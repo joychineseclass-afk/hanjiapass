@@ -1,4 +1,4 @@
-const wordData_social = {
+const wordData_social= {
     // 【비즈니스 - 실전 사교 (职场社交)】
     biz: [
         { 
