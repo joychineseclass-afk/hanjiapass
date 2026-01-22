@@ -46,17 +46,21 @@
         // 存储所有加载的主题数据
         let masterData = { biz: [], hsk: [] };
 
-        function initializeData() {
-            // 合并所有已加载的 data_xxx.js 里的内容
-            // 只要文件里定义的变量名叫 wordData_xxx，这里就会自动汇总
+                function initializeData() {
+            // 合并所有以 wordData_ 开头的数据
             const sources = Object.keys(window).filter(key => key.startsWith('wordData_'));
             
             masterData = { biz: [], hsk: [] };
             sources.forEach(source => {
-                if (window[source].biz) masterData.biz = [...masterData.biz, ...window[source].biz];
-                if (window[source].hsk) masterData.hsk = [...masterData.hsk, ...window[source].hsk];
+                if (window[source] && window[source].biz) {
+                    masterData.biz = [...masterData.biz, ...window[source].biz];
+                }
+                if (window[source] && window[source].hsk) {
+                    masterData.hsk = [...masterData.hsk, ...window[source].hsk];
+                }
             });
             render('biz');
+
         }
 
         function render(mode) {
@@ -146,3 +150,4 @@
     </script>
 </body>
 </html>
+
