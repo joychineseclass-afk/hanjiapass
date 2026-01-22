@@ -1,5 +1,4 @@
-const wordData_social= {
-    // 【비즈니스 - 실전 사교 (职场社交)】
+const wordData_social = {
     biz: [
         { 
             cn: "认识", hj: "認識", py: "rènshi", kr: "런 쓰", trans: "인식/알게되다",
@@ -18,9 +17,9 @@ const wordData_social= {
         { 
             cn: "辛苦", hj: "辛苦", py: "xīnkǔ", kr: "씬 쿠", trans: "수고/고생",
             sentence_kr: "모두들 수고하셨습니다.",
-            sentence_cn: "大家，辛苦了。",
-            sentence_py: "dàjiā,Xīnkǔle.",
-            sentence_read: "따지아, 씬쿠러"
+            sentence_cn: "辛苦了，大家。",
+            sentence_py: "Xīnkǔle, dàjiā.",
+            sentence_read: "씬쿠러, 따지아"
         },
         { 
             cn: "关照", hj: "關照", py: "guānzhào", kr: "꽌 쨔오", trans: "보살핌/배려",
@@ -35,10 +34,22 @@ const wordData_social= {
             sentence_cn: "欢迎来到我们公司。",
             sentence_py: "Huānyíng láidào wǒmen gōngsī.",
             sentence_read: "환잉 라이따오 워먼 꿍쓰"
+        },
+        { 
+            cn: "介绍", hj: "介紹", py: "jièshào", kr: "지에 샤오", trans: "소개",
+            sentence_kr: "제 소개를 좀 하겠습니다.",
+            sentence_cn: "我来介绍一下我自己。",
+            sentence_py: "Wǒ lái jièshào yíxià wǒ zìjǐ.",
+            sentence_read: "워 라이 지에샤오 이시아 워 쯔지"
+        },
+        { 
+            cn: "联系", hj: "聯繫", py: "liánxì", kr: "리엔 시", trans: "연락",
+            sentence_kr: "나중에 다시 연락드리겠습니다.",
+            sentence_cn: "以后再联系您。",
+            sentence_py: "Yǐhòu zài liánxì nín.",
+            sentence_read: "이허우 짜이 리엔시 닌"
         }
     ],
-
-    // 【HSK 1급 - 기초 생활 (基础生活)】
     hsk: [
         { 
             cn: "你好", hj: "你好", py: "nǐhǎo", kr: "니 하오", trans: "안녕",
@@ -46,13 +57,6 @@ const wordData_social= {
             sentence_cn: "见到你很高兴，你好！",
             sentence_py: "Jiàndào nǐ hěn gāoxìng, nǐhǎo!",
             sentence_read: "지엔따오 니 헌 까오싱, 니 하오!"
-        },
-        { 
-            cn: "谢谢", hj: "谢谢", py: "xièxie", kr: "씨에 씨에", trans: "감사",
-            sentence_kr: "도와주셔서 감사합니다.",
-            sentence_cn: "谢谢你的帮助。",
-            sentence_py: "Xièxie nǐ de bāngzhù.",
-            sentence_read: "씨에씨에 니 더 빵쭈"
         }
     ]
 };
