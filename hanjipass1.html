@@ -1,0 +1,50 @@
+<div id="register-modal" class="hidden fixed inset-0 z-[600] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
+    <div class="bg-white rounded-[40px] p-8 w-full max-w-sm text-center relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full"></div>
+        
+        <div class="text-5xl mb-4">🎁</div>
+        <h2 class="text-2xl font-black text-slate-800 mb-2">무료 혜택 예약!</h2>
+        <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+            지금 이메일을 남겨주시면,<br>
+            <span class="text-indigo-600 font-bold">PRO 멤버십 30일 이용권</span>을<br>
+            정식 런칭 시 보내드립니다!
+        </p>
+        
+        <input type="email" id="user-email" placeholder="이메일 주소 입력" class="w-full bg-slate-100 border-none rounded-2xl py-4 px-6 mb-4 text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none">
+        
+        <button onclick="submitLead()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold shadow-xl active:scale-95 transition">
+            지금 바로 신청하기 (0원)
+        </button>
+        
+        <button onclick="closeModal()" class="mt-4 text-xs text-slate-400 underline">나중에 할게요</button>
+    </div>
+</div>
+
+<script>
+    // 在之前的 setWord 函数末尾增加一个触发逻辑
+    let learnedCount = 0;
+    function submitLead() {
+        const email = document.getElementById('user-email').value;
+        if(email.includes('@')) {
+            alert("신청 완료! 런칭 시 메일로 알려드릴게요. (申请成功！上线时会通过邮件通知您)");
+            closeModal();
+        } else {
+            alert("올바른 이메일을 입력해주세요. (请输入正确的邮箱)");
+        }
+    }
+    
+    function closeModal() {
+        document.getElementById('register-modal').classList.add('hidden');
+    }
+
+    // 模拟学习两次后弹出
+    function checkProgress() {
+        learnedCount++;
+        if(learnedCount >= 2) {
+            setTimeout(() => {
+                document.getElementById('register-modal').classList.remove('hidden');
+            }, 1000);
+        }
+    }
+    // 修改原有的 setWord，加上 checkProgress()
+</script>
