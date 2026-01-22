@@ -1,4 +1,4 @@
-const wordData = {
+const wordData_social = {
     // 【비즈니스 - 실전 사교 (职场社交)】
     biz: [
         { 
@@ -18,9 +18,9 @@ const wordData = {
         { 
             cn: "辛苦", hj: "辛苦", py: "xīnkǔ", kr: "씬 쿠", trans: "수고/고생",
             sentence_kr: "모두들 수고하셨습니다.",
-            sentence_cn: "辛苦了，大家。",
-            sentence_py: "Xīnkǔle, dàjiā.",
-            sentence_read: "씬쿠러, 따지아"
+            sentence_cn: "大家，辛苦了。",
+            sentence_py: "dàjiā,Xīnkǔle.",
+            sentence_read: "따지아, 씬쿠러"
         },
         { 
             cn: "关照", hj: "關照", py: "guānzhào", kr: "꽌 쨔오", trans: "보살핌/배려",
