@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HanjaPass AI - 职场专家版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700;900&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #0F172A; color: white; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .active-btn { background: #6366f1 !important; color: white !important; }
+    </style>
+</head>
+<body class="flex justify-center min-h-screen">
+
+    <div class="w-full max-w-md bg-slate-900 shadow-2xl flex flex-col relative overflow-hidden">
+        
+        <div class="p-6 pt-12 flex items-center gap-4">
+            <div class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-4xl shadow-lg border-2 border-indigo-500">🐼</div>
+            <div>
+                <div class="bg-indigo-500/20 text-indigo-400 text-[10px] px-2 py-0.5 rounded-md font-bold inline-block mb-1">AI TUTOR ONLINE</div>
+                <h1 class="text-xl font-black italic tracking-tight">HanjaPass <span class="text-indigo-500">BIZ</span></h1>
+            </div>
+        </div>
+
+        <main class="px-6 flex-grow">
+            <div class="glass-card rounded-[40px] p-8 mb-6 text-center">
+                <div id="writer-container" class="flex justify-center gap-2 mb-6">
+                    </div>
+                
+                <h2 id="display-word" class="text-4xl font-black mb-1">确认</h2>
+                <p id="display-pinyin" class="text-indigo-400 font-mono mb-4 text-lg tracking-widest">què rèn</p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="bg-white/10 px-3 py-1 rounded-full text-xs">Hanja: 확인 (Hwak-in)</span>
+                    <span id="display-kor" class="bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-xs">발음: 췌 런</span>
+                </div>
+            </div>
+
+            <div id="ai-challenge" class="glass-card rounded-3xl p-6 mb-8 border-indigo-500/30">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs font-bold opacity-50 uppercase tracking-widest">AI Pronunciation</span>
+                    <span id="ai-status" class="text-[10px] text-green-400">● Ready</span>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <button onclick="simulateAI()" id="mic-btn" class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-indigo-500/40 active:scale-90 transition">🎤</button>
+                    <div class="flex-grow">
+                        <p id="ai-msg" class="text-sm text-gray-300">"화면을 보고 발음해보세요!"</p>
+                        <div id="progress-bar" class="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
+                            <div id="progress-inner" class="w-0 h-full bg-indigo-500 transition-all duration-1000"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="setWord('确认', 'què rèn', '확인', '췌 런')" class="w-full glass-card p-4 rounded-2xl flex justify-between items-center hover:bg-white/10 transition">
+                    <span class="font-bold">1. 确认 (Hwak-in)</span>
+                    <span class="text-xs opacity-40 italic">Daily Target</span>
+                </button>
+                <button onclick="setWord('成功', 'chéng gōng', '성공', '청 궁')" class="w-full glass-card p-4 rounded-2xl flex justify-between items-center hover:bg-white/10 transition">
+                    <span class="font-bold">2. 成功 (Seong-gong)</span>
+                    <span class="text-xs opacity-40 italic">Business</span>
+                </button>
+            </div>
+        </main>
+
+        <nav class="p-6 border-t border-white/5 flex justify-around">
+            <span class="text-indigo-500">🏠</span>
+            <span class="opacity-30">📊</span>
+            <span onclick="alert('PRO 맴버십 결제 페이지로 이동합니다.')" class="text-yellow-500">👑</span>
+        </nav>
+    </div>
+
+    <script>
+        let writers = [];
+        function setWord(word, pinyin, hanja, kor) {
+            document.getElementById('display-word').innerText = word;
+            document.getElementById('display-pinyin').innerText = pinyin;
+            document.getElementById('display-kor').innerText = `발음: ${kor}`;
+            
+            const container = document.getElementById('writer-container');
+            container.innerHTML = '';
+            writers = [];
+
+            for (let i = 0; i < word.length; i++) {
+                const div = document.createElement('div');
+                div.id = `char-${i}`;
+                div.className = "w-20 h-20 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center";
+                container.appendChild(div);
+                const writer = HanziWriter.create(`char-${i}`, word[i], {
+                    width: 70, height: 70, padding: 5, strokeColor: '#818cf8', radicalColor: '#f43f5e', delayBetweenStrokes: 100
+                });
+                writers.push(writer);
+            }
+            playAnims(0);
+        }
+
+        function playAnims(index) {
+            if(index < writers.length) {
+                writers[index].animateCharacter({ onComplete: () => setTimeout(() => playAnims(index+1), 300) });
+            }
+        }
+
+        function simulateAI() {
+            const msg = document.getElementById('ai-msg');
+            const bar = document.getElementById('progress-inner');
+            const status = document.getElementById('ai-status');
+            
+            msg.innerText = "듣고 있어요... (Listening)";
+            bar.style.width = "100%";
+            status.innerText = "● Recording";
+            
+            setTimeout(() => {
+                msg.innerText = "분석 중... (Analyzing)";
+                setTimeout(() => {
+                    msg.innerHTML = "✨ <span class='text-green-400 font-bold'>완벽해요!</span> 98점입니다.";
+                    status.innerText = "● Done";
+                    bar.style.width = "0%";
+                    // 模拟韩语语音
+                    const speech = new SpeechSynthesisUtterance("참 잘했어요. 발음이 완벽합니다.");
+                    speech.lang = 'ko-KR';
+                    window.speechSynthesis.speak(speech);
+                }, 1500);
+            }, 2000);
+        }
+
+        window.onload = () => setWord('确认', 'què rèn', '확인', '췌 런');
+    </script>
+</body>
+</html>
