@@ -1,4 +1,4 @@
-const wordData_social = {并提交
+const wordData_social = {
     biz: [
         { 
             cn: "认识", hj: "認識", py: "rènshi", kr: "런 쓰", trans: "인식/알게되다",
