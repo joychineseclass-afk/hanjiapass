@@ -1,64 +1,72 @@
 {
-  "hsk1": [
+  "数字类 (Numbers)": [
     {
-      "cn": "我",
-      "hj": "我",
-      "py": "wǒ",
-      "kr": "나",
-      "trans": "나 / 저",
-      "sentence_kr": "저는 학생입니다.",
-      "sentence_cn": "我是学生。",
-      "sentence_py": "Wǒ shì xuésheng.",
-      "sentence_read": "워 스 쉬에셩",
-      "video_url": ""
+      "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 제로",
+      "sentence_kr": "오늘 밤 12시(영시)에 수업이 끝나요.", "sentence_cn": "今天零点下课。",
+      "sentence_py": "jīntiān língdiǎn xiàkè.", "sentence_read": "찐티엔 링디엔 씨아커", "video_url": ""
     },
     {
-      "cn": "家",
-      "hj": "家",
-      "py": "jiā",
-      "kr": "가",
-      "trans": "집 / 가족",
-      "sentence_kr": "우리 집에는 네 명의 가족이 있습니다.",
-      "sentence_cn": "我家有四口人。",
-      "sentence_py": "Wǒ jiā yǒu sì kǒu rén.",
-      "sentence_read": "워 지아 요우 쓰 커우 런",
-      "video_url": ""
+      "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 일",
+      "sentence_kr": "저에게는 친구가 한 명 있어요.", "sentence_cn": "我有一个朋友。",
+      "sentence_py": "wǒ yǒu yígè péngyou.", "sentence_read": "워 요우 이꺼 펑요우", "video_url": ""
     },
     {
-      "cn": "漂亮",
-      "hj": "漂亮",
-      "py": "piàoliang",
-      "kr": "표 량",
-      "trans": "예쁘다",
-      "sentence_kr": "그녀의 옷이 정말 예뻐요.",
-      "sentence_cn": "她的衣服很漂亮。",
-      "sentence_py": "Tā de yīfu hěn piàoliang.",
-      "sentence_read": "타 더 이푸 헌 피아오리앙",
-      "video_url": ""
+      "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 (100)",
+      "sentence_kr": "백 위안(100块) 입니다.", "sentence_cn": "一百块。",
+      "sentence_py": "yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "video_url": ""
+    }
+  ],
+  "人物 & 家人 (People)": [
+    {
+      "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저",
+      "sentence_kr": "저는 학생입니다.", "sentence_cn": "我是学生。",
+      "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "video_url": ""
     },
     {
-      "cn": "喝",
-      "hj": "喝",
-      "py": "hē",
-      "kr": "갈",
-      "trans": "마시다",
-      "sentence_kr": "차 마시는 것을 좋아하시나요?",
-      "sentence_cn": "你喜欢喝茶吗？",
-      "sentence_py": "Nǐ xǐhuan hē chá ma?",
-      "sentence_read": "니 시환 허 차지아 마?",
-      "video_url": ""
+      "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠 / 아버지",
+      "sentence_kr": "우리 아빠는 아주 좋으신 분이에요.", "sentence_cn": "我爸爸很好。",
+      "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "video_url": ""
     },
     {
-      "cn": "谢谢",
-      "hj": "謝謝",
-      "py": "xièxie",
-      "kr": "사 사",
-      "trans": "감사하다",
-      "sentence_kr": "도와주셔서 감사합니다.",
-      "sentence_cn": "谢谢你的帮助。",
-      "sentence_py": "Xièxie nǐ de bāngzhù.",
-      "sentence_read": "씨에씨에 니 더 빵쭈",
-      "video_url": ""
+      "cn": "老师", "hj": "老師", "py": "lǎoshī", "kr": "로사", "trans": "선생님",
+      "sentence_kr": "그분은 선생님입니다.", "sentence_cn": "他是老师。",
+      "sentence_py": "tā shì lǎoshī.", "sentence_read": "타 스 라오스", "video_url": ""
+    }
+  ],
+  "指示 & 疑问 (Questions)": [
+    {
+      "cn": "什么", "hj": "什麼", "py": "shénme", "kr": "십마", "trans": "무엇 / 어떤",
+      "sentence_kr": "이것은 무엇입니까?", "sentence_cn": "这是什么？",
+      "sentence_py": "zhè shì shénme?", "sentence_read": "쩌 스 션머?", "video_url": ""
+    },
+    {
+      "cn": "多少", "hj": "多少", "py": "duōshao", "kr": "다소", "trans": "얼마나 / 얼마",
+      "sentence_kr": "얼마예요?", "sentence_cn": "多少钱？",
+      "sentence_py": "duōshao qián?", "sentence_read": "뚸샤오 치엔?", "video_url": ""
+    }
+  ],
+  "核心动词 (Verbs)": [
+    {
+      "cn": "喝", "hj": "喝", "py": "hē", "kr": "갈", "trans": "마시다",
+      "sentence_kr": "저는 물을 마셔요.", "sentence_cn": "我喝水。",
+      "sentence_py": "wǒ hē shuǐ.", "sentence_read": "워 허 슈이", "video_url": ""
+    },
+    {
+      "cn": "喜欢", "hj": "喜歡", "py": "xǐhuan", "kr": "희환", "trans": "좋아하다",
+      "sentence_kr": "저는 당신을 좋아해요.", "sentence_cn": "我喜欢你。",
+      "sentence_py": "wǒ xǐhuan nǐ.", "sentence_read": "워 시환 니", "video_url": ""
+    }
+  ],
+  "社交表达 (Social)": [
+    {
+      "cn": "谢谢", "hj": "謝謝", "py": "xièxie", "kr": "사사", "trans": "감사합니다",
+      "sentence_kr": "고마워요.", "sentence_cn": "谢谢你。",
+      "sentence_py": "xièxie nǐ.", "sentence_read": "씨에씨에 니", "video_url": ""
+    },
+    {
+      "cn": "再见", "hj": "再見", "py": "zàijiàn", "kr": "재견", "trans": "또 만나요 / 안녕",
+      "sentence_kr": "다음에 또 봐요.", "sentence_cn": "再见。",
+      "sentence_py": "zàijiàn.", "sentence_read": "짜이지엔", "video_url": ""
     }
   ]
 }
