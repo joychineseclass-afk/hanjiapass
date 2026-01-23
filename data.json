@@ -1,58 +1,28 @@
 {
   "HSK1": {
     "数字 (Numbers)": [
-      {
-        "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 0",
-        "sentence_cn": "今天零点下课。", "sentence_py": "jīntiān língdiǎn xiàkè.", "sentence_read": "찐티엔 링디엔 씨아커", "sentence_kr": "오늘 밤 12시에 수업이 끝나요."
-      },
-      {
-        "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1",
-        "sentence_cn": "我有一个朋友。", "sentence_py": "wǒ yǒu yí gè péngyou.", "sentence_read": "워 요우 이 꺼 펑요우", "sentence_kr": "저에게는 친구가 한 명 있어요."
-      },
-      {
-        "cn": "二", "hj": "二", "py": "èr", "kr": "이", "trans": "둘 / 2",
-        "sentence_cn": "我有两个老师。", "sentence_py": "wǒ yǒu liǎng gè lǎoshī.", "sentence_read": "워 요우 리앙 꺼 라오스", "sentence_kr": "저에게는 두 명의 선생님이 계세요."
-      },
-      {
-        "cn": "三", "hj": "三", "py": "sān", "kr": "삼", "trans": "셋 / 3",
-        "sentence_cn": "我们三个人。", "sentence_py": "wǒmen sān gè rén.", "sentence_read": "워먼 싼 꺼 런", "sentence_kr": "우리 세 사람이에요."
-      },
-      {
-        "cn": "四", "hj": "四", "py": "sì", "kr": "사", "trans": "넷 / 4",
-        "sentence_cn": "四点见。", "sentence_py": "sì diǎn jiàn.", "sentence_read": "쓰 디엔 찌엔", "sentence_kr": "네 시에 만나요."
-      },
-      {
-        "cn": "五", "hj": "五", "py": "wǔ", "kr": "오", "trans": "다섯 / 5",
-        "sentence_cn": "我五岁。", "sentence_py": "wǒ wǔ suì.", "sentence_read": "워 우 쑤이", "sentence_kr": "저는 다섯 살이에요."
-      }
+      { "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 0", "sentence_cn": "今天零点下课。", "sentence_py": "jīntiān língdiǎn xiàkè.", "sentence_read": "찐티엔 링디엔 씨아커", "sentence_kr": "오늘 밤 12시에 수업이 끝나요." },
+      { "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1", "sentence_cn": "我有一个朋友。", "sentence_py": "wǒ yǒu yí gè péngyou.", "sentence_read": "워 요우 이 꺼 펑요우", "sentence_kr": "저에게는 친구가 한 명 있어요." },
+      { "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 / 100", "sentence_cn": "一百块。", "sentence_py": "yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "sentence_kr": "백 위안 입니다." }
     ],
     "人物 & 家人 (People)": [
-      {
-        "cn": "人", "hj": "人", "py": "rén", "kr": "인", "trans": "사람",
-        "sentence_cn": "这里有三个人。", "sentence_py": "zhèlǐ yǒu sān gè rén.", "sentence_read": "쩌리 요우 싼 꺼 런", "sentence_kr": "여기에 세 사람이 있습니다."
-      },
-      {
-        "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저",
-        "sentence_cn": "我是学生。", "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "sentence_kr": "저는 학생입니다."
-      },
-      {
-        "cn": "你", "hj": "你", "py": "nǐ", "kr": "니", "trans": "너 / 당신",
-        "sentence_cn": "你好吗？", "sentence_py": "nǐ hǎo ma?", "sentence_read": "니 하오 마?", "sentence_kr": "잘 지내세요?"
-      },
-      {
-        "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠",
-        "sentence_cn": "我爸爸很好。", "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "sentence_kr": "우리 아빠는 아주 좋으신 분이에요."
-      }
+      { "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저", "sentence_cn": "我是学生。", "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "sentence_kr": "저는 학생입니다." },
+      { "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠", "sentence_cn": "我爸爸很好。", "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "sentence_kr": "우리 아빠는 아주 좋으신 분이에요." }
     ],
-    "指示 & 疑问 (Question)": [
-      {
-        "cn": "这", "hj": "這", "py": "zhè", "kr": "저", "trans": "이것 / 이",
-        "sentence_cn": "这是书。", "sentence_py": "zhè shì shū.", "sentence_read": "쩌 스 슈", "sentence_kr": "이것은 책입니다."
-      },
-      {
-        "cn": "什么", "hj": "什麼", "py": "shénme", "kr": "십마", "trans": "무엇",
-        "sentence_cn": "这是什么？", "sentence_py": "zhè shì shénme?", "sentence_read": "쩌 스 션머?", "sentence_kr": "이것은 무엇입니까?"
-      }
+    "指示 & 疑问 (Questions)": [
+      { "cn": "这", "hj": "這", "py": "zhè", "kr": "저", "trans": "이것", "sentence_cn": "这是书。", "sentence_py": "zhè shì shū.", "sentence_read": "쩌 스 슈", "sentence_kr": "이것은 책입니다." },
+      { "cn": "哪儿", "hj": "哪兒", "py": "nǎr", "kr": "나아", "trans": "어디", "sentence_cn": "你去哪儿？", "sentence_py": "nǐ qù nǎr?", "sentence_read": "니 취 나아?", "sentence_kr": "어디 가세요?" },
+      { "cn": "什么", "hj": "什麼", "py": "shénme", "kr": "십마", "trans": "무엇", "sentence_cn": "这是什么？", "sentence_py": "zhè shì shénme?", "sentence_read": "쩌 스 션머?", "sentence_kr": "이것은 무엇입니까?" }
+    ],
+    "时间 & 日期 (Time)": [
+      { "cn": "今天", "hj": "今天", "py": "jīntiān", "kr": "금천", "trans": "오늘", "sentence_cn": "今天上课。", "sentence_py": "jīntiān shàngkè.", "sentence_read": "찐티엔 샹커", "sentence_kr": "오늘 수업이 있어요." },
+      { "cn": "明天", "hj": "明天", "py": "míngtiān", "kr": "명천", "trans": "내일", "sentence_cn": "明天见。", "sentence_py": "míngtiān jiàn.", "sentence_read": "밍티엔 찌엔", "sentence_kr": "내일 만나요." },
+      { "cn": "现在", "hj": "現在", "py": "xiànzài", "kr": "현재", "trans": "지금", "sentence_cn": "我现在忙。", "sentence_py": "wǒ xiànzài máng.", "sentence_read": "워 씨엔짜이 망", "sentence_kr": "저 지금 바빠요." }
+    ],
+    "地点 & 方位 (Location)": [
+      { "cn": "学校", "hj": "學校", "py": "xuéxiào", "kr": "학교", "trans": "학교", "sentence_cn": "我在学校。", "sentence_py": "wǒ zài xuéxiào.", "sentence_read": "워 짜이 쉬에씨아오", "sentence_kr": "저는 학교에 있어요." },
+      { "cn": "商店", "hj": "商店", "py": "shāngdiàn", "kr": "상점", "trans": "가게 / 상점", "sentence_cn": "去商店。", "sentence_py": "qù shāngdiàn.", "sentence_read": "취 샹디엔", "sentence_kr": "상점에 가요." },
+      { "cn": "中国", "hj": "中國", "py": "zhōngguó", "kr": "중국", "trans": "중국", "sentence_cn": "我去中国。", "sentence_py": "wǒ qù zhōngguó.", "sentence_read": "워 취 쭝궈", "sentence_kr": "저는 중국에 갑니다." }
     ]
   }
 }
