@@ -1,72 +1,64 @@
 {
-  "数字类 (Numbers)": [
-    {
-      "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 제로",
-      "sentence_kr": "오늘 밤 12시(영시)에 수업이 끝나요.", "sentence_cn": "今天零点下课。",
-      "sentence_py": "jīntiān língdiǎn xiàkè.", "sentence_read": "찐티엔 링디엔 씨아커", "video_url": ""
-    },
-    {
-      "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 일",
-      "sentence_kr": "저에게는 친구가 한 명 있어요.", "sentence_cn": "我有一个朋友。",
-      "sentence_py": "wǒ yǒu yígè péngyou.", "sentence_read": "워 요우 이꺼 펑요우", "video_url": ""
-    },
-    {
-      "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 (100)",
-      "sentence_kr": "백 위안(100块) 입니다.", "sentence_cn": "一百块。",
-      "sentence_py": "yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "video_url": ""
-    }
-  ],
-  "人物 & 家人 (People)": [
-    {
-      "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저",
-      "sentence_kr": "저는 학생입니다.", "sentence_cn": "我是学生。",
-      "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "video_url": ""
-    },
-    {
-      "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠 / 아버지",
-      "sentence_kr": "우리 아빠는 아주 좋으신 분이에요.", "sentence_cn": "我爸爸很好。",
-      "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "video_url": ""
-    },
-    {
-      "cn": "老师", "hj": "老師", "py": "lǎoshī", "kr": "로사", "trans": "선생님",
-      "sentence_kr": "그분은 선생님입니다.", "sentence_cn": "他是老师。",
-      "sentence_py": "tā shì lǎoshī.", "sentence_read": "타 스 라오스", "video_url": ""
-    }
-  ],
-  "指示 & 疑问 (Questions)": [
-    {
-      "cn": "什么", "hj": "什麼", "py": "shénme", "kr": "십마", "trans": "무엇 / 어떤",
-      "sentence_kr": "이것은 무엇입니까?", "sentence_cn": "这是什么？",
-      "sentence_py": "zhè shì shénme?", "sentence_read": "쩌 스 션머?", "video_url": ""
-    },
-    {
-      "cn": "多少", "hj": "多少", "py": "duōshao", "kr": "다소", "trans": "얼마나 / 얼마",
-      "sentence_kr": "얼마예요?", "sentence_cn": "多少钱？",
-      "sentence_py": "duōshao qián?", "sentence_read": "뚸샤오 치엔?", "video_url": ""
-    }
-  ],
-  "核心动词 (Verbs)": [
-    {
-      "cn": "喝", "hj": "喝", "py": "hē", "kr": "갈", "trans": "마시다",
-      "sentence_kr": "저는 물을 마셔요.", "sentence_cn": "我喝水。",
-      "sentence_py": "wǒ hē shuǐ.", "sentence_read": "워 허 슈이", "video_url": ""
-    },
-    {
-      "cn": "喜欢", "hj": "喜歡", "py": "xǐhuan", "kr": "희환", "trans": "좋아하다",
-      "sentence_kr": "저는 당신을 좋아해요.", "sentence_cn": "我喜欢你。",
-      "sentence_py": "wǒ xǐhuan nǐ.", "sentence_read": "워 시환 니", "video_url": ""
-    }
-  ],
-  "社交表达 (Social)": [
-    {
-      "cn": "谢谢", "hj": "謝謝", "py": "xièxie", "kr": "사사", "trans": "감사합니다",
-      "sentence_kr": "고마워요.", "sentence_cn": "谢谢你。",
-      "sentence_py": "xièxie nǐ.", "sentence_read": "씨에씨에 니", "video_url": ""
-    },
-    {
-      "cn": "再见", "hj": "再見", "py": "zàijiàn", "kr": "재견", "trans": "또 만나요 / 안녕",
-      "sentence_kr": "다음에 또 봐요.", "sentence_cn": "再见。",
-      "sentence_py": "zàijiàn.", "sentence_read": "짜이지엔", "video_url": ""
-    }
-  ]
+  "HSK1": {
+    "数字 (Numbers)": [
+      {
+        "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 0",
+        "sentence_cn": "今天零点下课。", "sentence_py": "jīntiān língdiǎn xiàkè.", "sentence_read": "찐티엔 링디엔 씨아커", "sentence_kr": "오늘 밤 12시에 수업이 끝나요."
+      },
+      {
+        "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1",
+        "sentence_cn": "我有一个朋友。", "sentence_py": "wǒ yǒu yí gè péngyou.", "sentence_read": "워 요우 이 꺼 펑요우", "sentence_kr": "저에게는 친구가 한 명 있어요."
+      },
+      {
+        "cn": "二", "hj": "二", "py": "èr", "kr": "이", "trans": "둘 / 2",
+        "sentence_cn": "我有两个老师。", "sentence_py": "wǒ yǒu liǎng gè lǎoshī.", "sentence_read": "워 요우 리앙 꺼 라오스", "sentence_kr": "저에게는 두 명의 선생님이 계세요."
+      },
+      {
+        "cn": "三", "hj": "三", "py": "sān", "kr": "삼", "trans": "셋 / 3",
+        "sentence_cn": "我们三个人。", "sentence_py": "wǒmen sān gè rén.", "sentence_read": "워먼 싼 꺼 런", "sentence_kr": "우리 세 사람이에요."
+      },
+      {
+        "cn": "四", "hj": "四", "py": "sì", "kr": "사", "trans": "넷 / 4",
+        "sentence_cn": "四点见。", "sentence_py": "sì diǎn jiàn.", "sentence_read": "쓰 디엔 찌엔", "sentence_kr": "네 시에 만나요."
+      },
+      {
+        "cn": "五", "hj": "五", "py": "wǔ", "kr": "오", "trans": "다섯 / 5",
+        "sentence_cn": "我五岁。", "sentence_py": "wǒ wǔ suì.", "sentence_read": "워 우 쑤이", "sentence_kr": "저는 다섯 살이에요."
+      },
+      {
+        "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 / 100",
+        "sentence_cn": "一百块。", "sentence_py": "yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "sentence_kr": "백 위안(100块) 입니다."
+      }
+    ],
+    "人物 & 家人 (People)": [
+      {
+        "cn": "人", "hj": "人", "py": "rén", "kr": "인", "trans": "사람",
+        "sentence_cn": "这里有三个人。", "sentence_py": "zhèlǐ yǒu sān gè rén.", "sentence_read": "쩌리 요우 싼 꺼 런", "sentence_kr": "여기에 세 사람이 있습니다."
+      },
+      {
+        "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저",
+        "sentence_cn": "我是学生。", "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "sentence_kr": "저는 학생입니다."
+      },
+      {
+        "cn": "你", "hj": "你", "py": "nǐ", "kr": "니", "trans": "너 / 당신",
+        "sentence_cn": "你好吗？", "sentence_py": "nǐ hǎo ma?", "sentence_read": "니 하오 마?", "sentence_kr": "잘 지내세요?"
+      },
+      {
+        "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠 / 아버지",
+        "sentence_cn": "我爸爸很好。", "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "sentence_kr": "우리 아빠는 아주 좋으신 분이에요."
+      },
+      {
+        "cn": "妈妈", "hj": "媽媽", "py": "māma", "kr": "모", "trans": "엄마 / 어머니",
+        "sentence_cn": "妈妈在家。", "sentence_py": "māma zài jiā.", "sentence_read": "마마 짜이 지아", "sentence_kr": "엄마는 집에 계세요."
+      },
+      {
+        "cn": "老师", "hj": "老師", "py": "lǎoshī", "kr": "로사", "trans": "선생님",
+        "sentence_cn": "他是老师。", "sentence_py": "tā shì lǎoshī.", "sentence_read": "타 스 라오스", "sentence_kr": "그분은 선생님입니다."
+      },
+      {
+        "cn": "朋友", "hj": "朋友", "py": "péngyou", "kr": "붕우", "trans": "친구",
+        "sentence_cn": "他是我朋友。", "sentence_py": "tā shì wǒ péngyou.", "sentence_read": "타 스 워 펑요우", "sentence_kr": "그는 제 친구입니다."
+      }
+    ]
+  }
 }
