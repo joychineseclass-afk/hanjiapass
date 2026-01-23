@@ -3,161 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HanjaPass - Full Jelly Studio</title>
+    <title>HanjaPass - Multi-Level Academy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        /* 统一的果冻拟态风格 */
+        /* 一级菜单：HSK等级 (深色简约) */
+        .level-btn { padding: 10px 20px; border-radius: 15px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 13px; color: #666; transition: 0.3s; }
+        .active-level { background: #333 !important; color: #fff !important; border-color: #333; transform: scale(1.1); }
+
+        /* 二级菜单：果冻子分类 (多巴胺色) */
+        .sub-btn { padding: 8px 16px; border-radius: 20px; background: #fff5f0; color: #ffbfa0; font-weight: 900; font-size: 12px; transition: 0.3s; white-space: nowrap; }
+        .active-sub { background: #ff7e5f !important; color: white !important; box-shadow: 0 4px 10px rgba(255,126,95,0.3); }
+
+        /* 果冻盒子样式 */
         .jelly-box {
             background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            border-radius: 40px;
-            box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff, inset 0 0 15px rgba(255,255,255,0.6);
-            border: 2px solid rgba(255,255,255,0.8);
-            position: relative; cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 40px; box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff;
+            border: 2px solid rgba(255,255,255,0.8); position: relative; cursor: pointer;
         }
-        .jelly-box:active { transform: scale(0.96); box-shadow: 2px 2px 5px #ebebeb, inset 2px 2px 5px rgba(0,0,0,0.05); }
-
-        /* Click! 呼吸标签 */
         .click-badge {
-            position: absolute; top: -8px; right: -5px;
-            background: #ff7e5f; color: white; font-size: 9px; font-weight: 900;
-            padding: 3px 10px; border-radius: 20px; box-shadow: 0 4px 8px rgba(255,126,95,0.3);
-            animation: pulse 1.8s infinite; z-index: 10;
+            position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; 
+            font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite;
         }
-
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* 拼音样式：大写、橘色、间距 */
-        .pinyin-style {
-            font-size: 26px; font-weight: 900; color: #ff6b00;
-            letter-spacing: 0.2em; text-transform: lowercase;
-            margin-bottom: 8px; font-family: 'Arial Rounded MT Bold', sans-serif;
-        }
-
-        .word-card { background: white; border-radius: 55px; border: 6px solid #fff1e6; }
-        .active-tab { background: #ff7e5f !important; color: white !important; }
-        .tab-btn { flex: 1; padding: 15px; border-radius: 25px; color: #ffbfa0; font-weight: 900; background: #fff5f0; font-size: 14px; }
+        .word-card { background: white; border-radius: 50px; border: 6px solid #fff1e6; }
     </style>
 </head>
 <body class="p-6 max-w-md mx-auto pb-24">
 
-    <div class="text-center mb-10">
-        <div class="inline-block p-4 bg-white rounded-[30px] shadow-sm mb-4">
-            <h1 class="text-2xl font-black text-slate-800">🐼 HanjaPass <span class="text-orange-500">Premium</span></h1>
-        </div>
-        <div class="px-8">
-            <select id="voiceSet" class="w-full bg-white border-4 border-orange-50 text-orange-400 font-black p-3 rounded-[25px] outline-none appearance-none cursor-pointer text-center text-sm">
-                <option value="child">🍭 캔디 보이스 (Candy)</option>
-                <option value="pro">🎙️ 아나운서 (Pro)</option>
-            </select>
-        </div>
+    <div class="text-center mb-6">
+        <h1 class="text-2xl font-black text-slate-800">🐼 HanjaPass <span class="text-orange-500">PRO</span></h1>
     </div>
 
-    <div id="tabBar" class="flex gap-2 mb-10"></div>
+    <div id="levelBar" class="flex gap-3 overflow-x-auto pb-4 mb-4 no-scrollbar"></div>
+
+    <div id="subBar" class="flex gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar"></div>
+
     <div id="container" class="space-y-12"></div>
 
     <script>
         let globalData = {};
-        const FREE_LIMIT = 5;
+        let currentLevel = "";
 
         async function initApp() {
             try {
                 const response = await fetch('data.json');
                 globalData = await response.json();
-                createTabs();
-                render(Object.keys(globalData)[0]);
-            } catch (e) { console.error("Data loading error"); }
+                renderLevels();
+            } catch (e) { console.error("Data error"); }
         }
 
-        function createTabs() {
-            const tabBar = document.getElementById('tabBar');
-            Object.keys(globalData).forEach(mode => {
+        // 渲染第一级：HSK1, HSK2...
+        function renderLevels() {
+            const bar = document.getElementById('levelBar');
+            Object.keys(globalData).forEach((level, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'tab-btn';
-                btn.id = `tab-${mode}`;
-                btn.innerText = mode.toUpperCase();
-                btn.onclick = () => render(mode);
-                tabBar.appendChild(btn);
+                btn.className = 'level-btn flex-shrink-0';
+                btn.innerText = level;
+                btn.onclick = () => selectLevel(level);
+                bar.appendChild(btn);
+                if(index === 0) selectLevel(level);
             });
         }
 
-        function render(mode) {
+        // 选择级别后渲染第二级子分类
+        function selectLevel(level) {
+            currentLevel = level;
+            document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
+            
+            const subBar = document.getElementById('subBar');
+            subBar.innerHTML = '';
+            const categories = Object.keys(globalData[level]);
+            
+            categories.forEach((cat, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'sub-btn flex-shrink-0';
+                btn.innerText = cat;
+                btn.onclick = () => renderWords(cat);
+                subBar.appendChild(btn);
+                if(index === 0) renderWords(cat);
+            });
+        }
+
+        // 渲染最终的单词卡片
+        function renderWords(category) {
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active-sub', b.innerText === category));
             const list = document.getElementById('container');
             list.innerHTML = '';
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
-            document.getElementById(`tab-${mode}`).classList.add('active-tab');
 
-            globalData[mode].forEach((item, index) => {
-                const isLocked = index >= FREE_LIMIT;
+            globalData[currentLevel][category].forEach((item, index) => {
                 const card = document.createElement('div');
-                card.className = 'word-card p-8 relative';
-                
-                const traditional = (item.hj && item.hj !== item.cn) ? `<span class="text-slate-200">(${item.hj})</span>` : '';
-
+                card.className = 'word-card p-8';
                 card.innerHTML = `
-                    <div class="${isLocked ? 'blur-2xl opacity-40 pointer-events-none' : ''}">
-                        <div class="flex flex-col items-center mb-12">
-                            <div class="pinyin-style">${item.py.toLowerCase()}</div>
-                            <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
-                                <div class="click-badge">CLICK!</div>
-                                <span class="text-7xl font-black text-slate-800">${item.cn}</span>
-                            </div>
-                            <div class="mt-6 text-center">
-                                <p class="text-2xl font-black text-rose-500 underline decoration-orange-200 underline-offset-8">${item.trans} ${traditional}</p>
-                                <p class="text-lg font-black text-orange-300 mt-2 italic">/ ${item.kr} /</p>
-                            </div>
+                    <div class="flex flex-col items-center mb-10">
+                        <div class="text-[24px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
+                        <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
+                            <div class="click-badge">CLICK!</div>
+                            <span class="text-7xl font-black text-slate-800">${item.cn}</span>
                         </div>
-
-                        <div class="flex flex-col items-center mb-12">
-                            <div id="writer-${mode}-${index}" class="jelly-box w-40 h-40 flex items-center justify-center bg-white" onclick="draw('${item.cn}', 'writer-${mode}-${index}')">
-                                <div class="click-badge">WRITE!</div>
-                            </div>
+                        <div class="mt-6 text-center">
+                            <p class="text-2xl font-black text-rose-500 underline decoration-orange-100">${item.trans}</p>
+                            <p class="text-lg font-black text-orange-300 mt-2 italic">/ ${item.kr} /</p>
                         </div>
-
-                        <div class="jelly-box p-8 bg-white" onclick="play('${item.sentence_cn}')">
-                            <div class="click-badge">LISTEN!</div>
-                            <p class="text-slate-400 text-xs font-bold mb-4 italic">"${item.sentence_kr}"</p>
-                            <p class="text-3xl font-black text-slate-800 leading-tight">${item.sentence_cn}</p>
-                            <p class="text-orange-500 font-black text-sm mt-3">${item.sentence_py.toLowerCase()}</p>
-                            <p class="text-rose-400 font-black text-xl mt-1">${item.sentence_read}</p>
+                    </div>
+                    <div class="flex flex-col items-center mb-10">
+                        <div id="writer-${index}" class="jelly-box w-40 h-40 flex items-center justify-center bg-white" onclick="draw('${item.cn}', 'writer-${index}')">
+                            <div class="click-badge">WRITE!</div>
                         </div>
+                    </div>
+                    <div class="jelly-box p-8 bg-white" onclick="play('${item.sentence_cn}')">
+                        <div class="click-badge">LISTEN!</div>
+                        <p class="text-3xl font-black text-slate-800 mb-2">${item.sentence_cn}</p>
+                        <p class="text-orange-500 font-bold text-sm">${item.sentence_py}</p>
+                        <p class="text-rose-400 font-black text-lg mt-1">${item.sentence_read}</p>
                     </div>
                 `;
                 list.appendChild(card);
-                // 默认显示第一个字的底稿
-                setTimeout(() => initWriter(item.cn[0], `writer-${mode}-${index}`), 100);
+                setTimeout(() => HanziWriter.create(`writer-${index}`, item.cn[0], {width:130, height:130, padding:15, strokeColor:'#eee'}), 100);
             });
         }
 
-        function initWriter(char, el) { 
-            const container = document.getElementById(el);
-            if(!container) return;
-            container.innerHTML = '<div class="click-badge">WRITE!</div>';
-            HanziWriter.create(el, char, { width: 130, height: 130, padding: 15, strokeColor: '#f1f1f1', showOutline: true }); 
-        }
-        
         async function draw(word, el) {
             const container = document.getElementById(el);
-            // 循环播放单词里的每一个汉字
             for (let char of word) {
                 container.innerHTML = '<div class="click-badge">WRITE!</div>';
-                const writer = HanziWriter.create(el, char, { width: 130, height: 130, padding: 15, strokeColor: '#ff7e5f', radicalColor: '#4338ca', strokeAnimationSpeed: 2.5 });
+                const writer = HanziWriter.create(el, char, { width: 130, height: 130, padding: 15, strokeColor: '#ff7e5f', strokeAnimationSpeed: 2.5 });
                 await writer.animateCharacter();
-                await new Promise(r => setTimeout(r, 800)); // 每个字中间停顿
+                await new Promise(r => setTimeout(r, 800));
             }
-            // 播完后恢复第一个字的底稿
-            initWriter(word[0], el);
         }
 
         function play(text) {
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(text);
-            const mode = document.getElementById('voiceSet').value;
             utter.lang = 'zh-CN';
-            utter.pitch = (mode === 'child') ? 2.0 : 0.9;
-            utter.rate = (mode === 'child') ? 1.0 : 0.8;
+            utter.pitch = 2.0;
             window.speechSynthesis.speak(utter);
         }
 
