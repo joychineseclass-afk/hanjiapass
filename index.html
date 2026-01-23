@@ -3,54 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HanjaPass Pro - 한국어 강화판</title>
+    <title>HanjaPass Pro - Super Cute Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
-        body { background: #f8fafc; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .word-card { background: white; border-radius: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); position: relative; overflow: hidden; border: 1px solid #f1f5f9; }
-        .active-tab { background: #4f46e5 !important; color: white !important; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
-        .tab-btn { flex: 1; padding: 12px 0; border-radius: 12px; transition: all 0.2s; color: #64748b; font-weight: bold; }
+        body { background: #fefeff; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .word-card { background: white; border-radius: 35px; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.05); position: relative; overflow: hidden; border: 2px solid #f1f5f9; }
+        .active-tab { background: #6366f1 !important; color: white !important; transform: scale(1.05); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); }
+        .tab-btn { flex: 1; padding: 14px 0; border-radius: 18px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: #94a3b8; font-weight: 800; font-size: 13px; }
+        .paywall-overlay { position: absolute; inset: 0; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 30; }
         
-        /* 付费遮罩 */
-        .paywall-overlay { 
-            position: absolute; inset: 0; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(8px);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            z-index: 20; 
-        }
+        /* 萌系喇叭动画 */
+        .btn-hop:active { transform: scale(0.9); }
     </style>
 </head>
-<body class="p-4 max-w-md mx-auto pb-24">
+<body class="p-5 max-w-md mx-auto pb-24">
 
-    <div class="flex items-center justify-between mb-8 mt-4 bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
-        <div class="flex items-center gap-2">
-            <span class="text-3xl">🐼</span>
-            <h1 class="text-xl font-black text-slate-800">HanjaPass <span class="text-indigo-600 italic text-sm">PREMIUM</span></h1>
+    <div class="flex items-center justify-between mb-8 mt-4 bg-white p-5 rounded-[32px] shadow-sm border border-slate-50">
+        <div class="flex items-center gap-3">
+            <div class="bg-indigo-100 w-12 h-12 rounded-2xl flex items-center justify-center text-3xl">🐼</div>
+            <div>
+                <h1 class="text-xl font-black text-slate-800 leading-none">HanjaPass</h1>
+                <span class="text-[10px] font-bold text-indigo-400 tracking-widest uppercase">Premium Edu</span>
+            </div>
         </div>
-        <select id="voiceSet" class="bg-indigo-50 text-indigo-700 text-[11px] font-bold p-2 rounded-xl outline-none border-none">
+        <select id="voiceSet" class="bg-slate-100 text-slate-600 text-[11px] font-extrabold p-2.5 rounded-2xl outline-none border-none cursor-pointer">
             <option value="child">🍭 어린이 (Cute)</option>
             <option value="pro">🎙️ 아나운서 (Pro)</option>
-            <option value="male">👦 남성 발음 (Male)</option>
         </select>
     </div>
 
-    <div id="tabBar" class="flex bg-slate-200 p-1.5 rounded-2xl mb-8 font-bold text-xs"></div>
+    <div id="tabBar" class="flex bg-slate-100 p-2 rounded-[24px] mb-8 font-bold"></div>
 
-    <div id="container" class="space-y-6"></div>
+    <div id="container" class="space-y-8"></div>
 
-    <div id="strokeModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-8" onclick="closeStroke()">
-        <div class="bg-white p-8 rounded-[40px] w-full max-w-[340px] relative text-center" onclick="event.stopPropagation()">
-            <div id="character-target" class="w-full aspect-square mb-4 mx-auto border-2 border-slate-50 rounded-2xl"></div>
-            <p id="stroke-text" class="font-black text-5xl text-indigo-600 mb-4"></p>
-            <button onclick="closeStroke()" class="bg-slate-100 text-slate-500 px-8 py-3 rounded-2xl font-bold text-sm w-full">닫기 (Close)</button>
+    <div id="strokeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-8" onclick="closeStroke()">
+        <div class="bg-white p-8 rounded-[45px] w-full max-w-[340px] shadow-2xl" onclick="event.stopPropagation()">
+            <div id="character-target" class="w-full aspect-square mb-6 mx-auto bg-slate-50 rounded-[30px] border-4 border-dashed border-slate-200"></div>
+            <p id="stroke-text" class="font-black text-6xl text-indigo-600 mb-6"></p>
+            <button onclick="closeStroke()" class="bg-indigo-50 text-indigo-600 px-8 py-4 rounded-[25px] font-black text-sm w-full btn-hop">창 닫기</button>
         </div>
     </div>
 
     <script>
         let globalData = {};
-        const FREE_LIMIT = 5; // 免费词汇额度
+        const FREE_LIMIT = 5;
+
+        // 可爱小喇叭 SVG 图标组件
+        const speakerIcon = `
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 4.58656C10.5 3.84074 9.62094 3.44315 9.06066 3.93589L5.43934 7.12456H3C2.44772 7.12456 2 7.57228 2 8.12456V15.8746C2 16.4268 2.44772 16.8746 3 16.8746H5.43934L9.06066 20.0632C9.62094 20.556 10.5 20.1584 10.5 19.4126V4.58656Z" fill="currentColor"/>
+                <path d="M14 8C14.5 9 14.5 15 14 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M17 6C18.5 8 18.5 16 17 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        `;
 
         async function initApp() {
             try {
@@ -58,9 +64,7 @@
                 globalData = await response.json();
                 createTabs();
                 render(Object.keys(globalData)[0]);
-            } catch (e) {
-                document.getElementById('container').innerHTML = `<p class='text-center text-red-500'>data.json 파일을 확인해주세요.</p>`;
-            }
+            } catch (e) { console.error("Data error"); }
         }
 
         function createTabs() {
@@ -84,50 +88,50 @@
             globalData[mode].forEach((item, index) => {
                 const isLocked = index >= FREE_LIMIT;
                 const card = document.createElement('div');
-                card.className = 'word-card p-6 border-b-[6px] border-indigo-100';
+                card.className = 'word-card p-7 mb-4';
 
                 let html = `
-                    <div class="${isLocked ? 'blur-sm select-none' : ''}">
+                    <div class="${isLocked ? 'blur-md' : ''}">
                         <div class="flex justify-between items-start mb-6">
                             <div class="flex-1">
-                                <div class="flex gap-2 mb-3">
-                                    <span class="px-2.5 py-1 bg-slate-800 text-white rounded-lg text-[10px] font-bold">한자: ${item.hj}</span>
-                                    <span class="px-2.5 py-1 bg-rose-500 text-white rounded-lg text-[10px] font-bold">${item.trans}</span>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="px-3 py-1 bg-indigo-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest">Hanja: ${item.hj}</span>
+                                    <span class="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-[10px] font-black underline underline-offset-2">${item.trans}</span>
                                 </div>
-                                <div class="flex items-baseline gap-2">
-                                    <span class="text-4xl font-black text-slate-800">${item.cn}</span>
-                                    <span class="text-sm font-bold text-slate-400 font-mono">${item.py}</span>
-                                    <span class="text-xl font-black text-rose-600">${item.kr}</span>
+                                <div class="flex items-end gap-3">
+                                    <span class="text-5xl font-black text-slate-800 tracking-tighter">${item.cn}</span>
+                                    <span class="text-xl font-black text-rose-500 pb-1">${item.kr}</span>
                                 </div>
+                                <p class="text-sm font-bold text-slate-300 font-mono mt-1">${item.py}</p>
                             </div>
-                            <div class="flex gap-2">
-                                <button onclick="play('${item.cn}')" class="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center shadow-sm active:scale-90 border border-indigo-100">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v18l-7-7H3V10h2l7-7zm6.5 9c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                            <div class="flex flex-col gap-3">
+                                <button onclick="play('${item.cn}')" class="w-14 h-14 bg-indigo-600 text-white rounded-[22px] flex items-center justify-center shadow-lg shadow-indigo-200 btn-hop">
+                                    ${speakerIcon}
                                 </button>
-                                <button onclick="drawSequence('${item.cn}')" class="w-11 h-11 bg-white border border-slate-200 rounded-2xl flex flex-col items-center justify-center shadow-sm active:scale-90">
-                                    <span class="text-[8px] font-black text-orange-500">획순</span>
-                                    <span class="text-[10px] font-black text-orange-600">보기</span>
+                                <button onclick="drawSequence('${item.cn}')" class="w-14 h-14 bg-white border-2 border-slate-100 text-slate-400 rounded-[22px] flex flex-col items-center justify-center btn-hop">
+                                    <span class="text-[9px] font-black text-orange-500 leading-none">획순</span>
+                                    <span class="text-[11px] font-black text-orange-600">보기</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="pt-5 border-t border-slate-100">
-                            <div class="flex justify-between items-center mb-3">
-                                <p class="text-[11px] font-black text-indigo-500 italic uppercase">Business Dialogue</p>
+                        <div class="pt-6 border-t-2 border-dashed border-slate-100">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-[10px] font-black text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">BUSINESS DIALOGUE</span>
                                 ${item.video_url ? `
-                                    <button onclick="window.open('${item.video_url}')" class="flex items-center gap-1.5 bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-full shadow-md active:scale-95 transition-all">
-                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13L16 10z"/></svg>
-                                        <span class="text-[10px] font-black">영상 학습</span>
+                                    <button onclick="window.open('${item.video_url}')" class="flex items-center gap-2 bg-rose-500 text-white px-4 py-2.5 rounded-2xl shadow-md active:scale-95 transition-all btn-hop">
+                                        <div class="bg-white/20 p-1 rounded-full"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13L16 10z"/></svg></div>
+                                        <span class="text-[11px] font-black">영상학습</span>
                                     </button>
                                 ` : ''}
                             </div>
-                            <p class="text-slate-500 text-xs mb-3 font-medium">"${item.sentence_kr}"</p>
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                                <p class="text-slate-900 font-bold text-base mb-1">${item.sentence_cn}</p>
-                                <div class="flex justify-between items-end">
-                                    <p class="text-rose-500 text-xs font-black">${item.sentence_read}</p>
-                                    <button onclick="play('${item.sentence_cn}')" class="text-indigo-600"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg></button>
-                                </div>
+                            <div class="bg-indigo-50/50 p-5 rounded-[28px] relative">
+                                <p class="text-slate-600 text-xs font-bold mb-3 leading-relaxed">"${item.sentence_kr}"</p>
+                                <p class="text-slate-900 font-black text-[15px] mb-2 pr-10">${item.sentence_cn}</p>
+                                <p class="text-rose-500 text-[12px] font-black">${item.sentence_read}</p>
+                                <button onclick="play('${item.sentence_cn}')" class="absolute bottom-4 right-4 text-indigo-600 hover:scale-110 transition-transform btn-hop">
+                                    ${speakerIcon.replace('w-6 h-6', 'w-8 h-8')}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -136,13 +140,11 @@
                 if (isLocked) {
                     html += `
                         <div class="paywall-overlay">
-                            <div class="bg-white p-6 rounded-3xl shadow-xl border border-indigo-50 text-center scale-90">
-                                <span class="text-4xl mb-3 block">🔒</span>
-                                <p class="font-black text-slate-800 text-lg mb-1">프리미엄 전용 콘텐츠</p>
-                                <p class="text-slate-500 text-xs mb-4">학습을 계속하려면 구독이 필요합니다.</p>
-                                <button onclick="window.location.href='https://yourpaymentlink.com'" class="w-full bg-indigo-600 text-white py-3 rounded-2xl font-bold text-sm shadow-indigo-200 shadow-lg active:scale-95 transition-all">
-                                    멤버십 가입하기
-                                </button>
+                            <div class="bg-white p-8 rounded-[40px] shadow-2xl border border-indigo-50 text-center mx-6">
+                                <div class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">🎁</div>
+                                <p class="font-black text-slate-800 text-xl mb-2">무제한 학습 시작하기</p>
+                                <p class="text-slate-400 text-xs mb-6 font-medium leading-normal">구독을 통해 모든 단어와<br>비즈니스 영상을 확인해보세요!</p>
+                                <button onclick="alert('결제 페이지로 이동')" class="w-full bg-indigo-600 text-white py-4 rounded-[22px] font-black text-sm shadow-xl shadow-indigo-100 btn-hop">멤버십 가입</button>
                             </div>
                         </div>
                     `;
@@ -161,8 +163,8 @@
                 target.innerHTML = '';
                 textDisplay.innerText = char;
                 const writer = HanziWriter.create('character-target', char, {
-                    width: 250, height: 250, padding: 20, strokeColor: '#4f46e5',
-                    radicalColor: '#f43f5e', strokeAnimationSpeed: 2, delayBetweenStrokes: 100
+                    width: 260, height: 260, padding: 30, strokeColor: '#6366f1',
+                    radicalColor: '#f43f5e', strokeAnimationSpeed: 2, delayBetweenStrokes: 120
                 });
                 await writer.animateCharacter();
                 await new Promise(r => setTimeout(r, 800));
@@ -175,8 +177,7 @@
             const mode = document.getElementById('voiceSet').value;
             utter.lang = 'zh-CN';
             if (mode === 'child') { utter.pitch = 1.6; utter.rate = 1.1; }
-            else if (mode === 'pro') { utter.pitch = 0.9; utter.rate = 0.8; }
-            else { utter.pitch = 0.8; utter.rate = 0.9; }
+            else { utter.pitch = 0.95; utter.rate = 0.85; }
             window.speechSynthesis.speak(utter);
         }
 
