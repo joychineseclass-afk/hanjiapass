@@ -43,6 +43,8 @@
     ],
     "量词 & 功能词 (Grammar)": [
       { "cn": "个", "hj": "個", "py": "gè", "kr": "개", "trans": "개 / 명 (일반 양사)", "sentence_cn": "一个人。", "sentence_py": "Yí gè rén.", "sentence_read": "이 꺼 런", "sentence_kr": "한 사람." },
-      { "cn": "的", "hj": "的", "py": "de", "kr": "적", "trans": "~의 (소유)", "sentence_cn": "我的书。", "sentence_py": "Wǒ de shū.", "sentence_read": "워 더 슈", "sentence_kr": "나의 책." },
+      { "cn": "的", "hj": "의", "py": "de", "kr": "적", "trans": "~의 (소유)", "sentence_cn": "我的书。", "sentence_py": "Wǒ de shū.", "sentence_read": "워 더 슈", "sentence_kr": "나의 책." },
       { "cn": "吗", "hj": "嗎", "py": "ma", "kr": "마", "trans": "~입니까? (의문)", "sentence_cn": "你好吗？", "sentence_py": "Nǐ hǎo ma?", "sentence_read": "니 하오 마?", "sentence_kr": "잘 지내나요?" }
     ]
+  }
+}
