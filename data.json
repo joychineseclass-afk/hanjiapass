@@ -24,10 +24,6 @@
       {
         "cn": "五", "hj": "五", "py": "wǔ", "kr": "오", "trans": "다섯 / 5",
         "sentence_cn": "我五岁。", "sentence_py": "wǒ wǔ suì.", "sentence_read": "워 우 쑤이", "sentence_kr": "저는 다섯 살이에요."
-      },
-      {
-        "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 / 100",
-        "sentence_cn": "一百块。", "sentence_py": "yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "sentence_kr": "백 위안(100块) 입니다."
       }
     ],
     "人物 & 家人 (People)": [
@@ -44,20 +40,18 @@
         "sentence_cn": "你好吗？", "sentence_py": "nǐ hǎo ma?", "sentence_read": "니 하오 마?", "sentence_kr": "잘 지내세요?"
       },
       {
-        "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠 / 아버지",
+        "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠",
         "sentence_cn": "我爸爸很好。", "sentence_py": "wǒ bàba hěn hǎo.", "sentence_read": "워 빠바 헌 하오", "sentence_kr": "우리 아빠는 아주 좋으신 분이에요."
+      }
+    ],
+    "指示 & 疑问 (Question)": [
+      {
+        "cn": "这", "hj": "這", "py": "zhè", "kr": "저", "trans": "이것 / 이",
+        "sentence_cn": "这是书。", "sentence_py": "zhè shì shū.", "sentence_read": "쩌 스 슈", "sentence_kr": "이것은 책입니다."
       },
       {
-        "cn": "妈妈", "hj": "媽媽", "py": "māma", "kr": "모", "trans": "엄마 / 어머니",
-        "sentence_cn": "妈妈在家。", "sentence_py": "māma zài jiā.", "sentence_read": "마마 짜이 지아", "sentence_kr": "엄마는 집에 계세요."
-      },
-      {
-        "cn": "老师", "hj": "老師", "py": "lǎoshī", "kr": "로사", "trans": "선생님",
-        "sentence_cn": "他是老师。", "sentence_py": "tā shì lǎoshī.", "sentence_read": "타 스 라오스", "sentence_kr": "그분은 선생님입니다."
-      },
-      {
-        "cn": "朋友", "hj": "朋友", "py": "péngyou", "kr": "붕우", "trans": "친구",
-        "sentence_cn": "他是我朋友。", "sentence_py": "tā shì wǒ péngyou.", "sentence_read": "타 스 워 펑요우", "sentence_kr": "그는 제 친구입니다."
+        "cn": "什么", "hj": "什麼", "py": "shénme", "kr": "십마", "trans": "무엇",
+        "sentence_cn": "这是什么？", "sentence_py": "zhè shì shénme?", "sentence_read": "쩌 스 션머?", "sentence_kr": "이것은 무엇입니까?"
       }
     ]
   }
