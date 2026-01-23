@@ -9,9 +9,7 @@
     <style>
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        /* 兼容所有浏览器的隐藏滚动条 */
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         .jelly-box {
             background: linear-gradient(145deg, #ffffff, #f5f5f5);
             border-radius: 40px; box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff;
@@ -19,19 +17,14 @@
         }
         .click-badge { position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite; z-index: 5; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        
         .level-btn { padding: 10px 24px; border-radius: 18px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 14px; color: #888; transition: 0.3s; }
-        .active-level { background: #333 !important; color: #fff !important; border-color: #333; }
-        
+        .active-level { background: #333 !important; color: #fff !important; }
         .sub-btn { padding: 10px 18px; border-radius: 25px; background: #fff; color: #ffbfa0; font-weight: 900; font-size: 13px; border: 2px solid #fff5f0; white-space: nowrap; transition: 0.3s; }
         .active-sub { background: #ff7e5f !important; color: white !important; }
-        
         #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 480px; background: white; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: none; flex-direction: column; overflow: hidden; z-index: 200; border: 4px solid #333; }
         .msg-ai { background: #f0f0f0; border-radius: 20px 20px 20px 5px; padding: 12px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; line-height: 1.5; }
         .msg-user { background: #ff7e5f; color: white; border-radius: 20px 20px 5px 20px; padding: 12px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
-        
-        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 65px; height: 65px; background: #333; border-radius: 35px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f; transition: transform 0.2s; }
-        .ai-fab:active { transform: scale(0.9); }
+        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 65px; height: 65px; background: #333; border-radius: 35px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f; }
         .word-card { background: white; border-radius: 55px; border: 6px solid #fff1e6; position: relative; overflow: hidden; }
         .lock-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; border: 4px dashed #ffe0d6; }
     </style>
@@ -58,8 +51,8 @@
             <div class="msg-ai">안녕하세요! HSK 선생님입니다. 오늘 배운 단어에 대해 궁금한 점이 있나요? 무엇이든 물어보세요! 😊</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-orange-500">
-            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-lg">↑</button>
+            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
+            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">↑</button>
         </div>
     </div>
 
@@ -74,9 +67,7 @@
     </div>
 
     <script>
-        // 研发专家修正：直接使用相对路径，彻底解决域名拼写不一致导致的连接问题
         const VERCEL_URL = '/api/chat';
-
         let globalData = {};
         let currentLevel = "";
         const FREE_COUNT = 3;
@@ -150,7 +141,10 @@
                         <div class="click-badge">LISTEN!</div>
                         <p class="text-2xl font-black text-slate-800 mb-2">${item.sentence_cn}</p>
                         <p class="text-orange-500 font-bold text-sm mb-1">${item.sentence_py}</p>
-                        <p class="text-rose-400 font-black text-lg">${item.sentence_read}</p>
+                        <p class="text-rose-400 font-black text-lg mb-2">${item.sentence_read}</p>
+                        <div class="pt-2 border-t border-gray-100">
+                            <p class="text-teal-600 font-bold text-base">ㄴ ${item.sentence_kr}</p>
+                        </div>
                     </div>
                 `;
                 list.appendChild(card);
@@ -188,8 +182,6 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            
-            // 商务总监建议：增加更有温度的加载提示
             const loadingMsg = addMessage('AI 선생님이 생각 중입니다...', 'ai');
             
             try {
@@ -198,17 +190,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: msg })
                 });
-                
                 const data = await response.json();
-                
                 if (data.error) throw new Error(data.error);
-                
-                const aiResponse = data.candidates[0].content.parts[0].text;
-                loadingMsg.innerText = aiResponse;
+                loadingMsg.innerText = data.candidates[0].content.parts[0].text;
             } catch (e) {
-                console.error(e);
-                // 研发专家建议：不再显示冷冰冰的“连接失败”，而是委婉的韩语提醒
-                loadingMsg.innerText = "죄송합니다. 선생님이 수업 준비로 잠시 자리를 비우셨어요. 1분 후 다시 질문해 주세요!";
+                loadingMsg.innerText = "죄송합니다. 선생님이 수업 준비로 잠시 자리를 비우셨어요. 잠시 후 다시 질문해 주세요!";
             }
         }
 
