@@ -3,94 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HanjaPass - Jelly Sweet Edition</title>
+    <title>HanjaPass - 3D Jelly Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
-        /* 引入圆润字体 */
-        @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Hi+Melody&display=swap');
+        body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        body { background: #fffaf0; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        /* 拟态化果冻卡片 */
-        .word-card { 
-            background: #ffffff; 
-            border-radius: 45px; 
-            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.1); 
-            border: 4px solid #ffedda; 
+        /* 晶体立体感汉字卡片 */
+        .jelly-btn {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 40px;
+            box-shadow: 7px 7px 15px #ebebeb, -7px -7px 15px #ffffff, inset 0 0 20px rgba(255,255,255,0.5);
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px 40px; border: 2px solid rgba(255,255,255,0.8); cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .jelly-btn:active { transform: scale(0.92); box-shadow: 2px 2px 5px #ebebeb, inset 2px 2px 5px rgba(0,0,0,0.05); }
+
+        /* 点击提示标签 */
+        .click-hint {
+            position: absolute; top: -10px; right: -15px;
+            background: #ff7e5f; color: white; font-size: 10px; font-weight: 900;
+            padding: 4px 10px; border-radius: 20px; box-shadow: 0 4px 10px rgba(255,126,95,0.3);
+            animation: pulse 1.5s infinite;
         }
 
-        /* 顶部标签多巴胺配色 */
-        .active-tab { background: #ff7e5f !important; color: white !important; box-shadow: 0 8px 15px rgba(255, 126, 95, 0.4); }
-        .tab-btn { flex: 1; padding: 16px 0; border-radius: 25px; transition: all 0.3s; color: #fca5a5; font-weight: 900; font-size: 15px; background: #fff1f2; }
-        
-        /* 显眼的橘色拼音 */
-        .pinyin-top { 
-            font-size: 20px; 
-            font-weight: 900; 
-            color: #ff6b00; /* 明亮鲜活的橘色 */
-            margin-bottom: 2px;
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* 大号拼音，带间隔 */
+        .pinyin-box {
+            font-size: 24px; font-weight: 900; color: #ff6b00;
             font-family: 'Arial Rounded MT Bold', sans-serif;
-            text-shadow: 1px 1px 0px #fff, 2px 2px 5px rgba(255, 107, 0, 0.2);
+            letter-spacing: 0.15em; /* 增加拼音间距 */
+            margin-bottom: 5px; text-transform: lowercase; /* 强制小写 */
         }
 
-        /* 晶体透明感汉字 */
-        .jelly-hanzi {
-            font-size: 72px;
-            font-weight: 900;
-            color: #2d3436;
-            background: linear-gradient(145deg, #1e293b, #475569);
-            -webkit-background-clip: text;
-            /* 模拟透明立体感 */
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .jelly-hanzi:active { transform: scale(0.9) rotate(-3deg); filter: brightness(1.2); }
+        .word-card { background: white; border-radius: 50px; border: 5px solid #fff1e6; box-shadow: 0 20px 40px rgba(255,140,0,0.05); }
+        
+        .active-tab { background: #ff7e5f !important; color: white !important; }
+        .tab-btn { flex: 1; padding: 15px; border-radius: 25px; color: #ffbfa0; font-weight: 900; background: #fff5f0; }
 
-        /* 造句部分字体加大加粗 */
-        .sentence-box {
-            background: #fff5f0; 
-            border-radius: 35px; 
-            padding: 24px;
-            border: 3px dashed #ffcfb3;
+        /* 圆润小喇叭 */
+        .cute-speaker {
+            background: #ffedeb; color: #ff6b6b; width: 50px; height: 50px;
+            border-radius: 20px; display: flex; items-center; justify-content: center;
+            box-shadow: 0 6px 0 #ffd1cc; transition: all 0.1s;
         }
-        .sentence-cn { font-size: 22px; font-weight: 900; color: #4338ca; line-height: 1.3; }
-        .sentence-py { font-size: 14px; font-weight: 800; color: #ff6b00; margin-top: 4px; }
-        .sentence-read { font-size: 16px; font-weight: 900; color: #f43f5e; margin-top: 4px; }
+        .cute-speaker:active { transform: translateY(4px); box-shadow: 0 2px 0 #ffd1cc; }
 
-        .writer-box { 
-            background: white; 
-            border-radius: 30px; 
-            border: 3px solid #ffe4d6;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.02);
-        }
+        .sentence-cn { font-size: 26px; font-weight: 900; color: #2d3436; line-height: 1.2; }
     </style>
 </head>
-<body class="p-5 max-w-md mx-auto pb-24">
+<body class="p-6 max-w-md mx-auto pb-24">
 
-    <div class="flex flex-col items-center mb-10 mt-6">
-        <div class="bg-gradient-to-br from-orange-400 to-rose-400 w-20 h-20 rounded-[30px] flex items-center justify-center shadow-xl shadow-orange-200 mb-4 animate-bounce">
-            <span class="text-4xl text-white">🐼</span>
-        </div>
-        <h1 class="text-3xl font-black text-slate-800 tracking-tighter">HanjaPass <span class="text-orange-500 underline decoration-wavy">PANG!</span></h1>
-        <div class="mt-4 w-full px-10">
-            <select id="voiceSet" class="w-full bg-white border-2 border-orange-200 text-orange-600 font-black p-3 rounded-2xl outline-none text-center appearance-none cursor-pointer">
-                <option value="child">🍭 캔디 목소리 (Candy Voice)</option>
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-black text-slate-800">🐼 HanjaPass <span class="text-orange-500">Edu</span></h1>
+        <div class="mt-4 px-6">
+            <select id="voiceSet" class="w-full bg-white border-4 border-orange-100 text-orange-500 font-black p-3 rounded-3xl outline-none appearance-none cursor-pointer text-center">
+                <option value="child">🍭 캔디 보이스 (Candy)</option>
                 <option value="pro">🎙️ 아나운서 (Pro)</option>
             </select>
         </div>
     </div>
 
-    <div id="tabBar" class="flex gap-2 mb-10 font-bold"></div>
-
+    <div id="tabBar" class="flex gap-2 mb-10"></div>
     <div id="container" class="space-y-12"></div>
 
     <script>
         let globalData = {};
         const FREE_LIMIT = 5;
+
+        // 发音纠正表 (如果以后发现哪个字读错了，在这里改)
+        const PronounceCorrection = {
+            "不": "bù",
+            "一": "yī"
+        };
 
         async function initApp() {
             try {
@@ -123,69 +111,55 @@
                 const isLocked = index >= FREE_LIMIT;
                 const card = document.createElement('div');
                 card.className = 'word-card p-8';
+                
+                const traditional = (item.hj && item.hj !== item.cn) ? `<span class="text-slate-200">(${item.hj})</span>` : '';
 
-                const traditional = (item.hj && item.hj !== item.cn) ? ` <span class="text-slate-300 font-bold">(${item.hj})</span>` : '';
-
-                let html = `
-                    <div class="${isLocked ? 'blur-xl pointer-events-none opacity-50' : ''}">
-                        <div class="flex flex-col items-center mb-8">
-                            <div class="pinyin-top">${item.py.toUpperCase()}</div>
-                            <div class="jelly-hanzi" onclick="play('${item.cn}')">${item.cn}</div>
-                            <div class="mt-4 flex flex-col items-center">
-                                <span class="text-2xl font-black text-rose-500">${item.trans} ${traditional}</span>
-                                <span class="text-lg font-black text-orange-400 mt-1">[ ${item.kr} ]</span>
+                card.innerHTML = `
+                    <div class="${isLocked ? 'blur-2xl opacity-40 pointer-events-none' : ''}">
+                        <div class="flex flex-col items-center mb-10">
+                            <div class="pinyin-box">${item.py.toLowerCase()}</div>
+                            <div class="jelly-btn" onclick="play('${item.cn}')">
+                                <div class="click-hint">CLICK!</div>
+                                <span class="text-7xl font-black text-slate-800" style="text-shadow: 2px 2px 0px #fff;">${item.cn}</span>
+                            </div>
+                            <div class="mt-6 text-center">
+                                <p class="text-2xl font-black text-rose-500">${item.trans} ${traditional}</p>
+                                <p class="text-lg font-black text-orange-400 mt-1">[ ${item.kr} ]</p>
                             </div>
                         </div>
 
-                        <div class="flex flex-col items-center mb-8">
-                            <div id="writer-${mode}-${index}" class="writer-box w-32 h-32" onclick="drawInPlace('${item.cn}', 'writer-${mode}-${index}')"></div>
-                            <span class="mt-2 text-xs font-black text-orange-400">쓰기 애니메이션 (Click!)</span>
+                        <div class="flex flex-col items-center mb-10">
+                            <div id="writer-${mode}-${index}" class="bg-white border-4 border-orange-50 rounded-[40px] w-36 h-36 flex items-center justify-center shadow-inner" onclick="draw('${item.cn}', 'writer-${mode}-${index}')"></div>
+                            <span class="mt-3 text-[11px] font-black text-slate-300 uppercase tracking-widest">Stroke Animation</span>
                         </div>
 
-                        <div class="sentence-box relative" onclick="play('${item.sentence_cn}')">
-                            <div class="absolute -top-4 -left-2 bg-indigo-500 text-white text-[10px] font-black px-4 py-1.5 rounded-full shadow-lg">LEARN SENTENCE</div>
-                            <p class="text-slate-500 text-sm font-bold mb-4 italic">"${item.sentence_kr}"</p>
-                            <p class="sentence-cn">${item.sentence_cn}</p>
-                            <p class="sentence-py">${item.sentence_py}</p>
-                            <p class="sentence-read">${item.sentence_read}</p>
-                            
-                            <div class="absolute bottom-4 right-4 text-orange-300">
-                                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v18l-7-7H3V10h2l7-7zm6.5 9c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                        <div class="bg-orange-50/50 rounded-[40px] p-8 border-4 border-white shadow-sm relative">
+                            <p class="text-slate-400 text-xs font-bold mb-4 italic">"${item.sentence_kr}"</p>
+                            <div class="flex justify-between items-end gap-4">
+                                <div class="flex-1">
+                                    <p class="sentence-cn">${item.sentence_cn}</p>
+                                    <p class="text-orange-500 font-black text-sm mt-2">${item.sentence_py.toLowerCase()}</p>
+                                    <p class="text-rose-400 font-black text-lg mt-1">${item.sentence_read}</p>
+                                </div>
+                                <button onclick="play('${item.sentence_cn}')" class="cute-speaker flex-shrink-0">
+                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v18l-7-7H3V10h2l7-7zm6.5 9c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                                </button>
                             </div>
                         </div>
                     </div>
                 `;
-
-                if (isLocked) {
-                    html += `
-                        <div class="paywall-overlay">
-                            <div class="text-center bg-white p-8 rounded-[40px] shadow-2xl scale-110 border-4 border-orange-100">
-                                <span class="text-5xl mb-4 block">🧁</span>
-                                <p class="font-black text-slate-800 text-xl mb-4 leading-tight">더 많은 달콤한 단어들이<br>기다리고 있어요!</p>
-                                <button onclick="alert('Join Member')" class="w-full bg-gradient-to-r from-orange-400 to-rose-400 text-white py-4 rounded-3xl font-black text-sm shadow-lg shadow-orange-200">프리미엄 구독</button>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = html;
                 list.appendChild(card);
                 setTimeout(() => initWriter(item.cn[0], `writer-${mode}-${index}`), 100);
             });
         }
 
-        function initWriter(char, elementId) {
-            const el = document.getElementById(elementId);
-            if(!el) return;
-            el.innerHTML = '';
-            HanziWriter.create(elementId, char, { width: 128, height: 128, padding: 15, strokeColor: '#ffd8c2', showOutline: true });
-        }
-
-        async function drawInPlace(word, elementId) {
-            const el = document.getElementById(elementId);
+        function initWriter(char, el) { HanziWriter.create(el, char, { width: 120, height: 120, padding: 15, strokeColor: '#ffd8c2', showOutline: true }); }
+        
+        async function draw(word, el) {
+            const container = document.getElementById(el);
             for (let char of word) {
-                el.innerHTML = '';
-                const writer = HanziWriter.create(elementId, char, { width: 128, height: 128, padding: 15, strokeColor: '#ff7e5f', radicalColor: '#4338ca', strokeAnimationSpeed: 2 });
+                container.innerHTML = '';
+                const writer = HanziWriter.create(el, char, { width: 120, height: 120, padding: 15, strokeColor: '#ff7e5f', radicalColor: '#4338ca', strokeAnimationSpeed: 2 });
                 await writer.animateCharacter();
                 await new Promise(r => setTimeout(r, 600));
             }
@@ -196,13 +170,9 @@
             const utter = new SpeechSynthesisUtterance(text);
             const mode = document.getElementById('voiceSet').value;
             utter.lang = 'zh-CN';
-            if (mode === 'child') {
-                utter.pitch = 2.0; // 极高音，非常童声
-                utter.rate = 1.2;  // 稍快一点点，显得活泼
-            } else {
-                utter.pitch = 0.95;
-                utter.rate = 0.8;
-            }
+            // 语音萌化处理
+            utter.pitch = (mode === 'child') ? 2.0 : 0.9;
+            utter.rate = (mode === 'child') ? 1.1 : 0.8;
             window.speechSynthesis.speak(utter);
         }
 
