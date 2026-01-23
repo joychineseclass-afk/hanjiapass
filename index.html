@@ -22,7 +22,6 @@
         .active-sub { background: #ff7e5f !important; color: white !important; }
         .lock-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; border: 4px dashed #ffe0d6; }
         
-        /* AI 聊天窗系统 */
         #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: none; flex-direction: column; overflow: hidden; z-index: 200; border: 4px solid #333; }
         .msg-ai { background: #f0f0f0; border-radius: 20px 20px 20px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
         .msg-user { background: #ff7e5f; color: white; border-radius: 20px 20px 5px 20px; padding: 10px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
@@ -48,8 +47,8 @@
             </div>
             <button onclick="toggleAI()" class="text-xl">×</button>
         </div>
-        <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50">
-            <div class="msg-ai">你好院长！我是你的 AI 班主任。我可以帮学生解释汉字、练习对话，快来问我吧！</div>
+        <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50 text-slate-700">
+            <div class="msg-ai">안녕하세요! AI 선생님입니다. 무엇을 도와드릴까요?</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
             <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
@@ -68,21 +67,26 @@
     </div>
 
     <script>
-        // 【核心修改点】请把下方的 URL 换成您 Vercel 的网址（记得带上 /api/chat）
-        const VERCEL_URL = 'https://hanjiapass.vercel.app/api/chat'; 
+        // 【智能修复】不再手动写死网址，自动识别当前域名并指向 /api/chat
+        const VERCEL_URL = window.location.origin.includes('github.io') 
+            ? 'https://hanjapass-pro.vercel.app/api/chat' // 如果在github预览，指向vercel
+            : '/api/chat'; // 如果在vercel运行，直接用相对路径
 
         let globalData = {};
         let currentLevel = "";
         const FREE_COUNT = 3;
 
         async function initApp() {
-            const response = await fetch('data.json?v=' + Math.random());
-            globalData = await response.json();
-            renderLevels();
+            try {
+                const response = await fetch('data.json?v=' + Math.random());
+                globalData = await response.json();
+                renderLevels();
+            } catch(e) { console.error("Data load error", e); }
         }
 
         function renderLevels() {
             const bar = document.getElementById('levelBar');
+            bar.innerHTML = '';
             Object.keys(globalData).forEach((level, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'level-btn flex-shrink-0';
@@ -118,9 +122,9 @@
             words.forEach((item, index) => {
                 const isLocked = index >= FREE_COUNT;
                 const card = document.createElement('div');
-                card.className = 'word-card p-8 mb-6';
+                card.className = 'word-card p-8 mb-6 shadow-sm';
                 card.innerHTML = `
-                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs text-center px-6">Premium 학원 전용 콘텐츠</p></div>' : ''}
+                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs text-center px-6">Premium 전용</p></div>' : ''}
                     <div class="flex flex-col items-center mb-10">
                         <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
@@ -169,7 +173,7 @@
 
         function toggleAI() {
             const win = document.getElementById('ai-window');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
         async function askAI() {
@@ -179,7 +183,7 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            const loadingMsg = addMessage('AI가 생각중입니다...', 'ai');
+            const loadingMsg = addMessage('AI 선생님이 생각 중입니다...', 'ai');
             
             try {
                 const response = await fetch(VERCEL_URL, {
@@ -187,11 +191,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: msg })
                 });
+                
+                if (!response.ok) throw new Error("Server Error");
+                
                 const data = await response.json();
                 const aiResponse = data.candidates[0].content.parts[0].text;
                 loadingMsg.innerText = aiResponse;
             } catch (e) {
-                loadingMsg.innerText = "죄송합니다. 서버 연결에 실패했습니다.";
+                console.error(e);
+                loadingMsg.innerText = "죄송합니다. 서버 연결에 실패했습니다. (Vercel 설정과 API Key를 확인해주세요)";
             }
         }
 
