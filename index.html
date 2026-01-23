@@ -3,53 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HanjaPass PRO - 院长的AI学院</title>
+    <title>HanjaPass PRO - AI 한자 학원</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        
-        /* UI 组件 */
-        .level-btn { padding: 10px 24px; border-radius: 18px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 14px; color: #888; transition: 0.3s; }
-        .active-level { background: #333 !important; color: #fff !important; border-color: #333; }
-        .sub-btn { padding: 10px 18px; border-radius: 25px; background: #fff; color: #ffbfa0; font-weight: 900; font-size: 13px; border: 2px solid #fff5f0; transition: 0.3s; white-space: nowrap; }
-        .active-sub { background: #ff7e5f !important; color: white !important; box-shadow: 0 4px 12px rgba(255,126,95,0.3); }
-
-        /* 核心卡片 */
         .jelly-box {
             background: linear-gradient(145deg, #ffffff, #f5f5f5);
             border-radius: 40px; box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff;
             border: 2px solid rgba(255,255,255,0.9); position: relative; cursor: pointer;
         }
-        .click-badge {
-            position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; 
-            font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite; z-index: 5;
-        }
+        .click-badge { position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite; z-index: 5; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        /* 锁定层 */
-        .lock-overlay {
-            position: absolute; inset: 0; background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(10px); border-radius: 50px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 20; border: 4px dashed #ffe0d6;
-        }
-
+        .level-btn { padding: 10px 24px; border-radius: 18px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 14px; color: #888; }
+        .active-level { background: #333 !important; color: #fff !important; }
+        .sub-btn { padding: 10px 18px; border-radius: 25px; background: #fff; color: #ffbfa0; font-weight: 900; font-size: 13px; border: 2px solid #fff5f0; white-space: nowrap; }
+        .active-sub { background: #ff7e5f !important; color: white !important; }
+        .lock-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; border: 4px dashed #ffe0d6; }
+        
         /* AI 聊天窗系统 */
-        #ai-window {
-            position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px;
-            background: white; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            display: none; flex-direction: column; overflow: hidden; z-index: 200; border: 4px solid #333;
-        }
+        #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: none; flex-direction: column; overflow: hidden; z-index: 200; border: 4px solid #333; }
         .msg-ai { background: #f0f0f0; border-radius: 20px 20px 20px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
         .msg-user { background: #ff7e5f; color: white; border-radius: 20px 20px 5px 20px; padding: 10px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
-        
-        .ai-fab {
-            position: fixed; bottom: 30px; right: 20px; width: 65px; height: 65px;
-            background: #333; border-radius: 35px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f;
-        }
+        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 65px; height: 65px; background: #333; border-radius: 35px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f; }
+        .word-card { background: white; border-radius: 55px; border: 6px solid #fff1e6; position: relative; overflow: hidden; }
     </style>
 </head>
 <body class="p-6 max-w-md mx-auto pb-40">
@@ -66,16 +44,15 @@
     <div id="ai-window">
         <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <span class="text-xl">🤖</span>
-                <span class="font-black text-sm">AI 班主任 Gemini</span>
+                <span class="text-xl">🤖</span><span class="font-black text-sm">AI 班主任 Gemini</span>
             </div>
             <button onclick="toggleAI()" class="text-xl">×</button>
         </div>
         <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50">
-            <div class="msg-ai">你好！我是你的 AI 老师。有什么我可以帮你的吗？ (무엇을 도와드릴까요?)</div>
+            <div class="msg-ai">你好院长！我是你的 AI 班主任。我可以帮学生解释汉字、练习对话，快来问我吧！</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="用韩语或中文提问..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-orange-500">
+            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
             <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">↑</button>
         </div>
     </div>
@@ -86,11 +63,14 @@
     </div>
 
     <div id="payWallInfo" class="fixed bottom-6 left-6 right-6 bg-slate-900 text-white p-5 rounded-[35px] shadow-2xl z-50 flex justify-between items-center hidden">
-        <div><p class="font-black text-lg text-orange-400">解开 150+ 词汇</p></div>
+        <div><p class="font-black text-lg text-orange-400">Unlock Premium</p></div>
         <button onclick="window.location.href='https://open.kakao.com/'" class="bg-orange-500 px-6 py-3 rounded-2xl font-black text-sm">立刻订阅</button>
     </div>
 
     <script>
+        // 【核心修改点】请把下方的 URL 换成您 Vercel 的网址（记得带上 /api/chat）
+        const VERCEL_URL = 'https://hanjiapass.vercel.app/api/chat'; 
+
         let globalData = {};
         let currentLevel = "";
         const FREE_COUNT = 3;
@@ -140,7 +120,7 @@
                 const card = document.createElement('div');
                 card.className = 'word-card p-8 mb-6';
                 card.innerHTML = `
-                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs text-center px-6">HSK1 级通票学员专用内容</p></div>' : ''}
+                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs text-center px-6">Premium 학원 전용 콘텐츠</p></div>' : ''}
                     <div class="flex flex-col items-center mb-10">
                         <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
@@ -187,7 +167,6 @@
             window.speechSynthesis.speak(utter);
         }
 
-        // AI 交互逻辑
         function toggleAI() {
             const win = document.getElementById('ai-window');
             win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
@@ -200,17 +179,19 @@
 
             addMessage(msg, 'user');
             input.value = '';
-
-            const loadingMsg = addMessage('Thinking...', 'ai');
+            const loadingMsg = addMessage('AI가 생각중입니다...', 'ai');
             
             try {
-                // 注意：这里是占位逻辑，稍后我们会替换为安全的 Vercel 地址
-                // 为了演示，我先写一个模拟回复
-                setTimeout(() => {
-                    loadingMsg.innerText = "院长您好！为了商业安全，请在下一步将您的 API Key 交给我，我将教您如何将其安全地锁进 Vercel 保险柜。这样您的网站才能正式接通我的大脑！";
-                }, 1000);
+                const response = await fetch(VERCEL_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: msg })
+                });
+                const data = await response.json();
+                const aiResponse = data.candidates[0].content.parts[0].text;
+                loadingMsg.innerText = aiResponse;
             } catch (e) {
-                loadingMsg.innerText = "连接超时，请检查网络。";
+                loadingMsg.innerText = "죄송합니다. 서버 연결에 실패했습니다.";
             }
         }
 
