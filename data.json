@@ -28,3 +28,67 @@
     }
   ]
 }
+{
+  "hsk1": [
+    {
+      "cn": "我",
+      "hj": "我",
+      "py": "wǒ",
+      "kr": "나",
+      "trans": "나 / 저",
+      "sentence_kr": "저는 학생입니다.",
+      "sentence_cn": "我是学生。",
+      "sentence_py": "Wǒ shì xuésheng.",
+      "sentence_read": "워 스 쉬에셩",
+      "video_url": ""
+    },
+    {
+      "cn": "家",
+      "hj": "家",
+      "py": "jiā",
+      "kr": "가",
+      "trans": "집 / 가족",
+      "sentence_kr": "우리 집에는 네 명의 가족이 있습니다.",
+      "sentence_cn": "我家有四口人。",
+      "sentence_py": "Wǒ jiā yǒu sì kǒu rén.",
+      "sentence_read": "워 지아 요우 쓰 커우 런",
+      "video_url": ""
+    },
+    {
+      "cn": "漂亮",
+      "hj": "漂亮",
+      "py": "piàoliang",
+      "kr": "표 량",
+      "trans": "예쁘다",
+      "sentence_kr": "그녀의 옷이 정말 예뻐요.",
+      "sentence_cn": "她的衣服很漂亮。",
+      "sentence_py": "Tā de yīfu hěn piàoliang.",
+      "sentence_read": "타 더 이푸 헌 피아오리앙",
+      "video_url": ""
+    },
+    {
+      "cn": "喝",
+      "hj": "喝",
+      "py": "hē",
+      "kr": "갈",
+      "trans": "마시다",
+      "sentence_kr": "차 마시는 것을 좋아하시나요?",
+      "sentence_cn": "你喜欢喝茶吗？",
+      "sentence_py": "Nǐ xǐhuan hē chá ma?",
+      "sentence_read": "니 시환 허 차지아 마?",
+      "video_url": ""
+    },
+    {
+      "cn": "谢谢",
+      "hj": "謝謝",
+      "py": "xièxie",
+      "kr": "사 사",
+      "trans": "감사하다",
+      "sentence_kr": "도와주셔서 감사합니다.",
+      "sentence_cn": "谢谢你的帮助。",
+      "sentence_py": "Xièxie nǐ de bāngzhù.",
+      "sentence_read": "씨에씨에 니 더 빵쭈",
+      "video_url": ""
+    }
+  ]
+}
