@@ -18,10 +18,7 @@
     "数字 (Numbers)": [
       { "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1", "sentence_cn": "今天是一月。", "sentence_py": "Jīntiān shì yīyuè.", "sentence_read": "찐티엔 스 이위에", "sentence_kr": "오늘은 1월입니다." },
       { "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 / 100", "sentence_cn": "一百块。", "sentence_py": "Yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "sentence_kr": "백 위안입니다." }
-    ]
-  }
-}
-,
+    ],
     "场所 & 方位 (Location)": [
       { "cn": "这儿", "hj": "這兒", "py": "zhèr", "kr": "저아", "trans": "여기", "sentence_cn": "我在这儿。", "sentence_py": "Wǒ zài zhèr.", "sentence_read": "워 짜이 저아", "sentence_kr": "저는 여기에 있어요." },
       { "cn": "家", "hj": "家", "py": "jiā", "kr": "가", "trans": "집", "sentence_cn": "我现在回家。", "sentence_py": "Wǒ xiànzài huí jiā.", "sentence_read": "워 씨엔짜이 회이지아", "sentence_kr": "저는 지금 집에 가요." },
