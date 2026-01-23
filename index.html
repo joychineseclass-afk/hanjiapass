@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HanjaPass - 콘텐츠 강화판</title>
+    <title>HanjaPass Pro - 智慧教学版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         body { background: #f8fafc; color: #1e293b; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         .word-card { background: white; border-radius: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; transition: all 0.3s; }
-        .active-tab { background: #4f46e5; color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
+        .active-tab { background: #4f46e5 ! deprivation; color: white !important; shadow: 0 4px 15px rgba(79, 70, 229, 0.3); }
+        .tab-btn { flex: 1; padding: 12px 0; border-radius: 12px; transition: all 0.2s; color: #64748b; font-weight: bold; }
     </style>
 </head>
 <body class="p-4 max-w-md mx-auto pb-24">
@@ -17,76 +18,81 @@
     <div class="flex items-center justify-between mb-8 mt-4 bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
         <div class="flex items-center gap-2">
             <span class="text-3xl">🐼</span>
-            <h1 class="text-xl font-black text-slate-800 tracking-tighter">HanjaPass <span class="text-indigo-600 italic">BIZ</span></h1>
+            <h1 class="text-xl font-black text-slate-800 tracking-tighter">HanjaPass <span class="text-indigo-600 italic">EDU</span></h1>
         </div>
         <select id="voiceSet" class="bg-indigo-50 text-indigo-700 text-[11px] font-bold p-2 rounded-xl outline-none border-none">
-            <option value="female">👧 여성 발음 (Female)</option>
-            <option value="male">👦 남성 발음 (Male)</option>
+            <option value="female">👧 女性 (Female)</option>
+            <option value="male">👦 男性 (Male)</option>
         </select>
     </div>
 
-    <div class="flex bg-slate-200 p-1.5 rounded-2xl mb-8 font-bold text-xs text-slate-500">
-        <button onclick="changeMode('biz')" id="tab-biz" class="flex-1 py-3 rounded-xl active-tab transition-all">비즈니스 (职场模式)</button>
-        <button onclick="changeMode('hsk')" id="tab-hsk" class="flex-1 py-3 rounded-xl transition-all">HSK 1급 (基础模式)</button>
-    </div>
+    <div id="tabBar" class="flex bg-slate-200 p-1.5 rounded-2xl mb-8 font-bold text-xs">
+        </div>
 
-    <div id="container" class="space-y-6"></div>
+    <div id="container" class="space-y-6">
+        <div class="text-center py-20 text-slate-400">正在加载教材内容...</div>
+    </div>
 
     <div id="strokeModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-8" onclick="closeStroke()">
         <div class="bg-white p-8 rounded-[40px] w-full max-w-[340px] relative text-center" onclick="event.stopPropagation()">
             <div id="character-target" class="w-full aspect-square mb-4 mx-auto"></div>
             <p id="stroke-text" class="font-black text-5xl text-indigo-600 mb-4"></p>
-            <button onclick="closeStroke()" class="bg-slate-100 text-slate-500 px-8 py-3 rounded-2xl font-bold text-sm">닫기 (Close)</button>
+            <button onclick="closeStroke()" class="bg-slate-100 text-slate-500 px-8 py-3 rounded-2xl font-bold text-sm">关闭 (Close)</button>
         </div>
     </div>
 
     <script>
-        // 院长！这里就是我们要填充的内容区，您可以按照这个格式无限添加
-        const data = {
-            biz: [
-                { 
-                    cn: "确认", hj: "確認", py: "quèrèn", kr: "췌 런", trans: "확인",
-                    sentence_kr: "부장님, 서류 확인 부탁드립니다.",
-                    sentence_cn: "部长，请确认一下文件。",
-                    sentence_py: "Bùzhǎng, qǐng quèrèn yíxià wénjiàn.",
-                    sentence_read: "뿌짱, 칭 췌런 이시아 원지엔"
-                },
-                { 
-                    cn: "准备", hj: "準備", py: "zhǔnbèi", kr: "준 베이", trans: "준비",
-                    sentence_kr: "오늘 오후 회의 준비됐나요?",
-                    sentence_cn: "今天下午的会议准备好了吗？",
-                    sentence_py: "Jīntiān xiàwǔ de huìyì zhǔnbèi hǎole ma?",
-                    sentence_read: "진티엔 시아우 더 후이이 준베이 하오러 마?"
-                },
-                { 
-                    cn: "联系", hj: "聯繫", py: "liánxì", kr: "리엔 시", trans: "연락",
-                    sentence_kr: "나중에 다시 연락드리겠습니다.",
-                    sentence_cn: "以后再联系您。",
-                    sentence_py: "Yǐhòu zài liánxì nín.",
-                    sentence_read: "이허우 짜이 리엔시 닌"
-                }
-            ],
-            hsk: [
-                { 
-                    cn: "你好", hj: "你好", py: "nǐhǎo", kr: "니 하오", trans: "안녕",
-                    sentence_kr: "만나서 반갑습니다. 안녕하세요!",
-                    sentence_cn: "见到你很高兴，你好！",
-                    sentence_py: "Jiàndào nǐ hěn gāoxìng, nǐhǎo!",
-                    sentence_read: "지엔따오 니 헌 까오싱, 니 하오!"
-                }
-            ]
-        };
+        let globalData = {}; 
+
+        // 【核心功能】从外部 JSON 加载数据
+        async function initApp() {
+            try {
+                // 尝试读取同目录下的 data.json
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('找不到数据文件');
+                globalData = await response.json();
+                
+                createTabs();
+                const firstMode = Object.keys(globalData)[0];
+                render(firstMode);
+            } catch (error) {
+                document.getElementById('container').innerHTML = `
+                    <div class="p-8 bg-red-50 text-red-500 rounded-3xl text-sm border border-red-100">
+                        <b>院长提示：</b> 未检测到 data.json 文件或格式错误。<br>请在 GitHub 中上传 data.json。
+                    </div>
+                `;
+            }
+        }
+
+        // 动态创建分类按钮
+        function createTabs() {
+            const tabBar = document.getElementById('tabBar');
+            tabBar.innerHTML = '';
+            Object.keys(globalData).forEach((mode, index) => {
+                const btn = document.createElement('button');
+                btn.id = `tab-${mode}`;
+                btn.className = 'tab-btn';
+                btn.innerText = mode.toUpperCase();
+                btn.onclick = () => changeMode(mode);
+                tabBar.appendChild(btn);
+            });
+        }
 
         function render(mode) {
             const list = document.getElementById('container');
             list.innerHTML = '';
-            data[mode].forEach(item => {
+            
+            // 更新按钮状态
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(`tab-${mode}`).classList.add('active-tab');
+
+            globalData[mode].forEach(item => {
                 list.innerHTML += `
-                    <div class="word-card p-6 border-b-[6px] border-indigo-100">
+                    <div class="word-card p-6 border-b-[6px] border-indigo-100 animate-fade-in">
                         <div class="flex justify-between items-start mb-6">
                             <div class="flex-1">
                                 <div class="flex gap-2 mb-3">
-                                    <span class="text-[11px] font-black px-2.5 py-1 bg-slate-800 text-white rounded-lg">한자: ${item.hj}</span>
+                                    <span class="text-[11px] font-black px-2.5 py-1 bg-slate-800 text-white rounded-lg">汉字: ${item.hj}</span>
                                     <span class="text-[11px] font-black px-2.5 py-1 bg-rose-500 text-white rounded-lg">${item.trans}</span>
                                 </div>
                                 <div class="char-title flex items-baseline flex-wrap gap-2">
@@ -100,7 +106,7 @@
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                                 </button>
                                 <button onclick="drawSequence('${item.cn}')" class="w-11 h-11 bg-white border border-slate-200 rounded-2xl flex flex-col items-center justify-center shadow-sm active:scale-90 transition-all">
-                                    <span class="text-[8px] font-black text-orange-500">획순</span>
+                                    <span class="text-[8px] font-black text-orange-500">笔顺</span>
                                     <span class="text-[10px] font-black text-orange-600">보기</span>
                                 </button>
                             </div>
@@ -108,10 +114,17 @@
 
                         <div class="pt-5 border-t border-slate-100">
                             <div class="flex justify-between items-center mb-2">
-                                <p class="text-[12px] font-black text-indigo-500 uppercase tracking-tight italic">비즈니스 회화 (Business Dialogue)</p>
-                                <button onclick="play('${item.sentence_cn}')" class="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-md active:scale-90 transition-all">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
-                                </button>
+                                <p class="text-[12px] font-black text-indigo-500 uppercase tracking-tight italic">对话练习 (Dialogue)</p>
+                                <div class="flex gap-2">
+                                    ${item.video_url ? `
+                                        <button onclick="window.open('${item.video_url}')" class="w-9 h-9 bg-emerald-500 text-white rounded-xl flex items-center justify-center shadow-md active:scale-90 transition-all">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
+                                        </button>
+                                    ` : ''}
+                                    <button onclick="play('${item.sentence_cn}')" class="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-md active:scale-90 transition-all">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                                    </button>
+                                </div>
                             </div>
                             <p class="text-slate-500 text-xs mb-3 font-medium leading-relaxed">"${item.sentence_kr}"</p>
                             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
@@ -125,6 +138,7 @@
             });
         }
 
+        // 笔顺播放逻辑
         async function drawSequence(word) {
             document.getElementById('strokeModal').style.display = 'flex';
             const target = document.getElementById('character-target');
@@ -137,33 +151,29 @@
                     radicalColor: '#f43f5e', strokeAnimationSpeed: 3, delayBetweenStrokes: 50
                 });
                 await writer.animateCharacter();
-                await new Promise(r => setTimeout(r, 400));
+                await new Promise(r => setTimeout(r, 600));
             }
         }
 
+        // 语音播放逻辑
         function play(text) {
+            window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'zh-CN';
             const isMale = document.getElementById('voiceSet').value === 'male';
-            utter.rate = 0.85; 
-            utter.pitch = isMale ? 0.65 : 1.1; 
-            const voices = window.speechSynthesis.getVoices();
-            let voice = voices.find(v => v.lang.includes('zh') && v.name.includes(isMale ? 'Kangkang' : 'Xiaoxiao'));
-            if (!voice) voice = voices.find(v => v.lang.includes('zh-CN'));
-            utter.voice = voice;
+            utter.rate = 0.8; 
+            utter.pitch = isMale ? 0.7 : 1.1; 
             window.speechSynthesis.speak(utter);
         }
 
         function closeStroke() { document.getElementById('strokeModal').style.display = 'none'; }
         
         function changeMode(mode) {
-            document.getElementById('tab-biz').className = `flex-1 py-3 rounded-xl transition-all ${mode==='biz' ? 'active-tab' : 'text-slate-400'}`;
-            document.getElementById('tab-hsk').className = `flex-1 py-3 rounded-xl transition-all ${mode==='hsk' ? 'active-tab' : 'text-slate-400'}`;
             render(mode);
         }
 
-        window.speechSynthesis.onvoiceschanged = () => render('biz');
-        render('biz');
+        // 启动应用
+        initApp();
     </script>
 </body>
 </html>
