@@ -1,30 +1,23 @@
 {
   "HSK1": {
-    "打招呼 (Greetings)": [
-      { "cn": "你好", "hj": "你好", "py": "nǐhǎo", "kr": "니호", "trans": "안녕 / 안녕하세요", "sentence_cn": "你好！", "sentence_py": "nǐhǎo!", "sentence_read": "니하오!", "sentence_kr": "안녕하세요!" },
-      { "cn": "早上好", "hj": "早上好", "py": "zǎoshang hǎo", "kr": "조상호", "trans": "좋은 아침 / 굿모닝", "sentence_cn": "老师，早上好。", "sentence_py": "lǎoshī, zǎoshang hǎo.", "sentence_read": "라오스, 조상 하오", "sentence_kr": "선생님, 안녕하세요(아침)." },
-      { "cn": "谢谢", "hj": "謝謝", "py": "xièxie", "kr": "사사", "trans": "감사합니다", "sentence_cn": "谢谢老师。", "sentence_py": "xièxie lǎoshī.", "sentence_read": "씨에씨에 라오스", "sentence_kr": "선생님, 감사합니다." },
-      { "cn": "不客气", "hj": "不客氣", "py": "bú kèqi", "kr": "불객기", "trans": "천만에요 / 별말씀을요", "sentence_cn": "不客气。", "sentence_py": "bú kèqi.", "sentence_read": "부 커치", "sentence_kr": "천만에요." },
-      { "cn": "再见", "hj": "再見", "py": "zàijiàn", "kr": "재견", "trans": "또 만나요 / 안녕", "sentence_cn": "再见。", "sentence_py": "zàijiàn.", "sentence_read": "짜이지엔", "sentence_kr": "또 만나요." },
-      { "cn": "对不起", "hj": "對不起", "py": "duìbuqǐ", "kr": "대불기", "trans": "죄송합니다 / 미안해", "sentence_cn": "对不起。", "sentence_py": "duìbuqǐ.", "sentence_read": "뛔이부치", "sentence_kr": "미안합니다." },
-      { "cn": "没关系", "hj": "沒關係", "py": "méi guānxi", "kr": "몰관계", "trans": "괜찮아요", "sentence_cn": "没关系。", "sentence_py": "méi guānxi.", "sentence_read": "메이 꽌시", "sentence_kr": "괜찮습니다." }
+    "打招呼 (Greeting)": [
+      { "cn": "你好", "hj": "你好", "py": "nǐhǎo", "kr": "니호", "trans": "안녕 / 안녕하세요", "sentence_cn": "你好！", "sentence_py": "Nǐ hǎo!", "sentence_read": "니하오!", "sentence_kr": "안녕하세요!" },
+      { "cn": "早上好", "hj": "早上好", "py": "zǎoshang hǎo", "kr": "조상호", "trans": "좋은 아침", "sentence_cn": "老师，早上好。", "sentence_py": "Lǎoshī, zǎoshang hǎo.", "sentence_read": "라오스, 조상 하오", "sentence_kr": "선생님, 안녕하세요(아침)." },
+      { "cn": "谢谢", "hj": "謝謝", "py": "xièxie", "kr": "사사", "trans": "감사합니다", "sentence_cn": "谢谢老师。", "sentence_py": "Xièxie lǎoshī.", "sentence_read": "씨에씨에 라오스", "sentence_kr": "선생님, 감사합니다." },
+      { "cn": "再见", "hj": "再見", "py": "zàijiàn", "kr": "재견", "trans": "또 만나요", "sentence_cn": "再见。", "sentence_py": "Zàijiàn.", "sentence_read": "짜이지엔", "sentence_kr": "또 만나요." }
     ],
     "家人和人称 (Family)": [
-      { "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠 / 아버지", "sentence_cn": "我爸爸在家。", "sentence_py": "wǒ bàba zài jiā.", "sentence_read": "워 빠바 짜이 지아", "sentence_kr": "우리 아빠는 집에 계세요." },
-      { "cn": "妈妈", "hj": "媽媽", "py": "māma", "kr": "모", "trans": "엄마 / 어머니", "sentence_cn": "妈妈很好。", "sentence_py": "māma hěn hǎo.", "sentence_read": "마마 헌 하오", "sentence_kr": "엄마는 아주 잘 지내세요." },
-      { "cn": "我", "hj": "我", "py": "wǒ", "kr": "아", "trans": "나 / 저", "sentence_cn": "我是学生。", "sentence_py": "wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "sentence_kr": "저는 학생입니다." },
-      { "cn": "你", "hj": "你", "py": "nǐ", "kr": "니", "trans": "너 / 당신", "sentence_cn": "你好吗？", "sentence_py": "nǐ hǎo ma?", "sentence_read": "니 하오 마?", "sentence_kr": "잘 지내세요?" },
-      { "cn": "老师", "hj": "老師", "py": "lǎoshī", "kr": "로사", "trans": "선생님", "sentence_cn": "老师好。", "sentence_py": "lǎoshī hǎo.", "sentence_read": "라오스 하오", "sentence_kr": "선생님 안녕하세요." }
+      { "cn": "爸爸", "hj": "爸爸", "py": "bàba", "kr": "부", "trans": "아빠", "sentence_cn": "我爸爸在家。", "sentence_py": "Wǒ bàba zài jiā.", "sentence_read": "워 빠바 짜이 지아", "sentence_kr": "우리 아빠는 집에 계세요." },
+      { "cn": "妈妈", "hj": "媽媽", "py": "māma", "kr": "모", "trans": "엄마", "sentence_cn": "妈妈很好。", "sentence_py": "Māma hěn hǎo.", "sentence_read": "마마 헌 하오", "sentence_kr": "엄마는 아주 잘 지내세요." },
+      { "cn": "学生", "hj": "學生", "py": "xuésheng", "kr": "학생", "trans": "학생", "sentence_cn": "我是学生。", "sentence_py": "Wǒ shì xuésheng.", "sentence_read": "워 스 쉬에셩", "sentence_kr": "저는 학생입니다." }
     ],
     "时间 (Time)": [
-      { "cn": "今天", "hj": "今天", "py": "jīntiān", "kr": "금천", "trans": "오늘", "sentence_cn": "今天天气很好。", "sentence_py": "jīntiān tiānqì hěn hǎo.", "sentence_read": "찐티엔 티엔치 헌 하오", "sentence_kr": "오늘 날씨가 아주 좋아요." },
-      { "cn": "明天", "hj": "明天", "py": "míngtiān", "kr": "명천", "trans": "내일", "sentence_cn": "明天见。", "sentence_py": "míngtiān jiàn.", "sentence_read": "밍티엔 찌엔", "sentence_kr": "내일 봐요." },
-      { "cn": "现在", "hj": "現在", "py": "xiànzài", "kr": "현재", "trans": "지금", "sentence_cn": "我现在很忙。", "sentence_py": "wǒ xiànzài hěn máng.", "sentence_read": "워 씨엔짜이 헌 망", "sentence_kr": "저 지금 아주 바빠요." }
+      { "cn": "今天", "hj": "今天", "py": "jīntiān", "kr": "금천", "trans": "오늘", "sentence_cn": "今天天气很好。", "sentence_py": "Jīntiān tiānqì hěn hǎo.", "sentence_read": "찐티엔 티엔치 헌 하오", "sentence_kr": "오늘 날씨가 아주 좋아요." },
+      { "cn": "明天", "hj": "明天", "py": "míngtiān", "kr": "명천", "trans": "내일", "sentence_cn": "明天见。", "sentence_py": "Míngtiān jiàn.", "sentence_read": "밍티엔 찌엔", "sentence_kr": "내일 봐요." }
     ],
     "数字 (Numbers)": [
-      { "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1", "sentence_cn": "今天是一月。", "sentence_py": "jīntiān shì yīyuè.", "sentence_read": "찐티엔 스 이위에", "sentence_kr": "오늘은 1월입니다." },
-      { "cn": "二", "hj": "二", "py": "èr", "kr": "이", "trans": "둘 / 2", "sentence_cn": "今天星期二。", "sentence_py": "jīntiān xīngqī'èr.", "sentence_read": "찐티엔 싱치 얼", "sentence_kr": "오늘은 화요일입니다." },
-      { "cn": "零", "hj": "零", "py": "líng", "kr": "령", "trans": "영 / 0", "sentence_cn": "从零开始。", "sentence_py": "cóng líng kāishǐ.", "sentence_read": "충 링 카이스", "sentence_kr": "0부터 시작해요." }
+      { "cn": "一", "hj": "一", "py": "yī", "kr": "일", "trans": "하나 / 1", "sentence_cn": "今天是一月。", "sentence_py": "Jīntiān shì yīyuè.", "sentence_read": "찐티엔 스 이위에", "sentence_kr": "오늘은 1월입니다." },
+      { "cn": "百", "hj": "百", "py": "bǎi", "kr": "백", "trans": "백 / 100", "sentence_cn": "一百块。", "sentence_py": "Yì bǎi kuài.", "sentence_read": "이 빠이 쿠아이", "sentence_kr": "백 위안입니다." }
     ]
   }
 }
