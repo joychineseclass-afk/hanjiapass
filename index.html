@@ -3,60 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HanjaPass - Multi-Level Academy</title>
+    <title>HanjaPass PRO - 院长的AI学院</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* 一级菜单：HSK等级 (深色简约) */
-        .level-btn { padding: 10px 20px; border-radius: 15px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 13px; color: #666; transition: 0.3s; }
-        .active-level { background: #333 !important; color: #fff !important; border-color: #333; transform: scale(1.1); }
+        /* 按钮与UI组件 */
+        .level-btn { padding: 10px 24px; border-radius: 18px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 14px; color: #888; transition: 0.3s; }
+        .active-level { background: #333 !important; color: #fff !important; border-color: #333; }
+        .sub-btn { padding: 10px 18px; border-radius: 25px; background: #fff; color: #ffbfa0; font-weight: 900; font-size: 13px; border: 2px solid #fff5f0; transition: 0.3s; white-space: nowrap; }
+        .active-sub { background: #ff7e5f !important; color: white !important; box-shadow: 0 4px 12px rgba(255,126,95,0.3); }
 
-        /* 二级菜单：果冻子分类 (多巴胺色) */
-        .sub-btn { padding: 8px 16px; border-radius: 20px; background: #fff5f0; color: #ffbfa0; font-weight: 900; font-size: 12px; transition: 0.3s; white-space: nowrap; }
-        .active-sub { background: #ff7e5f !important; color: white !important; box-shadow: 0 4px 10px rgba(255,126,95,0.3); }
-
-        /* 果冻盒子样式 */
+        /* 核心盒子样式 */
         .jelly-box {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
             border-radius: 40px; box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff;
-            border: 2px solid rgba(255,255,255,0.8); position: relative; cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.9); position: relative; cursor: pointer;
         }
         .click-badge {
             position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; 
-            font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite;
+            font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite; z-index: 5;
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        .word-card { background: white; border-radius: 50px; border: 6px solid #fff1e6; }
+        /* 商用锁定层 */
+        .lock-overlay {
+            position: absolute; inset: 0; background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(10px); border-radius: 50px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 20; border: 4px dashed #ffe0d6;
+        }
+
+        .word-card { background: white; border-radius: 55px; border: 6px solid #fff1e6; position: relative; overflow: hidden; }
+
+        /* AI 浮动按钮 */
+        .ai-fab {
+            position: fixed; bottom: 100px; right: 20px; width: 60px; height: 60px;
+            background: #333; border-radius: 30px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f;
+        }
     </style>
 </head>
-<body class="p-6 max-w-md mx-auto pb-24">
+<body class="p-6 max-w-md mx-auto pb-40">
 
-    <div class="text-center mb-6">
-        <h1 class="text-2xl font-black text-slate-800">🐼 HanjaPass <span class="text-orange-500">PRO</span></h1>
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-black text-slate-800 tracking-tighter">🐼 HanjaPass <span class="text-orange-500 text-xs bg-orange-50 px-2 py-1 rounded-lg">PRO</span></h1>
+        <div class="text-[10px] font-black bg-yellow-400 px-3 py-1 rounded-full shadow-sm">KRW 9,900 / ALL ACCESS</div>
     </div>
 
     <div id="levelBar" class="flex gap-3 overflow-x-auto pb-4 mb-4 no-scrollbar"></div>
-
-    <div id="subBar" class="flex gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar"></div>
+    <div id="subBar" class="flex gap-2 overflow-x-auto pb-6 mb-4 no-scrollbar border-b border-orange-50"></div>
 
     <div id="container" class="space-y-12"></div>
+
+    <div class="ai-fab" onclick="alert('AI 班主任 Gemini 正在备课中，即将上线！')">
+        <span class="text-2xl">🤖</span>
+        <div class="absolute -top-2 -right-2 bg-red-500 text-white text-[8px] px-2 py-0.5 rounded-full animate-bounce">AI</div>
+    </div>
+
+    <div id="payWallInfo" class="fixed bottom-6 left-6 right-6 bg-slate-900 text-white p-5 rounded-[35px] shadow-2xl z-50 flex justify-between items-center hidden">
+        <div>
+            <p class="text-[10px] opacity-60 uppercase font-bold tracking-widest">Premium Plan</p>
+            <p class="font-black text-lg text-orange-400">解开剩下的 150 词</p>
+        </div>
+        <button class="bg-orange-500 px-6 py-3 rounded-2xl font-black text-sm hover:scale-105 transition">立刻订阅</button>
+    </div>
 
     <script>
         let globalData = {};
         let currentLevel = "";
+        const FREE_COUNT = 3; // 院长要求：只免费3个
 
         async function initApp() {
             try {
-                const response = await fetch('data.json');
+                const response = await fetch('data.json?v=' + Math.random());
                 globalData = await response.json();
                 renderLevels();
             } catch (e) { console.error("Data error"); }
         }
 
-        // 渲染第一级：HSK1, HSK2...
         function renderLevels() {
             const bar = document.getElementById('levelBar');
             Object.keys(globalData).forEach((level, index) => {
@@ -69,15 +96,12 @@
             });
         }
 
-        // 选择级别后渲染第二级子分类
         function selectLevel(level) {
             currentLevel = level;
             document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
-            
             const subBar = document.getElementById('subBar');
             subBar.innerHTML = '';
             const categories = Object.keys(globalData[level]);
-            
             categories.forEach((cat, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'sub-btn flex-shrink-0';
@@ -88,24 +112,27 @@
             });
         }
 
-        // 渲染最终的单词卡片
         function renderWords(category) {
             document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active-sub', b.innerText === category));
             const list = document.getElementById('container');
             list.innerHTML = '';
+            const words = globalData[currentLevel][category];
+            document.getElementById('payWallInfo').classList.toggle('hidden', words.length <= FREE_COUNT);
 
-            globalData[currentLevel][category].forEach((item, index) => {
+            words.forEach((item, index) => {
+                const isLocked = index >= FREE_COUNT;
                 const card = document.createElement('div');
                 card.className = 'word-card p-8';
                 card.innerHTML = `
+                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs">订阅后解锁更多精彩</p></div>' : ''}
                     <div class="flex flex-col items-center mb-10">
-                        <div class="text-[24px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
+                        <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
                             <div class="click-badge">CLICK!</div>
                             <span class="text-7xl font-black text-slate-800">${item.cn}</span>
                         </div>
                         <div class="mt-6 text-center">
-                            <p class="text-2xl font-black text-rose-500 underline decoration-orange-100">${item.trans}</p>
+                            <p class="text-2xl font-black text-rose-500">${item.trans}</p>
                             <p class="text-lg font-black text-orange-300 mt-2 italic">/ ${item.kr} /</p>
                         </div>
                     </div>
@@ -117,12 +144,14 @@
                     <div class="jelly-box p-8 bg-white" onclick="play('${item.sentence_cn}')">
                         <div class="click-badge">LISTEN!</div>
                         <p class="text-3xl font-black text-slate-800 mb-2">${item.sentence_cn}</p>
-                        <p class="text-orange-500 font-bold text-sm">${item.sentence_py}</p>
-                        <p class="text-rose-400 font-black text-lg mt-1">${item.sentence_read}</p>
+                        <p class="text-orange-500 font-bold text-sm mb-1">${item.sentence_py}</p>
+                        <p class="text-rose-400 font-black text-lg">${item.sentence_read}</p>
                     </div>
                 `;
                 list.appendChild(card);
-                setTimeout(() => HanziWriter.create(`writer-${index}`, item.cn[0], {width:130, height:130, padding:15, strokeColor:'#eee'}), 100);
+                setTimeout(() => {
+                    if(!isLocked) HanziWriter.create(`writer-${index}`, item.cn[0], {width:130, height:130, padding:15, strokeColor:'#eee'});
+                }, 100);
             });
         }
 
@@ -140,7 +169,7 @@
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'zh-CN';
-            utter.pitch = 2.0;
+            utter.pitch = 1.3;
             window.speechSynthesis.speak(utter);
         }
 
