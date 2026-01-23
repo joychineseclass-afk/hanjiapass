@@ -1,0 +1,30 @@
+{
+  "biz": [
+    {
+      "cn": "确认",
+      "hj": "確認",
+      "py": "quèrèn",
+      "kr": "췌 런",
+      "trans": "확인",
+      "sentence_kr": "부장님, 서류 확인 부탁드립니다.",
+      "sentence_cn": "部长，请确认一下文件。",
+      "sentence_py": "Bùzhǎng, qǐng quèrèn yíxià wénjiàn.",
+      "sentence_read": "뿌짱, 칭 췌런 이시아 원지엔",
+      "video_url": "https://www.w3schools.com/html/mov_bbb.mp4"
+    }
+  ],
+  "hsk1": [
+    {
+      "cn": "你好",
+      "hj": "你好",
+      "py": "nǐhǎo",
+      "kr": "니 하오",
+      "trans": "안녕",
+      "sentence_kr": "만나서 반갑습니다. 안녕하세요!",
+      "sentence_cn": "见到你很高兴，你好！",
+      "sentence_py": "Jiàndào nǐ hěn gāoxìng, nǐhǎo!",
+      "sentence_read": "지엔따오 니 헌 까오싱, 니 하오!",
+      "video_url": ""
+    }
+  ]
+}
