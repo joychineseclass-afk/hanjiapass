@@ -1,204 +1,393 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HanjaPass PRO - AI 한자 학원</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 董事长亲自设计的韩式极简风格 */
-        body { background: #fffaf5; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; margin: 0; padding: 20px; -webkit-tap-highlight-color: transparent; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* 汉字卡片：果冻质感 */
-        .word-card { background: white; border-radius: 40px; border: 4px solid #fff1e6; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center; transition: transform 0.2s; }
-        .word-card:active { transform: scale(0.98); }
-        .jelly-box { 
-            background: linear-gradient(145deg, #ffffff, #f5f5f5); 
-            border-radius: 30px; 
-            box-shadow: 5px 5px 10px #ebebeb, -5px -5px 10px #ffffff; 
-            border: 2px solid rgba(255,255,255,0.9); 
-            padding: 20px 40px; 
-            cursor: pointer; 
-            display: inline-block; 
-        }
-        
-        /* 按钮样式 */
-        .level-btn { padding: 8px 20px; border-radius: 15px; background: white; border: 2px solid #eee; font-weight: 800; color: #888; white-space: nowrap; margin-right: 8px; transition: 0.3s; }
-        .active-level { background: #333 !important; color: white !important; border-color: #333 !important; }
-        
-        /* AI 聊天窗：悬浮感 */
-        #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 1000; border: 3px solid #333; overflow: hidden; }
-        .msg-ai { background: #f1f1f1; border-radius: 15px 15px 15px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; line-height: 1.5; color: #333; }
-        .msg-user { background: #ff7e5f; color: white; border-radius: 15px 15px 5px 15px; padding: 10px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
-        
-        /* 悬浮球按钮 */
-        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: #333; border-radius: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 999; cursor: pointer; transition: 0.3s; }
-        .ai-fab:active { transform: scale(0.9); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HanjaPass PRO - AI 한자 학원</title>
+
+  <!-- ✅ Tailwind CDN: 개발용 OK / 운영시엔 설치 권장 (경고는 무시해도 기능엔 영향 없음) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ favicon 404 없애기(선택): 아이콘 파일이 없어도 괜찮지만 404 경고가 보기 싫으면 아래 한 줄 유지 -->
+  <link rel="icon" href="data:," />
+
+  <style>
+    /* 董事长亲自设计的韩式极简风格 */
+    body {
+      background: #fffaf5;
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      margin: 0;
+      padding: 20px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* 汉字卡片：果冻质感 */
+    .word-card {
+      background: white;
+      border-radius: 40px;
+      border: 4px solid #fff1e6;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .word-card:active { transform: scale(0.98); }
+
+    .jelly-box {
+      background: linear-gradient(145deg, #ffffff, #f5f5f5);
+      border-radius: 30px;
+      box-shadow: 5px 5px 10px #ebebeb, -5px -5px 10px #ffffff;
+      border: 2px solid rgba(255,255,255,0.9);
+      padding: 20px 40px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* 按钮样式 */
+    .level-btn {
+      padding: 8px 20px;
+      border-radius: 15px;
+      background: white;
+      border: 2px solid #eee;
+      font-weight: 800;
+      color: #888;
+      white-space: nowrap;
+      margin-right: 8px;
+      transition: 0.3s;
+    }
+    .active-level { background: #333 !important; color: white !important; border-color: #333 !important; }
+
+    /* AI 聊天窗：悬浮感 */
+    #ai-window {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 320px;
+      height: 450px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      border: 3px solid #333;
+      overflow: hidden;
+    }
+
+    .msg-ai {
+      background: #f1f1f1;
+      border-radius: 15px 15px 15px 5px;
+      padding: 10px 15px;
+      align-self: flex-start;
+      max-width: 85%;
+      font-size: 14px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: #333;
+      white-space: pre-wrap;
+    }
+
+    .msg-user {
+      background: #ff7e5f;
+      color: white;
+      border-radius: 15px 15px 5px 15px;
+      padding: 10px 15px;
+      align-self: flex-end;
+      max-width: 85%;
+      font-size: 14px;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+
+    /* 悬浮球按钮 */
+    .ai-fab {
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #333;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      z-index: 999;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .ai-fab:active { transform: scale(0.9); }
+  </style>
 </head>
+
 <body class="max-w-md mx-auto">
+  <header class="mb-6 flex justify-between items-center">
+    <h1 class="text-2xl font-black text-slate-800 tracking-tighter">
+      🐼 HanjaPass <span class="text-orange-500">PRO</span>
+    </h1>
+    <span class="text-[10px] bg-yellow-400 px-2 py-1 rounded-full font-bold">釜山版本 1.0</span>
+  </header>
 
-    <header class="mb-6 flex justify-between items-center">
-        <h1 class="text-2xl font-black text-slate-800 tracking-tighter">🐼 HanjaPass <span class="text-orange-500">PRO</span></h1>
-        <span class="text-[10px] bg-yellow-400 px-2 py-1 rounded-full font-bold">釜山版本 1.0</span>
-    </header>
+  <div id="levelBar" class="flex overflow-x-auto pb-4 no-scrollbar"></div>
+  <div id="container"></div>
 
-    <div id="levelBar" class="flex overflow-x-auto pb-4 no-scrollbar"></div>
-    
-    <div id="container"></div>
-
-    <div id="ai-window">
-        <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <span class="text-lg">🤖</span>
-                <span class="font-bold text-sm">AI 한자 선생님</span>
-            </div>
-            <button onclick="toggleAI()" class="text-xl">&times;</button>
-        </div>
-        <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50">
-            <div class="msg-ai">안녕하세요! HSK 한자 선생님입니다. 질문이 있으신가요? 😊</div>
-        </div>
-        <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-orange-500">
-            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">↑</button>
-        </div>
+  <!-- AI Chat -->
+  <div id="ai-window">
+    <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🤖</span>
+        <span class="font-bold text-sm">AI 한자 선생님</span>
+      </div>
+      <button onclick="toggleAI()" class="text-xl">&times;</button>
     </div>
 
-    <div class="ai-fab" onclick="toggleAI()">
-        <span class="text-2xl">🤖</span>
+    <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50">
+      <div class="msg-ai">안녕하세요! HSK 한자 선생님입니다. 질문이 있으신가요? 😊</div>
     </div>
 
-    <script>
-        let globalData = {};
-        let currentLevel = "";
-        
-        // 【核心】小白只需要确认这里的 API KEY 是否正确
-        const GEMINI_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
+    <div class="p-3 border-t bg-white flex gap-2">
+      <input
+        id="ai-input"
+        type="text"
+        placeholder="질문을 입력하세요..."
+        class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-orange-500"
+      />
+      <button
+        id="ai-send-btn"
+        onclick="askAI()"
+        class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold"
+        title="Send"
+      >
+        ↑
+      </button>
+    </div>
+  </div>
 
-        // 初始化加载
-        async function initApp() {
-            try {
-                // 加随机数防止浏览器读取旧的 data.json 缓存
-                const response = await fetch('data.json?t=' + Date.now());
-                globalData = await response.json();
-                renderLevels();
-            } catch(e) {
-                document.getElementById('container').innerHTML = `
-                    <div class="text-center p-10 bg-red-50 rounded-3xl">
-                        <p class="text-red-500 font-bold">data.json 파일을 불러오지 못했습니다.</p>
-                        <p class="text-xs text-gray-400 mt-2">파일 이름이 'data.json'인지 확인해주세요.</p>
-                    </div>`;
+  <div class="ai-fab" onclick="toggleAI()">
+    <span class="text-2xl">🤖</span>
+  </div>
+
+  <script>
+    let globalData = {};
+    let currentLevel = "";
+
+    // ✅ 1) 여기 KEY만 본인 것으로 넣으면 됩니다
+    // ⚠️ 참고: KEY를 프론트에 직접 넣으면 나중에 남이 복사할 수 있어요(배포용은 서버로 옮기는 게 안전)
+    const GEMINI_KEY = "YOUR_GEMINI_API_KEY_HERE";
+
+    // ✅ 2) 당신이 올려준 ListModels JSON에 실제로 존재하는 모델명 사용
+    // 가장 무난: models/gemini-flash-latest
+    const GEMINI_MODEL = "gemini-flash-latest";
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+
+    // -------- App Init --------
+    async function initApp() {
+      try {
+        // 캐시 방지용 랜덤 쿼리
+        const response = await fetch("data.json?t=" + Date.now());
+        if (!response.ok) throw new Error("data.json fetch failed: " + response.status);
+        globalData = await response.json();
+        renderLevels();
+      } catch (e) {
+        console.error(e);
+        document.getElementById("container").innerHTML = `
+          <div class="text-center p-10 bg-red-50 rounded-3xl">
+            <p class="text-red-500 font-bold">data.json 파일을 불러오지 못했습니다.</p>
+            <p class="text-xs text-gray-500 mt-2">✅ 같은 폴더에 <b>data.json</b>이 있는지, 이름이 정확한지 확인해주세요.</p>
+          </div>`;
+      }
+
+      // ✅ Enter로 보내기
+      const input = document.getElementById("ai-input");
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") askAI();
+      });
+    }
+
+    // -------- Level Bar --------
+    function renderLevels() {
+      const bar = document.getElementById("levelBar");
+      bar.innerHTML = "";
+
+      const levels = Object.keys(globalData || {});
+      if (levels.length === 0) {
+        document.getElementById("container").innerHTML = `
+          <div class="text-center p-10 bg-yellow-50 rounded-3xl">
+            <p class="text-yellow-700 font-bold">data.json 내용이 비어있거나 형식이 다릅니다.</p>
+          </div>`;
+        return;
+      }
+
+      levels.forEach((level, index) => {
+        const btn = document.createElement("button");
+        btn.className = "level-btn flex-shrink-0";
+        btn.innerText = level;
+        btn.onclick = () => selectLevel(level);
+        bar.appendChild(btn);
+        if (index === 0) selectLevel(level);
+      });
+    }
+
+    function selectLevel(level) {
+      currentLevel = level;
+      document.querySelectorAll(".level-btn").forEach((b) => {
+        b.classList.toggle("active-level", b.innerText === level);
+      });
+      renderWords();
+    }
+
+    // -------- Word List --------
+    function renderWords() {
+      const list = document.getElementById("container");
+      list.innerHTML = "";
+
+      const levelObj = globalData[currentLevel];
+      if (!levelObj) return;
+
+      const categories = Object.keys(levelObj);
+      if (categories.length === 0) return;
+
+      const firstCategory = categories[0];
+      const words = levelObj[firstCategory] || [];
+
+      words.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "word-card";
+        card.innerHTML = `
+          <div class="text-orange-500 font-bold mb-2 text-lg">${escapeHtml(item.py || "")}</div>
+          <div class="jelly-box" onclick="play('${escapeJs(item.cn || "")}')">
+            <span class="text-6xl font-black text-slate-800">${escapeHtml(item.cn || "")}</span>
+          </div>
+          <div class="mt-4 text-2xl font-bold text-rose-500">${escapeHtml(item.trans || "")}</div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    // -------- TTS --------
+    function play(text) {
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "zh-CN";
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        console.error("TTS Error:", e);
+      }
+    }
+
+    // -------- AI Window Toggle --------
+    function toggleAI() {
+      const win = document.getElementById("ai-window");
+      win.style.display = (win.style.display === "flex") ? "none" : "flex";
+      if (win.style.display === "flex") {
+        setTimeout(() => document.getElementById("ai-input").focus(), 50);
+      }
+    }
+
+    // -------- AI Chat --------
+    async function askAI() {
+      const input = document.getElementById("ai-input");
+      const sendBtn = document.getElementById("ai-send-btn");
+
+      const msg = (input.value || "").trim();
+      if (!msg) return;
+
+      // Key 미설정 방지
+      if (!GEMINI_KEY || GEMINI_KEY === "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98") {
+        addMessage("⚠️ GEMINI_KEY를 먼저 넣어주세요.\nindex.html에서 GEMINI_KEY를 본인 키로 바꾸면 됩니다.", "ai");
+        return;
+      }
+
+      addMessage(msg, "user");
+      input.value = "";
+
+      // 버튼 잠깐 비활성화(연타 방지)
+      sendBtn.disabled = true;
+      sendBtn.classList.add("opacity-60");
+
+      const loadingMsg = addMessage("생각 중입니다... 🤔", "ai");
+
+      try {
+        const prompt =
+          "너는 한국인에게 한자를 가르치는 HSK 전문가야. " +
+          "아주 친절하고 쉽게 한국어로 설명해줘. " +
+          "가능하면 예문도 1개 만들어줘.\n\n" +
+          "질문: " + msg;
+
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            // (선택) 너무 길게 말하는 걸 막고 싶으면 아래를 조절
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 512
             }
+          })
+        });
+
+        const data = await response.json();
+
+        // API 자체 오류(키/권한/모델 등)
+        if (data && data.error) {
+          loadingMsg.innerText =
+            "❌ 오류가 발생했어요:\n" +
+            (data.error.message || "Unknown error") +
+            "\n\n✅ 확인할 것:\n- 모델명(gemini-flash-latest)\n- API Key 제한(도메인 제한)\n- 결제/쿼터";
+          console.error("Google Error:", data.error);
+          return;
         }
 
-        // 渲染顶部关卡
-        function renderLevels() {
-            const bar = document.getElementById('levelBar');
-            bar.innerHTML = '';
-            Object.keys(globalData).forEach((level, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'level-btn flex-shrink-0';
-                btn.innerText = level;
-                btn.onclick = () => selectLevel(level);
-                bar.appendChild(btn);
-                if(index === 0) selectLevel(level);
-            });
-        }
+        // 정상 답변 파싱(더 안전하게)
+        const reply =
+          data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") ||
+          "답변을 가져오지 못했습니다. (응답 형식이 예상과 달라요)";
 
-        // 选择关卡
-        function selectLevel(level) {
-            currentLevel = level;
-            document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
-            renderWords();
-        }
+        loadingMsg.innerText = reply;
 
-        // 渲染汉字列表
-        function renderWords() {
-            const list = document.getElementById('container');
-            list.innerHTML = '';
-            // 默认展示该级别下的第一个分类
-            const firstCategory = Object.keys(globalData[currentLevel])[0];
-            const words = globalData[currentLevel][firstCategory];
-            
-            words.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'word-card';
-                card.innerHTML = `
-                    <div class="text-orange-500 font-bold mb-2 text-lg">${item.py}</div>
-                    <div class="jelly-box" onclick="play('${item.cn}')">
-                        <span class="text-6xl font-black text-slate-800">${item.cn}</span>
-                    </div>
-                    <div class="mt-4 text-2xl font-bold text-rose-500">${item.trans}</div>
-                `;
-                list.appendChild(card);
-            });
-        }
+      } catch (e) {
+        console.error("Fetch Error:", e);
+        loadingMsg.innerText =
+          "❌ 연결 실패입니다.\n" +
+          "✅ 확인할 것:\n- 인터넷 연결\n- API Key 도메인 제한(Referrer)\n- 브라우저 콘솔(Network 탭의 오류 메시지";
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.classList.remove("opacity-60");
+      }
+    }
 
-        // 语音播放
-        function play(text) {
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'zh-CN';
-            window.speechSynthesis.speak(utter);
-        }
+    function addMessage(text, role) {
+      const body = document.getElementById("ai-chat-body");
+      const div = document.createElement("div");
+      div.className = role === "user" ? "msg-user" : "msg-ai";
+      div.innerText = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+      return div;
+    }
 
-        // AI 窗口开关
-        function toggleAI() {
-            const win = document.getElementById('ai-window');
-            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
-        }
+    // -------- Small helpers to avoid broken HTML/JS when data contains quotes --------
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-        // --- 核心修复：小白注意看这里 ---
-        async function askAI() {
-            const input = document.getElementById('ai-input');
-            const msg = input.value.trim();
-            if(!msg) return;
+    function escapeJs(str) {
+      // for onclick="play('...')"
+      return String(str).replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+    }
 
-            addMessage(msg, 'user');
-            input.value = '';
-            const loadingMsg = addMessage('생각 중입니다...', 'ai');
-            
-            // 锁定 v1beta 接口和正确模型名
-            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 HSK 전문가야. 친절하게 한국어로 답해줘: " + msg }] }]
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.error) {
-                    loadingMsg.innerText = "Error: " + data.error.message;
-                    console.error("Google Error:", data.error);
-                } else if (data.candidates && data.candidates[0].content) {
-                    loadingMsg.innerText = data.candidates[0].content.parts[0].text;
-                } else {
-                    loadingMsg.innerText = "답변을 가져오지 못했습니다.";
-                }
-            } catch (e) {
-                loadingMsg.innerText = "연결 실패. 인터넷을 확인해주세요.";
-                console.error("Fetch Error:", e);
-            }
-        }
-
-        function addMessage(text, role) {
-            const body = document.getElementById('ai-chat-body');
-            const div = document.createElement('div');
-            div.className = role === 'user' ? 'msg-user' : 'msg-ai';
-            div.innerText = text;
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-            return div;
-        }
-
-        initApp();
-    </script>
+    initApp();
+  </script>
 </body>
 </html>
