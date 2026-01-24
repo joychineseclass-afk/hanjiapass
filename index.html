@@ -48,7 +48,7 @@
             <button onclick="toggleAI()" class="text-xl">×</button>
         </div>
         <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50 text-slate-700">
-            <div class="msg-ai">안녕하세요! HSK 선생님입니다. 오늘 배운 단어에 대해 궁금한 점이 있나요? 무엇이든 물어보세요! 😊</div>
+            <div class="msg-ai">안녕하세요! HSK 선생님입니다. 무엇이든 물어보세요! 😊</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
             <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
@@ -61,13 +61,7 @@
         <div class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] px-2 py-0.5 rounded-full animate-bounce">LIVE</div>
     </div>
 
-    <div id="payWallInfo" class="fixed bottom-6 left-6 right-6 bg-slate-900 text-white p-5 rounded-[35px] shadow-2xl z-50 flex justify-between items-center hidden">
-        <div><p class="font-black text-lg text-orange-400">Unlock Premium</p></div>
-        <button onclick="window.location.href='https://open.kakao.com/'" class="bg-orange-500 px-6 py-3 rounded-2xl font-black text-sm">지금 구독하기</button>
-    </div>
-
     <script>
-        // --- 核心配置区 ---
         let globalData = {};
         let currentLevel = "";
         const FREE_COUNT = 3;
@@ -98,6 +92,7 @@
             document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
             const subBar = document.getElementById('subBar');
             subBar.innerHTML = '';
+            if(!globalData[level]) return;
             Object.keys(globalData[level]).forEach((cat, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'sub-btn flex-shrink-0';
@@ -113,14 +108,11 @@
             const list = document.getElementById('container');
             list.innerHTML = '';
             const words = globalData[currentLevel][category];
-            document.getElementById('payWallInfo').classList.toggle('hidden', words.length <= FREE_COUNT);
-
+            
             words.forEach((item, index) => {
-                const isLocked = index >= FREE_COUNT;
                 const card = document.createElement('div');
                 card.className = 'word-card p-8 mb-6 shadow-sm';
                 card.innerHTML = `
-                    ${isLocked ? '<div class="lock-overlay"><span class="text-3xl mb-2">🔒</span><p class="text-orange-500 font-black text-xs text-center px-6">Premium 전용</p></div>' : ''}
                     <div class="flex flex-col items-center mb-10">
                         <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
@@ -129,45 +121,11 @@
                         </div>
                         <div class="mt-6 text-center">
                             <p class="text-2xl font-black text-rose-500">${item.trans}</p>
-                            <p class="text-lg font-black text-orange-300 mt-2 italic">/ ${item.kr} /</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center mb-10">
-                        <div id="writer-${category}-${index}" class="jelly-box w-40 h-40 flex items-center justify-center bg-white" onclick="draw('${item.cn}', 'writer-${category}-${index}')">
-                            <div class="click-badge">WRITE!</div>
-                        </div>
-                    </div>
-                    <div class="jelly-box p-8 bg-white" onclick="play('${item.sentence_cn}')">
-                        <div class="click-badge">LISTEN!</div>
-                        <p class="text-2xl font-black text-slate-800 mb-2">${item.sentence_cn}</p>
-                        <p class="text-orange-500 font-bold text-sm mb-1">${item.sentence_py}</p>
-                        <p class="text-rose-400 font-black text-lg mb-2">${item.sentence_read}</p>
-                        <div class="pt-2 border-t border-gray-100">
-                            <p class="text-teal-600 font-bold text-base">ㄴ ${item.sentence_kr}</p>
                         </div>
                     </div>
                 `;
                 list.appendChild(card);
-                if(!isLocked) setTimeout(() => HanziWriter.create(`writer-${category}-${index}`, item.cn[0], {width:130, height:130, padding:15, strokeColor:'#eee'}), 100);
             });
-        }
-
-        async function draw(word, el) {
-            const container = document.getElementById(el);
-            for (let char of word) {
-                container.innerHTML = '<div class="click-badge">WRITE!</div>';
-                const writer = HanziWriter.create(el, char, { width: 130, height: 130, padding: 15, strokeColor: '#ff7e5f', strokeAnimationSpeed: 2.5 });
-                await writer.animateCharacter();
-                await new Promise(r => setTimeout(r, 800));
-            }
-        }
-
-        function play(text) {
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'zh-CN';
-            utter.pitch = 1.1;
-            window.speechSynthesis.speak(utter);
         }
 
         function toggleAI() {
@@ -175,7 +133,7 @@
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 董事长为您重写的 AI 连接逻辑 ---
+        // --- 核心 AI 逻辑 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -185,31 +143,29 @@
             input.value = '';
             const loadingMsg = addMessage('AI 老师正在思考中...', 'ai');
             
-            // 重要：请在此处填入你的 API KEY
-            const YOUR_API_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
-            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${YOUR_API_KEY}`;
+            // 董事长已经帮你填好了 Key！
+            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`;
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: "你是一位专业的HSK老师，请用亲切的语气回答学生关于汉字学习的问题：" + msg }] }]
+                        contents: [{ parts: [{ text: "你是一位精通HSK的韩语老师，请用韩语回答学生：" + msg }] }]
                     })
                 });
                 
                 const data = await response.json();
                 
                 if (data.error) {
-                    throw new Error(data.error.message);
+                    loadingMsg.innerText = "Error: " + data.error.message;
+                } else {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    loadingMsg.innerText = aiResponse;
                 }
-
-                // 解析 Gemini 返回的文字结果
-                const aiResponse = data.candidates[0].content.parts[0].text;
-                loadingMsg.innerText = aiResponse;
             } catch (e) {
-                console.error("AI 接口调用失败:", e);
-                loadingMsg.innerText = "抱歉，连接 AI 老师失败了。请检查你的网络环境或 API Key 是否填写正确！";
+                loadingMsg.innerText = "连接失败，请确认您的网络是否可以访问 Google 服务。";
             }
         }
 
