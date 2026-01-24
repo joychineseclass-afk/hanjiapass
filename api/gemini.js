@@ -27,6 +27,22 @@ export default async function handler(req, res) {
 
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const prompt = String(body.prompt || body.message || "").trim();
+if (!prompt) return res.status(400).json({ error: "Empty prompt." });
+
+const systemPrompt = `
+你是“AI 한자 선생님”，面向韩国学生教中文（HSK/HSKK）。
+
+【回答规则】
+1. 默认用韩语说明
+2. 必须包含：
+   - 中文词语/句子
+   - 拼音
+   - 简单韩语解释
+3. 给 1~2 个例句（中文 + 拼音 + 韩语）
+4. 语气亲切，适合小学生或初学者
+`;
+
+const finalPrompt = systemPrompt + "\n\n【学生问题】\n" + prompt;
     if (!prompt) return res.status(400).json({ error: "Empty prompt." });
 
     // ===== 3) ✅ 使用官方文档的 v1beta + x-goog-api-key 方式 =====
@@ -41,9 +57,12 @@ export default async function handler(req, res) {
         "x-goog-api-key": apiKey, // ✅ 关键点：不要用 ?key=
       },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-      }),
-    });
+  contents: [
+    {
+      parts: [{ text: finalPrompt }]
+    }
+  ]
+});
 
     const data = await resp.json().catch(() => ({}));
 
