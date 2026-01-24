@@ -4,141 +4,123 @@
   <meta charset="UTF-8" />
   <title>AI 한자 선생님</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f5;
-    }
-    .ai-box {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 320px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.2);
-      overflow: hidden;
-    }
-    .ai-header {
-      background: #111;
-      color: #fff;
-      padding: 10px 14px;
-      font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .ai-body {
-      padding: 14px;
-      font-size: 14px;
-    }
-    .ai-msg {
-      background: #f2f2f2;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      white-space: pre-wrap;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .ai-input {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .ai-input input {
-      flex: 1;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    .ai-input button {
-      background: #e38b29;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0 14px;
-      cursor: pointer;
-    }
-    .ai-error {
-      color: #b00020;
-      font-size: 13px;
-      margin-top: 6px;
-      word-break: break-all;
-    }
-    .ai-footer {
-      font-size: 11px;
-      color: #777;
-      margin-top: 6px;
-      text-align: center;
-    }
+    body { background:#f7f7f7; }
+    .chat-box { max-height: 60vh; overflow-y: auto; }
+    pre { white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
-<body>
+<body class="p-4">
 
-<div class="ai-box">
-  <div class="ai-header">
-    AI 한자 선생님
-    <span style="cursor:pointer" onclick="document.querySelector('.ai-box').style.display='none'">✕</span>
+  <!-- 浮动按钮 -->
+  <button onclick="toggleAI()"
+    class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+    🤖
+  </button>
+
+  <!-- AI 窗口 -->
+  <div id="ai-panel"
+    class="hidden fixed bottom-20 right-4 w-[320px] bg-white rounded-xl shadow-xl flex flex-col">
+
+    <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
+      <span>AI 한자 선생님</span>
+      <button onclick="toggleAI()">✖</button>
+    </div>
+
+    <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
+
+    <div class="p-3 border-t flex gap-2">
+      <input id="input"
+        class="flex-1 border rounded px-2 py-1"
+        placeholder="질문을 입력하세요…" />
+      <button onclick="send()"
+        class="bg-orange-500 text-white px-3 py-1 rounded">
+        보내기
+      </button>
+    </div>
+
+    <div class="text-xs text-center text-gray-500 pb-2">
+      🔐 Key 보호 모드: Vercel /api/gemini
+    </div>
   </div>
-
-  <div class="ai-body">
-    <div class="ai-msg" id="aiReply">
-안녕하세요! 😊  
-HSK 한자 선생님입니다.  
-궁금한 단어나 예문 / 문법 / 비슷한 표현을 물어보세요!
-    </div>
-
-    <div class="ai-input">
-      <input id="userInput" placeholder="예: 你好 뜻이 뭐예요?" onkeypress="if(event.keyCode==13) askAI()"/>
-      <button onclick="askAI()">보내기</button>
-    </div>
-
-    <div class="ai-error" id="aiError"></div>
-
-    <div class="ai-footer">
-      🔒 API Proxy Mode · /api/gemini
-    </div>
-  </div>
-</div>
 
 <script>
-async function askAI() {
-  const input = document.getElementById("userInput");
-  const replyBox = document.getElementById("aiReply");
-  const errorBox = document.getElementById("aiError");
+const panel = document.getElementById("ai-panel");
+const chat  = document.getElementById("chat");
+const input = document.getElementById("input");
 
-  const message = input.value.trim();
-  if (!message) return;
+// ✅ 关键：GitHub Pages 必须用完整 Vercel 地址
+const API_URL = "https://hanjiapass.vercel.app/api/gemini";
 
-  errorBox.textContent = "";
-  replyBox.textContent = "✏️ 생각 중이에요...";
+function toggleAI() {
+  panel.classList.toggle("hidden");
+}
+
+function addMsg(text, who) {
+  const div = document.createElement("div");
+  div.className = who === "user" ? "text-right" : "text-left text-gray-800";
+
+  // 用 <pre> 保留换行
+  div.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${
+    who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"
+  }"><pre>${escapeHtml(text)}</pre></span>`;
+
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// 防止用户输入导致 HTML 注入
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function send() {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  addMsg(msg, "user");
+  input.value = "";
 
   try {
-    const res = await fetch("/api/gemini", {
+    const res = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      // 修正：这里发送的是 message 字符串，而不是 input 元素
-      body: JSON.stringify({ message: message }) 
+      headers: { "Content-Type": "application/json" },
+      // ✅ 关键：后端读的是 message，不是 prompt
+      body: JSON.stringify({ message: msg })
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      // 这里的错误信息会更详细，方便调试
-      throw new Error(data.error || "서버 응답 오류");
+      // 尽量把后端返回的错误展示出来，方便你调试
+      const errMsg = data?.error || ("HTTP " + res.status);
+      addMsg("오류: " + errMsg, "ai");
+      return;
     }
 
-    replyBox.textContent = data.text || "응답이 없습니다.";
-    input.value = "";
-  } catch (err) {
-    replyBox.textContent = "❌ 답변을 불러오지 못했어요.";
-    errorBox.textContent = err.message;
-    console.error("Error details:", err);
+    addMsg(data.text || "(응답 없음)", "ai");
+
+  } catch (e) {
+    addMsg("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.\n" + e.message, "ai");
   }
 }
+
+// 初始欢迎
+addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 문법을 물어보세요!", "ai");
+
+// 回车发送
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") send();
+});
 </script>
 
 </body>
