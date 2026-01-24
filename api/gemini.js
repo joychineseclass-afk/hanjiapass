@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // ===== CORS =====
+  // ===== CORS 设置 =====
   const allowOrigins = [
     "https://joychineseclass-afk.github.io",
     "https://hanjiapass.vercel.app",
@@ -13,38 +13,27 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Preflight
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
-  }
-
-  // POST only
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed. Use POST.", text: "" });
-  }
+  if (req.method === "OPTIONS") return res.status(204).end();
+  if (req.method !== "POST") return res.status(405).json({ error: "请使用 POST 方法" });
 
   try {
-    // ===== ENV =====
-    const apiKey = process.env.GEMINI_API_KEY; // ✅ 你Vercel里是 GEMINI_API_KEY
-    const model = process.env.GEMINI_MODEL || "gemini-1.5-flash"; // ✅ 不要 models/
+    // 1. 获取 API Key (确保你在 Vercel 后台设置了 GEMINI_API_KEY)
+    const apiKey = process.env.GEMINI_API_KEY;
+    
+    // 2. 强制指定一个最稳定的模型名称，避免环境变量里的名称太旧
+    const modelName = "gemini-1.5-flash"; 
 
     if (!apiKey) {
-      return res.status(500).json({
-        error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
-        text: "",
-      });
+      return res.status(500).json({ error: "缺少 API Key，请在 Vercel 环境变量中设置" });
     }
 
-    // ===== BODY =====
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const message = String(body.message || "").trim();
 
-    if (!message) {
-      return res.status(400).json({ error: "Empty message", text: "" });
-    }
+    if (!message) return res.status(400).json({ error: "消息不能为空" });
 
-    // ===== CALL GEMINI (v1) =====
-    const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+    // 3. 【核心修改】这里改成了 v1beta，解决你之前的 404/Not Found 错误
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
 
     const resp = await fetch(url, {
       method: "POST",
@@ -58,18 +47,17 @@ export default async function handler(req, res) {
 
     if (!resp.ok) {
       return res.status(resp.status).json({
-        error: data?.error?.message || "Gemini API error",
-        raw: data,
-        text: "",
+        error: data?.error?.message || "Gemini 接口返回错误",
+        details: data
       });
     }
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ||
-      "";
+    const aiResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI 没有返回内容";
+    
+    // 返回给前端
+    return res.status(200).json({ text: aiResponse });
 
-    return res.status(200).json({ text });
   } catch (e) {
-    return res.status(500).json({ error: String(e), text: "" });
+    return res.status(500).json({ error: "服务器内部错误: " + e.message });
   }
 }
