@@ -38,6 +38,8 @@
       border-radius: 8px;
       margin-bottom: 10px;
       white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
     }
     .ai-input {
       display: flex;
@@ -62,6 +64,7 @@
       color: #b00020;
       font-size: 13px;
       margin-top: 6px;
+      word-break: break-all;
     }
     .ai-footer {
       font-size: 11px;
@@ -71,7 +74,6 @@
     }
   </style>
 </head>
-
 <body>
 
 <div class="ai-box">
@@ -88,14 +90,14 @@ HSK 한자 선생님입니다.
     </div>
 
     <div class="ai-input">
-      <input id="userInput" placeholder="예: 你好 뜻이 뭐예요?" />
+      <input id="userInput" placeholder="예: 你好 뜻이 뭐예요?" onkeypress="if(event.keyCode==13) askAI()"/>
       <button onclick="askAI()">보내기</button>
     </div>
 
     <div class="ai-error" id="aiError"></div>
 
     <div class="ai-footer">
-      🔒 Key 보호 모드 · /api/gemini
+      🔒 API Proxy Mode · /api/gemini
     </div>
   </div>
 </div>
@@ -114,31 +116,30 @@ async function askAI() {
 
   try {
     const res = await fetch("/api/gemini", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    message: userInput
-  })
-});
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // 修正：这里发送的是 message 字符串，而不是 input 元素
+      body: JSON.stringify({ message: message }) 
+    });
 
     const data = await res.json();
 
-    if (!res.ok || data.error) {
-      throw new Error(data.error || "알 수 없는 오류");
+    if (!res.ok) {
+      // 这里的错误信息会更详细，方便调试
+      throw new Error(data.error || "서버 응답 오류");
     }
 
-    replyBox.textContent = data.text || "응답이 비어 있습니다.";
+    replyBox.textContent = data.text || "응답이 없습니다.";
     input.value = "";
   } catch (err) {
     replyBox.textContent = "❌ 답변을 불러오지 못했어요.";
     errorBox.textContent = err.message;
+    console.error("Error details:", err);
   }
 }
 </script>
 
 </body>
 </html>
-
-
