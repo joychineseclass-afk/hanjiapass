@@ -64,15 +64,12 @@
         let globalData = {};
         let currentLevel = "";
 
-        // 初始化加载数据
         async function initApp() {
             try {
                 const response = await fetch('data.json?v=' + Math.random());
                 globalData = await response.json();
                 renderLevels();
-            } catch(e) { 
-                console.error("Data load error", e);
-            }
+            } catch(e) { console.error("Data load error", e); }
         }
 
         function renderLevels() {
@@ -109,7 +106,6 @@
             const list = document.getElementById('container');
             list.innerHTML = '';
             const words = globalData[currentLevel][category];
-            
             words.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'word-card p-8 mb-6 shadow-sm';
@@ -117,12 +113,9 @@
                     <div class="flex flex-col items-center mb-10">
                         <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
-                            <div class="click-badge">CLICK!</div>
                             <span class="text-7xl font-black text-slate-800">${item.cn}</span>
                         </div>
-                        <div class="mt-6 text-center">
-                            <p class="text-2xl font-black text-rose-500">${item.trans}</p>
-                        </div>
+                        <div class="mt-6 text-center"><p class="text-2xl font-black text-rose-500">${item.trans}</p></div>
                     </div>
                 `;
                 list.appendChild(card);
@@ -141,7 +134,7 @@
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 核心 AI 连接逻辑 ---
+        // --- 核心 AI 连接逻辑（董事长增强版） ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -151,32 +144,40 @@
             input.value = '';
             const loadingMsg = addMessage('AI 老师正在思考中...', 'ai');
             
-            // 修正：使用 v1 正式接口
-            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
-            const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`;
+            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; //
+            
+            // 董事长策略：优先尝试 v1beta，因为它对 flash 模型支持最广
+            const endpoints = [
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`,
+                `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`
+            ];
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: "你是一位精通HSK的韩语老师，请用韩语回答学生关于汉字学习的问题：" + msg }] }]
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.error) {
-                    loadingMsg.innerText = "Error: " + data.error.message;
-                } else if (data.candidates && data.candidates[0].content) {
-                    const aiResponse = data.candidates[0].content.parts[0].text;
-                    loadingMsg.innerText = aiResponse;
-                } else {
-                    loadingMsg.innerText = "抱歉，AI 暂时无法回答。";
+            let success = false;
+            for (let url of endpoints) {
+                if (success) break;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: "너는 HSK 전문가 선생님이야. 학생의 질문에 친절하게 한국어로 답해줘: " + msg }] }]
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.candidates && data.candidates[0].content) {
+                        loadingMsg.innerText = data.candidates[0].content.parts[0].text;
+                        success = true;
+                    } else if (data.error) {
+                        console.warn("Endpoint failed:", url, data.error.message);
+                    }
+                } catch (e) {
+                    console.error("Fetch error:", e);
                 }
-            } catch (e) {
-                console.error(e);
-                loadingMsg.innerText = "连接失败。请检查网络环境（需能访问 Google）或 API Key。";
+            }
+
+            if (!success) {
+                loadingMsg.innerText = "죄송합니다. 현재 AI 연결이 불안정합니다. 잠시 후 다시 시도해주세요.";
             }
         }
 
