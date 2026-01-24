@@ -26,7 +26,6 @@
         .msg-user { background: #ff7e5f; color: white; border-radius: 20px 20px 5px 20px; padding: 12px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
         .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 65px; height: 65px; background: #333; border-radius: 35px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; border: 3px solid #ff7e5f; }
         .word-card { background: white; border-radius: 55px; border: 6px solid #fff1e6; position: relative; overflow: hidden; }
-        .lock-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; border: 4px dashed #ffe0d6; }
     </style>
 </head>
 <body class="p-6 max-w-md mx-auto pb-40">
@@ -64,14 +63,16 @@
     <script>
         let globalData = {};
         let currentLevel = "";
-        const FREE_COUNT = 3;
 
+        // 初始化加载数据
         async function initApp() {
             try {
                 const response = await fetch('data.json?v=' + Math.random());
                 globalData = await response.json();
                 renderLevels();
-            } catch(e) { console.error("Data load error", e); }
+            } catch(e) { 
+                console.error("Data load error", e);
+            }
         }
 
         function renderLevels() {
@@ -128,12 +129,19 @@
             });
         }
 
+        function play(text) {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'zh-CN';
+            window.speechSynthesis.speak(utter);
+        }
+
         function toggleAI() {
             const win = document.getElementById('ai-window');
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 核心 AI 逻辑 ---
+        // --- 核心 AI 连接逻辑 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -143,16 +151,16 @@
             input.value = '';
             const loadingMsg = addMessage('AI 老师正在思考中...', 'ai');
             
-            // 董事长已经帮你填好了 Key！
+            // 修正：使用 v1 正式接口
             const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
-            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`;
+            const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`;
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: "你是一位精通HSK的韩语老师，请用韩语回答学生：" + msg }] }]
+                        contents: [{ parts: [{ text: "你是一位精通HSK的韩语老师，请用韩语回答学生关于汉字学习的问题：" + msg }] }]
                     })
                 });
                 
@@ -160,12 +168,15 @@
                 
                 if (data.error) {
                     loadingMsg.innerText = "Error: " + data.error.message;
-                } else {
+                } else if (data.candidates && data.candidates[0].content) {
                     const aiResponse = data.candidates[0].content.parts[0].text;
                     loadingMsg.innerText = aiResponse;
+                } else {
+                    loadingMsg.innerText = "抱歉，AI 暂时无法回答。";
                 }
             } catch (e) {
-                loadingMsg.innerText = "连接失败，请确认您的网络是否可以访问 Google 服务。";
+                console.error(e);
+                loadingMsg.innerText = "连接失败。请检查网络环境（需能访问 Google）或 API Key。";
             }
         }
 
