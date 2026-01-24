@@ -1,11 +1,13 @@
+// /api/gemini.js
+export const config = { runtime: "nodejs" }; // 强制 Node 运行时，避免 Edge 兼容问题
+
 export default async function handler(req, res) {
-  // ===== 1) CORS（允许 GitHub Pages + Vercel 域名）=====
+  // ===== 1) CORS =====
   const allowOrigins = [
     "https://joychineseclass-afk.github.io",
     "https://hanjiapass.vercel.app",
   ];
-
-  const origin = req.headers.origin || "";
+  const origin = req.headers.origin;
   if (allowOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
@@ -18,35 +20,37 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method Not Allowed. Use POST." });
   }
 
-  // ===== 2) 读取参数 =====
   try {
+    // ===== 2) Env =====
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: "Missing GEMINI_API_KEY in Vercel environment variables." });
+      return res.status(500).json({
+        error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
+      });
     }
 
-    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-    const prompt = String(body.prompt || body.message || "").trim();
-if (!prompt) return res.status(400).json({ error: "Empty prompt." });
+    // ===== 3) Body =====
+    const body =
+      typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+    const userPrompt = String(body.prompt || body.message || "").trim();
+    if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
 
-const systemPrompt = `
+    // ===== 4) System Prompt（你要加的“老师规则”就放这里）=====
+    const systemPrompt = `
 你是“AI 한자 선생님”，面向韩国学生教中文（HSK/HSKK）。
 
-【回答规则】
-1. 默认用韩语说明
-2. 必须包含：
-   - 中文词语/句子
-   - 拼音
-   - 简单韩语解释
-3. 给 1~2 个例句（中文 + 拼音 + 韩语）
-4. 语气亲切，适合小学生或初学者
-`;
+【输出格式必须包含】
+1) 中文
+2) 拼音
+3) 韩语解释（亲切、适合初学者/小学生）
+4) 例句 1~2 个（中文+拼音+韩语）
+5) 如用户问语法：用简单韩语解释，并给对比例句
+`.trim();
 
-const finalPrompt = systemPrompt + "\n\n【学生问题】\n" + prompt;
-    if (!prompt) return res.status(400).json({ error: "Empty prompt." });
+    const finalPrompt = `${systemPrompt}\n\n【学生问题】\n${userPrompt}`;
 
-    // ===== 3) ✅ 使用官方文档的 v1beta + x-goog-api-key 方式 =====
-    // 选一个“确定存在”的模型：gemini-3-flash-preview
+    // ===== 5) 调 Gemini（你之前成功过：v1beta + x-goog-api-key + gemini-3-flash-preview）=====
+    // 如果以后模型变了，只改这里 model 字符串就行
     const model = "gemini-3-flash-preview";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
@@ -54,31 +58,31 @@ const finalPrompt = systemPrompt + "\n\n【学生问题】\n" + prompt;
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-goog-api-key": apiKey, // ✅ 关键点：不要用 ?key=
+        "x-goog-api-key": apiKey, // ✅ 不用 ?key=
       },
       body: JSON.stringify({
-  contents: [
-    {
-      parts: [{ text: finalPrompt }]
-    }
-  ]
-});
+        contents: [{ parts: [{ text: finalPrompt }] }],
+      }),
+    });
 
     const data = await resp.json().catch(() => ({}));
 
     if (!resp.ok) {
-      // 把 Google 返回的错误原样带回前端，方便定位
+      // 这里把 Google 返回的错误完整带回去，方便你一眼看到原因
       return res.status(resp.status).json({
         error: data?.error?.message || "Gemini API error",
         details: data,
-        usedModel: model,
       });
     }
 
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    return res.status(200).json({ text: text || "(no text)" , usedModel: model });
+    const text =
+      data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") || "";
 
+    return res.status(200).json({ text: text || "(응답 없음)" });
   } catch (e) {
-    return res.status(500).json({ error: "Server error: " + (e?.message || String(e)) });
+    // 关键：把异常信息返回（否则只看到 FUNCTION_INVOCATION_FAILED）
+    return res.status(500).json({
+      error: "Server error: " + (e?.message || String(e)),
+    });
   }
 }
