@@ -69,7 +69,7 @@
                 const response = await fetch('data.json?v=' + Math.random());
                 globalData = await response.json();
                 renderLevels();
-            } catch(e) { console.error("Data load error", e); }
+            } catch(e) { console.error("Data error", e); }
         }
 
         function renderLevels() {
@@ -106,7 +106,7 @@
             const list = document.getElementById('container');
             list.innerHTML = '';
             const words = globalData[currentLevel][category];
-            words.forEach((item, index) => {
+            words.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'word-card p-8 mb-6 shadow-sm';
                 card.innerHTML = `
@@ -134,7 +134,6 @@
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 核心 AI 连接逻辑（董事长增强版） ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -142,25 +141,24 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            const loadingMsg = addMessage('AI 老师正在思考中...', 'ai');
+            const loadingMsg = addMessage('AI 선생님이 생각 중입니다...', 'ai');
             
-            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; //
+            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
             
-            // 董事长策略：优先尝试 v1beta，因为它对 flash 模型支持最广
-            const endpoints = [
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`,
-                `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_KEY}`
-            ];
-
+            // 董事长增强版：自动尝试不同版本的模型名称
+            const modelNames = ["gemini-1.5-flash-latest", "gemini-1.5-flash"];
             let success = false;
-            for (let url of endpoints) {
+
+            for (let model of modelNames) {
                 if (success) break;
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${MY_KEY}`;
+                
                 try {
-                    const response = await fetch(url, {
+                    const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: "너는 HSK 전문가 선생님이야. 학생의 질문에 친절하게 한국어로 답해줘: " + msg }] }]
+                            contents: [{ parts: [{ text: "너는 HSK 전문가 선생님이야. 학생의 질문에 한국어로 친절하게 답해줘: " + msg }] }]
                         })
                     });
                     
@@ -168,16 +166,12 @@
                     if (data.candidates && data.candidates[0].content) {
                         loadingMsg.innerText = data.candidates[0].content.parts[0].text;
                         success = true;
-                    } else if (data.error) {
-                        console.warn("Endpoint failed:", url, data.error.message);
                     }
-                } catch (e) {
-                    console.error("Fetch error:", e);
-                }
+                } catch (e) { console.error("Try next model..."); }
             }
 
             if (!success) {
-                loadingMsg.innerText = "죄송합니다. 현재 AI 연결이 불안정합니다. 잠시 후 다시 시도해주세요.";
+                loadingMsg.innerText = "연결 오류가 발생했습니다. 잠시 후 다시 시도하거나 네트워크(VPN)를 확인해주세요.";
             }
         }
 
