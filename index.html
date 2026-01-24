@@ -297,12 +297,6 @@
       const msg = (input.value || "").trim();
       if (!msg) return;
 
-      // Key 미설정 방지
-      if (!GEMINI_KEY || GEMINI_KEY === "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98") {
-        addMessage("⚠️ GEMINI_KEY를 먼저 넣어주세요.\nindex.html에서 GEMINI_KEY를 본인 키로 바꾸면 됩니다.", "ai");
-        return;
-      }
-
       addMessage(msg, "user");
       input.value = "";
 
@@ -391,5 +385,6 @@
   </script>
 </body>
 </html>
+
 
 
