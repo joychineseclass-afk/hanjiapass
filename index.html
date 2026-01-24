@@ -91,20 +91,26 @@ async function send() {
   input.value = "";
 
   try {
-    const res = await fetch("/api/gemini", {
+    const res = await fetch("https://hanjiapass.vercel.app/api/gemini", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // ✅ 关键：后端读的是 message，不是 prompt
       body: JSON.stringify({ message: msg })
     });
 
-    const data = await res.json();
+   // 关键：就算不是 JSON，也先读成文本，避免 JSON.parse 直接炸
+    const raw = await res.text();
 
+    // 如果返回的是 HTML，这里会一眼看出来
     if (!res.ok) {
-      // 尽量把后端返回的错误展示出来，方便你调试
-      const errMsg = data?.error || ("HTTP " + res.status);
-      addMsg("오류: " + errMsg, "ai");
-      return;
+      throw new Error(`HTTP ${res.status}: ${raw.slice(0, 120)}`);
+    }
+
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      throw new Error("不是JSON，返回内容开头是：" + raw.slice(0, 60));
     }
 
     addMsg(data.text || "(응답 없음)", "ai");
@@ -125,4 +131,5 @@ input.addEventListener("keydown", (e) => {
 
 </body>
 </html>
+
 
