@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   try {
     // 2) Read env
     const apiKey = process.env.GEMINI_KEY;
-    const model = process.env.GEMINI_MODEL || "gemini-1.5-flash"; // ✅ 안정 기본값
+    const model = process.env.GEMINI_MODEL || "gemini-pro"; // ✅ 안정 기본값
 
     if (!apiKey) {
       return res.status(500).json({
