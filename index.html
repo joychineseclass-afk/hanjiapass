@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HanjaPass PRO - AI 한자 학원</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
     <style>
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -15,8 +14,6 @@
             border-radius: 40px; box-shadow: 8px 8px 16px #ebebeb, -8px -8px 16px #ffffff;
             border: 2px solid rgba(255,255,255,0.9); position: relative; cursor: pointer;
         }
-        .click-badge { position: absolute; top: -8px; right: -5px; background: #ff7e5f; color: white; font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 20px; animation: pulse 1.8s infinite; z-index: 5; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         .level-btn { padding: 10px 24px; border-radius: 18px; background: #fff; border: 2px solid #eee; font-weight: 900; font-size: 14px; color: #888; transition: 0.3s; }
         .active-level { background: #333 !important; color: #fff !important; }
         .sub-btn { padding: 10px 18px; border-radius: 25px; background: #fff; color: #ffbfa0; font-weight: 900; font-size: 13px; border: 2px solid #fff5f0; white-space: nowrap; transition: 0.3s; }
@@ -32,7 +29,6 @@
 
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-2xl font-black text-slate-800 tracking-tighter">🐼 HanjaPass <span class="text-orange-500 text-xs bg-orange-50 px-2 py-1 rounded-lg">PRO</span></h1>
-        <div class="text-[10px] font-black bg-yellow-400 px-3 py-1 rounded-full shadow-sm">KRW 9,900 / ALL</div>
     </div>
 
     <div id="levelBar" class="flex gap-3 overflow-x-auto pb-4 mb-4 no-scrollbar"></div>
@@ -41,24 +37,19 @@
 
     <div id="ai-window">
         <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <span class="text-xl">🤖</span><span class="font-black text-sm">AI 선생님 (HSK 전문가)</span>
-            </div>
-            <button onclick="toggleAI()" class="text-xl">×</button>
+            <span class="font-black text-sm">🤖 AI 선생님</span>
+            <button onclick="toggleAI()">×</button>
         </div>
         <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50 text-slate-700">
-            <div class="msg-ai">안녕하세요! HSK 선생님입니다. 무엇이든 물어보세요! 😊</div>
+            <div class="msg-ai">안녕하세요! 무엇이든 물어보세요! 😊</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
-            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">↑</button>
+            <input id="ai-input" type="text" placeholder="질문..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
+            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full font-bold">↑</button>
         </div>
     </div>
 
-    <div class="ai-fab" onclick="toggleAI()">
-        <span class="text-2xl">🤖</span>
-        <div class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] px-2 py-0.5 rounded-full animate-bounce">LIVE</div>
-    </div>
+    <div class="ai-fab" onclick="toggleAI()"><span class="text-2xl">🤖</span></div>
 
     <script>
         let globalData = {};
@@ -66,10 +57,11 @@
 
         async function initApp() {
             try {
-                const response = await fetch('data.json?v=' + Math.random());
+                // 强制刷新缓存加载数据
+                const response = await fetch('data.json?t=' + Date.now());
                 globalData = await response.json();
                 renderLevels();
-            } catch(e) { console.error("Data error", e); }
+            } catch(e) { console.error("Data fail", e); }
         }
 
         function renderLevels() {
@@ -90,7 +82,6 @@
             document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
             const subBar = document.getElementById('subBar');
             subBar.innerHTML = '';
-            if(!globalData[level]) return;
             Object.keys(globalData[level]).forEach((cat, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'sub-btn flex-shrink-0';
@@ -105,35 +96,34 @@
             document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active-sub', b.innerText === category));
             const list = document.getElementById('container');
             list.innerHTML = '';
-            const words = globalData[currentLevel][category];
-            words.forEach(item => {
+            globalData[currentLevel][category].forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'word-card p-8 mb-6 shadow-sm';
                 card.innerHTML = `
-                    <div class="flex flex-col items-center mb-10">
-                        <div class="text-[26px] font-black text-orange-500 mb-2">${item.py.toLowerCase()}</div>
+                    <div class="flex flex-col items-center">
+                        <div class="text-[26px] font-black text-orange-500 mb-2">${item.py}</div>
                         <div class="jelly-box px-12 py-6" onclick="play('${item.cn}')">
                             <span class="text-7xl font-black text-slate-800">${item.cn}</span>
                         </div>
                         <div class="mt-6 text-center"><p class="text-2xl font-black text-rose-500">${item.trans}</p></div>
-                    </div>
-                `;
+                    </div>`;
                 list.appendChild(card);
             });
         }
 
-        function play(text) {
+        function play(t) {
             window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'zh-CN';
-            window.speechSynthesis.speak(utter);
+            const u = new SpeechSynthesisUtterance(t);
+            u.lang = 'zh-CN';
+            window.speechSynthesis.speak(u);
         }
 
         function toggleAI() {
-            const win = document.getElementById('ai-window');
-            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+            const w = document.getElementById('ai-window');
+            w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
         }
 
+        // --- 核心修复：Google API 调用逻辑 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -141,48 +131,44 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            const loadingMsg = addMessage('AI 선생님이 생각 중입니다...', 'ai');
+            const loadingMsg = addMessage('AI 생각 중...', 'ai');
             
-            const MY_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
+            const KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
             
-            // 董事长增强版：自动尝试不同版本的模型名称
-            const modelNames = ["gemini-1.5-flash-latest", "gemini-1.5-flash"];
-            let success = false;
+            // 董事长精选：目前最稳定的路径格式，直接指向最新 flash 模型
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${KEY}`;
 
-            for (let model of modelNames) {
-                if (success) break;
-                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${MY_KEY}`;
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 HSK 선생님이야. 한국어로 대답해줘: " + msg }] }]
+                    })
+                });
                 
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: "너는 HSK 전문가 선생님이야. 학생의 질문에 한국어로 친절하게 답해줘: " + msg }] }]
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    if (data.candidates && data.candidates[0].content) {
-                        loadingMsg.innerText = data.candidates[0].content.parts[0].text;
-                        success = true;
-                    }
-                } catch (e) { console.error("Try next model..."); }
-            }
-
-            if (!success) {
-                loadingMsg.innerText = "연결 오류가 발생했습니다. 잠시 후 다시 시도하거나 네트워크(VPN)를 확인해주세요.";
+                const data = await response.json();
+                
+                // 增加错误日志，方便董事长在控制台远程办公
+                if (data.error) {
+                    console.error("API Error Detail:", data.error);
+                    loadingMsg.innerText = "Error: " + data.error.message;
+                } else {
+                    loadingMsg.innerText = data.candidates[0].content.parts[0].text;
+                }
+            } catch (e) {
+                loadingMsg.innerText = "연결 실패. 네트워크를 확인하세요.";
             }
         }
 
-        function addMessage(text, role) {
-            const body = document.getElementById('ai-chat-body');
-            const div = document.createElement('div');
-            div.className = role === 'user' ? 'msg-user' : 'msg-ai';
-            div.innerText = text;
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-            return div;
+        function addMessage(t, r) {
+            const b = document.getElementById('ai-chat-body');
+            const d = document.createElement('div');
+            d.className = r === 'user' ? 'msg-user' : 'msg-ai';
+            d.innerText = t;
+            b.appendChild(d);
+            b.scrollTop = b.scrollHeight;
+            return d;
         }
 
         initApp();
