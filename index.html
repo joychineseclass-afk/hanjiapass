@@ -113,11 +113,15 @@ async function askAI() {
   replyBox.textContent = "✏️ 생각 중이에요...";
 
   try {
-    const res = await fetch("/api/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
-    });
+    const res = await fetch("https://hanjiapass.vercel.app/api/gemini", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    message: userInput
+  })
+});
 
     const data = await res.json();
 
@@ -136,3 +140,4 @@ async function askAI() {
 
 </body>
 </html>
+
