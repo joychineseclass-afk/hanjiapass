@@ -6,39 +6,63 @@
     <title>HanjaPass PRO - AI 한자 학원</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 董事长亲自设计的内置样式，不再需要外部 CSS 文件，消灭 404 报错 */
-        body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 20px; }
+        /* 董事长亲自设计的韩式极简风格 */
+        body { background: #fffaf5; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; margin: 0; padding: 20px; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .word-card { background: white; border-radius: 40px; border: 4px solid #fff1e6; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center; }
-        .jelly-box { background: linear-gradient(145deg, #ffffff, #f5f5f5); border-radius: 30px; box-shadow: 5px 5px 10px #ebebeb; border: 2px solid rgba(255,255,255,0.9); padding: 20px 40px; cursor: pointer; display: inline-block; }
-        .level-btn { padding: 8px 20px; border-radius: 15px; background: white; border: 2px solid #eee; font-weight: 800; color: #888; white-space: nowrap; margin-right: 8px; }
-        .active-level { background: #333 !important; color: white !important; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* 汉字卡片：果冻质感 */
+        .word-card { background: white; border-radius: 40px; border: 4px solid #fff1e6; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center; transition: transform 0.2s; }
+        .word-card:active { transform: scale(0.98); }
+        .jelly-box { 
+            background: linear-gradient(145deg, #ffffff, #f5f5f5); 
+            border-radius: 30px; 
+            box-shadow: 5px 5px 10px #ebebeb, -5px -5px 10px #ffffff; 
+            border: 2px solid rgba(255,255,255,0.9); 
+            padding: 20px 40px; 
+            cursor: pointer; 
+            display: inline-block; 
+        }
+        
+        /* 按钮样式 */
+        .level-btn { padding: 8px 20px; border-radius: 15px; background: white; border: 2px solid #eee; font-weight: 800; color: #888; white-space: nowrap; margin-right: 8px; transition: 0.3s; }
+        .active-level { background: #333 !important; color: white !important; border-color: #333 !important; }
+        
+        /* AI 聊天窗：悬浮感 */
         #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 1000; border: 3px solid #333; overflow: hidden; }
-        .msg-ai { background: #f1f1f1; border-radius: 15px 15px 15px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
+        .msg-ai { background: #f1f1f1; border-radius: 15px 15px 15px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; line-height: 1.5; color: #333; }
         .msg-user { background: #ff7e5f; color: white; border-radius: 15px 15px 5px 15px; padding: 10px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
-        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: #333; border-radius: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 999; cursor: pointer; }
+        
+        /* 悬浮球按钮 */
+        .ai-fab { position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: #333; border-radius: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 999; cursor: pointer; transition: 0.3s; }
+        .ai-fab:active { transform: scale(0.9); }
     </style>
 </head>
 <body class="max-w-md mx-auto">
 
-    <header class="mb-6 text-center">
-        <h1 class="text-2xl font-black text-slate-800">🐼 HanjaPass <span class="text-orange-500">PRO</span></h1>
+    <header class="mb-6 flex justify-between items-center">
+        <h1 class="text-2xl font-black text-slate-800 tracking-tighter">🐼 HanjaPass <span class="text-orange-500">PRO</span></h1>
+        <span class="text-[10px] bg-yellow-400 px-2 py-1 rounded-full font-bold">釜山版本 1.0</span>
     </header>
 
     <div id="levelBar" class="flex overflow-x-auto pb-4 no-scrollbar"></div>
+    
     <div id="container"></div>
 
     <div id="ai-window">
-        <div class="bg-slate-800 p-4 text-white flex justify-between items-center font-bold">
-            <span>🤖 AI 한자 선생님</span>
-            <button onclick="toggleAI()">×</button>
+        <div class="bg-slate-800 p-4 text-white flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-lg">🤖</span>
+                <span class="font-bold text-sm">AI 한자 선생님</span>
+            </div>
+            <button onclick="toggleAI()" class="text-xl">&times;</button>
         </div>
-        <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col bg-gray-50">
-            <div class="msg-ai">안녕하세요! 무엇이든 물어보세요! 😊</div>
+        <div id="ai-chat-body" class="flex-1 p-4 overflow-y-auto flex flex-col no-scrollbar bg-gray-50">
+            <div class="msg-ai">안녕하세요! HSK 한자 선생님입니다. 질문이 있으신가요? 😊</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
-            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full font-bold">↑</button>
+            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-orange-500">
+            <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">↑</button>
         </div>
     </div>
 
@@ -48,46 +72,63 @@
 
     <script>
         let globalData = {};
-        const API_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
+        let currentLevel = "";
+        
+        // 【核心】小白只需要确认这里的 API KEY 是否正确
+        const GEMINI_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
 
+        // 初始化加载
         async function initApp() {
             try {
-                const response = await fetch('data.json?v=' + Date.now());
+                // 加随机数防止浏览器读取旧的 data.json 缓存
+                const response = await fetch('data.json?t=' + Date.now());
                 globalData = await response.json();
                 renderLevels();
-            } catch(e) { 
-                document.getElementById('container').innerHTML = "<p class='text-center text-gray-400'>data.json 파일을 찾을 수 없습니다.</p>";
+            } catch(e) {
+                document.getElementById('container').innerHTML = `
+                    <div class="text-center p-10 bg-red-50 rounded-3xl">
+                        <p class="text-red-500 font-bold">data.json 파일을 불러오지 못했습니다.</p>
+                        <p class="text-xs text-gray-400 mt-2">파일 이름이 'data.json'인지 확인해주세요.</p>
+                    </div>`;
             }
         }
 
+        // 渲染顶部关卡
         function renderLevels() {
             const bar = document.getElementById('levelBar');
             bar.innerHTML = '';
             Object.keys(globalData).forEach((level, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'level-btn';
+                btn.className = 'level-btn flex-shrink-0';
                 btn.innerText = level;
-                btn.onclick = () => {
-                    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active-level'));
-                    btn.classList.add('active-level');
-                    renderWords(level);
-                };
+                btn.onclick = () => selectLevel(level);
                 bar.appendChild(btn);
-                if(index === 0) btn.click();
+                if(index === 0) selectLevel(level);
             });
         }
 
-        function renderWords(level) {
+        // 选择关卡
+        function selectLevel(level) {
+            currentLevel = level;
+            document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active-level', b.innerText === level));
+            renderWords();
+        }
+
+        // 渲染汉字列表
+        function renderWords() {
             const list = document.getElementById('container');
             list.innerHTML = '';
-            const category = Object.keys(globalData[level])[0];
-            globalData[level][category].forEach(item => {
+            // 默认展示该级别下的第一个分类
+            const firstCategory = Object.keys(globalData[currentLevel])[0];
+            const words = globalData[currentLevel][firstCategory];
+            
+            words.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'word-card';
                 card.innerHTML = `
-                    <div class="text-orange-500 font-bold mb-2">${item.py}</div>
+                    <div class="text-orange-500 font-bold mb-2 text-lg">${item.py}</div>
                     <div class="jelly-box" onclick="play('${item.cn}')">
-                        <span class="text-6xl font-black">${item.cn}</span>
+                        <span class="text-6xl font-black text-slate-800">${item.cn}</span>
                     </div>
                     <div class="mt-4 text-2xl font-bold text-rose-500">${item.trans}</div>
                 `;
@@ -95,19 +136,21 @@
             });
         }
 
-        function play(t) {
+        // 语音播放
+        function play(text) {
             window.speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(t);
-            u.lang = 'zh-CN';
-            window.speechSynthesis.speak(u);
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'zh-CN';
+            window.speechSynthesis.speak(utter);
         }
 
+        // AI 窗口开关
         function toggleAI() {
-            const w = document.getElementById('ai-window');
-            w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
+            const win = document.getElementById('ai-window');
+            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 核心修复：修正 API 路径和模型名称 ---
+        // --- 核心修复：小白注意看这里 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -115,17 +158,17 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            const loadingMsg = addMessage('AI가 생각 중입니다...', 'ai');
+            const loadingMsg = addMessage('생각 중입니다...', 'ai');
             
-            // 修正：使用 v1beta 接口，并去掉 -latest 后缀，这是最稳健的写法
-            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+            // 锁定 v1beta 接口和正确模型名
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 HSK 전문가야. 학생의 질문에 한국어로 친절하게 대답해줘: " + msg }] }]
+                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 HSK 전문가야. 친절하게 한국어로 답해줘: " + msg }] }]
                     })
                 });
                 
@@ -133,22 +176,26 @@
                 
                 if (data.error) {
                     loadingMsg.innerText = "Error: " + data.error.message;
-                } else {
+                    console.error("Google Error:", data.error);
+                } else if (data.candidates && data.candidates[0].content) {
                     loadingMsg.innerText = data.candidates[0].content.parts[0].text;
+                } else {
+                    loadingMsg.innerText = "답변을 가져오지 못했습니다.";
                 }
             } catch (e) {
-                loadingMsg.innerText = "연결 실패. 네트워크 또는 API Key를 확인하세요.";
+                loadingMsg.innerText = "연결 실패. 인터넷을 확인해주세요.";
+                console.error("Fetch Error:", e);
             }
         }
 
-        function addMessage(t, r) {
-            const b = document.getElementById('ai-chat-body');
-            const d = document.createElement('div');
-            d.className = r === 'user' ? 'msg-user' : 'msg-ai';
-            d.innerText = t;
-            b.appendChild(d);
-            b.scrollTop = b.scrollHeight;
-            return d;
+        function addMessage(text, role) {
+            const body = document.getElementById('ai-chat-body');
+            const div = document.createElement('div');
+            div.className = role === 'user' ? 'msg-user' : 'msg-ai';
+            div.innerText = text;
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+            return div;
         }
 
         initApp();
