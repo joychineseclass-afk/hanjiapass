@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // 1) CORS
+  // ===== 0) CORS =====
   const allowOrigins = [
     "https://joychineseclass-afk.github.io",
     "https://hanjiapass.vercel.app",
@@ -17,55 +17,87 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method Not Allowed. Use POST." });
   }
 
+  // ===== 1) Read env =====
+  const apiKey =
+    process.env.GEMINI_API_KEY ||
+    process.env.GEMINI_KEY ||
+    process.env.GOOGLE_API_KEY;
+
+  // ✅ 建议：Vercel 里放 GEMINI_MODEL（可选），不放就用默认
+  const model =
+    (process.env.GEMINI_MODEL || "gemini-1.5-flash").replace(/^models\//, "");
+
+  if (!apiKey) {
+    return res.status(500).json({
+      error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
+    });
+  }
+
+  // ===== 2) Read body =====
+  let body = {};
   try {
-    // 2) Env
-    const apiKey = process.env.GEMINI_API_KEY; // 你 Vercel 里就是这个
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
-      });
-    }
+    body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
+  } catch (e) {
+    return res.status(400).json({ error: "Invalid JSON body." });
+  }
 
-    // 3) Body
-    const body =
-      typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-    const message = String(body.message || "").trim();
-    if (!message) {
-      return res.status(400).json({ error: "Empty message." });
-    }
+  // ✅ 前端发 message；兼容旧 prompt
+  const message = String(body.message || body.prompt || "").trim();
+  if (!message) return res.status(400).json({ error: "Empty message." });
 
-    // ✅ 4) 用“统一入口”的 Gemini API（更稳）
-    // 模型：gemini-1.5-flash 是最常用的稳定选择
-    const model = "gemini-1.5-flash";
+  // ===== 3) Build payload =====
+  const payload = {
+    contents: [{ role: "user", parts: [{ text: message }] }],
+  };
 
-    // 注意：这里不是 generativelanguage.googleapis.com，而是新的统一入口
-    const url =
-      `https://api.google.dev/gemini/v1/models/${model}:generateContent?key=${apiKey}`;
+  // ===== 4) Call Gemini (try v1 then v1beta) =====
+  const endpoints = [
+    `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+  ];
 
-    const resp = await fetch(url, {
+  async function callGemini(url) {
+    const r = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: message }] }],
-      }),
+      body: JSON.stringify(payload),
     });
 
-    const data = await resp.json();
+    const text = await r.text(); // ✅ 先读 text，保证永不崩
+    let data = null;
+    try { data = JSON.parse(text); } catch (_) {}
 
-    if (!resp.ok) {
-      return res.status(resp.status).json({
-        error: data?.error?.message || "Gemini API error",
-        details: data,
-        usingUrl: url.replace(apiKey, "****"), // 防止 key 被回显
-      });
-    }
-
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No response text.";
-
-    return res.status(200).json({ text });
-  } catch (e) {
-    return res.status(500).json({ error: "Server error: " + e.message });
+    return { ok: r.ok, status: r.status, data, raw: text, url };
   }
+
+  let last = null;
+  for (const url of endpoints) {
+    last = await callGemini(url);
+    if (last.ok) break;
+  }
+
+  if (!last || !last.ok) {
+    const msg =
+      last?.data?.error?.message ||
+      last?.data?.error ||
+      last?.raw ||
+      "Gemini request failed.";
+
+    return res.status(last?.status || 500).json({
+      error: msg,
+      triedModel: model,
+      triedUrls: endpoints,
+    });
+  }
+
+  const answer =
+    last.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+    last.data?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("\n") ||
+    "无回复内容";
+
+  return res.status(200).json({
+    text: answer,
+    model,
+    usedEndpoint: last.url.includes("/v1beta/") ? "v1beta" : "v1",
+  });
 }
