@@ -91,7 +91,7 @@ async function send() {
   input.value = "";
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch("/api/gemini", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // ✅ 关键：后端读的是 message，不是 prompt
@@ -125,3 +125,4 @@ input.addEventListener("keydown", (e) => {
 
 </body>
 </html>
+
