@@ -8,126 +8,93 @@
   <style>
     body { background:#f7f7f7; }
     .chat-box { max-height: 60vh; overflow-y: auto; }
-    .bubble { white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
-
 <body class="p-4">
 
-  <!-- 浮动按钮 -->
-  <button onclick="toggleAI()"
-    class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
-    🤖
-  </button>
+<button onclick="toggleAI()"
+  class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+  🤖
+</button>
 
-  <!-- AI 窗口 -->
-  <div id="ai-panel"
-    class="hidden fixed bottom-20 right-4 w-[340px] bg-white rounded-xl shadow-xl flex flex-col">
+<div id="ai-panel"
+  class="hidden fixed bottom-20 right-4 w-[320px] bg-white rounded-xl shadow-xl flex flex-col">
 
-    <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
-      <span>AI 한자 선생님</span>
-      <button onclick="toggleAI()">✖</button>
-    </div>
-
-    <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
-
-    <div class="p-3 border-t flex gap-2">
-      <input id="input" class="flex-1 border rounded px-2 py-1"
-        placeholder="질문을 입력하세요…" />
-      <button id="sendBtn" onclick="send()"
-        class="bg-orange-500 text-white px-3 py-1 rounded">
-        보내기
-      </button>
-    </div>
-
-    <div id="hint" class="text-xs text-center text-gray-500 pb-2">
-      🔐 Key 보호 모드: Vercel /api/gemini
-    </div>
+  <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
+    <span>AI 한자 선생님</span>
+    <button onclick="toggleAI()">✖</button>
   </div>
 
+  <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
+
+  <div class="p-3 border-t flex gap-2">
+    <input id="input"
+      class="flex-1 border rounded px-2 py-1"
+      placeholder="질문을 입력하세요…" />
+    <button onclick="send()"
+      class="bg-orange-500 text-white px-3 py-1 rounded">
+      보내기
+    </button>
+  </div>
+
+  <div class="text-xs text-center text-gray-500 pb-2">
+    🔐 Key 보호 모드: Vercel API
+  </div>
+</div>
+
 <script>
-  // ✅ 终极关键：无论页面跑在 GitHub Pages 还是别处，都固定打到 Vercel
-  const API_URL = "https://hanjiapass.vercel.app/api/gemini";
+const panel = document.getElementById("ai-panel");
+const chat  = document.getElementById("chat");
+const input = document.getElementById("input");
 
-  const panel = document.getElementById("ai-panel");
-  const chat  = document.getElementById("chat");
-  const input = document.getElementById("input");
-  const sendBtn = document.getElementById("sendBtn");
-  const hint = document.getElementById("hint");
+function toggleAI() {
+  panel.classList.toggle("hidden");
+}
 
-  function toggleAI() {
-    panel.classList.toggle("hidden");
-    if (!panel.classList.contains("hidden")) input.focus();
-  }
+function addMsg(text, who) {
+  const div = document.createElement("div");
+  div.className = who === "user" ? "text-right" : "text-left text-gray-800";
+  div.innerHTML = `
+    <span class="inline-block px-3 py-2 rounded-lg ${
+      who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"
+    }">${text}</span>
+  `;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
 
-  function addMsg(text, who) {
-    const div = document.createElement("div");
-    div.className = who === "user" ? "text-right" : "text-left text-gray-800";
-    div.innerHTML = `
-      <span class="bubble inline-block px-3 py-2 rounded-lg ${
-        who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"
-      }">${escapeHtml(text)}</span>
-    `;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-  }
+async function send() {
+  const msg = input.value.trim();
+  if (!msg) return;
 
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
+  addMsg(msg, "user");
+  input.value = "";
 
-  async function send() {
-    const msg = input.value.trim();
-    if (!msg) return;
-
-    addMsg(msg, "user");
-    input.value = "";
-
-    sendBtn.disabled = true;
-    sendBtn.classList.add("opacity-60");
-
-    try {
-      const res = await fetch(API_URL, {
+  try {
+    const res = await fetch(
+      "https://hanjiapass.vercel.app/api/gemini",
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // ✅ 后端终极版读取的是 message
         body: JSON.stringify({ message: msg })
-      });
-
-      // ✅ 就算后端炸了，也先读成 text，再尝试 JSON，避免 DOCTYPE JSON 错
-      const raw = await res.text();
-      let data = null;
-      try { data = JSON.parse(raw); } catch (_) {}
-
-      if (!res.ok) {
-        const errMsg = (data && (data.error || data.message)) ? (data.error || data.message) : raw;
-        throw new Error(`HTTP ${res.status}: ${errMsg}`);
       }
+    );
 
-      const answer = (data && data.text) ? data.text : "(응답 없음)";
-      addMsg(answer, "ai");
+    const data = await res.json();
 
-    } catch (e) {
-      addMsg("오류가 발생했습니다.\n" + e.message, "ai");
-    } finally {
-      sendBtn.disabled = false;
-      sendBtn.classList.remove("opacity-60");
+    if (!res.ok) {
+      addMsg("❌ 오류: " + (data.error || "서버 오류"), "ai");
+      return;
     }
+
+    addMsg(data.text || "(응답 없음)", "ai");
+
+  } catch (e) {
+    addMsg("❌ 네트워크 오류: " + e.message, "ai");
   }
+}
 
-  // Enter 发送
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") send();
-  });
-
-  // 初始欢迎
-  addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 예문/문법/비슷한 표현을 물어보세요!", "ai");
-  hint.textContent = `🔐 Key 보호 모드: ${API_URL}`;
+addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 문법을 물어보세요!", "ai");
 </script>
 
 </body>
