@@ -1,122 +1,125 @@
 // api/gemini.js
-// ✅ Vercel Serverless Function (Node.js)
-// ✅ POST only, returns { text } always
-// ✅ CORS for your GitHub Pages + Vercel domains
-// ✅ Uses env: GEMINI_KEY (required), GEMINI_MODEL (optional)
+// ✅ Vercel Serverless Function (Node) — 最稳最终版
+// 需要在 Vercel Environment Variables 设置：
+// GEMINI_API_KEY=xxxxx
+// （可选）GEMINI_MODEL=models/gemini-1.5-flash
 
 export default async function handler(req, res) {
-  // 1) CORS (필요한 도메인만 허용)
+  // ===== 1) CORS（如果你前端在 GitHub Pages / Vercel 都能用）=====
   const allowOrigins = [
     "https://joychineseclass-afk.github.io",
-    "https://joychineseclass-afk.github.io/hanjapass",
     "https://hanjapass.vercel.app",
+    // 也可以加你自己的自定义域名
   ];
 
-  const origin = req.headers.origin || "";
-  if (allowOrigins.includes(origin)) {
+  const origin = req.headers.origin;
+  if (origin && allowOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
   res.setHeader("Vary", "Origin");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Preflight
+  // 预检请求
   if (req.method === "OPTIONS") {
     return res.status(204).end();
   }
 
-  // POST only
+  // 只允许 POST
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed. Use POST.", text: "" });
   }
 
+  // ===== 2) 读取环境变量 =====
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GEMINI_KEY; // 兼容你之前写法
+  const model = process.env.GEMINI_MODEL || "models/gemini-1.5-flash"; // ✅ 最稳默认
+
+  if (!apiKey) {
+    return res.status(500).json({
+      error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
+      text: "",
+    });
+  }
+
+  // ===== 3) 读取 body（兼容各种情况）=====
+  let body = req.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      body = {};
+    }
+  }
+
+  const message = String(body?.message || "").trim();
+  const context = body?.context || null;
+
+  if (!message) {
+    return res.status(400).json({ error: "Empty message", text: "" });
+  }
+
+  // ===== 4) 组装 prompt（你可以按你应用风格再微调）=====
+  const systemHint = `
+너는 "AI 한자 선생님"이야.
+사용자는 한국인 중국어 학습자야.
+- 답변은 기본적으로 한국어로 설명하되, 필요한 중국어(한자/간체/병음)도 같이 보여줘.
+- 예문 2~3개 제공해줘.
+- 발음(병음)과 뜻(한국어) 정리해줘.
+- 너무 길면 핵심만.
+`.trim();
+
+  const userText = context
+    ? `${systemHint}\n\n[컨텍스트]\n${JSON.stringify(context)}\n\n[질문]\n${message}`
+    : `${systemHint}\n\n[질문]\n${message}`;
+
+  // ===== 5) Gemini generateContent 호출 (v1beta) =====
   try {
-    // 2) Read env
-    const apiKey = process.env.GEMINI_KEY;
-    const model = process.env.GEMINI_MODEL || "gemini-pro"; // ✅ 안정 기본값
+    const url = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(
+      apiKey
+    )}`;
 
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "Missing GEMINI_KEY in Vercel Environment Variables.",
-        text: "",
-      });
-    }
-
-    // 3) Read body
-    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-    const message = String(body.message || "").trim();
-    const context = body.context || null;
-
-    if (!message) {
-      return res.status(400).json({ error: "Empty message", text: "" });
-    }
-
-    // 4) Build prompt (간단/안전/안정)
-    const contextText = context
-      ? [
-          "선택된 항목(단어) 정보:",
-          `- 중국어: ${context.cn || ""}`,
-          `- 병음: ${context.py || ""}`,
-          `- 한국어: ${context.kr || ""}`,
-          `- 뜻/번역: ${context.trans || ""}`,
-          `- 예문(중문): ${context.sentence_cn || ""}`,
-          `- 예문(병음): ${context.sentence_py || ""}`,
-        ].join("\n")
-      : "";
-
-    const prompt = [
-      "당신은 'HSK 한자 선생님' 입니다.",
-      "대답은 기본적으로 한국어로 하되, 필요하면 중국어/병음도 함께 제공합니다.",
-      "짧고 명확하게, 학습자 친화적으로 설명하세요.",
-      contextText ? "\n" + contextText + "\n" : "",
-      `사용자 질문: ${message}`,
-    ].join("\n");
-
-    // 5) Call Gemini REST API
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-      model
-    )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const payload = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: userText }],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.6,
+        maxOutputTokens: 800,
+      },
+    };
 
     const resp = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: prompt }],
-          },
-        ],
-        generationConfig: {
-          temperature: 0.6,
-          topP: 0.9,
-          maxOutputTokens: 512,
-        },
-      }),
+      body: JSON.stringify(payload),
     });
 
-    const data = await resp.json().catch(() => ({}));
+    const data = await resp.json();
 
+    // 如果 API 返回错误
     if (!resp.ok) {
-      // Gemini 에러 원문을 최대한 전달
-      return res.status(resp.status).json({
-        error: data?.error?.message || `Gemini API error (HTTP ${resp.status})`,
-        raw: data,
-        text: "",
-      });
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        JSON.stringify(data).slice(0, 500) ||
+        "Gemini API error";
+      return res.status(resp.status).json({ error: msg, text: "" });
     }
 
-    // 6) Extract text safely
+    // 取出文本
     const text =
       data?.candidates?.[0]?.content?.parts
         ?.map((p) => p?.text || "")
         .join("")
         .trim() || "";
 
-    return res.status(200).json({ text: text || "답변을 생성하지 못했습니다.", ok: true });
-  } catch (e) {
+    return res.status(200).json({ text });
+  } catch (err) {
     return res.status(500).json({
-      error: String(e?.message || e),
+      error: err?.message || "Server error",
       text: "",
     });
   }
