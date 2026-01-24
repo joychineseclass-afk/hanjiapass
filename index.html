@@ -1,160 +1,675 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>AI 한자 선생님</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 한자 선생님 · HanjaPass</title>
+
+  <!-- ✅ Tailwind CDN (개발/데모용). 운영이면 빌드 권장 -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body { background:#fffaf5; }
-    .ai-box {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 320px;
-      max-height: 420px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.15);
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont;
-    }
-    .ai-header {
-      background:#1f2937;
-      color:#fff;
-      padding:10px 14px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .ai-body {
-      flex:1;
-      padding:12px;
-      overflow-y:auto;
-      font-size:14px;
-    }
-    .ai-footer {
-      display:flex;
-      gap:8px;
-      padding:10px;
-      border-top:1px solid #eee;
-    }
-    .ai-msg {
-      margin-bottom:8px;
-      line-height:1.5;
-      white-space:pre-wrap;
-    }
-    .user { text-align:right; }
-    .ai { text-align:left; color:#111; }
-    .fab {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      width:56px;
-      height:56px;
-      border-radius:50%;
-      background:#111827;
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      cursor:pointer;
-      box-shadow:0 6px 20px rgba(0,0,0,.25);
-    }
+    /* 작은 UI 보정 */
+    .card-hover { transition: transform .12s ease, box-shadow .12s ease; }
+    .card-hover:hover { transform: translateY(-2px); }
+    .chip { border: 1px solid rgba(0,0,0,.08); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .shadow-soft { box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .fade-in { animation: fadeIn .15s ease-out; }
+    @keyframes fadeIn { from { opacity: .4; transform: translateY(2px);} to { opacity: 1; transform: translateY(0);} }
+    .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 999px; }
   </style>
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-slate-900 text-white grid place-items-center">字</div>
+      <div class="flex-1">
+        <h1 class="text-lg font-bold leading-tight">HanjaPass · AI 한자 선생님</h1>
+        <p class="text-xs text-slate-500">클릭하면 HSK/부수/획수 정보를 보여주고, 질문도 할 수 있어요.</p>
+      </div>
+      <a class="text-xs text-slate-500 hover:text-slate-700" href="#" onclick="openHelp(); return false;">도움말</a>
+    </div>
+  </header>
 
-<!-- AI CHAT -->
-<div id="aiBox" class="ai-box">
-  <div class="ai-header">
-    <div>🤖 AI 한자 선생님</div>
-    <button onclick="toggleAI()">✕</button>
-  </div>
-  <div id="chat" class="ai-body"></div>
-  <div class="ai-footer">
-    <input id="aiInput" class="flex-1 border rounded px-2 py-1" placeholder="질문을 입력하세요…" />
-    <button onclick="askAI()" class="bg-orange-500 text-white px-3 rounded">▶</button>
-  </div>
-</div>
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <div id="topAlert" class="hidden mb-4 p-3 rounded-xl border bg-white text-sm"></div>
 
-<!-- FAB -->
-<div class="fab" onclick="toggleAI()">🤖</div>
+    <div class="grid grid-cols-12 gap-4">
+      <!-- Left: levels -->
+      <aside class="col-span-12 md:col-span-3">
+        <div class="bg-white rounded-2xl border shadow-soft p-3">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-sm font-semibold">레벨</span>
+            <span id="levelCount" class="text-xs text-slate-500"></span>
+          </div>
+
+          <div class="flex gap-2 mb-3">
+            <input id="searchInput" class="w-full text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring"
+                   placeholder="검색: 한자/뜻/병음/단어..." />
+            <button class="px-3 py-2 rounded-xl border text-sm hover:bg-slate-50" onclick="clearSearch()">X</button>
+          </div>
+
+          <div id="levelList" class="space-y-1 max-h-[70vh] overflow-auto scrollbar-thin pr-1"></div>
+        </div>
+      </aside>
+
+      <!-- Right: content -->
+      <section class="col-span-12 md:col-span-9">
+        <div class="bg-white rounded-2xl border shadow-soft p-4">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+            <div class="flex-1">
+              <h2 id="currentTitle" class="text-base font-bold">목록</h2>
+              <p id="currentSubtitle" class="text-sm text-slate-500">왼쪽에서 레벨을 선택하세요.</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-2 rounded-xl border text-sm hover:bg-slate-50" onclick="toggleView()">
+                보기: <span id="viewModeLabel" class="font-semibold">카드</span>
+              </button>
+              <button class="px-3 py-2 rounded-xl border text-sm hover:bg-slate-50" onclick="randomPick()">
+                랜덤 🎲
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 gap-4">
+            <!-- List -->
+            <div class="col-span-12 lg:col-span-7">
+              <div id="itemsWrap" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+              <div id="emptyState" class="hidden text-center text-slate-500 py-10">
+                검색 결과가 없어요.
+              </div>
+            </div>
+
+            <!-- Detail -->
+            <div class="col-span-12 lg:col-span-5">
+              <div class="rounded-2xl border bg-slate-50 p-4">
+                <div class="flex items-start gap-3">
+                  <div id="detailChar" class="w-16 h-16 rounded-2xl bg-white border grid place-items-center text-3xl font-bold">字</div>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span id="detailWord" class="text-base font-bold">선택한 항목</span>
+                      <span id="detailHSK" class="chip text-xs px-2 py-1 rounded-full bg-white">HSK: -</span>
+                      <span id="detailRadical" class="chip text-xs px-2 py-1 rounded-full bg-white">부수: -</span>
+                      <span id="detailStrokes" class="chip text-xs px-2 py-1 rounded-full bg-white">획수: -</span>
+                    </div>
+                    <p id="detailMeaning" class="text-sm text-slate-600 mt-1">왼쪽 목록에서 하나를 클릭해 보세요.</p>
+                    <p id="detailExtra" class="text-xs text-slate-500 mt-2"></p>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <div class="text-sm font-semibold mb-2">자모(문자) 분석</div>
+                  <div id="charBreakdown" class="space-y-2"></div>
+                  <p class="text-xs text-slate-500 mt-2">
+                    ※ 여러 글자(단어)라면, 각 글자별로 HSK/부수/획수를 따로 표시합니다.
+                  </p>
+                </div>
+
+                <hr class="my-4 border-slate-200" />
+
+                <div class="text-sm font-semibold mb-2">AI에게 질문하기</div>
+                <p class="text-xs text-slate-500 mb-3">
+                  예: “이 글자 HSK 몇 급이야?”, “초등학생에게 쉬운 예문 만들어줘”
+                </p>
+
+                <div class="flex gap-2">
+                  <input id="quickQuestion" class="flex-1 text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring"
+                         placeholder="질문을 입력하세요..." />
+                  <button id="quickAskBtn" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-sm hover:opacity-90"
+                          onclick="quickAsk()">질문</button>
+                </div>
+
+                <div class="mt-3 text-xs text-slate-500">
+                  ✅ Key 보호 모드: 기본은 <span class="mono">/api/gemini</span> 호출 (프론트에 Key 없음) <br/>
+                  ⚠️ 임시로 프론트 Key를 쓰려면 아래 <span class="mono">GEMINI_KEY</span>에 넣어도 됩니다(추천 X).
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Floating AI widget -->
+  <button class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-slate-900 text-white shadow-soft grid place-items-center"
+          onclick="toggleAI()" aria-label="AI Chat">
+    🤖
+  </button>
+
+  <div id="aiPanel" class="hidden fixed bottom-24 right-6 w-[340px] max-w-[90vw] bg-white rounded-2xl border shadow-soft overflow-hidden fade-in">
+    <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between">
+      <div class="font-semibold">AI 한자 선생님</div>
+      <button class="opacity-90 hover:opacity-100" onclick="toggleAI()">✕</button>
+    </div>
+
+    <div id="aiMessages" class="h-[340px] overflow-auto p-3 space-y-2 bg-slate-50 scrollbar-thin"></div>
+
+    <div class="p-3 bg-white border-t">
+      <div class="flex gap-2">
+        <input id="aiInput" class="flex-1 text-sm px-3 py-2 rounded-xl border focus:outline-none focus:ring"
+               placeholder="질문을 입력하세요..." />
+        <button id="aiSendBtn" class="px-3 py-2 rounded-xl bg-orange-500 text-white text-sm hover:opacity-90"
+                onclick="askAI()">보내기</button>
+      </div>
+      <div class="mt-2 text-[11px] text-slate-500">
+        운영 권장: Vercel 서버리스(<span class="mono">/api/gemini</span>)로 Key 보호
+      </div>
+    </div>
+  </div>
+
+  <!-- Help modal -->
+  <div id="helpModal" class="hidden fixed inset-0 bg-black/40 z-40" onclick="closeHelp()">
+    <div class="max-w-2xl mx-auto mt-16 px-4" onclick="event.stopPropagation()">
+      <div class="bg-white rounded-2xl shadow-soft border overflow-hidden">
+        <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between">
+          <div class="font-semibold">도움말</div>
+          <button onclick="closeHelp()">✕</button>
+        </div>
+        <div class="p-4 text-sm text-slate-700 space-y-3">
+          <p><b>1)</b> 이 페이지는 같은 폴더의 <span class="mono">data.json</span>을 읽어서 레벨/목록을 보여줍니다.</p>
+          <p><b>2)</b> 한자/단어를 클릭하면 <b>HSK/부수/획수</b>를 표시합니다.</p>
+          <p><b>3)</b> AI 질문 기능은 기본적으로 <span class="mono">/api/gemini</span>로 요청합니다(프론트에 Key 없음).</p>
+          <p class="text-xs text-slate-500">
+            * 아직 서버가 없으면 임시로 아래 코드의 <span class="mono">GEMINI_KEY</span>에 Key를 넣어 테스트할 수 있지만,
+            GitHub Pages 공개 사이트에서는 Key 노출 위험이 있어요.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
-/* ================== CONFIG ================== */
-// ✅ 这里换成你【新的、受保护的】API KEY
-const GEMINI_KEY = "AIzaSyBgRz67t10Rvuy-4L4OwKkwKuA2XUhI_n4";
+/* =========================================================
+   0) (중요) API 설정
+   - 운영(추천): Vercel 서버리스 /api/gemini 사용 → 프론트에 Key 없음
+   - 임시(비추천): GEMINI_KEY에 직접 넣으면 프론트에서 Google API 호출
+========================================================= */
+
+// ✅ 운영 추천: 아래는 빈 값으로 두세요. (Key 노출 방지)
+const GEMINI_KEY = ""; // ← 임시 테스트만 사용할 것 (예: "AIzaSy...")
 const GEMINI_MODEL = "gemini-flash-latest";
 
-const API_URL =
-  `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-/* ============================================ */
+// ✅ 운영 모드: Vercel 등에 만들 /api/gemini 엔드포인트
+const PROXY_API_URL = "/api/gemini";
 
-function toggleAI() {
-  const box = document.getElementById("aiBox");
-  box.style.display = box.style.display === "flex" ? "none" : "flex";
-  if (box.style.display === "flex" && !box.dataset.init) {
-    addMessage("안녕하세요! 😊\nHSK 한자 선생님입니다.\n무엇을 도와드릴까요?", "ai");
-    box.dataset.init = "1";
-  }
+/* =========================================================
+   1) HSK/부수/획수 메타데이터
+   - 여기에 자주 쓰는 글자부터 추가하면 됩니다.
+   - 예: "你": { hsk:"1", radical:"亻", strokes:7 }
+========================================================= */
+const HANZI_META = {
+  "你": { hsk: "1", radical: "亻", strokes: 7 },
+  "好": { hsk: "1", radical: "女", strokes: 6 },
+  "学": { hsk: "1", radical: "子", strokes: 8 },
+  "习": { hsk: "1", radical: "乙", strokes: 3 },
+  "汉": { hsk: "2", radical: "氵", strokes: 5 },
+  "语": { hsk: "1", radical: "讠", strokes: 9 },
+  "字": { hsk: "1", radical: "子", strokes: 6 }
+};
+
+// (선택) HSK 라벨을 예쁘게
+function prettyHSK(v) {
+  if (!v) return "-";
+  return String(v).startsWith("HSK") ? v : ("HSK " + v);
 }
 
-function addMessage(text, role) {
-  const chat = document.getElementById("chat");
-  const div = document.createElement("div");
-  div.className = `ai-msg ${role}`;
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+/* =========================================================
+   2) 앱 데이터 로딩 (data.json)
+========================================================= */
+let globalData = null;       // 전체 data.json
+let levelKeys = [];          // 레벨 목록
+let currentLevel = null;     // 현재 레벨 키
+let currentItems = [];       // 현재 레벨 아이템 목록
+let viewMode = "card";       // card | list
+let selectedItem = null;     // 선택된 아이템
+
+function showAlert(msg, type="info") {
+  const el = document.getElementById("topAlert");
+  el.classList.remove("hidden");
+  el.className = "mb-4 p-3 rounded-xl border bg-white text-sm";
+  if (type === "error") el.classList.add("border-red-200","bg-red-50","text-red-700");
+  if (type === "ok") el.classList.add("border-emerald-200","bg-emerald-50","text-emerald-700");
+  if (type === "info") el.classList.add("border-slate-200","bg-white","text-slate-700");
+  el.textContent = msg;
 }
 
-async function askAI() {
-  const input = document.getElementById("aiInput");
-  const msg = input.value.trim();
-  if (!msg) return;
+function clearAlert() {
+  const el = document.getElementById("topAlert");
+  el.classList.add("hidden");
+  el.textContent = "";
+}
 
-  addMessage(msg, "user");
-  input.value = "";
-
+async function initApp() {
   try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [
-              { text: `당신은 HSK 중국어·한자 전문 선생님입니다.\n한국 학습자에게 친절하게 설명하세요.\n\n질문: ${msg}` }
-            ]
-          }
-        ]
-      })
-    });
+    clearAlert();
+    const res = await fetch("data.json?t=" + Date.now());
+    if (!res.ok) throw new Error("data.json fetch failed: " + res.status);
+    globalData = await res.json();
 
-    const data = await res.json();
+    // data.json 구조가 다양할 수 있으니 최대한 유연하게 처리
+    // 1) { levels: {...} } or 2) { ...레벨키... } 형태 지원
+    const levelsObj = globalData.levels ? globalData.levels : globalData;
+    if (!levelsObj || typeof levelsObj !== "object") throw new Error("data.json 구조를 읽을 수 없어요.");
 
-    const answer =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    levelKeys = Object.keys(levelsObj);
+    levelKeys.sort((a,b)=> String(a).localeCompare(String(b), "ko"));
 
-    if (!answer) {
-      addMessage("❌ 답변을 가져오지 못했습니다.\n(응답 형식이 예상과 달라요)", "ai");
-      console.error(data);
-      return;
+    document.getElementById("levelCount").textContent = `(${levelKeys.length})`;
+
+    renderLevelList(levelsObj);
+
+    // 첫 레벨 자동 선택
+    if (levelKeys.length) {
+      selectLevel(levelKeys[0]);
     }
 
-    addMessage(answer, "ai");
+    // 검색 이벤트
+    document.getElementById("searchInput").addEventListener("input", () => applyFilter());
+
+    // 엔터로 AI 보내기
+    document.getElementById("aiInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") askAI();
+    });
+    document.getElementById("quickQuestion").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") quickAsk();
+    });
 
   } catch (e) {
     console.error(e);
-    addMessage("❌ 오류가 발생했습니다.\n콘솔을 확인해주세요.", "ai");
+    showAlert("초기화 실패: " + e.message, "error");
   }
 }
-</script>
 
+function renderLevelList(levelsObj) {
+  const wrap = document.getElementById("levelList");
+  wrap.innerHTML = "";
+  levelKeys.forEach((k) => {
+    const btn = document.createElement("button");
+    btn.className = "w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent";
+    btn.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold">${escapeHtml(k)}</span>
+        <span class="text-xs text-slate-500">${countLevelItems(levelsObj[k])}</span>
+      </div>
+    `;
+    btn.onclick = () => selectLevel(k);
+    btn.id = "levelBtn_" + k;
+    wrap.appendChild(btn);
+  });
+}
+
+function countLevelItems(levelVal) {
+  // levelVal이 배열일 수도, 객체일 수도 있음
+  if (Array.isArray(levelVal)) return levelVal.length;
+  if (levelVal && Array.isArray(levelVal.items)) return levelVal.items.length;
+  if (levelVal && typeof levelVal === "object") return Object.keys(levelVal).length;
+  return 0;
+}
+
+function selectLevel(levelKey) {
+  const levelsObj = globalData.levels ? globalData.levels : globalData;
+  currentLevel = levelKey;
+
+  // 버튼 스타일
+  levelKeys.forEach(k => {
+    const btn = document.getElementById("levelBtn_" + k);
+    if (!btn) return;
+    btn.classList.toggle("bg-slate-900", k === levelKey);
+    btn.classList.toggle("text-white", k === levelKey);
+    btn.classList.toggle("border-slate-900", k === levelKey);
+    btn.classList.toggle("hover:bg-slate-50", k !== levelKey);
+  });
+
+  // 현재 레벨 아이템 파싱
+  const levelVal = levelsObj[levelKey];
+  currentItems = normalizeItems(levelVal);
+
+  document.getElementById("currentTitle").textContent = String(levelKey);
+  document.getElementById("currentSubtitle").textContent = `총 ${currentItems.length}개`;
+
+  applyFilter();
+}
+
+function normalizeItems(levelVal) {
+  // 다양한 구조 대응:
+  // - [ {hanja:"你", ...}, ... ]
+  // - { items:[...] }
+  // - { "你": {...}, "好": {...} } → 객체면 key를 word로 만들기
+  if (Array.isArray(levelVal)) return levelVal;
+  if (levelVal && Array.isArray(levelVal.items)) return levelVal.items;
+
+  if (levelVal && typeof levelVal === "object") {
+    const arr = [];
+    for (const [k,v] of Object.entries(levelVal)) {
+      if (typeof v === "object") arr.push({ word: k, ...v });
+      else arr.push({ word: k, value: v });
+    }
+    return arr;
+  }
+  return [];
+}
+
+function applyFilter() {
+  const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+
+  let filtered = currentItems;
+  if (q) {
+    filtered = currentItems.filter(it => {
+      const blob = JSON.stringify(it).toLowerCase();
+      return blob.includes(q);
+    });
+  }
+
+  renderItems(filtered);
+}
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  applyFilter();
+}
+
+function toggleView() {
+  viewMode = (viewMode === "card") ? "list" : "card";
+  document.getElementById("viewModeLabel").textContent = (viewMode === "card") ? "카드" : "리스트";
+  applyFilter();
+}
+
+function randomPick() {
+  if (!currentItems.length) return;
+  const it = currentItems[Math.floor(Math.random() * currentItems.length)];
+  selectItem(it);
+  // 스크롤 상단으로
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderItems(items) {
+  const wrap = document.getElementById("itemsWrap");
+  const empty = document.getElementById("emptyState");
+  wrap.innerHTML = "";
+
+  if (!items.length) {
+    empty.classList.remove("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+
+  // 보기 모드에 따라 스타일 변경
+  if (viewMode === "list") {
+    wrap.className = "space-y-2";
+  } else {
+    wrap.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+  }
+
+  items.forEach((it) => {
+    const card = document.createElement("button");
+    card.className = (viewMode === "list")
+      ? "w-full text-left p-3 rounded-2xl border bg-white hover:bg-slate-50 card-hover"
+      : "w-full text-left p-3 rounded-2xl border bg-white card-hover";
+
+    const word = (it.word || it.hanja || it.char || it.text || "").toString();
+    const meaning = (it.meaning_ko || it.meaning || it.kr || it.korean || it.gloss || "").toString();
+    const pinyin = (it.pinyin || it.py || "").toString();
+    const hsk = (it.hsk || "").toString();
+
+    const primaryChar = extractFirstHanzi(word) || word || "字";
+
+    card.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="w-12 h-12 rounded-xl bg-slate-50 border grid place-items-center text-2xl font-bold">${escapeHtml(primaryChar)}</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <div class="font-bold">${escapeHtml(word || primaryChar)}</div>
+            <span class="chip text-xs px-2 py-1 rounded-full bg-white">HSK: ${escapeHtml(hsk || "-")}</span>
+          </div>
+          <div class="text-sm text-slate-600 truncate">${escapeHtml(meaning || "")}</div>
+          <div class="text-xs text-slate-500 mt-1">${escapeHtml(pinyin || "")}</div>
+        </div>
+      </div>
+    `;
+
+    card.onclick = () => selectItem(it);
+    wrap.appendChild(card);
+  });
+}
+
+function selectItem(it) {
+  selectedItem = it;
+
+  const word = (it.word || it.hanja || it.char || it.text || "").toString();
+  const meaning = (it.meaning_ko || it.meaning || it.kr || it.korean || it.gloss || "").toString();
+  const pinyin = (it.pinyin || it.py || "").toString();
+
+  const chars = extractHanziChars(word);
+  const firstChar = chars[0] || extractFirstHanzi(word) || word || "字";
+
+  document.getElementById("detailChar").textContent = firstChar;
+  document.getElementById("detailWord").textContent = word || firstChar;
+  document.getElementById("detailMeaning").textContent = meaning || "—";
+  document.getElementById("detailExtra").textContent = pinyin ? ("Pinyin: " + pinyin) : "";
+
+  // 단어 전체에 대한 “대표” 메타는 첫 글자 기준으로 표시
+  const meta = HANZI_META[firstChar] || null;
+  document.getElementById("detailHSK").textContent = "HSK: " + (meta ? prettyHSK(meta.hsk) : "-");
+  document.getElementById("detailRadical").textContent = "부수: " + (meta ? meta.radical : "-");
+  document.getElementById("detailStrokes").textContent = "획수: " + (meta ? meta.strokes : "-");
+
+  // 글자별 분석
+  renderBreakdown(chars.length ? chars : [firstChar]);
+}
+
+function renderBreakdown(chars) {
+  const wrap = document.getElementById("charBreakdown");
+  wrap.innerHTML = "";
+
+  chars.forEach(ch => {
+    const meta = HANZI_META[ch];
+    const row = document.createElement("div");
+    row.className = "p-3 rounded-2xl border bg-white";
+    row.innerHTML = `
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-50 border grid place-items-center text-xl font-bold">${escapeHtml(ch)}</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="chip text-xs px-2 py-1 rounded-full bg-white">HSK: ${escapeHtml(meta ? prettyHSK(meta.hsk) : "-")}</span>
+            <span class="chip text-xs px-2 py-1 rounded-full bg-white">부수: ${escapeHtml(meta ? meta.radical : "-")}</span>
+            <span class="chip text-xs px-2 py-1 rounded-full bg-white">획수: ${escapeHtml(meta ? meta.strokes : "-")}</span>
+          </div>
+          <div class="text-xs text-slate-500 mt-1">
+            ${meta ? "등록됨" : "미등록 (HANZI_META에 추가하면 표시됩니다)"}
+          </div>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+/* =========================================================
+   3) AI Chat
+   - 기본: /api/gemini (Key 보호)
+   - 임시: GEMINI_KEY가 있으면 직접 Google endpoint 호출
+========================================================= */
+function toggleAI() {
+  const panel = document.getElementById("aiPanel");
+  panel.classList.toggle("hidden");
+  if (!panel.classList.contains("hidden") && !document.getElementById("aiMessages").children.length) {
+    addMessage("안녕하세요! HSK 한자 선생님입니다. 무엇을 도와드릴까요? 😊", "bot");
+  }
+}
+
+function addMessage(text, role="bot") {
+  const wrap = document.getElementById("aiMessages");
+  const bubble = document.createElement("div");
+  bubble.className = (role === "user")
+    ? "ml-auto max-w-[85%] p-3 rounded-2xl bg-orange-500 text-white text-sm shadow-soft"
+    : "mr-auto max-w-[85%] p-3 rounded-2xl bg-white border text-slate-800 text-sm";
+
+  bubble.textContent = text;
+  wrap.appendChild(풍선껌);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function setSending(isSending) {
+  document.getElementById("aiSendBtn").disabled = isSending;
+  document.getElementById("quickAskBtn").disabled = isSending;
+  document.getElementById("aiSendBtn").classList.toggle("opacity-60", isSending);
+  document.getElementById("quickAskBtn").classList.toggle("opacity-60", isSending);
+}
+
+function buildContext() {
+  if (!selectedItem) return "";
+  const word = (selectedItem.word || selectedItem.hanja || selectedItem.char || selectedItem.text || "").toString();
+  const meaning = (selectedItem.meaning_ko || selectedItem.meaning || selectedItem.kr || selectedItem.korean || selectedItem.gloss || "").toString();
+  const pinyin = (selectedItem.pinyin || selectedItem.py || "").toString();
+
+  const chars = extractHanziChars(word);
+  const metaLines = chars.map(ch => {
+    const m = HANZI_META[ch];
+    return m
+      ? `${ch}: ${prettyHSK(m.hsk)}, 부수 ${m.radical}, 획수 ${m.strokes}`
+      : `${ch}: (메타 없음)`;
+  }).join("\n");
+
+  return [
+    "현재 선택한 항목 정보:",
+    `단어/한자: ${word}`,
+    `뜻(한국어): ${meaning}`,
+    pinyin ? `Pinyin: ${pinyin}` : "",
+    "글자별 HSK/부수/획수:",
+    metaLines
+  ].filter(Boolean).join("\n");
+}
+
+async function askAI() {
+  const inputEl = document.getElementById("aiInput");
+  const msg = (inputEl.value || "").trim();
+  if (!msg) return;
+
+  addMessage(msg, "user");
+  inputEl.value = "";
+
+  const prompt = buildContext()
+    ? (buildContext() + "\n\n사용자 질문: " + msg)
+    : msg;
+
+  await sendToGemini(prompt);
+}
+
+async function quickAsk() {
+  const inputEl = document.getElementById("quickQuestion");
+  const msg = (inputEl.value || "").trim();
+  if (!msg) return;
+
+  // 패널 열고 대화에 반영
+  if (document.getElementById("aiPanel").classList.contains("hidden")) toggleAI();
+
+  addMessage(msg, "user");
+  inputEl.value = "";
+
+  const prompt = buildContext()
+    ? (buildContext() + "\n\n사용자 질문: " + msg)
+    : msg;
+
+  await sendToGemini(prompt);
+}
+
+async function sendToGemini(prompt) {
+  setSending(true);
+  try {
+    let data;
+
+    if (GEMINI_KEY) {
+      // ✅ 임시(비추천): 프론트에서 직접 호출
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(GEMINI_KEY)}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, topP: 0.9, maxOutputTokens: 512 }
+        })
+      });
+      data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message || "요청 실패");
+
+    } else {
+      // ✅ 운영(추천): 서버리스 프록시 호출 (/api/gemini)
+      const res = await fetch(PROXY_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: GEMINI_MODEL,
+          prompt
+        })
+      });
+      data = await res.json();
+      if (!res.ok) throw new Error(data?.error || data?.message || "프록시 요청 실패");
+    }
+
+    const answer = extractGeminiText(data) || "답변을 가져오지 못했습니다. (응답 형식이 예상과 달라요)";
+    addMessage(answer, "bot");
+
+  } catch (e) {
+    console.error(e);
+    addMessage("오류: " + e.message, "bot");
+  } finally {
+    setSending(false);
+  }
+}
+
+// Google 응답에서 텍스트 추출 (여러 형식 대응)
+function extractGeminiText(data) {
+  // direct API
+  const t1 = data?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("");
+  if (t1) return t1;
+
+  // proxy API (우리가 {text:"..."} 형태로 만들 수도 있음)
+  const t2 = data?.text;
+  if (t2) return t2;
+
+  return "";
+}
+
+/* =========================================================
+   4) Utils
+========================================================= */
+function extractHanziChars(str) {
+  if (!str) return [];
+  const m = str.match(/[\u4E00-\u9FFF]/g);
+  return m ? m : [];
+}
+
+function extractFirstHanzi(str) {
+  const arr = extractHanziChars(str);
+  return arr[0] || "";
+}
+
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function openHelp() {
+  document.getElementById("helpModal").classList.remove("hidden");
+}
+function closeHelp() {
+  document.getElementById("helpModal").classList.add("hidden");
+}
+
+/* =========================================================
+   Start
+========================================================= */
+initApp();
+</script>
 </body>
 </html>
