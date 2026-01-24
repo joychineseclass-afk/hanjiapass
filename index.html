@@ -1,568 +1,104 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HanjaPass PRO - HSK 한자/단어 학습</title>
+  <meta charset="UTF-8" />
+  <title>AI 한자 선생님</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Tailwind CDN (개발/데모용) -->
+  <!-- Tailwind (简单用法，之后可以再优化) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body { background: #f8fafc; font-family: "Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif; }
-    .card { background: white; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 8px 24px rgba(0,0,0,.05); }
-    .pill { border: 1px solid rgba(0,0,0,.08); }
-    .btn { border: 1px solid rgba(0,0,0,.08); }
-    .btn:disabled { opacity: .5; cursor: not-allowed; }
-    .ai-panel { position: fixed; right: 20px; bottom: 20px; width: 360px; max-width: calc(100vw - 40px); z-index: 50; }
-    .ai-hidden { display:none; }
-    .ai-header { cursor: move; user-select:none; }
-    .ai-messages { height: 320px; overflow:auto; }
-    .msg-user { background:#f59e0b1a; border:1px solid rgba(245,158,11,.35); }
-    .msg-ai { background:#1118270d; border:1px solid rgba(0,0,0,.06); }
-    .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 60; }
+    body { background:#f7f7f7; }
+    .chat-box { max-height: 60vh; overflow-y: auto; }
   </style>
 </head>
+<body class="p-4">
 
-<body>
-  <header class="max-w-6xl mx-auto px-4 pt-8 pb-4">
-    <div class="flex items-start justify-between gap-4">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900">HanjaPass PRO</h1>
-        <p class="text-slate-600 mt-1">HSK 단어/표현을 카드로 보고, 예문과 발음까지 한 번에 학습하세요.</p>
-      </div>
-
-      <div class="flex gap-2">
-        <button id="viewCardBtn" class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm">보기: 카드</button>
-        <button id="randomBtn" class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm">랜덤 🎲</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto px-4 pb-24">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-      <!-- Left: List -->
-      <aside class="lg:col-span-4 card rounded-2xl p-4">
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-slate-900">목록</h2>
-          <div class="flex gap-2">
-            <select id="hskSelect" class="pill rounded-lg px-2 py-1 text-sm bg-white"></select>
-            <select id="catSelect" class="pill rounded-lg px-2 py-1 text-sm bg-white"></select>
-          </div>
-        </div>
-
-        <div class="mt-3">
-          <input id="searchInput" class="w-full pill rounded-lg px-3 py-2 text-sm bg-white" placeholder="검색: 중국어/한자/병음/한국어" />
-        </div>
-
-        <div class="mt-3 text-xs text-slate-500">
-          선택한 항목 수: <span id="countSpan">0</span>
-        </div>
-
-        <div id="listBox" class="mt-3 space-y-2 max-h-[62vh] overflow-auto pr-1"></div>
-      </aside>
-
-      <!-- Right: Detail -->
-      <section class="lg:col-span-8 card rounded-2xl p-5">
-        <div class="flex items-center justify-between gap-3">
-          <h2 class="font-semibold text-slate-900">상세 보기</h2>
-          <div class="flex gap-2">
-            <button id="speakBtn" class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm">🔊 발음</button>
-            <button id="copyBtn" class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm">📋 복사</button>
-          </div>
-        </div>
-
-        <div id="detailBox" class="mt-4">
-          <div class="text-slate-600">
-            왼쪽에서 단어/표현을 선택해 주세요 🙂
-          </div>
-        </div>
-
-        <hr class="my-5 border-slate-200" />
-
-        <div>
-          <h3 class="font-semibold text-slate-900">AI에게 질문하기</h3>
-          <p class="text-sm text-slate-600 mt-1">
-            단어 의미/사용법/예문/비슷한 표현 등을 물어보세요.
-          </p>
-          <div class="mt-3 flex gap-2">
-            <input id="quickAskInput" class="w-full pill rounded-lg px-3 py-2 text-sm bg-white" placeholder="예: 이 표현 HSK 몇 급이에요? 예문 3개 만들어줘." />
-            <button id="openAiBtn" class="btn px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-sm">열기</button>
-          </div>
-
-          <div class="mt-3 text-xs text-slate-500">
-            ✅ Key 보호 모드: <b>/api/gemini</b> 사용 중 (프론트에 Key 없음)
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- AI floating button -->
-  <button id="aiFab" class="fixed right-5 bottom-5 w-14 h-14 rounded-full bg-slate-900 text-white shadow-lg flex items-center justify-center hover:bg-slate-800 z-40" title="AI 한자 선생님">
+  <!-- 浮动按钮 -->
+  <button onclick="toggleAI()"
+    class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
     🤖
   </button>
 
-  <!-- AI Panel -->
-  <div id="aiPanel" class="ai-panel card rounded-2xl overflow-hidden ai-hidden">
-    <div id="aiHeader" class="ai-header flex items-center justify-between px-4 py-3 bg-slate-900 text-white">
-      <div class="font-semibold">AI 한자 선생님</div>
-      <button id="aiClose" class="text-white/80 hover:text-white">✕</button>
+  <!-- AI 窗口 -->
+  <div id="ai-panel"
+    class="hidden fixed bottom-20 right-4 w-[320px] bg-white rounded-xl shadow-xl flex flex-col">
+
+    <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
+      <span>AI 한자 선생님</span>
+      <button onclick="toggleAI()">✖</button>
     </div>
 
-    <div class="px-4 py-3">
-      <div id="aiMessages" class="ai-messages space-y-2"></div>
+    <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
 
-      <div class="mt-3 flex gap-2">
-        <input id="aiInput" class="w-full pill rounded-lg px-3 py-2 text-sm bg-white" placeholder="질문을 입력하세요..." />
-        <button id="aiSend" class="btn px-4 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-500 text-sm">보내기</button>
-      </div>
+    <div class="p-3 border-t flex gap-2">
+      <input id="input"
+        class="flex-1 border rounded px-2 py-1"
+        placeholder="질문을 입력하세요…" />
+      <button onclick="send()"
+        class="bg-orange-500 text-white px-3 py-1 rounded">
+        보내기
+      </button>
+    </div>
 
-      <div id="aiHint" class="mt-2 text-xs text-slate-500">
-        운영 권장: Vercel 서버리스(<b>/api/gemini</b>)로 Key 보호
-      </div>
+    <div class="text-xs text-center text-gray-500 pb-2">
+      🔐 Key 보호 모드: /api/gemini
     </div>
   </div>
 
-  <!-- Toast -->
-  <div id="toast" class="toast ai-hidden">
-    <div class="card rounded-xl px-4 py-2 text-sm text-slate-800"></div>
-  </div>
+<script>
+const panel = document.getElementById("ai-panel");
+const chat  = document.getElementById("chat");
+const input = document.getElementById("input");
 
-  <script>
-    // -----------------------------
-    // Global state
-    // -----------------------------
-    let globalData = null;
-    let currentHSK = null;
-    let currentCat = null;
-    let currentItem = null;
-    let viewMode = "card"; // card only now
-    let allItemsCache = []; // flattened items for searching/random
+function toggleAI() {
+  panel.classList.toggle("hidden");
+}
 
-    // -----------------------------
-    // Helpers
-    // -----------------------------
-    function $(id){ return document.getElementById(id); }
+function addMsg(text, who) {
+  const div = document.createElement("div");
+  div.className = who === "user"
+    ? "text-right"
+    : "text-left text-gray-800";
 
-    function toast(msg){
-      const t = $("toast");
-      t.firstElementChild.textContent = msg;
-      t.classList.remove("ai-hidden");
-      setTimeout(()=>t.classList.add("ai-hidden"), 1800);
-    }
+  div.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${
+    who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"
+  }">${text}</span>`;
 
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
 
-    function safeText(v){ return (v === null || v === undefined) ? "" : String(v); }
+async function send() {
+  const msg = input.value.trim();
+  if (!msg) return;
 
-    function buildFlatItems(){
-      allItemsCache = [];
-      if(!globalData) return;
-      // globalData example: { "HSK1": { "Greeting": [ {...}, ... ], ... } }
-      for (const hsk of Object.keys(globalData)){
-        const catsObj = globalData[hsk] || {};
-        for (const cat of Object.keys(catsObj)){
-          const arr = catsObj[cat] || [];
-          for (const item of arr){
-            allItemsCache.push({ hsk, cat, item });
-          }
-        }
-      }
-    }
+  addMsg(msg, "user");
+  input.value = "";
 
-    function normalizeForSearch(s){
-      return safeText(s).toLowerCase().replace(/\s+/g,"").trim();
-    }
-
-    function itemSearchKey(x){
-      const it = x.item || {};
-      return normalizeForSearch(
-        (it.cn||"") + (it.hj||"") + (it.py||"") + (it.kr||"") + (it.trans||"") + (it.sentence_cn||"") + (it.sentence_kr||"")
-      );
-    }
-
-    // -----------------------------
-    // Rendering
-    // -----------------------------
-    function renderHSKOptions(){
-      const sel = $("hskSelect");
-      sel.innerHTML = "";
-      const keys = Object.keys(globalData || {});
-      if(keys.length === 0) return;
-      for(const k of keys){
-        const opt = document.createElement("option");
-        opt.value = k;
-        opt.textContent = k;
-        sel.appendChild(opt);
-      }
-      currentHSK = currentHSK || keys[0];
-      sel.value = currentHSK;
-    }
-
-    function renderCatOptions(){
-      const sel = $("catSelect");
-      sel.innerHTML = "";
-      const cats = Object.keys((globalData?.[currentHSK]) || {});
-      for(const c of cats){
-        const opt = document.createElement("option");
-        opt.value = c;
-        opt.textContent = c;
-        sel.appendChild(opt);
-      }
-      currentCat = currentCat || cats[0] || null;
-      if(currentCat) sel.value = currentCat;
-    }
-
-    function getCurrentArray(){
-      if(!globalData || !currentHSK || !currentCat) return [];
-      return (globalData[currentHSK]?.[currentCat]) || [];
-    }
-
-    function renderList(){
-      const listBox = $("listBox");
-      listBox.innerHTML = "";
-      const q = normalizeForSearch($("searchInput").value);
-      const arr = getCurrentArray();
-
-      let shown = 0;
-
-      arr.forEach((it, idx)=>{
-        const key = normalizeForSearch(
-          (it.cn||"") + (it.hj||"") + (it.py||"") + (it.kr||"") + (it.trans||"") + (it.sentence_cn||"")
-        );
-        if(q && !key.includes(q)) return;
-
-        shown++;
-        const btn = document.createElement("button");
-        btn.className = "w-full text-left card rounded-xl p-3 hover:bg-slate-50 transition";
-        btn.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="text-lg font-bold text-slate-900">${escapeHtml(it.cn || "")}</div>
-              <div class="text-sm text-slate-600 mt-1">${escapeHtml(it.py || "")} · ${escapeHtml(it.kr || "")}</div>
-            </div>
-            <div class="text-xs text-slate-500">${escapeHtml(it.hj || "")}</div>
-          </div>
-          <div class="text-xs text-slate-500 mt-2 line-clamp-2">${escapeHtml(it.trans || "")}</div>
-        `;
-        btn.onclick = ()=>{
-          currentItem = it;
-          renderDetail(it);
-        };
-        listBox.appendChild(btn);
-      });
-
-      $("countSpan").textContent = String(shown);
-      if(shown === 0){
-        listBox.innerHTML = `<div class="text-sm text-slate-500 p-3">검색 결과가 없어요.</div>`;
-      }
-    }
-
-    function renderDetail(it){
-      if(!it) return;
-      const d = $("detailBox");
-      const cn = safeText(it.cn);
-      const hj = safeText(it.hj);
-      const py = safeText(it.py);
-      const kr = safeText(it.kr);
-      const trans = safeText(it.trans);
-
-      const s_cn = safeText(it.sentence_cn);
-      const s_py = safeText(it.sentence_py);
-      const s_kr = safeText(it.sentence_kr);
-
-      d.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div>
-            <div class="text-4xl font-extrabold text-slate-900">${escapeHtml(cn)}</div>
-            <div class="mt-2 flex flex-wrap gap-2">
-              ${hj ? `<span class="pill px-2 py-1 rounded-lg text-xs bg-white">한자: <b>${escapeHtml(hj)}</b></span>` : ``}
-              ${py ? `<span class="pill px-2 py-1 rounded-lg text-xs bg-white">병음: <b>${escapeHtml(py)}</b></span>` : ``}
-              ${kr ? `<span class="pill px-2 py-1 rounded-lg text-xs bg-white">한국어: <b>${escapeHtml(kr)}</b></span>` : ``}
-              <span class="pill px-2 py-1 rounded-lg text-xs bg-white">${escapeHtml(currentHSK || "")} · ${escapeHtml(currentCat || "")}</span>
-            </div>
-          </div>
-
-          <div class="flex gap-2">
-            <button class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm" onclick="speak('${escapeJs(cn)}')">🔊 단어</button>
-            ${s_cn ? `<button class="btn px-3 py-2 rounded-lg bg-white hover:bg-slate-50 text-sm" onclick="speak('${escapeJs(s_cn)}')">🔊 예문</button>` : ``}
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <div class="text-sm font-semibold text-slate-900">뜻/설명</div>
-          <div class="mt-1 text-slate-700 leading-relaxed">${escapeHtml(trans || "—")}</div>
-        </div>
-
-        <div class="mt-4">
-          <div class="text-sm font-semibold text-slate-900">예문</div>
-          <div class="mt-2 card rounded-xl p-4">
-            <div class="text-lg font-semibold text-slate-900">${escapeHtml(s_cn || "—")}</div>
-            <div class="text-sm text-slate-600 mt-1">${escapeHtml(s_py || "")}</div>
-            <div class="text-sm text-slate-700 mt-2">${escapeHtml(s_kr || "")}</div>
-          </div>
-        </div>
-      `;
-
-      // Quick ask placeholder
-      $("quickAskInput").value = `${cn} (${py}) 사용법을 쉽게 설명해줘. 예문 3개(중국어+병음+한국어)도 만들어줘.`;
-    }
-
-    // escape for inline onclick speak()
-    function escapeJs(str){
-      return String(str ?? "")
-        .replaceAll("\\","\\\\")
-        .replaceAll("'","\\'")
-        .replaceAll("\n","\\n");
-    }
-
-    // -----------------------------
-    // Speech (browser)
-    // -----------------------------
-    function speak(text){
-      try{
-        if(!text) return;
-        const u = new SpeechSynthesisUtterance(text);
-        // Chinese voice if possible
-        u.lang = "zh-CN";
-        u.rate = 0.95;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
-      }catch(e){
-        toast("이 브라우저에서 발음 기능이 제한될 수 있어요.");
-      }
-    }
-    window.speak = speak;
-
-    // -----------------------------
-    // AI Panel
-    // -----------------------------
-    function addMsg(role, text){
-      const box = $("aiMessages");
-      const div = document.createElement("div");
-      div.className = `rounded-xl p-3 text-sm ${role === "user" ? "msg-user" : "msg-ai"}`;
-      div.innerHTML = `<div class="whitespace-pre-wrap">${escapeHtml(text)}</div>`;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-    }
-
-    async function callAI(userText){
-      const context = currentItem ? {
-        hsk: currentHSK,
-        category: currentCat,
-        cn: currentItem.cn,
-        hj: currentItem.hj,
-        py: currentItem.py,
-        kr: currentItem.kr,
-        trans: currentItem.trans,
-        sentence_cn: currentItem.sentence_cn,
-        sentence_py: currentItem.sentence_py,
-        sentence_kr: currentItem.sentence_kr
-      } : null;
-
-      const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText, context })
-      });
-
-      // server should return: { text: "..." }
-      const data = await res.json().catch(()=> ({}));
-      if(!res.ok){
-        const err = data?.error || data?.message || `HTTP ${res.status}`;
-        throw new Error(err);
-      }
-      const text = data?.text || data?.output || data?.result || "";
-      if(!text) throw new Error("응답이 비어 있어요.");
-      return text;
-    }
-
-    async function sendAI(){
-      const input = $("aiInput");
-      const btn = $("aiSend");
-      const msg = (input.value || "").trim();
-      if(!msg) return;
-
-      addMsg("user", msg);
-      input.value = "";
-      btn.disabled = true;
-      btn.textContent = "전송중…";
-
-      try{
-        const reply = await callAI(msg);
-        addMsg("ai", reply);
-      }catch(e){
-        addMsg("ai", `오류가 발생했습니다.\n${e.message}\n\n(잠시 후 다시 시도해 주세요.)`);
-      }finally{
-        btn.disabled = false;
-        btn.textContent = "보내기";
-      }
-    }
-
-    function openAI(){
-      $("aiPanel").classList.remove("ai-hidden");
-      $("aiFab").classList.add("ai-hidden");
-      // greeting
-      if($("aiMessages").children.length === 0){
-        addMsg("ai", "안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 예문/문법/비슷한 표현을 물어보세요!");
-      }
-      setTimeout(()=> $("aiInput").focus(), 50);
-    }
-
-    function closeAI(){
-      $("aiPanel").classList.add("ai-hidden");
-      $("aiFab").classList.remove("ai-hidden");
-    }
-
-    // draggable
-    (function enableDrag(){
-      const panel = $("aiPanel");
-      const header = $("aiHeader");
-      let dragging = false, startX=0, startY=0, startLeft=0, startTop=0;
-
-      header.addEventListener("mousedown", (e)=>{
-        dragging = true;
-        const rect = panel.getBoundingClientRect();
-        startX = e.clientX; startY = e.clientY;
-        startLeft = rect.left; startTop = rect.top;
-        panel.style.right = "auto";
-        panel.style.bottom = "auto";
-        panel.style.left = startLeft + "px";
-        panel.style.top = startTop + "px";
-      });
-
-      window.addEventListener("mousemove", (e)=>{
-        if(!dragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        panel.style.left = (startLeft + dx) + "px";
-        panel.style.top  = (startTop + dy) + "px";
-      });
-
-      window.addEventListener("mouseup", ()=>{
-        dragging = false;
-      });
-    })();
-
-    // -----------------------------
-    // Init
-    // -----------------------------
-    async function initApp(){
-      try{
-        const r = await fetch("data.json?t=" + Date.now());
-        if(!r.ok) throw new Error("data.json 로드 실패: " + r.status);
-        globalData = await r.json();
-
-        buildFlatItems();
-
-        renderHSKOptions();
-        renderCatOptions();
-        renderList();
-      }catch(e){
-        document.body.innerHTML = `
-          <div class="max-w-3xl mx-auto p-6">
-            <div class="card rounded-2xl p-5">
-              <div class="text-xl font-bold text-red-600">데이터를 불러오지 못했습니다.</div>
-              <div class="mt-2 text-slate-700">${escapeHtml(e.message)}</div>
-              <div class="mt-3 text-sm text-slate-500">
-                확인: data.json 파일이 같은 폴더에 있고, JSON 문법 오류가 없는지 확인해 주세요.
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    // Events
-    $("hskSelect").addEventListener("change", ()=>{
-      currentHSK = $("hskSelect").value;
-      currentCat = null;
-      renderCatOptions();
-      renderList();
-      currentItem = null;
-      $("detailBox").innerHTML = `<div class="text-slate-600">왼쪽에서 단어/표현을 선택해 주세요 🙂</div>`;
+  try {
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: msg })
     });
 
-    $("catSelect").addEventListener("change", ()=>{
-      currentCat = $("catSelect").value;
-      renderList();
-      currentItem = null;
-      $("detailBox").innerHTML = `<div class="text-slate-600">왼쪽에서 단어/표현을 선택해 주세요 🙂</div>`;
-    });
+    if (!res.ok) {
+      throw new Error("HTTP " + res.status);
+    }
 
-    $("searchInput").addEventListener("input", ()=>{
-      renderList();
-    });
+    const data = await res.json();
+    addMsg(data.text || "(응답 없음)", "ai");
 
-    $("randomBtn").addEventListener("click", ()=>{
-      if(allItemsCache.length === 0) return;
-      // prefer current hsk & cat, else global random
-      const pool = allItemsCache.filter(x => x.hsk === currentHSK && x.cat === currentCat);
-      const usePool = pool.length ? pool : allItemsCache;
-      const pick = usePool[Math.floor(Math.random() * usePool.length)];
-      currentHSK = pick.hsk;
-      currentCat = pick.cat;
-      $("hskSelect").value = currentHSK;
-      renderCatOptions();
-      $("catSelect").value = currentCat;
-      renderList();
-      currentItem = pick.item;
-      renderDetail(pick.item);
-      toast("랜덤 선택!");
-    });
+  } catch (e) {
+    addMsg("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.", "ai");
+  }
+}
 
-    $("speakBtn").addEventListener("click", ()=>{
-      if(!currentItem) return toast("먼저 단어를 선택해 주세요.");
-      speak(currentItem.cn || "");
-    });
+// 初始欢迎
+addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 문법을 물어보세요!", "ai");
+</script>
 
-    $("copyBtn").addEventListener("click", async ()=>{
-      if(!currentItem) return toast("먼저 단어를 선택해 주세요.");
-      const t = [
-        `HSK: ${currentHSK}`,
-        `카테고리: ${currentCat}`,
-        `중국어: ${currentItem.cn || ""}`,
-        `한자: ${currentItem.hj || ""}`,
-        `병음: ${currentItem.py || ""}`,
-        `한국어: ${currentItem.kr || ""}`,
-        `뜻: ${currentItem.trans || ""}`,
-        `예문: ${currentItem.sentence_cn || ""}`,
-        `예문(병음): ${currentItem.sentence_py || ""}`,
-        `예문(한국어): ${currentItem.sentence_kr || ""}`
-      ].join("\n");
-      try{
-        await navigator.clipboard.writeText(t);
-        toast("복사 완료!");
-      }catch(e){
-        toast("복사 실패(브라우저 권한 확인).");
-      }
-    });
-
-    $("aiFab").addEventListener("click", openAI);
-    $("aiClose").addEventListener("click", closeAI);
-    $("openAiBtn").addEventListener("click", ()=>{
-      openAI();
-      const q = ($("quickAskInput").value || "").trim();
-      if(q){
-        $("aiInput").value = q;
-        sendAI();
-      }
-    });
-
-    $("aiSend").addEventListener("click", sendAI);
-    $("aiInput").addEventListener("keydown", (e)=>{
-      if(e.key === "Enter") sendAI();
-    });
-
-    initApp();
-  </script>
 </body>
 </html>
