@@ -67,7 +67,7 @@
     </div>
 
     <script>
-        const VERCEL_URL = '/api/chat';
+        // --- 核心配置区 ---
         let globalData = {};
         let currentLevel = "";
         const FREE_COUNT = 3;
@@ -175,6 +175,7 @@
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
         }
 
+        // --- 董事长为您重写的 AI 连接逻辑 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -182,19 +183,33 @@
 
             addMessage(msg, 'user');
             input.value = '';
-            const loadingMsg = addMessage('AI 선생님이 생각 중입니다...', 'ai');
+            const loadingMsg = addMessage('AI 老师正在思考中...', 'ai');
             
+            // 重要：请在此处填入你的 API KEY
+            const YOUR_API_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${YOUR_API_KEY}`;
+
             try {
-                const response = await fetch(VERCEL_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: msg })
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "你是一位专业的HSK老师，请用亲切的语气回答学生关于汉字学习的问题：" + msg }] }]
+                    })
                 });
+                
                 const data = await response.json();
-                if (data.error) throw new Error(data.error);
-                loadingMsg.innerText = data.candidates[0].content.parts[0].text;
+                
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+
+                // 解析 Gemini 返回的文字结果
+                const aiResponse = data.candidates[0].content.parts[0].text;
+                loadingMsg.innerText = aiResponse;
             } catch (e) {
-                loadingMsg.innerText = "죄송합니다. 선생님이 수업 준비로 잠시 자리를 비우셨어요. 잠시 후 다시 질문해 주세요!";
+                console.error("AI 接口调用失败:", e);
+                loadingMsg.innerText = "抱歉，连接 AI 老师失败了。请检查你的网络环境或 API Key 是否填写正确！";
             }
         }
 
