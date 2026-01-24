@@ -6,15 +6,13 @@
     <title>HanjaPass PRO - AI 한자 학원</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 直接把样式写在网页里，不调用外部文件，消灭 404 报错 */
+        /* 董事长亲自设计的内置样式，不再需要外部 CSS 文件，消灭 404 报错 */
         body { background: #fffaf5; font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 20px; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .word-card { background: white; border-radius: 40px; border: 4px solid #fff1e6; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); text-align: center; }
         .jelly-box { background: linear-gradient(145deg, #ffffff, #f5f5f5); border-radius: 30px; box-shadow: 5px 5px 10px #ebebeb; border: 2px solid rgba(255,255,255,0.9); padding: 20px 40px; cursor: pointer; display: inline-block; }
         .level-btn { padding: 8px 20px; border-radius: 15px; background: white; border: 2px solid #eee; font-weight: 800; color: #888; white-space: nowrap; margin-right: 8px; }
         .active-level { background: #333 !important; color: white !important; }
-        
-        /* AI 窗口样式 */
         #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 1000; border: 3px solid #333; overflow: hidden; }
         .msg-ai { background: #f1f1f1; border-radius: 15px 15px 15px 5px; padding: 10px 15px; align-self: flex-start; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
         .msg-user { background: #ff7e5f; color: white; border-radius: 15px 15px 5px 15px; padding: 10px 15px; align-self: flex-end; max-width: 85%; font-size: 14px; margin-bottom: 10px; }
@@ -39,16 +37,17 @@
             <div class="msg-ai">안녕하세요! 무엇이든 물어보세요! 😊</div>
         </div>
         <div class="p-3 border-t bg-white flex gap-2">
-            <input id="ai-input" type="text" placeholder="질문..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
+            <input id="ai-input" type="text" placeholder="질문을 입력하세요..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none">
             <button onclick="askAI()" class="bg-orange-500 text-white w-10 h-10 rounded-full font-bold">↑</button>
         </div>
     </div>
 
-    <div class="ai-fab" onclick="toggleAI()"><span class="text-2xl">🤖</span></div>
+    <div class="ai-fab" onclick="toggleAI()">
+        <span class="text-2xl">🤖</span>
+    </div>
 
     <script>
         let globalData = {};
-        // 董事长为你配置的 API KEY
         const API_KEY = "AIzaSyCteAmuRC8LtnNp2ZNKF-ANevyBFAdWC98"; 
 
         async function initApp() {
@@ -57,7 +56,7 @@
                 globalData = await response.json();
                 renderLevels();
             } catch(e) { 
-                document.getElementById('container').innerHTML = "data.json 파일을 찾을 수 없습니다."; 
+                document.getElementById('container').innerHTML = "<p class='text-center text-gray-400'>data.json 파일을 찾을 수 없습니다.</p>";
             }
         }
 
@@ -85,9 +84,13 @@
             globalData[level][category].forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'word-card';
-                card.innerHTML = `<div class="text-orange-500 font-bold mb-2">${item.py}</div>
-                    <div class="jelly-box" onclick="play('${item.cn}')"><span class="text-6xl font-black">${item.cn}</span></div>
-                    <div class="mt-4 text-2xl font-bold text-rose-500">${item.trans}</div>`;
+                card.innerHTML = `
+                    <div class="text-orange-500 font-bold mb-2">${item.py}</div>
+                    <div class="jelly-box" onclick="play('${item.cn}')">
+                        <span class="text-6xl font-black">${item.cn}</span>
+                    </div>
+                    <div class="mt-4 text-2xl font-bold text-rose-500">${item.trans}</div>
+                `;
                 list.appendChild(card);
             });
         }
@@ -104,7 +107,7 @@
             w.style.display = (w.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // --- 核心修复：Google API 的终极正确路径 ---
+        // --- 核心修复：修正 API 路径和模型名称 ---
         async function askAI() {
             const input = document.getElementById('ai-input');
             const msg = input.value.trim();
@@ -114,7 +117,7 @@
             input.value = '';
             const loadingMsg = addMessage('AI가 생각 중입니다...', 'ai');
             
-            // 董事长注意：这里必须用 v1beta，且路径要包含 models/gemini-1.5-flash
+            // 修正：使用 v1beta 接口，并去掉 -latest 后缀，这是最稳健的写法
             const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
             try {
@@ -122,19 +125,19 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 친절한 선생님이야. 한국어로 대답해줘: " + msg }] }]
+                        contents: [{ parts: [{ text: "너는 한국인에게 한자를 가르치는 HSK 전문가야. 학생의 질문에 한국어로 친절하게 대답해줘: " + msg }] }]
                     })
                 });
                 
                 const data = await response.json();
                 
                 if (data.error) {
-                    loadingMsg.innerText = "API Error: " + data.error.message;
+                    loadingMsg.innerText = "Error: " + data.error.message;
                 } else {
                     loadingMsg.innerText = data.candidates[0].content.parts[0].text;
                 }
             } catch (e) {
-                loadingMsg.innerText = "연결 실패. 인터넷 연결을 확인하세요.";
+                loadingMsg.innerText = "연결 실패. 네트워크 또는 API Key를 확인하세요.";
             }
         }
 
