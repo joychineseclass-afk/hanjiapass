@@ -1,395 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HanjaPass PRO</title>
-
-  <!-- ✅ Tailwind (개발용 CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <meta charset="UTF-8" />
+  <title>AI 한자 선생님</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body{background:#fffaf5;font-family: "Malgun Gothic","Apple SD Gothic Neo",sans-serif;}
-    .ai-fab{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:999px;
-      background:#111827;color:#fff;display:flex;align-items:center;justify-content:center;
-      box-shadow:0 10px 25px rgba(0,0,0,.15);cursor:pointer;z-index:50;}
-    .ai-modal{position:fixed;right:18px;bottom:90px;width:360px;max-width:92vw;
-      background:#fff;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.18);overflow:hidden;z-index:60;}
-    .ai-header{background:#111827;color:#fff;padding:12px 14px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
-    .ai-body{padding:12px 12px 10px 12px;max-height:360px;overflow:auto;}
-    .ai-msg{padding:10px 12px;border-radius:14px;margin:8px 0;line-height:1.35}
-    .ai-bot{background:#f3f4f6;}
-    .ai-user{background:#fb923c;color:#fff;margin-left:auto;max-width:80%;}
-    .ai-inputbar{padding:10px 12px;border-top:1px solid #eee;display:flex;gap:8px;align-items:center;}
-    .ai-inputbar input{flex:1;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;outline:none;}
-    .ai-inputbar button{background:#fb923c;color:#fff;border-radius:12px;padding:10px 14px;font-weight:700;}
-    .ai-foot{padding:0 12px 12px 12px;color:#6b7280;font-size:12px}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+    }
+    .ai-box {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+    .ai-header {
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ai-body {
+      padding: 14px;
+      font-size: 14px;
+    }
+    .ai-msg {
+      background: #f2f2f2;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      white-space: pre-wrap;
+    }
+    .ai-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .ai-input input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .ai-input button {
+      background: #e38b29;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0 14px;
+      cursor: pointer;
+    }
+    .ai-error {
+      color: #b00020;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .ai-footer {
+      font-size: 11px;
+      color: #777;
+      margin-top: 6px;
+      text-align: center;
+    }
   </style>
 </head>
 
-<body class="min-h-screen">
-  <div class="max-w-6xl mx-auto px-4 py-8">
-    <h1 class="text-3xl font-extrabold text-slate-900">HanjaPass PRO</h1>
-    <p class="text-slate-600 mt-2">HSK 단어/표현을 카드로 보고, 예문과 발음까지 한 번에 학습하세요.</p>
+<body>
 
-    <!-- Top controls -->
-    <div class="mt-6 flex flex-wrap gap-2 items-center">
-      <label class="text-sm font-semibold text-slate-700">목록</label>
-      <select id="levelSelect" class="border rounded-lg px-3 py-2 bg-white"></select>
-
-      <select id="categorySelect" class="border rounded-lg px-3 py-2 bg-white"></select>
-
-      <button id="viewCardBtn" class="border rounded-lg px-3 py-2 bg-white hover:bg-slate-50">
-        보기: 카드
-      </button>
-      <button id="randomBtn" class="border rounded-lg px-3 py-2 bg-white hover:bg-slate-50">
-        랜덤 🎲
-      </button>
-
-      <input id="searchInput" class="border rounded-lg px-3 py-2 bg-white w-64 max-w-full" placeholder="검색: 중국어/한자/병음/한국어" />
-      <span id="countInfo" class="text-sm text-slate-500"></span>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-5">
-      <!-- list -->
-      <div class="bg-white rounded-2xl shadow p-4">
-        <div class="flex items-center justify-between">
-          <div class="font-bold text-slate-800">단어 목록</div>
-          <div class="text-xs text-slate-500" id="selectedCount">선택한 항목 수: 0</div>
-        </div>
-        <div id="listBox" class="mt-3 space-y-2 max-h-[70vh] overflow-auto"></div>
-      </div>
-
-      <!-- detail -->
-      <div class="lg:col-span-2 bg-white rounded-2xl shadow p-5">
-        <div class="text-lg font-bold text-slate-800">상세 보기</div>
-        <div class="text-sm text-slate-500 mt-1">왼쪽에서 단어/표현을 선택해 주세요 🙂</div>
-
-        <div id="detailBox" class="mt-4">
-          <div class="text-slate-400">선택한 항목이 없습니다.</div>
-        </div>
-
-        <hr class="my-6"/>
-
-        <!-- AI -->
-        <div class="text-lg font-bold text-slate-800">AI에게 질문하기</div>
-        <div class="text-sm text-slate-500 mt-1">단어 의미/사용법/예문/비슷한 표현 등을 물어보세요!</div>
-        <div class="text-xs text-slate-400 mt-1">예: “这个 표현 HSK 몇 급이야?”, “예문 3개 만들어줘.”</div>
-        <div class="mt-3 text-sm text-emerald-600">✅ Key 보호 모드: <b>/api/gemini</b> 사용 중 (프론트에 Key 없음)</div>
-      </div>
-    </div>
+<div class="ai-box">
+  <div class="ai-header">
+    AI 한자 선생님
+    <span style="cursor:pointer" onclick="document.querySelector('.ai-box').style.display='none'">✕</span>
   </div>
 
-  <!-- Floating AI button + modal -->
-  <div class="ai-fab" onclick="toggleAI()" title="AI">
-    🤖
+  <div class="ai-body">
+    <div class="ai-msg" id="aiReply">
+안녕하세요! 😊  
+HSK 한자 선생님입니다.  
+궁금한 단어나 예문 / 문법 / 비슷한 표현을 물어보세요!
+    </div>
+
+    <div class="ai-input">
+      <input id="userInput" placeholder="예: 你好 뜻이 뭐예요?" />
+      <button onclick="askAI()">보내기</button>
+    </div>
+
+    <div class="ai-error" id="aiError"></div>
+
+    <div class="ai-footer">
+      🔒 Key 보호 모드 · /api/gemini
+    </div>
   </div>
+</div>
 
-  <div id="aiModal" class="ai-modal hidden">
-    <div class="ai-header">
-      <div>AI 한자 선생님</div>
-      <button onclick="toggleAI()" class="opacity-80 hover:opacity-100">✕</button>
-    </div>
-    <div id="aiBody" class="ai-body">
-      <div class="ai-msg ai-bot">안녕하세요! HSK 한자 선생님입니다 😊 궁금한 단어나 예문/문법/비슷한 표현을 물어보세요!</div>
-    </div>
-    <div class="ai-inputbar">
-      <input id="aiInput" placeholder="질문을 입력하세요..." />
-      <button id="aiSendBtn" onclick="askAI()">보내기</button>
-    </div>
-    <div class="ai-foot">운영 권장: Vercel 서버리스(<b>/api/gemini</b>)로 Key 보호</div>
-  </div>
+<script>
+async function askAI() {
+  const input = document.getElementById("userInput");
+  const replyBox = document.getElementById("aiReply");
+  const errorBox = document.getElementById("aiError");
 
-  <script>
-    // ----------------- Data -----------------
-    let globalData = {};
-    let currentLevel = "HSK1";
-    let currentCategory = "";
-    let viewMode = "card"; // card only for now
-    let selected = [];
+  const message = input.value.trim();
+  if (!message) return;
 
-    async function initApp(){
-      try{
-        const res = await fetch("data.json?t=" + Date.now());
-        if(!res.ok) throw new Error("data.json fetch failed: " + res.status);
-        globalData = await res.json();
+  errorBox.textContent = "";
+  replyBox.textContent = "✏️ 생각 중이에요...";
 
-        // level options
-        const levels = Object.keys(globalData || {});
-        if(levels.length === 0) throw new Error("No levels in data.json");
+  try {
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
 
-        currentLevel = levels.includes("HSK1") ? "HSK1" : levels[0];
+    const data = await res.json();
 
-        const levelSelect = document.getElementById("levelSelect");
-        levelSelect.innerHTML = levels.map(l => `<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join("");
-        levelSelect.value = currentLevel;
-        levelSelect.onchange = () => {
-          currentLevel = levelSelect.value;
-          selected = [];
-          renderCategories();
-          renderList();
-          renderDetail();
-        };
-
-        renderCategories();
-        renderList();
-        renderDetail();
-
-        document.getElementById("randomBtn").onclick = pickRandom;
-        document.getElementById("searchInput").addEventListener("input", () => renderList());
-
-        // Enter to send AI
-        document.getElementById("aiInput").addEventListener("keydown", (e)=>{
-          if(e.key === "Enter") askAI();
-        });
-
-      }catch(e){
-        console.error(e);
-        document.body.innerHTML = `
-          <div class="max-w-xl mx-auto mt-20 bg-white rounded-2xl shadow p-6">
-            <div class="text-red-600 font-bold text-lg">앗! 로딩 오류</div>
-            <div class="mt-2 text-slate-700">data.json 또는 스크립트 오류가 있어요.</div>
-            <pre class="mt-3 text-xs bg-slate-100 p-3 rounded-xl overflow-auto">${escapeHtml(String(e))}</pre>
-            <div class="mt-4 text-sm text-slate-500">GitHub에서 data.json이 존재하는지, JSON 형식이 깨지지 않았는지 확인해주세요.</div>
-          </div>
-        `;
-      }
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "알 수 없는 오류");
     }
 
-    function renderCategories(){
-      const catsObj = globalData[currentLevel] || {};
-      const cats = Object.keys(catsObj);
-      currentCategory = cats[0] || "";
+    replyBox.textContent = data.text || "응답이 비어 있습니다.";
+    input.value = "";
+  } catch (err) {
+    replyBox.textContent = "❌ 답변을 불러오지 못했어요.";
+    errorBox.textContent = err.message;
+  }
+}
+</script>
 
-      const categorySelect = document.getElementById("categorySelect");
-      categorySelect.innerHTML = cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
-      categorySelect.value = currentCategory;
-
-      categorySelect.onchange = () => {
-        currentCategory = categorySelect.value;
-        selected = [];
-        renderList();
-        renderDetail();
-      };
-    }
-
-    function getItems(){
-      const catsObj = globalData[currentLevel] || {};
-      const items = (catsObj[currentCategory] || []);
-      return items;
-    }
-
-    function renderList(){
-      const listBox = document.getElementById("listBox");
-      const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
-
-      const items = getItems().filter(it => {
-        if(!q) return true;
-        const blob = `${it.cn||""} ${it.hj||""} ${it.py||""} ${it.kr||""} ${it.trans||""}`.toLowerCase();
-        return blob.includes(q);
-      });
-
-      document.getElementById("countInfo").textContent = `표시: ${items.length}개`;
-      document.getElementById("selectedCount").textContent = `선택한 항목 수: ${selected.length}`;
-
-      listBox.innerHTML = items.map((it, idx) => {
-        const key = itemKey(it, idx);
-        const isSel = selected.some(s => s._key === key);
-        return `
-          <button class="w-full text-left border rounded-xl px-3 py-3 hover:bg-slate-50 ${isSel ? "bg-orange-50 border-orange-300" : "bg-white"}"
-            onclick="toggleSelect('${escapeJs(key)}')">
-            <div class="flex items-center justify-between">
-              <div class="font-bold text-slate-900">${escapeHtml(it.cn || "")}</div>
-              <div class="text-xs text-slate-500">${escapeHtml(it.py || "")}</div>
-            </div>
-            <div class="text-sm text-slate-600 mt-1">${escapeHtml(it.kr || it.trans || "")}</div>
-          </button>
-        `;
-      }).join("") || `<div class="text-slate-400 text-sm">목록이 비어있어요.</div>`;
-    }
-
-    function toggleSelect(key){
-      const items = getItems();
-      // find item by key
-      let found = null;
-      for(let i=0;i<items.length;i++){
-        const k = itemKey(items[i], i);
-        if(k === key){
-          found = {...items[i], _key: k};
-          break;
-        }
-      }
-      if(!found) return;
-
-      const exists = selected.some(s => s._key === key);
-      if(exists){
-        selected = selected.filter(s => s._key !== key);
-      }else{
-        selected = [found]; // single select (simpler)
-      }
-      renderList();
-      renderDetail();
-    }
-
-    function renderDetail(){
-      const box = document.getElementById("detailBox");
-      if(selected.length === 0){
-        box.innerHTML = `<div class="text-slate-400">선택한 항목이 없습니다.</div>`;
-        return;
-      }
-      const it = selected[0];
-
-      box.innerHTML = `
-        <div class="rounded-2xl border p-4">
-          <div class="flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <div class="text-3xl font-extrabold text-slate-900">${escapeHtml(it.cn || "")}</div>
-              <div class="text-slate-600 mt-1">
-                <span class="font-semibold">${escapeHtml(it.py || "")}</span>
-                <span class="mx-2">·</span>
-                <span>${escapeHtml(it.kr || "")}</span>
-              </div>
-              ${it.trans ? `<div class="text-slate-500 text-sm mt-1">${escapeHtml(it.trans)}</div>` : ""}
-            </div>
-            <div class="flex gap-2">
-              <button class="border rounded-xl px-3 py-2 hover:bg-slate-50" onclick="speakPinyin('${escapeJs(it.py||"")}')">🔊 발음</button>
-              <button class="border rounded-xl px-3 py-2 hover:bg-slate-50" onclick="copyText('${escapeJs(it.cn||"")}')">📋 복사</button>
-            </div>
-          </div>
-
-          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div class="bg-slate-50 rounded-xl p-3">
-              <div class="text-xs font-bold text-slate-500">예문(중문)</div>
-              <div class="mt-1 text-slate-800">${escapeHtml(it.sentence_cn || "—")}</div>
-            </div>
-            <div class="bg-slate-50 rounded-xl p-3">
-              <div class="text-xs font-bold text-slate-500">예문(병음)</div>
-              <div class="mt-1 text-slate-800">${escapeHtml(it.sentence_py || "—")}</div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function pickRandom(){
-      const items = getItems();
-      if(items.length === 0) return;
-      const idx = Math.floor(Math.random()*items.length);
-      const it = {...items[idx], _key: itemKey(items[idx], idx)};
-      selected = [it];
-      renderList();
-      renderDetail();
-    }
-
-    // ----------------- Pronunciation -----------------
-    function speakPinyin(py){
-      if(!py) return;
-      try{
-        const u = new SpeechSynthesisUtterance(py);
-        u.lang = "zh-CN";
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
-      }catch(e){
-        alert("발음 기능을 지원하지 않는 브라우저입니다.");
-      }
-    }
-
-    function copyText(t){
-      if(!t) return;
-      navigator.clipboard.writeText(t).then(()=> {
-        toast("복사 완료!");
-      }).catch(()=> {
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = t;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        toast("복사 완료!");
-      });
-    }
-
-    function toast(msg){
-      const d = document.createElement("div");
-      d.className = "fixed left-1/2 -translate-x-1/2 bottom-6 bg-slate-900 text-white px-4 py-2 rounded-xl shadow z-[100]";
-      d.textContent = msg;
-      document.body.appendChild(d);
-      setTimeout(()=> d.remove(), 1200);
-    }
-
-    // ----------------- AI modal -----------------
-    function toggleAI(){
-      document.getElementById("aiModal").classList.toggle("hidden");
-      setTimeout(()=> document.getElementById("aiInput").focus(), 50);
-    }
-
-    function addAiMsg(text, who){
-      const body = document.getElementById("aiBody");
-      const div = document.createElement("div");
-      div.className = "ai-msg " + (who === "user" ? "ai-user" : "ai-bot");
-      div.textContent = text;
-      body.appendChild(div);
-      body.scrollTop = body.scrollHeight;
-    }
-
-    async function askAI(){
-      const input = document.getElementById("aiInput");
-      const btn = document.getElementById("aiSendBtn");
-      const msg = (input.value || "").trim();
-      if(!msg) return;
-
-      addAiMsg(msg, "user");
-      input.value = "";
-
-      btn.disabled = true;
-      btn.style.opacity = "0.7";
-
-      try{
-        // ✅ IMPORTANT: relative path -> works on Vercel domain
-        const r = await fetch("/api/gemini", {
-          method: "POST",
-          headers: { "Content-Type":"application/json" },
-          body: JSON.stringify({ message: msg, context: selected[0] || null })
-        });
-
-        const data = await r.json().catch(()=> ({}));
-
-        if(!r.ok){
-          const err = data?.error || ("HTTP " + r.status);
-          addAiMsg("오류가 발생했습니다: " + err, "bot");
-          return;
-        }
-
-        const answer = data?.text || data?.answer || "";
-        addAiMsg(answer || "답변을 가져오지 못했습니다. (응답 형식이 예상과 달라요)", "bot");
-
-      }catch(e){
-        console.error(e);
-        addAiMsg("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.", "bot");
-      }finally{
-        btn.disabled = false;
-        btn.style.opacity = "1";
-      }
-    }
-
-    // ----------------- Utils -----------------
-    function itemKey(it, idx){
-      return `${currentLevel}__${currentCategory}__${idx}__${it.cn||""}__${it.py||""}`;
-    }
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-    function escapeJs(str){
-      return String(str).replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n","\\n");
-    }
-
-    initApp();
-  </script>
 </body>
 </html>
