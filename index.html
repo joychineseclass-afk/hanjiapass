@@ -369,18 +369,6 @@ function speakSmart(fullText, uiLang) {
   }
 }
 
-// 🔊 测试按钮：会根据当前选择语言朗读（如果文本里有中文就自动切普通话）
-uiTestVoiceBtn.addEventListener("click", () => {
-  const lang = explainLang.value;
-  const demo = {
-    ko: "안녕하세요. 你好",
-    en: "Hello. 你好",
-    ja: "こんにちは。你好",
-    zh: "你好。Hello"
-  }[lang] || "Hello. 你好";
-  speakSmart(demo, lang);
-});
-
 
 /* =========================
    7) 打字机效果（前端）
@@ -464,4 +452,5 @@ explainLang.addEventListener("change", () => {
 
 </body>
 </html>
+
 
