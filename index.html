@@ -4,84 +4,68 @@
   <meta charset="UTF-8" />
   <title>AI 한자 선생님</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Tailwind (개발용) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     body { background:#f7f7f7; }
     .chat-box { max-height: 60vh; overflow-y: auto; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    pre { white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
-
 <body class="p-4">
 
-  <!-- ✅ 페이지가 하얗게만 보이는지 확인용 (정상이라면 이 문구가 보입니다) -->
-  <div class="max-w-xl mx-auto mb-4">
-    <div class="bg-white rounded-xl shadow p-4">
-      <div class="text-lg font-semibold">✅ AI 한자 선생님</div>
-      <div class="text-sm text-gray-600 mt-1">
-        페이지가 이 카드까지 보이면, 정적(index.html) 배포는 정상입니다.
-      </div>
-
-      <!-- ✅ API 상태 점검 버튼 -->
-      <div class="mt-3 flex gap-2">
-        <button onclick="pingApi()"
-          class="bg-black text-white px-3 py-2 rounded-lg text-sm">
-          API 상태 점검
-        </button>
-        <div id="pingResult" class="text-sm text-gray-700"></div>
-      </div>
-
-      <!-- ✅ 디버그 로그 -->
-      <pre id="debug" class="mt-3 p-3 bg-gray-100 rounded-lg text-xs mono whitespace-pre-wrap"></pre>
-    </div>
-  </div>
-
-  <!-- ✅ 플로팅 버튼 -->
+  <!-- Floating Button -->
   <button onclick="toggleAI()"
     class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
     🤖
   </button>
 
-  <!-- ✅ AI 패널 -->
+  <!-- Panel -->
   <div id="ai-panel"
-    class="hidden fixed bottom-20 right-4 w-[360px] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden">
+    class="hidden fixed bottom-20 right-4 w-[360px] bg-white rounded-xl shadow-xl flex flex-col">
 
-    <div class="bg-black text-white px-4 py-2 flex justify-between items-center">
-      <span class="font-semibold">AI 한자 선생님</span>
-      <button onclick="toggleAI()" class="text-white/80 hover:text-white">✖</button>
+    <!-- Header -->
+    <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
+      <span>AI 한자 선생님</span>
+      <button onclick="toggleAI()">✖</button>
     </div>
 
-    <!-- ✅ TTS 영역 -->
-    <div class="px-3 pt-3 text-xs flex items-center gap-2">
-      <label class="flex items-center gap-1">
-        <input id="ttsToggle" type="checkbox" class="accent-orange-500" checked />
-        읽어주기(TTS)
-      </label>
+    <!-- Controls -->
+    <div class="px-3 pt-3 pb-2 border-b text-xs space-y-2">
+      <div class="flex items-center gap-2">
+        <input id="ttsEnabled" type="checkbox" class="accent-orange-500" checked />
+        <label for="ttsEnabled" class="select-none">읽어주기(TTS)</label>
+      </div>
 
-      <select id="voiceSelect"
-        class="border rounded px-2 py-1 text-xs flex-1"
-        onchange="selectedVoiceName=this.value">
-      </select>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">음색</span>
+        <select id="voiceSelect" class="flex-1 border rounded px-2 py-1 text-xs bg-white"></select>
+      </div>
+
+      <div class="text-[11px] text-gray-500 leading-snug">
+        • AI는 <b>HSK 한자/문법 선생님</b>으로 고정됩니다.<br/>
+        • 답변은 <b>한국어</b> 중심 + 필요한 경우 <b>중국어/병음</b>을 함께 제공합니다.
+      </div>
     </div>
 
+    <!-- Chat -->
     <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
 
-    <div class="p-3 border-t flex gap-2">
+    <!-- Input -->
+    <div class="p-3 border-t flex gap-2 items-center">
       <input id="input"
-        class="flex-1 border rounded px-2 py-2"
-        placeholder="질문을 입력하세요…"
-        onkeydown="if(event.key==='Enter') send();" />
-      <button onclick="send()"
-        class="bg-orange-500 text-white px-4 py-2 rounded">
+        class="flex-1 border rounded px-2 py-1"
+        placeholder="질문을 입력하세요…" />
+      <button id="sendBtn" onclick="send()"
+        class="bg-orange-500 text-white px-3 py-1 rounded">
         보내기
       </button>
     </div>
 
+    <!-- Footer -->
     <div class="text-xs text-center text-gray-500 pb-2">
-      🔐 Key 보호 모드: /api/gemini
+      🔐 Key 보호 모드: Vercel API
+      <span id="statusDot" class="inline-block ml-2 w-2 h-2 rounded-full bg-gray-300 align-middle"></span>
+      <span id="statusText" class="ml-1 text-[11px]">대기</span>
     </div>
   </div>
 
@@ -89,122 +73,113 @@
 const panel = document.getElementById("ai-panel");
 const chat  = document.getElementById("chat");
 const input = document.getElementById("input");
-const debugEl = document.getElementById("debug");
-const pingResult = document.getElementById("pingResult");
+const sendBtn = document.getElementById("sendBtn");
+const statusDot = document.getElementById("statusDot");
+const statusText = document.getElementById("statusText");
+const ttsEnabled = document.getElementById("ttsEnabled");
+const voiceSelect = document.getElementById("voiceSelect");
 
-function logDebug(msg) {
-  const t = new Date().toLocaleTimeString();
-  debugEl.textContent = `[${t}] ${msg}\n` + debugEl.textContent;
-}
+// ✅ 同域优先（最稳：不会因为域名、CORS、预览域变化而挂）
+// 如果你非要固定域名，也可以把 API_URL 改成你那条绝对地址。
+const API_URL = (location.origin || "https://hanjiapass.vercel.app") + "/api/gemini";
 
-function toggleAI() {
-  panel.classList.toggle("hidden");
+// ✅ 固定老师人设（每次都会带上）
+const TEACHER_SYSTEM_PROMPT = `
+당신은 "AI 한자 선생님"입니다.
+목표: 한국인 학습자에게 HSK/한자/문법을 친절하고 명확하게 설명합니다.
+규칙:
+1) 기본은 한국어로 답합니다.
+2) 필요하면 중국어 예문 + 병음 + 한국어 해석을 함께 제공합니다.
+3) 초보도 이해하도록 단계적으로 설명하고, 마지막에 짧은 연습문제(1~2개)를 냅니다.
+4) 말투는 따뜻하고 선생님처럼, 과장/허위정보는 피합니다.
+`;
+
+// ----- UI helpers -----
+function toggleAI() { panel.classList.toggle("hidden"); }
+
+function setStatus(type, text) {
+  // type: idle | loading | ok | error
+  statusText.textContent = text || "";
+  statusDot.className = "inline-block ml-2 w-2 h-2 rounded-full align-middle " + (
+    type === "loading" ? "bg-orange-400" :
+    type === "ok" ? "bg-green-500" :
+    type === "error" ? "bg-red-500" : "bg-gray-300"
+  );
 }
 
 function escapeHtml(str) {
-  return str
+  return String(str)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replaceAll(">", "&gt;");
 }
 
 function addMsg(text, who) {
   const div = document.createElement("div");
   div.className = who === "user" ? "text-right" : "text-left text-gray-800";
-
-  const safe = escapeHtml(text).replaceAll("\n", "<br/>");
-
-  div.innerHTML = `<span class="inline-block px-3 py-2 rounded-lg ${
-    who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"
-  }">${safe}</span>`;
-
+  div.innerHTML = `
+    <span class="inline-block px-3 py-2 rounded-lg ${who === "user" ? "bg-orange-500 text-white" : "bg-gray-200"}">
+      <pre>${escapeHtml(text)}</pre>
+    </span>
+  `;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
+
+  // ✅ AI 回复后朗读
+  if (who === "ai" && ttsEnabled.checked) speak(text);
 }
 
-/* =========================
-   ✅ TTS (Web Speech API)
-========================= */
+// ----- TTS (Web Speech API) -----
 let voices = [];
-let selectedVoiceName = "";
-
 function loadVoices() {
-  if (!("speechSynthesis" in window)) return;
+  voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  voiceSelect.innerHTML = "";
 
-  voices = window.speechSynthesis.getVoices();
-  const sel = document.getElementById("voiceSelect");
-  if (!sel) return;
+  // 优先韩语音色
+  const ko = voices.filter(v => (v.lang || "").toLowerCase().includes("ko"));
+  const rest = voices.filter(v => !((v.lang || "").toLowerCase().includes("ko")));
+  const list = [...ko, ...rest];
 
-  sel.innerHTML = "";
-
-  const filtered = voices.filter(v =>
-    v.lang.startsWith("ko") || v.lang.startsWith("zh") || v.lang.startsWith("en")
-  );
-
-  (filtered.length ? filtered : voices).forEach(v => {
+  list.forEach((v, idx) => {
     const opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = `${v.name} (${v.lang})`;
-    sel.appendChild(opt);
+    voiceSelect.appendChild(opt);
   });
 
-  const defaultVoice =
-    voices.find(v => v.lang.startsWith("ko")) ||
-    voices.find(v => v.lang.startsWith("zh")) ||
-    voices[0];
-
-  if (defaultVoice) {
-    selectedVoiceName = defaultVoice.name;
-    sel.value = defaultVoice.name;
-  }
-}
-
-if ("speechSynthesis" in window) {
-  window.speechSynthesis.onvoiceschanged = loadVoices;
-  setTimeout(loadVoices, 300);
+  // 尽量自动选一个韩语（如果存在）
+  if (ko.length > 0) voiceSelect.value = ko[0].name;
 }
 
 function speak(text) {
-  if (!("speechSynthesis" in window)) return;
-  const toggle = document.getElementById("ttsToggle");
-  if (!toggle?.checked) return;
-
-  const shortText = text.length > 700 ? text.slice(0, 700) + "…" : text;
-
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(shortText);
-
-  const v = voices.find(x => x.name === selectedVoiceName);
-  if (v) utter.voice = v;
-
-  utter.rate = 1.0;
-  utter.pitch = 1.0;
-  utter.volume = 1.0;
-
-  window.speechSynthesis.speak(utter);
-}
-
-/* =========================
-   ✅ API 상태 점검
-========================= */
-async function pingApi() {
-  pingResult.textContent = "점검 중...";
   try {
-    const res = await fetch("/api/gemini", { method: "GET" });
-    const txt = await res.text();
-    pingResult.textContent = `GET /api/gemini → ${res.status}`;
-    logDebug(`GET /api/gemini status=${res.status}\n${txt}`);
-  } catch (e) {
-    pingResult.textContent = "실패";
-    logDebug("PING ERROR: " + e.message);
-  }
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+
+    const u = new SpeechSynthesisUtterance(text);
+    const selected = voices.find(v => v.name === voiceSelect.value);
+    if (selected) u.voice = selected;
+
+    // 稍微自然一点
+    u.rate = 1.0;
+    u.pitch = 1.0;
+    u.lang = selected?.lang || "ko-KR";
+
+    speechSynthesis.speak(u);
+  } catch (_) {}
 }
 
-/* =========================
-   ✅ 메시지 전송
-========================= */
+if ("speechSynthesis" in window) {
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+// Enter to send
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") send();
+});
+
+// ----- Main send -----
 async function send() {
   const msg = input.value.trim();
   if (!msg) return;
@@ -212,43 +187,55 @@ async function send() {
   addMsg(msg, "user");
   input.value = "";
 
-  try {
-    logDebug("POST /api/gemini -> sending...");
+  setStatus("loading", "응답 생성 중…");
+  sendBtn.disabled = true;
+  sendBtn.classList.add("opacity-60", "cursor-not-allowed");
 
-    const res = await fetch("/api/gemini", {
+  // 你可以在这里决定是否把用户输入也做一次“教学模式包装”
+  // 例如：const wrapped = `학생 질문: ${msg}\n\n위 규칙대로 답해줘.`;
+  const payload = {
+    prompt: msg,
+    system: TEACHER_SYSTEM_PROMPT
+  };
+
+  try {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: msg })
+      body: JSON.stringify(payload)
     });
 
-    const raw = await res.text(); // ✅ 먼저 text로 받아서 디버그 가능하게
-    logDebug(`RESPONSE status=${res.status}\nRAW=${raw}`);
+    // ✅ 防止“返回 HTML 导致 json() 崩溃 -> 白屏”
+    const rawText = await res.text();
+    let data = {};
+    try { data = JSON.parse(rawText); } catch (_) { data = { error: rawText }; }
 
     if (!res.ok) {
-      // 에러도 JSON일 수 있고 아닐 수도 있으니 안전 처리
-      try {
-        const ejson = JSON.parse(raw);
-        addMsg(`오류: ${ejson.error || raw}`, "ai");
-      } catch {
-        addMsg(`오류: ${raw}`, "ai");
-      }
-      return;
+      throw new Error((data && (data.error || data.message || JSON.stringify(data))) || ("HTTP " + res.status));
     }
 
-    // 정상일 때 JSON 파싱
-    const data = JSON.parse(raw);
-    const answer = data.text || "(응답 없음)";
-    addMsg(answer, "ai");
-    speak(answer);
+    const answer =
+      data.text ||
+      data.output ||
+      data.response ||
+      (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) ||
+      "(응답 없음)";
 
+    addMsg(answer, "ai");
+    setStatus("ok", "완료");
   } catch (e) {
-    addMsg("오류가 발생했습니다. 잠시 후 다시 시도해 주세요.", "ai");
-    logDebug("SEND ERROR: " + e.message);
+    addMsg("오류: " + (e.message || "잠시 후 다시 시도해 주세요."), "ai");
+    setStatus("error", "오류");
+  } finally {
+    sendBtn.disabled = false;
+    sendBtn.classList.remove("opacity-60", "cursor-not-allowed");
+    setTimeout(() => setStatus("idle", "대기"), 1200);
   }
 }
 
-// 초기 환영
+// Init greeting
 addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 문법을 물어보세요!", "ai");
+setStatus("idle", "대기");
 </script>
 
 </body>
