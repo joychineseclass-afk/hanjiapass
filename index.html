@@ -13,59 +13,52 @@
 </head>
 <body class="p-4">
 
-  <!-- Floating Button -->
   <button onclick="toggleAI()"
     class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
     🤖
   </button>
 
-  <!-- Panel -->
   <div id="ai-panel"
     class="hidden fixed bottom-20 right-4 w-[360px] bg-white rounded-xl shadow-xl flex flex-col">
 
-    <!-- Header -->
     <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
       <span>AI 한자 선생님</span>
       <button onclick="toggleAI()">✖</button>
     </div>
 
-    <!-- Controls -->
+    <!-- ✅ TTS 控制区（开关 + 音色选择） -->
     <div class="px-3 pt-3 pb-2 border-b text-xs space-y-2">
       <div class="flex items-center gap-2">
-        <input id="ttsEnabled" type="checkbox" class="accent-orange-500" checked />
-        <label for="ttsEnabled" class="select-none">읽어주기(TTS)</label>
+        <input id="ttsToggle" type="checkbox" class="accent-orange-500" checked />
+        <label for="ttsToggle" class="select-none">읽어주기(TTS)</label>
       </div>
 
       <div class="flex items-center gap-2">
-        <span class="text-gray-600">음색</span>
+        <span class="text-gray-600">음색(선택)</span>
         <select id="voiceSelect" class="flex-1 border rounded px-2 py-1 text-xs bg-white"></select>
       </div>
 
       <div class="text-[11px] text-gray-500 leading-snug">
-        • AI는 <b>HSK 한자/문법 선생님</b>으로 고정됩니다.<br/>
-        • 답변은 <b>한국어</b> 중심 + 필요한 경우 <b>중국어/병음</b>을 함께 제공합니다.
+        • 중국어(한자)는 반드시 읽어줘요. (발음 학습용)<br/>
+        • 기호/구두점은 읽지 않도록 처리했어요.
       </div>
     </div>
 
-    <!-- Chat -->
     <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
 
-    <!-- Input -->
     <div class="p-3 border-t flex gap-2 items-center">
       <input id="input"
-        class="flex-1 border rounded px-2 py-1"
-        placeholder="질문을 입력하세요…" />
-      <button id="sendBtn" onclick="send()"
-        class="bg-orange-500 text-white px-3 py-1 rounded">
+        class="flex-1 border rounded px-2 py-2"
+        placeholder="질문을 입력하세요…"
+        onkeydown="if(event.key==='Enter') send();" />
+      <button onclick="send()"
+        class="bg-orange-500 text-white px-4 py-2 rounded">
         보내기
       </button>
     </div>
 
-    <!-- Footer -->
     <div class="text-xs text-center text-gray-500 pb-2">
       🔐 Key 보호 모드: Vercel API
-      <span id="statusDot" class="inline-block ml-2 w-2 h-2 rounded-full bg-gray-300 align-middle"></span>
-      <span id="statusText" class="ml-1 text-[11px]">대기</span>
     </div>
   </div>
 
@@ -73,38 +66,14 @@
 const panel = document.getElementById("ai-panel");
 const chat  = document.getElementById("chat");
 const input = document.getElementById("input");
-const sendBtn = document.getElementById("sendBtn");
-const statusDot = document.getElementById("statusDot");
-const statusText = document.getElementById("statusText");
-const ttsEnabled = document.getElementById("ttsEnabled");
+const ttsToggle = document.getElementById("ttsToggle");
 const voiceSelect = document.getElementById("voiceSelect");
 
-// ✅ 同域优先（最稳：不会因为域名、CORS、预览域变化而挂）
-// 如果你非要固定域名，也可以把 API_URL 改成你那条绝对地址。
-const API_URL = (location.origin || "https://hanjiapass.vercel.app") + "/api/gemini";
+// ✅ 你昨天跑通的绝对地址（保持不动）
+const API_URL = "https://hanjiapass.vercel.app/api/gemini";
 
-// ✅ 固定老师人设（每次都会带上）
-const TEACHER_SYSTEM_PROMPT = `
-당신은 "AI 한자 선생님"입니다.
-목표: 한국인 학습자에게 HSK/한자/문법을 친절하고 명확하게 설명합니다.
-규칙:
-1) 기본은 한국어로 답합니다.
-2) 필요하면 중국어 예문 + 병음 + 한국어 해석을 함께 제공합니다.
-3) 초보도 이해하도록 단계적으로 설명하고, 마지막에 짧은 연습문제(1~2개)를 냅니다.
-4) 말투는 따뜻하고 선생님처럼, 과장/허위정보는 피합니다.
-`;
-
-// ----- UI helpers -----
-function toggleAI() { panel.classList.toggle("hidden"); }
-
-function setStatus(type, text) {
-  // type: idle | loading | ok | error
-  statusText.textContent = text || "";
-  statusDot.className = "inline-block ml-2 w-2 h-2 rounded-full align-middle " + (
-    type === "loading" ? "bg-orange-400" :
-    type === "ok" ? "bg-green-500" :
-    type === "error" ? "bg-red-500" : "bg-gray-300"
-  );
+function toggleAI() {
+  panel.classList.toggle("hidden");
 }
 
 function escapeHtml(str) {
@@ -125,61 +94,149 @@ function addMsg(text, who) {
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 
-  // ✅ AI 回复后朗读
-  if (who === "ai" && ttsEnabled.checked) speak(text);
+  // ✅ AI 回复后自动朗读（可关闭）
+  if (who === "ai") {
+    speakMultilang(text);
+  }
 }
 
-// ----- TTS (Web Speech API) -----
-let voices = [];
+/* =========================================================
+   ✅ 多语分段朗读：中文一定读，韩语也读；不读标点/符号
+========================================================= */
+
+// 语音库
+let VOICES = [];
 function loadVoices() {
-  voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  if (!("speechSynthesis" in window)) return;
+  VOICES = speechSynthesis.getVoices() || [];
+
+  // 填充下拉框（显示所有音色）
   voiceSelect.innerHTML = "";
-
-  // 优先韩语音色
-  const ko = voices.filter(v => (v.lang || "").toLowerCase().includes("ko"));
-  const rest = voices.filter(v => !((v.lang || "").toLowerCase().includes("ko")));
-  const list = [...ko, ...rest];
-
-  list.forEach((v, idx) => {
+  VOICES.forEach(v => {
     const opt = document.createElement("option");
     opt.value = v.name;
     opt.textContent = `${v.name} (${v.lang})`;
     voiceSelect.appendChild(opt);
   });
 
-  // 尽量自动选一个韩语（如果存在）
-  if (ko.length > 0) voiceSelect.value = ko[0].name;
+  // 默认选一个韩语音色（更像老师）
+  const defaultKo = VOICES.find(v => (v.lang || "").toLowerCase().startsWith("ko"));
+  if (defaultKo) voiceSelect.value = defaultKo.name;
 }
-
-function speak(text) {
-  try {
-    if (!window.speechSynthesis) return;
-    speechSynthesis.cancel();
-
-    const u = new SpeechSynthesisUtterance(text);
-    const selected = voices.find(v => v.name === voiceSelect.value);
-    if (selected) u.voice = selected;
-
-    // 稍微自然一点
-    u.rate = 1.0;
-    u.pitch = 1.0;
-    u.lang = selected?.lang || "ko-KR";
-
-    speechSynthesis.speak(u);
-  } catch (_) {}
-}
-
 if ("speechSynthesis" in window) {
   loadVoices();
   speechSynthesis.onvoiceschanged = loadVoices;
 }
 
-// Enter to send
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") send();
-});
+// ✅ 清洗：去标点/符号，但保留中文/韩语/英文
+function ttsCleanKeepText(text) {
+  if (!text) return "";
+  let t = String(text);
 
-// ----- Main send -----
+  // 去代码块
+  t = t.replace(/```[\s\S]*?```/g, " ");
+
+  // 去 markdown 符号
+  t = t.replace(/[*_`#>|[\]]/g, " ");
+  t = t.replace(/-{2,}/g, " ");
+
+  // 标点替换为空格（避免读“逗号句号”）
+  t = t.replace(/[，。！？；：、“”‘’（）()\[\]{}《》〈〉…·、.,!?;:"'()]/g, " ");
+
+  // 去 emoji / 特殊符号
+  t = t.replace(/[\u{1F300}-\u{1FAFF}]/gu, " ");
+
+  // 压缩空格
+  t = t.replace(/\s+/g, " ").trim();
+  return t;
+}
+
+// 识别语言：含中文→zh；含韩语→ko；否则 en
+function detectLang(chunk) {
+  const hasZh = /[\u4E00-\u9FFF]/.test(chunk);
+  const hasKo = /[\uAC00-\uD7A3]/.test(chunk);
+  if (hasZh) return "zh-CN";
+  if (hasKo) return "ko-KR";
+  return "en-US";
+}
+
+// 分段：按语种合并
+function splitByLang(text) {
+  const cleaned = ttsCleanKeepText(text);
+  if (!cleaned) return [];
+
+  // 先按换行切，再按句子空格轻切（够用且稳定）
+  const rough = cleaned
+    .split(/\n+/)
+    .flatMap(line => line.split(/(?<=[.?!])\s+|\s{2,}/g))
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const parts = [];
+  for (const piece of rough) {
+    const lang = detectLang(piece);
+    const last = parts[parts.length - 1];
+    if (last && last.lang === lang) {
+      last.text += " " + piece;
+    } else {
+      parts.push({ lang, text: piece });
+    }
+  }
+  return parts;
+}
+
+// 选音色：优先对应语言；如果用户下拉选了某个音色，就作为“全局偏好”
+function pickVoice(lang) {
+  if (!VOICES.length) return null;
+
+  // 用户手动选择优先（不管语言）
+  const selectedName = voiceSelect.value;
+  const userSelected = VOICES.find(v => v.name === selectedName);
+  if (userSelected) return userSelected;
+
+  // 否则按语言自动选
+  const v1 = VOICES.find(v => (v.lang || "").toLowerCase().startsWith(lang.toLowerCase()));
+  if (v1) return v1;
+  const v2 = VOICES.find(v => (v.lang || "").toLowerCase().includes(lang.toLowerCase()));
+  if (v2) return v2;
+
+  return VOICES[0];
+}
+
+// 核心朗读：分段顺序播放（Promise 串起来）
+async function speakMultilang(rawText) {
+  if (!ttsToggle.checked) return;
+  if (!("speechSynthesis" in window)) return;
+
+  const parts = splitByLang(rawText);
+  if (!parts.length) return;
+
+  speechSynthesis.cancel();
+
+  for (const p of parts) {
+    await new Promise((resolve) => {
+      const u = new SpeechSynthesisUtterance(p.text);
+
+      // ✅ 更圆润可爱一点（你要的）
+      u.rate = 0.95;   // 稍慢
+      u.pitch = 1.10;  // 稍高一点点
+      u.volume = 1.0;
+
+      u.lang = p.lang;
+      const voice = pickVoice(p.lang);
+      if (voice) u.voice = voice;
+
+      u.onend = resolve;
+      u.onerror = resolve;
+
+      speechSynthesis.speak(u);
+    });
+  }
+}
+
+/* =========================================================
+   ✅ 发送消息
+========================================================= */
 async function send() {
   const msg = input.value.trim();
   if (!msg) return;
@@ -187,55 +244,27 @@ async function send() {
   addMsg(msg, "user");
   input.value = "";
 
-  setStatus("loading", "응답 생성 중…");
-  sendBtn.disabled = true;
-  sendBtn.classList.add("opacity-60", "cursor-not-allowed");
-
-  // 你可以在这里决定是否把用户输入也做一次“教学模式包装”
-  // 例如：const wrapped = `학생 질문: ${msg}\n\n위 규칙대로 답해줘.`;
-  const payload = {
-    prompt: msg,
-    system: TEACHER_SYSTEM_PROMPT
-  };
-
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ prompt: msg })
     });
 
-    // ✅ 防止“返回 HTML 导致 json() 崩溃 -> 白屏”
-    const rawText = await res.text();
-    let data = {};
-    try { data = JSON.parse(rawText); } catch (_) { data = { error: rawText }; }
+    const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      throw new Error((data && (data.error || data.message || JSON.stringify(data))) || ("HTTP " + res.status));
+      throw new Error((data && (data.error || JSON.stringify(data))) || ("HTTP " + res.status));
     }
 
-    const answer =
-      data.text ||
-      data.output ||
-      data.response ||
-      (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) ||
-      "(응답 없음)";
-
-    addMsg(answer, "ai");
-    setStatus("ok", "완료");
+    addMsg(data.text || "(응답 없음)", "ai");
   } catch (e) {
     addMsg("오류: " + (e.message || "잠시 후 다시 시도해 주세요."), "ai");
-    setStatus("error", "오류");
-  } finally {
-    sendBtn.disabled = false;
-    sendBtn.classList.remove("opacity-60", "cursor-not-allowed");
-    setTimeout(() => setStatus("idle", "대기"), 1200);
   }
 }
 
-// Init greeting
+// 初始欢迎
 addMsg("안녕하세요! HSK 한자 선생님입니다 😊\n궁금한 단어나 문법을 물어보세요!", "ai");
-setStatus("idle", "대기");
 </script>
 
 </body>
