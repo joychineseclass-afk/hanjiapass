@@ -10,11 +10,13 @@ const DEFAULT_TEACHER_SYSTEM = `
 2) 拼音
 3) 韩语解释（亲切、适合初学者/小学生）
 4) 例句 1~2 个（中文+拼音+韩语）
+
 【例句格式固定】
-- 例句部分请写成下面这样（每条一行）：
+例句部分请严格写成下面这样（每条一行）：
 例句1：<中文句子> | <拼音> | <解释语言>
 例句2：<中文句子> | <拼音> | <解释语言>
 （如果只有1条，就只输出 例句1）
+
 5) 如用户问语法：用简单韩语解释，并给对比例句
 `.trim();
 
@@ -37,10 +39,11 @@ function isLikelyModelNotFound(details) {
     details?.message ||
     ""
   ).toLowerCase();
+
   return (
     msg.includes("not found") ||
     msg.includes("not supported") ||
-    msg.includes("model") && msg.includes("not") && msg.includes("supported")
+    (msg.includes("model") && msg.includes("not") && msg.includes("supported"))
   );
 }
 
@@ -70,11 +73,11 @@ export default async function handler(req, res) {
 
   if (req.method === "OPTIONS") return res.status(204).end();
 
-  // ===== 2) GET 健康检查（你页面那张卡会显示 200）=====
+  // ===== 2) GET 健康检查 =====
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
-      message: "Gemini API endpoint is alive. Use POST with JSON { prompt, system? }",
+      message: "Gemini API endpoint is alive. Use POST with JSON { prompt, explainLang }",
       apiVersion: API_VERSION,
       modelCandidates: DEFAULT_MODEL_CANDIDATES,
     });
@@ -102,6 +105,7 @@ export default async function handler(req, res) {
 
     const userPrompt = String(body.prompt || body.message || "").trim();
     if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
+
     // 根据 explainLang 决定解释语言
     const langMap = {
       ko: "韩语",
@@ -110,34 +114,45 @@ export default async function handler(req, res) {
       zh: "中文"
     };
 
-   const explainLang = body.explainLang || "ko";
-   const explainLangName = langMap[explainLang] || "韩语";
+    const explainLang = String(body.explainLang || "ko").trim();
+    const explainLangName = langMap[explainLang] || "韩语";
 
-   const systemPrompt = `
-   你是一位亲切、耐心、适合教学的“AI 中文老师”。
+    // ===== ✅ 这里才是“真正送去 Gemini 的老师规则” =====
+    const systemPrompt = `
+你是一位亲切、耐心、适合教学的“AI 中文老师”。
 
-  【教学总原则】
-  - 中文（汉字）必须读出来（用于发音学习）
-  - 不要读标点符号、符号、编号
-  - 语气自然、温柔、像真人老师
-  - 不使用 markdown 符号（如 ** ## --- 等）
-  - 分段清晰，但用自然语言表达
+【教学总原则】
+- 中文（汉字）必须读出来（用于发音学习）
+- 不要读标点符号、符号、编号
+- 语气自然、温柔、像真人老师
+- 不使用 markdown 符号（如 ** ## --- 等）
+- 分段清晰，但用自然语言表达
 
-  【输出结构】
-  1. 中文词语 / 句子
-  2. 拼音（标准、可朗读）
-  3. ${explainLangName}解释（简洁、适合初学者）
-  4. 1~2 个例句（中文 + 拼音 + ${explainLangName}）
+【输出结构】
+1. 中文词语 / 句子
+2. 拼音（标准、可朗读）
+3. ${explainLangName}解释（简洁、适合初学者）
+4. 例句 1~2 个（中文 + 拼音 + ${explainLangName}）
 
- 【重要】
-  - 所有解释语言必须使用：${explainLangName}
-  - 不要混用其他语言
-  - 不要出现“下面是”“总结如下”等 AI 痕迹语
-  `;
+【例句格式固定】（非常重要，前端按钮靠这个识别）
+- 例句必须严格写成下面这样（每条一行）：
+例句1：<中文句子> | <拼音> | <${explainLangName}解释>
+例句2：<中文句子> | <拼音> | <${explainLangName}解释>
+（如果只有1条，就只输出 例句1）
+- 注意：例句必须“一行一条”，不要拆成多行
 
+【重要】
+- 所有解释语言必须使用：${explainLangName}
+- 不要混用其他语言
+- 不要出现“下面是”“总结如下”等 AI 痕迹语
+    `.trim();
 
-    // 最终 prompt
-    const finalPrompt = `${systemPrompt}\n\n【学生问题】\n${userPrompt}`;
+    // 如果你未来想让前端传入 system 自定义，也可以启用这行（目前先不用）
+    // const systemFromClient = String(body.system || "").trim();
+    // const finalSystem = systemFromClient || systemPrompt || DEFAULT_TEACHER_SYSTEM;
+
+    const finalSystem = systemPrompt || DEFAULT_TEACHER_SYSTEM;
+    const finalPrompt = `${finalSystem}\n\n【学生问题】\n${userPrompt}`;
 
     // ===== 6) 调 Gemini：带超时、模型兜底 =====
     const controller = new AbortController();
@@ -164,10 +179,10 @@ export default async function handler(req, res) {
         // 无论如何先拿到文本，再尝试 JSON（防止返回 HTML）
         const rawText = await resp.text();
         let data = {};
-        try { data = JSON.parse(rawText); } catch { data = { error: { message: rawText } }; }
+        try { data = JSON.parse(rawText); }
+        catch { data = { error: { message: rawText } }; }
 
         if (!resp.ok) {
-          // 如果是模型不存在/不支持，换下一个模型继续试
           if (isLikelyModelNotFound(data)) {
             lastError = {
               status: resp.status,
@@ -178,7 +193,6 @@ export default async function handler(req, res) {
             continue;
           }
 
-          // 其他错误：直接返回（例如 key leaked / permission / quota）
           return res.status(resp.status).json({
             error: data?.error?.message || "Gemini API error",
             triedModel: model,
@@ -194,27 +208,25 @@ export default async function handler(req, res) {
           text: text || "(응답 없음)",
           modelUsed: model,
           apiVersion: API_VERSION,
+          explainLang,
         });
       } catch (e) {
-        // fetch/network/timeout 错误：记录后尝试下一个模型
         lastError = {
           error: e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e)),
           triedModel: model,
         };
-
-        // 如果是超时，没必要继续试多个模型（节省资源）
         if (e?.name === "AbortError") break;
       }
     }
 
     clearTimeout(timeout);
 
-    // 所有模型都失败
     return res.status(500).json({
       error: "All model candidates failed.",
       apiVersion: API_VERSION,
       lastError,
     });
+
   } catch (e) {
     return res.status(500).json({
       error: "Server error: " + (e?.message || String(e)),
