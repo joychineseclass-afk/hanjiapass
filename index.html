@@ -52,6 +52,25 @@
         <option value="zh">中文</option>
       </select>
     </div>
+
+    <!-- ✅ 朗读范围（你要的：只读中文 / 中文+解释 / 全部） -->
+    <div class="flex items-center gap-2">
+      <span id="uiReadScopeLabel" class="w-[72px] text-gray-600">읽기 범위</span>
+      <select id="readScope" class="flex-1 border rounded px-2 py-1 text-xs">
+        <option value="zhOnly">中文만</option>
+        <option value="zhPlus">中文+설명</option>
+        <option value="all" selected>전체</option>
+      </select>
+    </div>
+
+    <!-- ✅ 模式：儿童/考试 -->
+    <div class="flex items-center gap-2">
+      <span id="uiModeLabel" class="w-[72px] text-gray-600">모드</span>
+      <select id="speakMode" class="flex-1 border rounded px-2 py-1 text-xs">
+        <option value="kids" selected>Kids</option>
+        <option value="exam">Exam</option>
+      </select>
+    </div>
   </div>
 
   <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
@@ -72,7 +91,7 @@
 
 <script>
 /* =========================
-   0) 绝对地址（你现在这个是对的）
+   0) API
 ========================= */
 const API_URL = "https://hanjiapass.vercel.app/api/gemini";
 
@@ -90,7 +109,10 @@ const UI_TEXT = {
     testVoice: "🔊 테스트",
     keyMode: "🔐 Key 보호 모드: Vercel API",
     thinking: "잠깐만요 🙂",
-    welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!"
+    welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!",
+    readScope: "읽기 범위",
+    mode: "모드",
+    follow: "🎤 따라읽기"
   },
   en: {
     title: "AI Chinese Teacher",
@@ -102,7 +124,10 @@ const UI_TEXT = {
     testVoice: "🔊 Test",
     keyMode: "🔐 Key protection: Vercel API",
     thinking: "One sec 🙂",
-    welcome: "Hi 🙂\nAsk me anything about Chinese!"
+    welcome: "Hi 🙂\nAsk me anything about Chinese!",
+    readScope: "Read scope",
+    mode: "Mode",
+    follow: "🎤 Shadow"
   },
   ja: {
     title: "AI 中国語先生",
@@ -114,7 +139,10 @@ const UI_TEXT = {
     testVoice: "🔊 テスト",
     keyMode: "🔐 キー保護: Vercel API",
     thinking: "ちょっと待ってね 🙂",
-    welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。"
+    welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。",
+    readScope: "読み範囲",
+    mode: "モード",
+    follow: "🎤 ついて読む"
   },
   zh: {
     title: "AI 汉字老师",
@@ -126,7 +154,10 @@ const UI_TEXT = {
     testVoice: "🔊 测试",
     keyMode: "🔐 密钥保护：Vercel API",
     thinking: "等一下🙂",
-    welcome: "你好 🙂\n有中文问题，直接问我吧。"
+    welcome: "你好 🙂\n有中文问题，直接问我吧。",
+    readScope: "朗读范围",
+    mode: "模式",
+    follow: "🎤 跟读"
   }
 };
 
@@ -139,6 +170,8 @@ const input = document.getElementById("input");
 const explainLang = document.getElementById("explainLang");
 const ttsToggle = document.getElementById("ttsToggle");
 const voiceSelect = document.getElementById("voiceSelect");
+const readScope = document.getElementById("readScope");
+const speakMode = document.getElementById("speakMode");
 
 const uiTitle = document.getElementById("uiTitle");
 const uiTtsLabel = document.getElementById("uiTtsLabel");
@@ -147,9 +180,11 @@ const uiExplainLabel = document.getElementById("uiExplainLabel");
 const uiSendBtn = document.getElementById("uiSendBtn");
 const uiKeyMode = document.getElementById("uiKeyMode");
 const uiTestVoiceBtn = document.getElementById("uiTestVoiceBtn");
+const uiReadScopeLabel = document.getElementById("uiReadScopeLabel");
+const uiModeLabel = document.getElementById("uiModeLabel");
 
 /* =========================
-   3) 安全：把错误直接显示在聊天里（你不用看控制台）
+   3) 安全：报错显示
 ========================= */
 function showError(msg) {
   createMsgBubble("오류: " + msg, "ai");
@@ -173,7 +208,69 @@ function cleanForDisplay(text) {
     .replace(/-{3,}/g, "")
     .trim();
 }
+/* =========================
+   ✅ 例句可点击朗读：把“例句1/2：...”转成按钮
+========================= */
 
+// 用来把例句行解析出来
+function parseExampleLines(text) {
+  const raw = String(text || "");
+  const lines = raw.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const examples = [];
+
+  // 支持：例句1：xxx | pinyin | explain
+  // 也支持：Example 1: ...（英文界面时有概率）
+  const re = /^(?:例句|예문|Example)\s*([0-9]+)\s*[:：]\s*(.+)$/i;
+
+  for (const line of lines) {
+    const m = line.match(re);
+    if (!m) continue;
+    const idx = m[1];
+    const rest = m[2];
+
+    // rest: 中文 | 拼音 | 解释
+    const parts = rest.split("|").map(s => s.trim());
+    const zh = parts[0] || "";
+    const py = parts[1] || "";
+    const exp = parts.slice(2).join(" | ") || "";
+
+    examples.push({ idx, zh, py, exp, fullLine: line });
+  }
+  return examples;
+}
+
+// 把例句按钮插到气泡下面
+function appendExampleButtons(wrapEl, answerText, uiLang) {
+  const examples = parseExampleLines(answerText);
+  if (!examples.length) return;
+
+  const t = UI_TEXT[uiLang] || UI_TEXT.ko;
+
+  const box = document.createElement("div");
+  box.className = "mt-2 flex flex-wrap gap-2";
+
+  examples.forEach(ex => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "px-2 py-1 rounded bg-white border text-xs hover:bg-slate-50";
+    btn.textContent = `🔊 ${t.follow} ${ex.idx}`; // 复用 follow 文案更省事
+
+    btn.addEventListener("click", async () => {
+      // 点哪句读哪句：中文普通话，其它按界面语言读
+      const lineToRead = `${ex.zh} ${ex.py ? (" " + ex.py) : ""}`; 
+      // 如果你也想把解释一起读，就用下面这行替换：
+      // const lineToRead = `${ex.zh} | ${ex.py} | ${ex.exp}`;
+
+      await speakSmart(lineToRead, uiLang);
+    });
+
+    box.appendChild(btn);
+  });
+
+  wrapEl.appendChild(box);
+  chat.scrollTop = chat.scrollHeight;
+}
+  
 function createMsgBubble(initialText, who) {
   const wrap = document.createElement("div");
   wrap.className = who === "user" ? "text-right" : "text-left";
@@ -193,7 +290,7 @@ function createMsgBubble(initialText, who) {
 }
 
 /* =========================
-   5) UI 跟随语言切换（界面+欢迎语）
+   5) UI 跟随语言切换
 ========================= */
 function applyUIText(lang) {
   const t = UI_TEXT[lang] || UI_TEXT.ko;
@@ -207,14 +304,17 @@ function applyUIText(lang) {
   uiExplainLabel.innerText = t.explainLang;
   uiTestVoiceBtn.innerText = t.testVoice;
   uiKeyMode.innerText = t.keyMode;
+  uiReadScopeLabel.innerText = t.readScope;
+  uiModeLabel.innerText = t.mode;
 
+  // 欢迎语
   chat.innerHTML = "";
   createMsgBubble(t.welcome, "ai");
 }
 
 /* =========================
-   /* =========================
-   6) TTS：Smart（中文用普通话，其它用对应语言）
+   6) TTS：Smart（中文普通话，其它跟随选择语言）
+   + 自然停顿（真人感）
 ========================= */
 let voices = [];
 
@@ -245,70 +345,49 @@ if (window.speechSynthesis) {
   loadVoices();
 }
 
-// 选择“最像目标语言”的 voice（找不到就用下拉选的）
+// 选“最像目标语言”的 voice（找不到就用下拉选的）
 function pickVoiceByLang(targetLang) {
   if (!voices.length) return null;
 
-  // targetLang: "zh" | "en" | "ko" | "ja"
   const prefix = {
-    zh: ["zh", "cmn"],   // 有些系统会用 cmn
+    zh: ["zh", "cmn"],
     en: ["en"],
     ko: ["ko"],
     ja: ["ja"]
   }[targetLang] || [targetLang];
 
-  // 优先：完全匹配前缀（例如 zh-CN）
   const v = voices.find(v => prefix.some(p => (v.lang || "").toLowerCase().startsWith(p)));
   if (v) return v;
 
-  // 找不到：回退到用户下拉选的 voice
   const idx = parseInt(voiceSelect.value, 10);
   if (!Number.isNaN(idx) && voices[idx]) return voices[idx];
 
   return voices[0] || null;
 }
 
-// 清理文本：去掉 markdown/多余符号，但保留语言文字
+// 清理：去掉 markdown/装饰符号，保留语言文字
 function cleanForSpeak(text) {
   return String(text)
-    .replace(/```[\s\S]*?```/g, " ")   // 去代码块
-    .replace(/\*\*(.*?)\*\*/g, "$1")  // 去 ** **
-    .replace(/#+\s*/g, "")            // 去标题符号
-    .replace(/-{3,}/g, " ")           // 去分割线
-    .replace(/[•●◦▶▷■□◆◇※★☆]/g, " ")  // 常见装饰符号
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/#+\s*/g, "")
+    .replace(/-{3,}/g, " ")
+    .replace(/[•●◦▶▷■□◆◇※★☆]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-// 把文本切成“中文块”和“非中文块”
-function splitByChineseRuns(text) {
-  const s = cleanForSpeak(text);
-  if (!s) return [];
-
-  const parts = [];
-  const re = /([\u4e00-\u9fff]+)|([^\u4e00-\u9fff]+)/g;
-  let m;
-  while ((m = re.exec(s)) !== null) {
-    if (m[1]) parts.push({ type: "zh", text: m[1] });     // 中文
-    else if (m[2]) parts.push({ type: "other", text: m[2] }); // 其它
-  }
-  return parts;
-}
-
-// 只保留指定语言的“主要文字”，避免读出太多标点
+// 只保留主要文字，减少读标点（但保留句子停顿用的分隔符）
 function keepLettersForLang(text, lang) {
   const t = String(text);
 
   if (lang === "en") {
-    // 保留英文/数字/基本空格
     return t.replace(/[^A-Za-z0-9\s'.,!?-]/g, " ").replace(/\s+/g, " ").trim();
   }
   if (lang === "ko") {
-    // 保留韩文/数字
     return t.replace(/[^가-힣0-9\s.,!?-]/g, " ").replace(/\s+/g, " ").trim();
   }
   if (lang === "ja") {
-    // 保留日文假名/汉字/数字（注意：这里的“汉字”会跟中文冲突，但我们已先分段）
     return t.replace(/[^ぁ-ゟ゠-ヿ一-龯0-9\s.,!?-]/g, " ").replace(/\s+/g, " ").trim();
   }
   if (lang === "zh") {
@@ -317,61 +396,164 @@ function keepLettersForLang(text, lang) {
   return t.replace(/\s+/g, " ").trim();
 }
 
-// ✅ Smart Speak：中文用普通话，其它用当前语言
-function speakSmart(fullText, uiLang) {
+// 中文/非中文切块
+function splitByChineseRuns(text) {
+  const s = cleanForSpeak(text);
+  if (!s) return [];
+
+  const parts = [];
+  const re = /([\u4e00-\u9fff]+)|([^\u4e00-\u9fff]+)/g;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    if (m[1]) parts.push({ type: "zh", text: m[1] });
+    else if (m[2]) parts.push({ type: "other", text: m[2] });
+  }
+  return parts;
+}
+
+// ✅ 自然停顿：把文本按句号/问号/感叹号切句
+function splitSentences(text) {
+  const s = String(text).trim();
+  if (!s) return [];
+  // 中英日韩常见句末符号
+  const re = /[^。！？!?]+[。！？!?]?/g;
+  return s.match(re)?.map(x => x.trim()).filter(Boolean) || [s];
+}
+
+function getSpeakParams() {
+  const mode = speakMode.value; // kids / exam
+  if (mode === "exam") {
+    return { rate: 1.05, pitch: 1.0, pauseShort: 120, pauseLong: 220 };
+  }
+  // kids
+  return { rate: 0.98, pitch: 1.07, pauseShort: 180, pauseLong: 320 };
+}
+
+// ✅ 朗读范围：只读中文 / 中文+解释 / 全部
+function filterByReadScope(fullText, uiLang, scope) {
+  const text = cleanForSpeak(fullText);
+
+  if (scope === "zhOnly") {
+    // 只保留中文
+    const onlyZh = (text.match(/[\u4e00-\u9fff]+/g) || []).join(" ");
+    return { mode: "zhOnly", zhText: onlyZh, otherText: "" };
+  }
+
+  if (scope === "zhPlus") {
+    // 中文 + 非中文（但非中文只读 uiLang 的主要文字）
+    return { mode: "zhPlus", zhText: text, otherText: text };
+  }
+
+  // all
+  return { mode: "all", zhText: text, otherText: text };
+}
+
+// ✅ Smart Speak（排队朗读 + 句间停顿）
+let speakingJobId = 0;
+
+async function speakSmart(fullText, uiLang) {
   if (!ttsToggle.checked) return;
   if (!window.speechSynthesis) return;
 
-  const chunks = splitByChineseRuns(fullText);
-  if (!chunks.length) return;
+  const jobId = ++speakingJobId;
+  const scope = readScope.value;
+  const params = getSpeakParams();
 
-  // 判断是否有中文
-  const hasChinese = chunks.some(c => c.type === "zh");
+  // 过滤范围
+  const filtered = filterByReadScope(fullText, uiLang, scope);
 
-  // 如果完全没有中文：就整段用 uiLang 读
-  if (!hasChinese) {
-    const text = keepLettersForLang(cleanForSpeak(fullText), uiLang);
-    if (!text) return;
-
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.voice = pickVoiceByLang(uiLang) || undefined;
-    u.lang = (u.voice && u.voice.lang) ? u.voice.lang : uiLang;
-    u.rate = 1.0;
-    u.pitch = 1.05;
-    window.speechSynthesis.speak(u);
+  // 只读中文
+  if (filtered.mode === "zhOnly") {
+    const t = keepLettersForLang(filtered.zhText, "zh");
+    if (!t) return;
+    await speakQueueByLang(t, "zh", params, jobId);
     return;
   }
 
-  // 有中文：按段落排队朗读（中文段→zh，其他段→uiLang）
+  // 中文+解释 / 全部：按“中文块/非中文块”分段，再切句朗读
+  const chunks = splitByChineseRuns(filtered.otherText);
+  if (!chunks.length) return;
+
   window.speechSynthesis.cancel();
 
   for (const c of chunks) {
+    if (jobId !== speakingJobId) return;
+
     if (c.type === "zh") {
       const t = keepLettersForLang(c.text, "zh");
       if (!t) continue;
-      const u = new SpeechSynthesisUtterance(t);
-      u.voice = pickVoiceByLang("zh") || undefined;
-      u.lang = (u.voice && u.voice.lang) ? u.voice.lang : "zh-CN";
-      u.rate = 1.0;
-      u.pitch = 1.05;
-      window.speechSynthesis.speak(u);
+      await speakQueueByLang(t, "zh", params, jobId);
     } else {
+      // 非中文：用 uiLang
       const t = keepLettersForLang(c.text, uiLang);
       if (!t) continue;
-      const u = new SpeechSynthesisUtterance(t);
-      u.voice = pickVoiceByLang(uiLang) || undefined;
-      u.lang = (u.voice && u.voice.lang) ? u.voice.lang : uiLang;
-      u.rate = 1.0;
-      u.pitch = 1.05;
-      window.speechSynthesis.speak(u);
+
+      // zhPlus 模式：更“短一点”，避免解释读太长（仍然会读，但更克制）
+      if (filtered.mode === "zhPlus") {
+        const shortened = t.length > 260 ? (t.slice(0, 260) + " ...") : t;
+        await speakQueueByLang(shortened, uiLang, params, jobId);
+      } else {
+        await speakQueueByLang(t, uiLang, params, jobId);
+      }
     }
   }
 }
 
+// 按语言朗读 + 句间自然停顿
+function speakQueueByLang(text, langKey, params, jobId) {
+  return new Promise((resolve) => {
+    const sentences = splitSentences(text);
+    if (!sentences.length) return resolve();
+
+    let idx = 0;
+
+    const speakNext = () => {
+      if (jobId !== speakingJobId) return resolve();
+      if (idx >= sentences.length) return resolve();
+
+      const s = sentences[idx++];
+      const u = new SpeechSynthesisUtterance(s);
+
+      const voice = pickVoiceByLang(langKey);
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang || (langKey === "zh" ? "zh-CN" : langKey);
+      } else {
+        u.lang = (langKey === "zh" ? "zh-CN" : langKey);
+      }
+
+      u.rate = params.rate;
+      u.pitch = params.pitch;
+
+      // 句末停顿更长
+      const endsWithStrong = /[。！？!?]$/.test(s);
+      const pause = endsWithStrong ? params.pauseLong : params.pauseShort;
+
+      u.onend = () => setTimeout(speakNext, pause);
+      u.onerror = () => resolve();
+
+      window.speechSynthesis.speak(u);
+    };
+
+    speakNext();
+  });
+}
+
+// ✅ 测试按钮：根据当前语言读 demo（保留你喜欢的功能）
+uiTestVoiceBtn.addEventListener("click", async () => {
+  const lang = explainLang.value;
+  const demo = {
+    ko: "안녕하세요. 你好. 오늘도 같이 공부해요!",
+    en: "Hello. 你好. Let's learn together!",
+    ja: "こんにちは。你好。いっしょに勉強しよう。",
+    zh: "你好。Hello. 我们一起学习吧。"
+  }[lang] || "Hello. 你好.";
+
+  await speakSmart(demo, lang);
+});
 
 /* =========================
-   7) 打字机效果（前端）
+   7) 打字机效果（完成后回调）
 ========================= */
 let typingTimer = null;
 function stopTyping() {
@@ -381,7 +563,7 @@ function stopTyping() {
   }
 }
 
-function typewriterRender(bubbleDiv, fullText, speed = 14) {
+function typewriterRender(bubbleDiv, fullText, speed = 14, onDone) {
   stopTyping();
   const cleaned = cleanForDisplay(fullText);
 
@@ -395,18 +577,45 @@ function typewriterRender(bubbleDiv, fullText, speed = 14) {
 
     if (i >= cleaned.length) {
       stopTyping();
+      if (typeof onDone === "function") onDone(cleaned);
     }
   }, speed);
 }
 
 /* =========================
-   8) 发送
+   8) 跟读（保存最近一次 AI 回复）
+========================= */
+let lastAnswerText = "";
+function addFollowButton(lang) {
+  const t = UI_TEXT[lang] || UI_TEXT.ko;
+
+  const wrap = document.createElement("div");
+  wrap.className = "text-left";
+
+  wrap.innerHTML = `
+    <button class="mt-1 px-3 py-1 rounded bg-slate-200 text-xs">
+      ${t.follow}
+    </button>
+  `;
+  const btn = wrap.querySelector("button");
+  btn.addEventListener("click", async () => {
+    if (!lastAnswerText) return;
+    await speakSmart(lastAnswerText, explainLang.value);
+  });
+
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+/* =========================
+   9) 发送
 ========================= */
 async function send() {
   const msg = input.value.trim();
   if (!msg) return;
 
   stopTyping();
+  window.speechSynthesis && window.speechSynthesis.cancel();
 
   createMsgBubble(msg, "user");
   input.value = "";
@@ -427,12 +636,16 @@ async function send() {
     if (!res.ok) throw new Error(data?.error || ("HTTP " + res.status));
 
     const answer = data.text || "(응답 없음)";
+    lastAnswerText = answer;
 
-    // ✅ 打字机显示
-    typewriterRender(bubbleDiv, answer, 14);
+    // ✅ 打字机：打完再朗读（更像真人）
+    typewriterRender(bubbleDiv, answer, 14, async () => {
+  await speakSmart(answer, lang);
+  addFollowButton(lang);
 
-    // ✅ 朗读中文（只读汉字）
-    speakChinese(answer);
+  // ✅ 新增：每个例句生成可点击朗读按钮
+  appendExampleButtons(bubbleDiv.closest("div"), answer, lang);
+});
 
   } catch (e) {
     bubbleDiv.textContent = "오류: " + (e.message || "잠시 후 다시 시도해 주세요.");
@@ -440,7 +653,7 @@ async function send() {
 }
 
 /* =========================
-   9) 初始化 & 切换语言
+   10) 初始化 & 切换语言
 ========================= */
 applyUIText(explainLang.value);
 
@@ -452,5 +665,3 @@ explainLang.addEventListener("change", () => {
 
 </body>
 </html>
-
-
