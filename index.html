@@ -66,6 +66,49 @@
 </div>
 
 <script>
+  const UI_TEXT = {
+  ko: {
+    title: "AI 한자 선생님",
+    inputPlaceholder: "질문을 입력하세요…",
+    send: "보내기",
+    explainLang: "설명 언어",
+    tts: "읽어주기",
+    voice: "음색",
+    keyMode: "🔐 Key 보호 모드: Vercel API",
+    welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!"
+  },
+  en: {
+    title: "AI Chinese Teacher",
+    inputPlaceholder: "Ask your question…",
+    send: "Send",
+    explainLang: "Explanation language",
+    tts: "Read aloud",
+    voice: "Voice",
+    keyMode: "🔐 Key protection: Vercel API",
+    welcome: "Hi 🙂\nAsk me anything about Chinese!"
+  },
+  ja: {
+    title: "AI 中国語先生",
+    inputPlaceholder: "質問を入力してください…",
+    send: "送信",
+    explainLang: "説明言語",
+    tts: "読み上げ",
+    voice: "音声",
+    keyMode: "🔐 キー保護: Vercel API",
+    welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。"
+  },
+  zh: {
+    title: "AI 汉字老师",
+    inputPlaceholder: "请输入你的问题…",
+    send: "发送",
+    explainLang: "说明语言",
+    tts: "朗读",
+    voice: "音色",
+    keyMode: "🔐 密钥保护：Vercel API",
+    welcome: "你好 🙂\n有中文问题，直接问我吧。"
+  }
+};
+  
 const panel = document.getElementById("ai-panel");
 const chat  = document.getElementById("chat");
 const input = document.getElementById("input");
@@ -109,6 +152,24 @@ function addMsg(text, who) {
   chat.scrollTop = chat.scrollHeight;
 }
 
+function applyUIText(lang) {
+ const t = UI_TEXT[lang];
+
+  document.querySelector("#ai-panel span").innerText = t.title;
+  document.getElementById("input").placeholder = t.inputPlaceholder;
+  document.querySelector("button.bg-orange-500").innerText = t.send;
+
+  document.querySelectorAll(".text-xs")[0].innerText = t.tts;
+  document.querySelectorAll(".text-xs")[1].innerText = t.voice;
+  document.querySelectorAll(".text-xs")[2].innerText = t.explainLang;
+
+  document.querySelector(".text-gray-500").innerText = t.keyMode;
+
+  // 刷新欢迎语
+  chat.innerHTML = "";
+  addMsg(t.welcome, "ai");
+}
+
 async function send() {
   const msg = input.value.trim();
   if (!msg) return;
@@ -140,3 +201,4 @@ showWelcome();
 
 </body>
 </html>
+
