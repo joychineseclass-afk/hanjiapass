@@ -1,107 +1,186 @@
-export default async function handler(req, res) {
-  // ========= 1) CORS =========
-  const allowOrigins = [
-    "https://hanjipass.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5173",
-  ];
+// /api/gemini.js
+export const config = { runtime: "nodejs" }; // 强制 Node 运行时，避免 Edge 兼容问题
 
+// ===== 默认老师人设（后端兜底）=====
+const DEFAULT_TEACHER_SYSTEM = `
+你是“AI 한자 선생님”，面向韩国学生教中文（HSK/HSKK）。
+
+【输出格式必须包含】
+1) 中文
+2) 拼音
+3) 韩语解释（亲切、适合初学者/小学生）
+4) 例句 1~2 个（中文+拼音+韩语）
+5) 如用户问语法：用简单韩语解释，并给对比例句
+`.trim();
+
+// 你可以在 Vercel 环境变量里设置（可选）
+// GEMINI_MODEL="gemini-3-flash-preview"
+// GEMINI_API_VERSION="v1beta" 或 "v1"
+const DEFAULT_MODEL_CANDIDATES = [
+  process.env.GEMINI_MODEL,          // 用户自定义优先
+  "gemini-3-flash-preview",          // 你之前跑通的
+  "gemini-1.5-flash",                // 常见备用
+  "gemini-1.5-pro",                  // 再备用
+].filter(Boolean);
+
+const API_VERSION = (process.env.GEMINI_API_VERSION || "v1beta").trim(); // 默认 v1beta 更兼容
+
+function isLikelyModelNotFound(details) {
+  const msg = (
+    details?.error?.message ||
+    details?.error ||
+    details?.message ||
+    ""
+  ).toLowerCase();
+  return (
+    msg.includes("not found") ||
+    msg.includes("not supported") ||
+    msg.includes("model") && msg.includes("not") && msg.includes("supported")
+  );
+}
+
+// 把 Gemini 的 candidates.parts 拼成纯文本
+function extractText(data) {
+  const parts = data?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts)) return "";
+  return parts.map(p => p?.text || "").join("").trim();
+}
+
+export default async function handler(req, res) {
+  // ===== 0) 基础 Header：确保永远返回 JSON（避免 HTML 导致前端 json() 崩）=====
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+
+  // ===== 1) CORS（同域调用其实不需要，但保留兼容 GitHub Pages）=====
+  const allowOrigins = [
+    "https://joychineseclass-afk.github.io",
+    "https://hanjiapass.vercel.app",
+  ];
   const origin = req.headers.origin;
   if (origin && allowOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
   res.setHeader("Vary", "Origin");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 
-  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method === "OPTIONS") return res.status(204).end();
 
-  // GET은 상태 확인용 (브라우저에서 열면 Method Not Allowed 대신 안내 JSON)
+  // ===== 2) GET 健康检查（你页面那张卡会显示 200）=====
   if (req.method === "GET") {
     return res.status(200).json({
       ok: true,
-      message: "Gemini API endpoint is alive. Use POST with JSON { prompt: '...' }",
+      message: "Gemini API endpoint is alive. Use POST with JSON { prompt, system? }",
+      apiVersion: API_VERSION,
+      modelCandidates: DEFAULT_MODEL_CANDIDATES,
     });
   }
 
+  // ===== 3) 只允许 POST =====
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed. Use POST." });
   }
 
-  // ========= 2) ENV =========
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: "Missing GEMINI_API_KEY in Vercel env." });
-  }
-
-  // ========= 3) Parse body =========
-  let body = {};
   try {
-    body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-  } catch {
-    body = {};
-  }
-
-  const userPrompt = String(body.prompt || body.message || "").trim();
-  if (!userPrompt) {
-    return res.status(400).json({ error: "Empty prompt." });
-  }
-
-  // ========= 4) 固定老师人设 =========
-  const SYSTEM_PROMPT = `
-너는 “AI 한자 선생님”이다. (한국인 중국어 학습자 대상)
-규칙:
-1) 말투: 친절하고 전문적인 선생님 톤, 격려 중심.
-2) 언어: 설명은 한국어 중심. 예문은 중국어. 필요하면 병음 추가.
-3) 목표: 이해 + 암기 + 활용. 단계별로 정리하고 예문을 반드시 제시.
-4) 교정: 사용자의 문장이 어색하면 문제점 → 자연스러운 문장 → 이유(한국어) 순서로 교정.
-5) 출력 형식(가능하면 유지):
-- ✅ 핵심(요점):
-- 📌 뜻(의미/한자 구성):
-- 🧠 기억법(암기 팁):
-- ✍️ 예문(중문 + 병음 + 해석):
-- ⚠️ 자주 하는 실수/교정(있으면):
-6) 난이도: 기본 HSK3~4. 사용자가 초급/아이용이면 쉽게, 고급이면 더 깊게.
-7) 너무 길게 늘어지지 말고, 핵심 위주로 명확하게.
-  `.trim();
-
-  const finalPrompt = `${SYSTEM_PROMPT}\n\n[학생 질문]\n${userPrompt}`;
-
-  // ========= 5) Gemini API call =========
-  // ✅ 가장 안정적으로 동작하는 v1 endpoint + :generateContent
-  // 모델명은 프로젝트/키에 따라 다를 수 있어, 1차는 gemini-1.5-flash 로 둡니다.
-  // 만약 "not found"가 뜨면 -> gemini-1.5-pro 또는 gemini-2.0-flash 로 바꾸면 됩니다.
-  const model = "gemini-1.5-flash";
-  const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent`;
-
-  try {
-    const resp = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey,
-      },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: finalPrompt }] }],
-      }),
-    });
-
-    const data = await resp.json().catch(() => ({}));
-
-    if (!resp.ok) {
-      // 에러를 그대로 프론트에서 볼 수 있게 JSON으로 반환
-      return res.status(resp.status).json({
-        error: data?.error?.message || "Gemini API error",
-        raw: data,
+    // ===== 4) Env =====
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({
+        error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
       });
     }
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.map(p => p.text).join("") ||
-      "";
+    // ===== 5) Body =====
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body || "{}")
+        : (req.body || {});
 
-    return res.status(200).json({ text: text || "(응답 없음)" });
+    const userPrompt = String(body.prompt || body.message || "").trim();
+    if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
 
+    // ✅ 支持前端传 system；不传就用后端默认
+    const systemFromClient = String(body.system || "").trim();
+    const systemPrompt = systemFromClient || DEFAULT_TEACHER_SYSTEM;
+
+    // 最终 prompt
+    const finalPrompt = `${systemPrompt}\n\n【学生问题】\n${userPrompt}`;
+
+    // ===== 6) 调 Gemini：带超时、模型兜底 =====
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000); // 25 秒超时
+
+    let lastError = null;
+
+    for (const model of DEFAULT_MODEL_CANDIDATES) {
+      const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:generateContent`;
+
+      try {
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey, // ✅ 只放 header，绝不拼到 URL
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: finalPrompt }] }],
+          }),
+          signal: controller.signal,
+        });
+
+        // 无论如何先拿到文本，再尝试 JSON（防止返回 HTML）
+        const rawText = await resp.text();
+        let data = {};
+        try { data = JSON.parse(rawText); } catch { data = { error: { message: rawText } }; }
+
+        if (!resp.ok) {
+          // 如果是模型不存在/不支持，换下一个模型继续试
+          if (isLikelyModelNotFound(data)) {
+            lastError = {
+              status: resp.status,
+              error: data?.error?.message || "Model not available",
+              triedModel: model,
+              details: data,
+            };
+            continue;
+          }
+
+          // 其他错误：直接返回（例如 key leaked / permission / quota）
+          return res.status(resp.status).json({
+            error: data?.error?.message || "Gemini API error",
+            triedModel: model,
+            apiVersion: API_VERSION,
+            details: data,
+          });
+        }
+
+        const text = extractText(data);
+        clearTimeout(timeout);
+
+        return res.status(200).json({
+          text: text || "(응답 없음)",
+          modelUsed: model,
+          apiVersion: API_VERSION,
+        });
+      } catch (e) {
+        // fetch/network/timeout 错误：记录后尝试下一个模型
+        lastError = {
+          error: e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e)),
+          triedModel: model,
+        };
+
+        // 如果是超时，没必要继续试多个模型（节省资源）
+        if (e?.name === "AbortError") break;
+      }
+    }
+
+    clearTimeout(timeout);
+
+    // 所有模型都失败
+    return res.status(500).json({
+      error: "All model candidates failed.",
+      apiVersion: API_VERSION,
+      lastError,
+    });
   } catch (e) {
     return res.status(500).json({
       error: "Server error: " + (e?.message || String(e)),
