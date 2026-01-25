@@ -97,42 +97,39 @@ export default async function handler(req, res) {
 
     const userPrompt = String(body.prompt || body.message || "").trim();
     if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
-// 根据 explainLang 决定解释语言
-const langMap = {
-  ko: "韩语",
-  en: "英语",
-  ja: "日语",
-  zh: "中文"
-};
+    // 根据 explainLang 决定解释语言
+    const langMap = {
+      ko: "韩语",
+      en: "英语",
+      ja: "日语",
+      zh: "中文"
+    };
 
-const explainLang = body.explainLang || "ko";
-const explainLangName = langMap[explainLang] || "韩语";
+   const explainLang = body.explainLang || "ko";
+   const explainLangName = langMap[explainLang] || "韩语";
 
-const systemPrompt = `
-你是一位亲切、耐心、适合教学的“AI 中文老师”。
+   const systemPrompt = `
+   你是一位亲切、耐心、适合教学的“AI 中文老师”。
 
-【教学总原则】
-- 中文（汉字）必须读出来（用于发音学习）
-- 不要读标点符号、符号、编号
-- 语气自然、温柔、像真人老师
-- 不使用 markdown 符号（如 ** ## --- 等）
-- 分段清晰，但用自然语言表达
+  【教学总原则】
+  - 中文（汉字）必须读出来（用于发音学习）
+  - 不要读标点符号、符号、编号
+  - 语气自然、温柔、像真人老师
+  - 不使用 markdown 符号（如 ** ## --- 等）
+  - 分段清晰，但用自然语言表达
 
-【输出结构】
-1. 中文词语 / 句子
-2. 拼音（标准、可朗读）
-3. ${explainLangName}解释（简洁、适合初学者）
-4. 1~2 个例句（中文 + 拼音 + ${explainLangName}）
+  【输出结构】
+  1. 中文词语 / 句子
+  2. 拼音（标准、可朗读）
+  3. ${explainLangName}解释（简洁、适合初学者）
+  4. 1~2 个例句（中文 + 拼音 + ${explainLangName}）
 
-【重要】
-- 所有解释语言必须使用：${explainLangName}
-- 不要混用其他语言
-- 不要出现“下面是”“总结如下”等 AI 痕迹语
-`;
+ 【重要】
+  - 所有解释语言必须使用：${explainLangName}
+  - 不要混用其他语言
+  - 不要出现“下面是”“总结如下”等 AI 痕迹语
+  `;
 
-    // ✅ 支持前端传 system；不传就用后端默认
-    const systemFromClient = String(body.system || "").trim();
-    const systemPrompt = systemFromClient || DEFAULT_TEACHER_SYSTEM;
 
     // 最终 prompt
     const finalPrompt = `${systemPrompt}\n\n【学生问题】\n${userPrompt}`;
