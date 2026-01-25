@@ -213,7 +213,8 @@ function applyUIText(lang) {
 }
 
 /* =========================
-   6) TTS：稳健加载声音 + 只读中文
+   /* =========================
+   6) TTS：Smart（中文用普通话，其它用对应语言）
 ========================= */
 let voices = [];
 
@@ -236,7 +237,6 @@ function loadVoices() {
     voiceSelect.appendChild(opt);
   });
 
-  // 默认选第一个
   voiceSelect.value = "0";
 }
 
@@ -245,36 +245,142 @@ if (window.speechSynthesis) {
   loadVoices();
 }
 
-// 只提取汉字，让朗读不读符号
-function extractChineseForTTS(text) {
-  const onlyHan = String(text).match(/[\u4e00-\u9fff]+/g);
-  if (!onlyHan) return "";
-  return onlyHan.join("，");
+// 选择“最像目标语言”的 voice（找不到就用下拉选的）
+function pickVoiceByLang(targetLang) {
+  if (!voices.length) return null;
+
+  // targetLang: "zh" | "en" | "ko" | "ja"
+  const prefix = {
+    zh: ["zh", "cmn"],   // 有些系统会用 cmn
+    en: ["en"],
+    ko: ["ko"],
+    ja: ["ja"]
+  }[targetLang] || [targetLang];
+
+  // 优先：完全匹配前缀（例如 zh-CN）
+  const v = voices.find(v => prefix.some(p => (v.lang || "").toLowerCase().startsWith(p)));
+  if (v) return v;
+
+  // 找不到：回退到用户下拉选的 voice
+  const idx = parseInt(voiceSelect.value, 10);
+  if (!Number.isNaN(idx) && voices[idx]) return voices[idx];
+
+  return voices[0] || null;
 }
 
-function speakChinese(text) {
+// 清理文本：去掉 markdown/多余符号，但保留语言文字
+function cleanForSpeak(text) {
+  return String(text)
+    .replace(/```[\s\S]*?```/g, " ")   // 去代码块
+    .replace(/\*\*(.*?)\*\*/g, "$1")  // 去 ** **
+    .replace(/#+\s*/g, "")            // 去标题符号
+    .replace(/-{3,}/g, " ")           // 去分割线
+    .replace(/[•●◦▶▷■□◆◇※★☆]/g, " ")  // 常见装饰符号
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// 把文本切成“中文块”和“非中文块”
+function splitByChineseRuns(text) {
+  const s = cleanForSpeak(text);
+  if (!s) return [];
+
+  const parts = [];
+  const re = /([\u4e00-\u9fff]+)|([^\u4e00-\u9fff]+)/g;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    if (m[1]) parts.push({ type: "zh", text: m[1] });     // 中文
+    else if (m[2]) parts.push({ type: "other", text: m[2] }); // 其它
+  }
+  return parts;
+}
+
+// 只保留指定语言的“主要文字”，避免读出太多标点
+function keepLettersForLang(text, lang) {
+  const t = String(text);
+
+  if (lang === "en") {
+    // 保留英文/数字/基本空格
+    return t.replace(/[^A-Za-z0-9\s'.,!?-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  if (lang === "ko") {
+    // 保留韩文/数字
+    return t.replace(/[^가-힣0-9\s.,!?-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  if (lang === "ja") {
+    // 保留日文假名/汉字/数字（注意：这里的“汉字”会跟中文冲突，但我们已先分段）
+    return t.replace(/[^ぁ-ゟ゠-ヿ一-龯0-9\s.,!?-]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  if (lang === "zh") {
+    return t.replace(/[^\u4e00-\u9fff0-9\s，。！？、]/g, " ").replace(/\s+/g, " ").trim();
+  }
+  return t.replace(/\s+/g, " ").trim();
+}
+
+// ✅ Smart Speak：中文用普通话，其它用当前语言
+function speakSmart(fullText, uiLang) {
   if (!ttsToggle.checked) return;
   if (!window.speechSynthesis) return;
 
-  const toSpeak = extractChineseForTTS(text);
-  if (!toSpeak) return;
+  const chunks = splitByChineseRuns(fullText);
+  if (!chunks.length) return;
 
+  // 判断是否有中文
+  const hasChinese = chunks.some(c => c.type === "zh");
+
+  // 如果完全没有中文：就整段用 uiLang 读
+  if (!hasChinese) {
+    const text = keepLettersForLang(cleanForSpeak(fullText), uiLang);
+    if (!text) return;
+
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.voice = pickVoiceByLang(uiLang) || undefined;
+    u.lang = (u.voice && u.voice.lang) ? u.voice.lang : uiLang;
+    u.rate = 1.0;
+    u.pitch = 1.05;
+    window.speechSynthesis.speak(u);
+    return;
+  }
+
+  // 有中文：按段落排队朗读（中文段→zh，其他段→uiLang）
   window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(toSpeak);
 
-  const idx = parseInt(voiceSelect.value, 10);
-  if (!Number.isNaN(idx) && voices[idx]) u.voice = voices[idx];
-
-  u.rate = 1.0;
-  u.pitch = 1.1;
-
-  window.speechSynthesis.speak(u);
+  for (const c of chunks) {
+    if (c.type === "zh") {
+      const t = keepLettersForLang(c.text, "zh");
+      if (!t) continue;
+      const u = new SpeechSynthesisUtterance(t);
+      u.voice = pickVoiceByLang("zh") || undefined;
+      u.lang = (u.voice && u.voice.lang) ? u.voice.lang : "zh-CN";
+      u.rate = 1.0;
+      u.pitch = 1.05;
+      window.speechSynthesis.speak(u);
+    } else {
+      const t = keepLettersForLang(c.text, uiLang);
+      if (!t) continue;
+      const u = new SpeechSynthesisUtterance(t);
+      u.voice = pickVoiceByLang(uiLang) || undefined;
+      u.lang = (u.voice && u.voice.lang) ? u.voice.lang : uiLang;
+      u.rate = 1.0;
+      u.pitch = 1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }
 }
 
-// 🔊 测试按钮：确保浏览器“已授权播放”
+// 🔊 测试按钮：会根据当前选择语言朗读（如果文本里有中文就自动切普通话）
 uiTestVoiceBtn.addEventListener("click", () => {
-  speakChinese("你好");
+  const lang = explainLang.value;
+  const demo = {
+    ko: "안녕하세요. 你好",
+    en: "Hello. 你好",
+    ja: "こんにちは。你好",
+    zh: "你好。Hello"
+  }[lang] || "Hello. 你好";
+  speakSmart(demo, lang);
 });
+
 
 /* =========================
    7) 打字机效果（前端）
@@ -358,3 +464,4 @@ explainLang.addEventListener("change", () => {
 
 </body>
 </html>
+
