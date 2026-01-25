@@ -19,7 +19,7 @@
 </button>
 
 <div id="ai-panel"
-  class="hidden fixed bottom-20 right-4 w-[380px] bg-white rounded-xl shadow-xl flex flex-col">
+  class="hidden fixed bottom-20 right-4 w-[390px] bg-white rounded-xl shadow-xl flex flex-col">
 
   <div class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center">
     <span id="uiTitle">AI 한자 선생님</span>
@@ -31,19 +31,24 @@
     <div class="flex items-center gap-2">
       <input id="ttsToggle" type="checkbox" checked class="accent-orange-500" />
       <label id="uiTtsLabel">읽어주기(TTS)</label>
+
+      <button id="uiTestVoiceBtn" type="button"
+        class="ml-auto px-2 py-1 rounded bg-slate-200">
+        🔊 테스트
+      </button>
     </div>
 
     <div class="flex items-center gap-2">
-      <span id="uiVoiceLabel" class="w-[70px] text-gray-600">음색</span>
+      <span id="uiVoiceLabel" class="w-[72px] text-gray-600">음색</span>
       <select id="voiceSelect" class="flex-1 border rounded px-2 py-1 text-xs"></select>
     </div>
 
     <div class="flex items-center gap-2">
-      <span id="uiExplainLabel" class="w-[70px] text-gray-600">설명 언어</span>
+      <span id="uiExplainLabel" class="w-[72px] text-gray-600">설명 언어</span>
       <select id="explainLang" class="flex-1 border rounded px-2 py-1 text-xs">
         <option value="ko" selected>한국어</option>
-        <option value="ja">日本語</option>
         <option value="en">English</option>
+        <option value="ja">日本語</option>
         <option value="zh">中文</option>
       </select>
     </div>
@@ -67,6 +72,11 @@
 
 <script>
 /* =========================
+   0) 绝对地址（你现在这个是对的）
+========================= */
+const API_URL = "https://hanjiapass.vercel.app/api/gemini";
+
+/* =========================
    1) UI 多语言文案
 ========================= */
 const UI_TEXT = {
@@ -77,7 +87,9 @@ const UI_TEXT = {
     explainLang: "설명 언어",
     tts: "읽어주기(TTS)",
     voice: "음색",
+    testVoice: "🔊 테스트",
     keyMode: "🔐 Key 보호 모드: Vercel API",
+    thinking: "잠깐만요 🙂",
     welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!"
   },
   en: {
@@ -87,7 +99,9 @@ const UI_TEXT = {
     explainLang: "Explanation language",
     tts: "Read aloud (TTS)",
     voice: "Voice",
+    testVoice: "🔊 Test",
     keyMode: "🔐 Key protection: Vercel API",
+    thinking: "One sec 🙂",
     welcome: "Hi 🙂\nAsk me anything about Chinese!"
   },
   ja: {
@@ -97,7 +111,9 @@ const UI_TEXT = {
     explainLang: "説明言語",
     tts: "読み上げ(TTS)",
     voice: "音声",
+    testVoice: "🔊 テスト",
     keyMode: "🔐 キー保護: Vercel API",
+    thinking: "ちょっと待ってね 🙂",
     welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。"
   },
   zh: {
@@ -107,7 +123,9 @@ const UI_TEXT = {
     explainLang: "说明语言",
     tts: "朗读(TTS)",
     voice: "音色",
+    testVoice: "🔊 测试",
     keyMode: "🔐 密钥保护：Vercel API",
+    thinking: "等一下🙂",
     welcome: "你好 🙂\n有中文问题，直接问我吧。"
   }
 };
@@ -128,17 +146,25 @@ const uiVoiceLabel = document.getElementById("uiVoiceLabel");
 const uiExplainLabel = document.getElementById("uiExplainLabel");
 const uiSendBtn = document.getElementById("uiSendBtn");
 const uiKeyMode = document.getElementById("uiKeyMode");
+const uiTestVoiceBtn = document.getElementById("uiTestVoiceBtn");
 
-/* ✅ 绝对地址 */
-const API_URL = "https://hanjiapass.vercel.app/api/gemini";
+/* =========================
+   3) 安全：把错误直接显示在聊天里（你不用看控制台）
+========================= */
+function showError(msg) {
+  createMsgBubble("오류: " + msg, "ai");
+}
+window.addEventListener("error", (e) => {
+  showError(e?.message || "Unknown error");
+});
 
+/* =========================
+   4) UI 基础
+========================= */
 function toggleAI() {
   panel.classList.toggle("hidden");
 }
 
-/* =========================
-   3) 显示清理：不显示 ** ## 等
-========================= */
 function cleanForDisplay(text) {
   return String(text)
     .replace(/```[\s\S]*?```/g, "")
@@ -148,36 +174,26 @@ function cleanForDisplay(text) {
     .trim();
 }
 
-/* =========================
-   4) 生成消息气泡（支持后续“打字机”更新内容）
-========================= */
 function createMsgBubble(initialText, who) {
   const wrap = document.createElement("div");
   wrap.className = who === "user" ? "text-right" : "text-left";
 
   const bubbleClass = who === "user" ? "bg-orange-500 text-white" : "bg-gray-200";
-
   wrap.innerHTML = `
     <span class="inline-block px-3 py-2 rounded-lg ${bubbleClass}">
       <div class="bubble"></div>
     </span>
   `;
-
   const bubbleDiv = wrap.querySelector(".bubble");
   bubbleDiv.textContent = cleanForDisplay(initialText);
 
   chat.appendChild(wrap);
   chat.scrollTop = chat.scrollHeight;
-
   return { wrap, bubbleDiv };
 }
 
-function addMsg(text, who) {
-  createMsgBubble(text, who);
-}
-
 /* =========================
-   5) UI 跟随语言切换
+   5) UI 跟随语言切换（界面+欢迎语）
 ========================= */
 function applyUIText(lang) {
   const t = UI_TEXT[lang] || UI_TEXT.ko;
@@ -189,19 +205,20 @@ function applyUIText(lang) {
   uiTtsLabel.innerText = t.tts;
   uiVoiceLabel.innerText = t.voice;
   uiExplainLabel.innerText = t.explainLang;
+  uiTestVoiceBtn.innerText = t.testVoice;
   uiKeyMode.innerText = t.keyMode;
 
   chat.innerHTML = "";
-  addMsg(t.welcome, "ai");
+  createMsgBubble(t.welcome, "ai");
 }
 
 /* =========================
-   6) TTS：只读中文，不读符号
+   6) TTS：稳健加载声音 + 只读中文
 ========================= */
 let voices = [];
 
 function loadVoices() {
-  voices = window.speechSynthesis.getVoices() || [];
+  voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
   voiceSelect.innerHTML = "";
 
   if (!voices.length) {
@@ -214,33 +231,37 @@ function loadVoices() {
 
   voices.forEach((v, idx) => {
     const opt = document.createElement("option");
-    opt.value = idx;
+    opt.value = String(idx);
     opt.textContent = `${v.name} - ${v.lang}`;
     voiceSelect.appendChild(opt);
   });
 
+  // 默认选第一个
   voiceSelect.value = "0";
 }
 
-window.speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
 
+// 只提取汉字，让朗读不读符号
 function extractChineseForTTS(text) {
-  const s = String(text);
-  const onlyHan = s.match(/[\u4e00-\u9fff]+/g);
+  const onlyHan = String(text).match(/[\u4e00-\u9fff]+/g);
   if (!onlyHan) return "";
   return onlyHan.join("，");
 }
 
 function speakChinese(text) {
   if (!ttsToggle.checked) return;
+  if (!window.speechSynthesis) return;
 
   const toSpeak = extractChineseForTTS(text);
   if (!toSpeak) return;
 
   window.speechSynthesis.cancel();
-
   const u = new SpeechSynthesisUtterance(toSpeak);
+
   const idx = parseInt(voiceSelect.value, 10);
   if (!Number.isNaN(idx) && voices[idx]) u.voice = voices[idx];
 
@@ -250,13 +271,15 @@ function speakChinese(text) {
   window.speechSynthesis.speak(u);
 }
 
+// 🔊 测试按钮：确保浏览器“已授权播放”
+uiTestVoiceBtn.addEventListener("click", () => {
+  speakChinese("你好");
+});
+
 /* =========================
-   7) 打字机/流式显示（关键）
-   - AI 回复一拿到就开始逐字显示
-   - 用户感觉“马上在答”
+   7) 打字机效果（前端）
 ========================= */
 let typingTimer = null;
-
 function stopTyping() {
   if (typingTimer) {
     clearInterval(typingTimer);
@@ -264,22 +287,16 @@ function stopTyping() {
   }
 }
 
-function typewriterRender(bubbleDiv, fullText, options = {}) {
+function typewriterRender(bubbleDiv, fullText, speed = 14) {
   stopTyping();
-
-  const speed = options.speed ?? 18; // 数字越小越快
   const cleaned = cleanForDisplay(fullText);
 
-  bubbleDiv.textContent = ""; // 清空，开始打字
-
+  bubbleDiv.textContent = "";
   let i = 0;
+
   typingTimer = setInterval(() => {
-    i++;
-
-    // 一次加 1 个字符
+    i += 1;
     bubbleDiv.textContent = cleaned.slice(0, i);
-
-    // 自动滚动到底部
     chat.scrollTop = chat.scrollHeight;
 
     if (i >= cleaned.length) {
@@ -289,36 +306,27 @@ function typewriterRender(bubbleDiv, fullText, options = {}) {
 }
 
 /* =========================
-   8) 发送请求
+   8) 发送
 ========================= */
 async function send() {
   const msg = input.value.trim();
   if (!msg) return;
 
-  // 如果 AI 正在打字，用户再发新消息时先停止
   stopTyping();
 
   createMsgBubble(msg, "user");
   input.value = "";
 
-  // 先放一个“AI 正在思考”的气泡，让用户完全不焦虑
-  const thinkingText = {
-    ko: "잠깐만요 🙂",
-    en: "One sec 🙂",
-    ja: "ちょっと待ってね 🙂",
-    zh: "等一下🙂"
-  }[explainLang.value] || "잠깐만요 🙂";
+  const lang = explainLang.value;
+  const t = UI_TEXT[lang] || UI_TEXT.ko;
 
-  const { bubbleDiv } = createMsgBubble(thinkingText, "ai");
+  const { bubbleDiv } = createMsgBubble(t.thinking, "ai");
 
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        prompt: msg,
-        explainLang: explainLang.value
-      })
+      body: JSON.stringify({ prompt: msg, explainLang: lang })
     });
 
     const data = await res.json().catch(() => ({}));
@@ -326,10 +334,10 @@ async function send() {
 
     const answer = data.text || "(응답 없음)";
 
-    // ✅ 一拿到答案就开始“流式显示”
-    typewriterRender(bubbleDiv, answer, { speed: 14 });
+    // ✅ 打字机显示
+    typewriterRender(bubbleDiv, answer, 14);
 
-    // ✅ 朗读：等打字开始后立刻读中文（你也可以改成等打完再读）
+    // ✅ 朗读中文（只读汉字）
     speakChinese(answer);
 
   } catch (e) {
@@ -338,7 +346,7 @@ async function send() {
 }
 
 /* =========================
-   9) 初始化 & 监听语言切换
+   9) 初始化 & 切换语言
 ========================= */
 applyUIText(explainLang.value);
 
