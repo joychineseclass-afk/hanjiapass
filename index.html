@@ -9,14 +9,14 @@
     body { background:#f7f7f7; }
     .chat-box { max-height: 60vh; overflow-y: auto; }
     .bubble { white-space: pre-wrap; word-break: break-word; }
-
-    /* ✅ 拖动时防止选中文本 */
     .no-select { user-select: none; }
   </style>
 </head>
+
 <body class="p-4">
 
-<button onclick="toggleAI()"
+<!-- ✅ 打开按钮：不再用 onclick，交给 ui.js 绑定 -->
+<button id="openAiBtn"
   class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
   🤖
 </button>
@@ -25,21 +25,21 @@
   class="hidden fixed bottom-20 right-4 w-[390px] bg-white rounded-xl shadow-xl flex flex-col">
 
   <!-- ✅ 拖动把手：标题栏 -->
-  <div id="dragHandle" class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center cursor-move no-select">
+  <div id="dragHandle"
+    class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center cursor-move no-select">
     <span id="uiTitle">AI 한자 선생님</span>
-    <button onclick="toggleAI()">✖</button>
+
+    <!-- ✅ 关闭按钮：不再用 onclick，交给 ui.js -->
+    <button id="closeAiBtn" type="button" class="px-2">✖</button>
   </div>
 
-  <!-- ✅ 控制区：sticky 永远可见 -->
-  <div id="controlBar" class="px-3 pt-3 pb-2 border-b text-xs space-y-2 sticky top-0 bg-white z-10">
+  <!-- ✅ 控制区（去掉测试按钮那一行：只保留 TTS 开关） -->
+  <div id="controlBar"
+    class="px-3 pt-3 pb-2 border-b text-xs space-y-2 sticky top-0 bg-white z-10">
+
     <div class="flex items-center gap-2">
       <input id="ttsToggle" type="checkbox" checked class="accent-orange-500" />
       <label id="uiTtsLabel">읽어주기(TTS)</label>
-
-      <button id="uiTestVoiceBtn" type="button"
-        class="ml-auto px-2 py-1 rounded bg-slate-200">
-        🔊 테스트
-      </button>
     </div>
 
     <div class="flex items-center gap-2">
@@ -80,8 +80,8 @@
   <div class="p-3 border-t flex gap-2">
     <input id="input" class="flex-1 border rounded px-2 py-2"
       placeholder="질문을 입력하세요…"
-      onkeydown="if(event.key==='Enter') send();" />
-    <button id="uiSendBtn" onclick="send()" class="bg-orange-500 text-white px-4 py-2 rounded">
+      autocomplete="off" />
+    <button id="uiSendBtn" class="bg-orange-500 text-white px-4 py-2 rounded">
       보내기
     </button>
   </div>
@@ -91,8 +91,8 @@
   </div>
 </div>
 
-<!-- ✅ 把你原来整段 JS 放到 ui.js -->
-<script src="./ui.js"></script>
+<!-- ✅ 分离出来的核心逻辑 -->
+<script src="./ui.js" defer></script>
 
 </body>
 </html>
