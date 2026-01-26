@@ -1,102 +1,4973 @@
 [
   {
-    "hanzi": "你好",
-    "pinyin": "nǐ hǎo",
-    "meaning_ko": "안녕하세요",
-    "tags": ["인사", "시험필수"],
+    "id": "hsk1-001",
+    "level": 1,
+    "hanzi": "不客气",
+    "variants": [],
+    "pinyin": "bú kèqi",
+    "meaning_ko": "천만에요. 사양하지 않다",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "不",
+        "pinyin": "",
+        "hanja": "不",
+        "strokeRef": "不"
+      },
+      {
+        "zi": "客",
+        "pinyin": "",
+        "hanja": "客",
+        "strokeRef": "客"
+      },
+      {
+        "zi": "气",
+        "pinyin": "",
+        "hanja": "气",
+        "strokeRef": "气"
+      }
+    ],
     "examples": [
-      { "zh": "你好！", "ko": "안녕하세요!" },
-      { "zh": "老师，你好！", "ko": "선생님, 안녕하세요!" }
+      {
+        "zh": "不客气。",
+        "pinyin": "bú kèqi",
+        "ko": "천만에요."
+      },
+      {
+        "zh": "没关系，不客气。",
+        "pinyin": "méi guānxi bú kèqi",
+        "ko": "괜찮아요, 천만에요."
+      }
     ]
   },
   {
-    "hanzi": "谢谢",
-    "pinyin": "xiè xie",
-    "meaning_ko": "감사합니다",
-    "tags": ["인사", "礼貌"],
-    "examples": [
-      { "zh": "谢谢你。", "ko": "감사합니다." },
-      { "zh": "老师，谢谢。", "ko": "선생님, 감사합니다." }
-    ]
-  },
-  {
+    "id": "hsk1-002",
+    "level": 1,
     "hanzi": "再见",
-    "pinyin": "zài jiàn",
-    "meaning_ko": "안녕히 가세요 / 안녕히 계세요",
-    "tags": ["인사"],
+    "variants": [],
+    "pinyin": "zàijiàn",
+    "meaning_ko": "또만나요. 안녕히계세요",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "再",
+        "pinyin": "",
+        "hanja": "再",
+        "strokeRef": "再"
+      },
+      {
+        "zi": "见",
+        "pinyin": "",
+        "hanja": "见",
+        "strokeRef": "见"
+      }
+    ],
     "examples": [
-      { "zh": "老师，再见！", "ko": "선생님, 안녕히 계세요!" },
-      { "zh": "同学，再见！", "ko": "학생, 안녕!" }
+      {
+        "zh": "再见！",
+        "pinyin": "zàijiàn",
+        "ko": "안녕히 가세요!"
+      },
+      {
+        "zh": "老师，再见！",
+        "pinyin": "lǎoshī zàijiàn",
+        "ko": "선생님, 안녕히 계세요!"
+      }
     ]
   },
   {
-    "hanzi": "我",
-    "pinyin": "wǒ",
-    "meaning_ko": "나",
-    "tags": ["人称"],
+    "id": "hsk1-003",
+    "level": 1,
+    "hanzi": "喂",
+    "variants": [],
+    "pinyin": "wèi",
+    "meaning_ko": "여보세요",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "喂",
+        "pinyin": "wèi",
+        "hanja": "喂",
+        "strokeRef": "喂"
+      }
+    ],
     "examples": [
-      { "zh": "我是学生。", "ko": "저는 학생이에요." },
-      { "zh": "我叫安娜。", "ko": "저는 안나예요." }
+      {
+        "zh": "喂？",
+        "pinyin": "wèi",
+        "ko": "여보세요?"
+      },
+      {
+        "zh": "喂，我是小明。",
+        "pinyin": "wèi wǒ shì Xiǎomíng",
+        "ko": "여보세요, 저는 샤오밍이에요."
+      }
     ]
   },
   {
+    "id": "hsk1-004",
+    "level": 1,
+    "hanzi": "对不起",
+    "variants": [],
+    "pinyin": "duìbuqǐ",
+    "meaning_ko": "미안합니다. 죄송합니다",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "对",
+        "pinyin": "",
+        "hanja": "对",
+        "strokeRef": "对"
+      },
+      {
+        "zi": "不",
+        "pinyin": "",
+        "hanja": "不",
+        "strokeRef": "不"
+      },
+      {
+        "zi": "起",
+        "pinyin": "",
+        "hanja": "起",
+        "strokeRef": "起"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "对不起！",
+        "pinyin": "duìbuqǐ",
+        "ko": "미안해요!"
+      },
+      {
+        "zh": "对不起，我来晚了。",
+        "pinyin": "duìbuqǐ wǒ lái wǎn le",
+        "ko": "미안해요, 제가 늦었어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-005",
+    "level": 1,
+    "hanzi": "没关系",
+    "variants": [],
+    "pinyin": "méi guānxi",
+    "meaning_ko": "괜찮습니다. 상관없습니다",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "没",
+        "pinyin": "",
+        "hanja": "没",
+        "strokeRef": "没"
+      },
+      {
+        "zi": "关",
+        "pinyin": "",
+        "hanja": "关",
+        "strokeRef": "关"
+      },
+      {
+        "zi": "系",
+        "pinyin": "",
+        "hanja": "系",
+        "strokeRef": "系"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "没关系。",
+        "pinyin": "méi guānxi",
+        "ko": "괜찮아요."
+      },
+      {
+        "zh": "对不起。—没关系。",
+        "pinyin": "duìbuqǐ méi guānxi",
+        "ko": "미안해요. — 괜찮아요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-006",
+    "level": 1,
+    "hanzi": "请",
+    "variants": [],
+    "pinyin": "qǐng",
+    "meaning_ko": "청하다. 부탁하다",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "请",
+        "pinyin": "qǐng",
+        "hanja": "请",
+        "strokeRef": "请"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "请喝茶。",
+        "pinyin": "qǐng hē chá",
+        "ko": "차 마셔요."
+      },
+      {
+        "zh": "请坐。",
+        "pinyin": "qǐng zuò",
+        "ko": "앉으세요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-007",
+    "level": 1,
+    "hanzi": "谢谢",
+    "variants": [],
+    "pinyin": "xièxie",
+    "meaning_ko": "감사합니다",
+    "hanja_hint": "",
+    "tags": [
+      "인사",
+      "시험필수"
+    ],
+    "chars": [
+      {
+        "zi": "谢",
+        "pinyin": "",
+        "hanja": "谢",
+        "strokeRef": "谢"
+      },
+      {
+        "zi": "谢",
+        "pinyin": "",
+        "hanja": "谢",
+        "strokeRef": "谢"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "谢谢！",
+        "pinyin": "xièxie",
+        "ko": "고마워요!"
+      },
+      {
+        "zh": "谢谢你！",
+        "pinyin": "xièxie nǐ",
+        "ko": "고마워요!"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-008",
+    "level": 1,
+    "hanzi": "他",
+    "variants": [],
+    "pinyin": "tā",
+    "meaning_ko": "그, 그사람",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "他",
+        "pinyin": "tā",
+        "hanja": "他",
+        "strokeRef": "他"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "他是老师。",
+        "pinyin": "tā shì lǎoshī",
+        "ko": "그는 선생님이에요."
+      },
+      {
+        "zh": "他在北京。",
+        "pinyin": "tā zài Běijīng",
+        "ko": "그는 베이징에 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-009",
+    "level": 1,
     "hanzi": "你",
+    "variants": [],
     "pinyin": "nǐ",
     "meaning_ko": "너",
-    "tags": ["人称"],
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "你",
+        "pinyin": "nǐ",
+        "hanja": "你",
+        "strokeRef": "你"
+      }
+    ],
     "examples": [
-      { "zh": "你好吗？", "ko": "잘 지내요?" },
-      { "zh": "你是老师吗？", "ko": "당신은 선생님이에요?" }
+      {
+        "zh": "你好吗？",
+        "pinyin": "nǐ hǎo ma",
+        "ko": "잘 지내요?"
+      },
+      {
+        "zh": "你是老师吗？",
+        "pinyin": "nǐ shì lǎoshī ma",
+        "ko": "선생님이에요?"
+      }
     ]
   },
   {
-    "hanzi": "他",
+    "id": "hsk1-010",
+    "level": 1,
+    "hanzi": "她",
+    "variants": [],
     "pinyin": "tā",
-    "meaning_ko": "그",
-    "tags": ["人称"],
+    "meaning_ko": "그녀, 그여자",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "她",
+        "pinyin": "tā",
+        "hanja": "她",
+        "strokeRef": "她"
+      }
+    ],
     "examples": [
-      { "zh": "他是老师。", "ko": "그는 선생님이에요." },
-      { "zh": "他很好。", "ko": "그는 잘 지내요." }
+      {
+        "zh": "她是学生。",
+        "pinyin": "tā shì xuésheng",
+        "ko": "그녀는 학생이에요."
+      },
+      {
+        "zh": "她喜欢看电影。",
+        "pinyin": "tā xǐhuan kàn diànyǐng",
+        "ko": "그녀는 영화 보는 걸 좋아해요."
+      }
     ]
   },
   {
-    "hanzi": "是",
-    "pinyin": "shì",
-    "meaning_ko": "~이다",
-    "tags": ["动词", "考试重点"],
+    "id": "hsk1-011",
+    "level": 1,
+    "hanzi": "我",
+    "variants": [],
+    "pinyin": "wǒ",
+    "meaning_ko": "나",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "我",
+        "pinyin": "wǒ",
+        "hanja": "我",
+        "strokeRef": "我"
+      }
+    ],
     "examples": [
-      { "zh": "我是学生。", "ko": "저는 학생이에요." },
-      { "zh": "他是老师。", "ko": "그는 선생님이에요." }
+      {
+        "zh": "我是学生。",
+        "pinyin": "wǒ shì xuésheng",
+        "ko": "저는 학생이에요."
+      },
+      {
+        "zh": "我很高兴。",
+        "pinyin": "wǒ hěn gāoxìng",
+        "ko": "저는 기뻐요."
+      }
     ]
   },
   {
-    "hanzi": "叫",
-    "pinyin": "jiào",
-    "meaning_ko": "불리다, ~라고 하다",
-    "tags": ["动词"],
+    "id": "hsk1-012",
+    "level": 1,
+    "hanzi": "我们",
+    "variants": [],
+    "pinyin": "wǒmen",
+    "meaning_ko": "우리",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "我",
+        "pinyin": "",
+        "hanja": "我",
+        "strokeRef": "我"
+      },
+      {
+        "zi": "们",
+        "pinyin": "",
+        "hanja": "们",
+        "strokeRef": "们"
+      }
+    ],
     "examples": [
-      { "zh": "我叫丽丽。", "ko": "저는 리리예요." },
-      { "zh": "他叫大卫。", "ko": "그의 이름은 데이비드예요." }
+      {
+        "zh": "我们是朋友。",
+        "pinyin": "wǒmen shì péngyou",
+        "ko": "우리는 친구예요."
+      },
+      {
+        "zh": "我们在学校。",
+        "pinyin": "wǒmen zài xuéxiào",
+        "ko": "우리는 학교에 있어요."
+      }
     ]
   },
   {
-    "hanzi": "吗",
-    "pinyin": "ma",
-    "meaning_ko": "의문 조사 (~인가요?)",
-    "tags": ["语气词", "疑问"],
+    "id": "hsk1-013",
+    "level": 1,
+    "hanzi": "哪",
+    "variants": [
+      "哪儿"
+    ],
+    "pinyin": "nǎ (nǎr)",
+    "meaning_ko": "무엇, 어느 것",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "哪",
+        "pinyin": "",
+        "hanja": "哪",
+        "strokeRef": "哪"
+      }
+    ],
     "examples": [
-      { "zh": "你是学生吗？", "ko": "당신은 학생이에요?" },
-      { "zh": "他好吗？", "ko": "그는 잘 지내요?" }
+      {
+        "zh": "你去哪儿？",
+        "pinyin": "nǐ qù nǎr",
+        "ko": "어디 가요?"
+      },
+      {
+        "zh": "哪个是你的？",
+        "pinyin": "nǎ ge shì nǐ de",
+        "ko": "어느 게 네 거예요?"
+      }
     ]
   },
   {
+    "id": "hsk1-014",
+    "level": 1,
+    "hanzi": "这",
+    "variants": [
+      "这儿"
+    ],
+    "pinyin": "zhè (zhèr)",
+    "meaning_ko": "이, 이것",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "这",
+        "pinyin": "",
+        "hanja": "这",
+        "strokeRef": "这"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是书。",
+        "pinyin": "zhè shì shū",
+        "ko": "이건 책이에요."
+      },
+      {
+        "zh": "这儿是学校吗？",
+        "pinyin": "zhèr shì xuéxiào ma",
+        "ko": "여기가 학교예요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-015",
+    "level": 1,
+    "hanzi": "那",
+    "variants": [
+      "那儿"
+    ],
+    "pinyin": "nà (nàr)",
+    "meaning_ko": "저, 저것, 그것",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "那",
+        "pinyin": "",
+        "hanja": "那",
+        "strokeRef": "那"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "那是北京。",
+        "pinyin": "nà shì Běijīng",
+        "ko": "저건 베이징이에요."
+      },
+      {
+        "zh": "那儿是饭馆。",
+        "pinyin": "nàr shì fànguǎn",
+        "ko": "저기가 식당이에요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-016",
+    "level": 1,
+    "hanzi": "一",
+    "variants": [],
+    "pinyin": "yī",
+    "meaning_ko": "1",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "一",
+        "pinyin": "yī",
+        "hanja": "一",
+        "strokeRef": "一"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "一。",
+        "pinyin": "yī",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有一本书。",
+        "pinyin": "wǒ yǒu yī běn shū",
+        "ko": "저는 책 1권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-017",
+    "level": 1,
+    "hanzi": "七",
+    "variants": [],
+    "pinyin": "qī",
+    "meaning_ko": "7",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "七",
+        "pinyin": "qī",
+        "hanja": "七",
+        "strokeRef": "七"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "七。",
+        "pinyin": "qī",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有七本书。",
+        "pinyin": "wǒ yǒu qī běn shū",
+        "ko": "저는 책 7권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-018",
+    "level": 1,
+    "hanzi": "三",
+    "variants": [],
+    "pinyin": "sān",
+    "meaning_ko": "3",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "三",
+        "pinyin": "sān",
+        "hanja": "三",
+        "strokeRef": "三"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "三。",
+        "pinyin": "sān",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有三本书。",
+        "pinyin": "wǒ yǒu sān běn shū",
+        "ko": "저는 책 3권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-019",
+    "level": 1,
+    "hanzi": "上",
+    "variants": [],
+    "pinyin": "shàng",
+    "meaning_ko": "위, 오르다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "上",
+        "pinyin": "shàng",
+        "hanja": "上",
+        "strokeRef": "上"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是上。",
+        "pinyin": "zhè shì shàng",
+        "ko": "이건 위, 오르다예요."
+      },
+      {
+        "zh": "我喜欢上。",
+        "pinyin": "wǒ xǐhuan shàng",
+        "ko": "저는 위, 오르다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-020",
+    "level": 1,
+    "hanzi": "上午",
+    "variants": [],
+    "pinyin": "shàngwǔ",
+    "meaning_ko": "오전",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "上",
+        "pinyin": "",
+        "hanja": "上",
+        "strokeRef": "上"
+      },
+      {
+        "zi": "午",
+        "pinyin": "",
+        "hanja": "午",
+        "strokeRef": "午"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "上午我去学校。",
+        "pinyin": "shàngwǔ wǒ qù xuéxiào",
+        "ko": "오전 저는 학교에 가요."
+      },
+      {
+        "zh": "上午你去吗？",
+        "pinyin": "shàngwǔ nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-021",
+    "level": 1,
+    "hanzi": "下",
+    "variants": [],
+    "pinyin": "xià",
+    "meaning_ko": "아래, 내리다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "下",
+        "pinyin": "xià",
+        "hanja": "下",
+        "strokeRef": "下"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是下。",
+        "pinyin": "zhè shì xià",
+        "ko": "이건 아래, 내리다예요."
+      },
+      {
+        "zh": "我喜欢下。",
+        "pinyin": "wǒ xǐhuan xià",
+        "ko": "저는 아래, 내리다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-022",
+    "level": 1,
+    "hanzi": "下午",
+    "variants": [],
+    "pinyin": "xiàwǔ",
+    "meaning_ko": "오후",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "下",
+        "pinyin": "",
+        "hanja": "下",
+        "strokeRef": "下"
+      },
+      {
+        "zi": "午",
+        "pinyin": "",
+        "hanja": "午",
+        "strokeRef": "午"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "下午我去学校。",
+        "pinyin": "xiàwǔ wǒ qù xuéxiào",
+        "ko": "오후 저는 학교에 가요."
+      },
+      {
+        "zh": "下午你去吗？",
+        "pinyin": "xiàwǔ nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-023",
+    "level": 1,
+    "hanzi": "下雨",
+    "variants": [],
+    "pinyin": "xià yǔ",
+    "meaning_ko": "비가 내리다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "下",
+        "pinyin": "xià",
+        "hanja": "下",
+        "strokeRef": "下"
+      },
+      {
+        "zi": "雨",
+        "pinyin": "yǔ",
+        "hanja": "雨",
+        "strokeRef": "雨"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是下雨。",
+        "pinyin": "zhè shì xià yǔ",
+        "ko": "이건 비가 내리다예요."
+      },
+      {
+        "zh": "我喜欢下雨。",
+        "pinyin": "wǒ xǐhuan xià yǔ",
+        "ko": "저는 비가 내리다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-024",
+    "level": 1,
     "hanzi": "不",
+    "variants": [],
     "pinyin": "bù",
-    "meaning_ko": "아니다, ~하지 않다",
-    "tags": ["副词", "否定"],
+    "meaning_ko": "아니다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "不",
+        "pinyin": "bù",
+        "hanja": "不",
+        "strokeRef": "不"
+      }
+    ],
     "examples": [
-      { "zh": "我不是老师。", "ko": "저는 선생님이 아니에요." },
-      { "zh": "他不好。", "ko": "그는 잘 지내지 않아요." }
+      {
+        "zh": "我不去。",
+        "pinyin": "wǒ bù qù",
+        "ko": "저는 안 가요."
+      },
+      {
+        "zh": "他不好。",
+        "pinyin": "tā bù hǎo",
+        "ko": "그는 안 좋아요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-025",
+    "level": 1,
+    "hanzi": "东西",
+    "variants": [],
+    "pinyin": "dōngxi",
+    "meaning_ko": "물건, 사물",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "东",
+        "pinyin": "",
+        "hanja": "东",
+        "strokeRef": "东"
+      },
+      {
+        "zi": "西",
+        "pinyin": "",
+        "hanja": "西",
+        "strokeRef": "西"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是东西。",
+        "pinyin": "zhè shì dōngxi",
+        "ko": "이건 물건, 사물예요."
+      },
+      {
+        "zh": "我喜欢东西。",
+        "pinyin": "wǒ xǐhuan dōngxi",
+        "ko": "저는 물건, 사물을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-026",
+    "level": 1,
+    "hanzi": "个",
+    "variants": [],
+    "pinyin": "gè",
+    "meaning_ko": "(사물)개, (사람)명",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "个",
+        "pinyin": "gè",
+        "hanja": "个",
+        "strokeRef": "个"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "一个苹果。",
+        "pinyin": "yí ge píngguǒ",
+        "ko": "사과 한 개."
+      },
+      {
+        "zh": "你有几个朋友？",
+        "pinyin": "nǐ yǒu jǐ ge péngyou",
+        "ko": "친구가 몇 명 있어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-027",
+    "level": 1,
+    "hanzi": "中午",
+    "variants": [],
+    "pinyin": "zhōngwǔ",
+    "meaning_ko": "정오, 낮",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "中",
+        "pinyin": "",
+        "hanja": "中",
+        "strokeRef": "中"
+      },
+      {
+        "zi": "午",
+        "pinyin": "",
+        "hanja": "午",
+        "strokeRef": "午"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "中午我去学校。",
+        "pinyin": "zhōngwǔ wǒ qù xuéxiào",
+        "ko": "정오, 낮 저는 학교에 가요."
+      },
+      {
+        "zh": "中午你去吗？",
+        "pinyin": "zhōngwǔ nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-028",
+    "level": 1,
+    "hanzi": "中国",
+    "variants": [],
+    "pinyin": "Zhōngguó",
+    "meaning_ko": "중국",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "中",
+        "pinyin": "",
+        "hanja": "中",
+        "strokeRef": "中"
+      },
+      {
+        "zi": "国",
+        "pinyin": "",
+        "hanja": "国",
+        "strokeRef": "国"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是中国。",
+        "pinyin": "zhè shì Zhōngguó",
+        "ko": "이건 중국예요."
+      },
+      {
+        "zh": "我喜欢中国。",
+        "pinyin": "wǒ xǐhuan Zhōngguó",
+        "ko": "저는 중국을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-029",
+    "level": 1,
+    "hanzi": "九",
+    "variants": [],
+    "pinyin": "jiǔ",
+    "meaning_ko": "9",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "九",
+        "pinyin": "jiǔ",
+        "hanja": "九",
+        "strokeRef": "九"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "九。",
+        "pinyin": "jiǔ",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有九本书。",
+        "pinyin": "wǒ yǒu jiǔ běn shū",
+        "ko": "저는 책 9권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-030",
+    "level": 1,
+    "hanzi": "书",
+    "variants": [],
+    "pinyin": "shū",
+    "meaning_ko": "책",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "书",
+        "pinyin": "shū",
+        "hanja": "书",
+        "strokeRef": "书"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是书。",
+        "pinyin": "zhè shì shū",
+        "ko": "이건 책예요."
+      },
+      {
+        "zh": "我喜欢书。",
+        "pinyin": "wǒ xǐhuan shū",
+        "ko": "저는 책을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-031",
+    "level": 1,
+    "hanzi": "买",
+    "variants": [],
+    "pinyin": "mǎi",
+    "meaning_ko": "사다. 구입하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "买",
+        "pinyin": "mǎi",
+        "hanja": "买",
+        "strokeRef": "买"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我买。",
+        "pinyin": "wǒ mǎi",
+        "ko": "저는 사다. 구입하다요."
+      },
+      {
+        "zh": "你想买吗？",
+        "pinyin": "nǐ xiǎng mǎi ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-032",
+    "level": 1,
+    "hanzi": "了",
+    "variants": [],
+    "pinyin": "le",
+    "meaning_ko": "조사. (동작의 완료나 변화)",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "了",
+        "pinyin": "le",
+        "hanja": "了",
+        "strokeRef": "了"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我吃饭了。",
+        "pinyin": "wǒ chī mǐfàn le",
+        "ko": "저 밥 먹었어요."
+      },
+      {
+        "zh": "他回家了。",
+        "pinyin": "tā huí jiā le",
+        "ko": "그는 집에 갔어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-033",
+    "level": 1,
+    "hanzi": "二",
+    "variants": [],
+    "pinyin": "èr",
+    "meaning_ko": "2",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "二",
+        "pinyin": "èr",
+        "hanja": "二",
+        "strokeRef": "二"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "二。",
+        "pinyin": "èr",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有二本书。",
+        "pinyin": "wǒ yǒu èr běn shū",
+        "ko": "저는 책 2권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-034",
+    "level": 1,
+    "hanzi": "五",
+    "variants": [],
+    "pinyin": "wǔ",
+    "meaning_ko": "5",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "五",
+        "pinyin": "wǔ",
+        "hanja": "五",
+        "strokeRef": "五"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "五。",
+        "pinyin": "wǔ",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有五本书。",
+        "pinyin": "wǒ yǒu wǔ běn shū",
+        "ko": "저는 책 5권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-035",
+    "level": 1,
+    "hanzi": "些",
+    "variants": [],
+    "pinyin": "xiē",
+    "meaning_ko": "약간. 조금",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "些",
+        "pinyin": "xiē",
+        "hanja": "些",
+        "strokeRef": "些"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "一些水。",
+        "pinyin": "yì xiē shuǐ",
+        "ko": "물 좀."
+      },
+      {
+        "zh": "我买一些水果。",
+        "pinyin": "wǒ mǎi yì xiē shuǐguǒ",
+        "ko": "저는 과일을 조금 사요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-036",
+    "level": 1,
+    "hanzi": "人",
+    "variants": [],
+    "pinyin": "rén",
+    "meaning_ko": "사람",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "人",
+        "pinyin": "rén",
+        "hanja": "人",
+        "strokeRef": "人"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是人。",
+        "pinyin": "zhè shì rén",
+        "ko": "이건 사람예요."
+      },
+      {
+        "zh": "我喜欢人。",
+        "pinyin": "wǒ xǐhuan rén",
+        "ko": "저는 사람을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-037",
+    "level": 1,
+    "hanzi": "什么",
+    "variants": [],
+    "pinyin": "shénme",
+    "meaning_ko": "어떤,무슨,무엇",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "什",
+        "pinyin": "",
+        "hanja": "什",
+        "strokeRef": "什"
+      },
+      {
+        "zi": "么",
+        "pinyin": "",
+        "hanja": "么",
+        "strokeRef": "么"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是什么？",
+        "pinyin": "zhè shì shénme",
+        "ko": "이건 뭐예요?"
+      },
+      {
+        "zh": "你想吃什么？",
+        "pinyin": "nǐ xiǎng chī shénme",
+        "ko": "뭐 먹고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-038",
+    "level": 1,
+    "hanzi": "今天",
+    "variants": [],
+    "pinyin": "jīntiān",
+    "meaning_ko": "오늘",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "今",
+        "pinyin": "",
+        "hanja": "今",
+        "strokeRef": "今"
+      },
+      {
+        "zi": "天",
+        "pinyin": "",
+        "hanja": "天",
+        "strokeRef": "天"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "今天我去学校。",
+        "pinyin": "jīntiān wǒ qù xuéxiào",
+        "ko": "오늘 저는 학교에 가요."
+      },
+      {
+        "zh": "今天你去吗？",
+        "pinyin": "jīntiān nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-039",
+    "level": 1,
+    "hanzi": "会",
+    "variants": [],
+    "pinyin": "huì",
+    "meaning_ko": "할 수 있다. 만나다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "会",
+        "pinyin": "huì",
+        "hanja": "会",
+        "strokeRef": "会"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我会说汉语。",
+        "pinyin": "wǒ huì shuōhuà Hànyǔ",
+        "ko": "저는 중국어를 할 수 있어요."
+      },
+      {
+        "zh": "他会写字。",
+        "pinyin": "tā huì xiě zì",
+        "ko": "그는 글자를 쓸 수 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-040",
+    "level": 1,
+    "hanzi": "住",
+    "variants": [],
+    "pinyin": "zhu",
+    "meaning_ko": "살다. 거주하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "住",
+        "pinyin": "zhu",
+        "hanja": "住",
+        "strokeRef": "住"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我住在北京。",
+        "pinyin": "wǒ zhù zài Běijīng",
+        "ko": "저는 베이징에 살아요."
+      },
+      {
+        "zh": "你住哪儿？",
+        "pinyin": "nǐ zhù nǎr",
+        "ko": "어디 살아요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-041",
+    "level": 1,
+    "hanzi": "做",
+    "variants": [],
+    "pinyin": "zuò",
+    "meaning_ko": "하다. 종사하다. 만들다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "做",
+        "pinyin": "zuò",
+        "hanja": "做",
+        "strokeRef": "做"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我做。",
+        "pinyin": "wǒ zuò",
+        "ko": "저는 하다. 종사하다. 만들다요."
+      },
+      {
+        "zh": "你想做吗？",
+        "pinyin": "nǐ xiǎng zuò ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-042",
+    "level": 1,
+    "hanzi": "儿子",
+    "variants": [],
+    "pinyin": "érzi",
+    "meaning_ko": "아들",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "儿",
+        "pinyin": "",
+        "hanja": "儿",
+        "strokeRef": "儿"
+      },
+      {
+        "zi": "子",
+        "pinyin": "",
+        "hanja": "子",
+        "strokeRef": "子"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是儿子。",
+        "pinyin": "zhè shì érzi",
+        "ko": "이건 아들예요."
+      },
+      {
+        "zh": "我喜欢儿子。",
+        "pinyin": "wǒ xǐhuan érzi",
+        "ko": "저는 아들을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-043",
+    "level": 1,
+    "hanzi": "先生",
+    "variants": [],
+    "pinyin": "xiānsheng",
+    "meaning_ko": "선생님",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "先",
+        "pinyin": "",
+        "hanja": "先",
+        "strokeRef": "先"
+      },
+      {
+        "zi": "生",
+        "pinyin": "",
+        "hanja": "生",
+        "strokeRef": "生"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是先生。",
+        "pinyin": "zhè shì xiānsheng",
+        "ko": "이건 선생님예요."
+      },
+      {
+        "zh": "我喜欢先生。",
+        "pinyin": "wǒ xǐhuan xiānsheng",
+        "ko": "저는 선생님을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-044",
+    "level": 1,
+    "hanzi": "八",
+    "variants": [],
+    "pinyin": "bā",
+    "meaning_ko": "팔",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "八",
+        "pinyin": "bā",
+        "hanja": "八",
+        "strokeRef": "八"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "八。",
+        "pinyin": "bā",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有八本书。",
+        "pinyin": "wǒ yǒu bā běn shū",
+        "ko": "저는 책 팔권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-045",
+    "level": 1,
+    "hanzi": "六",
+    "variants": [],
+    "pinyin": "liù",
+    "meaning_ko": "육",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "六",
+        "pinyin": "liù",
+        "hanja": "六",
+        "strokeRef": "六"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "六。",
+        "pinyin": "liù",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有六本书。",
+        "pinyin": "wǒ yǒu liù běn shū",
+        "ko": "저는 책 육권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-046",
+    "level": 1,
+    "hanzi": "写",
+    "variants": [],
+    "pinyin": "xiě",
+    "meaning_ko": "글씨를 쓰다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "写",
+        "pinyin": "xiě",
+        "hanja": "写",
+        "strokeRef": "写"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我写。",
+        "pinyin": "wǒ xiě",
+        "ko": "저는 글씨를 쓰다요."
+      },
+      {
+        "zh": "你想写吗？",
+        "pinyin": "nǐ xiǎng xiě ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-047",
+    "level": 1,
+    "hanzi": "冷",
+    "variants": [],
+    "pinyin": "lěng",
+    "meaning_ko": "춥다, 차갑다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "冷",
+        "pinyin": "lěng",
+        "hanja": "冷",
+        "strokeRef": "冷"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很冷。",
+        "pinyin": "tiānqì hěn lěng",
+        "ko": "날씨가 춥다, 차갑다요."
+      },
+      {
+        "zh": "这个冷吗？",
+        "pinyin": "zhè ge lěng ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-048",
+    "level": 1,
+    "hanzi": "几",
+    "variants": [],
+    "pinyin": "jǐ",
+    "meaning_ko": "몇 (주로 10 이하)",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "几",
+        "pinyin": "jǐ",
+        "hanja": "几",
+        "strokeRef": "几"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "现在几点？",
+        "pinyin": "xiànzài jǐ diǎn",
+        "ko": "지금 몇 시예요?"
+      },
+      {
+        "zh": "你几岁？",
+        "pinyin": "nǐ jǐ suì",
+        "ko": "몇 살이에요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-049",
+    "level": 1,
+    "hanzi": "出租车",
+    "variants": [],
+    "pinyin": "chūzūchē",
+    "meaning_ko": "택시",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "出",
+        "pinyin": "",
+        "hanja": "出",
+        "strokeRef": "出"
+      },
+      {
+        "zi": "租",
+        "pinyin": "",
+        "hanja": "租",
+        "strokeRef": "租"
+      },
+      {
+        "zi": "车",
+        "pinyin": "",
+        "hanja": "车",
+        "strokeRef": "车"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是出租车。",
+        "pinyin": "zhè shì chūzūchē",
+        "ko": "이건 택시예요."
+      },
+      {
+        "zh": "我喜欢出租车。",
+        "pinyin": "wǒ xǐhuan chūzūchē",
+        "ko": "저는 택시을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-050",
+    "level": 1,
+    "hanzi": "分钟",
+    "variants": [],
+    "pinyin": "fēnzhōng",
+    "meaning_ko": "분",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "分",
+        "pinyin": "",
+        "hanja": "分",
+        "strokeRef": "分"
+      },
+      {
+        "zi": "钟",
+        "pinyin": "",
+        "hanja": "钟",
+        "strokeRef": "钟"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "十分钟。",
+        "pinyin": "shí fēnzhōng",
+        "ko": "10분."
+      },
+      {
+        "zh": "等一分钟。",
+        "pinyin": "děng yì fēnzhōng",
+        "ko": "1분만 기다려요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-051",
+    "level": 1,
+    "hanzi": "前面",
+    "variants": [],
+    "pinyin": "qiánmiàn",
+    "meaning_ko": "앞, 전면",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "前",
+        "pinyin": "",
+        "hanja": "前",
+        "strokeRef": "前"
+      },
+      {
+        "zi": "面",
+        "pinyin": "",
+        "hanja": "面",
+        "strokeRef": "面"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是前面。",
+        "pinyin": "zhè shì qiánmiàn",
+        "ko": "이건 앞, 전면예요."
+      },
+      {
+        "zh": "我喜欢前面。",
+        "pinyin": "wǒ xǐhuan qiánmiàn",
+        "ko": "저는 앞, 전면을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-052",
+    "level": 1,
+    "hanzi": "北京",
+    "variants": [],
+    "pinyin": "Běijīng",
+    "meaning_ko": "북경, 베이징",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "北",
+        "pinyin": "",
+        "hanja": "北",
+        "strokeRef": "北"
+      },
+      {
+        "zi": "京",
+        "pinyin": "",
+        "hanja": "京",
+        "strokeRef": "京"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是北京。",
+        "pinyin": "zhè shì Běijīng",
+        "ko": "이건 북경, 베이징예요."
+      },
+      {
+        "zh": "我喜欢北京。",
+        "pinyin": "wǒ xǐhuan Běijīng",
+        "ko": "저는 북경, 베이징을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-053",
+    "level": 1,
+    "hanzi": "医生",
+    "variants": [],
+    "pinyin": "yīshēng",
+    "meaning_ko": "의사",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "医",
+        "pinyin": "",
+        "hanja": "医",
+        "strokeRef": "医"
+      },
+      {
+        "zi": "生",
+        "pinyin": "",
+        "hanja": "生",
+        "strokeRef": "生"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是医生。",
+        "pinyin": "zhè shì yīshēng",
+        "ko": "이건 의사예요."
+      },
+      {
+        "zh": "我喜欢医生。",
+        "pinyin": "wǒ xǐhuan yīshēng",
+        "ko": "저는 의사을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-054",
+    "level": 1,
+    "hanzi": "医院",
+    "variants": [],
+    "pinyin": "yīyuàn",
+    "meaning_ko": "병원",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "医",
+        "pinyin": "",
+        "hanja": "医",
+        "strokeRef": "医"
+      },
+      {
+        "zi": "院",
+        "pinyin": "",
+        "hanja": "院",
+        "strokeRef": "院"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是医院。",
+        "pinyin": "zhè shì yīyuàn",
+        "ko": "이건 병원예요."
+      },
+      {
+        "zh": "我喜欢医院。",
+        "pinyin": "wǒ xǐhuan yīyuàn",
+        "ko": "저는 병원을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-055",
+    "level": 1,
+    "hanzi": "十",
+    "variants": [],
+    "pinyin": "shí",
+    "meaning_ko": "10",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "十",
+        "pinyin": "shí",
+        "hanja": "十",
+        "strokeRef": "十"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "十。",
+        "pinyin": "shí",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有十本书。",
+        "pinyin": "wǒ yǒu shí běn shū",
+        "ko": "저는 책 10권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-056",
+    "level": 1,
+    "hanzi": "去",
+    "variants": [],
+    "pinyin": "qù",
+    "meaning_ko": "가다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "去",
+        "pinyin": "qù",
+        "hanja": "去",
+        "strokeRef": "去"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我去。",
+        "pinyin": "wǒ qù",
+        "ko": "저는 가다요."
+      },
+      {
+        "zh": "你想去吗？",
+        "pinyin": "nǐ xiǎng qù ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-057",
+    "level": 1,
+    "hanzi": "叫",
+    "variants": [],
+    "pinyin": "jiào",
+    "meaning_ko": "외치다. 소리치다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "叫",
+        "pinyin": "jiào",
+        "hanja": "叫",
+        "strokeRef": "叫"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我叫小明。",
+        "pinyin": "wǒ jiào Xiǎomíng",
+        "ko": "저는 샤오밍이라고 해요."
+      },
+      {
+        "zh": "你叫什么名字？",
+        "pinyin": "nǐ jiào shénme míngzi",
+        "ko": "이름이 뭐예요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-058",
+    "level": 1,
+    "hanzi": "吃",
+    "variants": [],
+    "pinyin": "chī",
+    "meaning_ko": "먹다. 마시다. 빨다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "吃",
+        "pinyin": "chī",
+        "hanja": "吃",
+        "strokeRef": "吃"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我吃。",
+        "pinyin": "wǒ chī",
+        "ko": "저는 먹다. 마시다. 빨다요."
+      },
+      {
+        "zh": "你想吃吗？",
+        "pinyin": "nǐ xiǎng chī ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-059",
+    "level": 1,
+    "hanzi": "同学",
+    "variants": [],
+    "pinyin": "tóngxué",
+    "meaning_ko": "동창생, 동급생",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "同",
+        "pinyin": "",
+        "hanja": "同",
+        "strokeRef": "同"
+      },
+      {
+        "zi": "学",
+        "pinyin": "",
+        "hanja": "学",
+        "strokeRef": "学"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是同学。",
+        "pinyin": "zhè shì tóngxué",
+        "ko": "이건 동창생, 동급생예요."
+      },
+      {
+        "zh": "我喜欢同学。",
+        "pinyin": "wǒ xǐhuan tóngxué",
+        "ko": "저는 동창생, 동급생을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-060",
+    "level": 1,
+    "hanzi": "名字",
+    "variants": [],
+    "pinyin": "míngzi",
+    "meaning_ko": "이름",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "名",
+        "pinyin": "",
+        "hanja": "名",
+        "strokeRef": "名"
+      },
+      {
+        "zi": "字",
+        "pinyin": "",
+        "hanja": "字",
+        "strokeRef": "字"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是名字。",
+        "pinyin": "zhè shì míngzi",
+        "ko": "이건 이름예요."
+      },
+      {
+        "zh": "我喜欢名字。",
+        "pinyin": "wǒ xǐhuan míngzi",
+        "ko": "저는 이름을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-061",
+    "level": 1,
+    "hanzi": "后面",
+    "variants": [],
+    "pinyin": "hòumiàn",
+    "meaning_ko": "뒤, 후면",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "后",
+        "pinyin": "",
+        "hanja": "后",
+        "strokeRef": "后"
+      },
+      {
+        "zi": "面",
+        "pinyin": "",
+        "hanja": "面",
+        "strokeRef": "面"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是后面。",
+        "pinyin": "zhè shì hòumiàn",
+        "ko": "이건 뒤, 후면예요."
+      },
+      {
+        "zh": "我喜欢后面。",
+        "pinyin": "wǒ xǐhuan hòumiàn",
+        "ko": "저는 뒤, 후면을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-062",
+    "level": 1,
+    "hanzi": "吗",
+    "variants": [],
+    "pinyin": "ma",
+    "meaning_ko": "의문 조사",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "吗",
+        "pinyin": "ma",
+        "hanja": "吗",
+        "strokeRef": "吗"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "你是学生吗？",
+        "pinyin": "nǐ shì xuésheng ma",
+        "ko": "학생이에요?"
+      },
+      {
+        "zh": "他在学校吗？",
+        "pinyin": "tā zài xuéxiào ma",
+        "ko": "그는 학교에 있어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-063",
+    "level": 1,
+    "hanzi": "听",
+    "variants": [],
+    "pinyin": "tīng",
+    "meaning_ko": "듣다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "听",
+        "pinyin": "tīng",
+        "hanja": "听",
+        "strokeRef": "听"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我听。",
+        "pinyin": "wǒ tīng",
+        "ko": "저는 듣다요."
+      },
+      {
+        "zh": "你想听吗？",
+        "pinyin": "nǐ xiǎng tīng ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-064",
+    "level": 1,
+    "hanzi": "呢",
+    "variants": [],
+    "pinyin": "ne",
+    "meaning_ko": "조사 (동작의 지속, 또는 강조)",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "呢",
+        "pinyin": "ne",
+        "hanja": "呢",
+        "strokeRef": "呢"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我很好，你呢？",
+        "pinyin": "wǒ hěn hǎo nǐ ne",
+        "ko": "저는 괜찮아요, 너는요?"
+      },
+      {
+        "zh": "茶呢？",
+        "pinyin": "chá ne",
+        "ko": "차는요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-065",
+    "level": 1,
+    "hanzi": "和",
+    "variants": [],
+    "pinyin": "hé",
+    "meaning_ko": "조화로운. 그리고",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "和",
+        "pinyin": "hé",
+        "hanja": "和",
+        "strokeRef": "和"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我和你是朋友。",
+        "pinyin": "wǒ hé nǐ shì péngyou",
+        "ko": "나랑 너는 친구예요."
+      },
+      {
+        "zh": "爸爸和妈妈在家。",
+        "pinyin": "bàba hé māma zài jiā",
+        "ko": "아빠랑 엄마가 집에 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-066",
+    "level": 1,
+    "hanzi": "商店",
+    "variants": [],
+    "pinyin": "shāngdiàn",
+    "meaning_ko": "상점",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "商",
+        "pinyin": "",
+        "hanja": "商",
+        "strokeRef": "商"
+      },
+      {
+        "zi": "店",
+        "pinyin": "",
+        "hanja": "店",
+        "strokeRef": "店"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是商店。",
+        "pinyin": "zhè shì shāngdiàn",
+        "ko": "이건 상점예요."
+      },
+      {
+        "zh": "我喜欢商店。",
+        "pinyin": "wǒ xǐhuan shāngdiàn",
+        "ko": "저는 상점을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-067",
+    "level": 1,
+    "hanzi": "喜欢",
+    "variants": [],
+    "pinyin": "xǐhuan",
+    "meaning_ko": "좋아하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "喜",
+        "pinyin": "",
+        "hanja": "喜",
+        "strokeRef": "喜"
+      },
+      {
+        "zi": "欢",
+        "pinyin": "",
+        "hanja": "欢",
+        "strokeRef": "欢"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是喜欢。",
+        "pinyin": "zhè shì xǐhuan",
+        "ko": "이건 좋아하다예요."
+      },
+      {
+        "zh": "我喜欢喜欢。",
+        "pinyin": "wǒ xǐhuan xǐhuan",
+        "ko": "저는 좋아하다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-068",
+    "level": 1,
+    "hanzi": "喝",
+    "variants": [],
+    "pinyin": "hē",
+    "meaning_ko": "마시다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "喝",
+        "pinyin": "hē",
+        "hanja": "喝",
+        "strokeRef": "喝"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我喝。",
+        "pinyin": "wǒ hē",
+        "ko": "저는 마시다요."
+      },
+      {
+        "zh": "你想喝吗？",
+        "pinyin": "nǐ xiǎng hē ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-069",
+    "level": 1,
+    "hanzi": "四",
+    "variants": [],
+    "pinyin": "sì",
+    "meaning_ko": "4",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "四",
+        "pinyin": "sì",
+        "hanja": "四",
+        "strokeRef": "四"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "四。",
+        "pinyin": "sì",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有四本书。",
+        "pinyin": "wǒ yǒu sì běn shū",
+        "ko": "저는 책 4권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-070",
+    "level": 1,
+    "hanzi": "回",
+    "variants": [],
+    "pinyin": "huí",
+    "meaning_ko": "되돌아가다. 되돌아오다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "回",
+        "pinyin": "huí",
+        "hanja": "回",
+        "strokeRef": "回"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我回。",
+        "pinyin": "wǒ huí",
+        "ko": "저는 되돌아가다. 되돌아오다요."
+      },
+      {
+        "zh": "你想回吗？",
+        "pinyin": "nǐ xiǎng huí ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-071",
+    "level": 1,
+    "hanzi": "在",
+    "variants": [],
+    "pinyin": "zài",
+    "meaning_ko": "존재하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "在",
+        "pinyin": "zài",
+        "hanja": "在",
+        "strokeRef": "在"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我在北京。",
+        "pinyin": "wǒ zài Běijīng",
+        "ko": "저는 베이징에 있어요."
+      },
+      {
+        "zh": "学校在这儿。",
+        "pinyin": "xuéxiào zài zhèr",
+        "ko": "학교는 여기에 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-072",
+    "level": 1,
+    "hanzi": "坐",
+    "variants": [],
+    "pinyin": "zuò",
+    "meaning_ko": "앉다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "坐",
+        "pinyin": "zuò",
+        "hanja": "坐",
+        "strokeRef": "坐"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我坐。",
+        "pinyin": "wǒ zuò",
+        "ko": "저는 앉다요."
+      },
+      {
+        "zh": "你想坐吗？",
+        "pinyin": "nǐ xiǎng zuò ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-073",
+    "level": 1,
+    "hanzi": "块",
+    "variants": [],
+    "pinyin": "kuài",
+    "meaning_ko": "덩어리",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "块",
+        "pinyin": "kuài",
+        "hanja": "块",
+        "strokeRef": "块"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "十块钱。",
+        "pinyin": "shí kuài qián",
+        "ko": "10위안."
+      },
+      {
+        "zh": "这个多少钱？—三块。",
+        "pinyin": "zhè ge duōshao qián sān kuài",
+        "ko": "이거 얼마예요? — 3위안이에요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-074",
+    "level": 1,
+    "hanzi": "多",
+    "variants": [],
+    "pinyin": "duō",
+    "meaning_ko": "많다. 훨씬",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "多",
+        "pinyin": "duō",
+        "hanja": "多",
+        "strokeRef": "多"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很多。",
+        "pinyin": "tiānqì hěn duō",
+        "ko": "날씨가 많다. 훨씬요."
+      },
+      {
+        "zh": "这个多吗？",
+        "pinyin": "zhè ge duō ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-075",
+    "level": 1,
+    "hanzi": "多少",
+    "variants": [],
+    "pinyin": "duōshao",
+    "meaning_ko": "약간, 조금",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "多",
+        "pinyin": "",
+        "hanja": "多",
+        "strokeRef": "多"
+      },
+      {
+        "zi": "少",
+        "pinyin": "",
+        "hanja": "少",
+        "strokeRef": "少"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "多少钱？",
+        "pinyin": "duōshao qián",
+        "ko": "얼마예요?"
+      },
+      {
+        "zh": "你有多少本书？",
+        "pinyin": "nǐ yǒu duōshao běn shū",
+        "ko": "책이 몇 권 있어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-076",
+    "level": 1,
+    "hanzi": "大",
+    "variants": [],
+    "pinyin": "dà",
+    "meaning_ko": "크다. 매우",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "大",
+        "pinyin": "dà",
+        "hanja": "大",
+        "strokeRef": "大"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很大。",
+        "pinyin": "tiānqì hěn dà",
+        "ko": "날씨가 크다. 매우요."
+      },
+      {
+        "zh": "这个大吗？",
+        "pinyin": "zhè ge dà ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-077",
+    "level": 1,
+    "hanzi": "天气",
+    "variants": [],
+    "pinyin": "tiānqi",
+    "meaning_ko": "날씨",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "天",
+        "pinyin": "",
+        "hanja": "天",
+        "strokeRef": "天"
+      },
+      {
+        "zi": "气",
+        "pinyin": "",
+        "hanja": "气",
+        "strokeRef": "气"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是天气。",
+        "pinyin": "zhè shì tiānqi",
+        "ko": "이건 날씨예요."
+      },
+      {
+        "zh": "我喜欢天气。",
+        "pinyin": "wǒ xǐhuan tiānqi",
+        "ko": "저는 날씨을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-078",
+    "level": 1,
+    "hanzi": "太",
+    "variants": [],
+    "pinyin": "tài",
+    "meaning_ko": "최고의",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "太",
+        "pinyin": "tài",
+        "hanja": "太",
+        "strokeRef": "太"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "太好了！",
+        "pinyin": "tài hǎo le",
+        "ko": "너무 좋아요!"
+      },
+      {
+        "zh": "天气太热。",
+        "pinyin": "tiānqì tài rè",
+        "ko": "날씨가 너무 더워요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-079",
+    "level": 1,
+    "hanzi": "女儿",
+    "variants": [],
+    "pinyin": "nǚér",
+    "meaning_ko": "딸",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "女",
+        "pinyin": "",
+        "hanja": "女",
+        "strokeRef": "女"
+      },
+      {
+        "zi": "儿",
+        "pinyin": "",
+        "hanja": "儿",
+        "strokeRef": "儿"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是女儿。",
+        "pinyin": "zhè shì nǚér",
+        "ko": "이건 딸예요."
+      },
+      {
+        "zh": "我喜欢女儿。",
+        "pinyin": "wǒ xǐhuan nǚér",
+        "ko": "저는 딸을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-080",
+    "level": 1,
+    "hanzi": "好",
+    "variants": [],
+    "pinyin": "hǎo",
+    "meaning_ko": "좋다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "好",
+        "pinyin": "hǎo",
+        "hanja": "好",
+        "strokeRef": "好"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我很好。",
+        "pinyin": "wǒ hěn hǎo",
+        "ko": "저는 괜찮아요."
+      },
+      {
+        "zh": "这个怎么样？很好。",
+        "pinyin": "zhè ge zěnmeyàng hěn hǎo",
+        "ko": "이거 어때요? 아주 좋아요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-081",
+    "level": 1,
+    "hanzi": "妈妈",
+    "variants": [],
+    "pinyin": "māma",
+    "meaning_ko": "엄마, 어머니",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "妈",
+        "pinyin": "",
+        "hanja": "妈",
+        "strokeRef": "妈"
+      },
+      {
+        "zi": "妈",
+        "pinyin": "",
+        "hanja": "妈",
+        "strokeRef": "妈"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是妈妈。",
+        "pinyin": "zhè shì māma",
+        "ko": "이건 엄마, 어머니예요."
+      },
+      {
+        "zh": "我喜欢妈妈。",
+        "pinyin": "wǒ xǐhuan māma",
+        "ko": "저는 엄마, 어머니을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-082",
+    "level": 1,
+    "hanzi": "字",
+    "variants": [],
+    "pinyin": "zì",
+    "meaning_ko": "문자, 글자",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "字",
+        "pinyin": "zì",
+        "hanja": "字",
+        "strokeRef": "字"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是字。",
+        "pinyin": "zhè shì zì",
+        "ko": "이건 문자, 글자예요."
+      },
+      {
+        "zh": "我喜欢字。",
+        "pinyin": "wǒ xǐhuan zì",
+        "ko": "저는 문자, 글자을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-083",
+    "level": 1,
+    "hanzi": "学习",
+    "variants": [],
+    "pinyin": "xuéxí",
+    "meaning_ko": "배우다. 공부하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "学",
+        "pinyin": "",
+        "hanja": "学",
+        "strokeRef": "学"
+      },
+      {
+        "zi": "习",
+        "pinyin": "",
+        "hanja": "习",
+        "strokeRef": "习"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我学习。",
+        "pinyin": "wǒ xuéxí",
+        "ko": "저는 배우다. 공부하다요."
+      },
+      {
+        "zh": "你想学习吗？",
+        "pinyin": "nǐ xiǎng xuéxí ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-084",
+    "level": 1,
+    "hanzi": "学校",
+    "variants": [],
+    "pinyin": "xuéxiào",
+    "meaning_ko": "학교",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "学",
+        "pinyin": "",
+        "hanja": "学",
+        "strokeRef": "学"
+      },
+      {
+        "zi": "校",
+        "pinyin": "",
+        "hanja": "校",
+        "strokeRef": "校"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是学校。",
+        "pinyin": "zhè shì xuéxiào",
+        "ko": "이건 학교예요."
+      },
+      {
+        "zh": "我喜欢学校。",
+        "pinyin": "wǒ xǐhuan xuéxiào",
+        "ko": "저는 학교을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-085",
+    "level": 1,
+    "hanzi": "学生",
+    "variants": [],
+    "pinyin": "xuésheng",
+    "meaning_ko": "학생",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "学",
+        "pinyin": "",
+        "hanja": "学",
+        "strokeRef": "学"
+      },
+      {
+        "zi": "生",
+        "pinyin": "",
+        "hanja": "生",
+        "strokeRef": "生"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是学生。",
+        "pinyin": "zhè shì xuésheng",
+        "ko": "이건 학생예요."
+      },
+      {
+        "zh": "我喜欢学生。",
+        "pinyin": "wǒ xǐhuan xuésheng",
+        "ko": "저는 학생을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-086",
+    "level": 1,
+    "hanzi": "家",
+    "variants": [],
+    "pinyin": "jiā",
+    "meaning_ko": "집",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "家",
+        "pinyin": "jiā",
+        "hanja": "家",
+        "strokeRef": "家"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是家。",
+        "pinyin": "zhè shì jiā",
+        "ko": "이건 집예요."
+      },
+      {
+        "zh": "我喜欢家。",
+        "pinyin": "wǒ xǐhuan jiā",
+        "ko": "저는 집을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-087",
+    "level": 1,
+    "hanzi": "小",
+    "variants": [],
+    "pinyin": "xiǎo",
+    "meaning_ko": "작다. 어리다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "小",
+        "pinyin": "xiǎo",
+        "hanja": "小",
+        "strokeRef": "小"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很小。",
+        "pinyin": "tiānqì hěn xiǎo",
+        "ko": "날씨가 작다. 어리다요."
+      },
+      {
+        "zh": "这个小吗？",
+        "pinyin": "zhè ge xiǎo ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-088",
+    "level": 1,
+    "hanzi": "小姐",
+    "variants": [],
+    "pinyin": "xiǎojiě",
+    "meaning_ko": "아가씨",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "小",
+        "pinyin": "",
+        "hanja": "小",
+        "strokeRef": "小"
+      },
+      {
+        "zi": "姐",
+        "pinyin": "",
+        "hanja": "姐",
+        "strokeRef": "姐"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是小姐。",
+        "pinyin": "zhè shì xiǎojiě",
+        "ko": "이건 아가씨예요."
+      },
+      {
+        "zh": "我喜欢小姐。",
+        "pinyin": "wǒ xǐhuan xiǎojiě",
+        "ko": "저는 아가씨을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-089",
+    "level": 1,
+    "hanzi": "少",
+    "variants": [],
+    "pinyin": "shǎo",
+    "meaning_ko": "적다. 부족하다. 조금",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "少",
+        "pinyin": "shǎo",
+        "hanja": "少",
+        "strokeRef": "少"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很少。",
+        "pinyin": "tiānqì hěn shǎo",
+        "ko": "날씨가 적다. 부족하다. 조금요."
+      },
+      {
+        "zh": "这个少吗？",
+        "pinyin": "zhè ge shǎo ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-090",
+    "level": 1,
+    "hanzi": "岁",
+    "variants": [],
+    "pinyin": "suì",
+    "meaning_ko": "몇 살",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "岁",
+        "pinyin": "suì",
+        "hanja": "岁",
+        "strokeRef": "岁"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我十岁。",
+        "pinyin": "wǒ shí suì",
+        "ko": "저는 열 살이에요."
+      },
+      {
+        "zh": "你几岁？",
+        "pinyin": "nǐ jǐ suì",
+        "ko": "몇 살이에요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-091",
+    "level": 1,
+    "hanzi": "工作",
+    "variants": [],
+    "pinyin": "gōngzuò",
+    "meaning_ko": "직업. 일자리",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "工",
+        "pinyin": "",
+        "hanja": "工",
+        "strokeRef": "工"
+      },
+      {
+        "zi": "作",
+        "pinyin": "",
+        "hanja": "作",
+        "strokeRef": "作"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我工作。",
+        "pinyin": "wǒ gōngzuò",
+        "ko": "저는 직업. 일자리요."
+      },
+      {
+        "zh": "你想工作吗？",
+        "pinyin": "nǐ xiǎng gōngzuò ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-092",
+    "level": 1,
+    "hanzi": "年",
+    "variants": [],
+    "pinyin": "nián",
+    "meaning_ko": "년, 해",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "年",
+        "pinyin": "nián",
+        "hanja": "年",
+        "strokeRef": "年"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "年我去学校。",
+        "pinyin": "nián wǒ qù xuéxiào",
+        "ko": "년, 해 저는 학교에 가요."
+      },
+      {
+        "zh": "年你去吗？",
+        "pinyin": "nián nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-093",
+    "level": 1,
+    "hanzi": "开",
+    "variants": [],
+    "pinyin": "kāi",
+    "meaning_ko": "열다. 틀다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "开",
+        "pinyin": "kāi",
+        "hanja": "开",
+        "strokeRef": "开"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "开门。",
+        "pinyin": "kāi mén",
+        "ko": "문 열어요."
+      },
+      {
+        "zh": "他开出租车。",
+        "pinyin": "tā kāi chūzūchē",
+        "ko": "그는 택시를 몰아요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-094",
+    "level": 1,
+    "hanzi": "很",
+    "variants": [],
+    "pinyin": "hěn",
+    "meaning_ko": "매우. 대단히",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "很",
+        "pinyin": "hěn",
+        "hanja": "很",
+        "strokeRef": "很"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我很好。",
+        "pinyin": "wǒ hěn hǎo",
+        "ko": "저는 아주 괜찮아요."
+      },
+      {
+        "zh": "她很漂亮。",
+        "pinyin": "tā hěn piàoliang",
+        "ko": "그녀는 정말 예뻐요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-095",
+    "level": 1,
+    "hanzi": "怎么",
+    "variants": [],
+    "pinyin": "zěnme",
+    "meaning_ko": "어떻게,왜,어째서",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "怎",
+        "pinyin": "",
+        "hanja": "怎",
+        "strokeRef": "怎"
+      },
+      {
+        "zi": "么",
+        "pinyin": "",
+        "hanja": "么",
+        "strokeRef": "么"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "你怎么去？",
+        "pinyin": "nǐ zěnme qù",
+        "ko": "어떻게 가요?"
+      },
+      {
+        "zh": "怎么写？",
+        "pinyin": "zěnme xiě",
+        "ko": "어떻게 써요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-096",
+    "level": 1,
+    "hanzi": "怎么样",
+    "variants": [],
+    "pinyin": "zěnmeyàng",
+    "meaning_ko": "어떻다. 어떠하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "怎",
+        "pinyin": "",
+        "hanja": "怎",
+        "strokeRef": "怎"
+      },
+      {
+        "zi": "么",
+        "pinyin": "",
+        "hanja": "么",
+        "strokeRef": "么"
+      },
+      {
+        "zi": "样",
+        "pinyin": "",
+        "hanja": "样",
+        "strokeRef": "样"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "你怎么样？",
+        "pinyin": "nǐ zěnmeyàng",
+        "ko": "어때요?"
+      },
+      {
+        "zh": "这个菜怎么样？",
+        "pinyin": "zhè ge cài zěnmeyàng",
+        "ko": "이 요리는 어때요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-097",
+    "level": 1,
+    "hanzi": "想",
+    "variants": [],
+    "pinyin": "xiǎng",
+    "meaning_ko": "생각하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "想",
+        "pinyin": "xiǎng",
+        "hanja": "想",
+        "strokeRef": "想"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我想。",
+        "pinyin": "wǒ xiǎng",
+        "ko": "저는 생각하다요."
+      },
+      {
+        "zh": "你想想吗？",
+        "pinyin": "nǐ xiǎng xiǎng ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-098",
+    "level": 1,
+    "hanzi": "打电话",
+    "variants": [],
+    "pinyin": "dǎ diànhuà",
+    "meaning_ko": "전화를 하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "打",
+        "pinyin": "",
+        "hanja": "打",
+        "strokeRef": "打"
+      },
+      {
+        "zi": "电",
+        "pinyin": "",
+        "hanja": "电",
+        "strokeRef": "电"
+      },
+      {
+        "zi": "话",
+        "pinyin": "",
+        "hanja": "话",
+        "strokeRef": "话"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是打电话。",
+        "pinyin": "zhè shì dǎ diànhuà",
+        "ko": "이건 전화를 하다예요."
+      },
+      {
+        "zh": "我喜欢打电话。",
+        "pinyin": "wǒ xǐhuan dǎ diànhuà",
+        "ko": "저는 전화를 하다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-099",
+    "level": 1,
+    "hanzi": "日",
+    "variants": [],
+    "pinyin": "rì",
+    "meaning_ko": "일, 해, 낮",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "日",
+        "pinyin": "rì",
+        "hanja": "日",
+        "strokeRef": "日"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "日我去学校。",
+        "pinyin": "rì wǒ qù xuéxiào",
+        "ko": "일, 해, 낮 저는 학교에 가요."
+      },
+      {
+        "zh": "日你去吗？",
+        "pinyin": "rì nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-100",
+    "level": 1,
+    "hanzi": "时候",
+    "variants": [],
+    "pinyin": "shíhou",
+    "meaning_ko": "때, 시간, 무렵",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "时",
+        "pinyin": "",
+        "hanja": "时",
+        "strokeRef": "时"
+      },
+      {
+        "zi": "候",
+        "pinyin": "",
+        "hanja": "候",
+        "strokeRef": "候"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "时候我去学校。",
+        "pinyin": "shíhou wǒ qù xuéxiào",
+        "ko": "때, 시간, 무렵 저는 학교에 가요."
+      },
+      {
+        "zh": "时候你去吗？",
+        "pinyin": "shíhou nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-101",
+    "level": 1,
+    "hanzi": "明天",
+    "variants": [],
+    "pinyin": "míngtiān",
+    "meaning_ko": "내일",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "明",
+        "pinyin": "",
+        "hanja": "明",
+        "strokeRef": "明"
+      },
+      {
+        "zi": "天",
+        "pinyin": "",
+        "hanja": "天",
+        "strokeRef": "天"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "明天我去学校。",
+        "pinyin": "míngtiān wǒ qù xuéxiào",
+        "ko": "내일 저는 학교에 가요."
+      },
+      {
+        "zh": "明天你去吗？",
+        "pinyin": "míngtiān nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-102",
+    "level": 1,
+    "hanzi": "星期",
+    "variants": [],
+    "pinyin": "xīngqī",
+    "meaning_ko": "요일, 주일",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "星",
+        "pinyin": "",
+        "hanja": "星",
+        "strokeRef": "星"
+      },
+      {
+        "zi": "期",
+        "pinyin": "",
+        "hanja": "期",
+        "strokeRef": "期"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "今天星期一。",
+        "pinyin": "jīntiān xīngqī yī",
+        "ko": "오늘은 월요일이에요."
+      },
+      {
+        "zh": "星期几？",
+        "pinyin": "xīngqī jǐ",
+        "ko": "무슨 요일이에요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-103",
+    "level": 1,
+    "hanzi": "昨天",
+    "variants": [],
+    "pinyin": "zuótiān",
+    "meaning_ko": "어제",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "昨",
+        "pinyin": "",
+        "hanja": "昨",
+        "strokeRef": "昨"
+      },
+      {
+        "zi": "天",
+        "pinyin": "",
+        "hanja": "天",
+        "strokeRef": "天"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "昨天我去学校。",
+        "pinyin": "zuótiān wǒ qù xuéxiào",
+        "ko": "어제 저는 학교에 가요."
+      },
+      {
+        "zh": "昨天你去吗？",
+        "pinyin": "zuótiān nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-104",
+    "level": 1,
+    "hanzi": "是",
+    "variants": [],
+    "pinyin": "shì",
+    "meaning_ko": "맞다, 옳다. / ~이다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "是",
+        "pinyin": "shì",
+        "hanja": "是",
+        "strokeRef": "是"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是是。",
+        "pinyin": "zhè shì shì",
+        "ko": "이건 맞다, 옳다. / ~이다예요."
+      },
+      {
+        "zh": "我喜欢是。",
+        "pinyin": "wǒ xǐhuan shì",
+        "ko": "저는 맞다, 옳다. / ~이다을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-105",
+    "level": 1,
+    "hanzi": "月",
+    "variants": [],
+    "pinyin": "yuè",
+    "meaning_ko": "월, 달",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "月",
+        "pinyin": "yuè",
+        "hanja": "月",
+        "strokeRef": "月"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "月我去学校。",
+        "pinyin": "yuè wǒ qù xuéxiào",
+        "ko": "월, 달 저는 학교에 가요."
+      },
+      {
+        "zh": "月你去吗？",
+        "pinyin": "yuè nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-106",
+    "level": 1,
+    "hanzi": "有",
+    "variants": [],
+    "pinyin": "yǒu",
+    "meaning_ko": "있다. 가지고 있다. 생기다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "有",
+        "pinyin": "yǒu",
+        "hanja": "有",
+        "strokeRef": "有"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我有钱。",
+        "pinyin": "wǒ yǒu qián",
+        "ko": "저는 돈이 있어요."
+      },
+      {
+        "zh": "你有书吗？",
+        "pinyin": "nǐ yǒu shū ma",
+        "ko": "책 있어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-107",
+    "level": 1,
+    "hanzi": "朋友",
+    "variants": [],
+    "pinyin": "péngyou",
+    "meaning_ko": "친구",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "朋",
+        "pinyin": "",
+        "hanja": "朋",
+        "strokeRef": "朋"
+      },
+      {
+        "zi": "友",
+        "pinyin": "",
+        "hanja": "友",
+        "strokeRef": "友"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是朋友。",
+        "pinyin": "zhè shì péngyou",
+        "ko": "이건 친구예요."
+      },
+      {
+        "zh": "我喜欢朋友。",
+        "pinyin": "wǒ xǐhuan péngyou",
+        "ko": "저는 친구을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-108",
+    "level": 1,
+    "hanzi": "本",
+    "variants": [],
+    "pinyin": "běn",
+    "meaning_ko": "책. 공책",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "本",
+        "pinyin": "běn",
+        "hanja": "本",
+        "strokeRef": "本"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "一本书。",
+        "pinyin": "yì běn shū",
+        "ko": "책 한 권."
+      },
+      {
+        "zh": "我有两本书。",
+        "pinyin": "wǒ yǒu liǎng běn shū",
+        "ko": "저는 책 두 권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-109",
+    "level": 1,
+    "hanzi": "来",
+    "variants": [],
+    "pinyin": "lái",
+    "meaning_ko": "오다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "来",
+        "pinyin": "lái",
+        "hanja": "来",
+        "strokeRef": "来"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我来。",
+        "pinyin": "wǒ lái",
+        "ko": "저는 오다요."
+      },
+      {
+        "zh": "你想来吗？",
+        "pinyin": "nǐ xiǎng lái ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-110",
+    "level": 1,
+    "hanzi": "杯子",
+    "variants": [],
+    "pinyin": "bēizi",
+    "meaning_ko": "컵, 잔",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "杯",
+        "pinyin": "",
+        "hanja": "杯",
+        "strokeRef": "杯"
+      },
+      {
+        "zi": "子",
+        "pinyin": "",
+        "hanja": "子",
+        "strokeRef": "子"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是杯子。",
+        "pinyin": "zhè shì bēizi",
+        "ko": "이건 컵, 잔예요."
+      },
+      {
+        "zh": "我喜欢杯子。",
+        "pinyin": "wǒ xǐhuan bēizi",
+        "ko": "저는 컵, 잔을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-111",
+    "level": 1,
+    "hanzi": "桌子",
+    "variants": [],
+    "pinyin": "zhuōzi",
+    "meaning_ko": "탁자",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "桌",
+        "pinyin": "",
+        "hanja": "桌",
+        "strokeRef": "桌"
+      },
+      {
+        "zi": "子",
+        "pinyin": "",
+        "hanja": "子",
+        "strokeRef": "子"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是桌子。",
+        "pinyin": "zhè shì zhuōzi",
+        "ko": "이건 탁자예요."
+      },
+      {
+        "zh": "我喜欢桌子。",
+        "pinyin": "wǒ xǐhuan zhuōzi",
+        "ko": "저는 탁자을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-112",
+    "level": 1,
+    "hanzi": "椅子",
+    "variants": [],
+    "pinyin": "yǐzi",
+    "meaning_ko": "의자",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "椅",
+        "pinyin": "",
+        "hanja": "椅",
+        "strokeRef": "椅"
+      },
+      {
+        "zi": "子",
+        "pinyin": "",
+        "hanja": "子",
+        "strokeRef": "子"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是椅子。",
+        "pinyin": "zhè shì yǐzi",
+        "ko": "이건 의자예요."
+      },
+      {
+        "zh": "我喜欢椅子。",
+        "pinyin": "wǒ xǐhuan yǐzi",
+        "ko": "저는 의자을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-113",
+    "level": 1,
+    "hanzi": "水",
+    "variants": [],
+    "pinyin": "shuǐ",
+    "meaning_ko": "물",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "水",
+        "pinyin": "shuǐ",
+        "hanja": "水",
+        "strokeRef": "水"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是水。",
+        "pinyin": "zhè shì shuǐ",
+        "ko": "이건 물예요."
+      },
+      {
+        "zh": "我喜欢水。",
+        "pinyin": "wǒ xǐhuan shuǐ",
+        "ko": "저는 물을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-114",
+    "level": 1,
+    "hanzi": "水果",
+    "variants": [],
+    "pinyin": "shuǐguǒ",
+    "meaning_ko": "과일",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "水",
+        "pinyin": "",
+        "hanja": "水",
+        "strokeRef": "水"
+      },
+      {
+        "zi": "果",
+        "pinyin": "",
+        "hanja": "果",
+        "strokeRef": "果"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是水果。",
+        "pinyin": "zhè shì shuǐguǒ",
+        "ko": "이건 과일예요."
+      },
+      {
+        "zh": "我喜欢水果。",
+        "pinyin": "wǒ xǐhuan shuǐguǒ",
+        "ko": "저는 과일을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-115",
+    "level": 1,
+    "hanzi": "汉语",
+    "variants": [],
+    "pinyin": "hànyǔ",
+    "meaning_ko": "중국어",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "汉",
+        "pinyin": "",
+        "hanja": "汉",
+        "strokeRef": "汉"
+      },
+      {
+        "zi": "语",
+        "pinyin": "",
+        "hanja": "语",
+        "strokeRef": "语"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是汉语。",
+        "pinyin": "zhè shì hànyǔ",
+        "ko": "이건 중국어예요."
+      },
+      {
+        "zh": "我喜欢汉语。",
+        "pinyin": "wǒ xǐhuan hànyǔ",
+        "ko": "저는 중국어을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-116",
+    "level": 1,
+    "hanzi": "没",
+    "variants": [],
+    "pinyin": "méi",
+    "meaning_ko": "없다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "没",
+        "pinyin": "méi",
+        "hanja": "没",
+        "strokeRef": "没"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我没钱。",
+        "pinyin": "wǒ méi qián",
+        "ko": "저 돈이 없어요."
+      },
+      {
+        "zh": "他没看见。",
+        "pinyin": "tā méi kànjiàn",
+        "ko": "그는 못 봤어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-117",
+    "level": 1,
+    "hanzi": "漂亮",
+    "variants": [],
+    "pinyin": "piàoliang",
+    "meaning_ko": "예쁘다, 아름답다, 훌륭하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "漂",
+        "pinyin": "",
+        "hanja": "漂",
+        "strokeRef": "漂"
+      },
+      {
+        "zi": "亮",
+        "pinyin": "",
+        "hanja": "亮",
+        "strokeRef": "亮"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很漂亮。",
+        "pinyin": "tiānqì hěn piàoliang",
+        "ko": "날씨가 예쁘다, 아름답다, 훌륭하다요."
+      },
+      {
+        "zh": "这个漂亮吗？",
+        "pinyin": "zhè ge piàoliang ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-118",
+    "level": 1,
+    "hanzi": "火车站",
+    "variants": [],
+    "pinyin": "huǒchēzhàn",
+    "meaning_ko": "기차역",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "火",
+        "pinyin": "",
+        "hanja": "火",
+        "strokeRef": "火"
+      },
+      {
+        "zi": "车",
+        "pinyin": "",
+        "hanja": "车",
+        "strokeRef": "车"
+      },
+      {
+        "zi": "站",
+        "pinyin": "",
+        "hanja": "站",
+        "strokeRef": "站"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是火车站。",
+        "pinyin": "zhè shì huǒchēzhàn",
+        "ko": "이건 기차역예요."
+      },
+      {
+        "zh": "我喜欢火车站。",
+        "pinyin": "wǒ xǐhuan huǒchēzhàn",
+        "ko": "저는 기차역을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-119",
+    "level": 1,
+    "hanzi": "点",
+    "variants": [],
+    "pinyin": "diǎn",
+    "meaning_ko": "시(시간)",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "点",
+        "pinyin": "diǎn",
+        "hanja": "点",
+        "strokeRef": "点"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "现在三点。",
+        "pinyin": "xiànzài sān diǎn",
+        "ko": "지금 3시예요."
+      },
+      {
+        "zh": "你几点来？",
+        "pinyin": "nǐ jǐ diǎn lái",
+        "ko": "몇 시에 와요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-120",
+    "level": 1,
+    "hanzi": "热",
+    "variants": [],
+    "pinyin": "rè",
+    "meaning_ko": "덥다, 뜨겁다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "热",
+        "pinyin": "rè",
+        "hanja": "热",
+        "strokeRef": "热"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很热。",
+        "pinyin": "tiānqì hěn rè",
+        "ko": "날씨가 덥다, 뜨겁다요."
+      },
+      {
+        "zh": "这个热吗？",
+        "pinyin": "zhè ge rè ma",
+        "ko": "이거 그래요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-121",
+    "level": 1,
+    "hanzi": "爱",
+    "variants": [],
+    "pinyin": "ài",
+    "meaning_ko": "사랑하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "爱",
+        "pinyin": "ài",
+        "hanja": "爱",
+        "strokeRef": "爱"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我爱。",
+        "pinyin": "wǒ ài",
+        "ko": "저는 사랑하다요."
+      },
+      {
+        "zh": "你想爱吗？",
+        "pinyin": "nǐ xiǎng ài ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-122",
+    "level": 1,
+    "hanzi": "爸爸",
+    "variants": [],
+    "pinyin": "bàba",
+    "meaning_ko": "아빠, 아버지",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "爸",
+        "pinyin": "",
+        "hanja": "爸",
+        "strokeRef": "爸"
+      },
+      {
+        "zi": "爸",
+        "pinyin": "",
+        "hanja": "爸",
+        "strokeRef": "爸"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是爸爸。",
+        "pinyin": "zhè shì bàba",
+        "ko": "이건 아빠, 아버지예요."
+      },
+      {
+        "zh": "我喜欢爸爸。",
+        "pinyin": "wǒ xǐhuan bàba",
+        "ko": "저는 아빠, 아버지을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-123",
+    "level": 1,
+    "hanzi": "狗",
+    "variants": [],
+    "pinyin": "gǒu",
+    "meaning_ko": "개",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "狗",
+        "pinyin": "gǒu",
+        "hanja": "狗",
+        "strokeRef": "狗"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是狗。",
+        "pinyin": "zhè shì gǒu",
+        "ko": "이건 개예요."
+      },
+      {
+        "zh": "我喜欢狗。",
+        "pinyin": "wǒ xǐhuan gǒu",
+        "ko": "저는 개을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-124",
+    "level": 1,
+    "hanzi": "猫",
+    "variants": [],
+    "pinyin": "māo",
+    "meaning_ko": "고양이",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "猫",
+        "pinyin": "māo",
+        "hanja": "猫",
+        "strokeRef": "猫"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是猫。",
+        "pinyin": "zhè shì māo",
+        "ko": "이건 고양이예요."
+      },
+      {
+        "zh": "我喜欢猫。",
+        "pinyin": "wǒ xǐhuan māo",
+        "ko": "저는 고양이을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-125",
+    "level": 1,
+    "hanzi": "现在",
+    "variants": [],
+    "pinyin": "xiànzài",
+    "meaning_ko": "현재, 지금",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "现",
+        "pinyin": "",
+        "hanja": "现",
+        "strokeRef": "现"
+      },
+      {
+        "zi": "在",
+        "pinyin": "",
+        "hanja": "在",
+        "strokeRef": "在"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "现在我去学校。",
+        "pinyin": "xiànzài wǒ qù xuéxiào",
+        "ko": "현재, 지금 저는 학교에 가요."
+      },
+      {
+        "zh": "现在你去吗？",
+        "pinyin": "xiànzài nǐ qù ma",
+        "ko": "그때 너도 가요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-126",
+    "level": 1,
+    "hanzi": "电影",
+    "variants": [],
+    "pinyin": "diànyǐng",
+    "meaning_ko": "영화",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "电",
+        "pinyin": "",
+        "hanja": "电",
+        "strokeRef": "电"
+      },
+      {
+        "zi": "影",
+        "pinyin": "",
+        "hanja": "影",
+        "strokeRef": "影"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是电影。",
+        "pinyin": "zhè shì diànyǐng",
+        "ko": "이건 영화예요."
+      },
+      {
+        "zh": "我喜欢电影。",
+        "pinyin": "wǒ xǐhuan diànyǐng",
+        "ko": "저는 영화을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-127",
+    "level": 1,
+    "hanzi": "电脑",
+    "variants": [],
+    "pinyin": "diànnǎo",
+    "meaning_ko": "컴퓨터",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "电",
+        "pinyin": "",
+        "hanja": "电",
+        "strokeRef": "电"
+      },
+      {
+        "zi": "脑",
+        "pinyin": "",
+        "hanja": "脑",
+        "strokeRef": "脑"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是电脑。",
+        "pinyin": "zhè shì diànnǎo",
+        "ko": "이건 컴퓨터예요."
+      },
+      {
+        "zh": "我喜欢电脑。",
+        "pinyin": "wǒ xǐhuan diànnǎo",
+        "ko": "저는 컴퓨터을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-128",
+    "level": 1,
+    "hanzi": "电视",
+    "variants": [],
+    "pinyin": "diànshì",
+    "meaning_ko": "텔레비전",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "电",
+        "pinyin": "",
+        "hanja": "电",
+        "strokeRef": "电"
+      },
+      {
+        "zi": "视",
+        "pinyin": "",
+        "hanja": "视",
+        "strokeRef": "视"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是电视。",
+        "pinyin": "zhè shì diànshì",
+        "ko": "이건 텔레비전예요."
+      },
+      {
+        "zh": "我喜欢电视。",
+        "pinyin": "wǒ xǐhuan diànshì",
+        "ko": "저는 텔레비전을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-129",
+    "level": 1,
+    "hanzi": "的",
+    "variants": [],
+    "pinyin": "de",
+    "meaning_ko": "관형어구조조사",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "的",
+        "pinyin": "de",
+        "hanja": "的",
+        "strokeRef": "的"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是我的书。",
+        "pinyin": "zhè shì wǒ de shū",
+        "ko": "이건 제 책이에요."
+      },
+      {
+        "zh": "那是你的电脑。",
+        "pinyin": "nà shì nǐ de diànnǎo",
+        "ko": "저건 네 컴퓨터예요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-130",
+    "level": 1,
+    "hanzi": "看",
+    "variants": [],
+    "pinyin": "kàn",
+    "meaning_ko": "보다. 구경하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "看",
+        "pinyin": "kàn",
+        "hanja": "看",
+        "strokeRef": "看"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我看。",
+        "pinyin": "wǒ kàn",
+        "ko": "저는 보다. 구경하다요."
+      },
+      {
+        "zh": "你想看吗？",
+        "pinyin": "nǐ xiǎng kàn ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-131",
+    "level": 1,
+    "hanzi": "看见",
+    "variants": [],
+    "pinyin": "kànjiàn",
+    "meaning_ko": "보다. 보이다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "看",
+        "pinyin": "",
+        "hanja": "看",
+        "strokeRef": "看"
+      },
+      {
+        "zi": "见",
+        "pinyin": "",
+        "hanja": "见",
+        "strokeRef": "见"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我看见。",
+        "pinyin": "wǒ kànjiàn",
+        "ko": "저는 보다. 보이다요."
+      },
+      {
+        "zh": "你想看见吗？",
+        "pinyin": "nǐ xiǎng kànjiàn ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-132",
+    "level": 1,
+    "hanzi": "睡觉",
+    "variants": [],
+    "pinyin": "shuìjiào",
+    "meaning_ko": "잠을 자다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "睡",
+        "pinyin": "",
+        "hanja": "睡",
+        "strokeRef": "睡"
+      },
+      {
+        "zi": "觉",
+        "pinyin": "",
+        "hanja": "觉",
+        "strokeRef": "觉"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我睡觉。",
+        "pinyin": "wǒ shuìjiào",
+        "ko": "저는 잠을 자다요."
+      },
+      {
+        "zh": "你想睡觉吗？",
+        "pinyin": "nǐ xiǎng shuìjiào ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-133",
+    "level": 1,
+    "hanzi": "米饭",
+    "variants": [],
+    "pinyin": "mǐfàn",
+    "meaning_ko": "밥, 쌀밥",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "米",
+        "pinyin": "",
+        "hanja": "米",
+        "strokeRef": "米"
+      },
+      {
+        "zi": "饭",
+        "pinyin": "",
+        "hanja": "饭",
+        "strokeRef": "饭"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是米饭。",
+        "pinyin": "zhè shì mǐfàn",
+        "ko": "이건 밥, 쌀밥예요."
+      },
+      {
+        "zh": "我喜欢米饭。",
+        "pinyin": "wǒ xǐhuan mǐfàn",
+        "ko": "저는 밥, 쌀밥을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-134",
+    "level": 1,
+    "hanzi": "老师",
+    "variants": [],
+    "pinyin": "lǎoshī",
+    "meaning_ko": "선생님, 스승님",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "老",
+        "pinyin": "",
+        "hanja": "老",
+        "strokeRef": "老"
+      },
+      {
+        "zi": "师",
+        "pinyin": "",
+        "hanja": "师",
+        "strokeRef": "师"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是老师。",
+        "pinyin": "zhè shì lǎoshī",
+        "ko": "이건 선생님, 스승님예요."
+      },
+      {
+        "zh": "我喜欢老师。",
+        "pinyin": "wǒ xǐhuan lǎoshī",
+        "ko": "저는 선생님, 스승님을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-135",
+    "level": 1,
+    "hanzi": "能",
+    "variants": [],
+    "pinyin": "néng",
+    "meaning_ko": "할 수 있다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "能",
+        "pinyin": "néng",
+        "hanja": "能",
+        "strokeRef": "能"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "你能来吗？",
+        "pinyin": "nǐ néng lái ma",
+        "ko": "올 수 있어요?"
+      },
+      {
+        "zh": "我现在不能去。",
+        "pinyin": "wǒ xiànzài bù néng qù",
+        "ko": "저는 지금 못 가요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-136",
+    "level": 1,
+    "hanzi": "苹果",
+    "variants": [],
+    "pinyin": "píngguǒ",
+    "meaning_ko": "사과",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "苹",
+        "pinyin": "",
+        "hanja": "苹",
+        "strokeRef": "苹"
+      },
+      {
+        "zi": "果",
+        "pinyin": "",
+        "hanja": "果",
+        "strokeRef": "果"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是苹果。",
+        "pinyin": "zhè shì píngguǒ",
+        "ko": "이건 사과예요."
+      },
+      {
+        "zh": "我喜欢苹果。",
+        "pinyin": "wǒ xǐhuan píngguǒ",
+        "ko": "저는 사과을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-137",
+    "level": 1,
+    "hanzi": "茶",
+    "variants": [],
+    "pinyin": "chá",
+    "meaning_ko": "차",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "茶",
+        "pinyin": "chá",
+        "hanja": "茶",
+        "strokeRef": "茶"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是茶。",
+        "pinyin": "zhè shì chá",
+        "ko": "이건 차예요."
+      },
+      {
+        "zh": "我喜欢茶。",
+        "pinyin": "wǒ xǐhuan chá",
+        "ko": "저는 차을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-138",
+    "level": 1,
+    "hanzi": "菜",
+    "variants": [],
+    "pinyin": "cài",
+    "meaning_ko": "채소, 야채, 요리",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "菜",
+        "pinyin": "cài",
+        "hanja": "菜",
+        "strokeRef": "菜"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是菜。",
+        "pinyin": "zhè shì cài",
+        "ko": "이건 채소, 야채, 요리예요."
+      },
+      {
+        "zh": "我喜欢菜。",
+        "pinyin": "wǒ xǐhuan cài",
+        "ko": "저는 채소, 야채, 요리을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-139",
+    "level": 1,
+    "hanzi": "衣服",
+    "variants": [],
+    "pinyin": "yīfu",
+    "meaning_ko": "옷",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "衣",
+        "pinyin": "",
+        "hanja": "衣",
+        "strokeRef": "衣"
+      },
+      {
+        "zi": "服",
+        "pinyin": "",
+        "hanja": "服",
+        "strokeRef": "服"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是衣服。",
+        "pinyin": "zhè shì yīfu",
+        "ko": "이건 옷예요."
+      },
+      {
+        "zh": "我喜欢衣服。",
+        "pinyin": "wǒ xǐhuan yīfu",
+        "ko": "저는 옷을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-140",
+    "level": 1,
+    "hanzi": "认识",
+    "variants": [],
+    "pinyin": "rènshi",
+    "meaning_ko": "알다. 인식하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "认",
+        "pinyin": "",
+        "hanja": "认",
+        "strokeRef": "认"
+      },
+      {
+        "zi": "识",
+        "pinyin": "",
+        "hanja": "识",
+        "strokeRef": "识"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我认识。",
+        "pinyin": "wǒ rènshi",
+        "ko": "저는 알다. 인식하다요."
+      },
+      {
+        "zh": "你想认识吗？",
+        "pinyin": "nǐ xiǎng rènshi ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-141",
+    "level": 1,
+    "hanzi": "说话",
+    "variants": [],
+    "pinyin": "shuōhuà",
+    "meaning_ko": "말하다. 이야기하다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "说",
+        "pinyin": "",
+        "hanja": "说",
+        "strokeRef": "说"
+      },
+      {
+        "zi": "话",
+        "pinyin": "",
+        "hanja": "话",
+        "strokeRef": "话"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我说话。",
+        "pinyin": "wǒ shuōhuà",
+        "ko": "저는 말하다. 이야기하다요."
+      },
+      {
+        "zh": "你想说话吗？",
+        "pinyin": "nǐ xiǎng shuōhuà ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-142",
+    "level": 1,
+    "hanzi": "读",
+    "variants": [],
+    "pinyin": "dú",
+    "meaning_ko": "읽다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "读",
+        "pinyin": "dú",
+        "hanja": "读",
+        "strokeRef": "读"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我读。",
+        "pinyin": "wǒ dú",
+        "ko": "저는 읽다요."
+      },
+      {
+        "zh": "你想读吗？",
+        "pinyin": "nǐ xiǎng dú ma",
+        "ko": "너도 하고 싶어요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-143",
+    "level": 1,
+    "hanzi": "谁",
+    "variants": [],
+    "pinyin": "shéi",
+    "meaning_ko": "누구",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "谁",
+        "pinyin": "shéi",
+        "hanja": "谁",
+        "strokeRef": "谁"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "他是谁？",
+        "pinyin": "tā shì shéi",
+        "ko": "그는 누구예요?"
+      },
+      {
+        "zh": "谁是老师？",
+        "pinyin": "shéi shì lǎoshī",
+        "ko": "누가 선생님이에요?"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-144",
+    "level": 1,
+    "hanzi": "都",
+    "variants": [],
+    "pinyin": "dōu",
+    "meaning_ko": "모두. 전부",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "都",
+        "pinyin": "dōu",
+        "hanja": "都",
+        "strokeRef": "都"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "我们都很好。",
+        "pinyin": "wǒmen dōu hěn hǎo",
+        "ko": "우리 모두 괜찮아요."
+      },
+      {
+        "zh": "他们都在家。",
+        "pinyin": "tāmen dōu zài jiā",
+        "ko": "그들은 다 집에 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-145",
+    "level": 1,
+    "hanzi": "里",
+    "variants": [],
+    "pinyin": "lǐ",
+    "meaning_ko": "속, 안쪽, 가운데. 이웃,부근",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "里",
+        "pinyin": "lǐ",
+        "hanja": "里",
+        "strokeRef": "里"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是里。",
+        "pinyin": "zhè shì lǐ",
+        "ko": "이건 속, 안쪽, 가운데. 이웃,부근예요."
+      },
+      {
+        "zh": "我喜欢里。",
+        "pinyin": "wǒ xǐhuan lǐ",
+        "ko": "저는 속, 안쪽, 가운데. 이웃,부근을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-146",
+    "level": 1,
+    "hanzi": "钱",
+    "variants": [],
+    "pinyin": "qián",
+    "meaning_ko": "돈",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "钱",
+        "pinyin": "qián",
+        "hanja": "钱",
+        "strokeRef": "钱"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是钱。",
+        "pinyin": "zhè shì qián",
+        "ko": "이건 돈예요."
+      },
+      {
+        "zh": "我喜欢钱。",
+        "pinyin": "wǒ xǐhuan qián",
+        "ko": "저는 돈을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-147",
+    "level": 1,
+    "hanzi": "零",
+    "variants": [],
+    "pinyin": "líng",
+    "meaning_ko": "영, 제로",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "零",
+        "pinyin": "líng",
+        "hanja": "零",
+        "strokeRef": "零"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "零。",
+        "pinyin": "líng",
+        "ko": "(숫자)"
+      },
+      {
+        "zh": "我有零本书。",
+        "pinyin": "wǒ yǒu líng běn shū",
+        "ko": "저는 책 영, 제로권 있어요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-148",
+    "level": 1,
+    "hanzi": "飞机",
+    "variants": [],
+    "pinyin": "fēijī",
+    "meaning_ko": "비행기",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "飞",
+        "pinyin": "",
+        "hanja": "飞",
+        "strokeRef": "飞"
+      },
+      {
+        "zi": "机",
+        "pinyin": "",
+        "hanja": "机",
+        "strokeRef": "机"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是飞机。",
+        "pinyin": "zhè shì fēijī",
+        "ko": "이건 비행기예요."
+      },
+      {
+        "zh": "我喜欢飞机。",
+        "pinyin": "wǒ xǐhuan fēijī",
+        "ko": "저는 비행기을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-149",
+    "level": 1,
+    "hanzi": "饭馆",
+    "variants": [],
+    "pinyin": "fàngguǎn",
+    "meaning_ko": "식당",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "饭",
+        "pinyin": "",
+        "hanja": "饭",
+        "strokeRef": "饭"
+      },
+      {
+        "zi": "馆",
+        "pinyin": "",
+        "hanja": "馆",
+        "strokeRef": "馆"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "这是饭馆。",
+        "pinyin": "zhè shì fàngguǎn",
+        "ko": "이건 식당예요."
+      },
+      {
+        "zh": "我喜欢饭馆。",
+        "pinyin": "wǒ xǐhuan fàngguǎn",
+        "ko": "저는 식당을/를 좋아해요."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-150",
+    "level": 1,
+    "hanzi": "高兴",
+    "variants": [],
+    "pinyin": "gāoxìng",
+    "meaning_ko": "기쁘다, 즐겁다",
+    "hanja_hint": "",
+    "tags": [],
+    "chars": [
+      {
+        "zi": "高",
+        "pinyin": "",
+        "hanja": "高",
+        "strokeRef": "高"
+      },
+      {
+        "zi": "兴",
+        "pinyin": "",
+        "hanja": "兴",
+        "strokeRef": "兴"
+      }
+    ],
+    "examples": [
+      {
+        "zh": "天气很高兴。",
+        "pinyin": "tiānqì hěn gāoxìng",
+        "ko": "날씨가 기쁘다, 즐겁다요."
+      },
+      {
+        "zh": "这个高兴吗？",
+        "pinyin": "zhè ge gāoxìng ma",
+        "ko": "이거 그래요?"
+      }
     ]
   }
 ]
