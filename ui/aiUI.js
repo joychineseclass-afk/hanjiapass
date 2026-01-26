@@ -352,8 +352,11 @@ async function send(msgFromOutside) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: currentAIController.signal,
-      body: JSON.stringify({ prompt: msg, explainLang: lang })
-    });
+      const mode = window.AI_CONTEXT?.mode || "teach";
+      const context = window.AI_CONTEXT?.context || null;
+
+   body: JSON.stringify({ prompt: msg, explainLang: lang, mode, context })
+   ;
 
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data?.error || ("HTTP " + res.status));
