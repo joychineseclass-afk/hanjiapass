@@ -348,14 +348,14 @@ async function send(msgFromOutside) {
   currentAIController = new AbortController();
 
   try {
+    const mode = window.AI_CONTEXT?.mode || "teach";
+    const context = window.AI_CONTEXT?.context || null;
+    
     const res = await fetch(window.APP_CONFIG.API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: currentAIController.signal,
-      const mode = window.AI_CONTEXT?.mode || "teach";
-      const context = window.AI_CONTEXT?.context || null;
-
-   body: JSON.stringify({ prompt: msg, explainLang: lang, mode, context })
+      body: JSON.stringify({ prompt: msg, explainLang: lang, mode, context })
    ;
 
     const data = await res.json().catch(() => ({}));
