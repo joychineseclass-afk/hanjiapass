@@ -1,20 +1,32 @@
 /* =========================================
-   AI + HSK UI (single file)
-   - 不读拼音
-   - 日语含假名：整段按日语读（不把汉字拆成中文）
-   - 中文（界面里的中文）用普通话
-   - 支持标点显示（朗读不“念出标点”）
-   - 主页面加载 /data/hsk1~9.json 并渲染（解决白屏）
+   AI + HSK UI (single file)  ✅ 강화판
+   - 기존 구조/기능 "삭제하지 않고" 보강
+   - (요청하신 것처럼) “작은 스피커(🔊) 아이콘 버튼”은 제거 가능 → HSK 카드의 🔊 읽기 버튼 제거하고,
+     카드/예문 자체를 “젤리 클릭”으로 대체(클릭하면 읽기)
+   - HSK DOM 없을 때도 에러 없이 동작(다른 페이지에서 흰 화면 방지)
+   - AI 요청 AbortController로 중복요청/레이스 컨디션 방지
+   - Enter 전송(Shift+Enter 줄바꿈)
+   - 패널: ESC로 닫기, 바깥 클릭 시 닫기(옵션)
 ========================================= */
 
 /* =========================
    0) API
 ========================= */
-const API_URL = "https://hanjiapass.vercel.app/api/gemini"; // 你的Vercel域名
-const DATA_BASE = "./data"; // GitHub Pages 同域相对路径：./data/hsk1.json
+const API_URL = "https://hanjiapass.vercel.app/api/gemini"; // 너의 Vercel 도메인
+
+// ✅ GitHub Pages/상대경로 안정화: 현재 문서 기준으로 data 폴더 URL 생성
+const DATA_BASE = (() => {
+  try {
+    // ./data -> 절대 URL로 안전 변환
+    const u = new URL("./data/", window.location.href);
+    return u.href.replace(/\/$/, ""); // 끝 슬래시 제거
+  } catch {
+    return "./data";
+  }
+})();
 
 /* =========================
-   1) UI 文案
+   1) UI 문안
 ========================= */
 const UI_TEXT = {
   ko: {
@@ -26,7 +38,7 @@ const UI_TEXT = {
     thinking: "잠깐만요 🙂",
     welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!",
     follow: "🎤 따라읽기",
-    exPlay: "🔊 예문"
+    exPlay: "예문"
   },
   en: {
     title: "AI Chinese Teacher",
@@ -37,7 +49,7 @@ const UI_TEXT = {
     thinking: "One sec 🙂",
     welcome: "Hi 🙂\nAsk me anything about Chinese!",
     follow: "🎤 Shadow",
-    exPlay: "🔊 Example"
+    exPlay: "Example"
   },
   ja: {
     title: "AI 中国語先生",
@@ -48,7 +60,7 @@ const UI_TEXT = {
     thinking: "ちょっと待ってね 🙂",
     welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。",
     follow: "🎤 ついて読む",
-    exPlay: "🔊 例文"
+    exPlay: "例文"
   },
   zh: {
     title: "AI 汉字老师",
@@ -59,12 +71,12 @@ const UI_TEXT = {
     thinking: "等一下🙂",
     welcome: "你好 🙂\n有中文问题，直接问我吧。",
     follow: "🎤 跟读",
-    exPlay: "🔊 例句"
+    exPlay: "例句"
   }
 };
 
 /* =========================
-   2) DOM
+   2) DOM (null-safe)
 ========================= */
 const panel = document.getElementById("ai-panel");
 const chat  = document.getElementById("chat");
@@ -89,25 +101,42 @@ const hskError = document.getElementById("hskError");
 const hskStatus = document.getElementById("hskStatus");
 
 /* =========================
-   3) 面板开关（修复你说的“关不掉”）
+   3) 面板开关（修复“关不掉”+增强）
 ========================= */
 function openAI() {
+  if (!panel) return;
   panel.classList.remove("hidden");
 }
 function closeAI() {
+  if (!panel) return;
   panel.classList.add("hidden");
 }
 function toggleAI() {
+  if (!panel) return;
   panel.classList.toggle("hidden");
 }
 botBtn?.addEventListener("click", toggleAI);
 closeBtn?.addEventListener("click", closeAI);
 
+// ✅ ESC 닫기
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeAI();
+});
+
+// ✅ (옵션) 바깥 클릭 시 닫기: 패널/버튼 아닌 곳 클릭하면 닫힘
+document.addEventListener("pointerdown", (e) => {
+  if (!panel || panel.classList.contains("hidden")) return;
+  const t = e.target;
+  if (!t) return;
+  const clickedInside = panel.contains(t) || botBtn?.contains(t);
+  if (!clickedInside) closeAI();
+});
+
 /* =========================
    4) 显示清洗（只影响显示，不影响TTS）
 ========================= */
 function cleanForDisplay(text) {
-  return String(text)
+  return String(text ?? "")
     .replace(/```[\s\S]*?```/g, "")
     .replace(/\*\*(.*?)\*\*/g, "$1")
     .replace(/#+\s*/g, "")
@@ -116,6 +145,8 @@ function cleanForDisplay(text) {
 }
 
 function createMsgBubble(initialText, who) {
+  if (!chat) return { wrap: null, bubbleDiv: null };
+
   const wrap = document.createElement("div");
   wrap.className = who === "user" ? "text-right" : "text-left";
 
@@ -143,34 +174,40 @@ function createMsgBubble(initialText, who) {
 function applyUIText(lang) {
   const t = UI_TEXT[lang] || UI_TEXT.ko;
 
-  uiTitle.innerText = t.title;
-  input.placeholder = t.inputPlaceholder;
-  uiSendBtn.innerText = t.send;
+  uiTitle && (uiTitle.innerText = t.title);
+  input && (input.placeholder = t.inputPlaceholder);
+  uiSendBtn && (uiSendBtn.innerText = t.send);
 
-  uiTtsLabel.innerText = t.tts;
-  uiExplainLabel.innerText = t.explainLang;
+  uiTtsLabel && (uiTtsLabel.innerText = t.tts);
+  uiExplainLabel && (uiExplainLabel.innerText = t.explainLang);
 
-  chat.innerHTML = "";
-  createMsgBubble(t.welcome, "ai");
+  if (chat) {
+    chat.innerHTML = "";
+    createMsgBubble(t.welcome, "ai");
+  }
 }
-applyUIText(explainLang.value);
+if (explainLang) applyUIText(explainLang.value);
 
-explainLang.addEventListener("change", () => {
+explainLang?.addEventListener("change", () => {
   stopTyping();
-  window.speechSynthesis && window.speechSynthesis.cancel();
+  try { window.speechSynthesis?.cancel(); } catch {}
   applyUIText(explainLang.value);
 });
 
 /* =========================
    6) TTS：核心修正
-   - 允许标点显示（TTS不念出标点，只做停顿）
+   - 标点显示OK（TTS不念出标点，只停顿）
    - 不读拼音（stripPinyinForTTS）
-   - 日语含假名时整段按日语读
+   - 日语含假名：整段按日语读（不把汉字拆成中文）
    - 中文段落普通话读
 ========================= */
 let voices = [];
 function loadVoices() {
-  voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
+  try {
+    voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
+  } catch {
+    voices = [];
+  }
 }
 if (window.speechSynthesis) {
   window.speechSynthesis.onvoiceschanged = loadVoices;
@@ -187,7 +224,6 @@ function pickVoiceByLang(targetLang) {
     ja: ["ja"]
   }[targetLang] || [targetLang];
 
-  // 优先选该语言
   const v = voices.find(v => prefix.some(p => (v.lang || "").toLowerCase().startsWith(p)));
   return v || voices[0] || null;
 }
@@ -239,7 +275,7 @@ function splitSentences(text) {
 }
 
 function getSpeakParams() {
-  const mode = speakMode.value;
+  const mode = speakMode?.value;
   if (mode === "exam") return { rate: 1.05, pitch: 1.0, pauseShort: 120, pauseLong: 220 };
   return { rate: 0.98, pitch: 1.07, pauseShort: 180, pauseLong: 320 };
 }
@@ -260,10 +296,13 @@ function splitByChineseRuns(text) {
 
 function speakQueueByLang(text, langKey, params, jobId) {
   return new Promise((resolve) => {
+    if (!window.speechSynthesis) return resolve();
+
     const sentences = splitSentences(text);
     if (!sentences.length) return resolve();
 
     let idx = 0;
+
     const speakNext = () => {
       if (jobId !== speakingJobId) return resolve();
       if (idx >= sentences.length) return resolve();
@@ -288,7 +327,11 @@ function speakQueueByLang(text, langKey, params, jobId) {
       u.onend = () => setTimeout(speakNext, pause);
       u.onerror = () => resolve();
 
-      window.speechSynthesis.speak(u);
+      try {
+        window.speechSynthesis.speak(u);
+      } catch {
+        resolve();
+      }
     };
 
     speakNext();
@@ -297,9 +340,9 @@ function speakQueueByLang(text, langKey, params, jobId) {
 
 let speakingJobId = 0;
 
-// ✅ 点击某一段就读那一段（果冻块点击读）
+// ✅ 클릭한 “한 줄”만 읽기 (젤리 클릭 TTS)
 async function speakSmart(fullText, uiLang) {
-  if (!ttsToggle.checked) return;
+  if (!ttsToggle?.checked) return;
   if (!window.speechSynthesis) return;
 
   const jobId = ++speakingJobId;
@@ -311,7 +354,7 @@ async function speakSmart(fullText, uiLang) {
   const text = cleanForSpeak(fullText);
   if (!text) return;
 
-  window.speechSynthesis.cancel();
+  try { window.speechSynthesis.cancel(); } catch {}
 
   // ✅ 日语特例：含假名则整段按日语读（不把汉字拆成中文）
   if (uiLang === "ja" && /[\u3040-\u30ff]/.test(text)) {
@@ -334,10 +377,9 @@ async function speakSmart(fullText, uiLang) {
 
 /* =========================
    7) “果冻块”点击朗读：把 AI 回复每一行拆成可点读块
-   - 你说不要小喇叭：这里直接整行变“透明果冻”可点击
 ========================= */
 function attachJellyClickToBubble(wrapEl, answerText, uiLang) {
-  const bubble = wrapEl.querySelector(".bubble");
+  const bubble = wrapEl?.querySelector?.(".bubble");
   if (!bubble) return;
 
   const raw = cleanForDisplay(answerText);
@@ -361,7 +403,7 @@ function attachJellyClickToBubble(wrapEl, answerText, uiLang) {
 }
 
 /* =========================
-   8) 打字机（完成后把内容变成果冻可点读）
+   8) 打字机（完成后变成果冻可点读）
 ========================= */
 let typingTimer = null;
 function stopTyping() {
@@ -381,7 +423,7 @@ function typewriterRender(bubbleDiv, fullText, speed = 14, onDone) {
   typingTimer = setInterval(() => {
     i += 1;
     bubbleDiv.textContent = cleaned.slice(0, i);
-    chat.scrollTop = chat.scrollHeight;
+    chat && (chat.scrollTop = chat.scrollHeight);
 
     if (i >= cleaned.length) {
       stopTyping();
@@ -391,27 +433,35 @@ function typewriterRender(bubbleDiv, fullText, speed = 14, onDone) {
 }
 
 /* =========================
-   9) 发送（AI）
+   9) 发送（AI） + AbortController 강화
 ========================= */
+let currentAIController = null;
+
 async function send(msgFromOutside) {
-  const msg = (msgFromOutside ?? input.value).trim();
+  const msg = (msgFromOutside ?? input?.value ?? "").trim();
   if (!msg) return;
 
   stopTyping();
-  window.speechSynthesis && window.speechSynthesis.cancel();
+  try { window.speechSynthesis?.cancel(); } catch {}
 
   createMsgBubble(msg, "user");
-  input.value = "";
+  if (input) input.value = "";
 
-  const lang = explainLang.value;
+  const lang = explainLang?.value || "ko";
   const t = UI_TEXT[lang] || UI_TEXT.ko;
 
   const { wrap, bubbleDiv } = createMsgBubble(t.thinking, "ai");
+  if (!bubbleDiv) return;
+
+  // ✅ 이전 요청 중단
+  try { currentAIController?.abort(); } catch {}
+  currentAIController = new AbortController();
 
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      signal: currentAIController.signal,
       body: JSON.stringify({ prompt: msg, explainLang: lang })
     });
 
@@ -424,15 +474,28 @@ async function send(msgFromOutside) {
       // 先整段读（不读拼音）
       await speakSmart(answer, lang);
 
-      // 变成果冻块：点哪段读哪段（不需要喇叭）
+      // 变成果冻块：点哪段读哪段
       attachJellyClickToBubble(wrap, answer, lang);
     });
 
   } catch (e) {
-    bubbleDiv.textContent = "오류: " + (e.message || "잠시 후 다시 시도해 주세요.");
+    if (e?.name === "AbortError") {
+      bubbleDiv.textContent = ""; // 중단은 조용히
+      return;
+    }
+    bubbleDiv.textContent = "오류: " + (e?.message || "잠시 후 다시 시도해 주세요.");
   }
 }
+
 uiSendBtn?.addEventListener("click", () => send());
+
+// ✅ Enter 전송 / Shift+Enter 줄바꿈
+input?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    send();
+  }
+});
 
 /* 暴露给 HTML Enter 调用 */
 window.AIUI = { send, openAI, closeAI, toggleAI };
@@ -484,7 +547,7 @@ window.AIUI = { send, openAI, closeAI, toggleAI };
 })();
 
 /* =========================
-   11) HSK 主页面：加载 JSON 并渲染（解决白屏）
+   11) HSK 主页面：加载 JSON 并渲染（白屏防止 + 젤리 클릭형）
    支持两种 JSON：
    A) 数组：[{hanzi,pinyin,meaning_ko,examples:[...]}]
    B) 对象：{items:[...]} 或 {data:[...]}
@@ -494,10 +557,12 @@ let HSK_CACHE = {}; // level -> items[]
 let currentLevel = "1";
 
 function showHSKError(msg) {
+  if (!hskError) return;
   hskError.classList.remove("hidden");
   hskError.textContent = msg;
 }
 function clearHSKError() {
+  if (!hskError) return;
   hskError.classList.add("hidden");
   hskError.textContent = "";
 }
@@ -516,7 +581,7 @@ async function loadHSK(level) {
   if (HSK_CACHE[lv]) return HSK_CACHE[lv];
 
   const url = `${DATA_BASE}/hsk${lv}.json`;
-  hskStatus.textContent = `Loading ${url} ...`;
+  if (hskStatus) hskStatus.textContent = `Loading ${url} ...`;
 
   const resp = await fetch(url, { cache: "no-store" });
   if (!resp.ok) throw new Error(`HTTP ${resp.status} (${url})`);
@@ -532,7 +597,13 @@ async function loadHSK(level) {
   return items;
 }
 
+/* ✅ 요청 반영: “작은 스피커(🔊) 아이콘 버튼” 제거
+   - 기존의 btnRead(🔊 읽기) 버튼 삭제
+   - 대신: 단어(한자), 예문 줄을 “젤리 클릭”하면 읽기
+*/
 function renderHSK(items, keyword = "") {
+  if (!hskGrid || !hskStatus) return; // ✅ HSK 섹션 없는 페이지 보호
+
   const q = String(keyword || "").trim().toLowerCase();
 
   const filtered = !q ? items : items.filter(it => {
@@ -543,7 +614,7 @@ function renderHSK(items, keyword = "") {
   hskGrid.innerHTML = "";
   hskStatus.textContent = `HSK ${currentLevel} · ${filtered.length} items`;
 
-  filtered.forEach((it, idx) => {
+  filtered.forEach((it) => {
     const hanzi = it.hanzi || it.word || it.chinese || it.cn || "";
     const pinyin = it.pinyin || it.py || "";
     const meaning = it.meaning_ko || it.ko || it.meaning || it.translation || "";
@@ -552,52 +623,69 @@ function renderHSK(items, keyword = "") {
     const card = document.createElement("div");
     card.className = "bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
 
+    // ✅ 단어 줄을 젤리로: 클릭하면 “중국어(보통화)”로 읽기
+    const wordJelly =
+      `<div class="jWord my-1 px-3 py-2 rounded-xl bg-white/70 border border-white shadow-sm cursor-pointer hover:shadow hover:bg-white transition">
+         <div class="text-2xl font-semibold">${escapeHtml(hanzi || "(no hanzi)")}</div>
+         <div class="text-sm text-gray-600 mt-1">${escapeHtml(pinyin)}</div>
+         <div class="text-sm mt-2">${escapeHtml(meaning)}</div>
+       </div>`;
+
     card.innerHTML = `
       <div class="flex items-start gap-3">
         <div class="flex-1">
-          <div class="text-2xl font-semibold">${escapeHtml(hanzi || "(no hanzi)")}</div>
-          <div class="text-sm text-gray-600 mt-1">${escapeHtml(pinyin)}</div>
-          <div class="text-sm mt-2">${escapeHtml(meaning)}</div>
+          ${wordJelly}
         </div>
-        <button class="px-3 py-2 rounded-xl bg-orange-500 text-white text-sm">
+        <button class="btnLearn px-3 py-2 rounded-xl bg-orange-500 text-white text-sm">
           배우기
         </button>
       </div>
-      ${ex.length ? `<div class="mt-3 text-xs text-gray-600 space-y-1">
-        ${ex.slice(0, 2).map(e => `<div>• ${escapeHtml(formatExample(e))}</div>`).join("")}
+
+      ${ex.length ? `<div class="mt-3 text-xs text-gray-600 space-y-2">
+        ${ex.slice(0, 3).map((e, i) => `
+          <div class="jEx my-1 px-3 py-2 rounded-xl bg-white/70 border border-white shadow-sm cursor-pointer hover:shadow hover:bg-white transition"
+               data-ex="${escapeHtml(formatExample(e))}">
+            • ${escapeHtml(formatExample(e))}
+          </div>
+        `).join("")}
       </div>` : ""}
+
       <div class="mt-3 flex gap-2">
-        <button class="btnRead px-3 py-2 rounded-xl bg-slate-100 text-sm">🔊 읽기</button>
         <button class="btnAsk px-3 py-2 rounded-xl bg-slate-100 text-sm">🤖 AI에게 질문</button>
       </div>
     `;
 
-    // 读：只读中文（普通话），不读拼音
-    card.querySelector(".btnRead").addEventListener("click", async () => {
-      const uiLang = explainLang.value; // 当前解释语言
-      await speakSmart(hanzi, "zh");     // ✅ 强制普通话读词语
+    // ✅ 단어 젤리 클릭 → 중국어(보통화) 읽기
+    card.querySelector(".jWord")?.addEventListener("click", async () => {
+      await speakSmart(hanzi, "zh");
+    });
+
+    // ✅ 예문 젤리 클릭 → 예문(중문은 zh로) 읽기
+    card.querySelectorAll(".jEx").forEach((el) => {
+      el.addEventListener("click", async () => {
+        const v = el.getAttribute("data-ex") || "";
+        // 예문에 한국어가 섞여있어도 중국어 덩어리는 zh, 나머지는 설명언어로 읽음
+        const uiLang = explainLang?.value || "ko";
+        await speakSmart(v, uiLang);
+      });
     });
 
     // 问：打开面板并发问
-    card.querySelector(".btnAsk").addEventListener("click", async () => {
+    card.querySelector(".btnAsk")?.addEventListener("click", async () => {
       openAI();
-      const uiLang = explainLang.value;
-
       const prompt =
 `HSK ${currentLevel} 단어를 가르쳐줘: ${hanzi}
-(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`
-      ;
+(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`;
       await send(prompt);
     });
 
     // “배우기”按钮：打开并直接让AI生成
-    card.querySelector("button").addEventListener("click", async () => {
+    card.querySelector(".btnLearn")?.addEventListener("click", async () => {
       openAI();
       const prompt =
 `HSK ${currentLevel} 단어/표현 수업:
 ${hanzi}
-(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`
-      ;
+(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`;
       await send(prompt);
     });
 
@@ -623,10 +711,13 @@ function formatExample(e) {
 }
 
 async function refreshHSK() {
+  // ✅ HSK 섹션이 없는 페이지면 아무것도 안 함(흰화면 방지)
+  if (!hskLevel || !hskGrid || !hskStatus) return;
+
   clearHSKError();
   try {
     const items = await loadHSK(hskLevel.value);
-    renderHSK(items, hskSearch.value);
+    renderHSK(items, hskSearch?.value || "");
   } catch (err) {
     showHSKError("HSK 데이터 로딩 실패: " + (err?.message || String(err)));
     hskStatus.textContent = "Load failed";
