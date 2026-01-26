@@ -46,7 +46,7 @@
       </div>
 
       <div class="mt-3 text-xs text-gray-500">
-        💡 카드 클릭 → 바로 읽기 / AI 선생님에게 질문하기
+        💡 카드 클릭 → 바로 읽기 / 배우기 → 학습 패널 / AI 선생님에게 질문하기
       </div>
     </div>
 
@@ -80,7 +80,6 @@
         <label id="uiTtsLabel">읽어주기(TTS)</label>
       </div>
 
-      <!-- ✅ 合并：说明语言=Voice 自动（ui.js里自动挑语言对应音色） -->
       <div class="flex items-center gap-2">
         <span id="uiExplainLabel" class="w-[120px] text-gray-600">설명 언어</span>
         <select id="explainLang" class="flex-1 border rounded px-2 py-1 text-xs">
@@ -108,17 +107,42 @@
 
     <div class="p-3 border-t flex gap-2">
       <input id="input" class="flex-1 border rounded px-2 py-2"
-        placeholder="질문을 입력하세요…"
-        onkeydown="if(event.key==='Enter') window.AIUI.send();" />
+        placeholder="질문을 입력하세요…" />
       <button id="uiSendBtn" class="bg-orange-500 text-white px-4 py-2 rounded">
         보내기
       </button>
     </div>
   </div>
 
-  <!-- HSK loader (up.js) -->
-  <script src="./up.js"></script>
-  <!-- UI Logic -->
-  <script src="./ui.js"></script>
+  <!-- ✅ (선택) 学习面板：也可以不写，让 JS 动态创建。写在这里更直观 -->
+  <!-- 如果你愿意先不加，这段可以删除，hskUI.js 也会自动创建 -->
+  <!--
+  <div id="learn-panel" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div class="w-full max-w-lg rounded-2xl bg-white shadow-xl overflow-hidden">
+      <div class="flex items-center justify-between px-4 py-3 border-b">
+        <div class="font-semibold">배우기</div>
+        <button id="learnClose" class="px-3 py-1 rounded-lg bg-slate-100">닫기</button>
+      </div>
+      <div id="learnBody" class="p-4 space-y-3"></div>
+    </div>
+  </div>
+  -->
+
+  <!-- ✅ 新结构脚本：替换旧 up.js / ui.js -->
+  <script src="./ui/dataPaths.js"></script>
+  <script src="./ui/aiUI.js"></script>
+  <script src="./ui/hskUI.js"></script>
+
+  <!-- ✅ 兼容：你原来 input 的 onkeydown 调用 AIUI.send，现在改成事件监听，不再需要内联 -->
+  <script>
+    // Enter 发送（Shift+Enter 换行），保持你原来的手感
+    const input = document.getElementById("input");
+    input?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        window.AIUI?.send?.();
+      }
+    });
+  </script>
 </body>
 </html>
