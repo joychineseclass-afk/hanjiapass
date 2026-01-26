@@ -1,484 +1,644 @@
-(() => {
-  "use strict";
+/* =========================================
+   AI + HSK UI (single file)
+   - 不读拼音
+   - 日语含假名：整段按日语读（不把汉字拆成中文）
+   - 中文（界面里的中文）用普通话
+   - 支持标点显示（朗读不“念出标点”）
+   - 主页面加载 /data/hsk1~9.json 并渲染（解决白屏）
+========================================= */
 
-  /* =========================
-     0) API
-  ========================= */
-  const API_URL = "https://hanjiapass.vercel.app/api/gemini";
+/* =========================
+   0) API
+========================= */
+const API_URL = "https://hanjiapass.vercel.app/api/gemini"; // 你的Vercel域名
+const DATA_BASE = "./data"; // GitHub Pages 同域相对路径：./data/hsk1.json
 
-  /* =========================
-     1) UI 多语言文案
-  ========================= */
-  const UI_TEXT = {
-    ko: {
-      title: "AI 한자 선생님",
-      inputPlaceholder: "질문을 입력하세요…",
-      send: "보내기",
-      explainLang: "설명 언어",
-      tts: "읽어주기(TTS)",
-      mode: "모드",
-      thinking: "잠깐만요 🙂",
-      welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!",
-      clickHint: "💡 문장(젤리)을 클릭하면 그 부분만 읽어줘요.",
-      autoVoiceHint: "(언어=음성 자동)"
-    },
-    en: {
-      title: "AI Chinese Teacher",
-      inputPlaceholder: "Ask your question…",
-      send: "Send",
-      explainLang: "Explanation language",
-      tts: "Read aloud (TTS)",
-      mode: "Mode",
-      thinking: "One sec 🙂",
-      welcome: "Hi 🙂\nAsk me anything about Chinese!",
-      clickHint: "💡 Click a jelly line to read that part only.",
-      autoVoiceHint: "(Language=Voice auto)"
-    },
-    ja: {
-      title: "AI 中国語先生",
-      inputPlaceholder: "質問を入力してください…",
-      send: "送信",
-      explainLang: "説明言語",
-      tts: "読み上げ(TTS)",
-      mode: "モード",
-      thinking: "ちょっと待ってね 🙂",
-      welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。",
-      clickHint: "💡 ゼリー文をクリックすると、その部分だけ読みます。",
-      autoVoiceHint: "(言語=音声 自動)"
-    },
-    zh: {
-      title: "AI 汉字老师",
-      inputPlaceholder: "请输入你的问题…",
-      send: "发送",
-      explainLang: "说明语言",
-      tts: "朗读(TTS)",
-      mode: "模式",
-      thinking: "等一下🙂",
-      welcome: "你好 🙂\n有中文问题，直接问我吧。",
-      clickHint: "💡 点击果冻句子，只朗读你点的那一段。",
-      autoVoiceHint: "(语言=音色自动)"
-    }
-  };
-
-  /* =========================
-     2) DOM
-  ========================= */
-  const panel = document.getElementById("ai-panel");
-  const chat = document.getElementById("chat");
-  const input = document.getElementById("input");
-  const explainLang = document.getElementById("explainLang");
-  const ttsToggle = document.getElementById("ttsToggle");
-  const speakMode = document.getElementById("speakMode");
-
-  const uiTitle = document.getElementById("uiTitle");
-  const uiTtsLabel = document.getElementById("uiTtsLabel");
-  const uiExplainLabel = document.getElementById("uiExplainLabel");
-  const uiSendBtn = document.getElementById("uiSendBtn");
-  const uiModeLabel = document.getElementById("uiModeLabel");
-  const uiAutoVoiceHint = document.getElementById("uiAutoVoiceHint");
-
-  /* =========================
-     3) 安全：报错显示
-  ========================= */
-  function showError(msg) {
-    createMsgBubble("오류: " + msg, "ai");
+/* =========================
+   1) UI 文案
+========================= */
+const UI_TEXT = {
+  ko: {
+    title: "AI 한자 선생님",
+    inputPlaceholder: "질문을 입력하세요…",
+    send: "보내기",
+    explainLang: "설명 언어",
+    tts: "읽어주기(TTS)",
+    thinking: "잠깐만요 🙂",
+    welcome: "안녕하세요 🙂\n중국어 질문, 바로 물어보세요!",
+    follow: "🎤 따라읽기",
+    exPlay: "🔊 예문"
+  },
+  en: {
+    title: "AI Chinese Teacher",
+    inputPlaceholder: "Ask your question…",
+    send: "Send",
+    explainLang: "Explanation language",
+    tts: "Read aloud (TTS)",
+    thinking: "One sec 🙂",
+    welcome: "Hi 🙂\nAsk me anything about Chinese!",
+    follow: "🎤 Shadow",
+    exPlay: "🔊 Example"
+  },
+  ja: {
+    title: "AI 中国語先生",
+    inputPlaceholder: "質問を入力してください…",
+    send: "送信",
+    explainLang: "説明言語",
+    tts: "読み上げ(TTS)",
+    thinking: "ちょっと待ってね 🙂",
+    welcome: "こんにちは 🙂\n中国語、気軽に聞いてください。",
+    follow: "🎤 ついて読む",
+    exPlay: "🔊 例文"
+  },
+  zh: {
+    title: "AI 汉字老师",
+    inputPlaceholder: "请输入你的问题…",
+    send: "发送",
+    explainLang: "说明语言",
+    tts: "朗读(TTS)",
+    thinking: "等一下🙂",
+    welcome: "你好 🙂\n有中文问题，直接问我吧。",
+    follow: "🎤 跟读",
+    exPlay: "🔊 例句"
   }
-  window.addEventListener("error", (e) => {
-    showError(e?.message || "Unknown error");
-  });
+};
 
-  /* =========================
-     4) UI 基础
-  ========================= */
-  function toggleAI() {
-    panel.classList.toggle("hidden");
+/* =========================
+   2) DOM
+========================= */
+const panel = document.getElementById("ai-panel");
+const chat  = document.getElementById("chat");
+const input = document.getElementById("input");
+const explainLang = document.getElementById("explainLang");
+const ttsToggle = document.getElementById("ttsToggle");
+const speakMode = document.getElementById("speakMode");
+
+const uiTitle = document.getElementById("uiTitle");
+const uiTtsLabel = document.getElementById("uiTtsLabel");
+const uiExplainLabel = document.getElementById("uiExplainLabel");
+const uiSendBtn = document.getElementById("uiSendBtn");
+
+const botBtn = document.getElementById("botBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+/* 主页面 HSK DOM */
+const hskLevel = document.getElementById("hskLevel");
+const hskSearch = document.getElementById("hskSearch");
+const hskGrid = document.getElementById("hskGrid");
+const hskError = document.getElementById("hskError");
+const hskStatus = document.getElementById("hskStatus");
+
+/* =========================
+   3) 面板开关（修复你说的“关不掉”）
+========================= */
+function openAI() {
+  panel.classList.remove("hidden");
+}
+function closeAI() {
+  panel.classList.add("hidden");
+}
+function toggleAI() {
+  panel.classList.toggle("hidden");
+}
+botBtn?.addEventListener("click", toggleAI);
+closeBtn?.addEventListener("click", closeAI);
+
+/* =========================
+   4) 显示清洗（只影响显示，不影响TTS）
+========================= */
+function cleanForDisplay(text) {
+  return String(text)
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/#+\s*/g, "")
+    .replace(/-{3,}/g, "")
+    .trim();
+}
+
+function createMsgBubble(initialText, who) {
+  const wrap = document.createElement("div");
+  wrap.className = who === "user" ? "text-right" : "text-left";
+
+  const bubbleClass = who === "user"
+    ? "bg-orange-500 text-white"
+    : "bg-gray-200 text-gray-900";
+
+  wrap.innerHTML = `
+    <span class="inline-block px-3 py-2 rounded-lg ${bubbleClass}">
+      <div class="bubble"></div>
+    </span>
+  `;
+
+  const bubbleDiv = wrap.querySelector(".bubble");
+  bubbleDiv.textContent = cleanForDisplay(initialText);
+
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+  return { wrap, bubbleDiv };
+}
+
+/* =========================
+   5) UI 跟随语言切换
+========================= */
+function applyUIText(lang) {
+  const t = UI_TEXT[lang] || UI_TEXT.ko;
+
+  uiTitle.innerText = t.title;
+  input.placeholder = t.inputPlaceholder;
+  uiSendBtn.innerText = t.send;
+
+  uiTtsLabel.innerText = t.tts;
+  uiExplainLabel.innerText = t.explainLang;
+
+  chat.innerHTML = "";
+  createMsgBubble(t.welcome, "ai");
+}
+applyUIText(explainLang.value);
+
+explainLang.addEventListener("change", () => {
+  stopTyping();
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  applyUIText(explainLang.value);
+});
+
+/* =========================
+   6) TTS：核心修正
+   - 允许标点显示（TTS不念出标点，只做停顿）
+   - 不读拼音（stripPinyinForTTS）
+   - 日语含假名时整段按日语读
+   - 中文段落普通话读
+========================= */
+let voices = [];
+function loadVoices() {
+  voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
+}
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function pickVoiceByLang(targetLang) {
+  if (!voices.length) return null;
+
+  const prefix = {
+    zh: ["zh", "cmn"],
+    en: ["en"],
+    ko: ["ko"],
+    ja: ["ja"]
+  }[targetLang] || [targetLang];
+
+  // 优先选该语言
+  const v = voices.find(v => prefix.some(p => (v.lang || "").toLowerCase().startsWith(p)));
+  return v || voices[0] || null;
+}
+
+function cleanForSpeak(text) {
+  return String(text || "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/#+\s*/g, "")
+    .replace(/-{3,}/g, " ")
+    .replace(/[•●◦▶▷■□◆◇※★☆]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// ✅ 不读拼音（但显示保留）
+function stripPinyinForTTS(text) {
+  let s = String(text || "");
+
+  // 去掉“拼音：xxx”整行
+  s = s.replace(/^\s*(拼音|Pinyin)\s*[:：].*$/gmi, "");
+
+  // 去掉“纯拼音行”（声调符号/ü/数字声调）
+  const pinyinLine = /^[\sA-Za-züÜāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜńňǹ·'’\-0-9]+$/;
+  s = s
+    .split("\n")
+    .filter(line => {
+      const t = line.trim();
+      if (!t) return true;
+      const hasCJK = /[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(t);
+      if (hasCJK) return true;
+      return !pinyinLine.test(t);
+    })
+    .join("\n");
+
+  // 例句行：只读中文 + 解释，不读拼音
+  s = s.replace(/^(例句|Example|예문|例文)\s*\d+\s*[:：]\s*([^|]+)\|\s*([^|]+)\|\s*(.+)$/gmi,
+    (m, tag, zh, py, exp) => `${zh.trim()}。 ${exp.trim()}`
+  );
+
+  return s;
+}
+
+function splitSentences(text) {
+  const s = String(text).trim();
+  if (!s) return [];
+  const re = /[^。！？!?]+[。！？!?]?/g;
+  return s.match(re)?.map(x => x.trim()).filter(Boolean) || [s];
+}
+
+function getSpeakParams() {
+  const mode = speakMode.value;
+  if (mode === "exam") return { rate: 1.05, pitch: 1.0, pauseShort: 120, pauseLong: 220 };
+  return { rate: 0.98, pitch: 1.07, pauseShort: 180, pauseLong: 320 };
+}
+
+// 把字符串按“中文块/其他块”切分（用于多语混读）
+function splitByChineseRuns(text) {
+  const s = cleanForSpeak(text);
+  if (!s) return [];
+  const parts = [];
+  const re = /([\u4e00-\u9fff]+)|([^\u4e00-\u9fff]+)/g;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    if (m[1]) parts.push({ type: "zh", text: m[1] });
+    else if (m[2]) parts.push({ type: "other", text: m[2] });
   }
-  // ✅ 让 HTML inline onclick 能调用到
-  window.toggleAI = toggleAI;
+  return parts;
+}
 
-  function cleanForDisplay(text) {
-    return String(text)
-      .replace(/```[\s\S]*?```/g, "")
-      .replace(/\*\*(.*?)\*\*/g, "$1")
-      .replace(/#+\s*/g, "")
-      .replace(/-{3,}/g, "")
-      .trim();
-  }
+function speakQueueByLang(text, langKey, params, jobId) {
+  return new Promise((resolve) => {
+    const sentences = splitSentences(text);
+    if (!sentences.length) return resolve();
 
-  function createMsgBubble(initialText, who) {
-    const wrap = document.createElement("div");
-    wrap.className = who === "user" ? "text-right" : "text-left";
-
-    const bubbleClass = who === "user" ? "bg-orange-500 text-white" : "bg-gray-200";
-    wrap.innerHTML = `
-      <span class="inline-block px-3 py-2 rounded-lg ${bubbleClass}">
-        <div class="bubble"></div>
-      </span>
-    `;
-    const bubbleDiv = wrap.querySelector(".bubble");
-    bubbleDiv.textContent = cleanForDisplay(initialText);
-
-    chat.appendChild(wrap);
-    chat.scrollTop = chat.scrollHeight;
-    return { wrap, bubbleDiv };
-  }
-
-  function applyUIText(lang) {
-    const t = UI_TEXT[lang] || UI_TEXT.ko;
-
-    uiTitle.innerText = t.title;
-    input.placeholder = t.inputPlaceholder;
-    uiSendBtn.innerText = t.send;
-
-    uiTtsLabel.innerText = t.tts;
-    uiExplainLabel.innerText = t.explainLang;
-    uiModeLabel.innerText = t.mode;
-
-    if (uiAutoVoiceHint) uiAutoVoiceHint.textContent = t.autoVoiceHint;
-
-    chat.innerHTML = "";
-    createMsgBubble(t.welcome, "ai");
-  }
-
-  /* =========================
-     5) TTS：语言=音色 自动绑定
-     - 点击果冻句子：只读该段
-  ========================= */
-  let voices = [];
-  const voiceByLang = { ko: null, en: null, ja: null, zh: null };
-  let speakingJobId = 0;
-
-  function loadVoices() {
-    voices = window.speechSynthesis ? (window.speechSynthesis.getVoices() || []) : [];
-    // 语言变了就重新挑最合适的 voice
-    setVoiceForLang(explainLang.value);
-  }
-
-  if (window.speechSynthesis) {
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    loadVoices();
-  }
-
-  function pickBestVoice(langKey) {
-    if (!voices.length) return null;
-
-    const prefix = {
-      zh: ["zh", "cmn"],
-      en: ["en"],
-      ko: ["ko"],
-      ja: ["ja"]
-    }[langKey] || [langKey];
-
-    const found = voices.find(v =>
-      prefix.some(p => (v.lang || "").toLowerCase().startsWith(p))
-    );
-    return found || voices[0] || null;
-  }
-
-  function setVoiceForLang(langKey) {
-    voiceByLang[langKey] = pickBestVoice(langKey);
-  }
-
-  function cleanForSpeak(text) {
-    return String(text)
-      .replace(/```[\s\S]*?```/g, " ")
-      .replace(/\*\*(.*?)\*\*/g, "$1")
-      .replace(/#+\s*/g, "")
-      .replace(/-{3,}/g, " ")
-      .replace(/[•●◦▶▷■□◆◇※★☆]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function getSpeakParams() {
-    const mode = speakMode.value; // kids / exam
-    if (mode === "exam") return { rate: 1.05, pitch: 1.0 };
-    return { rate: 0.98, pitch: 1.07 };
-  }
-
-  function speakLine(text, uiLang) {
-    if (!ttsToggle.checked) return Promise.resolve();
-    if (!window.speechSynthesis) return Promise.resolve();
-
-    const jobId = ++speakingJobId;
-    const t = cleanForSpeak(text);
-    if (!t) return Promise.resolve();
-
-    const params = getSpeakParams();
-
-    return new Promise((resolve) => {
+    let idx = 0;
+    const speakNext = () => {
       if (jobId !== speakingJobId) return resolve();
+      if (idx >= sentences.length) return resolve();
 
-      window.speechSynthesis.cancel();
+      const s = sentences[idx++];
+      const u = new SpeechSynthesisUtterance(s);
 
-      const u = new SpeechSynthesisUtterance(t);
-      const v = voiceByLang[uiLang] || pickBestVoice(uiLang);
-
-      if (v) {
-        u.voice = v;
-        u.lang = v.lang || (uiLang === "zh" ? "zh-CN" : uiLang);
+      const voice = pickVoiceByLang(langKey);
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang || (langKey === "zh" ? "zh-CN" : langKey);
       } else {
-        u.lang = (uiLang === "zh" ? "zh-CN" : uiLang);
+        u.lang = (langKey === "zh" ? "zh-CN" : langKey);
       }
 
       u.rate = params.rate;
       u.pitch = params.pitch;
 
-      u.onend = () => resolve();
+      const endsWithStrong = /[。！？!?]$/.test(s);
+      const pause = endsWithStrong ? params.pauseLong : params.pauseShort;
+
+      u.onend = () => setTimeout(speakNext, pause);
       u.onerror = () => resolve();
 
       window.speechSynthesis.speak(u);
-    });
-  }
-
-  /* =========================
-     6) 果冻段渲染：点哪段读哪段
-  ========================= */
-  function renderJellySegments(wrapEl, fullText, uiLang) {
-    const bubble = wrapEl.querySelector(".bubble");
-    if (!bubble) return;
-
-    const lines = String(fullText)
-      .split("\n")
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    bubble.innerHTML = "";
-    bubble.classList.add("jellyWrap");
-
-    lines.forEach((line) => {
-      const seg = document.createElement("div");
-      seg.className = "jelly";
-      seg.textContent = line;
-
-      seg.addEventListener("click", async () => {
-        await speakLine(line, uiLang);
-      });
-
-      bubble.appendChild(seg);
-    });
-
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  /* =========================
-     7) 打字机效果（保留核心）
-  ========================= */
-  let typingTimer = null;
-  function stopTyping() {
-    if (typingTimer) {
-      clearInterval(typingTimer);
-      typingTimer = null;
-    }
-  }
-
-  function typewriterRender(bubbleDiv, fullText, speed = 14, onDone) {
-    stopTyping();
-    const cleaned = cleanForDisplay(fullText);
-
-    bubbleDiv.textContent = "";
-    let i = 0;
-
-    typingTimer = setInterval(() => {
-      i += 1;
-      bubbleDiv.textContent = cleaned.slice(0, i);
-      chat.scrollTop = chat.scrollHeight;
-
-      if (i >= cleaned.length) {
-        stopTyping();
-        if (typeof onDone === "function") onDone(cleaned);
-      }
-    }, speed);
-  }
-
-  /* =========================
-     8) ✅ 离线 HSK 兜底（API 挂了也能教）
-     - 先内置少量 HSK1 示例
-     - 若你创建 /data/hsk1.json，会自动读取并替换
-  ========================= */
-  const LOCAL_HSK = {
-    1: [
-      { hanzi: "你好", pinyin: "nǐ hǎo", ko: "안녕하세요", en: "Hello", ja: "こんにちは", zh: "你好" },
-      { hanzi: "谢谢", pinyin: "xiè xie", ko: "감사합니다", en: "Thank you", ja: "ありがとう", zh: "谢谢" },
-      { hanzi: "再见", pinyin: "zài jiàn", ko: "안녕히 가세요/계세요", en: "Goodbye", ja: "さようなら", zh: "再见" },
-      { hanzi: "是", pinyin: "shì", ko: "~이다/맞다", en: "to be / yes", ja: "〜です", zh: "是" },
-      { hanzi: "不", pinyin: "bù", ko: "아니다/안", en: "not", ja: "〜ない", zh: "不" }
-    ]
-  };
-
-  const HSK_CACHE = new Map(); // level -> array
-
-  async function loadHSKLevel(level) {
-    if (HSK_CACHE.has(level)) return HSK_CACHE.get(level);
-
-    // 先尝试读取仓库里的 JSON：/data/hsk1.json
-    try {
-      const url = `./data/hsk${level}.json`;
-      const res = await fetch(url, { cache: "no-store" });
-      if (res.ok) {
-        const arr = await res.json();
-        if (Array.isArray(arr) && arr.length) {
-          HSK_CACHE.set(level, arr);
-          return arr;
-        }
-      }
-    } catch (_) {}
-
-    // 读不到就用本地内置
-    const fallback = LOCAL_HSK[level] || LOCAL_HSK[1];
-    HSK_CACHE.set(level, fallback);
-    return fallback;
-  }
-
-  function exLabel(lang) {
-    if (lang === "ko") return "예문";
-    if (lang === "en") return "Example";
-    if (lang === "ja") return "例文";
-    return "例句"; // zh
-  }
-
-  function explainText(item, lang) {
-    if (lang === "ko") return item.ko || "";
-    if (lang === "en") return item.en || "";
-    if (lang === "ja") return item.ja || "";
-    return item.zh || "";
-  }
-
-  function makeOfflineLesson(userMsg, lang) {
-    // 默认先从 HSK1 随机拿
-    const label = exLabel(lang);
-    const item = (HSK_CACHE.get(1) || LOCAL_HSK[1])[Math.floor(Math.random() * (HSK_CACHE.get(1)?.length || LOCAL_HSK[1].length))];
-
-    const exp = explainText(item, lang);
-
-    // 例句尽量短，符合你前端识别格式（每条一行）
-    const ex1 = {
-      zh: `${item.hanzi}！`,
-      py: `${item.pinyin}!`,
-      ko: `${exp}라고 말해요.`,
-      en: `We say “${exp}”.`,
-      ja: `「${exp}」と言います。`,
-      zh2: `就是“${exp}”。`
     };
 
-    const exp1 = lang === "ko" ? ex1.ko : lang === "en" ? ex1.en : lang === "ja" ? ex1.ja : ex1.zh2;
+    speakNext();
+  });
+}
 
-    const lesson =
-`${item.hanzi}
-${item.pinyin}
-${exp}
+let speakingJobId = 0;
 
-${label}1：${ex1.zh} | ${ex1.py} | ${exp1}`;
+// ✅ 点击某一段就读那一段（果冻块点击读）
+async function speakSmart(fullText, uiLang) {
+  if (!ttsToggle.checked) return;
+  if (!window.speechSynthesis) return;
 
-    return lesson.trim();
+  const jobId = ++speakingJobId;
+  const params = getSpeakParams();
+
+  // ✅ 关键：先删除“拼音行/拼音部分”
+  fullText = stripPinyinForTTS(fullText);
+
+  const text = cleanForSpeak(fullText);
+  if (!text) return;
+
+  window.speechSynthesis.cancel();
+
+  // ✅ 日语特例：含假名则整段按日语读（不把汉字拆成中文）
+  if (uiLang === "ja" && /[\u3040-\u30ff]/.test(text)) {
+    await speakQueueByLang(text, "ja", params, jobId);
+    return;
   }
 
-  /* =========================
-     9) 发送（保留核心 + API失败自动离线兜底）
-  ========================= */
-  async function send() {
-    const msg = input.value.trim();
-    if (!msg) return;
+  // ✅ 其它语言：中文块用普通话，其它块用界面语言
+  const chunks = splitByChineseRuns(text);
+  for (const c of chunks) {
+    if (jobId !== speakingJobId) return;
 
-    stopTyping();
-    window.speechSynthesis && window.speechSynthesis.cancel();
-
-    createMsgBubble(msg, "user");
-    input.value = "";
-
-    const lang = explainLang.value;
-    const t = UI_TEXT[lang] || UI_TEXT.ko;
-
-    const { wrap, bubbleDiv } = createMsgBubble(t.thinking, "ai");
-
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: msg, explainLang: lang })
-      });
-
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || ("HTTP " + res.status));
-
-      const answer = data.text || "(응답 없음)";
-
-      typewriterRender(bubbleDiv, answer, 14, async () => {
-        // ✅ 打完后：果冻化（点击读单段）
-        renderJellySegments(wrap, answer, lang);
-      });
-
-    } catch (e) {
-      // ✅ API 挂了：离线兜底（先加载 hsk1.json；没有就用内置）
-      await loadHSKLevel(1);
-
-      const offline = makeOfflineLesson(msg, lang);
-      typewriterRender(bubbleDiv, offline, 14, async () => {
-        renderJellySegments(wrap, offline, lang);
-      });
+    if (c.type === "zh") {
+      await speakQueueByLang(c.text, "zh", params, jobId); // 普通话
+    } else {
+      await speakQueueByLang(c.text, uiLang, params, jobId);
     }
   }
-  window.send = send; // ✅ inline onclick
+}
 
-  /* =========================
-     10) 初始化 & 切换语言
-  ========================= */
-  applyUIText(explainLang.value);
-  setVoiceForLang(explainLang.value);
+/* =========================
+   7) “果冻块”点击朗读：把 AI 回复每一行拆成可点读块
+   - 你说不要小喇叭：这里直接整行变“透明果冻”可点击
+========================= */
+function attachJellyClickToBubble(wrapEl, answerText, uiLang) {
+  const bubble = wrapEl.querySelector(".bubble");
+  if (!bubble) return;
 
-  explainLang.addEventListener("change", () => {
-    stopTyping();
-    window.speechSynthesis && window.speechSynthesis.cancel();
+  const raw = cleanForDisplay(answerText);
+  const lines = raw.split("\n").map(s => s.trim()).filter(Boolean);
 
-    setVoiceForLang(explainLang.value);
-    applyUIText(explainLang.value);
+  bubble.innerHTML = "";
+  lines.forEach((line) => {
+    const jelly = document.createElement("div");
+    jelly.className =
+      "my-1 px-3 py-2 rounded-xl bg-white/70 border border-white shadow-sm cursor-pointer " +
+      "hover:shadow hover:bg-white transition";
+
+    jelly.textContent = line;
+
+    jelly.addEventListener("click", async () => {
+      await speakSmart(line, uiLang);
+    });
+
+    bubble.appendChild(jelly);
+  });
+}
+
+/* =========================
+   8) 打字机（完成后把内容变成果冻可点读）
+========================= */
+let typingTimer = null;
+function stopTyping() {
+  if (typingTimer) {
+    clearInterval(typingTimer);
+    typingTimer = null;
+  }
+}
+
+function typewriterRender(bubbleDiv, fullText, speed = 14, onDone) {
+  stopTyping();
+  const cleaned = cleanForDisplay(fullText);
+
+  bubbleDiv.textContent = "";
+  let i = 0;
+
+  typingTimer = setInterval(() => {
+    i += 1;
+    bubbleDiv.textContent = cleaned.slice(0, i);
+    chat.scrollTop = chat.scrollHeight;
+
+    if (i >= cleaned.length) {
+      stopTyping();
+      if (typeof onDone === "function") onDone(cleaned);
+    }
+  }, speed);
+}
+
+/* =========================
+   9) 发送（AI）
+========================= */
+async function send(msgFromOutside) {
+  const msg = (msgFromOutside ?? input.value).trim();
+  if (!msg) return;
+
+  stopTyping();
+  window.speechSynthesis && window.speechSynthesis.cancel();
+
+  createMsgBubble(msg, "user");
+  input.value = "";
+
+  const lang = explainLang.value;
+  const t = UI_TEXT[lang] || UI_TEXT.ko;
+
+  const { wrap, bubbleDiv } = createMsgBubble(t.thinking, "ai");
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: msg, explainLang: lang })
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data?.error || ("HTTP " + res.status));
+
+    const answer = data.text || "(응답 없음)";
+
+    typewriterRender(bubbleDiv, answer, 14, async () => {
+      // 先整段读（不读拼音）
+      await speakSmart(answer, lang);
+
+      // 变成果冻块：点哪段读哪段（不需要喇叭）
+      attachJellyClickToBubble(wrap, answer, lang);
+    });
+
+  } catch (e) {
+    bubbleDiv.textContent = "오류: " + (e.message || "잠시 후 다시 시도해 주세요.");
+  }
+}
+uiSendBtn?.addEventListener("click", () => send());
+
+/* 暴露给 HTML Enter 调用 */
+window.AIUI = { send, openAI, closeAI, toggleAI };
+
+/* =========================
+   10) ✅ 面板拖动（标题栏）
+========================= */
+(function enableDrag() {
+  const handle = document.getElementById("dragHandle");
+  if (!handle || !panel) return;
+
+  let isDown = false;
+  let startX = 0, startY = 0;
+  let startLeft = 0, startTop = 0;
+
+  function getLeftTop() {
+    const rect = panel.getBoundingClientRect();
+    return { left: rect.left, top: rect.top };
+  }
+
+  handle.addEventListener("pointerdown", (e) => {
+    isDown = true;
+    handle.setPointerCapture(e.pointerId);
+
+    const { left, top } = getLeftTop();
+    startLeft = left;
+    startTop = top;
+    startX = e.clientX;
+    startY = e.clientY;
+
+    panel.style.right = "auto";
+    panel.style.bottom = "auto";
+    panel.style.left = startLeft + "px";
+    panel.style.top = startTop + "px";
   });
 
-  /* =========================
-     11) ✅ 面板拖动（拖标题栏）
-  ========================= */
-  (function enableDrag() {
-    const handle = document.getElementById("dragHandle");
-    if (!handle) return;
+  handle.addEventListener("pointermove", (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
 
-    let isDown = false;
-    let startX = 0, startY = 0;
-    let startLeft = 0, startTop = 0;
+    panel.style.left = (startLeft + dx) + "px";
+    panel.style.top = (startTop + dy) + "px";
+  });
 
-    function getLeftTop() {
-      const rect = panel.getBoundingClientRect();
-      return { left: rect.left, top: rect.top };
-    }
-
-    handle.addEventListener("pointerdown", (e) => {
-      isDown = true;
-      handle.setPointerCapture(e.pointerId);
-
-      const { left, top } = getLeftTop();
-      startLeft = left;
-      startTop = top;
-      startX = e.clientX;
-      startY = e.clientY;
-
-      // 把定位切换为 left/top（避免 bottom/right 干扰）
-      panel.style.right = "auto";
-      panel.style.bottom = "auto";
-      panel.style.left = startLeft + "px";
-      panel.style.top = startTop + "px";
-    });
-
-    handle.addEventListener("pointermove", (e) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-
-      panel.style.left = (startLeft + dx) + "px";
-      panel.style.top = (startTop + dy) + "px";
-    });
-
-    handle.addEventListener("pointerup", () => {
-      isDown = false;
-    });
-  })();
-
+  handle.addEventListener("pointerup", () => {
+    isDown = false;
+  });
 })();
+
+/* =========================
+   11) HSK 主页面：加载 JSON 并渲染（解决白屏）
+   支持两种 JSON：
+   A) 数组：[{hanzi,pinyin,meaning_ko,examples:[...]}]
+   B) 对象：{items:[...]} 或 {data:[...]}
+========================= */
+
+let HSK_CACHE = {}; // level -> items[]
+let currentLevel = "1";
+
+function showHSKError(msg) {
+  hskError.classList.remove("hidden");
+  hskError.textContent = msg;
+}
+function clearHSKError() {
+  hskError.classList.add("hidden");
+  hskError.textContent = "";
+}
+
+function normalizeHSKJson(json) {
+  if (Array.isArray(json)) return json;
+  if (Array.isArray(json?.items)) return json.items;
+  if (Array.isArray(json?.data)) return json.data;
+  return [];
+}
+
+async function loadHSK(level) {
+  const lv = String(level);
+  currentLevel = lv;
+
+  if (HSK_CACHE[lv]) return HSK_CACHE[lv];
+
+  const url = `${DATA_BASE}/hsk${lv}.json`;
+  hskStatus.textContent = `Loading ${url} ...`;
+
+  const resp = await fetch(url, { cache: "no-store" });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status} (${url})`);
+
+  const json = await resp.json();
+  const items = normalizeHSKJson(json);
+
+  if (!items.length) {
+    throw new Error(`데이터는 열렸지만 내용이 비어 있어요: ${url}\n(JSON 구조를 확인해 주세요)`);
+  }
+
+  HSK_CACHE[lv] = items;
+  return items;
+}
+
+function renderHSK(items, keyword = "") {
+  const q = String(keyword || "").trim().toLowerCase();
+
+  const filtered = !q ? items : items.filter(it => {
+    const blob = JSON.stringify(it).toLowerCase();
+    return blob.includes(q);
+  });
+
+  hskGrid.innerHTML = "";
+  hskStatus.textContent = `HSK ${currentLevel} · ${filtered.length} items`;
+
+  filtered.forEach((it, idx) => {
+    const hanzi = it.hanzi || it.word || it.chinese || it.cn || "";
+    const pinyin = it.pinyin || it.py || "";
+    const meaning = it.meaning_ko || it.ko || it.meaning || it.translation || "";
+    const ex = Array.isArray(it.examples) ? it.examples : [];
+
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
+
+    card.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="flex-1">
+          <div class="text-2xl font-semibold">${escapeHtml(hanzi || "(no hanzi)")}</div>
+          <div class="text-sm text-gray-600 mt-1">${escapeHtml(pinyin)}</div>
+          <div class="text-sm mt-2">${escapeHtml(meaning)}</div>
+        </div>
+        <button class="px-3 py-2 rounded-xl bg-orange-500 text-white text-sm">
+          배우기
+        </button>
+      </div>
+      ${ex.length ? `<div class="mt-3 text-xs text-gray-600 space-y-1">
+        ${ex.slice(0, 2).map(e => `<div>• ${escapeHtml(formatExample(e))}</div>`).join("")}
+      </div>` : ""}
+      <div class="mt-3 flex gap-2">
+        <button class="btnRead px-3 py-2 rounded-xl bg-slate-100 text-sm">🔊 읽기</button>
+        <button class="btnAsk px-3 py-2 rounded-xl bg-slate-100 text-sm">🤖 AI에게 질문</button>
+      </div>
+    `;
+
+    // 读：只读中文（普通话），不读拼音
+    card.querySelector(".btnRead").addEventListener("click", async () => {
+      const uiLang = explainLang.value; // 当前解释语言
+      await speakSmart(hanzi, "zh");     // ✅ 强制普通话读词语
+    });
+
+    // 问：打开面板并发问
+    card.querySelector(".btnAsk").addEventListener("click", async () => {
+      openAI();
+      const uiLang = explainLang.value;
+
+      const prompt =
+`HSK ${currentLevel} 단어를 가르쳐줘: ${hanzi}
+(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`
+      ;
+      await send(prompt);
+    });
+
+    // “배우기”按钮：打开并直接让AI生成
+    card.querySelector("button").addEventListener("click", async () => {
+      openAI();
+      const prompt =
+`HSK ${currentLevel} 단어/표현 수업:
+${hanzi}
+(형식: 1)中文 2)拼音 3)설명 4)예문1~2)`
+      ;
+      await send(prompt);
+    });
+
+    hskGrid.appendChild(card);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatExample(e) {
+  if (!e) return "";
+  if (typeof e === "string") return e;
+  const zh = e.zh || e.cn || e.chinese || "";
+  const ko = e.ko || e.meaning || e.translation || "";
+  return ko ? `${zh} / ${ko}` : zh;
+}
+
+async function refreshHSK() {
+  clearHSKError();
+  try {
+    const items = await loadHSK(hskLevel.value);
+    renderHSK(items, hskSearch.value);
+  } catch (err) {
+    showHSKError("HSK 데이터 로딩 실패: " + (err?.message || String(err)));
+    hskStatus.textContent = "Load failed";
+    hskGrid.innerHTML = "";
+  }
+}
+
+hskLevel?.addEventListener("change", refreshHSK);
+hskSearch?.addEventListener("input", () => {
+  const items = HSK_CACHE[currentLevel] || [];
+  renderHSK(items, hskSearch.value);
+});
+
+/* 首次加载 HSK1 */
+refreshHSK();
