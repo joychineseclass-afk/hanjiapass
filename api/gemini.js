@@ -1,235 +1,103 @@
 // /api/gemini.js
-export const config = { runtime: "nodejs" }; // 强制 Node 运行时，避免 Edge 兼容问题
+export const config = { runtime: "nodejs" };
 
-// ===== 默认老师人设（后端兜底）=====
-const DEFAULT_TEACHER_SYSTEM = `
-你是“AI 한자 선생님”，面向韩国学生教中文（HSK/HSKK）。
-
-【输出格式必须包含】
-1) 中文
-2) 拼音
-3) 韩语解释（亲切、适合初学者/小学生）
-4) 例句 1~2 个（中文+拼音+韩语）
-
-【例句格式固定】
-例句部分请严格写成下面这样（每条一行）：
-例句1：<中文句子> | <拼音> | <解释语言>
-例句2：<中文句子> | <拼音> | <解释语言>
-（如果只有1条，就只输出 例句1）
-
-5) 如用户问语法：用简单韩语解释，并给对比例句
-`.trim();
-
-// 你可以在 Vercel 环境变量里设置（可选）
-// GEMINI_MODEL="gemini-3-flash-preview"
-// GEMINI_API_VERSION="v1beta" 或 "v1"
-const DEFAULT_MODEL_CANDIDATES = [
-  process.env.GEMINI_MODEL,          // 用户自定义优先
-  "gemini-3-flash-preview",          // 你之前跑通的
-  "gemini-1.5-flash",                // 常见备用
-  "gemini-1.5-pro",                  // 再备用
+// ===== 模型候选 =====
+const MODEL_CANDIDATES = [
+  process.env.GEMINI_MODEL,
+  "gemini-3-flash-preview",
+  "gemini-1.5-flash",
+  "gemini-1.5-pro"
 ].filter(Boolean);
 
-const API_VERSION = (process.env.GEMINI_API_VERSION || "v1beta").trim(); // 默认 v1beta 更兼容
+const API_VERSION = process.env.GEMINI_API_VERSION || "v1beta";
 
-function isLikelyModelNotFound(details) {
-  const msg = (
-    details?.error?.message ||
-    details?.error ||
-    details?.message ||
-    ""
-  ).toLowerCase();
-
-  return (
-    msg.includes("not found") ||
-    msg.includes("not supported") ||
-    (msg.includes("model") && msg.includes("not") && msg.includes("supported"))
-  );
-}
-
-// 把 Gemini 的 candidates.parts 拼成纯文本
+// ===== 工具 =====
 function extractText(data) {
   const parts = data?.candidates?.[0]?.content?.parts;
   if (!Array.isArray(parts)) return "";
-  return parts.map(p => p?.text || "").join("").trim();
+  return parts.map(p => p.text || "").join("").trim();
 }
 
 export default async function handler(req, res) {
-  // ===== 0) 基础 Header：确保永远返回 JSON（避免 HTML 导致前端 json() 崩）=====
   res.setHeader("Content-Type", "application/json; charset=utf-8");
 
-  // ===== 1) CORS（同域调用其实不需要，但保留兼容 GitHub Pages）=====
-  const allowOrigins = [
-    "https://joychineseclass-afk.github.io",
-    "https://hanjiapass.vercel.app",
-  ];
-  const origin = req.headers.origin;
-  if (origin && allowOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader("Vary", "Origin");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
   if (req.method === "OPTIONS") return res.status(204).end();
-
-  // ===== 2) GET 健康检查 =====
-  if (req.method === "GET") {
-    return res.status(200).json({
-      ok: true,
-      message: "Gemini API endpoint is alive. Use POST with JSON { prompt, explainLang }",
-      apiVersion: API_VERSION,
-      modelCandidates: DEFAULT_MODEL_CANDIDATES,
-    });
-  }
-
-  // ===== 3) 只允许 POST =====
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed. Use POST." });
+    return res.status(405).json({ error: "POST only" });
   }
 
-  try {
-    // ===== 4) Env =====
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "Missing GEMINI_API_KEY in Vercel Environment Variables.",
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: "Missing GEMINI_API_KEY" });
+  }
+
+  const body = typeof req.body === "string"
+    ? JSON.parse(req.body || "{}")
+    : (req.body || {});
+
+  const userPrompt = String(body.prompt || "").trim();
+  const explainLang = body.explainLang || "ko";
+
+  const langMap = {
+    ko: "韩语",
+    en: "英语",
+    ja: "日语",
+    zh: "中文"
+  };
+
+  const explainLangName = langMap[explainLang] || "韩语";
+
+  const systemPrompt = `
+你是一位亲切、耐心、适合儿童和初学者的 AI 中文老师。
+
+教学要求：
+- 中文必须清楚朗读
+- 不读标点符号
+- 不使用 markdown
+- 语气自然、像真人老师
+
+输出结构：
+1. 中文
+2. 拼音
+3. ${explainLangName}解释
+4. 例句（格式固定）：
+例句1：中文 | 拼音 | ${explainLangName}
+例句2：中文 | 拼音 | ${explainLangName}
+
+所有解释语言只使用：${explainLangName}
+`;
+
+  const finalPrompt = `${systemPrompt}\n\n学生问题：${userPrompt}`;
+
+  for (const model of MODEL_CANDIDATES) {
+    const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:generateContent`;
+
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: finalPrompt }] }]
+        })
       });
+
+      const raw = await resp.text();
+      const data = JSON.parse(raw);
+
+      if (!resp.ok) continue;
+
+      return res.status(200).json({
+        text: extractText(data),
+        modelUsed: model
+      });
+
+    } catch (e) {
+      continue;
     }
-
-    // ===== 5) Body =====
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body || "{}")
-        : (req.body || {});
-
-    const userPrompt = String(body.prompt || body.message || "").trim();
-    if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
-
-    // 根据 explainLang 决定解释语言
-    const langMap = {
-      ko: "韩语",
-      en: "英语",
-      ja: "日语",
-      zh: "中文"
-    };
-
-    const explainLang = String(body.explainLang || "ko").trim();
-    const explainLangName = langMap[explainLang] || "韩语";
-
-    // ===== ✅ 这里才是“真正送去 Gemini 的老师规则” =====
-    const systemPrompt = `
-你是一位亲切、耐心、适合教学的“AI 中文老师”。
-
-【教学总原则】
-- 中文（汉字）必须读出来（用于发音学习）
-- 不要读标点符号、符号、编号
-- 语气自然、温柔、像真人老师
-- 不使用 markdown 符号（如 ** ## --- 等）
-- 分段清晰，但用自然语言表达
-
-【输出结构】
-1. 中文词语 / 句子
-2. 拼音（标准、可朗读）
-3. ${explainLangName}解释（简洁、适合初学者）
-4. 例句 1~2 个（中文 + 拼音 + ${explainLangName}）
-
-【例句格式固定】（非常重要，前端按钮靠这个识别）
-- 例句必须严格写成下面这样（每条一行）：
-例句1：<中文句子> | <拼音> | <${explainLangName}解释>
-例句2：<中文句子> | <拼音> | <${explainLangName}解释>
-（如果只有1条，就只输出 例句1）
-- 注意：例句必须“一行一条”，不要拆成多行
-
-【重要】
-- 所有解释语言必须使用：${explainLangName}
-- 不要混用其他语言
-- 不要出现“下面是”“总结如下”等 AI 痕迹语
-    `.trim();
-
-    // 如果你未来想让前端传入 system 自定义，也可以启用这行（目前先不用）
-    // const systemFromClient = String(body.system || "").trim();
-    // const finalSystem = systemFromClient || systemPrompt || DEFAULT_TEACHER_SYSTEM;
-
-    const finalSystem = systemPrompt || DEFAULT_TEACHER_SYSTEM;
-    const finalPrompt = `${finalSystem}\n\n【学生问题】\n${userPrompt}`;
-
-    // ===== 6) 调 Gemini：带超时、模型兜底 =====
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000); // 25 秒超时
-
-    let lastError = null;
-
-    for (const model of DEFAULT_MODEL_CANDIDATES) {
-      const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:generateContent`;
-
-      try {
-        const resp = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": apiKey, // ✅ 只放 header，绝不拼到 URL
-          },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: finalPrompt }] }],
-          }),
-          signal: controller.signal,
-        });
-
-        // 无论如何先拿到文本，再尝试 JSON（防止返回 HTML）
-        const rawText = await resp.text();
-        let data = {};
-        try { data = JSON.parse(rawText); }
-        catch { data = { error: { message: rawText } }; }
-
-        if (!resp.ok) {
-          if (isLikelyModelNotFound(data)) {
-            lastError = {
-              status: resp.status,
-              error: data?.error?.message || "Model not available",
-              triedModel: model,
-              details: data,
-            };
-            continue;
-          }
-
-          return res.status(resp.status).json({
-            error: data?.error?.message || "Gemini API error",
-            triedModel: model,
-            apiVersion: API_VERSION,
-            details: data,
-          });
-        }
-
-        const text = extractText(data);
-        clearTimeout(timeout);
-
-        return res.status(200).json({
-          text: text || "(응답 없음)",
-          modelUsed: model,
-          apiVersion: API_VERSION,
-          explainLang,
-        });
-      } catch (e) {
-        lastError = {
-          error: e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e)),
-          triedModel: model,
-        };
-        if (e?.name === "AbortError") break;
-      }
-    }
-
-    clearTimeout(timeout);
-
-    return res.status(500).json({
-      error: "All model candidates failed.",
-      apiVersion: API_VERSION,
-      lastError,
-    });
-
-  } catch (e) {
-    return res.status(500).json({
-      error: "Server error: " + (e?.message || String(e)),
-    });
   }
+
+  res.status(500).json({ error: "All models failed" });
 }
