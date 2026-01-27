@@ -36,21 +36,27 @@
       wrap.innerHTML = `
         <div class="w-full max-w-4xl rounded-2xl bg-white shadow-xl overflow-hidden">
           <!-- Top bar (sticky) -->
-          <div class="learnTopBar sticky top-0 z-[10000] bg-white border-b">
-            <div class="flex items-center justify-between px-4 py-3">
-              <div class="font-semibold">배우기</div>
-              <div class="flex items-center gap-2">
-                <button id="learnClose" type="button"
-                  class="px-3 py-1 rounded-lg bg-slate-100 text-sm hover:bg-slate-200">
-                  닫기
-                </button>
-                <button id="learnCloseX" type="button"
-                  class="w-9 h-9 rounded-lg bg-slate-100 text-lg leading-none hover:bg-slate-200">
-                  ×
-                </button>
-              </div>
-            </div>
-          </div>
+<div class="learnTopBar sticky top-0 bg-white border-b"
+     style="z-index: 2147483647; position: sticky; top: 0;">
+  <div class="flex items-center justify-between px-4 py-3">
+    <div class="font-semibold">배우기</div>
+
+    <!-- ✅ 强制显示在最右上角 -->
+    <div style="position: fixed; right: 22px; top: 18px; z-index: 2147483647;"
+         class="flex items-center gap-2">
+      <button id="learnClose" type="button"
+        class="px-3 py-1 rounded-lg bg-slate-100 text-sm hover:bg-slate-200"
+        style="display:inline-flex; align-items:center; justify-content:center; opacity:1; visibility:visible;">
+        닫기
+      </button>
+      <button id="learnCloseX" type="button"
+        class="w-9 h-9 rounded-lg bg-slate-100 text-lg leading-none hover:bg-slate-200"
+        style="display:inline-flex; align-items:center; justify-content:center; opacity:1; visibility:visible;">
+        ×
+      </button>
+    </div>
+  </div>
+</div>
 
           <!-- Body (scroll) -->
           <div id="learnBody" class="p-4 space-y-3 max-h-[80vh] overflow-auto"></div>
