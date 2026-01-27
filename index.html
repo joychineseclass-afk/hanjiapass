@@ -114,28 +114,24 @@
     </div>
   </div>
 
-  <!-- ✅ (선택) 学习面板：也可以不写，让 JS 动态创建。写在这里更直观 -->
-  <!-- 如果你愿意先不加，这段可以删除，hskUI.js 也会自动创建 -->
-  <!--
+  <!-- ✅ 学习面板：建议保留在 HTML（更稳定） -->
   <div id="learn-panel" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-    <div class="w-full max-w-lg rounded-2xl bg-white shadow-xl overflow-hidden">
+    <div class="w-full max-w-2xl rounded-2xl bg-white shadow-xl overflow-hidden">
       <div class="flex items-center justify-between px-4 py-3 border-b">
         <div class="font-semibold">배우기</div>
         <button id="learnClose" class="px-3 py-1 rounded-lg bg-slate-100">닫기</button>
       </div>
-      <div id="learnBody" class="p-4 space-y-3"></div>
+      <div id="learnBody" class="p-4 space-y-4"></div>
     </div>
   </div>
-  -->
 
-  <!-- ✅ 新结构脚本：替换旧 up.js / ui.js -->
+  <!-- ✅ 新结构脚本 -->
   <script src="./ui/dataPaths.js"></script>
   <script src="./ui/aiUI.js"></script>
   <script src="./ui/hskUI.js"></script>
 
-  <!-- ✅ 兼容：你原来 input 的 onkeydown 调用 AIUI.send，现在改成事件监听，不再需要内联 -->
+  <!-- ✅ Enter 发送（Shift+Enter 换行） -->
   <script>
-    // Enter 发送（Shift+Enter 换行），保持你原来的手感
     const input = document.getElementById("input");
     input?.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
