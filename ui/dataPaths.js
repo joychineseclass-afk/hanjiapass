@@ -1,22 +1,27 @@
-/* ui/dataPaths.js */
+(function () {
+  // 你项目里数据的默认位置：
+  // vocab:  data/vocab/hsk1_vocab.json, hsk2_vocab.json ...
+  // strokes: data/strokes/11904.svg (文件名是 Unicode 十进制码点)
 
-// API endpoint
-window.APP_CONFIG = {
-  API_URL: "https://hanjiapass.vercel.app/api/gemini",
-
-  // data base (absolute URL)
-  DATA_BASE: (() => {
-    try {
-      const u = new URL("./data/", window.location.href);
-      return u.href.replace(/\/$/, "");
-    } catch {
-      return "./data";
-    }
-  })(),
-
-  // ✅ HSK vocab url mapping
-  HSK_VOCAB_URL: (lv) => {
-    const level = String(lv);
-    return `${window.APP_CONFIG.DATA_BASE}/vocab/hsk${level}_vocab.json`;
+  function vocabUrl(level) {
+    return `./data/vocab/hsk${level}_vocab.json`;
   }
-};
+
+  function strokeFileNameForChar(ch) {
+    // makemeahanzi 的 svg 文件名一般是：十进制码点.svg
+    // 例如 U+2E80... 也会用 codePointAt(0)
+    const cp = ch.codePointAt(0);
+    return `${cp}.svg`;
+  }
+
+  function strokeUrl(ch) {
+    return `./data/strokes/${strokeFileNameForChar(ch)}`;
+  }
+
+  // 给全局使用
+  window.DATA_PATHS = {
+    vocabUrl,
+    strokeUrl,
+    strokeFileNameForChar,
+  };
+})();
