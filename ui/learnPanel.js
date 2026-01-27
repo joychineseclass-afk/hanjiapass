@@ -20,23 +20,46 @@
     const wrap = document.createElement("div");
     wrap.id = "learn-panel";
     wrap.className =
-      "hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4";
+      "hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-4";
 
+    // ✅ 关键：内容区滚动；顶部标题栏 sticky 固定
     wrap.innerHTML = `
-      <div class="w-full max-w-4xl rounded-2xl bg-white shadow-xl overflow-hidden">
-        <div class="flex items-center justify-between px-4 py-3 border-b">
-          <div class="font-semibold">배우기</div>
-          <button id="learnClose" class="px-3 py-1 rounded-lg bg-slate-100">닫기</button>
+      <div class="w-full max-w-4xl rounded-2xl bg-white shadow-xl overflow-hidden relative">
+        <!-- Top bar (sticky) -->
+        <div class="learnTopBar sticky top-0 z-[10000] bg-white border-b">
+          <div class="flex items-center justify-between px-4 py-3">
+            <div class="font-semibold">배우기</div>
+            <div class="flex items-center gap-2">
+              <button id="learnClose" class="px-3 py-1 rounded-lg bg-slate-100 text-sm">닫기</button>
+              <button id="learnCloseX" class="w-9 h-9 rounded-lg bg-slate-100 text-lg leading-none">×</button>
+            </div>
+          </div>
         </div>
+
+        <!-- Body (scroll) -->
         <div id="learnBody" class="p-4 space-y-3 max-h-[80vh] overflow-auto"></div>
       </div>
     `;
     document.body.appendChild(wrap);
 
-    $("learnClose")?.addEventListener("click", () => close());
-    // 点击遮罩也能关闭
+    // ✅ 关闭：按钮 + X + ESC + 点击遮罩
+    $("learnClose")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      close();
+    });
+    $("learnCloseX")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      close();
+    });
+
     wrap.addEventListener("click", (e) => {
       if (e.target === wrap) close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
     });
   }
 
@@ -70,13 +93,16 @@
     `;
     learnBody.appendChild(head);
 
-    head.querySelector("#learnSpeakWord")?.addEventListener("click", () => {
+    head.querySelector("#learnSpeakWord")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       window.AIUI?.speak?.(item.word, "zh-CN");
     });
 
-    head.querySelector("#learnAskAI")?.addEventListener("click", () => {
+    head.querySelector("#learnAskAI")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       window.AIUI?.open?.();
-      // ✅ 한국 학생용(韩语优先)
       window.AIUI?.addBubble?.(
         `"${item.word}"를 한국어로 쉽게 설명해줘. 뜻/발음(병음)/예문도 같이 알려줘.`,
         "user"
@@ -135,7 +161,9 @@
 
       grid.appendChild(box);
 
-      box.querySelector(".btnSpeak")?.addEventListener("click", () => {
+      box.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         window.AIUI?.speak?.(ch, "zh-CN");
       });
 
@@ -149,7 +177,6 @@
       obj.style.height = "100%";
       obj.style.display = "block";
 
-      // fallback
       const fallback = document.createElement("div");
       fallback.className = "text-xs text-gray-400 text-center p-2";
       fallback.innerHTML = `필순 파일 없음<br/><span class="text-[10px]">${escapeHtml(fileName)}</span>`;
@@ -158,19 +185,16 @@
       canvas.appendChild(obj);
       obj.appendChild(fallback);
 
-      // 控制：SVG 原生支持 pauseAnimations/unpauseAnimations/setCurrentTime
       function getSvgEl() {
         try {
           const doc = obj.contentDocument;
-          const svg = doc?.querySelector("svg");
-          return svg || null;
+          return doc?.querySelector("svg") || null;
         } catch {
           return null;
         }
       }
 
       function replay() {
-        // 保险做法：重新加载 object（最稳）
         if (!strokeUrl) return;
         const bust = `v=${Date.now()}`;
         obj.data = strokeUrl.includes("?") ? `${strokeUrl}&${bust}` : `${strokeUrl}?${bust}`;
@@ -179,20 +203,15 @@
       function play() {
         const svg = getSvgEl();
         if (!svg) return;
-        try {
-          svg.unpauseAnimations();
-        } catch {}
+        try { svg.unpauseAnimations(); } catch {}
       }
 
       function pause() {
         const svg = getSvgEl();
         if (!svg) return;
-        try {
-          svg.pauseAnimations();
-        } catch {}
+        try { svg.pauseAnimations(); } catch {}
       }
 
-      // object 加载完成后：让它从 0 秒开始（效果更一致）
       obj.addEventListener("load", () => {
         const svg = getSvgEl();
         if (!svg) return;
@@ -202,21 +221,19 @@
         } catch {}
       });
 
-      box.querySelector(".btnPlay")?.addEventListener("click", play);
-      box.querySelector(".btnPause")?.addEventListener("click", pause);
-      box.querySelector(".btnReplay")?.addEventListener("click", replay);
-
-      // ✅ 也支持点击字形区域：单击暂停/继续
-      canvas.addEventListener("click", () => {
-        const svg = getSvgEl();
-        if (!svg) return;
-        try {
-          // 没有直接 isPaused 标志：用 try/catch 简单切换
-          svg.pauseAnimations();
-          // 再立即 unpause 会变成“播放”，所以这里用一个小状态
-        } catch {}
+      box.querySelector(".btnPlay")?.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation(); play();
+      });
+      box.querySelector(".btnPause")?.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation(); pause();
+      });
+      box.querySelector(".btnReplay")?.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation(); replay();
       });
     }
+
+    // ✅ 打开时滚动到顶部（避免一打开就在中间看不到关闭）
+    try { learnBody.scrollTop = 0; } catch {}
   }
 
   window.LEARN_PANEL = { open, close };
