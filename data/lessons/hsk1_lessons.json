@@ -1,28 +1,74 @@
-[
-  { "lesson": 1, "lessonTitle": { "ko": "인사", "zh": "打招呼" }, "word": "你好", "pinyin": "nǐ hǎo", "meaning": { "ko": "안녕하세요" } },
-  { "lesson": 1, "lessonTitle": { "ko": "인사", "zh": "打招呼" }, "word": "您好", "pinyin": "nín hǎo", "meaning": { "ko": "안녕하세요(높임)" } },
-  { "lesson": 1, "word": "再见", "pinyin": "zài jiàn", "meaning": { "ko": "안녕히 가세요/계세요" } },
-  { "lesson": 1, "word": "谢谢", "pinyin": "xiè xie", "meaning": { "ko": "감사합니다" } },
-  { "lesson": 1, "word": "不客气", "pinyin": "bú kè qi", "meaning": { "ko": "천만에요" } },
-  { "lesson": 1, "word": "对不起", "pinyin": "duì bu qǐ", "meaning": { "ko": "미안합니다" } },
-  { "lesson": 1, "word": "没关系", "pinyin": "méi guān xi", "meaning": { "ko": "괜찮아요" } },
+{
+  "level": 1,
+  "langPriority": "ko",
+  "lessons": [
+    {
+      "id": 1,
+      "title_ko": "인사하기",
+      "title_zh": "打招呼",
+      "vocab": [
+        {
+          "word": "你好",
+          "pinyin": "nǐ hǎo",
+          "ko": "안녕하세요",
+          "example_zh": "你好！很高兴认识你。",
+          "example_pinyin": "Nǐ hǎo! Hěn gāoxìng rènshi nǐ.",
+          "example_ko": "안녕하세요! 만나서 반가워요."
+        },
+        {
+          "word": "谢谢",
+          "pinyin": "xièxie",
+          "ko": "감사합니다",
+          "example_zh": "谢谢你！",
+          "example_pinyin": "Xièxie nǐ!",
+          "example_ko": "고마워요!"
+        },
+        {
+          "word": "不客气",
+          "pinyin": "bú kèqi",
+          "ko": "천만에요 / 별말씀을요",
+          "example_zh": "不客气！",
+          "example_pinyin": "Bú kèqi!",
+          "example_ko": "천만에요!"
+        }
+      ],
+      "dialogue": [
+        {
+          "A_zh": "你好！",
+          "A_pinyin": "Nǐ hǎo!",
+          "A_ko": "안녕하세요!",
+          "B_zh": "你好！",
+          "B_pinyin": "Nǐ hǎo!",
+          "B_ko": "안녕하세요!"
+        },
+        {
+          "A_zh": "谢谢你！",
+          "A_pinyin": "Xièxie nǐ!",
+          "A_ko": "고마워요!",
+          "B_zh": "不客气！",
+          "B_pinyin": "Bú kèqi!",
+          "B_ko": "천만에요!"
+        }
+      ],
+      "practice": [
+        {
+          "type": "fill",
+          "q_ko": "빈칸에 알맞은 말을 넣으세요.",
+          "q_zh": "填空：____！很高兴认识你。",
+          "q_pinyin": "____! Hěn gāoxìng rènshi nǐ.",
+          "answer": "你好"
+        }
+      ]
+    },
 
-  { "lesson": 2, "lessonTitle": { "ko": "이름 묻기", "zh": "问名字" }, "word": "你", "pinyin": "nǐ", "meaning": { "ko": "너, 당신" } },
-  { "lesson": 2, "word": "我", "pinyin": "wǒ", "meaning": { "ko": "나" } },
-  { "lesson": 2, "word": "叫", "pinyin": "jiào", "meaning": { "ko": "~라고 부르다" } },
-  { "lesson": 2, "word": "名字", "pinyin": "míng zi", "meaning": { "ko": "이름" } },
-  { "lesson": 2, "word": "什么", "pinyin": "shén me", "meaning": { "ko": "무엇" } },
-  { "lesson": 2, "word": "呢", "pinyin": "ne", "meaning": { "ko": "~는요?" } },
-  { "lesson": 2, "word": "很", "pinyin": "hěn", "meaning": { "ko": "매우" } },
-  { "lesson": 2, "word": "高兴", "pinyin": "gāo xìng", "meaning": { "ko": "기쁘다" } },
-  { "lesson": 2, "word": "认识", "pinyin": "rèn shi", "meaning": { "ko": "알게 되다, 만나다" } },
-
-  { "lesson": 3, "lessonTitle": { "ko": "국적 묻기", "zh": "问国籍" }, "word": "哪", "pinyin": "nǎ", "meaning": { "ko": "어느" } },
-  { "lesson": 3, "word": "国", "pinyin": "guó", "meaning": { "ko": "나라" } },
-  { "lesson": 3, "word": "人", "pinyin": "rén", "meaning": { "ko": "사람" } },
-  { "lesson": 3, "word": "是", "pinyin": "shì", "meaning": { "ko": "~이다" } },
-  { "lesson": 3, "word": "中国", "pinyin": "Zhōng guó", "meaning": { "ko": "중국" } },
-  { "lesson": 3, "word": "韩国", "pinyin": "Hán guó", "meaning": { "ko": "한국" } },
-  { "lesson": 3, "word": "美国", "pinyin": "Měi guó", "meaning": { "ko": "미국" } },
-  { "lesson": 3, "word": "呢", "pinyin": "ne", "meaning": { "ko": "~는요?" } }
-]
+    { "id": 2, "title_ko": "이름 묻기", "title_zh": "你叫什么名字？", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 3, "title_ko": "국적 말하기", "title_zh": "你是哪国人？", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 4, "title_ko": "숫자", "title_zh": "数字", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 5, "title_ko": "시간", "title_zh": "几点了？", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 6, "title_ko": "요일/날짜", "title_zh": "星期几/日期", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 7, "title_ko": "가족", "title_zh": "家人", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 8, "title_ko": "학교", "title_zh": "学校", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 9, "title_ko": "음식", "title_zh": "吃什么", "vocab": [], "dialogue": [], "practice": [] },
+    { "id": 10, "title_ko": "장소/길 묻기", "title_zh": "哪里/怎么走", "vocab": [], "dialogue": [], "practice": [] }
+  ]
+}
