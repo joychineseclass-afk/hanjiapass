@@ -122,11 +122,28 @@
           <div class="text-lg font-semibold">${word}</div>
           <div class="text-xs text-gray-400">Learn</div>
         </div>
-        <div class="mt-1 text-sm text-gray-600">${escapeHtml(line1 || "")}</div>
-        <div class="mt-2 text-xs text-gray-500">${
-          ex ? `예문: ${escapeHtml(ex)}` : "&nbsp;"
-        }</div>
-      `;
+        const meaningText =
+  typeof item.meaning === "object"
+    ? item.meaning.ko || item.meaning.en || ""
+    : item.meaning || "";
+
+const exampleText =
+  typeof item.example === "object"
+    ? item.example.ko || item.example.zh || item.example.en || ""
+    : item.example || "";
+
+card.innerHTML = `
+  <div class="flex items-center justify-between gap-2">
+    <div class="text-lg font-semibold">${escapeHtml(item.word || "(빈 항목)")}</div>
+    <div class="text-xs text-gray-400">Learn</div>
+  </div>
+  <div class="mt-1 text-sm text-gray-600">${escapeHtml(
+    [item.pinyin, meaningText].filter(Boolean).join(" · ")
+  )}</div>
+  <div class="mt-2 text-xs text-gray-500">${
+    exampleText ? `예문: ${escapeHtml(exampleText)}` : "&nbsp;"
+  }</div>
+`;
 
       card.addEventListener("click", () => onClickWord?.(item));
       container.appendChild(card);
