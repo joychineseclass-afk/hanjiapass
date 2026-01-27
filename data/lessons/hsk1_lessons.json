@@ -1,0 +1,9 @@
+[
+  { "lesson": 1, "lessonTitle": { "ko": "인사", "zh": "打招呼" }, "word": "你好", "pinyin": "nǐ hǎo", "meaning": { "ko": "안녕하세요" } },
+  { "lesson": 1, "lessonTitle": { "ko": "인사", "zh": "打招呼" }, "word": "您好", "pinyin": "nín hǎo", "meaning": { "ko": "안녕하세요(높임)" } },
+  { "lesson": 1, "word": "再见", "pinyin": "zài jiàn", "meaning": { "ko": "안녕히 가세요/계세요" } },
+  { "lesson": 1, "word": "谢谢", "pinyin": "xiè xie", "meaning": { "ko": "감사합니다" } },
+  { "lesson": 1, "word": "不客气", "pinyin": "bú kè qi", "meaning": { "ko": "천만에요" } },
+  { "lesson": 1, "word": "对不起", "pinyin": "duì bu qǐ", "meaning": { "ko": "미안합니다" } },
+  { "lesson": 1, "word": "没关系", "pinyin": "méi guān xi", "meaning": { "ko": "괜찮아요" } }
+]
