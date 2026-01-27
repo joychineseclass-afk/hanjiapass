@@ -1,26 +1,35 @@
+// ui/dataPaths.js
 (function () {
-  // 你项目里数据的默认位置：
-  // vocab:  data/vocab/hsk1_vocab.json, hsk2_vocab.json ...
-  // strokes: data/strokes/11904.svg (文件名是 Unicode 十进制码点)
+  // GitHub Pages 子路径兼容（如果你不是放在根域名，而是 /hanjapass/ 这种）
+  // 一般保持 "" 就行；如果你的 Pages 地址是 https://xxx.github.io/hanjapass/
+  // 那么 BASE 写成 "/hanjapass" 更稳。
+  const BASE = "";
 
+  // 词库 JSON（按 level）
   function vocabUrl(level) {
-    return `./data/vocab/hsk${level}_vocab.json`;
+    return `${BASE}/data/vocab/hsk${level}_vocab.json`;
   }
 
+  // 课程 JSON（按 level）——✅ 你报错的就是缺这个
+  function lessonsUrl(level) {
+    return `${BASE}/data/lessons/hsk${level}_lessons.json`;
+  }
+
+  // 单字笔顺 SVG（makemeahanzi：按 Unicode codepoint）
   function strokeFileNameForChar(ch) {
-    // makemeahanzi 的 svg 文件名一般是：十进制码点.svg
-    // 例如 U+2E80... 也会用 codePointAt(0)
-    const cp = ch.codePointAt(0);
-    return `${cp}.svg`;
+    const code = ch.codePointAt(0);
+    return `${code}.svg`;
   }
 
   function strokeUrl(ch) {
-    return `./data/strokes/${strokeFileNameForChar(ch)}`;
+    return `${BASE}/data/strokes/${strokeFileNameForChar(ch)}`;
   }
 
-  // 给全局使用
+  // 暴露给 window
   window.DATA_PATHS = {
+    BASE,
     vocabUrl,
+    lessonsUrl,
     strokeUrl,
     strokeFileNameForChar,
   };
