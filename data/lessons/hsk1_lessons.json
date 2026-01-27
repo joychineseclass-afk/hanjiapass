@@ -3,72 +3,55 @@
   "langPriority": "ko",
   "lessons": [
     {
-      "id": 1,
-      "title_ko": "인사하기",
-      "title_zh": "打招呼",
+      "id": "L01",
+      "title_ko": "1과: 인사하기",
+      "title_zh": "第1课：打招呼",
       "vocab": [
-        {
-          "word": "你好",
-          "pinyin": "nǐ hǎo",
-          "ko": "안녕하세요",
-          "example_zh": "你好！很高兴认识你。",
-          "example_pinyin": "Nǐ hǎo! Hěn gāoxìng rènshi nǐ.",
-          "example_ko": "안녕하세요! 만나서 반가워요."
-        },
-        {
-          "word": "谢谢",
-          "pinyin": "xièxie",
-          "ko": "감사합니다",
-          "example_zh": "谢谢你！",
-          "example_pinyin": "Xièxie nǐ!",
-          "example_ko": "고마워요!"
-        },
-        {
-          "word": "不客气",
-          "pinyin": "bú kèqi",
-          "ko": "천만에요 / 별말씀을요",
-          "example_zh": "不客气！",
-          "example_pinyin": "Bú kèqi!",
-          "example_ko": "천만에요!"
-        }
+        { "word": "你好", "pinyin": "nǐ hǎo", "meaning_ko": "안녕하세요", "example": "你好！很高兴认识你。", "example_pinyin": "Nǐ hǎo! Hěn gāoxìng rènshi nǐ.", "example_ko": "안녕하세요! 만나서 반가워요." },
+        { "word": "谢谢", "pinyin": "xièxie", "meaning_ko": "감사합니다", "example": "谢谢你！", "example_pinyin": "Xièxie nǐ!", "example_ko": "고마워요!" },
+        { "word": "不客气", "pinyin": "bú kèqi", "meaning_ko": "천만에요", "example": "不客气。", "example_pinyin": "Bú kèqi.", "example_ko": "천만에요." }
       ],
-      "dialogue": [
-        {
-          "A_zh": "你好！",
-          "A_pinyin": "Nǐ hǎo!",
-          "A_ko": "안녕하세요!",
-          "B_zh": "你好！",
-          "B_pinyin": "Nǐ hǎo!",
-          "B_ko": "안녕하세요!"
-        },
-        {
-          "A_zh": "谢谢你！",
-          "A_pinyin": "Xièxie nǐ!",
-          "A_ko": "고마워요!",
-          "B_zh": "不客气！",
-          "B_pinyin": "Bú kèqi!",
-          "B_ko": "천만에요!"
-        }
-      ],
-      "practice": [
-        {
-          "type": "fill",
-          "q_ko": "빈칸에 알맞은 말을 넣으세요.",
-          "q_zh": "填空：____！很高兴认识你。",
-          "q_pinyin": "____! Hěn gāoxìng rènshi nǐ.",
-          "answer": "你好"
-        }
-      ]
+      "dialog": {
+        "title_ko": "대화",
+        "lines": [
+          { "spk": "A", "zh": "你好！", "py": "Nǐ hǎo!", "ko": "안녕하세요!" },
+          { "spk": "B", "zh": "你好！", "py": "Nǐ hǎo!", "ko": "안녕하세요!" },
+          { "spk": "A", "zh": "谢谢！", "py": "Xièxie!", "ko": "감사합니다!" },
+          { "spk": "B", "zh": "不客气。", "py": "Bú kèqi.", "ko": "천만에요." }
+        ]
+      },
+      "practice": {
+        "title_ko": "연습",
+        "items": [
+          { "type": "match", "q_ko": "‘谢谢’의 뜻은?", "choices": ["안녕하세요", "감사합니다", "천만에요"], "answerIndex": 1 },
+          { "type": "fill", "q_ko": "빈칸 채우기: 你好! —— ________", "answer": "谢谢" }
+        ]
+      }
     },
 
-    { "id": 2, "title_ko": "이름 묻기", "title_zh": "你叫什么名字？", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 3, "title_ko": "국적 말하기", "title_zh": "你是哪国人？", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 4, "title_ko": "숫자", "title_zh": "数字", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 5, "title_ko": "시간", "title_zh": "几点了？", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 6, "title_ko": "요일/날짜", "title_zh": "星期几/日期", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 7, "title_ko": "가족", "title_zh": "家人", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 8, "title_ko": "학교", "title_zh": "学校", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 9, "title_ko": "음식", "title_zh": "吃什么", "vocab": [], "dialogue": [], "practice": [] },
-    { "id": 10, "title_ko": "장소/길 묻기", "title_zh": "哪里/怎么走", "vocab": [], "dialogue": [], "practice": [] }
+    {
+      "id": "L02",
+      "title_ko": "2과: 이름 묻기",
+      "title_zh": "第2课：你叫什么名字？",
+      "vocab": [
+        { "word": "你", "pinyin": "nǐ", "meaning_ko": "너/당신", "example": "你好吗？", "example_pinyin": "Nǐ hǎo ma?", "example_ko": "안녕하세요?(잘 지내요?)" },
+        { "word": "叫", "pinyin": "jiào", "meaning_ko": "…라고 부르다", "example": "我叫小明。", "example_pinyin": "Wǒ jiào Xiǎomíng.", "example_ko": "저는 샤오밍이에요." },
+        { "word": "什么", "pinyin": "shénme", "meaning_ko": "무엇", "example": "你叫什么名字？", "example_pinyin": "Nǐ jiào shénme míngzi?", "example_ko": "이름이 뭐예요?" },
+        { "word": "名字", "pinyin": "míngzi", "meaning_ko": "이름", "example": "我的名字是…", "example_pinyin": "Wǒ de míngzi shì…", "example_ko": "제 이름은 …예요." }
+      ],
+      "dialog": {
+        "title_ko": "대화",
+        "lines": [
+          { "spk": "A", "zh": "你叫什么名字？", "py": "Nǐ jiào shénme míngzi?", "ko": "이름이 뭐예요?" },
+          { "spk": "B", "zh": "我叫美美。", "py": "Wǒ jiào Měiměi.", "ko": "저는 메이메이예요." }
+        ]
+      },
+      "practice": {
+        "title_ko": "연습",
+        "items": [
+          { "type": "fill", "q_ko": "중국어로 ‘저는 ~~예요’는?", "answer": "我叫" }
+        ]
+      }
+    }
   ]
 }
