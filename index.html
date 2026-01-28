@@ -23,6 +23,61 @@
       background: #fb923c !important;
       color: white !important;
     }
+   
+  /* ===== 따라쓰기(描红) 练习格：米字格 + 灰色大字水印 ===== */
+  .trace-gridbox{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .trace-gridbox::before,
+  .trace-gridbox::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.22;
+  }
+  /* 对角虚线 */
+  .trace-gridbox::before{
+    background:
+      linear-gradient(45deg, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%),
+      linear-gradient(-45deg, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%);
+    -webkit-mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
+            mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
+  }
+  /* 十字线 */
+  .trace-gridbox::after{
+    background:
+      linear-gradient(to right, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%),
+      linear-gradient(to bottom, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%);
+    opacity: .10;
+  }
+
+  /* 灰色大字（描红底字） */
+  .trace-watermark{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: clamp(220px, 38vw, 420px);
+    font-weight: 800;
+    color: rgba(0,0,0,.16);
+    user-select:none;
+    pointer-events:none;
+    line-height: 1;
+  }
+
+  /* 顶部工具按钮高亮 */
+  .trace-btn-on{
+    background:#fb923c !important;
+    color:#fff !important;
+  }
+
   </style>
 </head>
 
@@ -182,3 +237,4 @@
   </script>
 </body>
 </html>
+
