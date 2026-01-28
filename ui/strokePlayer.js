@@ -1,4 +1,10 @@
 function mountStrokeSwitcher(targetEl, hanChars) {
+
+  // ===== 教学跟写状态 =====
+  let traceApi = null;
+  let teachingMode = false;   // 是否处于教学模式
+  let demoPlaying = false;    // 当前是否正在播放示范笔画
+
   if (!targetEl) return;
 
   const chars = Array.from(hanChars || []).filter(Boolean);
