@@ -261,20 +261,64 @@ traceApi = window.StrokeTrace?.initTraceMode({
   svg,
   getColor: () => targetEl.querySelector(".inpColor")?.value || "#ff3b30",
   getSize: () => Number(targetEl.querySelector(".inpSize")?.value || 8),
+
+  // ✅ 每写对一笔
+  onStrokeCorrect: () => {
+    if (teachingMode) {
+      setTimeout(() => playDemoStroke(), 500); // 示范下一笔
+    }
+  },
+
+  // ✅ 全部完成
+  onAllComplete: () => {
+    alert("🎉 잘했어요! 모든 필순을 완료했어요!");
+  }
+});
+      
+function playDemoStroke() {
+  const svg = stage.querySelector("svg");
+  if (!svg) return;
+
+  const strokes = Array.from(svg.querySelectorAll('[id^="make-me-a-hanzi-animation-"]'));
+  const idx = traceApi?.getStrokeIndex?.() || 0;
+  const stroke = strokes[idx];
+  if (!stroke) return;
+
+  demoPlaying = true;
+  traceApi.setEnabled(false); // 示范时禁止学生写
+
+  try {
+    stroke.style.animation = "none";
+    stroke.getBoundingClientRect(); // 强制刷新
+    stroke.style.animation = null;  // 重新触发 SVG 动画
+  } catch {}
+
+  // 根据动画时长自动结束示范（大约 1.2 秒）
+  setTimeout(() => {
+    demoPlaying = false;
+    traceApi.setEnabled(true); // 允许学生写
+  }, 1200);
+}
+
+// ⭐ 따라쓰기 教学模式按钮
+const traceBtn = targetEl.querySelector(".btnTrace");
+
+traceBtn?.addEventListener("click", () => {
+  teachingMode = !teachingMode;
+  traceBtn.classList.toggle("trace-active", teachingMode);
+
+  if (teachingMode) {
+    playDemoStroke();
+  } else {
+    traceApi?.setEnabled(false);
+  }
 });
 
-// ⭐ 따라쓰기 按钮逻辑
-let tracing = false;
-
-targetEl.querySelector(".btnTrace")?.addEventListener("click", () => {
-  tracing = !tracing;
-  traceApi?.setEnabled(tracing);
-  targetEl.querySelector(".btnTrace").classList.toggle("bg-orange-200", tracing);
-});
-
+// 清除学生笔迹
 targetEl.querySelector(".btnClear")?.addEventListener("click", () => {
   traceApi?.clearCurrent();
 });
+
  
       // ✅ 加载新字后：重置视图
       resetView();
