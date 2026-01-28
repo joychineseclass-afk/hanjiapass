@@ -324,7 +324,9 @@
     }
 
     addBubble(reply, "bot");
-    speak(reply, langForTTS());
+
+   // 解释内容用“说明语言”的TTS
+   speak(reply, ttsLangForExplain());
   }
 
   // Enter 发送 / Shift+Enter 换行（如果 input 是 textarea 也适用）
