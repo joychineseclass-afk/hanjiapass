@@ -108,181 +108,176 @@
    * - 用 <object> 加载 SVG（与你当前 strokes 文件兼容）
    */
   function mountStrokeSwitcher(targetEl, hanChars) {
-    if (!targetEl) return;
+  if (!targetEl) return;
 
-    const chars = Array.from(hanChars || []).filter(Boolean);
-    if (chars.length === 0) {
-      targetEl.innerHTML = `<div class="text-sm text-gray-500">표시할 글자가 없어요.</div>`;
+  const chars = Array.from(hanChars || []).filter(Boolean);
+  if (chars.length === 0) {
+    targetEl.innerHTML = `<div class="text-sm text-gray-500">표시할 글자가 없어요.</div>`;
+    return;
+  }
+
+  targetEl.innerHTML = `
+    <div class="border rounded-xl p-3 bg-white">
+      <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
+        <div class="font-semibold">필순(筆順)</div>
+        <div class="flex gap-2 flex-wrap justify-end">
+          <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
+          <button type="button" class="btnPlay px-2 py-1 rounded bg-slate-100 text-xs">재생</button>
+          <button type="button" class="btnPause px-2 py-1 rounded bg-slate-100 text-xs">일시정지</button>
+          <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-2" id="strokeBtns"></div>
+
+      <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center">
+        <div id="strokeStage" class="w-full h-full flex items-center justify-center text-xs text-gray-400">
+          loading...
+        </div>
+      </div>
+
+      <div class="text-[10px] text-gray-400 mt-2" id="strokeFileName"></div>
+
+      <div class="text-xs text-gray-500 mt-2">
+        💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요.
+      </div>
+    </div>
+  `;
+
+  const btnWrap = targetEl.querySelector("#strokeBtns");
+  const stage = targetEl.querySelector("#strokeStage");
+  const fileNameEl = targetEl.querySelector("#strokeFileName");
+
+  let currentChar = chars[0];
+  let currentUrl = "";
+  let currentSvg = null;
+
+  function strokeUrl(ch) {
+    return window.DATA_PATHS?.strokeUrl?.(ch) || "";
+  }
+  function fileName(ch) {
+    return window.DATA_PATHS?.strokeFileNameForChar?.(ch) || "";
+  }
+
+  function setActive(btn) {
+    Array.from(btnWrap.children).forEach((x) =>
+      x.classList.remove("border-orange-400", "bg-orange-50")
+    );
+    btn.classList.add("border-orange-400", "bg-orange-50");
+  }
+
+  async function loadChar(ch) {
+    currentChar = ch;
+    currentUrl = strokeUrl(ch);
+
+    if (fileNameEl) fileNameEl.textContent = fileName(ch);
+
+    if (!currentUrl) {
+      stage.innerHTML = `<div class="text-sm text-red-600">strokeUrl 없음: ${ch}</div>`;
+      currentSvg = null;
       return;
     }
 
-    // UI
-    targetEl.innerHTML = `
-      <div class="border rounded-xl p-3 bg-white">
-        <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
-          <div class="font-semibold">필순(筆順)</div>
-          <div class="flex gap-2 flex-wrap justify-end">
-            <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
-            <button type="button" class="btnPlay px-2 py-1 rounded bg-slate-100 text-xs">재생</button>
-            <button type="button" class="btnPause px-2 py-1 rounded bg-slate-100 text-xs">일시정지</button>
-            <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
-          </div>
-        </div>
+    stage.innerHTML = `<div class="text-xs text-gray-400">loading... (${ch})</div>`;
+    currentSvg = null;
 
-        <div class="flex flex-wrap gap-2 mb-2" id="strokeBtns"></div>
-
-        <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center">
-          <div id="strokeStage" class="w-full h-full flex items-center justify-center text-xs text-gray-400">loading...</div>
-        </div>
-
-        <div class="text-[10px] text-gray-400 mt-2" id="strokeFileName"></div>
-
-        <div class="text-xs text-gray-500 mt-2">
-          💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요.
-        </div>
-      </div>
-    `;
-
-    const btnWrap = targetEl.querySelector("#strokeBtns");
-    const stage = targetEl.querySelector("#strokeStage");
-    const fileNameEl = targetEl.querySelector("#strokeFileName");
-
-    // ✅ 只用一个 object，切字只换 data
-    const strokeObj = document.createElement("object");
-    strokeObj.type = "image/svg+xml";
-    strokeObj.style.width = "100%";
-    strokeObj.style.height = "100%";
-    strokeObj.style.display = "block";
-
-    // 当前字
-    let currentChar = chars[0];
-    let currentStrokeUrl = "";
-
-    function getStrokeUrl(ch) {
-      return window.DATA_PATHS?.strokeUrl?.(ch) || "";
-    }
-    function getFileName(ch) {
-      return window.DATA_PATHS?.strokeFileNameForChar?.(ch) || "";
-    }
-
-    function getSvgEl() {
-      try {
-        return strokeObj.contentDocument?.querySelector("svg") || null;
-      } catch {
-        return null;
-      }
-    }
-
-    function setLoading(ch) {
-      stage.innerHTML = `<div class="text-xs text-gray-400">loading... (${escapeHtml(ch)})</div>`;
-    }
-
-    function setError(ch) {
-      stage.innerHTML = `<div class="text-sm text-red-600">필순 데이터를 찾지 못했어요: ${escapeHtml(ch)}</div>`;
-    }
-
-    function loadChar(ch) {
-      currentChar = ch;
-      currentStrokeUrl = getStrokeUrl(ch);
-
-      // filename
-      if (fileNameEl) fileNameEl.textContent = getFileName(ch);
-
-      if (!currentStrokeUrl) {
-        setError(ch);
+    try {
+      const res = await fetch(currentUrl, { cache: "no-store" });
+      if (!res.ok) {
+        stage.innerHTML = `<div class="text-sm text-red-600">
+          필순 파일이 없어요 (HTTP ${res.status})<br/>
+          <span class="text-[11px] break-all">${currentUrl}</span>
+        </div>`;
         return;
       }
 
-      setLoading(ch);
+      const svgText = await res.text();
+      stage.innerHTML = svgText;
 
-      // 先移除再设置 data，避免某些浏览器不触发 onload
-      try {
-        strokeObj.remove();
-      } catch {}
+      const svg = stage.querySelector("svg");
+      currentSvg = svg || null;
 
-      strokeObj.data = currentStrokeUrl;
-    }
-
-    // object load -> 显示 svg
-    strokeObj.onload = () => {
-      // 把 stage 清空再放 object
-      stage.innerHTML = "";
-      stage.appendChild(strokeObj);
-
-      // 尝试从头开始播放
-      const svg = getSvgEl();
       if (svg) {
+        svg.style.maxWidth = "100%";
+        svg.style.height = "auto";
         try {
           svg.setCurrentTime(0);
           svg.unpauseAnimations();
         } catch {}
       }
-    };
-
-    // buttons render
-    btnWrap.innerHTML = "";
-    chars.forEach((ch, i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50";
-      b.textContent = ch;
-
-      b.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        Array.from(btnWrap.children).forEach((x) =>
-          x.classList.remove("border-orange-400", "bg-orange-50")
-        );
-        b.classList.add("border-orange-400", "bg-orange-50");
-        loadChar(ch);
-      });
-
-      btnWrap.appendChild(b);
-
-      // 默认选中第一个
-      if (i === 0) requestAnimationFrame(() => b.click());
-    });
-
-    // 控制按钮
-    targetEl.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.AIUI?.speak?.(currentChar, "zh-CN");
-    });
-
-    targetEl.querySelector(".btnPlay")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const svg = getSvgEl();
-      if (!svg) return;
-      try {
-        svg.unpauseAnimations();
-      } catch {}
-    });
-
-    targetEl.querySelector(".btnPause")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const svg = getSvgEl();
-      if (!svg) return;
-      try {
-        svg.pauseAnimations();
-      } catch {}
-    });
-
-    targetEl.querySelector(".btnReplay")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!currentStrokeUrl) return;
-
-      // cache-bust 强制重新加载
-      const bust = `v=${Date.now()}`;
-      strokeObj.data = currentStrokeUrl.includes("?")
-        ? `${currentStrokeUrl}&${bust}`
-        : `${currentStrokeUrl}?${bust}`;
-    });
+    } catch (e) {
+      stage.innerHTML = `<div class="text-sm text-red-600">
+        로드 실패<br/>
+        <span class="text-[11px] break-all">${currentUrl}</span>
+      </div>`;
+    }
   }
+
+  // 字按钮
+  btnWrap.innerHTML = "";
+  chars.forEach((ch, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50";
+    b.textContent = ch;
+
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setActive(b);
+      loadChar(ch);
+    });
+
+    btnWrap.appendChild(b);
+    if (i === 0) requestAnimationFrame(() => b.click());
+  });
+
+  // 控制按钮
+  targetEl.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.AIUI?.speak?.(currentChar, "zh-CN");
+  });
+
+  targetEl.querySelector(".btnPlay")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!currentSvg) return;
+    try { currentSvg.unpauseAnimations(); } catch {}
+  });
+
+  targetEl.querySelector(".btnPause")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!currentSvg) return;
+    try { currentSvg.pauseAnimations(); } catch {}
+  });
+
+  targetEl.querySelector(".btnReplay")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!currentUrl) return;
+
+    const bust = `v=${Date.now()}`;
+    const url = currentUrl.includes("?") ? `${currentUrl}&${bust}` : `${currentUrl}?${bust}`;
+
+    fetch(url, { cache: "no-store" })
+      .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+      .then((t) => {
+        stage.innerHTML = t;
+        currentSvg = stage.querySelector("svg");
+        if (currentSvg) {
+          currentSvg.style.maxWidth = "100%";
+          currentSvg.style.height = "auto";
+          try {
+            currentSvg.setCurrentTime(0);
+            currentSvg.unpauseAnimations();
+          } catch {}
+        }
+      })
+      .catch(() => {});
+  });
+}
 
   async function open(item) {
     ensurePanel();
