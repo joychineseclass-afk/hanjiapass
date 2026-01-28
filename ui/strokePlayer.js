@@ -12,7 +12,7 @@ function mountStrokeSwitcher(targetEl, hanChars) {
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold">필순(筆順)</div>
 
-        <!-- ✅ 顶部工具条：읽기 / 다시 + 缩放控制 -->
+        <!-- ✅ 顶部工具条：읽기 / 다시 + 缩放控制 + 따라쓰기 -->
         <div class="flex gap-2 flex-wrap justify-end items-center">
           <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
           <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
@@ -21,7 +21,9 @@ function mountStrokeSwitcher(targetEl, hanChars) {
 
           <button type="button" class="btnZoomOut px-2 py-1 rounded bg-slate-100 text-xs">－</button>
           <button type="button" class="btnZoomIn px-2 py-1 rounded bg-slate-100 text-xs">＋</button>
-          <button type="button" class="btnFit px-2 py-1 rounded bg-slate-100 text-xs">맞춤</button>
+
+          <!-- ✅ B 方案：맞춤 -> 따라쓰기 -->
+          <button type="button" class="btnTrace px-2 py-1 rounded bg-slate-100 text-xs">따라쓰기</button>
           <button type="button" class="btnReset px-2 py-1 rounded bg-slate-100 text-xs">초기화</button>
         </div>
       </div>
@@ -29,7 +31,7 @@ function mountStrokeSwitcher(targetEl, hanChars) {
       <!-- 字按钮 -->
       <div class="flex flex-wrap gap-2 mb-2" id="strokeBtns"></div>
 
-      <!-- ✅ 视口 viewport：可拖动 + 缩放 -->
+      <!-- ✅ 视口 viewport：可拖动 + 缩放 + 触屏跟写 -->
       <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden relative select-none">
         <div id="strokeViewport"
              class="absolute inset-0 cursor-grab active:cursor-grabbing"
@@ -39,6 +41,11 @@ function mountStrokeSwitcher(targetEl, hanChars) {
             loading...
           </div>
         </div>
+
+        <!-- ✅ 跟写层：默认隐藏（盖在最上层） -->
+        <canvas id="traceCanvas"
+          class="absolute inset-0 w-full h-full hidden"
+          style="touch-action:none;"></canvas>
 
         <!-- 右下角显示缩放比例（可选） -->
         <div id="strokeZoomLabel"
@@ -50,7 +57,7 @@ function mountStrokeSwitcher(targetEl, hanChars) {
       <div class="text-[10px] text-gray-400 mt-2" id="strokeFileName"></div>
 
       <div class="text-xs text-gray-500 mt-2">
-        💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요. (휠=확대/축소, 드래그=이동)
+        💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요. (휠=확대/축소, 드래그=이동, 따라쓰기=터치로 따라쓰기)
       </div>
     </div>
   `;
@@ -60,6 +67,7 @@ function mountStrokeSwitcher(targetEl, hanChars) {
   const viewport = targetEl.querySelector("#strokeViewport");
   const fileNameEl = targetEl.querySelector("#strokeFileName");
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
+  const traceCanvas = targetEl.querySelector("#traceCanvas");
 
   let currentChar = chars[0];
   let currentUrl = "";
@@ -71,6 +79,11 @@ function mountStrokeSwitcher(targetEl, hanChars) {
 
   const MIN_SCALE = 0.5;
   const MAX_SCALE = 4;
+
+  // ✅ 跟写状态
+  let tracingOn = false;
+  let drawing = false;
+  let lastX = 0, lastY = 0;
 
   function clamp(n, a, b) {
     return Math.max(a, Math.min(b, n));
@@ -84,7 +97,6 @@ function mountStrokeSwitcher(targetEl, hanChars) {
     const svg = stage.querySelector("svg");
     if (!svg) return;
 
-    // 让 svg 可被 transform
     svg.style.transformOrigin = "center center";
     svg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
     svg.style.maxWidth = "none";
@@ -99,32 +111,88 @@ function mountStrokeSwitcher(targetEl, hanChars) {
     applyTransform();
   }
 
-  function fitToBox() {
-    const svg = stage.querySelector("svg");
-    if (!svg) return;
+  // ✅ 跟写：canvas 尺寸适配（支持 DPR）
+  function resizeTraceCanvas() {
+    if (!traceCanvas) return;
+    const rect = traceCanvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
 
-    // 适配：根据 viewport 的大小和 svg 的 viewBox/尺寸估算
-    const vpRect = viewport.getBoundingClientRect();
+    traceCanvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    traceCanvas.height = Math.max(1, Math.floor(rect.height * dpr));
 
-    // 尝试用 viewBox
-    const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
-    let w = vb?.width || svg.getBBox?.().width || 0;
-    let h = vb?.height || svg.getBBox?.().height || 0;
+    const ctx = traceCanvas.getContext("2d");
+    // 用 CSS 像素坐标绘制
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 4;      // 想更粗改 6~8
+    ctx.globalAlpha = 0.85;
+  }
 
-    // 兜底：如果拿不到尺寸
-    if (!w || !h) {
-      resetView();
-      return;
+  function clearTrace() {
+    if (!traceCanvas) return;
+    const ctx = traceCanvas.getContext("2d");
+    ctx.clearRect(0, 0, traceCanvas.width, traceCanvas.height);
+  }
+
+  function setTracing(on) {
+    tracingOn = !!on;
+    if (!traceCanvas) return;
+
+    if (tracingOn) {
+      traceCanvas.classList.remove("hidden");
+      resizeTraceCanvas();
+      // 开启时按钮高亮
+      targetEl.querySelector(".btnTrace")?.classList.add("bg-orange-100", "border", "border-orange-300");
+    } else {
+      traceCanvas.classList.add("hidden");
+      targetEl.querySelector(".btnTrace")?.classList.remove("bg-orange-100", "border", "border-orange-300");
     }
+  }
 
-    const padding = 0.88; // 留点边距
-    const sx = (vpRect.width / w) * padding;
-    const sy = (vpRect.height / h) * padding;
+  function getPos(e) {
+    const rect = traceCanvas.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
 
-    scale = clamp(Math.min(sx, sy), MIN_SCALE, MAX_SCALE);
-    tx = 0;
-    ty = 0;
-    applyTransform();
+  // ✅ 绑定跟写 pointer 事件（触屏/鼠标都能写）
+  if (traceCanvas) {
+    traceCanvas.addEventListener("pointerdown", (e) => {
+      if (!tracingOn) return;
+      e.preventDefault();
+      drawing = true;
+      traceCanvas.setPointerCapture?.(e.pointerId);
+      const p = getPos(e);
+      lastX = p.x; lastY = p.y;
+    });
+
+    traceCanvas.addEventListener("pointermove", (e) => {
+      if (!tracingOn || !drawing) return;
+      e.preventDefault();
+      const ctx = traceCanvas.getContext("2d");
+      const p = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      lastX = p.x; lastY = p.y;
+    });
+
+    const end = (e) => {
+      if (!tracingOn) return;
+      e.preventDefault();
+      drawing = false;
+    };
+    traceCanvas.addEventListener("pointerup", end);
+    traceCanvas.addEventListener("pointercancel", end);
+
+    // 窗口大小改变时重新适配（保持笔迹会清空更简单稳）
+    window.addEventListener("resize", () => {
+      if (tracingOn) {
+        clearTrace();
+        resizeTraceCanvas();
+      }
+    });
   }
 
   function strokeUrl(ch) {
@@ -144,6 +212,9 @@ function mountStrokeSwitcher(targetEl, hanChars) {
   async function loadChar(ch, { bust = false } = {}) {
     currentChar = ch;
     currentUrl = strokeUrl(ch);
+
+    // ✅ 切换字时清空跟写
+    clearTrace();
 
     if (fileNameEl) fileNameEl.textContent = fileName(ch);
 
@@ -174,15 +245,18 @@ function mountStrokeSwitcher(targetEl, hanChars) {
 
       const svg = stage.querySelector("svg");
       if (svg) {
-        // 给 svg 一些基础样式，避免撑爆
         svg.style.width = "80%";
         svg.style.height = "80%";
       }
 
-      // ✅ 加载新字后：先重置，再“适配”
+      // ✅ 加载新字后：重置视图
       resetView();
-      // 等 DOM 渲染后再 fit
-      requestAnimationFrame(() => fitToBox());
+
+      // ✅ 如果跟写开着，重新适配 canvas（并保持清空）
+      if (tracingOn) {
+        resizeTraceCanvas();
+        clearTrace();
+      }
 
       // 如果 SVG 有动画，尽量从头开始
       try {
@@ -190,7 +264,6 @@ function mountStrokeSwitcher(targetEl, hanChars) {
         svg2?.setCurrentTime?.(0);
         svg2?.unpauseAnimations?.();
       } catch {}
-
     } catch (e) {
       stage.innerHTML = `<div class="text-sm text-red-600">
         로드 실패<br/>
@@ -218,7 +291,7 @@ function mountStrokeSwitcher(targetEl, hanChars) {
     if (i === 0) requestAnimationFrame(() => b.click());
   });
 
-  // 控制按钮：읽기 / 다시 / 缩放
+  // 控制按钮：읽기 / 다시 / 缩放 / 따라쓰기 / 초기화
   targetEl.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -228,6 +301,8 @@ function mountStrokeSwitcher(targetEl, hanChars) {
   targetEl.querySelector(".btnReplay")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+    // ✅ 다시：清空跟写 + bust 重载
+    clearTrace();
     loadChar(currentChar, { bust: true });
   });
 
@@ -245,34 +320,38 @@ function mountStrokeSwitcher(targetEl, hanChars) {
     applyTransform();
   });
 
+  // ✅ 따라쓰기：开/关跟写层
+  targetEl.querySelector(".btnTrace")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setTracing(!tracingOn);
+  });
+
+  // ✅ 초기화：清空跟写 + 复位视图
   targetEl.querySelector(".btnReset")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+    clearTrace();
     resetView();
   });
 
-  targetEl.querySelector(".btnFit")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fitToBox();
-  });
-
-  // ✅ 拖动平移
+  // ✅ 拖动平移（跟写开启时，不拖动）
   let dragging = false;
-  let lastX = 0, lastY = 0;
+  let lastMX = 0, lastMY = 0;
 
   viewport.addEventListener("mousedown", (e) => {
+    if (tracingOn) return; // 跟写时不拖动
     dragging = true;
-    lastX = e.clientX;
-    lastY = e.clientY;
+    lastMX = e.clientX;
+    lastMY = e.clientY;
   });
 
   window.addEventListener("mousemove", (e) => {
     if (!dragging) return;
-    const dx = e.clientX - lastX;
-    const dy = e.clientY - lastY;
-    lastX = e.clientX;
-    lastY = e.clientY;
+    const dx = e.clientX - lastMX;
+    const dy = e.clientY - lastMY;
+    lastMX = e.clientX;
+    lastMY = e.clientY;
     tx += dx;
     ty += dy;
     applyTransform();
@@ -282,16 +361,19 @@ function mountStrokeSwitcher(targetEl, hanChars) {
     dragging = false;
   });
 
-  // ✅ 滚轮缩放（以鼠标为中心的“近似”缩放）
-  viewport.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    const delta = e.deltaY;
-    const factor = delta > 0 ? 1 / 1.12 : 1.12;
-    scale = clamp(scale * factor, MIN_SCALE, MAX_SCALE);
-    applyTransform();
-  }, { passive: false });
+  // ✅ 滚轮缩放（跟写开启时也允许缩放：你要禁用就加 if(tracingOn)return;）
+  viewport.addEventListener(
+    "wheel",
+    (e) => {
+      e.preventDefault();
+      const factor = e.deltaY > 0 ? 1 / 1.12 : 1.12;
+      scale = clamp(scale * factor, MIN_SCALE, MAX_SCALE);
+      applyTransform();
+    },
+    { passive: false }
+  );
 }
 
 window.StrokePlayer = {
-  mountStrokeSwitcher
+  mountStrokeSwitcher,
 };
