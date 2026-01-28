@@ -6,6 +6,7 @@
     return String(s ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
+      .replaceAll(">", "&lt;")
       .replaceAll(">", "&gt;");
   }
 
@@ -13,43 +14,50 @@
     return /[\u3400-\u9FFF]/.test(ch);
   }
 
-  // ✅ 统一把 meaning/example 转成“当前语言的字符串”，避免 [object Object]
-  function pickText(v) {
-    // 优先使用 learn.js 里提供的 pickLang（支持 ko 优先 & 跟随 window.APP_LANG）
-    if (window.strokeUI?.pickLang) return window.strokeUI.pickLang(v);
-
-    // 兜底：如果没有 strokeUI，就尽量安全转字符串
+  // ✅ 最稳：永不出现 [object Object]，并支持多语言对象/数组/嵌套
+  function pickText(v, lang = (window.APP_LANG || "ko")) {
     if (v == null) return "";
+
     if (typeof v === "string") return v;
     if (typeof v === "number" || typeof v === "boolean") return String(v);
-    if (Array.isArray(v)) return v.map(pickText).filter(Boolean).join(" / ");
-    if (typeof v === "object") {
-      return (
-        pickText(v.ko) ||
-        pickText(v.kr) ||
-        pickText(v.zh) ||
-        pickText(v.cn) ||
-        pickText(v.en) ||
-        pickText(Object.values(v).find((x) => pickText(x)))
-      );
+
+    if (Array.isArray(v)) {
+      return v.map((x) => pickText(x, lang)).filter(Boolean).join(" / ");
     }
-    return String(v);
+
+    if (typeof v === "object") {
+      // 优先：lang -> ko/kr -> zh/cn -> en
+      const direct =
+        pickText(v?.[lang], lang) ||
+        pickText(v?.ko, lang) ||
+        pickText(v?.kr, lang) ||
+        pickText(v?.zh, lang) ||
+        pickText(v?.cn, lang) ||
+        pickText(v?.en, lang);
+
+      if (direct) return direct;
+
+      for (const k of Object.keys(v)) {
+        const t = pickText(v[k], lang);
+        if (t) return t;
+      }
+      return "";
+    }
+
+    return "";
   }
 
   // ✅ 确保 learn-panel 存在（只创建一次）
   function ensurePanel() {
-    // 1) 兼容旧 id
     let wrap = $("learn-panel") || $("learnPanel") || $("learnpanel");
     if (wrap) wrap.id = "learn-panel";
 
-    // 2) 不存在才创建
     if (!wrap) {
       wrap = document.createElement("div");
       wrap.id = "learn-panel";
       document.body.appendChild(wrap);
     }
 
-    // 3) ✅ 每次都覆盖模板（保证按钮一定存在）
     wrap.className =
       "hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-4";
 
@@ -71,29 +79,27 @@
       </div>
     `;
 
-    const close = () => $("learn-panel")?.classList.add("hidden");
+    const closeLocal = () => $("learn-panel")?.classList.add("hidden");
 
-    // 4) 绑定关闭（用 onclick 覆盖，避免重复绑定）
     $("learnClose").onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      close();
+      closeLocal();
     };
     $("learnCloseX").onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
-      close();
+      closeLocal();
     };
 
     wrap.onclick = (e) => {
-      if (e.target === wrap) close();
+      if (e.target === wrap) closeLocal();
     };
 
-    // 5) ESC 只绑一次
     if (!document.body.dataset.learnEscBound) {
       document.body.dataset.learnEscBound = "1";
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
+        if (e.key === "Escape") closeLocal();
       });
     }
   }
@@ -115,16 +121,18 @@
     learnBody.innerHTML = "";
     learnPanel.classList.remove("hidden");
 
-    // ✅ 打开时先滚回顶部
     try {
       learnBody.scrollTop = 0;
     } catch {}
 
-    // ✅ 把 meaning/example 转成文本（当前语言）
-    const word = pickText(item.word);
-    const pinyin = pickText(item.pinyin);
-    const meaningText = pickText(item.meaning);
-    const exampleText = pickText(item.example);
+    // ✅ 语言（韩语优先）
+    const lang = window.APP_LANG || "ko";
+
+    // ✅ 全部走 pickText，彻底防 object
+    const word = pickText(item.word, lang);
+    const pinyin = pickText(item.pinyin, lang);
+    const meaningText = pickText(item.meaning, lang);
+    const exampleText = pickText(item.example, lang);
 
     // ===== 上方信息区 =====
     const head = document.createElement("div");
@@ -133,7 +141,7 @@
     const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
 
     head.innerHTML = `
-      <div class="text-2xl font-bold">${escapeHtml(word)}</div>
+      <div class="text-2xl font-bold">${escapeHtml(word || "(빈 항목)")}</div>
       ${line2 ? `<div class="text-sm text-gray-600">${escapeHtml(line2)}</div>` : ""}
       ${
         exampleText
@@ -179,25 +187,34 @@
     });
 
     // ===== 笔顺区 =====
-const hanChars = Array.from(word || "").filter(isHan);
+    const hanChars = Array.from(word || "").filter(isHan);
 
-if (hanChars.length === 0) {
-  const p = document.createElement("div");
-  p.className = "text-sm text-gray-500";
-  p.textContent = "이 단어에는 한자가 없어서 필순을 표시하지 않아요.";
-  learnBody.appendChild(p);
-  return;
-}
+    const strokesWrap = document.createElement("div");
+    strokesWrap.className = "mt-3";
+    learnBody.appendChild(strokesWrap);
 
-const strokesWrap = document.createElement("div");
-strokesWrap.className = "mt-3";
-learnBody.appendChild(strokesWrap);
+    if (hanChars.length === 0) {
+      const p = document.createElement("div");
+      p.className = "text-sm text-gray-500";
+      p.textContent = "이 단어에는 한자가 없어서 필순을 표시하지 않아요.";
+      strokesWrap.appendChild(p);
+      return;
+    }
 
-// 👉 交给独立笔顺播放器
-window.StrokePlayer?.mountStrokeSwitcher?.(strokesWrap, hanChars);
-    
-}
-  
-  // 供外部调用
+    // ✅ 给一个兜底提示：StrokePlayer 没加载时不会“空白”
+    if (!window.StrokePlayer?.mountStrokeSwitcher) {
+      strokesWrap.innerHTML = `
+        <div class="text-sm text-red-600">
+          StrokePlayer가 로드되지 않았어요.<br/>
+          <span class="text-xs text-gray-500">index.html에서 strokePlayer.js가 learnPanel.js보다 먼저 로드되는지 확인해 주세요.</span>
+        </div>
+      `;
+      return;
+    }
+
+    // ✅ 交给独立笔顺播放器
+    window.StrokePlayer.mountStrokeSwitcher(strokesWrap, hanChars);
+  }
+
   window.LEARN_PANEL = { open, close };
 })();
