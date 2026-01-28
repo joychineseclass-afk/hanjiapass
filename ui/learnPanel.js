@@ -179,22 +179,22 @@
     });
 
     // ===== 笔顺区 =====
-    const hanChars = Array.from(word || "").filter(isHan);
+const hanChars = Array.from(word || "").filter(isHan);
 
-    if (hanChars.length === 0) {
-      const p = document.createElement("div");
-      p.className = "text-sm text-gray-500";
-      p.textContent = "이 단어에는 한자가 없어서 필순을 표시하지 않아요.";
-      learnBody.appendChild(p);
-      return;
-    }
+if (hanChars.length === 0) {
+  const p = document.createElement("div");
+  p.className = "text-sm text-gray-500";
+  p.textContent = "이 단어에는 한자가 없어서 필순을 표시하지 않아요.";
+  learnBody.appendChild(p);
+  return;
+}
 
-    // ✅ 一个区域 + 按字切换（不会挤满）
-    const strokeBox = document.createElement("div");
-    strokeBox.className = "mt-3";
-    learnBody.appendChild(strokeBox);
-    mountStrokeSwitcher(strokeBox, hanChars);
-  }
+const strokesWrap = document.createElement("div");
+strokesWrap.className = "mt-3";
+learnBody.appendChild(strokesWrap);
+
+// 👉 交给独立笔顺播放器
+window.StrokePlayer?.mountStrokeSwitcher?.(strokesWrap, hanChars);
 
   // 供外部调用
   window.LEARN_PANEL = { open, close };
