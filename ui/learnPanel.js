@@ -195,7 +195,9 @@ learnBody.appendChild(strokesWrap);
 
 // 👉 交给独立笔顺播放器
 window.StrokePlayer?.mountStrokeSwitcher?.(strokesWrap, hanChars);
-
+    
+}
+  
   // 供外部调用
   window.LEARN_PANEL = { open, close };
 })();
