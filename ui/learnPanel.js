@@ -101,6 +101,7 @@
     $("learn-panel")?.classList.add("hidden");
   }
 
+  window.HSK_HISTORY?.add?.(item);
   async function open(item) {
     ensurePanel();
 
@@ -312,4 +313,13 @@
 
   // 供外部调用
   window.LEARN_PANEL = { open, close };
+})();
+// 放在 learnPanel.js 最后（window.LEARN_PANEL 设置完成之后）
+(function () {
+  if (!window.LEARN_PANEL?.open) return;
+  const _open = window.LEARN_PANEL.open;
+  window.LEARN_PANEL.open = function (item) {
+    window.HSK_HISTORY?.add?.(item);
+    return _open.call(this, item);
+  };
 })();
