@@ -70,10 +70,17 @@
 
     // 点击句子只读选中段（TTS）
     wrap.addEventListener("click", () => {
-      const sel = window.getSelection?.()?.toString()?.trim();
-      if (sel) speak(sel, langForTTS());
-      else speak(text, langForTTS());
-    });
+  const sel = window.getSelection()?.toString()?.trim();
+
+  // 用户自己说的话，通常是中文/问题 → 用中文读
+  if (who === "user") {
+    speak(sel || text, "zh-CN");
+  } 
+  // AI解释 → 用 설명 언어
+  else {
+    speak(sel || text, ttsLangForExplain());
+  }
+});
 
     chat.appendChild(wrap);
     pruneChat();
@@ -87,6 +94,15 @@
     if (v === "ja") return "ja-JP";
     return "en-US";
   }
+
+  // ✅ 专门用于“解释内容”的朗读语言
+function ttsLangForExplain() {
+  const v = explainLang?.value || "ko";
+  if (v === "ko") return "ko-KR";
+  if (v === "zh") return "zh-CN";
+  if (v === "ja") return "ja-JP";
+  return "en-US";
+}
 
   function canTTS() {
     return !!(ttsToggle?.checked && "speechSynthesis" in window);
