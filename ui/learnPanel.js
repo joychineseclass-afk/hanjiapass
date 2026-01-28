@@ -122,8 +122,6 @@
         <div class="font-semibold">필순(筆順)</div>
         <div class="flex gap-2 flex-wrap justify-end">
           <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
-          <button type="button" class="btnPlay px-2 py-1 rounded bg-slate-100 text-xs">재생</button>
-          <button type="button" class="btnPause px-2 py-1 rounded bg-slate-100 text-xs">일시정지</button>
           <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
         </div>
       </div>
@@ -150,7 +148,6 @@
 
   let currentChar = chars[0];
   let currentUrl = "";
-  let currentSvg = null;
 
   function strokeUrl(ch) {
     return window.DATA_PATHS?.strokeUrl?.(ch) || "";
@@ -166,7 +163,7 @@
     btn.classList.add("border-orange-400", "bg-orange-50");
   }
 
-  async function loadChar(ch) {
+  async function loadChar(ch, { bust = false } = {}) {
     currentChar = ch;
     currentUrl = strokeUrl(ch);
 
@@ -174,19 +171,21 @@
 
     if (!currentUrl) {
       stage.innerHTML = `<div class="text-sm text-red-600">strokeUrl 없음: ${ch}</div>`;
-      currentSvg = null;
       return;
     }
 
+    const url = bust
+      ? (currentUrl.includes("?") ? `${currentUrl}&v=${Date.now()}` : `${currentUrl}?v=${Date.now()}`)
+      : currentUrl;
+
     stage.innerHTML = `<div class="text-xs text-gray-400">loading... (${ch})</div>`;
-    currentSvg = null;
 
     try {
-      const res = await fetch(currentUrl, { cache: "no-store" });
+      const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) {
         stage.innerHTML = `<div class="text-sm text-red-600">
           필순 파일이 없어요 (HTTP ${res.status})<br/>
-          <span class="text-[11px] break-all">${currentUrl}</span>
+          <span class="text-[11px] break-all">${url}</span>
         </div>`;
         return;
       }
@@ -195,11 +194,10 @@
       stage.innerHTML = svgText;
 
       const svg = stage.querySelector("svg");
-      currentSvg = svg || null;
-
       if (svg) {
         svg.style.maxWidth = "100%";
         svg.style.height = "auto";
+        // 如果 SVG 有动画，尽量从头开始
         try {
           svg.setCurrentTime(0);
           svg.unpauseAnimations();
@@ -208,7 +206,7 @@
     } catch (e) {
       stage.innerHTML = `<div class="text-sm text-red-600">
         로드 실패<br/>
-        <span class="text-[11px] break-all">${currentUrl}</span>
+        <span class="text-[11px] break-all">${url}</span>
       </div>`;
     }
   }
@@ -232,50 +230,17 @@
     if (i === 0) requestAnimationFrame(() => b.click());
   });
 
-  // 控制按钮
+  // 控制按钮：읽기 / 다시
   targetEl.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
     window.AIUI?.speak?.(currentChar, "zh-CN");
   });
 
-  targetEl.querySelector(".btnPlay")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!currentSvg) return;
-    try { currentSvg.unpauseAnimations(); } catch {}
-  });
-
-  targetEl.querySelector(".btnPause")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!currentSvg) return;
-    try { currentSvg.pauseAnimations(); } catch {}
-  });
-
   targetEl.querySelector(".btnReplay")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!currentUrl) return;
-
-    const bust = `v=${Date.now()}`;
-    const url = currentUrl.includes("?") ? `${currentUrl}&${bust}` : `${currentUrl}?${bust}`;
-
-    fetch(url, { cache: "no-store" })
-      .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
-      .then((t) => {
-        stage.innerHTML = t;
-        currentSvg = stage.querySelector("svg");
-        if (currentSvg) {
-          currentSvg.style.maxWidth = "100%";
-          currentSvg.style.height = "auto";
-          try {
-            currentSvg.setCurrentTime(0);
-            currentSvg.unpauseAnimations();
-          } catch {}
-        }
-      })
-      .catch(() => {});
+    loadChar(currentChar, { bust: true });
   });
 }
 
