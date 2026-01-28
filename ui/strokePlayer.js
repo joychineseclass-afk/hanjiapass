@@ -244,20 +244,32 @@ function mountStrokeSwitcher(targetEl, hanChars) {
       stage.innerHTML = svgText;
 
       const svg = stage.querySelector("svg");
-      if (svg) {
-        svg.style.width = "80%";
-        svg.style.height = "80%";
-      }
-      const svg = stage.querySelector("svg");
 if (svg) {
-  traceApi = window.StrokeTrace?.initTraceMode({
-    viewport,
-    svg,
-    getColor: () => targetEl.querySelector(".inpColor")?.value || "#ff3b30",
-    getSize: () => Number(targetEl.querySelector(".inpSize")?.value || 8),
-  });
+  svg.style.width = "80%";
+  svg.style.height = "80%";
 }
 
+// ⭐ 初始化 따라쓰기
+traceApi = window.StrokeTrace?.initTraceMode({
+  viewport,
+  svg,
+  getColor: () => targetEl.querySelector(".inpColor")?.value || "#ff3b30",
+  getSize: () => Number(targetEl.querySelector(".inpSize")?.value || 8),
+});
+
+// ⭐ 따라쓰기 按钮逻辑
+let tracing = false;
+
+targetEl.querySelector(".btnTrace")?.addEventListener("click", () => {
+  tracing = !tracing;
+  traceApi?.setEnabled(tracing);
+  targetEl.querySelector(".btnTrace").classList.toggle("bg-orange-200", tracing);
+});
+
+targetEl.querySelector(".btnClear")?.addEventListener("click", () => {
+  traceApi?.clearCurrent();
+});
+ 
       // ✅ 加载新字后：重置视图
       resetView();
 
