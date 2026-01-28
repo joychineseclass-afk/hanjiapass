@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- ✅ (可选但推荐) base：GitHub Pages 子目录部署更稳
+       如果你的网站是 https://xxxx.github.io/repo/ 这种，把下面改成 /repo/
+       如果不确定，先注释掉也行（dataPaths.js 已做自动推断）
+  -->
+  <!-- <base href="/your-repo-name/"> -->
+
   <style>
     body { background:#f7f7f7; }
     .chat-box { max-height: 60vh; overflow-y: auto; }
@@ -40,8 +46,13 @@
             <option value="9">HSK 9</option>
           </select>
 
-          <input id="hskSearch" class="border rounded-lg px-3 py-2 text-sm w-48"
-                 placeholder="검색 (예: 你好 / 숫자 / 가족)" />
+          <input
+            id="hskSearch"
+            class="border rounded-lg px-3 py-2 text-sm w-48"
+            placeholder="검색 (예: 你好 / 숫자 / 가족)"
+            autocomplete="off"
+            spellcheck="false"
+          />
         </div>
       </div>
 
@@ -52,32 +63,46 @@
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
+    <!-- ✅ Grid：hskUI 会动态切换成列表/卡片/최근학습，不要强绑定 md:grid-cols-2 在这里也行
+         但保留也没问题（hskUI 会自己覆盖 innerHTML）
+    -->
     <div id="hskGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
 
     <div class="h-24"></div>
   </div>
 
   <!-- ===== Floating Bot Button ===== -->
-  <button id="botBtn"
-    class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+  <button
+    id="botBtn"
+    type="button"
+    class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+    aria-label="Open AI Panel"
+  >
     🤖
   </button>
 
   <!-- ===== AI Panel ===== -->
-  <div id="ai-panel"
-    class="hidden fixed bottom-20 right-4 w-[390px] bg-white rounded-xl shadow-xl flex flex-col">
-
+  <div
+    id="ai-panel"
+    class="hidden fixed bottom-20 right-4 w-[92vw] max-w-[390px] bg-white rounded-xl shadow-xl flex flex-col"
+  >
     <!-- Drag handle -->
-    <div id="dragHandle" class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center cursor-move no-select">
+    <div
+      id="dragHandle"
+      class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center cursor-move no-select"
+    >
       <span id="uiTitle">AI 한자 선생님</span>
-      <button id="closeBtn" type="button">✖</button>
+      <button id="closeBtn" type="button" aria-label="Close">✖</button>
     </div>
 
     <!-- Control bar -->
-    <div id="controlBar" class="px-3 pt-3 pb-2 border-b text-xs space-y-2 sticky top-0 bg-white z-10">
+    <div
+      id="controlBar"
+      class="px-3 pt-3 pb-2 border-b text-xs space-y-2 sticky top-0 bg-white z-10"
+    >
       <div class="flex items-center gap-2">
         <input id="ttsToggle" type="checkbox" checked class="accent-orange-500" />
-        <label id="uiTtsLabel">읽어주기(TTS)</label>
+        <label id="uiTtsLabel" for="ttsToggle">읽어주기(TTS)</label>
       </div>
 
       <div class="flex items-center gap-2">
@@ -106,45 +131,63 @@
     <div id="chat" class="chat-box p-3 space-y-2 text-sm"></div>
 
     <div class="p-3 border-t flex gap-2">
-      <input id="input" class="flex-1 border rounded px-2 py-2"
-        placeholder="질문을 입력하세요…" />
-      <button id="uiSendBtn" class="bg-orange-500 text-white px-4 py-2 rounded">
+      <!-- ✅ 如果你后面想支持 Shift+Enter 换行，建议改成 textarea。
+           现在 aiUI.js 已支持 Enter 发送，所以这里不再在 HTML 额外绑定一次，避免重复发送。
+      -->
+      <input
+        id="input"
+        class="flex-1 border rounded px-2 py-2"
+        placeholder="질문을 입력하세요…"
+        autocomplete="off"
+      />
+      <button id="uiSendBtn" type="button" class="bg-orange-500 text-white px-4 py-2 rounded">
         보내기
       </button>
     </div>
   </div>
 
-  <!-- ✅ 学习面板：建议保留在 HTML（更稳定） -->
+  <!-- ✅ 学习面板：保留在 HTML（更稳定） -->
   <div id="learn-panel" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
     <div class="w-full max-w-2xl rounded-2xl bg-white shadow-xl overflow-hidden">
       <div class="flex items-center justify-between px-4 py-3 border-b">
         <div class="font-semibold">배우기</div>
-        <button id="learnClose" class="px-3 py-1 rounded-lg bg-slate-100">닫기</button>
+        <button id="learnClose" type="button" class="px-3 py-1 rounded-lg bg-slate-100">닫기</button>
       </div>
       <div id="learnBody" class="p-4 space-y-4"></div>
     </div>
   </div>
 
-  <!-- ✅ 新结构脚本 -->
+  <!-- ✅ 脚本加载顺序（不返工关键） -->
   <script src="./ui/dataPaths.js"></script>
 
-<script src="./ui/hskLoader.js"></script>
-<script src="./ui/hskRenderer.js"></script>
-<script src="./ui/learnPanel.js"></script>
-<script src="./ui/hskUI.js"></script>
+  <!-- 如果你做了 최근학습：务必放在 learnPanel/hskUI 之前 -->
+  <!-- <script src="./ui/hskHistory.js"></script> -->
 
-<script src="./ui/aiUI.js"></script>
+  <script src="./ui/hskLoader.js"></script>
+  <script src="./ui/hskRenderer.js"></script>
+  <script src="./ui/learnPanel.js"></script>
+  <script src="./ui/hskUI.js"></script>
 
-  <!-- ✅ Enter 发送（Shift+Enter 换行） -->
+  <!-- AI 面板脚本（里面已经绑定 Enter 发送；HTML 不再重复绑定） -->
+  <script src="./ui/aiUI.js"></script>
+
+  <!-- ✅ 可选：基本自检（避免白屏时你找不到原因）
+       你上线后可以保留，也可以删掉
+  -->
   <script>
-    const input = document.getElementById("input");
-    input?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        window.AIUI?.send?.();
+    (function () {
+      const must = ["DATA_PATHS", "HSK_LOADER", "HSK_RENDER"];
+      const miss = must.filter((k) => !(k in window));
+      if (miss.length) {
+        const el = document.getElementById("hskError");
+        if (el) {
+          el.classList.remove("hidden");
+          el.textContent =
+            "스크립트 로딩에 문제가 있어요: " + miss.join(", ") +
+            "\\n(파일 경로/대소문자/로드 순서를 확인해 주세요)";
+        }
       }
-    });
+    })();
   </script>
 </body>
 </html>
-
