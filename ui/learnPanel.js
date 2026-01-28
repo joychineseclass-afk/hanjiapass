@@ -24,10 +24,11 @@
     if (typeof v === "number" || typeof v === "boolean") return String(v);
     if (Array.isArray(v)) return v.map(pickText).filter(Boolean).join(" / ");
     if (typeof v === "object") {
-      // 尝试常见字段
       return (
         pickText(v.ko) ||
+        pickText(v.kr) ||
         pickText(v.zh) ||
+        pickText(v.cn) ||
         pickText(v.en) ||
         pickText(Object.values(v).find((x) => pickText(x)))
       );
@@ -70,9 +71,9 @@
       </div>
     `;
 
-    // 4) 绑定关闭（用 onclick 覆盖，避免重复绑定）
     const close = () => $("learn-panel")?.classList.add("hidden");
 
+    // 4) 绑定关闭（用 onclick 覆盖，避免重复绑定）
     $("learnClose").onclick = (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -101,9 +102,193 @@
     $("learn-panel")?.classList.add("hidden");
   }
 
-  window.HSK_HISTORY?.add?.(item);
+  /**
+   * ✅ 笔顺：一个显示区 + 字按钮切换
+   * - 保留 “읽기/재생/일시정지/다시”
+   * - 用 <object> 加载 SVG（与你当前 strokes 文件兼容）
+   */
+  function mountStrokeSwitcher(targetEl, hanChars) {
+    if (!targetEl) return;
+
+    const chars = Array.from(hanChars || []).filter(Boolean);
+    if (chars.length === 0) {
+      targetEl.innerHTML = `<div class="text-sm text-gray-500">표시할 글자가 없어요.</div>`;
+      return;
+    }
+
+    // UI
+    targetEl.innerHTML = `
+      <div class="border rounded-xl p-3 bg-white">
+        <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
+          <div class="font-semibold">필순(筆順)</div>
+          <div class="flex gap-2 flex-wrap justify-end">
+            <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
+            <button type="button" class="btnPlay px-2 py-1 rounded bg-slate-100 text-xs">재생</button>
+            <button type="button" class="btnPause px-2 py-1 rounded bg-slate-100 text-xs">일시정지</button>
+            <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-2" id="strokeBtns"></div>
+
+        <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center">
+          <div id="strokeStage" class="w-full h-full flex items-center justify-center text-xs text-gray-400">loading...</div>
+        </div>
+
+        <div class="text-[10px] text-gray-400 mt-2" id="strokeFileName"></div>
+
+        <div class="text-xs text-gray-500 mt-2">
+          💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요.
+        </div>
+      </div>
+    `;
+
+    const btnWrap = targetEl.querySelector("#strokeBtns");
+    const stage = targetEl.querySelector("#strokeStage");
+    const fileNameEl = targetEl.querySelector("#strokeFileName");
+
+    // ✅ 只用一个 object，切字只换 data
+    const strokeObj = document.createElement("object");
+    strokeObj.type = "image/svg+xml";
+    strokeObj.style.width = "100%";
+    strokeObj.style.height = "100%";
+    strokeObj.style.display = "block";
+
+    // 当前字
+    let currentChar = chars[0];
+    let currentStrokeUrl = "";
+
+    function getStrokeUrl(ch) {
+      return window.DATA_PATHS?.strokeUrl?.(ch) || "";
+    }
+    function getFileName(ch) {
+      return window.DATA_PATHS?.strokeFileNameForChar?.(ch) || "";
+    }
+
+    function getSvgEl() {
+      try {
+        return strokeObj.contentDocument?.querySelector("svg") || null;
+      } catch {
+        return null;
+      }
+    }
+
+    function setLoading(ch) {
+      stage.innerHTML = `<div class="text-xs text-gray-400">loading... (${escapeHtml(ch)})</div>`;
+    }
+
+    function setError(ch) {
+      stage.innerHTML = `<div class="text-sm text-red-600">필순 데이터를 찾지 못했어요: ${escapeHtml(ch)}</div>`;
+    }
+
+    function loadChar(ch) {
+      currentChar = ch;
+      currentStrokeUrl = getStrokeUrl(ch);
+
+      // filename
+      if (fileNameEl) fileNameEl.textContent = getFileName(ch);
+
+      if (!currentStrokeUrl) {
+        setError(ch);
+        return;
+      }
+
+      setLoading(ch);
+
+      // 先移除再设置 data，避免某些浏览器不触发 onload
+      try {
+        strokeObj.remove();
+      } catch {}
+
+      strokeObj.data = currentStrokeUrl;
+    }
+
+    // object load -> 显示 svg
+    strokeObj.onload = () => {
+      // 把 stage 清空再放 object
+      stage.innerHTML = "";
+      stage.appendChild(strokeObj);
+
+      // 尝试从头开始播放
+      const svg = getSvgEl();
+      if (svg) {
+        try {
+          svg.setCurrentTime(0);
+          svg.unpauseAnimations();
+        } catch {}
+      }
+    };
+
+    // buttons render
+    btnWrap.innerHTML = "";
+    chars.forEach((ch, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50";
+      b.textContent = ch;
+
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        Array.from(btnWrap.children).forEach((x) =>
+          x.classList.remove("border-orange-400", "bg-orange-50")
+        );
+        b.classList.add("border-orange-400", "bg-orange-50");
+        loadChar(ch);
+      });
+
+      btnWrap.appendChild(b);
+
+      // 默认选中第一个
+      if (i === 0) requestAnimationFrame(() => b.click());
+    });
+
+    // 控制按钮
+    targetEl.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.AIUI?.speak?.(currentChar, "zh-CN");
+    });
+
+    targetEl.querySelector(".btnPlay")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const svg = getSvgEl();
+      if (!svg) return;
+      try {
+        svg.unpauseAnimations();
+      } catch {}
+    });
+
+    targetEl.querySelector(".btnPause")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const svg = getSvgEl();
+      if (!svg) return;
+      try {
+        svg.pauseAnimations();
+      } catch {}
+    });
+
+    targetEl.querySelector(".btnReplay")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!currentStrokeUrl) return;
+
+      // cache-bust 强制重新加载
+      const bust = `v=${Date.now()}`;
+      strokeObj.data = currentStrokeUrl.includes("?")
+        ? `${currentStrokeUrl}&${bust}`
+        : `${currentStrokeUrl}?${bust}`;
+    });
+  }
+
   async function open(item) {
     ensurePanel();
+
+    // ✅ 记录最近学习（你说先不加历史也可以，不影响）
+    window.HSK_HISTORY?.add?.(item);
 
     const learnPanel = $("learn-panel");
     const learnBody = $("learnBody");
@@ -161,7 +346,6 @@
       e.stopPropagation();
       window.AIUI?.open?.();
 
-      // ✅ AI 질문也用当前 meaning/example（不会 object）
       const prompt = [
         `"${word}"를 한국어로 쉽게 설명해줘.`,
         meaningText ? `뜻: ${meaningText}` : "",
@@ -187,217 +371,13 @@
       return;
     }
 
-    const strokesWrap = document.createElement("div");
-    strokesWrap.className = "mt-3";
-    strokesWrap.innerHTML = `
-      <div class="font-semibold mb-2">필순(筆順)</div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="strokeGrid"></div>
-      <div class="text-xs text-gray-500 mt-2">
-        💡 파일이 없으면 “없음”으로 표시돼요. (data/strokes 폴더 확인)
-      </div>
-    `;
-    learnBody.appendChild(strokesWrap);
-
-    const grid = strokesWrap.querySelector("#strokeGrid");
-
-    for (const ch of hanChars) {
-      const box = document.createElement("div");
-      box.className = "border rounded-xl p-3 bg-white";
-
-      const strokeUrl = window.DATA_PATHS?.strokeUrl?.(ch) || "";
-      const fileName = window.DATA_PATHS?.strokeFileNameForChar?.(ch) || "";
-
-      box.innerHTML = `
-        <div class="flex items-center justify-between mb-2">
-          <div class="text-lg font-semibold">${escapeHtml(ch)}</div>
-          <div class="flex gap-2 flex-wrap justify-end">
-            <button type="button" class="btnSpeak px-2 py-1 rounded bg-slate-100 text-xs">읽기</button>
-            <button type="button" class="btnPlay px-2 py-1 rounded bg-slate-100 text-xs">재생</button>
-            <button type="button" class="btnPause px-2 py-1 rounded bg-slate-100 text-xs">일시정지</button>
-            <button type="button" class="btnReplay px-2 py-1 rounded bg-slate-100 text-xs">다시</button>
-          </div>
-        </div>
-
-        <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center">
-          <div class="text-xs text-gray-400">loading...</div>
-        </div>
-
-        <div class="text-[10px] text-gray-400 mt-2">${escapeHtml(fileName)}</div>
-      `;
-      grid.appendChild(box);
-
-      box.querySelector(".btnSpeak")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        window.AIUI?.speak?.(ch, "zh-CN");
-      });
-
-// ✅ 笔顺：按字切换显示（默认只显示第一个字，点击再加载）
-// 依赖：window.DATA_PATHS.strokeUrl(ch)
-function renderStrokeSwitcher(targetEl, word) {
-  if (!targetEl) return;
-
-  const chars = Array.from(String(word || "")).filter(Boolean);
-  if (chars.length === 0) {
-    targetEl.innerHTML = `<div class="text-sm text-gray-500">표시할 글자가 없어요.</div>`;
-    return;
-  }
-
-  // 缓存：避免重复 fetch
-  const cache = new Map(); // ch -> svgText
-
-  targetEl.innerHTML = `
-    <div class="space-y-2">
-      <div class="flex flex-wrap gap-2" id="strokeBtns"></div>
-      <div class="bg-slate-50 rounded-xl p-3 overflow-auto" style="max-height: 360px;">
-        <div id="strokeStage" class="flex items-center justify-center"></div>
-        <div id="strokeTip" class="text-xs text-gray-500 mt-2"></div>
-      </div>
-    </div>
-  `;
-
-  const btns = targetEl.querySelector("#strokeBtns");
-  const stage = targetEl.querySelector("#strokeStage");
-  const tip = targetEl.querySelector("#strokeTip");
-
-  function setLoading(ch) {
-    stage.innerHTML = `<div class="text-sm text-gray-500">불러오는 중… (${ch})</div>`;
-    if (tip) tip.textContent = "💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요.";
-  }
-
-  function setError(ch) {
-    stage.innerHTML = `<div class="text-sm text-red-600">필순 데이터를 찾지 못했어요: ${ch}</div>`;
-  }
-
-  function setSvg(svgText) {
-    // SVG 原样插入即可
-    stage.innerHTML = svgText || `<div class="text-sm text-gray-500">표시할 내용이 없어요.</div>`;
-    // 防止 SVG 太大撑爆：给 svg 限制宽度
-    const svg = stage.querySelector("svg");
-    if (svg) {
-      svg.style.maxWidth = "100%";
-      svg.style.height = "auto";
-    }
-  }
-
-  async function loadAndShow(ch) {
-    if (!ch) return;
-    setLoading(ch);
-
-    if (cache.has(ch)) {
-      setSvg(cache.get(ch));
-      return;
-    }
-
-    const url = window.DATA_PATHS?.strokeUrl?.(ch);
-    if (!url) {
-      setError(ch);
-      return;
-    }
-
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const svgText = await res.text();
-      cache.set(ch, svgText);
-      setSvg(svgText);
-    } catch (e) {
-      setError(ch);
-    }
-  }
-
-  // buttons
-  chars.forEach((ch, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className =
-      "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50";
-    b.textContent = ch;
-
-    b.addEventListener("click", () => {
-      // active 样式
-      Array.from(btns.children).forEach((x) => x.classList.remove("border-orange-400", "bg-orange-50"));
-      b.classList.add("border-orange-400", "bg-orange-50");
-      loadAndShow(ch);
-    });
-
-    btns.appendChild(b);
-
-    // 默认选中第一个
-    if (i === 0) {
-      requestAnimationFrame(() => b.click());
-    }
-  });
-}
-
-      function getSvgEl() {
-        try {
-          return obj.contentDocument?.querySelector("svg") || null;
-        } catch {
-          return null;
-        }
-      }
-
-      function replay() {
-        if (!strokeUrl) return;
-        const bust = `v=${Date.now()}`;
-        obj.data = strokeUrl.includes("?")
-          ? `${strokeUrl}&${bust}`
-          : `${strokeUrl}?${bust}`;
-      }
-
-      function play() {
-        const svg = getSvgEl();
-        if (!svg) return;
-        try {
-          svg.unpauseAnimations();
-        } catch {}
-      }
-
-      function pause() {
-        const svg = getSvgEl();
-        if (!svg) return;
-        try {
-          svg.pauseAnimations();
-        } catch {}
-      }
-
-      obj.addEventListener("load", () => {
-        const svg = getSvgEl();
-        if (!svg) return;
-        try {
-          svg.setCurrentTime(0);
-          svg.unpauseAnimations();
-        } catch {}
-      });
-
-      box.querySelector(".btnPlay")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        play();
-      });
-      box.querySelector(".btnPause")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        pause();
-      });
-      box.querySelector(".btnReplay")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        replay();
-      });
-    }
+    // ✅ 一个区域 + 按字切换（不会挤满）
+    const strokeBox = document.createElement("div");
+    strokeBox.className = "mt-3";
+    learnBody.appendChild(strokeBox);
+    mountStrokeSwitcher(strokeBox, hanChars);
   }
 
   // 供外部调用
   window.LEARN_PANEL = { open, close };
-})();
-// 放在 learnPanel.js 最后（window.LEARN_PANEL 设置完成之后）
-(function () {
-  if (!window.LEARN_PANEL?.open) return;
-  const _open = window.LEARN_PANEL.open;
-  window.LEARN_PANEL.open = function (item) {
-    window.HSK_HISTORY?.add?.(item);
-    return _open.call(this, item);
-  };
 })();
