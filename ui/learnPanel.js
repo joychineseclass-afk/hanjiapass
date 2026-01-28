@@ -232,25 +232,103 @@
         window.AIUI?.speak?.(ch, "zh-CN");
       });
 
-      const canvas = box.querySelector(".aspect-square");
+// ✅ 笔顺：按字切换显示（默认只显示第一个字，点击再加载）
+// 依赖：window.DATA_PATHS.strokeUrl(ch)
+function renderStrokeSwitcher(targetEl, word) {
+  if (!targetEl) return;
 
-      // ✅ <object> 单独加载 SVG：多字不串台
-      const obj = document.createElement("object");
-      obj.type = "image/svg+xml";
-      obj.data = strokeUrl;
-      obj.style.width = "100%";
-      obj.style.height = "100%";
-      obj.style.display = "block";
+  const chars = Array.from(String(word || "")).filter(Boolean);
+  if (chars.length === 0) {
+    targetEl.innerHTML = `<div class="text-sm text-gray-500">표시할 글자가 없어요.</div>`;
+    return;
+  }
 
-      const fb = document.createElement("div");
-      fb.className = "text-xs text-gray-400 text-center p-2";
-      fb.innerHTML = `필순 파일 없음<br/><span class="text-[10px]">${escapeHtml(
-        fileName
-      )}</span>`;
+  // 缓存：避免重复 fetch
+  const cache = new Map(); // ch -> svgText
 
-      canvas.innerHTML = "";
-      canvas.appendChild(obj);
-      obj.appendChild(fb);
+  targetEl.innerHTML = `
+    <div class="space-y-2">
+      <div class="flex flex-wrap gap-2" id="strokeBtns"></div>
+      <div class="bg-slate-50 rounded-xl p-3 overflow-auto" style="max-height: 360px;">
+        <div id="strokeStage" class="flex items-center justify-center"></div>
+        <div id="strokeTip" class="text-xs text-gray-500 mt-2"></div>
+      </div>
+    </div>
+  `;
+
+  const btns = targetEl.querySelector("#strokeBtns");
+  const stage = targetEl.querySelector("#strokeStage");
+  const tip = targetEl.querySelector("#strokeTip");
+
+  function setLoading(ch) {
+    stage.innerHTML = `<div class="text-sm text-gray-500">불러오는 중… (${ch})</div>`;
+    if (tip) tip.textContent = "💡 글자 버튼을 눌러 다른 글자의 필순도 볼 수 있어요.";
+  }
+
+  function setError(ch) {
+    stage.innerHTML = `<div class="text-sm text-red-600">필순 데이터를 찾지 못했어요: ${ch}</div>`;
+  }
+
+  function setSvg(svgText) {
+    // SVG 原样插入即可
+    stage.innerHTML = svgText || `<div class="text-sm text-gray-500">표시할 내용이 없어요.</div>`;
+    // 防止 SVG 太大撑爆：给 svg 限制宽度
+    const svg = stage.querySelector("svg");
+    if (svg) {
+      svg.style.maxWidth = "100%";
+      svg.style.height = "auto";
+    }
+  }
+
+  async function loadAndShow(ch) {
+    if (!ch) return;
+    setLoading(ch);
+
+    if (cache.has(ch)) {
+      setSvg(cache.get(ch));
+      return;
+    }
+
+    const url = window.DATA_PATHS?.strokeUrl?.(ch);
+    if (!url) {
+      setError(ch);
+      return;
+    }
+
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const svgText = await res.text();
+      cache.set(ch, svgText);
+      setSvg(svgText);
+    } catch (e) {
+      setError(ch);
+    }
+  }
+
+  // buttons
+  chars.forEach((ch, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className =
+      "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50";
+    b.textContent = ch;
+
+    b.addEventListener("click", () => {
+      // active 样式
+      Array.from(btns.children).forEach((x) => x.classList.remove("border-orange-400", "bg-orange-50"));
+      b.classList.add("border-orange-400", "bg-orange-50");
+      loadAndShow(ch);
+    });
+
+    btns.appendChild(b);
+
+    // 默认选中第一个
+    if (i === 0) {
+      requestAnimationFrame(() => b.click());
+    }
+  });
+}
 
       function getSvgEl() {
         try {
