@@ -208,20 +208,24 @@
     window.APP_LANG = document.documentElement.dataset.appLang || "ko";
   </script>
 
-  <script src="./ui/dataPaths.js"></script>
-  <script src="./ui/hskLoader.js"></script>
-  <script src="./ui/hskRenderer.js"></script>
+  <!-- 基础路径（所有系统都依赖它） -->
+<script src="./ui/dataPaths.js"></script>
 
-  <!-- 👇 笔顺系统 -->
-  <script src="./ui/strokeTrace.js"></script>
-  <script src="./ui/strokePlayer.tpl.js"></script>
-  <script src="./ui/strokePlayer.canvas.js"></script>
-  <script src="./ui/dataPaths.js"></script>
-  <script src="./ui/strokePlayer.main.js"></script>
+<!-- HSK 主系统 -->
+<script src="./ui/hskHistory.js"></script>
+<script src="./ui/hskLoader.js"></script>
+<script src="./ui/hskRenderer.js"></script>
 
-  <script src="./ui/learnPanel.js"></script>
-  <script src="./ui/hskUI.js"></script>
-  <script src="./ui/aiUI.js"></script>
+<!-- ✍️ 笔顺 + 描红系统 -->
+<script src="./ui/strokeTrace.js"></script>
+<script src="./ui/strokePlayer.tpl.js"></script>
+<script src="./ui/strokePlayer.canvas.js"></script>
+<script src="./ui/strokePlayer.main.js"></script>
+
+<!-- 学习面板 -->
+<script src="./ui/learnPanel.js"></script>
+<script src="./ui/hskUI.js"></script>
+<script src="./ui/aiUI.js"></script>
 
   <!-- 自检 -->
   <script>
@@ -240,6 +244,7 @@
   </script>
 </body>
 </html>
+
 
 
 
