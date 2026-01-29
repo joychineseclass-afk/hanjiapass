@@ -1,5 +1,5 @@
 // ui/strokeTrace.js ✅完善不返工版（兼容你的 23458.svg / MakeMeAHanzi 类 SVG）
-// - 修复：if (오케이) -> if (ok)
+// - if (ok)
 // - 去掉闪提示（不提示、不闪绿红块）
 // - 支持回调：onStrokeCorrect / onAllComplete
 // - 支持重复练习：reset() / clearCurrent()
