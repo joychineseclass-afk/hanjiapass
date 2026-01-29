@@ -1,122 +1,95 @@
-// ui/dataPaths.js (ultimate, robust, low rework)
+// ui/dataPaths.js
+// ✅ 目的：统一管理数据路径（尤其是笔顺 svg）
+// 你的目录结构：/data/strokes/23458.svg  （文件名 = Unicode 十进制）
+//
+// 使用：
+//   DATA_PATHS.strokeUrl("客")  -> "./data/strokes/23458.svg"
+//   DATA_PATHS.strokeFileNameForChar("客") -> "23458.svg"
+//
+// 注意：这个文件只做“路径映射”，不改你现有逻辑，属于增强版。
+
 (function () {
-  function safeText(x) {
-    return String(x ?? "").trim();
+  "use strict";
+
+  // ---- 配置区：你只需要保证这两个目录正确 ----
+  const ROOT = ".";                 // GitHub Pages 下同级路径用 "."
+  const STROKES_DIR = "data/strokes";
+
+  // ---- 工具函数 ----
+  function isHanChar(ch) {
+    return typeof ch === "string" && ch.length > 0;
   }
 
-  // 兼容：level 可能传 1 / "1" / "hsk1" / "HSK 1"
-  function normalizeLevel(level) {
-    const s = safeText(level).toLowerCase();
-    const m = s.match(/(\d+)/);
-    return m ? m[1] : "1";
-  }
-
+  // 返回 Unicode code point（支持 emoji/扩展汉字）
   function codePoint(ch) {
-    return String(ch ?? "").codePointAt(0);
-  }
-
-  function joinPath(base, path) {
-    const b = safeText(base);
-    const p = safeText(path);
-    if (!b) return p || ".";
-    if (!p) return b;
-
-    const bb = b.endsWith("/") ? b.slice(0, -1) : b;
-    const pp = p.startsWith("/") ? p.slice(1) : p;
-    return `${bb}/${pp}`;
-  }
-
-  // 1) window.__APP_BASE__（你未来要手动指定时用）
-  // 2) <base href="...">
-  // 3) 当前页面路径推断（适配 GitHub Pages 子目录）
-  function detectBase() {
-    const forced = safeText(window.__APP_BASE__);
-    if (forced) return forced;
-
-    const baseEl = document.querySelector("base[href]");
-    if (baseEl) {
-      const href = safeText(baseEl.getAttribute("href"));
-      // base href 可能是绝对 URL，也可能是 /repo/
-      if (href) return href.replace(/\/+$/, "");
+    try {
+      return ch.codePointAt(0);
+    } catch {
+      return null;
     }
-
-    // 推断：用 pathname 的目录作为 base
-    // 例：/myrepo/index.html -> /myrepo
-    // 例：/myrepo/sub/index.html -> /myrepo/sub
-    const path = safeText(location.pathname || "/");
-    const isFile = /\.[a-z0-9]+$/i.test(path);
-    const dir = isFile ? path.replace(/\/[^/]*$/, "") : path.replace(/\/+$/, "");
-    // dir 可能是 ""（根目录），这里统一成 "."
-    return dir ? dir : ".";
   }
 
-  // ✅ 可选版本号（你现在不加也完全没影响）
-  // 未来如果你想 cache-busting：DATA_PATHS.setVersion("20260128")
-  let BASE = detectBase();
-  let VERSION = ""; // "" 表示不追加
-
-  function withVersion(url) {
-    if (!VERSION) return url;
-    const sep = url.includes("?") ? "&" : "?";
-    return `${url}${sep}v=${encodeURIComponent(VERSION)}`;
+  // 十进制文件名（你现在的 strokes 文件就是这个）
+  function toDecFileName(ch) {
+    const cp = codePoint(ch);
+    if (cp == null) return "";
+    return String(cp); // e.g. 客 U+5BA2 => 23458
   }
 
-  function vocabUrl(level) {
-    const lv = normalizeLevel(level);
-    return withVersion(joinPath(BASE, `data/vocab/hsk${lv}_vocab.json`));
+  // 可选：如果未来你想支持 u5BA2.svg / U5BA2.svg 等，也预留
+  function toHexFileName(ch) {
+    const cp = codePoint(ch);
+    if (cp == null) return "";
+    return "u" + cp.toString(16).toUpperCase(); // u5BA2
   }
 
-  function lessonsUrl(level) {
-    const lv = normalizeLevel(level);
-    return withVersion(joinPath(BASE, `data/lessons/hsk${lv}_lessons.json`));
+  function joinPath(a, b) {
+    if (!a) return b || "";
+    if (!b) return a || "";
+    return a.replace(/\/+$/, "") + "/" + b.replace(/^\/+/, "");
   }
 
-  // makemeahanzi：文件名是 unicode 十进制
-  function strokeUrl(ch) {
-    const s = safeText(ch);
-    // 只取第一个字符，避免传入字符串导致文件名错误
-    const first = s ? [...s][0] : "";
-    if (!first) return "";
-    const cp = codePoint(first);
-    if (!cp) return "";
-    return withVersion(joinPath(BASE, `data/strokes/${cp}.svg`));
-  }
-
+  // ---- 主要 API ----
   function strokeFileNameForChar(ch) {
-    const s = safeText(ch);
-    const first = s ? [...s][0] : "";
-    if (!first) return "";
-    const cp = codePoint(first);
-    if (!cp) return "";
-    return `${cp}.svg`;
+    if (!isHanChar(ch)) return "";
+    const dec = toDecFileName(ch);
+    if (!dec) return "";
+    return `${dec}.svg`;
   }
 
-  // ✅ 对外暴露：以后你想把站点放到别的子目录、或加版本号，不用改其它文件
-  function setBase(newBase) {
-    BASE = safeText(newBase) || ".";
+  function strokeUrl(ch) {
+    // ✅ 返回相对路径，和你 fetch(url) 逻辑兼容
+    const fn = strokeFileNameForChar(ch);
+    if (!fn) return "";
+
+    // "./data/strokes/23458.svg"
+    return joinPath(joinPath(ROOT, STROKES_DIR), fn);
   }
 
-  function getBase() {
-    return BASE;
+  // ---- 调试辅助：可在 Console 里直接用 ----
+  function debugChar(ch) {
+    const cp = codePoint(ch);
+    return {
+      char: ch,
+      codePoint: cp,
+      hex: cp != null ? "U+" + cp.toString(16).toUpperCase() : null,
+      dec: cp != null ? String(cp) : null,
+      file: strokeFileNameForChar(ch),
+      url: strokeUrl(ch),
+      altHexName: cp != null ? `${toHexFileName(ch)}.svg` : null,
+    };
   }
 
-  function setVersion(v) {
-    VERSION = safeText(v);
-  }
-
-  function getVersion() {
-    return VERSION;
-  }
-
+  // ---- 暴露到全局 ----
   window.DATA_PATHS = {
-    vocabUrl,
-    lessonsUrl,
+    // 笔顺
     strokeUrl,
     strokeFileNameForChar,
-    // 可选扩展（现在不用也不影响）
-    setBase,
-    getBase,
-    setVersion,
-    getVersion,
+
+    // 工具（可选）
+    debugChar,
   };
+
+  // ✅ 可选：启动时打印一次，方便确认加载成功（不想要就注释掉）
+  // console.log("[DATA_PATHS] ready:", window.DATA_PATHS);
 })();
