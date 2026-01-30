@@ -73,25 +73,18 @@
 <script type="module">
   import { i18n } from "../ui/i18n.js";
   import { mountNavBar } from "../ui/components/navBar.js";
+  import { initPageHSK } from "../ui/pages/page.hsk.js";  // 👈 新增
 
   i18n.init({ defaultLang:"kr", storageKey:"joy_lang", autoApplyRoot: document });
   mountNavBar(document.getElementById("navBar"));
   i18n.apply();
 
-  const statusEl = document.getElementById("hskStatus");
-  const vocabWrap = document.getElementById("vocabWrap");
-
-  function fakeLoad(){
-    statusEl.textContent = i18n.t("hsk_loading");
-    setTimeout(()=>{
-      statusEl.textContent = "";
-      vocabWrap.innerHTML = `<div class="placeholder">${i18n.t("hsk_empty")}</div>`;
-    },600);
-  }
-
-  document.getElementById("btnReload").addEventListener("click", fakeLoad);
-  document.getElementById("hskLevel").addEventListener("change", fakeLoad);
-  fakeLoad();
+  initPageHSK({
+    levelSelect: document.getElementById("hskLevel"),
+    reloadBtn: document.getElementById("btnReload"),
+    statusEl: document.getElementById("hskStatus"),
+    vocabWrap: document.getElementById("vocabWrap"),
+  });
 </script>
 
 </body>
