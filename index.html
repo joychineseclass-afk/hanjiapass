@@ -25,8 +25,6 @@
       background:var(--bg);
       color:var(--text);
     }
-    <link rel="stylesheet" href="./ui/styles.css" />
-    
     a{ color:inherit; }
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
     .card{
@@ -193,22 +191,49 @@
   </div>
 
   <!-- ✅ ES Modules -->
-<script type="module">
-  // ✅ 先只加载韩语导航栏（不启用双语）
-  import { initBar } from "./ui/components/bar.js";
+  <script type="module">
+    import { i18n } from "./i18n.js";
+    import { mountNavBar } from "./navBar.js";
 
-  // 年份（有就保留）
-  const yy = document.getElementById("yy");
-  if (yy) yy.textContent = new Date().getFullYear();
+    // year
+    document.getElementById("yy").textContent = new Date().getFullYear();
 
-  // 初始化顶部栏
-  initBar();
+    // init i18n
+    i18n.init({
+      defaultLang: "kr", // 默认 KR
+      storageKey: "joy_lang"
+    });
 
-  // hash 变化时（如果你有路由高亮逻辑，后面再接）
-  window.addEventListener("hashchange", () => {
-    // 预留：以后接 i18n.emit("route") 或 navbar 高亮更新
-  });
-</script>
+    // language buttons
+    const btnKR = document.getElementById("btnKR");
+    const btnCN = document.getElementById("btnCN");
 
+    function syncLangButtons() {
+      const lang = i18n.getLang();
+      btnKR.classList.toggle("active", lang === "kr");
+      btnCN.classList.toggle("active", lang === "cn");
+      document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+    }
+
+    btnKR.addEventListener("click", () => { i18n.setLang("kr"); });
+    btnCN.addEventListener("click", () => { i18n.setLang("cn"); });
+
+    // mount navbar once
+    mountNavBar(document.getElementById("navBar"));
+
+    // apply + listen
+    i18n.apply();
+    syncLangButtons();
+
+    i18n.onChange(() => {
+      i18n.apply();
+      syncLangButtons();
+    });
+
+    // active nav highlight on hash change
+    window.addEventListener("hashchange", () => {
+      i18n.emit("route");
+    });
+  </script>
 </body>
 </html>
