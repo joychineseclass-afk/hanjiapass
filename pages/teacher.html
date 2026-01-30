@@ -1,24 +1,31 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>教师</title>
-
-  <link rel="stylesheet" href="./styles/base.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="nav_teacher">교사专区 | Joy Chinese</title>
+  <link rel="stylesheet" href="../styles/base.css" />
 </head>
+<body>
 
-<body class="bg-slate-50 text-gray-800">
-  <div id="navMount"></div>
-  <main id="pageMount" class="max-w-6xl mx-auto p-6"></main>
+<div id="navBar"></div>
 
-  <script src="../ui/components/navBar.js"></script>
-  <script>
-    document.getElementById("navMount").innerHTML =
-      window.NavBar?.renderNavBar?.("teacher") || "";
-  </script>
+<main class="page-wrap">
+  <h1 class="page-title" data-i18n="nav_teacher"></h1>
+  <p class="muted">教师教学资料与课程管理区。</p>
 
-  <script src="../ui/pages/page.teacher.js"></script>
+  <div class="card" style="margin-top:16px;">
+    <div class="placeholder">👩‍🏫 教师功能模块（下一步接入）</div>
+  </div>
+</main>
+
+<script type="module">
+  import { i18n } from "../ui/i18n.js";
+  import { mountNavBar } from "../ui/components/navBar.js";
+  i18n.init({ defaultLang:"kr", storageKey:"joy_lang", autoApplyRoot: document });
+  mountNavBar(document.getElementById("navBar"));
+  i18n.apply();
+</script>
+
 </body>
 </html>
