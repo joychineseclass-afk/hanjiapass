@@ -198,57 +198,68 @@
 
   <!-- ✅ ES Modules -->
   <script type="module">
-    import { i18n } from "./i18n.js";
-    import { mountNavBar } from "./navBar.js";
+  import { i18n } from "./i18n.js";
+  import { mountNavBar } from "./navBar.js";
 
-    // year
-    document.getElementById("yy").textContent = new Date().getFullYear();
+  // year
+  document.getElementById("yy").textContent = new Date().getFullYear();
 
-    // init i18n
-    i18n.init({
-      defaultLang: "kr",
-      storageKey: "joy_lang"
-    });
+  // ✅ init i18n
+  i18n.init({
+    defaultLang: "kr",      // 默认 KR
+    storageKey: "joy_lang"  // 记住语言
+  });
 
-    // language buttons
-    const btnKR = document.getElementById("btnKR");
-    const btnCN = document.getElementById("btnCN");
+  // ✅ 可选：如果你希望“每次打开都先韩语”，就强制 KR
+  // （如果你只希望“第一次默认韩语”，把下面这段改成：if (!localStorage.getItem("joy_lang")) {...}）
+  try {
+    localStorage.setItem("joy_lang", "kr");
+  } catch {}
+  i18n.setLang("kr");
 
-    function syncLangButtons() {
-      const lang = i18n.getLang();
-      btnKR.classList.toggle("active", lang === "kr");
-      btnCN.classList.toggle("active", lang === "cn");
-      document.documentElement.lang = (lang === "kr") ? "ko" : "zh-CN";
-    }
+  // language buttons
+  const btnKR = document.getElementById("btnKR");
+  const btnCN = document.getElementById("btnCN");
 
-    btnKR.addEventListener("click", () => {
-      i18n.setLang("kr");
-      i18n.apply();          // ✅ 保险：切换后立刻刷新文案
-      syncLangButtons();
-    });
-
-    btnCN.addEventListener("click", () => {
-      i18n.setLang("cn");
-      i18n.apply();
-      syncLangButtons();
-    });
-
-    // mount navbar once
-    mountNavBar(document.getElementById("navBar"));
-
-    // apply + listen
+  function applyAll() {
+    // ✅ 关键：切换后立刻刷新所有 data-i18n 文案
     i18n.apply();
     syncLangButtons();
+  }
 
-    i18n.onChange(() => {
-      i18n.apply();
-      syncLangButtons();
-    });
+  function syncLangButtons() {
+    const lang = i18n.getLang();
+    btnKR.classList.toggle("active", lang === "kr");
+    btnCN.classList.toggle("active", lang === "cn");
+    document.documentElement.lang = (lang === "kr") ? "ko" : "zh-CN";
+  }
 
-    // active nav highlight on hash change
-    window.addEventListener("hashchange", () => {
-      i18n.emit("route");
-    });
-  </script>
+  // ✅ 点击切换：setLang + 立即 apply
+  btnKR.addEventListener("click", () => {
+    i18n.setLang("kr");
+    applyAll();
+  });
+
+  btnCN.addEventListener("click", () => {
+    i18n.setLang("cn");
+    applyAll();
+  });
+
+  // mount navbar once
+  mountNavBar(document.getElementById("navBar"));
+
+  // first render
+  applyAll();
+
+  // i18n change listener（如果 i18n.js 里真的会触发 onChange）
+  i18n.onChange(() => {
+    applyAll();
+  });
+
+  // active nav highlight on hash change
+  window.addEventListener("hashchange", () => {
+    i18n.emit("route");
+  });
+</script>
 </body>
 </html>
