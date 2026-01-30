@@ -192,48 +192,42 @@
 
   <!-- ✅ ES Modules -->
   <script type="module">
-    import { i18n } from "./i18n.js";
-    import { mountNavBar } from "./navBar.js";
+  import { i18n } from "./i18n.js";
+  import { mountNavBar } from "./navBar.js";
 
-    // year
-    document.getElementById("yy").textContent = new Date().getFullYear();
+  document.getElementById("yy").textContent = new Date().getFullYear();
 
-    // init i18n
-    i18n.init({
-      defaultLang: "kr", // 默认 KR
-      storageKey: "joy_lang"
-    });
+  // ✅ init：并开启 auto apply
+  i18n.init({
+    defaultLang: "kr",
+    storageKey: "joy_lang",
+    autoApplyRoot: document
+  });
 
-    // language buttons
-    const btnKR = document.getElementById("btnKR");
-    const btnCN = document.getElementById("btnCN");
+  const btnKR = document.getElementById("btnKR");
+  const btnCN = document.getElementById("btnCN");
 
-    function syncLangButtons() {
-      const lang = i18n.getLang();
-      btnKR.classList.toggle("active", lang === "kr");
-      btnCN.classList.toggle("active", lang === "cn");
-      document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
-    }
+  function syncLangButtons() {
+    const lang = i18n.getLang();
+    btnKR.classList.toggle("active", lang === "kr");
+    btnCN.classList.toggle("active", lang === "cn");
+    document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+  }
 
-    btnKR.addEventListener("click", () => { i18n.setLang("kr"); });
-    btnCN.addEventListener("click", () => { i18n.setLang("cn"); });
+  btnKR.addEventListener("click", () => i18n.setLang("kr"));
+  btnCN.addEventListener("click", () => i18n.setLang("cn"));
 
-    // mount navbar once
-    mountNavBar(document.getElementById("navBar"));
+  mountNavBar(document.getElementById("navBar"));
 
-    // apply + listen
-    i18n.apply();
-    syncLangButtons();
+  // ✅ 首次刷新
+  i18n.apply();
+  syncLangButtons();
 
-    i18n.onChange(() => {
-      i18n.apply();
-      syncLangButtons();
-    });
+  // ✅ 语言变化时同步按钮状态
+  i18n.on("change", () => syncLangButtons());
 
-    // active nav highlight on hash change
-    window.addEventListener("hashchange", () => {
-      i18n.emit("route");
-    });
-  </script>
+  // ✅ hash 变化时更新导航高亮
+  window.addEventListener("hashchange", () => i18n.emit("route"));
+</script>
 </body>
 </html>
