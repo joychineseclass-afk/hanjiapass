@@ -1,32 +1,57 @@
-(function () {
-  function render(container) {
-    container.innerHTML = `
-      <div class="page-wrap">
-        <h1 class="page-title">HSK 系统课程</h1>
+// /ui/pages/page.hsk.js
+// HSK 页面控制器（标准样板）
 
-        <div class="section-box">
-          <h2>📚 词汇学习区</h2>
-          <div id="hsk-vocab-area">（以后加载词库）</div>
-        </div>
+import { i18n } from "../i18n.js";
 
-        <div class="section-box">
-          <h2>📝 句子练习区</h2>
-          <div id="hsk-sentence-area">（以后加载例句）</div>
-        </div>
+export function initPageHSK({ levelSelect, reloadBtn, statusEl, vocabWrap }) {
+  if (!levelSelect || !reloadBtn || !statusEl || !vocabWrap) {
+    console.warn("HSKPage: missing elements");
+    return;
+  }
 
-        <div class="section-box">
-          <h2>🎧 听力 & 跟读</h2>
-          <div id="hsk-audio-area">（以后加载音频）</div>
-        </div>
-      </div>
+  function setStatus(key) {
+    statusEl.textContent = i18n.t(key);
+  }
+
+  function renderEmpty() {
+    vocabWrap.innerHTML = `
+      <div class="placeholder">${i18n.t("hsk_empty")}</div>
     `;
   }
 
-  function init() {
-    const el = document.getElementById("app");
-    if (!el) return;
-    render(el);
+  function renderList(words) {
+    vocabWrap.innerHTML = words.map(w => `
+      <div class="item">
+        <div class="w">${w.word}</div>
+        <div class="s">${w.meaning}</div>
+      </div>
+    `).join("");
   }
 
-  window.PageHSK = { init };
-})();
+  async function loadHSK(level) {
+    setStatus("hsk_loading");
+    await new Promise(r => setTimeout(r, 500));
+    setStatus("");
+
+    const demo = [
+      { word: "你好", meaning: "안녕하세요 / 你好" },
+      { word: "谢谢", meaning: "감사합니다 / 谢谢" },
+      { word: "中国", meaning: "중국 / 中国" },
+    ];
+
+    renderList(demo);
+  }
+
+  function reload() {
+    const level = levelSelect.value;
+    loadHSK(level).catch(err => {
+      console.error(err);
+      renderEmpty();
+    });
+  }
+
+  reloadBtn.addEventListener("click", reload);
+  levelSelect.addEventListener("change", reload);
+
+  reload(); // 首次加载
+}
