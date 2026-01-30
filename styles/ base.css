@@ -134,3 +134,34 @@ body {
   background: #111827;
   color: #ffffff;
 }
+
+/* 首页专用 */
+.home-intro {
+  color: #6b7280;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.home-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: #374151;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  color: #111827;
+}
