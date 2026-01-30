@@ -13,7 +13,7 @@
       --muted:#6b7280;
       --line:#e5e7eb;
       --brand:#2563eb;
-      --brand2:#f59e0b;
+      --accent:#f59e0b;
       --shadow: 0 10px 25px rgba(0,0,0,.06);
       --radius: 18px;
       --max: 980px;
@@ -48,12 +48,14 @@
     }
     .brand a{
       text-decoration:none;
-      font-weight:800;
+      font-weight:900;
       font-size:20px;
       color:var(--brand);
       letter-spacing:.2px;
     }
     .brand small{ color:var(--muted); }
+
+    /* language switch */
     .lang{
       display:flex;
       gap:8px;
@@ -65,7 +67,8 @@
       border-radius:999px;
       padding:8px 12px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
+      font-size:13px;
     }
     .lang button.active{
       border-color: rgba(245,158,11,.55);
@@ -91,7 +94,7 @@
       color:var(--muted);
       background:transparent;
       transition:.15s;
-      font-weight:700;
+      font-weight:800;
       font-size:14px;
     }
     nav#navBar a:hover{
@@ -113,7 +116,7 @@
     }
     .title{
       font-size:18px;
-      font-weight:800;
+      font-weight:900;
       margin:0 0 8px 0;
     }
     .desc{
@@ -133,7 +136,7 @@
       border:1px solid var(--line);
       background:#fff;
       color:#374151;
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
     }
     .footer{
@@ -144,6 +147,8 @@
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      padding-top:12px;
     }
   </style>
 </head>
@@ -157,6 +162,7 @@
           <small data-i18n="subtitle">AI 汉字・中文学习平台</small>
         </div>
 
+        <!-- ✅ 语言切换按钮：id 一定要是 btnKR / btnCN -->
         <div class="lang" aria-label="Language switcher">
           <button id="btnKR" type="button">KR</button>
           <button id="btnCN" type="button">CN</button>
@@ -200,7 +206,7 @@
 
     // init i18n
     i18n.init({
-      defaultLang: "kr", // 默认 KR
+      defaultLang: "kr",
       storageKey: "joy_lang"
     });
 
@@ -212,11 +218,20 @@
       const lang = i18n.getLang();
       btnKR.classList.toggle("active", lang === "kr");
       btnCN.classList.toggle("active", lang === "cn");
-      document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+      document.documentElement.lang = (lang === "kr") ? "ko" : "zh-CN";
     }
 
-    btnKR.addEventListener("click", () => { i18n.setLang("kr"); });
-    btnCN.addEventListener("click", () => { i18n.setLang("cn"); });
+    btnKR.addEventListener("click", () => {
+      i18n.setLang("kr");
+      i18n.apply();          // ✅ 保险：切换后立刻刷新文案
+      syncLangButtons();
+    });
+
+    btnCN.addEventListener("click", () => {
+      i18n.setLang("cn");
+      i18n.apply();
+      syncLangButtons();
+    });
 
     // mount navbar once
     mountNavBar(document.getElementById("navBar"));
