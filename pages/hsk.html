@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HSK 学习</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HSK学习</title>
 
-  <link rel="stylesheet" href="./styles/base.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../styles/base.css" />
+  <script src="../ui/components/navBar.js" defer></script>
 </head>
 
-<body class="bg-slate-50 text-gray-800">
-  <div id="navMount"></div>
-  <main id="pageMount" class="max-w-6xl mx-auto p-6"></main>
+<body>
+  <div id="siteNav"></div>
 
-  <script src="../ui/components/navBar.js"></script>
-  <script>
-    document.getElementById("navMount").innerHTML =
-      window.NavBar?.renderNavBar?.("hsk") || "";
-  </script>
-
-  <script src="../ui/pages/page.hsk.js"></script>
+  <div class="page-wrap">
+    <div class="page-title">HSK 학습</div>
+    <div class="text-gray-600">여기에 HSK 콘텐츠를 넣을 예정입니다.</div>
+  </div>
 </body>
 </html>
