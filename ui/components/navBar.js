@@ -1,63 +1,46 @@
-// /ui/components/navBar.js
+// ui/components/navBar.js
 (function () {
-  const NAV_ID = "siteNav";
+  function renderNav() {
+    const wrap = document.getElementById("siteNav");
+    if (!wrap) return;
 
-  const items = [
-    { label: "首页", href: "../index.html" },
-    { label: "HSK学习", href: "./hsk.html" },
-    { label: "汉字笔顺", href: "./stroke.html" },
-    { label: "한자공부", href: "./hanja.html" },
-    { label: "会话", href: "./convo.html" },
-    { label: "旅游中文", href: "./travel.html" },
-    { label: "文化", href: "./culture.html" },
-    { label: "复习区", href: "./review.html" },
-    { label: "资源", href: "./resources.html" },
-    { label: "教师", href: "./teacher.html" },
-    { label: "我的", href: "./me.html" },
-  ];
+    wrap.innerHTML = `
+      <div class="nav">
+        <div class="nav-left">
+          <a class="nav-brand" href="/index.html">Joy Chinese</a>
+        </div>
 
-  function normalizePath(p) {
-    return (p || "").split("?")[0].split("#")[0];
-  }
+        <div class="nav-links">
+          <a class="nav-link" href="/index.html" data-i18n="nav_home"></a>
+          <a class="nav-link" href="/pages/hsk.html" data-i18n="nav_hsk"></a>
+          <a class="nav-link" href="/pages/stroke.html" data-i18n="nav_stroke"></a>
+          <a class="nav-link" href="/pages/hanja.html" data-i18n="nav_hanja"></a>
+          <a class="nav-link" href="/pages/convo.html" data-i18n="nav_convo"></a>
+          <a class="nav-link" href="/pages/travel.html" data-i18n="nav_travel"></a>
+          <a class="nav-link" href="/pages/culture.html" data-i18n="nav_culture"></a>
+          <a class="nav-link" href="/pages/review.html" data-i18n="nav_review"></a>
+          <a class="nav-link" href="/pages/resources.html" data-i18n="nav_resources"></a>
+          <a class="nav-link" href="/pages/teacher.html" data-i18n="nav_teacher"></a>
+          <a class="nav-link" href="/pages/me.html" data-i18n="nav_me"></a>
+        </div>
 
-  function isActive(current, targetHref) {
-    // current: /hanjapass/pages/hsk.html
-    // target:  ./hsk.html  or ../index.html
-    const cur = normalizePath(current);
-    const t = normalizePath(targetHref);
-
-    // 取文件名比较最稳（hsk.html）
-    const curFile = cur.split("/").pop();
-    const tarFile = t.split("/").pop();
-    return curFile && tarFile && curFile === tarFile;
-  }
-
-  function render() {
-    const mount = document.getElementById(NAV_ID);
-    if (!mount) return;
-
-    const curPath = location.pathname || "";
-
-    const linksHtml = items
-      .map((it) => {
-        const active = isActive(curPath, it.href) ? "active" : "";
-        return `<a class="nav-link ${active}" href="${it.href}">${it.label}</a>`;
-      })
-      .join("");
-
-    mount.innerHTML = `
-      <div class="site-nav">
-        <div class="nav-inner">
-          ${linksHtml}
+        <div class="nav-right">
+          <button class="lang-btn" type="button" data-lang="ko">KR</button>
+          <button class="lang-btn" type="button" data-lang="zh">CN</button>
         </div>
       </div>
     `;
+
+    // 绑定语言切换
+    wrap.querySelectorAll("[data-lang]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        window.I18N?.setLang?.(btn.getAttribute("data-lang"));
+      });
+    });
+
+    // 立即应用一次（防止 nav 先空）
+    window.I18N?.apply?.(window.I18N?.getLang?.());
   }
 
-  // DOM 준비 후 실행
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", render);
-  } else {
-    render();
-  }
+  document.addEventListener("DOMContentLoaded", renderNav);
 })();
