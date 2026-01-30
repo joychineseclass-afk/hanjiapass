@@ -194,43 +194,20 @@
 
   <!-- ✅ ES Modules -->
 <script type="module">
-  import { i18n } from "./ui/i18n.js";
+  // ✅ 先只加载韩语导航栏（不启用双语）
   import { initBar } from "./ui/components/bar.js";
 
-  document.getElementById("yy").textContent = new Date().getFullYear();
+  // 年份（有就保留）
+  const yy = document.getElementById("yy");
+  if (yy) yy.textContent = new Date().getFullYear();
 
-  // ✅ init：并开启 auto apply
-  i18n.init({
-    defaultLang: "kr",
-    storageKey: "joy_lang",
-    autoApplyRoot: document
-  });
-
-  const btnKR = document.getElementById("btnKR");
-  const btnCN = document.getElementById("btnCN");
-
-  function syncLangButtons() {
-    const lang = i18n.getLang();
-    btnKR?.classList.toggle("active", lang === "kr");
-    btnCN?.classList.toggle("active", lang === "cn");
-    document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
-  }
-
-  btnKR?.addEventListener("click", () => i18n.setLang("kr"));
-  btnCN?.addEventListener("click", () => i18n.setLang("cn"));
-
-  // ✅ 顶部导航/工具栏（替代原 mountNavBar）
+  // 初始化顶部栏
   initBar();
 
-  // ✅ 首次刷新
-  i18n.apply();
-  syncLangButtons();
-
-  // ✅ 语言变化时同步按钮状态
-  i18n.on("change", () => syncLangButtons());
-
-  // ✅ hash 变化时更新导航高亮
-  window.addEventListener("hashchange", () => i18n.emit("route"));
+  // hash 变化时（如果你有路由高亮逻辑，后面再接）
+  window.addEventListener("hashchange", () => {
+    // 预留：以后接 i18n.emit("route") 或 navbar 高亮更新
+  });
 </script>
 
 </body>
