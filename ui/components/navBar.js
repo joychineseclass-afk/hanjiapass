@@ -1,83 +1,62 @@
-// navBar.js (ES Module)
-// - 只负责渲染一次 navbar
-// - data-i18n 文案由 i18n.apply() 来替换
-// - 自动高亮当前 hash 对应的导航项
+// ui/components/bar.js
+import { t, setLang, getLang } from "../i18n.js";
 
-import { i18n } from "./i18n.js";
-
-const NAV_ITEMS = [
-  { href: "#home", key: "nav_home" },
-  { href: "#hsk", key: "nav_hsk" },
-  { href: "#stroke", key: "nav_stroke" },
-  { href: "#hanjagongfu", key: "nav_hanjagongfu" },
-  { href: "#speaking", key: "nav_speaking" },
-  { href: "#travel", key: "nav_travel" },
-  { href: "#culture", key: "nav_culture" },
-  { href: "#review", key: "nav_review" },
-  { href: "#resources", key: "nav_resources" },
-  { href: "#teacher", key: "nav_teacher" },
-  { href: "#my", key: "nav_my" }
-];
-
-function normalizeHash(h) {
-  if (!h) return "#home";
-  return h.startsWith("#") ? h : `#${h}`;
+function qs(sel, root = document) {
+  return root.querySelector(sel);
 }
 
-function setActive(navEl) {
-  const current = normalizeHash(location.hash);
-  const links = navEl.querySelectorAll("a[data-nav]");
-  links.forEach((a) => {
-    const href = a.getAttribute("href");
-    a.classList.toggle("active", href === current);
-  });
-}
-
-export function mountNavBar(navEl) {
-  if (!navEl) return;
-
-  // ✅ 防止重复 mount
-  if (navEl.dataset.mounted === "1") {
-    setActive(navEl);
-    return;
+export function initBar() {
+  // 1) 确保容器存在（你也可以改成你现有的容器 id）
+  let bar = document.getElementById("top-bar");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "top-bar";
+    document.body.prepend(bar);
   }
-  navEl.dataset.mounted = "1";
 
-  // render
-  navEl.innerHTML = "";
-  const frag = document.createDocumentFragment();
+  // 2) 渲染
+  render(bar);
 
-  NAV_ITEMS.forEach((it) => {
-    const a = document.createElement("a");
-    a.href = it.href;
-    a.setAttribute("data-nav", "1");
-    a.setAttribute("data-i18n", it.key); // 交给 i18n.apply() 替换
-    a.textContent = i18n.t(it.key);      // 先给一个默认值（避免闪）
-    frag.appendChild(a);
+  // 3) 绑定事件
+  bind(bar);
+
+  // 4) 监听语言变化自动刷新文本
+  window.addEventListener("i18n:changed", () => render(bar));
+}
+
+function render(root) {
+  const lang = getLang();
+
+  root.innerHTML = `
+    <div class="bar">
+      <div class="bar-left">
+        <strong>AI 한자 선생님</strong>
+      </div>
+
+      <div class="bar-right">
+        <!-- ✅ 预留：你的 stroke 工具栏按钮（例如 跟写/따라쓰기 开关）可放这里 -->
+        <button class="btnTrace" type="button">${t("trace_toggle")}</button>
+
+        <!-- ✅ 语言切换 -->
+        <select class="langSelect" aria-label="language">
+          <option value="ko" ${lang === "ko" ? "selected" : ""}>${t("lang_ko")}</option>
+          <option value="zh" ${lang === "zh" ? "selected" : ""}>${t("lang_zh")}</option>
+        </select>
+      </div>
+    </div>
+  `;
+}
+
+function bind(root) {
+  const langSelect = qs(".langSelect", root);
+  langSelect?.addEventListener("change", (e) => {
+    setLang(e.target.value);
   });
 
-  navEl.appendChild(frag);
-
-  // click -> active
-  navEl.addEventListener("click", (e) => {
-    const a = e.target.closest("a[data-nav]");
-    if (!a) return;
-    // 让 hash 改变后再统一刷新 active
-    // （某些浏览器立即读 hash 可能还没变）
-    setTimeout(() => setActive(navEl), 0);
+  // ✅ trace按钮先给你占位：你之后接 traceApi / playDemoStroke 就接这里
+  const traceBtn = qs(".btnTrace", root);
+  traceBtn?.addEventListener("click", () => {
+    // TODO: 你现有的 teachingMode / traceApi / playDemoStroke 接入这里
+    console.log("trace toggle clicked");
   });
-
-  // language changed -> re-apply text
-  i18n.on("change", () => {
-    i18n.apply(navEl);
-  });
-
-  // route changed
-  i18n.on("route", () => {
-    setActive(navEl);
-  });
-
-  // initial active
-  if (!location.hash) location.hash = "#home";
-  setActive(navEl);
 }
