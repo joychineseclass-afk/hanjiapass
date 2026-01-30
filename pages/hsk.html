@@ -1,261 +1,98 @@
-<!-- /pages/hsk.html -->
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HSK 학습 | Joy Chinese</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="nav_hsk">HSK 학습 | Joy Chinese</title>
 
-    <!-- ✅ 全站基础样式 -->
-    <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/base.css" />
 
-    <!-- ✅ 多语言 + 顶部导航（defer 确保 DOM 后执行） -->
-    <script src="../ui/i18n.js" defer></script>
-    <script src="../ui/components/navBar.js" defer></script>
+  <style>
+    .grid-2 { display:grid; grid-template-columns:1fr; gap:14px; }
+    @media (min-width:900px){ .grid-2{ grid-template-columns:1.2fr 0.8fr; } }
+    .card{ background:#fff; border:1px solid #e5e7eb; border-radius:16px; padding:16px; }
+    .card-title{ font-size:18px; font-weight:800; margin-bottom:10px; }
+    .muted{ color:#6b7280; font-size:14px; }
+    .row{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .select{ border:1px solid #e5e7eb; border-radius:10px; padding:8px 10px; background:#fff; font-size:14px; }
+    .btn{ border:1px solid #e5e7eb; background:#fff; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:700; }
+    .btn:hover{ background:#f3f4f6; }
+    .placeholder{ padding:16px; border-radius:12px; border:1px dashed #e5e7eb; background:#fafafa; color:#6b7280; font-size:14px; }
+    .list{ display:grid; gap:10px; }
+    .item{ border:1px solid #e5e7eb; border-radius:12px; padding:12px; background:#fff; }
+  </style>
+</head>
 
-    <!-- ✅ 这个页面的最少补充样式（可删/可后续移动到 base.css） -->
-    <style>
-      .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-      @media (min-width: 900px) {
-        .grid-2 {
-          grid-template-columns: 1.2fr 0.8fr;
-        }
-      }
+<body>
 
-      .card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        padding: 16px;
-      }
+<!-- ✅ 顶部导航（模块化统一） -->
+<div id="navBar"></div>
 
-      .card-title {
-        font-size: 18px;
-        font-weight: 800;
-        margin-bottom: 10px;
-      }
+<main class="page-wrap">
+  <h1 class="page-title" data-i18n="hsk_title"></h1>
+  <p class="muted" data-i18n="hsk_subtitle"></p>
 
-      .muted {
-        color: #6b7280;
-        font-size: 14px;
-      }
+  <div class="card" style="margin-top:14px">
+    <div class="row">
+      <div class="muted" data-i18n="hsk_level"></div>
 
-      .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
-      }
+      <select id="hskLevel" class="select">
+        <option value="1">HSK 1</option>
+        <option value="2">HSK 2</option>
+        <option value="3">HSK 3</option>
+        <option value="4">HSK 4</option>
+        <option value="5">HSK 5</option>
+        <option value="6">HSK 6</option>
+      </select>
 
-      .select {
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-        padding: 8px 10px;
-        background: #fff;
-        font-size: 14px;
-      }
+      <button id="btnReload" class="btn" type="button" data-i18n="hsk_btn_reload"></button>
+      <span id="hskStatus" class="muted"></span>
+    </div>
+  </div>
 
-      .btn {
-        border: 1px solid #e5e7eb;
-        background: #fff;
-        padding: 8px 12px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 700;
-        color: #111827;
-      }
-      .btn:hover {
-        background: #f3f4f6;
-      }
-
-      .placeholder {
-        padding: 16px;
-        border-radius: 12px;
-        border: 1px dashed #e5e7eb;
-        background: #fafafa;
-        color: #6b7280;
-        font-size: 14px;
-      }
-
-      .err {
-        background: #fff5f5;
-        border: 1px solid #fecaca;
-        color: #991b1b;
-        border-radius: 12px;
-        padding: 12px;
-        font-size: 14px;
-      }
-
-      .list {
-        display: grid;
-        gap: 10px;
-      }
-      .item {
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 12px;
-        background: #fff;
-      }
-      .item .w {
-        font-weight: 800;
-        margin-bottom: 4px;
-      }
-      .item .s {
-        font-size: 14px;
-        color: #374151;
-      }
-    </style>
-
-    <!-- ✅ 这个页面专用文案 key（没有也不报错，会 fallback 到 key） -->
-    <script>
-      // 这里是“只给 HSK 页加文案”的方法：不影响其他页
-      // 你以后要更细：继续往下加 key 即可
-      document.addEventListener("DOMContentLoaded", () => {
-        if (!window.I18N?.DICT) return;
-
-        window.I18N.DICT.ko = Object.assign({}, window.I18N.DICT.ko, {
-          hsk_title: "HSK 학습",
-          hsk_subtitle: "레벨을 선택하면 단어·예문·학습 기능을 불러옵니다.",
-          hsk_level: "레벨",
-          hsk_btn_reload: "새로고침",
-          hsk_panel_vocab: "단어 학습",
-          hsk_panel_quick: "빠른 기능",
-          hsk_quick_1: "오늘의 단어(준비중)",
-          hsk_quick_2: "복습 퀴즈(준비중)",
-          hsk_quick_3: "나만의 단어장(준비중)",
-          hsk_loading: "불러오는 중…",
-          hsk_empty: "아직 표시할 데이터가 없어요. (다음 단계에서 연결해요)",
-        });
-
-        window.I18N.DICT.zh = Object.assign({}, window.I18N.DICT.zh, {
-          hsk_title: "HSK学习",
-          hsk_subtitle: "选择等级后加载单词、例句和学习功能。",
-          hsk_level: "等级",
-          hsk_btn_reload: "刷新",
-          hsk_panel_vocab: "词汇学习",
-          hsk_panel_quick: "快捷功能",
-          hsk_quick_1: "今日词汇（准备中）",
-          hsk_quick_2: "复习小测（准备中）",
-          hsk_quick_3: "我的单词本（准备中）",
-          hsk_loading: "加载中…",
-          hsk_empty: "暂时没有可显示的数据（下一步我们来接数据）。",
-        });
-
-        // navBar 已经会 apply，但这里保险再应用一次
-        window.I18N.apply(window.I18N.getLang());
-      });
-    </script>
-  </head>
-
-  <body>
-    <!-- ✅ 顶部导航注入点（navBar.js 会把导航渲染进来） -->
-    <div id="siteNav"></div>
-
-    <main class="page-wrap">
-      <h1 class="page-title" data-i18n="hsk_title"></h1>
-      <p class="muted" data-i18n="hsk_subtitle"></p>
-
-      <div class="card" style="margin-top: 14px">
-        <div class="row">
-          <div class="muted" data-i18n="hsk_level"></div>
-
-          <select id="hskLevel" class="select" aria-label="HSK Level">
-            <option value="1">HSK 1</option>
-            <option value="2">HSK 2</option>
-            <option value="3">HSK 3</option>
-            <option value="4">HSK 4</option>
-            <option value="5">HSK 5</option>
-            <option value="6">HSK 6</option>
-          </select>
-
-          <button id="btnReload" class="btn" type="button" data-i18n="hsk_btn_reload"></button>
-
-          <span id="hskStatus" class="muted"></span>
-        </div>
-
-        <div id="hskError" class="err" style="display:none; margin-top:12px;"></div>
+  <section class="grid-2" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title" data-i18n="hsk_panel_vocab"></div>
+      <div id="vocabWrap" class="list" style="margin-top:10px">
+        <div class="placeholder" data-i18n="hsk_empty"></div>
       </div>
+    </div>
 
-      <section class="grid-2" style="margin-top: 14px">
-        <!-- 左侧：词汇区域 -->
-        <div class="card">
-          <div class="card-title" data-i18n="hsk_panel_vocab"></div>
+    <aside class="card">
+      <div class="card-title" data-i18n="hsk_panel_quick"></div>
+      <div class="list" style="margin-top:10px">
+        <div class="item" data-i18n="hsk_quick_1"></div>
+        <div class="item" data-i18n="hsk_quick_2"></div>
+        <div class="item" data-i18n="hsk_quick_3"></div>
+      </div>
+    </aside>
+  </section>
+</main>
 
-          <div id="vocabWrap" class="list" style="margin-top: 10px">
-            <div class="placeholder" data-i18n="hsk_empty"></div>
-          </div>
-        </div>
+<!-- ✅ 模块化脚本（和首页一致，不会返工） -->
+<script type="module">
+  import { i18n } from "../ui/i18n.js";
+  import { mountNavBar } from "../ui/components/navBar.js";
 
-        <!-- 右侧：快捷功能 -->
-        <aside class="card">
-          <div class="card-title" data-i18n="hsk_panel_quick"></div>
+  i18n.init({ defaultLang:"kr", storageKey:"joy_lang", autoApplyRoot: document });
+  mountNavBar(document.getElementById("navBar"));
+  i18n.apply();
 
-          <div class="list" style="margin-top: 10px">
-            <div class="item">
-              <div class="w" data-i18n="hsk_quick_1"></div>
-              <div class="s muted">—</div>
-            </div>
-            <div class="item">
-              <div class="w" data-i18n="hsk_quick_2"></div>
-              <div class="s muted">—</div>
-            </div>
-            <div class="item">
-              <div class="w" data-i18n="hsk_quick_3"></div>
-              <div class="s muted">—</div>
-            </div>
-          </div>
-        </aside>
-      </section>
-    </main>
+  const statusEl = document.getElementById("hskStatus");
+  const vocabWrap = document.getElementById("vocabWrap");
 
-    <!-- ✅ 先给你一个“不会报错”的假加载器：骨架先跑起来 -->
-    <script>
-      (function () {
-        const $ = (id) => document.getElementById(id);
+  function fakeLoad(){
+    statusEl.textContent = i18n.t("hsk_loading");
+    setTimeout(()=>{
+      statusEl.textContent = "";
+      vocabWrap.innerHTML = `<div class="placeholder">${i18n.t("hsk_empty")}</div>`;
+    },600);
+  }
 
-        const levelSel = $("hskLevel");
-        const btnReload = $("btnReload");
-        const statusEl = $("hskStatus");
-        const errEl = $("hskError");
-        const vocabWrap = $("vocabWrap");
+  document.getElementById("btnReload").addEventListener("click", fakeLoad);
+  document.getElementById("hskLevel").addEventListener("change", fakeLoad);
+  fakeLoad();
+</script>
 
-        function setStatus(msgKey) {
-          statusEl.textContent = window.I18N?.t?.(msgKey) || msgKey;
-        }
-
-        function showError(msg) {
-          errEl.style.display = "block";
-          errEl.textContent = msg;
-        }
-
-        function hideError() {
-          errEl.style.display = "none";
-          errEl.textContent = "";
-        }
-
-        // ✅ 这里将来换成真正的 hskLoader（你现在先不接也没关系）
-        async function fakeLoad() {
-          hideError();
-          setStatus("hsk_loading");
-
-          // 演示：2 秒后清空状态（表示“加载完成”）
-          await new Promise((r) => setTimeout(r, 600));
-          statusEl.textContent = "";
-
-          // 这里先不显示数据，避免你还没接上 data 时页面乱
-          vocabWrap.innerHTML = `<div class="placeholder">${window.I18N?.t?.("hsk_empty") || ""}</div>`;
-        }
-
-        btnReload.addEventListener("click", () => fakeLoad());
-        levelSel.addEventListener("change", () => fakeLoad());
-
-        // 初次加载
-        document.addEventListener("DOMContentLoaded", () => fakeLoad());
-      })();
-    </script>
-  </body>
+</body>
 </html>
