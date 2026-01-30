@@ -1,4 +1,11 @@
-// i18n.js (ES Module) - 修复版：setLang 后自动 apply()
+// ui/i18n.js (ES Module)
+// - 支持 KR/CN
+// - localStorage 记住语言
+// - apply() 自动替换 data-i18n 文案
+// - onChange 订阅语言变化
+// - on/emit 简单事件总线（给 navBar 用于 route 更新）
+// ✅ 改进：setLang 后可自动 apply，避免“切换了但页面不变”
+
 const DICT = {
   kr: {
     brand: "Joy Chinese",
@@ -69,16 +76,27 @@ class I18N {
     this._lang = "kr";
     this._storageKey = "joy_lang";
     this._handlers = new Set();
-    this._bus = new Map();
-    this._autoApplyRoot = document; // ✅ 默认自动 apply 的 root
+    this._bus = new Map(); // event -> Set(handlers)
+
+    // ✅ 新增：切语言后自动 apply 的目标范围
+    this._autoApplyRoot = null; // null 表示不自动 apply（兼容旧行为）
   }
 
-  init({ defaultLang = "kr", storageKey = "joy_lang", autoApplyRoot = document } = {}) {
+  /**
+   * @param {Object} opts
+   * @param {"kr"|"cn"} [opts.defaultLang="kr"]
+   * @param {string} [opts.storageKey="joy_lang"]
+   * @param {Document|HTMLElement|null} [opts.autoApplyRoot=null]
+   *        - 传 document：setLang 后自动刷新整页
+   *        - 传某个元素：只刷新该元素内的 data-i18n
+   *        - null：不自动刷新（保持旧行为）
+   */
+  init({ defaultLang = "kr", storageKey = "joy_lang", autoApplyRoot = null } = {}) {
     this._storageKey = storageKey || "joy_lang";
-    this._autoApplyRoot = autoApplyRoot || document;
-
     const saved = safeGetLS(this._storageKey);
     this._lang = (saved === "cn" || saved === "kr") ? saved : defaultLang;
+
+    this._autoApplyRoot = autoApplyRoot; // ✅ 记住自动刷新范围
   }
 
   t(key) {
@@ -90,17 +108,44 @@ class I18N {
     return this._lang;
   }
 
-  setLang(lang) {
+  /**
+   * ✅ setLang：切换语言
+   * @param {"kr"|"cn"} lang
+   * @param {Object} [opts]
+   * @param {Document|HTMLElement|null} [opts.applyRoot]
+   *        - 优先使用 opts.applyRoot
+   *        - 否则使用 init 的 autoApplyRoot
+   *        - 都没有则不自动 apply
+   */
+  setLang(lang, opts = {}) {
     const next = (lang === "cn" || lang === "kr") ? lang : "kr";
     if (next === this._lang) return;
 
     this._lang = next;
     safeSetLS(this._storageKey, next);
 
-    // ✅ 核心修复：切换语言后自动刷新页面文案
-    this.apply(this._autoApplyRoot);
+    // ✅ 自动刷新：避免“切换了但页面没变”
+    const root = (opts && "applyRoot" in opts) ? opts.applyRoot : this._autoApplyRoot;
+    if (root) this.apply(root);
 
     // 通知订阅者
+    for (const fn of this._handlers) fn(next);
+    // 也广播一个 change 事件
+    this.emit("change", next);
+  }
+
+  /**
+   * ✅ forceLang：强制设置语言（无视当前是否相同）
+   * 用于“每次打开都默认韩语”这种需求
+   */
+  forceLang(lang, opts = {}) {
+    const next = (lang === "cn" || lang === "kr") ? lang : "kr";
+    this._lang = next;
+    safeSetLS(this._storageKey, next);
+
+    const root = (opts && "applyRoot" in opts) ? opts.applyRoot : this._autoApplyRoot;
+    if (root) this.apply(root);
+
     for (const fn of this._handlers) fn(next);
     this.emit("change", next);
   }
@@ -111,13 +156,15 @@ class I18N {
   }
 
   apply(root = document) {
-    const nodes = root.querySelectorAll("[data-i18n]");
+    const base = root || document;
+    const nodes = base.querySelectorAll("[data-i18n]");
     nodes.forEach((el) => {
       const key = el.getAttribute("data-i18n");
       el.textContent = this.t(key);
     });
   }
 
+  // 简单事件总线（给 navBar 监听 hashchange / route 更新用）
   on(event, fn) {
     if (!this._bus.has(event)) this._bus.set(event, new Set());
     this._bus.get(event).add(fn);
