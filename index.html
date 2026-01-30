@@ -1,38 +1,239 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Joy Chinese Learning Platform</title>
 
-  <link rel="stylesheet" href="./styles/base.css" />
-  <script src="./ui/i18n.js" defer></script>
-  <script src="./ui/components/navBar.js" defer></script>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --brand:#2563eb;
+      --brand2:#f59e0b;
+      --shadow: 0 10px 25px rgba(0,0,0,.06);
+      --radius: 18px;
+      --max: 980px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{ color:inherit; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand a{
+      text-decoration:none;
+      font-weight:800;
+      font-size:20px;
+      color:var(--brand);
+      letter-spacing:.2px;
+    }
+    .brand small{ color:var(--muted); }
+    .lang{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .lang button{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .lang button.active{
+      border-color: rgba(245,158,11,.55);
+      box-shadow: 0 0 0 4px rgba(245,158,11,.18);
+      background: rgba(245,158,11,.08);
+      color:#92400e;
+    }
+
+    /* navbar */
+    nav#navBar{
+      margin-top:12px;
+      border-top:1px dashed var(--line);
+      padding-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    nav#navBar a{
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid transparent;
+      color:var(--muted);
+      background:transparent;
+      transition:.15s;
+      font-weight:700;
+      font-size:14px;
+    }
+    nav#navBar a:hover{
+      background:rgba(37,99,235,.07);
+      color:var(--brand);
+      border-color: rgba(37,99,235,.15);
+    }
+    nav#navBar a.active{
+      background:rgba(37,99,235,.12);
+      color:var(--brand);
+      border-color: rgba(37,99,235,.25);
+      box-shadow: 0 0 0 4px rgba(37,99,235,.10);
+    }
+
+    .hero{
+      margin-top:14px;
+      display:grid;
+      gap:14px;
+    }
+    .title{
+      font-size:18px;
+      font-weight:800;
+      margin:0 0 8px 0;
+    }
+    .desc{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#374151;
+      font-weight:700;
+      font-size:13px;
+    }
+    .footer{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- 顶部导航 -->
-  <div id="siteNav"></div>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="brand">
+          <a href="#home" data-i18n="brand">Joy Chinese</a>
+          <small data-i18n="subtitle">AI 汉字・中文学习平台</small>
+        </div>
 
-  <div class="page-title" data-i18n="home_title"></div>
+        <div class="lang" aria-label="Language switcher">
+          <button id="btnKR" type="button">KR</button>
+          <button id="btnCN" type="button">CN</button>
+        </div>
+      </div>
 
-<div class="home-intro">
-  <p data-i18n="home_line1"></p>
-  <p data-i18n="home_line2"></p>
-</div>
+      <!-- ✅ 只保留一个导航容器，避免重复 -->
+      <nav id="navBar" aria-label="Primary"></nav>
 
-    <div class="home-grid">
-  <a class="home-card" href="./pages/hsk.html" data-i18n="card_hsk"></a>
-  <a class="home-card" href="./pages/stroke.html" data-i18n="card_stroke"></a>
-  <a class="home-card" href="./pages/hanja.html" data-i18n="card_hanja"></a>
-  <a class="home-card" href="./pages/convo.html" data-i18n="card_convo"></a>
-  <a class="home-card" href="./pages/travel.html" data-i18n="card_travel"></a>
-  <a class="home-card" href="./pages/culture.html" data-i18n="card_culture"></a>
-  <a class="home-card" href="./pages/review.html" data-i18n="card_review"></a>
-  <a class="home-card" href="./pages/resources.html" data-i18n="card_resources"></a>
-  <a class="home-card" href="./pages/teacher.html" data-i18n="card_teacher"></a>
-  <a class="home-card" href="./pages/me.html" data-i18n="card_me"></a>
-</div>
+      <section class="hero" id="content">
+        <div>
+          <h2 class="title" data-i18n="heroTitle">适合儿童到成人使用的综合中文学习网站。</h2>
+          <p class="desc" data-i18n="heroDesc">
+            HSK学习・汉字笔顺・汉字功夫・会话・旅游中文・文化
+          </p>
+
+          <div class="badges" aria-label="features">
+            <span class="badge" data-i18n="b1">HSK 学习</span>
+            <span class="badge" data-i18n="b2">汉字笔顺</span>
+            <span class="badge" data-i18n="b3">会话</span>
+            <span class="badge" data-i18n="b4">旅游中文</span>
+            <span class="badge" data-i18n="b5">文化</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <span>© <span id="yy"></span> Joy Chinese</span>
+        <span data-i18n="footerNote">逐步完善中：先把结构搭好，再把内容一块块补齐。</span>
+      </div>
+    </div>
   </div>
+
+  <!-- ✅ ES Modules -->
+  <script type="module">
+    import { i18n } from "./i18n.js";
+    import { mountNavBar } from "./navBar.js";
+
+    // year
+    document.getElementById("yy").textContent = new Date().getFullYear();
+
+    // init i18n
+    i18n.init({
+      defaultLang: "kr", // 默认 KR
+      storageKey: "joy_lang"
+    });
+
+    // language buttons
+    const btnKR = document.getElementById("btnKR");
+    const btnCN = document.getElementById("btnCN");
+
+    function syncLangButtons() {
+      const lang = i18n.getLang();
+      btnKR.classList.toggle("active", lang === "kr");
+      btnCN.classList.toggle("active", lang === "cn");
+      document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+    }
+
+    btnKR.addEventListener("click", () => { i18n.setLang("kr"); });
+    btnCN.addEventListener("click", () => { i18n.setLang("cn"); });
+
+    // mount navbar once
+    mountNavBar(document.getElementById("navBar"));
+
+    // apply + listen
+    i18n.apply();
+    syncLangButtons();
+
+    i18n.onChange(() => {
+      i18n.apply();
+      syncLangButtons();
+    });
+
+    // active nav highlight on hash change
+    window.addEventListener("hashchange", () => {
+      i18n.emit("route");
+    });
+  </script>
 </body>
 </html>
