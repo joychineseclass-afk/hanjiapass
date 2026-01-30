@@ -1,4 +1,24 @@
-标题
-一段"建设中"
-navBar注入
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>汉字笔顺</title>
 
+  <link rel="stylesheet" href="./styles/base.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 text-gray-800">
+  <div id="navMount"></div>
+  <main id="pageMount" class="max-w-6xl mx-auto p-6"></main>
+
+  <script src="../ui/components/navBar.js"></script>
+  <script>
+    document.getElementById("navMount").innerHTML =
+      window.NavBar?.renderNavBar?.("stroke") || "";
+  </script>
+
+  <script src="../ui/pages/page.stroke.js"></script>
+</body>
+</html>
