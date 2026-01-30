@@ -1,24 +1,38 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joy Chinese Class</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Joy Chinese Learning Platform</title>
 
-  <link rel="stylesheet" href="./styles/base.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./styles/base.css" />
+  <script src="./ui/components/navBar.js" defer></script>
 </head>
 
-<body class="bg-slate-50 text-gray-800">
-  <div id="navMount"></div>
-  <main id="pageMount" class="max-w-6xl mx-auto p-6"></main>
+<body>
+  <!-- 顶部导航 -->
+  <div id="siteNav"></div>
 
-  <script src="./ui/components/navBar.js"></script>
-  <script>
-    document.getElementById("navMount").innerHTML =
-      window.NavBar?.renderNavBar?.("home") || "";
-  </script>
+  <div class="page-wrap">
+    <div class="page-title">AI 한자 · 중국어 학습 플랫폼</div>
 
-  <script src="./ui/pages/page.home.js"></script>
+    <div class="home-intro">
+      <p>HSK 학습 · 한자 필순 · 한자공부 · 회화 · 여행 중국어 · 문화</p>
+      <p>아이부터 성인까지 사용할 수 있는 종합 중국어 학습 사이트입니다.</p>
+    </div>
+
+    <div class="home-grid">
+      <a class="home-card" href="./pages/hsk.html">HSK 학습</a>
+      <a class="home-card" href="./pages/stroke.html">汉字笔顺</a>
+      <a class="home-card" href="./pages/hanja.html">한자공부</a>
+      <a class="home-card" href="./pages/convo.html">회화</a>
+      <a class="home-card" href="./pages/travel.html">旅游中文</a>
+      <a class="home-card" href="./pages/culture.html">文化</a>
+      <a class="home-card" href="./pages/review.html">复习区</a>
+      <a class="home-card" href="./pages/resources.html">资源</a>
+      <a class="home-card" href="./pages/teacher.html">教师专区</a>
+      <a class="home-card" href="./pages/me.html">我的学习</a>
+    </div>
+  </div>
 </body>
 </html>
