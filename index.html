@@ -6,6 +6,7 @@
   <title>Joy Chinese Learning Platform</title>
 
   <link rel="stylesheet" href="./styles/base.css" />
+  <script src="./ui/i18n.js" defer></script>
   <script src="./ui/components/navBar.js" defer></script>
 </head>
 
@@ -13,13 +14,12 @@
   <!-- 顶部导航 -->
   <div id="siteNav"></div>
 
-  <div class="page-wrap">
-    <div class="page-title">AI 한자 · 중국어 학습 플랫폼</div>
+  <div class="page-title" data-i18n="home_title"></div>
 
-    <div class="home-intro">
-      <p>HSK 학습 · 한자 필순 · 한자공부 · 회화 · 여행 중국어 · 문화</p>
-      <p>아이부터 성인까지 사용할 수 있는 종합 중국어 학습 사이트입니다.</p>
-    </div>
+<div class="home-intro">
+  <p data-i18n="home_line1"></p>
+  <p data-i18n="home_line2"></p>
+</div>
 
     <div class="home-grid">
       <a class="home-card" href="./pages/hsk.html">HSK 학습</a>
