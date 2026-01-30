@@ -1,50 +1,77 @@
-// ui/components/bar.js
-function qs(sel, root = document) {
-  return root.querySelector(sel);
+// ui/components/navBar.js
+// - 只负责渲染一次 navbar
+// - data-i18n 文案由 i18n.apply() 来替换
+// - 自动高亮当前 hash 对应的导航项
+
+import { i18n } from "../i18n.js"; // ✅ 从 components 返回到 ui
+
+const NAV_ITEMS = [
+  { href: "#home", key: "nav_home" },
+  { href: "#hsk", key: "nav_hsk" },
+  { href: "#stroke", key: "nav_stroke" },
+  { href: "#hanjagongfu", key: "nav_hanjagongfu" },
+  { href: "#speaking", key: "nav_speaking" },
+  { href: "#travel", key: "nav_travel" },
+  { href: "#culture", key: "nav_culture" },
+  { href: "#review", key: "nav_review" },
+  { href: "#resources", key: "nav_resources" },
+  { href: "#teacher", key: "nav_teacher" },
+  { href: "#my", key: "nav_my" }
+];
+
+function normalizeHash(h) {
+  if (!h) return "#home";
+  return h.startsWith("#") ? h : `#${h}`;
 }
 
-export function initBar() {
-  // 确保容器存在
-  let bar = document.getElementById("top-bar");
-  if (!bar) {
-    bar = document.createElement("div");
-    bar.id = "top-bar";
-    document.body.prepend(bar);
+function setActive(navEl) {
+  const current = normalizeHash(location.hash);
+  const links = navEl.querySelectorAll("a[data-nav]");
+  links.forEach((a) => {
+    const href = a.getAttribute("href");
+    a.classList.toggle("active", href === current);
+  });
+}
+
+export function mountNavBar(navEl) {
+  if (!navEl) return;
+
+  if (navEl.dataset.mounted === "1") {
+    setActive(navEl);
+    return;
   }
+  navEl.dataset.mounted = "1";
 
-  render(bar);
-  bind(bar);
-}
+  navEl.innerHTML = "";
+  const frag = document.createDocumentFragment();
 
-function render(root) {
-  root.innerHTML = `
-    <div class="bar">
-      <div class="bar-left">
-        <strong>AI 한자 선생님</strong>
-      </div>
-
-      <div class="bar-right">
-        <!-- ✅ 预留：以后你要放 “따라쓰기” 开关就放这里 -->
-        <button class="btnTrace" type="button">따라쓰기</button>
-
-        <!-- ✅ 预留：语言切换入口（先禁用） -->
-        <button class="btnLang" type="button" disabled title="나중에 다국어 지원 예정">
-          KO
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function bind(root) {
-  const traceBtn = qs(".btnTrace", root);
-  traceBtn?.addEventListener("click", () => {
-    // TODO：以后接你的 teachingMode / playDemoStroke / traceApi
-    console.log("따라쓰기 클릭");
+  NAV_ITEMS.forEach((it) => {
+    const a = document.createElement("a");
+    a.href = it.href;
+    a.setAttribute("data-nav", "1");
+    a.setAttribute("data-i18n", it.key);
+    a.textContent = i18n.t(it.key);
+    frag.appendChild(a);
   });
 
-  const langBtn = qs(".btnLang", root);
-  langBtn?.addEventListener("click", () => {
-    // 预留：以后接语言选择弹窗
+  navEl.appendChild(frag);
+
+  navEl.addEventListener("click", (e) => {
+    const a = e.target.closest("a[data-nav]");
+    if (!a) return;
+    setTimeout(() => setActive(navEl), 0);
   });
+
+  // 语言变化 → 更新菜单文字
+  i18n.on("change", () => {
+    i18n.apply(navEl);
+  });
+
+  // 路由变化 → 更新高亮
+  i18n.on("route", () => {
+    setActive(navEl);
+  });
+
+  if (!location.hash) location.hash = "#home";
+  setActive(navEl);
 }
