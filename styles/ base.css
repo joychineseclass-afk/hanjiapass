@@ -165,3 +165,52 @@ body {
   box-shadow: 0 8px 18px rgba(0,0,0,0.08);
   color: #111827;
 }
+/* 顶部导航 */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.nav-brand {
+  font-weight: 800;
+  color: #111827;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-right {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-btn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #374151;
+}
+
+.lang-btn:hover {
+  background: #f3f4f6;
+}
+
+.lang-on {
+  background: #111827 !important;
+  color: #fff !important;
+  border-color: #111827 !important;
+}
