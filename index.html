@@ -25,6 +25,8 @@
       background:var(--bg);
       color:var(--text);
     }
+    <link rel="stylesheet" href="./ui/styles.css" />
+    
     a{ color:inherit; }
     .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
     .card{
@@ -191,9 +193,9 @@
   </div>
 
   <!-- ✅ ES Modules -->
-  <script type="module">
-  import { i18n } from "./i18n.js";
-  import { mountNavBar } from "./navBar.js";
+<script type="module">
+  import { i18n } from "./ui/i18n.js";
+  import { initBar } from "./ui/components/bar.js";
 
   document.getElementById("yy").textContent = new Date().getFullYear();
 
@@ -209,15 +211,16 @@
 
   function syncLangButtons() {
     const lang = i18n.getLang();
-    btnKR.classList.toggle("active", lang === "kr");
-    btnCN.classList.toggle("active", lang === "cn");
+    btnKR?.classList.toggle("active", lang === "kr");
+    btnCN?.classList.toggle("active", lang === "cn");
     document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
   }
 
-  btnKR.addEventListener("click", () => i18n.setLang("kr"));
-  btnCN.addEventListener("click", () => i18n.setLang("cn"));
+  btnKR?.addEventListener("click", () => i18n.setLang("kr"));
+  btnCN?.addEventListener("click", () => i18n.setLang("cn"));
 
-  mountNavBar(document.getElementById("navBar"));
+  // ✅ 顶部导航/工具栏（替代原 mountNavBar）
+  initBar();
 
   // ✅ 首次刷新
   i18n.apply();
@@ -229,5 +232,6 @@
   // ✅ hash 变化时更新导航高亮
   window.addEventListener("hashchange", () => i18n.emit("route"));
 </script>
+
 </body>
 </html>
