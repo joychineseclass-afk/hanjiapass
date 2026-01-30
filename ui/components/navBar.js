@@ -1,30 +1,43 @@
+// /ui/components/navBar.js
 (function () {
-  function renderNavBar() {
+  function renderNavBar(activeKey = "") {
+    const navItems = [
+      { key: "home", label: "首页", href: "/index.html" },
+      { key: "hsk", label: "HSK学习", href: "/pages/hsk.html" },
+      { key: "stroke", label: "汉字笔顺", href: "/pages/stroke.html" },
+      { key: "hanja", label: "한자공부", href: "/pages/hanja.html" },
+      { key: "convo", label: "会话", href: "/pages/convo.html" },
+      { key: "travel", label: "旅游中文", href: "/pages/travel.html" },
+      { key: "culture", label: "文化", href: "/pages/culture.html" },
+      { key: "review", label: "复习区", href: "/pages/review.html" },
+      { key: "resources", label: "资源", href: "/pages/resources.html" },
+      { key: "teacher", label: "教师专区", href: "/pages/teacher.html" },
+      { key: "me", label: "我的学习", href: "/pages/me.html" },
+    ];
+
+    const links = navItems
+      .map(
+        (item) => `
+        <a href="${item.href}" 
+           class="nav-link ${activeKey === item.key ? "active" : ""}">
+          ${item.label}
+        </a>`
+      )
+      .join("");
+
     return `
-      <nav class="w-full bg-white shadow-sm border-b">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap gap-3 text-sm font-medium">
-
-          <a href="../index.html" class="nav-link">🏠 首页</a>
-          <a href="../pages/hsk.html" class="nav-link">📘 HSK学习</a>
-          <a href="../pages/stroke.html" class="nav-link">✍️ 汉字笔顺</a>
-          <a href="../pages/hanja.html" class="nav-link">🇰🇷 한자공부</a>
-          <a href="../pages/convo.html" class="nav-link">💬 会话</a>
-          <a href="../pages/travel.html" class="nav-link">✈️ 旅游中文</a>
-          <a href="../pages/culture.html" class="nav-link">🏮 文化</a>
-          <a href="../pages/review.html" class="nav-link">🧠 复习</a>
-          <a href="../pages/resources.html" class="nav-link">📂 资料库</a>
-          <a href="../pages/teacher.html" class="nav-link">👩‍🏫 教师</a>
-          <a href="../pages/me.html" class="nav-link">⭐ 我的</a>
-
+      <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div class="text-lg font-bold text-orange-500">
+            AI 汉字学习平台
+          </div>
+          <nav class="flex flex-wrap gap-2 text-sm">
+            ${links}
+          </nav>
         </div>
-      </nav>
+      </header>
     `;
   }
 
-  function mountNavBar() {
-    const host = document.getElementById("site-nav");
-    if (host) host.innerHTML = renderNavBar();
-  }
-
-  window.NavBar = { mountNavBar };
+  window.NavBar = { renderNavBar };
 })();
