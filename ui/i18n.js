@@ -1,10 +1,4 @@
-// i18n.js (ES Module)
-// - 支持 KR/CN
-// - localStorage 记住语言
-// - apply() 自动替换 data-i18n 文案
-// - onChange 订阅语言变化
-// - emit() 简单事件总线（给 navBar 用于 route 更新）
-
+// i18n.js (ES Module) - 修复版：setLang 后自动 apply()
 const DICT = {
   kr: {
     brand: "Joy Chinese",
@@ -75,11 +69,14 @@ class I18N {
     this._lang = "kr";
     this._storageKey = "joy_lang";
     this._handlers = new Set();
-    this._bus = new Map(); // event -> Set(handlers)
+    this._bus = new Map();
+    this._autoApplyRoot = document; // ✅ 默认自动 apply 的 root
   }
 
-  init({ defaultLang = "kr", storageKey = "joy_lang" } = {}) {
+  init({ defaultLang = "kr", storageKey = "joy_lang", autoApplyRoot = document } = {}) {
     this._storageKey = storageKey || "joy_lang";
+    this._autoApplyRoot = autoApplyRoot || document;
+
     const saved = safeGetLS(this._storageKey);
     this._lang = (saved === "cn" || saved === "kr") ? saved : defaultLang;
   }
@@ -96,11 +93,15 @@ class I18N {
   setLang(lang) {
     const next = (lang === "cn" || lang === "kr") ? lang : "kr";
     if (next === this._lang) return;
+
     this._lang = next;
     safeSetLS(this._storageKey, next);
+
+    // ✅ 核心修复：切换语言后自动刷新页面文案
+    this.apply(this._autoApplyRoot);
+
     // 通知订阅者
     for (const fn of this._handlers) fn(next);
-    // 也广播一个 change 事件
     this.emit("change", next);
   }
 
@@ -113,13 +114,10 @@ class I18N {
     const nodes = root.querySelectorAll("[data-i18n]");
     nodes.forEach((el) => {
       const key = el.getAttribute("data-i18n");
-      const text = this.t(key);
-      // 避免把子元素全部清掉的复杂情况：这里简单处理
-      el.textContent = text;
+      el.textContent = this.t(key);
     });
   }
 
-  // 简单事件总线（给 navBar 监听 hashchange / route 更新用）
   on(event, fn) {
     if (!this._bus.has(event)) this._bus.set(event, new Set());
     this._bus.get(event).add(fn);
