@@ -1,43 +1,63 @@
 // /ui/components/navBar.js
 (function () {
-  function renderNavBar(activeKey = "") {
-    const navItems = [
-      { key: "home", label: "首页", href: "/index.html" },
-      { key: "hsk", label: "HSK学习", href: "/pages/hsk.html" },
-      { key: "stroke", label: "汉字笔顺", href: "/pages/stroke.html" },
-      { key: "hanja", label: "한자공부", href: "/pages/hanja.html" },
-      { key: "convo", label: "会话", href: "/pages/convo.html" },
-      { key: "travel", label: "旅游中文", href: "/pages/travel.html" },
-      { key: "culture", label: "文化", href: "/pages/culture.html" },
-      { key: "review", label: "复习区", href: "/pages/review.html" },
-      { key: "resources", label: "资源", href: "/pages/resources.html" },
-      { key: "teacher", label: "教师专区", href: "/pages/teacher.html" },
-      { key: "me", label: "我的学习", href: "/pages/me.html" },
-    ];
+  const NAV_ID = "siteNav";
 
-    const links = navItems
-      .map(
-        (item) => `
-        <a href="${item.href}" 
-           class="nav-link ${activeKey === item.key ? "active" : ""}">
-          ${item.label}
-        </a>`
-      )
+  const items = [
+    { label: "首页", href: "../index.html" },
+    { label: "HSK学习", href: "./hsk.html" },
+    { label: "汉字笔顺", href: "./stroke.html" },
+    { label: "한자공부", href: "./hanja.html" },
+    { label: "会话", href: "./convo.html" },
+    { label: "旅游中文", href: "./travel.html" },
+    { label: "文化", href: "./culture.html" },
+    { label: "复习区", href: "./review.html" },
+    { label: "资源", href: "./resources.html" },
+    { label: "教师", href: "./teacher.html" },
+    { label: "我的", href: "./me.html" },
+  ];
+
+  function normalizePath(p) {
+    return (p || "").split("?")[0].split("#")[0];
+  }
+
+  function isActive(current, targetHref) {
+    // current: /hanjapass/pages/hsk.html
+    // target:  ./hsk.html  or ../index.html
+    const cur = normalizePath(current);
+    const t = normalizePath(targetHref);
+
+    // 取文件名比较最稳（hsk.html）
+    const curFile = cur.split("/").pop();
+    const tarFile = t.split("/").pop();
+    return curFile && tarFile && curFile === tarFile;
+  }
+
+  function render() {
+    const mount = document.getElementById(NAV_ID);
+    if (!mount) return;
+
+    const curPath = location.pathname || "";
+
+    const linksHtml = items
+      .map((it) => {
+        const active = isActive(curPath, it.href) ? "active" : "";
+        return `<a class="nav-link ${active}" href="${it.href}">${it.label}</a>`;
+      })
       .join("");
 
-    return `
-      <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div class="text-lg font-bold text-orange-500">
-            AI 汉字学习平台
-          </div>
-          <nav class="flex flex-wrap gap-2 text-sm">
-            ${links}
-          </nav>
+    mount.innerHTML = `
+      <div class="site-nav">
+        <div class="nav-inner">
+          ${linksHtml}
         </div>
-      </header>
+      </div>
     `;
   }
 
-  window.NavBar = { renderNavBar };
+  // DOM 준비 후 실행
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", render);
+  } else {
+    render();
+  }
 })();
