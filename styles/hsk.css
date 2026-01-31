@@ -1,12 +1,45 @@
-/* ===============================
-   🌏 HSK PAGE BASE STYLES
-================================== */
+/* =========================================
+   📘 HSK Page Styles (Stable / No Rework)
+   只放“HSK页专属”和“笔顺/描红专属”
+   全站通用：放在 /styles/base.css
+========================================= */
 
-body {
-  background: #f7f7f7;
+/* ===============================
+   📱 Touch / Selection (局部)
+   只影响 HSK 页面区域，避免全站副作用
+================================== */
+#app, #hskGrid, #learn-panel, #ai-panel {
   -webkit-font-smoothing: antialiased;
 }
 
+#app * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-select {
+  user-select: none;
+}
+
+/* canvas 在描红/笔顺里用到 */
+#app canvas,
+#learn-panel canvas {
+  touch-action: none;
+}
+
+/* ===============================
+   🧱 HSK Grid / Cards (轻量兜底)
+   主要仍由 Tailwind 控制
+================================== */
+#hskGrid {
+  /* 如果未来某些地方没加 Tailwind grid，也能有间距 */
+  gap: 12px;
+}
+
+#hskError {
+  white-space: pre-wrap;
+}
+
+/* 你 AI 面板会用到 */
 .chat-box {
   max-height: 60vh;
   overflow-y: auto;
@@ -17,35 +50,18 @@ body {
   word-break: break-word;
 }
 
-.no-select {
-  user-select: none;
-}
-
 /* ===============================
-   📱 iOS / TOUCH OPTIMIZATION
+   ✍️ Trace Toggle Button (旧类名兼容)
 ================================== */
-
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-canvas {
-  touch-action: none;
-}
-
-/* ===============================
-   ✍️ TRACE MODE ACTIVE BUTTON
-================================== */
-
-.trace-active {
+.trace-active,
+.trace-btn-on {
   background: #fb923c !important;
-  color: white !important;
+  color: #fff !important;
 }
 
 /* ===============================
-   🧧 TRACE PRACTICE GRID (米字格)
+   🧧 Trace Practice Grid (米字格)
 ================================== */
-
 .trace-gridbox {
   position: relative;
   width: 100%;
@@ -55,7 +71,7 @@ canvas {
   overflow: hidden;
 }
 
-/* Diagonal dashed lines */
+/* diagonal dashed lines */
 .trace-gridbox::before,
 .trace-gridbox::after {
   content: "";
@@ -73,18 +89,15 @@ canvas {
           mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
 }
 
-/* Cross center lines */
+/* cross center lines */
 .trace-gridbox::after {
   background:
     linear-gradient(to right, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%),
     linear-gradient(to bottom, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%);
-  opacity: 0.1;
+  opacity: 0.10;
 }
 
-/* ===============================
-   🔤 TRACE WATERMARK CHARACTER
-================================== */
-
+/* watermark character */
 .trace-watermark {
   position: absolute;
   inset: 0;
@@ -100,10 +113,51 @@ canvas {
 }
 
 /* ===============================
-   🎛️ TRACE TOOLBAR ACTIVE STATE
+   🧩 Stroke Player (SVG 笔画态)
+   兼容 strokePlayer.main.js / canvas.js
 ================================== */
 
-.trace-btn-on {
-  background: #fb923c !important;
-  color: #fff !important;
+/* 未完成/底色 */
+.trace-stroke-dim {
+  stroke: rgba(0, 0, 0, .18) !important;
+  fill: rgba(0, 0, 0, .18) !important;
+  opacity: 1 !important;
+}
+
+/* 当前笔/播放高亮 */
+.trace-stroke-on {
+  stroke: #ff3b30 !important;
+  fill: #ff3b30 !important;
+  opacity: 1 !important;
+}
+
+/* 已完成 */
+.trace-stroke-done {
+  stroke: #ff3b30 !important;
+  fill: #ff3b30 !important;
+  opacity: 1 !important;
+}
+
+/* 笔画序号数字 */
+.trace-num {
+  font-size: 16px;
+  font-weight: 800;
+  fill: rgba(0, 0, 0, .35);
+}
+
+.trace-num-on {
+  fill: #ff3b30 !important;
+}
+
+.trace-num-done {
+  fill: rgba(255, 59, 48, .85) !important;
+}
+
+/* ===============================
+   ✅ Optional small polish
+================================== */
+@media (max-width: 480px) {
+  .trace-watermark {
+    font-size: clamp(180px, 55vw, 360px);
+  }
 }
