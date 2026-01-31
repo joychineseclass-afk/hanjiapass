@@ -240,3 +240,52 @@ button, input, select{ font: inherit; }
 /* ---------- 7) Utilities ---------- */
 .hidden{ display: none !important; }
 .muted{ color: var(--muted); }
+
+/* ===== NavBar styles (site-nav) ===== */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.topbar .brand a{
+  font-weight:700;
+  text-decoration:none;
+}
+
+.topbar .brand small{
+  display:block;
+  opacity:.75;
+  margin-top:2px;
+}
+
+.site-nav{
+  display:flex;
+  flex-wrap:wrap;        /* ✅ 允许换行，不会挤成一条 */
+  gap:10px;              /* ✅ 每个菜单之间的间距 */
+  padding:10px 0;
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+.site-nav a{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  text-decoration:none;
+  color:#111;
+  background:rgba(0,0,0,.04);  /* ✅ 默认淡灰底 */
+  transition:all .15s ease;
+}
+
+.site-nav a:hover{
+  color:#1d4ed8;                 /* ✅ hover 变蓝 */
+  background:rgba(29,78,216,.10);
+}
+
+.site-nav a.active{
+  color:#1d4ed8;                 /* ✅ 当前页高亮 */
+  background:rgba(29,78,216,.14);
+  font-weight:700;
+}
