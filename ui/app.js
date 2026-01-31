@@ -30,10 +30,18 @@ i18n.apply(document);
    🧭 注册页面路由（懒加载）
    只有切换到该页面才会加载 JS
 ================================== */
-registerRoute("#home", () => import("./pages/page.home.js"));
-registerRoute("#hsk", () => import("./pages/page.hsk.js"));
-registerRoute("#stroke", () => import("./pages/page.stroke.js"));
-registerRoute("#travel", () => import("./pages/page.travel.js"));
+registerRoute("#home",      () => import("./pages/page.home.js"));
+registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
+registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
+
+registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
+registerRoute("#speaking",  () => import("./pages/page.speaking.js"));
+registerRoute("#travel",    () => import("./pages/page.travel.js"));
+registerRoute("#culture",   () => import("./pages/page.culture.js"));
+registerRoute("#review",    () => import("./pages/page.review.js"));
+registerRoute("#resources", () => import("./pages/page.resources.js"));
+registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
+registerRoute("#my",        () => import("./pages/page.my.js"));
 
 
 /* ===============================
