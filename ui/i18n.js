@@ -1,11 +1,7 @@
-// /ui/i18n.js (ES Module) — STABLE++
-// - KR/CN
-// - localStorage remember
-// - apply(): data-i18n + placeholder/title/aria-label
-// - t(key, params) supports {x} interpolation
-// - setLang/forceLang can auto apply (autoApplyRoot)
-// - onChange + on/emit event bus (navBar / router)
-// - optional: MutationObserver auto-apply for newly added nodes
+// /ui/i18n.js (ES Module) — STABLE (recommended)
+// ✅ 只负责：DICT + t() + apply(root) + onChange/eventbus
+// ✅ 默认不 observe（避免你页面结构变化时重复/乱套）
+// ✅ 不会生成任何 DOM（所以不会造成重复标题栏）
 
 const DICT = {
   kr: {
@@ -35,18 +31,15 @@ const DICT = {
 
     footerNote: "차근차근 완성 중: 먼저 구조를 만들고, 콘텐츠를 하나씩 채워갑니다.",
 
-    // ✅ 常用通用文案（以后你慢慢加）
     common_loading: "불러오는 중...",
     common_retry: "다시 시도",
     common_close: "닫기",
-     
-    // ===== Hanja Page =====
-  hanja_title: "한자공부",
-  hanja_section_vocab: "📖 자주 쓰는 한자",
-  coming_soon_detail: "한자 어휘 학습 콘텐츠가 곧 추가될 예정입니다.",
-  hanja_section_compare: "🔄 중한 한자 비교",
-  hanja_compare_placeholder: "간체자·번체자·한국 한자 비교 기능이 추가될 예정입니다.",
 
+    hanja_title: "한자공부",
+    hanja_section_vocab: "📖 자주 쓰는 한자",
+    coming_soon_detail: "한자 어휘 학습 콘텐츠가 곧 추가될 예정입니다.",
+    hanja_section_compare: "🔄 중한 한자 비교",
+    hanja_compare_placeholder: "간체자·번체자·한국 한자 비교 기능이 추가될 예정입니다.",
   },
 
   cn: {
@@ -79,14 +72,12 @@ const DICT = {
     common_loading: "加载中...",
     common_retry: "重试",
     common_close: "关闭",
-     
-    // ===== Hanja Page =====
-  hanja_title: "韩语汉字学习",
-  hanja_section_vocab: "📖 常用韩语汉字",
-  coming_soon_detail: "汉字词汇学习内容即将上线。",
-  hanja_section_compare: "🔄 中韩汉字对比",
-  hanja_compare_placeholder: "未来将加入简体、繁体与韩字对照功能。",
 
+    hanja_title: "韩语汉字学习",
+    hanja_section_vocab: "📖 常用韩语汉字",
+    coming_soon_detail: "汉字词汇学习内容即将上线。",
+    hanja_section_compare: "🔄 中韩汉字对比",
+    hanja_compare_placeholder: "未来将加入简体、繁体与韩字对照功能。",
   }
 };
 
@@ -101,7 +92,7 @@ function normalizeLang(lang) {
   return (lang === "cn" || lang === "kr") ? lang : "kr";
 }
 
-// {name} 형태 치환
+// {name} 치환
 function interpolate(str, params) {
   if (!params) return str;
   return String(str).replace(/\{(\w+)\}/g, (_, k) => {
@@ -118,40 +109,21 @@ class I18N {
     // onChange subscribers
     this._handlers = new Set();
 
-    // event bus
-    this._bus = new Map(); // event -> Set(handlers)
-
-    // auto apply root
-    this._autoApplyRoot = null;
-
-    // optional: auto apply new DOM nodes
-    this._observer = null;
-    this._observeEnabled = false;
+    // event bus (navBar/router)
+    this._bus = new Map();
   }
 
-  /**
-   * @param {Object} opts
-   * @param {"kr"|"cn"} [opts.defaultLang="kr"]
-   * @param {string} [opts.storageKey="joy_lang"]
-   * @param {Document|HTMLElement|null} [opts.autoApplyRoot=null]
-   * @param {boolean} [opts.observe=false]  // ✅ 자동 번역(신규 DOM)
-   */
-  init({ defaultLang = "kr", storageKey = "joy_lang", autoApplyRoot = null, observe = false } = {}) {
+  init({ defaultLang = "kr", storageKey = "joy_lang" } = {}) {
     this._storageKey = storageKey || "joy_lang";
     const saved = safeGetLS(this._storageKey);
     this._lang = (saved === "cn" || saved === "kr") ? saved : normalizeLang(defaultLang);
-
-    this._autoApplyRoot = autoApplyRoot;
-    this.setObserve(observe);
   }
 
-  // ✅ 翻译（带变量）
   t(key, params) {
-    const lang = this._lang;
-    const pack = DICT[lang] || DICT.kr;
+    const pack = DICT[this._lang] || DICT.kr;
 
-    // 缺词回退：当前语言 -> kr -> key
-    const raw = (pack && key in pack) ? pack[key]
+    const raw =
+      (pack && key in pack) ? pack[key]
       : (DICT.kr && key in DICT.kr) ? DICT.kr[key]
       : key;
 
@@ -162,29 +134,12 @@ class I18N {
     return this._lang;
   }
 
-  // ✅ 切换语言（如果相同就不重复触发）
-  setLang(lang, opts = {}) {
+  setLang(lang) {
     const next = normalizeLang(lang);
     if (next === this._lang) return;
 
     this._lang = next;
     safeSetLS(this._storageKey, next);
-
-    this._afterLangChange(opts);
-  }
-
-  // ✅ 强制切换（无视是否相同）
-  forceLang(lang, opts = {}) {
-    const next = normalizeLang(lang);
-    this._lang = next;
-    safeSetLS(this._storageKey, next);
-
-    this._afterLangChange(opts);
-  }
-
-  _afterLangChange(opts = {}) {
-    const root = ("applyRoot" in opts) ? opts.applyRoot : this._autoApplyRoot;
-    if (root) this.apply(root);
 
     for (const fn of this._handlers) {
       try { fn(this._lang); } catch {}
@@ -192,53 +147,50 @@ class I18N {
     this.emit("change", this._lang);
   }
 
-  // ✅ 订阅语言变化
+  forceLang(lang) {
+    const next = normalizeLang(lang);
+    this._lang = next;
+    safeSetLS(this._storageKey, next);
+
+    for (const fn of this._handlers) {
+      try { fn(this._lang); } catch {}
+    }
+    this.emit("change", this._lang);
+  }
+
   onChange(fn) {
     this._handlers.add(fn);
     return () => this._handlers.delete(fn);
   }
 
-  /**
-   * ✅ 核心：把 data-i18n 写进 DOM
-   * 支持：
-   * - data-i18n="key" -> textContent
-   * - data-i18n-html="key" -> innerHTML（慎用：你自己保证内容安全）
-   * - data-i18n-placeholder="key" -> placeholder
-   * - data-i18n-title="key" -> title
-   * - data-i18n-aria-label="key" -> aria-label
-   */
-  apply(root = document) {
+  // ✅ 只负责把 data-i18n 写进“指定 root”
+  apply(root) {
     const base = root || document;
 
-    // 1) textContent
     base.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       if (!key) return;
       el.textContent = this.t(key);
     });
 
-    // 2) innerHTML (optional)
     base.querySelectorAll("[data-i18n-html]").forEach((el) => {
       const key = el.getAttribute("data-i18n-html");
       if (!key) return;
       el.innerHTML = this.t(key);
     });
 
-    // 3) placeholder
     base.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (!key) return;
       el.setAttribute("placeholder", this.t(key));
     });
 
-    // 4) title
     base.querySelectorAll("[data-i18n-title]").forEach((el) => {
       const key = el.getAttribute("data-i18n-title");
       if (!key) return;
       el.setAttribute("title", this.t(key));
     });
 
-    // 5) aria-label
     base.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
       const key = el.getAttribute("data-i18n-aria-label");
       if (!key) return;
@@ -246,7 +198,7 @@ class I18N {
     });
   }
 
-  // -------- event bus (navBar/router) --------
+  // event bus
   on(event, fn) {
     if (!event || typeof fn !== "function") return () => {};
     if (!this._bus.has(event)) this._bus.set(event, new Set());
@@ -259,52 +211,6 @@ class I18N {
     if (!set) return;
     for (const fn of set) {
       try { fn(payload); } catch {}
-    }
-  }
-
-  // -------- optional: DOM observe --------
-  setObserve(on) {
-    const enable = !!on;
-    this._observeEnabled = enable;
-
-    if (!enable) {
-      if (this._observer) {
-        try { this._observer.disconnect(); } catch {}
-      }
-      this._observer = null;
-      return;
-    }
-
-    // 已经开着就不重复开
-    if (this._observer) return;
-
-    const root = (this._autoApplyRoot && this._autoApplyRoot !== document)
-      ? this._autoApplyRoot
-      : document.body;
-
-    if (!root) return;
-
-    this._observer = new MutationObserver((mutations) => {
-      // 只对新增节点局部 apply（性能稳定）
-      for (const m of mutations) {
-        m.addedNodes?.forEach((node) => {
-          if (!(node instanceof HTMLElement)) return;
-          // node 自己或子树里有 data-i18n 的才处理
-          if (
-            node.matches?.("[data-i18n],[data-i18n-html],[data-i18n-placeholder],[data-i18n-title],[data-i18n-aria-label]") ||
-            node.querySelector?.("[data-i18n],[data-i18n-html],[data-i18n-placeholder],[data-i18n-title],[data-i18n-aria-label]")
-          ) {
-            this.apply(node);
-          }
-        });
-      }
-    });
-
-    try {
-      this._observer.observe(root, { childList: true, subtree: true });
-    } catch {
-      // observe 실패해도 치명적이지 않음
-      this._observer = null;
     }
   }
 }
