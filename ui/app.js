@@ -28,7 +28,7 @@ i18n.apply(document);
 
 /* ===============================
    🧭 注册页面路由（懒加载）
-   只有切换到该页面才会加载 JS
+     ⚠️ 注意：这里的路径是从 ui/app.js 出发
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   mountAIPanel();     // 🤖 AI 老师
   mountLearnPanel();  // 📘 单词学习面板
 
-  // 3️⃣ 启动路由系统（根据 hash 加载页面）
+  // 3️⃣ 启动路由
+  if (!location.hash) location.hash = "#home";
   startRouter();
 });
