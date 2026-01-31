@@ -1,27 +1,49 @@
-(function () {
-  function render(container) {
-    container.innerHTML = `
-      <div class="page-wrap">
-        <h1 class="page-title">한자 공부 (韩语汉字)</h1>
+// /ui/pages/page.hanja.js  ✅融合升级版：结构保留 + i18n + 兼容旧路由
+import { i18n } from "../i18n.js";
 
-        <div class="section-box">
-          <h2>📖 常用韩语汉字</h2>
-          <div id="hanja-list">（以后加载汉字词汇）</div>
-        </div>
+function render(container) {
+  container.innerHTML = `
+    <div class="page-wrap">
+      <h1 class="page-title" data-i18n="hanja_title">한자공부</h1>
 
-        <div class="section-box">
-          <h2>🔄 中韩对比</h2>
-          <div id="hanja-compare">（以后做简体/繁体/韩字对照）</div>
+      <div class="section-box">
+        <h2 data-i18n="hanja_section_vocab">📖 常用韩语汉字</h2>
+        <div id="hanja-list" class="placeholder" data-i18n="coming_soon_detail">
+          （以后加载汉字词汇）
         </div>
       </div>
-    `;
-  }
 
-  function init() {
-    const el = document.getElementById("app");
-    if (!el) return;
-    render(el);
-  }
+      <div class="section-box">
+        <h2 data-i18n="hanja_section_compare">🔄 中韩对比</h2>
+        <div id="hanja-compare" class="placeholder" data-i18n="hanja_compare_placeholder">
+          （以后做简体/繁体/韩字对照）
+        </div>
+      </div>
 
-  window.PageHanja = { init };
+      <div class="card" style="margin-top:16px;">
+        <section class="hero">
+          <p class="desc" data-i18n="coming_soon">
+            준비 중입니다. 한자 학습 콘텐츠를 추가할 예정입니다.
+          </p>
+        </section>
+      </div>
+    </div>
+  `;
+
+  // ✅ 只对当前页面区域 apply（更稳）
+  i18n.apply?.(container);
+}
+
+export function mount() {
+  const app = document.getElementById("app");
+  if (!app) return;
+  render(app);
+}
+
+// ✅ 兼容旧写法：window.PageHanja.init()
+(function exposeToWindow() {
+  window.PageHanja = {
+    init: () => mount(),
+    mount,
+  };
 })();
