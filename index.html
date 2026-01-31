@@ -2,253 +2,30 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Joy Chinese Learning Platform</title>
 
-  <style>
-    :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --brand:#2563eb;
-      --accent:#f59e0b;
-      --shadow: 0 10px 25px rgba(0,0,0,.06);
-      --radius: 18px;
-      --max: 980px;
-    }
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    a{ color:inherit; }
-    .wrap{ max-width:var(--max); margin:0 auto; padding:18px; }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      border-radius:var(--radius);
-      padding:18px;
-    }
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .brand a{
-      text-decoration:none;
-      font-weight:900;
-      font-size:20px;
-      color:var(--brand);
-      letter-spacing:.2px;
-    }
-    .brand small{ color:var(--muted); }
-
-    /* language switch */
-    .lang{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    .lang button{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:8px 12px;
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
-    }
-    .lang button.active{
-      border-color: rgba(245,158,11,.55);
-      box-shadow: 0 0 0 4px rgba(245,158,11,.18);
-      background: rgba(245,158,11,.08);
-      color:#92400e;
-    }
-
-    /* navbar */
-    nav#navBar{
-      margin-top:12px;
-      border-top:1px dashed var(--line);
-      padding-top:12px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    nav#navBar a{
-      text-decoration:none;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid transparent;
-      color:var(--muted);
-      background:transparent;
-      transition:.15s;
-      font-weight:800;
-      font-size:14px;
-    }
-    nav#navBar a:hover{
-      background:rgba(37,99,235,.07);
-      color:var(--brand);
-      border-color: rgba(37,99,235,.15);
-    }
-    nav#navBar a.active{
-      background:rgba(37,99,235,.12);
-      color:var(--brand);
-      border-color: rgba(37,99,235,.25);
-      box-shadow: 0 0 0 4px rgba(37,99,235,.10);
-    }
-
-    .hero{
-      margin-top:14px;
-      display:grid;
-      gap:14px;
-    }
-    .title{
-      font-size:18px;
-      font-weight:900;
-      margin:0 0 8px 0;
-    }
-    .desc{
-      margin:0;
-      color:var(--muted);
-      line-height:1.6;
-    }
-    .badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:12px;
-    }
-    .badge{
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:#374151;
-      font-weight:800;
-      font-size:13px;
-    }
-    .footer{
-      margin-top:14px;
-      color:var(--muted);
-      font-size:13px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      border-top:1px solid var(--line);
-      padding-top:12px;
-    }
-  </style>
+  <!-- ✅ 全站基础样式（从 index.html 移出去） -->
+  <link rel="stylesheet" href="./styles/base.css" />
 </head>
 
 <body>
-  <div class="wrap">
+  <!-- ✅ 顶部区域：品牌 + 语言按钮 + 导航（由 navBar.js 渲染） -->
+  <header class="wrap">
     <div class="card">
-      <div class="topbar">
-        <div class="brand">
-          <a href="#home" data-i18n="brand">Joy Chinese</a>
-          <small data-i18n="subtitle">AI 汉字・中文学习平台</small>
-        </div>
-
-        <!-- ✅ 语言切换按钮：id 一定要是 btnKR / btnCN -->
-        <div class="lang" aria-label="Language switcher">
-          <button id="btnKR" type="button">KR</button>
-          <button id="btnCN" type="button">CN</button>
-        </div>
-      </div>
-
-      <!-- ✅ 只保留一个导航容器，避免重复 -->
-      <nav id="navBar" aria-label="Primary"></nav>
-
-      <section class="hero" id="content">
-        <div>
-          <h2 class="title" data-i18n="heroTitle">适合儿童到成人使用的综合中文学习网站。</h2>
-        </div>
-      </section>
-
-      <div class="footer">
-        <span>© <span id="yy"></span> Joy Chinese</span>
-        <span data-i18n="footerNote">逐步完善中：先把结构搭好，再把内容一块块补齐。</span>
-      </div>
+      <div id="siteNav"></div>
     </div>
-  </div>
+  </header>
 
-  <!-- ✅ ES Modules -->
-  <script type="module">
-  import { i18n } from "./ui/i18n.js";
-  import { mountNavBar } from "./ui/components/navBar.js";
+  <!-- ✅ 页面内容注入点（router 把 page.* 渲染到这里） -->
+  <main id="app" class="wrap"></main>
 
-  // year
-  document.getElementById("yy").textContent = new Date().getFullYear();
+  <!-- ✅ 底部（可选：也可以做成组件） -->
+  <footer class="wrap">
+    <div id="siteFooter" class="card"></div>
+  </footer>
 
-  // ✅ init i18n
-  i18n.init({
-    defaultLang: "kr",      // 默认 KR
-    storageKey: "joy_lang"  // 记住语言
-  });
-
-  // ✅ 可选：如果你希望“每次打开都先韩语”，就强制 KR
-  // （如果你只希望“第一次默认韩语”，把下面这段改成：if (!localStorage.getItem("joy_lang")) {...}）
-  try {
-    localStorage.setItem("joy_lang", "kr");
-  } catch {}
-  i18n.setLang("kr");
-
-  // language buttons
-  const btnKR = document.getElementById("btnKR");
-  const btnCN = document.getElementById("btnCN");
-
-  function applyAll() {
-    // ✅ 关键：切换后立刻刷新所有 data-i18n 文案
-    i18n.apply();
-    syncLangButtons();
-  }
-
-  function syncLangButtons() {
-    const lang = i18n.getLang();
-    btnKR.classList.toggle("active", lang === "kr");
-    btnCN.classList.toggle("active", lang === "cn");
-    document.documentElement.lang = (lang === "kr") ? "ko" : "zh-CN";
-  }
-
-  // ✅ 点击切换：setLang + 立即 apply
-  btnKR.addEventListener("click", () => {
-    i18n.setLang("kr");
-    applyAll();
-  });
-
-  btnCN.addEventListener("click", () => {
-    i18n.setLang("cn");
-    applyAll();
-  });
-
-  // mount navbar once
-  mountNavBar(document.getElementById("navBar"));
-
-  // first render
-  applyAll();
-
-  // i18n change listener（如果 i18n.js 里真的会触发 onChange）
-  i18n.onChange(() => {
-    applyAll();
-  });
-
-  // active nav highlight on hash change
-  window.addEventListener("hashchange", () => {
-    i18n.emit("route");
-  });
-</script>
+  <!-- ✅ 全站入口 -->
+  <script type="module" src="./ui/app.js"></script>
 </body>
 </html>
