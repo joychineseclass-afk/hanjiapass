@@ -32,29 +32,31 @@ export function mount() {
       <!-- ✅ 功能入口网格：来自你旧版 home.js，但改成系统风格 + 路由跳转 -->
       <div class="page-wrap" style="padding:0; margin-top:14px;">
         <div class="home-grid">
-          <button class="home-card" type="button" data-go="#hsk">
+
+          <button class="home-card" type="button" data-go="#hsk" style="--dop:#3b82f6">
             📘 <span data-i18n="home_hsk">HSK 시스템 코스</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#stroke">
+          <button class="home-card" type="button" data-go="#stroke" style="--dop:#f97316">
             ✍️ <span data-i18n="home_stroke">한자 필순 연습</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#hanja">
-          🇰🇷 <span data-i18n="home_hanja">한국식 한자 공부</span>
+          <button class="home-card" type="button" data-go="#hanja" style="--dop:#22c55e">
+            🇰🇷 <span data-i18n="home_hanja">한국식 한자 공부</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#speaking">
+          <button class="home-card" type="button" data-go="#speaking" style="--dop:#a855f7">
             💬 <span data-i18n="home_speaking">일상 회화</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#travel">
+          <button class="home-card" type="button" data-go="#travel" style="--dop:#ef4444">
             ✈️ <span data-i18n="home_travel">여행 중국어</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#culture">
+          <button class="home-card" type="button" data-go="#culture" style="--dop:#eab308">
             🏮 <span data-i18n="home_culture">중국 문화</span>
           </button>
+
         </div>
       </div>
     </div>
