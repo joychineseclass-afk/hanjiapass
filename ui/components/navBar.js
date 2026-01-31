@@ -1,168 +1,134 @@
-// ui/components/navBar.js (Stable++)
-// - 只负责渲染一次 navbar（防重复）
-// - data-i18n 文案交给 i18n.apply() 替换
-// - 自动高亮：click / hashchange / i18n route
-// - ✅ 不重复注册监听（避免多页面进入后触发多次）
-// - ✅ 兼容未来 hash 扩展：#hsk/xxx 也能高亮 #hsk
+// /ui/components/navBar.js  ✅融合升级不返工版
+// - 负责渲染：topbar(brand+lang) + nav links（一次性挂载）
+// - hash 自动高亮
+// - i18n change 自动刷新文案 + 同步按钮状态
+// - 兼容：拆分 HTML 之后的结构（rootEl 内部自己生成 topbar+nav）
+// - 兼容：没有 i18n key 时 fallback label（韩语中心也OK）
 
 import { i18n } from "../i18n.js";
 
 const NAV_ITEMS = [
-  { href: "#home", key: "nav_home" },
-  { href: "#hsk", key: "nav_hsk" },
-  { href: "#stroke", key: "nav_stroke" },
-  { href: "#hanjagongfu", key: "nav_hanjagongfu" },
-  { href: "#speaking", key: "nav_speaking" },
-  { href: "#travel", key: "nav_travel" },
-  { href: "#culture", key: "nav_culture" },
-  { href: "#review", key: "nav_review" },
-  { href: "#resources", key: "nav_resources" },
-  { href: "#teacher", key: "nav_teacher" },
-  { href: "#my", key: "nav_my" },
+  { href: "#home",   key: "nav_home",   label: "홈" },
+  { href: "#hsk",    key: "nav_hsk",    label: "HSK 학습" },
+  { href: "#stroke", key: "nav_stroke", label: "汉字笔순" },
+  { href: "#travel", key: "nav_travel", label: "여행 중국어" },
 ];
 
+// ---------- helpers ----------
 function normalizeHash(h) {
-  const s = String(h || "").trim();
-  if (!s) return "";
-  return s.startsWith("#") ? s : `#${s}`;
+  if (!h) return "#home";
+  return h.startsWith("#") ? h : `#${h}`;
 }
 
-/**
- * ✅ 更稳的 active 判断：
- * - 完全相等：#hsk === #hsk
- * - 前缀匹配：#hsk/lesson1 也算在 #hsk 下（未来扩展不会返工）
- */
-function isActiveHref(currentHash, itemHref) {
-  const cur = normalizeHash(currentHash);
-  const href = normalizeHash(itemHref);
-
-  if (!cur || !href) return false;
-  if (cur === href) return true;
-
-  // 允许 #hsk/xxx #hsk?x=1 也匹配到 #hsk
-  return cur.startsWith(href + "/") || cur.startsWith(href + "?");
-}
-
-function applyI18nTo(navEl) {
+function t(key, fallback = "") {
   try {
-    // ✅ 兼容 i18n.apply(navEl) 或 i18n.apply()
-    if (typeof i18n?.apply === "function") {
-      if (i18n.apply.length >= 1) i18n.apply(navEl);
-      else i18n.apply();
-    }
-  } catch {}
+    const v = i18n?.t?.(key);
+    return (v && String(v).trim()) ? v : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
-function setActive(navEl) {
-  const current = normalizeHash(location.hash) || "#home";
-  const links = navEl.querySelectorAll("a[data-nav]");
-  links.forEach((a) => {
-    const href = a.getAttribute("href") || "";
-    a.classList.toggle("active", isActiveHref(current, href));
-    a.setAttribute("aria-current", isActiveHref(current, href) ? "page" : "false");
+function setActive(rootEl) {
+  const current = normalizeHash(location.hash);
+  rootEl.querySelectorAll('a[data-nav="1"]').forEach((a) => {
+    a.classList.toggle("active", a.getAttribute("href") === current);
   });
 }
 
-function render(navEl) {
-  navEl.innerHTML = "";
-  const frag = document.createDocumentFragment();
+function syncLangButtons(rootEl) {
+  const btnKR = rootEl.querySelector("#btnKR");
+  const btnCN = rootEl.querySelector("#btnCN");
 
+  const lang = (i18n?.getLang?.() || "kr").toLowerCase(); // "kr" | "cn"
+  btnKR?.classList.toggle("active", lang === "kr");
+  btnCN?.classList.toggle("active", lang === "cn");
+
+  // <html lang="ko"> 같은 기본 접근성
+  document.documentElement.lang = (lang === "kr") ? "ko" : "zh-CN";
+}
+
+function applyI18n(rootEl) {
+  // 只对 rootEl apply，避免全站重复刷新（更稳）
+  try { i18n?.apply?.(rootEl); } catch {}
+  syncLangButtons(rootEl);
+  setActive(rootEl);
+}
+
+// ---------- mount ----------
+export function mountNavBar(rootEl) {
+  if (!rootEl) return;
+
+  // ✅ 防重复挂载
+  if (rootEl.dataset.mounted === "1") {
+    applyI18n(rootEl);
+    return;
+  }
+  rootEl.dataset.mounted = "1";
+
+  // ✅ 渲染壳：topbar + nav 容器
+  rootEl.innerHTML = `
+    <div class="topbar">
+      <div class="brand">
+        <a href="#home" data-i18n="brand">Joy Chinese</a>
+        <small data-i18n="subtitle">AI 汉字・中文学习平台</small>
+      </div>
+
+      <div class="lang" aria-label="Language switcher">
+        <button id="btnKR" type="button">KR</button>
+        <button id="btnCN" type="button">CN</button>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Primary"></nav>
+  `;
+
+  // ✅ 渲染导航链接
+  const nav = rootEl.querySelector("nav.site-nav");
   NAV_ITEMS.forEach((it) => {
     const a = document.createElement("a");
     a.href = it.href;
     a.setAttribute("data-nav", "1");
     a.setAttribute("data-i18n", it.key);
-
-    // ✅ 先给默认文案避免闪烁（即便之后 i18n.apply 会再替换）
-    try {
-      a.textContent = i18n?.t?.(it.key) || it.key;
-    } catch {
-      a.textContent = it.key;
-    }
-
-    frag.appendChild(a);
+    a.textContent = t(it.key, it.label);
+    nav.appendChild(a);
   });
 
-  navEl.appendChild(frag);
-}
-
-/**
- * mountNavBar(navEl, options?)
- * options:
- * - defaultHash: 默认 hash（无 hash 时）
- */
-export function mountNavBar(navEl, options = {}) {
-  if (!navEl) return { destroy() {} };
-
-  const defaultHash = normalizeHash(options.defaultHash || "#home") || "#home";
-
-  // ✅ 防重复 mount（同一个 navEl 只 mount 一次）
-  if (navEl.dataset.mounted === "1") {
-    // 只刷新一下状态
-    if (!location.hash) location.hash = defaultHash;
-    applyI18nTo(navEl);
-    setActive(navEl);
-    return navEl.__navBarApi || { destroy() {} };
-  }
-  navEl.dataset.mounted = "1";
-
-  // ✅ 渲染一次
-  render(navEl);
-
-  // ✅ 初次 apply + active
-  if (!location.hash) location.hash = defaultHash;
-  applyI18nTo(navEl);
-  setActive(navEl);
-
-  // ✅ 绑定事件（只绑定一次）
-  const onClick = (e) => {
-    const a = e.target.closest?.("a[data-nav]");
+  // ✅ 点击导航后：立刻刷新 active（hashchange 也会触发，但这里更快）
+  nav.addEventListener("click", (e) => {
+    const a = e.target.closest('a[data-nav="1"]');
     if (!a) return;
-    // 等 hash 更新后再设置 active
-    setTimeout(() => setActive(navEl), 0);
-  };
+    setTimeout(() => setActive(rootEl), 0);
+  });
 
-  const onHashChange = () => setActive(navEl);
+  // ✅ 语言按钮
+  const btnKR = rootEl.querySelector("#btnKR");
+  const btnCN = rootEl.querySelector("#btnCN");
 
-  const onLangChange = () => {
-    applyI18nTo(navEl);
-  };
+  btnKR?.addEventListener("click", () => {
+    try { i18n?.setLang?.("kr"); } catch {}
+    applyI18n(rootEl);
+  });
 
-  const onRoute = () => setActive(navEl);
+  btnCN?.addEventListener("click", () => {
+    try { i18n?.setLang?.("cn"); } catch {}
+    applyI18n(rootEl);
+  });
 
-  navEl.addEventListener("click", onClick);
-  window.addEventListener("hashchange", onHashChange);
+  // ✅ hash active
+  window.addEventListener("hashchange", () => setActive(rootEl));
 
-  // ✅ 避免重复注册：把解绑函数存在元素上
-  // （即便将来 SPA 多次 mount/unmount，也不会监听累积）
-  const offFns = [];
-
+  // ✅ i18n change（兼容两种：on("change") 或 onChange）
   try {
-    if (typeof i18n?.on === "function") {
-      i18n.on("change", onLangChange);
-      i18n.on("route", onRoute);
-
-      // 如果你的 i18n 有 off，就记录下来；没有也没关系
-      if (typeof i18n.off === "function") {
-        offFns.push(() => i18n.off("change", onLangChange));
-        offFns.push(() => i18n.off("route", onRoute));
-      }
-    }
+    i18n?.on?.("change", () => applyI18n(rootEl));
+  } catch {}
+  try {
+    i18n?.onChange?.(() => applyI18n(rootEl));
   } catch {}
 
-  function destroy() {
-    try {
-      navEl.removeEventListener("click", onClick);
-      window.removeEventListener("hashchange", onHashChange);
-      offFns.forEach((fn) => fn());
-    } catch {}
+  // ✅ 首次默认路由
+  if (!location.hash) location.hash = "#home";
 
-    try {
-      delete navEl.__navBarApi;
-    } catch {}
-  }
-
-  const api = { destroy };
-  navEl.__navBarApi = api;
-  return api;
+  // ✅ 首次应用
+  applyI18n(rootEl);
 }
