@@ -1,6 +1,6 @@
 /* =========================================
-   🌍 Joy Chinese — base.css (Stable)
-   目标：全站统一 + 不冲突 + 可长期扩展
+🌍 Joy Chinese — base.css (Stable)
+目标：全站统一 + 不冲突 + 可长期扩展
 ========================================= */
 
 /* ---------- 0) Design Tokens ---------- */
@@ -58,7 +58,6 @@ button, input, select{ font: inherit; }
   line-height: 1.6;
 }
 
-/* 可选：通用模块盒子 */
 .section-box{
   background: var(--card);
   padding: 18px;
@@ -84,7 +83,6 @@ button, input, select{ font: inherit; }
   box-shadow: 0 0 0 4px rgba(251,146,60,.18);
 }
 
-/* 通用按钮（如果你以后不用 Tailwind，也能统一） */
 .btn{
   border: 1px solid var(--line);
   background: #fff;
@@ -105,143 +103,10 @@ button, input, select{ font: inherit; }
 }
 .btn-accent:hover{ filter: brightness(.98); }
 
-/* ---------- 4) Top Nav (用于 navBar.js) ---------- */
-/* 你的 navBar.js 是把 <a> 直接 append 到 nav 容器里。
-   所以我们让 #navBar 或 .nav-links 下的 a 都有统一样式。 */
+/* ---------- 4) Top Nav (用于 navBar.js) ----------
+   navBar.js 会把 <a> 直接 append 到 nav 容器里
+------------------------------------------ */
 
-#navBar,
-.nav-links{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-#navBar a,
-.nav-links a{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  color: var(--muted);
-  font-weight: 800;
-  font-size: 14px;
-  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
-}
-
-#navBar a:hover,
-.nav-links a:hover{
-  background: rgba(17,24,39,.06);
-  color: var(--brand);
-  border-color: rgba(17,24,39,.10);
-}
-
-/* navBar.js 会给 active 类（或你以后自己加 active） */
-#navBar a.active,
-.nav-links a.active{
-  background: rgba(17,24,39,.10);
-  color: var(--brand);
-  border-color: rgba(17,24,39,.20);
-  box-shadow: 0 0 0 4px rgba(17,24,39,.08);
-}
-
-/* sticky 容器（可选：你如果有 .site-nav / .nav-inner 结构就会生效） */
-.site-nav{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(255,255,255,.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-}
-.nav-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 10px 20px;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* 品牌区（如果你未来拆 nav 组件会用到） */
-.nav{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 14px 18px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--line);
-}
-.nav-brand{
-  font-weight: 900;
-  color: var(--brand);
-}
-
-/* ---------- 5) Language Buttons ---------- */
-.nav-right{ display: flex; gap: 6px; }
-
-.lang-btn{
-  border: 1px solid var(--line);
-  background: #fff;
-  padding: 6px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 800;
-  color: var(--text);
-  transition: background .15s, box-shadow .15s, border-color .15s;
-}
-.lang-btn:hover{ background: #f3f4f6; }
-
-.lang-on{
-  background: var(--brand) !important;
-  color: #fff !important;
-  border-color: var(--brand) !important;
-  box-shadow: 0 0 0 4px rgba(17,24,39,.12);
-}
-
-/* ---------- 6) Home Page Cards ---------- */
-.home-intro{
-  color: var(--muted);
-  margin-bottom: 18px;
-  line-height: 1.6;
-}
-
-.home-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-  margin-top: 18px;
-}
-
-.home-card{
-  background: var(--card);
-  padding: 20px;
-  border-radius: var(--radius);
-  text-align: center;
-  font-weight: 800;
-  color: #374151;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
-  transition: transform .15s, box-shadow .15s, color .15s;
-  cursor: pointer;
-}
-
-.home-card:hover{
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-  color: var(--brand);
-}
-
-/* ---------- 7) Utilities ---------- */
-.hidden{ display: none !important; }
-.muted{ color: var(--muted); }
-
-/* ===== NavBar styles (site-nav) ===== */
 .topbar{
   display:flex;
   align-items:center;
@@ -252,7 +117,6 @@ button, input, select{ font: inherit; }
 
 .topbar .brand a{
   font-weight:700;
-  text-decoration:none;
 }
 
 .topbar .brand small{
@@ -263,8 +127,8 @@ button, input, select{ font: inherit; }
 
 .site-nav{
   display:flex;
-  flex-wrap:wrap;        /* ✅ 允许换行，不会挤成一条 */
-  gap:10px;              /* ✅ 每个菜单之间的间距 */
+  flex-wrap:wrap;               /* ✅ 允许换行 */
+  gap:10px;                     /* ✅ 菜单间距 */
   padding:10px 0;
   border-bottom:1px solid rgba(0,0,0,.08);
 }
@@ -273,19 +137,22 @@ button, input, select{ font: inherit; }
   display:inline-block;
   padding:8px 12px;
   border-radius:999px;
-  text-decoration:none;
   color:#111;
-  background:rgba(0,0,0,.04);  /* ✅ 默认淡灰底 */
+  background:rgba(0,0,0,.04);
   transition:all .15s ease;
 }
 
 .site-nav a:hover{
-  color:#1d4ed8;                 /* ✅ hover 变蓝 */
+  color:#1d4ed8;
   background:rgba(29,78,216,.10);
 }
 
 .site-nav a.active{
-  color:#1d4ed8;                 /* ✅ 当前页高亮 */
+  color:#1d4ed8;
   background:rgba(29,78,216,.14);
   font-weight:700;
 }
+
+/* ---------- 5) Utilities ---------- */
+.hidden{ display: none !important; }
+.muted{ color: var(--muted); }
