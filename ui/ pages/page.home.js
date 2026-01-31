@@ -1,8 +1,4 @@
 // /ui/pages/page.home.js
-// ✅ Home page (Router mount version)
-// - 合并：旧 home-card 网格 + 新 hero/badges
-// - 点击卡片 → 切换 hash → router 加载对应 page
-
 export function mount() {
   const app = document.getElementById("app");
   if (!app) return;
@@ -29,7 +25,6 @@ export function mount() {
         </div>
       </section>
 
-      <!-- ✅ 功能入口网格：来自你旧版 home.js，但改成系统风格 + 路由跳转 -->
       <div class="page-wrap" style="padding:0; margin-top:14px;">
         <div class="home-grid">
 
@@ -62,7 +57,6 @@ export function mount() {
     </div>
   `;
 
-  // ✅ 卡片点击 → hash 跳转（router 会自动加载对应 page）
   app.querySelectorAll("[data-go]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const go = btn.getAttribute("data-go");
