@@ -1,0 +1,219 @@
+/* =========================================
+   🧩 Global Panels Styles (Stable / No Rework)
+   - AI Panel (#ai-panel) + Floating Bot Button (#botBtn)
+   - Learn Panel (#learn-panel)
+   说明：
+   1) 不绑定 Tailwind，纯 CSS 兜底 + 增强
+   2) 以后你换 HTML 结构也不怕：只要 id 不变即可
+========================================= */
+
+/* ===============================
+   Helpers
+================================== */
+.hidden { display: none !important; }
+
+.no-select { user-select: none; }
+
+:root {
+  --panel-bg: #ffffff;
+  --panel-text: #111827;
+  --panel-muted: #6b7280;
+  --panel-line: #e5e7eb;
+  --panel-shadow: 0 18px 40px rgba(0,0,0,.14);
+  --panel-radius: 16px;
+  --panel-accent: #fb923c; /* orange-400 */
+}
+
+/* iOS tap highlight */
+#ai-panel *, #learn-panel * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===============================
+   🤖 Floating Bot Button
+   id: #botBtn
+================================== */
+#botBtn {
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.18);
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+#botBtn:active {
+  transform: translateY(1px) scale(.98);
+  filter: brightness(.98);
+}
+
+#botBtn:focus-visible {
+  box-shadow: 0 0 0 4px rgba(251,146,60,.25), 0 10px 25px rgba(0,0,0,.18);
+}
+
+/* ===============================
+   🤖 AI Panel Container
+   id: #ai-panel
+================================== */
+#ai-panel {
+  background: var(--panel-bg);
+  color: var(--panel-text);
+  border: 1px solid rgba(229,231,235,.9);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  overflow: hidden;
+}
+
+/* draggable header */
+#ai-panel #dragHandle {
+  background: #111827; /* near-black */
+  color: #ffffff;
+  user-select: none;
+}
+
+#ai-panel #dragHandle button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 10px;
+  opacity: .92;
+}
+
+#ai-panel #dragHandle button:hover {
+  background: rgba(255,255,255,.12);
+  opacity: 1;
+}
+
+#ai-panel #dragHandle button:active {
+  transform: translateY(1px);
+}
+
+/* control bar (sticky settings area) */
+#ai-panel #controlBar {
+  border-bottom: 1px solid var(--panel-line);
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(8px);
+}
+
+/* selects and inputs inside panel */
+#ai-panel select,
+#ai-panel input {
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  outline: none;
+}
+
+#ai-panel select:focus,
+#ai-panel input:focus {
+  border-color: rgba(251,146,60,.85);
+  box-shadow: 0 0 0 4px rgba(251,146,60,.18);
+}
+
+/* chat area */
+#ai-panel #chat {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,.25) transparent;
+}
+
+#ai-panel #chat::-webkit-scrollbar {
+  width: 8px;
+}
+#ai-panel #chat::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.18);
+  border-radius: 999px;
+}
+
+/* send button */
+#ai-panel #uiSendBtn {
+  background: var(--panel-accent);
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  transition: filter .15s ease, transform .15s ease;
+}
+
+#ai-panel #uiSendBtn:hover {
+  filter: brightness(.98);
+}
+
+#ai-panel #uiSendBtn:active {
+  transform: translateY(1px);
+}
+
+/* clickable sentence hint / clickable bubble areas */
+#ai-panel .bubble,
+#ai-panel .chat-bubble,
+#ai-panel [data-speakable="1"] {
+  cursor: pointer;
+}
+
+/* ===============================
+   📚 Learn Panel (Modal)
+   id: #learn-panel
+================================== */
+
+/* overlay */
+#learn-panel {
+  background: rgba(0,0,0,.40);
+  backdrop-filter: blur(1px);
+}
+
+/* inner card */
+#learn-panel > div {
+  background: var(--panel-bg);
+  border-radius: calc(var(--panel-radius) + 4px);
+  box-shadow: var(--panel-shadow);
+  border: 1px solid rgba(229,231,235,.9);
+  overflow: hidden;
+}
+
+/* learn header */
+#learn-panel .learn-header,
+#learn-panel [data-learn-header="1"] {
+  border-bottom: 1px solid var(--panel-line);
+}
+
+/* close button inside learn */
+#learn-panel #learnClose,
+#learn-panel [data-close="learn"] {
+  border: 1px solid var(--panel-line);
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+#learn-panel #learnClose:hover,
+#learn-panel [data-close="learn"]:hover {
+  filter: brightness(.98);
+}
+
+#learn-panel #learnClose:active,
+#learn-panel [data-close="learn"]:active {
+  transform: translateY(1px);
+}
+
+/* learn body scroll */
+#learn-panel #learnBody {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,.25) transparent;
+}
+
+#learn-panel #learnBody::-webkit-scrollbar {
+  width: 8px;
+}
+#learn-panel #learnBody::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.18);
+  border-radius: 999px;
+}
+
+/* ===============================
+   ✅ Responsive polish
+================================== */
+@media (max-width: 420px) {
+  #ai-panel {
+    border-radius: 14px;
+  }
+}
