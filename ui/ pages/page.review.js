@@ -8,9 +8,9 @@ export function mount() {
   app.innerHTML = `
     <div class="card">
       <section class="hero">
-        <h2 class="title" data-i18n="culture_title">문화</h2>
+        <h2 class="title" data-i18n="review_title">복습</h2>
         <p class="desc" data-i18n="coming_soon">
-          준비 중입니다. 곧 콘텐츠를 추가할게요.
+          복습 콘텐츠를 준비 중입니다.
         </p>
       </section>
     </div>
