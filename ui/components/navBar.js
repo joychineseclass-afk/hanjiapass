@@ -1,5 +1,5 @@
-// /ui/components/navBar.js  ✅融合升级不返工版
-// - 负责渲染：topbar(brand+lang) + nav links（一次性挂载）
+// /ui/components/navBar.js  ✅融合升级不返工版（修复重复+更稳）
+// - 渲染：topbar(brand+lang) + nav links（一次性挂载）
 // - hash 自动高亮
 // - i18n change 自动刷新文案 + 同步按钮状态
 // - 兼容：拆分 HTML 之后的结构（rootEl 内部自己生成 topbar+nav）
@@ -8,21 +8,17 @@
 import { i18n } from "../i18n.js";
 
 const NAV_ITEMS = [
-  // ui/components/navBar.js
-import { i18n } from "../i18n.js";
-
-const NAV_ITEMS = [
-  { href: "#home",    key: "nav_home",        label: "홈" },
-  { href: "#hsk",     key: "nav_hsk",         label: "HSK 학습" },
-  { href: "#stroke",  key: "nav_stroke",      label: "한자 필순" },
-  { href: "#hanja",   key: "nav_hanjagongfu", label: "한자공부" },
-  { href: "#speaking",key: "nav_speaking",    label: "회화" },
-  { href: "#travel",  key: "nav_travel",      label: "여행중국어" },
-  { href: "#culture", key: "nav_culture",     label: "문화" },
-  { href: "#review",  key: "nav_review",      label: "복습" },
-  { href: "#resources",key:"nav_resources",   label: "자료" },
-  { href: "#teacher", key: "nav_teacher",     label: "교사专区" },
-  { href: "#my",      key: "nav_my",          label: "내 학습" },
+  { href: "#home",      key: "nav_home",        label: "홈" },
+  { href: "#hsk",       key: "nav_hsk",         label: "HSK 학습" },
+  { href: "#stroke",    key: "nav_stroke",      label: "한자 필순" },
+  { href: "#hanja",     key: "nav_hanjagongfu", label: "한자공부" },
+  { href: "#speaking",  key: "nav_speaking",    label: "회화" },
+  { href: "#travel",    key: "nav_travel",      label: "여행중국어" },
+  { href: "#culture",   key: "nav_culture",     label: "문화" },
+  { href: "#review",    key: "nav_review",      label: "복습" },
+  { href: "#resources", key: "nav_resources",   label: "자료" },
+  { href: "#teacher",   key: "nav_teacher",     label: "교사专区" },
+  { href: "#my",        key: "nav_my",          label: "내 학습" },
 ];
 
 // ---------- helpers ----------
@@ -66,11 +62,29 @@ function applyI18n(rootEl) {
   setActive(rootEl);
 }
 
+function bindI18nChange(rootEl) {
+  // ✅ 只绑定一次
+  if (rootEl.dataset.i18nBound === "1") return;
+  rootEl.dataset.i18nBound = "1";
+
+  // ✅ 兼容两种：on("change") 或 onChange
+  try { i18n?.on?.("change", () => applyI18n(rootEl)); } catch {}
+  try { i18n?.onChange?.(() => applyI18n(rootEl)); } catch {}
+}
+
+function bindHashChange(rootEl) {
+  // ✅ 只绑定一次
+  if (rootEl.dataset.hashBound === "1") return;
+  rootEl.dataset.hashBound = "1";
+
+  window.addEventListener("hashchange", () => setActive(rootEl));
+}
+
 // ---------- mount ----------
 export function mountNavBar(rootEl) {
   if (!rootEl) return;
 
-  // ✅ 防重复挂载
+  // ✅ 防重复挂载（避免刷新/多页重复 mount）
   if (rootEl.dataset.mounted === "1") {
     applyI18n(rootEl);
     return;
@@ -98,10 +112,10 @@ export function mountNavBar(rootEl) {
   const nav = rootEl.querySelector("nav.site-nav");
   NAV_ITEMS.forEach((it) => {
     const a = document.createElement("a");
-    a.href = it.href;
+    a.href = it.href;                 // ✅ 用 hash 路由
     a.setAttribute("data-nav", "1");
     a.setAttribute("data-i18n", it.key);
-    a.textContent = t(it.key, it.label);
+    a.textContent = t(it.key, it.label); // ✅ i18n 优先，没 key 用 label
     nav.appendChild(a);
   });
 
@@ -126,19 +140,12 @@ export function mountNavBar(rootEl) {
     applyI18n(rootEl);
   });
 
-  // ✅ hash active
-  window.addEventListener("hashchange", () => setActive(rootEl));
-
-  // ✅ i18n change（兼容两种：on("change") 或 onChange）
-  try {
-    i18n?.on?.("change", () => applyI18n(rootEl));
-  } catch {}
-  try {
-    i18n?.onChange?.(() => applyI18n(rootEl));
-  } catch {}
-
   // ✅ 首次默认路由
   if (!location.hash) location.hash = "#home";
+
+  // ✅ 监听绑定（只绑定一次）
+  bindHashChange(rootEl);
+  bindI18nChange(rootEl);
 
   // ✅ 首次应用
   applyI18n(rootEl);
