@@ -185,3 +185,25 @@ body{
 .home-card span{
   vertical-align:middle;
 }
+/* =========================================
+   ✅ Dopamine NAV (像图1：分开 + hover变色)
+========================================= */
+.site-nav.dopamine a{
+  --navc: var(--accent);
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.site-nav.dopamine a:hover{
+  color: var(--navc);
+  background: color-mix(in srgb, var(--navc) 14%, white);
+  border-color: color-mix(in srgb, var(--navc) 30%, rgba(0,0,0,.10));
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-nav.dopamine a.active{
+  color: var(--navc);
+  background: color-mix(in srgb, var(--navc) 18%, white);
+  border-color: color-mix(in srgb, var(--navc) 40%, rgba(0,0,0,.10));
+}
