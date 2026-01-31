@@ -1,357 +1,655 @@
-/* =========================================
-   📘 HSK UI CONTROLLER (Ultimate, ESM, Low Rework)
-   负责：页面交互层（连接 Loader / Renderer / History / LearnPanel）
-   - URL + localStorage 同步（lv / q / lesson）
-   - 支持 lessons 模式（有 lessons.json）或纯 vocab 模式
-   - KO-first + 对象字段容错（meaning/example 不再崩）
-========================================= */
+// /ui/modules/hsk/hskUI.js  (ultimate++ upgraded, module version)
+// - Views: Lessons list / Lesson words / All words / Recent history
+// - Search debounce, per-level cache, KO-first text handling
+// - Decoupled learn panel: dispatch CustomEvent("learn:set", {detail:item})
+// - Uses ESM imports (no window.HSK_LOADER/HSK_RENDER required)
 
-import { createHSKHistory } from "./hskHistory.js";
+import { loadHSKLevel, loadHSKLessons } from "./hskLoader.js";
+import { renderLessonList, renderWordCards } from "./hskRenderer.js";
+import { HSK_HISTORY } from "./hskHistory.js";
 
-/** ===============================
- * State
-================================== */
-let dom = {};
-let current = {
-  lv: "1",
-  q: "",
-  lesson: "", // 可选：lesson id
-};
+const $ = (id) => document.getElementById(id);
 
-let allWords = [];      // 当前 level 全部词
-let lessons = null;     // 当前 level lessons（可能为 null）
-let lessonWords = [];   // 当前 lesson 下 words（如启用 lessons）
+const CACHE_TTL = 1000 * 60 * 30; // 30min
+const SEARCH_DEBOUNCE_MS = 80;
 
-// 统一 History（URL + localStorage）
-const hist = createHSKHistory({
-  baseKey: "hsk",
-  defaults: { lv: "1", q: "", lesson: "" },
-});
+let dom = null;
 
-/** ===============================
- * Entry
- * 由 page.hsk.js 调用
-================================== */
-export function initHSKUI() {
+// ===== state =====
+let ALL = [];
+let LESSONS = null;
+let currentLesson = null;
+let inRecentView = false;
+
+let LESSON_INDEX = null;
+
+// cache: level -> { ts, all, lessons, index }
+const CACHE = new Map();
+
+// ===== init =====
+export function initHSKUI(opts = {}) {
   cacheDOM();
 
-  // 1) 读取初始状态（URL > localStorage > defaults）
-  current = hist.getInitialState();
+  // options
+  const defaultLevel = Number(opts.defaultLevel || dom.level?.value || 1);
+  const autoFocusSearch = opts.autoFocusSearch !== false;
 
-  // 2) 先把 UI 控件恢复到初始状态
-  applyStateToControls(current);
+  bindEvents({ autoFocusSearch });
 
-  // 3) 绑定事件（用户操作 -> 渲染 + history）
-  bindEvents();
+  // ensure select value
+  if (dom.level) dom.level.value = String(defaultLevel);
 
-  // 4) 绑定 popstate（浏览器前进/后退）
-  hist.bind({
-    getState: () => ({
-      lv: dom.levelSelect?.value || "1",
-      q: dom.searchInput?.value || "",
-      lesson: current.lesson || "",
-    }),
-    applyState: (s) => {
-      current = { ...current, ...s };
-      applyStateToControls(current);
-      // 注意：这里必须重新加载 level（可能不同）
-      loadLevel(current.lv, { keepQuery: true });
-    },
-  });
-
-  // 5) 首次加载
-  loadLevel(current.lv, { keepQuery: true });
+  loadLevel(String(defaultLevel), { autoFocusSearch });
 }
 
-/** ===============================
- * DOM cache
-================================== */
+// ===== dom =====
 function cacheDOM() {
-  dom.levelSelect = document.getElementById("hskLevel");
-  dom.searchInput = document.getElementById("hskSearch");
-  dom.grid = document.getElementById("hskGrid");
-  dom.status = document.getElementById("hskStatus");
-  dom.error = document.getElementById("hskError");
+  dom = {
+    level: $("hskLevel"),
+    search: $("hskSearch"),
+    grid: $("hskGrid"),
+    error: $("hskError"),
+    status: $("hskStatus"),
+  };
 }
 
-/** ===============================
- * Apply state -> controls only
-================================== */
-function applyStateToControls(state) {
-  if (dom.levelSelect) dom.levelSelect.value = String(state.lv || "1");
-  if (dom.searchInput) dom.searchInput.value = state.q || "";
+// ===== UI helpers =====
+function showError(msg) {
+  if (!dom.error) return;
+  dom.error.classList.remove("hidden");
+  dom.error.textContent = msg || "";
+}
+function clearError() {
+  if (!dom.error) return;
+  dom.error.classList.add("hidden");
+  dom.error.textContent = "";
+}
+function setStatus(s) {
+  if (dom.status) dom.status.textContent = s || "";
 }
 
-/** ===============================
- * Events
-================================== */
-function bindEvents() {
-  // level change
-  dom.levelSelect?.addEventListener("change", (e) => {
-    const lv = String(e.target.value || "1");
-    current = { ...current, lv, lesson: "" }; // 切换等级默认清空 lesson
-    hist.commit(current, "push");
-    loadLevel(lv, { keepQuery: true });
-  });
-
-  // search input (debounce)
-  let t = null;
-  dom.searchInput?.addEventListener("input", (e) => {
-    const q = String(e.target.value || "").trim();
-    current = { ...current, q };
-    // replace：避免每个字母都 push history
-    hist.commit(current, "replace");
-
-    clearTimeout(t);
-    t = setTimeout(() => {
-      applyFilterAndRender();
-    }, 120);
-  });
+function safeText(x) {
+  return String(x ?? "").trim();
+}
+function normalizeWord(s) {
+  return safeText(s).replace(/\s+/g, " ").trim();
 }
 
-/** ===============================
- * Load Level
-================================== */
-async function loadLevel(lv, opts = {}) {
-  const level = String(lv || "1");
-  setStatus(`HSK ${level} 로딩 중…`);
-  hideError();
-
-  // 防止旧内容残留（体验更稳）
-  if (dom.grid) dom.grid.innerHTML = "";
-
+function scrollToTop() {
   try {
-    // ✅ 统一走 window.HSK_LOADER（你现在的结构）
-    const loader = window.HSK_LOADER;
-    if (!loader?.loadVocab) {
-      throw new Error("HSK_LOADER.loadVocab 가 없습니다. (스크립트 로딩 순서 확인)");
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch {
+    window.scrollTo(0, 0);
+  }
+}
 
-    // 1) vocab
-    allWords = await loader.loadVocab(level, { fetch: { cache: "no-store" } });
+function focusSearch(autoFocus) {
+  if (!autoFocus) return;
+  try {
+    dom.search?.focus?.();
+  } catch {}
+}
 
-    // 2) lessons (可选)
-    lessons = await loader.loadLessons(level, { fetch: { cache: "no-store" } });
-    // lessons 若不存在 => null（loader 里已经做了容错）
+function renderFallback(title, desc) {
+  if (!dom.grid) return;
+  dom.grid.innerHTML = "";
+  const box = document.createElement("div");
+  box.className = "hsk-card";
+  box.innerHTML = `
+    <div class="hsk-card-title">${escapeHtml(title)}</div>
+    <div class="hsk-card-desc">${escapeHtml(desc || "")}</div>
+  `;
+  dom.grid.appendChild(box);
+}
 
-    // 3) 如果存在 lessons，并且 URL 里带了 lesson，则尝试恢复 lesson 模式
-    if (lessons && lessons.length) {
-      // lessonId 可能是 "2" / "A-1" / 数字
-      const lessonId = safeText(current.lesson);
-      const hit = lessonId ? findLessonById(lessons, lessonId) : null;
+function renderEmptyHint(container, title, desc) {
+  if (!container) return;
+  const card = document.createElement("div");
+  card.className = "hsk-card hsk-empty";
+  card.innerHTML = `
+    <div class="hsk-card-title">${escapeHtml(title)}</div>
+    <div class="hsk-card-desc">${escapeHtml(desc || "")}</div>
+  `;
+  container.appendChild(card);
+}
 
-      if (hit) {
-        lessonWords = pickWordsForLesson(hit, allWords);
-      } else {
-        // 没有指定 / 找不到：默认显示 lesson 列表（更像“课程”）
-        lessonWords = [];
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function renderTopBar({ title, subtitle, leftBtn, rightBtns = [] }) {
+  const top = document.createElement("div");
+  top.className = "hsk-topbar";
+
+  const rightHtml = rightBtns
+    .map(
+      (b) =>
+        `<button data-key="${b.key}" class="hsk-topbtn ${b.className || ""}">${escapeHtml(
+          b.text
+        )}</button>`
+    )
+    .join("");
+
+  top.innerHTML = `
+    <div class="hsk-topbar-left">
+      <div class="hsk-topbar-title">${escapeHtml(title || "")}</div>
+      <div class="hsk-topbar-sub">${escapeHtml(subtitle || "")}</div>
+    </div>
+    <div class="hsk-topbar-right">
+      ${
+        leftBtn
+          ? `<button data-key="${leftBtn.key}" class="hsk-topbtn ${
+              leftBtn.className || ""
+            }">${escapeHtml(leftBtn.text)}</button>`
+          : ""
       }
-    } else {
-      lessonWords = [];
-      current = { ...current, lesson: "" };
-      hist.commit(current, "replace");
-    }
+      ${rightHtml}
+    </div>
+  `;
+  return top;
+}
 
-    // 4) 首次渲染
-    applyFilterAndRender(opts);
-
-    setStatus(`HSK ${level} 준비 완료`);
-  } catch (err) {
-    showError("단어 데이터를 불러오지 못했습니다.");
-    console.error(err);
+// ===== data helpers =====
+function buildAllMap() {
+  const map = new Map();
+  for (const w of ALL) {
+    const key = normalizeWord(w?.word);
+    if (key && !map.has(key)) map.set(key, w);
   }
+  return map;
 }
 
-/** ===============================
- * Render (lessons or cards)
-================================== */
-function applyFilterAndRender(opts = {}) {
-  const q = safeText(current.q);
-  const list = getBaseListForRender();
+function buildLessonWordList(lesson, allMap) {
+  const raw = Array.isArray(lesson?.words) ? lesson.words : [];
+  const keys = raw.map(normalizeWord).filter(Boolean);
 
-  // 1) lesson list mode
-  if (shouldShowLessonList()) {
-    renderLessonList();
-    return;
-  }
-
-  // 2) vocab/lesson words mode
-  const filtered = q ? filterList(list, q) : list;
-  renderWordCards(filtered);
-
-  // 3) 如果是 keepQuery：不动输入框（已恢复）
-  // opts.keepQuery 仅为语义保留
-}
-
-function shouldShowLessonList() {
-  // lessons 存在 && 当前没有选中任何 lesson && 没有直接词表模式要求
-  if (!lessons || !lessons.length) return false;
-  const hasLesson = !!safeText(current.lesson);
-  return !hasLesson && lessonWords.length === 0;
-}
-
-function renderLessonList() {
-  const r = window.HSK_RENDER;
-  if (!r?.renderLessonList) {
-    // fallback：没有 lesson renderer，就直接显示全部词
-    renderWordCards(allWords);
-    return;
+  // ⚠️ 你原来用 Set 去重，会打乱“教材重复出现”的情况；这里保留顺序 + 去重
+  const seen = new Set();
+  const orderedUnique = [];
+  for (const k of keys) {
+    if (!k) continue;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    orderedUnique.push(k);
   }
 
-  r.renderLessonList(dom.grid, lessons, (lesson) => {
-    // 选择 lesson：写入 history（push）
-    current = { ...current, lesson: String(lesson.id ?? "") };
-    hist.commit(current, "push");
+  const list = [];
+  let missing = 0;
 
-    // 取该 lesson 对应词
-    lessonWords = pickWordsForLesson(lesson, allWords);
-
-    // 渲染词卡
-    applyFilterAndRender();
-  });
-}
-
-function renderWordCards(list) {
-  // 兼容你旧 renderer：renderHSKGrid(dom.grid, list, onClick)
-  if (typeof window.renderHSKGrid === "function") {
-    window.renderHSKGrid(dom.grid, list, handleWordClick);
-    return;
+  for (const k of orderedUnique) {
+    const found = allMap.get(k);
+    if (found) list.push(found);
+    else missing++;
   }
-
-  // 新 renderer：HSK_RENDER.renderWordCards
-  const r = window.HSK_RENDER;
-  if (!r?.renderWordCards) {
-    throw new Error("HSK_RENDER.renderWordCards 가 없습니다. (스크립트 로딩 순서 확인)");
-  }
-
-  r.renderWordCards(dom.grid, list, handleWordClick, {
-    lang: window.APP_LANG || "ko",
-    showLearnBadge: true,
-  });
+  return { list, missing };
 }
 
-/** ===============================
- * Word click -> LearnPanel
-================================== */
-function handleWordClick(item) {
-  // 统一走事件，不再依赖 saveHistory(word)
-  // LearnPanel 监听 openLearnPanel 事件即可
-  window.dispatchEvent(new CustomEvent("openLearnPanel", { detail: item }));
-}
-
-/** ===============================
- * Helpers: list source
-================================== */
-function getBaseListForRender() {
-  // 优先：lessonWords（lesson 模式）
-  if (lessons && lessons.length && safeText(current.lesson)) {
-    return lessonWords.length ? lessonWords : allWords;
-  }
-  // 默认：allWords
-  return allWords;
-}
-
-function findLessonById(lessonsArr, id) {
-  const key = safeText(id);
-  if (!key) return null;
-  return (
-    lessonsArr.find((l) => String(l?.id ?? "") === key) ||
-    lessonsArr.find((l) => safeText(l?.title) === key) ||
-    null
-  );
-}
-
-/**
- * lesson.words 可能是：
- * - ["你好","谢谢"] 这种 word 列表
- * - 或 [{word:"你好"}, ...] 这种对象
- * - 或直接就是完整词条（那就直接用）
- */
-function pickWordsForLesson(lesson, vocabList) {
-  const w = lesson?.words;
-  if (!Array.isArray(w) || !w.length) return [];
-
-  // 如果 lesson.words 本身是完整词条（有 word 字段并且 meaning/pinyin…），直接返回
-  if (typeof w[0] === "object" && safeText(w[0]?.word)) return w;
-
-  // 否则：把 lesson.words 当作“word 字符串数组”去 vocabList 里匹配
-  const set = new Set(
-    w.map((x) => (typeof x === "string" ? x : x?.word)).map((x) => safeText(x)).filter(Boolean)
-  );
-
-  if (!set.size) return [];
-
-  // 保持 vocabList 原顺序（教材顺序稳定）
-  return (vocabList || []).filter((it) => set.has(safeText(it?.word)));
-}
-
-/** ===============================
- * Filter (robust)
- * - meaning/example 可能是 object/array
-================================== */
-function filterList(list, keyword) {
-  const q = safeText(keyword);
-  const lower = q.toLowerCase();
-
-  return (list || []).filter((it) => {
-    const word = textOf(it?.word);
-    const pinyin = textOf(it?.pinyin);
-    const meaning = textOf(it?.meaning);
-    const example = textOf(it?.example);
-
-    return (
-      word.includes(q) ||
-      word.toLowerCase().includes(lower) ||
-      pinyin.toLowerCase().includes(lower) ||
-      meaning.toLowerCase().includes(lower) ||
-      example.toLowerCase().includes(lower)
-    );
-  });
-}
-
-function textOf(v) {
-  // 永远返回字符串（避免 [object Object]）
+function pickText(v) {
+  // ✅ 永远不返回 [object Object]
   if (v == null) return "";
   if (typeof v === "string") return v;
   if (typeof v === "number" || typeof v === "boolean") return String(v);
-  if (Array.isArray(v)) return v.map(textOf).filter(Boolean).join(" / ");
+
+  if (Array.isArray(v)) return v.map(pickText).filter(Boolean).join(" / ");
+
   if (typeof v === "object") {
-    // KO-first
     return (
-      textOf(v.ko) ||
-      textOf(v.kr) ||
-      textOf(v.zh) ||
-      textOf(v.cn) ||
-      textOf(v.en) ||
-      // 兜底：找第一个可用值
-      Object.keys(v)
-        .map((k) => textOf(v[k]))
-        .find((t) => safeText(t)) ||
+      pickText(v.ko) ||
+      pickText(v.kr) ||
+      pickText(v.zh) ||
+      pickText(v.cn) ||
+      pickText(v.en) ||
       ""
     );
   }
   return "";
 }
 
-function safeText(v) {
-  return String(v ?? "").trim();
+function filterWordList(list, q) {
+  const qq = safeText(q).toLowerCase();
+  if (!qq) return list;
+
+  return (list || []).filter((x) => {
+    const blob = `${safeText(x.word)} ${safeText(x.pinyin)} ${pickText(
+      x.meaning
+    )} ${pickText(x.example)}`.toLowerCase();
+    return blob.includes(qq);
+  });
 }
 
-/** ===============================
- * UI helpers
-================================== */
-function setStatus(msg) {
-  if (dom.status) dom.status.textContent = msg;
+// ===== lesson index (for searching lessons by title/words) =====
+function buildLessonIndex() {
+  if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
+    LESSON_INDEX = null;
+    return;
+  }
+
+  const allMap = buildAllMap();
+
+  const lessons = LESSONS.map((lesson, idx) => {
+    const title = safeText(lesson?.title) || `Lesson ${lesson?.id ?? idx + 1}`;
+    const subtitle = safeText(lesson?.subtitle);
+
+    const { list, missing } = buildLessonWordList(lesson, allMap);
+
+    const wordsBlob = list
+      .map((w) => `${safeText(w.word)} ${safeText(w.pinyin)} ${pickText(w.meaning)} ${pickText(w.example)}`)
+      .join(" | ");
+
+    const blob = `${title} ${subtitle} ${wordsBlob}`.toLowerCase();
+
+    return {
+      idx,
+      key: lesson?.id ?? idx,
+      lesson,
+      wordsResolved: list,
+      missing,
+      blob,
+    };
+  });
+
+  LESSON_INDEX = { lessons };
 }
 
-function showError(msg) {
-  if (!dom.error) return;
-  dom.error.classList.remove("hidden");
-  dom.error.textContent = msg;
+function getLessonMatches(query) {
+  if (!LESSON_INDEX?.lessons) return [];
+  const q = safeText(query).toLowerCase();
+
+  if (!q) {
+    return LESSON_INDEX.lessons.map((it) => ({
+      ...it,
+      matchCount: it.wordsResolved.length,
+      hitType: "all",
+    }));
+  }
+
+  return LESSON_INDEX.lessons
+    .filter((it) => it.blob.includes(q))
+    .map((it) => {
+      const matchCount = it.wordsResolved.reduce((acc, w) => {
+        const wb = `${safeText(w.word)} ${safeText(w.pinyin)} ${pickText(w.meaning)} ${pickText(w.example)}`.toLowerCase();
+        return acc + (wb.includes(q) ? 1 : 0);
+      }, 0);
+      return { ...it, matchCount, hitType: matchCount > 0 ? "words" : "title" };
+    });
 }
 
-function hideError() {
-  if (!dom.error) return;
-  dom.error.classList.add("hidden");
-  dom.error.textContent = "";
+// ===== view: recent =====
+function renderRecentView() {
+  if (!dom.grid) return;
+
+  inRecentView = true;
+  currentLesson = null;
+
+  const q = safeText(dom.search?.value);
+  const recent = HSK_HISTORY.list(); // newest -> older
+  const filtered = filterWordList(recent, q);
+
+  dom.grid.innerHTML = "";
+
+  const top = renderTopBar({
+    title: "최근 학습",
+    subtitle: q ? `검색: "${q}"` : "최근에 학습한 단어를 다시 확인해요",
+    leftBtn: { key: "backMain", text: "← 돌아가기" },
+    rightBtns: [{ key: "clearRecent", text: "기록 지우기" }],
+  });
+  dom.grid.appendChild(top);
+
+  top.querySelector(`[data-key="backMain"]`)?.addEventListener("click", () => {
+    inRecentView = false;
+    renderAuto();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  top.querySelector(`[data-key="clearRecent"]`)?.addEventListener("click", () => {
+    HSK_HISTORY.clear();
+    renderRecentView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  const wrap = document.createElement("div");
+  wrap.className = "hsk-grid";
+  dom.grid.appendChild(wrap);
+
+  if (recent.length === 0) {
+    renderEmptyHint(
+      wrap,
+      "최근 학습 기록이 없어요",
+      "단어 카드를 눌러 학습하면 여기에 자동으로 저장됩니다."
+    );
+    setStatus("(0)");
+    return;
+  }
+
+  if (filtered.length === 0) {
+    renderEmptyHint(
+      wrap,
+      "검색 결과가 없어요",
+      "검색어를 지우면 최근 학습 단어가 다시 표시됩니다."
+    );
+    setStatus(`(0/${recent.length})`);
+    return;
+  }
+
+  renderWordCards(wrap, filtered, onWordClick, {
+    lang: "ko",
+    query: q,
+    showTag: "학습",
+    compact: false,
+  });
+
+  setStatus(`(${filtered.length}/${recent.length})`);
+}
+
+// ===== view: lessons list =====
+function renderLessonsView() {
+  if (!dom.grid) return;
+
+  if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
+    renderAllWordsView();
+    return;
+  }
+
+  inRecentView = false;
+
+  const q = safeText(dom.search?.value);
+  const matches = getLessonMatches(q);
+
+  dom.grid.innerHTML = "";
+
+  const top = renderTopBar({
+    title: "수업 목록",
+    subtitle: `HSK ${dom.level?.value || ""}` + (q ? ` · 검색: "${q}"` : ""),
+    rightBtns: [
+      { key: "recent", text: "최근 학습" },
+      { key: "goAll", text: "전체 단어 보기" },
+    ],
+  });
+  dom.grid.appendChild(top);
+
+  top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
+    renderRecentView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  top.querySelector(`[data-key="goAll"]`)?.addEventListener("click", () => {
+    currentLesson = null;
+    renderAllWordsView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  const wrap = document.createElement("div");
+  wrap.className = "hsk-list";
+  dom.grid.appendChild(wrap);
+
+  if (matches.length === 0) {
+    renderEmptyHint(
+      wrap,
+      "검색 결과가 없어요",
+      "다른 키워드로 검색해 보세요.\n예) 중국어 / 병음 / 뜻 / 예문 일부"
+    );
+    setStatus(`(0/${LESSONS.length})`);
+    return;
+  }
+
+  const meta = new Map();
+  matches.forEach((it) => {
+    const badge =
+      q && it.hitType === "words"
+        ? `매칭 ${it.matchCount}개`
+        : q && it.hitType === "title"
+        ? `제목/설명 매칭`
+        : `단어 ${it.wordsResolved.length}개`;
+
+    meta.set(it.key, {
+      rightText: badge,
+      missing: it.missing || 0,
+    });
+  });
+
+  const lessonObjs = matches.map((x) => x.lesson);
+
+  renderLessonList(wrap, lessonObjs, (lesson) => {
+    currentLesson = lesson;
+    renderLessonWordsView();
+    scrollToTop();
+    focusSearch(true);
+  }, { meta, query: q, lang: "ko", showBadge: true });
+
+  setStatus(`(${matches.length}/${LESSONS.length})`);
+}
+
+// ===== view: lesson words =====
+function renderLessonWordsView() {
+  if (!dom.grid) return;
+
+  inRecentView = false;
+
+  const q = safeText(dom.search?.value);
+  const allMap = buildAllMap();
+  const { list: lessonWords, missing } = buildLessonWordList(currentLesson, allMap);
+  const filtered = filterWordList(lessonWords, q);
+
+  dom.grid.innerHTML = "";
+
+  const top = renderTopBar({
+    title: safeText(currentLesson?.title) || "Lesson",
+    subtitle:
+      safeText(currentLesson?.subtitle || "") +
+      (missing ? ` · ⚠️ 누락 ${missing}개` : "") +
+      (q ? ` · 검색: "${q}"` : ""),
+    leftBtn: { key: "backLessons", text: "← 수업 목록" },
+    rightBtns: [
+      { key: "recent", text: "최근 학습" },
+      { key: "goAll", text: "전체 단어 보기" },
+    ],
+  });
+  dom.grid.appendChild(top);
+
+  top.querySelector(`[data-key="backLessons"]`)?.addEventListener("click", () => {
+    currentLesson = null;
+    renderLessonsView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
+    renderRecentView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  top.querySelector(`[data-key="goAll"]`)?.addEventListener("click", () => {
+    currentLesson = null;
+    renderAllWordsView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  const wrap = document.createElement("div");
+  wrap.className = "hsk-grid";
+  dom.grid.appendChild(wrap);
+
+  if (filtered.length === 0) {
+    renderEmptyHint(
+      wrap,
+      "이 수업에서 검색 결과가 없어요",
+      "검색어를 바꾸거나, 검색어를 지워서 전체 단어를 확인해 보세요."
+    );
+    setStatus(`(0/${lessonWords.length})`);
+    return;
+  }
+
+  renderWordCards(wrap, filtered, onWordClick, {
+    lang: "ko",
+    query: q,
+    showTag: "학습",
+    compact: false,
+  });
+
+  setStatus(`(${filtered.length}/${lessonWords.length})`);
+}
+
+// ===== view: all words =====
+function renderAllWordsView() {
+  if (!dom.grid) return;
+
+  inRecentView = false;
+
+  const q = safeText(dom.search?.value);
+  const filtered = filterWordList(ALL, q);
+  const inLessonMode = Array.isArray(LESSONS) && LESSONS.length > 0;
+
+  dom.grid.innerHTML = "";
+
+  const top = renderTopBar({
+    title: "전체 단어",
+    subtitle: `HSK ${dom.level?.value || ""}` + (q ? ` · 검색: "${q}"` : ""),
+    leftBtn: inLessonMode ? { key: "backLessons", text: "← 수업 목록" } : null,
+    rightBtns: [{ key: "recent", text: "최근 학습" }],
+  });
+  dom.grid.appendChild(top);
+
+  top.querySelector(`[data-key="backLessons"]`)?.addEventListener("click", () => {
+    currentLesson = null;
+    renderLessonsView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
+    renderRecentView();
+    scrollToTop();
+    focusSearch(true);
+  });
+
+  const wrap = document.createElement("div");
+  wrap.className = "hsk-grid";
+  dom.grid.appendChild(wrap);
+
+  if (filtered.length === 0) {
+    renderEmptyHint(
+      wrap,
+      "검색 결과가 없어요",
+      "다른 키워드로 검색해 보세요.\n예) 중국어 / 병음 / 뜻 / 예문 일부"
+    );
+    setStatus(`(0/${ALL.length})`);
+    return;
+  }
+
+  renderWordCards(wrap, filtered, onWordClick, {
+    lang: "ko",
+    query: q,
+    showTag: "학습",
+    compact: false,
+  });
+
+  setStatus(`(${filtered.length}/${ALL.length})`);
+}
+
+// ===== auto route =====
+function renderAuto() {
+  if (inRecentView) return renderRecentView();
+
+  if (Array.isArray(LESSONS) && LESSONS.length > 0) {
+    if (currentLesson) return renderLessonWordsView();
+    return renderLessonsView();
+  }
+  return renderAllWordsView();
+}
+
+// ===== cache =====
+function getCached(level) {
+  const hit = CACHE.get(level);
+  if (!hit) return null;
+  if (Date.now() - hit.ts > CACHE_TTL) {
+    CACHE.delete(level);
+    return null;
+  }
+  return hit;
+}
+
+function setCached(level, all, lessons, index) {
+  CACHE.set(String(level), { all, lessons, index, ts: Date.now() });
+}
+
+// ===== loading =====
+function setLoadingUI() {
+  renderFallback("불러오는 중...", "데이터를 가져오고 있어요.");
+  setStatus("(loading...)");
+}
+
+async function loadLevel(level, { autoFocusSearch = true } = {}) {
+  clearError();
+  setLoadingUI();
+
+  currentLesson = null;
+  inRecentView = false;
+
+  try {
+    const cached = getCached(level);
+    if (cached) {
+      ALL = cached.all || [];
+      LESSONS = cached.lessons || null;
+      LESSON_INDEX = cached.index || null;
+      renderAuto();
+      scrollToTop();
+      focusSearch(autoFocusSearch);
+      return;
+    }
+
+    // vocab + lessons
+    ALL = await loadHSKLevel(level, { koFirst: true });
+
+    // lessons.json may not exist => null
+    LESSONS = await loadHSKLessons(level, { allowMissing: true });
+
+    buildLessonIndex();
+    setCached(level, ALL, LESSONS, LESSON_INDEX);
+
+    renderAuto();
+    scrollToTop();
+    focusSearch(autoFocusSearch);
+  } catch (e) {
+    showError(`HSK ${level} 데이터를 불러오지 못했어요.\n에러: ${e?.message || e}`);
+    setStatus("");
+  }
+}
+
+// ===== click word =====
+function onWordClick(item) {
+  // 1) history
+  try { HSK_HISTORY.add(item); } catch {}
+
+  // 2) open learn panel (decoupled)
+  window.dispatchEvent(new CustomEvent("learn:set", { detail: item }));
+}
+
+// ===== search debounce =====
+let debounceTimer = null;
+function onSearchChange() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    renderAuto();
+  }, SEARCH_DEBOUNCE_MS);
+}
+
+// ===== events =====
+let bound = false;
+function bindEvents({ autoFocusSearch }) {
+  if (bound) return;
+  bound = true;
+
+  dom.level?.addEventListener("change", () => {
+    loadLevel(dom.level.value, { autoFocusSearch });
+  });
+
+  dom.search?.addEventListener("input", onSearchChange);
 }
