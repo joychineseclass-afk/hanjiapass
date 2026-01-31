@@ -113,3 +113,75 @@ body{
   box-shadow:var(--shadow-sm);
 }
 .home-card:hover{box-shadow:var(--shadow)}
+
+/* =========================================
+   ✅ 新增：Home Hero / Badges（你 page.home.js 里用到了）
+========================================= */
+.hero{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.title{
+  margin:0;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.2px;
+}
+.desc{
+  margin:8px 0 0;
+  color:var(--muted);
+  line-height:1.55;
+  font-weight:600;
+}
+.badges{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,.08);
+  background:rgba(0,0,0,.03);
+  font-weight:800;
+  color:#111;
+}
+
+/* =========================================
+   ✅ 新增：多巴胺色彩 Home 卡片（每个按钮不同色）
+   - page.home.js 会给按钮加 style="--dop:#xxxxxx"
+========================================= */
+.home-card{
+  position:relative;
+  overflow:hidden;
+  text-align:left;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+}
+
+/* 左侧彩条 */
+.home-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:7px;
+  background:var(--dop, rgba(29,78,216,.65));
+}
+
+/* hover 变色 + 微抬起 */
+.home-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(0,0,0,.10);
+  background:color-mix(in srgb, var(--dop, rgba(29,78,216,.20)) 12%, #ffffff 88%);
+}
+
+/* emoji 更舒服一点 */
+.home-card span{
+  vertical-align:middle;
+}
