@@ -32,6 +32,29 @@ function render(container) {
 
   // ✅ 只对当前页面区域 apply（更稳）
   i18n.apply?.(container);
+
+// ================== HSK8 한자 단어 예시 ==================
+const hanjaData = [
+  { hanja: "学", pinyin: "xué", meaning: "배우다 / 학습" },
+  { hanja: "校", pinyin: "xiào", meaning: "학교" },
+  { hanja: "生", pinyin: "shēng", meaning: "학생 / 태어나다" },
+  { hanja: "先", pinyin: "xiān", meaning: "먼저 / 선생" },
+  { hanja: "名", pinyin: "míng", meaning: "이름 / 유명하다" }
+];
+
+const listEl = container.querySelector("#hanja-list");
+if (listEl) {
+  listEl.classList.remove("placeholder");
+
+  listEl.innerHTML = hanjaData.map(item => `
+    <div class="hanja-card">
+      <div class="hanja-char">${item.hanja}</div>
+      <div class="hanja-pinyin">${item.pinyin}</div>
+      <div class="hanja-meaning">${item.meaning}</div>
+    </div>
+  `).join("");
+}
+// =========================================================
 }
 
 export function mount() {
