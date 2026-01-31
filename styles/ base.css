@@ -1,216 +1,242 @@
-/* ========== 🌍 全站基础排版 ========== */
+/* =========================================
+   🌍 Joy Chinese — base.css (Stable)
+   目标：全站统一 + 不冲突 + 可长期扩展
+========================================= */
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #1f2937;
-  background: #f7f7f7;
+/* ---------- 0) Design Tokens ---------- */
+:root{
+  --bg: #f7f7f7;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+
+  --brand: #111827;       /* 主色（导航 active / 深色文字） */
+  --accent: #fb923c;      /* 橙色强调（你之前用的） */
+
+  --radius: 14px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.05);
+  --shadow: 0 6px 18px rgba(0,0,0,.08);
+
+  --max: 1100px;
 }
 
-/* 页面统一容器 */
-.page-wrap {
-  max-width: 1100px;
+/* ---------- 1) Minimal Reset ---------- */
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a{ color: inherit; text-decoration: none; }
+button, input, select{ font: inherit; }
+
+/* ---------- 2) Layout ---------- */
+.page-wrap{
+  max-width: var(--max);
   margin: 0 auto;
   padding: 28px 20px 60px;
 }
 
-/* 页面大标题 */
-.page-title {
+.page-title{
   font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 22px;
+  font-weight: 800;
+  margin: 0 0 18px 0;
   letter-spacing: -0.5px;
 }
 
-/* 每个功能模块盒子 */
-.section-box {
-  background: #ffffff;
-  padding: 18px 18px;
-  border-radius: 14px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+.page-desc{
+  color: var(--muted);
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-/* 输入框统一风格 */
-.input-box {
+/* 可选：通用模块盒子 */
+.section-box{
+  background: var(--card);
+  padding: 18px;
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+}
+
+/* ---------- 3) Common UI ---------- */
+.input-box{
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
   outline: none;
-  transition: border-color .15s;
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s;
 }
 
-.input-box:focus {
-  border-color: #fb923c;
+.input-box:focus{
+  border-color: rgba(251,146,60,.9);
+  box-shadow: 0 0 0 4px rgba(251,146,60,.18);
 }
 
-/* 首页功能卡片 */
-.home-card {
-  background: #ffffff;
-  padding: 22px;
-  border-radius: 14px;
-  text-align: center;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0,0,0,.05);
-  transition: transform .15s, box-shadow .15s;
+/* 通用按钮（如果你以后不用 Tailwind，也能统一） */
+.btn{
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 800;
+  color: var(--text);
+  transition: background .15s, box-shadow .15s, border-color .15s;
+}
+.btn:hover{ background: #f3f4f6; }
+.btn:active{ transform: translateY(1px); }
+
+.btn-accent{
+  background: var(--accent);
+  border-color: rgba(251,146,60,.9);
+  color: #fff;
+}
+.btn-accent:hover{ filter: brightness(.98); }
+
+/* ---------- 4) Top Nav (用于 navBar.js) ---------- */
+/* 你的 navBar.js 是把 <a> 直接 append 到 nav 容器里。
+   所以我们让 #navBar 或 .nav-links 下的 a 都有统一样式。 */
+
+#navBar,
+.nav-links{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
 
-.home-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.08);
-}
-
-/* ========== 🧭 导航栏样式增强 ========== */
-
-.nav-link {
-  padding: 6px 12px;
-  border-radius: 8px;
-  color: #374151;
-  transition: all 0.15s ease;
-  font-weight: 500;
-}
-
-.nav-link:hover {
-  background: #f3f4f6;
-  color: #111827;
-}
-
-/* 当前页面高亮（以后可用 JS 自动加 active 类） */
-.nav-link.active {
-  background: #fb923c;
-  color: white;
-}
-
-/* ========== ✍️ 学习区域视觉优化 ========== */
-
-.page-desc {
-  color: #6b7280;
-  margin-bottom: 16px;
+#navBar a,
+.nav-links a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--muted);
+  font-weight: 800;
   font-size: 14px;
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
 }
 
-.page-content {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #374151;
+#navBar a:hover,
+.nav-links a:hover{
+  background: rgba(17,24,39,.06);
+  color: var(--brand);
+  border-color: rgba(17,24,39,.10);
 }
 
-/* ================= 导航栏 ================= */
+/* navBar.js 会给 active 类（或你以后自己加 active） */
+#navBar a.active,
+.nav-links a.active{
+  background: rgba(17,24,39,.10);
+  color: var(--brand);
+  border-color: rgba(17,24,39,.20);
+  box-shadow: 0 0 0 4px rgba(17,24,39,.08);
+}
 
-.site-nav {
+/* sticky 容器（可选：你如果有 .site-nav / .nav-inner 结构就会生效） */
+.site-nav{
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255,255,255,.85);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--line);
 }
-
-.nav-inner {
-  max-width: 1100px;
+.nav-inner{
+  max-width: var(--max);
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.nav-link {
-  padding: 6px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #374151;
-  text-decoration: none;
-  transition: all 0.18s ease;
-}
-
-.nav-link:hover {
-  background: #f3f4f6;
-  color: #111827;
-}
-
-.nav-link.active {
-  background: #111827;
-  color: #ffffff;
-}
-
-/* 首页专用 */
-.home-intro {
-  color: #6b7280;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-.home-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-  margin-top: 30px;
-}
-
-.home-card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  text-align: center;
-  font-weight: 600;
-  color: #374151;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-  transition: all 0.2s ease;
-}
-
-.home-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  color: #111827;
-}
-/* 顶部导航 */
-.nav {
+/* 品牌区（如果你未来拆 nav 组件会用到） */
+.nav{
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
   padding: 14px 18px;
   background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand{
+  font-weight: 900;
+  color: var(--brand);
 }
 
-.nav-brand {
-  font-weight: 800;
-  color: #111827;
-  text-decoration: none;
-}
+/* ---------- 5) Language Buttons ---------- */
+.nav-right{ display: flex; gap: 6px; }
 
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-right {
-  display: flex;
-  gap: 6px;
-}
-
-.lang-btn {
-  border: 1px solid #e5e7eb;
+.lang-btn{
+  border: 1px solid var(--line);
   background: #fff;
   padding: 6px 10px;
   border-radius: 10px;
   cursor: pointer;
-  font-weight: 700;
-  color: #374151;
+  font-weight: 800;
+  color: var(--text);
+  transition: background .15s, box-shadow .15s, border-color .15s;
 }
+.lang-btn:hover{ background: #f3f4f6; }
 
-.lang-btn:hover {
-  background: #f3f4f6;
-}
-
-.lang-on {
-  background: #111827 !important;
+.lang-on{
+  background: var(--brand) !important;
   color: #fff !important;
-  border-color: #111827 !important;
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 4px rgba(17,24,39,.12);
 }
+
+/* ---------- 6) Home Page Cards ---------- */
+.home-intro{
+  color: var(--muted);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.home-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.home-card{
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: 800;
+  color: #374151;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s, box-shadow .15s, color .15s;
+  cursor: pointer;
+}
+
+.home-card:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  color: var(--brand);
+}
+
+/* ---------- 7) Utilities ---------- */
+.hidden{ display: none !important; }
+.muted{ color: var(--muted); }
