@@ -1,1 +1,109 @@
+/* ===============================
+   🌏 HSK PAGE BASE STYLES
+================================== */
 
+body {
+  background: #f7f7f7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.chat-box {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.bubble {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.no-select {
+  user-select: none;
+}
+
+/* ===============================
+   📱 iOS / TOUCH OPTIMIZATION
+================================== */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+canvas {
+  touch-action: none;
+}
+
+/* ===============================
+   ✍️ TRACE MODE ACTIVE BUTTON
+================================== */
+
+.trace-active {
+  background: #fb923c !important;
+  color: white !important;
+}
+
+/* ===============================
+   🧧 TRACE PRACTICE GRID (米字格)
+================================== */
+
+.trace-gridbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Diagonal dashed lines */
+.trace-gridbox::before,
+.trace-gridbox::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.trace-gridbox::before {
+  background:
+    linear-gradient(45deg, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%),
+    linear-gradient(-45deg, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%);
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
+          mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 12px);
+}
+
+/* Cross center lines */
+.trace-gridbox::after {
+  background:
+    linear-gradient(to right, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%),
+    linear-gradient(to bottom, transparent 49.6%, #000 49.6%, #000 50.4%, transparent 50.4%);
+  opacity: 0.1;
+}
+
+/* ===============================
+   🔤 TRACE WATERMARK CHARACTER
+================================== */
+
+.trace-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(220px, 38vw, 420px);
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.16);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ===============================
+   🎛️ TRACE TOOLBAR ACTIVE STATE
+================================== */
+
+.trace-btn-on {
+  background: #fb923c !important;
+  color: #fff !important;
+}
