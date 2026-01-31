@@ -1,6 +1,6 @@
 /* =========================================
-   📘 HSK PAGE CONTROLLER — STABLE EDITION
-   页面总控制器（可长期扩展不返工）
+   📘 HSK PAGE CONTROLLER — STABLE++ EDITION
+   页面总控制器（长期扩展不返工）
 ========================================= */
 
 import { mountNavBar } from "../components/navBar.js";
@@ -14,8 +14,11 @@ import { initHSKUI } from "../modules/hsk/hskUI.js";
 document.addEventListener("DOMContentLoaded", bootHSKPage);
 
 function bootHSKPage() {
-  mountLayout();
+  const ok = mountLayout();
+  if (!ok) return;
+
   mountGlobalComponents();
+  applyI18nIfAvailable();
   initPageModules();
 }
 
@@ -27,27 +30,67 @@ function mountLayout() {
   const app = document.getElementById("app");
 
   if (!navRoot || !app) {
-    console.error("HSK Page: Missing root containers.");
-    return;
+    // ✅ 不只 console：也给用户一个可见提示（方便手机调试）
+    document.body.innerHTML = `
+      <div style="padding:16px;font-family:system-ui">
+        <h2 style="margin:0 0 8px 0;">HSK Page Error</h2>
+        <div style="color:#b91c1c">
+          Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}
+        </div>
+      </div>
+    `;
+    console.error("HSK Page: Missing root containers.", { navRoot, app });
+    return false;
   }
 
+  // ✅ Nav 只 mount 一次
   mountNavBar(navRoot);
+
+  // ✅ 页面主体（包含 portal-root：给 AI / Learn Panel 用）
   app.innerHTML = getHSKLayoutHTML();
+  return true;
 }
 
 /* ===============================
-   2️⃣ 挂载全局组件
+   2️⃣ 挂载全局组件（AI / Learn）
 ================================== */
 function mountGlobalComponents() {
+  // ✅ 给全局组件一个固定的“挂载点”，避免以后每页到处插 DOM
+  ensurePortalRoot();
   mountAIPanel();
   mountLearnPanel();
+}
+
+function ensurePortalRoot() {
+  let portal = document.getElementById("portal-root");
+  if (!portal) {
+    portal = document.createElement("div");
+    portal.id = "portal-root";
+    document.body.appendChild(portal);
+  }
 }
 
 /* ===============================
    3️⃣ 启动本页功能模块
 ================================== */
 function initPageModules() {
-  initHSKUI(); // 旧 hskUI.js 里的核心逻辑入口
+  // ✅ 允许未来扩展参数（不改 hskUI 内部也行）
+  initHSKUI({
+    defaultLevel: 1,
+    autoFocusSearch: true,
+  });
+}
+
+/* ===============================
+   🌐 i18n：如果存在就应用一次
+   （确保 data-i18n 立刻生效）
+================================== */
+function applyI18nIfAvailable() {
+  try {
+    // 你现在有两种可能：window.i18n（全局）或模块化 i18n（未来）
+    // 这里不强依赖，存在就 apply
+    window.i18n?.apply?.();
+  } catch {}
 }
 
 /* ===============================
@@ -55,6 +98,7 @@ function initPageModules() {
 ================================== */
 function getHSKLayoutHTML() {
   return `
+    <!-- ✅ HSK 顶部栏 -->
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
       <div class="flex flex-col md:flex-row md:items-center gap-3">
         <div class="flex items-center gap-2">
@@ -66,6 +110,7 @@ function getHSKLayoutHTML() {
 
         <div class="flex items-center gap-2">
           <label class="text-sm text-gray-600" data-i18n="hsk_level">레벨</label>
+
           <select id="hskLevel" class="border rounded-lg px-3 py-2 text-sm bg-white">
             ${renderLevelOptions()}
           </select>
@@ -85,12 +130,18 @@ function getHSKLayoutHTML() {
       </div>
     </div>
 
+    <!-- ✅ Error -->
     <div id="hskError"
       class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm">
     </div>
 
+    <!-- ✅ HSK 主容器 -->
     <div id="hskGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
     <div class="h-24"></div>
+
+    <!-- ✅ Portal 预留（也可不放这里，ensurePortalRoot 会兜底）
+         放这里的好处：结构更清晰 -->
+    <div id="portal-root"></div>
   `;
 }
 
