@@ -1,9 +1,11 @@
-// ui/components/navBar.js
-// - 只负责渲染一次 navbar
-// - data-i18n 文案由 i18n.apply() 来替换
-// - 自动高亮当前 hash 对应的导航项
+// ui/components/navBar.js (Stable++)
+// - 只负责渲染一次 navbar（防重复）
+// - data-i18n 文案交给 i18n.apply() 替换
+// - 自动高亮：click / hashchange / i18n route
+// - ✅ 不重复注册监听（避免多页面进入后触发多次）
+// - ✅ 兼容未来 hash 扩展：#hsk/xxx 也能高亮 #hsk
 
-import { i18n } from "../i18n.js"; // ✅ 从 components 返回到 ui
+import { i18n } from "../i18n.js";
 
 const NAV_ITEMS = [
   { href: "#home", key: "nav_home" },
@@ -16,32 +18,52 @@ const NAV_ITEMS = [
   { href: "#review", key: "nav_review" },
   { href: "#resources", key: "nav_resources" },
   { href: "#teacher", key: "nav_teacher" },
-  { href: "#my", key: "nav_my" }
+  { href: "#my", key: "nav_my" },
 ];
 
 function normalizeHash(h) {
-  if (!h) return "#home";
-  return h.startsWith("#") ? h : `#${h}`;
+  const s = String(h || "").trim();
+  if (!s) return "";
+  return s.startsWith("#") ? s : `#${s}`;
+}
+
+/**
+ * ✅ 更稳的 active 判断：
+ * - 完全相等：#hsk === #hsk
+ * - 前缀匹配：#hsk/lesson1 也算在 #hsk 下（未来扩展不会返工）
+ */
+function isActiveHref(currentHash, itemHref) {
+  const cur = normalizeHash(currentHash);
+  const href = normalizeHash(itemHref);
+
+  if (!cur || !href) return false;
+  if (cur === href) return true;
+
+  // 允许 #hsk/xxx #hsk?x=1 也匹配到 #hsk
+  return cur.startsWith(href + "/") || cur.startsWith(href + "?");
+}
+
+function applyI18nTo(navEl) {
+  try {
+    // ✅ 兼容 i18n.apply(navEl) 或 i18n.apply()
+    if (typeof i18n?.apply === "function") {
+      if (i18n.apply.length >= 1) i18n.apply(navEl);
+      else i18n.apply();
+    }
+  } catch {}
 }
 
 function setActive(navEl) {
-  const current = normalizeHash(location.hash);
+  const current = normalizeHash(location.hash) || "#home";
   const links = navEl.querySelectorAll("a[data-nav]");
   links.forEach((a) => {
-    const href = a.getAttribute("href");
-    a.classList.toggle("active", href === current);
+    const href = a.getAttribute("href") || "";
+    a.classList.toggle("active", isActiveHref(current, href));
+    a.setAttribute("aria-current", isActiveHref(current, href) ? "page" : "false");
   });
 }
 
-export function mountNavBar(navEl) {
-  if (!navEl) return;
-
-  if (navEl.dataset.mounted === "1") {
-    setActive(navEl);
-    return;
-  }
-  navEl.dataset.mounted = "1";
-
+function render(navEl) {
   navEl.innerHTML = "";
   const frag = document.createDocumentFragment();
 
@@ -50,28 +72,97 @@ export function mountNavBar(navEl) {
     a.href = it.href;
     a.setAttribute("data-nav", "1");
     a.setAttribute("data-i18n", it.key);
-    a.textContent = i18n.t(it.key);
+
+    // ✅ 先给默认文案避免闪烁（即便之后 i18n.apply 会再替换）
+    try {
+      a.textContent = i18n?.t?.(it.key) || it.key;
+    } catch {
+      a.textContent = it.key;
+    }
+
     frag.appendChild(a);
   });
 
   navEl.appendChild(frag);
+}
 
-  navEl.addEventListener("click", (e) => {
-    const a = e.target.closest("a[data-nav]");
-    if (!a) return;
-    setTimeout(() => setActive(navEl), 0);
-  });
+/**
+ * mountNavBar(navEl, options?)
+ * options:
+ * - defaultHash: 默认 hash（无 hash 时）
+ */
+export function mountNavBar(navEl, options = {}) {
+  if (!navEl) return { destroy() {} };
 
-  // 语言变化 → 更新菜单文字
-  i18n.on("change", () => {
-    i18n.apply(navEl);
-  });
+  const defaultHash = normalizeHash(options.defaultHash || "#home") || "#home";
 
-  // 路由变化 → 更新高亮
-  i18n.on("route", () => {
+  // ✅ 防重复 mount（同一个 navEl 只 mount 一次）
+  if (navEl.dataset.mounted === "1") {
+    // 只刷新一下状态
+    if (!location.hash) location.hash = defaultHash;
+    applyI18nTo(navEl);
     setActive(navEl);
-  });
+    return navEl.__navBarApi || { destroy() {} };
+  }
+  navEl.dataset.mounted = "1";
 
-  if (!location.hash) location.hash = "#home";
+  // ✅ 渲染一次
+  render(navEl);
+
+  // ✅ 初次 apply + active
+  if (!location.hash) location.hash = defaultHash;
+  applyI18nTo(navEl);
   setActive(navEl);
+
+  // ✅ 绑定事件（只绑定一次）
+  const onClick = (e) => {
+    const a = e.target.closest?.("a[data-nav]");
+    if (!a) return;
+    // 等 hash 更新后再设置 active
+    setTimeout(() => setActive(navEl), 0);
+  };
+
+  const onHashChange = () => setActive(navEl);
+
+  const onLangChange = () => {
+    applyI18nTo(navEl);
+  };
+
+  const onRoute = () => setActive(navEl);
+
+  navEl.addEventListener("click", onClick);
+  window.addEventListener("hashchange", onHashChange);
+
+  // ✅ 避免重复注册：把解绑函数存在元素上
+  // （即便将来 SPA 多次 mount/unmount，也不会监听累积）
+  const offFns = [];
+
+  try {
+    if (typeof i18n?.on === "function") {
+      i18n.on("change", onLangChange);
+      i18n.on("route", onRoute);
+
+      // 如果你的 i18n 有 off，就记录下来；没有也没关系
+      if (typeof i18n.off === "function") {
+        offFns.push(() => i18n.off("change", onLangChange));
+        offFns.push(() => i18n.off("route", onRoute));
+      }
+    }
+  } catch {}
+
+  function destroy() {
+    try {
+      navEl.removeEventListener("click", onClick);
+      window.removeEventListener("hashchange", onHashChange);
+      offFns.forEach((fn) => fn());
+    } catch {}
+
+    try {
+      delete navEl.__navBarApi;
+    } catch {}
+  }
+
+  const api = { destroy };
+  navEl.__navBarApi = api;
+  return api;
 }
