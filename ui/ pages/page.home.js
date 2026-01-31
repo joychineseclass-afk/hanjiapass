@@ -40,8 +40,8 @@ export function mount() {
             ✍️ <span data-i18n="home_stroke">한자 필순 연습</span>
           </button>
 
-          <button class="home-card" type="button" data-go="#hanjagongfu">
-            🇰🇷 <span data-i18n="home_hanja">한국식 한자 공부</span>
+          <button class="home-card" type="button" data-go="#hanja">
+          🇰🇷 <span data-i18n="home_hanja">한국식 한자 공부</span>
           </button>
 
           <button class="home-card" type="button" data-go="#speaking">
