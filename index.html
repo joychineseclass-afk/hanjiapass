@@ -5,34 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Joy Chinese Learning Platform</title>
 
-  <!-- ✅ 全站基础样式（从 index.html 移出去） -->
-  <link rel="stylesheet" href="./styles/base.css">
-  <link rel="stylesheet" href="./styles/panels.css">
-  
+  <!-- ✅ CSS：建议加版本号，避免你看到旧样式 -->
+  <link rel="stylesheet" href="./styles/base.css?v=20260201">
+  <link rel="stylesheet" href="./styles/panels.css?v=20260201">
 </head>
 
-
 <body>
-  <!-- ✅ 顶部区域：品牌 + 语言按钮 + 导航（由 navBar.js 渲染） -->
+  <!-- ✅ 顶部区域：只留容器，不要再包 card -->
   <header class="wrap">
-    <div class="card">
-      <div id="siteNav"></div>
-    </div>
+    <div id="siteNav"></div>
   </header>
 
-  <!-- ✅ 页面内容注入点（router 把 page.* 渲染到这里） -->
+  <!-- ✅ 页面内容注入点 -->
   <main id="app" class="wrap"></main>
 
-  <!-- ✅ 底部（可选：也可以做成组件） -->
+  <!-- ✅ 底部 -->
   <footer class="wrap">
-    <div id="siteFooter" class="card"></div>
+    <div id="siteFooter"></div>
   </footer>
 
   <!-- 全站工具 -->
-<script src="./ui/dataPaths.js"></script>
+  <script src="./ui/dataPaths.js?v=20260201"></script>
 
-<!-- 全站入口 -->
-<script type="module" src="./ui/app.js"></script>
+  <!-- 全站入口 -->
+  <script type="module" src="./ui/app.js?v=20260201"></script>
 </body>
 </html>
-
