@@ -1,10 +1,8 @@
 // /ui/modules/stroke/strokePlayer.main.js
 // ✅ 完善不返工版（ES Module）
-// - 自动播放 + 字面序号 + 描红判笔
-// - 统一 import：tpl / canvas / trace
-// - 无提示/不闪红绿块（判笔错误直接清空重写）
-// - 支持重复练习（↻）
-// - 保留你现有 UI 结构和交互（避免返工）
+// - 统一使用 strokeDemo：playAll / playOne / stop
+// - 따라쓰기：自动示范一笔 -> 再允许学生写
+// - 统一 import：tpl / canvas / trace / demo
 
 import { renderStrokePlayerTpl } from "./strokePlayer.tpl.js";
 import {
@@ -14,23 +12,19 @@ import {
   setProgress,
 } from "./strokePlayer.canvas.js";
 import { initTraceMode } from "./strokeTrace.js";
+import { playAll, playOne, stop as stopDemo } from "./strokeDemo.js";
 
 /** =========================
  * One-time styles
  ========================= */
-const STYLE_ID = "stroke-trace-style-v6";
+const STYLE_ID = "stroke-trace-style-v7";
 function ensureStyleOnce() {
   if (document.getElementById(STYLE_ID)) return;
   const st = document.createElement("style");
   st.id = STYLE_ID;
   st.textContent = `
-    /* ✅ 描红底色：浅灰 */
     .trace-stroke-dim  { stroke: rgba(0,0,0,.18) !important; fill: rgba(0,0,0,.18) !important; opacity: 1 !important; }
-
-    /* ✅ 播放/当前笔高亮 */
     .trace-stroke-on   { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
-
-    /* ✅ 已完成笔 */
     .trace-stroke-done { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
 
     .trace-num { font-size: 16px; font-weight: 800; fill: rgba(0,0,0,.35); }
@@ -42,11 +36,6 @@ function ensureStyleOnce() {
   document.head.appendChild(st);
 }
 
-/** =========================
- * Public mount
- * targetEl: container element
- * hanChars: array of chars
- ========================= */
 export function mountStrokeSwitcher(targetEl, hanChars) {
   ensureStyleOnce();
   if (!targetEl) return;
@@ -57,7 +46,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
-  // 1) template
+  // template
   targetEl.innerHTML = renderStrokePlayerTpl();
 
   const btnWrap = targetEl.querySelector("#strokeBtns");
@@ -72,30 +61,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   let currentChar = chars[0];
 
-  /** =========================
-   * Mode state
-   ========================= */
-  let tracingOn = false; // 따라쓰기 on/off
-  let traceApi = null;   // trace mode API
-  let svg = null;        // current svg element
-  let strokeEls = [];    // stroke paths
-  let doneCount = 0;     // completed strokes
+  // state
+  let tracingOn = false;
+  let traceApi = null;
 
-  // Demo playback state
-  let demoStopFlag = false;
-  let demoTimer = null;
+  let svg = null;
+  let strokeEls = [];
+  let doneCount = 0;
 
-  function stopDemo() {
-    demoStopFlag = true;
-    if (demoTimer) {
-      clearTimeout(demoTimer);
-      demoTimer = null;
-    }
-  }
-
-  /** =========================
-   * Paths
-   ========================= */
   function strokeUrl(ch) {
     return window.DATA_PATHS?.strokeUrl?.(ch) || "";
   }
@@ -103,23 +76,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return window.DATA_PATHS?.strokeFileNameForChar?.(ch) || "";
   }
 
-  // 更稳的“按顺序取笔画”
   function getStrokeEls(svgEl) {
     if (!svgEl) return [];
-    // 默认 path 顺序就是笔顺顺序（你的数据集基本如此）
     return Array.from(svgEl.querySelectorAll("path"));
   }
 
-  function hideRedo() {
-    btnRedo?.classList.add("hidden");
-  }
-  function showRedo() {
-    btnRedo?.classList.remove("hidden");
-  }
+  function hideRedo() { btnRedo?.classList.add("hidden"); }
+  function showRedo() { btnRedo?.classList.remove("hidden"); }
 
-  /** =========================
-   * Progress refresh
-   ========================= */
   function refreshProgress() {
     if (!svg) return;
     setProgress({ svg, strokeEls, doneCount });
@@ -150,23 +114,28 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (!svg) return;
 
     if (tracingOn) {
-      // 进入描红：停止动画 + 整字浅灰 + 显示序号
+      // ✅ 进入描红：停止 demo + 重置 + 先示范一笔，再开启判笔
       stopDemo();
       resetForTraceMode();
-      traceApi?.setEnabled?.(true);
+
+      // 先不让写
+      traceApi?.setEnabled?.(false);
+
+      // ✅ 自动示范第一笔（或当前 doneCount 对应笔）
+      const idx = Math.min(doneCount, Math.max(0, strokeEls.length - 1));
+      playOne({ svg, strokeEls, index: idx, speed: 1.0 }).finally(() => {
+        // 示范后允许学生写
+        traceApi?.setEnabled?.(true);
+      });
     } else {
-      // 退出描红：隐藏序号 + 停止判笔 + 回到播放模式（不自动播）
+      // ✅ 退出描红：停判笔 + 回到播放模式（不自动播）
       traceApi?.setEnabled?.(false);
       setNumberLayerVisible(svg, false);
       resetForPlayMode();
     }
   }
 
-  /** =========================
-   * Init trace judge
-   ========================= */
   function initTrace(svgEl) {
-    // destroy old
     try { traceApi?.destroy?.(); } catch {}
     traceApi = null;
 
@@ -177,7 +146,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
         getColor: () => "#ff3b30",
         getSize: () => 8,
 
-        onStrokeCorrect: () => {
+        onStrokeCorrect: ({ index }) => {
+          // index 是“当前笔之前的 index”，这里我们用 doneCount 自增最直观
           doneCount = Math.min(doneCount + 1, strokeEls.length);
           refreshProgress();
           if (doneCount >= strokeEls.length) showRedo();
@@ -191,96 +161,45 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       traceApi?.setEnabled?.(false);
     } catch (e) {
       traceApi = null;
-      // 不抛，让播放器还能播 demo
       console.warn("initTraceMode failed:", e);
     }
   }
 
-  /** =========================
-   * Demo playback: draw strokes by dashoffset
-   ========================= */
-  async function playStrokeDemo({ speed = 1.0 } = {}) {
+  async function autoplayAll() {
     if (!svg || !strokeEls.length) return;
 
-    stopDemo(); // 防止重入
-    demoStopFlag = false;
-
-    // 播放模式：先清空到浅灰
+    stopDemo();
     resetForPlayMode();
 
-    // 让每笔用 stroke 来画
-    strokeEls.forEach((p) => {
-      p.style.fill = "none";
-      p.style.stroke = "#111";
-      p.style.strokeWidth = "8";
-      p.style.strokeLinecap = "round";
-      p.style.strokeLinejoin = "round";
-      p.style.transition = "";
-      p.style.strokeDasharray = "";
-      p.style.strokeDashoffset = "";
+    // playAll 中：每笔开始会回调 onStroke(i)
+    await playAll({
+      svg,
+      strokeEls,
+      speed: 1.0,
+      onStroke: (i) => {
+        doneCount = i;
+        refreshProgress();
+      },
+      showNumbersAfter: true,
     });
 
-    for (let i = 0; i < strokeEls.length; i++) {
-      if (demoStopFlag) return;
-
-      const p = strokeEls[i];
-
-      // 当前笔高亮
-      doneCount = i;
-      refreshProgress();
-      p.classList.add("trace-stroke-on");
-
-      // dash animation
-      let L = 0;
-      try { L = p.getTotalLength(); } catch { L = 300; }
-      L = Math.max(80, Math.min(2000, L));
-
-      p.style.strokeDasharray = `${L}`;
-      p.style.strokeDashoffset = `${L}`;
-      // force reflow
-      p.getBoundingClientRect();
-
-      const baseMs = 420;
-      const dur = Math.round((baseMs + L * 0.55) / Math.max(0.2, speed));
-
-      p.style.transition = `stroke-dashoffset ${dur}ms linear`;
-      p.style.stroke = "#ff3b30";
-      p.style.strokeDashoffset = "0";
-
-      await new Promise((resolve) => {
-        demoTimer = setTimeout(resolve, dur + 40);
-      });
-
-      if (demoStopFlag) return;
-
-      // 完成这一笔
-      p.classList.remove("trace-stroke-on");
-      p.classList.add("trace-stroke-done");
-
-      doneCount = i + 1;
-      refreshProgress();
-    }
-
-    // 播放结束：显示数字层（你要“顺序标在字面上”）
-    setNumberLayerVisible(svg, true);
+    // 播放完成
+    doneCount = strokeEls.length;
     refreshProgress();
   }
 
-  /** =========================
-   * Load char
-   ========================= */
   async function loadChar(ch, { bust = false } = {}) {
     currentChar = ch;
     hideRedo();
     stopDemo();
 
-    // 切换字：描红先关掉
+    // 切换字：先关描红
     tracingOn = false;
     btnTrace?.classList.remove("trace-btn-on");
 
-    // 清状态
     try { traceApi?.destroy?.(); } catch {}
     traceApi = null;
+
     svg = null;
     strokeEls = [];
     doneCount = 0;
@@ -320,23 +239,21 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       strokeEls = getStrokeEls(svg);
 
-      // 加序号层（默认隐藏）
+      // number layer
       addStrokeNumbers(svg, strokeEls, { defaultVisible: false });
 
-      // 初始化判笔（默认关闭）
+      // init trace judge
       initTrace(svg);
 
-      // 默认加载后：自动播放一次
-      await playStrokeDemo({ speed: 1.0 });
+      // ✅ 默认：自动播放全部
+      await autoplayAll();
     } catch (e) {
       console.error(e);
       stage.innerHTML = `<div class="text-sm text-red-600">로드 실패</div>`;
     }
   }
 
-  /** =========================
-   * Char buttons
-   ========================= */
+  // ----- char buttons -----
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
@@ -360,13 +277,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (i === 0) requestAnimationFrame(() => b.click());
   });
 
-  /** =========================
-   * Top buttons
-   ========================= */
+  // ----- top buttons -----
   btnSpeak?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // 你原来就是这样：如果 AIUI 没有 speak，不会报错
     window.AIUI?.speak?.(currentChar, "zh-CN");
   });
 
@@ -376,17 +290,17 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     e.stopPropagation();
 
     if (tracingOn) setTraceEnabled(false);
-    await playStrokeDemo({ speed: 1.0 });
+    await autoplayAll();
   });
 
-  // 따라쓰기：进入/退出描红
+  // 따라쓰기：进入/退出描红（进入时先示范一笔）
   btnTrace?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
     setTraceEnabled(!tracingOn);
   });
 
-  // ↻：重写（直接清空并继续描红）
+  // ↻：重写（清空并继续描红）
   btnRedo?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
