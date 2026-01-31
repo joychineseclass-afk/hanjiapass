@@ -8,10 +8,21 @@
 import { i18n } from "../i18n.js";
 
 const NAV_ITEMS = [
-  { href: "#home",   key: "nav_home",   label: "홈" },
-  { href: "#hsk",    key: "nav_hsk",    label: "HSK 학습" },
-  { href: "#stroke", key: "nav_stroke", label: "汉字笔순" },
-  { href: "#travel", key: "nav_travel", label: "여행 중국어" },
+  // ui/components/navBar.js
+import { i18n } from "../i18n.js";
+
+const NAV_ITEMS = [
+  { href: "#home",    key: "nav_home",        label: "홈" },
+  { href: "#hsk",     key: "nav_hsk",         label: "HSK 학습" },
+  { href: "#stroke",  key: "nav_stroke",      label: "한자 필순" },
+  { href: "#hanja",   key: "nav_hanjagongfu", label: "한자공부" },
+  { href: "#speaking",key: "nav_speaking",    label: "회화" },
+  { href: "#travel",  key: "nav_travel",      label: "여행중국어" },
+  { href: "#culture", key: "nav_culture",     label: "문화" },
+  { href: "#review",  key: "nav_review",      label: "복습" },
+  { href: "#resources",key:"nav_resources",   label: "자료" },
+  { href: "#teacher", key: "nav_teacher",     label: "교사专区" },
+  { href: "#my",      key: "nav_my",          label: "내 학습" },
 ];
 
 // ---------- helpers ----------
