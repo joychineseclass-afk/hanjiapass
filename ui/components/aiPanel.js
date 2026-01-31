@@ -1,9 +1,10 @@
 // /ui/components/aiPanel.js
-// - AI 面板（一次性挂载）
-// - 支持拖动（可关）
-// - 支持事件：openAIPanel / closeAIPanel / ai:push / ai:clear
-// - 不依赖 Tailwind（但兼容你页面已有 Tailwind）
-// - 预留 i18n: data-i18n
+// ✅ STABLE / NO-REWORK EDITION
+// - UI only (no business logic)
+// - Uses /styles/panels.css for all styles (no <style> injection)
+// - Events:
+//   openAIPanel / closeAIPanel / ai:push / ai:clear / ai:send
+// - Optional drag (default: false; recommend on desktop only)
 
 let mounted = false;
 
@@ -14,7 +15,9 @@ export function mountAIPanel(opts = {}) {
   const {
     container = document.body,
     defaultOpen = false,
-    draggable = true,
+    draggable = false,      // ✅ 默认关（移动端更稳定）
+    rememberState = true,   // ✅ 记住打开/关闭
+    storageKey = "joy_ai_open",
   } = opts;
 
   const wrap = document.createElement("div");
@@ -22,42 +25,79 @@ export function mountAIPanel(opts = {}) {
   wrap.innerHTML = tpl();
   container.appendChild(wrap);
 
-  const panel = wrap.querySelector("#ai-panel");
-  const btn = wrap.querySelector("#botBtn");
-  const closeBtn = wrap.querySelector("#closeBtn");
-  const dragHandle = wrap.querySelector("#dragHandle");
-  const chat = wrap.querySelector("#chat");
-  const input = wrap.querySelector("#input");
-  const sendBtn = wrap.querySelector("#uiSendBtn");
+  const panel = wrap.querySelector("#aiPanel");
+  const fab = wrap.querySelector("#aiFab");
+  const closeBtn = wrap.querySelector("#aiCloseBtn");
+  const dragHandle = wrap.querySelector("#aiDragHandle");
 
-  // ---------- open/close ----------
-  const open = () => {
-    panel.classList.remove("hidden");
-    btn.classList.add("hidden");
-  };
-  const close = () => {
-    panel.classList.add("hidden");
-    btn.classList.remove("hidden");
-  };
+  const chat = wrap.querySelector("#aiChat");
+  const input = wrap.querySelector("#aiInput");
+  const sendBtn = wrap.querySelector("#aiSendBtn");
 
-  btn.addEventListener("click", open);
-  closeBtn.addEventListener("click", close);
+  const ttsToggle = wrap.querySelector("#aiTTSToggle");
+  const explainLang = wrap.querySelector("#aiExplainLang");
+  const speakMode = wrap.querySelector("#aiSpeakMode");
 
-  if (defaultOpen) open();
-  else close();
+  if (!panel || !fab || !closeBtn || !chat || !input || !sendBtn) return;
 
-  // ---------- send ----------
-  function pushBubble(text, who = "user") {
+  // ===== state =====
+  let isOpen = false;
+
+  function setOpen(next) {
+    isOpen = !!next;
+    panel.classList.toggle("is-open", isOpen);
+    fab.classList.toggle("is-hidden", isOpen);
+
+    if (rememberState) {
+      try {
+        localStorage.setItem(storageKey, isOpen ? "1" : "0");
+      } catch {}
+    }
+
+    // open 时自动聚焦输入
+    if (isOpen) {
+      setTimeout(() => {
+        try { input.focus(); } catch {}
+      }, 0);
+    }
+  }
+
+  function open() { setOpen(true); }
+  function close() { setOpen(false); }
+  function toggle() { setOpen(!isOpen); }
+
+  // ===== init open state =====
+  if (rememberState) {
+    try {
+      const v = localStorage.getItem(storageKey);
+      if (v === "1") setOpen(true);
+      else if (v === "0") setOpen(false);
+      else setOpen(!!defaultOpen);
+    } catch {
+      setOpen(!!defaultOpen);
+    }
+  } else {
+    setOpen(!!defaultOpen);
+  }
+
+  // ===== bubbles =====
+  function pushBubble(text, who = "bot") {
+    const msg = String(text ?? "").trim();
+    if (!msg) return;
+
     const b = document.createElement("div");
-    b.className =
-      who === "user"
-        ? "ai-bubble ai-bubble-user"
-        : "ai-bubble ai-bubble-bot";
-    b.textContent = String(text ?? "");
+    b.className = `ai-bubble ${who === "user" ? "is-user" : "is-bot"}`;
+    b.textContent = msg;
+
     chat.appendChild(b);
     chat.scrollTop = chat.scrollHeight;
   }
 
+  function clearChat() {
+    chat.innerHTML = "";
+  }
+
+  // ===== send =====
   function handleSend() {
     const v = (input.value || "").trim();
     if (!v) return;
@@ -65,73 +105,88 @@ export function mountAIPanel(opts = {}) {
     pushBubble(v, "user");
     input.value = "";
 
-    // ✅ 这里先只做事件抛出，不在组件里写业务逻辑（不返工）
-    // 你可以在 aiUI.js 里监听 "ai:send" 来接 OpenAI / 规则回复 / TTS 等
-    window.dispatchEvent(new CustomEvent("ai:send", { detail: { text: v } }));
+    // ✅ 只抛事件，不做业务
+    window.dispatchEvent(
+      new CustomEvent("ai:send", {
+        detail: {
+          text: v,
+          // ✅ 这些控件值也一起抛出，外部 aiUI.js 可以直接用
+          prefs: {
+            tts: !!ttsToggle?.checked,
+            explainLang: explainLang?.value || "ko",
+            speakMode: speakMode?.value || "kids",
+          },
+        },
+      })
+    );
   }
+
+  // ===== ui events =====
+  fab.addEventListener("click", open);
+  closeBtn.addEventListener("click", close);
 
   sendBtn.addEventListener("click", handleSend);
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") handleSend();
   });
 
-  // ---------- external events ----------
+  // Esc 关闭（桌面更友好）
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen) close();
+  });
+
+  // ===== external events =====
   window.addEventListener("openAIPanel", open);
   window.addEventListener("closeAIPanel", close);
 
-  // 外部推送一条消息到面板（比如：点了单词卡 -> 自动把词丢到 AI）
   window.addEventListener("ai:push", (e) => {
-    const { text, who } = e.detail || {};
+    const { text, who, open: autoOpen } = e.detail || {};
+    if (autoOpen) open();
     pushBubble(text, who || "bot");
   });
 
   window.addEventListener("ai:clear", () => {
-    chat.innerHTML = "";
+    clearChat();
   });
 
-  // ---------- draggable ----------
+  // ===== draggable (optional) =====
   if (draggable) enableDrag(panel, dragHandle);
 
-  // ---------- expose helpers (optional) ----------
-  // 不挂 window，全靠事件；这里留个返回值方便你在 page 里直接调用
-  return { open, close, push: pushBubble };
+  return {
+    open,
+    close,
+    toggle,
+    push: pushBubble,
+    clear: clearChat,
+    getPrefs: () => ({
+      tts: !!ttsToggle?.checked,
+      explainLang: explainLang?.value || "ko",
+      speakMode: speakMode?.value || "kids",
+    }),
+  };
 }
 
 function tpl() {
   return `
-    <button
-      id="botBtn"
-      type="button"
-      class="fixed bottom-4 right-4 bg-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
-      aria-label="Open AI Panel"
-      title="AI"
-    >🤖</button>
+    <!-- Floating button -->
+    <button id="aiFab" type="button" class="ai-fab" aria-label="Open AI" title="AI">🤖</button>
 
-    <div
-      id="ai-panel"
-      class="hidden fixed bottom-20 right-4 w-[92vw] max-w-[390px] bg-white rounded-xl shadow-xl flex flex-col"
-      style="z-index: 9999;"
-    >
-      <div
-        id="dragHandle"
-        class="bg-black text-white px-4 py-2 rounded-t-xl flex justify-between items-center cursor-move select-none"
-      >
-        <span id="uiTitle" data-i18n="ai_title">AI 한자 선생님</span>
-        <button id="closeBtn" type="button" aria-label="close">✖</button>
-      </div>
+    <!-- Panel -->
+    <section id="aiPanel" class="ai-panel" aria-label="AI Panel" role="dialog" aria-modal="false">
+      <header id="aiDragHandle" class="ai-panel__header">
+        <span class="ai-panel__title" id="uiTitle" data-i18n="ai_title">AI 한자 선생님</span>
+        <button id="aiCloseBtn" type="button" class="ai-icon-btn" aria-label="close">✖</button>
+      </header>
 
-      <div
-        id="controlBar"
-        class="px-3 pt-3 pb-2 border-b text-xs space-y-2 sticky top-0 bg-white z-10"
-      >
-        <div class="flex items-center gap-2">
-          <input id="ttsToggle" type="checkbox" checked class="accent-orange-500" />
-          <label for="ttsToggle" data-i18n="ai_tts">읽어주기(TTS)</label>
-        </div>
+      <div class="ai-panel__controls">
+        <label class="ai-row">
+          <input id="aiTTSToggle" type="checkbox" checked />
+          <span data-i18n="ai_tts">읽어주기(TTS)</span>
+        </label>
 
-        <div class="flex items-center gap-2">
-          <span class="w-[120px] text-gray-600" data-i18n="ai_explain_lang">설명 언어</span>
-          <select id="explainLang" class="flex-1 border rounded px-2 py-1 text-xs">
+        <div class="ai-row">
+          <span class="ai-label" data-i18n="ai_explain_lang">설명 언어</span>
+          <select id="aiExplainLang" class="ai-select">
             <option value="ko" selected>한국어</option>
             <option value="en">English</option>
             <option value="ja">日本語</option>
@@ -139,52 +194,30 @@ function tpl() {
           </select>
         </div>
 
-        <div class="flex items-center gap-2">
-          <span class="w-[120px] text-gray-600" data-i18n="ai_mode">모드</span>
-          <select id="speakMode" class="flex-1 border rounded px-2 py-1 text-xs">
+        <div class="ai-row">
+          <span class="ai-label" data-i18n="ai_mode">모드</span>
+          <select id="aiSpeakMode" class="ai-select">
             <option value="kids" selected>Kids</option>
             <option value="exam">Exam</option>
           </select>
         </div>
 
-        <div class="text-[11px] text-gray-500 leading-4" data-i18n="ai_tip">
-          💡 문장을 클릭하면 그 부분만 읽어줘요.
-        </div>
+        <div class="ai-tip" data-i18n="ai_tip">💡 문장을 클릭하면 그 부분만 읽어줘요.</div>
       </div>
 
-      <div id="chat" class="ai-chat p-3 space-y-2 text-sm" style="max-height:60vh; overflow:auto;"></div>
+      <div id="aiChat" class="ai-chat" aria-label="Chat"></div>
 
-      <div class="p-3 border-t flex gap-2">
-        <input id="input" class="flex-1 border rounded px-2 py-2"
+      <footer class="ai-panel__inputbar">
+        <input
+          id="aiInput"
+          class="ai-input"
+          placeholder="질문을 입력하세요…"
           data-i18n-placeholder="ai_placeholder"
-          placeholder="질문을 입력하세요…" autocomplete="off" />
-        <button id="uiSendBtn" type="button"
-          class="bg-orange-500 text-white px-4 py-2 rounded"
-          data-i18n="ai_send"
-        >보내기</button>
-      </div>
-    </div>
-
-    <style>
-      /* 组件私有样式：不和全站冲突 */
-      #ai-panel-root .ai-bubble{
-        padding:10px 12px;
-        border-radius:14px;
-        max-width: 92%;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-      #ai-panel-root .ai-bubble-user{
-        margin-left:auto;
-        background: rgba(245,158,11,.12);
-        border: 1px solid rgba(245,158,11,.25);
-      }
-      #ai-panel-root .ai-bubble-bot{
-        margin-right:auto;
-        background: rgba(37,99,235,.08);
-        border: 1px solid rgba(37,99,235,.18);
-      }
-    </style>
+          autocomplete="off"
+        />
+        <button id="aiSendBtn" type="button" class="ai-send" data-i18n="ai_send">보내기</button>
+      </footer>
+    </section>
   `;
 }
 
@@ -192,19 +225,18 @@ function enableDrag(panel, handle) {
   if (!panel || !handle) return;
 
   let dragging = false;
-  let startX = 0,
-    startY = 0,
-    startLeft = 0,
-    startTop = 0;
+  let startX = 0, startY = 0, startLeft = 0, startTop = 0;
 
   function onDown(e) {
     dragging = true;
+
     const r = panel.getBoundingClientRect();
     startX = e.clientX;
     startY = e.clientY;
     startLeft = r.left;
     startTop = r.top;
 
+    // ✅ 拖动后改为 top/left 定位，避免和 right/bottom 打架
     panel.style.right = "auto";
     panel.style.bottom = "auto";
     panel.style.left = `${startLeft}px`;
