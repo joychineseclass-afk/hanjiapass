@@ -39,6 +39,14 @@ const DICT = {
     common_loading: "불러오는 중...",
     common_retry: "다시 시도",
     common_close: "닫기",
+     
+    // ===== Hanja Page =====
+  hanja_title: "한자공부",
+  hanja_section_vocab: "📖 자주 쓰는 한자",
+  coming_soon_detail: "한자 어휘 학습 콘텐츠가 곧 추가될 예정입니다.",
+  hanja_section_compare: "🔄 중한 한자 비교",
+  hanja_compare_placeholder: "간체자·번체자·한국 한자 비교 기능이 추가될 예정입니다.",
+
   },
 
   cn: {
@@ -71,6 +79,14 @@ const DICT = {
     common_loading: "加载中...",
     common_retry: "重试",
     common_close: "关闭",
+     
+    // ===== Hanja Page =====
+  hanja_title: "韩语汉字学习",
+  hanja_section_vocab: "📖 常用韩语汉字",
+  coming_soon_detail: "汉字词汇学习内容即将上线。",
+  hanja_section_compare: "🔄 中韩汉字对比",
+  hanja_compare_placeholder: "未来将加入简体、繁体与韩字对照功能。",
+
   }
 };
 
