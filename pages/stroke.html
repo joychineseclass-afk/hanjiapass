@@ -6,26 +6,104 @@
   <title data-i18n="nav_stroke">한자 필순 | Joy Chinese</title>
   <link rel="stylesheet" href="../styles/base.css" />
 </head>
+
 <body>
+  <div id="navBar"></div>
 
-<div id="navBar"></div>
+  <main class="page-wrap">
+    <!-- 标题：走 i18n -->
+    <h1 class="page-title" data-i18n="stroke_title">한자 필순 연습</h1>
+    <p class="muted" data-i18n="stroke_desc">
+      한 글자를 입력하면 필순 애니메이션과 따라쓰기를 할 수 있어요.
+    </p>
 
-<main class="page-wrap">
-  <h1 class="page-title" data-i18n="nav_stroke"></h1>
-  <p class="muted">汉字笔顺动画与书写练习将在这里出现。</p>
+    <!-- 输入区 -->
+    <div class="card" style="margin-top:16px;">
+      <div class="row" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label class="muted" for="stroke-input" data-i18n="stroke_input_label">한자 입력</label>
+        <input
+          id="stroke-input"
+          class="input"
+          style="min-width:180px;"
+          maxlength="2"
+          placeholder="한 글자를 입력"
+          data-i18n-placeholder="stroke_input_ph"
+        />
+        <button id="stroke-load-btn" class="btn" data-i18n="stroke_load_btn">불러오기</button>
 
-  <div class="card" style="margin-top:16px;">
-    <div class="placeholder">✍️ 笔顺动画组件（下一步接入）</div>
-  </div>
-</main>
+        <span id="stroke-file-hint" class="muted" style="margin-left:auto;"></span>
+      </div>
+    </div>
 
-<script type="module">
-  import { i18n } from "../ui/i18n.js";
-  import { mountNavBar } from "../ui/components/navBar.js";
-  i18n.init({ defaultLang:"kr", storageKey:"joy_lang", autoApplyRoot: document });
-  mountNavBar(document.getElementById("navBar"));
-  i18n.apply();
-</script>
+    <!-- 笔顺/描红组件挂载区 -->
+    <div class="card" style="margin-top:16px;">
+      <div class="section-title" data-i18n="stroke_player_title">필순 학습</div>
+      <!-- 这里由 ui-stroke-player.js mountStrokeSwitcher(...) 注入 -->
+      <div id="stroke-root"></div>
+    </div>
 
+    <!-- 释义区：后面接 lookup.js -->
+    <div class="card" style="margin-top:16px;">
+      <div class="section-title" data-i18n="stroke_meaning_title">단어/뜻</div>
+      <div id="stroke-meaning-area" class="muted" data-i18n="stroke_meaning_hint">
+        한자를 입력하면 HSK 단어장에서 뜻과 예문을 보여줄 수 있어요.
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { i18n } from "../ui/i18n.js";
+    import { mountNavBar } from "../ui/components/navBar.js";
+
+    // ✅ 你的笔顺系统（你现在已在用）
+    import { mountStrokeSwitcher } from "../ui/ui-stroke-player.js";
+
+    // ✅ 后续：你建立的 lookup（先留着，不报错的话再打开）
+    // import { findInHSK } from "../ui/hskLookup.js"; // 或 ../ui/lookup.js（看你文件名）
+
+    // 1) init i18n + navbar
+    i18n.init({ defaultLang: "kr", storageKey: "joy_lang", autoApplyRoot: document });
+    mountNavBar(document.getElementById("navBar"));
+    i18n.apply();
+
+    // 2) UI elements
+    const input = document.getElementById("stroke-input");
+    const btn = document.getElementById("stroke-load-btn");
+    const root = document.getElementById("stroke-root");
+    const meaningArea = document.getElementById("stroke-meaning-area");
+    const hint = document.getElementById("stroke-file-hint");
+
+    function setHint(ch) {
+      if (!hint) return;
+      // 仅提示：对应的 svg 文件名（例如 你用 unicode codepoint）
+      // 你现在实际怎么映射由 ui-stroke-player.js 决定，这里只是提示用
+      hint.textContent = ch ? `(${ch})` : "";
+    }
+
+    function handleLoad() {
+      const ch = (input.value || "").trim().charAt(0);
+      if (!ch) return;
+
+      setHint(ch);
+
+      // ✅ 笔顺+描红组件挂载
+      mountStrokeSwitcher(root, ch);
+
+      // ✅ 释义：先给占位，后面你接 lookup.js 时再替换
+      if (meaningArea) {
+        meaningArea.innerHTML = `<div style="opacity:.7">불러오는 중...</div>`;
+        // TODO: 之后接 renderMeaningFromHSK(ch, meaningArea)
+      }
+    }
+
+    btn?.addEventListener("click", handleLoad);
+    input?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleLoad();
+    });
+
+    // 3) 默认加载一个示例字（可选）
+    // input.value = "你";
+    // handleLoad();
+  </script>
 </body>
 </html>
