@@ -1,5 +1,35 @@
 // ui/pages/page.stroke.js
 import { mountStrokeSwitcher } from "../ui-stroke-player.js";
+import { findInHSK } from "../hskLookup.js";
+async function renderMeaningFromHSK(ch) {
+  const area = document.getElementById("stroke-meaning-area");
+  if (!area) return;
+
+  area.innerHTML = "불러오는 중..."; // 韩语优先
+
+  const hits = await findInHSK(ch, { max: 8 });
+
+  if (!hits.length) {
+    area.innerHTML = "<div style='opacity:.6'>HSK 단어장에서 정보를 찾지 못했어요</div>";
+    return;
+  }
+
+  area.innerHTML = hits.map(h => `
+    <div style="margin:12px 0; padding:12px; border:1px solid #eee; border-radius:12px">
+      <div><b>${h.word}</b> <span style="opacity:.7">HSK${h.level}</span></div>
+      <div><b>Pinyin:</b> ${h.pinyin || "-"}</div>
+      <div><b>한국어:</b> ${h.kr || "-"}</div>
+      ${h.example?.cn ? `
+        <div style="margin-top:8px; opacity:.85">
+          <div><b>예문:</b> ${h.example.cn}</div>
+          <div><b>Pinyin:</b> ${h.example.py || "-"}</div>
+          <div><b>한국어:</b> ${h.example.kr || "-"}</div>
+        </div>
+      ` : ""}
+    </div>
+  `).join("");
+}
+
 
 function getMountEl(root) {
   if (root && root.nodeType === 1) return root;
@@ -40,16 +70,17 @@ export function mount(root) {
   const btn = el.querySelector("#stroke-load-btn");
   const strokeRoot = el.querySelector("#stroke-root");
 
-  function handleLoad() {
-    const ch = (input.value || "").trim().charAt(0);
-    if (!ch) return;
+ function handleLoad() {
+  const ch = (input.value || "").trim().charAt(0);
+  if (!ch) return;
 
-    // 🔥 关键：调用你完整的笔顺系统
-    mountStrokeSwitcher(strokeRoot, ch);
+  // 🔥 笔顺系统
+  mountStrokeSwitcher(strokeRoot, ch);
 
-    // 加载释义
-    loadMeaning(ch, el.querySelector("#stroke-meaning-area"));
-  }
+  // ✅ 释义系统
+  renderMeaningFromHSK(ch, el.querySelector("#stroke-meaning-area"));
+}
+
 
   btn.addEventListener("click", handleLoad);
   input.addEventListener("keydown", e => {
