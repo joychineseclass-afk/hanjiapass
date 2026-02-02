@@ -64,18 +64,19 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
       <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none">
-        <div id="strokeViewport"
-             class="absolute inset-0 cursor-grab active:cursor-grabbing"
-             style="touch-action:none;">
-          <div id="strokeStage"
-               class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
-            loading...
-          </div>
-        </div>
+  <div id="strokeViewport"
+       class="absolute inset-0 cursor-grab active:cursor-grabbing"
+       style="touch-action:none;">
+    <div id="strokeStage"
+         class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
+      loading...
+    </div>
+  </div>
 
-        <canvas id="traceCanvas"
-                class="absolute inset-0 w-full h-full hidden"
-                style="touch-action:none;"></canvas>
+  <!-- ✨ 描红层：必须在 relative 容器内部 -->
+  <canvas id="traceCanvas"
+          class="absolute inset-0 w-full h-full pointer-events-auto"></canvas>
+</div>
 
         <div id="strokeZoomLabel"
              class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">
