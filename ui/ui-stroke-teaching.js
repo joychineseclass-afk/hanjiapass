@@ -12,8 +12,6 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     tag.id = "teachingTag";
     tag.className =
       "absolute left-2 top-2 text-[11px] text-white bg-slate-900/80 px-2 py-1 rounded hidden";
-    // stage가 들어있는 카드 안에 relative 컨테이너가 있으면 거기에 붙이는 게 베스트
-    // 없으면 rootEl에라도 붙임(안 깨지게)
     const box = rootEl.querySelector(".aspect-square")?.parentElement || rootEl;
     box.style.position = box.style.position || "relative";
     box.appendChild(tag);
@@ -35,20 +33,41 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const list = [...svg.querySelectorAll('[id^="make-me-a-hanzi-animation-"]')];
     if (list.length) return list;
 
-    // 다른 데이터셋 대비(있을 수도 있는 클래스/속성)
+    // 다른 데이터셋 대비
     const alt = [...svg.querySelectorAll('[data-stroke], .stroke, [id*="animation"]')];
     return alt;
   }
 
   function replayCssAnimation(el) {
-    // CSS 애니메이션 재시작 트릭
     el.style.animation = "none";
     // eslint-disable-next-line no-unused-expressions
     el.getBoundingClientRect();
     el.style.animation = "";
   }
 
+  // ✅ (핵심) 완료/진행 상태에 맞게 "파란색"을 정리해주는 redraw
+  // - activeIndex: 현재 파란색으로 보여줄 획 인덱스
+  // - finished=true 이면 파란색을 모두 제거(전부 검정)
+  function redrawStrokeColor({ activeIndex, finished = false } = {}) {
+    const svg = stage?.querySelector?.("svg");
+    if (!svg) return;
+
+    const strokes = getStrokeAnims(svg);
+    if (!strokes.length) return;
+
+    const total = strokes.length;
+
+    // ✅ finished면 active = -1 (파란색 없음)
+    const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
+
+    strokes.forEach((s, idx) => {
+      // 파란색/검정색을 style로 강제
+      s.style.stroke = idx === active ? "#2563eb" : "#111827";
+    });
+  }
+
   // ✅ “한 획 시범” (teaching 켜졌을 때)
+  // - 시범은 index를 바꾸지 않음 (학생 진행은 다른 곳에서)
   function playDemoOneStroke() {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return false;
@@ -60,30 +79,44 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const i = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
     const s = strokes[i] || strokes[0];
     if (!s) return false;
-    // 假设 total = 总笔画数
-// strokeIndex = 当前正在写的笔（0-based）
 
-strokeIndex++;
-
-if (strokeIndex >= total) {
-  // ✅ 最后一笔写完：强制进入“完成态”
-  strokeIndex = total;        // 让系统知道已经结束
-  traceApi?.setEnabled(false); // 可选：全部写完就锁住
-  redraw();                   // ✅ 强制刷新一次，让蓝色变黑
-  return;
-}
-
-redraw(); // 普通情况：刷新进入下一笔
-
+    // ✅ 시범: 해당 획을 파란색으로 잠깐 강조 + 애니메이션 리플레이
+    redrawStrokeColor({ activeIndex: i, finished: false });
     replayCssAnimation(s);
+
     return true;
+  }
+
+  // ✅ (핵심) "학생이 한 획을 끝냈다"를 감지하면 호출
+  // - 마지막 획 완료 시 finished로 강제 redraw → 마지막 파란색이 검정으로 바뀜
+  function onUserFinishedOneStroke() {
+    const svg = stage?.querySelector?.("svg");
+    if (!svg) return;
+
+    const strokes = getStrokeAnims(svg);
+    const total = strokes.length || 0;
+    if (!total) return;
+
+    const idx = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
+
+    // idx는 "지금 쓰는 획" 기준일 수 있으므로
+    // ✅ 안전하게: idx가 마지막을 넘어가면 finished로 처리
+    if (idx >= total - 1) {
+      // 마지막까지 끝난 것으로 간주
+      redrawStrokeColor({ finished: true });
+      // 완료 후 잠금(원하면 유지)
+      traceApi?.setEnabled?.(false);
+      return;
+    }
+
+    // 다음 획을 파란색으로 보여줌
+    redrawStrokeColor({ activeIndex: idx + 1, finished: false });
   }
 
   // ✅ teaching on/off
   function setTeaching(next) {
     teaching = !!next;
 
-    // 버튼 표시(네 디자인에 맞게 최소만)
     btnTrace.classList.toggle("trace-active", teaching);
     if (teaching) {
       btnTrace.classList.add("bg-orange-500", "text-white");
@@ -96,14 +129,11 @@ redraw(); // 普通情况：刷新进入下一笔
     setTag(teaching);
 
     if (teaching) {
-      // 1) (선택) 시범 중에는 잠깐 쓰기 잠금 → 시범 후 다시 활성
+      // 1) 시범 중에는 잠깐 쓰기 잠금 → 시범 후 다시 활성
       traceApi?.setEnabled?.(false);
 
       const ok = playDemoOneStroke();
       if (!ok) {
-        // 시범 불가 안내 (SVG에 애니메이션 레이어가 없는 경우)
-        // 너무 시끄럽지 않게 콘솔/짧은 안내만
-        // 필요하면 rootEl의 메시지 박스로 연결 가능
         console.warn("[stroke] demo stroke not found in svg");
       }
 
@@ -111,6 +141,8 @@ redraw(); // 普通情况：刷新进入下一笔
       setTimeout(() => traceApi?.setEnabled?.(true), 250);
     } else {
       traceApi?.setEnabled?.(false);
+      // teaching OFF면 파란색도 정리(원하면)
+      redrawStrokeColor({ finished: true });
     }
   }
 
@@ -127,13 +159,29 @@ redraw(); // 普通情况：刷新进入下一笔
   btnTrace.addEventListener("pointerleave", () => clearTimeout(pressTimer));
 
   // - (선택) 버튼 한번 클릭 시: teaching이 켜져 있으면 “다음 시범”만 재생
-  //   (학생이 쓰다가 막히면 한번 눌러서 다시 시범 보기)
   btnTrace.addEventListener("click", () => {
     if (!teaching) return;
     traceApi?.setEnabled?.(false);
     playDemoOneStroke();
     setTimeout(() => traceApi?.setEnabled?.(true), 250);
   });
+
+  // ✅ (매우 중요) traceApi가 "한 획 완료" 이벤트를 제공하면 여기에 연결
+  // 아래 중 너의 traceApi에 맞는 것이 하나는 있을 확률이 높음.
+  // - 있으면 자동으로 마지막 파란색이 검정으로 바뀜.
+  try {
+    if (typeof traceApi?.on === "function") {
+      // 예: traceApi.on("strokeComplete", cb)
+      traceApi.on("strokeComplete", onUserFinishedOneStroke);
+      traceApi.on("complete", onUserFinishedOneStroke);
+    } else if (typeof traceApi?.setOnStrokeComplete === "function") {
+      traceApi.setOnStrokeComplete(onUserFinishedOneStroke);
+    } else if (typeof traceApi?.onStrokeComplete === "function") {
+      traceApi.onStrokeComplete(onUserFinishedOneStroke);
+    }
+  } catch (e) {
+    console.warn("[stroke] cannot bind stroke complete event", e);
+  }
 
   // 초기 상태
   setTeaching(false);
