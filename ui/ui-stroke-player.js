@@ -1,3 +1,4 @@
+import { i18n } from "./i18n.js";
 import { initTraceCanvasLayer } from "./ui-trace-canvas.js";
 import { initStrokeTeaching } from "./ui-stroke-teaching.js";
 
