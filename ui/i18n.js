@@ -20,6 +20,24 @@ const DICT = {
     nav_teacher: "교사专区",
     nav_my: "내 학습",
 
+    // ===== Stroke (笔顺页面) =====
+    stroke_title: "한자 필순 연습",
+    stroke_desc: "한 글자를 입력하면 필순 애니메이션과 따라쓰기 연습을 할 수 있어요.",
+    stroke_input_label: "한자 입력",
+    stroke_input_ph: "예: 你 / 学 / 人",
+    stroke_load_btn: "불러오기",
+
+    stroke_player_title: "필순 보기",
+    stroke_meaning_title: "단어 뜻 (HSK)",
+    stroke_meaning_hint: "HSK 단어장에서 뜻, 병음, 예문을 보여줘요.",
+    stroke_not_found: "정보를 찾지 못했어요.",
+    stroke_loading: "불러오는 중…",
+
+    stroke_btn_speak: "발음",
+    stroke_btn_replay: "다시",
+    stroke_btn_reset: "초기화",
+    stroke_btn_trace: "묘홍",
+
     heroTitle: "아이부터 성인까지 사용하는 종합 중국어 학습 사이트입니다.",
     heroDesc: "HSK 학습 · 한자 필순 · 한자공부 · 회화 · 여행중국어 · 문화",
 
@@ -57,6 +75,23 @@ const DICT = {
     nav_resources: "资源",
     nav_teacher: "教师专区",
     nav_my: "我的学习",
+
+    stroke_title: "汉字笔顺练习",
+    stroke_desc: "输入一个汉字，即可观看笔顺动画并进行描红练习。",
+    stroke_input_label: "输入汉字",
+    stroke_input_ph: "例如：你 / 学 / 人",
+    stroke_load_btn: "加载",
+
+    stroke_player_title: "笔顺演示",
+    stroke_meaning_title: "词汇释义（HSK）",
+    stroke_meaning_hint: "从HSK词库中显示拼音、韩语、例句等信息。",
+    stroke_not_found: "未找到相关信息。",
+    stroke_loading: "加载中…",
+
+    stroke_btn_speak: "读音",
+    stroke_btn_replay: "重播",
+    stroke_btn_reset: "复位",
+    stroke_btn_trace: "描红",
 
     heroTitle: "适合儿童到成人使用的综合中文学习网站。",
     heroDesc: "HSK学习・汉字笔顺・汉字功夫・会话・旅游中文・文化",
