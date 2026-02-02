@@ -1,12 +1,19 @@
 // ui/pages/page.stroke.js
-// ✅ 不返工版：保留你原来的 render 结构
-// ✅ 兼容 Router：必须 export mount()
-// ✅ 接入 SVG 词库：./data/strokes/<十进制>.svg
+// ✅ 修复：root 可能是 undefined，render 不能直接用
+// ✅ 兜底：优先用 router 传入 root，否则自动找 #app
+// ✅ 先让页面不报错，再接 svg 词库
 
-// （可选）如果你那三个模块已经写好了并且有导出函数名，就把下面三行打开并改成真实导出名
-// import { initStrokePlayer } from "../ui-stroke-player.js";
-// import { initTeachingMode } from "../ui-stroke-teaching.js";
-// import { initTraceCanvas } from "../ui-trace-canvas.js";
+function getMountEl(root) {
+  // 1) router 正常传入的 DOM
+  if (root && root.nodeType === 1) return root;
+
+  // 2) 常见容器：#app
+  const app = document.getElementById("app");
+  if (app) return app;
+
+  // 3) 兜底：body
+  return document.body;
+}
 
 function render(container) {
   container.innerHTML = `
@@ -46,15 +53,13 @@ function render(container) {
   `;
 }
 
-// ✅ 核心：把汉字转换成 svg 文件名（十进制）
 function toDecCodePoint(ch) {
-  return ch.codePointAt(0); // 十进制
+  return ch.codePointAt(0);
 }
 
 async function loadStrokeSVG(ch, demoArea, hintEl) {
   const code = toDecCodePoint(ch);
   const url = `./data/strokes/${code}.svg`;
-
   if (hintEl) hintEl.textContent = `파일: ${code}.svg`;
 
   try {
@@ -62,11 +67,8 @@ async function loadStrokeSVG(ch, demoArea, hintEl) {
     if (!res.ok) throw new Error("NOT_FOUND");
 
     const svgText = await res.text();
-
-    // 直接显示 SVG
     demoArea.innerHTML = svgText;
 
-    // 让 SVG 自适应显示
     const svg = demoArea.querySelector("svg");
     if (svg) {
       svg.style.width = "100%";
@@ -74,50 +76,36 @@ async function loadStrokeSVG(ch, demoArea, hintEl) {
       svg.style.maxHeight = "420px";
       svg.style.display = "block";
     }
-
-    // ✅ 预留：如果你那三个笔顺模块已完成，就在这里“挂载”
-    // initStrokePlayer?.(demoArea, { char: ch, code, url });
-    // initTeachingMode?.(demoArea, { char: ch, code, url });
-    // initTraceCanvas?.(document.getElementById("stroke-trace-area"), { char: ch, code, url });
-
   } catch (e) {
     demoArea.innerHTML = `
       <div style="padding:12px; color:#b91c1c;">
         ❌ 找不到该汉字的笔顺 SVG：<b>${ch}</b><br/>
-        路径：<code>${url}</code><br/>
-        <div style="margin-top:6px; opacity:.8;">
-          ✅ 请确认这个网址能直接打开：<br/>
-          <code>${location.origin}${location.pathname.replace(/index\\.html?$/, "")}data/strokes/${code}.svg</code>
-        </div>
+        路径：<code>${url}</code>
       </div>
     `;
   }
 }
 
-// ✅ Router 需要的入口：mount / unmount
 export function mount(root) {
-  render(root);
+  const el = getMountEl(root);     // ✅ 关键：这里兜底
+  render(el);
 
-  const input = root.querySelector("#stroke-input");
-  const btn = root.querySelector("#stroke-load-btn");
-  const demoArea = root.querySelector("#stroke-demo-area");
-  const hintEl = root.querySelector("#stroke-file-hint");
+  const input = el.querySelector("#stroke-input");
+  const btn = el.querySelector("#stroke-load-btn");
+  const demoArea = el.querySelector("#stroke-demo-area");
+  const hintEl = el.querySelector("#stroke-file-hint");
 
   function handleLoad() {
-    const ch = (input.value || "").trim().charAt(0);
+    const ch = (input?.value || "").trim().charAt(0);
     if (!ch) return;
     loadStrokeSVG(ch, demoArea, hintEl);
   }
 
-  // 点击加载
   btn?.addEventListener("click", handleLoad);
-
-  // 回车加载
   input?.addEventListener("keydown", (e) => {
     if (e.key === "Enter") handleLoad();
   });
 
-  // 输入后 300ms 自动加载（更顺滑）
   let t = null;
   input?.addEventListener("input", () => {
     clearTimeout(t);
@@ -125,6 +113,4 @@ export function mount(root) {
   });
 }
 
-export function unmount(root) {
-  // 先不做清理也没问题；后续如果你模块里有销毁函数再加
-}
+export function unmount() {}
