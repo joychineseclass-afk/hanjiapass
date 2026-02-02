@@ -1,8 +1,40 @@
 import { initTraceCanvasLayer } from "./ui-trace-canvas.js";
 import { initStrokeTeaching } from "./ui-stroke-teaching.js";
 
+function getLang() {
+  return localStorage.getItem("joy_lang")
+      || localStorage.getItem("site_lang")
+      || "kr";
+}
+
+const UI_TEXT = {
+  kr: {
+    title: "한자 필순",
+    speak: "읽기",
+    replay: "다시보기",
+    reset: "초기화",
+    trace: "따라쓰기"
+  },
+  cn: {
+    title: "汉字笔顺",
+    speak: "读音",
+    replay: "重播",
+    reset: "复位",
+    trace: "描红"
+  },
+  en: {
+    title: "Stroke Order",
+    speak: "Speak",
+    replay: "Replay",
+    reset: "Reset",
+    trace: "Trace"
+  }
+};
+
 /**
  * ✅ 用法（在 page.stroke.js 里）：
+ const lang = getLang();
+const T = UI_TEXT[lang] || UI_TEXT.kr;
  * mountStrokeSwitcher(document.getElementById("stroke-root"), "中国人");
  * 或 mountStrokeSwitcher(targetEl, ["中","国","人"]);
  */
@@ -20,13 +52,12 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
-        <div class="font-semibold">汉字笔顺</div>
+        <div class="font-semibold">${T.title}</div>
+           <button class="btnSpeak ...">${T.speak}</button>
+           <button class="btnReplay ...">${T.replay}</button>
+           <button class="btnReset ...">${T.reset}</button>
+           <button class="btnTrace ...">${T.trace}</button>
 
-        <div class="flex gap-2 flex-wrap justify-end items-center">
-          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">读音</button>
-          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">重播</button>
-          <button class="btnReset px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">复位</button>
-          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">描红</button>
         </div>
       </div>
 
