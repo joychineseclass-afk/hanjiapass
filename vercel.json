@@ -1,8 +1,0 @@
-{
-  "routes": [
-    { "src": "/styles/(.*)", "dest": "/styles/$1" },
-    { "src": "/ui/(.*)", "dest": "/ui/$1" },
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ]
-}
