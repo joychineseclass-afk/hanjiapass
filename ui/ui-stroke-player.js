@@ -2,9 +2,11 @@ import { initTraceCanvasLayer } from "./ui-trace-canvas.js";
 import { initStrokeTeaching } from "./ui-stroke-teaching.js";
 
 function getLang() {
-  return localStorage.getItem("joy_lang")
-      || localStorage.getItem("site_lang")
-      || "kr";
+  return (
+    localStorage.getItem("joy_lang") ||
+    localStorage.getItem("site_lang") ||
+    "kr"
+  );
 }
 
 const UI_TEXT = {
@@ -13,70 +15,80 @@ const UI_TEXT = {
     speak: "읽기",
     replay: "다시보기",
     reset: "초기화",
-    trace: "따라쓰기"
+    trace: "따라쓰기",
+    noChars: "표시할 한자가 없습니다.",
+    resetDone: "초기화 완료",
+    speakFail: "읽기 기능을 사용할 수 없습니다."
   },
   cn: {
     title: "汉字笔顺",
     speak: "读音",
     replay: "重播",
     reset: "复位",
-    trace: "描红"
+    trace: "描红",
+    noChars: "没有可显示的汉字",
+    resetDone: "复位完成",
+    speakFail: "读音功能不可用"
   },
   en: {
     title: "Stroke Order",
     speak: "Speak",
     replay: "Replay",
     reset: "Reset",
-    trace: "Trace"
+    trace: "Trace",
+    noChars: "No characters to display.",
+    resetDone: "Reset done",
+    speakFail: "Speak is unavailable"
   }
 };
 
 /**
  * ✅ 用法（在 page.stroke.js 里）：
- const lang = getLang();
-const T = UI_TEXT[lang] || UI_TEXT.kr;
  * mountStrokeSwitcher(document.getElementById("stroke-root"), "中国人");
  * 或 mountStrokeSwitcher(targetEl, ["中","国","人"]);
  */
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
+  const lang = getLang();
+  const T = UI_TEXT[lang] || UI_TEXT.kr;
+
   // 1) 规范输入：支持 string 或 array
   const chars = normalizeChars(hanChars);
   if (!chars.length) {
-    targetEl.innerHTML = `<div class="text-sm text-gray-500">没有可显示的汉字</div>`;
+    targetEl.innerHTML = `<div class="text-sm text-gray-500">${T.noChars}</div>`;
     return;
   }
 
-  // 2) 渲染 UI（尽量贴你现在 Tailwind/简洁风格）
+  // 2) 渲染 UI（保持你当前 Tailwind/简洁风格）
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold">${T.title}</div>
-           <button class="btnSpeak ...">${T.speak}</button>
-           <button class="btnReplay ...">${T.replay}</button>
-           <button class="btnReset ...">${T.reset}</button>
-           <button class="btnTrace ...">${T.trace}</button>
 
+        <div class="flex gap-2 flex-wrap justify-end items-center">
+          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.speak}</button>
+          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.replay}</button>
+          <button class="btnReset px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.reset}</button>
+          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.trace}</button>
         </div>
       </div>
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
       <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none">
-  <div id="strokeViewport"
-       class="absolute inset-0 cursor-grab active:cursor-grabbing"
-       style="touch-action:none;">
-    <div id="strokeStage"
-         class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
-      loading...
-    </div>
-  </div>
+        <div id="strokeViewport"
+             class="absolute inset-0 cursor-grab active:cursor-grabbing"
+             style="touch-action:none;">
+          <div id="strokeStage"
+               class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
+            loading...
+          </div>
+        </div>
 
-  <!-- ✨ 描红层：必须在 relative 容器内部 -->
-  <canvas id="traceCanvas"
-          class="absolute inset-0 w-full h-full pointer-events-auto"></canvas>
-</div>
+        <canvas id="traceCanvas"
+                class="absolute inset-0 w-full h-full"
+                style="pointer-events:none;"></canvas>
 
         <div id="strokeZoomLabel"
              class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">
@@ -99,8 +111,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   // 3) 状态
   let currentChar = chars[0];
-  let scale = 1, tx = 0, ty = 0;
+  let scale = 1,
+    tx = 0,
+    ty = 0;
   let activeBtn = null;
+  let tracingOn = false;
 
   // 4) 小工具
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
@@ -113,7 +128,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   };
 
   function updateZoomLabel() {
-    zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+    if (zoomLabel) zoomLabel.textContent = `${Math.round(scale * 100)}%`;
   }
 
   function applyTransform() {
@@ -126,9 +141,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   }
 
   function resetView() {
-    scale = 1; tx = 0; ty = 0;
+    scale = 1;
+    tx = 0;
+    ty = 0;
     applyTransform();
-    showMsg("复位完成");
+    showMsg(T.resetDone);
   }
 
   function strokeUrl(ch) {
@@ -141,7 +158,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     currentChar = ch;
 
     // 按钮高亮
-    if (activeBtn) activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+    if (activeBtn)
+      activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
@@ -167,7 +185,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     stage.innerHTML = `loading...`;
 
     try {
-      const res = await fetch(url + (url.includes("?") ? "&" : "?") + "v=" + Date.now());
+      const res = await fetch(
+        url + (url.includes("?") ? "&" : "?") + "v=" + Date.now()
+      );
       if (!res.ok) throw new Error("HTTP_" + res.status);
 
       const svgText = await res.text();
@@ -199,6 +219,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   viewport.addEventListener(
     "wheel",
     (e) => {
+      // 描红开启时，不要抢 wheel（让你能专心写）
+      if (tracingOn) return;
       e.preventDefault();
       const next = scale * (e.deltaY > 0 ? 1 / 1.12 : 1.12);
       scale = clamp(next, 0.5, 4);
@@ -208,12 +230,16 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   );
 
   // pointer events：拖拽 + 双指缩放
-  let p1 = null, p2 = null;
+  let p1 = null,
+    p2 = null;
   let dragLast = null;
   let pinchStartDist = 0;
   let pinchStartScale = 1;
 
   viewport.addEventListener("pointerdown", (e) => {
+    // 描红开启时，拖拽缩放交给 canvas（避免冲突）
+    if (tracingOn) return;
+
     viewport.setPointerCapture?.(e.pointerId);
 
     if (!p1) {
@@ -228,10 +254,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   });
 
   viewport.addEventListener("pointermove", (e) => {
+    if (tracingOn) return;
+
     if (p1 && e.pointerId === p1.id) {
-      p1.x = e.clientX; p1.y = e.clientY;
+      p1.x = e.clientX;
+      p1.y = e.clientY;
     } else if (p2 && e.pointerId === p2.id) {
-      p2.x = e.clientX; p2.y = e.clientY;
+      p2.x = e.clientX;
+      p2.y = e.clientY;
     } else {
       return;
     }
@@ -249,8 +279,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
     // 单指拖拽
     if (p1 && dragLast) {
-      tx += (p1.x - dragLast.x);
-      ty += (p1.y - dragLast.y);
+      tx += p1.x - dragLast.x;
+      ty += p1.y - dragLast.y;
       dragLast = { x: p1.x, y: p1.y };
       applyTransform();
     }
@@ -260,7 +290,6 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (p1 && p1.id === id) p1 = null;
     if (p2 && p2.id === id) p2 = null;
 
-    // 结束后恢复拖拽记录
     if (p1 && !p2) dragLast = { x: p1.x, y: p1.y };
     if (!p1 && !p2) dragLast = null;
   }
@@ -285,22 +314,41 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     btnWrap.appendChild(b);
 
     if (i === 0) {
-      // 默认第一个字加载
       queueMicrotask(() => loadChar(ch, { reset: true }));
     }
   });
 
   // 8) 顶部功能按钮
-  targetEl.querySelector(".btnReplay").onclick = () => loadChar(currentChar, { reset: false });
-  targetEl.querySelector(".btnReset").onclick = () => resetView();
-  targetEl.querySelector(".btnTrace").onclick = () => traceApi?.toggle?.();
+  const btnReplay = targetEl.querySelector(".btnReplay");
+  const btnReset = targetEl.querySelector(".btnReset");
+  const btnTrace = targetEl.querySelector(".btnTrace");
+  const btnSpeak = targetEl.querySelector(".btnSpeak");
 
-  targetEl.querySelector(".btnSpeak").onclick = () => {
+  btnReplay.onclick = () => loadChar(currentChar, { reset: false });
+  btnReset.onclick = () => resetView();
+
+  btnTrace.onclick = () => {
+    if (!traceApi?.toggle) return;
+
+    tracingOn = !!traceApi.toggle();
+
+    // 描红打开：canvas 接管指针事件；关闭：让 viewport 可以拖拽缩放
+    traceCanvas.style.pointerEvents = tracingOn ? "auto" : "none";
+
+    // 按钮高亮（橙色）
+    btnTrace.classList.toggle("bg-orange-400", tracingOn);
+    btnTrace.classList.toggle("text-white", tracingOn);
+    btnTrace.classList.toggle("hover:bg-orange-500", tracingOn);
+  };
+
+  btnSpeak.onclick = () => {
     // 优先你自己的 AIUI
     if (window.AIUI?.speak) {
+      // ✅ 默认韩语界面，但读音我们仍读中文更合理
       window.AIUI.speak(currentChar, "zh-CN");
       return;
     }
+
     // 降级：浏览器自带 TTS
     try {
       const u = new SpeechSynthesisUtterance(currentChar);
@@ -308,7 +356,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       speechSynthesis.cancel();
       speechSynthesis.speak(u);
     } catch {
-      showMsg("读音功能不可用");
+      showMsg(T.speakFail);
     }
   };
 }
@@ -317,12 +365,12 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
 function normalizeChars(input) {
   if (!input) return [];
-  if (Array.isArray(input)) return input.map(String).map((s) => s.trim()).filter(Boolean);
+  if (Array.isArray(input))
+    return input.map(String).map((s) => s.trim()).filter(Boolean);
 
   // string：取其中所有汉字（去重）
   const s = String(input);
   const arr = Array.from(s).filter((ch) => /[\u3400-\u9FFF]/.test(ch));
-  // 去重但保留顺序
   const seen = new Set();
   return arr.filter((ch) => (seen.has(ch) ? false : (seen.add(ch), true)));
 }
@@ -340,8 +388,6 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;");
 }
 
-// data-ch selector 需要转义
 function cssEscape(s) {
-  // 简单版：足够用于汉字
   return String(s).replace(/"/g, '\\"');
 }
