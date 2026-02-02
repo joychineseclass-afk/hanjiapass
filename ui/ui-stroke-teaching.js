@@ -60,6 +60,20 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const i = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
     const s = strokes[i] || strokes[0];
     if (!s) return false;
+    // 假设 total = 总笔画数
+// strokeIndex = 当前正在写的笔（0-based）
+
+strokeIndex++;
+
+if (strokeIndex >= total) {
+  // ✅ 最后一笔写完：强制进入“完成态”
+  strokeIndex = total;        // 让系统知道已经结束
+  traceApi?.setEnabled(false); // 可选：全部写完就锁住
+  redraw();                   // ✅ 强制刷新一次，让蓝色变黑
+  return;
+}
+
+redraw(); // 普通情况：刷新进入下一笔
 
     replayCssAnimation(s);
     return true;
