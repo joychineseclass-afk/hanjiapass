@@ -207,3 +207,47 @@ body{
   background: color-mix(in srgb, var(--navc) 18%, white);
   border-color: color-mix(in srgb, var(--navc) 40%, rgba(0,0,0,.10));
 }
+/* ====== FINAL NAV LAYOUT FIX ====== */
+
+/* 顶部栏左右分开 */
+#siteNav .topbar{
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:center !important;
+  padding:16px 6px 10px !important;
+}
+
+/* 品牌 */
+#siteNav .brand{
+  font-size:22px;
+  font-weight:900;
+}
+
+/* 语言按钮右对齐 */
+#siteNav .lang{
+  display:flex;
+  gap:6px;
+}
+
+/* 主导航横向排列 */
+#siteNav .site-nav{
+  display:flex !important;
+  flex-wrap:wrap;
+  gap:12px !important;
+  padding-top:10px;
+  border-top:1px solid rgba(0,0,0,.06);
+}
+
+/* 每个导航按钮变成 pill */
+#siteNav .site-nav a{
+  padding:8px 14px !important;
+  border-radius:999px;
+  background:rgba(0,0,0,.04);
+  font-weight:700;
+}
+
+/* hover 颜色 */
+#siteNav .site-nav a:hover{
+  background:rgba(29,78,216,.12);
+  color:#1d4ed8;
+}
