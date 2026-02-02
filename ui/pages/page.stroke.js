@@ -1,5 +1,5 @@
 // ui/pages/page.stroke.js
-import { i18n } from "./i18n.js";
+import { i18n } from "../i18n.js";
 import { mountStrokeSwitcher } from "../ui-stroke-player.js";
 import { findInHSK } from "../hskLookup.js";
 async function renderMeaningFromHSK(ch) {
