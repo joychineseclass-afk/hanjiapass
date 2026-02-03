@@ -266,8 +266,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   // 5) 初始化描红层 + 教学
   const traceApi = initTraceCanvasLayer(traceCanvas);
-if (!traceApi) console.warn("[TRACE] initTraceCanvasLayer returned null");
-initStrokeTeaching(targetEl, stage, traceApi);
+const teaching = initStrokeTeaching(targetEl, stage, traceApi);
+// ✅ 写完一笔（抬笔）→ 通知教学进入下一笔
+traceCanvas.addEventListener("trace:strokeend", () => {
+  teaching?.onUserStrokeDone?.();
+});
 
   // 6) 生成切换按钮
   btnWrap.innerHTML = "";
@@ -330,6 +333,13 @@ initStrokeTeaching(targetEl, stage, traceApi);
   btnTrace.classList.toggle("bg-orange-400", tracingOn);
   btnTrace.classList.toggle("text-white", tracingOn);
   btnTrace.classList.toggle("hover:bg-orange-500", tracingOn);
+  if (tracingOn) {
+  // ✅ 进入教学：浅灰 → 示范一笔(浅蓝) → 允许写
+  teaching?.start?.();
+} else {
+  // ✅ 退出教学：关闭跟写
+  teaching?.stop?.();
+}
 
   // ✅ 5) 可选：提示一下状态（方便你现场确认）
   // showMsg(tracingOn ? "따라쓰기 ON" : "따라쓰기 OFF", 800);
