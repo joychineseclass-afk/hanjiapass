@@ -97,29 +97,6 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   });
 }
 
-  // ✅ 自己 + 子节点都处理（有的 stroke 元素是 g/use，真正的 path 在里面）
-  const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
-
-  targets.forEach((el) => {
-    // 1) 用 important 强压 CSS（关键）
-    try {
-      el.style?.setProperty?.("stroke", color, "important");
-      el.style?.setProperty?.("fill", color, "important");
-    } catch {}
-
-    // 2) 同时写属性（兼容某些 SVG）
-    try {
-      const st = el.getAttribute?.("stroke");
-      if (st !== "none") el.setAttribute?.("stroke", color);
-
-      const fi = el.getAttribute?.("fill");
-      if (fi !== "none") el.setAttribute?.("fill", color);
-    } catch {}
-  });
-});
-
-  }
-
   // ✅ “한 획 시범” (teaching 켜졌을 때)
   // - 시범은 index를 바꾸지 않음 (학생 진행은 다른 곳에서)
   function playDemoOneStroke() {
