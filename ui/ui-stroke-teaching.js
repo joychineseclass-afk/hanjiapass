@@ -19,19 +19,22 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   }
 
   function setTag(on) {
-    if (!tag) return;
-    if (on) {
-      tag.textContent = "Teaching ON";
-      tag.classList.remove("hidden");
-    } else {
-      tag.classList.add("hidden");
-    }
+  if (!tag) return;
+  if (on) {
+    tag.textContent = "Teaching ON";
+    tag.classList.remove("hidden");
+  } else {
+    tag.classList.add("hidden");
   }
-  
-  function setTracePointer(on) {
-  if (traceCanvas) traceCanvas.style.pointerEvents = on ? "auto" : "none";
 }
 
+/* ⭐⭐⭐ 关键：控制描红canvas是否接收笔迹 ⭐⭐⭐ */
+function setTracePointer(on) {
+  const traceCanvas = rootEl.querySelector("#traceCanvas");
+  if (traceCanvas) {
+    traceCanvas.style.pointerEvents = on ? "auto" : "none";
+  }
+}
 
   // ✅ SVG에서 한 획 애니메이션 엘리먼트 찾기
   function getStrokeAnims(svg) {
@@ -156,63 +159,80 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
   // ✅ teaching on/off
   function setTeaching(next) {
-    teaching = !!next;
+  teaching = !!next;
 
-    btnTrace.classList.toggle("trace-active", teaching);
-    if (teaching) {
-      btnTrace.classList.add("bg-orange-500", "text-white");
-      btnTrace.classList.remove("bg-slate-100");
-    } else {
-      btnTrace.classList.remove("bg-orange-500", "text-white");
-      btnTrace.classList.add("bg-slate-100");
+  btnTrace.classList.toggle("trace-active", teaching);
+
+  if (teaching) {
+    btnTrace.classList.add("bg-orange-500", "text-white");
+    btnTrace.classList.remove("bg-slate-100");
+  } else {
+    btnTrace.classList.remove("bg-orange-500", "text-white");
+    btnTrace.classList.add("bg-slate-100");
+  }
+
+  setTag(teaching);
+
+  if (teaching) {
+    /* ---------- 教学模式开启 ---------- */
+
+    // ① 打开描红层，让学生可以写
+    setTracePointer(true);
+
+    // ② 清除上一次笔迹（可选）
+    traceApi?.clear?.();
+
+    // ③ 示范前先锁定书写
+    traceApi?.setEnabled?.(false);
+
+    // ④ 播放一笔示范动画（蓝色）
+    const ok = playDemoOneStroke();
+    if (!ok) {
+      console.warn("[stroke] demo stroke not found in svg");
     }
 
-    setTag(teaching);
+    // ⑤ 示范结束后允许学生写
+    setTimeout(() => {
+      traceApi?.setEnabled?.(true);
 
-    if (teaching) {
-      // 1) 시범 중에는 잠깐 쓰기 잠금 → 시범 후 다시 활성
-      setTracePointer(true);              // ✅ 开描红层：canvas 接管
-      traceApi?.clear?.();                // ✅ 可选：清掉上一次轨迹（建议加）
-      traceApi?.setEnabled?.(false);      // ✅ 示范前先禁写
+      console.log(
+        "[TRACE] enabled:",
+        traceApi?.isEnabled?.() ?? "no isEnabled()",
+        "pointerEvents:",
+        rootEl.querySelector("#traceCanvas")?.style?.pointerEvents
+      );
+    }, 300);
 
-      const ok = playDemoOneStroke();
+  } else {
+    /* ---------- 教学模式关闭 ---------- */
 
-     setTimeout(() => {
-      traceApi?.setEnabled?.(true);     // ✅ 示范后再允许写
-     // ✅ 如果你的 traceApi 需要“激活当前笔”，这里可以加一行（见下面补丁）
-      }, 300);
+    setTracePointer(false);
+    traceApi?.setEnabled?.(false);
+    redrawStrokeColor({ finished: true });
 
-    } else {
-  setTracePointer(false);
-  traceApi?.setEnabled?.(false);
-  redrawStrokeColor({ finished: true });
-}
-
-  // ✅ 关闭教学时也兜底一次，避免残留蓝色
-  queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-}
-
+    queueMicrotask(() =>
+      rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete"))
+    );
   }
+}
 
   // ✅ 조작 방식: 모바일/PC 둘 다 편하게
   // - 더블클릭: 기존 유지
   btnTrace.addEventListener("dblclick", () => setTeaching(!teaching));
 
-  // - 길게누르기(모바일): 450ms
-  let pressTimer = null;
-  btnTrace.addEventListener("pointerdown", () => {
-    pressTimer = setTimeout(() => setTeaching(!teaching), 450);
-  });
-  btnTrace.addEventListener("pointerup", () => clearTimeout(pressTimer));
-  btnTrace.addEventListener("pointerleave", () => clearTimeout(pressTimer));
+let pressTimer = null;
+btnTrace.addEventListener("pointerdown", () => {
+  pressTimer = setTimeout(() => setTeaching(!teaching), 450);
+});
+btnTrace.addEventListener("pointerup", () => clearTimeout(pressTimer));
+btnTrace.addEventListener("pointerleave", () => clearTimeout(pressTimer));
 
-  // - (선택) 버튼 한번 클릭 시: teaching이 켜져 있으면 “다음 시범”만 재생
-  btnTrace.addEventListener("click", () => {
-    if (!teaching) return;
-    traceApi?.setEnabled?.(false);
-    playDemoOneStroke();
-    setTimeout(() => traceApi?.setEnabled?.(true), 250);
-  });
+btnTrace.addEventListener("click", () => {
+  if (!teaching) return;
+  traceApi?.setEnabled?.(false);
+  playDemoOneStroke();
+  setTimeout(() => traceApi?.setEnabled?.(true), 250);
+});
 
   // ✅ (매우 중요) traceApi가 "한 획 완료" 이벤트를 제공하면 여기에 연결
   // 아래 중 너의 traceApi에 맞는 것이 하나는 있을 확률이 높음.
