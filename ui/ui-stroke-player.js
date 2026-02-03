@@ -15,7 +15,6 @@ const UI_TEXT = {
     title: "한자 필순",
     speak: "읽기",
     replay: "다시보기",
-    reset: "초기화",
     trace: "따라쓰기",
     noChars: "표시할 한자가 없습니다.",
     resetDone: "초기화 완료",
@@ -25,7 +24,6 @@ const UI_TEXT = {
     title: "汉字笔顺",
     speak: "读音",
     replay: "重播",
-    reset: "复位",
     trace: "描红",
     noChars: "没有可显示的汉字",
     resetDone: "复位完成",
@@ -35,7 +33,6 @@ const UI_TEXT = {
     title: "Stroke Order",
     speak: "Speak",
     replay: "Replay",
-    reset: "Reset",
     trace: "Trace",
     noChars: "No characters to display.",
     resetDone: "Reset done",
@@ -51,8 +48,13 @@ const UI_TEXT = {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  const lang = getLang();
-  const T = UI_TEXT[lang] || UI_TEXT.kr;
+  // ✅ 如果同一个容器重复 mount，先清理旧监听（避免越绑越多）
+  try {
+    targetEl._strokeCleanup?.();
+  } catch {}
+
+  let lang = getLang();
+  let T = UI_TEXT[lang] || UI_TEXT.kr;
 
   // 1) 规范输入：支持 string 或 array
   const chars = normalizeChars(hanChars);
@@ -65,7 +67,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
-        <div class="font-semibold">${T.title}</div>
+        <div class="font-semibold strokeTitle">${T.title}</div>
 
         <div class="flex gap-2 flex-wrap justify-end items-center">
           <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.speak}</button>
@@ -153,6 +155,38 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     const fn = window.DATA_PATHS?.strokeUrl;
     if (!fn) return "";
     return fn(ch) || "";
+  }
+
+  // ✅ 语言切换后：只更新组件内部标题/按钮文案（不破坏当前字/缩放/描红状态）
+  function applyLangText() {
+    lang = getLang();
+    T = UI_TEXT[lang] || UI_TEXT.kr;
+
+    const titleEl = targetEl.querySelector(".strokeTitle");
+    if (titleEl) titleEl.textContent = T.title;
+
+    const btnSpeak = targetEl.querySelector(".btnSpeak");
+    const btnReplay = targetEl.querySelector(".btnReplay");
+    const btnReset = targetEl.querySelector(".btnReset");
+    const btnTrace = targetEl.querySelector(".btnTrace");
+
+    if (btnSpeak) btnSpeak.textContent = T.speak;
+    if (btnReplay) btnReplay.textContent = T.replay;
+    if (btnReset) btnReset.textContent = T.reset;
+    if (btnTrace) btnTrace.textContent = T.trace;
+  }
+
+  // ✅ 完成收尾：强制把所有 stroke 改黑（作为“最后一笔不黑”的兜底收尾）
+  function forceAllStrokesBlack() {
+    const svg = stage?.querySelector("svg");
+    if (!svg) return;
+
+    svg.querySelectorAll("path").forEach((p) => {
+      const st = p.getAttribute("stroke");
+      if (!st || st === "none") return;
+      p.setAttribute("stroke", "#000");
+      p.style.stroke = "#000";
+    });
   }
 
   async function loadChar(ch, { reset = true } = {}) {
@@ -359,6 +393,20 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     } catch {
       showMsg(T.speakFail);
     }
+  };
+
+  // ✅ 绑定：语言切换事件（全站）
+  const onLangChanged = () => applyLangText();
+  window.addEventListener("joy:langchanged", onLangChanged);
+
+  // ✅ 绑定：教学完成事件（由 ui-stroke-teaching.js 在完成时触发）
+  const onStrokeComplete = () => forceAllStrokesBlack();
+  targetEl.addEventListener("stroke:complete", onStrokeComplete);
+
+  // ✅ 保存清理函数（供下次 mount 或页面销毁时调用）
+  targetEl._strokeCleanup = () => {
+    window.removeEventListener("joy:langchanged", onLangChanged);
+    targetEl.removeEventListener("stroke:complete", onStrokeComplete);
   };
 }
 
