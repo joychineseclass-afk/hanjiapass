@@ -49,46 +49,53 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   // - activeIndex: 현재 파란색으로 보여줄 획 인덱스
   // - finished=true 이면 파란색을 모두 제거(전부 검정)
   function redrawStrokeColor({ activeIndex, finished = false } = {}) {
-    const svg = stage?.querySelector?.("svg");
-    if (!svg) return;
+  const svg = stage?.querySelector?.("svg");
+  if (!svg) return;
 
-    const strokes = getStrokeAnims(svg);
-    if (!strokes.length) return;
+  const strokes = getStrokeAnims(svg);
+  if (!strokes.length) return;
 
-    const total = strokes.length;
+  const total = strokes.length;
+  const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
 
-    // ✅ finished면 active = -1 (파란색 없음)
-    const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
+  strokes.forEach((s, idx) => {
+    let color;
 
-    strokes.forEach((el, idx) => {
-  let color;
+    if (finished) {
+      // 全部完成 → 黑色
+      color = "#111827";
+    } else if (idx < active) {
+      // 已完成的笔 → 橘色
+      color = "#FB923C";
+    } else if (idx === active) {
+      // 当前笔 → 浅蓝
+      color = "#93C5FD";
+    } else {
+      // 未开始的笔 → 浅灰
+      color = "#D1D5DB";
+    }
 
-  if (finished) {
-    // 全部完成 → 维持黑色
-    color = "#111827";
-  } else if (idx < active) {
-    // 学生已经写过的笔 → 橘色
-    color = "#FB923C";
-  } else if (idx === active) {
-    // 当前要示范 / 跟写的笔 → 浅蓝
-    color = "#93C5FD";
-  } else {
-    // 还没轮到的笔 → 浅灰
-    color = "#D1D5DB";
-  }
+    // ✅ 自己 + 子节点都处理（有的 stroke 是 g/use，path 在里面）
+    const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
 
-  try {
-    const st = el.getAttribute?.("stroke");
-    if (st !== "none") el.setAttribute("stroke", color);
+    targets.forEach((el) => {
+      // 1) 用 important 强压 CSS
+      try {
+        el.style?.setProperty?.("stroke", color, "important");
+        el.style?.setProperty?.("fill", color, "important");
+      } catch {}
 
-    const fi = el.getAttribute?.("fill");
-    if (fi !== "none") el.setAttribute("fill", color);
+      // 2) 同时写属性（兼容某些 SVG）
+      try {
+        const st = el.getAttribute?.("stroke");
+        if (st !== "none") el.setAttribute?.("stroke", color);
 
-    el.style.setProperty("stroke", color, "important");
-    el.style.setProperty("fill", color, "important");
-  } catch {}
-});
-
+        const fi = el.getAttribute?.("fill");
+        if (fi !== "none") el.setAttribute?.("fill", color);
+      } catch {}
+    });
+  });
+}
 
   // ✅ 自己 + 子节点都处理（有的 stroke 元素是 g/use，真正的 path 在里面）
   const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
