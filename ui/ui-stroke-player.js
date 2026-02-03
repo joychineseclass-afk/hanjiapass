@@ -184,27 +184,23 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const svg = stage?.querySelector("svg");
   if (!svg) return;
 
-  // 尽量覆盖各种数据格式：path / use / g / make-me-a-hanzi 的动画元素等
-  const nodes = svg.querySelectorAll(
-    '[id^="make-me-a-hanzi-animation-"], [data-stroke], .stroke, path, use, polygon, polyline, rect, circle, ellipse'
-  );
+  const all = svg.querySelectorAll("*");
+  all.forEach((el) => {
+    try {
+      el.style?.setProperty?.("stroke", "#111827", "important");
+      el.style?.setProperty?.("fill", "#111827", "important");
+    } catch {}
 
-  nodes.forEach((el) => {
-    // 1) stroke 变黑
-    const st = el.getAttribute?.("stroke");
-    if (st && st !== "none") {
-      el.setAttribute("stroke", "#111827");
-      if (el.style) el.style.stroke = "#111827";
-    }
+    try {
+      const st = el.getAttribute?.("stroke");
+      if (st !== "none") el.setAttribute?.("stroke", "#111827");
 
-    // 2) fill 也变黑（关键：你现在的蓝色多半在 fill）
-    const fi = el.getAttribute?.("fill");
-    if (fi && fi !== "none") {
-      el.setAttribute("fill", "#111827");
-      if (el.style) el.style.fill = "#111827";
-    }
+      const fi = el.getAttribute?.("fill");
+      if (fi !== "none") el.setAttribute?.("fill", "#111827");
+    } catch {}
   });
 }
+
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
