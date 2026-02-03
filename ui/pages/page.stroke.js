@@ -144,5 +144,3 @@ export function unmount() {
     _strokeLangHandler = null;
   }
 }
-
-export function unmount() {}
