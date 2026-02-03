@@ -4,6 +4,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
   const btnTrace = rootEl.querySelector(".btnTrace");
   if (!btnTrace) return;
+ const traceCanvas = rootEl.querySelector("#traceCanvas"); // ✅ 关键：描红层
 
   // ✅ (선택) teaching 상태를 작게 보여줄 라벨
   let tag = rootEl.querySelector("#teachingTag");
@@ -26,6 +27,11 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
       tag.classList.add("hidden");
     }
   }
+  
+  function setTracePointer(on) {
+  if (traceCanvas) traceCanvas.style.pointerEvents = on ? "auto" : "none";
+}
+
 
   // ✅ SVG에서 한 획 애니메이션 엘리먼트 찾기
   function getStrokeAnims(svg) {
@@ -165,19 +171,22 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
     if (teaching) {
       // 1) 시범 중에는 잠깐 쓰기 잠금 → 시범 후 다시 활성
-      traceApi?.setEnabled?.(false);
+      setTracePointer(true);              // ✅ 开描红层：canvas 接管
+      traceApi?.clear?.();                // ✅ 可选：清掉上一次轨迹（建议加）
+      traceApi?.setEnabled?.(false);      // ✅ 示范前先禁写
 
       const ok = playDemoOneStroke();
-      if (!ok) {
-        console.warn("[stroke] demo stroke not found in svg");
-      }
 
-      // 2) 시범 끝난 뒤 쓰기 활성(짧게 딜레이)
-      setTimeout(() => traceApi?.setEnabled?.(true), 250);
+     setTimeout(() => {
+      traceApi?.setEnabled?.(true);     // ✅ 示范后再允许写
+     // ✅ 如果你的 traceApi 需要“激活当前笔”，这里可以加一行（见下面补丁）
+      }, 300);
+
     } else {
+  setTracePointer(false);
   traceApi?.setEnabled?.(false);
-  // teaching OFF면 파란색도 정리(원하면)
   redrawStrokeColor({ finished: true });
+}
 
   // ✅ 关闭教学时也兜底一次，避免残留蓝色
   queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
