@@ -84,8 +84,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none">
         <div id="strokeViewport"
-             class="absolute inset-0 cursor-grab active:cursor-grabbing"
-             style="touch-action:none;">
+     class="absolute inset-0"
+     style="touch-action:auto;">
           <div id="strokeStage"
                class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
             loading...
