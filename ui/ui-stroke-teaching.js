@@ -102,12 +102,16 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // idx는 "지금 쓰는 획" 기준일 수 있으므로
     // ✅ 안전하게: idx가 마지막을 넘어가면 finished로 처리
     if (idx >= total - 1) {
-      // 마지막까지 끝난 것으로 간주
-      redrawStrokeColor({ finished: true });
-      // 완료 후 잠금(원하면 유지)
-      traceApi?.setEnabled?.(false);
-      return;
-    }
+  // 마지막까지 간걸로 간주
+  redrawStrokeColor({ finished: true });
+
+  // ✅ 通知外层 UI：已完成（用于统一把最后一笔也变黑）
+  queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
+
+  // 완료 후 잠금(원하면 유지)
+  traceApi?.setEnabled?.(false);
+  return;
+}
 
     // 다음 획을 파란색으로 보여줌
     redrawStrokeColor({ activeIndex: idx + 1, finished: false });
@@ -140,10 +144,14 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
       // 2) 시범 끝난 뒤 쓰기 활성(짧게 딜레이)
       setTimeout(() => traceApi?.setEnabled?.(true), 250);
     } else {
-      traceApi?.setEnabled?.(false);
-      // teaching OFF면 파란색도 정리(원하면)
-      redrawStrokeColor({ finished: true });
-    }
+  traceApi?.setEnabled?.(false);
+  // teaching OFF면 파란색도 정리(원하면)
+  redrawStrokeColor({ finished: true });
+
+  // ✅ 关闭教学时也兜底一次，避免残留蓝色
+  queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
+}
+
   }
 
   // ✅ 조작 방식: 모바일/PC 둘 다 편하게
