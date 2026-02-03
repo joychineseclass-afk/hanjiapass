@@ -133,14 +133,20 @@ export function mountNavBar(rootEl) {
   const btnCN = rootEl.querySelector("#btnCN");
 
   btnKR?.addEventListener("click", () => {
-    try { i18n?.setLang?.("kr"); } catch {}
-    applyI18n(rootEl);
-  });
-
-  btnCN?.addEventListener("click", () => {
-    try { i18n?.setLang?.("cn"); } catch {}
-    applyI18n(rootEl);
-  });
-
+  try { i18n?.setLang?.("kr"); } catch {}
   applyI18n(rootEl);
+
+  // ⭐ 通知整个网站：语言变了
+  window.dispatchEvent(new CustomEvent("joy:langchanged"));
+});
+
+btnCN?.addEventListener("click", () => {
+  try { i18n?.setLang?.("cn"); } catch {}
+  applyI18n(rootEl);
+
+  // ⭐ 通知整个网站：语言变了
+  window.dispatchEvent(new CustomEvent("joy:langchanged"));
+});
+
+applyI18n(rootEl);
 }
