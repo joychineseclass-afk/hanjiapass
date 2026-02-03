@@ -376,18 +376,45 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnReset.onclick = () => resetView();
 
   btnTrace.onclick = () => {
-    if (!traceApi?.toggle) return;
+  if (!traceApi) {
+    console.warn("[TRACE] traceApi is null");
+    return;
+  }
 
-    tracingOn = !!traceApi.toggle();
+  // ✅ 1) 计算下一状态（不依赖 toggle）
+  const next = !tracingOn;
 
-    // 描红打开：canvas 接管指针事件；关闭：让 viewport 可以拖拽缩放
-    traceCanvas.style.pointerEvents = tracingOn ? "auto" : "none";
+  // ✅ 2) 兼容不同 traceApi 实现：toggle / setEnabled / enable
+  try {
+    if (typeof traceApi.toggle === "function") {
+      tracingOn = !!traceApi.toggle();
+    } else if (typeof traceApi.setEnabled === "function") {
+      traceApi.setEnabled(next);
+      tracingOn = next;
+    } else if (typeof traceApi.enable === "function") {
+      traceApi.enable(next);
+      tracingOn = next;
+    } else {
+      console.warn("[TRACE] traceApi has no toggle/setEnabled/enable");
+      // 就算没有方法，也至少把 UI 切换给用户看到（避免“没反应”）
+      tracingOn = next;
+    }
+  } catch (e) {
+    console.error("[TRACE] toggle failed:", e);
+    return;
+  }
 
-    // 按钮高亮（橙色）
-    btnTrace.classList.toggle("bg-orange-400", tracingOn);
-    btnTrace.classList.toggle("text-white", tracingOn);
-    btnTrace.classList.toggle("hover:bg-orange-500", tracingOn);
-  };
+  // ✅ 3) canvas 是否接管指针事件（开=能写；关=不挡拖拽缩放）
+  traceCanvas.style.pointerEvents = tracingOn ? "auto" : "none";
+
+  // ✅ 4) 按钮高亮（橙色）
+  btnTrace.classList.toggle("bg-orange-400", tracingOn);
+  btnTrace.classList.toggle("text-white", tracingOn);
+  btnTrace.classList.toggle("hover:bg-orange-500", tracingOn);
+
+  // ✅ 5) 可选：提示一下状态（方便你现场确认）
+  // showMsg(tracingOn ? "따라쓰기 ON" : "따라쓰기 OFF", 800);
+};
 
   btnSpeak.onclick = () => {
     // 优先你自己的 AIUI
