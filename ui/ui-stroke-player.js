@@ -181,16 +181,30 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   // ✅ 完成收尾：强制把所有 stroke 改黑（作为“最后一笔不黑”的兜底收尾）
   function forceAllStrokesBlack() {
-    const svg = stage?.querySelector("svg");
-    if (!svg) return;
+  const svg = stage?.querySelector("svg");
+  if (!svg) return;
 
-    svg.querySelectorAll("path").forEach((p) => {
-      const st = p.getAttribute("stroke");
-      if (!st || st === "none") return;
-      p.setAttribute("stroke", "#000");
-      p.style.stroke = "#000";
-    });
-  }
+  // 尽量覆盖各种数据格式：path / use / g / make-me-a-hanzi 的动画元素等
+  const nodes = svg.querySelectorAll(
+    '[id^="make-me-a-hanzi-animation-"], [data-stroke], .stroke, path, use, polygon, polyline, rect, circle, ellipse'
+  );
+
+  nodes.forEach((el) => {
+    // 1) stroke 变黑
+    const st = el.getAttribute?.("stroke");
+    if (st && st !== "none") {
+      el.setAttribute("stroke", "#111827");
+      if (el.style) el.style.stroke = "#111827";
+    }
+
+    // 2) fill 也变黑（关键：你现在的蓝色多半在 fill）
+    const fi = el.getAttribute?.("fill");
+    if (fi && fi !== "none") {
+      el.setAttribute("fill", "#111827");
+      if (el.style) el.style.fill = "#111827";
+    }
+  });
+}
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
