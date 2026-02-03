@@ -105,21 +105,24 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     setTag(teaching);
 
     if (teaching) {
-      currentStrokeIndex = 0;
-      setTracePointer(true);
+  currentStrokeIndex = 0;
 
-      playDemoOneStroke();
+  setTracePoint(true);          // 允许 canvas 接收事件
+  traceApi?.toggle?.(true);     // ⭐ 真正打开描红层（否则 tracing=false 不能写）
 
-      setTimeout(() => {
-        traceApi?.enable?.();
-        traceApi?.setEnabled?.(true);
-      }, 300);
-    } else {
-      setTracePointer(false);
-      traceApi?.disable?.();
-      traceApi?.setEnabled?.(false);
-      redrawStrokeColor({ finished: true });
-    }
+  playDemoOneStroke();          // 播放示范
+
+  setTimeout(() => {
+    traceApi?.enable?.();
+    traceApi?.setEnabled?.(true);
+  }, 300);
+
+} else {
+  setTracePoint(false);
+  traceApi?.disable?.();
+  traceApi?.setEnabled?.(false);
+  redrawStrokeColor({ finished: true });
+}
   }
 
   /* ============ 单击直接切换描红模式 ============ */
