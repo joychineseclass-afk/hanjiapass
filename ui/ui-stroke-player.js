@@ -263,94 +263,13 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   }
 
-  // 5) 缩放：wheel + pinch（移动端）
-  viewport.addEventListener(
-    "wheel",
-    (e) => {
-      // 描红开启时，不要抢 wheel（让你能专心写）
-      if (tracingOn) return;
-      e.preventDefault();
-      const next = scale * (e.deltaY > 0 ? 1 / 1.12 : 1.12);
-      scale = clamp(next, 0.5, 4);
-      applyTransform();
-    },
-    { passive: false }
-  );
 
-  // pointer events：拖拽 + 双指缩放
-  let p1 = null,
-    p2 = null;
-  let dragLast = null;
-  let pinchStartDist = 0;
-  let pinchStartScale = 1;
-
-  viewport.addEventListener("pointerdown", (e) => {
-    // 描红开启时，拖拽缩放交给 canvas（避免冲突）
-    if (tracingOn) return;
-
-    viewport.setPointerCapture?.(e.pointerId);
-
-    if (!p1) {
-      p1 = { id: e.pointerId, x: e.clientX, y: e.clientY };
-      dragLast = { x: e.clientX, y: e.clientY };
-    } else if (!p2) {
-      p2 = { id: e.pointerId, x: e.clientX, y: e.clientY };
-      pinchStartDist = dist(p1, p2);
-      pinchStartScale = scale;
-      dragLast = null; // 双指时不拖拽
-    }
-  });
-
-  viewport.addEventListener("pointermove", (e) => {
-    if (tracingOn) return;
-
-    if (p1 && e.pointerId === p1.id) {
-      p1.x = e.clientX;
-      p1.y = e.clientY;
-    } else if (p2 && e.pointerId === p2.id) {
-      p2.x = e.clientX;
-      p2.y = e.clientY;
-    } else {
-      return;
-    }
-
-    // 双指 pinch
-    if (p1 && p2) {
-      const d = dist(p1, p2);
-      if (pinchStartDist > 0) {
-        const ratio = d / pinchStartDist;
-        scale = clamp(pinchStartScale * ratio, 0.5, 4);
-        applyTransform();
-      }
-      return;
-    }
-
-    // 单指拖拽
-    if (p1 && dragLast) {
-      tx += p1.x - dragLast.x;
-      ty += p1.y - dragLast.y;
-      dragLast = { x: p1.x, y: p1.y };
-      applyTransform();
-    }
-  });
-
-  function clearPointer(id) {
-    if (p1 && p1.id === id) p1 = null;
-    if (p2 && p2.id === id) p2 = null;
-
-    if (p1 && !p2) dragLast = { x: p1.x, y: p1.y };
-    if (!p1 && !p2) dragLast = null;
-  }
-
-  viewport.addEventListener("pointerup", (e) => clearPointer(e.pointerId));
-  viewport.addEventListener("pointercancel", (e) => clearPointer(e.pointerId));
-  viewport.addEventListener("pointerleave", (e) => clearPointer(e.pointerId));
-
-  // 6) 初始化描红层 + 教学
+  // 5) 初始化描红层 + 教学
   const traceApi = initTraceCanvasLayer(traceCanvas);
-  initStrokeTeaching(targetEl, stage, traceApi);
+if (!traceApi) console.warn("[TRACE] initTraceCanvasLayer returned null");
+initStrokeTeaching(targetEl, stage, traceApi);
 
-  // 7) 生成切换按钮
+  // 6) 生成切换按钮
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
@@ -366,7 +285,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   });
 
-  // 8) 顶部功能按钮
+  // 7) 顶部功能按钮
   const btnReplay = targetEl.querySelector(".btnReplay");
   const btnReset = targetEl.querySelector(".btnReset");
   const btnTrace = targetEl.querySelector(".btnTrace");
