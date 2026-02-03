@@ -149,7 +149,9 @@ function setTracePointer(on) {
   queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
 
   // 완료 후 잠금(원하면 유지)
-  traceApi?.setEnabled?.(false);
+  if (traceApi?.setEnabled) traceApi.setEnabled(false);
+else if (traceApi?.disable) traceApi.disable();
+else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(false);
   return;
 }
 
@@ -183,7 +185,10 @@ function setTracePointer(on) {
     traceApi?.clear?.();
 
     // ③ 示范前先锁定书写
-    traceApi?.setEnabled?.(false);
+    if (traceApi?.setEnabled) traceApi.setEnabled(false);
+else if (traceApi?.disable) traceApi.disable();
+else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(false);
+
 
     // ④ 播放一笔示范动画（蓝色）
     const ok = playDemoOneStroke();
@@ -193,7 +198,10 @@ function setTracePointer(on) {
 
     // ⑤ 示范结束后允许学生写
     setTimeout(() => {
-      traceApi?.setEnabled?.(true);
+      if (traceApi?.setEnabled) traceApi.setEnabled(true);
+else if (traceApi?.enable) traceApi.enable();
+else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(true);
+
 
       console.log(
         "[TRACE] enabled:",
@@ -207,7 +215,10 @@ function setTracePointer(on) {
     /* ---------- 教学模式关闭 ---------- */
 
     setTracePointer(false);
-    traceApi?.setEnabled?.(false);
+    if (traceApi?.setEnabled) traceApi.setEnabled(false);
+else if (traceApi?.disable) traceApi.disable();
+else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(false);
+
     redrawStrokeColor({ finished: true });
 
     queueMicrotask(() =>
@@ -229,10 +240,28 @@ btnTrace.addEventListener("pointerleave", () => clearTimeout(pressTimer));
 
 btnTrace.addEventListener("click", () => {
   if (!teaching) return;
-  traceApi?.setEnabled?.(false);
+
+  // 1) 先禁用描红（防止示范时误画）
+  if (traceApi?.setEnabled) traceApi.setEnabled(false);
+  else if (traceApi?.disable) traceApi.disable();
+  else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(false);
+
+  // 2) 播放一笔示范
   playDemoOneStroke();
-  setTimeout(() => traceApi?.setEnabled?.(true), 250);
+
+  // 3) 示范后再启用描红（允许学生跟写）
+  setTimeout(() => {
+    if (traceApi?.setEnabled) traceApi.setEnabled(true);
+    else if (traceApi?.enable) traceApi.enable();
+    else if (traceApi?.setDrawingEnabled) traceApi.setDrawingEnabled(true);
+
+    console.log(
+      "[TRACE] enabled method:",
+      traceApi?.setEnabled ? "setEnabled" : traceApi?.enable ? "enable" : traceApi?.setDrawingEnabled ? "setDrawingEnabled" : "none"
+    );
+  }, 250);
 });
+
 
   // ✅ (매우 중요) traceApi가 "한 획 완료" 이벤트를 제공하면 여기에 연결
   // 아래 중 너의 traceApi에 맞는 것이 하나는 있을 확률이 높음.
