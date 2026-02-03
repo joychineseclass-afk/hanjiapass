@@ -63,22 +63,25 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     strokes.forEach((s, idx) => {
   const color = idx === active ? "#2563eb" : "#111827";
 
-  // 1️⃣ style 方式（最常见）
-  if (s?.style) {
-    s.style.stroke = color;
-    s.style.fill = color;   // ⭐ 关键：有些笔画是用 fill 上色
-  }
+  // ✅ 自己 + 子节点都处理（有的 stroke 元素是 g/use，真正的 path 在里面）
+  const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
 
-  // 2️⃣ attribute 方式（有些 SVG 不走 style）
-  try {
-    const st = s.getAttribute?.("stroke");
-    if (st && st !== "none") s.setAttribute("stroke", color);
+  targets.forEach((el) => {
+    // 1) 用 important 强压 CSS（关键）
+    try {
+      el.style?.setProperty?.("stroke", color, "important");
+      el.style?.setProperty?.("fill", color, "important");
+    } catch {}
 
-    const fi = s.getAttribute?.("fill");
-    if (fi && fi !== "none") s.setAttribute("fill", color);
-  } catch (e) {
-    // 忽略奇怪节点
-  }
+    // 2) 同时写属性（兼容某些 SVG）
+    try {
+      const st = el.getAttribute?.("stroke");
+      if (st !== "none") el.setAttribute?.("stroke", color);
+
+      const fi = el.getAttribute?.("fill");
+      if (fi !== "none") el.setAttribute?.("fill", color);
+    } catch {}
+  });
 });
 
   }
