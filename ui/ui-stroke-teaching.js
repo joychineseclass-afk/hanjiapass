@@ -60,8 +60,35 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // ✅ finished면 active = -1 (파란색 없음)
     const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
 
-    strokes.forEach((s, idx) => {
-  const color = idx === active ? "#2563eb" : "#111827";
+    strokes.forEach((el, idx) => {
+  let color;
+
+  if (finished) {
+    // 全部完成 → 维持黑色
+    color = "#111827";
+  } else if (idx < active) {
+    // 学生已经写过的笔 → 橘色
+    color = "#FB923C";
+  } else if (idx === active) {
+    // 当前要示范 / 跟写的笔 → 浅蓝
+    color = "#93C5FD";
+  } else {
+    // 还没轮到的笔 → 浅灰
+    color = "#D1D5DB";
+  }
+
+  try {
+    const st = el.getAttribute?.("stroke");
+    if (st !== "none") el.setAttribute("stroke", color);
+
+    const fi = el.getAttribute?.("fill");
+    if (fi !== "none") el.setAttribute("fill", color);
+
+    el.style.setProperty("stroke", color, "important");
+    el.style.setProperty("fill", color, "important");
+  } catch {}
+});
+
 
   // ✅ 自己 + 子节点都处理（有的 stroke 元素是 g/use，真正的 path 在里面）
   const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
