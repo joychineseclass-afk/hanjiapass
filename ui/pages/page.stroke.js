@@ -97,11 +97,13 @@ function render(container) {
   `;
 }
 
+let _strokeLangHandler = null;
+
 export function mount(root) {
   const el = getMountEl(root);
   render(el);
 
-  // ✅ 关键：把 data-i18n / data-i18n-placeholder 全部应用到当前页面
+  // ✅ 首次渲染时应用当前语言
   i18n.apply(el);
 
   const input = el.querySelector("#stroke-input");
@@ -123,6 +125,24 @@ export function mount(root) {
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") handleLoad();
   });
+
+  // ⭐ 关键新增：监听语言变化，实时更新本页面
+  _strokeLangHandler = () => {
+    i18n.apply(el);
+
+    // 如果当前已经加载了汉字，释义区也跟着语言刷新
+    const ch = (input.value || "").trim().charAt(0);
+    if (ch) renderMeaningFromHSK(ch);
+  };
+
+  window.addEventListener("joy:langchanged", _strokeLangHandler);
+}
+
+export function unmount() {
+  if (_strokeLangHandler) {
+    window.removeEventListener("joy:langchanged", _strokeLangHandler);
+    _strokeLangHandler = null;
+  }
 }
 
 export function unmount() {}
