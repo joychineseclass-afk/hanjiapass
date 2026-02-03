@@ -1,89 +1,10 @@
 // ui/ui-stroke-teaching.js
 export function initStrokeTeaching(rootEl, stage, traceApi) {
-  let teaching = false;
+  let teachingOn = false;
+  let demoLock = false;
 
-  const btnTrace = rootEl.querySelector(".btnTrace");
-  if (!btnTrace) return;
+  const traceCanvas = rootEl.querySelector("#traceCanvas");
 
-  // ✅ 不要缓存 traceCanvas：它可能在 init 时还没生成
-  const getTraceCanvas = () => rootEl.querySelector("#traceCanvas");
-
-  // -------------------------
-  // ✅ 小标签：Teaching ON
-  // -------------------------
-  let tag = rootEl.querySelector("#teachingTag");
-  if (!tag) {
-    tag = document.createElement("div");
-    tag.id = "teachingTag";
-    tag.className =
-      "absolute left-2 top-2 text-[11px] text-white bg-slate-900/80 px-2 py-1 rounded hidden";
-    const box = rootEl.querySelector(".aspect-square")?.parentElement || rootEl;
-    box.style.position = box.style.position || "relative";
-    box.appendChild(tag);
-  }
-
-  function setTag(on) {
-    if (!tag) return;
-    if (on) {
-      tag.textContent = "Teaching ON";
-      tag.classList.remove("hidden");
-    } else {
-      tag.classList.add("hidden");
-    }
-  }
-
-  // -------------------------
-  // ✅ 关键：控制 canvas 是否接收触摸/鼠标
-  // -------------------------
-  function setTracePointer(on) {
-    const traceCanvas = getTraceCanvas();
-    if (!traceCanvas) return;
-    traceCanvas.style.pointerEvents = on ? "auto" : "none";
-  }
-
-  // -------------------------
-  // ✅ 写对发光 / 写错震动（钩子：若未来有判错信息就能用）
-  // -------------------------
-  function flashGlow() {
-    const traceCanvas = getTraceCanvas();
-    const el = traceCanvas || stage || rootEl;
-    if (!el) return;
-    el.classList.add("trace-glow");
-    setTimeout(() => el.classList.remove("trace-glow"), 180);
-  }
-
-  function vibrateWrong() {
-    try {
-      navigator.vibrate?.(60);
-    } catch {}
-    const el = stage || rootEl;
-    if (!el) return;
-    el.classList.add("trace-shake");
-    setTimeout(() => el.classList.remove("trace-shake"), 220);
-  }
-
-  // ✅ 注入一次必要的 CSS（只注入一次）
-  (function injectFxCssOnce() {
-    if (document.getElementById("stroke-teaching-fx-css")) return;
-    const style = document.createElement("style");
-    style.id = "stroke-teaching-fx-css";
-    style.textContent = `
-      .trace-glow { box-shadow: 0 0 0 4px rgba(255, 165, 0, .25), 0 0 18px rgba(255, 165, 0, .45) !important; border-radius: 12px; }
-      .trace-shake { animation: traceShake .22s linear; }
-      @keyframes traceShake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-3px); }
-        50% { transform: translateX(3px); }
-        75% { transform: translateX(-2px); }
-        100% { transform: translateX(0); }
-      }
-    `;
-    document.head.appendChild(style);
-  })();
-
-  // -------------------------
-  // ✅ SVG 한 획 애니메이션 요소 찾기
-  // -------------------------
   function getStrokeAnims(svg) {
     const list = [...svg.querySelectorAll('[id^="make-me-a-hanzi-animation-"]')];
     if (list.length) return list;
@@ -91,14 +12,12 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   }
 
   function replayCssAnimation(el) {
+    if (!el) return;
     el.style.animation = "none";
     el.getBoundingClientRect();
     el.style.animation = "";
   }
 
-  // -------------------------
-  // ✅ 你已经跑通的：按进度重绘颜色
-  // -------------------------
   function redrawStrokeColor({ activeIndex, finished = false } = {}) {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
@@ -132,9 +51,25 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     });
   }
 
-  // -------------------------
-  // ✅ 示范：播放当前笔（不推进 index）
-  // -------------------------
+  function glowOnce() {
+    if (!traceCanvas) return;
+    traceCanvas.classList.add("trace-glow");
+    clearTimeout(glowOnce._t);
+    glowOnce._t = setTimeout(() => traceCanvas.classList.remove("trace-glow"), 180);
+  }
+
+  // ✅ 确保有 glow 的 css（只注入一次）
+  try {
+    if (!document.getElementById("trace-glow-style")) {
+      const st = document.createElement("style");
+      st.id = "trace-glow-style";
+      st.textContent = `
+        .trace-glow { filter: drop-shadow(0 0 10px rgba(251,146,60,.9)); }
+      `;
+      document.head.appendChild(st);
+    }
+  } catch {}
+
   function playDemoOneStroke() {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return false;
@@ -151,10 +86,24 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     return true;
   }
 
-  // -------------------------
-  // ✅ 旧事件（保留）：如果 traceApi 自己会触发“完成一笔”
-  // -------------------------
-  function onUserFinishedOneStroke() {
+  function finishWholeChar() {
+    redrawStrokeColor({ finished: true });
+
+    // ✅ 完成：通知外层把最后一笔也变黑
+    queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
+
+    // ✅ 完成：自动跳下一个字（page.stroke.js 会接住）
+    queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
+
+    traceApi?.setEnabled?.(false);
+  }
+
+  function onUserStrokeDone() {
+    if (!teachingOn) return;
+    if (demoLock) return;
+
+    glowOnce(); // ✅ 写对发光（当前没有“判错”，所以先按完成一笔就奖励）
+
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
 
@@ -162,162 +111,57 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const total = strokes.length || 0;
     if (!total) return;
 
+    // initTraceCanvasLayer 会在抬笔时 autoAdvanceIndex++，所以这里读到的是“下一笔 index”
     const idx = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
 
-    if (idx >= total - 1) {
-      redrawStrokeColor({ finished: true });
-      queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-      queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
-      traceApi?.setEnabled?.(false);
+    if (idx >= total) {
+      finishWholeChar();
       return;
     }
 
-    redrawStrokeColor({ activeIndex: idx + 1, finished: false });
+    redrawStrokeColor({ activeIndex: idx, finished: false });
   }
 
-  // -------------------------
-  // ✅ 核心：监听 traceCanvas 的 “trace:strokeend”
-  // 来推进 strokeIndex + 更新颜色 + 完成后跳下一个字
-  // -------------------------
-  function bindTraceStrokeEndOnce() {
-    const traceCanvas = getTraceCanvas();
-    if (!traceCanvas) return;
-
-    // 避免重复绑定
-    if (traceCanvas.__strokeTeachingBound) return;
-    traceCanvas.__strokeTeachingBound = true;
-
-    traceCanvas.addEventListener("trace:strokeend", (e) => {
-      if (!teaching) return;
-
-      const svg = stage?.querySelector?.("svg");
-      const strokes = svg ? getStrokeAnims(svg) : [];
-      const total = strokes.length || 0;
-
-      const after =
-        Number(e?.detail?.strokeIndexAfter ?? traceApi?.getStrokeIndex?.() ?? 0) || 0;
-
-      // ✅ 同步 index（保险）
-      traceApi?.setStrokeIndex?.(after);
-
-      // ✅ 写对发光（目前没有判错数据：默认“写了就算对”）
-      flashGlow();
-
-      // ✅ 若未来你在 e.detail 里放入 wrong=true，就可以震动
-      if (e?.detail?.wrong === true) vibrateWrong();
-
-      if (total && after >= total) {
-        // ✅ 全部写完
-        redrawStrokeColor({ finished: true });
-        queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-        queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
-        traceApi?.setEnabled?.(false);
-      } else {
-        // ✅ 继续下一笔
-        redrawStrokeColor({ activeIndex: after, finished: false });
-      }
-    });
+  function vibrateWrong() {
+    // ✅ 写错震动：目前没有判错信号，预留接口
+    try {
+      navigator.vibrate?.([60, 40, 60]);
+    } catch {}
   }
 
-  // -------------------------
-  // ✅ teaching on/off（跟写必须：toggle(true) + setEnabled(true) + pointerEvents=auto）
-  // -------------------------
-  function setTeaching(next) {
-    teaching = !!next;
+  // 你以后如果做“判错”，只要在别处 dispatchEvent(new CustomEvent("trace:wrong"))
+  // 这里就会震动
+  traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
-    // ✅ 单击一次就高亮（你要的）
-    btnTrace.classList.toggle("trace-active", teaching);
-    if (teaching) {
-      btnTrace.classList.add("bg-orange-500", "text-white");
-      btnTrace.classList.remove("bg-slate-100");
-    } else {
-      btnTrace.classList.remove("bg-orange-500", "text-white");
-      btnTrace.classList.add("bg-slate-100");
-    }
+  function start() {
+    teachingOn = true;
 
-    setTag(teaching);
+    // ✅ 重置到第一笔（换字或重新开始）
+    traceApi?.setStrokeIndex?.(0);
 
-    if (teaching) {
-      // ---------- 教学模式开启 ----------
+    // 示范时先锁
+    traceApi?.setEnabled?.(false);
+    demoLock = true;
 
-      // ① 让 canvas 接收事件
-      setTracePointer(true);
+    playDemoOneStroke();
 
-      // ✅ ② 必须开启 tracing，否则 initTraceCanvasLayer 会拒绝画
-      traceApi?.toggle?.(true);
-
-      // ③ 从第一笔开始
-      traceApi?.setStrokeIndex?.(0);
-      redrawStrokeColor({ activeIndex: 0, finished: false });
-
-      // ④ 清掉上次轨迹
-      traceApi?.clear?.();
-
-      // ⑤ 示范前先锁定书写
-      traceApi?.setEnabled?.(false);
-
-      // ⑥ 播放一笔示范（只演示，不推进）
-      const ok = playDemoOneStroke();
-      if (!ok) console.warn("[stroke] demo stroke not found in svg");
-
-      // ⑦ 示范结束后允许学生写 + 绑定 strokeend
-      setTimeout(() => {
-        // ✅ 先绑定，防止第一笔写完事件丢失
-        bindTraceStrokeEndOnce();
-
-        // ✅ 再打开输入
-        traceApi?.setEnabled?.(true);
-
-        const traceCanvas = getTraceCanvas();
-        console.log(
-          "[TRACE] isTracing:",
-          traceApi?.isTracing?.() ?? "no isTracing()",
-          "enabled:",
-          "setEnabled" in (traceApi || {}) ? "setEnabled" : "unknown",
-          "pointerEvents:",
-          traceCanvas?.style?.pointerEvents
-        );
-      }, 260);
-    } else {
-      // ---------- 教学模式关闭 ----------
-      setTracePointer(false);
-
-      // 可选：关掉 tracing（干净）
-      traceApi?.toggle?.(false);
-
-      traceApi?.setEnabled?.(false);
-      redrawStrokeColor({ finished: true });
-      queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-    }
+    setTimeout(() => {
+      demoLock = false;
+      traceApi?.setEnabled?.(true);
+    }, 300);
   }
 
-  // -------------------------
-  // ✅ 交互：单击 = 开/关（一次就生效）
-  // -------------------------
-  btnTrace.addEventListener("click", () => setTeaching(!teaching));
-
-  // 长按（移动端可用）
-  let pressTimer = null;
-  btnTrace.addEventListener("pointerdown", () => {
-    pressTimer = setTimeout(() => setTeaching(!teaching), 450);
-  });
-  btnTrace.addEventListener("pointerup", () => clearTimeout(pressTimer));
-  btnTrace.addEventListener("pointerleave", () => clearTimeout(pressTimer));
-
-  // ✅ 保留你原来的 traceApi.on(...) 逻辑（并修复掉你文件里的 “aft”）
-  try {
-    if (typeof traceApi?.on === "function") {
-      traceApi.on("strokeComplete", onUserFinishedOneStroke);
-      traceApi.on("complete", onUserFinishedOneStroke);
-    } else if (typeof traceApi?.setOnStrokeComplete === "function") {
-      traceApi.setOnStrokeComplete(onUserFinishedOneStroke);
-    } else if (typeof traceApi?.onStrokeComplete === "function") {
-      traceApi.onStrokeComplete(onUserFinishedOneStroke);
-    }
-  } catch (e) {
-    console.warn("[stroke] cannot bind stroke complete event", e);
+  function stop() {
+    teachingOn = false;
+    demoLock = false;
+    traceApi?.setEnabled?.(false);
+    redrawStrokeColor({ finished: true });
   }
 
-  // 初始：关闭
-  setTeaching(false);
+  // ✅ 返回给 ui-stroke-player.js 使用
+  return {
+    start,
+    stop,
+    onUserStrokeDone
+  };
 }
