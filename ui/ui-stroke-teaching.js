@@ -58,7 +58,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     glowOnce._t = setTimeout(() => traceCanvas.classList.remove("trace-glow"), 180);
   }
 
-  // ✅ 确保 glow CSS 只注入一次
+  // ✅ glow CSS（只注入一次）
   try {
     if (!document.getElementById("trace-glow-style")) {
       const st = document.createElement("style");
@@ -70,61 +70,95 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     }
   } catch {}
 
-  // ✅ 示范指定笔（核心：后续每一笔都要示范）
+  // =========================
+  // ✅ 核心：示范某一笔，并返回该笔元素（用于 animationend 解锁）
+  // =========================
   function playDemoStrokeAt(index) {
     const svg = stage?.querySelector?.("svg");
-    if (!svg) return false;
+    if (!svg) return null;
 
     const strokes = getStrokeAnims(svg);
-    if (!strokes.length) return false;
+    if (!strokes.length) return null;
 
     const i = Math.max(0, Math.min(Number(index ?? 0) || 0, strokes.length - 1));
     const s = strokes[i];
-    if (!s) return false;
+    if (!s) return null;
 
-    // 当前笔浅蓝，其它灰，已完成橘
     redrawStrokeColor({ activeIndex: i, finished: false });
-
-    // 触发该笔 CSS 动画（显示“路线/示范”）
     replayCssAnimation(s);
-    return true;
+    return s;
   }
 
   function finishWholeChar() {
     redrawStrokeColor({ finished: true });
 
-    // ✅ 完成：通知外层把最后一笔也变黑
     queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-
-    // ✅ 完成：自动跳下一个字（page.stroke.js 会接住）
     queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
 
-    // ✅ 完成后关闭写入（下一字会重新 start）
+    // ✅ 完成后禁写，等下一字 start 再开
+    traceApi?.setEnabled?.(false);
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+  }
+
+  // =========================
+  // ✅ 最稳的“示范→解锁”流程：
+  // - 示范时：禁写 + 禁 pointer（避免 pointer capture 卡死）
+  // - 等 animationend 解锁（再加超时兜底）
+  // =========================
+  function lockInputForDemo() {
+    demoLock = true;
+
+    // ✅ 先关 pointerEvents，避免用户在示范期间点下去导致 capture 卡住
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+
+    // ✅ 再禁写（内部也会清掉 drawing/pointerId，安全）
     traceApi?.setEnabled?.(false);
   }
 
-  // ✅ 每一笔完成后：示范下一笔 → 解锁 → 允许写
+  function unlockInputAfterDemo() {
+    demoLock = false;
+    if (!teachingOn) return;
+
+    // ✅ 恢复可点可写
+    traceApi?.setEnabled?.(true);
+    if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
+  }
+
   function demoNextAndUnlock(nextIdx) {
-    // 锁住用户输入
-    demoLock = true;
-    traceApi?.setEnabled?.(false);
+    lockInputForDemo();
 
-    // 示范下一笔（如果失败就直接解锁）
-    const ok = playDemoStrokeAt(nextIdx);
+    const el = playDemoStrokeAt(nextIdx);
 
-    // 300ms 后允许写（你想更慢就改 450/600）
-    setTimeout(() => {
-      demoLock = false;
-      // teachingOn 还在才解锁，避免用户中途关掉
-      if (teachingOn) traceApi?.setEnabled?.(true);
-    }, ok ? 300 : 0);
+    // ✅ 如果拿不到动画元素，就立刻解锁
+    if (!el) {
+      unlockInputAfterDemo();
+      return;
+    }
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      try {
+        el.removeEventListener("animationend", finish);
+      } catch {}
+      unlockInputAfterDemo();
+    };
+
+    // ✅ 监听动画结束后解锁
+    try {
+      el.addEventListener("animationend", finish, { once: true });
+    } catch {}
+
+    // ✅ 兜底：如果 animationend 不触发，最多等 900ms
+    setTimeout(finish, 900);
   }
 
   function onUserStrokeDone() {
     if (!teachingOn) return;
     if (demoLock) return;
 
-    glowOnce(); // ✅ 写完发光（先按完成一笔就奖励）
+    glowOnce();
 
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
@@ -133,57 +167,46 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const total = strokes.length || 0;
     if (!total) return;
 
-    // ✅ traceApi 在 pointerup 已经 autoAdvanceIndex++，
-    // 所以这里读到的是“下一笔 index”
+    // ✅ traceApi 在 pointerup 已 autoAdvanceIndex++，所以这里是“下一笔 index”
     const idx = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
 
-    // ✅ 已经写完最后一笔
     if (idx >= total) {
       finishWholeChar();
       return;
     }
 
-    // ✅ 推进颜色（当前 idx 变浅蓝）
+    // ✅ 推进颜色
     redrawStrokeColor({ activeIndex: idx, finished: false });
 
-    // ✅ 🔥 关键：示范下一笔，然后解锁让用户写
+    // ✅ 示范下一笔 -> 解锁继续写
     demoNextAndUnlock(idx);
   }
 
   function vibrateWrong() {
-    // ✅ 写错震动：目前没有判错信号，预留接口
     try {
       navigator.vibrate?.([60, 40, 60]);
     } catch {}
   }
 
-  // 你以后如果做“判错”，只要在别处 dispatchEvent(new CustomEvent("trace:wrong"))
-  // 这里就会震动
   traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
   function start() {
     teachingOn = true;
 
-    // ✅ 重置到第一笔
+    // ✅ 从第一笔开始
     traceApi?.setStrokeIndex?.(0);
 
-    // ✅ 第一笔先示范，再允许写
-    demoLock = true;
-    traceApi?.setEnabled?.(false);
-
-    // 示范第一笔
-    playDemoStrokeAt(0);
-
-    setTimeout(() => {
-      demoLock = false;
-      if (teachingOn) traceApi?.setEnabled?.(true);
-    }, 300);
+    // ✅ 示范第一笔，然后解锁让写
+    demoNextAndUnlock(0);
   }
 
   function stop() {
     teachingOn = false;
     demoLock = false;
+
     traceApi?.setEnabled?.(false);
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+
     redrawStrokeColor({ finished: true });
   }
 
