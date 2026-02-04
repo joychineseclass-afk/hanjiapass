@@ -223,10 +223,16 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
 
-  // ✅ 抬笔完成一笔 → 推进教学
-  traceCanvas.addEventListener("trace:strokeend", (e) => {
-    teaching?.onUserStrokeDone?.(e?.detail);
-  });
+  const onStrokeEnd = (e) => teaching?.onUserStrokeDone?.(e?.detail);
+traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
+
+targetEl._strokeCleanup = () => {
+  window.removeEventListener("joy:langchanged", onLangChanged);
+  targetEl.removeEventListener("stroke:complete", onStrokeComplete);
+
+  // ✅ 关键：清理 strokeend 监听（防重复）
+  try { traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
+};
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
