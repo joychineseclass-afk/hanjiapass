@@ -44,14 +44,13 @@ const UI_TEXT = {
   }
 };
 
-// ✅ 只注入一次：锁死描红层级与可点击
+// ✅ 只注入一次：保证描红层在最上 + 不被 viewport 抢事件
 function ensureTraceCssLock() {
   if (document.getElementById("trace-css-lock")) return;
 
   const st = document.createElement("style");
   st.id = "trace-css-lock";
   st.textContent = `
-    /* ✅ 开启描红时：canvas 必须在最上层并接收事件 */
     .trace-on #traceCanvas{
       display:block !important;
       pointer-events:auto !important;
@@ -61,7 +60,6 @@ function ensureTraceCssLock() {
       height:100% !important;
       z-index:9999 !important;
     }
-    /* ✅ 开启描红时：下面那层不要抢事件（否则点不到 canvas） */
     .trace-on #strokeViewport{
       pointer-events:none !important;
     }
@@ -72,7 +70,7 @@ function ensureTraceCssLock() {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  // ✅ 清理旧监听（非常关键）
+  // ✅ 清理旧监听（避免越绑越多导致卡死）
   try {
     targetEl._strokeCleanup?.();
   } catch {}
@@ -88,6 +86,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
+  // ✅ 注意：canvas 不写 hidden，显隐交给 traceApi.toggle()
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
@@ -111,7 +110,6 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
           </div>
         </div>
 
-        <!-- ✅ 不要写 hidden，交给 traceApi.toggle(false) 控制 -->
         <canvas id="traceCanvas"
                 class="absolute inset-0 w-full h-full"
                 style="pointer-events:none;"></canvas>
@@ -135,9 +133,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const msgEl = targetEl.querySelector("#strokeMsg");
 
   let currentChar = chars[0];
-  let scale = 1,
-    tx = 0,
-    ty = 0;
+  let scale = 1, tx = 0, ty = 0;
   let activeBtn = null;
 
   // ✅ 描红状态只由按钮控制
@@ -164,9 +160,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   }
 
   function resetView() {
-    scale = 1;
-    tx = 0;
-    ty = 0;
+    scale = 1; tx = 0; ty = 0;
     applyTransform();
     showMsg(T.resetDone);
   }
@@ -219,18 +213,17 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     tracingDefault: false
   });
 
-  // 初始关闭（保证状态一致）
+  // 初始关闭（状态一致）
   traceApi.toggle(false);
   traceApi.setEnabled(false);
   traceCanvas.style.pointerEvents = "none";
 
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
 
-  // ✅ ✅ ✅ 关键修复：可清理的 strokeend handler（防重复绑定导致双示范/卡死）
-  const onStrokeEnd = (e) => {
+  // ✅ 抬笔完成一笔 → 推进教学（你的 teaching 里用 onUserStrokeDone）
+  traceCanvas.addEventListener("trace:strokeend", (e) => {
     teaching?.onUserStrokeDone?.(e?.detail);
-  };
-  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
+  });
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
@@ -238,14 +231,15 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (activeBtn) {
       activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
     }
-
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
       activeBtn = btn;
     }
 
+    // 换字先清空笔迹 & 重置 index（关键：避免到后面卡死）
     traceApi?.clear?.();
+    traceApi?.setStrokeIndex?.(0);
 
     if (reset) resetView();
 
@@ -262,9 +256,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     stage.innerHTML = `loading...`;
 
     try {
-      const res = await fetch(
-        url + (url.includes("?") ? "&" : "?") + "v=" + Date.now()
-      );
+      const res = await fetch(url + (url.includes("?") ? "&" : "?") + "v=" + Date.now());
       if (!res.ok) throw new Error("HTTP_" + res.status);
 
       const svgText = await res.text();
@@ -282,9 +274,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       applyTransform();
 
-      // ✅ 换字时：如果正在描红，重置笔序并重新示范
+      // ✅ 如果正在描红：换字后重新示范第一笔（但不会重复绑定事件）
       if (tracingOn) {
-        traceApi?.setStrokeIndex?.(0);
         teaching?.start?.();
       }
     } catch (e) {
@@ -311,7 +302,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (i === 0) queueMicrotask(() => loadChar(ch, { reset: true }));
   });
 
-  // ✅ 顶部按钮
+  // 顶部按钮
   const btnReplay = targetEl.querySelector(".btnReplay");
   const btnReset = targetEl.querySelector(".btnReset");
   const btnTrace = targetEl.querySelector(".btnTrace");
@@ -320,31 +311,28 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnReplay.onclick = () => loadChar(currentChar, { reset: false });
   btnReset.onclick = () => resetView();
 
-  // ✅ ✅ ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
+  // ✅ ✅ ✅ 一次点击：进入可写 + 示范 + 跟写推进（不会点两次）
   btnTrace.onclick = () => {
     tracingOn = !tracingOn;
 
-    // 用 class 锁死 CSS（最可靠：确保 canvas 在最上层）
+    // 锁 CSS 层级（防止点不到 canvas）
     targetEl.classList.toggle("trace-on", tracingOn);
 
     if (tracingOn) {
-      traceApi?.toggle?.(true);
-
-      // 注意：teaching.start 会示范时临时禁用，然后再解锁
-      traceApi?.setEnabled?.(true);
-
-      // DOM 兜底
+      traceApi.toggle(true);       // 显示描红层
+      traceApi.setEnabled(true);   // 允许输入（teaching 内部会短暂锁一下示范）
       traceCanvas.style.pointerEvents = "auto";
 
       btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
 
+      // ✅ 重置到第一笔并示范（避免从中间笔开始导致后面卡）
+      traceApi.setStrokeIndex(0);
       teaching?.start?.();
     } else {
       teaching?.stop?.();
 
-      traceApi?.setEnabled?.(false);
-      traceApi?.toggle?.(false);
-
+      traceApi.setEnabled(false);
+      traceApi.toggle(false);
       traceCanvas.style.pointerEvents = "none";
 
       btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
@@ -366,7 +354,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   };
 
-  // 语言切换
+  // 语言切换（只改文案，不破坏状态）
   const onLangChanged = () => applyLangText();
   window.addEventListener("joy:langchanged", onLangChanged);
 
@@ -374,26 +362,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const onStrokeComplete = () => forceAllStrokesBlack();
   targetEl.addEventListener("stroke:complete", onStrokeComplete);
 
-  // ✅ 清理（非常关键：否则会重复绑定导致双示范/卡死）
+  // 清理函数
   targetEl._strokeCleanup = () => {
     window.removeEventListener("joy:langchanged", onLangChanged);
     targetEl.removeEventListener("stroke:complete", onStrokeComplete);
-
-    // ✅ 关键：清理 strokeend 监听
-    try {
-      traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd);
-    } catch {}
-
-    // ✅ 退出时也关掉 trace 状态，避免残留
-    try {
-      teaching?.stop?.();
-      traceApi?.setEnabled?.(false);
-      traceApi?.toggle?.(false);
-    } catch {}
-
-    try {
-      targetEl.classList.remove("trace-on");
-    } catch {}
   };
 }
 
@@ -401,9 +373,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
 function normalizeChars(input) {
   if (!input) return [];
-  if (Array.isArray(input)) {
-    return input.map(String).map((s) => s.trim()).filter(Boolean);
-  }
+  if (Array.isArray(input)) return input.map(String).map((s) => s.trim()).filter(Boolean);
 
   const s = String(input);
   // ✅ 不去重：保持输入顺序（多字练习更自然）
@@ -417,7 +387,6 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;");
 }
 
-// ✅ 你 loadChar 里用到了这个：必须存在，否则直接报错打不开
 function cssEscape(s) {
   return String(s).replace(/"/g, '\\"');
 }
