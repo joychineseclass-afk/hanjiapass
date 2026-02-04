@@ -280,55 +280,68 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnReset.onclick = () => resetView();
 
   // ✅ ✅ ✅ 关键：一次点击就进入“可写 + 教学示范 + 跟写推进”
-  btnTrace.onclick = () => {
-    const next = !tracingOn;
-    tracingOn = next;
+btnTrace.onclick = () => {
+  const next = !tracingOn;
+  tracingOn = next;
 
-    // 1) 显示/隐藏描红层
-    traceApi.toggle(tracingOn);
+  if (tracingOn) {
+    // =========================
+    // ✅ 打开：先开 tracing 再开 enabled（顺序很关键）
+    // =========================
 
-    // 2) 允许/禁止描红绘制
-    traceApi.setEnabled(tracingOn);
-
-    // 3) 是否接收指针事件
-    traceCanvas.style.pointerEvents = tracingOn ? "auto" : "none";
-
-    // 4) 按钮高亮（橙色）
-    btnTrace.classList.toggle("bg-orange-400", tracingOn);
-    btnTrace.classList.toggle("text-white", tracingOn);
-    btnTrace.classList.toggle("hover:bg-orange-500", tracingOn);
-
-    // 5) 教学/跟写启动或停止
-    if (tracingOn) teaching?.start?.();
-    else teaching?.stop?.();
-  };
-
-  btnSpeak.onclick = () => {
-    if (window.AIUI?.speak) {
-      window.AIUI.speak(currentChar, "zh-CN");
-      return;
-    }
+    // 1) 显示描红层 + 让 traceApi 内部 state.tracing=true
     try {
-      const u = new SpeechSynthesisUtterance(currentChar);
-      u.lang = "zh-CN";
-      speechSynthesis.cancel();
-      speechSynthesis.speak(u);
-    } catch {
-      showMsg(T.speakFail);
+      traceApi?.toggle?.(true);
+    } catch (e) {
+      console.warn("[TRACE] toggle(true) failed", e);
     }
-  };
 
-  const onLangChanged = () => applyLangText();
-  window.addEventListener("joy:langchanged", onLangChanged);
+    // 2) 允许描红绘制（让 onPointerDown 不会 return）
+    try {
+      traceApi?.setEnabled?.(true);
+    } catch (e) {
+      console.warn("[TRACE] setEnabled(true) failed", e);
+    }
 
-  const onStrokeComplete = () => forceAllStrokesBlack();
-  targetEl.addEventListener("stroke:complete", onStrokeComplete);
+    // 3) canvas 接收指针事件（DOM 层兜底）
+    if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
 
-  targetEl._strokeCleanup = () => {
-    window.removeEventListener("joy:langchanged", onLangChanged);
-    targetEl.removeEventListener("stroke:complete", onStrokeComplete);
-  };
-}
+    // 4) 按钮高亮
+    btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
+
+    // 5) 教学/跟写启动（内部会：示范一笔 -> 300ms 后允许写）
+    teaching?.start?.();
+
+  } else {
+    // =========================
+    // ✅ 关闭：先禁用绘制再关 tracing（顺序很关键）
+    // =========================
+
+    // 1) 先禁止绘制，避免关的瞬间还在写
+    try {
+      traceApi?.setEnabled?.(false);
+    } catch (e) {
+      console.warn("[TRACE] setEnabled(false) failed", e);
+    }
+
+    // 2) 再隐藏描红层 + state.tracing=false
+    try {
+      traceApi?.toggle?.(false);
+    } catch (e) {
+      console.warn("[TRACE] toggle(false) failed", e);
+    }
+
+    // 3) DOM 层也关掉指针事件
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+
+    // 4) 取消按钮高亮
+    btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+
+    // 5) 停止教学/跟写
+    teaching?.stop?.();
+  }
+};
+
 
 /* ---------------- helpers ---------------- */
 
