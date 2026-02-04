@@ -65,33 +65,26 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // =========================
   // ✅ 状态
   // =========================
-  // ⭐⭐⭐ 关键：tracing 初始状态由 DOM 决定（你已跑通：保留）
+  // ⭐⭐⭐ tracing 初始状态由 DOM 决定（你已跑通：保留）
   const initTracing =
     typeof opts.tracingDefault === "boolean"
       ? opts.tracingDefault
       : !canvas.classList.contains("hidden");
 
-  // ⭐⭐⭐ 和 ui-stroke-player.js 对齐：默认 enabled 建议为 false
-  // - 因为我们按钮点击时会显式 setEnabled(true/false)
-  // - 避免页面加载时就能画，造成“状态错位/需要点两次”
+  // ⭐⭐⭐ 和 ui-stroke-player.js 对齐：默认 enabled=false
   const initEnabled =
     typeof opts.enabledDefault === "boolean" ? opts.enabledDefault : false;
 
   const state = {
-    enabled: initEnabled,        // ✅ 是否允许描红系统工作（教学示范时会临时关）
-    tracing: initTracing,        // ✅ 描红开关（显示/隐藏 canvas）
+    enabled: initEnabled, // ✅ 是否允许描红系统工作（教学示范时会临时关）
+    tracing: initTracing, // ✅ 描红开关（显示/隐藏 canvas）
     drawing: false,
     pointerId: null,
     lastX: 0,
     lastY: 0,
 
-    // ✅ 给 teaching / UI 用：当前第几笔
     strokeIndex: 0,
-
-    // ✅ 当前画笔颜色（默认橘色更符合你“学生写=橘色”）
     penColor: opts.penColor || "#FB923C",
-
-    // ✅ 是否在一次 stroke 中真的画了线（避免轻触就算一笔）
     hasInk: false
   };
 
@@ -101,7 +94,6 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   const lineWidth = Number(opts.lineWidth ?? 6);
   const alpha = Number(opts.alpha ?? 0.85);
 
-  // 是否在抬笔时自动 strokeIndex++
   const autoAdvanceIndex = opts.autoAdvanceIndex !== false; // 默认 true
 
   function applyCtxStyle() {
@@ -142,10 +134,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // ✅ 对外派发事件（DOM + bus 双通道）
   // =========================
   function emit(name, detail) {
-    // 1) bus
     fire(name, detail);
-
-    // 2) DOM
     try {
       canvas.dispatchEvent(new CustomEvent(name, { detail }));
     } catch {
@@ -162,11 +151,15 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     // 必须：开启描红 + enabled 才允许画
     if (!state.enabled || !state.tracing) return;
 
-    // 多指情况下不画（避免 pinch 误触）
+    // 多指不画（避免 pinch）
     if (state.pointerId !== null) return;
 
     state.pointerId = e.pointerId;
-    canvas.setPointerCapture?.(e.pointerId);
+
+    // ✅ 很关键：确保 capture 成功（有些浏览器需要 try）
+    try {
+      canvas.setPointerCapture?.(e.pointerId);
+    } catch {}
 
     state.drawing = true;
     state.hasInk = false;
@@ -175,6 +168,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     state.lastX = p.x;
     state.lastY = p.y;
 
+    // ✅ 防滚动/防拖拽
     e.preventDefault?.();
   }
 
@@ -193,6 +187,9 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
 
     state.lastX = p.x;
     state.lastY = p.y;
+
+    // ✅ 移动端/触控板上非常关键：阻止默认手势
+    e.preventDefault?.();
   }
 
   function endDrawing(e) {
@@ -208,26 +205,41 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
 
     endDrawing(e);
 
-    // ✅ 只有“真的写了线”才算一笔完成
     if (wasDrawing && hadInk && state.tracing && state.enabled) {
       const before = state.strokeIndex;
       if (autoAdvanceIndex) state.strokeIndex += 1;
 
-      // ✅ 你原本事件（保留不动）
+      // ✅ 你原本事件（保留）
       emit("trace:strokeend", {
         strokeIndexBefore: before,
         strokeIndexAfter: state.strokeIndex
       });
 
-      // ✅ 兼容 teaching.js 常见写法：strokeComplete/complete
+      // ✅ 兼容 teaching.js 常见写法（保留）
       emit("strokeComplete", { index: before, nextIndex: state.strokeIndex });
       emit("complete", { index: before, nextIndex: state.strokeIndex });
     }
 
     state.hasInk = false;
+
+    // ✅ 防止浏览器把抬笔当点击/选中文本
+    e.preventDefault?.();
   }
 
   function onPointerCancel(e) {
+    endDrawing(e);
+    state.hasInk = false;
+    e.preventDefault?.();
+  }
+
+  // ✅ 兜底：按住拖出 canvas / capture 丢失，会导致一直 drawing=true
+  function onPointerLeave(e) {
+    if (!state.drawing) return;
+    endDrawing(e);
+    state.hasInk = false;
+  }
+  function onLostPointerCapture(e) {
+    if (!state.drawing) return;
     endDrawing(e);
     state.hasInk = false;
   }
@@ -254,24 +266,30 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // ⭐⭐⭐ 防滚动抢事件（移动端关键）
   canvas.style.touchAction = "none";
 
+  // ✅ 最后一公里：确保描红层永远在最上面
+  // （有些 SVG/容器会形成新 stacking context）
+  canvas.style.zIndex = String(opts.zIndex ?? 50);
+
   canvas.addEventListener("pointerdown", onPointerDown, { passive: false });
-  canvas.addEventListener("pointermove", onPointerMove, { passive: true });
-  canvas.addEventListener("pointerup", onPointerUp, { passive: true });
-  canvas.addEventListener("pointercancel", onPointerCancel, { passive: true });
+  canvas.addEventListener("pointermove", onPointerMove, { passive: false });  // ✅ 改为 false
+  canvas.addEventListener("pointerup", onPointerUp, { passive: false });      // ✅ 改为 false
+  canvas.addEventListener("pointercancel", onPointerCancel, { passive: false }); // ✅ 改为 false
+  canvas.addEventListener("pointerleave", onPointerLeave, { passive: true });
+  canvas.addEventListener("lostpointercapture", onLostPointerCapture, { passive: true });
   window.addEventListener("resize", onResize);
 
   // =========================
   // ✅ 对外 API（兼容 + 扩展）
   // =========================
   const api = {
-    // ✅ 显示/隐藏（只管 tracing，不擅自改 enabled）
+    // ✅ 显示/隐藏（只管 tracing）
     toggle(force) {
       if (typeof force === "boolean") state.tracing = force;
       else state.tracing = !state.tracing;
 
       canvas.classList.toggle("hidden", !state.tracing);
 
-      // ✅ 同步 pointerEvents：可见才接收；不可见就别挡住拖拽缩放
+      // ✅ 同步 pointerEvents：可见才接收；不可见就别挡住缩放拖拽
       canvas.style.pointerEvents = state.tracing ? "auto" : "none";
 
       if (state.tracing) {
@@ -286,11 +304,11 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       return state.tracing;
     },
 
-    // ✅ 是否允许描红输入（和 ui-stroke-player / teaching 对齐）
+    // ✅ 是否允许描红输入（和 player/teaching 对齐）
     setEnabled(on) {
       state.enabled = !!on;
 
-      // ✅ 如果 canvas 当前可见(非 hidden)，确保 tracing 至少为 true（你原逻辑保留）
+      // ✅ 如果 canvas 可见，确保 tracing=true（保留你原逻辑）
       if (!canvas.classList.contains("hidden")) {
         state.tracing = true;
         canvas.style.pointerEvents = "auto";
@@ -305,7 +323,6 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       emit("trace:enabled", { enabled: state.enabled });
     },
 
-    // ✅ 兼容别名
     enable() {
       api.setEnabled(true);
     },
@@ -363,15 +380,17 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);
       canvas.removeEventListener("pointercancel", onPointerCancel);
+      canvas.removeEventListener("pointerleave", onPointerLeave);
+      canvas.removeEventListener("lostpointercapture", onLostPointerCapture);
       window.removeEventListener("resize", onResize);
       bus.clear();
     }
   };
 
-  // ✅ 初始化时同步一次可交互状态（避免初始 pointerEvents 不对）
+  // ✅ 初始化同步交互状态
   canvas.style.pointerEvents = state.tracing ? "auto" : "none";
 
-  // ✅ 初始化时如果 enabled=false，也不要能画（状态一致）
+  // ✅ 初始化 enabled=false 时不允许绘制（状态一致）
   if (!state.enabled) {
     state.drawing = false;
     state.pointerId = null;
