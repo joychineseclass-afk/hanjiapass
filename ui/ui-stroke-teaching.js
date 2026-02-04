@@ -301,7 +301,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // ✅ 从第一笔开始
     try {
       traceApi?.setStrokeIndex?.(0);
-    } catch {}
+    } catch (e) {}
 
     redrawStrokeColor({ activeIndex: 0, finished: false });
 
@@ -318,7 +318,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
     try {
       traceApi?.setEnabled?.(false);
-    } catch {}
+    } catch (e) {}
 
     if (traceCanvas) traceCanvas.style.pointerEvents = "none";
 
@@ -328,6 +328,6 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   return {
     start,
     stop,
-    onUserStrokeDone
+    onUserStrokeDone,
   };
 }
