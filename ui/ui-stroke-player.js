@@ -47,7 +47,7 @@ const UI_TEXT = {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  // ✅ 清理旧监听
+  // ✅ 清理旧监听（避免重复绑定）
   try {
     targetEl._strokeCleanup?.();
   } catch {}
@@ -61,6 +61,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
+  // ✅ UI
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
@@ -84,6 +85,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
           </div>
         </div>
 
+        <!-- ✅ 初始隐藏描红层：button 打开后 traceApi.toggle(true) 会显示 -->
         <canvas id="traceCanvas"
                 class="absolute inset-0 w-full h-full hidden"
                 style="pointer-events:none;"></canvas>
@@ -102,18 +104,33 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const btnWrap = targetEl.querySelector("#strokeBtns");
   const stage = targetEl.querySelector("#strokeStage");
-  const viewport = targetEl.querySelector("#strokeViewport");
   const traceCanvas = targetEl.querySelector("#traceCanvas");
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
 
+  // ✅ 状态
   let currentChar = chars[0];
   let scale = 1, tx = 0, ty = 0;
   let activeBtn = null;
 
-  // ✅ 重要：描红状态（只由按钮控制）
+  // ✅ 描红开关（只由按钮控制）
   let tracingOn = false;
 
+  // ✅ 先初始化 trace / teaching（供 loadChar 使用）
+  const traceApi = initTraceCanvasLayer(traceCanvas);
+  // 初始：关闭描红
+  traceApi.toggle(false);
+  traceApi.setEnabled(false);
+  traceCanvas.style.pointerEvents = "none";
+
+  const teaching = initStrokeTeaching(targetEl, stage, traceApi);
+
+  // ✅ 抬笔完成一笔 -> 推进（你 teaching.js 里是 onUserStrokeDone）
+  traceCanvas.addEventListener("trace:strokeend", (e) => {
+    teaching?.onUserStrokeDone?.(e?.detail);
+  });
+
+  // 小工具
   const showMsg = (text, ms = 1600) => {
     if (!msgEl) return;
     msgEl.textContent = text;
@@ -164,6 +181,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (btnTrace) btnTrace.textContent = T.trace;
   }
 
+  // ✅ 兜底：最后一笔不黑 -> 强制全黑
   function forceAllStrokesBlack() {
     const svg = stage?.querySelector("svg");
     if (!svg) return;
@@ -185,14 +203,17 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
 
-    if (activeBtn)
+    // 高亮按钮
+    if (activeBtn) {
       activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+    }
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
       activeBtn = btn;
     }
 
+    // 清描红
     traceApi?.clear?.();
 
     if (reset) resetView();
@@ -228,10 +249,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       applyTransform();
 
-      // ✅ 换字时，如果正在描红，重置笔序
+      // ✅ 换字时，如果正在描红：重置到第一笔 -> 示范 -> 允许写
       if (tracingOn) {
         traceApi?.setStrokeIndex?.(0);
-        teaching?.start?.(); // 重新示范第一笔，然后允许写
+        // 先确保 canvas 可交互
+        traceApi?.toggle?.(true);
+        traceApi?.setEnabled?.(true);
+        traceCanvas.style.pointerEvents = "auto";
+        teaching?.start?.();
       }
     } catch (e) {
       stage.innerHTML = `
@@ -243,25 +268,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   }
 
-  // ✅ 5) 初始化描红层 + 教学（重要：trace 初始关闭）
-  const traceApi = initTraceCanvasLayer(traceCanvas);
-  traceApi.toggle(false);
-  traceApi.setEnabled(false);
-  traceCanvas.style.pointerEvents = "none";
-
-  const teaching = initStrokeTeaching(targetEl, stage, traceApi);
-
-  // ✅ 抬笔完成一笔 → 通知 teaching（跟写推进）
-  traceCanvas.addEventListener("trace:strokeend", (e) => {
-    teaching?.onUserStrokeDone?.(e?.detail);
-  });
-
-  // ✅ 6) 字按钮
+  // ✅ 字按钮
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
-    b.className =
-      "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
+    b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
     b.textContent = ch;
     b.setAttribute("data-ch", ch);
     b.onclick = () => loadChar(ch, { reset: true });
@@ -270,7 +281,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (i === 0) queueMicrotask(() => loadChar(ch, { reset: true }));
   });
 
-  // ✅ 7) 顶部按钮
+  // 顶部按钮
   const btnReplay = targetEl.querySelector(".btnReplay");
   const btnReset = targetEl.querySelector(".btnReset");
   const btnTrace = targetEl.querySelector(".btnTrace");
@@ -279,78 +290,84 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnReplay.onclick = () => loadChar(currentChar, { reset: false });
   btnReset.onclick = () => resetView();
 
-  // ✅ ✅ ✅ 关键：一次点击就进入“可写 + 教学示范 + 跟写推进”
-btnTrace.onclick = () => {
-  const next = !tracingOn;
-  tracingOn = next;
+  // ✅✅✅ 关键：一次点击进入「可写 + 示范 + 跟写推进」
+  btnTrace.onclick = () => {
+    tracingOn = !tracingOn;
 
-  if (tracingOn) {
-    // =========================
-    // ✅ 打开：先开 tracing 再开 enabled（顺序很关键）
-    // =========================
-
-    // 1) 显示描红层 + 让 traceApi 内部 state.tracing=true
-    try {
+    if (tracingOn) {
+      // 1) 先显示描红层（让 tracing=true）
       traceApi?.toggle?.(true);
-    } catch (e) {
-      console.warn("[TRACE] toggle(true) failed", e);
-    }
 
-    // 2) 允许描红绘制（让 onPointerDown 不会 return）
-    try {
+      // 2) DOM 层兜底：允许接收点击/手写
+      traceCanvas.style.pointerEvents = "auto";
+
+      // 3) 开启绘制（注意：teaching.start 内部会先 setEnabled(false) 再 300ms 后 true）
       traceApi?.setEnabled?.(true);
-    } catch (e) {
-      console.warn("[TRACE] setEnabled(true) failed", e);
-    }
 
-    // 3) canvas 接收指针事件（DOM 层兜底）
-    if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
+      // 4) 按钮高亮
+      btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
 
-    // 4) 按钮高亮
-    btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
-
-    // 5) 教学/跟写启动（内部会：示范一笔 -> 300ms 后允许写）
-    teaching?.start?.();
-
-  } else {
-    // =========================
-    // ✅ 关闭：先禁用绘制再关 tracing（顺序很关键）
-    // =========================
-
-    // 1) 先禁止绘制，避免关的瞬间还在写
-    try {
+      // 5) 教学开始：示范一笔 -> 解锁 -> 写完一笔推进
+      teaching?.start?.();
+    } else {
+      // 1) 先禁用绘制
       traceApi?.setEnabled?.(false);
-    } catch (e) {
-      console.warn("[TRACE] setEnabled(false) failed", e);
-    }
 
-    // 2) 再隐藏描红层 + state.tracing=false
-    try {
+      // 2) 隐藏描红层
       traceApi?.toggle?.(false);
-    } catch (e) {
-      console.warn("[TRACE] toggle(false) failed", e);
+
+      // 3) DOM 层也关闭
+      traceCanvas.style.pointerEvents = "none";
+
+      // 4) 按钮样式恢复
+      btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+
+      // 5) 停止教学
+      teaching?.stop?.();
     }
+  };
 
-    // 3) DOM 层也关掉指针事件
-    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+  // 读音
+  btnSpeak.onclick = () => {
+    if (window.AIUI?.speak) {
+      window.AIUI.speak(currentChar, "zh-CN");
+      return;
+    }
+    try {
+      const u = new SpeechSynthesisUtterance(currentChar);
+      u.lang = "zh-CN";
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    } catch {
+      showMsg(T.speakFail);
+    }
+  };
 
-    // 4) 取消按钮高亮
-    btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+  // 语言切换
+  const onLangChanged = () => applyLangText();
+  window.addEventListener("joy:langchanged", onLangChanged);
 
-    // 5) 停止教学/跟写
-    teaching?.stop?.();
-  }
-};
+  // 教学完成：最后一笔变黑兜底
+  const onStrokeComplete = () => forceAllStrokesBlack();
+  targetEl.addEventListener("stroke:complete", onStrokeComplete);
 
+  // 清理函数
+  targetEl._strokeCleanup = () => {
+    window.removeEventListener("joy:langchanged", onLangChanged);
+    targetEl.removeEventListener("stroke:complete", onStrokeComplete);
+  };
+}
 
 /* ---------------- helpers ---------------- */
 
 function normalizeChars(input) {
   if (!input) return [];
-  if (Array.isArray(input)) return input.map(String).map((s) => s.trim()).filter(Boolean);
+  if (Array.isArray(input)) {
+    return input.map(String).map((s) => s.trim()).filter(Boolean);
+  }
 
   const s = String(input);
-  // ✅ 不去重：保持用户输入顺序与重复（为“多字练习/自动跳字”更自然）
+  // ✅ 不去重：保持用户输入顺序与重复（多字练习更自然）
   return Array.from(s).filter((ch) => /[\u3400-\u9FFF]/.test(ch));
 }
 
