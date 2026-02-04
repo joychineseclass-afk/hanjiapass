@@ -95,7 +95,9 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // ✅ 完成：自动跳下一个字（page.stroke.js 会接住）
     queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
 
+    // ✅ 完成后锁定输入，并避免 canvas 继续挡住交互
     traceApi?.setEnabled?.(false);
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
   }
 
   function onUserStrokeDone() {
@@ -133,11 +135,28 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   // 这里就会震动
   traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
+  // ✅ ✅ ✅ 关键：统一确保 tracing 打开 + pointerEvents 打开
+  function ensureTracingOn() {
+    // 1) 打开 tracing（若有 toggle）
+    if (typeof traceApi?.toggle === "function") {
+      // 强制打开
+      try {
+        traceApi.toggle(true);
+      } catch {}
+    }
+
+    // 2) 双保险：canvas 必须接收指针
+    if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
+  }
+
   function start() {
     teachingOn = true;
 
     // ✅ 重置到第一笔（换字或重新开始）
     traceApi?.setStrokeIndex?.(0);
+
+    // ✅ 先确保 tracing 打开（否则 enabled=true 也写不了）
+    ensureTracingOn();
 
     // 示范时先锁
     traceApi?.setEnabled?.(false);
@@ -147,14 +166,32 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
     setTimeout(() => {
       demoLock = false;
+
+      // ✅ 示范结束 → 解锁允许写
+      ensureTracingOn();
       traceApi?.setEnabled?.(true);
+
+      // ✅ 你现场调试用：一眼看出到底能不能写
+      try {
+        console.log(
+          "[TEACHING READY]",
+          "enabled:", traceApi?.isEnabled?.?.() ?? traceApi?.isEnabled?.() ?? "(no isEnabled)",
+          "tracing:", traceApi?.isTracing?.?.() ?? traceApi?.isTracing?.() ?? "(no isTracing)",
+          "pointerEvents:", traceCanvas?.style?.pointerEvents
+        );
+      } catch {}
     }, 300);
   }
 
   function stop() {
     teachingOn = false;
     demoLock = false;
+
     traceApi?.setEnabled?.(false);
+
+    // ✅ 关闭时避免挡住其它交互（拖拽/缩放等）
+    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+
     redrawStrokeColor({ finished: true });
   }
 
