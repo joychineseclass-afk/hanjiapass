@@ -278,9 +278,10 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
 
       // ✅ 换字时，如果正在描红：重置笔序并重新开始教学（否则会像“后面卡死”）
       if (tracingOn) {
-        traceApi?.setStrokeIndex?.(0);
-        teaching?.start?.();
-      }
+  traceApi?.setStrokeIndex?.(0);
+  teaching?.start?.();
+  traceCanvas.style.pointerEvents = "auto";
+}
     } catch (e) {
       stage.innerHTML = `
         <div class="text-red-600 text-sm p-3 text-center">
@@ -314,44 +315,48 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
   btnReplay.onclick = () => loadChar(currentChar, { reset: false });
   btnReset.onclick = () => resetView();
 
-  // ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
-  btnTrace.onclick = () => {
-    tracingOn = !tracingOn;
+  // ✅ ✅ ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
+btnTrace.onclick = () => {
+  tracingOn = !tracingOn;
 
-    // 用 class 锁死 CSS（最可靠）
-    targetEl.classList.toggle("trace-on", tracingOn);
+  // 用 class 锁死 CSS（最可靠）
+  targetEl.classList.toggle("trace-on", tracingOn);
 
-    if (tracingOn) {
-      // ✅ 每次开启描红都从第 0 笔开始（避免“前面能写后面卡死”的错觉）
-      traceApi?.setStrokeIndex?.(0);
+  if (tracingOn) {
+    // ✅ 双保险：彻底禁止底层抢事件（解决“正确位置点不到/写不出线”）
+    viewport.style.pointerEvents = "none";
+    stage.style.pointerEvents = "none";
 
-      // 1) 显示描红层
-      traceApi?.toggle?.(true);
+    // 1) 显示描红层
+    traceApi?.toggle?.(true);
 
-      // 2) 允许绘制（teaching.start 内部可能会先示范再打开）
-      traceApi?.setEnabled?.(true);
+    // 2) 允许绘制
+    traceApi?.setEnabled?.(true);
 
-      // 3) DOM 兜底（就算别处改 CSS，也能接事件）
-      traceCanvas.style.pointerEvents = "auto";
-      traceCanvas.style.zIndex = "9999";
-      traceCanvas.style.display = "block";
+    // 3) DOM 兜底：canvas 必须能接事件
+    traceCanvas.style.pointerEvents = "auto";
+    traceCanvas.style.zIndex = "9999";
+    traceCanvas.style.display = "block";
 
-      // 4) 高亮按钮
-      btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
+    // 4) 高亮按钮
+    btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
 
-      // 5) 开始教学
-      teaching?.start?.();
-    } else {
-      // 关闭
-      teaching?.stop?.();
-      traceApi?.setEnabled?.(false);
-      traceApi?.toggle?.(false);
+    // 5) 开始教学
+    teaching?.start?.();
+  } else {
+    // ✅ 关闭描红：恢复底层事件
+    viewport.style.pointerEvents = "auto";
+    stage.style.pointerEvents = "auto";
 
-      traceCanvas.style.pointerEvents = "none";
+    teaching?.stop?.();
+    traceApi?.setEnabled?.(false);
+    traceApi?.toggle?.(false);
 
-      btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
-    }
-  };
+    traceCanvas.style.pointerEvents = "none";
+
+    btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+  }
+};
 
   btnSpeak.onclick = () => {
     if (window.AIUI?.speak) {
