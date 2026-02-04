@@ -72,7 +72,7 @@ function ensureTraceCssLock() {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  // ✅ 清理旧监听
+  // ✅ 清理旧监听（非常关键）
   try {
     targetEl._strokeCleanup?.();
   } catch {}
@@ -111,7 +111,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
           </div>
         </div>
 
-        <!-- ✅ 注意：这里不要再写 hidden，隐藏交给 traceApi.toggle(false) 控制 -->
+        <!-- ✅ 不要写 hidden，交给 traceApi.toggle(false) 控制 -->
         <canvas id="traceCanvas"
                 class="absolute inset-0 w-full h-full"
                 style="pointer-events:none;"></canvas>
@@ -130,13 +130,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const btnWrap = targetEl.querySelector("#strokeBtns");
   const stage = targetEl.querySelector("#strokeStage");
-  const viewport = targetEl.querySelector("#strokeViewport");
   const traceCanvas = targetEl.querySelector("#traceCanvas");
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
 
   let currentChar = chars[0];
-  let scale = 1, tx = 0, ty = 0;
+  let scale = 1,
+    tx = 0,
+    ty = 0;
   let activeBtn = null;
 
   // ✅ 描红状态只由按钮控制
@@ -163,7 +164,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   }
 
   function resetView() {
-    scale = 1; tx = 0; ty = 0;
+    scale = 1;
+    tx = 0;
+    ty = 0;
     applyTransform();
     showMsg(T.resetDone);
   }
@@ -210,7 +213,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     });
   }
 
-  // ✅ 5) 初始化描红层 + 教学
+  // ✅ 初始化描红层 + 教学
   const traceApi = initTraceCanvasLayer(traceCanvas, {
     enabledDefault: false,
     tracingDefault: false
@@ -223,16 +226,19 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
 
-  // ✅ 抬笔完成一笔 → 推进教学
-  traceCanvas.addEventListener("trace:strokeend", (e) => {
+  // ✅ ✅ ✅ 关键修复：可清理的 strokeend handler（防重复绑定导致双示范/卡死）
+  const onStrokeEnd = (e) => {
     teaching?.onUserStrokeDone?.(e?.detail);
-  });
+  };
+  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
 
-    if (activeBtn)
+    if (activeBtn) {
       activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+    }
+
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
@@ -256,7 +262,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     stage.innerHTML = `loading...`;
 
     try {
-      const res = await fetch(url + (url.includes("?") ? "&" : "?") + "v=" + Date.now());
+      const res = await fetch(
+        url + (url.includes("?") ? "&" : "?") + "v=" + Date.now()
+      );
       if (!res.ok) throw new Error("HTTP_" + res.status);
 
       const svgText = await res.text();
@@ -274,7 +282,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       applyTransform();
 
-      // ✅ 换字时，如果正在描红，重置笔序并重新示范
+      // ✅ 换字时：如果正在描红，重置笔序并重新示范
       if (tracingOn) {
         traceApi?.setStrokeIndex?.(0);
         teaching?.start?.();
@@ -289,7 +297,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   }
 
-  // ✅ 6) 字按钮
+  // ✅ 字按钮
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
@@ -303,7 +311,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (i === 0) queueMicrotask(() => loadChar(ch, { reset: true }));
   });
 
-  // ✅ 7) 顶部按钮
+  // ✅ 顶部按钮
   const btnReplay = targetEl.querySelector(".btnReplay");
   const btnReset = targetEl.querySelector(".btnReset");
   const btnTrace = targetEl.querySelector(".btnTrace");
@@ -316,29 +324,24 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnTrace.onclick = () => {
     tracingOn = !tracingOn;
 
-    // 用 class 锁死 CSS（最可靠）
+    // 用 class 锁死 CSS（最可靠：确保 canvas 在最上层）
     targetEl.classList.toggle("trace-on", tracingOn);
 
     if (tracingOn) {
-      // 1) 显示描红层
       traceApi?.toggle?.(true);
 
-      // 2) 允许绘制（注意：teaching.start 会短暂 setEnabled(false) 示范，然后再打开）
+      // 注意：teaching.start 会示范时临时禁用，然后再解锁
       traceApi?.setEnabled?.(true);
 
-      // 3) DOM 兜底（就算别处改 CSS，也能接事件）
+      // DOM 兜底
       traceCanvas.style.pointerEvents = "auto";
-      traceCanvas.style.zIndex = "9999";
-      traceCanvas.style.display = "block";
 
-      // 4) 高亮按钮
       btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
 
-      // 5) 开始教学
       teaching?.start?.();
     } else {
-      // 关闭
       teaching?.stop?.();
+
       traceApi?.setEnabled?.(false);
       traceApi?.toggle?.(false);
 
@@ -371,10 +374,26 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const onStrokeComplete = () => forceAllStrokesBlack();
   targetEl.addEventListener("stroke:complete", onStrokeComplete);
 
-  // 清理
+  // ✅ 清理（非常关键：否则会重复绑定导致双示范/卡死）
   targetEl._strokeCleanup = () => {
     window.removeEventListener("joy:langchanged", onLangChanged);
     targetEl.removeEventListener("stroke:complete", onStrokeComplete);
+
+    // ✅ 关键：清理 strokeend 监听
+    try {
+      traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd);
+    } catch {}
+
+    // ✅ 退出时也关掉 trace 状态，避免残留
+    try {
+      teaching?.stop?.();
+      traceApi?.setEnabled?.(false);
+      traceApi?.toggle?.(false);
+    } catch {}
+
+    try {
+      targetEl.classList.remove("trace-on");
+    } catch {}
   };
 }
 
@@ -382,7 +401,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
 function normalizeChars(input) {
   if (!input) return [];
-  if (Array.isArray(input)) return input.map(String).map((s) => s.trim()).filter(Boolean);
+  if (Array.isArray(input)) {
+    return input.map(String).map((s) => s.trim()).filter(Boolean);
+  }
 
   const s = String(input);
   // ✅ 不去重：保持输入顺序（多字练习更自然）
@@ -396,6 +417,7 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;");
 }
 
+// ✅ 你 loadChar 里用到了这个：必须存在，否则直接报错打不开
 function cssEscape(s) {
   return String(s).replace(/"/g, '\\"');
 }
