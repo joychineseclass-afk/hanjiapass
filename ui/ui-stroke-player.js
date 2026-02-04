@@ -72,7 +72,7 @@ function ensureTraceCssLock() {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  // ✅ 清理旧监听
+  // ✅ 清理旧监听（防止重复绑定导致“越写越卡/后面不推进”）
   try {
     targetEl._strokeCleanup?.();
   } catch {}
@@ -223,10 +223,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
 
-  // ✅ 抬笔完成一笔 → 推进教学
-  traceCanvas.addEventListener("trace:strokeend", (e) => {
+  // ✅ 关键：监听必须在 teaching 创建之后（否则 teaching 为空）
+  const onStrokeEnd = (e) => {
     teaching?.onUserStrokeDone?.(e?.detail);
-  });
+  };
+  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
@@ -274,7 +275,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       applyTransform();
 
-      // ✅ 换字时，如果正在描红，重置笔序并重新示范
+      // ✅ 换字时，如果正在描红：重置笔序并重新开始教学（否则会像“后面卡死”）
       if (tracingOn) {
         traceApi?.setStrokeIndex?.(0);
         teaching?.start?.();
@@ -312,7 +313,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnReplay.onclick = () => loadChar(currentChar, { reset: false });
   btnReset.onclick = () => resetView();
 
-  // ✅ ✅ ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
+  // ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
   btnTrace.onclick = () => {
     tracingOn = !tracingOn;
 
@@ -320,10 +321,13 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     targetEl.classList.toggle("trace-on", tracingOn);
 
     if (tracingOn) {
+      // ✅ 每次开启描红都从第 0 笔开始（避免“前面能写后面卡死”的错觉）
+      traceApi?.setStrokeIndex?.(0);
+
       // 1) 显示描红层
       traceApi?.toggle?.(true);
 
-      // 2) 允许绘制（注意：teaching.start 会短暂 setEnabled(false) 示范，然后再打开）
+      // 2) 允许绘制（teaching.start 内部可能会先示范再打开）
       traceApi?.setEnabled?.(true);
 
       // 3) DOM 兜底（就算别处改 CSS，也能接事件）
@@ -371,10 +375,18 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const onStrokeComplete = () => forceAllStrokesBlack();
   targetEl.addEventListener("stroke:complete", onStrokeComplete);
 
-  // 清理
+  // ✅ ✅ ✅ 只保留一个 cleanup：全部解绑（防“越写越卡/后面卡死”）
   targetEl._strokeCleanup = () => {
-    window.removeEventListener("joy:langchanged", onLangChanged);
-    targetEl.removeEventListener("stroke:complete", onStrokeComplete);
+    try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
+    try { targetEl.removeEventListener("stroke:complete", onStrokeComplete); } catch {}
+    try { traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
+
+    // 兜底：关闭描红，避免残留状态影响下次 mount
+    try { teaching?.stop?.(); } catch {}
+    try { traceApi?.setEnabled?.(false); } catch {}
+    try { traceApi?.toggle?.(false); } catch {}
+    try { traceCanvas.style.pointerEvents = "none"; } catch {}
+    try { targetEl.classList.remove("trace-on"); } catch {}
   };
 }
 
