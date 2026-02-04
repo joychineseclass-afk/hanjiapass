@@ -58,7 +58,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     glowOnce._t = setTimeout(() => traceCanvas.classList.remove("trace-glow"), 180);
   }
 
-  // ✅ 确保有 glow 的 css（只注入一次）
+  // ✅ 确保 glow CSS 只注入一次
   try {
     if (!document.getElementById("trace-glow-style")) {
       const st = document.createElement("style");
@@ -70,31 +70,22 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     }
   } catch {}
 
-  function ensureTracingOn() {
-    // ✅ 关键兜底：必须让 traceApi 的 state.tracing=true
-    // 否则 onPointerDown 会直接 return（看起来能点，实际画不上）
-    try {
-      if (typeof traceApi?.toggle === "function") traceApi.toggle(true);
-    } catch {}
-
-    // ✅ 同步 DOM 层可写（再兜底一次）
-    try {
-      if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
-    } catch {}
-  }
-
-  function playDemoOneStroke() {
+  // ✅ 示范指定笔（核心：后续每一笔都要示范）
+  function playDemoStrokeAt(index) {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return false;
 
     const strokes = getStrokeAnims(svg);
     if (!strokes.length) return false;
 
-    const i = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
-    const s = strokes[i] || strokes[0];
+    const i = Math.max(0, Math.min(Number(index ?? 0) || 0, strokes.length - 1));
+    const s = strokes[i];
     if (!s) return false;
 
+    // 当前笔浅蓝，其它灰，已完成橘
     redrawStrokeColor({ activeIndex: i, finished: false });
+
+    // 触发该笔 CSS 动画（显示“路线/示范”）
     replayCssAnimation(s);
     return true;
   }
@@ -108,15 +99,32 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // ✅ 完成：自动跳下一个字（page.stroke.js 会接住）
     queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
 
-    // ✅ 收尾：禁止继续写（你如果想写完还能继续描红，就删掉这行）
+    // ✅ 完成后关闭写入（下一字会重新 start）
     traceApi?.setEnabled?.(false);
+  }
+
+  // ✅ 每一笔完成后：示范下一笔 → 解锁 → 允许写
+  function demoNextAndUnlock(nextIdx) {
+    // 锁住用户输入
+    demoLock = true;
+    traceApi?.setEnabled?.(false);
+
+    // 示范下一笔（如果失败就直接解锁）
+    const ok = playDemoStrokeAt(nextIdx);
+
+    // 300ms 后允许写（你想更慢就改 450/600）
+    setTimeout(() => {
+      demoLock = false;
+      // teachingOn 还在才解锁，避免用户中途关掉
+      if (teachingOn) traceApi?.setEnabled?.(true);
+    }, ok ? 300 : 0);
   }
 
   function onUserStrokeDone() {
     if (!teachingOn) return;
     if (demoLock) return;
 
-    glowOnce();
+    glowOnce(); // ✅ 写完发光（先按完成一笔就奖励）
 
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
@@ -125,66 +133,57 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const total = strokes.length || 0;
     if (!total) return;
 
-    // initTraceCanvasLayer 在抬笔时 autoAdvanceIndex++，所以这里读到的是“下一笔 index”
+    // ✅ traceApi 在 pointerup 已经 autoAdvanceIndex++，
+    // 所以这里读到的是“下一笔 index”
     const idx = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
 
+    // ✅ 已经写完最后一笔
     if (idx >= total) {
       finishWholeChar();
       return;
     }
 
+    // ✅ 推进颜色（当前 idx 变浅蓝）
     redrawStrokeColor({ activeIndex: idx, finished: false });
+
+    // ✅ 🔥 关键：示范下一笔，然后解锁让用户写
+    demoNextAndUnlock(idx);
   }
 
   function vibrateWrong() {
+    // ✅ 写错震动：目前没有判错信号，预留接口
     try {
       navigator.vibrate?.([60, 40, 60]);
     } catch {}
   }
+
+  // 你以后如果做“判错”，只要在别处 dispatchEvent(new CustomEvent("trace:wrong"))
+  // 这里就会震动
   traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
   function start() {
     teachingOn = true;
 
-    // ✅ 关键：开启 tracing（否则你永远画不上）
-    ensureTracingOn();
-
-    // ✅ 重置到第一笔（换字或重新开始）
+    // ✅ 重置到第一笔
     traceApi?.setStrokeIndex?.(0);
 
-    // ✅ 清空旧笔迹（更像“开始练习”）
-    traceApi?.clear?.();
-
-    // ✅ 学生写的颜色（橘色）
-    traceApi?.setPenColor?.("#FB923C");
-
-    // 示范时先锁
-    traceApi?.setEnabled?.(false);
+    // ✅ 第一笔先示范，再允许写
     demoLock = true;
+    traceApi?.setEnabled?.(false);
 
-    playDemoOneStroke();
+    // 示范第一笔
+    playDemoStrokeAt(0);
 
-    // ✅ 示范后允许写
     setTimeout(() => {
       demoLock = false;
-
-      // 再兜底一次：有些时候外层又把 tracing 关掉
-      ensureTracingOn();
-
-      traceApi?.setEnabled?.(true);
+      if (teachingOn) traceApi?.setEnabled?.(true);
     }, 300);
   }
 
   function stop() {
     teachingOn = false;
     demoLock = false;
-
-    // 关闭时禁止写
     traceApi?.setEnabled?.(false);
-
-    // 可选：也把 tracing 关掉（由 player 控制更一致）
-    // try { traceApi?.toggle?.(false); } catch {}
-
     redrawStrokeColor({ finished: true });
   }
 
