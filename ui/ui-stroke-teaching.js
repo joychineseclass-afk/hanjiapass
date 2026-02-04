@@ -70,19 +70,17 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     }
   } catch {}
 
-  // ✅ ⭐关键：保证“真的能写”所需的 3 件事都打开
-  function ensureTracingWritable(on) {
-    // 1) traceApi 的 tracing 状态（决定 onPointerDown 是否直接 return）
+  function ensureTracingOn() {
+    // ✅ 关键兜底：必须让 traceApi 的 state.tracing=true
+    // 否则 onPointerDown 会直接 return（看起来能点，实际画不上）
     try {
-      if (typeof traceApi?.toggle === "function") traceApi.toggle(!!on);
+      if (typeof traceApi?.toggle === "function") traceApi.toggle(true);
     } catch {}
 
-    // 2) canvas 可见
-    if (traceCanvas) {
-      traceCanvas.classList.toggle("hidden", !on);
-      // 3) 能接收指针
-      traceCanvas.style.pointerEvents = on ? "auto" : "none";
-    }
+    // ✅ 同步 DOM 层可写（再兜底一次）
+    try {
+      if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
+    } catch {}
   }
 
   function playDemoOneStroke() {
@@ -110,7 +108,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     // ✅ 完成：自动跳下一个字（page.stroke.js 会接住）
     queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
 
-    // 完成后锁住
+    // ✅ 收尾：禁止继续写（你如果想写完还能继续描红，就删掉这行）
     traceApi?.setEnabled?.(false);
   }
 
@@ -118,7 +116,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     if (!teachingOn) return;
     if (demoLock) return;
 
-    glowOnce(); // ✅ 写对发光（你未来加判错后可改为“判对才 glow”）
+    glowOnce();
 
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
@@ -127,7 +125,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     const total = strokes.length || 0;
     if (!total) return;
 
-    // initTraceCanvasLayer 默认 autoAdvanceIndex=true，所以抬笔后 index 已是“下一笔”
+    // initTraceCanvasLayer 在抬笔时 autoAdvanceIndex++，所以这里读到的是“下一笔 index”
     const idx = Number(traceApi?.getStrokeIndex?.() ?? 0) || 0;
 
     if (idx >= total) {
@@ -139,24 +137,26 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   }
 
   function vibrateWrong() {
-    // ✅ 写错震动：目前没有判错信号，先做预留
     try {
       navigator.vibrate?.([60, 40, 60]);
     } catch {}
   }
-
-  // 你以后如果做“判错”，只要在别处 dispatchEvent(new CustomEvent("trace:wrong"))
-  // 这里就会震动
   traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
   function start() {
     teachingOn = true;
 
-    // ✅ ⭐关键：开始教学时，先把 tracing 真正打开 + 允许接收指针
-    ensureTracingWritable(true);
+    // ✅ 关键：开启 tracing（否则你永远画不上）
+    ensureTracingOn();
 
-    // ✅ 重置到第一笔
+    // ✅ 重置到第一笔（换字或重新开始）
     traceApi?.setStrokeIndex?.(0);
+
+    // ✅ 清空旧笔迹（更像“开始练习”）
+    traceApi?.clear?.();
+
+    // ✅ 学生写的颜色（橘色）
+    traceApi?.setPenColor?.("#FB923C");
 
     // 示范时先锁
     traceApi?.setEnabled?.(false);
@@ -164,17 +164,14 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
     playDemoOneStroke();
 
-    // 示范结束后允许学生写
+    // ✅ 示范后允许写
     setTimeout(() => {
       demoLock = false;
 
-      // ✅ 仍然确保 tracing 没被外部关掉
-      ensureTracingWritable(true);
+      // 再兜底一次：有些时候外层又把 tracing 关掉
+      ensureTracingOn();
 
       traceApi?.setEnabled?.(true);
-
-      // ✅ 调试：你可以看 console 里这三个是不是正确
-      // console.log("[teach] enabled=", traceApi?.isEnabled?.(), "tracing=", traceApi?.isTracing?.(), "pe=", traceCanvas?.style?.pointerEvents);
     }, 300);
   }
 
@@ -182,15 +179,15 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     teachingOn = false;
     demoLock = false;
 
+    // 关闭时禁止写
     traceApi?.setEnabled?.(false);
 
-    // ✅ 关闭时是否隐藏 canvas：这里按你的原逻辑“退出就不让写”
-    ensureTracingWritable(false);
+    // 可选：也把 tracing 关掉（由 player 控制更一致）
+    // try { traceApi?.toggle?.(false); } catch {}
 
     redrawStrokeColor({ finished: true });
   }
 
-  // ✅ 返回给 ui-stroke-player.js 使用
   return {
     start,
     stop,
