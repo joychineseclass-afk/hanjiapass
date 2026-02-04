@@ -225,9 +225,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   // ✅ 关键：监听必须在 teaching 创建之后（否则 teaching 为空）
   const onStrokeEnd = (e) => {
-    teaching?.onUserStrokeDone?.(e?.detail);
-  };
-  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
+  console.log("[strokeend]", currentChar, e?.detail, "apiIdx=", traceApi?.getStrokeIndex?.());
+  teaching?.onUserStrokeDone?.(e?.detail);
+};
+traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
