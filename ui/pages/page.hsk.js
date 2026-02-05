@@ -100,9 +100,10 @@ async function ensureHSKDeps() {
     }
 
     // ✅ 统一用绝对路径，避免相对路径错位
-    await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
-    await loadScriptOnce("/ui/modules/hsk/hskRenderer.js");
-    await loadScriptOnce("/ui/modules/hsk/hskHistory.js");
+    await loadScriptOnce("../modules/hsk/hskLoader.js");
+    await loadScriptOnce("../modules/hsk/hskRenderer.js");
+    await loadScriptOnce("../modules/hsk/hskHistory.js");
+
 
     // ✅ 最后确认全局对象真的挂出来了
     if (!window.HSK_LOADER?.loadVocab) {
