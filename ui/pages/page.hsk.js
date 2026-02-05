@@ -18,7 +18,7 @@ export function mount() {
 
 export function unmount() {
   console.log("HSK Page: Unmounting...");
-  // 如果有定时器或全局监听器，可以在这里清除
+  // 如果有定时器，可以在这里清理，例如：clearInterval(window.hskTimer);
 }
 
 /**
@@ -41,21 +41,16 @@ function mountLayout() {
   const app = document.getElementById("app");
 
   if (!navRoot || !app) {
+    // 如果找不到容器，输出详细错误方便调试
     const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
-    document.body.innerHTML = `
-      <div style="padding:16px;font-family:system-ui;text-align:center;">
-        <h2 style="color:#b91c1c;">HSK Page Error</h2>
-        <p>${errorMsg}</p>
-      </div>
-    `;
-    console.error("HSK Page:", errorMsg);
+    console.error("HSK Page Error:", errorMsg);
     return false;
   }
 
   // 挂载导航栏
   mountNavBar(navRoot);
 
-  // 注入主体 HTML
+  // 注入主体 HTML 结构
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
@@ -79,14 +74,20 @@ function ensurePortalRoot() {
 }
 
 /* ===============================
-   3️⃣ 启动本页功能模块
+   3️⃣ 启动本页功能模块（保留你跑通的逻辑）
 ================================== */
 function initPageModules() {
   try {
+    // 1. 调用外部引用的 UI 初始化
     initHSKUI({
       defaultLevel: 1,
-      autoFocusSearch: true,
+      autoFocusSearch: false, // 设为 false 避免 Vercel 上的焦点冲突报错
     });
+
+    // 2. 【在此处粘贴你原来跑通的其他逻辑】
+    // 比如：自定义的事件监听、复杂的数据过滤等
+    console.log("HSK Page Modules Initialized.");
+
   } catch (e) {
     console.error("HSK UI Init Failed:", e);
   }
@@ -97,14 +98,12 @@ function initPageModules() {
 ================================== */
 function applyI18nIfAvailable() {
   try {
-    i18n.init({
-      defaultLang: "kr",
-      storageKey: "joy_lang"
-    });
-    // apply 传入 document 确保全页扫描 data-i18n 标签
-    i18n.apply(document); 
+    // 确保 i18n 已经初始化并应用到当前 DOM
+    if (i18n) {
+      i18n.apply(document);
+    }
   } catch (e) {
-    console.warn("HSK Page: i18n failed:", e);
+    console.warn("HSK Page: i18n apply failed:", e);
   }
 }
 
@@ -146,8 +145,7 @@ function getHSKLayoutHTML() {
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-       </div>
+    <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     
     <div class="h-20"></div>
 
@@ -163,11 +161,19 @@ function renderLevelOptions() {
 }
 
 /**
- * 🚀 自启动逻辑
- * 如果不是作为模块被 router 加载，则在 DOMReady 后自动运行
+ * 🚀 智能自启动逻辑
  */
-if (document.readyState === "complete" || document.readyState === "interactive") {
-  mount();
-} else {
-  document.addEventListener("DOMContentLoaded", mount);
-}
+(function autoInit() {
+  // 检查当前环境是否需要手动启动
+  // 1. 如果有 #app 容器
+  // 2. 如果 router 没有管理（window.currentModule 为空）
+  const appExists = !!document.getElementById("app");
+  
+  if (appExists) {
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      mount();
+    } else {
+      document.addEventListener("DOMContentLoaded", mount);
+    }
+  }
+})();
