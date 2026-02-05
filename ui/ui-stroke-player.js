@@ -72,7 +72,7 @@ function ensureTraceCssLock() {
 export function mountStrokeSwitcher(targetEl, hanChars) {
   if (!targetEl) return;
 
-  // ✅ 清理旧监听（防止重复绑定导致“越写越卡/后面不推进”）
+  // ✅ 清理旧监听（防止重复绑定导致“越写越卡/重复声明”）
   try {
     targetEl._strokeCleanup?.();
   } catch {}
@@ -103,6 +103,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
+      <!-- ✅ 笔顺展示区 -->
       <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none">
         <div id="strokeViewport" class="absolute inset-0" style="touch-action:auto;">
           <div id="strokeStage"
@@ -110,31 +111,6 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
             loading...
           </div>
         </div>
-      <!-- ✅ 练习区（默认隐藏，点 따라쓰기 才显示） -->
-<div id="practiceWrap" class="mt-3 hidden">
-  <div class="flex items-center gap-2 flex-wrap mb-2">
-    <label class="text-xs text-gray-600">색상</label>
-    <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
-      <option value="#FB923C">주황</option>
-      <option value="#3B82F6">파랑</option>
-      <option value="#111827">검정</option>
-      <option value="#22C55E">초록</option>
-      <option value="#EF4444">빨강</option>
-      <option value="#A855F7">보라</option>
-    </select>
-
-    <label class="text-xs text-gray-600 ml-2">굵기</label>
-    <input id="penWidth" type="range" min="2" max="18" value="8" />
-
-    <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">
-      지우기
-    </button>
-  </div>
-
-  <div class="w-full aspect-square bg-white rounded-xl overflow-hidden relative border">
-    <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full"></canvas>
-  </div>
-</div>
 
         <!-- ✅ 注意：这里不要再写 hidden，隐藏交给 traceApi.toggle(false) 控制 -->
         <canvas id="traceCanvas"
@@ -150,6 +126,32 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
              class="absolute left-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded hidden">
         </div>
       </div>
+
+      <!-- ✅ 练习区（默认隐藏，点 따라쓰기 才显示） -->
+      <div id="practiceWrap" class="mt-3 hidden">
+        <div class="flex items-center gap-2 flex-wrap mb-2">
+          <label class="text-xs text-gray-600">색상</label>
+          <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
+            <option value="#FB923C">주황</option>
+            <option value="#3B82F6">파랑</option>
+            <option value="#111827">검정</option>
+            <option value="#22C55E">초록</option>
+            <option value="#EF4444">빨강</option>
+            <option value="#A855F7">보라</option>
+          </select>
+
+          <label class="text-xs text-gray-600 ml-2">굵기</label>
+          <input id="penWidth" type="range" min="2" max="18" value="8" />
+
+          <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">
+            지우기
+          </button>
+        </div>
+
+        <div class="w-full aspect-square bg-white rounded-xl overflow-hidden relative border">
+          <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full"></canvas>
+        </div>
+      </div>
     </div>
   `;
 
@@ -159,12 +161,13 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const traceCanvas = targetEl.querySelector("#traceCanvas");
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
+
+  // ✅ 练习区 dom
   const practiceWrap = targetEl.querySelector("#practiceWrap");
   const practiceCanvas = targetEl.querySelector("#practiceCanvas");
   const penColorEl = targetEl.querySelector("#penColor");
   const penWidthEl = targetEl.querySelector("#penWidth");
   const btnClearPractice = targetEl.querySelector("#btnClearPractice");
-
 
   let currentChar = chars[0];
   let scale = 1, tx = 0, ty = 0;
@@ -241,63 +244,67 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     });
   }
 
-  // ✅ 5) 初始化描红层 + 教学
+  // =========================
+  // ✅ 1) 笔顺描红层（跟写判定用）
+  // =========================
   const traceApi = initTraceCanvasLayer(traceCanvas, {
     enabledDefault: false,
     tracingDefault: false
   });
-
-  // ✅ 自由练习画布（与演示区分离，永不做笔画判定）
-const practiceApi = initTraceCanvasLayer(practiceCanvas, {
-  enabledDefault: true,
-  tracingDefault: true,
-  penColor: "#FB923C",
-  lineWidth: Number(penWidthEl?.value || 8),
-  alpha: 0.9,
-  autoAdvanceIndex: false, // ✅ 自由画不需要 strokeIndex++
-});
-
-// 默认可写
-practiceApi.toggle(true);
-practiceApi.setEnabled(true);
-practiceCanvas.style.pointerEvents = "auto";
-
-// 颜色
-penColorEl?.addEventListener("change", () => {
-  practiceApi.setPenColor(penColorEl.value);
-});
-
-// 粗细
-penWidthEl?.addEventListener("input", () => {
-  practiceApi.setPenWidth?.(Number(penWidthEl.value) || 8);
-  // 如果你没加 setPenWidth，也可以用：
-  // practiceApi.setStyle({ width: Number(penWidthEl.value) || 8 });
-});
-
-// 清空
-btnClearPractice?.addEventListener("click", () => {
-  practiceApi.clear();
-});
 
   // 初始关闭（保证状态一致）
   traceApi.toggle(false);
   traceApi.setEnabled(false);
   traceCanvas.style.pointerEvents = "none";
 
+  // =========================
+  // ✅ 2) 教学逻辑（示范 + 推进）
+  // =========================
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
 
-  // ✅ 关键：监听必须在 teaching 创建之后（否则 teaching 为空）
   const onStrokeEnd = (e) => {
-  console.log("[strokeend]", currentChar, e?.detail, "apiIdx=", traceApi?.getStrokeIndex?.());
-  teaching?.onUserStrokeDone?.(e?.detail);
-};
-traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
+    teaching?.onUserStrokeDone?.(e?.detail);
+  };
+  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
+
+  // =========================
+  // ✅ 3) 自由练习画布（不做笔画判定）
+  // =========================
+  const practiceApi = initTraceCanvasLayer(practiceCanvas, {
+    enabledDefault: true,
+    tracingDefault: true,
+    penColor: "#FB923C",
+    lineWidth: Number(penWidthEl?.value || 8),
+    alpha: 0.9,
+    autoAdvanceIndex: false
+  });
+
+  // 默认允许画（但 practiceWrap 默认 hidden，所以用户看不到）
+  practiceApi.toggle(true);
+  practiceApi.setEnabled(true);
+  if (practiceCanvas) practiceCanvas.style.pointerEvents = "auto";
+
+  // 颜色
+  penColorEl?.addEventListener("change", () => {
+    practiceApi.setPenColor(penColorEl.value);
+  });
+
+  // 粗细：用 setStyle 改线宽（你 traceApi 里没有 setPenWidth）
+  penWidthEl?.addEventListener("input", () => {
+    practiceApi.setStyle({ width: Number(penWidthEl.value) || 8 });
+  });
+
+  // 清空
+  btnClearPractice?.addEventListener("click", () => {
+    practiceApi.clear();
+  });
 
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
 
-    if (activeBtn)
+    if (activeBtn) {
       activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+    }
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
@@ -305,7 +312,6 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
     }
 
     traceApi?.clear?.();
-
     if (reset) resetView();
 
     const url = strokeUrl(ch);
@@ -339,12 +345,12 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
 
       applyTransform();
 
-      // ✅ 换字时，如果正在描红：重置笔序并重新开始教学（否则会像“后面卡死”）
+      // ✅ 换字时，如果正在描红：重置笔序并重新开始教学
       if (tracingOn) {
-  traceApi?.setStrokeIndex?.(0);
-  teaching?.start?.();
-  traceCanvas.style.pointerEvents = "auto";
-}
+        traceApi?.setStrokeIndex?.(0);
+        teaching?.start?.();
+        traceCanvas.style.pointerEvents = "auto";
+      }
     } catch (e) {
       stage.innerHTML = `
         <div class="text-red-600 text-sm p-3 text-center">
@@ -359,8 +365,7 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
-    b.className =
-      "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
+    b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
     b.textContent = ch;
     b.setAttribute("data-ch", ch);
     b.onclick = () => loadChar(ch, { reset: true });
@@ -378,97 +383,83 @@ traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
   btnReplay.onclick = () => loadChar(currentChar, { reset: false });
   btnReset.onclick = () => resetView();
 
-  // ✅ ✅ ✅ 一次点击：进入可写 + 示范 + 跟写推进（并锁死事件层）
-// 🌟 简化版：只控制练习区显示，不再做笔画判定
-const practiceWrap = targetEl.querySelector("#practiceWrap");
-const practiceCanvas = targetEl.querySelector("#practiceCanvas");
+  // ✅ 따라쓰기：开启/关闭 “示范+跟写” + 显示/隐藏 “自由练习”
+  btnTrace.onclick = () => {
+    tracingOn = !tracingOn;
 
-let practiceApi = null;
+    // 用 class 锁死 CSS（最可靠）
+    targetEl.classList.toggle("trace-on", tracingOn);
 
-function initPracticeCanvas() {
-  if (!practiceCanvas) return;
+    if (tracingOn) {
+      // 1) 打开描红层
+      traceApi?.toggle?.(true);
+      traceApi?.setEnabled?.(true);
+      traceCanvas.style.pointerEvents = "auto";
 
-  const ctx = practiceCanvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
+      // 2) 开始教学（示范第一笔 → 解锁让写）
+      traceApi?.setStrokeIndex?.(0);
+      teaching?.start?.();
 
-  function resize() {
-    const r = practiceCanvas.getBoundingClientRect();
-    practiceCanvas.width = r.width * dpr;
-    practiceCanvas.height = r.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  resize();
-  window.addEventListener("resize", resize);
+      // 3) 显示自由练习区
+      practiceWrap?.classList.remove("hidden");
 
-  let drawing = false;
-  let lastX = 0;
-  let lastY = 0;
-  let color = "#FB923C";
-  let width = 8;
+      // 4) 按钮高亮
+      btnTrace.classList.add("bg-orange-400", "text-white", "hover:bg-orange-500");
+    } else {
+      // 关闭教学 + 描红
+      try { teaching?.stop?.(); } catch {}
+      try { traceApi?.setEnabled?.(false); } catch {}
+      try { traceApi?.toggle?.(false); } catch {}
 
-  function pos(e) {
-    const r = practiceCanvas.getBoundingClientRect();
-    return { x: e.clientX - r.left, y: e.clientY - r.top };
-  }
+      traceCanvas.style.pointerEvents = "none";
+      targetEl.classList.remove("trace-on");
 
-  practiceCanvas.style.touchAction = "none";
+      // 隐藏练习区
+      practiceWrap?.classList.add("hidden");
 
-  practiceCanvas.addEventListener("pointerdown", (e) => {
-    drawing = true;
-    const p = pos(e);
-    lastX = p.x;
-    lastY = p.y;
-  });
+      btnTrace.classList.remove("bg-orange-400", "text-white", "hover:bg-orange-500");
+    }
+  };
 
-  practiceCanvas.addEventListener("pointermove", (e) => {
-    if (!drawing) return;
-    const p = pos(e);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
-    lastX = p.x;
-    lastY = p.y;
-  });
+  // 发音（尽量普通话）
+  btnSpeak.onclick = () => {
+    try {
+      // ✅ 如果你有自己的 AIUI，就优先
+      if (window.AIUI?.speak) {
+        window.AIUI.speak(currentChar, "zh-CN");
+        return;
+      }
+      const u = new SpeechSynthesisUtterance(currentChar);
+      u.lang = "zh-CN";
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    } catch {
+      showMsg(T.speakFail);
+    }
+  };
 
-  window.addEventListener("pointerup", () => (drawing = false));
+  // 语言切换
+  const onLangChanged = () => applyLangText();
+  window.addEventListener("joy:langchanged", onLangChanged);
 
-  practiceApi = {
-    setColor(c) { color = c; },
-    setWidth(w) { width = Number(w); },
-    clear() { ctx.clearRect(0, 0, practiceCanvas.width, practiceCanvas.height); }
+  // 完成收尾（最后一笔变黑）
+  const onStrokeComplete = () => forceAllStrokesBlack();
+  targetEl.addEventListener("stroke:complete", onStrokeComplete);
+
+  // ✅ cleanup：防止重复 mount 时“声明重复/监听叠加/越来越卡”
+  targetEl._strokeCleanup = () => {
+    try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
+    try { targetEl.removeEventListener("stroke:complete", onStrokeComplete); } catch {}
+    try { traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
+
+    // 兜底：关闭描红
+    try { teaching?.stop?.(); } catch {}
+    try { traceApi?.setEnabled?.(false); } catch {}
+    try { traceApi?.toggle?.(false); } catch {}
+    try { traceCanvas.style.pointerEvents = "none"; } catch {}
+    try { targetEl.classList.remove("trace-on"); } catch {}
   };
 }
-
-queueMicrotask(initPracticeCanvas);
-
-// 🎨 颜色 & 粗细
-targetEl.querySelector("#penColor")?.addEventListener("change", (e) => {
-  practiceApi?.setColor(e.target.value);
-});
-targetEl.querySelector("#penWidth")?.addEventListener("input", (e) => {
-  practiceApi?.setWidth(e.target.value);
-});
-targetEl.querySelector("#btnClearPractice")?.addEventListener("click", () => {
-  practiceApi?.clear();
-});
-
-// ✏️ 따라쓰기 按钮
-btnTrace.onclick = () => {
-  const on = practiceWrap.classList.toggle("hidden");
-  if (!on) {
-    // 显示练习区
-    practiceWrap.classList.remove("hidden");
-    btnTrace.classList.add("bg-orange-400", "text-white");
-  } else {
-    // 隐藏练习区
-    practiceWrap.classList.add("hidden");
-    btnTrace.classList.remove("bg-orange-400", "text-white");
-  }
-};
 
 /* ---------------- helpers ---------------- */
 
