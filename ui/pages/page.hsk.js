@@ -1,4 +1,8 @@
 // /ui/pages/page.hsk.js
+// ✅ HSK Page Controller — Stable++ (router-compatible)
+// - exports: mount(), unmount()
+// - no autoInit (router will control lifecycle)
+
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
@@ -7,6 +11,9 @@ import { initHSKUI } from "../modules/hsk/hskUI.js";
 
 let hskApi = null;
 
+// ✅ 防重复加载（同一会话只加载一次）
+let depsPromise = null;
+
 export async function mount() {
   const ok = mountLayout();
   if (!ok) return;
@@ -14,25 +21,31 @@ export async function mount() {
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ 关键：先加载 HSK 依赖脚本
-  await ensureHSKScriptsLoaded();
+  // ✅ 关键：先确保 HSK 全局依赖存在（HSK_LOADER / HSK_RENDER / HSK_HISTORY）
+  await ensureHSKDeps();
 
-  // 再启动 UI
+  // ✅ 再启动 UI
   initPageModules();
 }
 
-export function unmount() {
+export async function unmount() {
   hskApi = null;
 }
 
-/* =============================== */
 function mountLayout() {
   const navRoot = document.getElementById("siteNav");
   const app = document.getElementById("app");
 
-  if (!navRoot || !app) return false;
+  if (!navRoot || !app) {
+    const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
+    console.error("HSK Page Error:", errorMsg);
+    return false;
+  }
 
+  // 导航栏（如果你全站只 mount 一次，也没问题；这里做幂等）
   mountNavBar(navRoot);
+
+  // 页面主体
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
@@ -44,52 +57,94 @@ function mountGlobalComponents() {
 }
 
 function ensurePortalRoot() {
-  if (!document.getElementById("portal-root")) {
-    const portal = document.createElement("div");
+  let portal = document.getElementById("portal-root");
+  if (!portal) {
+    portal = document.createElement("div");
     portal.id = "portal-root";
     document.body.appendChild(portal);
   }
 }
 
-/* =============================== */
-/* 🧠 动态加载全局 HSK 脚本 */
-async function ensureHSKScriptsLoaded() {
-  if (window.HSK_LOADER && window.HSK_RENDER && window.HSK_HISTORY) return;
+/* ===============================
+   ✅ HSK 依赖脚本加载（最小改动版）
+   - 不会抛出 [object Event]
+   - 失败时抛出可读错误信息
+================================== */
+async function ensureHSKDeps() {
+  // 已存在就不加载
+  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
 
-  const loadScript = (src) =>
-    new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = src;
-      s.onload = resolve;
-      s.onerror = reject;
-      document.body.appendChild(s);
-    });
+  // 已在加载中就复用
+  if (depsPromise) return depsPromise;
 
-  await loadScript("/ui/modules/hsk/hskLoader.js");
-  await loadScript("/ui/modules/hsk/hskRenderer.js");
-  await loadScript("/ui/modules/hsk/hskHistory.js");
+  depsPromise = (async () => {
+    // 再次检查一次（避免并发）
+    if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
+
+    // ✅ 使用“安全加载器”：失败时给出具体 src
+    async function loadScriptOnce(src) {
+      // 已经插入过相同 src，直接等待它完成（或判定已加载）
+      const existing = [...document.scripts].find((s) => s.src && s.src.endsWith(src));
+      if (existing) return;
+
+      await new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+
+        document.head.appendChild(s);
+      });
+    }
+
+    // ✅ 统一用绝对路径，避免相对路径错位
+    await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
+    await loadScriptOnce("/ui/modules/hsk/hskRenderer.js");
+    await loadScriptOnce("/ui/modules/hsk/hskHistory.js");
+
+    // ✅ 最后确认全局对象真的挂出来了
+    if (!window.HSK_LOADER?.loadVocab) {
+      throw new Error("HSK_LOADER.loadVocab 가 없습니다. (hskLoader.js가 window.HSK_LOADER를 등록하지 않았거나 로드 실패)");
+    }
+    if (!window.HSK_RENDER) {
+      throw new Error("HSK_RENDER 가 없습니다. (hskRenderer.js 로드/등록 확인 필요)");
+    }
+    if (!window.HSK_HISTORY) {
+      throw new Error("HSK_HISTORY 가 없습니다. (hskHistory.js 로드/등록 확인 필요)");
+    }
+  })();
+
+  return depsPromise;
 }
 
-/* =============================== */
 function initPageModules() {
   try {
+    // ✅ 初始化 HSK UI（你可按需改参数）
     hskApi = initHSKUI({
       defaultLevel: 1,
       autoFocusSearch: false,
       lang: "ko",
     });
+
+    console.log("HSK Page Modules Initialized.");
   } catch (e) {
-    console.error("HSK UI Init Failed:", e);
+    // ✅ 确保不会出现 [object Event]
+    const msg = e?.message || String(e);
+    console.error("HSK UI Init Failed:", msg, e);
+    throw new Error(msg);
   }
 }
 
 function applyI18nIfAvailable() {
   try {
     i18n?.apply?.(document);
-  } catch {}
+  } catch (e) {
+    console.warn("HSK Page: i18n apply failed:", e);
+  }
 }
 
-/* =============================== */
 function getHSKLayoutHTML() {
   return `
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
@@ -107,14 +162,27 @@ function getHSKLayoutHTML() {
             ${renderLevelOptions()}
           </select>
 
-          <input id="hskSearch" class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="검색" autocomplete="off"/>
+          <input
+            id="hskSearch"
+            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="검색 (예: 你好 / 숫자)"
+            data-i18n-placeholder="hsk_search_placeholder"
+            autocomplete="off"
+          />
         </div>
+      </div>
+
+      <div class="mt-3 text-xs text-gray-500 flex items-center gap-1">
+        <span>💡</span>
+        <span data-i18n="hsk_tip">카드 클릭 → 배우기 → AI 선생님에게 질문하기</span>
       </div>
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
+
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+    <div class="h-20"></div>
     <div id="portal-root"></div>
   `;
 }
