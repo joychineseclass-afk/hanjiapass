@@ -136,3 +136,18 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     container.appendChild(card);
   });
 }
+
+// ==============================
+// ✅ Global bridge for legacy UI
+// ==============================
+try {
+  window.HSK_RENDER = window.HSK_RENDER || {};
+  if (typeof renderWordCards === "function") {
+    window.HSK_RENDER.renderWordCards =
+      window.HSK_RENDER.renderWordCards || renderWordCards;
+  }
+  if (typeof renderLessonList === "function") {
+    window.HSK_RENDER.renderLessonList =
+      window.HSK_RENDER.renderLessonList || renderLessonList;
+  }
+} catch {}
