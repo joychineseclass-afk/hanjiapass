@@ -3,6 +3,7 @@
    页面总控制器（长期扩展不返工）
 ========================================= */
 
+import { i18n } from "../i18n.js"; // ✅ 新增：模块化 i18n
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
@@ -87,10 +88,17 @@ function initPageModules() {
 ================================== */
 function applyI18nIfAvailable() {
   try {
-    // 你现在有两种可能：window.i18n（全局）或模块化 i18n（未来）
-    // 这里不强依赖，存在就 apply
-    window.i18n?.apply?.();
-  } catch {}
+    // ✅ 和你笔顺那块一致：joy_lang / kr
+    i18n.init({
+      defaultLang: "kr",
+      storageKey: "joy_lang",
+      autoApplyRoot: document
+    });
+
+    i18n.apply(); // ✅ 立即应用 data-i18n
+  } catch (e) {
+    console.warn("HSK Page: i18n init/apply failed:", e);
+  }
 }
 
 /* ===============================
