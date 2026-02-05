@@ -91,18 +91,16 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // =========================
   // ✅ 可配置：线宽/透明度
   // =========================
-  const lineWidth = Number(opts.lineWidth ?? 6);
-  const alpha = Number(opts.alpha ?? 0.85);
+  let lineWidth = Number(opts.lineWidth ?? 6);
+  let alpha = Number(opts.alpha ?? 0.85);
 
-  const autoAdvanceIndex = opts.autoAdvanceIndex !== false; // 默认 true
-
-  function applyCtxStyle() {
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.lineWidth = lineWidth;
-    ctx.globalAlpha = alpha;
-    ctx.strokeStyle = state.penColor;
-  }
+function applyCtxStyle() {
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.lineWidth = lineWidth;
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = state.penColor;
+}
 
   function resize() {
     const r = canvas.getBoundingClientRect();
@@ -363,10 +361,11 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     },
 
     setStyle({ width, opacity } = {}) {
-      if (Number.isFinite(width)) ctx.lineWidth = Number(width);
-      if (Number.isFinite(opacity)) ctx.globalAlpha = Number(opacity);
-      emit("trace:style", { width: ctx.lineWidth, opacity: ctx.globalAlpha });
-    },
+  if (Number.isFinite(width)) lineWidth = Number(width);
+  if (Number.isFinite(opacity)) alpha = Number(opacity);
+  applyCtxStyle();
+  emit("trace:style", { width: ctx.lineWidth, opacity: ctx.globalAlpha });
+},
 
     on(name, fn) {
       return on(name, fn);
