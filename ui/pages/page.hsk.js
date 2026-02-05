@@ -78,21 +78,19 @@ function ensurePortalRoot() {
 ================================== */
 function initPageModules() {
   try {
-    // 1. 调用外部引用的 UI 初始化
+    // 确保 initHSKUI 在这里是可用的
+    // 如果你使用了 import { initHSKUI } ...，那么这样调用没问题
     initHSKUI({
+      lang: "ko",            // 建议显式传入语言，因为你的 hskUI 内部用了这个参数
       defaultLevel: 1,
-      autoFocusSearch: false, // 设为 false 避免 Vercel 上的焦点冲突报错
+      autoFocusSearch: false // 保持 false 是对的，避免 Vercel 焦点报错
     });
 
-    // 2. 【在此处粘贴你原来跑通的其他逻辑】
-    // 比如：自定义的事件监听、复杂的数据过滤等
     console.log("HSK Page Modules Initialized.");
-
   } catch (e) {
     console.error("HSK UI Init Failed:", e);
   }
 }
-
 /* ===============================
    🌐 i18n：应用多语言
 ================================== */
