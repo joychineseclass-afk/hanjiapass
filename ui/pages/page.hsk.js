@@ -3,6 +3,7 @@
 // - exports: mount(), unmount()
 // - router controls lifecycle
 
+import { renderWordCards } from "../modules/hsk/hskRenderer.js";
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
@@ -116,9 +117,7 @@ async function ensureHSKDeps() {
     if (!window.HSK_LOADER?.loadVocab) {
       throw new Error("HSK_LOADER.loadVocab 가 없습니다. (hskLoader.js 전역 등록 필요)");
     }
-    if (!window.HSK_RENDER?.renderWordCards) {
-      throw new Error("HSK_RENDER.renderWordCards 가 없습니다. (hskRenderer.js 전역 등록 필요)");
-    }
+    
     if (!window.HSK_HISTORY?.list) {
       throw new Error("HSK_HISTORY.list 가 없습니다. (hskHistory.js 전역 등록 필요)");
     }
