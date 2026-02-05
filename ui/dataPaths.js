@@ -65,9 +65,10 @@
 
   // ===== URL builders =====
   function vocabUrl(level) {
-    const lv = normalizeLevel(level);
-    return withVersion(joinPath(BASE, `data/vocab/hsk${lv}_vocab.json`));
-  }
+  const lv = normalizeLevel(level);
+  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  return withVersion(joinPath(BASE, `data/vocab/${ver}/hsk${lv}.json`));
+}
 
   function lessonsUrl(level) {
     const lv = normalizeLevel(level);
