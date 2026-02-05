@@ -1,7 +1,6 @@
 // /ui/modules/hsk/hskUI.js
-// ✅ HSK UI (ESM)
-// - export: initHSKUI(opts)
-// - expects globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY
+// ✅ HSK UI (ESM) — exports initHSKUI()
+// Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY / window.LEARN_PANEL
 
 export function initHSKUI(opts = {}) {
   const $ = (id) => document.getElementById(id);
@@ -14,7 +13,6 @@ export function initHSKUI(opts = {}) {
 
   const LANG = opts.lang || "ko";
   const AUTO_FOCUS_SEARCH = !!opts.autoFocusSearch;
-  const DEFAULT_LEVEL = String(opts.defaultLevel ?? "1");
 
   let ALL = [];
   let LESSONS = null;
@@ -23,8 +21,11 @@ export function initHSKUI(opts = {}) {
 
   const CACHE = new Map();
   const CACHE_TTL = 1000 * 60 * 30;
-  let LESSON_INDEX = null;
 
+  let LESSON_INDEX = null;
+  let debounceTimer = null;
+
+  // ===== helpers =====
   function showError(msg) {
     if (!hskError) return;
     hskError.classList.remove("hidden");
@@ -53,9 +54,7 @@ export function initHSKUI(opts = {}) {
   }
   function focusSearch() {
     if (!AUTO_FOCUS_SEARCH) return;
-    try {
-      hskSearch?.focus?.();
-    } catch {}
+    try { hskSearch?.focus?.(); } catch {}
   }
 
   function renderFallback(title, desc) {
@@ -70,101 +69,15 @@ export function initHSKUI(opts = {}) {
     hskGrid.appendChild(box);
   }
 
-  function filterWordList(list, q) {
-    const qq = safeText(q).toLowerCase();
-    if (!qq) return list;
-    return list.filter((x) => {
-      const blob = `${x.word ?? ""} ${x.pinyin ?? ""} ${JSON.stringify(
-        x.meaning ?? ""
-      )} ${JSON.stringify(x.example ?? "")}`.toLowerCase();
-      return blob.includes(qq);
-    });
-  }
-
-  function buildAllMap() {
-    const map = new Map();
-    for (const w of ALL) {
-      const key = normalizeWord(w?.word);
-      if (key && !map.has(key)) map.set(key, w);
-    }
-    return map;
-  }
-
-  function buildLessonWordList(lesson, allMap) {
-    const raw = Array.isArray(lesson?.words) ? lesson.words : [];
-    const keys = raw.map(normalizeWord).filter(Boolean);
-    const set = new Set(keys);
-
-    const list = [];
-    let missing = 0;
-
-    for (const k of set) {
-      const found = allMap.get(k);
-      if (found) list.push(found);
-      else missing++;
-    }
-    return { list, missing };
-  }
-
-  function buildLessonIndex() {
-    if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
-      LESSON_INDEX = null;
-      return;
-    }
-
-    const allMap = buildAllMap();
-    const lessons = LESSONS.map((lesson, idx) => {
-      const title = safeText(lesson?.title) || `Lesson ${lesson?.id ?? idx + 1}`;
-      const subtitle = safeText(lesson?.subtitle);
-
-      const { list, missing } = buildLessonWordList(lesson, allMap);
-      const wordsBlob = list
-        .map(
-          (w) =>
-            `${w.word ?? ""} ${w.pinyin ?? ""} ${JSON.stringify(
-              w.meaning ?? ""
-            )} ${JSON.stringify(w.example ?? "")}`
-        )
-        .join(" | ");
-
-      const blob = `${title} ${subtitle} ${wordsBlob}`.toLowerCase();
-
-      return {
-        idx,
-        key: lesson?.id ?? idx,
-        lesson,
-        wordsResolved: list,
-        missing,
-        blob,
-      };
-    });
-
-    LESSON_INDEX = { lessons };
-  }
-
-  function getLessonMatches(query) {
-    if (!LESSON_INDEX?.lessons) return [];
-    const q = safeText(query).toLowerCase();
-
-    if (!q) {
-      return LESSON_INDEX.lessons.map((it) => ({
-        ...it,
-        matchCount: it.wordsResolved.length,
-        hitType: "all",
-      }));
-    }
-
-    return LESSON_INDEX.lessons
-      .filter((it) => it.blob.includes(q))
-      .map((it) => {
-        const matchCount = it.wordsResolved.reduce((acc, w) => {
-          const wb = `${w.word ?? ""} ${w.pinyin ?? ""} ${JSON.stringify(
-            w.meaning ?? ""
-          )} ${JSON.stringify(w.example ?? "")}`.toLowerCase();
-          return acc + (wb.includes(q) ? 1 : 0);
-        }, 0);
-        return { ...it, matchCount, hitType: matchCount > 0 ? "words" : "title" };
-      });
+  function renderEmptyHint(container, title, desc) {
+    if (!container) return;
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-2xl shadow p-4 text-sm text-gray-600";
+    card.innerHTML = `
+      <div class="font-semibold text-gray-800">${title}</div>
+      <div class="mt-1 whitespace-pre-wrap">${desc || ""}</div>
+    `;
+    container.appendChild(card);
   }
 
   function renderTopBar({ title, subtitle, leftBtn, rightBtns = [] }) {
@@ -200,20 +113,104 @@ export function initHSKUI(opts = {}) {
     return top;
   }
 
-  function renderEmptyHint(container, title, desc) {
-    const card = document.createElement("div");
-    card.className = "bg-white rounded-2xl shadow p-4 text-sm text-gray-600";
-    card.innerHTML = `
-      <div class="font-semibold text-gray-800">${title}</div>
-      <div class="mt-1 whitespace-pre-wrap">${desc || ""}</div>
-    `;
-    container.appendChild(card);
+  // ===== data helpers =====
+  function buildAllMap() {
+    const map = new Map();
+    for (const w of ALL) {
+      const key = normalizeWord(w?.word);
+      if (key && !map.has(key)) map.set(key, w);
+    }
+    return map;
   }
 
+  function buildLessonWordList(lesson, allMap) {
+    const raw = Array.isArray(lesson?.words) ? lesson.words : [];
+    const keys = raw.map(normalizeWord).filter(Boolean);
+    const set = new Set(keys);
+
+    const list = [];
+    let missing = 0;
+    for (const k of set) {
+      const found = allMap.get(k);
+      if (found) list.push(found);
+      else missing++;
+    }
+    return { list, missing };
+  }
+
+  function filterWordList(list, q) {
+    const qq = safeText(q).toLowerCase();
+    if (!qq) return list;
+
+    return list.filter((x) => {
+      const blob = `${x.word ?? ""} ${x.pinyin ?? ""} ${JSON.stringify(
+        x.meaning ?? ""
+      )} ${JSON.stringify(x.example ?? "")}`.toLowerCase();
+      return blob.includes(qq);
+    });
+  }
+
+  function buildLessonIndex() {
+    if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
+      LESSON_INDEX = null;
+      return;
+    }
+
+    const allMap = buildAllMap();
+    const lessons = LESSONS.map((lesson, idx) => {
+      const title = safeText(lesson?.title) || `Lesson ${lesson?.id ?? idx + 1}`;
+      const subtitle = safeText(lesson?.subtitle);
+
+      const { list, missing } = buildLessonWordList(lesson, allMap);
+
+      const wordsBlob = list
+        .map(
+          (w) =>
+            `${w.word ?? ""} ${w.pinyin ?? ""} ${JSON.stringify(
+              w.meaning ?? ""
+            )} ${JSON.stringify(w.example ?? "")}`
+        )
+        .join(" | ");
+
+      const blob = `${title} ${subtitle} ${wordsBlob}`.toLowerCase();
+
+      return { idx, key: lesson?.id ?? idx, lesson, wordsResolved: list, missing, blob };
+    });
+
+    LESSON_INDEX = { lessons };
+  }
+
+  function getLessonMatches(query) {
+    if (!LESSON_INDEX?.lessons) return [];
+    const q = safeText(query).toLowerCase();
+
+    if (!q) {
+      return LESSON_INDEX.lessons.map((it) => ({
+        ...it,
+        matchCount: it.wordsResolved.length,
+        hitType: "all",
+      }));
+    }
+
+    return LESSON_INDEX.lessons
+      .filter((it) => it.blob.includes(q))
+      .map((it) => {
+        const matchCount = it.wordsResolved.reduce((acc, w) => {
+          const wb = `${w.word ?? ""} ${w.pinyin ?? ""} ${JSON.stringify(
+            w.meaning ?? ""
+          )} ${JSON.stringify(w.example ?? "")}`.toLowerCase();
+          return acc + (wb.includes(q) ? 1 : 0);
+        }, 0);
+        return { ...it, matchCount, hitType: matchCount > 0 ? "words" : "title" };
+      });
+  }
+
+  // ===== views =====
   function renderRecentView() {
     if (!hskGrid) return;
+
     if (!window.HSK_RENDER?.renderWordCards) {
-      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards가 없습니다.");
+      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards 가 없습니다.");
       setStatus("");
       return;
     }
@@ -226,6 +223,7 @@ export function initHSKUI(opts = {}) {
     const filtered = filterWordList(recent, q);
 
     hskGrid.innerHTML = "";
+
     const top = renderTopBar({
       title: "최근 학습",
       subtitle: q ? `검색: "${q}"` : "최근에 학습한 단어를 다시 확인해요",
@@ -253,17 +251,13 @@ export function initHSKUI(opts = {}) {
     hskGrid.appendChild(wrap);
 
     if (recent.length === 0) {
-      renderEmptyHint(
-        wrap,
-        "최근 학습 기록이 없어요",
-        "단어 카드를 눌러 학습하면 여기에 자동으로 저장됩니다."
-      );
+      renderEmptyHint(wrap, "최근 학습 기록이 없어요", "단어 카드를 눌러 학습하면 여기에 자동 저장됩니다.");
       setStatus("(0)");
       return;
     }
 
     if (filtered.length === 0) {
-      renderEmptyHint(wrap, "검색 결과가 없어요", "검색어를 지우면 다시 표시됩니다.");
+      renderEmptyHint(wrap, "검색 결과가 없어요", "검색어를 지우면 최근 학습 단어가 다시 표시됩니다.");
       setStatus(`(0/${recent.length})`);
       return;
     }
@@ -280,8 +274,9 @@ export function initHSKUI(opts = {}) {
 
   function renderLessonsView() {
     if (!hskGrid) return;
+
     if (!window.HSK_RENDER?.renderLessonList) {
-      renderFallback("렌더러가 없어요", "HSK_RENDER.renderLessonList가 없습니다.");
+      renderFallback("렌더러가 없어요", "HSK_RENDER.renderLessonList 가 없습니다.");
       setStatus("");
       return;
     }
@@ -297,6 +292,7 @@ export function initHSKUI(opts = {}) {
     const matches = getLessonMatches(q);
 
     hskGrid.innerHTML = "";
+
     const top = renderTopBar({
       title: "수업 목록",
       subtitle: `HSK ${hskLevel?.value || ""}` + (q ? ` · 검색: "${q}"` : ""),
@@ -312,6 +308,7 @@ export function initHSKUI(opts = {}) {
       scrollToTop();
       focusSearch();
     });
+
     top.querySelector(`[data-key="goAll"]`)?.addEventListener("click", () => {
       currentLesson = null;
       renderAllWordsView();
@@ -360,8 +357,9 @@ export function initHSKUI(opts = {}) {
 
   function renderLessonWordsView() {
     if (!hskGrid) return;
+
     if (!window.HSK_RENDER?.renderWordCards) {
-      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards가 없습니다.");
+      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards 가 없습니다.");
       setStatus("");
       return;
     }
@@ -374,6 +372,7 @@ export function initHSKUI(opts = {}) {
     const filtered = filterWordList(lessonWords, q);
 
     hskGrid.innerHTML = "";
+
     const top = renderTopBar({
       title: currentLesson?.title || "Lesson",
       subtitle:
@@ -394,11 +393,13 @@ export function initHSKUI(opts = {}) {
       scrollToTop();
       focusSearch();
     });
+
     top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
       renderRecentView();
       scrollToTop();
       focusSearch();
     });
+
     top.querySelector(`[data-key="goAll"]`)?.addEventListener("click", () => {
       currentLesson = null;
       renderAllWordsView();
@@ -411,7 +412,7 @@ export function initHSKUI(opts = {}) {
     hskGrid.appendChild(cardWrap);
 
     if (filtered.length === 0) {
-      renderEmptyHint(cardWrap, "이 수업에서 검색 결과가 없어요", "검색어를 지우면 전체가 보여요.");
+      renderEmptyHint(cardWrap, "이 수업에서 검색 결과가 없어요", "검색어를 바꾸거나 지워 보세요.");
       setStatus(`(0/${lessonWords.length})`);
       return;
     }
@@ -428,8 +429,9 @@ export function initHSKUI(opts = {}) {
 
   function renderAllWordsView() {
     if (!hskGrid) return;
+
     if (!window.HSK_RENDER?.renderWordCards) {
-      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards가 없습니다.");
+      renderFallback("렌더러가 없어요", "HSK_RENDER.renderWordCards 가 없습니다.");
       setStatus("");
       return;
     }
@@ -441,6 +443,7 @@ export function initHSKUI(opts = {}) {
     const inLessonMode = Array.isArray(LESSONS) && LESSONS.length > 0;
 
     hskGrid.innerHTML = "";
+
     const top = renderTopBar({
       title: "전체 단어",
       subtitle: `HSK ${hskLevel?.value || ""}` + (q ? ` · 검색: "${q}"` : ""),
@@ -455,6 +458,7 @@ export function initHSKUI(opts = {}) {
       scrollToTop();
       focusSearch();
     });
+
     top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
       renderRecentView();
       scrollToTop();
@@ -490,6 +494,7 @@ export function initHSKUI(opts = {}) {
     return renderAllWordsView();
   }
 
+  // ===== cache =====
   function getCached(level) {
     const hit = CACHE.get(level);
     if (!hit) return null;
@@ -503,6 +508,7 @@ export function initHSKUI(opts = {}) {
     CACHE.set(level, { all, lessons, index, ts: Date.now() });
   }
 
+  // ===== loading =====
   function setLoadingUI() {
     renderFallback("불러오는 중...", "데이터를 가져오고 있어요.");
     setStatus("(loading...)");
@@ -515,13 +521,13 @@ export function initHSKUI(opts = {}) {
     inRecentView = false;
 
     if (!window.HSK_LOADER?.loadVocab) {
-      showError("HSK_LOADER.loadVocab 가 없어요. loader가 window.HSK_LOADER를 등록했는지 확인해 주세요.");
+      showError("HSK_LOADER.loadVocab 가 없어요. loader 스크립트 로드 상태를 확인해 주세요.");
       setStatus("");
       return;
     }
 
     try {
-      const lv = String(level || "1");
+      const lv = safeText(level || "1");
       const cached = getCached(lv);
       if (cached) {
         ALL = cached.all || [];
@@ -548,22 +554,24 @@ export function initHSKUI(opts = {}) {
     }
   }
 
-  let debounceTimer = null;
   function onSearchChange() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => renderAuto(), 80);
   }
 
-  hskLevel?.addEventListener("change", () => loadLevel(hskLevel.value));
+  // ===== bind events =====
+  const onLevelChange = () => loadLevel(hskLevel?.value);
+  hskLevel?.addEventListener("change", onLevelChange);
   hskSearch?.addEventListener("input", onSearchChange);
 
   // init
-  if (hskLevel) hskLevel.value = String(hskLevel.value || DEFAULT_LEVEL);
-  loadLevel(hskLevel?.value || DEFAULT_LEVEL);
+  loadLevel(String(opts.defaultLevel || hskLevel?.value || "1"));
 
   return {
-    reload() {
-      loadLevel(hskLevel?.value || DEFAULT_LEVEL);
+    destroy() {
+      clearTimeout(debounceTimer);
+      hskLevel?.removeEventListener("change", onLevelChange);
+      hskSearch?.removeEventListener("input", onSearchChange);
     },
   };
 }
