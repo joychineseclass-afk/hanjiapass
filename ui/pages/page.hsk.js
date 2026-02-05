@@ -1,8 +1,4 @@
 // /ui/pages/page.hsk.js
-// ✅ HSK Page Controller — Stable++ (router-compatible)
-// - exports: mount(), unmount()
-// - no autoInit (router will control lifecycle)
-
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
@@ -17,29 +13,26 @@ export async function mount() {
 
   mountGlobalComponents();
   applyI18nIfAvailable();
+
+  // ✅ 关键：先加载 HSK 依赖脚本
+  await ensureHSKScriptsLoaded();
+
+  // 再启动 UI
   initPageModules();
 }
 
-export async function unmount() {
-  // 目前你的 HSK UI 主要是 DOM 事件绑定 + 全局面板
-  // 你如果未来加 interval/timer，在这里清理即可
+export function unmount() {
   hskApi = null;
 }
 
+/* =============================== */
 function mountLayout() {
   const navRoot = document.getElementById("siteNav");
   const app = document.getElementById("app");
 
-  if (!navRoot || !app) {
-    const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
-    console.error("HSK Page Error:", errorMsg);
-    return false;
-  }
+  if (!navRoot || !app) return false;
 
-  // 导航栏（如果你全站只 mount 一次，也没问题；这里做幂等）
   mountNavBar(navRoot);
-
-  // 页面主体
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
@@ -51,24 +44,40 @@ function mountGlobalComponents() {
 }
 
 function ensurePortalRoot() {
-  let portal = document.getElementById("portal-root");
-  if (!portal) {
-    portal = document.createElement("div");
+  if (!document.getElementById("portal-root")) {
+    const portal = document.createElement("div");
     portal.id = "portal-root";
     document.body.appendChild(portal);
   }
 }
 
+/* =============================== */
+/* 🧠 动态加载全局 HSK 脚本 */
+async function ensureHSKScriptsLoaded() {
+  if (window.HSK_LOADER && window.HSK_RENDER && window.HSK_HISTORY) return;
+
+  const loadScript = (src) =>
+    new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.body.appendChild(s);
+    });
+
+  await loadScript("/ui/modules/hsk/hskLoader.js");
+  await loadScript("/ui/modules/hsk/hskRenderer.js");
+  await loadScript("/ui/modules/hsk/hskHistory.js");
+}
+
+/* =============================== */
 function initPageModules() {
   try {
-    // ✅ 初始化 HSK UI（你可按需改参数）
     hskApi = initHSKUI({
       defaultLevel: 1,
       autoFocusSearch: false,
       lang: "ko",
     });
-
-    console.log("HSK Page Modules Initialized.");
   } catch (e) {
     console.error("HSK UI Init Failed:", e);
   }
@@ -77,11 +86,10 @@ function initPageModules() {
 function applyI18nIfAvailable() {
   try {
     i18n?.apply?.(document);
-  } catch (e) {
-    console.warn("HSK Page: i18n apply failed:", e);
-  }
+  } catch {}
 }
 
+/* =============================== */
 function getHSKLayoutHTML() {
   return `
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
@@ -99,27 +107,14 @@ function getHSKLayoutHTML() {
             ${renderLevelOptions()}
           </select>
 
-          <input
-            id="hskSearch"
-            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="검색 (예: 你好 / 숫자)"
-            data-i18n-placeholder="hsk_search_placeholder"
-            autocomplete="off"
-          />
+          <input id="hskSearch" class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="검색" autocomplete="off"/>
         </div>
-      </div>
-
-      <div class="mt-3 text-xs text-gray-500 flex items-center gap-1">
-        <span>💡</span>
-        <span data-i18n="hsk_tip">카드 클릭 → 배우기 → AI 선생님에게 질문하기</span>
       </div>
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
-
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
-    <div class="h-20"></div>
     <div id="portal-root"></div>
   `;
 }
