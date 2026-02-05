@@ -107,20 +107,7 @@ async function ensureHSKDeps() {
     // 注意：这里用相对路径（相对于 /ui/pages/page.hsk.js）
     const rMod = await import("../modules/hsk/hskRenderer.js");
     const hMod = await import("../modules/hsk/hskHistory.js");
-
-    // 3) ✅ 如果模块本身没挂 window，这里兜底桥接一次
-    // （你后面按我下面②③改了文件，就算这里不写也行；写着更稳）
-    window.HSK_RENDER = window.HSK_RENDER || rMod.HSK_RENDER || rMod.default || rMod;
-    window.HSK_HISTORY = window.HSK_HISTORY || hMod.HSK_HISTORY || hMod.default || hMod;
-
-    // 4) verify
-    if (!window.HSK_LOADER?.loadVocab) {
-      throw new Error("HSK_LOADER.loadVocab 가 없습니다. (hskLoader.js 전역 등록 필요)");
-    }
-    
-    if (!window.HSK_HISTORY?.list) {
-      throw new Error("HSK_HISTORY.list 가 없습니다. (hskHistory.js 전역 등록 필요)");
-    }
+  
   })();
 
   return depsPromise;
