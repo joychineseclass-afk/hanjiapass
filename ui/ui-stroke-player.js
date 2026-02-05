@@ -55,31 +55,11 @@ function cssEscape(s) {
 }
 function normalizeChars(input) {
   if (!input) return [];
-  if (Array.isArray(input)) return input.map(String).map((s) => s.trim()).filter(Boolean);
+  if (Array.isArray(input))
+    return input.map(String).map((s) => s.trim()).filter(Boolean);
 
   const s = String(input);
   return Array.from(s).filter((ch) => /[\u3400-\u9FFF]/.test(ch));
-}
-
-// ✅ 只注入一次：锁死描红层级与可点击（演示区用）
-function ensureTraceCssLock() {
-  if (document.getElementById("trace-css-lock")) return;
-
-  const st = document.createElement("style");
-  st.id = "trace-css-lock";
-  st.textContent = `
-    /* ✅ 演示描红层始终在最上面 */
-    .stroke-demo #traceCanvas{
-      display:block !important;
-      pointer-events:auto !important;
-      position:absolute !important;
-      inset:0 !important;
-      width:100% !important;
-      height:100% !important;
-      z-index:9999 !important;
-    }
-  `;
-  document.head.appendChild(st);
 }
 
 async function speakZhCN(text) {
@@ -87,18 +67,19 @@ async function speakZhCN(text) {
     const t = String(text || "").trim();
     if (!t) return;
 
-    // 先停止旧朗读
     try { speechSynthesis.cancel(); } catch {}
 
-    // 等 voice 列表准备好（Chrome 有时需要一次异步）
     const voices = await new Promise((resolve) => {
       const v = speechSynthesis.getVoices?.() || [];
       if (v.length) return resolve(v);
+
       const on = () => {
-        speechSynthesis.removeEventListener?.("voiceschanged", on);
+        try { speechSynthesis.removeEventListener?.("voiceschanged", on); } catch {}
         resolve(speechSynthesis.getVoices?.() || []);
       };
+
       speechSynthesis.addEventListener?.("voiceschanged", on);
+
       setTimeout(() => {
         try { speechSynthesis.removeEventListener?.("voiceschanged", on); } catch {}
         resolve(speechSynthesis.getVoices?.() || []);
@@ -108,7 +89,6 @@ async function speakZhCN(text) {
     const u = new SpeechSynthesisUtterance(t);
     u.lang = "zh-CN";
 
-    // ✅ 选择更像普通话的 voice（尽量）
     const pick =
       voices.find(v => (v.lang || "").toLowerCase().startsWith("zh-cn") && /mandarin|普通话|chinese/i.test(v.name || "")) ||
       voices.find(v => (v.lang || "").toLowerCase().startsWith("zh-cn")) ||
@@ -128,7 +108,6 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   // ✅ 清理旧监听（防止重复绑定）
   try { targetEl._strokeCleanup?.(); } catch {}
-  ensureTraceCssLock();
 
   let lang = getLang();
   let T = UI_TEXT[lang] || UI_TEXT.kr;
@@ -154,8 +133,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
-      <!-- ✅ 上：演示区 -->
-      <div class="stroke-demo w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none border">
+      <!-- ✅ 上：演示区（只展示，不允许写，避免吃点击） -->
+      <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none border">
         <div id="strokeViewport" class="absolute inset-0" style="touch-action:auto;">
           <div id="strokeStage"
                class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
@@ -163,6 +142,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
           </div>
         </div>
 
+        <!-- ✅ 永远不吃事件：避免“按钮点不动” -->
         <canvas id="traceCanvas"
                 class="absolute inset-0 w-full h-full"
                 style="pointer-events:none;"></canvas>
@@ -272,7 +252,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (btnTrace) btnTrace.textContent = T.trace;
   }
 
-  // ✅ 演示描红层 + 教学（你原有的）
+  // ✅ 演示层：保持初始化，但始终关闭输入（只显示用）
   const traceApi = initTraceCanvasLayer(traceCanvas, {
     enabledDefault: false,
     tracingDefault: false
@@ -282,8 +262,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   traceApi.setEnabled(false);
   traceCanvas.style.pointerEvents = "none";
 
+  // teaching 仍可存在（未来你要做跟写判定再启用）
   const teaching = initStrokeTeaching(targetEl, stage, traceApi);
-
   const onStrokeEnd = (e) => {
     teaching?.onUserStrokeDone?.(e?.detail);
   };
@@ -307,8 +287,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     practiceApi.setPenColor(penColorEl.value);
   });
 
+  // ⚠️ 你的 ui-trace-canvas.js 没有 setPenWidth()，用 setStyle({width}) 才稳
   penWidthEl?.addEventListener("input", () => {
-    practiceApi.setPenWidth(Number(penWidthEl.value) || 8);
+    practiceApi.setStyle?.({ width: Number(penWidthEl.value) || 8 });
   });
 
   btnClearPractice?.addEventListener("click", () => {
@@ -318,7 +299,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   async function loadChar(ch, { reset = true } = {}) {
     currentChar = ch;
 
-    if (activeBtn) activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+    if (activeBtn)
+      activeBtn.classList.remove("bg-slate-900", "text-white", "border-slate-900");
+
     const btn = btnWrap.querySelector(`[data-ch="${cssEscape(ch)}"]`);
     if (btn) {
       btn.classList.add("bg-slate-900", "text-white", "border-slate-900");
@@ -359,7 +342,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       applyTransform();
 
-      // ✅ 每次换字：重置教学状态（避免“后面卡住”）
+      // ✅ 每次换字：演示层保持关闭，避免吃点击
       traceApi.setStrokeIndex?.(0);
       traceApi.toggle(false);
       traceApi.setEnabled(false);
@@ -378,7 +361,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   btnWrap.innerHTML = "";
   chars.forEach((ch, i) => {
     const b = document.createElement("button");
-    b.className = "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
+    b.className =
+      "px-3 py-1 rounded-lg border text-sm bg-white hover:bg-slate-50 transition";
     b.textContent = ch;
     b.setAttribute("data-ch", ch);
     b.onclick = () => loadChar(ch, { reset: true });
