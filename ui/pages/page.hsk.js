@@ -1,7 +1,7 @@
-/* =========================================
-   📘 HSK PAGE CONTROLLER — STABLE++ EDITION
-   页面总控制器
-========================================= */
+// /ui/pages/page.hsk.js
+// ✅ HSK Page Controller — Stable++ (router-compatible)
+// - exports: mount(), unmount()
+// - no autoInit (router will control lifecycle)
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -9,22 +9,9 @@ import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
-/**
- * 暴露给 router.js 的生命周期函数
- */
-export function mount() {
-  bootHSKPage();
-}
+let hskApi = null;
 
-export function unmount() {
-  console.log("HSK Page: Unmounting...");
-  // 如果有定时器，可以在这里清理，例如：clearInterval(window.hskTimer);
-}
-
-/**
- * 启动页面
- */
-function bootHSKPage() {
+export async function mount() {
   const ok = mountLayout();
   if (!ok) return;
 
@@ -33,31 +20,30 @@ function bootHSKPage() {
   initPageModules();
 }
 
-/* ===============================
-   1️⃣ 渲染页面结构
-================================== */
+export async function unmount() {
+  // 目前你的 HSK UI 主要是 DOM 事件绑定 + 全局面板
+  // 你如果未来加 interval/timer，在这里清理即可
+  hskApi = null;
+}
+
 function mountLayout() {
   const navRoot = document.getElementById("siteNav");
   const app = document.getElementById("app");
 
   if (!navRoot || !app) {
-    // 如果找不到容器，输出详细错误方便调试
     const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
     console.error("HSK Page Error:", errorMsg);
     return false;
   }
 
-  // 挂载导航栏
+  // 导航栏（如果你全站只 mount 一次，也没问题；这里做幂等）
   mountNavBar(navRoot);
 
-  // 注入主体 HTML 结构
+  // 页面主体
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
 
-/* ===============================
-   2️⃣ 挂载全局组件（AI / Learn）
-================================== */
 function mountGlobalComponents() {
   ensurePortalRoot();
   mountAIPanel();
@@ -73,17 +59,13 @@ function ensurePortalRoot() {
   }
 }
 
-/* ===============================
-   3️⃣ 启动本页功能模块（保留你跑通的逻辑）
-================================== */
 function initPageModules() {
   try {
-    // 确保 initHSKUI 在这里是可用的
-    // 如果你使用了 import { initHSKUI } ...，那么这样调用没问题
-    initHSKUI({
-      lang: "ko",            // 建议显式传入语言，因为你的 hskUI 内部用了这个参数
+    // ✅ 初始化 HSK UI（你可按需改参数）
+    hskApi = initHSKUI({
       defaultLevel: 1,
-      autoFocusSearch: false // 保持 false 是对的，避免 Vercel 焦点报错
+      autoFocusSearch: false,
+      lang: "ko",
     });
 
     console.log("HSK Page Modules Initialized.");
@@ -91,23 +73,15 @@ function initPageModules() {
     console.error("HSK UI Init Failed:", e);
   }
 }
-/* ===============================
-   🌐 i18n：应用多语言
-================================== */
+
 function applyI18nIfAvailable() {
   try {
-    // 确保 i18n 已经初始化并应用到当前 DOM
-    if (i18n) {
-      i18n.apply(document);
-    }
+    i18n?.apply?.(document);
   } catch (e) {
     console.warn("HSK Page: i18n apply failed:", e);
   }
 }
 
-/* ===============================
-   📦 页面HTML结构模板
-================================== */
 function getHSKLayoutHTML() {
   return `
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
@@ -144,9 +118,8 @@ function getHSKLayoutHTML() {
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    
-    <div class="h-20"></div>
 
+    <div class="h-20"></div>
     <div id="portal-root"></div>
   `;
 }
@@ -157,21 +130,3 @@ function renderLevelOptions() {
     return `<option value="${level}" ${level === 1 ? "selected" : ""}>HSK ${level}급</option>`;
   }).join("");
 }
-
-/**
- * 🚀 智能自启动逻辑
- */
-(function autoInit() {
-  // 检查当前环境是否需要手动启动
-  // 1. 如果有 #app 容器
-  // 2. 如果 router 没有管理（window.currentModule 为空）
-  const appExists = !!document.getElementById("app");
-  
-  if (appExists) {
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-      mount();
-    } else {
-      document.addEventListener("DOMContentLoaded", mount);
-    }
-  }
-})();
