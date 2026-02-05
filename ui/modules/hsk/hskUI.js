@@ -10,6 +10,22 @@ export function initHSKUI(opts = {}) {
   const hskGrid = $("hskGrid");
   const hskError = $("hskError");
   const hskStatus = $("hskStatus");
+  const hskVersion = $("hskVersion");
+
+  // ✅ vocab version dropdown
+if (hskVersion) {
+  const saved = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  hskVersion.value = saved;
+
+  hskVersion.addEventListener("change", async () => {
+    localStorage.setItem("hsk_vocab_version", hskVersion.value);
+
+    // 重新加载当前等级数据（用你现有的加载函数）
+    // 这里用最稳的方式：触发一次 level change 或直接调用内部 reload
+    hskLevel?.dispatchEvent(new Event("change"));
+  });
+}
+
 
   const LANG = opts.lang || "ko";
   const AUTO_FOCUS_SEARCH = !!opts.autoFocusSearch;
