@@ -1,24 +1,30 @@
+<!-- /pages/page.hsk.html -->
 <!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title data-i18n="nav_hsk">HSK 학습 | Joy Chinese</title>
+  <title>HSK 학습 | Joy Chinese</title>
 
-  <link rel="stylesheet" href="../styles/base.css">
-  <link rel="stylesheet" href="../ui/styles/panels.css">
-  <link rel="stylesheet" href="../ui/styles/hsk.css">
+  <!-- ✅ 统一用绝对路径，避免相对路径错位 -->
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/ui/styles/panels.css">
+  <link rel="stylesheet" href="/ui/styles/hsk.css">
 </head>
 
 <body class="bg-gray-50">
   <div id="siteNav"></div>
-
   <main id="app" class="page-wrap min-h-screen p-4 md:p-8"></main>
 
- <script src="../ui/modules/hsk/hskLoader.js"></script>
-<script src="../ui/modules/hsk/hskRenderer.js"></script>
-<script src="../ui/modules/hsk/hskHistory.js"></script>
+  <!-- ✅ HSK 依赖（全局脚本） -->
+  <script src="/ui/modules/hsk/hskLoader.js"></script>
+  <script src="/ui/modules/hsk/hskRenderer.js"></script>
+  <script src="/ui/modules/hsk/hskHistory.js"></script>
 
-<script type="module" src="../ui/pages/page.hsk.js"></script>
+  <!-- ✅ 页面控制器（ES Module） -->
+  <script type="module">
+    import { mount } from "/ui/pages/page.hsk.js";
+    mount();
+  </script>
 </body>
 </html>
