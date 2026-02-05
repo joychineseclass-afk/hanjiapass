@@ -2,7 +2,6 @@
 // ✅ HSK Page Controller — Stable++ (router-compatible)
 // - exports: mount(), unmount()
 // - router controls lifecycle
-// - deps are loaded via import() (ESM-safe)
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -20,14 +19,21 @@ export async function mount() {
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ must have HSK_LOADER / HSK_RENDER / HSK_HISTORY
+  // ✅ ensure globals exist (loader/renderer/history)
   await ensureHSKDeps();
 
-  // ✅ then init UI
-  initPageModules();
+  // ✅ init UI
+  hskApi = initHSKUI({
+    defaultLevel: 1,
+    autoFocusSearch: false,
+    lang: "ko",
+  });
 }
 
 export async function unmount() {
+  try {
+    hskApi?.destroy?.();
+  } catch {}
   hskApi = null;
 }
 
@@ -36,8 +42,10 @@ function mountLayout() {
   const app = document.getElementById("app");
 
   if (!navRoot || !app) {
-    const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
-    console.error("HSK Page Error:", errorMsg);
+    console.error(
+      "HSK Page Error:",
+      `Missing: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`
+    );
     return false;
   }
 
@@ -69,46 +77,56 @@ function applyI18nIfAvailable() {
   }
 }
 
-function initPageModules() {
-  try {
-    hskApi = initHSKUI({
-      defaultLevel: 1,
-      autoFocusSearch: false,
-      lang: "ko",
-    });
-    console.log("HSK Page Modules Initialized.");
-  } catch (e) {
-    const msg = e?.message || String(e);
-    console.error("HSK UI Init Failed:", msg, e);
-    throw new Error(msg);
-  }
-}
-
 /* ===============================
-   ✅ Load deps via import() safely
-   (NO <script> injection)
+   ✅ Load global deps safely
+   MUST be classic scripts (no `export`)
 ================================== */
 async function ensureHSKDeps() {
+  // already ok
   if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
+
   if (depsPromise) return depsPromise;
 
   depsPromise = (async () => {
-    // ✅ 네 실제 구조: /ui/modules/hsk/*
-    await import("../modules/hsk/hskLoader.js");
-    await import("../modules/hsk/hskRenderer.js");
-    await import("../modules/hsk/hskHistory.js");
+    const loadScriptOnce = (src) =>
+      new Promise((resolve, reject) => {
+        const already = [...document.scripts].some((s) => (s.src || "").endsWith(src));
+        if (already) return resolve();
 
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+        document.head.appendChild(s);
+      });
+
+    // ✅ your real repo path is /ui/modules/hsk/*.js
+    await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
+    await loadScriptOnce("/ui/modules/hsk/hskRenderer.js");
+    await loadScriptOnce("/ui/modules/hsk/hskHistory.js");
+
+    // verify
     if (!window.HSK_LOADER?.loadVocab) {
       throw new Error(
         "HSK_LOADER.loadVocab 가 없습니다.\n" +
+          "(로드된 파일: /ui/modules/hsk/hskLoader.js)\n" +
           "hskLoader.js가 window.HSK_LOADER = { loadVocab, loadLessons } 형태로 등록해야 합니다."
       );
     }
-    if (!window.HSK_RENDER) {
-      throw new Error("HSK_RENDER 가 없습니다. (hskRenderer.js 전역 등록 확인)");
+    if (!window.HSK_RENDER?.renderWordCards) {
+      throw new Error(
+        "HSK_RENDER.renderWordCards 가 없습니다.\n" +
+          "(로드된 파일: /ui/modules/hsk/hskRenderer.js)\n" +
+          "hskRenderer.js 전역 등록(window.HSK_RENDER) 확인이 필요합니다."
+      );
     }
-    if (!window.HSK_HISTORY) {
-      throw new Error("HSK_HISTORY 가 없습니다. (hskHistory.js 전역 등록 확인)");
+    if (!window.HSK_HISTORY?.list) {
+      throw new Error(
+        "HSK_HISTORY.list 가 없습니다.\n" +
+          "(로드된 파일: /ui/modules/hsk/hskHistory.js)\n" +
+          "hskHistory.js 전역 등록(window.HSK_HISTORY) 확인이 필요합니다."
+      );
     }
   })();
 
@@ -150,7 +168,6 @@ function getHSKLayoutHTML() {
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
-
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
     <div class="h-20"></div>
