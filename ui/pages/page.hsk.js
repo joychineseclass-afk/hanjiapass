@@ -138,6 +138,11 @@ function getHSKLayoutHTML() {
             ${renderLevelOptions()}
           </select>
 
+          <select id="hskVersion" class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
+          <option value="hsk2.0">HSK 2.0</option>
+          <option value="hsk3.0">HSK 3.0</option>
+          </select>
+          
           <input
             id="hskSearch"
             class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
