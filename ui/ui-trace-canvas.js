@@ -11,17 +11,12 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       enable() {},
       disable() {},
       setDrawingEnabled() {},
-      isEnabled() {
-        return false;
-      },
-      isTracing() {
-        return false;
-      },
-      getStrokeIndex() {
-        return 0;
-      },
+      isEnabled() { return false; },
+      isTracing() { return false; },
+      getStrokeIndex() { return 0; },
       setStrokeIndex() {},
       setPenColor() {},
+      setPenWidth() {},
       setStyle() {},
       on() {},
       off() {},
@@ -54,53 +49,48 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     const set = bus.get(name);
     if (!set) return;
     set.forEach((fn) => {
-      try {
-        fn(payload);
-      } catch (e) {
-        console.warn("[trace] handler error", name, e);
-      }
+      try { fn(payload); } catch (e) { console.warn("[trace] handler error", name, e); }
     });
   }
 
   // =========================
   // ✅ 状态
   // =========================
-  // ⭐⭐⭐ tracing 初始状态由 DOM 决定（你已跑通：保留）
   const initTracing =
     typeof opts.tracingDefault === "boolean"
       ? opts.tracingDefault
       : !canvas.classList.contains("hidden");
 
-  // ⭐⭐⭐ 和 ui-stroke-player.js 对齐：默认 enabled=false
   const initEnabled =
     typeof opts.enabledDefault === "boolean" ? opts.enabledDefault : false;
 
   const state = {
-    enabled: initEnabled, // ✅ 是否允许描红系统工作（教学示范时会临时关）
-    tracing: initTracing, // ✅ 描红开关（显示/隐藏 canvas）
+    enabled: initEnabled,
+    tracing: initTracing,
     drawing: false,
     pointerId: null,
     lastX: 0,
     lastY: 0,
 
     strokeIndex: 0,
-    penColor: opts.penColor || "#FB923C",
+
+    penColor: String(opts.penColor || "#FB923C"),
+    penWidth: Number(opts.lineWidth ?? 6),
+    alpha: Number(opts.alpha ?? 0.85),
+
     hasInk: false
   };
 
-  // =========================
-  // ✅ 可配置：线宽/透明度
-  // =========================
-  let lineWidth = Number(opts.lineWidth ?? 6);
-  let alpha = Number(opts.alpha ?? 0.85);
+  // ✅ 是否自动推进笔画索引（自由画布要关掉）
+  const AUTO_ADVANCE = opts.autoAdvanceIndex !== false; // default true
 
-function applyCtxStyle() {
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.lineWidth = lineWidth;
-  ctx.globalAlpha = alpha;
-  ctx.strokeStyle = state.penColor;
-}
+  function applyCtxStyle() {
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = state.penWidth;
+    ctx.globalAlpha = state.alpha;
+    ctx.strokeStyle = state.penColor;
+  }
 
   function resize() {
     const r = canvas.getBoundingClientRect();
@@ -136,9 +126,7 @@ function applyCtxStyle() {
     try {
       canvas.dispatchEvent(new CustomEvent(name, { detail }));
     } catch {
-      try {
-        canvas.dispatchEvent(new Event(name));
-      } catch {}
+      try { canvas.dispatchEvent(new Event(name)); } catch {}
     }
   }
 
@@ -146,18 +134,11 @@ function applyCtxStyle() {
   // ✅ 事件处理
   // =========================
   function onPointerDown(e) {
-    // 必须：开启描红 + enabled 才允许画
     if (!state.enabled || !state.tracing) return;
-
-    // 多指不画（避免 pinch）
     if (state.pointerId !== null) return;
 
     state.pointerId = e.pointerId;
-
-    // ✅ 很关键：确保 capture 成功（有些浏览器需要 try）
-    try {
-      canvas.setPointerCapture?.(e.pointerId);
-    } catch {}
+    try { canvas.setPointerCapture?.(e.pointerId); } catch {}
 
     state.drawing = true;
     state.hasInk = false;
@@ -166,7 +147,6 @@ function applyCtxStyle() {
     state.lastX = p.x;
     state.lastY = p.y;
 
-    // ✅ 防滚动/防拖拽
     e.preventDefault?.();
   }
 
@@ -179,6 +159,8 @@ function applyCtxStyle() {
 
     if (p.x !== state.lastX || p.y !== state.lastY) {
       ctx.strokeStyle = state.penColor;
+      ctx.lineWidth = state.penWidth;
+      ctx.globalAlpha = state.alpha;
       drawLine(state.lastX, state.lastY, p.x, p.y);
       state.hasInk = true;
     }
@@ -186,7 +168,6 @@ function applyCtxStyle() {
     state.lastX = p.x;
     state.lastY = p.y;
 
-    // ✅ 移动端/触控板上非常关键：阻止默认手势
     e.preventDefault?.();
   }
 
@@ -205,22 +186,19 @@ function applyCtxStyle() {
 
     if (wasDrawing && hadInk && state.tracing && state.enabled) {
       const before = state.strokeIndex;
-      if (autoAdvanceIndex) state.strokeIndex += 1;
+      if (AUTO_ADVANCE) state.strokeIndex += 1;
 
-      // ✅ 你原本事件（保留）
       emit("trace:strokeend", {
         strokeIndexBefore: before,
         strokeIndexAfter: state.strokeIndex
       });
 
-      // ✅ 兼容 teaching.js 常见写法（保留）
+      // 兼容旧事件名
       emit("strokeComplete", { index: before, nextIndex: state.strokeIndex });
       emit("complete", { index: before, nextIndex: state.strokeIndex });
     }
 
     state.hasInk = false;
-
-    // ✅ 防止浏览器把抬笔当点击/选中文本
     e.preventDefault?.();
   }
 
@@ -230,7 +208,6 @@ function applyCtxStyle() {
     e.preventDefault?.();
   }
 
-  // ✅ 兜底：按住拖出 canvas / capture 丢失，会导致一直 drawing=true
   function onPointerLeave(e) {
     if (!state.drawing) return;
     endDrawing(e);
@@ -244,13 +221,10 @@ function applyCtxStyle() {
 
   function onResize() {
     if (!state.tracing) return;
-
     try {
       const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
       resize();
-      try {
-        ctx.putImageData(img, 0, 0);
-      } catch {}
+      try { ctx.putImageData(img, 0, 0); } catch {}
     } catch {
       resize();
     }
@@ -260,39 +234,27 @@ function applyCtxStyle() {
   // ✅ 初次初始化
   // =========================
   resize();
-
-  // ⭐⭐⭐ 防滚动抢事件（移动端关键）
   canvas.style.touchAction = "none";
-
-  // ✅ 最后一公里：确保描红层永远在最上面
-  // （有些 SVG/容器会形成新 stacking context）
   canvas.style.zIndex = String(opts.zIndex ?? 50);
 
   canvas.addEventListener("pointerdown", onPointerDown, { passive: false });
-  canvas.addEventListener("pointermove", onPointerMove, { passive: false });  // ✅ 改为 false
-  canvas.addEventListener("pointerup", onPointerUp, { passive: false });      // ✅ 改为 false
-  canvas.addEventListener("pointercancel", onPointerCancel, { passive: false }); // ✅ 改为 false
+  canvas.addEventListener("pointermove", onPointerMove, { passive: false });
+  canvas.addEventListener("pointerup", onPointerUp, { passive: false });
+  canvas.addEventListener("pointercancel", onPointerCancel, { passive: false });
   canvas.addEventListener("pointerleave", onPointerLeave, { passive: true });
   canvas.addEventListener("lostpointercapture", onLostPointerCapture, { passive: true });
   window.addEventListener("resize", onResize);
 
-  // =========================
-  // ✅ 对外 API（兼容 + 扩展）
-  // =========================
   const api = {
-    // ✅ 显示/隐藏（只管 tracing）
     toggle(force) {
       if (typeof force === "boolean") state.tracing = force;
       else state.tracing = !state.tracing;
 
       canvas.classList.toggle("hidden", !state.tracing);
-
-      // ✅ 同步 pointerEvents：可见才接收；不可见就别挡住缩放拖拽
       canvas.style.pointerEvents = state.tracing ? "auto" : "none";
 
-      if (state.tracing) {
-        resize();
-      } else {
+      if (state.tracing) resize();
+      else {
         state.drawing = false;
         state.pointerId = null;
         state.hasInk = false;
@@ -302,11 +264,9 @@ function applyCtxStyle() {
       return state.tracing;
     },
 
-    // ✅ 是否允许描红输入（和 player/teaching 对齐）
     setEnabled(on) {
       state.enabled = !!on;
 
-      // ✅ 如果 canvas 可见，确保 tracing=true（保留你原逻辑）
       if (!canvas.classList.contains("hidden")) {
         state.tracing = true;
         canvas.style.pointerEvents = "auto";
@@ -321,22 +281,12 @@ function applyCtxStyle() {
       emit("trace:enabled", { enabled: state.enabled });
     },
 
-    enable() {
-      api.setEnabled(true);
-    },
-    disable() {
-      api.setEnabled(false);
-    },
-    setDrawingEnabled(on) {
-      api.setEnabled(!!on);
-    },
+    enable() { api.setEnabled(true); },
+    disable() { api.setEnabled(false); },
+    setDrawingEnabled(on) { api.setEnabled(!!on); },
 
-    isEnabled() {
-      return !!state.enabled;
-    },
-    isTracing() {
-      return !!state.tracing;
-    },
+    isEnabled() { return !!state.enabled; },
+    isTracing() { return !!state.tracing; },
 
     clear() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -344,9 +294,7 @@ function applyCtxStyle() {
       emit("trace:clear", {});
     },
 
-    getStrokeIndex() {
-      return state.strokeIndex || 0;
-    },
+    getStrokeIndex() { return state.strokeIndex || 0; },
     setStrokeIndex(i) {
       const n = Number(i);
       state.strokeIndex = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
@@ -360,19 +308,25 @@ function applyCtxStyle() {
       emit("trace:color", { color: state.penColor });
     },
 
-    setStyle({ width, opacity } = {}) {
-  if (Number.isFinite(width)) lineWidth = Number(width);
-  if (Number.isFinite(opacity)) alpha = Number(opacity);
-  applyCtxStyle();
-  emit("trace:style", { width: ctx.lineWidth, opacity: ctx.globalAlpha });
-},
+    setPenWidth(w) {
+      const n = Number(w);
+      if (!Number.isFinite(n)) return;
+      state.penWidth = Math.max(1, Math.min(60, n));
+      ctx.lineWidth = state.penWidth;
+      emit("trace:width", { width: state.penWidth });
+    },
 
-    on(name, fn) {
-      return on(name, fn);
+    setStyle({ width, opacity } = {}) {
+      if (Number.isFinite(width)) api.setPenWidth(width);
+      if (Number.isFinite(opacity)) {
+        state.alpha = Number(opacity);
+        ctx.globalAlpha = state.alpha;
+      }
+      emit("trace:style", { width: state.penWidth, opacity: state.alpha });
     },
-    off(name, fn) {
-      return off(name, fn);
-    },
+
+    on(name, fn) { return on(name, fn); },
+    off(name, fn) { return off(name, fn); },
 
     destroy() {
       canvas.removeEventListener("pointerdown", onPointerDown);
@@ -386,10 +340,7 @@ function applyCtxStyle() {
     }
   };
 
-  // ✅ 初始化同步交互状态
   canvas.style.pointerEvents = state.tracing ? "auto" : "none";
-
-  // ✅ 初始化 enabled=false 时不允许绘制（状态一致）
   if (!state.enabled) {
     state.drawing = false;
     state.pointerId = null;
