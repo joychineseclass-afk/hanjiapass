@@ -219,3 +219,12 @@ export function createHSKHistory(options = {}) {
     syncFromUI,
   };
 }
+
+// ===== Global bridge (for legacy code) =====
+try {
+  window.HSK_HISTORY = window.HSK_HISTORY || {};
+  // 你文件里如果有 export function list() / clear() / add()
+  window.HSK_HISTORY.list = window.HSK_HISTORY.list || list;
+  if (typeof clear === "function") window.HSK_HISTORY.clear = window.HSK_HISTORY.clear || clear;
+  if (typeof add === "function") window.HSK_HISTORY.add = window.HSK_HISTORY.add || add;
+} catch {}
