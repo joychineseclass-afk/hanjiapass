@@ -1,10 +1,10 @@
 // ui/ui-trace-canvas.js
-// ✅ Trace Canvas Layer (stable)
+// ✅ Trace Canvas Layer (stable+enhanced)
 // - supports pointer events (mouse/touch/pen)
-// - supports toggle(show/hide), enable/disable
+// - supports toggle(show/hide), setTracing(show/hide), enable/disable, setHitTest
 // - emits: "trace:strokeend" + legacy "strokeComplete"/"complete"
 // - provides API: setPenColor, setPenWidth, setStyle, clear, destroy
-// - fixes: no undefined variables (e.g. autoAdvanceIndex), safe null canvas
+// - fixes: no undefined variables, safe null canvas, robust tracing/enabled/pointerEvents sync
 
 export function initTraceCanvasLayer(canvas, opts = {}) {
   // =========================
@@ -13,20 +13,16 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   if (!canvas) {
     return {
       toggle() {},
+      setTracing() {},
+      setHitTest() {},
       clear() {},
       setEnabled() {},
       enable() {},
       disable() {},
       setDrawingEnabled() {},
-      isEnabled() {
-        return false;
-      },
-      isTracing() {
-        return false;
-      },
-      getStrokeIndex() {
-        return 0;
-      },
+      isEnabled() { return false; },
+      isTracing() { return false; },
+      getStrokeIndex() { return 0; },
       setStrokeIndex() {},
       setPenColor() {},
       setPenWidth() {},
@@ -38,6 +34,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   }
 
   const ctx = canvas.getContext("2d");
+  const debug = !!opts.debug;
 
   // =========================
   // ✅ 事件总线（兼容 teaching.js / 其他模块）
@@ -62,11 +59,8 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     const set = bus.get(name);
     if (!set) return;
     set.forEach((fn) => {
-      try {
-        fn(payload);
-      } catch (e) {
-        console.warn("[trace] handler error", name, e);
-      }
+      try { fn(payload); }
+      catch (e) { console.warn("[trace] handler error", name, e); }
     });
   }
 
@@ -82,8 +76,9 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     typeof opts.enabledDefault === "boolean" ? opts.enabledDefault : false;
 
   const state = {
-    enabled: initEnabled, // ✅ 是否允许绘制
-    tracing: initTracing, // ✅ 是否显示/接收事件
+    enabled: initEnabled,   // ✅ 是否允许绘制
+    tracing: initTracing,   // ✅ 是否显示
+    hitTest: initTracing,   // ✅ 是否吃事件（默认跟 tracing 同步）
     drawing: false,
     pointerId: null,
     lastX: 0,
@@ -106,7 +101,6 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // ✅ 是否每次抬笔自动 +1（自由画布要关掉）
   const shouldAutoAdvanceIndex = opts.autoAdvanceIndex !== false; // 默认 true
 
-  // 当前可变样式（允许后面 setPenWidth / setStyle 调整）
   let currentLineWidth = baseLineWidth;
   let currentAlpha = baseAlpha;
 
@@ -118,13 +112,35 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     ctx.strokeStyle = state.penColor;
   }
 
+  function syncVisibilityAndHitTest() {
+    // tracing 控制显示
+    canvas.classList.toggle("hidden", !state.tracing);
+    // 保险：有些 CSS 会对 hidden 之外的 display 做覆盖，这里强行给 display
+    canvas.style.display = state.tracing ? "block" : "none";
+
+    // hitTest 控制 pointer-events（能显示但不挡按钮）
+    canvas.style.pointerEvents = (state.tracing && state.hitTest) ? "auto" : "none";
+  }
+
   function resize() {
     const r = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
-    if (!r.width || !r.height) return;
 
-    canvas.width = Math.round(r.width * dpr);
-    canvas.height = Math.round(r.height * dpr);
+    // 若还没布局（刚插入 DOM），延迟重试一次
+    if (!r.width || !r.height) {
+      queueMicrotask(() => {
+        const rr = canvas.getBoundingClientRect();
+        if (!rr.width || !rr.height) return;
+        resize();
+      });
+      return;
+    }
+
+    const w = Math.round(r.width * dpr);
+    const h = Math.round(r.height * dpr);
+
+    if (canvas.width !== w) canvas.width = w;
+    if (canvas.height !== h) canvas.height = h;
 
     // 坐标系归一到 CSS 像素
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -152,9 +168,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     try {
       canvas.dispatchEvent(new CustomEvent(name, { detail }));
     } catch {
-      try {
-        canvas.dispatchEvent(new Event(name));
-      } catch {}
+      try { canvas.dispatchEvent(new Event(name)); } catch {}
     }
   }
 
@@ -162,17 +176,13 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // ✅ 事件处理
   // =========================
   function onPointerDown(e) {
-    // 必须：开启 tracing + enabled 才允许画
-    if (!state.tracing || !state.enabled) return;
+    if (!state.tracing || !state.hitTest || !state.enabled) return;
+    if (state.pointerId !== null) return; // 多指不画
 
-    // 多指不画（避免 pinch）
-    if (state.pointerId !== null) return;
-
+    // 某些设备上 pointerdown 会出现 buttons=0 的怪情况，仍允许开始
     state.pointerId = e.pointerId;
 
-    try {
-      canvas.setPointerCapture?.(e.pointerId);
-    } catch {}
+    try { canvas.setPointerCapture?.(e.pointerId); } catch {}
 
     state.drawing = true;
     state.hasInk = false;
@@ -181,15 +191,30 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     state.lastX = p.x;
     state.lastY = p.y;
 
+    if (debug) {
+      console.log("[trace] down", {
+        enabled: state.enabled,
+        tracing: state.tracing,
+        hitTest: state.hitTest,
+        pointerId: e.pointerId
+      });
+    }
+
     e.preventDefault?.();
   }
 
   function onPointerMove(e) {
-    if (!state.tracing || !state.enabled) return;
+    if (!state.tracing || !state.hitTest || !state.enabled) return;
     if (!state.drawing) return;
     if (state.pointerId !== e.pointerId) return;
 
     const p = pos(e);
+
+    // 兜底：如果系统认为没有按键了（buttons=0），当作结束
+    if (typeof e.buttons === "number" && e.buttons === 0) {
+      onPointerUp(e);
+      return;
+    }
 
     if (p.x !== state.lastX || p.y !== state.lastY) {
       // ✅ 每次 move 都确保当前样式生效
@@ -220,22 +245,25 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
 
     endDrawing(e);
 
-    if (wasDrawing && hadInk && state.tracing && state.enabled) {
+    if (wasDrawing && hadInk && state.tracing && state.hitTest && state.enabled) {
       const before = state.strokeIndex;
 
       if (shouldAutoAdvanceIndex) {
         state.strokeIndex += 1;
       }
 
-      // ✅ 主事件：你在 player 里监听的就是这个
       emit("trace:strokeend", {
         strokeIndexBefore: before,
         strokeIndexAfter: state.strokeIndex
       });
 
-      // ✅ 兼容 teaching.js 常见写法（保留）
+      // ✅ legacy
       emit("strokeComplete", { index: before, nextIndex: state.strokeIndex });
       emit("complete", { index: before, nextIndex: state.strokeIndex });
+
+      if (debug) {
+        console.log("[trace] strokeend", { before, after: state.strokeIndex });
+      }
     }
 
     state.hasInk = false;
@@ -248,29 +276,26 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     e.preventDefault?.();
   }
 
-  // ✅ 兜底：避免 capture 丢失导致一直 drawing=true
-  function onPointerLeave(e) {
+  function onPointerLeave() {
     if (!state.drawing) return;
-    endDrawing(e);
+    state.drawing = false;
+    state.pointerId = null;
     state.hasInk = false;
   }
 
-  function onLostPointerCapture(e) {
+  function onLostPointerCapture() {
     if (!state.drawing) return;
-    endDrawing(e);
+    state.drawing = false;
+    state.pointerId = null;
     state.hasInk = false;
   }
 
   function onResize() {
     if (!state.tracing) return;
-
-    // ✅ 尽量保留已画内容
     try {
       const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
       resize();
-      try {
-        ctx.putImageData(img, 0, 0);
-      } catch {}
+      try { ctx.putImageData(img, 0, 0); } catch {}
     } catch {
       resize();
     }
@@ -279,15 +304,16 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // =========================
   // ✅ 初次初始化
   // =========================
-  resize();
-
   // 移动端关键：不让页面滚动/缩放手势抢事件
   canvas.style.touchAction = "none";
-
-  // 确保层级在上面（你也可以通过 opts.zIndex 调整）
+  // 层级
   canvas.style.zIndex = String(opts.zIndex ?? 50);
 
-  // 绑定事件：move/up/cancel 必须 passive:false 才能 preventDefault 生效
+  // 同步可见/可点
+  syncVisibilityAndHitTest();
+  resize();
+
+  // passive:false 才能 preventDefault 生效
   canvas.addEventListener("pointerdown", onPointerDown, { passive: false });
   canvas.addEventListener("pointermove", onPointerMove, { passive: false });
   canvas.addEventListener("pointerup", onPointerUp, { passive: false });
@@ -300,15 +326,15 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
   // ✅ 对外 API（兼容 + 扩展）
   // =========================
   const api = {
-    // ✅ 显示/隐藏（只管 tracing）
+    // ✅ toggle = 只管 tracing（显示/隐藏），hitTest 默认跟随
     toggle(force) {
       if (typeof force === "boolean") state.tracing = force;
       else state.tracing = !state.tracing;
 
-      canvas.classList.toggle("hidden", !state.tracing);
+      // 默认：显示就能点，隐藏就不挡
+      state.hitTest = state.tracing;
 
-      // ✅ 同步 pointerEvents：可见才接收；不可见就别挡住底下按钮/层
-      canvas.style.pointerEvents = state.tracing ? "auto" : "none";
+      syncVisibilityAndHitTest();
 
       if (state.tracing) {
         resize();
@@ -318,15 +344,32 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
         state.hasInk = false;
       }
 
-      emit("trace:toggle", { tracing: state.tracing });
+      emit("trace:toggle", { tracing: state.tracing, hitTest: state.hitTest });
+      if (debug) console.log("[trace] toggle", state.tracing, "hitTest", state.hitTest);
       return state.tracing;
+    },
+
+    // ✅ 新增：只设置显示/隐藏，不改变 hitTest（更精细控制）
+    setTracing(on) {
+      state.tracing = !!on;
+      syncVisibilityAndHitTest();
+      if (state.tracing) resize();
+      emit("trace:toggle", { tracing: state.tracing, hitTest: state.hitTest });
+      if (debug) console.log("[trace] setTracing", state.tracing);
+    },
+
+    // ✅ 新增：是否吃事件（显示但不挡按钮/或显示且可写）
+    setHitTest(on) {
+      state.hitTest = !!on;
+      syncVisibilityAndHitTest();
+      emit("trace:hittest", { hitTest: state.hitTest });
+      if (debug) console.log("[trace] setHitTest", state.hitTest);
     },
 
     // ✅ 是否允许描红输入（和 player/teaching 对齐）
     setEnabled(on) {
       state.enabled = !!on;
 
-      // 如果关闭，直接中止绘制状态
       if (!state.enabled) {
         state.drawing = false;
         state.pointerId = null;
@@ -334,24 +377,15 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       }
 
       emit("trace:enabled", { enabled: state.enabled });
+      if (debug) console.log("[trace] enabled", state.enabled);
     },
 
-    enable() {
-      api.setEnabled(true);
-    },
-    disable() {
-      api.setEnabled(false);
-    },
-    setDrawingEnabled(on) {
-      api.setEnabled(!!on);
-    },
+    enable() { api.setEnabled(true); },
+    disable() { api.setEnabled(false); },
+    setDrawingEnabled(on) { api.setEnabled(!!on); },
 
-    isEnabled() {
-      return !!state.enabled;
-    },
-    isTracing() {
-      return !!state.tracing;
-    },
+    isEnabled() { return !!state.enabled; },
+    isTracing() { return !!state.tracing; },
 
     clear() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -362,6 +396,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
     getStrokeIndex() {
       return state.strokeIndex || 0;
     },
+
     setStrokeIndex(i) {
       const n = Number(i);
       state.strokeIndex = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
@@ -375,7 +410,6 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       emit("trace:color", { color: state.penColor });
     },
 
-    // ✅ 你在 player 里用到的：practiceApi.setPenWidth(...)
     setPenWidth(width) {
       const w = Number(width);
       if (!Number.isFinite(w)) return;
@@ -396,12 +430,8 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       emit("trace:style", { width: currentLineWidth, opacity: currentAlpha });
     },
 
-    on(name, fn) {
-      return on(name, fn);
-    },
-    off(name, fn) {
-      return off(name, fn);
-    },
+    on(name, fn) { return on(name, fn); },
+    off(name, fn) { return off(name, fn); },
 
     destroy() {
       try { canvas.removeEventListener("pointerdown", onPointerDown); } catch {}
@@ -414,9 +444,6 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       bus.clear();
     }
   };
-
-  // ✅ 初始化同步 pointerEvents
-  canvas.style.pointerEvents = state.tracing ? "auto" : "none";
 
   return api;
 }
