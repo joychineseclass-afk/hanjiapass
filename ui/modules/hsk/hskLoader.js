@@ -150,3 +150,14 @@
   // ✅ register global
   window.HSK_LOADER = { loadVocab, loadLessons };
 })();
+
+// ===== Global bridge (for legacy code) =====
+try {
+  // 你文件里如果是 export function renderWordCards(...) / renderLessonList(...)
+  // 就把它们组成一个对象挂到 window
+  window.HSK_RENDER = window.HSK_RENDER || {};
+  window.HSK_RENDER.renderWordCards = window.HSK_RENDER.renderWordCards || renderWordCards;
+  if (typeof renderLessonList === "function") {
+    window.HSK_RENDER.renderLessonList = window.HSK_RENDER.renderLessonList || renderLessonList;
+  }
+} catch {}
