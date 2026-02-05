@@ -1,6 +1,6 @@
 /* =========================================
    📘 HSK PAGE CONTROLLER — STABLE++ EDITION
-   页面总控制器（长期扩展不返工）
+   页面总控制器
 ========================================= */
 
 import { i18n } from "../i18n.js";
@@ -9,16 +9,21 @@ import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
-// ❌ 删除这句：document.addEventListener("DOMContentLoaded", bootHSKPage);
-
+/**
+ * 暴露给 router.js 的生命周期函数
+ */
 export function mount() {
   bootHSKPage();
 }
 
 export function unmount() {
-  // 先留空也行，后面再加清理逻辑
+  console.log("HSK Page: Unmounting...");
+  // 如果有定时器或全局监听器，可以在这里清除
 }
 
+/**
+ * 启动页面
+ */
 function bootHSKPage() {
   const ok = mountLayout();
   if (!ok) return;
@@ -28,7 +33,6 @@ function bootHSKPage() {
   initPageModules();
 }
 
-
 /* ===============================
    1️⃣ 渲染页面结构
 ================================== */
@@ -37,23 +41,21 @@ function mountLayout() {
   const app = document.getElementById("app");
 
   if (!navRoot || !app) {
-    // ✅ 不只 console：也给用户一个可见提示（方便手机调试）
+    const errorMsg = `Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}`;
     document.body.innerHTML = `
-      <div style="padding:16px;font-family:system-ui">
-        <h2 style="margin:0 0 8px 0;">HSK Page Error</h2>
-        <div style="color:#b91c1c">
-          Missing root containers: ${!navRoot ? "#siteNav " : ""}${!app ? "#app" : ""}
-        </div>
+      <div style="padding:16px;font-family:system-ui;text-align:center;">
+        <h2 style="color:#b91c1c;">HSK Page Error</h2>
+        <p>${errorMsg}</p>
       </div>
     `;
-    console.error("HSK Page: Missing root containers.", { navRoot, app });
+    console.error("HSK Page:", errorMsg);
     return false;
   }
 
-  // ✅ Nav 只 mount 一次
+  // 挂载导航栏
   mountNavBar(navRoot);
 
-  // ✅ 页面主体（包含 portal-root：给 AI / Learn Panel 用）
+  // 注入主体 HTML
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
@@ -62,7 +64,6 @@ function mountLayout() {
    2️⃣ 挂载全局组件（AI / Learn）
 ================================== */
 function mountGlobalComponents() {
-  // ✅ 给全局组件一个固定的“挂载点”，避免以后每页到处插 DOM
   ensurePortalRoot();
   mountAIPanel();
   mountLearnPanel();
@@ -81,29 +82,29 @@ function ensurePortalRoot() {
    3️⃣ 启动本页功能模块
 ================================== */
 function initPageModules() {
-  // ✅ 允许未来扩展参数（不改 hskUI 内部也行）
-  initHSKUI({
-    defaultLevel: 1,
-    autoFocusSearch: true,
-  });
+  try {
+    initHSKUI({
+      defaultLevel: 1,
+      autoFocusSearch: true,
+    });
+  } catch (e) {
+    console.error("HSK UI Init Failed:", e);
+  }
 }
 
 /* ===============================
-   🌐 i18n：如果存在就应用一次
-   （确保 data-i18n 立刻生效）
+   🌐 i18n：应用多语言
 ================================== */
 function applyI18nIfAvailable() {
   try {
-    // ✅ 和你笔顺那块一致：joy_lang / kr
     i18n.init({
       defaultLang: "kr",
-      storageKey: "joy_lang",
-      autoApplyRoot: document
+      storageKey: "joy_lang"
     });
-
-    i18n.apply(); // ✅ 立即应用 data-i18n
+    // apply 传入 document 确保全页扫描 data-i18n 标签
+    i18n.apply(document); 
   } catch (e) {
-    console.warn("HSK Page: i18n init/apply failed:", e);
+    console.warn("HSK Page: i18n failed:", e);
   }
 }
 
@@ -112,59 +113,61 @@ function applyI18nIfAvailable() {
 ================================== */
 function getHSKLayoutHTML() {
   return `
-    <!-- ✅ HSK 顶部栏 -->
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
       <div class="flex flex-col md:flex-row md:items-center gap-3">
         <div class="flex items-center gap-2">
-          <span class="text-lg font-semibold" data-i18n="hsk_title">HSK 학습 콘텐츠</span>
-          <span id="hskStatus" class="text-xs text-gray-500"></span>
+          <span class="text-lg font-bold text-blue-600" data-i18n="hsk_title">HSK 학습 콘텐츠</span>
+          <span id="hskStatus" class="text-xs text-gray-400"></span>
         </div>
 
         <div class="flex-1"></div>
 
         <div class="flex items-center gap-2">
           <label class="text-sm text-gray-600" data-i18n="hsk_level">레벨</label>
-
-          <select id="hskLevel" class="border rounded-lg px-3 py-2 text-sm bg-white">
+          <select id="hskLevel" class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
             ${renderLevelOptions()}
           </select>
 
           <input
             id="hskSearch"
-            class="border rounded-lg px-3 py-2 text-sm w-48"
-            placeholder="검색 (예: 你好 / 숫자 / 가족)"
+            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="검색 (예: 你好 / 숫자)"
+            data-i18n-placeholder="hsk_search_placeholder"
             autocomplete="off"
-            spellcheck="false"
           />
         </div>
       </div>
 
-      <div class="mt-3 text-xs text-gray-500" data-i18n="hsk_tip">
-        💡 카드 클릭 → 배우기 → AI 선생님에게 질문하기
+      <div class="mt-3 text-xs text-gray-500 flex items-center gap-1">
+        <span>💡</span>
+        <span data-i18n="hsk_tip">카드 클릭 → 배우기 → AI 선생님에게 질문하기</span>
       </div>
     </div>
 
-    <!-- ✅ Error -->
-    <div id="hskError"
-      class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm">
-    </div>
+    <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <!-- ✅ HSK 主容器 -->
-    <div id="hskGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-    <div class="h-24"></div>
+    <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+       </div>
+    
+    <div class="h-20"></div>
 
-    <!-- ✅ Portal 预留（也可不放这里，ensurePortalRoot 会兜底）
-         放这里的好处：结构更清晰 -->
     <div id="portal-root"></div>
   `;
 }
 
-/* ===============================
-   🎚 HSK 等级选项生成
-================================== */
 function renderLevelOptions() {
   return Array.from({ length: 9 }, (_, i) => {
     const level = i + 1;
-    return `<option value="${level}" ${level === 1 ? "selected" : ""}>HSK ${level}</option>`;
+    return `<option value="${level}" ${level === 1 ? "selected" : ""}>HSK ${level}급</option>`;
   }).join("");
+}
+
+/**
+ * 🚀 自启动逻辑
+ * 如果不是作为模块被 router 加载，则在 DOMReady 后自动运行
+ */
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  mount();
+} else {
+  document.addEventListener("DOMContentLoaded", mount);
 }
