@@ -3,16 +3,21 @@
    页面总控制器（长期扩展不返工）
 ========================================= */
 
-import { i18n } from "../i18n.js"; // ✅ 新增：模块化 i18n
+import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
-/* ===============================
-   页面启动总入口
-================================== */
-document.addEventListener("DOMContentLoaded", bootHSKPage);
+// ❌ 删除这句：document.addEventListener("DOMContentLoaded", bootHSKPage);
+
+export function mount() {
+  bootHSKPage();
+}
+
+export function unmount() {
+  // 先留空也行，后面再加清理逻辑
+}
 
 function bootHSKPage() {
   const ok = mountLayout();
@@ -22,6 +27,7 @@ function bootHSKPage() {
   applyI18nIfAvailable();
   initPageModules();
 }
+
 
 /* ===============================
    1️⃣ 渲染页面结构
