@@ -152,9 +152,10 @@
   // =========================
   // ✅ NEW: Versioned URL builder (Formal)
   // =========================
-  function vocabUrlVersioned(lv, version) {
-    return `/data/vocab/${version}/hsk${lv}.json`;
-  }
+  function vocabUrlFallback(lv) {
+  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  return `/data/vocab/${ver}/hsk${lv}.json`;
+}
 
   // ✅ lessons 可选：如果你以后也要版本化
   function lessonsUrlVersioned(lv, version) {
