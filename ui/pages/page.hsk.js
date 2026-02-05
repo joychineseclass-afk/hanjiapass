@@ -23,12 +23,18 @@ export async function mount() {
   // ✅ ensure globals exist (loader/renderer/history)
   await ensureHSKDeps();
 
-  // ✅ init UI
-  hskApi = initHSKUI({
-    defaultLevel: 1,
-    autoFocusSearch: false,
-    lang: "ko",
-  });
+// ⭐⭐⭐ 在这里加：设置默认词库版本 ⭐⭐⭐
+localStorage.setItem(
+  "hsk_vocab_version",
+  localStorage.getItem("hsk_vocab_version") || "hsk2.0"
+);
+
+// ✅ init UI
+hskApi = initHSKUI({
+  defaultLevel: 1,
+  autoFocusSearch: false,
+  lang: "ko",
+});
 }
 
 export async function unmount() {
