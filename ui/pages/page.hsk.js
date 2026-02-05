@@ -82,39 +82,33 @@ async function ensureHSKDeps() {
     if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
 
     // ✅ 使用“安全加载器”：失败时给出具体 src
+    async function ensureHSKDeps() {
+  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
+  if (depsPromise) return depsPromise;
+
+  depsPromise = (async () => {
     async function loadScriptOnce(src) {
-      // 已经插入过相同 src，直接等待它完成（或判定已加载）
-      const existing = [...document.scripts].find((s) => s.src && s.src.endsWith(src));
+      const existing = [...document.scripts].find(s => s.src && s.src.endsWith(src));
       if (existing) return;
 
       await new Promise((resolve, reject) => {
         const s = document.createElement("script");
         s.src = src;
         s.async = true;
-
-        s.onload = () => resolve();
+        s.onload = resolve;
         s.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-
         document.head.appendChild(s);
       });
     }
 
-    // ✅ 统一用绝对路径，避免相对路径错位
-    await loadScriptOnce("../modules/hsk/hskLoader.js");
-    await loadScriptOnce("../modules/hsk/hskRenderer.js");
-    await loadScriptOnce("../modules/hsk/hskHistory.js");
+    // ✅ 正确真实路径
+    await loadScriptOnce("/ui/modules/hskLoader.js");
+    await loadScriptOnce("/ui/modules/hskRenderer.js");
+    await loadScriptOnce("/ui/modules/hskHistory.js");
 
-
-    // ✅ 最后确认全局对象真的挂出来了
-    if (!window.HSK_LOADER?.loadVocab) {
-      throw new Error("HSK_LOADER.loadVocab 가 없습니다. (hskLoader.js가 window.HSK_LOADER를 등록하지 않았거나 로드 실패)");
-    }
-    if (!window.HSK_RENDER) {
-      throw new Error("HSK_RENDER 가 없습니다. (hskRenderer.js 로드/등록 확인 필요)");
-    }
-    if (!window.HSK_HISTORY) {
-      throw new Error("HSK_HISTORY 가 없습니다. (hskHistory.js 로드/등록 확인 필요)");
-    }
+    if (!window.HSK_LOADER?.loadVocab) throw new Error("HSK_LOADER.loadVocab 가 없습니다.");
+    if (!window.HSK_RENDER) throw new Error("HSK_RENDER 가 없습니다.");
+    if (!window.HSK_HISTORY) throw new Error("HSK_HISTORY 가 없습니다.");
   })();
 
   return depsPromise;
