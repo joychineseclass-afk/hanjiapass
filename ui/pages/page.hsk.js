@@ -1,7 +1,7 @@
 // /ui/pages/page.hsk.js
 // ✅ HSK Page Controller — Stable++ (router-compatible)
 // - exports: mount(), unmount()
-// - no autoInit (router will control lifecycle)
+// - router controls lifecycle
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -10,8 +10,6 @@ import { mountLearnPanel } from "../components/learnPanel.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
 let hskApi = null;
-
-// ✅ 防重复加载（同一会话只加载一次）
 let depsPromise = null;
 
 export async function mount() {
@@ -21,10 +19,10 @@ export async function mount() {
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ 关键：先确保 HSK 全局依赖存在（HSK_LOADER / HSK_RENDER / HSK_HISTORY）
+  // ✅ must have HSK_LOADER / HSK_RENDER / HSK_HISTORY
   await ensureHSKDeps();
 
-  // ✅ 再启动 UI
+  // ✅ then init UI
   initPageModules();
 }
 
@@ -42,10 +40,7 @@ function mountLayout() {
     return false;
   }
 
-  // 导航栏（如果你全站只 mount 一次，也没问题；这里做幂等）
   mountNavBar(navRoot);
-
-  // 页面主体
   app.innerHTML = getHSKLayoutHTML();
   return true;
 }
@@ -65,73 +60,6 @@ function ensurePortalRoot() {
   }
 }
 
-/* ===============================
-   ✅ HSK 依赖脚本加载（最小改动版）
-   - 不会抛出 [object Event]
-   - 失败时抛出可读错误信息
-================================== */
-async function ensureHSKDeps() {
-  // 已存在就不加载
-  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
-
-  // 已在加载中就复用
-  if (depsPromise) return depsPromise;
-
-  depsPromise = (async () => {
-    // 再次检查一次（避免并发）
-    if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
-
-    // ✅ 使用“安全加载器”：失败时给出具体 src
-    async function ensureHSKDeps() {
-  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
-  if (depsPromise) return depsPromise;
-
-  depsPromise = (async () => {
-    async function loadScriptOnce(src) {
-      const existing = [...document.scripts].find(s => s.src && s.src.endsWith(src));
-      if (existing) return;
-
-      await new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = src;
-        s.async = true;
-        s.onload = resolve;
-        s.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-        document.head.appendChild(s);
-      });
-    }
-
-    // ✅ 正确真实路径
-    await loadScriptOnce("/ui/modules/hskLoader.js");
-    await loadScriptOnce("/ui/modules/hskRenderer.js");
-    await loadScriptOnce("/ui/modules/hskHistory.js");
-
-    if (!window.HSK_LOADER?.loadVocab) throw new Error("HSK_LOADER.loadVocab 가 없습니다.");
-    if (!window.HSK_RENDER) throw new Error("HSK_RENDER 가 없습니다.");
-    if (!window.HSK_HISTORY) throw new Error("HSK_HISTORY 가 없습니다.");
-  })();
-
-  return depsPromise;
-}
-
-function initPageModules() {
-  try {
-    // ✅ 初始化 HSK UI（你可按需改参数）
-    hskApi = initHSKUI({
-      defaultLevel: 1,
-      autoFocusSearch: false,
-      lang: "ko",
-    });
-
-    console.log("HSK Page Modules Initialized.");
-  } catch (e) {
-    // ✅ 确保不会出现 [object Event]
-    const msg = e?.message || String(e);
-    console.error("HSK UI Init Failed:", msg, e);
-    throw new Error(msg);
-  }
-}
-
 function applyI18nIfAvailable() {
   try {
     i18n?.apply?.(document);
@@ -140,6 +68,89 @@ function applyI18nIfAvailable() {
   }
 }
 
+function initPageModules() {
+  try {
+    hskApi = initHSKUI({
+      defaultLevel: 1,
+      autoFocusSearch: false,
+      lang: "ko",
+    });
+    console.log("HSK Page Modules Initialized.");
+  } catch (e) {
+    const msg = e?.message || String(e);
+    console.error("HSK UI Init Failed:", msg, e);
+    throw new Error(msg);
+  }
+}
+
+/* ===============================
+   ✅ Load global deps safely
+   tries both:
+   - /ui/modules/hsk/*.js
+   - /ui/modules/*.js
+================================== */
+async function ensureHSKDeps() {
+  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
+  if (depsPromise) return depsPromise;
+
+  depsPromise = (async () => {
+    const loadScript = (src) =>
+      new Promise((resolve, reject) => {
+        // already loaded?
+        const exists = [...document.scripts].some((s) => (s.src || "").endsWith(src));
+        if (exists) return resolve();
+
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+        document.head.appendChild(s);
+      });
+
+    async function loadFirstThatWorks(candidates) {
+      let lastErr = null;
+      for (const src of candidates) {
+        try {
+          await loadScript(src);
+          return src;
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      throw lastErr || new Error("Failed to load scripts");
+    }
+
+    // ✅ try both folder layouts
+    await loadFirstThatWorks([
+      "/ui/modules/hsk/hskLoader.js",
+      "/ui/modules/hskLoader.js",
+    ]);
+    await loadFirstThatWorks([
+      "/ui/modules/hsk/hskRenderer.js",
+      "/ui/modules/hskRenderer.js",
+    ]);
+    await loadFirstThatWorks([
+      "/ui/modules/hsk/hskHistory.js",
+      "/ui/modules/hskHistory.js",
+    ]);
+
+    // ✅ verify globals
+    if (!window.HSK_LOADER?.loadVocab) {
+      throw new Error("HSK_LOADER.loadVocab 가 없습니다. (hskLoader.js가 window.HSK_LOADER를 등록해야 합니다)");
+    }
+    if (!window.HSK_RENDER) {
+      throw new Error("HSK_RENDER 가 없습니다. (hskRenderer.js 전역 등록 확인)");
+    }
+    if (!window.HSK_HISTORY) {
+      throw new Error("HSK_HISTORY 가 없습니다. (hskHistory.js 전역 등록 확인)");
+    }
+  })();
+
+  return depsPromise;
+}
+
+/* =============================== */
 function getHSKLayoutHTML() {
   return `
     <div class="bg-white rounded-2xl shadow p-4 mb-4">
