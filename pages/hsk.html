@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title data-i18n="nav_hsk">HSK 학습 | Joy Chinese</title>
 
+  <!-- ✅ 你这个文件在 /pages/ 里，所以要用 ../ 回到根目录 -->
   <link rel="stylesheet" href="../styles/base.css">
-  <link rel="stylesheet" href="./styles/panels.css">
-  <link rel="stylesheet" href="./styles/hsk.css"> <!-- 如果是HSK页才需要 -->
+  <link rel="stylesheet" href="../ui/styles/panels.css">
+  <link rel="stylesheet" href="../ui/styles/hsk.css">
 
   <style>
     .grid-2 { display:grid; grid-template-columns:1fr; gap:14px; }
@@ -71,7 +72,6 @@
   </section>
 </main>
 
-<!-- ✅ 模块化脚本（和首页一致，不会返工） -->
 <script type="module">
   import { i18n } from "../ui/i18n.js";
   import { mountNavBar } from "../ui/components/navBar.js";
