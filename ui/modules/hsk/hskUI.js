@@ -1,5 +1,10 @@
-// ui/hskUI.js (ultimate++ with Recent History)
-(function () {
+// /ui/modules/hsk/hskUI.js
+// ✅ HSK UI (ES Module) — Stable++
+// - export initHSKUI(opts)
+// - works with: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY / window.LEARN_PANEL
+// - NO auto-run (router/page controls lifecycle)
+
+export function initHSKUI(opts = {}) {
   const $ = (id) => document.getElementById(id);
 
   const hskLevel = $("hskLevel");
@@ -8,14 +13,15 @@
   const hskError = $("hskError");
   const hskStatus = $("hskStatus");
 
-  const LANG = "ko";
-  const AUTO_FOCUS_SEARCH = true;
+  const LANG = opts.lang || "ko";
+  const AUTO_FOCUS_SEARCH = opts.autoFocusSearch ?? true;
+  const DEFAULT_LEVEL = String(opts.defaultLevel ?? (hskLevel?.value || "1"));
 
   let ALL = [];
   let LESSONS = null;
   let currentLesson = null;
 
-  // ✅ 新增：当前是否在“최근 학습”视图
+  // ✅ 최근학습 뷰
   let inRecentView = false;
 
   const CACHE = new Map();
@@ -215,7 +221,7 @@
       });
   }
 
-  // ===== ✅ Recent View =====
+  // ===== Recent View =====
   function renderRecentView() {
     if (!hskGrid) return;
 
@@ -622,9 +628,7 @@
       scrollToTop();
       focusSearch();
     } catch (e) {
-      showError(
-        `HSK ${level} 데이터를 불러오지 못했어요.\n에러: ${e?.message || e}`
-      );
+      showError(`HSK ${level} 데이터를 불러오지 못했어요.\n에러: ${e?.message || e}`);
       setStatus("");
     }
   }
@@ -638,10 +642,26 @@
     }, 80);
   }
 
-  // ===== events =====
-  hskLevel?.addEventListener("change", () => loadLevel(hskLevel.value));
-  hskSearch?.addEventListener("input", onSearchChange);
+  // ===== bind events (avoid double-binding) =====
+  // If mount/unmount triggers repeatedly, ensure we don't bind twice.
+  // We'll mark the container once.
+  const BIND_FLAG = "__hsk_ui_bound__";
+  if (hskLevel && !hskLevel[BIND_FLAG]) {
+    hskLevel.addEventListener("change", () => loadLevel(hskLevel.value));
+    hskLevel[BIND_FLAG] = true;
+  }
+  if (hskSearch && !hskSearch[BIND_FLAG]) {
+    hskSearch.addEventListener("input", onSearchChange);
+    hskSearch[BIND_FLAG] = true;
+  }
 
-  // init
-  loadLevel(hskLevel?.value || "1");
-})();
+  // ===== init =====
+  // Ensure select value exists
+  if (hskLevel) hskLevel.value = String(hskLevel.value || DEFAULT_LEVEL);
+  loadLevel(String(hskLevel?.value || DEFAULT_LEVEL));
+
+  // Return an optional cleanup hook if you ever want it
+  return {
+    refresh: () => renderAuto(),
+  };
+}
