@@ -152,7 +152,8 @@ const exampleExplainCn =
   item.cnExplain ||
   "";
 
-const exampleExplain = lang === "cn" ? exampleExplainCn : exampleExplainKr;
+const isZh = lang === "zh" || lang === "cn";
+const exampleExplain = isZh ? exampleExplainCn : exampleExplainKr;
 
     card.innerHTML = `
   <div class="flex items-center justify-between gap-2">
