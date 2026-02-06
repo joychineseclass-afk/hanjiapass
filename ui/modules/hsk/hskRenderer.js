@@ -145,7 +145,6 @@ card.addEventListener("click", (e) => {
 });
 
 container.appendChild(card);
-}
 
 // ==============================
 // ✅ Global bridge for legacy UI
