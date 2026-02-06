@@ -161,3 +161,30 @@
     font-size: clamp(180px, 55vw, 360px);
   }
 }
+
+.word-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  background: white;
+}
+
+.word-card:hover {
+  background: #f5f5f5;
+}
+
+.word-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+}
