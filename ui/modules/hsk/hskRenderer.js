@@ -95,93 +95,105 @@ export function renderLessonList(container, lessons, onClickLesson) {
  */
 export function renderWordCards(container, list, onClickWord, options = {}) {
   if (!container) return;
+
+  // ✅ 清空容器
   container.innerHTML = "";
 
-  const currentLang =
-    options.lang ||
-    window.APP_LANG || // 你以后全站语言可以继续用这个
-    "ko";
+  // ✅ 当前语言
+  const currentLang = options.lang || window.APP_LANG || "ko";
+
+  // ✅ 防御：onClickWord 不是函数也不崩
+  const handleClick =
+    typeof onClickWord === "function"
+      ? onClickWord
+      : (w) => {
+          try {
+            openWordDetail?.(w); // 如果你有弹窗函数
+          } catch {}
+        };
 
   const showLearnBadge = options.showLearnBadge !== false;
 
+  // ✅ 让卡片区不被上层 Router 误捕获（兜底）
+  // （如果 Router 用了捕获阶段监听，下面 stopImmediatePropagation + 这个兜底更稳）
+  container.addEventListener(
+    "click",
+    (e) => {
+      e.stopPropagation();
+    },
+    false
+  );
+
   (list || []).forEach((item) => {
+    // ✅ 创建卡片按钮
     const card = document.createElement("button");
-    card.type = "button";
+    card.type = "button"; // ✅ 防止表单提交导致刷新
     card.className =
       "text-left bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
-    // ✅ 防止点击触发 Router / 表单提交 / hash 跳转
-  card.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  onClickWord?.(item); // 只执行“打开单词详情/学习”的逻辑
-});
 
+    // ✅ 关键：阻止默认行为 + 阻止冒泡 + 阻止其他监听（防 Router）
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      handleClick(item);
+    });
+
+    // ✅ 基础字段（兼容 meaning / meanings）
     const word = pickText(item?.word, currentLang) || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, currentLang);
     const meaningText = pickText(item?.meaning ?? item?.meanings, currentLang);
-    const exampleText = pickText(item?.example, currentLang);
 
     const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
-    
-    // ✅ Example fields (stable, no crash)
-// - exampleZh: 永远中文例句（主显示）
-// - examplePinyin: 永远显示
-// - exampleExplainKr / exampleExplainCn: 解释随系统语言变化
-const lang = options?.lang || "ko";
-const langNorm = String(lang || "").toLowerCase();
-const isZh = langNorm === "zh" || langNorm === "cn" || langNorm === "zh-cn";
-  
-const exampleZh = pickText(
-  item.exampleZh || item.example_zh || item.example || item.sentenceZh || item.sentence,
-  "zh"
-);
 
-const examplePinyin = pickText(
-  item.examplePinyin || item.sentencePinyin || item.example_py || item.examplePY,
-  currentLang
-);
+    // ✅ Example fields（全部过 pickText，彻底杜绝 [object Object]）
+    const exampleZh = pickText(
+      item?.exampleZh ||
+        item?.exampleZH ||
+        item?.example_zh ||
+        item?.sentenceZh ||
+        item?.sentence ||
+        item?.example,
+      "zh"
+    );
 
-const exampleExplainKr = pickText(
-  item.exampleExplainKr || item.exampleKR || item.explainKr || item.krExplain,
-  "ko"
-);
+    const examplePinyin = pickText(
+      item?.examplePinyin || item?.sentencePinyin || item?.example_py || item?.examplePY,
+      currentLang
+    );
 
-const exampleExplainCn = pickText(
-  item.exampleExplainCn || item.exampleCN || item.explainCn || item.cnExplain,
-  "zh"
-);
+    const exampleExplainKr = pickText(
+      item?.exampleExplainKr || item?.exampleKR || item?.explainKr || item?.krExplain,
+      "ko"
+    );
 
-const exampleExplain = isZh ? exampleExplainCn : exampleExplainKr;
+    const exampleExplainCn = pickText(
+      item?.exampleExplainCn || item?.exampleCN || item?.explainCn || item?.cnExplain,
+      "zh"
+    );
 
+    // ✅ 组装 example 区块（有内容才显示）
+    const exLines = [exampleZh, examplePinyin, exampleExplainKr, exampleExplainCn].filter(Boolean);
+    const exampleBlock = exLines.length
+      ? `<div class="mt-2 text-sm text-gray-600">${exLines
+          .map((t) => `<div>${t}</div>`)
+          .join("")}</div>`
+      : "";
+
+    // ✅ Learn 徽章（可选）
+    const learnBadge = showLearnBadge
+      ? `<div class="mt-2 inline-block text-xs px-2 py-1 rounded-full bg-gray-100">Learn</div>`
+      : "";
+
+    // ✅ 渲染卡片 HTML
     card.innerHTML = `
-  <div class="flex items-center justify-between gap-2">
-    <div class="text-lg font-semibold">${escapeHtml(word)}</div>
-    <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
-  </div>
+      <div class="text-xl font-semibold">${word}</div>
+      ${line2 ? `<div class="mt-1 text-sm text-gray-500">${line2}</div>` : ""}
+      ${learnBadge}
+      ${exampleBlock}
+    `;
 
-  ${line2
-    ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
-    : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
-  }
-
- ${exampleZh
-  ? `<div class="mt-2 text-sm text-gray-700">${escapeHtml(exampleZh)}</div>`
-  : ""}
-
-${examplePinyin
-  ? `<div class="mt-1 text-xs text-gray-500">${escapeHtml(examplePinyin)}</div>`
-  : ""}
-
-${exampleExplain
-  ? `<div class="mt-1 text-xs text-gray-400">${escapeHtml(exampleExplain)}</div>`
-  : ""}
-`;
-
-card.addEventListener("click", () => {
-  onClickWord?.(item);
-});
-
-container.appendChild(card);
+    container.appendChild(card);
   });
 }
 
