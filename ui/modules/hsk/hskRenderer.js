@@ -155,10 +155,14 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
   // ✅ Global bridge for legacy UI (只执行一次，放在 forEach 外)
   // ==============================
   try {
-    window.HSK_RENDER = window.HSK_RENDER || {};
-    window.HSK_RENDER.renderWordCards =
-      window.HSK_RENDER.renderWordCards || renderWordCards;
-    window.HSK_RENDER.renderLessonList =
-      window.HSK_RENDER.renderLessonList || renderLessonList;
-  } catch {}
-}
+  window.HSK_RENDER = window.HSK_RENDER || {};
+
+  if (typeof window.HSK_RENDER.renderWordCards !== "function") {
+    window.HSK_RENDER.renderWordCards = renderWordCards;
+  }
+
+  // ✅ 如果你项目里确实有 renderLessonList，就挂上
+  if (typeof renderLessonList === "function" && typeof window.HSK_RENDER.renderLessonList !== "function") {
+    window.HSK_RENDER.renderLessonList = renderLessonList;
+  }
+} catch (e) {}
