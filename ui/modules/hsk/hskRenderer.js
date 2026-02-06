@@ -125,35 +125,25 @@ const lang = options?.lang || "ko";
 const langNorm = String(lang || "").toLowerCase();
 const isZh = langNorm === "zh" || langNorm === "cn" || langNorm === "zh-cn";
   
-const exampleZh =
-  item.exampleZh ||
-  item.exampleZH ||
-  item.example_zh ||
-  item.example ||
-  item.sentenceZh ||
-  item.sentence ||
-  "";
+const exampleZh = pickText(
+  item.exampleZh || item.example_zh || item.example || item.sentenceZh || item.sentence,
+  "zh"
+);
 
-const examplePinyin =
-  item.examplePinyin ||
-  item.sentencePinyin ||
-  item.example_py ||
-  item.examplePY ||
-  "";
+const examplePinyin = pickText(
+  item.examplePinyin || item.sentencePinyin || item.example_py || item.examplePY,
+  currentLang
+);
 
-const exampleExplainKr =
-  item.exampleExplainKr ||
-  item.exampleKR ||
-  item.explainKr ||
-  item.krExplain ||
-  "";
+const exampleExplainKr = pickText(
+  item.exampleExplainKr || item.exampleKR || item.explainKr || item.krExplain,
+  "ko"
+);
 
-const exampleExplainCn =
-  item.exampleExplainCn ||
-  item.exampleCN ||
-  item.explainCn ||
-  item.cnExplain ||
-  "";
+const exampleExplainCn = pickText(
+  item.exampleExplainCn || item.exampleCN || item.explainCn || item.cnExplain,
+  "zh"
+);
 
 const exampleExplain = isZh ? exampleExplainCn : exampleExplainKr;
 
@@ -209,15 +199,52 @@ function openWordDetail(word) {
   const modal = document.createElement("div");
   modal.className = "word-modal";
 
+  const lang = (window.APP_LANG || "ko");
+
+  // ✅ 所有字段都先转成“可显示文本”，彻底杜绝 [object Object]
+  const hanzi   = pickText(word?.hanzi || word?.word, lang);
+  const pinyin  = pickText(word?.pinyin, lang);
+
+  // meaning 可能是 word.meaning / word.kr / word.meaning.kr 等各种结构
+  const meaning =
+    pickText(word?.meaning, lang) ||
+    pickText(word?.kr, lang) ||
+    pickText(word?.ko, lang) ||
+    pickText(word?.meaningKr, lang) ||
+    pickText(word?.meaning_kr, lang);
+
+  // 例句：你数据可能是 exampleZh / examplePinyin / exampleExplainKr…
+  const exZh =
+    pickText(word?.exampleZh, "zh") ||
+    pickText(word?.example_zh, "zh") ||
+    pickText(word?.sentenceZh, "zh") ||
+    pickText(word?.sentence, "zh") ||
+    pickText(word?.example?.zh, "zh") ||
+    pickText(word?.example, "zh");
+
+  const exPy =
+    pickText(word?.examplePinyin, lang) ||
+    pickText(word?.sentencePinyin, lang) ||
+    pickText(word?.example_py, lang) ||
+    pickText(word?.examplePY, lang);
+
+  const exKr =
+    pickText(word?.exampleExplainKr, "ko") ||
+    pickText(word?.exampleKR, "ko") ||
+    pickText(word?.explainKr, "ko") ||
+    pickText(word?.krExplain, "ko") ||
+    pickText(word?.example?.kr, "ko");
+
   modal.innerHTML = `
     <div class="modal-box">
-      <div class="modal-hanzi">${word.hanzi}</div>
-      <div class="modal-pinyin">${word.pinyin}</div>
-      <div class="modal-meaning">${word.kr}</div>
+      <div class="modal-hanzi">${hanzi}</div>
+      <div class="modal-pinyin">${pinyin}</div>
+      <div class="modal-meaning">${meaning}</div>
 
       <div class="modal-example">
-        <p>${word.example?.zh || ""}</p>
-        <p>${word.example?.kr || ""}</p>
+        ${exZh ? `<p>${exZh}</p>` : ""}
+        ${exPy ? `<p>${exPy}</p>` : ""}
+        ${exKr ? `<p>${exKr}</p>` : ""}
       </div>
 
       <button class="modal-close">닫기</button>
@@ -226,6 +253,5 @@ function openWordDetail(word) {
 
   modal.querySelector(".modal-close").onclick = () => modal.remove();
   modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-
   document.body.appendChild(modal);
 }
