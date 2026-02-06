@@ -152,7 +152,9 @@ const exampleExplainCn =
   item.cnExplain ||
   "";
 
-const isZh = lang === "zh" || lang === "cn";
+const lang = options?.lang || "ko";
+const isZh = lang === "zh" || lang === "cn" || lang === "zh-cn";
+
 const exampleExplain = isZh ? exampleExplainCn : exampleExplainKr;
 
     card.innerHTML = `
