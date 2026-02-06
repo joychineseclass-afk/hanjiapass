@@ -109,6 +109,12 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     card.type = "button";
     card.className =
       "text-left bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
+    // ✅ 防止点击触发 Router / 表单提交 / hash 跳转
+  card.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  onClickWord?.(item); // 只执行“打开单词详情/学习”的逻辑
+});
 
     const word = pickText(item?.word, currentLang) || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, currentLang);
