@@ -124,28 +124,27 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     const line2 = [pinyin, meaningKR].filter(Boolean).join(" · ");
 
     card.innerHTML = `
-      <div class="flex items-center justify-between gap-2">
-        <div class="text-lg font-semibold">${escapeHtml(word)}</div>
-        <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
-      </div>
-      ${
-        line2
-          ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
-          : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
-      }
-      ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
-      ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
-    `;
+  <div class="flex items-center justify-between gap-2">
+    <div class="text-lg font-semibold">${escapeHtml(word)}</div>
+    <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
+  </div>
 
-    card.addEventListener("click", (e) => {
-  // ✅ 可选：防止外层也绑定了 click 导致被覆盖/重复触发
+  ${line2
+    ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
+    : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
+  }
+
+  ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
+  ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
+`;
+
+card.addEventListener("click", (e) => {
   e.stopPropagation();
-
-  // ✅ 调试：先确认真的触发了
   console.log("[HSK] card click:", item);
-
   onClickWord?.(item);
 });
+
+container.appendChild(card);
 }
 
 // ==============================
