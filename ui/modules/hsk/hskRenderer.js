@@ -97,7 +97,11 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
   if (!container) return;
   container.innerHTML = "";
 
-  const currentLang = options.lang || window.APP_LANG || "ko";
+  const currentLang =
+    options.lang ||
+    window.APP_LANG || // 你以后全站语言可以继续用这个
+    "ko";
+
   const showLearnBadge = options.showLearnBadge !== false;
 
   (list || []).forEach((item) => {
@@ -106,63 +110,73 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     card.className =
       "text-left bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
 
-    const word = pickText(item?.word, "zh") || "(빈 항목)";
-    const pinyin = pickText(item?.pinyin, "zh");
+    const word = pickText(item?.word, currentLang) || "(빈 항목)";
+    const pinyin = pickText(item?.pinyin, currentLang);
+    const meaningText = pickText(item?.meaning, currentLang);
+    const exampleText = pickText(item?.example, currentLang);
 
-    // ✅ 韩语意思（你的数据若是 ko 也兼容，因为 pickText 会兜底 ko/kr）
-    const meaningKR = pickText(item?.meaning, "kr");
-
-    // ✅ 例句分开取
-    const exampleZH = pickText(item?.example, "zh");
-    const exampleKR = pickText(item?.example, "kr");
-
-    const line2 = [pinyin, meaningKR].filter(Boolean).join(" · ");
+    const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
 
     card.innerHTML = `
-      <div class="flex items-center justify-between gap-2">
-        <div class="text-lg font-semibold">${escapeHtml(word)}</div>
-        <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
+  <div class="flex items-center justify-between gap-2">
+    <div class="text-lg font-semibold">${escapeHtml(word)}</div>
+    <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
+  </div>
+
+  ${line2
+    ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
+    : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
+  }
+
+  ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
+  ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
+`;
+
+card.addEventListener("click", () => {
+  onClickWord?.(item);
+});
+
+container.appendChild(card);
+  });
+}
+
+// ==============================
+// ✅ Global bridge for legacy UI
+// ==============================
+try {
+  window.HSK_RENDER = window.HSK_RENDER || {};
+  if (typeof renderWordCards === "function") {
+    window.HSK_RENDER.renderWordCards =
+      window.HSK_RENDER.renderWordCards || renderWordCards;
+  }
+  if (typeof renderLessonList === "function") {
+    window.HSK_RENDER.renderLessonList =
+      window.HSK_RENDER.renderLessonList || renderLessonList;
+  }
+} catch {}
+
+/* ====== ✅ 新增：单词详情弹窗（放在文件最后）====== */
+function openWordDetail(word) {
+  const modal = document.createElement("div");
+  modal.className = "word-modal";
+
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-hanzi">${word.hanzi}</div>
+      <div class="modal-pinyin">${word.pinyin}</div>
+      <div class="modal-meaning">${word.kr}</div>
+
+      <div class="modal-example">
+        <p>${word.example?.zh || ""}</p>
+        <p>${word.example?.kr || ""}</p>
       </div>
 
-      ${
-        line2
-          ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
-          : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
-      }
+      <button class="modal-close">닫기</button>
+    </div>
+  `;
 
-      ${
-        exampleZH
-          ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>`
-          : ""
-      }
-      ${
-        exampleKR
-          ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>`
-          : ""
-      }
-    `;
+  modal.querySelector(".modal-close").onclick = () => modal.remove();
+  modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
 
-    card.addEventListener("click", (e) => {
-      e.stopPropagation();
-      console.log("[HSK] card click:", item);
-      onClickWord?.(item);
-    });
-
-    container.appendChild(card);
-  });
-
-  // ==============================
-  // ✅ Global bridge for legacy UI (只执行一次，放在 forEach 外)
-  // ==============================
-  try {
-  window.HSK_RENDER = window.HSK_RENDER || {};
-
-  if (typeof window.HSK_RENDER.renderWordCards !== "function") {
-    window.HSK_RENDER.renderWordCards = renderWordCards;
-  }
-
-  // ✅ 如果你项目里确实有 renderLessonList，就挂上
-  if (typeof renderLessonList === "function" && typeof window.HSK_RENDER.renderLessonList !== "function") {
-    window.HSK_RENDER.renderLessonList = renderLessonList;
-  }
-} catch (e) {}
+  document.body.appendChild(modal);
+}
