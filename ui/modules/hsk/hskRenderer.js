@@ -116,6 +116,43 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     const exampleText = pickText(item?.example, currentLang);
 
     const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
+    
+    // ✅ Example fields (stable, no crash)
+// - exampleZh: 永远中文例句（主显示）
+// - examplePinyin: 永远显示
+// - exampleExplainKr / exampleExplainCn: 解释随系统语言变化
+const lang = options?.lang || "kr"; // 你也可以改成从 localStorage 取
+const exampleZh =
+  item.exampleZh ||
+  item.exampleZH ||
+  item.example_zh ||
+  item.example ||
+  item.sentenceZh ||
+  item.sentence ||
+  "";
+
+const examplePinyin =
+  item.examplePinyin ||
+  item.sentencePinyin ||
+  item.example_py ||
+  item.examplePY ||
+  "";
+
+const exampleExplainKr =
+  item.exampleExplainKr ||
+  item.exampleKR ||
+  item.explainKr ||
+  item.krExplain ||
+  "";
+
+const exampleExplainCn =
+  item.exampleExplainCn ||
+  item.exampleCN ||
+  item.explainCn ||
+  item.cnExplain ||
+  "";
+
+const exampleExplain = lang === "cn" ? exampleExplainCn : exampleExplainKr;
 
     card.innerHTML = `
   <div class="flex items-center justify-between gap-2">
@@ -128,8 +165,17 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
   }
 
-  ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
-  ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
+ ${exampleZh
+  ? `<div class="mt-2 text-sm text-gray-700">${escapeHtml(exampleZh)}</div>`
+  : ""}
+
+${examplePinyin
+  ? `<div class="mt-1 text-xs text-gray-500">${escapeHtml(examplePinyin)}</div>`
+  : ""}
+
+${exampleExplain
+  ? `<div class="mt-1 text-xs text-gray-400">${escapeHtml(exampleExplain)}</div>`
+  : ""}
 `;
 
 card.addEventListener("click", () => {
