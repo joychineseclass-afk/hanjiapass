@@ -112,7 +112,7 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
 
     const word = pickText(item?.word, currentLang) || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, currentLang);
-    const meaningText = pickText(item?.meaning, currentLang);
+    const meaningText = pickText(item?.meaning ?? item?.meanings, currentLang);
     const exampleText = pickText(item?.example, currentLang);
 
     const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
