@@ -27,7 +27,7 @@ if (hskVersion) {
 }
 
 
-  const LANG = opts.lang || "kr";
+  const LANG = opts.lang || "ko";
   const AUTO_FOCUS_SEARCH = !!opts.autoFocusSearch;
 
   let ALL = [];
