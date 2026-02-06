@@ -121,7 +121,10 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
 // - exampleZh: 永远中文例句（主显示）
 // - examplePinyin: 永远显示
 // - exampleExplainKr / exampleExplainCn: 解释随系统语言变化
-const lang = options?.lang || "kr"; // 你也可以改成从 localStorage 取
+const lang = options?.lang || "ko";
+const langNorm = String(lang || "").toLowerCase();
+const isZh = langNorm === "zh" || langNorm === "cn" || langNorm === "zh-cn";
+  
 const exampleZh =
   item.exampleZh ||
   item.exampleZH ||
@@ -151,9 +154,6 @@ const exampleExplainCn =
   item.explainCn ||
   item.cnExplain ||
   "";
-
-const lang = options?.lang || "ko";
-const isZh = lang === "zh" || lang === "cn" || lang === "zh-cn";
 
 const exampleExplain = isZh ? exampleExplainCn : exampleExplainKr;
 
