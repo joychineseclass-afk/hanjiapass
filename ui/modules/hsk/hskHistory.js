@@ -220,11 +220,13 @@ export function createHSKHistory(options = {}) {
   };
 }
 
-// ===== Global bridge (for legacy code) =====
+// ==== Global bridge (for legacy code) ====
 try {
-  window.HSK_HISTORY = window.HSK_HISTORY || {};
-  // 你文件里如果有 export function list() / clear() / add()
-  window.HSK_HISTORY.list = window.HSK_HISTORY.list || list;
-  if (typeof clear === "function") window.HSK_HISTORY.clear = window.HSK_HISTORY.clear || clear;
-  if (typeof add === "function") window.HSK_HISTORY.add = window.HSK_HISTORY.add || add;
-} catch {}
+  const g = (window.HSK_HISTORY = window.HSK_HISTORY || {});
+
+  // ✅ 不要引用 list/clear/add 这种可能不存在的变量
+  // ✅ 给出安全兜底，保证页面不崩
+  g.list = typeof g.list === "function" ? g.list : (() => []);
+  g.clear = typeof g.clear === "function" ? g.clear : (() => {});
+  g.add = typeof g.add === "function" ? g.add : (() => {});
+} catch (e) {}
