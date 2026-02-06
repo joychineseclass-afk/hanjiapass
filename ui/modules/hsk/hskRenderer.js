@@ -110,12 +110,18 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     card.className =
       "text-left bg-white rounded-2xl shadow p-4 hover:shadow-md transition";
 
-    const word = pickText(item?.word, currentLang) || "(빈 항목)";
-    const pinyin = pickText(item?.pinyin, currentLang);
-    const meaningText = pickText(item?.meaning, currentLang);
-    const exampleText = pickText(item?.example, currentLang);
+    const word = pickText(item?.word, "zh") || "(빈 항목)";
+    const pinyin = pickText(item?.pinyin, "zh");
 
-    const line2 = [pinyin, meaningText].filter(Boolean).join(" · ");
+    // ✅ 韩语意思
+    const meaningKR = pickText(item?.meaning, "kr");
+
+    // ✅ 例句分开取
+    const exampleZH = pickText(item?.example, "zh");
+    const exampleKR = pickText(item?.example, "kr");
+
+
+    const line2 = [pinyin, meaningKR].filter(Boolean).join(" · ");
 
     card.innerHTML = `
       <div class="flex items-center justify-between gap-2">
@@ -127,14 +133,19 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
           ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
           : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
       }
-      <div class="mt-2 text-xs text-gray-500">
-        ${exampleText ? `예문: ${escapeHtml(exampleText)}` : "&nbsp;"}
-      </div>
+      ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
+      ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
     `;
 
-    card.addEventListener("click", () => onClickWord?.(item));
-    container.appendChild(card);
-  });
+    card.addEventListener("click", (e) => {
+  // ✅ 可选：防止外层也绑定了 click 导致被覆盖/重复触发
+  e.stopPropagation();
+
+  // ✅ 调试：先确认真的触发了
+  console.log("[HSK] card click:", item);
+
+  onClickWord?.(item);
+});
 }
 
 // ==============================
