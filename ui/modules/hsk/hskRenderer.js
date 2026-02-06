@@ -97,11 +97,7 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
   if (!container) return;
   container.innerHTML = "";
 
-  const currentLang =
-    options.lang ||
-    window.APP_LANG || // 你以后全站语言可以继续用这个
-    "ko";
-
+  const currentLang = options.lang || window.APP_LANG || "ko";
   const showLearnBadge = options.showLearnBadge !== false;
 
   (list || []).forEach((item) => {
@@ -113,50 +109,56 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
     const word = pickText(item?.word, "zh") || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, "zh");
 
-    // ✅ 韩语意思
+    // ✅ 韩语意思（你的数据若是 ko 也兼容，因为 pickText 会兜底 ko/kr）
     const meaningKR = pickText(item?.meaning, "kr");
 
     // ✅ 例句分开取
     const exampleZH = pickText(item?.example, "zh");
     const exampleKR = pickText(item?.example, "kr");
 
-
     const line2 = [pinyin, meaningKR].filter(Boolean).join(" · ");
 
     card.innerHTML = `
-  <div class="flex items-center justify-between gap-2">
-    <div class="text-lg font-semibold">${escapeHtml(word)}</div>
-    <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
-  </div>
+      <div class="flex items-center justify-between gap-2">
+        <div class="text-lg font-semibold">${escapeHtml(word)}</div>
+        <div class="text-xs text-gray-400">${showLearnBadge ? "Learn" : ""}</div>
+      </div>
 
-  ${line2
-    ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
-    : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
-  }
+      ${
+        line2
+          ? `<div class="mt-1 text-sm text-gray-600">${escapeHtml(line2)}</div>`
+          : `<div class="mt-1 text-sm text-gray-600">&nbsp;</div>`
+      }
 
-  ${exampleZH ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>` : ""}
-  ${exampleKR ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>` : ""}
-`;
+      ${
+        exampleZH
+          ? `<div class="mt-2 text-xs text-gray-500">${escapeHtml(exampleZH)}</div>`
+          : ""
+      }
+      ${
+        exampleKR
+          ? `<div class="text-xs text-gray-400">${escapeHtml(exampleKR)}</div>`
+          : ""
+      }
+    `;
 
-card.addEventListener("click", (e) => {
-  e.stopPropagation();
-  console.log("[HSK] card click:", item);
-  onClickWord?.(item);
-});
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+      console.log("[HSK] card click:", item);
+      onClickWord?.(item);
+    });
 
-container.appendChild(card);
+    container.appendChild(card);
+  });
 
-// ==============================
-// ✅ Global bridge for legacy UI
-// ==============================
-try {
-  window.HSK_RENDER = window.HSK_RENDER || {};
-  if (typeof renderWordCards === "function") {
+  // ==============================
+  // ✅ Global bridge for legacy UI (只执行一次，放在 forEach 外)
+  // ==============================
+  try {
+    window.HSK_RENDER = window.HSK_RENDER || {};
     window.HSK_RENDER.renderWordCards =
       window.HSK_RENDER.renderWordCards || renderWordCards;
-  }
-  if (typeof renderLessonList === "function") {
     window.HSK_RENDER.renderLessonList =
       window.HSK_RENDER.renderLessonList || renderLessonList;
-  }
-} catch {}
+  } catch {}
+}
