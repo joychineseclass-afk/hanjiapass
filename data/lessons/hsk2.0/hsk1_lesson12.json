@@ -1,0 +1,14 @@
+{
+  "lesson": 12,
+  "title": { "zh": "在饭店", "kr": "식당에서" },
+  "words": ["饭店", "商店", "买", "钱", "块", "东西", "水果"],
+  "dialogue": [
+    { "speaker": "A", "line": "这个多少钱？" },
+    { "speaker": "B", "line": "十块钱。" }
+  ],
+  "grammar": [
+    { "title": "多少钱", "explanation_zh": "询问价格用“多少钱”。", "explanation_kr": "가격을 물을 때 '多少钱'를 사용합니다.", "example": "这个多少钱？" }
+  ],
+  "practice": [{ "type": "math", "question": "五块+五块", "answer": "十块" }],
+  "ai_interaction": { "speaking": ["十块钱"], "chat_prompt": "AI卖水果，学生买。" }
+}
