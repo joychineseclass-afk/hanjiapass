@@ -1,126 +1,26 @@
 {
-  "level": "HSK1",
-  "version": "2.0",
-  "totalLessons": 22,
   "lessons": [
-    {
-      "lesson": 1,
-      "title": { "zh": "打招呼", "kr": "인사하기" },
-      "file": "hsk1_lesson1.json"
-    },
-    {
-      "lesson": 2,
-      "title": { "zh": "礼貌用语", "kr": "예절 표현" },
-      "file": "hsk1_lesson2.json"
-    },
-    {
-      "lesson": 3,
-      "title": { "zh": "自我介绍", "kr": "자기소개" },
-      "file": "hsk1_lesson3.json"
-    },
-    {
-      "lesson": 4,
-      "title": { "zh": "认识别人", "kr": "다른 사람 알기" },
-      "file": "hsk1_lesson4.json"
-    },
-
-    {
-      "lesson": 5,
-      "title": { "zh": "我的家人", "kr": "우리 가족" },
-      "file": "hsk1_lesson5.json"
-    },
-    {
-      "lesson": 6,
-      "title": { "zh": "人物关系", "kr": "사람 관계" },
-      "file": "hsk1_lesson6.json"
-    },
-
-    {
-      "lesson": 7,
-      "title": { "zh": "数字（一）", "kr": "숫자 ①" },
-      "file": "hsk1_lesson7.json"
-    },
-    {
-      "lesson": 8,
-      "title": { "zh": "数字（二）", "kr": "숫자 ②" },
-      "file": "hsk1_lesson8.json"
-    },
-
-    {
-      "lesson": 9,
-      "title": { "zh": "今天和现在", "kr": "오늘과 지금" },
-      "file": "hsk1_lesson9.json"
-    },
-    {
-      "lesson": 10,
-      "title": { "zh": "时间表达", "kr": "시간 표현" },
-      "file": "hsk1_lesson10.json"
-    },
-
-    {
-      "lesson": 11,
-      "title": { "zh": "吃和喝", "kr": "먹고 마시기" },
-      "file": "hsk1_lesson11.json"
-    },
-    {
-      "lesson": 12,
-      "title": { "zh": "在饭店", "kr": "식당에서" },
-      "file": "hsk1_lesson12.json"
-    },
-
-    {
-      "lesson": 13,
-      "title": { "zh": "去哪里", "kr": "어디에 가요?" },
-      "file": "hsk1_lesson13.json"
-    },
-    {
-      "lesson": 14,
-      "title": { "zh": "常见地点", "kr": "자주 가는 장소" },
-      "file": "hsk1_lesson14.json"
-    },
-
-    {
-      "lesson": 15,
-      "title": { "zh": "喜欢做什么", "kr": "무엇을 좋아해요?" },
-      "file": "hsk1_lesson15.json"
-    },
-    {
-      "lesson": 16,
-      "title": { "zh": "形容词", "kr": "형용사 표현" },
-      "file": "hsk1_lesson16.json"
-    },
-
-    {
-      "lesson": 17,
-      "title": { "zh": "日常活动", "kr": "일상 활동" },
-      "file": "hsk1_lesson17.json"
-    },
-    {
-      "lesson": 18,
-      "title": { "zh": "能力表达", "kr": "능력 표현" },
-      "file": "hsk1_lesson18.json"
-    },
-
-    {
-      "lesson": 19,
-      "title": { "zh": "生活物品", "kr": "생활 물건" },
-      "file": "hsk1_lesson19.json"
-    },
-    {
-      "lesson": 20,
-      "title": { "zh": "数量表达", "kr": "수량 표현" },
-      "file": "hsk1_lesson20.json"
-    },
-
-    {
-      "lesson": 21,
-      "title": { "zh": "天气和状态", "kr": "날씨와 상태" },
-      "file": "hsk1_lesson21.json"
-    },
-    {
-      "lesson": 22,
-      "title": { "zh": "综合复习", "kr": "종합 복습" },
-      "file": "hsk1_lesson22.json"
-    }
+    { "id": 1, "title": "인사하기 / 打招呼", "subtitle": "첫 만남 인사", "file": "hsk1_lesson1.json" },
+    { "id": 2, "title": "이름 묻기 / 介绍名字", "subtitle": "이름 말하기", "file": "hsk1_lesson2.json" },
+    { "id": 3, "title": "국적 / 国家", "subtitle": "어디 사람이에요?", "file": "hsk1_lesson3.json" },
+    { "id": 4, "title": "가족 / 家人", "subtitle": "우리 가족 소개", "file": "hsk1_lesson4.json" },
+    { "id": 5, "title": "숫자 1 / 数字①", "subtitle": "0–10", "file": "hsk1_lesson5.json" },
+    { "id": 6, "title": "숫자 2 / 数字②", "subtitle": "전화번호", "file": "hsk1_lesson6.json" },
+    { "id": 7, "title": "나이 묻기 / 年龄", "subtitle": "몇 살이에요?", "file": "hsk1_lesson7.json" },
+    { "id": 8, "title": "날짜 / 日期", "subtitle": "오늘 몇 월 며칠?", "file": "hsk1_lesson8.json" },
+    { "id": 9, "title": "시간 / 时间", "subtitle": "지금 몇 시?", "file": "hsk1_lesson9.json" },
+    { "id": 10, "title": "요일 / 星期", "subtitle": "오늘은 무슨 요일?", "file": "hsk1_lesson10.json" },
+    { "id": 11, "title": "학교 생활 / 学校", "subtitle": "학교에서 뭐 해요?", "file": "hsk1_lesson11.json" },
+    { "id": 12, "title": "직업 / 工作", "subtitle": "무슨 일 하세요?", "file": "hsk1_lesson12.json" },
+    { "id": 13, "title": "취미 / 爱好", "subtitle": "뭐 좋아해요?", "file": "hsk1_lesson13.json" },
+    { "id": 14, "title": "음식 1 / 吃饭", "subtitle": "식당에서 주문하기", "file": "hsk1_lesson14.json" },
+    { "id": 15, "title": "음식 2 / 饮料", "subtitle": "마실 것 주문", "file": "hsk1_lesson15.json" },
+    { "id": 16, "title": "위치 / 在哪儿", "subtitle": "장소 묻기", "file": "hsk1_lesson16.json" },
+    { "id": 17, "title": "교통 / 坐车", "subtitle": "버스/택시", "file": "hsk1_lesson17.json" },
+    { "id": 18, "title": "쇼핑 / 买东西", "subtitle": "가격 묻기", "file": "hsk1_lesson18.json" },
+    { "id": 19, "title": "날씨 / 天气", "subtitle": "오늘 날씨 어때요?", "file": "hsk1_lesson19.json" },
+    { "id": 20, "title": "병원 / 看病", "subtitle": "아파요", "file": "hsk1_lesson20.json" },
+    { "id": 21, "title": "복습 1", "subtitle": "1–10과 복습", "file": "hsk1_lesson21.json" },
+    { "id": 22, "title": "복습 2", "subtitle": "11–20과 복습", "file": "hsk1_lesson22.json" }
   ]
 }
