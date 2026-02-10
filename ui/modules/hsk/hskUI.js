@@ -23,6 +23,11 @@ export function initHSKUI(opts = {}) {
       try {
         CACHE.clear();
       } catch {}
+      // ✅ NEW: 清理 lesson detail 缓存（不同版本不同课件）
+      try {
+        LESSON_DETAIL_CACHE.clear();
+      } catch {}
+
       // 重新加载当前等级数据
       hskLevel?.dispatchEvent(new Event("change"));
     });
@@ -41,6 +46,15 @@ export function initHSKUI(opts = {}) {
 
   let LESSON_INDEX = null;
   let debounceTimer = null;
+
+  // ✅ NEW: 课程Tab页状态（不破坏你现有 view）
+  let viewMode = "auto"; // "auto" | "lessonDetail"
+  let lessonTab = "vocab"; // "vocab" | "dialogue" | "grammar" | "practice" | "ai"
+  let currentLessonDetail = null;
+
+  // ✅ NEW: 课件详情缓存（避免反复请求）
+  const LESSON_DETAIL_CACHE = new Map(); // key: `${version}:${level}:${lessonNo}` -> {ts, data}
+  const LESSON_DETAIL_TTL = 1000 * 60 * 30;
 
   // ===== helpers =====
   function showError(msg) {
@@ -142,6 +156,46 @@ export function initHSKUI(opts = {}) {
     );
   }
 
+  // ✅ NEW: 简单 fetch JSON（课件详情用）
+  async function fetchJson(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} - ${url}`);
+    return res.json();
+  }
+
+  // ✅ NEW: 解析 lessonNo（兼容 id / lesson / title）
+  function getLessonNo(lesson, idxFallback = 0) {
+    const n =
+      Number(lesson?.lesson) ||
+      Number(lesson?.id) ||
+      Number(lesson?.no) ||
+      Number(idxFallback + 1);
+    return Number.isFinite(n) && n > 0 ? n : idxFallback + 1;
+  }
+
+  // ✅ NEW: 课件详情 URL
+  function lessonDetailUrl(level, lessonNo, version) {
+    const lv = safeText(level || "1");
+    const ver = safeText(version || getVersion());
+    return `/data/lessons/${ver}/hsk${lv}_lesson${lessonNo}.json`;
+  }
+
+  // ✅ NEW: 读取课件详情（带缓存）
+  async function loadLessonDetail(level, lessonNo, version) {
+    const ver = safeText(version || getVersion());
+    const lv = safeText(level || "1");
+    const key = `${ver}:${lv}:${lessonNo}`;
+
+    const hit = LESSON_DETAIL_CACHE.get(key);
+    if (hit && Date.now() - hit.ts < LESSON_DETAIL_TTL) return hit.data;
+
+    const url = lessonDetailUrl(lv, lessonNo, ver);
+    const data = await fetchJson(url);
+
+    LESSON_DETAIL_CACHE.set(key, { ts: Date.now(), data });
+    return data;
+  }
+
   // ===== data helpers =====
   function buildAllMap() {
     const map = new Map();
@@ -235,6 +289,400 @@ export function initHSKUI(opts = {}) {
       });
   }
 
+  // ✅ NEW: 进入课程 Tab 页（核心入口）
+  async function openLessonDetail(lesson, idxFallback = 0) {
+    clearError();
+    const lv = safeText(hskLevel?.value || "1");
+    const ver = getVersion();
+    const lessonNo = getLessonNo(lesson, idxFallback);
+
+    viewMode = "lessonDetail";
+    lessonTab = "vocab"; // 默认先词汇
+    currentLesson = lesson;
+    inRecentView = false;
+
+    renderFallback("불러오는 중...", `Lesson ${lessonNo} 데이터를 가져오고 있어요...`);
+    setStatus("(loading...)");
+
+    try {
+      currentLessonDetail = await loadLessonDetail(lv, lessonNo, ver);
+      renderLessonDetailView();
+      scrollToTop();
+      focusSearch();
+    } catch (e) {
+      // ✅ 不破坏旧逻辑：课件详情不存在时，回退到你原本的“本课单词列表”
+      console.warn("Lesson detail load failed, fallback to word list:", e);
+      currentLessonDetail = null;
+      viewMode = "auto";
+      currentLesson = lesson;
+      renderLessonWordsView();
+      showError(
+        `⚠️ Lesson 상세 파일을 못 찾았어요.\n` +
+          `경로: ${lessonDetailUrl(lv, lessonNo, ver)}\n` +
+          `에러: ${e?.message || e}\n\n` +
+          `대신 '이 수업 단어' 보기로 전환했어요.`
+      );
+      setStatus("");
+    }
+  }
+
+  // ✅ NEW: Tab 버튼 UI
+  function renderTabBar() {
+    const tabs = [
+      { key: "vocab", text: "단어" },
+      { key: "dialogue", text: "회화" },
+      { key: "grammar", text: "문법" },
+      { key: "practice", text: "연습" },
+      { key: "ai", text: "AI" },
+    ];
+
+    const bar = document.createElement("div");
+    bar.className = "bg-white rounded-2xl shadow p-2 mb-3 flex flex-wrap gap-2";
+
+    bar.innerHTML = tabs
+      .map((t) => {
+        const active = t.key === lessonTab;
+        return `<button type="button" data-tab="${t.key}"
+          class="px-3 py-2 rounded-xl text-sm ${
+            active ? "bg-blue-600 text-white" : "bg-slate-100"
+          }">${t.text}</button>`;
+      })
+      .join("");
+
+    bar.querySelectorAll("button[data-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        lessonTab = btn.getAttribute("data-tab") || "vocab";
+        renderLessonDetailView();
+        scrollToTop();
+        focusSearch();
+      });
+    });
+
+    return bar;
+  }
+
+  // ✅ NEW: 课程 Tab 页整体渲染
+  function renderLessonDetailView() {
+    if (!hskGrid) return;
+
+    // 安全：没有 detail 就退回原模式
+    if (!currentLessonDetail) {
+      viewMode = "auto";
+      return renderAuto();
+    }
+
+    const lv = safeText(hskLevel?.value || "1");
+    const ver = getVersion();
+    const lessonNo = Number(currentLessonDetail?.lesson) || getLessonNo(currentLesson, 0);
+
+    const title =
+      safeText(currentLessonDetail?.title) ||
+      safeText(currentLesson?.title) ||
+      `Lesson ${lessonNo}`;
+
+    const topic = safeText(currentLessonDetail?.topic);
+    const subtitle = `HSK ${lv} · ${ver}` + (topic ? ` · ${topic}` : "");
+
+    hskGrid.innerHTML = "";
+
+    const top = renderTopBar({
+      title,
+      subtitle,
+      leftBtn: { key: "backLessons", text: "← 수업 목록" },
+      rightBtns: [
+        { key: "recent", text: "최근 학습" },
+        { key: "goAll", text: "전체 단어" },
+      ],
+    });
+    hskGrid.appendChild(top);
+
+    top.querySelector(`[data-key="backLessons"]`)?.addEventListener("click", () => {
+      viewMode = "auto";
+      currentLessonDetail = null;
+      lessonTab = "vocab";
+      currentLesson = null;
+      renderLessonsView();
+      scrollToTop();
+      focusSearch();
+    });
+
+    top.querySelector(`[data-key="recent"]`)?.addEventListener("click", () => {
+      viewMode = "auto";
+      currentLessonDetail = null;
+      currentLesson = null;
+      renderRecentView();
+      scrollToTop();
+      focusSearch();
+    });
+
+    top.querySelector(`[data-key="goAll"]`)?.addEventListener("click", () => {
+      viewMode = "auto";
+      currentLessonDetail = null;
+      currentLesson = null;
+      renderAllWordsView();
+      scrollToTop();
+      focusSearch();
+    });
+
+    // Tab bar
+    hskGrid.appendChild(renderTabBar());
+
+    // Content wrap
+    const wrap = document.createElement("div");
+    wrap.className = "bg-white rounded-2xl shadow p-4";
+    hskGrid.appendChild(wrap);
+
+    // Tab contents
+    if (lessonTab === "vocab") return renderLessonTabVocab(wrap);
+    if (lessonTab === "dialogue") return renderLessonTabDialogue(wrap);
+    if (lessonTab === "grammar") return renderLessonTabGrammar(wrap);
+    if (lessonTab === "practice") return renderLessonTabPractice(wrap);
+    if (lessonTab === "ai") return renderLessonTabAI(wrap);
+
+    // fallback
+    renderLessonTabVocab(wrap);
+  }
+
+  // ✅ NEW: Tab - 단어(词汇)
+  function renderLessonTabVocab(container) {
+    if (!container) return;
+
+    if (!window.HSK_RENDER?.renderWordCards) {
+      container.innerHTML = `<div class="text-sm text-red-600">HSK_RENDER.renderWordCards 가 없습니다.</div>`;
+      return;
+    }
+
+    const q = safeText(hskSearch?.value);
+    const allMap = buildAllMap();
+
+    // 优先用 lesson detail 的 words（课件真实词表）
+    const wordsRaw = Array.isArray(currentLessonDetail?.words)
+      ? currentLessonDetail.words
+      : Array.isArray(currentLesson?.words)
+      ? currentLesson.words
+      : [];
+
+    // 用 ALL map 解析成完整词条（带meaning/example）
+    const tmpLesson = { words: wordsRaw };
+    const { list: lessonWords, missing } = buildLessonWordList(tmpLesson, allMap);
+    const filtered = filterWordList(lessonWords, q);
+
+    container.innerHTML = "";
+
+    const meta = document.createElement("div");
+    meta.className = "text-sm text-gray-600 mb-3";
+    meta.textContent =
+      (q ? `검색: "${q}" · ` : "") +
+      `단어 ${filtered.length}개` +
+      (missing ? ` · ⚠️ 누락 ${missing}개` : "");
+    container.appendChild(meta);
+
+    const cardWrap = document.createElement("div");
+    cardWrap.className = "grid grid-cols-1 md:grid-cols-2 gap-3";
+    container.appendChild(cardWrap);
+
+    if (filtered.length === 0) {
+      renderEmptyHint(cardWrap, "단어가 없어요", "이 수업 words 목록을 확인해 주세요.");
+      setStatus("(0)");
+      return;
+    }
+
+    window.HSK_RENDER.renderWordCards(
+      cardWrap,
+      filtered,
+      (item) => window.LEARN_PANEL?.open?.(item),
+      { lang: LANG, query: q, showTag: "학습", compact: false }
+    );
+
+    setStatus(`(${filtered.length})`);
+  }
+
+  // ✅ NEW: Tab - 회화(对话)
+  function renderLessonTabDialogue(container) {
+    if (!container) return;
+
+    const dia = Array.isArray(currentLessonDetail?.dialogue)
+      ? currentLessonDetail.dialogue
+      : [];
+
+    container.innerHTML = "";
+
+    if (dia.length === 0) {
+      container.innerHTML = `<div class="text-sm text-gray-600">회화 데이터가 없어요. (dialogue: [])</div>`;
+      setStatus("(0)");
+      return;
+    }
+
+    const list = document.createElement("div");
+    list.className = "space-y-2";
+    container.appendChild(list);
+
+    dia.forEach((it, idx) => {
+      const speaker = safeText(it?.speaker || it?.role || `S${idx + 1}`);
+      const line = safeText(it?.line || it?.text || it?.zh || it?.cn);
+
+      const row = document.createElement("div");
+      row.className = "p-3 rounded-xl bg-slate-50";
+      row.innerHTML = `
+        <div class="text-xs text-gray-500 mb-1">${speaker}</div>
+        <div class="text-base">${line || ""}</div>
+      `;
+      list.appendChild(row);
+    });
+
+    setStatus(`(${dia.length})`);
+  }
+
+  // ✅ NEW: Tab - 문법(语法)
+  function renderLessonTabGrammar(container) {
+    if (!container) return;
+
+    const gram = Array.isArray(currentLessonDetail?.grammar)
+      ? currentLessonDetail.grammar
+      : [];
+
+    container.innerHTML = "";
+
+    if (gram.length === 0) {
+      container.innerHTML = `<div class="text-sm text-gray-600">문법 데이터가 없어요. (grammar: [])</div>`;
+      setStatus("(0)");
+      return;
+    }
+
+    const list = document.createElement("div");
+    list.className = "space-y-3";
+    container.appendChild(list);
+
+    gram.forEach((g, idx) => {
+      const title = safeText(g?.title || `문법 ${idx + 1}`);
+      const kr = safeText(g?.explanation_kr || g?.kr || g?.explainKr);
+      const zh = safeText(g?.explanation_zh || g?.zh || g?.explainZh);
+      const ex = safeText(g?.example || g?.eg);
+
+      const card = document.createElement("div");
+      card.className = "p-4 rounded-2xl bg-slate-50";
+      card.innerHTML = `
+        <div class="text-base font-semibold">${title}</div>
+        ${kr ? `<div class="text-sm text-gray-700 mt-2"><b>KR</b> ${kr}</div>` : ""}
+        ${zh ? `<div class="text-sm text-gray-700 mt-2"><b>ZH</b> ${zh}</div>` : ""}
+        ${ex ? `<div class="text-sm text-gray-500 mt-2"><b>예문</b> ${ex}</div>` : ""}
+      `;
+      list.appendChild(card);
+    });
+
+    setStatus(`(${gram.length})`);
+  }
+
+  // ✅ NEW: Tab - 연습(练习)
+  function renderLessonTabPractice(container) {
+    if (!container) return;
+
+    const prac = Array.isArray(currentLessonDetail?.practice)
+      ? currentLessonDetail.practice
+      : [];
+
+    container.innerHTML = "";
+
+    if (prac.length === 0) {
+      container.innerHTML = `<div class="text-sm text-gray-600">연습 데이터가 없어요. (practice: [])</div>`;
+      setStatus("(0)");
+      return;
+    }
+
+    const list = document.createElement("div");
+    list.className = "space-y-3";
+    container.appendChild(list);
+
+    prac.forEach((p, idx) => {
+      const type = safeText(p?.type || "practice");
+      const q = safeText(p?.question || "");
+      const options = Array.isArray(p?.options) ? p.options : [];
+      const answer = safeText(p?.answer || "");
+
+      const card = document.createElement("div");
+      card.className = "p-4 rounded-2xl bg-slate-50";
+      card.innerHTML = `
+        <div class="text-xs text-gray-500 mb-2">${idx + 1}. ${type}</div>
+        ${q ? `<div class="text-base font-medium">${q}</div>` : ""}
+        ${
+          options.length
+            ? `<div class="mt-2 text-sm text-gray-700 space-y-1">
+                ${options.map((x) => `<div>• ${safeText(x)}</div>`).join("")}
+               </div>`
+            : ""
+        }
+        ${answer ? `<div class="mt-2 text-sm text-gray-500"><b>정답</b> ${answer}</div>` : ""}
+      `;
+      list.appendChild(card);
+    });
+
+    setStatus(`(${prac.length})`);
+  }
+
+  // ✅ NEW: Tab - AI (这里先做“可用版”，后续你要接豆包/Gemini再升级)
+  function renderLessonTabAI(container) {
+    if (!container) return;
+
+    const lv = safeText(hskLevel?.value || "1");
+    const title =
+      safeText(currentLessonDetail?.title) ||
+      safeText(currentLesson?.title) ||
+      "Lesson";
+
+    const topic = safeText(currentLessonDetail?.topic);
+    const words = Array.isArray(currentLessonDetail?.words) ? currentLessonDetail.words : [];
+
+    const prompt =
+      `당신은 한국 학생을 가르치는 중국어 선생님입니다.\n` +
+      `오늘 수업: HSK${lv} / ${title}\n` +
+      (topic ? `주제: ${topic}\n` : "") +
+      (words.length ? `단어: ${words.join(", ")}\n` : "") +
+      `\n요청:\n` +
+      `1) 위 단어로 쉬운 회화 5문장 만들어 주세요.\n` +
+      `2) 한국어 뜻 + 중국어 + 병음 같이 보여 주세요.\n` +
+      `3) 마지막에 간단한 퀴즈 3개(객관식) 만들어 주세요.\n`;
+
+    container.innerHTML = `
+      <div class="text-sm text-gray-600 mb-2">
+        아래 프롬프트를 복사해서 AI 패널/ChatGPT에 붙여넣으면 바로 연습할 수 있어요.
+      </div>
+      <textarea id="hskAiPrompt" class="w-full border rounded-xl p-3 text-sm" rows="10"></textarea>
+      <div class="flex gap-2 mt-3">
+        <button id="btnCopyAi" type="button" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm">프롬프트 복사</button>
+        <button id="btnOpenRecent" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-sm">최근 학습 보기</button>
+      </div>
+      <div class="text-xs text-gray-500 mt-2">
+        (다음 단계) AI 패널에 "이 프롬프트로 시작" 버튼을 직접 연결해 줄 수도 있어요.
+      </div>
+    `;
+
+    const ta = container.querySelector("#hskAiPrompt");
+    if (ta) ta.value = prompt;
+
+    container.querySelector("#btnCopyAi")?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(prompt);
+      } catch {
+        // fallback
+        try {
+          ta?.select?.();
+          document.execCommand("copy");
+        } catch {}
+      }
+    });
+
+    container.querySelector("#btnOpenRecent")?.addEventListener("click", () => {
+      viewMode = "auto";
+      currentLessonDetail = null;
+      currentLesson = null;
+      renderRecentView();
+      scrollToTop();
+      focusSearch();
+    });
+
+    setStatus("");
+  }
+
   // ===== views =====
   function renderRecentView() {
     if (!hskGrid) return;
@@ -312,9 +760,9 @@ export function initHSKUI(opts = {}) {
     }
 
     if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
-  renderFallback("수업 데이터가 없어요", "lessons 파일을 확인해 주세요.");
-  return;
-}
+      renderFallback("수업 데이터가 없어요", "lessons 파일을 확인해 주세요.");
+      return;
+    }
 
     inRecentView = false;
 
@@ -374,10 +822,9 @@ export function initHSKUI(opts = {}) {
       wrap,
       lessonObjs,
       (lesson) => {
-        currentLesson = lesson;
-        renderLessonWordsView();
-        scrollToTop();
-        focusSearch();
+        // ✅ PATCH/NEW: 原来是 renderLessonWordsView()，现在进入“课程Tab页”
+        const idxFallback = LESSONS?.indexOf?.(lesson) ?? 0;
+        openLessonDetail(lesson, idxFallback);
       },
       { lang: LANG, query: q, meta, showBadge: true }
     );
@@ -385,6 +832,7 @@ export function initHSKUI(opts = {}) {
     setStatus(`(${matches.length}/${LESSONS.length})`);
   }
 
+  // ✅ 保留原本的“本课单词列表”视图（作为 fallback/工具页）
   function renderLessonWordsView() {
     if (!hskGrid) return;
 
@@ -516,6 +964,9 @@ export function initHSKUI(opts = {}) {
   }
 
   function renderAuto() {
+    // ✅ NEW: 如果在课程Tab页，优先渲染课程Tab页
+    if (viewMode === "lessonDetail") return renderLessonDetailView();
+
     if (inRecentView) return renderRecentView();
     if (Array.isArray(LESSONS) && LESSONS.length > 0) {
       if (currentLesson) return renderLessonWordsView();
@@ -551,6 +1002,11 @@ export function initHSKUI(opts = {}) {
     setLoadingUI();
     currentLesson = null;
     inRecentView = false;
+
+    // ✅ NEW: 레벨 바꾸면 탭 페이지 해제
+    viewMode = "auto";
+    currentLessonDetail = null;
+    lessonTab = "vocab";
 
     if (!window.HSK_LOADER?.loadVocab) {
       showError("HSK_LOADER.loadVocab 가 없어요. loader 스크립트 로드 상태를 확인해 주세요.");
