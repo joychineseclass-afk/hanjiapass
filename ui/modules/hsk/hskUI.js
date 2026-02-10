@@ -13,19 +13,20 @@ export function initHSKUI(opts = {}) {
   const hskVersion = $("hskVersion");
 
   // ✅ vocab version dropdown
-if (hskVersion) {
-  const saved = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
-  hskVersion.value = saved;
+  if (hskVersion) {
+    const saved = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    hskVersion.value = saved;
 
-  hskVersion.addEventListener("change", async () => {
-    localStorage.setItem("hsk_vocab_version", hskVersion.value);
-
-    // 重新加载当前等级数据（用你现有的加载函数）
-    // 这里用最稳的方式：触发一次 level change 或直接调用内部 reload
-    hskLevel?.dispatchEvent(new Event("change"));
-  });
-}
-
+    hskVersion.addEventListener("change", async () => {
+      localStorage.setItem("hsk_vocab_version", hskVersion.value);
+      // ✅ PATCH: 切换版本后清理当前 level 缓存，避免拿到旧版本缓存
+      try {
+        CACHE.clear();
+      } catch {}
+      // 重新加载当前等级数据
+      hskLevel?.dispatchEvent(new Event("change"));
+    });
+  }
 
   const LANG = opts.lang || "kr";
   const AUTO_FOCUS_SEARCH = !!opts.autoFocusSearch;
@@ -70,7 +71,9 @@ if (hskVersion) {
   }
   function focusSearch() {
     if (!AUTO_FOCUS_SEARCH) return;
-    try { hskSearch?.focus?.(); } catch {}
+    try {
+      hskSearch?.focus?.();
+    } catch {}
   }
 
   function renderFallback(title, desc) {
@@ -129,6 +132,16 @@ if (hskVersion) {
     return top;
   }
 
+  // ===== ✅ PATCH:统一获取当前 version =====
+  function getVersion() {
+    return (
+      safeText(hskVersion?.value) ||
+      safeText(localStorage.getItem("hsk_vocab_version")) ||
+      safeText(window.APP_VOCAB_VERSION) ||
+      "hsk2.0"
+    );
+  }
+
   // ===== data helpers =====
   function buildAllMap() {
     const map = new Map();
@@ -174,6 +187,7 @@ if (hskVersion) {
 
     const allMap = buildAllMap();
     const lessons = LESSONS.map((lesson, idx) => {
+      // title 可能是 {zh,kr}，这里保持原逻辑不删
       const title = safeText(lesson?.title) || `Lesson ${lesson?.id ?? idx + 1}`;
       const subtitle = safeText(lesson?.subtitle);
 
@@ -511,17 +525,19 @@ if (hskVersion) {
   }
 
   // ===== cache =====
-  function getCached(level) {
-    const hit = CACHE.get(level);
+  function getCached(level, version) {
+    const key = `${version}:${level}`; // ✅ PATCH
+    const hit = CACHE.get(key);
     if (!hit) return null;
     if (Date.now() - hit.ts > CACHE_TTL) {
-      CACHE.delete(level);
+      CACHE.delete(key);
       return null;
     }
     return hit;
   }
-  function setCached(level, all, lessons, index) {
-    CACHE.set(level, { all, lessons, index, ts: Date.now() });
+  function setCached(level, version, all, lessons, index) {
+    const key = `${version}:${level}`; // ✅ PATCH
+    CACHE.set(key, { all, lessons, index, ts: Date.now() });
   }
 
   // ===== loading =====
@@ -544,7 +560,8 @@ if (hskVersion) {
 
     try {
       const lv = safeText(level || "1");
-      const cached = getCached(lv);
+      const version = getVersion(); // ✅ PATCH: 当前版本
+      const cached = getCached(lv, version); // ✅ PATCH
       if (cached) {
         ALL = cached.all || [];
         LESSONS = cached.lessons || null;
@@ -555,11 +572,14 @@ if (hskVersion) {
         return;
       }
 
-      ALL = await window.HSK_LOADER.loadVocab(lv);
-      LESSONS = window.HSK_LOADER.loadLessons ? await window.HSK_LOADER.loadLessons(lv) : null;
+      // ✅ PATCH: 把 version 传进 loader，保证走 /data/vocab/<ver>/ & /data/lessons/<ver>/
+      ALL = await window.HSK_LOADER.loadVocab(lv, { version });
+      LESSONS = window.HSK_LOADER.loadLessons
+        ? await window.HSK_LOADER.loadLessons(lv, { version })
+        : null;
 
       buildLessonIndex();
-      setCached(lv, ALL, LESSONS, LESSON_INDEX);
+      setCached(lv, version, ALL, LESSONS, LESSON_INDEX); // ✅ PATCH
 
       renderAuto();
       scrollToTop();
