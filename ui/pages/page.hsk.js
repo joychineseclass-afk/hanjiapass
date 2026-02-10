@@ -2,8 +2,15 @@
 // ✅ HSK Page Controller — Stable++ (router-compatible)
 // - exports: mount(), unmount()
 // - router controls lifecycle
+//
+// ✅ Updates in this full version:
+// 1) Adds Lessons UI container (#hskLessonsWrap/#hskLessons)
+// 2) Syncs HSK version select with localStorage (hsk2.0 / hsk3.0)
+// 3) Loads lessons via window.HSK_LOADER.loadLessons(level,{version})
+// 4) Clicking a lesson loads its lesson file and filters vocab -> renders cards
+// 5) Version/Level change reloads vocab + lessons (simple & stable)
 
-import { renderWordCards } from "../modules/hsk/hskRenderer.js";
+import { renderWordCards, renderLessonList } from "../modules/hsk/hskRenderer.js";
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
@@ -23,18 +30,28 @@ export async function mount() {
   // ✅ ensure globals exist (loader/renderer/history)
   await ensureHSKDeps();
 
-// ⭐⭐⭐ 在这里加：设置默认词库版本 ⭐⭐⭐
-localStorage.setItem(
-  "hsk_vocab_version",
-  localStorage.getItem("hsk_vocab_version") || "hsk2.0"
-);
+  // ✅ Default version (keep user's last selection)
+  localStorage.setItem(
+    "hsk_vocab_version",
+    localStorage.getItem("hsk_vocab_version") || "hsk2.0"
+  );
 
-// ✅ init UI
-hskApi = initHSKUI({
-  defaultLevel: 1,
-  autoFocusSearch: false,
-  lang: "ko",
-});
+  // ✅ Sync version select UI
+  const verSel = document.getElementById("hskVersion");
+  if (verSel) verSel.value = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+
+  // ✅ init UI (your existing stable UI)
+  hskApi = initHSKUI({
+    defaultLevel: 1,
+    autoFocusSearch: false,
+    lang: "ko",
+  });
+
+  // ✅ Bind events (level/version changes)
+  bindHSKEvents();
+
+  // ✅ Initial render lessons (and keep vocab already rendered by initHSKUI)
+  await refreshLessons();
 }
 
 export async function unmount() {
@@ -89,13 +106,16 @@ function applyI18nIfAvailable() {
    MUST be classic scripts (no `export`)
 ================================== */
 async function ensureHSKDeps() {
-  if (window.HSK_LOADER?.loadVocab && window.HSK_RENDER && window.HSK_HISTORY) return;
+  // Note: renderer is ESM import; loader/history are globals
+  if (window.HSK_LOADER?.loadVocab && window.HSK_HISTORY) return;
   if (depsPromise) return depsPromise;
 
   depsPromise = (async () => {
     const loadScriptOnce = (src) =>
       new Promise((resolve, reject) => {
-        const already = [...document.scripts].some((s) => (s.src || "").endsWith(src));
+        const already = [...document.scripts].some((s) =>
+          (s.src || "").endsWith(src)
+        );
         if (already) return resolve();
 
         const s = document.createElement("script");
@@ -109,16 +129,179 @@ async function ensureHSKDeps() {
     // 1) ✅ Loader：classic script（无 export）
     await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
 
-    // 2) ✅ Renderer / History：ESM，用 import()（有 export）
-    // 注意：这里用相对路径（相对于 /ui/pages/page.hsk.js）
-    const rMod = await import("../modules/hsk/hskRenderer.js");
-    const hMod = await import("../modules/hsk/hskHistory.js");
-  
+    // 2) ✅ History：classic script OR ESM（按你实际文件来）
+    // 如果你的 hskHistory.js 是 classic script，请改为 loadScriptOnce
+    // 这里按你现在代码：ESM import()
+    await import("../modules/hsk/hskHistory.js");
+
+    // 3) Renderer is already imported at top (ESM)
   })();
 
   return depsPromise;
 }
 
+/* ===============================
+   ✅ Events
+================================== */
+function bindHSKEvents() {
+  const levelSel = document.getElementById("hskLevel");
+  const verSel = document.getElementById("hskVersion");
+
+  levelSel?.addEventListener("change", async () => {
+    // initHSKUI should already respond; we just refresh lessons + (optional) grid
+    await refreshLessons(true);
+  });
+
+  verSel?.addEventListener("change", async () => {
+    const v = verSel.value || "hsk2.0";
+    localStorage.setItem("hsk_vocab_version", v);
+
+    // Let initHSKUI do its thing if it watches localStorage;
+    // Still, we refresh lessons and re-render grid for stability.
+    await refreshAll();
+  });
+}
+
+/* ===============================
+   ✅ Helpers to read current UI
+================================== */
+function getCurrentLevel() {
+  const levelSel = document.getElementById("hskLevel");
+  const v = levelSel?.value || "1";
+  const m = String(v).match(/(\d+)/);
+  return m ? Number(m[1]) : 1;
+}
+
+function getCurrentVersion() {
+  const verSel = document.getElementById("hskVersion");
+  const v =
+    verSel?.value ||
+    localStorage.getItem("hsk_vocab_version") ||
+    "hsk2.0";
+  return v;
+}
+
+/* ===============================
+   ✅ Refresh lessons list
+================================== */
+async function refreshLessons(scrollIntoView = false) {
+  const lv = getCurrentLevel();
+  const version = getCurrentVersion();
+
+  const lessonsWrap = document.getElementById("hskLessonsWrap");
+  const lessonsEl = document.getElementById("hskLessons");
+
+  if (!lessonsWrap || !lessonsEl) return;
+
+  let lessons = null;
+  try {
+    lessons = await window.HSK_LOADER?.loadLessons?.(lv, { version });
+  } catch (e) {
+    console.warn("Lessons load failed:", e);
+    lessons = null;
+  }
+
+  if (!lessons || !lessons.length) {
+    lessonsWrap.classList.add("hidden");
+    lessonsEl.innerHTML = "";
+    return;
+  }
+
+  lessonsWrap.classList.remove("hidden");
+
+  renderLessonList(
+    lessonsEl,
+    lessons,
+    async (lesson) => {
+      await openLesson(lesson, { lv, version });
+    },
+    { lang: "ko" }
+  );
+
+  if (scrollIntoView) {
+    lessonsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+/* ===============================
+   ✅ Open one lesson → load lesson file → filter vocab → render cards
+================================== */
+async function openLesson(lesson, { lv, version }) {
+  const grid = document.getElementById("hskGrid");
+  const err = document.getElementById("hskError");
+  const status = document.getElementById("hskStatus");
+
+  if (!grid) return;
+
+  const file = lesson?.file || lesson?.path || "";
+  if (!file) return;
+
+  const lessonUrl = `/data/lessons/${version}/${file}`;
+
+  try {
+    err?.classList.add("hidden");
+    if (status) status.textContent = "Loading lesson...";
+
+    const lessonData = await fetch(lessonUrl, { cache: "no-store" }).then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status} - ${lessonUrl}`);
+      return r.json();
+    });
+
+    const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
+    const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
+    const set = new Set(words);
+
+    const lessonWords = vocab.filter((x) => set.has(x.word));
+
+    // ✅ Render using ESM renderer (click opens modal by default)
+    renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
+
+    if (status) status.textContent = `Lesson ${lesson.lesson || lesson.id || ""} (${lessonWords.length}/${words.length})`;
+  } catch (e) {
+    console.error(e);
+    if (status) status.textContent = "";
+    if (err) {
+      err.textContent = `Lesson load failed: ${e.message || e}`;
+      err.classList.remove("hidden");
+    }
+  }
+}
+
+/* ===============================
+   ✅ Full refresh on version change
+================================== */
+async function refreshAll() {
+  const lv = getCurrentLevel();
+  const version = getCurrentVersion();
+
+  const err = document.getElementById("hskError");
+  const status = document.getElementById("hskStatus");
+  const grid = document.getElementById("hskGrid");
+
+  try {
+    err?.classList.add("hidden");
+    if (status) status.textContent = "Reloading...";
+
+    // 1) refresh lessons
+    await refreshLessons(false);
+
+    // 2) refresh vocab grid (all words)
+    if (grid) {
+      const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
+      renderWordCards(grid, vocab, undefined, { lang: "ko" });
+      if (status) status.textContent = `HSK ${lv} (${vocab.length}/${vocab.length})`;
+    } else {
+      if (status) status.textContent = "";
+    }
+  } catch (e) {
+    console.error(e);
+    if (status) status.textContent = "";
+    if (err) {
+      err.textContent = `Reload failed: ${e.message || e}`;
+      err.classList.remove("hidden");
+    }
+  }
+}
 
 /* =============================== */
 function getHSKLayoutHTML() {
@@ -139,10 +322,10 @@ function getHSKLayoutHTML() {
           </select>
 
           <select id="hskVersion" class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white">
-          <option value="hsk2.0">HSK 2.0</option>
-          <option value="hsk3.0">HSK 3.0</option>
+            <option value="hsk2.0">HSK 2.0</option>
+            <option value="hsk3.0">HSK 3.0</option>
           </select>
-          
+
           <input
             id="hskSearch"
             class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
@@ -160,6 +343,14 @@ function getHSKLayoutHTML() {
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
+
+    <!-- ✅ Lessons -->
+    <div id="hskLessonsWrap" class="mb-4 hidden">
+      <div class="text-sm font-semibold mb-2">📚 Lessons</div>
+      <div id="hskLessons" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    </div>
+
+    <!-- ✅ Word grid -->
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
     <div class="h-20"></div>
