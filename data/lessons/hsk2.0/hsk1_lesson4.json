@@ -1,0 +1,75 @@
+{
+  "lesson": 4,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "认识别人", "kr": "다른 사람 알기" },
+  "topic": { "zh": "介绍和询问他人", "kr": "다른 사람 소개하고 묻기" },
+
+  "words": [
+    "他",
+    "她",
+    "谁",
+    "认识",
+    "我们",
+    "你们",
+    "他们"
+  ],
+
+  "dialogue": [
+    { "speaker": "A", "line": "他是谁？" },
+    { "speaker": "B", "line": "他是我的朋友。" },
+    { "speaker": "A", "line": "你认识他吗？" },
+    { "speaker": "B", "line": "认识，我们是同学。" }
+  ],
+
+  "grammar": [
+    {
+      "title": "谁 — 疑问代词",
+      "explanation_zh": "“谁”用于询问人物。",
+      "explanation_kr": "'谁'는 사람을 물을 때 사용합니다.",
+      "example": "他是谁？"
+    },
+    {
+      "title": "认识 — 表示认识某人",
+      "explanation_zh": "“认识”表示知道或见过某人。",
+      "explanation_kr": "'认识'는 어떤 사람을 알고 있음을 나타냅니다.",
+      "example": "我认识他。"
+    },
+    {
+      "title": "我们 / 你们 / 他们",
+      "explanation_zh": "在“我、你、他”后加“们”表示复数。",
+      "explanation_kr": "'们'을 붙이면 복수형이 됩니다.",
+      "example": "我们是朋友。"
+    }
+  ],
+
+  "practice": [
+    {
+      "type": "choice",
+      "question": "他是谁？",
+      "options": ["他是学生", "我很好", "谢谢"],
+      "answer": "他是学生"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        ["他", "남자 한 명"],
+        ["她", "여자 한 명"],
+        ["他们", "그들(남녀 모두)"]
+      ]
+    },
+    {
+      "type": "roleplay",
+      "prompt": "介绍你的朋友：他是谁？她是谁？"
+    }
+  ],
+
+  "ai_interaction": {
+    "speaking": [
+      "他是谁",
+      "她是我的朋友",
+      "我认识他"
+    ],
+    "chat_prompt": "AI展示一个人物图片，问：他是谁？学生回答。"
+  }
+}
