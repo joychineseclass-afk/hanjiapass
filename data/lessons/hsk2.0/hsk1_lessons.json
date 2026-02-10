@@ -1,14 +1,38 @@
 {
+  "level": "HSK1",
+  "version": "2.0",
+  "totalLessons": 22,
   "lessons": [
-    { "id": "L01", "title": "Lesson 01 인사", "subtitle": "안녕하세요 / 고마워요", "words": ["你好", "再见", "谢谢", "不客气"] },
-    { "id": "L02", "title": "Lesson 02 이름", "subtitle": "너 이름이 뭐야?", "words": ["你", "叫", "什么", "名字", "我"] },
-    { "id": "L03", "title": "Lesson 03 나라", "subtitle": "어느 나라 사람이에요?", "words": ["哪", "国", "人", "中国", "韩国"] },
-    { "id": "L04", "title": "Lesson 04 숫자", "subtitle": "1~10", "words": ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"] },
-    { "id": "L05", "title": "Lesson 05 시간", "subtitle": "몇 시예요?", "words": ["现在", "点", "分钟", "今天"] },
-    { "id": "L06", "title": "Lesson 06 요일/날짜", "subtitle": "오늘은 무슨 요일?", "words": ["星期", "月", "日", "年"] },
-    { "id": "L07", "title": "Lesson 07 학교", "subtitle": "학교/교실", "words": ["学校", "老师", "学生", "同学"] },
-    { "id": "L08", "title": "Lesson 08 가족", "subtitle": "가족 소개", "words": ["爸爸", "妈妈", "儿子", "女儿"] },
-    { "id": "L09", "title": "Lesson 09 먹기", "subtitle": "먹고 마시기", "words": ["吃", "喝", "水", "米饭"] },
-    { "id": "L10", "title": "Lesson 10 생활", "subtitle": "자주 쓰는 말", "words": ["有", "没有", "在", "不", "很"] }
+    { "lesson": 1, "title": "打招呼", "file": "hsk1_lesson1.json" },
+    { "lesson": 2, "title": "礼貌用语", "file": "hsk1_lesson2.json" },
+    { "lesson": 3, "title": "自我介绍", "file": "hsk1_lesson3.json" },
+    { "lesson": 4, "title": "认识别人", "file": "hsk1_lesson4.json" },
+
+    { "lesson": 5, "title": "我的家人", "file": "hsk1_lesson5.json" },
+    { "lesson": 6, "title": "人物关系", "file": "hsk1_lesson6.json" },
+
+    { "lesson": 7, "title": "数字（一）", "file": "hsk1_lesson7.json" },
+    { "lesson": 8, "title": "数字（二）", "file": "hsk1_lesson8.json" },
+
+    { "lesson": 9, "title": "今天和现在", "file": "hsk1_lesson9.json" },
+    { "lesson": 10, "title": "时间表达", "file": "hsk1_lesson10.json" },
+
+    { "lesson": 11, "title": "吃和喝", "file": "hsk1_lesson11.json" },
+    { "lesson": 12, "title": "在饭店", "file": "hsk1_lesson12.json" },
+
+    { "lesson": 13, "title": "去哪里", "file": "hsk1_lesson13.json" },
+    { "lesson": 14, "title": "常见地点", "file": "hsk1_lesson14.json" },
+
+    { "lesson": 15, "title": "喜欢做什么", "file": "hsk1_lesson15.json" },
+    { "lesson": 16, "title": "形容词", "file": "hsk1_lesson16.json" },
+
+    { "lesson": 17, "title": "日常活动", "file": "hsk1_lesson17.json" },
+    { "lesson": 18, "title": "能力表达", "file": "hsk1_lesson18.json" },
+
+    { "lesson": 19, "title": "生活物品", "file": "hsk1_lesson19.json" },
+    { "lesson": 20, "title": "数量表达", "file": "hsk1_lesson20.json" },
+
+    { "lesson": 21, "title": "天气和状态", "file": "hsk1_lesson21.json" },
+    { "lesson": 22, "title": "综合复习", "file": "hsk1_lesson22.json" }
   ]
 }
