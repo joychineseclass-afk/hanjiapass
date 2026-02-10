@@ -1,0 +1,14 @@
+{
+  "lesson": 9,
+  "title": { "zh": "今天和现在", "kr": "오늘과 지금" },
+  "words": ["今天", "明天", "昨天", "现在", "时候", "上午", "下午"],
+  "dialogue": [
+    { "speaker": "A", "line": "今天你忙吗？" },
+    { "speaker": "B", "line": "现在不忙。" }
+  ],
+  "grammar": [
+    { "title": "时间词放句首", "explanation_zh": "时间词常放在句子前面。", "explanation_kr": "시간 표현은 보통 문장 앞에 옵니다.", "example": "今天我学习。" }
+  ],
+  "practice": [{ "type": "match", "pairs": [["今天", "오늘"], ["明天", "내일"]] }],
+  "ai_interaction": { "speaking": ["今天", "现在"], "chat_prompt": "AI问今天做什么。" }
+}
