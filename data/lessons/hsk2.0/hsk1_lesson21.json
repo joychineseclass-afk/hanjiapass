@@ -1,0 +1,17 @@
+{
+  "lesson": 21,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "天气和状态", "kr": "날씨와 상태" },
+  "topic": { "zh": "描述天气和状态", "kr": "날씨와 상태 표현" },
+  "words": ["天气", "下雨", "太", "和", "都", "很"],
+  "dialogue": [
+    { "speaker": "A", "line": "今天天气怎么样？" },
+    { "speaker": "B", "line": "很好，不下雨。" }
+  ],
+  "grammar": [
+    { "title": "太…了", "explanation_zh": "表示程度高。", "explanation_kr": "정도가 매우 높을 때 사용.", "example": "太热了" }
+  ],
+  "practice": [{ "type": "choice", "question": "今天天气___？", "options": ["很好", "谢谢", "苹果"], "answer": "很好" }],
+  "ai_interaction": { "speaking": ["今天天气很好"], "chat_prompt": "AI问天气。" }
+}
