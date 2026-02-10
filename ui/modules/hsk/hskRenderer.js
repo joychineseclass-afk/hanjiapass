@@ -47,6 +47,13 @@ export function pickText(v, lang = "ko") {
   return "";
 }
 
+function cleanText(v, lang) {
+  const t = pickText(v, lang);
+  const s = String(t ?? "").trim();
+  if (!s || s === "[object Object]") return "";
+  return s;
+}
+
 /* ==============================
    ✅ Lesson List
 ============================== */
@@ -115,11 +122,46 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
 
     const word = pickText(item?.word ?? item?.hanzi, lang) || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, lang);
-    const meaning = pickText(item?.meaning ?? item?.ko ?? item?.kr, lang);
+    const meaningText = cleanText(
+  item?.meaning ?? item?.meanings ?? item?.ko ?? item?.kr,
+  lang
+);
 
-    const exampleZh = pickText(item?.exampleZh || item?.sentenceZh, "zh");
-    const examplePy = pickText(item?.examplePinyin || item?.sentencePinyin, lang);
-    const exampleKr = pickText(item?.exampleExplainKr || item?.krExplain, "ko");
+    const exampleZh = cleanText(
+  item?.exampleZh ||
+    item?.exampleZH ||
+    item?.example_zh ||
+    item?.sentenceZh ||
+    item?.sentence ||
+    item?.example,
+  "zh"
+);
+
+const examplePinyin = cleanText(
+  item?.examplePinyin ||
+    item?.sentencePinyin ||
+    item?.example_py ||
+    item?.examplePY,
+  lang
+);
+
+const exampleExplainKr = cleanText(
+  item?.exampleExplainKr ||
+    item?.exampleKR ||
+    item?.explainKr ||
+    item?.krExplain ||
+    item?.example?.kr,
+  "ko"
+);
+
+const exampleExplainCn = cleanText(
+  item?.exampleExplainCn ||
+    item?.exampleCN ||
+    item?.explainCn ||
+    item?.cnExplain ||
+    item?.example?.zh,
+  "zh"
+);
 
     card.innerHTML = `
       <div class="text-2xl font-bold text-gray-800">${escapeHtml(word)}</div>
