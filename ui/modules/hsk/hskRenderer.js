@@ -106,7 +106,10 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
   const lang = options.lang || window.APP_LANG || "ko";
   const showLearnBadge = options.showLearnBadge !== false;
 
-  const handleClick = typeof onClickWord === "function" ? onClickWord : openWordDetail;
+  const handleClick =
+  typeof onClickWord === "function"
+    ? onClickWord
+    : (item) => window.LEARN_PANEL?.open?.(item);
 
   (list || []).forEach((item) => {
     const card = document.createElement("button");
