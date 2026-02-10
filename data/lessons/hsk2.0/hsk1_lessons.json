@@ -3,36 +3,124 @@
   "version": "2.0",
   "totalLessons": 22,
   "lessons": [
-    { "lesson": 1, "title": "打招呼", "file": "hsk1_lesson1.json" },
-    { "lesson": 2, "title": "礼貌用语", "file": "hsk1_lesson2.json" },
-    { "lesson": 3, "title": "自我介绍", "file": "hsk1_lesson3.json" },
-    { "lesson": 4, "title": "认识别人", "file": "hsk1_lesson4.json" },
+    {
+      "lesson": 1,
+      "title": { "zh": "打招呼", "kr": "인사하기" },
+      "file": "hsk1_lesson1.json"
+    },
+    {
+      "lesson": 2,
+      "title": { "zh": "礼貌用语", "kr": "예절 표현" },
+      "file": "hsk1_lesson2.json"
+    },
+    {
+      "lesson": 3,
+      "title": { "zh": "自我介绍", "kr": "자기소개" },
+      "file": "hsk1_lesson3.json"
+    },
+    {
+      "lesson": 4,
+      "title": { "zh": "认识别人", "kr": "다른 사람 알기" },
+      "file": "hsk1_lesson4.json"
+    },
 
-    { "lesson": 5, "title": "我的家人", "file": "hsk1_lesson5.json" },
-    { "lesson": 6, "title": "人物关系", "file": "hsk1_lesson6.json" },
+    {
+      "lesson": 5,
+      "title": { "zh": "我的家人", "kr": "우리 가족" },
+      "file": "hsk1_lesson5.json"
+    },
+    {
+      "lesson": 6,
+      "title": { "zh": "人物关系", "kr": "사람 관계" },
+      "file": "hsk1_lesson6.json"
+    },
 
-    { "lesson": 7, "title": "数字（一）", "file": "hsk1_lesson7.json" },
-    { "lesson": 8, "title": "数字（二）", "file": "hsk1_lesson8.json" },
+    {
+      "lesson": 7,
+      "title": { "zh": "数字（一）", "kr": "숫자 ①" },
+      "file": "hsk1_lesson7.json"
+    },
+    {
+      "lesson": 8,
+      "title": { "zh": "数字（二）", "kr": "숫자 ②" },
+      "file": "hsk1_lesson8.json"
+    },
 
-    { "lesson": 9, "title": "今天和现在", "file": "hsk1_lesson9.json" },
-    { "lesson": 10, "title": "时间表达", "file": "hsk1_lesson10.json" },
+    {
+      "lesson": 9,
+      "title": { "zh": "今天和现在", "kr": "오늘과 지금" },
+      "file": "hsk1_lesson9.json"
+    },
+    {
+      "lesson": 10,
+      "title": { "zh": "时间表达", "kr": "시간 표현" },
+      "file": "hsk1_lesson10.json"
+    },
 
-    { "lesson": 11, "title": "吃和喝", "file": "hsk1_lesson11.json" },
-    { "lesson": 12, "title": "在饭店", "file": "hsk1_lesson12.json" },
+    {
+      "lesson": 11,
+      "title": { "zh": "吃和喝", "kr": "먹고 마시기" },
+      "file": "hsk1_lesson11.json"
+    },
+    {
+      "lesson": 12,
+      "title": { "zh": "在饭店", "kr": "식당에서" },
+      "file": "hsk1_lesson12.json"
+    },
 
-    { "lesson": 13, "title": "去哪里", "file": "hsk1_lesson13.json" },
-    { "lesson": 14, "title": "常见地点", "file": "hsk1_lesson14.json" },
+    {
+      "lesson": 13,
+      "title": { "zh": "去哪里", "kr": "어디에 가요?" },
+      "file": "hsk1_lesson13.json"
+    },
+    {
+      "lesson": 14,
+      "title": { "zh": "常见地点", "kr": "자주 가는 장소" },
+      "file": "hsk1_lesson14.json"
+    },
 
-    { "lesson": 15, "title": "喜欢做什么", "file": "hsk1_lesson15.json" },
-    { "lesson": 16, "title": "形容词", "file": "hsk1_lesson16.json" },
+    {
+      "lesson": 15,
+      "title": { "zh": "喜欢做什么", "kr": "무엇을 좋아해요?" },
+      "file": "hsk1_lesson15.json"
+    },
+    {
+      "lesson": 16,
+      "title": { "zh": "形容词", "kr": "형용사 표현" },
+      "file": "hsk1_lesson16.json"
+    },
 
-    { "lesson": 17, "title": "日常活动", "file": "hsk1_lesson17.json" },
-    { "lesson": 18, "title": "能力表达", "file": "hsk1_lesson18.json" },
+    {
+      "lesson": 17,
+      "title": { "zh": "日常活动", "kr": "일상 활동" },
+      "file": "hsk1_lesson17.json"
+    },
+    {
+      "lesson": 18,
+      "title": { "zh": "能力表达", "kr": "능력 표현" },
+      "file": "hsk1_lesson18.json"
+    },
 
-    { "lesson": 19, "title": "生活物品", "file": "hsk1_lesson19.json" },
-    { "lesson": 20, "title": "数量表达", "file": "hsk1_lesson20.json" },
+    {
+      "lesson": 19,
+      "title": { "zh": "生活物品", "kr": "생활 물건" },
+      "file": "hsk1_lesson19.json"
+    },
+    {
+      "lesson": 20,
+      "title": { "zh": "数量表达", "kr": "수량 표현" },
+      "file": "hsk1_lesson20.json"
+    },
 
-    { "lesson": 21, "title": "天气和状态", "file": "hsk1_lesson21.json" },
-    { "lesson": 22, "title": "综合复习", "file": "hsk1_lesson22.json" }
+    {
+      "lesson": 21,
+      "title": { "zh": "天气和状态", "kr": "날씨와 상태" },
+      "file": "hsk1_lesson21.json"
+    },
+    {
+      "lesson": 22,
+      "title": { "zh": "综合复习", "kr": "종합 복습" },
+      "file": "hsk1_lesson22.json"
+    }
   ]
 }
