@@ -312,9 +312,9 @@ export function initHSKUI(opts = {}) {
     }
 
     if (!Array.isArray(LESSONS) || LESSONS.length === 0) {
-      renderAllWordsView();
-      return;
-    }
+  renderFallback("수업 데이터가 없어요", "lessons 파일을 확인해 주세요.");
+  return;
+}
 
     inRecentView = false;
 
