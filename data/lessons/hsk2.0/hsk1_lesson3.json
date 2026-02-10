@@ -1,0 +1,74 @@
+{
+  "lesson": 3,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "自我介绍", "kr": "자기소개" },
+  "topic": { "zh": "介绍名字和身份", "kr": "이름과 신분 소개" },
+
+  "words": [
+    "叫",
+    "什么",
+    "名字",
+    "是",
+    "老师",
+    "学生",
+    "朋友"
+  ],
+
+  "dialogue": [
+    { "speaker": "A", "line": "你好！" },
+    { "speaker": "B", "line": "你好！" },
+    { "speaker": "A", "line": "你叫什么名字？" },
+    { "speaker": "B", "line": "我叫李明。" },
+    { "speaker": "A", "line": "你是学生吗？" },
+    { "speaker": "B", "line": "是，我是学生。" }
+  ],
+
+  "grammar": [
+    {
+      "title": "叫 + 名字",
+      "explanation_zh": "用“叫”来表达名字。",
+      "explanation_kr": "'叫'는 이름을 말할 때 사용합니다.",
+      "example": "我叫王明。"
+    },
+    {
+      "title": "什么 — 疑问词",
+      "explanation_zh": "“什么”用于询问事物或名字。",
+      "explanation_kr": "'什么'은 사물이나 이름을 물을 때 사용합니다.",
+      "example": "你叫什么名字？"
+    },
+    {
+      "title": "是 — 判断句",
+      "explanation_zh": "“是”用于连接主语和身份、职业。",
+      "explanation_kr": "'是'는 주어와 신분·직업을 연결합니다.",
+      "example": "我是学生。"
+    }
+  ],
+
+  "practice": [
+    {
+      "type": "choice",
+      "question": "你叫什么名字？",
+      "options": ["我很好", "我叫小美", "谢谢"],
+      "answer": "我叫小美"
+    },
+    {
+      "type": "reorder",
+      "question": ["学生", "是", "我"],
+      "answer": "我是学生"
+    },
+    {
+      "type": "roleplay",
+      "prompt": "两人一组练习：互相问名字和身份。"
+    }
+  ],
+
+  "ai_interaction": {
+    "speaking": [
+      "你叫什么名字",
+      "我叫小明",
+      "我是学生"
+    ],
+    "chat_prompt": "AI问：你叫什么名字？你是老师吗？学生回答。"
+  }
+}
