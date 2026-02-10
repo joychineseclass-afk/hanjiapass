@@ -1,0 +1,14 @@
+{
+  "lesson": 10,
+  "title": { "zh": "时间表达", "kr": "시간 표현" },
+  "words": ["点", "分钟", "号", "月", "星期", "中午"],
+  "dialogue": [
+    { "speaker": "A", "line": "现在几点？" },
+    { "speaker": "B", "line": "三点。" }
+  ],
+  "grammar": [
+    { "title": "点钟表达", "explanation_zh": "时间表达用“点”。", "explanation_kr": "시간은 '点'으로 표현합니다.", "example": "三点" }
+  ],
+  "practice": [{ "type": "time", "question": "看表说时间", "answer": "三点" }],
+  "ai_interaction": { "speaking": ["三点", "五点"], "chat_prompt": "AI问时间。" }
+}
