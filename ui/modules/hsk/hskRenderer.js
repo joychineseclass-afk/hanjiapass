@@ -26,7 +26,7 @@ export function pickText(v, lang = "ko") {
   }
 
   if (typeof v === "object") {
-    const L = String(lang).toLowerCase();
+    const L = String(lang || "").toLowerCase();
 
     const direct =
       pickText(v?.[L], lang) ||
@@ -120,46 +120,49 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
       handleClick(item, { lang });
     };
 
-    const word = pickText(item?.word ?? item?.hanzi ?? item?.hz, lang) || "(빈 항목)";
-    const pinyin = pickText(item?.pinyin, lang);
+    const word = cleanText(item?.word ?? item?.hanzi ?? item?.hz, lang) || "(빈 항목)";
+    const pinyin = cleanText(item?.pinyin, lang);
     const meaning = cleanText(item?.meaning ?? item?.ko ?? item?.kr, lang);
 
-
+    // ✅ Example fields (统一变量名：exampleZh / examplePy / exampleKr / exampleCn)
     const exampleZh = cleanText(
-  item?.exampleZh ||
-    item?.exampleZH ||
-    item?.example_zh ||
-    item?.sentenceZh ||
-    item?.sentence ||
-    item?.example,
-  "zh"
-);
+      item?.exampleZh ||
+        item?.exampleZH ||
+        item?.example_zh ||
+        item?.sentenceZh ||
+        item?.sentence ||
+        item?.example,
+      "zh"
+    );
 
-const examplePinyin = cleanText(
-  item?.examplePinyin ||
-    item?.sentencePinyin ||
-    item?.example_py ||
-    item?.examplePY,
-  lang
-);
+    const examplePy = cleanText(
+      item?.examplePinyin ||
+        item?.sentencePinyin ||
+        item?.example_py ||
+        item?.examplePY,
+      lang
+    );
 
-const exampleExplainKr = cleanText(
-  item?.exampleExplainKr ||
-    item?.exampleKR ||
-    item?.explainKr ||
-    item?.krExplain ||
-    item?.example?.kr,
-  "ko"
-);
+    const exampleKr = cleanText(
+      item?.exampleExplainKr ||
+        item?.exampleKR ||
+        item?.explainKr ||
+        item?.krExplain ||
+        item?.example?.kr,
+      "ko"
+    );
 
-const exampleExplainCn = cleanText(
-  item?.exampleExplainCn ||
-    item?.exampleCN ||
-    item?.explainCn ||
-    item?.cnExplain ||
-    item?.example?.zh,
-  "zh"
-);
+    const exampleCn = cleanText(
+      item?.exampleExplainCn ||
+        item?.exampleCN ||
+        item?.explainCn ||
+        item?.cnExplain ||
+        item?.example?.zh,
+      "zh"
+    );
+
+    // ✅ example block: zh + pinyin + (kr/cn explain)
+    const hasExample = !!(exampleZh || examplePy || exampleKr || exampleCn);
 
     card.innerHTML = `
       <div class="text-2xl font-bold text-gray-800">${escapeHtml(word)}</div>
@@ -167,11 +170,12 @@ const exampleExplainCn = cleanText(
       ${meaning ? `<div class="text-base text-gray-700 mt-2">${escapeHtml(meaning)}</div>` : ""}
 
       ${
-        exampleZh || examplePy || exampleKr
+        hasExample
           ? `<div class="mt-4 p-3 rounded-xl bg-gray-50 text-sm text-gray-700 space-y-1">
               ${exampleZh ? `<div>${escapeHtml(exampleZh)}</div>` : ""}
               ${examplePy ? `<div class="text-blue-600">${escapeHtml(examplePy)}</div>` : ""}
               ${exampleKr ? `<div class="text-gray-500">${escapeHtml(exampleKr)}</div>` : ""}
+              ${exampleCn && !exampleKr ? `<div class="text-gray-500">${escapeHtml(exampleCn)}</div>` : ""}
             </div>`
           : ""
       }
@@ -203,12 +207,13 @@ try {
 function openWordDetail(word, opts = {}) {
   const lang = opts.lang || window.APP_LANG || "ko";
 
-  const hanzi = pickText(word?.word || word?.hanzi, lang);
-  const pinyin = pickText(word?.pinyin, lang);
-  const meaning = pickText(word?.meaning ?? word?.kr ?? word?.ko, lang);
-  const exZh = pickText(word?.exampleZh || word?.sentenceZh, "zh");
-  const exPy = pickText(word?.examplePinyin || word?.sentencePinyin, lang);
-  const exKr = pickText(word?.exampleExplainKr || word?.krExplain, "ko");
+  const hanzi = cleanText(word?.word || word?.hanzi, lang);
+  const pinyin = cleanText(word?.pinyin, lang);
+  const meaning = cleanText(word?.meaning ?? word?.kr ?? word?.ko, lang);
+
+  const exZh = cleanText(word?.exampleZh || word?.sentenceZh || word?.sentence || word?.example, "zh");
+  const exPy = cleanText(word?.examplePinyin || word?.sentencePinyin, lang);
+  const exKr = cleanText(word?.exampleExplainKr || word?.krExplain || word?.explainKr, "ko");
 
   const existing = document.querySelector(".word-modal");
   if (existing) existing.remove();
@@ -221,6 +226,7 @@ function openWordDetail(word, opts = {}) {
       <div class="modal-hanzi">${escapeHtml(hanzi)}</div>
       ${pinyin ? `<div class="modal-pinyin">${escapeHtml(pinyin)}</div>` : ""}
       ${meaning ? `<div class="modal-meaning">${escapeHtml(meaning)}</div>` : ""}
+
       ${(exZh || exPy || exKr)
         ? `<div class="modal-example">
             ${exZh ? `<p>${escapeHtml(exZh)}</p>` : ""}
@@ -228,6 +234,7 @@ function openWordDetail(word, opts = {}) {
             ${exKr ? `<p>${escapeHtml(exKr)}</p>` : ""}
           </div>`
         : ""}
+
       <button type="button" class="modal-close">닫기</button>
     </div>
   `;
