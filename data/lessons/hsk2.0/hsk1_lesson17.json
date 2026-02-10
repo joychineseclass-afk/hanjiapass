@@ -1,0 +1,17 @@
+{
+  "lesson": 17,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "日常活动", "kr": "일상 활동" },
+  "topic": { "zh": "日常生活动词", "kr": "일상 동사" },
+  "words": ["工作", "学习", "睡觉", "开", "坐", "住", "做"],
+  "dialogue": [
+    { "speaker": "A", "line": "你在哪儿工作？" },
+    { "speaker": "B", "line": "我在北京工作。" }
+  ],
+  "grammar": [
+    { "title": "动词位置", "explanation_zh": "动词一般放在主语后面。", "explanation_kr": "동사는 주어 뒤에 옵니다.", "example": "我学习汉语。" }
+  ],
+  "practice": [{ "type": "choice", "question": "晚上做什么？", "options": ["睡觉", "谢谢", "苹果"], "answer": "睡觉" }],
+  "ai_interaction": { "speaking": ["我学习汉语"], "chat_prompt": "AI问日常活动。" }
+}
