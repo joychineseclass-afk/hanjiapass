@@ -1,0 +1,27 @@
+{
+  "lesson": 16,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "形容词", "kr": "형용사 표현" },
+  "topic": { "zh": "描述事物特征", "kr": "사물 묘사" },
+  "words": ["大", "小", "多", "少", "热", "冷", "漂亮"],
+  "dialogue": [
+    { "speaker": "A", "line": "这个苹果大吗？" },
+    { "speaker": "B", "line": "不大，很小。" }
+  ],
+  "grammar": [
+    {
+      "title": "很 + 形容词",
+      "explanation_zh": "形容词前常加“很”。",
+      "explanation_kr": "형용사 앞에 보통 '很'을 씁니다.",
+      "example": "很大"
+    }
+  ],
+  "practice": [
+    { "type": "match", "pairs": [["大", "크다"], ["小", "작다"]] }
+  ],
+  "ai_interaction": {
+    "speaking": ["很大", "很漂亮"],
+    "chat_prompt": "AI描述图片，学生回答。"
+  }
+}
