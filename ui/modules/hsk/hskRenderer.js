@@ -120,12 +120,10 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
       handleClick(item, { lang });
     };
 
-    const word = pickText(item?.word ?? item?.hanzi, lang) || "(빈 항목)";
+    const word = pickText(item?.word ?? item?.hanzi ?? item?.hz, lang) || "(빈 항목)";
     const pinyin = pickText(item?.pinyin, lang);
-    const meaningText = cleanText(
-  item?.meaning ?? item?.meanings ?? item?.ko ?? item?.kr,
-  lang
-);
+    const meaning = cleanText(item?.meaning ?? item?.ko ?? item?.kr, lang);
+
 
     const exampleZh = cleanText(
   item?.exampleZh ||
