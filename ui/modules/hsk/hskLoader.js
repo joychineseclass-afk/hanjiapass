@@ -2,10 +2,13 @@
 // ✅ Classic Script (NO export) — registers window.HSK_LOADER
 // Provides: loadVocab(level, opts), loadLessons(level, opts)
 //
-// ✅ NEW (Formal): supports versioned vocab folders
+// ✅ Supports versioned vocab + lessons folders
 //   /data/vocab/hsk2.0/hsk1.json
 //   /data/vocab/hsk3.0/hsk1.json
-// - version priority: opts.version -> localStorage -> window.APP_VOCAB_VERSION -> default "hsk2.0"
+//   /data/lessons/hsk2.0/hsk1_lessons.json
+//   /data/lessons/hsk3.0/hsk1_lessons.json
+//
+// Version priority: opts.version -> localStorage -> window.APP_VOCAB_VERSION -> default "hsk2.0"
 
 (function () {
   const MEM_CACHE_TTL = 1000 * 60 * 30; // 30min
@@ -103,7 +106,13 @@
       )
     );
 
-    return { raw, word: normalizeWord(word), pinyin: safeText(pinyin), meaning, example };
+    return {
+      raw,
+      word: normalizeWord(word),
+      pinyin: safeText(pinyin),
+      meaning,
+      example,
+    };
   }
 
   async function fetchJson(url, opt) {
@@ -115,7 +124,13 @@
   function extractArray(data) {
     if (Array.isArray(data)) return data;
     return (
-      (data && (data.items || data.data || data.vocab || data.words || data.list || data.results)) ||
+      (data &&
+        (data.items ||
+          data.data ||
+          data.vocab ||
+          data.words ||
+          data.list ||
+          data.results)) ||
       []
     );
   }
@@ -130,7 +145,7 @@
   }
 
   // =========================
-  // ✅ NEW: Level normalize
+  // ✅ Level normalize
   // =========================
   function normalizeLevel(level) {
     // supports: "HSK 1급" / "HSK1" / 1 / "1" / "hsk1"
@@ -140,31 +155,39 @@
   }
 
   // =========================
-  // ✅ NEW: Version resolver
+  // ✅ Version resolver
   // =========================
+  function normalizeVersion(v) {
+    const s = safeText(v).toLowerCase();
+    if (!s) return "";
+    // allow: "2.0" -> "hsk2.0", "hsk2.0" -> "hsk2.0"
+    if (s === "2" || s === "2.0") return "hsk2.0";
+    if (s === "3" || s === "3.0") return "hsk3.0";
+    if (s.startsWith("hsk")) return s;
+    return s; // keep as-is (for future versions)
+  }
+
   function getVocabVersion(opts) {
-    const fromOpts = opts && safeText(opts.version);
-    const fromLS = safeText(localStorage.getItem("hsk_vocab_version"));
-    const fromGlobal = safeText(window.APP_VOCAB_VERSION);
+    const fromOpts = normalizeVersion(opts && safeText(opts.version));
+    const fromLS = normalizeVersion(localStorage.getItem("hsk_vocab_version"));
+    const fromGlobal = normalizeVersion(window.APP_VOCAB_VERSION);
     return fromOpts || fromLS || fromGlobal || "hsk2.0";
   }
 
   // =========================
-  // ✅ NEW: Versioned URL builder (Formal)
+  // ✅ Versioned URL builders
   // =========================
-  function vocabUrlFallback(lv) {
-  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
-  return `/data/vocab/${ver}/hsk${lv}.json`;
-}
-
-  // ✅ lessons 可选：如果你以后也要版本化
-  function lessonsUrlVersioned(lv, version) {
-    // 你如果没做 lessons 文件，就返回 null
-    // return `/data/vocab/${version}/hsk${lv}.lessons.json`;
-    return null;
+  function vocabUrlVersioned(lv, version) {
+    const ver = normalizeVersion(version) || "hsk2.0";
+    return `/data/vocab/${ver}/hsk${lv}.json`;
   }
 
-  // ✅ fallback (if you ever need)
+  function lessonsUrlVersioned(lv, version) {
+    const ver = normalizeVersion(version) || "hsk2.0";
+    return `/data/lessons/${ver}/hsk${lv}_lessons.json`;
+  }
+
+  // ✅ old fallback (keep for legacy)
   function vocabUrlFallback(lv) {
     return `/data/hsk${lv}.json`;
   }
@@ -224,15 +247,28 @@
 
     try {
       const data = await fetchJson(url);
-      const lessons = Array.isArray(data) ? data : (data && (data.lessons || data.data)) || [];
 
-      const normalized = lessons.map((l, i) => ({
-        ...l,
-        id: l.id != null ? l.id : i,
-        title: l.title || `Lesson ${i + 1}`,
-        subtitle: l.subtitle || "",
-        words: Array.isArray(l.words) ? l.words : [],
-      }));
+      // supports:
+      // 1) { lessons: [...] }
+      // 2) { data: [...] }
+      // 3) [...]
+      const lessonsRaw = Array.isArray(data)
+        ? data
+        : (data && (data.lessons || data.data)) || [];
+
+      // normalize titles: allow string or {zh,kr,en}
+      const normalized = lessonsRaw.map((l, i) => {
+        const title = l && l.title != null ? l.title : `Lesson ${i + 1}`;
+        return {
+          ...l,
+          id: l.id != null ? l.id : i,
+          lesson: l.lesson != null ? l.lesson : i + 1,
+          title,
+          subtitle: l.subtitle || "",
+          words: Array.isArray(l.words) ? l.words : [],
+          file: l.file || l.path || l.url || "",
+        };
+      });
 
       memSet(memKey, normalized);
       return normalized;
@@ -249,5 +285,4 @@
 try {
   window.HSK_RENDER = window.HSK_RENDER || {};
   // 这里不要再强行绑定未定义的 renderWordCards
-  // 如果你现在已经改成 ESM import renderWordCards，那这里可以删掉整段
 } catch {}
