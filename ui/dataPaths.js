@@ -71,9 +71,10 @@
 }
 
   function lessonsUrl(level) {
-    const lv = normalizeLevel(level);
-    return withVersion(joinPath(BASE, `data/lessons/hsk${lv}_lessons.json`));
-  }
+  const lv = normalizeLevel(level);
+  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lessons.json`));
+}
 
   // make-me-a-hanzi：文件名 = Unicode 十进制 code point（比如 客=23458）
   function strokeUrl(ch) {
