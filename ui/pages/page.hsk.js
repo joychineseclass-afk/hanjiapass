@@ -344,12 +344,6 @@ function getHSKLayoutHTML() {
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <!-- ✅ Lessons -->
-    <div id="hskLessonsWrap" class="mb-4 hidden">
-      <div class="text-sm font-semibold mb-2">📚 Lessons</div>
-      <div id="hskLessons" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-    </div>
-
     <!-- ✅ Word grid -->
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
