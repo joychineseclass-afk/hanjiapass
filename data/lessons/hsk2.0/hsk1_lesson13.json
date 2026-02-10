@@ -1,0 +1,29 @@
+{
+  "lesson": 13,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "去哪里", "kr": "어디에 가요?" },
+  "topic": { "zh": "询问和表达去的地方", "kr": "가는 장소 묻고 말하기" },
+  "words": ["去", "来", "在", "这", "那", "哪", "哪儿"],
+  "dialogue": [
+    { "speaker": "A", "line": "你去哪儿？" },
+    { "speaker": "B", "line": "我去学校。" },
+    { "speaker": "A", "line": "他在哪儿？" },
+    { "speaker": "B", "line": "他在这儿。" }
+  ],
+  "grammar": [
+    {
+      "title": "在哪儿",
+      "explanation_zh": "“在 + 地点”表示人或物的位置。",
+      "explanation_kr": "'在 + 장소'는 위치를 나타냅니다.",
+      "example": "我在家。"
+    }
+  ],
+  "practice": [
+    { "type": "choice", "question": "你去哪儿？", "options": ["我很好", "我去商店", "谢谢"], "answer": "我去商店" }
+  ],
+  "ai_interaction": {
+    "speaking": ["我去学校", "他在哪儿"],
+    "chat_prompt": "AI问你去哪儿，学生回答。"
+  }
+}
