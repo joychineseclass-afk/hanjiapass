@@ -127,7 +127,7 @@ async function ensureHSKDeps() {
       });
 
     // 1) ✅ Loader：classic script（无 export）
-    await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
+    await loadScriptOnce("/ui/modules/hsk/hskLoader.v2.js");
 
     // 2) ✅ History：classic script OR ESM（按你实际文件来）
     // 如果你的 hskHistory.js 是 classic script，请改为 loadScriptOnce
