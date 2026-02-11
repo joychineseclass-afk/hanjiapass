@@ -31,39 +31,43 @@ export function mountLearnPanel(opts = {}) {
   wrap.innerHTML = tpl();
   container.appendChild(wrap);
 
-  const overlay = wrap.querySelector("#learn-panel");
-  const closeBtn = wrap.querySelector("#learnClose");
-  const closeXBtn = wrap.querySelector("#learnCloseX");
-  const body = wrap.querySelector("#learnBody");
+const overlay = wrap.querySelector("#learn-panel");
+const backBtn = wrap.querySelector("#learnBack");
+const closeXBtn = wrap.querySelector("#learnCloseX");
+const body = wrap.querySelector("#learnBody");
 
-  // --- open/close ---
-  const open = () => overlay?.classList.remove("hidden");
-  const close = () => overlay?.classList.add("hidden");
+// --- open/close ---
+const open = () => overlay?.classList.remove("hidden");
+const close = () => overlay?.classList.add("hidden");
 
-  closeBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
+// X 关闭
+closeXBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  close();
+});
+
+// ← 返回（退回单词栏：本质是关闭 + 滚动回单词区域）
+backBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  close();
+  // 可选：回到单词卡区域
+  document.querySelector("#hskGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// 点黑背景关闭
+overlay?.addEventListener("click", (e) => {
+  if (e.target === overlay) close();
+});
+
+// Esc 关闭（只绑定一次）
+if (!document.body.dataset.learnEscBound) {
+  document.body.dataset.learnEscBound = "1";
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
   });
-
-  closeXBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
-  });
-
-  overlay?.addEventListener("click", (e) => {
-    // 点击黑色背景关闭
-    if (e.target === overlay) close();
-  });
-
-  // Esc 关闭（只绑定一次）
-  if (!document.body.dataset.learnEscBound) {
-    document.body.dataset.learnEscBound = "1";
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
+}
 
   // --- external events ---
   window.addEventListener("openLearnPanel", open);
