@@ -103,27 +103,30 @@ export function mountLearnPanel(opts = {}) {
 function tpl() {
   return `
     <div id="learn-panel"
-      class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 p-4"
+      class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4"
       aria-label="Learn Panel"
     >
-      <div class="w-full max-w-4xl rounded-2xl bg-white shadow-xl overflow-hidden relative">
-        <div class="sticky top-0 z-[10000] bg-white border-b">
+      <div class="w-full max-w-[560px] rounded-2xl bg-white shadow-2xl overflow-hidden relative">
+        
+        <!-- 顶部栏 -->
+        <div class="sticky top-0 z-10 bg-white border-b">
           <div class="flex items-center justify-between px-4 py-3">
-            <div class="font-semibold" data-i18n="learn_title">배우기</div>
-            <div class="flex items-center gap-2">
-              <button id="learnClose" type="button"
-                class="px-3 py-1 rounded-lg bg-slate-100 text-sm hover:bg-slate-200"
-                data-i18n="learn_close"
-              >닫기</button>
-              <button id="learnCloseX" type="button"
-                class="w-9 h-9 rounded-lg bg-slate-100 text-lg leading-none hover:bg-slate-200"
-                aria-label="close"
-              >×</button>
-            </div>
+            <button id="learnBack" type="button"
+              class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
+              ← 뒤로
+            </button>
+
+            <div class="font-extrabold" data-i18n="learn_title">단어 학습</div>
+
+            <button id="learnClose" type="button"
+              class="w-10 h-10 rounded-xl bg-slate-100 text-lg leading-none font-bold">
+              ×
+            </button>
           </div>
         </div>
 
-        <div id="learnBody" class="p-4 space-y-4 max-h-[80vh] overflow-auto"></div>
+        <!-- 内容区 -->
+        <div id="learnBody" class="p-4 space-y-4 max-h-[75vh] overflow-auto"></div>
       </div>
     </div>
   `;
