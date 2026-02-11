@@ -383,10 +383,8 @@ function render(root, raw) {
 
   // ✅ Speak
   root.querySelector("#btnLearnSpeak")?.addEventListener("click", () => {
-    try {
-      window.AIUI?.speak?.(wordText, "zh-CN");
-    } catch {}
-  });
+  speakFallback(wordText, "zh-CN");
+});
 
   // ✅ Recent save
   root.querySelector("#btnLearnToRecent")?.addEventListener("click", () => {
