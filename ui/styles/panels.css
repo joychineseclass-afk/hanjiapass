@@ -368,3 +368,69 @@
   font-weight: 800;
   cursor:pointer;
 }
+/* =========================
+   Learn Panel (no Tailwind required)
+========================= */
+.hidden { display: none !important; }
+
+.learn-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.learn-modal{
+  width: 100%;
+  max-width: 560px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+
+.learn-topbar{
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.learn-title{
+  font-weight: 800;
+}
+
+.learn-x{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 0;
+  background: #f1f5f9;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.learn-btn{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 0;
+  background: #f1f5f9;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.learn-body{
+  padding: 16px;
+  max-height: 75vh;
+  overflow: auto;
+}
