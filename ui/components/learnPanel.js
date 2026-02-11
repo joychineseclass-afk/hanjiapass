@@ -245,6 +245,29 @@ function extractHanChars(wordText) {
   return m ? Array.from(new Set(m)) : [];
 }
 
+// 🔊 朗读（优先你现有 AIUI，没有就用浏览器自带语音）
+function speakFallback(text, lang = "zh-CN") {
+  const t = String(text || "").trim();
+  if (!t) return;
+
+  // ① 如果你已有 AI 朗读
+  if (typeof window.AIUI?.speak === "function") {
+    window.AIUI.speak(t, lang);
+    return;
+  }
+
+  // ② 浏览器自带语音（兜底）
+  if ("speechSynthesis" in window) {
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = lang;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+    return;
+  }
+
+  alert("이 브라우저는 음성 기능을 지원하지 않아요.");
+}
+
 /* ===============================
    Main render (stable)
 ================================== */
