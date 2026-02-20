@@ -80,7 +80,7 @@ export function modalTpl({ id, titleId, backId, closeId, bodyId, titleText = "" 
 }
 
 export function createModalSystem(rootWrap, cfg) {
-  injectModalCSS();
+  ensureModalCSS();
 
   const {
     id,
@@ -181,33 +181,45 @@ function ensureModalCss() {
   const style = document.createElement("style");
   style.id = "jc-modal-css";
   style.textContent = `
-    .jc-hidden{display:none!important;}
-    .jc-modal-overlay{
-      position:fixed; inset:0; z-index:9999;
-      background:rgba(0,0,0,.5);
-      display:flex; align-items:center; justify-content:center;
-      padding:16px;
-    }
-    .jc-modal-box{
-      width:100%; max-width:720px;
-      background:#fff; border-radius:16px;
-      overflow:hidden;
-      box-shadow:0 20px 60px rgba(0,0,0,.25);
-    }
-    .jc-modal-top{
-      position:sticky; top:0;
-      background:#fff; border-bottom:1px solid #eee;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:8px; padding:12px 16px;
-    }
-    .jc-btn{
-      border:0; background:#f1f5f9; cursor:pointer;
-      padding:8px 12px; border-radius:12px;
-      font-weight:700;
-    }
-    .jc-modal-body{
-      padding:16px; max-height:78vh; overflow:auto;
-    }
+    /* ✅ Tailwind fallback for modal usage */
+    .hidden{display:none!important;}
+
+    /* common overlay look if you rely on fixed/inset styles */
+    .fixed{position:fixed;}
+    .inset-0{top:0;right:0;bottom:0;left:0;}
+    .bg-black\\/50{background:rgba(0,0,0,.5);}
+    .flex{display:flex;}
+    .items-center{align-items:center;}
+    .justify-center{justify-content:center;}
+    .p-4{padding:16px;}
+
+    /* better modal box defaults */
+    .shadow-2xl{box-shadow:0 20px 60px rgba(0,0,0,.25);}
+    .rounded-2xl{border-radius:16px;}
+    .overflow-hidden{overflow:hidden;}
+    .bg-white{background:#fff;}
+
+    /* body scrolling */
+    .max-h-\\[78vh\\]{max-height:78vh;}
+    .overflow-auto{overflow:auto;}
+
+    /* simple button styling if tailwind absent */
+    .bg-slate-100{background:#f1f5f9;}
+    .rounded-xl{border-radius:12px;}
+    .px-3{padding-left:12px;padding-right:12px;}
+    .py-2{padding-top:8px;padding-bottom:8px;}
+    .text-sm{font-size:14px;}
+    .font-bold{font-weight:700;}
+    .w-10{width:40px;}
+    .h-10{height:40px;}
+    .text-lg{font-size:18px;}
+    .leading-none{line-height:1;}
+    .border-b{border-bottom:1px solid #eee;}
+    .border{border:1px solid #eee;}
+    .sticky{position:sticky;}
+    .top-0{top:0;}
+    .z-10{z-index:10;}
+    .relative{position:relative;}
   `;
   document.head.appendChild(style);
 }
