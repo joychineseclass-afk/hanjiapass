@@ -1,3 +1,4 @@
+import { modalTpl, createModalSystem } from "./modalBase.js";
 // /ui/components/dialoguePanel.js
 // ✅ Dialogue Panel (stable, extensible, ESM-compatible)
 // - mount once
