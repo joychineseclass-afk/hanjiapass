@@ -83,6 +83,7 @@ function mountGlobalComponents() {
   ensurePortalRoot();
   mountAIPanel();
   mountLearnPanel();
+  mountDialoguePanel();
 }
 
 function ensurePortalRoot() {
