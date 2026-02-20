@@ -79,34 +79,16 @@ export function mountDialoguePanel(opts = {}) {
    Template
 ================================== */
 function tpl() {
-  return `
-    <div id="dialogue-panel"
-      class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4"
-      aria-label="Dialogue Panel"
-    >
-      <div class="w-full max-w-[720px] rounded-2xl bg-white shadow-2xl overflow-hidden">
-        <div class="sticky top-0 z-10 bg-white border-b">
-          <div class="flex items-center justify-between px-4 py-3">
-            <button id="dialogueBack" type="button"
-              class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
-              ← 뒤로
-            </button>
-
-            <div class="font-extrabold" id="dialogueTitle">회화 학습</div>
-
-            <button id="dialogueCloseX" type="button"
-              class="w-10 h-10 rounded-xl bg-slate-100 text-lg leading-none font-bold">
-              ×
-            </button>
-          </div>
-        </div>
-
-        <div id="dialogueBody" class="p-4 space-y-4 max-h-[78vh] overflow-auto"></div>
-      </div>
-    </div>
-  `;
+  return modalTpl({
+    id: "dialogue-panel",
+    titleId: "dialogueTitle",
+    backId: "dialogueBack",
+    closeId: "dialogueCloseX",
+    bodyId: "dialogueBody",
+    titleText: "회화 학습",
+    maxWidth: 720,
+  });
 }
-
 /* ===============================
    Helpers
 ================================== */
