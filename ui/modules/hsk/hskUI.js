@@ -349,45 +349,17 @@ export function initHSKUI(opts = {}) {
       })
       .join("");
 
-   bar.querySelectorAll('button[data-tab]').forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const nextTab = btn.getAttribute("data-tab") || "vocab";
-    lessonTab = nextTab;
+    bar.querySelectorAll("button[data-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        lessonTab = btn.getAttribute("data-tab") || "vocab";
+        renderLessonDetailView();
+        scrollToTop();
+        focusSearch();
+      });
+    });
 
-    // ✅ 如果点击的是「会话」tab：走弹窗系统（Event-driven）
-    if (lessonTab === "dialogue") {
-      // 你原来在 renderLessonDetailView() 里取的这些数据，这里也可以直接取
-      const dialogue = currentLessonDetail?.dialogue || currentLessonDetail?.content || [];
-      const title =
-        currentLessonDetail?.title ||
-        currentLesson?.title ||
-        "회화 학습";
-      const subtitle = currentLessonDetail?.subtitle || "";
-
-      window.dispatchEvent(
-        new CustomEvent("dialogue:open", {
-          detail: {
-            title,
-            subtitle,
-            dialogue,
-            lang: LANG, // 你项目里已有 LANG 就继续用
-          },
-        })
-      );
-
-      // 可选：保持页面体验（要不要滚动看你）
-      scrollToTop?.();
-      focusSearch?.();
-
-      return; // ✅ 关键：不要继续渲染到页面里
-    }
-
-    // ✅ 其他 tab：正常渲染到页面
-    renderLessonDetailView();
-    scrollToTop();
-    focusSearch();
-  });
-});
+    return bar;
+  }
 
   // ✅ NEW: 课程 Tab 页整体渲染
   function renderLessonDetailView() {
@@ -462,25 +434,7 @@ export function initHSKUI(opts = {}) {
 
     // Tab contents
     if (lessonTab === "vocab") return renderLessonTabVocab(wrap);
-    if (lessonTab === "dialogue") {
-  // ✅ 优先：弹窗会话学习卡
-  const dialogue = currentLessonDetail?.dialogue || currentLessonDetail?.conversation || [];
-  const title = currentLessonDetail?.title || currentLesson?.title || "회화 학습";
-  const subtitle = currentLessonDetail?.subtitle || "";
-
-  if (window.DIALOGUE_PANEL?.open) {
-    window.DIALOGUE_PANEL.open({
-      title,
-      subtitle,
-      dialogue,
-      lang: LANG
-    });
-    return; // ✅ 不再在页面里渲染
-  }
-
-  // fallback：如果弹窗没挂载，继续旧方式渲染
-  return renderLessonTabDialogue(wrap);
-}
+    if (lessonTab === "dialogue") return renderLessonTabDialogue(wrap);
     if (lessonTab === "grammar") return renderLessonTabGrammar(wrap);
     if (lessonTab === "practice") return renderLessonTabPractice(wrap);
     if (lessonTab === "ai") return renderLessonTabAI(wrap);
