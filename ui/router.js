@@ -232,15 +232,35 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
   }
 }
 // -----------------------------
-// hash router bindings (must be at file end)
+// hash router bindings (safe)
 // -----------------------------
-window.addEventListener("hashchange", () => {
-  try { handleRouteChange(); } catch (e) { console.error(e); }
-});
+function getAppEl() {
+  return (
+    document.getElementById("app") ||
+    document.querySelector("#app") ||
+    document.querySelector("main") ||
+    document.body
+  );
+}
 
-window.addEventListener("popstate", () => {
-  try { handleRouteChange(); } catch (e) { console.error(e); }
-});
+function safeRoute() {
+  try {
+    const appEl = getAppEl();
+
+    // 兼容两种签名：handleRouteChange({appEl}) 或 handleRouteChange(appEl)
+    if (typeof handleRouteChange === "function") {
+      // 如果你的 handleRouteChange 期望对象参数
+      return handleRouteChange({ appEl, scrollTop: true });
+      // 如果你确认它只要 appEl，把上面改成：
+      // return handleRouteChange(appEl);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+window.addEventListener("hashchange", safeRoute);
+window.addEventListener("popstate", safeRoute);
 
 // first load
-try { handleRouteChange(); } catch (e) { console.error(e); }
+safeRoute();
