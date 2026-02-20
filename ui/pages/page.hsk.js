@@ -15,6 +15,7 @@ import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
+import { mountDialoguePanel } from "../components/dialoguePanel.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
 let hskApi = null;
