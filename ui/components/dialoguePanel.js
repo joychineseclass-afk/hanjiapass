@@ -22,37 +22,24 @@ export function mountDialoguePanel(opts = {}) {
   wrap.innerHTML = tpl();
   container.appendChild(wrap);
 
-  const overlay = wrap.querySelector("#dialogue-panel");
-  const backBtn = wrap.querySelector("#dialogueBack");
-  const closeBtn = wrap.querySelector("#dialogueCloseX");
-  const body = wrap.querySelector("#dialogueBody");
-
-  const open = () => overlay?.classList.remove("hidden");
-  const close = () => overlay?.classList.add("hidden");
-
-  closeBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
-  });
-
-  backBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
+  const modal = createModalSystem(wrap, {
+  id: "dialogue-panel",
+  titleId: "dialogueTitle",
+  backId: "dialogueBack",
+  closeId: "dialogueCloseX",
+  bodyId: "dialogueBody",
+  onBack: () => {
+    modal.close();
     document.querySelector("#hskGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  },
+});
 
-  overlay?.addEventListener("click", (e) => {
-    if (e.target === overlay) close();
-  });
+// ✅ modal system 已经接管 overlay + open/close
+const body = wrap.querySelector("#dialogueBody") || modal.body;
 
-  if (!document.body.dataset.dialogueEscBound) {
-    document.body.dataset.dialogueEscBound = "1";
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
+// 统一 open/close
+const open = () => modal.open();
+const close = () => modal.close();
 
   // events
   window.addEventListener("dialogue:open", (e) => {
