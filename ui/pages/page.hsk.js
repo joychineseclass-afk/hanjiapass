@@ -16,6 +16,7 @@ import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
 import { mountDialoguePanel } from "../components/dialoguePanel.js";
+import { mountDialogueModal, openDialogueModal } from "../components/dialogueModal.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
 let hskApi = null;
@@ -53,6 +54,7 @@ export async function mount() {
 
   // ✅ Initial render lessons (and keep vocab already rendered by initHSKUI)
   await refreshLessons();
+  bindDialogueTabOpen();
 }
 
 export async function unmount() {
@@ -83,6 +85,8 @@ function mountGlobalComponents() {
   ensurePortalRoot();
   mountAIPanel();
   mountLearnPanel();
+  // ✅ 新增：dialogue modal
+  mountDialogueModal();
 }
 
 function ensurePortalRoot() {
@@ -247,7 +251,8 @@ async function openLesson(lesson, { lv, version }) {
       if (!r.ok) throw new Error(`HTTP ${r.status} - ${lessonUrl}`);
       return r.json();
     });
-
+    window.__HSK_CURRENT_LESSON = { lv, version, lesson, lessonData };
+    
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
     const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
     const set = new Set(words);
@@ -358,4 +363,44 @@ function renderLevelOptions() {
     const level = i + 1;
     return `<option value="${level}" ${level === 1 ? "selected" : ""}>HSK ${level}급</option>`;
   }).join("");
+}
+function bindDialogueTabOpen() {
+  // 只绑定一次
+  if (document.body.dataset.__bindDiaTab) return;
+  document.body.dataset.__bindDiaTab = "1";
+
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
+
+    // 1) 优先：你以后可以给会话按钮加 data-tab="dialogue" 或 data-key="dialogue"
+    const tab = t.getAttribute("data-tab") || t.getAttribute("data-key");
+
+    // 2) 兼容：按钮文字是 "회화" 或 "会话"
+    const txt = (t.textContent || "").trim();
+
+    const isDialogue =
+      tab === "dialogue" ||
+      txt === "회화" ||
+      txt === "会话";
+
+    if (!isDialogue) return;
+
+    // 必须有当前课数据
+    const cur = window.__HSK_CURRENT_LESSON;
+    const lessonData = cur?.lessonData;
+
+    const dialogue =
+      lessonData?.dialogue ||
+      lessonData?.conversation ||
+      lessonData?.content ||
+      [];
+
+    openDialogueModal({
+      title: lessonData?.title || cur?.lesson?.title || "회화 학습",
+      subtitle: `HSK ${cur?.lv || ""} · ${cur?.version || ""}`,
+      dialogue,
+      lang: "ko",
+    });
+  });
 }
