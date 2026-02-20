@@ -16,6 +16,7 @@ import { mountNavBar } from "../components/navBar.js";
 import { mountAIPanel } from "../components/aiPanel.js";
 import { mountLearnPanel } from "../components/learnPanel.js";
 import { mountDialoguePanel } from "../components/dialoguePanel.js";
+import { modalTpl, createModalSystem } from "../components/modalBase.js";
 import { mountDialogueModal, openDialogueModal } from "../components/dialogueModal.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
@@ -54,7 +55,7 @@ export async function mount() {
 
   // ✅ Initial render lessons (and keep vocab already rendered by initHSKUI)
   await refreshLessons();
-  bindDialogueTabOpen();
+  enableHSKModalMode(); // ✅ 单词/会话/语法/练习/AI 全部改为弹窗模式
 }
 
 export async function unmount() {
@@ -403,4 +404,424 @@ function bindDialogueTabOpen() {
       lang: "ko",
     });
   });
+}
+/* =========================================================
+   ✅ HSK Modal Mode: tabs open modals only, page content hidden
+   - Covers: 단어/회화/문법/연습/AI
+   - Only edit hsk.js once
+========================================================= */
+function enableHSKModalMode() {
+  // bind once
+  if (document.body.dataset.__hskModalMode === "1") return;
+  document.body.dataset.__hskModalMode = "1";
+
+  // 1) Inject CSS to hide the inline lesson/tab content area (best-effort selectors)
+  ensureHSKModalModeCSS();
+
+  // 2) Build 3 generic modals for: grammar / practice / ai
+  const MODALS = ensureHSKGenericModals();
+
+  // 3) Delegate click on tab buttons
+  document.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+
+      // Find a likely tab button (you have buttons with "단어/회화/문법/연습/AI")
+      const btn = t.closest("button, a, [role='tab']");
+      if (!btn) return;
+
+      const label = (btn.textContent || "").trim();
+      const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+
+      const tab = normalizeTabKey(key, label);
+      if (!tab) return;
+
+      // ✅ Stop page switching / inline rendering
+      e.preventDefault();
+      e.stopPropagation();
+
+      // ✅ Hide/clear the inline content area immediately
+      suppressInlineLessonArea();
+
+      // ✅ Need current lesson data
+      const cur = window.__HSK_CURRENT_LESSON;
+      const lessonData = cur?.lessonData || {};
+      const lv = cur?.lv || "";
+      const version = cur?.version || "";
+
+      // For title/subtitle
+      const titleBase = pickTextAny(lessonData?.title) || "학습";
+      const subtitle = `HSK ${lv} · ${version}`;
+
+      // 4) Route to correct modal
+      if (tab === "dialogue") {
+        // Use your existing dialogue panel (dialoguePanel.js)
+        // Make sure it's mounted somewhere (you already do mountDialoguePanel in mount()).
+        const dialogue =
+          lessonData?.dialogue ||
+          lessonData?.conversation ||
+          lessonData?.content ||
+          [];
+
+        // Open dialogue modal (window.DIALOGUE_PANEL)
+        if (window.DIALOGUE_PANEL?.open) {
+          window.DIALOGUE_PANEL.open({
+            title: `${titleBase} · 회화`,
+            subtitle,
+            dialogue,
+            lang: "ko",
+          });
+        } else {
+          // fallback: show generic
+          MODALS.generic.open({
+            title: `${titleBase} · 회화`,
+            subtitle,
+            html: `<div class="p-4 text-sm text-gray-500">DIALOGUE_PANEL not mounted.</div>`,
+          });
+        }
+        return;
+      }
+
+      if (tab === "grammar") {
+        const grammar =
+          lessonData?.grammar ||
+          lessonData?.grammars ||
+          lessonData?.patterns ||
+          lessonData?.points ||
+          lessonData?.grammarPoints ||
+          [];
+
+        MODALS.grammar.open({
+          title: `${titleBase} · 문법`,
+          subtitle,
+          data: grammar,
+        });
+        return;
+      }
+
+      if (tab === "practice") {
+        const practice =
+          lessonData?.practice ||
+          lessonData?.exercises ||
+          lessonData?.drills ||
+          lessonData?.questions ||
+          [];
+
+        MODALS.practice.open({
+          title: `${titleBase} · 연습`,
+          subtitle,
+          data: practice,
+        });
+        return;
+      }
+
+      if (tab === "ai") {
+        // You may already have AI panel. We show a modal wrapper here.
+        MODALS.ai.open({
+          title: `${titleBase} · AI`,
+          subtitle,
+          lessonData,
+        });
+        return;
+      }
+
+      if (tab === "words") {
+        // “단어” tab: in your current UI, words are already the grid.
+        // We can optionally scroll to grid + show a small modal summary.
+        document.querySelector("#hskGrid")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+        MODALS.generic.open({
+          title: `${titleBase} · 단어`,
+          subtitle,
+          html: `
+            <div class="p-4">
+              <div class="text-sm text-gray-600">단어는 아래 카드 그리드에서 학습해요.</div>
+              <div class="text-xs text-gray-400 mt-2">(카드 클릭 → 배우기/AI 등)</div>
+            </div>
+          `,
+        });
+        return;
+      }
+    },
+    true // capture = true, so we intercept before other handlers
+  );
+}
+
+/* -----------------------------
+   CSS: hide inline lesson content
+------------------------------ */
+function ensureHSKModalModeCSS() {
+  const id = "__hsk_modal_mode_css__";
+  if (document.getElementById(id)) return;
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = `
+    /* Best-effort: hide common inline lesson/content containers */
+    #lessonContent, #hskLessonContent, #hskContent, #tabContent,
+    .lesson-content, .hsk-lesson-content, .tab-content, .hsk-tab-content,
+    #dialogueContent, #grammarContent, #practiceContent, #aiContent {
+      display: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/* -----------------------------
+   Generic Modals (grammar/practice/ai)
+------------------------------ */
+function ensureHSKGenericModals() {
+  // mount once
+  if (window.__HSK_GENERIC_MODALS) return window.__HSK_GENERIC_MODALS;
+
+  // portal root
+  let portal = document.getElementById("portal-root");
+  if (!portal) {
+    portal = document.createElement("div");
+    portal.id = "portal-root";
+    document.body.appendChild(portal);
+  }
+
+  // root
+  const root = document.createElement("div");
+  root.id = "hsk-generic-modals-root";
+  root.innerHTML = `
+    ${modalTpl({ id:"hsk-generic-modal", titleId:"hskGenTitle", backId:"hskGenBack", closeId:"hskGenClose", bodyId:"hskGenBody", titleText:"", maxWidth: 860 })}
+    ${modalTpl({ id:"hsk-grammar-modal", titleId:"hskGrammarTitle", backId:"hskGrammarBack", closeId:"hskGrammarClose", bodyId:"hskGrammarBody", titleText:"문법", maxWidth: 860 })}
+    ${modalTpl({ id:"hsk-practice-modal", titleId:"hskPracticeTitle", backId:"hskPracticeBack", closeId:"hskPracticeClose", bodyId:"hskPracticeBody", titleText:"연습", maxWidth: 860 })}
+    ${modalTpl({ id:"hsk-ai-modal", titleId:"hskAiTitle", backId:"hskAiBack", closeId:"hskAiClose", bodyId:"hskAiBody", titleText:"AI", maxWidth: 860 })}
+  `;
+  portal.appendChild(root);
+
+  const generic = createModalSystem(root, {
+    id: "hsk-generic-modal",
+    titleId: "hskGenTitle",
+    backId: "hskGenBack",
+    closeId: "hskGenClose",
+    bodyId: "hskGenBody",
+    lockScroll: true,
+    escClose: true,
+  });
+
+  const grammar = createModalSystem(root, {
+    id: "hsk-grammar-modal",
+    titleId: "hskGrammarTitle",
+    backId: "hskGrammarBack",
+    closeId: "hskGrammarClose",
+    bodyId: "hskGrammarBody",
+    lockScroll: true,
+    escClose: true,
+  });
+
+  const practice = createModalSystem(root, {
+    id: "hsk-practice-modal",
+    titleId: "hskPracticeTitle",
+    backId: "hskPracticeBack",
+    closeId: "hskPracticeClose",
+    bodyId: "hskPracticeBody",
+    lockScroll: true,
+    escClose: true,
+  });
+
+  const ai = createModalSystem(root, {
+    id: "hsk-ai-modal",
+    titleId: "hskAiTitle",
+    backId: "hskAiBack",
+    closeId: "hskAiClose",
+    bodyId: "hskAiBody",
+    lockScroll: true,
+    escClose: true,
+  });
+
+  // stronger overlay style
+  ensureGenericModalCSS();
+
+  window.__HSK_GENERIC_MODALS = {
+    generic: {
+      open: ({ title, subtitle, html }) => {
+        generic.setTitle(title || "");
+        generic.body.innerHTML = `
+          <div class="p-4">
+            ${subtitle ? `<div class="text-sm text-gray-500 mb-3">${escapeHTML(subtitle)}</div>` : ""}
+            ${html || ""}
+          </div>
+        `;
+        generic.open();
+      },
+      close: () => generic.close(),
+    },
+    grammar: {
+      open: ({ title, subtitle, data }) => {
+        grammar.setTitle(title || "문법");
+        grammar.body.innerHTML = renderListBlock(subtitle, data, "문법 데이터가 없어요.");
+        grammar.open();
+      },
+      close: () => grammar.close(),
+    },
+    practice: {
+      open: ({ title, subtitle, data }) => {
+        practice.setTitle(title || "연습");
+        practice.body.innerHTML = renderListBlock(subtitle, data, "연습 데이터가 없어요.");
+        practice.open();
+      },
+      close: () => practice.close(),
+    },
+    ai: {
+      open: ({ title, subtitle, lessonData }) => {
+        ai.setTitle(title || "AI");
+        ai.body.innerHTML = `
+          <div class="p-4">
+            ${subtitle ? `<div class="text-sm text-gray-500 mb-3">${escapeHTML(subtitle)}</div>` : ""}
+            <div class="rounded-2xl border p-4">
+              <div class="font-extrabold mb-2">AI 선생님</div>
+              <div class="text-sm text-gray-600">
+                이 레슨 내용으로 질문해보세요.
+              </div>
+              <div class="text-xs text-gray-400 mt-2">
+                (다음 단계: 여기서 바로 AI 패널/채팅 UI를 붙이면 완성!)
+              </div>
+            </div>
+          </div>
+        `;
+        ai.open();
+      },
+      close: () => ai.close(),
+    },
+  };
+
+  return window.__HSK_GENERIC_MODALS;
+}
+
+function ensureGenericModalCSS() {
+  const id = "__hsk_generic_modal_css__";
+  if (document.getElementById(id)) return;
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = `
+    #hsk-generic-modal, #hsk-grammar-modal, #hsk-practice-modal, #hsk-ai-modal{
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 99999 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 24px !important;
+      background: rgba(0,0,0,0.62) !important;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    #hsk-generic-modal.joy-modal-hidden,
+    #hsk-grammar-modal.joy-modal-hidden,
+    #hsk-practice-modal.joy-modal-hidden,
+    #hsk-ai-modal.joy-modal-hidden{
+      display: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/* -----------------------------
+   Hide inline content area (runtime)
+   - best effort without knowing exact DOM
+------------------------------ */
+function suppressInlineLessonArea() {
+  // 1) If you have a known container, hide it
+  const known =
+    document.getElementById("lessonContent") ||
+    document.getElementById("hskLessonContent") ||
+    document.getElementById("hskContent") ||
+    document.querySelector(".lesson-content") ||
+    document.querySelector(".hsk-lesson-content") ||
+    null;
+
+  if (known) {
+    known.style.display = "none";
+    return;
+  }
+
+  // 2) Otherwise, hide the block under the tab bar (best effort)
+  const tabBar = findHSKTabBar();
+  if (tabBar) {
+    // typically content is the next block after tab bar
+    const content = findNextBlock(tabBar);
+    if (content) content.style.display = "none";
+  }
+}
+
+function findHSKTabBar() {
+  // find a container that contains all five labels
+  const labels = ["단어", "회화", "문법", "연습", "AI"];
+  const candidates = Array.from(document.querySelectorAll("div, nav, section"));
+  for (const el of candidates) {
+    const txt = (el.textContent || "").trim();
+    if (!txt) continue;
+    if (labels.every((x) => txt.includes(x))) return el;
+  }
+  return null;
+}
+
+function findNextBlock(el) {
+  let cur = el;
+  for (let i = 0; i < 5 && cur; i++) {
+    const next = cur.nextElementSibling;
+    if (next && next.getBoundingClientRect && next.getBoundingClientRect().height > 40) return next;
+    cur = cur.parentElement;
+  }
+  return null;
+}
+
+/* -----------------------------
+   tab key normalize
+------------------------------ */
+function normalizeTabKey(key, label) {
+  const k = String(key || "").toLowerCase();
+  const L = String(label || "").trim();
+
+  if (k === "words" || L === "단어" || L === "词" || L === "单词") return "words";
+  if (k === "dialogue" || L === "회화" || L === "会话" || L === "對話" || L === "对话") return "dialogue";
+  if (k === "grammar" || L === "문법" || L === "语法") return "grammar";
+  if (k === "practice" || L === "연습" || L === "练习") return "practice";
+  if (k === "ai" || L === "AI" || L.toLowerCase() === "ai") return "ai";
+
+  return "";
+}
+
+/* -----------------------------
+   simple render helpers
+------------------------------ */
+function renderListBlock(subtitle, data, emptyText) {
+  const list = Array.isArray(data) ? data : (data ? [data] : []);
+  const items = list
+    .map((x) => {
+      if (typeof x === "string") return `<li class="py-2 border-b last:border-b-0">${escapeHTML(x)}</li>`;
+      if (typeof x === "object") return `<li class="py-2 border-b last:border-b-0"><pre class="text-xs whitespace-pre-wrap">${escapeHTML(JSON.stringify(x, null, 2))}</pre></li>`;
+      return "";
+    })
+    .filter(Boolean)
+    .join("");
+
+  return `
+    <div class="p-4">
+      ${subtitle ? `<div class="text-sm text-gray-500 mb-3">${escapeHTML(subtitle)}</div>` : ""}
+      ${
+        items
+          ? `<ul class="rounded-2xl border px-4">${items}</ul>`
+          : `<div class="rounded-2xl border p-6 text-sm text-gray-500">${escapeHTML(emptyText)}</div>`
+      }
+    </div>
+  `;
+}
+
+function escapeHTML(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function pickTextAny(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v.trim();
+  if (typeof v === "object") return v.ko || v.kr || v.zh || v.cn || v.en || "";
+  return String(v);
 }
