@@ -231,36 +231,3 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
     setErrorUI(appEl, "페이지 로드 실패", e?.message || String(e));
   }
 }
-// -----------------------------
-// hash router bindings (safe)
-// -----------------------------
-function getAppEl() {
-  return (
-    document.getElementById("app") ||
-    document.querySelector("#app") ||
-    document.querySelector("main") ||
-    document.body
-  );
-}
-
-function safeRoute() {
-  try {
-    const appEl = getAppEl();
-
-    // 兼容两种签名：handleRouteChange({appEl}) 或 handleRouteChange(appEl)
-    if (typeof handleRouteChange === "function") {
-      // 如果你的 handleRouteChange 期望对象参数
-      return handleRouteChange({ appEl, scrollTop: true });
-      // 如果你确认它只要 appEl，把上面改成：
-      // return handleRouteChange(appEl);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-window.addEventListener("hashchange", safeRoute);
-window.addEventListener("popstate", safeRoute);
-
-// first load
-safeRoute();
