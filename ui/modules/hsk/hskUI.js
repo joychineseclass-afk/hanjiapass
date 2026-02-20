@@ -434,7 +434,25 @@ export function initHSKUI(opts = {}) {
 
     // Tab contents
     if (lessonTab === "vocab") return renderLessonTabVocab(wrap);
-    if (lessonTab === "dialogue") return renderLessonTabDialogue(wrap);
+    if (lessonTab === "dialogue") {
+  // ✅ 优先：弹窗会话学习卡
+  const dialogue = currentLessonDetail?.dialogue || currentLessonDetail?.conversation || [];
+  const title = currentLessonDetail?.title || currentLesson?.title || "회화 학습";
+  const subtitle = currentLessonDetail?.subtitle || "";
+
+  if (window.DIALOGUE_PANEL?.open) {
+    window.DIALOGUE_PANEL.open({
+      title,
+      subtitle,
+      dialogue,
+      lang: LANG
+    });
+    return; // ✅ 不再在页面里渲染
+  }
+
+  // fallback：如果弹窗没挂载，继续旧方式渲染
+  return renderLessonTabDialogue(wrap);
+}
     if (lessonTab === "grammar") return renderLessonTabGrammar(wrap);
     if (lessonTab === "practice") return renderLessonTabPractice(wrap);
     if (lessonTab === "ai") return renderLessonTabAI(wrap);
