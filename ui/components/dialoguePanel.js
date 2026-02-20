@@ -1,10 +1,10 @@
-import { modalTpl, createModalSystem } from "./modalBase.js";
 // /ui/components/dialoguePanel.js
-// ✅ Dialogue Panel (stable, extensible, ESM-compatible)
+// ✅ Dialogue Panel (Stable, ESM, modalBase compatible)
 // - mount once
 // - window.DIALOGUE_PANEL.open({ title, subtitle, dialogue, lang })
-// - dialogue can be: array of strings OR array of { zh/cn, ko/kr, pinyin, speaker, audio }
-// - has per-line speak button + speak all
+// - listens event: window.dispatchEvent(new CustomEvent("dialogue:open",{detail:{...}}))
+
+import { modalTpl, createModalSystem } from "./modalBase.js";
 
 let mounted = false;
 
@@ -14,62 +14,64 @@ export function mountDialoguePanel(opts = {}) {
 
   const { container = document.body } = opts;
 
+  // remove old root (hot reload safe)
   const existed = document.getElementById("dialogue-panel-root");
   if (existed) existed.remove();
 
+  // mount root + template
   const wrap = document.createElement("div");
   wrap.id = "dialogue-panel-root";
   wrap.innerHTML = tpl();
   container.appendChild(wrap);
 
-  const overlay = wrap.querySelector("#dialogue-panel");
-  const backBtn = wrap.querySelector("#dialogueBack");
-  const closeBtn = wrap.querySelector("#dialogueCloseX");
-  const body = wrap.querySelector("#dialogueBody");
-
-  const open = () => overlay?.classList.remove("hidden");
-  const close = () => overlay?.classList.add("hidden");
-
-  closeBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
+  // create modal system (handles open/close/backdrop/esc)
+  const modal = createModalSystem(wrap, {
+    id: "dialogue-panel",
+    titleId: "dialogueTitle",
+    backId: "dialogueBack",
+    closeId: "dialogueCloseX",
+    bodyId: "dialogueBody",
+    onBack: () => {
+      modal.close();
+      // optional: scroll back to lesson area
+      document.querySelector("#hskGrid")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+    },
+    onClose: () => {
+      // hook if you want
+    },
+    lockScroll: true,
+    escClose: true,
   });
 
-  backBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    close();
-    document.querySelector("#hskGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  // Ensure initial hidden state uses modalBase class
+  // (modalTpl already uses joy-modal-hidden, but keep safe)
+  modal.overlay?.classList.add("joy-modal-hidden");
 
-  overlay?.addEventListener("click", (e) => {
-    if (e.target === overlay) close();
-  });
-
-  if (!document.body.dataset.dialogueEscBound) {
-    document.body.dataset.dialogueEscBound = "1";
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
-
-  // events
-  window.addEventListener("dialogue:open", (e) => {
+  // event bindings
+  const onOpen = (e) => {
     const data = e?.detail || {};
-    render(body, data);
-    open();
-  });
-  window.addEventListener("dialogue:close", close);
+    render(modal.body, data);
+    modal.setTitle(pickText(data?.title, getLang(data?.lang)) || "회화 학습");
+    modal.open();
+  };
+  const onClose = () => modal.close();
+
+  window.addEventListener("dialogue:open", onOpen);
+  window.addEventListener("dialogue:close", onClose);
 
   window.DIALOGUE_PANEL = {
     open: (data) => {
-      render(body, data);
-      open();
+      render(modal.body, data || {});
+      modal.setTitle(pickText(data?.title, getLang(data?.lang)) || "회화 학습");
+      modal.open();
     },
-    close,
-    set: (data) => render(body, data),
+    close: () => modal.close(),
+    set: (data) => render(modal.body, data || {}),
     isMounted: true,
+    __unbind: () => {
+      window.removeEventListener("dialogue:open", onOpen);
+      window.removeEventListener("dialogue:close", onClose);
+    },
   };
 
   return window.DIALOGUE_PANEL;
@@ -89,9 +91,14 @@ function tpl() {
     maxWidth: 720,
   });
 }
+
 /* ===============================
    Helpers
 ================================== */
+function getLang(lang) {
+  return String(lang || window.APP_LANG || window.site_lang || "ko").toLowerCase();
+}
+
 function esc(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -168,16 +175,18 @@ function normalizeDialogueItem(item) {
 function render(root, raw = {}) {
   if (!root) return;
 
-  const lang = window.APP_LANG || window.site_lang || "ko";
+  const lang = getLang(raw?.lang);
   const title = pickText(raw.title, lang) || "회화 학습";
   const subtitle = pickText(raw.subtitle, lang);
 
-  const list = Array.isArray(raw.dialogue) ? raw.dialogue : [];
-  const dia = list.map(normalizeDialogueItem).filter((x) => x.zh || x.ko);
+  // accept dialogue under multiple keys (防止你数据字段不同)
+  const list =
+    (Array.isArray(raw.dialogue) && raw.dialogue) ||
+    (Array.isArray(raw.conversation) && raw.conversation) ||
+    (Array.isArray(raw.content) && raw.content) ||
+    [];
 
-  // update title
-  const titleEl = document.getElementById("dialogueTitle");
-  if (titleEl) titleEl.textContent = title;
+  const dia = list.map(normalizeDialogueItem).filter((x) => x.zh || x.ko);
 
   root.innerHTML = `
     <div class="rounded-2xl border p-4">
@@ -198,30 +207,32 @@ function render(root, raw = {}) {
     <div class="space-y-3">
       ${
         dia.length
-          ? dia.map((d, idx) => {
-              const zh = pickText(d.zh, "zh");
-              const ko = pickText(d.ko, "ko");
-              const py = pickText(d.pinyin, lang);
-              const sp = pickText(d.speaker, lang);
-              return `
-                <div class="rounded-2xl border p-4">
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="min-w-0">
-                      ${sp ? `<div class="text-xs text-gray-500 mb-1">${esc(sp)}</div>` : ""}
-                      <div class="text-lg font-bold">${esc(zh)}</div>
-                      ${py ? `<div class="text-blue-600 mt-1">${esc(py)}</div>` : ""}
-                      ${ko ? `<div class="text-gray-600 mt-2">${esc(ko)}</div>` : ""}
-                    </div>
-                    <div class="flex flex-col gap-2">
-                      <button type="button" data-speak-idx="${idx}"
-                        class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
-                        🔊
-                      </button>
+          ? dia
+              .map((d, idx) => {
+                const zh = pickText(d.zh, "zh");
+                const ko = pickText(d.ko, "ko");
+                const py = pickText(d.pinyin, lang);
+                const sp = pickText(d.speaker, lang);
+                return `
+                  <div class="rounded-2xl border p-4">
+                    <div class="flex items-start justify-between gap-3">
+                      <div class="min-w-0">
+                        ${sp ? `<div class="text-xs text-gray-500 mb-1">${esc(sp)}</div>` : ""}
+                        <div class="text-lg font-bold">${esc(zh)}</div>
+                        ${py ? `<div class="text-blue-600 mt-1">${esc(py)}</div>` : ""}
+                        ${ko ? `<div class="text-gray-600 mt-2">${esc(ko)}</div>` : ""}
+                      </div>
+                      <div class="flex flex-col gap-2">
+                        <button type="button" data-speak-idx="${idx}"
+                          class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
+                          🔊
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              `;
-            }).join("")
+                `;
+              })
+              .join("")
           : `<div class="rounded-2xl border p-6 text-sm text-gray-500">회화 데이터가 없어요.</div>`
       }
     </div>
@@ -234,7 +245,7 @@ function render(root, raw = {}) {
     </div>
   `;
 
-  // per line speak
+  // per-line speak
   root.querySelectorAll("[data-speak-idx]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const idx = Number(btn.getAttribute("data-speak-idx"));
@@ -245,12 +256,10 @@ function render(root, raw = {}) {
 
   // speak all
   root.querySelector("#btnDiaSpeakAll")?.addEventListener("click", async () => {
-    // simple sequential speaking (best effort)
     for (const d of dia) {
       const zh = pickText(d.zh, "zh");
       if (!zh) continue;
       speakText(zh, "zh-CN");
-      // naive delay, avoids overlapping a bit
       await new Promise((r) => setTimeout(r, Math.min(1400 + zh.length * 120, 4000)));
     }
   });
