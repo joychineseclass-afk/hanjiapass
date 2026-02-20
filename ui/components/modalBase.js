@@ -1,68 +1,12 @@
 // /ui/components/modalBase.js
-// ✅ Modal Base (no-tailwind required)
-
-let __modalStyleInjected = false;
-
-function injectModalCSS() {
-  if (__modalStyleInjected) return;
-  __modalStyleInjected = true;
-
-  const css = `
-  .joy-modal-overlay{
-    position: fixed; inset: 0;
-    z-index: 9999;
-    display: none;
-    align-items: center; justify-content: center;
-    background: rgba(0,0,0,.5);
-    padding: 16px;
-  }
-  .joy-modal-overlay.is-open{ display:flex; }
-
-  .joy-modal-card{
-    width: 100%;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
-    overflow: hidden;
-  }
-  .joy-modal-top{
-    position: sticky; top:0;
-    background:#fff;
-    border-bottom:1px solid #eee;
-  }
-  .joy-modal-topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 12px 16px;
-    gap: 12px;
-  }
-  .joy-modal-btn{
-    padding: 8px 12px;
-    border-radius: 12px;
-    background: #f1f5f9;
-    font-weight: 700;
-    border: 0;
-    cursor: pointer;
-  }
-  .joy-modal-x{
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    background: #f1f5f9;
-    font-size: 18px;
-    font-weight: 800;
-    border: 0;
-    cursor: pointer;
-  }
-  .joy-modal-body{
-    padding: 16px;
-    max-height: 78vh;
-    overflow: auto;
-  }
-  `;
-  const style = document.createElement("style");
-  style.setAttribute("data-joy-modal", "1");
-  style.textContent = css;
-  document.head.appendChild(style);
-}
+// ✅ Modal Base (single-style system)
+// - consistent overlay + modal layout
+// - mount once
+// - open/close helpers
+// - Esc close (bind once per modal id)
+// - click backdrop to close
+// - optional: lock body scroll while modal open
+// - ESM-friendly
 
 export function modalTpl({
   id,
@@ -73,26 +17,43 @@ export function modalTpl({
   titleText = "",
   maxWidth = 560,
 }) {
-  // 这里不注入，等 createModalSystem 时注入（确保 head 已存在）
   return `
-    <div id="${id}" class="joy-modal-overlay" aria-label="${id}">
-      <div class="joy-modal-card" style="max-width:${Number(maxWidth) || 560}px">
-        <div class="joy-modal-top">
-          <div class="joy-modal-topbar">
-            <button id="${backId}" type="button" class="joy-modal-btn">← 뒤로</button>
-            <div id="${titleId}" style="font-weight:800">${titleText}</div>
-            <button id="${closeId}" type="button" class="joy-modal-x">×</button>
+    <div id="${id}"
+      class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4"
+      aria-label="${id}"
+    >
+      <div class="w-full max-w-[${maxWidth}px] rounded-2xl bg-white shadow-2xl overflow-hidden relative">
+        <!-- topbar -->
+        <div class="sticky top-0 z-10 bg-white border-b">
+          <div class="flex items-center justify-between px-4 py-3">
+            <button id="${backId}" type="button"
+              class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
+              ← 뒤로
+            </button>
+
+            <div class="font-extrabold" id="${titleId}">${titleText}</div>
+
+            <button id="${closeId}" type="button"
+              class="w-10 h-10 rounded-xl bg-slate-100 text-lg leading-none font-bold">
+              ×
+            </button>
           </div>
         </div>
-        <div id="${bodyId}" class="joy-modal-body"></div>
+
+        <!-- body -->
+        <div id="${bodyId}" class="p-4 space-y-4 max-h-[78vh] overflow-auto"></div>
       </div>
     </div>
   `;
 }
 
+/**
+ * createModalSystem
+ * - takes rootWrap (the wrapper you inserted into DOM)
+ * - wires open/close/backdrop/esc
+ * - returns { overlay, body, titleEl, open(), close(), setTitle(), setBodyHTML() }
+ */
 export function createModalSystem(rootWrap, cfg) {
-  injectModalCSS();
-
   const {
     id,
     titleId,
@@ -111,43 +72,52 @@ export function createModalSystem(rootWrap, cfg) {
   const body = rootWrap.querySelector(`#${bodyId}`);
   const titleEl = rootWrap.querySelector(`#${titleId}`);
 
+  if (!overlay || !body) {
+    console.warn("[modalBase] overlay/body not found:", id);
+  }
+
   const open = () => {
-    overlay?.classList.add("is-open");
+    overlay?.classList.remove("hidden");
     if (lockScroll) lockBodyScroll(true);
   };
 
   const close = () => {
-    overlay?.classList.remove("is-open");
+    overlay?.classList.add("hidden");
     if (lockScroll) lockBodyScroll(false);
     onClose?.();
   };
 
+  // close button
   closeBtn?.addEventListener("click", (e) => {
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     close();
   });
 
+  // back button (default = close)
   backBtn?.addEventListener("click", (e) => {
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     if (typeof onBack === "function") onBack();
     else close();
   });
 
+  // click backdrop to close
   overlay?.addEventListener("click", (e) => {
     if (e.target === overlay) close();
   });
 
-  if (escClose) {
-    // ✅ dataset key 不能有 "-"，用 safeKey
-    const safeKey = String(id).replace(/[^a-zA-Z0-9_]/g, "_");
-    const key = `escBound_${safeKey}`;
-    if (!document.body.dataset[key]) {
-      document.body.dataset[key] = "1";
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
-      });
-    }
+  // Esc close (bind once per modal id) ✅ safe for ids with hyphen
+if (escClose) {
+  const attr = `data-esc-bound-${id}`; // id can contain "-"
+  if (!document.body.hasAttribute(attr)) {
+    document.body.setAttribute(attr, "1");
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
   }
+}
+  
 
   return {
     overlay,
@@ -155,8 +125,12 @@ export function createModalSystem(rootWrap, cfg) {
     titleEl,
     open,
     close,
-    setTitle: (t) => { if (titleEl) titleEl.textContent = String(t ?? ""); },
-    setBodyHTML: (html) => { if (body) body.innerHTML = html || ""; },
+    setTitle: (t) => {
+      if (titleEl) titleEl.textContent = String(t ?? "");
+    },
+    setBodyHTML: (html) => {
+      if (body) body.innerHTML = html || "";
+    },
   };
 }
 
