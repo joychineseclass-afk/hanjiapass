@@ -25,7 +25,7 @@ export async function mount() {
   const ok = mountLayout();
   if (!ok) return;
 
-  mountGlobalComponents();
+  mountDialoguePanel({ container: document.body });
   applyI18nIfAvailable();
 
   // ✅ ensure globals exist (loader/renderer/history)
