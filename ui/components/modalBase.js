@@ -1,86 +1,128 @@
 // /ui/components/modalBase.js
-// ✅ Modal Base (no-tailwind required)
+// ✅ Modal Base (single-style system, no Tailwind dependency)
+// - injects minimal CSS once (center + overlay + z-index)
+// - provides modalTpl() + createModalSystem()
+// - safe Esc binding per modal id
 
-let __modalStyleInjected = false;
+const STYLE_ID = "__joy_modal_base_style__";
 
-function injectModalCSS() {
-  if (__modalStyleInjected) return;
-  __modalStyleInjected = true;
+function ensureModalCss() {
+  if (document.getElementById(STYLE_ID)) return;
 
   const css = `
-  .joy-modal-overlay{
-    position: fixed; inset: 0;
-    z-index: 9999;
-    display: none;
-    align-items: center; justify-content: center;
-    background: rgba(0,0,0,.5);
-    padding: 16px;
-  }
-  .joy-modal-overlay.is-open{ display:flex; }
+    /* ===== Joy Modal Base (no tailwind required) ===== */
+    .joy-modal-hidden { display: none !important; }
 
-  .joy-modal-card{
-    width: 100%;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
-    overflow: hidden;
-  }
-  .joy-modal-top{
-    position: sticky; top:0;
-    background:#fff;
-    border-bottom:1px solid #eee;
-  }
-  .joy-modal-topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 12px 16px;
-    gap: 12px;
-  }
-  .joy-modal-btn{
-    padding: 8px 12px;
-    border-radius: 12px;
-    background: #f1f5f9;
-    font-weight: 700;
-    border: 0;
-    cursor: pointer;
-  }
-  .joy-modal-x{
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    background: #f1f5f9;
-    font-size: 18px;
-    font-weight: 800;
-    border: 0;
-    cursor: pointer;
-  }
-  .joy-modal-body{
-    padding: 16px;
-    max-height: 78vh;
-    overflow: auto;
-  }
-  `;
+    .joy-modal-overlay{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.45);
+      padding: 16px;
+    }
+
+    .joy-modal-box{
+      width: 100%;
+      max-height: 78vh;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.28);
+      overflow: hidden;
+      position: relative;
+      max-width: 720px;
+    }
+
+    .joy-modal-topbar{
+      position: sticky;
+      top: 0;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      z-index: 2;
+    }
+
+    .joy-modal-topbar-inner{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+    }
+
+    .joy-modal-btn{
+      border: 0;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .joy-modal-btn:hover{ background: #e8eef6; }
+
+    .joy-modal-closeX{
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .joy-modal-title{
+      font-weight: 800;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 55vw;
+    }
+
+    .joy-modal-body{
+      padding: 14px;
+      overflow: auto;
+      max-height: 78vh;
+    }
+  `.trim();
+
   const style = document.createElement("style");
-  style.setAttribute("data-joy-modal", "1");
+  style.id = STYLE_ID;
   style.textContent = css;
   document.head.appendChild(style);
 }
 
-export function modalTpl({ id, titleId, backId, closeId, bodyId, titleText = "" }) {
+export function modalTpl({
+  id,
+  titleId,
+  backId,
+  closeId,
+  bodyId,
+  titleText = "",
+  maxWidth = 720,
+}) {
+  // ✅ ensure base CSS once
+  ensureModalCss();
+
   return `
-    <div id="${id}" class="jc-hidden jc-modal-overlay" aria-label="${id}">
-      <div class="jc-modal-box">
-        <div class="jc-modal-top">
-          <button id="${backId}" type="button" class="jc-btn">← 뒤로</button>
-          <div id="${titleId}" style="font-weight:800;">${titleText}</div>
-          <button id="${closeId}" type="button" class="jc-btn">×</button>
+    <div id="${id}" class="joy-modal-overlay joy-modal-hidden" aria-label="${id}">
+      <div class="joy-modal-box" style="max-width:${Number(maxWidth) || 720}px">
+        <div class="joy-modal-topbar">
+          <div class="joy-modal-topbar-inner">
+            <button id="${backId}" type="button" class="joy-modal-btn">← 뒤로</button>
+            <div class="joy-modal-title" id="${titleId}">${titleText}</div>
+            <button id="${closeId}" type="button" class="joy-modal-btn joy-modal-closeX">×</button>
+          </div>
         </div>
-        <div id="${bodyId}" class="jc-modal-body"></div>
+        <div id="${bodyId}" class="joy-modal-body"></div>
       </div>
     </div>
   `;
 }
 
 export function createModalSystem(rootWrap, cfg) {
-  ensureModalCSS();
+  ensureModalCss();
 
   const {
     id,
@@ -101,37 +143,39 @@ export function createModalSystem(rootWrap, cfg) {
   const titleEl = rootWrap.querySelector(`#${titleId}`);
 
   const open = () => {
-    overlay?.classList.add("is-open");
+    overlay?.classList.remove("joy-modal-hidden");
     if (lockScroll) lockBodyScroll(true);
   };
 
   const close = () => {
-    overlay?.classList.remove("is-open");
+    overlay?.classList.add("joy-modal-hidden");
     if (lockScroll) lockBodyScroll(false);
     onClose?.();
   };
 
   closeBtn?.addEventListener("click", (e) => {
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     close();
   });
 
   backBtn?.addEventListener("click", (e) => {
-    e.preventDefault(); e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
     if (typeof onBack === "function") onBack();
     else close();
   });
 
+  // click backdrop to close
   overlay?.addEventListener("click", (e) => {
     if (e.target === overlay) close();
   });
 
+  // Esc close (bind once per modal id)
   if (escClose) {
-    // ✅ dataset key 不能有 "-"，用 safeKey
-    const safeKey = String(id).replace(/[^a-zA-Z0-9_]/g, "_");
-    const key = `escBound_${safeKey}`;
-    if (!document.body.dataset[key]) {
-      document.body.dataset[key] = "1";
+    const attr = `data-esc-bound-${id}`;
+    if (!document.body.hasAttribute(attr)) {
+      document.body.setAttribute(attr, "1");
       window.addEventListener("keydown", (e) => {
         if (e.key === "Escape") close();
       });
@@ -144,8 +188,12 @@ export function createModalSystem(rootWrap, cfg) {
     titleEl,
     open,
     close,
-    setTitle: (t) => { if (titleEl) titleEl.textContent = String(t ?? ""); },
-    setBodyHTML: (html) => { if (body) body.innerHTML = html || ""; },
+    setTitle: (t) => {
+      if (titleEl) titleEl.textContent = String(t ?? "");
+    },
+    setBodyHTML: (html) => {
+      if (body) body.innerHTML = html || "";
+    },
   };
 }
 
@@ -175,51 +223,4 @@ function lockBodyScroll(locked) {
       }
     }
   } catch {}
-}
-function ensureModalCss() {
-  if (document.getElementById("jc-modal-css")) return;
-  const style = document.createElement("style");
-  style.id = "jc-modal-css";
-  style.textContent = `
-    /* ✅ Tailwind fallback for modal usage */
-    .hidden{display:none!important;}
-
-    /* common overlay look if you rely on fixed/inset styles */
-    .fixed{position:fixed;}
-    .inset-0{top:0;right:0;bottom:0;left:0;}
-    .bg-black\\/50{background:rgba(0,0,0,.5);}
-    .flex{display:flex;}
-    .items-center{align-items:center;}
-    .justify-center{justify-content:center;}
-    .p-4{padding:16px;}
-
-    /* better modal box defaults */
-    .shadow-2xl{box-shadow:0 20px 60px rgba(0,0,0,.25);}
-    .rounded-2xl{border-radius:16px;}
-    .overflow-hidden{overflow:hidden;}
-    .bg-white{background:#fff;}
-
-    /* body scrolling */
-    .max-h-\\[78vh\\]{max-height:78vh;}
-    .overflow-auto{overflow:auto;}
-
-    /* simple button styling if tailwind absent */
-    .bg-slate-100{background:#f1f5f9;}
-    .rounded-xl{border-radius:12px;}
-    .px-3{padding-left:12px;padding-right:12px;}
-    .py-2{padding-top:8px;padding-bottom:8px;}
-    .text-sm{font-size:14px;}
-    .font-bold{font-weight:700;}
-    .w-10{width:40px;}
-    .h-10{height:40px;}
-    .text-lg{font-size:18px;}
-    .leading-none{line-height:1;}
-    .border-b{border-bottom:1px solid #eee;}
-    .border{border:1px solid #eee;}
-    .sticky{position:sticky;}
-    .top-0{top:0;}
-    .z-10{z-index:10;}
-    .relative{position:relative;}
-  `;
-  document.head.appendChild(style);
 }
