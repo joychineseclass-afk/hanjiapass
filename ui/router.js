@@ -231,3 +231,16 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
     setErrorUI(appEl, "페이지 로드 실패", e?.message || String(e));
   }
 }
+// -----------------------------
+// hash router bindings (must be at file end)
+// -----------------------------
+window.addEventListener("hashchange", () => {
+  try { handleRouteChange(); } catch (e) { console.error(e); }
+});
+
+window.addEventListener("popstate", () => {
+  try { handleRouteChange(); } catch (e) { console.error(e); }
+});
+
+// first load
+try { handleRouteChange(); } catch (e) { console.error(e); }
