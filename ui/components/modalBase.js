@@ -107,16 +107,15 @@ export function createModalSystem(rootWrap, cfg) {
     if (e.target === overlay) close();
   });
 
-  // Esc close (bind once per modal id) 
-  ✅ safe for ids with hyphen
-  if (escClose) {
+  // Esc close (bind once per modal id) ✅ safe for ids with hyphen
+if (escClose) {
   const attr = `data-esc-bound-${id}`; // id can contain "-"
   if (!document.body.hasAttribute(attr)) {
     document.body.setAttribute(attr, "1");
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") close();
     });
-  } 
+  }
 }
   
 
