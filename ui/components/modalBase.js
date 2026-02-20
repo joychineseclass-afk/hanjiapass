@@ -64,27 +64,16 @@ function injectModalCSS() {
   document.head.appendChild(style);
 }
 
-export function modalTpl({
-  id,
-  titleId,
-  backId,
-  closeId,
-  bodyId,
-  titleText = "",
-  maxWidth = 560,
-}) {
-  // 这里不注入，等 createModalSystem 时注入（确保 head 已存在）
+export function modalTpl({ id, titleId, backId, closeId, bodyId, titleText = "" }) {
   return `
-    <div id="${id}" class="joy-modal-overlay" aria-label="${id}">
-      <div class="joy-modal-card" style="max-width:${Number(maxWidth) || 560}px">
-        <div class="joy-modal-top">
-          <div class="joy-modal-topbar">
-            <button id="${backId}" type="button" class="joy-modal-btn">← 뒤로</button>
-            <div id="${titleId}" style="font-weight:800">${titleText}</div>
-            <button id="${closeId}" type="button" class="joy-modal-x">×</button>
-          </div>
+    <div id="${id}" class="jc-hidden jc-modal-overlay" aria-label="${id}">
+      <div class="jc-modal-box">
+        <div class="jc-modal-top">
+          <button id="${backId}" type="button" class="jc-btn">← 뒤로</button>
+          <div id="${titleId}" style="font-weight:800;">${titleText}</div>
+          <button id="${closeId}" type="button" class="jc-btn">×</button>
         </div>
-        <div id="${bodyId}" class="joy-modal-body"></div>
+        <div id="${bodyId}" class="jc-modal-body"></div>
       </div>
     </div>
   `;
@@ -186,4 +175,39 @@ function lockBodyScroll(locked) {
       }
     }
   } catch {}
+}
+function ensureModalCss() {
+  if (document.getElementById("jc-modal-css")) return;
+  const style = document.createElement("style");
+  style.id = "jc-modal-css";
+  style.textContent = `
+    .jc-hidden{display:none!important;}
+    .jc-modal-overlay{
+      position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,.5);
+      display:flex; align-items:center; justify-content:center;
+      padding:16px;
+    }
+    .jc-modal-box{
+      width:100%; max-width:720px;
+      background:#fff; border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);
+    }
+    .jc-modal-top{
+      position:sticky; top:0;
+      background:#fff; border-bottom:1px solid #eee;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:8px; padding:12px 16px;
+    }
+    .jc-btn{
+      border:0; background:#f1f5f9; cursor:pointer;
+      padding:8px 12px; border-radius:12px;
+      font-weight:700;
+    }
+    .jc-modal-body{
+      padding:16px; max-height:78vh; overflow:auto;
+    }
+  `;
+  document.head.appendChild(style);
 }
