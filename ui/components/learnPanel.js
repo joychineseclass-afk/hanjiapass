@@ -1,3 +1,4 @@
+import { modalTpl, createModalSystem } from "./modalBase.js";
 // /ui/components/learnPanel.js
 // ✅完善不返工版（KO-first, stable, extensible, ESM-compatible）
 //
