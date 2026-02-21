@@ -216,10 +216,48 @@ export async function openWordsStep({ lessonId, state }) {
   if (canUseRenderer && Array.isArray(words) && words.length) {
     // 用一个容器让 renderer 渲染，然后塞进 modal
     const containerId = "joyWordsRendererRoot";
-    const title = `Words (${words.length})`;
-    const html = `<div id="${containerId}"></div>`;
+    const words = await loadWordsForLesson(lessonId);
 
-    openModal({ title, html });
+// ✅ 兼容各种字段名：cn/zh/word/hanzi...
+const pick = (w, keys) => {
+  for (const k of keys) {
+    const v = w?.[k];
+    if (v !== undefined && v !== null && String(v).trim() !== "") return String(v);
+  }
+  return "";
+};
+
+const rows = (words || []).map((w, i) => {
+  const han = pick(w, ["hanzi","word","zh","cn","ch","text","simplified"]);
+  const pinyin = pick(w, ["pinyin","py"]);
+  const kr = pick(w, ["kr","ko","korean","meaning_kr","def_kr"]);
+  const en = pick(w, ["en","eng","english","meaning_en","def_en"]);
+  const meaning = kr || en || "";
+
+  return `
+    <div class="joy-word-row" data-idx="${i}" style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.08);">
+      <div style="min-width:64px;font-size:20px;font-weight:700;">${han || "(?)"}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;opacity:.75;">${pinyin}</div>
+        <div style="font-size:14px;">${meaning}</div>
+      </div>
+      <div style="font-size:12px;opacity:.6;">#${i+1}</div>
+    </div>
+  `;
+}).join("");
+
+const html = `
+  <div style="padding:14px;">
+    <div style="font-size:12px;opacity:.7;margin-bottom:10px;">点击单词（下一步我们接：详情卡 / 发音 / 笔顺）</div>
+    <div>${rows || '<div style="opacity:.7;">(没有可显示字段)</div>'}</div>
+  </div>
+`;
+
+window.dispatchEvent(
+  new CustomEvent("modal:open", {
+    detail: { title: `Words (${words?.length || 0})`, html }
+  })
+);
 
     const root = document.getElementById(containerId);
     if (root) {
