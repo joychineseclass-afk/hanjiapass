@@ -18,7 +18,7 @@ function openSimpleModal({ title, body }) {
   `;
 
   window.dispatchEvent(
-    new CustomEvent("joy:modal:open", {
+    new CustomEvent("modal:open", {
       detail: { title, html }
     })
   );
