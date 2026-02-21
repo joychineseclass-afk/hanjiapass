@@ -1,8 +1,10 @@
 // /ui/core/wordsStep.js
 // ✅ Words Step: open real words list inside modal
-// - Tries to use existing loaders/renderers if present
-// - Fallback: simple list rendering
-// - Click word: prefer existing word panel, else dispatch "word:open"
+// - Load words from: loader.loadLesson OR DATA_PATHS.lessonsUrl(pack) -> single lesson
+// - Render:
+//   A) if HSK_RENDER.renderWordCards exists -> render into modal container
+//   B) fallback: simple list
+// - Click word: prefer WORD_PANEL/WORD_MODAL, else dispatch "word:open"
 
 function getLangFromState(state) {
   return (
@@ -12,6 +14,16 @@ function getLangFromState(state) {
     "kr"
   );
 }
+
+// --- helpers ---
+const safe = (s) => String(s ?? "");
+const pick = (w, keys) => {
+  for (const k of keys) {
+    const v = w?.[k];
+    if (v !== undefined && v !== null && String(v).trim() !== "") return String(v);
+  }
+  return "";
+};
 
 // --- 1) Load lesson words (best-effort adapter) ---
 async function loadWordsForLesson(lessonId) {
@@ -24,139 +36,82 @@ async function loadWordsForLesson(lessonId) {
 
   if (loader?.loadLesson) {
     const data = await loader.loadLesson(lessonId);
-    return data?.words || data?.vocab || data?.wordList || [];
+    return data?.words || data?.vocab || data?.wordList || data?.newWords || data?.vocabulary || [];
   }
 
- // 2) 优先：用项目内置 DATA_PATHS
-const dp = window.DATA_PATHS;
+  // 2) 优先：用项目内置 DATA_PATHS
+  const dp = window.DATA_PATHS || null;
 
-let url = null;
+  let url = null;
 
-if (dp?.lessonsUrl) {
-  url = dp.lessonsUrl(lessonId);
-}
+  // 你项目里真实的是 lessonsUrl（你 console 已验证存在）
+  if (typeof dp?.lessonsUrl === "function") {
+    url = dp.lessonsUrl(lessonId);
+  }
 
-// fallback（备用路径）
-if (!url) {
-  url = `./data/lessons/${lessonId}.json`;
-}
-
-  // 3) 如果仍然没有：尝试从你已有的 HSK 数据根路径拼接
-  // （下面这两条你可以根据项目结构保留一种）
-  if (!url) url = `./data/lessons/${lessonId}.json`;  // 相对路径（比 /data 更稳）
-  // if (!url) url = `./data/hsk/lessons/${lessonId}.json`;
+  // fallback（备用路径）
+  if (!url) {
+    url = `./data/lessons/${lessonId}.json`;
+  }
 
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch lesson data: ${url}`);
   const json = await res.json();
 
-// ✅ lesson pack: { lessons: [...] }
-if (Array.isArray(json?.lessons)) {
-  const wantedFile = `${lessonId}.json`;
+  // ✅ lesson pack: { lessons: [...] }
+  if (Array.isArray(json?.lessons)) {
+    const wantedFile = `${lessonId}.json`;
 
-  const found =
-    json.lessons.find((x) => x?.file === wantedFile) ||
-    json.lessons.find((x) => String(x?.id) === String(lessonId).replace(/\D/g, "")) ||
-    null;
+    const found =
+      json.lessons.find((x) => x?.file === wantedFile) ||
+      // 兼容：lessonId=hsk1_lesson1 -> id=1
+      json.lessons.find((x) => String(x?.id) === String(lessonId).replace(/\D/g, "")) ||
+      null;
 
-  if (!found) {
-    console.warn("[wordsStep] lesson not found in pack:", lessonId, "pack size=", json.lessons.length);
-    return [];
+    if (!found) {
+      console.warn(
+        "[wordsStep] lesson not found in pack:",
+        lessonId,
+        "packUrl=",
+        url,
+        "pack size=",
+        json.lessons.length
+      );
+      return [];
+    }
+
+    // 第二跳：拉真正的单课文件
+    const packUrl = url; // 例如：./data/lessons/hsk2.0/hsk1_lessons.json
+    const baseDir = packUrl.slice(0, packUrl.lastIndexOf("/") + 1);
+    const singleUrl = baseDir + found.file; // 例如：./data/lessons/hsk2.0/hsk1_lesson1.json
+
+    const res2 = await fetch(singleUrl, { cache: "no-store" });
+    if (!res2.ok) throw new Error(`Failed to fetch single lesson: ${singleUrl}`);
+    const one = await res2.json();
+
+    return (
+      one.words ||
+      one.vocab ||
+      one.wordList ||
+      one.newWords ||
+      one.vocabulary ||
+      one.lesson?.words ||
+      []
+    );
   }
 
-  // ✅ 第二跳：拉真正的单课文件
-  // packUrl 例如：./data/lessons/hsk2.0/hsk1_lessons.json
-  // singleUrl 例如：./data/lessons/hsk2.0/hsk1_lesson1.json
-  const packUrl = url; // 注意：这里 url 就是你 fetch 的 lessonsUrl(lessonId) 结果
-  const baseDir = packUrl.slice(0, packUrl.lastIndexOf("/") + 1);
-  const singleUrl = baseDir + found.file;
-
-  const res2 = await fetch(singleUrl, { cache: "no-store" });
-  if (!res2.ok) throw new Error(`Failed to fetch single lesson: ${singleUrl}`);
-  const one = await res2.json();
-
-  // ✅ 从单课里取 words
+  // fallback：直接单课结构
   return (
-    one.words ||
-    one.vocab ||
-    one.wordList ||
-    one.newWords ||
-    one.vocabulary ||
-    one.lesson?.words ||
+    json?.words ||
+    json?.vocab ||
+    json?.wordList ||
+    json?.newWords ||
+    json?.vocabulary ||
     []
   );
 }
 
-// fallback：直接单课结构
-return (
-  json?.words ||
-  json?.vocab ||
-  json?.wordList ||
-  json?.newWords ||
-  json?.vocabulary ||
-  []
-);
-}
-
-// --- 2) Render words list into modal ---
-function renderWordsFallback(words, lang) {
-  const safe = (s) => String(s ?? "");
-
-  // 尽量兼容你词条结构：{ zh, pinyin, kr } / { hanzi, pinyin, meaning } 等
-  const pick = (w, keys) => {
-    for (const k of keys) {
-      if (w && w[k] != null && w[k] !== "") return w[k];
-    }
-    return "";
-  };
-
-  const title = `Words (${words.length})`;
-
-  const itemsHtml = words
-    .map((w, idx) => {
-      const zh = pick(w, ["zh", "cn", "hanzi", "word", "text"]);
-      const py = pick(w, ["pinyin", "py"]);
-      const kr = pick(w, ["kr", "ko", "meaning", "gloss"]);
-      const sub =
-        lang === "kr"
-          ? safe(kr || py)
-          : safe(py || kr);
-
-      return `
-        <button
-          class="joy-word-row"
-          data-idx="${idx}"
-          style="
-            width:100%;
-            text-align:left;
-            padding:10px 12px;
-            border:1px solid rgba(0,0,0,.08);
-            border-radius:12px;
-            background:#fff;
-            margin:8px 0;
-            cursor:pointer;
-          "
-        >
-          <div style="font-size:16px; font-weight:700;">${safe(zh)}</div>
-          <div style="font-size:13px; opacity:.75; margin-top:2px;">${safe(sub)}</div>
-        </button>
-      `;
-    })
-    .join("");
-
-  const html = `
-    <div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <div style="font-weight:800;">${title}</div>
-        <div style="font-size:12px; opacity:.65;">Click a word to open detail</div>
-      </div>
-      <div id="joyWordsList">${itemsHtml}</div>
-    </div>
-  `;
-
-  return { title, html };
-}
-
+// --- 2) Modal open ---
 function openModal({ title, html }) {
   window.dispatchEvent(
     new CustomEvent("modal:open", {
@@ -165,9 +120,8 @@ function openModal({ title, html }) {
   );
 }
 
+// --- 3) Word detail open ---
 function openWordDetail(word, lang) {
-  // A) prefer your existing word detail modal/panel if exists
-  // e.g. window.WORD_PANEL.open({ word, lang })
   if (window.WORD_PANEL?.open) {
     window.WORD_PANEL.open({ word, lang });
     return;
@@ -177,7 +131,6 @@ function openWordDetail(word, lang) {
     return;
   }
 
-  // B) otherwise dispatch event, you can connect it to your existing word-card modal
   window.dispatchEvent(
     new CustomEvent("word:open", {
       detail: { word, lang }
@@ -185,21 +138,59 @@ function openWordDetail(word, lang) {
   );
 }
 
+// --- 4) fallback renderer ---
+function renderWordsFallback(words, lang) {
+  const title = `Words (${words.length})`;
+
+  const rows = (words || []).map((w, i) => {
+    const han = pick(w, ["hanzi","word","zh","cn","ch","text","simplified"]);
+    const pinyin = pick(w, ["pinyin","py"]);
+    const kr = pick(w, ["kr","ko","korean","meaning_kr","def_kr","gloss"]);
+    const en = pick(w, ["en","eng","english","meaning_en","def_en"]);
+    const meaning = (lang === "kr" ? (kr || en) : (en || kr)) || "";
+
+    // ✅ 如果 w 本身是字符串（有些数据会这样），也能显示
+    const fallbackHan = !han && typeof w === "string" ? w : "";
+    const showHan = han || fallbackHan || "(?)";
+
+    return `
+      <div class="joy-word-row" data-idx="${i}"
+        style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.08);cursor:pointer;">
+        <div style="min-width:64px;font-size:20px;font-weight:800;">${safe(showHan)}</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;opacity:.75;">${safe(pinyin)}</div>
+          <div style="font-size:14px;">${safe(meaning)}</div>
+        </div>
+        <div style="font-size:12px;opacity:.6;">#${i + 1}</div>
+      </div>
+    `;
+  }).join("");
+
+  const html = `
+    <div style="padding:14px;">
+      <div style="font-size:12px;opacity:.7;margin-bottom:10px;">点击单词（下一步我们接：详情卡 / 发音 / 笔顺）</div>
+      <div id="joyWordsList">${rows || '<div style="opacity:.7;">(没有可显示字段)</div>'}</div>
+    </div>
+  `;
+
+  return { title, html };
+}
+
 function bindWordClicks(words, lang) {
   const root = document.getElementById("joyWordsList");
   if (!root) return;
 
   root.addEventListener("click", (e) => {
-    const btn = e.target?.closest?.(".joy-word-row");
-    if (!btn) return;
-    const idx = Number(btn.dataset.idx);
-    const w = words[idx];
+    const row = e.target?.closest?.(".joy-word-row");
+    if (!row) return;
+    const idx = Number(row.dataset.idx);
+    const w = words?.[idx];
     if (!w) return;
     openWordDetail(w, lang);
   });
 }
 
-// --- 3) Public API: called by lessonStepRunner when step === "words" ---
+// --- 5) Public API ---
 export async function openWordsStep({ lessonId, state }) {
   const lang = getLangFromState(state);
 
@@ -208,72 +199,38 @@ export async function openWordsStep({ lessonId, state }) {
     words = await loadWordsForLesson(lessonId);
   } catch (err) {
     console.warn("[wordsStep] loadWordsForLesson failed:", err);
+    words = [];
   }
 
-  // 如果你已有 HSK_RENDER.renderWordCards，就用它（更漂亮）
-  const canUseRenderer = window.HSK_RENDER?.renderWordCards;
+  // ✅ 永远暴露出来，便于 console 调试
+  window.__words = words;
+  console.log("[wordsStep] __words length =", words?.length);
+  console.log("[wordsStep] first word =", words?.[0]);
 
+  const canUseRenderer = typeof window.HSK_RENDER?.renderWordCards === "function";
+
+  // A) 用你已有 renderer：渲染到 modal 的容器里
   if (canUseRenderer && Array.isArray(words) && words.length) {
-    // 用一个容器让 renderer 渲染，然后塞进 modal
     const containerId = "joyWordsRendererRoot";
-    const words = await loadWordsForLesson(lessonId);
-    window.__words = words;
-console.log("[wordsStep] first word =", words?.[0]);
 
-// ✅ 兼容各种字段名：cn/zh/word/hanzi...
-const pick = (w, keys) => {
-  for (const k of keys) {
-    const v = w?.[k];
-    if (v !== undefined && v !== null && String(v).trim() !== "") return String(v);
-  }
-  return "";
-};
+    openModal({
+      title: `Words (${words.length})`,
+      html: `<div id="${containerId}" style="padding:12px;"></div>`
+    });
 
-const rows = (words || []).map((w, i) => {
-  const han = pick(w, ["hanzi","word","zh","cn","ch","text","simplified"]);
-  const pinyin = pick(w, ["pinyin","py"]);
-  const kr = pick(w, ["kr","ko","korean","meaning_kr","def_kr"]);
-  const en = pick(w, ["en","eng","english","meaning_en","def_en"]);
-  const meaning = kr || en || "";
-
-  return `
-    <div class="joy-word-row" data-idx="${i}" style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.08);">
-      <div style="min-width:64px;font-size:20px;font-weight:700;">${han || "(?)"}</div>
-      <div style="flex:1;">
-        <div style="font-size:13px;opacity:.75;">${pinyin}</div>
-        <div style="font-size:14px;">${meaning}</div>
-      </div>
-      <div style="font-size:12px;opacity:.6;">#${i+1}</div>
-    </div>
-  `;
-}).join("");
-
-const html = `
-  <div style="padding:14px;">
-    <div style="font-size:12px;opacity:.7;margin-bottom:10px;">点击单词（下一步我们接：详情卡 / 发音 / 笔顺）</div>
-    <div>${rows || '<div style="opacity:.7;">(没有可显示字段)</div>'}</div>
-  </div>
-`;
-
-window.dispatchEvent(
-  new CustomEvent("modal:open", {
-    detail: { title: `Words (${words?.length || 0})`, html }
-  })
-);
-
-    const root = document.getElementById(containerId);
-    if (root) {
-      // 点击单词：走你已有的 onClickWord 逻辑（如果你有全局处理）
+    // 等 modal DOM 出现再渲染（避免 root=null）
+    requestAnimationFrame(() => {
+      const root = document.getElementById(containerId);
+      if (!root) return;
       const onClickWord = (w) => openWordDetail(w, lang);
       window.HSK_RENDER.renderWordCards(root, words, onClickWord, { lang });
-    }
+    });
+
     return;
   }
 
-  // Fallback 渲染
+  // B) fallback 简单列表
   const modal = renderWordsFallback(words || [], lang);
   openModal(modal);
-
-  // 绑定点击打开详情
   bindWordClicks(words || [], lang);
 }
