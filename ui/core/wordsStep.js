@@ -15,8 +15,7 @@ function getLangFromState(state) {
 
 // --- 1) Load lesson words (best-effort adapter) ---
 async function loadWordsForLesson(lessonId) {
-  // A) if you already have a loader exposed globally
-  // e.g. window.HSK_LOADER.loadLesson(lessonId) -> { words:[...] }
+  // 1) 优先：你若已有 loader
   const loader =
     window.HSK_LOADER ||
     window.hskLoader ||
@@ -28,20 +27,28 @@ async function loadWordsForLesson(lessonId) {
     return data?.words || data?.vocab || data?.wordList || [];
   }
 
-  // B) if you have a path helper exposed globally (dataPaths.js)
-  // e.g. window.DATA_PATHS.lesson(lessonId) -> url
-  const dp = window.DATA_PATHS || window.dataPaths || null;
+  // 2) 优先：从 dataPaths.js 取真实路径
+  const dp = window.DATA_PATHS || window.dataPaths || window.DATA_PATH || null;
+
   let url = null;
 
-  if (dp?.lesson) url = dp.lesson(lessonId);
-  if (!url && dp?.lessons?.[lessonId]) url = dp.lessons[lessonId];
+  // 常见写法1：dp.lesson(lessonId)
+  if (typeof dp?.lesson === "function") url = dp.lesson(lessonId);
+
+  // 常见写法2：dp.lessons[lessonId]
+  if (!url && dp?.lessons && dp.lessons[lessonId]) url = dp.lessons[lessonId];
+
+  // 常见写法3：dp.getLessonUrl(lessonId)
   if (!url && typeof dp?.getLessonUrl === "function") url = dp.getLessonUrl(lessonId);
 
-  // C) last resort: try a conventional endpoint (you can edit this later)
-  if (!url) {
-    // ⚠️ 如果你课程 JSON 路径不同，后面我再按你项目结构帮你对齐
-    url = `/data/lessons/${lessonId}.json`;
-  }
+  // 常见写法4：dp.hskLesson / dp.hsk (不同项目命名)
+  if (!url && typeof dp?.hskLesson === "function") url = dp.hskLesson(lessonId);
+  if (!url && typeof dp?.hsk === "function") url = dp.hsk(lessonId);
+
+  // 3) 如果仍然没有：尝试从你已有的 HSK 数据根路径拼接
+  // （下面这两条你可以根据项目结构保留一种）
+  if (!url) url = `./data/lessons/${lessonId}.json`;  // 相对路径（比 /data 更稳）
+  // if (!url) url = `./data/hsk/lessons/${lessonId}.json`;
 
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch lesson data: ${url}`);
