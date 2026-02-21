@@ -1,4 +1,6 @@
 // /ui/core/lessonStepRunner.js
+import { openWordsStep } from "./wordsStep.js";
+
 // ✅ Step Runner: when step changes, open corresponding modal/panel
 // 先用占位弹窗验证完整闭环，下一步再替换为真正的 Words/Grammar/Practice UI
 
@@ -33,12 +35,9 @@ export function mountLessonStepRunner() {
 
     // ⭐ 根据 step 决定打开什么
     if (step === "words") {
-      openSimpleModal({
-        title: "Words / 单词",
-        body: "这里下一步将接入真实的单词卡弹窗内容（HSK words list）"
-      });
-      return;
-    }
+  openWordsStep({ lessonId: st.lessonId, state: st });
+  return;
+}
 
     if (step === "dialogue") {
       // dialogue 你已经有 DIALOGUE_PANEL（保持你现有逻辑）
