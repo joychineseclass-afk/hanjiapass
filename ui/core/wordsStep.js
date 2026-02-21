@@ -50,15 +50,13 @@ if (!url) {
   if (!res.ok) throw new Error(`Failed to fetch lesson data: ${url}`);
   const json = await res.json();
 
-// ✅ 你的 lessonsUrl 返回的是 “lesson pack”：{ lessons: [...] }
+// ✅ lesson pack: { lessons: [...] }
 if (Array.isArray(json?.lessons)) {
-  // lessonId 例如: "hsk1_lesson1"
-  // 常见字段名：id / lessonId / key / slug
+  const wantedFile = `${lessonId}.json`;
+
   const found =
-    json.lessons.find((x) => x?.lessonId === lessonId) ||
-    json.lessons.find((x) => x?.id === lessonId) ||
-    json.lessons.find((x) => x?.key === lessonId) ||
-    json.lessons.find((x) => x?.slug === lessonId) ||
+    json.lessons.find((x) => x?.file === wantedFile) ||
+    json.lessons.find((x) => String(x?.id) === String(lessonId).replace(/\D/g, "")) ||
     null;
 
   if (!found) {
@@ -66,19 +64,30 @@ if (Array.isArray(json?.lessons)) {
     return [];
   }
 
-  // ✅ 从该课里取 words（兼容多字段）
+  // ✅ 第二跳：拉真正的单课文件
+  // packUrl 例如：./data/lessons/hsk2.0/hsk1_lessons.json
+  // singleUrl 例如：./data/lessons/hsk2.0/hsk1_lesson1.json
+  const packUrl = url; // 注意：这里 url 就是你 fetch 的 lessonsUrl(lessonId) 结果
+  const baseDir = packUrl.slice(0, packUrl.lastIndexOf("/") + 1);
+  const singleUrl = baseDir + found.file;
+
+  const res2 = await fetch(singleUrl, { cache: "no-store" });
+  if (!res2.ok) throw new Error(`Failed to fetch single lesson: ${singleUrl}`);
+  const one = await res2.json();
+
+  // ✅ 从单课里取 words
   return (
-    found.words ||
-    found.vocab ||
-    found.wordList ||
-    found.newWords ||
-    found.vocabulary ||
-    found.lesson?.words ||
+    one.words ||
+    one.vocab ||
+    one.wordList ||
+    one.newWords ||
+    one.vocabulary ||
+    one.lesson?.words ||
     []
   );
 }
 
-// fallback：如果以后某些 lessonUrl 直接就是单课结构
+// fallback：直接单课结构
 return (
   json?.words ||
   json?.vocab ||
