@@ -27,23 +27,19 @@ async function loadWordsForLesson(lessonId) {
     return data?.words || data?.vocab || data?.wordList || [];
   }
 
-  // 2) 优先：从 dataPaths.js 取真实路径
-  const dp = window.DATA_PATHS || window.dataPaths || window.DATA_PATH || null;
+ // 2) 优先：用项目内置 DATA_PATHS
+const dp = window.DATA_PATHS;
 
-  let url = null;
+let url = null;
 
-  // 常见写法1：dp.lesson(lessonId)
-  if (typeof dp?.lesson === "function") url = dp.lesson(lessonId);
+if (dp?.lessonsUrl) {
+  url = dp.lessonsUrl(lessonId);
+}
 
-  // 常见写法2：dp.lessons[lessonId]
-  if (!url && dp?.lessons && dp.lessons[lessonId]) url = dp.lessons[lessonId];
-
-  // 常见写法3：dp.getLessonUrl(lessonId)
-  if (!url && typeof dp?.getLessonUrl === "function") url = dp.getLessonUrl(lessonId);
-
-  // 常见写法4：dp.hskLesson / dp.hsk (不同项目命名)
-  if (!url && typeof dp?.hskLesson === "function") url = dp.hskLesson(lessonId);
-  if (!url && typeof dp?.hsk === "function") url = dp.hsk(lessonId);
+// fallback（备用路径）
+if (!url) {
+  url = `./data/lessons/${lessonId}.json`;
+}
 
   // 3) 如果仍然没有：尝试从你已有的 HSK 数据根路径拼接
   // （下面这两条你可以根据项目结构保留一种）
