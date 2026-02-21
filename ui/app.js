@@ -4,14 +4,15 @@
 ========================================= */
 import { LESSON_ENGINE } from "./core/lessonEngine.js";
 window.LESSON_ENGINE = LESSON_ENGINE;
-import { mountLessonBridge } from "/ui/core/lessonBridge.js";
+
+import { mountLessonBridge } from "./core/lessonBridge.js";
 mountLessonBridge();
+
 import { i18n } from "./i18n.js";
 import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
-
 
 /* ===============================
    🌐 i18n 全站初始化
