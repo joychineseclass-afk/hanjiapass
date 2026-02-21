@@ -148,10 +148,15 @@ export function createModalSystem(rootWrap, cfg) {
   };
 
   const close = () => {
-    overlay?.classList.add("joy-modal-hidden");
-    if (lockScroll) lockBodyScroll(false);
-    onClose?.();
-  };
+  overlay?.classList.add("joy-modal-hidden");
+  if (lockScroll) lockBodyScroll(false);
+  onClose?.();
+
+  // ⭐ 通知系统：弹窗关闭了
+  window.dispatchEvent(
+    new CustomEvent("modal:close")
+  );
+};
 
   closeBtn?.addEventListener("click", (e) => {
     e.preventDefault();
