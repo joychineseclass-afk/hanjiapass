@@ -2,7 +2,8 @@
    🌍 APP ENTRY — GLOBAL BOOTSTRAP
    全站唯一入口（只在 index.html 引入这一个）
 ========================================= */
-
+import { LESSON_ENGINE } from "./core/lessonEngine.js";
+window.LESSON_ENGINE = LESSON_ENGINE;
 import { i18n } from "./i18n.js";
 import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
