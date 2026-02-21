@@ -8,6 +8,9 @@ window.LESSON_ENGINE = LESSON_ENGINE;
 import { mountLessonBridge } from "./core/lessonBridge.js";
 mountLessonBridge();
 
+import { mountLessonStepRunner } from "./core/lessonStepRunner.js";
+mountLessonStepRunner();
+
 import { i18n } from "./i18n.js";
 import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
