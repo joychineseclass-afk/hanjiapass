@@ -153,9 +153,7 @@ export function createModalSystem(rootWrap, cfg) {
   onClose?.();
 
   // ⭐ 通知系统：弹窗关闭了
-  window.dispatchEvent(
-    new CustomEvent("modal:close")
-  );
+ window.dispatchEvent(new CustomEvent("modal:close", { detail: { id } }));
 };
 
   // ✅ 通用打开事件：modal:open
