@@ -217,6 +217,8 @@ export async function openWordsStep({ lessonId, state }) {
     // 用一个容器让 renderer 渲染，然后塞进 modal
     const containerId = "joyWordsRendererRoot";
     const words = await loadWordsForLesson(lessonId);
+    window.__words = words;
+console.log("[wordsStep] first word =", words?.[0]);
 
 // ✅ 兼容各种字段名：cn/zh/word/hanzi...
 const pick = (w, keys) => {
