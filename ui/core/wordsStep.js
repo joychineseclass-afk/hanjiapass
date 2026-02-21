@@ -50,7 +50,43 @@ if (!url) {
   if (!res.ok) throw new Error(`Failed to fetch lesson data: ${url}`);
   const json = await res.json();
 
-  return json?.words || json?.vocab || json?.wordList || [];
+// ✅ 你的 lessonsUrl 返回的是 “lesson pack”：{ lessons: [...] }
+if (Array.isArray(json?.lessons)) {
+  // lessonId 例如: "hsk1_lesson1"
+  // 常见字段名：id / lessonId / key / slug
+  const found =
+    json.lessons.find((x) => x?.lessonId === lessonId) ||
+    json.lessons.find((x) => x?.id === lessonId) ||
+    json.lessons.find((x) => x?.key === lessonId) ||
+    json.lessons.find((x) => x?.slug === lessonId) ||
+    null;
+
+  if (!found) {
+    console.warn("[wordsStep] lesson not found in pack:", lessonId, "pack size=", json.lessons.length);
+    return [];
+  }
+
+  // ✅ 从该课里取 words（兼容多字段）
+  return (
+    found.words ||
+    found.vocab ||
+    found.wordList ||
+    found.newWords ||
+    found.vocabulary ||
+    found.lesson?.words ||
+    []
+  );
+}
+
+// fallback：如果以后某些 lessonUrl 直接就是单课结构
+return (
+  json?.words ||
+  json?.vocab ||
+  json?.wordList ||
+  json?.newWords ||
+  json?.vocabulary ||
+  []
+);
 }
 
 // --- 2) Render words list into modal ---
