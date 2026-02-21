@@ -158,6 +158,21 @@ export function createModalSystem(rootWrap, cfg) {
   );
 };
 
+  // ✅ 通用打开事件：modal:open
+// 用法：window.dispatchEvent(new CustomEvent("modal:open",{detail:{ title, html }}))
+window.addEventListener("modal:open", (ev) => {
+  const d = ev?.detail || {};
+  const title = d.title ?? "";
+  const html = d.html ?? "";
+
+  // 写入标题/内容
+  if (titleEl) titleEl.textContent = String(title);
+  if (body) body.innerHTML = String(html);
+
+  // 打开弹窗
+  open();
+});
+  
   closeBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
