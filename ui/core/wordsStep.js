@@ -306,6 +306,6 @@ export async function openWordsStep({ lessonId, state }) {
 
   // B) fallback 简单列表（永远可用）
   const modal = renderWordsFallback(words || [], lang);
-  openModal(modal);
-  bindWordClicks(words || [], lang);
+openModal(modal);
+requestAnimationFrame(() => bindWordClicks(words || [], lang));
 }
