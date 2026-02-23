@@ -6,11 +6,21 @@
 const DEFAULT_STEPS = ["words", "dialogue", "grammar", "practice", "ai"];
 
 function safeJsonParse(s, fallback) {
-  try { return JSON.parse(s); } catch { return fallback; }
+  try {
+    return JSON.parse(s);
+  } catch {
+    return fallback;
+  }
 }
 
 function storageKey(lessonId) {
   return `joy_lesson_state:${lessonId}`;
+}
+
+// ✅ 更稳的 clone（避免 structuredClone 未定义时报错）
+function cloneState(obj) {
+  if (typeof structuredClone === "function") return structuredClone(obj);
+  return JSON.parse(JSON.stringify(obj));
 }
 
 export const LESSON_ENGINE = (() => {
@@ -22,28 +32,40 @@ export const LESSON_ENGINE = (() => {
     lang: "kr",
   };
 
-  let listeners = new Set();
+  const listeners = new Set();
 
   function emit() {
-    for (const fn of listeners) fn(getState());
-    // 同时广播事件，方便你用 window.addEventListener 监听
-    window.dispatchEvent(new CustomEvent("lesson:state", { detail: getState() }));
+    const snapshot = getState();
+
+    // 1) 内部订阅回调
+    for (const fn of listeners) {
+      try {
+        fn(snapshot);
+      } catch (e) {
+        console.warn("[LESSON_ENGINE] listener error:", e);
+      }
+    }
+
+    // 2) 广播 window 事件给 StepRunner
+    window.dispatchEvent(
+      new CustomEvent("lesson:state", { detail: snapshot })
+    );
   }
 
   function getState() {
-    return structuredClone ? structuredClone(state) : JSON.parse(JSON.stringify(state));
+    return cloneState(state);
   }
 
   function setLang(lang) {
     state.lang = lang || "kr";
+    save();
     emit();
   }
 
   function load(lessonId) {
     const raw = localStorage.getItem(storageKey(lessonId));
     if (!raw) return null;
-    const saved = safeJsonParse(raw, null);
-    return saved;
+    return safeJsonParse(raw, null);
   }
 
   function save() {
@@ -55,15 +77,23 @@ export const LESSON_ENGINE = (() => {
     if (!lessonId) throw new Error("LESSON_ENGINE.start requires lessonId");
 
     const saved = load(lessonId);
-    state = saved || {
-      lessonId,
-      steps: Array.isArray(steps) && steps.length ? steps : [...DEFAULT_STEPS],
-      stepIndex: 0,
-      completedSteps: {},
-      lang: lang || localStorage.getItem("joy_lang") || localStorage.getItem("site_lang") || "kr",
-    };
 
-    // 若外部传入steps/lang，允许覆盖
+    state =
+      saved ||
+      {
+        lessonId,
+        steps:
+          Array.isArray(steps) && steps.length ? steps : [...DEFAULT_STEPS],
+        stepIndex: 0,
+        completedSteps: {},
+        lang:
+          lang ||
+          localStorage.getItem("joy_lang") ||
+          localStorage.getItem("site_lang") ||
+          "kr",
+      };
+
+    // 若外部传入 steps/lang，允许覆盖
     if (Array.isArray(steps) && steps.length) state.steps = steps;
     if (lang) state.lang = lang;
 
@@ -118,7 +148,10 @@ export const LESSON_ENGINE = (() => {
       steps: [...DEFAULT_STEPS],
       stepIndex: 0,
       completedSteps: {},
-      lang: localStorage.getItem("joy_lang") || localStorage.getItem("site_lang") || "kr",
+      lang:
+        localStorage.getItem("joy_lang") ||
+        localStorage.getItem("site_lang") ||
+        "kr",
     };
     save();
     emit();
