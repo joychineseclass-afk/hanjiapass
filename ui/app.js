@@ -11,6 +11,8 @@ mountLessonBridge();
 import { mountLessonStepRunner } from "./core/lessonStepRunner.js";
 mountLessonStepRunner();
 
+import "./components/wordPanel.js";
+
 import { i18n } from "./i18n.js";
 import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
