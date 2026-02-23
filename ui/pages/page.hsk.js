@@ -20,6 +20,31 @@ import { modalTpl, createModalSystem } from "../components/modalBase.js";
 import { mountDialogueModal, openDialogueModal } from "../components/dialogueModal.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
 
+function deriveLessonId(lesson, { lv, version } = {}) {
+  // 1) 优先用 lesson 自带字段
+  const direct =
+    lesson?.lessonId ||
+    lesson?.id ||
+    lesson?.lesson ||
+    lesson?.key ||
+    "";
+  if (direct) return String(direct);
+
+  // 2) 用文件名推导（最常见：hsk1_lesson1.json -> hsk1_lesson1）
+  const file = lesson?.file || lesson?.path || lesson?.url || "";
+  if (file) {
+    const base = String(file).split("/").pop();      // hsk1_lesson1.json
+    return base.replace(/\.(json|txt|md)$/i, "");    // hsk1_lesson1
+  }
+
+  // 3) 最后兜底：用 lv + “lessonX”（如果 lesson 里有 lessonNo/index）
+  const no = lesson?.lessonNo ?? lesson?.no ?? lesson?.index;
+  if (lv != null && no != null) return `hsk${lv}_lesson${no}`;
+
+  return "";
+}
+
+
 let hskApi = null;
 let depsPromise = null;
 
@@ -273,6 +298,16 @@ async function refreshLessons(scrollIntoView = false) {
    ✅ Open one lesson → load lesson file → filter vocab → render cards
 ================================== */
 async function openLesson(lesson, { lv, version }) {
+  const lessonId = deriveLessonId(lesson, { lv, version });
+
+  if (lessonId) {
+    window.__CURRENT_LESSON_ID = lessonId;
+    window.__HSK_LAST_LESSON_ID = lessonId;
+    localStorage.setItem("joy_current_lesson", lessonId);
+  }
+
+  console.log("[HSK] openLesson clicked:", { lessonId, lv, version, lesson });
+
   const grid = document.getElementById("hskGrid");
   const err = document.getElementById("hskError");
   const status = document.getElementById("hskStatus");
