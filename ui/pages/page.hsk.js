@@ -187,6 +187,46 @@ function getCurrentVersion() {
   return v;
 }
 
+function joyGetLang() {
+  return localStorage.getItem("joy_lang") || localStorage.getItem("site_lang") || "kr";
+}
+
+/**
+ * 把旧UI按钮接到新 Lesson Engine/Runner
+ * - 不依赖你旧逻辑结构
+ * - 只要传入当前 lessonId 即可
+ */
+function joyOpenStep(stepName, lessonId) {
+  const lang = joyGetLang();
+
+  console.log("[UI] step click =", stepName);
+  console.log("[UI] before start state =", window.LESSON_ENGINE?.getState?.());
+  console.log("[UI] using lessonId =", lessonId, "lang=", lang);
+
+  if (!window.LESSON_ENGINE?.start) {
+    console.warn("[UI] LESSON_ENGINE not found");
+    return;
+  }
+
+  // ✅ 如果 engine 还没绑定 lessonId，就 start 一次
+  const st0 = window.LESSON_ENGINE.getState?.();
+  if (!st0?.lessonId || st0.lessonId !== lessonId) {
+    window.LESSON_ENGINE.start({ lessonId, lang });
+  }
+
+  console.log("[UI] after start state =", window.LESSON_ENGINE.getState?.());
+
+  // ✅ 跳到指定步骤：words/dialogue/grammar/practice/ai
+  try {
+    window.LESSON_ENGINE.go(stepName);
+  } catch (e) {
+    console.warn("[UI] go(step) failed:", e);
+    return;
+  }
+
+  console.log("[UI] after go state =", window.LESSON_ENGINE.getState?.());
+}
+
 /* ===============================
    ✅ Refresh lessons list
 ================================== */
