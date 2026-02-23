@@ -292,7 +292,23 @@ async function openLesson(lesson, { lv, version }) {
       if (!r.ok) throw new Error(`HTTP ${r.status} - ${lessonUrl}`);
       return r.json();
     });
-    window.__HSK_CURRENT_LESSON = { lv, version, lesson, lessonData };
+    const lessonId =
+  lesson?.lessonId ||
+  lesson?.id ||
+  lesson?.lesson ||
+  lessonData?.lessonId ||
+  lessonData?.id ||
+  "";
+
+window.__HSK_CURRENT_LESSON = {
+  lessonId,
+  lv,
+  version,
+  lesson,
+  lessonData
+};
+
+console.log("[HSK] current lesson set:", window.__HSK_CURRENT_LESSON);
     
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
     const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
