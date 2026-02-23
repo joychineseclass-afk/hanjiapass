@@ -485,30 +485,25 @@ function enableHSKModalMode() {
       // ✅ Hide/clear the inline content area immediately
       suppressInlineLessonArea();
 
-      // ✅ Need current lesson data
-      const cur = window.__HSK_CURRENT_LESSON;
-
-      // ✅ NEW: route tab click to Lesson Engine / Step Runner (modal)
+      // ✅ Need current lesson id (best source: your existing variable)
 const currentLessonId =
-  cur?.lessonId ||
-  cur?.lessonKey ||
-  cur?.key ||
-  cur?.file?.replace?.(/\.json$/i, "") ||
-  cur?.id;
+  window.__HSK_CURRENT_LESSON?.lessonId ||
+  window.__CURRENT_LESSON_ID ||
+  localStorage.getItem("joy_current_lesson") ||
+  window.__HSK_LAST_LESSON_ID; // 兜底（如果你愿意后面加）
 
-// 只要有 joyOpenStep + lessonId，就用弹窗流程接管
 if (typeof window.joyOpenStep === "function" && currentLessonId) {
   console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
   window.joyOpenStep(tab, currentLessonId);
-  return; // ⭐ 非常关键：阻止旧的 inline 渲染继续跑
-} else {
-  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
-    hasJoyOpenStep: typeof window.joyOpenStep === "function",
-    currentLessonId,
-    tab,
-    cur
-  });
+  return;
 }
+
+console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
+  hasJoyOpenStep: typeof window.joyOpenStep === "function",
+  currentLessonId,
+  tab,
+  cur: window.__HSK_CURRENT_LESSON
+});
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
       const version = cur?.version || "";
