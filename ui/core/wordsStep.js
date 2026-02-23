@@ -18,6 +18,7 @@ function getLangFromState(state) {
     "kr"
   );
 }
+window.__words = window.__words || [];
 
 // ---------- helpers ----------
 const safe = (v) => String(v ?? "");
