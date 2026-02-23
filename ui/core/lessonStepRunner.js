@@ -1,14 +1,15 @@
 // /ui/core/lessonStepRunner.js
 import { openWordsStep } from "./wordsStep.js";
 
-// ✅ Step Runner: when step changes, open corresponding modal/panel
-// 先用占位弹窗验证完整闭环，下一步再替换为真正的 Words/Grammar/Practice UI
+// ✅ Step Runner: when lesson state changes, open corresponding modal/panel
+// - Listen to "lesson:state" emitted by LESSON_ENGINE
+// - Dedup to avoid opening modal repeatedly
+// - async/await to ensure modal DOM is ready for words rendering
+
+let mounted = false;
+let lastKey = "";
 
 function openSimpleModal({ title, body }) {
-  // 复用你已有 modalBase 的 DOM（不确定你当前 modalBase 的 open API）
-  // 所以这里用最稳的方式：直接触发一个“通用 modal 打开事件”
-  // 如果你 modalBase 已经有 window.MODAL.open(...)，我们下一步改成调用它即可
-
   const html = `
     <div style="padding:14px; line-height:1.6">
       <h3 style="margin:0 0 10px 0;">${title}</h3>
@@ -27,21 +28,29 @@ function openSimpleModal({ title, body }) {
 }
 
 export function mountLessonStepRunner() {
-  window.addEventListener("lesson:state", (ev) => {
+  if (mounted) return;
+  mounted = true;
+
+  window.addEventListener("lesson:state", async (ev) => {
     const st = ev.detail;
     if (!st?.lessonId) return;
 
     const step = st.steps?.[st.stepIndex] || "words";
+    const key = `${st.lessonId}:${st.stepIndex}:${step}:${st.lang || ""}`;
+
+    // ✅ 去重：同一个 state 重复 emit 不要重复开弹窗
+    if (key === lastKey) return;
+    lastKey = key;
 
     // ⭐ 根据 step 决定打开什么
     if (step === "words") {
-  openWordsStep({ lessonId: st.lessonId, state: st });
-  return;
-}
+      await openWordsStep({ lessonId: st.lessonId, state: st });
+      return;
+    }
 
     if (step === "dialogue") {
       // dialogue 你已经有 DIALOGUE_PANEL（保持你现有逻辑）
-      // 这里不强制打开，避免重复；由你点击会话或系统触发 dialogue:open 来打开
+      // 由你点击会话或系统触发 dialogue:open 来打开
       return;
     }
 
