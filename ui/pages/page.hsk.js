@@ -501,25 +501,41 @@ function enableHSKModalMode() {
       // ✅ Hide/clear the inline content area immediately
       suppressInlineLessonArea();
 
-      // ✅ Need current lesson id (best source: your existing variable)
+      // ✅ Need current lesson id (best effort)
+const cur = window.__HSK_CURRENT_LESSON || null;
+
 const currentLessonId =
-  window.__HSK_CURRENT_LESSON?.lessonId ||
+  cur?.lessonId ||
+  cur?.lesson?.lessonId ||
+  cur?.lesson?.id ||
+  cur?.lesson?.lesson ||
   window.__CURRENT_LESSON_ID ||
   localStorage.getItem("joy_current_lesson") ||
-  window.__HSK_LAST_LESSON_ID; // 兜底（如果你愿意后面加）
+  "";
 
-if (typeof window.joyOpenStep === "function" && currentLessonId) {
+// ✅ If we still don't have lessonId, stop here (avoid crash)
+if (!currentLessonId) {
+  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
+    hasJoyOpenStep: typeof window.joyOpenStep === "function",
+    currentLessonId,
+    tab,
+    curExists: !!cur
+  });
+  // 你想要更友好也可以弹窗提示：请先选择一课
+  return;
+}
+
+if (typeof window.joyOpenStep === "function") {
   console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
   window.joyOpenStep(tab, currentLessonId);
   return;
 }
 
-console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
-  hasJoyOpenStep: typeof window.joyOpenStep === "function",
-  currentLessonId,
+console.warn("[page.hsk] joyOpenStep missing:", {
   tab,
-  cur: window.__HSK_CURRENT_LESSON
+  currentLessonId
 });
+ 
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
       const version = cur?.version || "";
