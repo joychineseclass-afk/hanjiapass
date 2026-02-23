@@ -19,6 +19,33 @@ import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
 
+// ✅ Global helper: open step modal by Lesson Engine + StepRunner
+window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
+  const engine = window.LESSON_ENGINE;
+  if (!engine) {
+    console.warn("[joyOpenStep] LESSON_ENGINE missing");
+    return;
+  }
+  if (!lessonId) {
+    console.warn("[joyOpenStep] lessonId missing", { step, lessonId });
+    return;
+  }
+
+  const lang =
+    opts.lang ||
+    localStorage.getItem("joy_lang") ||
+    localStorage.getItem("site_lang") ||
+    "kr";
+
+  // Ensure engine has state for this lesson
+  engine.start({ lessonId, lang });
+
+  // Jump to requested step (words/dialogue/grammar/practice/ai)
+  if (step) engine.go(step);
+
+  console.log("[joyOpenStep] ok:", { step, lessonId, lang });
+};
+
 /* ===============================
    🌐 i18n 全站初始化
    - 默认韩语
