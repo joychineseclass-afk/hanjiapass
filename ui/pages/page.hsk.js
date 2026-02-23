@@ -487,6 +487,28 @@ function enableHSKModalMode() {
 
       // ✅ Need current lesson data
       const cur = window.__HSK_CURRENT_LESSON;
+
+      // ✅ NEW: route tab click to Lesson Engine / Step Runner (modal)
+const currentLessonId =
+  cur?.lessonId ||
+  cur?.lessonKey ||
+  cur?.key ||
+  cur?.file?.replace?.(/\.json$/i, "") ||
+  cur?.id;
+
+// 只要有 joyOpenStep + lessonId，就用弹窗流程接管
+if (typeof window.joyOpenStep === "function" && currentLessonId) {
+  console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
+  window.joyOpenStep(tab, currentLessonId);
+  return; // ⭐ 非常关键：阻止旧的 inline 渲染继续跑
+} else {
+  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
+    hasJoyOpenStep: typeof window.joyOpenStep === "function",
+    currentLessonId,
+    tab,
+    cur
+  });
+}
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
       const version = cur?.version || "";
