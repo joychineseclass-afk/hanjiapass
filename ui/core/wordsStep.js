@@ -296,8 +296,11 @@ export async function openWordsStep({ lessonId, state }) {
 
         // renderer 崩了就 fallback（更稳）
         const modal = renderWordsFallback(words || [], lang);
-        openModal(modal);
-        bindWordClicks(words || [], lang);
+openModal(modal);
+
+requestAnimationFrame(() => {
+  bindWordClicks(words || [], lang);
+});
       }
     });
 
