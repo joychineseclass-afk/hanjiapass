@@ -1,5 +1,6 @@
 // /ui/core/lessonStepRunner.js
 import { openWordsStep } from "./wordsStep.js";
+console.log("[Runner] file loaded:", import.meta.url);
 
 // ✅ Step Runner: when lesson state changes, open corresponding modal/panel
 // - Listen to "lesson:state" emitted by LESSON_ENGINE
@@ -28,6 +29,7 @@ function openSimpleModal({ title, body }) {
 }
 
 export function mountLessonStepRunner() {
+  console.log("[Runner] mounted");
   if (mounted) return;
   mounted = true;
 
