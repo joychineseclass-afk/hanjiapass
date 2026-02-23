@@ -249,42 +249,7 @@ function bindWordClicks(words, lang) {
 }
 
 // ---------- 5) Public API ----------
-export async function openWordsStep({ lessonId, state }) {
-  const lang = getLangFromState(state);
-
-  let words = [];
-  try {
-    words = await loadWordsForLesson(lessonId);
-  } catch (err) {
-    console.warn("[wordsStep] loadWordsForLesson failed:", err);
-    words = [];
-  }
-
-  // ✅ debug: 永远暴露
-  window.__words = words;
-  console.log("[wordsStep] __words length =", words?.length || 0);
-  console.log("[wordsStep] first word =", words?.[0]);
-  console.log("[wordsStep] first keys =", Object.keys((words?.[0] && typeof words?.[0] === "object") ? words[0] : {}));
-
-  const canUseRenderer = typeof window.HSK_RENDER?.renderWordCards === "function";
-
-  // A) 用你已有 renderer（前提：它能正确处理你的 word 字段）
-  if (canUseRenderer && Array.isArray(words) && words.length) {
-    const containerId = "joyWordsRendererRoot";
-
-    openModal({
-      title: `Words (${words.length})`,
-      html: `
-        <div style="padding:12px;">
-          <div style="font-size:12px;opacity:.7;margin-bottom:10px;">
-            点击单词（下一步我们接：详情卡 / 发音 / 笔顺）
-          </div>
-          <div id="${containerId}"></div>
-        </div>
-      `,
-    });
-
-    // ✅ 等待元素出现（modal 渲染是异步的，必须等）
+// ✅ 等待元素出现（modal 渲染是异步的，必须等）
 function waitForEl(id, tries = 20, interval = 50) {
   return new Promise((resolve) => {
     let n = 0;
@@ -334,41 +299,31 @@ export async function openWordsStep({ lessonId, state }) {
       `,
     });
 
-    // ✅ 等待 modal DOM 出现（稳定版）
-function waitForEl(id, tries = 20, interval = 50) {
-  return new Promise((resolve) => {
-    let n = 0;
-    const tick = () => {
-      const el = document.getElementById(id);
-      if (el) return resolve(el);
-      n++;
-      if (n >= tries) return resolve(null);
-      setTimeout(tick, interval);
-    };
-    tick();
-  });
+    // ✅ 等容器真正出现在 DOM，再渲染
+    const root = await waitForEl(containerId, 30, 50);
+    if (!root) {
+      console.warn("[wordsStep] renderer root not found, fallback list");
+      const modal = renderWordsFallback(words || [], lang);
+      openModal(modal);
+      bindWordClicks(words || [], lang);
+      return;
+    }
+
+    try {
+      const onClickWord = (w) => openWordDetail(w, lang);
+      window.HSK_RENDER.renderWordCards(root, words, onClickWord, { lang });
+      return;
+    } catch (e) {
+      console.warn("[wordsStep] renderWordCards failed, fallback:", e);
+      const modal = renderWordsFallback(words || [], lang);
+      openModal(modal);
+      bindWordClicks(words || [], lang);
+      return;
+    }
+  }
+
+  // B) fallback（永远可用）
+  const modal = renderWordsFallback(words || [], lang);
+  openModal(modal);
+  bindWordClicks(words || [], lang);
 }
-
-(async () => {
-  const root = await waitForEl(containerId, 30, 50);
-
-  if (!root) {
-    console.warn("[wordsStep] renderer root not found, fallback");
-    const modal = renderWordsFallback(words || [], lang);
-    openModal(modal);
-    bindWordClicks(words || [], lang);
-    return;
-  }
-
-  const onClickWord = (w) => openWordDetail(w, lang);
-
-  try {
-    window.HSK_RENDER.renderWordCards(root, words, onClickWord, { lang });
-  } catch (e) {
-    console.warn("[wordsStep] renderWordCards failed:", e);
-
-    const modal = renderWordsFallback(words || [], lang);
-    openModal(modal);
-    bindWordClicks(words || [], lang);
-  }
-})();
