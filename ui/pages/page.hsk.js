@@ -793,6 +793,7 @@ console.warn("[page.hsk] joyOpenStep missing", { tab, currentLessonId });
   );
 }
 
+
 /* -----------------------------
    CSS: hide inline lesson content
 ------------------------------ */
