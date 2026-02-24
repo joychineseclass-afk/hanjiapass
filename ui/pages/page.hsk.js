@@ -187,15 +187,11 @@ async function openLesson(lesson, { lv, version }) {
   const file = lesson?.file || lesson?.path || "";
   if (!file) return;
 
-  const lessonUrl = `/data/lessons/${version}/${file}`;
-
-  try {
-    err?.classList.add("hidden");
-    if (status) status.textContent = "Loading lesson...";
-
-    const lessonData = await fetch(lessonUrl, { cache: "no-store" }).then((r) => {
-      if (!r.ok) throw new Error(`HTTP ${r.status} - ${lessonUrl}`);
-      return r.json();
+      // ✅ 用 loader 统一加载 lesson detail：优先 file，兜底固定命名
+    const lessonNo = Number(lesson?.lessonNo || lesson?.lesson || lesson?.id || 1);
+    const lessonData = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, {
+      version,
+      file, // ✅ 关键：优先走 file
     });
 
     // ✅ 把 lessonData 存进 current lesson（统一入口）
