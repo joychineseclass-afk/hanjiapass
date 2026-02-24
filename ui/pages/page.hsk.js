@@ -19,6 +19,40 @@ import { mountDialoguePanel } from "../components/dialoguePanel.js";
 import { modalTpl, createModalSystem } from "../components/modalBase.js";
 import { mountDialogueModal, openDialogueModal } from "../components/dialogueModal.js";
 import { initHSKUI } from "../modules/hsk/hskUI.js";
+import { deriveLessonId } from "../core/deriveLessonId.js";
+
+function setCurrentLessonGlobal(lesson, opts = {}) {
+  const version =
+    opts.version ||
+    lesson?.version ||
+    localStorage.getItem("hsk_vocab_version") ||
+    "hsk2.0";
+
+  const lv = opts.lv ?? lesson?.lv ?? lesson?.level;
+
+  const lessonId = deriveLessonId(lesson, { lv, version });
+
+  const cur = { ...(lesson || {}), lv, version, lessonId, openedAt: Date.now() };
+
+  window.__HSK_CURRENT_LESSON_ID = lessonId;
+  window.__HSK_CURRENT_LESSON = cur;
+
+  // 可选：刷新后还能恢复“上次选中的课”
+  try {
+    localStorage.setItem(
+      "hsk_last_lesson",
+      JSON.stringify({
+        lessonId,
+        lv,
+        version,
+        file: lesson?.file || lesson?.path || lesson?.url || ""
+      })
+    );
+  } catch {}
+
+  console.log("[page.hsk] SET current lesson =>", lessonId, cur);
+  return cur;
+}
 
 function deriveLessonId(lesson, { lv, version } = {}) {
   // 1) 优先用 lesson 自带字段
@@ -300,11 +334,35 @@ async function refreshLessons(scrollIntoView = false) {
 async function openLesson(lesson, { lv, version }) {
   const lessonId = deriveLessonId(lesson, { lv, version });
 
-  if (lessonId) {
-    window.__CURRENT_LESSON_ID = lessonId;
-    window.__HSK_LAST_LESSON_ID = lessonId;
+ if (lessonId) {
+  // ✅ 新统一全局（tab / runner / 其它模块都读这个）
+  window.__HSK_CURRENT_LESSON_ID = lessonId;
+  window.__HSK_CURRENT_LESSON = {
+    ...(lesson || {}),
+    lessonId,
+    lv,
+    version,
+    openedAt: Date.now(),
+  };
+
+  // ✅ 兼容旧字段（你以前系统可能还在读这些）
+  window._CURRENT_LESSON_ID = lessonId;
+  window.__HSK_LAST_LESSON_ID = lessonId;
+
+  // ✅ 持久化：刷新也能恢复“最后一课”
+  try {
     localStorage.setItem("joy_current_lesson", lessonId);
-  }
+    localStorage.setItem(
+      "hsk_last_lesson",
+      JSON.stringify({
+        lessonId,
+        lv,
+        version,
+        file: lesson?.file || lesson?.path || lesson?.url || "",
+      })
+    );
+  } catch {}
+}
 
   console.log("[HSK] openLesson clicked:", { lessonId, lv, version, lesson });
 
@@ -537,6 +595,16 @@ function enableHSKModalMode() {
       suppressInlineLessonArea();
 
       // ✅ Need current lesson id (best effort)
+
+      if (!window.__HSK_CURRENT_LESSON_ID) {
+  try {
+    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+    if (last?.file) {
+      setCurrentLessonGlobal({ file: last.file, lv: last.lv, version: last.version, lessonId: last.lessonId });
+    }
+  } catch {}
+}
+      
 const cur = window.__HSK_CURRENT_LESSON || null;
 
 const currentLessonId =
