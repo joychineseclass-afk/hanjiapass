@@ -365,7 +365,7 @@ async function openLesson(lesson, { lv, version }) {
   const cur0 = window.__HSK_CURRENT_LESSON || {};
 
 // 1) 推导 lessonId（优先用 lesson 自带，其次用 lessonData）
-const lessonId =
+const computedLessonId =
   lesson?.lessonId ||
   lesson?.id ||
   lesson?.lesson ||
@@ -373,28 +373,23 @@ const lessonId =
   lessonData?.id ||
   "";
 
-// 2) 写入全局（重点：ID 和对象都要写）
-window.__HSK_CURRENT_LESSON_ID = String(lessonId || "");
+const lessonIdStr = String(computedLessonId || "");
+
+window.__HSK_CURRENT_LESSON_ID = lessonIdStr;
 window.__HSK_CURRENT_LESSON = {
-  ...cur0,
-  lessonId: String(lessonId || ""),
-  lessonData,                // ✅ 把 lessonData 存起来
+  ...(window.__HSK_CURRENT_LESSON || {}),
+  ...(lesson || {}),
+  lessonId: lessonIdStr,
+  lv,
+  version,
+  lessonData,            // ✅ 存 lessonData
+  file,                  // ✅ 存 file（后面恢复 last lesson 用）
   openedAt: Date.now(),
 };
 
-// 3) 可选：持久化（方便刷新后恢复）
-try {
-  localStorage.setItem("joy_current_lesson", String(lessonId || ""));
-  localStorage.setItem(
-    "hsk_last_lesson",
-    JSON.stringify({
-      lessonId: String(lessonId || ""),
-      lv,
-      version,
-      file: lesson?.file || lesson?.path || "",
-    })
-  );
-} catch {}
+// 兼容旧字段（你旧模块可能还在读）
+window._CURRENT_LESSON_ID = lessonIdStr;
+window.__HSK_LAST_LESSON_ID = lessonIdStr;
 
     
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
