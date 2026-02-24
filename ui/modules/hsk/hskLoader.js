@@ -1,10 +1,12 @@
 // /ui/modules/hsk/hskLoader.js
 // ✅ Classic Script (NO export) — registers window.HSK_LOADER
-// Provides: loadVocab(level, opts), loadLessons(level, opts)
+// Provides: loadVocab(level, opts), loadLessons(level, opts), loadLessonDetail(level, lessonNo, opts)
 //
 // ✅ Versioned paths (repo):
-//   vocab:   /data/vocab/<ver>/hsk<lv>.json
-//   lessons: /data/lessons/<ver>/hsk<lv>_lessons.json
+//   vocab:        /data/vocab/<ver>/hsk<lv>.json
+//   lessons index:/data/lessons/<ver>/hsk<lv>_lessons.json
+//   lesson detail:/data/lessons/<ver>/<file>   (preferred)
+//                /data/lessons/<ver>/hsk<lv>_lesson<no>.json (fallback)
 //
 // ✅ Version priority:
 //   opts.version -> localStorage(hsk_vocab_version) -> window.APP_VOCAB_VERSION -> default "hsk2.0"
@@ -13,7 +15,8 @@
 // - normalizes version aliases (2.0/3.0/hsk2/hsk3)
 // - 404 fallback: if hsk3.0 missing -> try hsk2.0
 // - cache keys include version+url
-// - exposes window.HSK_LOADER.getVersion() / clearCache()
+// - exposes window.HSK_LOADER.getVersion() / setVersion() / clearCache()
+// - NEW: lessonDetailUrl() + loadLessonDetail()
 
 (function () {
   const MEM_CACHE_TTL = 1000 * 60 * 30; // 30min
@@ -143,7 +146,6 @@
     if (s === "hsk3") return "hsk3.0";
     if (s === "hsk2.0" || s === "hsk3.0") return s;
 
-    // allow "HSK 2.0" / "hsk_3.0" etc
     const m = s.match(/(2\.0|3\.0)/);
     if (m) return `hsk${m[1]}`;
 
@@ -169,6 +171,17 @@
   }
   function lessonsUrl(lv, version) {
     return `/data/lessons/${version}/hsk${lv}_lessons.json`;
+  }
+
+  // ✅ NEW: lesson detail url unify
+  // - prefer file: /data/lessons/<ver>/<file>
+  // - fallback fixed: /data/lessons/<ver>/hsk<lv>_lesson<no>.json
+  function lessonDetailUrl(lv, lessonNo, version, file) {
+    const f = safeText(file);
+    if (f) return `/data/lessons/${version}/${f}`;
+    const n = Number(lessonNo || 1);
+    const no = Number.isFinite(n) && n > 0 ? n : 1;
+    return `/data/lessons/${version}/hsk${lv}_lesson${no}.json`;
   }
 
   // -----------------------------
@@ -211,6 +224,15 @@
       seen.add(item.word);
       return true;
     });
+  }
+
+  function normalizeLessonNo(lesson, i) {
+    const n =
+      Number(lesson?.lesson) ||
+      Number(lesson?.id) ||
+      Number(lesson?.no) ||
+      Number(i + 1);
+    return Number.isFinite(n) && n > 0 ? n : i + 1;
   }
 
   // -----------------------------
@@ -257,23 +279,52 @@
       ? data
       : (data && (data.lessons || data.data)) || [];
 
-    const normalized = lessons.map((l, i) => ({
-      ...l,
-      // ✅ stable defaults
-      id: l.id != null ? l.id : i + 1,
-      lesson: l.lesson != null ? l.lesson : i + 1,
-      title: l.title || `Lesson ${i + 1}`,
-      subtitle: l.subtitle || "",
-      words: Array.isArray(l.words) ? l.words : [],
-      // ✅ keep the file reference for opening the lesson file
-      file: l.file || l.path || l.filename || "",
-      // ✅ stamp version/lv into meta (handy for deriveLessonId & openLesson)
-      lv,
-      version,
-    }));
+    const normalized = lessons.map((l, i) => {
+      const lessonNo = normalizeLessonNo(l, i);
+      const file = l.file || l.path || l.filename || "";
+
+      return {
+        ...l,
+        // ✅ stable defaults
+        id: l.id != null ? l.id : lessonNo,
+        lesson: l.lesson != null ? l.lesson : lessonNo,
+        lessonNo,
+        // ✅ stable lessonId (does NOT break old fields)
+        lessonId: l.lessonId || l.id || l.lesson || `hsk${lv}_lesson${lessonNo}`,
+        title: l.title || `Lesson ${lessonNo}`,
+        subtitle: l.subtitle || "",
+        words: Array.isArray(l.words) ? l.words : [],
+        file,
+        // ✅ stamp version/lv
+        lv,
+        version,
+      };
+    });
 
     memSet(memKey, normalized);
     return normalized;
+  }
+
+  // ✅ NEW: load one lesson detail with unified url (file first, fallback fixed)
+  async function loadLessonDetail(level, lessonNo, opts = {}) {
+    const lv = normalizeLevel(level);
+    const version = getVocabVersion(opts);
+    const file = safeText(opts.file || "");
+
+    const url =
+      (window.DATA_PATHS &&
+        window.DATA_PATHS.lessonDetailUrl &&
+        window.DATA_PATHS.lessonDetailUrl(lv, lessonNo, { version, file })) ||
+      lessonDetailUrl(lv, lessonNo, version, file);
+
+    const memKey = `lessonDetail:${version}:${lv}:${lessonNo}:${url}`;
+    const cached = memGet(memKey);
+    if (cached) return cached;
+
+    const data = await fetchJson(url, { fallbackTo2: true });
+
+    memSet(memKey, data);
+    return data;
   }
 
   // ✅ Helper: force set version (UI can call this)
@@ -282,15 +333,13 @@
     try {
       localStorage.setItem("hsk_vocab_version", ver);
     } catch {}
-    // clear mem cache for lessons/vocab so switching is immediate
     memClear("vocab:");
     memClear("lessons:");
-    // optional: clear last lesson selection to avoid cross-version mismatch
+    memClear("lessonDetail:");
     try {
       localStorage.removeItem("joy_current_lesson");
       localStorage.removeItem("hsk_last_lesson");
     } catch {}
-    // also clear globals (best effort)
     window.__HSK_CURRENT_LESSON_ID = "";
     window.__HSK_CURRENT_LESSON = null;
 
@@ -301,6 +350,15 @@
   window.HSK_LOADER = {
     loadVocab,
     loadLessons,
+
+    // ✅ NEW
+    loadLessonDetail,
+    lessonDetailUrl: (lv, lessonNo, opts = {}) => {
+      const version = getVocabVersion(opts || {});
+      const file = safeText(opts?.file || "");
+      return lessonDetailUrl(normalizeLevel(lv), Number(lessonNo || 1), version, file);
+    },
+
     // extras (safe)
     getVersion: (opts) => getVocabVersion(opts || {}),
     setVersion,
