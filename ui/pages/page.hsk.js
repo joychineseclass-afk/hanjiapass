@@ -548,20 +548,30 @@ function enableHSKModalMode() {
 
   // 3) Delegate click on tab buttons
   document.addEventListener(
-    "click",
-    (e) => {
-      const t = e.target;
-      if (!(t instanceof Element)) return;
+  "click",
+  (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
 
-      // Find a likely tab button (you have buttons with "단어/회화/문법/연습/AI")
-      const btn = t.closest("button, a, [role='tab']");
-      if (!btn) return;
+    // ✅ 1️⃣ 忽略弹窗内部点击
+    if (t.closest(".joy-modal, .modal, [data-modal], .modalRoot, .modalOverlay")) {
+      return;
+    }
 
-      const label = (btn.textContent || "").trim();
-      const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+    // ✅ 2️⃣ 只处理页面顶部 tab
+    const btn = t.closest("button, a, [role='tab']");
+    if (!btn) return;
 
-      const tab = normalizeTabKey(key, label);
-      if (!tab) return;
+    const label = (btn.textContent || "").trim();
+    const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+
+    const tab = normalizeTabKey(key, label);
+    if (!tab) return;
+
+    e.preventDefault();
+
+  }
+);
 
       // ✅ Stop page switching / inline rendering
       e.preventDefault();
@@ -570,17 +580,24 @@ function enableHSKModalMode() {
       // ✅ Hide/clear the inline content area immediately
       suppressInlineLessonArea();
 
-      // ✅ Need current lesson id (best effort)
+      // ✅ Need current lesson id FIRST (before clearing UI)
 
-      if (!window.__HSK_CURRENT_LESSON_ID) {
+if (!window.__HSK_CURRENT_LESSON_ID) {
   try {
-    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+    const last = JSON.parse(
+      localStorage.getItem("hsk_last_lesson") || "null"
+    );
     if (last?.file) {
-      setCurrentLessonGlobal({ file: last.file, lv: last.lv, version: last.version, lessonId: last.lessonId });
+      setCurrentLessonGlobal({
+        file: last.file,
+        lv: last.lv,
+        version: last.version,
+        lessonId: last.lessonId,
+      });
     }
   } catch {}
 }
-      
+
 const cur = window.__HSK_CURRENT_LESSON || null;
 
 const currentLessonId =
@@ -589,17 +606,15 @@ const currentLessonId =
   cur?.id ||
   "";
 
-// ✅ If we still don't have lessonId, stop here (avoid crash)
+// ❗如果还是没有 lessonId，不要清理 UI，直接 return
 if (!currentLessonId) {
-  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
-    hasJoyOpenStep: typeof window.joyOpenStep === "function",
-    currentLessonId,
-    tab,
-    curExists: !!cur
-  });
-  // 你想要更友好也可以弹窗提示：请先选择一课
+  console.warn("[page.hsk] missing lessonId, keep modal as-is");
   return;
 }
+
+// ✅ 只有在有 lessonId 时才清理 inline
+suppressInlineLessonArea();
+  
 
 if (typeof window.joyOpenStep === "function") {
   console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
