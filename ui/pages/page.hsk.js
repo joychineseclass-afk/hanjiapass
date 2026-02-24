@@ -396,23 +396,6 @@ try {
   );
 } catch {}
 
-  const lessonId =
-  lesson?.lessonId ||
-  lesson?.id ||
-  lesson?.lesson ||
-  lessonData?.lessonId ||
-  lessonData?.id ||
-  "";
-
-window.__HSK_CURRENT_LESSON = {
-  lessonId,
-  lv,
-  version,
-  lesson,
-  lessonData
-};
-
-console.log("[HSK] current lesson set:", window.__HSK_CURRENT_LESSON);
     
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
     const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
