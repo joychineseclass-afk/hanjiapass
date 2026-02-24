@@ -90,6 +90,7 @@ export async function mount() {
 
   // ✅ Initial render lessons (and keep vocab already rendered by initHSKUI)
   await refreshLessons();
+  window.joyOpenStep = joyOpenStep;   // ✅ 关键：挂全局
   enableHSKModalMode(); // ✅ 单词/会话/语法/练习/AI 全部改为弹窗模式
 }
 
