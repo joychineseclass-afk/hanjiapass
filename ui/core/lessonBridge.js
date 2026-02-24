@@ -8,29 +8,28 @@
 import { deriveLessonId } from "./deriveLessonId.js";
 
 export async function openLesson(lesson, opts = {}) {
+  const version =
+    opts.version ||
+    lesson?.version ||
+    localStorage.getItem("hsk_vocab_version") ||
+    "hsk2.0";
 
-  const { lv, version } = opts;
+  const lv = opts.lv ?? lesson?.lv ?? lesson?.level;
 
-  // ✅ 1. 生成 lessonId
+  // ✅ 生成带版本 lessonId（强制非空）
   const lessonId = deriveLessonId(lesson, { lv, version });
 
-  // ✅ 2. 回写到 lesson
+  // ✅ 回写 + 全局注入
   lesson.lessonId = lessonId;
+  lesson.version = version;
 
-  // ✅ 3. 写入全局
   window.__HSK_CURRENT_LESSON_ID = lessonId;
+  window.__HSK_CURRENT_LESSON = { ...(lesson || {}), lessonId, version, lv, openedAt: Date.now() };
 
-  window.__HSK_CURRENT_LESSON = {
-    ...(lesson || {}),
-    lessonId,
-    lv,
-    version,
-    openedAt: Date.now()
-  };
-
-  console.log("[lessonBridge] current lesson:", window.__HSK_CURRENT_LESSON);
-
-  // 原本的逻辑继续执行
+  // 可加一条验证日志（改完就能立刻确认）
+  console.log("[lessonBridge] openLesson =>", { lessonId, version, lv, lesson });
+  
+}
 
 export function mountLessonBridge() {
   const engine = () => window.LESSON_ENGINE;
