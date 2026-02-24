@@ -562,235 +562,150 @@ function enableHSKModalMode() {
 
   // 3) Delegate click on tab buttons
   document.addEventListener(
-    "click",
-    (e) => {
-      const t = e.target;
-      if (!(t instanceof Element)) return;
+  "click",
+  (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
 
-      // Find a likely tab button (you have buttons with "단어/회화/문법/연습/AI")
-      const btn = t.closest("button, a, [role='tab']");
-      if (!btn) return;
+    // tab button
+    const btn = t.closest("button, a, [role='tab']");
+    if (!btn) return;
 
-      const label = (btn.textContent || "").trim();
-      const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+    const label = (btn.textContent || "").trim();
+    const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+    const tab = normalizeTabKey(key, label);
+    if (!tab) return;
 
-      const tab = normalizeTabKey(key, label);
-      if (!tab) return;
+    // ✅ 只保留这一套：恢复 current lesson + currentLessonId
+    let cur = window.__HSK_CURRENT_LESSON || null;
 
-      // 1) 先拿到 currentLessonId
-let cur = window.__HSK_CURRENT_LESSON || null;
-
-try {
-  const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
-  if (!cur && last) {
-    window.__HSK_CURRENT_LESSON_ID = last.lessonId || "";
-    window.__HSK_CURRENT_LESSON = {
-      lessonId: last.lessonId || "",
-      lv: last.lv,
-      version: last.version,
-      file: last.file,
-    };
-    cur = window.__HSK_CURRENT_LESSON;
-  }
-} catch {}
-
-const currentLessonId =
-  window.__HSK_CURRENT_LESSON_ID ||
-  cur?.lessonId ||
-  "";
-
-// 2) ✅ 没有课就弹一个提示（而不是直接 return 什么都不干）
-if (!currentLessonId) {
-  // 这里可以用你 already 的 generic modal
-  const MODALS = ensureHSKGenericModals();
-  MODALS.generic.open({
-    title: "레슨을 먼저 선택해주세요",
-    subtitle: "수업을 선택해야 회화/문법/연습/AI를 열 수 있어요.",
-    html: `<div class="text-sm text-gray-600">왼쪽/위쪽에서 레슨을 먼저 클릭해 주세요.</div>`,
-  });
-
-  // ✅ 你希望“只用弹窗，不显示页面内容”，那就拦截
-  e.preventDefault();
-  e.stopPropagation();
-  return;
-}
-
-// 3) 有 lessonId 才真正拦截并打开 step modal
-e.preventDefault();
-e.stopPropagation();
-
-suppressInlineLessonArea();
-
-if (typeof window.joyOpenStep === "function") {
-  window.joyOpenStep(tab, currentLessonId);
-  return;
-}
-
-      // ✅ Hide/clear the inline content area immediately
-      suppressInlineLessonArea();
-
-      // ✅ Need current lesson id (best effort)
-
-      if (!window.__HSK_CURRENT_LESSON_ID) {
-  try {
-    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
-    if (last?.file) {
-      setCurrentLessonGlobal({ file: last.file, lv: last.lv, version: last.version, lessonId: last.lessonId });
-    }
-  } catch {}
-}
-      
-// ---- inside enableHSKModalMode() click handler ----
-
-// A) 尝试拿到当前课（不强行创建）
-let cur = window.__HSK_CURRENT_LESSON || null;
-
-// B) 如果没有 current lesson，尝试从 last lesson 恢复（可选但推荐）
-if (!cur && !window.__HSK_CURRENT_LESSON_ID) {
-  try {
-    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
-    if (last?.lessonId) {
-      window.__HSK_CURRENT_LESSON_ID = last.lessonId;
-    }
-    if (last) {
-      // 仅恢复必要字段，避免结构冲突
-      window.__HSK_CURRENT_LESSON = {
-        lessonId: last.lessonId || "",
-        lv: last.lv,
-        version: last.version,
-        file: last.file,
-      };
-      cur = window.__HSK_CURRENT_LESSON;
-    }
-  } catch {}
-}
-
-// C) 再取一次 lessonId
-const currentLessonId =
-  window.__HSK_CURRENT_LESSON_ID ||
-  cur?.lessonId ||
-  cur?.id ||
-  "";
-
-// ✅ 关键修复：如果没有 lessonId，就不要拦截，让旧系统继续工作
-if (!currentLessonId) {
-  console.warn("[page.hsk] no lessonId yet → allow default behavior");
-  return; // 注意：这里不要 preventDefault/stopPropagation（确保你是在它们之前做判断）
-}
-
-// D) 有 lessonId 才开始拦截 + 弹窗
-e.preventDefault();
-e.stopPropagation();
-
-// 你想隐藏 inline 的话在这里再做
-suppressInlineLessonArea();
-
-if (typeof window.joyOpenStep === "function") {
-  window.joyOpenStep(tab, currentLessonId);
-  return;
-}
-
-console.warn("[page.hsk] joyOpenStep missing", { tab, currentLessonId });
- 
-      const lessonData = cur?.lessonData || {};
-      const lv = cur?.lv || "";
-      const version = cur?.version || "";
-
-      // For title/subtitle
-      const titleBase = pickTextAny(lessonData?.title) || "학습";
-      const subtitle = `HSK ${lv} · ${version}`;
-
-      // 4) Route to correct modal
-      if (tab === "dialogue") {
-        // Use your existing dialogue panel (dialoguePanel.js)
-        // Make sure it's mounted somewhere (you already do mountDialoguePanel in mount()).
-        const dialogue =
-          lessonData?.dialogue ||
-          lessonData?.conversation ||
-          lessonData?.content ||
-          [];
-
-        // Open dialogue modal (window.DIALOGUE_PANEL)
-        if (window.DIALOGUE_PANEL?.open) {
-          window.DIALOGUE_PANEL.open({
-            title: `${titleBase} · 회화`,
-            subtitle,
-            dialogue,
-            lang: "ko",
-          });
-        } else {
-          // fallback: show generic
-          MODALS.generic.open({
-            title: `${titleBase} · 회화`,
-            subtitle,
-            html: `<div class="p-4 text-sm text-gray-500">DIALOGUE_PANEL not mounted.</div>`,
-          });
+    // try restore from localStorage
+    if (!cur || !window.__HSK_CURRENT_LESSON_ID) {
+      try {
+        const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+        if (last) {
+          if (!window.__HSK_CURRENT_LESSON_ID && last.lessonId) {
+            window.__HSK_CURRENT_LESSON_ID = last.lessonId || "";
+          }
+          if (!cur) {
+            window.__HSK_CURRENT_LESSON = {
+              lessonId: last.lessonId || "",
+              lv: last.lv,
+              version: last.version,
+              file: last.file,
+            };
+            cur = window.__HSK_CURRENT_LESSON;
+          }
         }
-        return;
-      }
+      } catch {}
+    }
 
-      if (tab === "grammar") {
-        const grammar =
-          lessonData?.grammar ||
-          lessonData?.grammars ||
-          lessonData?.patterns ||
-          lessonData?.points ||
-          lessonData?.grammarPoints ||
-          [];
+    const currentLessonId =
+      window.__HSK_CURRENT_LESSON_ID ||
+      cur?.lessonId ||
+      cur?.id ||
+      "";
 
-        MODALS.grammar.open({
-          title: `${titleBase} · 문법`,
+    // ✅ 没选课：弹提示（并拦截默认行为）
+    if (!currentLessonId) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      MODALS.generic.open({
+        title: "레슨을 먼저 선택해주세요",
+        subtitle: "수업을 선택해야 회화/문법/연습/AI를 열 수 있어요.",
+        html: `<div class="text-sm text-gray-600">레슨을 먼저 클릭해 주세요.</div>`,
+      });
+      return;
+    }
+
+    // ✅ 有课：拦截默认行为 → 只用弹窗
+    e.preventDefault();
+    e.stopPropagation();
+
+    suppressInlineLessonArea();
+
+    // ✅ 优先用 StepRunner/Engine
+    if (typeof window.joyOpenStep === "function") {
+      window.joyOpenStep(tab, currentLessonId);
+      return;
+    }
+
+    // ✅ fallback：用当前 lessonData 打开简易 modal
+    const lessonData = cur?.lessonData || {};
+    const lv = cur?.lv || "";
+    const version = cur?.version || "";
+    const titleBase = pickTextAny(lessonData?.title) || "학습";
+    const subtitle = `HSK ${lv} · ${version}`;
+
+    if (tab === "dialogue") {
+      const dialogue =
+        lessonData?.dialogue ||
+        lessonData?.conversation ||
+        lessonData?.content ||
+        [];
+      if (window.DIALOGUE_PANEL?.open) {
+        window.DIALOGUE_PANEL.open({
+          title: `${titleBase} · 회화`,
           subtitle,
-          data: grammar,
+          dialogue,
+          lang: "ko",
         });
-        return;
-      }
-
-      if (tab === "practice") {
-        const practice =
-          lessonData?.practice ||
-          lessonData?.exercises ||
-          lessonData?.drills ||
-          lessonData?.questions ||
-          [];
-
-        MODALS.practice.open({
-          title: `${titleBase} · 연습`,
-          subtitle,
-          data: practice,
-        });
-        return;
-      }
-
-      if (tab === "ai") {
-        // You may already have AI panel. We show a modal wrapper here.
-        MODALS.ai.open({
-          title: `${titleBase} · AI`,
-          subtitle,
-          lessonData,
-        });
-        return;
-      }
-
-      if (tab === "words") {
-        // “단어” tab: in your current UI, words are already the grid.
-        // We can optionally scroll to grid + show a small modal summary.
-        document.querySelector("#hskGrid")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+      } else {
         MODALS.generic.open({
-          title: `${titleBase} · 단어`,
+          title: `${titleBase} · 회화`,
           subtitle,
-          html: `
-            <div class="p-4">
-              <div class="text-sm text-gray-600">단어는 아래 카드 그리드에서 학습해요.</div>
-              <div class="text-xs text-gray-400 mt-2">(카드 클릭 → 배우기/AI 등)</div>
-            </div>
-          `,
+          html: `<div class="p-4 text-sm text-gray-500">DIALOGUE_PANEL not mounted.</div>`,
         });
-        return;
       }
-    },
-    true // capture = true, so we intercept before other handlers
-  );
+      return;
+    }
+
+    if (tab === "grammar") {
+      const grammar =
+        lessonData?.grammar ||
+        lessonData?.grammars ||
+        lessonData?.patterns ||
+        lessonData?.points ||
+        lessonData?.grammarPoints ||
+        [];
+      MODALS.grammar.open({ title: `${titleBase} · 문법`, subtitle, data: grammar });
+      return;
+    }
+
+    if (tab === "practice") {
+      const practice =
+        lessonData?.practice ||
+        lessonData?.exercises ||
+        lessonData?.drills ||
+        lessonData?.questions ||
+        [];
+      MODALS.practice.open({ title: `${titleBase} · 연습`, subtitle, data: practice });
+      return;
+    }
+
+    if (tab === "ai") {
+      MODALS.ai.open({ title: `${titleBase} · AI`, subtitle, lessonData });
+      return;
+    }
+
+    if (tab === "words") {
+      document.querySelector("#hskGrid")?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+      MODALS.generic.open({
+        title: `${titleBase} · 단어`,
+        subtitle,
+        html: `
+          <div class="p-4">
+            <div class="text-sm text-gray-600">단어는 아래 카드 그리드에서 학습해요.</div>
+            <div class="text-xs text-gray-400 mt-2">(카드 클릭 → 배우기/AI 등)</div>
+          </div>
+        `,
+      });
+      return;
+    }
+  },
+  true
+);
 }
 
 
