@@ -547,7 +547,7 @@ function enableHSKModalMode() {
   const MODALS = ensureHSKGenericModals();
 
   // 3) Delegate click on tab buttons
-  document.addEventListener(
+document.addEventListener(
   "click",
   (e) => {
     const t = e.target;
@@ -568,65 +568,59 @@ function enableHSKModalMode() {
     const tab = normalizeTabKey(key, label);
     if (!tab) return;
 
+    // ✅ Stop page switching / inline rendering
     e.preventDefault();
+    e.stopPropagation();
 
-  }
+    // ✅ 先确保有 lessonId（必要时从 localStorage 恢复）
+    if (!window.__HSK_CURRENT_LESSON_ID) {
+      try {
+        const last = JSON.parse(
+          localStorage.getItem("hsk_last_lesson") || "null"
+        );
+        if (last?.file) {
+          setCurrentLessonGlobal({
+            file: last.file,
+            lv: last.lv,
+            version: last.version,
+            lessonId: last.lessonId,
+          });
+        }
+      } catch {}
+    }
+
+    const cur = window.__HSK_CURRENT_LESSON || null;
+
+    const currentLessonId =
+      window.__HSK_CURRENT_LESSON_ID ||
+      cur?.lessonId ||
+      cur?.id ||
+      "";
+
+    // ❗如果没有 lessonId，直接停止
+    if (!currentLessonId) {
+      console.warn("[page.hsk] missing lessonId, keep modal as-is");
+      return;
+    }
+
+    // ✅ 有 lessonId 才清理 inline
+    suppressInlineLessonArea();
+
+    // ✅ 调用 step
+    if (typeof window.joyOpenStep === "function") {
+      console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
+      window.joyOpenStep(tab, currentLessonId);
+      return;
+    }
+
+    console.warn("[page.hsk] joyOpenStep missing:", {
+      tab,
+      currentLessonId,
+    });
+  },
+  true // capture = true
 );
 
-      // ✅ Stop page switching / inline rendering
-      e.preventDefault();
-      e.stopPropagation();
-
-      // ✅ Hide/clear the inline content area immediately
-      suppressInlineLessonArea();
-
-      // ✅ Need current lesson id FIRST (before clearing UI)
-
-if (!window.__HSK_CURRENT_LESSON_ID) {
-  try {
-    const last = JSON.parse(
-      localStorage.getItem("hsk_last_lesson") || "null"
-    );
-    if (last?.file) {
-      setCurrentLessonGlobal({
-        file: last.file,
-        lv: last.lv,
-        version: last.version,
-        lessonId: last.lessonId,
-      });
-    }
-  } catch {}
-}
-
-const cur = window.__HSK_CURRENT_LESSON || null;
-
-const currentLessonId =
-  window.__HSK_CURRENT_LESSON_ID ||
-  cur?.lessonId ||
-  cur?.id ||
-  "";
-
-// ❗如果还是没有 lessonId，不要清理 UI，直接 return
-if (!currentLessonId) {
-  console.warn("[page.hsk] missing lessonId, keep modal as-is");
-  return;
-}
-
-// ✅ 只有在有 lessonId 时才清理 inline
-suppressInlineLessonArea();
-  
-
-if (typeof window.joyOpenStep === "function") {
-  console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
-  window.joyOpenStep(tab, currentLessonId);
-  return;
-}
-
-console.warn("[page.hsk] joyOpenStep missing:", {
-  tab,
-  currentLessonId
-});
- 
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
       const version = cur?.version || "";
