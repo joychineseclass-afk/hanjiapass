@@ -539,8 +539,6 @@ function enableHSKModalMode() {
       // ✅ Need current lesson id (best effort)
 const cur = window.__HSK_CURRENT_LESSON || null;
 
-const cur = window.__HSK_CURRENT_LESSON;
-
 const currentLessonId =
   window.__HSK_CURRENT_LESSON_ID ||
   cur?.lessonId ||
