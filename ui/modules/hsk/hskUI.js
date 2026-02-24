@@ -18,18 +18,23 @@ export function initHSKUI(opts = {}) {
     hskVersion.value = saved;
 
     hskVersion.addEventListener("change", async () => {
-      localStorage.setItem("hsk_vocab_version", hskVersion.value);
-      // ✅ PATCH: 切换版本后清理当前 level 缓存，避免拿到旧版本缓存
-      try {
-        CACHE.clear();
-      } catch {}
-      // ✅ NEW: 清理 lesson detail 缓存（不同版本不同课件）
-      try {
-        LESSON_DETAIL_CACHE.clear();
-      } catch {}
+      // ✅ 用 loader 的版本管理（会自动 normalize + 清内部缓存）
+if (window.HSK_LOADER?.setVersion) {
+  window.HSK_LOADER.setVersion(hskVersion.value);
+} else {
+  localStorage.setItem("hsk_vocab_version", hskVersion.value);
+}
 
-      // 重新加载当前等级数据
-      hskLevel?.dispatchEvent(new Event("change"));
+// ✅ 保留你原有的缓存机制（双保险）
+try { CACHE.clear(); } catch {}
+try { LESSON_DETAIL_CACHE.clear(); } catch {}
+
+// ✅ 清当前课程全局，避免跨版本 lessonId 污染
+window.__HSK_CURRENT_LESSON_ID = "";
+window.__HSK_CURRENT_LESSON = null;
+
+// ✅ 触发当前 level 重新加载
+hskLevel?.dispatchEvent(new Event("change"));
     });
   }
 
