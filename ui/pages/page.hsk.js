@@ -718,8 +718,8 @@ document.addEventListener(
         return;
       }
     },
-    true // capture = true, so we intercept before other handlers
-  );
+      true // capture = true, so we intercept before other handlers
+    );
 }
 
 /* -----------------------------
