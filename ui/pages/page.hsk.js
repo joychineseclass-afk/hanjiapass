@@ -547,80 +547,71 @@ function enableHSKModalMode() {
   const MODALS = ensureHSKGenericModals();
 
   // 3) Delegate click on tab buttons
-document.addEventListener(
-  "click",
-  (e) => {
-    const t = e.target;
-    if (!(t instanceof Element)) return;
+  document.addEventListener(
+    "click",
+    (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
 
-    // ✅ 1️⃣ 忽略弹窗内部点击
-    if (t.closest(".joy-modal, .modal, [data-modal], .modalRoot, .modalOverlay")) {
-      return;
+      // Find a likely tab button (you have buttons with "단어/회화/문법/연습/AI")
+      const btn = t.closest("button, a, [role='tab']");
+      if (!btn) return;
+
+      const label = (btn.textContent || "").trim();
+      const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+
+      const tab = normalizeTabKey(key, label);
+      if (!tab) return;
+
+      // ✅ Stop page switching / inline rendering
+      e.preventDefault();
+      e.stopPropagation();
+
+      // ✅ Hide/clear the inline content area immediately
+      suppressInlineLessonArea();
+
+      // ✅ Need current lesson id (best effort)
+
+      if (!window.__HSK_CURRENT_LESSON_ID) {
+  try {
+    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+    if (last?.file) {
+      setCurrentLessonGlobal({ file: last.file, lv: last.lv, version: last.version, lessonId: last.lessonId });
     }
+  } catch {}
+}
+      
+const cur = window.__HSK_CURRENT_LESSON || null;
 
-    // ✅ 2️⃣ 只处理页面顶部 tab
-    const btn = t.closest("button, a, [role='tab']");
-    if (!btn) return;
+const currentLessonId =
+  window.__HSK_CURRENT_LESSON_ID ||
+  cur?.lessonId ||
+  cur?.id ||
+  "";
 
-    const label = (btn.textContent || "").trim();
-    const key = btn.getAttribute("data-tab") || btn.getAttribute("data-key") || "";
+// ✅ If we still don't have lessonId, stop here (avoid crash)
+if (!currentLessonId) {
+  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
+    hasJoyOpenStep: typeof window.joyOpenStep === "function",
+    currentLessonId,
+    tab,
+    curExists: !!cur
+  });
+  // 你想要更友好也可以弹窗提示：请先选择一课
+  return;
+}
 
-    const tab = normalizeTabKey(key, label);
-    if (!tab) return;
+if (typeof window.joyOpenStep === "function") {
+  console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
+  window.joyOpenStep(tab, currentLessonId);
+  return;
+}
 
-    // ✅ Stop page switching / inline rendering
-    e.preventDefault();
-    e.stopPropagation();
-
-    // ✅ 先确保有 lessonId（必要时从 localStorage 恢复）
-    if (!window.__HSK_CURRENT_LESSON_ID) {
-      try {
-        const last = JSON.parse(
-          localStorage.getItem("hsk_last_lesson") || "null"
-        );
-        if (last?.file) {
-          setCurrentLessonGlobal({
-            file: last.file,
-            lv: last.lv,
-            version: last.version,
-            lessonId: last.lessonId,
-          });
-        }
-      } catch {}
-    }
-
-    const cur = window.__HSK_CURRENT_LESSON || null;
-
-    const currentLessonId =
-      window.__HSK_CURRENT_LESSON_ID ||
-      cur?.lessonId ||
-      cur?.id ||
-      "";
-
-    // ❗如果没有 lessonId，直接停止
-    if (!currentLessonId) {
-      console.warn("[page.hsk] missing lessonId, keep modal as-is");
-      return;
-    }
-
-    // ✅ 有 lessonId 才清理 inline
-    suppressInlineLessonArea();
-
-    // ✅ 调用 step
-    if (typeof window.joyOpenStep === "function") {
-      console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
-      window.joyOpenStep(tab, currentLessonId);
-      return;
-    }
-
-    console.warn("[page.hsk] joyOpenStep missing:", {
-      tab,
-      currentLessonId,
-    });
-  },
-  true // capture = true
-);
-
+console.warn("[page.hsk] joyOpenStep missing:", {
+  tab,
+  currentLessonId
+});
+ 
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
       const version = cur?.version || "";
@@ -717,9 +708,9 @@ document.addEventListener(
         });
         return;
       }
-    ,
-      true // capture = true, so we intercept before other handlers
-    );
+    },
+    true // capture = true, so we intercept before other handlers
+  );
 }
 
 /* -----------------------------
