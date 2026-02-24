@@ -294,6 +294,7 @@ async function refreshLessons(scrollIntoView = false) {
     lessonsEl,
     lessons,
     async (lesson) => {
+      setCurrentLessonGlobal(lesson, { lv, version });
       await openLesson(lesson, { lv, version });
     },
     { lang: "ko" }
@@ -361,7 +362,41 @@ async function openLesson(lesson, { lv, version }) {
       if (!r.ok) throw new Error(`HTTP ${r.status} - ${lessonUrl}`);
       return r.json();
     });
-    const lessonId =
+  const cur0 = window.__HSK_CURRENT_LESSON || {};
+
+// 1) 推导 lessonId（优先用 lesson 自带，其次用 lessonData）
+const lessonId =
+  lesson?.lessonId ||
+  lesson?.id ||
+  lesson?.lesson ||
+  lessonData?.lessonId ||
+  lessonData?.id ||
+  "";
+
+// 2) 写入全局（重点：ID 和对象都要写）
+window.__HSK_CURRENT_LESSON_ID = String(lessonId || "");
+window.__HSK_CURRENT_LESSON = {
+  ...cur0,
+  lessonId: String(lessonId || ""),
+  lessonData,                // ✅ 把 lessonData 存起来
+  openedAt: Date.now(),
+};
+
+// 3) 可选：持久化（方便刷新后恢复）
+try {
+  localStorage.setItem("joy_current_lesson", String(lessonId || ""));
+  localStorage.setItem(
+    "hsk_last_lesson",
+    JSON.stringify({
+      lessonId: String(lessonId || ""),
+      lv,
+      version,
+      file: lesson?.file || lesson?.path || "",
+    })
+  );
+} catch {}
+
+  const lessonId =
   lesson?.lessonId ||
   lesson?.id ||
   lesson?.lesson ||
