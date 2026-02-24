@@ -577,9 +577,54 @@ function enableHSKModalMode() {
       const tab = normalizeTabKey(key, label);
       if (!tab) return;
 
-      // ✅ Stop page switching / inline rendering
-      e.preventDefault();
-      e.stopPropagation();
+      // 1) 先拿到 currentLessonId
+let cur = window.__HSK_CURRENT_LESSON || null;
+
+try {
+  const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+  if (!cur && last) {
+    window.__HSK_CURRENT_LESSON_ID = last.lessonId || "";
+    window.__HSK_CURRENT_LESSON = {
+      lessonId: last.lessonId || "",
+      lv: last.lv,
+      version: last.version,
+      file: last.file,
+    };
+    cur = window.__HSK_CURRENT_LESSON;
+  }
+} catch {}
+
+const currentLessonId =
+  window.__HSK_CURRENT_LESSON_ID ||
+  cur?.lessonId ||
+  "";
+
+// 2) ✅ 没有课就弹一个提示（而不是直接 return 什么都不干）
+if (!currentLessonId) {
+  // 这里可以用你 already 的 generic modal
+  const MODALS = ensureHSKGenericModals();
+  MODALS.generic.open({
+    title: "레슨을 먼저 선택해주세요",
+    subtitle: "수업을 선택해야 회화/문법/연습/AI를 열 수 있어요.",
+    html: `<div class="text-sm text-gray-600">왼쪽/위쪽에서 레슨을 먼저 클릭해 주세요.</div>`,
+  });
+
+  // ✅ 你希望“只用弹窗，不显示页面内容”，那就拦截
+  e.preventDefault();
+  e.stopPropagation();
+  return;
+}
+
+// 3) 有 lessonId 才真正拦截并打开 step modal
+e.preventDefault();
+e.stopPropagation();
+
+suppressInlineLessonArea();
+
+if (typeof window.joyOpenStep === "function") {
+  window.joyOpenStep(tab, currentLessonId);
+  return;
+}
 
       // ✅ Hide/clear the inline content area immediately
       suppressInlineLessonArea();
