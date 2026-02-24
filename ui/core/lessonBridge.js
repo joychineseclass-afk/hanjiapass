@@ -4,6 +4,34 @@
 // - modal:close     -> markDone(currentStep) + next()
 // - keep decoupled from UI components
 
+// core/lessonBridge.js
+import { deriveLessonId } from "./deriveLessonId.js";
+
+export async function openLesson(lesson, opts = {}) {
+
+  const { lv, version } = opts;
+
+  // ✅ 1. 生成 lessonId
+  const lessonId = deriveLessonId(lesson, { lv, version });
+
+  // ✅ 2. 回写到 lesson
+  lesson.lessonId = lessonId;
+
+  // ✅ 3. 写入全局
+  window.__HSK_CURRENT_LESSON_ID = lessonId;
+
+  window.__HSK_CURRENT_LESSON = {
+    ...(lesson || {}),
+    lessonId,
+    lv,
+    version,
+    openedAt: Date.now()
+  };
+
+  console.log("[lessonBridge] current lesson:", window.__HSK_CURRENT_LESSON);
+
+  // 原本的逻辑继续执行
+
 export function mountLessonBridge() {
   const engine = () => window.LESSON_ENGINE;
 
