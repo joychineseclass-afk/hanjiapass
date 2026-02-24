@@ -581,36 +581,57 @@ function enableHSKModalMode() {
   } catch {}
 }
       
-const cur = window.__HSK_CURRENT_LESSON || null;
+// ---- inside enableHSKModalMode() click handler ----
 
+// A) 尝试拿到当前课（不强行创建）
+let cur = window.__HSK_CURRENT_LESSON || null;
+
+// B) 如果没有 current lesson，尝试从 last lesson 恢复（可选但推荐）
+if (!cur && !window.__HSK_CURRENT_LESSON_ID) {
+  try {
+    const last = JSON.parse(localStorage.getItem("hsk_last_lesson") || "null");
+    if (last?.lessonId) {
+      window.__HSK_CURRENT_LESSON_ID = last.lessonId;
+    }
+    if (last) {
+      // 仅恢复必要字段，避免结构冲突
+      window.__HSK_CURRENT_LESSON = {
+        lessonId: last.lessonId || "",
+        lv: last.lv,
+        version: last.version,
+        file: last.file,
+      };
+      cur = window.__HSK_CURRENT_LESSON;
+    }
+  } catch {}
+}
+
+// C) 再取一次 lessonId
 const currentLessonId =
   window.__HSK_CURRENT_LESSON_ID ||
   cur?.lessonId ||
   cur?.id ||
   "";
 
-// ✅ If we still don't have lessonId, stop here (avoid crash)
+// ✅ 关键修复：如果没有 lessonId，就不要拦截，让旧系统继续工作
 if (!currentLessonId) {
-  console.warn("[page.hsk] joyOpenStep missing or lessonId missing:", {
-    hasJoyOpenStep: typeof window.joyOpenStep === "function",
-    currentLessonId,
-    tab,
-    curExists: !!cur
-  });
-  // 你想要更友好也可以弹窗提示：请先选择一课
-  return;
+  console.warn("[page.hsk] no lessonId yet → allow default behavior");
+  return; // 注意：这里不要 preventDefault/stopPropagation（确保你是在它们之前做判断）
 }
 
+// D) 有 lessonId 才开始拦截 + 弹窗
+e.preventDefault();
+e.stopPropagation();
+
+// 你想隐藏 inline 的话在这里再做
+suppressInlineLessonArea();
+
 if (typeof window.joyOpenStep === "function") {
-  console.log("[page.hsk] joyOpenStep:", tab, currentLessonId);
   window.joyOpenStep(tab, currentLessonId);
   return;
 }
 
-console.warn("[page.hsk] joyOpenStep missing:", {
-  tab,
-  currentLessonId
-});
+console.warn("[page.hsk] joyOpenStep missing", { tab, currentLessonId });
  
       const lessonData = cur?.lessonData || {};
       const lv = cur?.lv || "";
