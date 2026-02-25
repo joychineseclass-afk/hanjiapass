@@ -1,5 +1,6 @@
 // /ui/pages/page.hsk.js
 // ✅ HSK Page Controller — Slim (router-compatible)
+// ✅ 关键：不再调用 initHSKUI（旧方格目录就是它渲染的）
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -8,7 +9,6 @@ import { mountLearnPanel } from "../components/learnPanel.js";
 import { mountDialoguePanel } from "../components/dialoguePanel.js";
 import { mountDialogueModal } from "../components/dialogueModal.js";
 
-import { initHSKUI } from "../modules/hsk/hskUI.js";
 import { renderWordCards, renderLessonList } from "../modules/hsk/hskRenderer.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
@@ -18,16 +18,19 @@ import {
 } from "../modules/hsk/lessonSession.js";
 import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
 
-let hskApi = null;
+let mounted = false;
 
 export async function mount() {
+  if (mounted) return;
+  mounted = true;
+
   const ok = mountLayout();
   if (!ok) return;
 
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ ensure globals exist (loader/history/etc)
+  // ✅ ensure globals exist (loader/history)
   await ensureHSKDeps();
 
   // ✅ Default version (keep user's last selection)
@@ -42,30 +45,23 @@ export async function mount() {
   const verSel = document.getElementById("hskVersion");
   if (verSel) verSel.value = getCurrentVersion();
 
-  // ✅ init UI
-  hskApi = initHSKUI({
-    defaultLevel: 1,
-    autoFocusSearch: false,
-    lang: "ko",
-  });
-
-  // ✅ Bind events
+  // ✅ Bind events (level/version changes)
   bindHSKEvents();
 
   // ✅ Initial render lessons
- 
+  await refreshLessons();
 
-  // ✅ Modal mode
+  // ✅ Modal mode: tabs open modals only (kids mode)
   enableHSKModalMode();
 }
 
 export async function unmount() {
-  try {
-    hskApi?.destroy?.();
-  } catch {}
-  hskApi = null;
+  mounted = false;
 }
 
+/* ===============================
+   Layout + Global components
+================================== */
 function mountLayout() {
   const navRoot = document.getElementById("siteNav");
   const app = document.getElementById("app");
@@ -99,27 +95,27 @@ function applyI18nIfAvailable() {
 }
 
 /* ===============================
-   ✅ Events
+   Events
 ================================== */
 function bindHSKEvents() {
   const levelSel = document.getElementById("hskLevel");
   const verSel = document.getElementById("hskVersion");
 
   levelSel?.addEventListener("change", async () => {
- 
+    await refreshLessons(true);
   });
 
   verSel?.addEventListener("change", async () => {
-    const v = verSel?.value || "hsk2.0";
+    const v = verSel.value || "hsk2.0";
     try {
       localStorage.setItem("hsk_vocab_version", v);
     } catch {}
-    await refreshAll();
+    await refreshLessons(true);
   });
 }
 
 /* ===============================
-   ✅ Helpers to read current UI
+   Helpers
 ================================== */
 function getCurrentLevel() {
   const levelSel = document.getElementById("hskLevel");
@@ -130,53 +126,15 @@ function getCurrentLevel() {
 
 function getCurrentVersion() {
   const verSel = document.getElementById("hskVersion");
-  return verSel?.value || safeText(tryGetLS("hsk_vocab_version")) || "hsk2.0";
-}
-
-function tryGetLS(key) {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return "";
-  }
-}
-
-function safeText(x) {
-  return String(x ?? "").trim();
-}
-
-async function fetchJson(url) {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`HTTP ${res.status} - ${url}`);
-  return res.json();
-}
-
-function fallbackLessonDetailUrl(lv, lessonNo, version) {
-  const L = safeText(lv || "1");
-  const N = Number(lessonNo) || 1;
-  const V = safeText(version || "hsk2.0");
-  return `/data/lessons/${V}/hsk${L}_lesson${N}.json`;
-}
-
-async function loadLessonDetailSafe(lv, lessonNo, { version, file } = {}) {
-  // 1) loader provides it
-  if (window.HSK_LOADER?.loadLessonDetail) {
-    return window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version, file });
-  }
-
-  // 2) file path provided (absolute or relative)
-  const f = safeText(file);
-  if (f) {
-    const url = f.startsWith("/") ? f : `/data/lessons/${safeText(version)}/${f}`;
-    return fetchJson(url);
-  }
-
-  // 3) fallback naming
-  return fetchJson(fallbackLessonDetailUrl(lv, lessonNo, version));
+  return (
+    verSel?.value ||
+    localStorage.getItem("hsk_vocab_version") ||
+    "hsk2.0"
+  );
 }
 
 /* ===============================
-   ✅ Refresh lessons list
+   Refresh lessons list (纵向目录)
 ================================== */
 async function refreshLessons(scrollIntoView = false) {
   const lv = getCurrentLevel();
@@ -184,7 +142,16 @@ async function refreshLessons(scrollIntoView = false) {
 
   const lessonsWrap = document.getElementById("hskLessonsWrap");
   const lessonsEl = document.getElementById("hskLessons");
-  if (!lessonsWrap || !lessonsEl) return;
+  const grid = document.getElementById("hskGrid");
+  const err = document.getElementById("hskError");
+  const status = document.getElementById("hskStatus");
+
+  if (err) err.classList.add("hidden");
+
+  if (!lessonsWrap || !lessonsEl) {
+    console.warn("[HSK] missing lessons containers: #hskLessonsWrap/#hskLessons");
+    return;
+  }
 
   let lessons = null;
   try {
@@ -194,14 +161,17 @@ async function refreshLessons(scrollIntoView = false) {
     lessons = null;
   }
 
-  if (!Array.isArray(lessons) || lessons.length === 0) {
+  if (!lessons || !lessons.length) {
     lessonsWrap.classList.add("hidden");
     lessonsEl.innerHTML = "";
+    if (status) status.textContent = "";
+    if (grid) grid.innerHTML = "";
     return;
   }
 
   lessonsWrap.classList.remove("hidden");
 
+  // ✅ 纵向目录渲染（不是方格）
   renderLessonList(
     lessonsEl,
     lessons,
@@ -212,87 +182,54 @@ async function refreshLessons(scrollIntoView = false) {
     { lang: "ko" }
   );
 
+  if (status) status.textContent = `HSK ${lv} (${lessons.length})`;
+
   if (scrollIntoView) {
-    try {
-      lessonsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
-    } catch {}
+    lessonsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
 /* ===============================
-   ✅ Open one lesson → load lesson file → filter vocab → render cards
+   Open one lesson → load detail → filter vocab → render word cards
 ================================== */
 async function openLesson(lesson, { lv, version }) {
+  const grid = document.getElementById("hskGrid");
   const err = document.getElementById("hskError");
   const status = document.getElementById("hskStatus");
+  if (!grid) return;
 
   try {
     err?.classList.add("hidden");
-    if (status) status.textContent = "Loading lesson...";
 
-    // 1) 记录当前课（全局）
-    setCurrentLessonGlobal(lesson, { lv, version });
+    const file = lesson?.file || lesson?.path || "";
+    const lessonNo = Number(lesson?.lessonNo || lesson?.lesson || lesson?.id || 1);
 
-    // 2) ✅ 启动 LessonEngine（StepRunner 会监听 lesson:state 然后渲染那排按钮）
-    const engine = window.LESSON_ENGINE;
-    if (!engine?.start) throw new Error("LESSON_ENGINE missing. Check ensureHSKDeps().");
-
-    // lessonId：尽量稳定
-    const lessonId =
-      String(lesson?.lessonId || lesson?.id || lesson?.lesson || "").trim() ||
-      `hsk${lv}_lesson${Number(lesson?.lesson || lesson?.id || 1)}`;
-
-    engine.start({
-      lv,
+    const lessonData = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, {
       version,
-      lessonId,
-      lesson, // 传进去给各 step 使用
+      file, // ✅ 优先走 file
     });
 
+    setLessonDataOnCurrent({ lesson, lv, version, file, lessonData });
+
+    const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
+    const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
+    const set = new Set(words);
+
+    const lessonWords = Array.isArray(vocab)
+      ? vocab.filter((x) => set.has(x.word))
+      : [];
+
+    renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
+
     if (status) {
-      const label = lesson?.lesson || lesson?.id || "";
-      status.textContent = `Lesson ${label} ready`;
+      const label = lesson?.title?.ko || lesson?.title?.zh || lesson?.lesson || lesson?.id || lessonNo;
+      status.textContent = `Lesson ${label} (${lessonWords.length}/${words.length})`;
     }
   } catch (e) {
     console.error(e);
     if (status) status.textContent = "";
     if (err) {
-      err.textContent = `Lesson open failed: ${e.message || e}`;
-      err.classList.remove("hidden");
-    }
-  }
-}
-
-/* ===============================
-   ✅ Full refresh on version change
-================================== */
-async function refreshAll() {
-  const lv = getCurrentLevel();
-  const version = getCurrentVersion();
-
-  const err = document.getElementById("hskError");
-  const status = document.getElementById("hskStatus");
-  const grid = document.getElementById("hskGrid");
-
-  try {
-    err?.classList.add("hidden");
-    if (status) status.textContent = "Reloading...";
-
-    
-
-    if (grid) {
-      const vocab = await window.HSK_LOADER?.loadVocab?.(lv, { version });
-      const vocabList = Array.isArray(vocab) ? vocab : [];
-      renderWordCards(grid, vocabList, undefined, { lang: "ko" });
-      if (status) status.textContent = `HSK ${lv} (${vocabList.length})`;
-    } else {
-      if (status) status.textContent = "";
-    }
-  } catch (e) {
-    console.error(e);
-    if (status) status.textContent = "";
-    if (err) {
-      err.textContent = `Reload failed: ${e?.message || e}`;
+      err.textContent = `Lesson load failed: ${e?.message || e}`;
       err.classList.remove("hidden");
     }
   }
