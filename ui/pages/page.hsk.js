@@ -27,33 +27,35 @@ export async function mount() {
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ ensure globals exist (loader/history)
+  // ✅ ensure globals exist (loader/history/etc)
   await ensureHSKDeps();
 
   // ✅ Default version (keep user's last selection)
-  localStorage.setItem(
-    "hsk_vocab_version",
-    localStorage.getItem("hsk_vocab_version") || "hsk2.0"
-  );
+  try {
+    localStorage.setItem(
+      "hsk_vocab_version",
+      localStorage.getItem("hsk_vocab_version") || "hsk2.0"
+    );
+  } catch {}
 
   // ✅ Sync version select UI
   const verSel = document.getElementById("hskVersion");
-  if (verSel) verSel.value = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  if (verSel) verSel.value = getCurrentVersion();
 
-  // ✅ init UI (your stable UI)
+  // ✅ init UI
   hskApi = initHSKUI({
     defaultLevel: 1,
     autoFocusSearch: false,
     lang: "ko",
   });
 
-  // ✅ Bind events (level/version changes)
+  // ✅ Bind events
   bindHSKEvents();
 
   // ✅ Initial render lessons
   await refreshLessons();
 
-  // ✅ Modal mode: tabs open modals only
+  // ✅ Modal mode
   enableHSKModalMode();
 }
 
@@ -108,8 +110,10 @@ function bindHSKEvents() {
   });
 
   verSel?.addEventListener("change", async () => {
-    const v = verSel.value || "hsk2.0";
-    localStorage.setItem("hsk_vocab_version", v);
+    const v = verSel?.value || "hsk2.0";
+    try {
+      localStorage.setItem("hsk_vocab_version", v);
+    } catch {}
     await refreshAll();
   });
 }
@@ -126,11 +130,49 @@ function getCurrentLevel() {
 
 function getCurrentVersion() {
   const verSel = document.getElementById("hskVersion");
-  return (
-    verSel?.value ||
-    localStorage.getItem("hsk_vocab_version") ||
-    "hsk2.0"
-  );
+  return verSel?.value || safeText(tryGetLS("hsk_vocab_version")) || "hsk2.0";
+}
+
+function tryGetLS(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return "";
+  }
+}
+
+function safeText(x) {
+  return String(x ?? "").trim();
+}
+
+async function fetchJson(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`HTTP ${res.status} - ${url}`);
+  return res.json();
+}
+
+function fallbackLessonDetailUrl(lv, lessonNo, version) {
+  const L = safeText(lv || "1");
+  const N = Number(lessonNo) || 1;
+  const V = safeText(version || "hsk2.0");
+  return `/data/lessons/${V}/hsk${L}_lesson${N}.json`;
+}
+
+async function loadLessonDetailSafe(lv, lessonNo, { version, file } = {}) {
+  // 1) loader provides it
+  if (window.HSK_LOADER?.loadLessonDetail) {
+    return window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version, file });
+  }
+
+  // 2) file path provided (absolute or relative)
+  const f = safeText(file);
+  if (f) {
+    const url = f.startsWith("/") ? f : `/data/lessons/${safeText(version)}/${f}`;
+    return fetchJson(url);
+  }
+
+  // 3) fallback naming
+  return fetchJson(fallbackLessonDetailUrl(lv, lessonNo, version));
 }
 
 /* ===============================
@@ -152,7 +194,7 @@ async function refreshLessons(scrollIntoView = false) {
     lessons = null;
   }
 
-  if (!lessons || !lessons.length) {
+  if (!Array.isArray(lessons) || lessons.length === 0) {
     lessonsWrap.classList.add("hidden");
     lessonsEl.innerHTML = "";
     return;
@@ -171,7 +213,9 @@ async function refreshLessons(scrollIntoView = false) {
   );
 
   if (scrollIntoView) {
-    lessonsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    try {
+      lessonsWrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch {}
   }
 }
 
@@ -184,36 +228,40 @@ async function openLesson(lesson, { lv, version }) {
   const status = document.getElementById("hskStatus");
   if (!grid) return;
 
-  const file = lesson?.file || lesson?.path || "";
-  if (!file) return;
+  try {
+    err?.classList.add("hidden");
 
-      // ✅ 用 loader 统一加载 lesson detail：优先 file，兜底固定命名
+    const file = safeText(lesson?.file || lesson?.path || "");
     const lessonNo = Number(lesson?.lessonNo || lesson?.lesson || lesson?.id || 1);
-    const lessonData = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, {
-      version,
-      file, // ✅ 关键：优先走 file
-    });
 
-    // ✅ 把 lessonData 存进 current lesson（统一入口）
+    if (status) status.textContent = "Loading lesson...";
+
+    // ✅ load lesson detail (file first, then fallback)
+    const lessonData = await loadLessonDetailSafe(lv, lessonNo, { version, file });
+
+    // ✅ store on current session (single source of truth)
     setLessonDataOnCurrent({ lesson, lv, version, file, lessonData });
 
-    const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
-    const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
-    const set = new Set(words);
+    // ✅ vocab for this level/version
+    const vocab = await window.HSK_LOADER?.loadVocab?.(lv, { version });
+    const vocabList = Array.isArray(vocab) ? vocab : [];
 
-    const lessonWords = vocab.filter((x) => set.has(x.word));
+    const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
+    const set = new Set(words.map((x) => safeText(x)).filter(Boolean));
+
+    const lessonWords = vocabList.filter((x) => set.has(safeText(x?.word)));
 
     renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
 
     if (status) {
-      const label = lesson?.lesson || lesson?.id || "";
+      const label = lesson?.lesson || lesson?.id || lessonNo || "";
       status.textContent = `Lesson ${label} (${lessonWords.length}/${words.length})`;
     }
   } catch (e) {
     console.error(e);
     if (status) status.textContent = "";
     if (err) {
-      err.textContent = `Lesson load failed: ${e.message || e}`;
+      err.textContent = `Lesson load failed: ${e?.message || e}`;
       err.classList.remove("hidden");
     }
   }
@@ -237,9 +285,10 @@ async function refreshAll() {
     await refreshLessons(false);
 
     if (grid) {
-      const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
-      renderWordCards(grid, vocab, undefined, { lang: "ko" });
-      if (status) status.textContent = `HSK ${lv} (${vocab.length}/${vocab.length})`;
+      const vocab = await window.HSK_LOADER?.loadVocab?.(lv, { version });
+      const vocabList = Array.isArray(vocab) ? vocab : [];
+      renderWordCards(grid, vocabList, undefined, { lang: "ko" });
+      if (status) status.textContent = `HSK ${lv} (${vocabList.length})`;
     } else {
       if (status) status.textContent = "";
     }
@@ -247,7 +296,7 @@ async function refreshAll() {
     console.error(e);
     if (status) status.textContent = "";
     if (err) {
-      err.textContent = `Reload failed: ${e.message || e}`;
+      err.textContent = `Reload failed: ${e?.message || e}`;
       err.classList.remove("hidden");
     }
   }
