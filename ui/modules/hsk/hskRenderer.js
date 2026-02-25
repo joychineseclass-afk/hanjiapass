@@ -29,59 +29,138 @@ function _pickText(val, lang) {
   return "";
 }
 
-/* ===============================
-   ✅ Lesson List (目录式纵向渲染)
-================================== */
+// ✅ Lessons List (Directory style, safe, no duplicate helpers)
 export function renderLessonList(container, lessons, onClickLesson, options = {}) {
   if (!container) return;
-  const { lang = "ko" } = options;
 
+  const lang = options.lang || "ko";
   container.innerHTML = "";
 
-  const wrap = document.createElement("div");
-  wrap.className = "flex flex-col gap-2";
+  // ---------- helpers (local, no global name collisions) ----------
+  const _escape = (s) =>
+    String(s ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
 
-  (Array.isArray(lessons) ? lessons : []).forEach((lesson, idx) => {
-    const titleText =
-      _pickText(lesson?.title, lang) ||
-      `Lesson ${lesson?.lesson ?? lesson?.id ?? idx + 1}`;
+  const _pick = (v) => {
+    // accept string or {ko,kr,zh,cn,en} like objects
+    if (typeof v === "string") return v;
+    if (!v || typeof v !== "object") return "";
 
-    const subText = _pickText(lesson?.subtitle, lang);
+    // try common keys
+    const byLang =
+      v?.[lang] ||
+      v?.ko || v?.kr ||
+      v?.zh || v?.cn ||
+      v?.en ||
+      "";
 
-    // lesson.words 可能不存在；也可能 count 在 lesson 里
-    const count = Array.isArray(lesson?.words)
-      ? lesson.words.length
-      : (Number(lesson?.count) || 0);
+    return typeof byLang === "string" ? byLang : "";
+  };
 
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className =
-      "w-full text-left border border-gray-200 rounded-xl px-4 py-3 bg-white hover:bg-gray-50 active:bg-gray-100 transition";
+  const _lessonNo = (lesson, idx) => {
+    const raw = lesson?.lessonNo ?? lesson?.lesson ?? lesson?.id ?? lesson?.no ?? lesson?.index;
+    const n = Number(String(raw).match(/(\d+)/)?.[1] ?? (idx + 1));
+    return Number.isFinite(n) ? n : (idx + 1);
+  };
 
-    btn.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <div class="min-w-0">
-          <div class="text-base font-bold text-gray-800 truncate">${_escapeHtml(titleText)}</div>
-          ${subText ? `<div class="text-sm text-gray-500 mt-1">${_escapeHtml(subText)}</div>` : ""}
+  const _titleBlock = (lesson, idx) => {
+    // Try many possible fields (your loader fields differ by version)
+    const no = _lessonNo(lesson, idx);
+
+    const titleZh =
+      _pick(lesson?.titleZh) ||
+      _pick(lesson?.zhTitle) ||
+      _pick(lesson?.title?.zh) ||
+      _pick(lesson?.title?.cn) ||
+      _pick(lesson?.title) ||
+      "";
+
+    const titleKo =
+      _pick(lesson?.titleKo) ||
+      _pick(lesson?.koTitle) ||
+      _pick(lesson?.title?.ko) ||
+      _pick(lesson?.title?.kr) ||
+      _pick(lesson?.subtitle?.ko) ||
+      _pick(lesson?.subtitle?.kr) ||
+      _pick(lesson?.ko) ||
+      _pick(lesson?.kr) ||
+      "";
+
+    const pinyin =
+      _pick(lesson?.pinyin) ||
+      _pick(lesson?.py) ||
+      _pick(lesson?.titlePinyin) ||
+      _pick(lesson?.pinyinTitle) ||
+      "";
+
+    // Fallback label if nothing
+    const main =
+      titleKo || titleZh || _pick(lesson?.subtitle) || `Lesson ${no}`;
+
+    // Compose a neat 2-line directory item
+    const line1 = `第 ${no} 课 · ${main}`;
+    const line2Parts = [];
+    if (titleZh && titleZh !== main) line2Parts.push(titleZh);
+    if (pinyin) line2Parts.push(pinyin);
+    if (titleKo && titleKo !== main) line2Parts.push(titleKo);
+
+    return {
+      no,
+      line1,
+      line2: line2Parts.join(" · "),
+    };
+  };
+
+  // ---------- container styling (inline safe, minimal) ----------
+  container.style.display = "block";
+  container.style.padding = "4px 0";
+
+  // ---------- render list ----------
+  lessons.forEach((lesson, idx) => {
+    const { no, line1, line2 } = _titleBlock(lesson, idx);
+
+    const row = document.createElement("button");
+    row.type = "button";
+    row.style.width = "100%";
+    row.style.textAlign = "left";
+    row.style.border = "1px solid #e5e7eb";
+    row.style.borderRadius = "12px";
+    row.style.padding = "12px 14px";
+    row.style.margin = "8px 0";
+    row.style.background = "#fff";
+    row.style.cursor = "pointer";
+
+    row.innerHTML = `
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div style="min-width:0;">
+          <div style="font-weight:800; font-size:15px; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${_escape(line1)}
+          </div>
+          ${
+            line2
+              ? `<div style="margin-top:4px; font-size:12px; color:#6b7280; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                   ${_escape(line2)}
+                 </div>`
+              : ""
+          }
         </div>
-        <div class="shrink-0 text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600">
-          ${count ? `${count} 단어` : ""}
-        </div>
+        <div style="flex:0 0 auto; font-size:12px; color:#9ca3af;">▶</div>
       </div>
     `;
 
-    btn.onclick = (e) => {
+    row.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (typeof onClickLesson === "function") onClickLesson(lesson);
-    };
+      onClickLesson?.(lesson);
+    });
 
-    wrap.appendChild(btn);
+    container.appendChild(row);
   });
-
-  container.appendChild(wrap);
 }
-
 /* ===============================
    ✅ Word Cards
 ================================== */
