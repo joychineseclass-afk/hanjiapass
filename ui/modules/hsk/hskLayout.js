@@ -10,7 +10,7 @@ export function getHSKLayoutHTML() {
 
         <div class="flex-1"></div>
 
-        <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-2">
           <label class="text-sm text-gray-600" data-i18n="hsk_level">레벨</label>
           <select id="hskLevel" class="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500">
             ${renderLevelOptions()}
@@ -33,19 +33,19 @@ export function getHSKLayoutHTML() {
 
       <div class="mt-3 text-xs text-gray-500 flex items-center gap-1">
         <span>💡</span>
-        <span data-i18n="hsk_tip">수업을 선택한 뒤, 단어/회화/문법/연습/AI 순서로 학습해요</span>
+        <span data-i18n="hsk_tip">카드 클릭 → 배우기 → AI 선생님에게 질문하기</span>
       </div>
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <!-- ✅ 目录式 Lessons（像目录页一样往下排） -->
-    <div class="bg-white rounded-2xl shadow p-4 mb-4">
-      <div class="text-sm font-extrabold mb-2">수업 목록</div>
-      <div id="hskLessonList"></div>
+    <!-- ✅ 目录式 Lessons（纵向列表容器） -->
+    <div id="hskLessonsWrap" class="bg-white rounded-2xl shadow p-4 mb-4">
+      <div class="text-sm font-bold mb-2">Lessons</div>
+      <div id="hskLessons"></div>
     </div>
 
-    <!-- ✅ 学习内容区域：点课后显示（词卡/弹窗触发等） -->
+    <!-- ✅ 单词区（点击 lesson 后可在这里渲染 words，也可配合 modal） -->
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
     <div class="h-20"></div>
