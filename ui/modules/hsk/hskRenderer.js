@@ -130,43 +130,123 @@ function pickExampleBlock(item) {
 /* ==============================
    ✅ Lesson List
 ============================== */
-export function renderLessonList(container, lessons, onClickLesson, options = {}) {
-  if (!container) return;
-  container.innerHTML = "";
+export function renderLessonList(root, lessons, onPick, opts = {}) {
+  const { lang = "ko" } = opts;
 
-  const lang = options.lang || window.APP_LANG || "ko";
+  if (!root) return;
+  if (!Array.isArray(lessons)) lessons = [];
 
-  (lessons || []).forEach((lesson, idx) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className =
-      "text-left bg-white rounded-2xl shadow p-5 hover:shadow-lg transition w-full border border-gray-100";
+  // 小工具：取中文/韩文/拼音标题（你 lesson json 字段不统一，所以多兜底）
+  const pick = (obj, keys) => {
+    for (const k of keys) {
+      const v = obj?.[k];
+      if (typeof v === "string" && v.trim()) return v.trim();
+    }
+    return "";
+  };
 
-    const titleText =
-      pickText(lesson?.title, lang) ||
-      `Lesson ${lesson?.lesson ?? lesson?.id ?? idx + 1}`;
+  const getTitlePack = (lesson, idx) => {
+    const no =
+      Number(lesson?.lessonNo || lesson?.no || lesson?.lesson || lesson?.id || idx + 1) || (idx + 1);
 
-    const subText = pickText(lesson?.subtitle, lang);
-    const count = Array.isArray(lesson?.words) ? lesson.words.length : 0;
+    // ✅ 你现在的 lesson 里可能有：title / name / topic / zh / ko / pinyin 等
+    const zh =
+      pick(lesson, ["zh", "titleZh", "cn", "titleCN", "title", "name"]) ||
+      pick(lesson?.meta, ["zh", "titleZh", "title"]);
+    const ko =
+      pick(lesson, ["ko", "titleKo", "kr", "titleKR", "subtitle"]) ||
+      pick(lesson?.meta, ["ko", "titleKo", "subtitle"]);
+    const py =
+      pick(lesson, ["pinyin", "py", "titlePinyin"]) ||
+      pick(lesson?.meta, ["pinyin", "py"]);
 
-    btn.innerHTML = `
-      <div class="flex items-center justify-between">
-        <div>
-          <div class="text-xl font-bold text-gray-800">${escapeHtml(titleText)}</div>
-          ${subText ? `<div class="text-sm text-gray-500 mt-1">${escapeHtml(subText)}</div>` : ""}
-        </div>
-        <div class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600">${count} 단어</div>
-      </div>
-    `;
+    return { no, zh, ko, py };
+  };
 
-    btn.onclick = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      onClickLesson?.(lesson);
-    };
+  const rows = lessons
+    .map((lesson, idx) => {
+      const { no, zh, ko, py } = getTitlePack(lesson, idx);
 
-    container.appendChild(btn);
+      const zhLine = zh ? `<div style="font-weight:800;font-size:15px;">第${no}课：${escapeHtml(zh)}</div>` : `<div style="font-weight:800;font-size:15px;">第${no}课</div>`;
+      const pyLine = py ? `<div style="font-size:12px;opacity:.75;margin-top:2px;">${escapeHtml(py)}</div>` : "";
+      const koLine = ko ? `<div style="font-size:13px;opacity:.9;margin-top:2px;">${escapeHtml(ko)}</div>` : "";
+
+      return `
+        <button class="joy-lesson-row" data-idx="${idx}" type="button">
+          <div class="joy-lesson-left">
+            ${zhLine}
+            ${pyLine}
+            ${koLine}
+          </div>
+          <div class="joy-lesson-right">›</div>
+        </button>
+      `;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="joy-lesson-list">
+      ${rows || `<div style="opacity:.7;font-size:13px;">No lessons</div>`}
+    </div>
+  `;
+
+  // 绑定点击
+  root.querySelectorAll(".joy-lesson-row").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const idx = Number(btn.dataset.idx || "0");
+      const lesson = lessons[idx];
+      if (typeof onPick === "function") await onPick(lesson);
+    });
   });
+
+  // 注入一次 CSS（不影响你现有样式）
+  ensureLessonListCss();
+}
+
+function ensureLessonListCss() {
+  const id = "__joy_lesson_list_css__";
+  if (document.getElementById(id)) return;
+
+  const css = `
+    .joy-lesson-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding: 6px 2px;
+    }
+    .joy-lesson-row{
+      width:100%;
+      text-align:left;
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:14px;
+      background:#fff;
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      cursor:pointer;
+    }
+    .joy-lesson-row:hover{
+      background: rgba(0,0,0,.03);
+    }
+    .joy-lesson-left{ flex:1; min-width:0; }
+    .joy-lesson-right{ font-size:22px; opacity:.35; }
+  `.trim();
+
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = css;
+  document.head.appendChild(style);
+}
+
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 /* ==============================
