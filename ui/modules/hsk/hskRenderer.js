@@ -1,6 +1,7 @@
 // /ui/modules/hsk/hskRenderer.js
 // ✅ HSK Renderer (Lesson list + Word cards)
-// - no duplicate identifier declarations (avoid escapeHtml redeclare crash)
+// - ESM exports + global bridge (window.HSK_RENDER.*) for backward compatibility
+// - avoids duplicate identifier crashes
 
 function _escapeHtml(s) {
   return String(s ?? "").replace(/[&<>"']/g, (ch) => {
@@ -20,7 +21,6 @@ function _pickText(val, lang) {
   const fn = window?.pickText;
   if (typeof fn === "function") return fn(val, lang);
 
-  // 常见结构：{ ko:"", zh:"", en:"" } 或 string
   if (typeof val === "string") return val;
   if (val && typeof val === "object") {
     if (lang && val[lang] != null) return String(val[lang]);
@@ -31,7 +31,6 @@ function _pickText(val, lang) {
 
 /* ===============================
    ✅ Lesson List (目录式纵向渲染)
-   - 你要的“像课本目录那样一行一课”
 ================================== */
 export function renderLessonList(container, lessons, onClickLesson, options = {}) {
   if (!container) return;
@@ -42,13 +41,17 @@ export function renderLessonList(container, lessons, onClickLesson, options = {}
   const wrap = document.createElement("div");
   wrap.className = "flex flex-col gap-2";
 
-  lessons.forEach((lesson, idx) => {
+  (Array.isArray(lessons) ? lessons : []).forEach((lesson, idx) => {
     const titleText =
       _pickText(lesson?.title, lang) ||
       `Lesson ${lesson?.lesson ?? lesson?.id ?? idx + 1}`;
 
     const subText = _pickText(lesson?.subtitle, lang);
-    const count = Array.isArray(lesson?.words) ? lesson.words.length : (Number(lesson?.count) || 0);
+
+    // lesson.words 可能不存在；也可能 count 在 lesson 里
+    const count = Array.isArray(lesson?.words)
+      ? lesson.words.length
+      : (Number(lesson?.count) || 0);
 
     const btn = document.createElement("button");
     btn.type = "button";
@@ -62,7 +65,7 @@ export function renderLessonList(container, lessons, onClickLesson, options = {}
           ${subText ? `<div class="text-sm text-gray-500 mt-1">${_escapeHtml(subText)}</div>` : ""}
         </div>
         <div class="shrink-0 text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600">
-          ${count ? `${count} 단어` : " "}
+          ${count ? `${count} 단어` : ""}
         </div>
       </div>
     `;
@@ -125,3 +128,13 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
 
   container.appendChild(grid);
 }
+
+/* ===============================
+   ✅ Global Bridge (关键：兼容旧代码 window.HSK_RENDER.*)
+   你现在页面提示缺 renderLessonList，就是因为这里没桥接
+================================== */
+try {
+  const g = (window.HSK_RENDER = window.HSK_RENDER || {});
+  g.renderLessonList = renderLessonList;
+  g.renderWordCards = renderWordCards;
+} catch {}
