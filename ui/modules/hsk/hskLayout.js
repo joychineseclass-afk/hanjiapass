@@ -23,7 +23,7 @@ export function getHSKLayoutHTML() {
 
           <input
             id="hskSearch"
-            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-48 outline-none focus:ring-2 focus:ring-blue-500"
+            class="border border-gray-200 rounded-lg px-3 py-2 text-sm w-56 outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="검색 (예: 你好 / 숫자)"
             data-i18n-placeholder="hsk_search_placeholder"
             autocomplete="off"
@@ -39,13 +39,19 @@ export function getHSKLayoutHTML() {
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <!-- ✅ 目录式 Lessons（纵向列表容器） -->
-    <div id="hskLessonsWrap" class="bg-white rounded-2xl shadow p-4 mb-4">
+    <!-- ✅ NEW: directory lesson list container -->
+    <div id="hskLessonListWrap" class="hidden bg-white rounded-2xl shadow p-4 mb-4">
+      <div class="text-sm font-bold mb-2">Lessons</div>
+      <div id="hskLessonList"></div>
+    </div>
+
+    <!-- ✅ OLD fallback (keep, so no regression) -->
+    <div id="hskLessonsWrap" class="hidden bg-white rounded-2xl shadow p-4 mb-4">
       <div class="text-sm font-bold mb-2">Lessons</div>
       <div id="hskLessons"></div>
     </div>
 
-    <!-- ✅ 单词区（点击 lesson 后可在这里渲染 words，也可配合 modal） -->
+    <!-- ✅ Word grid / preview area -->
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
     <div class="h-20"></div>
