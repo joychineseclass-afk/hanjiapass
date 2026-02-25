@@ -42,6 +42,12 @@ export async function mount() {
   const verSel = document.getElementById("hskVersion");
   if (verSel) verSel.value = getCurrentVersion();
 
+  // ✅ init UI
+  hskApi = initHSKUI({
+    defaultLevel: 1,
+    autoFocusSearch: false,
+    lang: "ko",
+  });
 
   // ✅ Bind events
   bindHSKEvents();
