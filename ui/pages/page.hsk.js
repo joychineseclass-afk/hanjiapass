@@ -24,7 +24,7 @@ export async function mount() {
   const ok = mountLayout();
   if (!ok) return;
 
-  mountGlobalComponents();
+  mountGlobalComponents();✅ 必须：挂 learn/ai/dialogue 的 portal 系统
   applyI18nIfAvailable();
 
   // ✅ ensure globals exist (loader/history)
