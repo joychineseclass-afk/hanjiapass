@@ -223,45 +223,41 @@ async function refreshLessons(scrollIntoView = false) {
    ✅ Open one lesson → load lesson file → filter vocab → render cards
 ================================== */
 async function openLesson(lesson, { lv, version }) {
-  const grid = document.getElementById("hskGrid");
   const err = document.getElementById("hskError");
   const status = document.getElementById("hskStatus");
-  if (!grid) return;
 
   try {
     err?.classList.add("hidden");
-
-    const file = safeText(lesson?.file || lesson?.path || "");
-    const lessonNo = Number(lesson?.lessonNo || lesson?.lesson || lesson?.id || 1);
-
     if (status) status.textContent = "Loading lesson...";
 
-    // ✅ load lesson detail (file first, then fallback)
-    const lessonData = await loadLessonDetailSafe(lv, lessonNo, { version, file });
+    // 1) 记录当前课（全局）
+    setCurrentLessonGlobal(lesson, { lv, version });
 
-    // ✅ store on current session (single source of truth)
-    setLessonDataOnCurrent({ lesson, lv, version, file, lessonData });
+    // 2) ✅ 启动 LessonEngine（StepRunner 会监听 lesson:state 然后渲染那排按钮）
+    const engine = window.LESSON_ENGINE;
+    if (!engine?.start) throw new Error("LESSON_ENGINE missing. Check ensureHSKDeps().");
 
-    // ✅ vocab for this level/version
-    const vocab = await window.HSK_LOADER?.loadVocab?.(lv, { version });
-    const vocabList = Array.isArray(vocab) ? vocab : [];
+    // lessonId：尽量稳定
+    const lessonId =
+      String(lesson?.lessonId || lesson?.id || lesson?.lesson || "").trim() ||
+      `hsk${lv}_lesson${Number(lesson?.lesson || lesson?.id || 1)}`;
 
-    const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
-    const set = new Set(words.map((x) => safeText(x)).filter(Boolean));
-
-    const lessonWords = vocabList.filter((x) => set.has(safeText(x?.word)));
-
-    renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
+    engine.start({
+      lv,
+      version,
+      lessonId,
+      lesson, // 传进去给各 step 使用
+    });
 
     if (status) {
-      const label = lesson?.lesson || lesson?.id || lessonNo || "";
-      status.textContent = `Lesson ${label} (${lessonWords.length}/${words.length})`;
+      const label = lesson?.lesson || lesson?.id || "";
+      status.textContent = `Lesson ${label} ready`;
     }
   } catch (e) {
     console.error(e);
     if (status) status.textContent = "";
     if (err) {
-      err.textContent = `Lesson load failed: ${e?.message || e}`;
+      err.textContent = `Lesson open failed: ${e.message || e}`;
       err.classList.remove("hidden");
     }
   }
