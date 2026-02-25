@@ -18,6 +18,9 @@ import {
 } from "../modules/hsk/lessonSession.js";
 import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
 
+window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v1";
+console.log("[HSK] SLIM page loaded ✅", window.__HSK_PAGE_FILE__);
+
 let mounted = false;
 
 export async function mount() {
