@@ -1,5 +1,5 @@
 // /ui/pages/page.hsk.js
-// ✅ HSK Page Controller — SLIM v2 (NO legacy initHSKUI render)
+// ✅ HSK Page Controller — SLIM v2.1 (NO legacy initHSKUI, container fallback)
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -19,7 +19,7 @@ import {
 
 import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
 
-window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2";
+window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2.1";
 console.log("[HSK] SLIM page loaded ✅", window.__HSK_PAGE_FILE__);
 
 let mounted = false;
@@ -34,26 +34,20 @@ export async function mount() {
   mountGlobalComponents();
   applyI18nIfAvailable();
 
-  // ✅ ensure globals exist (loader/history)
   await ensureHSKDeps();
 
-  // ✅ Default version (keep user's last selection)
   localStorage.setItem(
     "hsk_vocab_version",
     localStorage.getItem("hsk_vocab_version") || "hsk2.0"
   );
 
-  // ✅ Sync version select UI
   const verSel = document.getElementById("hskVersion");
   if (verSel) verSel.value = getCurrentVersion();
 
-  // ✅ Bind events (level/version/search)
   bindHSKEvents();
 
-  // ✅ Initial render lessons
   await refreshLessons(true);
 
-  // ✅ Modal mode: tabs open modals only (kids mode)
   enableHSKModalMode();
 }
 
@@ -111,7 +105,6 @@ function bindHSKEvents() {
     await refreshLessons(true);
   });
 
-  // ✅ search: filter current level vocab (optional)
   search?.addEventListener("input", async () => {
     const q = String(search.value || "").trim();
     await refreshVocabPreview(q);
@@ -119,7 +112,7 @@ function bindHSKEvents() {
 }
 
 /* ===============================
-   ✅ Helpers to read current UI
+   ✅ Helpers
 ================================== */
 function getCurrentLevel() {
   const levelSel = document.getElementById("hskLevel");
@@ -133,8 +126,21 @@ function getCurrentVersion() {
   return verSel?.value || localStorage.getItem("hsk_vocab_version") || "hsk2.0";
 }
 
+// ✅ 兼容：新容器 / 旧容器 都能用
+function getLessonListNodes() {
+  // new
+  let wrap = document.getElementById("hskLessonListWrap");
+  let el = document.getElementById("hskLessonList");
+
+  // old fallback
+  if (!wrap) wrap = document.getElementById("hskLessonsWrap");
+  if (!el) el = document.getElementById("hskLessons");
+
+  return { wrap, el };
+}
+
 /* ===============================
-   ✅ Refresh lessons list (Directory style)
+   ✅ Refresh lessons list
 ================================== */
 async function refreshLessons(scrollIntoView = false) {
   const lv = getCurrentLevel();
@@ -143,8 +149,7 @@ async function refreshLessons(scrollIntoView = false) {
   const err = document.getElementById("hskError");
   const status = document.getElementById("hskStatus");
 
-  const listWrap = document.getElementById("hskLessonListWrap");
-  const listEl = document.getElementById("hskLessonList");
+  const { wrap: listWrap, el: listEl } = getLessonListNodes();
   const grid = document.getElementById("hskGrid");
 
   try {
@@ -171,6 +176,7 @@ async function refreshLessons(scrollIntoView = false) {
 
     listWrap?.classList.remove("hidden");
 
+    // ✅ 渲染目录（renderLessonList 内部会处理 container 为空的情况）
     renderLessonList(
       listEl,
       lessons,
@@ -195,7 +201,7 @@ async function refreshLessons(scrollIntoView = false) {
 }
 
 /* ===============================
-   ✅ Open one lesson → load lesson file → filter vocab → render cards
+   ✅ Open one lesson → load lesson file → render cards
 ================================== */
 async function openLesson(lesson, { lv, version }) {
   const grid = document.getElementById("hskGrid");
@@ -211,10 +217,9 @@ async function openLesson(lesson, { lv, version }) {
 
     const lessonData = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, {
       version,
-      file, // ✅ prefer explicit file
+      file,
     });
 
-    // ✅ store on current session
     setLessonDataOnCurrent({ lesson, lv, version, file, lessonData });
 
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
@@ -223,7 +228,6 @@ async function openLesson(lesson, { lv, version }) {
 
     const lessonWords = vocab.filter((x) => set.has(x.word));
 
-    // ✅ render preview cards (teacher/web mode)
     renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
 
     if (status) {
@@ -250,7 +254,7 @@ async function refreshVocabPreview(q) {
   const lv = getCurrentLevel();
   const version = getCurrentVersion();
 
-  if (!q) return; // 不输入就不强制刷
+  if (!q) return;
 
   try {
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
