@@ -1,8 +1,12 @@
 // /ui/components/modalBase.js
 // ✅ Modal Base (single-style system, no Tailwind dependency)
-// - injects minimal CSS once (center + overlay + z-index)
-// - provides modalTpl() + createModalSystem()
-// - safe Esc binding per modal id
+// ✅ Enhanced (no-break, keep current working):
+// - Supports modal:open (existing)
+// - Adds modal:closeAll (NEW) to force-close immediately
+// - On close (X / back / backdrop / Esc): emits
+//    1) modal:close  { id, reason }
+//    2) hsk:cancel   (ONLY if HSK_FLOW exists)  ✅ stops StepRunner immediately
+// - Esc only closes when THIS modal is open (avoid interfering other pages)
 
 const STYLE_ID = "__joy_modal_base_style__";
 
@@ -102,7 +106,6 @@ export function modalTpl({
   titleText = "",
   maxWidth = 720,
 }) {
-  // ✅ ensure base CSS once
   ensureModalCss();
 
   return `
@@ -142,51 +145,74 @@ export function createModalSystem(rootWrap, cfg) {
   const body = rootWrap.querySelector(`#${bodyId}`);
   const titleEl = rootWrap.querySelector(`#${titleId}`);
 
+  const isOpen = () => !!overlay && !overlay.classList.contains("joy-modal-hidden");
+
   const open = () => {
     overlay?.classList.remove("joy-modal-hidden");
     if (lockScroll) lockBodyScroll(true);
   };
 
-  const close = () => {
-  overlay?.classList.add("joy-modal-hidden");
-  if (lockScroll) lockBodyScroll(false);
-  onClose?.();
+  const close = (reason = "close") => {
+    overlay?.classList.add("joy-modal-hidden");
+    if (lockScroll) lockBodyScroll(false);
 
-  // ⭐ 通知系统：弹窗关闭了
- window.dispatchEvent(new CustomEvent("modal:close", { detail: { id } }));
-};
+    // ✅ keep existing callback behavior
+    try {
+      onClose?.();
+    } catch {}
+
+    // ✅ notify generic system
+    try {
+      window.dispatchEvent(new CustomEvent("modal:close", { detail: { id, reason } }));
+    } catch {}
+
+    // ✅ IMPORTANT: stop step auto-open ONLY when HSK flow exists
+    // (Avoid affecting other pages that also reuse modalBase)
+    try {
+      if (window.HSK_FLOW?.cancel) {
+        window.dispatchEvent(new CustomEvent("hsk:cancel"));
+      }
+    } catch {}
+  };
 
   // ✅ 通用打开事件：modal:open
-// 用法：window.dispatchEvent(new CustomEvent("modal:open",{detail:{ title, html }}))
-window.addEventListener("modal:open", (ev) => {
-  const d = ev?.detail || {};
-  const title = d.title ?? "";
-  const html = d.html ?? "";
+  // 用法：window.dispatchEvent(new CustomEvent("modal:open",{detail:{ title, html }}))
+  window.addEventListener("modal:open", (ev) => {
+    const d = ev?.detail || {};
+    const title = d.title ?? "";
+    const html = d.html ?? "";
 
-  // 写入标题/内容
-  if (titleEl) titleEl.textContent = String(title);
-  if (body) body.innerHTML = String(html);
+    if (titleEl) titleEl.textContent = String(title);
+    if (body) body.innerHTML = String(html);
 
-  // 打开弹窗
-  open();
-});
-  
+    open();
+  });
+
+  // ✅ NEW: 强制关闭所有弹窗（StepRunner cancelFlow 会发）
+  window.addEventListener("modal:closeAll", () => {
+    if (isOpen()) close("closeAll");
+  });
+
   closeBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    close();
+    close("closeBtn");
   });
 
   backBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (typeof onBack === "function") onBack();
-    else close();
+    try {
+      if (typeof onBack === "function") onBack();
+      else close("backBtn");
+    } catch {
+      close("backBtn");
+    }
   });
 
   // click backdrop to close
   overlay?.addEventListener("click", (e) => {
-    if (e.target === overlay) close();
+    if (e.target === overlay) close("backdrop");
   });
 
   // Esc close (bind once per modal id)
@@ -195,7 +221,9 @@ window.addEventListener("modal:open", (ev) => {
     if (!document.body.hasAttribute(attr)) {
       document.body.setAttribute(attr, "1");
       window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
+        if (e.key !== "Escape") return;
+        // ✅ only close when THIS modal is currently open
+        if (isOpen()) close("esc");
       });
     }
   }
@@ -206,6 +234,7 @@ window.addEventListener("modal:open", (ev) => {
     titleEl,
     open,
     close,
+    isOpen,
     setTitle: (t) => {
       if (titleEl) titleEl.textContent = String(t ?? "");
     },
