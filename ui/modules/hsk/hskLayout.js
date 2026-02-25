@@ -39,11 +39,6 @@ export function getHSKLayoutHTML() {
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mb-4 text-sm"></div>
 
-    <!-- ✅ Lessons list (新版：只保留这一套目录) -->
-    <div id="hskLessonsWrap" class="hidden bg-white rounded-2xl shadow p-4 mb-4">
-      <div class="text-sm font-bold mb-2">Lessons</div>
-      <div id="hskLessons"></div>
-    </div>
 
     <!-- ✅ Word grid -->
     <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
