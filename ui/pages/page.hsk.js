@@ -53,7 +53,7 @@ export async function mount() {
   bindHSKEvents();
 
   // ✅ Initial render lessons
-  await refreshLessons();
+ 
 
   // ✅ Modal mode
   enableHSKModalMode();
@@ -106,7 +106,7 @@ function bindHSKEvents() {
   const verSel = document.getElementById("hskVersion");
 
   levelSel?.addEventListener("change", async () => {
-    await refreshLessons(true);
+ 
   });
 
   verSel?.addEventListener("change", async () => {
@@ -278,7 +278,7 @@ async function refreshAll() {
     err?.classList.add("hidden");
     if (status) status.textContent = "Reloading...";
 
-    await refreshLessons(false);
+    
 
     if (grid) {
       const vocab = await window.HSK_LOADER?.loadVocab?.(lv, { version });
