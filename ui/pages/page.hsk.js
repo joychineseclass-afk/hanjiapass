@@ -183,8 +183,8 @@ async function refreshLessons(scrollIntoView = false) {
   const version = getCurrentVersion();
 
   const lessonsWrap = document.getElementById("hskLessonsWrap");
- const lessonsEl = document.getElementById("hskLessonList");
-if (!lessonsEl) return;
+  const lessonsEl = document.getElementById("hskLessons");
+  if (!lessonsWrap || !lessonsEl) return;
 
   let lessons = null;
   try {
