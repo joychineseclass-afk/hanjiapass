@@ -1,8 +1,9 @@
-// ui/modules/hsk/hskRenderer.js
-// ✅ Ultimate Stable Renderer
+// /ui/modules/hsk/hskRenderer.js
+// ✅ Ultimate Stable Renderer (Hardened)
 // - Fix [object Object]
 // - Beautiful learning cards
-// - Ready for AI integration
+// - Robust example extraction (string/object/array)
+// - Safe fallback modal when LEARN_PANEL missing
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -38,6 +39,7 @@ export function pickText(v, lang = "ko") {
 
     if (direct) return direct;
 
+    // fallback: first readable key
     for (const k of Object.keys(v)) {
       const t = pickText(v[k], lang);
       if (t) return t;
@@ -52,6 +54,77 @@ function cleanText(v, lang) {
   const s = String(t ?? "").trim();
   if (!s || s === "[object Object]") return "";
   return s;
+}
+
+/* ==============================
+   ✅ Example Extractor (robust)
+   - supports string/object/array
+============================== */
+function pickExampleBlock(item) {
+  // normalize "example" source (can be string/object/array)
+  const exAny =
+    item?.example ??
+    item?.sentence ??
+    item?.eg ??
+    item?.ex ??
+    null;
+
+  // direct fields override
+  const exampleZh = cleanText(
+    item?.exampleZh ||
+      item?.exampleZH ||
+      item?.example_zh ||
+      item?.sentenceZh ||
+      item?.sentenceZH ||
+      (typeof exAny === "string" ? exAny : exAny?.zh || exAny?.cn),
+    "zh"
+  );
+
+  const examplePy = cleanText(
+    item?.examplePinyin ||
+      item?.sentencePinyin ||
+      item?.example_py ||
+      item?.examplePY ||
+      exAny?.pinyin ||
+      exAny?.py,
+    "zh" // pinyin is language-independent; using "zh" keeps object pick stable
+  );
+
+  const exampleKr = cleanText(
+    item?.exampleExplainKr ||
+      item?.exampleKR ||
+      item?.explainKr ||
+      item?.krExplain ||
+      exAny?.ko ||
+      exAny?.kr,
+    "ko"
+  );
+
+  const exampleCnExplain = cleanText(
+    item?.exampleExplainCn ||
+      item?.exampleCN ||
+      item?.explainCn ||
+      item?.cnExplain ||
+      exAny?.zhExplain ||
+      exAny?.cnExplain ||
+      exAny?.explainZh,
+    "zh"
+  );
+
+  // if example is array of lines, try to join
+  const exampleLines = Array.isArray(exAny)
+    ? exAny.map((x) => cleanText(x, "zh")).filter(Boolean).join(" / ")
+    : "";
+
+  const zh = exampleZh || exampleLines;
+
+  return {
+    zh,
+    py: examplePy,
+    kr: exampleKr,
+    cnExplain: exampleCnExplain,
+    has: !!(zh || examplePy || exampleKr || exampleCnExplain),
+  };
 }
 
 /* ==============================
@@ -97,7 +170,7 @@ export function renderLessonList(container, lessons, onClickLesson, options = {}
 }
 
 /* ==============================
-   ✅ Word Cards (BEAUTIFIED)
+   ✅ Word Cards (BEAUTIFIED + hardened)
 ============================== */
 export function renderWordCards(container, list, onClickWord, options = {}) {
   if (!container) return;
@@ -107,9 +180,14 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
   const showLearnBadge = options.showLearnBadge !== false;
 
   const handleClick =
-  typeof onClickWord === "function"
-    ? onClickWord
-    : (item) => window.LEARN_PANEL?.open?.(item);
+    typeof onClickWord === "function"
+      ? onClickWord
+      : (item, ctx) => {
+          // prefer LEARN_PANEL
+          if (window.LEARN_PANEL?.open) return window.LEARN_PANEL.open(item, ctx);
+          // fallback modal
+          return openWordDetail(item, ctx);
+        };
 
   (list || []).forEach((item) => {
     const card = document.createElement("button");
@@ -123,49 +201,17 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
       handleClick(item, { lang });
     };
 
-    const word = cleanText(item?.word ?? item?.hanzi ?? item?.hz, lang) || "(빈 항목)";
+    const word =
+      cleanText(item?.word ?? item?.hanzi ?? item?.hz, lang) ||
+      cleanText(item?.raw?.word ?? item?.raw?.hanzi, lang) ||
+      "(빈 항목)";
+
     const pinyin = cleanText(item?.pinyin, lang);
-    const meaning = cleanText(item?.meaning ?? item?.ko ?? item?.kr, lang);
+    const meaning =
+      cleanText(item?.meaning ?? item?.ko ?? item?.kr, lang) ||
+      cleanText(item?.raw?.meaning ?? item?.raw?.ko ?? item?.raw?.kr, lang);
 
-    // ✅ Example fields (统一变量名：exampleZh / examplePy / exampleKr / exampleCn)
-    const exampleZh = cleanText(
-      item?.exampleZh ||
-        item?.exampleZH ||
-        item?.example_zh ||
-        item?.sentenceZh ||
-        item?.sentence ||
-        item?.example,
-      "zh"
-    );
-
-    const examplePy = cleanText(
-      item?.examplePinyin ||
-        item?.sentencePinyin ||
-        item?.example_py ||
-        item?.examplePY,
-      lang
-    );
-
-    const exampleKr = cleanText(
-      item?.exampleExplainKr ||
-        item?.exampleKR ||
-        item?.explainKr ||
-        item?.krExplain ||
-        item?.example?.kr,
-      "ko"
-    );
-
-    const exampleCn = cleanText(
-      item?.exampleExplainCn ||
-        item?.exampleCN ||
-        item?.explainCn ||
-        item?.cnExplain ||
-        item?.example?.zh,
-      "zh"
-    );
-
-    // ✅ example block: zh + pinyin + (kr/cn explain)
-    const hasExample = !!(exampleZh || examplePy || exampleKr || exampleCn);
+    const ex = pickExampleBlock(item);
 
     card.innerHTML = `
       <div class="text-2xl font-bold text-gray-800">${escapeHtml(word)}</div>
@@ -173,12 +219,12 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
       ${meaning ? `<div class="text-base text-gray-700 mt-2">${escapeHtml(meaning)}</div>` : ""}
 
       ${
-        hasExample
+        ex.has
           ? `<div class="mt-4 p-3 rounded-xl bg-gray-50 text-sm text-gray-700 space-y-1">
-              ${exampleZh ? `<div>${escapeHtml(exampleZh)}</div>` : ""}
-              ${examplePy ? `<div class="text-blue-600">${escapeHtml(examplePy)}</div>` : ""}
-              ${exampleKr ? `<div class="text-gray-500">${escapeHtml(exampleKr)}</div>` : ""}
-              ${exampleCn && !exampleKr ? `<div class="text-gray-500">${escapeHtml(exampleCn)}</div>` : ""}
+              ${ex.zh ? `<div>${escapeHtml(ex.zh)}</div>` : ""}
+              ${ex.py ? `<div class="text-blue-600">${escapeHtml(ex.py)}</div>` : ""}
+              ${ex.kr ? `<div class="text-gray-500">${escapeHtml(ex.kr)}</div>` : ""}
+              ${ex.cnExplain && !ex.kr ? `<div class="text-gray-500">${escapeHtml(ex.cnExplain)}</div>` : ""}
             </div>`
           : ""
       }
@@ -195,7 +241,7 @@ export function renderWordCards(container, list, onClickWord, options = {}) {
 }
 
 /* ==============================
-   ✅ Global Bridge
+   ✅ Global Bridge (compat)
 ============================== */
 try {
   window.HSK_RENDER = window.HSK_RENDER || {};
@@ -205,44 +251,104 @@ try {
 } catch {}
 
 /* ==============================
-   ✅ Word Modal
+   ✅ Word Modal (fallback)
+   - only used when LEARN_PANEL missing
 ============================== */
+function ensureWordModalCSS() {
+  const id = "__joy_word_modal_css__";
+  if (document.getElementById(id)) return;
+
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = `
+    .joy-word-modal {
+      position: fixed; inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,0.62);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .joy-word-modal-box{
+      width: min(720px, 100%);
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      padding: 18px;
+    }
+    .joy-word-modal-hanzi{ font-size: 42px; font-weight: 800; color: #111827; line-height: 1.1; }
+    .joy-word-modal-pinyin{ margin-top: 6px; color: #2563eb; font-size: 14px; }
+    .joy-word-modal-meaning{ margin-top: 10px; color: #374151; font-size: 16px; }
+    .joy-word-modal-example{
+      margin-top: 14px;
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 12px;
+      color: #374151;
+      font-size: 14px;
+    }
+    .joy-word-modal-close{
+      margin-top: 14px;
+      width: 100%;
+      border: 0;
+      background: #111827;
+      color: #fff;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 function openWordDetail(word, opts = {}) {
+  ensureWordModalCSS();
+
   const lang = opts.lang || window.APP_LANG || "ko";
 
-  const hanzi = cleanText(word?.word || word?.hanzi, lang);
+  const hanzi =
+    cleanText(word?.word || word?.hanzi, lang) ||
+    cleanText(word?.raw?.word || word?.raw?.hanzi, lang) ||
+    "";
+
   const pinyin = cleanText(word?.pinyin, lang);
-  const meaning = cleanText(word?.meaning ?? word?.kr ?? word?.ko, lang);
+  const meaning =
+    cleanText(word?.meaning ?? word?.kr ?? word?.ko, lang) ||
+    cleanText(word?.raw?.meaning ?? word?.raw?.kr ?? word?.raw?.ko, lang);
 
-  const exZh = cleanText(word?.exampleZh || word?.sentenceZh || word?.sentence || word?.example, "zh");
-  const exPy = cleanText(word?.examplePinyin || word?.sentencePinyin, lang);
-  const exKr = cleanText(word?.exampleExplainKr || word?.krExplain || word?.explainKr, "ko");
+  const ex = pickExampleBlock(word);
 
-  const existing = document.querySelector(".word-modal");
+  const existing = document.querySelector(".joy-word-modal");
   if (existing) existing.remove();
 
   const modal = document.createElement("div");
-  modal.className = "word-modal";
+  modal.className = "joy-word-modal";
 
   modal.innerHTML = `
-    <div class="modal-box">
-      <div class="modal-hanzi">${escapeHtml(hanzi)}</div>
-      ${pinyin ? `<div class="modal-pinyin">${escapeHtml(pinyin)}</div>` : ""}
-      ${meaning ? `<div class="modal-meaning">${escapeHtml(meaning)}</div>` : ""}
+    <div class="joy-word-modal-box">
+      <div class="joy-word-modal-hanzi">${escapeHtml(hanzi)}</div>
+      ${pinyin ? `<div class="joy-word-modal-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+      ${meaning ? `<div class="joy-word-modal-meaning">${escapeHtml(meaning)}</div>` : ""}
 
-      ${(exZh || exPy || exKr)
-        ? `<div class="modal-example">
-            ${exZh ? `<p>${escapeHtml(exZh)}</p>` : ""}
-            ${exPy ? `<p>${escapeHtml(exPy)}</p>` : ""}
-            ${exKr ? `<p>${escapeHtml(exKr)}</p>` : ""}
-          </div>`
-        : ""}
+      ${
+        ex.has
+          ? `<div class="joy-word-modal-example">
+              ${ex.zh ? `<div>${escapeHtml(ex.zh)}</div>` : ""}
+              ${ex.py ? `<div style="color:#2563eb;margin-top:4px;">${escapeHtml(ex.py)}</div>` : ""}
+              ${ex.kr ? `<div style="color:#6b7280;margin-top:6px;">${escapeHtml(ex.kr)}</div>` : ""}
+              ${ex.cnExplain && !ex.kr ? `<div style="color:#6b7280;margin-top:6px;">${escapeHtml(ex.cnExplain)}</div>` : ""}
+            </div>`
+          : ""
+      }
 
-      <button type="button" class="modal-close">닫기</button>
+      <button type="button" class="joy-word-modal-close">닫기</button>
     </div>
   `;
 
-  modal.onclick = (e) => e.target === modal && modal.remove();
-  modal.querySelector(".modal-close").onclick = () => modal.remove();
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.remove();
+  });
+  modal.querySelector(".joy-word-modal-close")?.addEventListener("click", () => modal.remove());
+
   document.body.appendChild(modal);
 }
