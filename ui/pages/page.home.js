@@ -20,7 +20,8 @@ function renderHomeInto(root) {
           <a href="#hsk" style="background:#2563eb; color:#fff; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:700;">
             시작 학습
           </a>
-         <a href="#catalog">커리큘럼 보기</a>
+          <a href="#resources" style="border:1px solid #e2e8f0; background:#fff; color:#0f172a; padding:10px 14px; border-radius:14px; text-decoration:none; font-weight:700;">
+            커리큘럼 보기
           </a>
         </div>
       </div>
