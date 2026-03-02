@@ -1,4 +1,9 @@
+// /ui/pages/page.home.js ✅ PROD
 import { i18n } from "../i18n.js";
+
+function safeApplyI18n(root) {
+  try { i18n?.apply?.(root); } catch {}
+}
 
 function renderHomeInto(root) {
   root.innerHTML = `
@@ -17,45 +22,61 @@ function renderHomeInto(root) {
         </p>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-  <a href="#hsk"
-     style="background:#2563eb;color:#fff;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:700;">
-     시작 학습
-  </a>
+          <a href="#hsk"
+             style="background:#2563eb;color:#fff;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:700;">
+             시작 학습
+          </a>
 
-  <a href="#catalog"
-     style="border:1px solid #e2e8f0;background:#fff;color:#0f172a;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:700;">
-     커리큘럼 보기
-  </a>
-</div>
+          <a href="#catalog"
+             style="border:1px solid #e2e8f0;background:#fff;color:#0f172a;padding:10px 14px;border-radius:14px;text-decoration:none;font-weight:700;">
+             커리큘럼 보기
+          </a>
+        </div>
       </div>
     </section>
   `;
 
-  // i18n apply (如果你有 data-i18n 的话这里会生效)
-  try { i18n.apply(root); } catch {}
+  safeApplyI18n(root);
 }
 
-/** ✅ 兼容1：router 调用 module.default(...) */
-export default function pageHome(ctxOrRoot) {
-  const root =
+function resolveRoot(ctxOrRoot) {
+  return (
     ctxOrRoot?.root ||
     ctxOrRoot?.app ||
     (ctxOrRoot instanceof HTMLElement ? ctxOrRoot : null) ||
-    document.getElementById("app");
+    document.getElementById("app")
+  );
+}
 
-  if (!root) {
-    console.warn("[page.home] #app not found");
+/** ✅ router: module.mount(ctx) */
+export function mount(ctxOrRoot) {
+  const root = resolveRoot(ctxOrRoot);
+  if (!root) return;
+
+  // 防重复（被 force rerender 时也安全）
+  if (root.dataset.pageHomeMounted === "1") {
+    renderHomeInto(root);
     return;
   }
+  root.dataset.pageHomeMounted = "1";
+
   renderHomeInto(root);
 }
 
-/** ✅ 兼容2：router 调用 module.mount(...) */
-export function mount(ctxOrRoot) {
-  return pageHome(ctxOrRoot);
+/** ✅ router: module.render(ctx) */
+export function render(ctxOrRoot) {
+  return mount(ctxOrRoot);
 }
 
-/** ✅ 兼容3：router 调用 module.render(...) */
-export function render(ctxOrRoot) {
-  return pageHome(ctxOrRoot);
+/** ✅ router: module.default(ctx) */
+export default function pageHome(ctxOrRoot) {
+  return mount(ctxOrRoot);
+}
+
+/** ✅ router: safe unmount */
+export function unmount() {
+  const root = document.getElementById("app");
+  if (root) {
+    delete root.dataset.pageHomeMounted;
+  }
 }
