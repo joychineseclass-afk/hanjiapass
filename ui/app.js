@@ -124,5 +124,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 5) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.
-  console.log("[app] hint: ensure ui/pages/page.home.js exists and exports mount/render/default");
+
 });
