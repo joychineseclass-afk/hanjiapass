@@ -174,17 +174,15 @@ export function startRouter(opts = {}) {
 
   // 绑定 hashchange
   window.addEventListener("hashchange", () => {
-    handleRouteChange({ appEl, defaultHash, scrollTop });
-  });
-
-  // 首次进入也要跑一次
+  console.log("[router] hashchange:", location.hash);
   handleRouteChange({ appEl, defaultHash, scrollTop });
-}
-
+});
+  
 // 兼容旧写法：initRouter()
 export const initRouter = startRouter;
 
 async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
+  console.log("[router] handleRouteChange enter:", location.hash);
   const token = ++navToken;
 
   let hash = normalizeHash(location.hash);
