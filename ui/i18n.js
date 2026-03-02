@@ -1,12 +1,12 @@
-// /ui/i18n.js (ES Module) — STABLE v2.2 (system-lang cleanup compatible)
-// ✅ Still: DICT + t() + apply(root) + onChange/eventbus (no DOM generation, no observe)
-// ✅ NOW: supports normalized lang codes ko/zh/en AND legacy kr/cn
-// ✅ Keeps your existing API: init/t/getLang/setLang/forceLang/onChange/apply/on/emit
-// ✅ Keeps your already-running behavior, just makes it compatible with /core/lang.js
+// /ui/i18n.js (ES Module) — STABLE FULL (compat kr/cn + ko/zh/en)
+// ✅ DICT + t() + apply(root) + onChange/eventbus
+// ✅ No DOM creation / No MutationObserver (safe for your dynamic layout)
+// ✅ Backward compatible with old lang codes (kr/cn) + new (ko/zh/en)
+// ✅ Emits standard window events on lang change: joy:lang, languageChanged, i18n:changed
 
 const DICT = {
-  // ✅ Unified keys (preferred)
-  ko: {
+  // ===== Korean =====
+  kr: {
     brand: "Joy Chinese",
     subtitle: "AI 한자 · 중국어 학습 플랫폼",
 
@@ -22,7 +22,7 @@ const DICT = {
     nav_teacher: "교사专区",
     nav_my: "내 학습",
 
-    // ===== Stroke (笔顺页面) =====
+    // ===== Stroke =====
     stroke_title: "한자 필순 연습",
     stroke_desc: "한 글자를 입력하면 필순 애니메이션과 따라쓰기 연습을 할 수 있어요.",
     stroke_input_label: "한자 입력",
@@ -54,7 +54,6 @@ const DICT = {
     common_loading: "불러오는 중...",
     common_retry: "다시 시도",
     common_close: "닫기",
-    common_back: "← 목록으로",
 
     hanja_title: "한자공부",
     hanja_section_vocab: "📖 자주 쓰는 한자",
@@ -62,17 +61,24 @@ const DICT = {
     hanja_section_compare: "🔄 중한 한자 비교",
     hanja_compare_placeholder: "간체자·번체자·한국 한자 비교 기능이 추가될 예정입니다.",
 
-    // ✅ HSK common (add these so you don't see raw keys)
+    // ===== HSK common (avoid raw keys on HSK page) =====
     hsk_title: "HSK 학습",
+    hsk_header: "HSK {lv} · {version}",
     hsk_level: "레벨",
     hsk_tip: "레벨을 선택하고 수업을 시작해요.",
     hsk_search_placeholder: "단어/병음/뜻 검색",
-    hsk_loading_lessons: "수업 목록 불러오는 중…",
-    hsk_header: "HSK {lv} · {version}",
+    hsk_loading_lessons: "수업 목록 불러오는 중...",
     hsk_lesson_status: "Lesson {label} ({got}/{total})",
+    hsk_back_to_list: "← 목록으로",
+    hsk_words_tab: "단어",
+    hsk_dialogue_tab: "회화",
+    hsk_grammar_tab: "문법",
+    hsk_quiz_tab: "퀴즈",
+    hsk_ai_tab: "AI 학습",
   },
 
-  zh: {
+  // ===== Chinese =====
+  cn: {
     brand: "Joy Chinese",
     subtitle: "AI 汉字・中文学习平台",
 
@@ -88,6 +94,7 @@ const DICT = {
     nav_teacher: "教师专区",
     nav_my: "我的学习",
 
+    // ===== Stroke =====
     stroke_title: "汉字笔顺练习",
     stroke_desc: "输入一个汉字，即可观看笔顺动画并进行描红练习。",
     stroke_input_label: "输入汉字",
@@ -119,7 +126,6 @@ const DICT = {
     common_loading: "加载中...",
     common_retry: "重试",
     common_close: "关闭",
-    common_back: "← 返回目录",
 
     hanja_title: "韩语汉字学习",
     hanja_section_vocab: "📖 常用韩语汉字",
@@ -127,17 +133,23 @@ const DICT = {
     hanja_section_compare: "🔄 中韩汉字对比",
     hanja_compare_placeholder: "未来将加入简体、繁体与韩字对照功能。",
 
-    // ✅ HSK common (add these so you don't see raw keys)
+    // ===== HSK common =====
     hsk_title: "HSK 学习",
-    hsk_level: "等级",
-    hsk_tip: "请选择等级并开始课程。",
-    hsk_search_placeholder: "搜索：词 / 拼音 / 释义",
-    hsk_loading_lessons: "正在加载课程…",
     hsk_header: "HSK {lv} · {version}",
+    hsk_level: "级别",
+    hsk_tip: "请选择级别开始学习。",
+    hsk_search_placeholder: "搜索：词/拼音/释义",
+    hsk_loading_lessons: "正在加载课程…",
     hsk_lesson_status: "第{label}课（{got}/{total}）",
+    hsk_back_to_list: "← 返回目录",
+    hsk_words_tab: "单词",
+    hsk_dialogue_tab: "会话",
+    hsk_grammar_tab: "语法",
+    hsk_quiz_tab: "练习",
+    hsk_ai_tab: "AI 学习",
   },
 
-  // ✅ English pack (optional; safe defaults)
+  // ===== English (optional) =====
   en: {
     brand: "Joy Chinese",
     subtitle: "AI Hanzi · Chinese Learning Platform",
@@ -145,37 +157,36 @@ const DICT = {
     nav_home: "Home",
     nav_hsk: "HSK",
     nav_stroke: "Stroke Order",
-    nav_hanjagongfu: "Hanja",
+    nav_hanjagongfu: "Hanzi Study",
     nav_speaking: "Speaking",
     nav_travel: "Travel Chinese",
     nav_culture: "Culture",
     nav_review: "Review",
     nav_resources: "Resources",
     nav_teacher: "Teacher",
-    nav_my: "My Study",
+    nav_my: "My Learning",
 
     common_loading: "Loading...",
     common_retry: "Retry",
     common_close: "Close",
 
     hsk_title: "HSK",
-    hsk_level: "Level",
-    hsk_tip: "Choose a level and start a lesson.",
-    hsk_search_placeholder: "Search word / pinyin / meaning",
-    hsk_loading_lessons: "Loading lessons…",
     hsk_header: "HSK {lv} · {version}",
+    hsk_level: "Level",
+    hsk_tip: "Select a level to start.",
+    hsk_search_placeholder: "Search word/pinyin/meaning",
+    hsk_loading_lessons: "Loading lessons...",
     hsk_lesson_status: "Lesson {label} ({got}/{total})",
+    hsk_back_to_list: "← Back to list",
+    hsk_words_tab: "Words",
+    hsk_dialogue_tab: "Dialogue",
+    hsk_grammar_tab: "Grammar",
+    hsk_quiz_tab: "Quiz",
+    hsk_ai_tab: "AI Learn",
   },
-
-  // ✅ Legacy aliases (kept for backward compatibility)
-  kr: null,
-  cn: null,
 };
 
-// link legacy → unified
-DICT.kr = DICT.ko;
-DICT.cn = DICT.zh;
-
+// ---------- safe storage ----------
 function safeGetLS(key) {
   try { return localStorage.getItem(key); } catch { return null; }
 }
@@ -183,22 +194,33 @@ function safeSetLS(key, val) {
   try { localStorage.setItem(key, val); } catch {}
 }
 
-// ✅ normalize to unified codes (ko/zh/en)
-function normalizeLang(lang) {
-  const L = String(lang || "").trim().toLowerCase();
-  if (!L) return "ko";
+// ---------- normalize lang codes (compat) ----------
+// accepts: kr/cn/ko/zh/en, also "zh-cn", "zh-hans", "kr-KR" etc.
+function normalizeLang(input, fallback = "ko") {
+  const raw = String(input || "").trim().toLowerCase();
+  if (!raw) return fallback;
 
-  if (L === "kr") return "ko";
-  if (L === "ko") return "ko";
+  // old codes
+  if (raw === "kr") return "ko";
+  if (raw === "cn") return "zh";
 
-  if (L === "cn") return "zh";
-  if (L === "zh-cn") return "zh";
-  if (L === "zh-tw") return "zh";
-  if (L.startsWith("zh")) return "zh";
+  // common variants
+  if (raw === "ko" || raw.startsWith("ko-")) return "ko";
+  if (raw === "zh" || raw.startsWith("zh")) return "zh";
+  if (raw === "en" || raw.startsWith("en-")) return "en";
 
-  if (L.startsWith("en")) return "en";
+  // tolerate your older "site_lang" values
+  if (raw === "korean") return "ko";
+  if (raw === "chinese") return "zh";
 
-  return "ko";
+  return fallback;
+}
+
+function canonToDictKey(canon) {
+  // our DICT keys: kr/cn/en
+  if (canon === "ko") return "kr";
+  if (canon === "zh") return "cn";
+  return canon === "en" ? "en" : "kr";
 }
 
 // {name} interpolation
@@ -212,73 +234,117 @@ function interpolate(str, params) {
 
 class I18N {
   constructor() {
+    // canonical: ko|zh|en
     this._lang = "ko";
+
+    // storage
     this._storageKey = "joy_lang";
 
-    // onChange subscribers
+    // subscribers (legacy)
     this._handlers = new Set();
 
-    // event bus (navBar/router)
+    // internal event bus
     this._bus = new Map();
   }
 
   init({ defaultLang = "ko", storageKey = "joy_lang" } = {}) {
     this._storageKey = storageKey || "joy_lang";
-    const saved = safeGetLS(this._storageKey);
 
-    // accept legacy or unified
-    this._lang = normalizeLang(saved || defaultLang);
+    const saved =
+      safeGetLS(this._storageKey) ||
+      safeGetLS("site_lang") ||
+      safeGetLS("lang");
 
-    // write back unified code (keeps storage clean)
+    this._lang = normalizeLang(saved || defaultLang, normalizeLang(defaultLang, "ko"));
+
+    // keep storage consistent
     safeSetLS(this._storageKey, this._lang);
   }
 
+  // canonical getter
+  getLang() {
+    return this._lang; // ko|zh|en
+  }
+
+  // legacy getter (some old code expects kr/cn)
+  getLangLegacy() {
+    return canonToDictKey(this._lang); // kr|cn|en
+  }
+
+  // Accepts kr/cn/ko/zh/en; emits change events
+  setLang(lang) {
+    const next = normalizeLang(lang, "ko");
+    if (next === this._lang) return this._lang;
+
+    this._lang = next;
+    safeSetLS(this._storageKey, next);
+
+    // legacy handlers
+    for (const fn of this._handlers) {
+      try { fn(this._lang); } catch {}
+    }
+
+    // internal bus
+    this.emit("change", this._lang);
+
+    // global events (pages can listen)
+    this._emitWindowEvents(this._lang);
+
+    return this._lang;
+  }
+
+  // Force without equality check (rare use)
+  forceLang(lang) {
+    const next = normalizeLang(lang, "ko");
+    this._lang = next;
+    safeSetLS(this._storageKey, next);
+
+    for (const fn of this._handlers) {
+      try { fn(this._lang); } catch {}
+    }
+    this.emit("change", this._lang);
+    this._emitWindowEvents(this._lang);
+
+    return this._lang;
+  }
+
   t(key, params) {
-    const pack = DICT[this._lang] || DICT.ko || {};
+    const dictKey = canonToDictKey(this._lang); // kr/cn/en
+    const pack = DICT[dictKey] || DICT.kr;
 
     const raw =
       (pack && key in pack) ? pack[key]
-      : (DICT.ko && key in DICT.ko) ? DICT.ko[key]
+      : (DICT.kr && key in DICT.kr) ? DICT.kr[key]
+      : (DICT.cn && key in DICT.cn) ? DICT.cn[key]
+      : (DICT.en && key in DICT.en) ? DICT.en[key]
       : key;
 
     return interpolate(raw, params);
   }
 
-  getLang() {
-    return this._lang; // ✅ always ko|zh|en
-  }
-
-  // ✅ Accepts ko/zh/en + legacy kr/cn
-  setLang(lang) {
-    const next = normalizeLang(lang);
-    if (next === this._lang) return;
-
-    this._lang = next;
-    safeSetLS(this._storageKey, next);
-
-    for (const fn of this._handlers) {
-      try { fn(this._lang); } catch {}
-    }
-    this.emit("change", this._lang);
-  }
-
-  forceLang(lang) {
-    const next = normalizeLang(lang);
-    this._lang = next;
-    safeSetLS(this._storageKey, next);
-
-    for (const fn of this._handlers) {
-      try { fn(this._lang); } catch {}
-    }
-    this.emit("change", this._lang);
-  }
-
   onChange(fn) {
+    if (typeof fn !== "function") return () => {};
     this._handlers.add(fn);
     return () => this._handlers.delete(fn);
   }
 
-  // ✅ apply translations into a specific root
+  // internal event bus
+  on(event, fn) {
+    if (!event || typeof fn !== "function") return () => {};
+    if (!this._bus.has(event)) this._bus.set(event, new Set());
+    this._bus.get(event).add(fn);
+    return () => this._bus.get(event)?.delete(fn);
+  }
+
+  emit(event, payload) {
+    const set = this._bus.get(event);
+    if (!set) return;
+    for (const fn of set) {
+      try { fn(payload); } catch {}
+    }
+  }
+
+  // Apply translations to specific root (or document)
   apply(root) {
     const base = root || document;
 
@@ -313,21 +379,21 @@ class I18N {
     });
   }
 
-  // event bus
-  on(event, fn) {
-    if (!event || typeof fn !== "function") return () => {};
-    if (!this._bus.has(event)) this._bus.set(event, new Set());
-    this._bus.get(event).add(fn);
-    return () => this._bus.get(event)?.delete(fn);
-  }
-
-  emit(event, payload) {
-    const set = this._bus.get(event);
-    if (!set) return;
-    for (const fn of set) {
-      try { fn(payload); } catch {}
-    }
+  _emitWindowEvents(langCanon) {
+    // langCanon is ko|zh|en
+    try {
+      window.dispatchEvent(new CustomEvent("joy:lang", { detail: { lang: langCanon } }));
+    } catch {}
+    try {
+      window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: langCanon } }));
+    } catch {}
+    try {
+      window.dispatchEvent(new CustomEvent("i18n:changed", { detail: { lang: langCanon } }));
+    } catch {}
   }
 }
 
 export const i18n = new I18N();
+
+// Optional auto-init if you want (safe):
+// i18n.init({ defaultLang: "ko", storageKey: "joy_lang" });
