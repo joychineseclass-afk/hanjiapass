@@ -1,5 +1,11 @@
-// /ui/components/navBar.js  ✅FINAL (dopamine nav)
+// /ui/components/navBar.js  ✅FINAL (dopamine nav) — v2.2 (System-lang cleaned, no refactor)
+// ✅ Keeps your working nav + i18n apply flow
+// ✅ Switcher now uses unified /ui/core/lang.js (ko/zh/en)
+// ✅ Still compatible with existing code expecting i18n change callbacks
+// ✅ Emits standard events: joy:lang, languageChanged, i18n:changed (via setLang)
+
 import { i18n } from "../i18n.js";
+import { getLang, setLang } from "../core/lang.js";
 
 const NAV_ITEMS = [
   { href: "#home",      key: "nav_home",        label: "홈",        color: "#3b82f6" },
@@ -41,12 +47,17 @@ function setActive(rootEl) {
 
 function syncLangButtons(rootEl) {
   if (!rootEl) return;
+
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
-  const lang = (i18n?.getLang?.() || "kr").toLowerCase();
-  btnKR?.classList.toggle("active", lang === "kr");
-  btnCN?.classList.toggle("active", lang === "cn");
-  document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+
+  const lang = getLang(); // ✅ always ko|zh|en
+
+  btnKR?.classList.toggle("active", lang === "ko");
+  btnCN?.classList.toggle("active", lang === "zh");
+
+  // set <html lang="">
+  document.documentElement.lang = lang === "ko" ? "ko" : lang === "zh" ? "zh-CN" : "en";
 }
 
 function applyI18n(rootEl) {
@@ -67,6 +78,7 @@ function bindGlobalOnce() {
     if (lastRootEl) setActive(lastRootEl);
   });
 
+  // ✅ Keep your existing i18n hooks (no refactor)
   try {
     i18n?.on?.("change", () => {
       if (lastRootEl) applyI18n(lastRootEl);
@@ -78,6 +90,17 @@ function bindGlobalOnce() {
       if (lastRootEl) applyI18n(lastRootEl);
     });
   } catch {}
+
+  // ✅ Also react to unified lang events (important for pages not relying on i18n callbacks)
+  window.addEventListener("joy:lang", () => {
+    if (lastRootEl) applyI18n(lastRootEl);
+  });
+  window.addEventListener("languageChanged", () => {
+    if (lastRootEl) applyI18n(lastRootEl);
+  });
+  window.addEventListener("i18n:changed", () => {
+    if (lastRootEl) applyI18n(lastRootEl);
+  });
 }
 
 export function mountNavBar(rootEl) {
@@ -88,6 +111,8 @@ export function mountNavBar(rootEl) {
 
   // ✅ 防重复挂载
   if (rootEl.dataset.mounted === "1") {
+    // ensure i18n current lang aligns with core/lang
+    try { i18n?.setLang?.(getLang()); } catch {}
     applyI18n(rootEl);
     return;
   }
@@ -132,21 +157,24 @@ export function mountNavBar(rootEl) {
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
 
+  // ✅ On mount: align i18n lang to unified core/lang (no breaking)
+  try { i18n?.setLang?.(getLang()); } catch {}
+
   btnKR?.addEventListener("click", () => {
-  try { i18n?.setLang?.("kr"); } catch {}
+    // ✅ unified set (will emit joy:lang / languageChanged / i18n:changed)
+    const lang = setLang("ko");
+
+    // ✅ keep i18n in sync (some components rely on i18n internal state)
+    try { i18n?.setLang?.(lang); } catch {}
+
+    applyI18n(rootEl);
+  });
+
+  btnCN?.addEventListener("click", () => {
+    const lang = setLang("zh");
+    try { i18n?.setLang?.(lang); } catch {}
+    applyI18n(rootEl);
+  });
+
   applyI18n(rootEl);
-
-  // ⭐ 通知整个网站：语言变了
-  window.dispatchEvent(new CustomEvent("joy:langchanged"));
-});
-
-btnCN?.addEventListener("click", () => {
-  try { i18n?.setLang?.("cn"); } catch {}
-  applyI18n(rootEl);
-
-  // ⭐ 通知整个网站：语言变了
-  window.dispatchEvent(new CustomEvent("joy:langchanged"));
-});
-
-applyI18n(rootEl);
 }
