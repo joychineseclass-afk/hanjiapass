@@ -110,19 +110,16 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("[app] mount panels error:", e);
   }
 
-  // 3) Default route
-  if (!location.hash) location.hash = "#home";
+// 3) Start router (router will ensure defaultHash + first render)
+try {
+  console.log("[app] startRouter (boot)");
+  startRouter({ defaultHash: "#home", appId: "app", scrollTop: true });
+} catch (e) {
+  console.error("[app] startRouter error:", e);
+  showFatal(e);
+}
 
-  // 4) Start router (with guard)
-  try {
-    console.log("[app] startRouter:", location.hash);
-    startRouter();
-  } catch (e) {
-    console.error("[app] startRouter error:", e);
-    showFatal(e);
-  }
-
-  // 5) Helpful debug hint
+  // 4) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.
 
 });
