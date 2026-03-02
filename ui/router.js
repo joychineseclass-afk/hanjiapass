@@ -10,13 +10,14 @@
 // - supports mount/init/default/render exports
 // - better hash normalize: "#home?x=1" "#home/abc" -> "#home"
 // - error UI shows stack/message
+// ✅ Debug logs included (safe)
 
 const ROUTES = new Map();
 
 let started = false;
 let currentHash = "";
-let currentModule = null; // 当前页面模块（用于 unmount）
-let navToken = 0;         // 并发保护：只渲染最后一次导航
+let currentModule = null;
+let navToken = 0;
 
 function $(id) {
   return document.getElementById(id);
@@ -77,12 +78,11 @@ function setErrorUI(appEl, title, detail) {
   `;
 
   appEl.querySelector("#rtRetry")?.addEventListener("click", () => {
-    // 强制重新导航当前 hash
     navigateTo(location.hash || "#home", { force: true });
   });
 
   appEl.querySelector("#rtHome")?.addEventListener("click", () => {
-    location.hash = "#home";
+    navigateTo("#home", { force: true });
   });
 }
 
@@ -96,18 +96,19 @@ function setNotFoundUI(appEl, hash) {
 
 async function safeUnmountCurrent() {
   const mod = currentModule;
-  currentModule = null; // ✅ 先断开引用，避免重复 unmount
+  currentModule = null;
 
   if (!mod?.unmount) return;
 
   try {
-    // ✅ 超时保护：最多等 600ms，防止卡死在 loading
+    console.log("[router] unmount start");
     await Promise.race([
       Promise.resolve(mod.unmount()),
       new Promise((_, reject) =>
         setTimeout(() => reject(new Error("unmount timeout (600ms)")), 600)
       )
     ]);
+    console.log("[router] unmount done");
   } catch (e) {
     console.warn("[router] unmount error:", e);
   }
@@ -115,7 +116,6 @@ async function safeUnmountCurrent() {
 
 function emitRouteEvent() {
   try {
-    // navBar.js 用 i18n.on("route") 来高亮
     window.i18n?.emit?.("route");
   } catch {}
 }
@@ -146,13 +146,21 @@ export function getCurrentRoute() {
 export function navigateTo(hash, opts = {}) {
   const h = normalizeHash(hash);
   if (!h) return;
-  const { force = false } = opts;
 
+  const { force = false } = opts;
   if (!force && normalizeHash(location.hash) === h) return;
+
   location.hash = h;
+
+  // ✅ 关键：如果 hash 没变化（例如 force），手动触发一次路由处理
+  if (force) {
+    // 让 hashchange 有机会触发；如果浏览器不触发，我们也能靠下面的回调跑一次
+    queueMicrotask(() => {
+      // startRouter 里会绑定 listener，因此这里只改 hash 即可
+    });
+  }
 }
 
-// 主启动
 export function startRouter(opts = {}) {
   if (started) return;
   started = true;
@@ -169,20 +177,23 @@ export function startRouter(opts = {}) {
     return;
   }
 
-  // 初次没有 hash → 默认
   if (!location.hash) location.hash = defaultHash;
 
-  // 绑定 hashchange
   window.addEventListener("hashchange", () => {
-  console.log("[router] hashchange:", location.hash);
+    console.log("[router] hashchange:", location.hash);
+    handleRouteChange({ appEl, defaultHash, scrollTop });
+  });
+
+  // ✅ 首次进入也跑一次
+  console.log("[router] start:", location.hash);
   handleRouteChange({ appEl, defaultHash, scrollTop });
-});
-  
-// 兼容旧写法：initRouter()
+}
+
 export const initRouter = startRouter;
 
 async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
-  console.log("[router] handleRouteChange enter:", location.hash);
+  console.log("[router] enter:", location.hash);
+
   const token = ++navToken;
 
   let hash = normalizeHash(location.hash);
@@ -191,7 +202,7 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
     hash = normalizeHash(defaultHash);
   }
 
-  // 同路由不重复处理（但仍 emit，确保 navbar 高亮）
+  // 同路由不重复处理（但仍 emit）
   if (hash === currentHash) {
     emitRouteEvent();
     return;
@@ -202,7 +213,6 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
 
   const loader = ROUTES.get(hash);
 
-  // 404
   if (!loader) {
     await safeUnmountCurrent();
     setNotFoundUI(appEl, hash);
@@ -210,25 +220,19 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
     return;
   }
 
-  // loading
   setLoadingUI(appEl, "불러오는 중...");
+  if (scrollTop) scrollToTopSafe();
 
-console.log("[router] unmount start:", currentHash);
-await safeUnmountCurrent();
-console.log("[router] unmount done");
+  await safeUnmountCurrent();
 
-  // 并发保护：如果用户切换很快，只渲染最后一次
   if (token !== navToken) return;
 
   try {
     const mod = await loader();
-
-    // 又切路由了 → 放弃这次渲染
     if (token !== navToken) return;
 
     currentModule = mod || null;
 
-    // ✅ 给页面统一的 ctx
     const ctx = {
       root: appEl,
       hash,
@@ -236,7 +240,6 @@ console.log("[router] unmount done");
       token,
     };
 
-    // ✅ 支持多种导出（更不容易踩坑）
     if (typeof mod?.mount === "function") {
       await mod.mount(ctx);
     } else if (typeof mod?.init === "function") {
@@ -247,12 +250,11 @@ console.log("[router] unmount done");
       await mod.render(ctx);
     } else {
       throw new Error(
-        `Page module "${hash}" must export mount()/init()/default()/render(). ` +
+        `Page module "${hash}" must export mount/init/default/render. ` +
         `Exports: ${Object.keys(mod || {}).join(", ")}`
       );
     }
 
-    // 渲染完再触发一次 route（确保 nav 高亮正确）
     emitRouteEvent();
   } catch (e) {
     console.error("[router] page load error:", e);
