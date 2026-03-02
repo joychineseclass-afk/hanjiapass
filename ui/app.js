@@ -15,7 +15,6 @@ import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
-registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 
 /* ---------- Global helper: open step modal ---------- */
 window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
@@ -66,6 +65,7 @@ registerRoute("#review",    () => import("./pages/page.review.js"));
 registerRoute("#resources", () => import("./pages/page.resources.js"));
 registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
+registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 
 /* ===============================
    🚀 Boot
