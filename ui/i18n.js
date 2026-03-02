@@ -54,6 +54,7 @@ const DICT = {
     common_loading: "불러오는 중...",
     common_retry: "다시 시도",
     common_close: "닫기",
+    common_back: "← 목록으로",
 
     hanja_title: "한자공부",
     hanja_section_vocab: "📖 자주 쓰는 한자",
@@ -118,6 +119,7 @@ const DICT = {
     common_loading: "加载中...",
     common_retry: "重试",
     common_close: "关闭",
+    common_back: "← 返回目录",
 
     hanja_title: "韩语汉字学习",
     hanja_section_vocab: "📖 常用韩语汉字",
