@@ -323,26 +323,57 @@ function bindEvents() {
   }, { signal });
 
   // AI: send (placeholder – integrate later with your AI backend / step runner)
-  $("hskAISend")?.addEventListener("click", () => {
-    const input = String($("hskAIInput")?.value || "").trim();
-    const out = $("hskAIResult");
-    if (!out) return;
+  $("hskAISend")?.addEventListener("click", async () => {
+  const input = String($("hskAIInput")?.value || "").trim();
+  const out = $("hskAIResult");
+  if (!out) return;
 
-    if (!input) {
-      out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk_ai_empty"))}</div>`;
-      return;
+  if (!input) {
+    out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk_ai_empty"))}</div>`;
+    return;
+  }
+
+  const lang = getLang(); // "ko" | "zh"
+  const context = buildAIContext();
+
+  // UI: loading
+  out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("common_loading"))}</div>`;
+
+  try {
+    if (!window.JOY_RUNNER?.askAI) {
+      throw new Error("JOY_RUNNER.askAI not found. (Did you patch lessonStepRunner.js?)");
     }
 
-    // ✅ For now: show a structured prompt (later you can wire to your API)
-    const ctx = buildAIContext();
+    // ✅ Call StepRunner AI
+    const res = await window.JOY_RUNNER.askAI({
+      prompt: input,
+      context,
+      lang,
+      mode: "Kids",
+    });
+
+    const text = res?.text ?? "";
+
     out.innerHTML = `
-      <div class="border rounded-xl p-3 bg-slate-50">
-        <div class="text-xs opacity-60 mb-2">${escapeHtml(i18n.t("hsk_ai_prompt_preview"))}</div>
-        <pre class="text-xs whitespace-pre-wrap">${escapeHtml(ctx + "\n" + input)}</pre>
+      <div class="border rounded-xl p-3">
+        <div class="text-xs opacity-60 mb-2">AI</div>
+        <div class="text-sm whitespace-pre-wrap">${escapeHtml(text)}</div>
       </div>
-      <div class="text-sm opacity-70 mt-2">${escapeHtml(i18n.t("hsk_ai_next_tip"))}</div>
     `;
-  }, { signal });
+  } catch (e) {
+    console.error(e);
+    out.innerHTML = `
+      <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
+        AI error: ${escapeHtml(e?.message || e)}
+      </div>
+      <div class="text-xs opacity-60 mt-2">
+        체크: ① lessonStepRunner.js에 JOY_RUNNER.askAI 추가했는지
+        ② aiAsk/AI.ask/JOY_AI.ask 중 하나가 실제로 존재하는지
+        ③ 또는 /api/ai-chat 엔드포인트가 있는지
+      </div>
+    `;
+  }
+});
 
   // Language changed
   window.addEventListener("joy:langchanged", () => {
