@@ -3,33 +3,48 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- ✅ title 也能 i18n（但 title 需要 JS apply 才会变） -->
   <title data-i18n="nav_stroke">한자 필순 | Joy Chinese</title>
-  <link rel="stylesheet" href="../styles/base.css" />
+
+  <!-- ✅ 按你项目实际路径调整 -->
+  <link rel="stylesheet" href="/styles/base.css" />
 </head>
 
 <body>
   <div id="navBar"></div>
 
   <main class="page-wrap">
-    <!-- 标题：走 i18n -->
     <h1 class="page-title" data-i18n="stroke_title">한자 필순 연습</h1>
     <p class="muted" data-i18n="stroke_desc">
-      한 글자를 입력하면 필순 애니메이션과 따라쓰기를 할 수 있어요.
+      한 글자를 입력하면 필순 애니메이션과 따라쓰기 연습을 할 수 있어요.
     </p>
 
     <!-- 输入区 -->
     <div class="card" style="margin-top:16px;">
       <div class="row" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <label class="muted" for="stroke-input" data-i18n="stroke_input_label">한자 입력</label>
+
         <input
           id="stroke-input"
           class="input"
           style="min-width:180px;"
           maxlength="2"
-          placeholder="한 글자를 입력"
           data-i18n-placeholder="stroke_input_ph"
+          placeholder="예: 你 / 学 / 人"
+          aria-label="stroke input"
+          data-i18n-aria-label="stroke_input_label"
         />
-        <button id="stroke-load-btn" class="btn" data-i18n="stroke_load_btn">불러오기</button>
+
+        <button
+          id="stroke-load-btn"
+          class="btn"
+          type="button"
+          data-i18n="stroke_load_btn"
+          data-i18n-title="stroke_load_btn"
+        >
+          불러오기
+        </button>
 
         <span id="stroke-file-hint" class="muted" style="margin-left:auto;"></span>
       </div>
@@ -37,73 +52,122 @@
 
     <!-- 笔顺/描红组件挂载区 -->
     <div class="card" style="margin-top:16px;">
-      <div class="section-title" data-i18n="stroke_player_title">필순 학습</div>
-      <!-- 这里由 ui-stroke-player.js mountStrokeSwitcher(...) 注入 -->
+      <div class="section-title" data-i18n="stroke_player_title">필순 보기</div>
       <div id="stroke-root"></div>
     </div>
 
-    <!-- 释义区：后面接 lookup.js -->
+    <!-- 释义区 -->
     <div class="card" style="margin-top:16px;">
-      <div class="section-title" data-i18n="stroke_meaning_title">단어/뜻</div>
+      <div class="section-title" data-i18n="stroke_meaning_title">단어 뜻 (HSK)</div>
       <div id="stroke-meaning-area" class="muted" data-i18n="stroke_meaning_hint">
-        한자를 입력하면 HSK 단어장에서 뜻과 예문을 보여줄 수 있어요.
+        한자를 입력하면 HSK 단어장에서 뜻, 병음, 예문을 보여줘요.
       </div>
     </div>
   </main>
 
   <script type="module">
-    import { i18n } from "../ui/i18n.js";
-    import { mountNavBar } from "../ui/components/navBar.js";
+    import { i18n } from "/ui/i18n.js";
+    import { mountNavBar } from "/ui/components/navBar.js";
 
-    // ✅ 你的笔顺系统（你现在已在用）
-    import { mountStrokeSwitcher } from "../ui/ui-stroke-player.js";
+    // ✅ 你的笔顺系统（保持不变）
+    import { mountStrokeSwitcher } from "/ui/ui-stroke-player.js";
 
-    // ✅ 后续：你建立的 lookup（先留着，不报错的话再打开）
-    // import { findInHSK } from "../ui/hskLookup.js"; // 或 ../ui/lookup.js（看你文件名）
+    // ✅ 预留：后续接 HSK lookup（不会影响当前运行）
+    // import { findInHSK } from "/ui/hskLookup.js";
 
-    // 1) init i18n + navbar
-    i18n.init({ defaultLang: "kr", storageKey: "joy_lang", autoApplyRoot: document });
+    // ---------- boot ----------
+    i18n.init({ defaultLang: "kr", storageKey: "joy_lang" }); // ✅ 不用 autoApplyRoot，避免旧实现报错
     mountNavBar(document.getElementById("navBar"));
-    i18n.apply();
 
-    // 2) UI elements
+    // 首次 apply（包含 title / placeholder / aria-label）
+    i18n.apply(document);
+
+    // 语言切换后自动 apply（兼容你系统发的多种事件）
+    const reapply = () => {
+      try { i18n.apply(document); } catch {}
+      // ⚠️ title 不是普通元素 textContent，有的浏览器不会跟 data-i18n 自动变
+      // 所以这里手动更新一下 title（有 key 就用 i18n.t）
+      try {
+        const titleEl = document.querySelector("title[data-i18n]");
+        const key = titleEl?.getAttribute("data-i18n");
+        if (key) document.title = i18n.t(key);
+      } catch {}
+    };
+    window.addEventListener("joy:lang", reapply);
+    window.addEventListener("languageChanged", reapply);
+    window.addEventListener("i18n:changed", reapply);
+
+    // ---------- elements ----------
     const input = document.getElementById("stroke-input");
     const btn = document.getElementById("stroke-load-btn");
     const root = document.getElementById("stroke-root");
     const meaningArea = document.getElementById("stroke-meaning-area");
     const hint = document.getElementById("stroke-file-hint");
 
+    function codePointHex(ch) {
+      if (!ch) return "";
+      const cp = ch.codePointAt(0);
+      return cp ? "U+" + cp.toString(16).toUpperCase().padStart(4, "0") : "";
+    }
+
     function setHint(ch) {
       if (!hint) return;
-      // 仅提示：对应的 svg 文件名（例如 你用 unicode codepoint）
-      // 你现在实际怎么映射由 ui-stroke-player.js 决定，这里只是提示用
-      hint.textContent = ch ? `(${ch})` : "";
+      // 仅提示：你可按自己的映射逻辑调整
+      hint.textContent = ch ? `${ch} (${codePointHex(ch)})` : "";
     }
 
-    function handleLoad() {
-      const ch = (input.value || "").trim().charAt(0);
+    function setMeaningLoading() {
+      if (!meaningArea) return;
+      const txt = (typeof i18n?.t === "function" && i18n.t("common_loading")) || "Loading...";
+      meaningArea.innerHTML = `<div style="opacity:.7">${txt}</div>`;
+    }
+
+    function resetMeaningHint() {
+      if (!meaningArea) return;
+      // 回到提示文案（用 i18n key）
+      meaningArea.setAttribute("data-i18n", "stroke_meaning_hint");
+      i18n.apply(meaningArea.parentElement || document);
+    }
+
+    function handleLoad(chRaw) {
+      const ch = (chRaw || (input?.value || "").trim()).charAt(0);
       if (!ch) return;
 
+      if (input) input.value = ch;
       setHint(ch);
 
-      // ✅ 笔顺+描红组件挂载
-      mountStrokeSwitcher(root, ch);
+      // ✅ mount stroke player
+      try { mountStrokeSwitcher(root, ch); } catch (e) { console.warn("mountStrokeSwitcher failed:", e); }
 
-      // ✅ 释义：先给占位，后面你接 lookup.js 时再替换
-      if (meaningArea) {
-        meaningArea.innerHTML = `<div style="opacity:.7">불러오는 중...</div>`;
-        // TODO: 之后接 renderMeaningFromHSK(ch, meaningArea)
-      }
+      // ✅ meaning placeholder (later connect lookup)
+      setMeaningLoading();
+
+      // TODO: when you connect lookup:
+      // const found = await findInHSK(ch, { version: ..., level: ... });
+      // renderMeaning(found)
+
+      // 临时：1.2 秒后回提示（避免一直 loading）
+      setTimeout(() => {
+        // 如果你未来接了真实 lookup，就删掉这个 timeout
+        resetMeaningHint();
+      }, 1200);
     }
 
-    btn?.addEventListener("click", handleLoad);
+    btn?.addEventListener("click", () => handleLoad());
     input?.addEventListener("keydown", (e) => {
       if (e.key === "Enter") handleLoad();
     });
 
-    // 3) 默认加载一个示例字（可选）
-    // input.value = "你";
-    // handleLoad();
+    // ---------- optional: URL param auto load ----------
+    // /stroke.html?ch=你
+    try {
+      const sp = new URLSearchParams(location.search);
+      const ch = (sp.get("ch") || "").trim().charAt(0);
+      if (ch) handleLoad(ch);
+    } catch {}
+
+    // ---------- optional: default demo ----------
+    // input.value = "你"; handleLoad();
   </script>
 </body>
 </html>
