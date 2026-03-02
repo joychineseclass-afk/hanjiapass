@@ -217,7 +217,20 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     hash = normalizeHash(defaultHash);
   }
 
+// ✅ same route: only skip when page already rendered (avoid first-load stuck)
+if (!force && hash === currentHash) {
+  const html = appEl?.innerHTML || "";
+  const isLoading = html.includes("불러오는 중") || html.includes("Loading");
+  const isEmpty = html.trim().length === 0;
 
+  if (!isLoading && !isEmpty) {
+    emitRouteEvent();
+    return;
+  }
+  // else: fall through → re-render
+}
+
+  
   currentHash = hash;
   emitRouteEvent();
 
