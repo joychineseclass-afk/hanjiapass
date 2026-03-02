@@ -217,11 +217,6 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     hash = normalizeHash(defaultHash);
   }
 
-  // same route: only skip when not forced
-  if (!force && hash === currentHash) {
-    emitRouteEvent();
-    return;
-  }
 
   currentHash = hash;
   emitRouteEvent();
