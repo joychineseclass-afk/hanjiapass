@@ -229,10 +229,14 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     };
 
     // optional: timeout to avoid infinite loading
-    await Promise.race([
-      Promise.resolve(run()),
-      new Promise((_, reject) => setTimeout(() => reject(new Error("mount timeout (1500ms)")), 1500)),
-    ]);
+    const MOUNT_TIMEOUT_MS = 8000;
+
+await Promise.race([
+  Promise.resolve(run()),
+  new Promise((_, reject) =>
+    setTimeout(() => reject(new Error(`mount timeout (${MOUNT_TIMEOUT_MS}ms)`)), MOUNT_TIMEOUT_MS)
+  )
+]);
 
     emitRouteEvent();
   } catch (e) {
