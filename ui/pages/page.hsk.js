@@ -331,10 +331,15 @@ async function refreshLessons(scrollIntoView = false) {
 /* ===============================
    ✅ Open one lesson → load lesson file → render cards
 ================================== */
-console.log("🔥 openLesson called:", lesson);
 async function openLesson(lesson, { lv, version, __skipSetCurrent = false }) {
+
+  console.log("🔥 openLesson called:", lesson);  
+
   const grid = document.getElementById("hskGrid");
   const err = document.getElementById("hskError");
+
+  console.log("grid =", grid);
+
   if (!grid) return;
 
   const lang = getCurrentLang();
