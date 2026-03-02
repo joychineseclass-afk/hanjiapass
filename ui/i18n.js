@@ -21,6 +21,7 @@ const DICT = {
     nav_resources: "자료",
     nav_teacher: "교사专区",
     nav_my: "내 학습",
+    nav_login: "로그인",
 
     // ===== Stroke =====
     stroke_title: "한자 필순 연습",
@@ -107,6 +108,7 @@ hsk_empty_grammar: "문법 콘텐츠가 아직 없습니다.",
     nav_resources: "资源",
     nav_teacher: "教师专区",
     nav_my: "我的学习",
+    nav_login: "登录",
 
     // ===== Stroke =====
     stroke_title: "汉字笔顺练习",
