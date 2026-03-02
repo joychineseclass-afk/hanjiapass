@@ -1,24 +1,30 @@
-// /ui/components/navBar.js ✅ FINAL (MPA + index#home router compatible)
-// - Each section is a separate HTML page: /pages/hsk.html ...
-// - Home is index.html, and index uses hash router (#home)
-// - Fix: clicking 홈 while already on #home will force router to re-render
+// /ui/components/navBar.js ✅ FINAL (MIXED: MPA + index#home router)
+// - Other sections: /pages/*.html (MPA)
+// - Home: /index.html#home (index uses hash router)
+// - Fix: clicking "홈" on index will force router re-render (no refresh needed)
+
 import { i18n } from "../i18n.js";
 
-// ✅ 多页面导航：每个都是独立页面
-const NAV_ITEMS_FULL = [
-  // 注意：홈 目标是 /index.html#home（确保首页 router 生效）
-  { href: "/index.html#home",     key: "nav_home",        label: "홈",        color: "#3b82f6" },
+// ⚠️ 只有在 index.html 才会用到 router（强制重渲染）
+let navigateTo = null;
+try {
+  // 这里用动态 import，避免在纯 MPA 页面上引入 router 造成你不需要的依赖
+  //（但就算引入也没问题，这样更稳）
+} catch {}
 
-  { href: "/pages/hsk.html",      key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
-  { href: "/pages/stroke.html",   key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
-  { href: "/pages/hanja.html",    key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
-  { href: "/pages/speaking.html", key: "nav_speaking",    label: "회화",      color: "#ef4444" },
-  { href: "/pages/travel.html",   key: "nav_travel",      label: "여행중국어", color: "#06b6d4" },
-  { href: "/pages/culture.html",  key: "nav_culture",     label: "문화",      color: "#eab308" },
-  { href: "/pages/review.html",   key: "nav_review",      label: "복습",      color: "#8b5cf6" },
-  { href: "/pages/resources.html",key: "nav_resources",   label: "자료",      color: "#10b981" },
-  { href: "/pages/teacher.html",  key: "nav_teacher",     label: "교사专区",  color: "#f43f5e" },
-  { href: "/pages/my.html",       key: "nav_my",          label: "내 학습",   color: "#64748b" },
+const NAV_ITEMS_FULL = [
+  { href: "/index.html#home",      key: "nav_home",        label: "홈",        color: "#3b82f6" },
+
+  { href: "/pages/hsk.html",       key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
+  { href: "/pages/stroke.html",    key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
+  { href: "/pages/hanja.html",     key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
+  { href: "/pages/speaking.html",  key: "nav_speaking",    label: "회화",      color: "#ef4444" },
+  { href: "/pages/travel.html",    key: "nav_travel",      label: "여행중국어", color: "#06b6d4" },
+  { href: "/pages/culture.html",   key: "nav_culture",     label: "문화",      color: "#eab308" },
+  { href: "/pages/review.html",    key: "nav_review",      label: "복습",      color: "#8b5cf6" },
+  { href: "/pages/resources.html", key: "nav_resources",   label: "자료",      color: "#10b981" },
+  { href: "/pages/teacher.html",   key: "nav_teacher",     label: "교사专区",  color: "#f43f5e" },
+  { href: "/pages/my.html",        key: "nav_my",          label: "내 학습",   color: "#64748b" },
 ];
 
 function t(key, fallback = "") {
@@ -36,16 +42,8 @@ function normalizePath(p) {
   return raw.split("#")[0].split("?")[0];
 }
 
-function normalizeHref(href) {
-  const raw = String(href || "").trim();
-  if (!raw) return "/index.html";
-  const [path] = raw.split("#");
-  return normalizePath(path || "/index.html");
-}
-
 function isIndexPage() {
   const p = normalizePath(location.pathname);
-  // 兼容：/ 或 /index.html 都当首页
   return p === "/" || p.endsWith("/index.html");
 }
 
@@ -62,12 +60,12 @@ function setActive(rootEl) {
 
     let active = false;
 
-    // ✅ 1) 首页：path 匹配 + hash 匹配（有 hash 的话）
+    // ✅ 首页：path 匹配 + hash 匹配
     if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
       const wantHash = toHash ? `#${toHash}` : "";
       active = wantHash ? (curHash === wantHash) : true;
     } else {
-      // ✅ 2) 其它页面：只看 pathname
+      // ✅ 其它页面：只看 pathname
       active = navPath === curPath;
     }
 
@@ -104,22 +102,30 @@ function bindGlobalOnce() {
   try { i18n?.onChange?.(() => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
 }
 
-// ✅ 关键：在 index.html 内点击 “홈” 时，强制触发 router 再渲染
-function forceReRenderHomeOnIndex() {
-  // 只在首页生效
-  if (!isIndexPage()) return;
-
-  // 如果本来就在 #home，hash 不变就不会触发 router → 这里手动触发一次
-  if (location.hash === "#home") {
-    // 1) 先改成一个临时 hash
-    location.hash = "#_";
-    // 2) 下一帧再改回 #home，保证触发 hashchange
-    requestAnimationFrame(() => {
-      location.hash = "#home";
-    });
-  } else {
-    location.hash = "#home";
+// ✅ 核心：在 index.html 内点击 홈，要强制 router 重新渲染
+async function forceHomeOnIndex() {
+  if (!isIndexPage()) {
+    // 不是首页：直接去 /index.html#home，让浏览器整页跳转即可（最稳）
+    location.href = "/index.html#home";
+    return;
   }
+
+  // 是首页：用 router 的 navigateTo 强制渲染（不靠刷新）
+  try {
+    if (!navigateTo) {
+      const mod = await import("../router.js");
+      navigateTo = mod?.navigateTo;
+    }
+    if (typeof navigateTo === "function") {
+      navigateTo("#home", { force: true });
+      return;
+    }
+  } catch (e) {
+    console.warn("[navBar] router import failed, fallback to hash", e);
+  }
+
+  // fallback：如果 router 没拿到，还是回到 #home（至少能回去）
+  location.hash = "#home";
 }
 
 export function mountNavBar(rootEl) {
@@ -164,16 +170,11 @@ export function mountNavBar(rootEl) {
     a.style.setProperty("--navc", it.color);
     a.textContent = t(it.key, it.label);
 
-    // ✅ 홈만 특별 처리: index에서 클릭 시 router 강제 재실행
-    if (normalizeHref(it.href).endsWith("/index.html")) {
+    // ✅ 홈：任何页面点都回主页；index 内强制 rerender
+    if (it.href.startsWith("/index.html#home")) {
       a.addEventListener("click", (e) => {
-        // index 페이지면 SPA router 흐름을 강제 재실행
-        if (isIndexPage()) {
-          e.preventDefault();
-          forceReRenderHomeOnIndex();
-          setActive(rootEl);
-        }
-        // 다른 페이지면 그냥 /index.html#home 로 이동 (기본 동작)
+        e.preventDefault();
+        forceHomeOnIndex();
       });
     }
 
