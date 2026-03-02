@@ -1,25 +1,31 @@
-// /ui/components/navBar.js ✅ HYBRID PROD
+// /ui/components/navBar.js ✅ HYBRID PROD (FINAL)
 // - MPA: /pages/*.html
 // - Home: /index.html#home (hash router)
 // - On index: clicking Home forces router re-render (no refresh)
 // - On other pages: allow normal navigation to /index.html#home
+// - Adds: Login button (로그인)
+// - Keeps: i18n apply + active highlight + lang buttons
 
 import { i18n } from "../i18n.js";
 
 // ✅ 多页面导航：每个都是独立页面
+// ⚠️ teacher 改名为 학부모/선생님
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",      key: "nav_home",        label: "홈",        color: "#3b82f6" },
-  { href: "/pages/hsk.html",       key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
-  { href: "/pages/stroke.html",    key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
-  { href: "/pages/hanja.html",     key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
-  { href: "/pages/speaking.html",  key: "nav_speaking",    label: "회화",      color: "#ef4444" },
-  { href: "/pages/travel.html",    key: "nav_travel",      label: "여행중국어", color: "#06b6d4" },
-  { href: "/pages/culture.html",   key: "nav_culture",     label: "문화",      color: "#eab308" },
-  { href: "/pages/review.html",    key: "nav_review",      label: "복습",      color: "#8b5cf6" },
-  { href: "/pages/resources.html", key: "nav_resources",   label: "자료",      color: "#10b981" },
-  { href: "/pages/teacher.html",   key: "nav_teacher",     label: "교사专区",  color: "#f43f5e" },
-  { href: "/pages/my.html",        key: "nav_my",          label: "내 학습",   color: "#64748b" },
+  { href: "/index.html#home",      key: "nav_home",        label: "홈",            color: "#3b82f6" },
+  { href: "/pages/hsk.html",       key: "nav_hsk",         label: "HSK 학습",      color: "#22c55e" },
+  { href: "/pages/stroke.html",    key: "nav_stroke",      label: "한자 필순",     color: "#f97316" },
+  { href: "/pages/hanja.html",     key: "nav_hanjagongfu", label: "한자공부",      color: "#a855f7" },
+  { href: "/pages/speaking.html",  key: "nav_speaking",    label: "회화",          color: "#ef4444" },
+  { href: "/pages/travel.html",    key: "nav_travel",      label: "여행중국어",     color: "#06b6d4" },
+  { href: "/pages/culture.html",   key: "nav_culture",     label: "문화",          color: "#eab308" },
+  { href: "/pages/review.html",    key: "nav_review",      label: "복습",          color: "#8b5cf6" },
+  { href: "/pages/resources.html", key: "nav_resources",   label: "자료",          color: "#10b981" },
+  { href: "/pages/teacher.html",   key: "nav_teacher",     label: "학부모/선생님",  color: "#f43f5e" },
+  { href: "/pages/my.html",        key: "nav_my",          label: "내 학습",       color: "#64748b" },
 ];
+
+// ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
+const LOGIN_HREF = "/pages/login.html";
 
 function t(key, fallback = "") {
   try {
@@ -71,9 +77,12 @@ function syncLangButtons(rootEl) {
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
   const lang = (i18n?.getLang?.() || "kr").toLowerCase();
-  btnKR?.classList.toggle("active", lang === "kr");
-  btnCN?.classList.toggle("active", lang === "cn");
-  document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
+
+  btnKR?.classList.toggle("active", lang === "kr" || lang === "ko");
+  btnCN?.classList.toggle("active", lang === "cn" || lang === "zh");
+
+  document.documentElement.lang =
+    (lang === "kr" || lang === "ko") ? "ko" : "zh-CN";
 }
 
 function applyI18n(rootEl) {
@@ -98,7 +107,7 @@ function bindGlobalOnce() {
 }
 
 /**
- * ✅ Production-grade: force router rerender on index without relying on hash "jitter"
+ * ✅ Force router rerender on index without refresh
  * - tries: import router + navigateTo('#home', {force:true})
  * - fallback: hash jitter
  */
@@ -127,9 +136,35 @@ async function forceHomeOnIndex(rootEl) {
   setActive(rootEl);
 }
 
+function ensureNavStylesOnce() {
+  if (document.getElementById("joy-navbar-style")) return;
+
+  const style = document.createElement("style");
+  style.id = "joy-navbar-style";
+  style.textContent = `
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 10px}
+    .topbar .brand{display:flex;flex-direction:column;gap:2px}
+    .topbar .brand a{font-weight:800;font-size:18px;letter-spacing:-.2px}
+    .topbar .brand small{opacity:.7;font-size:12px}
+    .topbar .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .topbar .lang{display:flex;align-items:center;gap:6px}
+    .topbar .lang button{border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;cursor:pointer;font-weight:800;font-size:12px}
+    .topbar .lang button.active{border-color:#2563eb;background:rgba(37,99,235,.08);color:#2563eb}
+    .topbar .login a{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px}
+    .topbar .login a:hover{transform:translateY(-1px)}
+    nav.site-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    nav.site-nav a{padding:9px 12px;border-radius:999px;border:1px solid rgba(226,232,240,.9);background:#fff;font-weight:800;font-size:13px}
+    nav.site-nav a.active{border-color:var(--navc,#2563eb);background:color-mix(in srgb, var(--navc,#2563eb) 12%, white)}
+    nav.site-nav.mini{gap:6px}
+    nav.site-nav.mini a{padding:8px 10px;font-size:12px}
+  `;
+  document.head.appendChild(style);
+}
+
 export function mountNavBar(rootEl) {
   if (!rootEl) return;
 
+  ensureNavStylesOnce();
   bindGlobalOnce();
   lastRootEl = rootEl;
 
@@ -146,13 +181,19 @@ export function mountNavBar(rootEl) {
   rootEl.innerHTML = `
     <div class="topbar">
       <div class="brand">
-        <a href="/index.html#home" data-i18n="brand">Joy Chinese</a>
+        <a href="/index.html#home" data-i18n="brand">***中文学习中心</a>
         <small data-i18n="subtitle">AI 한자 · 중국어 학습 플랫폼</small>
       </div>
 
-      <div class="lang" aria-label="Language switcher">
-        <button id="btnKR" type="button">KR</button>
-        <button id="btnCN" type="button">CN</button>
+      <div class="right">
+        <div class="lang" aria-label="Language switcher">
+          <button id="btnKR" type="button" aria-label="Korean">KR</button>
+          <button id="btnCN" type="button" aria-label="Chinese">CN</button>
+        </div>
+
+        <div class="login">
+          <a href="${LOGIN_HREF}" data-i18n="nav_login">로그인</a>
+        </div>
       </div>
     </div>
 
@@ -171,7 +212,7 @@ export function mountNavBar(rootEl) {
 
     // ✅ Home special:
     // - On index: preventDefault + force rerender
-    // - On other pages: DO NOT preventDefault, allow normal navigation to /index.html#home
+    // - On other pages: allow normal navigation to /index.html#home
     if (String(it.href || "").startsWith("/index.html#home")) {
       a.addEventListener("click", (e) => {
         if (!isIndexPage()) return; // ✅ allow normal navigation
