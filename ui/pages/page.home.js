@@ -1,28 +1,20 @@
 // ui/pages/page.home.js
-// ✅ Home page content only (NO extra topbar) — uses global navbar
-// ✅ Fully language-consistent via i18n (KR/CN) + live rerender
-// ✅ Removed HSK ladder section (move to HSK page)
-// ✅ "교사专区" -> "학부모/선생님"
-// ✅ Site name: 中文学习中心 (via i18n key: brand)
-
-// IMPORTANT:
-// - All visible strings come from i18n.t(key) (no hard-coded mixed CN in KR mode)
-// - Falls back to KR/CN default strings by current language
-// - Re-render on joy:langchanged / i18n change, so no refresh required
+// ✅ Home: Brand-level Hero (compact) + Today learning + Updates only
+// ✅ All strings via i18n.t (KR/CN) + live rerender
+// ✅ Remove blocks (visual placeholder / parent-teacher cards / why-us) from Home
+// ✅ Keep "공지/업데이트"
 
 import { i18n } from "../i18n.js";
 
-const STYLE_ID = "joy-home-style-v2";
+const STYLE_ID = "lumina-home-style-v3";
 let _bound = false;
 
 function getLang() {
-  // normalize to 'kr' | 'cn'
   const v =
     (i18n?.getLang?.() ||
       localStorage.getItem("joy_lang") ||
       localStorage.getItem("site_lang") ||
       "kr").toLowerCase();
-
   if (v.startsWith("zh") || v === "cn") return "cn";
   return "kr";
 }
@@ -36,131 +28,107 @@ function t(key, fallback = "") {
   }
 }
 
-/** KR/CN fallback dictionaries (ONLY used if i18n key missing) */
-const FALLBACK = {
+/** minimal fallback (only used if i18n key missing) */
+const FB = {
   kr: {
-    brand: "中文学习中心",
+    brand: "Lumina Chinese Learning Center",
+    subtitle: "루미나 글로벌 중국어 교육 플랫폼",
+
     kicker: "✨ 오늘도 한 걸음",
-    h1: "오늘은 3분만, 중국어 해볼까요?",
-    p1: "아이는 즐겁게 배우고, 부모님과 선생님은 커리큘럼을 쉽게 찾을 수 있는",
-    p1b: "학습 플랫폼",
+    h1: "오늘의 학습, 지금 3분만 시작해요",
+    desc: "아이는 즐겁게 배우고, 학부모/선생님은 커리큘럼을 쉽게 찾을 수 있어요.",
     cta1: "시작 학습",
     cta2: "커리큘럼 보기",
     tags: ["HSK 2.0/3.0", "중·한·병음", "따라쓰기", "AI 말하기"],
-    visualTitle: "(여기에 메인 일러스트/캐릭터)",
-    visualDesc1: '예: "판다 + 책" / “오늘의 미션” 이미지',
-    visualDesc2: "※ 나중에 이미지 넣어도 레이아웃이 무너지지 않게 설계됨",
 
-    quickTitle: "빠른 시작",
-    quickSub: "아이/학부모/선생님 모두 편하게",
+    today_title: "오늘의 학습",
+    today_desc: "마지막으로 하던 수업을 이어서, 짧게라도 꾸준히!",
+    today_meta: "이번 주 3/7 완료",
 
-    card1Badge: "아이용",
-    card1Title: "오늘의 학습",
-    card1Desc: "마지막으로 하던 수업을 이어서, 짧게라도 꾸준히!",
-    card1Btn: "바로가기",
-    card1Meta: "이번 주 3/7 완료",
-
-    card2Badge: "학부모/선생님",
-    card2Title: "커리큘럼 목차(검색/필터)",
-    card2Desc: "레벨/주제/기능별로 검색·필터해서 필요한 학습을 빠르게 찾을 수 있어요.",
-    card2Btn: "보기",
-    card2Chips: ["검색", "필터", "정렬"],
-
-    card3Badge: "관리",
-    card3Title: "학부모/선생님",
-    card3Desc: "학습 진도, 숙제 제안, 예약/공지 등을 한 곳에서 확인합니다.",
-    card3Btn: "들어가기",
-    card3Chips: ["진도", "숙제", "예약"],
-
-    twoLeftBadge: "공지/업데이트",
-    twoLeftTitle: "최근 업데이트",
+    upd_badge: "공지/업데이트",
+    upd_title: "최근 업데이트",
     more: "더보기",
-
     upd1: "신규: HSK1 1과 「인사하기」",
     upd2: "개선: 목차 언어 동기화",
     upd3: "예고: 따라쓰기 ‘정답 발광/너무 잘했어요’",
 
-    twoRightBadge: "왜 아이에게 좋아요",
-    twoRightTitle: "학습 경험",
-    twoRightDesc: "‘단어 → 회화 → 따라쓰기 → 퀴즈’ 순서로 완주하면 성취감이 쌓여요.",
-    feat1: "AI 말하기",
-    feat1s: "자연스럽게 말하기",
-    feat2: "중·한 + 병음",
-    feat2s: "부모님도 쉽게 도와요",
-    feat3: "학습 리포트",
-    feat3s: "선생님이 추적 가능",
-
-    footerBrand: "中文学习中心",
     footerLine: "아이도 즐겁고, 학부모/선생님도 찾기 쉬운 중국어 학습 플랫폼",
     contact: "문의",
     email: "이메일",
     privacy: "개인정보처리방침",
     terms: "이용약관",
-    copy: "© 2026 中文学习中心",
+    copy: "© 2026 Lumina Chinese Learning Center",
   },
-
   cn: {
-    brand: "中文学习中心",
+    brand: "Lumina Chinese Learning Center",
+    subtitle: "루미나 글로벌 중국어 교육 플랫폼",
+
     kicker: "✨ 今天也前进一步",
-    h1: "今天只要3分钟，要不要学点中文？",
-    p1: "孩子学得开心，家长和老师也能轻松找到课程内容的",
-    p1b: "中文学习平台",
+    h1: "今天的学习，现在开始只要3分钟",
+    desc: "孩子学得开心，家长/老师也能快速找到课程目录与学习路径。",
     cta1: "开始学习",
     cta2: "查看课程目录",
     tags: ["HSK 2.0/3.0", "中·韩·拼音", "描红", "AI口语"],
 
-    visualTitle: "(这里放主视觉/角色插画)",
-    visualDesc1: "例如：熊猫+书 / 今日任务图片",
-    visualDesc2: "※ 以后加图也不会破坏版式",
+    today_title: "今天的学习",
+    today_desc: "继续上次的课程，短短几分钟也能坚持！",
+    today_meta: "本周完成 3/7",
 
-    quickTitle: "快速开始",
-    quickSub: "孩子 / 家长 / 老师都好用",
-
-    card1Badge: "给孩子",
-    card1Title: "今天的学习",
-    card1Desc: "继续上次的课程，短短几分钟也能坚持！",
-    card1Btn: "立即进入",
-    card1Meta: "本周完成 3/7",
-
-    card2Badge: "家长/老师",
-    card2Title: "课程目录（可查找）",
-    card2Desc: "按级别/主题/技能筛选与搜索，快速找到需要的学习内容。",
-    card2Btn: "查看",
-    card2Chips: ["搜索", "筛选", "排序"],
-
-    card3Badge: "管理",
-    card3Title: "家长/老师专区",
-    card3Desc: "学习进度、作业建议、预约与通知，在这里集中查看。",
-    card3Btn: "进入",
-    card3Chips: ["进度报告", "作业", "预约"],
-
-    twoLeftBadge: "公告/更新",
-    twoLeftTitle: "最近更新",
+    upd_badge: "公告/更新",
+    upd_title: "最近更新",
     more: "更多",
-
     upd1: "新增：HSK1 第1课「打招呼」",
-    upd2: "优化：课程目录支持语言同步",
+    upd2: "优化：目录支持语言同步",
     upd3: "预告：描红“写对发光/太棒了”",
 
-    twoRightBadge: "为什么适合孩子",
-    twoRightTitle: "学习体验",
-    twoRightDesc: "每节课按“词汇 → 会话 → 描红 → 测验”闯关式完成，孩子更有成就感。",
-    feat1: "AI 口语陪练",
-    feat1s: "开口更自然",
-    feat2: "中韩对照 + 拼音",
-    feat2s: "家长也能陪学",
-    feat3: "学习报告",
-    feat3s: "老师可追踪",
-
-    footerBrand: "中文学习中心",
     footerLine: "孩子学得开心，家长/老师也更容易找到课程内容的中文学习平台",
     contact: "联系方式",
     email: "邮箱",
     privacy: "隐私政策",
     terms: "使用条款",
-    copy: "© 2026 中文学习中心",
+    copy: "© 2026 Lumina Chinese Learning Center",
   },
 };
+
+function copy() {
+  const lang = getLang();
+  const F = FB[lang];
+
+  return {
+    brand: t("brand", F.brand),
+    subtitle: t("subtitle", F.subtitle),
+
+    kicker: t("home_kicker", F.kicker),
+    h1: t("home_h1", F.h1),
+    desc: t("home_desc", F.desc),
+    cta1: t("home_cta1", F.cta1),
+    cta2: t("home_cta2", F.cta2),
+    tags: [
+      t("home_tag1", F.tags[0]),
+      t("home_tag2", F.tags[1]),
+      t("home_tag3", F.tags[2]),
+      t("home_tag4", F.tags[3]),
+    ],
+
+    today_title: t("home_today_title", F.today_title),
+    today_desc: t("home_today_desc", F.today_desc),
+    today_meta: t("home_today_meta", F.today_meta),
+
+    upd_badge: t("home_upd_badge", F.upd_badge),
+    upd_title: t("home_upd_title", F.upd_title),
+    more: t("home_more", F.more),
+    upd1: t("home_upd1", F.upd1),
+    upd2: t("home_upd2", F.upd2),
+    upd3: t("home_upd3", F.upd3),
+
+    footerLine: t("home_footerLine", F.footerLine),
+    contact: t("home_contact", F.contact),
+    email: t("home_email", F.email),
+    privacy: t("home_privacy", F.privacy),
+    terms: t("home_terms", F.terms),
+    copy: t("home_copy", F.copy),
+  };
+}
 
 function ensureStyles() {
   if (document.getElementById(STYLE_ID)) return;
@@ -168,287 +136,124 @@ function ensureStyles() {
   style.id = STYLE_ID;
   style.textContent = `
     :root{
-      --bg:#fff;--text:#0f172a;--muted:#475569;--line:#e2e8f0;--card:#fff;
+      --bg:#fff;--text:#0f172a;--muted:#475569;--line:#e2e8f0;
       --shadow:0 10px 30px rgba(2,6,23,.08);
-      --brand:#2563eb;--brand-2:#1d4ed8;--soft:#f8fafc;--radius:18px;--max:1120px;
+      --brand:#2563eb;--brand2:#1d4ed8;
+      --soft:#f8fafc;--radius:18px;--max:1120px;
     }
-    .joy-home{ background:var(--soft); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
-    .joy-home .wrap{ max-width:var(--max); margin:0 auto; padding:0 16px; }
-    .joy-home a{ color:inherit; text-decoration:none; }
-    .joy-home .btn{ border:1px solid var(--line); background:#fff; color:var(--text); padding:10px 12px; border-radius:14px; cursor:pointer; transition:.15s ease;
-      display:inline-flex; align-items:center; gap:8px; white-space:nowrap; font-weight:800; }
-    .joy-home .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(2,6,23,.06); }
-    .joy-home .btn--primary{ border-color:transparent; background:var(--brand); color:#fff; }
-    .joy-home .btn--primary:hover{ background:var(--brand-2); }
-
-    .joy-home .hero{ padding:22px 0 18px; }
-    .joy-home .hero__grid{ display:grid; grid-template-columns:1fr; gap:14px; }
-    .joy-home .hero__card{ background:var(--bg); border:1px solid var(--line); border-radius:calc(var(--radius) + 8px); box-shadow:var(--shadow); overflow:hidden; }
-    .joy-home .hero__inner{ padding:22px; display:grid; gap:14px; }
-
-    .joy-home .kicker{ display:inline-flex; align-items:center; gap:8px; font-weight:900; font-size:12px; color:var(--brand); background:rgba(37,99,235,.08);
+    .lumina-home{ background:var(--soft); color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+    .lumina-home .wrap{ max-width:var(--max); margin:0 auto; padding:0 16px; }
+    .lumina-home a{ color:inherit; text-decoration:none; }
+    .lumina-home .card{ background:var(--bg); border:1px solid var(--line);
+      border-radius:calc(var(--radius) + 8px); box-shadow:var(--shadow); overflow:hidden; }
+    .lumina-home .inner{ padding:18px; display:grid; gap:12px; }
+    .lumina-home .kicker{ display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px; color:var(--brand); background:rgba(37,99,235,.08);
       padding:8px 10px; border-radius:999px; width:fit-content; }
-    .joy-home h1{ margin:0; font-size:28px; letter-spacing:-0.6px; }
-    .joy-home p{ margin:0; color:var(--muted); line-height:1.6; font-size:15px; }
-    .joy-home .hero__cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
-    .joy-home .badge{ font-size:12px; font-weight:900; color:var(--brand); background:rgba(37,99,235,.08);
+    .lumina-home h1{ margin:0; font-size:28px; letter-spacing:-0.6px; line-height:1.15; }
+    .lumina-home p{ margin:0; color:var(--muted); line-height:1.6; font-size:15px; }
+    .lumina-home .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:2px; }
+    .lumina-home .btn{ border:1px solid var(--line); background:#fff; color:var(--text);
+      padding:10px 12px; border-radius:14px; cursor:pointer; transition:.15s ease;
+      display:inline-flex; align-items:center; gap:8px; white-space:nowrap; font-weight:900; }
+    .lumina-home .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(2,6,23,.06); }
+    .lumina-home .btn.primary{ border-color:transparent; background:var(--brand); color:#fff; }
+    .lumina-home .btn.primary:hover{ background:var(--brand2); }
+    .lumina-home .tag{ font-size:12px; font-weight:900; color:var(--brand);
+      background:rgba(37,99,235,.08); padding:6px 10px; border-radius:999px; }
+
+    .lumina-home .hero{ padding:18px 0 10px; }
+    .lumina-home .heroGrid{ display:grid; grid-template-columns:1fr; gap:12px; }
+    .lumina-home .progress{ height:10px; background:#f1f5f9; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
+    .lumina-home .progress i{ display:block; height:100%; width:45%; background:var(--brand); border-radius:999px; }
+
+    .lumina-home .updates{ padding:10px 0 18px; }
+    .lumina-home .headRow{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .lumina-home .badge{ font-size:12px; font-weight:900; color:var(--brand); background:rgba(37,99,235,.08);
       padding:6px 10px; border-radius:999px; width:fit-content; }
-
-    .joy-home .hero__visual{ min-height:180px; background:
-      radial-gradient(900px 250px at 20% 30%, rgba(37,99,235,.22), transparent 55%),
-      radial-gradient(700px 240px at 75% 40%, rgba(96,165,250,.25), transparent 55%),
-      linear-gradient(180deg,#fff,#f8fafc);
-      border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; padding:18px; }
-    .joy-home .visual__box{ width:100%; max-width:520px; border:1px dashed rgba(71,85,105,.35); border-radius:20px; padding:16px;
-      color:var(--muted); text-align:center; background:rgba(255,255,255,.7); }
-    .joy-home .visual__box b{ color:var(--text); }
-
-    .joy-home .section{ padding:10px 0 18px; }
-    .joy-home .section__title{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:10px 0 10px; }
-    .joy-home .section__title h2{ margin:0; font-size:18px; letter-spacing:-.3px; }
-    .joy-home .section__title span{ color:var(--muted); font-size:13px; }
-
-    .joy-home .grid3{ display:grid; grid-template-columns:1fr; gap:12px; }
-    .joy-home .card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 12px 26px rgba(2,6,23,.06);
-      padding:16px; display:grid; gap:10px; }
-    .joy-home .card__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-    .joy-home .card h3{ margin:0; font-size:16px; letter-spacing:-.2px; }
-    .joy-home .card p{ margin:0; color:var(--muted); line-height:1.55; font-size:14px; }
-    .joy-home .card__bottom{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:2px; }
-
-    .joy-home .progress{ flex:1; min-width:160px; height:10px; background:#f1f5f9; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
-    .joy-home .progress>i{ display:block; height:100%; width:45%; background:var(--brand); border-radius:999px; }
-
-    .joy-home .tick{ font-size:12px; border:1px solid var(--line); border-radius:999px; padding:6px 8px; color:var(--muted); background:#fff; font-weight:900; }
-    .joy-home .tick.on{ color:#0b3; border-color:rgba(0,187,85,.35); background:rgba(0,187,85,.06); }
-
-    .joy-home .two{ display:grid; grid-template-columns:1fr; gap:12px; }
-    .joy-home .list{ display:grid; gap:8px; margin-top:4px; }
-    .joy-home .li{ border:1px solid var(--line); border-radius:14px; padding:12px; background:#fff;
+    .lumina-home h2{ margin:0; font-size:18px; letter-spacing:-.3px; }
+    .lumina-home .list{ display:grid; gap:8px; margin-top:10px; }
+    .lumina-home .li{ border:1px solid var(--line); border-radius:14px; padding:12px; background:#fff;
       display:flex; justify-content:space-between; gap:10px; }
-    .joy-home .li span{ color:var(--muted); font-size:13px; }
-    .joy-home .li b{ font-size:14px; }
+    .lumina-home .li b{ font-size:14px; }
+    .lumina-home .li span{ color:var(--muted); font-size:13px; }
 
-    .joy-home footer{ margin-top:24px; padding:22px 0 30px; border-top:1px solid var(--line); background:#fff; }
-    .joy-home .footer__grid{ display:grid; grid-template-columns:1fr; gap:12px; color:var(--muted); font-size:13px; line-height:1.6; }
-    .joy-home .footer__grid b{ color:var(--text); }
+    .lumina-home footer{ margin-top:18px; padding:20px 0 26px; border-top:1px solid var(--line); background:#fff; }
+    .lumina-home .foot{ display:grid; gap:10px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lumina-home .foot b{ color:var(--text); }
 
     @media (min-width: 860px){
-      .joy-home .hero__grid{ grid-template-columns:1.15fr .85fr; align-items:stretch; }
-      .joy-home .hero__card{ height:100%; }
-      .joy-home .hero__visual{ min-height:100%; border-top:none; border-left:1px solid var(--line); }
-      .joy-home .grid3{ grid-template-columns:repeat(3, 1fr); }
-      .joy-home .two{ grid-template-columns:1.15fr .85fr; }
-      .joy-home .footer__grid{ grid-template-columns:1.2fr .8fr; }
+      .lumina-home .heroGrid{ grid-template-columns:1.2fr .8fr; align-items:stretch; }
     }
   `;
   document.head.appendChild(style);
 }
 
-function getCopy() {
-  const lang = getLang();
-  const FB = FALLBACK[lang];
-
-  return {
-    brand: t("brand", FB.brand),
-    kicker: t("home_kicker", FB.kicker),
-    h1: t("home_h1", FB.h1),
-    p1: t("home_p1", FB.p1),
-    p1b: t("home_p1b", FB.p1b),
-    cta1: t("home_cta1", FB.cta1),
-    cta2: t("home_cta2", FB.cta2),
-
-    tags: [
-      t("home_tag1", FB.tags[0]),
-      t("home_tag2", FB.tags[1]),
-      t("home_tag3", FB.tags[2]),
-      t("home_tag4", FB.tags[3]),
-    ],
-
-    visualTitle: t("home_visual_title", FB.visualTitle),
-    visualDesc1: t("home_visual_desc1", FB.visualDesc1),
-    visualDesc2: t("home_visual_desc2", FB.visualDesc2),
-
-    quickTitle: t("home_quickTitle", FB.quickTitle),
-    quickSub: t("home_quickSub", FB.quickSub),
-
-    card1Badge: t("home_card1_badge", FB.card1Badge),
-    card1Title: t("home_card1_title", FB.card1Title),
-    card1Desc: t("home_card1_desc", FB.card1Desc),
-    card1Btn: t("home_card1_btn", FB.card1Btn),
-    card1Meta: t("home_card1_meta", FB.card1Meta),
-
-    card2Badge: t("home_card2_badge", FB.card2Badge),
-    card2Title: t("home_card2_title", FB.card2Title),
-    card2Desc: t("home_card2_desc", FB.card2Desc),
-    card2Btn: t("home_card2_btn", FB.card2Btn),
-    card2Chips: [
-      t("home_card2_chip1", FB.card2Chips[0]),
-      t("home_card2_chip2", FB.card2Chips[1]),
-      t("home_card2_chip3", FB.card2Chips[2]),
-    ],
-
-    card3Badge: t("home_card3_badge", FB.card3Badge),
-    card3Title: t("home_card3_title", FB.card3Title),
-    card3Desc: t("home_card3_desc", FB.card3Desc),
-    card3Btn: t("home_card3_btn", FB.card3Btn),
-    card3Chips: [
-      t("home_card3_chip1", FB.card3Chips[0]),
-      t("home_card3_chip2", FB.card3Chips[1]),
-      t("home_card3_chip3", FB.card3Chips[2]),
-    ],
-
-    twoLeftBadge: t("home_twoLeftBadge", FB.twoLeftBadge),
-    twoLeftTitle: t("home_twoLeftTitle", FB.twoLeftTitle),
-    more: t("home_more", FB.more),
-    upd1: t("home_upd1", FB.upd1),
-    upd2: t("home_upd2", FB.upd2),
-    upd3: t("home_upd3", FB.upd3),
-
-    twoRightBadge: t("home_twoRightBadge", FB.twoRightBadge),
-    twoRightTitle: t("home_twoRightTitle", FB.twoRightTitle),
-    twoRightDesc: t("home_twoRightDesc", FB.twoRightDesc),
-    feat1: t("home_feat1", FB.feat1),
-    feat1s: t("home_feat1s", FB.feat1s),
-    feat2: t("home_feat2", FB.feat2),
-    feat2s: t("home_feat2s", FB.feat2s),
-    feat3: t("home_feat3", FB.feat3),
-    feat3s: t("home_feat3s", FB.feat3s),
-
-    footerBrand: t("brand", FB.footerBrand),
-    footerLine: t("home_footerLine", FB.footerLine),
-    contact: t("home_contact", FB.contact),
-    email: t("home_email", FB.email),
-    privacy: t("home_privacy", FB.privacy),
-    terms: t("home_terms", FB.terms),
-    copy: t("home_copy", FB.copy),
-  };
-}
-
 function renderHome(root) {
   ensureStyles();
   const lang = getLang();
-  const T = getCopy();
+  const T = copy();
 
   root.innerHTML = `
-    <div class="joy-home">
+    <div class="lumina-home">
       <main>
+        <!-- ✅ HERO (kicker + today learning merged) -->
         <section class="hero">
-          <div class="wrap hero__grid">
-            <div class="hero__card">
-              <div class="hero__inner">
+          <div class="wrap heroGrid">
+            <div class="card">
+              <div class="inner">
                 <div class="kicker">${T.kicker}</div>
                 <h1>${T.h1}</h1>
-                <p>${T.p1} <b>${T.p1b}</b>${lang === "kr" ? "입니다." : "。"}</p>
+                <p>${T.desc}</p>
 
-                <div class="hero__cta">
-                  <a class="btn btn--primary" href="#hsk">${T.cta1}</a>
+                <div class="cta">
+                  <a class="btn primary" href="#hsk">${T.cta1}</a>
                   <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
 
-                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
-                  ${T.tags.map(x => `<span class="badge">${x}</span>`).join("")}
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:2px;">
+                  ${T.tags.map(x => `<span class="tag">${x}</span>`).join("")}
                 </div>
               </div>
             </div>
 
-            <div class="hero__card">
-              <div class="hero__visual">
-                <div class="visual__box">
-                  <div style="font-size:14px; margin-bottom:6px;">${T.visualTitle}</div>
-                  <div style="font-size:12px;">
-                    ${T.visualDesc1}<br/>
-                    ${T.visualDesc2}
-                  </div>
+            <!-- ✅ TODAY LEARNING (compact card) -->
+            <div class="card">
+              <div class="inner">
+                <div class="badge">${T.today_title}</div>
+                <p style="font-weight:900; font-size:16px; color:var(--text); margin-top:2px;">
+                  ${T.today_desc}
+                </p>
+
+                <div class="progress" aria-label="progress"><i></i></div>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:2px;">
+                  <span style="color:var(--muted); font-size:13px;">${T.today_meta}</span>
+                  <a class="btn primary" href="#hsk">${T.cta1}</a>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section class="section">
+        <!-- ✅ UPDATES keep -->
+        <section class="updates">
           <div class="wrap">
-            <div class="section__title">
-              <h2>${T.quickTitle}</h2>
-              <span>${T.quickSub}</span>
-            </div>
-
-            <div class="grid3">
-              <article class="card">
-                <div class="card__top">
-                  <div>
-                    <div class="badge">${T.card1Badge}</div>
-                    <h3>${T.card1Title}</h3>
-                  </div>
-                  <a class="btn btn--primary" href="#hsk">${T.card1Btn}</a>
-                </div>
-                <p>${T.card1Desc}</p>
-                <div class="card__bottom">
-                  <div class="progress" aria-label="progress"><i></i></div>
-                  <span style="color:var(--muted); font-size:13px;">${T.card1Meta}</span>
-                </div>
-              </article>
-
-              <article class="card">
-                <div class="card__top">
-                  <div>
-                    <div class="badge">${T.card2Badge}</div>
-                    <h3>${T.card2Title}</h3>
-                  </div>
-                  <a class="btn" href="#catalog">${T.card2Btn}</a>
-                </div>
-                <p>${T.card2Desc}</p>
-                <div class="card__bottom">
-                  ${T.card2Chips.map(x => `<span class="tick on">${x}</span>`).join("")}
-                </div>
-              </article>
-
-              <article class="card">
-                <div class="card__top">
-                  <div>
-                    <div class="badge">${T.card3Badge}</div>
-                    <h3>${T.card3Title}</h3>
-                  </div>
-                  <a class="btn" href="#teacher">${T.card3Btn}</a>
-                </div>
-                <p>${T.card3Desc}</p>
-                <div class="card__bottom">
-                  ${T.card3Chips.map((x,i) => `<span class="tick ${i<2 ? "on":""}">${x}</span>`).join("")}
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="wrap two">
             <div class="card">
-              <div class="card__top">
-                <div>
-                  <div class="badge">${T.twoLeftBadge}</div>
-                  <h3>${T.twoLeftTitle}</h3>
+              <div class="inner">
+                <div class="headRow">
+                  <div>
+                    <div class="badge">${T.upd_badge}</div>
+                    <h2>${T.upd_title}</h2>
+                  </div>
+                  <a class="btn" href="#resources">${T.more}</a>
                 </div>
-                <a class="btn" href="#resources">${T.more}</a>
-              </div>
-              <div class="list">
-                <div class="li"><b>${T.upd1}</b><span>2026-03-03</span></div>
-                <div class="li"><b>${T.upd2}</b><span>2026-03-02</span></div>
-                <div class="li"><b>${T.upd3}</b><span>${lang === "kr" ? "기획 중" : "规划中"}</span></div>
-              </div>
-            </div>
 
-            <div class="card">
-              <div class="card__top">
-                <div>
-                  <div class="badge">${T.twoRightBadge}</div>
-                  <h3>${T.twoRightTitle}</h3>
+                <div class="list">
+                  <div class="li"><b>${T.upd1}</b><span>2026-03-03</span></div>
+                  <div class="li"><b>${T.upd2}</b><span>2026-03-02</span></div>
+                  <div class="li"><b>${T.upd3}</b><span>${lang === "kr" ? "기획 중" : "规划中"}</span></div>
                 </div>
-              </div>
-              <p>${T.twoRightDesc}</p>
-              <div class="list">
-                <div class="li"><b>${T.feat1}</b><span>${T.feat1s}</span></div>
-                <div class="li"><b>${T.feat2}</b><span>${T.feat2s}</span></div>
-                <div class="li"><b>${T.feat3}</b><span>${T.feat3s}</span></div>
               </div>
             </div>
           </div>
@@ -456,9 +261,9 @@ function renderHome(root) {
       </main>
 
       <footer>
-        <div class="wrap footer__grid">
+        <div class="wrap foot">
           <div>
-            <b>${T.footerBrand}</b><br/>
+            <b>${t("brand", T.brand)}</b><br/>
             ${T.footerLine}
           </div>
           <div>
@@ -487,20 +292,15 @@ function bindLiveRerender(root) {
     renderHome(el);
   };
 
-  // ✅ your navbar already dispatches this
   window.addEventListener("joy:langchanged", rerender);
-
-  // ✅ fallback: i18n emits change
   try { i18n?.on?.("change", rerender); } catch {}
   try { i18n?.onChange?.(rerender); } catch {}
 
-  // ✅ multi-tab
   window.addEventListener("storage", (e) => {
     if (e.key === "joy_lang" || e.key === "site_lang") rerender();
   });
 }
 
-/** router: default(ctx) */
 export default function pageHome(ctxOrRoot) {
   const root =
     ctxOrRoot?.root ||
@@ -509,7 +309,6 @@ export default function pageHome(ctxOrRoot) {
     document.getElementById("app");
 
   if (!root) return;
-
   bindLiveRerender(root);
   renderHome(root);
 }
