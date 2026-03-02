@@ -95,15 +95,21 @@ function setNotFoundUI(appEl, hash) {
 }
 
 async function safeUnmountCurrent() {
+  const mod = currentModule;
+  currentModule = null; // ✅ 先断开引用，避免重复 unmount
+
+  if (!mod?.unmount) return;
+
   try {
-    if (currentModule?.unmount) {
-      await currentModule.unmount();
-    }
+    // ✅ 超时保护：最多等 600ms，防止卡死在 loading
+    await Promise.race([
+      Promise.resolve(mod.unmount()),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("unmount timeout (600ms)")), 600)
+      )
+    ]);
   } catch (e) {
-    // unmount 에러는 치명적이지 않게 무시
     console.warn("[router] unmount error:", e);
-  } finally {
-    currentModule = null;
   }
 }
 
@@ -208,10 +214,10 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
 
   // loading
   setLoadingUI(appEl, "불러오는 중...");
-  if (scrollTop) scrollToTopSafe();
 
-  // 卸载旧页（先卸载，避免旧页事件残留）
-  await safeUnmountCurrent();
+console.log("[router] unmount start:", currentHash);
+await safeUnmountCurrent();
+console.log("[router] unmount done");
 
   // 并发保护：如果用户切换很快，只渲染最后一次
   if (token !== navToken) return;
