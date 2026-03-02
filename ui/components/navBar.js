@@ -2,17 +2,17 @@
 import { i18n } from "../i18n.js";
 
 const NAV_ITEMS = [
-  { href: "/index.html",  key: "nav_home",        label: "홈",        color: "#3b82f6" },
-  { href: "/hsk.html",    key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
-  { href: "/stroke.html", key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
-  { href: "/hanja.html",  key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
-  { href: "/speaking.html", key: "nav_speaking",  label: "회화",      color: "#ef4444" },
-  { href: "/travel.html", key: "nav_travel",      label: "여행중국어", color: "#06b6d4" },
-  { href: "/culture.html", key: "nav_culture",    label: "문화",      color: "#eab308" },
-  { href: "/review.html", key: "nav_review",      label: "복습",      color: "#8b5cf6" },
-  { href: "/resources.html", key: "nav_resources", label: "자료",     color: "#10b981" },
-  { href: "/teacher.html", key: "nav_teacher",    label: "교사专区",  color: "#f43f5e" },
-  { href: "/my.html",     key: "nav_my",          label: "내 학습",   color: "#64748b" },
+  { href: "/index.html",          key: "nav_home",   label: "홈", color:"#3b82f6" },
+  { href: "/pages/hsk.html",      key: "nav_hsk",    label: "HSK 학습", color:"#22c55e" },
+  { href: "/pages/stroke.html",   key: "nav_stroke", label: "한자 필순", color:"#f97316" },
+  { href: "/pages/hanja.html",    key: "nav_hanjagongfu", label:"한자공부", color:"#a855f7" },
+  { href: "/pages/convo.html",    key: "nav_speaking", label:"회화", color:"#ef4444" },
+  { href: "/pages/travel.html",   key: "nav_travel", label:"여행중국어", color:"#06b6d4" },
+  { href: "/pages/culture.html",  key: "nav_culture", label:"문화", color:"#eab308" },
+  { href: "/pages/review.html",   key: "nav_review", label:"복습", color:"#8b5cf6" },
+  { href: "/pages/resources.html",key: "nav_resources", label:"자료", color:"#10b981" },
+  { href: "/pages/teacher.html",  key: "nav_teacher", label:"교사专区", color:"#f43f5e" },
+  { href: "/pages/me.html",       key: "nav_my", label:"내 학습", color:"#64748b" },
 ];
 
 function t(key, fallback = "") {
