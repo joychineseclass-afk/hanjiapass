@@ -1,12 +1,14 @@
 // /ui/router.js
-// ✅ STABLE HASH ROUTER
+// ✅ Production-grade hash router
 // - registerRoute(hash, loader)
 // - startRouter({ defaultHash, appId, scrollTop })
-// - supports page exports: mount/init/default/render
-// ✅ Extra:
-// - navigateTo(hash, { force:true }) will re-render even if hash unchanged
-// - mount timeout protection (optional)
-// - emits i18n "route" event for navbar highlight
+// - page module exports: mount/init/default/render (any one)
+// - navigateTo(hash, { force:true }) to re-render even if hash unchanged
+// ✅ Production fixes:
+// - NO hard Promise.race reject for mount (prevents "need refresh" / stuck loading)
+// - Soft timeout: show "slow loading" hint but keep awaiting
+// - Concurrent-safe: latest navigation wins
+// - Robust initial render: always renders once on start (no reliance on hashchange)
 
 const ROUTES = new Map();
 
@@ -15,7 +17,7 @@ let currentHash = "";
 let currentModule = null;
 let navToken = 0;
 
-// keep last start context so we can force rerender
+// keep last start context so we can force re-render without hashchange
 let _appEl = null;
 let _defaultHash = "#home";
 let _scrollTop = true;
@@ -28,7 +30,7 @@ function normalizeHash(h) {
   if (!h) return "";
   const s = String(h).trim();
 
-  // remove query
+  // remove query: "#home?a=1" -> "#home"
   const q = s.indexOf("?");
   const noQuery = q >= 0 ? s.slice(0, q) : s;
 
@@ -48,24 +50,39 @@ function escapeHtml(s) {
 }
 
 function emitRouteEvent() {
-  try { window.i18n?.emit?.("route"); } catch {}
+  try {
+    // navBar.js can listen to this to update active state
+    window.i18n?.emit?.("route");
+  } catch {}
 }
 
 function scrollToTopSafe() {
-  try { window.scrollTo({ top: 0, behavior: "smooth" }); }
-  catch { window.scrollTo(0, 0); }
+  try {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch {
+    window.scrollTo(0, 0);
+  }
 }
 
-function setLoadingUI(appEl, text = "Loading...") {
+function setLoadingUI(appEl, text = "불러오는 중...") {
   if (!appEl) return;
   appEl.innerHTML = `
     <div class="card">
       <div class="hero">
         <div class="title">⏳ ${escapeHtml(text)}</div>
         <p class="desc">페이지를 불러오는 중입니다.</p>
+        <p id="rtSlowHint" class="desc" style="display:none; margin-top:8px;">
+          네트워크/첫 로딩이라 시간이 조금 걸릴 수 있어요…
+        </p>
       </div>
     </div>
   `;
+}
+
+function showSlowHint(appEl) {
+  try {
+    appEl?.querySelector?.("#rtSlowHint")?.style?.setProperty("display", "block");
+  } catch {}
 }
 
 function setErrorUI(appEl, title, detail) {
@@ -128,7 +145,7 @@ export function getCurrentRoute() {
   return currentHash || normalizeHash(location.hash) || "";
 }
 
-// ✅ IMPORTANT: force rerender even when hash is same
+// ✅ force rerender even when hash is same
 export function navigateTo(hash, opts = {}) {
   const h = normalizeHash(hash);
   if (!h) return;
@@ -136,11 +153,15 @@ export function navigateTo(hash, opts = {}) {
   const { force = false } = opts;
   const cur = normalizeHash(location.hash);
 
-  // same hash
   if (cur === h) {
     if (force && started && _appEl) {
-      // do not rely on hashchange, call handler directly
-      handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop, force: true });
+      // call handler directly (do not rely on hashchange)
+      handleRouteChange({
+        appEl: _appEl,
+        defaultHash: _defaultHash,
+        scrollTop: _scrollTop,
+        force: true,
+      });
     }
     return;
   }
@@ -167,10 +188,22 @@ export function startRouter(opts = {}) {
   if (!location.hash) location.hash = _defaultHash;
 
   window.addEventListener("hashchange", () => {
-    handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop });
+    handleRouteChange({
+      appEl: _appEl,
+      defaultHash: _defaultHash,
+      scrollTop: _scrollTop,
+    });
   });
 
-  handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop });
+  // ✅ Always render once on start (do not rely on hashchange)
+  queueMicrotask(() => {
+    handleRouteChange({
+      appEl: _appEl,
+      defaultHash: _defaultHash,
+      scrollTop: _scrollTop,
+      force: true, // initial render should run even if currentHash matches (e.g., hot reload)
+    });
+  });
 }
 
 export const initRouter = startRouter;
@@ -184,7 +217,7 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     hash = normalizeHash(defaultHash);
   }
 
-  // ✅ same route: only skip when not forced
+  // same route: only skip when not forced
   if (!force && hash === currentHash) {
     emitRouteEvent();
     return;
@@ -207,8 +240,16 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
   await safeUnmountCurrent();
   if (token !== navToken) return;
 
+  // ✅ soft timeout (no reject!)
+  const SLOW_HINT_MS = 1200;
+  let slowTimer = setTimeout(() => {
+    // only show hint if still on same navigation
+    if (token === navToken) showSlowHint(appEl);
+  }, SLOW_HINT_MS);
+
   try {
-    const mod = await loader();
+    // 1) load module
+    const mod = await Promise.resolve(loader());
     if (token !== navToken) return;
 
     currentModule = mod || null;
@@ -220,7 +261,8 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
       token,
     };
 
-    const run = async () => {
+    // 2) run page
+    const run = () => {
       if (typeof mod?.mount === "function") return mod.mount(ctx);
       if (typeof mod?.init === "function") return mod.init(ctx);
       if (typeof mod?.default === "function") return mod.default(ctx);
@@ -228,20 +270,16 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
       throw new Error(`Page module "${hash}" must export mount/init/default/render`);
     };
 
-    // optional: timeout to avoid infinite loading
-    const MOUNT_TIMEOUT_MS = 8000;
+    await Promise.resolve(run());
 
-await Promise.race([
-  Promise.resolve(run()),
-  new Promise((_, reject) =>
-    setTimeout(() => reject(new Error(`mount timeout (${MOUNT_TIMEOUT_MS}ms)`)), MOUNT_TIMEOUT_MS)
-  )
-]);
-
+    // 3) final
+    if (token !== navToken) return;
     emitRouteEvent();
   } catch (e) {
     console.error("[router] page load error:", e);
     if (token !== navToken) return;
     setErrorUI(appEl, "페이지 로드 실패", e?.stack || e?.message || String(e));
+  } finally {
+    clearTimeout(slowTimer);
   }
 }
