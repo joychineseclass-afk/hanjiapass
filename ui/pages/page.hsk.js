@@ -1,5 +1,10 @@
 // /ui/pages/page.hsk.js
-// ✅ HSK Page Controller — SLIM v2.2 (Lang-following + safe cleanup + re-render on lang change)
+// ✅ HSK Page Controller — SLIM v2.3 (System-lang cleanup compatible)
+// - Keeps your working flow (no refactor of loader / modal / session)
+// - Replaces getCurrentLang() with unified core/lang.js (single source of truth)
+// - Still listens to languageChanged / i18n:changed / joy:lang
+// - Safe cleanup via AbortController remains
+// - Keeps your current render/refresh/open logic intact
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -19,7 +24,10 @@ import {
 
 import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
 
-window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2.2";
+// ✅ NEW: single source of truth language
+import { getLang } from "../core/lang.js";
+
+window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2.3";
 console.log("[HSK] SLIM page loaded ✅", window.__HSK_PAGE_FILE__);
 
 let mounted = false;
@@ -106,6 +114,8 @@ function mountGlobalComponents() {
 
 function applyI18nIfAvailable() {
   try {
+    // If your i18n supports setLang, keep it aligned with core/lang
+    if (typeof i18n?.setLang === "function") i18n.setLang(getLang());
     i18n?.apply?.(document);
   } catch (e) {
     console.warn("HSK Page: i18n apply failed:", e);
@@ -170,7 +180,7 @@ function bindHSKEvents() {
     }
   };
 
-  // support multiple event names (whichever your system emits)
+  // support multiple event names (keep your existing compatibility)
   window.addEventListener("languageChanged", onLangChanged, { signal });
   window.addEventListener("i18n:changed", onLangChanged, { signal });
   window.addEventListener("joy:lang", onLangChanged, { signal });
@@ -191,27 +201,9 @@ function getCurrentVersion() {
   return verSel?.value || localStorage.getItem("hsk_vocab_version") || "hsk2.0";
 }
 
+// ✅ REPLACED: system cleaned lang source
 function getCurrentLang() {
-  // best-effort, compatible with your existing system
-  const fromI18n =
-    (typeof i18n?.getLang === "function" && i18n.getLang()) ||
-    i18n?.lang ||
-    i18n?.current ||
-    "";
-
-  const fromLS =
-    localStorage.getItem("joy_lang") ||
-    localStorage.getItem("site_lang") ||
-    localStorage.getItem("lang") ||
-    "";
-
-  const raw = String(fromI18n || fromLS || "ko").trim().toLowerCase();
-  // normalize common variants
-  if (raw === "kr") return "ko";
-  if (raw.startsWith("zh")) return "zh";
-  if (raw.startsWith("en")) return "en";
-  if (raw.startsWith("ko")) return "ko";
-  return raw || "ko";
+  return getLang(); // always "ko" | "zh" | "en"
 }
 
 // ✅ 兼容：新容器 / 旧容器 都能用
@@ -233,7 +225,6 @@ function setStatusText(text) {
 }
 
 function setLoadingLessons() {
-  // translate if your i18n has t(), else fallback
   const txt =
     (typeof i18n?.t === "function" && i18n.t("hsk_loading_lessons")) ||
     "Loading lessons...";
@@ -372,7 +363,6 @@ async function openLesson(lesson, { lv, version, __skipSetCurrent = false }) {
 
     renderWordCards(grid, lessonWords, undefined, { lang });
 
-    // status (translated if available)
     const label = lesson?.lesson || lesson?.id || lessonNo;
     const txt =
       (typeof i18n?.t === "function" &&
