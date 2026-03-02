@@ -368,6 +368,22 @@ async function openLesson(lesson, { lv, version, __skipSetCurrent = false }) {
     const lessonWords = Array.isArray(vocab) ? vocab.filter((x) => set.has(x.word)) : [];
 
     renderWordCards(grid, lessonWords, undefined, { lang });
+    // ✅ 进入课时视图：隐藏目录 + 滚动到单词区 + 显示返回按钮（可选）
+try {
+  const { wrap: listWrap } = getLessonListNodes();
+  const grid = document.getElementById("hskGrid");
+  const gridWrap =
+    document.getElementById("hskGridWrap") || grid?.parentElement;
+
+  // 1) 隐藏目录（你想“进入新页面”的感觉，本质是视图切换）
+  if (listWrap) listWrap.classList.add("hidden");
+
+  // 2) 显示单词区（如果你有包裹容器）
+  gridWrap?.classList?.remove("hidden");
+
+  // 3) 滚动到单词区
+  grid?.scrollIntoView({ behavior: "smooth", block: "start" });
+} catch {}
 
     const label = lesson?.lesson || lesson?.id || lessonNo;
     const txt =
