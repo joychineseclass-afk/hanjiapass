@@ -1,16 +1,12 @@
 // /ui/router.js
-// ✅ STABLE ROUTER (hash-based)
+// ✅ STABLE HASH ROUTER
 // - registerRoute(hash, loader)
 // - startRouter({ defaultHash, appId, scrollTop })
-// - supports mount()/unmount() in page modules
-// - concurrent-safe (latest navigation wins)
+// - supports page exports: mount/init/default/render
+// ✅ Extra:
+// - navigateTo(hash, { force:true }) will re-render even if hash unchanged
+// - mount timeout protection (optional)
 // - emits i18n "route" event for navbar highlight
-// ✅ Enhanced:
-// - pass ctx to page: { root, hash, route }
-// - supports mount/init/default/render exports
-// - better hash normalize: "#home?x=1" "#home/abc" -> "#home"
-// - error UI shows stack/message
-// ✅ Debug logs included (safe)
 
 const ROUTES = new Map();
 
@@ -18,6 +14,11 @@ let started = false;
 let currentHash = "";
 let currentModule = null;
 let navToken = 0;
+
+// keep last start context so we can force rerender
+let _appEl = null;
+let _defaultHash = "#home";
+let _scrollTop = true;
 
 function $(id) {
   return document.getElementById(id);
@@ -34,11 +35,9 @@ function normalizeHash(h) {
   // ensure starts with #
   const withHash = noQuery.startsWith("#") ? noQuery : `#${noQuery}`;
 
-  // only keep first segment: "#home/xx" -> "#home"
+  // keep only first segment: "#home/xx" -> "#home"
   const slash = withHash.indexOf("/", 1);
-  const pure = slash > 0 ? withHash.slice(0, slash) : withHash;
-
-  return pure;
+  return slash > 0 ? withHash.slice(0, slash) : withHash;
 }
 
 function escapeHtml(s) {
@@ -46,6 +45,15 @@ function escapeHtml(s) {
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function emitRouteEvent() {
+  try { window.i18n?.emit?.("route"); } catch {}
+}
+
+function scrollToTopSafe() {
+  try { window.scrollTo({ top: 0, behavior: "smooth" }); }
+  catch { window.scrollTo(0, 0); }
 }
 
 function setLoadingUI(appEl, text = "Loading...") {
@@ -80,7 +88,6 @@ function setErrorUI(appEl, title, detail) {
   appEl.querySelector("#rtRetry")?.addEventListener("click", () => {
     navigateTo(location.hash || "#home", { force: true });
   });
-
   appEl.querySelector("#rtHome")?.addEventListener("click", () => {
     navigateTo("#home", { force: true });
   });
@@ -97,34 +104,12 @@ function setNotFoundUI(appEl, hash) {
 async function safeUnmountCurrent() {
   const mod = currentModule;
   currentModule = null;
-
   if (!mod?.unmount) return;
 
   try {
-    console.log("[router] unmount start");
-    await Promise.race([
-      Promise.resolve(mod.unmount()),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("unmount timeout (600ms)")), 600)
-      )
-    ]);
-    console.log("[router] unmount done");
+    await Promise.resolve(mod.unmount());
   } catch (e) {
     console.warn("[router] unmount error:", e);
-  }
-}
-
-function emitRouteEvent() {
-  try {
-    window.i18n?.emit?.("route");
-  } catch {}
-}
-
-function scrollToTopSafe() {
-  try {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } catch {
-    window.scrollTo(0, 0);
   }
 }
 
@@ -143,33 +128,31 @@ export function getCurrentRoute() {
   return currentHash || normalizeHash(location.hash) || "";
 }
 
+// ✅ IMPORTANT: force rerender even when hash is same
 export function navigateTo(hash, opts = {}) {
   const h = normalizeHash(hash);
   if (!h) return;
 
   const { force = false } = opts;
-  if (!force && normalizeHash(location.hash) === h) return;
+  const cur = normalizeHash(location.hash);
+
+  // same hash
+  if (cur === h) {
+    if (force && started && _appEl) {
+      // do not rely on hashchange, call handler directly
+      handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop, force: true });
+    }
+    return;
+  }
 
   location.hash = h;
-
-  // ✅ 关键：如果 hash 没变化（例如 force），手动触发一次路由处理
-  if (force) {
-    // 让 hashchange 有机会触发；如果浏览器不触发，我们也能靠下面的回调跑一次
-    queueMicrotask(() => {
-      // startRouter 里会绑定 listener，因此这里只改 hash 即可
-    });
-  }
 }
 
 export function startRouter(opts = {}) {
   if (started) return;
   started = true;
 
-  const {
-    defaultHash = "#home",
-    appId = "app",
-    scrollTop = true,
-  } = opts;
+  const { defaultHash = "#home", appId = "app", scrollTop = true } = opts;
 
   const appEl = $(appId);
   if (!appEl) {
@@ -177,23 +160,22 @@ export function startRouter(opts = {}) {
     return;
   }
 
-  if (!location.hash) location.hash = defaultHash;
+  _appEl = appEl;
+  _defaultHash = normalizeHash(defaultHash) || "#home";
+  _scrollTop = !!scrollTop;
+
+  if (!location.hash) location.hash = _defaultHash;
 
   window.addEventListener("hashchange", () => {
-    console.log("[router] hashchange:", location.hash);
-    handleRouteChange({ appEl, defaultHash, scrollTop });
+    handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop });
   });
 
-  // ✅ 首次进入也跑一次
-  console.log("[router] start:", location.hash);
-  handleRouteChange({ appEl, defaultHash, scrollTop });
+  handleRouteChange({ appEl: _appEl, defaultHash: _defaultHash, scrollTop: _scrollTop });
 }
 
 export const initRouter = startRouter;
 
-async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
-  console.log("[router] enter:", location.hash);
-
+async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false }) {
   const token = ++navToken;
 
   let hash = normalizeHash(location.hash);
@@ -202,8 +184,8 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
     hash = normalizeHash(defaultHash);
   }
 
-  // 同路由不重复处理（但仍 emit）
-  if (hash === currentHash) {
+  // ✅ same route: only skip when not forced
+  if (!force && hash === currentHash) {
     emitRouteEvent();
     return;
   }
@@ -212,7 +194,6 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
   emitRouteEvent();
 
   const loader = ROUTES.get(hash);
-
   if (!loader) {
     await safeUnmountCurrent();
     setNotFoundUI(appEl, hash);
@@ -224,7 +205,6 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
   if (scrollTop) scrollToTopSafe();
 
   await safeUnmountCurrent();
-
   if (token !== navToken) return;
 
   try {
@@ -240,27 +220,24 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop }) {
       token,
     };
 
-    if (typeof mod?.mount === "function") {
-      await mod.mount(ctx);
-    } else if (typeof mod?.init === "function") {
-      await mod.init(ctx);
-    } else if (typeof mod?.default === "function") {
-      await mod.default(ctx);
-    } else if (typeof mod?.render === "function") {
-      await mod.render(ctx);
-    } else {
-      throw new Error(
-        `Page module "${hash}" must export mount/init/default/render. ` +
-        `Exports: ${Object.keys(mod || {}).join(", ")}`
-      );
-    }
+    const run = async () => {
+      if (typeof mod?.mount === "function") return mod.mount(ctx);
+      if (typeof mod?.init === "function") return mod.init(ctx);
+      if (typeof mod?.default === "function") return mod.default(ctx);
+      if (typeof mod?.render === "function") return mod.render(ctx);
+      throw new Error(`Page module "${hash}" must export mount/init/default/render`);
+    };
+
+    // optional: timeout to avoid infinite loading
+    await Promise.race([
+      Promise.resolve(run()),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("mount timeout (1500ms)")), 1500)),
+    ]);
 
     emitRouteEvent();
   } catch (e) {
     console.error("[router] page load error:", e);
     if (token !== navToken) return;
-
-    const msg = e?.stack || e?.message || String(e);
-    setErrorUI(appEl, "페이지 로드 실패", msg);
+    setErrorUI(appEl, "페이지 로드 실패", e?.stack || e?.message || String(e));
   }
 }
