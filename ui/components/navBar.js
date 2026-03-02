@@ -1,181 +1,285 @@
-// /ui/components/navBar.js  ✅ MIXED (MPA pages + index.html hash-router)
-import { i18n } from "../i18n.js";
+// /ui/router.js
+// ✅ Production-grade hash router
+// - registerRoute(hash, loader)
+// - startRouter({ defaultHash, appId, scrollTop })
+// - page module exports: mount/init/default/render (any one)
+// - navigateTo(hash, { force:true }) to re-render even if hash unchanged
+// ✅ Production fixes:
+// - NO hard Promise.race reject for mount (prevents "need refresh" / stuck loading)
+// - Soft timeout: show "slow loading" hint but keep awaiting
+// - Concurrent-safe: latest navigation wins
+// - Robust initial render: always renders once on start (no reliance on hashchange)
 
-// If on index, we can force rerender via router.navigateTo
-async function forceHomeOnIndex() {
-  // lazy import to avoid breaking other pages
-  try {
-    const { navigateTo } = await import("../router.js");
-    navigateTo("#home", { force: true });
-    return;
-  } catch (e) {
-    // fallback: hash toggle
-    if (location.hash === "#home") {
-      location.hash = "#_";
-      requestAnimationFrame(() => (location.hash = "#home"));
-    } else {
-      location.hash = "#home";
-    }
-  }
+const ROUTES = new Map();
+
+let started = false;
+let currentHash = "";
+let currentModule = null;
+let navToken = 0;
+
+// keep last start context so we can force re-render without hashchange
+let _appEl = null;
+let _defaultHash = "#home";
+let _scrollTop = true;
+
+function $(id) {
+  return document.getElementById(id);
 }
 
-const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",     key: "nav_home",        label: "홈",        color: "#3b82f6" },
-  { href: "/pages/hsk.html",      key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
-  { href: "/pages/stroke.html",   key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
-  { href: "/pages/hanja.html",    key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
-  { href: "/pages/speaking.html", key: "nav_speaking",    label: "회화",      color: "#ef4444" },
-  { href: "/pages/travel.html",   key: "nav_travel",      label: "여행중국어", color: "#06b6d4" },
-  { href: "/pages/culture.html",  key: "nav_culture",     label: "문화",      color: "#eab308" },
-  { href: "/pages/review.html",   key: "nav_review",      label: "복습",      color: "#8b5cf6" },
-  { href: "/pages/resources.html",key: "nav_resources",   label: "자료",      color: "#10b981" },
-  { href: "/pages/teacher.html",  key: "nav_teacher",     label: "교사专区",  color: "#f43f5e" },
-  { href: "/pages/my.html",       key: "nav_my",          label: "내 학습",   color: "#64748b" },
-];
+function normalizeHash(h) {
+  if (!h) return "";
+  const s = String(h).trim();
 
-function t(key, fallback = "") {
+  // remove query: "#home?a=1" -> "#home"
+  const q = s.indexOf("?");
+  const noQuery = q >= 0 ? s.slice(0, q) : s;
+
+  // ensure starts with #
+  const withHash = noQuery.startsWith("#") ? noQuery : `#${noQuery}`;
+
+  // keep only first segment: "#home/xx" -> "#home"
+  const slash = withHash.indexOf("/", 1);
+  return slash > 0 ? withHash.slice(0, slash) : withHash;
+}
+
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function emitRouteEvent() {
   try {
-    const v = i18n?.t?.(key);
-    return v && String(v).trim() ? v : fallback;
+    // navBar.js can listen to this to update active state
+    window.i18n?.emit?.("route");
+  } catch {}
+}
+
+function scrollToTopSafe() {
+  try {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } catch {
-    return fallback;
+    window.scrollTo(0, 0);
   }
 }
 
-function normalizePath(p) {
-  const raw = (p || "").trim();
-  if (!raw) return "/index.html";
-  return raw.split("#")[0].split("?")[0];
-}
-
-function isIndexPage() {
-  const p = normalizePath(location.pathname);
-  return p === "/" || p.endsWith("/index.html");
-}
-
-function setActive(rootEl) {
-  if (!rootEl) return;
-
-  const curPath = normalizePath(location.pathname);
-  const curHash = (location.hash || "").trim();
-
-  rootEl.querySelectorAll('a[data-nav="1"]').forEach((a) => {
-    const href = a.getAttribute("href") || "";
-    const [toPath, toHash] = href.split("#");
-    const navPath = normalizePath(toPath || "/index.html");
-
-    let active = false;
-
-    if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
-      const wantHash = toHash ? `#${toHash}` : "";
-      active = wantHash ? (curHash === wantHash) : true;
-    } else {
-      active = navPath === curPath;
-    }
-
-    a.classList.toggle("active", !!active);
-  });
-}
-
-function syncLangButtons(rootEl) {
-  const btnKR = rootEl.querySelector("#btnKR");
-  const btnCN = rootEl.querySelector("#btnCN");
-  const lang = (i18n?.getLang?.() || "kr").toLowerCase();
-  btnKR?.classList.toggle("active", lang === "kr");
-  btnCN?.classList.toggle("active", lang === "cn");
-  document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
-}
-
-function applyI18n(rootEl) {
-  try { i18n?.apply?.(rootEl); } catch {}
-  syncLangButtons(rootEl);
-  setActive(rootEl);
-}
-
-let globalBound = false;
-let lastRootEl = null;
-
-function bindGlobalOnce() {
-  if (globalBound) return;
-  globalBound = true;
-
-  window.addEventListener("popstate", () => { if (lastRootEl) setActive(lastRootEl); });
-  window.addEventListener("hashchange", () => { if (lastRootEl) setActive(lastRootEl); });
-
-  try { i18n?.on?.("change", () => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
-  try { i18n?.onChange?.(() => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
-}
-
-export function mountNavBar(rootEl) {
-  if (!rootEl) return;
-
-  bindGlobalOnce();
-  lastRootEl = rootEl;
-
-  if (rootEl.dataset.mounted === "1") {
-    applyI18n(rootEl);
-    return;
-  }
-  rootEl.dataset.mounted = "1";
-
-  const mini = (rootEl.dataset.mode || "").toLowerCase() === "mini";
-  const items = mini ? [NAV_ITEMS_FULL[0]] : NAV_ITEMS_FULL;
-
-  rootEl.innerHTML = `
-    <div class="topbar">
-      <div class="brand">
-        <a href="/index.html#home" data-i18n="brand">Joy Chinese</a>
-        <small data-i18n="subtitle">AI 한자 · 중국어 학습 플랫폼</small>
-      </div>
-
-      <div class="lang" aria-label="Language switcher">
-        <button id="btnKR" type="button">KR</button>
-        <button id="btnCN" type="button">CN</button>
+function setLoadingUI(appEl, text = "불러오는 중...") {
+  if (!appEl) return;
+  appEl.innerHTML = `
+    <div class="card">
+      <div class="hero">
+        <div class="title">⏳ ${escapeHtml(text)}</div>
+        <p class="desc">페이지를 불러오는 중입니다.</p>
+        <p id="rtSlowHint" class="desc" style="display:none; margin-top:8px;">
+          네트워크/첫 로딩이라 시간이 조금 걸릴 수 있어요…
+        </p>
       </div>
     </div>
+  `;
+}
 
-    <nav class="site-nav dopamine ${mini ? "mini" : ""}" aria-label="Primary"></nav>
+function showSlowHint(appEl) {
+  try {
+    appEl?.querySelector?.("#rtSlowHint")?.style?.setProperty("display", "block");
+  } catch {}
+}
+
+function setErrorUI(appEl, title, detail) {
+  if (!appEl) return;
+
+  const detailText = detail ? String(detail) : "";
+  appEl.innerHTML = `
+    <div class="card">
+      <div class="hero">
+        <div class="title">⚠️ ${escapeHtml(title || "오류")}</div>
+        <p class="desc" style="white-space:pre-wrap">${escapeHtml(detailText)}</p>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="rtRetry" type="button" class="badge">다시 시도</button>
+          <button id="rtHome" type="button" class="badge">홈으로</button>
+        </div>
+      </div>
+    </div>
   `;
 
-  const nav = rootEl.querySelector("nav.site-nav");
+  appEl.querySelector("#rtRetry")?.addEventListener("click", () => {
+    navigateTo(location.hash || "#home", { force: true });
+  });
+  appEl.querySelector("#rtHome")?.addEventListener("click", () => {
+    navigateTo("#home", { force: true });
+  });
+}
 
-  items.forEach((it) => {
-    const a = document.createElement("a");
-    a.href = it.href;
-    a.setAttribute("data-nav", "1");
-    a.setAttribute("data-i18n", it.key);
-    a.style.setProperty("--navc", it.color);
-    a.textContent = t(it.key, it.label);
+function setNotFoundUI(appEl, hash) {
+  setErrorUI(
+    appEl,
+    "페이지가 없어요",
+    `등록되지 않은 경로입니다: ${hash}\n(메뉴에서 다시 선택해 주세요.)`
+  );
+}
 
-    // ✅ Home: on index page -> force rerender (NO refresh needed)
-    if (it.href.startsWith("/index.html#home")) {
-      a.addEventListener("click", (e) => {
-        if (isIndexPage()) {
-          e.preventDefault();
-          forceHomeOnIndex();
-          setActive(rootEl);
-        }
-        // not on index: allow normal navigation to /index.html#home
+async function safeUnmountCurrent() {
+  const mod = currentModule;
+  currentModule = null;
+  if (!mod?.unmount) return;
+
+  try {
+    await Promise.resolve(mod.unmount());
+  } catch (e) {
+    console.warn("[router] unmount error:", e);
+  }
+}
+
+export function registerRoute(hash, loader) {
+  const h = normalizeHash(hash);
+  if (!h) throw new Error("registerRoute: hash is required");
+  if (typeof loader !== "function") throw new Error("registerRoute: loader must be a function");
+  ROUTES.set(h, loader);
+}
+
+export function hasRoute(hash) {
+  return ROUTES.has(normalizeHash(hash));
+}
+
+export function getCurrentRoute() {
+  return currentHash || normalizeHash(location.hash) || "";
+}
+
+// ✅ force rerender even when hash is same
+export function navigateTo(hash, opts = {}) {
+  const h = normalizeHash(hash);
+  if (!h) return;
+
+  const { force = false } = opts;
+  const cur = normalizeHash(location.hash);
+
+  if (cur === h) {
+    if (force && started && _appEl) {
+      // call handler directly (do not rely on hashchange)
+      handleRouteChange({
+        appEl: _appEl,
+        defaultHash: _defaultHash,
+        scrollTop: _scrollTop,
+        force: true,
       });
     }
+    return;
+  }
 
-    nav.appendChild(a);
+  location.hash = h;
+}
+
+export function startRouter(opts = {}) {
+  if (started) return;
+  started = true;
+
+  const { defaultHash = "#home", appId = "app", scrollTop = true } = opts;
+
+  const appEl = $(appId);
+  if (!appEl) {
+    console.error(`[router] missing app container #${appId}`);
+    return;
+  }
+
+  _appEl = appEl;
+  _defaultHash = normalizeHash(defaultHash) || "#home";
+  _scrollTop = !!scrollTop;
+
+  if (!location.hash) location.hash = _defaultHash;
+
+  window.addEventListener("hashchange", () => {
+    handleRouteChange({
+      appEl: _appEl,
+      defaultHash: _defaultHash,
+      scrollTop: _scrollTop,
+    });
   });
 
-  const btnKR = rootEl.querySelector("#btnKR");
-  const btnCN = rootEl.querySelector("#btnCN");
-
-  btnKR?.addEventListener("click", () => {
-    try { i18n?.setLang?.("kr"); } catch {}
-    applyI18n(rootEl);
-    window.dispatchEvent(new CustomEvent("joy:langchanged"));
+  // ✅ Always render once on start (do not rely on hashchange)
+  queueMicrotask(() => {
+    handleRouteChange({
+      appEl: _appEl,
+      defaultHash: _defaultHash,
+      scrollTop: _scrollTop,
+      force: true, // initial render should run even if currentHash matches (e.g., hot reload)
+    });
   });
+}
 
-  btnCN?.addEventListener("click", () => {
-    try { i18n?.setLang?.("cn"); } catch {}
-    applyI18n(rootEl);
-    window.dispatchEvent(new CustomEvent("joy:langchanged"));
-  });
+export const initRouter = startRouter;
 
-  applyI18n(rootEl);
+async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false }) {
+  const token = ++navToken;
+
+  let hash = normalizeHash(location.hash);
+  if (!hash) {
+    location.hash = defaultHash;
+    hash = normalizeHash(defaultHash);
+  }
+
+  // same route: only skip when not forced
+  if (!force && hash === currentHash) {
+    emitRouteEvent();
+    return;
+  }
+
+  currentHash = hash;
+  emitRouteEvent();
+
+  const loader = ROUTES.get(hash);
+  if (!loader) {
+    await safeUnmountCurrent();
+    setNotFoundUI(appEl, hash);
+    if (scrollTop) scrollToTopSafe();
+    return;
+  }
+
+  setLoadingUI(appEl, "불러오는 중...");
+  if (scrollTop) scrollToTopSafe();
+
+  await safeUnmountCurrent();
+  if (token !== navToken) return;
+
+  // ✅ soft timeout (no reject!)
+  const SLOW_HINT_MS = 1200;
+  let slowTimer = setTimeout(() => {
+    // only show hint if still on same navigation
+    if (token === navToken) showSlowHint(appEl);
+  }, SLOW_HINT_MS);
+
+  try {
+    // 1) load module
+    const mod = await Promise.resolve(loader());
+    if (token !== navToken) return;
+
+    currentModule = mod || null;
+
+    const ctx = {
+      root: appEl,
+      hash,
+      route: hash.replace(/^#/, ""),
+      token,
+    };
+
+    // 2) run page
+    const run = () => {
+      if (typeof mod?.mount === "function") return mod.mount(ctx);
+      if (typeof mod?.init === "function") return mod.init(ctx);
+      if (typeof mod?.default === "function") return mod.default(ctx);
+      if (typeof mod?.render === "function") return mod.render(ctx);
+      throw new Error(`Page module "${hash}" must export mount/init/default/render`);
+    };
+
+    await Promise.resolve(run());
+
+    // 3) final
+    if (token !== navToken) return;
+    emitRouteEvent();
+  } catch (e) {
+    console.error("[router] page load error:", e);
+    if (token !== navToken) return;
+    setErrorUI(appEl, "페이지 로드 실패", e?.stack || e?.message || String(e));
+  } finally {
+    clearTimeout(slowTimer);
+  }
 }
