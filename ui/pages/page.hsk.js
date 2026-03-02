@@ -5,8 +5,24 @@
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
+import { mountAIPanel } from "../components/aiPanel.js";
+import { mountLearnPanel } from "../components/learnPanel.js";
+import { mountDialoguePanel } from "../components/dialoguePanel.js";
+import { mountDialogueModal } from "../components/dialogueModal.js";
+
+import { renderWordCards, renderLessonList } from "../modules/hsk/hskRenderer.js";
+import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
-import { renderLessonList, renderWordCards } from "../modules/hsk/hskRenderer.js";
+
+import {
+  setCurrentLessonGlobal,
+  setLessonDataOnCurrent,
+} from "../modules/hsk/lessonSession.js";
+
+import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
+
+// ✅ NEW: single source of truth language
+import { getLang } from "../core/lang.js";
 
 const state = {
   lv: 1,
