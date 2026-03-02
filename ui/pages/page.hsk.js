@@ -1,5 +1,5 @@
 // /ui/pages/page.hsk.js
-// ✅ HSK Page Controller — SLIM v2.1 (NO legacy initHSKUI, container fallback)
+// ✅ HSK Page Controller — SLIM v2.2 (Lang-following + safe cleanup + re-render on lang change)
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
@@ -19,14 +19,28 @@ import {
 
 import { enableHSKModalMode } from "../modules/hsk/hskModalMode.js";
 
-window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2.1";
+window.__HSK_PAGE_FILE__ = "page.hsk.js SLIM v2.2";
 console.log("[HSK] SLIM page loaded ✅", window.__HSK_PAGE_FILE__);
 
 let mounted = false;
 
+// ✅ for cleanup
+let aborter = null;
+
+// ✅ state cache (for re-render on lang change)
+let lastLessons = [];
+let lastLv = 1;
+let lastVersion = "hsk2.0";
+let currentOpen = null; // { lesson, lv, version }
+
+/* ===============================
+   ✅ Public mount/unmount
+================================== */
 export async function mount() {
   if (mounted) return;
   mounted = true;
+
+  aborter = new AbortController();
 
   const ok = mountLayout();
   if (!ok) return;
@@ -53,8 +67,19 @@ export async function mount() {
 
 export async function unmount() {
   mounted = false;
+  try {
+    aborter?.abort?.();
+  } catch {}
+  aborter = null;
+
+  // reset page-local caches
+  lastLessons = [];
+  currentOpen = null;
 }
 
+/* ===============================
+   ✅ Layout / global components
+================================== */
 function mountLayout() {
   const navRoot = document.getElementById("siteNav");
   const app = document.getElementById("app");
@@ -95,20 +120,60 @@ function bindHSKEvents() {
   const verSel = document.getElementById("hskVersion");
   const search = document.getElementById("hskSearch");
 
-  levelSel?.addEventListener("change", async () => {
-    await refreshLessons(true);
-  });
+  // guard
+  const signal = aborter?.signal;
 
-  verSel?.addEventListener("change", async () => {
-    const v = verSel.value || "hsk2.0";
-    localStorage.setItem("hsk_vocab_version", v);
-    await refreshLessons(true);
-  });
+  levelSel?.addEventListener(
+    "change",
+    async () => {
+      await refreshLessons(true);
+    },
+    { signal }
+  );
 
-  search?.addEventListener("input", async () => {
-    const q = String(search.value || "").trim();
-    await refreshVocabPreview(q);
-  });
+  verSel?.addEventListener(
+    "change",
+    async () => {
+      const v = verSel.value || "hsk2.0";
+      localStorage.setItem("hsk_vocab_version", v);
+      await refreshLessons(true);
+    },
+    { signal }
+  );
+
+  search?.addEventListener(
+    "input",
+    async () => {
+      const q = String(search.value || "").trim();
+      await refreshVocabPreview(q);
+    },
+    { signal }
+  );
+
+  // ✅ Language follow: re-apply i18n + re-render list + re-render opened lesson/cards
+  const onLangChanged = async () => {
+    if (!mounted) return;
+    applyI18nIfAvailable();
+
+    // re-render list using cached lessons
+    rerenderLessonListOnly();
+
+    // re-render opened lesson words/cards if any
+    if (currentOpen?.lesson) {
+      try {
+        await openLesson(currentOpen.lesson, {
+          lv: currentOpen.lv,
+          version: currentOpen.version,
+          __skipSetCurrent: true,
+        });
+      } catch {}
+    }
+  };
+
+  // support multiple event names (whichever your system emits)
+  window.addEventListener("languageChanged", onLangChanged, { signal });
+  window.addEventListener("i18n:changed", onLangChanged, { signal });
+  window.addEventListener("joy:lang", onLangChanged, { signal });
 }
 
 /* ===============================
@@ -126,6 +191,29 @@ function getCurrentVersion() {
   return verSel?.value || localStorage.getItem("hsk_vocab_version") || "hsk2.0";
 }
 
+function getCurrentLang() {
+  // best-effort, compatible with your existing system
+  const fromI18n =
+    (typeof i18n?.getLang === "function" && i18n.getLang()) ||
+    i18n?.lang ||
+    i18n?.current ||
+    "";
+
+  const fromLS =
+    localStorage.getItem("joy_lang") ||
+    localStorage.getItem("site_lang") ||
+    localStorage.getItem("lang") ||
+    "";
+
+  const raw = String(fromI18n || fromLS || "ko").trim().toLowerCase();
+  // normalize common variants
+  if (raw === "kr") return "ko";
+  if (raw.startsWith("zh")) return "zh";
+  if (raw.startsWith("en")) return "en";
+  if (raw.startsWith("ko")) return "ko";
+  return raw || "ko";
+}
+
 // ✅ 兼容：新容器 / 旧容器 都能用
 function getLessonListNodes() {
   // new
@@ -139,22 +227,70 @@ function getLessonListNodes() {
   return { wrap, el };
 }
 
+function setStatusText(text) {
+  const status = document.getElementById("hskStatus");
+  if (status) status.textContent = text || "";
+}
+
+function setLoadingLessons() {
+  // translate if your i18n has t(), else fallback
+  const txt =
+    (typeof i18n?.t === "function" && i18n.t("hsk_loading_lessons")) ||
+    "Loading lessons...";
+  setStatusText(txt);
+}
+
+function setLessonsHeader(lv, version) {
+  const lang = getCurrentLang();
+  const txt =
+    (typeof i18n?.t === "function" &&
+      i18n.t("hsk_header", { lv, version, lang })) ||
+    `HSK ${lv} · ${version}`;
+  setStatusText(txt);
+}
+
+function rerenderLessonListOnly() {
+  const { wrap: listWrap, el: listEl } = getLessonListNodes();
+  if (!listEl) return;
+
+  const lessons = Array.isArray(lastLessons) ? lastLessons : [];
+  if (!lessons.length) return;
+
+  listWrap?.classList.remove("hidden");
+
+  const lv = lastLv || getCurrentLevel();
+  const version = lastVersion || getCurrentVersion();
+  const lang = getCurrentLang();
+
+  renderLessonList(
+    listEl,
+    lessons,
+    async (lesson) => {
+      setCurrentLessonGlobal(lesson, { lv, version });
+      await openLesson(lesson, { lv, version });
+    },
+    { lang }
+  );
+}
+
 /* ===============================
    ✅ Refresh lessons list
 ================================== */
 async function refreshLessons(scrollIntoView = false) {
   const lv = getCurrentLevel();
   const version = getCurrentVersion();
+  const lang = getCurrentLang();
+
+  lastLv = lv;
+  lastVersion = version;
 
   const err = document.getElementById("hskError");
-  const status = document.getElementById("hskStatus");
-
   const { wrap: listWrap, el: listEl } = getLessonListNodes();
   const grid = document.getElementById("hskGrid");
 
   try {
     err?.classList.add("hidden");
-    if (status) status.textContent = "Loading lessons...";
+    setLoadingLessons();
 
     let lessons = [];
     try {
@@ -164,27 +300,28 @@ async function refreshLessons(scrollIntoView = false) {
       lessons = [];
     }
 
-    if (!lessons || !lessons.length) {
-      if (status) status.textContent = "";
+    lastLessons = Array.isArray(lessons) ? lessons : [];
+
+    if (!lastLessons.length) {
+      setStatusText("");
       if (listWrap) listWrap.classList.add("hidden");
       if (listEl) listEl.innerHTML = "";
       if (grid) grid.innerHTML = "";
       return;
     }
 
-    if (status) status.textContent = `HSK ${lv} · ${version}`;
+    setLessonsHeader(lv, version);
 
     listWrap?.classList.remove("hidden");
 
-    // ✅ 渲染目录（renderLessonList 内部会处理 container 为空的情况）
     renderLessonList(
       listEl,
-      lessons,
+      lastLessons,
       async (lesson) => {
         setCurrentLessonGlobal(lesson, { lv, version });
         await openLesson(lesson, { lv, version });
       },
-      { lang: "ko" }
+      { lang }
     );
 
     if (scrollIntoView) {
@@ -192,7 +329,7 @@ async function refreshLessons(scrollIntoView = false) {
     }
   } catch (e) {
     console.error(e);
-    if (status) status.textContent = "";
+    setStatusText("");
     if (err) {
       err.textContent = `Lessons load failed: ${e.message || e}`;
       err.classList.remove("hidden");
@@ -203,14 +340,19 @@ async function refreshLessons(scrollIntoView = false) {
 /* ===============================
    ✅ Open one lesson → load lesson file → render cards
 ================================== */
-async function openLesson(lesson, { lv, version }) {
+async function openLesson(lesson, { lv, version, __skipSetCurrent = false }) {
   const grid = document.getElementById("hskGrid");
   const err = document.getElementById("hskError");
-  const status = document.getElementById("hskStatus");
   if (!grid) return;
+
+  const lang = getCurrentLang();
 
   try {
     err?.classList.add("hidden");
+
+    if (!__skipSetCurrent) {
+      currentOpen = { lesson, lv, version };
+    }
 
     const file = lesson?.file || lesson?.path || "";
     const lessonNo = Number(lesson?.lessonNo || lesson?.lesson || lesson?.id || 1);
@@ -226,17 +368,25 @@ async function openLesson(lesson, { lv, version }) {
     const words = Array.isArray(lessonData?.words) ? lessonData.words : [];
     const set = new Set(words);
 
-    const lessonWords = vocab.filter((x) => set.has(x.word));
+    const lessonWords = Array.isArray(vocab) ? vocab.filter((x) => set.has(x.word)) : [];
 
-    renderWordCards(grid, lessonWords, undefined, { lang: "ko" });
+    renderWordCards(grid, lessonWords, undefined, { lang });
 
-    if (status) {
-      const label = lesson?.lesson || lesson?.id || lessonNo;
-      status.textContent = `Lesson ${label} (${lessonWords.length}/${words.length})`;
-    }
+    // status (translated if available)
+    const label = lesson?.lesson || lesson?.id || lessonNo;
+    const txt =
+      (typeof i18n?.t === "function" &&
+        i18n.t("hsk_lesson_status", {
+          label,
+          got: lessonWords.length,
+          total: words.length,
+        })) ||
+      `Lesson ${label} (${lessonWords.length}/${words.length})`;
+
+    setStatusText(txt);
   } catch (e) {
     console.error(e);
-    if (status) status.textContent = "";
+    setStatusText("");
     if (err) {
       err.textContent = `Lesson load failed: ${e.message || e}`;
       err.classList.remove("hidden");
@@ -253,16 +403,18 @@ async function refreshVocabPreview(q) {
 
   const lv = getCurrentLevel();
   const version = getCurrentVersion();
+  const lang = getCurrentLang();
 
   if (!q) return;
 
   try {
     const vocab = await window.HSK_LOADER.loadVocab(lv, { version });
     const qq = q.toLowerCase();
-    const filtered = vocab.filter((x) => {
+
+    const filtered = (Array.isArray(vocab) ? vocab : []).filter((x) => {
       const w = String(x.word || "");
       const p = String(x.pinyin || "");
-      const k = String(x.ko || x.kr || "");
+      const k = String(x.ko || x.kr || x.en || "");
       return (
         w.includes(q) ||
         p.toLowerCase().includes(qq) ||
@@ -270,7 +422,7 @@ async function refreshVocabPreview(q) {
       );
     });
 
-    renderWordCards(grid, filtered.slice(0, 60), undefined, { lang: "ko" });
+    renderWordCards(grid, filtered.slice(0, 60), undefined, { lang });
   } catch (e) {
     console.warn("search preview failed:", e);
   }
