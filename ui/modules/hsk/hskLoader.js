@@ -269,6 +269,25 @@
         window.DATA_PATHS.lessonsUrl &&
         window.DATA_PATHS.lessonsUrl(lv, { version })) ||
       lessonsUrl(lv, version);
+   
+    // try index file first: /data/lessons/hsk2.0/hsk1.json
+const idxPath = `/data/lessons/${version}/hsk${lv}.json`;
+try {
+  const r = await fetch(idxPath);
+  if (r.ok) {
+    const index = await r.json();
+    // normalize to your current lesson shape
+    return index.map(it => ({
+      lessonNo: it.lessonNo ?? it.lesson ?? it.id,
+      lesson: it.lessonNo ?? it.lesson ?? it.id,
+      id: it.lessonNo ?? it.lesson ?? it.id,
+      file: it.file,
+      title: it.title,              // {ko,zh}
+      pinyinTitle: it.pinyinTitle || it.pinyin || ""
+    }));
+  }
+} catch {}
+// fallback: keep your old logic
 
     const memKey = `lessons:${version}:${lv}:${url}`;
     const cached = memGet(memKey);
