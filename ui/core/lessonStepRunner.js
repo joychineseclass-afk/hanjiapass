@@ -189,3 +189,74 @@ export function mountLessonStepRunner() {
     });
   }
 }
+// ✅ Expose a small stable API for other pages (like HSK) to call AI
+(function exposeRunnerAPI() {
+  // Try to find any runner instance / function you already have
+  const api = window.JOY_RUNNER || {};
+
+  // 1) If you already have a "runner" object, attach it here (optional)
+  // api.runner = api.runner || window.LessonStepRunner || window.lessonStepRunner || null;
+
+  // 2) A single method that HSK page can call
+  // It will try several existing AI entry points (so it works even if your internals change)
+  api.askAI = async function askAI({ prompt, context = "", lang = "ko", mode = "Kids" } = {}) {
+    const fullPrompt = [context, prompt].filter(Boolean).join("\n\n");
+
+    // (A) If your project already has an AI function, use it first
+    // Try common names you might already have:
+    const candidates = [
+      window.aiAsk,                 // function(prompt, opts)
+      window.AI?.ask,               // AI.ask(prompt, opts)
+      window.JOY_AI?.ask,           // JOY_AI.ask(prompt, opts)
+      window.openAIChat?.ask,       // openAIChat.ask(prompt, opts)
+    ].filter(Boolean);
+
+    for (const fn of candidates) {
+      try {
+        const out = await fn(fullPrompt, { lang, mode, context });
+        if (out != null) return normalizeAIResult(out);
+      } catch (e) {
+        // keep trying next candidate
+        console.warn("[JOY_RUNNER.askAI] candidate failed:", e);
+      }
+    }
+
+    // (B) If you have a backend endpoint, use it (optional)
+    // If you DON'T have /api/ai-chat, this will fail gracefully.
+    try {
+      const r = await fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: fullPrompt, lang, mode, context }),
+      });
+      if (r.ok) {
+        const data = await r.json();
+        return normalizeAIResult(data);
+      }
+    } catch (e) {
+      console.warn("[JOY_RUNNER.askAI] /api/ai-chat failed:", e);
+    }
+
+    // (C) If no AI wired yet
+    throw new Error("AI not connected: cannot find aiAsk/AI.ask/JOY_AI.ask and /api/ai-chat not available.");
+  };
+
+  function normalizeAIResult(out) {
+    // Accept: string | {text} | {answer} | {content} | {message}
+    if (typeof out === "string") return { text: out };
+    if (out && typeof out === "object") {
+      return {
+        text:
+          out.text ??
+          out.answer ??
+          out.content ??
+          out.message ??
+          JSON.stringify(out),
+        raw: out,
+      };
+    }
+    return { text: String(out) };
+  }
+
+  window.JOY_RUNNER = api;
+})();
