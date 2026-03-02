@@ -1,9 +1,9 @@
-<!doctype html>
+import { i18n } from "../i18n.js";
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Joy Chinese | 기쁨중국어</title>
+  <title>Joy Chinese study center
   <meta name="description" content="아이도 즐겁고, 부모님도 찾기 쉬운 중국어 학습 플랫폼. HSK · 회화 · 따라쓰기 · AI 말하기" />
 
   <style>
