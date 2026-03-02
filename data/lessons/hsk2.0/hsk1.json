@@ -1,0 +1,44 @@
+[
+  {
+    "lessonNo": 1,
+    "file": "hsk1_lesson1.json",
+    "title": { "ko": "인사하기", "zh": "打招呼" },
+    "pinyinTitle": "dǎ zhāo hū"
+  },
+  {
+    "lessonNo": 2,
+    "file": "hsk1_lesson2.json",
+    "title": { "ko": "이름 묻기", "zh": "介绍名字" },
+    "pinyinTitle": "jiè shào míng zì"
+  },
+  {
+    "lessonNo": 3,
+    "file": "hsk1_lesson3.json",
+    "title": { "ko": "국적", "zh": "国家" },
+    "pinyinTitle": "guó jiā"
+  },
+  {
+    "lessonNo": 4,
+    "file": "hsk1_lesson4.json",
+    "title": { "ko": "가족", "zh": "家人" },
+    "pinyinTitle": "jiā rén"
+  },
+  {
+    "lessonNo": 5,
+    "file": "hsk1_lesson5.json",
+    "title": { "ko": "숫자 1", "zh": "数字①" },
+    "pinyinTitle": "shù zì yī"
+  },
+  {
+    "lessonNo": 6,
+    "file": "hsk1_lesson6.json",
+    "title": { "ko": "숫자 2", "zh": "数字②" },
+    "pinyinTitle": "shù zì èr"
+  },
+  {
+    "lessonNo": 7,
+    "file": "hsk1_lesson7.json",
+    "title": { "ko": "나이 묻기", "zh": "年龄" },
+    "pinyinTitle": "nián líng"
+  }
+]
