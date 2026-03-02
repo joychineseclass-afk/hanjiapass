@@ -7,8 +7,8 @@
 const DICT = {
   // ===== Korean =====
   kr: {
-    brand: "Joy Chinese",
-    subtitle: "AI 한자 · 중국어 학습 플랫폼",
+    brand: "Lumina Chinese Learning Center",
+    subtitle: "루미나 글로벌 중국어 교육 플랫폼",
 
     nav_home: "홈",
     nav_hsk: "HSK 학습",
