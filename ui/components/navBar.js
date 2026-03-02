@@ -1,17 +1,26 @@
-// /ui/components/navBar.js
-// ✅ MIXED MODE NAVBAR
-// - Works with MPA pages (/pages/*.html)
-// - Works with index.html hash router
-// - Clicking "홈" inside index forces router rerender
-// - Active highlight support
-// - Language switch support
-
+// /ui/components/navBar.js  ✅ MIXED (MPA pages + index.html hash-router)
 import { i18n } from "../i18n.js";
-import { navigateTo } from "../router.js";
+
+// If on index, we can force rerender via router.navigateTo
+async function forceHomeOnIndex() {
+  // lazy import to avoid breaking other pages
+  try {
+    const { navigateTo } = await import("../router.js");
+    navigateTo("#home", { force: true });
+    return;
+  } catch (e) {
+    // fallback: hash toggle
+    if (location.hash === "#home") {
+      location.hash = "#_";
+      requestAnimationFrame(() => (location.hash = "#home"));
+    } else {
+      location.hash = "#home";
+    }
+  }
+}
 
 const NAV_ITEMS_FULL = [
   { href: "/index.html#home",     key: "nav_home",        label: "홈",        color: "#3b82f6" },
-
   { href: "/pages/hsk.html",      key: "nav_hsk",         label: "HSK 학습",  color: "#22c55e" },
   { href: "/pages/stroke.html",   key: "nav_stroke",      label: "한자 필순", color: "#f97316" },
   { href: "/pages/hanja.html",    key: "nav_hanjagongfu", label: "한자공부",  color: "#a855f7" },
@@ -23,6 +32,15 @@ const NAV_ITEMS_FULL = [
   { href: "/pages/teacher.html",  key: "nav_teacher",     label: "교사专区",  color: "#f43f5e" },
   { href: "/pages/my.html",       key: "nav_my",          label: "내 학습",   color: "#64748b" },
 ];
+
+function t(key, fallback = "") {
+  try {
+    const v = i18n?.t?.(key);
+    return v && String(v).trim() ? v : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
 function normalizePath(p) {
   const raw = (p || "").trim();
@@ -39,7 +57,7 @@ function setActive(rootEl) {
   if (!rootEl) return;
 
   const curPath = normalizePath(location.pathname);
-  const curHash = location.hash;
+  const curHash = (location.hash || "").trim();
 
   rootEl.querySelectorAll('a[data-nav="1"]').forEach((a) => {
     const href = a.getAttribute("href") || "";
@@ -48,14 +66,14 @@ function setActive(rootEl) {
 
     let active = false;
 
-    if (navPath.endsWith("/index.html") &&
-        (curPath === "/" || curPath.endsWith("/index.html"))) {
-      active = (!toHash && !curHash) || (`#${toHash}` === curHash);
+    if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
+      const wantHash = toHash ? `#${toHash}` : "";
+      active = wantHash ? (curHash === wantHash) : true;
     } else {
       active = navPath === curPath;
     }
 
-    a.classList.toggle("active", active);
+    a.classList.toggle("active", !!active);
   });
 }
 
@@ -63,10 +81,8 @@ function syncLangButtons(rootEl) {
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
   const lang = (i18n?.getLang?.() || "kr").toLowerCase();
-
   btnKR?.classList.toggle("active", lang === "kr");
   btnCN?.classList.toggle("active", lang === "cn");
-
   document.documentElement.lang = lang === "kr" ? "ko" : "zh-CN";
 }
 
@@ -83,19 +99,11 @@ function bindGlobalOnce() {
   if (globalBound) return;
   globalBound = true;
 
-  window.addEventListener("popstate", () => {
-    if (lastRootEl) setActive(lastRootEl);
-  });
+  window.addEventListener("popstate", () => { if (lastRootEl) setActive(lastRootEl); });
+  window.addEventListener("hashchange", () => { if (lastRootEl) setActive(lastRootEl); });
 
-  window.addEventListener("hashchange", () => {
-    if (lastRootEl) setActive(lastRootEl);
-  });
-
-  try {
-    i18n?.on?.("change", () => {
-      if (lastRootEl) applyI18n(lastRootEl);
-    });
-  } catch {}
+  try { i18n?.on?.("change", () => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
+  try { i18n?.onChange?.(() => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
 }
 
 export function mountNavBar(rootEl) {
@@ -108,47 +116,46 @@ export function mountNavBar(rootEl) {
     applyI18n(rootEl);
     return;
   }
-
   rootEl.dataset.mounted = "1";
+
+  const mini = (rootEl.dataset.mode || "").toLowerCase() === "mini";
+  const items = mini ? [NAV_ITEMS_FULL[0]] : NAV_ITEMS_FULL;
 
   rootEl.innerHTML = `
     <div class="topbar">
       <div class="brand">
-        <a href="/index.html#home">Joy Chinese</a>
-        <small>AI 한자 · 중국어 학습 플랫폼</small>
+        <a href="/index.html#home" data-i18n="brand">Joy Chinese</a>
+        <small data-i18n="subtitle">AI 한자 · 중국어 학습 플랫폼</small>
       </div>
 
-      <div class="lang">
+      <div class="lang" aria-label="Language switcher">
         <button id="btnKR" type="button">KR</button>
         <button id="btnCN" type="button">CN</button>
       </div>
     </div>
 
-    <nav class="site-nav dopamine"></nav>
+    <nav class="site-nav dopamine ${mini ? "mini" : ""}" aria-label="Primary"></nav>
   `;
 
   const nav = rootEl.querySelector("nav.site-nav");
 
-  NAV_ITEMS_FULL.forEach((it) => {
+  items.forEach((it) => {
     const a = document.createElement("a");
     a.href = it.href;
     a.setAttribute("data-nav", "1");
     a.setAttribute("data-i18n", it.key);
     a.style.setProperty("--navc", it.color);
-    a.textContent = it.label;
+    a.textContent = t(it.key, it.label);
 
-    // ✅ 핵심: 홈 클릭 시 index 안에서는 router 강제 실행
+    // ✅ Home: on index page -> force rerender (NO refresh needed)
     if (it.href.startsWith("/index.html#home")) {
       a.addEventListener("click", (e) => {
-
         if (isIndexPage()) {
           e.preventDefault();
-
-          // 강제 rerender
-          navigateTo("#home", { force: true });
-
+          forceHomeOnIndex();
           setActive(rootEl);
         }
+        // not on index: allow normal navigation to /index.html#home
       });
     }
 
@@ -161,11 +168,13 @@ export function mountNavBar(rootEl) {
   btnKR?.addEventListener("click", () => {
     try { i18n?.setLang?.("kr"); } catch {}
     applyI18n(rootEl);
+    window.dispatchEvent(new CustomEvent("joy:langchanged"));
   });
 
   btnCN?.addEventListener("click", () => {
     try { i18n?.setLang?.("cn"); } catch {}
     applyI18n(rootEl);
+    window.dispatchEvent(new CustomEvent("joy:langchanged"));
   });
 
   applyI18n(rootEl);
