@@ -51,8 +51,23 @@ export function getHSKLayoutHTML() {
       <div id="hskLessons"></div>
     </div>
 
-    <!-- ✅ Word grid / preview area -->
-    <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+   <!-- ✅ Word grid / preview area -->
+<div id="hskGridWrap" class="hidden bg-white rounded-2xl shadow p-4 mb-4">
+  <div class="flex items-center justify-between mb-3">
+    <button
+      id="btnBackToLessons"
+      type="button"
+      class="px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 hover:bg-gray-100"
+      data-i18n="common_back"
+    >
+      ← 返回目录
+    </button>
+
+    <div id="hskLessonTitle" class="text-sm font-bold text-gray-700"></div>
+  </div>
+
+  <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</div>
 
     <div class="h-20"></div>
     <div id="portal-root"></div>
