@@ -1,30 +1,28 @@
-<!-- /pages/page.hsk.html -->
 <!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HSK 학습 | Joy Chinese</title>
+  <title>Joy Chinese · HSK</title>
 
-  <!-- ✅ 统一用绝对路径，避免相对路径错位 -->
-  <link rel="stylesheet" href="/styles/base.css">
-  <link rel="stylesheet" href="/ui/styles/panels.css">
-  <link rel="stylesheet" href="/ui/styles/hsk.css">
+  <!-- 你的全局样式（按你项目实际路径） -->
+  <link rel="stylesheet" href="/ui/styles.css" />
 </head>
 
-<body class="bg-gray-50">
+<body>
   <div id="siteNav"></div>
-  <main id="app" class="page-wrap min-h-screen p-4 md:p-8"></main>
+  <main id="app"></main>
 
-  <!-- ✅ HSK 依赖（全局脚本） -->
-  <script src="/ui/modules/hsk/hskLoader.js"></script>
-  <script src="/ui/modules/hsk/hskRenderer.js"></script>
-  <script src="/ui/modules/hsk/hskHistory.js"></script>
-
-  <!-- ✅ 页面控制器（ES Module） -->
   <script type="module">
-    import { mount } from "/ui/pages/page.hsk.js";
-    mount();
+    import { i18n } from "/ui/i18n.js";
+    import { mountNavBar } from "/ui/components/navBar.js";
+    import { mount as mountHSK } from "/ui/pages/page.hsk.js";
+
+    // 统一入口：语言初始化（会读取 localStorage 的 joy_lang）
+    i18n.init({ defaultLang: "kr", storageKey: "joy_lang" });
+
+    mountNavBar(document.getElementById("siteNav"));
+    mountHSK();
   </script>
 </body>
 </html>
