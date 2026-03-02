@@ -1,15 +1,12 @@
 /* =========================================
    🌍 APP ENTRY — GLOBAL BOOTSTRAP
-   全站唯一入口（只在 index.html 引入这一个）
 ========================================= */
+
 import { LESSON_ENGINE } from "./core/lessonEngine.js";
 window.LESSON_ENGINE = LESSON_ENGINE;
 
 import { mountLessonBridge } from "./core/lessonBridge.js";
-mountLessonBridge();
-
 import { mountLessonStepRunner } from "./core/lessonStepRunner.js";
-mountLessonStepRunner();
 
 import "./components/wordPanel.js";
 
@@ -19,17 +16,11 @@ import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
 
-// ✅ Global helper: open step modal by Lesson Engine + StepRunner
+/* ---------- Global helper: open step modal ---------- */
 window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
   const engine = window.LESSON_ENGINE;
-  if (!engine) {
-    console.warn("[joyOpenStep] LESSON_ENGINE missing");
-    return;
-  }
-  if (!lessonId) {
-    console.warn("[joyOpenStep] lessonId missing", { step, lessonId });
-    return;
-  }
+  if (!engine) return console.warn("[joyOpenStep] LESSON_ENGINE missing");
+  if (!lessonId) return console.warn("[joyOpenStep] lessonId missing", { step, lessonId });
 
   const lang =
     opts.lang ||
@@ -37,40 +28,35 @@ window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
     localStorage.getItem("site_lang") ||
     "kr";
 
-  // Ensure engine has state for this lesson
   engine.start({ lessonId, lang });
-
-  // Jump to requested step (words/dialogue/grammar/practice/ai)
   if (step) engine.go(step);
 
   console.log("[joyOpenStep] ok:", { step, lessonId, lang });
 };
 
-/* ===============================
-   🌐 i18n 全站初始化
-   - 默认韩语
-   - 切换语言自动刷新整页
-   - 新增 DOM 自动翻译（配合 router 懒加载页面）
-================================== */
+/* ---------- i18n init ---------- */
 i18n.init({
   defaultLang: "kr",
   storageKey: "joy_lang",
   autoApplyRoot: document,
   observe: true
 });
-
-// 首次应用翻译
 i18n.apply(document);
 
+/* ---------- Mount once (bridge / step runner) ---------- */
+try {
+  mountLessonBridge();
+  mountLessonStepRunner();
+} catch (e) {
+  console.error("[app] bridge/stepRunner mount error:", e);
+}
 
 /* ===============================
-   🧭 注册页面路由（懒加载）
-     ⚠️ 注意：这里的路径是从 ui/app.js 出发
+   🧭 Routes (lazy)
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
-
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
 registerRoute("#speaking",  () => import("./pages/page.speaking.js"));
 registerRoute("#travel",    () => import("./pages/page.travel.js"));
@@ -80,19 +66,62 @@ registerRoute("#resources", () => import("./pages/page.resources.js"));
 registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
 
-
 /* ===============================
-   🚀 页面启动入口
+   🚀 Boot
 ================================== */
+function ensureRoot() {
+  const root = document.getElementById("app");
+  if (!root) {
+    console.error("[app] #app not found. Check index.html has <main id='app'>");
+  }
+  return root;
+}
+
+function showFatal(err) {
+  const root = ensureRoot();
+  if (!root) return;
+  root.innerHTML = `
+    <div style="padding:16px; border:1px solid #e2e8f0; background:#fff; border-radius:14px;">
+      <b style="display:block; margin-bottom:8px;">페이지 로딩 오류</b>
+      <div style="color:#475569; line-height:1.6; font-size:13px;">
+        콘솔(Console)에서 에러를 확인해 주세요.<br/>
+        <pre style="white-space:pre-wrap; margin:10px 0 0; background:#f8fafc; padding:10px; border-radius:12px; border:1px solid #e2e8f0;">${String(err?.stack || err)}</pre>
+      </div>
+    </div>
+  `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  // 1️⃣ 顶部导航栏（品牌 + 语言切换 + 菜单）
-  mountNavBar(document.getElementById("siteNav"));
+  console.log("[app] DOMContentLoaded");
 
-  // 2️⃣ 全局浮动面板（只挂一次）
-  mountAIPanel();     // 🤖 AI 老师
-  mountLearnPanel();  // 📘 单词学习面板
+  // 1) Nav
+  try {
+    mountNavBar(document.getElementById("siteNav"));
+  } catch (e) {
+    console.error("[app] mountNavBar error:", e);
+  }
 
-  // 3️⃣ 启动路由
+  // 2) Global panels
+  try {
+    mountAIPanel();
+    mountLearnPanel();
+  } catch (e) {
+    console.error("[app] mount panels error:", e);
+  }
+
+  // 3) Default route
   if (!location.hash) location.hash = "#home";
-  startRouter();
+
+  // 4) Start router (with guard)
+  try {
+    console.log("[app] startRouter:", location.hash);
+    startRouter();
+  } catch (e) {
+    console.error("[app] startRouter error:", e);
+    showFatal(e);
+  }
+
+  // 5) Helpful debug hint
+  // If stuck on loading, likely page module export mismatch or wrong file path.
+  console.log("[app] hint: ensure ui/pages/page.home.js exists and exports mount/render/default");
 });
