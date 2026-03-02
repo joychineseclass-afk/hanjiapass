@@ -1,5 +1,6 @@
-// /ui/modules/hsk/hskLayout.js ✅ FINAL
-// - Adds: #hskLessonListWrap (directory) + #hskStudyBar (study header with back button) + #hskGrid (study area)
+// /ui/modules/hsk/hskLayout.js ✅ FINAL (Study Tabs version)
+// - Directory: #hskLessonListWrap
+// - Study: #hskStudyBar + #hskStudyTabs + 4 panels
 
 export function getHSKLayoutHTML() {
   return `
@@ -49,17 +50,72 @@ export function getHSKLayoutHTML() {
       <div id="hskLessonList"></div>
     </div>
 
-    <!-- ✅ Study header (Back + Title) -->
-    <div id="hskStudyBar" class="hidden bg-white rounded-2xl shadow p-3 mt-4 mb-3 flex items-center gap-2">
-      <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
-        ← <span data-i18n="common_back">목록으로</span>
-      </button>
-      <span id="hskStudyTitle" class="font-semibold"></span>
-      <span id="hskStudyMeta" class="text-sm opacity-60"></span>
+    <!-- ✅ Study header -->
+    <div id="hskStudyBar" class="hidden bg-white rounded-2xl shadow p-3 mt-4 mb-3">
+      <div class="flex items-center gap-2">
+        <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
+          ← <span data-i18n="common_back">목록으로</span>
+        </button>
+        <span id="hskStudyTitle" class="font-semibold"></span>
+        <span id="hskStudyMeta" class="text-sm opacity-60"></span>
+      </div>
+
+      <!-- ✅ Study Tabs -->
+      <div id="hskStudyTabs" class="mt-3 flex flex-wrap gap-2">
+        <button id="hskTabWords" type="button" class="px-3 py-1 rounded-lg border" data-tab="words">
+          <span data-i18n="hsk_tab_words">단어</span>
+        </button>
+        <button id="hskTabDialogue" type="button" class="px-3 py-1 rounded-lg border" data-tab="dialogue">
+          <span data-i18n="hsk_tab_dialogue">회화</span>
+        </button>
+        <button id="hskTabGrammar" type="button" class="px-3 py-1 rounded-lg border" data-tab="grammar">
+          <span data-i18n="hsk_tab_grammar">문법</span>
+        </button>
+        <button id="hskTabAI" type="button" class="px-3 py-1 rounded-lg border" data-tab="ai">
+          <span data-i18n="hsk_tab_ai">AI 학습</span>
+        </button>
+      </div>
     </div>
 
-    <!-- ✅ Study area (NOT bottom-of-site; it lives here) -->
-    <div id="hskGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <!-- ✅ Study Panels -->
+    <div id="hskStudyPanels" class="hidden">
+      <div id="hskPanelWords" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <div id="hskPanelDialogue" class="hidden bg-white rounded-2xl shadow p-4">
+        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_dialogue">회화</div>
+        <div id="hskDialogueBody" class="space-y-3"></div>
+      </div>
+
+      <div id="hskPanelGrammar" class="hidden bg-white rounded-2xl shadow p-4">
+        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_grammar">문법</div>
+        <div id="hskGrammarBody" class="space-y-3"></div>
+      </div>
+
+      <div id="hskPanelAI" class="hidden bg-white rounded-2xl shadow p-4">
+        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_ai">AI 학습</div>
+        <div class="text-sm opacity-70 mb-3" data-i18n="hsk_ai_tip">
+          오늘 배운 단어/회화를 가지고 AI에게 질문해 보세요.
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <textarea id="hskAIInput" class="border rounded-xl p-3 text-sm" rows="4"
+            data-i18n-placeholder="hsk_ai_placeholder"
+            placeholder="예: ‘你好’랑 ‘您好’ 차이가 뭐예요?"></textarea>
+
+          <div class="flex gap-2">
+            <button id="hskAISend" type="button" class="px-3 py-2 rounded-xl border">
+              <span data-i18n="hsk_ai_send">보내기</span>
+            </button>
+            <button id="hskAICopyContext" type="button" class="px-3 py-2 rounded-xl border opacity-80">
+              <span data-i18n="hsk_ai_copy">수업내용 복사</span>
+            </button>
+          </div>
+
+          <pre id="hskAIContext" class="hidden bg-slate-50 border rounded-xl p-3 text-xs whitespace-pre-wrap"></pre>
+          <div id="hskAIResult" class="text-sm"></div>
+        </div>
+      </div>
+    </div>
 
     <div class="h-20"></div>
     <div id="portal-root"></div>
