@@ -15,6 +15,7 @@ import { startRouter, registerRoute } from "./router.js";
 import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
+registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 
 /* ---------- Global helper: open step modal ---------- */
 window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
