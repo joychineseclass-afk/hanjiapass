@@ -1,49 +1,46 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Joy Chinese · HSK</title>
+  <title>Joy Chinese | HSK</title>
 
-  <!-- ✅ 全局样式：确保这个文件真实存在 -->
-  <link rel="stylesheet" href="/ui/styles.css" />
+  <link rel="stylesheet" href="/ui/styles/base.css?v=20260303">
+  <link rel="stylesheet" href="/ui/styles/panels.css?v=20260303">
 </head>
 
 <body>
-  <!-- ✅ 顶部导航容器（navBar.js 会渲染在这里） -->
-  <div id="siteNav"></div>
+  <header class="wrap">
+    <div id="siteNav"></div>
+  </header>
 
-  <!-- ✅ HSK 页面主体容器（page.hsk.js 会渲染在这里） -->
-  <main id="app"></main>
+  <main id="app" class="wrap"></main>
 
-  <!--
-    ✅ 非 module（挂到 window 上）必须先加载：
-    1) HSK_LOADER  -> window.HSK_LOADER.loadLessons / loadLessonDetail / loadVocab...
-    2) JOY_RUNNER  -> window.JOY_RUNNER.askAI...
-    ※ 这两个如果路径不对，就会出现你截图里的两个报错
-  -->
-  <script src="/ui/modules/hsk/hskLoader.js"></script>
-  <script src="/ui/core/lessonStepRunner.js"></script>
+  <footer class="wrap">
+    <div id="siteFooter"></div>
+  </footer>
 
-  <!-- ✅ 最后再用 module 入口：初始化语言 + mount 导航 + mount HSK -->
+  <!-- ✅ 只允许一个 module 入口 -->
   <script type="module">
     import { i18n } from "/ui/i18n.js";
     import { mountNavBar } from "/ui/components/navBar.js";
     import { mount as mountHSK } from "/ui/pages/page.hsk.js";
 
-    // 1) 语言初始化（会读取 localStorage: joy_lang）
-    i18n.init({ defaultLang: "kr", storageKey: "joy_lang" });
+    // 初始化语言
+    i18n.init({
+      defaultLang: "kr",
+      storageKey: "joy_lang",
+      autoApplyRoot: document,
+      observe: true
+    });
 
-    // 2) mount 导航
+    i18n.apply(document);
+
+    // 挂载导航
     mountNavBar(document.getElementById("siteNav"));
 
-    // 3) mount HSK 页面
-    mountHSK();
-
-    // 4) 可选：快速自检（你也可以删掉）
-    console.log("[HSK] HSK_LOADER =", !!window.HSK_LOADER);
-    console.log("[HSK] loadLessons =", typeof window.HSK_LOADER?.loadLessons);
-    console.log("[HSK] JOY_RUNNER.askAI =", typeof window.JOY_RUNNER?.askAI);
+    // 挂载 HSK 页面
+    await mountHSK();
   </script>
 </body>
 </html>
