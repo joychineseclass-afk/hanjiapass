@@ -206,6 +206,21 @@ body{
 /* =========================================================
    Home Hero / Badges (used by page.home.js)
    ========================================================= */
+.hero{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+
+  position:relative;
+  overflow:hidden;
+
+  background: linear-gradient(
+    135deg,
+    var(--hero-start),
+    var(--hero-mid),
+    var(--hero-end)
+  );
+}
 .hero::before{
   content:"";
   position:absolute;
