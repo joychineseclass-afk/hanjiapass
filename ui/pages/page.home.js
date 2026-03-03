@@ -244,7 +244,7 @@ function ensureStyles() {
 
   font-weight: 950;
   color: #0f172a;
-  text-shadow: 0 3px 10px rgba(0,0,0,.12);
+  text-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
 
 @media (min-width: 860px){
