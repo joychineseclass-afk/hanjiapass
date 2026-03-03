@@ -190,6 +190,14 @@ function ensureStyles() {
   box-shadow: 0 20px 50px rgba(0,0,0,.08);
   overflow:hidden;
 }
+/* HERO card — fully transparent layer */
+.lumina-home .heroFull .card{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
     .lumina-home .inner{
       padding: 18px;
       display:grid;
@@ -213,34 +221,34 @@ function ensureStyles() {
   gap:8px;
 
   font-weight: 900;
-  font-size: 14px;   /* 原来 12px → 提高 */
+  font-size: 16px;   /* 再放大一点 */
 
-  letter-spacing: .2px;
+  letter-spacing: .3px;
 
   color: var(--brand);
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(255,255,255,.5);
+  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.6);
 
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
   width: fit-content;
 }
 
     /* Hero headline */
-    .lumina-home .heroTitle{
+   .lumina-home .heroTitle{
   margin:0;
 
-  font-size: 36px;   /* 原来 44px → 收一点 */
+  font-size: 38px;
   letter-spacing: -0.5px;
-  line-height: 1.12;
+  line-height: 1.1;
 
   font-weight: 950;
-
   color: #0f172a;
 }
+
 @media (min-width: 860px){
   .lumina-home .heroTitle{
-    font-size: 40px;  /* 原来 44px */
+    font-size: 44px;
   }
 }
 
