@@ -7,7 +7,7 @@
 
 import { i18n } from "../i18n.js";
 
-const STYLE_ID = "lumina-home-style-v4";
+const STYLE_ID = "lumina-home-style-v5";
 let _bound = false;
 
 function getLang() {
@@ -51,7 +51,8 @@ const FB = {
     // ✅ actions / trust tags
     cta1: "시작 학습",
     cta2: "커리큘럼 보기",
-    tags: ["HSK 2.0/3.0", "중·한·병음", "따라쓰기", "AI 말하기"],
+    // ✅ change tag2: 중·한·병음 -> 회화
+    tags: ["HSK 2.0/3.0", "회화", "따라쓰기", "AI 말하기"],
 
     // ✅ today
     today_badge: "오늘의 학습",
@@ -89,7 +90,8 @@ const FB = {
 
     cta1: "开始学习",
     cta2: "查看课程目录",
-    tags: ["HSK 2.0/3.0", "中·韩·拼音", "描红", "AI口语"],
+    // ✅ change tag2: 中·韩·拼音 -> 会话
+    tags: ["HSK 2.0/3.0", "会话", "描红", "AI口语"],
 
     today_badge: "今天的学习",
     today_title: "现在开始，只要3分钟",
@@ -129,7 +131,7 @@ function copy() {
     cta2: t("home_cta2", F.cta2),
     tags: [
       t("home_tag1", F.tags[0]),
-      t("home_tag2", F.tags[1]),
+      t("home_tag2", F.tags[1]), // ✅ 회화 / 会话
       t("home_tag3", F.tags[2]),
       t("home_tag4", F.tags[3]),
     ],
@@ -164,6 +166,7 @@ function copy() {
  */
 function ensureStyles() {
   if (document.getElementById(STYLE_ID)) return;
+
   const style = document.createElement("style");
   style.id = STYLE_ID;
 
@@ -184,19 +187,29 @@ function ensureStyles() {
       box-shadow: var(--shadow-sm, 0 6px 18px rgba(2,6,23,.08));
       overflow:hidden;
     }
-    .lumina-home .inner{ padding: 18px; display:grid; gap: 12px; }
+    .lumina-home .inner{
+      padding: 18px;
+      display:grid;
+      gap: 12px;
+    }
 
     /* Layout */
     .lumina-home .hero{ padding: 18px 0 12px; }
-    .lumina-home .heroGrid{ display:grid; grid-template-columns: 1fr; gap: 12px; align-items: stretch; }
-    @media (min-width: 860px){
-      .lumina-home .heroGrid{ grid-template-columns: 1.25fr .75fr; }
+    .lumina-home .section{ padding: 10px 0 18px; }
+
+    /* FULL-WIDTH brand hero card (your request) */
+    .lumina-home .heroFull{
+      display:grid;
+      gap: 12px;
     }
 
-    /* Brand line (top small pill) */
+    /* Brand line pill */
     .lumina-home .brandLine{
-      display:inline-flex; align-items:center; gap:8px;
-      font-weight: 950; font-size: 12px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 950;
+      font-size: 12px;
       color: var(--brand, #2563eb);
       background: var(--brand-soft, rgba(37,99,235,.10));
       border: 1px solid rgba(37,99,235,.14);
@@ -214,7 +227,7 @@ function ensureStyles() {
       color: var(--text, #0f172a);
     }
     @media (min-width: 860px){
-      .lumina-home .heroTitle{ font-size: 42px; }
+      .lumina-home .heroTitle{ font-size: 44px; }
     }
 
     /* Hero subline */
@@ -223,11 +236,16 @@ function ensureStyles() {
       color: var(--muted, #475569);
       line-height: 1.65;
       font-size: 15px;
-      max-width: 62ch;
+      max-width: 70ch;
     }
 
     /* Buttons */
-    .lumina-home .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 2px; }
+    .lumina-home .cta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 2px;
+    }
     .lumina-home .btn{
       border: 1px solid var(--line, #e2e8f0);
       background: #fff;
@@ -236,7 +254,9 @@ function ensureStyles() {
       border-radius: 14px;
       cursor: pointer;
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
-      display:inline-flex; align-items:center; gap: 8px;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
       white-space: nowrap;
       font-weight: 950;
     }
@@ -256,7 +276,12 @@ function ensureStyles() {
     }
 
     /* Trust tags */
-    .lumina-home .tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 2px; }
+    .lumina-home .tags{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 0;
+    }
     .lumina-home .tag{
       font-size: 12px;
       font-weight: 950;
@@ -267,7 +292,7 @@ function ensureStyles() {
       border-radius: 999px;
     }
 
-    /* Today card — make it clean & aligned (your “图3位置”) */
+    /* Badge */
     .lumina-home .badge{
       font-size: 12px;
       font-weight: 950;
@@ -278,6 +303,8 @@ function ensureStyles() {
       border-radius: 999px;
       width: fit-content;
     }
+
+    /* Today card (moved below hero, and contains buttons+tags) */
     .lumina-home .todayTitle{
       margin: 0;
       font-weight: 950;
@@ -306,13 +333,6 @@ function ensureStyles() {
       background: var(--brand, #2563eb);
       border-radius: 999px;
     }
-    .lumina-home .todayRow{
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 2px;
-    }
     .lumina-home .todayMeta{
       color: var(--muted, #475569);
       font-size: 13px;
@@ -320,8 +340,12 @@ function ensureStyles() {
     }
 
     /* Updates */
-    .lumina-home .updates{ padding: 10px 0 18px; }
-    .lumina-home .headRow{ display:flex; justify-content:space-between; align-items:flex-start; gap: 10px; }
+    .lumina-home .headRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap: 10px;
+    }
     .lumina-home h2{ margin:0; font-size: 18px; letter-spacing:-.3px; }
     .lumina-home .list{ display:grid; gap: 8px; margin-top: 10px; }
     .lumina-home .li{
@@ -361,50 +385,51 @@ function renderHome(root) {
   ensureStyles();
   const T = copy();
 
-  // ✅ No data-i18n usage here; text already resolved via t() to prevent raw keys.
   root.innerHTML = `
     <div class="lumina-home">
       <main>
-        <!-- ✅ HERO (international brand-level) -->
+        <!-- ✅ HERO: FULL-WIDTH brand card (no buttons/tags here) -->
         <section class="hero">
-          <div class="wrap heroGrid">
+          <div class="wrap heroFull">
             <div class="card">
               <div class="inner">
                 <div class="brandLine">${T.brand_line}</div>
                 <h1 class="heroTitle">${T.slogan}</h1>
                 <p class="heroSub">${T.subline}</p>
-
-                <div class="cta">
-                  <a class="btn primary" href="#hsk">${T.cta1}</a>
-                  <a class="btn" href="#catalog">${T.cta2}</a>
-                </div>
-
-                <div class="tags">
-                  ${T.tags.map((x) => `<span class="tag">${x}</span>`).join("")}
-                </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <!-- ✅ TODAY (clean card, aligned like your “图3”) -->
+        <!-- ✅ TODAY: moved BELOW hero, and NOW contains the 2 rows (buttons + tags) -->
+        <section class="section">
+          <div class="wrap">
             <div class="card">
               <div class="inner">
                 <div class="badge">${T.today_badge}</div>
                 <p class="todayTitle">${T.today_title}</p>
                 <p class="todayDesc">${T.today_desc}</p>
 
-                <div class="progress" aria-label="progress"><i></i></div>
-
-                <div class="todayRow">
-                  <span class="todayMeta">${T.today_meta}</span>
+                <!-- Row 1: buttons -->
+                <div class="cta">
                   <a class="btn primary" href="#hsk">${T.cta1}</a>
+                  <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
+
+                <!-- Row 2: tags -->
+                <div class="tags">
+                  ${T.tags.map((x) => `<span class="tag">${x}</span>`).join("")}
+                </div>
+
+                <div class="progress" aria-label="progress"><i></i></div>
+                <div class="todayMeta">${T.today_meta}</div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ✅ UPDATES (credibility block) -->
-        <section class="updates">
+        <!-- ✅ UPDATES -->
+        <section class="section">
           <div class="wrap">
             <div class="card">
               <div class="inner">
@@ -435,7 +460,7 @@ function renderHome(root) {
           </div>
           <div>
             ${T.contact}: 010-0000-0000<br/>
-            ${T.email}: hello@joychinese.kr<br/>
+            ${T.email}: hello@lumina.example<br/>
             <a href="#my" style="text-decoration:underline;">${T.privacy}</a>
             ·
             <a href="#my" style="text-decoration:underline;">${T.terms}</a><br/>
