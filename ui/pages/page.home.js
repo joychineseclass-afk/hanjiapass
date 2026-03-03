@@ -3,10 +3,11 @@
 // ✅ All strings via i18n.t (KR/CN) + live rerender
 // ✅ No mixed language, no raw i18n keys shown
 // ✅ Keep "공지/업데이트"
+// ✅ IMPORTANT: Styles are scoped; DO NOT override global :root tokens here.
 
 import { i18n } from "../i18n.js";
 
-const STYLE_ID = "lumina-home-style-v3";
+const STYLE_ID = "lumina-home-style-v4";
 let _bound = false;
 
 function getLang() {
@@ -19,12 +20,15 @@ function getLang() {
   return "kr";
 }
 
+/** t() with safe fallback:
+ * - if i18n misses and returns key itself => fallback
+ * - if returns "[key]" => fallback
+ */
 function t(key, fallback = "") {
   try {
     const v = i18n?.t?.(key);
     if (v == null) return fallback;
     const s = String(v).trim();
-    // i18n miss → returns key itself
     if (!s || s === key || s === `[${key}]`) return fallback;
     return s;
   } catch {
@@ -44,6 +48,10 @@ const FB = {
     subline:
       "구조화된 HSK 코스, 상호작용형 한자 쓰기, 실전 말하기까지 — 전 세계 학습자를 위한 차세대 중국어 학습 경험.",
 
+    // ✅ actions / trust tags
+    cta1: "시작 학습",
+    cta2: "커리큘럼 보기",
+    tags: ["HSK 2.0/3.0", "중·한·병음", "따라쓰기", "AI 말하기"],
 
     // ✅ today
     today_badge: "오늘의 학습",
@@ -79,6 +87,10 @@ const FB = {
     subline:
       "结构化HSK课程、互动汉字书写、真实场景口语训练——面向全球学习者的下一代中文学习体验。",
 
+    cta1: "开始学习",
+    cta2: "查看课程目录",
+    tags: ["HSK 2.0/3.0", "中·韩·拼音", "描红", "AI口语"],
+
     today_badge: "今天的学习",
     today_title: "现在开始，只要3分钟",
     today_desc: "继续上次的课程，短短几分钟也能坚持！",
@@ -109,7 +121,6 @@ function copy() {
     brand: t("brand", F.brand),
     subtitle: t("subtitle", F.subtitle),
 
-    // ✅ brand hero keys (optional in i18n, fallback ok)
     brand_line: t("home_brand_line", F.brand_line),
     slogan: t("home_slogan", F.slogan),
     subline: t("home_subline", F.subline),
@@ -145,83 +156,212 @@ function copy() {
   };
 }
 
+/**
+ * ✅ IMPORTANT:
+ * - DO NOT define :root tokens here (global tokens should be in base.css)
+ * - Only scoped styles under .lumina-home
+ * - Uses global tokens: --soft --bg --card --text --muted --line --brand --brand-2 --brand-soft --brand-soft-2 --shadow --shadow-sm --glow --max
+ */
 function ensureStyles() {
   if (document.getElementById(STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = STYLE_ID;
+
   style.textContent = `
-    
-    .lumina-home{ background:var(--soft); color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
-    .lumina-home .wrap{ max-width:var(--max); margin:0 auto; padding:0 16px; }
-    .lumina-home a{ color:inherit; text-decoration:none; }
+    .lumina-home{
+      background: var(--soft, #f8fafc);
+      color: var(--text, #0f172a);
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    }
+    .lumina-home .wrap{ max-width: var(--max, 1120px); margin:0 auto; padding: 0 16px; }
+    .lumina-home a{ color: inherit; text-decoration:none; }
 
-    .lumina-home .card{ background:var(--bg); border:1px solid var(--line);
-      border-radius:calc(var(--radius) + 8px); box-shadow:var(--shadow); overflow:hidden; }
-    .lumina-home .inner{ padding:18px; display:grid; gap:12px; }
+    /* Cards */
+    .lumina-home .card{
+      background: var(--card, #fff);
+      border: 1px solid var(--line, #e2e8f0);
+      border-radius: calc(var(--radius, 18px) + 8px);
+      box-shadow: var(--shadow-sm, 0 6px 18px rgba(2,6,23,.08));
+      overflow:hidden;
+    }
+    .lumina-home .inner{ padding: 18px; display:grid; gap: 12px; }
 
-    /* ✅ Brand-level Hero typography */
+    /* Layout */
+    .lumina-home .hero{ padding: 18px 0 12px; }
+    .lumina-home .heroGrid{ display:grid; grid-template-columns: 1fr; gap: 12px; align-items: stretch; }
+    @media (min-width: 860px){
+      .lumina-home .heroGrid{ grid-template-columns: 1.25fr .75fr; }
+    }
+
+    /* Brand line (top small pill) */
     .lumina-home .brandLine{
       display:inline-flex; align-items:center; gap:8px;
-      font-weight:900; font-size:12px; color:var(--brand);
-      background:rgba(37,99,235,.08); padding:8px 10px;
-      border-radius:999px; width:fit-content;
+      font-weight: 950; font-size: 12px;
+      color: var(--brand, #2563eb);
+      background: var(--brand-soft, rgba(37,99,235,.10));
+      border: 1px solid rgba(37,99,235,.14);
+      padding: 8px 10px;
+      border-radius: 999px;
+      width: fit-content;
     }
+
+    /* Hero headline */
     .lumina-home .heroTitle{
-      margin:0; font-size:34px; letter-spacing:-0.9px; line-height:1.08;
+      margin:0;
+      font-size: 34px;
+      letter-spacing: -0.9px;
+      line-height: 1.08;
+      color: var(--text, #0f172a);
     }
-    .lumina-home .heroSub{
-      margin:0; color:var(--muted); line-height:1.65; font-size:15px;
-      max-width:56ch;
-    }
-
-    .lumina-home .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:2px; }
-    .lumina-home .btn{ border:1px solid var(--line); background:#fff; color:var(--text);
-      padding:10px 12px; border-radius:14px; cursor:pointer; transition:.15s ease;
-      display:inline-flex; align-items:center; gap:8px; white-space:nowrap; font-weight:900; }
-    .lumina-home .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(2,6,23,.06); }
-    .lumina-home .btn.primary{ border-color:transparent; background:var(--brand); color:#fff; }
-    .lumina-home .btn.primary:hover{ background:var(--brand2); }
-    .lumina-home .tag{ font-size:12px; font-weight:900; color:var(--brand);
-      background:rgba(37,99,235,.08); padding:6px 10px; border-radius:999px; }
-
-    .lumina-home .hero{ padding:18px 0 10px; }
-    .lumina-home .heroGrid{ display:grid; grid-template-columns:1fr; gap:12px; }
-
-    .lumina-home .badge{ font-size:12px; font-weight:900; color:var(--brand);
-      background:rgba(37,99,235,.08); padding:6px 10px; border-radius:999px; width:fit-content; }
-
-    .lumina-home .todayTitle{ font-weight:900; font-size:16px; color:var(--text); margin:0; }
-    .lumina-home .todayDesc{ color:var(--muted); font-size:14px; line-height:1.55; margin:0; }
-    .lumina-home .progress{ height:10px; background:#f1f5f9; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
-    .lumina-home .progress i{ display:block; height:100%; width:45%; background:var(--brand); border-radius:999px; }
-
-    .lumina-home .updates{ padding:10px 0 18px; }
-    .lumina-home .headRow{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
-    .lumina-home h2{ margin:0; font-size:18px; letter-spacing:-.3px; }
-    .lumina-home .list{ display:grid; gap:8px; margin-top:10px; }
-    .lumina-home .li{ border:1px solid var(--line); border-radius:14px; padding:12px; background:#fff;
-      display:flex; justify-content:space-between; gap:10px; }
-    .lumina-home .li b{ font-size:14px; }
-    .lumina-home .li span{ color:var(--muted); font-size:13px; }
-
-    .lumina-home footer{ margin-top:18px; padding:20px 0 26px; border-top:1px solid var(--line); background:#fff; }
-    .lumina-home .foot{ display:grid; gap:10px; color:var(--muted); font-size:13px; line-height:1.6; }
-    .lumina-home .foot b{ color:var(--text); }
-
     @media (min-width: 860px){
-      .lumina-home .heroGrid{ grid-template-columns:1.25fr .75fr; align-items:stretch; }
-      .lumina-home .heroTitle{ font-size:40px; }
+      .lumina-home .heroTitle{ font-size: 42px; }
     }
+
+    /* Hero subline */
+    .lumina-home .heroSub{
+      margin:0;
+      color: var(--muted, #475569);
+      line-height: 1.65;
+      font-size: 15px;
+      max-width: 62ch;
+    }
+
+    /* Buttons */
+    .lumina-home .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 2px; }
+    .lumina-home .btn{
+      border: 1px solid var(--line, #e2e8f0);
+      background: #fff;
+      color: var(--text, #0f172a);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap: 8px;
+      white-space: nowrap;
+      font-weight: 950;
+    }
+    .lumina-home .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+      border-color: rgba(2,6,23,.10);
+    }
+    .lumina-home .btn.primary{
+      border-color: transparent;
+      background: var(--brand, #2563eb);
+      color: #fff;
+      box-shadow: var(--glow, 0 14px 40px rgba(37,99,235,.18));
+    }
+    .lumina-home .btn.primary:hover{
+      background: var(--brand-2, #1d4ed8);
+    }
+
+    /* Trust tags */
+    .lumina-home .tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 2px; }
+    .lumina-home .tag{
+      font-size: 12px;
+      font-weight: 950;
+      color: var(--brand, #2563eb);
+      background: var(--brand-soft, rgba(37,99,235,.10));
+      border: 1px solid rgba(37,99,235,.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    /* Today card — make it clean & aligned (your “图3位置”) */
+    .lumina-home .badge{
+      font-size: 12px;
+      font-weight: 950;
+      color: var(--brand, #2563eb);
+      background: var(--brand-soft, rgba(37,99,235,.10));
+      border: 1px solid rgba(37,99,235,.14);
+      padding: 6px 10px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+    .lumina-home .todayTitle{
+      margin: 0;
+      font-weight: 950;
+      font-size: 16px;
+      color: var(--text, #0f172a);
+      letter-spacing: -0.2px;
+      line-height: 1.25;
+    }
+    .lumina-home .todayDesc{
+      margin: 0;
+      color: var(--muted, #475569);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .lumina-home .progress{
+      height: 10px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow:hidden;
+      border: 1px solid var(--line, #e2e8f0);
+    }
+    .lumina-home .progress i{
+      display:block;
+      height: 100%;
+      width: 45%;
+      background: var(--brand, #2563eb);
+      border-radius: 999px;
+    }
+    .lumina-home .todayRow{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .lumina-home .todayMeta{
+      color: var(--muted, #475569);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* Updates */
+    .lumina-home .updates{ padding: 10px 0 18px; }
+    .lumina-home .headRow{ display:flex; justify-content:space-between; align-items:flex-start; gap: 10px; }
+    .lumina-home h2{ margin:0; font-size: 18px; letter-spacing:-.3px; }
+    .lumina-home .list{ display:grid; gap: 8px; margin-top: 10px; }
+    .lumina-home .li{
+      border: 1px solid var(--line, #e2e8f0);
+      border-radius: 14px;
+      padding: 12px;
+      background:#fff;
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .lumina-home .li b{ font-size: 14px; }
+    .lumina-home .li span{ color: var(--muted, #475569); font-size: 13px; white-space: nowrap; }
+
+    /* Footer */
+    .lumina-home footer{
+      margin-top: 18px;
+      padding: 20px 0 26px;
+      border-top: 1px solid var(--line, #e2e8f0);
+      background: #fff;
+    }
+    .lumina-home .foot{
+      display:grid;
+      gap: 10px;
+      color: var(--muted, #475569);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .lumina-home .foot b{ color: var(--text, #0f172a); }
   `;
+
   document.head.appendChild(style);
 }
 
 function renderHome(root) {
   ensureStyles();
-  const lang = getLang();
   const T = copy();
 
+  // ✅ No data-i18n usage here; text already resolved via t() to prevent raw keys.
   root.innerHTML = `
     <div class="lumina-home">
       <main>
@@ -239,13 +379,13 @@ function renderHome(root) {
                   <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
 
-                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:2px;">
-                  ${T.tags.map(x => `<span class="tag">${x}</span>`).join("")}
+                <div class="tags">
+                  ${T.tags.map((x) => `<span class="tag">${x}</span>`).join("")}
                 </div>
               </div>
             </div>
 
-            <!-- ✅ TODAY (compact trust/activation card) -->
+            <!-- ✅ TODAY (clean card, aligned like your “图3”) -->
             <div class="card">
               <div class="inner">
                 <div class="badge">${T.today_badge}</div>
@@ -254,8 +394,8 @@ function renderHome(root) {
 
                 <div class="progress" aria-label="progress"><i></i></div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:2px;">
-                  <span style="color:var(--muted); font-size:13px;">${T.today_meta}</span>
+                <div class="todayRow">
+                  <span class="todayMeta">${T.today_meta}</span>
                   <a class="btn primary" href="#hsk">${T.cta1}</a>
                 </div>
               </div>
@@ -305,8 +445,6 @@ function renderHome(root) {
       </footer>
     </div>
   `;
-
-  try { i18n?.apply?.(root); } catch {}
 }
 
 function bindLiveRerender(root) {
@@ -319,10 +457,14 @@ function bindLiveRerender(root) {
     renderHome(el);
   };
 
+  // ✅ Your app’s language switch event
   window.addEventListener("joy:langchanged", rerender);
+
+  // ✅ i18n libs (optional)
   try { i18n?.on?.("change", rerender); } catch {}
   try { i18n?.onChange?.(rerender); } catch {}
 
+  // ✅ storage change (multi-tab)
   window.addEventListener("storage", (e) => {
     if (e.key === "joy_lang" || e.key === "site_lang") rerender();
   });
