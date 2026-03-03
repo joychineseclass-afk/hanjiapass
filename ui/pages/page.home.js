@@ -181,12 +181,15 @@ function ensureStyles() {
 
     /* Cards */
     .lumina-home .card{
-      background: var(--card, #fff);
-      border: 1px solid var(--line, #e2e8f0);
-      border-radius: calc(var(--radius, 18px) + 8px);
-      box-shadow: var(--shadow-sm, 0 6px 18px rgba(2,6,23,.08));
-      overflow:hidden;
-    }
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: calc(var(--radius, 18px) + 8px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.08);
+  overflow:hidden;
+}
     .lumina-home .inner{
       padding: 18px;
       display:grid;
@@ -205,30 +208,41 @@ function ensureStyles() {
 
     /* Brand line pill */
     .lumina-home .brandLine{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-weight: 950;
-      font-size: 12px;
-      color: var(--brand, #2563eb);
-      background: var(--brand-soft, rgba(37,99,235,.10));
-      border: 1px solid rgba(37,99,235,.14);
-      padding: 8px 10px;
-      border-radius: 999px;
-      width: fit-content;
-    }
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  font-weight: 900;
+  font-size: 14px;   /* 原来 12px → 提高 */
+
+  letter-spacing: .2px;
+
+  color: var(--brand);
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.5);
+
+  padding: 8px 12px;
+  border-radius: 999px;
+  width: fit-content;
+}
 
     /* Hero headline */
     .lumina-home .heroTitle{
-      margin:0;
-      font-size: 34px;
-      letter-spacing: -0.9px;
-      line-height: 1.08;
-      color: var(--text, #0f172a);
-    }
-    @media (min-width: 860px){
-      .lumina-home .heroTitle{ font-size: 44px; }
-    }
+  margin:0;
+
+  font-size: 36px;   /* 原来 44px → 收一点 */
+  letter-spacing: -0.5px;
+  line-height: 1.12;
+
+  font-weight: 950;
+
+  color: #0f172a;
+}
+@media (min-width: 860px){
+  .lumina-home .heroTitle{
+    font-size: 40px;  /* 原来 44px */
+  }
+}
 
     /* Hero subline */
     .lumina-home .heroSub{
