@@ -234,7 +234,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .hero{
   position: relative;
   overflow: hidden;
-
   padding: 34px;
   border-radius: calc(var(--radius-lg) + 6px);
 
@@ -245,7 +244,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   transition: transform .25s ease, box-shadow .35s ease;
 }
 
-/* 用 ::before 做“hover 渐变层”，更稳，不怕被 background 覆盖 */
+/* hover pastel layer */
 .hero::before{
   content:"";
   position:absolute;
@@ -263,37 +262,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   );
 }
 
-/* hover 才显示马卡龙 */
-.hero:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 30px 60px rgba(0,0,0,.08);
-}
-.hero:hover::before{
-  opacity: 1;
-}
-  /* Pastel stage */
-  background: linear-gradient(
-    135deg,
-    var(--hero-start),
-    var(--hero-mid),
-    var(--hero-end)
-  );
-
-  box-shadow: var(--shadow-md);
-}
-
-/* soft light wash */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background: rgba(255,255,255,.55);
-
-  pointer-events:none;
-}
-
-/* extra glow orb (very soft) */
+/* subtle glow orb (optional, safe) */
 .hero::after{
   content:"";
   position:absolute;
@@ -301,12 +270,21 @@ a, button { -webkit-tap-highlight-color: transparent; }
   height:520px;
   right:-180px;
   top:-240px;
-  background: radial-gradient(circle, rgba(255,255,255,.50), transparent 65%);
-  filter: blur(100px);
+  background: radial-gradient(circle, rgba(255,255,255,.45), transparent 65%);
+  filter: blur(90px);
   pointer-events:none;
+  opacity:.55;
 }
 
-/* Hero cards: glass (safe: only inside hero) */
+.hero:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 30px 60px rgba(0,0,0,.08);
+}
+.hero:hover::before{
+  opacity: 1;
+}
+
+/* Hero cards: glass (only inside hero) */
 .hero .card{
   background: var(--glass-2);
   border: 1px solid rgba(255,255,255,.40);
@@ -314,18 +292,14 @@ a, button { -webkit-tap-highlight-color: transparent; }
   backdrop-filter: blur(10px);
 }
 
-/* Hero typography polish (safe: only inside hero) */
+/* Hero typography polish (only inside hero) */
 .hero .title{
   margin:0;
   font-size:44px;
   line-height:1.05;
   font-weight:900;
   letter-spacing:-0.8px;
-
-  /* keep readable, not too dark/heavy */
   color: rgba(15,23,42,.92);
-  background: none;
-  -webkit-text-fill-color: initial;
 }
 .hero .desc{
   margin:10px 0 0;
@@ -335,13 +309,13 @@ a, button { -webkit-tap-highlight-color: transparent; }
   max-width: 56ch;
 }
 
+/* Badges */
 .badges{
   margin-top:12px;
   display:flex;
   flex-wrap:wrap;
   gap:8px;
 }
-
 .badge{
   display:inline-flex;
   align-items:center;
@@ -354,7 +328,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
   color: rgba(15,23,42,.70);
   backdrop-filter: blur(8px);
 }
-
 /* =========================================================
    Buttons (safe: mild upgrade, won't break JS)
    - targets common button look + hero emphasis
