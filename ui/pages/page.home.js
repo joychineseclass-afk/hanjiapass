@@ -1,7 +1,7 @@
 // ui/pages/page.home.js
-// ✅ Home: Brand-level Hero (compact) + Today learning + Updates only
+// ✅ Home: Brand-level Hero (international) + Today learning + Updates only
 // ✅ All strings via i18n.t (KR/CN) + live rerender
-// ✅ Remove blocks (visual placeholder / parent-teacher cards / why-us) from Home
+// ✅ No mixed language, no raw i18n keys shown
 // ✅ Keep "공지/업데이트"
 
 import { i18n } from "../i18n.js";
@@ -22,19 +22,10 @@ function getLang() {
 function t(key, fallback = "") {
   try {
     const v = i18n?.t?.(key);
-
-    // 1) 空值：fallback
     if (v == null) return fallback;
-
     const s = String(v).trim();
-
-    // 2) i18n 未命中时，很多实现会“原样返回 key”
-    //    这时我们要当作没翻译 → fallback
-    if (!s || s === key) return fallback;
-
-    // 3) 也有人会返回形如 "[home_desc]" 这种，可选处理
-    if (s === `[${key}]`) return fallback;
-
+    // i18n miss → returns key itself
+    if (!s || s === key || s === `[${key}]`) return fallback;
     return s;
   } catch {
     return fallback;
@@ -47,24 +38,33 @@ const FB = {
     brand: "Lumina Chinese Learning Center",
     subtitle: "루미나 글로벌 중국어 교육 플랫폼",
 
-    kicker: "✨ 오늘도 한 걸음",
-    h1: "오늘의 학습, 지금 3분만 시작해요",
-    desc: "아이는 즐겁게 배우고, 학부모/선생님은 커리큘럼을 쉽게 찾을 수 있어요.",
+    // ✅ International brand hero (3-layer)
+    brand_line: "Where Language Meets Light.",
+    slogan: "Light the Language. Shape the Future.",
+    subline:
+      "구조화된 HSK 코스, 상호작용형 한자 쓰기, 실전 말하기까지 — 전 세계 학습자를 위한 차세대 중국어 학습 경험.",
+
+    // ✅ actions / trust tags
     cta1: "시작 학습",
     cta2: "커리큘럼 보기",
     tags: ["HSK 2.0/3.0", "중·한·병음", "따라쓰기", "AI 말하기"],
 
-    today_title: "오늘의 학습",
+    // ✅ today
+    today_badge: "오늘의 학습",
+    today_title: "지금 3분만 — 오늘의 학습을 이어가요",
     today_desc: "마지막으로 하던 수업을 이어서, 짧게라도 꾸준히!",
     today_meta: "이번 주 3/7 완료",
 
+    // ✅ updates
     upd_badge: "공지/업데이트",
     upd_title: "최근 업데이트",
     more: "더보기",
     upd1: "신규: HSK1 1과 「인사하기」",
     upd2: "개선: 목차 언어 동기화",
     upd3: "예고: 따라쓰기 ‘정답 발광/너무 잘했어요’",
+    planning: "기획 중",
 
+    // ✅ footer
     footerLine: "아이도 즐겁고, 학부모/선생님도 찾기 쉬운 중국어 학습 플랫폼",
     contact: "문의",
     email: "이메일",
@@ -72,18 +72,23 @@ const FB = {
     terms: "이용약관",
     copy: "© 2026 Lumina Chinese Learning Center",
   },
+
   cn: {
     brand: "Lumina Chinese Learning Center",
     subtitle: "루미나 글로벌 중국어 교육 플랫폼",
 
-    kicker: "✨ 今天也前进一步",
-    h1: "今天的学习，现在开始只要3分钟",
-    desc: "孩子学得开心，家长/老师也能快速找到课程目录与学习路径。",
+    // ✅ International brand hero (3-layer)
+    brand_line: "Where Language Meets Light.",
+    slogan: "Light the Language. Shape the Future.",
+    subline:
+      "结构化HSK课程、互动汉字书写、真实场景口语训练——面向全球学习者的下一代中文学习体验。",
+
     cta1: "开始学习",
     cta2: "查看课程目录",
     tags: ["HSK 2.0/3.0", "中·韩·拼音", "描红", "AI口语"],
 
-    today_title: "今天的学习",
+    today_badge: "今天的学习",
+    today_title: "现在开始，只要3分钟",
     today_desc: "继续上次的课程，短短几分钟也能坚持！",
     today_meta: "本周完成 3/7",
 
@@ -93,6 +98,7 @@ const FB = {
     upd1: "新增：HSK1 第1课「打招呼」",
     upd2: "优化：目录支持语言同步",
     upd3: "预告：描红“写对发光/太棒了”",
+    planning: "规划中",
 
     footerLine: "孩子学得开心，家长/老师也更容易找到课程内容的中文学习平台",
     contact: "联系方式",
@@ -111,9 +117,11 @@ function copy() {
     brand: t("brand", F.brand),
     subtitle: t("subtitle", F.subtitle),
 
-    kicker: t("home_kicker", F.kicker),
-    h1: t("home_h1", F.h1),
-    desc: t("home_desc", F.desc),
+    // ✅ brand hero keys (optional in i18n, fallback ok)
+    brand_line: t("home_brand_line", F.brand_line),
+    slogan: t("home_slogan", F.slogan),
+    subline: t("home_subline", F.subline),
+
     cta1: t("home_cta1", F.cta1),
     cta2: t("home_cta2", F.cta2),
     tags: [
@@ -123,6 +131,7 @@ function copy() {
       t("home_tag4", F.tags[3]),
     ],
 
+    today_badge: t("home_today_badge", F.today_badge),
     today_title: t("home_today_title", F.today_title),
     today_desc: t("home_today_desc", F.today_desc),
     today_meta: t("home_today_meta", F.today_meta),
@@ -133,6 +142,7 @@ function copy() {
     upd1: t("home_upd1", F.upd1),
     upd2: t("home_upd2", F.upd2),
     upd3: t("home_upd3", F.upd3),
+    planning: t("home_planning", F.planning),
 
     footerLine: t("home_footerLine", F.footerLine),
     contact: t("home_contact", F.contact),
@@ -150,7 +160,7 @@ function ensureStyles() {
   style.textContent = `
     :root{
       --bg:#fff;--text:#0f172a;--muted:#475569;--line:#e2e8f0;
-      --shadow:0 10px 30px rgba(2,6,23,.08);
+      --shadow:0 12px 34px rgba(2,6,23,.10);
       --brand:#2563eb;--brand2:#1d4ed8;
       --soft:#f8fafc;--radius:18px;--max:1120px;
     }
@@ -158,14 +168,26 @@ function ensureStyles() {
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
     .lumina-home .wrap{ max-width:var(--max); margin:0 auto; padding:0 16px; }
     .lumina-home a{ color:inherit; text-decoration:none; }
+
     .lumina-home .card{ background:var(--bg); border:1px solid var(--line);
       border-radius:calc(var(--radius) + 8px); box-shadow:var(--shadow); overflow:hidden; }
     .lumina-home .inner{ padding:18px; display:grid; gap:12px; }
-    .lumina-home .kicker{ display:inline-flex; align-items:center; gap:8px;
-      font-weight:900; font-size:12px; color:var(--brand); background:rgba(37,99,235,.08);
-      padding:8px 10px; border-radius:999px; width:fit-content; }
-    .lumina-home h1{ margin:0; font-size:28px; letter-spacing:-0.6px; line-height:1.15; }
-    .lumina-home p{ margin:0; color:var(--muted); line-height:1.6; font-size:15px; }
+
+    /* ✅ Brand-level Hero typography */
+    .lumina-home .brandLine{
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight:900; font-size:12px; color:var(--brand);
+      background:rgba(37,99,235,.08); padding:8px 10px;
+      border-radius:999px; width:fit-content;
+    }
+    .lumina-home .heroTitle{
+      margin:0; font-size:34px; letter-spacing:-0.9px; line-height:1.08;
+    }
+    .lumina-home .heroSub{
+      margin:0; color:var(--muted); line-height:1.65; font-size:15px;
+      max-width:56ch;
+    }
+
     .lumina-home .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:2px; }
     .lumina-home .btn{ border:1px solid var(--line); background:#fff; color:var(--text);
       padding:10px 12px; border-radius:14px; cursor:pointer; transition:.15s ease;
@@ -178,13 +200,17 @@ function ensureStyles() {
 
     .lumina-home .hero{ padding:18px 0 10px; }
     .lumina-home .heroGrid{ display:grid; grid-template-columns:1fr; gap:12px; }
+
+    .lumina-home .badge{ font-size:12px; font-weight:900; color:var(--brand);
+      background:rgba(37,99,235,.08); padding:6px 10px; border-radius:999px; width:fit-content; }
+
+    .lumina-home .todayTitle{ font-weight:900; font-size:16px; color:var(--text); margin:0; }
+    .lumina-home .todayDesc{ color:var(--muted); font-size:14px; line-height:1.55; margin:0; }
     .lumina-home .progress{ height:10px; background:#f1f5f9; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
     .lumina-home .progress i{ display:block; height:100%; width:45%; background:var(--brand); border-radius:999px; }
 
     .lumina-home .updates{ padding:10px 0 18px; }
     .lumina-home .headRow{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
-    .lumina-home .badge{ font-size:12px; font-weight:900; color:var(--brand); background:rgba(37,99,235,.08);
-      padding:6px 10px; border-radius:999px; width:fit-content; }
     .lumina-home h2{ margin:0; font-size:18px; letter-spacing:-.3px; }
     .lumina-home .list{ display:grid; gap:8px; margin-top:10px; }
     .lumina-home .li{ border:1px solid var(--line); border-radius:14px; padding:12px; background:#fff;
@@ -197,7 +223,8 @@ function ensureStyles() {
     .lumina-home .foot b{ color:var(--text); }
 
     @media (min-width: 860px){
-      .lumina-home .heroGrid{ grid-template-columns:1.2fr .8fr; align-items:stretch; }
+      .lumina-home .heroGrid{ grid-template-columns:1.25fr .75fr; align-items:stretch; }
+      .lumina-home .heroTitle{ font-size:40px; }
     }
   `;
   document.head.appendChild(style);
@@ -211,14 +238,14 @@ function renderHome(root) {
   root.innerHTML = `
     <div class="lumina-home">
       <main>
-        <!-- ✅ HERO (kicker + today learning merged) -->
+        <!-- ✅ HERO (international brand-level) -->
         <section class="hero">
           <div class="wrap heroGrid">
             <div class="card">
               <div class="inner">
-                <div class="kicker">${T.kicker}</div>
-                <h1>${T.h1}</h1>
-                <p>${T.desc}</p>
+                <div class="brandLine">${T.brand_line}</div>
+                <h1 class="heroTitle">${T.slogan}</h1>
+                <p class="heroSub">${T.subline}</p>
 
                 <div class="cta">
                   <a class="btn primary" href="#hsk">${T.cta1}</a>
@@ -231,15 +258,15 @@ function renderHome(root) {
               </div>
             </div>
 
-            <!-- ✅ TODAY LEARNING (compact card) -->
+            <!-- ✅ TODAY (compact trust/activation card) -->
             <div class="card">
               <div class="inner">
-                <div class="badge">${T.today_title}</div>
-                <p style="font-weight:900; font-size:16px; color:var(--text); margin-top:2px;">
-                  ${T.today_desc}
-                </p>
+                <div class="badge">${T.today_badge}</div>
+                <p class="todayTitle">${T.today_title}</p>
+                <p class="todayDesc">${T.today_desc}</p>
 
                 <div class="progress" aria-label="progress"><i></i></div>
+
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:2px;">
                   <span style="color:var(--muted); font-size:13px;">${T.today_meta}</span>
                   <a class="btn primary" href="#hsk">${T.cta1}</a>
@@ -249,7 +276,7 @@ function renderHome(root) {
           </div>
         </section>
 
-        <!-- ✅ UPDATES keep -->
+        <!-- ✅ UPDATES (credibility block) -->
         <section class="updates">
           <div class="wrap">
             <div class="card">
@@ -265,7 +292,7 @@ function renderHome(root) {
                 <div class="list">
                   <div class="li"><b>${T.upd1}</b><span>2026-03-03</span></div>
                   <div class="li"><b>${T.upd2}</b><span>2026-03-02</span></div>
-                  <div class="li"><b>${T.upd3}</b><span>${lang === "kr" ? "기획 중" : "规划中"}</span></div>
+                  <div class="li"><b>${T.upd3}</b><span>${T.planning}</span></div>
                 </div>
               </div>
             </div>
@@ -276,7 +303,7 @@ function renderHome(root) {
       <footer>
         <div class="wrap foot">
           <div>
-            <b>${t("brand", T.brand)}</b><br/>
+            <b>${T.brand}</b><br/>
             ${T.footerLine}
           </div>
           <div>
