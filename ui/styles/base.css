@@ -238,16 +238,22 @@ a, button { -webkit-tap-highlight-color: transparent; }
   padding: 34px;
   border-radius: calc(var(--radius-lg) + 6px);
 
-  background: linear-gradient(
-    120deg,
-    #c7e6ff 0%,
-    #c7f5e4 45%,
-    #ffe3c7 100%
-  );
-
-  box-shadow: var(--shadow-md);
+  background: #ffffff;        /* 默认白色 */
+  transition: background .6s ease, box-shadow .4s ease, transform .3s ease;
 }
 
+/* Hover 出现马卡龙渐变 */
+.hero:hover{
+  background: linear-gradient(
+    120deg,
+    #cfe9ff 0%,
+    #d9f8ea 45%,
+    #ffe7d1 100%
+  );
+
+  box-shadow: 0 30px 60px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
   /* Pastel stage */
   background: linear-gradient(
     135deg,
