@@ -14,37 +14,37 @@
   --muted:#475569;
   --line:#e2e8f0;
 
-  /* Brand */
+  /* Brand (keep readable, not too dark) */
   --brand:#2563eb;
   --brand-2:#1d4ed8;
 
   --brand-soft: rgba(37,99,235,.10);
   --brand-soft-2: rgba(37,99,235,.16);
 
-  /* Hero Gradient */
-  --hero-start: #3B82F6;
-  --hero-mid:   #8B5CF6;
-  --hero-end:   #F97316;
+  /* =====================================================
+     Hero Gradient (PASTEL / readable)
+     - light sky -> mint -> peach
+     ===================================================== */
+  --hero-start: #93C5FD;  /* light sky blue */
+  --hero-mid:   #A7F3D0;  /* mint green */
+  --hero-end:   #FDBA74;  /* soft peach/orange */
 
-  /* ===== Premium Tokens (add-only) ===== */
-  --glass: rgba(255,255,255,.78);
-  --glass-2: rgba(255,255,255,.92);
-  --glass-line: rgba(255,255,255,.22);
+  /* ===== Premium Tokens ===== */
+  --glass: rgba(255,255,255,.72);
+  --glass-2: rgba(255,255,255,.88);
+  --glass-line: rgba(255,255,255,.25);
 
   --shadow-xs: 0 2px 10px rgba(2,6,23,.06);
-  --shadow-md: 0 18px 50px rgba(2,6,23,.12);
-
-  --focus: 0 0 0 4px rgba(59,130,246,.22);
-
-  /* Buttons */
-  --btn: var(--brand);
-  --btn2: #7c3aed; /* violet */
-  --btn3: #f97316; /* orange */
-
-  /* Glow / shadow */
-  --glow: 0 14px 40px rgba(37,99,235,.18);
-  --shadow: 0 12px 34px rgba(2,6,23,.10);
   --shadow-sm: 0 6px 18px rgba(2,6,23,.08);
+  --shadow: 0 12px 34px rgba(2,6,23,.10);
+  --shadow-md: 0 18px 52px rgba(2,6,23,.12);
+
+  --focus: 0 0 0 4px rgba(59,130,246,.18);
+
+  /* Buttons (lighter palette, still readable) */
+  --btn-a: #38BDF8; /* sky */
+  --btn-b: #34D399; /* mint/emerald */
+  --btn-c: #FDBA74; /* peach */
 
   /* Radius & layout */
   --radius-sm: 12px;
@@ -89,10 +89,10 @@ a, button { -webkit-tap-highlight-color: transparent; }
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   padding: 18px;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .card:hover{
   box-shadow: var(--shadow);
-  transition: box-shadow var(--dur) var(--ease);
 }
 
 /* =========================================================
@@ -138,8 +138,8 @@ a, button { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 10px 22px rgba(2,6,23,.06);
 }
 .lang button.active{
-  border-color: rgba(37,99,235,.35);
-  background: var(--brand-soft);
+  border-color: rgba(37,99,235,.30);
+  background: rgba(37,99,235,.08);
   color: var(--brand);
 }
 
@@ -165,19 +165,19 @@ a, button { -webkit-tap-highlight-color: transparent; }
   border: 1px solid rgba(2,6,23,.06);
   color: var(--text);
   font-weight:900;
-  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease), filter var(--dur) var(--ease);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .site-nav a:hover{
   color: var(--brand);
-  background: var(--brand-soft);
-  border-color: rgba(37,99,235,.25);
+  background: rgba(37,99,235,.09);
+  border-color: rgba(37,99,235,.20);
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(2,6,23,.06);
 }
 .site-nav a.active{
   color: var(--brand);
-  background: var(--brand-soft-2);
-  border-color: rgba(37,99,235,.32);
+  background: rgba(37,99,235,.13);
+  border-color: rgba(37,99,235,.26);
 }
 
 /* =========================================================
@@ -201,7 +201,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   cursor:pointer;
   font-weight:900;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), filter var(--dur) var(--ease);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .home-card:hover{
   transform: translateY(-2px);
@@ -217,17 +217,15 @@ a, button { -webkit-tap-highlight-color: transparent; }
   top:0;
   bottom:0;
   width:7px;
-  background: var(--dop, rgba(37,99,235,.65));
+  background: var(--dop, rgba(56,189,248,.70));
 }
 
 /* Hover tint (safe fallback if color-mix not supported) */
 @supports (background: color-mix(in srgb, #000 10%, #fff)){
   .home-card:hover{
-    background: color-mix(in srgb, var(--dop, rgba(37,99,235,.20)) 12%, #ffffff 88%);
+    background: color-mix(in srgb, var(--dop, rgba(56,189,248,.22)) 12%, #ffffff 88%);
   }
 }
-
-/* emoji align */
 .home-card span{ vertical-align:middle; }
 
 /* =========================================================
@@ -243,8 +241,9 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
   padding:34px;
   border-radius: calc(var(--radius-lg) + 6px);
-  border: 1px solid rgba(255,255,255,.28);
+  border: 1px solid rgba(255,255,255,.30);
 
+  /* Pastel stage */
   background: linear-gradient(
     135deg,
     var(--hero-start),
@@ -261,29 +260,29 @@ a, button { -webkit-tap-highlight-color: transparent; }
   position:absolute;
   inset:-2px;
   background:
-    radial-gradient(circle at 18% 25%, rgba(255,255,255,.35), transparent 60%),
-    radial-gradient(circle at 85% 20%, rgba(255,255,255,.25), transparent 55%),
-    radial-gradient(circle at 70% 85%, rgba(255,255,255,.20), transparent 55%);
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(circle at 82% 18%, rgba(255,255,255,.40), transparent 55%),
+    radial-gradient(circle at 65% 88%, rgba(255,255,255,.35), transparent 55%);
   pointer-events:none;
 }
 
-/* extra glow orb */
+/* extra glow orb (very soft) */
 .hero::after{
   content:"";
   position:absolute;
   width:520px;
   height:520px;
-  right:-160px;
-  top:-220px;
-  background: radial-gradient(circle, rgba(255,255,255,.38), transparent 65%);
-  filter: blur(90px);
+  right:-180px;
+  top:-240px;
+  background: radial-gradient(circle, rgba(255,255,255,.50), transparent 65%);
+  filter: blur(100px);
   pointer-events:none;
 }
 
 /* Hero cards: glass (safe: only inside hero) */
 .hero .card{
   background: var(--glass-2);
-  border: 1px solid rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.40);
   box-shadow: var(--shadow-xs);
   backdrop-filter: blur(10px);
 }
@@ -295,13 +294,15 @@ a, button { -webkit-tap-highlight-color: transparent; }
   line-height:1.05;
   font-weight:900;
   letter-spacing:-0.8px;
-  background: linear-gradient(to right, rgba(15,23,42,1), rgba(15,23,42,.72));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+
+  /* keep readable, not too dark/heavy */
+  color: rgba(15,23,42,.92);
+  background: none;
+  -webkit-text-fill-color: initial;
 }
 .hero .desc{
   margin:10px 0 0;
-  color: rgba(15,23,42,.78);
+  color: rgba(15,23,42,.72);
   line-height:1.55;
   font-weight:650;
   max-width: 56ch;
@@ -320,18 +321,45 @@ a, button { -webkit-tap-highlight-color: transparent; }
   gap:6px;
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid rgba(37,99,235,.18);
-  background: var(--brand-soft);
+  border:1px solid rgba(15,23,42,.10);
+  background: rgba(255,255,255,.70);
   font-weight:900;
-  color: var(--brand);
+  color: rgba(15,23,42,.70);
+  backdrop-filter: blur(8px);
 }
 
-/* Optional: nicer badges inside hero */
-.hero .badge{
+/* =========================================================
+   Buttons (safe: mild upgrade, won't break JS)
+   - targets common button look + hero emphasis
+   ========================================================= */
+button{
+  font-family:inherit;
+}
+
+.hero button{
+  border: 1px solid rgba(15,23,42,.10);
   background: rgba(255,255,255,.70);
-  border: 1px solid rgba(255,255,255,.40);
-  color: rgba(15,23,42,.75);
-  backdrop-filter: blur(8px);
+  color: rgba(15,23,42,.85);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), filter var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.hero button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(2,6,23,.10);
+}
+
+/* If your primary CTA already has a class like .primary, it will look premium */
+.hero button.primary, .hero .btn.primary{
+  border: 0;
+  color:#fff;
+  background: linear-gradient(135deg, var(--btn-a), var(--btn-b));
+  box-shadow: 0 16px 34px rgba(56,189,248,.20);
+}
+.hero button.primary:hover, .hero .btn.primary:hover{
+  filter: brightness(1.02);
 }
 
 /* =========================================================
@@ -345,16 +373,16 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
 .site-nav.dopamine a:hover{
   color: var(--navc);
-  border-color: rgba(37,99,235,.25);
+  border-color: rgba(37,99,235,.20);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
-  background: var(--brand-soft);
+  background: rgba(37,99,235,.09);
 }
 
 .site-nav.dopamine a.active{
   color: var(--navc);
-  background: var(--brand-soft-2);
-  border-color: rgba(37,99,235,.32);
+  background: rgba(37,99,235,.13);
+  border-color: rgba(37,99,235,.26);
 }
 
 /* =========================================================
@@ -394,12 +422,12 @@ a, button { -webkit-tap-highlight-color: transparent; }
 }
 
 #siteNav .site-nav a:hover{
-  background: var(--brand-soft);
+  background: rgba(37,99,235,.09);
   color: var(--brand);
-  border-color: rgba(37,99,235,.25);
+  border-color: rgba(37,99,235,.20);
 }
 
 /* Optional: brand glow emphasis for logo hover */
 #siteNav .brand a:hover{
-  filter: drop-shadow(0 10px 18px rgba(37,99,235,.18));
+  filter: drop-shadow(0 10px 18px rgba(37,99,235,.14));
 }
