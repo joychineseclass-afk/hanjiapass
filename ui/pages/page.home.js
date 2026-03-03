@@ -22,7 +22,20 @@ function getLang() {
 function t(key, fallback = "") {
   try {
     const v = i18n?.t?.(key);
-    return v && String(v).trim() ? v : fallback;
+
+    // 1) 空值：fallback
+    if (v == null) return fallback;
+
+    const s = String(v).trim();
+
+    // 2) i18n 未命中时，很多实现会“原样返回 key”
+    //    这时我们要当作没翻译 → fallback
+    if (!s || s === key) return fallback;
+
+    // 3) 也有人会返回形如 "[home_desc]" 这种，可选处理
+    if (s === `[${key}]`) return fallback;
+
+    return s;
   } catch {
     return fallback;
   }
