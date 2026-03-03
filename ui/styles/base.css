@@ -232,16 +232,21 @@ a, button { -webkit-tap-highlight-color: transparent; }
    Home Hero / Badges (used by page.home.js)
    ========================================================= */
 .hero{
-  display:flex;
-  gap:18px;
-  align-items:stretch;
+  position: relative;
+  overflow: hidden;
 
-  position:relative;
-  overflow:hidden;
-
-  padding:34px;
+  padding: 34px;
   border-radius: calc(var(--radius-lg) + 6px);
-  border: 1px solid rgba(255,255,255,.30);
+
+  background: linear-gradient(
+    120deg,
+    #c7e6ff 0%,
+    #c7f5e4 45%,
+    #ffe3c7 100%
+  );
+
+  box-shadow: var(--shadow-md);
+}
 
   /* Pastel stage */
   background: linear-gradient(
@@ -258,11 +263,10 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .hero::before{
   content:"";
   position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(circle at 82% 18%, rgba(255,255,255,.40), transparent 55%),
-    radial-gradient(circle at 65% 88%, rgba(255,255,255,.35), transparent 55%);
+  inset:0;
+
+  background: rgba(255,255,255,.55);
+
   pointer-events:none;
 }
 
@@ -294,6 +298,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   line-height:1.05;
   font-weight:900;
   letter-spacing:-0.8px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.08);
 
   /* keep readable, not too dark/heavy */
   color: rgba(15,23,42,.92);
