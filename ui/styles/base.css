@@ -431,3 +431,48 @@ button{
 #siteNav .brand a:hover{
   filter: drop-shadow(0 10px 18px rgba(37,99,235,.14));
 }
+/* =========================================================
+   FORCE OVERRIDE (Home Hero)
+   - Put this at the VERY END of base.css
+   - Ensures it wins over injected styles
+   ========================================================= */
+
+.lumina-home .hero{
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: calc(var(--radius-lg) + 6px) !important;
+
+  /* default: pure white */
+  background: #fff !important;
+  background-image: none !important;
+
+  box-shadow: var(--shadow-md) !important;
+  transition: transform .25s ease, box-shadow .35s ease !important;
+}
+
+.lumina-home .hero::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  pointer-events:none !important;
+
+  opacity: 0 !important;
+  transition: opacity .55s ease !important;
+
+  /* macaron pastel hover layer */
+  background: linear-gradient(
+    120deg,
+    #cfe9ff 0%,
+    #d9f8ea 45%,
+    #ffe7d1 100%
+  ) !important;
+}
+
+.lumina-home .hero:hover{
+  transform: translateY(-2px) !important;
+  box-shadow: 0 30px 60px rgba(0,0,0,.08) !important;
+}
+
+.lumina-home .hero:hover::before{
+  opacity: 1 !important;
+}
