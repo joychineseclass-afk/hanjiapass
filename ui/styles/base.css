@@ -1,36 +1,71 @@
+/* =========================================================
+   Lumina Light Theme (Global Tokens + Layout + Components)
+   - Replace your previous CSS with this version
+   - Keeps: topbar / lang / nav pills / home grid / hero / dopamine
+   ========================================================= */
+
+/* ===== Lumina Brand Tokens (Light) ===== */
 :root{
-  --bg:#f7f7f7;
-  --card:#fff;
-  --text:#111827;
-  --muted:#6b7280;
-  --line:#e5e7eb;
-  --brand:#111827;
-  --accent:#1d4ed8; /* 你想要的蓝色 */
-  --radius:18px;
-  --shadow:0 10px 25px rgba(0,0,0,.08);
-  --shadow-sm:0 2px 8px rgba(0,0,0,.06);
-  --max:1100px;
+  --bg:#ffffff;
+  --soft:#f8fafc;
+  --card:#ffffff;
+
+  --text:#0f172a;
+  --muted:#475569;
+  --line:#e2e8f0;
+
+  /* Brand */
+  --brand:#2563eb;
+  --brand-2:#1d4ed8;
+
+  --brand-soft: rgba(37,99,235,.10);
+  --brand-soft-2: rgba(37,99,235,.16);
+
+  /* Glow / shadow */
+  --glow: 0 14px 40px rgba(37,99,235,.18);
+  --shadow: 0 12px 34px rgba(2,6,23,.10);
+  --shadow-sm: 0 6px 18px rgba(2,6,23,.08);
+
+  /* Radius & layout */
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --max: 1120px;
+
+  /* Motion */
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --dur: .18s;
+
+  /* ---- Backward compatibility (old tokens) ---- */
+  --accent: var(--brand);          /* old name */
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+/* ===== Reset ===== */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 body{
   margin:0;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  background: var(--soft);
+  color: var(--text);
 }
 
-.wrap{max-width:var(--max);margin:0 auto;padding:18px}
+/* ===== Layout ===== */
+.wrap{ max-width: var(--max); margin:0 auto; padding:18px 16px; }
+.page-wrap{ padding:0; margin-top:14px; }
+
+/* ===== Card (global) ===== */
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
-  padding:18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 18px;
 }
 
-/* ===== topbar ===== */
+/* =========================================================
+   Topbar
+   ========================================================= */
 .topbar{
   display:flex;
   align-items:center;
@@ -44,37 +79,49 @@ body{
   font-weight:900;
   font-size:22px;
   text-decoration:none;
-  color:var(--brand);
+  color: var(--brand);
+  letter-spacing: -0.2px;
 }
 .topbar .brand small{
   display:block;
   margin-top:4px;
-  color:var(--muted);
+  color: var(--muted);
 }
 
-/* ===== lang buttons ===== */
+/* =========================================================
+   Language Buttons
+   ========================================================= */
+.lang{ display:flex; gap:6px; }
 .lang button{
   padding:8px 12px;
   border-radius:999px;
   border:1px solid var(--line);
   background:#fff;
   cursor:pointer;
-  font-weight:800;
+  font-weight:900;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.lang button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(2,6,23,.06);
 }
 .lang button.active{
-  border-color:rgba(29,78,216,.35);
-  background:rgba(29,78,216,.10);
-  color:var(--accent);
+  border-color: rgba(37,99,235,.35);
+  background: var(--brand-soft);
+  color: var(--brand);
 }
 
-/* ===== nav pills ===== */
+/* =========================================================
+   Nav Pills
+   ========================================================= */
 .site-nav{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
-  padding-top:8px;
-  border-top:1px solid rgba(0,0,0,.06);
+  padding-top:10px;
+  border-top:1px solid rgba(2,6,23,.06);
 }
+
 .site-nav a{
   display:inline-flex;
   align-items:center;
@@ -82,88 +129,55 @@ body{
   padding:9px 14px;
   border-radius:999px;
   text-decoration:none;
-  background:rgba(0,0,0,.04);
-  color:#111;
-  font-weight:800;
-  transition:all .15s ease;
+  background: rgba(2,6,23,.04);
+  border: 1px solid rgba(2,6,23,.06);
+  color: var(--text);
+  font-weight:900;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .site-nav a:hover{
-  color:var(--accent);
-  background:rgba(29,78,216,.10);
+  color: var(--brand);
+  background: var(--brand-soft);
+  border-color: rgba(37,99,235,.25);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(2,6,23,.06);
 }
 .site-nav a.active{
-  color:var(--accent);
-  background:rgba(29,78,216,.14);
+  color: var(--brand);
+  background: var(--brand-soft-2);
+  border-color: rgba(37,99,235,.32);
 }
 
-/* ===== home grid ===== */
-.page-wrap{padding:0;margin-top:14px}
+/* =========================================================
+   Home Grid
+   ========================================================= */
 .home-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
   gap:14px;
 }
+
+/* Base Home Card */
 .home-card{
+  position:relative;
+  overflow:hidden;
+  text-align:left;
   border:1px solid var(--line);
   background:#fff;
   border-radius:16px;
   padding:16px;
   cursor:pointer;
-  font-weight:800;
-  box-shadow:var(--shadow-sm);
-}
-.home-card:hover{box-shadow:var(--shadow)}
-
-/* =========================================
-   ✅ 新增：Home Hero / Badges（你 page.home.js 里用到了）
-========================================= */
-.hero{
-  display:flex;
-  gap:14px;
-  align-items:flex-start;
-}
-.title{
-  margin:0;
-  font-size:20px;
   font-weight:900;
-  letter-spacing:-.2px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.desc{
-  margin:8px 0 0;
-  color:var(--muted);
-  line-height:1.55;
-  font-weight:600;
-}
-.badges{
-  margin-top:12px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.08);
-  background:rgba(0,0,0,.03);
-  font-weight:800;
-  color:#111;
+.home-card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: rgba(2,6,23,.10);
 }
 
-/* =========================================
-   ✅ 新增：多巴胺色彩 Home 卡片（每个按钮不同色）
-   - page.home.js 会给按钮加 style="--dop:#xxxxxx"
-========================================= */
-.home-card{
-  position:relative;
-  overflow:hidden;
-  text-align:left;
-  transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
-}
-
-/* 左侧彩条 */
+/* Dopamine color bar (page.home.js sets style="--dop:#xxxx") */
 .home-card::before{
   content:"";
   position:absolute;
@@ -171,45 +185,87 @@ body{
   top:0;
   bottom:0;
   width:7px;
-  background:var(--dop, rgba(29,78,216,.65));
+  background: var(--dop, rgba(37,99,235,.65));
 }
 
-/* hover 变色 + 微抬起 */
-.home-card:hover{
-  transform:translateY(-2px);
-  border-color:rgba(0,0,0,.10);
-  background:color-mix(in srgb, var(--dop, rgba(29,78,216,.20)) 12%, #ffffff 88%);
+/* Hover tint (safe fallback if color-mix not supported) */
+@supports (background: color-mix(in srgb, #000 10%, #fff)){
+  .home-card:hover{
+    background: color-mix(in srgb, var(--dop, rgba(37,99,235,.20)) 12%, #ffffff 88%);
+  }
 }
 
-/* emoji 更舒服一点 */
-.home-card span{
-  vertical-align:middle;
+/* emoji align */
+.home-card span{ vertical-align:middle; }
+
+/* =========================================================
+   Home Hero / Badges (used by page.home.js)
+   ========================================================= */
+.hero{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
 }
-/* =========================================
-   ✅ Dopamine NAV (像图1：分开 + hover变色)
-========================================= */
+
+.title{
+  margin:0;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.2px;
+}
+
+.desc{
+  margin:8px 0 0;
+  color: var(--muted);
+  line-height:1.55;
+  font-weight:650;
+}
+
+.badges{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(37,99,235,.18);
+  background: var(--brand-soft);
+  font-weight:900;
+  color: var(--brand);
+}
+
+/* =========================================================
+   Dopamine NAV (optional class: .site-nav.dopamine)
+   ========================================================= */
 .site-nav.dopamine a{
-  --navc: var(--accent);
-  background: rgba(0,0,0,.04);
-  border: 1px solid rgba(0,0,0,.06);
+  --navc: var(--brand);
+  background: rgba(2,6,23,.04);
+  border: 1px solid rgba(2,6,23,.06);
 }
 
 .site-nav.dopamine a:hover{
   color: var(--navc);
-  background: color-mix(in srgb, var(--navc) 14%, white);
-  border-color: color-mix(in srgb, var(--navc) 30%, rgba(0,0,0,.10));
+  border-color: rgba(37,99,235,.25);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
+  background: var(--brand-soft);
 }
 
 .site-nav.dopamine a.active{
   color: var(--navc);
-  background: color-mix(in srgb, var(--navc) 18%, white);
-  border-color: color-mix(in srgb, var(--navc) 40%, rgba(0,0,0,.10));
+  background: var(--brand-soft-2);
+  border-color: rgba(37,99,235,.32);
 }
-/* ====== FINAL NAV LAYOUT FIX ====== */
 
-/* 顶部栏左右分开 */
+/* =========================================================
+   FINAL NAV LAYOUT FIX (kept, but tokenized)
+   ========================================================= */
 #siteNav .topbar{
   display:flex !important;
   justify-content:space-between !important;
@@ -217,37 +273,39 @@ body{
   padding:16px 6px 10px !important;
 }
 
-/* 品牌 */
 #siteNav .brand{
   font-size:22px;
   font-weight:900;
 }
 
-/* 语言按钮右对齐 */
 #siteNav .lang{
   display:flex;
   gap:6px;
 }
 
-/* 主导航横向排列 */
 #siteNav .site-nav{
   display:flex !important;
   flex-wrap:wrap;
   gap:12px !important;
   padding-top:10px;
-  border-top:1px solid rgba(0,0,0,.06);
+  border-top:1px solid rgba(2,6,23,.06);
 }
 
-/* 每个导航按钮变成 pill */
 #siteNav .site-nav a{
   padding:8px 14px !important;
   border-radius:999px;
-  background:rgba(0,0,0,.04);
-  font-weight:700;
+  background: rgba(2,6,23,.04);
+  border: 1px solid rgba(2,6,23,.06);
+  font-weight:900;
 }
 
-/* hover 颜色 */
 #siteNav .site-nav a:hover{
-  background:rgba(29,78,216,.12);
-  color:#1d4ed8;
+  background: var(--brand-soft);
+  color: var(--brand);
+  border-color: rgba(37,99,235,.25);
+}
+
+/* Optional: brand glow emphasis for logo hover */
+#siteNav .brand a:hover{
+  filter: drop-shadow(0 10px 18px rgba(37,99,235,.18));
 }
