@@ -214,7 +214,7 @@ export const CONTENT = {
   async loadClassroom({ classId } = {}) {
     const id = safeStr(classId);
     if (!id) return { classes: [] };
-    const url = `./data/classroom/mvp/class_${encodeURIComponent(id)}.json`;
+    const url = `/data/classroom/mvp/class_${encodeURIComponent(id)}.json`;
     try {
       return await fetchJson(url);
     } catch {
