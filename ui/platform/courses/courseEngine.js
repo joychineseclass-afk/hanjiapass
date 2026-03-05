@@ -36,5 +36,10 @@ export async function loadCourse(idOrObj, opts = {}) {
   });
 
   const courseId = `${type}:${level}:${lessonNo}`;
-  return { courseId, type, level, lessonNo, raw, doc };
+  const title =
+    (typeof doc?.title === "string" ? doc.title : null) ||
+    (doc?.i18n?.title && (typeof doc.i18n.title === "string" ? doc.i18n.title : doc.i18n.title.zh || doc.i18n.title.ko || "")) ||
+    (typeof raw?.title === "string" ? raw.title : "") ||
+    "";
+  return { courseId, type, level, lessonNo, raw, doc, title };
 }
