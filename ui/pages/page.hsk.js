@@ -230,6 +230,14 @@ async function openLesson({ lessonNo, file }) {
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
 
+    // 供 Stroke 弹窗 / fallback 使用的上下文
+    window.__HSK_PAGE_CTX = {
+      version: state.version,
+      level: state.lv,
+      lessonNo: no,
+      from: typeof location !== "undefined" ? location.pathname : "/pages/hsk.html",
+    };
+
     // Default tab: words
     state.tab = "words";
     updateTabsUI();

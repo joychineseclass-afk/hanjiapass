@@ -4,6 +4,7 @@
 // - Helpers: normalizeLang, wordKey, wordPinyin, wordMeaning
 
 import { i18n } from "../../i18n.js";
+import { openStrokeInModal } from "./strokeModal.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -172,23 +173,6 @@ function getMeaningMainAndSub(raw, lang) {
   return { main: en || zh || ko, sub: zh };
 }
 
-/** 打开笔顺：跳转 stroke 页面（?ch= 已支持）；MODALS 可用时弹窗占位 */
-function openStroke(hanzi) {
-  const ch = String(hanzi ?? "").trim();
-  if (!ch) return;
-
-  const modals = window.__HSK_GENERIC_MODALS?.generic;
-  if (modals?.open) {
-    modals.open({
-      title: (i18n?.t?.("stroke_title") || "笔顺") + "：" + ch,
-      html: `<div class="p-4"><p class="text-lg font-bold">${escapeHtml(ch)}</p><p class="text-sm text-gray-500 mt-2">(TODO: stroke player)</p></div>`,
-    });
-    return;
-  }
-  const base = (window.DATA_PATHS?.getBase?.()) || ".";
-  window.location.href = `${String(base).replace(/\/+$/, "")}/pages/stroke.html?ch=${encodeURIComponent(ch)}`;
-}
-
 export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
@@ -285,17 +269,20 @@ export function bindWordCardActions() {
       e.preventDefault();
       e.stopPropagation();
       btn.classList.add("btn-stroke-active");
+      const ctx = {
+        version: window.__HSK_PAGE_CTX?.version ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0",
+        level: window.__HSK_PAGE_CTX?.level ?? 1,
+        lessonId: window.__HSK_PAGE_CTX?.lessonNo ?? window.__HSK_CURRENT_LESSON_ID ?? "",
+        wordId: hanzi,
+      };
       try {
-        const modals = window.__HSK_GENERIC_MODALS?.generic;
-        if (modals?.open) {
-          modals.open({
-            title: (i18n?.t?.("stroke_title") || "笔顺") + "：" + hanzi,
-            html: `<div style="font-size:48px;font-weight:700;line-height:1">${escapeHtml(hanzi)}</div><div style="margin-top:8px;opacity:.7">笔顺模块待接入</div>`,
-          });
-        } else {
-          const url = await resolveStrokeUrlAsync(hanzi);
-          window.location.href = url;
-        }
+        await openStrokeInModal(hanzi, ctx);
+      } catch (err) {
+        console.warn("[Stroke] modal failed, fallback to new tab:", err);
+        const { resolveStrokeUrl, buildReturnParams } = await import("./strokeModal.js");
+        const baseUrl = resolveStrokeUrl(hanzi);
+        const sep = baseUrl.includes("?") ? "&" : "?";
+        window.open(`${baseUrl}${sep}${buildReturnParams(ctx)}`, "_blank", "noopener");
       } finally {
         setTimeout(() => btn.classList.remove("btn-stroke-active"), 200);
       }

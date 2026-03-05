@@ -8,13 +8,24 @@
   <title data-i18n="nav_stroke">한자 필순 | Joy Chinese</title>
 
   <!-- ✅ 按你项目实际路径调整 -->
-  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/ui/styles/base.css" />
+  <style>
+    body[data-embed="1"] #navBar,
+    body[data-embed="1"] .page-title,
+    body[data-embed="1"] .muted:first-of-type { display: none !important; }
+    body[data-embed="1"] .page-wrap { padding-top: 8px; }
+    .stroke-return-bar { position: fixed; top: 12px; right: 12px; z-index: 9999; }
+    .stroke-return-bar.hidden { display: none !important; }
+    .stroke-return-bar .btn-return { padding: 8px 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-size: 14px; }
+    .stroke-return-bar .btn-return:hover { background: #f1f5f9; }
+  </style>
 </head>
 
 <body>
   <div id="navBar"></div>
+  <div id="stroke-return-bar" class="stroke-return-bar hidden"></div>
 
-  <main class="page-wrap">
+  <main class="page-wrap" id="stroke-main">
     <h1 class="page-title" data-i18n="stroke_title">한자 필순 연습</h1>
     <p class="muted" data-i18n="stroke_desc">
       한 글자를 입력하면 필순 애니메이션과 따라쓰기 연습을 할 수 있어요.
@@ -72,12 +83,30 @@
     // ✅ 你的笔顺系统（保持不变）
     import { mountStrokeSwitcher } from "/ui/ui-stroke-player.js";
 
-    // ✅ 预留：后续接 HSK lookup（不会影响当前运行）
-    // import { findInHSK } from "/ui/hskLookup.js";
+    // ---------- embed 模式 + 返回学习 ----------
+    const spInit = new URLSearchParams(location.search);
+    const isEmbed = spInit.get("embed") === "1";
+    const from = spInit.get("from") || "";
+    const lessonIdParam = spInit.get("lessonId") || "";
+    const wordIdParam = spInit.get("wordId") || "";
+
+    if (isEmbed) document.body.setAttribute("data-embed", "1");
+
+    if (from) {
+      const returnBar = document.getElementById("stroke-return-bar");
+      if (returnBar) {
+        returnBar.classList.remove("hidden");
+        const backLabel = "← 返回学习";
+        const hash = lessonIdParam || wordIdParam ? `#hsk&lessonId=${encodeURIComponent(lessonIdParam)}&wordId=${encodeURIComponent(wordIdParam)}` : "";
+        const href = from + hash;
+        returnBar.innerHTML = `<a href="${href}" class="btn-return">${backLabel}</a>`;
+        returnBar.querySelector("a")?.addEventListener("click", (e) => { e.preventDefault(); location.href = href; });
+      }
+    }
 
     // ---------- boot ----------
-    i18n.init({ defaultLang: "kr", storageKey: "joy_lang" }); // ✅ 不用 autoApplyRoot，避免旧实现报错
-    mountNavBar(document.getElementById("navBar"));
+    i18n.init({ defaultLang: "kr", storageKey: "joy_lang" });
+    if (!isEmbed) mountNavBar(document.getElementById("navBar"));
 
     // 首次 apply（包含 title / placeholder / aria-label）
     i18n.apply(document);

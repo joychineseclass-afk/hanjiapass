@@ -119,6 +119,7 @@ export function getHSKLayoutHTML() {
 
     <div class="h-20"></div>
     <div id="portal-root"></div>
+    <div id="strokeModalRoot"></div>
   </section>
   `;
 }
