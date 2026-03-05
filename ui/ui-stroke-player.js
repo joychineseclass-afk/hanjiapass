@@ -95,6 +95,24 @@ async function speakZhCN(text) {
   speechSynthesis.speak(u);
 }
 
+function t(key) {
+  const lang = getLang();
+  const k = { kr: "ko", cn: "zh" }[lang] || lang;
+  try {
+    const v = i18n?.t?.(key);
+    if (v) return v;
+  } catch {}
+  const FALLBACK = {
+    stroke_demo: { ko: "데모", zh: "演示", en: "Demo" },
+    stroke_practice: { ko: "연습", zh: "练习", en: "Practice" },
+    stroke_write_here: { ko: "여기에 쓰기 ✍️", zh: "在这里写字 ✍️", en: "Write here ✍️" },
+    stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
+    stroke_continue_practice: { ko: "연습 계속", zh: "继续练习(无笔顺)", en: "Continue practice" },
+    stroke_feedback_char: { ko: "글자 추가 요청", zh: "反馈缺字", en: "Request character" },
+  };
+  return FALLBACK[key]?.[k] || FALLBACK[key]?.en || key;
+}
+
 // ✅ 只注入一次：保证 traceCanvas 永远在最上层，不会被 SVG 吃事件
 function ensureTraceLayerCSS() {
   if (document.getElementById("trace-layer-lock")) return;
@@ -103,6 +121,16 @@ function ensureTraceLayerCSS() {
   st.textContent = `
     #strokeViewport { z-index: 10 !important; }
     #traceCanvas    { z-index: 50 !important; }
+    .stroke-stage { min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
+    @media (max-width: 640px) { .stroke-stage { min-height: 240px; } }
+    .stroke-stage-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
+    .stroke-stage-content { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+    .stroke-practice-grid { background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; background-color: #fff; }
+    .stroke-write-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: #94a3b8; font-size: 14px; }
+    .stroke-write-hint.hidden { opacity: 0; transition: opacity 0.2s; }
+    .stroke-fallback-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
+    .stroke-fallback-actions button { padding: 6px 12px; border-radius: 8px; font-size: 13px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; }
+    .stroke-fallback-actions button:hover { background: #f1f5f9; }
   `;
   document.head.appendChild(st);
 }
@@ -124,11 +152,14 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
+  const demoTitle = t("stroke_demo");
+  const practiceTitle = t("stroke_practice");
+  const writeHere = t("stroke_write_here");
+
   targetEl.innerHTML = `
     <div class="border rounded-2xl p-3 bg-white shadow-sm">
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold strokeTitle">${T.title}</div>
-
         <div class="flex gap-2 flex-wrap justify-end items-center">
           <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.speak}</button>
           <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.trace}</button>
@@ -137,53 +168,41 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
-      <!-- ✅ 上：演示 + 跟写（同一个区，跟写时启用 traceCanvas） -->
-      <div class="w-full aspect-square bg-slate-50 rounded-xl overflow-hidden relative select-none border">
-        <div id="strokeViewport" class="absolute inset-0" style="touch-action:auto;">
-          <div id="strokeStage"
-               class="w-full h-full flex items-center justify-center text-xs text-gray-400 p-3 text-center">
-            loading...
+      <!-- ✅ 两栏：演示区 | 练习区 -->
+      <div class="stroke-stages grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <!-- 左：演示区 Demo Stage -->
+        <div class="stroke-stage">
+          <div class="stroke-stage-title">${demoTitle}</div>
+          <div class="stroke-stage-content" style="min-height:280px; position:relative;">
+            <div id="strokeViewport" class="absolute inset-0 flex items-center justify-center" style="touch-action:auto;">
+              <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm" style="max-width:100%;">
+                loading...
+              </div>
+            </div>
+            <canvas id="traceCanvas" class="absolute inset-0 w-full h-full" style="pointer-events:none;"></canvas>
+            <div id="strokeZoomLabel" class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">100%</div>
+            <div id="strokeMsg" class="absolute left-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded hidden"></div>
           </div>
         </div>
 
-        <!-- ✅ 跟写层（默认不吃事件；开启 따라쓰기 后 toggle(true)+setEnabled(true)） -->
-        <canvas id="traceCanvas"
-                class="absolute inset-0 w-full h-full"
-                style="pointer-events:none;"></canvas>
-
-        <div id="strokeZoomLabel"
-             class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">
-          100%
-        </div>
-
-        <div id="strokeMsg"
-             class="absolute left-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded hidden">
-        </div>
-      </div>
-
-      <!-- ✅ 下：自由练习区（따라쓰기 时显示） -->
-      <div id="practiceWrap" class="mt-3 hidden">
-        <div class="flex items-center gap-2 flex-wrap mb-2">
-          <label class="text-xs text-gray-600">색상</label>
-          <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
-            <option value="#FB923C">주황</option>
-            <option value="#3B82F6">파랑</option>
-            <option value="#111827">검정</option>
-            <option value="#22C55E">초록</option>
-            <option value="#EF4444">빨강</option>
-            <option value="#A855F7">보라</option>
-          </select>
-
-          <label class="text-xs text-gray-600 ml-2">굵기</label>
-          <input id="penWidth" type="range" min="2" max="18" value="8" />
-
-          <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">
-            지우기
-          </button>
-        </div>
-
-        <div class="w-full aspect-square bg-white rounded-xl overflow-hidden relative border">
-          <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full"></canvas>
+        <!-- 右：练习区 Practice Stage（始终可见） -->
+        <div class="stroke-stage">
+          <div class="stroke-stage-title">${practiceTitle}</div>
+          <div class="flex items-center gap-2 flex-wrap mb-2">
+            <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
+              <option value="#FB923C">🟠</option>
+              <option value="#3B82F6">🔵</option>
+              <option value="#111827">⚫</option>
+              <option value="#22C55E">🟢</option>
+              <option value="#EF4444">🔴</option>
+            </select>
+            <input id="penWidth" type="range" min="2" max="18" value="8" style="width:80px;" />
+            <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">✕</button>
+          </div>
+          <div class="stroke-stage-content stroke-practice-grid" style="min-height:220px; position:relative; aspect-ratio:1;">
+            <div id="strokeWriteHint" class="stroke-write-hint">${writeHere}</div>
+            <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full" style="max-width:100%;"></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -196,8 +215,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
 
-  const practiceWrap = targetEl.querySelector("#practiceWrap");
   const practiceCanvas = targetEl.querySelector("#practiceCanvas");
+  const writeHint = targetEl.querySelector("#strokeWriteHint");
   const penColorEl = targetEl.querySelector("#penColor");
   const penWidthEl = targetEl.querySelector("#penWidth");
   const btnClearPractice = targetEl.querySelector("#btnClearPractice");
@@ -285,6 +304,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   practiceApi.setEnabled(true);
   practiceCanvas.style.pointerEvents = "auto";
 
+  // 练习区：开始画时隐藏“在这里写字”提示
+  const hideWriteHint = () => { writeHint?.classList.add("hidden"); };
+  practiceCanvas.addEventListener("pointerdown", hideWriteHint, { once: false });
+  practiceCanvas.addEventListener("touchstart", hideWriteHint, { passive: true });
+
   // ===== UI controls =====
   penColorEl?.addEventListener("change", () => {
     const c = penColorEl.value;
@@ -300,6 +324,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   btnClearPractice?.addEventListener("click", () => {
     practiceApi.clear();
+    writeHint?.classList.remove("hidden");
   });
 
   // ===== load SVG =====
@@ -328,16 +353,29 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (reset) resetView();
 
     const url = strokeUrl(ch);
-    if (!url) {
+    const missingMsg = t("stroke_missing_data");
+    const continueBtn = t("stroke_continue_practice");
+    const feedbackBtn = t("stroke_feedback_char");
+
+    const renderFallback = (msg) => {
       stage.innerHTML = `
-        <div class="text-red-600 text-sm p-3 text-center">
-          ❌ strokeUrl() 未配置或返回空<br/>
-          <div class="opacity-80 mt-1">请检查 window.DATA_PATHS.strokeUrl(ch)</div>
+        <div class="text-amber-700 text-sm p-4 text-center max-w-[260px]">
+          <div class="opacity-90">${escapeHtml(msg)}</div>
+          <div class="stroke-fallback-actions">
+            <button type="button" class="btnFallbackContinue">${escapeHtml(continueBtn)}</button>
+            <button type="button" class="btnFallbackFeedback">${escapeHtml(feedbackBtn)}</button>
+          </div>
         </div>`;
+      stage.querySelector(".btnFallbackContinue")?.addEventListener("click", () => { practiceApi.clear?.(); writeHint?.classList.remove("hidden"); });
+      stage.querySelector(".btnFallbackFeedback")?.addEventListener("click", () => { window.open("https://github.com/", "_blank"); });
+    };
+
+    if (!url) {
+      renderFallback(missingMsg);
       return;
     }
 
-    stage.innerHTML = `loading...`;
+    stage.innerHTML = `<span class="opacity-70">${typeof i18n?.t === "function" ? i18n.t("common_loading") : "loading..."}</span>`;
 
     try {
       const res = await fetch(url + (url.includes("?") ? "&" : "?") + "v=" + Date.now());
@@ -350,8 +388,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       if (svg) {
         svg.style.width = "100%";
         svg.style.height = "100%";
-        svg.style.maxWidth = "520px";
-        svg.style.maxHeight = "520px";
+        svg.style.maxWidth = "320px";
+        svg.style.maxHeight = "320px";
         svg.style.display = "block";
         svg.style.margin = "0 auto";
       }
@@ -366,12 +404,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
         }
       }
     } catch (e) {
-      stage.innerHTML = `
-        <div class="text-red-600 text-sm p-3 text-center">
-          ❌ 笔顺 SVG 加载失败<br/>
-          <div class="opacity-80 mt-1">字：<b>${escapeHtml(ch)}</b></div>
-          <div class="opacity-80 mt-1">URL：<code>${escapeHtml(url)}</code></div>
-        </div>`;
+      renderFallback(missingMsg);
     }
   }
 
@@ -401,35 +434,25 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   };
 
-  // ✅ 따라쓰기：开启/关闭
+  // ✅ 따라쓰기：开启/关闭（在演示区跟写）
   btnTrace.onclick = () => {
     tracingOn = !tracingOn;
 
     if (tracingOn) {
-      practiceWrap.classList.remove("hidden");
       btnTrace.classList.add("bg-orange-400", "text-white");
-
-      // ✅ 上层跟写：必须显示并吃事件
       traceApi.toggle(true);
       traceApi.setEnabled(true);
       traceCanvas.style.pointerEvents = "auto";
       traceCanvas.style.touchAction = "none";
-
       traceApi.setStrokeIndex?.(0);
       traceApi.clear?.();
       try { teaching?.start?.(); } catch {}
-
       showMsg(T.traceOnMsg);
     } else {
-      // 关闭上层跟写
       traceApi.setEnabled(false);
       traceApi.toggle(false);
       traceCanvas.style.pointerEvents = "none";
-
-      // 隐藏下方自由练习
-      practiceWrap.classList.add("hidden");
       btnTrace.classList.remove("bg-orange-400", "text-white");
-
       showMsg(T.traceOffMsg);
     }
   };

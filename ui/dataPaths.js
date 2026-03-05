@@ -112,11 +112,17 @@
     return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lesson${no}.json`));
   }
 
-  // make-me-a-hanzi：文件名 = Unicode 十进制 code point（比如 客=23458）
+  // make-me-a-hanzi：文件名 = Unicode 十进制 code point（好=22909）
   function strokeUrl(ch) {
     const cp = codePoint(ch);
-    if (!cp) return "";
-    return withVersion(joinPath(BASE, `data/strokes/${cp}.svg`));
+    if (!cp) return null;
+    const pathname = typeof location !== "undefined" ? (location.pathname || "") : "";
+    // /pages/ 等子路径时用相对路径，否则用 BASE
+    const rel =
+      pathname.includes("/pages/") || pathname.includes("/stroke")
+        ? `../data/strokes/${cp}.svg`
+        : joinPath(BASE, `data/strokes/${cp}.svg`);
+    return withVersion(rel);
   }
 
   function strokeFileNameForChar(ch) {
