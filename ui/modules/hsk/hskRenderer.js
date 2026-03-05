@@ -4,6 +4,7 @@
 // - Helpers: normalizeLang, wordKey, wordPinyin, wordMeaning
 
 import { i18n } from "../../i18n.js";
+import { speakChinese } from "../../core/tts.js";
 
 // Returns "ko" | "en" | "zh"
 export function normalizeLang(i18nLang) {
@@ -131,6 +132,37 @@ function meaningTextOf(val, lang) {
   return String(val);
 }
 
+/** 主释义 + 次要释义（老师对照用）：ko主+en次 / zh主+en次 / en主+zh次 */
+function getMeaningMainAndSub(raw, lang) {
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const m = raw?.meaning ?? raw;
+  const obj = typeof m === "object" ? m : {};
+  const ko = str(raw?.ko ?? raw?.kr ?? obj.ko ?? obj.kr);
+  const zh = str(raw?.zh ?? raw?.cn ?? obj.zh ?? obj.cn) || wordKey(raw);
+  const en = str(raw?.en ?? obj.en ?? obj.english);
+
+  if (lang === "ko") return { main: ko || en || zh, sub: en };
+  if (lang === "zh") return { main: zh || en || ko, sub: en };
+  return { main: en || zh || ko, sub: zh };
+}
+
+/** 打开笔顺：跳转 stroke 页面（?ch= 已支持）；MODALS 可用时弹窗占位 */
+function openStroke(hanzi) {
+  const ch = String(hanzi ?? "").trim();
+  if (!ch) return;
+
+  const modals = window.__HSK_GENERIC_MODALS?.generic;
+  if (modals?.open) {
+    modals.open({
+      title: (i18n?.t?.("stroke_title") || "笔顺") + "：" + ch,
+      html: `<div class="p-4"><p class="text-lg font-bold">${escapeHtml(ch)}</p><p class="text-sm text-gray-500 mt-2">(TODO: stroke player)</p></div>`,
+    });
+    return;
+  }
+  const base = (window.DATA_PATHS?.getBase?.()) || ".";
+  window.location.href = `${String(base).replace(/\/+$/, "")}/pages/stroke.html?ch=${encodeURIComponent(ch)}`;
+}
+
 export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
@@ -141,26 +173,30 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       const raw = typeof x === "string" ? { hanzi: x } : (x || {});
       const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
       const pinyinStr = wordPinyin(raw);
-      let meaningStr = meaningTextOf(raw, currentLang);
-      if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
-
-      if (!meaningStr) {
-        console.warn("[renderWordCards] no meaning for word:", han, "| vocab/item:", raw);
-        meaningStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
+      const { main: meaningMain, sub: meaningSub } = getMeaningMainAndSub(raw, currentLang);
+      let mainStr = meaningMain;
+      if (mainStr && mainStr.includes("object Object")) mainStr = "";
+      if (!mainStr) {
+        mainStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
       }
+      const subStr = meaningSub || "";
 
       const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
       const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
       const audioLabel = currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : "Audio";
+      const strokeDisabled = !han ? " disabled" : "";
 
       return `
       <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
         <div class="word-hanzi">${escapeHtml(han)}</div>
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
-        <div class="word-meaning">${escapeHtml(meaningStr)}</div>
+        <div class="word-meaning">
+          <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
+          ${subStr ? `<div class="word-meaning-sub">${escapeHtml(subStr)}</div>` : ""}
+        </div>
         <div class="word-actions">
           <button type="button" class="btn-learn">${escapeHtml(learnLabel)}</button>
-          <button type="button" class="btn-stroke">${escapeHtml(strokeLabel)}</button>
+          <button type="button" class="btn-stroke"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
           <button type="button" class="btn-audio">${escapeHtml(audioLabel)}</button>
         </div>
       </div>
@@ -187,14 +223,18 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
         e.preventDefault();
         e.stopPropagation();
         (typeof onClickWord === "function" ? onClickWord : window.LEARN_PANEL?.open)?.(item);
-      } else if (e.target.classList.contains("btn-stroke")) {
+      } else if (e.target.classList.contains("btn-stroke") && !e.target.disabled) {
         e.preventDefault();
         e.stopPropagation();
-        window.dispatchEvent(new CustomEvent("stroke:open", { detail: { char: hanzi, word: item } }));
+        openStroke(hanzi);
       } else if (e.target.classList.contains("btn-audio")) {
         e.preventDefault();
         e.stopPropagation();
-        window.dispatchEvent(new CustomEvent("word:audio", { detail: { word: item, hanzi, pinyin: item?.pinyin } }));
+        const text = hanzi || wordPinyin(item) || "";
+        if (text && speakChinese(text)) {
+          e.target.classList.add("btn-audio-active");
+          setTimeout(() => e.target.classList.remove("btn-audio-active"), 400);
+        }
       }
     });
   }

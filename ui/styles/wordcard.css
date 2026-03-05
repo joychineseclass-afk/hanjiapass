@@ -26,9 +26,18 @@
 
 .word-meaning {
   margin-top: 8px;
+  line-height: 1.4;
+}
+
+.word-meaning-main {
   font-size: 14px;
   color: #333;
-  line-height: 1.4;
+}
+
+.word-meaning-sub {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
 }
 
 .word-actions {
@@ -54,4 +63,14 @@
 .word-actions .btn-audio:hover {
   background: #f1f5f9;
   border-color: #cbd5e1;
+}
+
+.word-actions .btn-stroke:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.word-actions .btn-audio.btn-audio-active {
+  background: #e0f2fe;
+  border-color: #38bdf8;
 }
