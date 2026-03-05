@@ -6,6 +6,7 @@ export { AI_SERVICE } from "./capabilities/ai/aiService.js";
 export { PromptBuilder } from "./capabilities/ai/promptBuilder.js";
 export { SchemaValidator } from "./capabilities/ai/schemaValidator.js";
 export { LearnerModel } from "./capabilities/ai/learnerModel.js";
+export { loadCourse } from "./courses/courseEngine.js";
 export {
   getCourseRouteState,
   getStrokeRouteState,
