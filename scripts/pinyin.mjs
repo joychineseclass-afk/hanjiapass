@@ -1,7 +1,6 @@
 /**
  * 拼音生成/修复：优先保留已有；缺失时用 pinyin-pro 补
- */
-import pinyin from "pinyin-pro";
+ */import { pinyin } from "pinyin-pro";
 
 export function ensurePinyin(hanzi, existing = "") {
   const h = String(hanzi ?? "").trim();
