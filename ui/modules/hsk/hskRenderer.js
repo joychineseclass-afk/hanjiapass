@@ -131,7 +131,7 @@ function meaningTextOf(val, lang) {
   return String(val);
 }
 
-export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
+export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? i18n?.getLang?.());
@@ -140,7 +140,7 @@ export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
     try {
       const raw = typeof x === "string" ? { hanzi: x } : (x || {});
       const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
-      const pinyin = wordPinyin(raw);
+      const pinyinStr = wordPinyin(raw);
       let meaningStr = meaningTextOf(raw, currentLang);
       if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
 
@@ -149,25 +149,55 @@ export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
         meaningStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
       }
 
+      const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
+      const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
+      const audioLabel = currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : "Audio";
+
       return `
-      <div class="word-card bg-white rounded-2xl shadow p-4 border border-slate-100">
-        <div class="hanzi text-2xl font-bold">${escapeHtml(han)}</div>
-        ${pinyin ? `<div class="pinyin text-sm italic opacity-70 mt-1">${escapeHtml(pinyin)}</div>` : ``}
-        <div class="meaning text-sm mt-2">${escapeHtml(meaningStr)}</div>
-        <div class="mt-3">
-          <button type="button" class="px-3 py-1 rounded-lg border text-sm opacity-80">
-            Tap to Learn
-          </button>
+      <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
+        <div class="word-hanzi">${escapeHtml(han)}</div>
+        <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
+        <div class="word-meaning">${escapeHtml(meaningStr)}</div>
+        <div class="word-actions">
+          <button type="button" class="btn-learn">${escapeHtml(learnLabel)}</button>
+          <button type="button" class="btn-stroke">${escapeHtml(strokeLabel)}</button>
+          <button type="button" class="btn-audio">${escapeHtml(audioLabel)}</button>
         </div>
       </div>
     `;
     } catch (e) {
       console.warn("[renderWordCards] failed for item:", x, e);
-      return `<div class="word-card border border-red-200 p-2 text-sm text-red-600">Error rendering word</div>`;
+      return `<div class="word-card" style="border:1px solid #fecaca;color:#dc2626;"><div class="word-meaning">Error rendering word</div></div>`;
     }
   });
 
-  gridEl.innerHTML = cards.join("");
+  gridEl.innerHTML = `<div class="word-grid">${cards.join("")}</div>`;
+
+  // 事件委托：Learn / Stroke / Audio
+  const grid = gridEl.querySelector(".word-grid");
+  if (grid && (typeof onClickWord === "function" || window.LEARN_PANEL)) {
+    grid.addEventListener("click", (e) => {
+      const card = e.target.closest(".word-card");
+      if (!card) return;
+      const hanzi = card.getAttribute("data-word-hanzi");
+      const item = arr.find((x) => wordKey(x) === hanzi) ?? (hanzi ? { hanzi } : null);
+      if (!item) return;
+
+      if (e.target.classList.contains("btn-learn")) {
+        e.preventDefault();
+        e.stopPropagation();
+        (typeof onClickWord === "function" ? onClickWord : window.LEARN_PANEL?.open)?.(item);
+      } else if (e.target.classList.contains("btn-stroke")) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.dispatchEvent(new CustomEvent("stroke:open", { detail: { char: hanzi, word: item } }));
+      } else if (e.target.classList.contains("btn-audio")) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.dispatchEvent(new CustomEvent("word:audio", { detail: { word: item, hanzi, pinyin: item?.pinyin } }));
+      }
+    });
+  }
 }
 
 function escapeHtml(s) {

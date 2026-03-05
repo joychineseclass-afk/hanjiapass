@@ -1,0 +1,57 @@
+/* WordCard 单词卡片样式 */
+
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.word-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 0;
+}
+
+.word-hanzi {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.word-pinyin {
+  color: #666;
+  margin-top: 4px;
+}
+
+.word-meaning {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.word-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.word-actions .btn-learn,
+.word-actions .btn-stroke,
+.word-actions .btn-audio {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.word-actions .btn-learn:hover,
+.word-actions .btn-stroke:hover,
+.word-actions .btn-audio:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
