@@ -76,6 +76,23 @@
   return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lessons.json`));
 }
 
+  /** 课程序列索引文件 hsk{N}.json（与 BASE 一致，子目录部署可用） */
+  function lessonsIndexUrl(level) {
+    const lv = normalizeLevel(level);
+    const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}.json`));
+  }
+
+  /** 单课详情 URL，opts.file 可选；与 BASE 一致 */
+  function lessonDetailUrl(level, lessonNo, opts) {
+    const lv = normalizeLevel(level);
+    const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    const file = toStr(opts && opts.file);
+    if (file) return withVersion(joinPath(BASE, `data/lessons/${ver}/${file}`));
+    const no = (typeof lessonNo === "number" ? lessonNo : parseInt(lessonNo, 10)) || 1;
+    return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lesson${no}.json`));
+  }
+
   // make-me-a-hanzi：文件名 = Unicode 十进制 code point（比如 客=23458）
   function strokeUrl(ch) {
     const cp = codePoint(ch);
@@ -124,6 +141,8 @@
   window.DATA_PATHS = {
     vocabUrl,
     lessonsUrl,
+    lessonsIndexUrl,
+    lessonDetailUrl,
     strokeUrl,
     strokeFileNameForChar,
     setBase,

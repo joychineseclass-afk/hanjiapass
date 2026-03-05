@@ -5,6 +5,7 @@
 
 import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
+import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards } from "../modules/hsk/hskRenderer.js";
 
@@ -406,6 +407,8 @@ export async function mount() {
     return false;
   }
 
+  await ensureHSKDeps();
+
   // ✅ mini nav: Home + Lang only
   navRoot.dataset.mode = "mini";
   mountNavBar(navRoot);
@@ -423,15 +426,6 @@ export async function mount() {
   showListMode();
   return true;
 }
-
-// Auto mount
-try {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => mount());
-  } else {
-    mount();
-  }
-} catch {}
 
 function escapeHtml(s) {
   return String(s ?? "")

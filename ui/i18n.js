@@ -19,7 +19,7 @@ const DICT = {
     nav_culture: "문화",
     nav_review: "복습",
     nav_resources: "자료",
-    nav_teacher: "교사专区",
+    nav_teacher: "교사 전용",
     nav_my: "내 학습",
     nav_login: "로그인",
 
@@ -88,7 +88,7 @@ home_contact: "문의",
 home_email: "이메일",
 home_privacy: "개인정보처리방침",
 home_terms: "이용약관",
-home_copy: "© 2026 中文学习中心",
+home_copy: "© 2026 Lumina Chinese Learning Center",
 
     // ===== Stroke =====
     stroke_title: "한자 필순 연습",
@@ -106,7 +106,7 @@ home_copy: "© 2026 中文学习中心",
     stroke_btn_speak: "발음",
     stroke_btn_replay: "다시",
     stroke_btn_reset: "초기화",
-    stroke_btn_trace: "묘홍",
+    stroke_btn_trace: "따라쓰기",
 
     heroTitle: "아이부터 성인까지 사용하는 종합 중국어 학습 사이트입니다.",
     heroDesc: "HSK 학습 · 한자 필순 · 한자공부 · 회화 · 여행중국어 · 문화",
@@ -157,6 +157,7 @@ hsk_empty_grammar: "문법 콘텐츠가 아직 없습니다.",
     hsk_grammar_tab: "문법",
     hsk_quiz_tab: "퀴즈",
     hsk_ai_tab: "AI 학습",
+    hsk_lesson_unit: "{n}과",
   },
 
   // ===== Chinese =====
@@ -309,6 +310,7 @@ hsk_empty_grammar: "暂无语法内容。",
     hsk_grammar_tab: "语法",
     hsk_quiz_tab: "练习",
     hsk_ai_tab: "AI 学习",
+    hsk_lesson_unit: "第{n}课",
   },
 
   // ===== English (optional) =====
@@ -345,6 +347,7 @@ hsk_empty_grammar: "暂无语法内容。",
     hsk_grammar_tab: "Grammar",
     hsk_quiz_tab: "Quiz",
     hsk_ai_tab: "AI Learn",
+    hsk_lesson_unit: "Lesson {n}",
   },
 };
 

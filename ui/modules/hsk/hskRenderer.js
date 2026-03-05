@@ -4,6 +4,8 @@
 // - Fixes: [object Object] by pickText()
 // - Supports pinyinTitle in lesson list
 
+import { i18n } from "../../i18n.js";
+
 function pickText(v, lang = "ko") {
   if (v == null) return "";
   if (typeof v === "string" || typeof v === "number") return String(v);
@@ -47,7 +49,7 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
             data-file="${escapeHtmlAttr(file)}"
           >
             <div class="flex items-center gap-3">
-              <div class="w-14 text-sm font-bold opacity-70">${lessonNo ? `${lessonNo}과` : ""}</div>
+              <div class="w-14 text-sm font-bold opacity-70">${lessonNo ? (i18n?.t?.("hsk_lesson_unit", { n: lessonNo }) || `${lessonNo}과`) : ""}</div>
               <div class="flex-1">
                 <div class="text-base font-semibold">${escapeHtml(big)}</div>
                 ${small ? `<div class="text-sm opacity-70">${escapeHtml(small)}</div>` : ``}

@@ -43,6 +43,16 @@
     for (const k of MEM.keys()) if (String(k).startsWith(prefix)) MEM.delete(k);
   }
 
+  /** 当 DATA_PATHS 存在时使用 BASE，子目录部署时 fallback URL 也正确 */
+  function withBase(relativePath) {
+    const p = String(relativePath).replace(/^\/+/, "");
+    try {
+      const base = window.DATA_PATHS && window.DATA_PATHS.getBase && window.DATA_PATHS.getBase();
+      if (base && String(base).trim()) return (String(base).replace(/\/+$/, "") + "/" + p);
+    } catch {}
+    return "/" + p;
+  }
+
   // -----------------------------
   // Value normalizers
   // -----------------------------
@@ -167,21 +177,19 @@
   // URL builders
   // -----------------------------
   function vocabUrl(lv, version) {
-    return `/data/vocab/${version}/hsk${lv}.json`;
+    return withBase(`data/vocab/${version}/hsk${lv}.json`);
   }
   function lessonsUrl(lv, version) {
-    return `/data/lessons/${version}/hsk${lv}_lessons.json`;
+    return withBase(`data/lessons/${version}/hsk${lv}_lessons.json`);
   }
 
-  // ✅ NEW: lesson detail url unify
-  // - prefer file: /data/lessons/<ver>/<file>
-  // - fallback fixed: /data/lessons/<ver>/hsk<lv>_lesson<no>.json
+  // ✅ NEW: lesson detail url unify (fallback respects BASE)
   function lessonDetailUrl(lv, lessonNo, version, file) {
     const f = safeText(file);
-    if (f) return `/data/lessons/${version}/${f}`;
+    if (f) return withBase(`data/lessons/${version}/${f}`);
     const n = Number(lessonNo || 1);
     const no = Number.isFinite(n) && n > 0 ? n : 1;
-    return `/data/lessons/${version}/hsk${lv}_lesson${no}.json`;
+    return withBase(`data/lessons/${version}/hsk${lv}_lesson${no}.json`);
   }
 
   // -----------------------------
@@ -270,11 +278,15 @@
         window.DATA_PATHS.lessonsUrl(lv, { version })) ||
       lessonsUrl(lv, version);
    
-    // try index file first: /data/lessons/hsk2.0/hsk1.json
-const idxPath = `/data/lessons/${version}/hsk${lv}.json`;
-try {
-  const r = await fetch(idxPath);
-  if (r.ok) {
+    // try index file first (respect BASE for subpath deploy)
+    const idxUrl =
+      (window.DATA_PATHS &&
+        typeof window.DATA_PATHS.lessonsIndexUrl === "function" &&
+        window.DATA_PATHS.lessonsIndexUrl(lv)) ||
+      `/data/lessons/${version}/hsk${lv}.json`;
+    try {
+      const r = await fetch(idxUrl);
+      if (r.ok) {
     const index = await r.json();
     // normalize to your current lesson shape
     return index.map(it => ({
@@ -332,8 +344,8 @@ try {
 
     const url =
       (window.DATA_PATHS &&
-        window.DATA_PATHS.lessonDetailUrl &&
-        window.DATA_PATHS.lessonDetailUrl(lv, lessonNo, { version, file })) ||
+        typeof window.DATA_PATHS.lessonDetailUrl === "function" &&
+        window.DATA_PATHS.lessonDetailUrl(lv, lessonNo, { file })) ||
       lessonDetailUrl(lv, lessonNo, version, file);
 
     const memKey = `lessonDetail:${version}:${lv}:${lessonNo}:${url}`;

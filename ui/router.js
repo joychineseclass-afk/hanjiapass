@@ -185,8 +185,6 @@ export function startRouter(opts = {}) {
   _defaultHash = normalizeHash(defaultHash) || "#home";
   _scrollTop = !!scrollTop;
 
-  if (!location.hash) location.hash = _defaultHash;
-
   window.addEventListener("hashchange", () => {
     handleRouteChange({
       appEl: _appEl,
@@ -194,6 +192,8 @@ export function startRouter(opts = {}) {
       scrollTop: _scrollTop,
     });
   });
+
+  if (!location.hash) location.hash = _defaultHash;
 
   // ✅ Always render once on start (do not rely on hashchange)
   queueMicrotask(() => {
@@ -217,18 +217,19 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     hash = normalizeHash(defaultHash);
   }
 
-// ✅ same route: only skip when page already rendered (avoid first-load stuck)
-if (!force && hash === currentHash) {
+  // Same route: skip when page already rendered (avoid first-load stuck + duplicate render from hashchange + microtask)
   const html = appEl?.innerHTML || "";
   const isLoading = html.includes("불러오는 중") || html.includes("Loading");
   const isEmpty = html.trim().length === 0;
-
-  if (!isLoading && !isEmpty) {
+  if (hash === currentHash && !isLoading && !isEmpty) {
+    if (!force) {
+      emitRouteEvent();
+      return;
+    }
+    // force: true but already rendered same route → skip to avoid double mount (e.g. startRouter microtask after hashchange)
     emitRouteEvent();
     return;
   }
-  // else: fall through → re-render
-}
 
   
   currentHash = hash;
