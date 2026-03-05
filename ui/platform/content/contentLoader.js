@@ -1,7 +1,7 @@
 // ui/platform/content/contentLoader.js
 // Content Layer 统一入口：loadCourse / loadStroke / loadHanja / loadClassroom
 // 兼容 DATA_PATHS、HSK_LOADER，不改动现有 loader 实现
-// Path format: data/lessons/${type}/${level}/index.json | lesson${lessonNo}.json
+// Path format (repo): data/lessons/hsk2.0/hsk{level}.json | hsk{level}_lesson{lessonNo}.json
 
 import { ensureHSKDeps } from "../../modules/hsk/hskDeps.js";
 
@@ -22,14 +22,15 @@ function withBase(relativePath) {
   return (p.startsWith(".") ? p : "./" + p);
 }
 
-function buildCourseIndexUrl(type, level) {
-  const levelKey = /^hsk\d+$/i.test(String(level)) ? String(level).toLowerCase() : `hsk${Number(level) || 1}`;
-  return withBase(`data/lessons/${type}/${levelKey}/index.json`);
+function buildIndexUrl(track, level) {
+  const lv = Number(level) || 1;
+  return withBase(`data/lessons/${track}/hsk${lv}.json`);
 }
 
-function buildLessonUrl(type, level, lessonNo) {
-  const levelKey = /^hsk\d+$/i.test(String(level)) ? String(level).toLowerCase() : `hsk${Number(level) || 1}`;
-  return withBase(`data/lessons/${type}/${levelKey}/lesson${Number(lessonNo) || 1}.json`);
+function buildLessonFileUrl(track, level, lessonNo) {
+  const lv = Number(level) || 1;
+  const no = Number(lessonNo) || 1;
+  return withBase(`data/lessons/${track}/hsk${lv}_lesson${no}.json`);
 }
 
 function memGet(key) {
@@ -92,28 +93,26 @@ function legacyHskToLessonDoc(raw, { track, level, lessonNo, file }) {
 }
 
 async function loadHskIndex({ track, level }) {
-  const levelKey = /^hsk\d+$/i.test(String(level)) ? String(level) : `hsk${Number(level) || 1}`;
-  const cacheKey = `index:${track}:${levelKey}`;
+  const lv = Number(level) || 1;
+  const cacheKey = `index:${track}:hsk${lv}`;
   const cached = memGet(cacheKey);
   if (cached) return cached;
 
-  const newUrl = buildCourseIndexUrl(track, level);
+  const url = buildIndexUrl(track, level);
   try {
-    const data = await fetchJson(newUrl, { warnOnFail: false });
+    const data = await fetchJson(url);
     const list = Array.isArray(data) ? data : data?.lessons ?? data?.data ?? [];
     memSet(cacheKey, list);
     return list;
   } catch (e) {
-    console.warn("[CONTENT] loadCourseIndex failed, attempted URL:", newUrl);
+    console.warn("[CONTENT] loadCourseIndex failed, attempted URL:", url);
     await ensureHSKDeps();
     if (window.HSK_LOADER?.loadLessons) {
-      const out = await window.HSK_LOADER.loadLessons(Number(level) || 1, { version: track });
+      const out = await window.HSK_LOADER.loadLessons(lv, { version: track });
       memSet(cacheKey, out);
       return out;
     }
-    const fallbackUrl =
-      window.DATA_PATHS?.lessonsIndexUrl?.(level) ||
-      `./data/lessons/${track}/hsk${Number(level) || 1}.json`;
+    const fallbackUrl = window.DATA_PATHS?.lessonsIndexUrl?.(level) || url;
     const out = await fetchJson(fallbackUrl);
     const list = Array.isArray(out) ? out : out?.lessons ?? out?.data ?? [];
     memSet(cacheKey, list);
@@ -128,17 +127,17 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   const cached = memGet(cacheKey);
   if (cached) return cached;
 
-  const newUrl = buildLessonUrl(track, level, lessonNo);
+  const url = file ? withBase(`data/lessons/${track}/${file}`) : buildLessonFileUrl(track, level, lessonNo);
   try {
-    const raw = await fetchJson(newUrl, { warnOnFail: false });
+    const raw = await fetchJson(url);
     const result = {
       raw,
-      doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file: newUrl }),
+      doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file: url }),
     };
     memSet(cacheKey, result);
     return result;
   } catch (e) {
-    console.warn("[CONTENT] loadLesson failed, attempted URL:", newUrl);
+    console.warn("[CONTENT] loadLesson failed, attempted URL:", url);
     await ensureHSKDeps();
     if (window.HSK_LOADER?.loadLessonDetail) {
       const raw = await window.HSK_LOADER.loadLessonDetail(lv, no, {
