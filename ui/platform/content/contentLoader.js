@@ -16,10 +16,10 @@ function withBase(relativePath) {
   const p = String(relativePath).replace(/^\/+/, "");
   try {
     const base = window.DATA_PATHS?.getBase?.();
-    if (base && String(base).trim())
-      return String(base).replace(/\/+$/, "") + "/" + p;
+    const b = base && String(base).trim() && base !== ".";
+    if (b) return String(base).replace(/\/+$/, "") + "/" + p;
   } catch {}
-  return (p.startsWith(".") ? p : "./" + p);
+  return "/" + p;
 }
 
 function buildIndexUrl(track, level) {
@@ -48,10 +48,12 @@ function memSet(key, data) {
 }
 
 async function fetchJson(url, opts = {}) {
-  const res = await fetch(url, { cache: opts.cache ?? "no-store" });
+  let u = String(url || "");
+  if (u.startsWith("./data/")) u = "/" + u.slice(2);
+  const res = await fetch(u, { cache: opts.cache ?? "no-store" });
   if (!res.ok) {
-    if (opts.warnOnFail) console.warn("[CONTENT] fetch failed, attempted URL:", url);
-    throw new Error(`Fetch failed ${res.status}: ${url}`);
+    if (opts.warnOnFail) console.warn("[CONTENT] fetch failed, attempted URL:", u);
+    throw new Error(`Fetch failed ${res.status}: ${u}`);
   }
   return await res.json();
 }
@@ -153,7 +155,7 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
     }
     const fallbackUrl =
       window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file }) ||
-      `./data/lessons/${track}/${file || `hsk${lv}_lesson${no}.json`}`;
+      `/data/lessons/${track}/${file || `hsk${lv}_lesson${no}.json`}`;
     const raw = await fetchJson(fallbackUrl);
     const result = {
       raw,
@@ -170,7 +172,7 @@ async function loadStroke({ char }) {
   const cp = [...ch][0]?.codePointAt?.(0) || 0;
   if (!cp) throw new Error("stroke char invalid");
   const url =
-    window.DATA_PATHS?.strokeUrl?.(ch) || `./data/strokes/${cp}.svg`;
+    window.DATA_PATHS?.strokeUrl?.(ch) || `/data/strokes/${cp}.svg`;
   const res = await fetch(url, { cache: "force-cache" });
   if (!res.ok) throw new Error(`Stroke SVG not found: ${url}`);
   const svgText = await res.text();
@@ -214,7 +216,7 @@ export const CONTENT = {
   async loadClassroom({ classId } = {}) {
     const id = safeStr(classId);
     if (!id) return { classes: [] };
-    const url = `./data/classroom/mvp/class_${encodeURIComponent(id)}.json`;
+    const url = `/data/classroom/mvp/class_${encodeURIComponent(id)}.json`;
     try {
       return await fetchJson(url);
     } catch {
