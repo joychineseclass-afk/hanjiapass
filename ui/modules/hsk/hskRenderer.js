@@ -4,7 +4,6 @@
 // - Helpers: normalizeLang, wordKey, wordPinyin, wordMeaning
 
 import { i18n } from "../../i18n.js";
-import { speakChinese } from "../../core/tts.js";
 
 // Returns "ko" | "en" | "zh"
 export function normalizeLang(i18nLang) {
@@ -195,9 +194,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
           ${subStr ? `<div class="word-meaning-sub">${escapeHtml(subStr)}</div>` : ""}
         </div>
         <div class="word-actions">
-          <button type="button" class="btn-learn">${escapeHtml(learnLabel)}</button>
-          <button type="button" class="btn-stroke"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
-          <button type="button" class="btn-audio">${escapeHtml(audioLabel)}</button>
+          <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
+          <button type="button" class="btn btn-stroke" data-action="stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
+          <button type="button" class="btn btn-audio" data-action="audio" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
         </div>
       </div>
     `;
@@ -209,35 +208,82 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
 
   gridEl.innerHTML = `<div class="word-grid">${cards.join("")}</div>`;
 
-  // 事件委托：Learn / Stroke / Audio
-  const grid = gridEl.querySelector(".word-grid");
-  if (grid && (typeof onClickWord === "function" || window.LEARN_PANEL)) {
-    grid.addEventListener("click", (e) => {
-      const card = e.target.closest(".word-card");
-      if (!card) return;
-      const hanzi = card.getAttribute("data-word-hanzi");
-      const item = arr.find((x) => wordKey(x) === hanzi) ?? (hanzi ? { hanzi } : null);
-      if (!item) return;
-
-      if (e.target.classList.contains("btn-learn")) {
-        e.preventDefault();
-        e.stopPropagation();
-        (typeof onClickWord === "function" ? onClickWord : window.LEARN_PANEL?.open)?.(item);
-      } else if (e.target.classList.contains("btn-stroke") && !e.target.disabled) {
-        e.preventDefault();
-        e.stopPropagation();
-        openStroke(hanzi);
-      } else if (e.target.classList.contains("btn-audio")) {
-        e.preventDefault();
-        e.stopPropagation();
-        const text = hanzi || wordPinyin(item) || "";
-        if (text && speakChinese(text)) {
-          e.target.classList.add("btn-audio-active");
-          setTimeout(() => e.target.classList.remove("btn-audio-active"), 400);
-        }
-      }
+  // 供 bindWordCardActions 查找 learn 时用的 item 与 callback
+  if (typeof window !== "undefined") {
+    window.__HSK_WORD_ITEMS_BY_HANZI = window.__HSK_WORD_ITEMS_BY_HANZI || new Map();
+    arr.forEach((x) => {
+      const h = wordKey(x);
+      if (h) window.__HSK_WORD_ITEMS_BY_HANZI.set(h, x);
     });
+    window.__HSK_ON_CLICK_WORD = typeof onClickWord === "function" ? onClickWord : null;
   }
+
+  bindWordCardActions();
+}
+
+let _wordCardBound = false;
+
+/** 文档级事件委托，确保 rerender 后点击仍有效 */
+export function bindWordCardActions() {
+  if (_wordCardBound) return;
+  _wordCardBound = true;
+
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-action]");
+    if (!btn || !btn.closest(".word-card")) return;
+
+    const action = btn.dataset.action;
+    const hanzi = (btn.dataset.hanzi || "").trim();
+    const pinyin = (btn.dataset.pinyin || "").trim();
+
+    if (!hanzi && action !== "learn") return;
+    if (action === "stroke" && btn.disabled) return;
+
+    if (action === "audio") {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.add("btn-audio-active");
+      try {
+        const { speakChinese } = await import("../../core/tts.js");
+        await speakChinese(hanzi || pinyin, { rate: 0.9, lang: "zh-CN" });
+      } catch (err) {
+        console.error("[TTS] failed:", err);
+        if (typeof alert === "function") alert("TTS failed. Check console.");
+      } finally {
+        setTimeout(() => btn.classList.remove("btn-audio-active"), 400);
+      }
+    }
+
+    if (action === "stroke") {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.add("btn-stroke-active");
+      try {
+        const modals = window.__HSK_GENERIC_MODALS?.generic;
+        if (modals?.open) {
+          modals.open({
+            title: (i18n?.t?.("stroke_title") || "笔顺") + "：" + hanzi,
+            html: `<div style="font-size:48px;font-weight:700;line-height:1">${escapeHtml(hanzi)}</div><div style="margin-top:8px;opacity:.7">笔顺模块待接入</div>`,
+          });
+        } else {
+          const base = (window.DATA_PATHS?.getBase?.()) || ".";
+          const url = `${String(base).replace(/\/+$/, "")}/pages/stroke.html?ch=${encodeURIComponent(hanzi)}`;
+          window.location.href = url;
+        }
+      } finally {
+        setTimeout(() => btn.classList.remove("btn-stroke-active"), 200);
+      }
+    }
+
+    if (action === "learn") {
+      e.preventDefault();
+      e.stopPropagation();
+      const item = window.__HSK_WORD_ITEMS_BY_HANZI?.get?.(hanzi) ?? { hanzi, pinyin };
+      const fn = window.__HSK_ON_CLICK_WORD;
+      if (typeof fn === "function") fn(item);
+      else if (window.LEARN_PANEL?.open) window.LEARN_PANEL.open(item);
+    }
+  });
 }
 
 function escapeHtml(s) {

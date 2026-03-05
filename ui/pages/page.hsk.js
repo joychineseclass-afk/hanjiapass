@@ -7,7 +7,7 @@ import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
-import { renderLessonList, renderWordCards, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
+import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 
 const state = {
   lv: 1,
@@ -430,6 +430,7 @@ export async function mount() {
 
   try { i18n.apply(document); } catch {}
 
+  bindWordCardActions();
   bindEvents();
   await loadLessons();
   showListMode();

@@ -1,29 +1,31 @@
 /**
- * TTS 朗读：优先浏览器 SpeechSynthesis，中文 zh-CN
+ * TTS 朗读：浏览器 SpeechSynthesis，中文 zh-CN
  */
-export function speakChinese(text, opts = {}) {
+export async function speakChinese(text, opts = {}) {
   const t = String(text ?? "").trim();
-  if (!t) return false;
+  if (!t) return;
 
-  if (typeof window === "undefined" || !window.speechSynthesis) {
-    if (opts.onError) opts.onError(new Error("TTS not supported"));
-    else if (typeof alert === "function") alert("TTS not supported");
-    return false;
+  if (!("speechSynthesis" in window)) {
+    if (typeof alert === "function") alert("TTS not supported");
+    return;
   }
 
-  try {
-    window.speechSynthesis.cancel();
-    const u = new window.SpeechSynthesisUtterance(t);
-    u.lang = "zh-CN";
-    u.rate = opts.rate ?? 0.9;
-    if (opts.onStart) u.onstart = opts.onStart;
-    if (opts.onEnd) u.onend = opts.onEnd;
-    if (opts.onError) u.onerror = (e) => opts.onError(e);
+  window.speechSynthesis.cancel();
+
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = opts.lang || "zh-CN";
+  u.rate = typeof opts.rate === "number" ? opts.rate : 0.9;
+  u.pitch = typeof opts.pitch === "number" ? opts.pitch : 1;
+
+  const pickVoice = () => {
+    const voices = window.speechSynthesis.getVoices() || [];
+    return voices.find((v) => /zh|cmn|Chinese/i.test(v.lang) || /zh|Chinese/i.test(v.name));
+  };
+  u.voice = pickVoice() || null;
+
+  return new Promise((resolve) => {
+    u.onend = resolve;
+    u.onerror = resolve;
     window.speechSynthesis.speak(u);
-    return true;
-  } catch (e) {
-    if (opts.onError) opts.onError(e);
-    else if (typeof alert === "function") alert("TTS error: " + (e?.message || "unknown"));
-    return false;
-  }
+  });
 }

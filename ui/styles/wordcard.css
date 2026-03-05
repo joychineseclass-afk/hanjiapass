@@ -74,3 +74,11 @@
   background: #e0f2fe;
   border-color: #38bdf8;
 }
+
+.btn-audio-active {
+  outline: 2px solid rgba(37, 99, 235, 0.35);
+}
+
+.btn-stroke-active {
+  outline: 2px solid rgba(16, 185, 129, 0.35);
+}
