@@ -4,6 +4,18 @@
 
   const toStr = (x) => String(x ?? "").trim();
 
+  /** 内部 version 仅允许 hsk2.0 / hsk3.0，禁止 hsk2/hsk3 短写 */
+  function normalizeHskVersion(v) {
+    const s = toStr(v).toLowerCase();
+    if (!s) return "hsk2.0";
+    if (s === "hsk2.0" || s === "hsk3.0") return s;
+    if (s === "2.0" || s === "hsk2") return "hsk2.0";
+    if (s === "3.0" || s === "hsk3") return "hsk3.0";
+    const m = s.match(/(2\.0|3\.0)/);
+    if (m) return `hsk${m[1]}`;
+    return "hsk2.0";
+  }
+
   // 兼容：1 / "1" / "hsk1" / "HSK 1"
   function normalizeLevel(level) {
     const s = toStr(level).toLowerCase();
@@ -64,29 +76,34 @@
   }
 
   // ===== URL builders =====
-  function vocabUrl(level) {
-  const lv = normalizeLevel(level);
-  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
-  return withVersion(joinPath(BASE, `data/vocab/${ver}/hsk${lv}.json`));
-}
+  /** opts.version 优先，否则 localStorage；version 仅允许 hsk2.0 / hsk3.0 */
+  function vocabUrl(level, opts) {
+    const lv = normalizeLevel(level);
+    const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
+    const ver = normalizeHskVersion(raw);
+    return withVersion(joinPath(BASE, `data/vocab/${ver}/hsk${lv}.json`));
+  }
 
-  function lessonsUrl(level) {
-  const lv = normalizeLevel(level);
-  const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
-  return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lessons.json`));
-}
+  function lessonsUrl(level, opts) {
+    const lv = normalizeLevel(level);
+    const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
+    const ver = normalizeHskVersion(raw);
+    return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}_lessons.json`));
+  }
 
   /** 课程序列索引文件 hsk{N}.json（与 BASE 一致，子目录部署可用） */
-  function lessonsIndexUrl(level) {
+  function lessonsIndexUrl(level, opts) {
     const lv = normalizeLevel(level);
-    const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
+    const ver = normalizeHskVersion(raw);
     return withVersion(joinPath(BASE, `data/lessons/${ver}/hsk${lv}.json`));
   }
 
   /** 单课详情 URL，opts.file 可选；与 BASE 一致 */
   function lessonDetailUrl(level, lessonNo, opts) {
     const lv = normalizeLevel(level);
-    const ver = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
+    const ver = normalizeHskVersion(raw);
     const file = toStr(opts && opts.file);
     if (file) return withVersion(joinPath(BASE, `data/lessons/${ver}/${file}`));
     const no = (typeof lessonNo === "number" ? lessonNo : parseInt(lessonNo, 10)) || 1;
@@ -149,6 +166,7 @@
     getBase,
     setVersion,
     getVersion,
+    normalizeHskVersion,
     debugChar,
   };
 })();

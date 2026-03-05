@@ -12,9 +12,9 @@
 //   opts.version -> localStorage(hsk_vocab_version) -> window.APP_VOCAB_VERSION -> default "hsk2.0"
 //
 // ✅ Robust:
-// - normalizes version aliases (2.0/3.0/hsk2/hsk3)
+// - version 仅允许 hsk2.0 / hsk3.0（禁止 hsk2/hsk3 短写，normalizeVersion 会转成完整形式）
 // - 404 fallback: if hsk3.0 missing -> try hsk2.0
-// - cache keys include version+url
+// - cache key: vocab:${version}:hsk${lv}
 // - exposes window.HSK_LOADER.getVersion() / setVersion() / clearCache()
 // - NEW: lessonDetailUrl() + loadLessonDetail()
 
@@ -161,18 +161,15 @@
     return m ? String(Number(m[1])) : "1";
   }
 
+  /** 内部 version 仅允许 hsk2.0 / hsk3.0，禁止 hsk2/hsk3 短写（读入时自动归一化） */
   function normalizeVersion(v) {
     const s = safeText(v).toLowerCase();
     if (!s) return "hsk2.0";
-    if (s === "2.0") return "hsk2.0";
-    if (s === "3.0") return "hsk3.0";
-    if (s === "hsk2") return "hsk2.0";
-    if (s === "hsk3") return "hsk3.0";
     if (s === "hsk2.0" || s === "hsk3.0") return s;
-
+    if (s === "2.0" || s === "hsk2") return "hsk2.0";
+    if (s === "3.0" || s === "hsk3") return "hsk3.0";
     const m = s.match(/(2\.0|3\.0)/);
     if (m) return `hsk${m[1]}`;
-
     return "hsk2.0";
   }
 
@@ -269,13 +266,14 @@
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
 
+    // URL 永远为 data/vocab/${version}/hsk${lv}.json
     const url =
-      (window.DATA_PATHS &&
-        window.DATA_PATHS.vocabUrl &&
-        window.DATA_PATHS.vocabUrl(lv, { version })) ||
+      (window.DATA_PATHS?.vocabUrl?.(lv, { version })) ||
       vocabUrl(lv, version);
 
-    const memKey = `vocab:${version}:${lv}`;
+    const memKey = `vocab:${version}:hsk${lv}`;
+    console.log("[HSK_LOADER] loadVocab url=%s cacheKey=%s version=%s lv=%s", url, memKey, version, lv);
+
     const cached = memGet(memKey);
     if (cached) return cached;
 
@@ -313,10 +311,8 @@
    
     // try index file first (respect BASE for subpath deploy)
     const idxUrl =
-      (window.DATA_PATHS &&
-        typeof window.DATA_PATHS.lessonsIndexUrl === "function" &&
-        window.DATA_PATHS.lessonsIndexUrl(lv)) ||
-      `/data/lessons/${version}/hsk${lv}.json`;
+      (window.DATA_PATHS?.lessonsIndexUrl?.(lv, { version })) ||
+      withBase(`data/lessons/${version}/hsk${lv}.json`);
     try {
       const r = await fetch(idxUrl);
       if (r.ok) {
@@ -433,6 +429,7 @@
 
     // extras (safe)
     getVersion: (opts) => getVocabVersion(opts || {}),
+    normalizeVersion,
     setVersion,
     clearCache: () => memClear(),
   };

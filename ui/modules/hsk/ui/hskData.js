@@ -3,13 +3,14 @@
 
 import { safeText } from "./hskDom.js";
 
+/** version 仅允许 hsk2.0 / hsk3.0 */
 export function getVersion(dom) {
-  return (
+  const raw =
     safeText(dom?.hskVersion?.value) ||
     safeText(localStorage.getItem("hsk_vocab_version")) ||
     safeText(window.APP_VOCAB_VERSION) ||
-    "hsk2.0"
-  );
+    "hsk2.0";
+  return window.DATA_PATHS?.normalizeHskVersion?.(raw) || window.HSK_LOADER?.normalizeVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
 }
 
 export async function fetchJson(url) {
@@ -29,12 +30,14 @@ export function getLessonNo(lesson, idxFallback = 0) {
 
 export function lessonDetailUrl(level, lessonNo, version) {
   const lv = safeText(level || "1");
-  const ver = safeText(version || "hsk2.0");
+  const raw = safeText(version || "hsk2.0");
+  const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   return `/data/lessons/${ver}/hsk${lv}_lesson${lessonNo}.json`;
 }
 
 export async function loadLessonDetail({ level, lessonNo, version, detailCache }) {
-  const ver = safeText(version || "hsk2.0");
+  const raw = safeText(version || "hsk2.0");
+  const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   const lv = safeText(level || "1");
   const key = `${ver}:${lv}:${lessonNo}`;
 
@@ -50,7 +53,8 @@ export async function loadLessonDetail({ level, lessonNo, version, detailCache }
 
 export async function loadLevelData({ level, version }) {
   const lv = safeText(level || "1");
-  const ver = safeText(version || "hsk2.0");
+  const raw = safeText(version || "hsk2.0");
+  const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
 
   if (!window.HSK_LOADER?.loadVocab) {
     throw new Error("HSK_LOADER.loadVocab 가 없어요. loader 스크립트 로드 상태를 확인해 주세요.");

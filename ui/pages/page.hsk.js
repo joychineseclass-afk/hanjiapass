@@ -261,8 +261,9 @@ function bindEvents() {
   }, { signal });
 
   $("hskVersion")?.addEventListener("change", async (e) => {
-    state.version = String(e.target.value || "hsk2.0");
-    try { window.HSK_LOADER?.setVersion?.(state.version); } catch {}
+    const ver = window.HSK_LOADER?.normalizeVersion?.(e.target.value) || (e.target.value === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+    state.version = ver;
+    try { window.HSK_LOADER?.setVersion?.(ver); } catch {}
     await loadLessons();
     if (state.current?.lessonData) {
       const { lessonNo, file } = state.current;
@@ -421,9 +422,9 @@ export async function mount() {
 
   app.innerHTML = getHSKLayoutHTML();
 
-  // init controls — sync version from localStorage so vocab/loader use correct version
+  // init controls — sync version from localStorage（仅允许 hsk2.0 / hsk3.0）
   const savedVer = localStorage.getItem("hsk_vocab_version") || state.version;
-  state.version = savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0";
+  state.version = (window.HSK_LOADER?.normalizeVersion?.(savedVer)) || (savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   $("hskLevel") && ($("hskLevel").value = String(state.lv));
   $("hskVersion") && ($("hskVersion").value = String(state.version));
 

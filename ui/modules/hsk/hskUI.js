@@ -12,18 +12,19 @@ export function initHSKUI(opts = {}) {
   const hskStatus = $("hskStatus");
   const hskVersion = $("hskVersion");
 
-  // ✅ vocab version dropdown
+  // ✅ vocab version dropdown（version 仅允许 hsk2.0 / hsk3.0）
   if (hskVersion) {
-    const saved = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    const raw = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+    const saved = window.HSK_LOADER?.normalizeVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
     hskVersion.value = saved;
 
     hskVersion.addEventListener("change", async () => {
-      // ✅ 用 loader 的版本管理（会自动 normalize + 清内部缓存）
-if (window.HSK_LOADER?.setVersion) {
-  window.HSK_LOADER.setVersion(hskVersion.value);
-} else {
-  localStorage.setItem("hsk_vocab_version", hskVersion.value);
-}
+      const ver = window.HSK_LOADER?.normalizeVersion?.(hskVersion.value) || hskVersion.value;
+      if (window.HSK_LOADER?.setVersion) {
+        window.HSK_LOADER.setVersion(ver);
+      } else {
+        localStorage.setItem("hsk_vocab_version", ver);
+      }
 
 // ✅ 保留你原有的缓存机制（双保险）
 try { CACHE.clear(); } catch {}
@@ -151,14 +152,14 @@ hskLevel?.dispatchEvent(new Event("change"));
     return top;
   }
 
-  // ===== ✅ PATCH:统一获取当前 version =====
+  // ===== ✅ PATCH:统一获取当前 version（仅允许 hsk2.0 / hsk3.0）=====
   function getVersion() {
-    return (
+    const raw =
       safeText(hskVersion?.value) ||
       safeText(localStorage.getItem("hsk_vocab_version")) ||
       safeText(window.APP_VOCAB_VERSION) ||
-      "hsk2.0"
-    );
+      "hsk2.0";
+    return window.HSK_LOADER?.normalizeVersion?.(raw) || window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   }
 
   // ✅ NEW: 简单 fetch JSON（课件详情用）
@@ -178,10 +179,11 @@ hskLevel?.dispatchEvent(new Event("change"));
     return Number.isFinite(n) && n > 0 ? n : idxFallback + 1;
   }
 
-  // ✅ NEW: 课件详情 URL
+  // ✅ NEW: 课件详情 URL（version 仅允许 hsk2.0 / hsk3.0）
   function lessonDetailUrl(level, lessonNo, version) {
     const lv = safeText(level || "1");
-    const ver = safeText(version || getVersion());
+    const raw = safeText(version || getVersion());
+    const ver = window.HSK_LOADER?.normalizeVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
     return `/data/lessons/${ver}/hsk${lv}_lesson${lessonNo}.json`;
   }
 

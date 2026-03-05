@@ -2,6 +2,18 @@
 // ✅ Stable lessonId derivation helper (Version-safe)
 // Output format example:
 //   hsk2.0_hsk1_lesson1
+// version 仅允许 hsk2.0 / hsk3.0
+
+function normalizeVersion(v) {
+  const s = String(v ?? "").trim().toLowerCase();
+  if (!s) return "hsk2.0";
+  if (s === "hsk2.0" || s === "hsk3.0") return s;
+  if (s === "2.0" || s === "hsk2") return "hsk2.0";
+  if (s === "3.0" || s === "hsk3") return "hsk3.0";
+  const m = s.match(/(2\.0|3\.0)/);
+  if (m) return `hsk${m[1]}`;
+  return "hsk2.0";
+}
 
 export function deriveLessonId(lesson, { lv, version } = {}) {
   // -------- 0) 统一拿版本 --------
@@ -16,7 +28,7 @@ export function deriveLessonId(lesson, { lv, version } = {}) {
     ? versionFromPathMatch[1]
     : "";
 
-  const finalVersion = String(
+  const rawVersion = String(
     version ||
       lesson?.version ||
       versionFromPath ||
@@ -25,6 +37,7 @@ export function deriveLessonId(lesson, { lv, version } = {}) {
         : "") ||
       "hsk2.0"
   ).trim();
+  const finalVersion = normalizeVersion(rawVersion);
 
   // -------- 1) 如果 lesson 本身已有 lessonId --------
   const direct =

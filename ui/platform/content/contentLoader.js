@@ -59,7 +59,14 @@ async function fetchJson(url, opts = {}) {
 }
 
 function getTrackDefault() {
-  return localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  const raw = localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  return window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+}
+
+function normalizeTrack(track) {
+  const raw = safeStr(track);
+  if (!raw) return getTrackDefault();
+  return window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
 }
 
 function legacyHskToLessonDoc(raw, { track, level, lessonNo, file }) {
@@ -194,7 +201,7 @@ export const CONTENT = {
     const t = safeStr(type);
     if (t === "hsk")
       return await loadHskLesson({
-        track: track || getTrackDefault(),
+        track: normalizeTrack(track),
         level: Number(level || 1),
         lessonNo: Number(lessonNo || 1),
         file: safeStr(file),

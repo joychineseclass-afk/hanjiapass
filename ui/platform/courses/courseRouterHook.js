@@ -21,9 +21,11 @@ export function getCourseRouteState() {
   const { route, query } = parseHashQuery();
   if (route !== "course") return null;
 
+  const rawTrack = query.track || localStorage.getItem("hsk_vocab_version") || "hsk2.0";
+  const track = window.DATA_PATHS?.normalizeHskVersion?.(rawTrack) || (rawTrack === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   return {
     type: query.type || "hsk",
-    track: query.track || localStorage.getItem("hsk_vocab_version") || "hsk2.0",
+    track,
     level: Number(query.level || 1),
     lessonNo: query.lesson ? Number(query.lesson) : null,
     lessonId: query.lessonId || "",
