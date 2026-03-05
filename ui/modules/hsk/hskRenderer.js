@@ -1,10 +1,57 @@
 // /ui/modules/hsk/hskRenderer.js ✅ FINAL
 // - renderLessonList(container, lessons, { lang })
 // - renderWordCards(gridEl, items, _, { lang })
-// - Fixes: [object Object] by pickText()
-// - Supports pinyinTitle in lesson list
+// - Helpers: normalizeLang, wordKey, wordPinyin, wordMeaning
 
 import { i18n } from "../../i18n.js";
+
+// Returns "ko" | "en" | "zh"
+export function normalizeLang(i18nLang) {
+  const l = String(i18nLang ?? i18n?.getLang?.() ?? "ko").toLowerCase();
+  if (l === "kr" || l === "ko") return "ko";
+  if (l === "cn" || l === "zh") return "zh";
+  if (l === "en") return "en";
+  return "ko";
+}
+
+export function wordKey(x) {
+  if (x == null) return "";
+  if (typeof x === "string") return x.trim();
+  return String(x.hanzi ?? x.word ?? x.zh ?? x.cn ?? "").trim();
+}
+
+export function wordPinyin(x) {
+  if (x == null || typeof x === "string") return "";
+  return String(x.pinyin ?? x.py ?? "").trim();
+}
+
+export function wordMeaning(x, lang) {
+  if (x == null) return "";
+  if (typeof x === "string") return "";
+  const m = x.meaning;
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  if (lang === "ko") {
+    return str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
+      str(x.en) || (m && str(m.en)) ||
+      str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
+      (typeof m === "string" ? m.trim() : "") ||
+      wordKey(x) || "";
+  }
+  if (lang === "en") {
+    return str(x.en) || (m && str(m.en)) ||
+      str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
+      str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
+      (typeof m === "string" ? m.trim() : "") ||
+      wordKey(x) || "";
+  }
+  // zh
+  return str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
+    str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
+    str(x.en) || (m && str(m.en)) ||
+    (typeof m === "string" ? m.trim() : "") ||
+    wordKey(x) || "";
+}
 
 function pickText(v, lang = "ko") {
   if (v == null) return "";
@@ -69,35 +116,16 @@ const MEANING_FALLBACK = {
   en: "(No meaning yet)",
 };
 
-// Extract meaning string from word / vocabMap hit. Supports:
-// word.ko, word.kr, word.meaning.ko, word.meaning.kr
-// word.en, word.meaning.en
-// word.zh, word.cn, word.meaning.zh, word.meaning.cn
-function extractMeaning(word, lang) {
-  if (!word || typeof word !== "object") return "";
-  const m = word.meaning;
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-
-  if (lang === "ko") {
-    return str(word.ko) || str(word.kr) || (m && (str(m.ko) || str(m.kr))) || "";
-  }
-  if (lang === "en") {
-    return str(word.en) || (m && str(m.en)) || "";
-  }
-  // zh
-  return str(word.zh) || str(word.cn) || (m && (str(m.zh) || str(m.cn))) || "";
-}
-
 function meaningTextOf(val, lang) {
   if (!val) return "";
   if (typeof val === "string") return val.trim();
   if (Array.isArray(val)) return val.map(v => meaningTextOf(v, lang)).filter(Boolean).join(" / ");
   if (typeof val === "object") {
-    const v = extractMeaning(val, lang);
+    const v = wordMeaning(val, lang);
     if (v) return v;
     const pick = val.meaning ?? val.text ?? val.def ?? val.gloss ?? "";
     if (typeof pick === "string") return pick.trim();
-    if (typeof pick === "object") return extractMeaning({ meaning: pick }, lang) || extractMeaning(pick, lang);
+    if (typeof pick === "object") return wordMeaning({ meaning: pick }, lang) || "";
     return "";
   }
   return String(val);
@@ -106,22 +134,22 @@ function meaningTextOf(val, lang) {
 export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
-  const resolvedLang = lang ?? i18n?.getLang?.() ?? "ko"; // ko|zh|en
+  const currentLang = normalizeLang(lang ?? i18n?.getLang?.());
 
-  gridEl.innerHTML = arr.map((x) => {
-    const raw = typeof x === "string" ? { hanzi: x } : (x || {});
-    const han = String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
-    const pinyin = String(raw.pinyin ?? raw.py ?? raw.p ?? "").trim();
+  const cards = arr.map((x) => {
+    try {
+      const raw = typeof x === "string" ? { hanzi: x } : (x || {});
+      const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
+      const pinyin = wordPinyin(raw);
+      let meaningStr = meaningTextOf(raw, currentLang);
+      if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
 
-    let meaningStr = meaningTextOf(raw, resolvedLang);
-    if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
+      if (!meaningStr) {
+        console.warn("[renderWordCards] no meaning for word:", han, "| vocab/item:", raw);
+        meaningStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
+      }
 
-    if (!meaningStr) {
-      console.warn("[renderWordCards] no meaning for word:", han, "| vocab/item:", raw);
-      meaningStr = MEANING_FALLBACK[resolvedLang] ?? MEANING_FALLBACK.ko;
-    }
-
-    return `
+      return `
       <div class="word-card bg-white rounded-2xl shadow p-4 border border-slate-100">
         <div class="hanzi text-2xl font-bold">${escapeHtml(han)}</div>
         ${pinyin ? `<div class="pinyin text-sm italic opacity-70 mt-1">${escapeHtml(pinyin)}</div>` : ``}
@@ -133,7 +161,13 @@ export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
         </div>
       </div>
     `;
-  }).join("");
+    } catch (e) {
+      console.warn("[renderWordCards] failed for item:", x, e);
+      return `<div class="word-card border border-red-200 p-2 text-sm text-red-600">Error rendering word</div>`;
+    }
+  });
+
+  gridEl.innerHTML = cards.join("");
 }
 
 function escapeHtml(s) {

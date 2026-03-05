@@ -7,7 +7,7 @@ import { i18n } from "../i18n.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
-import { renderLessonList, renderWordCards } from "../modules/hsk/hskRenderer.js";
+import { renderLessonList, renderWordCards, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 
 const state = {
   lv: 1,
@@ -18,10 +18,7 @@ const state = {
 };
 
 function getLang() {
-  const l = (i18n?.getLang?.() || "kr").toLowerCase();
-  if (l === "cn" || l === "zh") return "zh";
-  if (l === "en") return "en";
-  return "ko";
+  return normalizeLang(i18n?.getLang?.()); // ko | zh | en
 }
 
 function $(id) { return document.getElementById(id); }
@@ -164,12 +161,9 @@ function buildAIContext() {
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {
-    const raw = typeof w === "string" ? { hanzi: w } : (w || {});
-    const han = raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? "";
-    const py  = raw.pinyin ?? raw.py ?? "";
-    const mean = lang === "zh" ? (raw.zh ?? raw.cn ?? raw.meaningZh ?? raw.zhMeaning ?? raw.meaning ?? "")
-      : lang === "en" ? (raw.en ?? raw.meaning ?? "")
-      : (raw.kr ?? raw.ko ?? raw.meaning ?? "");
+    const han = wordKey(w);
+    const py = wordPinyin(w);
+    const mean = wordMeaning(w, lang);
     return `${han}${py ? `(${py})` : ""}${mean ? `: ${mean}` : ""}`;
   }).join("\n");
 
@@ -223,15 +217,16 @@ async function openLesson({ lessonNo, file }) {
     }
 
     const lessonWordsRaw = Array.isArray(lessonData?.words) ? lessonData.words : [];
-    const set = new Set(lessonWordsRaw.map((w) => String(w ?? "").trim()).filter(Boolean));
+    const vocabArr = Array.isArray(vocab) ? vocab : [];
+    const vocabByKey = new Map(vocabArr.map((v) => [wordKey(v), v]).filter(([k]) => k));
 
-    const lessonWords =
-      Array.isArray(vocab)
-        ? vocab.filter((x) => {
-            const word = String(x?.word ?? x?.han ?? x?.zh ?? x?.cn ?? "").trim();
-            return word && set.has(word);
-          })
-        : [];
+    const lessonWords = lessonWordsRaw.map((w) => {
+      if (typeof w === "string") {
+        const key = String(w ?? "").trim();
+        return vocabByKey.get(key) || { hanzi: key };
+      }
+      return w || {};
+    }).filter((w) => wordKey(w));
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
 
