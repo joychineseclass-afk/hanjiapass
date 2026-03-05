@@ -76,13 +76,15 @@ function setActive(rootEl) {
 function syncLangButtons(rootEl) {
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
-  const lang = (i18n?.getLang?.() || "kr").toLowerCase();
+  const btnEN = rootEl.querySelector("#btnEN");
+  const lang = (i18n?.getLang?.() || "ko").toLowerCase();
+  const canon = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
 
-  btnKR?.classList.toggle("active", lang === "kr" || lang === "ko");
-  btnCN?.classList.toggle("active", lang === "cn" || lang === "zh");
+  btnKR?.classList.toggle("active", canon === "ko");
+  btnCN?.classList.toggle("active", canon === "zh");
+  btnEN?.classList.toggle("active", canon === "en");
 
-  document.documentElement.lang =
-    (lang === "kr" || lang === "ko") ? "ko" : "zh-CN";
+  document.documentElement.lang = canon === "ko" ? "ko" : canon === "zh" ? "zh-CN" : "en";
 }
 
 function applyI18n(rootEl) {
@@ -187,8 +189,9 @@ export function mountNavBar(rootEl) {
 
       <div class="right">
         <div class="lang" aria-label="Language switcher">
-          <button id="btnKR" type="button" aria-label="Korean">KR</button>
-          <button id="btnCN" type="button" aria-label="Chinese">CN</button>
+          <button id="btnKR" type="button" aria-label="Korean" data-lang="ko">KR</button>
+          <button id="btnCN" type="button" aria-label="Chinese" data-lang="zh">CN</button>
+          <button id="btnEN" type="button" aria-label="English" data-lang="en">EN</button>
         </div>
 
         <div class="login">
@@ -224,19 +227,18 @@ export function mountNavBar(rootEl) {
     nav.appendChild(a);
   });
 
-  const btnKR = rootEl.querySelector("#btnKR");
-  const btnCN = rootEl.querySelector("#btnCN");
+  const langButtons = rootEl.querySelectorAll(".lang button[data-lang]");
 
-  btnKR?.addEventListener("click", () => {
-    try { i18n?.setLang?.("kr"); } catch {}
-    applyI18n(rootEl);
-    window.dispatchEvent(new CustomEvent("joy:langchanged"));
-  });
-
-  btnCN?.addEventListener("click", () => {
-    try { i18n?.setLang?.("cn"); } catch {}
-    applyI18n(rootEl);
-    window.dispatchEvent(new CustomEvent("joy:langchanged"));
+  langButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang") || "ko"; // ko | zh | en
+      try {
+        i18n?.setLang?.(lang);
+        localStorage.setItem("joy_lang", lang);
+      } catch {}
+      applyI18n(rootEl);
+      window.dispatchEvent(new CustomEvent("joy:langchanged"));
+    });
   });
 
   applyI18n(rootEl);

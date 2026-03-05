@@ -63,58 +63,69 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
   `;
 }
 
-function normalizeLang() {
-  const l = (window?.i18n?.getLang?.() || localStorage.getItem("joy_lang") || "ko").toLowerCase();
-  if (l === "kr") return "ko";
-  if (l === "cn") return "zh";
-  return l;
+const MEANING_FALLBACK = {
+  ko: "(뜻 정보 없음)",
+  zh: "(暂无释义)",
+  en: "(No meaning yet)",
+};
+
+// Extract meaning string from word / vocabMap hit. Supports:
+// word.ko, word.kr, word.meaning.ko, word.meaning.kr
+// word.en, word.meaning.en
+// word.zh, word.cn, word.meaning.zh, word.meaning.cn
+function extractMeaning(word, lang) {
+  if (!word || typeof word !== "object") return "";
+  const m = word.meaning;
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  if (lang === "ko") {
+    return str(word.ko) || str(word.kr) || (m && (str(m.ko) || str(m.kr))) || "";
+  }
+  if (lang === "en") {
+    return str(word.en) || (m && str(m.en)) || "";
+  }
+  // zh
+  return str(word.zh) || str(word.cn) || (m && (str(m.zh) || str(m.cn))) || "";
 }
 
 function meaningTextOf(val, lang) {
   if (!val) return "";
-  if (typeof val === "string") return val;
+  if (typeof val === "string") return val.trim();
   if (Array.isArray(val)) return val.map(v => meaningTextOf(v, lang)).filter(Boolean).join(" / ");
   if (typeof val === "object") {
-    const l = (lang || "ko").toLowerCase();
-    const pick =
-      (l === "en" && (val.en || val.eng)) ||
-      ((l === "ko" || l === "kr") && (val.ko || val.kr)) ||
-      ((l === "zh" || l === "cn") && (val.zh || val.cn)) ||
-      val.meaning || val.text || val.def || "";
-    if (typeof pick === "string") return pick;
-    try { return JSON.stringify(pick); } catch { return ""; }
+    const v = extractMeaning(val, lang);
+    if (v) return v;
+    const pick = val.meaning ?? val.text ?? val.def ?? val.gloss ?? "";
+    if (typeof pick === "string") return pick.trim();
+    if (typeof pick === "object") return extractMeaning({ meaning: pick }, lang) || extractMeaning(pick, lang);
+    return "";
   }
   return String(val);
 }
 
-let _meaningObjectWarned = false;
-
 export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
-  const resolvedLang = lang ?? normalizeLang();
+  const resolvedLang = lang ?? i18n?.getLang?.() ?? "ko"; // ko|zh|en
 
   gridEl.innerHTML = arr.map((x) => {
-    // Support both: string ("你好") and object ({ hanzi, pinyin, kr, en })
     const raw = typeof x === "string" ? { hanzi: x } : (x || {});
     const han = String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
     const pinyin = String(raw.pinyin ?? raw.py ?? raw.p ?? "").trim();
-    // meaningCandidate: vocabMap lookup (object) or word object with ko/en/zh
-    const meaningCandidate = raw.meaning ?? raw;
-    let meaningStr = meaningTextOf(meaningCandidate, resolvedLang);
-    if (meaningStr && meaningStr.includes("object Object")) {
-      if (!_meaningObjectWarned) {
-        console.warn("[renderWordCards] meaning resolved to [object Object], cleared");
-        _meaningObjectWarned = true;
-      }
-      meaningStr = "";
+
+    let meaningStr = meaningTextOf(raw, resolvedLang);
+    if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
+
+    if (!meaningStr) {
+      console.warn("[renderWordCards] no meaning for word:", han, "| vocab/item:", raw);
+      meaningStr = MEANING_FALLBACK[resolvedLang] ?? MEANING_FALLBACK.ko;
     }
 
     return `
       <div class="word-card bg-white rounded-2xl shadow p-4 border border-slate-100">
         <div class="hanzi text-2xl font-bold">${escapeHtml(han)}</div>
         ${pinyin ? `<div class="pinyin text-sm italic opacity-70 mt-1">${escapeHtml(pinyin)}</div>` : ``}
-        ${meaningStr ? `<div class="meaning text-sm mt-2">${escapeHtml(meaningStr)}</div>` : ``}
+        <div class="meaning text-sm mt-2">${escapeHtml(meaningStr)}</div>
         <div class="mt-3">
           <button type="button" class="px-3 py-1 rounded-lg border text-sm opacity-80">
             Tap to Learn

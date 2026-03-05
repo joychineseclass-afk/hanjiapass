@@ -22,6 +22,15 @@ const DICT = {
     nav_teacher: "교사 전용",
     nav_my: "내 학습",
     nav_login: "로그인",
+    nav_hanja: "한자",
+    login: "로그인",
+    hsk_version: "버전",
+    back_to_list: "목록으로",
+    tab_words: "단어",
+    tab_dialogue: "회화",
+    tab_grammar: "문법",
+    tab_ai: "AI 학습",
+    tap_to_learn: "탭해서 학습",
 
     // ===== Home (page.home.js) =====
 home_kicker: "✨ 오늘도 한 걸음",
@@ -177,6 +186,16 @@ hsk_empty_grammar: "문법 콘텐츠가 아직 없습니다.",
     nav_teacher: "教师专区",
     nav_my: "我的学习",
     nav_login: "登录",
+    nav_hanja: "汉字",
+    login: "登录",
+    hsk_version: "版本",
+    back_to_list: "返回目录",
+    tab_words: "单词",
+    tab_dialogue: "会话",
+    tab_grammar: "语法",
+    tab_ai: "AI学习",
+    tap_to_learn: "点击学习",
+
 // ===== Home (page.home.js) =====
 home_kicker: "✨ 今天也前进一步",
 home_h1: "今天只要3分钟，要不要学点中文？",
@@ -313,15 +332,16 @@ hsk_empty_grammar: "暂无语法内容。",
     hsk_lesson_unit: "第{n}课",
   },
 
-  // ===== English (optional) =====
+  // ===== English =====
   en: {
-    brand: "Joy Chinese",
+    brand: "Lumina Chinese Learning Center",
     subtitle: "AI Hanzi · Chinese Learning Platform",
 
     nav_home: "Home",
     nav_hsk: "HSK",
     nav_stroke: "Stroke Order",
     nav_hanjagongfu: "Hanzi Study",
+    nav_hanja: "Hanzi",
     nav_speaking: "Speaking",
     nav_travel: "Travel Chinese",
     nav_culture: "Culture",
@@ -329,25 +349,36 @@ hsk_empty_grammar: "暂无语法内容。",
     nav_resources: "Resources",
     nav_teacher: "Teacher",
     nav_my: "My Learning",
+    nav_login: "Login",
+    login: "Login",
 
     common_loading: "Loading...",
     common_retry: "Retry",
     common_close: "Close",
+    common_back: "Back",
 
-    hsk_title: "HSK",
+    hsk_title: "HSK Learning",
     hsk_header: "HSK {lv} · {version}",
     hsk_level: "Level",
+    hsk_version: "Version",
     hsk_tip: "Select a level to start.",
     hsk_search_placeholder: "Search word/pinyin/meaning",
     hsk_loading_lessons: "Loading lessons...",
     hsk_lesson_status: "Lesson {label} ({got}/{total})",
     hsk_back_to_list: "← Back to list",
+    back_to_list: "Back to list",
     hsk_words_tab: "Words",
     hsk_dialogue_tab: "Dialogue",
     hsk_grammar_tab: "Grammar",
     hsk_quiz_tab: "Quiz",
     hsk_ai_tab: "AI Learn",
     hsk_lesson_unit: "Lesson {n}",
+
+    tab_words: "Words",
+    tab_dialogue: "Dialogue",
+    tab_grammar: "Grammar",
+    tab_ai: "AI Learn",
+    tap_to_learn: "Tap to Learn",
   },
 };
 
@@ -359,24 +390,16 @@ function safeSetLS(key, val) {
   try { localStorage.setItem(key, val); } catch {}
 }
 
-// ---------- normalize lang codes (compat) ----------
-// accepts: kr/cn/ko/zh/en, also "zh-cn", "zh-hans", "kr-KR" etc.
+// ---------- normalize lang codes (unified) ----------
+// kr/ko/korean → ko; cn/zh/chinese → zh; en stays en
+// getLang() always returns ko|zh|en
 function normalizeLang(input, fallback = "ko") {
   const raw = String(input || "").trim().toLowerCase();
   if (!raw) return fallback;
 
-  // old codes
-  if (raw === "kr") return "ko";
-  if (raw === "cn") return "zh";
-
-  // common variants
-  if (raw === "ko" || raw.startsWith("ko-")) return "ko";
-  if (raw === "zh" || raw.startsWith("zh")) return "zh";
+  if (raw === "kr" || raw === "ko" || raw === "korean" || raw.startsWith("ko-")) return "ko";
+  if (raw === "cn" || raw === "zh" || raw === "chinese" || raw.startsWith("zh")) return "zh";
   if (raw === "en" || raw.startsWith("en-")) return "en";
-
-  // tolerate your older "site_lang" values
-  if (raw === "korean") return "ko";
-  if (raw === "chinese") return "zh";
 
   return fallback;
 }
@@ -426,9 +449,9 @@ class I18N {
     safeSetLS(this._storageKey, this._lang);
   }
 
-  // canonical getter
+  // canonical getter — always returns ko|zh|en
   getLang() {
-    return this._lang; // ko|zh|en
+    return normalizeLang(this._lang, "ko");
   }
 
   // legacy getter (some old code expects kr/cn)
