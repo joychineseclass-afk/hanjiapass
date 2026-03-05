@@ -5,6 +5,33 @@
 
 import { i18n } from "../../i18n.js";
 
+/** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
+function resolveStrokeUrl(hanzi) {
+  const ch = encodeURIComponent(hanzi || "");
+  const inPages = (typeof location !== "undefined" && location.pathname) ? location.pathname.includes("/pages/") : false;
+  if (inPages) return `stroke.html?ch=${ch}`; // 相对路径 → /pages/stroke.html
+  return `/pages/stroke.html?ch=${ch}`;
+}
+
+/** 存在性探测，优先返回可用的 stroke 页路径 */
+async function resolveStrokeUrlAsync(hanzi) {
+  const ch = encodeURIComponent(hanzi || "");
+  const candidates = [];
+  if (typeof location !== "undefined" && location.pathname?.includes("/pages/")) {
+    candidates.push(`stroke.html?ch=${ch}`);
+  }
+  candidates.push(`/pages/stroke.html?ch=${ch}`, `/stroke.html?ch=${ch}`);
+
+  for (const u of candidates) {
+    try {
+      const test = u.split("?")[0];
+      const r = await fetch(test, { method: "HEAD" });
+      if (r.ok) return u;
+    } catch {}
+  }
+  return candidates[0] || `/pages/stroke.html?ch=${ch}`;
+}
+
 // Returns "ko" | "en" | "zh"
 export function normalizeLang(i18nLang) {
   const l = String(i18nLang ?? i18n?.getLang?.() ?? "ko").toLowerCase();
@@ -266,8 +293,7 @@ export function bindWordCardActions() {
             html: `<div style="font-size:48px;font-weight:700;line-height:1">${escapeHtml(hanzi)}</div><div style="margin-top:8px;opacity:.7">笔顺模块待接入</div>`,
           });
         } else {
-          const base = (window.DATA_PATHS?.getBase?.()) || ".";
-          const url = `${String(base).replace(/\/+$/, "")}/pages/stroke.html?ch=${encodeURIComponent(hanzi)}`;
+          const url = await resolveStrokeUrlAsync(hanzi);
           window.location.href = url;
         }
       } finally {
