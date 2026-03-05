@@ -87,7 +87,8 @@
     return "";
   }
 
-  function normalizeItem(raw) {
+  /** Normalized vocab schema: { hanzi, pinyin, meaning:{ko,en,zh}, example?, tags? } */
+  function normalizeVocabItem(raw, version) {
     const word = pickFirstNonEmpty(
       raw && raw.word,
       raw && raw.hanzi,
@@ -100,6 +101,7 @@
       raw && raw.term,
       raw && raw.token
     );
+    const hanzi = normalizeWord(word);
 
     const pinyin = pickFirstNonEmpty(
       raw && raw.pinyin,
@@ -108,34 +110,46 @@
       raw && raw.pronunciation
     );
 
-    const meaning = normalizeLangValue(
-      pickFirstNonEmpty(
-        raw && raw.meaning,
-        raw && raw.ko,
-        raw && raw.kr,
-        raw && raw.translation,
-        raw && raw.trans,
-        raw && raw.en,
-        raw && raw.def
-      )
-    );
+    const rawMeaning = raw && (raw.meaning || raw.ko || raw.kr || raw.translation || raw.trans || raw.en || raw.def);
+    const m = typeof rawMeaning === "object" ? rawMeaning : { ko: rawMeaning || "", en: "", zh: "" };
+    const meaning = {
+      ko: safeText(m.ko || m.kr),
+      en: safeText(m.en),
+      zh: safeText(m.zh || m.cn) || hanzi,
+    };
 
-    const example = normalizeLangValue(
-      pickFirstNonEmpty(
-        raw && raw.example,
-        raw && raw.sentence,
-        raw && raw.eg,
-        raw && raw.ex
-      )
-    );
+    const rawEx = raw && (raw.example || raw.sentence || raw.eg || raw.ex);
+    const ex = typeof rawEx === "object" ? rawEx : { zh: rawEx || "" };
+    const example = (ex && (ex.zh || ex.ko || ex.en)) ? {
+      zh: safeText(ex.zh || ex.cn),
+      ko: safeText(ex.ko || ex.kr),
+      en: safeText(ex.en),
+    } : undefined;
+
+    const tags = {};
+    if (raw && (raw.lesson != null || raw.lesson_title)) {
+      if (raw.lesson != null) tags.lesson = Number(raw.lesson);
+      if (raw.lesson_title) tags.lesson_title = String(raw.lesson_title);
+    }
+    if (raw && raw.tags && raw.tags.generated) tags.generated = true;
 
     return {
-      raw,
-      word: normalizeWord(word),
+      hanzi,
       pinyin: safeText(pinyin),
       meaning,
-      example,
+      example: example && (example.zh || example.ko || example.en) ? example : undefined,
+      tags: Object.keys(tags).length ? tags : undefined,
+      word: hanzi,
+      ko: meaning.ko,
+      kr: meaning.ko,
+      en: meaning.en,
+      zh: meaning.zh,
+      cn: meaning.zh,
     };
+  }
+
+  function normalizeItem(raw) {
+    return normalizeVocabItem(raw, "hsk2.0");
   }
 
   // -----------------------------
@@ -228,8 +242,13 @@
   function dedupeByWord(list) {
     const seen = new Set();
     return list.filter((item) => {
-      if (!item.word || seen.has(item.word)) return false;
-      seen.add(item.word);
+      const key = (item.hanzi || item.word || "").trim();
+      if (!key) return false;
+      if (seen.has(key)) {
+        console.warn("[HSK_LOADER] duplicate vocab key:", key);
+        return false;
+      }
+      seen.add(key);
       return true;
     });
   }
@@ -256,13 +275,27 @@
         window.DATA_PATHS.vocabUrl(lv, { version })) ||
       vocabUrl(lv, version);
 
-    const memKey = `vocab:${version}:${lv}:${url}`;
+    const memKey = `vocab:${version}:${lv}`;
     const cached = memGet(memKey);
     if (cached) return cached;
 
-    const data = await fetchJson(url, { fallbackTo2: true });
+    let data;
+    try {
+      data = await fetchJson(url, { fallbackTo2: false });
+    } catch (e) {
+      console.warn("[HSK_LOADER] vocab fetch failed:", url, e);
+      throw e;
+    }
+
     const arr = extractArray(data);
-    const finalList = dedupeByWord(arr.map(normalizeItem)).filter((x) => x.word);
+    const normalized = arr.map((r) => normalizeVocabItem(r, version));
+
+    for (const x of normalized) {
+      if (!(x.hanzi || x.word)) console.warn("[HSK_LOADER] vocab entry missing hanzi:", x);
+      if (!x.pinyin) console.warn("[HSK_LOADER] vocab entry missing pinyin:", x.hanzi || x.word, x);
+    }
+
+    const finalList = dedupeByWord(normalized).filter((x) => x.hanzi || x.word);
 
     memSet(memKey, finalList);
     return finalList;

@@ -262,8 +262,14 @@ function bindEvents() {
 
   $("hskVersion")?.addEventListener("change", async (e) => {
     state.version = String(e.target.value || "hsk2.0");
-    showListMode();
+    try { window.HSK_LOADER?.setVersion?.(state.version); } catch {}
     await loadLessons();
+    if (state.current?.lessonData) {
+      const { lessonNo, file } = state.current;
+      await openLesson({ lessonNo, file });
+    } else {
+      showListMode();
+    }
   }, { signal });
 
   $("hskBackToList")?.addEventListener("click", () => {
@@ -415,7 +421,9 @@ export async function mount() {
 
   app.innerHTML = getHSKLayoutHTML();
 
-  // init controls
+  // init controls — sync version from localStorage so vocab/loader use correct version
+  const savedVer = localStorage.getItem("hsk_vocab_version") || state.version;
+  state.version = savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0";
   $("hskLevel") && ($("hskLevel").value = String(state.lv));
   $("hskVersion") && ($("hskVersion").value = String(state.version));
 
