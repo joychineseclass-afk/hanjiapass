@@ -19,7 +19,9 @@ const state = {
 
 function getLang() {
   const l = (i18n?.getLang?.() || "kr").toLowerCase();
-  return (l === "cn" || l === "zh") ? "zh" : "ko";
+  if (l === "cn" || l === "zh") return "zh";
+  if (l === "en") return "en";
+  return "ko";
 }
 
 function $(id) { return document.getElementById(id); }
@@ -162,9 +164,12 @@ function buildAIContext() {
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {
-    const han = w?.word || w?.han || w?.zh || w?.cn || "";
-    const py  = w?.pinyin || w?.py || "";
-    const mean = (lang === "zh") ? (w?.meaningZh || w?.zhMeaning || w?.meaning || "") : (w?.meaning || w?.ko || w?.kr || "");
+    const raw = typeof w === "string" ? { hanzi: w } : (w || {});
+    const han = raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? "";
+    const py  = raw.pinyin ?? raw.py ?? "";
+    const mean = lang === "zh" ? (raw.zh ?? raw.cn ?? raw.meaningZh ?? raw.zhMeaning ?? raw.meaning ?? "")
+      : lang === "en" ? (raw.en ?? raw.meaning ?? "")
+      : (raw.kr ?? raw.ko ?? raw.meaning ?? "");
     return `${han}${py ? `(${py})` : ""}${mean ? `: ${mean}` : ""}`;
   }).join("\n");
 
