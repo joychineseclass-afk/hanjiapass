@@ -336,26 +336,25 @@
     return normalized;
   }
 
-  // ✅ NEW: load one lesson detail with unified url (file first, fallback fixed)
+  // ✅ load lesson via platform course engine
   async function loadLessonDetail(level, lessonNo, opts = {}) {
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
     const file = safeText(opts.file || "");
+    const no = Number(lessonNo || 1) || 1;
 
-    const url =
-      (window.DATA_PATHS &&
-        typeof window.DATA_PATHS.lessonDetailUrl === "function" &&
-        window.DATA_PATHS.lessonDetailUrl(lv, lessonNo, { file })) ||
-      lessonDetailUrl(lv, lessonNo, version, file);
-
-    const memKey = `lessonDetail:${version}:${lv}:${lessonNo}:${url}`;
+    const memKey = `lessonDetail:${version}:${lv}:${no}:${file}`;
     const cached = memGet(memKey);
     if (cached) return cached;
 
-    const data = await fetchJson(url, { fallbackTo2: true });
+    const { COURSES } = await import("/ui/platform/index.js");
+    const course = await COURSES.loadCourse(
+      { type: "hsk", level: lv, lessonNo: no },
+      { track: version, file: file || undefined }
+    );
 
-    memSet(memKey, data);
-    return data;
+    memSet(memKey, course.raw);
+    return course.raw;
   }
 
   // ✅ Helper: force set version (UI can call this)
