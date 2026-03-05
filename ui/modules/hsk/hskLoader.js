@@ -340,21 +340,30 @@
   async function loadLessonDetail(level, lessonNo, opts = {}) {
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
-    const file = safeText(opts.file || "");
     const no = Number(lessonNo || 1) || 1;
 
-    const memKey = `lessonDetail:${version}:${lv}:${no}:${file}`;
+    const memKey = `lessonDetail:${version}:${lv}:${no}`;
     const cached = memGet(memKey);
     if (cached) return cached;
 
     const { COURSES } = await import("/ui/platform/index.js");
     const course = await COURSES.loadCourse(
       { type: "hsk", level: lv, lessonNo: no },
-      { track: version, file: file || undefined }
+      { track: version }
     );
 
-    memSet(memKey, course.raw);
-    return course.raw;
+    const source = course.raw || course.doc || {};
+    const c = source.content;
+    const lesson = {
+      ...source,
+      words: Array.isArray(source.words) ? source.words : (Array.isArray(c?.words) ? c.words : []),
+      dialogue: Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []),
+      grammar: Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []),
+      practice: Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []),
+    };
+
+    memSet(memKey, lesson);
+    return lesson;
   }
 
   // ✅ Helper: force set version (UI can call this)
