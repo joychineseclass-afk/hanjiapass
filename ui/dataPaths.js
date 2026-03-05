@@ -76,12 +76,14 @@
   }
 
   // ===== URL builders =====
-  /** opts.version 优先，否则 localStorage；version 仅允许 hsk2.0 / hsk3.0 */
+  /** opts.version 优先，否则 localStorage；version 仅允许 hsk2.0 / hsk3.0
+   * HSK 3.0 的 7~9 级共用 hsk7-9.json */
   function vocabUrl(level, opts) {
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
-    return withVersion(joinPath(BASE, `data/vocab/${ver}/hsk${lv}.json`));
+    const file = (ver === "hsk3.0" && ["7", "8", "9"].includes(lv)) ? "hsk7-9.json" : `hsk${lv}.json`;
+    return withVersion(joinPath(BASE, `data/vocab/${ver}/${file}`));
   }
 
   function lessonsUrl(level, opts) {

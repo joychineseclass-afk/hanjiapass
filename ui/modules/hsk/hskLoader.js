@@ -185,10 +185,11 @@
   }
 
   // -----------------------------
-  // URL builders
+  // URL builders (HSK 3.0 的 7~9 级共用 hsk7-9.json)
   // -----------------------------
   function vocabUrl(lv, version) {
-    return withBase(`data/vocab/${version}/hsk${lv}.json`);
+    const file = (version === "hsk3.0" && ["7", "8", "9"].includes(String(lv))) ? "hsk7-9.json" : `hsk${lv}.json`;
+    return withBase(`data/vocab/${version}/${file}`);
   }
   function lessonsUrl(lv, version) {
     return withBase(`data/lessons/${version}/hsk${lv}_lessons.json`);

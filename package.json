@@ -1,0 +1,13 @@
+{
+  "name": "hanjiapass",
+  "version": "1.0.0",
+  "description": "Lumina Chinese Learning Center - HSK vocabulary system",
+  "type": "module",
+  "scripts": {
+    "build:vocab": "node scripts/build-vocab.mjs",
+    "migrate:lesson-words": "node scripts/migrate-lesson-words.mjs"
+  },
+  "dependencies": {
+    "pinyin-pro": "^3.21.0"
+  }
+}

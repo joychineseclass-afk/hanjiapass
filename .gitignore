@@ -1,0 +1,3 @@
+node_modules/
+# 构建报告（建议保留便于复现，可选忽略）
+# data/reports/
