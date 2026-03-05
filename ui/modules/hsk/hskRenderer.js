@@ -63,33 +63,58 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
   `;
 }
 
-// Resolve meaning by lang: kr→kr/ko, en→en, cn/zh→zh/cn or hanzi fallback
-function getMeaningByLang(x, lang) {
-  const pickKey = (lang === "zh" || lang === "cn") ? "zh" : (lang === "en" ? "en" : "ko");
-  const fromObj = pickText(x.meaning ?? { ko: x.kr ?? x.ko, zh: x.zh ?? x.cn, en: x.en }, pickKey);
-  if (fromObj) return fromObj;
-  if (pickKey === "ko") return String(x.kr ?? x.ko ?? x.def ?? x.gloss ?? "");
-  if (pickKey === "en") return String(x.en ?? "");
-  return String(x.zh ?? x.cn ?? x.hanzi ?? x.han ?? x.word ?? "");
+function normalizeLang() {
+  const l = (window?.i18n?.getLang?.() || localStorage.getItem("joy_lang") || "ko").toLowerCase();
+  if (l === "kr") return "ko";
+  if (l === "cn") return "zh";
+  return l;
 }
+
+function meaningTextOf(val, lang) {
+  if (!val) return "";
+  if (typeof val === "string") return val;
+  if (Array.isArray(val)) return val.map(v => meaningTextOf(v, lang)).filter(Boolean).join(" / ");
+  if (typeof val === "object") {
+    const l = (lang || "ko").toLowerCase();
+    const pick =
+      (l === "en" && (val.en || val.eng)) ||
+      ((l === "ko" || l === "kr") && (val.ko || val.kr)) ||
+      ((l === "zh" || l === "cn") && (val.zh || val.cn)) ||
+      val.meaning || val.text || val.def || "";
+    if (typeof pick === "string") return pick;
+    try { return JSON.stringify(pick); } catch { return ""; }
+  }
+  return String(val);
+}
+
+let _meaningObjectWarned = false;
 
 export function renderWordCards(gridEl, items, _unused, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
-  const resolvedLang = lang ?? i18n?.getLang?.() ?? "ko";
+  const resolvedLang = lang ?? normalizeLang();
 
   gridEl.innerHTML = arr.map((x) => {
     // Support both: string ("你好") and object ({ hanzi, pinyin, kr, en })
     const raw = typeof x === "string" ? { hanzi: x } : (x || {});
     const han = String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
     const pinyin = String(raw.pinyin ?? raw.py ?? raw.p ?? "").trim();
-    const meaning = getMeaningByLang(raw, resolvedLang);
+    // meaningCandidate: vocabMap lookup (object) or word object with ko/en/zh
+    const meaningCandidate = raw.meaning ?? raw;
+    let meaningStr = meaningTextOf(meaningCandidate, resolvedLang);
+    if (meaningStr && meaningStr.includes("object Object")) {
+      if (!_meaningObjectWarned) {
+        console.warn("[renderWordCards] meaning resolved to [object Object], cleared");
+        _meaningObjectWarned = true;
+      }
+      meaningStr = "";
+    }
 
     return `
       <div class="word-card bg-white rounded-2xl shadow p-4 border border-slate-100">
         <div class="hanzi text-2xl font-bold">${escapeHtml(han)}</div>
         ${pinyin ? `<div class="pinyin text-sm italic opacity-70 mt-1">${escapeHtml(pinyin)}</div>` : ``}
-        ${meaning ? `<div class="meaning text-sm mt-2">${escapeHtml(meaning)}</div>` : ``}
+        ${meaningStr ? `<div class="meaning text-sm mt-2">${escapeHtml(meaningStr)}</div>` : ``}
         <div class="mt-3">
           <button type="button" class="px-3 py-1 rounded-lg border text-sm opacity-80">
             Tap to Learn
