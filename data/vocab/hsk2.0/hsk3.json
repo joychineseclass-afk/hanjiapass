@@ -1,0 +1,10117 @@
+[
+  {
+    "id": "hsk2.0:hsk3:0001",
+    "hanzi": "阿姨",
+    "pinyin": "āyí",
+    "meaning": {
+      "zh": "阿姨",
+      "en": "maternal aunt; step-mother; childcare worker; nursemaid; woman of similar age to one's parents (term of address used by child)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0002",
+    "hanzi": "啊",
+    "pinyin": "ā",
+    "meaning": {
+      "zh": "啊",
+      "en": "interjection of surprise; Ah!; Oh!",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0003",
+    "hanzi": "矮",
+    "pinyin": "ǎi",
+    "meaning": {
+      "zh": "矮",
+      "en": "low; short (in length)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0004",
+    "hanzi": "爱",
+    "pinyin": "ài",
+    "meaning": {
+      "zh": "爱",
+      "en": "to love; to be fond of; to like; affection; to be inclined (to do sth); to tend to (happen)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0005",
+    "hanzi": "爱好",
+    "pinyin": "àihào",
+    "meaning": {
+      "zh": "爱好",
+      "en": "to like; to be fond of; to take pleasure in; to be keen on; interest; hobby",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0006",
+    "hanzi": "安静",
+    "pinyin": "ānjìng",
+    "meaning": {
+      "zh": "安静",
+      "en": "quiet; peaceful; calm",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0007",
+    "hanzi": "八",
+    "pinyin": "bā",
+    "meaning": {
+      "zh": "八",
+      "en": "eight; 8",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0008",
+    "hanzi": "把",
+    "pinyin": "bǎ",
+    "meaning": {
+      "zh": "把",
+      "en": "to hold; to grasp; to hold a baby in position to help it urinate or defecate; handlebar; classifier: handful, bundle, bunch; classifier for things with handles; (used to put the object before the verb: 把 + {noun} + {verb})",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0009",
+    "hanzi": "爸爸",
+    "pinyin": "bàba",
+    "meaning": {
+      "zh": "爸爸",
+      "en": "(coll.) father; dad",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0010",
+    "hanzi": "吧",
+    "pinyin": "bā",
+    "meaning": {
+      "zh": "吧",
+      "en": "bar (loanword) (serving drinks, or providing Internet access etc); to puff (on a pipe etc); (onom.) bang; abbr. for 贴吧",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0011",
+    "hanzi": "白",
+    "pinyin": "Bái",
+    "meaning": {
+      "zh": "白",
+      "en": "surname Bai",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0012",
+    "hanzi": "百",
+    "pinyin": "Bǎi",
+    "meaning": {
+      "zh": "百",
+      "en": "surname Bai",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0013",
+    "hanzi": "班",
+    "pinyin": "Bān",
+    "meaning": {
+      "zh": "班",
+      "en": "surname Ban",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0014",
+    "hanzi": "搬",
+    "pinyin": "bān",
+    "meaning": {
+      "zh": "搬",
+      "en": "to move (i.e. relocate oneself); to move (sth relatively heavy or bulky); to shift; to copy indiscriminately",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0015",
+    "hanzi": "办法",
+    "pinyin": "bànfǎ",
+    "meaning": {
+      "zh": "办法",
+      "en": "means; method; way (of doing sth)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0016",
+    "hanzi": "办公室",
+    "pinyin": "bàngōngshì",
+    "meaning": {
+      "zh": "办公室",
+      "en": "office; business premises; bureau",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0017",
+    "hanzi": "半",
+    "pinyin": "bàn",
+    "meaning": {
+      "zh": "半",
+      "en": "half; semi-; incomplete; (after a number) and a half",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0018",
+    "hanzi": "帮忙",
+    "pinyin": "bāngmáng",
+    "meaning": {
+      "zh": "帮忙",
+      "en": "to help; to lend a hand; to do a favor; to do a good turn",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0019",
+    "hanzi": "帮助",
+    "pinyin": "bāngzhù",
+    "meaning": {
+      "zh": "帮助",
+      "en": "assistance; aid; to help; to assist",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0020",
+    "hanzi": "包",
+    "pinyin": "Bāo",
+    "meaning": {
+      "zh": "包",
+      "en": "surname Bao",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0021",
+    "hanzi": "饱",
+    "pinyin": "bǎo",
+    "meaning": {
+      "zh": "饱",
+      "en": "to eat till full; satisfied",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0022",
+    "hanzi": "报纸",
+    "pinyin": "bàozhǐ",
+    "meaning": {
+      "zh": "报纸",
+      "en": "newspaper; newsprint",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0023",
+    "hanzi": "杯子",
+    "pinyin": "bēizi",
+    "meaning": {
+      "zh": "杯子",
+      "en": "cup; glass",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0024",
+    "hanzi": "北方",
+    "pinyin": "běifāng",
+    "meaning": {
+      "zh": "北方",
+      "en": "north; the northern part a country; China north of the Yellow River",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0025",
+    "hanzi": "北京",
+    "pinyin": "Běijīng",
+    "meaning": {
+      "zh": "北京",
+      "en": "Beijing, capital of the People's Republic of China",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0026",
+    "hanzi": "被",
+    "pinyin": "bèi",
+    "meaning": {
+      "zh": "被",
+      "en": "quilt; to cover (with); (literary) to suffer (a misfortune); used to indicate passive voice (placed before the doer of the action like \"by\" in English passive-voice sentences, or, if the doer is not mentioned, before the verb); (since c. 2009) (sarcastic or jocular) used to indicate that the following word should be regarded as being in air quotes (as in 被旅游 to \"go on a trip\", for example)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0027",
+    "hanzi": "本",
+    "pinyin": "běn",
+    "meaning": {
+      "zh": "本",
+      "en": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0028",
+    "hanzi": "鼻子",
+    "pinyin": "bízi",
+    "meaning": {
+      "zh": "鼻子",
+      "en": "nose",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0029",
+    "hanzi": "比",
+    "pinyin": "Bǐ",
+    "meaning": {
+      "zh": "比",
+      "en": "Belgium; Belgian; abbr. for 比利时",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0030",
+    "hanzi": "比较",
+    "pinyin": "bǐjiào",
+    "meaning": {
+      "zh": "比较",
+      "en": "to compare; to contrast; comparatively; relatively; quite; comparison",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0031",
+    "hanzi": "比赛",
+    "pinyin": "bǐsài",
+    "meaning": {
+      "zh": "比赛",
+      "en": "competition (sports etc); match; to compete",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0032",
+    "hanzi": "必须",
+    "pinyin": "bìxū",
+    "meaning": {
+      "zh": "必须",
+      "en": "to have to; must; compulsory; necessarily",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0033",
+    "hanzi": "变化",
+    "pinyin": "biànhuà",
+    "meaning": {
+      "zh": "变化",
+      "en": "(intransitive) to change; to vary; change; variation",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0034",
+    "hanzi": "便宜",
+    "pinyin": "biànyí",
+    "meaning": {
+      "zh": "便宜",
+      "en": "convenient",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0035",
+    "hanzi": "表示",
+    "pinyin": "biǎoshì",
+    "meaning": {
+      "zh": "表示",
+      "en": "to express; to show; to say; to state; to indicate; to mean",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0036",
+    "hanzi": "表演",
+    "pinyin": "biǎoyǎn",
+    "meaning": {
+      "zh": "表演",
+      "en": "play; show; performance; exhibition; to perform; to act; to demonstrate",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0037",
+    "hanzi": "别",
+    "pinyin": "Bié",
+    "meaning": {
+      "zh": "别",
+      "en": "surname Bie",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0038",
+    "hanzi": "别人",
+    "pinyin": "biéren",
+    "meaning": {
+      "zh": "别人",
+      "en": "other people; others; other person",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0039",
+    "hanzi": "宾馆",
+    "pinyin": "bīnguǎn",
+    "meaning": {
+      "zh": "宾馆",
+      "en": "guesthouse; lodge; hotel",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0040",
+    "hanzi": "冰箱",
+    "pinyin": "bīngxiāng",
+    "meaning": {
+      "zh": "冰箱",
+      "en": "icebox; freezer cabinet; refrigerator",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0041",
+    "hanzi": "不",
+    "pinyin": "bù",
+    "meaning": {
+      "zh": "不",
+      "en": "no; not so; (bound form) not; un-",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0042",
+    "hanzi": "不客气",
+    "pinyin": "bùkèqi",
+    "meaning": {
+      "zh": "不客气",
+      "en": "you're welcome; don't mention it; impolite; rude; blunt",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0043",
+    "hanzi": "才",
+    "pinyin": "cái",
+    "meaning": {
+      "zh": "才",
+      "en": "ability; talent; sb of a certain type; a capable individual; then and only then; just now; (before an expression of quantity) only",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0044",
+    "hanzi": "菜",
+    "pinyin": "cài",
+    "meaning": {
+      "zh": "菜",
+      "en": "dish (type of food); vegetable; cuisine; (coll.) (one's) type; (of one's skills etc) weak; poor",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0045",
+    "hanzi": "菜单",
+    "pinyin": "càidān",
+    "meaning": {
+      "zh": "菜单",
+      "en": "menu",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0046",
+    "hanzi": "参加",
+    "pinyin": "cānjiā",
+    "meaning": {
+      "zh": "参加",
+      "en": "to participate; to take part; to join",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0047",
+    "hanzi": "草",
+    "pinyin": "cǎo",
+    "meaning": {
+      "zh": "草",
+      "en": "variant of 草",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0048",
+    "hanzi": "层",
+    "pinyin": "céng",
+    "meaning": {
+      "zh": "层",
+      "en": "to pile on top of one another; layer; stratum; floor (of a building); story; (math.) sheaf; classifier for layers",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0049",
+    "hanzi": "茶",
+    "pinyin": "chá",
+    "meaning": {
+      "zh": "茶",
+      "en": "tea; tea plant",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0050",
+    "hanzi": "差",
+    "pinyin": "chā",
+    "meaning": {
+      "zh": "差",
+      "en": "difference; discrepancy; (math.) difference (amount remaining after a subtraction); (literary) a little; somewhat; slightly",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0051",
+    "hanzi": "唱歌",
+    "pinyin": "chànggē",
+    "meaning": {
+      "zh": "唱歌",
+      "en": "to sing a song",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0052",
+    "hanzi": "超市",
+    "pinyin": "chāoshì",
+    "meaning": {
+      "zh": "超市",
+      "en": "supermarket (abbr. for 超级市场)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0053",
+    "hanzi": "衬衫",
+    "pinyin": "chènshān",
+    "meaning": {
+      "zh": "衬衫",
+      "en": "shirt; blouse",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0054",
+    "hanzi": "成绩",
+    "pinyin": "chéngjì",
+    "meaning": {
+      "zh": "成绩",
+      "en": "achievement; performance records; grades",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0055",
+    "hanzi": "城市",
+    "pinyin": "chéngshì",
+    "meaning": {
+      "zh": "城市",
+      "en": "city; town",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0056",
+    "hanzi": "吃",
+    "pinyin": "chī",
+    "meaning": {
+      "zh": "吃",
+      "en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0057",
+    "hanzi": "迟到",
+    "pinyin": "chídào",
+    "meaning": {
+      "zh": "迟到",
+      "en": "to arrive late",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0058",
+    "hanzi": "出",
+    "pinyin": "chū",
+    "meaning": {
+      "zh": "出",
+      "en": "to go out; to come out; to occur; to produce; to go beyond; to rise; to put forth; to happen; (used after a verb to indicate an outward direction or a positive result); classifier for dramas, plays, operas etc",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0059",
+    "hanzi": "出现",
+    "pinyin": "chūxiàn",
+    "meaning": {
+      "zh": "出现",
+      "en": "to appear; to arise; to emerge; to show up",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0060",
+    "hanzi": "出租车",
+    "pinyin": "chūzūchē",
+    "meaning": {
+      "zh": "出租车",
+      "en": "taxi; (Tw) rental car",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0061",
+    "hanzi": "除了",
+    "pinyin": "chúle",
+    "meaning": {
+      "zh": "除了",
+      "en": "besides; apart from (... also...); in addition to; except (for)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0062",
+    "hanzi": "厨房",
+    "pinyin": "chúfáng",
+    "meaning": {
+      "zh": "厨房",
+      "en": "kitchen",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0063",
+    "hanzi": "穿",
+    "pinyin": "chuān",
+    "meaning": {
+      "zh": "穿",
+      "en": "to wear; to put on; to dress; to bore through; to pierce; to perforate; to penetrate; to pass through; to thread",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0064",
+    "hanzi": "船",
+    "pinyin": "chuán",
+    "meaning": {
+      "zh": "船",
+      "en": "variant of 船",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0065",
+    "hanzi": "春",
+    "pinyin": "chūn",
+    "meaning": {
+      "zh": "春",
+      "en": "old variant of 春",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0066",
+    "hanzi": "词语",
+    "pinyin": "cíyǔ",
+    "meaning": {
+      "zh": "词语",
+      "en": "word (general term including monosyllables through to short phrases); term (e.g. technical term); expression",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0067",
+    "hanzi": "次",
+    "pinyin": "cì",
+    "meaning": {
+      "zh": "次",
+      "en": "next in sequence; second; the second (day, time etc); secondary; vice-; sub-; infra-; inferior quality; substandard; order; sequence; hypo- (chemistry); classifier for enumerated events: time",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0068",
+    "hanzi": "聪明",
+    "pinyin": "cōngming",
+    "meaning": {
+      "zh": "聪明",
+      "en": "intelligent; clever; bright; smart; acute (of sight and hearing)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0069",
+    "hanzi": "从",
+    "pinyin": "cóng",
+    "meaning": {
+      "zh": "从",
+      "en": "variant of 从",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0070",
+    "hanzi": "错",
+    "pinyin": "Cuò",
+    "meaning": {
+      "zh": "错",
+      "en": "surname Cuo",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0071",
+    "hanzi": "打电话",
+    "pinyin": "dǎdiànhuà",
+    "meaning": {
+      "zh": "打电话",
+      "en": "to make a telephone call",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0072",
+    "hanzi": "打篮球",
+    "pinyin": "dǎlánqiú",
+    "meaning": {
+      "zh": "打篮球",
+      "en": "to play basketball",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0073",
+    "hanzi": "打扫",
+    "pinyin": "dǎsǎo",
+    "meaning": {
+      "zh": "打扫",
+      "en": "to clean; to sweep",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0074",
+    "hanzi": "打算",
+    "pinyin": "dǎsuàn",
+    "meaning": {
+      "zh": "打算",
+      "en": "to plan; to intend; to calculate; plan; intention; calculation",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0075",
+    "hanzi": "大",
+    "pinyin": "dà",
+    "meaning": {
+      "zh": "大",
+      "en": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0076",
+    "hanzi": "大家",
+    "pinyin": "dàjiā",
+    "meaning": {
+      "zh": "大家",
+      "en": "everyone; influential family; great expert",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0077",
+    "hanzi": "带",
+    "pinyin": "dài",
+    "meaning": {
+      "zh": "带",
+      "en": "band; belt; girdle; ribbon; tire; area; zone; region; to wear; to carry; to take along; to bear (i.e. to have); to lead; to bring; to look after; to raise",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0078",
+    "hanzi": "担心",
+    "pinyin": "dānxīn",
+    "meaning": {
+      "zh": "担心",
+      "en": "anxious; worried; uneasy; to worry; to be anxious",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0079",
+    "hanzi": "但是",
+    "pinyin": "dànshì",
+    "meaning": {
+      "zh": "但是",
+      "en": "but; however",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0080",
+    "hanzi": "蛋糕",
+    "pinyin": "dàngāo",
+    "meaning": {
+      "zh": "蛋糕",
+      "en": "cake",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0081",
+    "hanzi": "当然",
+    "pinyin": "dāngrán",
+    "meaning": {
+      "zh": "当然",
+      "en": "only natural; as it should be; certainly; of course; without doubt",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0082",
+    "hanzi": "到",
+    "pinyin": "dào",
+    "meaning": {
+      "zh": "到",
+      "en": "to reach; to arrive; to leave for; to go to; to (a place); until (a time); up to (a point); (verb complement indicating arriving at a place or reaching a point); considerate; thoughtful; thorough",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0083",
+    "hanzi": "地",
+    "pinyin": "de",
+    "meaning": {
+      "zh": "地",
+      "en": "-ly; structural particle: used before a verb or adjective, linking it to preceding modifying adverbial adjunct",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0084",
+    "hanzi": "地方",
+    "pinyin": "dìfāng",
+    "meaning": {
+      "zh": "地方",
+      "en": "region; regional (away from the central administration); local",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0085",
+    "hanzi": "地铁",
+    "pinyin": "dìtiě",
+    "meaning": {
+      "zh": "地铁",
+      "en": "underground railway; subway; subway train",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0086",
+    "hanzi": "地图",
+    "pinyin": "dìtú",
+    "meaning": {
+      "zh": "地图",
+      "en": "map",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0087",
+    "hanzi": "的",
+    "pinyin": "de",
+    "meaning": {
+      "zh": "的",
+      "en": "of; ~'s (possessive particle); (used after an attribute); (used to form a nominal expression); (used at the end of a declarative sentence for emphasis); also pr. [dì] or [di] in poetry and songs",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0088",
+    "hanzi": "得",
+    "pinyin": "dé",
+    "meaning": {
+      "zh": "得",
+      "en": "to obtain; to get; to gain; to catch (a disease); proper; suitable; proud; contented; to allow; to permit; ready; finished",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0089",
+    "hanzi": "灯",
+    "pinyin": "dēng",
+    "meaning": {
+      "zh": "灯",
+      "en": "lamp; light; lantern",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0090",
+    "hanzi": "低",
+    "pinyin": "dī",
+    "meaning": {
+      "zh": "低",
+      "en": "low; beneath; to lower (one's head); to let droop; to hang down; to incline",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0091",
+    "hanzi": "弟弟",
+    "pinyin": "dìdi",
+    "meaning": {
+      "zh": "弟弟",
+      "en": "younger brother",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0092",
+    "hanzi": "第一",
+    "pinyin": "dìyī",
+    "meaning": {
+      "zh": "第一",
+      "en": "first; number one; primary",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0093",
+    "hanzi": "点",
+    "pinyin": "diǎn",
+    "meaning": {
+      "zh": "点",
+      "en": "point; dot; drop; speck; o'clock; point (in space or time); to draw a dot; to check on a list; to choose; to order (food in a restaurant); to touch briefly; to hint; to light; to ignite; to pour a liquid drop by drop; (old) one fifth of a two-hour watch 更; dot stroke in Chinese characters; classifier for items",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0094",
+    "hanzi": "电脑",
+    "pinyin": "diànnǎo",
+    "meaning": {
+      "zh": "电脑",
+      "en": "computer",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0095",
+    "hanzi": "电视",
+    "pinyin": "diànshì",
+    "meaning": {
+      "zh": "电视",
+      "en": "television; TV",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0096",
+    "hanzi": "电梯",
+    "pinyin": "diàntī",
+    "meaning": {
+      "zh": "电梯",
+      "en": "elevator; escalator",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0097",
+    "hanzi": "电影",
+    "pinyin": "diànyǐng",
+    "meaning": {
+      "zh": "电影",
+      "en": "movie; film",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0098",
+    "hanzi": "电子",
+    "pinyin": "diànzǐ",
+    "meaning": {
+      "zh": "电子",
+      "en": "electronic; electron (particle physics)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0099",
+    "hanzi": "东",
+    "pinyin": "Dōng",
+    "meaning": {
+      "zh": "东",
+      "en": "surname Dong",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0100",
+    "hanzi": "东西",
+    "pinyin": "dōngxī",
+    "meaning": {
+      "zh": "东西",
+      "en": "east and west",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0101",
+    "hanzi": "冬",
+    "pinyin": "dōng",
+    "meaning": {
+      "zh": "冬",
+      "en": "winter",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0102",
+    "hanzi": "懂",
+    "pinyin": "dǒng",
+    "meaning": {
+      "zh": "懂",
+      "en": "to understand; to comprehend",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0103",
+    "hanzi": "动物",
+    "pinyin": "dòngwù",
+    "meaning": {
+      "zh": "动物",
+      "en": "animal",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0104",
+    "hanzi": "都",
+    "pinyin": "Dū",
+    "meaning": {
+      "zh": "都",
+      "en": "surname Du",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0105",
+    "hanzi": "读",
+    "pinyin": "dòu",
+    "meaning": {
+      "zh": "读",
+      "en": "comma; phrase marked by pause",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0106",
+    "hanzi": "短",
+    "pinyin": "duǎn",
+    "meaning": {
+      "zh": "短",
+      "en": "short; brief; to lack; weak point; fault",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0107",
+    "hanzi": "段",
+    "pinyin": "Duàn",
+    "meaning": {
+      "zh": "段",
+      "en": "surname Duan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0108",
+    "hanzi": "锻炼",
+    "pinyin": "duànliàn",
+    "meaning": {
+      "zh": "锻炼",
+      "en": "to toughen; to temper; to engage in physical exercise; to work out; (fig.) to develop one's skills; to train oneself",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0109",
+    "hanzi": "对不起",
+    "pinyin": "duìbuqǐ",
+    "meaning": {
+      "zh": "对不起",
+      "en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0110",
+    "hanzi": "多",
+    "pinyin": "duō",
+    "meaning": {
+      "zh": "多",
+      "en": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0111",
+    "hanzi": "多么",
+    "pinyin": "duōme",
+    "meaning": {
+      "zh": "多么",
+      "en": "how (wonderful etc); what (a great idea etc); however (difficult it may be etc); (in interrogative sentences) how (much etc); to what extent",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0112",
+    "hanzi": "多少",
+    "pinyin": "duōshǎo",
+    "meaning": {
+      "zh": "多少",
+      "en": "number; amount; somewhat",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0113",
+    "hanzi": "饿",
+    "pinyin": "è",
+    "meaning": {
+      "zh": "饿",
+      "en": "to be hungry; hungry; to starve (sb)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0114",
+    "hanzi": "儿子",
+    "pinyin": "érzi",
+    "meaning": {
+      "zh": "儿子",
+      "en": "son",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0115",
+    "hanzi": "而且",
+    "pinyin": "érqiě",
+    "meaning": {
+      "zh": "而且",
+      "en": "(not only ...) but also; moreover; in addition; furthermore",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0116",
+    "hanzi": "耳朵",
+    "pinyin": "ěrduo",
+    "meaning": {
+      "zh": "耳朵",
+      "en": "ear; handle (on a cup)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0117",
+    "hanzi": "二",
+    "pinyin": "èr",
+    "meaning": {
+      "zh": "二",
+      "en": "two; 2; (Beijing dialect) stupid",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0118",
+    "hanzi": "发烧",
+    "pinyin": "fāshāo",
+    "meaning": {
+      "zh": "发烧",
+      "en": "to have a high temperature (from illness); to have a fever",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0119",
+    "hanzi": "发现",
+    "pinyin": "fāxiàn",
+    "meaning": {
+      "zh": "发现",
+      "en": "to notice; to become aware of; to discover; to find; to detect; a discovery",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0120",
+    "hanzi": "饭馆",
+    "pinyin": "fànguǎn",
+    "meaning": {
+      "zh": "饭馆",
+      "en": "restaurant",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0121",
+    "hanzi": "方便",
+    "pinyin": "fāngbiàn",
+    "meaning": {
+      "zh": "方便",
+      "en": "convenient; suitable; to facilitate; to make things easy; having money to spare; (euphemism) to relieve oneself",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0122",
+    "hanzi": "房间",
+    "pinyin": "fángjiān",
+    "meaning": {
+      "zh": "房间",
+      "en": "room",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0123",
+    "hanzi": "放",
+    "pinyin": "fàng",
+    "meaning": {
+      "zh": "放",
+      "en": "to put; to place; to release; to free; to let go; to let out; to set off (fireworks)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0124",
+    "hanzi": "放心",
+    "pinyin": "fàngxīn",
+    "meaning": {
+      "zh": "放心",
+      "en": "to feel relieved; to feel reassured; to be at ease",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0125",
+    "hanzi": "飞机",
+    "pinyin": "fēijī",
+    "meaning": {
+      "zh": "飞机",
+      "en": "airplane",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0126",
+    "hanzi": "非常",
+    "pinyin": "fēicháng",
+    "meaning": {
+      "zh": "非常",
+      "en": "very; really; unusual; extraordinary",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0127",
+    "hanzi": "分",
+    "pinyin": "fēn",
+    "meaning": {
+      "zh": "分",
+      "en": "to divide; to separate; to distribute; to allocate; to distinguish (good and bad); (bound form) branch of (an organization); sub- (as in 局); fraction; one tenth (of certain units); unit of length equivalent to 0.33 cm; minute (unit of time); minute (angular measurement unit); a point (in sports or games); 0.01 yuan (unit of money)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0128",
+    "hanzi": "分钟",
+    "pinyin": "fēnzhōng",
+    "meaning": {
+      "zh": "分钟",
+      "en": "minute",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0129",
+    "hanzi": "服务员",
+    "pinyin": "fúwùyuán",
+    "meaning": {
+      "zh": "服务员",
+      "en": "waiter; waitress; attendant; customer service personnel",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0130",
+    "hanzi": "附近",
+    "pinyin": "fùjìn",
+    "meaning": {
+      "zh": "附近",
+      "en": "nearby; neighboring; (in the) vicinity (of); neighborhood",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0131",
+    "hanzi": "复习",
+    "pinyin": "fùxí",
+    "meaning": {
+      "zh": "复习",
+      "en": "to review; revision",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0132",
+    "hanzi": "敢",
+    "pinyin": "gǎn",
+    "meaning": {
+      "zh": "敢",
+      "en": "to dare; daring; (polite) may I venture",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0133",
+    "hanzi": "感冒",
+    "pinyin": "gǎnmào",
+    "meaning": {
+      "zh": "感冒",
+      "en": "to catch cold; (common) cold; (coll.) to be interested in (often used in the negative); (Tw) to detest; can't stand",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0134",
+    "hanzi": "干净",
+    "pinyin": "gānjìng",
+    "meaning": {
+      "zh": "干净",
+      "en": "clean; neat",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0135",
+    "hanzi": "刚才",
+    "pinyin": "gāngcái",
+    "meaning": {
+      "zh": "刚才",
+      "en": "just now; a moment ago",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0136",
+    "hanzi": "高",
+    "pinyin": "Gāo",
+    "meaning": {
+      "zh": "高",
+      "en": "surname Gao",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0137",
+    "hanzi": "高兴",
+    "pinyin": "gāoxìng",
+    "meaning": {
+      "zh": "高兴",
+      "en": "happy; glad; willing (to do sth); in a cheerful mood",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0138",
+    "hanzi": "告诉",
+    "pinyin": "gàosù",
+    "meaning": {
+      "zh": "告诉",
+      "en": "to press charges; to file a complaint",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0139",
+    "hanzi": "哥哥",
+    "pinyin": "gēge",
+    "meaning": {
+      "zh": "哥哥",
+      "en": "older brother",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0140",
+    "hanzi": "个",
+    "pinyin": "gě",
+    "meaning": {
+      "zh": "个",
+      "en": "used in 自个儿",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0141",
+    "hanzi": "给",
+    "pinyin": "gěi",
+    "meaning": {
+      "zh": "给",
+      "en": "to; for; for the benefit of; to give; to allow; to do sth (for sb); (grammatical equivalent of 被); (grammatical equivalent of 把); (sentence intensifier)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0142",
+    "hanzi": "根据",
+    "pinyin": "gēnjù",
+    "meaning": {
+      "zh": "根据",
+      "en": "according to; based on; basis; foundation",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0143",
+    "hanzi": "跟",
+    "pinyin": "gēn",
+    "meaning": {
+      "zh": "跟",
+      "en": "heel; to follow closely; to go with; (of a woman) to marry sb; with; compared with; to; towards; and (joining two nouns)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0144",
+    "hanzi": "更",
+    "pinyin": "gēng",
+    "meaning": {
+      "zh": "更",
+      "en": "to change or replace; to experience; one of the five two-hour periods into which the night was formerly divided; watch (e.g. of a sentry or guard)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0145",
+    "hanzi": "工作",
+    "pinyin": "gōngzuò",
+    "meaning": {
+      "zh": "工作",
+      "en": "to work; (of a machine) to operate; job; work; task",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0146",
+    "hanzi": "公共汽车",
+    "pinyin": "gōnggòngqìchē",
+    "meaning": {
+      "zh": "公共汽车",
+      "en": "bus",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0147",
+    "hanzi": "公斤",
+    "pinyin": "gōngjīn",
+    "meaning": {
+      "zh": "公斤",
+      "en": "kilogram (kg)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0148",
+    "hanzi": "公司",
+    "pinyin": "gōngsī",
+    "meaning": {
+      "zh": "公司",
+      "en": "company; firm; corporation",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0149",
+    "hanzi": "公园",
+    "pinyin": "gōngyuán",
+    "meaning": {
+      "zh": "公园",
+      "en": "park (for public recreation)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0150",
+    "hanzi": "狗",
+    "pinyin": "gǒu",
+    "meaning": {
+      "zh": "狗",
+      "en": "dog",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0151",
+    "hanzi": "故事",
+    "pinyin": "gùshì",
+    "meaning": {
+      "zh": "故事",
+      "en": "old practice",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0152",
+    "hanzi": "刮",
+    "pinyin": "guā",
+    "meaning": {
+      "zh": "刮",
+      "en": "to scrape; to blow; to shave; to plunder; to extort",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0153",
+    "hanzi": "关",
+    "pinyin": "Guān",
+    "meaning": {
+      "zh": "关",
+      "en": "surname Guan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0154",
+    "hanzi": "关系",
+    "pinyin": "guānxi",
+    "meaning": {
+      "zh": "关系",
+      "en": "relation; relationship; to concern; to affect; to have to do with; guanxi",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0155",
+    "hanzi": "关心",
+    "pinyin": "guānxīn",
+    "meaning": {
+      "zh": "关心",
+      "en": "to be concerned about; to care about",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0156",
+    "hanzi": "关于",
+    "pinyin": "guānyú",
+    "meaning": {
+      "zh": "关于",
+      "en": "pertaining to; concerning; with regard to; about; a matter of",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0157",
+    "hanzi": "贵",
+    "pinyin": "guì",
+    "meaning": {
+      "zh": "贵",
+      "en": "expensive; noble; precious; (honorific) your",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0158",
+    "hanzi": "国家",
+    "pinyin": "guójiā",
+    "meaning": {
+      "zh": "国家",
+      "en": "country; nation; state",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0159",
+    "hanzi": "果汁",
+    "pinyin": "guǒzhī",
+    "meaning": {
+      "zh": "果汁",
+      "en": "fruit juice",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0160",
+    "hanzi": "过去",
+    "pinyin": "guòqù",
+    "meaning": {
+      "zh": "过去",
+      "en": "(in the) past; former; previous; to go over; to pass by",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0161",
+    "hanzi": "还",
+    "pinyin": "Huán",
+    "meaning": {
+      "zh": "还",
+      "en": "surname Huan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0162",
+    "hanzi": "还是",
+    "pinyin": "háishi",
+    "meaning": {
+      "zh": "还是",
+      "en": "still (as before); had better; unexpectedly; or",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0163",
+    "hanzi": "孩子",
+    "pinyin": "háizi",
+    "meaning": {
+      "zh": "孩子",
+      "en": "child",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0164",
+    "hanzi": "害怕",
+    "pinyin": "hàipà",
+    "meaning": {
+      "zh": "害怕",
+      "en": "to be afraid; to be scared",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0165",
+    "hanzi": "汉语",
+    "pinyin": "Hànyǔ",
+    "meaning": {
+      "zh": "汉语",
+      "en": "Chinese language",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0166",
+    "hanzi": "好",
+    "pinyin": "hǎo",
+    "meaning": {
+      "zh": "好",
+      "en": "good; appropriate; proper; all right!; (before a verb) easy to; (before a verb) good to; (before an adjective for exclamatory effect) so; (verb complement indicating completion); (of two people) close; on intimate terms; (after a personal pronoun) hello",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0167",
+    "hanzi": "好吃",
+    "pinyin": "hǎochī",
+    "meaning": {
+      "zh": "好吃",
+      "en": "tasty; delicious",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0168",
+    "hanzi": "号",
+    "pinyin": "háo",
+    "meaning": {
+      "zh": "号",
+      "en": "roar; cry",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0169",
+    "hanzi": "喝",
+    "pinyin": "hē",
+    "meaning": {
+      "zh": "喝",
+      "en": "to drink; variant of 嗬",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0170",
+    "hanzi": "和",
+    "pinyin": "hé",
+    "meaning": {
+      "zh": "和",
+      "en": "old variant of 和",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0171",
+    "hanzi": "河",
+    "pinyin": "hé",
+    "meaning": {
+      "zh": "河",
+      "en": "river",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0172",
+    "hanzi": "黑",
+    "pinyin": "Hēi",
+    "meaning": {
+      "zh": "黑",
+      "en": "abbr. for Heilongjiang province 黑龙江",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0173",
+    "hanzi": "黑板",
+    "pinyin": "hēibǎn",
+    "meaning": {
+      "zh": "黑板",
+      "en": "blackboard",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0174",
+    "hanzi": "很",
+    "pinyin": "hěn",
+    "meaning": {
+      "zh": "很",
+      "en": "(adverb of degree); quite; very; awfully",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0175",
+    "hanzi": "红",
+    "pinyin": "Hóng",
+    "meaning": {
+      "zh": "红",
+      "en": "surname Hong",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0176",
+    "hanzi": "后面",
+    "pinyin": "hòumian",
+    "meaning": {
+      "zh": "后面",
+      "en": "the back; the rear; the last bit; behind; near the end; at the back; later; afterwards",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0177",
+    "hanzi": "护照",
+    "pinyin": "hùzhào",
+    "meaning": {
+      "zh": "护照",
+      "en": "passport",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0178",
+    "hanzi": "花",
+    "pinyin": "Huā",
+    "meaning": {
+      "zh": "花",
+      "en": "surname Hua",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0179",
+    "hanzi": "花园",
+    "pinyin": "huāyuán",
+    "meaning": {
+      "zh": "花园",
+      "en": "garden",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0180",
+    "hanzi": "画",
+    "pinyin": "huà",
+    "meaning": {
+      "zh": "画",
+      "en": "to draw; to paint; picture; painting; to draw (a line) (variant of 划); stroke of a Chinese character (variant of 划); (calligraphy) horizontal stroke (variant of 划)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0181",
+    "hanzi": "坏",
+    "pinyin": "huài",
+    "meaning": {
+      "zh": "坏",
+      "en": "bad; spoiled; broken; to break down; (suffix) to the utmost",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0182",
+    "hanzi": "环境",
+    "pinyin": "huánjìng",
+    "meaning": {
+      "zh": "环境",
+      "en": "environment; circumstances; surroundings; ambient",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0183",
+    "hanzi": "换",
+    "pinyin": "huàn",
+    "meaning": {
+      "zh": "换",
+      "en": "to exchange; to change (clothes etc); to substitute; to switch; to convert (currency)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0184",
+    "hanzi": "欢迎",
+    "pinyin": "huānyíng",
+    "meaning": {
+      "zh": "欢迎",
+      "en": "to welcome; welcome",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0185",
+    "hanzi": "黄",
+    "pinyin": "Huáng",
+    "meaning": {
+      "zh": "黄",
+      "en": "surname Huang or Hwang",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0186",
+    "hanzi": "回",
+    "pinyin": "huí",
+    "meaning": {
+      "zh": "回",
+      "en": "to circle; to go back; to turn around; to answer; to return; to revolve; Hui ethnic group (Chinese Muslims); time; classifier for acts of a play; section or chapter (of a classic book)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0187",
+    "hanzi": "回答",
+    "pinyin": "huídá",
+    "meaning": {
+      "zh": "回答",
+      "en": "to reply; to answer; reply; answer",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0188",
+    "hanzi": "会",
+    "pinyin": "huì",
+    "meaning": {
+      "zh": "会",
+      "en": "can; to have the skill; to know how to; to be likely to; to be sure to; to meet; to get together; meeting; gathering; (suffix) union; group; association; (bound form) a moment (Taiwan pr. [huǐ])",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0189",
+    "hanzi": "会议",
+    "pinyin": "huìyì",
+    "meaning": {
+      "zh": "会议",
+      "en": "meeting; conference",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0190",
+    "hanzi": "火车站",
+    "pinyin": "huǒchēzhàn",
+    "meaning": {
+      "zh": "火车站",
+      "en": "train station",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0191",
+    "hanzi": "或者",
+    "pinyin": "huòzhě",
+    "meaning": {
+      "zh": "或者",
+      "en": "or; possibly; maybe; perhaps",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0192",
+    "hanzi": "机场",
+    "pinyin": "jīchǎng",
+    "meaning": {
+      "zh": "机场",
+      "en": "airport; airfield; (slang) service provider for Shadowsocks or similar software for circumventing Internet censorship",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0193",
+    "hanzi": "机会",
+    "pinyin": "jīhuì",
+    "meaning": {
+      "zh": "机会",
+      "en": "opportunity; chance; occasion",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0194",
+    "hanzi": "鸡蛋",
+    "pinyin": "jīdàn",
+    "meaning": {
+      "zh": "鸡蛋",
+      "en": "(chicken) egg; hen's egg",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0195",
+    "hanzi": "极",
+    "pinyin": "jí",
+    "meaning": {
+      "zh": "极",
+      "en": "extremely; pole (geography, physics); utmost; top",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0196",
+    "hanzi": "几",
+    "pinyin": "jī",
+    "meaning": {
+      "zh": "几",
+      "en": "small table",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0197",
+    "hanzi": "几乎",
+    "pinyin": "jīhū",
+    "meaning": {
+      "zh": "几乎",
+      "en": "almost; nearly; practically",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0198",
+    "hanzi": "记得",
+    "pinyin": "jìde",
+    "meaning": {
+      "zh": "记得",
+      "en": "to remember",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0199",
+    "hanzi": "季节",
+    "pinyin": "jìjié",
+    "meaning": {
+      "zh": "季节",
+      "en": "time; season; period",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0200",
+    "hanzi": "家",
+    "pinyin": "jiā",
+    "meaning": {
+      "zh": "家",
+      "en": "used in 家伙 and 家俱",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0201",
+    "hanzi": "检查",
+    "pinyin": "jiǎnchá",
+    "meaning": {
+      "zh": "检查",
+      "en": "inspection; to examine; to inspect",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0202",
+    "hanzi": "简单",
+    "pinyin": "jiǎndān",
+    "meaning": {
+      "zh": "简单",
+      "en": "simple; not complicated",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0203",
+    "hanzi": "见面",
+    "pinyin": "jiànmiàn",
+    "meaning": {
+      "zh": "见面",
+      "en": "to meet; to see each other",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0204",
+    "hanzi": "件",
+    "pinyin": "jiàn",
+    "meaning": {
+      "zh": "件",
+      "en": "item; component; classifier for events, things, clothes etc",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0205",
+    "hanzi": "健康",
+    "pinyin": "jiànkāng",
+    "meaning": {
+      "zh": "健康",
+      "en": "health; healthy",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0206",
+    "hanzi": "讲",
+    "pinyin": "jiǎng",
+    "meaning": {
+      "zh": "讲",
+      "en": "to speak; to explain; to negotiate; to emphasize; to be particular about; as far as sth is concerned; speech; lecture",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0207",
+    "hanzi": "角",
+    "pinyin": "Jué",
+    "meaning": {
+      "zh": "角",
+      "en": "surname Jue",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0208",
+    "hanzi": "脚",
+    "pinyin": "jiǎo",
+    "meaning": {
+      "zh": "脚",
+      "en": "foot; leg (of an animal or an object); base (of an object); classifier for kicks",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0209",
+    "hanzi": "叫",
+    "pinyin": "jiào",
+    "meaning": {
+      "zh": "叫",
+      "en": "to shout; to call; to order; to ask; to be called; by (indicates agent in the passive mood)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0210",
+    "hanzi": "教",
+    "pinyin": "Jiào",
+    "meaning": {
+      "zh": "教",
+      "en": "surname Jiao",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0211",
+    "hanzi": "教室",
+    "pinyin": "jiàoshì",
+    "meaning": {
+      "zh": "教室",
+      "en": "classroom",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0212",
+    "hanzi": "接",
+    "pinyin": "jiē",
+    "meaning": {
+      "zh": "接",
+      "en": "to receive; to answer (the phone); to meet or welcome sb; to connect; to catch; to join; to extend; to take one's turn on duty; to take over for sb",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0213",
+    "hanzi": "街道",
+    "pinyin": "jiēdào",
+    "meaning": {
+      "zh": "街道",
+      "en": "street; subdistrict; residential district",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0214",
+    "hanzi": "节目",
+    "pinyin": "jiémù",
+    "meaning": {
+      "zh": "节目",
+      "en": "program; item (on a program)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0215",
+    "hanzi": "节日",
+    "pinyin": "jiérì",
+    "meaning": {
+      "zh": "节日",
+      "en": "holiday; festival",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0216",
+    "hanzi": "结婚",
+    "pinyin": "jiéhūn",
+    "meaning": {
+      "zh": "结婚",
+      "en": "to marry; to get married",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0217",
+    "hanzi": "结束",
+    "pinyin": "jiéshù",
+    "meaning": {
+      "zh": "结束",
+      "en": "termination; to finish; to end; to conclude; to close",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0218",
+    "hanzi": "解决",
+    "pinyin": "jiějué",
+    "meaning": {
+      "zh": "解决",
+      "en": "to solve; to resolve; to settle (a problem); to eliminate; to wipe out (an enemy, bandits etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0219",
+    "hanzi": "介绍",
+    "pinyin": "jièshào",
+    "meaning": {
+      "zh": "介绍",
+      "en": "to introduce (sb to sb); to give a presentation; to present (sb for a job etc); introduction",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0220",
+    "hanzi": "借",
+    "pinyin": "jiè",
+    "meaning": {
+      "zh": "借",
+      "en": "to lend; to borrow; by means of; to take (an opportunity)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0221",
+    "hanzi": "姐姐",
+    "pinyin": "jiějie",
+    "meaning": {
+      "zh": "姐姐",
+      "en": "older sister",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0222",
+    "hanzi": "今天",
+    "pinyin": "jīntiān",
+    "meaning": {
+      "zh": "今天",
+      "en": "today; at the present; now",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0223",
+    "hanzi": "近",
+    "pinyin": "jìn",
+    "meaning": {
+      "zh": "近",
+      "en": "near; close to; approximately",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0224",
+    "hanzi": "进",
+    "pinyin": "jìn",
+    "meaning": {
+      "zh": "进",
+      "en": "to go forward; to advance; to go in; to enter; to put in; to submit; to take in; to admit; (math.) base of a number system; classifier for sections in a building or residential compound",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0225",
+    "hanzi": "经常",
+    "pinyin": "jīngcháng",
+    "meaning": {
+      "zh": "经常",
+      "en": "frequently; constantly; regularly; often; day-to-day; everyday; daily",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0226",
+    "hanzi": "经过",
+    "pinyin": "jīngguò",
+    "meaning": {
+      "zh": "经过",
+      "en": "to pass; to go through; process; course",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0227",
+    "hanzi": "经理",
+    "pinyin": "jīnglǐ",
+    "meaning": {
+      "zh": "经理",
+      "en": "manager; director",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0228",
+    "hanzi": "九",
+    "pinyin": "jiǔ",
+    "meaning": {
+      "zh": "九",
+      "en": "nine; 9",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0229",
+    "hanzi": "久",
+    "pinyin": "jiǔ",
+    "meaning": {
+      "zh": "久",
+      "en": "(long) time; (long) duration of time",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0230",
+    "hanzi": "旧",
+    "pinyin": "jiù",
+    "meaning": {
+      "zh": "旧",
+      "en": "old; opposite: new 新; former; worn (with age)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0231",
+    "hanzi": "就",
+    "pinyin": "jiù",
+    "meaning": {
+      "zh": "就",
+      "en": "(after a suppositional clause) in that case; then; (after a clause of action) as soon as; immediately after; (same as 是) merely; nothing else but; simply; just; precisely; exactly; only; as little as; as much as; as many as; to approach; to move towards; to undertake; to engage in; (often followed by 着) taking advantage of; (of food) to go with; with regard to; concerning; (pattern: 就 ... 也 ...) even if ... still ...; (pattern: 不 ... 就 ...) if not ... then must be ...",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0232",
+    "hanzi": "举行",
+    "pinyin": "jǔxíng",
+    "meaning": {
+      "zh": "举行",
+      "en": "to hold (a meeting, ceremony etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0233",
+    "hanzi": "句子",
+    "pinyin": "jùzi",
+    "meaning": {
+      "zh": "句子",
+      "en": "sentence",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0234",
+    "hanzi": "决定",
+    "pinyin": "juédìng",
+    "meaning": {
+      "zh": "决定",
+      "en": "to decide (to do something); to resolve; decision; certainly",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0235",
+    "hanzi": "觉得",
+    "pinyin": "juéde",
+    "meaning": {
+      "zh": "觉得",
+      "en": "to think that ...; to feel that ...; to feel (uncomfortable etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0236",
+    "hanzi": "咖啡",
+    "pinyin": "kāfēi",
+    "meaning": {
+      "zh": "咖啡",
+      "en": "coffee (loanword)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0237",
+    "hanzi": "开",
+    "pinyin": "kāi",
+    "meaning": {
+      "zh": "开",
+      "en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate; to run; to boil; to write out (a prescription, check, invoice etc); (directional complement) away; off; carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0238",
+    "hanzi": "开始",
+    "pinyin": "kāishǐ",
+    "meaning": {
+      "zh": "开始",
+      "en": "to begin; beginning; to start; initial",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0239",
+    "hanzi": "看",
+    "pinyin": "kān",
+    "meaning": {
+      "zh": "看",
+      "en": "to look after; to take care of; to watch; to guard",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0240",
+    "hanzi": "看见",
+    "pinyin": "kànjiàn",
+    "meaning": {
+      "zh": "看见",
+      "en": "to see; to catch sight of",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0241",
+    "hanzi": "考试",
+    "pinyin": "kǎoshì",
+    "meaning": {
+      "zh": "考试",
+      "en": "to take an exam; exam",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0242",
+    "hanzi": "可爱",
+    "pinyin": "kěài",
+    "meaning": {
+      "zh": "可爱",
+      "en": "adorable; cute; lovely",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0243",
+    "hanzi": "可能",
+    "pinyin": "kěnéng",
+    "meaning": {
+      "zh": "可能",
+      "en": "might (happen); possible; probable; possibility; probability; maybe; perhaps",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0244",
+    "hanzi": "可以",
+    "pinyin": "kěyǐ",
+    "meaning": {
+      "zh": "可以",
+      "en": "can; may; possible; able to; not bad; pretty good",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0245",
+    "hanzi": "渴",
+    "pinyin": "kě",
+    "meaning": {
+      "zh": "渴",
+      "en": "thirsty",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0246",
+    "hanzi": "刻",
+    "pinyin": "kè",
+    "meaning": {
+      "zh": "刻",
+      "en": "quarter (hour); moment; to carve; to engrave; to cut; oppressive; classifier for short time intervals",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0247",
+    "hanzi": "客人",
+    "pinyin": "kèrén",
+    "meaning": {
+      "zh": "客人",
+      "en": "visitor; guest; customer; client",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0248",
+    "hanzi": "课",
+    "pinyin": "kè",
+    "meaning": {
+      "zh": "课",
+      "en": "subject; course; class; lesson; to levy; tax; form of divination",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0249",
+    "hanzi": "空调",
+    "pinyin": "kōngtiáo",
+    "meaning": {
+      "zh": "空调",
+      "en": "air conditioning; air conditioner (including units that have a heating mode)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0250",
+    "hanzi": "口",
+    "pinyin": "kǒu",
+    "meaning": {
+      "zh": "口",
+      "en": "mouth; classifier for things with mouths (people, domestic animals, cannons, wells etc); classifier for bites or mouthfuls",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0251",
+    "hanzi": "哭",
+    "pinyin": "kū",
+    "meaning": {
+      "zh": "哭",
+      "en": "to cry; to weep",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0252",
+    "hanzi": "裤子",
+    "pinyin": "kùzi",
+    "meaning": {
+      "zh": "裤子",
+      "en": "variant of 裤子, trousers; pants",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0253",
+    "hanzi": "块",
+    "pinyin": "kuài",
+    "meaning": {
+      "zh": "块",
+      "en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0254",
+    "hanzi": "快",
+    "pinyin": "kuài",
+    "meaning": {
+      "zh": "快",
+      "en": "rapid; quick; speed; rate; soon; almost; to make haste; clever; sharp (of knives or wits); forthright; plainspoken; gratified; pleased; pleasant",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0255",
+    "hanzi": "快乐",
+    "pinyin": "kuàilè",
+    "meaning": {
+      "zh": "快乐",
+      "en": "happy; joyful",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0256",
+    "hanzi": "筷子",
+    "pinyin": "kuàizi",
+    "meaning": {
+      "zh": "筷子",
+      "en": "chopsticks",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0257",
+    "hanzi": "来",
+    "pinyin": "lái",
+    "meaning": {
+      "zh": "来",
+      "en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回来); ever since (as in 自古以来); for the past (amount of time); (prefix) the coming ...; the next ... (as in 来世); (between two verbs) in order to; (after a round number) approximately; (used after 得 to indicate possibility, as in 谈得来, or after 不 to indicate impossibility, as in 吃不来)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0258",
+    "hanzi": "蓝",
+    "pinyin": "Lán",
+    "meaning": {
+      "zh": "蓝",
+      "en": "surname Lan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0259",
+    "hanzi": "老",
+    "pinyin": "lǎo",
+    "meaning": {
+      "zh": "老",
+      "en": "prefix used before the surname of a person or a numeral indicating the order of birth of the children in a family or to indicate affection or familiarity; old (of people); venerable (person); experienced; of long standing; always; all the time; of the past; very; outdated; (of meat etc) tough",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0260",
+    "hanzi": "老师",
+    "pinyin": "lǎoshī",
+    "meaning": {
+      "zh": "老师",
+      "en": "teacher",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0261",
+    "hanzi": "了",
+    "pinyin": "le",
+    "meaning": {
+      "zh": "了",
+      "en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0262",
+    "hanzi": "了解",
+    "pinyin": "liǎojiě",
+    "meaning": {
+      "zh": "了解",
+      "en": "to understand; to realize; to find out",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0263",
+    "hanzi": "累",
+    "pinyin": "lěi",
+    "meaning": {
+      "zh": "累",
+      "en": "to accumulate; to involve or implicate (Taiwan pr. [lèi]); continuous; repeated",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0264",
+    "hanzi": "冷",
+    "pinyin": "Lěng",
+    "meaning": {
+      "zh": "冷",
+      "en": "surname Leng",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0265",
+    "hanzi": "离",
+    "pinyin": "chī",
+    "meaning": {
+      "zh": "离",
+      "en": "mythical beast (archaic)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0266",
+    "hanzi": "离开",
+    "pinyin": "líkāi",
+    "meaning": {
+      "zh": "离开",
+      "en": "to depart; to leave",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0267",
+    "hanzi": "礼物",
+    "pinyin": "lǐwù",
+    "meaning": {
+      "zh": "礼物",
+      "en": "gift; present",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0268",
+    "hanzi": "里",
+    "pinyin": "lǐ",
+    "meaning": {
+      "zh": "里",
+      "en": "variant of 里",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0269",
+    "hanzi": "历史",
+    "pinyin": "lìshǐ",
+    "meaning": {
+      "zh": "历史",
+      "en": "history",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0270",
+    "hanzi": "脸",
+    "pinyin": "liǎn",
+    "meaning": {
+      "zh": "脸",
+      "en": "face",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0271",
+    "hanzi": "练习",
+    "pinyin": "liànxí",
+    "meaning": {
+      "zh": "练习",
+      "en": "to practice; exercise; drill; practice",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0272",
+    "hanzi": "两",
+    "pinyin": "liǎng",
+    "meaning": {
+      "zh": "两",
+      "en": "two; both; some; a few; tael, unit of weight equal to 50 grams (modern) or 1⁄16 of a catty 斤 (old)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0273",
+    "hanzi": "辆",
+    "pinyin": "liàng",
+    "meaning": {
+      "zh": "辆",
+      "en": "classifier for vehicles",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0274",
+    "hanzi": "邻居",
+    "pinyin": "línjū",
+    "meaning": {
+      "zh": "邻居",
+      "en": "neighbor; next door",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0275",
+    "hanzi": "零",
+    "pinyin": "líng",
+    "meaning": {
+      "zh": "零",
+      "en": "zero; nought; zero sign; fractional; fragmentary; odd (of numbers); (placed between two numbers to indicate a smaller quantity followed by a larger one); fraction; (in mathematics) remainder (after division); extra; to wither and fall; to wither",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0276",
+    "hanzi": "六",
+    "pinyin": "liù",
+    "meaning": {
+      "zh": "六",
+      "en": "six; 6",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0277",
+    "hanzi": "楼",
+    "pinyin": "Lóu",
+    "meaning": {
+      "zh": "楼",
+      "en": "surname Lou",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0278",
+    "hanzi": "路",
+    "pinyin": "Lù",
+    "meaning": {
+      "zh": "路",
+      "en": "surname Lu",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0279",
+    "hanzi": "旅游",
+    "pinyin": "lǚyóu",
+    "meaning": {
+      "zh": "旅游",
+      "en": "trip; journey; tourism; travel; tour; to travel",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0280",
+    "hanzi": "绿",
+    "pinyin": "lǜ",
+    "meaning": {
+      "zh": "绿",
+      "en": "green; (slang) (derived from 绿帽子) to cheat on (one's spouse or boyfriend or girlfriend)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0281",
+    "hanzi": "妈妈",
+    "pinyin": "māma",
+    "meaning": {
+      "zh": "妈妈",
+      "en": "mama; mommy; mother",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0282",
+    "hanzi": "马",
+    "pinyin": "Mǎ",
+    "meaning": {
+      "zh": "马",
+      "en": "surname Ma; abbr. for Malaysia 马来西亚",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0283",
+    "hanzi": "马上",
+    "pinyin": "mǎshàng",
+    "meaning": {
+      "zh": "马上",
+      "en": "at once; right away; immediately; on horseback (i.e. by military force)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0284",
+    "hanzi": "吗",
+    "pinyin": "má",
+    "meaning": {
+      "zh": "吗",
+      "en": "(coll.) what?",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0285",
+    "hanzi": "买",
+    "pinyin": "mǎi",
+    "meaning": {
+      "zh": "买",
+      "en": "to buy; to purchase",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0286",
+    "hanzi": "卖",
+    "pinyin": "mài",
+    "meaning": {
+      "zh": "卖",
+      "en": "to sell; to betray; to spare no effort; to show off or flaunt",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0287",
+    "hanzi": "满意",
+    "pinyin": "mǎnyì",
+    "meaning": {
+      "zh": "满意",
+      "en": "satisfied; pleased; to one's satisfaction",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0288",
+    "hanzi": "慢",
+    "pinyin": "màn",
+    "meaning": {
+      "zh": "慢",
+      "en": "slow",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0289",
+    "hanzi": "忙",
+    "pinyin": "máng",
+    "meaning": {
+      "zh": "忙",
+      "en": "busy; hurriedly; to hurry; to rush",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0290",
+    "hanzi": "猫",
+    "pinyin": "māo",
+    "meaning": {
+      "zh": "猫",
+      "en": "cat; (dialect) to hide oneself; (coll.) modem",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0291",
+    "hanzi": "帽子",
+    "pinyin": "màozi",
+    "meaning": {
+      "zh": "帽子",
+      "en": "hat; cap; (fig.) label; bad name",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0292",
+    "hanzi": "没",
+    "pinyin": "méi",
+    "meaning": {
+      "zh": "没",
+      "en": "(negative prefix for verbs) have not; not",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0293",
+    "hanzi": "没关系",
+    "pinyin": "méiguānxi",
+    "meaning": {
+      "zh": "没关系",
+      "en": "it doesn't matter",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0294",
+    "hanzi": "每",
+    "pinyin": "měi",
+    "meaning": {
+      "zh": "每",
+      "en": "each; every",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0295",
+    "hanzi": "妹妹",
+    "pinyin": "mèimei",
+    "meaning": {
+      "zh": "妹妹",
+      "en": "younger sister; young woman",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0296",
+    "hanzi": "门",
+    "pinyin": "Mén",
+    "meaning": {
+      "zh": "门",
+      "en": "surname Men",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0297",
+    "hanzi": "米",
+    "pinyin": "Mǐ",
+    "meaning": {
+      "zh": "米",
+      "en": "surname Mi",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0298",
+    "hanzi": "米饭",
+    "pinyin": "mǐfàn",
+    "meaning": {
+      "zh": "米饭",
+      "en": "(cooked) rice",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0299",
+    "hanzi": "面包",
+    "pinyin": "miànbāo",
+    "meaning": {
+      "zh": "面包",
+      "en": "bread",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0300",
+    "hanzi": "面条",
+    "pinyin": "miàntiáo",
+    "meaning": {
+      "zh": "面条",
+      "en": "noodles",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0301",
+    "hanzi": "名字",
+    "pinyin": "míngzi",
+    "meaning": {
+      "zh": "名字",
+      "en": "name (of a person or thing)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0302",
+    "hanzi": "明白",
+    "pinyin": "míngbai",
+    "meaning": {
+      "zh": "明白",
+      "en": "clear; obvious; unequivocal; to understand; to realize",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0303",
+    "hanzi": "明天",
+    "pinyin": "míngtiān",
+    "meaning": {
+      "zh": "明天",
+      "en": "tomorrow",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0304",
+    "hanzi": "拿",
+    "pinyin": "ná",
+    "meaning": {
+      "zh": "拿",
+      "en": "old variant of 拿",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0305",
+    "hanzi": "哪",
+    "pinyin": "nǎ",
+    "meaning": {
+      "zh": "哪",
+      "en": "how; which",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0306",
+    "hanzi": "那",
+    "pinyin": "Nā",
+    "meaning": {
+      "zh": "那",
+      "en": "surname Na",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0307",
+    "hanzi": "奶奶",
+    "pinyin": "nǎinai",
+    "meaning": {
+      "zh": "奶奶",
+      "en": "(informal) grandma (paternal grandmother); (respectful) mistress of the house; (coll.) boobies; breasts",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0308",
+    "hanzi": "男人",
+    "pinyin": "nánrén",
+    "meaning": {
+      "zh": "男人",
+      "en": "a man; a male; men",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0309",
+    "hanzi": "南",
+    "pinyin": "Nán",
+    "meaning": {
+      "zh": "南",
+      "en": "surname Nan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0310",
+    "hanzi": "难",
+    "pinyin": "nán",
+    "meaning": {
+      "zh": "难",
+      "en": "difficult (to...); problem; difficulty; difficult; not good",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0311",
+    "hanzi": "难过",
+    "pinyin": "nánguò",
+    "meaning": {
+      "zh": "难过",
+      "en": "to feel sad; to feel unwell; (of life) to be difficult",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0312",
+    "hanzi": "呢",
+    "pinyin": "ne",
+    "meaning": {
+      "zh": "呢",
+      "en": "particle indicating that a previously asked question is to be applied to the preceding word (\"What about ...?\", \"And ...?\"); particle for inquiring about location (\"Where is ...?\"); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board (\"ok?\", \"are you with me?\"); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0313",
+    "hanzi": "能",
+    "pinyin": "Néng",
+    "meaning": {
+      "zh": "能",
+      "en": "surname Neng",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0314",
+    "hanzi": "你",
+    "pinyin": "nǐ",
+    "meaning": {
+      "zh": "你",
+      "en": "you (informal, as opposed to courteous 您)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0315",
+    "hanzi": "年",
+    "pinyin": "Nián",
+    "meaning": {
+      "zh": "年",
+      "en": "surname Nian",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0316",
+    "hanzi": "年级",
+    "pinyin": "niánjí",
+    "meaning": {
+      "zh": "年级",
+      "en": "grade; year (in school, college etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0317",
+    "hanzi": "年轻",
+    "pinyin": "niánqīng",
+    "meaning": {
+      "zh": "年轻",
+      "en": "young",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0318",
+    "hanzi": "鸟",
+    "pinyin": "diǎo",
+    "meaning": {
+      "zh": "鸟",
+      "en": "variant of 屌; penis",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0319",
+    "hanzi": "您",
+    "pinyin": "nín",
+    "meaning": {
+      "zh": "您",
+      "en": "you (courteous, as opposed to informal 你)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0320",
+    "hanzi": "牛奶",
+    "pinyin": "niúnǎi",
+    "meaning": {
+      "zh": "牛奶",
+      "en": "cow's milk",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0321",
+    "hanzi": "努力",
+    "pinyin": "nǔlì",
+    "meaning": {
+      "zh": "努力",
+      "en": "to make an effort; to try hard; to strive; hard-working; conscientious",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0322",
+    "hanzi": "女儿",
+    "pinyin": "nǚér",
+    "meaning": {
+      "zh": "女儿",
+      "en": "daughter",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0323",
+    "hanzi": "女人",
+    "pinyin": "nǚrén",
+    "meaning": {
+      "zh": "女人",
+      "en": "woman",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0324",
+    "hanzi": "爬山",
+    "pinyin": "páshān",
+    "meaning": {
+      "zh": "爬山",
+      "en": "to climb a mountain; to mountaineer; hiking; mountaineering",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0325",
+    "hanzi": "盘子",
+    "pinyin": "pánzi",
+    "meaning": {
+      "zh": "盘子",
+      "en": "tray; plate; dish",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0326",
+    "hanzi": "旁边",
+    "pinyin": "pángbiān",
+    "meaning": {
+      "zh": "旁边",
+      "en": "side; adjacent place",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0327",
+    "hanzi": "胖",
+    "pinyin": "pán",
+    "meaning": {
+      "zh": "胖",
+      "en": "healthy; at ease",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0328",
+    "hanzi": "跑步",
+    "pinyin": "pǎobù",
+    "meaning": {
+      "zh": "跑步",
+      "en": "to run; to jog; (military) to march at the double",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0329",
+    "hanzi": "朋友",
+    "pinyin": "péngyou",
+    "meaning": {
+      "zh": "朋友",
+      "en": "friend",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0330",
+    "hanzi": "啤酒",
+    "pinyin": "píjiǔ",
+    "meaning": {
+      "zh": "啤酒",
+      "en": "beer (loanword)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0331",
+    "hanzi": "票",
+    "pinyin": "piào",
+    "meaning": {
+      "zh": "票",
+      "en": "ticket; ballot; banknote; person held for ransom; amateur performance of Chinese opera; classifier for groups, batches, business transactions",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0332",
+    "hanzi": "漂亮",
+    "pinyin": "piàoliang",
+    "meaning": {
+      "zh": "漂亮",
+      "en": "pretty; beautiful",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0333",
+    "hanzi": "苹果",
+    "pinyin": "píngguǒ",
+    "meaning": {
+      "zh": "苹果",
+      "en": "apple",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0334",
+    "hanzi": "葡萄",
+    "pinyin": "pútao",
+    "meaning": {
+      "zh": "葡萄",
+      "en": "grape",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0335",
+    "hanzi": "普通话",
+    "pinyin": "pǔtōnghuà",
+    "meaning": {
+      "zh": "普通话",
+      "en": "Mandarin (common language); Putonghua (common speech of the Chinese language); ordinary speech",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0336",
+    "hanzi": "七",
+    "pinyin": "qī",
+    "meaning": {
+      "zh": "七",
+      "en": "seven; 7",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0337",
+    "hanzi": "妻子",
+    "pinyin": "qīzǐ",
+    "meaning": {
+      "zh": "妻子",
+      "en": "wife and children",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0338",
+    "hanzi": "其实",
+    "pinyin": "qíshí",
+    "meaning": {
+      "zh": "其实",
+      "en": "actually; in fact; really",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0339",
+    "hanzi": "其他",
+    "pinyin": "qítā",
+    "meaning": {
+      "zh": "其他",
+      "en": "other; (sth or sb) else; the rest",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0340",
+    "hanzi": "奇怪",
+    "pinyin": "qíguài",
+    "meaning": {
+      "zh": "奇怪",
+      "en": "strange; odd; to marvel; to be baffled",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0341",
+    "hanzi": "骑",
+    "pinyin": "jì",
+    "meaning": {
+      "zh": "骑",
+      "en": "(Tw) saddle horse; mounted soldier",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0342",
+    "hanzi": "起床",
+    "pinyin": "qǐchuáng",
+    "meaning": {
+      "zh": "起床",
+      "en": "to get out of bed; to get up",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0343",
+    "hanzi": "千",
+    "pinyin": "qiān",
+    "meaning": {
+      "zh": "千",
+      "en": "thousand",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0344",
+    "hanzi": "铅笔",
+    "pinyin": "qiānbǐ",
+    "meaning": {
+      "zh": "铅笔",
+      "en": "(lead) pencil",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0345",
+    "hanzi": "前面",
+    "pinyin": "qiánmiàn",
+    "meaning": {
+      "zh": "前面",
+      "en": "ahead; in front; preceding; above; also pr. [qián mian]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0346",
+    "hanzi": "钱",
+    "pinyin": "Qián",
+    "meaning": {
+      "zh": "钱",
+      "en": "surname Qian",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0347",
+    "hanzi": "清楚",
+    "pinyin": "qīngchu",
+    "meaning": {
+      "zh": "清楚",
+      "en": "clear; distinct; to understand thoroughly; to be clear about",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0348",
+    "hanzi": "晴",
+    "pinyin": "qíng",
+    "meaning": {
+      "zh": "晴",
+      "en": "clear; fine (weather)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0349",
+    "hanzi": "请",
+    "pinyin": "qǐng",
+    "meaning": {
+      "zh": "请",
+      "en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0350",
+    "hanzi": "秋",
+    "pinyin": "Qiū",
+    "meaning": {
+      "zh": "秋",
+      "en": "surname Qiu",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0351",
+    "hanzi": "去",
+    "pinyin": "qù",
+    "meaning": {
+      "zh": "去",
+      "en": "to go; to go to (a place); (of a time etc) last; just passed; to send; to remove; to get rid of; to reduce; to be apart from in space or time; to die (euphemism); to play (a part); (when used either before or after a verb) to go in order to do sth; (after a verb of motion indicates movement away from the speaker); (used after certain verbs to indicate detachment or separation)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0352",
+    "hanzi": "去年",
+    "pinyin": "qùnián",
+    "meaning": {
+      "zh": "去年",
+      "en": "last year",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0353",
+    "hanzi": "裙子",
+    "pinyin": "qúnzi",
+    "meaning": {
+      "zh": "裙子",
+      "en": "skirt",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0354",
+    "hanzi": "然后",
+    "pinyin": "ránhòu",
+    "meaning": {
+      "zh": "然后",
+      "en": "then; after that; afterwards",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0355",
+    "hanzi": "让",
+    "pinyin": "ràng",
+    "meaning": {
+      "zh": "让",
+      "en": "to yield; to permit; to let sb do sth; to have sb do sth; to make sb (feel sad etc); by (indicates the agent in a passive clause, like 被)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0356",
+    "hanzi": "热",
+    "pinyin": "rè",
+    "meaning": {
+      "zh": "热",
+      "en": "to warm up; to heat up; hot (of weather); heat; fervent",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0357",
+    "hanzi": "热情",
+    "pinyin": "rèqíng",
+    "meaning": {
+      "zh": "热情",
+      "en": "cordial; enthusiastic; passion; passionate; passionately",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0358",
+    "hanzi": "人",
+    "pinyin": "rén",
+    "meaning": {
+      "zh": "人",
+      "en": "person; people",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0359",
+    "hanzi": "认识",
+    "pinyin": "rènshi",
+    "meaning": {
+      "zh": "认识",
+      "en": "to know; to recognize; to be familiar with; to get acquainted with sb; knowledge; understanding; awareness; cognition",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0360",
+    "hanzi": "认为",
+    "pinyin": "rènwéi",
+    "meaning": {
+      "zh": "认为",
+      "en": "to believe; to think; to consider; to feel",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0361",
+    "hanzi": "认真",
+    "pinyin": "rènzhēn",
+    "meaning": {
+      "zh": "认真",
+      "en": "conscientious; earnest; serious; to take seriously; to take to heart",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0362",
+    "hanzi": "日",
+    "pinyin": "Rì",
+    "meaning": {
+      "zh": "日",
+      "en": "abbr. for 本, Japan",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0363",
+    "hanzi": "容易",
+    "pinyin": "róngyì",
+    "meaning": {
+      "zh": "容易",
+      "en": "easy; straightforward; likely; liable to; apt to",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0364",
+    "hanzi": "如果",
+    "pinyin": "rúguǒ",
+    "meaning": {
+      "zh": "如果",
+      "en": "if; in case; in the event that",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0365",
+    "hanzi": "三",
+    "pinyin": "Sān",
+    "meaning": {
+      "zh": "三",
+      "en": "surname San",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0366",
+    "hanzi": "伞",
+    "pinyin": "sǎn",
+    "meaning": {
+      "zh": "伞",
+      "en": "umbrella; parasol",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0367",
+    "hanzi": "商店",
+    "pinyin": "shāngdiàn",
+    "meaning": {
+      "zh": "商店",
+      "en": "store; shop",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0368",
+    "hanzi": "上",
+    "pinyin": "shǎng",
+    "meaning": {
+      "zh": "上",
+      "en": "used in 上声",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0369",
+    "hanzi": "上班",
+    "pinyin": "shàngbān",
+    "meaning": {
+      "zh": "上班",
+      "en": "to go to work; to be on duty; to start work; to go to the office",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0370",
+    "hanzi": "上网",
+    "pinyin": "shàngwǎng",
+    "meaning": {
+      "zh": "上网",
+      "en": "to go online; to connect to the Internet; (of a document etc) to be uploaded to the Internet; (tennis, volleyball etc) to move in close to the net",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0371",
+    "hanzi": "上午",
+    "pinyin": "shàngwǔ",
+    "meaning": {
+      "zh": "上午",
+      "en": "morning",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0372",
+    "hanzi": "少",
+    "pinyin": "shǎo",
+    "meaning": {
+      "zh": "少",
+      "en": "few; less; to lack; to be missing; to stop (doing sth); seldom",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0373",
+    "hanzi": "身体",
+    "pinyin": "shēntǐ",
+    "meaning": {
+      "zh": "身体",
+      "en": "the body; one's health; in person",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0374",
+    "hanzi": "什么",
+    "pinyin": "shénme",
+    "meaning": {
+      "zh": "什么",
+      "en": "what?; something; anything",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0375",
+    "hanzi": "生病",
+    "pinyin": "shēngbìng",
+    "meaning": {
+      "zh": "生病",
+      "en": "to fall ill",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0376",
+    "hanzi": "生气",
+    "pinyin": "shēngqì",
+    "meaning": {
+      "zh": "生气",
+      "en": "to get angry; to take offense; angry; vitality; liveliness",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0377",
+    "hanzi": "生日",
+    "pinyin": "shēngrì",
+    "meaning": {
+      "zh": "生日",
+      "en": "birthday",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0378",
+    "hanzi": "声音",
+    "pinyin": "shēngyīn",
+    "meaning": {
+      "zh": "声音",
+      "en": "voice; sound",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0379",
+    "hanzi": "十",
+    "pinyin": "shí",
+    "meaning": {
+      "zh": "十",
+      "en": "ten; 10",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0380",
+    "hanzi": "时候",
+    "pinyin": "shíhou",
+    "meaning": {
+      "zh": "时候",
+      "en": "time; length of time; moment; period",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0381",
+    "hanzi": "时间",
+    "pinyin": "shíjiān",
+    "meaning": {
+      "zh": "时间",
+      "en": "time; period",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0382",
+    "hanzi": "使",
+    "pinyin": "shǐ",
+    "meaning": {
+      "zh": "使",
+      "en": "to make; to cause; to enable; to use; to employ; to send; to instruct sb to do sth; envoy; messenger",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0383",
+    "hanzi": "世界",
+    "pinyin": "shìjiè",
+    "meaning": {
+      "zh": "世界",
+      "en": "world",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0384",
+    "hanzi": "事情",
+    "pinyin": "shìqing",
+    "meaning": {
+      "zh": "事情",
+      "en": "affair; matter; thing; business",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0385",
+    "hanzi": "是",
+    "pinyin": "shì",
+    "meaning": {
+      "zh": "是",
+      "en": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well; (adverb for emphatic assertion)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0386",
+    "hanzi": "手表",
+    "pinyin": "shǒubiǎo",
+    "meaning": {
+      "zh": "手表",
+      "en": "wristwatch",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0387",
+    "hanzi": "手机",
+    "pinyin": "shǒujī",
+    "meaning": {
+      "zh": "手机",
+      "en": "cell phone; mobile phone",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0388",
+    "hanzi": "瘦",
+    "pinyin": "shòu",
+    "meaning": {
+      "zh": "瘦",
+      "en": "thin; to lose weight; (of clothing) tight; (of meat) lean; (of land) unproductive",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0389",
+    "hanzi": "书",
+    "pinyin": "Shū",
+    "meaning": {
+      "zh": "书",
+      "en": "abbr. for 书经",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0390",
+    "hanzi": "叔叔",
+    "pinyin": "shūshu",
+    "meaning": {
+      "zh": "叔叔",
+      "en": "father's younger brother; uncle; Taiwan pr. [shú shu]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0391",
+    "hanzi": "舒服",
+    "pinyin": "shūfu",
+    "meaning": {
+      "zh": "舒服",
+      "en": "comfortable; feeling well",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0392",
+    "hanzi": "树",
+    "pinyin": "shù",
+    "meaning": {
+      "zh": "树",
+      "en": "tree; to cultivate; to set up",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0393",
+    "hanzi": "数学",
+    "pinyin": "shùxué",
+    "meaning": {
+      "zh": "数学",
+      "en": "mathematics; mathematical",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0394",
+    "hanzi": "刷",
+    "pinyin": "shuā",
+    "meaning": {
+      "zh": "刷",
+      "en": "to brush; to paint; to daub; to paste up; to skip class (of students); to fire from a job",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0395",
+    "hanzi": "双",
+    "pinyin": "Shuāng",
+    "meaning": {
+      "zh": "双",
+      "en": "surname Shuang",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0396",
+    "hanzi": "谁",
+    "pinyin": "shéi",
+    "meaning": {
+      "zh": "谁",
+      "en": "who; also pr. [shuí]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0397",
+    "hanzi": "水",
+    "pinyin": "Shuǐ",
+    "meaning": {
+      "zh": "水",
+      "en": "surname Shui",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0398",
+    "hanzi": "水果",
+    "pinyin": "shuǐguǒ",
+    "meaning": {
+      "zh": "水果",
+      "en": "fruit",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0399",
+    "hanzi": "水平",
+    "pinyin": "shuǐpíng",
+    "meaning": {
+      "zh": "水平",
+      "en": "level (of achievement etc); standard; horizontal",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0400",
+    "hanzi": "睡觉",
+    "pinyin": "shuìjiào",
+    "meaning": {
+      "zh": "睡觉",
+      "en": "to go to bed; to sleep",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0401",
+    "hanzi": "说话",
+    "pinyin": "shuōhuà",
+    "meaning": {
+      "zh": "说话",
+      "en": "to speak; to say; to talk; to gossip; to tell stories; talk; word",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0402",
+    "hanzi": "司机",
+    "pinyin": "sījī",
+    "meaning": {
+      "zh": "司机",
+      "en": "chauffeur; driver",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0403",
+    "hanzi": "四",
+    "pinyin": "sì",
+    "meaning": {
+      "zh": "四",
+      "en": "four; 4",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0404",
+    "hanzi": "送",
+    "pinyin": "sòng",
+    "meaning": {
+      "zh": "送",
+      "en": "to send; to deliver; to transmit; to give (as a present); to see (sb) off; to accompany; to go along with",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0405",
+    "hanzi": "虽然",
+    "pinyin": "suīrán",
+    "meaning": {
+      "zh": "虽然",
+      "en": "although; even though (often used correlatively with 是 or 是 etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0406",
+    "hanzi": "岁",
+    "pinyin": "suì",
+    "meaning": {
+      "zh": "岁",
+      "en": "variant of 岁, year; years old",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0407",
+    "hanzi": "所以",
+    "pinyin": "suǒyǐ",
+    "meaning": {
+      "zh": "所以",
+      "en": "therefore; as a result; so; the reason why",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0408",
+    "hanzi": "他",
+    "pinyin": "tā",
+    "meaning": {
+      "zh": "他",
+      "en": "he; him (used for either sex when the sex is unknown or unimportant); (used before sb's name for emphasis); (used as a meaningless mock object); (literary) other",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0409",
+    "hanzi": "它",
+    "pinyin": "tā",
+    "meaning": {
+      "zh": "它",
+      "en": "it",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0410",
+    "hanzi": "她",
+    "pinyin": "tā",
+    "meaning": {
+      "zh": "她",
+      "en": "she",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0411",
+    "hanzi": "太",
+    "pinyin": "tài",
+    "meaning": {
+      "zh": "太",
+      "en": "highest; greatest; too (much); very; extremely",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0412",
+    "hanzi": "太阳",
+    "pinyin": "tàiyang",
+    "meaning": {
+      "zh": "太阳",
+      "en": "sun; abbr. for 太阳穴",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0413",
+    "hanzi": "糖",
+    "pinyin": "táng",
+    "meaning": {
+      "zh": "糖",
+      "en": "sugar; sweets; candy",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0414",
+    "hanzi": "特别",
+    "pinyin": "tèbié",
+    "meaning": {
+      "zh": "特别",
+      "en": "unusual; special; very; especially; particularly; expressly; for a specific purpose; (often followed by 是) in particular",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0415",
+    "hanzi": "疼",
+    "pinyin": "téng",
+    "meaning": {
+      "zh": "疼",
+      "en": "(it) hurts; sore; to love dearly",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0416",
+    "hanzi": "踢",
+    "pinyin": "tī",
+    "meaning": {
+      "zh": "踢",
+      "en": "to kick; to play (e.g. soccer); (slang) butch (in a lesbian relationship)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0417",
+    "hanzi": "提高",
+    "pinyin": "tígāo",
+    "meaning": {
+      "zh": "提高",
+      "en": "to raise; to increase; to improve",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0418",
+    "hanzi": "题",
+    "pinyin": "Tí",
+    "meaning": {
+      "zh": "题",
+      "en": "surname Ti",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0419",
+    "hanzi": "体育",
+    "pinyin": "tǐyù",
+    "meaning": {
+      "zh": "体育",
+      "en": "sports; physical education",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0420",
+    "hanzi": "天气",
+    "pinyin": "tiānqì",
+    "meaning": {
+      "zh": "天气",
+      "en": "weather",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0421",
+    "hanzi": "甜",
+    "pinyin": "tián",
+    "meaning": {
+      "zh": "甜",
+      "en": "sweet",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0422",
+    "hanzi": "条",
+    "pinyin": "tiáo",
+    "meaning": {
+      "zh": "条",
+      "en": "strip; item; article; clause (of law or treaty); classifier for long thin things (ribbon, river, road, trousers etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0423",
+    "hanzi": "跳舞",
+    "pinyin": "tiàowǔ",
+    "meaning": {
+      "zh": "跳舞",
+      "en": "to dance",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0424",
+    "hanzi": "听",
+    "pinyin": "yǐn",
+    "meaning": {
+      "zh": "听",
+      "en": "smile (archaic)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0425",
+    "hanzi": "同事",
+    "pinyin": "tóngshì",
+    "meaning": {
+      "zh": "同事",
+      "en": "colleague; co-worker",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0426",
+    "hanzi": "同学",
+    "pinyin": "tóngxué",
+    "meaning": {
+      "zh": "同学",
+      "en": "to study at the same school; fellow student; classmate",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0427",
+    "hanzi": "同意",
+    "pinyin": "tóngyì",
+    "meaning": {
+      "zh": "同意",
+      "en": "to agree; to consent; to approve",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0428",
+    "hanzi": "头发",
+    "pinyin": "tóufa",
+    "meaning": {
+      "zh": "头发",
+      "en": "hair (on the head)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0429",
+    "hanzi": "突然",
+    "pinyin": "tūrán",
+    "meaning": {
+      "zh": "突然",
+      "en": "sudden; abrupt; unexpected",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0430",
+    "hanzi": "图书馆",
+    "pinyin": "túshūguǎn",
+    "meaning": {
+      "zh": "图书馆",
+      "en": "library",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0431",
+    "hanzi": "腿",
+    "pinyin": "tuǐ",
+    "meaning": {
+      "zh": "腿",
+      "en": "leg",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0432",
+    "hanzi": "外",
+    "pinyin": "wài",
+    "meaning": {
+      "zh": "外",
+      "en": "outside; in addition; foreign; external",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0433",
+    "hanzi": "完",
+    "pinyin": "wán",
+    "meaning": {
+      "zh": "完",
+      "en": "to finish; to be over; whole; complete; entire",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0434",
+    "hanzi": "完成",
+    "pinyin": "wánchéng",
+    "meaning": {
+      "zh": "完成",
+      "en": "to complete; to accomplish",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0435",
+    "hanzi": "玩",
+    "pinyin": "wán",
+    "meaning": {
+      "zh": "玩",
+      "en": "to play; to have fun; to trifle with; toy; sth used for amusement; curio or antique (Taiwan pr. [wàn]); to keep sth for entertainment",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0436",
+    "hanzi": "晚上",
+    "pinyin": "wǎnshang",
+    "meaning": {
+      "zh": "晚上",
+      "en": "evening; night; in the evening",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0437",
+    "hanzi": "碗",
+    "pinyin": "wǎn",
+    "meaning": {
+      "zh": "碗",
+      "en": "variant of 碗",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0438",
+    "hanzi": "万",
+    "pinyin": "mò",
+    "meaning": {
+      "zh": "万",
+      "en": "used in 俟",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0439",
+    "hanzi": "忘记",
+    "pinyin": "wàngjì",
+    "meaning": {
+      "zh": "忘记",
+      "en": "to forget",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0440",
+    "hanzi": "为",
+    "pinyin": "wéi",
+    "meaning": {
+      "zh": "为",
+      "en": "as (in the capacity of); to take sth as; to act as; to serve as; to behave as; to become; to be; to do; by (in the passive voice)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0441",
+    "hanzi": "为了",
+    "pinyin": "wèile",
+    "meaning": {
+      "zh": "为了",
+      "en": "for; for the purpose of; in order to",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0442",
+    "hanzi": "为什么",
+    "pinyin": "wèishénme",
+    "meaning": {
+      "zh": "为什么",
+      "en": "why?; for what reason?",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0443",
+    "hanzi": "位",
+    "pinyin": "wèi",
+    "meaning": {
+      "zh": "位",
+      "en": "position; location; place; seat; classifier for people (honorific); classifier for binary bits (e.g. 十六位 16-bit or 2 bytes); (physics) potential",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0444",
+    "hanzi": "喂",
+    "pinyin": "wéi",
+    "meaning": {
+      "zh": "喂",
+      "en": "hello (when answering the phone)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0445",
+    "hanzi": "文化",
+    "pinyin": "wénhuà",
+    "meaning": {
+      "zh": "文化",
+      "en": "culture; civilization; cultural",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0446",
+    "hanzi": "问",
+    "pinyin": "wèn",
+    "meaning": {
+      "zh": "问",
+      "en": "to ask; to inquire",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0447",
+    "hanzi": "问题",
+    "pinyin": "wèntí",
+    "meaning": {
+      "zh": "问题",
+      "en": "question; problem; issue; topic",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0448",
+    "hanzi": "我",
+    "pinyin": "wǒ",
+    "meaning": {
+      "zh": "我",
+      "en": "I; me; my",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0449",
+    "hanzi": "我们",
+    "pinyin": "wǒmen",
+    "meaning": {
+      "zh": "我们",
+      "en": "we; us; ourselves; our",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0450",
+    "hanzi": "五",
+    "pinyin": "wǔ",
+    "meaning": {
+      "zh": "五",
+      "en": "five; 5",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0451",
+    "hanzi": "希望",
+    "pinyin": "xīwàng",
+    "meaning": {
+      "zh": "希望",
+      "en": "to hope; a hope; a wish",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0452",
+    "hanzi": "习惯",
+    "pinyin": "xíguàn",
+    "meaning": {
+      "zh": "习惯",
+      "en": "habit; custom; usual practice; to be used to",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0453",
+    "hanzi": "洗",
+    "pinyin": "xǐ",
+    "meaning": {
+      "zh": "洗",
+      "en": "to wash; to bathe; to develop (photographs); to shuffle (cards etc); to erase (a recording)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0454",
+    "hanzi": "洗手间",
+    "pinyin": "xǐshǒujiān",
+    "meaning": {
+      "zh": "洗手间",
+      "en": "toilet; lavatory; washroom",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0455",
+    "hanzi": "洗澡",
+    "pinyin": "xǐzǎo",
+    "meaning": {
+      "zh": "洗澡",
+      "en": "to bathe; to take a shower",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0456",
+    "hanzi": "喜欢",
+    "pinyin": "xǐhuan",
+    "meaning": {
+      "zh": "喜欢",
+      "en": "to like; to be fond of",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0457",
+    "hanzi": "西",
+    "pinyin": "Xī",
+    "meaning": {
+      "zh": "西",
+      "en": "the West; abbr. for Spain 牙; Spanish",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0458",
+    "hanzi": "西瓜",
+    "pinyin": "xīguā",
+    "meaning": {
+      "zh": "西瓜",
+      "en": "watermelon",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0459",
+    "hanzi": "下",
+    "pinyin": "xià",
+    "meaning": {
+      "zh": "下",
+      "en": "down; downwards; below; lower; later; next (week etc); second (of two parts); to decline; to go down; to arrive at (a decision, conclusion etc); measure word to show the frequency of an action",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0460",
+    "hanzi": "下午",
+    "pinyin": "xiàwǔ",
+    "meaning": {
+      "zh": "下午",
+      "en": "afternoon; p.m.",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0461",
+    "hanzi": "下雨",
+    "pinyin": "xiàyǔ",
+    "meaning": {
+      "zh": "下雨",
+      "en": "to rain",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0462",
+    "hanzi": "夏",
+    "pinyin": "Xià",
+    "meaning": {
+      "zh": "夏",
+      "en": "the Xia or Hsia dynasty c. 2000 BC; Xia of the Sixteen Kingdoms (407-432); surname Xia",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0463",
+    "hanzi": "先",
+    "pinyin": "xiān",
+    "meaning": {
+      "zh": "先",
+      "en": "early; prior; former; in advance; first",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0464",
+    "hanzi": "先生",
+    "pinyin": "xiānsheng",
+    "meaning": {
+      "zh": "先生",
+      "en": "teacher; gentleman; sir; mister (Mr.); husband; (dialect) doctor",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0465",
+    "hanzi": "现在",
+    "pinyin": "xiànzài",
+    "meaning": {
+      "zh": "现在",
+      "en": "now; at present; at the moment; modern; current; nowadays",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0466",
+    "hanzi": "相同",
+    "pinyin": "xiāngtóng",
+    "meaning": {
+      "zh": "相同",
+      "en": "identical; same",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0467",
+    "hanzi": "相信",
+    "pinyin": "xiāngxìn",
+    "meaning": {
+      "zh": "相信",
+      "en": "to be convinced (that sth is true); to believe; to accept sth as true",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0468",
+    "hanzi": "香蕉",
+    "pinyin": "xiāngjiāo",
+    "meaning": {
+      "zh": "香蕉",
+      "en": "banana",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0469",
+    "hanzi": "想",
+    "pinyin": "xiǎng",
+    "meaning": {
+      "zh": "想",
+      "en": "to think (about); to think of; to devise; to think (that); to believe (that); to desire; to want (to); to miss (feel wistful about the absence of)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0470",
+    "hanzi": "向",
+    "pinyin": "Xiàng",
+    "meaning": {
+      "zh": "向",
+      "en": "surname Xiang",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0471",
+    "hanzi": "像",
+    "pinyin": "xiàng",
+    "meaning": {
+      "zh": "像",
+      "en": "to resemble; to be like; to look as if; such as; appearance; image; portrait; image under a mapping (math.)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0472",
+    "hanzi": "小",
+    "pinyin": "xiǎo",
+    "meaning": {
+      "zh": "小",
+      "en": "small; tiny; few; young",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0473",
+    "hanzi": "小姐",
+    "pinyin": "xiǎojie",
+    "meaning": {
+      "zh": "小姐",
+      "en": "young lady; miss; (slang) prostitute",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0474",
+    "hanzi": "小时",
+    "pinyin": "xiǎoshí",
+    "meaning": {
+      "zh": "小时",
+      "en": "hour",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0475",
+    "hanzi": "小心",
+    "pinyin": "xiǎoxīn",
+    "meaning": {
+      "zh": "小心",
+      "en": "to be careful; to take care",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0476",
+    "hanzi": "校长",
+    "pinyin": "xiàozhǎng",
+    "meaning": {
+      "zh": "校长",
+      "en": "(college, university) president; headmaster",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0477",
+    "hanzi": "笑",
+    "pinyin": "xiào",
+    "meaning": {
+      "zh": "笑",
+      "en": "old variant of 笑",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0478",
+    "hanzi": "些",
+    "pinyin": "xiē",
+    "meaning": {
+      "zh": "些",
+      "en": "classifier indicating a small amount or small number greater than 1: some, a few, several",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0479",
+    "hanzi": "鞋",
+    "pinyin": "xié",
+    "meaning": {
+      "zh": "鞋",
+      "en": "shoe",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0480",
+    "hanzi": "写",
+    "pinyin": "xiě",
+    "meaning": {
+      "zh": "写",
+      "en": "to write",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0481",
+    "hanzi": "谢谢",
+    "pinyin": "xièxie",
+    "meaning": {
+      "zh": "谢谢",
+      "en": "to thank; thanks; thank you",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0482",
+    "hanzi": "新",
+    "pinyin": "Xīn",
+    "meaning": {
+      "zh": "新",
+      "en": "abbr. for Xinjiang 疆 or Singapore 坡; surname Xin",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0483",
+    "hanzi": "新闻",
+    "pinyin": "xīnwén",
+    "meaning": {
+      "zh": "新闻",
+      "en": "news",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0484",
+    "hanzi": "新鲜",
+    "pinyin": "xīnxiān",
+    "meaning": {
+      "zh": "新鲜",
+      "en": "fresh (experience, food etc); freshness; novel; uncommon",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0485",
+    "hanzi": "信",
+    "pinyin": "xìn",
+    "meaning": {
+      "zh": "信",
+      "en": "letter; mail; to trust; to believe; to profess faith in; truthful; confidence; trust; at will; at random",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0486",
+    "hanzi": "星期",
+    "pinyin": "xīngqī",
+    "meaning": {
+      "zh": "星期",
+      "en": "week; day of the week; Sunday",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0487",
+    "hanzi": "行李箱",
+    "pinyin": "xínglixiāng",
+    "meaning": {
+      "zh": "行李箱",
+      "en": "suitcase; baggage compartment; overhead bin; (car) trunk; boot",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0488",
+    "hanzi": "兴趣",
+    "pinyin": "xìngqù",
+    "meaning": {
+      "zh": "兴趣",
+      "en": "interest (desire to know about sth); interest (thing in which one is interested); hobby",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0489",
+    "hanzi": "姓",
+    "pinyin": "xìng",
+    "meaning": {
+      "zh": "姓",
+      "en": "family name; surname; to be surnamed",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0490",
+    "hanzi": "熊猫",
+    "pinyin": "xióngmāo",
+    "meaning": {
+      "zh": "熊猫",
+      "en": "panda",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0491",
+    "hanzi": "休息",
+    "pinyin": "xiūxi",
+    "meaning": {
+      "zh": "休息",
+      "en": "rest; to rest",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0492",
+    "hanzi": "需要",
+    "pinyin": "xūyào",
+    "meaning": {
+      "zh": "需要",
+      "en": "to need; to want; to demand; to require; needs",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0493",
+    "hanzi": "选择",
+    "pinyin": "xuǎnzé",
+    "meaning": {
+      "zh": "选择",
+      "en": "to select; to pick; choice; option; alternative",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0494",
+    "hanzi": "学生",
+    "pinyin": "xuésheng",
+    "meaning": {
+      "zh": "学生",
+      "en": "student; schoolchild",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0495",
+    "hanzi": "学习",
+    "pinyin": "xuéxí",
+    "meaning": {
+      "zh": "学习",
+      "en": "to learn; to study",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0496",
+    "hanzi": "学校",
+    "pinyin": "xuéxiào",
+    "meaning": {
+      "zh": "学校",
+      "en": "school",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0497",
+    "hanzi": "雪",
+    "pinyin": "Xuě",
+    "meaning": {
+      "zh": "雪",
+      "en": "surname Xue",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0498",
+    "hanzi": "颜色",
+    "pinyin": "yánsè",
+    "meaning": {
+      "zh": "颜色",
+      "en": "color; countenance; appearance; facial expression; pigment; dyestuff",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0499",
+    "hanzi": "眼镜",
+    "pinyin": "yǎnjìng",
+    "meaning": {
+      "zh": "眼镜",
+      "en": "spectacles; eyeglasses",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0500",
+    "hanzi": "眼睛",
+    "pinyin": "yǎnjing",
+    "meaning": {
+      "zh": "眼睛",
+      "en": "eye",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0501",
+    "hanzi": "羊肉",
+    "pinyin": "yángròu",
+    "meaning": {
+      "zh": "羊肉",
+      "en": "mutton; goat meat",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0502",
+    "hanzi": "药",
+    "pinyin": "yào",
+    "meaning": {
+      "zh": "药",
+      "en": "leaf of the iris; variant of 药",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0503",
+    "hanzi": "要",
+    "pinyin": "yāo",
+    "meaning": {
+      "zh": "要",
+      "en": "(bound form) to demand; to coerce",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0504",
+    "hanzi": "要求",
+    "pinyin": "yāoqiú",
+    "meaning": {
+      "zh": "要求",
+      "en": "to request; to require; requirement; to stake a claim; to ask; to demand",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0505",
+    "hanzi": "也",
+    "pinyin": "Yě",
+    "meaning": {
+      "zh": "也",
+      "en": "surname Ye",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0506",
+    "hanzi": "爷爷",
+    "pinyin": "yéye",
+    "meaning": {
+      "zh": "爷爷",
+      "en": "(coll.) father's father; paternal grandfather",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0507",
+    "hanzi": "一",
+    "pinyin": "yī",
+    "meaning": {
+      "zh": "一",
+      "en": "one; single; a (article); as soon as; entire; whole; all; throughout; \"one\" radical in Chinese characters (Kangxi radical 1); also pr. [yāo] for greater clarity when spelling out numbers digit by digit",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0508",
+    "hanzi": "一般",
+    "pinyin": "yībān",
+    "meaning": {
+      "zh": "一般",
+      "en": "same; ordinary; so-so; common; general; generally; in general",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0509",
+    "hanzi": "一边",
+    "pinyin": "yībiān",
+    "meaning": {
+      "zh": "一边",
+      "en": "one side; either side; on the one hand; on the other hand; doing while",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0510",
+    "hanzi": "一定",
+    "pinyin": "yīdìng",
+    "meaning": {
+      "zh": "一定",
+      "en": "surely; certainly; necessarily; fixed; a certain (extent etc); given; particular; must",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0511",
+    "hanzi": "一共",
+    "pinyin": "yīgòng",
+    "meaning": {
+      "zh": "一共",
+      "en": "altogether",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0512",
+    "hanzi": "一会儿",
+    "pinyin": "yīhuìr",
+    "meaning": {
+      "zh": "一会儿",
+      "en": "a moment; a while; in a moment; now...now...; also pr. [yī huǐ r]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0513",
+    "hanzi": "一起",
+    "pinyin": "yīqǐ",
+    "meaning": {
+      "zh": "一起",
+      "en": "in the same place; together; with; altogether (in total)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0514",
+    "hanzi": "一样",
+    "pinyin": "yīyàng",
+    "meaning": {
+      "zh": "一样",
+      "en": "same; like; equal to; the same as; just like",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0515",
+    "hanzi": "一直",
+    "pinyin": "yīzhí",
+    "meaning": {
+      "zh": "一直",
+      "en": "straight (in a straight line); continuously; always; all the way through",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0516",
+    "hanzi": "衣服",
+    "pinyin": "yīfu",
+    "meaning": {
+      "zh": "衣服",
+      "en": "clothes",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0517",
+    "hanzi": "医生",
+    "pinyin": "yīshēng",
+    "meaning": {
+      "zh": "医生",
+      "en": "doctor",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0518",
+    "hanzi": "医院",
+    "pinyin": "yīyuàn",
+    "meaning": {
+      "zh": "医院",
+      "en": "hospital",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0519",
+    "hanzi": "已经",
+    "pinyin": "yǐjīng",
+    "meaning": {
+      "zh": "已经",
+      "en": "already",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0520",
+    "hanzi": "以后",
+    "pinyin": "yǐhòu",
+    "meaning": {
+      "zh": "以后",
+      "en": "after; later; afterwards; following; later on; in the future",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0521",
+    "hanzi": "以前",
+    "pinyin": "yǐqián",
+    "meaning": {
+      "zh": "以前",
+      "en": "before; formerly; previous; ago",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0522",
+    "hanzi": "以为",
+    "pinyin": "yǐwéi",
+    "meaning": {
+      "zh": "以为",
+      "en": "to think (i.e. to take it to be true that ...) (Usually there is an implication that the notion is mistaken – except when expressing one's own current opinion.)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0523",
+    "hanzi": "椅子",
+    "pinyin": "yǐzi",
+    "meaning": {
+      "zh": "椅子",
+      "en": "chair",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0524",
+    "hanzi": "意思",
+    "pinyin": "yìsi",
+    "meaning": {
+      "zh": "意思",
+      "en": "idea; opinion; meaning; wish; desire; interest; fun; token of appreciation, affection etc; to give as a small token; to do sth as a gesture of goodwill etc",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0525",
+    "hanzi": "因为",
+    "pinyin": "yīnwèi",
+    "meaning": {
+      "zh": "因为",
+      "en": "because; owing to; on account of",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0526",
+    "hanzi": "阴",
+    "pinyin": "Yīn",
+    "meaning": {
+      "zh": "阴",
+      "en": "surname Yin",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0527",
+    "hanzi": "音乐",
+    "pinyin": "yīnyuè",
+    "meaning": {
+      "zh": "音乐",
+      "en": "music",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0528",
+    "hanzi": "银行",
+    "pinyin": "yínháng",
+    "meaning": {
+      "zh": "银行",
+      "en": "bank",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0529",
+    "hanzi": "应该",
+    "pinyin": "yīnggāi",
+    "meaning": {
+      "zh": "应该",
+      "en": "ought to; should; must",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0530",
+    "hanzi": "影响",
+    "pinyin": "yǐngxiǎng",
+    "meaning": {
+      "zh": "影响",
+      "en": "influence; effect; to influence; to affect (usually adversely); to disturb",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0531",
+    "hanzi": "用",
+    "pinyin": "yòng",
+    "meaning": {
+      "zh": "用",
+      "en": "to use; to employ; to have to; to eat or drink; expense or outlay; usefulness; hence; therefore",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0532",
+    "hanzi": "游戏",
+    "pinyin": "yóuxì",
+    "meaning": {
+      "zh": "游戏",
+      "en": "game; to play",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0533",
+    "hanzi": "游泳",
+    "pinyin": "yóuyǒng",
+    "meaning": {
+      "zh": "游泳",
+      "en": "swimming; to swim",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0534",
+    "hanzi": "有",
+    "pinyin": "yǒu",
+    "meaning": {
+      "zh": "有",
+      "en": "to have; there is; (bound form) having; with; -ful; -ed; -al (as in 意 intentional)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0535",
+    "hanzi": "有名",
+    "pinyin": "yǒumíng",
+    "meaning": {
+      "zh": "有名",
+      "en": "famous; well-known",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0536",
+    "hanzi": "又",
+    "pinyin": "yòu",
+    "meaning": {
+      "zh": "又",
+      "en": "(once) again; also; both... and...; and yet; (used for emphasis) anyway",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0537",
+    "hanzi": "右边",
+    "pinyin": "yòubian",
+    "meaning": {
+      "zh": "右边",
+      "en": "right side; right, to the right",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0538",
+    "hanzi": "鱼",
+    "pinyin": "Yú",
+    "meaning": {
+      "zh": "鱼",
+      "en": "surname Yu",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0539",
+    "hanzi": "遇到",
+    "pinyin": "yùdào",
+    "meaning": {
+      "zh": "遇到",
+      "en": "to meet; to run into; to come across",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0540",
+    "hanzi": "元",
+    "pinyin": "Yuán",
+    "meaning": {
+      "zh": "元",
+      "en": "surname Yuan; the Yuan or Mongol dynasty (1279-1368)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0541",
+    "hanzi": "远",
+    "pinyin": "yuǎn",
+    "meaning": {
+      "zh": "远",
+      "en": "far; distant; remote; (intensifier in a comparison) by far; much (lower etc)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0542",
+    "hanzi": "愿意",
+    "pinyin": "yuànyì",
+    "meaning": {
+      "zh": "愿意",
+      "en": "to wish; to want; ready; willing (to do sth)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0543",
+    "hanzi": "月",
+    "pinyin": "yuè",
+    "meaning": {
+      "zh": "月",
+      "en": "moon; month; monthly",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0544",
+    "hanzi": "月亮",
+    "pinyin": "yuèliang",
+    "meaning": {
+      "zh": "月亮",
+      "en": "the moon",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0545",
+    "hanzi": "越",
+    "pinyin": "Yuè",
+    "meaning": {
+      "zh": "越",
+      "en": "generic word for peoples or states of south China or south Asia at different historical periods; abbr. for Vietnam 越南",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0546",
+    "hanzi": "云",
+    "pinyin": "yún",
+    "meaning": {
+      "zh": "云",
+      "en": "(classical) to say",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0547",
+    "hanzi": "运动",
+    "pinyin": "yùndòng",
+    "meaning": {
+      "zh": "运动",
+      "en": "to move; to exercise; sports; exercise; motion; movement; campaign",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0548",
+    "hanzi": "再",
+    "pinyin": "zài",
+    "meaning": {
+      "zh": "再",
+      "en": "again; once more; re-; second; another; then (after sth, and not until then); no matter how ... (followed by an adjective or verb, and then (usually) 也 or 都 for emphasis)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0549",
+    "hanzi": "再见",
+    "pinyin": "zàijiàn",
+    "meaning": {
+      "zh": "再见",
+      "en": "goodbye; see you again later",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0550",
+    "hanzi": "在",
+    "pinyin": "zài",
+    "meaning": {
+      "zh": "在",
+      "en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0551",
+    "hanzi": "早上",
+    "pinyin": "zǎoshang",
+    "meaning": {
+      "zh": "早上",
+      "en": "early morning",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0552",
+    "hanzi": "怎么",
+    "pinyin": "zěnme",
+    "meaning": {
+      "zh": "怎么",
+      "en": "how?; what?; why?",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0553",
+    "hanzi": "怎么样",
+    "pinyin": "zěnmeyàng",
+    "meaning": {
+      "zh": "怎么样",
+      "en": "how?; how about?; how was it?; how are things?",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0554",
+    "hanzi": "站",
+    "pinyin": "zhàn",
+    "meaning": {
+      "zh": "站",
+      "en": "station; to stand; to halt; to stop; branch of a company or organization; website",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0555",
+    "hanzi": "张",
+    "pinyin": "Zhāng",
+    "meaning": {
+      "zh": "张",
+      "en": "surname Zhang",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0556",
+    "hanzi": "长",
+    "pinyin": "cháng",
+    "meaning": {
+      "zh": "长",
+      "en": "length; long; forever; always; constantly",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0557",
+    "hanzi": "丈夫",
+    "pinyin": "zhàngfu",
+    "meaning": {
+      "zh": "丈夫",
+      "en": "husband",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0558",
+    "hanzi": "找",
+    "pinyin": "zhǎo",
+    "meaning": {
+      "zh": "找",
+      "en": "to try to find; to look for; to call on sb; to find; to seek; to return; to give change",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0559",
+    "hanzi": "照顾",
+    "pinyin": "zhàogu",
+    "meaning": {
+      "zh": "照顾",
+      "en": "to take care of; to show consideration; to attend to; to look after",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0560",
+    "hanzi": "照片",
+    "pinyin": "zhàopiàn",
+    "meaning": {
+      "zh": "照片",
+      "en": "photograph; picture",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0561",
+    "hanzi": "照相机",
+    "pinyin": "zhàoxiàngjī",
+    "meaning": {
+      "zh": "照相机",
+      "en": "camera",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0562",
+    "hanzi": "这",
+    "pinyin": "zhè",
+    "meaning": {
+      "zh": "这",
+      "en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this; these (followed by a classifier) (in this sense, commonly pr. [zhèi], esp. in Beijing)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0563",
+    "hanzi": "着",
+    "pinyin": "zhāo",
+    "meaning": {
+      "zh": "着",
+      "en": "(chess) move; trick; all right!; (dialect) to add",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0564",
+    "hanzi": "着急",
+    "pinyin": "zháojí",
+    "meaning": {
+      "zh": "着急",
+      "en": "to worry; to feel anxious; to feel a sense of urgency; to be in a hurry; Taiwan pr. [zhāo jí]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0565",
+    "hanzi": "真",
+    "pinyin": "zhēn",
+    "meaning": {
+      "zh": "真",
+      "en": "really; truly; indeed; real; true; genuine",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0566",
+    "hanzi": "正在",
+    "pinyin": "zhèngzài",
+    "meaning": {
+      "zh": "正在",
+      "en": "just at (that time); right in (that place); right in the middle of (doing sth)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0567",
+    "hanzi": "知道",
+    "pinyin": "zhīdào",
+    "meaning": {
+      "zh": "知道",
+      "en": "to know; to become aware of; also pr. [zhī dao]",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0568",
+    "hanzi": "只",
+    "pinyin": "zhǐ",
+    "meaning": {
+      "zh": "只",
+      "en": "only; merely; just; but",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0569",
+    "hanzi": "中国",
+    "pinyin": "Zhōngguó",
+    "meaning": {
+      "zh": "中国",
+      "en": "China",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0570",
+    "hanzi": "中间",
+    "pinyin": "zhōngjiān",
+    "meaning": {
+      "zh": "中间",
+      "en": "the middle; the inside; in the middle; within; between; among; during; in the meantime",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0571",
+    "hanzi": "中午",
+    "pinyin": "zhōngwǔ",
+    "meaning": {
+      "zh": "中午",
+      "en": "noon; midday",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0572",
+    "hanzi": "终于",
+    "pinyin": "zhōngyú",
+    "meaning": {
+      "zh": "终于",
+      "en": "at last; in the end; finally; eventually",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0573",
+    "hanzi": "种",
+    "pinyin": "zhǒng",
+    "meaning": {
+      "zh": "种",
+      "en": "seed; species; kind; type; classifier for types, kinds, sorts",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0574",
+    "hanzi": "重要",
+    "pinyin": "zhòngyào",
+    "meaning": {
+      "zh": "重要",
+      "en": "important; significant; major",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0575",
+    "hanzi": "周末",
+    "pinyin": "zhōumò",
+    "meaning": {
+      "zh": "周末",
+      "en": "weekend",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0576",
+    "hanzi": "主要",
+    "pinyin": "zhǔyào",
+    "meaning": {
+      "zh": "主要",
+      "en": "main; principal; major; primary",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0577",
+    "hanzi": "住",
+    "pinyin": "zhù",
+    "meaning": {
+      "zh": "住",
+      "en": "to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0578",
+    "hanzi": "注意",
+    "pinyin": "zhùyì",
+    "meaning": {
+      "zh": "注意",
+      "en": "to take note of; to pay attention to",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0579",
+    "hanzi": "祝",
+    "pinyin": "Zhù",
+    "meaning": {
+      "zh": "祝",
+      "en": "surname Zhu",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0580",
+    "hanzi": "准备",
+    "pinyin": "zhǔnbèi",
+    "meaning": {
+      "zh": "准备",
+      "en": "preparation; to prepare; to intend; to be about to; reserve (fund)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0581",
+    "hanzi": "桌子",
+    "pinyin": "zhuōzi",
+    "meaning": {
+      "zh": "桌子",
+      "en": "table; desk",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0582",
+    "hanzi": "字",
+    "pinyin": "zì",
+    "meaning": {
+      "zh": "字",
+      "en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0583",
+    "hanzi": "字典",
+    "pinyin": "zìdiǎn",
+    "meaning": {
+      "zh": "字典",
+      "en": "Chinese character dictionary (containing entries for single characters, contrasted with a 词典, which has entries for words of one or more characters); (coll.) dictionary",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0584",
+    "hanzi": "自己",
+    "pinyin": "zìjǐ",
+    "meaning": {
+      "zh": "自己",
+      "en": "oneself; one's own",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0585",
+    "hanzi": "自行车",
+    "pinyin": "zìxíngchē",
+    "meaning": {
+      "zh": "自行车",
+      "en": "bicycle; bike",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0586",
+    "hanzi": "总是",
+    "pinyin": "zǒngshì",
+    "meaning": {
+      "zh": "总是",
+      "en": "always",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0587",
+    "hanzi": "走",
+    "pinyin": "zǒu",
+    "meaning": {
+      "zh": "走",
+      "en": "to walk; to go; to run; to move (of vehicle); to visit; to leave; to go away; to die (euph.); from; through; away (in compound verbs, such as 走); to change (shape, form, meaning)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0588",
+    "hanzi": "最",
+    "pinyin": "zuì",
+    "meaning": {
+      "zh": "最",
+      "en": "variant of 最",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0589",
+    "hanzi": "最近",
+    "pinyin": "zuìjìn",
+    "meaning": {
+      "zh": "最近",
+      "en": "recently; soon; nearest",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0590",
+    "hanzi": "昨天",
+    "pinyin": "zuótiān",
+    "meaning": {
+      "zh": "昨天",
+      "en": "yesterday",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0591",
+    "hanzi": "左边",
+    "pinyin": "zuǒbian",
+    "meaning": {
+      "zh": "左边",
+      "en": "left; the left side; to the left of",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0592",
+    "hanzi": "作业",
+    "pinyin": "zuòyè",
+    "meaning": {
+      "zh": "作业",
+      "en": "school assignment; homework; work; task; operation; to operate",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0593",
+    "hanzi": "作用",
+    "pinyin": "zuòyòng",
+    "meaning": {
+      "zh": "作用",
+      "en": "to act on; to affect; action; function; activity; impact; result; effect; purpose; intent; (suffix) -ation, -tion etc, as in 用, inhibition",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0594",
+    "hanzi": "坐",
+    "pinyin": "Zuò",
+    "meaning": {
+      "zh": "坐",
+      "en": "surname Zuo",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk3:0595",
+    "hanzi": "做",
+    "pinyin": "zuò",
+    "meaning": {
+      "zh": "做",
+      "en": "to make; to produce; to write; to compose; to do; to engage in; to hold (a party etc); (of a person) to be (an intermediary, a good student etc); to become (husband and wife, friends etc); (of a thing) to serve as; to be used for; to assume (an air or manner)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk3",
+      "version": "hsk2.0"
+    }
+  }
+]

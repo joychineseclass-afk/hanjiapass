@@ -1,0 +1,161 @@
+{
+  "files": {
+    "hsk2.0:hsk1": {
+      "version": "hsk2.0",
+      "level": "hsk1",
+      "entries": 150,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 150,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk2.0:hsk2": {
+      "version": "hsk2.0",
+      "level": "hsk2",
+      "entries": 297,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 297,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk2.0:hsk3": {
+      "version": "hsk2.0",
+      "level": "hsk3",
+      "entries": 595,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 595,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk2.0:hsk4": {
+      "version": "hsk2.0",
+      "level": "hsk4",
+      "entries": 1193,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 1193,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk2.0:hsk5": {
+      "version": "hsk2.0",
+      "level": "hsk5",
+      "entries": 2491,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 2491,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk2.0:hsk6": {
+      "version": "hsk2.0",
+      "level": "hsk6",
+      "entries": 4991,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 4991,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk1": {
+      "version": "hsk3.0",
+      "level": "hsk1",
+      "entries": 497,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 497,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk2": {
+      "version": "hsk3.0",
+      "level": "hsk2",
+      "entries": 764,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 764,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk3": {
+      "version": "hsk3.0",
+      "level": "hsk3",
+      "entries": 966,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 966,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk4": {
+      "version": "hsk3.0",
+      "level": "hsk4",
+      "entries": 995,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 995,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk5": {
+      "version": "hsk3.0",
+      "level": "hsk5",
+      "entries": 1067,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 1067,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk6": {
+      "version": "hsk3.0",
+      "level": "hsk6",
+      "entries": 1134,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 1134,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    },
+    "hsk3.0:hsk7-9": {
+      "version": "hsk3.0",
+      "level": "hsk7-9",
+      "entries": 5619,
+      "missingPinyin": 0,
+      "missingZh": 0,
+      "missingEn": 0,
+      "missingKo": 5619,
+      "duplicateCount": 0,
+      "duplicates": [],
+      "missing_source": false
+    }
+  },
+  "generatedAt": "2026-03-05T15:16:20.231Z"
+}
