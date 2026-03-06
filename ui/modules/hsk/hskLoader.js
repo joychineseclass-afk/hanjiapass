@@ -361,7 +361,7 @@
     const { COURSES } = await import("/ui/platform/index.js");
     const course = await COURSES.loadCourse(
       { type: "hsk", level: lv, lessonNo: no },
-      { track: version }
+      { track: version, file: opts.file }
     );
 
     const source = course.raw || {};

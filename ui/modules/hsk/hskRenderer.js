@@ -103,7 +103,7 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
   const list = Array.isArray(lessons) ? lessons : [];
 
   containerEl.innerHTML = `
-    <div class="lesson-list-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+    <div class="lesson-list-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
       ${list.map((it) => {
         const lessonNo = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
         const file = it.file || it.path || it.url || "";
@@ -132,16 +132,17 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
         }
 
         return `
-          <button class="lesson-card-v w-full text-left rounded-2xl border border-slate-200 hover:border-slate-300 px-4 py-3"
+          <button class="lesson-card-v w-full text-left rounded-2xl border border-slate-200 hover:border-slate-300"
+            style="min-height:100px;padding:14px 16px;display:flex;flex-direction:column;align-items:stretch;gap:6px;"
             data-open-lesson="1"
             data-lesson-no="${lessonNo}"
             data-file="${escapeHtmlAttr(file)}"
           >
-            <div class="lesson-card-v-inner flex flex-col gap-0.5">
+            <div class="lesson-card-v-inner" style="display:flex;flex-direction:column;gap:6px;">
               <div class="text-xs font-bold opacity-70">${lessonNo ? (i18n?.t?.("hsk_lesson_unit", { n: lessonNo }) || `第${lessonNo}课`) : ""}</div>
-              <div class="text-base font-semibold">${escapeHtml(zh || "-")}</div>
-              ${pinyin ? `<div class="text-sm italic opacity-80">${escapeHtml(pinyin)}</div>` : ""}
-              ${translation ? `<div class="text-sm opacity-70">${escapeHtml(translation)}</div>` : ""}
+              <div class="text-base font-semibold leading-tight">${escapeHtml(zh || "-")}</div>
+              ${pinyin ? `<div class="text-sm italic opacity-80 leading-snug">${escapeHtml(pinyin)}</div>` : ""}
+              ${translation ? `<div class="text-sm opacity-70 leading-snug">${escapeHtml(translation)}</div>` : ""}
             </div>
           </button>
         `;

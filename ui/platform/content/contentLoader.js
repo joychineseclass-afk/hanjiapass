@@ -52,12 +52,23 @@ function memSet(key, data) {
 async function fetchJson(url, opts = {}) {
   let u = String(url || "");
   if (u.startsWith("./data/")) u = "/" + u.slice(2);
-  const res = await fetch(u, { cache: opts.cache ?? "no-store" });
-  if (!res.ok) {
+  const cacheOpt = opts.cache ?? "no-store";
+  const attempt = async (target) => {
+    const res = await fetch(target, { cache: cacheOpt });
+    if (!res.ok) throw new Error(`Fetch failed ${res.status}: ${target}`);
+    return res.json();
+  };
+  try {
+    return await attempt(u);
+  } catch (e) {
+    if (typeof location !== "undefined" && u.startsWith("/data/")) {
+      try {
+        return await attempt("." + u);
+      } catch (e2) {}
+    }
     if (opts.warnOnFail) console.warn("[CONTENT] fetch failed, attempted URL:", u);
-    throw new Error(`Fetch failed ${res.status}: ${u}`);
+    throw e;
   }
-  return await res.json();
 }
 
 function getTrackDefault() {
@@ -166,12 +177,18 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   const cached = memGet(cacheKey);
   if (cached) return cached;
 
-  const url = file && /^hsk\d+_lesson\d+\.json$/i.test(file)
-    ? (() => {
-        const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
-        return m ? withBase(`data/courses/${track}/hsk${m[1]}/lesson${m[2]}.json`) : withBase(`data/courses/${track}/${file}`);
-      })()
-    : buildLessonFileUrl(track, level, lessonNo);
+  const ver = normalizeTrack(track);
+  let url;
+  if (window.DATA_PATHS?.lessonDetailUrl) {
+    url = window.DATA_PATHS.lessonDetailUrl(lv, no, { file: safeStr(file), version: ver });
+  } else if (file && /^lesson\d+\.json$/i.test(file)) {
+    url = withBase(`data/courses/${ver}/hsk${lv}/${file}`);
+  } else if (file && /^hsk\d+_lesson\d+\.json$/i.test(file)) {
+    const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
+    url = m ? withBase(`data/courses/${ver}/hsk${m[1]}/lesson${m[2]}.json`) : withBase(`data/courses/${ver}/hsk${lv}/lesson${no}.json`);
+  } else {
+    url = withBase(`data/courses/${ver}/hsk${lv}/lesson${no}.json`);
+  }
   try {
     const raw = await fetchJson(url);
     const result = {
@@ -181,30 +198,21 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
     memSet(cacheKey, result);
     return result;
   } catch (e) {
+    const altUrl = window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file, version: ver }) || withBase(`data/courses/${ver}/hsk${lv}/lesson${no}.json`);
+    if (altUrl && altUrl !== url) {
+      try {
+        const raw = await fetchJson(altUrl);
+        const result = {
+          raw,
+          doc: legacyHskToLessonDoc(raw, { track: ver, level: lv, lessonNo: no, file: altUrl }),
+        };
+        memSet(cacheKey, result);
+        return result;
+      } catch (e2) {}
+    }
     console.warn("[CONTENT] loadLesson failed, attempted URL:", url);
     await ensureHSKDeps();
-    if (window.HSK_LOADER?.loadLessonDetail) {
-      const raw = await window.HSK_LOADER.loadLessonDetail(lv, no, {
-        version: track,
-        file,
-      });
-      const result = {
-        raw,
-        doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file }),
-      };
-      memSet(cacheKey, result);
-      return result;
-    }
-    const fallbackUrl =
-      window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file, version: track }) ||
-      withBase(`data/courses/${track}/hsk${lv}/lesson${no}.json`);
-    const raw = await fetchJson(fallbackUrl);
-    const result = {
-      raw,
-      doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file: fallbackUrl }),
-    };
-    memSet(cacheKey, result);
-    return result;
+    throw e;
   }
 }
 
