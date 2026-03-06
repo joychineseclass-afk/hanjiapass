@@ -1,0 +1,69 @@
+{
+  "lesson": 5,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "我的家人", "kr": "우리 가족" },
+  "topic": { "zh": "介绍家庭成员", "kr": "가족 구성원 소개" },
+
+  "words": [
+    "爸爸",
+    "妈妈",
+    "儿子",
+    "女儿",
+    "家",
+    "有",
+    "没"
+  ],
+
+  "dialogue": [
+    { "speaker": "A", "line": "你家有几口人？" },
+    { "speaker": "B", "line": "我家有四口人。" },
+    { "speaker": "A", "line": "有爸爸妈妈吗？" },
+    { "speaker": "B", "line": "有，还有一个儿子。" }
+  ],
+
+  "grammar": [
+    {
+      "title": "有 / 没 — 表示存在",
+      "explanation_zh": "“有”表示拥有或存在，“没有”表示不存在。",
+      "explanation_kr": "'有'는 있다, '没有'는 없다를 나타냅니다.",
+      "example": "我家有四口人。"
+    },
+    {
+      "title": "家 — 家庭",
+      "explanation_zh": "“家”可以表示家庭。",
+      "explanation_kr": "'家'는 가족을 의미할 수 있습니다.",
+      "example": "我家有爸爸妈妈。"
+    }
+  ],
+
+  "practice": [
+    {
+      "type": "choice",
+      "question": "你家有几口人？",
+      "options": ["我很好", "我家有三口人", "谢谢"],
+      "answer": "我家有三口人"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        ["爸爸", "아빠"],
+        ["妈妈", "엄마"],
+        ["女儿", "딸"]
+      ]
+    },
+    {
+      "type": "roleplay",
+      "prompt": "介绍你的家庭成员。"
+    }
+  ],
+
+  "ai_interaction": {
+    "speaking": [
+      "我家有四口人",
+      "有爸爸妈妈",
+      "这是我的儿子"
+    ],
+    "chat_prompt": "AI问：你家有几口人？学生介绍自己的家人。"
+  }
+}

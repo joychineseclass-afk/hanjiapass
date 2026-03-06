@@ -1,0 +1,17 @@
+{
+  "lesson": 18,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "能力表达", "kr": "능력 표현" },
+  "topic": { "zh": "表达会做的事情", "kr": "할 수 있는 일 말하기" },
+  "words": ["会", "能", "打电话", "回", "上", "下", "出租车"],
+  "dialogue": [
+    { "speaker": "A", "line": "你会说汉语吗？" },
+    { "speaker": "B", "line": "会一点。" }
+  ],
+  "grammar": [
+    { "title": "会 vs 能", "explanation_zh": "“会”表示能力，“能”表示条件允许。", "explanation_kr": "'会'는 능력, '能'은 가능 여부.", "example": "我会说汉语。" }
+  ],
+  "practice": [{ "type": "choice", "question": "你会开车吗？", "options": ["会", "谢谢", "苹果"], "answer": "会" }],
+  "ai_interaction": { "speaking": ["我会说汉语"], "chat_prompt": "AI问能力。" }
+}

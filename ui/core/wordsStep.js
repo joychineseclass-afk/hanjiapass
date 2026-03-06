@@ -3,7 +3,7 @@
 // - Load words from:
 //   1) loader.loadLesson(lessonId) if exists
 //   2) DATA_PATHS.lessonsUrl(lessonId) -> (pack {lessons:[]}) -> fetch single lesson
-//   3) fallback ./data/lessons/${lessonId}.json
+//   3) fallback ./data/courses/${lessonId}.json
 // - Render:
 //   A) if window.HSK_RENDER.renderWordCards exists -> render into modal container
 //   B) fallback: simple list rendering
@@ -93,7 +93,7 @@ async function loadWordsForLesson(lessonId) {
 
   // 3) fallback 单课路径
   if (!url) {
-    url = `./data/lessons/${lessonId}.json`;
+    url = `./data/courses/${lessonId}.json`;
     // 不算StepA三条log，但也很关键：确认是不是走了 fallback
     console.log("[wordsStep] fallback lesson url =", url);
   }
@@ -124,8 +124,8 @@ async function loadWordsForLesson(lessonId) {
       return [];
     }
 
-    // packUrl: ./data/lessons/hsk2.0/hsk1/lessons.json
-    // single : ./data/lessons/hsk2.0/hsk1/lesson1.json (新结构: file hsk1_lesson1.json → lesson1.json)
+    // packUrl: ./data/courses/hsk2.0/hsk1/lessons.json
+    // single : ./data/courses/hsk2.0/hsk1/lesson1.json (新结构: file hsk1_lesson1.json → lesson1.json)
     const baseDir = url.slice(0, url.lastIndexOf("/") + 1);
     const m = String(found.file || "").match(/^hsk\d+_lesson(\d+)\.json$/i);
     const singleFile = m ? `lesson${m[1]}.json` : found.file;

@@ -1,0 +1,27 @@
+{
+  "lesson": 7,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "数字（一）", "kr": "숫자 ①" },
+  "topic": { "zh": "1–7的数字", "kr": "1–7 숫자" },
+  "words": ["一", "二", "三", "四", "五", "六", "七"],
+  "dialogue": [
+    { "speaker": "A", "line": "你有几个苹果？" },
+    { "speaker": "B", "line": "我有三个。" }
+  ],
+  "grammar": [
+    {
+      "title": "数字 + 量词",
+      "explanation_zh": "数字后面通常要接量词。",
+      "explanation_kr": "숫자 뒤에는 보통 양사를 사용합니다.",
+      "example": "三个苹果"
+    }
+  ],
+  "practice": [
+    { "type": "count", "question": "看图说数字（3个）", "answer": "三" }
+  ],
+  "ai_interaction": {
+    "speaking": ["一", "二", "三", "四", "五", "六", "七"],
+    "chat_prompt": "AI问数量，学生回答数字。"
+  }
+}

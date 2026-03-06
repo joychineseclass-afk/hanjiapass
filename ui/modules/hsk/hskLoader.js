@@ -4,9 +4,8 @@
 //
 // ✅ Versioned paths (repo):
 //   vocab:        /data/vocab/<ver>/hsk<lv>.json
-//   lessons index:/data/lessons/<ver>/hsk<lv>_lessons.json
-//   lesson detail:/data/lessons/<ver>/<file>   (preferred)
-//                /data/lessons/<ver>/hsk<lv>_lesson<no>.json (fallback)
+//   lessons: /data/courses/<ver>/hsk<lv>/lessons.json
+//   lesson:  /data/courses/<ver>/hsk<lv>/lesson<no>.json
 //
 // ✅ Version priority:
 //   opts.version -> localStorage(hsk_vocab_version) -> window.APP_VOCAB_VERSION -> default "hsk2.0"
@@ -192,7 +191,7 @@
     return withBase(`data/vocab/${version}/${file}`);
   }
   function lessonsUrl(lv, version) {
-    return withBase(`data/lessons/${version}/hsk${lv}/lessons.json`);
+    return withBase(`data/courses/${version}/hsk${lv}/lessons.json`);
   }
 
   // ✅ NEW: lesson detail url (新结构 hsk{N}/lesson{M}.json)
@@ -202,9 +201,9 @@
     const f = safeText(file);
     if (f && /^hsk\d+_lesson\d+\.json$/i.test(f)) {
       const m = f.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
-      if (m) return withBase(`data/lessons/${version}/hsk${m[1]}/lesson${m[2]}.json`);
+      if (m) return withBase(`data/courses/${version}/hsk${m[1]}/lesson${m[2]}.json`);
     }
-    return withBase(`data/lessons/${version}/hsk${lv}/lesson${no}.json`);
+    return withBase(`data/courses/${version}/hsk${lv}/lesson${no}.json`);
   }
 
   // -----------------------------
@@ -316,7 +315,7 @@
     // try index file first (respect BASE for subpath deploy)
     const idxUrl =
       (window.DATA_PATHS?.lessonsIndexUrl?.(lv, { version })) ||
-      withBase(`data/lessons/${version}/hsk${lv}.json`);
+      withBase(`data/courses/${version}/hsk${lv}.json`);
     try {
       const r = await fetch(idxUrl);
       if (r.ok) {

@@ -1,0 +1,12 @@
+{
+  "lesson": 1,
+  "level": "HSK3",
+  "version": "3.0",
+  "title": "HSK3 第1课",
+  "topic": "基础词汇",
+  "words": ["爱心", "安排", "安装", "按", "按照", "把", "把握", "白", "白菜", "班级"],
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "ai_interaction": { "speaking": [], "chat_prompt": "" }
+}

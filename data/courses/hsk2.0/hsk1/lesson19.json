@@ -1,0 +1,17 @@
+{
+  "lesson": 19,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "生活物品", "kr": "생활 물건" },
+  "topic": { "zh": "日常生活用品", "kr": "생활 물건" },
+  "words": ["衣服", "桌子", "椅子", "杯子", "书", "字", "电脑"],
+  "dialogue": [
+    { "speaker": "A", "line": "你的书在哪儿？" },
+    { "speaker": "B", "line": "在桌子上。" }
+  ],
+  "grammar": [
+    { "title": "名词位置", "explanation_zh": "名词表示事物名称。", "explanation_kr": "명사는 사물 이름입니다.", "example": "这是书。" }
+  ],
+  "practice": [{ "type": "match", "pairs": [["书", "책"], ["电脑", "컴퓨터"]] }],
+  "ai_interaction": { "speaking": ["这是我的书"], "chat_prompt": "AI问物品。" }
+}

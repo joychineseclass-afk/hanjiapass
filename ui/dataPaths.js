@@ -69,7 +69,7 @@
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
-    const url = withVersion(getDataRoot() + `data/lessons/${ver}/hsk${lv}/lessons.json`);
+    const url = withVersion(getDataRoot() + `data/courses/${ver}/hsk${lv}/lessons.json`);
     if (DEBUG) console.log("[PATH] lessonsUrl", url);
     return url;
   }
@@ -79,7 +79,7 @@
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
-    const url = withVersion(getDataRoot() + `data/lessons/${ver}/hsk${lv}.json`);
+    const url = withVersion(getDataRoot() + `data/courses/${ver}/hsk${lv}.json`);
     if (DEBUG) console.log("[PATH] lessonsIndexUrl", url);
     return url;
   }
@@ -94,9 +94,9 @@
     let path;
     if (file && /^hsk\d+_lesson\d+\.json$/i.test(file)) {
       const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
-      path = m ? `data/lessons/${ver}/hsk${m[1]}/lesson${m[2]}.json` : `data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
+      path = m ? `data/courses/${ver}/hsk${m[1]}/lesson${m[2]}.json` : `data/courses/${ver}/hsk${lv}/lesson${no}.json`;
     } else {
-      path = `data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
+      path = `data/courses/${ver}/hsk${lv}/lesson${no}.json`;
     }
     const url = withVersion(getDataRoot() + path);
     if (DEBUG) console.log("[PATH] lessonDetailUrl", url);

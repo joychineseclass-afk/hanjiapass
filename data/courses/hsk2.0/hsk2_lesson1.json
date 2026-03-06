@@ -1,0 +1,12 @@
+{
+  "lesson": 1,
+  "level": "HSK2",
+  "version": "2.0",
+  "title": "HSK2 第1课",
+  "topic": "基础词汇",
+  "words": ["爱", "八", "爸爸", "吧", "白", "百", "帮助", "报纸", "杯子", "北京"],
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "ai_interaction": { "speaking": [], "chat_prompt": "" }
+}

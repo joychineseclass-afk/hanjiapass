@@ -184,7 +184,7 @@ hskLevel?.dispatchEvent(new Event("change"));
     const lv = safeText(level || "1");
     const raw = safeText(version || getVersion());
     const ver = window.HSK_LOADER?.normalizeVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
-    return `/data/lessons/${ver}/hsk${lv}_lesson${lessonNo}.json`;
+    return `/data/courses/${ver}/hsk${lv}/lesson${lessonNo}.json`;
   }
 
   // ✅ NEW: 读取课件详情（带缓存）

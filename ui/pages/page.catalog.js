@@ -1,7 +1,7 @@
 // ui/pages/page.catalog.js
 import { i18n } from "../i18n.js";
 
-const DATA_ROOT = "./data/lessons/hsk2.0"; // ✅ 你的数据路径
+const DATA_ROOT = "./data/courses/hsk2.0"; // ✅ 课程数据路径
 
 function langPick(obj, lang = "kr") {
   if (!obj) return "";
@@ -130,9 +130,9 @@ export async function mount({ root } = {}) {
     localStorage.getItem("site_lang") ||
     "kr";
 
-  // 当前只做 HSK1（你后面加 hsk2.json、hsk3.json 直接扩展）
+  // 当前只做 HSK1（你后面加 hsk2、hsk3 直接扩展）
   async function loadIndex(levelKey) {
-    const url = `${DATA_ROOT}/${levelKey}.json`; // e.g. ./data/lessons/hsk2.0/hsk1.json
+    const url = `${DATA_ROOT}/${levelKey}/lessons.json`; // e.g. ./data/courses/hsk2.0/hsk1/lessons.json
     return await fetchJson(url);
   }
 

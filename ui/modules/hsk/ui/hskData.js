@@ -36,7 +36,7 @@ export function lessonDetailUrl(level, lessonNo, version) {
   if (window.DATA_PATHS?.lessonDetailUrl) {
     return window.DATA_PATHS.lessonDetailUrl(lv, no, { version: ver });
   }
-  return `/data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
+  return `/data/courses/${ver}/hsk${lv}/lesson${no}.json`;
 }
 
 export async function loadLessonDetail({ level, lessonNo, version, detailCache }) {

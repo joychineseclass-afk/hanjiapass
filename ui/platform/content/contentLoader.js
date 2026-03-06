@@ -1,7 +1,7 @@
 // ui/platform/content/contentLoader.js
 // Content Layer 统一入口：loadCourse / loadStroke / loadHanja / loadClassroom
 // 兼容 DATA_PATHS、HSK_LOADER，不改动现有 loader 实现
-// Path format (repo): data/lessons/hsk2.0/hsk{level}.json | hsk{level}_lesson{lessonNo}.json
+// Path format: data/courses/{ver}/hsk{lv}/lessons.json | lesson{no}.json
 
 import { ensureHSKDeps } from "../../modules/hsk/hskDeps.js";
 
@@ -24,13 +24,13 @@ function withBase(relativePath) {
 
 function buildIndexUrl(track, level) {
   const lv = Number(level) || 1;
-  return withBase(`data/lessons/${track}/hsk${lv}.json`);
+  return withBase(`data/courses/${track}/hsk${lv}.json`);
 }
 
 function buildLessonFileUrl(track, level, lessonNo) {
   const lv = Number(level) || 1;
   const no = Number(lessonNo) || 1;
-  return withBase(`data/lessons/${track}/hsk${lv}/lesson${no}.json`);
+  return withBase(`data/courses/${track}/hsk${lv}/lesson${no}.json`);
 }
 
 function memGet(key) {
@@ -139,7 +139,7 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   const url = file && /^hsk\d+_lesson\d+\.json$/i.test(file)
     ? (() => {
         const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
-        return m ? withBase(`data/lessons/${track}/hsk${m[1]}/lesson${m[2]}.json`) : withBase(`data/lessons/${track}/${file}`);
+        return m ? withBase(`data/courses/${track}/hsk${m[1]}/lesson${m[2]}.json`) : withBase(`data/courses/${track}/${file}`);
       })()
     : buildLessonFileUrl(track, level, lessonNo);
   try {
@@ -167,7 +167,7 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
     }
     const fallbackUrl =
       window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file, version: track }) ||
-      withBase(`data/lessons/${track}/hsk${lv}/lesson${no}.json`);
+      withBase(`data/courses/${track}/hsk${lv}/lesson${no}.json`);
     const raw = await fetchJson(fallbackUrl);
     const result = {
       raw,

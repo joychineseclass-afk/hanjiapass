@@ -1,0 +1,14 @@
+{
+  "lesson": 11,
+  "title": { "zh": "吃和喝", "kr": "먹고 마시기" },
+  "words": ["吃", "喝", "水", "茶", "米饭", "苹果", "菜"],
+  "dialogue": [
+    { "speaker": "A", "line": "你吃什么？" },
+    { "speaker": "B", "line": "我吃米饭。" }
+  ],
+  "grammar": [
+    { "title": "动词+宾语", "explanation_zh": "动词后面接吃的东西。", "explanation_kr": "동사 뒤에 목적어가 옵니다.", "example": "吃苹果" }
+  ],
+  "practice": [{ "type": "choice", "question": "你喝什么？", "options": ["水", "书", "老师"], "answer": "水" }],
+  "ai_interaction": { "speaking": ["吃苹果", "喝水"], "chat_prompt": "AI问想吃什么。" }
+}

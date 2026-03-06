@@ -1,0 +1,70 @@
+{
+  "lesson": 6,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "人物关系", "kr": "사람 관계" },
+  "topic": { "zh": "介绍身边的人和关系", "kr": "주변 사람과 관계 소개" },
+
+  "words": [
+    "朋友",
+    "老师",
+    "医生",
+    "先生",
+    "小姐",
+    "同学"
+  ],
+
+  "dialogue": [
+    { "speaker": "A", "line": "他是谁？" },
+    { "speaker": "B", "line": "他是我的朋友。" },
+    { "speaker": "A", "line": "她是老师吗？" },
+    { "speaker": "B", "line": "是，她是老师。" },
+    { "speaker": "A", "line": "他是医生吗？" },
+    { "speaker": "B", "line": "不是，他是同学。" }
+  ],
+
+  "grammar": [
+    {
+      "title": "是 — 判断句（身份职业）",
+      "explanation_zh": "用“是”连接主语和身份、职业。",
+      "explanation_kr": "'是'는 주어와 직업·신분을 연결합니다.",
+      "example": "他是医生。"
+    },
+    {
+      "title": "吗 — 职业疑问句",
+      "explanation_zh": "在判断句后加“吗”构成疑问句。",
+      "explanation_kr": "판단문 뒤에 '吗'를 붙이면 의문문이 됩니다.",
+      "example": "她是老师吗？"
+    }
+  ],
+
+  "practice": [
+    {
+      "type": "choice",
+      "question": "他是医生吗？（他是学生）",
+      "options": ["是", "不是", "谢谢"],
+      "answer": "不是"
+    },
+    {
+      "type": "match",
+      "pairs": [
+        ["老师", "선생님"],
+        ["医生", "의사"],
+        ["同学", "학교 친구"]
+      ]
+    },
+    {
+      "type": "roleplay",
+      "prompt": "介绍你的朋友和老师：他是谁？她是谁？"
+    }
+  ],
+
+  "ai_interaction": {
+    "speaking": [
+      "他是我的朋友",
+      "她是老师",
+      "他不是医生"
+    ],
+    "chat_prompt": "AI展示人物职业图片，学生回答：他是老师吗？她是谁？"
+  }
+}

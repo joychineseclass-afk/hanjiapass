@@ -1,0 +1,22 @@
+{
+  "lesson": 22,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "综合复习", "kr": "종합 복습" },
+  "topic": { "zh": "综合运用HSK1词汇", "kr": "HSK1 단어 종합 활용" },
+  "words": [],
+  "dialogue": [
+    { "speaker": "A", "line": "你好！你叫什么名字？" },
+    { "speaker": "B", "line": "我叫李明。我是学生。" },
+    { "speaker": "A", "line": "你家有几口人？" },
+    { "speaker": "B", "line": "我家有四口人。" }
+  ],
+  "grammar": [],
+  "practice": [
+    { "type": "roleplay", "prompt": "完成完整自我介绍对话。" }
+  ],
+  "ai_interaction": {
+    "speaking": ["你好", "我叫小明"],
+    "chat_prompt": "AI进行完整情景对话。"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "lesson": 15,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "喜欢做什么", "kr": "무엇을 좋아해요?" },
+  "topic": { "zh": "表达兴趣爱好", "kr": "취미 표현" },
+  "words": ["喜欢", "想", "看", "听", "说", "读"],
+  "dialogue": [
+    { "speaker": "A", "line": "你喜欢做什么？" },
+    { "speaker": "B", "line": "我喜欢看电影。" }
+  ],
+  "grammar": [
+    {
+      "title": "喜欢 + 动词",
+      "explanation_zh": "“喜欢”后面接动词或名词。",
+      "explanation_kr": "'喜欢' 뒤에는 동사나 명사가 옵니다.",
+      "example": "喜欢听音乐"
+    }
+  ],
+  "practice": [
+    { "type": "choice", "question": "你喜欢什么？", "options": ["我喜欢苹果", "谢谢", "再见"], "answer": "我喜欢苹果" }
+  ],
+  "ai_interaction": {
+    "speaking": ["我喜欢看书"],
+    "chat_prompt": "AI问兴趣爱好。"
+  }
+}
