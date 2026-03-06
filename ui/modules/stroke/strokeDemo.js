@@ -1,9 +1,7 @@
-// /ui/modules/stroke/strokeDemo.js
-// ✅ 完善不返工版（ES Module）
-// - 只负责“示范动画”：单笔/全部
-// - 无 window 依赖
-// - 与 strokePlayer.canvas 的 resetTraceState / setProgress 配套
-// - stop() 可随时终止播放（切字/切模式时用）
+// ui/modules/stroke/strokeDemo.js
+// 职责：左侧 demo
+// - svg 加载后的笔画动画（playAll / playOne）
+// - replay、발음、따라쓰기 模式下的 demo 状态切换
 
 import { resetTraceState, setNumberLayerVisible, setProgress } from "./strokePlayer.canvas.js";
 

@@ -1,8 +1,7 @@
-// /ui/modules/stroke/strokePlayer.main.js
-// ✅ 完善不返工版（ES Module）
-// - 统一使用 strokeDemo：playAll / playOne / stop
-// - 따라쓰기：自动示范一笔 -> 再允许学生写
-// - 统一 import：tpl / canvas / trace / demo
+// ui/modules/stroke/strokePlayer.main.js
+// 职责：流程控制器
+// - render template、init demo、init trace、bind buttons、close modal
+// - mode/source/lang 处理
 
 import { renderStrokePlayerTpl } from "./strokePlayer.tpl.js";
 import {

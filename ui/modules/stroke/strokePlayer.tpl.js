@@ -1,8 +1,6 @@
-// /ui/modules/stroke/strokePlayer.tpl.js
-// ✅ 完善不返工版（ES Module）
-// - 仅负责返回模板字符串
-// - DOM 结构不变（避免返工）
-// - 预留 data-i18n（后续可无痛双语）
+// ui/modules/stroke/strokePlayer.tpl.js
+// 职责：stroke modal/card 的 HTML 模板生成
+// 不负责：业务逻辑、动画、事件绑定
 
 export function renderStrokePlayerTpl() {
   return `

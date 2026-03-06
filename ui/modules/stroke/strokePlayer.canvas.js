@@ -1,8 +1,7 @@
-// /ui/modules/stroke/strokePlayer.canvas.js
-// ✅ 完善不返工版（ES Module）
-// - 负责：笔画编号层、笔画高亮进度（不涉及跟写判定）
-// - 不挂 window，全用 export
-// - 兼容 :scope 不支持的浏览器（fallback）
+// ui/modules/stroke/strokePlayer.canvas.js
+// 职责：canvas 工具
+// - resize with DPR、grid drawing（如需要）
+// - 笔画编号层、高亮进度、canvas helpers
 
 const NS = "http://www.w3.org/2000/svg";
 

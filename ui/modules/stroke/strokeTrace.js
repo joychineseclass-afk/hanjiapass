@@ -1,15 +1,6 @@
-// /ui/modules/stroke/strokeTrace.js
-// ✅ 完善不返工版（ES Module）
-// - 无提示/不闪红绿块
-// - 支持回调：onStrokeCorrect / onAllComplete
-// - 支持重复练习：reset() / clearCurrent()
-// - 支持 3 类“目标笔画”选择：
-//   1) path[fill="lightgray"]（旧数据）
-//   2) path[id^="make-me-a-hanzi-animation-"]（MakeMeAHanzi 动画笔）
-//   3) path[id^="make-me-a-hanzi-stroke-"]（MakeMeAHanzi 静态笔）
-//   4) 兜底：所有 path
-// - 兼容你的 23458.svg / MakeMeAHanzi 类 SVG
-// - 判定：bbox overlap + length + (start/end near bbox) 轻量增强
+// ui/modules/stroke/strokeTrace.js
+// 职责：右侧练习区 —— trace canvas 绘制、color/width/clear、pointer/touch 逻辑
+// 不负责：模板、demo 动画、主流程控制
 
 function safeNum(v, fallback) {
   const n = Number(v);
@@ -74,7 +65,7 @@ function pointNearBBox(p, bb, pad) {
 }
 
 /**
- * ✅ initTraceMode(options)
+ * initTraceMode(options)
  * options:
  * - viewport: relative container（用于叠 canvas）
  * - svg: 当前字的 svg 根节点
@@ -190,7 +181,7 @@ export function initTraceMode({
   function reset() {
     strokeIndex = 0;
     clearCurrent();
-    refreshOutlines(); // 切字时 svg 变了，必须重抓 outlines
+    refreshOutlines();
   }
 
   function setEnabled(v) {
@@ -217,9 +208,6 @@ export function initTraceMode({
     canvas.remove();
   }
 
-  /** =========================
-   * Judge stroke OK (no flash)
-   ========================= */
   function judgeStrokeOK() {
     if (!outlines.length) return true;
     const target = outlines[strokeIndex];
@@ -228,10 +216,8 @@ export function initTraceMode({
     const bb = svgBBoxToClientBBox(target);
     if (!bb) return true;
 
-    // 不够点，不判通过
     if (pts.length < 2) return false;
 
-    // user bbox
     const xs = pts.map((p) => p.x);
     const ys = pts.map((p) => p.y);
 
@@ -251,30 +237,22 @@ export function initTraceMode({
 
     const L = polylineLength(pts);
 
-    // 阈值：稳+不严格（防返工）
     const overlapOK = overlapRatio >= 0.18;
-
-    // 长度：至少覆盖 bbox 的一部分
     const lenOK = L >= Math.max(bb.width, bb.height) * 0.32;
 
-    // 起/止点落在 bbox 附近：轻增强（减少乱划误判）
     const pad = Math.max(bb.width, bb.height) * 0.18;
     const startOK = pointNearBBox(pts[0], bb, pad);
     const endOK = pointNearBBox(pts[pts.length - 1], bb, pad);
 
-    // 要求 overlap + length 成立；start/end 至少一个成立（不太严）
     return overlapOK && lenOK && (startOK || endOK);
   }
 
   function advanceStroke() {
     if (!outlines.length) return;
     if (strokeIndex < outlines.length - 1) strokeIndex += 1;
-    else strokeIndex = outlines.length; // done
+    else strokeIndex = outlines.length;
   }
 
-  /** =========================
-   * Pointer events
-   ========================= */
   function getXY(e) {
     return { x: e.clientX, y: e.clientY };
   }
@@ -298,8 +276,6 @@ export function initTraceMode({
 
   function onDown(e) {
     if (!enabled) return;
-
-    // 이미 다른 포인터로 그리고 있으면 무시 (multi touch 방지)
     if (drawing && pointerId != null && e.pointerId !== pointerId) return;
 
     drawing = true;
@@ -330,17 +306,15 @@ export function initTraceMode({
   function finishStrokeAttempt() {
     drawing = false;
 
-    // 少点就直接重写（不提示）
     if (pts.length < 6) {
       pointerId = null;
       clearCurrent();
       return;
     }
 
-    const ok = judgeStrokeOK(); // ✅ 修复：原来的 오케이 bug
+    const ok = judgeStrokeOK();
 
     if (ok) {
-      // 写对：回调（主控自己决定上色/动画/音效）
       try {
         onStrokeCorrect?.({
           index: strokeIndex,
@@ -358,7 +332,6 @@ export function initTraceMode({
         paintGuide();
       }
     } else {
-      // 写错：不前进，清掉重写（不提示）
       pointerId = null;
       clearCurrent();
       paintGuide();
@@ -387,7 +360,6 @@ export function initTraceMode({
   canvas.addEventListener("pointerup", onUp);
   canvas.addEventListener("pointercancel", onCancel);
 
-  // 默认关闭，等主控打开（teachingMode/traceMode）
   setEnabled(false);
 
   return {
@@ -397,6 +369,6 @@ export function initTraceMode({
     destroy,
     getStrokeIndex,
     getTotalStrokes,
-    refreshOutlines, // 可选：切字后手动刷新
+    refreshOutlines,
   };
 }
