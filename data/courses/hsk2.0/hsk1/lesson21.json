@@ -12,7 +12,7 @@
     "en": "Review 1"
   },
   "summary": {
-    "zh": "1–10课综合复习",
+    "zh": "第1–10课综合复习",
     "kr": "1–10과 종합 복습",
     "en": "Review of lessons 1–10"
   },
@@ -21,50 +21,21 @@
   "dialogue": [],
   "grammar": [],
   "practice": [
-    {
-      "type": "roleplay",
-      "prompt": "复习第1–10课学过的词汇和对话。"
-    }
+    { "type": "choice", "question": "你好吗？", "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },
+    { "type": "choice", "question": "你叫什么名字？回答：", "options": ["再见", "我叫小明", "不客气"], "answer": "我叫小明" },
+    { "type": "roleplay", "prompt": "复习第1–10课学过的词汇和对话：打招呼、问名字、国家、家庭、数字、日期、时间、地点。" }
   ],
   "review": {
-    "lessonRange": [
-      1,
-      10
-    ],
-    "focusAreas": [
-      "vocab",
-      "dialogue",
-      "grammar"
-    ]
+    "lessonRange": [1, 10],
+    "focusAreas": ["vocab", "dialogue", "grammar"]
   },
   "aiPractice": {
     "speaking": [],
-    "chatPrompt": "复习对话练习。"
+    "chatPrompt": "复习第1–10课对话练习。"
   },
   "steps": [
-    {
-      "key": "review",
-      "label": {
-        "zh": "复习",
-        "kr": "복습",
-        "en": "Review"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "review", "label": { "zh": "复习", "kr": "복습", "en": "Review" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

@@ -6,195 +6,69 @@
   "lessonNo": 2,
   "type": "lesson",
   "title": {
-    "zh": "礼貌用语",
-    "pinyin": "",
-    "kr": "예절 표현",
-    "en": "Polite expressions"
+    "zh": "介绍名字",
+    "pinyin": "jièshào míngzì",
+    "kr": "이름 소개",
+    "en": "Introducing names"
   },
   "summary": {
-    "zh": "感谢、道歉与道别",
-    "kr": "감사, 사과, 작별 인사"
+    "zh": "问名字、礼貌用语与道别",
+    "kr": "이름 묻기, 예절 표현, 작별 인사",
+    "en": "Asking names, polite expressions, and farewells"
   },
   "objectives": [],
   "vocab": [
-    {
-      "hanzi": "对不起",
-      "pinyin": "",
-      "meaning": {
-        "zh": "对不起",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "没关系",
-      "pinyin": "",
-      "meaning": {
-        "zh": "没关系",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "请",
-      "pinyin": "",
-      "meaning": {
-        "zh": "请",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "再见",
-      "pinyin": "",
-      "meaning": {
-        "zh": "再见",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "喂",
-      "pinyin": "",
-      "meaning": {
-        "zh": "喂",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "高兴",
-      "pinyin": "",
-      "meaning": {
-        "zh": "高兴",
-        "kr": "",
-        "en": ""
-      }
-    }
+    { "hanzi": "叫", "pinyin": "jiào", "meaning": { "zh": "叫", "kr": "~라고 부르다", "en": "to be called" } },
+    { "hanzi": "什么", "pinyin": "shénme", "meaning": { "zh": "什么", "kr": "무엇", "en": "what" } },
+    { "hanzi": "名字", "pinyin": "míngzi", "meaning": { "zh": "名字", "kr": "이름", "en": "name" } },
+    { "hanzi": "是", "pinyin": "shì", "meaning": { "zh": "是", "kr": "~이다", "en": "to be" } },
+    { "hanzi": "不客气", "pinyin": "bùkèqi", "meaning": { "zh": "不客气", "kr": "천만에요", "en": "you're welcome" } },
+    { "hanzi": "对不起", "pinyin": "duìbuqǐ", "meaning": { "zh": "对不起", "kr": "죄송합니다", "en": "sorry" } },
+    { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "en": "it's okay" } },
+    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "안녕히 가세요", "en": "goodbye" } },
+    { "hanzi": "请", "pinyin": "qǐng", "meaning": { "zh": "请", "kr": "~해 주세요", "en": "please" } },
+    { "hanzi": "喂", "pinyin": "wéi", "meaning": { "zh": "喂", "kr": "여보세요", "en": "hello (on phone)" } },
+    { "hanzi": "高兴", "pinyin": "gāoxìng", "meaning": { "zh": "高兴", "kr": "기쁘다", "en": "happy" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "对不起！"
-    },
-    {
-      "speaker": "B",
-      "line": "没关系。"
-    },
-    {
-      "speaker": "A",
-      "line": "谢谢！"
-    },
-    {
-      "speaker": "B",
-      "line": "不客气！"
-    },
-    {
-      "speaker": "A",
-      "line": "再见！"
-    },
-    {
-      "speaker": "B",
-      "line": "再见！"
-    }
+    { "speaker": "A", "line": "你好！你叫什么名字？", "kr": "안녕하세요! 이름이 뭐예요?", "en": "Hello! What's your name?" },
+    { "speaker": "B", "line": "我叫小明。你呢？", "kr": "저는 소명이에요. 당신은요?", "en": "I'm Xiaoming. And you?" },
+    { "speaker": "A", "line": "我叫小美。很高兴认识你！", "kr": "저는 소미예요. 만나서 반가워요!", "en": "I'm Xiaomei. Nice to meet you!" },
+    { "speaker": "B", "line": "谢谢！", "kr": "감사합니다!", "en": "Thanks!" },
+    { "speaker": "A", "line": "不客气！再见！", "kr": "천만에요! 안녕히 가세요!", "en": "You're welcome! Goodbye!" },
+    { "speaker": "B", "line": "再见！", "kr": "안녕히 가세요!", "en": "Goodbye!" }
   ],
   "grammar": [
     {
-      "title": "礼貌表达：感谢与回应",
-      "explanation_zh": "别人帮助你时说“谢谢”，对方可以回答“没关系”或“不客气”。",
-      "explanation_kr": "도움을 받았을 때 '谢谢'라고 말하고, 상대는 '没关系' 또는 '不客气'라고 답할 수 있습니다.",
-      "example": "A：谢谢！ B：没关系！"
+      "title": "叫 + 名字",
+      "explanation_zh": "用"叫"来介绍或询问名字。",
+      "explanation_kr": "'叫'로 이름을 소개하거나 물을 수 있습니다.",
+      "explanation_en": "Use \"叫\" to introduce or ask for names.",
+      "example": { "zh": "我叫李明。", "pinyin": "Wǒ jiào Lǐ Míng.", "kr": "저는 이명이에요.", "en": "I'm Li Ming." }
     },
     {
-      "title": "对不起 — 表达道歉",
-      "explanation_zh": "做错事情或打扰别人时使用“对不起”。",
-      "explanation_kr": "실수했거나 상대를 방해했을 때 '对不起'를 사용합니다.",
-      "example": "对不起，我来晚了。"
+      "title": "什么 — 疑问词",
+      "explanation_zh": "\"什么\"用于询问事物或名字。",
+      "explanation_kr": "'什么'은 사물이나 이름을 물을 때 사용합니다.",
+      "explanation_en": "\"什么\" is used to ask about things or names.",
+      "example": { "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "kr": "이름이 뭐예요?", "en": "What's your name?" }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "别人说“谢谢”，你应该怎么回答？",
-      "options": [
-        "对不起",
-        "没关系",
-        "再见"
-      ],
-      "answer": "没关系"
-    },
-    {
-      "type": "match",
-      "pairs": [
-        [
-          "对不起",
-          "道歉"
-        ],
-        [
-          "谢谢",
-          "感谢"
-        ],
-        [
-          "再见",
-          "告别"
-        ]
-      ]
-    },
-    {
-      "type": "roleplay",
-      "prompt": "和同学练习：道歉、感谢、道别。"
-    }
+    { "type": "choice", "question": "别人说"谢谢"，你应该怎么回答？", "options": ["对不起", "不客气", "再见"], "answer": "不客气" },
+    { "type": "reorder", "question": ["叫", "什么", "你", "名字"], "answer": "你叫什么名字" },
+    { "type": "roleplay", "prompt": "两人一组：互相问名字，然后道别。" }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": [
-      "谢谢",
-      "对不起",
-      "没关系",
-      "再见"
-    ],
-    "chatPrompt": "AI先说“谢谢”或“对不起”，学生做出合适回应。"
+    "speaking": ["你叫什么名字", "我叫小明", "再见"],
+    "chatPrompt": "AI问：你叫什么名字？学生回答并道别。"
   },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

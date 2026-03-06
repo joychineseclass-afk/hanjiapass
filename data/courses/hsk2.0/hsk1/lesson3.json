@@ -6,201 +6,65 @@
   "lessonNo": 3,
   "type": "lesson",
   "title": {
-    "zh": "自我介绍",
-    "pinyin": "",
-    "kr": "자기소개",
-    "en": "Countries"
+    "zh": "国籍/国家",
+    "pinyin": "guójí / guójiā",
+    "kr": "국적/국가",
+    "en": "Nationality / Countries"
   },
   "summary": {
-    "zh": "介绍名字和身份",
-    "kr": "이름과 신분 소개"
+    "zh": "介绍来自哪个国家，认识新朋友",
+    "kr": "어느 나라 사람인지 소개하기",
+    "en": "Introducing where you're from, meeting new friends"
   },
   "objectives": [],
   "vocab": [
-    {
-      "hanzi": "叫",
-      "pinyin": "",
-      "meaning": {
-        "zh": "叫",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "什么",
-      "pinyin": "",
-      "meaning": {
-        "zh": "什么",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "名字",
-      "pinyin": "",
-      "meaning": {
-        "zh": "名字",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "是",
-      "pinyin": "",
-      "meaning": {
-        "zh": "是",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "老师",
-      "pinyin": "",
-      "meaning": {
-        "zh": "老师",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "学生",
-      "pinyin": "",
-      "meaning": {
-        "zh": "学生",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "朋友",
-      "pinyin": "",
-      "meaning": {
-        "zh": "朋友",
-        "kr": "",
-        "en": ""
-      }
-    }
+    { "hanzi": "北京", "pinyin": "Běijīng", "meaning": { "zh": "北京", "kr": "베이징", "en": "Beijing" } },
+    { "hanzi": "中国", "pinyin": "Zhōngguó", "meaning": { "zh": "中国", "kr": "중국", "en": "China" } },
+    { "hanzi": "老师", "pinyin": "lǎoshī", "meaning": { "zh": "老师", "kr": "선생님", "en": "teacher" } },
+    { "hanzi": "学生", "pinyin": "xuéshēng", "meaning": { "zh": "学生", "kr": "학생", "en": "student" } },
+    { "hanzi": "朋友", "pinyin": "péngyou", "meaning": { "zh": "朋友", "kr": "친구", "en": "friend" } },
+    { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다/만나다", "en": "to know" } },
+    { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "친구/동급생", "en": "classmate" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你好！"
-    },
-    {
-      "speaker": "B",
-      "line": "你好！"
-    },
-    {
-      "speaker": "A",
-      "line": "你叫什么名字？"
-    },
-    {
-      "speaker": "B",
-      "line": "我叫李明。"
-    },
-    {
-      "speaker": "A",
-      "line": "你是学生吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "是，我是学生。"
-    }
+    { "speaker": "A", "line": "你好！你叫什么名字？", "kr": "안녕하세요! 이름이 뭐예요?", "en": "Hello! What's your name?" },
+    { "speaker": "B", "line": "我叫李华。我是学生。", "kr": "저는 이화예요. 저는 학생이에요.", "en": "I'm Li Hua. I'm a student." },
+    { "speaker": "A", "line": "你是老师吗？", "kr": "선생님이에요?", "en": "Are you a teacher?" },
+    { "speaker": "B", "line": "我是学生。北京很好。", "kr": "저는 학생이에요. 베이징은 좋아요.", "en": "I'm a student. Beijing is nice." },
+    { "speaker": "A", "line": "很高兴认识你！", "kr": "만나서 반가워요!", "en": "Nice to meet you!" },
+    { "speaker": "B", "line": "谢谢！再见！", "kr": "감사합니다! 안녕히 가세요!", "en": "Thanks! Goodbye!" }
   ],
   "grammar": [
     {
-      "title": "叫 + 名字",
-      "explanation_zh": "用“叫”来表达名字。",
-      "explanation_kr": "'叫'는 이름을 말할 때 사용합니다.",
-      "example": "我叫王明。"
-    },
-    {
-      "title": "什么 — 疑问词",
-      "explanation_zh": "“什么”用于询问事物或名字。",
-      "explanation_kr": "'什么'은 사물이나 이름을 물을 때 사용합니다.",
-      "example": "你叫什么名字？"
-    },
-    {
       "title": "是 — 判断句",
-      "explanation_zh": "“是”用于连接主语和身份、职业。",
+      "explanation_zh": "\"是\"用于连接主语和身份、职业。",
       "explanation_kr": "'是'는 주어와 신분·직업을 연결합니다.",
-      "example": "我是学生。"
+      "explanation_en": "\"是\" connects the subject with identity or job.",
+      "example": { "zh": "我是学生。", "pinyin": "Wǒ shì xuéshēng.", "kr": "저는 학생이에요.", "en": "I'm a student." }
+    },
+    {
+      "title": "认识 — 认识新朋友",
+      "explanation_zh": "\"认识\"表示认识某人。",
+      "explanation_kr": "'认识'는 ~를 알다/만나다입니다.",
+      "explanation_en": "\"认识\" means to know or meet someone.",
+      "example": { "zh": "很高兴认识你！", "pinyin": "Hěn gāoxìng rènshi nǐ!", "kr": "만나서 반가워요!", "en": "Nice to meet you!" }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "你叫什么名字？",
-      "options": [
-        "我很好",
-        "我叫小美",
-        "谢谢"
-      ],
-      "answer": "我叫小美"
-    },
-    {
-      "type": "reorder",
-      "question": [
-        "学生",
-        "是",
-        "我"
-      ],
-      "answer": "我是学生"
-    },
-    {
-      "type": "roleplay",
-      "prompt": "两人一组练习：互相问名字和身份。"
-    }
+    { "type": "choice", "question": "你是学生吗？", "options": ["你好", "是，我是学生", "再见"], "answer": "是，我是学生" },
+    { "type": "reorder", "question": ["北京", "来自", "我"], "answer": "我来自北京" },
+    { "type": "roleplay", "prompt": "互相介绍：名字、是否学生、来自哪里。" }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": [
-      "你叫什么名字",
-      "我叫小明",
-      "我是学生"
-    ],
-    "chatPrompt": "AI问：你叫什么名字？你是老师吗？学生回答。"
+    "speaking": ["我是学生", "我来自北京", "很高兴认识你"],
+    "chatPrompt": "AI问：你是学生吗？你来自哪儿？学生回答。"
   },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }
