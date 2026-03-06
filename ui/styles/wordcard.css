@@ -19,6 +19,14 @@
   font-weight: 600;
 }
 
+.word-hanzi-char {
+  cursor: pointer;
+  border-radius: 4px;
+}
+.word-hanzi-char:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
 .word-pinyin {
   color: #666;
   margin-top: 4px;

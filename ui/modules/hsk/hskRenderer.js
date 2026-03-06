@@ -5,6 +5,7 @@
 
 import { i18n } from "../../i18n.js";
 import { openStrokeInModal } from "./strokeModal.js";
+import { openStrokePlayer } from "../stroke/index.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -195,10 +196,13 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
       const audioLabel = currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : "Audio";
       const strokeDisabled = !han ? " disabled" : "";
+      const hanziChars = han ? Array.from(han).map((ch) =>
+        `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
+      ).join("") : escapeHtml(han);
 
       return `
       <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
-        <div class="word-hanzi">${escapeHtml(han)}</div>
+        <div class="word-hanzi">${hanziChars}</div>
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
         <div class="word-meaning">
           <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
@@ -240,8 +244,29 @@ export function bindWordCardActions() {
   _wordCardBound = true;
 
   document.addEventListener("click", async (e) => {
+    const card = e.target.closest(".word-card");
+    if (!card) return;
+
+    const charSpan = e.target.closest(".word-hanzi-char");
+    if (charSpan) {
+      e.preventDefault();
+      e.stopPropagation();
+      const char = (charSpan.dataset.char || "").trim();
+      const wordId = (charSpan.dataset.word || "").trim();
+      if (!char) return;
+      const lessonId = window.__HSK_PAGE_CTX?.lessonNo ?? window.__HSK_CURRENT_LESSON_ID ?? "";
+      try {
+        await openStrokePlayer(char, {
+          ctx: { from: "hsk", lessonId, wordId },
+        });
+      } catch (err) {
+        console.warn("[stroke] openStrokePlayer failed:", err);
+      }
+      return;
+    }
+
     const btn = e.target.closest("[data-action]");
-    if (!btn || !btn.closest(".word-card")) return;
+    if (!btn) return;
 
     const action = btn.dataset.action;
     const hanzi = (btn.dataset.hanzi || "").trim();
