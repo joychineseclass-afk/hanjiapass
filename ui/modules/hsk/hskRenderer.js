@@ -6,6 +6,7 @@
 import { i18n } from "../../i18n.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
+import { resolvePinyin } from "../../utils/pinyinEngine.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -183,7 +184,8 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
     try {
       const raw = typeof x === "string" ? { hanzi: x } : (x || {});
       const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
-      const pinyinStr = wordPinyin(raw);
+      let pinyinStr = wordPinyin(raw);
+      if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
       let mainStr = getMeaningSingle(raw, currentLang);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
       if (!mainStr) {

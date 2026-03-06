@@ -8,7 +8,7 @@ import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
-import { ensurePinyin } from "../utils/pinyinBrowser.js";
+import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 
 const state = {
   lv: 1,
@@ -103,7 +103,7 @@ function pickDialogueTranslation(line, lang, zhMain = "") {
 }
 
 /** 对话渲染：教学型结构化 HTML。每句：speaker / 中文 / 拼音 / 当前语言翻译 */
-async function buildDialogueHTML(lessonData) {
+function buildDialogueHTML(lessonData) {
   const d = lessonData?.dialogue;
   if (!d) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
@@ -111,17 +111,14 @@ async function buildDialogueHTML(lessonData) {
   const arr = Array.isArray(d) ? d : (Array.isArray(d?.lines) ? d.lines : []);
   if (!arr.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
-  const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
-  const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
-  const isHsk79 = (lv >= 7 || /[789]/.test(String(lessonData?.version ?? "")));
-  const showPinyin = !isHsk79;
+  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
 
   const blocks = [];
   for (const line of arr) {
     const spk = String(line?.spk ?? line?.speaker ?? "").trim();
     const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
-    let py = String(line?.pinyin ?? line?.py ?? "").trim();
-    if (showPinyin && zh && !py) py = await ensurePinyin(zh, py);
+    let py = maybeGetManualPinyin(line, "dialogue");
+    if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
     const trans = pickDialogueTranslation(line, lang, zh);
     const isA = spk.toUpperCase() === "A";
 
@@ -165,7 +162,7 @@ function pickGrammarExample(pt, lang) {
 }
 
 /** 语法渲染：教学型结构化 HTML。每个 item：编号+标题 / 拼音 / 解释 / 例句块 */
-async function buildGrammarHTML(lessonData) {
+function buildGrammarHTML(lessonData) {
   const g = lessonData?.grammar;
   if (!g) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
@@ -173,11 +170,7 @@ async function buildGrammarHTML(lessonData) {
   const arr = Array.isArray(g) ? g : (Array.isArray(g?.points) ? g.points : []);
   if (!arr.length) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
-  const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
-  const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
-  const isHsk79 = (lv >= 7 || /[789]/.test(String(lessonData?.version ?? "")));
-  const showPinyin = !isHsk79;
-
+  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
   const exLabel = lang === "ko" ? "예문" : lang === "zh" ? "例句" : "Example";
 
   const blocks = [];
@@ -186,15 +179,13 @@ async function buildGrammarHTML(lessonData) {
     const titleZh = typeof pt?.title === "object"
       ? (pt.title?.zh ?? pt.title?.kr ?? pt.title?.en ?? "")
       : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${i + 1}`);
-    let titlePy = typeof pt?.title === "object"
-      ? (pt.title?.pinyin ?? pt.title?.py ?? "")
-      : (pt?.titlePinyin ?? pt?.pinyin ?? pt?.py ?? "");
-    if (showPinyin && titleZh && !titlePy) titlePy = await ensurePinyin(titleZh, titlePy);
+    let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
+    if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
     const expl = pickGrammarExplanation(pt, lang);
     const ex = pickGrammarExample(pt, lang);
     let exPy = ex.pinyin;
-    if (showPinyin && ex.zh && !exPy) exPy = await ensurePinyin(ex.zh, exPy);
+    if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
 
     blocks.push(`
 <article class="hsk-grammar-item border border-slate-200 rounded-xl p-5 mb-4 last:mb-0 bg-white">
@@ -328,8 +319,8 @@ async function openLesson({ lessonNo, file }) {
     } else {
       renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang });
     }
-    $("hskDialogueBody").innerHTML = await buildDialogueHTML(lessonData);
-    $("hskGrammarBody").innerHTML = await buildGrammarHTML(lessonData);
+    $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
+    $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
 
     // AI panel reset
     $("hskAIResult").innerHTML = "";
@@ -476,7 +467,7 @@ function bindEvents() {
 });
 
   // Language changed
-  window.addEventListener("joy:langchanged", async () => {
+  window.addEventListener("joy:langchanged", () => {
     try { i18n.apply(document); } catch {}
     setSubTitle();
 
@@ -501,8 +492,8 @@ function bindEvents() {
       } else {
         renderWordCards($("hskPanelWords"), lw, undefined, { lang });
       }
-      $("hskDialogueBody").innerHTML = await buildDialogueHTML(ld);
-      $("hskGrammarBody").innerHTML = await buildGrammarHTML(ld);
+      $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
+      $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
       updateTabsUI();
     }
   }, { signal });
