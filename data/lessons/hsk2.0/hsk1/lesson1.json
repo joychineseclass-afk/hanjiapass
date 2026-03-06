@@ -1,0 +1,62 @@
+{
+  "lesson": 1,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": "打招呼",
+  "topic": "见面问候与基本寒暄",
+  "words": [
+    "你好",
+    "我",
+    "你",
+    "很",
+    "好",
+    "吗",
+    "谢谢"
+  ],
+  "dialogue": [
+    { "speaker": "A", "line": "你好！" },
+    { "speaker": "B", "line": "你好！" },
+    { "speaker": "A", "line": "你好吗？" },
+    { "speaker": "B", "line": "我很好，谢谢！" },
+    { "speaker": "A", "line": "我也很好。" }
+  ],
+  "grammar": [
+    {
+      "title": "吗 — 一般疑问句",
+      "explanation_zh": "在陈述句后加“吗”构成一般疑问句。",
+      "explanation_kr": "평서문 뒤에 '吗'를 붙이면 의문문이 됩니다.",
+      "example": "你很好 → 你好吗？"
+    },
+    {
+      "title": "很 + 形容词",
+      "explanation_zh": "形容词作谓语时通常需要“很”。",
+      "explanation_kr": "형용사가 서술어가 될 때 보통 '很'을 함께 사용합니다.",
+      "example": "我很好。"
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "question": "你好吗？",
+      "options": ["你好", "我很好", "谢谢"],
+      "answer": "我很好"
+    },
+    {
+      "type": "reorder",
+      "question": ["很好", "我"],
+      "answer": "我很好"
+    },
+    {
+      "type": "roleplay",
+      "prompt": "和同学练习打招呼：你好！你好吗？我很好。"
+    }
+  ],
+  "ai_interaction": {
+    "speaking": [
+      "你好",
+      "你好吗",
+      "我很好"
+    ],
+    "chat_prompt": "AI先说：你好！学生回答，然后继续对话。"
+  }
+}
