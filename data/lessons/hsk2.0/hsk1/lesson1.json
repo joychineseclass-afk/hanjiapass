@@ -5,12 +5,13 @@
   "title": "打招呼",
   "topic": "见面问候与基本寒暄",
   "words": [
-    { "hanzi": "好", "pinyin": "hǎo", "ko": "좋다", "en": "good" },
-    { "hanzi": "很", "pinyin": "hěn", "ko": "매우", "en": "very" },
-    { "hanzi": "吗", "pinyin": "ma", "ko": "의문 조사", "en": "question particle" },
-    { "hanzi": "你", "pinyin": "nǐ", "ko": "너 / 당신", "en": "you" },
-    { "hanzi": "我", "pinyin": "wǒ", "ko": "나 / 저", "en": "I / me" },
-    { "hanzi": "谢谢", "pinyin": "xièxie", "ko": "감사합니다", "en": "thank you" }
+    "你好",
+    "我",
+    "你",
+    "很",
+    "好",
+    "吗",
+    "谢谢"
   ],
   "dialogue": [
     { "speaker": "A", "line": "你好！" },
