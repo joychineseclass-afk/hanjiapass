@@ -72,6 +72,7 @@ function pointNearBBox(p, bb, pad) {
  * - getColor(): string
  * - getSize(): number
  * - onStrokeCorrect({index,total})
+ * - onStrokeWrong({expectedIndex,total}) 笔顺错误时
  * - onAllComplete({total})
  */
 export function initTraceMode({
@@ -80,6 +81,7 @@ export function initTraceMode({
   getColor,
   getSize,
   onStrokeCorrect,
+  onStrokeWrong,
   onAllComplete,
 } = {}) {
   if (!viewport || !svg) return null;
@@ -332,6 +334,9 @@ export function initTraceMode({
         paintGuide();
       }
     } else {
+      try {
+        onStrokeWrong?.({ expectedIndex: strokeIndex, total: outlines.length });
+      } catch {}
       pointerId = null;
       clearCurrent();
       paintGuide();

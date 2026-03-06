@@ -11,7 +11,7 @@ import {
   setProgress,
 } from "./strokePlayer.canvas.js";
 import { initTraceMode } from "./strokeTrace.js";
-import { playAll, playOne, stop as stopDemo } from "./strokeDemo.js";
+import { playAll, playOne, stop as stopDemo, glowStrokeOnCorrect } from "./strokeDemo.js";
 
 /** =========================
  * One-time styles
@@ -26,11 +26,26 @@ function ensureStyleOnce() {
     .trace-stroke-on   { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
     .trace-stroke-done { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
 
+    .trace-stroke-glow { filter: drop-shadow(0 0 8px rgba(255,59,48,.7)) !important; stroke: #ff6b5b !important; fill: #ff6b5b !important; }
+
     .trace-num { font-size: 16px; font-weight: 800; fill: rgba(0,0,0,.35); }
     .trace-num-on { fill: #ff3b30 !important; }
     .trace-num-done { fill: rgba(255,59,48,.85) !important; }
 
     .trace-btn-on { background:#fb923c !important; color:#fff !important; }
+
+    .stroke-viewport.is-shaking { animation: stroke-shake 220ms ease-in-out; }
+    @keyframes stroke-shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+
+    .stroke-toast { position:absolute; left:50%; top:12%; transform:translateX(-50%); z-index:100; padding:10px 20px; border-radius:12px;
+      background:rgba(255,255,255,.95); box-shadow:0 4px 16px rgba(0,0,0,.12); font-size:15px; font-weight:600; color:#1f2937;
+      pointer-events:none; opacity:0; transition:opacity .2s; }
+    .stroke-toast.show { opacity:1; }
+    .stroke-toast.stroke-toast-complete { color:#059669; }
   `;
   document.head.appendChild(st);
 }
@@ -52,6 +67,36 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   const stage = targetEl.querySelector("#strokeStage");
   const viewport = targetEl.querySelector("#strokeViewport");
   const fileNameEl = targetEl.querySelector("#strokeFileName");
+  const toastEl = targetEl.querySelector("#strokeToast");
+
+  let toastTimer = null;
+  function showToast(text, { type = "", ms = 1000 } = {}) {
+    if (!toastEl) return;
+    if (toastTimer) clearTimeout(toastTimer);
+    toastEl.textContent = text || "";
+    toastEl.classList.remove("show", "stroke-toast-complete");
+    if (type === "complete") toastEl.classList.add("stroke-toast-complete");
+    toastEl.classList.add("show");
+    toastTimer = setTimeout(() => {
+      toastEl.classList.remove("show");
+      toastTimer = null;
+    }, ms);
+  }
+
+  function tStroke(key) {
+    try {
+      const v = window.i18n?.t?.(key);
+      if (v) return v;
+    } catch {}
+    const fallback = {
+      stroke_wrong_hint: { kr: "이 획부터 써 보세요", ko: "이 획부터 써 보세요", zh: "请从这一笔开始", cn: "请从这一笔开始", en: "Start from this stroke" },
+      stroke_complete_toast: { kr: "잘했어요!", ko: "잘했어요!", zh: "太棒了！", cn: "太棒了！", en: "Great!" },
+    };
+    let lang = (localStorage.getItem("joy_lang") || "kr").toLowerCase();
+    if (lang === "cn") lang = "zh";
+    if (lang === "ko") lang = "kr";
+    return fallback[key]?.[lang] || fallback[key]?.en || key;
+  }
 
   const btnSpeak = targetEl.querySelector(".btnSpeak");
   const btnReplay = targetEl.querySelector(".btnReplay");
@@ -146,14 +191,22 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
         getSize: () => 8,
 
         onStrokeCorrect: ({ index }) => {
-          // index 是“当前笔之前的 index”，这里我们用 doneCount 自增最直观
           doneCount = Math.min(doneCount + 1, strokeEls.length);
+          glowStrokeOnCorrect({ svg: svgEl, strokeEls, index });
           refreshProgress();
           if (doneCount >= strokeEls.length) showRedo();
         },
 
+        onStrokeWrong: () => {
+          try { navigator.vibrate?.([60, 50, 60]); } catch {}
+          viewport?.classList.add("is-shaking");
+          setTimeout(() => viewport?.classList.remove("is-shaking"), 220);
+          showToast(tStroke("stroke_wrong_hint"), { ms: 1400 });
+        },
+
         onAllComplete: () => {
           showRedo();
+          showToast(tStroke("stroke_complete_toast"), { type: "complete", ms: 1100 });
         },
       });
 

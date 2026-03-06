@@ -132,6 +132,21 @@ export async function playAll({
 }
 
 /**
+ * 写对发光：当前已完成笔画短暂高亮 300~400ms
+ * @param {object} opts - { svg, strokeEls, index } index 为刚完成的笔画
+ */
+export function glowStrokeOnCorrect({ svg, strokeEls, index } = {}) {
+  const el = strokeEls?.[index];
+  if (!el || !svg) return;
+
+  el.classList.add("trace-stroke-glow");
+  const t = setTimeout(() => {
+    el.classList.remove("trace-stroke-glow");
+  }, 380);
+  return () => clearTimeout(t);
+}
+
+/**
  * playOne({ svg, strokeEls, index, speed })
  * - 用于“进入 따라쓰기 自动示范一笔”
  */

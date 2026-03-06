@@ -28,7 +28,8 @@ export function renderStrokePlayerTpl() {
 
       <!-- ✅ 原底色保持：不加米字格、不加水印、不加缩放label -->
       <div class="w-full aspect-square bg-slate-50 rounded-lg overflow-hidden relative select-none">
-        <div id="strokeViewport" class="absolute inset-0" style="touch-action:none;">
+        <div id="strokeToast" class="stroke-toast" aria-live="polite"></div>
+        <div id="strokeViewport" class="stroke-viewport absolute inset-0" style="touch-action:none;">
           <div id="strokeStage"
                class="w-full h-full flex items-center justify-center text-xs text-gray-400">
             loading...
