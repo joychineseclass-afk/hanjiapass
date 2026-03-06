@@ -108,7 +108,7 @@ function t(key) {
     stroke_btn_replay: { ko: "다시", zh: "重播", en: "Replay" },
     stroke_btn_speak: { ko: "발음", zh: "读音", en: "Speak" },
     stroke_btn_trace: { ko: "따라쓰기", zh: "跟写", en: "Trace" },
-    stroke_write_here: { ko: "여기에 쓰기 ✍️", zh: "在这里写字 ✍️", en: "Write here ✍️" },
+    stroke_write_here: { ko: "여기에 따라 써 보세요 ✍", zh: "在这里跟着写 ✍", en: "Trace here ✍" },
     stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
     stroke_continue_practice: { ko: "연습 계속", zh: "继续练习(无笔顺)", en: "Continue practice" },
     stroke_feedback_char: { ko: "글자 추가 요청", zh: "反馈缺字", en: "Request character" },
@@ -127,6 +127,7 @@ function ensureTraceLayerCSS() {
     #strokeDemoPanel * { pointer-events: none; }
     #strokeDemoPanel button, #strokeDemoPanel a { pointer-events: auto; }
     #strokePracticePanel { flex: 1; min-width: 280px; height: 420px; min-height: 280px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; overflow: hidden; }
+    .stroke-page #strokeDemoPanel { border-right: 1px solid #f1f5f9; }
     .stroke-panel-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
     .stroke-card-inner.embed-mode { padding: 8px !important; }
     .stroke-card-inner.embed-mode .stroke-page { flex: 1; min-height: 0; gap: 12px; }
@@ -136,12 +137,12 @@ function ensureTraceLayerCSS() {
     .stroke-card-inner.embed-mode .embed-practice-tools { margin-bottom: 6px !important; }
     @media (max-width: 640px) { .stroke-page { flex-direction: column; } #strokeDemoPanel, #strokePracticePanel { min-height: 320px; height: auto; } }
     #strokePlayerHost { flex: 1; position: relative; width: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; }
-    #traceBoard { flex: 1; position: relative; width: 100%; min-height: 0; overflow: hidden; }
+    #traceBoard { flex: 1; position: relative; width: 100%; min-height: 0; overflow: hidden !important; }
     #traceGridCanvas { position: absolute; inset: 0; background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; background-color: #fff; pointer-events: none; }
     #traceDrawCanvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
     .stroke-write-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: #94a3b8; font-size: 14px; }
     .stroke-write-hint.hidden { opacity: 0; transition: opacity 0.2s; }
-    .stroke-zoom-label { position: absolute; right: 8px; bottom: 8px; font-size: 11px; color: #64748b; background: rgba(255,255,255,.9); padding: 4px 8px; border-radius: 6px; }
+    .stroke-zoom-label { display: none !important; }
     .stroke-msg { position: absolute; left: 8px; bottom: 8px; font-size: 11px; color: #64748b; background: rgba(255,255,255,.9); padding: 4px 8px; border-radius: 6px; }
     .stroke-msg.hidden { display: none !important; }
     .stroke-fallback-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
@@ -181,17 +182,17 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
     ? `<div class="flex items-center justify-between mb-1 gap-2 flex-wrap">
         <div class="flex flex-wrap gap-2" id="strokeBtns"></div>
         <div class="flex gap-2 justify-end items-center">
-          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${replayLabel}</button>
-          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${speakLabel}</button>
-          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${traceLabel}</button>
+          <button class="btnReplay stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">↻ ${replayLabel}</button>
+          <button class="btnSpeak stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">🔊 ${speakLabel}</button>
+          <button class="btnTrace stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">✍ ${traceLabel}</button>
         </div>
       </div>`
     : `<div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold strokeTitle">${T.title}</div>
         <div class="flex gap-2 flex-wrap justify-end items-center">
-          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${replayLabel}</button>
-          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${speakLabel}</button>
-          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${traceLabel}</button>
+          <button class="btnReplay stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">↻ ${replayLabel}</button>
+          <button class="btnSpeak stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">🔊 ${speakLabel}</button>
+          <button class="btnTrace stroke-btn px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">✍ ${traceLabel}</button>
         </div>
       </div>
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>`;
@@ -206,7 +207,6 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
           ${panelTitle(demoTitle)}
           <div id="strokePlayerHost">
             <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm">loading...</div>
-            <div id="strokeZoomLabel" class="stroke-zoom-label">100%</div>
             <div id="strokeMsg" class="stroke-msg hidden"></div>
           </div>
         </div>
@@ -237,7 +237,6 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
   // ===== DOM refs =====
   const btnWrap = targetEl.querySelector("#strokeBtns");
   const stage = targetEl.querySelector("#strokeStage");
-  const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
 
   const traceDrawCanvas = targetEl.querySelector("#traceDrawCanvas");
@@ -253,7 +252,7 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
   // ===== state =====
   let currentChar = chars[0];
-  let scale = 1, tx = 0, ty = 0;
+  let scale = 1.15, tx = 0, ty = 0;
   let activeBtn = null;
   let tracingOn = false;
 
@@ -267,20 +266,15 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
   if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "auto";
 
-  function updateZoomLabel() {
-    if (zoomLabel) zoomLabel.textContent = `${Math.round(scale * 100)}%`;
-  }
-
   function applyTransform() {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
     svg.style.transformOrigin = "center center";
     svg.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
-    updateZoomLabel();
   }
 
   function resetView() {
-    scale = 1; tx = 0; ty = 0;
+    scale = 1.15; tx = 0; ty = 0;
     applyTransform();
   }
 
@@ -296,9 +290,9 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
     const titleEl = targetEl.querySelector(".strokeTitle");
     if (titleEl) titleEl.textContent = T.title;
-    if (btnSpeak) btnSpeak.textContent = t("stroke_btn_speak");
-    if (btnTrace) btnTrace.textContent = t("stroke_btn_trace");
-    if (btnReplay) btnReplay.textContent = t("stroke_btn_replay");
+    if (btnSpeak) btnSpeak.textContent = "🔊 " + t("stroke_btn_speak");
+    if (btnTrace) btnTrace.textContent = "✍ " + t("stroke_btn_trace");
+    if (btnReplay) btnReplay.textContent = "↻ " + t("stroke_btn_replay");
   }
 
   /** 重播笔顺动画（克隆 SVG 触发 CSS 动画重启） */
