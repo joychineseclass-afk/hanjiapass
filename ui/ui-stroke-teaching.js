@@ -29,9 +29,11 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
     const total = strokes.length;
     const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
 
+    // 따라쓰기 完成后保持 penColor，不变黑
+    const finishColor = traceApi?.getPenColor?.() || "#FB923C";
     strokes.forEach((s, idx) => {
       let color;
-      if (finished) color = "#111827";
+      if (finished) color = finishColor;
       else if (idx < active) color = "#FB923C";
       else if (idx === active) color = "#93C5FD";
       else color = "#D1D5DB";
@@ -223,7 +225,8 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
     try { traceApi?.setEnabled?.(false); } catch (e) {}
     if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
 
-    redrawStrokeColor({ finished: true });
+    // 延后 DOM 更新，避免阻塞（与 finishWholeChar 一致）
+    requestAnimationFrame(() => redrawStrokeColor({ finished: true }));
   }
 
   return {

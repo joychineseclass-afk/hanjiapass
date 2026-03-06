@@ -24,6 +24,7 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       isTracing() { return false; },
       getStrokeIndex() { return 0; },
       setStrokeIndex() {},
+      getPenColor() { return "#FB923C"; },
       setPenColor() {},
       setPenWidth() {},
       setStyle() {},
@@ -401,6 +402,10 @@ export function initTraceCanvasLayer(canvas, opts = {}) {
       const n = Number(i);
       state.strokeIndex = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : 0;
       emit("trace:index", { strokeIndex: state.strokeIndex });
+    },
+
+    getPenColor() {
+      return state.penColor || "#FB923C";
     },
 
     setPenColor(color) {
