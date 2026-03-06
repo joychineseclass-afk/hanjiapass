@@ -19,6 +19,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
     el.style.animation = "";
   }
 
+  /** 따라쓰기 简化两层：guide(蓝细线) + final(橘正式笔画)，无橘色细线中间态 */
   function redrawStrokeColor({ activeIndex, finished = false } = {}) {
     const svg = stage?.querySelector?.("svg");
     if (!svg) return;
@@ -28,15 +29,38 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
 
     const total = strokes.length;
     const active = finished ? -1 : Math.max(0, Math.min(activeIndex ?? 0, total - 1));
-
-    // 따라쓰기 完成后保持 penColor，不变黑
     const finishColor = traceApi?.getPenColor?.() || "#FB923C";
+
     strokes.forEach((s, idx) => {
+      const isCompleted = finished || idx < active;
+      const isActive = !finished && idx === active;
+      const isPending = !finished && idx > active;
+
       let color;
-      if (finished) color = finishColor;
-      else if (idx < active) color = "#FB923C";
-      else if (idx === active) color = "#93C5FD";
+      if (isCompleted) color = finishColor;
+      else if (isActive) color = "#93C5FD";
       else color = "#D1D5DB";
+
+      // completed：立即切到正式笔画，停止动画，避免 橘色细线 中间态
+      if (isCompleted) {
+        try {
+          s.style.animation = "none";
+          s.style.strokeDashoffset = "0";
+          s.style.strokeWidth = "1024";
+        } catch {}
+      }
+      // active：保留动画（蓝色细线演示），只改颜色
+      else if (isActive) {
+        try {
+          s.style.animation = "";
+          s.style.strokeDashoffset = "";
+          s.style.strokeWidth = "";
+        } catch {}
+      }
+      // pending：灰色底字（不参与动画）
+      else {
+        try { s.style.animation = "none"; } catch {}
+      }
 
       const targets = [s, ...(s?.querySelectorAll?.("*") || [])];
       targets.forEach((el) => {
