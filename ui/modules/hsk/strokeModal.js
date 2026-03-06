@@ -2,6 +2,7 @@
 // HSK 页内 Stroke 弹窗：iframe 内嵌 stroke 页，关闭时恢复滚动
 
 import { modalTpl, createModalSystem } from "../../components/modalBase.js";
+import { i18n } from "../../i18n.js";
 
 /** 解析 stroke 页 URL（避免 /pages/pages/） */
 function resolveStrokeUrl(hanzi, opts = {}) {
@@ -40,6 +41,7 @@ function ensureStrokeModal() {
 
   const root = document.createElement("div");
   root.id = "hsk-stroke-modal-root";
+  const backLabel = typeof i18n?.t === "function" ? "← " + i18n.t("common_back") : "← 뒤로";
   root.innerHTML = modalTpl({
     id: "hsk-stroke-modal",
     titleId: "hskStrokeTitle",
@@ -47,9 +49,28 @@ function ensureStrokeModal() {
     closeId: "hskStrokeClose",
     bodyId: "hskStrokeBody",
     titleText: "",
-    maxWidth: 920,
+    backText: backLabel,
+    maxWidth: 1180,
   });
   portal.appendChild(root);
+
+  // 固定尺寸、无内部滚动
+  const box = root.querySelector(".joy-modal-box");
+  if (box) {
+    box.style.width = "min(1180px, 92vw)";
+    box.style.height = "min(720px, 84vh)";
+    box.style.maxHeight = "min(720px, 84vh)";
+    box.style.display = "flex";
+    box.style.flexDirection = "column";
+    box.style.overflow = "hidden";
+  }
+  const body = root.querySelector("#hskStrokeBody");
+  if (body) {
+    body.style.overflow = "hidden";
+    body.style.flex = "1";
+    body.style.minHeight = "0";
+    body.style.padding = "0";
+  }
 
   let _onClose = null;
 
@@ -107,19 +128,23 @@ export async function openStrokeInModal(hanzi, ctx = {}) {
   };
 
   const iframeSrc = resolveStrokeUrl(ch, { embed: true });
+  const titleLabel = typeof i18n?.t === "function" ? i18n.t("stroke_modal_title") : "笔画";
   const bodyHTML = `
-    <div id="strokeHost" style="min-height:70vh;">
+    <div id="strokeHost" style="width:100%;height:100%;min-height:0;">
       <iframe
         id="stroke-iframe"
         src="${iframeSrc}"
-        style="width:100%;height:70vh;border:0;border-radius:12px;"
-        title="笔画 - ${ch}"
+        style="width:100%;height:100%;min-height:0;border:0;border-radius:0;display:block;"
+        title="${titleLabel} - ${ch}"
       ></iframe>
     </div>
   `;
 
-  modal.setTitle(`笔画 / Stroke - ${ch}`);
+  modal.setTitle(`${titleLabel} - ${ch}`);
   modal.setBodyHTML(bodyHTML);
+
+  const backBtn = document.getElementById("hskStrokeBack");
+  if (backBtn) backBtn.textContent = "← " + (i18n?.t?.("common_back") || "뒤로");
 
   modal._setOnClose(() => {
     try {

@@ -14,7 +14,12 @@
     body[data-embed="1"] #navBar,
     body[data-embed="1"] .page-title,
     body[data-embed="1"] .muted:first-of-type { display: none !important; }
-    body[data-embed="1"] .page-wrap { padding-top: 8px; }
+    body[data-embed="1"] .page-wrap { padding: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+    body[data-embed="1"] .stroke-embed-wrap { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+    body[data-embed="1"] .stroke-embed-wrap .card { flex: 1; min-height: 0; overflow: hidden; margin: 0; }
+    body[data-embed="1"] .stroke-embed-wrap #stroke-root { height: 100%; overflow: hidden; }
+    body[data-embed="1"] .stroke-input-card { display: none !important; }
+    body[data-embed="1"] .stroke-meaning-card { display: none !important; }
     .stroke-return-bar { position: fixed; top: 12px; right: 12px; z-index: 9999; }
     .stroke-return-bar.hidden { display: none !important; }
     .stroke-return-bar .btn-return { padding: 8px 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; font-size: 14px; }
@@ -32,8 +37,8 @@
       한 글자를 입력하면 필순 애니메이션과 따라쓰기 연습을 할 수 있어요.
     </p>
 
-    <!-- 输入区 -->
-    <div class="card" style="margin-top:16px;">
+    <!-- 输入区（embed 时隐藏） -->
+    <div class="card stroke-input-card" style="margin-top:16px;">
       <div class="row" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <label class="muted" for="stroke-input" data-i18n="stroke_input_label">한자 입력</label>
 
@@ -62,17 +67,19 @@
       </div>
     </div>
 
-    <!-- 笔顺/描红组件挂载区（保留 한자 필순，由 mountStrokeSwitcher 渲染） -->
+    <!-- 笔顺/描红组件挂载区（embed 时占满，隐藏 뜻） -->
+    <div class="stroke-embed-wrap">
     <div class="card" style="margin-top:16px;">
       <div id="stroke-root"></div>
     </div>
 
-    <!-- 释义区 -->
-    <div class="card" style="margin-top:16px;">
+    <!-- 释义区（embed/modal 模式隐藏） -->
+    <div class="card stroke-meaning-card" style="margin-top:16px;">
       <div class="section-title" data-i18n="stroke_meaning_title">단어 뜻 (HSK)</div>
       <div id="stroke-meaning-area" class="muted" data-i18n="stroke_meaning_hint">
         한자를 입력하면 HSK 단어장에서 뜻, 병음, 예문을 보여줘요.
       </div>
+    </div>
     </div>
   </main>
 
@@ -96,7 +103,7 @@
       const returnBar = document.getElementById("stroke-return-bar");
       if (returnBar) {
         returnBar.classList.remove("hidden");
-        const backLabel = "← 返回学习";
+        const backLabel = "← " + (typeof i18n?.t === "function" ? i18n.t("stroke_back_to_learn") : "返回学习");
         const hash = lessonIdParam || wordIdParam ? `#hsk&lessonId=${encodeURIComponent(lessonIdParam)}&wordId=${encodeURIComponent(wordIdParam)}` : "";
         const href = from + hash;
         returnBar.innerHTML = `<a href="${href}" class="btn-return">${backLabel}</a>`;
@@ -165,21 +172,18 @@
       if (input) input.value = ch;
       setHint(ch);
 
-      // ✅ mount stroke player
-      try { mountStrokeSwitcher(root, ch); } catch (e) { console.warn("mountStrokeSwitcher failed:", e); }
+      // ✅ mount stroke player（embed 模式下不显示重复标题、不显示 뜻）
+      try { mountStrokeSwitcher(root, ch, { embed: isEmbed }); } catch (e) { console.warn("mountStrokeSwitcher failed:", e); }
 
-      // ✅ meaning placeholder (later connect lookup)
-      setMeaningLoading();
+      // ✅ meaning placeholder（embed 时已隐藏 뜻区块，不加载）
+      if (!isEmbed) setMeaningLoading();
 
       // TODO: when you connect lookup:
       // const found = await findInHSK(ch, { version: ..., level: ... });
       // renderMeaning(found)
 
       // 临时：1.2 秒后回提示（避免一直 loading）
-      setTimeout(() => {
-        // 如果你未来接了真实 lookup，就删掉这个 timeout
-        resetMeaningHint();
-      }, 1200);
+      if (!isEmbed) setTimeout(() => resetMeaningHint(), 1200);
     }
 
     btn?.addEventListener("click", () => handleLoad());

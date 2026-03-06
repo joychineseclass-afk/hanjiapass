@@ -104,6 +104,7 @@ export function modalTpl({
   closeId,
   bodyId,
   titleText = "",
+  backText = "← 뒤로",
   maxWidth = 720,
 }) {
   ensureModalCss();
@@ -113,7 +114,7 @@ export function modalTpl({
       <div class="joy-modal-box" style="max-width:${Number(maxWidth) || 720}px">
         <div class="joy-modal-topbar">
           <div class="joy-modal-topbar-inner">
-            <button id="${backId}" type="button" class="joy-modal-btn">← 뒤로</button>
+            <button id="${backId}" type="button" class="joy-modal-btn">${backText}</button>
             <div class="joy-modal-title" id="${titleId}">${titleText}</div>
             <button id="${closeId}" type="button" class="joy-modal-btn joy-modal-closeX">×</button>
           </div>

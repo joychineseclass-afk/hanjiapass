@@ -104,8 +104,10 @@ function t(key) {
   } catch {}
   const FALLBACK = {
     stroke_demo: { ko: "데모", zh: "演示", en: "Demo" },
-    stroke_practice: { ko: "따라쓰기 · 연습", zh: "书写练习", en: "Practice" },
-    stroke_replay: { ko: "다시", zh: "重播", en: "Replay" },
+    stroke_practice: { ko: "연습", zh: "练习", en: "Practice" },
+    stroke_btn_replay: { ko: "다시", zh: "重播", en: "Replay" },
+    stroke_btn_speak: { ko: "발음", zh: "读音", en: "Speak" },
+    stroke_btn_trace: { ko: "따라쓰기", zh: "跟写", en: "Trace" },
     stroke_write_here: { ko: "여기에 쓰기 ✍️", zh: "在这里写字 ✍️", en: "Write here ✍️" },
     stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
     stroke_continue_practice: { ko: "연습 계속", zh: "继续练习(无笔顺)", en: "Continue practice" },
@@ -120,12 +122,18 @@ function ensureTraceLayerCSS() {
   const st = document.createElement("style");
   st.id = "trace-layer-lock";
   st.textContent = `
-    .stroke-page { display: flex; gap: 24px; flex-wrap: wrap; }
-    #strokeDemoPanel { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; pointer-events: auto; }
+    .stroke-page { display: flex; gap: 24px; flex-wrap: wrap; min-height: 0; }
+    #strokeDemoPanel { flex: 1; min-width: 280px; height: 420px; min-height: 280px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; pointer-events: auto; overflow: hidden; }
     #strokeDemoPanel * { pointer-events: none; }
     #strokeDemoPanel button, #strokeDemoPanel a { pointer-events: auto; }
-    #strokePracticePanel { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
+    #strokePracticePanel { flex: 1; min-width: 280px; height: 420px; min-height: 280px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; overflow: hidden; }
     .stroke-panel-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
+    .stroke-card-inner.embed-mode { padding: 8px !important; }
+    .stroke-card-inner.embed-mode .stroke-page { flex: 1; min-height: 0; gap: 12px; }
+    .stroke-card-inner.embed-mode #strokeDemoPanel,
+    .stroke-card-inner.embed-mode #strokePracticePanel { height: auto; flex: 1; min-height: 180px; padding: 10px; }
+    .stroke-card-inner.embed-mode .flex.items-center.justify-between { margin-bottom: 6px !important; }
+    .stroke-card-inner.embed-mode .embed-practice-tools { margin-bottom: 6px !important; }
     @media (max-width: 640px) { .stroke-page { flex-direction: column; } #strokeDemoPanel, #strokePracticePanel { min-height: 320px; height: auto; } }
     #strokePlayerHost { flex: 1; position: relative; width: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; }
     #traceBoard { flex: 1; position: relative; width: 100%; min-height: 0; overflow: hidden; }
@@ -143,8 +151,10 @@ function ensureTraceLayerCSS() {
   document.head.appendChild(st);
 }
 
-export function mountStrokeSwitcher(targetEl, hanChars) {
+export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
   if (!targetEl) return;
+
+  const embed = !!opts.embed;
 
   // ✅ 清理旧监听（防止重复绑定导致越写越卡）
   try { targetEl._strokeCleanup?.(); } catch {}
@@ -160,27 +170,40 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
+  const replayLabel = t("stroke_btn_replay");
+  const speakLabel = t("stroke_btn_speak");
+  const traceLabel = t("stroke_btn_trace");
+  const writeHere = t("stroke_write_here");
   const demoTitle = t("stroke_demo");
   const practiceTitle = t("stroke_practice");
-  const replayLabel = t("stroke_replay");
-  const writeHere = t("stroke_write_here");
 
-  targetEl.innerHTML = `
-    <div class="border rounded-2xl p-3 bg-white shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
+  const topRow = embed
+    ? `<div class="flex items-center justify-between mb-1 gap-2 flex-wrap">
+        <div class="flex flex-wrap gap-2" id="strokeBtns"></div>
+        <div class="flex gap-2 justify-end items-center">
+          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${replayLabel}</button>
+          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${speakLabel}</button>
+          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${traceLabel}</button>
+        </div>
+      </div>`
+    : `<div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold strokeTitle">${T.title}</div>
         <div class="flex gap-2 flex-wrap justify-end items-center">
           <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${replayLabel}</button>
-          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.speak}</button>
-          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.trace}</button>
+          <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${speakLabel}</button>
+          <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${traceLabel}</button>
         </div>
       </div>
+      <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>`;
+  const panelTitle = (label) => embed ? "" : `<div class="stroke-panel-title">${label}</div>`;
 
-      <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
+  targetEl.innerHTML = `
+    <div class="border rounded-2xl p-3 bg-white shadow-sm stroke-card-inner${embed ? " embed-mode" : ""}">
+      ${topRow}
 
       <div class="stroke-page">
         <div id="strokeDemoPanel">
-          <div class="stroke-panel-title">${demoTitle}</div>
+          ${panelTitle(demoTitle)}
           <div id="strokePlayerHost">
             <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm">loading...</div>
             <div id="strokeZoomLabel" class="stroke-zoom-label">100%</div>
@@ -189,8 +212,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
         </div>
 
         <div id="strokePracticePanel">
-          <div class="stroke-panel-title">${practiceTitle}</div>
-          <div class="flex items-center gap-2 flex-wrap mb-2">
+          ${panelTitle(practiceTitle)}
+          <div class="flex items-center gap-2 flex-wrap mb-1 embed-practice-tools">
             <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
               <option value="#FB923C">🟠</option>
               <option value="#3B82F6">🔵</option>
@@ -273,9 +296,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
     const titleEl = targetEl.querySelector(".strokeTitle");
     if (titleEl) titleEl.textContent = T.title;
-    if (btnSpeak) btnSpeak.textContent = T.speak;
-    if (btnTrace) btnTrace.textContent = T.trace;
-    if (btnReplay) btnReplay.textContent = t("stroke_replay");
+    if (btnSpeak) btnSpeak.textContent = t("stroke_btn_speak");
+    if (btnTrace) btnTrace.textContent = t("stroke_btn_trace");
+    if (btnReplay) btnReplay.textContent = t("stroke_btn_replay");
   }
 
   /** 重播笔顺动画（克隆 SVG 触发 CSS 动画重启） */
