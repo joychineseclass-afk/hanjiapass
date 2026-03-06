@@ -270,14 +270,46 @@ function sortLessonsByDistributionOrder(lessons, order) {
   });
 }
 
-/** 用 vocab-distribution 的 lessonThemes 覆盖课程标题（与顺序来源保持一致） */
+/** vocab-distribution 主题的韩语/英语翻译（供课程卡片显示） */
+const HSK1_THEME_TRANSLATIONS = {
+  "打招呼": { ko: "인사하기", en: "Greetings" },
+  "介绍名字": { ko: "이름 소개하기", en: "Introducing names" },
+  "国籍/国家": { ko: "국적 / 국가", en: "Nationality" },
+  "家庭": { ko: "가족", en: "Family" },
+  "数字与数量": { ko: "숫자와 수량", en: "Numbers and quantity" },
+  "年龄": { ko: "나이 묻기", en: "Age" },
+  "日期": { ko: "날짜", en: "Date" },
+  "时间": { ko: "시간", en: "Time" },
+  "打电话": { ko: "전화하기", en: "Making calls" },
+  "问地点/在哪儿": { ko: "장소 묻기 / 어디에", en: "Asking location" },
+  "学校生活": { ko: "학교 생활", en: "School life" },
+  "工作": { ko: "직업", en: "Work" },
+  "爱好": { ko: "취미", en: "Hobbies" },
+  "饮食1": { ko: "음식 1", en: "Food 1" },
+  "饮食2": { ko: "음식 2", en: "Food 2" },
+  "位置/方向": { ko: "위치 / 방향", en: "Location / direction" },
+  "交通/出行": { ko: "교통 / 출행", en: "Transport" },
+  "购物": { ko: "쇼핑", en: "Shopping" },
+  "天气": { ko: "날씨", en: "Weather" },
+  "看病/综合应用": { ko: "병원 / 종합 활용", en: "Doctor visit" },
+  "复习1": { ko: "복습 1", en: "Review 1" },
+  "复习2": { ko: "복습 2", en: "Review 2" },
+};
+
+/** 用 vocab-distribution 的 lessonThemes 覆盖课程标题，并附加翻译（与顺序来源保持一致） */
 function applyVocabDistributionTitles(lessons, lessonThemes) {
   if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") return lessons;
   return lessons.map((l) => {
     const no = Number(l?.lessonNo ?? l?.lesson ?? l?.id ?? l?.no ?? 0) || 0;
     const theme = no ? (lessonThemes[String(no)] ?? lessonThemes[no]) : null;
     if (!theme || typeof theme !== "string") return l;
-    return { ...l, title: theme };
+    const tr = HSK1_THEME_TRANSLATIONS[theme];
+    return {
+      ...l,
+      title: theme,
+      titleKo: tr?.ko ?? "",
+      titleEn: tr?.en ?? "",
+    };
   });
 }
 

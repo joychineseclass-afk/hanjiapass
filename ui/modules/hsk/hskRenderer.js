@@ -103,35 +103,45 @@ export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
   const list = Array.isArray(lessons) ? lessons : [];
 
   containerEl.innerHTML = `
-    <div class="lesson-list">
+    <div class="lesson-list-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
       ${list.map((it) => {
         const lessonNo = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
         const file = it.file || it.path || it.url || "";
-        const titleObj = it.title ?? it.name ?? it.label ?? "";
-        const title = pickText(titleObj, lang) || pickText(titleObj, lang === "ko" ? "zh" : "ko") || "";
-        const zh = pickText(titleObj, "zh");
-        const ko = pickText(titleObj, "ko");
-        const pinyin = pickText(it.pinyinTitle ?? it.pinyin ?? it.py ?? "", "zh");
 
-        // Display lines:
-        // - KR mode: show KO big, ZH small, pinyin small
-        // - CN mode: show ZH big, KO small, pinyin small
-        const big = (lang === "zh" || lang === "cn") ? (zh || title) : (ko || title);
-        const small = (lang === "zh" || lang === "cn") ? (ko || "") : (zh || "");
+        const titleObj = it.title ?? it.name ?? it.label ?? "";
+        let zh = "";
+        if (typeof titleObj === "string") {
+          const s = titleObj.trim();
+          const parts = s.split(/\s*\/\s*/);
+          zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s;
+        } else {
+          zh = pickText(titleObj, "zh") || pickText(titleObj, "cn") || "";
+        }
+        const manualPinyin = String(it.pinyinTitle ?? it.pinyin ?? it.py ?? "").trim();
+        const pinyin = manualPinyin || (zh && /[\u4e00-\u9fff]/.test(zh) ? resolvePinyin(zh, manualPinyin) : "");
+
+        let translation = "";
+        if (lang === "ko") {
+          translation = it.titleKo ?? pickText(titleObj, "ko") ?? pickText(titleObj, "kr") ?? "";
+          if (!translation && typeof titleObj === "string") {
+            const parts = String(titleObj).split(/\s*\/\s*/);
+            translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
+          }
+        } else if (lang === "en") {
+          translation = it.titleEn ?? pickText(titleObj, "en") ?? "";
+        }
 
         return `
-          <button class="lesson-row w-full text-left rounded-2xl border border-slate-200 hover:border-slate-300 px-4 py-3 mb-3"
+          <button class="lesson-card-v w-full text-left rounded-2xl border border-slate-200 hover:border-slate-300 px-4 py-3"
             data-open-lesson="1"
             data-lesson-no="${lessonNo}"
             data-file="${escapeHtmlAttr(file)}"
           >
-            <div class="flex items-center gap-3">
-              <div class="w-14 text-sm font-bold opacity-70">${lessonNo ? (i18n?.t?.("hsk_lesson_unit", { n: lessonNo }) || `${lessonNo}과`) : ""}</div>
-              <div class="flex-1">
-                <div class="text-base font-semibold">${escapeHtml(big)}</div>
-                ${small ? `<div class="text-sm opacity-70">${escapeHtml(small)}</div>` : ``}
-                ${pinyin ? `<div class="text-sm italic opacity-70">${escapeHtml(pinyin)}</div>` : ``}
-              </div>
+            <div class="lesson-card-v-inner flex flex-col gap-0.5">
+              <div class="text-xs font-bold opacity-70">${lessonNo ? (i18n?.t?.("hsk_lesson_unit", { n: lessonNo }) || `第${lessonNo}课`) : ""}</div>
+              <div class="text-base font-semibold">${escapeHtml(zh || "-")}</div>
+              ${pinyin ? `<div class="text-sm italic opacity-80">${escapeHtml(pinyin)}</div>` : ""}
+              ${translation ? `<div class="text-sm opacity-70">${escapeHtml(translation)}</div>` : ""}
             </div>
           </button>
         `;
