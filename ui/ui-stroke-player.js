@@ -104,7 +104,7 @@ function t(key) {
   } catch {}
   const FALLBACK = {
     stroke_demo: { ko: "데모", zh: "演示", en: "Demo" },
-    stroke_practice: { ko: "연습", zh: "练习", en: "Practice" },
+    stroke_practice: { ko: "따라쓰기 · 연습", zh: "书写练习", en: "Practice" },
     stroke_replay: { ko: "다시", zh: "重播", en: "Replay" },
     stroke_write_here: { ko: "여기에 쓰기 ✍️", zh: "在这里写字 ✍️", en: "Write here ✍️" },
     stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
@@ -120,16 +120,22 @@ function ensureTraceLayerCSS() {
   const st = document.createElement("style");
   st.id = "trace-layer-lock";
   st.textContent = `
-    #strokeViewport { z-index: 10 !important; }
-    #traceCanvas    { z-index: 50 !important; width: 100%; height: 100%; }
     .stroke-page { display: flex; gap: 24px; flex-wrap: wrap; }
-    .stroke-demo { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
-    .stroke-practice { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
-    @media (max-width: 640px) { .stroke-page { flex-direction: column; } .stroke-demo, .stroke-practice { min-height: 320px; height: auto; } }
-    .stroke-stage-content { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; }
-    .stroke-practice-grid { background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; background-color: #fff; }
+    #strokeDemoPanel { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; pointer-events: auto; }
+    #strokeDemoPanel * { pointer-events: none; }
+    #strokeDemoPanel button, #strokeDemoPanel a { pointer-events: auto; }
+    #strokePracticePanel { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
+    .stroke-panel-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
+    @media (max-width: 640px) { .stroke-page { flex-direction: column; } #strokeDemoPanel, #strokePracticePanel { min-height: 320px; height: auto; } }
+    #strokePlayerHost { flex: 1; position: relative; width: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; }
+    #traceBoard { flex: 1; position: relative; width: 100%; min-height: 0; overflow: hidden; }
+    #traceGridCanvas { position: absolute; inset: 0; background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; background-color: #fff; pointer-events: none; }
+    #traceDrawCanvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
     .stroke-write-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: #94a3b8; font-size: 14px; }
     .stroke-write-hint.hidden { opacity: 0; transition: opacity 0.2s; }
+    .stroke-zoom-label { position: absolute; right: 8px; bottom: 8px; font-size: 11px; color: #64748b; background: rgba(255,255,255,.9); padding: 4px 8px; border-radius: 6px; }
+    .stroke-msg { position: absolute; left: 8px; bottom: 8px; font-size: 11px; color: #64748b; background: rgba(255,255,255,.9); padding: 4px 8px; border-radius: 6px; }
+    .stroke-msg.hidden { display: none !important; }
     .stroke-fallback-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
     .stroke-fallback-actions button { padding: 6px 12px; border-radius: 8px; font-size: 13px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; }
     .stroke-fallback-actions button:hover { background: #f1f5f9; }
@@ -154,6 +160,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
+  const demoTitle = t("stroke_demo");
+  const practiceTitle = t("stroke_practice");
   const replayLabel = t("stroke_replay");
   const writeHere = t("stroke_write_here");
 
@@ -170,20 +178,18 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
-      <!-- strokePage: 左演示 | 右练习，同一行 -->
       <div class="stroke-page">
-        <div class="stroke-demo">
-          <div class="stroke-stage-content" style="flex:1; position:relative; width:100%;">
-            <div id="strokeViewport" class="absolute inset-0 flex items-center justify-center" style="touch-action:auto;">
-              <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm">loading...</div>
-            </div>
-            <canvas id="traceCanvas" class="absolute inset-0" style="pointer-events:none;"></canvas>
-            <div id="strokeZoomLabel" class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">100%</div>
-            <div id="strokeMsg" class="absolute left-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded hidden"></div>
+        <div id="strokeDemoPanel">
+          <div class="stroke-panel-title">${demoTitle}</div>
+          <div id="strokePlayerHost">
+            <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm">loading...</div>
+            <div id="strokeZoomLabel" class="stroke-zoom-label">100%</div>
+            <div id="strokeMsg" class="stroke-msg hidden"></div>
           </div>
         </div>
 
-        <div class="stroke-practice">
+        <div id="strokePracticePanel">
+          <div class="stroke-panel-title">${practiceTitle}</div>
           <div class="flex items-center gap-2 flex-wrap mb-2">
             <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
               <option value="#FB923C">🟠</option>
@@ -195,9 +201,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
             <input id="penWidth" type="range" min="2" max="18" value="8" style="width:80px;" />
             <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">✕</button>
           </div>
-          <div class="stroke-stage-content stroke-practice-grid" style="flex:1; position:relative; min-height:0;">
+          <div id="traceBoard">
+            <div id="traceGridCanvas"></div>
             <div id="strokeWriteHint" class="stroke-write-hint">${writeHere}</div>
-            <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full"></canvas>
+            <canvas id="traceDrawCanvas"></canvas>
           </div>
         </div>
       </div>
@@ -207,12 +214,12 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   // ===== DOM refs =====
   const btnWrap = targetEl.querySelector("#strokeBtns");
   const stage = targetEl.querySelector("#strokeStage");
-  const traceCanvas = targetEl.querySelector("#traceCanvas");
   const zoomLabel = targetEl.querySelector("#strokeZoomLabel");
   const msgEl = targetEl.querySelector("#strokeMsg");
 
-  const practiceCanvas = targetEl.querySelector("#practiceCanvas");
+  const traceDrawCanvas = targetEl.querySelector("#traceDrawCanvas");
   const writeHint = targetEl.querySelector("#strokeWriteHint");
+  const traceBoard = targetEl.querySelector("#traceBoard");
   const penColorEl = targetEl.querySelector("#penColor");
   const penWidthEl = targetEl.querySelector("#penWidth");
   const btnClearPractice = targetEl.querySelector("#btnClearPractice");
@@ -234,6 +241,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     clearTimeout(showMsg._t);
     showMsg._t = setTimeout(() => msgEl.classList.add("hidden"), ms);
   };
+
+  if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "auto";
 
   function updateZoomLabel() {
     if (zoomLabel) zoomLabel.textContent = `${Math.round(scale * 100)}%`;
@@ -283,30 +292,11 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   }
 
-  // ===== init layers =====
-  // ✅ 上：跟写层（默认关闭）
-  const traceApi = initTraceCanvasLayer(traceCanvas, {
-    enabledDefault: false,
-    tracingDefault: false,
-    autoAdvanceIndex: true,
-    penColor: "#FB923C",
-    lineWidth: 8,
-    alpha: 0.85
-  });
-
-  // ✅ 教学推进（依赖 trace:strokeend）
-  const teaching = initStrokeTeaching(targetEl, stage, traceApi);
-
-  const onStrokeEnd = (e) => {
-    teaching?.onUserStrokeDone?.(e?.detail);
-  };
-  traceCanvas.addEventListener("trace:strokeend", onStrokeEnd);
-
-  // ✅ 下：自由练习层（永远可写，只是 UI 隐藏）
-  const practiceApi = initTraceCanvasLayer(practiceCanvas, {
+  // ===== drawing 仅绑定到 #traceDrawCanvas，与 #strokePlayerHost 完全分离 =====
+  const practiceApi = initTraceCanvasLayer(traceDrawCanvas, {
     enabledDefault: true,
     tracingDefault: true,
-    autoAdvanceIndex: false,
+    autoAdvanceIndex: true,
     penColor: "#FB923C",
     lineWidth: Number(penWidthEl?.value || 8),
     alpha: 0.9
@@ -314,24 +304,31 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   practiceApi.toggle(true);
   practiceApi.setEnabled(true);
-  practiceCanvas.style.pointerEvents = "auto";
 
-  // 练习区：开始画时隐藏“在这里写字”提示
+  const teaching = initStrokeTeaching(targetEl, stage, practiceApi, traceDrawCanvas);
+
+  const onStrokeEnd = (e) => {
+    teaching?.onUserStrokeDone?.(e?.detail);
+  };
+  traceDrawCanvas?.addEventListener("trace:strokeend", onStrokeEnd);
+
   const hideWriteHint = () => { writeHint?.classList.add("hidden"); };
-  practiceCanvas.addEventListener("pointerdown", hideWriteHint, { once: false });
-  practiceCanvas.addEventListener("touchstart", hideWriteHint, { passive: true });
+  traceDrawCanvas?.addEventListener("pointerdown", hideWriteHint, { once: false });
+  traceDrawCanvas?.addEventListener("touchstart", hideWriteHint, { passive: true });
+
+  if (traceBoard && typeof ResizeObserver !== "undefined") {
+    const ro = new ResizeObserver(() => { window.dispatchEvent(new Event("resize")); });
+    ro.observe(traceBoard);
+    targetEl._strokeResizeObs = ro;
+  }
 
   // ===== UI controls =====
   penColorEl?.addEventListener("change", () => {
-    const c = penColorEl.value;
-    practiceApi.setPenColor(c);
-    traceApi.setPenColor(c);
+    practiceApi.setPenColor(penColorEl.value);
   });
 
   penWidthEl?.addEventListener("input", () => {
-    const w = Number(penWidthEl.value) || 8;
-    practiceApi.setPenWidth(w);
-    traceApi.setPenWidth(w);
+    practiceApi.setPenWidth(Number(penWidthEl.value) || 8);
   });
 
   btnClearPractice?.addEventListener("click", () => {
@@ -353,9 +350,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       activeBtn = btn;
     }
 
-    // reset tracing state for new char
-    traceApi.clear?.();
-    traceApi.setStrokeIndex?.(0);
+    practiceApi.clear?.();
+    practiceApi.setStrokeIndex?.(0);
 
     // if tracing mode on, restart teaching
     if (tracingOn) {
@@ -448,24 +444,20 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     }
   };
 
-  // ✅ 따라쓰기：开启/关闭（在演示区跟写）
+  // 따라쓰기：仅右侧练习区 trace 状态，左侧 demo 永不变
   btnTrace.onclick = () => {
     tracingOn = !tracingOn;
-
+    practiceApi.setStrokeIndex?.(0);
     if (tracingOn) {
       btnTrace.classList.add("bg-orange-400", "text-white");
-      traceApi.toggle(true);
-      traceApi.setEnabled(true);
-      traceCanvas.style.pointerEvents = "auto";
-      traceCanvas.style.touchAction = "none";
-      traceApi.setStrokeIndex?.(0);
-      traceApi.clear?.();
+      practiceApi.setEnabled(true);
+      if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "auto";
       try { teaching?.start?.(); } catch {}
       showMsg(T.traceOnMsg);
     } else {
-      traceApi.setEnabled(false);
-      traceApi.toggle(false);
-      traceCanvas.style.pointerEvents = "none";
+      try { teaching?.stop?.(); } catch {}
+      practiceApi.setEnabled(true);
+      if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "auto";
       btnTrace.classList.remove("bg-orange-400", "text-white");
       showMsg(T.traceOffMsg);
     }
@@ -478,10 +470,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   // ===== cleanup =====
   targetEl._strokeCleanup = () => {
     try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
-    try { traceCanvas.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
+    try { traceDrawCanvas?.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
     try { teaching?.stop?.(); } catch {}
-    try { traceApi?.destroy?.(); } catch {}
     try { practiceApi?.destroy?.(); } catch {}
+    try { targetEl._strokeResizeObs?.disconnect?.(); } catch {}
   };
 
   applyLangText();

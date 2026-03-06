@@ -1,9 +1,7 @@
 // ui/ui-stroke-teaching.js
-export function initStrokeTeaching(rootEl, stage, traceApi) {
+export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
   let teachingOn = false;
   let demoLock = false;
-
-  const traceCanvas = rootEl.querySelector("#traceCanvas");
 
   // =========================
   // Helpers
@@ -55,10 +53,10 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   }
 
   function glowOnce() {
-    if (!traceCanvas) return;
-    traceCanvas.classList.add("trace-glow");
+    if (!traceDrawCanvas) return;
+    traceDrawCanvas.classList.add("trace-glow");
     clearTimeout(glowOnce._t);
-    glowOnce._t = setTimeout(() => traceCanvas.classList.remove("trace-glow"), 180);
+    glowOnce._t = setTimeout(() => traceDrawCanvas.classList.remove("trace-glow"), 180);
   }
 
   // ✅ glow CSS（只注入一次）
@@ -98,7 +96,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
 
     // 完成后禁写
     try { traceApi?.setEnabled?.(false); } catch (e) {}
-    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+    if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
   }
 
   // =========================
@@ -122,7 +120,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   function lockInputForDemo() {
     demoLock = true;
     try { traceApi?.setEnabled?.(false); } catch (e) {}
-    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+    if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
   }
 
   function unlockInputAfterDemo() {
@@ -130,7 +128,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     if (!teachingOn) return;
 
     try { traceApi?.setEnabled?.(true); } catch (e) {}
-    if (traceCanvas) traceCanvas.style.pointerEvents = "auto";
+    if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "auto";
   }
 
   function demoNextAndUnlock(nextIdx) {
@@ -195,7 +193,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
   function vibrateWrong() {
     try { navigator.vibrate?.([60, 40, 60]); } catch {}
   }
-  traceCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
+  traceDrawCanvas?.addEventListener?.("trace:wrong", vibrateWrong);
 
   // =========================
   // Public API
@@ -224,7 +222,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi) {
     _lastNextIdx = -1;
 
     try { traceApi?.setEnabled?.(false); } catch (e) {}
-    if (traceCanvas) traceCanvas.style.pointerEvents = "none";
+    if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
 
     redrawStrokeColor({ finished: true });
   }
