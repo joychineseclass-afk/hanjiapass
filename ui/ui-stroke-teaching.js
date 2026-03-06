@@ -56,7 +56,7 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
     if (!traceDrawCanvas) return;
     traceDrawCanvas.classList.add("trace-glow");
     clearTimeout(glowOnce._t);
-    glowOnce._t = setTimeout(() => traceDrawCanvas.classList.remove("trace-glow"), 180);
+    glowOnce._t = setTimeout(() => traceDrawCanvas.classList.remove("trace-glow"), 80);
   }
 
   // ✅ glow CSS（只注入一次）

@@ -4,7 +4,7 @@
 // - supports toggle(show/hide), setTracing(show/hide), enable/disable, setHitTest
 // - emits: "trace:strokeend" + legacy "strokeComplete"/"complete"
 // - provides API: setPenColor, setPenWidth, setStyle, clear, destroy
-// - fixes: no undefined variables, safe null canvas, robust tracing/enabled/pointerEvents sync
+// - 练习区完成时笔迹保持用户 penColor，不做 finalize/commit 重绘变色
 
 export function initTraceCanvasLayer(canvas, opts = {}) {
   // =========================
