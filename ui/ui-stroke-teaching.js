@@ -88,15 +88,14 @@ export function initStrokeTeaching(rootEl, stage, traceApi, traceDrawCanvas) {
   }
 
   function finishWholeChar() {
-    redrawStrokeColor({ finished: true });
-
-    // 完成事件：给外部（player）用
-    queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete")));
-    queueMicrotask(() => rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar")));
-
-    // 完成后禁写
-    try { traceApi?.setEnabled?.(false); } catch (e) {}
-    if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
+    // 延后 DOM 更新到下一帧，避免阻塞最后一笔的绘制
+    requestAnimationFrame(() => {
+      redrawStrokeColor({ finished: true });
+      rootEl?.dispatchEvent?.(new CustomEvent("stroke:complete"));
+      rootEl?.dispatchEvent?.(new CustomEvent("stroke:nextchar"));
+      try { traceApi?.setEnabled?.(false); } catch (e) {}
+      if (traceDrawCanvas) traceDrawCanvas.style.pointerEvents = "none";
+    });
   }
 
   // =========================

@@ -116,7 +116,8 @@ export async function playAll({
     const el = strokeEls[i];
     const L = getLen(el);
     const baseMs = 420;
-    const dur = Math.round((baseMs + L * 0.55) / Math.max(0.2, speed));
+    const raw = Math.round((baseMs + L * 0.55) / Math.max(0.2, speed));
+    const dur = Math.min(raw, 300);  // cap 避免最后一笔拖慢
 
     await animateOne(el, { duration: dur });
 
@@ -161,7 +162,8 @@ export async function playOne({
   if (el) {
     const L = getLen(el);
     const baseMs = 420;
-    const dur = Math.round((baseMs + L * 0.55) / Math.max(0.2, speed));
+    const raw = Math.round((baseMs + L * 0.55) / Math.max(0.2, speed));
+    const dur = Math.min(raw, 300);  // cap 避免最后一笔拖慢
 
     await animateOne(el, { duration: dur });
     el.classList.remove("trace-stroke-on");

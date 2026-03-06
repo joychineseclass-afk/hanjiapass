@@ -59,6 +59,29 @@ function normalizeChars(input) {
   return Array.from(s).filter((ch) => /[\u3400-\u9FFF]/.test(ch));
 }
 
+/** 优化 stroke 动画：cap 每笔时长、缩短 finalize 阶段，避免最后一笔明显拖慢 */
+function patchSvgAnimationSpeed(svgText) {
+  if (!svgText || typeof svgText !== "string") return svgText;
+  const DURATION_CAP_MS = 300;  // 260~320ms
+  const FINALIZE_AT_PCT = 98;   // step-end 移到 98%，finalize 仅占 2%（约 6ms @300ms）
+  let s = svgText;
+  // 1) Cap animation duration
+  s = s.replace(
+    /(animation:\s*keyframes\d+\s+)([\d.]+)s(\s+both)/gi,
+    (_, pre, sec, suf) => {
+      const ms = parseFloat(sec) * 1000;
+      const capped = Math.min(ms, DURATION_CAP_MS) / 1000;
+      return pre + capped.toFixed(4) + "s" + suf;
+    }
+  );
+  // 2) 将 step-end 所在百分比移到 98%，缩短 finalize 过渡
+  s = s.replace(
+    /(\d+)%\s*\{\s*animation-timing-function:\s*step-end/gi,
+    () => `${FINALIZE_AT_PCT}% { animation-timing-function: step-end`
+  );
+  return s;
+}
+
 async function speakZhCN(text) {
   const t = String(text || "").trim();
   if (!t) return;
@@ -390,7 +413,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       if (!res.ok) throw new Error("HTTP_" + res.status);
 
       const svgText = await res.text();
-      stage.innerHTML = svgText;
+      stage.innerHTML = patchSvgAnimationSpeed(svgText);
 
       const svg = stage.querySelector("svg");
       if (svg) {
