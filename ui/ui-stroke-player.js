@@ -112,6 +112,8 @@ function t(key) {
     stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
     stroke_continue_practice: { ko: "연습 계속", zh: "继续练习(无笔顺)", en: "Continue practice" },
     stroke_feedback_char: { ko: "글자 추가 요청", zh: "反馈缺字", en: "Request character" },
+    stroke_complete_toast: { ko: "잘했어요!", zh: "太棒了！", en: "Great!" },
+    stroke_wrong_hint: { ko: "이 획부터 써 보세요", zh: "请从这一笔开始", en: "Start from this stroke" },
   };
   return FALLBACK[key]?.[k] || FALLBACK[key]?.en || key;
 }
@@ -148,6 +150,12 @@ function ensureTraceLayerCSS() {
     .stroke-fallback-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; justify-content: center; }
     .stroke-fallback-actions button { padding: 6px 12px; border-radius: 8px; font-size: 13px; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; }
     .stroke-fallback-actions button:hover { background: #f1f5f9; }
+    .stroke-practice-toast { position: absolute; left: 50%; top: 18%; transform: translateX(-50%); z-index: 100; padding: 10px 20px; border-radius: 12px;
+      background: rgba(255,255,255,.95); box-shadow: 0 4px 16px rgba(0,0,0,.12); font-size: 15px; font-weight: 600; color: #059669;
+      pointer-events: none; opacity: 0; transition: opacity .2s; }
+    .stroke-practice-toast.show { opacity: 1; }
+    #strokePracticePanel.is-shaking { animation: stroke-panel-shake 220ms ease-in-out; }
+    @keyframes stroke-panel-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
   `;
   document.head.appendChild(st);
 }
@@ -213,7 +221,8 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
           </div>
         </div>
 
-        <div id="strokePracticePanel">
+        <div id="strokePracticePanel" class="relative">
+          <div id="strokePracticeToast" class="stroke-practice-toast" aria-live="polite"></div>
           ${panelTitle(practiceTitle)}
           <div class="flex items-center gap-2 flex-wrap mb-1 embed-practice-tools">
             <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
@@ -244,6 +253,8 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
   const traceDrawCanvas = targetEl.querySelector("#traceDrawCanvas");
   const writeHint = targetEl.querySelector("#strokeWriteHint");
   const traceBoard = targetEl.querySelector("#traceBoard");
+  const strokePracticePanel = targetEl.querySelector("#strokePracticePanel");
+  const practiceToastEl = targetEl.querySelector("#strokePracticeToast");
   const penColorEl = targetEl.querySelector("#penColor");
   const penWidthEl = targetEl.querySelector("#penWidth");
   const btnClearPractice = targetEl.querySelector("#btnClearPractice");
@@ -455,8 +466,25 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
     }
   });
 
-  // ===== HSK 自动下一字：stroke:complete 后 800ms 切换到下一字 =====
+  // ===== 整字完成提示：先显示 toast，再自动下一字 =====
+  let practiceToastTimer = null;
   let autoNextTimer = null;
+
+  const showCompletionToast = () => {
+    if (!practiceToastEl) return;
+    if (practiceToastTimer) clearTimeout(practiceToastTimer);
+    practiceToastEl.textContent = t("stroke_complete_toast");
+    practiceToastEl.classList.add("show");
+    practiceToastTimer = setTimeout(() => {
+      practiceToastEl.classList.remove("show");
+      practiceToastTimer = null;
+    }, 900);
+  };
+
+  const onStrokeComplete = () => {
+    showCompletionToast();
+  };
+
   const onStrokeNextChar = () => {
     const fromHsk = ctx?.from && String(ctx.from).toLowerCase().includes("hsk");
     if (!fromHsk || !ctx?.wordId) return;
@@ -470,6 +498,8 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
       loadChar(nextChar, { reset: true, speak: true });
     }, 800);
   };
+
+  targetEl.addEventListener("stroke:complete", onStrokeComplete);
   targetEl.addEventListener("stroke:nextchar", onStrokeNextChar);
 
   // ===== top buttons =====
@@ -508,7 +538,9 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
   // ===== cleanup =====
   targetEl._strokeCleanup = () => {
+    if (practiceToastTimer) clearTimeout(practiceToastTimer);
     if (autoNextTimer) clearTimeout(autoNextTimer);
+    try { targetEl.removeEventListener("stroke:complete", onStrokeComplete); } catch {}
     try { targetEl.removeEventListener("stroke:nextchar", onStrokeNextChar); } catch {}
     try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
     try { traceDrawCanvas?.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}

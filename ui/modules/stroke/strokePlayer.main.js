@@ -11,7 +11,7 @@ import {
   setProgress,
 } from "./strokePlayer.canvas.js";
 import { initTraceMode } from "./strokeTrace.js";
-import { playAll, playOne, stop as stopDemo, glowStrokeOnCorrect } from "./strokeDemo.js";
+import { playAll, playOne, stop as stopDemo } from "./strokeDemo.js";
 
 /** =========================
  * One-time styles
@@ -26,7 +26,8 @@ function ensureStyleOnce() {
     .trace-stroke-on   { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
     .trace-stroke-done { stroke: #ff3b30 !important; fill: #ff3b30 !important; opacity: 1 !important; }
 
-    .trace-stroke-glow { filter: drop-shadow(0 0 8px rgba(255,59,48,.7)) !important; stroke: #ff6b5b !important; fill: #ff6b5b !important; }
+    .stroke-viewport.stroke-viewport-glow { animation: stroke-viewport-glow 380ms ease-out; }
+    @keyframes stroke-viewport-glow { 0% { filter: drop-shadow(0 0 12px rgba(255,59,48,.5)); } 100% { filter: none; } }
 
     .trace-num { font-size: 16px; font-weight: 800; fill: rgba(0,0,0,.35); }
     .trace-num-on { fill: #ff3b30 !important; }
@@ -192,7 +193,10 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
         onStrokeCorrect: ({ index }) => {
           doneCount = Math.min(doneCount + 1, strokeEls.length);
-          glowStrokeOnCorrect({ svg: svgEl, strokeEls, index });
+          viewport?.classList.remove("stroke-viewport-glow");
+          void viewport?.offsetWidth;
+          viewport?.classList.add("stroke-viewport-glow");
+          setTimeout(() => viewport?.classList.remove("stroke-viewport-glow"), 380);
           refreshProgress();
           if (doneCount >= strokeEls.length) showRedo();
         },
