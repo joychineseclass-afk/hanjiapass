@@ -1,7 +1,8 @@
 {
+  "level": 1,
   "lessons": [
-    { "id": 1, "title": "인사하기 / 打招呼", "subtitle": "첫 만남 인사", "file": "lesson1.json" },
-    { "id": 2, "title": "이름 묻기 / 介绍名字", "subtitle": "이름 말하기", "file": "lesson2.json" },
+    { "no": 1, "id": 1, "title": "인사하기 / 打招呼", "subtitle": "첫 만남 인사", "file": "lesson1.json" },
+    { "no": 2, "id": 2, "title": "이름 묻기 / 介绍名字", "subtitle": "이름 말하기", "file": "lesson2.json" },
     { "id": 3, "title": "국적 / 国家", "subtitle": "어디 사람이에요?", "file": "lesson3.json" },
     { "id": 4, "title": "가족 / 家人", "subtitle": "우리 가족 소개", "file": "lesson4.json" },
     { "id": 5, "title": "숫자 1 / 数字①", "subtitle": "0–10", "file": "lesson5.json" },

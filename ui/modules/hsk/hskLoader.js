@@ -306,32 +306,12 @@
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
 
+    // ✅ 新结构: data/courses/{ver}/hsk{lv}/lessons.json（不再请求 hsk{lv}.json）
     const url =
       (window.DATA_PATHS &&
         window.DATA_PATHS.lessonsUrl &&
         window.DATA_PATHS.lessonsUrl(lv, { version })) ||
       lessonsUrl(lv, version);
-   
-    // try index file first (respect BASE for subpath deploy)
-    const idxUrl =
-      (window.DATA_PATHS?.lessonsIndexUrl?.(lv, { version })) ||
-      withBase(`data/courses/${version}/hsk${lv}.json`);
-    try {
-      const r = await fetch(idxUrl);
-      if (r.ok) {
-    const index = await r.json();
-    // normalize to your current lesson shape
-    return index.map(it => ({
-      lessonNo: it.lessonNo ?? it.lesson ?? it.id,
-      lesson: it.lessonNo ?? it.lesson ?? it.id,
-      id: it.lessonNo ?? it.lesson ?? it.id,
-      file: it.file,
-      title: it.title,              // {ko,zh}
-      pinyinTitle: it.pinyinTitle || it.pinyin || ""
-    }));
-  }
-} catch {}
-// fallback: keep your old logic
 
     const memKey = `lessons:${version}:${lv}:${url}`;
     const cached = memGet(memKey);
@@ -344,7 +324,7 @@
 
     const normalized = lessons.map((l, i) => {
       const lessonNo = normalizeLessonNo(l, i);
-      const file = l.file || l.path || l.filename || "";
+      const file = l.file || l.path || l.filename || `lesson${lessonNo}.json`;
 
       return {
         ...l,

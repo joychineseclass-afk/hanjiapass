@@ -26,7 +26,7 @@ function withBase(relativePath) {
 
 function buildIndexUrl(track, level) {
   const lv = Number(level) || 1;
-  return withBase(`data/courses/${track}/hsk${lv}.json`);
+  return withBase(`data/courses/${track}/hsk${lv}/lessons.json`);
 }
 
 function buildLessonFileUrl(track, level, lessonNo) {

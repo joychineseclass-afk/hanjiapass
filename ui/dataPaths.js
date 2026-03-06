@@ -74,12 +74,12 @@
     return url;
   }
 
-  /** 课程序列索引文件 hsk{N}.json */
+  /** 课程序列索引文件 hsk{N}/lessons.json（新结构） */
   function lessonsIndexUrl(level, opts) {
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
-    const url = withVersion(getDataRoot() + `data/courses/${ver}/hsk${lv}.json`);
+    const url = withVersion(getDataRoot() + `data/courses/${ver}/hsk${lv}/lessons.json`);
     if (DEBUG) console.log("[PATH] lessonsIndexUrl", url);
     return url;
   }
