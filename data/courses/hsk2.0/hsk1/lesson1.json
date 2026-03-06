@@ -1,23 +1,99 @@
 {
-  "lesson": 1,
+  "id": "hsk2.0_hsk1_lesson1",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": "打招呼",
-  "topic": "见面问候与基本寒暄",
-  "words": [
-    { "hanzi": "好", "pinyin": "hǎo", "ko": "좋다", "en": "good" },
-    { "hanzi": "很", "pinyin": "hěn", "ko": "매우", "en": "very" },
-    { "hanzi": "吗", "pinyin": "ma", "ko": "의문 조사", "en": "question particle" },
-    { "hanzi": "你", "pinyin": "nǐ", "ko": "너 / 당신", "en": "you" },
-    { "hanzi": "我", "pinyin": "wǒ", "ko": "나 / 저", "en": "I / me" },
-    { "hanzi": "谢谢", "pinyin": "xièxie", "ko": "감사합니다", "en": "thank you" }
+  "lessonNo": 1,
+  "type": "lesson",
+  "title": {
+    "zh": "打招呼",
+    "pinyin": "dǎ zhāohu",
+    "kr": "인사하기",
+    "en": "Greetings"
+  },
+  "summary": {
+    "zh": "见面问候与基本寒暄",
+    "kr": "첫 만남 인사",
+    "en": "First meeting greetings"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "好",
+      "pinyin": "hǎo",
+      "meaning": {
+        "zh": "好",
+        "kr": "좋다",
+        "en": "good"
+      }
+    },
+    {
+      "hanzi": "很",
+      "pinyin": "hěn",
+      "meaning": {
+        "zh": "很",
+        "kr": "매우",
+        "en": "very"
+      }
+    },
+    {
+      "hanzi": "吗",
+      "pinyin": "ma",
+      "meaning": {
+        "zh": "吗",
+        "kr": "의문 조사",
+        "en": "question particle"
+      }
+    },
+    {
+      "hanzi": "你",
+      "pinyin": "nǐ",
+      "meaning": {
+        "zh": "你",
+        "kr": "너/당신",
+        "en": "you"
+      }
+    },
+    {
+      "hanzi": "我",
+      "pinyin": "wǒ",
+      "meaning": {
+        "zh": "我",
+        "kr": "나/저",
+        "en": "I/me"
+      }
+    },
+    {
+      "hanzi": "谢谢",
+      "pinyin": "xièxie",
+      "meaning": {
+        "zh": "谢谢",
+        "kr": "감사합니다",
+        "en": "thank you"
+      }
+    }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你好！" },
-    { "speaker": "B", "line": "你好！" },
-    { "speaker": "A", "line": "你好吗？" },
-    { "speaker": "B", "line": "我很好，谢谢！" },
-    { "speaker": "A", "line": "我也很好。" }
+    {
+      "speaker": "A",
+      "line": "你好！"
+    },
+    {
+      "speaker": "B",
+      "line": "你好！"
+    },
+    {
+      "speaker": "A",
+      "line": "你好吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "我很好，谢谢！"
+    },
+    {
+      "speaker": "A",
+      "line": "我也很好。"
+    }
   ],
   "grammar": [
     {
@@ -37,12 +113,19 @@
     {
       "type": "choice",
       "question": "你好吗？",
-      "options": ["你好", "我很好", "谢谢"],
+      "options": [
+        "你好",
+        "我很好",
+        "谢谢"
+      ],
       "answer": "我很好"
     },
     {
       "type": "reorder",
-      "question": ["很好", "我"],
+      "question": [
+        "很好",
+        "我"
+      ],
       "answer": "我很好"
     },
     {
@@ -50,12 +133,55 @@
       "prompt": "和同学练习打招呼：你好！你好吗？我很好。"
     }
   ],
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "你好",
       "你好吗",
       "我很好"
     ],
-    "chat_prompt": "AI先说：你好！学生回答，然后继续对话。"
-  }
+    "chatPrompt": "AI先说：你好！学生回答，然后继续对话。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

@@ -1,0 +1,22 @@
+{
+  "id": "hsk2.0_hsk1_lesson21",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 21,
+  "type": "review",
+  "title": { "zh": "复习 1", "pinyin": "fùxí 1", "kr": "복습 1", "en": "Review 1" },
+  "summary": { "zh": "1–10课综合复习", "kr": "1–10과 종합 복습", "en": "Review 1–10" },
+  "objectives": [],
+  "vocab": [],
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "review": { "lessonRange": [1, 10], "focusAreas": ["vocab", "dialogue", "grammar"] },
+  "aiPractice": {},
+  "steps": [
+    { "key": "review", "label": { "zh": "复习", "kr": "복습", "en": "Review" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+  ]
+}

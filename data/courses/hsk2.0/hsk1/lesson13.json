@@ -1,15 +1,103 @@
 {
-  "lesson": 13,
+  "id": "hsk2.0_hsk1_lesson13",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "去哪里", "kr": "어디에 가요?" },
-  "topic": { "zh": "询问和表达去的地方", "kr": "가는 장소 묻고 말하기" },
-  "words": ["去", "来", "在", "这", "那", "哪", "哪儿"],
+  "lessonNo": 13,
+  "type": "lesson",
+  "title": {
+    "zh": "去哪里",
+    "pinyin": "",
+    "kr": "어디에 가요?",
+    "en": "Hobbies"
+  },
+  "summary": {
+    "zh": "询问和表达去的地方",
+    "kr": "가는 장소 묻고 말하기"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "去",
+      "pinyin": "",
+      "meaning": {
+        "zh": "去",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "来",
+      "pinyin": "",
+      "meaning": {
+        "zh": "来",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "在",
+      "pinyin": "",
+      "meaning": {
+        "zh": "在",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "这",
+      "pinyin": "",
+      "meaning": {
+        "zh": "这",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "那",
+      "pinyin": "",
+      "meaning": {
+        "zh": "那",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "哪",
+      "pinyin": "",
+      "meaning": {
+        "zh": "哪",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "哪儿",
+      "pinyin": "",
+      "meaning": {
+        "zh": "哪儿",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你去哪儿？" },
-    { "speaker": "B", "line": "我去学校。" },
-    { "speaker": "A", "line": "他在哪儿？" },
-    { "speaker": "B", "line": "他在这儿。" }
+    {
+      "speaker": "A",
+      "line": "你去哪儿？"
+    },
+    {
+      "speaker": "B",
+      "line": "我去学校。"
+    },
+    {
+      "speaker": "A",
+      "line": "他在哪儿？"
+    },
+    {
+      "speaker": "B",
+      "line": "他在这儿。"
+    }
   ],
   "grammar": [
     {
@@ -20,10 +108,65 @@
     }
   ],
   "practice": [
-    { "type": "choice", "question": "你去哪儿？", "options": ["我很好", "我去商店", "谢谢"], "answer": "我去商店" }
+    {
+      "type": "choice",
+      "question": "你去哪儿？",
+      "options": [
+        "我很好",
+        "我去商店",
+        "谢谢"
+      ],
+      "answer": "我去商店"
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["我去学校", "他在哪儿"],
-    "chat_prompt": "AI问你去哪儿，学生回答。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "我去学校",
+      "他在哪儿"
+    ],
+    "chatPrompt": "AI问你去哪儿，学生回答。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

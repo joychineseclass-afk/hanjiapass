@@ -1,14 +1,165 @@
 {
-  "lesson": 11,
-  "title": { "zh": "吃和喝", "kr": "먹고 마시기" },
-  "words": ["吃", "喝", "水", "茶", "米饭", "苹果", "菜"],
+  "id": "hsk2.0_hsk1_lesson11",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 11,
+  "type": "lesson",
+  "title": {
+    "zh": "吃和喝",
+    "pinyin": "",
+    "kr": "먹고 마시기",
+    "en": "School"
+  },
+  "summary": {
+    "zh": "",
+    "kr": "",
+    "en": ""
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "吃",
+      "pinyin": "",
+      "meaning": {
+        "zh": "吃",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "喝",
+      "pinyin": "",
+      "meaning": {
+        "zh": "喝",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "水",
+      "pinyin": "",
+      "meaning": {
+        "zh": "水",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "茶",
+      "pinyin": "",
+      "meaning": {
+        "zh": "茶",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "米饭",
+      "pinyin": "",
+      "meaning": {
+        "zh": "米饭",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "苹果",
+      "pinyin": "",
+      "meaning": {
+        "zh": "苹果",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "菜",
+      "pinyin": "",
+      "meaning": {
+        "zh": "菜",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你吃什么？" },
-    { "speaker": "B", "line": "我吃米饭。" }
+    {
+      "speaker": "A",
+      "line": "你吃什么？"
+    },
+    {
+      "speaker": "B",
+      "line": "我吃米饭。"
+    }
   ],
   "grammar": [
-    { "title": "动词+宾语", "explanation_zh": "动词后面接吃的东西。", "explanation_kr": "동사 뒤에 목적어가 옵니다.", "example": "吃苹果" }
+    {
+      "title": "动词+宾语",
+      "explanation_zh": "动词后面接吃的东西。",
+      "explanation_kr": "동사 뒤에 목적어가 옵니다.",
+      "example": "吃苹果"
+    }
   ],
-  "practice": [{ "type": "choice", "question": "你喝什么？", "options": ["水", "书", "老师"], "answer": "水" }],
-  "ai_interaction": { "speaking": ["吃苹果", "喝水"], "chat_prompt": "AI问想吃什么。" }
+  "practice": [
+    {
+      "type": "choice",
+      "question": "你喝什么？",
+      "options": [
+        "水",
+        "书",
+        "老师"
+      ],
+      "answer": "水"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "吃苹果",
+      "喝水"
+    ],
+    "chatPrompt": "AI问想吃什么。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

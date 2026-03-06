@@ -1,14 +1,159 @@
 {
-  "lesson": 12,
-  "title": { "zh": "在饭店", "kr": "식당에서" },
-  "words": ["饭店", "商店", "买", "钱", "块", "东西", "水果"],
+  "id": "hsk2.0_hsk1_lesson12",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 12,
+  "type": "lesson",
+  "title": {
+    "zh": "在饭店",
+    "pinyin": "",
+    "kr": "식당에서",
+    "en": "Work"
+  },
+  "summary": {
+    "zh": "",
+    "kr": "",
+    "en": ""
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "饭店",
+      "pinyin": "",
+      "meaning": {
+        "zh": "饭店",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "商店",
+      "pinyin": "",
+      "meaning": {
+        "zh": "商店",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "买",
+      "pinyin": "",
+      "meaning": {
+        "zh": "买",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "钱",
+      "pinyin": "",
+      "meaning": {
+        "zh": "钱",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "块",
+      "pinyin": "",
+      "meaning": {
+        "zh": "块",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "东西",
+      "pinyin": "",
+      "meaning": {
+        "zh": "东西",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "水果",
+      "pinyin": "",
+      "meaning": {
+        "zh": "水果",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "这个多少钱？" },
-    { "speaker": "B", "line": "十块钱。" }
+    {
+      "speaker": "A",
+      "line": "这个多少钱？"
+    },
+    {
+      "speaker": "B",
+      "line": "十块钱。"
+    }
   ],
   "grammar": [
-    { "title": "多少钱", "explanation_zh": "询问价格用“多少钱”。", "explanation_kr": "가격을 물을 때 '多少钱'를 사용합니다.", "example": "这个多少钱？" }
+    {
+      "title": "多少钱",
+      "explanation_zh": "询问价格用“多少钱”。",
+      "explanation_kr": "가격을 물을 때 '多少钱'를 사용합니다.",
+      "example": "这个多少钱？"
+    }
   ],
-  "practice": [{ "type": "math", "question": "五块+五块", "answer": "十块" }],
-  "ai_interaction": { "speaking": ["十块钱"], "chat_prompt": "AI卖水果，学生买。" }
+  "practice": [
+    {
+      "type": "math",
+      "question": "五块+五块",
+      "answer": "十块"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "十块钱"
+    ],
+    "chatPrompt": "AI卖水果，学生买。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

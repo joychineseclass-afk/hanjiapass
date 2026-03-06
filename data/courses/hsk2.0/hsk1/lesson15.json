@@ -1,13 +1,86 @@
 {
-  "lesson": 15,
+  "id": "hsk2.0_hsk1_lesson15",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "喜欢做什么", "kr": "무엇을 좋아해요?" },
-  "topic": { "zh": "表达兴趣爱好", "kr": "취미 표현" },
-  "words": ["喜欢", "想", "看", "听", "说", "读"],
+  "lessonNo": 15,
+  "type": "lesson",
+  "title": {
+    "zh": "喜欢做什么",
+    "pinyin": "",
+    "kr": "무엇을 좋아해요?",
+    "en": "Drinks"
+  },
+  "summary": {
+    "zh": "表达兴趣爱好",
+    "kr": "취미 표현"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "喜欢",
+      "pinyin": "",
+      "meaning": {
+        "zh": "喜欢",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "想",
+      "pinyin": "",
+      "meaning": {
+        "zh": "想",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "看",
+      "pinyin": "",
+      "meaning": {
+        "zh": "看",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "听",
+      "pinyin": "",
+      "meaning": {
+        "zh": "听",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "说",
+      "pinyin": "",
+      "meaning": {
+        "zh": "说",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "读",
+      "pinyin": "",
+      "meaning": {
+        "zh": "读",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你喜欢做什么？" },
-    { "speaker": "B", "line": "我喜欢看电影。" }
+    {
+      "speaker": "A",
+      "line": "你喜欢做什么？"
+    },
+    {
+      "speaker": "B",
+      "line": "我喜欢看电影。"
+    }
   ],
   "grammar": [
     {
@@ -18,10 +91,64 @@
     }
   ],
   "practice": [
-    { "type": "choice", "question": "你喜欢什么？", "options": ["我喜欢苹果", "谢谢", "再见"], "answer": "我喜欢苹果" }
+    {
+      "type": "choice",
+      "question": "你喜欢什么？",
+      "options": [
+        "我喜欢苹果",
+        "谢谢",
+        "再见"
+      ],
+      "answer": "我喜欢苹果"
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["我喜欢看书"],
-    "chat_prompt": "AI问兴趣爱好。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "我喜欢看书"
+    ],
+    "chatPrompt": "AI问兴趣爱好。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

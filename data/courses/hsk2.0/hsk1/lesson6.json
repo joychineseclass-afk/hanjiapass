@@ -1,28 +1,103 @@
 {
-  "lesson": 6,
+  "id": "hsk2.0_hsk1_lesson6",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "人物关系", "kr": "사람 관계" },
-  "topic": { "zh": "介绍身边的人和关系", "kr": "주변 사람과 관계 소개" },
-
-  "words": [
-    "朋友",
-    "老师",
-    "医生",
-    "先生",
-    "小姐",
-    "同学"
+  "lessonNo": 6,
+  "type": "lesson",
+  "title": {
+    "zh": "人物关系",
+    "pinyin": "",
+    "kr": "사람 관계",
+    "en": "Numbers 2"
+  },
+  "summary": {
+    "zh": "介绍身边的人和关系",
+    "kr": "주변 사람과 관계 소개"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "朋友",
+      "pinyin": "",
+      "meaning": {
+        "zh": "朋友",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "老师",
+      "pinyin": "",
+      "meaning": {
+        "zh": "老师",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "医生",
+      "pinyin": "",
+      "meaning": {
+        "zh": "医生",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "先生",
+      "pinyin": "",
+      "meaning": {
+        "zh": "先生",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "小姐",
+      "pinyin": "",
+      "meaning": {
+        "zh": "小姐",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "同学",
+      "pinyin": "",
+      "meaning": {
+        "zh": "同学",
+        "kr": "",
+        "en": ""
+      }
+    }
   ],
-
   "dialogue": [
-    { "speaker": "A", "line": "他是谁？" },
-    { "speaker": "B", "line": "他是我的朋友。" },
-    { "speaker": "A", "line": "她是老师吗？" },
-    { "speaker": "B", "line": "是，她是老师。" },
-    { "speaker": "A", "line": "他是医生吗？" },
-    { "speaker": "B", "line": "不是，他是同学。" }
+    {
+      "speaker": "A",
+      "line": "他是谁？"
+    },
+    {
+      "speaker": "B",
+      "line": "他是我的朋友。"
+    },
+    {
+      "speaker": "A",
+      "line": "她是老师吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "是，她是老师。"
+    },
+    {
+      "speaker": "A",
+      "line": "他是医生吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "不是，他是同学。"
+    }
   ],
-
   "grammar": [
     {
       "title": "是 — 判断句（身份职业）",
@@ -37,20 +112,32 @@
       "example": "她是老师吗？"
     }
   ],
-
   "practice": [
     {
       "type": "choice",
       "question": "他是医生吗？（他是学生）",
-      "options": ["是", "不是", "谢谢"],
+      "options": [
+        "是",
+        "不是",
+        "谢谢"
+      ],
       "answer": "不是"
     },
     {
       "type": "match",
       "pairs": [
-        ["老师", "선생님"],
-        ["医生", "의사"],
-        ["同学", "학교 친구"]
+        [
+          "老师",
+          "선생님"
+        ],
+        [
+          "医生",
+          "의사"
+        ],
+        [
+          "同学",
+          "학교 친구"
+        ]
       ]
     },
     {
@@ -58,13 +145,55 @@
       "prompt": "介绍你的朋友和老师：他是谁？她是谁？"
     }
   ],
-
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "他是我的朋友",
       "她是老师",
       "他不是医生"
     ],
-    "chat_prompt": "AI展示人物职业图片，学生回答：他是老师吗？她是谁？"
-  }
+    "chatPrompt": "AI展示人物职业图片，学生回答：他是老师吗？她是谁？"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

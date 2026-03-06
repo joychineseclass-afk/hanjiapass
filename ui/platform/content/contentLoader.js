@@ -2,8 +2,10 @@
 // Content Layer 统一入口：loadCourse / loadStroke / loadHanja / loadClassroom
 // 兼容 DATA_PATHS、HSK_LOADER，不改动现有 loader 实现
 // Path format: data/courses/{ver}/hsk{lv}/lessons.json | lesson{no}.json
+// 字段统一：vocab 为主，words 兼容映射；steps 为对象数组
 
 import { ensureHSKDeps } from "../../modules/hsk/hskDeps.js";
+import { normalizeSteps } from "../../core/lessonSteps.js";
 
 const MEM = new Map();
 const MEM_TTL = 1000 * 60 * 30;
@@ -70,34 +72,62 @@ function normalizeTrack(track) {
 }
 
 function legacyHskToLessonDoc(raw, { track, level, lessonNo, file }) {
-  const id = `hsk|${track}|lv${level}|lesson${lessonNo}`;
+  const id = raw?.id || `hsk|${track}|lv${level}|lesson${lessonNo}`;
+  // vocab 为主，words 兼容
+  const vocabSource = Array.isArray(raw?.vocab) ? raw.vocab : (Array.isArray(raw?.words) ? raw.words : []);
+  const vocab = vocabSource.map((w) => {
+    if (typeof w === "string") return { hanzi: w };
+    const m = w?.meaning;
+    return {
+      hanzi: w?.hanzi || w?.word || "",
+      pinyin: w?.pinyin || "",
+      ko: w?.ko || w?.kr || (m && (m.ko || m.kr)),
+      en: w?.en || (m && m.en),
+      meaning: w?.meaning,
+    };
+  });
+  const titleObj = raw?.title;
+  const titleZh = typeof titleObj === "object" ? (titleObj?.zh || titleObj?.cn) : (typeof titleObj === "string" ? titleObj : "");
+  const titleKo = typeof titleObj === "object" ? (titleObj?.kr || titleObj?.ko) : "";
+  const topicObj = raw?.topic;
+  const topicZh = typeof topicObj === "object" ? (topicObj?.zh || topicObj?.cn) : (typeof topicObj === "string" ? topicObj : "");
+  const topicKo = typeof topicObj === "object" ? (topicObj?.kr || topicObj?.ko) : "";
+  const grammarSource = Array.isArray(raw?.grammar) ? raw.grammar : [];
+  const grammar = grammarSource.map((g) => {
+    const t = g?.title;
+    const titleStr = typeof t === "object" ? (t?.zh || t?.cn || t?.ko || t?.kr) : (typeof t === "string" ? t : "");
+    return {
+      title: { zh: titleStr, ko: typeof t === "object" ? (t?.kr || t?.ko) : "" },
+      explain: { zh: g?.explanation_zh || "", ko: g?.explanation_kr || "" },
+      examples: g?.example ? [g.example] : (Array.isArray(g?.examples) ? g.examples : []),
+    };
+  });
+  const aiSrc = raw?.aiPractice || raw?.ai_interaction;
+  const isReview = raw?.type === "review";
+  const steps = normalizeSteps(raw?.steps, isReview);
+
   return {
     schemaVersion: "lesson.v1",
     id,
     course: { type: "hsk", track, level, lessonNo, tags: [] },
+    steps,
     i18n: {
-      title: { zh: raw?.title || "", ko: "" },
-      topic: { zh: raw?.topic || "", ko: "" },
+      title: { zh: titleZh, ko: titleKo },
+      topic: { zh: topicZh, ko: topicKo },
     },
     content: {
-      words: Array.isArray(raw?.words)
-        ? raw.words.map((w) => ({ hanzi: typeof w === "string" ? w : w?.hanzi || w?.word || "" }))
-        : [],
+      vocab,
+      words: vocab, // compat
       dialogue: Array.isArray(raw?.dialogue) ? raw.dialogue : [],
-      grammar: Array.isArray(raw?.grammar)
-        ? raw.grammar.map((g) => ({
-            title: { zh: g?.title || "", ko: "" },
-            explain: { zh: g?.explanation_zh || "", ko: g?.explanation_kr || "" },
-            examples: g?.example ? [g.example] : [],
-          }))
-        : [],
+      grammar,
       practice: Array.isArray(raw?.practice) ? raw.practice : [],
+      review: raw?.review || {},
     },
     ai: {
-      speakingPhrases: raw?.ai_interaction?.speaking || [],
-      coachHint: raw?.ai_interaction?.chat_prompt || "",
+      speakingPhrases: Array.isArray(aiSrc?.speaking) ? aiSrc.speaking : [],
+      coachHint: aiSrc?.chatPrompt || aiSrc?.chat_prompt || "",
     },
-    source: { kind: "legacy-hsk", legacyFile: file || "" },
+    source: { kind: isReview ? "review" : "legacy-hsk", legacyFile: file || "" },
   };
 }
 

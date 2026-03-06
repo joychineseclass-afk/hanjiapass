@@ -1,13 +1,95 @@
 {
-  "lesson": 14,
+  "id": "hsk2.0_hsk1_lesson14",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "常见地点", "kr": "자주 가는 장소" },
-  "topic": { "zh": "生活中常见的地方", "kr": "생활 속 장소" },
-  "words": ["学校", "医院", "北京", "中国", "里", "前面", "后面"],
+  "lessonNo": 14,
+  "type": "lesson",
+  "title": {
+    "zh": "常见地点",
+    "pinyin": "",
+    "kr": "자주 가는 장소",
+    "en": "Eating"
+  },
+  "summary": {
+    "zh": "生活中常见的地方",
+    "kr": "생활 속 장소"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "学校",
+      "pinyin": "",
+      "meaning": {
+        "zh": "学校",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "医院",
+      "pinyin": "",
+      "meaning": {
+        "zh": "医院",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "北京",
+      "pinyin": "",
+      "meaning": {
+        "zh": "北京",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "中国",
+      "pinyin": "",
+      "meaning": {
+        "zh": "中国",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "里",
+      "pinyin": "",
+      "meaning": {
+        "zh": "里",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "前面",
+      "pinyin": "",
+      "meaning": {
+        "zh": "前面",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "后面",
+      "pinyin": "",
+      "meaning": {
+        "zh": "后面",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "学校在哪儿？" },
-    { "speaker": "B", "line": "在前面。" }
+    {
+      "speaker": "A",
+      "line": "学校在哪儿？"
+    },
+    {
+      "speaker": "B",
+      "line": "在前面。"
+    }
   ],
   "grammar": [
     {
@@ -18,10 +100,72 @@
     }
   ],
   "practice": [
-    { "type": "match", "pairs": [["前面", "앞"], ["后面", "뒤"], ["里", "안"]] }
+    {
+      "type": "match",
+      "pairs": [
+        [
+          "前面",
+          "앞"
+        ],
+        [
+          "后面",
+          "뒤"
+        ],
+        [
+          "里",
+          "안"
+        ]
+      ]
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["在前面", "在里面"],
-    "chat_prompt": "AI问地点位置。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "在前面",
+      "在里面"
+    ],
+    "chatPrompt": "AI问地点位置。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

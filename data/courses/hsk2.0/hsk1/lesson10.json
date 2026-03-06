@@ -1,14 +1,151 @@
 {
-  "lesson": 10,
-  "title": { "zh": "时间表达", "kr": "시간 표현" },
-  "words": ["点", "分钟", "号", "月", "星期", "中午"],
+  "id": "hsk2.0_hsk1_lesson10",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 10,
+  "type": "lesson",
+  "title": {
+    "zh": "时间表达",
+    "pinyin": "",
+    "kr": "시간 표현",
+    "en": "Weekdays"
+  },
+  "summary": {
+    "zh": "",
+    "kr": "",
+    "en": ""
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "点",
+      "pinyin": "",
+      "meaning": {
+        "zh": "点",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "分钟",
+      "pinyin": "",
+      "meaning": {
+        "zh": "分钟",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "号",
+      "pinyin": "",
+      "meaning": {
+        "zh": "号",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "月",
+      "pinyin": "",
+      "meaning": {
+        "zh": "月",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "星期",
+      "pinyin": "",
+      "meaning": {
+        "zh": "星期",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "中午",
+      "pinyin": "",
+      "meaning": {
+        "zh": "中午",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "现在几点？" },
-    { "speaker": "B", "line": "三点。" }
+    {
+      "speaker": "A",
+      "line": "现在几点？"
+    },
+    {
+      "speaker": "B",
+      "line": "三点。"
+    }
   ],
   "grammar": [
-    { "title": "点钟表达", "explanation_zh": "时间表达用“点”。", "explanation_kr": "시간은 '点'으로 표현합니다.", "example": "三点" }
+    {
+      "title": "点钟表达",
+      "explanation_zh": "时间表达用“点”。",
+      "explanation_kr": "시간은 '点'으로 표현합니다.",
+      "example": "三点"
+    }
   ],
-  "practice": [{ "type": "time", "question": "看表说时间", "answer": "三点" }],
-  "ai_interaction": { "speaking": ["三点", "五点"], "chat_prompt": "AI问时间。" }
+  "practice": [
+    {
+      "type": "time",
+      "question": "看表说时间",
+      "answer": "三点"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "三点",
+      "五点"
+    ],
+    "chatPrompt": "AI问时间。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

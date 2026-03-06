@@ -1,13 +1,95 @@
 {
-  "lesson": 16,
+  "id": "hsk2.0_hsk1_lesson16",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "形容词", "kr": "형용사 표현" },
-  "topic": { "zh": "描述事物特征", "kr": "사물 묘사" },
-  "words": ["大", "小", "多", "少", "热", "冷", "漂亮"],
+  "lessonNo": 16,
+  "type": "lesson",
+  "title": {
+    "zh": "形容词",
+    "pinyin": "",
+    "kr": "형용사 표현",
+    "en": "Location"
+  },
+  "summary": {
+    "zh": "描述事物特征",
+    "kr": "사물 묘사"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "大",
+      "pinyin": "",
+      "meaning": {
+        "zh": "大",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "小",
+      "pinyin": "",
+      "meaning": {
+        "zh": "小",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "多",
+      "pinyin": "",
+      "meaning": {
+        "zh": "多",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "少",
+      "pinyin": "",
+      "meaning": {
+        "zh": "少",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "热",
+      "pinyin": "",
+      "meaning": {
+        "zh": "热",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "冷",
+      "pinyin": "",
+      "meaning": {
+        "zh": "冷",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "漂亮",
+      "pinyin": "",
+      "meaning": {
+        "zh": "漂亮",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "这个苹果大吗？" },
-    { "speaker": "B", "line": "不大，很小。" }
+    {
+      "speaker": "A",
+      "line": "这个苹果大吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "不大，很小。"
+    }
   ],
   "grammar": [
     {
@@ -18,10 +100,68 @@
     }
   ],
   "practice": [
-    { "type": "match", "pairs": [["大", "크다"], ["小", "작다"]] }
+    {
+      "type": "match",
+      "pairs": [
+        [
+          "大",
+          "크다"
+        ],
+        [
+          "小",
+          "작다"
+        ]
+      ]
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["很大", "很漂亮"],
-    "chat_prompt": "AI描述图片，学生回答。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "很大",
+      "很漂亮"
+    ],
+    "chatPrompt": "AI描述图片，学生回答。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

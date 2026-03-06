@@ -1,13 +1,95 @@
 {
-  "lesson": 8,
+  "id": "hsk2.0_hsk1_lesson8",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "数字（二）", "kr": "숫자 ②" },
-  "topic": { "zh": "8–10和年龄", "kr": "8–10과 나이" },
-  "words": ["八", "九", "十", "几", "多少", "岁", "年"],
+  "lessonNo": 8,
+  "type": "lesson",
+  "title": {
+    "zh": "数字（二）",
+    "pinyin": "",
+    "kr": "숫자 ②",
+    "en": "Dates"
+  },
+  "summary": {
+    "zh": "8–10和年龄",
+    "kr": "8–10과 나이"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "八",
+      "pinyin": "",
+      "meaning": {
+        "zh": "八",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "九",
+      "pinyin": "",
+      "meaning": {
+        "zh": "九",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "十",
+      "pinyin": "",
+      "meaning": {
+        "zh": "十",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "几",
+      "pinyin": "",
+      "meaning": {
+        "zh": "几",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "多少",
+      "pinyin": "",
+      "meaning": {
+        "zh": "多少",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "岁",
+      "pinyin": "",
+      "meaning": {
+        "zh": "岁",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "年",
+      "pinyin": "",
+      "meaning": {
+        "zh": "年",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你几岁？" },
-    { "speaker": "B", "line": "我十岁。" }
+    {
+      "speaker": "A",
+      "line": "你几岁？"
+    },
+    {
+      "speaker": "B",
+      "line": "我十岁。"
+    }
   ],
   "grammar": [
     {
@@ -18,10 +100,66 @@
     }
   ],
   "practice": [
-    { "type": "choice", "question": "你几岁？", "options": ["我很好", "我九岁", "谢谢"], "answer": "我九岁" }
+    {
+      "type": "choice",
+      "question": "你几岁？",
+      "options": [
+        "我很好",
+        "我九岁",
+        "谢谢"
+      ],
+      "answer": "我九岁"
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["八", "九", "十"],
-    "chat_prompt": "AI问年龄，学生回答。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "八",
+      "九",
+      "十"
+    ],
+    "chatPrompt": "AI问年龄，学生回答。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

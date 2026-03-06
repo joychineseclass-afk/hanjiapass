@@ -1,17 +1,154 @@
 {
-  "lesson": 20,
+  "id": "hsk2.0_hsk1_lesson20",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "数量表达", "kr": "수량 표현" },
-  "topic": { "zh": "量词使用", "kr": "양사 사용" },
-  "words": ["个", "本", "些", "怎么", "怎么样", "请"],
+  "lessonNo": 20,
+  "type": "lesson",
+  "title": {
+    "zh": "数量表达",
+    "pinyin": "",
+    "kr": "수량 표현",
+    "en": "Seeing a doctor"
+  },
+  "summary": {
+    "zh": "量词使用",
+    "kr": "양사 사용"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "个",
+      "pinyin": "",
+      "meaning": {
+        "zh": "个",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "本",
+      "pinyin": "",
+      "meaning": {
+        "zh": "本",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "些",
+      "pinyin": "",
+      "meaning": {
+        "zh": "些",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "怎么",
+      "pinyin": "",
+      "meaning": {
+        "zh": "怎么",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "怎么样",
+      "pinyin": "",
+      "meaning": {
+        "zh": "怎么样",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "请",
+      "pinyin": "",
+      "meaning": {
+        "zh": "请",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "这个怎么样？" },
-    { "speaker": "B", "line": "很好！" }
+    {
+      "speaker": "A",
+      "line": "这个怎么样？"
+    },
+    {
+      "speaker": "B",
+      "line": "很好！"
+    }
   ],
   "grammar": [
-    { "title": "量词个", "explanation_zh": "“个”是常用量词。", "explanation_kr": "'个'은 가장 많이 쓰는 양사.", "example": "一个人" }
+    {
+      "title": "量词个",
+      "explanation_zh": "“个”是常用量词。",
+      "explanation_kr": "'个'은 가장 많이 쓰는 양사.",
+      "example": "一个人"
+    }
   ],
-  "practice": [{ "type": "choice", "question": "一个___", "options": ["人", "谢谢", "再见"], "answer": "人" }],
-  "ai_interaction": { "speaking": ["一个苹果"], "chat_prompt": "AI问数量。" }
+  "practice": [
+    {
+      "type": "choice",
+      "question": "一个___",
+      "options": [
+        "人",
+        "谢谢",
+        "再见"
+      ],
+      "answer": "人"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "一个苹果"
+    ],
+    "chatPrompt": "AI问数量。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

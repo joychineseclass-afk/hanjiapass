@@ -28,7 +28,12 @@ window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
     localStorage.getItem("site_lang") ||
     "kr";
 
-  engine.start({ lessonId, lang });
+  engine.start({
+    lessonId,
+    lang,
+    steps: opts.steps,
+    stepKeys: opts.stepKeys,
+  });
   if (step) engine.go(step);
 
   console.log("[joyOpenStep] ok:", { step, lessonId, lang });

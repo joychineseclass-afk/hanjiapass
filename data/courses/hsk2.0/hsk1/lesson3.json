@@ -1,29 +1,112 @@
 {
-  "lesson": 3,
+  "id": "hsk2.0_hsk1_lesson3",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "自我介绍", "kr": "자기소개" },
-  "topic": { "zh": "介绍名字和身份", "kr": "이름과 신분 소개" },
-
-  "words": [
-    "叫",
-    "什么",
-    "名字",
-    "是",
-    "老师",
-    "学生",
-    "朋友"
+  "lessonNo": 3,
+  "type": "lesson",
+  "title": {
+    "zh": "自我介绍",
+    "pinyin": "",
+    "kr": "자기소개",
+    "en": "Countries"
+  },
+  "summary": {
+    "zh": "介绍名字和身份",
+    "kr": "이름과 신분 소개"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "叫",
+      "pinyin": "",
+      "meaning": {
+        "zh": "叫",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "什么",
+      "pinyin": "",
+      "meaning": {
+        "zh": "什么",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "名字",
+      "pinyin": "",
+      "meaning": {
+        "zh": "名字",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "是",
+      "pinyin": "",
+      "meaning": {
+        "zh": "是",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "老师",
+      "pinyin": "",
+      "meaning": {
+        "zh": "老师",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "学生",
+      "pinyin": "",
+      "meaning": {
+        "zh": "学生",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "朋友",
+      "pinyin": "",
+      "meaning": {
+        "zh": "朋友",
+        "kr": "",
+        "en": ""
+      }
+    }
   ],
-
   "dialogue": [
-    { "speaker": "A", "line": "你好！" },
-    { "speaker": "B", "line": "你好！" },
-    { "speaker": "A", "line": "你叫什么名字？" },
-    { "speaker": "B", "line": "我叫李明。" },
-    { "speaker": "A", "line": "你是学生吗？" },
-    { "speaker": "B", "line": "是，我是学生。" }
+    {
+      "speaker": "A",
+      "line": "你好！"
+    },
+    {
+      "speaker": "B",
+      "line": "你好！"
+    },
+    {
+      "speaker": "A",
+      "line": "你叫什么名字？"
+    },
+    {
+      "speaker": "B",
+      "line": "我叫李明。"
+    },
+    {
+      "speaker": "A",
+      "line": "你是学生吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "是，我是学生。"
+    }
   ],
-
   "grammar": [
     {
       "title": "叫 + 名字",
@@ -44,17 +127,24 @@
       "example": "我是学生。"
     }
   ],
-
   "practice": [
     {
       "type": "choice",
       "question": "你叫什么名字？",
-      "options": ["我很好", "我叫小美", "谢谢"],
+      "options": [
+        "我很好",
+        "我叫小美",
+        "谢谢"
+      ],
       "answer": "我叫小美"
     },
     {
       "type": "reorder",
-      "question": ["学生", "是", "我"],
+      "question": [
+        "学生",
+        "是",
+        "我"
+      ],
       "answer": "我是学生"
     },
     {
@@ -62,13 +152,55 @@
       "prompt": "两人一组练习：互相问名字和身份。"
     }
   ],
-
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "你叫什么名字",
       "我叫小明",
       "我是学生"
     ],
-    "chat_prompt": "AI问：你叫什么名字？你是老师吗？学生回答。"
-  }
+    "chatPrompt": "AI问：你叫什么名字？你是老师吗？学生回答。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

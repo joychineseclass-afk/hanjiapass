@@ -1,9 +1,11 @@
 // /ui/core/lessonEngine.js
 // ✅ Lesson Engine v1 (ESM)
-// 目标：统一控制 “单词 → 会话 → 语法 → 练习 → AI” 的流程与切换
-// 不依赖 hsk.js，可被 router / 页面入口调用
+// 目标：统一控制 vocab → dialogue → grammar → practice → aiPractice 的流程
+// step keys: vocab | dialogue | grammar | practice | review | aiPractice
 
-const DEFAULT_STEPS = ["words", "dialogue", "grammar", "practice", "ai"];
+import { DEFAULT_STEPS, stepKeys, stepKey } from "./lessonSteps.js";
+
+const DEFAULT_STEP_KEYS = stepKeys(DEFAULT_STEPS);
 
 function safeJsonParse(s, fallback) {
   try {
@@ -27,8 +29,9 @@ export const LESSON_ENGINE = (() => {
   let state = {
     lessonId: null,
     steps: [...DEFAULT_STEPS],
+    stepKeys: [...DEFAULT_STEP_KEYS],
     stepIndex: 0,
-    completedSteps: {}, // { words:true, dialogue:true ... }
+    completedSteps: {},
     lang: "kr",
   };
 
@@ -73,17 +76,18 @@ export const LESSON_ENGINE = (() => {
     localStorage.setItem(storageKey(state.lessonId), JSON.stringify(state));
   }
 
-  function start({ lessonId, steps, lang } = {}) {
+  function start({ lessonId, steps, stepKeys: sk, lang } = {}) {
     if (!lessonId) throw new Error("LESSON_ENGINE.start requires lessonId");
 
     const saved = load(lessonId);
+    const keys = Array.isArray(sk) && sk.length ? sk : (Array.isArray(steps) && steps.length ? stepKeys(steps) : DEFAULT_STEP_KEYS);
 
     state =
       saved ||
       {
         lessonId,
-        steps:
-          Array.isArray(steps) && steps.length ? steps : [...DEFAULT_STEPS],
+        steps: Array.isArray(steps) && steps.length ? steps : DEFAULT_STEPS,
+        stepKeys: keys,
         stepIndex: 0,
         completedSteps: {},
         lang:
@@ -93,8 +97,10 @@ export const LESSON_ENGINE = (() => {
           "kr",
       };
 
-    // 若外部传入 steps/lang，允许覆盖
     if (Array.isArray(steps) && steps.length) state.steps = steps;
+    if (Array.isArray(sk) && sk.length) state.stepKeys = sk;
+    else if (Array.isArray(steps) && steps.length) state.stepKeys = stepKeys(steps);
+    else if (!state.stepKeys || !state.stepKeys.length) state.stepKeys = stepKeys(state.steps);
     if (lang) state.lang = lang;
 
     save();
@@ -103,11 +109,14 @@ export const LESSON_ENGINE = (() => {
   }
 
   function currentStep() {
-    return state.steps[state.stepIndex] || state.steps[0];
+    const keys = state.stepKeys || stepKeys(state.steps);
+    return keys[state.stepIndex] || keys[0] || "vocab";
   }
 
   function go(stepName) {
-    const idx = state.steps.indexOf(stepName);
+    const k = stepKey(stepName);
+    const keys = state.stepKeys || stepKeys(state.steps);
+    const idx = keys.indexOf(k);
     if (idx < 0) throw new Error(`Unknown step: ${stepName}`);
     state.stepIndex = idx;
     save();
@@ -146,6 +155,7 @@ export const LESSON_ENGINE = (() => {
     state = {
       lessonId,
       steps: [...DEFAULT_STEPS],
+      stepKeys: [...DEFAULT_STEP_KEYS],
       stepIndex: 0,
       completedSteps: {},
       lang:

@@ -1,17 +1,163 @@
 {
-  "lesson": 18,
+  "id": "hsk2.0_hsk1_lesson18",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "能力表达", "kr": "능력 표현" },
-  "topic": { "zh": "表达会做的事情", "kr": "할 수 있는 일 말하기" },
-  "words": ["会", "能", "打电话", "回", "上", "下", "出租车"],
+  "lessonNo": 18,
+  "type": "lesson",
+  "title": {
+    "zh": "能力表达",
+    "pinyin": "",
+    "kr": "능력 표현",
+    "en": "Shopping"
+  },
+  "summary": {
+    "zh": "表达会做的事情",
+    "kr": "할 수 있는 일 말하기"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "会",
+      "pinyin": "",
+      "meaning": {
+        "zh": "会",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "能",
+      "pinyin": "",
+      "meaning": {
+        "zh": "能",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "打电话",
+      "pinyin": "",
+      "meaning": {
+        "zh": "打电话",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "回",
+      "pinyin": "",
+      "meaning": {
+        "zh": "回",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "上",
+      "pinyin": "",
+      "meaning": {
+        "zh": "上",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "下",
+      "pinyin": "",
+      "meaning": {
+        "zh": "下",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "出租车",
+      "pinyin": "",
+      "meaning": {
+        "zh": "出租车",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你会说汉语吗？" },
-    { "speaker": "B", "line": "会一点。" }
+    {
+      "speaker": "A",
+      "line": "你会说汉语吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "会一点。"
+    }
   ],
   "grammar": [
-    { "title": "会 vs 能", "explanation_zh": "“会”表示能力，“能”表示条件允许。", "explanation_kr": "'会'는 능력, '能'은 가능 여부.", "example": "我会说汉语。" }
+    {
+      "title": "会 vs 能",
+      "explanation_zh": "“会”表示能力，“能”表示条件允许。",
+      "explanation_kr": "'会'는 능력, '能'은 가능 여부.",
+      "example": "我会说汉语。"
+    }
   ],
-  "practice": [{ "type": "choice", "question": "你会开车吗？", "options": ["会", "谢谢", "苹果"], "answer": "会" }],
-  "ai_interaction": { "speaking": ["我会说汉语"], "chat_prompt": "AI问能力。" }
+  "practice": [
+    {
+      "type": "choice",
+      "question": "你会开车吗？",
+      "options": [
+        "会",
+        "谢谢",
+        "苹果"
+      ],
+      "answer": "会"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "我会说汉语"
+    ],
+    "chatPrompt": "AI问能力。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

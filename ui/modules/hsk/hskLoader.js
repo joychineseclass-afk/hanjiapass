@@ -384,14 +384,25 @@
       { track: version }
     );
 
-    const source = course.raw || course.doc || {};
-    const c = source.content;
+    const source = course.raw || {};
+    const doc = course.doc || {};
+    const c = doc.content;
+    // vocab 为主，words 兼容
+    const vocabArr = Array.isArray(source.vocab) ? source.vocab
+      : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
+    const { normalizeSteps, stepKeys } = await import("/ui/core/lessonSteps.js");
+    const stepsRaw = Array.isArray(source.steps) ? source.steps : (Array.isArray(doc.steps) ? doc.steps : undefined);
+    const steps = normalizeSteps(stepsRaw, source.type === "review");
     const lesson = {
       ...source,
-      words: Array.isArray(source.words) ? source.words : (Array.isArray(c?.words) ? c.words : []),
+      vocab: vocabArr,
+      words: vocabArr, // compat
       dialogue: Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []),
       grammar: Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []),
       practice: Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []),
+      review: source.review || doc.content?.review || {},
+      steps,
+      stepKeys: stepKeys(steps),
     };
 
     memSet(memKey, lesson);

@@ -1,27 +1,104 @@
 {
-  "lesson": 5,
+  "id": "hsk2.0_hsk1_lesson5",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "我的家人", "kr": "우리 가족" },
-  "topic": { "zh": "介绍家庭成员", "kr": "가족 구성원 소개" },
-
-  "words": [
-    "爸爸",
-    "妈妈",
-    "儿子",
-    "女儿",
-    "家",
-    "有",
-    "没"
+  "lessonNo": 5,
+  "type": "lesson",
+  "title": {
+    "zh": "我的家人",
+    "pinyin": "",
+    "kr": "우리 가족",
+    "en": "Numbers 1"
+  },
+  "summary": {
+    "zh": "介绍家庭成员",
+    "kr": "가족 구성원 소개"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "爸爸",
+      "pinyin": "",
+      "meaning": {
+        "zh": "爸爸",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "妈妈",
+      "pinyin": "",
+      "meaning": {
+        "zh": "妈妈",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "儿子",
+      "pinyin": "",
+      "meaning": {
+        "zh": "儿子",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "女儿",
+      "pinyin": "",
+      "meaning": {
+        "zh": "女儿",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "家",
+      "pinyin": "",
+      "meaning": {
+        "zh": "家",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "有",
+      "pinyin": "",
+      "meaning": {
+        "zh": "有",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "没",
+      "pinyin": "",
+      "meaning": {
+        "zh": "没",
+        "kr": "",
+        "en": ""
+      }
+    }
   ],
-
   "dialogue": [
-    { "speaker": "A", "line": "你家有几口人？" },
-    { "speaker": "B", "line": "我家有四口人。" },
-    { "speaker": "A", "line": "有爸爸妈妈吗？" },
-    { "speaker": "B", "line": "有，还有一个儿子。" }
+    {
+      "speaker": "A",
+      "line": "你家有几口人？"
+    },
+    {
+      "speaker": "B",
+      "line": "我家有四口人。"
+    },
+    {
+      "speaker": "A",
+      "line": "有爸爸妈妈吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "有，还有一个儿子。"
+    }
   ],
-
   "grammar": [
     {
       "title": "有 / 没 — 表示存在",
@@ -36,20 +113,32 @@
       "example": "我家有爸爸妈妈。"
     }
   ],
-
   "practice": [
     {
       "type": "choice",
       "question": "你家有几口人？",
-      "options": ["我很好", "我家有三口人", "谢谢"],
+      "options": [
+        "我很好",
+        "我家有三口人",
+        "谢谢"
+      ],
       "answer": "我家有三口人"
     },
     {
       "type": "match",
       "pairs": [
-        ["爸爸", "아빠"],
-        ["妈妈", "엄마"],
-        ["女儿", "딸"]
+        [
+          "爸爸",
+          "아빠"
+        ],
+        [
+          "妈妈",
+          "엄마"
+        ],
+        [
+          "女儿",
+          "딸"
+        ]
       ]
     },
     {
@@ -57,13 +146,55 @@
       "prompt": "介绍你的家庭成员。"
     }
   ],
-
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "我家有四口人",
       "有爸爸妈妈",
       "这是我的儿子"
     ],
-    "chat_prompt": "AI问：你家有几口人？学生介绍自己的家人。"
-  }
+    "chatPrompt": "AI问：你家有几口人？学生介绍自己的家人。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

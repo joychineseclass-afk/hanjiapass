@@ -1,28 +1,103 @@
 {
-  "lesson": 2,
+  "id": "hsk2.0_hsk1_lesson2",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "礼貌用语", "kr": "예절 표현" },
-  "topic": { "zh": "感谢、道歉与道别", "kr": "감사, 사과, 작별 인사" },
-
-  "words": [
-    "对不起",
-    "没关系",
-    "请",
-    "再见",
-    "喂",
-    "高兴"
+  "lessonNo": 2,
+  "type": "lesson",
+  "title": {
+    "zh": "礼貌用语",
+    "pinyin": "",
+    "kr": "예절 표현",
+    "en": "Polite expressions"
+  },
+  "summary": {
+    "zh": "感谢、道歉与道别",
+    "kr": "감사, 사과, 작별 인사"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "对不起",
+      "pinyin": "",
+      "meaning": {
+        "zh": "对不起",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "没关系",
+      "pinyin": "",
+      "meaning": {
+        "zh": "没关系",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "请",
+      "pinyin": "",
+      "meaning": {
+        "zh": "请",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "再见",
+      "pinyin": "",
+      "meaning": {
+        "zh": "再见",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "喂",
+      "pinyin": "",
+      "meaning": {
+        "zh": "喂",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "高兴",
+      "pinyin": "",
+      "meaning": {
+        "zh": "高兴",
+        "kr": "",
+        "en": ""
+      }
+    }
   ],
-
   "dialogue": [
-    { "speaker": "A", "line": "对不起！" },
-    { "speaker": "B", "line": "没关系。" },
-    { "speaker": "A", "line": "谢谢！" },
-    { "speaker": "B", "line": "不客气！" },
-    { "speaker": "A", "line": "再见！" },
-    { "speaker": "B", "line": "再见！" }
+    {
+      "speaker": "A",
+      "line": "对不起！"
+    },
+    {
+      "speaker": "B",
+      "line": "没关系。"
+    },
+    {
+      "speaker": "A",
+      "line": "谢谢！"
+    },
+    {
+      "speaker": "B",
+      "line": "不客气！"
+    },
+    {
+      "speaker": "A",
+      "line": "再见！"
+    },
+    {
+      "speaker": "B",
+      "line": "再见！"
+    }
   ],
-
   "grammar": [
     {
       "title": "礼貌表达：感谢与回应",
@@ -37,20 +112,32 @@
       "example": "对不起，我来晚了。"
     }
   ],
-
   "practice": [
     {
       "type": "choice",
       "question": "别人说“谢谢”，你应该怎么回答？",
-      "options": ["对不起", "没关系", "再见"],
+      "options": [
+        "对不起",
+        "没关系",
+        "再见"
+      ],
       "answer": "没关系"
     },
     {
       "type": "match",
       "pairs": [
-        ["对不起", "道歉"],
-        ["谢谢", "感谢"],
-        ["再见", "告别"]
+        [
+          "对不起",
+          "道歉"
+        ],
+        [
+          "谢谢",
+          "感谢"
+        ],
+        [
+          "再见",
+          "告别"
+        ]
       ]
     },
     {
@@ -58,14 +145,56 @@
       "prompt": "和同学练习：道歉、感谢、道别。"
     }
   ],
-
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "谢谢",
       "对不起",
       "没关系",
       "再见"
     ],
-    "chat_prompt": "AI先说“谢谢”或“对不起”，学生做出合适回应。"
-  }
+    "chatPrompt": "AI先说“谢谢”或“对不起”，学生做出合适回应。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

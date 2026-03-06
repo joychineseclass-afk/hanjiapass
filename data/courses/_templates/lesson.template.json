@@ -1,0 +1,24 @@
+{
+  "id": "hsk2.0_hsk1_lesson1",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 1,
+  "type": "lesson",
+  "title": { "zh": "标题", "pinyin": "biāotí", "kr": "제목", "en": "Title" },
+  "summary": { "zh": "概要", "kr": "요약", "en": "Summary" },
+  "objectives": [],
+  "vocab": [{ "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "en": "good" } }],
+  "dialogue": [{ "speaker": "A", "line": "你好！" }],
+  "grammar": [{ "title": "语法", "explanation_zh": "说明", "explanation_kr": "설명", "example": "例句" }],
+  "practice": [],
+  "review": {},
+  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+  ]
+}

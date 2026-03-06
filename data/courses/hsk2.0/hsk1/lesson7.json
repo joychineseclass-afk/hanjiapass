@@ -1,13 +1,95 @@
 {
-  "lesson": 7,
+  "id": "hsk2.0_hsk1_lesson7",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "数字（一）", "kr": "숫자 ①" },
-  "topic": { "zh": "1–7的数字", "kr": "1–7 숫자" },
-  "words": ["一", "二", "三", "四", "五", "六", "七"],
+  "lessonNo": 7,
+  "type": "lesson",
+  "title": {
+    "zh": "数字（一）",
+    "pinyin": "",
+    "kr": "숫자 ①",
+    "en": "Age"
+  },
+  "summary": {
+    "zh": "1–7的数字",
+    "kr": "1–7 숫자"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "一",
+      "pinyin": "",
+      "meaning": {
+        "zh": "一",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "二",
+      "pinyin": "",
+      "meaning": {
+        "zh": "二",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "三",
+      "pinyin": "",
+      "meaning": {
+        "zh": "三",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "四",
+      "pinyin": "",
+      "meaning": {
+        "zh": "四",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "五",
+      "pinyin": "",
+      "meaning": {
+        "zh": "五",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "六",
+      "pinyin": "",
+      "meaning": {
+        "zh": "六",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "七",
+      "pinyin": "",
+      "meaning": {
+        "zh": "七",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你有几个苹果？" },
-    { "speaker": "B", "line": "我有三个。" }
+    {
+      "speaker": "A",
+      "line": "你有几个苹果？"
+    },
+    {
+      "speaker": "B",
+      "line": "我有三个。"
+    }
   ],
   "grammar": [
     {
@@ -18,10 +100,65 @@
     }
   ],
   "practice": [
-    { "type": "count", "question": "看图说数字（3个）", "answer": "三" }
+    {
+      "type": "count",
+      "question": "看图说数字（3个）",
+      "answer": "三"
+    }
   ],
-  "ai_interaction": {
-    "speaking": ["一", "二", "三", "四", "五", "六", "七"],
-    "chat_prompt": "AI问数量，学生回答数字。"
-  }
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "一",
+      "二",
+      "三",
+      "四",
+      "五",
+      "六",
+      "七"
+    ],
+    "chatPrompt": "AI问数量，学生回答数字。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

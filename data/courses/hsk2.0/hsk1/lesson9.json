@@ -1,14 +1,168 @@
 {
-  "lesson": 9,
-  "title": { "zh": "今天和现在", "kr": "오늘과 지금" },
-  "words": ["今天", "明天", "昨天", "现在", "时候", "上午", "下午"],
+  "id": "hsk2.0_hsk1_lesson9",
+  "courseId": "hsk2.0_hsk1",
+  "level": "HSK1",
+  "version": "2.0",
+  "lessonNo": 9,
+  "type": "lesson",
+  "title": {
+    "zh": "今天和现在",
+    "pinyin": "",
+    "kr": "오늘과 지금",
+    "en": "Time"
+  },
+  "summary": {
+    "zh": "",
+    "kr": "",
+    "en": ""
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "今天",
+      "pinyin": "",
+      "meaning": {
+        "zh": "今天",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "明天",
+      "pinyin": "",
+      "meaning": {
+        "zh": "明天",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "昨天",
+      "pinyin": "",
+      "meaning": {
+        "zh": "昨天",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "现在",
+      "pinyin": "",
+      "meaning": {
+        "zh": "现在",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "时候",
+      "pinyin": "",
+      "meaning": {
+        "zh": "时候",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "上午",
+      "pinyin": "",
+      "meaning": {
+        "zh": "上午",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "下午",
+      "pinyin": "",
+      "meaning": {
+        "zh": "下午",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "今天你忙吗？" },
-    { "speaker": "B", "line": "现在不忙。" }
+    {
+      "speaker": "A",
+      "line": "今天你忙吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "现在不忙。"
+    }
   ],
   "grammar": [
-    { "title": "时间词放句首", "explanation_zh": "时间词常放在句子前面。", "explanation_kr": "시간 표현은 보통 문장 앞에 옵니다.", "example": "今天我学习。" }
+    {
+      "title": "时间词放句首",
+      "explanation_zh": "时间词常放在句子前面。",
+      "explanation_kr": "시간 표현은 보통 문장 앞에 옵니다.",
+      "example": "今天我学习。"
+    }
   ],
-  "practice": [{ "type": "match", "pairs": [["今天", "오늘"], ["明天", "내일"]] }],
-  "ai_interaction": { "speaking": ["今天", "现在"], "chat_prompt": "AI问今天做什么。" }
+  "practice": [
+    {
+      "type": "match",
+      "pairs": [
+        [
+          "今天",
+          "오늘"
+        ],
+        [
+          "明天",
+          "내일"
+        ]
+      ]
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "今天",
+      "现在"
+    ],
+    "chatPrompt": "AI问今天做什么。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

@@ -101,9 +101,8 @@ function buildDialogueHTML(lessonData) {
   if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   return arr.map((line) => {
-    // line could be {spk, zh, ko, pinyin} etc
     const spk = line?.spk || line?.speaker || "";
-    const zh = line?.zh || line?.cn || "";
+    const zh = line?.zh || line?.cn || line?.line || "";
     const ko = line?.ko || line?.kr || "";
     const py = line?.pinyin || line?.py || "";
 
@@ -131,9 +130,9 @@ function buildGrammarHTML(lessonData) {
   if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
   return arr.map((pt, idx) => {
-    const title = pt?.title || pt?.name || `#${idx + 1}`;
-    const zh = pt?.zh || pt?.cn || "";
-    const ko = pt?.ko || pt?.kr || "";
+    const title = typeof pt?.title === "object" ? (pt.title?.zh || pt.title?.kr || pt.title?.en || "") : (pt?.title || pt?.name || `#${idx + 1}`);
+    const zh = pt?.zh || pt?.cn || pt?.explanation_zh || "";
+    const ko = pt?.ko || pt?.kr || pt?.explanation_kr || "";
     const ex = pt?.example || pt?.examples || "";
 
     const main = (lang === "zh") ? zh : ko;
@@ -243,7 +242,19 @@ async function openLesson({ lessonNo, file }) {
     updateTabsUI();
 
     // Render panels
-    renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang });
+    const isReview = lessonData?.type === "review";
+    const reviewRange = lessonData?.review?.lessonRange;
+    if (isReview && (!lessonWords || lessonWords.length === 0) && Array.isArray(reviewRange) && reviewRange.length >= 2) {
+      $("hskPanelWords").innerHTML = `
+        <div class="rounded-xl border p-4 bg-slate-50">
+          <div class="font-semibold mb-2">${escapeHtml(i18n?.t?.("hsk_review_range") || "复习范围")}</div>
+          <p>第 ${reviewRange[0]}–${reviewRange[1]} 课 / 1–${reviewRange[1]}과 복습</p>
+          <p class="text-sm opacity-70 mt-2">请回顾前面学过的词汇和对话。</p>
+        </div>
+      `;
+    } else {
+      renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang });
+    }
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
 
@@ -399,11 +410,24 @@ function bindEvents() {
     const lang = getLang();
     renderLessonList($("hskLessonList"), state.lessons, { lang });
 
-    // Re-render current lesson in the new language
     if (state.current?.lessonData) {
-      renderWordCards($("hskPanelWords"), state.current.lessonWords || [], undefined, { lang });
-      $("hskDialogueBody").innerHTML = buildDialogueHTML(state.current.lessonData);
-      $("hskGrammarBody").innerHTML = buildGrammarHTML(state.current.lessonData);
+      const ld = state.current.lessonData;
+      const lw = state.current.lessonWords || [];
+      const isReview = ld?.type === "review";
+      const rr = ld?.review?.lessonRange;
+      if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
+        $("hskPanelWords").innerHTML = `
+          <div class="rounded-xl border p-4 bg-slate-50">
+            <div class="font-semibold mb-2">${escapeHtml(i18n?.t?.("hsk_review_range") || "复习范围")}</div>
+            <p>第 ${rr[0]}–${rr[1]} 课 / 1–${rr[1]}과 복습</p>
+            <p class="text-sm opacity-70 mt-2">请回顾前面学过的词汇和对话。</p>
+          </div>
+        `;
+      } else {
+        renderWordCards($("hskPanelWords"), lw, undefined, { lang });
+      }
+      $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
+      $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
       updateTabsUI();
     }
   }, { signal });

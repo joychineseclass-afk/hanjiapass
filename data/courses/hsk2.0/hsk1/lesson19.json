@@ -1,17 +1,166 @@
 {
-  "lesson": 19,
+  "id": "hsk2.0_hsk1_lesson19",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "生活物品", "kr": "생활 물건" },
-  "topic": { "zh": "日常生活用品", "kr": "생활 물건" },
-  "words": ["衣服", "桌子", "椅子", "杯子", "书", "字", "电脑"],
+  "lessonNo": 19,
+  "type": "lesson",
+  "title": {
+    "zh": "生活物品",
+    "pinyin": "",
+    "kr": "생활 물건",
+    "en": "Weather"
+  },
+  "summary": {
+    "zh": "日常生活用品",
+    "kr": "생활 물건"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "衣服",
+      "pinyin": "",
+      "meaning": {
+        "zh": "衣服",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "桌子",
+      "pinyin": "",
+      "meaning": {
+        "zh": "桌子",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "椅子",
+      "pinyin": "",
+      "meaning": {
+        "zh": "椅子",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "杯子",
+      "pinyin": "",
+      "meaning": {
+        "zh": "杯子",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "书",
+      "pinyin": "",
+      "meaning": {
+        "zh": "书",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "字",
+      "pinyin": "",
+      "meaning": {
+        "zh": "字",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "电脑",
+      "pinyin": "",
+      "meaning": {
+        "zh": "电脑",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你的书在哪儿？" },
-    { "speaker": "B", "line": "在桌子上。" }
+    {
+      "speaker": "A",
+      "line": "你的书在哪儿？"
+    },
+    {
+      "speaker": "B",
+      "line": "在桌子上。"
+    }
   ],
   "grammar": [
-    { "title": "名词位置", "explanation_zh": "名词表示事物名称。", "explanation_kr": "명사는 사물 이름입니다.", "example": "这是书。" }
+    {
+      "title": "名词位置",
+      "explanation_zh": "名词表示事物名称。",
+      "explanation_kr": "명사는 사물 이름입니다.",
+      "example": "这是书。"
+    }
   ],
-  "practice": [{ "type": "match", "pairs": [["书", "책"], ["电脑", "컴퓨터"]] }],
-  "ai_interaction": { "speaking": ["这是我的书"], "chat_prompt": "AI问物品。" }
+  "practice": [
+    {
+      "type": "match",
+      "pairs": [
+        [
+          "书",
+          "책"
+        ],
+        [
+          "电脑",
+          "컴퓨터"
+        ]
+      ]
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "这是我的书"
+    ],
+    "chatPrompt": "AI问物品。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

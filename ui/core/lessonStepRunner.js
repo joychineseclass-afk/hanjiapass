@@ -1,5 +1,7 @@
 // /ui/core/lessonStepRunner.js
-import { openWordsStep } from "./wordsStep.js";
+// step keys: vocab | dialogue | grammar | practice | review | aiPractice
+import { openWordsStep, loadLessonRaw } from "./wordsStep.js";
+import { stepKey } from "./lessonSteps.js";
 
 console.log("[Runner] file loaded:", import.meta.url);
 
@@ -85,10 +87,11 @@ async function openStep(step, st, { force = false, source = "event" } = {}) {
   }
   lastKey = key;
 
-  console.log("[Runner] run step:", step, "key=", key);
+  const stepKeyNorm = stepKey(step);
+  console.log("[Runner] run step:", stepKeyNorm, "key=", key);
 
-  // ---- words (real module) ----
-  if (step === "words") {
+  // ---- vocab (词汇) ----
+  if (stepKeyNorm === "vocab") {
     try {
       await openWordsStep({ lessonId: st.lessonId, state: st, mode });
     } catch (e) {
@@ -97,23 +100,40 @@ async function openStep(step, st, { force = false, source = "event" } = {}) {
     return;
   }
 
-  // ---- placeholders for now ----
+  // ---- review: 显示 lessonRange ----
+  if (stepKeyNorm === "review") {
+    try {
+      const raw = await loadLessonRaw(st.lessonId);
+      const r = raw?.review;
+      const range = Array.isArray(r?.lessonRange) ? r.lessonRange : [];
+      const [a, b] = range;
+      const rangeText = a != null && b != null ? `第 ${a}–${b} 课 / 1–${b}과` : "복습";
+      const title = "Review / 복습";
+      const body = `<p>복습 범위: ${rangeText}</p><p>请回顾前面学过的词汇和对话。</p>`;
+      if (mode === "page") renderPagePanel({ title, body });
+      else openSimpleModal({ title, body });
+    } catch (e) {
+      console.warn("[Runner] review step failed:", e);
+      openSimpleModal({ title: "Review / 복습", body: "복습 범위를 불러올 수 없습니다." });
+    }
+    return;
+  }
+
+  // ---- dialogue / grammar / practice / aiPractice ----
   const titleMap = {
     dialogue: "Dialogue / 회화",
     grammar: "Grammar / 문법",
     practice: "Practice / 연습",
-    ai: "AI / 말하기",
+    aiPractice: "AI / 말하기",
   };
-
   const bodyMap = {
-    dialogue: "여기에 다음 단계로 회화 콘텐츠를 연결할 예정입니다. (placeholder)",
-    grammar: "여기에 다음 단계로 문법 콘텐츠를 연결할 예정입니다. (placeholder)",
-    practice: "여기에 다음 단계로 연습 문제 엔진을 연결할 예정입니다. (placeholder)",
-    ai: "여기에 다음 단계로 AI 대화 모듈을 연결할 예정입니다. (placeholder)",
+    dialogue: "회화 콘텐츠를 표시합니다.",
+    grammar: "문법 콘텐츠를 표시합니다.",
+    practice: "연습 문제를 표시합니다.",
+    aiPractice: "AI 대화 모듈을 연결할 예정입니다.",
   };
-
-  const title = titleMap[step] || step;
-  const body = bodyMap[step] || "";
+  const title = titleMap[stepKeyNorm] || stepKeyNorm;
+  const body = bodyMap[stepKeyNorm] || "";
 
   if (mode === "page") {
     // teacher mode: render into page panel
@@ -129,7 +149,11 @@ async function openStep(step, st, { force = false, source = "event" } = {}) {
 ----------------------------- */
 async function handleState(st, source = "event") {
   if (!st?.lessonId) return;
-  const step = st.steps?.[st.stepIndex] || "words";
+  const stepRaw = st.steps?.[st.stepIndex];
+  const keys = st.stepKeys;
+  const step = stepRaw != null
+    ? (typeof stepRaw === "string" ? stepRaw : stepRaw?.key)
+    : (Array.isArray(keys) && keys[st.stepIndex] != null ? keys[st.stepIndex] : "vocab");
   await openStep(step, st, { source });
 }
 

@@ -58,8 +58,8 @@ async function loadWordsForLesson(lessonId) {
       const data = await loader.loadLesson(lessonId);
 
       const list =
-        data?.words ||
         data?.vocab ||
+        data?.words ||
         data?.wordList ||
         data?.newWords ||
         data?.vocabulary ||
@@ -139,11 +139,12 @@ async function loadWordsForLesson(lessonId) {
     const one = await res2.json();
 
     return (
-      one?.words ||
       one?.vocab ||
+      one?.words ||
       one?.wordList ||
       one?.newWords ||
       one?.vocabulary ||
+      one?.lesson?.vocab ||
       one?.lesson?.words ||
       []
     );
@@ -151,14 +152,42 @@ async function loadWordsForLesson(lessonId) {
 
   // ✅ single lesson directly
   return (
-    json?.words ||
     json?.vocab ||
+    json?.words ||
     json?.wordList ||
     json?.newWords ||
     json?.vocabulary ||
     json?.lesson?.words ||
     []
   );
+}
+
+/** 加载整课 JSON（供 review 等步骤使用） */
+export async function loadLessonRaw(lessonId) {
+  const dp = window.DATA_PATHS || null;
+  let url = null;
+  if (typeof dp?.lessonsUrl === "function") {
+    try { url = dp.lessonsUrl(lessonId); } catch {}
+  }
+  if (!url) url = `./data/courses/${lessonId}.json`;
+
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to fetch: ${url}`);
+  const json = await res.json();
+
+  if (Array.isArray(json?.lessons)) {
+    const idNum = String(lessonId).match(/\d+/g)?.pop() || "";
+    const found = json.lessons.find((x) => x?.file === `${lessonId}.json`) ||
+      (idNum ? json.lessons.find((x) => String(x?.id) === idNum) : null);
+    if (!found?.file) return null;
+    const baseDir = url.slice(0, url.lastIndexOf("/") + 1);
+    const m = String(found.file || "").match(/^hsk\d+_lesson(\d+)\.json$/i);
+    const singleFile = m ? `lesson${m[1]}.json` : found.file;
+    const r2 = await fetch(baseDir + singleFile, { cache: "no-store" });
+    if (!r2.ok) return null;
+    return await r2.json();
+  }
+  return json;
 }
 
 // ---------- 2) Modal open ----------

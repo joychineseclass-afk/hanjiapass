@@ -1,17 +1,163 @@
 {
-  "lesson": 17,
+  "id": "hsk2.0_hsk1_lesson17",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "日常活动", "kr": "일상 활동" },
-  "topic": { "zh": "日常生活动词", "kr": "일상 동사" },
-  "words": ["工作", "学习", "睡觉", "开", "坐", "住", "做"],
+  "lessonNo": 17,
+  "type": "lesson",
+  "title": {
+    "zh": "日常活动",
+    "pinyin": "",
+    "kr": "일상 활동",
+    "en": "Transport"
+  },
+  "summary": {
+    "zh": "日常生活动词",
+    "kr": "일상 동사"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "工作",
+      "pinyin": "",
+      "meaning": {
+        "zh": "工作",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "学习",
+      "pinyin": "",
+      "meaning": {
+        "zh": "学习",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "睡觉",
+      "pinyin": "",
+      "meaning": {
+        "zh": "睡觉",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "开",
+      "pinyin": "",
+      "meaning": {
+        "zh": "开",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "坐",
+      "pinyin": "",
+      "meaning": {
+        "zh": "坐",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "住",
+      "pinyin": "",
+      "meaning": {
+        "zh": "住",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "做",
+      "pinyin": "",
+      "meaning": {
+        "zh": "做",
+        "kr": "",
+        "en": ""
+      }
+    }
+  ],
   "dialogue": [
-    { "speaker": "A", "line": "你在哪儿工作？" },
-    { "speaker": "B", "line": "我在北京工作。" }
+    {
+      "speaker": "A",
+      "line": "你在哪儿工作？"
+    },
+    {
+      "speaker": "B",
+      "line": "我在北京工作。"
+    }
   ],
   "grammar": [
-    { "title": "动词位置", "explanation_zh": "动词一般放在主语后面。", "explanation_kr": "동사는 주어 뒤에 옵니다.", "example": "我学习汉语。" }
+    {
+      "title": "动词位置",
+      "explanation_zh": "动词一般放在主语后面。",
+      "explanation_kr": "동사는 주어 뒤에 옵니다.",
+      "example": "我学习汉语。"
+    }
   ],
-  "practice": [{ "type": "choice", "question": "晚上做什么？", "options": ["睡觉", "谢谢", "苹果"], "answer": "睡觉" }],
-  "ai_interaction": { "speaking": ["我学习汉语"], "chat_prompt": "AI问日常活动。" }
+  "practice": [
+    {
+      "type": "choice",
+      "question": "晚上做什么？",
+      "options": [
+        "睡觉",
+        "谢谢",
+        "苹果"
+      ],
+      "answer": "睡觉"
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "我学习汉语"
+    ],
+    "chatPrompt": "AI问日常活动。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }

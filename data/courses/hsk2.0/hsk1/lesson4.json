@@ -1,27 +1,104 @@
 {
-  "lesson": 4,
+  "id": "hsk2.0_hsk1_lesson4",
+  "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
-  "title": { "zh": "认识别人", "kr": "다른 사람 알기" },
-  "topic": { "zh": "介绍和询问他人", "kr": "다른 사람 소개하고 묻기" },
-
-  "words": [
-    "他",
-    "她",
-    "谁",
-    "认识",
-    "我们",
-    "你们",
-    "他们"
+  "lessonNo": 4,
+  "type": "lesson",
+  "title": {
+    "zh": "认识别人",
+    "pinyin": "",
+    "kr": "다른 사람 알기",
+    "en": "Family"
+  },
+  "summary": {
+    "zh": "介绍和询问他人",
+    "kr": "다른 사람 소개하고 묻기"
+  },
+  "objectives": [],
+  "vocab": [
+    {
+      "hanzi": "他",
+      "pinyin": "",
+      "meaning": {
+        "zh": "他",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "她",
+      "pinyin": "",
+      "meaning": {
+        "zh": "她",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "谁",
+      "pinyin": "",
+      "meaning": {
+        "zh": "谁",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "认识",
+      "pinyin": "",
+      "meaning": {
+        "zh": "认识",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "我们",
+      "pinyin": "",
+      "meaning": {
+        "zh": "我们",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "你们",
+      "pinyin": "",
+      "meaning": {
+        "zh": "你们",
+        "kr": "",
+        "en": ""
+      }
+    },
+    {
+      "hanzi": "他们",
+      "pinyin": "",
+      "meaning": {
+        "zh": "他们",
+        "kr": "",
+        "en": ""
+      }
+    }
   ],
-
   "dialogue": [
-    { "speaker": "A", "line": "他是谁？" },
-    { "speaker": "B", "line": "他是我的朋友。" },
-    { "speaker": "A", "line": "你认识他吗？" },
-    { "speaker": "B", "line": "认识，我们是同学。" }
+    {
+      "speaker": "A",
+      "line": "他是谁？"
+    },
+    {
+      "speaker": "B",
+      "line": "他是我的朋友。"
+    },
+    {
+      "speaker": "A",
+      "line": "你认识他吗？"
+    },
+    {
+      "speaker": "B",
+      "line": "认识，我们是同学。"
+    }
   ],
-
   "grammar": [
     {
       "title": "谁 — 疑问代词",
@@ -42,20 +119,32 @@
       "example": "我们是朋友。"
     }
   ],
-
   "practice": [
     {
       "type": "choice",
       "question": "他是谁？",
-      "options": ["他是学生", "我很好", "谢谢"],
+      "options": [
+        "他是学生",
+        "我很好",
+        "谢谢"
+      ],
       "answer": "他是学生"
     },
     {
       "type": "match",
       "pairs": [
-        ["他", "남자 한 명"],
-        ["她", "여자 한 명"],
-        ["他们", "그들(남녀 모두)"]
+        [
+          "他",
+          "남자 한 명"
+        ],
+        [
+          "她",
+          "여자 한 명"
+        ],
+        [
+          "他们",
+          "그들(남녀 모두)"
+        ]
       ]
     },
     {
@@ -63,13 +152,55 @@
       "prompt": "介绍你的朋友：他是谁？她是谁？"
     }
   ],
-
-  "ai_interaction": {
+  "review": {},
+  "aiPractice": {
     "speaking": [
       "他是谁",
       "她是我的朋友",
       "我认识他"
     ],
-    "chat_prompt": "AI展示一个人物图片，问：他是谁？学生回答。"
-  }
+    "chatPrompt": "AI展示一个人物图片，问：他是谁？学生回答。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ]
 }
