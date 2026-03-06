@@ -156,6 +156,8 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
   if (!targetEl) return;
 
   const embed = !!opts.embed;
+  const ctx = opts.ctx || null;
+  const initialChar = opts.initialChar || null;
 
   // ✅ 清理旧监听（防止重复绑定导致越写越卡）
   try { targetEl._strokeCleanup?.(); } catch {}
@@ -447,8 +449,28 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
     btnWrap.appendChild(b);
 
-    if (i === 0) queueMicrotask(() => loadChar(ch, { reset: true, speak: false }));
+    if (i === 0) {
+      const firstCh = initialChar && chars.includes(initialChar) ? initialChar : chars[0];
+      queueMicrotask(() => loadChar(firstCh, { reset: true, speak: false }));
+    }
   });
+
+  // ===== HSK 自动下一字：stroke:complete 后 800ms 切换到下一字 =====
+  let autoNextTimer = null;
+  const onStrokeNextChar = () => {
+    const fromHsk = ctx?.from && String(ctx.from).toLowerCase().includes("hsk");
+    if (!fromHsk || !ctx?.wordId) return;
+    const wordChars = Array.from(ctx.wordId);
+    const idx = wordChars.indexOf(currentChar);
+    if (idx < 0 || idx >= wordChars.length - 1) return;
+    const nextChar = wordChars[idx + 1];
+    if (autoNextTimer) clearTimeout(autoNextTimer);
+    autoNextTimer = setTimeout(() => {
+      autoNextTimer = null;
+      loadChar(nextChar, { reset: true, speak: true });
+    }, 800);
+  };
+  targetEl.addEventListener("stroke:nextchar", onStrokeNextChar);
 
   // ===== top buttons =====
   btnReplay?.addEventListener("click", () => restartAnimation());
@@ -486,6 +508,8 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
   // ===== cleanup =====
   targetEl._strokeCleanup = () => {
+    if (autoNextTimer) clearTimeout(autoNextTimer);
+    try { targetEl.removeEventListener("stroke:nextchar", onStrokeNextChar); } catch {}
     try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
     try { traceDrawCanvas?.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
     try { teaching?.stop?.(); } catch {}

@@ -12,7 +12,12 @@ function resolveStrokeUrl(hanzi, opts = {}) {
     typeof location !== "undefined" && location.pathname?.includes("/pages/");
   const base = inPages ? "stroke.html" : "/pages/stroke.html";
   const sep = base.includes("?") ? "&" : "?";
-  return `${base}${sep}ch=${ch}${embed}`;
+  let url = `${base}${sep}ch=${ch}${embed}`;
+  const ctx = opts.ctx || {};
+  if (ctx.from) url += "&from=" + encodeURIComponent(ctx.from);
+  if (ctx.lessonId) url += "&lessonId=" + encodeURIComponent(String(ctx.lessonId));
+  if (ctx.wordId) url += "&wordId=" + encodeURIComponent(String(ctx.wordId));
+  return url;
 }
 
 /** 构建 return 参数（用于新标签 fallback） */
@@ -127,7 +132,7 @@ export async function openStrokeInModal(hanzi, ctx = {}) {
     wordId: ctx.wordId || ch,
   };
 
-  const iframeSrc = resolveStrokeUrl(ch, { embed: true });
+  const iframeSrc = resolveStrokeUrl(ch, { embed: true, ctx: fullCtx });
   const titleLabel = typeof i18n?.t === "function" ? i18n.t("stroke_modal_title") : "笔画";
   const bodyHTML = `
     <div id="strokeHost" style="width:100%;height:100%;min-height:0;">

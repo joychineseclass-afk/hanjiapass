@@ -92,12 +92,15 @@
     // ✅ 你的笔顺系统（保持不变）
     import { mountStrokeSwitcher } from "/ui/ui-stroke-player.js";
 
-    // ---------- embed 模式 + 返回学习 ----------
+    // ---------- embed 模式 + 返回学习 + HSK 自动下一字 ctx ----------
     const spInit = new URLSearchParams(location.search);
     const isEmbed = spInit.get("embed") === "1";
     const from = spInit.get("from") || "";
     const lessonIdParam = spInit.get("lessonId") || "";
     const wordIdParam = spInit.get("wordId") || "";
+    const strokeCtx = (from && (lessonIdParam || wordIdParam))
+      ? { from, lessonId: lessonIdParam, wordId: wordIdParam }
+      : null;
 
     if (isEmbed) document.body.setAttribute("data-embed", "1");
 
@@ -175,7 +178,14 @@
       setHint(ch);
 
       // ✅ mount stroke player（embed 模式下不显示重复标题、不显示 뜻）
-      try { mountStrokeSwitcher(root, ch, { embed: isEmbed }); } catch (e) { console.warn("mountStrokeSwitcher failed:", e); }
+      // HSK 自动下一字：ctx 含 from/lessonId/wordId 时用 wordId 作为 chars 源
+      const opts = { embed: isEmbed };
+      if (strokeCtx) opts.ctx = strokeCtx;
+      const charsSource = (strokeCtx?.from === "hsk" && strokeCtx?.wordId)
+        ? strokeCtx.wordId
+        : ch;
+      if (strokeCtx) opts.initialChar = ch;
+      try { mountStrokeSwitcher(root, charsSource, opts); } catch (e) { console.warn("mountStrokeSwitcher failed:", e); }
 
       // ✅ meaning placeholder（embed 时已隐藏 뜻区块，不加载）
       if (!isEmbed) setMeaningLoading();
