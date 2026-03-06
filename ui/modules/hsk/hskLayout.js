@@ -50,14 +50,13 @@ export function getHSKLayoutHTML() {
       <div id="hskLessonList"></div>
     </div>
 
-    <!-- ✅ Study header -->
+    <!-- ✅ Study header：只显示 Lesson N / title，HSK N · version 在页面标题 hskSubTitle -->
     <div id="hskStudyBar" class="hidden bg-white rounded-2xl shadow p-3 mt-4 mb-3">
       <div class="flex items-center gap-2">
         <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
           ← <span data-i18n="common_back">목록으로</span>
         </button>
         <span id="hskStudyTitle" class="font-semibold"></span>
-        <span id="hskStudyMeta" class="text-sm opacity-60"></span>
       </div>
 
       <!-- ✅ Study Tabs -->

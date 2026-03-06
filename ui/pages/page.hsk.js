@@ -38,14 +38,11 @@ function setSubTitle() {
   el.textContent = `HSK ${state.lv} · ${state.version}`;
 }
 
-function showStudyMode(titleText = "", metaText = "") {
+function showStudyMode(titleText = "") {
   $("hskLessonListWrap")?.classList.add("hidden");
-
   $("hskStudyBar")?.classList.remove("hidden");
   $("hskStudyPanels")?.classList.remove("hidden");
-
   if ($("hskStudyTitle")) $("hskStudyTitle").textContent = titleText || "";
-  if ($("hskStudyMeta")) $("hskStudyMeta").textContent = metaText || "";
 }
 
 function showListMode() {
@@ -91,8 +88,8 @@ function updateTabsUI() {
   });
 }
 
-/** 按系统语言取翻译，缺失时按 kr -> en -> zh 回退。zh/cn/line 为中文原文，kr/ko、en 为译文 */
-function pickTranslation(line, lang, zhMain = "") {
+/** 按系统语言取对话翻译，缺失时 kr -> en -> zh 回退。line/zh/cn 为中文原文，kr/ko、en 为译文 */
+function pickDialogueTranslation(line, lang, zhMain = "") {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   const kr = str(line?.kr ?? line?.ko);
   const en = str(line?.en);
@@ -101,45 +98,42 @@ function pickTranslation(line, lang, zhMain = "") {
   if (lang === "ko") out = kr || en || zhTr;
   else if (lang === "en") out = en || kr || zhTr;
   else out = zhTr || kr || en;
-  if (out && zhMain && out === zhMain) return ""; // 避免与中文原文重复
+  if (out && zhMain && out === zhMain) return "";
   return out;
 }
 
+/** 对话渲染：教学型结构化 HTML。每句：speaker / 中文 / 拼音 / 当前语言翻译 */
 async function buildDialogueHTML(lessonData) {
   const d = lessonData?.dialogue;
-  if (!d) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
+  if (!d) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   const lang = getLang();
   const arr = Array.isArray(d) ? d : (Array.isArray(d?.lines) ? d.lines : []);
-  if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
+  if (!arr.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
   const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
-  const version = String(lessonData?.version ?? "").toLowerCase();
-  const isHsk79 = (lv >= 7 || version.includes("7") || version.includes("8") || version.includes("9"));
-  const showPinyin = !isHsk79; // HSK1-6 强制拼音；HSK7-9 预留
+  const isHsk79 = (lv >= 7 || /[789]/.test(String(lessonData?.version ?? "")));
+  const showPinyin = !isHsk79;
 
-  const htmlParts = [];
+  const blocks = [];
   for (const line of arr) {
-    const spk = line?.spk ?? line?.speaker ?? "";
+    const spk = String(line?.spk ?? line?.speaker ?? "").trim();
     const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
     let py = String(line?.pinyin ?? line?.py ?? "").trim();
-    if (showPinyin && zh && !py) {
-      py = await ensurePinyin(zh, py);
-    }
-    const trans = pickTranslation(line, lang, zh);
-    const isA = String(spk).toUpperCase() === "A";
+    if (showPinyin && zh && !py) py = await ensurePinyin(zh, py);
+    const trans = pickDialogueTranslation(line, lang, zh);
+    const isA = spk.toUpperCase() === "A";
 
-    htmlParts.push(`
-      <div class="border border-slate-200 rounded-xl p-3 mb-3 last:mb-0 ${isA ? "bg-slate-50/50" : "bg-white"}">
-        ${spk ? `<div class="text-xs font-medium text-slate-500 mb-1">${escapeHtml(spk)}</div>` : ""}
-        ${zh ? `<div class="text-base font-semibold text-slate-800">${escapeHtml(zh)}</div>` : ""}
-        ${py ? `<div class="text-sm italic opacity-80 mt-0.5 text-slate-600">${escapeHtml(py)}</div>` : ""}
-        ${trans ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(trans)}</div>` : ""}
-      </div>
-    `);
+    blocks.push(`
+<article class="hsk-dialogue-line rounded-xl border border-slate-200 p-4 mb-3 last:mb-0 ${isA ? "bg-slate-50/60" : "bg-white"}">
+  ${spk ? `<div class="hsk-dialogue-speaker text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">${escapeHtml(spk)}</div>` : ""}
+  <div class="hsk-dialogue-zh text-lg font-semibold text-slate-800">${escapeHtml(zh)}</div>
+  ${py ? `<div class="hsk-dialogue-pinyin text-base italic text-slate-600 mt-1">${escapeHtml(py)}</div>` : ""}
+  ${trans ? `<div class="hsk-dialogue-trans text-sm text-slate-600 mt-2 opacity-90">${escapeHtml(trans)}</div>` : ""}
+</article>`);
   }
-  return htmlParts.join("");
+  return `<div class="hsk-dialogue-list space-y-0">${blocks.join("")}</div>`;
 }
 
 /** 语法：取当前语言解释，缺失时 kr -> en -> zh 回退 */
@@ -153,14 +147,12 @@ function pickGrammarExplanation(pt, lang) {
   return zh || kr || en;
 }
 
-/** 语法：取例句（支持 example 为对象 {zh, pinyin, kr, en} 或字符串） */
+/** 语法：取例句，兼容 example 为字符串或 {zh, pinyin, kr, en} */
 function pickGrammarExample(pt, lang) {
   const ex = pt?.example ?? pt?.examples;
   if (!ex) return { zh: "", pinyin: "", trans: "" };
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  if (typeof ex === "string") {
-    return { zh: ex, pinyin: "", trans: "" };
-  }
+  if (typeof ex === "string") return { zh: ex, pinyin: "", trans: "" };
   const zh = str(ex?.zh ?? ex?.cn ?? ex?.line);
   const pinyin = str(ex?.pinyin ?? ex?.py);
   const kr = str(ex?.kr ?? ex?.ko);
@@ -172,57 +164,54 @@ function pickGrammarExample(pt, lang) {
   return { zh, pinyin, trans };
 }
 
+/** 语法渲染：教学型结构化 HTML。每个 item：编号+标题 / 拼音 / 解释 / 例句块 */
 async function buildGrammarHTML(lessonData) {
   const g = lessonData?.grammar;
-  if (!g) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
+  if (!g) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
   const lang = getLang();
   const arr = Array.isArray(g) ? g : (Array.isArray(g?.points) ? g.points : []);
-  if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
+  if (!arr.length) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
   const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
   const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
-  const version = String(lessonData?.version ?? "").toLowerCase();
-  const isHsk79 = (lv >= 7 || version.includes("7") || version.includes("8") || version.includes("9"));
-  const showPinyin = !isHsk79; // HSK1-6 强制拼音；HSK7-9 预留
+  const isHsk79 = (lv >= 7 || /[789]/.test(String(lessonData?.version ?? "")));
+  const showPinyin = !isHsk79;
 
-  const htmlParts = [];
-  for (let idx = 0; idx < arr.length; idx++) {
-    const pt = arr[idx];
-    const titleRaw = typeof pt?.title === "object"
+  const exLabel = lang === "ko" ? "예문" : lang === "zh" ? "例句" : "Example";
+
+  const blocks = [];
+  for (let i = 0; i < arr.length; i++) {
+    const pt = arr[i];
+    const titleZh = typeof pt?.title === "object"
       ? (pt.title?.zh ?? pt.title?.kr ?? pt.title?.en ?? "")
-      : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${idx + 1}`);
-    const titlePinyin = typeof pt?.title === "object"
+      : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${i + 1}`);
+    let titlePy = typeof pt?.title === "object"
       ? (pt.title?.pinyin ?? pt.title?.py ?? "")
       : (pt?.titlePinyin ?? pt?.pinyin ?? pt?.py ?? "");
-    let titlePy = titlePinyin;
-    if (showPinyin && titleRaw && !titlePy) {
-      titlePy = await ensurePinyin(titleRaw, titlePy);
-    }
+    if (showPinyin && titleZh && !titlePy) titlePy = await ensurePinyin(titleZh, titlePy);
 
-    const explanation = pickGrammarExplanation(pt, lang);
+    const expl = pickGrammarExplanation(pt, lang);
     const ex = pickGrammarExample(pt, lang);
-    let exPinyin = ex.pinyin;
-    if (showPinyin && ex.zh && !exPinyin) {
-      exPinyin = await ensurePinyin(ex.zh, exPinyin);
-    }
+    let exPy = ex.pinyin;
+    if (showPinyin && ex.zh && !exPy) exPy = await ensurePinyin(ex.zh, exPy);
 
-    htmlParts.push(`
-      <div class="border border-slate-200 rounded-xl p-4 mb-4 last:mb-0">
-        <div class="text-sm font-bold text-slate-800 mb-2">${idx + 1}. ${escapeHtml(titleRaw)}${titlePy ? ` — ${escapeHtml(titlePy)}` : ""}</div>
-        ${explanation ? `<div class="text-sm text-slate-700 mb-3">${escapeHtml(explanation)}</div>` : ""}
-        ${ex.zh ? `
-        <div class="text-sm mt-3 pt-3 border-t border-slate-100 bg-slate-50/80 rounded-lg p-3">
-          <div class="font-medium text-slate-600 mb-1">${escapeHtml(lang === "ko" ? "예문" : lang === "zh" ? "例句" : "Example")}：</div>
-          <div class="text-base font-semibold text-slate-800">${escapeHtml(ex.zh)}</div>
-          ${exPinyin ? `<div class="text-sm italic opacity-80 mt-0.5 text-slate-600">${escapeHtml(exPinyin)}</div>` : ""}
-          ${ex.trans ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(ex.trans)}</div>` : ""}
-        </div>
-        ` : ""}
-      </div>
-    `);
+    blocks.push(`
+<article class="hsk-grammar-item border border-slate-200 rounded-xl p-5 mb-4 last:mb-0 bg-white">
+  <div class="hsk-grammar-title text-base font-bold text-slate-800 mb-1">${i + 1}. ${escapeHtml(titleZh)}</div>
+  ${titlePy ? `<div class="hsk-grammar-title-pinyin text-sm italic text-slate-600 mb-2">${escapeHtml(titlePy)}</div>` : ""}
+  ${expl ? `<div class="hsk-grammar-explanation text-sm text-slate-700 mb-4">${escapeHtml(expl)}</div>` : ""}
+  ${ex.zh ? `
+  <div class="hsk-grammar-example mt-3 pt-4 border-t border-slate-100 bg-slate-50/80 rounded-lg p-4">
+    <div class="hsk-grammar-example-label text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">${escapeHtml(exLabel)}：</div>
+    <div class="hsk-grammar-example-zh text-base font-semibold text-slate-800">${escapeHtml(ex.zh)}</div>
+    ${exPy ? `<div class="hsk-grammar-example-pinyin text-sm italic text-slate-600 mt-1">${escapeHtml(exPy)}</div>` : ""}
+    ${ex.trans ? `<div class="hsk-grammar-example-trans text-sm text-slate-600 mt-2 opacity-90">${escapeHtml(ex.trans)}</div>` : ""}
+  </div>
+  ` : ""}
+</article>`);
   }
-  return htmlParts.join("");
+  return `<div class="hsk-grammar-list">${blocks.join("")}</div>`;
 }
 
 function buildAIContext() {
@@ -308,7 +297,7 @@ async function openLesson({ lessonNo, file }) {
       ? (titleObj?.[lang] || titleObj?.kr || titleObj?.zh || titleObj?.en || "")
       : (typeof titleObj === "string" ? titleObj : "");
     const headerTitle = titleStr ? `Lesson ${no} / ${titleStr}` : `Lesson ${no}`;
-    showStudyMode(headerTitle, `HSK ${state.lv} · ${state.version}`);
+    showStudyMode(headerTitle, ""); // 详情区只显示 Lesson N / title，不再重复 HSK N · version
     $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     // 供 Stroke 弹窗 / fallback 使用的上下文
@@ -487,7 +476,7 @@ function bindEvents() {
 });
 
   // Language changed
-  window.addEventListener("joy:langchanged", () => {
+  window.addEventListener("joy:langchanged", async () => {
     try { i18n.apply(document); } catch {}
     setSubTitle();
 
@@ -512,8 +501,8 @@ function bindEvents() {
       } else {
         renderWordCards($("hskPanelWords"), lw, undefined, { lang });
       }
-      $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
-      $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
+      $("hskDialogueBody").innerHTML = await buildDialogueHTML(ld);
+      $("hskGrammarBody").innerHTML = await buildGrammarHTML(ld);
       updateTabsUI();
     }
   }, { signal });

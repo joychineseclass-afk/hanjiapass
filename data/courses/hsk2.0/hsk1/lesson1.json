@@ -74,39 +74,26 @@
     }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你好！"
-    },
-    {
-      "speaker": "B",
-      "line": "你好！"
-    },
-    {
-      "speaker": "A",
-      "line": "你好吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "我很好，谢谢！"
-    },
-    {
-      "speaker": "A",
-      "line": "我也很好。"
-    }
+    { "speaker": "A", "line": "你好！", "kr": "안녕하세요!", "en": "Hello!" },
+    { "speaker": "B", "line": "你好！", "kr": "안녕하세요!", "en": "Hello!" },
+    { "speaker": "A", "line": "你好吗？", "kr": "잘 지내세요?", "en": "How are you?" },
+    { "speaker": "B", "line": "我很好，谢谢！", "kr": "저는 잘 지내요, 감사합니다!", "en": "I'm fine, thanks!" },
+    { "speaker": "A", "line": "我也很好。", "kr": "저도 잘 지냅니다.", "en": "I'm fine too." }
   ],
   "grammar": [
     {
       "title": "吗 — 一般疑问句",
       "explanation_zh": "在陈述句后加“吗”构成一般疑问句。",
-      "explanation_kr": "평서문 뒤에 '吗'를 붙이면 의문문이 됩니다.",
-      "example": "你很好 → 你好吗？"
+      "explanation_kr": "평서문 뒤에 \"吗\"를 붙이면 의문문이 됩니다.",
+      "explanation_en": "Adding \"吗\" after a statement forms a yes-no question.",
+      "example": { "zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "kr": "잘 지내세요?", "en": "How are you?" }
     },
     {
       "title": "很 + 形容词",
       "explanation_zh": "形容词作谓语时通常需要“很”。",
       "explanation_kr": "형용사가 서술어가 될 때 보통 '很'을 함께 사용합니다.",
-      "example": "我很好。"
+      "explanation_en": "Adjectives as predicates usually need \"很\".",
+      "example": { "zh": "我很好。", "pinyin": "Wǒ hěn hǎo.", "kr": "저는 잘 지냅니다.", "en": "I'm fine." }
     }
   ],
   "practice": [
