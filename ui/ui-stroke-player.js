@@ -105,6 +105,7 @@ function t(key) {
   const FALLBACK = {
     stroke_demo: { ko: "데모", zh: "演示", en: "Demo" },
     stroke_practice: { ko: "연습", zh: "练习", en: "Practice" },
+    stroke_replay: { ko: "다시", zh: "重播", en: "Replay" },
     stroke_write_here: { ko: "여기에 쓰기 ✍️", zh: "在这里写字 ✍️", en: "Write here ✍️" },
     stroke_missing_data: { ko: "이 글자의 필순 데이터가 아직 없어요.", zh: "该字暂未收录笔画数据", en: "Stroke data not yet available." },
     stroke_continue_practice: { ko: "연습 계속", zh: "继续练习(无笔顺)", en: "Continue practice" },
@@ -120,11 +121,12 @@ function ensureTraceLayerCSS() {
   st.id = "trace-layer-lock";
   st.textContent = `
     #strokeViewport { z-index: 10 !important; }
-    #traceCanvas    { z-index: 50 !important; }
-    .stroke-stage { min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
-    @media (max-width: 640px) { .stroke-stage { min-height: 240px; } }
-    .stroke-stage-title { font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; }
-    .stroke-stage-content { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+    #traceCanvas    { z-index: 50 !important; width: 100%; height: 100%; }
+    .stroke-page { display: flex; gap: 24px; flex-wrap: wrap; }
+    .stroke-demo { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
+    .stroke-practice { flex: 1; min-width: 280px; height: 420px; display: flex; flex-direction: column; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; padding: 16px; position: relative; }
+    @media (max-width: 640px) { .stroke-page { flex-direction: column; } .stroke-demo, .stroke-practice { min-height: 320px; height: auto; } }
+    .stroke-stage-content { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; }
     .stroke-practice-grid { background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; background-color: #fff; }
     .stroke-write-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; color: #94a3b8; font-size: 14px; }
     .stroke-write-hint.hidden { opacity: 0; transition: opacity 0.2s; }
@@ -152,8 +154,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     return;
   }
 
-  const demoTitle = t("stroke_demo");
-  const practiceTitle = t("stroke_practice");
+  const replayLabel = t("stroke_replay");
   const writeHere = t("stroke_write_here");
 
   targetEl.innerHTML = `
@@ -161,6 +162,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
       <div class="flex items-center justify-between mb-2 gap-2 flex-wrap">
         <div class="font-semibold strokeTitle">${T.title}</div>
         <div class="flex gap-2 flex-wrap justify-end items-center">
+          <button class="btnReplay px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${replayLabel}</button>
           <button class="btnSpeak px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.speak}</button>
           <button class="btnTrace px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs">${T.trace}</button>
         </div>
@@ -168,26 +170,20 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
       <div class="flex flex-wrap gap-2 mb-3" id="strokeBtns"></div>
 
-      <!-- ✅ 两栏：演示区 | 练习区 -->
-      <div class="stroke-stages grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-        <!-- 左：演示区 Demo Stage -->
-        <div class="stroke-stage">
-          <div class="stroke-stage-title">${demoTitle}</div>
-          <div class="stroke-stage-content" style="min-height:280px; position:relative;">
+      <!-- strokePage: 左演示 | 右练习，同一行 -->
+      <div class="stroke-page">
+        <div class="stroke-demo">
+          <div class="stroke-stage-content" style="flex:1; position:relative; width:100%;">
             <div id="strokeViewport" class="absolute inset-0 flex items-center justify-center" style="touch-action:auto;">
-              <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm" style="max-width:100%;">
-                loading...
-              </div>
+              <div id="strokeStage" class="w-full h-full flex items-center justify-center text-gray-400 p-3 text-center text-sm">loading...</div>
             </div>
-            <canvas id="traceCanvas" class="absolute inset-0 w-full h-full" style="pointer-events:none;"></canvas>
+            <canvas id="traceCanvas" class="absolute inset-0" style="pointer-events:none;"></canvas>
             <div id="strokeZoomLabel" class="absolute right-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded">100%</div>
             <div id="strokeMsg" class="absolute left-2 bottom-2 text-[11px] text-gray-500 bg-white/80 px-2 py-1 rounded hidden"></div>
           </div>
         </div>
 
-        <!-- 右：练习区 Practice Stage（始终可见） -->
-        <div class="stroke-stage">
-          <div class="stroke-stage-title">${practiceTitle}</div>
+        <div class="stroke-practice">
           <div class="flex items-center gap-2 flex-wrap mb-2">
             <select id="penColor" class="px-2 py-1 border rounded-lg text-sm">
               <option value="#FB923C">🟠</option>
@@ -199,9 +195,9 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
             <input id="penWidth" type="range" min="2" max="18" value="8" style="width:80px;" />
             <button id="btnClearPractice" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm">✕</button>
           </div>
-          <div class="stroke-stage-content stroke-practice-grid" style="min-height:220px; position:relative; aspect-ratio:1;">
+          <div class="stroke-stage-content stroke-practice-grid" style="flex:1; position:relative; min-height:0;">
             <div id="strokeWriteHint" class="stroke-write-hint">${writeHere}</div>
-            <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full" style="max-width:100%;"></canvas>
+            <canvas id="practiceCanvas" class="absolute inset-0 w-full h-full"></canvas>
           </div>
         </div>
       </div>
@@ -223,6 +219,7 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
 
   const btnTrace = targetEl.querySelector(".btnTrace");
   const btnSpeak = targetEl.querySelector(".btnSpeak");
+  const btnReplay = targetEl.querySelector(".btnReplay");
 
   // ===== state =====
   let currentChar = chars[0];
@@ -269,6 +266,21 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
     if (titleEl) titleEl.textContent = T.title;
     if (btnSpeak) btnSpeak.textContent = T.speak;
     if (btnTrace) btnTrace.textContent = T.trace;
+    if (btnReplay) btnReplay.textContent = t("stroke_replay");
+  }
+
+  /** 重播笔顺动画（克隆 SVG 触发 CSS 动画重启） */
+  function restartAnimation() {
+    const svg = stage?.querySelector?.("svg");
+    if (!svg) return;
+    const parent = svg.parentNode;
+    if (!parent) return;
+    const clone = svg.cloneNode(true);
+    parent.replaceChild(clone, svg);
+    applyTransform();
+    if (tracingOn) {
+      try { teaching?.start?.(); } catch {}
+    }
   }
 
   // ===== init layers =====
@@ -426,6 +438,8 @@ export function mountStrokeSwitcher(targetEl, hanChars) {
   });
 
   // ===== top buttons =====
+  btnReplay?.addEventListener("click", () => restartAnimation());
+
   btnSpeak.onclick = async () => {
     try {
       await speakZhCN(currentChar);
