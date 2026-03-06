@@ -231,6 +231,42 @@ function buildAIContext() {
   ].filter(Boolean).join("\n");
 }
 
+/** 获取 vocab-distribution.json 中 distribution 的键顺序（lesson1, lesson2, ...）用于课程排序 */
+const _vocabDistOrderCache = new Map();
+async function getVocabDistributionOrder(lv, version) {
+  const key = `${version}:hsk${lv}`;
+  if (_vocabDistOrderCache.has(key)) return _vocabDistOrderCache.get(key);
+  const base = String(window.__APP_BASE__ || "").replace(/\/+$/, "");
+  const root = base ? base + "/" : "/";
+  const url = `${root}data/courses/${version}/hsk${lv}/vocab-distribution.json`;
+  try {
+    const res = await fetch(url, { cache: "default" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const dist = data?.distribution;
+    const order = dist && typeof dist === "object" ? Object.keys(dist) : null;
+    _vocabDistOrderCache.set(key, order);
+    return order;
+  } catch {
+    return null;
+  }
+}
+
+/** 按 vocab-distribution 的 distribution 键顺序排序课程 */
+function sortLessonsByDistributionOrder(lessons, order) {
+  if (!Array.isArray(lessons) || !Array.isArray(order) || order.length === 0) return lessons;
+  const idxMap = new Map(order.map((k, i) => [k, i]));
+  return [...lessons].sort((a, b) => {
+    const noA = Number(a?.lessonNo ?? a?.lesson ?? a?.id ?? a?.no ?? 0) || 0;
+    const noB = Number(b?.lessonNo ?? b?.lesson ?? b?.id ?? b?.no ?? 0) || 0;
+    const keyA = noA ? `lesson${noA}` : "";
+    const keyB = noB ? `lesson${noB}` : "";
+    const iA = idxMap.has(keyA) ? idxMap.get(keyA) : Infinity;
+    const iB = idxMap.has(keyB) ? idxMap.get(keyB) : Infinity;
+    return iA - iB;
+  });
+}
+
 async function loadLessons() {
   setError("");
   setSubTitle();
@@ -241,8 +277,12 @@ async function loadLessons() {
 
   try {
     if (!window.HSK_LOADER?.loadLessons) throw new Error("HSK_LOADER.loadLessons not found");
-    const lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
-    state.lessons = Array.isArray(lessons) ? lessons : [];
+    let lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
+    lessons = Array.isArray(lessons) ? lessons : [];
+
+    const order = await getVocabDistributionOrder(state.lv, state.version);
+    state.lessons = sortLessonsByDistributionOrder(lessons, order);
+
     renderLessonList(listEl, state.lessons, { lang });
   } catch (e) {
     console.error(e);
