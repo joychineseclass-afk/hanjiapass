@@ -30,7 +30,7 @@ function buildIndexUrl(track, level) {
 function buildLessonFileUrl(track, level, lessonNo) {
   const lv = Number(level) || 1;
   const no = Number(lessonNo) || 1;
-  return withBase(`data/lessons/${track}/hsk${lv}_lesson${no}.json`);
+  return withBase(`data/lessons/${track}/hsk${lv}/lesson${no}.json`);
 }
 
 function memGet(key) {
@@ -136,7 +136,12 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   const cached = memGet(cacheKey);
   if (cached) return cached;
 
-  const url = file ? withBase(`data/lessons/${track}/${file}`) : buildLessonFileUrl(track, level, lessonNo);
+  const url = file && /^hsk\d+_lesson\d+\.json$/i.test(file)
+    ? (() => {
+        const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
+        return m ? withBase(`data/lessons/${track}/hsk${m[1]}/lesson${m[2]}.json`) : withBase(`data/lessons/${track}/${file}`);
+      })()
+    : buildLessonFileUrl(track, level, lessonNo);
   try {
     const raw = await fetchJson(url);
     const result = {
@@ -161,8 +166,8 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
       return result;
     }
     const fallbackUrl =
-      window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file }) ||
-      `/data/lessons/${track}/${file || `hsk${lv}_lesson${no}.json`}`;
+      window.DATA_PATHS?.lessonDetailUrl?.(lv, no, { file, version: track }) ||
+      withBase(`data/lessons/${track}/hsk${lv}/lesson${no}.json`);
     const raw = await fetchJson(fallbackUrl);
     const result = {
       raw,

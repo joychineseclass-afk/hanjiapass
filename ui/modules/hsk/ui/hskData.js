@@ -32,7 +32,11 @@ export function lessonDetailUrl(level, lessonNo, version) {
   const lv = safeText(level || "1");
   const raw = safeText(version || "hsk2.0");
   const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
-  return `/data/lessons/${ver}/hsk${lv}_lesson${lessonNo}.json`;
+  const no = Number(lessonNo || 1) || 1;
+  if (window.DATA_PATHS?.lessonDetailUrl) {
+    return window.DATA_PATHS.lessonDetailUrl(lv, no, { version: ver });
+  }
+  return `/data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
 }
 
 export async function loadLessonDetail({ level, lessonNo, version, detailCache }) {

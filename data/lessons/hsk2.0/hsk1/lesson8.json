@@ -1,0 +1,27 @@
+{
+  "lesson": 8,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "数字（二）", "kr": "숫자 ②" },
+  "topic": { "zh": "8–10和年龄", "kr": "8–10과 나이" },
+  "words": ["八", "九", "十", "几", "多少", "岁", "年"],
+  "dialogue": [
+    { "speaker": "A", "line": "你几岁？" },
+    { "speaker": "B", "line": "我十岁。" }
+  ],
+  "grammar": [
+    {
+      "title": "几 vs 多少",
+      "explanation_zh": "“几”用于少量，“多少”用于不确定数量。",
+      "explanation_kr": "'几'는 적은 수, '多少'는 수량을 물을 때 사용합니다.",
+      "example": "你几岁？"
+    }
+  ],
+  "practice": [
+    { "type": "choice", "question": "你几岁？", "options": ["我很好", "我九岁", "谢谢"], "answer": "我九岁" }
+  ],
+  "ai_interaction": {
+    "speaking": ["八", "九", "十"],
+    "chat_prompt": "AI问年龄，学生回答。"
+  }
+}

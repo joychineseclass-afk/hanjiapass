@@ -192,16 +192,19 @@
     return withBase(`data/vocab/${version}/${file}`);
   }
   function lessonsUrl(lv, version) {
-    return withBase(`data/lessons/${version}/hsk${lv}_lessons.json`);
+    return withBase(`data/lessons/${version}/hsk${lv}/lessons.json`);
   }
 
-  // ✅ NEW: lesson detail url unify (fallback respects BASE)
+  // ✅ NEW: lesson detail url (新结构 hsk{N}/lesson{M}.json)
   function lessonDetailUrl(lv, lessonNo, version, file) {
-    const f = safeText(file);
-    if (f) return withBase(`data/lessons/${version}/${f}`);
     const n = Number(lessonNo || 1);
     const no = Number.isFinite(n) && n > 0 ? n : 1;
-    return withBase(`data/lessons/${version}/hsk${lv}_lesson${no}.json`);
+    const f = safeText(file);
+    if (f && /^hsk\d+_lesson\d+\.json$/i.test(f)) {
+      const m = f.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
+      if (m) return withBase(`data/lessons/${version}/hsk${m[1]}/lesson${m[2]}.json`);
+    }
+    return withBase(`data/lessons/${version}/hsk${lv}/lesson${no}.json`);
   }
 
   // -----------------------------

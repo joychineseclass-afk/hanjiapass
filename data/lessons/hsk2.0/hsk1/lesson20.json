@@ -1,0 +1,17 @@
+{
+  "lesson": 20,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "数量表达", "kr": "수량 표현" },
+  "topic": { "zh": "量词使用", "kr": "양사 사용" },
+  "words": ["个", "本", "些", "怎么", "怎么样", "请"],
+  "dialogue": [
+    { "speaker": "A", "line": "这个怎么样？" },
+    { "speaker": "B", "line": "很好！" }
+  ],
+  "grammar": [
+    { "title": "量词个", "explanation_zh": "“个”是常用量词。", "explanation_kr": "'个'은 가장 많이 쓰는 양사.", "example": "一个人" }
+  ],
+  "practice": [{ "type": "choice", "question": "一个___", "options": ["人", "谢谢", "再见"], "answer": "人" }],
+  "ai_interaction": { "speaking": ["一个苹果"], "chat_prompt": "AI问数量。" }
+}

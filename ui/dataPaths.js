@@ -69,7 +69,7 @@
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
-    const url = withVersion(getDataRoot() + `data/lessons/${ver}/hsk${lv}_lessons.json`);
+    const url = withVersion(getDataRoot() + `data/lessons/${ver}/hsk${lv}/lessons.json`);
     if (DEBUG) console.log("[PATH] lessonsUrl", url);
     return url;
   }
@@ -84,13 +84,20 @@
     return url;
   }
 
-  /** 单课详情 URL，opts.file 可选 */
+  /** 单课详情 URL，opts.file 可选。新结构: hsk{N}/lesson{M}.json */
   function lessonDetailUrl(level, lessonNo, opts) {
     const lv = normalizeLevel(level);
     const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
     const ver = normalizeHskVersion(raw);
+    const no = (typeof lessonNo === "number" ? lessonNo : parseInt(lessonNo, 10)) || 1;
     const file = toStr(opts && opts.file);
-    const path = file ? `data/lessons/${ver}/${file}` : `data/lessons/${ver}/hsk${lv}_lesson${(typeof lessonNo === "number" ? lessonNo : parseInt(lessonNo, 10)) || 1}.json`;
+    let path;
+    if (file && /^hsk\d+_lesson\d+\.json$/i.test(file)) {
+      const m = file.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
+      path = m ? `data/lessons/${ver}/hsk${m[1]}/lesson${m[2]}.json` : `data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
+    } else {
+      path = `data/lessons/${ver}/hsk${lv}/lesson${no}.json`;
+    }
     const url = withVersion(getDataRoot() + path);
     if (DEBUG) console.log("[PATH] lessonDetailUrl", url);
     return url;

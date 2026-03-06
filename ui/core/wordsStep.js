@@ -124,10 +124,12 @@ async function loadWordsForLesson(lessonId) {
       return [];
     }
 
-    // packUrl: ./data/lessons/hsk2.0/hsk1_lessons.json
-    // single : ./data/lessons/hsk2.0/hsk1_lesson1.json
+    // packUrl: ./data/lessons/hsk2.0/hsk1/lessons.json
+    // single : ./data/lessons/hsk2.0/hsk1/lesson1.json (新结构: file hsk1_lesson1.json → lesson1.json)
     const baseDir = url.slice(0, url.lastIndexOf("/") + 1);
-    const singleUrl = baseDir + found.file;
+    const m = String(found.file || "").match(/^hsk\d+_lesson(\d+)\.json$/i);
+    const singleFile = m ? `lesson${m[1]}.json` : found.file;
+    const singleUrl = baseDir + singleFile;
 
     // ✅ StepA log #3: singleUrl（真正单课文件）
     console.log("[wordsStep:A] singleUrl =", singleUrl);

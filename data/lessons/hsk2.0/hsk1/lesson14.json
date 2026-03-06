@@ -1,0 +1,27 @@
+{
+  "lesson": 14,
+  "level": "HSK1",
+  "version": "2.0",
+  "title": { "zh": "常见地点", "kr": "자주 가는 장소" },
+  "topic": { "zh": "生活中常见的地方", "kr": "생활 속 장소" },
+  "words": ["学校", "医院", "北京", "中国", "里", "前面", "后面"],
+  "dialogue": [
+    { "speaker": "A", "line": "学校在哪儿？" },
+    { "speaker": "B", "line": "在前面。" }
+  ],
+  "grammar": [
+    {
+      "title": "方位词",
+      "explanation_zh": "“前面、后面、里”表示位置。",
+      "explanation_kr": "'앞, 뒤, 안' 위치를 나타냅니다.",
+      "example": "书在桌子上面。"
+    }
+  ],
+  "practice": [
+    { "type": "match", "pairs": [["前面", "앞"], ["后面", "뒤"], ["里", "안"]] }
+  ],
+  "ai_interaction": {
+    "speaking": ["在前面", "在里面"],
+    "chat_prompt": "AI问地点位置。"
+  }
+}
