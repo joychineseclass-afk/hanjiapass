@@ -2,6 +2,7 @@
 // step keys: vocab | dialogue | grammar | practice | review | aiPractice
 import { openWordsStep, loadLessonRaw } from "./wordsStep.js";
 import { stepKey } from "./lessonSteps.js";
+import { i18n } from "../i18n.js";
 
 console.log("[Runner] file loaded:", import.meta.url);
 
@@ -107,14 +108,18 @@ async function openStep(step, st, { force = false, source = "event" } = {}) {
       const r = raw?.review;
       const range = Array.isArray(r?.lessonRange) ? r.lessonRange : [];
       const [a, b] = range;
-      const rangeText = a != null && b != null ? `第 ${a}–${b} 课 / 1–${b}과` : "복습";
-      const title = "Review / 복습";
-      const body = `<p>복습 범위: ${rangeText}</p><p>请回顾前面学过的词汇和对话。</p>`;
+      const rangeText = a != null && b != null ? `第 ${a}–${b} 课 / 1–${b}과` : "";
+      const titleRaw = i18n?.t?.("hsk_review_range");
+      const title = (titleRaw && titleRaw !== "hsk_review_range") ? titleRaw : "복습 범위";
+      const descRaw = i18n?.t?.("hsk_review_desc");
+      const desc = (descRaw && descRaw !== "hsk_review_desc") ? descRaw : "请回顾前面学过的词汇和对话。";
+      const body = `<p class="mb-2">${rangeText || title}</p><p class="text-sm opacity-80">${desc}</p>`;
       if (mode === "page") renderPagePanel({ title, body });
       else openSimpleModal({ title, body });
     } catch (e) {
       console.warn("[Runner] review step failed:", e);
-      openSimpleModal({ title: "Review / 복습", body: "복습 범위를 불러올 수 없습니다." });
+      const t = i18n?.t?.("hsk_review_range");
+      openSimpleModal({ title: (t && t !== "hsk_review_range") ? t : "복습 범위", body: "복습 범위를 불러올 수 없습니다." });
     }
     return;
   }

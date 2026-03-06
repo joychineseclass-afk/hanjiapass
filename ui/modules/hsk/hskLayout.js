@@ -79,7 +79,7 @@ export function getHSKLayoutHTML() {
 
     <!-- ✅ Study Panels -->
     <div id="hskStudyPanels" class="hidden">
-      <div id="hskPanelWords" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <div id="hskPanelWords" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1"></div>
 
       <div id="hskPanelDialogue" class="hidden bg-white rounded-2xl shadow p-4">
         <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_dialogue">회화</div>
@@ -97,8 +97,8 @@ export function getHSKLayoutHTML() {
           오늘 배운 단어/회화를 가지고 AI에게 질문해 보세요.
         </div>
 
-        <div class="flex flex-col gap-2">
-          <textarea id="hskAIInput" class="border rounded-xl p-3 text-sm" rows="4"
+        <div class="flex flex-col gap-3">
+          <textarea id="hskAIInput" class="border border-slate-200 rounded-xl p-3 text-sm w-full" rows="4"
             data-i18n-placeholder="hsk_ai_placeholder"
             placeholder="예: ‘你好’랑 ‘您好’ 차이가 뭐예요?"></textarea>
 

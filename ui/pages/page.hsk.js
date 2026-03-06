@@ -105,16 +105,15 @@ function buildDialogueHTML(lessonData) {
     const zh = line?.zh || line?.cn || line?.line || "";
     const ko = line?.ko || line?.kr || "";
     const py = line?.pinyin || line?.py || "";
-
     const main = (lang === "zh") ? zh : ko;
     const sub = (lang === "zh") ? ko : zh;
-
+    const isA = String(spk).toUpperCase() === "A";
     return `
-      <div class="border rounded-xl p-3">
-        ${spk ? `<div class="text-xs opacity-60 mb-1">${escapeHtml(spk)}</div>` : ``}
-        ${main ? `<div class="text-base font-semibold">${escapeHtml(main)}</div>` : ``}
-        ${sub ? `<div class="text-sm opacity-70 mt-1">${escapeHtml(sub)}</div>` : ``}
-        ${py ? `<div class="text-sm italic opacity-70 mt-1">${escapeHtml(py)}</div>` : ``}
+      <div class="border border-slate-200 rounded-xl p-3 mb-3 last:mb-0 ${isA ? "bg-slate-50/50" : "bg-white"}">
+        ${spk ? `<div class="text-xs font-medium text-slate-500 mb-1">${escapeHtml(spk)}</div>` : ``}
+        ${main ? `<div class="text-base font-semibold text-slate-800">${escapeHtml(main)}</div>` : ``}
+        ${sub ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(sub)}</div>` : ``}
+        ${py ? `<div class="text-sm italic opacity-70 mt-1 text-slate-500">${escapeHtml(py)}</div>` : ``}
       </div>
     `;
   }).join("");
@@ -139,11 +138,11 @@ function buildGrammarHTML(lessonData) {
     const sub = (lang === "zh") ? ko : zh;
 
     return `
-      <div class="border rounded-xl p-3">
-        <div class="text-sm font-bold">${escapeHtml(title)}</div>
-        ${main ? `<div class="text-sm mt-2">${escapeHtml(main)}</div>` : ``}
-        ${sub ? `<div class="text-sm opacity-70 mt-1">${escapeHtml(sub)}</div>` : ``}
-        ${ex ? `<div class="text-sm mt-2 bg-slate-50 border rounded-lg p-2">${escapeHtml(stringifyMaybe(ex))}</div>` : ``}
+      <div class="border border-slate-200 rounded-xl p-3 mb-3 last:mb-0">
+        <div class="text-sm font-bold text-slate-800 mb-2">${escapeHtml(title)}</div>
+        ${main ? `<div class="text-sm text-slate-700 mb-1">${escapeHtml(main)}</div>` : ``}
+        ${sub ? `<div class="text-sm opacity-75 text-slate-600">${escapeHtml(sub)}</div>` : ``}
+        ${ex ? `<div class="text-sm mt-3 pt-3 border-t border-slate-100 bg-slate-50/80 rounded-lg p-2 text-slate-700">${escapeHtml(stringifyMaybe(ex))}</div>` : ``}
       </div>
     `;
   }).join("");
@@ -210,12 +209,13 @@ async function openLesson({ lessonNo, file }) {
       file: file || "",
     });
 
+    const lessonWordsRaw = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
+    const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");
     let vocab = [];
-    if (window.HSK_LOADER?.loadVocab) {
+    if (needsVocabEnrichment && window.HSK_LOADER?.loadVocab) {
       vocab = await window.HSK_LOADER.loadVocab(state.lv, { version: state.version });
     }
 
-    const lessonWordsRaw = Array.isArray(lessonData?.words) ? lessonData.words : [];
     const vocabArr = Array.isArray(vocab) ? vocab : [];
     const vocabByKey = new Map(vocabArr.map((v) => [wordKey(v), v]).filter(([k]) => k));
 
@@ -245,11 +245,13 @@ async function openLesson({ lessonNo, file }) {
     const isReview = lessonData?.type === "review";
     const reviewRange = lessonData?.review?.lessonRange;
     if (isReview && (!lessonWords || lessonWords.length === 0) && Array.isArray(reviewRange) && reviewRange.length >= 2) {
+      const reviewTitle = (() => { const r = i18n?.t?.("hsk_review_range"); return (r && r !== "hsk_review_range") ? r : (lang === "zh" ? "复习范围" : lang === "en" ? "Review Range" : "복습 범위"); })();
+      const reviewDesc = (() => { const r = i18n?.t?.("hsk_review_desc"); return (r && r !== "hsk_review_desc") ? r : (lang === "zh" ? "请回顾前面学过的词汇和对话。" : lang === "en" ? "Please review the vocabulary and dialogue from previous lessons." : "앞서 배운 단어와 대화를 복습해 주세요."); })();
       $("hskPanelWords").innerHTML = `
-        <div class="rounded-xl border p-4 bg-slate-50">
-          <div class="font-semibold mb-2">${escapeHtml(i18n?.t?.("hsk_review_range") || "复习范围")}</div>
-          <p>第 ${reviewRange[0]}–${reviewRange[1]} 课 / 1–${reviewRange[1]}과 복습</p>
-          <p class="text-sm opacity-70 mt-2">请回顾前面学过的词汇和对话。</p>
+        <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+          <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
+          <p class="text-slate-700">第 ${reviewRange[0]}–${reviewRange[1]} 课 / 1–${reviewRange[1]}과 복습</p>
+          <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
         </div>
       `;
     } else {
@@ -416,11 +418,13 @@ function bindEvents() {
       const isReview = ld?.type === "review";
       const rr = ld?.review?.lessonRange;
       if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
+        const reviewTitle = (() => { const r = i18n?.t?.("hsk_review_range"); return (r && r !== "hsk_review_range") ? r : (lang === "zh" ? "复习范围" : lang === "en" ? "Review Range" : "복습 범위"); })();
+        const reviewDesc = (() => { const r = i18n?.t?.("hsk_review_desc"); return (r && r !== "hsk_review_desc") ? r : (lang === "zh" ? "请回顾前面学过的词汇和对话。" : lang === "en" ? "Please review the vocabulary and dialogue from previous lessons." : "앞서 배운 단어와 대화를 복습해 주세요."); })();
         $("hskPanelWords").innerHTML = `
-          <div class="rounded-xl border p-4 bg-slate-50">
-            <div class="font-semibold mb-2">${escapeHtml(i18n?.t?.("hsk_review_range") || "复习范围")}</div>
-            <p>第 ${rr[0]}–${rr[1]} 课 / 1–${rr[1]}과 복습</p>
-            <p class="text-sm opacity-70 mt-2">请回顾前面学过的词汇和对话。</p>
+          <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
+            <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
+            <p class="text-slate-700">第 ${rr[0]}–${rr[1]} 课 / 1–${rr[1]}과 복습</p>
+            <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
           </div>
         `;
       } else {
