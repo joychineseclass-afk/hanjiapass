@@ -231,11 +231,12 @@ function buildAIContext() {
   ].filter(Boolean).join("\n");
 }
 
-/** 获取 vocab-distribution.json 中 distribution 的键顺序（lesson1, lesson2, ...）用于课程排序 */
-const _vocabDistOrderCache = new Map();
-async function getVocabDistributionOrder(lv, version) {
+/** 获取 vocab-distribution.json：distribution 键顺序 + lessonThemes 主题标题
+ *  返回 { order: string[], lessonThemes: Record<string, string> } 或 null */
+const _vocabDistCache = new Map();
+async function getVocabDistribution(lv, version) {
   const key = `${version}:hsk${lv}`;
-  if (_vocabDistOrderCache.has(key)) return _vocabDistOrderCache.get(key);
+  if (_vocabDistCache.has(key)) return _vocabDistCache.get(key);
   const base = String(window.__APP_BASE__ || "").replace(/\/+$/, "");
   const root = base ? base + "/" : "/";
   const url = `${root}data/courses/${version}/hsk${lv}/vocab-distribution.json`;
@@ -245,8 +246,10 @@ async function getVocabDistributionOrder(lv, version) {
     const data = await res.json();
     const dist = data?.distribution;
     const order = dist && typeof dist === "object" ? Object.keys(dist) : null;
-    _vocabDistOrderCache.set(key, order);
-    return order;
+    const lessonThemes = data?.lessonThemes && typeof data.lessonThemes === "object" ? data.lessonThemes : null;
+    const out = { order, lessonThemes };
+    _vocabDistCache.set(key, out);
+    return out;
   } catch {
     return null;
   }
@@ -267,6 +270,17 @@ function sortLessonsByDistributionOrder(lessons, order) {
   });
 }
 
+/** 用 vocab-distribution 的 lessonThemes 覆盖课程标题（与顺序来源保持一致） */
+function applyVocabDistributionTitles(lessons, lessonThemes) {
+  if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") return lessons;
+  return lessons.map((l) => {
+    const no = Number(l?.lessonNo ?? l?.lesson ?? l?.id ?? l?.no ?? 0) || 0;
+    const theme = no ? (lessonThemes[String(no)] ?? lessonThemes[no]) : null;
+    if (!theme || typeof theme !== "string") return l;
+    return { ...l, title: theme };
+  });
+}
+
 async function loadLessons() {
   setError("");
   setSubTitle();
@@ -280,9 +294,11 @@ async function loadLessons() {
     let lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
     lessons = Array.isArray(lessons) ? lessons : [];
 
-    const order = await getVocabDistributionOrder(state.lv, state.version);
-    state.lessons = sortLessonsByDistributionOrder(lessons, order);
+    const vocabDist = await getVocabDistribution(state.lv, state.version);
+    let result = sortLessonsByDistributionOrder(lessons, vocabDist?.order ?? null);
+    result = applyVocabDistributionTitles(result, vocabDist?.lessonThemes ?? null);
 
+    state.lessons = result;
     renderLessonList(listEl, state.lessons, { lang });
   } catch (e) {
     console.error(e);
