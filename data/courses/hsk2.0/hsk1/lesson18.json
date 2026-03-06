@@ -18,66 +18,75 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "会",
-      "pinyin": "",
+      "hanzi": "买",
+      "pinyin": "mǎi",
       "meaning": {
-        "zh": "会",
+        "zh": "买",
         "kr": "",
-        "en": ""
+        "en": "to buy; to purchase"
       }
     },
     {
-      "hanzi": "能",
-      "pinyin": "",
+      "hanzi": "钱",
+      "pinyin": "Qián",
       "meaning": {
-        "zh": "能",
+        "zh": "钱",
         "kr": "",
-        "en": ""
+        "en": "surname Qian"
       }
     },
     {
-      "hanzi": "打电话",
-      "pinyin": "",
+      "hanzi": "商店",
+      "pinyin": "shāngdiàn",
       "meaning": {
-        "zh": "打电话",
+        "zh": "商店",
         "kr": "",
-        "en": ""
+        "en": "store; shop"
       }
     },
     {
-      "hanzi": "回",
-      "pinyin": "",
+      "hanzi": "衣服",
+      "pinyin": "yīfu",
       "meaning": {
-        "zh": "回",
+        "zh": "衣服",
         "kr": "",
-        "en": ""
+        "en": "clothes"
       }
     },
     {
-      "hanzi": "上",
-      "pinyin": "",
+      "hanzi": "些",
+      "pinyin": "xiē",
       "meaning": {
-        "zh": "上",
+        "zh": "些",
         "kr": "",
-        "en": ""
+        "en": "classifier indicating a small amount or small number greater than 1: some, a few, several"
       }
     },
     {
-      "hanzi": "下",
-      "pinyin": "",
+      "hanzi": "那",
+      "pinyin": "Nā",
       "meaning": {
-        "zh": "下",
+        "zh": "那",
         "kr": "",
-        "en": ""
+        "en": "surname Na"
       }
     },
     {
-      "hanzi": "出租车",
-      "pinyin": "",
+      "hanzi": "这",
+      "pinyin": "zhè",
       "meaning": {
-        "zh": "出租车",
+        "zh": "这",
         "kr": "",
-        "en": ""
+        "en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this; these (followed by a classifier) (in this sense, commonly pr. [zhèi], esp. in Beijing)"
+      }
+    },
+    {
+      "hanzi": "电脑",
+      "pinyin": "diànnǎo",
+      "meaning": {
+        "zh": "电脑",
+        "kr": "",
+        "en": "computer"
       }
     }
   ],

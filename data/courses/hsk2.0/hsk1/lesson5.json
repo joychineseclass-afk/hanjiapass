@@ -18,66 +18,138 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "爸爸",
-      "pinyin": "",
+      "hanzi": "一",
+      "pinyin": "yī",
       "meaning": {
-        "zh": "爸爸",
+        "zh": "一",
         "kr": "",
-        "en": ""
+        "en": "one; single; a (article); as soon as; entire; whole; all; throughout; \"one\" radical in Chinese characters (Kangxi radical 1); also pr. [yāo] for greater clarity when spelling out numbers digit by digit"
       }
     },
     {
-      "hanzi": "妈妈",
-      "pinyin": "",
+      "hanzi": "二",
+      "pinyin": "èr",
       "meaning": {
-        "zh": "妈妈",
+        "zh": "二",
         "kr": "",
-        "en": ""
+        "en": "two; 2; (Beijing dialect) stupid"
       }
     },
     {
-      "hanzi": "儿子",
-      "pinyin": "",
+      "hanzi": "三",
+      "pinyin": "Sān",
       "meaning": {
-        "zh": "儿子",
+        "zh": "三",
         "kr": "",
-        "en": ""
+        "en": "surname San"
       }
     },
     {
-      "hanzi": "女儿",
-      "pinyin": "",
+      "hanzi": "四",
+      "pinyin": "sì",
       "meaning": {
-        "zh": "女儿",
+        "zh": "四",
         "kr": "",
-        "en": ""
+        "en": "four; 4"
       }
     },
     {
-      "hanzi": "家",
-      "pinyin": "",
+      "hanzi": "五",
+      "pinyin": "wǔ",
       "meaning": {
-        "zh": "家",
+        "zh": "五",
         "kr": "",
-        "en": ""
+        "en": "five; 5"
       }
     },
     {
-      "hanzi": "有",
-      "pinyin": "",
+      "hanzi": "六",
+      "pinyin": "liù",
       "meaning": {
-        "zh": "有",
+        "zh": "六",
         "kr": "",
-        "en": ""
+        "en": "six; 6"
       }
     },
     {
-      "hanzi": "没",
-      "pinyin": "",
+      "hanzi": "七",
+      "pinyin": "qī",
       "meaning": {
-        "zh": "没",
+        "zh": "七",
         "kr": "",
-        "en": ""
+        "en": "seven; 7"
+      }
+    },
+    {
+      "hanzi": "八",
+      "pinyin": "bā",
+      "meaning": {
+        "zh": "八",
+        "kr": "",
+        "en": "eight; 8"
+      }
+    },
+    {
+      "hanzi": "九",
+      "pinyin": "jiǔ",
+      "meaning": {
+        "zh": "九",
+        "kr": "",
+        "en": "nine; 9"
+      }
+    },
+    {
+      "hanzi": "十",
+      "pinyin": "shí",
+      "meaning": {
+        "zh": "十",
+        "kr": "",
+        "en": "ten; 10"
+      }
+    },
+    {
+      "hanzi": "零",
+      "pinyin": "líng",
+      "meaning": {
+        "zh": "零",
+        "kr": "",
+        "en": "zero; nought; zero sign; fractional; fragmentary; odd (of numbers); (placed between two numbers to indicate a smaller quantity followed by a larger one); fraction; (in mathematics) remainder (after division); extra; to wither and fall; to wither"
+      }
+    },
+    {
+      "hanzi": "多少",
+      "pinyin": "duōshǎo",
+      "meaning": {
+        "zh": "多少",
+        "kr": "",
+        "en": "number; amount; somewhat"
+      }
+    },
+    {
+      "hanzi": "几",
+      "pinyin": "jī",
+      "meaning": {
+        "zh": "几",
+        "kr": "",
+        "en": "small table"
+      }
+    },
+    {
+      "hanzi": "个",
+      "pinyin": "gě",
+      "meaning": {
+        "zh": "个",
+        "kr": "",
+        "en": "used in 自个儿"
+      }
+    },
+    {
+      "hanzi": "少",
+      "pinyin": "shǎo",
+      "meaning": {
+        "zh": "少",
+        "kr": "",
+        "en": "few; less; to lack; to be missing; to stop (doing sth); seldom"
       }
     }
   ],

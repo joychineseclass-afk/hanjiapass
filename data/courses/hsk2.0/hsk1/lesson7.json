@@ -18,66 +18,57 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "一",
-      "pinyin": "",
+      "hanzi": "今天",
+      "pinyin": "jīntiān",
       "meaning": {
-        "zh": "一",
+        "zh": "今天",
         "kr": "",
-        "en": ""
+        "en": "today; at the present; now"
       }
     },
     {
-      "hanzi": "二",
-      "pinyin": "",
+      "hanzi": "明天",
+      "pinyin": "míngtiān",
       "meaning": {
-        "zh": "二",
+        "zh": "明天",
         "kr": "",
-        "en": ""
+        "en": "tomorrow"
       }
     },
     {
-      "hanzi": "三",
-      "pinyin": "",
+      "hanzi": "昨天",
+      "pinyin": "zuótiān",
       "meaning": {
-        "zh": "三",
+        "zh": "昨天",
         "kr": "",
-        "en": ""
+        "en": "yesterday"
       }
     },
     {
-      "hanzi": "四",
-      "pinyin": "",
+      "hanzi": "月",
+      "pinyin": "yuè",
       "meaning": {
-        "zh": "四",
+        "zh": "月",
         "kr": "",
-        "en": ""
+        "en": "moon; month; monthly"
       }
     },
     {
-      "hanzi": "五",
-      "pinyin": "",
+      "hanzi": "日",
+      "pinyin": "Rì",
       "meaning": {
-        "zh": "五",
+        "zh": "日",
         "kr": "",
-        "en": ""
+        "en": "abbr. for 本, Japan"
       }
     },
     {
-      "hanzi": "六",
-      "pinyin": "",
+      "hanzi": "星期",
+      "pinyin": "xīngqī",
       "meaning": {
-        "zh": "六",
+        "zh": "星期",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "七",
-      "pinyin": "",
-      "meaning": {
-        "zh": "七",
-        "kr": "",
-        "en": ""
+        "en": "week; day of the week; Sunday"
       }
     }
   ],

@@ -18,66 +18,84 @@
   "objectives": [],
   "vocab": [
     {
+      "hanzi": "爸爸",
+      "pinyin": "bàba",
+      "meaning": {
+        "zh": "爸爸",
+        "kr": "",
+        "en": "(coll.) father; dad"
+      }
+    },
+    {
+      "hanzi": "妈妈",
+      "pinyin": "māma",
+      "meaning": {
+        "zh": "妈妈",
+        "kr": "",
+        "en": "mama; mommy; mother"
+      }
+    },
+    {
+      "hanzi": "儿子",
+      "pinyin": "érzi",
+      "meaning": {
+        "zh": "儿子",
+        "kr": "",
+        "en": "son"
+      }
+    },
+    {
+      "hanzi": "女儿",
+      "pinyin": "nǚér",
+      "meaning": {
+        "zh": "女儿",
+        "kr": "",
+        "en": "daughter"
+      }
+    },
+    {
+      "hanzi": "家",
+      "pinyin": "jiā",
+      "meaning": {
+        "zh": "家",
+        "kr": "",
+        "en": "used in 家伙 and 家俱"
+      }
+    },
+    {
+      "hanzi": "人",
+      "pinyin": "rén",
+      "meaning": {
+        "zh": "人",
+        "kr": "",
+        "en": "person; people"
+      }
+    },
+    {
+      "hanzi": "的",
+      "pinyin": "de",
+      "meaning": {
+        "zh": "的",
+        "kr": "",
+        "en": "of; ~'s (possessive particle); (used after an attribute); (used to form a nominal expression); (used at the end of a declarative sentence for emphasis); also pr. [dì] or [di] in poetry and songs"
+      }
+    },
+    {
       "hanzi": "他",
-      "pinyin": "",
+      "pinyin": "tā",
       "meaning": {
         "zh": "他",
         "kr": "",
-        "en": ""
+        "en": "he; him (used for either sex when the sex is unknown or unimportant); (used before sb's name for emphasis); (used as a meaningless mock object); (literary) other"
       }
     },
     {
       "hanzi": "她",
-      "pinyin": "",
+      "pinyin": "tā",
       "meaning": {
         "zh": "她",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "谁",
-      "pinyin": "",
-      "meaning": {
-        "zh": "谁",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "认识",
-      "pinyin": "",
-      "meaning": {
-        "zh": "认识",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "我们",
-      "pinyin": "",
-      "meaning": {
-        "zh": "我们",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "你们",
-      "pinyin": "",
-      "meaning": {
-        "zh": "你们",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "他们",
-      "pinyin": "",
-      "meaning": {
-        "zh": "他们",
-        "kr": "",
-        "en": ""
+        "en": "she"
       }
     }
   ],

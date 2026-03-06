@@ -18,57 +18,57 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "个",
-      "pinyin": "",
+      "hanzi": "医院",
+      "pinyin": "yīyuàn",
       "meaning": {
-        "zh": "个",
+        "zh": "医院",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "本",
-      "pinyin": "",
-      "meaning": {
-        "zh": "本",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "些",
-      "pinyin": "",
-      "meaning": {
-        "zh": "些",
-        "kr": "",
-        "en": ""
+        "en": "hospital"
       }
     },
     {
       "hanzi": "怎么",
-      "pinyin": "",
+      "pinyin": "zěnme",
       "meaning": {
         "zh": "怎么",
         "kr": "",
-        "en": ""
+        "en": "how?; what?; why?"
       }
     },
     {
       "hanzi": "怎么样",
-      "pinyin": "",
+      "pinyin": "zěnmeyàng",
       "meaning": {
         "zh": "怎么样",
         "kr": "",
-        "en": ""
+        "en": "how?; how about?; how was it?; how are things?"
       }
     },
     {
-      "hanzi": "请",
-      "pinyin": "",
+      "hanzi": "我们",
+      "pinyin": "wǒmen",
       "meaning": {
-        "zh": "请",
+        "zh": "我们",
         "kr": "",
-        "en": ""
+        "en": "we; us; ourselves; our"
+      }
+    },
+    {
+      "hanzi": "没",
+      "pinyin": "méi",
+      "meaning": {
+        "zh": "没",
+        "kr": "",
+        "en": "(negative prefix for verbs) have not; not"
+      }
+    },
+    {
+      "hanzi": "呢",
+      "pinyin": "ne",
+      "meaning": {
+        "zh": "呢",
+        "kr": "",
+        "en": "particle indicating that a previously asked question is to be applied to the preceding word (\"What about ...?\", \"And ...?\"); particle for inquiring about location (\"Where is ...?\"); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board (\"ok?\", \"are you with me?\"); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation"
       }
     }
   ],

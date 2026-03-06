@@ -18,57 +18,66 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "朋友",
-      "pinyin": "",
+      "hanzi": "岁",
+      "pinyin": "suì",
       "meaning": {
-        "zh": "朋友",
+        "zh": "岁",
         "kr": "",
-        "en": ""
+        "en": "variant of 岁, year; years old"
       }
     },
     {
-      "hanzi": "老师",
-      "pinyin": "",
+      "hanzi": "年",
+      "pinyin": "Nián",
       "meaning": {
-        "zh": "老师",
+        "zh": "年",
         "kr": "",
-        "en": ""
+        "en": "surname Nian"
       }
     },
     {
-      "hanzi": "医生",
-      "pinyin": "",
+      "hanzi": "多",
+      "pinyin": "duō",
       "meaning": {
-        "zh": "医生",
+        "zh": "多",
         "kr": "",
-        "en": ""
+        "en": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-"
       }
     },
     {
-      "hanzi": "先生",
-      "pinyin": "",
+      "hanzi": "大",
+      "pinyin": "dà",
       "meaning": {
-        "zh": "先生",
+        "zh": "大",
         "kr": "",
-        "en": ""
+        "en": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)"
       }
     },
     {
-      "hanzi": "小姐",
-      "pinyin": "",
+      "hanzi": "小",
+      "pinyin": "xiǎo",
       "meaning": {
-        "zh": "小姐",
+        "zh": "小",
         "kr": "",
-        "en": ""
+        "en": "small; tiny; few; young"
       }
     },
     {
-      "hanzi": "同学",
-      "pinyin": "",
+      "hanzi": "了",
+      "pinyin": "le",
       "meaning": {
-        "zh": "同学",
+        "zh": "了",
         "kr": "",
-        "en": ""
+        "en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)"
+      }
+    },
+    {
+      "hanzi": "不",
+      "pinyin": "bù",
+      "meaning": {
+        "zh": "不",
+        "kr": "",
+        "en": "no; not so; (bound form) not; un-"
       }
     }
   ],

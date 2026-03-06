@@ -18,57 +18,48 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "喜欢",
-      "pinyin": "",
+      "hanzi": "茶",
+      "pinyin": "chá",
       "meaning": {
-        "zh": "喜欢",
+        "zh": "茶",
         "kr": "",
-        "en": ""
+        "en": "tea; tea plant"
       }
     },
     {
-      "hanzi": "想",
-      "pinyin": "",
+      "hanzi": "杯子",
+      "pinyin": "bēizi",
       "meaning": {
-        "zh": "想",
+        "zh": "杯子",
         "kr": "",
-        "en": ""
+        "en": "cup; glass"
       }
     },
     {
-      "hanzi": "看",
-      "pinyin": "",
+      "hanzi": "饭馆",
+      "pinyin": "fànguǎn",
       "meaning": {
-        "zh": "看",
+        "zh": "饭馆",
         "kr": "",
-        "en": ""
+        "en": "restaurant"
       }
     },
     {
-      "hanzi": "听",
-      "pinyin": "",
+      "hanzi": "块",
+      "pinyin": "kuài",
       "meaning": {
-        "zh": "听",
+        "zh": "块",
         "kr": "",
-        "en": ""
+        "en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units"
       }
     },
     {
-      "hanzi": "说",
-      "pinyin": "",
+      "hanzi": "东西",
+      "pinyin": "dōngxī",
       "meaning": {
-        "zh": "说",
+        "zh": "东西",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "读",
-      "pinyin": "",
-      "meaning": {
-        "zh": "读",
-        "kr": "",
-        "en": ""
+        "en": "east and west"
       }
     }
   ],

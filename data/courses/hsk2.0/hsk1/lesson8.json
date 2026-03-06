@@ -18,66 +18,66 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "八",
-      "pinyin": "",
+      "hanzi": "点",
+      "pinyin": "diǎn",
       "meaning": {
-        "zh": "八",
+        "zh": "点",
         "kr": "",
-        "en": ""
+        "en": "point; dot; drop; speck; o'clock; point (in space or time); to draw a dot; to check on a list; to choose; to order (food in a restaurant); to touch briefly; to hint; to light; to ignite; to pour a liquid drop by drop; (old) one fifth of a two-hour watch 更; dot stroke in Chinese characters; classifier for items"
       }
     },
     {
-      "hanzi": "九",
-      "pinyin": "",
+      "hanzi": "分钟",
+      "pinyin": "fēnzhōng",
       "meaning": {
-        "zh": "九",
+        "zh": "分钟",
         "kr": "",
-        "en": ""
+        "en": "minute"
       }
     },
     {
-      "hanzi": "十",
-      "pinyin": "",
+      "hanzi": "上午",
+      "pinyin": "shàngwǔ",
       "meaning": {
-        "zh": "十",
+        "zh": "上午",
         "kr": "",
-        "en": ""
+        "en": "morning"
       }
     },
     {
-      "hanzi": "几",
-      "pinyin": "",
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
       "meaning": {
-        "zh": "几",
+        "zh": "下午",
         "kr": "",
-        "en": ""
+        "en": "afternoon; p.m."
       }
     },
     {
-      "hanzi": "多少",
-      "pinyin": "",
+      "hanzi": "中午",
+      "pinyin": "zhōngwǔ",
       "meaning": {
-        "zh": "多少",
+        "zh": "中午",
         "kr": "",
-        "en": ""
+        "en": "noon; midday"
       }
     },
     {
-      "hanzi": "岁",
-      "pinyin": "",
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
       "meaning": {
-        "zh": "岁",
+        "zh": "现在",
         "kr": "",
-        "en": ""
+        "en": "now; at present; at the moment; modern; current; nowadays"
       }
     },
     {
-      "hanzi": "年",
-      "pinyin": "",
+      "hanzi": "时候",
+      "pinyin": "shíhou",
       "meaning": {
-        "zh": "年",
+        "zh": "时候",
         "kr": "",
-        "en": ""
+        "en": "time; length of time; moment; period"
       }
     }
   ],

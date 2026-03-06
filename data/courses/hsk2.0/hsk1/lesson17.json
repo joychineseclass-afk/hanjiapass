@@ -18,66 +18,57 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "工作",
-      "pinyin": "",
+      "hanzi": "出租车",
+      "pinyin": "chūzūchē",
       "meaning": {
-        "zh": "工作",
+        "zh": "出租车",
         "kr": "",
-        "en": ""
+        "en": "taxi; (Tw) rental car"
       }
     },
     {
-      "hanzi": "学习",
-      "pinyin": "",
+      "hanzi": "飞机",
+      "pinyin": "fēijī",
       "meaning": {
-        "zh": "学习",
+        "zh": "飞机",
         "kr": "",
-        "en": ""
+        "en": "airplane"
       }
     },
     {
-      "hanzi": "睡觉",
-      "pinyin": "",
+      "hanzi": "火车站",
+      "pinyin": "huǒchēzhàn",
       "meaning": {
-        "zh": "睡觉",
+        "zh": "火车站",
         "kr": "",
-        "en": ""
+        "en": "train station"
       }
     },
     {
       "hanzi": "开",
-      "pinyin": "",
+      "pinyin": "kāi",
       "meaning": {
         "zh": "开",
         "kr": "",
-        "en": ""
+        "en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate; to run; to boil; to write out (a prescription, check, invoice etc); (directional complement) away; off; carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format"
       }
     },
     {
-      "hanzi": "坐",
-      "pinyin": "",
+      "hanzi": "看见",
+      "pinyin": "kànjiàn",
       "meaning": {
-        "zh": "坐",
+        "zh": "看见",
         "kr": "",
-        "en": ""
+        "en": "to see; to catch sight of"
       }
     },
     {
-      "hanzi": "住",
-      "pinyin": "",
+      "hanzi": "都",
+      "pinyin": "Dū",
       "meaning": {
-        "zh": "住",
+        "zh": "都",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "做",
-      "pinyin": "",
-      "meaning": {
-        "zh": "做",
-        "kr": "",
-        "en": ""
+        "en": "surname Du"
       }
     }
   ],

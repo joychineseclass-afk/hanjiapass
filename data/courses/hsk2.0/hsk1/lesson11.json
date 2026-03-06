@@ -19,66 +19,75 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "吃",
-      "pinyin": "",
+      "hanzi": "学校",
+      "pinyin": "xuéxiào",
       "meaning": {
-        "zh": "吃",
+        "zh": "学校",
         "kr": "",
-        "en": ""
+        "en": "school"
       }
     },
     {
-      "hanzi": "喝",
-      "pinyin": "",
+      "hanzi": "学习",
+      "pinyin": "xuéxí",
       "meaning": {
-        "zh": "喝",
+        "zh": "学习",
         "kr": "",
-        "en": ""
+        "en": "to learn; to study"
       }
     },
     {
-      "hanzi": "水",
-      "pinyin": "",
+      "hanzi": "读",
+      "pinyin": "dòu",
       "meaning": {
-        "zh": "水",
+        "zh": "读",
         "kr": "",
-        "en": ""
+        "en": "comma; phrase marked by pause"
       }
     },
     {
-      "hanzi": "茶",
-      "pinyin": "",
+      "hanzi": "书",
+      "pinyin": "Shū",
       "meaning": {
-        "zh": "茶",
+        "zh": "书",
         "kr": "",
-        "en": ""
+        "en": "abbr. for 书经"
       }
     },
     {
-      "hanzi": "米饭",
-      "pinyin": "",
+      "hanzi": "字",
+      "pinyin": "zì",
       "meaning": {
-        "zh": "米饭",
+        "zh": "字",
         "kr": "",
-        "en": ""
+        "en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China"
       }
     },
     {
-      "hanzi": "苹果",
-      "pinyin": "",
+      "hanzi": "本",
+      "pinyin": "běn",
       "meaning": {
-        "zh": "苹果",
+        "zh": "本",
         "kr": "",
-        "en": ""
+        "en": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc"
       }
     },
     {
-      "hanzi": "菜",
-      "pinyin": "",
+      "hanzi": "写",
+      "pinyin": "xiě",
       "meaning": {
-        "zh": "菜",
+        "zh": "写",
         "kr": "",
-        "en": ""
+        "en": "to write"
+      }
+    },
+    {
+      "hanzi": "汉语",
+      "pinyin": "Hànyǔ",
+      "meaning": {
+        "zh": "汉语",
+        "kr": "",
+        "en": "Chinese language"
       }
     }
   ],

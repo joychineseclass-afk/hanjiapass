@@ -19,57 +19,75 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "点",
-      "pinyin": "",
+      "hanzi": "在",
+      "pinyin": "zài",
       "meaning": {
-        "zh": "点",
+        "zh": "在",
         "kr": "",
-        "en": ""
+        "en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)"
       }
     },
     {
-      "hanzi": "分钟",
-      "pinyin": "",
+      "hanzi": "哪",
+      "pinyin": "nǎ",
       "meaning": {
-        "zh": "分钟",
+        "zh": "哪",
         "kr": "",
-        "en": ""
+        "en": "how; which"
       }
     },
     {
-      "hanzi": "号",
-      "pinyin": "",
+      "hanzi": "里",
+      "pinyin": "lǐ",
       "meaning": {
-        "zh": "号",
+        "zh": "里",
         "kr": "",
-        "en": ""
+        "en": "variant of 里"
       }
     },
     {
-      "hanzi": "月",
-      "pinyin": "",
+      "hanzi": "上",
+      "pinyin": "shǎng",
       "meaning": {
-        "zh": "月",
+        "zh": "上",
         "kr": "",
-        "en": ""
+        "en": "used in 上声"
       }
     },
     {
-      "hanzi": "星期",
-      "pinyin": "",
+      "hanzi": "下",
+      "pinyin": "xià",
       "meaning": {
-        "zh": "星期",
+        "zh": "下",
         "kr": "",
-        "en": ""
+        "en": "down; downwards; below; lower; later; next (week etc); second (of two parts); to decline; to go down; to arrive at (a decision, conclusion etc); measure word to show the frequency of an action"
       }
     },
     {
-      "hanzi": "中午",
-      "pinyin": "",
+      "hanzi": "前面",
+      "pinyin": "qiánmiàn",
       "meaning": {
-        "zh": "中午",
+        "zh": "前面",
         "kr": "",
-        "en": ""
+        "en": "ahead; in front; preceding; above; also pr. [qián mian]"
+      }
+    },
+    {
+      "hanzi": "后面",
+      "pinyin": "hòumian",
+      "meaning": {
+        "zh": "后面",
+        "kr": "",
+        "en": "the back; the rear; the last bit; behind; near the end; at the back; later; afterwards"
+      }
+    },
+    {
+      "hanzi": "住",
+      "pinyin": "zhù",
+      "meaning": {
+        "zh": "住",
+        "kr": "",
+        "en": "to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt)"
       }
     }
   ],

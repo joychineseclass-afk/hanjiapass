@@ -18,66 +18,75 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "衣服",
-      "pinyin": "",
+      "hanzi": "天气",
+      "pinyin": "tiānqì",
       "meaning": {
-        "zh": "衣服",
+        "zh": "天气",
         "kr": "",
-        "en": ""
+        "en": "weather"
       }
     },
     {
-      "hanzi": "桌子",
-      "pinyin": "",
+      "hanzi": "热",
+      "pinyin": "rè",
       "meaning": {
-        "zh": "桌子",
+        "zh": "热",
         "kr": "",
-        "en": ""
+        "en": "to warm up; to heat up; hot (of weather); heat; fervent"
       }
     },
     {
-      "hanzi": "椅子",
-      "pinyin": "",
+      "hanzi": "冷",
+      "pinyin": "Lěng",
       "meaning": {
-        "zh": "椅子",
+        "zh": "冷",
         "kr": "",
-        "en": ""
+        "en": "surname Leng"
       }
     },
     {
-      "hanzi": "杯子",
-      "pinyin": "",
+      "hanzi": "下雨",
+      "pinyin": "xiàyǔ",
       "meaning": {
-        "zh": "杯子",
+        "zh": "下雨",
         "kr": "",
-        "en": ""
+        "en": "to rain"
       }
     },
     {
-      "hanzi": "书",
-      "pinyin": "",
+      "hanzi": "太",
+      "pinyin": "tài",
       "meaning": {
-        "zh": "书",
+        "zh": "太",
         "kr": "",
-        "en": ""
+        "en": "highest; greatest; too (much); very; extremely"
       }
     },
     {
-      "hanzi": "字",
-      "pinyin": "",
+      "hanzi": "想",
+      "pinyin": "xiǎng",
       "meaning": {
-        "zh": "字",
+        "zh": "想",
         "kr": "",
-        "en": ""
+        "en": "to think (about); to think of; to devise; to think (that); to believe (that); to desire; to want (to); to miss (feel wistful about the absence of)"
       }
     },
     {
-      "hanzi": "电脑",
-      "pinyin": "",
+      "hanzi": "说话",
+      "pinyin": "shuōhuà",
       "meaning": {
-        "zh": "电脑",
+        "zh": "说话",
         "kr": "",
-        "en": ""
+        "en": "to speak; to say; to talk; to gossip; to tell stories; talk; word"
+      }
+    },
+    {
+      "hanzi": "睡觉",
+      "pinyin": "shuìjiào",
+      "meaning": {
+        "zh": "睡觉",
+        "kr": "",
+        "en": "to go to bed; to sleep"
       }
     }
   ],

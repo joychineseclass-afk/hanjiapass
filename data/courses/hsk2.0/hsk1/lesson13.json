@@ -18,66 +18,84 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "去",
-      "pinyin": "",
+      "hanzi": "喜欢",
+      "pinyin": "xǐhuan",
       "meaning": {
-        "zh": "去",
+        "zh": "喜欢",
         "kr": "",
-        "en": ""
+        "en": "to like; to be fond of"
       }
     },
     {
-      "hanzi": "来",
-      "pinyin": "",
+      "hanzi": "爱",
+      "pinyin": "ài",
       "meaning": {
-        "zh": "来",
+        "zh": "爱",
         "kr": "",
-        "en": ""
+        "en": "to love; to be fond of; to like; affection; to be inclined (to do sth); to tend to (happen)"
       }
     },
     {
-      "hanzi": "在",
-      "pinyin": "",
+      "hanzi": "看",
+      "pinyin": "kān",
       "meaning": {
-        "zh": "在",
+        "zh": "看",
         "kr": "",
-        "en": ""
+        "en": "to look after; to take care of; to watch; to guard"
       }
     },
     {
-      "hanzi": "这",
-      "pinyin": "",
+      "hanzi": "听",
+      "pinyin": "yǐn",
       "meaning": {
-        "zh": "这",
+        "zh": "听",
         "kr": "",
-        "en": ""
+        "en": "smile (archaic)"
       }
     },
     {
-      "hanzi": "那",
-      "pinyin": "",
+      "hanzi": "狗",
+      "pinyin": "gǒu",
       "meaning": {
-        "zh": "那",
+        "zh": "狗",
         "kr": "",
-        "en": ""
+        "en": "dog"
       }
     },
     {
-      "hanzi": "哪",
-      "pinyin": "",
+      "hanzi": "猫",
+      "pinyin": "māo",
       "meaning": {
-        "zh": "哪",
+        "zh": "猫",
         "kr": "",
-        "en": ""
+        "en": "cat; (dialect) to hide oneself; (coll.) modem"
       }
     },
     {
-      "hanzi": "哪儿",
-      "pinyin": "",
+      "hanzi": "电影",
+      "pinyin": "diànyǐng",
       "meaning": {
-        "zh": "哪儿",
+        "zh": "电影",
         "kr": "",
-        "en": ""
+        "en": "movie; film"
+      }
+    },
+    {
+      "hanzi": "电视",
+      "pinyin": "diànshì",
+      "meaning": {
+        "zh": "电视",
+        "kr": "",
+        "en": "television; TV"
+      }
+    },
+    {
+      "hanzi": "漂亮",
+      "pinyin": "piàoliang",
+      "meaning": {
+        "zh": "漂亮",
+        "kr": "",
+        "en": "pretty; beautiful"
       }
     }
   ],

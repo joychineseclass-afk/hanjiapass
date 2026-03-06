@@ -18,66 +18,75 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "学校",
-      "pinyin": "",
+      "hanzi": "吃",
+      "pinyin": "chī",
       "meaning": {
-        "zh": "学校",
+        "zh": "吃",
         "kr": "",
-        "en": ""
+        "en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)"
       }
     },
     {
-      "hanzi": "医院",
-      "pinyin": "",
+      "hanzi": "喝",
+      "pinyin": "hē",
       "meaning": {
-        "zh": "医院",
+        "zh": "喝",
         "kr": "",
-        "en": ""
+        "en": "to drink; variant of 嗬"
       }
     },
     {
-      "hanzi": "北京",
-      "pinyin": "",
+      "hanzi": "菜",
+      "pinyin": "cài",
       "meaning": {
-        "zh": "北京",
+        "zh": "菜",
         "kr": "",
-        "en": ""
+        "en": "dish (type of food); vegetable; cuisine; (coll.) (one's) type; (of one's skills etc) weak; poor"
       }
     },
     {
-      "hanzi": "中国",
-      "pinyin": "",
+      "hanzi": "米饭",
+      "pinyin": "mǐfàn",
       "meaning": {
-        "zh": "中国",
+        "zh": "米饭",
         "kr": "",
-        "en": ""
+        "en": "(cooked) rice"
       }
     },
     {
-      "hanzi": "里",
-      "pinyin": "",
+      "hanzi": "水",
+      "pinyin": "Shuǐ",
       "meaning": {
-        "zh": "里",
+        "zh": "水",
         "kr": "",
-        "en": ""
+        "en": "surname Shui"
       }
     },
     {
-      "hanzi": "前面",
-      "pinyin": "",
+      "hanzi": "水果",
+      "pinyin": "shuǐguǒ",
       "meaning": {
-        "zh": "前面",
+        "zh": "水果",
         "kr": "",
-        "en": ""
+        "en": "fruit"
       }
     },
     {
-      "hanzi": "后面",
-      "pinyin": "",
+      "hanzi": "苹果",
+      "pinyin": "píngguǒ",
       "meaning": {
-        "zh": "后面",
+        "zh": "苹果",
         "kr": "",
-        "en": ""
+        "en": "apple"
+      }
+    },
+    {
+      "hanzi": "和",
+      "pinyin": "hé",
+      "meaning": {
+        "zh": "和",
+        "kr": "",
+        "en": "old variant of 和"
       }
     }
   ],

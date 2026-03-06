@@ -19,66 +19,48 @@
   "objectives": [],
   "vocab": [
     {
-      "hanzi": "今天",
-      "pinyin": "",
+      "hanzi": "喂",
+      "pinyin": "wéi",
       "meaning": {
-        "zh": "今天",
+        "zh": "喂",
         "kr": "",
-        "en": ""
+        "en": "hello (when answering the phone)"
       }
     },
     {
-      "hanzi": "明天",
-      "pinyin": "",
+      "hanzi": "请",
+      "pinyin": "qǐng",
       "meaning": {
-        "zh": "明天",
+        "zh": "请",
         "kr": "",
-        "en": ""
+        "en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request"
       }
     },
     {
-      "hanzi": "昨天",
-      "pinyin": "",
+      "hanzi": "打电话",
+      "pinyin": "dǎdiànhuà",
       "meaning": {
-        "zh": "昨天",
+        "zh": "打电话",
         "kr": "",
-        "en": ""
+        "en": "to make a telephone call"
       }
     },
     {
-      "hanzi": "现在",
-      "pinyin": "",
+      "hanzi": "谁",
+      "pinyin": "shéi",
       "meaning": {
-        "zh": "现在",
+        "zh": "谁",
         "kr": "",
-        "en": ""
+        "en": "who; also pr. [shuí]"
       }
     },
     {
-      "hanzi": "时候",
-      "pinyin": "",
+      "hanzi": "问",
+      "pinyin": "wèn",
       "meaning": {
-        "zh": "时候",
+        "zh": "问",
         "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "上午",
-      "pinyin": "",
-      "meaning": {
-        "zh": "上午",
-        "kr": "",
-        "en": ""
-      }
-    },
-    {
-      "hanzi": "下午",
-      "pinyin": "",
-      "meaning": {
-        "zh": "下午",
-        "kr": "",
-        "en": ""
+        "en": "to ask; to inquire"
       }
     }
   ],
