@@ -160,18 +160,18 @@ function meaningTextOf(val, lang) {
   return String(val);
 }
 
-/** 主释义 + 次要释义（老师对照用）：ko主+en次 / zh主+en次 / en主+zh次 */
-function getMeaningMainAndSub(raw, lang) {
+/** 按系统语言取单一释义，缺失时按 kr -> en -> zh 回退 */
+function getMeaningSingle(raw, lang) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   const m = raw?.meaning ?? raw;
   const obj = typeof m === "object" ? m : {};
-  const ko = str(raw?.ko ?? raw?.kr ?? obj.ko ?? obj.kr);
-  const zh = str(raw?.zh ?? raw?.cn ?? obj.zh ?? obj.cn) || wordKey(raw);
+  const kr = str(raw?.ko ?? raw?.kr ?? obj.ko ?? obj.kr);
   const en = str(raw?.en ?? obj.en ?? obj.english);
+  const zh = str(raw?.zh ?? raw?.cn ?? obj.zh ?? obj.cn) || wordKey(raw);
 
-  if (lang === "ko") return { main: ko || en || zh, sub: en };
-  if (lang === "zh") return { main: zh || en || ko, sub: en };
-  return { main: en || zh || ko, sub: zh };
+  if (lang === "ko") return kr || en || zh;
+  if (lang === "en") return en || kr || zh;
+  return zh || kr || en;
 }
 
 export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
@@ -184,13 +184,11 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       const raw = typeof x === "string" ? { hanzi: x } : (x || {});
       const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
       const pinyinStr = wordPinyin(raw);
-      const { main: meaningMain, sub: meaningSub } = getMeaningMainAndSub(raw, currentLang);
-      let mainStr = meaningMain;
+      let mainStr = getMeaningSingle(raw, currentLang);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
       if (!mainStr) {
         mainStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
       }
-      const subStr = meaningSub || "";
 
       const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
       const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
@@ -206,7 +204,6 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
         <div class="word-meaning">
           <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
-          ${subStr ? `<div class="word-meaning-sub">${escapeHtml(subStr)}</div>` : ""}
         </div>
         <div class="word-actions">
           <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>

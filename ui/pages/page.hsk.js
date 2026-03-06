@@ -8,6 +8,7 @@ import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
+import { ensurePinyin } from "../utils/pinyinBrowser.js";
 
 const state = {
   lv: 1,
@@ -90,62 +91,138 @@ function updateTabsUI() {
   });
 }
 
-function buildDialogueHTML(lessonData) {
-  // Accept: lessonData.dialogue could be array of lines or object.
+/** 按系统语言取翻译，缺失时按 kr -> en -> zh 回退。zh/cn/line 为中文原文，kr/ko、en 为译文 */
+function pickTranslation(line, lang, zhMain = "") {
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const kr = str(line?.kr ?? line?.ko);
+  const en = str(line?.en);
+  const zhTr = str(line?.zh ?? line?.cn);
+  let out = "";
+  if (lang === "ko") out = kr || en || zhTr;
+  else if (lang === "en") out = en || kr || zhTr;
+  else out = zhTr || kr || en;
+  if (out && zhMain && out === zhMain) return ""; // 避免与中文原文重复
+  return out;
+}
+
+async function buildDialogueHTML(lessonData) {
   const d = lessonData?.dialogue;
   if (!d) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   const lang = getLang();
   const arr = Array.isArray(d) ? d : (Array.isArray(d?.lines) ? d.lines : []);
-
   if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
-  return arr.map((line) => {
-    const spk = line?.spk || line?.speaker || "";
-    const zh = line?.zh || line?.cn || line?.line || "";
-    const ko = line?.ko || line?.kr || "";
-    const py = line?.pinyin || line?.py || "";
-    const main = (lang === "zh") ? zh : ko;
-    const sub = (lang === "zh") ? ko : zh;
+  const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
+  const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
+  const version = String(lessonData?.version ?? "").toLowerCase();
+  const isHsk79 = (lv >= 7 || version.includes("7") || version.includes("8") || version.includes("9"));
+  const showPinyin = !isHsk79; // HSK1-6 强制拼音；HSK7-9 预留
+
+  const htmlParts = [];
+  for (const line of arr) {
+    const spk = line?.spk ?? line?.speaker ?? "";
+    const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
+    let py = String(line?.pinyin ?? line?.py ?? "").trim();
+    if (showPinyin && zh && !py) {
+      py = await ensurePinyin(zh, py);
+    }
+    const trans = pickTranslation(line, lang, zh);
     const isA = String(spk).toUpperCase() === "A";
-    return `
+
+    htmlParts.push(`
       <div class="border border-slate-200 rounded-xl p-3 mb-3 last:mb-0 ${isA ? "bg-slate-50/50" : "bg-white"}">
-        ${spk ? `<div class="text-xs font-medium text-slate-500 mb-1">${escapeHtml(spk)}</div>` : ``}
-        ${main ? `<div class="text-base font-semibold text-slate-800">${escapeHtml(main)}</div>` : ``}
-        ${sub ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(sub)}</div>` : ``}
-        ${py ? `<div class="text-sm italic opacity-70 mt-1 text-slate-500">${escapeHtml(py)}</div>` : ``}
+        ${spk ? `<div class="text-xs font-medium text-slate-500 mb-1">${escapeHtml(spk)}</div>` : ""}
+        ${zh ? `<div class="text-base font-semibold text-slate-800">${escapeHtml(zh)}</div>` : ""}
+        ${py ? `<div class="text-sm italic opacity-80 mt-0.5 text-slate-600">${escapeHtml(py)}</div>` : ""}
+        ${trans ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(trans)}</div>` : ""}
       </div>
-    `;
-  }).join("");
+    `);
+  }
+  return htmlParts.join("");
 }
 
-function buildGrammarHTML(lessonData) {
+/** 语法：取当前语言解释，缺失时 kr -> en -> zh 回退 */
+function pickGrammarExplanation(pt, lang) {
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const kr = str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko);
+  const en = str(pt?.explanation_en ?? pt?.en);
+  const zh = str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
+  if (lang === "ko") return kr || en || zh;
+  if (lang === "en") return en || kr || zh;
+  return zh || kr || en;
+}
+
+/** 语法：取例句（支持 example 为对象 {zh, pinyin, kr, en} 或字符串） */
+function pickGrammarExample(pt, lang) {
+  const ex = pt?.example ?? pt?.examples;
+  if (!ex) return { zh: "", pinyin: "", trans: "" };
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  if (typeof ex === "string") {
+    return { zh: ex, pinyin: "", trans: "" };
+  }
+  const zh = str(ex?.zh ?? ex?.cn ?? ex?.line);
+  const pinyin = str(ex?.pinyin ?? ex?.py);
+  const kr = str(ex?.kr ?? ex?.ko);
+  const en = str(ex?.en);
+  let trans = "";
+  if (lang === "ko") trans = kr || en || str(ex?.zh ?? ex?.cn);
+  else if (lang === "en") trans = en || kr || str(ex?.zh ?? ex?.cn);
+  else trans = str(ex?.zh ?? ex?.cn) || kr || en;
+  return { zh, pinyin, trans };
+}
+
+async function buildGrammarHTML(lessonData) {
   const g = lessonData?.grammar;
   if (!g) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
   const lang = getLang();
   const arr = Array.isArray(g) ? g : (Array.isArray(g?.points) ? g.points : []);
-
   if (!arr.length) return `<div class="text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
 
-  return arr.map((pt, idx) => {
-    const title = typeof pt?.title === "object" ? (pt.title?.zh || pt.title?.kr || pt.title?.en || "") : (pt?.title || pt?.name || `#${idx + 1}`);
-    const zh = pt?.zh || pt?.cn || pt?.explanation_zh || "";
-    const ko = pt?.ko || pt?.kr || pt?.explanation_kr || "";
-    const ex = pt?.example || pt?.examples || "";
+  const lvRaw = lessonData?.level ?? lessonData?.lv ?? 1;
+  const lv = typeof lvRaw === "string" ? parseInt(String(lvRaw).replace(/\D/g, ""), 10) || 1 : Number(lvRaw) || 1;
+  const version = String(lessonData?.version ?? "").toLowerCase();
+  const isHsk79 = (lv >= 7 || version.includes("7") || version.includes("8") || version.includes("9"));
+  const showPinyin = !isHsk79; // HSK1-6 强制拼音；HSK7-9 预留
 
-    const main = (lang === "zh") ? zh : ko;
-    const sub = (lang === "zh") ? ko : zh;
+  const htmlParts = [];
+  for (let idx = 0; idx < arr.length; idx++) {
+    const pt = arr[idx];
+    const titleRaw = typeof pt?.title === "object"
+      ? (pt.title?.zh ?? pt.title?.kr ?? pt.title?.en ?? "")
+      : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${idx + 1}`);
+    const titlePinyin = typeof pt?.title === "object"
+      ? (pt.title?.pinyin ?? pt.title?.py ?? "")
+      : (pt?.titlePinyin ?? pt?.pinyin ?? pt?.py ?? "");
+    let titlePy = titlePinyin;
+    if (showPinyin && titleRaw && !titlePy) {
+      titlePy = await ensurePinyin(titleRaw, titlePy);
+    }
 
-    return `
-      <div class="border border-slate-200 rounded-xl p-3 mb-3 last:mb-0">
-        <div class="text-sm font-bold text-slate-800 mb-2">${escapeHtml(title)}</div>
-        ${main ? `<div class="text-sm text-slate-700 mb-1">${escapeHtml(main)}</div>` : ``}
-        ${sub ? `<div class="text-sm opacity-75 text-slate-600">${escapeHtml(sub)}</div>` : ``}
-        ${ex ? `<div class="text-sm mt-3 pt-3 border-t border-slate-100 bg-slate-50/80 rounded-lg p-2 text-slate-700">${escapeHtml(stringifyMaybe(ex))}</div>` : ``}
+    const explanation = pickGrammarExplanation(pt, lang);
+    const ex = pickGrammarExample(pt, lang);
+    let exPinyin = ex.pinyin;
+    if (showPinyin && ex.zh && !exPinyin) {
+      exPinyin = await ensurePinyin(ex.zh, exPinyin);
+    }
+
+    htmlParts.push(`
+      <div class="border border-slate-200 rounded-xl p-4 mb-4 last:mb-0">
+        <div class="text-sm font-bold text-slate-800 mb-2">${idx + 1}. ${escapeHtml(titleRaw)}${titlePy ? ` — ${escapeHtml(titlePy)}` : ""}</div>
+        ${explanation ? `<div class="text-sm text-slate-700 mb-3">${escapeHtml(explanation)}</div>` : ""}
+        ${ex.zh ? `
+        <div class="text-sm mt-3 pt-3 border-t border-slate-100 bg-slate-50/80 rounded-lg p-3">
+          <div class="font-medium text-slate-600 mb-1">${escapeHtml(lang === "ko" ? "예문" : lang === "zh" ? "例句" : "Example")}：</div>
+          <div class="text-base font-semibold text-slate-800">${escapeHtml(ex.zh)}</div>
+          ${exPinyin ? `<div class="text-sm italic opacity-80 mt-0.5 text-slate-600">${escapeHtml(exPinyin)}</div>` : ""}
+          ${ex.trans ? `<div class="text-sm opacity-75 mt-1 text-slate-600">${escapeHtml(ex.trans)}</div>` : ""}
+        </div>
+        ` : ""}
       </div>
-    `;
-  }).join("");
+    `);
+  }
+  return htmlParts.join("");
 }
 
 function buildAIContext() {
@@ -199,9 +276,6 @@ async function openLesson({ lessonNo, file }) {
   const no = Number(lessonNo || 1);
 
   try {
-    showStudyMode(`Lesson ${no}`, `HSK ${state.lv} · ${state.version}`);
-    $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
-
     if (!window.HSK_LOADER?.loadLessonDetail) throw new Error("HSK_LOADER.loadLessonDetail not found");
 
     const lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
@@ -228,6 +302,14 @@ async function openLesson({ lessonNo, file }) {
     }).filter((w) => wordKey(w));
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
+
+    const titleObj = lessonData?.title;
+    const titleStr = typeof titleObj === "object"
+      ? (titleObj?.[lang] || titleObj?.kr || titleObj?.zh || titleObj?.en || "")
+      : (typeof titleObj === "string" ? titleObj : "");
+    const headerTitle = titleStr ? `Lesson ${no} / ${titleStr}` : `Lesson ${no}`;
+    showStudyMode(headerTitle, `HSK ${state.lv} · ${state.version}`);
+    $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     // 供 Stroke 弹窗 / fallback 使用的上下文
     window.__HSK_PAGE_CTX = {
@@ -257,8 +339,8 @@ async function openLesson({ lessonNo, file }) {
     } else {
       renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang });
     }
-    $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
-    $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
+    $("hskDialogueBody").innerHTML = await buildDialogueHTML(lessonData);
+    $("hskGrammarBody").innerHTML = await buildGrammarHTML(lessonData);
 
     // AI panel reset
     $("hskAIResult").innerHTML = "";
