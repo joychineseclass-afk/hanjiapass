@@ -23,6 +23,41 @@ const FALLBACK_MAP = {
 const CACHE_PREFIX = "pinyin::";
 const _cache = new Map();
 
+/** 缺失字符集合（自动检测新字） */
+export const missingChars = new Set();
+let _reportScheduled = false;
+
+/** 记录缺失字符，并即时 console 提示 */
+export function recordMissingChar(char) {
+  if (!char || typeof char !== "string" || !/[\u4e00-\u9fff]/.test(char)) return;
+  if (missingChars.has(char)) return;
+  missingChars.add(char);
+  console.warn(`[PinyinMap] Missing character "${char}". Run: npm run build:pinyin`);
+  scheduleReportMissingPinyin();
+}
+
+/** 汇总提示：页面加载后输出缺失字符数量 */
+export function reportMissingPinyin() {
+  const n = missingChars.size;
+  if (n > 0) {
+    console.warn(`[PinyinMap] ${n} characters missing in map. Run: npm run build:pinyin`);
+  }
+}
+
+function scheduleReportMissingPinyin() {
+  if (_reportScheduled) return;
+  _reportScheduled = true;
+  const run = () => {
+    reportMissingPinyin();
+    _reportScheduled = false;
+  };
+  if (typeof document !== "undefined" && document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => setTimeout(run, 500));
+  } else {
+    setTimeout(run, 500);
+  }
+}
+
 /** 从主引擎或兜底获取单字拼音 */
 function charToPinyin(ch, useFallback = true) {
   const main = PINYIN_MAP?.[ch];
@@ -39,6 +74,7 @@ function toPinyin(text) {
   const parts = [];
   for (const ch of t) {
     if (/[\u4e00-\u9fff]/.test(ch)) {
+      if (!PINYIN_MAP?.[ch] && !FALLBACK_MAP[ch]) recordMissingChar(ch);
       const py = charToPinyin(ch);
       parts.push(py || ch);
     } else {
