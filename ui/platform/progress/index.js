@@ -11,10 +11,3 @@ export const PROGRESS_ENGINE = ProgressEngine;
 export const PROGRESS_SELECTORS = ProgressSelectors;
 export const PROGRESS_STORE = ProgressStore;
 export const REVIEW_SCHEDULER = ReviewScheduler;
-
-export {
-  PROGRESS_ENGINE,
-  PROGRESS_SELECTORS,
-  PROGRESS_STORE,
-  REVIEW_SCHEDULER,
-};
