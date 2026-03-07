@@ -1,0 +1,19 @@
+{
+  "nav_home": { "cn": "首页", "kr": "홈", "en": "Home" },
+  "nav_courses": { "cn": "课程", "kr": "과정", "en": "Courses" },
+  "nav_hsk": { "cn": "HSK学习", "kr": "HSK 학습", "en": "HSK Learning" },
+  "nav_kids": { "cn": "少儿中文", "kr": "어린이 중국어", "en": "Kids Chinese" },
+  "nav_travel": { "cn": "旅游中文", "kr": "여행중국어", "en": "Travel Chinese" },
+  "nav_business": { "cn": "商务中文", "kr": "비즈니스 중국어", "en": "Business Chinese" },
+  "nav_culture": { "cn": "文化", "kr": "문화", "en": "Culture" },
+  "nav_hanja": { "cn": "汉字", "kr": "한자", "en": "Hanzi" },
+  "nav_strokes": { "cn": "笔顺", "kr": "필순", "en": "Strokes" },
+  "nav_speaking": { "cn": "会话", "kr": "회화", "en": "Speaking" },
+  "nav_review": { "cn": "复习", "kr": "복습", "en": "Review" },
+  "nav_resources": { "cn": "资源", "kr": "자료", "en": "Resources" },
+  "nav_teacher": { "cn": "教师专区", "kr": "교사 전용", "en": "Teacher" },
+  "nav_student": { "cn": "学生", "kr": "학생", "en": "Student" },
+  "nav_my_learning": { "cn": "我的学习", "kr": "내 학습", "en": "My Learning" },
+  "nav_settings": { "cn": "设置", "kr": "설정", "en": "Settings" },
+  "nav_language": { "cn": "语言", "kr": "언어", "en": "Language" }
+}

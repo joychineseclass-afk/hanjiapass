@@ -1,10 +1,10 @@
 // /ui/i18n.js (ES Module) — STABLE FULL (compat kr/cn + ko/zh/en)
 // ✅ DICT + t() + apply(root) + onChange/eventbus
-// ✅ No DOM creation / No MutationObserver (safe for your dynamic layout)
+// ✅ 支持 ui/i18n/*.json 模块化文案（商业级总表）
 // ✅ Backward compatible with old lang codes (kr/cn) + new (ko/zh/en)
 // ✅ Emits standard window events on lang change: joy:lang, languageChanged, i18n:changed
 
-const DICT = {
+let DICT = {
   // ===== Korean =====
   kr: {
     brand: "Lumina Chinese Learning Center",
@@ -723,6 +723,26 @@ class I18N {
 
     // keep storage consistent
     safeSetLS(this._storageKey, this._lang);
+  }
+
+  /**
+   * 从 ui/i18n/*.json 加载文案并合并到 DICT（JSON 键覆盖同名字段）
+   * @param {string} [basePath] - 如 "/ui/i18n/" 或 ""（用 DATA_PATHS.getBase）
+   * @returns {Promise<void>}
+   */
+  async loadFromJson(basePath) {
+    try {
+      const base = basePath ?? (typeof window !== "undefined" && window.DATA_PATHS?.getBase?.?.()) ?? "";
+      const path = String(base || "").replace(/\/+$/, "") + (base ? "/" : "") + "ui/i18n/";
+      const { loadAllI18n } = await import("./i18n/index.js");
+      const resolved = path.startsWith("http") ? path : (path.startsWith("/") ? path : "/" + path);
+      const loaded = await loadAllI18n(resolved);
+      if (loaded?.kr) Object.assign(DICT.kr, loaded.kr);
+      if (loaded?.cn) Object.assign(DICT.cn, loaded.cn);
+      if (loaded?.en) Object.assign(DICT.en, loaded.en);
+    } catch (e) {
+      console.warn("[i18n] loadFromJson failed:", e?.message);
+    }
   }
 
   // canonical getter — always returns ko|zh|en

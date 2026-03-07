@@ -1,0 +1,11 @@
+{
+  "system_loading": { "cn": "加载中", "kr": "로딩 중", "en": "Loading" },
+  "system_error": { "cn": "系统错误", "kr": "시스템 오류", "en": "System Error" },
+  "system_network_error": { "cn": "网络错误", "kr": "네트워크 오류", "en": "Network Error" },
+  "system_save_success": { "cn": "保存成功", "kr": "저장 완료", "en": "Saved successfully" },
+  "system_save_failed": { "cn": "保存失败", "kr": "저장 실패", "en": "Save failed" },
+  "system_operation_success": { "cn": "操作成功", "kr": "작업 완료", "en": "Operation successful" },
+  "system_operation_failed": { "cn": "操作失败", "kr": "작업 실패", "en": "Operation failed" },
+  "system_try_again": { "cn": "请重试", "kr": "다시 시도해 주세요", "en": "Please try again" },
+  "system_no_data": { "cn": "暂无数据", "kr": "데이터 없음", "en": "No data" }
+}

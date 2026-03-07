@@ -97,8 +97,15 @@ function showFatal(err) {
   `;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   console.log("[app] DOMContentLoaded");
+
+  // 0) 加载 ui/i18n/*.json 模块化文案
+  try {
+    await i18n.loadFromJson();
+  } catch (e) {
+    console.warn("[app] i18n.loadFromJson failed:", e?.message);
+  }
 
   // 1) Nav
   try {

@@ -1,0 +1,10 @@
+{
+  "ai_chat": { "cn": "AI对话", "kr": "AI 대화", "en": "AI Chat" },
+  "ai_explain": { "cn": "AI讲解", "kr": "AI 설명", "en": "AI Explain" },
+  "ai_practice": { "cn": "AI练习", "kr": "AI 연습", "en": "AI Practice" },
+  "ai_feedback": { "cn": "AI反馈", "kr": "AI 피드백", "en": "AI Feedback" },
+  "game_mode": { "cn": "游戏模式", "kr": "게임 모드", "en": "Game mode" },
+  "leaderboard": { "cn": "排行榜", "kr": "순위표", "en": "Leaderboard" },
+  "certificate": { "cn": "证书", "kr": "수료증", "en": "Certificate" },
+  "level_test": { "cn": "等级测试", "kr": "레벨 테스트", "en": "Level test" }
+}

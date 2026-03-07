@@ -1,0 +1,14 @@
+{
+  "lesson_title": { "cn": "课程", "kr": "수업", "en": "Lesson" },
+  "lesson_start": { "cn": "开始", "kr": "시작", "en": "Start" },
+  "lesson_words": { "cn": "单词", "kr": "단어", "en": "Vocabulary" },
+  "lesson_dialogue": { "cn": "会话", "kr": "회화", "en": "Dialogue" },
+  "lesson_grammar": { "cn": "语法", "kr": "문법", "en": "Grammar" },
+  "lesson_extension": { "cn": "扩展表达", "kr": "확장 표현", "en": "Extension" },
+  "lesson_practice": { "cn": "练习", "kr": "연습", "en": "Practice" },
+  "lesson_ai_practice": { "cn": "AI练习", "kr": "AI 학습", "en": "AI Practice" },
+  "lesson_complete": { "cn": "完成", "kr": "완료", "en": "Complete" },
+  "lesson_progress": { "cn": "进度", "kr": "진행", "en": "Progress" },
+  "lesson_continue_learning": { "cn": "继续学习", "kr": "학습 계속", "en": "Continue learning" },
+  "lesson_review_lesson": { "cn": "复习本课", "kr": "본과 복습", "en": "Review lesson" }
+}

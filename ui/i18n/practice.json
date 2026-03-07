@@ -1,0 +1,22 @@
+{
+  "practice_title": { "cn": "练习", "kr": "연습", "en": "Practice" },
+  "practice_start": { "cn": "开始练习", "kr": "연습 시작", "en": "Start practice" },
+  "practice_submit": { "cn": "提交答案", "kr": "제출하기", "en": "Submit" },
+  "practice_question": { "cn": "题目", "kr": "문제", "en": "Question" },
+  "practice_question_number": { "cn": "第{n}题", "kr": "제{n}문제", "en": "Question {n}" },
+  "practice_choose_answer": { "cn": "选择题", "kr": "선택", "en": "Choice" },
+  "practice_correct": { "cn": "正确", "kr": "정답", "en": "Correct" },
+  "practice_wrong": { "cn": "错误", "kr": "오답", "en": "Wrong" },
+  "practice_explanation": { "cn": "解析", "kr": "해설", "en": "Explanation" },
+  "practice_finish": { "cn": "完成", "kr": "완료", "en": "Finish" },
+  "practice_score": { "cn": "得分", "kr": "점수", "en": "Score" },
+  "practice_retry": { "cn": "重做", "kr": "다시", "en": "Retry" },
+  "practice_next_question": { "cn": "下一题", "kr": "다음 문제", "en": "Next question" },
+  "practice_subtitle": { "cn": "完成后点击提交，可查看正误与解析。", "kr": "문제를 풀고 제출하면 정답과 해설을 볼 수 있습니다.", "en": "Answer the questions and submit to see results and explanations." },
+  "practice_total_count": { "cn": "共{n}题", "kr": "{n}문제", "en": "{n} questions" },
+  "practice_answer": { "cn": "正确答案", "kr": "정답", "en": "Answer" },
+  "practice_listen": { "cn": "发音", "kr": "듣기", "en": "Speak" },
+  "practice_empty": { "cn": "暂无练习题。", "kr": "연습 문제가 없습니다.", "en": "No practice questions." },
+  "practice_total_score": { "cn": "总分{score}/{total}", "kr": "총점{score}/{total}", "en": "Score {score}/{total}" },
+  "practice_unanswered": { "cn": "未选择", "kr": "미선택", "en": "Unanswered" }
+}

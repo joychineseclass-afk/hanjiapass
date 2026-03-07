@@ -1,0 +1,9 @@
+{
+  "teacher_dashboard": { "cn": "教师工作台", "kr": "교사 대시보드", "en": "Teacher Dashboard" },
+  "teacher_classes": { "cn": "班级管理", "kr": "반 관리", "en": "Classes" },
+  "teacher_students": { "cn": "学生管理", "kr": "학생 관리", "en": "Students" },
+  "teacher_assign_homework": { "cn": "布置作业", "kr": "숙제 부여", "en": "Assign homework" },
+  "teacher_create_lesson": { "cn": "创建课程", "kr": "수업 만들기", "en": "Create lesson" },
+  "teacher_view_progress": { "cn": "查看进度", "kr": "진도 보기", "en": "View progress" },
+  "teacher_review_reports": { "cn": "复习报告", "kr": "복습 리포트", "en": "Review reports" }
+}

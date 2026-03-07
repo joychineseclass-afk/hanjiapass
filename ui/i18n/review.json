@@ -1,0 +1,20 @@
+{
+  "review_mode": { "cn": "错题复习", "kr": "오답 복습", "en": "Wrong Answer Review" },
+  "review_start": { "cn": "复习", "kr": "복습", "en": "Review" },
+  "review_submit": { "cn": "提交", "kr": "제출", "en": "Submit" },
+  "review_continue": { "cn": "继续复习", "kr": "계속 복습", "en": "Continue Review" },
+  "review_current_lesson": { "cn": "本课", "kr": "본과", "en": "This Lesson" },
+  "review_current_level": { "cn": "本级", "kr": "본급", "en": "This Level" },
+  "review_all_wrong": { "cn": "全部错题", "kr": "전체 오답", "en": "All Wrong" },
+  "review_question": { "cn": "复习题", "kr": "복습 문제", "en": "Review question" },
+  "review_correct": { "cn": "正确", "kr": "정답", "en": "Correct" },
+  "review_wrong": { "cn": "错误", "kr": "오답", "en": "Incorrect" },
+  "review_explanation": { "cn": "解析", "kr": "해설", "en": "Explanation" },
+  "review_completed": { "cn": "复习完成", "kr": "복습 완료", "en": "Review Completed" },
+  "review_cleared": { "cn": "已移除错题", "kr": "제거된 오답", "en": "Cleared" },
+  "review_still_need_review": { "cn": "仍需复习", "kr": "남은 복습", "en": "Still need review" },
+  "review_no_wrong_questions": { "cn": "暂无错题需要复习。", "kr": "복습할 오답이 없습니다.", "en": "No wrong questions to review." },
+  "review_back_to_lesson": { "cn": "返回目录", "kr": "목록으로", "en": "Back to List" },
+  "review_total": { "cn": "共{n}题", "kr": "총{n}문제", "en": "{n} / {total}" },
+  "review_question_no": { "cn": "复习题{n}/{total}", "kr": "복습{n}/{total}", "en": "Review {n}/{total}" }
+}

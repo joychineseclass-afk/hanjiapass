@@ -1,0 +1,10 @@
+{
+  "progress_title": { "cn": "学习进度", "kr": "학습 진행", "en": "Learning Progress" },
+  "progress_today": { "cn": "今日", "kr": "오늘", "en": "Today" },
+  "progress_total_lessons": { "cn": "总课程数", "kr": "총 수업", "en": "Total lessons" },
+  "progress_total_words": { "cn": "总词汇数", "kr": "총 단어", "en": "Total words" },
+  "progress_learning_time": { "cn": "学习时长", "kr": "학습 시간", "en": "Learning time" },
+  "progress_accuracy": { "cn": "正确率", "kr": "정답률", "en": "Accuracy" },
+  "progress_review_needed": { "cn": "待复习", "kr": "복습 대기", "en": "Review needed" },
+  "progress_learning_streak": { "cn": "连续学习", "kr": "연속 학습", "en": "Learning streak" }
+}

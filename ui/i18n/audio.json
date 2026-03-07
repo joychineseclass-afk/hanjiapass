@@ -1,0 +1,11 @@
+{
+  "audio_play": { "cn": "播放", "kr": "재생", "en": "Play" },
+  "audio_repeat": { "cn": "重复", "kr": "반복", "en": "Repeat" },
+  "audio_slow": { "cn": "慢速", "kr": "느리게", "en": "Slow" },
+  "audio_normal": { "cn": "正常", "kr": "보통", "en": "Normal" },
+  "audio_record": { "cn": "录音", "kr": "녹음", "en": "Record" },
+  "audio_stop_record": { "cn": "停止录音", "kr": "녹음 중지", "en": "Stop recording" },
+  "audio_listen": { "cn": "听", "kr": "듣기", "en": "Listen" },
+  "audio_pronunciation": { "cn": "发音", "kr": "발음", "en": "Pronunciation" },
+  "audio_speaking_practice": { "cn": "口语练习", "kr": "말하기 연습", "en": "Speaking practice" }
+}

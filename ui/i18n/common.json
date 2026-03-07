@@ -1,0 +1,21 @@
+{
+  "common_ok": { "cn": "确定", "kr": "확인", "en": "OK" },
+  "common_cancel": { "cn": "取消", "kr": "취소", "en": "Cancel" },
+  "common_confirm": { "cn": "确认", "kr": "확인", "en": "Confirm" },
+  "common_back": { "cn": "返回", "kr": "뒤로", "en": "Back" },
+  "common_next": { "cn": "下一步", "kr": "다음", "en": "Next" },
+  "common_previous": { "cn": "上一步", "kr": "이전", "en": "Previous" },
+  "common_close": { "cn": "关闭", "kr": "닫기", "en": "Close" },
+  "common_open": { "cn": "打开", "kr": "열기", "en": "Open" },
+  "common_save": { "cn": "保存", "kr": "저장", "en": "Save" },
+  "common_delete": { "cn": "删除", "kr": "삭제", "en": "Delete" },
+  "common_edit": { "cn": "编辑", "kr": "편집", "en": "Edit" },
+  "common_search": { "cn": "搜索", "kr": "검색", "en": "Search" },
+  "common_loading": { "cn": "加载中...", "kr": "불러오는 중...", "en": "Loading..." },
+  "common_submit": { "cn": "提交", "kr": "제출", "en": "Submit" },
+  "common_retry": { "cn": "重试", "kr": "다시 시도", "en": "Retry" },
+  "common_start": { "cn": "开始", "kr": "시작", "en": "Start" },
+  "common_finish": { "cn": "完成", "kr": "완료", "en": "Finish" },
+  "common_continue": { "cn": "继续", "kr": "계속", "en": "Continue" },
+  "common_view_more": { "cn": "查看更多", "kr": "더보기", "en": "View more" }
+}

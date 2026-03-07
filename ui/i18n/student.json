@@ -1,0 +1,8 @@
+{
+  "student_dashboard": { "cn": "学习中心", "kr": "학습 센터", "en": "Student Dashboard" },
+  "student_my_courses": { "cn": "我的课程", "kr": "내 과정", "en": "My courses" },
+  "student_my_progress": { "cn": "我的进度", "kr": "내 진도", "en": "My progress" },
+  "student_homework": { "cn": "作业", "kr": "숙제", "en": "Homework" },
+  "student_review_center": { "cn": "复习中心", "kr": "복습 센터", "en": "Review center" },
+  "student_learning_history": { "cn": "学习记录", "kr": "학습 기록", "en": "Learning history" }
+}

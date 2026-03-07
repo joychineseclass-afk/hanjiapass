@@ -1,0 +1,20 @@
+{
+  "hsk_title": { "cn": "HSK学习", "kr": "HSK 학습", "en": "HSK Learning" },
+  "hsk_level": { "cn": "等级", "kr": "레벨", "en": "Level" },
+  "hsk_version": { "cn": "版本", "kr": "버전", "en": "Version" },
+  "hsk_select_level": { "cn": "选择等级", "kr": "레벨 선택", "en": "Select level" },
+  "hsk_start_learning": { "cn": "开始学习", "kr": "학습 시작", "en": "Start learning" },
+  "hsk_lessons_total": { "cn": "共{n}课", "kr": "총{n}과", "en": "{n} lessons" },
+  "hsk_words_total": { "cn": "共{n}词", "kr": "총{n}단어", "en": "{n} words" },
+  "hsk_last_update": { "cn": "最近更新", "kr": "최근 업데이트", "en": "Last update" },
+  "hsk_search_word": { "cn": "搜索单词", "kr": "단어 검색", "en": "Search word" },
+  "hsk_choose_lesson": { "cn": "选择课程", "kr": "수업 선택", "en": "Choose lesson" },
+  "hsk_tip": { "cn": "选择等级并开始课程", "kr": "레벨을 선택하고 수업을 시작해요.", "en": "Select a level to start." },
+  "hsk_directory_title": { "cn": "课程目录", "kr": "학습 목록", "en": "Course List" },
+  "hsk_meta_completed": { "cn": "已完成", "kr": "완료", "en": "Completed" },
+  "hsk_meta_current": { "cn": "当前第", "kr": "현재 학습", "en": "Current Lesson" },
+  "hsk_meta_review": { "cn": "待复习", "kr": "복습 대기", "en": "Review Words" },
+  "hsk_meta_last_study": { "cn": "最近学习", "kr": "최근 학습", "en": "Last Study" },
+  "hsk_meta_lesson_unit": { "cn": "课", "kr": "과", "en": "lessons" },
+  "hsk_meta_word_unit": { "cn": "词", "kr": "단어", "en": "words" }
+}
