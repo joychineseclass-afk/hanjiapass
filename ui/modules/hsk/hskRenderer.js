@@ -7,7 +7,7 @@ import { i18n } from "../../i18n.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
-import { getMeaningByLang, getPosByLang } from "../../utils/wordDisplay.js";
+import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -182,8 +182,14 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
       ).join("") : escapeHtml(han);
 
+      const imgUrl = getWordImageUrl(raw);
+      const imgHtml = imgUrl
+        ? `<img class="word-card-image" src="${escapeHtmlAttr(imgUrl)}" alt="${escapeHtmlAttr(han)}" loading="lazy" onerror="this.style.display='none'" />`
+        : "";
+
       return `
       <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
+        ${imgHtml}
         <div class="word-hanzi">${hanziChars}</div>
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
         ${posStr ? `<div class="word-pos text-sm opacity-75">${escapeHtml(posStr)}</div>` : ""}

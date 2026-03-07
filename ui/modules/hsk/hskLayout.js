@@ -52,6 +52,9 @@ export function getHSKLayoutHTML() {
 
     <!-- ✅ Study header：只显示 Lesson N / title，HSK N · version 在页面标题 hskSubTitle -->
     <div id="hskStudyBar" class="hidden bg-white rounded-2xl shadow p-3 mt-4 mb-3">
+      <div id="hskLessonCoverWrap" class="hidden mb-3 rounded-xl overflow-hidden">
+        <img id="hskLessonCover" class="hsk-lesson-cover-image" src="" alt="" />
+      </div>
       <div class="flex items-center gap-2">
         <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
           ← <span data-i18n="common_back">목록으로</span>

@@ -5,9 +5,20 @@
  *
  * getMeaningByLang(word, lang, fallbackHanzi?, scope?)
  * getPosByLang(word, lang, scope?)
+ * getWordImageUrl(word) - 平台级 Image Engine，词卡图片
  */
 
 import { getGlossaryMeaning, getGlossaryPos } from "./glossary.js";
+import { getWordImage } from "../platform/media/imageEngine.js";
+
+/** 获取词汇图片 URL，无图时返回空字符串 */
+export function getWordImageUrl(word) {
+  try {
+    return getWordImage?.(word) ?? "";
+  } catch {
+    return "";
+  }
+}
 
 /** 中文词性 -> { ko, en } 映射 */
 export const POS_ZH_MAP = {

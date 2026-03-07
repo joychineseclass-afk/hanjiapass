@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE } from "../platform/index.js";
 
 const state = {
   lv: 1,
@@ -402,6 +402,23 @@ async function openLesson({ lessonNo, file }) {
     }).filter((w) => wordKey(w));
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
+
+    const lessonCoverUrl = IMAGE_ENGINE?.getLessonImage?.(lessonData, {
+      courseType: state.version,
+      level: `hsk${state.lv}`,
+    });
+    const coverWrap = $("hskLessonCoverWrap");
+    const coverImg = $("hskLessonCover");
+    if (coverWrap && coverImg) {
+      if (lessonCoverUrl) {
+        coverImg.src = lessonCoverUrl;
+        coverImg.alt = typeof lessonData?.title === "object" ? (lessonData.title?.zh ?? lessonData.title?.en ?? "") : String(lessonData?.title ?? "");
+        coverImg.onerror = () => { coverWrap.classList.add("hidden"); };
+        coverWrap.classList.remove("hidden");
+      } else {
+        coverWrap.classList.add("hidden");
+      }
+    }
 
     const titleObj = lessonData?.title;
     const titleStr = typeof titleObj === "object"

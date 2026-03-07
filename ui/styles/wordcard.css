@@ -14,6 +14,15 @@
   min-width: 0;
 }
 
+.word-card-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+}
+
 .word-hanzi {
   font-size: 36px;
   font-weight: 600;
@@ -89,4 +98,13 @@
 
 .btn-stroke-active {
   outline: 2px solid rgba(16, 185, 129, 0.35);
+}
+
+/* Image Engine - 课程封面 */
+.hsk-lesson-cover-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
 }
