@@ -81,6 +81,9 @@ export function getHSKLayoutHTML() {
         <button id="hskTabGrammar" type="button" class="px-3 py-1 rounded-lg border" data-tab="grammar">
           <span data-i18n="hsk_tab_grammar">문법</span>
         </button>
+        <button id="hskTabExtension" type="button" class="px-3 py-1 rounded-lg border" data-tab="extension">
+          <span data-i18n="hsk_tab_extension">확장</span>
+        </button>
         <button id="hskTabPractice" type="button" class="px-3 py-1 rounded-lg border" data-tab="practice">
           <span data-i18n="hsk_tab_practice">연습</span>
         </button>
@@ -102,6 +105,11 @@ export function getHSKLayoutHTML() {
       <div id="hskPanelGrammar" class="hidden bg-white rounded-2xl shadow p-4">
         <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_grammar">문법</div>
         <div id="hskGrammarBody" class="space-y-3"></div>
+      </div>
+
+      <div id="hskPanelExtension" class="hidden bg-white rounded-2xl shadow p-4">
+        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_extension">확장</div>
+        <div id="hskExtensionBody" class="space-y-3"></div>
       </div>
 
       <div id="hskPanelPractice" class="hidden bg-white rounded-2xl shadow p-4">

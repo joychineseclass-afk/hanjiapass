@@ -271,3 +271,59 @@
   background: rgba(37, 99, 235, 0.06);
   border-radius: 12px;
 }
+
+/* ===============================
+   📋 Lesson Extension (扩展 tab)
+================================== */
+.lesson-extension-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.lesson-extension-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.lesson-extension-zh {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.lesson-extension-pinyin {
+  font-size: 16px;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.lesson-extension-meaning {
+  font-size: 15px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.lesson-extension-empty {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  padding: 1rem;
+}
+
+.lesson-extension-zh[data-speak-text] {
+  cursor: pointer;
+}
+
+.lesson-extension-zh[data-speak-text]:hover {
+  background: rgba(37, 99, 235, 0.04);
+  border-radius: 8px;
+}
+
+.lesson-extension-card.is-speaking .lesson-extension-zh {
+  outline: 2px solid rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.06);
+  border-radius: 8px;
+}

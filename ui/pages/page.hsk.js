@@ -18,7 +18,7 @@ const state = {
   version: "hsk2.0",
   lessons: [],
   current: null,        // { lessonNo, file, lessonData, lessonWords }
-  tab: "words",         // words | dialogue | grammar | practice | ai
+  tab: "words",         // words | dialogue | grammar | extension | practice | ai
 };
 
 function getLang() {
@@ -80,6 +80,7 @@ function showListMode() {
   $("hskPanelWords") && ($("hskPanelWords").innerHTML = "");
   $("hskDialogueBody") && ($("hskDialogueBody").innerHTML = "");
   $("hskGrammarBody") && ($("hskGrammarBody").innerHTML = "");
+  $("hskExtensionBody") && ($("hskExtensionBody").innerHTML = "");
   $("hskPracticeBody") && ($("hskPracticeBody").innerHTML = "");
   $("hskAIResult") && ($("hskAIResult").innerHTML = "");
   $("hskAIContext")?.classList.add("hidden");
@@ -95,6 +96,7 @@ function updateTabsUI() {
     ["words", "hskTabWords", "hskPanelWords"],
     ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
     ["grammar", "hskTabGrammar", "hskPanelGrammar"],
+    ["extension", "hskTabExtension", "hskPanelExtension"],
     ["practice", "hskTabPractice", "hskPanelPractice"],
     ["ai", "hskTabAI", "hskPanelAI"],
   ];
@@ -276,6 +278,36 @@ function buildGrammarHTML(lessonData) {
 </article>`);
   }
   return `<div class="hsk-grammar-list">${blocks.join("")}</div>`;
+}
+
+/** 扩展表达：从 lessonData.extension 渲染卡片列表，支持点读 */
+function buildExtensionHTML(lessonData) {
+  const raw = lessonData?._raw ?? lessonData;
+  const arr = Array.isArray(raw?.extension) ? raw.extension : [];
+  if (!arr.length) {
+    return `<div class="lesson-extension-empty">${i18n.t("hsk_extension_empty", {})}</div>`;
+  }
+
+  const lang = getLang();
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  const cards = arr.map((item) => {
+    const zh = str(item?.zh ?? item?.cn ?? item?.line ?? "");
+    const pinyin = str(item?.pinyin ?? item?.py ?? "");
+    let meaning = "";
+    if (lang === "ko") meaning = str(item?.kr ?? item?.ko ?? item?.zh ?? item?.cn ?? "");
+    else if (lang === "en") meaning = str(item?.en ?? item?.kr ?? item?.ko ?? item?.zh ?? item?.cn ?? "");
+    else meaning = str(item?.zh ?? item?.cn ?? item?.kr ?? item?.ko ?? item?.en ?? "");
+
+    const zhAttrs = zh ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="extension"` : "";
+    return `<article class="lesson-extension-card">
+  <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+  ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+  ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+</article>`;
+  }).filter(Boolean).join("");
+
+  return `<section class="lesson-extension-list">${cards}</section>`;
 }
 
 function buildAIContext() {
@@ -553,6 +585,7 @@ async function openLesson({ lessonNo, file }) {
     }
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
+    $("hskExtensionBody").innerHTML = buildExtensionHTML(lessonData);
 
     // Practice panel: 平台级 Practice Engine
     if (mountPractice && $("hskPracticeBody")) {
@@ -641,9 +674,9 @@ function bindEvents() {
     openLesson({ lessonNo, file });
   }, { signal });
 
-  // 点读：会话区点击中文句
+  // 点读：会话区 / 扩展区点击中文
   document.addEventListener("click", (e) => {
-    const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue']");
+    const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension']");
     if (!el) return;
     const text = (el.dataset?.speakText || "").trim();
     if (!text || !AUDIO_ENGINE?.isSpeechSupported?.()) return;
@@ -651,7 +684,7 @@ function bindEvents() {
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line");
+    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",
@@ -791,6 +824,7 @@ function bindEvents() {
       }
       $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
       $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
+      $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
       if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
         try {
           AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
