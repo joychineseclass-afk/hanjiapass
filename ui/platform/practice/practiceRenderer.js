@@ -120,17 +120,14 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     return;
   }
 
-  /** 下一题：使用事件委托，确保每次替换 DOM 后点击仍有效 */
-  function handleNextClick() {
-    PracticeState.goToNext();
-    render();
-  }
+  let submitted = false;
 
   function render() {
     const progress = PracticeState.getProgress();
     const q = PracticeState.getCurrentQuestion();
 
     if (!q) {
+      submitted = false;
       if (onComplete && !container.dataset.progressRecorded) {
         container.dataset.progressRecorded = "1";
         onComplete({
@@ -148,6 +145,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       return;
     }
 
+    submitted = false;
     const questionHtml = renderQuestion(q, { lang, disabled: false });
     const expl = q.explanation && typeof q.explanation === "object" ? pickLang(q.explanation, lang) : str(q.explanation);
     const explHtml = expl ? `<div class="practice-explanation mt-4 p-4 rounded-xl bg-slate-50 text-sm text-slate-700 hidden">${escapeHtml(expl)}</div>` : "";
@@ -163,96 +161,52 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
         <div class="practice-feedback mt-4 hidden"></div>
         ${explHtml}
       </div>`;
-
-    bindEvents(container, { q, lang, expl, onRerender: render, onNext: handleNextClick });
   }
 
-  function bindEvents(root, { q, lang, expl, onRerender, onNext }) {
-    const submitBtn = root.querySelector(".practice-submit");
-    const nextBtn = root.querySelector(".practice-next");
-    const feedbackEl = root.querySelector(".practice-feedback");
-    const explEl = root.querySelector(".practice-explanation");
+  /** 事件委托：在 container 上统一处理点击，避免 render 替换 DOM 后事件丢失 */
+  container.addEventListener("click", (e) => {
+    const submitBtn = e.target.closest(".practice-submit");
+    const nextBtn = e.target.closest(".practice-next");
+    const optionBtn = e.target.closest(".practice-option");
 
-    let submitted = false;
-
-    function showFeedback(correct, score) {
+    if (submitBtn && !submitted) {
+      const q = PracticeState.getCurrentQuestion();
+      if (!q) return;
+      const questionEl = container.querySelector(`[data-question-id="${q.id}"]`);
+      let answer = null;
+      if (questionEl && q.type === "choice") {
+        const sel = questionEl.querySelector(".practice-option.selected");
+        answer = sel ? sel.dataset.answer : null;
+      }
+      const { correct, score } = PracticeEngine.submitAnswer(q.id, answer);
       submitted = true;
+      const feedbackEl = container.querySelector(".practice-feedback");
+      const explEl = container.querySelector(".practice-explanation");
       if (feedbackEl) {
         feedbackEl.classList.remove("hidden");
         feedbackEl.className = `practice-feedback mt-4 p-4 rounded-xl ${correct ? "bg-green-50 border border-green-200 text-green-800" : "bg-red-50 border border-red-200 text-red-800"}`;
         feedbackEl.textContent = correct ? `✓ 正确！+${score} 分` : "✗ 错误";
       }
       if (explEl) explEl.classList.remove("hidden");
-      if (submitBtn) submitBtn.classList.add("hidden");
-      if (nextBtn) nextBtn.classList.remove("hidden");
-    }
-
-    function getAnswer() {
-      const questionEl = root.querySelector(`[data-question-id="${q.id}"]`);
-      if (!questionEl) return null;
-      if (q.type === "choice") {
-        const sel = questionEl.querySelector(".practice-option.selected");
-        return sel ? sel.dataset.answer : null;
-      }
-      if (q.type === "fill" || q.type === "typing") {
-        const input = questionEl.querySelector(".practice-fill-input, .practice-typing-input");
-        return input ? input.value : null;
-      }
-      if (q.type === "order") {
-        const answerZone = questionEl.querySelector(".practice-order-answer");
-        if (!answerZone) return "";
-        const chips = answerZone.querySelectorAll(".practice-order-chip");
-        return Array.from(chips).map((c) => c.dataset.value).join("");
-      }
-      return null;
-    }
-
-    if (submitBtn) {
-      submitBtn.addEventListener("click", () => {
-        if (submitted) return;
-        const answer = getAnswer();
-        const { correct, score } = PracticeEngine.submitAnswer(q.id, answer);
-        showFeedback(correct, score);
-      });
+      submitBtn.classList.add("hidden");
+      const nextEl = container.querySelector(".practice-next");
+      if (nextEl) nextEl.classList.remove("hidden");
+      return;
     }
 
     if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        onNext();
-      });
+      PracticeState.goToNext();
+      render();
+      return;
     }
 
-    root.querySelectorAll(".practice-option").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (submitted) return;
-        root.querySelectorAll(".practice-option").forEach((b) => b.classList.remove("selected", "border-green-500"));
-        btn.classList.add("selected", "border-green-500");
-      });
-    });
-
-    if (q.type === "order") {
-      const optionsZone = root.querySelector(".practice-order-options");
-      const answerZone = root.querySelector(".practice-order-answer");
-      if (optionsZone && answerZone) {
-        const handleChipClick = (chip) => {
-          if (submitted) return;
-          if (chip.parentElement === answerZone) {
-            optionsZone.appendChild(chip);
-          } else {
-            answerZone.appendChild(chip);
-          }
-        };
-        optionsZone.addEventListener("click", (e) => {
-          const chip = e.target.closest(".practice-order-chip");
-          if (chip) handleChipClick(chip);
-        });
-        answerZone.addEventListener("click", (e) => {
-          const chip = e.target.closest(".practice-order-chip");
-          if (chip) handleChipClick(chip);
-        });
-      }
+    if (optionBtn && !submitted) {
+      const panel = container.querySelector(".practice-panel");
+      if (!panel) return;
+      panel.querySelectorAll(".practice-option").forEach((b) => b.classList.remove("selected", "border-green-500"));
+      optionBtn.classList.add("selected", "border-green-500");
     }
-  }
+  });
 
   render();
 }
