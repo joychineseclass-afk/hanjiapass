@@ -77,10 +77,27 @@ async function fetchJson(url) {
 
 /**
  * 加载课程目录 lessons.json
+ * 优先使用 Global Course Engine（若已加载）
  * @param {{ courseType: string, level: string }} opts
  * @returns {Promise<{ courseId, courseType, level, title, lessons }>}
  */
 export async function loadCourseIndex({ courseType, level } = {}) {
+  const GCE = window.GLOBAL_COURSE_ENGINE;
+  if (GCE?.loadCourse) {
+    try {
+      const manifest = await GCE.loadCourse({ courseType, level });
+      return {
+        courseId: manifest.courseId,
+        courseType: manifest.courseType === "hsk" ? manifest.version : manifest.courseType,
+        level: manifest.level,
+        title: manifest.title,
+        lessons: manifest.lessons ?? [],
+      };
+    } catch (e) {
+      console.warn("[courseLoader] GLOBAL_COURSE_ENGINE.loadCourse failed, fallback:", e?.message);
+    }
+  }
+
   const ct = str(courseType) || "hsk2.0";
   const lv = str(level) || "hsk1";
   const cacheKey = `index:${ct}:${lv}`;
@@ -126,10 +143,21 @@ export async function loadCourseIndex({ courseType, level } = {}) {
 
 /**
  * 加载单课详情
+ * 优先使用 Global Course Engine（若已加载）
  * @param {{ courseType, level, lessonNo, file, lessonId }} opts
  * @returns {Promise<{ raw, lesson }>} lesson 为归一化后的标准对象
  */
 export async function loadLessonDetail({ courseType, level, lessonNo, file, lessonId } = {}) {
+  const GCE = window.GLOBAL_COURSE_ENGINE;
+  if (GCE?.loadLesson) {
+    try {
+      const { raw, lesson } = await GCE.loadLesson({ courseType, level, lessonNo, file, lessonId });
+      if (lesson) return { raw, lesson };
+    } catch (e) {
+      console.warn("[courseLoader] GLOBAL_COURSE_ENGINE.loadLesson failed, fallback:", e?.message);
+    }
+  }
+
   const ct = str(courseType) || "hsk2.0";
   const lv = str(level) || "hsk1";
   const no = Number(lessonNo || 1) || 1;

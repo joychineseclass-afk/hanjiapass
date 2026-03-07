@@ -1,6 +1,9 @@
 // ui/platform/index.js
 // Platform 统一导出入口
 
+// 预加载 Global Course Engine，供 courseLoader 底层委托
+import "./course-engine/index.js";
+
 export { CONTENT } from "./content/contentLoader.js";
 export * as LESSON_ENGINE from "./engine/index.js";
 export * as LESSON_RENDERER from "./renderers/lessonRenderer.js";

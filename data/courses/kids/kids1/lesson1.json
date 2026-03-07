@@ -1,0 +1,48 @@
+{
+  "id": "kids_kids_kids1_lesson1",
+  "courseId": "kids_kids_kids1",
+  "level": "kids1",
+  "version": "kids",
+  "lessonNo": 1,
+  "type": "lesson",
+  "title": {
+    "zh": "打招呼",
+    "pinyin": "dǎ zhāohu",
+    "kr": "인사하기",
+    "en": "Hello"
+  },
+  "summary": {
+    "zh": "小朋友学打招呼",
+    "kr": "어린이 인사",
+    "en": "Kids greetings"
+  },
+  "vocab": [
+    { "hanzi": "你好", "pinyin": "nǐ hǎo", "meaning": { "zh": "你好", "kr": "안녕", "en": "hello" } },
+    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "잘가", "en": "goodbye" } }
+  ],
+  "dialogueCards": [
+    {
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Dialogue 1" },
+      "lines": [
+        { "speaker": "A", "zh": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕!", "en": "Hello!" },
+        { "speaker": "B", "zh": "你好！再见！", "pinyin": "Nǐ hǎo! Zàijiàn!", "kr": "안녕! 잘가!", "en": "Hello! Bye!" }
+      ]
+    }
+  ],
+  "grammar": [],
+  "extension": [
+    { "zh": "早上好", "pinyin": "zǎoshang hǎo", "kr": "좋은 아침", "en": "Good morning" }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "question": { "zh": "「你好」是什么意思？", "kr": "「你好」는 무슨 뜻?", "en": "What does 你好 mean?" },
+      "options": ["hello", "goodbye", "thanks"],
+      "answer": "hello"
+    }
+  ],
+  "aiPractice": {
+    "speaking": ["你好", "再见"],
+    "chatPrompt": "和AI练习打招呼。"
+  }
+}

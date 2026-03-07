@@ -150,11 +150,14 @@ export function normalizeLesson(raw, ctx = {}) {
 
   const courseType = str(ctx.courseType ?? raw.courseType ?? raw.version ?? "hsk2.0");
   const rawLevel = ctx.level ?? raw.level ?? "";
-  const levelKey = typeof rawLevel === "string" && /^hsk\d+$/i.test(rawLevel)
-    ? rawLevel.toLowerCase()
-    : (typeof rawLevel === "number" || (typeof rawLevel === "string" && /^\d+$/.test(rawLevel)))
-      ? `hsk${String(rawLevel).replace(/\D/g, "") || "1"}`
-      : "hsk1";
+  let levelKey = "hsk1";
+  if (typeof rawLevel === "string" && rawLevel.trim()) {
+    if (/^hsk\d+$/i.test(rawLevel)) levelKey = rawLevel.toLowerCase();
+    else if (/^(kids|travel|business|culture)\d+$/i.test(rawLevel)) levelKey = rawLevel.toLowerCase();
+    else if (/^\d+$/.test(rawLevel)) levelKey = `hsk${rawLevel}`;
+  } else if (typeof rawLevel === "number") {
+    levelKey = `hsk${rawLevel}`;
+  }
   const lessonNo = Number(ctx.lessonNo ?? raw.lessonNo ?? raw.no ?? raw.lesson ?? 1) || 1;
   const file = str(ctx.file ?? raw.file ?? `lesson${lessonNo}.json`);
   const id = str(raw.id ?? ctx.id ?? `${courseType}_${levelKey}_lesson${lessonNo}`);

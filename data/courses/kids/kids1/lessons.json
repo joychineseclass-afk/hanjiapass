@@ -1,0 +1,6 @@
+{
+  "level": 1,
+  "lessons": [
+    { "no": 1, "id": 1, "title": "打招呼 / Hello", "subtitle": "小朋友打招呼", "file": "lesson1.json" }
+  ]
+}
