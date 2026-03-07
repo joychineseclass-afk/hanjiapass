@@ -1,12 +1,38 @@
 /**
  * Practice Engine v1 - 核心逻辑（整页提交批改模式）
  * loadPractice(lesson) / submitAll()
+ * 接入 Practice Generator v2：优先手写题，不足自动补齐
  */
 
 import { i18n } from "../../i18n.js";
 import { filterSupportedQuestions } from "./practiceTypes.js";
 import * as PracticeState from "./practiceState.js";
 import { generatePractice } from "./generator/practiceGenerator.js";
+import { generate as generateV2 } from "../practice-generator/index.js";
+
+function getLang() {
+  const l = String(i18n?.getLang?.() ?? "ko").toLowerCase();
+  if (l === "zh" || l === "cn") return "zh";
+  if (l === "en") return "en";
+  return "ko";
+}
+
+/**
+ * 使用 Practice Generator v2 生成题目（优先手写，不足补齐）
+ */
+function generateWithV2(lesson, existing) {
+  try {
+    return generateV2({
+      lesson,
+      lang: getLang(),
+      level: lesson?.level ?? lesson?.courseId ?? "",
+      course: lesson?.version ?? "hsk2.0",
+      existing,
+    });
+  } catch (e) {
+    return null;
+  }
+}
 
 /**
  * 加载练习
@@ -16,7 +42,12 @@ import { generatePractice } from "./generator/practiceGenerator.js";
 export function loadPractice(lesson) {
   PracticeState.resetPracticeState();
   const existing = Array.isArray(lesson?.practice) ? lesson.practice : [];
-  const raw = generatePractice(lesson, existing);
+
+  let raw = generateWithV2(lesson, existing);
+  if (!raw || !raw.length) {
+    raw = generatePractice(lesson, existing);
+  }
+
   const questions = filterSupportedQuestions(raw);
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
 
