@@ -140,16 +140,14 @@ export function generateDialogueFill(dialogue, vocab, count = 4) {
   if (!texts.length) return [];
 
   const out = [];
-  const used = new Set();
 
   for (let i = 0; i < count; i++) {
     const t = texts[i % texts.length];
-    if (!t || used.has(t)) continue;
-    used.add(t);
+    if (!t) continue;
 
     const pieces = splitSentence(t);
     if (pieces.length < 2) continue;
-    const idx = Math.floor(pieces.length / 2);
+    const idx = i % pieces.length;
     const blank = pieces[idx];
     const before = pieces.slice(0, idx).join("");
     const after = pieces.slice(idx + 1).join("");

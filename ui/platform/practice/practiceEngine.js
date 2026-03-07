@@ -14,10 +14,8 @@ import { generatePractice } from "./generator/practiceGenerator.js";
  */
 export function loadPractice(lesson) {
   PracticeState.resetPracticeState();
-  let raw = Array.isArray(lesson?.practice) ? lesson.practice : [];
-  if (!raw.length) {
-    raw = generatePractice(lesson);
-  }
+  const existing = Array.isArray(lesson?.practice) ? lesson.practice : [];
+  const raw = generatePractice(lesson, existing);
   const questions = filterSupportedQuestions(raw);
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
 

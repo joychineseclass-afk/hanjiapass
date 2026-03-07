@@ -1,12 +1,16 @@
 /**
- * Auto Practice Generator v1
- * 当 lesson.practice 不存在时，根据 lesson 内容自动生成 20 道题
+ * Practice Auto Generator v1
+ * 每课自动生成约 20 题，不依赖 lesson.json 手写题目
  *
- * 规则：
- * - vocab: 5 choice + 5 fill
- * - dialogue: 4 choice + 3 order
- * - grammar: 3 fill
+ * 题型分布：
+ * - 词汇选择题：6 题（vocab）
+ * - 听句选词：4 题（dialogue）
+ * - 语序题：4 题（dialogue）
+ * - 填空题：4 题（dialogue）
+ * - 理解题：2 题（dialogue）
  * 总计 20 题
+ *
+ * 若 lesson.practice 已有题，则优先使用，不足部分由系统补齐
  */
 
 import { generateFromVocab } from "./vocabGenerator.js";
@@ -15,32 +19,52 @@ import { generateFromGrammar } from "./grammarGenerator.js";
 
 const TARGET_COUNT = 20;
 
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /**
- * 生成练习题
+ * 生成练习题（用于补齐）
  * @param {object} lesson - 归一化后的 lesson
  * @returns {Array<object>} 题目列表
  */
-export function generatePractice(lesson) {
+function generateQuestions(lesson) {
   if (!lesson) return [];
-
   const vocab = generateFromVocab(lesson);
   const dialogue = generateFromDialogue(lesson);
   const grammar = generateFromGrammar(lesson);
+  return [...vocab, ...dialogue, ...grammar];
+}
 
-  const all = [...vocab, ...dialogue, ...grammar];
+/**
+ * 生成练习题
+ * @param {object} lesson - 归一化后的 lesson
+ * @param {Array} [existing] - 已有题目（来自 lesson.practice）
+ * @returns {Array<object>} 题目列表
+ */
+export function generatePractice(lesson, existing = []) {
+  if (!lesson) return [];
 
-  let result = all;
-  if (all.length < TARGET_COUNT) {
-    const repeat = [...all];
-    while (result.length < TARGET_COUNT && repeat.length) {
-      result = [...result, ...repeat.slice(0, TARGET_COUNT - result.length)];
+  const existingValid = Array.isArray(existing) ? existing.filter(Boolean) : [];
+  let result = [...existingValid];
+
+  if (result.length < TARGET_COUNT) {
+    const generated = generateQuestions(lesson);
+    const pool = shuffle(generated);
+    for (let i = 0; result.length < TARGET_COUNT && pool.length; i++) {
+      result.push(pool[i % pool.length]);
     }
-  } else if (all.length > TARGET_COUNT) {
-    result = all.slice(0, TARGET_COUNT);
+  } else if (result.length > TARGET_COUNT) {
+    result = shuffle(result).slice(0, TARGET_COUNT);
   }
 
   return result.map((q, i) => ({
     ...q,
-    id: q.id || `q-auto-${i + 1}`,
+    id: q.id || `q-${i + 1}`,
   }));
 }
