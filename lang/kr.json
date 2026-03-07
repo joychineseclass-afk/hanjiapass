@@ -97,10 +97,29 @@
     "review_range_format": "제 {from}–{to}과 / 1–{total}과 복습",
     "review_desc": "앞서 배운 단어와 대화를 복습해 주세요.",
     "back_to_list": "← 목록으로",
-    "lesson_unit": "{n}과"
+    "lesson_unit": "{n}과",
+    "section": {
+      "practice": "연습",
+      "ai": "AI 학습"
+    },
+    "desc": {
+      "practice": "문제를 풀고 제출하면 정답과 해설을 볼 수 있습니다.",
+      "ai": "오늘 배운 단어/회화를 가지고 AI에게 질문해 보세요."
+    }
+  },
+  "action": {
+    "learn": "학습",
+    "trace": "따라쓰기",
+    "speak": "발음",
+    "listen": "듣기"
   },
   "lesson": {
     "learn": "학습",
+    "summary": {
+      "words": "어휘",
+      "dialogues": "대화",
+      "grammar_points": "문법"
+    },
     "words": "단어",
     "dialogue": "회화",
     "grammar": "문법",
@@ -111,6 +130,7 @@
     "dialogue_card": "회화"
   },
   "practice": {
+    "question": "질문",
     "title": "연습",
     "subtitle": "문제를 풀고 제출하면 정답과 해설을 볼 수 있습니다.",
     "submit": "제출하기",
@@ -126,7 +146,18 @@
     "total_count": "{n}문제",
     "total_score": "총점 {score} / {total}",
     "question_no": "제 {n}문제",
-    "unanswered": "미선택"
+    "unanswered": "미선택",
+    "incorrect": "오답"
+  },
+  "ai": {
+    "placeholder": "예: '你好'랑 '您好' 차이가 뭐예요?",
+    "send": "보내기",
+    "copy_lesson": "수업내용 복사",
+    "follow_along": "따라 읽기",
+    "substitution": "대체 연습",
+    "role_play": "역할 놀이",
+    "free_qa": "자유 질문",
+    "prompt_preview": "프롬프트 미리보기"
   },
   "review": {
     "mode": "오답 복습",

@@ -99,8 +99,19 @@
     "back_to_list": "← 返回目录",
     "lesson_unit": "第{n}课"
   },
+  "action": {
+    "learn": "学习",
+    "trace": "笔画",
+    "speak": "发音",
+    "listen": "发音"
+  },
   "lesson": {
     "learn": "学习",
+    "summary": {
+      "words": "词汇",
+      "dialogues": "对话",
+      "grammar_points": "语法"
+    },
     "words": "单词",
     "dialogue": "会话",
     "grammar": "语法",
@@ -111,6 +122,7 @@
     "dialogue_card": "会话"
   },
   "practice": {
+    "question": "题目",
     "title": "练习",
     "subtitle": "完成后点击提交，可查看正误与解析。",
     "submit": "提交答案",
@@ -126,7 +138,18 @@
     "total_count": "共 {n} 题",
     "total_score": "总分 {score} / {total}",
     "question_no": "第 {n} 题",
-    "unanswered": "未选择"
+    "unanswered": "未选择",
+    "incorrect": "错误"
+  },
+  "ai": {
+    "placeholder": "例如：「你好」和「您好」有什么区别？",
+    "send": "发送",
+    "copy_lesson": "复制课程内容",
+    "follow_along": "跟读",
+    "substitution": "替换练习",
+    "role_play": "角色扮演",
+    "free_qa": "自由问答",
+    "prompt_preview": "提示预览"
   },
   "review": {
     "mode": "错题复习",

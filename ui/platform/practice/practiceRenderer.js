@@ -20,13 +20,19 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** 严格模式：仅当前语言，不 fallback 避免混语 */
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp);
-  if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.en) || str(obj.zh || obj.cn) || str(obj.jp);
-  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.en) || str(obj.kr || obj.ko) || str(obj.zh || obj.cn);
-  return str(obj.en) || str(obj.kr || obj.ko) || str(obj.jp) || str(obj.zh || obj.cn);
+  const key = l === "zh" || l === "cn" ? "zh" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
+  return str(obj[key] ?? obj[key === "kr" ? "ko" : key === "zh" ? "cn" : key === "jp" ? "ja" : key]) || "";
+}
+
+/** 题干：优先当前语言，缺则回退中文（题目主体可保留中文） */
+function pickQuestionText(obj, lang) {
+  const v = pickLang(obj, lang);
+  if (v) return v;
+  return str(obj?.zh ?? obj?.cn ?? obj?.zh ?? "") || "";
 }
 
 /** 解析跟随系统语言：KR/CN/EN/JP */
@@ -79,17 +85,17 @@ function getAnswerDisplay(q, resultAnswer, lang) {
 /** 渲染单题：教材级题卡 */
 function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   const questionObj = typeof q.question === "object" ? q.question : { zh: str(q.question) };
-  const questionZh = pickLang(questionObj, lang) || str(q.question);
+  const questionZh = pickQuestionText(questionObj, lang) || str(q.question);
   const options = Array.isArray(q.options) ? q.options : [];
   const selected = answers[q.id];
   const result = resultMap[q.id];
   const correctAnswerDisplay = result ? getAnswerDisplay(q, result.answer, lang) : "";
 
-  const typeLabel = t("practice_type_choice");
-  const qNo = t("practice_question_no", { n: index + 1 });
+  const typeLabel = t("practice.type_choice");
+  const qNo = t("practice.question_no", { n: index + 1 });
   const qPy = getPinyin(questionZh);
   const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
-  const speakLabel = t("practice_listen");
+  const speakLabel = t("practice.listen");
 
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
@@ -173,7 +179,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);
   if (!questions.length) {
-    container.innerHTML = `<div class="lesson-practice-empty">${t("practice_empty")}</div>`;
+    container.innerHTML = `<div class="lesson-practice-empty">${t("practice.empty")}</div>`;
     return;
   }
 
@@ -190,17 +196,17 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     ).join("");
 
     const scoreLabel = submitted
-      ? t("practice_total_score", { score, total: totalScore })
-      : t("practice_total_count", { n: questions.length });
+      ? t("practice.total_score", { score, total: totalScore })
+      : t("practice.total_count", { n: questions.length });
 
     const submitBtnHtml = !submitted
-      ? `<button type="button" class="lesson-practice-submit">${t("practice_submit")}</button>`
+      ? `<button type="button" class="lesson-practice-submit">${t("practice.submit")}</button>`
       : "";
 
     const hero = `
 <section class="lesson-section-hero lesson-practice-hero">
-  <h3 class="lesson-section-title">${escapeHtml(t("practice_title"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(t("hsk.section.practice"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(t("hsk.desc.practice"))}</p>
   <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
   ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
 </section>`;
@@ -271,17 +277,17 @@ export function rerenderPractice(container, lang = "ko") {
   ).join("");
 
   const scoreLabel = submitted
-    ? t("practice_total_score", { score, total: totalScore })
-    : t("practice_total_count", { n: questions.length });
+    ? t("practice.total_score", { score, total: totalScore })
+    : t("practice.total_count", { n: questions.length });
 
   const submitBtnHtml = !submitted
-    ? `<button type="button" class="lesson-practice-submit">${t("practice_submit")}</button>`
+    ? `<button type="button" class="lesson-practice-submit">${t("practice.submit")}</button>`
     : "";
 
   const hero = `
 <section class="lesson-section-hero lesson-practice-hero">
-  <h3 class="lesson-section-title">${escapeHtml(t("practice_title"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(t("hsk.section.practice"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(t("hsk.desc.practice"))}</p>
   <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
   ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
 </section>`;

@@ -4,16 +4,17 @@
  */
 
 const MODES = {
-  follow: { key: "follow", zh: "跟读模式", kr: "따라 읽기", en: "Follow-along" },
-  replace: { key: "replace", zh: "替换练习", kr: "대체 연습", en: "Substitution" },
-  roleplay: { key: "roleplay", zh: "角色扮演", kr: "역할 놀이", en: "Role-play" },
-  free: { key: "free", zh: "自由问答", kr: "자유 질문", en: "Free Q&A" },
+  follow: { key: "follow", zh: "跟读模式", kr: "따라 읽기", en: "Follow-along", jp: "跟読" },
+  replace: { key: "replace", zh: "替换练习", kr: "대체 연습", en: "Substitution", jp: "置換練習" },
+  roleplay: { key: "roleplay", zh: "角色扮演", kr: "역할 놀이", en: "Role-play", jp: "ロールプレイ" },
+  free: { key: "free", zh: "自由问答", kr: "자유 질문", en: "Free Q&A", jp: "自由質問" },
 };
 
 /** 获取模式描述 */
 export function getModeLabel(mode, lang) {
   const m = MODES[mode] || MODES.follow;
-  return m[lang === "zh" || lang === "cn" ? "zh" : lang === "ko" || lang === "kr" ? "kr" : "en"] || m.zh;
+  const key = lang === "zh" || lang === "cn" ? "zh" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+  return m[key] || m.zh;
 }
 
 /**

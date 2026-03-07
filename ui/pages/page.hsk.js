@@ -4,7 +4,7 @@
 // ✅ Study Tabs: words/dialogue/grammar/ai
 
 import { i18n } from "../i18n.js";
-import { pick, getContentText, getLang as getEngineLang } from "../core/languageEngine.js";
+import { pick, getContentText, getLang as getEngineLang, getLessonDisplayTitle } from "../core/languageEngine.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
@@ -83,8 +83,7 @@ function rerenderHSKFromState() {
       console.debug("[HSK] render tab", state.tab, "lang=" + lang);
     }
 
-    const titleObj = ld && ld.title;
-    const titleStr = typeof titleObj === "object" ? pick(titleObj) : (typeof titleObj === "string" ? titleObj : "");
+    const titleStr = getLessonDisplayTitle(ld, getLang());
     const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no });
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
     const titleEl = $("hskStudyTitle");
@@ -256,17 +255,17 @@ function updateTabsUI() {
   });
 }
 
-/** 对话翻译：统一走 languageEngine.getContentText */
+/** 对话翻译：统一走 languageEngine.getContentText，strict 避免混语 */
 function pickDialogueTranslation(line, zhMain = "") {
-  const out = getContentText(line, "translation") || pick(line);
+  const out = getContentText(line, "translation") || pick(line, { strict: true });
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
 
-/** 会话标题：pick(title) 或 i18n 会話{n} */
+/** 会话标题：pick(title, strict) 或 i18n 会話{n} */
 function pickCardTitle(obj, cardIndex = 1) {
   if (obj != null && typeof obj === "string") return obj.trim();
-  const v = pick(obj);
+  const v = pick(obj, { strict: true });
   if (v) return v;
   const sessionText = i18n.t("dialogue.session", { n: cardIndex });
   if (sessionText && sessionText !== "dialogue.session") return sessionText;
@@ -713,11 +712,10 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    const titleObj = lessonData && lessonData.title;
-    const titleStr = typeof titleObj === "object" ? pick(titleObj) : (typeof titleObj === "string" ? titleObj : "");
-    const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no }) || (lang === "jp" ? `第 ${no} 課` : lang === "kr" ? `제 ${no}과` : lang === "zh" ? `第 ${no} 课` : `Lesson ${no}`);
+    const titleStr = getLessonDisplayTitle(lessonData, lang);
+    const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no });
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
-    showStudyMode(headerTitle, "");
+    showStudyMode(headerTitle);
     el = $("hskStudyBar"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     updateProgressBlock();
 

@@ -93,7 +93,8 @@ export function getPosByLang(word, lang, scope = "") {
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "");
 
   if (typeof p === "object" && p != null) {
-    const fromPick = pick(p);
+    const normLang = lang === "ko" ? "kr" : lang === "zh" ? "cn" : lang === "ja" ? "jp" : lang;
+    const fromPick = pick(p, { strict: true, lang: normLang });
     if (fromPick) return fromPick;
 
     const zh = str(p.zh ?? p.cn);

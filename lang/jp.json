@@ -101,10 +101,29 @@
     "review_range_format": "第{from}–{to}課 / 1–{total}課復習",
     "review_desc": "以前学んだ単語と会話を復習してください。",
     "back_to_list": "← 一覧に戻る",
-    "lesson_unit": "第{n}課"
+    "lesson_unit": "第{n}課",
+    "section": {
+      "practice": "練習",
+      "ai": "AI学習"
+    },
+    "desc": {
+      "practice": "回答して送信すると、正誤と解説が表示されます。",
+      "ai": "本課の単語・会話でAIに質問しましょう。"
+    }
+  },
+  "action": {
+    "learn": "学習",
+    "trace": "なぞり書き",
+    "speak": "発音",
+    "listen": "発音"
   },
   "lesson": {
     "learn": "学習",
+    "summary": {
+      "words": "語彙",
+      "dialogues": "会話",
+      "grammar_points": "文法"
+    },
     "words": "単語",
     "dialogue": "会話",
     "grammar": "文法",
@@ -115,6 +134,7 @@
     "dialogue_card": "会話"
   },
   "practice": {
+    "question": "質問",
     "title": "練習",
     "subtitle": "回答して送信すると、正誤と解説が表示されます。",
     "submit": "送信",
@@ -132,7 +152,18 @@
     "question_no": "第{n}問",
     "total_questions": "{n}問",
     "score": "得点",
-    "unanswered": "未回答"
+    "unanswered": "未回答",
+    "incorrect": "不正解"
+  },
+  "ai": {
+    "placeholder": "例：「你好」と「您好」の違いは？",
+    "send": "送信",
+    "copy_lesson": "レッスン内容をコピー",
+    "follow_along": "跟読",
+    "substitution": "置換練習",
+    "role_play": "ロールプレイ",
+    "free_qa": "自由質問",
+    "prompt_preview": "プロンプトプレビュー"
   },
   "progress": {
     "completed": "完了",

@@ -97,10 +97,29 @@
     "review_range_format": "Lesson {from}–{to} / 1–{total} review",
     "review_desc": "Please review the vocabulary and dialogue from previous lessons.",
     "back_to_list": "← Back to list",
-    "lesson_unit": "Lesson {n}"
+    "lesson_unit": "Lesson {n}",
+    "section": {
+      "practice": "Practice",
+      "ai": "AI Learning"
+    },
+    "desc": {
+      "practice": "Answer the questions and submit to see results and explanations.",
+      "ai": "Ask AI about the words and dialogue from this lesson."
+    }
+  },
+  "action": {
+    "learn": "Learn",
+    "trace": "Trace",
+    "speak": "Speak",
+    "listen": "Listen"
   },
   "lesson": {
     "learn": "Learn",
+    "summary": {
+      "words": "words",
+      "dialogues": "dialogues",
+      "grammar_points": "grammar points"
+    },
     "words": "Vocabulary",
     "dialogue": "Dialogue",
     "grammar": "Grammar",
@@ -111,6 +130,7 @@
     "dialogue_card": "Dialogue"
   },
   "practice": {
+    "question": "Question",
     "title": "Practice",
     "subtitle": "Answer the questions and submit to see results and explanations.",
     "submit": "Submit",
@@ -126,7 +146,18 @@
     "total_count": "{n} questions",
     "total_score": "Score {score}/{total}",
     "question_no": "Question {n}",
-    "unanswered": "Unanswered"
+    "unanswered": "Unanswered",
+    "incorrect": "Incorrect"
+  },
+  "ai": {
+    "placeholder": "e.g. What's the difference between 你好 and 您好?",
+    "send": "Send",
+    "copy_lesson": "Copy lesson content",
+    "follow_along": "Follow-along",
+    "substitution": "Substitution",
+    "role_play": "Role-play",
+    "free_qa": "Free Q&A",
+    "prompt_preview": "Prompt preview"
   },
   "review": {
     "mode": "Wrong Answer Review",

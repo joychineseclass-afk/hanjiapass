@@ -14,23 +14,24 @@
   "summary": {
     "zh": "见面问候与基本寒暄",
     "kr": "첫 만남 인사",
-    "en": "First meeting greetings"
+    "en": "First meeting greetings",
+    "jp": "初対面の挨拶と基本的な会話"
   },
   "objectives": [
     { "zh": "学会用中文打招呼", "kr": "중국어로 인사할 수 있다", "en": "Can greet in Chinese" },
     { "zh": "学会问好并回应", "kr": "안부를 묻고 대답할 수 있다", "en": "Can ask and respond to greetings" }
   ],
   "vocab": [
-    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "jp": "あなた", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "jp": "良い", "en": "good; hello" }, "pos": { "kr": "형용사", "en": "adjective" } },
-    { "hanzi": "很", "pinyin": "hěn", "meaning": { "zh": "很", "kr": "매우", "jp": "とても", "en": "very" }, "pos": { "kr": "부사", "en": "adverb" } },
-    { "hanzi": "吗", "pinyin": "ma", "meaning": { "zh": "吗", "kr": "의문 조사", "jp": "疑問の助詞", "en": "question particle" }, "pos": { "kr": "조사", "en": "particle" } },
-    { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "jp": "ありがとう", "en": "thank you" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "안녕히 가세요", "jp": "さようなら", "en": "goodbye" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "不客气", "pinyin": "bùkèqi", "meaning": { "zh": "不客气", "kr": "천만에요", "jp": "どういたしまして", "en": "you're welcome" }, "pos": { "kr": "형용사", "en": "adjective" } },
-    { "hanzi": "对不起", "pinyin": "duìbuqǐ", "meaning": { "zh": "对不起", "kr": "죄송합니다", "jp": "すみません", "en": "sorry" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "jp": "大丈夫です", "en": "it doesn't matter" }, "pos": { "kr": "형용사", "en": "adjective" } }
+    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "jp": "あなた", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "jp": "良い", "en": "good; hello" }, "pos": { "kr": "형용사", "en": "adjective", "jp": "形容詞" } },
+    { "hanzi": "很", "pinyin": "hěn", "meaning": { "zh": "很", "kr": "매우", "jp": "とても", "en": "very" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } },
+    { "hanzi": "吗", "pinyin": "ma", "meaning": { "zh": "吗", "kr": "의문 조사", "jp": "疑問の助詞", "en": "question particle" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } },
+    { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "jp": "ありがとう", "en": "thank you" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "안녕히 가세요", "jp": "さようなら", "en": "goodbye" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "不客气", "pinyin": "bùkèqi", "meaning": { "zh": "不客气", "kr": "천만에요", "jp": "どういたしまして", "en": "you're welcome" }, "pos": { "kr": "형용사", "en": "adjective", "jp": "形容詞" } },
+    { "hanzi": "对不起", "pinyin": "duìbuqǐ", "meaning": { "zh": "对不起", "kr": "죄송합니다", "jp": "すみません", "en": "sorry" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "jp": "大丈夫です", "en": "it doesn't matter" }, "pos": { "kr": "형용사", "en": "adjective", "jp": "形容詞" } }
   ],
   "dialogueCards": [
     {
@@ -89,11 +90,11 @@
     { "hanzi": "欢迎你！", "pinyin": "Huānyíng nǐ!", "translation": { "kr": "환영해요!", "jp": "ようこそ!", "en": "Welcome!" } }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "你好 ___？", "kr": "你好 ___？", "en": "你好 ___?" }, "options": ["吗", "好", "在"], "answer": "吗" },
-    { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "「你好吗？」에 대한 답은?", "en": "What is the response to 你好吗?" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },
-    { "type": "choice", "question": { "zh": "请选择正确语序：我 / 很 / 好", "kr": "올바른 순서를 선택하세요.", "en": "Correct order for 我 / 很 / 好?" }, "options": ["我很好", "很好我", "好我很"], "answer": "我很好" },
-    { "type": "choice", "question": { "zh": "哪个是「谢谢」？", "kr": "「谢谢」는 어느 것?", "en": "Which one is 谢谢?" }, "options": ["再见", "谢谢", "不客气"], "answer": "谢谢" },
-    { "type": "choice", "question": { "zh": "A：对不起。 B：___", "kr": "A：对不起。 B：___", "en": "A: Sorry. B: ___" }, "options": ["谢谢", "没关系", "再见"], "answer": "没关系" }
+    { "type": "choice", "question": { "zh": "你好 ___？", "kr": "你好 ___？", "en": "你好 ___?", "jp": "你好 ___？" }, "options": ["吗", "好", "在"], "answer": "吗" },
+    { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "「你好吗？」에 대한 답은?", "en": "What is the response to 你好吗?", "jp": "「你好吗？」への返答は？" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },
+    { "type": "choice", "question": { "zh": "请选择正确语序：我 / 很 / 好", "kr": "올바른 순서를 선택하세요.", "en": "Correct order for 我 / 很 / 好?", "jp": "正しい語順を選んでください：我 / 很 / 好" }, "options": ["我很好", "很好我", "好我很"], "answer": "我很好" },
+    { "type": "choice", "question": { "zh": "哪个是「谢谢」？", "kr": "「谢谢」는 어느 것?", "en": "Which one is 谢谢?", "jp": "「谢谢」はどれ？" }, "options": ["再见", "谢谢", "不客气"], "answer": "谢谢" },
+    { "type": "choice", "question": { "zh": "A：对不起。 B：___", "kr": "A：对不起。 B：___", "en": "A: Sorry. B: ___", "jp": "A：对不起。 B：___" }, "options": ["谢谢", "没关系", "再见"], "answer": "没关系" }
   ],
   "review": {},
   "aiPractice": {

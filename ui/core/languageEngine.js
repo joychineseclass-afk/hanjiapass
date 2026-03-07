@@ -92,6 +92,19 @@ const KEY_ALIAS = {
   common_back: "common.back",
   stroke_btn_trace: "stroke.btn_trace",
   lesson_learn: "lesson.learn",
+  action_learn: "action.learn",
+  action_trace: "action.trace",
+  action_speak: "action.speak",
+  action_listen: "action.listen",
+  hsk_section_practice: "hsk.section.practice",
+  hsk_section_ai: "hsk.section.ai",
+  hsk_desc_practice: "hsk.desc.practice",
+  hsk_desc_ai: "hsk.desc.ai",
+  practice_question: "practice.question",
+  practice_submit: "practice.submit",
+  practice_correct: "practice.correct",
+  practice_incorrect: "practice.incorrect",
+  practice_explanation: "practice.explanation",
 };
 
 function keyToPath(key) {
@@ -243,6 +256,28 @@ export function pick(obj, options = {}) {
     if (v != null && str(v)) return str(v);
   }
   return options.fallback ?? "";
+}
+
+/**
+ * 4b. getLessonDisplayTitle(lesson, lang?)
+ * 统一 lesson 标题：目录页与 detail 共用
+ * 优先 pick(lesson.title, { strict:true })
+ * 兼容 lesson.title_jp / title_en / title_kr / title_cn
+ * 当前语言缺失时回退到 cn 或原始 title，避免混语
+ */
+export function getLessonDisplayTitle(lesson, lang) {
+  if (!lesson) return "";
+  const l = lang ?? getLang();
+  const titleObj = lesson.title || lesson.name || lesson.label;
+  if (typeof titleObj === "object" && titleObj !== null) {
+    const v = pick(titleObj, { strict: true, lang: l });
+    if (v) return v;
+    return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
+  }
+  if (typeof titleObj === "string") return str(titleObj);
+  const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
+  if (flat) return str(flat);
+  return str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
 }
 
 /**

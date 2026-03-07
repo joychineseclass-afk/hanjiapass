@@ -9,9 +9,8 @@ const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en);
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn);
-  return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  const key = l === "zh" || l === "cn" ? "zh" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
+  return str(obj[key] ?? obj[key === "kr" ? "ko" : key === "zh" ? "cn" : key === "jp" ? "ja" : key]) || "";
 }
 
 /**
@@ -22,8 +21,10 @@ function pickLang(obj, lang) {
  */
 export function buildLessonContext(lesson, opts = {}) {
   const lang = opts.lang || "ko";
-  const words = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
-  const dialogue = Array.isArray(lesson?.dialogue) ? lesson.dialogue : [];
+  const words = Array.isArray(lesson?.vocab) ? lesson.vocab : (Array.isArray(lesson?.words) ? lesson.words : []);
+  const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
+  const flatLines = cards.flatMap((c) => Array.isArray(c?.lines) ? c.lines : []);
+  const dialogue = flatLines.length ? flatLines : (Array.isArray(lesson?.dialogue) ? lesson.dialogue : []);
   const grammar = Array.isArray(lesson?.grammar) ? lesson.grammar : [];
   const getMeaning = opts.wordsWithMeaning || ((w) => pickLang(w?.meaning, lang) || str(w?.hanzi ?? w?.word ?? ""));
 
@@ -34,16 +35,22 @@ export function buildLessonContext(lesson, opts = {}) {
     return { hanzi: han, pinyin: py, meaning: mean };
   });
 
-  const dialogueLines = dialogue.map((line) => ({
-    speaker: str(line.speaker),
-    zh: str(line.zh ?? line.cn ?? line.line ?? ""),
-    pinyin: str(line.pinyin ?? line.py ?? ""),
-    trans: pickLang({ zh: line.zh, kr: line.kr, en: line.en }, lang),
-  }));
+  const dialogueLines = dialogue.map((line) => {
+    const zh = str(line.zh ?? line.cn ?? line.text ?? line.line ?? "");
+    const trans = (line.translation && typeof line.translation === "object")
+      ? (line.translation[lang] ?? line.translation[lang === "kr" ? "ko" : lang === "cn" ? "zh" : lang === "jp" ? "ja" : lang] ?? "")
+      : pickLang({ zh: line.zh, kr: line.kr, en: line.en, jp: line.jp }, lang);
+    return {
+      speaker: str(line.speaker),
+      zh,
+      pinyin: str(line.pinyin ?? line.py ?? ""),
+      trans: str(trans),
+    };
+  });
 
   const grammarPoints = grammar.slice(0, 5).map((g) => ({
-    title: pickLang(g?.title, lang) || str(g?.title),
-    explanation: pickLang(g?.explanation ?? g, lang),
+    title: pickLang(g?.title, lang) || str(g?.pattern ?? g?.title),
+    explanation: pickLang(g?.explain ?? g?.explanation ?? g, lang),
     example: typeof g?.example === "object" ? pickLang(g.example, lang) : str(g?.example),
   }));
 

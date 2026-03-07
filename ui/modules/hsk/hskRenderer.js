@@ -2,7 +2,7 @@
 // 统一使用 i18n.t() + languageEngine.pick/getContentText，禁止散乱 item.kr/item.en 判断
 
 import { i18n } from "../../i18n.js";
-import { pick, getContentText, getLang } from "../../core/languageEngine.js";
+import { pick, getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
@@ -73,11 +73,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
 
-    const titleObj = it.title || it.name || it.label || "";
-    const zh = typeof titleObj === "string"
-      ? (() => { const s = titleObj.trim(); const parts = s.split(/\s*\/\s*/); return parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s; })()
-      : (titleObj?.zh ?? titleObj?.cn ?? "");
-    const titleDisplay = pick(titleObj) || zh || "-";
+    const titleDisplay = getLessonDisplayTitle(it, lang) || "-";
 
     const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
@@ -118,9 +114,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
 
       const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
-      const learnLabel = i18n.t("lesson.learn", "학습");
-      const strokeLabel = i18n.t("stroke.btn_trace", "笔画");
-      const audioLabel = i18n.t("common.listen") || i18n.t("common.speak", "发音");
+      const learnLabel = i18n.t("action.learn", i18n.t("lesson.learn", "学習"));
+      const strokeLabel = i18n.t("action.trace", i18n.t("stroke.btn_trace", "なぞり書き"));
+      const audioLabel = i18n.t("action.speak", i18n.t("action.listen", i18n.t("common.listen", "発音")));
       const strokeDisabled = !han ? " disabled" : "";
       const hanziChars = han ? Array.from(han).map((ch) =>
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
