@@ -433,6 +433,10 @@ async function openLesson({ lessonNo, file }) {
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
 
+    const courseId = lessonData?.courseId ?? getCourseId();
+    const lessonId = lessonData?.id ?? `${courseId}_lesson${no}`;
+    PROGRESS_ENGINE?.markLessonStarted?.({ courseId, lessonId, lessonNo: no });
+
     const lessonCoverUrl = IMAGE_ENGINE?.getLessonImage?.(lessonData, {
       courseType: state.version,
       level: `hsk${state.lv}`,
