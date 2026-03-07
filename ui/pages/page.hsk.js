@@ -116,35 +116,27 @@ function updateTabsUI() {
   });
 }
 
-/** 按系统语言取对话翻译，缺失时 kr -> en -> zh 回退。line/zh/cn 为中文原文，kr/ko、en 为译文 */
+/** 按系统语言取对话翻译。KR: kr/ko, CN: zh, EN: en，缺失时回退 */
 function pickDialogueTranslation(line, lang, zhMain = "") {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const kr = str(line?.kr ?? line?.ko);
-  const en = str(line?.en);
-  const zhTr = str(line?.zh ?? line?.cn);
+  const t = line?.translation;
   let out = "";
-  if (lang === "ko") out = kr || en || zhTr;
-  else if (lang === "en") out = en || kr || zhTr;
-  else out = zhTr || kr || en;
+  if (lang === "ko") out = str(line?.kr ?? line?.ko ?? t?.kr ?? t?.ko ?? line?.zh ?? line?.cn);
+  else if (lang === "en") out = str(line?.en ?? t?.en ?? line?.zh ?? line?.cn);
+  else out = str(line?.zh ?? line?.cn ?? t?.zh ?? line?.kr ?? line?.ko ?? line?.en);
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
 
-/** 取会话标题：支持 title 为 { zh, kr, en } 或字符串；无 title 时按 cardIndex 生成（会话1/회화 1/Dialogue 1） */
+/** 取会话标题：card.title[currentLang] 或 card.title.zh，否则生成 会话1/会话2 */
 function pickCardTitle(obj, lang, cardIndex = 1) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   if (obj != null) {
     if (typeof obj === "string") return str(obj);
-    const zh = str(obj?.zh ?? obj?.cn);
-    const kr = str(obj?.kr ?? obj?.ko);
-    const en = str(obj?.en);
-    if (zh || kr || en) {
-      if (lang === "ko") return kr || en || zh;
-      if (lang === "en") return en || kr || zh;
-      return zh || kr || en;
-    }
+    const key = lang === "ko" ? "kr" : (lang === "en" ? "en" : "zh");
+    const v = str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.ko ?? obj.en);
+    if (v) return v;
   }
-  // 无 title 时按系统语言生成
   const n = String(cardIndex);
   if (lang === "ko") return `회화 ${n}`;
   if (lang === "en") return `Dialogue ${n}`;
@@ -168,28 +160,23 @@ function getDialogueCards(lesson) {
   return [];
 }
 
-/** 渲染单条对话行（卡片式结构） */
+/** 渲染单条对话行，输出完整 HTML（lesson-dialogue-line / lesson-dialogue-speaker / lesson-dialogue-zh / lesson-dialogue-pinyin / lesson-dialogue-translation） */
 function renderDialogueLine(line, lang, showPinyin) {
   const spk = String(line?.spk ?? line?.speaker ?? "").trim();
   const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
   const trans = pickDialogueTranslation(line, lang, zh);
-  const isA = spk.toUpperCase() === "A";
-  const speakerClass = isA ? "speaker-a" : "speaker-b";
 
-  return `
-<article class="lesson-dialogue-line ${speakerClass}">
-  ${spk ? `<div class="lesson-dialogue-line__speaker">${escapeHtml(spk)}</div>` : ""}
-  <div class="lesson-dialogue-line__content">
-    <div class="lesson-dialogue-line__zh">${escapeHtml(zh)}</div>
-    ${py ? `<div class="lesson-dialogue-line__pinyin">${escapeHtml(py)}</div>` : ""}
-    ${trans ? `<div class="lesson-dialogue-line__tr">${escapeHtml(trans)}</div>` : ""}
-  </div>
+  return `<article class="lesson-dialogue-line">
+  ${spk ? `<div class="lesson-dialogue-speaker">${escapeHtml(spk)}</div>` : ""}
+  <div class="lesson-dialogue-zh">${escapeHtml(zh)}</div>
+  ${py ? `<div class="lesson-dialogue-pinyin">${escapeHtml(py)}</div>` : ""}
+  ${trans ? `<div class="lesson-dialogue-translation">${escapeHtml(trans)}</div>` : ""}
 </article>`;
 }
 
-/** 对话渲染：若有 scene.frames 则用分镜增强版，否则按会话卡片渲染 */
+/** 对话渲染：优先 dialogueCards，回退 dialogue；卡片式渲染，无旧 fallback 文本流 */
 function buildDialogueHTML(lessonData) {
   const cards = getDialogueCards(lessonData);
   if (!cards.length) return `<div class="lesson-dialogue-empty">${i18n.t("hsk_empty_dialogue", {})}</div>`;
@@ -210,16 +197,11 @@ function buildDialogueHTML(lessonData) {
     if (!lines.length) continue;
 
     const titleText = pickCardTitle(card?.title, lang, i + 1);
-    const lineBlocks = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
+    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
 
-    cardBlocks.push(`
-<section class="lesson-dialogue-card">
-  <div class="lesson-dialogue-card__head">
-    <h4>${escapeHtml(titleText)}</h4>
-  </div>
-  <div class="lesson-dialogue-card__body">
-    ${lineBlocks}
-  </div>
+    cardBlocks.push(`<section class="lesson-dialogue-card">
+  <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
+  <div class="lesson-dialogue-lines">${lineHtml}</div>
 </section>`);
   }
 
