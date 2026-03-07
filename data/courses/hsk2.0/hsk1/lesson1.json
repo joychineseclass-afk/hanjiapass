@@ -210,25 +210,50 @@
   "practice": [
     {
       "type": "choice",
-      "question": "你好吗？",
-      "options": [
-        "你好",
-        "我很好",
-        "谢谢"
-      ],
-      "answer": "我很好"
+      "question": {
+        "zh": "「你好吗？」的回答是什么？",
+        "kr": "「你好吗？」에 대한 답은?",
+        "en": "What is the response to '你好吗？'?"
+      },
+      "options": ["你好", "我很好", "谢谢"],
+      "answer": "我很好",
+      "explanation": {
+        "zh": "我很好是回答「你好吗？」的常用说法。",
+        "kr": "「我很好」는 「你好吗？」에 대한 일반적인 답입니다.",
+        "en": "'我很好' is the common response to '你好吗？'."
+      },
+      "score": 1
     },
     {
-      "type": "reorder",
-      "question": [
-        "很好",
-        "我"
-      ],
-      "answer": "我很好"
+      "type": "fill",
+      "question": {
+        "zh": "请填空：你好___？",
+        "kr": "빈칸 채우기: 你好___？",
+        "en": "Fill in the blank: 你好___?"
+      },
+      "answer": "吗",
+      "explanation": {
+        "zh": "吗是疑问语气词，用于构成一般疑问句。",
+        "kr": "「吗」는 의문 조사로 일반 의문문을 만듭니다.",
+        "en": "'吗' is a question particle that forms yes-no questions."
+      },
+      "score": 1
     },
     {
-      "type": "roleplay",
-      "prompt": "和同学练习打招呼：你好！你好吗？我很好。"
+      "type": "order",
+      "question": {
+        "zh": "请将词语按正确顺序排列成句子。",
+        "kr": "단어를 올바른 순서로 배열하세요.",
+        "en": "Arrange the words in the correct order."
+      },
+      "options": ["很好", "我"],
+      "answer": "我很好",
+      "explanation": {
+        "zh": "主语「我」在前，谓语「很好」在后。",
+        "kr": "주어 「我」가 앞에, 서술어 「很好」가 뒤에 옵니다.",
+        "en": "Subject '我' comes first, predicate '很好' follows."
+      },
+      "score": 1
     }
   ],
   "review": {},

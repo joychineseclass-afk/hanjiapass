@@ -10,14 +10,14 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice } from "../platform/index.js";
 
 const state = {
   lv: 1,
   version: "hsk2.0",
   lessons: [],
   current: null,        // { lessonNo, file, lessonData, lessonWords }
-  tab: "words",         // words | dialogue | grammar | ai
+  tab: "words",         // words | dialogue | grammar | practice | ai
 };
 
 function getLang() {
@@ -57,6 +57,7 @@ function showListMode() {
   $("hskPanelWords") && ($("hskPanelWords").innerHTML = "");
   $("hskDialogueBody") && ($("hskDialogueBody").innerHTML = "");
   $("hskGrammarBody") && ($("hskGrammarBody").innerHTML = "");
+  $("hskPracticeBody") && ($("hskPracticeBody").innerHTML = "");
   $("hskAIResult") && ($("hskAIResult").innerHTML = "");
   $("hskAIContext")?.classList.add("hidden");
 
@@ -70,6 +71,7 @@ function updateTabsUI() {
     ["words", "hskTabWords", "hskPanelWords"],
     ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
     ["grammar", "hskTabGrammar", "hskPanelGrammar"],
+    ["practice", "hskTabPractice", "hskPanelPractice"],
     ["ai", "hskTabAI", "hskPanelAI"],
   ];
 
@@ -439,6 +441,16 @@ async function openLesson({ lessonNo, file }) {
     }
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
+
+    // Practice panel: 平台级 Practice Engine
+    if (mountPractice && $("hskPracticeBody")) {
+      try {
+        mountPractice($("hskPracticeBody"), { lesson: lessonData, lang });
+      } catch (e) {
+        console.warn("[HSK] Practice mount failed:", e?.message);
+        $("hskPracticeBody").innerHTML = `<div class="text-sm opacity-70">(练习加载失败)</div>`;
+      }
+    }
 
     // AI panel: 平台级 AI 对话训练入口
     $("hskAIInput").value = "";

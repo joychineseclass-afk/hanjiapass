@@ -4,6 +4,7 @@
  */
 
 import { getMeaningByLang, getPosByLang } from "../../utils/wordDisplay.js";
+import { renderPracticeStep as renderPracticeStepNew } from "../practice/practiceRenderer.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -107,22 +108,25 @@ export function renderGrammarStep({ lesson, lang = "ko" } = {}) {
 }
 
 /**
- * 渲染 practice step
+ * 渲染 practice step（委托给 Practice Engine）
  */
-export function renderPracticeStep({ lesson, lang = "ko" } = {}) {
+export function renderPracticeStep(opts) {
+  try {
+    return renderPracticeStepNew ? renderPracticeStepNew(opts) : _renderPracticeStepFallback(opts);
+  } catch {
+    return _renderPracticeStepFallback(opts);
+  }
+}
+
+/** 静态回退（无 Practice Engine 时） */
+function _renderPracticeStepFallback({ lesson, lang = "ko" } = {}) {
   const items = Array.isArray(lesson?.practice) ? lesson.practice : [];
   if (!items.length) return `<div class="lesson-empty text-sm opacity-70">(暂无练习)</div>`;
-
   const blocks = items.map((p, i) => {
     const q = typeof p.question === "object" ? pickLang(p.question, lang) : str(p.question);
     const opts = Array.isArray(p.options) ? p.options : [];
     const optsHtml = opts.length ? `<ul class="list-disc ml-4 mt-2">${opts.map((o) => `<li>${escapeHtml(String(o))}</li>`).join("")}</ul>` : "";
-    return `
-      <div class="practice-item p-4 rounded-xl border border-slate-200 mb-3">
-        <div class="font-medium text-slate-800">${i + 1}. ${escapeHtml(q)}</div>
-        ${optsHtml}
-        ${p.answer ? `<div class="text-sm text-green-600 mt-2">✓ ${escapeHtml(str(p.answer))}</div>` : ""}
-      </div>`;
+    return `<div class="practice-item p-4 rounded-xl border border-slate-200 mb-3"><div class="font-medium text-slate-800">${i + 1}. ${escapeHtml(q)}</div>${optsHtml}${p.answer ? `<div class="text-sm text-green-600 mt-2">✓ ${escapeHtml(str(p.answer))}</div>` : ""}</div>`;
   });
   return `<div class="practice-list">${blocks.join("")}</div>`;
 }
