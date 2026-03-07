@@ -150,5 +150,25 @@
         "en": "AI Practice"
       }
     }
+  ],
+  "extension": [
+    {
+      "phrase": "你是哪国人？",
+      "pinyin": "Nǐ shì nǎ guó rén?",
+      "explain": {
+        "kr": "어느 나라 사람이에요?",
+        "jp": "どこの国の方ですか？",
+        "en": "Which country are you from?"
+      }
+    },
+    {
+      "phrase": "我很好。",
+      "pinyin": "Wǒ hěn hǎo.",
+      "explain": {
+        "kr": "저는 잘 지내요.",
+        "jp": "元気です。",
+        "en": "I'm fine."
+      }
+    }
   ]
 }

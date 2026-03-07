@@ -253,31 +253,58 @@
       "zh": "请问……",
       "pinyin": "Qǐngwèn...",
       "kr": "실례합니다...",
-      "en": "Excuse me..."
+      "en": "Excuse me...",
+      "phrase": "请问……",
+      "explain": {
+        "kr": "실례합니다...",
+        "en": "Excuse me...",
+        "jp": "すみません..."
+      }
     },
     {
       "zh": "请等一下。",
       "pinyin": "Qǐng děng yī xià.",
       "kr": "잠시만 기다려 주세요.",
-      "en": "Please wait a moment."
+      "en": "Please wait a moment.",
+      "phrase": "请等一下。",
+      "explain": {
+        "kr": "잠시만 기다려 주세요.",
+        "en": "Please wait a moment.",
+        "jp": "少々お待ちください。"
+      }
     },
     {
       "zh": "我知道了。",
       "pinyin": "Wǒ zhīdào le.",
       "kr": "알겠어요.",
-      "en": "I got it."
+      "en": "I got it.",
+      "phrase": "我知道了。",
+      "explain": {
+        "kr": "알겠어요.",
+        "en": "I got it."
+      }
     },
     {
       "zh": "我一会儿给你打电话。",
       "pinyin": "Wǒ yīhuǐr gěi nǐ dǎ diànhuà.",
       "kr": "잠시 후에 전화할게요.",
-      "en": "I'll call you in a moment."
+      "en": "I'll call you in a moment.",
+      "phrase": "我一会儿给你打电话。",
+      "explain": {
+        "kr": "잠시 후에 전화할게요.",
+        "en": "I'll call you in a moment."
+      }
     },
     {
       "zh": "他在吗？",
       "pinyin": "Tā zài ma?",
       "kr": "그 있어요?",
-      "en": "Is he there?"
+      "en": "Is he there?",
+      "phrase": "他在吗？",
+      "explain": {
+        "kr": "그 있어요?",
+        "en": "Is he there?"
+      }
     }
   ],
   "practice": [

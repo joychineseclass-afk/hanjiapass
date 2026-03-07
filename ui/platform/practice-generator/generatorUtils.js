@@ -48,10 +48,10 @@ export function getVocabMeaningObj(w) {
   };
 }
 
-/** 从 extension 项取 zh（兼容对象 / 字符串） */
+/** 从 extension 项取 zh（兼容 phrase / hanzi / zh） */
 export function getExtensionZh(item) {
   if (typeof item === "string") return str(item);
-  return str(item?.zh ?? item?.cn ?? item?.line ?? "");
+  return str(item?.phrase ?? item?.hanzi ?? item?.zh ?? item?.cn ?? item?.line ?? "");
 }
 
 /** 从 extension 项取 pinyin */
@@ -60,17 +60,33 @@ export function getExtensionPinyin(item) {
   return str(item?.pinyin ?? item?.py ?? "");
 }
 
-/** 从 extension 项取 meaning */
+/** 从 extension 项取 meaning（兼容 explain / meaning / translation / 扁平 kr/en） */
 export function getExtensionMeaning(item, lang) {
   if (typeof item === "string") return "";
+  const l = lang === "ko" ? "kr" : lang;
+  const explain = item?.explain ?? item?.explanation;
+  if (explain && typeof explain === "object") {
+    const v = explain[l] ?? explain[l === "kr" ? "ko" : l === "cn" ? "zh" : l];
+    if (v) return str(v);
+  }
   const m = item?.meaning;
-  if (!m || typeof m !== "object") return str(item?.kr ?? item?.ko ?? item?.en ?? item?.zh ?? item?.cn ?? "");
-  return pickLang(m, lang);
+  if (m && typeof m === "object") return pickLang(m, lang) || "";
+  const t = item?.translation;
+  if (t && typeof t === "object") return pickLang(t, lang) || "";
+  return str(item?.kr ?? item?.ko ?? item?.en ?? item?.zh ?? item?.cn ?? "");
 }
 
 /** 从 extension 项取完整 meaning 对象 */
 export function getExtensionMeaningObj(item) {
   if (typeof item === "string") return { zh: "", kr: "", en: "" };
+  const explain = item?.explain ?? item?.explanation;
+  if (explain && typeof explain === "object") {
+    return {
+      zh: str(explain.zh ?? explain.cn ?? ""),
+      kr: str(explain.kr ?? explain.ko ?? ""),
+      en: str(explain.en ?? ""),
+    };
+  }
   const m = item?.meaning;
   if (!m || typeof m !== "object") {
     return {

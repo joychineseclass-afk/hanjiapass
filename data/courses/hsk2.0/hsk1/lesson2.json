@@ -244,31 +244,61 @@
       "zh": "我姓王。",
       "pinyin": "Wǒ xìng Wáng.",
       "kr": "제 성은 왕이에요.",
-      "en": "My family name is Wang."
+      "en": "My family name is Wang.",
+      "phrase": "我姓王。",
+      "explain": {
+        "kr": "제 성은 왕이에요.",
+        "en": "My family name is Wang.",
+        "jp": "私は王です。"
+      }
     },
     {
       "zh": "我的名字是李明。",
       "pinyin": "Wǒ de míngzi shì Lǐ Míng.",
       "kr": "제 이름은 이명이에요.",
-      "en": "My name is Li Ming."
+      "en": "My name is Li Ming.",
+      "phrase": "我的名字是李明。",
+      "explain": {
+        "kr": "제 이름은 이명이에요.",
+        "en": "My name is Li Ming.",
+        "jp": "私の名前は李明です。"
+      }
     },
     {
       "zh": "你呢？",
       "pinyin": "Nǐ ne?",
       "kr": "당신은요?",
-      "en": "And you?"
+      "en": "And you?",
+      "phrase": "你呢？",
+      "explain": {
+        "kr": "당신은요?",
+        "en": "And you?",
+        "jp": "あなたは？"
+      }
     },
     {
       "zh": "请多关照。",
       "pinyin": "Qǐng duō guānzhào.",
       "kr": "잘 부탁해요.",
-      "en": "Please take care of me."
+      "en": "Please take care of me.",
+      "phrase": "请多关照。",
+      "explain": {
+        "kr": "잘 부탁해요.",
+        "en": "Please take care of me.",
+        "jp": "よろしくお願いします。"
+      }
     },
     {
       "zh": "我是学生。",
       "pinyin": "Wǒ shì xuésheng.",
       "kr": "저는 학생이에요.",
-      "en": "I am a student."
+      "en": "I am a student.",
+      "phrase": "我是学生。",
+      "explain": {
+        "kr": "저는 학생이에요.",
+        "en": "I am a student.",
+        "jp": "私は学生です。"
+      }
     }
   ],
   "practice": [

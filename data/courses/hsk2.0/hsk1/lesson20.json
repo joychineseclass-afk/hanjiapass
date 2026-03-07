@@ -286,31 +286,61 @@
       "zh": "不舒服",
       "pinyin": "Bù shūfu",
       "kr": "몸이 안 좋아요",
-      "en": "unwell"
+      "en": "unwell",
+      "phrase": "不舒服",
+      "explain": {
+        "kr": "몸이 안 좋아요",
+        "en": "unwell",
+        "jp": "体調が悪い"
+      }
     },
     {
       "zh": "去医院",
       "pinyin": "Qù yīyuàn",
       "kr": "병원 가다",
-      "en": "to go to the hospital"
+      "en": "to go to the hospital",
+      "phrase": "去医院",
+      "explain": {
+        "kr": "병원 가다",
+        "en": "to go to the hospital",
+        "jp": "病院に行く"
+      }
     },
     {
       "zh": "现在怎么样？",
       "pinyin": "Xiànzài zěnmeyàng?",
       "kr": "지금 어때요?",
-      "en": "How are you now?"
+      "en": "How are you now?",
+      "phrase": "现在怎么样？",
+      "explain": {
+        "kr": "지금 어때요?",
+        "en": "How are you now?",
+        "jp": "今どうですか？"
+      }
     },
     {
       "zh": "好一点了。",
       "pinyin": "Hǎo yīdiǎn le.",
       "kr": "조금 나아졌어요.",
-      "en": "I'm feeling a bit better."
+      "en": "I'm feeling a bit better.",
+      "phrase": "好一点了。",
+      "explain": {
+        "kr": "조금 나아졌어요.",
+        "en": "I'm feeling a bit better.",
+        "jp": "少し良くなりました。"
+      }
     },
     {
       "zh": "没问题。",
       "pinyin": "Méi wèntí.",
       "kr": "문제없어요.",
-      "en": "No problem."
+      "en": "No problem.",
+      "phrase": "没问题。",
+      "explain": {
+        "kr": "문제없어요.",
+        "en": "No problem.",
+        "jp": "問題ありません。"
+      }
     }
   ],
   "practice": [

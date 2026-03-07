@@ -268,43 +268,80 @@
       "zh": "今天几月几号？",
       "pinyin": "Jīntiān jǐ yuè jǐ hào?",
       "kr": "오늘 몇 월 며칠이에요?",
-      "en": "What date is it today?"
+      "en": "What date is it today?",
+      "phrase": "今天几月几号？",
+      "explain": {
+        "kr": "오늘 몇 월 며칠이에요?",
+        "en": "What date is it today?",
+        "jp": "今日は何月何日ですか？"
+      }
     },
     {
       "zh": "今天星期几？",
       "pinyin": "Jīntiān xīngqī jǐ?",
       "kr": "오늘 무슨 요일이에요?",
-      "en": "What day is it today?"
+      "en": "What day is it today?",
+      "phrase": "今天星期几？",
+      "explain": {
+        "kr": "오늘 무슨 요일이에요?",
+        "en": "What day is it today?",
+        "jp": "今日は何曜日ですか？"
+      }
     },
     {
       "zh": "明天几号？",
       "pinyin": "Míngtiān jǐ hào?",
       "kr": "내일 며칠이에요?",
-      "en": "What date is tomorrow?"
+      "en": "What date is tomorrow?",
+      "phrase": "明天几号？",
+      "explain": {
+        "kr": "내일 며칠이에요?",
+        "en": "What date is tomorrow?"
+      }
     },
     {
       "zh": "一月到十二月",
       "pinyin": "Yī yuè dào shí'èr yuè",
       "kr": "1월부터 12월까지",
-      "en": "January to December"
+      "en": "January to December",
+      "phrase": "一月到十二月",
+      "explain": {
+        "kr": "1월부터 12월까지",
+        "en": "January to December"
+      }
     },
     {
       "zh": "星期一到星期天",
       "pinyin": "Xīngqī yī dào xīngqī tiān",
       "kr": "월요일부터 일요일까지",
-      "en": "Monday to Sunday"
+      "en": "Monday to Sunday",
+      "phrase": "星期一到星期天",
+      "explain": {
+        "kr": "월요일부터 일요일까지",
+        "en": "Monday to Sunday"
+      }
     },
     {
       "zh": "三月十五号",
       "pinyin": "Sān yuè shíwǔ hào",
       "kr": "3월 15일",
-      "en": "March 15th"
+      "en": "March 15th",
+      "phrase": "三月十五号",
+      "explain": {
+        "kr": "3월 15일",
+        "en": "March 15th"
+      }
     },
     {
       "zh": "下星期一",
       "pinyin": "Xià xīngqī yī",
       "kr": "다음 주 월요일",
-      "en": "next Monday"
+      "en": "next Monday",
+      "phrase": "下星期一",
+      "explain": {
+        "kr": "다음 주 월요일",
+        "en": "next Monday"
+      }
     }
   ],
   "practice": [

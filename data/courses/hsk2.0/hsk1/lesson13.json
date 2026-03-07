@@ -312,31 +312,61 @@
       "zh": "看电影",
       "pinyin": "Kàn diànyǐng",
       "kr": "영화 보다",
-      "en": "to watch movies"
+      "en": "to watch movies",
+      "phrase": "看电影",
+      "explain": {
+        "kr": "영화 보다",
+        "en": "to watch movies",
+        "jp": "映画を見る"
+      }
     },
     {
       "zh": "听音乐",
       "pinyin": "Tīng yīnyuè",
       "kr": "음악 듣다",
-      "en": "to listen to music"
+      "en": "to listen to music",
+      "phrase": "听音乐",
+      "explain": {
+        "kr": "음악 듣다",
+        "en": "to listen to music",
+        "jp": "音楽を聞く"
+      }
     },
     {
       "zh": "看书",
       "pinyin": "Kàn shū",
       "kr": "책 읽다",
-      "en": "to read books"
+      "en": "to read books",
+      "phrase": "看书",
+      "explain": {
+        "kr": "책 읽다",
+        "en": "to read books",
+        "jp": "本を読む"
+      }
     },
     {
       "zh": "运动",
       "pinyin": "Yùndòng",
       "kr": "운동",
-      "en": "exercise"
+      "en": "exercise",
+      "phrase": "运动",
+      "explain": {
+        "kr": "운동",
+        "en": "exercise",
+        "jp": "運動"
+      }
     },
     {
       "zh": "我不喜欢……",
       "pinyin": "Wǒ bù xǐhuan...",
       "kr": "저는 ... 안 좋아해요.",
-      "en": "I don't like..."
+      "en": "I don't like...",
+      "phrase": "我不喜欢……",
+      "explain": {
+        "kr": "저는 ... 안 좋아해요.",
+        "en": "I don't like...",
+        "jp": "私は...が好きじゃありません。"
+      }
     }
   ],
   "practice": [

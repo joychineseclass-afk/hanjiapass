@@ -493,16 +493,58 @@ function buildGrammarHTML(lessonData) {
   return `${hero}<section class="lesson-grammar-list">${cards}</section>`;
 }
 
-/** 扩展表达：hero + 教材卡片列表，支持点读（点击中文或发音按钮） */
+/**
+ * 统一 extension explanation 读取：strict 规则，不 fallback
+ * 优先级：explain.{lang} > explanation.{lang} > explainKr/Jp/En > meaning.{lang} > translation.{lang}
+ */
+function getExtensionExplanation(item, lang) {
+  if (!item || typeof item !== "object") return "";
+  const l = (lang || getLang()).toLowerCase();
+  const key = l === "jp" || l === "ja" ? "jp" : l === "kr" || l === "ko" ? "kr" : l === "cn" || l === "zh" ? "cn" : "en";
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  const explain = item.explain ?? item.explanation;
+  if (explain && typeof explain === "object") {
+    const v = explain[key] ?? explain[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  const flatMap = {
+    jp: ["explainJp", "explanationJp", "explain_jp", "explanation_jp"],
+    kr: ["explainKr", "explanationKr", "explain_kr", "explanation_kr"],
+    en: ["explainEn", "explanationEn", "explain_en", "explanation_en"],
+    cn: ["explainCn", "explanationCn", "explain_zh", "explanation_zh"],
+  };
+  for (const k of flatMap[key] || []) {
+    const v = item[k];
+    if (v) return str(v);
+  }
+  const meaning = item.meaning;
+  if (meaning && typeof meaning === "object") {
+    const v = meaning[key] ?? meaning[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  const trans = item.translation;
+  if (trans && typeof trans === "object") {
+    const v = trans[key] ?? trans[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  if (key === "kr" && item.kr) return str(item.kr);
+  if (key === "en" && item.en) return str(item.en);
+  if (key === "jp" && item.jp) return str(item.jp);
+  if (key === "cn" && item.cn) return str(item.zh || item.cn);
+  return "";
+}
+
+/** 扩展表达：hero + 教材卡片列表，phrase/pinyin/example 固定，explanation 随系统语言 */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
   const lang = getLang();
   const speakLabel = i18n.t("hsk.extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.extension_title"))}</h3>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.section.extension") || i18n.t("hsk.extension_title"))}</h3>
   <span class="lesson-extension-badge">${escapeHtml(i18n.t("hsk.extension_badge"))}</span>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.extension_subtitle"))}</p>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.desc.extension") || i18n.t("hsk.extension_subtitle"))}</p>
   <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip"))}</p>
 </section>`;
 
@@ -512,14 +554,16 @@ function buildExtensionHTML(lessonData) {
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   const cards = arr.map((item, i) => {
-    const zh = str((item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
+    const phrase = str((item && item.phrase) || (item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
-    const meaning = getContentText(item, "translation", { strict: true, lang }) || pick(item, { strict: true, lang }) || "";
+    const example = str((item && item.example) || (item && item.exampleZh) || "");
+    const examplePinyin = str((item && item.examplePinyin) || (item && item.examplePy) || "");
+    const explanation = getExtensionExplanation(item, lang);
 
     const idx = String(i + 1).padStart(2, "0");
-    const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
-    const zhAttrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-    const btnAttrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const zhEsc = escapeHtml(phrase).replaceAll('"', "&quot;");
+    const zhAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const btnAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
 
     return `<article class="lesson-extension-card">
   <div class="lesson-extension-card-top">
@@ -527,9 +571,11 @@ function buildExtensionHTML(lessonData) {
     <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
   <div class="lesson-extension-body">
-    <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+    <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
     ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
-    ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+    ${explanation ? `<div class="lesson-extension-meaning">${escapeHtml(explanation)}</div>` : ""}
+    ${example ? `<div class="lesson-extension-example">${escapeHtml(example)}</div>` : ""}
+    ${examplePinyin ? `<div class="lesson-extension-example-pinyin">${escapeHtml(examplePinyin)}</div>` : ""}
   </div>
 </article>`;
   }).filter(Boolean).join("");

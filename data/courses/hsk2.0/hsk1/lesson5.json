@@ -403,31 +403,61 @@
       "zh": "你的电话号码是多少？",
       "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?",
       "kr": "전화번호가 뭐예요?",
-      "en": "What's your phone number?"
+      "en": "What's your phone number?",
+      "phrase": "你的电话号码是多少？",
+      "explain": {
+        "kr": "전화번호가 뭐예요?",
+        "en": "What's your phone number?",
+        "jp": "電話番号は何番ですか？"
+      }
     },
     {
       "zh": "我的房间号是二零一。",
       "pinyin": "Wǒ de fángjiān hào shì èr líng yī.",
       "kr": "제 방 호수는 201이에요.",
-      "en": "My room number is 201."
+      "en": "My room number is 201.",
+      "phrase": "我的房间号是二零一。",
+      "explain": {
+        "kr": "제 방 호수는 201이에요.",
+        "en": "My room number is 201.",
+        "jp": "私の部屋番号は201です。"
+      }
     },
     {
       "zh": "一共多少钱？",
       "pinyin": "Yīgòng duōshao qián?",
       "kr": "총 얼마예요?",
-      "en": "How much in total?"
+      "en": "How much in total?",
+      "phrase": "一共多少钱？",
+      "explain": {
+        "kr": "총 얼마예요?",
+        "en": "How much in total?",
+        "jp": "合計いくらですか？"
+      }
     },
     {
       "zh": "一到十",
       "pinyin": "Yī dào shí",
       "kr": "하나부터 열까지",
-      "en": "one to ten"
+      "en": "one to ten",
+      "phrase": "一到十",
+      "explain": {
+        "kr": "하나부터 열까지",
+        "en": "one to ten",
+        "jp": "1から10まで"
+      }
     },
     {
       "zh": "十一到二十",
       "pinyin": "Shíyī dào èrshí",
       "kr": "열하나부터 스무까지",
-      "en": "eleven to twenty"
+      "en": "eleven to twenty",
+      "phrase": "十一到二十",
+      "explain": {
+        "kr": "열하나부터 스무까지",
+        "en": "eleven to twenty",
+        "jp": "11から20まで"
+      }
     }
   ],
   "practice": [

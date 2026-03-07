@@ -253,25 +253,47 @@
       "zh": "我要一杯茶。",
       "pinyin": "Wǒ yào yī bēi chá.",
       "kr": "차 한 잔 주세요.",
-      "en": "I'd like a cup of tea."
+      "en": "I'd like a cup of tea.",
+      "phrase": "我要一杯茶。",
+      "explain": {
+        "kr": "차 한 잔 주세요.",
+        "en": "I'd like a cup of tea.",
+        "jp": "お茶を一杯ください。"
+      }
     },
     {
       "zh": "给我一杯水。",
       "pinyin": "Gěi wǒ yī bēi shuǐ.",
       "kr": "물 한 잔 주세요.",
-      "en": "Give me a glass of water."
+      "en": "Give me a glass of water.",
+      "phrase": "给我一杯水。",
+      "explain": {
+        "kr": "물 한 잔 주세요.",
+        "en": "Give me a glass of water.",
+        "jp": "水を一杯ください。"
+      }
     },
     {
       "zh": "这个好吃吗？",
       "pinyin": "Zhè gè hǎo chī ma?",
       "kr": "이거 맛있어요?",
-      "en": "Is this delicious?"
+      "en": "Is this delicious?",
+      "phrase": "这个好吃吗？",
+      "explain": {
+        "kr": "이거 맛있어요?",
+        "en": "Is this delicious?"
+      }
     },
     {
       "zh": "我不要咖啡。",
       "pinyin": "Wǒ bú yào kāfēi.",
       "kr": "커피는 안 주세요.",
-      "en": "I don't want coffee."
+      "en": "I don't want coffee.",
+      "phrase": "我不要咖啡。",
+      "explain": {
+        "kr": "커피는 안 주세요.",
+        "en": "I don't want coffee."
+      }
     }
   ],
   "practice": [

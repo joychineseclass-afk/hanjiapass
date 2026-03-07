@@ -150,5 +150,25 @@
         "en": "AI Practice"
       }
     }
+  ],
+  "extension": [
+    {
+      "phrase": "你几点起床？",
+      "pinyin": "Nǐ jǐ diǎn qǐchuáng?",
+      "explain": {
+        "kr": "몇 시에 일어나요?",
+        "jp": "何時に起きますか？",
+        "en": "What time do you get up?"
+      }
+    },
+    {
+      "phrase": "你做什么工作？",
+      "pinyin": "Nǐ zuò shénme gōngzuò?",
+      "explain": {
+        "kr": "무슨 일 하세요?",
+        "jp": "お仕事は何をしていますか？",
+        "en": "What do you do for work?"
+      }
+    }
   ]
 }

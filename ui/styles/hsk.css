@@ -545,6 +545,19 @@
   line-height: 1.5;
 }
 
+.lesson-extension-example {
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+.lesson-extension-example-pinyin {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
 .lesson-extension-empty {
   font-size: 0.875rem;
   color: #94a3b8;

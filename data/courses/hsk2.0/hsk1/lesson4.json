@@ -313,31 +313,61 @@
       "zh": "我哥哥",
       "pinyin": "Wǒ gēge",
       "kr": "제 오빠/형",
-      "en": "my older brother"
+      "en": "my older brother",
+      "phrase": "我哥哥",
+      "explain": {
+        "kr": "제 오빠/형",
+        "en": "my older brother",
+        "jp": "私の兄"
+      }
     },
     {
       "zh": "我姐姐",
       "pinyin": "Wǒ jiějie",
       "kr": "제 언니/누나",
-      "en": "my older sister"
+      "en": "my older sister",
+      "phrase": "我姐姐",
+      "explain": {
+        "kr": "제 언니/누나",
+        "en": "my older sister",
+        "jp": "私の姉"
+      }
     },
     {
       "zh": "我家有五口人。",
       "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
       "kr": "우리 가족은 다섯 명이에요.",
-      "en": "My family has five people."
+      "en": "My family has five people.",
+      "phrase": "我家有五口人。",
+      "explain": {
+        "kr": "우리 가족은 다섯 명이에요.",
+        "en": "My family has five people.",
+        "jp": "私の家族は5人です。"
+      }
     },
     {
       "zh": "我们一家人。",
       "pinyin": "Wǒmen yī jiā rén.",
       "kr": "우리 한 가족이에요.",
-      "en": "We are one family."
+      "en": "We are one family.",
+      "phrase": "我们一家人。",
+      "explain": {
+        "kr": "우리 한 가족이에요.",
+        "en": "We are one family.",
+        "jp": "私たちは一つの家族です。"
+      }
     },
     {
       "zh": "我们一起住。",
       "pinyin": "Wǒmen yīqǐ zhù.",
       "kr": "우리 같이 살아요.",
-      "en": "We live together."
+      "en": "We live together.",
+      "phrase": "我们一起住。",
+      "explain": {
+        "kr": "우리 같이 살아요.",
+        "en": "We live together.",
+        "jp": "私たちは一緒に住んでいます。"
+      }
     }
   ],
   "practice": [

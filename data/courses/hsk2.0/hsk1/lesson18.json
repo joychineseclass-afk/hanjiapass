@@ -298,31 +298,59 @@
       "zh": "太贵了。",
       "pinyin": "Tài guì le.",
       "kr": "너무 비싸요.",
-      "en": "It's too expensive."
+      "en": "It's too expensive.",
+      "phrase": "太贵了。",
+      "explain": {
+        "kr": "너무 비싸요.",
+        "en": "It's too expensive.",
+        "jp": "高すぎます。"
+      }
     },
     {
       "zh": "便宜一点吧。",
       "pinyin": "Piányi yīdiǎn ba.",
       "kr": "조금 깎아 주세요.",
-      "en": "Can you make it cheaper?"
+      "en": "Can you make it cheaper?",
+      "phrase": "便宜一点吧。",
+      "explain": {
+        "kr": "조금 깎아 주세요.",
+        "en": "Can you make it cheaper?",
+        "jp": "もう少し安くしてください。"
+      }
     },
     {
       "zh": "我要这个。",
       "pinyin": "Wǒ yào zhè gè.",
       "kr": "이거 주세요.",
-      "en": "I want this one."
+      "en": "I want this one.",
+      "phrase": "我要这个。",
+      "explain": {
+        "kr": "이거 주세요.",
+        "en": "I want this one.",
+        "jp": "これをください。"
+      }
     },
     {
       "zh": "不要那个。",
       "pinyin": "Bú yào nà gè.",
       "kr": "저건 안 할게요.",
-      "en": "I don't want that one."
+      "en": "I don't want that one.",
+      "phrase": "不要那个。",
+      "explain": {
+        "kr": "저건 안 할게요.",
+        "en": "I don't want that one."
+      }
     },
     {
       "zh": "我再看看。",
       "pinyin": "Wǒ zài kànkan.",
       "kr": "다시 살펴볼게요.",
-      "en": "Let me look around some more."
+      "en": "Let me look around some more.",
+      "phrase": "我再看看。",
+      "explain": {
+        "kr": "다시 살펴볼게요.",
+        "en": "Let me look around some more."
+      }
     }
   ],
   "practice": [

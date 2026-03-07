@@ -283,31 +283,61 @@
       "zh": "在公司工作",
       "pinyin": "Zài gōngsī gōngzuò",
       "kr": "회사에서 일하다",
-      "en": "to work at a company"
+      "en": "to work at a company",
+      "phrase": "在公司工作",
+      "explain": {
+        "kr": "회사에서 일하다",
+        "en": "to work at a company",
+        "jp": "会社で働く"
+      }
     },
     {
       "zh": "他是老师。",
       "pinyin": "Tā shì lǎoshī.",
       "kr": "그는 선생님이에요.",
-      "en": "He is a teacher."
+      "en": "He is a teacher.",
+      "phrase": "他是老师。",
+      "explain": {
+        "kr": "그는 선생님이에요.",
+        "en": "He is a teacher.",
+        "jp": "彼は先生です。"
+      }
     },
     {
       "zh": "她是医生。",
       "pinyin": "Tā shì yīshēng.",
       "kr": "그녀는 의사예요.",
-      "en": "She is a doctor."
+      "en": "She is a doctor.",
+      "phrase": "她是医生。",
+      "explain": {
+        "kr": "그녀는 의사예요.",
+        "en": "She is a doctor.",
+        "jp": "彼女は医者です。"
+      }
     },
     {
       "zh": "王先生",
       "pinyin": "Wáng xiānsheng",
       "kr": "왕 선생님/씨",
-      "en": "Mr. Wang"
+      "en": "Mr. Wang",
+      "phrase": "王先生",
+      "explain": {
+        "kr": "왕 선생님/씨",
+        "en": "Mr. Wang",
+        "jp": "王さん"
+      }
     },
     {
       "zh": "李小姐",
       "pinyin": "Lǐ xiǎojiě",
       "kr": "이 아가씨",
-      "en": "Miss Li"
+      "en": "Miss Li",
+      "phrase": "李小姐",
+      "explain": {
+        "kr": "이 아가씨",
+        "en": "Miss Li",
+        "jp": "李さん"
+      }
     }
   ],
   "practice": [

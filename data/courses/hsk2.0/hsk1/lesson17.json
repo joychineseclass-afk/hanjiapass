@@ -268,31 +268,58 @@
       "zh": "坐地铁",
       "pinyin": "Zuò dìtiě",
       "kr": "지하철 타다",
-      "en": "to take the subway"
+      "en": "to take the subway",
+      "phrase": "坐地铁",
+      "explain": {
+        "kr": "지하철 타다",
+        "en": "to take the subway",
+        "jp": "地下鉄に乗る"
+      }
     },
     {
       "zh": "坐公交车",
       "pinyin": "Zuò gōngjiāo chē",
       "kr": "버스 타다",
-      "en": "to take the bus"
+      "en": "to take the bus",
+      "phrase": "坐公交车",
+      "explain": {
+        "kr": "버스 타다",
+        "en": "to take the bus",
+        "jp": "バスに乗る"
+      }
     },
     {
       "zh": "走路",
       "pinyin": "Zǒu lù",
       "kr": "걷다",
-      "en": "to walk"
+      "en": "to walk",
+      "phrase": "走路",
+      "explain": {
+        "kr": "걷다",
+        "en": "to walk"
+      }
     },
     {
       "zh": "开车",
       "pinyin": "Kāi chē",
       "kr": "운전하다",
-      "en": "to drive"
+      "en": "to drive",
+      "phrase": "开车",
+      "explain": {
+        "kr": "운전하다",
+        "en": "to drive"
+      }
     },
     {
       "zh": "一起去",
       "pinyin": "Yīqǐ qù",
       "kr": "같이 가다",
-      "en": "to go together"
+      "en": "to go together",
+      "phrase": "一起去",
+      "explain": {
+        "kr": "같이 가다",
+        "en": "to go together"
+      }
     }
   ],
   "practice": [

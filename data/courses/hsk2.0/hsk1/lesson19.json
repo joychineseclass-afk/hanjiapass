@@ -298,37 +298,70 @@
       "zh": "今天天气很好。",
       "pinyin": "Jīntiān tiānqì hěn hǎo.",
       "kr": "오늘 날씨가 아주 좋아요.",
-      "en": "The weather is nice today."
+      "en": "The weather is nice today.",
+      "phrase": "今天天气很好。",
+      "explain": {
+        "kr": "오늘 날씨가 아주 좋아요.",
+        "en": "The weather is nice today.",
+        "jp": "今日は天気がとても良いです。"
+      }
     },
     {
       "zh": "很冷",
       "pinyin": "Hěn lěng",
       "kr": "매우 추워요",
-      "en": "very cold"
+      "en": "very cold",
+      "phrase": "很冷",
+      "explain": {
+        "kr": "매우 추워요",
+        "en": "very cold",
+        "jp": "とても寒い"
+      }
     },
     {
       "zh": "很热",
       "pinyin": "Hěn rè",
       "kr": "매우 더워요",
-      "en": "very hot"
+      "en": "very hot",
+      "phrase": "很热",
+      "explain": {
+        "kr": "매우 더워요",
+        "en": "very hot",
+        "jp": "とても暑い"
+      }
     },
     {
       "zh": "下雨了。",
       "pinyin": "Xià yǔ le.",
       "kr": "비 와요.",
-      "en": "It's raining."
+      "en": "It's raining.",
+      "phrase": "下雨了。",
+      "explain": {
+        "kr": "비 와요.",
+        "en": "It's raining."
+      }
     },
     {
       "zh": "有风",
       "pinyin": "Yǒu fēng",
       "kr": "바람 불어요",
-      "en": "it's windy"
+      "en": "it's windy",
+      "phrase": "有风",
+      "explain": {
+        "kr": "바람 불어요",
+        "en": "it's windy"
+      }
     },
     {
       "zh": "好天气",
       "pinyin": "Hǎo tiānqì",
       "kr": "좋은 날씨",
-      "en": "nice weather"
+      "en": "nice weather",
+      "phrase": "好天气",
+      "explain": {
+        "kr": "좋은 날씨",
+        "en": "nice weather"
+      }
     }
   ],
   "practice": [

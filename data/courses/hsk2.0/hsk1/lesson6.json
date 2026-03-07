@@ -283,31 +283,59 @@
       "zh": "今年多大？",
       "pinyin": "Jīnnián duō dà?",
       "kr": "올해 몇 살이에요?",
-      "en": "How old are you this year?"
+      "en": "How old are you this year?",
+      "phrase": "今年多大？",
+      "explain": {
+        "kr": "올해 몇 살이에요?",
+        "en": "How old are you this year?",
+        "jp": "今年何歳ですか？"
+      }
     },
     {
       "zh": "比我大",
       "pinyin": "Bǐ wǒ dà",
       "kr": "나보다 나이가 많아요",
-      "en": "older than me"
+      "en": "older than me",
+      "phrase": "比我大",
+      "explain": {
+        "kr": "나보다 나이가 많아요",
+        "en": "older than me",
+        "jp": "私より年上"
+      }
     },
     {
       "zh": "比我小",
       "pinyin": "Bǐ wǒ xiǎo",
       "kr": "나보다 어려요",
-      "en": "younger than me"
+      "en": "younger than me",
+      "phrase": "比我小",
+      "explain": {
+        "kr": "나보다 어려요",
+        "en": "younger than me",
+        "jp": "私より年下"
+      }
     },
     {
       "zh": "他比我大三岁。",
       "pinyin": "Tā bǐ wǒ dà sān suì.",
       "kr": "그는 나보다 세 살 많아요.",
-      "en": "He is three years older than me."
+      "en": "He is three years older than me.",
+      "phrase": "他比我大三岁。",
+      "explain": {
+        "kr": "그는 나보다 세 살 많아요.",
+        "en": "He is three years older than me."
+      }
     },
     {
       "zh": "她比我小两岁。",
       "pinyin": "Tā bǐ wǒ xiǎo liǎng suì.",
       "kr": "그녀는 나보다 두 살 어려요.",
-      "en": "She is two years younger than me."
+      "en": "She is two years younger than me.",
+      "phrase": "她比我小两岁。",
+      "explain": {
+        "kr": "그녀는 나보다 두 살 어려요.",
+        "en": "She is two years younger than me."
+      }
     }
   ],
   "practice": [

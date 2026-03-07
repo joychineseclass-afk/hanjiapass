@@ -285,35 +285,65 @@
       "pinyin": "Wǒ láizì Běijīng.",
       "kr": "저는 베이징에서 왔어요.",
       "en": "I'm from Beijing.",
-      "jp": "私は北京出身です。"
+      "jp": "私は北京出身です。",
+      "phrase": "我来自北京。",
+      "explain": {
+        "kr": "저는 베이징에서 왔어요.",
+        "en": "I'm from Beijing.",
+        "jp": "私は北京出身です。"
+      }
     },
     {
       "zh": "我住在上海。",
       "pinyin": "Wǒ zhù zài Shànghǎi.",
       "kr": "저는 상하이에 살아요.",
       "en": "I live in Shanghai.",
-      "jp": "私は上海に住んでいます。"
+      "jp": "私は上海に住んでいます。",
+      "phrase": "我住在上海。",
+      "explain": {
+        "kr": "저는 상하이에 살아요.",
+        "en": "I live in Shanghai.",
+        "jp": "私は上海に住んでいます。"
+      }
     },
     {
       "zh": "我在北京工作。",
       "pinyin": "Wǒ zài Běijīng gōngzuò.",
       "kr": "저는 베이징에서 일해요.",
       "en": "I work in Beijing.",
-      "jp": "私は北京で働いています。"
+      "jp": "私は北京で働いています。",
+      "phrase": "我在北京工作。",
+      "explain": {
+        "kr": "저는 베이징에서 일해요.",
+        "en": "I work in Beijing.",
+        "jp": "私は北京で働いています。"
+      }
     },
     {
       "zh": "他住在上海。",
       "pinyin": "Tā zhù zài Shànghǎi.",
       "kr": "그는 상하이에 살아요.",
       "en": "He lives in Shanghai.",
-      "jp": "彼は上海に住んでいます。"
+      "jp": "彼は上海に住んでいます。",
+      "phrase": "他住在上海。",
+      "explain": {
+        "kr": "그는 상하이에 살아요.",
+        "en": "He lives in Shanghai.",
+        "jp": "彼は上海に住んでいます。"
+      }
     },
     {
       "zh": "你住在哪儿？",
       "pinyin": "Nǐ zhù zài nǎr?",
       "kr": "어디에 살아요?",
       "en": "Where do you live?",
-      "jp": "どこに住んでいますか？"
+      "jp": "どこに住んでいますか？",
+      "phrase": "你住在哪儿？",
+      "explain": {
+        "kr": "어디에 살아요?",
+        "en": "Where do you live?",
+        "jp": "どこに住んでいますか？"
+      }
     }
   ],
   "practice": [

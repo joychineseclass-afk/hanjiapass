@@ -104,6 +104,7 @@
       "words": "单词",
       "dialogue": "会话",
       "grammar": "语法",
+      "extension": "扩展",
       "practice": "练习",
       "ai": "AI学习"
     },
@@ -111,6 +112,7 @@
       "words": "本课词汇。",
       "dialogue": "本课会话。",
       "grammar": "本课语法。",
+      "extension": "本课相关扩展表达。",
       "practice": "完成题目并提交，可查看正误与解析。",
       "ai": "用本课单词/会话向AI提问。"
     }

@@ -298,37 +298,70 @@
       "zh": "洗手间在哪儿？",
       "pinyin": "Xǐshǒujiān zài nǎr?",
       "kr": "화장실이 어디에 있어요?",
-      "en": "Where is the restroom?"
+      "en": "Where is the restroom?",
+      "phrase": "洗手间在哪儿？",
+      "explain": {
+        "kr": "화장실이 어디에 있어요?",
+        "en": "Where is the restroom?",
+        "jp": "トイレはどこにありますか？"
+      }
     },
     {
       "zh": "教室在哪儿？",
       "pinyin": "Jiàoshì zài nǎr?",
       "kr": "교실이 어디에 있어요?",
-      "en": "Where is the classroom?"
+      "en": "Where is the classroom?",
+      "phrase": "教室在哪儿？",
+      "explain": {
+        "kr": "교실이 어디에 있어요?",
+        "en": "Where is the classroom?",
+        "jp": "教室はどこにありますか？"
+      }
     },
     {
       "zh": "图书馆在哪儿？",
       "pinyin": "Túshūguǎn zài nǎr?",
       "kr": "도서관이 어디에 있어요?",
-      "en": "Where is the library?"
+      "en": "Where is the library?",
+      "phrase": "图书馆在哪儿？",
+      "explain": {
+        "kr": "도서관이 어디에 있어요?",
+        "en": "Where is the library?",
+        "jp": "図書館はどこにありますか？"
+      }
     },
     {
       "zh": "在那边。",
       "pinyin": "Zài nà biān.",
       "kr": "저쪽에 있어요.",
-      "en": "It's over there."
+      "en": "It's over there.",
+      "phrase": "在那边。",
+      "explain": {
+        "kr": "저쪽에 있어요.",
+        "en": "It's over there."
+      }
     },
     {
       "zh": "在楼上。",
       "pinyin": "Zài lóu shàng.",
       "kr": "위층에 있어요.",
-      "en": "It's upstairs."
+      "en": "It's upstairs.",
+      "phrase": "在楼上。",
+      "explain": {
+        "kr": "위층에 있어요.",
+        "en": "It's upstairs."
+      }
     },
     {
       "zh": "在楼下。",
       "pinyin": "Zài lóu xià.",
       "kr": "아래층에 있어요.",
-      "en": "It's downstairs."
+      "en": "It's downstairs.",
+      "phrase": "在楼下。",
+      "explain": {
+        "kr": "아래층에 있어요.",
+        "en": "It's downstairs."
+      }
     }
   ],
   "practice": [

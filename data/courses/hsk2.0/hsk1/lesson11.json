@@ -298,31 +298,59 @@
       "zh": "上课",
       "pinyin": "Shàng kè",
       "kr": "수업하다",
-      "en": "to have class"
+      "en": "to have class",
+      "phrase": "上课",
+      "explain": {
+        "kr": "수업하다",
+        "en": "to have class",
+        "jp": "授業をする"
+      }
     },
     {
       "zh": "看书",
       "pinyin": "Kàn shū",
       "kr": "책 읽다",
-      "en": "to read books"
+      "en": "to read books",
+      "phrase": "看书",
+      "explain": {
+        "kr": "책 읽다",
+        "en": "to read books",
+        "jp": "本を読む"
+      }
     },
     {
       "zh": "写字",
       "pinyin": "Xiě zì",
       "kr": "글자 쓰다",
-      "en": "to write characters"
+      "en": "to write characters",
+      "phrase": "写字",
+      "explain": {
+        "kr": "글자 쓰다",
+        "en": "to write characters",
+        "jp": "字を書く"
+      }
     },
     {
       "zh": "读中文",
       "pinyin": "Dú Zhōngwén",
       "kr": "중국어 읽다",
-      "en": "to read Chinese"
+      "en": "to read Chinese",
+      "phrase": "读中文",
+      "explain": {
+        "kr": "중국어 읽다",
+        "en": "to read Chinese"
+      }
     },
     {
       "zh": "今天有课。",
       "pinyin": "Jīntiān yǒu kè.",
       "kr": "오늘 수업 있어요.",
-      "en": "I have class today."
+      "en": "I have class today.",
+      "phrase": "今天有课。",
+      "explain": {
+        "kr": "오늘 수업 있어요.",
+        "en": "I have class today."
+      }
     }
   ],
   "practice": [

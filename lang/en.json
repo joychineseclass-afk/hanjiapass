@@ -103,6 +103,7 @@
       "words": "Words",
       "dialogue": "Dialogue",
       "grammar": "Grammar",
+      "extension": "Extension",
       "practice": "Practice",
       "ai": "AI Learning"
     },
@@ -110,6 +111,7 @@
       "words": "Vocabulary for this lesson.",
       "dialogue": "Dialogue for this lesson.",
       "grammar": "Grammar for this lesson.",
+      "extension": "Useful extension expressions related to this lesson.",
       "practice": "Answer the questions and submit to see results and explanations.",
       "ai": "Ask AI about the words and dialogue from this lesson."
     }

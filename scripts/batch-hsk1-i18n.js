@@ -13,6 +13,7 @@ const ROOT = join(__dirname, "..");
 const HSK1_DIR = join(ROOT, "data/courses/hsk2.0/hsk1");
 const GLOSSARY_JP = join(ROOT, "data/glossary/jp-hsk1.json");
 const DIAG_TRANS = join(HSK1_DIR, "dialogue-translations.json");
+const EXT_TRANS = join(HSK1_DIR, "extension-translations.json");
 
 const THEME_JP = {
   "打招呼": "あいさつ", "介绍名字": "名前の紹介", "国籍/国家": "国籍", "家庭": "家族",
@@ -137,7 +138,46 @@ function ensureGrammarJp(grammar) {
   }
 }
 
-function processLesson(lessonNo, glossaryJp, diagTrans) {
+function ensureExtensionExplain(extension, extTrans) {
+  if (!Array.isArray(extension) || !extTrans) return;
+  for (const item of extension) {
+    const phrase = (item.phrase || item.hanzi || item.zh || item.cn || "").trim();
+    if (!phrase) continue;
+    if (!item.phrase) item.phrase = phrase;
+    if (!item.explain) item.explain = {};
+    if (typeof item.explain === "string") item.explain = { zh: item.explain };
+    const tr = extTrans[phrase];
+    if (item.translation && typeof item.translation === "object") {
+      if (!item.explain.kr && item.translation.kr) item.explain.kr = item.translation.kr;
+      if (!item.explain.en && item.translation.en) item.explain.en = item.translation.en;
+      if (!item.explain.jp && item.translation.jp) item.explain.jp = item.translation.jp;
+    }
+    if (!item.explain.kr && item.kr) item.explain.kr = item.kr;
+    if (!item.explain.en && item.en) item.explain.en = item.en;
+    if (!item.explain.jp && item.jp) item.explain.jp = item.jp;
+    if (!item.explain.kr && tr?.kr) item.explain.kr = tr.kr;
+    if (!item.explain.en && tr?.en) item.explain.en = tr.en;
+    if (!item.explain.jp && tr?.jp) item.explain.jp = tr.jp;
+  }
+}
+
+function ensureExtensionExists(lesson, lessonNo) {
+  if (Array.isArray(lesson.extension) && lesson.extension.length) return;
+  const reviewExt = {
+    21: [
+      { phrase: "你是哪国人？", pinyin: "Nǐ shì nǎ guó rén?", explain: { kr: "어느 나라 사람이에요?", jp: "どこの国の方ですか？", en: "Which country are you from?" } },
+      { phrase: "我很好。", pinyin: "Wǒ hěn hǎo.", explain: { kr: "저는 잘 지내요.", jp: "元気です。", en: "I'm fine." } },
+    ],
+    22: [
+      { phrase: "你几点起床？", pinyin: "Nǐ jǐ diǎn qǐchuáng?", explain: { kr: "몇 시에 일어나요?", jp: "何時に起きますか？", en: "What time do you get up?" } },
+      { phrase: "你做什么工作？", pinyin: "Nǐ zuò shénme gōngzuò?", explain: { kr: "무슨 일 하세요?", jp: "お仕事は何をしていますか？", en: "What do you do for work?" } },
+    ],
+  };
+  const items = reviewExt[lessonNo];
+  if (items) lesson.extension = items;
+}
+
+function processLesson(lessonNo, glossaryJp, diagTrans, extTrans) {
   const path = join(HSK1_DIR, `lesson${lessonNo}.json`);
   const lesson = loadJson(path);
   if (!lesson) return false;
@@ -145,6 +185,8 @@ function processLesson(lessonNo, glossaryJp, diagTrans) {
   ensureVocabJp(lesson.vocab, glossaryJp);
   ensureDialogueTranslation(lesson.dialogueCards, diagTrans);
   ensureGrammarJp(lesson.grammar);
+  ensureExtensionExists(lesson, lessonNo);
+  ensureExtensionExplain(lesson.extension, extTrans);
   writeFileSync(path, JSON.stringify(lesson, null, 2), "utf8");
   return true;
 }
@@ -152,9 +194,10 @@ function processLesson(lessonNo, glossaryJp, diagTrans) {
 function main() {
   const glossaryJp = loadJson(GLOSSARY_JP) || {};
   const diagTrans = loadJson(DIAG_TRANS) || {};
+  const extTrans = loadJson(EXT_TRANS) || {};
   console.log("[batch-hsk1-i18n] Processing lesson1~22...");
   for (let i = 1; i <= 22; i++) {
-    const ok = processLesson(i, glossaryJp, diagTrans);
+    const ok = processLesson(i, glossaryJp, diagTrans, extTrans);
     console.log(ok ? `  lesson${i}.json OK` : `  lesson${i}.json skip`);
   }
   console.log("[batch-hsk1-i18n] Done.");

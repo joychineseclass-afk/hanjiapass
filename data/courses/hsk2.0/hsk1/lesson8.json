@@ -281,49 +281,91 @@
       "zh": "一点",
       "pinyin": "Yī diǎn",
       "kr": "한 시",
-      "en": "one o'clock"
+      "en": "one o'clock",
+      "phrase": "一点",
+      "explain": {
+        "kr": "한 시",
+        "en": "one o'clock",
+        "jp": "1時"
+      }
     },
     {
       "zh": "两点半",
       "pinyin": "Liǎng diǎn bàn",
       "kr": "두 시 반",
-      "en": "half past two"
+      "en": "half past two",
+      "phrase": "两点半",
+      "explain": {
+        "kr": "두 시 반",
+        "en": "half past two",
+        "jp": "2時半"
+      }
     },
     {
       "zh": "三点十分",
       "pinyin": "Sān diǎn shí fēn",
       "kr": "세 시 십 분",
-      "en": "ten past three"
+      "en": "ten past three",
+      "phrase": "三点十分",
+      "explain": {
+        "kr": "세 시 십 분",
+        "en": "ten past three"
+      }
     },
     {
       "zh": "早上",
       "pinyin": "Zǎoshang",
       "kr": "아침",
-      "en": "early morning"
+      "en": "early morning",
+      "phrase": "早上",
+      "explain": {
+        "kr": "아침",
+        "en": "early morning"
+      }
     },
     {
       "zh": "中午",
       "pinyin": "Zhōngwǔ",
       "kr": "점심시간",
-      "en": "noon"
+      "en": "noon",
+      "phrase": "中午",
+      "explain": {
+        "kr": "점심시간",
+        "en": "noon"
+      }
     },
     {
       "zh": "晚上",
       "pinyin": "Wǎnshang",
       "kr": "저녁",
-      "en": "evening"
+      "en": "evening",
+      "phrase": "晚上",
+      "explain": {
+        "kr": "저녁",
+        "en": "evening"
+      }
     },
     {
       "zh": "几点起床？",
       "pinyin": "Jǐ diǎn qǐchuáng?",
       "kr": "몇 시에 일어나요?",
-      "en": "What time do you get up?"
+      "en": "What time do you get up?",
+      "phrase": "几点起床？",
+      "explain": {
+        "kr": "몇 시에 일어나요?",
+        "en": "What time do you get up?"
+      }
     },
     {
       "zh": "几点睡觉？",
       "pinyin": "Jǐ diǎn shuìjiào?",
       "kr": "몇 시에 자요?",
-      "en": "What time do you go to bed?"
+      "en": "What time do you go to bed?",
+      "phrase": "几点睡觉？",
+      "explain": {
+        "kr": "몇 시에 자요?",
+        "en": "What time do you go to bed?"
+      }
     }
   ],
   "practice": [

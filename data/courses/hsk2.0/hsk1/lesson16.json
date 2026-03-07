@@ -283,43 +283,80 @@
       "zh": "左边",
       "pinyin": "Zuǒbiān",
       "kr": "왼쪽",
-      "en": "left side"
+      "en": "left side",
+      "phrase": "左边",
+      "explain": {
+        "kr": "왼쪽",
+        "en": "left side",
+        "jp": "左"
+      }
     },
     {
       "zh": "右边",
       "pinyin": "Yòubiān",
       "kr": "오른쪽",
-      "en": "right side"
+      "en": "right side",
+      "phrase": "右边",
+      "explain": {
+        "kr": "오른쪽",
+        "en": "right side",
+        "jp": "右"
+      }
     },
     {
       "zh": "前面",
       "pinyin": "Qiánmiàn",
       "kr": "앞",
-      "en": "front"
+      "en": "front",
+      "phrase": "前面",
+      "explain": {
+        "kr": "앞",
+        "en": "front"
+      }
     },
     {
       "zh": "后面",
       "pinyin": "Hòumiàn",
       "kr": "뒤",
-      "en": "back"
+      "en": "back",
+      "phrase": "后面",
+      "explain": {
+        "kr": "뒤",
+        "en": "back"
+      }
     },
     {
       "zh": "里面",
       "pinyin": "Lǐmiàn",
       "kr": "안",
-      "en": "inside"
+      "en": "inside",
+      "phrase": "里面",
+      "explain": {
+        "kr": "안",
+        "en": "inside"
+      }
     },
     {
       "zh": "外面",
       "pinyin": "Wàimiàn",
       "kr": "밖",
-      "en": "outside"
+      "en": "outside",
+      "phrase": "外面",
+      "explain": {
+        "kr": "밖",
+        "en": "outside"
+      }
     },
     {
       "zh": "在……旁边",
       "pinyin": "Zài... pángbiān",
       "kr": "... 옆에",
-      "en": "next to..."
+      "en": "next to...",
+      "phrase": "在……旁边",
+      "explain": {
+        "kr": "... 옆에",
+        "en": "next to..."
+      }
     }
   ],
   "practice": [
