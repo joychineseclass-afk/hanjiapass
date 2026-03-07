@@ -654,7 +654,7 @@ async function openLesson({ lessonNo, file }) {
         mountPractice($("hskPracticeBody"), {
           lesson: lessonData,
           lang,
-          onComplete: ({ total, correct, score, lesson }) => {
+          onComplete: ({ total, correct, score, lesson, wrongItems = [] }) => {
             PROGRESS_ENGINE?.recordPracticeResult?.({
               courseId,
               lessonId,
@@ -662,6 +662,7 @@ async function openLesson({ lessonNo, file }) {
               correct,
               score,
               vocabItems: (lesson?.vocab ?? lesson?.words ?? []).map((w) => (typeof w === "string" ? w : w?.hanzi ?? w?.word ?? "")).filter(Boolean),
+              wrongItems,
             });
             updateProgressBlock();
           },

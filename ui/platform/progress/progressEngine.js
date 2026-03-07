@@ -96,8 +96,10 @@ export function markLessonCompleted({ courseId, lessonId }) {
 
 /**
  * 记录练习结果
+ * @param {object} opts
+ * @param {Array} [opts.wrongItems] - 错题列表 { questionId, subtype, selected, correct }
  */
-export function recordPracticeResult({ courseId, lessonId, total, correct, score, vocabItems = [] }) {
+export function recordPracticeResult({ courseId, lessonId, total, correct, score, vocabItems = [], wrongItems = [] }) {
   if (!courseId || !lessonId) return;
   const data = Store.loadProgress();
   const course = ensureCourse(data, courseId);
@@ -118,6 +120,60 @@ export function recordPracticeResult({ courseId, lessonId, total, correct, score
       v.nextReviewAt = now;
     }
   });
+  if (Array.isArray(wrongItems) && wrongItems.length > 0) {
+    const wq = data.wrongQuestions || [];
+    const seen = new Set(wq.map((x) => `${x.lessonId}:${x.questionId}`));
+    wrongItems.forEach((item) => {
+      const record = {
+        lessonId,
+        questionId: item.questionId,
+        subtype: item.subtype ?? "choice",
+        selected: String(item.selected ?? ""),
+        correct: String(item.correct ?? ""),
+        timestamp: Math.floor(now / 1000),
+      };
+      const key = `${lessonId}:${item.questionId}`;
+      if (seen.has(key)) {
+        const idx = wq.findIndex((x) => x.lessonId === lessonId && x.questionId === item.questionId);
+        if (idx >= 0) wq[idx] = record;
+      } else {
+        seen.add(key);
+        wq.push(record);
+      }
+    });
+    data.wrongQuestions = wq;
+  }
+  Store.saveProgress(data);
+}
+
+/**
+ * 获取全部错题
+ * @returns {Array}
+ */
+export function getWrongQuestions() {
+  const data = Store.loadProgress();
+  return Array.isArray(data.wrongQuestions) ? [...data.wrongQuestions] : [];
+}
+
+/**
+ * 按课程获取错题
+ * @param {string} lessonId
+ * @returns {Array}
+ */
+export function getWrongQuestionsByLesson(lessonId) {
+  if (!lessonId) return [];
+  return getWrongQuestions().filter((x) => x.lessonId === lessonId);
+}
+
+/**
+ * 清除指定课程的错题记录
+ * @param {string} lessonId
+ */
+export function clearWrongQuestions(lessonId) {
+  if (!lessonId) return;
+  const data = Store.loadProgress();
+  if (!Array.isArray(data.wrongQuestions)) return;
+  data.wrongQuestions = data.wrongQuestions.filter((x) => x.lessonId !== lessonId);
   Store.saveProgress(data);
 }
 

@@ -98,20 +98,20 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
     const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
     const oAttrs = optDisplay ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
 
-    let stateClasses = "lesson-practice-option";
+    let stateClasses = "practice-option lesson-practice-option";
     if (submitted && result) {
       const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer ?? "");
       const isCorrectOption = optValue === correctVal;
       const isWrongSelected = !result.correct && isSelected;
-      if (isCorrectOption) stateClasses += " is-correct";
-      else if (isWrongSelected) stateClasses += " is-wrong";
+      if (isCorrectOption) stateClasses += " option-correct is-correct";
+      else if (isWrongSelected) stateClasses += " option-wrong is-wrong";
     } else if (isSelected) {
-      stateClasses += " is-selected";
+      stateClasses += " option-selected is-selected";
     }
 
     return `
 <button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(optValue).replaceAll('"', "&quot;")}">
-  <span class="lesson-practice-option-letter">${letter}</span>
+  <span class="practice-option-letter lesson-practice-option-letter">${letter}</span>
   <span class="lesson-practice-option-content">
     <span class="lesson-practice-option-zh"${oAttrs}>${escapeHtml(optDisplay)}</span>
     ${optPy ? `<span class="lesson-practice-option-pinyin">${escapeHtml(optPy)}</span>` : ""}
@@ -142,24 +142,23 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
     <span class="lesson-practice-answer-zh"${aAttrs}>${escapeHtml(answerDisplay)}</span>
     ${answerPy ? `<span class="lesson-practice-answer-pinyin">${escapeHtml(answerPy)}</span>` : ""}
   </div>` : ""}
-  ${expl ? `<div class="lesson-practice-explanation"><span class="lesson-practice-explanation-label">${explLabel}:</span> ${escapeHtml(expl)}</div>` : ""}
+  ${expl ? `<div class="practice-explanation lesson-practice-explanation"><span class="lesson-practice-explanation-label">${explLabel}:</span> ${escapeHtml(expl)}</div>` : ""}
 </div>`;
   }
 
   const questionSpeakAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
 
   return `
-<article class="lesson-practice-card" data-question-id="${escapeHtml(q.id)}">
-  <div class="lesson-practice-card-top">
-    <span class="lesson-practice-index">${qNo}</span>
-    <span class="lesson-practice-type">${escapeHtml(typeLabel)}</span>
-    <button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>${escapeHtml(speakLabel)}</button>
+<article class="lumina-card practice-card lesson-practice-card" data-question-id="${escapeHtml(q.id)}">
+  <div class="practice-header lesson-practice-card-top">
+    <span class="practice-header-no lesson-practice-index">${qNo}</span>
+    <button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>🔊 ${escapeHtml(speakLabel)}</button>
   </div>
-  <div class="lesson-practice-question">
+  <div class="practice-question lesson-practice-question">
     <div class="lesson-practice-question-zh"${questionSpeakAttrs}>${escapeHtml(questionZh)}</div>
     ${qPy ? `<div class="lesson-practice-question-pinyin">${escapeHtml(qPy)}</div>` : ""}
   </div>
-  <div class="lesson-practice-options">${optsHtml}</div>
+  <div class="practice-options lesson-practice-options">${optsHtml}</div>
   ${resultHtml}
 </article>`;
 }
@@ -215,10 +214,9 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
   /** 事件委托 */
   container.addEventListener("click", (e) => {
     const submitBtn = e.target.closest(".lesson-practice-submit");
-    const optionBtn = e.target.closest(".lesson-practice-option");
 
     if (submitBtn && !PracticeState.isSubmitted()) {
-      const { score, correctCount } = PracticeEngine.submitAll();
+      const { score, correctCount, wrongItems } = PracticeEngine.submitAll();
       if (onComplete && !container.dataset.progressRecorded) {
         container.dataset.progressRecorded = "1";
         onComplete({
@@ -226,20 +224,24 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
           correct: correctCount,
           score,
           lesson,
+          wrongItems: wrongItems ?? [],
         });
       }
       render();
       return;
     }
 
+    const optionBtn = e.target.closest(".practice-option") || e.target.closest(".lesson-practice-option");
     if (optionBtn && !PracticeState.isSubmitted()) {
       const qid = optionBtn.dataset.questionId;
       const answer = optionBtn.dataset.answer;
       if (qid && answer !== undefined) {
         const card = optionBtn.closest(".lesson-practice-card");
         if (card) {
-          card.querySelectorAll(".lesson-practice-option").forEach((b) => b.classList.remove("is-selected"));
-          optionBtn.classList.add("is-selected");
+          card.querySelectorAll(".practice-option, .lesson-practice-option").forEach((b) => {
+            b.classList.remove("is-selected", "option-selected");
+          });
+          optionBtn.classList.add("is-selected", "option-selected");
         }
         PracticeState.setAnswer(qid, answer);
       }

@@ -10,6 +10,7 @@ function getEmptyProgress() {
     version: 1,
     updatedAt: 0,
     courses: {},
+    wrongQuestions: [],
   };
 }
 
@@ -25,6 +26,7 @@ export function loadProgress() {
     if (!data || typeof data !== "object") return getEmptyProgress();
     if (data.version !== 1) return migrateOrReset(data);
     data.courses = data.courses && typeof data.courses === "object" ? data.courses : {};
+    if (!Array.isArray(data.wrongQuestions)) data.wrongQuestions = [];
     return data;
   } catch {
     return getEmptyProgress();

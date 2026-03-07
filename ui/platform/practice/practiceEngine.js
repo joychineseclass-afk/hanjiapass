@@ -103,13 +103,15 @@ function judgeOne(q, answer) {
 
 /**
  * 整页提交批改
- * @returns {{ resultMap: object, score: number, correctCount: number }}
+ * @returns {{ resultMap: object, score: number, correctCount: number, wrongItems: Array }}
  */
 export function submitAll() {
   const questions = PracticeState.getQuestions();
   const answers = PracticeState.getAnswers();
   const resultMap = {};
+  const wrongItems = [];
   let score = 0;
+  const lang = getLang();
 
   questions.forEach((q) => {
     const selected = answers[q.id] ?? null;
@@ -121,6 +123,15 @@ export function submitAll() {
       score: s,
     };
     if (correct) score += s;
+    else if (selected != null && selected !== "") {
+      const { exp } = normalizeAnswer(q.answer, selected, lang);
+      wrongItems.push({
+        questionId: q.id,
+        subtype: q.subtype ?? q.subType ?? q.type ?? "choice",
+        selected: String(selected),
+        correct: String(exp ?? ""),
+      });
+    }
   });
 
   PracticeState.setResultMap(resultMap);
@@ -130,6 +141,7 @@ export function submitAll() {
     resultMap,
     score,
     correctCount: Object.values(resultMap).filter((r) => r?.correct).length,
+    wrongItems,
   };
 }
 
