@@ -5,68 +5,439 @@
   "version": "2.0",
   "lessonNo": 3,
   "type": "lesson",
-  "title": { "zh": "国家", "pinyin": "guójiā", "kr": "국가", "en": "Countries", "jp": "国・国籍" },
-  "summary": { "zh": "介绍国籍与身份", "kr": "국적과 신분 소개", "en": "Introducing nationality and identity" },
+  "title": {
+    "zh": "国家",
+    "pinyin": "guójiā",
+    "kr": "국가",
+    "en": "Countries",
+    "jp": "国・国籍"
+  },
+  "summary": {
+    "zh": "介绍国籍与身份",
+    "kr": "국적과 신분 소개",
+    "en": "Introducing nationality and identity"
+  },
   "objectives": [
-    { "zh": "学会说来自哪里", "kr": "어디서 왔는지 말할 수 있다", "en": "Can say where you're from" },
-    { "zh": "学会介绍身份", "kr": "신분을 소개할 수 있다", "en": "Can introduce your identity" }
+    {
+      "zh": "学会说来自哪里",
+      "kr": "어디서 왔는지 말할 수 있다",
+      "en": "Can say where you're from"
+    },
+    {
+      "zh": "学会介绍身份",
+      "kr": "신분을 소개할 수 있다",
+      "en": "Can introduce your identity"
+    }
   ],
   "vocab": [
-    { "hanzi": "北京", "pinyin": "Běijīng", "meaning": { "zh": "北京", "kr": "베이징", "en": "Beijing", "jp": "北京" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "中国", "pinyin": "Zhōngguó", "meaning": { "zh": "中国", "kr": "중국", "en": "China", "jp": "中国" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "老师", "pinyin": "lǎoshī", "meaning": { "zh": "老师", "kr": "선생님", "en": "teacher", "jp": "先生" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "学生", "pinyin": "xuésheng", "meaning": { "zh": "学生", "kr": "학생", "en": "student", "jp": "学生" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "朋友", "pinyin": "péngyou", "meaning": { "zh": "朋友", "kr": "친구", "en": "friend", "jp": "友達" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "동창", "en": "classmate", "jp": "クラスメート" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
+    {
+      "hanzi": "北京",
+      "pinyin": "Běijīng",
+      "meaning": {
+        "zh": "北京",
+        "kr": "베이징",
+        "en": "Beijing",
+        "jp": "北京"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "中国",
+      "pinyin": "Zhōngguó",
+      "meaning": {
+        "zh": "中国",
+        "kr": "중국",
+        "en": "China",
+        "jp": "中国"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "老师",
+      "pinyin": "lǎoshī",
+      "meaning": {
+        "zh": "老师",
+        "kr": "선생님",
+        "en": "teacher",
+        "jp": "先生"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "学生",
+      "pinyin": "xuésheng",
+      "meaning": {
+        "zh": "学生",
+        "kr": "학생",
+        "en": "student",
+        "jp": "学生"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "朋友",
+      "pinyin": "péngyou",
+      "meaning": {
+        "zh": "朋友",
+        "kr": "친구",
+        "en": "friend",
+        "jp": "友達"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "同学",
+      "pinyin": "tóngxué",
+      "meaning": {
+        "zh": "同学",
+        "kr": "동창",
+        "en": "classmate",
+        "jp": "クラスメート"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你是哪国人？", "pinyin": "Nǐ shì nǎ guó rén?", "kr": "어느 나라 사람이에요?", "en": "Which country are you from?", "jp": "どこの国の方ですか？" },
-        { "speaker": "B", "zh": "我是中国人。", "pinyin": "Wǒ shì Zhōngguó rén.", "kr": "저는 중국인이에요.", "en": "I'm Chinese.", "jp": "私は中国人です。" }
+        {
+          "speaker": "A",
+          "zh": "你是哪国人？",
+          "pinyin": "Nǐ shì nǎ guó rén?",
+          "kr": "어느 나라 사람이에요?",
+          "en": "Which country are you from?",
+          "jp": "どこの国の方ですか？",
+          "text": "你是哪国人？",
+          "translation": {
+            "kr": "어느 나라 사람이에요?",
+            "en": "Which country are you from?",
+            "jp": "どこの国の方ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我是中国人。",
+          "pinyin": "Wǒ shì Zhōngguó rén.",
+          "kr": "저는 중국인이에요.",
+          "en": "I'm Chinese.",
+          "jp": "私は中国人です。",
+          "text": "我是中国人。",
+          "translation": {
+            "kr": "저는 중국인이에요.",
+            "en": "I'm Chinese.",
+            "jp": "私は中国人です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "他是哪国人？", "pinyin": "Tā shì nǎ guó rén?", "kr": "그는 어느 나라 사람이에요?", "en": "Which country is he from?", "jp": "彼はどこの国の方ですか？" },
-        { "speaker": "B", "zh": "他是韩国人。", "pinyin": "Tā shì Hánguó rén.", "kr": "그는 한국인이에요.", "en": "He's Korean.", "jp": "彼は韓国人です。" }
+        {
+          "speaker": "A",
+          "zh": "他是哪国人？",
+          "pinyin": "Tā shì nǎ guó rén?",
+          "kr": "그는 어느 나라 사람이에요?",
+          "en": "Which country is he from?",
+          "jp": "彼はどこの国の方ですか？",
+          "text": "他是哪国人？",
+          "translation": {
+            "kr": "그는 어느 나라 사람이에요?",
+            "en": "Which country is he from?",
+            "jp": "彼はどこの国の方ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "他是韩国人。",
+          "pinyin": "Tā shì Hánguó rén.",
+          "kr": "그는 한국인이에요.",
+          "en": "He's Korean.",
+          "jp": "彼は韓国人です。",
+          "text": "他是韩国人。",
+          "translation": {
+            "kr": "그는 한국인이에요.",
+            "en": "He's Korean.",
+            "jp": "彼は韓国人です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "kr": "어디에 살아요?", "en": "Where do you live?", "jp": "どこに住んでいますか？" },
-        { "speaker": "B", "zh": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "kr": "저는 베이징에 살아요.", "en": "I live in Beijing.", "jp": "私は北京に住んでいます。" }
+        {
+          "speaker": "A",
+          "zh": "你住在哪儿？",
+          "pinyin": "Nǐ zhù zài nǎr?",
+          "kr": "어디에 살아요?",
+          "en": "Where do you live?",
+          "jp": "どこに住んでいますか？",
+          "text": "你住在哪儿？",
+          "translation": {
+            "kr": "어디에 살아요?",
+            "en": "Where do you live?",
+            "jp": "どこに住んでいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我住在北京。",
+          "pinyin": "Wǒ zhù zài Běijīng.",
+          "kr": "저는 베이징에 살아요.",
+          "en": "I live in Beijing.",
+          "jp": "私は北京に住んでいます。",
+          "text": "我住在北京。",
+          "translation": {
+            "kr": "저는 베이징에 살아요.",
+            "en": "I live in Beijing.",
+            "jp": "私は北京に住んでいます。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "A 是 B", "explanation_zh": "「是」连接主语和宾语，表示等同。", "explanation_kr": "'是'는 주어와 목적어를 연결합니다.", "explanation_en": "是 connects subject and object.", "explanation_jp": "「是」は主語と目的語をつなぎ、同等であることを表します。", "example": { "zh": "他是老师。", "pinyin": "Tā shì lǎoshī.", "kr": "그는 선생님이에요.", "en": "He is a teacher.", "jp": "彼は先生です。" } },
-    { "title": "不 + 是", "explanation_zh": "否定「是」用「不」。", "explanation_kr": "'是'의 부정은 '不'를 사용합니다.", "explanation_en": "Negate 是 with 不.", "explanation_jp": "「是」の否定には「不」を使います。", "example": { "zh": "他不是老师。", "pinyin": "Tā bú shì lǎoshī.", "kr": "그는 선생님이 아닙니다.", "en": "He is not a teacher.", "jp": "彼は先生ではありません。" } }
+    {
+      "title": "A 是 B",
+      "explanation_zh": "「是」连接主语和宾语，表示等同。",
+      "explanation_kr": "'是'는 주어와 목적어를 연결합니다.",
+      "explanation_en": "是 connects subject and object.",
+      "explanation_jp": "「是」は主語と目的語をつなぎ、同等であることを表します。",
+      "example": {
+        "zh": "他是老师。",
+        "pinyin": "Tā shì lǎoshī.",
+        "kr": "그는 선생님이에요.",
+        "en": "He is a teacher.",
+        "jp": "彼は先生です。"
+      },
+      "explain": {
+        "jp": "「是」は主語と目的語をつなぎ、同等であることを表します。",
+        "en": "是 connects subject and object.",
+        "kr": "'是'는 주어와 목적어를 연결합니다.",
+        "zh": "「是」连接主语和宾语，表示等同。"
+      }
+    },
+    {
+      "title": "不 + 是",
+      "explanation_zh": "否定「是」用「不」。",
+      "explanation_kr": "'是'의 부정은 '不'를 사용합니다.",
+      "explanation_en": "Negate 是 with 不.",
+      "explanation_jp": "「是」の否定には「不」を使います。",
+      "example": {
+        "zh": "他不是老师。",
+        "pinyin": "Tā bú shì lǎoshī.",
+        "kr": "그는 선생님이 아닙니다.",
+        "en": "He is not a teacher.",
+        "jp": "彼は先生ではありません。"
+      },
+      "explain": {
+        "jp": "「是」の否定には「不」を使います。",
+        "en": "Negate 是 with 不.",
+        "kr": "'是'의 부정은 '不'를 사용합니다.",
+        "zh": "否定「是」用「不」。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "我来自北京。", "pinyin": "Wǒ láizì Běijīng.", "kr": "저는 베이징에서 왔어요.", "en": "I'm from Beijing.", "jp": "私は北京出身です。" },
-    { "zh": "我住在上海。", "pinyin": "Wǒ zhù zài Shànghǎi.", "kr": "저는 상하이에 살아요.", "en": "I live in Shanghai.", "jp": "私は上海に住んでいます。" },
-    { "zh": "我在北京工作。", "pinyin": "Wǒ zài Běijīng gōngzuò.", "kr": "저는 베이징에서 일해요.", "en": "I work in Beijing.", "jp": "私は北京で働いています。" },
-    { "zh": "他住在上海。", "pinyin": "Tā zhù zài Shànghǎi.", "kr": "그는 상하이에 살아요.", "en": "He lives in Shanghai.", "jp": "彼は上海に住んでいます。" },
-    { "zh": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "kr": "어디에 살아요?", "en": "Where do you live?", "jp": "どこに住んでいますか？" }
+    {
+      "zh": "我来自北京。",
+      "pinyin": "Wǒ láizì Běijīng.",
+      "kr": "저는 베이징에서 왔어요.",
+      "en": "I'm from Beijing.",
+      "jp": "私は北京出身です。"
+    },
+    {
+      "zh": "我住在上海。",
+      "pinyin": "Wǒ zhù zài Shànghǎi.",
+      "kr": "저는 상하이에 살아요.",
+      "en": "I live in Shanghai.",
+      "jp": "私は上海に住んでいます。"
+    },
+    {
+      "zh": "我在北京工作。",
+      "pinyin": "Wǒ zài Běijīng gōngzuò.",
+      "kr": "저는 베이징에서 일해요.",
+      "en": "I work in Beijing.",
+      "jp": "私は北京で働いています。"
+    },
+    {
+      "zh": "他住在上海。",
+      "pinyin": "Tā zhù zài Shànghǎi.",
+      "kr": "그는 상하이에 살아요.",
+      "en": "He lives in Shanghai.",
+      "jp": "彼は上海に住んでいます。"
+    },
+    {
+      "zh": "你住在哪儿？",
+      "pinyin": "Nǐ zhù zài nǎr?",
+      "kr": "어디에 살아요?",
+      "en": "Where do you live?",
+      "jp": "どこに住んでいますか？"
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「北京」是哪里？", "kr": "北京은 어디?", "en": "Where is 北京?" }, "options": ["中国", "北京", "美国"], "answer": "北京" },
-    { "type": "choice", "question": { "zh": "「老师」的意思是？", "kr": "의미는?", "en": "Meaning of 老师?" }, "options": ["学生", "老师", "朋友"], "answer": "老师" },
-    { "type": "choice", "question": { "zh": "我们是___。", "kr": "빈칸 채우기", "en": "Fill in" }, "options": ["老师", "同学", "医生"], "answer": "同学" },
-    { "type": "choice", "question": { "zh": "A：他是学生吗？ B：___", "kr": "대화 이해", "en": "Dialogue" }, "options": ["是", "不是", "谢谢"], "answer": "不是" },
-    { "type": "choice", "question": { "zh": "哪个是「朋友」？", "kr": "어느 것이 朋友?", "en": "Which is 朋友?" }, "options": ["朋友", "老师", "学生"], "answer": "朋友" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「北京」是哪里？",
+        "kr": "北京은 어디?",
+        "en": "Where is 北京?"
+      },
+      "options": [
+        "中国",
+        "北京",
+        "美国"
+      ],
+      "answer": "北京"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「老师」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning of 老师?"
+      },
+      "options": [
+        "学生",
+        "老师",
+        "朋友"
+      ],
+      "answer": "老师"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "我们是___。",
+        "kr": "빈칸 채우기",
+        "en": "Fill in"
+      },
+      "options": [
+        "老师",
+        "同学",
+        "医生"
+      ],
+      "answer": "同学"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：他是学生吗？ B：___",
+        "kr": "대화 이해",
+        "en": "Dialogue"
+      },
+      "options": [
+        "是",
+        "不是",
+        "谢谢"
+      ],
+      "answer": "不是"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「朋友」？",
+        "kr": "어느 것이 朋友?",
+        "en": "Which is 朋友?"
+      },
+      "options": [
+        "朋友",
+        "老师",
+        "学生"
+      ],
+      "answer": "朋友"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我是中国人", "他是老师", "我们是同学", "北京"], "chatPrompt": "AI问：你是哪国人？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "我是中国人",
+      "他是老师",
+      "我们是同学",
+      "北京"
+    ],
+    "chatPrompt": "AI问：你是哪国人？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

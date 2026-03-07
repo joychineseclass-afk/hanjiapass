@@ -77,7 +77,8 @@
       "grammar": "文法",
       "extension": "拡張",
       "practice": "練習",
-      "ai": "AI学習"
+      "ai": "AI学習",
+      "review": "復習"
     },
     "vocab_subtitle": "本課の単語。クリックで発音を聞けます。",
     "vocab_count": "{n}語",

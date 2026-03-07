@@ -382,7 +382,7 @@ ${cards.map((card, index) => {
 
 /**
  * 统一 grammar explanation 读取：strict 规则，不 fallback 到其他语言
- * 兼容：explain / explanation / explainJp / explanationJp / 旧扁平字段
+ * 兼容：explain / explanation / explainJp / explanation_jp / explanation_zh / explanation_kr / explanation_en
  */
 function getGrammarExplanation(item, lang) {
   if (!item || typeof item !== "object") return "";
@@ -395,20 +395,14 @@ function getGrammarExplanation(item, lang) {
     const v = explain[key] ?? explain[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
     if (v) return str(v);
   }
-  if (key === "jp") {
-    const v = item.explainJp ?? item.explanationJp ?? item.explain_jp ?? item.explanation_jp;
-    if (v) return str(v);
-  }
-  if (key === "kr") {
-    const v = item.explainKr ?? item.explanationKr ?? item.explain_kr ?? item.explanation_kr;
-    if (v) return str(v);
-  }
-  if (key === "en") {
-    const v = item.explainEn ?? item.explanationEn ?? item.explain_en ?? item.explanation_en;
-    if (v) return str(v);
-  }
-  if (key === "cn") {
-    const v = item.explainCn ?? item.explanationCn ?? item.explain_zh ?? item.explanation_zh;
+  const flatMap = {
+    jp: ["explainJp", "explanationJp", "explain_jp", "explanation_jp"],
+    kr: ["explainKr", "explanationKr", "explain_kr", "explanation_kr"],
+    en: ["explainEn", "explanationEn", "explain_en", "explanation_en"],
+    cn: ["explainCn", "explanationCn", "explain_zh", "explanation_zh"],
+  };
+  for (const k of flatMap[key] || []) {
+    const v = item[k];
     if (v) return str(v);
   }
   return "";
@@ -729,6 +723,11 @@ async function openLesson({ lessonNo, file }) {
       });
     }
     if (!lessonData) throw new Error("Failed to load lesson");
+
+    const listItem = state.lessons.find((l) => Number((l && l.lessonNo) || l.lesson || l.no) === no);
+    if (listItem && listItem.title && typeof listItem.title === "object") {
+      lessonData.title = { ...(lessonData.title || {}), ...listItem.title };
+    }
 
     const lessonWordsRaw = Array.isArray(lessonData && lessonData.words) ? lessonData.words : (Array.isArray(lessonData && lessonData.vocab) ? lessonData.vocab : []);
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");

@@ -45,6 +45,7 @@
     "level": "레벨",
     "version": "버전",
     "select_level": "레벨 선택",
+    "select_level_tip": "레벨을 선택하고 학습을 시작해 주세요.",
     "start_learning": "학습 시작",
     "search_placeholder": "단어 / 병음 / 뜻 검색",
     "tip": "레벨을 선택하고 수업을 시작해요.",
@@ -72,7 +73,8 @@
       "grammar": "문법",
       "extension": "확장",
       "practice": "연습",
-      "ai": "AI 학습"
+      "ai": "AI 학습",
+      "review": "복습"
     },
     "vocab_subtitle": "본문 단어입니다. 클릭하면 발음을 들을 수 있어요.",
     "vocab_count": "{n}단어",
@@ -99,10 +101,16 @@
     "back_to_list": "← 목록으로",
     "lesson_unit": "{n}과",
     "section": {
+      "words": "단어",
+      "dialogue": "회화",
+      "grammar": "문법",
       "practice": "연습",
       "ai": "AI 학습"
     },
     "desc": {
+      "words": "본문 단어입니다.",
+      "dialogue": "본문 대화입니다.",
+      "grammar": "이번 과에서 배우는 문법입니다.",
       "practice": "문제를 풀고 제출하면 정답과 해설을 볼 수 있습니다.",
       "ai": "오늘 배운 단어/회화를 가지고 AI에게 질문해 보세요."
     }

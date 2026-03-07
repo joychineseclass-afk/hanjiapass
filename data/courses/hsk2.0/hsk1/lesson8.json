@@ -5,72 +5,449 @@
   "version": "2.0",
   "lessonNo": 8,
   "type": "lesson",
-  "title": { "zh": "时间", "pinyin": "shíjiān", "kr": "시간", "en": "Time" },
-  "summary": { "zh": "点钟、分钟与时段", "kr": "시, 분과 시간대", "en": "O'clock, minutes and time periods" },
+  "title": {
+    "zh": "时间",
+    "pinyin": "shíjiān",
+    "kr": "시간",
+    "en": "Time",
+    "jp": "時間"
+  },
+  "summary": {
+    "zh": "点钟、分钟与时段",
+    "kr": "시, 분과 시간대",
+    "en": "O'clock, minutes and time periods"
+  },
   "objectives": [
-    { "zh": "学会说时间", "kr": "시간을 말할 수 있다", "en": "Can tell time" },
-    { "zh": "学会上午、下午", "kr": "'上午', '下午'를 사용할 수 있다", "en": "Can use 上午 and 下午" }
+    {
+      "zh": "学会说时间",
+      "kr": "시간을 말할 수 있다",
+      "en": "Can tell time"
+    },
+    {
+      "zh": "学会上午、下午",
+      "kr": "'上午', '下午'를 사용할 수 있다",
+      "en": "Can use 上午 and 下午"
+    }
   ],
   "vocab": [
-    { "hanzi": "点", "pinyin": "diǎn", "meaning": { "zh": "点", "kr": "시", "en": "o'clock" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "分钟", "pinyin": "fēnzhōng", "meaning": { "zh": "分钟", "kr": "분", "en": "minute" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "上午", "pinyin": "shàngwǔ", "meaning": { "zh": "上午", "kr": "오전", "en": "morning" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "下午", "pinyin": "xiàwǔ", "meaning": { "zh": "下午", "kr": "오후", "en": "afternoon" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "中午", "pinyin": "zhōngwǔ", "meaning": { "zh": "中午", "kr": "정오", "en": "noon" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "现在", "pinyin": "xiànzài", "meaning": { "zh": "现在", "kr": "지금", "en": "now" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "时候", "pinyin": "shíhou", "meaning": { "zh": "时候", "kr": "때", "en": "time" }, "pos": { "kr": "명사", "en": "noun" } }
+    {
+      "hanzi": "点",
+      "pinyin": "diǎn",
+      "meaning": {
+        "zh": "点",
+        "kr": "시",
+        "en": "o'clock",
+        "jp": "時"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "分钟",
+      "pinyin": "fēnzhōng",
+      "meaning": {
+        "zh": "分钟",
+        "kr": "분",
+        "en": "minute",
+        "jp": "分"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "上午",
+      "pinyin": "shàngwǔ",
+      "meaning": {
+        "zh": "上午",
+        "kr": "오전",
+        "en": "morning",
+        "jp": "午前"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
+      "meaning": {
+        "zh": "下午",
+        "kr": "오후",
+        "en": "afternoon",
+        "jp": "午後"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "中午",
+      "pinyin": "zhōngwǔ",
+      "meaning": {
+        "zh": "中午",
+        "kr": "정오",
+        "en": "noon",
+        "jp": "昼"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
+      "meaning": {
+        "zh": "现在",
+        "kr": "지금",
+        "en": "now",
+        "jp": "今"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "时候",
+      "pinyin": "shíhou",
+      "meaning": {
+        "zh": "时候",
+        "kr": "때",
+        "en": "time",
+        "jp": "時"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?" },
-        { "speaker": "B", "zh": "现在三点。", "pinyin": "Xiànzài sān diǎn.", "kr": "지금 3시예요." }
+        {
+          "speaker": "A",
+          "zh": "现在几点？",
+          "pinyin": "Xiànzài jǐ diǎn?",
+          "kr": "지금 몇 시예요?",
+          "text": "现在几点？",
+          "translation": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "现在三点。",
+          "pinyin": "Xiànzài sān diǎn.",
+          "kr": "지금 3시예요.",
+          "text": "现在三点。",
+          "translation": {
+            "kr": "지금 3시예요.",
+            "en": "It's three o'clock.",
+            "jp": "3時です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你什么时候回家？", "pinyin": "Nǐ shénme shíhou huí jiā?", "kr": "언제 집에 돌아가요?" },
-        { "speaker": "B", "zh": "我下午回家。", "pinyin": "Wǒ xiàwǔ huí jiā.", "kr": "저는 오후에 집에 돌아가요." }
+        {
+          "speaker": "A",
+          "zh": "你什么时候回家？",
+          "pinyin": "Nǐ shénme shíhou huí jiā?",
+          "kr": "언제 집에 돌아가요?",
+          "text": "你什么时候回家？",
+          "translation": {
+            "kr": "언제 집에 돌아가요?",
+            "en": "When do you go home?",
+            "jp": "いつ家に帰りますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我下午回家。",
+          "pinyin": "Wǒ xiàwǔ huí jiā.",
+          "kr": "저는 오후에 집에 돌아가요.",
+          "text": "我下午回家。",
+          "translation": {
+            "kr": "저는 오후에 집에 돌아가요.",
+            "en": "I go home in the afternoon.",
+            "jp": "午後に帰ります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你上午做什么？", "pinyin": "Nǐ shàngwǔ zuò shénme?", "kr": "오전에 뭐 해요?" },
-        { "speaker": "B", "zh": "我学习。", "pinyin": "Wǒ xuéxí.", "kr": "저는 공부해요." }
+        {
+          "speaker": "A",
+          "zh": "你上午做什么？",
+          "pinyin": "Nǐ shàngwǔ zuò shénme?",
+          "kr": "오전에 뭐 해요?",
+          "text": "你上午做什么？",
+          "translation": {
+            "kr": "오전에 뭐 해요?",
+            "en": "What do you do in the morning?",
+            "jp": "午前中は何をしますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我学习。",
+          "pinyin": "Wǒ xuéxí.",
+          "kr": "저는 공부해요.",
+          "text": "我学习。",
+          "translation": {
+            "kr": "저는 공부해요.",
+            "en": "I study.",
+            "jp": "勉強します。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "点 + 分钟", "explanation_zh": "「点」表示钟点，「分钟」表示分。", "explanation_kr": "'点'는 시, '分钟'는 분을 나타냅니다.", "explanation_en": "点 for o'clock, 分钟 for minutes.", "example": { "zh": "九点十分", "pinyin": "jiǔ diǎn shí fēn", "kr": "9시 10분", "en": "9:10" } },
-    { "title": "上午 / 下午 / 中午", "explanation_zh": "时段词放在时间前。", "explanation_kr": "시간대는 시간 앞에 옵니다.", "explanation_en": "Time period before the time.", "example": { "zh": "下午三点", "pinyin": "xiàwǔ sān diǎn", "kr": "오후 3시", "en": "3 p.m." } }
+    {
+      "title": "点 + 分钟",
+      "explanation_zh": "「点」表示钟点，「分钟」表示分。",
+      "explanation_kr": "'点'는 시, '分钟'는 분을 나타냅니다.",
+      "explanation_en": "点 for o'clock, 分钟 for minutes.",
+      "example": {
+        "zh": "九点十分",
+        "pinyin": "jiǔ diǎn shí fēn",
+        "kr": "9시 10분",
+        "en": "9:10"
+      },
+      "explain": {
+        "en": "点 for o'clock, 分钟 for minutes.",
+        "kr": "'点'는 시, '分钟'는 분을 나타냅니다.",
+        "zh": "「点」表示钟点，「分钟」表示分。"
+      }
+    },
+    {
+      "title": "上午 / 下午 / 中午",
+      "explanation_zh": "时段词放在时间前。",
+      "explanation_kr": "시간대는 시간 앞에 옵니다.",
+      "explanation_en": "Time period before the time.",
+      "example": {
+        "zh": "下午三点",
+        "pinyin": "xiàwǔ sān diǎn",
+        "kr": "오후 3시",
+        "en": "3 p.m."
+      },
+      "explain": {
+        "en": "Time period before the time.",
+        "kr": "시간대는 시간 앞에 옵니다.",
+        "zh": "时段词放在时间前。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "一点", "pinyin": "Yī diǎn", "kr": "한 시", "en": "one o'clock" },
-    { "zh": "两点半", "pinyin": "Liǎng diǎn bàn", "kr": "두 시 반", "en": "half past two" },
-    { "zh": "三点十分", "pinyin": "Sān diǎn shí fēn", "kr": "세 시 십 분", "en": "ten past three" },
-    { "zh": "早上", "pinyin": "Zǎoshang", "kr": "아침", "en": "early morning" },
-    { "zh": "中午", "pinyin": "Zhōngwǔ", "kr": "점심시간", "en": "noon" },
-    { "zh": "晚上", "pinyin": "Wǎnshang", "kr": "저녁", "en": "evening" },
-    { "zh": "几点起床？", "pinyin": "Jǐ diǎn qǐchuáng?", "kr": "몇 시에 일어나요?", "en": "What time do you get up?" },
-    { "zh": "几点睡觉？", "pinyin": "Jǐ diǎn shuìjiào?", "kr": "몇 시에 자요?", "en": "What time do you go to bed?" }
+    {
+      "zh": "一点",
+      "pinyin": "Yī diǎn",
+      "kr": "한 시",
+      "en": "one o'clock"
+    },
+    {
+      "zh": "两点半",
+      "pinyin": "Liǎng diǎn bàn",
+      "kr": "두 시 반",
+      "en": "half past two"
+    },
+    {
+      "zh": "三点十分",
+      "pinyin": "Sān diǎn shí fēn",
+      "kr": "세 시 십 분",
+      "en": "ten past three"
+    },
+    {
+      "zh": "早上",
+      "pinyin": "Zǎoshang",
+      "kr": "아침",
+      "en": "early morning"
+    },
+    {
+      "zh": "中午",
+      "pinyin": "Zhōngwǔ",
+      "kr": "점심시간",
+      "en": "noon"
+    },
+    {
+      "zh": "晚上",
+      "pinyin": "Wǎnshang",
+      "kr": "저녁",
+      "en": "evening"
+    },
+    {
+      "zh": "几点起床？",
+      "pinyin": "Jǐ diǎn qǐchuáng?",
+      "kr": "몇 시에 일어나요?",
+      "en": "What time do you get up?"
+    },
+    {
+      "zh": "几点睡觉？",
+      "pinyin": "Jǐ diǎn shuìjiào?",
+      "kr": "몇 시에 자요?",
+      "en": "What time do you go to bed?"
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「点」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["分钟", "点", "现在"], "answer": "点" },
-    { "type": "choice", "question": { "zh": "「上午」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["下午", "上午", "中午"], "answer": "上午" },
-    { "type": "choice", "question": { "zh": "现在___点？", "kr": "빈칸", "en": "Fill in" }, "options": ["几", "时候", "分钟"], "answer": "几" },
-    { "type": "choice", "question": { "zh": "九___十分", "kr": "빈칸", "en": "Fill in" }, "options": ["点", "分钟", "上午"], "answer": "点" },
-    { "type": "choice", "question": { "zh": "哪个是「现在」？", "kr": "어느 것?", "en": "Which?" }, "options": ["现在", "时候", "下午"], "answer": "现在" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「点」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "分钟",
+        "点",
+        "现在"
+      ],
+      "answer": "点"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「上午」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "下午",
+        "上午",
+        "中午"
+      ],
+      "answer": "上午"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "现在___点？",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "几",
+        "时候",
+        "分钟"
+      ],
+      "answer": "几"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "九___十分",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "点",
+        "分钟",
+        "上午"
+      ],
+      "answer": "点"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「现在」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "现在",
+        "时候",
+        "下午"
+      ],
+      "answer": "现在"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["现在几点", "上午九点", "下午三点", "中午"], "chatPrompt": "AI问：现在几点？学生回答时间。" },
+  "aiPractice": {
+    "speaking": [
+      "现在几点",
+      "上午九点",
+      "下午三点",
+      "中午"
+    ],
+    "chatPrompt": "AI问：现在几点？学生回答时间。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

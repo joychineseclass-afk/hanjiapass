@@ -5,71 +5,462 @@
   "version": "2.0",
   "lessonNo": 13,
   "type": "lesson",
-  "title": { "zh": "爱好", "pinyin": "àihào", "kr": "취미", "en": "Hobbies" },
-  "summary": { "zh": "喜欢与爱好", "kr": "좋아하는 것", "en": "Likes and hobbies" },
+  "title": {
+    "zh": "爱好",
+    "pinyin": "àihào",
+    "kr": "취미",
+    "en": "Hobbies",
+    "jp": "趣味"
+  },
+  "summary": {
+    "zh": "喜欢与爱好",
+    "kr": "좋아하는 것",
+    "en": "Likes and hobbies"
+  },
   "objectives": [
-    { "zh": "学会说喜欢什么", "kr": "뭘 좋아하는지 말할 수 있다", "en": "Can say what you like" },
-    { "zh": "学会看、听", "kr": "'看', '听'를 사용할 수 있다", "en": "Can use 看 and 听" }
+    {
+      "zh": "学会说喜欢什么",
+      "kr": "뭘 좋아하는지 말할 수 있다",
+      "en": "Can say what you like"
+    },
+    {
+      "zh": "学会看、听",
+      "kr": "'看', '听'를 사용할 수 있다",
+      "en": "Can use 看 and 听"
+    }
   ],
   "vocab": [
-    { "hanzi": "喜欢", "pinyin": "xǐhuan", "meaning": { "zh": "喜欢", "kr": "좋아하다", "en": "to like" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "爱", "pinyin": "ài", "meaning": { "zh": "爱", "kr": "사랑하다", "en": "to love" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "看", "pinyin": "kàn", "meaning": { "zh": "看", "kr": "보다", "en": "to look; to watch" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "听", "pinyin": "tīng", "meaning": { "zh": "听", "kr": "듣다", "en": "to listen" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "狗", "pinyin": "gǒu", "meaning": { "zh": "狗", "kr": "개", "en": "dog" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "猫", "pinyin": "māo", "meaning": { "zh": "猫", "kr": "고양이", "en": "cat" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "电影", "pinyin": "diànyǐng", "meaning": { "zh": "电影", "kr": "영화", "en": "movie" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "电视", "pinyin": "diànshì", "meaning": { "zh": "电视", "kr": "텔레비전", "en": "TV" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "漂亮", "pinyin": "piàoliang", "meaning": { "zh": "漂亮", "kr": "예쁘다", "en": "pretty" }, "pos": { "kr": "형용사", "en": "adjective" } }
+    {
+      "hanzi": "喜欢",
+      "pinyin": "xǐhuan",
+      "meaning": {
+        "zh": "喜欢",
+        "kr": "좋아하다",
+        "en": "to like",
+        "jp": "好き"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "爱",
+      "pinyin": "ài",
+      "meaning": {
+        "zh": "爱",
+        "kr": "사랑하다",
+        "en": "to love",
+        "jp": "愛する"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "看",
+      "pinyin": "kàn",
+      "meaning": {
+        "zh": "看",
+        "kr": "보다",
+        "en": "to look; to watch",
+        "jp": "見る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "听",
+      "pinyin": "tīng",
+      "meaning": {
+        "zh": "听",
+        "kr": "듣다",
+        "en": "to listen",
+        "jp": "聞く"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "狗",
+      "pinyin": "gǒu",
+      "meaning": {
+        "zh": "狗",
+        "kr": "개",
+        "en": "dog",
+        "jp": "犬"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "猫",
+      "pinyin": "māo",
+      "meaning": {
+        "zh": "猫",
+        "kr": "고양이",
+        "en": "cat",
+        "jp": "猫"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "电影",
+      "pinyin": "diànyǐng",
+      "meaning": {
+        "zh": "电影",
+        "kr": "영화",
+        "en": "movie",
+        "jp": "映画"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "电视",
+      "pinyin": "diànshì",
+      "meaning": {
+        "zh": "电视",
+        "kr": "텔레비전",
+        "en": "TV",
+        "jp": "テレビ"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "漂亮",
+      "pinyin": "piàoliang",
+      "meaning": {
+        "zh": "漂亮",
+        "kr": "예쁘다",
+        "en": "pretty",
+        "jp": "きれい"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "kr": "뭘 좋아해요?" },
-        { "speaker": "B", "zh": "我喜欢狗。", "pinyin": "Wǒ xǐhuan gǒu.", "kr": "저는 개를 좋아해요." }
+        {
+          "speaker": "A",
+          "zh": "你喜欢什么？",
+          "pinyin": "Nǐ xǐhuan shénme?",
+          "kr": "뭘 좋아해요?",
+          "text": "你喜欢什么？",
+          "translation": {
+            "kr": "뭘 좋아해요?",
+            "en": "What do you like?",
+            "jp": "何が好きですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我喜欢狗。",
+          "pinyin": "Wǒ xǐhuan gǒu.",
+          "kr": "저는 개를 좋아해요.",
+          "text": "我喜欢狗。",
+          "translation": {
+            "kr": "저는 개를 좋아해요.",
+            "en": "I like dogs.",
+            "jp": "犬が好きです。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "kr": "텔레비전 봐요?" },
-        { "speaker": "B", "zh": "看。", "pinyin": "Kàn.", "kr": "봐요." }
+        {
+          "speaker": "A",
+          "zh": "你看电视吗？",
+          "pinyin": "Nǐ kàn diànshì ma?",
+          "kr": "텔레비전 봐요?",
+          "text": "你看电视吗？",
+          "translation": {
+            "kr": "텔레비전 봐요?",
+            "en": "Do you watch TV?",
+            "jp": "テレビを見ますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "看。",
+          "pinyin": "Kàn.",
+          "kr": "봐요.",
+          "text": "看。",
+          "translation": {
+            "kr": "봐요.",
+            "en": "Yes.",
+            "jp": "見ます。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你喜欢看电影吗？", "pinyin": "Nǐ xǐhuan kàn diànyǐng ma?", "kr": "영화 보는 거 좋아해요?" },
-        { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }
+        {
+          "speaker": "A",
+          "zh": "你喜欢看电影吗？",
+          "pinyin": "Nǐ xǐhuan kàn diànyǐng ma?",
+          "kr": "영화 보는 거 좋아해요?",
+          "text": "你喜欢看电影吗？",
+          "translation": {
+            "kr": "영화 보는 거 좋아해요?",
+            "en": "Do you like watching movies?",
+            "jp": "映画を見るのは好きですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "喜欢。",
+          "pinyin": "Xǐhuan.",
+          "kr": "좋아해요.",
+          "text": "喜欢。",
+          "translation": {
+            "kr": "좋아해요.",
+            "en": "Yes, I do.",
+            "jp": "好きです。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "喜欢 + 宾语", "explanation_zh": "「喜欢」后接喜欢的事物。", "explanation_kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.", "explanation_en": "喜欢 takes object.", "example": { "zh": "喜欢狗", "pinyin": "xǐhuan gǒu", "kr": "개를 좋아하다", "en": "like dogs" } },
-    { "title": "和", "explanation_zh": "「和」连接名词。", "explanation_kr": "'和'는 명사를 연결합니다.", "explanation_en": "和 connects nouns.", "example": { "zh": "狗和猫", "pinyin": "gǒu hé māo", "kr": "개와 고양이", "en": "dogs and cats" } }
+    {
+      "title": "喜欢 + 宾语",
+      "explanation_zh": "「喜欢」后接喜欢的事物。",
+      "explanation_kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.",
+      "explanation_en": "喜欢 takes object.",
+      "example": {
+        "zh": "喜欢狗",
+        "pinyin": "xǐhuan gǒu",
+        "kr": "개를 좋아하다",
+        "en": "like dogs"
+      },
+      "explain": {
+        "en": "喜欢 takes object.",
+        "kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.",
+        "zh": "「喜欢」后接喜欢的事物。"
+      }
+    },
+    {
+      "title": "和",
+      "explanation_zh": "「和」连接名词。",
+      "explanation_kr": "'和'는 명사를 연결합니다.",
+      "explanation_en": "和 connects nouns.",
+      "example": {
+        "zh": "狗和猫",
+        "pinyin": "gǒu hé māo",
+        "kr": "개와 고양이",
+        "en": "dogs and cats"
+      },
+      "explain": {
+        "jp": "「和」は名詞をつなぎます。",
+        "en": "和 connects nouns.",
+        "kr": "'和'는 명사를 연결합니다.",
+        "zh": "「和」连接名词。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "看电影", "pinyin": "Kàn diànyǐng", "kr": "영화 보다", "en": "to watch movies" },
-    { "zh": "听音乐", "pinyin": "Tīng yīnyuè", "kr": "음악 듣다", "en": "to listen to music" },
-    { "zh": "看书", "pinyin": "Kàn shū", "kr": "책 읽다", "en": "to read books" },
-    { "zh": "运动", "pinyin": "Yùndòng", "kr": "운동", "en": "exercise" },
-    { "zh": "我不喜欢……", "pinyin": "Wǒ bù xǐhuan...", "kr": "저는 ... 안 좋아해요.", "en": "I don't like..." }
+    {
+      "zh": "看电影",
+      "pinyin": "Kàn diànyǐng",
+      "kr": "영화 보다",
+      "en": "to watch movies"
+    },
+    {
+      "zh": "听音乐",
+      "pinyin": "Tīng yīnyuè",
+      "kr": "음악 듣다",
+      "en": "to listen to music"
+    },
+    {
+      "zh": "看书",
+      "pinyin": "Kàn shū",
+      "kr": "책 읽다",
+      "en": "to read books"
+    },
+    {
+      "zh": "运动",
+      "pinyin": "Yùndòng",
+      "kr": "운동",
+      "en": "exercise"
+    },
+    {
+      "zh": "我不喜欢……",
+      "pinyin": "Wǒ bù xǐhuan...",
+      "kr": "저는 ... 안 좋아해요.",
+      "en": "I don't like..."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「喜欢」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["爱", "喜欢", "看"], "answer": "喜欢" },
-    { "type": "choice", "question": { "zh": "「电影」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["电视", "电影", "看"], "answer": "电影" },
-    { "type": "choice", "question": { "zh": "我___看电视。", "kr": "빈칸", "en": "Fill in" }, "options": ["喜欢", "爱", "看"], "answer": "看" },
-    { "type": "choice", "question": { "zh": "A：你喜欢猫吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["喜欢", "不", "看"], "answer": "喜欢" },
-    { "type": "choice", "question": { "zh": "哪个是「漂亮」？", "kr": "어느 것?", "en": "Which?" }, "options": ["漂亮", "喜欢", "爱"], "answer": "漂亮" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「喜欢」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "爱",
+        "喜欢",
+        "看"
+      ],
+      "answer": "喜欢"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「电影」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "电视",
+        "电影",
+        "看"
+      ],
+      "answer": "电影"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "我___看电视。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "喜欢",
+        "爱",
+        "看"
+      ],
+      "answer": "看"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你喜欢猫吗？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "喜欢",
+        "不",
+        "看"
+      ],
+      "answer": "喜欢"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「漂亮」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "漂亮",
+        "喜欢",
+        "爱"
+      ],
+      "answer": "漂亮"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我喜欢狗", "爱看电影", "看电视", "很漂亮"], "chatPrompt": "AI问：你喜欢什么？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "我喜欢狗",
+      "爱看电影",
+      "看电视",
+      "很漂亮"
+    ],
+    "chatPrompt": "AI问：你喜欢什么？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

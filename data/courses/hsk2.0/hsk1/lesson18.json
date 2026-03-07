@@ -5,70 +5,448 @@
   "version": "2.0",
   "lessonNo": 18,
   "type": "lesson",
-  "title": { "zh": "买东西", "pinyin": "mǎi dōngxi", "kr": "쇼핑", "en": "Shopping" },
-  "summary": { "zh": "买、钱、商店", "kr": "사다, 돈, 가게", "en": "Buy, money, shop" },
+  "title": {
+    "zh": "买东西",
+    "pinyin": "mǎi dōngxi",
+    "kr": "쇼핑",
+    "en": "Shopping",
+    "jp": "買い物"
+  },
+  "summary": {
+    "zh": "买、钱、商店",
+    "kr": "사다, 돈, 가게",
+    "en": "Buy, money, shop"
+  },
   "objectives": [
-    { "zh": "学会说买东西", "kr": "쇼핑할 수 있다", "en": "Can talk about shopping" },
-    { "zh": "学会这、那", "kr": "'这', '那'를 사용할 수 있다", "en": "Can use 这 and 那" }
+    {
+      "zh": "学会说买东西",
+      "kr": "쇼핑할 수 있다",
+      "en": "Can talk about shopping"
+    },
+    {
+      "zh": "学会这、那",
+      "kr": "'这', '那'를 사용할 수 있다",
+      "en": "Can use 这 and 那"
+    }
   ],
   "vocab": [
-    { "hanzi": "买", "pinyin": "mǎi", "meaning": { "zh": "买", "kr": "사다", "en": "to buy" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "钱", "pinyin": "qián", "meaning": { "zh": "钱", "kr": "돈", "en": "money" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "商店", "pinyin": "shāngdiàn", "meaning": { "zh": "商店", "kr": "가게", "en": "shop" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "衣服", "pinyin": "yīfu", "meaning": { "zh": "衣服", "kr": "옷", "en": "clothes" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "些", "pinyin": "xiē", "meaning": { "zh": "些", "kr": "몇", "en": "some" }, "pos": { "kr": "양사", "en": "measure word" } },
-    { "hanzi": "那", "pinyin": "nà", "meaning": { "zh": "那", "kr": "저", "en": "that" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "这", "pinyin": "zhè", "meaning": { "zh": "这", "kr": "이", "en": "this" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "电脑", "pinyin": "diànnǎo", "meaning": { "zh": "电脑", "kr": "컴퓨터", "en": "computer" }, "pos": { "kr": "명사", "en": "noun" } }
+    {
+      "hanzi": "买",
+      "pinyin": "mǎi",
+      "meaning": {
+        "zh": "买",
+        "kr": "사다",
+        "en": "to buy",
+        "jp": "買う"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "钱",
+      "pinyin": "qián",
+      "meaning": {
+        "zh": "钱",
+        "kr": "돈",
+        "en": "money",
+        "jp": "お金"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "商店",
+      "pinyin": "shāngdiàn",
+      "meaning": {
+        "zh": "商店",
+        "kr": "가게",
+        "en": "shop",
+        "jp": "店"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "衣服",
+      "pinyin": "yīfu",
+      "meaning": {
+        "zh": "衣服",
+        "kr": "옷",
+        "en": "clothes",
+        "jp": "服"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "些",
+      "pinyin": "xiē",
+      "meaning": {
+        "zh": "些",
+        "kr": "몇",
+        "en": "some",
+        "jp": "いくつか"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word",
+        "jp": "量詞"
+      }
+    },
+    {
+      "hanzi": "那",
+      "pinyin": "nà",
+      "meaning": {
+        "zh": "那",
+        "kr": "저",
+        "en": "that",
+        "jp": "あれ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "这",
+      "pinyin": "zhè",
+      "meaning": {
+        "zh": "这",
+        "kr": "이",
+        "en": "this",
+        "jp": "これ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "电脑",
+      "pinyin": "diànnǎo",
+      "meaning": {
+        "zh": "电脑",
+        "kr": "컴퓨터",
+        "en": "computer",
+        "jp": "パソコン"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
-        { "speaker": "B", "zh": "二十块。", "pinyin": "Èrshí kuài.", "kr": "20위안이에요." }
+        {
+          "speaker": "A",
+          "zh": "这个多少钱？",
+          "pinyin": "Zhè gè duōshao qián?",
+          "kr": "이거 얼마예요?",
+          "text": "这个多少钱？",
+          "translation": {
+            "kr": "이거 얼마예요?",
+            "en": "How much is this?",
+            "jp": "これはいくらですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "二十块。",
+          "pinyin": "Èrshí kuài.",
+          "kr": "20위안이에요.",
+          "text": "二十块。",
+          "translation": {
+            "kr": "20위안이에요.",
+            "en": "Twenty yuan.",
+            "jp": "20元です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "太贵了。", "pinyin": "Tài guì le.", "kr": "너무 비싸요." },
-        { "speaker": "B", "zh": "好，十五块。", "pinyin": "Hǎo, shíwǔ kuài.", "kr": "좋아요, 15위안이에요." }
+        {
+          "speaker": "A",
+          "zh": "太贵了。",
+          "pinyin": "Tài guì le.",
+          "kr": "너무 비싸요.",
+          "text": "太贵了。",
+          "translation": {
+            "kr": "너무 비싸요.",
+            "en": "Too expensive.",
+            "jp": "高すぎます。"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "好，十五块。",
+          "pinyin": "Hǎo, shíwǔ kuài.",
+          "kr": "좋아요, 15위안이에요.",
+          "text": "好，十五块。",
+          "translation": {
+            "kr": "좋아요, 15위안이에요.",
+            "en": "OK, fifteen yuan.",
+            "jp": "わかりました、15元です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "我要这个。", "pinyin": "Wǒ yào zhè gè.", "kr": "이거 주세요." },
-        { "speaker": "B", "zh": "好的。", "pinyin": "Hǎo de.", "kr": "알겠어요." }
+        {
+          "speaker": "A",
+          "zh": "我要这个。",
+          "pinyin": "Wǒ yào zhè gè.",
+          "kr": "이거 주세요.",
+          "text": "我要这个。",
+          "translation": {
+            "kr": "이거 주세요.",
+            "en": "I'll take this.",
+            "jp": "これをください。"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "好的。",
+          "pinyin": "Hǎo de.",
+          "kr": "알겠어요.",
+          "text": "好的。",
+          "translation": {
+            "kr": "알겠어요.",
+            "en": "OK.",
+            "jp": "わかりました。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "这 / 那", "explanation_zh": "「这」指近处，「那」指远处。", "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.", "explanation_en": "这 for near, 那 for far.", "example": { "zh": "这个，那个", "pinyin": "zhè gè, nà gè", "kr": "이것, 저것", "en": "this one, that one" } },
-    { "title": "呢", "explanation_zh": "「呢」用于追问或话题转换。", "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.", "explanation_en": "呢 for follow-up or topic shift.", "example": { "zh": "那个呢？", "pinyin": "Nà gè ne?", "kr": "저것은요?", "en": "What about that one?" } }
+    {
+      "title": "这 / 那",
+      "explanation_zh": "「这」指近处，「那」指远处。",
+      "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.",
+      "explanation_en": "这 for near, 那 for far.",
+      "example": {
+        "zh": "这个，那个",
+        "pinyin": "zhè gè, nà gè",
+        "kr": "이것, 저것",
+        "en": "this one, that one"
+      },
+      "explain": {
+        "jp": "「这」は近く、「那」は遠くを指します。",
+        "en": "这 for near, 那 for far.",
+        "kr": "'这'는 가까운 것, '那'는 먼 것.",
+        "zh": "「这」指近处，「那」指远处。"
+      }
+    },
+    {
+      "title": "呢",
+      "explanation_zh": "「呢」用于追问或话题转换。",
+      "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
+      "explanation_en": "呢 for follow-up or topic shift.",
+      "example": {
+        "zh": "那个呢？",
+        "pinyin": "Nà gè ne?",
+        "kr": "저것은요?",
+        "en": "What about that one?"
+      },
+      "explain": {
+        "jp": "「呢」は追及や話題転換に使います。",
+        "en": "呢 for follow-up or topic shift.",
+        "kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
+        "zh": "「呢」用于追问或话题转换。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "太贵了。", "pinyin": "Tài guì le.", "kr": "너무 비싸요.", "en": "It's too expensive." },
-    { "zh": "便宜一点吧。", "pinyin": "Piányi yīdiǎn ba.", "kr": "조금 깎아 주세요.", "en": "Can you make it cheaper?" },
-    { "zh": "我要这个。", "pinyin": "Wǒ yào zhè gè.", "kr": "이거 주세요.", "en": "I want this one." },
-    { "zh": "不要那个。", "pinyin": "Bú yào nà gè.", "kr": "저건 안 할게요.", "en": "I don't want that one." },
-    { "zh": "我再看看。", "pinyin": "Wǒ zài kànkan.", "kr": "다시 살펴볼게요.", "en": "Let me look around some more." }
+    {
+      "zh": "太贵了。",
+      "pinyin": "Tài guì le.",
+      "kr": "너무 비싸요.",
+      "en": "It's too expensive."
+    },
+    {
+      "zh": "便宜一点吧。",
+      "pinyin": "Piányi yīdiǎn ba.",
+      "kr": "조금 깎아 주세요.",
+      "en": "Can you make it cheaper?"
+    },
+    {
+      "zh": "我要这个。",
+      "pinyin": "Wǒ yào zhè gè.",
+      "kr": "이거 주세요.",
+      "en": "I want this one."
+    },
+    {
+      "zh": "不要那个。",
+      "pinyin": "Bú yào nà gè.",
+      "kr": "저건 안 할게요.",
+      "en": "I don't want that one."
+    },
+    {
+      "zh": "我再看看。",
+      "pinyin": "Wǒ zài kànkan.",
+      "kr": "다시 살펴볼게요.",
+      "en": "Let me look around some more."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「买」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["卖", "买", "钱"], "answer": "买" },
-    { "type": "choice", "question": { "zh": "「这」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["那", "这", "个"], "answer": "那" },
-    { "type": "choice", "question": { "zh": "这个___钱？", "kr": "빈칸", "en": "Fill in" }, "options": ["多少", "买", "商店"], "answer": "多少" },
-    { "type": "choice", "question": { "zh": "A：你买什么？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我买衣服", "十块", "商店"], "answer": "我买衣服" },
-    { "type": "choice", "question": { "zh": "哪个是「钱」？", "kr": "어느 것?", "en": "Which?" }, "options": ["买", "钱", "商店"], "answer": "钱" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「买」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "卖",
+        "买",
+        "钱"
+      ],
+      "answer": "买"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「这」的反义词是？",
+        "kr": "반대말은?",
+        "en": "Antonym?"
+      },
+      "options": [
+        "那",
+        "这",
+        "个"
+      ],
+      "answer": "那"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "这个___钱？",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "多少",
+        "买",
+        "商店"
+      ],
+      "answer": "多少"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你买什么？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "我买衣服",
+        "十块",
+        "商店"
+      ],
+      "answer": "我买衣服"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「钱」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "买",
+        "钱",
+        "商店"
+      ],
+      "answer": "钱"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我买衣服", "多少钱", "这个那个", "我有钱"], "chatPrompt": "AI问：你买什么？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "我买衣服",
+      "多少钱",
+      "这个那个",
+      "我有钱"
+    ],
+    "chatPrompt": "AI问：你买什么？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

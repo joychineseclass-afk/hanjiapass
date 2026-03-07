@@ -5,68 +5,418 @@
   "version": "2.0",
   "lessonNo": 17,
   "type": "lesson",
-  "title": { "zh": "交通", "pinyin": "jiāotōng", "kr": "교통", "en": "Transport" },
-  "summary": { "zh": "出租车、飞机、火车站", "kr": "택시, 비행기, 기차역", "en": "Taxi, plane, train station" },
+  "title": {
+    "zh": "交通",
+    "pinyin": "jiāotōng",
+    "kr": "교통",
+    "en": "Transport",
+    "jp": "交通"
+  },
+  "summary": {
+    "zh": "出租车、飞机、火车站",
+    "kr": "택시, 비행기, 기차역",
+    "en": "Taxi, plane, train station"
+  },
   "objectives": [
-    { "zh": "学会说交通方式", "kr": "교통 수단을 말할 수 있다", "en": "Can talk about transport" },
-    { "zh": "学会开、看见、都", "kr": "'开', '看见', '都'를 사용할 수 있다", "en": "Can use 开, 看见, 都" }
+    {
+      "zh": "学会说交通方式",
+      "kr": "교통 수단을 말할 수 있다",
+      "en": "Can talk about transport"
+    },
+    {
+      "zh": "学会开、看见、都",
+      "kr": "'开', '看见', '都'를 사용할 수 있다",
+      "en": "Can use 开, 看见, 都"
+    }
   ],
   "vocab": [
-    { "hanzi": "出租车", "pinyin": "chūzūchē", "meaning": { "zh": "出租车", "kr": "택시", "en": "taxi" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "飞机", "pinyin": "fēijī", "meaning": { "zh": "飞机", "kr": "비행기", "en": "plane" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "火车站", "pinyin": "huǒchēzhàn", "meaning": { "zh": "火车站", "kr": "기차역", "en": "train station" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "开", "pinyin": "kāi", "meaning": { "zh": "开", "kr": "운전하다", "en": "to drive" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "看见", "pinyin": "kànjiàn", "meaning": { "zh": "看见", "kr": "보다", "en": "to see" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "都", "pinyin": "dōu", "meaning": { "zh": "都", "kr": "다", "en": "all" }, "pos": { "kr": "부사", "en": "adverb" } }
+    {
+      "hanzi": "出租车",
+      "pinyin": "chūzūchē",
+      "meaning": {
+        "zh": "出租车",
+        "kr": "택시",
+        "en": "taxi",
+        "jp": "タクシー"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "飞机",
+      "pinyin": "fēijī",
+      "meaning": {
+        "zh": "飞机",
+        "kr": "비행기",
+        "en": "plane",
+        "jp": "飛行機"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "火车站",
+      "pinyin": "huǒchēzhàn",
+      "meaning": {
+        "zh": "火车站",
+        "kr": "기차역",
+        "en": "train station",
+        "jp": "駅"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "开",
+      "pinyin": "kāi",
+      "meaning": {
+        "zh": "开",
+        "kr": "운전하다",
+        "en": "to drive",
+        "jp": "開ける；運転する"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "看见",
+      "pinyin": "kànjiàn",
+      "meaning": {
+        "zh": "看见",
+        "kr": "보다",
+        "en": "to see",
+        "jp": "見える"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "都",
+      "pinyin": "dōu",
+      "meaning": {
+        "zh": "都",
+        "kr": "다",
+        "en": "all",
+        "jp": "みんな"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb",
+        "jp": "副詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你怎么去学校？", "pinyin": "Nǐ zěnme qù xuéxiào?", "kr": "어떻게 학교에 가요?" },
-        { "speaker": "B", "zh": "我坐车去。", "pinyin": "Wǒ zuò chē qù.", "kr": "저는 차 타고 가요." }
+        {
+          "speaker": "A",
+          "zh": "你怎么去学校？",
+          "pinyin": "Nǐ zěnme qù xuéxiào?",
+          "kr": "어떻게 학교에 가요?",
+          "text": "你怎么去学校？",
+          "translation": {
+            "kr": "어떻게 학교에 가요?",
+            "en": "How do you go to school?",
+            "jp": "どうやって学校に行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我坐车去。",
+          "pinyin": "Wǒ zuò chē qù.",
+          "kr": "저는 차 타고 가요.",
+          "text": "我坐车去。",
+          "translation": {
+            "kr": "저는 차 타고 가요.",
+            "en": "I go by car.",
+            "jp": "車で行きます。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "kr": "어디 가요?" },
-        { "speaker": "B", "zh": "我去学校。", "pinyin": "Wǒ qù xuéxiào.", "kr": "저는 학교에 가요." }
+        {
+          "speaker": "A",
+          "zh": "你去哪儿？",
+          "pinyin": "Nǐ qù nǎr?",
+          "kr": "어디 가요?",
+          "text": "你去哪儿？",
+          "translation": {
+            "kr": "어디 가요?",
+            "en": "Where are you going?",
+            "jp": "どこに行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我去学校。",
+          "pinyin": "Wǒ qù xuéxiào.",
+          "kr": "저는 학교에 가요.",
+          "text": "我去学校。",
+          "translation": {
+            "kr": "저는 학교에 가요.",
+            "en": "I'm going to school.",
+            "jp": "学校に行きます。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你回家吗？", "pinyin": "Nǐ huí jiā ma?", "kr": "집에 돌아가요?" },
-        { "speaker": "B", "zh": "回。", "pinyin": "Huí.", "kr": "돌아가요." }
+        {
+          "speaker": "A",
+          "zh": "你回家吗？",
+          "pinyin": "Nǐ huí jiā ma?",
+          "kr": "집에 돌아가요?",
+          "text": "你回家吗？",
+          "translation": {
+            "kr": "집에 돌아가요?",
+            "en": "Are you going home?",
+            "jp": "家に帰りますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "回。",
+          "pinyin": "Huí.",
+          "kr": "돌아가요.",
+          "text": "回。",
+          "translation": {
+            "kr": "돌아가요.",
+            "en": "Yes.",
+            "jp": "帰ります。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "坐 + 交通工具", "explanation_zh": "「坐」后接交通工具。", "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.", "explanation_en": "坐 takes transport.", "example": { "zh": "坐出租车", "pinyin": "zuò chūzūchē", "kr": "택시 타다", "en": "take a taxi" } },
-    { "title": "都", "explanation_zh": "「都」表示全部。", "explanation_kr": "'都'는 모두를 나타냅니다.", "explanation_en": "都 means all.", "example": { "zh": "我们都去。", "pinyin": "Wǒmen dōu qù.", "kr": "우리 모두 가요.", "en": "We all go." } }
+    {
+      "title": "坐 + 交通工具",
+      "explanation_zh": "「坐」后接交通工具。",
+      "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.",
+      "explanation_en": "坐 takes transport.",
+      "example": {
+        "zh": "坐出租车",
+        "pinyin": "zuò chūzūchē",
+        "kr": "택시 타다",
+        "en": "take a taxi"
+      },
+      "explain": {
+        "jp": "「坐」の後に交通手段が続きます。",
+        "en": "坐 takes transport.",
+        "kr": "'坐' 뒤에 교통수단이 옵니다.",
+        "zh": "「坐」后接交通工具。"
+      }
+    },
+    {
+      "title": "都",
+      "explanation_zh": "「都」表示全部。",
+      "explanation_kr": "'都'는 모두를 나타냅니다.",
+      "explanation_en": "都 means all.",
+      "example": {
+        "zh": "我们都去。",
+        "pinyin": "Wǒmen dōu qù.",
+        "kr": "우리 모두 가요.",
+        "en": "We all go."
+      },
+      "explain": {
+        "jp": "「都」は全部を表します。",
+        "en": "都 means all.",
+        "kr": "'都'는 모두를 나타냅니다.",
+        "zh": "「都」表示全部。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "坐地铁", "pinyin": "Zuò dìtiě", "kr": "지하철 타다", "en": "to take the subway" },
-    { "zh": "坐公交车", "pinyin": "Zuò gōngjiāo chē", "kr": "버스 타다", "en": "to take the bus" },
-    { "zh": "走路", "pinyin": "Zǒu lù", "kr": "걷다", "en": "to walk" },
-    { "zh": "开车", "pinyin": "Kāi chē", "kr": "운전하다", "en": "to drive" },
-    { "zh": "一起去", "pinyin": "Yīqǐ qù", "kr": "같이 가다", "en": "to go together" }
+    {
+      "zh": "坐地铁",
+      "pinyin": "Zuò dìtiě",
+      "kr": "지하철 타다",
+      "en": "to take the subway"
+    },
+    {
+      "zh": "坐公交车",
+      "pinyin": "Zuò gōngjiāo chē",
+      "kr": "버스 타다",
+      "en": "to take the bus"
+    },
+    {
+      "zh": "走路",
+      "pinyin": "Zǒu lù",
+      "kr": "걷다",
+      "en": "to walk"
+    },
+    {
+      "zh": "开车",
+      "pinyin": "Kāi chē",
+      "kr": "운전하다",
+      "en": "to drive"
+    },
+    {
+      "zh": "一起去",
+      "pinyin": "Yīqǐ qù",
+      "kr": "같이 가다",
+      "en": "to go together"
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「出租车」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["飞机", "出租车", "火车站"], "answer": "出租车" },
-    { "type": "choice", "question": { "zh": "「看见」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["看", "看见", "开"], "answer": "看见" },
-    { "type": "choice", "question": { "zh": "我___出租车。", "kr": "빈칸", "en": "Fill in" }, "options": ["坐", "开", "看见"], "answer": "坐" },
-    { "type": "choice", "question": { "zh": "A：你去哪儿？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我去火车站", "坐出租车", "飞机"], "answer": "我去火车站" },
-    { "type": "choice", "question": { "zh": "哪个是「飞机」？", "kr": "어느 것?", "en": "Which?" }, "options": ["出租车", "飞机", "火车站"], "answer": "飞机" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「出租车」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "飞机",
+        "出租车",
+        "火车站"
+      ],
+      "answer": "出租车"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「看见」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "看",
+        "看见",
+        "开"
+      ],
+      "answer": "看见"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "我___出租车。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "坐",
+        "开",
+        "看见"
+      ],
+      "answer": "坐"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你去哪儿？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "我去火车站",
+        "坐出租车",
+        "飞机"
+      ],
+      "answer": "我去火车站"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「飞机」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "出租车",
+        "飞机",
+        "火车站"
+      ],
+      "answer": "飞机"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["坐出租车", "去火车站", "看见飞机", "我们都去"], "chatPrompt": "AI问：你去哪儿？学生回答交通方式。" },
+  "aiPractice": {
+    "speaking": [
+      "坐出租车",
+      "去火车站",
+      "看见飞机",
+      "我们都去"
+    ],
+    "chatPrompt": "AI问：你去哪儿？学生回答交通方式。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

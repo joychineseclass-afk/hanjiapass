@@ -45,6 +45,7 @@
     "level": "等级",
     "version": "版本",
     "select_level": "选择等级",
+    "select_level_tip": "请选择等级开始学习。",
     "start_learning": "开始学习",
     "search_placeholder": "搜索词语 / 拼音 / 翻译",
     "tip": "选择等级并开始课程",
@@ -72,7 +73,8 @@
       "grammar": "语法",
       "extension": "扩展",
       "practice": "练习",
-      "ai": "AI学习"
+      "ai": "AI学习",
+      "review": "复习"
     },
     "vocab_subtitle": "本课词汇，点击可听发音。",
     "vocab_count": "{n}词",
@@ -97,7 +99,21 @@
     "review_range_format": "第 {from}–{to} 课 / 1–{total} 课复习",
     "review_desc": "请复习前面学过的词汇和对话。",
     "back_to_list": "← 返回目录",
-    "lesson_unit": "第{n}课"
+    "lesson_unit": "第{n}课",
+    "section": {
+      "words": "单词",
+      "dialogue": "会话",
+      "grammar": "语法",
+      "practice": "练习",
+      "ai": "AI学习"
+    },
+    "desc": {
+      "words": "本课词汇。",
+      "dialogue": "本课会话。",
+      "grammar": "本课语法。",
+      "practice": "完成题目并提交，可查看正误与解析。",
+      "ai": "用本课单词/会话向AI提问。"
+    }
   },
   "action": {
     "learn": "学习",

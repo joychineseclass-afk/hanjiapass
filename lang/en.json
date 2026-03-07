@@ -45,6 +45,7 @@
     "level": "Level",
     "version": "Version",
     "select_level": "Select level",
+    "select_level_tip": "Select a level to start learning.",
     "start_learning": "Start learning",
     "search_placeholder": "Search word / pinyin / meaning",
     "tip": "Select a level to start.",
@@ -99,10 +100,16 @@
     "back_to_list": "← Back to list",
     "lesson_unit": "Lesson {n}",
     "section": {
+      "words": "Words",
+      "dialogue": "Dialogue",
+      "grammar": "Grammar",
       "practice": "Practice",
       "ai": "AI Learning"
     },
     "desc": {
+      "words": "Vocabulary for this lesson.",
+      "dialogue": "Dialogue for this lesson.",
+      "grammar": "Grammar for this lesson.",
       "practice": "Answer the questions and submit to see results and explanations.",
       "ai": "Ask AI about the words and dialogue from this lesson."
     }

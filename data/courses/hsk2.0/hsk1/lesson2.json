@@ -9,7 +9,8 @@
     "zh": "介绍名字",
     "pinyin": "jièshào míngzì",
     "kr": "이름 소개",
-    "en": "Introducing names"
+    "en": "Introducing names",
+    "jp": "名前の紹介"
   },
   "summary": {
     "zh": "问名字、礼貌用语与道别",
@@ -17,30 +18,168 @@
     "en": "Asking names and polite expressions"
   },
   "objectives": [
-    { "zh": "学会介绍自己的名字", "kr": "자기 이름을 소개할 수 있다", "en": "Can introduce your name" },
-    { "zh": "学会问别人名字", "kr": "다른 사람 이름을 물을 수 있다", "en": "Can ask others' names" }
+    {
+      "zh": "学会介绍自己的名字",
+      "kr": "자기 이름을 소개할 수 있다",
+      "en": "Can introduce your name"
+    },
+    {
+      "zh": "学会问别人名字",
+      "kr": "다른 사람 이름을 물을 수 있다",
+      "en": "Can ask others' names"
+    }
   ],
   "vocab": [
-    { "hanzi": "叫", "pinyin": "jiào", "meaning": { "zh": "叫", "kr": "~라고 부르다", "en": "to be called" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "什么", "pinyin": "shénme", "meaning": { "zh": "什么", "kr": "무엇", "en": "what" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "名字", "pinyin": "míngzi", "meaning": { "zh": "名字", "kr": "이름", "en": "name" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "是", "pinyin": "shì", "meaning": { "zh": "是", "kr": "~이다", "en": "to be" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "高兴", "pinyin": "gāoxìng", "meaning": { "zh": "高兴", "kr": "기쁘다", "en": "happy" }, "pos": { "kr": "형용사", "en": "adjective" } },
-    { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다, 만나다", "en": "to know" }, "pos": { "kr": "동사", "en": "verb" } }
+    {
+      "hanzi": "叫",
+      "pinyin": "jiào",
+      "meaning": {
+        "zh": "叫",
+        "kr": "~라고 부르다",
+        "en": "to be called",
+        "jp": "〜という"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "什么",
+      "pinyin": "shénme",
+      "meaning": {
+        "zh": "什么",
+        "kr": "무엇",
+        "en": "what",
+        "jp": "何"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "名字",
+      "pinyin": "míngzi",
+      "meaning": {
+        "zh": "名字",
+        "kr": "이름",
+        "en": "name",
+        "jp": "名前"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "是",
+      "pinyin": "shì",
+      "meaning": {
+        "zh": "是",
+        "kr": "~이다",
+        "en": "to be",
+        "jp": "〜である"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "高兴",
+      "pinyin": "gāoxìng",
+      "meaning": {
+        "zh": "高兴",
+        "kr": "기쁘다",
+        "en": "happy",
+        "jp": "嬉しい"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
+    },
+    {
+      "hanzi": "认识",
+      "pinyin": "rènshi",
+      "meaning": {
+        "zh": "认识",
+        "kr": "알다, 만나다",
+        "en": "to know",
+        "jp": "知る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你叫什么名字？", "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?" } },
-        { "speaker": "B", "text": "我叫小明。", "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "My name is Xiaoming." } }
+        {
+          "speaker": "A",
+          "text": "你叫什么名字？",
+          "zh": "你叫什么名字？",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "translation": {
+            "kr": "이름이 뭐예요?",
+            "en": "What is your name?"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我叫小明。",
+          "zh": "我叫小明。",
+          "pinyin": "Wǒ jiào Xiǎomíng.",
+          "translation": {
+            "kr": "저는 샤오밍이에요.",
+            "en": "My name is Xiaoming."
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "text": "我叫小美。", "zh": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "translation": { "kr": "저는 샤오메이예요.", "en": "My name is Xiaomei." } },
-        { "speaker": "B", "text": "很高兴认识你。", "zh": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "만나서 반가워요.", "en": "Nice to meet you." } }
+        {
+          "speaker": "A",
+          "text": "我叫小美。",
+          "zh": "我叫小美。",
+          "pinyin": "Wǒ jiào Xiǎoměi.",
+          "translation": {
+            "kr": "저는 샤오메이예요.",
+            "en": "My name is Xiaomei."
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "很高兴认识你。",
+          "zh": "很高兴认识你。",
+          "pinyin": "Hěn gāoxìng rènshi nǐ.",
+          "translation": {
+            "kr": "만나서 반가워요.",
+            "en": "Nice to meet you."
+          }
+        }
       ]
     }
   ],
@@ -50,47 +189,210 @@
       "explanation_zh": "用「叫」来介绍或询问名字。",
       "explanation_kr": "'叫'로 이름을 소개하거나 물을 수 있습니다.",
       "explanation_en": "Use 叫 to introduce or ask for names.",
-      "example": { "zh": "我叫李明。", "pinyin": "Wǒ jiào Lǐ Míng.", "kr": "저는 이명이에요.", "en": "I'm Li Ming." }
+      "example": {
+        "zh": "我叫李明。",
+        "pinyin": "Wǒ jiào Lǐ Míng.",
+        "kr": "저는 이명이에요.",
+        "en": "I'm Li Ming."
+      },
+      "explain": {
+        "jp": "「叫」で名前を紹介したり聞いたりします。",
+        "en": "Use 叫 to introduce or ask for names.",
+        "kr": "'叫'로 이름을 소개하거나 물을 수 있습니다.",
+        "zh": "用「叫」来介绍或询问名字。"
+      }
     },
     {
       "title": "什么 — 疑问词",
       "explanation_zh": "「什么」用于询问事物或名字。",
       "explanation_kr": "'什么'은 사물이나 이름을 물을 때 사용합니다.",
       "explanation_en": "什么 is used to ask about things or names.",
-      "example": { "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "kr": "이름이 뭐예요?", "en": "What's your name?" }
+      "example": {
+        "zh": "你叫什么名字？",
+        "pinyin": "Nǐ jiào shénme míngzi?",
+        "kr": "이름이 뭐예요?",
+        "en": "What's your name?"
+      },
+      "explain": {
+        "jp": "「什么」は物や名前を聞くときに使います。",
+        "en": "什么 is used to ask about things or names.",
+        "kr": "'什么'은 사물이나 이름을 물을 때 사용합니다.",
+        "zh": "「什么」用于询问事物或名字。"
+      }
     },
     {
       "title": "A 是 B",
       "explanation_zh": "「是」表示等同关系。",
       "explanation_kr": "'是'는 동일 관계를 나타냅니다.",
       "explanation_en": "是 indicates equality.",
-      "example": { "zh": "我是学生。", "pinyin": "Wǒ shì xuésheng.", "kr": "저는 학생이에요.", "en": "I am a student." }
+      "example": {
+        "zh": "我是学生。",
+        "pinyin": "Wǒ shì xuésheng.",
+        "kr": "저는 학생이에요.",
+        "en": "I am a student."
+      },
+      "explain": {
+        "jp": "「是」は主語と目的語をつなぎ、同等であることを表します。",
+        "en": "是 indicates equality.",
+        "kr": "'是'는 동일 관계를 나타냅니다.",
+        "zh": "「是」表示等同关系。"
+      }
     }
   ],
   "extension": [
-    { "zh": "我姓王。", "pinyin": "Wǒ xìng Wáng.", "kr": "제 성은 왕이에요.", "en": "My family name is Wang." },
-    { "zh": "我的名字是李明。", "pinyin": "Wǒ de míngzi shì Lǐ Míng.", "kr": "제 이름은 이명이에요.", "en": "My name is Li Ming." },
-    { "zh": "你呢？", "pinyin": "Nǐ ne?", "kr": "당신은요?", "en": "And you?" },
-    { "zh": "请多关照。", "pinyin": "Qǐng duō guānzhào.", "kr": "잘 부탁해요.", "en": "Please take care of me." },
-    { "zh": "我是学生。", "pinyin": "Wǒ shì xuésheng.", "kr": "저는 학생이에요.", "en": "I am a student." }
+    {
+      "zh": "我姓王。",
+      "pinyin": "Wǒ xìng Wáng.",
+      "kr": "제 성은 왕이에요.",
+      "en": "My family name is Wang."
+    },
+    {
+      "zh": "我的名字是李明。",
+      "pinyin": "Wǒ de míngzi shì Lǐ Míng.",
+      "kr": "제 이름은 이명이에요.",
+      "en": "My name is Li Ming."
+    },
+    {
+      "zh": "你呢？",
+      "pinyin": "Nǐ ne?",
+      "kr": "당신은요?",
+      "en": "And you?"
+    },
+    {
+      "zh": "请多关照。",
+      "pinyin": "Qǐng duō guānzhào.",
+      "kr": "잘 부탁해요.",
+      "en": "Please take care of me."
+    },
+    {
+      "zh": "我是学生。",
+      "pinyin": "Wǒ shì xuésheng.",
+      "kr": "저는 학생이에요.",
+      "en": "I am a student."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "别人说「谢谢」，你应该怎么回答？", "kr": "감사합니다에 대한 답은?", "en": "Response to 谢谢?" }, "options": ["对不起", "不客气", "再见"], "answer": "不客气" },
-    { "type": "choice", "question": { "zh": "请选择正确语序：你 / 叫 / 什么 / 名字", "kr": "올바른 순서를 선택하세요.", "en": "Correct order?" }, "options": ["你叫什么名字", "叫什么你名字", "名字什么叫你"], "answer": "你叫什么名字" },
-    { "type": "choice", "question": { "zh": "「很高兴认识你」的意思是？", "kr": "의미는?", "en": "Meaning of 很高兴认识你?" }, "options": ["再见", "很高兴认识你", "谢谢"], "answer": "很高兴认识你" },
-    { "type": "choice", "question": { "zh": "你叫什么___？", "kr": "빈칸 채우기", "en": "Fill in the blank" }, "options": ["名字", "什么", "叫"], "answer": "名字" },
-    { "type": "choice", "question": { "zh": "A：你好！你叫什么名字？ B：___", "kr": "대화 이해", "en": "Dialogue understanding" }, "options": ["再见", "我叫小明", "谢谢"], "answer": "我叫小明" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "别人说「谢谢」，你应该怎么回答？",
+        "kr": "감사합니다에 대한 답은?",
+        "en": "Response to 谢谢?"
+      },
+      "options": [
+        "对不起",
+        "不客气",
+        "再见"
+      ],
+      "answer": "不客气"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "请选择正确语序：你 / 叫 / 什么 / 名字",
+        "kr": "올바른 순서를 선택하세요.",
+        "en": "Correct order?"
+      },
+      "options": [
+        "你叫什么名字",
+        "叫什么你名字",
+        "名字什么叫你"
+      ],
+      "answer": "你叫什么名字"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「很高兴认识你」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning of 很高兴认识你?"
+      },
+      "options": [
+        "再见",
+        "很高兴认识你",
+        "谢谢"
+      ],
+      "answer": "很高兴认识你"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "你叫什么___？",
+        "kr": "빈칸 채우기",
+        "en": "Fill in the blank"
+      },
+      "options": [
+        "名字",
+        "什么",
+        "叫"
+      ],
+      "answer": "名字"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你好！你叫什么名字？ B：___",
+        "kr": "대화 이해",
+        "en": "Dialogue understanding"
+      },
+      "options": [
+        "再见",
+        "我叫小明",
+        "谢谢"
+      ],
+      "answer": "我叫小明"
+    }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你叫什么名字", "我叫小明", "很高兴认识你", "再见"],
+    "speaking": [
+      "你叫什么名字",
+      "我叫小明",
+      "很高兴认识你",
+      "再见"
+    ],
     "chatPrompt": "AI问：你叫什么名字？学生回答并道别。"
   },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

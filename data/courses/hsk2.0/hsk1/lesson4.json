@@ -5,71 +5,463 @@
   "version": "2.0",
   "lessonNo": 4,
   "type": "lesson",
-  "title": { "zh": "家人", "pinyin": "jiārén", "kr": "가족", "en": "Family" },
-  "summary": { "zh": "介绍家庭成员", "kr": "가족 소개", "en": "Introducing family members" },
+  "title": {
+    "zh": "家人",
+    "pinyin": "jiārén",
+    "kr": "가족",
+    "en": "Family",
+    "jp": "家族"
+  },
+  "summary": {
+    "zh": "介绍家庭成员",
+    "kr": "가족 소개",
+    "en": "Introducing family members"
+  },
   "objectives": [
-    { "zh": "学会介绍家人", "kr": "가족을 소개할 수 있다", "en": "Can introduce family" },
-    { "zh": "学会使用「的」", "kr": "'的'를 사용할 수 있다", "en": "Can use 的" }
+    {
+      "zh": "学会介绍家人",
+      "kr": "가족을 소개할 수 있다",
+      "en": "Can introduce family"
+    },
+    {
+      "zh": "学会使用「的」",
+      "kr": "'的'를 사용할 수 있다",
+      "en": "Can use 的"
+    }
   ],
   "vocab": [
-    { "hanzi": "爸爸", "pinyin": "bàba", "meaning": { "zh": "爸爸", "kr": "아빠", "en": "dad" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "妈妈", "pinyin": "māma", "meaning": { "zh": "妈妈", "kr": "엄마", "en": "mom" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "儿子", "pinyin": "érzi", "meaning": { "zh": "儿子", "kr": "아들", "en": "son" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "女儿", "pinyin": "nǚ'ér", "meaning": { "zh": "女儿", "kr": "딸", "en": "daughter" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "家", "pinyin": "jiā", "meaning": { "zh": "家", "kr": "집", "en": "home; family" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "人", "pinyin": "rén", "meaning": { "zh": "人", "kr": "사람", "en": "person" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "的", "pinyin": "de", "meaning": { "zh": "的", "kr": "소유 조사", "en": "possessive particle" }, "pos": { "kr": "조사", "en": "particle" } },
-    { "hanzi": "他", "pinyin": "tā", "meaning": { "zh": "他", "kr": "그", "en": "he" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "她", "pinyin": "tā", "meaning": { "zh": "她", "kr": "그녀", "en": "she" }, "pos": { "kr": "대명사", "en": "pronoun" } }
+    {
+      "hanzi": "爸爸",
+      "pinyin": "bàba",
+      "meaning": {
+        "zh": "爸爸",
+        "kr": "아빠",
+        "en": "dad",
+        "jp": "お父さん"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "妈妈",
+      "pinyin": "māma",
+      "meaning": {
+        "zh": "妈妈",
+        "kr": "엄마",
+        "en": "mom",
+        "jp": "お母さん"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "儿子",
+      "pinyin": "érzi",
+      "meaning": {
+        "zh": "儿子",
+        "kr": "아들",
+        "en": "son",
+        "jp": "息子"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "女儿",
+      "pinyin": "nǚ'ér",
+      "meaning": {
+        "zh": "女儿",
+        "kr": "딸",
+        "en": "daughter",
+        "jp": "娘"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "家",
+      "pinyin": "jiā",
+      "meaning": {
+        "zh": "家",
+        "kr": "집",
+        "en": "home; family",
+        "jp": "家"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "人",
+      "pinyin": "rén",
+      "meaning": {
+        "zh": "人",
+        "kr": "사람",
+        "en": "person",
+        "jp": "人"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "的",
+      "pinyin": "de",
+      "meaning": {
+        "zh": "的",
+        "kr": "소유 조사",
+        "en": "possessive particle",
+        "jp": "所有の助詞"
+      },
+      "pos": {
+        "kr": "조사",
+        "en": "particle",
+        "jp": "助詞"
+      }
+    },
+    {
+      "hanzi": "他",
+      "pinyin": "tā",
+      "meaning": {
+        "zh": "他",
+        "kr": "그",
+        "en": "he",
+        "jp": "彼"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "她",
+      "pinyin": "tā",
+      "meaning": {
+        "zh": "她",
+        "kr": "그녀",
+        "en": "she",
+        "jp": "彼女"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你家有几个人？", "pinyin": "Nǐ jiā yǒu jǐ gè rén?", "kr": "가족이 몇 명이에요?" },
-        { "speaker": "B", "zh": "我家有四个人。", "pinyin": "Wǒ jiā yǒu sì gè rén.", "kr": "우리 가족은 네 명이에요." }
+        {
+          "speaker": "A",
+          "zh": "你家有几个人？",
+          "pinyin": "Nǐ jiā yǒu jǐ gè rén?",
+          "kr": "가족이 몇 명이에요?",
+          "text": "你家有几个人？",
+          "translation": {
+            "kr": "가족이 몇 명이에요?",
+            "en": "How many people are in your family?",
+            "jp": "ご家族は何人ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我家有四个人。",
+          "pinyin": "Wǒ jiā yǒu sì gè rén.",
+          "kr": "우리 가족은 네 명이에요.",
+          "text": "我家有四个人。",
+          "translation": {
+            "kr": "우리 가족은 네 명이에요.",
+            "en": "There are four people in my family.",
+            "jp": "私の家族は4人です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "kr": "아버지는 선생님이에요?" },
-        { "speaker": "B", "zh": "不是，他是医生。", "pinyin": "Bú shì, tā shì yīshēng.", "kr": "아니요, 그는 의사예요." }
+        {
+          "speaker": "A",
+          "zh": "你爸爸是老师吗？",
+          "pinyin": "Nǐ bàba shì lǎoshī ma?",
+          "kr": "아버지는 선생님이에요?",
+          "text": "你爸爸是老师吗？",
+          "translation": {
+            "kr": "아버지는 선생님이에요?",
+            "en": "Is your dad a teacher?",
+            "jp": "お父さんは先生ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "不是，他是医生。",
+          "pinyin": "Bú shì, tā shì yīshēng.",
+          "kr": "아니요, 그는 의사예요.",
+          "text": "不是，他是医生。",
+          "translation": {
+            "kr": "아니요, 그는 의사예요.",
+            "en": "No, he's a doctor.",
+            "jp": "いいえ、彼は医者です。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "她是谁？", "pinyin": "Tā shì shéi?", "kr": "그녀는 누구예요?" },
-        { "speaker": "B", "zh": "她是我妈妈。", "pinyin": "Tā shì wǒ māma.", "kr": "그녀는 우리 엄마예요." }
+        {
+          "speaker": "A",
+          "zh": "她是谁？",
+          "pinyin": "Tā shì shéi?",
+          "kr": "그녀는 누구예요?",
+          "text": "她是谁？",
+          "translation": {
+            "kr": "그녀는 누구예요?",
+            "en": "Who is she?",
+            "jp": "彼女は誰ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "她是我妈妈。",
+          "pinyin": "Tā shì wǒ māma.",
+          "kr": "그녀는 우리 엄마예요.",
+          "text": "她是我妈妈。",
+          "translation": {
+            "kr": "그녀는 우리 엄마예요.",
+            "en": "She is my mom.",
+            "jp": "彼女は私の母です。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "的 — 所属", "explanation_zh": "「的」表示所属关系。", "explanation_kr": "'的'는 소유 관계를 나타냅니다.", "explanation_en": "的 indicates possession.", "example": { "zh": "我爸爸", "pinyin": "wǒ bàba", "kr": "우리 아빠", "en": "my dad" } },
-    { "title": "他 / 她", "explanation_zh": "「他」指男性，「她」指女性。", "explanation_kr": "'他'는 남성, '她'는 여성을 가리킵니다.", "explanation_en": "他 for male, 她 for female.", "example": { "zh": "他是学生。她是老师。", "pinyin": "Tā shì xuésheng. Tā shì lǎoshī.", "kr": "그는 학생. 그녀는 선생님.", "en": "He is a student. She is a teacher." } }
+    {
+      "title": "的 — 所属",
+      "explanation_zh": "「的」表示所属关系。",
+      "explanation_kr": "'的'는 소유 관계를 나타냅니다.",
+      "explanation_en": "的 indicates possession.",
+      "example": {
+        "zh": "我爸爸",
+        "pinyin": "wǒ bàba",
+        "kr": "우리 아빠",
+        "en": "my dad"
+      },
+      "explain": {
+        "jp": "「的」は所有関係を表します。",
+        "en": "的 indicates possession.",
+        "kr": "'的'는 소유 관계를 나타냅니다.",
+        "zh": "「的」表示所属关系。"
+      }
+    },
+    {
+      "title": "他 / 她",
+      "explanation_zh": "「他」指男性，「她」指女性。",
+      "explanation_kr": "'他'는 남성, '她'는 여성을 가리킵니다.",
+      "explanation_en": "他 for male, 她 for female.",
+      "example": {
+        "zh": "他是学生。她是老师。",
+        "pinyin": "Tā shì xuésheng. Tā shì lǎoshī.",
+        "kr": "그는 학생. 그녀는 선생님.",
+        "en": "He is a student. She is a teacher."
+      },
+      "explain": {
+        "jp": "「他」は男性、「她」は女性を指します。",
+        "en": "他 for male, 她 for female.",
+        "kr": "'他'는 남성, '她'는 여성을 가리킵니다.",
+        "zh": "「他」指男性，「她」指女性。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "我哥哥", "pinyin": "Wǒ gēge", "kr": "제 오빠/형", "en": "my older brother" },
-    { "zh": "我姐姐", "pinyin": "Wǒ jiějie", "kr": "제 언니/누나", "en": "my older sister" },
-    { "zh": "我家有五口人。", "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.", "kr": "우리 가족은 다섯 명이에요.", "en": "My family has five people." },
-    { "zh": "我们一家人。", "pinyin": "Wǒmen yī jiā rén.", "kr": "우리 한 가족이에요.", "en": "We are one family." },
-    { "zh": "我们一起住。", "pinyin": "Wǒmen yīqǐ zhù.", "kr": "우리 같이 살아요.", "en": "We live together." }
+    {
+      "zh": "我哥哥",
+      "pinyin": "Wǒ gēge",
+      "kr": "제 오빠/형",
+      "en": "my older brother"
+    },
+    {
+      "zh": "我姐姐",
+      "pinyin": "Wǒ jiějie",
+      "kr": "제 언니/누나",
+      "en": "my older sister"
+    },
+    {
+      "zh": "我家有五口人。",
+      "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
+      "kr": "우리 가족은 다섯 명이에요.",
+      "en": "My family has five people."
+    },
+    {
+      "zh": "我们一家人。",
+      "pinyin": "Wǒmen yī jiā rén.",
+      "kr": "우리 한 가족이에요.",
+      "en": "We are one family."
+    },
+    {
+      "zh": "我们一起住。",
+      "pinyin": "Wǒmen yīqǐ zhù.",
+      "kr": "우리 같이 살아요.",
+      "en": "We live together."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「爸爸」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["妈妈", "爸爸", "儿子"], "answer": "爸爸" },
-    { "type": "choice", "question": { "zh": "「女儿」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["儿子", "女儿", "爸爸"], "answer": "女儿" },
-    { "type": "choice", "question": { "zh": "我家有___口人。", "kr": "빈칸", "en": "Fill in" }, "options": ["的", "家", "四"], "answer": "四" },
-    { "type": "choice", "question": { "zh": "A：你妈妈是老师吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["是", "不", "家"], "answer": "是" },
-    { "type": "choice", "question": { "zh": "哪个是「家」？", "kr": "어느 것?", "en": "Which?" }, "options": ["人", "家", "的"], "answer": "家" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「爸爸」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "妈妈",
+        "爸爸",
+        "儿子"
+      ],
+      "answer": "爸爸"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「女儿」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "儿子",
+        "女儿",
+        "爸爸"
+      ],
+      "answer": "女儿"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "我家有___口人。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "的",
+        "家",
+        "四"
+      ],
+      "answer": "四"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你妈妈是老师吗？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "是",
+        "不",
+        "家"
+      ],
+      "answer": "是"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「家」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "人",
+        "家",
+        "的"
+      ],
+      "answer": "家"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我爸爸", "我妈妈", "我家有四口人", "他是老师"], "chatPrompt": "AI问：你家有几口人？学生介绍家人。" },
+  "aiPractice": {
+    "speaking": [
+      "我爸爸",
+      "我妈妈",
+      "我家有四口人",
+      "他是老师"
+    ],
+    "chatPrompt": "AI问：你家有几口人？学生介绍家人。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

@@ -5,71 +5,454 @@
   "version": "2.0",
   "lessonNo": 19,
   "type": "lesson",
-  "title": { "zh": "天气", "pinyin": "tiānqì", "kr": "날씨", "en": "Weather" },
-  "summary": { "zh": "天气、热、冷、下雨", "kr": "날씨, 더위, 추위, 비", "en": "Weather, hot, cold, rain" },
+  "title": {
+    "zh": "天气",
+    "pinyin": "tiānqì",
+    "kr": "날씨",
+    "en": "Weather",
+    "jp": "天気"
+  },
+  "summary": {
+    "zh": "天气、热、冷、下雨",
+    "kr": "날씨, 더위, 추위, 비",
+    "en": "Weather, hot, cold, rain"
+  },
   "objectives": [
-    { "zh": "学会说天气", "kr": "날씨를 말할 수 있다", "en": "Can talk about weather" },
-    { "zh": "学会太、想、说话、睡觉", "kr": "'太', '想', '说话', '睡觉'를 사용할 수 있다", "en": "Can use 太, 想, 说话, 睡觉" }
+    {
+      "zh": "学会说天气",
+      "kr": "날씨를 말할 수 있다",
+      "en": "Can talk about weather"
+    },
+    {
+      "zh": "学会太、想、说话、睡觉",
+      "kr": "'太', '想', '说话', '睡觉'를 사용할 수 있다",
+      "en": "Can use 太, 想, 说话, 睡觉"
+    }
   ],
   "vocab": [
-    { "hanzi": "天气", "pinyin": "tiānqì", "meaning": { "zh": "天气", "kr": "날씨", "en": "weather" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "热", "pinyin": "rè", "meaning": { "zh": "热", "kr": "덥다", "en": "hot" }, "pos": { "kr": "형용사", "en": "adjective" } },
-    { "hanzi": "冷", "pinyin": "lěng", "meaning": { "zh": "冷", "kr": "춥다", "en": "cold" }, "pos": { "kr": "형용사", "en": "adjective" } },
-    { "hanzi": "下雨", "pinyin": "xià yǔ", "meaning": { "zh": "下雨", "kr": "비 오다", "en": "to rain" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "太", "pinyin": "tài", "meaning": { "zh": "太", "kr": "너무", "en": "too" }, "pos": { "kr": "부사", "en": "adverb" } },
-    { "hanzi": "想", "pinyin": "xiǎng", "meaning": { "zh": "想", "kr": "생각하다", "en": "to think" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "说话", "pinyin": "shuōhuà", "meaning": { "zh": "说话", "kr": "말하다", "en": "to speak" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "睡觉", "pinyin": "shuìjiào", "meaning": { "zh": "睡觉", "kr": "자다", "en": "to sleep" }, "pos": { "kr": "동사", "en": "verb" } }
+    {
+      "hanzi": "天气",
+      "pinyin": "tiānqì",
+      "meaning": {
+        "zh": "天气",
+        "kr": "날씨",
+        "en": "weather",
+        "jp": "天気"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "热",
+      "pinyin": "rè",
+      "meaning": {
+        "zh": "热",
+        "kr": "덥다",
+        "en": "hot",
+        "jp": "暑い"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
+    },
+    {
+      "hanzi": "冷",
+      "pinyin": "lěng",
+      "meaning": {
+        "zh": "冷",
+        "kr": "춥다",
+        "en": "cold",
+        "jp": "寒い"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
+    },
+    {
+      "hanzi": "下雨",
+      "pinyin": "xià yǔ",
+      "meaning": {
+        "zh": "下雨",
+        "kr": "비 오다",
+        "en": "to rain",
+        "jp": "雨が降る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "太",
+      "pinyin": "tài",
+      "meaning": {
+        "zh": "太",
+        "kr": "너무",
+        "en": "too",
+        "jp": "あまりに"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb",
+        "jp": "副詞"
+      }
+    },
+    {
+      "hanzi": "想",
+      "pinyin": "xiǎng",
+      "meaning": {
+        "zh": "想",
+        "kr": "생각하다",
+        "en": "to think",
+        "jp": "〜したい"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "说话",
+      "pinyin": "shuōhuà",
+      "meaning": {
+        "zh": "说话",
+        "kr": "말하다",
+        "en": "to speak",
+        "jp": "話す"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "睡觉",
+      "pinyin": "shuìjiào",
+      "meaning": {
+        "zh": "睡觉",
+        "kr": "자다",
+        "en": "to sleep",
+        "jp": "寝る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "今天天气怎么样？", "pinyin": "Jīntiān tiānqì zěnmeyàng?", "kr": "오늘 날씨 어때요?" },
-        { "speaker": "B", "zh": "很好。", "pinyin": "Hěn hǎo.", "kr": "아주 좋아요." }
+        {
+          "speaker": "A",
+          "zh": "今天天气怎么样？",
+          "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+          "kr": "오늘 날씨 어때요?",
+          "text": "今天天气怎么样？",
+          "translation": {
+            "kr": "오늘 날씨 어때요?",
+            "en": "How's the weather today?",
+            "jp": "今日の天気はどうですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "很好。",
+          "pinyin": "Hěn hǎo.",
+          "kr": "아주 좋아요.",
+          "text": "很好。",
+          "translation": {
+            "kr": "아주 좋아요.",
+            "en": "Very good.",
+            "jp": "とても良いです。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "冷吗？", "pinyin": "Lěng ma?", "kr": "추워요?" },
-        { "speaker": "B", "zh": "不冷。", "pinyin": "Bù lěng.", "kr": "안 추워요." }
+        {
+          "speaker": "A",
+          "zh": "冷吗？",
+          "pinyin": "Lěng ma?",
+          "kr": "추워요?",
+          "text": "冷吗？",
+          "translation": {
+            "kr": "추워요?",
+            "en": "Is it cold?",
+            "jp": "寒いですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "不冷。",
+          "pinyin": "Bù lěng.",
+          "kr": "안 추워요.",
+          "text": "不冷。",
+          "translation": {
+            "kr": "안 추워요.",
+            "en": "Not cold.",
+            "jp": "寒くないです。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "热吗？", "pinyin": "Rè ma?", "kr": "더워요?" },
-        { "speaker": "B", "zh": "很热。", "pinyin": "Hěn rè.", "kr": "매우 더워요." }
+        {
+          "speaker": "A",
+          "zh": "热吗？",
+          "pinyin": "Rè ma?",
+          "kr": "더워요?",
+          "text": "热吗？",
+          "translation": {
+            "kr": "더워요?",
+            "en": "Is it hot?",
+            "jp": "暑いですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "很热。",
+          "pinyin": "Hěn rè.",
+          "kr": "매우 더워요.",
+          "text": "很热。",
+          "translation": {
+            "kr": "매우 더워요.",
+            "en": "Very hot.",
+            "jp": "とても暑いです。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "太 + 形容词", "explanation_zh": "「太」表示程度过高。", "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.", "explanation_en": "太 indicates excessive degree.", "example": { "zh": "太热", "pinyin": "tài rè", "kr": "너무 덥다", "en": "too hot" } },
-    { "title": "想 + 动词", "explanation_zh": "「想」后接动词表示想做什么。", "explanation_kr": "'想' 뒤에 동사가 오면 ~하고 싶다.", "explanation_en": "想 + verb means want to do.", "example": { "zh": "想睡觉", "pinyin": "xiǎng shuìjiào", "kr": "자고 싶다", "en": "want to sleep" } }
+    {
+      "title": "太 + 形容词",
+      "explanation_zh": "「太」表示程度过高。",
+      "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.",
+      "explanation_en": "太 indicates excessive degree.",
+      "example": {
+        "zh": "太热",
+        "pinyin": "tài rè",
+        "kr": "너무 덥다",
+        "en": "too hot"
+      },
+      "explain": {
+        "jp": "「太」は程度が高すぎることを表します。",
+        "en": "太 indicates excessive degree.",
+        "kr": "'太'는 정도가 너무 높음을 나타냅니다.",
+        "zh": "「太」表示程度过高。"
+      }
+    },
+    {
+      "title": "想 + 动词",
+      "explanation_zh": "「想」后接动词表示想做什么。",
+      "explanation_kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
+      "explanation_en": "想 + verb means want to do.",
+      "example": {
+        "zh": "想睡觉",
+        "pinyin": "xiǎng shuìjiào",
+        "kr": "자고 싶다",
+        "en": "want to sleep"
+      },
+      "explain": {
+        "jp": "「想」の後に動詞が来ると、〜したいという意味になります。",
+        "en": "想 + verb means want to do.",
+        "kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
+        "zh": "「想」后接动词表示想做什么。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "今天天气很好。", "pinyin": "Jīntiān tiānqì hěn hǎo.", "kr": "오늘 날씨가 아주 좋아요.", "en": "The weather is nice today." },
-    { "zh": "很冷", "pinyin": "Hěn lěng", "kr": "매우 추워요", "en": "very cold" },
-    { "zh": "很热", "pinyin": "Hěn rè", "kr": "매우 더워요", "en": "very hot" },
-    { "zh": "下雨了。", "pinyin": "Xià yǔ le.", "kr": "비 와요.", "en": "It's raining." },
-    { "zh": "有风", "pinyin": "Yǒu fēng", "kr": "바람 불어요", "en": "it's windy" },
-    { "zh": "好天气", "pinyin": "Hǎo tiānqì", "kr": "좋은 날씨", "en": "nice weather" }
+    {
+      "zh": "今天天气很好。",
+      "pinyin": "Jīntiān tiānqì hěn hǎo.",
+      "kr": "오늘 날씨가 아주 좋아요.",
+      "en": "The weather is nice today."
+    },
+    {
+      "zh": "很冷",
+      "pinyin": "Hěn lěng",
+      "kr": "매우 추워요",
+      "en": "very cold"
+    },
+    {
+      "zh": "很热",
+      "pinyin": "Hěn rè",
+      "kr": "매우 더워요",
+      "en": "very hot"
+    },
+    {
+      "zh": "下雨了。",
+      "pinyin": "Xià yǔ le.",
+      "kr": "비 와요.",
+      "en": "It's raining."
+    },
+    {
+      "zh": "有风",
+      "pinyin": "Yǒu fēng",
+      "kr": "바람 불어요",
+      "en": "it's windy"
+    },
+    {
+      "zh": "好天气",
+      "pinyin": "Hǎo tiānqì",
+      "kr": "좋은 날씨",
+      "en": "nice weather"
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「天气」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["热", "天气", "冷"], "answer": "天气" },
-    { "type": "choice", "question": { "zh": "「热」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["冷", "热", "太"], "answer": "冷" },
-    { "type": "choice", "question": { "zh": "今天___热。", "kr": "빈칸", "en": "Fill in" }, "options": ["太", "很", "想"], "answer": "很" },
-    { "type": "choice", "question": { "zh": "A：下雨吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["不下雨", "太热", "想睡觉"], "answer": "不下雨" },
-    { "type": "choice", "question": { "zh": "哪个是「睡觉」？", "kr": "어느 것?", "en": "Which?" }, "options": ["说话", "睡觉", "想"], "answer": "睡觉" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「天气」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "热",
+        "天气",
+        "冷"
+      ],
+      "answer": "天气"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「热」的反义词是？",
+        "kr": "반대말은?",
+        "en": "Antonym?"
+      },
+      "options": [
+        "冷",
+        "热",
+        "太"
+      ],
+      "answer": "冷"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "今天___热。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "太",
+        "很",
+        "想"
+      ],
+      "answer": "很"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：下雨吗？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "不下雨",
+        "太热",
+        "想睡觉"
+      ],
+      "answer": "不下雨"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「睡觉」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "说话",
+        "睡觉",
+        "想"
+      ],
+      "answer": "睡觉"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["今天天气热", "下雨", "想睡觉", "太冷"], "chatPrompt": "AI问：今天天气怎么样？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "今天天气热",
+      "下雨",
+      "想睡觉",
+      "太冷"
+    ],
+    "chatPrompt": "AI问：今天天气怎么样？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

@@ -5,71 +5,445 @@
   "version": "2.0",
   "lessonNo": 16,
   "type": "lesson",
-  "title": { "zh": "在哪儿", "pinyin": "zài nǎr", "kr": "위치", "en": "Location" },
-  "summary": { "zh": "来、去、回与位置", "kr": "오다, 가다, 돌아가다와 위치", "en": "Come, go, return and location" },
+  "title": {
+    "zh": "在哪儿",
+    "pinyin": "zài nǎr",
+    "kr": "위치",
+    "en": "Location",
+    "jp": "位置・方向"
+  },
+  "summary": {
+    "zh": "来、去、回与位置",
+    "kr": "오다, 가다, 돌아가다와 위치",
+    "en": "Come, go, return and location"
+  },
   "objectives": [
-    { "zh": "学会说来去", "kr": "오다, 가다를 말할 수 있다", "en": "Can say come and go" },
-    { "zh": "学会有、椅子、桌子", "kr": "'有', '椅子', '桌子'를 사용할 수 있다", "en": "Can use 有, 椅子, 桌子" }
+    {
+      "zh": "学会说来去",
+      "kr": "오다, 가다를 말할 수 있다",
+      "en": "Can say come and go"
+    },
+    {
+      "zh": "学会有、椅子、桌子",
+      "kr": "'有', '椅子', '桌子'를 사용할 수 있다",
+      "en": "Can use 有, 椅子, 桌子"
+    }
   ],
   "vocab": [
-    { "hanzi": "来", "pinyin": "lái", "meaning": { "zh": "来", "kr": "오다", "en": "to come" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "去", "pinyin": "qù", "meaning": { "zh": "去", "kr": "가다", "en": "to go" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "回", "pinyin": "huí", "meaning": { "zh": "回", "kr": "돌아가다", "en": "to return" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "坐", "pinyin": "zuò", "meaning": { "zh": "坐", "kr": "앉다", "en": "to sit" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "有", "pinyin": "yǒu", "meaning": { "zh": "有", "kr": "있다", "en": "to have" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "椅子", "pinyin": "yǐzi", "meaning": { "zh": "椅子", "kr": "의자", "en": "chair" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "桌子", "pinyin": "zhuōzi", "meaning": { "zh": "桌子", "kr": "탁자", "en": "table" }, "pos": { "kr": "명사", "en": "noun" } }
+    {
+      "hanzi": "来",
+      "pinyin": "lái",
+      "meaning": {
+        "zh": "来",
+        "kr": "오다",
+        "en": "to come",
+        "jp": "来る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "去",
+      "pinyin": "qù",
+      "meaning": {
+        "zh": "去",
+        "kr": "가다",
+        "en": "to go",
+        "jp": "行く"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "回",
+      "pinyin": "huí",
+      "meaning": {
+        "zh": "回",
+        "kr": "돌아가다",
+        "en": "to return",
+        "jp": "帰る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "坐",
+      "pinyin": "zuò",
+      "meaning": {
+        "zh": "坐",
+        "kr": "앉다",
+        "en": "to sit",
+        "jp": "座る"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "有",
+      "pinyin": "yǒu",
+      "meaning": {
+        "zh": "有",
+        "kr": "있다",
+        "en": "to have",
+        "jp": "ある"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "椅子",
+      "pinyin": "yǐzi",
+      "meaning": {
+        "zh": "椅子",
+        "kr": "의자",
+        "en": "chair",
+        "jp": "椅子"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "桌子",
+      "pinyin": "zhuōzi",
+      "meaning": {
+        "zh": "桌子",
+        "kr": "탁자",
+        "en": "table",
+        "jp": "机"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
-        { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "书在哪儿？",
+          "pinyin": "Shū zài nǎr?",
+          "kr": "책이 어디에 있어요?",
+          "text": "书在哪儿？",
+          "translation": {
+            "kr": "책이 어디에 있어요?",
+            "en": "Where is the book?",
+            "jp": "本はどこにありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "在桌子上。",
+          "pinyin": "Zài zhuōzi shàng.",
+          "kr": "책상 위에 있어요.",
+          "text": "在桌子上。",
+          "translation": {
+            "kr": "책상 위에 있어요.",
+            "en": "On the table.",
+            "jp": "机の上にあります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "椅子在哪儿？", "pinyin": "Yǐzi zài nǎr?", "kr": "의자가 어디에 있어요?" },
-        { "speaker": "B", "zh": "在桌子下面。", "pinyin": "Zài zhuōzi xiàmiàn.", "kr": "탁자 아래에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "椅子在哪儿？",
+          "pinyin": "Yǐzi zài nǎr?",
+          "kr": "의자가 어디에 있어요?",
+          "text": "椅子在哪儿？",
+          "translation": {
+            "kr": "의자가 어디에 있어요?",
+            "en": "Where is the chair?",
+            "jp": "椅子はどこにありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "在桌子下面。",
+          "pinyin": "Zài zhuōzi xiàmiàn.",
+          "kr": "탁자 아래에 있어요.",
+          "text": "在桌子下面。",
+          "translation": {
+            "kr": "탁자 아래에 있어요.",
+            "en": "Under the table.",
+            "jp": "机の下にあります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "学校在哪儿？", "pinyin": "Xuéxiào zài nǎr?", "kr": "학교가 어디에 있어요?" },
-        { "speaker": "B", "zh": "在那儿。", "pinyin": "Zài nàr.", "kr": "저기에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "学校在哪儿？",
+          "pinyin": "Xuéxiào zài nǎr?",
+          "kr": "학교가 어디에 있어요?",
+          "text": "学校在哪儿？",
+          "translation": {
+            "kr": "학교가 어디에 있어요?",
+            "en": "Where is the school?",
+            "jp": "学校はどこにありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "在那儿。",
+          "pinyin": "Zài nàr.",
+          "kr": "저기에 있어요.",
+          "text": "在那儿。",
+          "translation": {
+            "kr": "저기에 있어요.",
+            "en": "Over there.",
+            "jp": "あそこにあります。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "来 / 去 / 回", "explanation_zh": "「来」向说话人，「去」离开，「回」返回。", "explanation_kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.", "explanation_en": "来 toward speaker, 去 away, 回 return.", "example": { "zh": "来学校，回家", "pinyin": "lái xuéxiào, huí jiā", "kr": "학교 오다, 집 돌아가다", "en": "come to school, go home" } },
-    { "title": "有", "explanation_zh": "「有」表示拥有。", "explanation_kr": "'有'는 소유를 나타냅니다.", "explanation_en": "有 indicates possession.", "example": { "zh": "我有书。", "pinyin": "Wǒ yǒu shū.", "kr": "저는 책이 있어요.", "en": "I have a book." } }
+    {
+      "title": "来 / 去 / 回",
+      "explanation_zh": "「来」向说话人，「去」离开，「回」返回。",
+      "explanation_kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.",
+      "explanation_en": "来 toward speaker, 去 away, 回 return.",
+      "example": {
+        "zh": "来学校，回家",
+        "pinyin": "lái xuéxiào, huí jiā",
+        "kr": "학교 오다, 집 돌아가다",
+        "en": "come to school, go home"
+      },
+      "explain": {
+        "jp": "「来」は話者へ、「去」は離れる、「回」は帰る。",
+        "en": "来 toward speaker, 去 away, 回 return.",
+        "kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.",
+        "zh": "「来」向说话人，「去」离开，「回」返回。"
+      }
+    },
+    {
+      "title": "有",
+      "explanation_zh": "「有」表示拥有。",
+      "explanation_kr": "'有'는 소유를 나타냅니다.",
+      "explanation_en": "有 indicates possession.",
+      "example": {
+        "zh": "我有书。",
+        "pinyin": "Wǒ yǒu shū.",
+        "kr": "저는 책이 있어요.",
+        "en": "I have a book."
+      },
+      "explain": {
+        "jp": "「有」は所有を表します。",
+        "en": "有 indicates possession.",
+        "kr": "'有'는 소유를 나타냅니다.",
+        "zh": "「有」表示拥有。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "左边", "pinyin": "Zuǒbiān", "kr": "왼쪽", "en": "left side" },
-    { "zh": "右边", "pinyin": "Yòubiān", "kr": "오른쪽", "en": "right side" },
-    { "zh": "前面", "pinyin": "Qiánmiàn", "kr": "앞", "en": "front" },
-    { "zh": "后面", "pinyin": "Hòumiàn", "kr": "뒤", "en": "back" },
-    { "zh": "里面", "pinyin": "Lǐmiàn", "kr": "안", "en": "inside" },
-    { "zh": "外面", "pinyin": "Wàimiàn", "kr": "밖", "en": "outside" },
-    { "zh": "在……旁边", "pinyin": "Zài... pángbiān", "kr": "... 옆에", "en": "next to..." }
+    {
+      "zh": "左边",
+      "pinyin": "Zuǒbiān",
+      "kr": "왼쪽",
+      "en": "left side"
+    },
+    {
+      "zh": "右边",
+      "pinyin": "Yòubiān",
+      "kr": "오른쪽",
+      "en": "right side"
+    },
+    {
+      "zh": "前面",
+      "pinyin": "Qiánmiàn",
+      "kr": "앞",
+      "en": "front"
+    },
+    {
+      "zh": "后面",
+      "pinyin": "Hòumiàn",
+      "kr": "뒤",
+      "en": "back"
+    },
+    {
+      "zh": "里面",
+      "pinyin": "Lǐmiàn",
+      "kr": "안",
+      "en": "inside"
+    },
+    {
+      "zh": "外面",
+      "pinyin": "Wàimiàn",
+      "kr": "밖",
+      "en": "outside"
+    },
+    {
+      "zh": "在……旁边",
+      "pinyin": "Zài... pángbiān",
+      "kr": "... 옆에",
+      "en": "next to..."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「来」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["去", "来", "回"], "answer": "来" },
-    { "type": "choice", "question": { "zh": "「有」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["在", "有", "去"], "answer": "有" },
-    { "type": "choice", "question": { "zh": "我___家。", "kr": "빈칸", "en": "Fill in" }, "options": ["回", "来", "去"], "answer": "回" },
-    { "type": "choice", "question": { "zh": "A：你有椅子吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["有", "不", "去"], "answer": "有" },
-    { "type": "choice", "question": { "zh": "哪个是「桌子」？", "kr": "어느 것?", "en": "Which?" }, "options": ["椅子", "桌子", "有"], "answer": "桌子" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「来」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "去",
+        "来",
+        "回"
+      ],
+      "answer": "来"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「有」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "在",
+        "有",
+        "去"
+      ],
+      "answer": "有"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "我___家。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "回",
+        "来",
+        "去"
+      ],
+      "answer": "回"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你有椅子吗？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "有",
+        "不",
+        "去"
+      ],
+      "answer": "有"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「桌子」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "椅子",
+        "桌子",
+        "有"
+      ],
+      "answer": "桌子"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我来学校", "回家", "坐椅子", "有桌子"], "chatPrompt": "AI问：你去哪儿？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "我来学校",
+      "回家",
+      "坐椅子",
+      "有桌子"
+    ],
+    "chatPrompt": "AI问：你去哪儿？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

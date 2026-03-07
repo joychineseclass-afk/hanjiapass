@@ -5,77 +5,553 @@
   "version": "2.0",
   "lessonNo": 5,
   "type": "lesson",
-  "title": { "zh": "数字①", "pinyin": "shùzì ①", "kr": "숫자 ①", "en": "Numbers 1" },
-  "summary": { "zh": "0–10 与基本数量表达", "kr": "0–10과 기본 수량", "en": "0–10 and basic quantity" },
+  "title": {
+    "zh": "数字①",
+    "pinyin": "shùzì ①",
+    "kr": "숫자 ①",
+    "en": "Numbers 1",
+    "jp": "数字と数量"
+  },
+  "summary": {
+    "zh": "0–10 与基本数量表达",
+    "kr": "0–10과 기본 수량",
+    "en": "0–10 and basic quantity"
+  },
   "objectives": [
-    { "zh": "学会数 0–10", "kr": "0–10을 셀 수 있다", "en": "Can count 0–10" },
-    { "zh": "学会用「几」「多少」", "kr": "'几', '多少'를 사용할 수 있다", "en": "Can use 几 and 多少" }
+    {
+      "zh": "学会数 0–10",
+      "kr": "0–10을 셀 수 있다",
+      "en": "Can count 0–10"
+    },
+    {
+      "zh": "学会用「几」「多少」",
+      "kr": "'几', '多少'를 사용할 수 있다",
+      "en": "Can use 几 and 多少"
+    }
   ],
   "vocab": [
-    { "hanzi": "一", "pinyin": "yī", "meaning": { "zh": "一", "kr": "하나", "en": "one" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "二", "pinyin": "èr", "meaning": { "zh": "二", "kr": "둘", "en": "two" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "三", "pinyin": "sān", "meaning": { "zh": "三", "kr": "셋", "en": "three" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "四", "pinyin": "sì", "meaning": { "zh": "四", "kr": "넷", "en": "four" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "五", "pinyin": "wǔ", "meaning": { "zh": "五", "kr": "다섯", "en": "five" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "六", "pinyin": "liù", "meaning": { "zh": "六", "kr": "여섯", "en": "six" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "七", "pinyin": "qī", "meaning": { "zh": "七", "kr": "일곱", "en": "seven" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "八", "pinyin": "bā", "meaning": { "zh": "八", "kr": "여덟", "en": "eight" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "九", "pinyin": "jiǔ", "meaning": { "zh": "九", "kr": "아홉", "en": "nine" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "十", "pinyin": "shí", "meaning": { "zh": "十", "kr": "열", "en": "ten" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "零", "pinyin": "líng", "meaning": { "zh": "零", "kr": "영", "en": "zero" }, "pos": { "kr": "수사", "en": "numeral" } },
-    { "hanzi": "多少", "pinyin": "duōshao", "meaning": { "zh": "多少", "kr": "얼마나", "en": "how many/much" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "几", "pinyin": "jǐ", "meaning": { "zh": "几", "kr": "몇", "en": "how many" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "个", "pinyin": "gè", "meaning": { "zh": "个", "kr": "개", "en": "measure word" }, "pos": { "kr": "양사", "en": "measure word" } },
-    { "hanzi": "少", "pinyin": "shǎo", "meaning": { "zh": "少", "kr": "적다", "en": "few" }, "pos": { "kr": "형용사", "en": "adjective" } }
+    {
+      "hanzi": "一",
+      "pinyin": "yī",
+      "meaning": {
+        "zh": "一",
+        "kr": "하나",
+        "en": "one",
+        "jp": "一"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "二",
+      "pinyin": "èr",
+      "meaning": {
+        "zh": "二",
+        "kr": "둘",
+        "en": "two",
+        "jp": "二"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "三",
+      "pinyin": "sān",
+      "meaning": {
+        "zh": "三",
+        "kr": "셋",
+        "en": "three",
+        "jp": "三"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "四",
+      "pinyin": "sì",
+      "meaning": {
+        "zh": "四",
+        "kr": "넷",
+        "en": "four",
+        "jp": "四"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "五",
+      "pinyin": "wǔ",
+      "meaning": {
+        "zh": "五",
+        "kr": "다섯",
+        "en": "five",
+        "jp": "五"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "六",
+      "pinyin": "liù",
+      "meaning": {
+        "zh": "六",
+        "kr": "여섯",
+        "en": "six",
+        "jp": "六"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "七",
+      "pinyin": "qī",
+      "meaning": {
+        "zh": "七",
+        "kr": "일곱",
+        "en": "seven",
+        "jp": "七"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "八",
+      "pinyin": "bā",
+      "meaning": {
+        "zh": "八",
+        "kr": "여덟",
+        "en": "eight",
+        "jp": "八"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "九",
+      "pinyin": "jiǔ",
+      "meaning": {
+        "zh": "九",
+        "kr": "아홉",
+        "en": "nine",
+        "jp": "九"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "十",
+      "pinyin": "shí",
+      "meaning": {
+        "zh": "十",
+        "kr": "열",
+        "en": "ten",
+        "jp": "十"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "零",
+      "pinyin": "líng",
+      "meaning": {
+        "zh": "零",
+        "kr": "영",
+        "en": "zero",
+        "jp": "ゼロ"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "多少",
+      "pinyin": "duōshao",
+      "meaning": {
+        "zh": "多少",
+        "kr": "얼마나",
+        "en": "how many/much",
+        "jp": "いくつ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "几",
+      "pinyin": "jǐ",
+      "meaning": {
+        "zh": "几",
+        "kr": "몇",
+        "en": "how many",
+        "jp": "いくつ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "个",
+      "pinyin": "gè",
+      "meaning": {
+        "zh": "个",
+        "kr": "개",
+        "en": "measure word",
+        "jp": "量詞"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word",
+        "jp": "量詞"
+      }
+    },
+    {
+      "hanzi": "少",
+      "pinyin": "shǎo",
+      "meaning": {
+        "zh": "少",
+        "kr": "적다",
+        "en": "few",
+        "jp": "少ない"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你有几个苹果？", "pinyin": "Nǐ yǒu jǐ gè píngguǒ?", "kr": "사과가 몇 개 있어요?" },
-        { "speaker": "B", "zh": "我有三个。", "pinyin": "Wǒ yǒu sān gè.", "kr": "저는 세 개 있어요." }
+        {
+          "speaker": "A",
+          "zh": "你有几个苹果？",
+          "pinyin": "Nǐ yǒu jǐ gè píngguǒ?",
+          "kr": "사과가 몇 개 있어요?",
+          "text": "你有几个苹果？",
+          "translation": {
+            "kr": "사과가 몇 개 있어요?",
+            "en": "How many apples do you have?",
+            "jp": "りんごはいくつありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我有三个。",
+          "pinyin": "Wǒ yǒu sān gè.",
+          "kr": "저는 세 개 있어요.",
+          "text": "我有三个。",
+          "translation": {
+            "kr": "저는 세 개 있어요.",
+            "en": "I have three.",
+            "jp": "3つあります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你有几本书？", "pinyin": "Nǐ yǒu jǐ běn shū?", "kr": "책이 몇 권 있어요?" },
-        { "speaker": "B", "zh": "我有两本。", "pinyin": "Wǒ yǒu liǎng běn.", "kr": "저는 두 권 있어요." }
+        {
+          "speaker": "A",
+          "zh": "你有几本书？",
+          "pinyin": "Nǐ yǒu jǐ běn shū?",
+          "kr": "책이 몇 권 있어요?",
+          "text": "你有几本书？",
+          "translation": {
+            "kr": "책이 몇 권 있어요?",
+            "en": "How many books do you have?",
+            "jp": "本は何冊ありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我有两本。",
+          "pinyin": "Wǒ yǒu liǎng běn.",
+          "kr": "저는 두 권 있어요.",
+          "text": "我有两本。",
+          "translation": {
+            "kr": "저는 두 권 있어요.",
+            "en": "I have two.",
+            "jp": "2冊あります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
-        { "speaker": "B", "zh": "十块钱。", "pinyin": "Shí kuài qián.", "kr": "10위안이에요." }
+        {
+          "speaker": "A",
+          "zh": "这个多少钱？",
+          "pinyin": "Zhè gè duōshao qián?",
+          "kr": "이거 얼마예요?",
+          "text": "这个多少钱？",
+          "translation": {
+            "kr": "이거 얼마예요?",
+            "en": "How much is this?",
+            "jp": "これはいくらですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "十块钱。",
+          "pinyin": "Shí kuài qián.",
+          "kr": "10위안이에요.",
+          "text": "十块钱。",
+          "translation": {
+            "kr": "10위안이에요.",
+            "en": "Ten yuan.",
+            "jp": "10元です。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "几 + 个", "explanation_zh": "「几」问小数量，「个」是量词。", "explanation_kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.", "explanation_en": "几 asks small quantity, 个 is measure word.", "example": { "zh": "几个苹果", "pinyin": "jǐ gè píngguǒ", "kr": "사과 몇 개", "en": "how many apples" } },
-    { "title": "多少", "explanation_zh": "「多少」问数量或价格。", "explanation_kr": "'多少'는 수량이나 가격을 묻습니다.", "explanation_en": "多少 asks quantity or price.", "example": { "zh": "多少钱？", "pinyin": "Duōshao qián?", "kr": "얼마예요?", "en": "How much?" } }
+    {
+      "title": "几 + 个",
+      "explanation_zh": "「几」问小数量，「个」是量词。",
+      "explanation_kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.",
+      "explanation_en": "几 asks small quantity, 个 is measure word.",
+      "example": {
+        "zh": "几个苹果",
+        "pinyin": "jǐ gè píngguǒ",
+        "kr": "사과 몇 개",
+        "en": "how many apples"
+      },
+      "explain": {
+        "jp": "「几」は少ない数量を聞き、「个」は量詞です。",
+        "en": "几 asks small quantity, 个 is measure word.",
+        "kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.",
+        "zh": "「几」问小数量，「个」是量词。"
+      }
+    },
+    {
+      "title": "多少",
+      "explanation_zh": "「多少」问数量或价格。",
+      "explanation_kr": "'多少'는 수량이나 가격을 묻습니다.",
+      "explanation_en": "多少 asks quantity or price.",
+      "example": {
+        "zh": "多少钱？",
+        "pinyin": "Duōshao qián?",
+        "kr": "얼마예요?",
+        "en": "How much?"
+      },
+      "explain": {
+        "jp": "「多少」は数量や価格を聞きます。",
+        "en": "多少 asks quantity or price.",
+        "kr": "'多少'는 수량이나 가격을 묻습니다.",
+        "zh": "「多少」问数量或价格。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "你的电话号码是多少？", "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?", "kr": "전화번호가 뭐예요?", "en": "What's your phone number?" },
-    { "zh": "我的房间号是二零一。", "pinyin": "Wǒ de fángjiān hào shì èr líng yī.", "kr": "제 방 호수는 201이에요.", "en": "My room number is 201." },
-    { "zh": "一共多少钱？", "pinyin": "Yīgòng duōshao qián?", "kr": "총 얼마예요?", "en": "How much in total?" },
-    { "zh": "一到十", "pinyin": "Yī dào shí", "kr": "하나부터 열까지", "en": "one to ten" },
-    { "zh": "十一到二十", "pinyin": "Shíyī dào èrshí", "kr": "열하나부터 스무까지", "en": "eleven to twenty" }
+    {
+      "zh": "你的电话号码是多少？",
+      "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?",
+      "kr": "전화번호가 뭐예요?",
+      "en": "What's your phone number?"
+    },
+    {
+      "zh": "我的房间号是二零一。",
+      "pinyin": "Wǒ de fángjiān hào shì èr líng yī.",
+      "kr": "제 방 호수는 201이에요.",
+      "en": "My room number is 201."
+    },
+    {
+      "zh": "一共多少钱？",
+      "pinyin": "Yīgòng duōshao qián?",
+      "kr": "총 얼마예요?",
+      "en": "How much in total?"
+    },
+    {
+      "zh": "一到十",
+      "pinyin": "Yī dào shí",
+      "kr": "하나부터 열까지",
+      "en": "one to ten"
+    },
+    {
+      "zh": "十一到二十",
+      "pinyin": "Shíyī dào èrshí",
+      "kr": "열하나부터 스무까지",
+      "en": "eleven to twenty"
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「五」是几？", "kr": "五는?", "en": "五 is?" }, "options": ["三", "五", "七"], "answer": "五" },
-    { "type": "choice", "question": { "zh": "请选择正确语序：我 / 有 / 三 / 个", "kr": "올바른 순서", "en": "Correct order" }, "options": ["我有三个", "三个有我", "有我三个"], "answer": "我有三个" },
-    { "type": "choice", "question": { "zh": "哪个是「十」？", "kr": "어느 것이 十?", "en": "Which is 十?" }, "options": ["一", "十", "零"], "answer": "十" },
-    { "type": "choice", "question": { "zh": "「多少」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["几", "多少", "个"], "answer": "多少" },
-    { "type": "choice", "question": { "zh": "你有几___苹果？", "kr": "빈칸", "en": "Fill in" }, "options": ["个", "少", "零"], "answer": "个" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「五」是几？",
+        "kr": "五는?",
+        "en": "五 is?"
+      },
+      "options": [
+        "三",
+        "五",
+        "七"
+      ],
+      "answer": "五"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "请选择正确语序：我 / 有 / 三 / 个",
+        "kr": "올바른 순서",
+        "en": "Correct order"
+      },
+      "options": [
+        "我有三个",
+        "三个有我",
+        "有我三个"
+      ],
+      "answer": "我有三个"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「十」？",
+        "kr": "어느 것이 十?",
+        "en": "Which is 十?"
+      },
+      "options": [
+        "一",
+        "十",
+        "零"
+      ],
+      "answer": "十"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「多少」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "几",
+        "多少",
+        "个"
+      ],
+      "answer": "多少"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "你有几___苹果？",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "个",
+        "少",
+        "零"
+      ],
+      "answer": "个"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["一、二、三、四、五", "几个", "多少钱", "十个"], "chatPrompt": "AI问：你有几个苹果？学生用数字回答。" },
+  "aiPractice": {
+    "speaking": [
+      "一、二、三、四、五",
+      "几个",
+      "多少钱",
+      "十个"
+    ],
+    "chatPrompt": "AI问：你有几个苹果？学生用数字回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

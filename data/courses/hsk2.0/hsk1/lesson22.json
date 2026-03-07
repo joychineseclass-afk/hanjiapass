@@ -5,33 +5,150 @@
   "version": "2.0",
   "lessonNo": 22,
   "type": "review",
-  "title": { "zh": "复习 2", "pinyin": "fùxí 2", "kr": "복습 2", "en": "Review 2" },
-  "summary": { "zh": "第11–20课综合复习", "kr": "11–20과 종합 복습", "en": "Review of lessons 11–20" },
+  "title": {
+    "zh": "复习 2",
+    "pinyin": "fùxí 2",
+    "kr": "복습 2",
+    "en": "Review 2",
+    "jp": "復習2"
+  },
+  "summary": {
+    "zh": "第11–20课综合复习",
+    "kr": "11–20과 종합 복습",
+    "en": "Review of lessons 11–20"
+  },
   "objectives": [
-    { "zh": "复习第11–20课词汇", "kr": "11–20과 단어 복습", "en": "Review vocab from lessons 11–20" },
-    { "zh": "复习对话与语法", "kr": "대화와 문법 복습", "en": "Review dialogue and grammar" }
+    {
+      "zh": "复习第11–20课词汇",
+      "kr": "11–20과 단어 복습",
+      "en": "Review vocab from lessons 11–20"
+    },
+    {
+      "zh": "复习对话与语法",
+      "kr": "대화와 문법 복습",
+      "en": "Review dialogue and grammar"
+    }
   ],
   "vocab": [],
   "dialogueCards": [],
   "grammar": [],
   "practice": [
-    { "type": "choice", "question": { "zh": "「学习」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["工作", "学习", "读"], "answer": "学习" },
-    { "type": "choice", "question": { "zh": "你做什么工作？回答：", "kr": "답은?", "en": "Response?" }, "options": ["我是医生", "我喜欢狗", "我吃米饭"], "answer": "我是医生" },
-    { "type": "choice", "question": { "zh": "「有」的否定是？", "kr": "부정은?", "en": "Negation of 有?" }, "options": ["不", "没", "没在"], "answer": "没" },
-    { "type": "choice", "question": { "zh": "今天天气热。「热」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["冷", "太", "想"], "answer": "冷" },
-    { "type": "choice", "question": { "zh": "A：这个多少钱？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["十块", "我买", "商店"], "answer": "十块" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「学习」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "工作",
+        "学习",
+        "读"
+      ],
+      "answer": "学习"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "你做什么工作？回答：",
+        "kr": "답은?",
+        "en": "Response?"
+      },
+      "options": [
+        "我是医生",
+        "我喜欢狗",
+        "我吃米饭"
+      ],
+      "answer": "我是医生"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「有」的否定是？",
+        "kr": "부정은?",
+        "en": "Negation of 有?"
+      },
+      "options": [
+        "不",
+        "没",
+        "没在"
+      ],
+      "answer": "没"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "今天天气热。「热」的反义词是？",
+        "kr": "반대말은?",
+        "en": "Antonym?"
+      },
+      "options": [
+        "冷",
+        "太",
+        "想"
+      ],
+      "answer": "冷"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：这个多少钱？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "十块",
+        "我买",
+        "商店"
+      ],
+      "answer": "十块"
+    }
   ],
   "review": {
-    "lessonRange": [11, 20],
-    "focusAreas": ["vocab", "dialogue", "grammar"]
+    "lessonRange": [
+      11,
+      20
+    ],
+    "focusAreas": [
+      "vocab",
+      "dialogue",
+      "grammar"
+    ]
   },
   "aiPractice": {
-    "speaking": ["学习汉语", "我做什么工作", "我喝茶", "今天天气热", "我们去医院"],
+    "speaking": [
+      "学习汉语",
+      "我做什么工作",
+      "我喝茶",
+      "今天天气热",
+      "我们去医院"
+    ],
     "chatPrompt": "复习第11–20课对话：学校、工作、爱好、饮食、位置、交通、购物、天气、看病。"
   },
   "steps": [
-    { "key": "review", "label": { "zh": "复习", "kr": "복습", "en": "Review" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "review",
+      "label": {
+        "zh": "复习",
+        "kr": "복습",
+        "en": "Review"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

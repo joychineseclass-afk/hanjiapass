@@ -5,33 +5,150 @@
   "version": "2.0",
   "lessonNo": 21,
   "type": "review",
-  "title": { "zh": "复习 1", "pinyin": "fùxí 1", "kr": "복습 1", "en": "Review 1" },
-  "summary": { "zh": "第1–10课综合复习", "kr": "1–10과 종합 복습", "en": "Review of lessons 1–10" },
+  "title": {
+    "zh": "复习 1",
+    "pinyin": "fùxí 1",
+    "kr": "복습 1",
+    "en": "Review 1",
+    "jp": "復習1"
+  },
+  "summary": {
+    "zh": "第1–10课综合复习",
+    "kr": "1–10과 종합 복습",
+    "en": "Review of lessons 1–10"
+  },
   "objectives": [
-    { "zh": "复习第1–10课词汇", "kr": "1–10과 단어 복습", "en": "Review vocab from lessons 1–10" },
-    { "zh": "复习对话与语法", "kr": "대화와 문법 복습", "en": "Review dialogue and grammar" }
+    {
+      "zh": "复习第1–10课词汇",
+      "kr": "1–10과 단어 복습",
+      "en": "Review vocab from lessons 1–10"
+    },
+    {
+      "zh": "复习对话与语法",
+      "kr": "대화와 문법 복습",
+      "en": "Review dialogue and grammar"
+    }
   ],
   "vocab": [],
   "dialogueCards": [],
   "grammar": [],
   "practice": [
-    { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "답은?", "en": "Response to 你好吗?" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },
-    { "type": "choice", "question": { "zh": "你叫什么名字？回答：", "kr": "답은?", "en": "Response?" }, "options": ["再见", "我叫小明", "不客气"], "answer": "我叫小明" },
-    { "type": "choice", "question": { "zh": "「北京」在哪个国家？", "kr": "어느 나라?", "en": "Which country?" }, "options": ["美国", "中国", "日本"], "answer": "中国" },
-    { "type": "choice", "question": { "zh": "请选择正确语序：我 / 有 / 三 / 个", "kr": "올바른 순서", "en": "Correct order" }, "options": ["我有三个", "三个有我", "有我三个"], "answer": "我有三个" },
-    { "type": "choice", "question": { "zh": "现在几点？用「点」回答。", "kr": "답 예시", "en": "Example answer" }, "options": ["上午九点", "今天", "星期"], "answer": "上午九点" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「你好吗？」的回答是什么？",
+        "kr": "답은?",
+        "en": "Response to 你好吗?"
+      },
+      "options": [
+        "你好",
+        "我很好",
+        "谢谢"
+      ],
+      "answer": "我很好"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "你叫什么名字？回答：",
+        "kr": "답은?",
+        "en": "Response?"
+      },
+      "options": [
+        "再见",
+        "我叫小明",
+        "不客气"
+      ],
+      "answer": "我叫小明"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「北京」在哪个国家？",
+        "kr": "어느 나라?",
+        "en": "Which country?"
+      },
+      "options": [
+        "美国",
+        "中国",
+        "日本"
+      ],
+      "answer": "中国"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "请选择正确语序：我 / 有 / 三 / 个",
+        "kr": "올바른 순서",
+        "en": "Correct order"
+      },
+      "options": [
+        "我有三个",
+        "三个有我",
+        "有我三个"
+      ],
+      "answer": "我有三个"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "现在几点？用「点」回答。",
+        "kr": "답 예시",
+        "en": "Example answer"
+      },
+      "options": [
+        "上午九点",
+        "今天",
+        "星期"
+      ],
+      "answer": "上午九点"
+    }
   ],
   "review": {
-    "lessonRange": [1, 10],
-    "focusAreas": ["vocab", "dialogue", "grammar"]
+    "lessonRange": [
+      1,
+      10
+    ],
+    "focusAreas": [
+      "vocab",
+      "dialogue",
+      "grammar"
+    ]
   },
   "aiPractice": {
-    "speaking": ["你好", "你叫什么名字", "我是中国人", "今天几月几日", "现在几点"],
+    "speaking": [
+      "你好",
+      "你叫什么名字",
+      "我是中国人",
+      "今天几月几日",
+      "现在几点"
+    ],
     "chatPrompt": "复习第1–10课对话：打招呼、问名字、国家、家庭、数字、日期、时间、地点。"
   },
   "steps": [
-    { "key": "review", "label": { "zh": "复习", "kr": "복습", "en": "Review" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "review",
+      "label": {
+        "zh": "复习",
+        "kr": "복습",
+        "en": "Review"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

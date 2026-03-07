@@ -5,66 +5,397 @@
   "version": "2.0",
   "lessonNo": 15,
   "type": "lesson",
-  "title": { "zh": "饮料", "pinyin": "yǐnliào", "kr": "음료", "en": "Drinks" },
-  "summary": { "zh": "茶、杯子与饭馆", "kr": "차, 컵과 식당", "en": "Tea, cups and restaurant" },
+  "title": {
+    "zh": "饮料",
+    "pinyin": "yǐnliào",
+    "kr": "음료",
+    "en": "Drinks",
+    "jp": "飲食2"
+  },
+  "summary": {
+    "zh": "茶、杯子与饭馆",
+    "kr": "차, 컵과 식당",
+    "en": "Tea, cups and restaurant"
+  },
   "objectives": [
-    { "zh": "学会在饭馆点饮料", "kr": "식당에서 음료 주문할 수 있다", "en": "Can order drinks at restaurant" },
-    { "zh": "学会块、东西", "kr": "'块', '东西'를 사용할 수 있다", "en": "Can use 块 and 东西" }
+    {
+      "zh": "学会在饭馆点饮料",
+      "kr": "식당에서 음료 주문할 수 있다",
+      "en": "Can order drinks at restaurant"
+    },
+    {
+      "zh": "学会块、东西",
+      "kr": "'块', '东西'를 사용할 수 있다",
+      "en": "Can use 块 and 东西"
+    }
   ],
   "vocab": [
-    { "hanzi": "茶", "pinyin": "chá", "meaning": { "zh": "茶", "kr": "차", "en": "tea" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "杯子", "pinyin": "bēizi", "meaning": { "zh": "杯子", "kr": "컵", "en": "cup" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "饭馆", "pinyin": "fànguǎn", "meaning": { "zh": "饭馆", "kr": "식당", "en": "restaurant" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "块", "pinyin": "kuài", "meaning": { "zh": "块", "kr": "위안", "en": "yuan" }, "pos": { "kr": "양사", "en": "measure word" } },
-    { "hanzi": "东西", "pinyin": "dōngxi", "meaning": { "zh": "东西", "kr": "것", "en": "thing" }, "pos": { "kr": "명사", "en": "noun" } }
+    {
+      "hanzi": "茶",
+      "pinyin": "chá",
+      "meaning": {
+        "zh": "茶",
+        "kr": "차",
+        "en": "tea",
+        "jp": "お茶"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "杯子",
+      "pinyin": "bēizi",
+      "meaning": {
+        "zh": "杯子",
+        "kr": "컵",
+        "en": "cup",
+        "jp": "コップ"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "饭馆",
+      "pinyin": "fànguǎn",
+      "meaning": {
+        "zh": "饭馆",
+        "kr": "식당",
+        "en": "restaurant",
+        "jp": "レストラン"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "块",
+      "pinyin": "kuài",
+      "meaning": {
+        "zh": "块",
+        "kr": "위안",
+        "en": "yuan",
+        "jp": "元（量詞）"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word",
+        "jp": "量詞"
+      }
+    },
+    {
+      "hanzi": "东西",
+      "pinyin": "dōngxi",
+      "meaning": {
+        "zh": "东西",
+        "kr": "것",
+        "en": "thing",
+        "jp": "もの"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?" },
-        { "speaker": "B", "zh": "喝。", "pinyin": "Hē.", "kr": "마셔요." }
+        {
+          "speaker": "A",
+          "zh": "你喝茶吗？",
+          "pinyin": "Nǐ hē chá ma?",
+          "kr": "차 마셔요?",
+          "text": "你喝茶吗？",
+          "translation": {
+            "kr": "차 마셔요?",
+            "en": "Do you drink tea?",
+            "jp": "お茶を飲みますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "喝。",
+          "pinyin": "Hē.",
+          "kr": "마셔요.",
+          "text": "喝。",
+          "translation": {
+            "kr": "마셔요.",
+            "en": "Yes.",
+            "jp": "飲みます。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你喝咖啡吗？", "pinyin": "Nǐ hē kāfēi ma?", "kr": "커피 마셔요?" },
-        { "speaker": "B", "zh": "不喝。", "pinyin": "Bù hē.", "kr": "안 마셔요." }
+        {
+          "speaker": "A",
+          "zh": "你喝咖啡吗？",
+          "pinyin": "Nǐ hē kāfēi ma?",
+          "kr": "커피 마셔요?",
+          "text": "你喝咖啡吗？",
+          "translation": {
+            "kr": "커피 마셔요?",
+            "en": "Do you drink coffee?",
+            "jp": "コーヒーを飲みますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "不喝。",
+          "pinyin": "Bù hē.",
+          "kr": "안 마셔요.",
+          "text": "不喝。",
+          "translation": {
+            "kr": "안 마셔요.",
+            "en": "No.",
+            "jp": "飲みません。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "这个好吃吗？", "pinyin": "Zhè gè hǎo chī ma?", "kr": "이거 맛있어요?" },
-        { "speaker": "B", "zh": "很好吃。", "pinyin": "Hěn hǎo chī.", "kr": "아주 맛있어요." }
+        {
+          "speaker": "A",
+          "zh": "这个好吃吗？",
+          "pinyin": "Zhè gè hǎo chī ma?",
+          "kr": "이거 맛있어요?",
+          "text": "这个好吃吗？",
+          "translation": {
+            "kr": "이거 맛있어요?",
+            "en": "Is this delicious?",
+            "jp": "これはおいしいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "很好吃。",
+          "pinyin": "Hěn hǎo chī.",
+          "kr": "아주 맛있어요.",
+          "text": "很好吃。",
+          "translation": {
+            "kr": "아주 맛있어요.",
+            "en": "Very delicious.",
+            "jp": "とてもおいしいです。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "块", "explanation_zh": "「块」是人民币单位。", "explanation_kr": "'块'는 위안 단위입니다.", "explanation_en": "块 is the unit for yuan.", "example": { "zh": "五块", "pinyin": "wǔ kuài", "kr": "5위안", "en": "five yuan" } },
-    { "title": "东西", "explanation_zh": "「东西」指事物。", "explanation_kr": "'东西'는 물건을 가리킵니다.", "explanation_en": "东西 means thing.", "example": { "zh": "买东西", "pinyin": "mǎi dōngxi", "kr": "물건 사다", "en": "buy things" } }
+    {
+      "title": "块",
+      "explanation_zh": "「块」是人民币单位。",
+      "explanation_kr": "'块'는 위안 단위입니다.",
+      "explanation_en": "块 is the unit for yuan.",
+      "example": {
+        "zh": "五块",
+        "pinyin": "wǔ kuài",
+        "kr": "5위안",
+        "en": "five yuan"
+      },
+      "explain": {
+        "jp": "「块」は人民元の単位です。",
+        "en": "块 is the unit for yuan.",
+        "kr": "'块'는 위안 단위입니다.",
+        "zh": "「块」是人民币单位。"
+      }
+    },
+    {
+      "title": "东西",
+      "explanation_zh": "「东西」指事物。",
+      "explanation_kr": "'东西'는 물건을 가리킵니다.",
+      "explanation_en": "东西 means thing.",
+      "example": {
+        "zh": "买东西",
+        "pinyin": "mǎi dōngxi",
+        "kr": "물건 사다",
+        "en": "buy things"
+      },
+      "explain": {
+        "jp": "「东西」は物を指します。",
+        "en": "东西 means thing.",
+        "kr": "'东西'는 물건을 가리킵니다.",
+        "zh": "「东西」指事物。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "我要一杯茶。", "pinyin": "Wǒ yào yī bēi chá.", "kr": "차 한 잔 주세요.", "en": "I'd like a cup of tea." },
-    { "zh": "给我一杯水。", "pinyin": "Gěi wǒ yī bēi shuǐ.", "kr": "물 한 잔 주세요.", "en": "Give me a glass of water." },
-    { "zh": "这个好吃吗？", "pinyin": "Zhè gè hǎo chī ma?", "kr": "이거 맛있어요?", "en": "Is this delicious?" },
-    { "zh": "我不要咖啡。", "pinyin": "Wǒ bú yào kāfēi.", "kr": "커피는 안 주세요.", "en": "I don't want coffee." }
+    {
+      "zh": "我要一杯茶。",
+      "pinyin": "Wǒ yào yī bēi chá.",
+      "kr": "차 한 잔 주세요.",
+      "en": "I'd like a cup of tea."
+    },
+    {
+      "zh": "给我一杯水。",
+      "pinyin": "Gěi wǒ yī bēi shuǐ.",
+      "kr": "물 한 잔 주세요.",
+      "en": "Give me a glass of water."
+    },
+    {
+      "zh": "这个好吃吗？",
+      "pinyin": "Zhè gè hǎo chī ma?",
+      "kr": "이거 맛있어요?",
+      "en": "Is this delicious?"
+    },
+    {
+      "zh": "我不要咖啡。",
+      "pinyin": "Wǒ bú yào kāfēi.",
+      "kr": "커피는 안 주세요.",
+      "en": "I don't want coffee."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「茶」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["水", "茶", "杯子"], "answer": "茶" },
-    { "type": "choice", "question": { "zh": "「饭馆」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["商店", "饭馆", "家"], "answer": "饭馆" },
-    { "type": "choice", "question": { "zh": "这个___多少钱？", "kr": "빈칸", "en": "Fill in" }, "options": ["块", "东西", "茶"], "answer": "茶" },
-    { "type": "choice", "question": { "zh": "A：你喝什么？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我喝茶", "五块", "杯子"], "answer": "我喝茶" },
-    { "type": "choice", "question": { "zh": "哪个是「东西」？", "kr": "어느 것?", "en": "Which?" }, "options": ["东西", "块", "茶"], "answer": "东西" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「茶」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "水",
+        "茶",
+        "杯子"
+      ],
+      "answer": "茶"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「饭馆」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "商店",
+        "饭馆",
+        "家"
+      ],
+      "answer": "饭馆"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "这个___多少钱？",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "块",
+        "东西",
+        "茶"
+      ],
+      "answer": "茶"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你喝什么？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "我喝茶",
+        "五块",
+        "杯子"
+      ],
+      "answer": "我喝茶"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「东西」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "东西",
+        "块",
+        "茶"
+      ],
+      "answer": "东西"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["我喝茶", "一个杯子", "五块", "买东西"], "chatPrompt": "AI问：你喝什么？学生回答。" },
+  "aiPractice": {
+    "speaking": [
+      "我喝茶",
+      "一个杯子",
+      "五块",
+      "买东西"
+    ],
+    "chatPrompt": "AI问：你喝什么？学生回答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }

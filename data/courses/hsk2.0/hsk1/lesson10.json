@@ -5,71 +5,454 @@
   "version": "2.0",
   "lessonNo": 10,
   "type": "lesson",
-  "title": { "zh": "在哪儿", "pinyin": "zài nǎr", "kr": "어디에", "en": "Where" },
-  "summary": { "zh": "问地点与方位", "kr": "장소와 방향 묻기", "en": "Asking location and direction" },
+  "title": {
+    "zh": "在哪儿",
+    "pinyin": "zài nǎr",
+    "kr": "어디에",
+    "en": "Where",
+    "jp": "場所を聞く"
+  },
+  "summary": {
+    "zh": "问地点与方位",
+    "kr": "장소와 방향 묻기",
+    "en": "Asking location and direction"
+  },
   "objectives": [
-    { "zh": "学会问在哪里", "kr": "어디에 있는지 물을 수 있다", "en": "Can ask where" },
-    { "zh": "学会方位词", "kr": "방향어를 사용할 수 있다", "en": "Can use direction words" }
+    {
+      "zh": "学会问在哪里",
+      "kr": "어디에 있는지 물을 수 있다",
+      "en": "Can ask where"
+    },
+    {
+      "zh": "学会方位词",
+      "kr": "방향어를 사용할 수 있다",
+      "en": "Can use direction words"
+    }
   ],
   "vocab": [
-    { "hanzi": "在", "pinyin": "zài", "meaning": { "zh": "在", "kr": "~에 있다", "en": "to be at" }, "pos": { "kr": "동사", "en": "verb" } },
-    { "hanzi": "哪", "pinyin": "nǎ", "meaning": { "zh": "哪", "kr": "어느", "en": "which" }, "pos": { "kr": "대명사", "en": "pronoun" } },
-    { "hanzi": "里", "pinyin": "lǐ", "meaning": { "zh": "里", "kr": "안", "en": "inside" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "上", "pinyin": "shàng", "meaning": { "zh": "上", "kr": "위", "en": "on; above" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "下", "pinyin": "xià", "meaning": { "zh": "下", "kr": "아래", "en": "under" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "前面", "pinyin": "qiánmiàn", "meaning": { "zh": "前面", "kr": "앞", "en": "front" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "后面", "pinyin": "hòumiàn", "meaning": { "zh": "后面", "kr": "뒤", "en": "back" }, "pos": { "kr": "명사", "en": "noun" } },
-    { "hanzi": "住", "pinyin": "zhù", "meaning": { "zh": "住", "kr": "살다", "en": "to live" }, "pos": { "kr": "동사", "en": "verb" } }
+    {
+      "hanzi": "在",
+      "pinyin": "zài",
+      "meaning": {
+        "zh": "在",
+        "kr": "~에 있다",
+        "en": "to be at",
+        "jp": "〜にいる"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "哪",
+      "pinyin": "nǎ",
+      "meaning": {
+        "zh": "哪",
+        "kr": "어느",
+        "en": "which",
+        "jp": "どれ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
+      "hanzi": "里",
+      "pinyin": "lǐ",
+      "meaning": {
+        "zh": "里",
+        "kr": "안",
+        "en": "inside",
+        "jp": "中"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "上",
+      "pinyin": "shàng",
+      "meaning": {
+        "zh": "上",
+        "kr": "위",
+        "en": "on; above",
+        "jp": "上"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "下",
+      "pinyin": "xià",
+      "meaning": {
+        "zh": "下",
+        "kr": "아래",
+        "en": "under",
+        "jp": "下"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "前面",
+      "pinyin": "qiánmiàn",
+      "meaning": {
+        "zh": "前面",
+        "kr": "앞",
+        "en": "front",
+        "jp": "前"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "后面",
+      "pinyin": "hòumiàn",
+      "meaning": {
+        "zh": "后面",
+        "kr": "뒤",
+        "en": "back",
+        "jp": "後ろ"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "住",
+      "pinyin": "zhù",
+      "meaning": {
+        "zh": "住",
+        "kr": "살다",
+        "en": "to live",
+        "jp": "住む"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "zh": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "kr": "어디에 있어요?" },
-        { "speaker": "B", "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "你在哪儿？",
+          "pinyin": "Nǐ zài nǎr?",
+          "kr": "어디에 있어요?",
+          "text": "你在哪儿？",
+          "translation": {
+            "kr": "어디에 있어요?",
+            "en": "Where are you?",
+            "jp": "どこにいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "我在学校。",
+          "pinyin": "Wǒ zài xuéxiào.",
+          "kr": "저는 학교에 있어요.",
+          "text": "我在学校。",
+          "translation": {
+            "kr": "저는 학교에 있어요.",
+            "en": "I'm at school.",
+            "jp": "学校にいます。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
-        { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "书在哪儿？",
+          "pinyin": "Shū zài nǎr?",
+          "kr": "책이 어디에 있어요?",
+          "text": "书在哪儿？",
+          "translation": {
+            "kr": "책이 어디에 있어요?",
+            "en": "Where is the book?",
+            "jp": "本はどこにありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "在桌子上。",
+          "pinyin": "Zài zhuōzi shàng.",
+          "kr": "책상 위에 있어요.",
+          "text": "在桌子上。",
+          "translation": {
+            "kr": "책상 위에 있어요.",
+            "en": "On the table.",
+            "jp": "机の上にあります。"
+          }
+        }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
       "lines": [
-        { "speaker": "A", "zh": "猫在哪儿？", "pinyin": "Māo zài nǎr?", "kr": "고양이가 어디에 있어요?" },
-        { "speaker": "B", "zh": "在椅子下面。", "pinyin": "Zài yǐzi xiàmiàn.", "kr": "의자 아래에 있어요." }
+        {
+          "speaker": "A",
+          "zh": "猫在哪儿？",
+          "pinyin": "Māo zài nǎr?",
+          "kr": "고양이가 어디에 있어요?",
+          "text": "猫在哪儿？",
+          "translation": {
+            "kr": "고양이가 어디에 있어요?",
+            "en": "Where is the cat?",
+            "jp": "猫はどこにいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "在椅子下面。",
+          "pinyin": "Zài yǐzi xiàmiàn.",
+          "kr": "의자 아래에 있어요.",
+          "text": "在椅子下面。",
+          "translation": {
+            "kr": "의자 아래에 있어요.",
+            "en": "Under the chair.",
+            "jp": "椅子の下にあります。"
+          }
+        }
       ]
     }
   ],
   "grammar": [
-    { "title": "在 + 地点", "explanation_zh": "「在」表示存在或位置。", "explanation_kr": "'在'는 존재나 위치를 나타냅니다.", "explanation_en": "在 indicates location.", "example": { "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요.", "en": "I'm at school." } },
-    { "title": "上 / 下 / 里", "explanation_zh": "方位词：上、下、前面、后面、里。", "explanation_kr": "방향어: 上, 下, 前面, 后面, 里.", "explanation_en": "Direction words.", "example": { "zh": "在桌子上", "pinyin": "zài zhuōzi shàng", "kr": "책상 위에", "en": "on the table" } }
+    {
+      "title": "在 + 地点",
+      "explanation_zh": "「在」表示存在或位置。",
+      "explanation_kr": "'在'는 존재나 위치를 나타냅니다.",
+      "explanation_en": "在 indicates location.",
+      "example": {
+        "zh": "我在学校。",
+        "pinyin": "Wǒ zài xuéxiào.",
+        "kr": "저는 학교에 있어요.",
+        "en": "I'm at school."
+      },
+      "explain": {
+        "jp": "「在」は存在や位置を表します。",
+        "en": "在 indicates location.",
+        "kr": "'在'는 존재나 위치를 나타냅니다.",
+        "zh": "「在」表示存在或位置。"
+      }
+    },
+    {
+      "title": "上 / 下 / 里",
+      "explanation_zh": "方位词：上、下、前面、后面、里。",
+      "explanation_kr": "방향어: 上, 下, 前面, 后面, 里.",
+      "explanation_en": "Direction words.",
+      "example": {
+        "zh": "在桌子上",
+        "pinyin": "zài zhuōzi shàng",
+        "kr": "책상 위에",
+        "en": "on the table"
+      },
+      "explain": {
+        "jp": "方位詞：上、下、前面、后面、里。",
+        "en": "Direction words.",
+        "kr": "방향어: 上, 下, 前面, 后面, 里.",
+        "zh": "方位词：上、下、前面、后面、里。"
+      }
+    }
   ],
   "extension": [
-    { "zh": "洗手间在哪儿？", "pinyin": "Xǐshǒujiān zài nǎr?", "kr": "화장실이 어디에 있어요?", "en": "Where is the restroom?" },
-    { "zh": "教室在哪儿？", "pinyin": "Jiàoshì zài nǎr?", "kr": "교실이 어디에 있어요?", "en": "Where is the classroom?" },
-    { "zh": "图书馆在哪儿？", "pinyin": "Túshūguǎn zài nǎr?", "kr": "도서관이 어디에 있어요?", "en": "Where is the library?" },
-    { "zh": "在那边。", "pinyin": "Zài nà biān.", "kr": "저쪽에 있어요.", "en": "It's over there." },
-    { "zh": "在楼上。", "pinyin": "Zài lóu shàng.", "kr": "위층에 있어요.", "en": "It's upstairs." },
-    { "zh": "在楼下。", "pinyin": "Zài lóu xià.", "kr": "아래층에 있어요.", "en": "It's downstairs." }
+    {
+      "zh": "洗手间在哪儿？",
+      "pinyin": "Xǐshǒujiān zài nǎr?",
+      "kr": "화장실이 어디에 있어요?",
+      "en": "Where is the restroom?"
+    },
+    {
+      "zh": "教室在哪儿？",
+      "pinyin": "Jiàoshì zài nǎr?",
+      "kr": "교실이 어디에 있어요?",
+      "en": "Where is the classroom?"
+    },
+    {
+      "zh": "图书馆在哪儿？",
+      "pinyin": "Túshūguǎn zài nǎr?",
+      "kr": "도서관이 어디에 있어요?",
+      "en": "Where is the library?"
+    },
+    {
+      "zh": "在那边。",
+      "pinyin": "Zài nà biān.",
+      "kr": "저쪽에 있어요.",
+      "en": "It's over there."
+    },
+    {
+      "zh": "在楼上。",
+      "pinyin": "Zài lóu shàng.",
+      "kr": "위층에 있어요.",
+      "en": "It's upstairs."
+    },
+    {
+      "zh": "在楼下。",
+      "pinyin": "Zài lóu xià.",
+      "kr": "아래층에 있어요.",
+      "en": "It's downstairs."
+    }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「在」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["有", "在", "去"], "answer": "在" },
-    { "type": "choice", "question": { "zh": "「前面」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["后面", "前面", "里"], "answer": "后面" },
-    { "type": "choice", "question": { "zh": "书___桌子上。", "kr": "빈칸", "en": "Fill in" }, "options": ["在", "住", "里"], "answer": "在" },
-    { "type": "choice", "question": { "zh": "A：你在哪儿？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我住北京", "我在学校", "在学校里"], "answer": "我在学校" },
-    { "type": "choice", "question": { "zh": "哪个是「住」？", "kr": "어느 것?", "en": "Which?" }, "options": ["在", "住", "里"], "answer": "住" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「在」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
+      },
+      "options": [
+        "有",
+        "在",
+        "去"
+      ],
+      "answer": "在"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「前面」的反义词是？",
+        "kr": "반대말은?",
+        "en": "Antonym?"
+      },
+      "options": [
+        "后面",
+        "前面",
+        "里"
+      ],
+      "answer": "后面"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "书___桌子上。",
+        "kr": "빈칸",
+        "en": "Fill in"
+      },
+      "options": [
+        "在",
+        "住",
+        "里"
+      ],
+      "answer": "在"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：你在哪儿？ B：___",
+        "kr": "대화",
+        "en": "Dialogue"
+      },
+      "options": [
+        "我住北京",
+        "我在学校",
+        "在学校里"
+      ],
+      "answer": "我在学校"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "哪个是「住」？",
+        "kr": "어느 것?",
+        "en": "Which?"
+      },
+      "options": [
+        "在",
+        "住",
+        "里"
+      ],
+      "answer": "住"
+    }
   ],
   "review": {},
-  "aiPractice": { "speaking": ["你在哪儿", "我在学校", "在桌子上", "学校后面"], "chatPrompt": "AI问：你在哪儿？学生回答地点。" },
+  "aiPractice": {
+    "speaking": [
+      "你在哪儿",
+      "我在学校",
+      "在桌子上",
+      "学校后面"
+    ],
+    "chatPrompt": "AI问：你在哪儿？学生回答地点。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }
