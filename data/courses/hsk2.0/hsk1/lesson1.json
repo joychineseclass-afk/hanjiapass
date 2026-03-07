@@ -32,9 +32,9 @@
     { "hanzi": "对不起", "pinyin": "duìbuqǐ", "meaning": { "zh": "对不起", "kr": "죄송합니다", "en": "sorry" }, "pos": { "kr": "동사", "en": "verb" } },
     { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "en": "it doesn't matter" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!" },
         { "speaker": "B", "zh": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!" },
@@ -43,14 +43,14 @@
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "谢谢你。", "pinyin": "Xièxie nǐ.", "kr": "감사해요." },
         { "speaker": "B", "zh": "不客气。", "pinyin": "Bùkèqi.", "kr": "천만에요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "对不起。", "pinyin": "Duìbuqǐ.", "kr": "죄송합니다." },
         { "speaker": "B", "zh": "没关系。", "pinyin": "Méiguānxi.", "kr": "괜찮아요." },

@@ -21,23 +21,23 @@
     { "hanzi": "苹果", "pinyin": "píngguǒ", "meaning": { "zh": "苹果", "kr": "사과", "en": "apple" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "和", "pinyin": "hé", "meaning": { "zh": "和", "kr": "그리고", "en": "and" }, "pos": { "kr": "접속사", "en": "conjunction" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你吃什么？", "pinyin": "Nǐ chī shénme?", "kr": "뭘 먹어요?" },
         { "speaker": "B", "zh": "我吃米饭。", "pinyin": "Wǒ chī mǐfàn.", "kr": "저는 밥을 먹어요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你喝什么？", "pinyin": "Nǐ hē shénme?", "kr": "뭘 마셔요?" },
         { "speaker": "B", "zh": "我喝水。", "pinyin": "Wǒ hē shuǐ.", "kr": "저는 물을 마셔요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你喜欢苹果吗？", "pinyin": "Nǐ xǐhuan píngguǒ ma?", "kr": "사과 좋아해요?" },
         { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }

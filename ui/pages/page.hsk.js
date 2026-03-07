@@ -130,15 +130,60 @@ function pickDialogueTranslation(line, lang, zhMain = "") {
   return out;
 }
 
-/** 对话渲染：若有 scene.frames 则用分镜增强版，否则用原逻辑 */
+/** 取会话标题：支持 title 为 { zh, kr, en } 或字符串 */
+function pickCardTitle(obj, lang) {
+  if (!obj) return "";
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  if (typeof obj === "string") return str(obj);
+  const zh = str(obj?.zh ?? obj?.cn);
+  const kr = str(obj?.kr ?? obj?.ko);
+  const en = str(obj?.en);
+  if (lang === "ko") return kr || en || zh;
+  if (lang === "en") return en || kr || zh;
+  return zh || kr || en;
+}
+
+/** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
+function getDialogueCards(lesson) {
+  if (Array.isArray(lesson?.dialogueCards) && lesson.dialogueCards.length) {
+    return lesson.dialogueCards;
+  }
+
+  if (Array.isArray(lesson?.dialogue) && lesson.dialogue.length) {
+    const first = lesson.dialogue[0];
+    if (first && first.lines && Array.isArray(first.lines)) {
+      return lesson.dialogue;
+    }
+    return [{ title: null, lines: lesson.dialogue }];
+  }
+
+  return [];
+}
+
+/** 渲染单条对话行 */
+function renderDialogueLine(line, lang, showPinyin) {
+  const spk = String(line?.spk ?? line?.speaker ?? "").trim();
+  const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
+  let py = maybeGetManualPinyin(line, "dialogue");
+  if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
+  const trans = pickDialogueTranslation(line, lang, zh);
+  const isA = spk.toUpperCase() === "A";
+
+  return `
+<article class="hsk-dialogue-line rounded-xl border border-slate-200 p-4 mb-3 last:mb-0 ${isA ? "bg-slate-50/60" : "bg-white"}">
+  ${spk ? `<div class="hsk-dialogue-speaker text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">${escapeHtml(spk)}</div>` : ""}
+  <div class="hsk-dialogue-zh text-lg font-semibold text-slate-800">${escapeHtml(zh)}</div>
+  ${py ? `<div class="hsk-dialogue-pinyin text-base italic text-slate-600 mt-1">${escapeHtml(py)}</div>` : ""}
+  ${trans ? `<div class="hsk-dialogue-trans text-sm text-slate-600 mt-2 opacity-90">${escapeHtml(trans)}</div>` : ""}
+</article>`;
+}
+
+/** 对话渲染：若有 scene.frames 则用分镜增强版，否则按会话卡片渲染 */
 function buildDialogueHTML(lessonData) {
-  const d = lessonData?.dialogue;
-  if (!d) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
+  const cards = getDialogueCards(lessonData);
+  if (!cards.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   const lang = getLang();
-  const arr = Array.isArray(d) ? d : (Array.isArray(d?.lines) ? d.lines : []);
-  if (!arr.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
-
   if (SCENE_ENGINE?.hasScene?.(lessonData)) {
     const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
     const framesHtml = SceneRenderer.renderSceneFrames(scene, lessonData, lang);
@@ -146,24 +191,24 @@ function buildDialogueHTML(lessonData) {
   }
 
   const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
-  const blocks = [];
-  for (const line of arr) {
-    const spk = String(line?.spk ?? line?.speaker ?? "").trim();
-    const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
-    let py = maybeGetManualPinyin(line, "dialogue");
-    if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
-    const trans = pickDialogueTranslation(line, lang, zh);
-    const isA = spk.toUpperCase() === "A";
+  const cardBlocks = [];
 
-    blocks.push(`
-<article class="hsk-dialogue-line rounded-xl border border-slate-200 p-4 mb-3 last:mb-0 ${isA ? "bg-slate-50/60" : "bg-white"}">
-  ${spk ? `<div class="hsk-dialogue-speaker text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">${escapeHtml(spk)}</div>` : ""}
-  <div class="hsk-dialogue-zh text-lg font-semibold text-slate-800">${escapeHtml(zh)}</div>
-  ${py ? `<div class="hsk-dialogue-pinyin text-base italic text-slate-600 mt-1">${escapeHtml(py)}</div>` : ""}
-  ${trans ? `<div class="hsk-dialogue-trans text-sm text-slate-600 mt-2 opacity-90">${escapeHtml(trans)}</div>` : ""}
-</article>`);
+  for (const card of cards) {
+    const lines = Array.isArray(card?.lines) ? card.lines : [];
+    if (!lines.length) continue;
+
+    const titleText = pickCardTitle(card?.title, lang);
+    const lineBlocks = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
+
+    cardBlocks.push(`
+<div class="hsk-dialogue-card border border-slate-200 rounded-xl p-5 mb-4 last:mb-0 bg-white shadow-sm">
+  ${titleText ? `<div class="hsk-dialogue-card-title text-sm font-bold text-slate-600 uppercase tracking-wider mb-4">${escapeHtml(titleText)}</div>` : ""}
+  <div class="hsk-dialogue-list space-y-0">${lineBlocks}</div>
+</div>`);
   }
-  return `<div class="hsk-dialogue-list space-y-0">${blocks.join("")}</div>`;
+
+  if (!cardBlocks.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
+  return `<div class="hsk-dialogue-cards">${cardBlocks.join("")}</div>`;
 }
 
 /** 语法：取当前语言解释，缺失时 kr -> en -> zh 回退 */

@@ -20,23 +20,23 @@
     { "hanzi": "了", "pinyin": "le", "meaning": { "zh": "了", "kr": "완료 조사", "en": "aspect particle" }, "pos": { "kr": "조사", "en": "particle" } },
     { "hanzi": "不", "pinyin": "bù", "meaning": { "zh": "不", "kr": "아니", "en": "not" }, "pos": { "kr": "부사", "en": "adverb" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你多大？", "pinyin": "Nǐ duō dà?", "kr": "몇 살이에요?" },
         { "speaker": "B", "zh": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "kr": "저는 스무 살이에요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "他多大？", "pinyin": "Tā duō dà?", "kr": "그는 몇 살이에요?" },
         { "speaker": "B", "zh": "他十八岁。", "pinyin": "Tā shíbā suì.", "kr": "그는 열여덟 살이에요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "她大吗？", "pinyin": "Tā dà ma?", "kr": "그녀는 커요?" },
         { "speaker": "B", "zh": "不大。", "pinyin": "Bù dà.", "kr": "안 커요." }

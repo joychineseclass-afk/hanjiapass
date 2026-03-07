@@ -21,23 +21,23 @@
     { "hanzi": "后面", "pinyin": "hòumiàn", "meaning": { "zh": "后面", "kr": "뒤", "en": "back" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "住", "pinyin": "zhù", "meaning": { "zh": "住", "kr": "살다", "en": "to live" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "kr": "어디에 있어요?" },
         { "speaker": "B", "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
         { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "猫在哪儿？", "pinyin": "Māo zài nǎr?", "kr": "고양이가 어디에 있어요?" },
         { "speaker": "B", "zh": "在椅子下面。", "pinyin": "Zài yǐzi xiàmiàn.", "kr": "의자 아래에 있어요." }

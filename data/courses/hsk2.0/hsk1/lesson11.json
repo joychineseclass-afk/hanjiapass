@@ -21,23 +21,23 @@
     { "hanzi": "写", "pinyin": "xiě", "meaning": { "zh": "写", "kr": "쓰다", "en": "to write" }, "pos": { "kr": "동사", "en": "verb" } },
     { "hanzi": "汉语", "pinyin": "Hànyǔ", "meaning": { "zh": "汉语", "kr": "중국어", "en": "Chinese" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你在哪儿学习？", "pinyin": "Nǐ zài nǎr xuéxí?", "kr": "어디서 공부해요?" },
         { "speaker": "B", "zh": "我在学校学习。", "pinyin": "Wǒ zài xuéxiào xuéxí.", "kr": "저는 학교에서 공부해요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你学什么？", "pinyin": "Nǐ xué shénme?", "kr": "뭘 배워요?" },
         { "speaker": "B", "zh": "我学汉语。", "pinyin": "Wǒ xué Hànyǔ.", "kr": "저는 중국어를 배워요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你写字吗？", "pinyin": "Nǐ xiě zì ma?", "kr": "글자 써요?" },
         { "speaker": "B", "zh": "写，我写汉字。", "pinyin": "Xiě, wǒ xiě Hànzì.", "kr": "써요, 저는 한자를 써요." }

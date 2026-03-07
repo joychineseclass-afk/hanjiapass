@@ -20,23 +20,23 @@
     { "hanzi": "现在", "pinyin": "xiànzài", "meaning": { "zh": "现在", "kr": "지금", "en": "now" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "时候", "pinyin": "shíhou", "meaning": { "zh": "时候", "kr": "때", "en": "time" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?" },
         { "speaker": "B", "zh": "现在三点。", "pinyin": "Xiànzài sān diǎn.", "kr": "지금 3시예요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你什么时候回家？", "pinyin": "Nǐ shénme shíhou huí jiā?", "kr": "언제 집에 돌아가요?" },
         { "speaker": "B", "zh": "我下午回家。", "pinyin": "Wǒ xiàwǔ huí jiā.", "kr": "저는 오후에 집에 돌아가요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你上午做什么？", "pinyin": "Nǐ shàngwǔ zuò shénme?", "kr": "오전에 뭐 해요?" },
         { "speaker": "B", "zh": "我学习。", "pinyin": "Wǒ xuéxí.", "kr": "저는 공부해요." }

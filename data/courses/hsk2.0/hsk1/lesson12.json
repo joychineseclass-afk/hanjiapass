@@ -20,23 +20,23 @@
     { "hanzi": "能", "pinyin": "néng", "meaning": { "zh": "能", "kr": "~할 수 있다", "en": "can" }, "pos": { "kr": "동사", "en": "verb" } },
     { "hanzi": "会", "pinyin": "huì", "meaning": { "zh": "会", "kr": "~할 줄 알다", "en": "can; to know how" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "kr": "무슨 일 하세요?" },
         { "speaker": "B", "zh": "我是医生。", "pinyin": "Wǒ shì yīshēng.", "kr": "저는 의사예요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "他是老师吗？", "pinyin": "Tā shì lǎoshī ma?", "kr": "그는 선생님이에요?" },
         { "speaker": "B", "zh": "是，他是老师。", "pinyin": "Shì, tā shì lǎoshī.", "kr": "네, 그는 선생님이에요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "王先生做什么工作？", "pinyin": "Wáng xiānsheng zuò shénme gōngzuò?", "kr": "왕先生은 무슨 일 하세요?" },
         { "speaker": "B", "zh": "他是医生。", "pinyin": "Tā shì yīshēng.", "kr": "그는 의사예요." }

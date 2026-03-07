@@ -12,7 +12,7 @@
     { "zh": "复习对话与语法", "kr": "대화와 문법 복습", "en": "Review dialogue and grammar" }
   ],
   "vocab": [],
-  "dialogue": [],
+  "dialogueCards": [],
   "grammar": [],
   "practice": [
     { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "답은?", "en": "Response to 你好吗?" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },

@@ -19,23 +19,23 @@
     { "hanzi": "日", "pinyin": "rì", "meaning": { "zh": "日", "kr": "일", "en": "day" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "星期", "pinyin": "xīngqī", "meaning": { "zh": "星期", "kr": "주", "en": "week" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "今天几号？", "pinyin": "Jīntiān jǐ hào?", "kr": "오늘 며칠이에요?" },
         { "speaker": "B", "zh": "今天五号。", "pinyin": "Jīntiān wǔ hào.", "kr": "오늘 5일이에요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?" },
         { "speaker": "B", "zh": "今天星期一。", "pinyin": "Jīntiān xīngqī yī.", "kr": "오늘 월요일이에요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "明天星期几？", "pinyin": "Míngtiān xīngqī jǐ?", "kr": "내일 무슨 요일이에요?" },
         { "speaker": "B", "zh": "明天星期二。", "pinyin": "Míngtiān xīngqī èr.", "kr": "내일 화요일이에요." }

@@ -22,23 +22,23 @@
     { "hanzi": "他", "pinyin": "tā", "meaning": { "zh": "他", "kr": "그", "en": "he" }, "pos": { "kr": "대명사", "en": "pronoun" } },
     { "hanzi": "她", "pinyin": "tā", "meaning": { "zh": "她", "kr": "그녀", "en": "she" }, "pos": { "kr": "대명사", "en": "pronoun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你家有几个人？", "pinyin": "Nǐ jiā yǒu jǐ gè rén?", "kr": "가족이 몇 명이에요?" },
         { "speaker": "B", "zh": "我家有四个人。", "pinyin": "Wǒ jiā yǒu sì gè rén.", "kr": "우리 가족은 네 명이에요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "kr": "아버지는 선생님이에요?" },
         { "speaker": "B", "zh": "不是，他是医生。", "pinyin": "Bú shì, tā shì yīshēng.", "kr": "아니요, 그는 의사예요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "她是谁？", "pinyin": "Tā shì shéi?", "kr": "그녀는 누구예요?" },
         { "speaker": "B", "zh": "她是我妈妈。", "pinyin": "Tā shì wǒ māma.", "kr": "그녀는 우리 엄마예요." }

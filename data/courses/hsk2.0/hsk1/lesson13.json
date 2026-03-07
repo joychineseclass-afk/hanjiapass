@@ -22,23 +22,23 @@
     { "hanzi": "电视", "pinyin": "diànshì", "meaning": { "zh": "电视", "kr": "텔레비전", "en": "TV" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "漂亮", "pinyin": "piàoliang", "meaning": { "zh": "漂亮", "kr": "예쁘다", "en": "pretty" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "kr": "뭘 좋아해요?" },
         { "speaker": "B", "zh": "我喜欢狗。", "pinyin": "Wǒ xǐhuan gǒu.", "kr": "저는 개를 좋아해요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "kr": "텔레비전 봐요?" },
         { "speaker": "B", "zh": "看。", "pinyin": "Kàn.", "kr": "봐요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你喜欢看电影吗？", "pinyin": "Nǐ xǐhuan kàn diànyǐng ma?", "kr": "영화 보는 거 좋아해요?" },
         { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }

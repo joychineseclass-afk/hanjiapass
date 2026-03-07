@@ -21,23 +21,23 @@
     { "hanzi": "说话", "pinyin": "shuōhuà", "meaning": { "zh": "说话", "kr": "말하다", "en": "to speak" }, "pos": { "kr": "동사", "en": "verb" } },
     { "hanzi": "睡觉", "pinyin": "shuìjiào", "meaning": { "zh": "睡觉", "kr": "자다", "en": "to sleep" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "今天天气怎么样？", "pinyin": "Jīntiān tiānqì zěnmeyàng?", "kr": "오늘 날씨 어때요?" },
         { "speaker": "B", "zh": "很好。", "pinyin": "Hěn hǎo.", "kr": "아주 좋아요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "冷吗？", "pinyin": "Lěng ma?", "kr": "추워요?" },
         { "speaker": "B", "zh": "不冷。", "pinyin": "Bù lěng.", "kr": "안 추워요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "热吗？", "pinyin": "Rè ma?", "kr": "더워요?" },
         { "speaker": "B", "zh": "很热。", "pinyin": "Hěn rè.", "kr": "매우 더워요." }

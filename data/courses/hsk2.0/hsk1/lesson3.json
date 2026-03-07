@@ -19,23 +19,23 @@
     { "hanzi": "朋友", "pinyin": "péngyou", "meaning": { "zh": "朋友", "kr": "친구", "en": "friend" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "동창", "en": "classmate" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你是哪国人？", "pinyin": "Nǐ shì nǎ guó rén?", "kr": "어느 나라 사람이에요?" },
         { "speaker": "B", "zh": "我是中国人。", "pinyin": "Wǒ shì Zhōngguó rén.", "kr": "저는 중국인이에요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "他是哪国人？", "pinyin": "Tā shì nǎ guó rén?", "kr": "그는 어느 나라 사람이에요?" },
         { "speaker": "B", "zh": "他是韩国人。", "pinyin": "Tā shì Hánguó rén.", "kr": "그는 한국인이에요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "kr": "어디에 살아요?" },
         { "speaker": "B", "zh": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "kr": "저는 베이징에 살아요." }

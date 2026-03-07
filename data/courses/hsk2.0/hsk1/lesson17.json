@@ -19,23 +19,23 @@
     { "hanzi": "看见", "pinyin": "kànjiàn", "meaning": { "zh": "看见", "kr": "보다", "en": "to see" }, "pos": { "kr": "동사", "en": "verb" } },
     { "hanzi": "都", "pinyin": "dōu", "meaning": { "zh": "都", "kr": "다", "en": "all" }, "pos": { "kr": "부사", "en": "adverb" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你怎么去学校？", "pinyin": "Nǐ zěnme qù xuéxiào?", "kr": "어떻게 학교에 가요?" },
         { "speaker": "B", "zh": "我坐车去。", "pinyin": "Wǒ zuò chē qù.", "kr": "저는 차 타고 가요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "kr": "어디 가요?" },
         { "speaker": "B", "zh": "我去学校。", "pinyin": "Wǒ qù xuéxiào.", "kr": "저는 학교에 가요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "你回家吗？", "pinyin": "Nǐ huí jiā ma?", "kr": "집에 돌아가요?" },
         { "speaker": "B", "zh": "回。", "pinyin": "Huí.", "kr": "돌아가요." }

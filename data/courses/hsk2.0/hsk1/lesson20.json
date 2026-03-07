@@ -19,23 +19,23 @@
     { "hanzi": "没", "pinyin": "méi", "meaning": { "zh": "没", "kr": "없다", "en": "not have" }, "pos": { "kr": "부사", "en": "adverb" } },
     { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~은/는요?", "en": "particle" }, "pos": { "kr": "조사", "en": "particle" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你怎么了？", "pinyin": "Nǐ zěnme le?", "kr": "어디 아파요?" },
         { "speaker": "B", "zh": "我不舒服。", "pinyin": "Wǒ bù shūfu.", "kr": "저는 몸이 안 좋아요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "kr": "병원 갔어요?" },
         { "speaker": "B", "zh": "去了。", "pinyin": "Qù le.", "kr": "갔어요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "现在怎么样？", "pinyin": "Xiànzài zěnmeyàng?", "kr": "지금 어때요?" },
         { "speaker": "B", "zh": "很好。", "pinyin": "Hěn hǎo.", "kr": "아주 좋아요." }

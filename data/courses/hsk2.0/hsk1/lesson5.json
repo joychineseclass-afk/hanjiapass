@@ -28,23 +28,23 @@
     { "hanzi": "个", "pinyin": "gè", "meaning": { "zh": "个", "kr": "개", "en": "measure word" }, "pos": { "kr": "양사", "en": "measure word" } },
     { "hanzi": "少", "pinyin": "shǎo", "meaning": { "zh": "少", "kr": "적다", "en": "few" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你有几个苹果？", "pinyin": "Nǐ yǒu jǐ gè píngguǒ?", "kr": "사과가 몇 개 있어요?" },
         { "speaker": "B", "zh": "我有三个。", "pinyin": "Wǒ yǒu sān gè.", "kr": "저는 세 개 있어요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你有几本书？", "pinyin": "Nǐ yǒu jǐ běn shū?", "kr": "책이 몇 권 있어요?" },
         { "speaker": "B", "zh": "我有两本。", "pinyin": "Wǒ yǒu liǎng běn.", "kr": "저는 두 권 있어요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
         { "speaker": "B", "zh": "十块钱。", "pinyin": "Shí kuài qián.", "kr": "10위안이에요." }

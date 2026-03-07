@@ -20,23 +20,23 @@
     { "hanzi": "椅子", "pinyin": "yǐzi", "meaning": { "zh": "椅子", "kr": "의자", "en": "chair" }, "pos": { "kr": "명사", "en": "noun" } },
     { "hanzi": "桌子", "pinyin": "zhuōzi", "meaning": { "zh": "桌子", "kr": "탁자", "en": "table" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
         { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "椅子在哪儿？", "pinyin": "Yǐzi zài nǎr?", "kr": "의자가 어디에 있어요?" },
         { "speaker": "B", "zh": "在桌子下面。", "pinyin": "Zài zhuōzi xiàmiàn.", "kr": "탁자 아래에 있어요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "学校在哪儿？", "pinyin": "Xuéxiào zài nǎr?", "kr": "학교가 어디에 있어요?" },
         { "speaker": "B", "zh": "在那儿。", "pinyin": "Zài nàr.", "kr": "저기에 있어요." }

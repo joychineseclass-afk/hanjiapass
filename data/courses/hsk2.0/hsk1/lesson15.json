@@ -18,23 +18,23 @@
     { "hanzi": "块", "pinyin": "kuài", "meaning": { "zh": "块", "kr": "위안", "en": "yuan" }, "pos": { "kr": "양사", "en": "measure word" } },
     { "hanzi": "东西", "pinyin": "dōngxi", "meaning": { "zh": "东西", "kr": "것", "en": "thing" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
-  "dialogue": [
+  "dialogueCards": [
     {
-      "title": "会话1",
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
         { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?" },
         { "speaker": "B", "zh": "喝。", "pinyin": "Hē.", "kr": "마셔요." }
       ]
     },
     {
-      "title": "会话2",
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
         { "speaker": "A", "zh": "你喝咖啡吗？", "pinyin": "Nǐ hē kāfēi ma?", "kr": "커피 마셔요?" },
         { "speaker": "B", "zh": "不喝。", "pinyin": "Bù hē.", "kr": "안 마셔요." }
       ]
     },
     {
-      "title": "会话3",
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3" },
       "lines": [
         { "speaker": "A", "zh": "这个好吃吗？", "pinyin": "Zhè gè hǎo chī ma?", "kr": "이거 맛있어요?" },
         { "speaker": "B", "zh": "很好吃。", "pinyin": "Hěn hǎo chī.", "kr": "아주 맛있어요." }

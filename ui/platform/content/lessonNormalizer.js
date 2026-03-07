@@ -48,9 +48,27 @@ function normVocab(raw) {
   }).filter((v) => v.hanzi);
 }
 
+/** 从 raw 提取扁平对话行：支持 dialogueCards、嵌套 dialogue、扁平 dialogue */
+function extractDialogueLines(raw) {
+  const cards = Array.isArray(raw?.dialogueCards) ? raw.dialogueCards : null;
+  if (cards?.length) {
+    return cards.flatMap((c) => Array.isArray(c?.lines) ? c.lines : []);
+  }
+
+  const d = raw?.dialogue;
+  if (!Array.isArray(d) || !d.length) return [];
+
+  const first = d[0];
+  if (first?.lines && Array.isArray(first.lines)) {
+    return d.flatMap((c) => Array.isArray(c?.lines) ? c.lines : []);
+  }
+
+  return d;
+}
+
 /** dialogue 归一化：line/zh/cn、lines，兼容 line 字段 */
 function normDialogue(raw) {
-  const src = Array.isArray(raw?.dialogue) ? raw.dialogue : (Array.isArray(raw?.dialogue?.lines) ? raw.dialogue.lines : []);
+  const src = extractDialogueLines(raw);
   return src.map((line) => {
     const zh = str(line?.zh ?? line?.cn ?? line?.line ?? "");
     const py = str(line?.pinyin ?? line?.py ?? "");
