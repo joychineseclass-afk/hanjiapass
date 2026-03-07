@@ -22,8 +22,12 @@
       "pinyin": "lái",
       "meaning": {
         "zh": "来",
-        "kr": "",
+        "kr": "오다",
         "en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回来); ever since (as in 自古以来); for the past (amount of time); (prefix) the coming ...; the next ... (as in 来世); (between two verbs) in order to; (after a round number) approximately; (used after 得 to indicate possibility, as in 谈得来, or after 不 to indicate impossibility, as in 吃不来)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "qù",
       "meaning": {
         "zh": "去",
-        "kr": "",
+        "kr": "가다",
         "en": "to go; to go to (a place); (of a time etc) last; just passed; to send; to remove; to get rid of; to reduce; to be apart from in space or time; to die (euphemism); to play (a part); (when used either before or after a verb) to go in order to do sth; (after a verb of motion indicates movement away from the speaker); (used after certain verbs to indicate detachment or separation)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "huí",
       "meaning": {
         "zh": "回",
-        "kr": "",
+        "kr": "돌아오다",
         "en": "to circle; to go back; to turn around; to answer; to return; to revolve; Hui ethnic group (Chinese Muslims); time; classifier for acts of a play; section or chapter (of a classic book)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "Zuò",
       "meaning": {
         "zh": "坐",
-        "kr": "",
+        "kr": "앉다",
         "en": "surname Zuo"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "yǒu",
       "meaning": {
         "zh": "有",
-        "kr": "",
+        "kr": "있다",
         "en": "to have; there is; (bound form) having; with; -ful; -ed; -al (as in 意 intentional)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "yǐzi",
       "meaning": {
         "zh": "椅子",
-        "kr": "",
+        "kr": "의자",
         "en": "chair"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "zhuōzi",
       "meaning": {
         "zh": "桌子",
-        "kr": "",
+        "kr": "책상",
         "en": "table; desk"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

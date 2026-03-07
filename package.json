@@ -6,7 +6,8 @@
   "scripts": {
     "build:vocab": "node scripts/build-vocab.mjs",
     "build:pinyin": "node scripts/build-pinyin-map.mjs",
-    "migrate:lesson-words": "node scripts/migrate-lesson-words.mjs"
+    "migrate:lesson-words": "node scripts/migrate-lesson-words.mjs",
+    "sync:lesson-glossary": "node scripts/sync-lesson-glossary.mjs"
   },
   "dependencies": {
     "pinyin-pro": "^3.21.0"

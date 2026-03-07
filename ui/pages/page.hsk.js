@@ -9,6 +9,7 @@ import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
+import { loadGlossary } from "../utils/glossary.js";
 
 const state = {
   lv: 1,
@@ -405,7 +406,7 @@ async function openLesson({ lessonNo, file }) {
         </div>
       `;
     } else {
-      renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang });
+      renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang, scope: `hsk${state.lv}` });
     }
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
@@ -601,6 +602,11 @@ export async function mount() {
   }
 
   await ensureHSKDeps();
+
+  // ✅ 预加载 glossary（HSK1 的 kr/en），供词卡释义回退
+  const scope = `hsk${state.lv}`;
+  loadGlossary("kr", scope).catch(() => {});
+  loadGlossary("en", scope).catch(() => {});
 
   // ✅ mini nav: Home + Lang only
   navRoot.dataset.mode = "mini";

@@ -22,8 +22,12 @@
       "pinyin": "chá",
       "meaning": {
         "zh": "茶",
-        "kr": "",
+        "kr": "차",
         "en": "tea; tea plant"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "bēizi",
       "meaning": {
         "zh": "杯子",
-        "kr": "",
+        "kr": "컵",
         "en": "cup; glass"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "fànguǎn",
       "meaning": {
         "zh": "饭馆",
-        "kr": "",
+        "kr": "식당",
         "en": "restaurant"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "kuài",
       "meaning": {
         "zh": "块",
-        "kr": "",
+        "kr": "위안",
         "en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "dōngxī",
       "meaning": {
         "zh": "东西",
-        "kr": "",
+        "kr": "것",
         "en": "east and west"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

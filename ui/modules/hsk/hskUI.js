@@ -494,11 +494,12 @@ hskLevel?.dispatchEvent(new Event("change"));
       return;
     }
 
+    const scope = `hsk${hskLevel?.value || 1}`;
     window.HSK_RENDER.renderWordCards(
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, query: q, showTag: "학습", compact: false }
+      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
     );
 
     setStatus(`(${filtered.length})`);
@@ -747,11 +748,12 @@ hskLevel?.dispatchEvent(new Event("change"));
       return;
     }
 
+    const scope = `hsk${hskLevel?.value || 1}`;
     window.HSK_RENDER.renderWordCards(
       wrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, query: q, showTag: "학습", compact: false }
+      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
     );
 
     setStatus(`(${filtered.length}/${recent.length})`);
@@ -902,11 +904,12 @@ hskLevel?.dispatchEvent(new Event("change"));
       return;
     }
 
+    const scope = `hsk${hskLevel?.value || 1}`;
     window.HSK_RENDER.renderWordCards(
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, query: q, showTag: "학습", compact: false }
+      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
     );
 
     setStatus(`(${filtered.length}/${lessonWords.length})`);
@@ -960,11 +963,12 @@ hskLevel?.dispatchEvent(new Event("change"));
       return;
     }
 
+    const scope = `hsk${hskLevel?.value || 1}`;
     window.HSK_RENDER.renderWordCards(
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, query: q, showTag: "학습", compact: false }
+      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
     );
 
     setStatus(`(${filtered.length}/${ALL.length})`);
@@ -1043,6 +1047,13 @@ hskLevel?.dispatchEvent(new Event("change"));
 
       buildLessonIndex();
       setCached(lv, version, ALL, LESSONS, LESSON_INDEX); // ✅ PATCH
+
+      // 预加载 glossary 供词卡释义回退
+      import("../../utils/glossary.js").then(({ loadGlossary }) => {
+        const scope = `hsk${lv}`;
+        loadGlossary("kr", scope).catch(() => {});
+        loadGlossary("en", scope).catch(() => {});
+      }).catch(() => {});
 
       renderAuto();
       scrollToTop();

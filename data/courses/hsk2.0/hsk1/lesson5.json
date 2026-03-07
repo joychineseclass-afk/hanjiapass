@@ -22,8 +22,12 @@
       "pinyin": "yī",
       "meaning": {
         "zh": "一",
-        "kr": "",
+        "kr": "하나",
         "en": "one; single; a (article); as soon as; entire; whole; all; throughout; \"one\" radical in Chinese characters (Kangxi radical 1); also pr. [yāo] for greater clarity when spelling out numbers digit by digit"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "èr",
       "meaning": {
         "zh": "二",
-        "kr": "",
+        "kr": "둘",
         "en": "two; 2; (Beijing dialect) stupid"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "Sān",
       "meaning": {
         "zh": "三",
-        "kr": "",
+        "kr": "셋",
         "en": "surname San"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "sì",
       "meaning": {
         "zh": "四",
-        "kr": "",
+        "kr": "넷",
         "en": "four; 4"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "wǔ",
       "meaning": {
         "zh": "五",
-        "kr": "",
+        "kr": "다섯",
         "en": "five; 5"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "liù",
       "meaning": {
         "zh": "六",
-        "kr": "",
+        "kr": "여섯",
         "en": "six; 6"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "qī",
       "meaning": {
         "zh": "七",
-        "kr": "",
+        "kr": "일곱",
         "en": "seven; 7"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -85,8 +113,12 @@
       "pinyin": "bā",
       "meaning": {
         "zh": "八",
-        "kr": "",
+        "kr": "여덟",
         "en": "eight; 8"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -94,8 +126,12 @@
       "pinyin": "jiǔ",
       "meaning": {
         "zh": "九",
-        "kr": "",
+        "kr": "아홉",
         "en": "nine; 9"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -103,8 +139,12 @@
       "pinyin": "shí",
       "meaning": {
         "zh": "十",
-        "kr": "",
+        "kr": "열",
         "en": "ten; 10"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -112,8 +152,12 @@
       "pinyin": "líng",
       "meaning": {
         "zh": "零",
-        "kr": "",
+        "kr": "영",
         "en": "zero; nought; zero sign; fractional; fragmentary; odd (of numbers); (placed between two numbers to indicate a smaller quantity followed by a larger one); fraction; (in mathematics) remainder (after division); extra; to wither and fall; to wither"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -121,8 +165,12 @@
       "pinyin": "duōshǎo",
       "meaning": {
         "zh": "多少",
-        "kr": "",
+        "kr": "얼마나",
         "en": "number; amount; somewhat"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -130,8 +178,12 @@
       "pinyin": "jī",
       "meaning": {
         "zh": "几",
-        "kr": "",
+        "kr": "몇",
         "en": "small table"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral"
       }
     },
     {
@@ -139,8 +191,12 @@
       "pinyin": "gě",
       "meaning": {
         "zh": "个",
-        "kr": "",
+        "kr": "양사",
         "en": "used in 自个儿"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word"
       }
     },
     {
@@ -148,8 +204,12 @@
       "pinyin": "shǎo",
       "meaning": {
         "zh": "少",
-        "kr": "",
+        "kr": "적다",
         "en": "few; less; to lack; to be missing; to stop (doing sth); seldom"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     }
   ],

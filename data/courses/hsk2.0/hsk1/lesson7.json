@@ -22,8 +22,12 @@
       "pinyin": "jīntiān",
       "meaning": {
         "zh": "今天",
-        "kr": "",
+        "kr": "오늘",
         "en": "today; at the present; now"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "míngtiān",
       "meaning": {
         "zh": "明天",
-        "kr": "",
+        "kr": "내일",
         "en": "tomorrow"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "zuótiān",
       "meaning": {
         "zh": "昨天",
-        "kr": "",
+        "kr": "어제",
         "en": "yesterday"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "yuè",
       "meaning": {
         "zh": "月",
-        "kr": "",
+        "kr": "달",
         "en": "moon; month; monthly"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "Rì",
       "meaning": {
         "zh": "日",
-        "kr": "",
+        "kr": "날",
         "en": "abbr. for 本, Japan"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "xīngqī",
       "meaning": {
         "zh": "星期",
-        "kr": "",
+        "kr": "요일",
         "en": "week; day of the week; Sunday"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

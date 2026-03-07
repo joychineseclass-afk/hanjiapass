@@ -22,8 +22,12 @@
       "pinyin": "yīyuàn",
       "meaning": {
         "zh": "医院",
-        "kr": "",
+        "kr": "병원",
         "en": "hospital"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "zěnme",
       "meaning": {
         "zh": "怎么",
-        "kr": "",
+        "kr": "어떻게",
         "en": "how?; what?; why?"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "zěnmeyàng",
       "meaning": {
         "zh": "怎么样",
-        "kr": "",
+        "kr": "어때",
         "en": "how?; how about?; how was it?; how are things?"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "wǒmen",
       "meaning": {
         "zh": "我们",
-        "kr": "",
+        "kr": "우리",
         "en": "we; us; ourselves; our"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "méi",
       "meaning": {
         "zh": "没",
-        "kr": "",
+        "kr": "~없다",
         "en": "(negative prefix for verbs) have not; not"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "ne",
       "meaning": {
         "zh": "呢",
-        "kr": "",
+        "kr": "~은/는요",
         "en": "particle indicating that a previously asked question is to be applied to the preceding word (\"What about ...?\", \"And ...?\"); particle for inquiring about location (\"Where is ...?\"); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board (\"ok?\", \"are you with me?\"); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation"
+      },
+      "pos": {
+        "kr": "조사",
+        "en": "particle"
       }
     }
   ],

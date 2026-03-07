@@ -23,8 +23,12 @@
       "pinyin": "jiào",
       "meaning": {
         "zh": "叫",
-        "kr": "",
+        "kr": "~라고 부르다",
         "en": "to shout; to call; to order; to ask; to be called; by (indicates agent in the passive mood)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "shénme",
       "meaning": {
         "zh": "什么",
-        "kr": "",
+        "kr": "무엇",
         "en": "what?; something; anything"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "míngzi",
       "meaning": {
         "zh": "名字",
-        "kr": "",
+        "kr": "이름",
         "en": "name (of a person or thing)"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "shì",
       "meaning": {
         "zh": "是",
-        "kr": "",
+        "kr": "~이다",
         "en": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well; (adverb for emphatic assertion)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "gāoxìng",
       "meaning": {
         "zh": "高兴",
-        "kr": "",
+        "kr": "기쁘다",
         "en": "happy; glad; willing (to do sth); in a cheerful mood"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "rènshi",
       "meaning": {
         "zh": "认识",
-        "kr": "",
+        "kr": "알다, 만나다",
         "en": "to know; to recognize; to be familiar with; to get acquainted with sb; knowledge; understanding; awareness; cognition"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     }
   ],

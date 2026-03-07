@@ -153,10 +153,11 @@ function meaningTextOf(val, lang) {
   return String(val);
 }
 
-export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
+export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? i18n?.getLang?.());
+  const glossaryScope = scope || "";
 
   const cards = arr.map((x) => {
     try {
@@ -165,13 +166,13 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       let pinyinStr = wordPinyin(raw);
       if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
 
-      let mainStr = getMeaningByLang(raw, currentLang, han);
+      let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
       if (!mainStr) {
         mainStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
       }
 
-      const posStr = getPosByLang(raw, currentLang);
+      const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
       const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
       const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";

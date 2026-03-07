@@ -22,8 +22,12 @@
       "pinyin": "diǎn",
       "meaning": {
         "zh": "点",
-        "kr": "",
+        "kr": "시",
         "en": "point; dot; drop; speck; o'clock; point (in space or time); to draw a dot; to check on a list; to choose; to order (food in a restaurant); to touch briefly; to hint; to light; to ignite; to pour a liquid drop by drop; (old) one fifth of a two-hour watch 更; dot stroke in Chinese characters; classifier for items"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "fēnzhōng",
       "meaning": {
         "zh": "分钟",
-        "kr": "",
+        "kr": "분",
         "en": "minute"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "shàngwǔ",
       "meaning": {
         "zh": "上午",
-        "kr": "",
+        "kr": "오전",
         "en": "morning"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "xiàwǔ",
       "meaning": {
         "zh": "下午",
-        "kr": "",
+        "kr": "오후",
         "en": "afternoon; p.m."
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "zhōngwǔ",
       "meaning": {
         "zh": "中午",
-        "kr": "",
+        "kr": "점심",
         "en": "noon; midday"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "xiànzài",
       "meaning": {
         "zh": "现在",
-        "kr": "",
+        "kr": "지금",
         "en": "now; at present; at the moment; modern; current; nowadays"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "shíhou",
       "meaning": {
         "zh": "时候",
-        "kr": "",
+        "kr": "때",
         "en": "time; length of time; moment; period"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

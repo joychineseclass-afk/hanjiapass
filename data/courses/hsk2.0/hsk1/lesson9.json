@@ -23,8 +23,12 @@
       "pinyin": "wéi",
       "meaning": {
         "zh": "喂",
-        "kr": "",
+        "kr": "여보세요",
         "en": "hello (when answering the phone)"
+      },
+      "pos": {
+        "kr": "감탄사",
+        "en": "interjection"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "qǐng",
       "meaning": {
         "zh": "请",
-        "kr": "",
+        "kr": "~해 주세요",
         "en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "dǎdiànhuà",
       "meaning": {
         "zh": "打电话",
-        "kr": "",
+        "kr": "전화하다",
         "en": "to make a telephone call"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "shéi",
       "meaning": {
         "zh": "谁",
-        "kr": "",
+        "kr": "누구",
         "en": "who; also pr. [shuí]"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "wèn",
       "meaning": {
         "zh": "问",
-        "kr": "",
+        "kr": "묻다",
         "en": "to ask; to inquire"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     }
   ],

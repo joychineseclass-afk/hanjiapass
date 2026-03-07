@@ -23,8 +23,12 @@
       "pinyin": "gōngzuò",
       "meaning": {
         "zh": "工作",
-        "kr": "",
+        "kr": "일",
         "en": "to work; (of a machine) to operate; job; work; task"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "yīshēng",
       "meaning": {
         "zh": "医生",
-        "kr": "",
+        "kr": "의사",
         "en": "doctor"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "xiānsheng",
       "meaning": {
         "zh": "先生",
-        "kr": "",
+        "kr": "선생님",
         "en": "teacher; gentleman; sir; mister (Mr.); husband; (dialect) doctor"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "xiǎojie",
       "meaning": {
         "zh": "小姐",
-        "kr": "",
+        "kr": "아가씨",
         "en": "young lady; miss; (slang) prostitute"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "zuò",
       "meaning": {
         "zh": "做",
-        "kr": "",
+        "kr": "하다",
         "en": "to make; to produce; to write; to compose; to do; to engage in; to hold (a party etc); (of a person) to be (an intermediary, a good student etc); to become (husband and wife, friends etc); (of a thing) to serve as; to be used for; to assume (an air or manner)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "Néng",
       "meaning": {
         "zh": "能",
-        "kr": "",
+        "kr": "~할 수 있다",
         "en": "surname Neng"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -77,8 +101,12 @@
       "pinyin": "huì",
       "meaning": {
         "zh": "会",
-        "kr": "",
+        "kr": "~할 수 있다",
         "en": "can; to have the skill; to know how to; to be likely to; to be sure to; to meet; to get together; meeting; gathering; (suffix) union; group; association; (bound form) a moment (Taiwan pr. [huǐ])"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     }
   ],

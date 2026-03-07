@@ -23,8 +23,12 @@
       "pinyin": "xuéxiào",
       "meaning": {
         "zh": "学校",
-        "kr": "",
+        "kr": "학교",
         "en": "school"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "xuéxí",
       "meaning": {
         "zh": "学习",
-        "kr": "",
+        "kr": "공부하다",
         "en": "to learn; to study"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "dòu",
       "meaning": {
         "zh": "读",
-        "kr": "",
+        "kr": "읽다",
         "en": "comma; phrase marked by pause"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "Shū",
       "meaning": {
         "zh": "书",
-        "kr": "",
+        "kr": "책",
         "en": "abbr. for 书经"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "zì",
       "meaning": {
         "zh": "字",
-        "kr": "",
+        "kr": "글자",
         "en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "běn",
       "meaning": {
         "zh": "本",
-        "kr": "",
+        "kr": "책",
         "en": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word"
       }
     },
     {
@@ -77,8 +101,12 @@
       "pinyin": "xiě",
       "meaning": {
         "zh": "写",
-        "kr": "",
+        "kr": "쓰다",
         "en": "to write"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -86,8 +114,12 @@
       "pinyin": "Hànyǔ",
       "meaning": {
         "zh": "汉语",
-        "kr": "",
+        "kr": "중국어",
         "en": "Chinese language"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

@@ -23,8 +23,12 @@
       "pinyin": "zài",
       "meaning": {
         "zh": "在",
-        "kr": "",
+        "kr": "~에 있다",
         "en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "nǎ",
       "meaning": {
         "zh": "哪",
-        "kr": "",
+        "kr": "어디",
         "en": "how; which"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "lǐ",
       "meaning": {
         "zh": "里",
-        "kr": "",
+        "kr": "안",
         "en": "variant of 里"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "shǎng",
       "meaning": {
         "zh": "上",
-        "kr": "",
+        "kr": "위",
         "en": "used in 上声"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "xià",
       "meaning": {
         "zh": "下",
-        "kr": "",
+        "kr": "아래",
         "en": "down; downwards; below; lower; later; next (week etc); second (of two parts); to decline; to go down; to arrive at (a decision, conclusion etc); measure word to show the frequency of an action"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "qiánmiàn",
       "meaning": {
         "zh": "前面",
-        "kr": "",
+        "kr": "앞",
         "en": "ahead; in front; preceding; above; also pr. [qián mian]"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -77,8 +101,12 @@
       "pinyin": "hòumian",
       "meaning": {
         "zh": "后面",
-        "kr": "",
+        "kr": "뒤",
         "en": "the back; the rear; the last bit; behind; near the end; at the back; later; afterwards"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -86,8 +114,12 @@
       "pinyin": "zhù",
       "meaning": {
         "zh": "住",
-        "kr": "",
+        "kr": "살다",
         "en": "to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     }
   ],

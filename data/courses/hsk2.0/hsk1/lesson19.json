@@ -22,8 +22,12 @@
       "pinyin": "tiānqì",
       "meaning": {
         "zh": "天气",
-        "kr": "",
+        "kr": "날씨",
         "en": "weather"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "rè",
       "meaning": {
         "zh": "热",
-        "kr": "",
+        "kr": "덥다",
         "en": "to warm up; to heat up; hot (of weather); heat; fervent"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "Lěng",
       "meaning": {
         "zh": "冷",
-        "kr": "",
+        "kr": "춥다",
         "en": "surname Leng"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "xiàyǔ",
       "meaning": {
         "zh": "下雨",
-        "kr": "",
+        "kr": "비 오다",
         "en": "to rain"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "tài",
       "meaning": {
         "zh": "太",
-        "kr": "",
+        "kr": "너무",
         "en": "highest; greatest; too (much); very; extremely"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "xiǎng",
       "meaning": {
         "zh": "想",
-        "kr": "",
+        "kr": "생각하다",
         "en": "to think (about); to think of; to devise; to think (that); to believe (that); to desire; to want (to); to miss (feel wistful about the absence of)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "shuōhuà",
       "meaning": {
         "zh": "说话",
-        "kr": "",
+        "kr": "말하다",
         "en": "to speak; to say; to talk; to gossip; to tell stories; talk; word"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -85,8 +113,12 @@
       "pinyin": "shuìjiào",
       "meaning": {
         "zh": "睡觉",
-        "kr": "",
+        "kr": "자다",
         "en": "to go to bed; to sleep"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     }
   ],

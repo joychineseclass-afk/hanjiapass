@@ -23,8 +23,12 @@
       "pinyin": "nǐ",
       "meaning": {
         "zh": "你",
-        "kr": "",
+        "kr": "너, 당신",
         "en": "you (informal, as opposed to courteous 您)"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "wǒ",
       "meaning": {
         "zh": "我",
-        "kr": "",
+        "kr": "나, 저",
         "en": "I; me; my"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "hǎo",
       "meaning": {
         "zh": "好",
-        "kr": "",
+        "kr": "좋다",
         "en": "good; appropriate; proper; all right!; (before a verb) easy to; (before a verb) good to; (before an adjective for exclamatory effect) so; (verb complement indicating completion); (of two people) close; on intimate terms; (after a personal pronoun) hello"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "hěn",
       "meaning": {
         "zh": "很",
-        "kr": "",
+        "kr": "매우, 아주",
         "en": "(adverb of degree); quite; very; awfully"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "má",
       "meaning": {
         "zh": "吗",
-        "kr": "",
+        "kr": "~吗 (의문 조사)",
         "en": "(coll.) what?"
+      },
+      "pos": {
+        "kr": "조사",
+        "en": "particle"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "xièxie",
       "meaning": {
         "zh": "谢谢",
-        "kr": "",
+        "kr": "감사합니다",
         "en": "to thank; thanks; thank you"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -77,8 +101,12 @@
       "pinyin": "zàijiàn",
       "meaning": {
         "zh": "再见",
-        "kr": "",
+        "kr": "안녕히 가세요",
         "en": "goodbye; see you again later"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -86,8 +114,12 @@
       "pinyin": "bùkèqi",
       "meaning": {
         "zh": "不客气",
-        "kr": "",
+        "kr": "천만에요",
         "en": "you're welcome; don't mention it; impolite; rude; blunt"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -95,8 +127,12 @@
       "pinyin": "duìbuqǐ",
       "meaning": {
         "zh": "对不起",
-        "kr": "",
+        "kr": "죄송합니다",
         "en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -104,8 +140,12 @@
       "pinyin": "méiguānxi",
       "meaning": {
         "zh": "没关系",
-        "kr": "",
+        "kr": "괜찮아요",
         "en": "it doesn't matter"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     }
   ],

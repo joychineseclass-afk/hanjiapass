@@ -222,11 +222,12 @@ function renderLessonTabVocab(ctx, container) {
     return;
   }
 
+  const scope = `hsk${safeText(dom.hskLevel?.value || "1")}`;
   window.HSK_RENDER.renderWordCards(
     cardWrap,
     filtered,
     (item) => window.LEARN_PANEL?.open?.(item),
-    { lang: ctx.LANG, query: q, showTag: "학습", compact: false }
+    { lang: ctx.LANG, scope, query: q, showTag: "학습", compact: false }
   );
 
   setStatus(dom, `(${filtered.length})`);

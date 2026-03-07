@@ -22,8 +22,12 @@
       "pinyin": "suì",
       "meaning": {
         "zh": "岁",
-        "kr": "",
+        "kr": "살",
         "en": "variant of 岁, year; years old"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "Nián",
       "meaning": {
         "zh": "年",
-        "kr": "",
+        "kr": "해",
         "en": "surname Nian"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "duō",
       "meaning": {
         "zh": "多",
-        "kr": "",
+        "kr": "많다",
         "en": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "dà",
       "meaning": {
         "zh": "大",
-        "kr": "",
+        "kr": "크다",
         "en": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "xiǎo",
       "meaning": {
         "zh": "小",
-        "kr": "",
+        "kr": "작다",
         "en": "small; tiny; few; young"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "le",
       "meaning": {
         "zh": "了",
-        "kr": "",
+        "kr": "완료 조사",
         "en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)"
+      },
+      "pos": {
+        "kr": "조사",
+        "en": "particle"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "bù",
       "meaning": {
         "zh": "不",
-        "kr": "",
+        "kr": "~않다",
         "en": "no; not so; (bound form) not; un-"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb"
       }
     }
   ],

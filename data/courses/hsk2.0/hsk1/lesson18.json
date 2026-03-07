@@ -22,8 +22,12 @@
       "pinyin": "mǎi",
       "meaning": {
         "zh": "买",
-        "kr": "",
+        "kr": "사다",
         "en": "to buy; to purchase"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "Qián",
       "meaning": {
         "zh": "钱",
-        "kr": "",
+        "kr": "돈",
         "en": "surname Qian"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "shāngdiàn",
       "meaning": {
         "zh": "商店",
-        "kr": "",
+        "kr": "가게",
         "en": "store; shop"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "yīfu",
       "meaning": {
         "zh": "衣服",
-        "kr": "",
+        "kr": "옷",
         "en": "clothes"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "xiē",
       "meaning": {
         "zh": "些",
-        "kr": "",
+        "kr": "좀",
         "en": "classifier indicating a small amount or small number greater than 1: some, a few, several"
+      },
+      "pos": {
+        "kr": "양사",
+        "en": "measure word"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "Nā",
       "meaning": {
         "zh": "那",
-        "kr": "",
+        "kr": "그",
         "en": "surname Na"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "zhè",
       "meaning": {
         "zh": "这",
-        "kr": "",
+        "kr": "이",
         "en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this; these (followed by a classifier) (in this sense, commonly pr. [zhèi], esp. in Beijing)"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun"
       }
     },
     {
@@ -85,8 +113,12 @@
       "pinyin": "diànnǎo",
       "meaning": {
         "zh": "电脑",
-        "kr": "",
+        "kr": "컴퓨터",
         "en": "computer"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

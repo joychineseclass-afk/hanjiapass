@@ -22,8 +22,12 @@
       "pinyin": "xǐhuan",
       "meaning": {
         "zh": "喜欢",
-        "kr": "",
+        "kr": "좋아하다",
         "en": "to like; to be fond of"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "ài",
       "meaning": {
         "zh": "爱",
-        "kr": "",
+        "kr": "사랑하다",
         "en": "to love; to be fond of; to like; affection; to be inclined (to do sth); to tend to (happen)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "kān",
       "meaning": {
         "zh": "看",
-        "kr": "",
+        "kr": "보다",
         "en": "to look after; to take care of; to watch; to guard"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "yǐn",
       "meaning": {
         "zh": "听",
-        "kr": "",
+        "kr": "듣다",
         "en": "smile (archaic)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "gǒu",
       "meaning": {
         "zh": "狗",
-        "kr": "",
+        "kr": "개",
         "en": "dog"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "māo",
       "meaning": {
         "zh": "猫",
-        "kr": "",
+        "kr": "고양이",
         "en": "cat; (dialect) to hide oneself; (coll.) modem"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "diànyǐng",
       "meaning": {
         "zh": "电影",
-        "kr": "",
+        "kr": "영화",
         "en": "movie; film"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -85,8 +113,12 @@
       "pinyin": "diànshì",
       "meaning": {
         "zh": "电视",
-        "kr": "",
+        "kr": "텔레비전",
         "en": "television; TV"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -94,8 +126,12 @@
       "pinyin": "piàoliang",
       "meaning": {
         "zh": "漂亮",
-        "kr": "",
+        "kr": "예쁘다",
         "en": "pretty; beautiful"
+      },
+      "pos": {
+        "kr": "형용사",
+        "en": "adjective"
       }
     }
   ],

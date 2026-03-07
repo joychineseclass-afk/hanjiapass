@@ -22,8 +22,12 @@
       "pinyin": "chī",
       "meaning": {
         "zh": "吃",
-        "kr": "",
+        "kr": "먹다",
         "en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "hē",
       "meaning": {
         "zh": "喝",
-        "kr": "",
+        "kr": "마시다",
         "en": "to drink; variant of 嗬"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "cài",
       "meaning": {
         "zh": "菜",
-        "kr": "",
+        "kr": "반찬",
         "en": "dish (type of food); vegetable; cuisine; (coll.) (one's) type; (of one's skills etc) weak; poor"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "mǐfàn",
       "meaning": {
         "zh": "米饭",
-        "kr": "",
+        "kr": "밥",
         "en": "(cooked) rice"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "Shuǐ",
       "meaning": {
         "zh": "水",
-        "kr": "",
+        "kr": "물",
         "en": "surname Shui"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "shuǐguǒ",
       "meaning": {
         "zh": "水果",
-        "kr": "",
+        "kr": "과일",
         "en": "fruit"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -76,8 +100,12 @@
       "pinyin": "píngguǒ",
       "meaning": {
         "zh": "苹果",
-        "kr": "",
+        "kr": "사과",
         "en": "apple"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -85,8 +113,12 @@
       "pinyin": "hé",
       "meaning": {
         "zh": "和",
-        "kr": "",
+        "kr": "~와/과",
         "en": "old variant of 和"
+      },
+      "pos": {
+        "kr": "접속사",
+        "en": "conjunction"
       }
     }
   ],

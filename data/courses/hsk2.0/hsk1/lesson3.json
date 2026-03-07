@@ -23,8 +23,12 @@
       "pinyin": "Běijīng",
       "meaning": {
         "zh": "北京",
-        "kr": "",
+        "kr": "베이징",
         "en": "Beijing, capital of the People's Republic of China"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -32,8 +36,12 @@
       "pinyin": "Zhōngguó",
       "meaning": {
         "zh": "中国",
-        "kr": "",
+        "kr": "중국",
         "en": "China"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -41,8 +49,12 @@
       "pinyin": "lǎoshī",
       "meaning": {
         "zh": "老师",
-        "kr": "",
+        "kr": "선생님",
         "en": "teacher"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -50,8 +62,12 @@
       "pinyin": "xuésheng",
       "meaning": {
         "zh": "学生",
-        "kr": "",
+        "kr": "학생",
         "en": "student; schoolchild"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -59,8 +75,12 @@
       "pinyin": "péngyou",
       "meaning": {
         "zh": "朋友",
-        "kr": "",
+        "kr": "친구",
         "en": "friend"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -68,8 +88,12 @@
       "pinyin": "tóngxué",
       "meaning": {
         "zh": "同学",
-        "kr": "",
+        "kr": "동급생",
         "en": "to study at the same school; fellow student; classmate"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     }
   ],

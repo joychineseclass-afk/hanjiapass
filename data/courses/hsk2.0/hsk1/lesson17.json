@@ -22,8 +22,12 @@
       "pinyin": "chūzūchē",
       "meaning": {
         "zh": "出租车",
-        "kr": "",
+        "kr": "택시",
         "en": "taxi; (Tw) rental car"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -31,8 +35,12 @@
       "pinyin": "fēijī",
       "meaning": {
         "zh": "飞机",
-        "kr": "",
+        "kr": "비행기",
         "en": "airplane"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -40,8 +48,12 @@
       "pinyin": "huǒchēzhàn",
       "meaning": {
         "zh": "火车站",
-        "kr": "",
+        "kr": "기차역",
         "en": "train station"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun"
       }
     },
     {
@@ -49,8 +61,12 @@
       "pinyin": "kāi",
       "meaning": {
         "zh": "开",
-        "kr": "",
+        "kr": "열다, 운전하다",
         "en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate; to run; to boil; to write out (a prescription, check, invoice etc); (directional complement) away; off; carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -58,8 +74,12 @@
       "pinyin": "kànjiàn",
       "meaning": {
         "zh": "看见",
-        "kr": "",
+        "kr": "보이다",
         "en": "to see; to catch sight of"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb"
       }
     },
     {
@@ -67,8 +87,12 @@
       "pinyin": "Dū",
       "meaning": {
         "zh": "都",
-        "kr": "",
+        "kr": "모두",
         "en": "surname Du"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb"
       }
     }
   ],
