@@ -255,10 +255,44 @@ function updateTabsUI() {
   });
 }
 
-/** 对话翻译：统一走 languageEngine.getContentText，JP strict 避免混语 */
+/**
+ * 统一 dialogue translation 读取：strict 规则，不 fallback 到其他语言
+ * 兼容：translation.en / en / translationEn / 旧扁平字段
+ */
+function getDialogueTranslation(item, lang) {
+  if (!item || typeof item !== "object") return "";
+  const l = (lang || getLang()).toLowerCase();
+  const key = l === "jp" || l === "ja" ? "jp" : l === "kr" || l === "ko" ? "kr" : l === "cn" || l === "zh" ? "cn" : "en";
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  const trans = item.translation ?? item.trans;
+  if (trans && typeof trans === "object") {
+    const v = trans[key] ?? trans[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  if (key === "en") {
+    const v = item.en ?? item.english ?? item.translationEn ?? item.translation_en;
+    if (v) return str(v);
+  }
+  if (key === "kr") {
+    const v = item.kr ?? item.ko ?? item.translationKr ?? item.translation_kr;
+    if (v) return str(v);
+  }
+  if (key === "jp") {
+    const v = item.jp ?? item.ja ?? item.translationJp ?? item.translation_jp;
+    if (v) return str(v);
+  }
+  if (key === "cn") {
+    const v = item.cn ?? item.zh ?? item.translationCn ?? item.translation_cn;
+    if (v) return str(v);
+  }
+  return "";
+}
+
+/** 对话翻译：使用 getDialogueTranslation，避免与中文主句重复 */
 function pickDialogueTranslation(line, zhMain = "") {
   const lang = getLang();
-  const out = getContentText(line, "translation", { strict: true, lang }) || pick(line, { strict: true, lang });
+  const out = getDialogueTranslation(line, lang);
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
@@ -298,6 +332,9 @@ function renderDialogueLine(line, lang, showPinyin) {
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
   const trans = pickDialogueTranslation(line, zh);
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug("[HSK dialogue] lang=", lang, "text=", zh, "translation=", trans);
+  }
 
   const zhAttrs = zh ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"` : "";
   return `<article class="lesson-dialogue-line">

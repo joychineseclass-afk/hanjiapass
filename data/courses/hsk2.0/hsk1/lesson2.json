@@ -32,15 +32,15 @@
     {
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1" },
       "lines": [
-        { "speaker": "A", "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "kr": "이름이 뭐예요?" },
-        { "speaker": "B", "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "kr": "저는 샤오밍이에요." }
+        { "speaker": "A", "text": "你叫什么名字？", "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?" } },
+        { "speaker": "B", "text": "我叫小明。", "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "My name is Xiaoming." } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2" },
       "lines": [
-        { "speaker": "A", "zh": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "kr": "저는 샤오메이예요." },
-        { "speaker": "B", "zh": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "kr": "만나서 반가워요." }
+        { "speaker": "A", "text": "我叫小美。", "zh": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "translation": { "kr": "저는 샤오메이예요.", "en": "My name is Xiaomei." } },
+        { "speaker": "B", "text": "很高兴认识你。", "zh": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "만나서 반가워요.", "en": "Nice to meet you." } }
       ]
     }
   ],
