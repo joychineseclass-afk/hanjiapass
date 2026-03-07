@@ -1,1 +1,2 @@
-export * as TTS_ENGINE from "./ttsEngine.js";
+import * as TTS_ENGINE from "./ttsEngine.js";
+export { TTS_ENGINE };
