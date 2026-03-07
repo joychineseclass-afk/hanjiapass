@@ -41,18 +41,18 @@ export function getHSKLayoutHTML() {
         💡 <span data-i18n="hsk_tip">레벨을 선택하고 수업을 시작해요.</span>
       </div>
 
-      <!-- Progress Engine v1: 最小进度区 -->
-      <div id="hskProgressBlock" class="mt-3 p-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-700">
-        <span id="hskProgressText">—</span>
-      </div>
+      <!-- Meta bar: 已完成 / 当前课 / 待复习 / 最近学习 -->
+      <div id="hskProgressBlock" class="hsk-meta-bar"></div>
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mt-3"></div>
 
-    <!-- ✅ Directory -->
-    <div id="hskLessonListWrap" class="bg-white rounded-2xl shadow p-4 mt-4">
-      <div class="text-sm font-bold mb-2">Lessons</div>
-      <div id="hskLessonList"></div>
+    <!-- ✅ Directory: 教材目录列表 -->
+    <div id="hskLessonListWrap" class="mt-4">
+      <section class="hsk-lesson-directory">
+        <div class="hsk-directory-head" data-i18n="hsk_directory_title">학습 목록</div>
+        <div id="hskLessonList"></div>
+      </section>
     </div>
 
     <!-- ✅ Study header：只显示 Lesson N / title，HSK N · version 在页面标题 hskSubTitle -->

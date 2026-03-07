@@ -32,21 +32,35 @@ function getCourseId() {
 function $(id) { return document.getElementById(id); }
 
 function updateProgressBlock() {
-  const el = $("hskProgressText");
+  const el = $("hskProgressBlock");
   if (!el) return;
   const courseId = getCourseId();
   const total = state.lessons?.length ?? 0;
   const stats = PROGRESS_SELECTORS?.getCourseStats?.(courseId, total) ?? {};
   const { completedLessonCount, dueReviewCount, lastLessonNo, lastActivityAt } = stats;
-  const parts = [];
-  parts.push(total > 0 ? `已完成 ${completedLessonCount} / ${total} 课` : "—");
-  if (lastLessonNo > 0) parts.push(`当前第 ${lastLessonNo} 课`);
-  if (dueReviewCount > 0) parts.push(`待复习 ${dueReviewCount} 词`);
+
+  const lessonUnit = i18n.t("hsk_meta_lesson_unit") || "课";
+  const wordUnit = i18n.t("hsk_meta_word_unit") || "词";
+
+  const chips = [];
+  chips.push(
+    total > 0
+      ? `${i18n.t("hsk_meta_completed")} ${completedLessonCount} / ${total} ${lessonUnit}`
+      : "—"
+  );
+  if (lastLessonNo > 0) {
+    chips.push(`${i18n.t("hsk_meta_current")} ${lastLessonNo} ${lessonUnit}`);
+  }
+  if (dueReviewCount > 0) {
+    chips.push(`${i18n.t("hsk_meta_review")} ${dueReviewCount} ${wordUnit}`);
+  }
   if (lastActivityAt > 0) {
     const d = new Date(lastActivityAt);
-    parts.push(`最近 ${d.toLocaleDateString()}`);
+    const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+    chips.push(`${i18n.t("hsk_meta_last_study")} ${dateStr}`);
   }
-  el.textContent = parts.join(" · ");
+
+  el.innerHTML = chips.map((text) => `<span class="hsk-meta-chip">${escapeHtml(text)}</span>`).join("");
 }
 
 function setError(msg = "") {
@@ -494,7 +508,9 @@ async function loadLessons() {
     result = applyVocabDistributionTitles(result, vocabDist?.lessonThemes ?? null);
 
     state.lessons = result;
-    renderLessonList(listEl, state.lessons, { lang });
+    const total = state.lessons.length;
+    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
+    renderLessonList(listEl, state.lessons, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
     updateProgressBlock();
   } catch (e) {
     console.error(e);
@@ -774,7 +790,9 @@ function bindEvents() {
           return title.includes(q) || pinyin.includes(q) || file.includes(q);
         });
 
-    renderLessonList(listEl, filtered, { lang });
+    const total = state.lessons?.length ?? 0;
+    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
+    renderLessonList(listEl, filtered, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
   }, { signal });
 
   // AI: copy context
@@ -847,7 +865,9 @@ function bindEvents() {
     setSubTitle();
 
     const lang = getLang();
-    renderLessonList($("hskLessonList"), state.lessons, { lang });
+    const total = state.lessons?.length ?? 0;
+    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
+    renderLessonList($("hskLessonList"), state.lessons, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
 
     if (state.current?.lessonData) {
       const ld = state.current.lessonData;

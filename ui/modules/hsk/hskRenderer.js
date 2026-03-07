@@ -79,57 +79,55 @@ function pickText(v, lang = "ko") {
   return String(v);
 }
 
-export function renderLessonList(containerEl, lessons, { lang = "ko" } = {}) {
+export function renderLessonList(containerEl, lessons, { lang = "ko", currentLessonNo = 0 } = {}) {
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
+  const lessonLabel = i18n?.t?.("hsk_directory_lesson") || "第";
+  const arrow = "›";
 
-  containerEl.innerHTML = `
-    <div class="lesson-list-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
-      ${list.map((it) => {
-        const lessonNo = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
-        const file = it.file || it.path || it.url || "";
+  const rows = list.map((it) => {
+    const lessonNo = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
+    const file = it.file || it.path || it.url || "";
 
-        const titleObj = it.title ?? it.name ?? it.label ?? "";
-        let zh = "";
-        if (typeof titleObj === "string") {
-          const s = titleObj.trim();
-          const parts = s.split(/\s*\/\s*/);
-          zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s;
-        } else {
-          zh = pickText(titleObj, "zh") || pickText(titleObj, "cn") || "";
-        }
-        const manualPinyin = String(it.pinyinTitle ?? it.pinyin ?? it.py ?? "").trim();
-        const pinyin = manualPinyin || (zh && /[\u4e00-\u9fff]/.test(zh) ? resolvePinyin(zh, manualPinyin) : "");
+    const titleObj = it.title ?? it.name ?? it.label ?? "";
+    let zh = "";
+    if (typeof titleObj === "string") {
+      const s = titleObj.trim();
+      const parts = s.split(/\s*\/\s*/);
+      zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s;
+    } else {
+      zh = pickText(titleObj, "zh") || pickText(titleObj, "cn") || "";
+    }
 
-        let translation = "";
-        if (lang === "ko") {
-          translation = it.titleKo ?? pickText(titleObj, "ko") ?? pickText(titleObj, "kr") ?? "";
-          if (!translation && typeof titleObj === "string") {
-            const parts = String(titleObj).split(/\s*\/\s*/);
-            translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
-          }
-        } else if (lang === "en") {
-          translation = it.titleEn ?? pickText(titleObj, "en") ?? "";
-        }
+    let translation = "";
+    if (lang === "ko") {
+      translation = it.titleKo ?? pickText(titleObj, "ko") ?? pickText(titleObj, "kr") ?? "";
+      if (!translation && typeof titleObj === "string") {
+        const parts = String(titleObj).split(/\s*\/\s*/);
+        translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
+      }
+    } else if (lang === "en") {
+      translation = it.titleEn ?? pickText(titleObj, "en") ?? "";
+    }
 
-        return `
-          <button class="lesson-card-v w-full text-left rounded-2xl border border-slate-200 hover:border-slate-300"
-            style="min-height:100px;padding:14px 16px;display:flex;flex-direction:column;align-items:stretch;gap:6px;"
-            data-open-lesson="1"
-            data-lesson-no="${lessonNo}"
-            data-file="${escapeHtmlAttr(file)}"
-          >
-            <div class="lesson-card-v-inner" style="display:flex;flex-direction:column;gap:6px;">
-              <div class="text-xs font-bold opacity-70">${lessonNo ? (i18n?.t?.("hsk_lesson_unit", { n: lessonNo }) || `第${lessonNo}课`) : ""}</div>
-              <div class="text-base font-semibold leading-tight">${escapeHtml(zh || "-")}</div>
-              ${pinyin ? `<div class="text-sm italic opacity-80 leading-snug">${escapeHtml(pinyin)}</div>` : ""}
-              ${translation ? `<div class="text-sm opacity-70 leading-snug">${escapeHtml(translation)}</div>` : ""}
-            </div>
-          </button>
-        `;
-      }).join("")}
-    </div>
-  `;
+    const titleDisplay = lang === "zh" ? (zh || translation) : (translation || zh || "-");
+    const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
+
+    return `
+      <button class="hsk-directory-row${isActive ? " is-active" : ""}"
+        data-open-lesson="1"
+        data-lesson-no="${lessonNo}"
+        data-file="${escapeHtmlAttr(file)}"
+      >
+        <span class="hsk-directory-no">${lessonNo || ""}</span>
+        <span class="hsk-directory-title">${lessonLabel} ${lessonNo} / ${escapeHtml(titleDisplay)}</span>
+        <span class="hsk-directory-arrow">${arrow}</span>
+      </button>
+    `;
+  }).join("");
+
+  const emptyMsg = i18n?.t?.("hsk_empty_lessons") || "—";
+  containerEl.innerHTML = `<div class="hsk-directory-rows">${rows || `<div class="hsk-directory-empty">${escapeHtml(emptyMsg)}</div>`}</div>`;
 }
 
 const MEANING_FALLBACK = {
