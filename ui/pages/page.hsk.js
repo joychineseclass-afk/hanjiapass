@@ -23,7 +23,7 @@ const state = {
 };
 
 function getLang() {
-  return normalizeLang(i18n?.getLang?.()); // ko | zh | en
+  return normalizeLang(i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko");
 }
 
 function getCourseId() {
@@ -36,8 +36,8 @@ function updateProgressBlock() {
   const el = $("hskProgressBlock");
   if (!el) return;
   const courseId = getCourseId();
-  const total = state.lessons?.length ?? 0;
-  const stats = PROGRESS_SELECTORS?.getCourseStats?.(courseId, total) ?? {};
+  const total = (state.lessons && state.lessons.length) || 0;
+  const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(courseId, total) : null) || {};
   const { completedLessonCount, dueReviewCount, lastLessonNo, lastActivityAt } = stats;
 
   const lessonUnit = i18n.t("hsk_meta_lesson_unit") || "课";
@@ -79,27 +79,27 @@ function setSubTitle() {
 }
 
 function showStudyMode(titleText = "") {
-  $("hskLessonListWrap")?.classList.add("hidden");
-  $("hskStudyBar")?.classList.remove("hidden");
-  $("hskStudyPanels")?.classList.remove("hidden");
+  var el = $("hskLessonListWrap"); if (el) el.classList.add("hidden");
+  el = $("hskStudyBar"); if (el) el.classList.remove("hidden");
+  el = $("hskStudyPanels"); if (el) el.classList.remove("hidden");
   if ($("hskStudyTitle")) $("hskStudyTitle").textContent = titleText || "";
 }
 
 function showListMode() {
-  $("hskStudyBar")?.classList.add("hidden");
-  $("hskStudyPanels")?.classList.add("hidden");
+  el = $("hskStudyBar"); if (el) el.classList.add("hidden");
+  el = $("hskStudyPanels"); if (el) el.classList.add("hidden");
 
-  $("hskLessonListWrap")?.classList.remove("hidden");
+  el = $("hskLessonListWrap"); if (el) el.classList.remove("hidden");
 
   // clear panels
-  $("hskPanelWords") && ($("hskPanelWords").innerHTML = "");
-  $("hskDialogueBody") && ($("hskDialogueBody").innerHTML = "");
-  $("hskGrammarBody") && ($("hskGrammarBody").innerHTML = "");
-  $("hskExtensionBody") && ($("hskExtensionBody").innerHTML = "");
-  $("hskPracticeBody") && ($("hskPracticeBody").innerHTML = "");
-  $("hskAIResult") && ($("hskAIResult").innerHTML = "");
-  $("hskAIContext")?.classList.add("hidden");
-  $("hskSceneSection") && ($("hskSceneSection").innerHTML = "") && $("hskSceneSection").classList.add("hidden");
+  el = $("hskPanelWords"); if (el) el.innerHTML = "";
+  el = $("hskDialogueBody"); if (el) el.innerHTML = "";
+  el = $("hskGrammarBody"); if (el) el.innerHTML = "";
+  el = $("hskExtensionBody"); if (el) el.innerHTML = "";
+  el = $("hskPracticeBody"); if (el) el.innerHTML = "";
+  el = $("hskAIResult"); if (el) el.innerHTML = "";
+  el = $("hskAIContext"); if (el) el.classList.add("hidden");
+  el = $("hskSceneSection"); if (el) { el.innerHTML = ""; el.classList.add("hidden"); }
 
   state.current = null;
   state.tab = "words";
@@ -121,7 +121,7 @@ function updateTabsUI() {
     const panel = $(panelId);
     const active = state.tab === tab;
 
-    btn?.classList.toggle("active", active);
+    if (btn) btn.classList.toggle("active", active);
     // simple active style without CSS dependency
     if (btn) {
       btn.style.background = active ? "rgba(34,197,94,0.10)" : "";
@@ -136,9 +136,9 @@ function updateTabsUI() {
 /** 按系统语言取对话翻译。KR/CN/EN/JP 统一 fallback：jp->cn->en->kr */
 function pickDialogueTranslation(line, lang, zhMain = "") {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const t = line?.translation;
+  const t = line && line.translation;
   const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  const obj = { jp: line?.jp ?? t?.jp, cn: line?.zh ?? line?.cn ?? t?.zh ?? t?.cn, en: line?.en ?? t?.en, kr: line?.kr ?? line?.ko ?? t?.kr ?? t?.ko };
+  const obj = { jp: (line && line.jp) || (t && t.jp), cn: (line && (line.zh || line.cn)) || (t && (t.zh || t.cn)), en: (line && line.en) || (t && t.en), kr: (line && (line.kr || line.ko)) || (t && (t.kr || t.ko)) };
   const out = str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, ""));
   if (out && zhMain && out === zhMain) return "";
   return out;
@@ -152,7 +152,7 @@ function pickCardTitle(obj, lang, cardIndex = 1) {
     if (typeof obj === "string") return str(obj);
     const v = getLocalizedText(obj, contentLang, "") || getLocalizedText(obj, lang, "");
     if (v) return str(v);
-    if ((contentLang === "jp" || contentLang === "ja") && !str(obj?.jp ?? obj?.ja)) {
+    if ((contentLang === "jp" || contentLang === "ja") && !str((obj && obj.jp) || (obj && obj.ja))) {
       const sessionText = i18n.t("dialogue.session", { n: cardIndex });
       if (sessionText && sessionText !== "dialogue.session") return sessionText;
     }
@@ -165,11 +165,11 @@ function pickCardTitle(obj, lang, cardIndex = 1) {
 
 /** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
 function getDialogueCards(lesson) {
-  if (Array.isArray(lesson?.dialogueCards) && lesson.dialogueCards.length) {
+  if (lesson && Array.isArray(lesson.dialogueCards) && lesson.dialogueCards.length) {
     return lesson.dialogueCards;
   }
 
-  if (Array.isArray(lesson?.dialogue) && lesson.dialogue.length) {
+  if (lesson && Array.isArray(lesson.dialogue) && lesson.dialogue.length) {
     const first = lesson.dialogue[0];
     if (first && first.lines && Array.isArray(first.lines)) {
       return lesson.dialogue;
@@ -182,8 +182,8 @@ function getDialogueCards(lesson) {
 
 /** 渲染单条对话行，输出完整 HTML（lesson-dialogue-line / lesson-dialogue-speaker / lesson-dialogue-zh / lesson-dialogue-pinyin / lesson-dialogue-translation） */
 function renderDialogueLine(line, lang, showPinyin) {
-  const spk = String(line?.spk ?? line?.speaker ?? "").trim();
-  const zh = String(line?.zh ?? line?.cn ?? line?.line ?? "").trim();
+  const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
+  const zh = String((line && line.zh) || (line && line.cn) || (line && line.line) || "").trim();
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
   const trans = pickDialogueTranslation(line, lang, zh);
@@ -199,7 +199,7 @@ function renderDialogueLine(line, lang, showPinyin) {
 
 /** 对话渲染：优先 dialogueCards，回退 dialogue；每张卡单独渲染，不合并 */
 function buildDialogueHTML(lessonData) {
-  const raw = lessonData?._raw ?? lessonData;
+  const raw = (lessonData && lessonData._raw) || lessonData;
   const cards = getDialogueCards(raw);
   const lang = getLang();
 
@@ -210,19 +210,19 @@ function buildDialogueHTML(lessonData) {
 
   if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk_empty_dialogue")}</div>`;
 
-  if (SCENE_ENGINE?.hasScene?.(lessonData)) {
+  if (SCENE_ENGINE && typeof SCENE_ENGINE.hasScene === "function" && SCENE_ENGINE.hasScene(lessonData)) {
     const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
     const framesHtml = SceneRenderer.renderSceneFrames(scene, lessonData, lang);
     if (framesHtml) return hero + framesHtml;
   }
 
-  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
+  const showPinyin = shouldShowPinyin({ level: (lessonData && lessonData.level), version: (lessonData && lessonData.version) });
 
   return `${hero}<div class="lesson-dialogue-list">
 ${cards.map((card, index) => {
-  const lines = Array.isArray(card?.lines) ? card.lines : [];
+  const lines = Array.isArray(card && card.lines) ? card.lines : [];
   if (!lines.length) return "";
-  const titleText = pickCardTitle(card?.title, lang, index + 1);
+  const titleText = pickCardTitle(card && card.title, lang, index + 1);
   const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
   return `  <section class="lesson-dialogue-card">
     <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
@@ -235,22 +235,22 @@ ${cards.map((card, index) => {
 /** 语法：取当前语言解释。KR/CN/EN/JP 统一用 getLocalizedText */
 function pickGrammarExplanation(pt, lang) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const obj = pt?.explanation ?? { zh: pt?.explanation_zh, kr: pt?.explanation_kr ?? pt?.kr ?? pt?.ko, en: pt?.explanation_en ?? pt?.en, jp: pt?.explanation_jp ?? pt?.jp };
+  const obj = (pt && pt.explanation) || { zh: pt && pt.explanation_zh, kr: (pt && (pt.explanation_kr || pt.kr || pt.ko)), en: (pt && (pt.explanation_en || pt.en)), jp: (pt && (pt.explanation_jp || pt.jp)) };
   const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  return str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, "")) || str(obj?.zh ?? obj?.kr ?? obj?.en ?? obj?.jp);
+  return str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, "")) || str((obj && obj.zh) || (obj && obj.kr) || (obj && obj.en) || (obj && obj.jp));
 }
 
 /** 语法：取例句列表，兼容 example / examples，JP fallback: jp->cn->en->kr */
 function getGrammarExamples(pt, lang) {
-  const ex = pt?.example ?? pt?.examples;
+  const ex = (pt && pt.example) || (pt && pt.examples);
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const transObj = (e) => ({ jp: str(e?.jp ?? e?.ja), cn: str(e?.zh ?? e?.cn), en: str(e?.en), kr: str(e?.kr ?? e?.ko) });
+  const transObj = (e) => ({ jp: str((e && e.jp) || (e && e.ja)), cn: str((e && e.zh) || (e && e.cn)), en: str(e && e.en), kr: str((e && e.kr) || (e && e.ko)) });
   const toItem = (e) => {
     if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
-    const zh = str(e?.zh ?? e?.cn ?? e?.line);
-    const pinyin = str(e?.pinyin ?? e?.py);
+    const zh = str((e && e.zh) || (e && e.cn) || (e && e.line));
+    const pinyin = str((e && e.pinyin) || (e && e.py));
     const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    const trans = getLocalizedText(transObj(e), contentLang, "") || getLocalizedText(transObj(e), lang, "") || str(e?.zh ?? e?.cn) || str(e?.kr ?? e?.ko) || str(e?.en);
+    const trans = getLocalizedText(transObj(e), contentLang, "") || getLocalizedText(transObj(e), lang, "") || str((e && e.zh) || (e && e.cn)) || str((e && e.kr) || (e && e.ko) || (e && e.en));
     return { zh, pinyin, trans };
   };
   if (!ex) return [];
@@ -260,7 +260,7 @@ function getGrammarExamples(pt, lang) {
 
 /** 语法渲染：教材级卡片，支持点读 */
 function buildGrammarHTML(lessonData) {
-  const g = lessonData?.grammar;
+  const g = lessonData && lessonData.grammar;
   const lang = getLang();
   const speakLabel = i18n.t("extension_speak");
   const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk_empty_grammar")}</div>`;
@@ -272,14 +272,14 @@ function buildGrammarHTML(lessonData) {
 
   if (!g) return `${hero}${emptyMsg}`;
 
-  const arr = Array.isArray(g) ? g : (Array.isArray(g?.points) ? g.points : []);
+  const arr = Array.isArray(g) ? g : (Array.isArray(g && g.points) ? g.points : []);
   if (!arr.length) return `${hero}${emptyMsg}`;
 
-  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
+  const showPinyin = shouldShowPinyin({ level: (lessonData && lessonData.level), version: (lessonData && lessonData.version) });
   const cards = arr.map((pt, i) => {
-    const titleZh = typeof pt?.title === "object"
-      ? (pt.title?.zh ?? pt.title?.kr ?? pt.title?.en ?? "")
-      : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${i + 1}`);
+    const titleZh = typeof (pt && pt.title) === "object"
+      ? ((pt.title && pt.title.zh) || (pt.title && pt.title.kr) || (pt.title && pt.title.en) || "")
+      : ((pt && pt.title) || (pt && pt.name) || (pt && pt.pattern) || "#" + (i + 1));
     let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
     if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
@@ -324,8 +324,8 @@ function buildGrammarHTML(lessonData) {
 
 /** 扩展表达：hero + 教材卡片列表，支持点读（点击中文或发音按钮） */
 function buildExtensionHTML(lessonData) {
-  const raw = lessonData?._raw ?? lessonData;
-  const arr = Array.isArray(raw?.extension) ? raw.extension : [];
+  const raw = (lessonData && lessonData._raw) || lessonData;
+  const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
   const lang = getLang();
   const speakLabel = i18n.t("extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
@@ -342,8 +342,8 @@ function buildExtensionHTML(lessonData) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
   const cards = arr.map((item, i) => {
-    const zh = str(item?.zh ?? item?.cn ?? item?.line ?? "");
-    const pinyin = str(item?.pinyin ?? item?.py ?? "");
+    const zh = str((item && item.zh) || (item && item.cn) || (item && item.line) || "");
+    const pinyin = str((item && item.pinyin) || (item && item.py) || "");
     const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
     const meaning = getLocalizedText(item, contentLang, "") || getLocalizedText(item, lang, "");
 
@@ -369,12 +369,13 @@ function buildExtensionHTML(lessonData) {
 }
 
 function buildAIContext() {
-  if (!state.current?.lessonData) return "";
+  if (!state.current || !state.current.lessonData) return "";
   const lang = getLang();
   const ld = state.current.lessonData;
   const no = state.current.lessonNo;
 
-  const titleObj = state.lessons?.find(x => Number(x.lessonNo) === Number(no))?.title;
+  const found = state.lessons && state.lessons.find(function(x) { return Number(x.lessonNo) === Number(no); });
+  const titleObj = found && found.title;
   const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
   const title = titleObj ? (typeof titleObj === "object" ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || "") : String(titleObj)) : "";
 
@@ -411,9 +412,9 @@ async function getVocabDistribution(lv, version) {
     const res = await fetch(url, { cache: "default" });
     if (!res.ok) return null;
     const data = await res.json();
-    const dist = data?.distribution;
+    const dist = data && data.distribution;
     const order = dist && typeof dist === "object" ? Object.keys(dist) : null;
-    const lessonThemes = data?.lessonThemes && typeof data.lessonThemes === "object" ? data.lessonThemes : null;
+    const lessonThemes = (data && data.lessonThemes && typeof data.lessonThemes === "object") ? data.lessonThemes : null;
     const out = { order, lessonThemes };
     _vocabDistCache.set(key, out);
     return out;
@@ -427,8 +428,8 @@ function sortLessonsByDistributionOrder(lessons, order) {
   if (!Array.isArray(lessons) || !Array.isArray(order) || order.length === 0) return lessons;
   const idxMap = new Map(order.map((k, i) => [k, i]));
   return [...lessons].sort((a, b) => {
-    const noA = Number(a?.lessonNo ?? a?.lesson ?? a?.id ?? a?.no ?? 0) || 0;
-    const noB = Number(b?.lessonNo ?? b?.lesson ?? b?.id ?? b?.no ?? 0) || 0;
+    const noA = Number((a && a.lessonNo) || (a && a.lesson) || (a && a.id) || (a && a.no) || 0) || 0;
+    const noB = Number((b && b.lessonNo) || (b && b.lesson) || (b && b.id) || (b && b.no) || 0) || 0;
     const keyA = noA ? `lesson${noA}` : "";
     const keyB = noB ? `lesson${noB}` : "";
     const iA = idxMap.has(keyA) ? idxMap.get(keyA) : Infinity;
@@ -467,21 +468,21 @@ const HSK1_THEME_TRANSLATIONS = {
 function applyVocabDistributionTitles(lessons, lessonThemes) {
   if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") return lessons;
   return lessons.map((l) => {
-    const no = Number(l?.lessonNo ?? l?.lesson ?? l?.id ?? l?.no ?? 0) || 0;
-    const theme = no ? (lessonThemes[String(no)] ?? lessonThemes[no]) : null;
+    const no = Number((l && l.lessonNo) || (l && l.lesson) || (l && l.id) || (l && l.no) || 0) || 0;
+    const theme = no ? (lessonThemes[String(no)] || lessonThemes[no]) : null;
     if (!theme || typeof theme !== "string") return l;
     const tr = HSK1_THEME_TRANSLATIONS[theme];
     return {
       ...l,
       title: {
         zh: theme,
-        kr: tr?.ko ?? "",
-        en: tr?.en ?? "",
-        jp: tr?.jp ?? "",
+        kr: (tr && tr.ko) || "",
+        en: (tr && tr.en) || "",
+        jp: (tr && tr.jp) || "",
       },
-      titleKo: tr?.ko ?? "",
-      titleEn: tr?.en ?? "",
-      titleJp: tr?.jp ?? "",
+      titleKo: (tr && tr.ko) || "",
+      titleEn: (tr && tr.en) || "",
+      titleJp: (tr && tr.jp) || "",
     };
   });
 }
@@ -496,34 +497,34 @@ async function loadLessons() {
 
   try {
     let lessons = [];
-    if (LESSON_ENGINE?.loadCourseIndex) {
+    if (LESSON_ENGINE && typeof LESSON_ENGINE.loadCourseIndex === "function") {
       try {
         const index = await LESSON_ENGINE.loadCourseIndex({
           courseType: state.version,
           level: `hsk${state.lv}`,
         });
-        lessons = Array.isArray(index?.lessons) ? index.lessons : [];
+        lessons = Array.isArray(index && index.lessons) ? index.lessons : [];
       } catch (engineErr) {
-        console.warn("[HSK] Lesson Engine loadCourseIndex failed, fallback to HSK_LOADER:", engineErr?.message);
+        console.warn("[HSK] Lesson Engine loadCourseIndex failed, fallback to HSK_LOADER:", engineErr && engineErr.message);
       }
     }
-    if (!lessons.length && window.HSK_LOADER?.loadLessons) {
+    if (!lessons.length && window.HSK_LOADER && typeof window.HSK_LOADER.loadLessons === "function") {
       lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
     }
     lessons = Array.isArray(lessons) ? lessons : [];
 
     const vocabDist = await getVocabDistribution(state.lv, state.version);
-    let result = sortLessonsByDistributionOrder(lessons, vocabDist?.order ?? null);
-    result = applyVocabDistributionTitles(result, vocabDist?.lessonThemes ?? null);
+    let result = sortLessonsByDistributionOrder(lessons, (vocabDist && vocabDist.order) || null);
+    result = applyVocabDistributionTitles(result, (vocabDist && vocabDist.lessonThemes) || null);
 
     state.lessons = result;
     const total = state.lessons.length;
-    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
-    renderLessonList(listEl, state.lessons, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
+    const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total) : null) || {};
+    renderLessonList(listEl, state.lessons, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
     updateProgressBlock();
   } catch (e) {
     console.error(e);
-    setError(`Lessons load failed: ${e?.message || e}`);
+    setError("Lessons load failed: " + (e && e.message ? e.message : e));
   }
 }
 
@@ -534,7 +535,7 @@ async function openLesson({ lessonNo, file }) {
 
   try {
     let lessonData = null;
-    if (LESSON_ENGINE?.loadLessonDetail) {
+    if (LESSON_ENGINE && typeof LESSON_ENGINE.loadLessonDetail === "function") {
       try {
         const { lesson } = await LESSON_ENGINE.loadLessonDetail({
           courseType: state.version,
@@ -544,10 +545,10 @@ async function openLesson({ lessonNo, file }) {
         });
         lessonData = lesson;
       } catch (engineErr) {
-        console.warn("[HSK] Lesson Engine loadLessonDetail failed, fallback to HSK_LOADER:", engineErr?.message);
+        console.warn("[HSK] Lesson Engine loadLessonDetail failed, fallback to HSK_LOADER:", engineErr && engineErr.message);
       }
     }
-    if (!lessonData && window.HSK_LOADER?.loadLessonDetail) {
+    if (!lessonData && window.HSK_LOADER && typeof window.HSK_LOADER.loadLessonDetail === "function") {
       lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
         version: state.version,
         file: file || "",
@@ -555,10 +556,10 @@ async function openLesson({ lessonNo, file }) {
     }
     if (!lessonData) throw new Error("Failed to load lesson");
 
-    const lessonWordsRaw = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
+    const lessonWordsRaw = Array.isArray(lessonData && lessonData.words) ? lessonData.words : (Array.isArray(lessonData && lessonData.vocab) ? lessonData.vocab : []);
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");
     let vocab = [];
-    if (needsVocabEnrichment && window.HSK_LOADER?.loadVocab) {
+    if (needsVocabEnrichment && window.HSK_LOADER && typeof window.HSK_LOADER.loadVocab === "function") {
       vocab = await window.HSK_LOADER.loadVocab(state.lv, { version: state.version });
     }
 
@@ -567,7 +568,7 @@ async function openLesson({ lessonNo, file }) {
 
     const lessonWords = lessonWordsRaw.map((w) => {
       if (typeof w === "string") {
-        const key = String(w ?? "").trim();
+        const key = String(w != null ? w : "").trim();
         return vocabByKey.get(key) || { hanzi: key };
       }
       return w || {};
@@ -575,20 +576,20 @@ async function openLesson({ lessonNo, file }) {
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
 
-    const courseId = lessonData?.courseId ?? getCourseId();
-    const lessonId = lessonData?.id ?? `${courseId}_lesson${no}`;
-    PROGRESS_ENGINE?.markLessonStarted?.({ courseId, lessonId, lessonNo: no });
+    const courseId = (lessonData && lessonData.courseId) || getCourseId();
+    const lessonId = (lessonData && lessonData.id) || (courseId + "_lesson" + no);
+    if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.markLessonStarted === "function") PROGRESS_ENGINE.markLessonStarted({ courseId: courseId, lessonId: lessonId, lessonNo: no });
 
-    const lessonCoverUrl = IMAGE_ENGINE?.getLessonImage?.(lessonData, {
+    const lessonCoverUrl = (IMAGE_ENGINE && typeof IMAGE_ENGINE.getLessonImage === "function" ? IMAGE_ENGINE.getLessonImage(lessonData, {
       courseType: state.version,
-      level: `hsk${state.lv}`,
-    });
+      level: "hsk" + state.lv,
+    }) : null);
     const coverWrap = $("hskLessonCoverWrap");
     const coverImg = $("hskLessonCover");
     if (coverWrap && coverImg) {
       if (lessonCoverUrl) {
         coverImg.src = lessonCoverUrl;
-        coverImg.alt = typeof lessonData?.title === "object" ? (lessonData.title?.zh ?? lessonData.title?.en ?? "") : String(lessonData?.title ?? "");
+        coverImg.alt = typeof (lessonData && lessonData.title) === "object" ? ((lessonData.title && lessonData.title.zh) || (lessonData.title && lessonData.title.en) || "") : String((lessonData && lessonData.title) || "");
         coverImg.onerror = () => { coverWrap.classList.add("hidden"); };
         coverWrap.classList.remove("hidden");
     } else {
@@ -598,7 +599,7 @@ async function openLesson({ lessonNo, file }) {
 
     const sceneSection = $("hskSceneSection");
     if (sceneSection) {
-      if (SCENE_ENGINE?.hasScene?.(lessonData)) {
+      if (SCENE_ENGINE && typeof SCENE_ENGINE.hasScene === "function" && SCENE_ENGINE.hasScene(lessonData)) {
         const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
         sceneSection.innerHTML = SceneRenderer.renderSceneHeader(scene, lang) +
           SceneRenderer.renderSceneGoals(scene, lang) +
@@ -610,15 +611,15 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    const titleObj = lessonData?.title;
+    const titleObj = lessonData && lessonData.title;
     const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
     const titleStr = typeof titleObj === "object"
-      ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || titleObj?.kr || titleObj?.zh || titleObj?.en || "")
+      ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || (titleObj && titleObj.kr) || (titleObj && titleObj.zh) || (titleObj && titleObj.en) || "")
       : (typeof titleObj === "string" ? titleObj : "");
     const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no }) || (lang === "jp" ? `第 ${no} 課` : lang === "kr" ? `제 ${no}과` : lang === "zh" ? `第 ${no} 课` : `Lesson ${no}`);
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
     showStudyMode(headerTitle, "");
-    $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    el = $("hskStudyBar"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     updateProgressBlock();
 
     // 供 Stroke 弹窗 / fallback 使用的上下文
@@ -631,12 +632,12 @@ async function openLesson({ lessonNo, file }) {
 
     // Default tab: words
     state.tab = "words";
-    PROGRESS_ENGINE?.markStepCompleted?.({ courseId, lessonId, step: "vocab" });
+    if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.markStepCompleted === "function") PROGRESS_ENGINE.markStepCompleted({ courseId: courseId, lessonId: lessonId, step: "vocab" });
     updateTabsUI();
 
     // Render panels
-    const isReview = lessonData?.type === "review";
-    const reviewRange = lessonData?.review?.lessonRange;
+    const isReview = (lessonData && lessonData.type) === "review";
+    const reviewRange = (lessonData && lessonData.review && lessonData.review.lessonRange);
     if (isReview && (!lessonWords || lessonWords.length === 0) && Array.isArray(reviewRange) && reviewRange.length >= 2) {
       const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
       const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
@@ -650,7 +651,7 @@ async function openLesson({ lessonNo, file }) {
       `;
     } else {
       renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang, scope: `hsk${state.lv}` });
-      PROGRESS_ENGINE?.touchLessonVocab?.({
+      if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.touchLessonVocab === "function") PROGRESS_ENGINE.touchLessonVocab({
         courseId,
         lessonId,
         vocabItems: lessonWords.map((w) => wordKey(w) || w),
@@ -667,28 +668,28 @@ async function openLesson({ lessonNo, file }) {
           lesson: lessonData,
           lang,
           onComplete: ({ total, correct, score, lesson, wrongItems = [] }) => {
-            PROGRESS_ENGINE?.recordPracticeResult?.({
+            if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.recordPracticeResult === "function") PROGRESS_ENGINE.recordPracticeResult({
               courseId,
               lessonId,
               total,
               correct,
               score,
-              vocabItems: (lesson?.vocab ?? lesson?.words ?? []).map((w) => (typeof w === "string" ? w : w?.hanzi ?? w?.word ?? "")).filter(Boolean),
+              vocabItems: ((lesson && lesson.vocab) || (lesson && lesson.words) || []).map(function(w) { return typeof w === "string" ? w : (w && w.hanzi) || (w && w.word) || ""; }).filter(Boolean),
               wrongItems,
             });
             updateProgressBlock();
           },
         });
       } catch (e) {
-        console.warn("[HSK] Practice mount failed:", e?.message);
+        console.warn("[HSK] Practice mount failed:", e && e.message);
         $("hskPracticeBody").innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("practice.load_failed") || i18n.t("practice.empty"))}</div>`;
       }
     }
 
     // AI panel: 平台级 AI 对话训练入口
     $("hskAIInput").value = "";
-    $("hskAIContext")?.classList.add("hidden");
-    if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
+    el = $("hskAIContext"); if (el) el.classList.add("hidden");
+    if (AI_CAPABILITY && typeof AI_CAPABILITY.mountAIPanel === "function" && $("hskAIResult")) {
       try {
         AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
           lesson: lessonData,
@@ -696,7 +697,7 @@ async function openLesson({ lessonNo, file }) {
           wordsWithMeaning: (w) => wordMeaning(w, lang),
         });
       } catch (e) {
-        console.warn("[HSK] AI panel mount failed, fallback:", e?.message);
+        console.warn("[HSK] AI panel mount failed, fallback:", e && e.message);
         $("hskAIResult").innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk_ai_tip", {}))}</div>`;
       }
     } else {
@@ -705,7 +706,7 @@ async function openLesson({ lessonNo, file }) {
 
   } catch (e) {
     console.error(e);
-    setError(`Lesson load failed: ${e?.message || e}`);
+    setError("Lesson load failed: " + (e && e.message ? e.message : e));
   }
 }
 
@@ -713,20 +714,20 @@ function bindEvents() {
   const controller = new AbortController();
   const { signal } = controller;
 
-  $("hskLevel")?.addEventListener("change", async (e) => {
+  el = $("hskLevel"); if (el) el.addEventListener("change", async function(e) {
     state.lv = Number(e.target.value || 1);
     showListMode();
     await loadLessons();
     updateProgressBlock();
   }, { signal });
 
-  $("hskVersion")?.addEventListener("change", async (e) => {
-    const ver = window.HSK_LOADER?.normalizeVersion?.(e.target.value) || (e.target.value === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+  el = $("hskVersion"); if (el) el.addEventListener("change", async function(e) {
+    const ver = (window.HSK_LOADER && typeof window.HSK_LOADER.normalizeVersion === "function" ? window.HSK_LOADER.normalizeVersion(e.target.value) : null) || (e.target.value === "hsk3.0" ? "hsk3.0" : "hsk2.0");
     state.version = ver;
-    try { window.HSK_LOADER?.setVersion?.(ver); } catch {}
+    try { if (window.HSK_LOADER && typeof window.HSK_LOADER.setVersion === "function") window.HSK_LOADER.setVersion(ver); } catch (err) {}
     await loadLessons();
     updateProgressBlock();
-    if (state.current?.lessonData) {
+    if (state.current && state.current.lessonData) {
       const { lessonNo, file } = state.current;
       await openLesson({ lessonNo, file });
     } else {
@@ -734,9 +735,9 @@ function bindEvents() {
     }
   }, { signal });
 
-  $("hskBackToList")?.addEventListener("click", () => {
+  el = $("hskBackToList"); if (el) el.addEventListener("click", function() {
     showListMode();
-    $("hskLessonListWrap")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    el = $("hskLessonListWrap"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, { signal });
 
   // Review Mode 入口
@@ -772,10 +773,10 @@ function bindEvents() {
     container.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  $("hskReviewLesson")?.addEventListener("click", () => {
-    const lessonId = state.current?.lessonData?.id ?? (state.current ? `${getCourseId()}_lesson${state.current.lessonNo}` : "");
+  el = $("hskReviewLesson"); if (el) el.addEventListener("click", function() {
+    const lessonId = (state.current && state.current.lessonData && state.current.lessonData.id) || (state.current ? getCourseId() + "_lesson" + state.current.lessonNo : "");
     if (!lessonId) {
-      const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), state.lessons?.length ?? 0) ?? {};
+      const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), (state.lessons && state.lessons.length) || 0) : null) || {};
       const lastNo = stats.lastLessonNo || 1;
       enterReviewMode("lesson", `${getCourseId()}_lesson${lastNo}`);
     } else {
@@ -783,21 +784,21 @@ function bindEvents() {
     }
   }, { signal });
 
-  $("hskReviewLevel")?.addEventListener("click", () => {
+  el = $("hskReviewLevel"); if (el) el.addEventListener("click", function() {
     enterReviewMode("level", "", getCourseId());
   }, { signal });
 
-  $("hskReviewAll")?.addEventListener("click", () => {
+  el = $("hskReviewAll"); if (el) el.addEventListener("click", function() {
     enterReviewMode("all");
   }, { signal });
 
-  $("hskReviewBtn")?.addEventListener("click", () => {
-    const lessonId = state.current?.lessonData?.id ?? (state.current ? `${getCourseId()}_lesson${state.current.lessonNo}` : "");
+  el = $("hskReviewBtn"); if (el) el.addEventListener("click", function() {
+    const lessonId = (state.current && state.current.lessonData && state.current.lessonData.id) || (state.current ? getCourseId() + "_lesson" + state.current.lessonNo : "");
     enterReviewMode("lesson", lessonId);
   }, { signal });
 
   // Lesson click (delegate)
-  $("hskLessonList")?.addEventListener("click", (e) => {
+  el = $("hskLessonList"); if (el) el.addEventListener("click", function(e) {
     const btn = e.target.closest('button[data-open-lesson="1"]');
     if (!btn) return;
     const lessonNo = Number(btn.dataset.lessonNo || 1);
@@ -809,33 +810,33 @@ function bindEvents() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension'], [data-speak-text][data-speak-kind='grammar'], [data-speak-text][data-speak-kind='practice']");
     if (!el) return;
-    const text = (el.dataset?.speakText || "").trim();
-    if (!text || !AUDIO_ENGINE?.isSpeechSupported?.()) return;
+    const text = (el.dataset && el.dataset.speakText || "").trim();
+    if (!text || !(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) return;
     e.preventDefault();
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card") ?? el.closest(".lesson-grammar-card") ?? el.closest(".lesson-practice-card") ?? el.closest(".review-question-card") ?? el.closest(".lesson-practice-option");
+    const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card") || el.closest(".lesson-grammar-card") || el.closest(".lesson-practice-card") || el.closest(".review-question-card") || el.closest(".lesson-practice-option");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",
-      onEnd: () => lineEl?.classList.remove("is-speaking"),
-      onError: () => lineEl?.classList.remove("is-speaking"),
+      onEnd: function() { if (lineEl) lineEl.classList.remove("is-speaking"); },
+      onError: function() { if (lineEl) lineEl.classList.remove("is-speaking"); },
     });
   }, { signal });
 
   // Tabs
-  $("hskStudyTabs")?.addEventListener("click", (e) => {
+  el = $("hskStudyTabs"); if (el) el.addEventListener("click", function(e) {
     const btn = e.target.closest("button[data-tab]");
     if (!btn) return;
     state.tab = btn.dataset.tab;
     updateTabsUI();
 
     const step = state.tab === "ai" ? "aiPractice" : state.tab;
-    if (state.current?.lessonData) {
+    if (state.current && state.current.lessonData) {
       const courseId = getCourseId();
-      const lessonId = state.current.lessonData?.id ?? `${courseId}_lesson${state.current.lessonNo}`;
-      PROGRESS_ENGINE?.markStepCompleted?.({ courseId, lessonId, step });
+      const lessonId = (state.current.lessonData && state.current.lessonData.id) || (courseId + "_lesson" + state.current.lessonNo);
+      if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.markStepCompleted === "function") PROGRESS_ENGINE.markStepCompleted({ courseId: courseId, lessonId: lessonId, step: step });
       updateProgressBlock();
     }
 
@@ -845,8 +846,8 @@ function bindEvents() {
   }, { signal });
 
   // Search filter (client-side)
-  $("hskSearch")?.addEventListener("input", () => {
-    const q = String($("hskSearch")?.value || "").trim().toLowerCase();
+  el = $("hskSearch"); if (el) el.addEventListener("input", function() {
+    const q = String(($("hskSearch") && $("hskSearch").value) || "").trim().toLowerCase();
     const lang = getLang();
     const listEl = $("hskLessonList");
     if (!listEl) return;
@@ -854,19 +855,19 @@ function bindEvents() {
     const filtered = !q
       ? state.lessons
       : state.lessons.filter((it) => {
-          const title = JSON.stringify(it?.title || it?.name || "").toLowerCase();
-          const pinyin = String(it?.pinyinTitle || it?.pinyin || "").toLowerCase();
-          const file = String(it?.file || "").toLowerCase();
+          const title = JSON.stringify((it && it.title) || (it && it.name) || "").toLowerCase();
+          const pinyin = String((it && it.pinyinTitle) || (it && it.pinyin) || "").toLowerCase();
+          const file = String((it && it.file) || "").toLowerCase();
           return title.includes(q) || pinyin.includes(q) || file.includes(q);
         });
 
-    const total = state.lessons?.length ?? 0;
-    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
-    renderLessonList(listEl, filtered, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
+    const total = (state.lessons && state.lessons.length) || 0;
+    const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total) : null) || {};
+    renderLessonList(listEl, filtered, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
   }, { signal });
 
   // AI: copy context
-  $("hskAICopyContext")?.addEventListener("click", async () => {
+  el = $("hskAICopyContext"); if (el) el.addEventListener("click", async function() {
     const ctx = buildAIContext();
     const pre = $("hskAIContext");
     if (pre) {
@@ -877,8 +878,8 @@ function bindEvents() {
   }, { signal });
 
   // AI: send (placeholder – integrate later with your AI backend / step runner)
-  $("hskAISend")?.addEventListener("click", async () => {
-  const input = String($("hskAIInput")?.value || "").trim();
+  el = $("hskAISend"); if (el) el.addEventListener("click", async function() {
+  const input = String(($("hskAIInput") && $("hskAIInput").value) || "").trim();
   const out = $("hskAIResult");
   if (!out) return;
 
@@ -894,7 +895,7 @@ function bindEvents() {
   out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("common_loading"))}</div>`;
 
   try {
-    if (!window.JOY_RUNNER?.askAI) {
+    if (!window.JOY_RUNNER || typeof window.JOY_RUNNER.askAI !== "function") {
       throw new Error("JOY_RUNNER.askAI not found. (Did you patch lessonStepRunner.js?)");
     }
 
@@ -906,7 +907,7 @@ function bindEvents() {
       mode: "Kids",
     });
 
-    const text = res?.text ?? "";
+    const text = (res && res.text) || "";
 
     out.innerHTML = `
       <div class="border rounded-xl p-3">
@@ -918,7 +919,7 @@ function bindEvents() {
     console.error(e);
     out.innerHTML = `
       <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
-        AI error: ${escapeHtml(e?.message || e)}
+        AI error: ${escapeHtml(e && e.message ? e.message : e)}
       </div>
       <div class="text-xs opacity-60 mt-2">
         체크: ① lessonStepRunner.js에 JOY_RUNNER.askAI 추가했는지
@@ -935,15 +936,15 @@ function bindEvents() {
     setSubTitle();
 
     const lang = getLang();
-    const total = state.lessons?.length ?? 0;
-    const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), total) ?? {};
-    renderLessonList($("hskLessonList"), state.lessons, { lang, currentLessonNo: stats.lastLessonNo ?? 0 });
+    const total = (state.lessons && state.lessons.length) || 0;
+    const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total) : null) || {};
+    renderLessonList($("hskLessonList"), state.lessons, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
 
-    if (state.current?.lessonData) {
+    if (state.current && state.current.lessonData) {
       const ld = state.current.lessonData;
       const lw = state.current.lessonWords || [];
-      const isReview = ld?.type === "review";
-      const rr = ld?.review?.lessonRange;
+      const isReview = (ld && ld.type) === "review";
+      const rr = (ld && ld.review && ld.review.lessonRange);
       if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
         const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
         const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
@@ -964,7 +965,7 @@ function bindEvents() {
       if (rerenderPractice && $("hskPracticeBody")) {
         try { rerenderPractice($("hskPracticeBody"), lang); } catch {}
       }
-      if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
+      if (AI_CAPABILITY && typeof AI_CAPABILITY.mountAIPanel === "function" && $("hskAIResult")) {
         try {
           AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
             lesson: ld,
@@ -979,7 +980,7 @@ function bindEvents() {
 
   // i18n bus
   try {
-    i18n?.on?.("change", () => window.dispatchEvent(new CustomEvent("joy:langchanged")));
+    if (i18n && typeof i18n.on === "function") i18n.on("change", function() { window.dispatchEvent(new CustomEvent("joy:langchanged")); });
   } catch {}
 }
 
@@ -1006,7 +1007,7 @@ export async function mount() {
 
   // init controls — sync version from localStorage（仅允许 hsk2.0 / hsk3.0）
   const savedVer = localStorage.getItem("hsk_vocab_version") || state.version;
-  state.version = (window.HSK_LOADER?.normalizeVersion?.(savedVer)) || (savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+  state.version = (window.HSK_LOADER && typeof window.HSK_LOADER.normalizeVersion === "function" ? window.HSK_LOADER.normalizeVersion(savedVer) : null) || (savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   $("hskLevel") && ($("hskLevel").value = String(state.lv));
   $("hskVersion") && ($("hskVersion").value = String(state.version));
 
@@ -1020,7 +1021,7 @@ export async function mount() {
 }
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")

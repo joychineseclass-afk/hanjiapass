@@ -12,7 +12,7 @@ const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 const LETTERS = ["A", "B", "C", "D", "E"];
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -23,10 +23,10 @@ function escapeHtml(s) {
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp);
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.jp);
-  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
-  return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.jp) || str(obj.zh ?? obj.cn);
+  if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp);
+  if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.en) || str(obj.zh || obj.cn) || str(obj.jp);
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.en) || str(obj.kr || obj.ko) || str(obj.zh || obj.cn);
+  return str(obj.en) || str(obj.kr || obj.ko) || str(obj.jp) || str(obj.zh || obj.cn);
 }
 
 /** 解析跟随系统语言：KR/CN/EN/JP */
@@ -34,14 +34,14 @@ function pickExplanation(obj, lang) {
   if (!obj || typeof obj !== "object") return str(obj);
   if (typeof obj === "string") return str(obj);
   const l = (lang || "ko").toLowerCase();
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.jp);
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp);
-  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
-  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp);
+  if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.jp);
+  if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp);
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.en) || str(obj.kr || obj.ko) || str(obj.zh || obj.cn);
+  return str(obj.en) || str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.jp);
 }
 
 function t(key, params) {
-  return (i18n?.t?.(key, params) ?? key);
+  return (i18n && typeof i18n.t === "function" ? i18n.t(key, params) : null) || key;
 }
 
 function getPinyin(text) {
@@ -54,7 +54,7 @@ function getPinyin(text) {
 function getOptionDisplay(o, lang) {
   if (o == null) return "";
   if (typeof o === "string") return o;
-  return pickLang(o, lang) || str(o.zh ?? o.kr ?? o.en ?? o.cn ?? o.ko) || "";
+  return pickLang(o, lang) || str(o.zh || o.kr || o.en || o.cn || o.ko) || "";
 }
 
 /** 选项提交值（用于 data-answer，对象用 key） */
@@ -68,7 +68,7 @@ function getOptionValue(o, lang) {
 function getAnswerDisplay(q, resultAnswer, lang) {
   if (resultAnswer == null) return "";
   if (typeof resultAnswer === "string") {
-    const opts = Array.isArray(q?.options) ? q.options : [];
+    const opts = Array.isArray(q && q.options) ? q.options : [];
     const found = opts.find((o) => o && typeof o === "object" && o.key === resultAnswer);
     if (found) return getOptionDisplay(found, lang);
     return resultAnswer;
@@ -94,7 +94,7 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
     const optValue = getOptionValue(o, lang);
-    const letter = LETTERS[i] ?? String(i + 1);
+    const letter = LETTERS[i] || String(i + 1);
     const isSelected = selected === optValue;
     const optPy = /[\u4e00-\u9fff]/.test(optDisplay) ? getPinyin(optDisplay) : "";
     const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
@@ -102,7 +102,7 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
 
     let stateClasses = "practice-option lesson-practice-option";
     if (submitted && result) {
-      const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer ?? "");
+      const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer != null ? result.answer : "");
       const isCorrectOption = optValue === correctVal;
       const isWrongSelected = !result.correct && isSelected;
       if (isCorrectOption) stateClasses += " option-correct is-correct";
@@ -226,7 +226,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
           correct: correctCount,
           score,
           lesson,
-          wrongItems: wrongItems ?? [],
+          wrongItems: wrongItems || [],
         });
       }
       render();
@@ -300,7 +300,7 @@ export function renderPracticeStep({ lesson, lang = "ko" } = {}) {
   const mountId = "practice-mount-" + Date.now();
   if (typeof window !== "undefined") {
     window.__PRACTICE_PENDING = { lesson, lang };
-    requestAnimationFrame?.(() => {
+    if (typeof requestAnimationFrame === "function") requestAnimationFrame(function() {
       const el = document.querySelector(".practice-mount-point");
       const opts = window.__PRACTICE_PENDING;
       if (el && opts) {

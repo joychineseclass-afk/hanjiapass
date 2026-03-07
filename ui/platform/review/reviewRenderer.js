@@ -11,7 +11,7 @@ const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 const LETTERS = ["A", "B", "C", "D", "E"];
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -22,24 +22,24 @@ function escapeHtml(s) {
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp ?? obj.ja);
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.jp ?? obj.ja);
-  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko);
-  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp ?? obj.ja);
+  if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp || obj.ja);
+  if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.en) || str(obj.zh || obj.cn) || str(obj.jp || obj.ja);
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.kr || obj.ko);
+  return str(obj.en) || str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.jp || obj.ja);
 }
 
 function pickExplanation(obj, lang) {
   if (!obj || typeof obj !== "object") return str(obj);
   if (typeof obj === "string") return str(obj);
   const l = (lang || "ko").toLowerCase();
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.jp ?? obj.ja);
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp ?? obj.ja);
-  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko);
-  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp ?? obj.ja);
+  if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.jp || obj.ja);
+  if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp || obj.ja);
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.kr || obj.ko);
+  return str(obj.en) || str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.jp || obj.ja);
 }
 
 function t(key, params) {
-  return (i18n?.t?.(key, params) ?? key);
+  return (i18n && typeof i18n.t === "function" ? i18n.t(key, params) : null) || key;
 }
 
 function getPinyin(text) {
@@ -51,7 +51,7 @@ function getPinyin(text) {
 function getOptionDisplay(o, lang) {
   if (o == null) return "";
   if (typeof o === "string") return o;
-  return pickLang(o, lang) || str(o.zh ?? o.kr ?? o.en ?? o.cn ?? o.ko) || "";
+  return pickLang(o, lang) || str(o.zh || o.kr || o.en || o.cn || o.ko) || "";
 }
 
 function getOptionValue(o, lang) {
@@ -63,7 +63,7 @@ function getOptionValue(o, lang) {
 function getAnswerDisplay(q, resultAnswer, lang) {
   if (resultAnswer == null) return "";
   if (typeof resultAnswer === "string") {
-    const opts = Array.isArray(q?.options) ? q.options : [];
+    const opts = Array.isArray(q && q.options) ? q.options : [];
     const found = opts.find((o) => o && typeof o === "object" && o.key === resultAnswer);
     if (found) return getOptionDisplay(found, lang);
     return resultAnswer;
@@ -87,7 +87,7 @@ function renderReviewQuestionCard(q, index, { lang, answers, resultMap, submitte
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
     const optValue = getOptionValue(o, lang);
-    const letter = LETTERS[i] ?? String(i + 1);
+    const letter = LETTERS[i] || String(i + 1);
     const isSelected = selected === optValue;
     const optPy = /[\u4e00-\u9fff]/.test(optDisplay) ? getPinyin(optDisplay) : "";
     const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
@@ -95,7 +95,7 @@ function renderReviewQuestionCard(q, index, { lang, answers, resultMap, submitte
 
     let stateClasses = "practice-option lesson-practice-option review-option";
     if (submitted && result) {
-      const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer ?? "");
+      const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer != null ? result.answer : "");
       const isCorrectOption = optValue === correctVal;
       const isWrongSelected = !result.correct && isSelected;
       if (isCorrectOption) stateClasses += " option-correct is-correct";
@@ -164,7 +164,7 @@ function renderReviewQuestionCard(q, index, { lang, answers, resultMap, submitte
 export function renderReviewMode(container, session, { lang = "ko", onFinish, enableTTS = true } = {}) {
   if (!container) return;
 
-  const questions = session?.questions || [];
+  const questions = (session && session.questions) || [];
   const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : lang === "jp" || lang === "ja" ? "jp" : "ko";
 
   if (!questions.length) {
@@ -191,7 +191,7 @@ export function renderReviewMode(container, session, { lang = "ko", onFinish, en
     if (submitted) {
       const result = ReviewState.getReviewResult() || { correctCount: 0, total: 0, clearedCount: 0 };
       const { correctCount, total, clearedCount } = result;
-      const stillNeed = Math.max(0, (session?.items?.length ?? total) - clearedCount);
+      const stillNeed = Math.max(0, ((session && session.items && session.items.length) || total) - clearedCount);
 
       container.innerHTML = `
 <div class="review-result-block">
@@ -209,10 +209,10 @@ export function renderReviewMode(container, session, { lang = "ko", onFinish, en
 
       const btnContinue = container.querySelector(".review-btn-continue");
       const btnBack = container.querySelector(".review-btn-back");
-      btnContinue?.addEventListener("click", () => {
+      if (btnContinue) btnContinue.addEventListener("click", function() {
         if (onFinish) onFinish({ action: "continue" });
       });
-      btnBack?.addEventListener("click", () => {
+      if (btnBack) btnBack.addEventListener("click", function() {
         if (onFinish) onFinish({ action: "back" });
       });
       return;

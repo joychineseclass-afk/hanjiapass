@@ -22,7 +22,7 @@ function resolveStrokeUrl(hanzi) {
 async function resolveStrokeUrlAsync(hanzi) {
   const ch = encodeURIComponent(hanzi || "");
   const candidates = [];
-  if (typeof location !== "undefined" && location.pathname?.includes("/pages/")) {
+  if (typeof location !== "undefined" && location.pathname && location.pathname.includes("/pages/")) {
     candidates.push(`stroke.html?ch=${ch}`);
   }
   candidates.push(`/pages/stroke.html?ch=${ch}`, `/stroke.html?ch=${ch}`);
@@ -39,7 +39,7 @@ async function resolveStrokeUrlAsync(hanzi) {
 
 // Returns "ko" | "en" | "zh" | "jp"
 export function normalizeLang(i18nLang) {
-  const l = String(i18nLang ?? i18n?.getLang?.() ?? "ko").toLowerCase();
+  const l = String(i18nLang != null ? i18nLang : (i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko")).toLowerCase();
   if (l === "kr" || l === "ko") return "ko";
   if (l === "cn" || l === "zh") return "zh";
   if (l === "jp" || l === "ja") return "jp";
@@ -50,12 +50,12 @@ export function normalizeLang(i18nLang) {
 export function wordKey(x) {
   if (x == null) return "";
   if (typeof x === "string") return x.trim();
-  return String(x.hanzi ?? x.word ?? x.zh ?? x.cn ?? "").trim();
+  return String(x.hanzi || x.word || x.zh || x.cn || "").trim();
 }
 
 export function wordPinyin(x) {
   if (x == null || typeof x === "string") return "";
-  return String(x.pinyin ?? x.py ?? "").trim();
+  return String(x.pinyin || x.py || "").trim();
 }
 
 /** 按系统语言取释义，委托给全站统一的 getMeaningByLang */
@@ -82,10 +82,10 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
   const arrow = "›";
 
   const rows = list.map((it) => {
-    const lessonNo = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
+    const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
 
-    const titleObj = it.title ?? it.name ?? it.label ?? "";
+    const titleObj = it.title || it.name || it.label || "";
     let zh = "";
     if (typeof titleObj === "string") {
       const s = titleObj.trim();
@@ -96,14 +96,15 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
     }
 
     const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    let translation = getLocalizedText(titleObj, contentLang, "") || it.titleJp ?? it.titleEn ?? it.titleKo ?? "";
+    let translation = getLocalizedText(titleObj, contentLang, "") || it.titleJp || it.titleEn || it.titleKo || "";
     if (!translation && typeof titleObj === "string") {
       const parts = String(titleObj).split(/\s*\/\s*/);
-      translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
+      const found = parts.find((p) => !/[\u4e00-\u9fff]/.test(p));
+      translation = (found != null ? String(found).trim() : "") || "";
     }
 
     const titleDisplay = (lang === "zh" || lang === "cn") ? (zh || translation) : (translation || zh || "-");
-    const lessonNoFormatted = i18n?.t?.("hsk.lesson_no_format", { n: lessonNo }) || (contentLang === "jp" ? `第 ${lessonNo} 課` : contentLang === "kr" ? `제 ${lessonNo}과` : contentLang === "cn" ? `第 ${lessonNo} 课` : `Lesson ${lessonNo}`);
+    const lessonNoFormatted = (i18n && typeof i18n.t === "function" ? i18n.t("hsk.lesson_no_format", { n: lessonNo }) : null) || (contentLang === "jp" ? "第 " + lessonNo + " 課" : contentLang === "kr" ? "제 " + lessonNo + "과" : contentLang === "cn" ? "第 " + lessonNo + " 课" : "Lesson " + lessonNo);
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
 
     return `
@@ -119,7 +120,7 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
     `;
   }).join("");
 
-  const emptyMsg = i18n?.t?.("hsk_empty_lessons") || "—";
+  const emptyMsg = (i18n && typeof i18n.t === "function" ? i18n.t("hsk_empty_lessons") : null) || "—";
   containerEl.innerHTML = `<div class="hsk-directory-rows">${rows || `<div class="hsk-directory-empty">${escapeHtml(emptyMsg)}</div>`}</div>`;
 }
 
@@ -137,7 +138,7 @@ function meaningTextOf(val, lang) {
   if (typeof val === "object") {
     const v = wordMeaning(val, lang);
     if (v) return v;
-    const pick = val.meaning ?? val.text ?? val.def ?? val.gloss ?? "";
+    const pick = val.meaning || val.text || val.def || val.gloss || "";
     if (typeof pick === "string") return pick.trim();
     if (typeof pick === "object") return wordMeaning({ meaning: pick }, lang) || "";
     return "";
@@ -148,27 +149,27 @@ function meaningTextOf(val, lang) {
 export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
-  const currentLang = normalizeLang(lang ?? i18n?.getLang?.());
+  const currentLang = normalizeLang(lang != null ? lang : (i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko"));
   const glossaryScope = scope || "";
 
   const cards = arr.map((x) => {
     try {
       const raw = typeof x === "string" ? { hanzi: x } : (x || {});
-      const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
+      const han = wordKey(raw) || String(raw.hanzi || raw.han || raw.word || raw.zh || raw.cn || raw.simplified || raw.trad || "").trim();
       let pinyinStr = wordPinyin(raw);
       if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
 
       let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
       if (!mainStr) {
-        mainStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
+        mainStr = MEANING_FALLBACK[currentLang] || MEANING_FALLBACK.ko;
       }
 
       const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
-      const learnLabel = i18n?.t?.("lesson.learn") || (currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : currentLang === "jp" ? "学習" : "Learn");
-      const strokeLabel = i18n?.t?.("stroke.btn_trace") || (currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : currentLang === "jp" ? "筆順" : "Stroke");
-      const audioLabel = i18n?.t?.("common.listen") || i18n?.t?.("common.speak") || (currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : currentLang === "jp" ? "発音" : "Audio");
+      const learnLabel = (i18n && typeof i18n.t === "function" ? i18n.t("lesson.learn") : null) || (currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : currentLang === "jp" ? "学習" : "Learn");
+      const strokeLabel = (i18n && typeof i18n.t === "function" ? i18n.t("stroke.btn_trace") : null) || (currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : currentLang === "jp" ? "筆順" : "Stroke");
+      const audioLabel = (i18n && typeof i18n.t === "function" ? i18n.t("common.listen") : null) || (i18n && typeof i18n.t === "function" ? i18n.t("common.speak") : null) || (currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : currentLang === "jp" ? "発音" : "Audio");
       const strokeDisabled = !han ? " disabled" : "";
       const hanziChars = han ? Array.from(han).map((ch) =>
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
@@ -202,9 +203,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   });
 
   const hero = `<section class="lesson-section-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n?.t?.("hsk_tab_words") || "单词")}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n?.t?.("vocab_subtitle") || "本课词汇，点击可听发音。")}</p>
-  ${arr.length ? `<span class="lesson-section-count">${escapeHtml((i18n?.t?.("vocab_count") || "{n}词").replace("{n}", arr.length))}</span>` : ""}
+  <h3 class="lesson-section-title">${escapeHtml((i18n && typeof i18n.t === "function" ? i18n.t("hsk_tab_words") : null) || "单词")}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml((i18n && typeof i18n.t === "function" ? i18n.t("vocab_subtitle") : null) || "本课词汇，点击可听发音。")}</p>
+  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(((i18n && typeof i18n.t === "function" ? i18n.t("vocab_count") : null) || "{n}词").replace("{n}", arr.length)) + "</span>" : ""}
 </section>`;
   gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 
@@ -239,7 +240,7 @@ export function bindWordCardActions() {
       const char = (charSpan.dataset.char || "").trim();
       const wordId = (charSpan.dataset.word || "").trim();
       if (!char) return;
-      const lessonId = window.__HSK_PAGE_CTX?.lessonNo ?? window.__HSK_CURRENT_LESSON_ID ?? "";
+      const lessonId = (window.__HSK_PAGE_CTX && window.__HSK_PAGE_CTX.lessonNo) || window.__HSK_CURRENT_LESSON_ID || "";
       try {
         await openStrokePlayer(char, {
           ctx: { from: "hsk", lessonId, wordId },
@@ -267,7 +268,7 @@ export function bindWordCardActions() {
       if (!text) return;
       try {
         const { AUDIO_ENGINE } = await import("../../platform/index.js");
-        if (!AUDIO_ENGINE?.isSpeechSupported?.()) {
+        if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
           if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
           return;
         }
@@ -278,8 +279,8 @@ export function bindWordCardActions() {
         AUDIO_ENGINE.playText(text, {
           lang: "zh-CN",
           rate: 0.95,
-          onEnd: () => cardEl?.classList.remove("is-speaking"),
-          onError: () => cardEl?.classList.remove("is-speaking"),
+          onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
+          onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
         });
       } catch (err) {
         if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speak failed:", err);
@@ -291,9 +292,9 @@ export function bindWordCardActions() {
       e.stopPropagation();
       btn.classList.add("btn-stroke-active");
       const ctx = {
-        version: window.__HSK_PAGE_CTX?.version ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0",
-        level: window.__HSK_PAGE_CTX?.level ?? 1,
-        lessonId: window.__HSK_PAGE_CTX?.lessonNo ?? window.__HSK_CURRENT_LESSON_ID ?? "",
+        version: (window.__HSK_PAGE_CTX && window.__HSK_PAGE_CTX.version) || (typeof localStorage !== "undefined" ? localStorage.getItem("hsk_vocab_version") : null) || "hsk2.0",
+        level: (window.__HSK_PAGE_CTX && window.__HSK_PAGE_CTX.level) != null ? window.__HSK_PAGE_CTX.level : 1,
+        lessonId: (window.__HSK_PAGE_CTX && window.__HSK_PAGE_CTX.lessonNo) || window.__HSK_CURRENT_LESSON_ID || "",
         wordId: hanzi,
       };
       try {
@@ -312,16 +313,17 @@ export function bindWordCardActions() {
     if (action === "learn") {
       e.preventDefault();
       e.stopPropagation();
-      const item = window.__HSK_WORD_ITEMS_BY_HANZI?.get?.(hanzi) ?? { hanzi, pinyin };
+      const map = window.__HSK_WORD_ITEMS_BY_HANZI;
+      const item = (map && typeof map.get === "function" ? map.get(hanzi) : null) || { hanzi: hanzi, pinyin: pinyin };
       const fn = window.__HSK_ON_CLICK_WORD;
       if (typeof fn === "function") fn(item);
-      else if (window.LEARN_PANEL?.open) window.LEARN_PANEL.open(item);
+      else if (window.LEARN_PANEL && typeof window.LEARN_PANEL.open === "function") window.LEARN_PANEL.open(item);
     }
   });
 }
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
