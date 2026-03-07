@@ -30,8 +30,15 @@
     {
       "title": "会话2",
       "lines": [
+        { "speaker": "A", "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?" },
+        { "speaker": "B", "zh": "今天星期一。", "pinyin": "Jīntiān xīngqī yī.", "kr": "오늘 월요일이에요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
         { "speaker": "A", "zh": "明天星期几？", "pinyin": "Míngtiān xīngqī jǐ?", "kr": "내일 무슨 요일이에요?" },
-        { "speaker": "B", "zh": "明天星期一。", "pinyin": "Míngtiān xīngqī yī.", "kr": "내일 월요일이에요." }
+        { "speaker": "B", "zh": "明天星期二。", "pinyin": "Míngtiān xīngqī èr.", "kr": "내일 화요일이에요." }
       ]
     }
   ],

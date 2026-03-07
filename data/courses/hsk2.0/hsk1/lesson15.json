@@ -22,15 +22,22 @@
     {
       "title": "会话1",
       "lines": [
-        { "speaker": "A", "zh": "你喜欢苹果吗？", "pinyin": "Nǐ xǐhuan píngguǒ ma?", "kr": "사과 좋아해요?" },
-        { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }
+        { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?" },
+        { "speaker": "B", "zh": "喝。", "pinyin": "Hē.", "kr": "마셔요." }
       ]
     },
     {
       "title": "会话2",
       "lines": [
-        { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?" },
-        { "speaker": "B", "zh": "不喝，我喝水。", "pinyin": "Bù hē, wǒ hē shuǐ.", "kr": "안 마셔요, 저는 물을 마셔요." }
+        { "speaker": "A", "zh": "你喝咖啡吗？", "pinyin": "Nǐ hē kāfēi ma?", "kr": "커피 마셔요?" },
+        { "speaker": "B", "zh": "不喝。", "pinyin": "Bù hē.", "kr": "안 마셔요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "这个好吃吗？", "pinyin": "Zhè gè hǎo chī ma?", "kr": "이거 맛있어요?" },
+        { "speaker": "B", "zh": "很好吃。", "pinyin": "Hěn hǎo chī.", "kr": "아주 맛있어요." }
       ]
     }
   ],

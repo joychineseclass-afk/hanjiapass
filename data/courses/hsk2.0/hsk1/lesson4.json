@@ -36,6 +36,13 @@
         { "speaker": "A", "zh": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "kr": "아버지는 선생님이에요?" },
         { "speaker": "B", "zh": "不是，他是医生。", "pinyin": "Bú shì, tā shì yīshēng.", "kr": "아니요, 그는 의사예요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "她是谁？", "pinyin": "Tā shì shéi?", "kr": "그녀는 누구예요?" },
+        { "speaker": "B", "zh": "她是我妈妈。", "pinyin": "Tā shì wǒ māma.", "kr": "그녀는 우리 엄마예요." }
+      ]
     }
   ],
   "grammar": [

@@ -31,8 +31,15 @@
     {
       "title": "会话2",
       "lines": [
-        { "speaker": "A", "zh": "猫在哪儿？", "pinyin": "Māo zài nǎr?", "kr": "고양이가 어디에 있어요?" },
-        { "speaker": "B", "zh": "在椅子下面。", "pinyin": "Zài yǐzi xiàmiàn.", "kr": "의자 아래에 있어요." }
+        { "speaker": "A", "zh": "椅子在哪儿？", "pinyin": "Yǐzi zài nǎr?", "kr": "의자가 어디에 있어요?" },
+        { "speaker": "B", "zh": "在桌子下面。", "pinyin": "Zài zhuōzi xiàmiàn.", "kr": "탁자 아래에 있어요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "学校在哪儿？", "pinyin": "Xuéxiào zài nǎr?", "kr": "학교가 어디에 있어요?" },
+        { "speaker": "B", "zh": "在那儿。", "pinyin": "Zài nàr.", "kr": "저기에 있어요." }
       ]
     }
   ],

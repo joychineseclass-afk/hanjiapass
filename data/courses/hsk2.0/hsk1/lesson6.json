@@ -34,6 +34,13 @@
         { "speaker": "A", "zh": "他多大？", "pinyin": "Tā duō dà?", "kr": "그는 몇 살이에요?" },
         { "speaker": "B", "zh": "他十八岁。", "pinyin": "Tā shíbā suì.", "kr": "그는 열여덟 살이에요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "她大吗？", "pinyin": "Tā dà ma?", "kr": "그녀는 커요?" },
+        { "speaker": "B", "zh": "不大。", "pinyin": "Bù dà.", "kr": "안 커요." }
+      ]
     }
   ],
   "grammar": [

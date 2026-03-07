@@ -23,14 +23,21 @@
       "title": "会话1",
       "lines": [
         { "speaker": "A", "zh": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요, 안녕하세요!" },
-        { "speaker": "B", "zh": "你好，请问你是谁？", "pinyin": "Nǐ hǎo, qǐngwèn nǐ shì shéi?", "kr": "안녕하세요,请问你是谁?" }
+        { "speaker": "B", "zh": "你好。", "pinyin": "Nǐ hǎo.", "kr": "안녕하세요." }
       ]
     },
     {
       "title": "会话2",
       "lines": [
-        { "speaker": "A", "zh": "我是小明。", "pinyin": "Wǒ shì Xiǎomíng.", "kr": "저는 샤오밍이에요." },
-        { "speaker": "B", "zh": "好，我知道了。", "pinyin": "Hǎo, wǒ zhīdào le.", "kr": "좋아요, 알겠어요." }
+        { "speaker": "A", "zh": "请问你是谁？", "pinyin": "Qǐngwèn nǐ shì shéi?", "kr": "请问你是谁?" },
+        { "speaker": "B", "zh": "我是小明。", "pinyin": "Wǒ shì Xiǎomíng.", "kr": "저는 샤오밍이에요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "他在吗？", "pinyin": "Tā zài ma?", "kr": "그 있어요?" },
+        { "speaker": "B", "zh": "他不在。", "pinyin": "Tā bú zài.", "kr": "그 없어요." }
       ]
     }
   ],

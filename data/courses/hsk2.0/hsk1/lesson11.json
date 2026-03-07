@@ -35,6 +35,13 @@
         { "speaker": "A", "zh": "你学什么？", "pinyin": "Nǐ xué shénme?", "kr": "뭘 배워요?" },
         { "speaker": "B", "zh": "我学汉语。", "pinyin": "Wǒ xué Hànyǔ.", "kr": "저는 중국어를 배워요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "你写字吗？", "pinyin": "Nǐ xiě zì ma?", "kr": "글자 써요?" },
+        { "speaker": "B", "zh": "写，我写汉字。", "pinyin": "Xiě, wǒ xiě Hànzì.", "kr": "써요, 저는 한자를 써요." }
+      ]
     }
   ],
   "grammar": [

@@ -33,7 +33,14 @@
       "title": "会话2",
       "lines": [
         { "speaker": "A", "zh": "冷吗？", "pinyin": "Lěng ma?", "kr": "추워요?" },
-        { "speaker": "B", "zh": "不冷，很热。", "pinyin": "Bù lěng, hěn rè.", "kr": "안 추워요, 매우 더워요." }
+        { "speaker": "B", "zh": "不冷。", "pinyin": "Bù lěng.", "kr": "안 추워요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "热吗？", "pinyin": "Rè ma?", "kr": "더워요?" },
+        { "speaker": "B", "zh": "很热。", "pinyin": "Hěn rè.", "kr": "매우 더워요." }
       ]
     }
   ],

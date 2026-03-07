@@ -34,6 +34,13 @@
         { "speaker": "A", "zh": "你什么时候回家？", "pinyin": "Nǐ shénme shíhou huí jiā?", "kr": "언제 집에 돌아가요?" },
         { "speaker": "B", "zh": "我下午回家。", "pinyin": "Wǒ xiàwǔ huí jiā.", "kr": "저는 오후에 집에 돌아가요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "你上午做什么？", "pinyin": "Nǐ shàngwǔ zuò shénme?", "kr": "오전에 뭐 해요?" },
+        { "speaker": "B", "zh": "我学习。", "pinyin": "Wǒ xuéxí.", "kr": "저는 공부해요." }
+      ]
     }
   ],
   "grammar": [

@@ -33,6 +33,13 @@
         { "speaker": "A", "zh": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "kr": "병원 갔어요?" },
         { "speaker": "B", "zh": "去了。", "pinyin": "Qù le.", "kr": "갔어요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "现在怎么样？", "pinyin": "Xiànzài zěnmeyàng?", "kr": "지금 어때요?" },
+        { "speaker": "B", "zh": "很好。", "pinyin": "Hěn hǎo.", "kr": "아주 좋아요." }
+      ]
     }
   ],
   "grammar": [

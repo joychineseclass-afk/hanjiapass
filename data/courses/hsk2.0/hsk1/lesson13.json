@@ -34,7 +34,14 @@
       "title": "会话2",
       "lines": [
         { "speaker": "A", "zh": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "kr": "텔레비전 봐요?" },
-        { "speaker": "B", "zh": "看，我喜欢看电视。", "pinyin": "Kàn, wǒ xǐhuan kàn diànshì.", "kr": "봐요, 저는 텔레비전 보는 걸 좋아해요." }
+        { "speaker": "B", "zh": "看。", "pinyin": "Kàn.", "kr": "봐요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "你喜欢看电影吗？", "pinyin": "Nǐ xǐhuan kàn diànyǐng ma?", "kr": "영화 보는 거 좋아해요?" },
+        { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }
       ]
     }
   ],

@@ -40,7 +40,7 @@
       "title": "会话2",
       "lines": [
         { "speaker": "A", "zh": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "kr": "저는 샤오메이예요." },
-        { "speaker": "B", "zh": "很高兴认识你！", "pinyin": "Hěn gāoxìng rènshi nǐ!", "kr": "만나서 반가워요!" }
+        { "speaker": "B", "zh": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "kr": "만나서 반가워요." }
       ]
     }
   ],

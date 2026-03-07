@@ -35,6 +35,13 @@
         { "speaker": "A", "zh": "你喝什么？", "pinyin": "Nǐ hē shénme?", "kr": "뭘 마셔요?" },
         { "speaker": "B", "zh": "我喝水。", "pinyin": "Wǒ hē shuǐ.", "kr": "저는 물을 마셔요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "你喜欢苹果吗？", "pinyin": "Nǐ xǐhuan píngguǒ ma?", "kr": "사과 좋아해요?" },
+        { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }
+      ]
     }
   ],
   "grammar": [

@@ -30,6 +30,13 @@
     {
       "title": "会话2",
       "lines": [
+        { "speaker": "A", "zh": "他是哪国人？", "pinyin": "Tā shì nǎ guó rén?", "kr": "그는 어느 나라 사람이에요?" },
+        { "speaker": "B", "zh": "他是韩国人。", "pinyin": "Tā shì Hánguó rén.", "kr": "그는 한국인이에요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
         { "speaker": "A", "zh": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "kr": "어디에 살아요?" },
         { "speaker": "B", "zh": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "kr": "저는 베이징에 살아요." }
       ]

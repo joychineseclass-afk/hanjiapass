@@ -32,8 +32,15 @@
     {
       "title": "会话2",
       "lines": [
-        { "speaker": "A", "zh": "太贵了！", "pinyin": "Tài guì le!", "kr": "너무 비싸요!" },
+        { "speaker": "A", "zh": "太贵了。", "pinyin": "Tài guì le.", "kr": "너무 비싸요." },
         { "speaker": "B", "zh": "好，十五块。", "pinyin": "Hǎo, shíwǔ kuài.", "kr": "좋아요, 15위안이에요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "我要这个。", "pinyin": "Wǒ yào zhè gè.", "kr": "이거 주세요." },
+        { "speaker": "B", "zh": "好的。", "pinyin": "Hǎo de.", "kr": "알겠어요." }
       ]
     }
   ],

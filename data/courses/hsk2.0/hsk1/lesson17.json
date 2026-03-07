@@ -33,6 +33,13 @@
         { "speaker": "A", "zh": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "kr": "어디 가요?" },
         { "speaker": "B", "zh": "我去学校。", "pinyin": "Wǒ qù xuéxiào.", "kr": "저는 학교에 가요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "你回家吗？", "pinyin": "Nǐ huí jiā ma?", "kr": "집에 돌아가요?" },
+        { "speaker": "B", "zh": "回。", "pinyin": "Huí.", "kr": "돌아가요." }
+      ]
     }
   ],
   "grammar": [

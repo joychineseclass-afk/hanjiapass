@@ -39,6 +39,13 @@
     {
       "title": "会话2",
       "lines": [
+        { "speaker": "A", "zh": "你有几本书？", "pinyin": "Nǐ yǒu jǐ běn shū?", "kr": "책이 몇 권 있어요?" },
+        { "speaker": "B", "zh": "我有两本。", "pinyin": "Wǒ yǒu liǎng běn.", "kr": "저는 두 권 있어요." }
+      ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
         { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
         { "speaker": "B", "zh": "十块钱。", "pinyin": "Shí kuài qián.", "kr": "10위안이에요." }
       ]

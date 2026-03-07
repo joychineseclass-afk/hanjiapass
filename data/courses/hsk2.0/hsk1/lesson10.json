@@ -35,6 +35,13 @@
         { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
         { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "猫在哪儿？", "pinyin": "Māo zài nǎr?", "kr": "고양이가 어디에 있어요?" },
+        { "speaker": "B", "zh": "在椅子下面。", "pinyin": "Zài yǐzi xiàmiàn.", "kr": "의자 아래에 있어요." }
+      ]
     }
   ],
   "grammar": [

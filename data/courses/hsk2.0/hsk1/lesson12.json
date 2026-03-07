@@ -34,6 +34,13 @@
         { "speaker": "A", "zh": "他是老师吗？", "pinyin": "Tā shì lǎoshī ma?", "kr": "그는 선생님이에요?" },
         { "speaker": "B", "zh": "是，他是老师。", "pinyin": "Shì, tā shì lǎoshī.", "kr": "네, 그는 선생님이에요." }
       ]
+    },
+    {
+      "title": "会话3",
+      "lines": [
+        { "speaker": "A", "zh": "王先生做什么工作？", "pinyin": "Wáng xiānsheng zuò shénme gōngzuò?", "kr": "왕先生은 무슨 일 하세요?" },
+        { "speaker": "B", "zh": "他是医生。", "pinyin": "Tā shì yīshēng.", "kr": "그는 의사예요." }
+      ]
     }
   ],
   "grammar": [
