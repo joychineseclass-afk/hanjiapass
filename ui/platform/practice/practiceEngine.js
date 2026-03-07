@@ -3,6 +3,7 @@
  * loadPractice(lesson) / submitAll()
  */
 
+import { i18n } from "../../i18n.js";
 import { filterSupportedQuestions } from "./practiceTypes.js";
 import * as PracticeState from "./practiceState.js";
 import { generatePractice } from "./generator/practiceGenerator.js";
@@ -30,8 +31,24 @@ export function loadPractice(lesson) {
   };
 }
 
+function normalizeAnswer(expected, selected, lang) {
+  const sel = String(selected ?? "").trim();
+  if (expected == null) return { exp: "", sel };
+  if (typeof expected === "object" && expected !== null) {
+    const l = String(lang || "ko").toLowerCase();
+    const exp = l === "zh" || l === "cn"
+      ? String(expected.zh ?? expected.cn ?? expected.kr ?? expected.ko ?? expected.en ?? "").trim()
+      : l === "en"
+        ? String(expected.en ?? expected.kr ?? expected.ko ?? expected.zh ?? expected.cn ?? "").trim()
+        : String(expected.kr ?? expected.ko ?? expected.en ?? expected.zh ?? expected.cn ?? "").trim();
+    return { exp, sel };
+  }
+  return { exp: String(expected).trim(), sel };
+}
+
 /**
  * 单题判题（内部用）
+ * 支持 answer 为对象（多语言）时，与用户选择字符串比较
  */
 function judgeOne(q, answer) {
   const expected = q.answer;
@@ -40,7 +57,10 @@ function judgeOne(q, answer) {
   const type = String(q.type || "choice").toLowerCase();
 
   if (type === "choice" || type === "fill" || type === "typing") {
-    correct = String(answer ?? "").trim() === String(expected ?? "").trim();
+    const lang = (i18n?.getLang?.()) ? String(i18n.getLang()).toLowerCase() : "ko";
+    const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+    const { exp, sel } = normalizeAnswer(expected, answer, langKey);
+    correct = sel === exp;
   } else if (type === "order") {
     const ansArr = Array.isArray(answer) ? answer : (typeof answer === "string" ? answer.split("") : []);
     const expArr = Array.isArray(expected) ? expected : (typeof expected === "string" ? expected.split("") : []);

@@ -179,22 +179,28 @@ function renderDialogueLine(line, lang, showPinyin) {
 </article>`;
 }
 
-/** 对话渲染：优先 dialogueCards，回退 dialogue；每张卡单独渲染，不合并。lessonData 可能为归一化对象，需用 _raw 取原始 dialogueCards */
+/** 对话渲染：优先 dialogueCards，回退 dialogue；每张卡单独渲染，不合并 */
 function buildDialogueHTML(lessonData) {
   const raw = lessonData?._raw ?? lessonData;
   const cards = getDialogueCards(raw);
-  if (!cards.length) return `<div class="lesson-dialogue-empty">${i18n.t("hsk_empty_dialogue", {})}</div>`;
-
   const lang = getLang();
+
+  const hero = `<section class="lesson-dialogue-hero">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk_tab_dialogue"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("dialogue_subtitle") || "本课会话，可点击中文朗读。")}</p>
+</section>`;
+
+  if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk_empty_dialogue")}</div>`;
+
   if (SCENE_ENGINE?.hasScene?.(lessonData)) {
     const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
     const framesHtml = SceneRenderer.renderSceneFrames(scene, lessonData, lang);
-    if (framesHtml) return framesHtml;
+    if (framesHtml) return hero + framesHtml;
   }
 
   const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
 
-  return `<div class="lesson-dialogue-list">
+  return `${hero}<div class="lesson-dialogue-list">
 ${cards.map((card, index) => {
   const lines = Array.isArray(card?.lines) ? card.lines : [];
   if (!lines.length) return "";

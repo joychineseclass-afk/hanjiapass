@@ -48,32 +48,46 @@ function getPinyin(text) {
   return resolvePinyin(zh, "");
 }
 
+/** 选项显示值与 data-answer（支持对象多语言） */
+function getOptionDisplay(o, lang) {
+  if (o == null) return "";
+  if (typeof o === "string") return o;
+  return pickLang(o, lang) || str(o.zh ?? o.kr ?? o.en ?? o.cn ?? o.ko) || "";
+}
+
+/** 正确答案显示（支持对象） */
+function getAnswerDisplay(resultAnswer, lang) {
+  if (resultAnswer == null) return "";
+  if (typeof resultAnswer === "string") return resultAnswer;
+  return pickLang(resultAnswer, lang) || "";
+}
+
 /** 渲染单题：教材级题卡 */
 function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   const questionObj = typeof q.question === "object" ? q.question : { zh: str(q.question) };
   const questionZh = pickLang(questionObj, lang) || str(q.question);
-  const questionMeaning = questionObj && typeof questionObj === "object" ? pickLang(questionObj, lang) : "";
   const options = Array.isArray(q.options) ? q.options : [];
   const selected = answers[q.id];
   const result = resultMap[q.id];
+  const correctAnswerDisplay = result ? getAnswerDisplay(result.answer, lang) : "";
 
   const typeLabel = t("practice_type_choice");
   const qNo = t("practice_question_no", { n: index + 1 });
   const qPy = getPinyin(questionZh);
   const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
-  const qAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
   const speakLabel = t("practice_listen");
 
   const optsHtml = options.map((o, i) => {
+    const optDisplay = getOptionDisplay(o, lang);
     const letter = LETTERS[i] ?? String(i + 1);
-    const isSelected = selected === o;
-    const optPy = getPinyin(o);
-    const oEsc = escapeHtml(o).replaceAll('"', "&quot;");
-    const oAttrs = o ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
+    const isSelected = selected === optDisplay;
+    const optPy = /[\u4e00-\u9fff]/.test(optDisplay) ? getPinyin(optDisplay) : "";
+    const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
+    const oAttrs = optDisplay ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
 
     let stateClasses = "lesson-practice-option";
     if (submitted && result) {
-      const isCorrect = result.answer === o;
+      const isCorrect = optDisplay === correctAnswerDisplay;
       const isWrongSelected = !result.correct && isSelected;
       if (isCorrect) stateClasses += " is-correct";
       else if (isWrongSelected) stateClasses += " is-wrong";
@@ -82,10 +96,10 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
     }
 
     return `
-<button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(String(o))}">
+<button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(optDisplay).replaceAll('"', "&quot;")}">
   <span class="lesson-practice-option-letter">${letter}</span>
   <span class="lesson-practice-option-content">
-    <span class="lesson-practice-option-zh"${oAttrs}>${escapeHtml(o)}</span>
+    <span class="lesson-practice-option-zh"${oAttrs}>${escapeHtml(optDisplay)}</span>
     ${optPy ? `<span class="lesson-practice-option-pinyin">${escapeHtml(optPy)}</span>` : ""}
   </span>
 </button>`;
@@ -100,10 +114,10 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
     const expl = pickExplanation(q.explanation, lang);
     const icon = result.correct ? "○" : "×";
     const resultClass = result.correct ? "lesson-practice-result-correct" : "lesson-practice-result-wrong";
-    const answerZh = result.answer;
-    const answerPy = getPinyin(answerZh);
-    const aEsc = escapeHtml(answerZh).replaceAll('"', "&quot;");
-    const aAttrs = answerZh ? ` data-speak-text="${aEsc}" data-speak-kind="practice"` : "";
+    const answerDisplay = correctAnswerDisplay;
+    const answerPy = /[\u4e00-\u9fff]/.test(answerDisplay) ? getPinyin(answerDisplay) : "";
+    const aEsc = escapeHtml(answerDisplay).replaceAll('"', "&quot;");
+    const aAttrs = answerDisplay ? ` data-speak-text="${aEsc}" data-speak-kind="practice"` : "";
 
     resultHtml = `
 <div class="lesson-practice-result ${resultClass}">
@@ -111,7 +125,7 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   ${!result.correct ? `
   <div class="lesson-practice-answer">
     <span class="lesson-practice-answer-label">${answerLabel}:</span>
-    <span class="lesson-practice-answer-zh"${aAttrs}>${escapeHtml(answerZh)}</span>
+    <span class="lesson-practice-answer-zh"${aAttrs}>${escapeHtml(answerDisplay)}</span>
     ${answerPy ? `<span class="lesson-practice-answer-pinyin">${escapeHtml(answerPy)}</span>` : ""}
   </div>` : ""}
   ${expl ? `<div class="lesson-practice-explanation"><span class="lesson-practice-explanation-label">${explLabel}:</span> ${escapeHtml(expl)}</div>` : ""}

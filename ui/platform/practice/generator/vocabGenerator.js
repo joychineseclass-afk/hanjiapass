@@ -1,6 +1,8 @@
 /**
- * Auto Practice Generator - 从 lesson.vocab 生成
- * 5 choice + 5 fill
+ * 词汇练习生成 - 题型逻辑正确
+ * A: 词义识别 - 看中文选翻译（选项为翻译）
+ * B: 翻译找中文 - 看翻译选中文
+ * C: 拼音选中文
  */
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -23,10 +25,19 @@ function shuffle(arr) {
   return a;
 }
 
-/**
- * 生成 5 道词汇选择题
- */
-export function generateVocabChoice(vocab, count = 5) {
+/** 取多语言释义 */
+function getMeaningObj(w) {
+  const m = w?.meaning;
+  if (!m || typeof m !== "object") return { zh: str(w?.hanzi ?? w?.word), kr: "", en: "" };
+  return {
+    zh: str(m.zh ?? m.cn) || str(m.kr ?? m.ko) || str(m.en),
+    kr: str(m.kr ?? m.ko) || str(m.en) || str(m.zh ?? m.cn),
+    en: str(m.en) || str(m.kr ?? m.ko) || str(m.zh ?? m.cn),
+  };
+}
+
+/** A: 词义识别 - 看中文选翻译。选项为多语言对象，渲染时按系统语言取 */
+function generateMeaningChoice(vocab, count = 2) {
   const items = Array.isArray(vocab) ? vocab : [];
   if (items.length < 2) return [];
 
@@ -38,25 +49,29 @@ export function generateVocabChoice(vocab, count = 5) {
     const hanzi = str(target?.hanzi ?? target?.word);
     if (!hanzi) continue;
 
-    const correctMean = getMeaning(target, "zh");
-    const others = items.filter((w) => w !== target).map((w) => getMeaning(w, "zh")).filter(Boolean);
-    const options = [correctMean, ...shuffle(others).slice(0, 3)];
-    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
+    const correctObj = getMeaningObj(target);
+    const others = items
+      .filter((w) => w !== target)
+      .map((w) => getMeaningObj(w))
+      .filter((o) => o.zh && JSON.stringify(o) !== JSON.stringify(correctObj));
+    const options = [correctObj, ...shuffle(others).slice(0, 3)];
+    const uniqueOpts = options.slice(0, 4);
 
     out.push({
       type: "choice",
-      id: `vocab-choice-${i + 1}`,
+      subType: "meaning",
+      id: `vocab-meaning-${i + 1}`,
       question: {
-        zh: `「${hanzi}」是什么意思？`,
-        kr: `「${hanzi}」는 무슨 뜻입니까?`,
+        zh: `「${hanzi}」的意思是？`,
+        kr: `「${hanzi}」의 뜻은?`,
         en: `What does '${hanzi}' mean?`,
       },
-      options: uniqueOpts.length >= 2 ? uniqueOpts : [correctMean, "其他"],
-      answer: correctMean,
+      options: uniqueOpts,
+      answer: correctObj,
       explanation: {
-        zh: `「${hanzi}」：${correctMean}`,
-        kr: `「${hanzi}」: ${correctMean}`,
-        en: `'${hanzi}' means ${correctMean}`,
+        zh: `「${hanzi}」：${correctObj.zh || correctObj.kr || correctObj.en}`,
+        kr: `「${hanzi}」: ${correctObj.kr || correctObj.zh || correctObj.en}`,
+        en: `'${hanzi}' means ${correctObj.en || correctObj.kr || correctObj.zh}`,
       },
       score: 1,
     });
@@ -64,36 +79,84 @@ export function generateVocabChoice(vocab, count = 5) {
   return out;
 }
 
-/**
- * 生成 5 道词汇填空题
- */
-export function generateVocabFill(vocab, count = 5) {
+/** B: 翻译找中文 - 看翻译选中文。题干用多语言，选项为中文词 */
+function generateTranslateToZh(vocab, count = 1) {
   const items = Array.isArray(vocab) ? vocab : [];
-  if (!items.length) return [];
+  if (items.length < 2) return [];
 
   const out = [];
-  const pool = items.filter((w) => str(w?.hanzi ?? w?.word));
+  const pool = shuffle(items).filter((w) => str(w?.hanzi ?? w?.word));
 
   for (let i = 0; i < count && i < pool.length; i++) {
     const target = pool[i];
     const hanzi = str(target?.hanzi ?? target?.word);
-    if (!hanzi) continue;
+    const trans = getMeaningObj(target);
+    if (!hanzi || !(trans.zh || trans.kr || trans.en)) continue;
 
-    const mean = getMeaning(target, "zh");
+    const others = items
+      .filter((w) => w !== target)
+      .map((w) => str(w?.hanzi ?? w?.word))
+      .filter((h) => h && h !== hanzi);
+    const options = [hanzi, ...shuffle(others).slice(0, 3)];
+    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
 
     out.push({
-      type: "fill",
-      id: `vocab-fill-${i + 1}`,
+      type: "choice",
+      subType: "trans2zh",
+      id: `vocab-trans-${i + 1}`,
       question: {
-        zh: `请填写正确的汉字：___ 的意思是「${mean}」`,
-        kr: `올바른 한자를 쓰세요: ___ 의 뜻은「${mean}」`,
-        en: `Fill in the correct character: ___ means "${mean}"`,
+        zh: `「${trans.zh || trans.kr || trans.en}」用中文怎么说？`,
+        kr: `「${trans.kr || trans.zh || trans.en}」은 중국어로?`,
+        en: `Which Chinese word means '${trans.en || trans.kr || trans.zh}'?`,
       },
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [hanzi],
       answer: hanzi,
       explanation: {
-        zh: `答案：${hanzi}。${mean}`,
-        kr: `답: ${hanzi}. ${mean}`,
-        en: `Answer: ${hanzi}. ${mean}`,
+        zh: `「${trans.zh || trans.kr}」：${hanzi}`,
+        kr: `「${trans.kr || trans.zh}」: ${hanzi}`,
+        en: `'${trans.en || trans.kr}' is ${hanzi}`,
+      },
+      score: 1,
+    });
+  }
+  return out;
+}
+
+/** C: 拼音选中文 */
+function generatePinyinChoice(vocab, count = 1) {
+  const items = Array.isArray(vocab) ? vocab : [];
+  if (items.length < 2) return [];
+
+  const out = [];
+  const pool = shuffle(items).filter((w) => str(w?.hanzi ?? w?.word) && str(w?.pinyin ?? w?.py));
+
+  for (let i = 0; i < count && i < pool.length; i++) {
+    const target = pool[i];
+    const hanzi = str(target?.hanzi ?? target?.word);
+    const pinyin = str(target?.pinyin ?? target?.py);
+    if (!hanzi || !pinyin) continue;
+
+    const others = items
+      .filter((w) => w !== target)
+      .map((w) => str(w?.hanzi ?? w?.word))
+      .filter((h) => h && h !== hanzi);
+    const options = [hanzi, ...shuffle(others).slice(0, 3)];
+    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
+
+    out.push({
+      type: "choice",
+      id: `vocab-pinyin-${i + 1}`,
+      question: {
+        zh: `「${pinyin}」是哪一个？`,
+        kr: `「${pinyin}」은 어느 것?`,
+        en: `Which word is "${pinyin}"?`,
+      },
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [hanzi],
+      answer: hanzi,
+      explanation: {
+        zh: `「${pinyin}」：${hanzi}`,
+        kr: `「${pinyin}」: ${hanzi}`,
+        en: `"${pinyin}" is ${hanzi}`,
       },
       score: 1,
     });
@@ -102,9 +165,26 @@ export function generateVocabFill(vocab, count = 5) {
 }
 
 /**
- * 从 vocab 生成 6 题（词汇选择题）
+ * 按等级生成词汇题
+ * HSK1-2: 2 词义 + 1 翻译找中文
+ * HSK3-4: 3 词义 + 2 翻译找中文
+ * HSK5+: 更多
  */
-export function generateFromVocab(lesson) {
+export function generateFromVocab(lesson, level = 1) {
   const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
-  return generateVocabChoice(vocab, 6);
+
+  if (level <= 2) {
+    const a = generateMeaningChoice(vocab, 2);
+    const b = generateTranslateToZh(vocab, 1);
+    return [...a, ...b];
+  }
+  if (level <= 4) {
+    const a = generateMeaningChoice(vocab, 3);
+    const b = generateTranslateToZh(vocab, 2);
+    return [...a, ...b];
+  }
+  const a = generateMeaningChoice(vocab, 4);
+  const b = generateTranslateToZh(vocab, 2);
+  const c = generatePinyinChoice(vocab, 1);
+  return [...a, ...b, ...c];
 }

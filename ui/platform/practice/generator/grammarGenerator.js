@@ -93,9 +93,14 @@ export function generateGrammarFill(grammar, count = 3) {
 }
 
 /**
- * 从 grammar 生成 3 题（3 fill）
+ * 按等级生成语法题
+ * HSK1-2: 0
+ * HSK3-4: 1
+ * HSK5+: 2-3
  */
-export function generateFromGrammar(lesson) {
+export function generateFromGrammar(lesson, level = 1) {
   const grammar = Array.isArray(lesson?.grammar) ? lesson.grammar : [];
-  return generateGrammarFill(grammar, 3);
+  if (level <= 2) return [];
+  if (level <= 4) return generateGrammarFill(grammar, 1);
+  return generateGrammarFill(grammar, Math.min(3, grammar.length));
 }

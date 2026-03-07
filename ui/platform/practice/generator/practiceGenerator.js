@@ -1,24 +1,26 @@
 /**
- * Practice Auto Generator v1
- * 每课自动生成约 20 题，统一为 choice 题型
+ * Practice Generator v2
+ * 按 HSK 等级控制题量，优先使用 lesson.practice 人工题
  *
- * 题型分布（全部 type: "choice"）：
- * - 词汇选择题：6 题（vocab）
- * - 听句选词：4 题（dialogue）
- * - 语序选择题：4 题（dialogue）
- * - 填空题：4 题（dialogue）
- * - 理解题：2 题（dialogue）
- * - 语法选择题：3 题（grammar）
- *
- * 若 lesson.practice 已有题，则优先使用，不足部分由系统补齐
- * 所有题目统一为 choice，保证 Practice UI 正常显示 20/20 题
+ * 题量规则：
+ * HSK1-2: 5题
+ * HSK3-4: 10题
+ * HSK5-6: 15题
+ * HSK7-9: 20题
  */
 
 import { generateFromVocab } from "./vocabGenerator.js";
 import { generateFromDialogue } from "./dialogueGenerator.js";
 import { generateFromGrammar } from "./grammarGenerator.js";
 
-const TARGET_COUNT = 20;
+/** 按等级获取目标题量 */
+export function getTargetCountByLevel(level) {
+  const lv = parseInt(String(level || "").replace(/\D/g, ""), 10) || 1;
+  if (lv <= 2) return 5;
+  if (lv <= 4) return 10;
+  if (lv <= 6) return 15;
+  return 20;
+}
 
 function shuffle(arr) {
   const a = [...arr];
@@ -39,23 +41,17 @@ function pickQuestionText(q) {
   return str(qu?.zh ?? qu?.cn ?? qu?.kr ?? qu?.ko ?? qu?.en) || "";
 }
 
-/**
- * 将任意题型统一为 choice 格式
- * 保证 question、options、answer 存在
- */
+/** 校验题目逻辑：question、options、answer 需匹配 */
 function normalizeToChoice(q) {
   if (!q || !q.question) return null;
-  const type = String(q.type || "").toLowerCase();
   const question = pickQuestionText(q) || (typeof q.question === "object" ? JSON.stringify(q.question) : "");
   if (!question) return null;
 
   let options = Array.isArray(q.options) ? q.options : [];
   const answer = str(q.answer ?? q.correct ?? "");
 
-  if (type !== "choice") {
-    if (!options.length && answer) {
-      options = [answer, "其他", "不确定", "跳过"];
-    }
+  if (options.length < 2 && answer) {
+    options = [answer, ...options.filter((o) => o !== answer)];
   }
   if (options.length < 2) options = [answer || "A", "B", "C", "D"].slice(0, 4);
   if (!answer && options[0]) options = shuffle(options);
@@ -64,44 +60,47 @@ function normalizeToChoice(q) {
     ...q,
     type: "choice",
     question: q.question,
-    options,
+    options: [...new Set(options)].slice(0, 6),
     answer: answer || options[0],
     id: q.id,
   };
 }
 
-/**
- * 生成练习题（用于补齐）
- */
-function generateQuestions(lesson) {
-  if (!lesson) return [];
-  const vocab = generateFromVocab(lesson);
-  const dialogue = generateFromDialogue(lesson);
-  const grammar = generateFromGrammar(lesson);
+/** 按等级生成题目池（用于补足） */
+function generateByLevel(lesson, level) {
+  const lv = parseInt(String(level || "").replace(/\D/g, ""), 10) || 1;
+  const vocab = generateFromVocab(lesson, lv);
+  const dialogue = generateFromDialogue(lesson, lv);
+  const grammar = generateFromGrammar(lesson, lv);
   return [...vocab, ...dialogue, ...grammar];
 }
 
 /**
  * 生成练习题
  * @param {object} lesson - 归一化后的 lesson
- * @param {Array} [existing] - 已有题目（来自 lesson.practice）
- * @returns {Array<object>} 题目列表（全部 type: "choice"）
+ * @param {Array} [existing] - lesson.practice
+ * @returns {Array<object>}
  */
 export function generatePractice(lesson, existing = []) {
   if (!lesson) return [];
 
+  const level = lesson?.level ?? lesson?.courseId ?? "";
+  const targetCount = getTargetCountByLevel(level);
+
   const existingValid = Array.isArray(existing) ? existing.filter(Boolean) : [];
   let result = existingValid.map(normalizeToChoice).filter(Boolean);
 
-  if (result.length < TARGET_COUNT) {
-    const generated = generateQuestions(lesson);
+  if (result.length < targetCount) {
+    const generated = generateByLevel(lesson, level);
     const pool = shuffle(generated);
-    for (let i = 0; result.length < TARGET_COUNT && pool.length; i++) {
+    for (let i = 0; result.length < targetCount && pool.length; i++) {
       const q = normalizeToChoice(pool[i % pool.length]);
-      if (q) result.push(q);
+      if (q && !result.some((r) => r.id === q.id)) result.push(q);
     }
-  } else if (result.length > TARGET_COUNT) {
-    result = shuffle(result).slice(0, TARGET_COUNT);
+  }
+
+  if (result.length > targetCount) {
+    result = result.slice(0, targetCount);
   }
 
   return result.map((q, i) => ({
