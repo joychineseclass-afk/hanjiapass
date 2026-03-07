@@ -9,7 +9,7 @@
 
 import { getGlossaryMeaning, getGlossaryPos } from "./glossary.js";
 
-/** 中文词性 -> { ko, en } 映射，用于仅有中文词性时的显示 */
+/** 中文词性 -> { ko, en } 映射 */
 export const POS_ZH_MAP = {
   代词: { ko: "대명사", en: "pronoun" },
   动词: { ko: "동사", en: "verb" },
@@ -26,9 +26,13 @@ export const POS_ZH_MAP = {
   语气词: { ko: "어기사", en: "modal particle" },
 };
 
-/** 英语词性 -> 中文（用于 zh 模式仅有 pos.en 时的反向推导） */
-const POS_EN_TO_ZH = Object.fromEntries(
+export const POS_ZH_TO_KR = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.ko]));
+export const POS_ZH_TO_EN = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.en]));
+export const POS_EN_TO_ZH = Object.fromEntries(
   Object.entries(POS_ZH_MAP).map(([zh, v]) => [v.en?.toLowerCase?.(), zh])
+);
+export const POS_KR_TO_ZH = Object.fromEntries(
+  Object.entries(POS_ZH_MAP).map(([zh, v]) => [v.ko, zh])
 );
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -112,6 +116,7 @@ export function getPosByLang(word, lang, scope = "") {
         if (g) return g;
       }
       if (en && POS_EN_TO_ZH[en.toLowerCase()]) return POS_EN_TO_ZH[en.toLowerCase()];
+      if (kr && POS_KR_TO_ZH[kr]) return POS_KR_TO_ZH[kr];
       return "";
     }
     if (lang === "ko") {

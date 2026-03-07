@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY } from "../platform/index.js";
 
 const state = {
   lv: 1,
@@ -440,10 +440,23 @@ async function openLesson({ lessonNo, file }) {
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
 
-    // AI panel reset
-    $("hskAIResult").innerHTML = "";
+    // AI panel: 平台级 AI 对话训练入口
     $("hskAIInput").value = "";
     $("hskAIContext")?.classList.add("hidden");
+    if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
+      try {
+        AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
+          lesson: lessonData,
+          lang,
+          wordsWithMeaning: (w) => wordMeaning(w, lang),
+        });
+      } catch (e) {
+        console.warn("[HSK] AI panel mount failed, fallback:", e?.message);
+        $("hskAIResult").innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk_ai_tip", {}))}</div>`;
+      }
+    } else {
+      $("hskAIResult").innerHTML = "";
+    }
 
   } catch (e) {
     console.error(e);
@@ -608,10 +621,19 @@ function bindEvents() {
           </div>
         `;
       } else {
-        renderWordCards($("hskPanelWords"), lw, undefined, { lang });
+        renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
       }
       $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
       $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
+      if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
+        try {
+          AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
+            lesson: ld,
+            lang,
+            wordsWithMeaning: (w) => wordMeaning(w, lang),
+          });
+        } catch {}
+      }
       updateTabsUI();
     }
   }, { signal });

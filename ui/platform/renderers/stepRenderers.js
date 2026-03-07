@@ -1,7 +1,10 @@
 /**
  * 平台级 Step 渲染器
- * 统一接收标准 lesson 数据，不按课程类型分叉
+ * 统一接收标准 lesson 数据，使用 wordDisplay 取释义/词性
  */
+
+import { getMeaningByLang, getPosByLang } from "../../utils/wordDisplay.js";
+import { resolvePinyin } from "../../utils/pinyinEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -24,7 +27,7 @@ function pickLang(obj, lang) {
 }
 
 /**
- * 渲染 vocab step
+ * 渲染 vocab step（使用 wordDisplay 统一释义/词性）
  * @param {{ lesson: object, lang: string, scope?: string }} opts
  * @returns {string} HTML
  */
@@ -40,11 +43,20 @@ export function renderVocabStep({ lesson, lang = "ko", scope = "" } = {}) {
     return grid.innerHTML;
   }
 
+  const normLang = (l) => (l === "zh" || l === "cn" ? "zh" : l === "ko" || l === "kr" ? "ko" : "en");
+  const l = normLang(lang);
   const blocks = words.map((w) => {
-    const han = str(w.hanzi);
-    const py = str(w.pinyin);
-    const mean = pickLang(w.meaning, lang) || pickLang(w, lang);
-    return `<div class="word-item p-3 rounded-lg border border-slate-200">${escapeHtml(han)} ${py ? `(${escapeHtml(py)})` : ""} — ${escapeHtml(mean)}</div>`;
+    const han = str(w.hanzi ?? w.word ?? "");
+    let py = str(w.pinyin ?? w.py);
+    if (!py && han) py = resolvePinyin(han, py);
+    const mean = getMeaningByLang(w, l, han, scope);
+    const pos = getPosByLang(w, l, scope);
+    return `<div class="word-item p-3 rounded-lg border border-slate-200">
+      <div class="font-semibold">${escapeHtml(han)}</div>
+      ${py ? `<div class="text-sm italic opacity-80">${escapeHtml(py)}</div>` : ""}
+      ${pos ? `<div class="text-xs opacity-75">${escapeHtml(pos)}</div>` : ""}
+      <div class="text-sm opacity-90">${escapeHtml(mean || "-")}</div>
+    </div>`;
   });
   return `<div class="vocab-list space-y-2">${blocks.join("")}</div>`;
 }

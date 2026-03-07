@@ -6,6 +6,7 @@
   "scripts": {
     "build:vocab": "node scripts/build-vocab.mjs",
     "build:pinyin": "node scripts/build-pinyin-map.mjs",
+    "check:pinyin": "node scripts/check-pinyin-needed.mjs",
     "migrate:lesson-words": "node scripts/migrate-lesson-words.mjs",
     "sync:lesson-glossary": "node scripts/sync-lesson-glossary.mjs"
   },
