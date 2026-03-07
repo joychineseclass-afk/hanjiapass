@@ -54,12 +54,10 @@ export function resolveCoursePath(input = {}) {
   let lessonFile = file;
   if (!lessonFile) {
     lessonFile = `lesson${lessonNo}.json`;
-  } else if (/^hsk\d+_lesson\d+\.json$/i.test(lessonFile)) {
-    const m = lessonFile.match(/^hsk(\d+)_lesson(\d+)\.json$/i);
-    lessonFile = m ? `lesson${m[2]}.json` : `lesson${lessonNo}.json`;
   } else if (!lessonFile.endsWith(".json")) {
     lessonFile = `lesson${lessonNo}.json`;
   }
+  // 保留 hsk1_lesson21.json 等完整文件名，不转换为 lesson21.json
 
   const lessonUrl = withBase(`${basePath}/${lessonFile}`);
 

@@ -21,7 +21,7 @@
     { "id": 18, "title": "쇼핑 / 买东西", "subtitle": "가격 묻기", "file": "lesson18.json" },
     { "id": 19, "title": "날씨 / 天气", "subtitle": "오늘 날씨 어때요?", "file": "lesson19.json" },
     { "id": 20, "title": "병원 / 看病", "subtitle": "아파요", "file": "lesson20.json" },
-    { "id": 21, "title": "복습 1", "subtitle": "1–10과 복습", "file": "lesson21.json" },
-    { "id": 22, "title": "복습 2", "subtitle": "11–20과 복습", "file": "lesson22.json" }
+    { "no": 21, "id": 21, "title": "종합 복습 1 / 综合复习一", "subtitle": "1–10과 복습", "file": "hsk1_lesson21.json" },
+    { "no": 22, "id": 22, "title": "종합 복습 2 / 综合复习二", "subtitle": "11–20과 복습", "file": "hsk1_lesson22.json" }
   ]
 }
