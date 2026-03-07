@@ -20,30 +20,34 @@ export function getWordImageUrl(word) {
   }
 }
 
-/** 中文词性 -> { ko, en } 映射 */
+/** 中文词性 -> { kr, en, jp } 映射 */
 export const POS_ZH_MAP = {
-  代词: { ko: "대명사", en: "pronoun" },
-  动词: { ko: "동사", en: "verb" },
-  名词: { ko: "명사", en: "noun" },
-  形容词: { ko: "형용사", en: "adjective" },
-  副词: { ko: "부사", en: "adverb" },
-  量词: { ko: "양사", en: "measure word" },
-  助词: { ko: "조사", en: "particle" },
-  介词: { ko: "전치사", en: "preposition" },
-  连词: { ko: "접속사", en: "conjunction" },
-  叹词: { ko: "감탄사", en: "interjection" },
-  数词: { ko: "수사", en: "numeral" },
-  拟声词: { ko: "의태어", en: "onomatopoeia" },
-  语气词: { ko: "어기사", en: "modal particle" },
+  代词: { kr: "대명사", ko: "대명사", en: "pronoun", jp: "代名詞" },
+  动词: { kr: "동사", ko: "동사", en: "verb", jp: "動詞" },
+  名词: { kr: "명사", ko: "명사", en: "noun", jp: "名詞" },
+  形容词: { kr: "형용사", ko: "형용사", en: "adjective", jp: "形容詞" },
+  副词: { kr: "부사", ko: "부사", en: "adverb", jp: "副詞" },
+  量词: { kr: "양사", ko: "양사", en: "measure word", jp: "量詞" },
+  助词: { kr: "조사", ko: "조사", en: "particle", jp: "助詞" },
+  介词: { kr: "전치사", ko: "전치사", en: "preposition", jp: "前置詞" },
+  连词: { kr: "접속사", ko: "접속사", en: "conjunction", jp: "接続詞" },
+  叹词: { kr: "감탄사", ko: "감탄사", en: "interjection", jp: "感嘆詞" },
+  数词: { kr: "수사", ko: "수사", en: "numeral", jp: "数詞" },
+  拟声词: { kr: "의태어", ko: "의태어", en: "onomatopoeia", jp: "擬声語" },
+  语气词: { kr: "어기사", ko: "어기사", en: "modal particle", jp: "語気詞" },
 };
 
-export const POS_ZH_TO_KR = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.ko]));
+export const POS_ZH_TO_KR = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.kr ?? v.ko]));
 export const POS_ZH_TO_EN = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.en]));
+export const POS_ZH_TO_JP = Object.fromEntries(Object.entries(POS_ZH_MAP).map(([zh, v]) => [zh, v.jp]));
 export const POS_EN_TO_ZH = Object.fromEntries(
   Object.entries(POS_ZH_MAP).map(([zh, v]) => [v.en?.toLowerCase?.(), zh])
 );
 export const POS_KR_TO_ZH = Object.fromEntries(
-  Object.entries(POS_ZH_MAP).map(([zh, v]) => [v.ko, zh])
+  Object.entries(POS_ZH_MAP).flatMap(([zh, v]) => {
+    const kr = v.kr ?? v.ko;
+    return kr ? [[kr, zh]] : [];
+  })
 );
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -54,6 +58,7 @@ function glossaryLang(lang) {
   if (l === "ko" || l === "kr") return "kr";
   if (l === "en") return "en";
   if (l === "zh" || l === "cn") return "zh";
+  if (l === "jp" || l === "ja") return "jp";
   return l || "en";
 }
 
@@ -74,11 +79,11 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
   const zh = str(word.zh ?? word.cn ?? obj.zh ?? obj.cn) || fallbackHanzi;
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "") || fallbackHanzi;
 
-  if (lang === "ko") {
+  if (lang === "ko" || lang === "kr") {
     const kr = str(obj.kr ?? obj.ko ?? word.kr ?? word.ko);
     if (kr) return kr;
     if (scope) {
-      const g = getGlossaryMeaning(hanzi, glossaryLang(lang), scope);
+      const g = getGlossaryMeaning(hanzi, "kr", scope);
       if (g) return g;
     }
     return zh;
@@ -87,10 +92,19 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
     const en = str(word.en ?? obj.en ?? obj.english);
     if (en) return en;
     if (scope) {
-      const g = getGlossaryMeaning(hanzi, glossaryLang(lang), scope);
+      const g = getGlossaryMeaning(hanzi, "en", scope);
       if (g) return g;
     }
     return zh;
+  }
+  if (lang === "jp" || lang === "ja") {
+    const jp = str(obj.jp ?? obj.ja ?? word.jp ?? word.ja);
+    if (jp) return jp;
+    if (scope) {
+      const g = getGlossaryMeaning(hanzi, "jp", scope);
+      if (g) return g;
+    }
+    return str(obj.en ?? obj.kr ?? obj.ko) || zh;
   }
   // zh / cn
   if (zh) return zh;
@@ -148,6 +162,16 @@ export function getPosByLang(word, lang, scope = "") {
       if (zh && POS_ZH_MAP[zh]) return POS_ZH_MAP[zh].en || zh;
       return "";
     }
+    if (lang === "jp" || lang === "ja") {
+      const jp = str(p.jp ?? p.ja);
+      if (jp) return jp;
+      if (scope && hanzi) {
+        const g = getGlossaryPos(hanzi, "jp", scope);
+        if (g) return g;
+      }
+      if (zh && POS_ZH_MAP[zh]) return POS_ZH_MAP[zh].jp || POS_ZH_MAP[zh].en || zh;
+      return "";
+    }
     return zh || kr || en;
   }
 
@@ -160,12 +184,12 @@ export function getPosByLang(word, lang, scope = "") {
     }
     return "";
   }
-  if (lang === "ko") {
+  if (lang === "ko" || lang === "kr") {
     if (scope && hanzi) {
       const g = getGlossaryPos(hanzi, "kr", scope);
       if (g) return g;
     }
-    if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].ko || zhVal;
+    if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].kr || POS_ZH_MAP[zhVal].ko || zhVal;
     return "";
   }
   if (lang === "en") {
@@ -174,6 +198,14 @@ export function getPosByLang(word, lang, scope = "") {
       if (g) return g;
     }
     if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].en || zhVal;
+    return "";
+  }
+  if (lang === "jp" || lang === "ja") {
+    if (scope && hanzi) {
+      const g = getGlossaryPos(hanzi, "jp", scope);
+      if (g) return g;
+    }
+    if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].jp || POS_ZH_MAP[zhVal].en || zhVal;
     return "";
   }
   return zhVal;

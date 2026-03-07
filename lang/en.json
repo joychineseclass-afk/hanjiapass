@@ -2,6 +2,10 @@
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
+    "listen": "Listen",
+    "speak": "Speak",
+    "empty": "Empty",
+    "no_data": "No data",
     "confirm": "Confirm",
     "back": "Back",
     "next": "Next",
@@ -82,6 +86,7 @@
     "empty_grammar": "No grammar content yet.",
     "extension_empty": "No extension items yet.",
     "review_range": "Review Range",
+    "review_range_format": "Lesson {from}–{to} / 1–{total} review",
     "review_desc": "Please review the vocabulary and dialogue from previous lessons.",
     "back_to_list": "← Back to list",
     "lesson_unit": "Lesson {n}"
@@ -92,7 +97,9 @@
     "grammar": "Grammar",
     "extension": "Extension",
     "practice": "Practice",
-    "ai": "AI Learning"
+    "ai": "AI Learning",
+    "back_to_list": "Back to list",
+    "dialogue_card": "Dialogue"
   },
   "practice": {
     "title": "Practice",
@@ -105,6 +112,8 @@
     "listen": "Speak",
     "type_choice": "Choice",
     "empty": "No practice questions.",
+    "load_failed": "Practice load failed",
+    "question_label": "Question",
     "total_count": "{n} questions",
     "total_score": "Score {score}/{total}",
     "question_no": "Question {n}",

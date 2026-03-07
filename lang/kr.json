@@ -2,6 +2,10 @@
   "common": {
     "ok": "확인",
     "cancel": "취소",
+    "listen": "듣기",
+    "speak": "발음",
+    "empty": "없음",
+    "no_data": "데이터 없음",
     "confirm": "확인",
     "back": "뒤로",
     "next": "다음",
@@ -82,6 +86,7 @@
     "empty_grammar": "문법 콘텐츠가 아직 없습니다.",
     "extension_empty": "확장 표현이 아직 없습니다.",
     "review_range": "복습 범위",
+    "review_range_format": "제 {from}–{to}과 / 1–{total}과 복습",
     "review_desc": "앞서 배운 단어와 대화를 복습해 주세요.",
     "back_to_list": "← 목록으로",
     "lesson_unit": "{n}과"
@@ -92,7 +97,9 @@
     "grammar": "문법",
     "extension": "확장 표현",
     "practice": "연습",
-    "ai": "AI 학습"
+    "ai": "AI 학습",
+    "back_to_list": "목록으로",
+    "dialogue_card": "회화"
   },
   "practice": {
     "title": "연습",
@@ -105,6 +112,8 @@
     "listen": "듣기",
     "type_choice": "선택",
     "empty": "연습 문제가 없습니다.",
+    "load_failed": "연습 로드 실패",
+    "question_label": "질문",
     "total_count": "{n}문제",
     "total_score": "총점 {score} / {total}",
     "question_no": "제 {n}문제",

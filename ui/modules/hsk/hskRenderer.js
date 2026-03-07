@@ -8,6 +8,7 @@ import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
+import { getLocalizedText } from "../../utils/localizedText.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -68,13 +69,8 @@ function pickText(v, lang = "ko") {
   if (v == null) return "";
   if (typeof v === "string" || typeof v === "number") return String(v);
   if (typeof v === "object") {
-    return (
-      v[lang] ||
-      v.ko || v.kr ||
-      v.zh || v.cn ||
-      v.en ||
-      ""
-    );
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang === "jp" ? "jp" : lang);
+    return getLocalizedText(v, lang, "") || getLocalizedText(v, contentLang, "");
   }
   return String(v);
 }
@@ -82,7 +78,7 @@ function pickText(v, lang = "ko") {
 export function renderLessonList(containerEl, lessons, { lang = "ko", currentLessonNo = 0 } = {}) {
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
-  const lessonLabel = i18n?.t?.("hsk_directory_lesson") || "第";
+  const lessonLabel = i18n?.t?.("hsk.directory_lesson") || i18n?.t?.("hsk_directory_lesson") || "第";
   const arrow = "›";
 
   const rows = list.map((it) => {
@@ -108,6 +104,8 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
       }
     } else if (lang === "en") {
       translation = it.titleEn ?? pickText(titleObj, "en") ?? "";
+    } else if (lang === "jp") {
+      translation = it.titleJp ?? pickText(titleObj, "jp") ?? pickText(titleObj, "en") ?? "";
     }
 
     const titleDisplay = lang === "zh" ? (zh || translation) : (translation || zh || "-");
@@ -134,6 +132,7 @@ const MEANING_FALLBACK = {
   ko: "(뜻 정보 없음)",
   zh: "(暂无释义)",
   en: "(No meaning yet)",
+  jp: "(意味なし)",
 };
 
 function meaningTextOf(val, lang) {

@@ -9,6 +9,7 @@ import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
+import { getLocalizedText } from "../utils/localizedText.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
@@ -144,19 +145,18 @@ function pickDialogueTranslation(line, lang, zhMain = "") {
   return out;
 }
 
-/** 取会话标题：card.title[currentLang] 或 card.title.zh，否则生成 会话1/会话2 */
+/** 取会话标题：card.title[currentLang]，否则用 i18n */
 function pickCardTitle(obj, lang, cardIndex = 1) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   if (obj != null) {
     if (typeof obj === "string") return str(obj);
-    const key = lang === "ko" ? "kr" : (lang === "en" ? "en" : "zh");
-    const v = str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.ko ?? obj.en);
-    if (v) return v;
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+    const v = getLocalizedText(obj, contentLang, "") || getLocalizedText(obj, lang, "");
+    if (v) return str(v);
   }
   const n = String(cardIndex);
-  if (lang === "ko") return `회화 ${n}`;
-  if (lang === "en") return `Dialogue ${n}`;
-  return `会话${n}`;
+  const cardLabel = i18n.t("lesson.dialogue_card") || i18n.t("hsk.tab.dialogue") || "会话";
+  return `${cardLabel} ${n}`;
 }
 
 /** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
@@ -228,12 +228,12 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法：取当前语言解释。KR: kr→ko→zh, CN: zh→cn, EN: en→zh */
+/** 语法：取当前语言解释。KR/CN/EN/JP 统一用 getLocalizedText */
 function pickGrammarExplanation(pt, lang) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  if (lang === "ko") return str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko) || str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
-  if (lang === "en") return str(pt?.explanation_en ?? pt?.en) || str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
-  return str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn) || str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko);
+  const obj = pt?.explanation ?? { zh: pt?.explanation_zh, kr: pt?.explanation_kr ?? pt?.kr ?? pt?.ko, en: pt?.explanation_en ?? pt?.en, jp: pt?.explanation_jp ?? pt?.jp };
+  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+  return str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, "")) || str(obj?.zh ?? obj?.kr ?? obj?.en ?? obj?.jp);
 }
 
 /** 语法：取例句列表，兼容 example / examples 单条或数组 */
@@ -343,10 +343,8 @@ function buildExtensionHTML(lessonData) {
   const cards = arr.map((item, i) => {
     const zh = str(item?.zh ?? item?.cn ?? item?.line ?? "");
     const pinyin = str(item?.pinyin ?? item?.py ?? "");
-    let meaning = "";
-    if (lang === "ko") meaning = str(item?.kr ?? item?.ko ?? item?.zh ?? item?.cn ?? "");
-    else if (lang === "en") meaning = str(item?.en ?? item?.kr ?? item?.ko ?? item?.zh ?? item?.cn ?? "");
-    else meaning = str(item?.zh ?? item?.cn ?? item?.kr ?? item?.ko ?? item?.en ?? "");
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+    const meaning = getLocalizedText(item, contentLang, "") || getLocalizedText(item, lang, "");
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
@@ -386,12 +384,14 @@ function buildAIContext() {
     return `${han}${py ? `(${py})` : ""}${mean ? `: ${mean}` : ""}`;
   }).join("\n");
 
+  const lessonLabel = i18n.t("hsk.directory_lesson") || "Lesson";
+  const questionLabel = i18n.t("practice.question_label") || "Question";
   return [
-    `Lesson ${no}`,
+    `${lessonLabel} ${no}`,
     title ? `Title: ${title}` : "",
     wordsLine ? `Words:\n${wordsLine}` : "",
     "",
-    "질문(Question):",
+    questionLabel + ":",
   ].filter(Boolean).join("\n");
 }
 
@@ -627,12 +627,13 @@ async function openLesson({ lessonNo, file }) {
     const isReview = lessonData?.type === "review";
     const reviewRange = lessonData?.review?.lessonRange;
     if (isReview && (!lessonWords || lessonWords.length === 0) && Array.isArray(reviewRange) && reviewRange.length >= 2) {
-      const reviewTitle = (() => { const r = i18n?.t?.("hsk_review_range"); return (r && r !== "hsk_review_range") ? r : (lang === "zh" ? "复习范围" : lang === "en" ? "Review Range" : "복습 범위"); })();
-      const reviewDesc = (() => { const r = i18n?.t?.("hsk_review_desc"); return (r && r !== "hsk_review_desc") ? r : (lang === "zh" ? "请回顾前面学过的词汇和对话。" : lang === "en" ? "Please review the vocabulary and dialogue from previous lessons." : "앞서 배운 단어와 대화를 복습해 주세요."); })();
+      const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
+      const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
+      const rangeFmt = i18n.t("hsk.review_range_format", { from: reviewRange[0], to: reviewRange[1], total: reviewRange[1] }) || `第 ${reviewRange[0]}–${reviewRange[1]} 课`;
       $("hskPanelWords").innerHTML = `
         <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
           <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
-          <p class="text-slate-700">第 ${reviewRange[0]}–${reviewRange[1]} 课 / 1–${reviewRange[1]}과 복습</p>
+          <p class="text-slate-700">${escapeHtml(rangeFmt)}</p>
           <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
         </div>
       `;
@@ -669,7 +670,7 @@ async function openLesson({ lessonNo, file }) {
         });
       } catch (e) {
         console.warn("[HSK] Practice mount failed:", e?.message);
-        $("hskPracticeBody").innerHTML = `<div class="text-sm opacity-70">(练习加载失败)</div>`;
+        $("hskPracticeBody").innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("practice.load_failed") || i18n.t("practice.empty"))}</div>`;
       }
     }
 
@@ -933,12 +934,13 @@ function bindEvents() {
       const isReview = ld?.type === "review";
       const rr = ld?.review?.lessonRange;
       if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
-        const reviewTitle = (() => { const r = i18n?.t?.("hsk_review_range"); return (r && r !== "hsk_review_range") ? r : (lang === "zh" ? "复习范围" : lang === "en" ? "Review Range" : "복습 범위"); })();
-        const reviewDesc = (() => { const r = i18n?.t?.("hsk_review_desc"); return (r && r !== "hsk_review_desc") ? r : (lang === "zh" ? "请回顾前面学过的词汇和对话。" : lang === "en" ? "Please review the vocabulary and dialogue from previous lessons." : "앞서 배운 단어와 대화를 복습해 주세요."); })();
+        const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
+        const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
+        const rangeFmt = i18n.t("hsk.review_range_format", { from: rr[0], to: rr[1], total: rr[1] }) || `第 ${rr[0]}–${rr[1]} 课`;
         $("hskPanelWords").innerHTML = `
           <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
             <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
-            <p class="text-slate-700">第 ${rr[0]}–${rr[1]} 课 / 1–${rr[1]}과 복습</p>
+            <p class="text-slate-700">${escapeHtml(rangeFmt)}</p>
             <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
           </div>
         `;

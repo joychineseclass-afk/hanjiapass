@@ -23,19 +23,21 @@ function escapeHtml(s) {
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en);
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn);
-  return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp);
+  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.jp);
+  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.jp) || str(obj.zh ?? obj.cn);
 }
 
-/** 解析跟随系统语言：KR kr→ko→zh, CN zh→cn, EN en→zh */
+/** 解析跟随系统语言：KR/CN/EN/JP */
 function pickExplanation(obj, lang) {
   if (!obj || typeof obj !== "object") return str(obj);
   if (typeof obj === "string") return str(obj);
   const l = (lang || "ko").toLowerCase();
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
-  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
+  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.jp);
+  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp);
+  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp);
 }
 
 function t(key, params) {

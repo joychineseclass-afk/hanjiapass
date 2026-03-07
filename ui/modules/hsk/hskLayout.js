@@ -32,8 +32,8 @@ export function getHSKLayoutHTML() {
         <input
           id="hskSearch"
           class="border rounded-lg px-3 py-1 text-sm"
-          data-i18n-placeholder="hsk_search_placeholder"
-          placeholder="단어/병음/뜻 검색"
+          data-i18n-placeholder="hsk.search_placeholder"
+          placeholder=""
         />
       </div>
 
@@ -73,7 +73,7 @@ export function getHSKLayoutHTML() {
       </div>
       <div class="flex items-center gap-2">
         <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
-          ← <span data-i18n="common_back">목록으로</span>
+          ← <span data-i18n="lesson.back_to_list">목록으로</span>
         </button>
         <span id="hskStudyTitle" class="font-semibold"></span>
       </div>
