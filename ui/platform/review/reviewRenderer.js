@@ -19,12 +19,13 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** JP strict: 当 lang=jp 时只返回 jp，不 fallback 到 kr/cn */
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || "";
   if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp || obj.ja);
   if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.en) || str(obj.zh || obj.cn) || str(obj.jp || obj.ja);
-  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.kr || obj.ko);
   return str(obj.en) || str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.jp || obj.ja);
 }
 
@@ -79,10 +80,10 @@ function renderReviewQuestionCard(q, index, { lang, answers, resultMap, submitte
   const result = resultMap[q.id];
   const correctAnswerDisplay = result ? getAnswerDisplay(q, result.answer, lang) : "";
 
-  const qNo = t("review_question_no", { n: index + 1, total: total || 1 });
+  const qNo = t("review.question_no", { n: index + 1, total: total || 1 }) || t("review_question_no", { n: index + 1, total: total || 1 });
   const qPy = getPinyin(questionZh);
   const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
-  const speakLabel = t("practice_listen");
+  const speakLabel = t("practice.listen") || t("practice_listen");
 
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
@@ -116,10 +117,10 @@ function renderReviewQuestionCard(q, index, { lang, answers, resultMap, submitte
 
   let resultHtml = "";
   if (submitted && result) {
-    const correctLabel = t("review_correct");
-    const wrongLabel = t("review_wrong");
-    const answerLabel = t("practice_answer");
-    const explLabel = t("review_explanation");
+    const correctLabel = t("review.correct") || t("review_correct");
+    const wrongLabel = t("review.wrong") || t("review_wrong");
+    const answerLabel = t("practice.answer") || t("practice_answer");
+    const explLabel = t("review.explanation") || t("review_explanation");
     const expl = pickExplanation(q.explanation, lang);
     const icon = result.correct ? "○" : "×";
     const resultClass = result.correct ? "lesson-practice-result-correct" : "lesson-practice-result-wrong";
@@ -178,10 +179,10 @@ export function renderReviewMode(container, session, { lang = "ko", onFinish, en
   ReviewState.setSession(session);
 
   const modeLabel = session.mode === "lesson"
-    ? t("review_current_lesson")
+    ? (t("hsk.review_this_lesson") || t("review_current_lesson"))
     : session.mode === "level"
-      ? t("review_current_level")
-      : t("review_all_wrong");
+      ? (t("hsk.review_this_level") || t("review_current_level"))
+      : (t("hsk.review_all_wrong") || t("review_all_wrong"));
 
   function render() {
     const answers = ReviewState.getAnswers();
@@ -225,9 +226,9 @@ export function renderReviewMode(container, session, { lang = "ko", onFinish, en
     container.innerHTML = `
 <div class="review-mode-block">
   <section class="review-hero">
-    <h3 class="review-title">${escapeHtml(t("review_mode"))}</h3>
+    <h3 class="review-title">${escapeHtml(t("hsk.review_mode") || t("review_mode"))}</h3>
     <p class="review-mode-label">${escapeHtml(modeLabel)}</p>
-    <p class="review-count">${escapeHtml(t("review_total", { n: questions.length, total: questions.length }))}</p>
+    <p class="review-count">${escapeHtml(t("review.total", { n: questions.length, total: questions.length }) || t("review_total", { n: questions.length, total: questions.length }))}</p>
     <button type="button" class="lesson-practice-submit review-submit">${escapeHtml(t("review_submit"))}</button>
   </section>
   <section class="review-list lesson-practice-list">${cardsHtml}</section>

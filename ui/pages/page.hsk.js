@@ -139,7 +139,7 @@ function updateTabsLabels() {
     }
   });
   const reviewBtn = $("hskReviewBtn");
-  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start", "복습");
+  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start", "復習");
   const reviewLabels = [
     ["hskReviewEntry", "span", "hsk.review_mode"],
     ["hskReviewLesson", null, "hsk.review_this_lesson"],
@@ -255,9 +255,10 @@ function updateTabsUI() {
   });
 }
 
-/** 对话翻译：统一走 languageEngine.getContentText，strict 避免混语 */
+/** 对话翻译：统一走 languageEngine.getContentText，JP strict 避免混语 */
 function pickDialogueTranslation(line, zhMain = "") {
-  const out = getContentText(line, "translation") || pick(line, { strict: true });
+  const lang = getLang();
+  const out = getContentText(line, "translation", { strict: true, lang }) || pick(line, { strict: true, lang });
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
@@ -265,7 +266,8 @@ function pickDialogueTranslation(line, zhMain = "") {
 /** 会话标题：pick(title, strict) 或 i18n 会話{n} */
 function pickCardTitle(obj, cardIndex = 1) {
   if (obj != null && typeof obj === "string") return obj.trim();
-  const v = pick(obj, { strict: true });
+  const lang = getLang();
+  const v = pick(obj, { strict: true, lang });
   if (v) return v;
   const sessionText = i18n.t("dialogue.session", { n: cardIndex });
   if (sessionText && sessionText !== "dialogue.session") return sessionText;
@@ -341,20 +343,24 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法解释：统一走 languageEngine.getContentText */
+/** 语法解释：统一走 languageEngine.getContentText，JP strict 禁止 fallback 中文 */
 function pickGrammarExplanation(pt) {
-  return getContentText(pt, "explain") || getContentText(pt, "explanation") || pick(pt) || "";
+  const lang = getLang();
+  return getContentText(pt, "explain", { strict: true, lang })
+    || getContentText(pt, "explanation", { strict: true, lang })
+    || pick(pt, { strict: true, lang }) || "";
 }
 
-/** 语法例句：getContentText(example, "translation") 或 pick */
+/** 语法例句：getContentText(example, "translation") 或 pick，JP strict */
 function getGrammarExamples(pt) {
   const ex = (pt && pt.example) || (pt && pt.examples);
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const lang = getLang();
   const toItem = (e) => {
     if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
     const zh = str((e && e.zh) || (e && e.cn) || (e && e.line) || (e && e.text));
     const pinyin = str((e && e.pinyin) || (e && e.py));
-    const trans = getContentText(e, "translation") || pick(e) || "";
+    const trans = getContentText(e, "translation", { strict: true, lang }) || pick(e, { strict: true, lang }) || "";
     return { zh, pinyin, trans };
   };
   if (!ex) return [];
@@ -447,7 +453,7 @@ function buildExtensionHTML(lessonData) {
   const cards = arr.map((item, i) => {
     const zh = str((item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
-    const meaning = getContentText(item, "translation") || pick(item) || "";
+    const meaning = getContentText(item, "translation", { strict: true, lang }) || pick(item, { strict: true, lang }) || "";
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
@@ -478,7 +484,7 @@ function buildAIContext() {
 
   const found = state.lessons && state.lessons.find(function(x) { return Number(x.lessonNo) === Number(no); });
   const titleObj = found && found.title;
-  const title = titleObj ? (typeof titleObj === "object" ? pick(titleObj) : String(titleObj)) : "";
+  const title = titleObj ? (typeof titleObj === "object" ? pick(titleObj, { strict: true, lang }) : String(titleObj)) : "";
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {

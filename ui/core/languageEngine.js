@@ -238,6 +238,7 @@ export async function tAsync(key, paramsOrFallback, fallback) {
  * 4. pick(obj, options?)
  * 从多语言对象取值
  * options.strict: true 时仅返回当前语言，不 fallback 到其他语言（课程内容用，避免混语）
+ * JP strict lock: 当 lang=jp 且 strict 时，绝不 fallback 到 kr/cn/en
  * 否则顺序：当前 lang -> en -> kr -> cn -> jp -> ""
  */
 export function pick(obj, options = {}) {
@@ -261,9 +262,9 @@ export function pick(obj, options = {}) {
 /**
  * 4b. getLessonDisplayTitle(lesson, lang?)
  * 统一 lesson 标题：目录页与 detail 共用
+ * JP strict lock: 当 lang=jp 时，只返回 jp 字段，绝不 fallback 到 kr/cn
  * 优先 pick(lesson.title, { strict:true })
  * 兼容 lesson.title_jp / title_en / title_kr / title_cn
- * 当前语言缺失时回退到 cn 或原始 title，避免混语
  */
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
@@ -272,45 +273,46 @@ export function getLessonDisplayTitle(lesson, lang) {
   if (typeof titleObj === "object" && titleObj !== null) {
     const v = pick(titleObj, { strict: true, lang: l });
     if (v) return v;
+    if (l === "jp" || l === "ja") return "";
     return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
   }
   if (typeof titleObj === "string") return str(titleObj);
   const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
   if (flat) return str(flat);
+  if (l === "jp" || l === "ja") return str(lesson.title_jp ?? lesson.title_ja ?? "") || "";
   return str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
 }
 
 /**
- * 5. getContentText(item, field?)
+ * 5. getContentText(item, field?, options?)
  * 课程内容字段：兼容 translation/meaning/explain + 旧结构
+ * options: { strict: true, lang: "jp" } — JP strict lock 时绝不 fallback 到 kr/cn
  * 新结构: item.translation?.[lang], item.meaning?.[lang], item.explain?.[lang]
  * 旧结构: item.kr/jp/en/cn, item.meaningKr/meaningJp/meaningEn/meaningCn,
  *        item.explainKr/explainJp/explainEn/explainCn,
  *        item.explanation_kr/explanation_jp/explanation_en/explanation_zh
  */
-export function getContentText(item, field) {
+export function getContentText(item, field, options = {}) {
   if (!item || typeof item !== "object") return "";
 
-  const lang = getLang();
-  const altKeys = { kr: ["kr", "ko"], cn: ["cn", "zh"], en: ["en"], jp: ["jp", "ja"] };
-  const keys = altKeys[lang] || ["kr", "en", "cn", "jp"];
+  const lang = options.lang ?? getLang();
+  const useStrict = options.strict !== false;
 
   /** 从旧结构构建多语言对象：meaningKr->kr, explanation_kr->kr */
-  function buildFromOld(item, prefix) {
+  function buildFromOld(it, prefix) {
     const obj = {};
     const map = { kr: ["kr", "Kr", "ko", "Ko"], cn: ["cn", "Cn", "zh", "Zh"], en: ["en", "En"], jp: ["jp", "Jp", "ja", "Ja"] };
     for (const [k, variants] of Object.entries(map)) {
       for (const v of variants) {
         const key = prefix + v;
-        const val = item[key];
+        const val = it[key];
         if (val != null && str(val)) { obj[k] = str(val); break; }
       }
     }
     return Object.keys(obj).length ? obj : null;
   }
 
-  /** 课程内容 strict: 缺当前语言时不 fallback 到其他语言，避免混语 */
-  const strictOpt = { strict: true };
+  const strictOpt = { strict: useStrict, lang };
 
   const fields = field ? [field] : ["translation", "meaning", "explain", "explanation"];
 

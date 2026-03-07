@@ -44,12 +44,12 @@ export function getHSKLayoutHTML() {
       <!-- Meta bar: 已完成 / 当前课 / 待复习 / 最近学习 -->
       <div id="hskProgressBlock" class="hsk-meta-bar"></div>
 
-      <!-- Review Mode 入口 -->
+      <!-- Review Mode 入口：JP strict 时使用 hsk.review_* 键 -->
       <div id="hskReviewEntry" class="hsk-review-entry mt-2 flex flex-wrap gap-2">
-        <span class="text-sm font-medium opacity-80" data-i18n="review_mode">복습</span>
-        <button id="hskReviewLesson" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="review_current_lesson">본과</button>
-        <button id="hskReviewLevel" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="review_current_level">본급</button>
-        <button id="hskReviewAll" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="review_all_wrong">전체 오답</button>
+        <span class="text-sm font-medium opacity-80" data-i18n="hsk.review_mode">復習モード</span>
+        <button id="hskReviewLesson" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="hsk.review_this_lesson">本課</button>
+        <button id="hskReviewLevel" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="hsk.review_this_level">本級</button>
+        <button id="hskReviewAll" type="button" class="px-3 py-1 rounded-lg border text-sm" data-i18n="hsk.review_all_wrong">全誤答</button>
       </div>
 
       <!-- Review 内容容器 -->

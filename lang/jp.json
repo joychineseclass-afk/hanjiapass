@@ -54,7 +54,7 @@
     "tip": "レベルを選んで学習を始めましょう。",
     "directory_title": "コース一覧",
     "directory_lesson": "第",
-    "lesson_no_format": "第 {n} 課",
+    "lesson_no_format": "第{n}課",
     "directory_enter": "レッスン開始",
     "meta": {
       "completed": "完了",
@@ -69,7 +69,7 @@
     "review_mode": "復習モード",
     "review_this_lesson": "本課",
     "review_this_level": "本級",
-    "review_all_wrong": "全オ답",
+    "review_all_wrong": "全誤答",
     "tab": {
       "words": "単語",
       "dialogue": "会話",
@@ -103,10 +103,19 @@
     "back_to_list": "← 一覧に戻る",
     "lesson_unit": "第{n}課",
     "section": {
+      "words": "単語",
+      "dialogue": "会話",
+      "grammar": "文法",
+      "extension": "拡張",
       "practice": "練習",
+      "review": "復習",
       "ai": "AI学習"
     },
     "desc": {
+      "words": "本課の単語。クリックで発音を聞けます。",
+      "dialogue": "本課の会話。中国語をクリックで読み上げ。",
+      "grammar": "本課の文法。",
+      "extension": "本課に関連する拡張表現。",
       "practice": "回答して送信すると、正誤と解説が表示されます。",
       "ai": "本課の単語・会話でAIに質問しましょう。"
     }
@@ -172,8 +181,9 @@
     "last_study": "最近の学習"
   },
   "review": {
+    "title": "復習",
+    "question_count": "{n}問",
     "mode": "復習モード",
-    "start": "復習",
     "submit": "送信",
     "continue": "復習を続ける",
     "current_lesson": "本課",

@@ -20,7 +20,7 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
-/** 严格模式：仅当前语言，不 fallback 避免混语 */
+/** 严格模式：仅当前语言，不 fallback 避免混语。JP strict: 绝不 fallback 到 kr/cn */
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
@@ -35,14 +35,14 @@ function pickQuestionText(obj, lang) {
   return str(obj?.zh ?? obj?.cn ?? obj?.zh ?? "") || "";
 }
 
-/** 解析跟随系统语言：KR/CN/EN/JP */
+/** 解析跟随系统语言：KR/CN/EN/JP。JP strict: 只返回 jp，不 fallback 到 kr/cn */
 function pickExplanation(obj, lang) {
   if (!obj || typeof obj !== "object") return str(obj);
   if (typeof obj === "string") return str(obj);
   const l = (lang || "ko").toLowerCase();
+  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || "";
   if (l === "ko" || l === "kr") return str(obj.kr || obj.ko) || str(obj.zh || obj.cn) || str(obj.en) || str(obj.jp);
   if (l === "zh" || l === "cn") return str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.en) || str(obj.jp);
-  if (l === "jp" || l === "ja") return str(obj.jp || obj.ja) || str(obj.en) || str(obj.kr || obj.ko) || str(obj.zh || obj.cn);
   return str(obj.en) || str(obj.zh || obj.cn) || str(obj.kr || obj.ko) || str(obj.jp);
 }
 
@@ -129,10 +129,10 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
 
   let resultHtml = "";
   if (submitted && result) {
-    const correctLabel = t("practice_correct");
-    const wrongLabel = t("practice_wrong");
-    const answerLabel = t("practice_answer");
-    const explLabel = t("practice_explanation");
+    const correctLabel = t("practice.correct") || t("practice_correct");
+    const wrongLabel = t("practice.incorrect") || t("practice_wrong");
+    const answerLabel = t("practice.answer") || t("practice_answer");
+    const explLabel = t("practice.explanation") || t("practice_explanation");
     const expl = pickExplanation(q.explanation, lang);
     const icon = result.correct ? "○" : "×";
     const resultClass = result.correct ? "lesson-practice-result-correct" : "lesson-practice-result-wrong";

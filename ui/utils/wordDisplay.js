@@ -61,20 +61,26 @@ function glossaryLang(lang) {
 
 /**
  * 按系统语言取释义，委托 languageEngine.getContentText
+ * JP strict lock: 当 lang=jp 时，只返回 jp 释义，绝不 fallback 到 kr/cn
  * 兼容 meaning / translation + 扁平 kr/jp/en/cn，glossary 回退
  */
 export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
   if (!word) return "";
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "") || fallbackHanzi;
-  const zh = str(word.zh ?? word.cn ?? (word.meaning && word.meaning.zh) ?? (word.meaning && word.meaning.cn)) || fallbackHanzi;
+  const normLang = lang === "ko" ? "kr" : lang === "zh" ? "cn" : lang === "ja" ? "jp" : lang;
+  const isJp = normLang === "jp";
 
-  const fromEngine = getContentText(word, "meaning") || getContentText(word, "translation") || pick(word, { strict: true });
+  const fromEngine = getContentText(word, "meaning", { strict: true, lang: normLang })
+    || getContentText(word, "translation", { strict: true, lang: normLang })
+    || pick(word, { strict: true, lang: normLang });
   if (fromEngine) return fromEngine;
 
   if (scope && hanzi) {
     const g = getGlossaryMeaning(hanzi, glossaryLang(lang), scope);
     if (g) return g;
   }
+  if (isJp) return "";
+  const zh = str(word.zh ?? word.cn ?? (word.meaning && word.meaning.zh) ?? (word.meaning && word.meaning.cn)) || fallbackHanzi;
   return zh || fallbackHanzi;
 }
 
