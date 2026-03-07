@@ -122,22 +122,25 @@ export function recordPracticeResult({ courseId, lessonId, total, correct, score
   });
   if (Array.isArray(wrongItems) && wrongItems.length > 0) {
     const wq = data.wrongQuestions || [];
-    const seen = new Set(wq.map((x) => `${x.lessonId}:${x.questionId}`));
+    const nowSec = Math.floor(now / 1000);
     wrongItems.forEach((item) => {
+      const key = `${lessonId}:${item.questionId}`;
+      const idx = wq.findIndex((x) => (x.lessonId || "") === lessonId && (x.questionId || "") === item.questionId);
       const record = {
         lessonId,
         questionId: item.questionId,
         subtype: item.subtype ?? "choice",
         selected: String(item.selected ?? ""),
         correct: String(item.correct ?? ""),
-        timestamp: Math.floor(now / 1000),
+        wrongCount: idx >= 0 ? (Number(wq[idx].wrongCount) || 1) + 1 : 1,
+        reviewCorrectCount: idx >= 0 ? (Number(wq[idx].reviewCorrectCount) || 0) : 0,
+        lastWrongAt: nowSec,
+        lastReviewAt: idx >= 0 ? (Number(wq[idx].lastReviewAt) || 0) : 0,
+        questionSnapshot: item.questionSnapshot ?? (idx >= 0 ? wq[idx].questionSnapshot : null) ?? null,
       };
-      const key = `${lessonId}:${item.questionId}`;
-      if (seen.has(key)) {
-        const idx = wq.findIndex((x) => x.lessonId === lessonId && x.questionId === item.questionId);
-        if (idx >= 0) wq[idx] = record;
+      if (idx >= 0) {
+        wq[idx] = record;
       } else {
-        seen.add(key);
         wq.push(record);
       }
     });
@@ -166,6 +169,19 @@ export function getWrongQuestionsByLesson(lessonId) {
 }
 
 /**
+ * 按 course 获取错题
+ * @param {string} courseId
+ * @returns {Array}
+ */
+export function getWrongQuestionsByCourse(courseId) {
+  if (!courseId) return [];
+  return getWrongQuestions().filter((x) => {
+    const lid = x.lessonId || "";
+    return lid.startsWith(courseId + "_") || lid === courseId;
+  });
+}
+
+/**
  * 清除指定课程的错题记录
  * @param {string} lessonId
  */
@@ -175,6 +191,70 @@ export function clearWrongQuestions(lessonId) {
   if (!Array.isArray(data.wrongQuestions)) return;
   data.wrongQuestions = data.wrongQuestions.filter((x) => x.lessonId !== lessonId);
   Store.saveProgress(data);
+}
+
+/**
+ * 移除单道错题
+ * @param {string} questionId
+ * @param {string} lessonId
+ */
+export function removeWrongQuestion(questionId, lessonId) {
+  if (!questionId || !lessonId) return;
+  const data = Store.loadProgress();
+  if (!Array.isArray(data.wrongQuestions)) return;
+  data.wrongQuestions = data.wrongQuestions.filter(
+    (x) => !(x.questionId === questionId && x.lessonId === lessonId)
+  );
+  Store.saveProgress(data);
+}
+
+/**
+ * 记录复习提交结果
+ * @param {{ sessionId: string, results: Array<{questionId, lessonId, correct}> }}
+ */
+export function recordReviewSubmit({ sessionId, results = [] }) {
+  if (!sessionId || !Array.isArray(results)) return;
+  const data = Store.loadProgress();
+  const wq = [...(data.wrongQuestions || [])];
+  const now = Math.floor(Date.now() / 1000);
+  const CLEAR_THRESHOLD = 2;
+  const toRemove = new Set();
+
+  results.forEach((r) => {
+    const idx = wq.findIndex(
+      (x) => x.questionId === r.questionId && x.lessonId === r.lessonId
+    );
+    if (idx < 0) return;
+
+    const item = wq[idx];
+    if (r.correct) {
+      const newCount = (item.reviewCorrectCount || 0) + 1;
+      item.reviewCorrectCount = newCount;
+      item.lastReviewAt = now;
+      if (newCount >= CLEAR_THRESHOLD) {
+        toRemove.add(`${item.lessonId}:${item.questionId}`);
+      }
+    } else {
+      item.wrongCount = (item.wrongCount || 1) + 1;
+      item.lastWrongAt = now;
+      item.reviewCorrectCount = 0;
+    }
+  });
+
+  data.wrongQuestions = wq.filter((x) => !toRemove.has(`${x.lessonId}:${x.questionId}`));
+  Store.saveProgress(data);
+}
+
+/**
+ * 复习统计
+ */
+export function getReviewStats() {
+  const list = getWrongQuestions();
+  return {
+    totalWrong: list.length,
+    dueReview: list.length,
+    clearedToday: 0,
+  };
 }
 
 /**

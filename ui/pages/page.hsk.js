@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -727,6 +727,63 @@ function bindEvents() {
     $("hskLessonListWrap")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, { signal });
 
+  // Review Mode 入口
+  function enterReviewMode(mode, lessonId = "", levelKey = "") {
+    const container = $("hskReviewContainer");
+    if (!container || !renderReviewMode) return;
+    const { session, questions } = prepareReviewSession({ mode, lessonId, levelKey });
+    if (!questions.length) {
+      container.innerHTML = `<div class="review-empty-state p-4"><p>${escapeHtml(i18n.t("review_no_wrong_questions"))}</p></div>`;
+      container.classList.remove("hidden");
+      return;
+    }
+    container.classList.remove("hidden");
+    const doRender = () => {
+      const { session: s, questions: qs } = prepareReviewSession({ mode, lessonId, levelKey });
+      if (!qs.length) {
+        container.innerHTML = `<div class="review-empty-state p-4"><p>${escapeHtml(i18n.t("review_no_wrong_questions"))}</p></div>`;
+        return;
+      }
+      renderReviewMode(container, s, {
+        lang: getLang(),
+        onFinish: ({ action }) => {
+          if (action === "back") {
+            container.classList.add("hidden");
+            container.innerHTML = "";
+          } else if (action === "continue") {
+            doRender();
+          }
+        },
+      });
+    };
+    doRender();
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  $("hskReviewLesson")?.addEventListener("click", () => {
+    const lessonId = state.current?.lessonData?.id ?? (state.current ? `${getCourseId()}_lesson${state.current.lessonNo}` : "");
+    if (!lessonId) {
+      const stats = PROGRESS_SELECTORS?.getCourseStats?.(getCourseId(), state.lessons?.length ?? 0) ?? {};
+      const lastNo = stats.lastLessonNo || 1;
+      enterReviewMode("lesson", `${getCourseId()}_lesson${lastNo}`);
+    } else {
+      enterReviewMode("lesson", lessonId);
+    }
+  }, { signal });
+
+  $("hskReviewLevel")?.addEventListener("click", () => {
+    enterReviewMode("level", "", getCourseId());
+  }, { signal });
+
+  $("hskReviewAll")?.addEventListener("click", () => {
+    enterReviewMode("all");
+  }, { signal });
+
+  $("hskReviewBtn")?.addEventListener("click", () => {
+    const lessonId = state.current?.lessonData?.id ?? (state.current ? `${getCourseId()}_lesson${state.current.lessonNo}` : "");
+    enterReviewMode("lesson", lessonId);
+  }, { signal });
+
   // Lesson click (delegate)
   $("hskLessonList")?.addEventListener("click", (e) => {
     const btn = e.target.closest('button[data-open-lesson="1"]');
@@ -746,7 +803,7 @@ function bindEvents() {
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card") ?? el.closest(".lesson-grammar-card") ?? el.closest(".lesson-practice-card") ?? el.closest(".lesson-practice-option");
+    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card") ?? el.closest(".lesson-grammar-card") ?? el.closest(".lesson-practice-card") ?? el.closest(".review-question-card") ?? el.closest(".lesson-practice-option");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",

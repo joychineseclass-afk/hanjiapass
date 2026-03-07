@@ -148,3 +148,116 @@
   background: #ef4444;
   color: #fff;
 }
+
+/* ===== Review Mode Engine v1 ===== */
+.hsk-review-entry {
+  padding: 8px 0;
+}
+
+.hsk-review-container {
+  background: #fff;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.review-mode-block {
+  padding-bottom: 1rem;
+}
+
+.review-hero {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.review-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px;
+}
+
+.review-mode-label {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0 0 4px;
+}
+
+.review-count {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0 0 12px;
+}
+
+.review-footer {
+  margin-top: 16px;
+}
+
+.review-result-block {
+  padding: 24px;
+  text-align: center;
+}
+
+.review-result-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 0 0 16px;
+}
+
+.review-result-stats {
+  font-size: 1rem;
+  color: #334155;
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.review-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.review-btn-continue,
+.review-btn-back {
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.review-btn-continue {
+  color: #fff;
+  background: #22c55e;
+  border: none;
+}
+
+.review-btn-continue:hover {
+  background: #16a34a;
+}
+
+.review-btn-back {
+  color: #64748b;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+
+.review-btn-back:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.review-empty-state {
+  color: #64748b;
+  text-align: center;
+}
+
+.review-question-card {
+  margin-bottom: 18px;
+}

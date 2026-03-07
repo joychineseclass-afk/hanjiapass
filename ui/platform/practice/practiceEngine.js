@@ -130,6 +130,12 @@ export function submitAll() {
         subtype: q.subtype ?? q.subType ?? q.type ?? "choice",
         selected: String(selected),
         correct: String(exp ?? ""),
+        questionSnapshot: {
+          question: q.question,
+          options: q.options,
+          answer: q.answer,
+          explanation: q.explanation,
+        },
       });
     }
   });

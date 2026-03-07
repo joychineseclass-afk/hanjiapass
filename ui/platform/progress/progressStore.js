@@ -27,6 +27,7 @@ export function loadProgress() {
     if (data.version !== 1) return migrateOrReset(data);
     data.courses = data.courses && typeof data.courses === "object" ? data.courses : {};
     if (!Array.isArray(data.wrongQuestions)) data.wrongQuestions = [];
+    data.wrongQuestions = data.wrongQuestions.map((w) => migrateWrongQuestion(w));
     return data;
   } catch {
     return getEmptyProgress();
@@ -46,6 +47,22 @@ export function saveProgress(data) {
   } catch (e) {
     console.warn("[Progress] save failed:", e?.message);
   }
+}
+
+/**
+ * 迁移旧 wrongQuestion 结构
+ */
+function migrateWrongQuestion(w) {
+  if (!w || typeof w !== "object") return w;
+  const ts = w.timestamp ?? w.lastWrongAt ?? 0;
+  const tsSec = ts > 1e12 ? Math.floor(ts / 1000) : ts;
+  return {
+    ...w,
+    wrongCount: w.wrongCount ?? 1,
+    reviewCorrectCount: w.reviewCorrectCount ?? 0,
+    lastWrongAt: tsSec,
+    lastReviewAt: w.lastReviewAt ?? 0,
+  };
 }
 
 /**

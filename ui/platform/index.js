@@ -27,6 +27,8 @@ export {
   parseHashQuery,
 } from "./courses/courseRouterHook.js";
 export { PROGRESS_ENGINE, PROGRESS_SELECTORS } from "./progress/index.js";
+export * as REVIEW from "./review/index.js";
+export { renderReviewMode, prepareReviewSession } from "./review/index.js";
 import { TTS_ENGINE, AUDIO_ENGINE } from "./audio/index.js";
 export { TTS_ENGINE, AUDIO_ENGINE };
 if (typeof window !== "undefined") {
