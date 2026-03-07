@@ -5,6 +5,7 @@
 
 import { filterSupportedQuestions } from "./practiceTypes.js";
 import * as PracticeState from "./practiceState.js";
+import { generatePractice } from "./generator/practiceGenerator.js";
 
 /**
  * 加载练习
@@ -13,7 +14,10 @@ import * as PracticeState from "./practiceState.js";
  */
 export function loadPractice(lesson) {
   PracticeState.resetPracticeState();
-  const raw = Array.isArray(lesson?.practice) ? lesson.practice : [];
+  let raw = Array.isArray(lesson?.practice) ? lesson.practice : [];
+  if (!raw.length) {
+    raw = generatePractice(lesson);
+  }
   const questions = filterSupportedQuestions(raw);
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
 
