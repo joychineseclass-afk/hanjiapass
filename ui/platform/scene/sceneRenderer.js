@@ -41,7 +41,7 @@ export function renderSceneHeader(scene, lang = "ko") {
   const coverSrc = cover ? resolveMediaUrl(cover) : "";
 
   const coverHtml = coverSrc
-    ? `<img class="scene-cover-image" src="${escapeHtml(coverSrc)}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.style.display='none'" />`
+    ? `<img class="scene-cover-image" src="${escapeHtml(coverSrc)}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.style.display='none';if(this.parentElement)this.parentElement.style.display='none'" />`
     : "";
 
   return `

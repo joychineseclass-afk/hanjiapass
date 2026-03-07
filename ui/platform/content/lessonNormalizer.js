@@ -162,6 +162,7 @@ export function normalizeLesson(raw, ctx = {}) {
     aiPractice: normAiPractice(raw),
     review: raw?.review && typeof raw.review === "object" ? raw.review : {},
     steps: raw?.steps,
+    scene: raw?.scene && typeof raw.scene === "object" ? raw.scene : undefined,
     _raw: raw,
   };
 }
