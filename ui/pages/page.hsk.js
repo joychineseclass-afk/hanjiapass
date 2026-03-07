@@ -280,18 +280,26 @@ function buildGrammarHTML(lessonData) {
   return `<div class="hsk-grammar-list">${blocks.join("")}</div>`;
 }
 
-/** 扩展表达：从 lessonData.extension 渲染卡片列表，支持点读 */
+/** 扩展表达：hero + 教材卡片列表，支持点读（点击中文或发音按钮） */
 function buildExtensionHTML(lessonData) {
   const raw = lessonData?._raw ?? lessonData;
   const arr = Array.isArray(raw?.extension) ? raw.extension : [];
+  const lang = getLang();
+  const speakLabel = i18n.t("extension_speak");
+  const hero = `<section class="lesson-extension-hero">
+  <h3 class="lesson-extension-title">${escapeHtml(i18n.t("extension_title"))}</h3>
+  <span class="lesson-extension-badge">${escapeHtml(i18n.t("extension_badge"))}</span>
+  <p class="lesson-extension-subtitle">${escapeHtml(i18n.t("extension_subtitle"))}</p>
+  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension_tip"))}</p>
+</section>`;
+
   if (!arr.length) {
-    return `<div class="lesson-extension-empty">${i18n.t("hsk_extension_empty", {})}</div>`;
+    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk_extension_empty", {})}</div>`;
   }
 
-  const lang = getLang();
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
-  const cards = arr.map((item) => {
+  const cards = arr.map((item, i) => {
     const zh = str(item?.zh ?? item?.cn ?? item?.line ?? "");
     const pinyin = str(item?.pinyin ?? item?.py ?? "");
     let meaning = "";
@@ -299,15 +307,25 @@ function buildExtensionHTML(lessonData) {
     else if (lang === "en") meaning = str(item?.en ?? item?.kr ?? item?.ko ?? item?.zh ?? item?.cn ?? "");
     else meaning = str(item?.zh ?? item?.cn ?? item?.kr ?? item?.ko ?? item?.en ?? "");
 
-    const zhAttrs = zh ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="extension"` : "";
+    const idx = String(i + 1).padStart(2, "0");
+    const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
+    const zhAttrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const btnAttrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+
     return `<article class="lesson-extension-card">
-  <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(zh)}</div>
-  ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
-  ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+  <div class="lesson-extension-card-top">
+    <span class="lesson-extension-index">${idx}</span>
+    <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+  </div>
+  <div class="lesson-extension-body">
+    <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+    ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+    ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+  </div>
 </article>`;
   }).filter(Boolean).join("");
 
-  return `<section class="lesson-extension-list">${cards}</section>`;
+  return `${hero}<section class="lesson-extension-list">${cards}</section>`;
 }
 
 function buildAIContext() {
