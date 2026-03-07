@@ -45,6 +45,12 @@
     { "title": "块", "explanation_zh": "「块」是人民币单位。", "explanation_kr": "'块'는 위안 단위입니다.", "explanation_en": "块 is the unit for yuan.", "example": { "zh": "五块", "pinyin": "wǔ kuài", "kr": "5위안", "en": "five yuan" } },
     { "title": "东西", "explanation_zh": "「东西」指事物。", "explanation_kr": "'东西'는 물건을 가리킵니다.", "explanation_en": "东西 means thing.", "example": { "zh": "买东西", "pinyin": "mǎi dōngxi", "kr": "물건 사다", "en": "buy things" } }
   ],
+  "extension": [
+    { "zh": "我要一杯茶。", "pinyin": "Wǒ yào yī bēi chá.", "kr": "차 한 잔 주세요.", "en": "I'd like a cup of tea." },
+    { "zh": "给我一杯水。", "pinyin": "Gěi wǒ yī bēi shuǐ.", "kr": "물 한 잔 주세요.", "en": "Give me a glass of water." },
+    { "zh": "这个好吃吗？", "pinyin": "Zhè gè hǎo chī ma?", "kr": "이거 맛있어요?", "en": "Is this delicious?" },
+    { "zh": "我不要咖啡。", "pinyin": "Wǒ bú yào kāfēi.", "kr": "커피는 안 주세요.", "en": "I don't want coffee." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「茶」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["水", "茶", "杯子"], "answer": "茶" },
     { "type": "choice", "question": { "zh": "「饭馆」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["商店", "饭馆", "家"], "answer": "饭馆" },

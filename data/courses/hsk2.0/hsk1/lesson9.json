@@ -45,6 +45,13 @@
     { "title": "喂", "explanation_zh": "接电话时用「喂」。", "explanation_kr": "전화 받을 때 '喂'를 사용합니다.", "explanation_en": "Use 喂 when answering the phone.", "example": { "zh": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요!", "en": "Hello!" } },
     { "title": "谁 — 疑问词", "explanation_zh": "「谁」问人。", "explanation_kr": "'谁'는 사람을 묻습니다.", "explanation_en": "谁 asks about people.", "example": { "zh": "你是谁？", "pinyin": "Nǐ shì shéi?", "kr": "당신은 누구예요?", "en": "Who are you?" } }
   ],
+  "extension": [
+    { "zh": "请问……", "pinyin": "Qǐngwèn...", "kr": "실례합니다...", "en": "Excuse me..." },
+    { "zh": "请等一下。", "pinyin": "Qǐng děng yī xià.", "kr": "잠시만 기다려 주세요.", "en": "Please wait a moment." },
+    { "zh": "我知道了。", "pinyin": "Wǒ zhīdào le.", "kr": "알겠어요.", "en": "I got it." },
+    { "zh": "我一会儿给你打电话。", "pinyin": "Wǒ yīhuǐr gěi nǐ dǎ diànhuà.", "kr": "잠시 후에 전화할게요.", "en": "I'll call you in a moment." },
+    { "zh": "他在吗？", "pinyin": "Tā zài ma?", "kr": "그 있어요?", "en": "Is he there?" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "接电话时先说___。", "kr": "전화 받을 때", "en": "When answering" }, "options": ["再见", "喂", "谢谢"], "answer": "喂" },
     { "type": "choice", "question": { "zh": "「请问」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["请", "请问", "问"], "answer": "请问" },

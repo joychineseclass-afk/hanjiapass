@@ -47,6 +47,13 @@
     { "title": "做 + 工作", "explanation_zh": "「做」表示从事。", "explanation_kr": "'做'는 ~을 한다는 뜻입니다.", "explanation_en": "做 indicates doing work.", "example": { "zh": "做什么工作", "pinyin": "zuò shénme gōngzuò", "kr": "무슨 일 하다", "en": "what work do you do" } },
     { "title": "能 / 会", "explanation_zh": "「能」表示能力，「会」表示会做。", "explanation_kr": "'能'은 능력, '会'는 할 줄 알다.", "explanation_en": "能 for ability, 会 for knowing how.", "example": { "zh": "我能去。我会说汉语。", "pinyin": "Wǒ néng qù. Wǒ huì shuō Hànyǔ.", "kr": "저는 갈 수 있어요. 중국어를 할 줄 알아요.", "en": "I can go. I can speak Chinese." } }
   ],
+  "extension": [
+    { "zh": "在公司工作", "pinyin": "Zài gōngsī gōngzuò", "kr": "회사에서 일하다", "en": "to work at a company" },
+    { "zh": "他是老师。", "pinyin": "Tā shì lǎoshī.", "kr": "그는 선생님이에요.", "en": "He is a teacher." },
+    { "zh": "她是医生。", "pinyin": "Tā shì yīshēng.", "kr": "그녀는 의사예요.", "en": "She is a doctor." },
+    { "zh": "王先生", "pinyin": "Wáng xiānsheng", "kr": "왕 선생님/씨", "en": "Mr. Wang" },
+    { "zh": "李小姐", "pinyin": "Lǐ xiǎojiě", "kr": "이 아가씨", "en": "Miss Li" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「医生」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["老师", "医生", "学生"], "answer": "医生" },
     { "type": "choice", "question": { "zh": "「先生」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["小姐", "先生", "医生"], "answer": "先生" },

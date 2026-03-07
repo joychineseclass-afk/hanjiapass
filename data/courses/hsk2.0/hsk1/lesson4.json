@@ -49,6 +49,13 @@
     { "title": "的 — 所属", "explanation_zh": "「的」表示所属关系。", "explanation_kr": "'的'는 소유 관계를 나타냅니다.", "explanation_en": "的 indicates possession.", "example": { "zh": "我爸爸", "pinyin": "wǒ bàba", "kr": "우리 아빠", "en": "my dad" } },
     { "title": "他 / 她", "explanation_zh": "「他」指男性，「她」指女性。", "explanation_kr": "'他'는 남성, '她'는 여성을 가리킵니다.", "explanation_en": "他 for male, 她 for female.", "example": { "zh": "他是学生。她是老师。", "pinyin": "Tā shì xuésheng. Tā shì lǎoshī.", "kr": "그는 학생. 그녀는 선생님.", "en": "He is a student. She is a teacher." } }
   ],
+  "extension": [
+    { "zh": "我哥哥", "pinyin": "Wǒ gēge", "kr": "제 오빠/형", "en": "my older brother" },
+    { "zh": "我姐姐", "pinyin": "Wǒ jiějie", "kr": "제 언니/누나", "en": "my older sister" },
+    { "zh": "我家有五口人。", "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.", "kr": "우리 가족은 다섯 명이에요.", "en": "My family has five people." },
+    { "zh": "我们一家人。", "pinyin": "Wǒmen yī jiā rén.", "kr": "우리 한 가족이에요.", "en": "We are one family." },
+    { "zh": "我们一起住。", "pinyin": "Wǒmen yīqǐ zhù.", "kr": "우리 같이 살아요.", "en": "We live together." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「爸爸」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["妈妈", "爸爸", "儿子"], "answer": "爸爸" },
     { "type": "choice", "question": { "zh": "「女儿」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["儿子", "女儿", "爸爸"], "answer": "女儿" },

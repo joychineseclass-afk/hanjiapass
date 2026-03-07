@@ -48,6 +48,14 @@
     { "title": "在 + 地点", "explanation_zh": "「在」表示存在或位置。", "explanation_kr": "'在'는 존재나 위치를 나타냅니다.", "explanation_en": "在 indicates location.", "example": { "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요.", "en": "I'm at school." } },
     { "title": "上 / 下 / 里", "explanation_zh": "方位词：上、下、前面、后面、里。", "explanation_kr": "방향어: 上, 下, 前面, 后面, 里.", "explanation_en": "Direction words.", "example": { "zh": "在桌子上", "pinyin": "zài zhuōzi shàng", "kr": "책상 위에", "en": "on the table" } }
   ],
+  "extension": [
+    { "zh": "洗手间在哪儿？", "pinyin": "Xǐshǒujiān zài nǎr?", "kr": "화장실이 어디에 있어요?", "en": "Where is the restroom?" },
+    { "zh": "教室在哪儿？", "pinyin": "Jiàoshì zài nǎr?", "kr": "교실이 어디에 있어요?", "en": "Where is the classroom?" },
+    { "zh": "图书馆在哪儿？", "pinyin": "Túshūguǎn zài nǎr?", "kr": "도서관이 어디에 있어요?", "en": "Where is the library?" },
+    { "zh": "在那边。", "pinyin": "Zài nà biān.", "kr": "저쪽에 있어요.", "en": "It's over there." },
+    { "zh": "在楼上。", "pinyin": "Zài lóu shàng.", "kr": "위층에 있어요.", "en": "It's upstairs." },
+    { "zh": "在楼下。", "pinyin": "Zài lóu xià.", "kr": "아래층에 있어요.", "en": "It's downstairs." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「在」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["有", "在", "去"], "answer": "在" },
     { "type": "choice", "question": { "zh": "「前面」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["后面", "前面", "里"], "answer": "后面" },

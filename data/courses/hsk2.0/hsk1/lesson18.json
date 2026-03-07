@@ -48,6 +48,13 @@
     { "title": "这 / 那", "explanation_zh": "「这」指近处，「那」指远处。", "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.", "explanation_en": "这 for near, 那 for far.", "example": { "zh": "这个，那个", "pinyin": "zhè gè, nà gè", "kr": "이것, 저것", "en": "this one, that one" } },
     { "title": "呢", "explanation_zh": "「呢」用于追问或话题转换。", "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.", "explanation_en": "呢 for follow-up or topic shift.", "example": { "zh": "那个呢？", "pinyin": "Nà gè ne?", "kr": "저것은요?", "en": "What about that one?" } }
   ],
+  "extension": [
+    { "zh": "太贵了。", "pinyin": "Tài guì le.", "kr": "너무 비싸요.", "en": "It's too expensive." },
+    { "zh": "便宜一点吧。", "pinyin": "Piányi yīdiǎn ba.", "kr": "조금 깎아 주세요.", "en": "Can you make it cheaper?" },
+    { "zh": "我要这个。", "pinyin": "Wǒ yào zhè gè.", "kr": "이거 주세요.", "en": "I want this one." },
+    { "zh": "不要那个。", "pinyin": "Bú yào nà gè.", "kr": "저건 안 할게요.", "en": "I don't want that one." },
+    { "zh": "我再看看。", "pinyin": "Wǒ zài kànkan.", "kr": "다시 살펴볼게요.", "en": "Let me look around some more." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「买」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["卖", "买", "钱"], "answer": "买" },
     { "type": "choice", "question": { "zh": "「这」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["那", "这", "个"], "answer": "那" },

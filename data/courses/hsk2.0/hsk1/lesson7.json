@@ -46,6 +46,15 @@
     { "title": "年 + 月 + 日", "explanation_zh": "日期顺序：年、月、日。", "explanation_kr": "날짜 순서: 년, 월, 일.", "explanation_en": "Date order: year, month, day.", "example": { "zh": "三月十五日", "pinyin": "sān yuè shíwǔ rì", "kr": "3월 15일", "en": "March 15th" } },
     { "title": "星期 + 数字", "explanation_zh": "星期几问星期几。", "explanation_kr": "'星期几'는 무슨 요일인지 묻습니다.", "explanation_en": "星期几 asks day of week.", "example": { "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?", "en": "What day is today?" } }
   ],
+  "extension": [
+    { "zh": "今天几月几号？", "pinyin": "Jīntiān jǐ yuè jǐ hào?", "kr": "오늘 몇 월 며칠이에요?", "en": "What date is it today?" },
+    { "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?", "en": "What day is it today?" },
+    { "zh": "明天几号？", "pinyin": "Míngtiān jǐ hào?", "kr": "내일 며칠이에요?", "en": "What date is tomorrow?" },
+    { "zh": "一月到十二月", "pinyin": "Yī yuè dào shí'èr yuè", "kr": "1월부터 12월까지", "en": "January to December" },
+    { "zh": "星期一到星期天", "pinyin": "Xīngqī yī dào xīngqī tiān", "kr": "월요일부터 일요일까지", "en": "Monday to Sunday" },
+    { "zh": "三月十五号", "pinyin": "Sān yuè shíwǔ hào", "kr": "3월 15일", "en": "March 15th" },
+    { "zh": "下星期一", "pinyin": "Xià xīngqī yī", "kr": "다음 주 월요일", "en": "next Monday" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「今天」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["明天", "今天", "昨天"], "answer": "今天" },
     { "type": "choice", "question": { "zh": "「星期」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["月", "星期", "日"], "answer": "星期" },

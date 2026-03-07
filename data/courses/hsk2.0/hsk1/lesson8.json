@@ -47,6 +47,16 @@
     { "title": "点 + 分钟", "explanation_zh": "「点」表示钟点，「分钟」表示分。", "explanation_kr": "'点'는 시, '分钟'는 분을 나타냅니다.", "explanation_en": "点 for o'clock, 分钟 for minutes.", "example": { "zh": "九点十分", "pinyin": "jiǔ diǎn shí fēn", "kr": "9시 10분", "en": "9:10" } },
     { "title": "上午 / 下午 / 中午", "explanation_zh": "时段词放在时间前。", "explanation_kr": "시간대는 시간 앞에 옵니다.", "explanation_en": "Time period before the time.", "example": { "zh": "下午三点", "pinyin": "xiàwǔ sān diǎn", "kr": "오후 3시", "en": "3 p.m." } }
   ],
+  "extension": [
+    { "zh": "一点", "pinyin": "Yī diǎn", "kr": "한 시", "en": "one o'clock" },
+    { "zh": "两点半", "pinyin": "Liǎng diǎn bàn", "kr": "두 시 반", "en": "half past two" },
+    { "zh": "三点十分", "pinyin": "Sān diǎn shí fēn", "kr": "세 시 십 분", "en": "ten past three" },
+    { "zh": "早上", "pinyin": "Zǎoshang", "kr": "아침", "en": "early morning" },
+    { "zh": "中午", "pinyin": "Zhōngwǔ", "kr": "점심시간", "en": "noon" },
+    { "zh": "晚上", "pinyin": "Wǎnshang", "kr": "저녁", "en": "evening" },
+    { "zh": "几点起床？", "pinyin": "Jǐ diǎn qǐchuáng?", "kr": "몇 시에 일어나요?", "en": "What time do you get up?" },
+    { "zh": "几点睡觉？", "pinyin": "Jǐ diǎn shuìjiào?", "kr": "몇 시에 자요?", "en": "What time do you go to bed?" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「点」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["分钟", "点", "现在"], "answer": "点" },
     { "type": "choice", "question": { "zh": "「上午」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["下午", "上午", "中午"], "answer": "上午" },

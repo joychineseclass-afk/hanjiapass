@@ -55,6 +55,13 @@
     { "title": "几 + 个", "explanation_zh": "「几」问小数量，「个」是量词。", "explanation_kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.", "explanation_en": "几 asks small quantity, 个 is measure word.", "example": { "zh": "几个苹果", "pinyin": "jǐ gè píngguǒ", "kr": "사과 몇 개", "en": "how many apples" } },
     { "title": "多少", "explanation_zh": "「多少」问数量或价格。", "explanation_kr": "'多少'는 수량이나 가격을 묻습니다.", "explanation_en": "多少 asks quantity or price.", "example": { "zh": "多少钱？", "pinyin": "Duōshao qián?", "kr": "얼마예요?", "en": "How much?" } }
   ],
+  "extension": [
+    { "zh": "你的电话号码是多少？", "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?", "kr": "전화번호가 뭐예요?", "en": "What's your phone number?" },
+    { "zh": "我的房间号是二零一。", "pinyin": "Wǒ de fángjiān hào shì èr líng yī.", "kr": "제 방 호수는 201이에요.", "en": "My room number is 201." },
+    { "zh": "一共多少钱？", "pinyin": "Yīgòng duōshao qián?", "kr": "총 얼마예요?", "en": "How much in total?" },
+    { "zh": "一到十", "pinyin": "Yī dào shí", "kr": "하나부터 열까지", "en": "one to ten" },
+    { "zh": "十一到二十", "pinyin": "Shíyī dào èrshí", "kr": "열하나부터 스무까지", "en": "eleven to twenty" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「五」是几？", "kr": "五는?", "en": "五 is?" }, "options": ["三", "五", "七"], "answer": "五" },
     { "type": "choice", "question": { "zh": "请选择正确语序：我 / 有 / 三 / 个", "kr": "올바른 순서", "en": "Correct order" }, "options": ["我有三个", "三个有我", "有我三个"], "answer": "我有三个" },

@@ -46,6 +46,13 @@
     { "title": "坐 + 交通工具", "explanation_zh": "「坐」后接交通工具。", "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.", "explanation_en": "坐 takes transport.", "example": { "zh": "坐出租车", "pinyin": "zuò chūzūchē", "kr": "택시 타다", "en": "take a taxi" } },
     { "title": "都", "explanation_zh": "「都」表示全部。", "explanation_kr": "'都'는 모두를 나타냅니다.", "explanation_en": "都 means all.", "example": { "zh": "我们都去。", "pinyin": "Wǒmen dōu qù.", "kr": "우리 모두 가요.", "en": "We all go." } }
   ],
+  "extension": [
+    { "zh": "坐地铁", "pinyin": "Zuò dìtiě", "kr": "지하철 타다", "en": "to take the subway" },
+    { "zh": "坐公交车", "pinyin": "Zuò gōngjiāo chē", "kr": "버스 타다", "en": "to take the bus" },
+    { "zh": "走路", "pinyin": "Zǒu lù", "kr": "걷다", "en": "to walk" },
+    { "zh": "开车", "pinyin": "Kāi chē", "kr": "운전하다", "en": "to drive" },
+    { "zh": "一起去", "pinyin": "Yīqǐ qù", "kr": "같이 가다", "en": "to go together" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「出租车」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["飞机", "出租车", "火车站"], "answer": "出租车" },
     { "type": "choice", "question": { "zh": "「看见」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["看", "看见", "开"], "answer": "看见" },

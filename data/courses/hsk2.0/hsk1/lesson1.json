@@ -75,6 +75,13 @@
       "example": { "zh": "我很好。", "pinyin": "Wǒ hěn hǎo.", "kr": "저는 잘 지냅니다.", "en": "I'm fine." }
     }
   ],
+  "extension": [
+    { "zh": "您好！", "pinyin": "Nín hǎo!", "kr": "안녕하세요! (정중)", "en": "Hello! (polite)" },
+    { "zh": "早上好！", "pinyin": "Zǎoshang hǎo!", "kr": "좋은 아침이에요!", "en": "Good morning!" },
+    { "zh": "晚上好！", "pinyin": "Wǎnshang hǎo!", "kr": "좋은 저녁이에요!", "en": "Good evening!" },
+    { "zh": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "kr": "만나서 반가워요.", "en": "Nice to meet you." },
+    { "zh": "欢迎你！", "pinyin": "Huānyíng nǐ!", "kr": "환영해요!", "en": "Welcome!" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "你好 ___？", "kr": "你好 ___？", "en": "你好 ___?" }, "options": ["吗", "好", "在"], "answer": "吗" },
     { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "「你好吗？」에 대한 답은?", "en": "What is the response to 你好吗?" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },

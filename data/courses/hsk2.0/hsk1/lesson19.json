@@ -48,6 +48,14 @@
     { "title": "太 + 形容词", "explanation_zh": "「太」表示程度过高。", "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.", "explanation_en": "太 indicates excessive degree.", "example": { "zh": "太热", "pinyin": "tài rè", "kr": "너무 덥다", "en": "too hot" } },
     { "title": "想 + 动词", "explanation_zh": "「想」后接动词表示想做什么。", "explanation_kr": "'想' 뒤에 동사가 오면 ~하고 싶다.", "explanation_en": "想 + verb means want to do.", "example": { "zh": "想睡觉", "pinyin": "xiǎng shuìjiào", "kr": "자고 싶다", "en": "want to sleep" } }
   ],
+  "extension": [
+    { "zh": "今天天气很好。", "pinyin": "Jīntiān tiānqì hěn hǎo.", "kr": "오늘 날씨가 아주 좋아요.", "en": "The weather is nice today." },
+    { "zh": "很冷", "pinyin": "Hěn lěng", "kr": "매우 추워요", "en": "very cold" },
+    { "zh": "很热", "pinyin": "Hěn rè", "kr": "매우 더워요", "en": "very hot" },
+    { "zh": "下雨了。", "pinyin": "Xià yǔ le.", "kr": "비 와요.", "en": "It's raining." },
+    { "zh": "有风", "pinyin": "Yǒu fēng", "kr": "바람 불어요", "en": "it's windy" },
+    { "zh": "好天气", "pinyin": "Hǎo tiānqì", "kr": "좋은 날씨", "en": "nice weather" }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「天气」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["热", "天气", "冷"], "answer": "天气" },
     { "type": "choice", "question": { "zh": "「热」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["冷", "热", "太"], "answer": "冷" },

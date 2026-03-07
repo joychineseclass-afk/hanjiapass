@@ -48,6 +48,15 @@
     { "title": "吃 / 喝 + 宾语", "explanation_zh": "「吃」用于固体，「喝」用于液体。", "explanation_kr": "'吃'는 고체, '喝'는 액체에 사용합니다.", "explanation_en": "吃 for solid, 喝 for liquid.", "example": { "zh": "吃饭，喝水", "pinyin": "chī fàn, hē shuǐ", "kr": "밥 먹다, 물 마시다", "en": "eat, drink water" } },
     { "title": "和", "explanation_zh": "「和」连接名词。", "explanation_kr": "'和'는 명사를 연결합니다.", "explanation_en": "和 connects nouns.", "example": { "zh": "米饭和菜", "pinyin": "mǐfàn hé cài", "kr": "밥과 요리", "en": "rice and dishes" } }
   ],
+  "extension": [
+    { "zh": "早餐", "pinyin": "Zǎocān", "kr": "아침 식사", "en": "breakfast" },
+    { "zh": "午饭", "pinyin": "Wǔfàn", "kr": "점심", "en": "lunch" },
+    { "zh": "晚饭", "pinyin": "Wǎnfàn", "kr": "저녁 식사", "en": "dinner" },
+    { "zh": "好吃", "pinyin": "Hǎo chī", "kr": "맛있어요", "en": "delicious" },
+    { "zh": "好喝", "pinyin": "Hǎo hē", "kr": "맛있어요 (음료)", "en": "tasty (for drinks)" },
+    { "zh": "我喜欢吃……", "pinyin": "Wǒ xǐhuan chī...", "kr": "저는 ... 먹는 거 좋아해요.", "en": "I like to eat..." },
+    { "zh": "我喜欢喝……", "pinyin": "Wǒ xǐhuan hē...", "kr": "저는 ... 마시는 거 좋아해요.", "en": "I like to drink..." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「吃」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["喝", "吃", "菜"], "answer": "吃" },
     { "type": "choice", "question": { "zh": "「米饭」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["菜", "米饭", "水"], "answer": "米饭" },

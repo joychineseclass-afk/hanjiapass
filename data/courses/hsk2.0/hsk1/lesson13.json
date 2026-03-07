@@ -49,6 +49,13 @@
     { "title": "喜欢 + 宾语", "explanation_zh": "「喜欢」后接喜欢的事物。", "explanation_kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.", "explanation_en": "喜欢 takes object.", "example": { "zh": "喜欢狗", "pinyin": "xǐhuan gǒu", "kr": "개를 좋아하다", "en": "like dogs" } },
     { "title": "和", "explanation_zh": "「和」连接名词。", "explanation_kr": "'和'는 명사를 연결합니다.", "explanation_en": "和 connects nouns.", "example": { "zh": "狗和猫", "pinyin": "gǒu hé māo", "kr": "개와 고양이", "en": "dogs and cats" } }
   ],
+  "extension": [
+    { "zh": "看电影", "pinyin": "Kàn diànyǐng", "kr": "영화 보다", "en": "to watch movies" },
+    { "zh": "听音乐", "pinyin": "Tīng yīnyuè", "kr": "음악 듣다", "en": "to listen to music" },
+    { "zh": "看书", "pinyin": "Kàn shū", "kr": "책 읽다", "en": "to read books" },
+    { "zh": "运动", "pinyin": "Yùndòng", "kr": "운동", "en": "exercise" },
+    { "zh": "我不喜欢……", "pinyin": "Wǒ bù xǐhuan...", "kr": "저는 ... 안 좋아해요.", "en": "I don't like..." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「喜欢」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["爱", "喜欢", "看"], "answer": "喜欢" },
     { "type": "choice", "question": { "zh": "「电影」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["电视", "电影", "看"], "answer": "电影" },

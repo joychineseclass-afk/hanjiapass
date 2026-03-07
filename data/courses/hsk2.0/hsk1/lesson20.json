@@ -47,6 +47,13 @@
     { "title": "没 + 有", "explanation_zh": "「有」的否定用「没」。", "explanation_kr": "'有'의 부정은 '没'를 사용합니다.", "explanation_en": "Negate 有 with 没.", "example": { "zh": "没钱", "pinyin": "méi qián", "kr": "돈 없다", "en": "no money" } },
     { "title": "呢", "explanation_zh": "「呢」用于追问或话题。", "explanation_kr": "'呢'는 재질문이나 화제에 사용합니다.", "explanation_en": "呢 for follow-up or topic.", "example": { "zh": "你呢？", "pinyin": "Nǐ ne?", "kr": "당신은요?", "en": "And you?" } }
   ],
+  "extension": [
+    { "zh": "不舒服", "pinyin": "Bù shūfu", "kr": "몸이 안 좋아요", "en": "unwell" },
+    { "zh": "去医院", "pinyin": "Qù yīyuàn", "kr": "병원 가다", "en": "to go to the hospital" },
+    { "zh": "现在怎么样？", "pinyin": "Xiànzài zěnmeyàng?", "kr": "지금 어때요?", "en": "How are you now?" },
+    { "zh": "好一点了。", "pinyin": "Hǎo yīdiǎn le.", "kr": "조금 나아졌어요.", "en": "I'm feeling a bit better." },
+    { "zh": "没问题。", "pinyin": "Méi wèntí.", "kr": "문제없어요.", "en": "No problem." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "「医院」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["学校", "医院", "商店"], "answer": "医院" },
     { "type": "choice", "question": { "zh": "「怎么」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["什么", "怎么", "怎么样"], "answer": "怎么" },

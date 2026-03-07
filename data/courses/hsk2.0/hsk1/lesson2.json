@@ -67,6 +67,13 @@
       "example": { "zh": "我是学生。", "pinyin": "Wǒ shì xuésheng.", "kr": "저는 학생이에요.", "en": "I am a student." }
     }
   ],
+  "extension": [
+    { "zh": "我姓王。", "pinyin": "Wǒ xìng Wáng.", "kr": "제 성은 왕이에요.", "en": "My family name is Wang." },
+    { "zh": "我的名字是李明。", "pinyin": "Wǒ de míngzi shì Lǐ Míng.", "kr": "제 이름은 이명이에요.", "en": "My name is Li Ming." },
+    { "zh": "你呢？", "pinyin": "Nǐ ne?", "kr": "당신은요?", "en": "And you?" },
+    { "zh": "请多关照。", "pinyin": "Qǐng duō guānzhào.", "kr": "잘 부탁해요.", "en": "Please take care of me." },
+    { "zh": "我是学生。", "pinyin": "Wǒ shì xuésheng.", "kr": "저는 학생이에요.", "en": "I am a student." }
+  ],
   "practice": [
     { "type": "choice", "question": { "zh": "别人说「谢谢」，你应该怎么回答？", "kr": "감사합니다에 대한 답은?", "en": "Response to 谢谢?" }, "options": ["对不起", "不客气", "再见"], "answer": "不客气" },
     { "type": "choice", "question": { "zh": "请选择正确语序：你 / 叫 / 什么 / 名字", "kr": "올바른 순서를 선택하세요.", "en": "Correct order?" }, "options": ["你叫什么名字", "叫什么你名字", "名字什么叫你"], "answer": "你叫什么名字" },
