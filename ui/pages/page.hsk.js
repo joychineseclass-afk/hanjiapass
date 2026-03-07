@@ -343,12 +343,38 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法解释：统一走 languageEngine.getContentText，JP strict 禁止 fallback 中文 */
-function pickGrammarExplanation(pt) {
-  const lang = getLang();
-  return getContentText(pt, "explain", { strict: true, lang })
-    || getContentText(pt, "explanation", { strict: true, lang })
-    || pick(pt, { strict: true, lang }) || "";
+/**
+ * 统一 grammar explanation 读取：strict 规则，不 fallback 到其他语言
+ * 兼容：explain / explanation / explainJp / explanationJp / 旧扁平字段
+ */
+function getGrammarExplanation(item, lang) {
+  if (!item || typeof item !== "object") return "";
+  const l = (lang || getLang()).toLowerCase();
+  const key = l === "jp" || l === "ja" ? "jp" : l === "kr" || l === "ko" ? "kr" : l === "cn" || l === "zh" ? "cn" : "en";
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  const explain = item.explain ?? item.explanation;
+  if (explain && typeof explain === "object") {
+    const v = explain[key] ?? explain[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  if (key === "jp") {
+    const v = item.explainJp ?? item.explanationJp ?? item.explain_jp ?? item.explanation_jp;
+    if (v) return str(v);
+  }
+  if (key === "kr") {
+    const v = item.explainKr ?? item.explanationKr ?? item.explain_kr ?? item.explanation_kr;
+    if (v) return str(v);
+  }
+  if (key === "en") {
+    const v = item.explainEn ?? item.explanationEn ?? item.explain_en ?? item.explanation_en;
+    if (v) return str(v);
+  }
+  if (key === "cn") {
+    const v = item.explainCn ?? item.explanationCn ?? item.explain_zh ?? item.explanation_zh;
+    if (v) return str(v);
+  }
+  return "";
 }
 
 /** 语法例句：getContentText(example, "translation") 或 pick，JP strict */
@@ -368,9 +394,10 @@ function getGrammarExamples(pt) {
   return [toItem(ex)];
 }
 
-/** 语法渲染：教材级卡片，支持点读 */
+/** 语法渲染：教材级卡片，支持点读。使用 _raw 以保留 explain.jp 等原始字段 */
 function buildGrammarHTML(lessonData) {
-  const g = lessonData && lessonData.grammar;
+  const raw = (lessonData && lessonData._raw) || lessonData;
+  const g = raw && raw.grammar;
   const lang = getLang();
   const speakLabel = i18n.t("hsk.extension_speak");
   const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar")}</div>`;
@@ -393,7 +420,10 @@ function buildGrammarHTML(lessonData) {
     let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
     if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
-    const expl = pickGrammarExplanation(pt);
+    const expl = getGrammarExplanation(pt, lang);
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[HSK grammar] lang=", lang, "pattern=", pt?.pattern, "explanation=", expl);
+    }
     const examples = getGrammarExamples(pt);
     const idx = String(i + 1).padStart(2, "0");
     const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");

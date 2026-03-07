@@ -5,8 +5,8 @@
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
-/** 多语言对象归一化 */
-function normI18n(obj, keys = ["zh", "cn", "kr", "ko", "en"]) {
+/** 多语言对象归一化：zh/cn, kr/ko, en, jp/ja */
+function normI18n(obj, keys = ["zh", "cn", "kr", "ko", "en", "jp", "ja"]) {
   if (!obj || typeof obj !== "object") return {};
   const out = {};
   if (obj.zh) out.zh = str(obj.zh);
@@ -14,6 +14,8 @@ function normI18n(obj, keys = ["zh", "cn", "kr", "ko", "en"]) {
   if (obj.kr) out.kr = str(obj.kr);
   if (obj.ko) out.kr = out.kr || str(obj.ko);
   if (obj.en) out.en = str(obj.en);
+  if (obj.jp) out.jp = str(obj.jp);
+  if (obj.ja) out.jp = out.jp || str(obj.ja);
   return out;
 }
 
@@ -85,15 +87,16 @@ function normDialogue(raw) {
   });
 }
 
-/** grammar 归一化：explanation_zh/kr、example 字符串或对象，兼容旧字段 */
+/** grammar 归一化：explain/explanation、explanation_zh/kr/jp、example，兼容旧字段 */
 function normGrammar(raw) {
   const src = Array.isArray(raw?.grammar) ? raw.grammar : (Array.isArray(raw?.grammar?.points) ? raw.grammar.points : []);
   return src.map((g) => {
     const title = normTitle(g?.title ?? g?.name ?? g?.pattern ?? "");
     const expl = normI18n({
-      zh: g?.explanation_zh ?? g?.explanation?.zh,
-      kr: g?.explanation_kr ?? g?.explanation?.kr ?? g?.explanation?.ko,
-      en: g?.explanation_en ?? g?.explanation?.en,
+      zh: g?.explanation_zh ?? g?.explanation?.zh ?? g?.explain?.zh ?? g?.explain?.cn,
+      kr: g?.explanation_kr ?? g?.explanation?.kr ?? g?.explanation?.ko ?? g?.explain?.kr ?? g?.explain?.ko,
+      en: g?.explanation_en ?? g?.explanation?.en ?? g?.explain?.en,
+      jp: g?.explanation_jp ?? g?.explanation?.jp ?? g?.explain?.jp ?? g?.explain?.ja ?? g?.explainJp ?? g?.explanationJp,
     });
     const ex = g?.example ?? g?.examples?.[0];
     const example = typeof ex === "string"
@@ -105,6 +108,7 @@ function normGrammar(raw) {
       explanation_zh: expl.zh,
       explanation_kr: expl.kr,
       explanation_en: expl.en,
+      explanation_jp: expl.jp,
       example,
     };
   });
