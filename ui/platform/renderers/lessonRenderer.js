@@ -4,6 +4,8 @@
  */
 
 import * as StepRenderers from "./stepRenderers.js";
+import * as SceneEngine from "../scene/sceneEngine.js";
+import * as SceneRenderer from "../scene/sceneRenderer.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -13,6 +15,16 @@ function pickLang(obj, lang) {
   if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en);
   if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn);
   return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+}
+
+/**
+ * 渲染 scene 区块（若存在）
+ */
+export function renderSceneBlock({ lesson, lang = "ko" } = {}) {
+  if (!SceneEngine.hasScene(lesson)) return "";
+  const scene = SceneEngine.getSceneFromLesson(lesson);
+  if (!scene) return "";
+  return SceneRenderer.renderSceneSection(scene, lesson, lang);
 }
 
 const STEP_RENDER_MAP = {

@@ -6,6 +6,8 @@
 import { getMeaningByLang, getPosByLang } from "../../utils/wordDisplay.js";
 import { renderPracticeStep as renderPracticeStepNew } from "../practice/practiceRenderer.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
+import * as SceneEngine from "../scene/sceneEngine.js";
+import * as SceneRenderer from "../scene/sceneRenderer.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -63,18 +65,23 @@ export function renderVocabStep({ lesson, lang = "ko", scope = "" } = {}) {
 }
 
 /**
- * 渲染 dialogue step
+ * 渲染 dialogue step（若有 scene.frames 则用分镜增强版）
  */
 export function renderDialogueStep({ lesson, lang = "ko" } = {}) {
   const lines = Array.isArray(lesson?.dialogue) ? lesson.dialogue : [];
   if (!lines.length) return `<div class="lesson-empty text-sm opacity-70">(暂无对话)</div>`;
 
+  if (SceneEngine.hasScene(lesson)) {
+    const scene = SceneEngine.getSceneFromLesson(lesson);
+    const framesHtml = SceneRenderer.renderSceneFrames(scene, lesson, lang);
+    if (framesHtml) return framesHtml;
+  }
+
   const blocks = lines.map((line) => {
     const spk = str(line.speaker);
-    const zh = str(line.zh);
+    const zh = str(line.zh ?? line.cn ?? line.line);
     const py = str(line.pinyin);
-    const trans = pickLang({ zh: line.zh, kr: line.kr, en: line.en }, lang);
-    if (zh === trans) return "";
+    const trans = pickLang({ zh: line.zh ?? line.line, kr: line.kr, en: line.en }, lang);
     return `
       <article class="dialogue-line rounded-xl border border-slate-200 p-4 mb-3">
         ${spk ? `<div class="text-xs font-semibold text-slate-500 uppercase mb-2">${escapeHtml(spk)}</div>` : ""}
@@ -82,8 +89,8 @@ export function renderDialogueStep({ lesson, lang = "ko" } = {}) {
         ${py ? `<div class="text-sm italic text-slate-600 mt-1">${escapeHtml(py)}</div>` : ""}
         ${trans && trans !== zh ? `<div class="text-sm text-slate-600 mt-2">${escapeHtml(trans)}</div>` : ""}
       </article>`;
-  }).filter(Boolean);
-  return `<div class="dialogue-list">${blocks.join("") || "(暂无翻译)"}</div>`;
+  });
+  return `<div class="dialogue-list">${blocks.join("")}</div>`;
 }
 
 /**

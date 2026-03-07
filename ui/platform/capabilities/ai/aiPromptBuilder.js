@@ -22,14 +22,26 @@ export function getModeLabel(mode, lang) {
  * @param {string} mode - follow | replace | roleplay | free
  */
 export function buildPrompt(context, mode = "follow") {
-  const { lessonTitle, vocab, dialogue, grammar, lang } = context || {};
+  const { lessonTitle, vocab, dialogue, grammar, scene, lang } = context || {};
   const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "ko" || lang === "kr" ? "kr" : "en";
   const vocabStr = vocab?.slice(0, 15).map((w) => `${w.hanzi}${w.pinyin ? `(${w.pinyin})` : ""}${w.meaning ? `: ${w.meaning}` : ""}`).join("\n") || "";
   const dialogueStr = dialogue?.map((d) => `[${d.speaker}] ${d.zh}${d.trans ? ` → ${d.trans}` : ""}`).join("\n") || "";
   const grammarStr = grammar?.map((g) => `- ${g.title}: ${g.explanation || ""}`).join("\n") || "";
 
+  let sceneStr = "";
+  if (scene?.id) {
+    const parts = [
+      scene.title ? `场景: ${scene.title}` : "",
+      scene.summary ? `情境: ${scene.summary}` : "",
+      scene.goal?.length ? `目标: ${scene.goal.join("; ")}` : "",
+      scene.characters?.length ? `角色: ${scene.characters.map((c) => `${c.id}: ${c.name}`).join(", ")}` : "",
+    ].filter(Boolean);
+    sceneStr = parts.join("\n");
+  }
+
   const base = [
     `课程: ${lessonTitle || "本课"}`,
+    sceneStr ? `场景:\n${sceneStr}` : "",
     vocabStr ? `词汇:\n${vocabStr}` : "",
     dialogueStr ? `对话:\n${dialogueStr}` : "",
     grammarStr ? `语法:\n${grammarStr}` : "",

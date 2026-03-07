@@ -10,7 +10,8 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE } from "../platform/index.js";
+import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
   lv: 1,
@@ -60,6 +61,7 @@ function showListMode() {
   $("hskPracticeBody") && ($("hskPracticeBody").innerHTML = "");
   $("hskAIResult") && ($("hskAIResult").innerHTML = "");
   $("hskAIContext")?.classList.add("hidden");
+  $("hskSceneSection") && ($("hskSceneSection").innerHTML = "") && $("hskSceneSection").classList.add("hidden");
 
   state.current = null;
   state.tab = "words";
@@ -106,7 +108,7 @@ function pickDialogueTranslation(line, lang, zhMain = "") {
   return out;
 }
 
-/** 对话渲染：教学型结构化 HTML。每句：speaker / 中文 / 拼音 / 当前语言翻译 */
+/** 对话渲染：若有 scene.frames 则用分镜增强版，否则用原逻辑 */
 function buildDialogueHTML(lessonData) {
   const d = lessonData?.dialogue;
   if (!d) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
@@ -115,8 +117,13 @@ function buildDialogueHTML(lessonData) {
   const arr = Array.isArray(d) ? d : (Array.isArray(d?.lines) ? d.lines : []);
   if (!arr.length) return `<div class="hsk-dialogue-empty text-sm opacity-70">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
-  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
+  if (SCENE_ENGINE?.hasScene?.(lessonData)) {
+    const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
+    const framesHtml = SceneRenderer.renderSceneFrames(scene, lessonData, lang);
+    if (framesHtml) return framesHtml;
+  }
 
+  const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
   const blocks = [];
   for (const line of arr) {
     const spk = String(line?.spk ?? line?.speaker ?? "").trim();
@@ -415,8 +422,22 @@ async function openLesson({ lessonNo, file }) {
         coverImg.alt = typeof lessonData?.title === "object" ? (lessonData.title?.zh ?? lessonData.title?.en ?? "") : String(lessonData?.title ?? "");
         coverImg.onerror = () => { coverWrap.classList.add("hidden"); };
         coverWrap.classList.remove("hidden");
+    } else {
+      coverWrap.classList.add("hidden");
+      }
+    }
+
+    const sceneSection = $("hskSceneSection");
+    if (sceneSection) {
+      if (SCENE_ENGINE?.hasScene?.(lessonData)) {
+        const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
+        sceneSection.innerHTML = SceneRenderer.renderSceneHeader(scene, lang) +
+          SceneRenderer.renderSceneGoals(scene, lang) +
+          SceneRenderer.renderSceneCharacters(scene, lang);
+        sceneSection.classList.remove("hidden");
       } else {
-        coverWrap.classList.add("hidden");
+        sceneSection.innerHTML = "";
+        sceneSection.classList.add("hidden");
       }
     }
 

@@ -181,6 +181,74 @@
       "en": "I'm fine too."
     }
   ],
+  "scene": {
+    "id": "greeting_school_gate",
+    "title": {
+      "zh": "学校门口打招呼",
+      "kr": "학교 앞 인사하기",
+      "en": "Greeting at the school gate"
+    },
+    "summary": {
+      "zh": "两位同学第一次见面，学习基本打招呼表达。",
+      "kr": "두 학생이 처음 만나 기본 인사 표현을 배웁니다.",
+      "en": "Two students meet for the first time and practice basic greetings."
+    },
+    "cover": "/media/scenes/greeting_school_gate/cover.jpg",
+    "location": "school_gate",
+    "mood": "friendly",
+    "goal": [
+      {
+        "zh": "学会用中文打招呼",
+        "kr": "중국어로 인사할 수 있다",
+        "en": "Can greet in Chinese"
+      },
+      {
+        "zh": "学会问好并回应",
+        "kr": "안부를 묻고 대답할 수 있다",
+        "en": "Can ask and respond to greetings"
+      }
+    ],
+    "characters": [
+      {
+        "id": "A",
+        "name": {
+          "zh": "小明",
+          "kr": "샤오밍",
+          "en": "Xiaoming"
+        },
+        "avatar": "/media/scenes/greeting_school_gate/A.png"
+      },
+      {
+        "id": "B",
+        "name": {
+          "zh": "小美",
+          "kr": "샤오메이",
+          "en": "Xiaomei"
+        },
+        "avatar": "/media/scenes/greeting_school_gate/B.png"
+      }
+    ],
+    "frames": [
+      {
+        "id": "scene1",
+        "image": "/media/scenes/greeting_school_gate/frame1.jpg",
+        "dialogueRef": 0,
+        "focusWords": ["你好"]
+      },
+      {
+        "id": "scene2",
+        "image": "/media/scenes/greeting_school_gate/frame2.jpg",
+        "dialogueRef": 1,
+        "focusWords": ["你", "好"]
+      },
+      {
+        "id": "scene3",
+        "image": "/media/scenes/greeting_school_gate/frame3.jpg",
+        "dialogueRef": 2,
+        "focusWords": ["你", "好", "吗"]
+      }
+    ]
+  },
   "grammar": [
     {
       "title": "吗 — 一般疑问句",

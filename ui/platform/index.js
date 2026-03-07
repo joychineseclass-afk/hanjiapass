@@ -8,6 +8,7 @@ export * as STEP_RENDERERS from "./renderers/stepRenderers.js";
 export * as PRACTICE from "./practice/practiceEngine.js";
 export { mountPractice } from "./practice/practiceRenderer.js";
 export * as IMAGE_ENGINE from "./media/imageEngine.js";
+export * as SCENE_ENGINE from "./scene/sceneEngine.js";
 export * as AI_CAPABILITY from "./capabilities/ai/index.js";
 export { AI_SERVICE } from "./capabilities/ai/aiService.js";
 export { PromptBuilder } from "./capabilities/ai/promptBuilder.js";
