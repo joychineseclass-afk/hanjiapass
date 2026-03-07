@@ -27,8 +27,9 @@ const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 /**
  * 按系统语言取释义
- * KR 优先 meaning.kr，CN 优先 meaning.zh，EN 优先 meaning.en
- * 缺失时回退到 zh
+ * KR 模式读取顺序：meaning.kr → meaning.ko → word.kr → word.ko → zh（不回退英文）
+ * CN 模式：meaning.zh 优先，缺失回退 kr/en
+ * EN 模式：meaning.en 优先，缺失回退 zh/kr
  * @param {object} word - 词条 { meaning: { zh, kr, en } } 或兼容 zh/kr/en 在顶层
  * @param {string} lang - "ko" | "zh" | "en"
  * @param {string} fallbackHanzi - 无释义时的 fallback（如汉字本身）
@@ -38,10 +39,10 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "") {
   const m = word.meaning;
   const obj = typeof m === "object" ? m : {};
   const zh = str(word.zh ?? word.cn ?? obj.zh ?? obj.cn) || fallbackHanzi;
-  const kr = str(word.ko ?? word.kr ?? obj.ko ?? obj.kr);
+  const kr = str(obj.kr ?? obj.ko ?? word.kr ?? word.ko);
   const en = str(word.en ?? obj.en ?? obj.english);
 
-  if (lang === "ko") return kr || zh || en;
+  if (lang === "ko") return kr || zh;
   if (lang === "en") return en || zh || kr;
   return zh || kr || en;
 }
