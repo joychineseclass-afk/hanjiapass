@@ -1,0 +1,101 @@
+{
+  "id": "hsk2.0_hsk1_lesson1",
+  "course": "hsk2.0",
+  "level": "hsk1",
+
+  "title": {
+    "zh": "打招呼",
+    "pinyin": "dǎ zhāo hu",
+    "kr": "인사하기",
+    "en": "Greetings"
+  },
+
+  "vocab": [
+    {
+      "zh": "你好",
+      "pinyin": "nǐ hǎo",
+      "pos": "interj",
+      "meaning": {
+        "kr": "안녕하세요",
+        "en": "hello"
+      }
+    }
+  ],
+
+  "dialogueCards": [
+    {
+      "id": "dialogue1",
+      "lines": [
+        {
+          "speaker": "A",
+          "zh": "你好",
+          "pinyin": "nǐ hǎo",
+          "meaning": {
+            "kr": "안녕하세요",
+            "en": "Hello"
+          }
+        }
+      ]
+    }
+  ],
+
+  "grammar": [
+    {
+      "zh": "吗",
+      "pinyin": "ma",
+      "explanation": {
+        "zh": "疑问语气词",
+        "kr": "의문 조사",
+        "en": "Question particle"
+      },
+      "examples": [
+        {
+          "zh": "你好吗？",
+          "pinyin": "nǐ hǎo ma",
+          "meaning": {
+            "kr": "잘 지내세요?",
+            "en": "How are you?"
+          }
+        }
+      ]
+    }
+  ],
+
+  "extension": [
+    {
+      "zh": "您好",
+      "pinyin": "nín hǎo",
+      "meaning": {
+        "kr": "안녕하세요 (존댓말)",
+        "en": "Hello (formal)"
+      }
+    }
+  ],
+
+  "practice": [
+    {
+      "type": "choice",
+      "question": {
+        "zh": "\"你好\" 的意思是？",
+        "kr": "\"你好\"의 뜻은?",
+        "en": "What does 你好 mean?"
+      },
+      "options": [
+        { "value": "A", "text": "안녕하세요" },
+        { "value": "B", "text": "谢谢" }
+      ],
+      "answer": "A"
+    }
+  ],
+
+  "aiScope": {
+    "topic": "greeting",
+    "tasks": ["练习打招呼"]
+  },
+
+  "meta": {
+    "lessonNumber": 1,
+    "estimatedTime": 20,
+    "difficulty": "A1"
+  }
+}

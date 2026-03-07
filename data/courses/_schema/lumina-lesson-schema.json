@@ -1,0 +1,31 @@
+{
+  "id": "course_level_lesson",
+
+  "course": "hsk2.0",
+  "level": "hsk1",
+
+  "title": {
+    "zh": "",
+    "pinyin": "",
+    "kr": "",
+    "en": ""
+  },
+
+  "vocab": [],
+
+  "dialogueCards": [],
+
+  "grammar": [],
+
+  "extension": [],
+
+  "practice": [],
+
+  "aiScope": {},
+
+  "meta": {
+    "lessonNumber": 1,
+    "estimatedTime": 20,
+    "difficulty": "A1"
+  }
+}
