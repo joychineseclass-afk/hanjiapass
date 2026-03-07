@@ -10,6 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
+import { LESSON_ENGINE } from "../platform/index.js";
 
 const state = {
   lv: 1,
@@ -323,8 +324,21 @@ async function loadLessons() {
   if (listEl) listEl.innerHTML = `<div class="text-sm opacity-70">${i18n.t("common_loading")}</div>`;
 
   try {
-    if (!window.HSK_LOADER?.loadLessons) throw new Error("HSK_LOADER.loadLessons not found");
-    let lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
+    let lessons = [];
+    if (LESSON_ENGINE?.loadCourseIndex) {
+      try {
+        const index = await LESSON_ENGINE.loadCourseIndex({
+          courseType: state.version,
+          level: `hsk${state.lv}`,
+        });
+        lessons = Array.isArray(index?.lessons) ? index.lessons : [];
+      } catch (engineErr) {
+        console.warn("[HSK] Lesson Engine loadCourseIndex failed, fallback to HSK_LOADER:", engineErr?.message);
+      }
+    }
+    if (!lessons.length && window.HSK_LOADER?.loadLessons) {
+      lessons = await window.HSK_LOADER.loadLessons(state.lv, { version: state.version });
+    }
     lessons = Array.isArray(lessons) ? lessons : [];
 
     const vocabDist = await getVocabDistribution(state.lv, state.version);
@@ -345,12 +359,27 @@ async function openLesson({ lessonNo, file }) {
   const no = Number(lessonNo || 1);
 
   try {
-    if (!window.HSK_LOADER?.loadLessonDetail) throw new Error("HSK_LOADER.loadLessonDetail not found");
-
-    const lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
-      version: state.version,
-      file: file || "",
-    });
+    let lessonData = null;
+    if (LESSON_ENGINE?.loadLessonDetail) {
+      try {
+        const { lesson } = await LESSON_ENGINE.loadLessonDetail({
+          courseType: state.version,
+          level: `hsk${state.lv}`,
+          lessonNo: no,
+          file: file || "",
+        });
+        lessonData = lesson;
+      } catch (engineErr) {
+        console.warn("[HSK] Lesson Engine loadLessonDetail failed, fallback to HSK_LOADER:", engineErr?.message);
+      }
+    }
+    if (!lessonData && window.HSK_LOADER?.loadLessonDetail) {
+      lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
+        version: state.version,
+        file: file || "",
+      });
+    }
+    if (!lessonData) throw new Error("Failed to load lesson");
 
     const lessonWordsRaw = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");

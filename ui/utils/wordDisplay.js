@@ -26,6 +26,11 @@ export const POS_ZH_MAP = {
   语气词: { ko: "어기사", en: "modal particle" },
 };
 
+/** 英语词性 -> 中文（用于 zh 模式仅有 pos.en 时的反向推导） */
+const POS_EN_TO_ZH = Object.fromEntries(
+  Object.entries(POS_ZH_MAP).map(([zh, v]) => [v.en?.toLowerCase?.(), zh])
+);
+
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 /** lang 归一化为 glossary 文件用的 key（kr-hsk1, en-hsk1） */
@@ -83,9 +88,9 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
 
 /**
  * 按系统语言取词性
+ * CN: pos.zh → 字符串 pos → glossary(zh-*) → 若仅有 pos.en 则反向推导中文 → 不显示（绝不回退 kr/en）
  * KR: pos.kr → pos.ko → glossary → 中文 pos 映射为韩语
  * EN: pos.en → glossary → 中文 pos 映射为英语
- * CN: pos.zh → 字符串 pos 直接显示
  * @param {object} word - 词条 { pos: { zh, kr, en }, hanzi } 或 pos: "代词"
  * @param {string} lang - "ko" | "zh" | "en"
  * @param {string} scope - 可选，如 "hsk1"，用于 glossary 回退
@@ -99,41 +104,61 @@ export function getPosByLang(word, lang, scope = "") {
     const zh = str(p.zh ?? p.cn);
     const kr = str(p.ko ?? p.kr);
     const en = str(p.en ?? p.english);
+
+    if (lang === "zh" || lang === "cn") {
+      if (zh) return zh;
+      if (scope && hanzi) {
+        const g = getGlossaryPos(hanzi, "zh", scope);
+        if (g) return g;
+      }
+      if (en && POS_EN_TO_ZH[en.toLowerCase()]) return POS_EN_TO_ZH[en.toLowerCase()];
+      return "";
+    }
     if (lang === "ko") {
       if (kr) return kr;
       if (scope && hanzi) {
-        const g = getGlossaryPos(hanzi, glossaryLang(lang), scope);
+        const g = getGlossaryPos(hanzi, "kr", scope);
         if (g) return g;
       }
-      return zh || en;
+      if (zh && POS_ZH_MAP[zh]) return POS_ZH_MAP[zh].ko || zh;
+      return "";
     }
     if (lang === "en") {
       if (en) return en;
       if (scope && hanzi) {
-        const g = getGlossaryPos(hanzi, glossaryLang(lang), scope);
+        const g = getGlossaryPos(hanzi, "en", scope);
         if (g) return g;
       }
-      return zh || kr;
+      if (zh && POS_ZH_MAP[zh]) return POS_ZH_MAP[zh].en || zh;
+      return "";
     }
     return zh || kr || en;
   }
 
   const zhVal = str(p);
+  if (lang === "zh" || lang === "cn") {
+    if (zhVal) return zhVal;
+    if (scope && hanzi) {
+      const g = getGlossaryPos(hanzi, "zh", scope);
+      if (g) return g;
+    }
+    return "";
+  }
   if (lang === "ko") {
     if (scope && hanzi) {
-      const g = getGlossaryPos(hanzi, glossaryLang(lang), scope);
+      const g = getGlossaryPos(hanzi, "kr", scope);
       if (g) return g;
     }
     if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].ko || zhVal;
-    return zhVal;
+    return "";
   }
   if (lang === "en") {
     if (scope && hanzi) {
-      const g = getGlossaryPos(hanzi, glossaryLang(lang), scope);
+      const g = getGlossaryPos(hanzi, "en", scope);
       if (g) return g;
     }
     if (zhVal && POS_ZH_MAP[zhVal]) return POS_ZH_MAP[zhVal].en || zhVal;
-    return zhVal;
+    return "";
   }
   return zhVal;
 }
