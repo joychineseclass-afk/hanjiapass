@@ -1,42 +1,65 @@
 /**
- * Practice Engine v1 - 状态管理
- * 管理 currentQuestion、score、progress
+ * Practice Engine v1 - 状态管理（整页提交批改模式）
+ * questions, answers, submitted, resultMap, score
  */
 
 let state = {
-  currentIndex: 0,
+  questions: [],
+  answers: {},       // { questionId: selectedOptionValue }
+  submitted: false,
+  resultMap: {},     // { questionId: { correct, selected, answer, score } }
   score: 0,
   totalScore: 0,
-  questions: [],
-  answered: new Map(), // questionId -> { correct, score }
 };
 
 export function resetPracticeState() {
   state = {
-    currentIndex: 0,
+    questions: [],
+    answers: {},
+    submitted: false,
+    resultMap: {},
     score: 0,
     totalScore: 0,
-    questions: [],
-    answered: new Map(),
   };
 }
 
 export function setPracticeState(next) {
   if (next?.questions) state.questions = next.questions;
   if (typeof next?.totalScore === "number") state.totalScore = next.totalScore;
-  if (typeof next?.currentIndex === "number") state.currentIndex = next.currentIndex;
-}
-
-export function getCurrentQuestion() {
-  return state.questions[state.currentIndex] ?? null;
-}
-
-export function getCurrentIndex() {
-  return state.currentIndex;
+  if (next?.answers && typeof next.answers === "object") state.answers = { ...next.answers };
 }
 
 export function getQuestions() {
   return state.questions;
+}
+
+export function getAnswers() {
+  return { ...state.answers };
+}
+
+export function setAnswer(questionId, value) {
+  state.answers[questionId] = value;
+}
+
+export function getAnswer(questionId) {
+  return state.answers[questionId] ?? null;
+}
+
+export function isSubmitted() {
+  return state.submitted;
+}
+
+export function setSubmitted(val) {
+  state.submitted = !!val;
+}
+
+export function getResultMap() {
+  return { ...state.resultMap };
+}
+
+export function setResultMap(map) {
+  state.resultMap = { ...map };
+  state.score = Object.values(map).reduce((sum, r) => sum + (r?.score ?? 0), 0);
 }
 
 export function getScore() {
@@ -47,35 +70,36 @@ export function getTotalScore() {
   return state.totalScore;
 }
 
+/** 答对题数（供 Progress Engine 使用） */
+export function getCorrectCount() {
+  return Object.values(state.resultMap).filter((x) => x?.correct).length;
+}
+
+/** 兼容旧接口 */
+export function getCurrentQuestion() {
+  return state.questions[0] ?? null;
+}
+
+export function getCurrentIndex() {
+  return 0;
+}
+
 export function getProgress() {
   const total = state.questions.length;
-  if (!total) return { current: 0, total: 0, percent: 0 };
-  return {
-    current: state.currentIndex + 1,
-    total,
-    percent: Math.round(((state.currentIndex + 1) / total) * 100),
-  };
+  return { current: 1, total, percent: total ? 100 : 0 };
 }
 
 export function recordAnswer(questionId, { correct, score }) {
-  state.answered.set(questionId, { correct, score });
+  if (!state.resultMap[questionId]) state.resultMap[questionId] = {};
+  state.resultMap[questionId].correct = correct;
+  state.resultMap[questionId].score = correct ? score : 0;
   if (correct) state.score += score;
 }
 
 export function goToNext() {
-  if (state.currentIndex < state.questions.length - 1) {
-    state.currentIndex += 1;
-    return true;
-  }
-  state.currentIndex = state.questions.length;
   return true;
 }
 
 export function isLastQuestion() {
-  return state.currentIndex >= state.questions.length - 1;
-}
-
-/** 答对题数（供 Progress Engine 使用） */
-export function getCorrectCount() {
-  return [...state.answered.values()].filter((x) => x?.correct).length;
+  return true;
 }

@@ -1,12 +1,15 @@
 /**
- * Practice Engine v1 - 渲染器
- * 支持 choice / fill / order / typing
+ * Practice Engine v1 - 渲染器（整页提交批改模式）
+ * 全题展示、A/B/C/D 选项、拼音、统一提交
  */
 
 import * as PracticeEngine from "./practiceEngine.js";
 import * as PracticeState from "./practiceState.js";
+import { resolvePinyin } from "../../utils/pinyinEngine.js";
+import { i18n } from "../../i18n.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+const LETTERS = ["A", "B", "C", "D", "E"];
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -17,7 +20,6 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
-/** 按 lang 取多语言文本 */
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
@@ -26,215 +28,170 @@ function pickLang(obj, lang) {
   return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
 }
 
-/**
- * 渲染选择题
- */
-export function renderChoiceQuestion(q, { lang = "ko", disabled = false } = {}) {
+function t(key, params) {
+  return (i18n?.t?.(key, params) ?? key);
+}
+
+/** 中文+拼音两行显示 */
+function renderZhWithPinyin(text, manualPinyin = "") {
+  const zh = str(text);
+  if (!zh) return "";
+  const py = str(manualPinyin) || resolvePinyin(zh, manualPinyin);
+  if (!/[\u4e00-\u9fff]/.test(zh)) return `<div class="practice-zh-line">${escapeHtml(zh)}</div>`;
+  if (!py) return `<div class="practice-zh-line">${escapeHtml(zh)}</div>`;
+  return `
+    <div class="practice-zh-line">${escapeHtml(zh)}</div>
+    <div class="practice-py-line text-slate-500 italic">${escapeHtml(py)}</div>`;
+}
+
+/** 渲染单题（整页模式，含 A/B/C/D、拼音、选中态） */
+function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   const questionText = typeof q.question === "object" ? pickLang(q.question, lang) : str(q.question);
   const options = Array.isArray(q.options) ? q.options : [];
-  const optsHtml = options
-    .map(
-      (o, i) =>
-        `<button type="button" class="practice-option w-full text-left px-4 py-3 rounded-xl border border-slate-200 hover:border-green-400 transition-colors ${disabled ? "opacity-60 cursor-default" : ""}" data-answer="${escapeHtml(String(o))}">${escapeHtml(String(o))}</button>`
-    )
-    .join("");
+  const selected = answers[q.id];
+  const result = resultMap[q.id];
+
+  const optsHtml = options.map((o, i) => {
+    const letter = LETTERS[i] ?? String(i + 1);
+    const isSelected = selected === o;
+    let stateClass = "practice-option";
+    if (submitted && result) {
+      const isCorrect = result.answer === o;
+      const isWrongSelected = !result.correct && isSelected;
+      if (isCorrect) stateClass += " practice-option-correct";
+      else if (isWrongSelected) stateClass += " practice-option-wrong";
+    } else if (isSelected) {
+      stateClass += " practice-option-selected";
+    }
+    const content = renderZhWithPinyin(o);
+    return `
+      <button type="button" class="${stateClass} w-full text-left px-4 py-3 rounded-xl border flex items-center gap-3 transition-colors" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(String(o))}">
+        <span class="practice-option-letter w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0">${letter}</span>
+        <span class="practice-option-content flex-1">${content}</span>
+      </button>`;
+  }).join("");
+
+  let resultHtml = "";
+  if (submitted && result) {
+    const correctLabel = t("practice_correct");
+    const wrongLabel = t("practice_wrong");
+    const correctAnswerLabel = t("practice_correct_answer", { answer: result.answer });
+    const explLabel = t("practice_explanation");
+    const expl = q.explanation && typeof q.explanation === "object" ? pickLang(q.explanation, lang) : str(q.explanation);
+    const icon = result.correct ? "○" : "✕";
+    const resultClass = result.correct ? "practice-result-correct" : "practice-result-wrong";
+    resultHtml = `
+      <div class="practice-result mt-3 p-3 rounded-xl ${resultClass}">
+        <div class="font-semibold mb-1">${icon} ${result.correct ? correctLabel : wrongLabel}</div>
+        ${!result.correct ? `<div class="text-sm mb-2">${correctAnswerLabel}</div>` : ""}
+        ${expl ? `<div class="text-sm"><span class="font-medium">${explLabel}:</span> ${renderZhWithPinyin(expl)}</div>` : ""}
+      </div>`;
+  }
+
+  const qContent = renderZhWithPinyin(questionText);
+  const qNo = t("practice_question_no", { n: index + 1 });
+
   return `
-    <div class="practice-question choice" data-question-id="${escapeHtml(q.id)}">
-      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${escapeHtml(questionText)}</div>
+    <div class="practice-question-card rounded-xl border border-slate-200 p-4 mb-4 bg-white" data-question-id="${escapeHtml(q.id)}">
+      <div class="practice-question-header text-sm font-semibold text-slate-500 mb-2">${qNo}</div>
+      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${qContent}</div>
       <div class="practice-options space-y-2">${optsHtml}</div>
+      ${resultHtml}
     </div>`;
 }
 
 /**
- * 渲染填空题
- */
-export function renderFillQuestion(q, { lang = "ko", disabled = false } = {}) {
-  const questionText = typeof q.question === "object" ? pickLang(q.question, lang) : str(q.question);
-  return `
-    <div class="practice-question fill" data-question-id="${escapeHtml(q.id)}">
-      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${escapeHtml(questionText)}</div>
-      <input type="text" class="practice-fill-input w-full px-4 py-3 border border-slate-200 rounded-xl text-lg" placeholder="" ${disabled ? "disabled" : ""} />
-    </div>`;
-}
-
-/**
- * 渲染排序题（点击芯片按顺序放入答案区）
- */
-export function renderOrderQuestion(q, { lang = "ko", disabled = false } = {}) {
-  const questionText = typeof q.question === "object" ? pickLang(q.question, lang) : str(q.question);
-  const pieces = Array.isArray(q.question) ? q.question : (Array.isArray(q.options) ? q.options : []);
-  const items = pieces.length ? pieces : (typeof q.question === "string" ? [q.question] : []);
-  const chipsHtml = items
-    .map(
-      (item, i) =>
-        `<span class="practice-order-chip px-4 py-2 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-green-400" data-value="${escapeHtml(String(item))}">${escapeHtml(String(item))}</span>`
-    )
-    .join("");
-  return `
-    <div class="practice-question order" data-question-id="${escapeHtml(q.id)}">
-      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${escapeHtml(questionText || "请按正确顺序排列")}</div>
-      <div class="text-sm text-slate-500 mb-2">点击词语按顺序排列：</div>
-      <div class="practice-order-options flex flex-wrap gap-2 mb-2">${chipsHtml}</div>
-      <div class="practice-order-answer min-h-[48px] p-3 rounded-xl border border-dashed border-slate-300 flex flex-wrap gap-2 items-center"></div>
-    </div>`;
-}
-
-/**
- * 渲染输入题
- */
-export function renderTypingQuestion(q, { lang = "ko", disabled = false } = {}) {
-  const questionText = typeof q.question === "object" ? pickLang(q.question, lang) : str(q.question);
-  return `
-    <div class="practice-question typing" data-question-id="${escapeHtml(q.id)}">
-      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${escapeHtml(questionText)}</div>
-      <input type="text" class="practice-typing-input w-full px-4 py-3 border border-slate-200 rounded-xl text-lg" placeholder="" ${disabled ? "disabled" : ""} />
-    </div>`;
-}
-
-const RENDER_MAP = {
-  choice: renderChoiceQuestion,
-  fill: renderFillQuestion,
-  order: renderOrderQuestion,
-  typing: renderTypingQuestion,
-};
-
-/**
- * 渲染单题（按题型分发）
- */
-function renderQuestion(q, opts) {
-  const fn = RENDER_MAP[q.type];
-  return fn ? fn(q, opts) : `<div class="text-sm opacity-70">(不支持的题型: ${q.type})</div>`;
-}
-
-/**
- * 统一入口：挂载互动练习到容器
- * @param {HTMLElement} container
- * @param {{ lesson: object, lang?: string, onComplete?: (opts) => void }} opts
+ * 统一入口：挂载整页练习
  */
 export function mountPractice(container, { lesson, lang = "ko", onComplete } = {}) {
   if (!container) return;
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);
   if (!questions.length) {
-    container.innerHTML = `<div class="lesson-empty text-sm opacity-70">(暂无练习)</div>`;
+    container.innerHTML = `<div class="lesson-empty text-sm opacity-70">${t("common_loading")}</div>`;
     return;
   }
 
-  let submitted = false;
+  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
 
   function render() {
-    const progress = PracticeState.getProgress();
-    const q = PracticeState.getCurrentQuestion();
+    const answers = PracticeState.getAnswers();
+    const submitted = PracticeState.isSubmitted();
+    const resultMap = PracticeState.getResultMap();
+    const score = PracticeState.getScore();
 
-    if (!q) {
-      submitted = false;
-      if (onComplete && !container.dataset.progressRecorded) {
-        container.dataset.progressRecorded = "1";
-        onComplete({
-          total: questions.length,
-          correct: PracticeState.getCorrectCount?.() ?? 0,
-          score: PracticeState.getScore(),
-          lesson,
-        });
-      }
-      container.innerHTML = `
-        <div class="practice-done p-6 rounded-xl border border-green-200 bg-green-50">
-          <div class="font-semibold text-green-800 mb-2">练习完成</div>
-          <div class="text-sm text-green-700">得分: ${PracticeState.getScore()} / ${PracticeState.getTotalScore()}</div>
-        </div>`;
-      return;
-    }
+    const questionsHtml = questions.map((q, i) =>
+      renderQuestionCard(q, i, { lang: langKey, answers, resultMap, submitted })
+    ).join("");
 
-    submitted = false;
-    const questionHtml = renderQuestion(q, { lang, disabled: false });
-    const expl = q.explanation && typeof q.explanation === "object" ? pickLang(q.explanation, lang) : str(q.explanation);
-    const explHtml = expl ? `<div class="practice-explanation mt-4 p-4 rounded-xl bg-slate-50 text-sm text-slate-700 hidden">${escapeHtml(expl)}</div>` : "";
+    const totalLabel = t("practice_total_questions", { n: questions.length });
+    const scoreLabel = submitted
+      ? t("practice_total_score", { score, total: totalScore })
+      : totalLabel;
+
+    const submitBtnHtml = !submitted
+      ? `<button type="button" class="practice-submit-all w-full py-4 rounded-xl border-2 border-green-500 bg-green-500 text-white font-semibold text-lg hover:bg-green-600 transition-colors">${t("practice_submit")}</button>`
+      : "";
 
     container.innerHTML = `
-      <div class="practice-panel">
-        <div class="practice-progress text-sm text-slate-500 mb-4">第 ${progress.current} / ${progress.total} 题 · 得分 ${PracticeState.getScore()} / ${totalScore}</div>
-        ${questionHtml}
-        <div class="practice-actions mt-6 flex gap-2">
-          <button type="button" class="practice-submit px-4 py-2 rounded-xl border border-green-500 bg-green-500 text-white hover:bg-green-600">提交</button>
-          <button type="button" class="practice-next px-4 py-2 rounded-xl border border-slate-300 hidden">下一题</button>
-        </div>
-        <div class="practice-feedback mt-4 hidden"></div>
-        ${explHtml}
+      <div class="practice-fullpage">
+        <div class="practice-header text-sm text-slate-600 mb-4">${scoreLabel}</div>
+        <div class="practice-questions">${questionsHtml}</div>
+        <div class="practice-footer mt-6">${submitBtnHtml}</div>
       </div>`;
   }
 
-  /** 事件委托：在 container 上统一处理点击，避免 render 替换 DOM 后事件丢失 */
+  /** 事件委托：只绑定一次 */
   container.addEventListener("click", (e) => {
-    const submitBtn = e.target.closest(".practice-submit");
-    const nextBtn = e.target.closest(".practice-next");
-    const optionBtn = e.target.closest(".practice-option");
+      const submitBtn = e.target.closest(".practice-submit-all");
+      const optionBtn = e.target.closest(".practice-option");
 
-    if (submitBtn && !submitted) {
-      const q = PracticeState.getCurrentQuestion();
-      if (!q) return;
-      const questionEl = container.querySelector(`[data-question-id="${q.id}"]`);
-      let answer = null;
-      if (questionEl && q.type === "choice") {
-        const sel = questionEl.querySelector(".practice-option.selected");
-        answer = sel ? sel.dataset.answer : null;
+      if (submitBtn && !PracticeState.isSubmitted()) {
+        const { score, correctCount } = PracticeEngine.submitAll();
+        if (onComplete && !container.dataset.progressRecorded) {
+          container.dataset.progressRecorded = "1";
+          onComplete({
+            total: questions.length,
+            correct: correctCount,
+            score,
+            lesson,
+          });
+        }
+        render();
+        return;
       }
-      const { correct, score } = PracticeEngine.submitAnswer(q.id, answer);
-      submitted = true;
-      const feedbackEl = container.querySelector(".practice-feedback");
-      const explEl = container.querySelector(".practice-explanation");
-      if (feedbackEl) {
-        feedbackEl.classList.remove("hidden");
-        feedbackEl.className = `practice-feedback mt-4 p-4 rounded-xl ${correct ? "bg-green-50 border border-green-200 text-green-800" : "bg-red-50 border border-red-200 text-red-800"}`;
-        feedbackEl.textContent = correct ? `✓ 正确！+${score} 分` : "✗ 错误";
+
+      if (optionBtn && !PracticeState.isSubmitted()) {
+        const qid = optionBtn.dataset.questionId;
+        const answer = optionBtn.dataset.answer;
+        if (qid && answer !== undefined) {
+          const card = optionBtn.closest(".practice-question-card");
+          if (card) {
+            card.querySelectorAll(".practice-option").forEach((b) => b.classList.remove("practice-option-selected"));
+            optionBtn.classList.add("practice-option-selected");
+          }
+          PracticeState.setAnswer(qid, answer);
+        }
       }
-      if (explEl) explEl.classList.remove("hidden");
-      submitBtn.classList.add("hidden");
-      const nextEl = container.querySelector(".practice-next");
-      if (nextEl) nextEl.classList.remove("hidden");
-      return;
-    }
-
-    if (nextBtn) {
-      PracticeState.goToNext();
-      render();
-      return;
-    }
-
-    if (optionBtn && !submitted) {
-      const panel = container.querySelector(".practice-panel");
-      if (!panel) return;
-      panel.querySelectorAll(".practice-option").forEach((b) => b.classList.remove("selected", "border-green-500"));
-      optionBtn.classList.add("selected", "border-green-500");
-    }
-  });
+    });
 
   render();
 }
 
-/**
- * 供 stepRenderers 使用的入口：返回 HTML 字符串（含挂载点）
- * 插入 DOM 后由 MutationObserver 自动调用 mountPractice
- */
 export function renderPracticeStep({ lesson, lang = "ko" } = {}) {
   const { questions } = PracticeEngine.loadPractice(lesson);
   if (!questions.length) return `<div class="lesson-empty text-sm opacity-70">(暂无练习)</div>`;
-
   const mountId = "practice-mount-" + Date.now();
   if (typeof window !== "undefined") {
     window.__PRACTICE_PENDING = { lesson, lang };
-    _scheduleMountCheck();
+    requestAnimationFrame?.(() => {
+      const el = document.querySelector(".practice-mount-point");
+      const opts = window.__PRACTICE_PENDING;
+      if (el && opts) {
+        mountPractice(el, opts);
+        window.__PRACTICE_PENDING = null;
+      }
+    });
   }
   return `<div id="${mountId}" class="practice-mount-point"></div>`;
-}
-
-function _scheduleMountCheck() {
-  if (typeof requestAnimationFrame === "undefined") return;
-  requestAnimationFrame(() => {
-    const el = document.querySelector(".practice-mount-point");
-    const opts = window.__PRACTICE_PENDING;
-    if (el && opts) {
-      mountPractice(el, opts);
-      window.__PRACTICE_PENDING = null;
-    }
-  });
 }

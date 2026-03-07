@@ -1,0 +1,68 @@
+/* Practice Engine - 整页提交批改模式 */
+
+.practice-fullpage {
+  padding-bottom: 1rem;
+}
+
+.practice-zh-line {
+  line-height: 1.5;
+}
+
+.practice-py-line {
+  font-size: 0.9em;
+  margin-top: 0.15rem;
+}
+
+.practice-option {
+  border-color: #e2e8f0;
+  background: #fff;
+}
+
+.practice-option:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.practice-option-selected {
+  border-color: #22c55e !important;
+  border-width: 2px !important;
+  background: #f0fdf4 !important;
+}
+
+.practice-option-correct {
+  border-color: #22c55e !important;
+  background: #f0fdf4 !important;
+}
+
+.practice-option-wrong {
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+}
+
+.practice-result-correct {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.practice-result-wrong {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.practice-option-letter {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.practice-option-selected .practice-option-letter,
+.practice-option-correct .practice-option-letter {
+  background: #22c55e;
+  color: #fff;
+}
+
+.practice-option-wrong .practice-option-letter {
+  background: #ef4444;
+  color: #fff;
+}
