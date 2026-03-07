@@ -120,12 +120,16 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     return;
   }
 
-  let currentQ = PracticeState.getCurrentQuestion();
-  let submitted = false;
+  /** 下一题：使用事件委托，确保每次替换 DOM 后点击仍有效 */
+  function handleNextClick() {
+    PracticeState.goToNext();
+    render();
+  }
 
   function render() {
     const progress = PracticeState.getProgress();
     const q = PracticeState.getCurrentQuestion();
+
     if (!q) {
       if (onComplete && !container.dataset.progressRecorded) {
         container.dataset.progressRecorded = "1";
@@ -144,7 +148,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       return;
     }
 
-    const questionHtml = renderQuestion(q, { lang, disabled: submitted });
+    const questionHtml = renderQuestion(q, { lang, disabled: false });
     const expl = q.explanation && typeof q.explanation === "object" ? pickLang(q.explanation, lang) : str(q.explanation);
     const explHtml = expl ? `<div class="practice-explanation mt-4 p-4 rounded-xl bg-slate-50 text-sm text-slate-700 hidden">${escapeHtml(expl)}</div>` : "";
 
@@ -153,27 +157,31 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
         <div class="practice-progress text-sm text-slate-500 mb-4">第 ${progress.current} / ${progress.total} 题 · 得分 ${PracticeState.getScore()} / ${totalScore}</div>
         ${questionHtml}
         <div class="practice-actions mt-6 flex gap-2">
-          <button type="button" class="practice-submit px-4 py-2 rounded-xl border border-green-500 bg-green-500 text-white hover:bg-green-600 ${submitted ? "hidden" : ""}">提交</button>
+          <button type="button" class="practice-submit px-4 py-2 rounded-xl border border-green-500 bg-green-500 text-white hover:bg-green-600">提交</button>
           <button type="button" class="practice-next px-4 py-2 rounded-xl border border-slate-300 hidden">下一题</button>
         </div>
         <div class="practice-feedback mt-4 hidden"></div>
         ${explHtml}
       </div>`;
 
-    bindEvents(container, { q, lang, expl, submitted, onRerender: render });
+    bindEvents(container, { q, lang, expl, onRerender: render, onNext: handleNextClick });
   }
 
-  function bindEvents(root, { q, lang, expl, submitted, onRerender }) {
+  function bindEvents(root, { q, lang, expl, onRerender, onNext }) {
     const submitBtn = root.querySelector(".practice-submit");
     const nextBtn = root.querySelector(".practice-next");
     const feedbackEl = root.querySelector(".practice-feedback");
     const explEl = root.querySelector(".practice-explanation");
 
+    let submitted = false;
+
     function showFeedback(correct, score) {
-      if (!feedbackEl) return;
-      feedbackEl.classList.remove("hidden");
-      feedbackEl.className = `practice-feedback mt-4 p-4 rounded-xl ${correct ? "bg-green-50 border border-green-200 text-green-800" : "bg-red-50 border border-red-200 text-red-800"}`;
-      feedbackEl.textContent = correct ? `✓ 正确！+${score} 分` : "✗ 错误";
+      submitted = true;
+      if (feedbackEl) {
+        feedbackEl.classList.remove("hidden");
+        feedbackEl.className = `practice-feedback mt-4 p-4 rounded-xl ${correct ? "bg-green-50 border border-green-200 text-green-800" : "bg-red-50 border border-red-200 text-red-800"}`;
+        feedbackEl.textContent = correct ? `✓ 正确！+${score} 分` : "✗ 错误";
+      }
       if (explEl) explEl.classList.remove("hidden");
       if (submitBtn) submitBtn.classList.add("hidden");
       if (nextBtn) nextBtn.classList.remove("hidden");
@@ -199,27 +207,21 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       return null;
     }
 
-    if (submitBtn && !submitted) {
+    if (submitBtn) {
       submitBtn.addEventListener("click", () => {
+        if (submitted) return;
         const answer = getAnswer();
         const { correct, score } = PracticeEngine.submitAnswer(q.id, answer);
-        submitted = true;
         showFeedback(correct, score);
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
-        if (PracticeEngine.PracticeState.goToNext()) {
-          submitted = false;
-          onRerender();
-        } else {
-          onRerender();
-        }
+        onNext();
       });
     }
 
-    // choice: 选项点击
     root.querySelectorAll(".practice-option").forEach((btn) => {
       btn.addEventListener("click", () => {
         if (submitted) return;
@@ -228,7 +230,6 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       });
     });
 
-    // order: 点击芯片按顺序收集（点击顺序即作答顺序）
     if (q.type === "order") {
       const optionsZone = root.querySelector(".practice-order-options");
       const answerZone = root.querySelector(".practice-order-answer");
