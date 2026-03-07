@@ -28,6 +28,17 @@ function getLang() {
   return normalizeLang(i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko");
 }
 
+/** 内容翻译键：translation/explain 对象使用 kr|jp|en，zh 模式 fallback 到 en */
+function getContentLang() {
+  const raw = i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "kr";
+  const l = String(raw || "").toLowerCase();
+  if (l === "kr" || l === "ko") return "kr";
+  if (l === "jp" || l === "ja") return "jp";
+  if (l === "en") return "en";
+  if (l === "cn" || l === "zh") return "en"; // zh 模式无 translation，fallback en
+  return "kr";
+}
+
 function getCourseId() {
   return `${state.version}_hsk${state.lv}`;
 }
@@ -135,13 +146,20 @@ function updateTabsUI() {
   });
 }
 
-/** 按系统语言取对话翻译。KR/CN/EN/JP 统一 fallback：jp->cn->en->kr */
+/** 按系统语言取对话翻译。支持新结构 translation:{kr,jp,en} 与旧结构扁平 kr/en/jp，fallback: lang -> en -> "" */
 function pickDialogueTranslation(line, lang, zhMain = "") {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const contentLang = getContentLang();
   const t = line && line.translation;
-  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  const obj = { jp: (line && line.jp) || (t && t.jp), cn: (line && (line.zh || line.cn)) || (t && (t.zh || t.cn)), en: (line && line.en) || (t && t.en), kr: (line && (line.kr || line.ko)) || (t && (t.kr || t.ko)) };
-  const out = str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, ""));
+  // 新结构：translation: { kr, jp, en }
+  if (t && typeof t === "object") {
+    const out = str(t[contentLang]) || str(t.en) || "";
+    if (out && zhMain && out === zhMain) return "";
+    return out;
+  }
+  // 旧结构：扁平 kr, en, jp
+  const obj = { jp: (line && line.jp) || (line && line.ja), en: (line && line.en), kr: (line && (line.kr || line.ko)) };
+  const out = str(obj[contentLang]) || str(obj.en) || "";
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
@@ -182,10 +200,10 @@ function getDialogueCards(lesson) {
   return [];
 }
 
-/** 渲染单条对话行，输出完整 HTML（lesson-dialogue-line / lesson-dialogue-speaker / lesson-dialogue-zh / lesson-dialogue-pinyin / lesson-dialogue-translation） */
+/** 渲染单条对话行，输出完整 HTML。支持新结构 text/translation 与旧结构 zh/kr */
 function renderDialogueLine(line, lang, showPinyin) {
   const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
-  const zh = String((line && line.zh) || (line && line.cn) || (line && line.line) || "").trim();
+  const zh = String((line && line.text) || (line && line.zh) || (line && line.cn) || (line && line.line) || "").trim();
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
   const trans = pickDialogueTranslation(line, lang, zh);
@@ -234,25 +252,33 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法：取当前语言解释。KR/CN/EN/JP 统一用 getLocalizedText */
+/** 语法：取当前语言解释。支持新结构 explain:{kr,jp,en} 与旧结构 explanation_*，fallback: lang -> en -> "" */
 function pickGrammarExplanation(pt, lang) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const obj = (pt && pt.explanation) || { zh: pt && pt.explanation_zh, kr: (pt && (pt.explanation_kr || pt.kr || pt.ko)), en: (pt && (pt.explanation_en || pt.en)), jp: (pt && (pt.explanation_jp || pt.jp)) };
-  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  return str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, "")) || str((obj && obj.zh) || (obj && obj.kr) || (obj && obj.en) || (obj && obj.jp));
+  const contentLang = getContentLang();
+  const expl = pt && pt.explain;
+  // 新结构：explain: { kr, jp, en }
+  if (expl && typeof expl === "object") {
+    return str(expl[contentLang]) || str(expl.en) || "";
+  }
+  // 旧结构：explanation_zh, explanation_kr, explanation_en, explanation_jp
+  const obj = { kr: (pt && (pt.explanation_kr || pt.kr || pt.ko)), en: (pt && (pt.explanation_en || pt.en)), jp: (pt && (pt.explanation_jp || pt.jp)) };
+  return str(obj[contentLang]) || str(obj.en) || "";
 }
 
-/** 语法：取例句列表，兼容 example / examples，JP fallback: jp->cn->en->kr */
+/** 语法：取例句列表，兼容 example / examples。支持新结构 translation:{kr,jp,en} 与旧结构扁平 */
 function getGrammarExamples(pt, lang) {
   const ex = (pt && pt.example) || (pt && pt.examples);
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const transObj = (e) => ({ jp: str((e && e.jp) || (e && e.ja)), cn: str((e && e.zh) || (e && e.cn)), en: str(e && e.en), kr: str((e && e.kr) || (e && e.ko)) });
+  const contentLang = getContentLang();
   const toItem = (e) => {
     if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
-    const zh = str((e && e.zh) || (e && e.cn) || (e && e.line));
+    const zh = str((e && e.zh) || (e && e.cn) || (e && e.line) || (e && e.text));
     const pinyin = str((e && e.pinyin) || (e && e.py));
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    const trans = getLocalizedText(transObj(e), contentLang, "") || getLocalizedText(transObj(e), lang, "") || str((e && e.zh) || (e && e.cn)) || str((e && e.kr) || (e && e.ko) || (e && e.en));
+    const t = e && e.translation;
+    let trans = "";
+    if (t && typeof t === "object") trans = str(t[contentLang]) || str(t.en) || "";
+    else trans = str(e[contentLang]) || str(e.en) || str((e && e.kr) || (e && e.ko)) || str(e && e.jp);
     return { zh, pinyin, trans };
   };
   if (!ex) return [];
@@ -281,7 +307,7 @@ function buildGrammarHTML(lessonData) {
   const cards = arr.map((pt, i) => {
     const titleZh = typeof (pt && pt.title) === "object"
       ? ((pt.title && pt.title.zh) || (pt.title && pt.title.kr) || (pt.title && pt.title.en) || "")
-      : ((pt && pt.title) || (pt && pt.name) || (pt && pt.pattern) || "#" + (i + 1));
+      : ((pt && pt.pattern) || (pt && pt.title) || (pt && pt.name) || "#" + (i + 1));
     let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
     if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
@@ -342,12 +368,16 @@ function buildExtensionHTML(lessonData) {
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const contentLang = getContentLang();
 
   const cards = arr.map((item, i) => {
-    const zh = str((item && item.zh) || (item && item.cn) || (item && item.line) || "");
+    const zh = str((item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    const meaning = getLocalizedText(item, contentLang, "") || getLocalizedText(item, lang, "");
+    // 新结构：translation: { kr, jp, en }
+    let meaning = "";
+    const t = item && item.translation;
+    if (t && typeof t === "object") meaning = str(t[contentLang]) || str(t.en) || "";
+    else meaning = getLocalizedText(item, contentLang, "") || getLocalizedText(item, "en", "");
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");

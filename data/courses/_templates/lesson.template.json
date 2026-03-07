@@ -5,12 +5,29 @@
   "version": "2.0",
   "lessonNo": 1,
   "type": "lesson",
-  "title": { "zh": "标题", "pinyin": "biāotí", "kr": "제목", "en": "Title" },
+  "title": { "zh": "标题", "kr": "제목", "jp": "タイトル", "en": "Title" },
   "summary": { "zh": "概要", "kr": "요약", "en": "Summary" },
   "objectives": [],
-  "vocab": [{ "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "en": "good" } }],
-  "dialogue": [{ "speaker": "A", "line": "你好！" }],
-  "grammar": [{ "title": "语法", "explanation_zh": "说明", "explanation_kr": "설명", "example": "例句" }],
+  "vocab": [{ "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "jp": "良い", "en": "good" } }],
+  "dialogueCards": [
+    {
+      "title": { "zh": "会话1", "kr": "회화1", "jp": "会話1", "en": "Session 1" },
+      "lines": [
+        { "speaker": "A", "text": "你好！", "pinyin": "Nǐ hǎo!", "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" } }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "语法",
+      "pinyin": "yǔfǎ",
+      "explain": { "kr": "설명", "jp": "説明", "en": "Explanation" },
+      "example": { "zh": "例句", "pinyin": "lìjù", "translation": { "kr": "예문", "jp": "例文", "en": "Example" } }
+    }
+  ],
+  "extension": [
+    { "hanzi": "你好", "pinyin": "Nǐ hǎo", "translation": { "kr": "안녕하세요", "jp": "こんにちは", "en": "Hello" } }
+  ],
   "practice": [],
   "review": {},
   "aiPractice": { "speaking": [], "chatPrompt": "" },
