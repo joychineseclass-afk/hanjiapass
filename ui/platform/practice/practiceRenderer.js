@@ -1,6 +1,6 @@
 /**
  * Practice Engine v1 - 渲染器（整页提交批改模式）
- * 全题展示、A/B/C/D 选项、拼音、统一提交
+ * 教材级题卡 UI、A/B/C/D 选项、点读、多语言解析
  */
 
 import * as PracticeEngine from "./practiceEngine.js";
@@ -28,76 +28,112 @@ function pickLang(obj, lang) {
   return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
 }
 
+/** 解析跟随系统语言：KR kr→ko→zh, CN zh→cn, EN en→zh */
+function pickExplanation(obj, lang) {
+  if (!obj || typeof obj !== "object") return str(obj);
+  if (typeof obj === "string") return str(obj);
+  const l = (lang || "ko").toLowerCase();
+  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
+  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
+}
+
 function t(key, params) {
   return (i18n?.t?.(key, params) ?? key);
 }
 
-/** 中文+拼音两行显示 */
-function renderZhWithPinyin(text, manualPinyin = "") {
+function getPinyin(text) {
   const zh = str(text);
-  if (!zh) return "";
-  const py = str(manualPinyin) || resolvePinyin(zh, manualPinyin);
-  if (!/[\u4e00-\u9fff]/.test(zh)) return `<div class="practice-zh-line">${escapeHtml(zh)}</div>`;
-  if (!py) return `<div class="practice-zh-line">${escapeHtml(zh)}</div>`;
-  return `
-    <div class="practice-zh-line">${escapeHtml(zh)}</div>
-    <div class="practice-py-line text-slate-500 italic">${escapeHtml(py)}</div>`;
+  if (!zh || !/[\u4e00-\u9fff]/.test(zh)) return "";
+  return resolvePinyin(zh, "");
 }
 
-/** 渲染单题（整页模式，含 A/B/C/D、拼音、选中态） */
+/** 渲染单题：教材级题卡 */
 function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
-  const questionText = typeof q.question === "object" ? pickLang(q.question, lang) : str(q.question);
+  const questionObj = typeof q.question === "object" ? q.question : { zh: str(q.question) };
+  const questionZh = pickLang(questionObj, lang) || str(q.question);
+  const questionMeaning = questionObj && typeof questionObj === "object" ? pickLang(questionObj, lang) : "";
   const options = Array.isArray(q.options) ? q.options : [];
   const selected = answers[q.id];
   const result = resultMap[q.id];
 
+  const typeLabel = t("practice_type_choice");
+  const qNo = t("practice_question_no", { n: index + 1 });
+  const qPy = getPinyin(questionZh);
+  const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
+  const qAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
+  const speakLabel = t("practice_listen");
+
   const optsHtml = options.map((o, i) => {
     const letter = LETTERS[i] ?? String(i + 1);
     const isSelected = selected === o;
-    let stateClass = "practice-option";
+    const optPy = getPinyin(o);
+    const oEsc = escapeHtml(o).replaceAll('"', "&quot;");
+    const oAttrs = o ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
+
+    let stateClasses = "lesson-practice-option";
     if (submitted && result) {
       const isCorrect = result.answer === o;
       const isWrongSelected = !result.correct && isSelected;
-      if (isCorrect) stateClass += " practice-option-correct";
-      else if (isWrongSelected) stateClass += " practice-option-wrong";
+      if (isCorrect) stateClasses += " is-correct";
+      else if (isWrongSelected) stateClasses += " is-wrong";
     } else if (isSelected) {
-      stateClass += " practice-option-selected";
+      stateClasses += " is-selected";
     }
-    const content = renderZhWithPinyin(o);
+
     return `
-      <button type="button" class="${stateClass} w-full text-left px-4 py-3 rounded-xl border flex items-center gap-3 transition-colors" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(String(o))}">
-        <span class="practice-option-letter w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0">${letter}</span>
-        <span class="practice-option-content flex-1">${content}</span>
-      </button>`;
+<button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(String(o))}">
+  <span class="lesson-practice-option-letter">${letter}</span>
+  <span class="lesson-practice-option-content">
+    <span class="lesson-practice-option-zh"${oAttrs}>${escapeHtml(o)}</span>
+    ${optPy ? `<span class="lesson-practice-option-pinyin">${escapeHtml(optPy)}</span>` : ""}
+  </span>
+</button>`;
   }).join("");
 
   let resultHtml = "";
   if (submitted && result) {
     const correctLabel = t("practice_correct");
     const wrongLabel = t("practice_wrong");
-    const correctAnswerLabel = t("practice_correct_answer", { answer: result.answer });
+    const answerLabel = t("practice_answer");
     const explLabel = t("practice_explanation");
-    const expl = q.explanation && typeof q.explanation === "object" ? pickLang(q.explanation, lang) : str(q.explanation);
-    const icon = result.correct ? "○" : "✕";
-    const resultClass = result.correct ? "practice-result-correct" : "practice-result-wrong";
+    const expl = pickExplanation(q.explanation, lang);
+    const icon = result.correct ? "○" : "×";
+    const resultClass = result.correct ? "lesson-practice-result-correct" : "lesson-practice-result-wrong";
+    const answerZh = result.answer;
+    const answerPy = getPinyin(answerZh);
+    const aEsc = escapeHtml(answerZh).replaceAll('"', "&quot;");
+    const aAttrs = answerZh ? ` data-speak-text="${aEsc}" data-speak-kind="practice"` : "";
+
     resultHtml = `
-      <div class="practice-result mt-3 p-3 rounded-xl ${resultClass}">
-        <div class="font-semibold mb-1">${icon} ${result.correct ? correctLabel : wrongLabel}</div>
-        ${!result.correct ? `<div class="text-sm mb-2">${correctAnswerLabel}</div>` : ""}
-        ${expl ? `<div class="text-sm"><span class="font-medium">${explLabel}:</span> ${renderZhWithPinyin(expl)}</div>` : ""}
-      </div>`;
+<div class="lesson-practice-result ${resultClass}">
+  <div class="lesson-practice-result-header">${icon} ${result.correct ? correctLabel : wrongLabel}</div>
+  ${!result.correct ? `
+  <div class="lesson-practice-answer">
+    <span class="lesson-practice-answer-label">${answerLabel}:</span>
+    <span class="lesson-practice-answer-zh"${aAttrs}>${escapeHtml(answerZh)}</span>
+    ${answerPy ? `<span class="lesson-practice-answer-pinyin">${escapeHtml(answerPy)}</span>` : ""}
+  </div>` : ""}
+  ${expl ? `<div class="lesson-practice-explanation"><span class="lesson-practice-explanation-label">${explLabel}:</span> ${escapeHtml(expl)}</div>` : ""}
+</div>`;
   }
 
-  const qContent = renderZhWithPinyin(questionText);
-  const qNo = t("practice_question_no", { n: index + 1 });
+  const questionSpeakAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
 
   return `
-    <div class="practice-question-card rounded-xl border border-slate-200 p-4 mb-4 bg-white" data-question-id="${escapeHtml(q.id)}">
-      <div class="practice-question-header text-sm font-semibold text-slate-500 mb-2">${qNo}</div>
-      <div class="practice-question-text text-lg font-medium text-slate-800 mb-4">${qContent}</div>
-      <div class="practice-options space-y-2">${optsHtml}</div>
-      ${resultHtml}
-    </div>`;
+<article class="lesson-practice-card" data-question-id="${escapeHtml(q.id)}">
+  <div class="lesson-practice-card-top">
+    <span class="lesson-practice-index">${qNo}</span>
+    <span class="lesson-practice-type">${escapeHtml(typeLabel)}</span>
+    <button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>${escapeHtml(speakLabel)}</button>
+  </div>
+  <div class="lesson-practice-question">
+    <div class="lesson-practice-question-zh"${questionSpeakAttrs}>${escapeHtml(questionZh)}</div>
+    ${qPy ? `<div class="lesson-practice-question-pinyin">${escapeHtml(qPy)}</div>` : ""}
+  </div>
+  <div class="lesson-practice-options">${optsHtml}</div>
+  ${resultHtml}
+</article>`;
 }
 
 /**
@@ -108,7 +144,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);
   if (!questions.length) {
-    container.innerHTML = `<div class="lesson-empty text-sm opacity-70">${t("common_loading")}</div>`;
+    container.innerHTML = `<div class="lesson-practice-empty">${t("practice_empty")}</div>`;
     return;
   }
 
@@ -124,63 +160,111 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       renderQuestionCard(q, i, { lang: langKey, answers, resultMap, submitted })
     ).join("");
 
-    const totalLabel = t("practice_total_questions", { n: questions.length });
     const scoreLabel = submitted
       ? t("practice_total_score", { score, total: totalScore })
-      : totalLabel;
+      : t("practice_total_count", { n: questions.length });
 
     const submitBtnHtml = !submitted
-      ? `<button type="button" class="practice-submit-all w-full py-4 rounded-xl border-2 border-green-500 bg-green-500 text-white font-semibold text-lg hover:bg-green-600 transition-colors">${t("practice_submit")}</button>`
+      ? `<button type="button" class="lesson-practice-submit">${t("practice_submit")}</button>`
       : "";
 
+    const hero = `
+<section class="lesson-practice-hero">
+  <h3 class="lesson-practice-title">${escapeHtml(t("practice_title"))}</h3>
+  <p class="lesson-practice-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+  <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
+  ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
+</section>`;
+
     container.innerHTML = `
-      <div class="practice-fullpage">
-        <div class="practice-header text-sm text-slate-600 mb-4">${scoreLabel}</div>
-        <div class="practice-questions">${questionsHtml}</div>
-        <div class="practice-footer mt-6">${submitBtnHtml}</div>
-      </div>`;
+<div class="lesson-practice-fullpage">
+  ${hero}
+  <section class="lesson-practice-list">${questionsHtml}</section>
+  ${submitBtnHtml ? `<div class="lesson-practice-footer">${submitBtnHtml}</div>` : ""}
+</div>`;
   }
 
-  /** 事件委托：只绑定一次 */
+  /** 事件委托 */
   container.addEventListener("click", (e) => {
-      const submitBtn = e.target.closest(".practice-submit-all");
-      const optionBtn = e.target.closest(".practice-option");
+    const submitBtn = e.target.closest(".lesson-practice-submit");
+    const optionBtn = e.target.closest(".lesson-practice-option");
 
-      if (submitBtn && !PracticeState.isSubmitted()) {
-        const { score, correctCount } = PracticeEngine.submitAll();
-        if (onComplete && !container.dataset.progressRecorded) {
-          container.dataset.progressRecorded = "1";
-          onComplete({
-            total: questions.length,
-            correct: correctCount,
-            score,
-            lesson,
-          });
-        }
-        render();
-        return;
+    if (submitBtn && !PracticeState.isSubmitted()) {
+      const { score, correctCount } = PracticeEngine.submitAll();
+      if (onComplete && !container.dataset.progressRecorded) {
+        container.dataset.progressRecorded = "1";
+        onComplete({
+          total: questions.length,
+          correct: correctCount,
+          score,
+          lesson,
+        });
       }
+      render();
+      return;
+    }
 
-      if (optionBtn && !PracticeState.isSubmitted()) {
-        const qid = optionBtn.dataset.questionId;
-        const answer = optionBtn.dataset.answer;
-        if (qid && answer !== undefined) {
-          const card = optionBtn.closest(".practice-question-card");
-          if (card) {
-            card.querySelectorAll(".practice-option").forEach((b) => b.classList.remove("practice-option-selected"));
-            optionBtn.classList.add("practice-option-selected");
-          }
-          PracticeState.setAnswer(qid, answer);
+    if (optionBtn && !PracticeState.isSubmitted()) {
+      const qid = optionBtn.dataset.questionId;
+      const answer = optionBtn.dataset.answer;
+      if (qid && answer !== undefined) {
+        const card = optionBtn.closest(".lesson-practice-card");
+        if (card) {
+          card.querySelectorAll(".lesson-practice-option").forEach((b) => b.classList.remove("is-selected"));
+          optionBtn.classList.add("is-selected");
         }
+        PracticeState.setAnswer(qid, answer);
       }
-    });
+    }
+  });
 
   render();
 }
 
+/** 语言切换时重新渲染（不重置答题状态） */
+export function rerenderPractice(container, lang = "ko") {
+  if (!container) return;
+  const questions = PracticeState.getQuestions();
+  if (!questions.length) return;
+
+  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+  const answers = PracticeState.getAnswers();
+  const submitted = PracticeState.isSubmitted();
+  const resultMap = PracticeState.getResultMap();
+  const score = PracticeState.getScore();
+  const totalScore = PracticeState.getTotalScore();
+
+  const questionsHtml = questions.map((q, i) =>
+    renderQuestionCard(q, i, { lang: langKey, answers, resultMap, submitted })
+  ).join("");
+
+  const scoreLabel = submitted
+    ? t("practice_total_score", { score, total: totalScore })
+    : t("practice_total_count", { n: questions.length });
+
+  const submitBtnHtml = !submitted
+    ? `<button type="button" class="lesson-practice-submit">${t("practice_submit")}</button>`
+    : "";
+
+  const hero = `
+<section class="lesson-practice-hero">
+  <h3 class="lesson-practice-title">${escapeHtml(t("practice_title"))}</h3>
+  <p class="lesson-practice-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+  <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
+  ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
+</section>`;
+
+  container.innerHTML = `
+<div class="lesson-practice-fullpage">
+  ${hero}
+  <section class="lesson-practice-list">${questionsHtml}</section>
+  ${submitBtnHtml ? `<div class="lesson-practice-footer">${submitBtnHtml}</div>` : ""}
+</div>`;
+}
+
 export function renderPracticeStep({ lesson, lang = "ko" } = {}) {
   const { questions } = PracticeEngine.loadPractice(lesson);
-  if (!questions.length) return `<div class="lesson-empty text-sm opacity-70">(暂无练习)</div>`;
+  if (!questions.length) return `<div class="lesson-practice-empty">—</div>`;
   const mountId = "practice-mount-" + Date.now();
   if (typeof window !== "undefined") {
     window.__PRACTICE_PENDING = { lesson, lang };

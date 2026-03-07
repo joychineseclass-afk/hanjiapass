@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -208,49 +208,54 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法：取当前语言解释，缺失时 kr -> en -> zh 回退 */
+/** 语法：取当前语言解释。KR: kr→ko→zh, CN: zh→cn, EN: en→zh */
 function pickGrammarExplanation(pt, lang) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const kr = str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko);
-  const en = str(pt?.explanation_en ?? pt?.en);
-  const zh = str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
-  if (lang === "ko") return kr || en || zh;
-  if (lang === "en") return en || kr || zh;
-  return zh || kr || en;
+  if (lang === "ko") return str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko) || str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
+  if (lang === "en") return str(pt?.explanation_en ?? pt?.en) || str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn);
+  return str(pt?.explanation_zh ?? pt?.zh ?? pt?.cn) || str(pt?.explanation_kr ?? pt?.kr ?? pt?.ko);
 }
 
-/** 语法：取例句，兼容 example 为字符串或 {zh, pinyin, kr, en} */
-function pickGrammarExample(pt, lang) {
+/** 语法：取例句列表，兼容 example / examples 单条或数组 */
+function getGrammarExamples(pt, lang) {
   const ex = pt?.example ?? pt?.examples;
-  if (!ex) return { zh: "", pinyin: "", trans: "" };
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  if (typeof ex === "string") return { zh: ex, pinyin: "", trans: "" };
-  const zh = str(ex?.zh ?? ex?.cn ?? ex?.line);
-  const pinyin = str(ex?.pinyin ?? ex?.py);
-  const kr = str(ex?.kr ?? ex?.ko);
-  const en = str(ex?.en);
-  let trans = "";
-  if (lang === "ko") trans = kr || en || str(ex?.zh ?? ex?.cn);
-  else if (lang === "en") trans = en || kr || str(ex?.zh ?? ex?.cn);
-  else trans = str(ex?.zh ?? ex?.cn) || kr || en;
-  return { zh, pinyin, trans };
+  const toItem = (e) => {
+    if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
+    const zh = str(e?.zh ?? e?.cn ?? e?.line);
+    const pinyin = str(e?.pinyin ?? e?.py);
+    const kr = str(e?.kr ?? e?.ko);
+    const en = str(e?.en);
+    let trans = "";
+    if (lang === "ko") trans = kr || en || str(e?.zh ?? e?.cn);
+    else if (lang === "en") trans = en || kr || str(e?.zh ?? e?.cn);
+    else trans = str(e?.zh ?? e?.cn) || kr || en;
+    return { zh, pinyin, trans };
+  };
+  if (!ex) return [];
+  if (Array.isArray(ex)) return ex.map(toItem).filter((x) => x.zh);
+  return [toItem(ex)];
 }
 
-/** 语法渲染：教学型结构化 HTML。每个 item：编号+标题 / 拼音 / 解释 / 例句块 */
+/** 语法渲染：教材级卡片，支持点读 */
 function buildGrammarHTML(lessonData) {
   const g = lessonData?.grammar;
-  if (!g) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
-
   const lang = getLang();
+  const speakLabel = i18n.t("extension_speak");
+  const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk_empty_grammar")}</div>`;
+
+  const hero = `<section class="lesson-grammar-hero">
+  <h3 class="lesson-grammar-title">${escapeHtml(i18n.t("grammar_title"))}</h3>
+  <p class="lesson-grammar-subtitle">${escapeHtml(i18n.t("grammar_subtitle"))}</p>
+</section>`;
+
+  if (!g) return `${hero}${emptyMsg}`;
+
   const arr = Array.isArray(g) ? g : (Array.isArray(g?.points) ? g.points : []);
-  if (!arr.length) return `<div class="hsk-grammar-empty text-sm opacity-70">${i18n.t("hsk_empty_grammar", {})}</div>`;
+  if (!arr.length) return `${hero}${emptyMsg}`;
 
   const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
-  const exLabel = lang === "ko" ? "예문" : lang === "zh" ? "例句" : "Example";
-
-  const blocks = [];
-  for (let i = 0; i < arr.length; i++) {
-    const pt = arr[i];
+  const cards = arr.map((pt, i) => {
     const titleZh = typeof pt?.title === "object"
       ? (pt.title?.zh ?? pt.title?.kr ?? pt.title?.en ?? "")
       : (pt?.title ?? pt?.name ?? pt?.pattern ?? `#${i + 1}`);
@@ -258,26 +263,42 @@ function buildGrammarHTML(lessonData) {
     if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
     const expl = pickGrammarExplanation(pt, lang);
-    const ex = pickGrammarExample(pt, lang);
-    let exPy = ex.pinyin;
-    if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
+    const examples = getGrammarExamples(pt, lang);
+    const idx = String(i + 1).padStart(2, "0");
+    const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
+    const titleAttrs = titleZh ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"` : "";
+    const btnAttrs = titleZh ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"` : "";
 
-    blocks.push(`
-<article class="hsk-grammar-item border border-slate-200 rounded-xl p-5 mb-4 last:mb-0 bg-white">
-  <div class="hsk-grammar-title text-base font-bold text-slate-800 mb-1">${i + 1}. ${escapeHtml(titleZh)}</div>
-  ${titlePy ? `<div class="hsk-grammar-title-pinyin text-sm italic text-slate-600 mb-2">${escapeHtml(titlePy)}</div>` : ""}
-  ${expl ? `<div class="hsk-grammar-explanation text-sm text-slate-700 mb-4">${escapeHtml(expl)}</div>` : ""}
-  ${ex.zh ? `
-  <div class="hsk-grammar-example mt-3 pt-4 border-t border-slate-100 bg-slate-50/80 rounded-lg p-4">
-    <div class="hsk-grammar-example-label text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">${escapeHtml(exLabel)}：</div>
-    <div class="hsk-grammar-example-zh text-base font-semibold text-slate-800">${escapeHtml(ex.zh)}</div>
-    ${exPy ? `<div class="hsk-grammar-example-pinyin text-sm italic text-slate-600 mt-1">${escapeHtml(exPy)}</div>` : ""}
-    ${ex.trans ? `<div class="hsk-grammar-example-trans text-sm text-slate-600 mt-2 opacity-90">${escapeHtml(ex.trans)}</div>` : ""}
+    let examplesHtml = "";
+    if (examples.length) {
+      examplesHtml = examples.map((ex) => {
+        let exPy = ex.pinyin;
+        if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
+        const exEsc = escapeHtml(ex.zh).replaceAll('"', "&quot;");
+        const exAttrs = ex.zh ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"` : "";
+        return `<div class="lesson-grammar-example">
+  <div class="lesson-grammar-example-zh"${exAttrs}>${escapeHtml(ex.zh)}</div>
+  ${exPy ? `<div class="lesson-grammar-example-pinyin">${escapeHtml(exPy)}</div>` : ""}
+  ${ex.trans ? `<div class="lesson-grammar-example-meaning">${escapeHtml(ex.trans)}</div>` : ""}
+</div>`;
+      }).join("");
+    }
+
+    return `<article class="lesson-grammar-card">
+  <div class="lesson-grammar-card-top">
+    <span class="lesson-grammar-index">${idx}</span>
+    <button type="button" class="lesson-grammar-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
-  ` : ""}
-</article>`);
-  }
-  return `<div class="hsk-grammar-list">${blocks.join("")}</div>`;
+  <div class="lesson-grammar-head">
+    <div class="lesson-grammar-zh"${titleAttrs}>${escapeHtml(titleZh)}</div>
+    ${titlePy ? `<div class="lesson-grammar-pinyin">${escapeHtml(titlePy)}</div>` : ""}
+  </div>
+  ${expl ? `<div class="lesson-grammar-expl">${escapeHtml(expl)}</div>` : ""}
+  ${examplesHtml ? `<div class="lesson-grammar-examples">${examplesHtml}</div>` : ""}
+</article>`;
+  }).join("");
+
+  return `${hero}<section class="lesson-grammar-list">${cards}</section>`;
 }
 
 /** 扩展表达：hero + 教材卡片列表，支持点读（点击中文或发音按钮） */
@@ -692,9 +713,9 @@ function bindEvents() {
     openLesson({ lessonNo, file });
   }, { signal });
 
-  // 点读：会话区 / 扩展区点击中文
+  // 点读：会话 / 扩展 / 语法 / 练习区点击中文
   document.addEventListener("click", (e) => {
-    const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension']");
+    const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension'], [data-speak-text][data-speak-kind='grammar'], [data-speak-text][data-speak-kind='practice']");
     if (!el) return;
     const text = (el.dataset?.speakText || "").trim();
     if (!text || !AUDIO_ENGINE?.isSpeechSupported?.()) return;
@@ -702,7 +723,7 @@ function bindEvents() {
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card");
+    const lineEl = el.closest(".lesson-dialogue-line") ?? el.closest(".lesson-extension-card") ?? el.closest(".lesson-grammar-card") ?? el.closest(".lesson-practice-card") ?? el.closest(".lesson-practice-option");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",
@@ -843,6 +864,9 @@ function bindEvents() {
       $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
       $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
       $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
+      if (rerenderPractice && $("hskPracticeBody")) {
+        try { rerenderPractice($("hskPracticeBody"), lang); } catch {}
+      }
       if (AI_CAPABILITY?.mountAIPanel && $("hskAIResult")) {
         try {
           AI_CAPABILITY.mountAIPanel($("hskAIResult"), {

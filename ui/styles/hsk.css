@@ -427,3 +427,449 @@
 .lesson-extension-card.is-speaking .lesson-extension-zh {
   color: #2563eb;
 }
+
+/* ===============================
+   📋 Lesson Grammar (语法 tab) — 教材级
+================================== */
+.lesson-grammar-hero {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.lesson-grammar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px;
+}
+
+.lesson-grammar-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.lesson-grammar-empty {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  padding: 1rem;
+}
+
+.lesson-grammar-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .lesson-grammar-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.lesson-grammar-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #fff;
+  padding: 18px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.lesson-grammar-card:hover {
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.lesson-grammar-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.lesson-grammar-index {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
+.lesson-grammar-audio-btn {
+  padding: 4px 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lesson-grammar-audio-btn:hover {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+}
+
+.lesson-grammar-head {
+  margin-bottom: 10px;
+}
+
+.lesson-grammar-zh {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #0f172a;
+}
+
+@media (max-width: 600px) {
+  .lesson-grammar-zh {
+    font-size: 1.25rem;
+  }
+}
+
+.lesson-grammar-pinyin {
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.lesson-grammar-expl {
+  font-size: 0.9375rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.lesson-grammar-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-grammar-example {
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.lesson-grammar-example-zh {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.lesson-grammar-example-zh:hover {
+  background: rgba(37, 99, 235, 0.04);
+  border-radius: 6px;
+}
+
+.lesson-grammar-example-pinyin {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.lesson-grammar-example-meaning {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.lesson-grammar-card.is-speaking {
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.lesson-grammar-card.is-speaking .lesson-grammar-zh,
+.lesson-grammar-card.is-speaking .lesson-grammar-example-zh {
+  color: #2563eb;
+}
+
+/* ===============================
+   📋 Lesson Practice (练习 tab) — 教材级
+================================== */
+.lesson-practice-hero {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.lesson-practice-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px;
+}
+
+.lesson-practice-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.lesson-practice-summary {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.lesson-practice-submit-wrap,
+.lesson-practice-footer {
+  margin-top: 12px;
+}
+
+.lesson-practice-submit {
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #22c55e;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lesson-practice-submit:hover {
+  background: #16a34a;
+}
+
+.lesson-practice-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.lesson-practice-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #fff;
+  padding: 18px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s;
+}
+
+.lesson-practice-card:hover {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.lesson-practice-card-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lesson-practice-index {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.lesson-practice-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.lesson-practice-audio-btn {
+  margin-left: auto;
+  padding: 4px 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.lesson-practice-question {
+  margin-bottom: 14px;
+}
+
+.lesson-practice-question-zh {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.lesson-practice-question-zh:hover {
+  color: #2563eb;
+}
+
+.lesson-practice-question-pinyin {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.lesson-practice-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .lesson-practice-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.lesson-practice-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.lesson-practice-option:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.04);
+}
+
+.lesson-practice-option.is-selected {
+  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.lesson-practice-option.is-selected .lesson-practice-option-letter {
+  background: #22c55e;
+  color: #fff;
+}
+
+.lesson-practice-option.is-correct {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.lesson-practice-option.is-correct .lesson-practice-option-letter {
+  background: #22c55e;
+  color: #fff;
+}
+
+.lesson-practice-option.is-wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.lesson-practice-option.is-wrong .lesson-practice-option-letter {
+  background: #ef4444;
+  color: #fff;
+}
+
+.lesson-practice-option-letter {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  border-radius: 50%;
+}
+
+.lesson-practice-option-content {
+  flex: 1;
+}
+
+.lesson-practice-option-zh {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.lesson-practice-option-pinyin {
+  display: block;
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.lesson-practice-result {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.lesson-practice-result-correct {
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.06);
+}
+
+.lesson-practice-result-wrong {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.lesson-practice-result-header {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.lesson-practice-result-correct .lesson-practice-result-header {
+  color: #16a34a;
+}
+
+.lesson-practice-result-wrong .lesson-practice-result-header {
+  color: #dc2626;
+}
+
+.lesson-practice-answer {
+  font-size: 0.9375rem;
+  margin-bottom: 8px;
+}
+
+.lesson-practice-answer-zh {
+  cursor: pointer;
+}
+
+.lesson-practice-answer-zh:hover {
+  color: #2563eb;
+}
+
+.lesson-practice-explanation {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.lesson-practice-card.is-speaking {
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.lesson-practice-option.is-speaking {
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.lesson-practice-empty {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  padding: 1rem;
+}

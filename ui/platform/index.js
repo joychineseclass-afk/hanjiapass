@@ -6,7 +6,7 @@ export * as LESSON_ENGINE from "./engine/index.js";
 export * as LESSON_RENDERER from "./renderers/lessonRenderer.js";
 export * as STEP_RENDERERS from "./renderers/stepRenderers.js";
 export * as PRACTICE from "./practice/practiceEngine.js";
-export { mountPractice } from "./practice/practiceRenderer.js";
+export { mountPractice, rerenderPractice } from "./practice/practiceRenderer.js";
 export * as IMAGE_ENGINE from "./media/imageEngine.js";
 import * as SCENE_ENGINE from "./scene/sceneEngine.js";
 export { SCENE_ENGINE };
