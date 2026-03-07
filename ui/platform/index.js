@@ -26,3 +26,4 @@ export {
   getClassroomRouteState,
   parseHashQuery,
 } from "./courses/courseRouterHook.js";
+export { PROGRESS_ENGINE, PROGRESS_SELECTORS } from "./progress/index.js";

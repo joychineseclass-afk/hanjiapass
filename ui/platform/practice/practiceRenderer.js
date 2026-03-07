@@ -109,9 +109,9 @@ function renderQuestion(q, opts) {
 /**
  * 统一入口：挂载互动练习到容器
  * @param {HTMLElement} container
- * @param {{ lesson: object, lang?: string }} opts
+ * @param {{ lesson: object, lang?: string, onComplete?: (opts) => void }} opts
  */
-export function mountPractice(container, { lesson, lang = "ko" } = {}) {
+export function mountPractice(container, { lesson, lang = "ko", onComplete } = {}) {
   if (!container) return;
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);
@@ -127,6 +127,15 @@ export function mountPractice(container, { lesson, lang = "ko" } = {}) {
     const progress = PracticeState.getProgress();
     const q = PracticeState.getCurrentQuestion();
     if (!q) {
+      if (onComplete && !container.dataset.progressRecorded) {
+        container.dataset.progressRecorded = "1";
+        onComplete({
+          total: questions.length,
+          correct: PracticeState.getCorrectCount?.() ?? 0,
+          score: PracticeState.getScore(),
+          lesson,
+        });
+      }
       container.innerHTML = `
         <div class="practice-done p-6 rounded-xl border border-green-200 bg-green-50">
           <div class="font-semibold text-green-800 mb-2">练习完成</div>

@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -25,7 +25,29 @@ function getLang() {
   return normalizeLang(i18n?.getLang?.()); // ko | zh | en
 }
 
+function getCourseId() {
+  return `${state.version}_hsk${state.lv}`;
+}
+
 function $(id) { return document.getElementById(id); }
+
+function updateProgressBlock() {
+  const el = $("hskProgressText");
+  if (!el) return;
+  const courseId = getCourseId();
+  const total = state.lessons?.length ?? 0;
+  const stats = PROGRESS_SELECTORS?.getCourseStats?.(courseId, total) ?? {};
+  const { completedLessonCount, dueReviewCount, lastLessonNo, lastActivityAt } = stats;
+  const parts = [];
+  parts.push(total > 0 ? `已完成 ${completedLessonCount} / ${total} 课` : "—");
+  if (lastLessonNo > 0) parts.push(`当前第 ${lastLessonNo} 课`);
+  if (dueReviewCount > 0) parts.push(`待复习 ${dueReviewCount} 词`);
+  if (lastActivityAt > 0) {
+    const d = new Date(lastActivityAt);
+    parts.push(`最近 ${d.toLocaleDateString()}`);
+  }
+  el.textContent = parts.join(" · ");
+}
 
 function setError(msg = "") {
   const err = $("hskError");
@@ -356,6 +378,7 @@ async function loadLessons() {
 
     state.lessons = result;
     renderLessonList(listEl, state.lessons, { lang });
+    updateProgressBlock();
   } catch (e) {
     console.error(e);
     setError(`Lessons load failed: ${e?.message || e}`);
@@ -448,6 +471,7 @@ async function openLesson({ lessonNo, file }) {
     const headerTitle = titleStr ? `Lesson ${no} / ${titleStr}` : `Lesson ${no}`;
     showStudyMode(headerTitle, ""); // 详情区只显示 Lesson N / title，不再重复 HSK N · version
     $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    updateProgressBlock();
 
     // 供 Stroke 弹窗 / fallback 使用的上下文
     window.__HSK_PAGE_CTX = {
@@ -459,6 +483,7 @@ async function openLesson({ lessonNo, file }) {
 
     // Default tab: words
     state.tab = "words";
+    PROGRESS_ENGINE?.markStepCompleted?.({ courseId, lessonId, step: "vocab" });
     updateTabsUI();
 
     // Render panels
@@ -476,6 +501,11 @@ async function openLesson({ lessonNo, file }) {
       `;
     } else {
       renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang, scope: `hsk${state.lv}` });
+      PROGRESS_ENGINE?.touchLessonVocab?.({
+        courseId,
+        lessonId,
+        vocabItems: lessonWords.map((w) => wordKey(w) || w),
+      });
     }
     $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
     $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
@@ -483,7 +513,21 @@ async function openLesson({ lessonNo, file }) {
     // Practice panel: 平台级 Practice Engine
     if (mountPractice && $("hskPracticeBody")) {
       try {
-        mountPractice($("hskPracticeBody"), { lesson: lessonData, lang });
+        mountPractice($("hskPracticeBody"), {
+          lesson: lessonData,
+          lang,
+          onComplete: ({ total, correct, score, lesson }) => {
+            PROGRESS_ENGINE?.recordPracticeResult?.({
+              courseId,
+              lessonId,
+              total,
+              correct,
+              score,
+              vocabItems: (lesson?.vocab ?? lesson?.words ?? []).map((w) => (typeof w === "string" ? w : w?.hanzi ?? w?.word ?? "")).filter(Boolean),
+            });
+            updateProgressBlock();
+          },
+        });
       } catch (e) {
         console.warn("[HSK] Practice mount failed:", e?.message);
         $("hskPracticeBody").innerHTML = `<div class="text-sm opacity-70">(练习加载失败)</div>`;
@@ -522,6 +566,7 @@ function bindEvents() {
     state.lv = Number(e.target.value || 1);
     showListMode();
     await loadLessons();
+    updateProgressBlock();
   }, { signal });
 
   $("hskVersion")?.addEventListener("change", async (e) => {
@@ -529,6 +574,7 @@ function bindEvents() {
     state.version = ver;
     try { window.HSK_LOADER?.setVersion?.(ver); } catch {}
     await loadLessons();
+    updateProgressBlock();
     if (state.current?.lessonData) {
       const { lessonNo, file } = state.current;
       await openLesson({ lessonNo, file });
@@ -558,7 +604,14 @@ function bindEvents() {
     state.tab = btn.dataset.tab;
     updateTabsUI();
 
-    // when switching to AI: prepare context preview (optional)
+    const step = state.tab === "ai" ? "aiPractice" : state.tab;
+    if (state.current?.lessonData) {
+      const courseId = getCourseId();
+      const lessonId = state.current.lessonData?.id ?? `${courseId}_lesson${state.current.lessonNo}`;
+      PROGRESS_ENGINE?.markStepCompleted?.({ courseId, lessonId, step });
+      updateProgressBlock();
+    }
+
     if (state.tab === "ai") {
       // keep it light; user can click copy
     }

@@ -74,3 +74,8 @@ export function goToNext() {
 export function isLastQuestion() {
   return state.currentIndex >= state.questions.length - 1;
 }
+
+/** 答对题数（供 Progress Engine 使用） */
+export function getCorrectCount() {
+  return [...state.answered.values()].filter((x) => x?.correct).length;
+}

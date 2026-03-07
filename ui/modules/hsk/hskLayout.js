@@ -40,6 +40,11 @@ export function getHSKLayoutHTML() {
       <div class="mt-2 text-sm opacity-70">
         💡 <span data-i18n="hsk_tip">레벨을 선택하고 수업을 시작해요.</span>
       </div>
+
+      <!-- Progress Engine v1: 最小进度区 -->
+      <div id="hskProgressBlock" class="mt-3 p-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-700">
+        <span id="hskProgressText">—</span>
+      </div>
     </div>
 
     <div id="hskError" class="hidden bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 mt-3"></div>
