@@ -7,6 +7,7 @@ import { i18n } from "../../i18n.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
+import { getMeaningByLang, getPosByLang } from "../../utils/wordDisplay.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -55,32 +56,12 @@ export function wordPinyin(x) {
   return String(x.pinyin ?? x.py ?? "").trim();
 }
 
+/** 按系统语言取释义，委托给全站统一的 getMeaningByLang */
 export function wordMeaning(x, lang) {
   if (x == null) return "";
   if (typeof x === "string") return "";
-  const m = x.meaning;
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-
-  if (lang === "ko") {
-    return str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
-      str(x.en) || (m && str(m.en)) ||
-      str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
-      (typeof m === "string" ? m.trim() : "") ||
-      wordKey(x) || "";
-  }
-  if (lang === "en") {
-    return str(x.en) || (m && str(m.en)) ||
-      str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
-      str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
-      (typeof m === "string" ? m.trim() : "") ||
-      wordKey(x) || "";
-  }
-  // zh
-  return str(x.zh) || str(x.cn) || (m && (str(m.zh) || str(m.cn))) ||
-    str(x.ko) || str(x.kr) || (m && (str(m.ko) || str(m.kr))) ||
-    str(x.en) || (m && str(m.en)) ||
-    (typeof m === "string" ? m.trim() : "") ||
-    wordKey(x) || "";
+  const l = normalizeLang(lang);
+  return getMeaningByLang(x, l, wordKey(x) || "");
 }
 
 function pickText(v, lang = "ko") {
@@ -172,20 +153,6 @@ function meaningTextOf(val, lang) {
   return String(val);
 }
 
-/** 按系统语言取单一释义，缺失时按 kr -> en -> zh 回退 */
-function getMeaningSingle(raw, lang) {
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const m = raw?.meaning ?? raw;
-  const obj = typeof m === "object" ? m : {};
-  const kr = str(raw?.ko ?? raw?.kr ?? obj.ko ?? obj.kr);
-  const en = str(raw?.en ?? obj.en ?? obj.english);
-  const zh = str(raw?.zh ?? raw?.cn ?? obj.zh ?? obj.cn) || wordKey(raw);
-
-  if (lang === "ko") return kr || en || zh;
-  if (lang === "en") return en || kr || zh;
-  return zh || kr || en;
-}
-
 export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
@@ -197,11 +164,14 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       const han = wordKey(raw) || String(raw.hanzi ?? raw.han ?? raw.word ?? raw.zh ?? raw.cn ?? raw.simplified ?? raw.trad ?? "").trim();
       let pinyinStr = wordPinyin(raw);
       if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
-      let mainStr = getMeaningSingle(raw, currentLang);
+
+      let mainStr = getMeaningByLang(raw, currentLang, han);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
       if (!mainStr) {
         mainStr = MEANING_FALLBACK[currentLang] ?? MEANING_FALLBACK.ko;
       }
+
+      const posStr = getPosByLang(raw, currentLang);
 
       const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
       const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
@@ -215,6 +185,7 @@ export function renderWordCards(gridEl, items, onClickWord, { lang } = {}) {
       <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
         <div class="word-hanzi">${hanziChars}</div>
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
+        ${posStr ? `<div class="word-pos text-sm opacity-75">${escapeHtml(posStr)}</div>` : ""}
         <div class="word-meaning">
           <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
         </div>

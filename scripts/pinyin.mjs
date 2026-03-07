@@ -15,4 +15,4 @@ export function ensurePinyin(hanzi, existing = "") {
   } catch (e) {
     return "";
   }
-}
+}npm run build:pinyin
