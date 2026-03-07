@@ -102,11 +102,9 @@ export function generateVocabFill(vocab, count = 5) {
 }
 
 /**
- * 从 vocab 生成 10 题（5 choice + 5 fill）
+ * 从 vocab 生成 6 题（词汇选择题）
  */
 export function generateFromVocab(lesson) {
   const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
-  const choice = generateVocabChoice(vocab, 5);
-  const fill = generateVocabFill(vocab, 5);
-  return [...choice, ...fill];
+  return generateVocabChoice(vocab, 6);
 }

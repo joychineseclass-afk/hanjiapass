@@ -1,6 +1,6 @@
 /**
  * Auto Practice Generator - 从 lesson.dialogue 生成
- * 4 choice + 3 order
+ * 4 听句选词 + 4 语序 + 4 填空 + 2 理解
  */
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -39,37 +39,44 @@ function splitSentence(s) {
 }
 
 /**
- * 生成 4 道对话选择题
+ * 听句选词：句子 → 选择正确释义/对应词
+ * 例：你好！这句话的意思是？ A 再见 B 你好 C 谢谢
  */
-export function generateDialogueChoice(dialogue, count = 4) {
+export function generateSentenceMeaningChoice(dialogue, vocab, count = 4) {
   const lines = Array.isArray(dialogue) ? dialogue : [];
-  if (lines.length < 2) return [];
+  const vocabItems = Array.isArray(vocab) ? vocab : [];
+  const vocabWords = vocabItems.map((w) => str(w?.hanzi ?? w?.word)).filter(Boolean);
+  if (lines.length < 1 || vocabWords.length < 2) return [];
 
   const out = [];
-  const allTexts = lines.map((l) => getLineText(l)).filter(Boolean);
-  const texts = [...new Set(allTexts)];
-  if (texts.length < 2) return [];
+  const used = new Set();
+  const pool = shuffle(lines);
 
-  for (let i = 0; i < Math.min(count, texts.length); i++) {
-    const target = texts[i];
-    const others = texts.filter((t) => t !== target);
-    const options = [target, ...shuffle(others).slice(0, 3)];
+  for (let i = 0; i < count && i < pool.length; i++) {
+    const line = pool[i];
+    const sentence = getLineText(line);
+    if (!sentence || used.has(sentence)) continue;
+    used.add(sentence);
+
+    const matchWord = vocabWords.find((w) => sentence.includes(w)) || vocabWords[0];
+    const others = shuffle(vocabWords.filter((w) => w !== matchWord)).slice(0, 3);
+    const options = [matchWord, ...others];
     const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
 
     out.push({
       type: "choice",
-      id: `dialogue-choice-${i + 1}`,
+      id: `dialogue-meaning-${i + 1}`,
       question: {
-        zh: `对话中第 ${i + 1} 句是什么？`,
-        kr: `대화에서 ${i + 1}번째 문장은?`,
-        en: `What is the ${i + 1}${i === 0 ? "st" : i === 1 ? "nd" : i === 2 ? "rd" : "th"} line in the dialogue?`,
+        zh: `「${sentence}」这句话的意思是？`,
+        kr: `「${sentence}」이 문장의 뜻은?`,
+        en: `What does "${sentence}" mean?`,
       },
-      options: uniqueOpts.length >= 2 ? uniqueOpts : [target],
-      answer: target,
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [matchWord, "其他"],
+      answer: matchWord,
       explanation: {
-        zh: `正确答案：${target}`,
-        kr: `정답: ${target}`,
-        en: `Correct answer: ${target}`,
+        zh: `「${sentence}」：${matchWord}`,
+        kr: `「${sentence}」: ${matchWord}`,
+        en: `"${sentence}" means ${matchWord}`,
       },
       score: 1,
     });
@@ -78,9 +85,9 @@ export function generateDialogueChoice(dialogue, count = 4) {
 }
 
 /**
- * 生成 3 道对话排序题
+ * 生成 4 道对话排序题
  */
-export function generateDialogueOrder(dialogue, count = 3) {
+export function generateDialogueOrder(dialogue, count = 4) {
   const lines = Array.isArray(dialogue) ? dialogue : [];
   const texts = lines.map((l) => getLineText(l)).filter((t) => t.length >= 2);
   if (!texts.length) return [];
@@ -123,11 +130,126 @@ export function generateDialogueOrder(dialogue, count = 3) {
 }
 
 /**
- * 从 dialogue 生成 7 题（4 choice + 3 order）
+ * 填空题：从对话句挖空，选词填空
+ * 例：你____吗？ A 好 B 好吗 C 好的
+ */
+export function generateDialogueFill(dialogue, vocab, count = 4) {
+  const lines = Array.isArray(dialogue) ? dialogue : [];
+  const vocabItems = Array.isArray(vocab) ? vocab : [];
+  const texts = lines.map((l) => getLineText(l)).filter((t) => t.length >= 2);
+  if (!texts.length) return [];
+
+  const out = [];
+  const used = new Set();
+
+  for (let i = 0; i < count; i++) {
+    const t = texts[i % texts.length];
+    if (!t || used.has(t)) continue;
+    used.add(t);
+
+    const pieces = splitSentence(t);
+    if (pieces.length < 2) continue;
+    const idx = Math.floor(pieces.length / 2);
+    const blank = pieces[idx];
+    const before = pieces.slice(0, idx).join("");
+    const after = pieces.slice(idx + 1).join("");
+    const sentence = before + "____" + after;
+
+    const wrongOpts = vocabItems
+      .map((w) => str(w?.hanzi ?? w?.word))
+      .filter((w) => w && w !== blank && w.length <= 3);
+    const options = [blank, ...shuffle(wrongOpts).slice(0, 3)];
+    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
+
+    out.push({
+      type: "choice",
+      id: `dialogue-fill-${i + 1}`,
+      question: {
+        zh: `请选择正确的词填空：${sentence}`,
+        kr: `빈칸에 맞는 말을 고르세요: ${sentence}`,
+        en: `Choose the correct word: ${sentence}`,
+      },
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [blank],
+      answer: blank,
+      explanation: {
+        zh: `正确答案：${t}`,
+        kr: `정답: ${t}`,
+        en: `Correct answer: ${t}`,
+      },
+      score: 1,
+    });
+  }
+  return out;
+}
+
+/** 理解题选项映射 */
+const COMPREHENSION_MAP = [
+  { keywords: ["你好", "您好", "嗨"], answer: "打招呼" },
+  { keywords: ["再见", "拜拜"], answer: "告别" },
+  { keywords: ["谢谢", "感谢"], answer: "感谢" },
+  { keywords: ["对不起", "抱歉"], answer: "道歉" },
+  { keywords: ["你好吗", "怎么样"], answer: "问候" },
+];
+
+/**
+ * 理解题：对话片段 → 他们在做什么？
+ */
+export function generateDialogueComprehension(dialogue, count = 2) {
+  const lines = Array.isArray(dialogue) ? dialogue : [];
+  if (lines.length < 2) return [];
+
+  const out = [];
+  const allAnswers = COMPREHENSION_MAP.map((c) => c.answer);
+
+  for (let i = 0; i < count; i++) {
+    const lineA = lines[i * 2 % lines.length];
+    const lineB = lines[(i * 2 + 1) % lines.length];
+    const textA = getLineText(lineA);
+    const textB = getLineText(lineB);
+    if (!textA || !textB) continue;
+
+    let answer = "打招呼";
+    for (const { keywords, answer: a } of COMPREHENSION_MAP) {
+      if (keywords.some((k) => textA.includes(k) || textB.includes(k))) {
+        answer = a;
+        break;
+      }
+    }
+
+    const others = shuffle(allAnswers.filter((a) => a !== answer)).slice(0, 3);
+    const options = [answer, ...others];
+    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
+
+    out.push({
+      type: "choice",
+      id: `dialogue-comprehension-${i + 1}`,
+      question: {
+        zh: `A：${textA}\nB：${textB}\n\n他们是在做什么？`,
+        kr: `A: ${textA}\nB: ${textB}\n\n그들은 무엇을 하고 있나요?`,
+        en: `A: ${textA}\nB: ${textB}\n\nWhat are they doing?`,
+      },
+      options: uniqueOpts,
+      answer,
+      explanation: {
+        zh: `正确答案：${answer}`,
+        kr: `정답: ${answer}`,
+        en: `Correct answer: ${answer}`,
+      },
+      score: 1,
+    });
+  }
+  return out;
+}
+
+/**
+ * 从 dialogue 生成 14 题（4 听句选词 + 4 语序 + 4 填空 + 2 理解）
  */
 export function generateFromDialogue(lesson) {
   const dialogue = Array.isArray(lesson?.dialogue) ? lesson.dialogue : [];
-  const choice = generateDialogueChoice(dialogue, 4);
-  const order = generateDialogueOrder(dialogue, 3);
-  return [...choice, ...order];
+  const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
+  const meaning = generateSentenceMeaningChoice(dialogue, vocab, 4);
+  const order = generateDialogueOrder(dialogue, 4);
+  const fill = generateDialogueFill(dialogue, vocab, 4);
+  const comprehension = generateDialogueComprehension(dialogue, 2);
+  return [...meaning, ...order, ...fill, ...comprehension];
 }
