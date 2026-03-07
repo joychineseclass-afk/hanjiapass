@@ -185,7 +185,7 @@ function buildDialogueHTML(lessonData) {
   const cards = getDialogueCards(raw);
   const lang = getLang();
 
-  const hero = `<section class="lesson-dialogue-hero">
+  const hero = `<section class="lesson-section-hero lesson-dialogue-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk_tab_dialogue"))}</h3>
   <p class="lesson-section-subtitle">${escapeHtml(i18n.t("dialogue_subtitle") || "本课会话，可点击中文朗读。")}</p>
 </section>`;
@@ -250,9 +250,9 @@ function buildGrammarHTML(lessonData) {
   const speakLabel = i18n.t("extension_speak");
   const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk_empty_grammar")}</div>`;
 
-  const hero = `<section class="lesson-grammar-hero">
-  <h3 class="lesson-grammar-title">${escapeHtml(i18n.t("grammar_title"))}</h3>
-  <p class="lesson-grammar-subtitle">${escapeHtml(i18n.t("grammar_subtitle"))}</p>
+  const hero = `<section class="lesson-section-hero lesson-grammar-hero">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("grammar_title"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("grammar_subtitle"))}</p>
 </section>`;
 
   if (!g) return `${hero}${emptyMsg}`;
@@ -313,10 +313,10 @@ function buildExtensionHTML(lessonData) {
   const arr = Array.isArray(raw?.extension) ? raw.extension : [];
   const lang = getLang();
   const speakLabel = i18n.t("extension_speak");
-  const hero = `<section class="lesson-extension-hero">
-  <h3 class="lesson-extension-title">${escapeHtml(i18n.t("extension_title"))}</h3>
+  const hero = `<section class="lesson-section-hero lesson-extension-hero">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("extension_title"))}</h3>
   <span class="lesson-extension-badge">${escapeHtml(i18n.t("extension_badge"))}</span>
-  <p class="lesson-extension-subtitle">${escapeHtml(i18n.t("extension_subtitle"))}</p>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("extension_subtitle"))}</p>
   <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension_tip"))}</p>
 </section>`;
 

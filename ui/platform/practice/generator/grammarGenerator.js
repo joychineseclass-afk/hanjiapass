@@ -96,11 +96,13 @@ export function generateGrammarFill(grammar, count = 3) {
  * 按等级生成语法题
  * HSK1-2: 0
  * HSK3-4: 1
- * HSK5+: 2-3
+ * HSK5-6: 2
+ * HSK7-9: 3
  */
 export function generateFromGrammar(lesson, level = 1) {
   const grammar = Array.isArray(lesson?.grammar) ? lesson.grammar : [];
   if (level <= 2) return [];
   if (level <= 4) return generateGrammarFill(grammar, 1);
+  if (level <= 6) return generateGrammarFill(grammar, 2);
   return generateGrammarFill(grammar, Math.min(3, grammar.length));
 }

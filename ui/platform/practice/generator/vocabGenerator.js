@@ -25,18 +25,20 @@ function shuffle(arr) {
   return a;
 }
 
-/** 取多语言释义 */
+/** 取多语言释义，带 key（hanzi）用于判题 */
 function getMeaningObj(w) {
+  const hanzi = str(w?.hanzi ?? w?.word);
   const m = w?.meaning;
-  if (!m || typeof m !== "object") return { zh: str(w?.hanzi ?? w?.word), kr: "", en: "" };
+  if (!m || typeof m !== "object") return { key: hanzi, zh: hanzi, kr: "", en: "" };
   return {
+    key: hanzi,
     zh: str(m.zh ?? m.cn) || str(m.kr ?? m.ko) || str(m.en),
     kr: str(m.kr ?? m.ko) || str(m.en) || str(m.zh ?? m.cn),
     en: str(m.en) || str(m.kr ?? m.ko) || str(m.zh ?? m.cn),
   };
 }
 
-/** A: 词义识别 - 看中文选翻译。选项为多语言对象，渲染时按系统语言取 */
+/** A: 词义识别 - 看中文选翻译。选项为多语言对象 {key, zh, kr, en}，answer 为 key */
 function generateMeaningChoice(vocab, count = 2) {
   const items = Array.isArray(vocab) ? vocab : [];
   if (items.length < 2) return [];
@@ -53,7 +55,7 @@ function generateMeaningChoice(vocab, count = 2) {
     const others = items
       .filter((w) => w !== target)
       .map((w) => getMeaningObj(w))
-      .filter((o) => o.zh && JSON.stringify(o) !== JSON.stringify(correctObj));
+      .filter((o) => o.key && o.key !== hanzi);
     const options = [correctObj, ...shuffle(others).slice(0, 3)];
     const uniqueOpts = options.slice(0, 4);
 
@@ -67,7 +69,7 @@ function generateMeaningChoice(vocab, count = 2) {
         en: `What does '${hanzi}' mean?`,
       },
       options: uniqueOpts,
-      answer: correctObj,
+      answer: hanzi,
       explanation: {
         zh: `「${hanzi}」：${correctObj.zh || correctObj.kr || correctObj.en}`,
         kr: `「${hanzi}」: ${correctObj.kr || correctObj.zh || correctObj.en}`,

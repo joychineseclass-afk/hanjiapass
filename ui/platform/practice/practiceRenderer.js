@@ -48,17 +48,29 @@ function getPinyin(text) {
   return resolvePinyin(zh, "");
 }
 
-/** 选项显示值与 data-answer（支持对象多语言） */
+/** 选项显示值（支持对象多语言） */
 function getOptionDisplay(o, lang) {
   if (o == null) return "";
   if (typeof o === "string") return o;
   return pickLang(o, lang) || str(o.zh ?? o.kr ?? o.en ?? o.cn ?? o.ko) || "";
 }
 
-/** 正确答案显示（支持对象） */
-function getAnswerDisplay(resultAnswer, lang) {
+/** 选项提交值（用于 data-answer，对象用 key） */
+function getOptionValue(o, lang) {
+  if (o == null) return "";
+  if (typeof o === "string") return o;
+  return str(o.key) || getOptionDisplay(o, lang) || "";
+}
+
+/** 正确答案显示（支持对象，或从 options 中按 answer key 查找） */
+function getAnswerDisplay(q, resultAnswer, lang) {
   if (resultAnswer == null) return "";
-  if (typeof resultAnswer === "string") return resultAnswer;
+  if (typeof resultAnswer === "string") {
+    const opts = Array.isArray(q?.options) ? q.options : [];
+    const found = opts.find((o) => o && typeof o === "object" && o.key === resultAnswer);
+    if (found) return getOptionDisplay(found, lang);
+    return resultAnswer;
+  }
   return pickLang(resultAnswer, lang) || "";
 }
 
@@ -69,7 +81,7 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
   const options = Array.isArray(q.options) ? q.options : [];
   const selected = answers[q.id];
   const result = resultMap[q.id];
-  const correctAnswerDisplay = result ? getAnswerDisplay(result.answer, lang) : "";
+  const correctAnswerDisplay = result ? getAnswerDisplay(q, result.answer, lang) : "";
 
   const typeLabel = t("practice_type_choice");
   const qNo = t("practice_question_no", { n: index + 1 });
@@ -79,24 +91,26 @@ function renderQuestionCard(q, index, { lang, answers, resultMap, submitted }) {
 
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
+    const optValue = getOptionValue(o, lang);
     const letter = LETTERS[i] ?? String(i + 1);
-    const isSelected = selected === optDisplay;
+    const isSelected = selected === optValue;
     const optPy = /[\u4e00-\u9fff]/.test(optDisplay) ? getPinyin(optDisplay) : "";
     const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
     const oAttrs = optDisplay ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
 
     let stateClasses = "lesson-practice-option";
     if (submitted && result) {
-      const isCorrect = optDisplay === correctAnswerDisplay;
+      const correctVal = typeof result.answer === "object" ? getOptionValue(result.answer, lang) : String(result.answer ?? "");
+      const isCorrectOption = optValue === correctVal;
       const isWrongSelected = !result.correct && isSelected;
-      if (isCorrect) stateClasses += " is-correct";
+      if (isCorrectOption) stateClasses += " is-correct";
       else if (isWrongSelected) stateClasses += " is-wrong";
     } else if (isSelected) {
       stateClasses += " is-selected";
     }
 
     return `
-<button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(optDisplay).replaceAll('"', "&quot;")}">
+<button type="button" class="${stateClasses}" data-question-id="${escapeHtml(q.id)}" data-answer="${escapeHtml(optValue).replaceAll('"', "&quot;")}">
   <span class="lesson-practice-option-letter">${letter}</span>
   <span class="lesson-practice-option-content">
     <span class="lesson-practice-option-zh"${oAttrs}>${escapeHtml(optDisplay)}</span>
@@ -183,9 +197,9 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
       : "";
 
     const hero = `
-<section class="lesson-practice-hero">
-  <h3 class="lesson-practice-title">${escapeHtml(t("practice_title"))}</h3>
-  <p class="lesson-practice-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+<section class="lesson-section-hero lesson-practice-hero">
+  <h3 class="lesson-section-title">${escapeHtml(t("practice_title"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
   <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
   ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
 </section>`;
@@ -261,9 +275,9 @@ export function rerenderPractice(container, lang = "ko") {
     : "";
 
   const hero = `
-<section class="lesson-practice-hero">
-  <h3 class="lesson-practice-title">${escapeHtml(t("practice_title"))}</h3>
-  <p class="lesson-practice-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
+<section class="lesson-section-hero lesson-practice-hero">
+  <h3 class="lesson-section-title">${escapeHtml(t("practice_title"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(t("practice_subtitle"))}</p>
   <div class="lesson-practice-summary">${escapeHtml(scoreLabel)}</div>
   ${submitBtnHtml ? `<div class="lesson-practice-submit-wrap">${submitBtnHtml}</div>` : ""}
 </section>`;

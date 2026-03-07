@@ -41,27 +41,30 @@ function pickQuestionText(q) {
   return str(qu?.zh ?? qu?.cn ?? qu?.kr ?? qu?.ko ?? qu?.en) || "";
 }
 
-/** 校验题目逻辑：question、options、answer 需匹配 */
+/** 校验题目逻辑：question、options、answer 需匹配。options 可为字符串或对象 {key, zh, kr, en} */
 function normalizeToChoice(q) {
   if (!q || !q.question) return null;
   const question = pickQuestionText(q) || (typeof q.question === "object" ? JSON.stringify(q.question) : "");
   if (!question) return null;
 
-  let options = Array.isArray(q.options) ? q.options : [];
-  const answer = str(q.answer ?? q.correct ?? "");
+  let options = Array.isArray(q.options) ? [...q.options] : [];
+  const answer = q.answer ?? q.correct;
+  const answerStr = typeof answer === "object" ? str(answer?.key ?? answer?.zh ?? answer?.kr ?? answer?.en) : str(answer);
 
-  if (options.length < 2 && answer) {
-    options = [answer, ...options.filter((o) => o !== answer)];
+  if (options.length < 2) {
+    if (answerStr && options.length) options = [options.find((o) => (typeof o === "object" ? o.key : o) === answerStr) || options[0], ...options.filter((o) => (typeof o === "object" ? o.key : o) !== answerStr)];
+    if (options.length < 2) options = [answerStr || "A", "B", "C", "D"].slice(0, 4).filter(Boolean);
   }
-  if (options.length < 2) options = [answer || "A", "B", "C", "D"].slice(0, 4);
-  if (!answer && options[0]) options = shuffle(options);
+  const hasObjOpts = options.some((o) => o && typeof o === "object");
+  if (!hasObjOpts && options.length > 1) options = [...new Set(options)].slice(0, 6);
+  else options = options.slice(0, 6);
 
   return {
     ...q,
     type: "choice",
     question: q.question,
-    options: [...new Set(options)].slice(0, 6),
-    answer: answer || options[0],
+    options,
+    answer: answer ?? (options[0] && typeof options[0] === "object" ? options[0].key : options[0]),
     id: q.id,
   };
 }

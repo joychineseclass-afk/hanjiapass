@@ -188,7 +188,7 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
         : "";
 
       return `
-      <div class="word-card" data-word-hanzi="${escapeHtmlAttr(han)}">
+      <div class="word-card lesson-vocab-card lesson-card" data-word-hanzi="${escapeHtmlAttr(han)}">
         ${imgHtml}
         <div class="word-hanzi">${hanziChars}</div>
         <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
@@ -209,7 +209,12 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
     }
   });
 
-  gridEl.innerHTML = `<div class="word-grid">${cards.join("")}</div>`;
+  const hero = `<section class="lesson-section-hero">
+  <h3 class="lesson-section-title">${escapeHtml(i18n?.t?.("hsk_tab_words") || "单词")}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n?.t?.("vocab_subtitle") || "本课词汇，点击可听发音。")}</p>
+  ${arr.length ? `<span class="lesson-section-count">${escapeHtml((i18n?.t?.("vocab_count") || "{n}词").replace("{n}", arr.length))}</span>` : ""}
+</section>`;
+  gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 
   // 供 bindWordCardActions 查找 learn 时用的 item 与 callback
   if (typeof window !== "undefined") {
