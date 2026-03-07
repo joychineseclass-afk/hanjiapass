@@ -22,6 +22,8 @@ const state = {
   tab: "words",         // words | dialogue | grammar | extension | practice | ai
 };
 
+var el; // 复用变量，供 showStudyMode/showListMode/bindEvents/openLesson 等使用
+
 function getLang() {
   return normalizeLang(i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko");
 }
