@@ -85,7 +85,8 @@ export function generateSentenceMeaningChoice(dialogue, vocab, count = 4) {
 }
 
 /**
- * 生成 4 道对话排序题
+ * 生成 4 道语序选择题（统一为 choice）
+ * 将排序题转为：选择正确排列
  */
 export function generateDialogueOrder(dialogue, count = 4) {
   const lines = Array.isArray(dialogue) ? dialogue : [];
@@ -103,20 +104,25 @@ export function generateDialogueOrder(dialogue, count = 4) {
     const pieces = splitSentence(t);
     if (pieces.length < 2) continue;
 
-    const shuffled = shuffle([...pieces]);
-    if (shuffled.join("") === t) {
-      [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+    const wrongOrders = new Set();
+    wrongOrders.add(t);
+    for (let j = 0; j < 5; j++) {
+      const shuffled = shuffle([...pieces]);
+      const joined = shuffled.join("");
+      if (joined !== t) wrongOrders.add(joined);
     }
+    const options = [t, ...shuffle([...wrongOrders]).filter((o) => o !== t).slice(0, 3)];
+    const uniqueOpts = [...new Set(shuffle(options))].slice(0, 4);
 
     out.push({
-      type: "order",
+      type: "choice",
       id: `dialogue-order-${i + 1}`,
       question: {
-        zh: "请将词语按正确顺序排列成句子。",
-        kr: "단어를 올바른 순서로 배열하세요.",
-        en: "Arrange the words in the correct order.",
+        zh: `词语：${pieces.join(" / ")}。请选择正确的排列。`,
+        kr: `단어: ${pieces.join(" / ")}. 올바른 순서를 고르세요.`,
+        en: `Words: ${pieces.join(" / ")}. Choose the correct order.`,
       },
-      options: shuffled,
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [t],
       answer: t,
       explanation: {
         zh: `正确答案：${t}`,

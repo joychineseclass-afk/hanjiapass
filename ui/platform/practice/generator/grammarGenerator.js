@@ -48,7 +48,8 @@ function extractBlankFromExample(exampleZh, grammarTitle) {
 }
 
 /**
- * 生成 3 道语法填空题
+ * 生成 3 道语法选择题（统一为 choice）
+ * 将填空题转为：选择正确填空
  */
 export function generateGrammarFill(grammar, count = 3) {
   const items = Array.isArray(grammar) ? grammar : [];
@@ -64,14 +65,21 @@ export function generateGrammarFill(grammar, count = 3) {
     const blank = extractBlankFromExample(exampleZh, title);
     if (!blank) continue;
 
+    const punct = /[。？！，、；：""''（）\s]/;
+    const chars = exampleZh.split("").filter((c) => c.trim() && c !== blank.answer && !punct.test(c));
+    const wrongOpts = [...new Set(chars)].slice(0, 3);
+    const options = [blank.answer, ...wrongOpts];
+    const uniqueOpts = [...new Set(options)].slice(0, 4);
+
     out.push({
-      type: "fill",
+      type: "choice",
       id: `grammar-fill-${i + 1}`,
       question: {
-        zh: `请填空：${blank.sentence}`,
-        kr: `빈칸 채우기: ${blank.sentence}`,
-        en: `Fill in the blank: ${blank.sentence}`,
+        zh: `请选择正确的词填空：${blank.sentence}`,
+        kr: `빈칸에 맞는 말을 고르세요: ${blank.sentence}`,
+        en: `Choose the correct word: ${blank.sentence}`,
       },
+      options: uniqueOpts.length >= 2 ? uniqueOpts : [blank.answer],
       answer: blank.answer,
       explanation: {
         zh: expl || `答案：${blank.answer}`,
