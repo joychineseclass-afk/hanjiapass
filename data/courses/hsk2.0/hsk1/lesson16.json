@@ -5,191 +5,46 @@
   "version": "2.0",
   "lessonNo": 16,
   "type": "lesson",
-  "title": {
-    "zh": "形容词",
-    "pinyin": "",
-    "kr": "형용사 표현",
-    "en": "Location"
-  },
-  "summary": {
-    "zh": "描述事物特征",
-    "kr": "사물 묘사"
-  },
-  "objectives": [],
+  "title": { "zh": "在哪儿", "pinyin": "zài nǎr", "kr": "위치", "en": "Location" },
+  "summary": { "zh": "来、去、回与位置", "kr": "오다, 가다, 돌아가다와 위치", "en": "Come, go, return and location" },
+  "objectives": [
+    { "zh": "学会说来去", "kr": "오다, 가다를 말할 수 있다", "en": "Can say come and go" },
+    { "zh": "学会有、椅子、桌子", "kr": "'有', '椅子', '桌子'를 사용할 수 있다", "en": "Can use 有, 椅子, 桌子" }
+  ],
   "vocab": [
-    {
-      "hanzi": "来",
-      "pinyin": "lái",
-      "meaning": {
-        "zh": "来",
-        "kr": "오다",
-        "en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回来); ever since (as in 自古以来); for the past (amount of time); (prefix) the coming ...; the next ... (as in 来世); (between two verbs) in order to; (after a round number) approximately; (used after 得 to indicate possibility, as in 谈得来, or after 不 to indicate impossibility, as in 吃不来)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "去",
-      "pinyin": "qù",
-      "meaning": {
-        "zh": "去",
-        "kr": "가다",
-        "en": "to go; to go to (a place); (of a time etc) last; just passed; to send; to remove; to get rid of; to reduce; to be apart from in space or time; to die (euphemism); to play (a part); (when used either before or after a verb) to go in order to do sth; (after a verb of motion indicates movement away from the speaker); (used after certain verbs to indicate detachment or separation)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "回",
-      "pinyin": "huí",
-      "meaning": {
-        "zh": "回",
-        "kr": "돌아오다",
-        "en": "to circle; to go back; to turn around; to answer; to return; to revolve; Hui ethnic group (Chinese Muslims); time; classifier for acts of a play; section or chapter (of a classic book)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "坐",
-      "pinyin": "Zuò",
-      "meaning": {
-        "zh": "坐",
-        "kr": "앉다",
-        "en": "surname Zuo"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "有",
-      "pinyin": "yǒu",
-      "meaning": {
-        "zh": "有",
-        "kr": "있다",
-        "en": "to have; there is; (bound form) having; with; -ful; -ed; -al (as in 意 intentional)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "椅子",
-      "pinyin": "yǐzi",
-      "meaning": {
-        "zh": "椅子",
-        "kr": "의자",
-        "en": "chair"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "桌子",
-      "pinyin": "zhuōzi",
-      "meaning": {
-        "zh": "桌子",
-        "kr": "책상",
-        "en": "table; desk"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    }
+    { "hanzi": "来", "pinyin": "lái", "meaning": { "zh": "来", "kr": "오다", "en": "to come" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "去", "pinyin": "qù", "meaning": { "zh": "去", "kr": "가다", "en": "to go" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "回", "pinyin": "huí", "meaning": { "zh": "回", "kr": "돌아가다", "en": "to return" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "坐", "pinyin": "zuò", "meaning": { "zh": "坐", "kr": "앉다", "en": "to sit" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "有", "pinyin": "yǒu", "meaning": { "zh": "有", "kr": "있다", "en": "to have" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "椅子", "pinyin": "yǐzi", "meaning": { "zh": "椅子", "kr": "의자", "en": "chair" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "桌子", "pinyin": "zhuōzi", "meaning": { "zh": "桌子", "kr": "탁자", "en": "table" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "这个苹果大吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "不大，很小。"
-    }
+    { "speaker": "A", "line": "你来学校吗？", "pinyin": "Nǐ lái xuéxiào ma?", "kr": "학교에 와요?", "en": "Are you coming to school?" },
+    { "speaker": "B", "line": "是，我来。你去哪儿？", "pinyin": "Shì, wǒ lái. Nǐ qù nǎr?", "kr": "네, 와요. 어디 가요?", "en": "Yes, I'm coming. Where are you going?" },
+    { "speaker": "A", "line": "我回家。我坐椅子。", "pinyin": "Wǒ huí jiā. Wǒ zuò yǐzi.", "kr": "저는 집에 돌아가요. 의자에 앉아요.", "en": "I'm going home. I sit on the chair." },
+    { "speaker": "B", "line": "你有桌子吗？", "pinyin": "Nǐ yǒu zhuōzi ma?", "kr": "탁자 있어요?", "en": "Do you have a table?" },
+    { "speaker": "A", "line": "有。书在桌子上。", "pinyin": "Yǒu. Shū zài zhuōzi shàng.", "kr": "있어요. 책은 탁자 위에 있어요.", "en": "Yes. The book is on the table." }
   ],
   "grammar": [
-    {
-      "title": "很 + 形容词",
-      "explanation_zh": "形容词前常加“很”。",
-      "explanation_kr": "형용사 앞에 보통 '很'을 씁니다.",
-      "example": "很大"
-    }
+    { "title": "来 / 去 / 回", "explanation_zh": "「来」向说话人，「去」离开，「回」返回。", "explanation_kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.", "explanation_en": "来 toward speaker, 去 away, 回 return.", "example": { "zh": "来学校，回家", "pinyin": "lái xuéxiào, huí jiā", "kr": "학교 오다, 집 돌아가다", "en": "come to school, go home" } },
+    { "title": "有", "explanation_zh": "「有」表示拥有。", "explanation_kr": "'有'는 소유를 나타냅니다.", "explanation_en": "有 indicates possession.", "example": { "zh": "我有书。", "pinyin": "Wǒ yǒu shū.", "kr": "저는 책이 있어요.", "en": "I have a book." } }
   ],
   "practice": [
-    {
-      "type": "match",
-      "pairs": [
-        [
-          "大",
-          "크다"
-        ],
-        [
-          "小",
-          "작다"
-        ]
-      ]
-    }
+    { "type": "choice", "question": { "zh": "「来」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["去", "来", "回"], "answer": "来" },
+    { "type": "choice", "question": { "zh": "「有」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["在", "有", "去"], "answer": "有" },
+    { "type": "choice", "question": { "zh": "我___家。", "kr": "빈칸", "en": "Fill in" }, "options": ["回", "来", "去"], "answer": "回" },
+    { "type": "choice", "question": { "zh": "A：你有椅子吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["有", "不", "去"], "answer": "有" },
+    { "type": "choice", "question": { "zh": "哪个是「桌子」？", "kr": "어느 것?", "en": "Which?" }, "options": ["椅子", "桌子", "有"], "answer": "桌子" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "很大",
-      "很漂亮"
-    ],
-    "chatPrompt": "AI描述图片，学生回答。"
-  },
+  "aiPractice": { "speaking": ["我来学校", "回家", "坐椅子", "有桌子"], "chatPrompt": "AI问：你去哪儿？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

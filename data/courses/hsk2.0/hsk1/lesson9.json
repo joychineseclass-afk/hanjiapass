@@ -5,166 +5,43 @@
   "version": "2.0",
   "lessonNo": 9,
   "type": "lesson",
-  "title": {
-    "zh": "今天和现在",
-    "pinyin": "",
-    "kr": "오늘과 지금",
-    "en": "Time"
-  },
-  "summary": {
-    "zh": "",
-    "kr": "",
-    "en": ""
-  },
-  "objectives": [],
+  "title": { "zh": "打电话", "pinyin": "dǎ diànhuà", "kr": "전화하기", "en": "Phone calls" },
+  "summary": { "zh": "接听电话与礼貌用语", "kr": "전화 받기와 예절 표현", "en": "Answering calls and polite expressions" },
+  "objectives": [
+    { "zh": "学会接电话", "kr": "전화를 받을 수 있다", "en": "Can answer the phone" },
+    { "zh": "学会用「请」「请问」", "kr": "'请', '请问'를 사용할 수 있다", "en": "Can use 请 and 请问" }
+  ],
   "vocab": [
-    {
-      "hanzi": "喂",
-      "pinyin": "wéi",
-      "meaning": {
-        "zh": "喂",
-        "kr": "여보세요",
-        "en": "hello (when answering the phone)"
-      },
-      "pos": {
-        "kr": "감탄사",
-        "en": "interjection"
-      }
-    },
-    {
-      "hanzi": "请",
-      "pinyin": "qǐng",
-      "meaning": {
-        "zh": "请",
-        "kr": "~해 주세요",
-        "en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "打电话",
-      "pinyin": "dǎdiànhuà",
-      "meaning": {
-        "zh": "打电话",
-        "kr": "전화하다",
-        "en": "to make a telephone call"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "谁",
-      "pinyin": "shéi",
-      "meaning": {
-        "zh": "谁",
-        "kr": "누구",
-        "en": "who; also pr. [shuí]"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "问",
-      "pinyin": "wèn",
-      "meaning": {
-        "zh": "问",
-        "kr": "묻다",
-        "en": "to ask; to inquire"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    }
+    { "hanzi": "喂", "pinyin": "wèi", "meaning": { "zh": "喂", "kr": "여보세요", "en": "hello (phone)" }, "pos": { "kr": "감탄사", "en": "interjection" } },
+    { "hanzi": "请", "pinyin": "qǐng", "meaning": { "zh": "请", "kr": "~해 주세요", "en": "please" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "打电话", "pinyin": "dǎ diànhuà", "meaning": { "zh": "打电话", "kr": "전화하다", "en": "to call" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "谁", "pinyin": "shéi", "meaning": { "zh": "谁", "kr": "누구", "en": "who" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "问", "pinyin": "wèn", "meaning": { "zh": "问", "kr": "묻다", "en": "to ask" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "今天你忙吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "现在不忙。"
-    }
+    { "speaker": "A", "line": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요, 안녕하세요!", "en": "Hello!" },
+    { "speaker": "B", "line": "你好！请问你是谁？", "pinyin": "Nǐ hǎo! Qǐngwèn nǐ shì shéi?", "kr": "안녕하세요!请问你是谁?", "en": "Hello! May I ask who is this?" },
+    { "speaker": "A", "line": "我是小明。我打电话给你。", "pinyin": "Wǒ shì Xiǎomíng. Wǒ dǎ diànhuà gěi nǐ.", "kr": "저는 샤오밍이에요. 전화했어요.", "en": "I'm Xiaoming. I'm calling you." },
+    { "speaker": "B", "line": "谢谢！再见！", "pinyin": "Xièxie! Zàijiàn!", "kr": "감사합니다! 안녕히 가세요!", "en": "Thanks! Goodbye!" }
   ],
   "grammar": [
-    {
-      "title": "时间词放句首",
-      "explanation_zh": "时间词常放在句子前面。",
-      "explanation_kr": "시간 표현은 보통 문장 앞에 옵니다.",
-      "example": "今天我学习。"
-    }
+    { "title": "喂", "explanation_zh": "接电话时用「喂」。", "explanation_kr": "전화 받을 때 '喂'를 사용합니다.", "explanation_en": "Use 喂 when answering the phone.", "example": { "zh": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요!", "en": "Hello!" } },
+    { "title": "谁 — 疑问词", "explanation_zh": "「谁」问人。", "explanation_kr": "'谁'는 사람을 묻습니다.", "explanation_en": "谁 asks about people.", "example": { "zh": "你是谁？", "pinyin": "Nǐ shì shéi?", "kr": "당신은 누구예요?", "en": "Who are you?" } }
   ],
   "practice": [
-    {
-      "type": "match",
-      "pairs": [
-        [
-          "今天",
-          "오늘"
-        ],
-        [
-          "明天",
-          "내일"
-        ]
-      ]
-    }
+    { "type": "choice", "question": { "zh": "接电话时先说___。", "kr": "전화 받을 때", "en": "When answering" }, "options": ["再见", "喂", "谢谢"], "answer": "喂" },
+    { "type": "choice", "question": { "zh": "「请问」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["请", "请问", "问"], "answer": "请问" },
+    { "type": "choice", "question": { "zh": "「谁」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["什么", "谁", "哪"], "answer": "谁" },
+    { "type": "choice", "question": { "zh": "A：你是谁？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我打电话", "我是小明", "喂"], "answer": "我是小明" },
+    { "type": "choice", "question": { "zh": "哪个是「打电话」？", "kr": "어느 것?", "en": "Which?" }, "options": ["打电话", "再见", "喂"], "answer": "打电话" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "今天",
-      "现在"
-    ],
-    "chatPrompt": "AI问今天做什么。"
-  },
+  "aiPractice": { "speaking": ["喂", "请问你是谁", "我打电话", "再见"], "chatPrompt": "AI扮演接电话的人，学生练习打电话对话。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

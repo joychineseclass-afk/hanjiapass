@@ -5,232 +5,45 @@
   "version": "2.0",
   "lessonNo": 6,
   "type": "lesson",
-  "title": {
-    "zh": "人物关系",
-    "pinyin": "",
-    "kr": "사람 관계",
-    "en": "Numbers 2"
-  },
-  "summary": {
-    "zh": "介绍身边的人和关系",
-    "kr": "주변 사람과 관계 소개"
-  },
-  "objectives": [],
+  "title": { "zh": "年龄", "pinyin": "niánlíng", "kr": "나이", "en": "Age" },
+  "summary": { "zh": "问年龄与描述大小", "kr": "나이 묻기와 크기 표현", "en": "Asking age and size" },
+  "objectives": [
+    { "zh": "学会问年龄", "kr": "나이를 물을 수 있다", "en": "Can ask age" },
+    { "zh": "学会用大、小", "kr": "'大', '小'를 사용할 수 있다", "en": "Can use 大 and 小" }
+  ],
   "vocab": [
-    {
-      "hanzi": "岁",
-      "pinyin": "suì",
-      "meaning": {
-        "zh": "岁",
-        "kr": "살",
-        "en": "variant of 岁, year; years old"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word"
-      }
-    },
-    {
-      "hanzi": "年",
-      "pinyin": "Nián",
-      "meaning": {
-        "zh": "年",
-        "kr": "해",
-        "en": "surname Nian"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "多",
-      "pinyin": "duō",
-      "meaning": {
-        "zh": "多",
-        "kr": "많다",
-        "en": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    },
-    {
-      "hanzi": "大",
-      "pinyin": "dà",
-      "meaning": {
-        "zh": "大",
-        "kr": "크다",
-        "en": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    },
-    {
-      "hanzi": "小",
-      "pinyin": "xiǎo",
-      "meaning": {
-        "zh": "小",
-        "kr": "작다",
-        "en": "small; tiny; few; young"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    },
-    {
-      "hanzi": "了",
-      "pinyin": "le",
-      "meaning": {
-        "zh": "了",
-        "kr": "완료 조사",
-        "en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)"
-      },
-      "pos": {
-        "kr": "조사",
-        "en": "particle"
-      }
-    },
-    {
-      "hanzi": "不",
-      "pinyin": "bù",
-      "meaning": {
-        "zh": "不",
-        "kr": "~않다",
-        "en": "no; not so; (bound form) not; un-"
-      },
-      "pos": {
-        "kr": "부사",
-        "en": "adverb"
-      }
-    }
+    { "hanzi": "岁", "pinyin": "suì", "meaning": { "zh": "岁", "kr": "살", "en": "years old" }, "pos": { "kr": "양사", "en": "measure word" } },
+    { "hanzi": "年", "pinyin": "nián", "meaning": { "zh": "年", "kr": "년", "en": "year" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "多", "pinyin": "duō", "meaning": { "zh": "多", "kr": "많다", "en": "many" }, "pos": { "kr": "형용사", "en": "adjective" } },
+    { "hanzi": "大", "pinyin": "dà", "meaning": { "zh": "大", "kr": "크다", "en": "big" }, "pos": { "kr": "형용사", "en": "adjective" } },
+    { "hanzi": "小", "pinyin": "xiǎo", "meaning": { "zh": "小", "kr": "작다", "en": "small" }, "pos": { "kr": "형용사", "en": "adjective" } },
+    { "hanzi": "了", "pinyin": "le", "meaning": { "zh": "了", "kr": "완료 조사", "en": "aspect particle" }, "pos": { "kr": "조사", "en": "particle" } },
+    { "hanzi": "不", "pinyin": "bù", "meaning": { "zh": "不", "kr": "아니", "en": "not" }, "pos": { "kr": "부사", "en": "adverb" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "他是谁？"
-    },
-    {
-      "speaker": "B",
-      "line": "他是我的朋友。"
-    },
-    {
-      "speaker": "A",
-      "line": "她是老师吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "是，她是老师。"
-    },
-    {
-      "speaker": "A",
-      "line": "他是医生吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "不是，他是同学。"
-    }
+    { "speaker": "A", "line": "你今年几岁？", "pinyin": "Nǐ jīnnián jǐ suì?", "kr": "올해 몇 살이에요?", "en": "How old are you this year?" },
+    { "speaker": "B", "line": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "kr": "저는 스무 살이에요.", "en": "I'm twenty." },
+    { "speaker": "A", "line": "他多大了？", "pinyin": "Tā duō dà le?", "kr": "그는 몇 살이에요?", "en": "How old is he?" },
+    { "speaker": "B", "line": "他十五岁，不大。", "pinyin": "Tā shíwǔ suì, bù dà.", "kr": "그는 열다섯 살이에요, 크지 않아요.", "en": "He's fifteen, not big." }
   ],
   "grammar": [
-    {
-      "title": "是 — 判断句（身份职业）",
-      "explanation_zh": "用“是”连接主语和身份、职业。",
-      "explanation_kr": "'是'는 주어와 직업·신분을 연결합니다.",
-      "example": "他是医生。"
-    },
-    {
-      "title": "吗 — 职业疑问句",
-      "explanation_zh": "在判断句后加“吗”构成疑问句。",
-      "explanation_kr": "판단문 뒤에 '吗'를 붙이면 의문문이 됩니다.",
-      "example": "她是老师吗？"
-    }
+    { "title": "几 + 岁", "explanation_zh": "问年龄用「几岁」。", "explanation_kr": "나이를 물을 때 '几岁'를 사용합니다.", "explanation_en": "Ask age with 几岁.", "example": { "zh": "你几岁？", "pinyin": "Nǐ jǐ suì?", "kr": "몇 살이에요?", "en": "How old are you?" } },
+    { "title": "不 + 形容词", "explanation_zh": "否定形容词用「不」。", "explanation_kr": "형용사 부정은 '不'를 사용합니다.", "explanation_en": "Negate adjectives with 不.", "example": { "zh": "不大", "pinyin": "bù dà", "kr": "크지 않다", "en": "not big" } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "他是医生吗？（他是学生）",
-      "options": [
-        "是",
-        "不是",
-        "谢谢"
-      ],
-      "answer": "不是"
-    },
-    {
-      "type": "match",
-      "pairs": [
-        [
-          "老师",
-          "선생님"
-        ],
-        [
-          "医生",
-          "의사"
-        ],
-        [
-          "同学",
-          "학교 친구"
-        ]
-      ]
-    },
-    {
-      "type": "roleplay",
-      "prompt": "介绍你的朋友和老师：他是谁？她是谁？"
-    }
+    { "type": "choice", "question": { "zh": "「岁」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["年", "岁", "多"], "answer": "岁" },
+    { "type": "choice", "question": { "zh": "「大」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["小", "多", "不"], "answer": "小" },
+    { "type": "choice", "question": { "zh": "你今年___岁？", "kr": "빈칸", "en": "Fill in" }, "options": ["几", "了", "不"], "answer": "几" },
+    { "type": "choice", "question": { "zh": "A：你几岁？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我二十岁", "不大", "多了"], "answer": "我二十岁" },
+    { "type": "choice", "question": { "zh": "哪个是「年」？", "kr": "어느 것?", "en": "Which?" }, "options": ["月", "年", "日"], "answer": "年" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "他是我的朋友",
-      "她是老师",
-      "他不是医生"
-    ],
-    "chatPrompt": "AI展示人物职业图片，学生回答：他是老师吗？她是谁？"
-  },
+  "aiPractice": { "speaking": ["你几岁", "我二十岁", "不大", "很多"], "chatPrompt": "AI问：你几岁？学生回答年龄。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

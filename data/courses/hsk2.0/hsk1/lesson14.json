@@ -5,208 +5,46 @@
   "version": "2.0",
   "lessonNo": 14,
   "type": "lesson",
-  "title": {
-    "zh": "常见地点",
-    "pinyin": "",
-    "kr": "자주 가는 장소",
-    "en": "Eating"
-  },
-  "summary": {
-    "zh": "生活中常见的地方",
-    "kr": "생활 속 장소"
-  },
-  "objectives": [],
+  "title": { "zh": "吃饭", "pinyin": "chī fàn", "kr": "식사", "en": "Eating" },
+  "summary": { "zh": "吃、喝与食物", "kr": "먹기, 마시기와 음식", "en": "Eating, drinking and food" },
+  "objectives": [
+    { "zh": "学会说吃什么", "kr": "뭘 먹는지 말할 수 있다", "en": "Can say what you eat" },
+    { "zh": "学会和连接", "kr": "'和'로 연결할 수 있다", "en": "Can use 和 to connect" }
+  ],
   "vocab": [
-    {
-      "hanzi": "吃",
-      "pinyin": "chī",
-      "meaning": {
-        "zh": "吃",
-        "kr": "먹다",
-        "en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "喝",
-      "pinyin": "hē",
-      "meaning": {
-        "zh": "喝",
-        "kr": "마시다",
-        "en": "to drink; variant of 嗬"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "菜",
-      "pinyin": "cài",
-      "meaning": {
-        "zh": "菜",
-        "kr": "반찬",
-        "en": "dish (type of food); vegetable; cuisine; (coll.) (one's) type; (of one's skills etc) weak; poor"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "米饭",
-      "pinyin": "mǐfàn",
-      "meaning": {
-        "zh": "米饭",
-        "kr": "밥",
-        "en": "(cooked) rice"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "水",
-      "pinyin": "Shuǐ",
-      "meaning": {
-        "zh": "水",
-        "kr": "물",
-        "en": "surname Shui"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "水果",
-      "pinyin": "shuǐguǒ",
-      "meaning": {
-        "zh": "水果",
-        "kr": "과일",
-        "en": "fruit"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "苹果",
-      "pinyin": "píngguǒ",
-      "meaning": {
-        "zh": "苹果",
-        "kr": "사과",
-        "en": "apple"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "和",
-      "pinyin": "hé",
-      "meaning": {
-        "zh": "和",
-        "kr": "~와/과",
-        "en": "old variant of 和"
-      },
-      "pos": {
-        "kr": "접속사",
-        "en": "conjunction"
-      }
-    }
+    { "hanzi": "吃", "pinyin": "chī", "meaning": { "zh": "吃", "kr": "먹다", "en": "to eat" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "喝", "pinyin": "hē", "meaning": { "zh": "喝", "kr": "마시다", "en": "to drink" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "菜", "pinyin": "cài", "meaning": { "zh": "菜", "kr": "요리", "en": "dish" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "米饭", "pinyin": "mǐfàn", "meaning": { "zh": "米饭", "kr": "밥", "en": "rice" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "水", "pinyin": "shuǐ", "meaning": { "zh": "水", "kr": "물", "en": "water" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "水果", "pinyin": "shuǐguǒ", "meaning": { "zh": "水果", "kr": "과일", "en": "fruit" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "苹果", "pinyin": "píngguǒ", "meaning": { "zh": "苹果", "kr": "사과", "en": "apple" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "和", "pinyin": "hé", "meaning": { "zh": "和", "kr": "그리고", "en": "and" }, "pos": { "kr": "접속사", "en": "conjunction" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "学校在哪儿？"
-    },
-    {
-      "speaker": "B",
-      "line": "在前面。"
-    }
+    { "speaker": "A", "line": "你吃什么？", "pinyin": "Nǐ chī shénme?", "kr": "뭘 먹어요?", "en": "What do you eat?" },
+    { "speaker": "B", "line": "我吃米饭和菜。", "pinyin": "Wǒ chī mǐfàn hé cài.", "kr": "저는 밥과 요리를 먹어요.", "en": "I eat rice and dishes." },
+    { "speaker": "A", "line": "你喝什么？", "pinyin": "Nǐ hē shénme?", "kr": "뭘 마셔요?", "en": "What do you drink?" },
+    { "speaker": "B", "line": "我喝水。我吃苹果和水果。", "pinyin": "Wǒ hē shuǐ. Wǒ chī píngguǒ hé shuǐguǒ.", "kr": "저는 물을 마셔요. 사과와 과일을 먹어요.", "en": "I drink water. I eat apples and fruit." }
   ],
   "grammar": [
-    {
-      "title": "方位词",
-      "explanation_zh": "“前面、后面、里”表示位置。",
-      "explanation_kr": "'앞, 뒤, 안' 위치를 나타냅니다.",
-      "example": "书在桌子上面。"
-    }
+    { "title": "吃 / 喝 + 宾语", "explanation_zh": "「吃」用于固体，「喝」用于液体。", "explanation_kr": "'吃'는 고체, '喝'는 액체에 사용합니다.", "explanation_en": "吃 for solid, 喝 for liquid.", "example": { "zh": "吃饭，喝水", "pinyin": "chī fàn, hē shuǐ", "kr": "밥 먹다, 물 마시다", "en": "eat, drink water" } },
+    { "title": "和", "explanation_zh": "「和」连接名词。", "explanation_kr": "'和'는 명사를 연결합니다.", "explanation_en": "和 connects nouns.", "example": { "zh": "米饭和菜", "pinyin": "mǐfàn hé cài", "kr": "밥과 요리", "en": "rice and dishes" } }
   ],
   "practice": [
-    {
-      "type": "match",
-      "pairs": [
-        [
-          "前面",
-          "앞"
-        ],
-        [
-          "后面",
-          "뒤"
-        ],
-        [
-          "里",
-          "안"
-        ]
-      ]
-    }
+    { "type": "choice", "question": { "zh": "「吃」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["喝", "吃", "菜"], "answer": "吃" },
+    { "type": "choice", "question": { "zh": "「米饭」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["菜", "米饭", "水"], "answer": "米饭" },
+    { "type": "choice", "question": { "zh": "我___水。", "kr": "빈칸", "en": "Fill in" }, "options": ["吃", "喝", "和"], "answer": "喝" },
+    { "type": "choice", "question": { "zh": "A：你吃什么？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我吃米饭", "我喝水", "苹果"], "answer": "我吃米饭" },
+    { "type": "choice", "question": { "zh": "哪个是「苹果」？", "kr": "어느 것?", "en": "Which?" }, "options": ["苹果", "水果", "水"], "answer": "苹果" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "在前面",
-      "在里面"
-    ],
-    "chatPrompt": "AI问地点位置。"
-  },
+  "aiPractice": { "speaking": ["我吃米饭", "我喝水", "苹果和水果", "菜"], "chatPrompt": "AI问：你吃什么？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

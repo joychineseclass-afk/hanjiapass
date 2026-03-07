@@ -5,175 +5,44 @@
   "version": "2.0",
   "lessonNo": 7,
   "type": "lesson",
-  "title": {
-    "zh": "数字（一）",
-    "pinyin": "",
-    "kr": "숫자 ①",
-    "en": "Age"
-  },
-  "summary": {
-    "zh": "1–7的数字",
-    "kr": "1–7 숫자"
-  },
-  "objectives": [],
+  "title": { "zh": "日期", "pinyin": "rìqī", "kr": "날짜", "en": "Dates" },
+  "summary": { "zh": "今天、昨天、明天与星期", "kr": "오늘, 어제, 내일과 요일", "en": "Today, yesterday, tomorrow and weekdays" },
+  "objectives": [
+    { "zh": "学会说日期", "kr": "날짜를 말할 수 있다", "en": "Can say dates" },
+    { "zh": "学会星期表达", "kr": "요일 표현을 할 수 있다", "en": "Can express weekdays" }
+  ],
   "vocab": [
-    {
-      "hanzi": "今天",
-      "pinyin": "jīntiān",
-      "meaning": {
-        "zh": "今天",
-        "kr": "오늘",
-        "en": "today; at the present; now"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "明天",
-      "pinyin": "míngtiān",
-      "meaning": {
-        "zh": "明天",
-        "kr": "내일",
-        "en": "tomorrow"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "昨天",
-      "pinyin": "zuótiān",
-      "meaning": {
-        "zh": "昨天",
-        "kr": "어제",
-        "en": "yesterday"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "月",
-      "pinyin": "yuè",
-      "meaning": {
-        "zh": "月",
-        "kr": "달",
-        "en": "moon; month; monthly"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "日",
-      "pinyin": "Rì",
-      "meaning": {
-        "zh": "日",
-        "kr": "날",
-        "en": "abbr. for 本, Japan"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "星期",
-      "pinyin": "xīngqī",
-      "meaning": {
-        "zh": "星期",
-        "kr": "요일",
-        "en": "week; day of the week; Sunday"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    }
+    { "hanzi": "今天", "pinyin": "jīntiān", "meaning": { "zh": "今天", "kr": "오늘", "en": "today" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "明天", "pinyin": "míngtiān", "meaning": { "zh": "明天", "kr": "내일", "en": "tomorrow" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "昨天", "pinyin": "zuótiān", "meaning": { "zh": "昨天", "kr": "어제", "en": "yesterday" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "月", "pinyin": "yuè", "meaning": { "zh": "月", "kr": "월", "en": "month" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "日", "pinyin": "rì", "meaning": { "zh": "日", "kr": "일", "en": "day" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "星期", "pinyin": "xīngqī", "meaning": { "zh": "星期", "kr": "주", "en": "week" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你有几个苹果？"
-    },
-    {
-      "speaker": "B",
-      "line": "我有三个。"
-    }
+    { "speaker": "A", "line": "今天几月几日？", "pinyin": "Jīntiān jǐ yuè jǐ rì?", "kr": "오늘 몇 월 며칠이에요?", "en": "What's the date today?" },
+    { "speaker": "B", "line": "今天三月十五日。", "pinyin": "Jīntiān sān yuè shíwǔ rì.", "kr": "오늘 3월 15일이에요.", "en": "Today is March 15th." },
+    { "speaker": "A", "line": "明天星期几？", "pinyin": "Míngtiān xīngqī jǐ?", "kr": "내일 무슨 요일이에요?", "en": "What day is tomorrow?" },
+    { "speaker": "B", "line": "明天星期二。", "pinyin": "Míngtiān xīngqī èr.", "kr": "내일 화요일이에요.", "en": "Tomorrow is Tuesday." }
   ],
   "grammar": [
-    {
-      "title": "数字 + 量词",
-      "explanation_zh": "数字后面通常要接量词。",
-      "explanation_kr": "숫자 뒤에는 보통 양사를 사용합니다.",
-      "example": "三个苹果"
-    }
+    { "title": "年 + 月 + 日", "explanation_zh": "日期顺序：年、月、日。", "explanation_kr": "날짜 순서: 년, 월, 일.", "explanation_en": "Date order: year, month, day.", "example": { "zh": "三月十五日", "pinyin": "sān yuè shíwǔ rì", "kr": "3월 15일", "en": "March 15th" } },
+    { "title": "星期 + 数字", "explanation_zh": "星期几问星期几。", "explanation_kr": "'星期几'는 무슨 요일인지 묻습니다.", "explanation_en": "星期几 asks day of week.", "example": { "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?", "en": "What day is today?" } }
   ],
   "practice": [
-    {
-      "type": "count",
-      "question": "看图说数字（3个）",
-      "answer": "三"
-    }
+    { "type": "choice", "question": { "zh": "「今天」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["明天", "今天", "昨天"], "answer": "今天" },
+    { "type": "choice", "question": { "zh": "「星期」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["月", "星期", "日"], "answer": "星期" },
+    { "type": "choice", "question": { "zh": "明天___星期二。", "kr": "빈칸", "en": "Fill in" }, "options": ["是", "月", "日"], "answer": "是" },
+    { "type": "choice", "question": { "zh": "三月十五___", "kr": "빈칸", "en": "Fill in" }, "options": ["月", "日", "星期"], "answer": "日" },
+    { "type": "choice", "question": { "zh": "哪个是「昨天」？", "kr": "어느 것?", "en": "Which?" }, "options": ["今天", "明天", "昨天"], "answer": "昨天" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "一",
-      "二",
-      "三",
-      "四",
-      "五",
-      "六",
-      "七"
-    ],
-    "chatPrompt": "AI问数量，学生回答数字。"
-  },
+  "aiPractice": { "speaking": ["今天几月几日", "明天星期几", "昨天", "三月"], "chatPrompt": "AI问：今天几月几日？学生回答日期。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

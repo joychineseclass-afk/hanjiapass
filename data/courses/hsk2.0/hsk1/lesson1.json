@@ -16,363 +16,65 @@
     "kr": "첫 만남 인사",
     "en": "First meeting greetings"
   },
-  "objectives": [],
+  "objectives": [
+    { "zh": "学会用中文打招呼", "kr": "중국어로 인사할 수 있다", "en": "Can greet in Chinese" },
+    { "zh": "学会问好并回应", "kr": "안부를 묻고 대답할 수 있다", "en": "Can ask and respond to greetings" }
+  ],
   "vocab": [
-    {
-      "hanzi": "你",
-      "pinyin": "nǐ",
-      "meaning": {
-        "zh": "你",
-        "kr": "너, 당신",
-        "en": "you (informal, as opposed to courteous 您)"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "我",
-      "pinyin": "wǒ",
-      "meaning": {
-        "zh": "我",
-        "kr": "나, 저",
-        "en": "I; me; my"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "好",
-      "pinyin": "hǎo",
-      "meaning": {
-        "zh": "好",
-        "kr": "좋다",
-        "en": "good; appropriate; proper; all right!; (before a verb) easy to; (before a verb) good to; (before an adjective for exclamatory effect) so; (verb complement indicating completion); (of two people) close; on intimate terms; (after a personal pronoun) hello"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    },
-    {
-      "hanzi": "很",
-      "pinyin": "hěn",
-      "meaning": {
-        "zh": "很",
-        "kr": "매우, 아주",
-        "en": "(adverb of degree); quite; very; awfully"
-      },
-      "pos": {
-        "kr": "부사",
-        "en": "adverb"
-      }
-    },
-    {
-      "hanzi": "吗",
-      "pinyin": "má",
-      "meaning": {
-        "zh": "吗",
-        "kr": "~吗 (의문 조사)",
-        "en": "(coll.) what?"
-      },
-      "pos": {
-        "kr": "조사",
-        "en": "particle"
-      }
-    },
-    {
-      "hanzi": "谢谢",
-      "pinyin": "xièxie",
-      "meaning": {
-        "zh": "谢谢",
-        "kr": "감사합니다",
-        "en": "to thank; thanks; thank you"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "再见",
-      "pinyin": "zàijiàn",
-      "meaning": {
-        "zh": "再见",
-        "kr": "안녕히 가세요",
-        "en": "goodbye; see you again later"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "不客气",
-      "pinyin": "bùkèqi",
-      "meaning": {
-        "zh": "不客气",
-        "kr": "천만에요",
-        "en": "you're welcome; don't mention it; impolite; rude; blunt"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    },
-    {
-      "hanzi": "对不起",
-      "pinyin": "duìbuqǐ",
-      "meaning": {
-        "zh": "对不起",
-        "kr": "죄송합니다",
-        "en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "没关系",
-      "pinyin": "méiguānxi",
-      "meaning": {
-        "zh": "没关系",
-        "kr": "괜찮아요",
-        "en": "it doesn't matter"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective"
-      }
-    }
+    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "好", "pinyin": "hǎo", "meaning": { "zh": "好", "kr": "좋다", "en": "good; hello" }, "pos": { "kr": "형용사", "en": "adjective" } },
+    { "hanzi": "很", "pinyin": "hěn", "meaning": { "zh": "很", "kr": "매우", "en": "very" }, "pos": { "kr": "부사", "en": "adverb" } },
+    { "hanzi": "吗", "pinyin": "ma", "meaning": { "zh": "吗", "kr": "의문 조사", "en": "question particle" }, "pos": { "kr": "조사", "en": "particle" } },
+    { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "en": "thank you" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "안녕히 가세요", "en": "goodbye" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "不客气", "pinyin": "bùkèqi", "meaning": { "zh": "不客气", "kr": "천만에요", "en": "you're welcome" }, "pos": { "kr": "형용사", "en": "adjective" } },
+    { "hanzi": "对不起", "pinyin": "duìbuqǐ", "meaning": { "zh": "对不起", "kr": "죄송합니다", "en": "sorry" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "en": "it doesn't matter" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你好！",
-      "kr": "안녕하세요!",
-      "en": "Hello!"
-    },
-    {
-      "speaker": "B",
-      "line": "你好！",
-      "kr": "안녕하세요!",
-      "en": "Hello!"
-    },
-    {
-      "speaker": "A",
-      "line": "你好吗？",
-      "kr": "잘 지내세요?",
-      "en": "How are you?"
-    },
-    {
-      "speaker": "B",
-      "line": "我很好，谢谢！",
-      "kr": "저는 잘 지내요, 감사합니다!",
-      "en": "I'm fine, thanks!"
-    },
-    {
-      "speaker": "A",
-      "line": "我也很好。",
-      "kr": "저도 잘 지냅니다.",
-      "en": "I'm fine too."
-    }
+    { "speaker": "A", "line": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!", "en": "Hello!" },
+    { "speaker": "B", "line": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!", "en": "Hello!" },
+    { "speaker": "A", "line": "你好吗？", "pinyin": "Nǐ hǎo ma?", "kr": "잘 지내세요?", "en": "How are you?" },
+    { "speaker": "B", "line": "我很好，谢谢！", "pinyin": "Wǒ hěn hǎo, xièxie!", "kr": "저는 잘 지내요, 감사합니다!", "en": "I'm fine, thanks!" },
+    { "speaker": "A", "line": "再见！", "pinyin": "Zàijiàn!", "kr": "안녕히 가세요!", "en": "Goodbye!" },
+    { "speaker": "B", "line": "再见！", "pinyin": "Zàijiàn!", "kr": "안녕히 가세요!", "en": "Goodbye!" },
+    { "speaker": "A", "line": "对不起。", "pinyin": "Duìbuqǐ.", "kr": "죄송합니다.", "en": "Sorry." },
+    { "speaker": "B", "line": "没关系。", "pinyin": "Méiguānxi.", "kr": "괜찮아요.", "en": "It's okay." }
   ],
-  "scene": {
-    "id": "greeting_school_gate",
-    "title": {
-      "zh": "学校门口打招呼",
-      "kr": "학교 앞 인사하기",
-      "en": "Greeting at the school gate"
-    },
-    "summary": {
-      "zh": "两位同学第一次见面，学习基本打招呼表达。",
-      "kr": "두 학생이 처음 만나 기본 인사 표현을 배웁니다.",
-      "en": "Two students meet for the first time and practice basic greetings."
-    },
-    "cover": "/media/scenes/greeting_school_gate/cover.jpg",
-    "location": "school_gate",
-    "mood": "friendly",
-    "goal": [
-      {
-        "zh": "学会用中文打招呼",
-        "kr": "중국어로 인사할 수 있다",
-        "en": "Can greet in Chinese"
-      },
-      {
-        "zh": "学会问好并回应",
-        "kr": "안부를 묻고 대답할 수 있다",
-        "en": "Can ask and respond to greetings"
-      }
-    ],
-    "characters": [
-      {
-        "id": "A",
-        "name": {
-          "zh": "小明",
-          "kr": "샤오밍",
-          "en": "Xiaoming"
-        },
-        "avatar": "/media/scenes/greeting_school_gate/A.png"
-      },
-      {
-        "id": "B",
-        "name": {
-          "zh": "小美",
-          "kr": "샤오메이",
-          "en": "Xiaomei"
-        },
-        "avatar": "/media/scenes/greeting_school_gate/B.png"
-      }
-    ],
-    "frames": [
-      {
-        "id": "scene1",
-        "image": "/media/scenes/greeting_school_gate/frame1.jpg",
-        "dialogueRef": 0,
-        "focusWords": ["你好"]
-      },
-      {
-        "id": "scene2",
-        "image": "/media/scenes/greeting_school_gate/frame2.jpg",
-        "dialogueRef": 1,
-        "focusWords": ["你", "好"]
-      },
-      {
-        "id": "scene3",
-        "image": "/media/scenes/greeting_school_gate/frame3.jpg",
-        "dialogueRef": 2,
-        "focusWords": ["你", "好", "吗"]
-      }
-    ]
-  },
   "grammar": [
     {
       "title": "吗 — 一般疑问句",
-      "explanation_zh": "在陈述句后加\"吗\"构成一般疑问句。",
-      "explanation_kr": "평서문 뒤에 \"吗\"를 붙이면 의문문이 됩니다.",
-      "explanation_en": "Adding \"吗\" after a statement forms a yes-no question.",
-      "example": {
-        "zh": "你好吗？",
-        "pinyin": "Nǐ hǎo ma?",
-        "kr": "잘 지내세요?",
-        "en": "How are you?"
-      }
+      "explanation_zh": "在陈述句后加「吗」构成一般疑问句。",
+      "explanation_kr": "평서문 뒤에 「吗」를 붙이면 의문문이 됩니다.",
+      "explanation_en": "Adding 吗 after a statement forms a yes-no question.",
+      "example": { "zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "kr": "잘 지내세요?", "en": "How are you?" }
     },
     {
       "title": "很 + 形容词",
-      "explanation_zh": "形容词作谓语时通常需要\"很\"。",
-      "explanation_kr": "형용사가 서술어가 될 때 보통 '很'을 함께 사용합니다.",
-      "explanation_en": "Adjectives as predicates usually need \"很\".",
-      "example": {
-        "zh": "我很好。",
-        "pinyin": "Wǒ hěn hǎo.",
-        "kr": "저는 잘 지냅니다.",
-        "en": "I'm fine."
-      }
+      "explanation_zh": "形容词作谓语时通常需要「很」。",
+      "explanation_kr": "형용사가 서술어가 될 때 보통 「很」을 함께 사용합니다.",
+      "explanation_en": "Adjectives as predicates usually need 很.",
+      "example": { "zh": "我很好。", "pinyin": "Wǒ hěn hǎo.", "kr": "저는 잘 지냅니다.", "en": "I'm fine." }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「你好吗？」的回答是什么？",
-        "kr": "「你好吗？」에 대한 답은?",
-        "en": "What is the response to '你好吗？'?"
-      },
-      "options": ["你好", "我很好", "谢谢"],
-      "answer": "我很好",
-      "explanation": {
-        "zh": "我很好是回答「你好吗？」的常用说法。",
-        "kr": "「我很好」는 「你好吗？」에 대한 일반적인 답입니다.",
-        "en": "'我很好' is the common response to '你好吗？'."
-      },
-      "score": 1
-    },
-    {
-      "type": "fill",
-      "question": {
-        "zh": "请填空：你好___？",
-        "kr": "빈칸 채우기: 你好___？",
-        "en": "Fill in the blank: 你好___?"
-      },
-      "answer": "吗",
-      "explanation": {
-        "zh": "吗是疑问语气词，用于构成一般疑问句。",
-        "kr": "「吗」는 의문 조사로 일반 의문문을 만듭니다.",
-        "en": "'吗' is a question particle that forms yes-no questions."
-      },
-      "score": 1
-    },
-    {
-      "type": "order",
-      "question": {
-        "zh": "请将词语按正确顺序排列成句子。",
-        "kr": "단어를 올바른 순서로 배열하세요.",
-        "en": "Arrange the words in the correct order."
-      },
-      "options": ["很好", "我"],
-      "answer": "我很好",
-      "explanation": {
-        "zh": "主语「我」在前，谓语「很好」在后。",
-        "kr": "주어 「我」가 앞에, 서술어 「很好」가 뒤에 옵니다.",
-        "en": "Subject '我' comes first, predicate '很好' follows."
-      },
-      "score": 1
-    }
+    { "type": "choice", "question": { "zh": "你好 ___？", "kr": "你好 ___？", "en": "你好 ___?" }, "options": ["吗", "好", "在"], "answer": "吗" },
+    { "type": "choice", "question": { "zh": "「你好吗？」的回答是什么？", "kr": "「你好吗？」에 대한 답은?", "en": "What is the response to 你好吗?" }, "options": ["你好", "我很好", "谢谢"], "answer": "我很好" },
+    { "type": "choice", "question": { "zh": "请选择正确语序：我 / 很 / 好", "kr": "올바른 순서를 선택하세요.", "en": "Correct order for 我 / 很 / 好?" }, "options": ["我很好", "很好我", "好我很"], "answer": "我很好" },
+    { "type": "choice", "question": { "zh": "哪个是「谢谢」？", "kr": "「谢谢」는 어느 것?", "en": "Which one is 谢谢?" }, "options": ["再见", "谢谢", "不客气"], "answer": "谢谢" },
+    { "type": "choice", "question": { "zh": "A：对不起。 B：___", "kr": "A：对不起。 B：___", "en": "A: Sorry. B: ___" }, "options": ["谢谢", "没关系", "再见"], "answer": "没关系" }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": [
-      "你好",
-      "你好吗",
-      "我很好"
-    ],
+    "speaking": ["你好", "你好吗", "我很好", "谢谢", "再见"],
     "chatPrompt": "AI先说：你好！学生回答，然后继续对话。"
   },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

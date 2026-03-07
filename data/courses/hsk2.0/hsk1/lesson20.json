@@ -5,174 +5,45 @@
   "version": "2.0",
   "lessonNo": 20,
   "type": "lesson",
-  "title": {
-    "zh": "数量表达",
-    "pinyin": "",
-    "kr": "수량 표현",
-    "en": "Seeing a doctor"
-  },
-  "summary": {
-    "zh": "量词使用",
-    "kr": "양사 사용"
-  },
-  "objectives": [],
+  "title": { "zh": "看病", "pinyin": "kàn bìng", "kr": "병원", "en": "Seeing a doctor" },
+  "summary": { "zh": "医院、怎么、怎么样", "kr": "병원, 어떻게, 어때요", "en": "Hospital, how, how about" },
+  "objectives": [
+    { "zh": "学会说身体不适", "kr": "몸이 안 좋을 때 말할 수 있다", "en": "Can say when unwell" },
+    { "zh": "学会我们、没、呢", "kr": "'我们', '没', '呢'를 사용할 수 있다", "en": "Can use 我们, 没, 呢" }
+  ],
   "vocab": [
-    {
-      "hanzi": "医院",
-      "pinyin": "yīyuàn",
-      "meaning": {
-        "zh": "医院",
-        "kr": "병원",
-        "en": "hospital"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "怎么",
-      "pinyin": "zěnme",
-      "meaning": {
-        "zh": "怎么",
-        "kr": "어떻게",
-        "en": "how?; what?; why?"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "怎么样",
-      "pinyin": "zěnmeyàng",
-      "meaning": {
-        "zh": "怎么样",
-        "kr": "어때",
-        "en": "how?; how about?; how was it?; how are things?"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "我们",
-      "pinyin": "wǒmen",
-      "meaning": {
-        "zh": "我们",
-        "kr": "우리",
-        "en": "we; us; ourselves; our"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "没",
-      "pinyin": "méi",
-      "meaning": {
-        "zh": "没",
-        "kr": "~없다",
-        "en": "(negative prefix for verbs) have not; not"
-      },
-      "pos": {
-        "kr": "부사",
-        "en": "adverb"
-      }
-    },
-    {
-      "hanzi": "呢",
-      "pinyin": "ne",
-      "meaning": {
-        "zh": "呢",
-        "kr": "~은/는요",
-        "en": "particle indicating that a previously asked question is to be applied to the preceding word (\"What about ...?\", \"And ...?\"); particle for inquiring about location (\"Where is ...?\"); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board (\"ok?\", \"are you with me?\"); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation"
-      },
-      "pos": {
-        "kr": "조사",
-        "en": "particle"
-      }
-    }
+    { "hanzi": "医院", "pinyin": "yīyuàn", "meaning": { "zh": "医院", "kr": "병원", "en": "hospital" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "怎么", "pinyin": "zěnme", "meaning": { "zh": "怎么", "kr": "어떻게", "en": "how" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "怎么样", "pinyin": "zěnmeyàng", "meaning": { "zh": "怎么样", "kr": "어때요", "en": "how about" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "我们", "pinyin": "wǒmen", "meaning": { "zh": "我们", "kr": "우리", "en": "we" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "没", "pinyin": "méi", "meaning": { "zh": "没", "kr": "없다", "en": "not have" }, "pos": { "kr": "부사", "en": "adverb" } },
+    { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~은/는요?", "en": "particle" }, "pos": { "kr": "조사", "en": "particle" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "这个怎么样？"
-    },
-    {
-      "speaker": "B",
-      "line": "很好！"
-    }
+    { "speaker": "A", "line": "你怎么了？", "pinyin": "Nǐ zěnme le?", "kr": "어디 아파요?", "en": "What's wrong with you?" },
+    { "speaker": "B", "line": "我不好。我们去医院。", "pinyin": "Wǒ bù hǎo. Wǒmen qù yīyuàn.", "kr": "저는 몸이 안 좋아요. 우리 병원 가요.", "en": "I'm not well. We go to the hospital." },
+    { "speaker": "A", "line": "医生怎么样？", "pinyin": "Yīshēng zěnmeyàng?", "kr": "의사는 어때요?", "en": "How's the doctor?" },
+    { "speaker": "B", "line": "很好。我没钱了。", "pinyin": "Hěn hǎo. Wǒ méi qián le.", "kr": "아주 좋아요. 저는 돈이 없어요.", "en": "Very good. I have no money." }
   ],
   "grammar": [
-    {
-      "title": "量词个",
-      "explanation_zh": "“个”是常用量词。",
-      "explanation_kr": "'个'은 가장 많이 쓰는 양사.",
-      "example": "一个人"
-    }
+    { "title": "怎么", "explanation_zh": "「怎么」问方式。", "explanation_kr": "'怎么'는 방법을 묻습니다.", "explanation_en": "怎么 asks how.", "example": { "zh": "怎么去？", "pinyin": "Zěnme qù?", "kr": "어떻게 가요?", "en": "How to get there?" } },
+    { "title": "没 + 有", "explanation_zh": "「有」的否定用「没」。", "explanation_kr": "'有'의 부정은 '没'를 사용합니다.", "explanation_en": "Negate 有 with 没.", "example": { "zh": "没钱", "pinyin": "méi qián", "kr": "돈 없다", "en": "no money" } },
+    { "title": "呢", "explanation_zh": "「呢」用于追问或话题。", "explanation_kr": "'呢'는 재질문이나 화제에 사용합니다.", "explanation_en": "呢 for follow-up or topic.", "example": { "zh": "你呢？", "pinyin": "Nǐ ne?", "kr": "당신은요?", "en": "And you?" } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "一个___",
-      "options": [
-        "人",
-        "谢谢",
-        "再见"
-      ],
-      "answer": "人"
-    }
+    { "type": "choice", "question": { "zh": "「医院」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["学校", "医院", "商店"], "answer": "医院" },
+    { "type": "choice", "question": { "zh": "「怎么」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["什么", "怎么", "怎么样"], "answer": "怎么" },
+    { "type": "choice", "question": { "zh": "我___钱。", "kr": "빈칸", "en": "Fill in" }, "options": ["没", "有", "不"], "answer": "没" },
+    { "type": "choice", "question": { "zh": "A：你好吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我们", "我很好", "呢"], "answer": "我很好" },
+    { "type": "choice", "question": { "zh": "哪个是「我们」？", "kr": "어느 것?", "en": "Which?" }, "options": ["我", "我们", "你"], "answer": "我们" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "一个苹果"
-    ],
-    "chatPrompt": "AI问数量。"
-  },
+  "aiPractice": { "speaking": ["我们去医院", "怎么样", "没钱", "你呢"], "chatPrompt": "AI问：你怎么了？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

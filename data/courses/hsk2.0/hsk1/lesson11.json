@@ -5,202 +5,46 @@
   "version": "2.0",
   "lessonNo": 11,
   "type": "lesson",
-  "title": {
-    "zh": "吃和喝",
-    "pinyin": "",
-    "kr": "먹고 마시기",
-    "en": "School"
-  },
-  "summary": {
-    "zh": "",
-    "kr": "",
-    "en": ""
-  },
-  "objectives": [],
+  "title": { "zh": "学校", "pinyin": "xuéxiào", "kr": "학교", "en": "School" },
+  "summary": { "zh": "学校生活与学习", "kr": "학교 생활과 학습", "en": "School life and learning" },
+  "objectives": [
+    { "zh": "学会说学习活动", "kr": "학습 활동을 말할 수 있다", "en": "Can talk about learning" },
+    { "zh": "学会读、写、书", "kr": "'读', '写', '书'를 사용할 수 있다", "en": "Can use 读, 写, 书" }
+  ],
   "vocab": [
-    {
-      "hanzi": "学校",
-      "pinyin": "xuéxiào",
-      "meaning": {
-        "zh": "学校",
-        "kr": "학교",
-        "en": "school"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "学习",
-      "pinyin": "xuéxí",
-      "meaning": {
-        "zh": "学习",
-        "kr": "공부하다",
-        "en": "to learn; to study"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "读",
-      "pinyin": "dòu",
-      "meaning": {
-        "zh": "读",
-        "kr": "읽다",
-        "en": "comma; phrase marked by pause"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "书",
-      "pinyin": "Shū",
-      "meaning": {
-        "zh": "书",
-        "kr": "책",
-        "en": "abbr. for 书经"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "字",
-      "pinyin": "zì",
-      "meaning": {
-        "zh": "字",
-        "kr": "글자",
-        "en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "本",
-      "pinyin": "běn",
-      "meaning": {
-        "zh": "本",
-        "kr": "책",
-        "en": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word"
-      }
-    },
-    {
-      "hanzi": "写",
-      "pinyin": "xiě",
-      "meaning": {
-        "zh": "写",
-        "kr": "쓰다",
-        "en": "to write"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "汉语",
-      "pinyin": "Hànyǔ",
-      "meaning": {
-        "zh": "汉语",
-        "kr": "중국어",
-        "en": "Chinese language"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    }
+    { "hanzi": "学校", "pinyin": "xuéxiào", "meaning": { "zh": "学校", "kr": "학교", "en": "school" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "学习", "pinyin": "xuéxí", "meaning": { "zh": "学习", "kr": "배우다", "en": "to learn" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "读", "pinyin": "dú", "meaning": { "zh": "读", "kr": "읽다", "en": "to read" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "书", "pinyin": "shū", "meaning": { "zh": "书", "kr": "책", "en": "book" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "字", "pinyin": "zì", "meaning": { "zh": "字", "kr": "글자", "en": "character" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "本", "pinyin": "běn", "meaning": { "zh": "本", "kr": "권", "en": "measure word for books" }, "pos": { "kr": "양사", "en": "measure word" } },
+    { "hanzi": "写", "pinyin": "xiě", "meaning": { "zh": "写", "kr": "쓰다", "en": "to write" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "汉语", "pinyin": "Hànyǔ", "meaning": { "zh": "汉语", "kr": "중국어", "en": "Chinese" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你吃什么？"
-    },
-    {
-      "speaker": "B",
-      "line": "我吃米饭。"
-    }
+    { "speaker": "A", "line": "你在学校学习什么？", "pinyin": "Nǐ zài xuéxiào xuéxí shénme?", "kr": "학교에서 뭘 배워요?", "en": "What do you learn at school?" },
+    { "speaker": "B", "line": "我学习汉语。我读这本书。", "pinyin": "Wǒ xuéxí Hànyǔ. Wǒ dú zhè běn shū.", "kr": "저는 중국어를 배워요. 이 책을 읽어요.", "en": "I learn Chinese. I read this book." },
+    { "speaker": "A", "line": "你会写汉字吗？", "pinyin": "Nǐ huì xiě Hànzì ma?", "kr": "한자를 쓸 수 있어요?", "en": "Can you write Chinese characters?" },
+    { "speaker": "B", "line": "会，我写很多字。", "pinyin": "Huì, wǒ xiě hěn duō zì.", "kr": "네, 저는 글자를 많이 써요.", "en": "Yes, I write many characters." }
   ],
   "grammar": [
-    {
-      "title": "动词+宾语",
-      "explanation_zh": "动词后面接吃的东西。",
-      "explanation_kr": "동사 뒤에 목적어가 옵니다.",
-      "example": "吃苹果"
-    }
+    { "title": "学习 + 宾语", "explanation_zh": "「学习」后接学习内容。", "explanation_kr": "'学习' 뒤에 학습 내용이 옵니다.", "explanation_en": "学习 takes object.", "example": { "zh": "学习汉语", "pinyin": "xuéxí Hànyǔ", "kr": "중국어 배우다", "en": "learn Chinese" } },
+    { "title": "本 — 量词", "explanation_zh": "「本」用于书。", "explanation_kr": "'本'은 책에 사용합니다.", "explanation_en": "本 for books.", "example": { "zh": "一本书", "pinyin": "yī běn shū", "kr": "책 한 권", "en": "one book" } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "你喝什么？",
-      "options": [
-        "水",
-        "书",
-        "老师"
-      ],
-      "answer": "水"
-    }
+    { "type": "choice", "question": { "zh": "「学习」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["工作", "学习", "读"], "answer": "学习" },
+    { "type": "choice", "question": { "zh": "「字」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["书", "字", "本"], "answer": "字" },
+    { "type": "choice", "question": { "zh": "我___汉语。", "kr": "빈칸", "en": "Fill in" }, "options": ["学习", "写", "读"], "answer": "学习" },
+    { "type": "choice", "question": { "zh": "「一本书」的「本」是？", "kr": "本은?", "en": "本 is?" }, "options": ["本", "书", "字"], "answer": "本" },
+    { "type": "choice", "question": { "zh": "哪个是「汉语」？", "kr": "어느 것?", "en": "Which?" }, "options": ["汉语", "字", "书"], "answer": "汉语" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "吃苹果",
-      "喝水"
-    ],
-    "chatPrompt": "AI问想吃什么。"
-  },
+  "aiPractice": { "speaking": ["学习汉语", "读这本书", "写汉字", "一本书"], "chatPrompt": "AI问：你在学校学习什么？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

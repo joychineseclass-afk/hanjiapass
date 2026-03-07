@@ -5,200 +5,46 @@
   "version": "2.0",
   "lessonNo": 18,
   "type": "lesson",
-  "title": {
-    "zh": "能力表达",
-    "pinyin": "",
-    "kr": "능력 표현",
-    "en": "Shopping"
-  },
-  "summary": {
-    "zh": "表达会做的事情",
-    "kr": "할 수 있는 일 말하기"
-  },
-  "objectives": [],
+  "title": { "zh": "买东西", "pinyin": "mǎi dōngxi", "kr": "쇼핑", "en": "Shopping" },
+  "summary": { "zh": "买、钱、商店", "kr": "사다, 돈, 가게", "en": "Buy, money, shop" },
+  "objectives": [
+    { "zh": "学会说买东西", "kr": "쇼핑할 수 있다", "en": "Can talk about shopping" },
+    { "zh": "学会这、那", "kr": "'这', '那'를 사용할 수 있다", "en": "Can use 这 and 那" }
+  ],
   "vocab": [
-    {
-      "hanzi": "买",
-      "pinyin": "mǎi",
-      "meaning": {
-        "zh": "买",
-        "kr": "사다",
-        "en": "to buy; to purchase"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "钱",
-      "pinyin": "Qián",
-      "meaning": {
-        "zh": "钱",
-        "kr": "돈",
-        "en": "surname Qian"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "商店",
-      "pinyin": "shāngdiàn",
-      "meaning": {
-        "zh": "商店",
-        "kr": "가게",
-        "en": "store; shop"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "衣服",
-      "pinyin": "yīfu",
-      "meaning": {
-        "zh": "衣服",
-        "kr": "옷",
-        "en": "clothes"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "些",
-      "pinyin": "xiē",
-      "meaning": {
-        "zh": "些",
-        "kr": "좀",
-        "en": "classifier indicating a small amount or small number greater than 1: some, a few, several"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word"
-      }
-    },
-    {
-      "hanzi": "那",
-      "pinyin": "Nā",
-      "meaning": {
-        "zh": "那",
-        "kr": "그",
-        "en": "surname Na"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "这",
-      "pinyin": "zhè",
-      "meaning": {
-        "zh": "这",
-        "kr": "이",
-        "en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this; these (followed by a classifier) (in this sense, commonly pr. [zhèi], esp. in Beijing)"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "电脑",
-      "pinyin": "diànnǎo",
-      "meaning": {
-        "zh": "电脑",
-        "kr": "컴퓨터",
-        "en": "computer"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    }
+    { "hanzi": "买", "pinyin": "mǎi", "meaning": { "zh": "买", "kr": "사다", "en": "to buy" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "钱", "pinyin": "qián", "meaning": { "zh": "钱", "kr": "돈", "en": "money" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "商店", "pinyin": "shāngdiàn", "meaning": { "zh": "商店", "kr": "가게", "en": "shop" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "衣服", "pinyin": "yīfu", "meaning": { "zh": "衣服", "kr": "옷", "en": "clothes" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "些", "pinyin": "xiē", "meaning": { "zh": "些", "kr": "몇", "en": "some" }, "pos": { "kr": "양사", "en": "measure word" } },
+    { "hanzi": "那", "pinyin": "nà", "meaning": { "zh": "那", "kr": "저", "en": "that" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "这", "pinyin": "zhè", "meaning": { "zh": "这", "kr": "이", "en": "this" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "电脑", "pinyin": "diànnǎo", "meaning": { "zh": "电脑", "kr": "컴퓨터", "en": "computer" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你会说汉语吗？"
-    },
-    {
-      "speaker": "B",
-      "line": "会一点。"
-    }
+    { "speaker": "A", "line": "你在商店买什么？", "pinyin": "Nǐ zài shāngdiàn mǎi shénme?", "kr": "가게에서 뭘 사요?", "en": "What do you buy at the shop?" },
+    { "speaker": "B", "line": "我买衣服。这个多少钱？", "pinyin": "Wǒ mǎi yīfu. Zhè gè duōshao qián?", "kr": "저는 옷을 사요. 이거 얼마예요?", "en": "I buy clothes. How much is this?" },
+    { "speaker": "A", "line": "十块。那个电脑呢？", "pinyin": "Shí kuài. Nà gè diànnǎo ne?", "kr": "10위안이에요. 저 컴퓨터는요?", "en": "Ten yuan. What about that computer?" },
+    { "speaker": "B", "line": "我买一些东西。我有钱。", "pinyin": "Wǒ mǎi yīxiē dōngxi. Wǒ yǒu qián.", "kr": "저는 뭔가 사요. 저는 돈이 있어요.", "en": "I buy some things. I have money." }
   ],
   "grammar": [
-    {
-      "title": "会 vs 能",
-      "explanation_zh": "“会”表示能力，“能”表示条件允许。",
-      "explanation_kr": "'会'는 능력, '能'은 가능 여부.",
-      "example": "我会说汉语。"
-    }
+    { "title": "这 / 那", "explanation_zh": "「这」指近处，「那」指远处。", "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.", "explanation_en": "这 for near, 那 for far.", "example": { "zh": "这个，那个", "pinyin": "zhè gè, nà gè", "kr": "이것, 저것", "en": "this one, that one" } },
+    { "title": "呢", "explanation_zh": "「呢」用于追问或话题转换。", "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.", "explanation_en": "呢 for follow-up or topic shift.", "example": { "zh": "那个呢？", "pinyin": "Nà gè ne?", "kr": "저것은요?", "en": "What about that one?" } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "你会开车吗？",
-      "options": [
-        "会",
-        "谢谢",
-        "苹果"
-      ],
-      "answer": "会"
-    }
+    { "type": "choice", "question": { "zh": "「买」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["卖", "买", "钱"], "answer": "买" },
+    { "type": "choice", "question": { "zh": "「这」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["那", "这", "个"], "answer": "那" },
+    { "type": "choice", "question": { "zh": "这个___钱？", "kr": "빈칸", "en": "Fill in" }, "options": ["多少", "买", "商店"], "answer": "多少" },
+    { "type": "choice", "question": { "zh": "A：你买什么？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我买衣服", "十块", "商店"], "answer": "我买衣服" },
+    { "type": "choice", "question": { "zh": "哪个是「钱」？", "kr": "어느 것?", "en": "Which?" }, "options": ["买", "钱", "商店"], "answer": "钱" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "我会说汉语"
-    ],
-    "chatPrompt": "AI问能力。"
-  },
+  "aiPractice": { "speaking": ["我买衣服", "多少钱", "这个那个", "我有钱"], "chatPrompt": "AI问：你买什么？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

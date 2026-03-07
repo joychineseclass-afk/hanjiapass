@@ -5,197 +5,46 @@
   "version": "2.0",
   "lessonNo": 10,
   "type": "lesson",
-  "title": {
-    "zh": "时间表达",
-    "pinyin": "",
-    "kr": "시간 표현",
-    "en": "Weekdays"
-  },
-  "summary": {
-    "zh": "",
-    "kr": "",
-    "en": ""
-  },
-  "objectives": [],
+  "title": { "zh": "在哪儿", "pinyin": "zài nǎr", "kr": "어디에", "en": "Where" },
+  "summary": { "zh": "问地点与方位", "kr": "장소와 방향 묻기", "en": "Asking location and direction" },
+  "objectives": [
+    { "zh": "学会问在哪里", "kr": "어디에 있는지 물을 수 있다", "en": "Can ask where" },
+    { "zh": "学会方位词", "kr": "방향어를 사용할 수 있다", "en": "Can use direction words" }
+  ],
   "vocab": [
-    {
-      "hanzi": "在",
-      "pinyin": "zài",
-      "meaning": {
-        "zh": "在",
-        "kr": "~에 있다",
-        "en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "哪",
-      "pinyin": "nǎ",
-      "meaning": {
-        "zh": "哪",
-        "kr": "어디",
-        "en": "how; which"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun"
-      }
-    },
-    {
-      "hanzi": "里",
-      "pinyin": "lǐ",
-      "meaning": {
-        "zh": "里",
-        "kr": "안",
-        "en": "variant of 里"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "上",
-      "pinyin": "shǎng",
-      "meaning": {
-        "zh": "上",
-        "kr": "위",
-        "en": "used in 上声"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "下",
-      "pinyin": "xià",
-      "meaning": {
-        "zh": "下",
-        "kr": "아래",
-        "en": "down; downwards; below; lower; later; next (week etc); second (of two parts); to decline; to go down; to arrive at (a decision, conclusion etc); measure word to show the frequency of an action"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "前面",
-      "pinyin": "qiánmiàn",
-      "meaning": {
-        "zh": "前面",
-        "kr": "앞",
-        "en": "ahead; in front; preceding; above; also pr. [qián mian]"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "后面",
-      "pinyin": "hòumian",
-      "meaning": {
-        "zh": "后面",
-        "kr": "뒤",
-        "en": "the back; the rear; the last bit; behind; near the end; at the back; later; afterwards"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "住",
-      "pinyin": "zhù",
-      "meaning": {
-        "zh": "住",
-        "kr": "살다",
-        "en": "to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    }
+    { "hanzi": "在", "pinyin": "zài", "meaning": { "zh": "在", "kr": "~에 있다", "en": "to be at" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "哪", "pinyin": "nǎ", "meaning": { "zh": "哪", "kr": "어느", "en": "which" }, "pos": { "kr": "대명사", "en": "pronoun" } },
+    { "hanzi": "里", "pinyin": "lǐ", "meaning": { "zh": "里", "kr": "안", "en": "inside" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "上", "pinyin": "shàng", "meaning": { "zh": "上", "kr": "위", "en": "on; above" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "下", "pinyin": "xià", "meaning": { "zh": "下", "kr": "아래", "en": "under" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "前面", "pinyin": "qiánmiàn", "meaning": { "zh": "前面", "kr": "앞", "en": "front" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "后面", "pinyin": "hòumiàn", "meaning": { "zh": "后面", "kr": "뒤", "en": "back" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "住", "pinyin": "zhù", "meaning": { "zh": "住", "kr": "살다", "en": "to live" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "现在几点？"
-    },
-    {
-      "speaker": "B",
-      "line": "三点。"
-    }
+    { "speaker": "A", "line": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "kr": "어디에 있어요?", "en": "Where are you?" },
+    { "speaker": "B", "line": "我在学校。书在桌子上。", "pinyin": "Wǒ zài xuéxiào. Shū zài zhuōzi shàng.", "kr": "저는 학교에 있어요. 책은 책상 위에 있어요.", "en": "I'm at school. The book is on the table." },
+    { "speaker": "A", "line": "你家在哪儿？", "pinyin": "Nǐ jiā zài nǎr?", "kr": "집이 어디에 있어요?", "en": "Where is your home?" },
+    { "speaker": "B", "line": "我家在学校后面。我住在那儿。", "pinyin": "Wǒ jiā zài xuéxiào hòumiàn. Wǒ zhù zài nàr.", "kr": "우리 집은 학교 뒤에 있어요. 저는 거기에 삽니다.", "en": "My home is behind the school. I live there." }
   ],
   "grammar": [
-    {
-      "title": "点钟表达",
-      "explanation_zh": "时间表达用“点”。",
-      "explanation_kr": "시간은 '点'으로 표현합니다.",
-      "example": "三点"
-    }
+    { "title": "在 + 地点", "explanation_zh": "「在」表示存在或位置。", "explanation_kr": "'在'는 존재나 위치를 나타냅니다.", "explanation_en": "在 indicates location.", "example": { "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요.", "en": "I'm at school." } },
+    { "title": "上 / 下 / 里", "explanation_zh": "方位词：上、下、前面、后面、里。", "explanation_kr": "방향어: 上, 下, 前面, 后面, 里.", "explanation_en": "Direction words.", "example": { "zh": "在桌子上", "pinyin": "zài zhuōzi shàng", "kr": "책상 위에", "en": "on the table" } }
   ],
   "practice": [
-    {
-      "type": "time",
-      "question": "看表说时间",
-      "answer": "三点"
-    }
+    { "type": "choice", "question": { "zh": "「在」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["有", "在", "去"], "answer": "在" },
+    { "type": "choice", "question": { "zh": "「前面」的反义词是？", "kr": "반대말은?", "en": "Antonym?" }, "options": ["后面", "前面", "里"], "answer": "后面" },
+    { "type": "choice", "question": { "zh": "书___桌子上。", "kr": "빈칸", "en": "Fill in" }, "options": ["在", "住", "里"], "answer": "在" },
+    { "type": "choice", "question": { "zh": "A：你在哪儿？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我住北京", "我在学校", "在学校里"], "answer": "我在学校" },
+    { "type": "choice", "question": { "zh": "哪个是「住」？", "kr": "어느 것?", "en": "Which?" }, "options": ["在", "住", "里"], "answer": "住" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "三点",
-      "五点"
-    ],
-    "chatPrompt": "AI问时间。"
-  },
+  "aiPractice": { "speaking": ["你在哪儿", "我在学校", "在桌子上", "学校后面"], "chatPrompt": "AI问：你在哪儿？学生回答地点。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

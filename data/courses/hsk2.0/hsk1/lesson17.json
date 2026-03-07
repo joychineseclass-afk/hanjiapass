@@ -5,174 +5,44 @@
   "version": "2.0",
   "lessonNo": 17,
   "type": "lesson",
-  "title": {
-    "zh": "日常活动",
-    "pinyin": "",
-    "kr": "일상 활동",
-    "en": "Transport"
-  },
-  "summary": {
-    "zh": "日常生活动词",
-    "kr": "일상 동사"
-  },
-  "objectives": [],
+  "title": { "zh": "交通", "pinyin": "jiāotōng", "kr": "교통", "en": "Transport" },
+  "summary": { "zh": "出租车、飞机、火车站", "kr": "택시, 비행기, 기차역", "en": "Taxi, plane, train station" },
+  "objectives": [
+    { "zh": "学会说交通方式", "kr": "교통 수단을 말할 수 있다", "en": "Can talk about transport" },
+    { "zh": "学会开、看见、都", "kr": "'开', '看见', '都'를 사용할 수 있다", "en": "Can use 开, 看见, 都" }
+  ],
   "vocab": [
-    {
-      "hanzi": "出租车",
-      "pinyin": "chūzūchē",
-      "meaning": {
-        "zh": "出租车",
-        "kr": "택시",
-        "en": "taxi; (Tw) rental car"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "飞机",
-      "pinyin": "fēijī",
-      "meaning": {
-        "zh": "飞机",
-        "kr": "비행기",
-        "en": "airplane"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "火车站",
-      "pinyin": "huǒchēzhàn",
-      "meaning": {
-        "zh": "火车站",
-        "kr": "기차역",
-        "en": "train station"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "开",
-      "pinyin": "kāi",
-      "meaning": {
-        "zh": "开",
-        "kr": "열다, 운전하다",
-        "en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate; to run; to boil; to write out (a prescription, check, invoice etc); (directional complement) away; off; carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "看见",
-      "pinyin": "kànjiàn",
-      "meaning": {
-        "zh": "看见",
-        "kr": "보이다",
-        "en": "to see; to catch sight of"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "都",
-      "pinyin": "Dū",
-      "meaning": {
-        "zh": "都",
-        "kr": "모두",
-        "en": "surname Du"
-      },
-      "pos": {
-        "kr": "부사",
-        "en": "adverb"
-      }
-    }
+    { "hanzi": "出租车", "pinyin": "chūzūchē", "meaning": { "zh": "出租车", "kr": "택시", "en": "taxi" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "飞机", "pinyin": "fēijī", "meaning": { "zh": "飞机", "kr": "비행기", "en": "plane" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "火车站", "pinyin": "huǒchēzhàn", "meaning": { "zh": "火车站", "kr": "기차역", "en": "train station" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "开", "pinyin": "kāi", "meaning": { "zh": "开", "kr": "운전하다", "en": "to drive" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "看见", "pinyin": "kànjiàn", "meaning": { "zh": "看见", "kr": "보다", "en": "to see" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "都", "pinyin": "dōu", "meaning": { "zh": "都", "kr": "다", "en": "all" }, "pos": { "kr": "부사", "en": "adverb" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你在哪儿工作？"
-    },
-    {
-      "speaker": "B",
-      "line": "我在北京工作。"
-    }
+    { "speaker": "A", "line": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "kr": "어디 가요?", "en": "Where are you going?" },
+    { "speaker": "B", "line": "我去火车站。我坐出租车。", "pinyin": "Wǒ qù huǒchēzhàn. Wǒ zuò chūzūchē.", "kr": "저는 기차역에 가요. 택시를 타요.", "en": "I'm going to the train station. I take a taxi." },
+    { "speaker": "A", "line": "你看见飞机了吗？", "pinyin": "Nǐ kànjiàn fēijī le ma?", "kr": "비행기 봤어요?", "en": "Did you see the plane?" },
+    { "speaker": "B", "line": "看见了。我爸爸开出租车。我们都去北京。", "pinyin": "Kànjiàn le. Wǒ bàba kāi chūzūchē. Wǒmen dōu qù Běijīng.", "kr": "봤어요. 우리 아빠는 택시를 운전해요. 우리 모두 베이징에 가요.", "en": "Yes. My dad drives a taxi. We all go to Beijing." }
   ],
   "grammar": [
-    {
-      "title": "动词位置",
-      "explanation_zh": "动词一般放在主语后面。",
-      "explanation_kr": "동사는 주어 뒤에 옵니다.",
-      "example": "我学习汉语。"
-    }
+    { "title": "坐 + 交通工具", "explanation_zh": "「坐」后接交通工具。", "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.", "explanation_en": "坐 takes transport.", "example": { "zh": "坐出租车", "pinyin": "zuò chūzūchē", "kr": "택시 타다", "en": "take a taxi" } },
+    { "title": "都", "explanation_zh": "「都」表示全部。", "explanation_kr": "'都'는 모두를 나타냅니다.", "explanation_en": "都 means all.", "example": { "zh": "我们都去。", "pinyin": "Wǒmen dōu qù.", "kr": "우리 모두 가요.", "en": "We all go." } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "晚上做什么？",
-      "options": [
-        "睡觉",
-        "谢谢",
-        "苹果"
-      ],
-      "answer": "睡觉"
-    }
+    { "type": "choice", "question": { "zh": "「出租车」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["飞机", "出租车", "火车站"], "answer": "出租车" },
+    { "type": "choice", "question": { "zh": "「看见」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["看", "看见", "开"], "answer": "看见" },
+    { "type": "choice", "question": { "zh": "我___出租车。", "kr": "빈칸", "en": "Fill in" }, "options": ["坐", "开", "看见"], "answer": "坐" },
+    { "type": "choice", "question": { "zh": "A：你去哪儿？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我去火车站", "坐出租车", "飞机"], "answer": "我去火车站" },
+    { "type": "choice", "question": { "zh": "哪个是「飞机」？", "kr": "어느 것?", "en": "Which?" }, "options": ["出租车", "飞机", "火车站"], "answer": "飞机" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "我学习汉语"
-    ],
-    "chatPrompt": "AI问日常活动。"
-  },
+  "aiPractice": { "speaking": ["坐出租车", "去火车站", "看见飞机", "我们都去"], "chatPrompt": "AI问：你去哪儿？学生回答交通方式。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

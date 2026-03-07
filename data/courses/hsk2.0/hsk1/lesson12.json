@@ -5,183 +5,45 @@
   "version": "2.0",
   "lessonNo": 12,
   "type": "lesson",
-  "title": {
-    "zh": "在饭店",
-    "pinyin": "",
-    "kr": "식당에서",
-    "en": "Work"
-  },
-  "summary": {
-    "zh": "",
-    "kr": "",
-    "en": ""
-  },
-  "objectives": [],
+  "title": { "zh": "工作", "pinyin": "gōngzuò", "kr": "직업", "en": "Work" },
+  "summary": { "zh": "职业与工作", "kr": "직업과 일", "en": "Jobs and work" },
+  "objectives": [
+    { "zh": "学会说职业", "kr": "직업을 말할 수 있다", "en": "Can talk about jobs" },
+    { "zh": "学会能、会", "kr": "'能', '会'를 사용할 수 있다", "en": "Can use 能 and 会" }
+  ],
   "vocab": [
-    {
-      "hanzi": "工作",
-      "pinyin": "gōngzuò",
-      "meaning": {
-        "zh": "工作",
-        "kr": "일",
-        "en": "to work; (of a machine) to operate; job; work; task"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "医生",
-      "pinyin": "yīshēng",
-      "meaning": {
-        "zh": "医生",
-        "kr": "의사",
-        "en": "doctor"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "先生",
-      "pinyin": "xiānsheng",
-      "meaning": {
-        "zh": "先生",
-        "kr": "선생님",
-        "en": "teacher; gentleman; sir; mister (Mr.); husband; (dialect) doctor"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "小姐",
-      "pinyin": "xiǎojie",
-      "meaning": {
-        "zh": "小姐",
-        "kr": "아가씨",
-        "en": "young lady; miss; (slang) prostitute"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "做",
-      "pinyin": "zuò",
-      "meaning": {
-        "zh": "做",
-        "kr": "하다",
-        "en": "to make; to produce; to write; to compose; to do; to engage in; to hold (a party etc); (of a person) to be (an intermediary, a good student etc); to become (husband and wife, friends etc); (of a thing) to serve as; to be used for; to assume (an air or manner)"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "能",
-      "pinyin": "Néng",
-      "meaning": {
-        "zh": "能",
-        "kr": "~할 수 있다",
-        "en": "surname Neng"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    },
-    {
-      "hanzi": "会",
-      "pinyin": "huì",
-      "meaning": {
-        "zh": "会",
-        "kr": "~할 수 있다",
-        "en": "can; to have the skill; to know how to; to be likely to; to be sure to; to meet; to get together; meeting; gathering; (suffix) union; group; association; (bound form) a moment (Taiwan pr. [huǐ])"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb"
-      }
-    }
+    { "hanzi": "工作", "pinyin": "gōngzuò", "meaning": { "zh": "工作", "kr": "일하다", "en": "to work" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "医生", "pinyin": "yīshēng", "meaning": { "zh": "医生", "kr": "의사", "en": "doctor" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "先生", "pinyin": "xiānsheng", "meaning": { "zh": "先生", "kr": "선생님, 씨", "en": "Mr." }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "小姐", "pinyin": "xiǎojiě", "meaning": { "zh": "小姐", "kr": "아가씨", "en": "Miss" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "做", "pinyin": "zuò", "meaning": { "zh": "做", "kr": "하다", "en": "to do" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "能", "pinyin": "néng", "meaning": { "zh": "能", "kr": "~할 수 있다", "en": "can" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "会", "pinyin": "huì", "meaning": { "zh": "会", "kr": "~할 줄 알다", "en": "can; to know how" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "这个多少钱？"
-    },
-    {
-      "speaker": "B",
-      "line": "十块钱。"
-    }
+    { "speaker": "A", "line": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "kr": "무슨 일 하세요?", "en": "What do you do?" },
+    { "speaker": "B", "line": "我是医生。王先生是医生。", "pinyin": "Wǒ shì yīshēng. Wáng xiānsheng shì yīshēng.", "kr": "저는 의사예요. 왕先生도 의사예요.", "en": "I'm a doctor. Mr. Wang is a doctor." },
+    { "speaker": "A", "line": "李小姐会汉语吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma?", "kr": "이小姐는 중국어 할 줄 알아요?", "en": "Can Miss Li speak Chinese?" },
+    { "speaker": "B", "line": "会，她能说话。", "pinyin": "Huì, tā néng shuōhuà.", "kr": "네, 그녀는 말할 수 있어요.", "en": "Yes, she can speak." }
   ],
   "grammar": [
-    {
-      "title": "多少钱",
-      "explanation_zh": "询问价格用“多少钱”。",
-      "explanation_kr": "가격을 물을 때 '多少钱'를 사용합니다.",
-      "example": "这个多少钱？"
-    }
+    { "title": "做 + 工作", "explanation_zh": "「做」表示从事。", "explanation_kr": "'做'는 ~을 한다는 뜻입니다.", "explanation_en": "做 indicates doing work.", "example": { "zh": "做什么工作", "pinyin": "zuò shénme gōngzuò", "kr": "무슨 일 하다", "en": "what work do you do" } },
+    { "title": "能 / 会", "explanation_zh": "「能」表示能力，「会」表示会做。", "explanation_kr": "'能'은 능력, '会'는 할 줄 알다.", "explanation_en": "能 for ability, 会 for knowing how.", "example": { "zh": "我能去。我会说汉语。", "pinyin": "Wǒ néng qù. Wǒ huì shuō Hànyǔ.", "kr": "저는 갈 수 있어요. 중국어를 할 줄 알아요.", "en": "I can go. I can speak Chinese." } }
   ],
   "practice": [
-    {
-      "type": "math",
-      "question": "五块+五块",
-      "answer": "十块"
-    }
+    { "type": "choice", "question": { "zh": "「医生」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["老师", "医生", "学生"], "answer": "医生" },
+    { "type": "choice", "question": { "zh": "「先生」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["小姐", "先生", "医生"], "answer": "先生" },
+    { "type": "choice", "question": { "zh": "你___什么工作？", "kr": "빈칸", "en": "Fill in" }, "options": ["做", "能", "会"], "answer": "做" },
+    { "type": "choice", "question": { "zh": "A：你会汉语吗？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["会", "不", "做"], "answer": "会" },
+    { "type": "choice", "question": { "zh": "哪个是「工作」？", "kr": "어느 것?", "en": "Which?" }, "options": ["工作", "做", "能"], "answer": "工作" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "十块钱"
-    ],
-    "chatPrompt": "AI卖水果，学生买。"
-  },
+  "aiPractice": { "speaking": ["我做什么工作", "我是医生", "会汉语", "能做"], "chatPrompt": "AI问：你做什么工作？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

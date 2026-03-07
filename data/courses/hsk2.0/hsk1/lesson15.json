@@ -5,161 +5,43 @@
   "version": "2.0",
   "lessonNo": 15,
   "type": "lesson",
-  "title": {
-    "zh": "喜欢做什么",
-    "pinyin": "",
-    "kr": "무엇을 좋아해요?",
-    "en": "Drinks"
-  },
-  "summary": {
-    "zh": "表达兴趣爱好",
-    "kr": "취미 표현"
-  },
-  "objectives": [],
+  "title": { "zh": "饮料", "pinyin": "yǐnliào", "kr": "음료", "en": "Drinks" },
+  "summary": { "zh": "茶、杯子与饭馆", "kr": "차, 컵과 식당", "en": "Tea, cups and restaurant" },
+  "objectives": [
+    { "zh": "学会在饭馆点饮料", "kr": "식당에서 음료 주문할 수 있다", "en": "Can order drinks at restaurant" },
+    { "zh": "学会块、东西", "kr": "'块', '东西'를 사용할 수 있다", "en": "Can use 块 and 东西" }
+  ],
   "vocab": [
-    {
-      "hanzi": "茶",
-      "pinyin": "chá",
-      "meaning": {
-        "zh": "茶",
-        "kr": "차",
-        "en": "tea; tea plant"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "杯子",
-      "pinyin": "bēizi",
-      "meaning": {
-        "zh": "杯子",
-        "kr": "컵",
-        "en": "cup; glass"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "饭馆",
-      "pinyin": "fànguǎn",
-      "meaning": {
-        "zh": "饭馆",
-        "kr": "식당",
-        "en": "restaurant"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    },
-    {
-      "hanzi": "块",
-      "pinyin": "kuài",
-      "meaning": {
-        "zh": "块",
-        "kr": "위안",
-        "en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word"
-      }
-    },
-    {
-      "hanzi": "东西",
-      "pinyin": "dōngxī",
-      "meaning": {
-        "zh": "东西",
-        "kr": "것",
-        "en": "east and west"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun"
-      }
-    }
+    { "hanzi": "茶", "pinyin": "chá", "meaning": { "zh": "茶", "kr": "차", "en": "tea" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "杯子", "pinyin": "bēizi", "meaning": { "zh": "杯子", "kr": "컵", "en": "cup" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "饭馆", "pinyin": "fànguǎn", "meaning": { "zh": "饭馆", "kr": "식당", "en": "restaurant" }, "pos": { "kr": "명사", "en": "noun" } },
+    { "hanzi": "块", "pinyin": "kuài", "meaning": { "zh": "块", "kr": "위안", "en": "yuan" }, "pos": { "kr": "양사", "en": "measure word" } },
+    { "hanzi": "东西", "pinyin": "dōngxi", "meaning": { "zh": "东西", "kr": "것", "en": "thing" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    {
-      "speaker": "A",
-      "line": "你喜欢做什么？"
-    },
-    {
-      "speaker": "B",
-      "line": "我喜欢看电影。"
-    }
+    { "speaker": "A", "line": "我们在饭馆。你喝什么？", "pinyin": "Wǒmen zài fànguǎn. Nǐ hē shénme?", "kr": "우리는 식당에 있어요. 뭘 마셔요?", "en": "We're at a restaurant. What do you drink?" },
+    { "speaker": "B", "line": "我喝茶。一个杯子。", "pinyin": "Wǒ hē chá. Yī gè bēizi.", "kr": "저는 차를 마셔요. 컵 하나요.", "en": "I drink tea. One cup." },
+    { "speaker": "A", "line": "这个茶多少钱？", "pinyin": "Zhè gè chá duōshao qián?", "kr": "이 차는 얼마예요?", "en": "How much is this tea?" },
+    { "speaker": "B", "line": "五块。我买一些东西。", "pinyin": "Wǔ kuài. Wǒ mǎi yīxiē dōngxi.", "kr": "5위안이에요. 저는 뭔가 사요.", "en": "Five yuan. I buy some things." }
   ],
   "grammar": [
-    {
-      "title": "喜欢 + 动词",
-      "explanation_zh": "“喜欢”后面接动词或名词。",
-      "explanation_kr": "'喜欢' 뒤에는 동사나 명사가 옵니다.",
-      "example": "喜欢听音乐"
-    }
+    { "title": "块", "explanation_zh": "「块」是人民币单位。", "explanation_kr": "'块'는 위안 단위입니다.", "explanation_en": "块 is the unit for yuan.", "example": { "zh": "五块", "pinyin": "wǔ kuài", "kr": "5위안", "en": "five yuan" } },
+    { "title": "东西", "explanation_zh": "「东西」指事物。", "explanation_kr": "'东西'는 물건을 가리킵니다.", "explanation_en": "东西 means thing.", "example": { "zh": "买东西", "pinyin": "mǎi dōngxi", "kr": "물건 사다", "en": "buy things" } }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": "你喜欢什么？",
-      "options": [
-        "我喜欢苹果",
-        "谢谢",
-        "再见"
-      ],
-      "answer": "我喜欢苹果"
-    }
+    { "type": "choice", "question": { "zh": "「茶」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["水", "茶", "杯子"], "answer": "茶" },
+    { "type": "choice", "question": { "zh": "「饭馆」的意思是？", "kr": "의미는?", "en": "Meaning?" }, "options": ["商店", "饭馆", "家"], "answer": "饭馆" },
+    { "type": "choice", "question": { "zh": "这个___多少钱？", "kr": "빈칸", "en": "Fill in" }, "options": ["块", "东西", "茶"], "answer": "茶" },
+    { "type": "choice", "question": { "zh": "A：你喝什么？ B：___", "kr": "대화", "en": "Dialogue" }, "options": ["我喝茶", "五块", "杯子"], "answer": "我喝茶" },
+    { "type": "choice", "question": { "zh": "哪个是「东西」？", "kr": "어느 것?", "en": "Which?" }, "options": ["东西", "块", "茶"], "answer": "东西" }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "我喜欢看书"
-    ],
-    "chatPrompt": "AI问兴趣爱好。"
-  },
+  "aiPractice": { "speaking": ["我喝茶", "一个杯子", "五块", "买东西"], "chatPrompt": "AI问：你喝什么？学生回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }
