@@ -82,7 +82,7 @@ export function renderSceneCharacters(scene, lang = "ko") {
     const avatar = str(c.avatar);
     const avatarSrc = avatar ? resolveMediaUrl(avatar) : "";
     const avatarHtml = avatarSrc
-      ? `<img class="scene-character-avatar" src="${escapeHtml(avatarSrc)}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.display='none'" />`
+      ? `<img class="scene-character-avatar" src="${escapeHtml(avatarSrc)}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.display='none';var w=this.closest('.scene-character-avatar-wrap');if(w)w.style.display='none'" />`
       : `<span class="scene-character-placeholder">${escapeHtml(c.id)}</span>`;
     return `
       <div class="scene-character-card">
@@ -116,7 +116,7 @@ export function renderSceneFrames(scene, lesson, lang = "ko") {
 
     const frameSrc = frame.image ? resolveMediaUrl(frame.image) : "";
     const imgHtml = frameSrc
-      ? `<img class="scene-frame-image" src="${escapeHtml(frameSrc)}" alt="" loading="lazy" onerror="this.style.display='none'" />`
+      ? `<img class="scene-frame-image" src="${escapeHtml(frameSrc)}" alt="" loading="lazy" onerror="this.style.display='none';var w=this.closest('.scene-frame-image-wrap');if(w){w.style.display='none'}" />`
       : "";
 
     const dialogueHtml = zh
