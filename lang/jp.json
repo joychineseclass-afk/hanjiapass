@@ -59,11 +59,17 @@
     "meta": {
       "completed": "完了",
       "current": "現在のレッスン",
+      "current_lesson": "現在のレッスン",
       "review": "復習待ち",
+      "review_words": "復習待ち",
       "last_study": "最近の学習",
       "lesson_unit": "課",
       "word_unit": "語"
     },
+    "review_mode": "復習モード",
+    "review_this_lesson": "本課",
+    "review_this_level": "本級",
+    "review_all_wrong": "全オ답",
     "tab": {
       "words": "単語",
       "dialogue": "会話",

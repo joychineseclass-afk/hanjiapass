@@ -185,7 +185,7 @@ export function mount(root) {
     if (ch) renderMeaningFromHSK(ch);
   };
 
-  window.addEventListener("joy:langchanged", _strokeLangHandler);
+  window.addEventListener("joy:langChanged", _strokeLangHandler);
 }
 
 export function unmount() {
@@ -198,7 +198,7 @@ export function unmount() {
   }
 
   if (_strokeLangHandler) {
-    window.removeEventListener("joy:langchanged", _strokeLangHandler);
+    window.removeEventListener("joy:langChanged", _strokeLangHandler);
     _strokeLangHandler = null;
   }
 }

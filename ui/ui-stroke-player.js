@@ -534,7 +534,7 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
 
   // ===== language =====
   const onLangChanged = () => applyLangText();
-  window.addEventListener("joy:langchanged", onLangChanged);
+  window.addEventListener("joy:langChanged", onLangChanged);
 
   // ===== cleanup =====
   targetEl._strokeCleanup = () => {
@@ -542,7 +542,7 @@ export function mountStrokeSwitcher(targetEl, hanChars, opts = {}) {
     if (autoNextTimer) clearTimeout(autoNextTimer);
     try { targetEl.removeEventListener("stroke:complete", onStrokeComplete); } catch {}
     try { targetEl.removeEventListener("stroke:nextchar", onStrokeNextChar); } catch {}
-    try { window.removeEventListener("joy:langchanged", onLangChanged); } catch {}
+    try { window.removeEventListener("joy:langChanged", onLangChanged); } catch {}
     try { traceDrawCanvas?.removeEventListener("trace:strokeend", onStrokeEnd); } catch {}
     try { teaching?.stop?.(); } catch {}
     try { practiceApi?.destroy?.(); } catch {}

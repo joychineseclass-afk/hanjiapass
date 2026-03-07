@@ -55,11 +55,17 @@
     "meta": {
       "completed": "완료",
       "current": "현재 학습",
+      "current_lesson": "현재 학습",
       "review": "복습 대기",
+      "review_words": "복습 대기",
       "last_study": "최근 학습",
       "lesson_unit": "과",
       "word_unit": "단어"
     },
+    "review_mode": "오답 복습",
+    "review_this_lesson": "본과",
+    "review_this_level": "본급",
+    "review_all_wrong": "전체 오답",
     "tab": {
       "words": "단어",
       "dialogue": "회화",

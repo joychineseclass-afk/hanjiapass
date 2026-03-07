@@ -237,10 +237,8 @@ export function mountNavBar(rootEl) {
       const lang = btn.getAttribute("data-lang") || "kr"; // kr | cn | en | jp
       try {
         await i18n?.setLang?.(lang);
-        localStorage.setItem("joy_lang", lang);
       } catch {}
       applyI18n(rootEl);
-      window.dispatchEvent(new CustomEvent("joy:langchanged"));
     });
   });
 

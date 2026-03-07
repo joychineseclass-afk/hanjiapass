@@ -66,6 +66,26 @@ const KEY_ALIAS = {
   hsk_review_desc: "hsk.review_desc",
   hsk_review_range_format: "hsk.review_range_format",
   review_no_wrong_questions: "review.no_wrong_questions",
+  review_mode: "hsk.review_mode",
+  review_current_lesson: "hsk.review_this_lesson",
+  review_current_level: "hsk.review_this_level",
+  review_all_wrong: "hsk.review_all_wrong",
+  review_start: "review.start",
+  hsk_title: "hsk.title",
+  hsk_level: "hsk.level",
+  hsk_tip: "hsk.tip",
+  hsk_directory_title: "hsk.directory_title",
+  hsk_tab_words: "hsk.tab.words",
+  hsk_tab_dialogue: "hsk.tab.dialogue",
+  hsk_tab_grammar: "hsk.tab.grammar",
+  hsk_tab_extension: "hsk.tab.extension",
+  hsk_tab_practice: "hsk.tab.practice",
+  hsk_tab_ai: "hsk.tab.ai",
+  hsk_ai_tip: "hsk.ai_tip",
+  hsk_ai_placeholder: "hsk.ai_placeholder",
+  hsk_ai_send: "hsk.ai_send",
+  hsk_ai_copy: "hsk.ai_copy",
+  hsk_ai_empty: "hsk.ai_empty",
   practice_load_failed: "practice.load_failed",
   practice_empty: "practice.empty",
   common_loading: "common.loading",
@@ -121,10 +141,13 @@ export function getLang() {
 
 /**
  * 2. setLang(lang)
- * 保存、更新 DOM、分发 joy:langChanged
+ * 保存、更新 DOM、分发 joy:langChanged（统一事件名，仅此一个）
  */
 export async function setLang(lang) {
   const next = normalizeLang(lang, "kr");
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug("[LanguageEngine] setLang ->", next);
+  }
   if (next === currentLang) return currentLang;
 
   currentLang = next;
@@ -142,7 +165,6 @@ export async function setLang(lang) {
 
   try {
     window.dispatchEvent(new CustomEvent("joy:langChanged", { detail: { lang: next } }));
-    window.dispatchEvent(new CustomEvent("joy:langchanged", { detail: { lang: next } }));
   } catch {}
 
   return currentLang;
@@ -202,15 +224,20 @@ export async function tAsync(key, paramsOrFallback, fallback) {
 /**
  * 4. pick(obj, options?)
  * 从多语言对象取值
- * 顺序：当前 lang -> en -> kr -> cn -> jp -> ""
+ * options.strict: true 时仅返回当前语言，不 fallback 到其他语言（课程内容用，避免混语）
+ * 否则顺序：当前 lang -> en -> kr -> cn -> jp -> ""
  */
 export function pick(obj, options = {}) {
   if (!obj || typeof obj !== "object") return options.fallback ?? "";
   if (typeof obj === "string" || typeof obj === "number") return String(obj);
 
   const lang = options.lang ?? getLang();
-  const order = [lang, ...FALLBACK_ORDER.filter((l) => l !== lang)];
+  if (options.strict) {
+    const v = obj[lang] ?? obj[lang === "kr" ? "ko" : lang === "cn" ? "zh" : lang === "jp" ? "ja" : lang];
+    return (v != null && str(v)) ? str(v) : (options.fallback ?? "");
+  }
 
+  const order = [lang, ...FALLBACK_ORDER.filter((l) => l !== lang)];
   for (const l of order) {
     const v = obj[l] ?? obj[l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l];
     if (v != null && str(v)) return str(v);
@@ -220,25 +247,61 @@ export function pick(obj, options = {}) {
 
 /**
  * 5. getContentText(item, field?)
- * 课程内容字段：兼容 translation/meaning/explain + 旧结构扁平 kr/jp/en/cn
- * field: "translation" | "meaning" | "explain" | 不传则自动检测
+ * 课程内容字段：兼容 translation/meaning/explain + 旧结构
+ * 新结构: item.translation?.[lang], item.meaning?.[lang], item.explain?.[lang]
+ * 旧结构: item.kr/jp/en/cn, item.meaningKr/meaningJp/meaningEn/meaningCn,
+ *        item.explainKr/explainJp/explainEn/explainCn,
+ *        item.explanation_kr/explanation_jp/explanation_en/explanation_zh
  */
 export function getContentText(item, field) {
   if (!item || typeof item !== "object") return "";
 
-  const fields = field
-    ? [field]
-    : ["translation", "meaning", "explain", "explanation"];
+  const lang = getLang();
+  const altKeys = { kr: ["kr", "ko"], cn: ["cn", "zh"], en: ["en"], jp: ["jp", "ja"] };
+  const keys = altKeys[lang] || ["kr", "en", "cn", "jp"];
+
+  /** 从旧结构构建多语言对象：meaningKr->kr, explanation_kr->kr */
+  function buildFromOld(item, prefix) {
+    const obj = {};
+    const map = { kr: ["kr", "Kr", "ko", "Ko"], cn: ["cn", "Cn", "zh", "Zh"], en: ["en", "En"], jp: ["jp", "Jp", "ja", "Ja"] };
+    for (const [k, variants] of Object.entries(map)) {
+      for (const v of variants) {
+        const key = prefix + v;
+        const val = item[key];
+        if (val != null && str(val)) { obj[k] = str(val); break; }
+      }
+    }
+    return Object.keys(obj).length ? obj : null;
+  }
+
+  /** 课程内容 strict: 缺当前语言时不 fallback 到其他语言，避免混语 */
+  const strictOpt = { strict: true };
+
+  const fields = field ? [field] : ["translation", "meaning", "explain", "explanation"];
 
   for (const f of fields) {
     const sub = item[f];
     if (sub && typeof sub === "object") {
-      const v = pick(sub);
+      const v = pick(sub, strictOpt);
       if (v) return v;
+    }
+    if (f === "meaning") {
+      const old = buildFromOld(item, "meaning") ?? buildFromOld(item, "meaning_");
+      if (old) { const v = pick(old, strictOpt); if (v) return v; }
+    }
+    if (f === "translation") {
+      const old = buildFromOld(item, "translation") ?? buildFromOld(item, "translation_");
+      if (old) { const v = pick(old, strictOpt); if (v) return v; }
     }
   }
 
-  return pick(item);
+  const explainPrefixes = ["explain", "explanation_"];
+  for (const p of explainPrefixes) {
+    const old = buildFromOld(item, p);
+    if (old) { const v = pick(old, strictOpt); if (v) return v; }
+  }
+
+  return pick(item, strictOpt);
 }
 
 /** 初始化：从 storage/html 读取并加载语言包，预加载 en 用于 fallback。可选传 lang 覆盖 */

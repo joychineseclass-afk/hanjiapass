@@ -506,7 +506,7 @@ function bindLiveRerender(root) {
   };
 
   // ✅ Your app’s language switch event
-  window.addEventListener("joy:langchanged", rerender);
+  window.addEventListener("joy:langChanged", rerender);
 
   // ✅ i18n libs (optional)
   try { i18n?.on?.("change", rerender); } catch {}

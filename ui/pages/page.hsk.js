@@ -4,7 +4,7 @@
 // ✅ Study Tabs: words/dialogue/grammar/ai
 
 import { i18n } from "../i18n.js";
-import { pick, getContentText } from "../core/languageEngine.js";
+import { pick, getContentText, getLang as getEngineLang } from "../core/languageEngine.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
@@ -20,12 +20,34 @@ const state = {
   lessons: [],
   current: null,        // { lessonNo, file, lessonData, lessonWords }
   tab: "words",         // words | dialogue | grammar | extension | practice | ai
+  searchKeyword: "",
+  reviewMode: null,
 };
 
-var el; // 复用变量，供 showStudyMode/showListMode/bindEvents/openLesson 等使用
+var el;
+
+/** 当前 hskState，供 rerender 使用 */
+function getHskState() {
+  return {
+    version: state.version,
+    level: state.lv,
+    lessonId: state.current ? (state.current.lessonData?.id || getCourseId() + "_lesson" + state.current.lessonNo) : "",
+    lessonNo: state.current?.lessonNo || 0,
+    file: state.current?.file || "",
+    activeTab: state.tab,
+    reviewMode: state.reviewMode,
+    searchKeyword: state.searchKeyword,
+  };
+}
+
+function isHSKPageActive() {
+  const hash = (typeof location !== "undefined" && location.hash || "").toLowerCase();
+  const path = (typeof location !== "undefined" && location.pathname || "").toLowerCase();
+  return hash.includes("hsk") || path.includes("hsk");
+}
 
 function getLang() {
-  return normalizeLang(i18n?.getLang?.() ?? "kr");
+  return normalizeLang(getEngineLang());
 }
 
 function getCourseId() {
@@ -33,6 +55,105 @@ function getCourseId() {
 }
 
 function $(id) { return document.getElementById(id); }
+
+/** state-driven 全量重渲染：meta / lesson list / detail 区 / tabs */
+function rerenderHSKFromState() {
+  const lang = getLang();
+  const hskState = getHskState();
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug("[HSK] rerender detail:", { ...hskState, lang });
+  }
+
+  updateProgressBlock();
+  updateTabsLabels();
+
+  const total = (state.lessons && state.lessons.length) || 0;
+  const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total) : null) || {};
+  const listEl = $("hskLessonList");
+  if (listEl) renderLessonList(listEl, state.lessons, { lang, currentLessonNo: stats.lastLessonNo || 0 });
+
+  if (state.current && state.current.lessonData) {
+    const ld = state.current.lessonData;
+    const lw = state.current.lessonWords || [];
+    const no = state.current.lessonNo;
+    const isReview = (ld && ld.type) === "review";
+    const rr = (ld && ld.review && ld.review.lessonRange);
+
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[HSK] render tab", state.tab, "lang=" + lang);
+    }
+
+    const titleObj = ld && ld.title;
+    const titleStr = typeof titleObj === "object" ? pick(titleObj) : (typeof titleObj === "string" ? titleObj : "");
+    const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no });
+    const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
+    const titleEl = $("hskStudyTitle");
+    if (titleEl) titleEl.textContent = headerTitle;
+
+    if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
+      const reviewTitle = i18n.t("hsk.review_range", "复习范围");
+      const reviewDesc = i18n.t("hsk.review_desc", "请回顾前面学过的词汇和对话。");
+      const rangeFmt = i18n.t("hsk.review_range_format", { from: rr[0], to: rr[1], total: rr[1] });
+      const pw = $("hskPanelWords");
+      if (pw) pw.innerHTML = `<div class="rounded-xl border border-slate-200 p-4 bg-slate-50"><div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div><p class="text-slate-700">${escapeHtml(rangeFmt)}</p><p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p></div>`;
+    } else {
+      renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
+    }
+
+    $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
+    $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
+    $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
+
+    if (rerenderPractice && $("hskPracticeBody")) {
+      try { rerenderPractice($("hskPracticeBody"), lang); } catch {}
+    }
+
+    if (AI_CAPABILITY && typeof AI_CAPABILITY.mountAIPanel === "function" && $("hskAIResult")) {
+      try {
+        AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
+          lesson: ld,
+          lang,
+          wordsWithMeaning: (w) => wordMeaning(w, lang),
+        });
+      } catch {}
+    }
+
+    updateTabsUI();
+  }
+}
+
+/** 更新 tab 与 review 入口按钮文案（语言切换后） */
+function updateTabsLabels() {
+  const tabs = [
+    ["hskTabWords", "hsk.tab.words"],
+    ["hskTabDialogue", "hsk.tab.dialogue"],
+    ["hskTabGrammar", "hsk.tab.grammar"],
+    ["hskTabExtension", "hsk.tab.extension"],
+    ["hskTabPractice", "hsk.tab.practice"],
+    ["hskTabAI", "hsk.tab.ai"],
+  ];
+  tabs.forEach(([id, key]) => {
+    const btn = $(id);
+    if (btn) {
+      const span = btn.querySelector("span") || btn;
+      span.textContent = i18n.t(key, key.split(".").pop());
+    }
+  });
+  const reviewBtn = $("hskReviewBtn");
+  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start", "복습");
+  const reviewLabels = [
+    ["hskReviewEntry", "span", "hsk.review_mode"],
+    ["hskReviewLesson", null, "hsk.review_this_lesson"],
+    ["hskReviewLevel", null, "hsk.review_this_level"],
+    ["hskReviewAll", null, "hsk.review_all_wrong"],
+  ];
+  reviewLabels.forEach(([id, child, key]) => {
+    const el = $(id);
+    if (!el) return;
+    const target = child ? el.querySelector(child) : el;
+    if (target) target.textContent = i18n.t(key, key.split(".").pop());
+  });
+}
 
 function updateProgressBlock() {
   const el = $("hskProgressBlock");
@@ -52,10 +173,10 @@ function updateProgressBlock() {
       : "—"
   );
   if (lastLessonNo > 0) {
-    chips.push(`${i18n.t("hsk.meta.current", "현재")} ${lastLessonNo} ${lessonUnit}`);
+    chips.push(`${i18n.t("hsk.meta.current_lesson", "현재")} ${lastLessonNo} ${lessonUnit}`);
   }
   if (dueReviewCount > 0) {
-    chips.push(`${i18n.t("hsk.meta.review", "복습")} ${dueReviewCount} ${wordUnit}`);
+    chips.push(`${i18n.t("hsk.meta.review_words", "복습")} ${dueReviewCount} ${wordUnit}`);
   }
   if (lastActivityAt > 0) {
     const d = new Date(lastActivityAt);
@@ -908,57 +1029,22 @@ function bindEvents() {
   }
 });
 
-  // Language changed
-  window.addEventListener("joy:langchanged", () => {
+  // joy:langChanged — 统一事件名，state-driven 全量重渲染
+  window.addEventListener("joy:langChanged", (e) => {
+    const newLang = (e && e.detail && e.detail.lang) || getLang();
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[HSK] joy:langChanged received ->", newLang);
+    }
+    if (!isHSKPageActive()) return;
+
     try { i18n.apply(document); } catch {}
     setSubTitle();
-
-    const lang = getLang();
-    const total = (state.lessons && state.lessons.length) || 0;
-    const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total) : null) || {};
-    renderLessonList($("hskLessonList"), state.lessons, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
-
-    if (state.current && state.current.lessonData) {
-      const ld = state.current.lessonData;
-      const lw = state.current.lessonWords || [];
-      const isReview = (ld && ld.type) === "review";
-      const rr = (ld && ld.review && ld.review.lessonRange);
-      if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
-        const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
-        const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
-        const rangeFmt = i18n.t("hsk.review_range_format", { from: rr[0], to: rr[1], total: rr[1] }) || `第 ${rr[0]}–${rr[1]} 课`;
-        $("hskPanelWords").innerHTML = `
-          <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
-            <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
-            <p class="text-slate-700">${escapeHtml(rangeFmt)}</p>
-            <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
-          </div>
-        `;
-      } else {
-        renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
-      }
-      $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
-      $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
-      $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
-      if (rerenderPractice && $("hskPracticeBody")) {
-        try { rerenderPractice($("hskPracticeBody"), lang); } catch {}
-      }
-      if (AI_CAPABILITY && typeof AI_CAPABILITY.mountAIPanel === "function" && $("hskAIResult")) {
-        try {
-          AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
-            lesson: ld,
-            lang,
-            wordsWithMeaning: (w) => wordMeaning(w, lang),
-          });
-        } catch {}
-      }
-      updateTabsUI();
-    }
+    rerenderHSKFromState();
   }, { signal });
 
   // i18n bus
   try {
-    if (i18n && typeof i18n.on === "function") i18n.on("change", function() { window.dispatchEvent(new CustomEvent("joy:langchanged")); });
+    if (i18n && typeof i18n.on === "function") i18n.on("change", function() { window.dispatchEvent(new CustomEvent("joy:langChanged", { detail: { lang: i18n?.getLang?.() } })); });
   } catch {}
 }
 
@@ -972,10 +1058,11 @@ export async function mount() {
 
   await ensureHSKDeps();
 
-  // ✅ 预加载 glossary（HSK1 的 kr/en），供词卡释义回退
+  // ✅ 预加载 glossary（HSK1 的 kr/en/jp），供词卡释义回退
   const scope = `hsk${state.lv}`;
   loadGlossary("kr", scope).catch(() => {});
   loadGlossary("en", scope).catch(() => {});
+  loadGlossary("jp", scope).catch(() => {});
 
   // ✅ mini nav: Home + Lang only
   navRoot.dataset.mode = "mini";

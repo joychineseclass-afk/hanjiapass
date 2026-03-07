@@ -68,7 +68,7 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "") || fallbackHanzi;
   const zh = str(word.zh ?? word.cn ?? (word.meaning && word.meaning.zh) ?? (word.meaning && word.meaning.cn)) || fallbackHanzi;
 
-  const fromEngine = getContentText(word, "meaning") || getContentText(word, "translation") || pick(word);
+  const fromEngine = getContentText(word, "meaning") || getContentText(word, "translation") || pick(word, { strict: true });
   if (fromEngine) return fromEngine;
 
   if (scope && hanzi) {

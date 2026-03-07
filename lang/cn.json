@@ -55,11 +55,17 @@
     "meta": {
       "completed": "已完成",
       "current": "当前第",
+      "current_lesson": "当前第",
       "review": "待复习",
+      "review_words": "待复习",
       "last_study": "最近学习",
       "lesson_unit": "课",
       "word_unit": "词"
     },
+    "review_mode": "错题复习",
+    "review_this_lesson": "本课",
+    "review_this_level": "本级",
+    "review_all_wrong": "全部错题",
     "tab": {
       "words": "单词",
       "dialogue": "会话",

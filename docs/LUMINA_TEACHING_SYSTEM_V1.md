@@ -63,7 +63,7 @@
 
 ### 接入点
 
-- `ui/pages/page.hsk.js`：openLesson 时 mountAIPanel，joy:langchanged 时重挂载
+- `ui/pages/page.hsk.js`：openLesson 时 mountAIPanel，joy:langChanged 时重挂载
 
 ---
 

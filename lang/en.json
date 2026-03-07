@@ -55,11 +55,17 @@
     "meta": {
       "completed": "Completed",
       "current": "Current Lesson",
+      "current_lesson": "Current Lesson",
       "review": "Review Words",
+      "review_words": "Review Words",
       "last_study": "Last Study",
       "lesson_unit": "lessons",
       "word_unit": "words"
     },
+    "review_mode": "Review Mode",
+    "review_this_lesson": "This Lesson",
+    "review_this_level": "This Level",
+    "review_all_wrong": "All Wrong",
     "tab": {
       "words": "Words",
       "dialogue": "Dialogue",
