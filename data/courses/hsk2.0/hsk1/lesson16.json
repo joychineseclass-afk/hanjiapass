@@ -21,11 +21,20 @@
     { "hanzi": "桌子", "pinyin": "zhuōzi", "meaning": { "zh": "桌子", "kr": "탁자", "en": "table" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你来学校吗？", "pinyin": "Nǐ lái xuéxiào ma?", "kr": "학교에 와요?", "en": "Are you coming to school?" },
-    { "speaker": "B", "line": "是，我来。你去哪儿？", "pinyin": "Shì, wǒ lái. Nǐ qù nǎr?", "kr": "네, 와요. 어디 가요?", "en": "Yes, I'm coming. Where are you going?" },
-    { "speaker": "A", "line": "我回家。我坐椅子。", "pinyin": "Wǒ huí jiā. Wǒ zuò yǐzi.", "kr": "저는 집에 돌아가요. 의자에 앉아요.", "en": "I'm going home. I sit on the chair." },
-    { "speaker": "B", "line": "你有桌子吗？", "pinyin": "Nǐ yǒu zhuōzi ma?", "kr": "탁자 있어요?", "en": "Do you have a table?" },
-    { "speaker": "A", "line": "有。书在桌子上。", "pinyin": "Yǒu. Shū zài zhuōzi shàng.", "kr": "있어요. 책은 탁자 위에 있어요.", "en": "Yes. The book is on the table." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
+        { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "猫在哪儿？", "pinyin": "Māo zài nǎr?", "kr": "고양이가 어디에 있어요?" },
+        { "speaker": "B", "zh": "在椅子下面。", "pinyin": "Zài yǐzi xiàmiàn.", "kr": "의자 아래에 있어요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "来 / 去 / 回", "explanation_zh": "「来」向说话人，「去」离开，「回」返回。", "explanation_kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.", "explanation_en": "来 toward speaker, 去 away, 回 return.", "example": { "zh": "来学校，回家", "pinyin": "lái xuéxiào, huí jiā", "kr": "학교 오다, 집 돌아가다", "en": "come to school, go home" } },

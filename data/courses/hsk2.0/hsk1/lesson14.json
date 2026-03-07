@@ -22,10 +22,20 @@
     { "hanzi": "和", "pinyin": "hé", "meaning": { "zh": "和", "kr": "그리고", "en": "and" }, "pos": { "kr": "접속사", "en": "conjunction" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你吃什么？", "pinyin": "Nǐ chī shénme?", "kr": "뭘 먹어요?", "en": "What do you eat?" },
-    { "speaker": "B", "line": "我吃米饭和菜。", "pinyin": "Wǒ chī mǐfàn hé cài.", "kr": "저는 밥과 요리를 먹어요.", "en": "I eat rice and dishes." },
-    { "speaker": "A", "line": "你喝什么？", "pinyin": "Nǐ hē shénme?", "kr": "뭘 마셔요?", "en": "What do you drink?" },
-    { "speaker": "B", "line": "我喝水。我吃苹果和水果。", "pinyin": "Wǒ hē shuǐ. Wǒ chī píngguǒ hé shuǐguǒ.", "kr": "저는 물을 마셔요. 사과와 과일을 먹어요.", "en": "I drink water. I eat apples and fruit." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你吃什么？", "pinyin": "Nǐ chī shénme?", "kr": "뭘 먹어요?" },
+        { "speaker": "B", "zh": "我吃米饭。", "pinyin": "Wǒ chī mǐfàn.", "kr": "저는 밥을 먹어요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你喝什么？", "pinyin": "Nǐ hē shénme?", "kr": "뭘 마셔요?" },
+        { "speaker": "B", "zh": "我喝水。", "pinyin": "Wǒ hē shuǐ.", "kr": "저는 물을 마셔요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "吃 / 喝 + 宾语", "explanation_zh": "「吃」用于固体，「喝」用于液体。", "explanation_kr": "'吃'는 고체, '喝'는 액체에 사용합니다.", "explanation_en": "吃 for solid, 喝 for liquid.", "example": { "zh": "吃饭，喝水", "pinyin": "chī fàn, hē shuǐ", "kr": "밥 먹다, 물 마시다", "en": "eat, drink water" } },

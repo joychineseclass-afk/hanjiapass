@@ -20,10 +20,20 @@
     { "hanzi": "星期", "pinyin": "xīngqī", "meaning": { "zh": "星期", "kr": "주", "en": "week" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "今天几月几日？", "pinyin": "Jīntiān jǐ yuè jǐ rì?", "kr": "오늘 몇 월 며칠이에요?", "en": "What's the date today?" },
-    { "speaker": "B", "line": "今天三月十五日。", "pinyin": "Jīntiān sān yuè shíwǔ rì.", "kr": "오늘 3월 15일이에요.", "en": "Today is March 15th." },
-    { "speaker": "A", "line": "明天星期几？", "pinyin": "Míngtiān xīngqī jǐ?", "kr": "내일 무슨 요일이에요?", "en": "What day is tomorrow?" },
-    { "speaker": "B", "line": "明天星期二。", "pinyin": "Míngtiān xīngqī èr.", "kr": "내일 화요일이에요.", "en": "Tomorrow is Tuesday." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "今天几号？", "pinyin": "Jīntiān jǐ hào?", "kr": "오늘 며칠이에요?" },
+        { "speaker": "B", "zh": "今天五号。", "pinyin": "Jīntiān wǔ hào.", "kr": "오늘 5일이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "明天星期几？", "pinyin": "Míngtiān xīngqī jǐ?", "kr": "내일 무슨 요일이에요?" },
+        { "speaker": "B", "zh": "明天星期一。", "pinyin": "Míngtiān xīngqī yī.", "kr": "내일 월요일이에요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "年 + 月 + 日", "explanation_zh": "日期顺序：年、月、日。", "explanation_kr": "날짜 순서: 년, 월, 일.", "explanation_en": "Date order: year, month, day.", "example": { "zh": "三月十五日", "pinyin": "sān yuè shíwǔ rì", "kr": "3월 15일", "en": "March 15th" } },

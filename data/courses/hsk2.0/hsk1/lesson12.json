@@ -21,10 +21,20 @@
     { "hanzi": "会", "pinyin": "huì", "meaning": { "zh": "会", "kr": "~할 줄 알다", "en": "can; to know how" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "kr": "무슨 일 하세요?", "en": "What do you do?" },
-    { "speaker": "B", "line": "我是医生。王先生是医生。", "pinyin": "Wǒ shì yīshēng. Wáng xiānsheng shì yīshēng.", "kr": "저는 의사예요. 왕先生도 의사예요.", "en": "I'm a doctor. Mr. Wang is a doctor." },
-    { "speaker": "A", "line": "李小姐会汉语吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma?", "kr": "이小姐는 중국어 할 줄 알아요?", "en": "Can Miss Li speak Chinese?" },
-    { "speaker": "B", "line": "会，她能说话。", "pinyin": "Huì, tā néng shuōhuà.", "kr": "네, 그녀는 말할 수 있어요.", "en": "Yes, she can speak." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "kr": "무슨 일 하세요?" },
+        { "speaker": "B", "zh": "我是医生。", "pinyin": "Wǒ shì yīshēng.", "kr": "저는 의사예요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "他是老师吗？", "pinyin": "Tā shì lǎoshī ma?", "kr": "그는 선생님이에요?" },
+        { "speaker": "B", "zh": "是，他是老师。", "pinyin": "Shì, tā shì lǎoshī.", "kr": "네, 그는 선생님이에요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "做 + 工作", "explanation_zh": "「做」表示从事。", "explanation_kr": "'做'는 ~을 한다는 뜻입니다.", "explanation_en": "做 indicates doing work.", "example": { "zh": "做什么工作", "pinyin": "zuò shénme gōngzuò", "kr": "무슨 일 하다", "en": "what work do you do" } },

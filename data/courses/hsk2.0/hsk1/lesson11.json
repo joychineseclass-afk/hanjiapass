@@ -22,10 +22,20 @@
     { "hanzi": "汉语", "pinyin": "Hànyǔ", "meaning": { "zh": "汉语", "kr": "중국어", "en": "Chinese" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你在学校学习什么？", "pinyin": "Nǐ zài xuéxiào xuéxí shénme?", "kr": "학교에서 뭘 배워요?", "en": "What do you learn at school?" },
-    { "speaker": "B", "line": "我学习汉语。我读这本书。", "pinyin": "Wǒ xuéxí Hànyǔ. Wǒ dú zhè běn shū.", "kr": "저는 중국어를 배워요. 이 책을 읽어요.", "en": "I learn Chinese. I read this book." },
-    { "speaker": "A", "line": "你会写汉字吗？", "pinyin": "Nǐ huì xiě Hànzì ma?", "kr": "한자를 쓸 수 있어요?", "en": "Can you write Chinese characters?" },
-    { "speaker": "B", "line": "会，我写很多字。", "pinyin": "Huì, wǒ xiě hěn duō zì.", "kr": "네, 저는 글자를 많이 써요.", "en": "Yes, I write many characters." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你在哪儿学习？", "pinyin": "Nǐ zài nǎr xuéxí?", "kr": "어디서 공부해요?" },
+        { "speaker": "B", "zh": "我在学校学习。", "pinyin": "Wǒ zài xuéxiào xuéxí.", "kr": "저는 학교에서 공부해요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你学什么？", "pinyin": "Nǐ xué shénme?", "kr": "뭘 배워요?" },
+        { "speaker": "B", "zh": "我学汉语。", "pinyin": "Wǒ xué Hànyǔ.", "kr": "저는 중국어를 배워요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "学习 + 宾语", "explanation_zh": "「学习」后接学习内容。", "explanation_kr": "'学习' 뒤에 학습 내용이 옵니다.", "explanation_en": "学习 takes object.", "example": { "zh": "学习汉语", "pinyin": "xuéxí Hànyǔ", "kr": "중국어 배우다", "en": "learn Chinese" } },

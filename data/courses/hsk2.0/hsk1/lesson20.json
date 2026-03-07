@@ -20,10 +20,20 @@
     { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~은/는요?", "en": "particle" }, "pos": { "kr": "조사", "en": "particle" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你怎么了？", "pinyin": "Nǐ zěnme le?", "kr": "어디 아파요?", "en": "What's wrong with you?" },
-    { "speaker": "B", "line": "我不好。我们去医院。", "pinyin": "Wǒ bù hǎo. Wǒmen qù yīyuàn.", "kr": "저는 몸이 안 좋아요. 우리 병원 가요.", "en": "I'm not well. We go to the hospital." },
-    { "speaker": "A", "line": "医生怎么样？", "pinyin": "Yīshēng zěnmeyàng?", "kr": "의사는 어때요?", "en": "How's the doctor?" },
-    { "speaker": "B", "line": "很好。我没钱了。", "pinyin": "Hěn hǎo. Wǒ méi qián le.", "kr": "아주 좋아요. 저는 돈이 없어요.", "en": "Very good. I have no money." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你怎么了？", "pinyin": "Nǐ zěnme le?", "kr": "어디 아파요?" },
+        { "speaker": "B", "zh": "我不舒服。", "pinyin": "Wǒ bù shūfu.", "kr": "저는 몸이 안 좋아요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "kr": "병원 갔어요?" },
+        { "speaker": "B", "zh": "去了。", "pinyin": "Qù le.", "kr": "갔어요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "怎么", "explanation_zh": "「怎么」问方式。", "explanation_kr": "'怎么'는 방법을 묻습니다.", "explanation_en": "怎么 asks how.", "example": { "zh": "怎么去？", "pinyin": "Zěnme qù?", "kr": "어떻게 가요?", "en": "How to get there?" } },

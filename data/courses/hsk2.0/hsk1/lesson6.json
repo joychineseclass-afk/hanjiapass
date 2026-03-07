@@ -21,10 +21,20 @@
     { "hanzi": "不", "pinyin": "bù", "meaning": { "zh": "不", "kr": "아니", "en": "not" }, "pos": { "kr": "부사", "en": "adverb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你今年几岁？", "pinyin": "Nǐ jīnnián jǐ suì?", "kr": "올해 몇 살이에요?", "en": "How old are you this year?" },
-    { "speaker": "B", "line": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "kr": "저는 스무 살이에요.", "en": "I'm twenty." },
-    { "speaker": "A", "line": "他多大了？", "pinyin": "Tā duō dà le?", "kr": "그는 몇 살이에요?", "en": "How old is he?" },
-    { "speaker": "B", "line": "他十五岁，不大。", "pinyin": "Tā shíwǔ suì, bù dà.", "kr": "그는 열다섯 살이에요, 크지 않아요.", "en": "He's fifteen, not big." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你多大？", "pinyin": "Nǐ duō dà?", "kr": "몇 살이에요?" },
+        { "speaker": "B", "zh": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "kr": "저는 스무 살이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "他多大？", "pinyin": "Tā duō dà?", "kr": "그는 몇 살이에요?" },
+        { "speaker": "B", "zh": "他十八岁。", "pinyin": "Tā shíbā suì.", "kr": "그는 열여덟 살이에요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "几 + 岁", "explanation_zh": "问年龄用「几岁」。", "explanation_kr": "나이를 물을 때 '几岁'를 사용합니다.", "explanation_en": "Ask age with 几岁.", "example": { "zh": "你几岁？", "pinyin": "Nǐ jǐ suì?", "kr": "몇 살이에요?", "en": "How old are you?" } },

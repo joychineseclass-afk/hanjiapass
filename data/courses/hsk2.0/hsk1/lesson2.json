@@ -29,10 +29,20 @@
     { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다, 만나다", "en": "to know" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你好！你叫什么名字？", "pinyin": "Nǐ hǎo! Nǐ jiào shénme míngzi?", "kr": "안녕하세요! 이름이 뭐예요?", "en": "Hello! What's your name?" },
-    { "speaker": "B", "line": "我叫小明。你呢？", "pinyin": "Wǒ jiào Xiǎomíng. Nǐ ne?", "kr": "저는 샤오밍이에요. 당신은요?", "en": "I'm Xiaoming. And you?" },
-    { "speaker": "A", "line": "我叫小美。很高兴认识你！", "pinyin": "Wǒ jiào Xiǎoměi. Hěn gāoxìng rènshi nǐ!", "kr": "저는 샤오메이예요. 만나서 반가워요!", "en": "I'm Xiaomei. Nice to meet you!" },
-    { "speaker": "B", "line": "谢谢！不客气！再见！", "pinyin": "Xièxie! Bùkèqi! Zàijiàn!", "kr": "감사합니다! 천만에요! 안녕히 가세요!", "en": "Thanks! You're welcome! Goodbye!" }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "kr": "이름이 뭐예요?" },
+        { "speaker": "B", "zh": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "kr": "저는 샤오밍이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "kr": "저는 샤오메이예요." },
+        { "speaker": "B", "zh": "很高兴认识你！", "pinyin": "Hěn gāoxìng rènshi nǐ!", "kr": "만나서 반가워요!" }
+      ]
+    }
   ],
   "grammar": [
     {

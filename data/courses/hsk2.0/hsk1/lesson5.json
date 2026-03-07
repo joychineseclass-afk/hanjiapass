@@ -29,10 +29,20 @@
     { "hanzi": "少", "pinyin": "shǎo", "meaning": { "zh": "少", "kr": "적다", "en": "few" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你有几个苹果？", "pinyin": "Nǐ yǒu jǐ gè píngguǒ?", "kr": "사과가 몇 개 있어요?", "en": "How many apples do you have?" },
-    { "speaker": "B", "line": "我有五个。", "pinyin": "Wǒ yǒu wǔ gè.", "kr": "저는 다섯 개 있어요.", "en": "I have five." },
-    { "speaker": "A", "line": "这本书多少钱？", "pinyin": "Zhè běn shū duōshao qián?", "kr": "이 책은 얼마예요?", "en": "How much is this book?" },
-    { "speaker": "B", "line": "十块。", "pinyin": "Shí kuài.", "kr": "10위안이에요.", "en": "Ten yuan." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你有几个苹果？", "pinyin": "Nǐ yǒu jǐ gè píngguǒ?", "kr": "사과가 몇 개 있어요?" },
+        { "speaker": "B", "zh": "我有三个。", "pinyin": "Wǒ yǒu sān gè.", "kr": "저는 세 개 있어요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
+        { "speaker": "B", "zh": "十块钱。", "pinyin": "Shí kuài qián.", "kr": "10위안이에요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "几 + 个", "explanation_zh": "「几」问小数量，「个」是量词。", "explanation_kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.", "explanation_en": "几 asks small quantity, 个 is measure word.", "example": { "zh": "几个苹果", "pinyin": "jǐ gè píngguǒ", "kr": "사과 몇 개", "en": "how many apples" } },

@@ -22,10 +22,20 @@
     { "hanzi": "电脑", "pinyin": "diànnǎo", "meaning": { "zh": "电脑", "kr": "컴퓨터", "en": "computer" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你在商店买什么？", "pinyin": "Nǐ zài shāngdiàn mǎi shénme?", "kr": "가게에서 뭘 사요?", "en": "What do you buy at the shop?" },
-    { "speaker": "B", "line": "我买衣服。这个多少钱？", "pinyin": "Wǒ mǎi yīfu. Zhè gè duōshao qián?", "kr": "저는 옷을 사요. 이거 얼마예요?", "en": "I buy clothes. How much is this?" },
-    { "speaker": "A", "line": "十块。那个电脑呢？", "pinyin": "Shí kuài. Nà gè diànnǎo ne?", "kr": "10위안이에요. 저 컴퓨터는요?", "en": "Ten yuan. What about that computer?" },
-    { "speaker": "B", "line": "我买一些东西。我有钱。", "pinyin": "Wǒ mǎi yīxiē dōngxi. Wǒ yǒu qián.", "kr": "저는 뭔가 사요. 저는 돈이 있어요.", "en": "I buy some things. I have money." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "这个多少钱？", "pinyin": "Zhè gè duōshao qián?", "kr": "이거 얼마예요?" },
+        { "speaker": "B", "zh": "二十块。", "pinyin": "Èrshí kuài.", "kr": "20위안이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "太贵了！", "pinyin": "Tài guì le!", "kr": "너무 비싸요!" },
+        { "speaker": "B", "zh": "好，十五块。", "pinyin": "Hǎo, shíwǔ kuài.", "kr": "좋아요, 15위안이에요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "这 / 那", "explanation_zh": "「这」指近处，「那」指远处。", "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.", "explanation_en": "这 for near, 那 for far.", "example": { "zh": "这个，那个", "pinyin": "zhè gè, nà gè", "kr": "이것, 저것", "en": "this one, that one" } },

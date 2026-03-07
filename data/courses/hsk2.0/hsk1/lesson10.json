@@ -22,10 +22,20 @@
     { "hanzi": "住", "pinyin": "zhù", "meaning": { "zh": "住", "kr": "살다", "en": "to live" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "kr": "어디에 있어요?", "en": "Where are you?" },
-    { "speaker": "B", "line": "我在学校。书在桌子上。", "pinyin": "Wǒ zài xuéxiào. Shū zài zhuōzi shàng.", "kr": "저는 학교에 있어요. 책은 책상 위에 있어요.", "en": "I'm at school. The book is on the table." },
-    { "speaker": "A", "line": "你家在哪儿？", "pinyin": "Nǐ jiā zài nǎr?", "kr": "집이 어디에 있어요?", "en": "Where is your home?" },
-    { "speaker": "B", "line": "我家在学校后面。我住在那儿。", "pinyin": "Wǒ jiā zài xuéxiào hòumiàn. Wǒ zhù zài nàr.", "kr": "우리 집은 학교 뒤에 있어요. 저는 거기에 삽니다.", "en": "My home is behind the school. I live there." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "kr": "어디에 있어요?" },
+        { "speaker": "B", "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?" },
+        { "speaker": "B", "zh": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "kr": "책상 위에 있어요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "在 + 地点", "explanation_zh": "「在」表示存在或位置。", "explanation_kr": "'在'는 존재나 위치를 나타냅니다.", "explanation_en": "在 indicates location.", "example": { "zh": "我在学校。", "pinyin": "Wǒ zài xuéxiào.", "kr": "저는 학교에 있어요.", "en": "I'm at school." } },

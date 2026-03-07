@@ -23,10 +23,20 @@
     { "hanzi": "她", "pinyin": "tā", "meaning": { "zh": "她", "kr": "그녀", "en": "she" }, "pos": { "kr": "대명사", "en": "pronoun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你家有几个人？", "pinyin": "Nǐ jiā yǒu jǐ gè rén?", "kr": "가족이 몇 명이에요?", "en": "How many people in your family?" },
-    { "speaker": "B", "line": "我家有四个人。我爸爸、我妈妈、我儿子和我女儿。", "pinyin": "Wǒ jiā yǒu sì gè rén. Wǒ bàba, wǒ māma, wǒ érzi hé wǒ nǚ'ér.", "kr": "우리 가족은 네 명이에요. 아빠, 엄마, 아들, 딸.", "en": "There are four. My dad, mom, son and daughter." },
-    { "speaker": "A", "line": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "kr": "아버지는 선생님이에요?", "en": "Is your dad a teacher?" },
-    { "speaker": "B", "line": "是，他是老师。她是我妈妈。", "pinyin": "Shì, tā shì lǎoshī. Tā shì wǒ māma.", "kr": "네, 그는 선생님이에요. 그녀는 우리 엄마예요.", "en": "Yes, he is. She is my mom." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你家有几个人？", "pinyin": "Nǐ jiā yǒu jǐ gè rén?", "kr": "가족이 몇 명이에요?" },
+        { "speaker": "B", "zh": "我家有四个人。", "pinyin": "Wǒ jiā yǒu sì gè rén.", "kr": "우리 가족은 네 명이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "kr": "아버지는 선생님이에요?" },
+        { "speaker": "B", "zh": "不是，他是医生。", "pinyin": "Bú shì, tā shì yīshēng.", "kr": "아니요, 그는 의사예요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "的 — 所属", "explanation_zh": "「的」表示所属关系。", "explanation_kr": "'的'는 소유 관계를 나타냅니다.", "explanation_en": "的 indicates possession.", "example": { "zh": "我爸爸", "pinyin": "wǒ bàba", "kr": "우리 아빠", "en": "my dad" } },

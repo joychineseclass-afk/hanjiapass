@@ -20,10 +20,20 @@
     { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "동창", "en": "classmate" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你是中国人吗？", "pinyin": "Nǐ shì Zhōngguó rén ma?", "kr": "중국인이에요?", "en": "Are you Chinese?" },
-    { "speaker": "B", "line": "是，我是中国人。我住在北京。", "pinyin": "Shì, wǒ shì Zhōngguó rén. Wǒ zhù zài Běijīng.", "kr": "네, 저는 중국인이에요. 베이징에 삽니다.", "en": "Yes, I'm Chinese. I live in Beijing." },
-    { "speaker": "A", "line": "他是老师吗？", "pinyin": "Tā shì lǎoshī ma?", "kr": "그는 선생님이에요?", "en": "Is he a teacher?" },
-    { "speaker": "B", "line": "不是，他是学生。我们是同学和朋友。", "pinyin": "Bú shì, tā shì xuésheng. Wǒmen shì tóngxué hé péngyou.", "kr": "아니요, 그는 학생이에요. 우리는 동창이자 친구예요.", "en": "No, he's a student. We're classmates and friends." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你是哪国人？", "pinyin": "Nǐ shì nǎ guó rén?", "kr": "어느 나라 사람이에요?" },
+        { "speaker": "B", "zh": "我是中国人。", "pinyin": "Wǒ shì Zhōngguó rén.", "kr": "저는 중국인이에요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "kr": "어디에 살아요?" },
+        { "speaker": "B", "zh": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "kr": "저는 베이징에 살아요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "A 是 B", "explanation_zh": "「是」连接主语和宾语，表示等同。", "explanation_kr": "'是'는 주어와 목적어를 연결합니다.", "explanation_en": "是 connects subject and object.", "example": { "zh": "他是老师。", "pinyin": "Tā shì lǎoshī.", "kr": "그는 선생님이에요.", "en": "He is a teacher." } },

@@ -22,10 +22,20 @@
     { "hanzi": "睡觉", "pinyin": "shuìjiào", "meaning": { "zh": "睡觉", "kr": "자다", "en": "to sleep" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "今天天气怎么？", "pinyin": "Jīntiān tiānqì zěnme?", "kr": "오늘 날씨 어때요?", "en": "How's the weather today?" },
-    { "speaker": "B", "line": "今天很热。明天太热。", "pinyin": "Jīntiān hěn rè. Míngtiān tài rè.", "kr": "오늘은 매우 더워요. 내일은 너무 더워요.", "en": "Today is very hot. Tomorrow is too hot." },
-    { "speaker": "A", "line": "下雨吗？", "pinyin": "Xià yǔ ma?", "kr": "비 와요?", "en": "Is it raining?" },
-    { "speaker": "B", "line": "不下雨。我想睡觉。", "pinyin": "Bú xià yǔ. Wǒ xiǎng shuìjiào.", "kr": "비 안 와요. 저는 자고 싶어요.", "en": "No rain. I want to sleep." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "今天天气怎么样？", "pinyin": "Jīntiān tiānqì zěnmeyàng?", "kr": "오늘 날씨 어때요?" },
+        { "speaker": "B", "zh": "很好。", "pinyin": "Hěn hǎo.", "kr": "아주 좋아요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "冷吗？", "pinyin": "Lěng ma?", "kr": "추워요?" },
+        { "speaker": "B", "zh": "不冷，很热。", "pinyin": "Bù lěng, hěn rè.", "kr": "안 추워요, 매우 더워요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "太 + 形容词", "explanation_zh": "「太」表示程度过高。", "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.", "explanation_en": "太 indicates excessive degree.", "example": { "zh": "太热", "pinyin": "tài rè", "kr": "너무 덥다", "en": "too hot" } },

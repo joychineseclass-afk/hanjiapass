@@ -21,10 +21,20 @@
     { "hanzi": "时候", "pinyin": "shíhou", "meaning": { "zh": "时候", "kr": "때", "en": "time" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?", "en": "What time is it now?" },
-    { "speaker": "B", "line": "现在上午九点。", "pinyin": "Xiànzài shàngwǔ jiǔ diǎn.", "kr": "지금 오전 9시예요.", "en": "It's 9 a.m. now." },
-    { "speaker": "A", "line": "我们下午三点见，好吗？", "pinyin": "Wǒmen xiàwǔ sān diǎn jiàn, hǎo ma?", "kr": "우리 오후 3시에 만나요,好吗?", "en": "Let's meet at 3 p.m., okay?" },
-    { "speaker": "B", "line": "好。再见！", "pinyin": "Hǎo. Zàijiàn!", "kr": "좋아요. 안녕히 가세요!", "en": "Okay. Goodbye!" }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?" },
+        { "speaker": "B", "zh": "现在三点。", "pinyin": "Xiànzài sān diǎn.", "kr": "지금 3시예요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你什么时候回家？", "pinyin": "Nǐ shénme shíhou huí jiā?", "kr": "언제 집에 돌아가요?" },
+        { "speaker": "B", "zh": "我下午回家。", "pinyin": "Wǒ xiàwǔ huí jiā.", "kr": "저는 오후에 집에 돌아가요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "点 + 分钟", "explanation_zh": "「点」表示钟点，「分钟」表示分。", "explanation_kr": "'点'는 시, '分钟'는 분을 나타냅니다.", "explanation_en": "点 for o'clock, 分钟 for minutes.", "example": { "zh": "九点十分", "pinyin": "jiǔ diǎn shí fēn", "kr": "9시 10분", "en": "9:10" } },

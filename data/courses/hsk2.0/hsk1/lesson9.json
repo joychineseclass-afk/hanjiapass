@@ -19,10 +19,20 @@
     { "hanzi": "问", "pinyin": "wèn", "meaning": { "zh": "问", "kr": "묻다", "en": "to ask" }, "pos": { "kr": "동사", "en": "verb" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요, 안녕하세요!", "en": "Hello!" },
-    { "speaker": "B", "line": "你好！请问你是谁？", "pinyin": "Nǐ hǎo! Qǐngwèn nǐ shì shéi?", "kr": "안녕하세요!请问你是谁?", "en": "Hello! May I ask who is this?" },
-    { "speaker": "A", "line": "我是小明。我打电话给你。", "pinyin": "Wǒ shì Xiǎomíng. Wǒ dǎ diànhuà gěi nǐ.", "kr": "저는 샤오밍이에요. 전화했어요.", "en": "I'm Xiaoming. I'm calling you." },
-    { "speaker": "B", "line": "谢谢！再见！", "pinyin": "Xièxie! Zàijiàn!", "kr": "감사합니다! 안녕히 가세요!", "en": "Thanks! Goodbye!" }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요, 안녕하세요!" },
+        { "speaker": "B", "zh": "你好，请问你是谁？", "pinyin": "Nǐ hǎo, qǐngwèn nǐ shì shéi?", "kr": "안녕하세요,请问你是谁?" }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "我是小明。", "pinyin": "Wǒ shì Xiǎomíng.", "kr": "저는 샤오밍이에요." },
+        { "speaker": "B", "zh": "好，我知道了。", "pinyin": "Hǎo, wǒ zhīdào le.", "kr": "좋아요, 알겠어요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "喂", "explanation_zh": "接电话时用「喂」。", "explanation_kr": "전화 받을 때 '喂'를 사용합니다.", "explanation_en": "Use 喂 when answering the phone.", "example": { "zh": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "kr": "여보세요!", "en": "Hello!" } },

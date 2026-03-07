@@ -33,14 +33,20 @@
     { "hanzi": "没关系", "pinyin": "méiguānxi", "meaning": { "zh": "没关系", "kr": "괜찮아요", "en": "it doesn't matter" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!", "en": "Hello!" },
-    { "speaker": "B", "line": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!", "en": "Hello!" },
-    { "speaker": "A", "line": "你好吗？", "pinyin": "Nǐ hǎo ma?", "kr": "잘 지내세요?", "en": "How are you?" },
-    { "speaker": "B", "line": "我很好，谢谢！", "pinyin": "Wǒ hěn hǎo, xièxie!", "kr": "저는 잘 지내요, 감사합니다!", "en": "I'm fine, thanks!" },
-    { "speaker": "A", "line": "再见！", "pinyin": "Zàijiàn!", "kr": "안녕히 가세요!", "en": "Goodbye!" },
-    { "speaker": "B", "line": "再见！", "pinyin": "Zàijiàn!", "kr": "안녕히 가세요!", "en": "Goodbye!" },
-    { "speaker": "A", "line": "对不起。", "pinyin": "Duìbuqǐ.", "kr": "죄송합니다.", "en": "Sorry." },
-    { "speaker": "B", "line": "没关系。", "pinyin": "Méiguānxi.", "kr": "괜찮아요.", "en": "It's okay." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!" },
+        { "speaker": "B", "zh": "你好！", "pinyin": "Nǐ hǎo!", "kr": "안녕하세요!" }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你好吗？", "pinyin": "Nǐ hǎo ma?", "kr": "잘 지내세요?" },
+        { "speaker": "B", "zh": "我很好，谢谢！", "pinyin": "Wǒ hěn hǎo, xièxie!", "kr": "저는 잘 지내요, 감사합니다!" }
+      ]
+    }
   ],
   "grammar": [
     {

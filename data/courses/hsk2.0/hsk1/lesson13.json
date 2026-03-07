@@ -23,10 +23,20 @@
     { "hanzi": "漂亮", "pinyin": "piàoliang", "meaning": { "zh": "漂亮", "kr": "예쁘다", "en": "pretty" }, "pos": { "kr": "형용사", "en": "adjective" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "kr": "뭘 좋아해요?", "en": "What do you like?" },
-    { "speaker": "B", "line": "我喜欢狗和猫。我爱看电影。", "pinyin": "Wǒ xǐhuan gǒu hé māo. Wǒ ài kàn diànyǐng.", "kr": "저는 개와 고양이를 좋아해요. 영화 보는 걸 좋아해요.", "en": "I like dogs and cats. I love watching movies." },
-    { "speaker": "A", "line": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "kr": "텔레비전 봐요?", "en": "Do you watch TV?" },
-    { "speaker": "B", "line": "看。我喜欢的电影很漂亮。", "pinyin": "Kàn. Wǒ xǐhuan de diànyǐng hěn piàoliang.", "kr": "봐요. 제가 좋아하는 영화는 아주 예뻐요.", "en": "Yes. The movie I like is very nice." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "kr": "뭘 좋아해요?" },
+        { "speaker": "B", "zh": "我喜欢狗。", "pinyin": "Wǒ xǐhuan gǒu.", "kr": "저는 개를 좋아해요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "kr": "텔레비전 봐요?" },
+        { "speaker": "B", "zh": "看，我喜欢看电视。", "pinyin": "Kàn, wǒ xǐhuan kàn diànshì.", "kr": "봐요, 저는 텔레비전 보는 걸 좋아해요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "喜欢 + 宾语", "explanation_zh": "「喜欢」后接喜欢的事物。", "explanation_kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.", "explanation_en": "喜欢 takes object.", "example": { "zh": "喜欢狗", "pinyin": "xǐhuan gǒu", "kr": "개를 좋아하다", "en": "like dogs" } },

@@ -19,10 +19,20 @@
     { "hanzi": "东西", "pinyin": "dōngxi", "meaning": { "zh": "东西", "kr": "것", "en": "thing" }, "pos": { "kr": "명사", "en": "noun" } }
   ],
   "dialogue": [
-    { "speaker": "A", "line": "我们在饭馆。你喝什么？", "pinyin": "Wǒmen zài fànguǎn. Nǐ hē shénme?", "kr": "우리는 식당에 있어요. 뭘 마셔요?", "en": "We're at a restaurant. What do you drink?" },
-    { "speaker": "B", "line": "我喝茶。一个杯子。", "pinyin": "Wǒ hē chá. Yī gè bēizi.", "kr": "저는 차를 마셔요. 컵 하나요.", "en": "I drink tea. One cup." },
-    { "speaker": "A", "line": "这个茶多少钱？", "pinyin": "Zhè gè chá duōshao qián?", "kr": "이 차는 얼마예요?", "en": "How much is this tea?" },
-    { "speaker": "B", "line": "五块。我买一些东西。", "pinyin": "Wǔ kuài. Wǒ mǎi yīxiē dōngxi.", "kr": "5위안이에요. 저는 뭔가 사요.", "en": "Five yuan. I buy some things." }
+    {
+      "title": "会话1",
+      "lines": [
+        { "speaker": "A", "zh": "你喜欢苹果吗？", "pinyin": "Nǐ xǐhuan píngguǒ ma?", "kr": "사과 좋아해요?" },
+        { "speaker": "B", "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해요." }
+      ]
+    },
+    {
+      "title": "会话2",
+      "lines": [
+        { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?" },
+        { "speaker": "B", "zh": "不喝，我喝水。", "pinyin": "Bù hē, wǒ hē shuǐ.", "kr": "안 마셔요, 저는 물을 마셔요." }
+      ]
+    }
   ],
   "grammar": [
     { "title": "块", "explanation_zh": "「块」是人民币单位。", "explanation_kr": "'块'는 위안 단위입니다.", "explanation_en": "块 is the unit for yuan.", "example": { "zh": "五块", "pinyin": "wǔ kuài", "kr": "5위안", "en": "five yuan" } },
