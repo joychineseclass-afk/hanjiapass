@@ -82,6 +82,7 @@
     "ai_send": "发送",
     "ai_copy": "复制课程内容",
     "ai_empty": "请输入问题。",
+    "meaning_empty": "(暂无释义)",
     "empty_lessons": "暂无课程。",
     "empty_dialogue": "暂无会话内容。",
     "empty_grammar": "暂无语法内容。",
@@ -93,6 +94,7 @@
     "lesson_unit": "第{n}课"
   },
   "lesson": {
+    "learn": "学习",
     "words": "单词",
     "dialogue": "会话",
     "grammar": "语法",
@@ -175,6 +177,7 @@
     "subtitle": "AI 汉字・中文学习平台"
   },
   "dialogue": {
+    "session": "会话{n}",
     "subtitle": "本课会话，可点击中文朗读。"
   },
   "grammar": {

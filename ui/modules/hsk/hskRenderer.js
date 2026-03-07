@@ -1,14 +1,12 @@
-// /ui/modules/hsk/hskRenderer.js ✅ FINAL
-// - renderLessonList(container, lessons, { lang })
-// - renderWordCards(gridEl, items, _, { lang })
-// - Helpers: normalizeLang, wordKey, wordPinyin, wordMeaning
+// /ui/modules/hsk/hskRenderer.js — Lumina Language Engine v1
+// 统一使用 i18n.t() + languageEngine.pick/getContentText，禁止散乱 item.kr/item.en 判断
 
 import { i18n } from "../../i18n.js";
+import { pick, getContentText, getLang } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
-import { getLocalizedText } from "../../utils/localizedText.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
@@ -37,14 +35,14 @@ async function resolveStrokeUrlAsync(hanzi) {
   return candidates[0] || `/pages/stroke.html?ch=${ch}`;
 }
 
-// Returns "ko" | "en" | "zh" | "jp"
-export function normalizeLang(i18nLang) {
-  const l = String(i18nLang != null ? i18nLang : (i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko")).toLowerCase();
-  if (l === "kr" || l === "ko") return "ko";
-  if (l === "cn" || l === "zh") return "zh";
+/** 归一化为 wordDisplay/glossary 用：kr|cn|en|jp，兼容 ko/zh */
+export function normalizeLang(lang) {
+  const l = String(lang != null ? lang : getLang()).toLowerCase();
+  if (l === "kr" || l === "ko") return "kr";
+  if (l === "cn" || l === "zh") return "cn";
   if (l === "jp" || l === "ja") return "jp";
   if (l === "en") return "en";
-  return "ko";
+  return "kr";
 }
 
 export function wordKey(x) {
@@ -66,17 +64,7 @@ export function wordMeaning(x, lang) {
   return getMeaningByLang(x, l, wordKey(x) || "");
 }
 
-function pickText(v, lang = "ko") {
-  if (v == null) return "";
-  if (typeof v === "string" || typeof v === "number") return String(v);
-  if (typeof v === "object") {
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang === "jp" ? "jp" : lang);
-    return getLocalizedText(v, lang, "") || getLocalizedText(v, contentLang, "");
-  }
-  return String(v);
-}
-
-export function renderLessonList(containerEl, lessons, { lang = "ko", currentLessonNo = 0 } = {}) {
+export function renderLessonList(containerEl, lessons, { lang, currentLessonNo = 0 } = {}) {
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
   const arrow = "›";
@@ -86,25 +74,12 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
     const file = it.file || it.path || it.url || "";
 
     const titleObj = it.title || it.name || it.label || "";
-    let zh = "";
-    if (typeof titleObj === "string") {
-      const s = titleObj.trim();
-      const parts = s.split(/\s*\/\s*/);
-      zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s;
-    } else {
-      zh = pickText(titleObj, "zh") || pickText(titleObj, "cn") || "";
-    }
+    const zh = typeof titleObj === "string"
+      ? (() => { const s = titleObj.trim(); const parts = s.split(/\s*\/\s*/); return parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || parts[parts.length - 1] || s; })()
+      : (titleObj?.zh ?? titleObj?.cn ?? "");
+    const titleDisplay = pick(titleObj) || zh || "-";
 
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    let translation = getLocalizedText(titleObj, contentLang, "") || it.titleJp || it.titleEn || it.titleKo || "";
-    if (!translation && typeof titleObj === "string") {
-      const parts = String(titleObj).split(/\s*\/\s*/);
-      const found = parts.find((p) => !/[\u4e00-\u9fff]/.test(p));
-      translation = (found != null ? String(found).trim() : "") || "";
-    }
-
-    const titleDisplay = (lang === "zh" || lang === "cn") ? (zh || translation) : (translation || zh || "-");
-    const lessonNoFormatted = (i18n && typeof i18n.t === "function" ? i18n.t("hsk.lesson_no_format", { n: lessonNo }) : null) || (contentLang === "jp" ? "第 " + lessonNo + " 課" : contentLang === "kr" ? "제 " + lessonNo + "과" : contentLang === "cn" ? "第 " + lessonNo + " 课" : "Lesson " + lessonNo);
+    const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
 
     return `
@@ -120,36 +95,14 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
     `;
   }).join("");
 
-  const emptyMsg = (i18n && typeof i18n.t === "function" ? i18n.t("hsk_empty_lessons") : null) || "—";
+  const emptyMsg = i18n.t("hsk.empty_lessons", "—");
   containerEl.innerHTML = `<div class="hsk-directory-rows">${rows || `<div class="hsk-directory-empty">${escapeHtml(emptyMsg)}</div>`}</div>`;
-}
-
-const MEANING_FALLBACK = {
-  ko: "(뜻 정보 없음)",
-  zh: "(暂无释义)",
-  en: "(No meaning yet)",
-  jp: "(意味なし)",
-};
-
-function meaningTextOf(val, lang) {
-  if (!val) return "";
-  if (typeof val === "string") return val.trim();
-  if (Array.isArray(val)) return val.map(v => meaningTextOf(v, lang)).filter(Boolean).join(" / ");
-  if (typeof val === "object") {
-    const v = wordMeaning(val, lang);
-    if (v) return v;
-    const pick = val.meaning || val.text || val.def || val.gloss || "";
-    if (typeof pick === "string") return pick.trim();
-    if (typeof pick === "object") return wordMeaning({ meaning: pick }, lang) || "";
-    return "";
-  }
-  return String(val);
 }
 
 export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
-  const currentLang = normalizeLang(lang != null ? lang : (i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko"));
+  const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
 
   const cards = arr.map((x) => {
@@ -161,15 +114,13 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
 
       let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
-      if (!mainStr) {
-        mainStr = MEANING_FALLBACK[currentLang] || MEANING_FALLBACK.ko;
-      }
+      if (!mainStr) mainStr = i18n.t("hsk.meaning_empty", "(暂无释义)");
 
       const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
-      const learnLabel = (i18n && typeof i18n.t === "function" ? i18n.t("lesson.learn") : null) || (currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : currentLang === "jp" ? "学習" : "Learn");
-      const strokeLabel = (i18n && typeof i18n.t === "function" ? i18n.t("stroke.btn_trace") : null) || (currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : currentLang === "jp" ? "筆順" : "Stroke");
-      const audioLabel = (i18n && typeof i18n.t === "function" ? i18n.t("common.listen") : null) || (i18n && typeof i18n.t === "function" ? i18n.t("common.speak") : null) || (currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : currentLang === "jp" ? "発音" : "Audio");
+      const learnLabel = i18n.t("lesson.learn", "학습");
+      const strokeLabel = i18n.t("stroke.btn_trace", "笔画");
+      const audioLabel = i18n.t("common.listen") || i18n.t("common.speak", "发音");
       const strokeDisabled = !han ? " disabled" : "";
       const hanziChars = han ? Array.from(han).map((ch) =>
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
@@ -203,9 +154,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   });
 
   const hero = `<section class="lesson-section-hero">
-  <h3 class="lesson-section-title">${escapeHtml((i18n && typeof i18n.t === "function" ? i18n.t("hsk_tab_words") : null) || "单词")}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml((i18n && typeof i18n.t === "function" ? i18n.t("vocab_subtitle") : null) || "本课词汇，点击可听发音。")}</p>
-  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(((i18n && typeof i18n.t === "function" ? i18n.t("vocab_count") : null) || "{n}词").replace("{n}", arr.length)) + "</span>" : ""}
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words", "单词"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle", "本课词汇，点击可听发音。"))}</p>
+  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", "{n}词").replace("{n}", arr.length)) + "</span>" : ""}
 </section>`;
   gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 

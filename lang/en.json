@@ -82,6 +82,7 @@
     "ai_send": "Send",
     "ai_copy": "Copy lesson content",
     "ai_empty": "Please enter a question.",
+    "meaning_empty": "(No meaning yet)",
     "empty_lessons": "No lessons.",
     "empty_dialogue": "No dialogue content yet.",
     "empty_grammar": "No grammar content yet.",
@@ -93,6 +94,7 @@
     "lesson_unit": "Lesson {n}"
   },
   "lesson": {
+    "learn": "Learn",
     "words": "Vocabulary",
     "dialogue": "Dialogue",
     "grammar": "Grammar",
@@ -175,6 +177,7 @@
     "subtitle": "AI-Powered Global Mandarin Education Platform"
   },
   "dialogue": {
+    "session": "Session {n}",
     "subtitle": "Dialogue for this lesson. Click Chinese to hear it read aloud."
   },
   "grammar": {

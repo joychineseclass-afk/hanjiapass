@@ -82,6 +82,7 @@
     "ai_send": "보내기",
     "ai_copy": "수업내용 복사",
     "ai_empty": "질문을 입력해 주세요.",
+    "meaning_empty": "(뜻 정보 없음)",
     "empty_lessons": "수업이 없습니다.",
     "empty_dialogue": "회화 콘텐츠가 아직 없습니다.",
     "empty_grammar": "문법 콘텐츠가 아직 없습니다.",
@@ -93,6 +94,7 @@
     "lesson_unit": "{n}과"
   },
   "lesson": {
+    "learn": "학습",
     "words": "단어",
     "dialogue": "회화",
     "grammar": "문법",
@@ -175,6 +177,7 @@
     "subtitle": "루미나 글로벌 중국어 교육 플랫폼"
   },
   "dialogue": {
+    "session": "회화 {n}",
     "subtitle": "본문 대화입니다. 중국어를 클릭하면 읽어줍니다."
   },
   "grammar": {

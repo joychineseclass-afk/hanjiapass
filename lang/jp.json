@@ -86,6 +86,7 @@
     "ai_send": "送信",
     "ai_copy": "レッスン内容をコピー",
     "ai_empty": "質問を入力してください。",
+    "meaning_empty": "(意味なし)",
     "empty_lessons": "レッスンがありません。",
     "empty_dialogue": "会話コンテンツがまだありません。",
     "empty_grammar": "文法コンテンツがまだありません。",
@@ -97,6 +98,7 @@
     "lesson_unit": "第{n}課"
   },
   "lesson": {
+    "learn": "学習",
     "words": "単語",
     "dialogue": "会話",
     "grammar": "文法",

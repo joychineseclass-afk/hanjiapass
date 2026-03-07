@@ -1,13 +1,10 @@
 /**
  * 全站统一词卡显示规则
- * 释义、词性随系统语言（KR/CN/EN）切换，可复用到全站词卡
+ * 释义、词性随系统语言（KR/CN/EN/JP）切换，委托 languageEngine
  * 支持 glossary 层回退：课程词条缺失时从 data/glossary/{lang}-{scope}.json 补充
- *
- * getMeaningByLang(word, lang, fallbackHanzi?, scope?)
- * getPosByLang(word, lang, scope?)
- * getWordImageUrl(word) - 平台级 Image Engine，词卡图片
  */
 
+import { getContentText, pick } from "../core/languageEngine.js";
 import { getGlossaryMeaning, getGlossaryPos } from "./glossary.js";
 import { getWordImage } from "../platform/media/imageEngine.js";
 
@@ -63,56 +60,22 @@ function glossaryLang(lang) {
 }
 
 /**
- * 按系统语言取释义
- * KR: meaning.kr → meaning.ko → glossary → word.kr → word.ko → zh（不回退英文）
- * EN: meaning.en → glossary → word.en → zh
- * CN: meaning.zh → word.zh → glossary(如以后有)
- * @param {object} word - 词条 { meaning: { zh, kr, en }, hanzi } 或兼容 zh/kr/en 在顶层
- * @param {string} lang - "ko" | "zh" | "en"
- * @param {string} fallbackHanzi - 无释义时的 fallback（如汉字本身）
- * @param {string} scope - 可选，如 "hsk1"，用于 glossary 回退
+ * 按系统语言取释义，委托 languageEngine.getContentText
+ * 兼容 meaning / translation + 扁平 kr/jp/en/cn，glossary 回退
  */
 export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
   if (!word) return "";
-  const m = word.meaning;
-  const obj = typeof m === "object" ? m : {};
-  const zh = str(word.zh ?? word.cn ?? obj.zh ?? obj.cn) || fallbackHanzi;
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "") || fallbackHanzi;
+  const zh = str(word.zh ?? word.cn ?? (word.meaning && word.meaning.zh) ?? (word.meaning && word.meaning.cn)) || fallbackHanzi;
 
-  if (lang === "ko" || lang === "kr") {
-    const kr = str(obj.kr ?? obj.ko ?? word.kr ?? word.ko);
-    if (kr) return kr;
-    if (scope) {
-      const g = getGlossaryMeaning(hanzi, "kr", scope);
-      if (g) return g;
-    }
-    return zh;
-  }
-  if (lang === "en") {
-    const en = str(word.en ?? obj.en ?? obj.english);
-    if (en) return en;
-    if (scope) {
-      const g = getGlossaryMeaning(hanzi, "en", scope);
-      if (g) return g;
-    }
-    return zh;
-  }
-  if (lang === "jp" || lang === "ja") {
-    const jp = str(obj.jp ?? obj.ja ?? word.jp ?? word.ja);
-    if (jp) return jp;
-    if (scope) {
-      const g = getGlossaryMeaning(hanzi, "jp", scope);
-      if (g) return g;
-    }
-    return str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko) || zh;
-  }
-  // zh / cn
-  if (zh) return zh;
-  if (scope) {
-    const g = getGlossaryMeaning(hanzi, "zh", scope);
+  const fromEngine = getContentText(word, "meaning") || getContentText(word, "translation") || pick(word);
+  if (fromEngine) return fromEngine;
+
+  if (scope && hanzi) {
+    const g = getGlossaryMeaning(hanzi, glossaryLang(lang), scope);
     if (g) return g;
   }
-  return str(word.kr ?? word.ko ?? word.en) || fallbackHanzi;
+  return zh || fallbackHanzi;
 }
 
 /**
@@ -130,6 +93,9 @@ export function getPosByLang(word, lang, scope = "") {
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "");
 
   if (typeof p === "object" && p != null) {
+    const fromPick = pick(p);
+    if (fromPick) return fromPick;
+
     const zh = str(p.zh ?? p.cn);
     const kr = str(p.ko ?? p.kr);
     const en = str(p.en ?? p.english);

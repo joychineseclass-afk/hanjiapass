@@ -4,12 +4,12 @@
 // ✅ Study Tabs: words/dialogue/grammar/ai
 
 import { i18n } from "../i18n.js";
+import { pick, getContentText } from "../core/languageEngine.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
-import { getLocalizedText } from "../utils/localizedText.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
@@ -25,18 +25,7 @@ const state = {
 var el; // 复用变量，供 showStudyMode/showListMode/bindEvents/openLesson 等使用
 
 function getLang() {
-  return normalizeLang(i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "ko");
-}
-
-/** 内容翻译键：translation/explain 对象使用 kr|jp|en，zh 模式 fallback 到 en */
-function getContentLang() {
-  const raw = i18n && typeof i18n.getLang === "function" ? i18n.getLang() : "kr";
-  const l = String(raw || "").toLowerCase();
-  if (l === "kr" || l === "ko") return "kr";
-  if (l === "jp" || l === "ja") return "jp";
-  if (l === "en") return "en";
-  if (l === "cn" || l === "zh") return "en"; // zh 模式无 translation，fallback en
-  return "kr";
+  return normalizeLang(i18n?.getLang?.() ?? "kr");
 }
 
 function getCourseId() {
@@ -53,25 +42,25 @@ function updateProgressBlock() {
   const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(courseId, total) : null) || {};
   const { completedLessonCount, dueReviewCount, lastLessonNo, lastActivityAt } = stats;
 
-  const lessonUnit = i18n.t("hsk_meta_lesson_unit") || "课";
-  const wordUnit = i18n.t("hsk_meta_word_unit") || "词";
+  const lessonUnit = i18n.t("hsk.meta.lesson_unit", "课");
+  const wordUnit = i18n.t("hsk.meta.word_unit", "词");
 
   const chips = [];
   chips.push(
     total > 0
-      ? `${i18n.t("hsk_meta_completed")} ${completedLessonCount} / ${total} ${lessonUnit}`
+      ? `${i18n.t("hsk.meta.completed", "완료")} ${completedLessonCount} / ${total} ${lessonUnit}`
       : "—"
   );
   if (lastLessonNo > 0) {
-    chips.push(`${i18n.t("hsk_meta_current")} ${lastLessonNo} ${lessonUnit}`);
+    chips.push(`${i18n.t("hsk.meta.current", "현재")} ${lastLessonNo} ${lessonUnit}`);
   }
   if (dueReviewCount > 0) {
-    chips.push(`${i18n.t("hsk_meta_review")} ${dueReviewCount} ${wordUnit}`);
+    chips.push(`${i18n.t("hsk.meta.review", "복습")} ${dueReviewCount} ${wordUnit}`);
   }
   if (lastActivityAt > 0) {
     const d = new Date(lastActivityAt);
     const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
-    chips.push(`${i18n.t("hsk_meta_last_study")} ${dateStr}`);
+    chips.push(`${i18n.t("hsk.meta.last_study", "최근 학습")} ${dateStr}`);
   }
 
   el.innerHTML = chips.map((text) => `<span class="hsk-meta-chip">${escapeHtml(text)}</span>`).join("");
@@ -146,41 +135,21 @@ function updateTabsUI() {
   });
 }
 
-/** 按系统语言取对话翻译。支持新结构 translation:{kr,jp,en} 与旧结构扁平 kr/en/jp，fallback: lang -> en -> "" */
-function pickDialogueTranslation(line, lang, zhMain = "") {
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const contentLang = getContentLang();
-  const t = line && line.translation;
-  // 新结构：translation: { kr, jp, en }
-  if (t && typeof t === "object") {
-    const out = str(t[contentLang]) || str(t.en) || "";
-    if (out && zhMain && out === zhMain) return "";
-    return out;
-  }
-  // 旧结构：扁平 kr, en, jp
-  const obj = { jp: (line && line.jp) || (line && line.ja), en: (line && line.en), kr: (line && (line.kr || line.ko)) };
-  const out = str(obj[contentLang]) || str(obj.en) || "";
+/** 对话翻译：统一走 languageEngine.getContentText */
+function pickDialogueTranslation(line, zhMain = "") {
+  const out = getContentText(line, "translation") || pick(line);
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
 
-/** 取会话标题：card.title[currentLang]，JP 缺失时用 i18n 会話{n} */
-function pickCardTitle(obj, lang, cardIndex = 1) {
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  if (obj != null) {
-    if (typeof obj === "string") return str(obj);
-    const v = getLocalizedText(obj, contentLang, "") || getLocalizedText(obj, lang, "");
-    if (v) return str(v);
-    if ((contentLang === "jp" || contentLang === "ja") && !str((obj && obj.jp) || (obj && obj.ja))) {
-      const sessionText = i18n.t("dialogue.session", { n: cardIndex });
-      if (sessionText && sessionText !== "dialogue.session") return sessionText;
-    }
-  }
+/** 会话标题：pick(title) 或 i18n 会話{n} */
+function pickCardTitle(obj, cardIndex = 1) {
+  if (obj != null && typeof obj === "string") return obj.trim();
+  const v = pick(obj);
+  if (v) return v;
   const sessionText = i18n.t("dialogue.session", { n: cardIndex });
   if (sessionText && sessionText !== "dialogue.session") return sessionText;
-  const cardLabel = i18n.t("lesson.dialogue_card") || i18n.t("hsk.tab.dialogue") || "会话";
-  return `${cardLabel}${cardIndex}`;
+  return i18n.t("lesson.dialogue_card", "会话") + cardIndex;
 }
 
 /** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
@@ -206,7 +175,7 @@ function renderDialogueLine(line, lang, showPinyin) {
   const zh = String((line && line.text) || (line && line.zh) || (line && line.cn) || (line && line.line) || "").trim();
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
-  const trans = pickDialogueTranslation(line, lang, zh);
+  const trans = pickDialogueTranslation(line, zh);
 
   const zhAttrs = zh ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"` : "";
   return `<article class="lesson-dialogue-line">
@@ -224,11 +193,11 @@ function buildDialogueHTML(lessonData) {
   const lang = getLang();
 
   const hero = `<section class="lesson-section-hero lesson-dialogue-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk_tab_dialogue"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("dialogue_subtitle") || "本课会话，可点击中文朗读。")}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue", "会话"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。"))}</p>
 </section>`;
 
-  if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk_empty_dialogue")}</div>`;
+  if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue", "暂无会话")}</div>`;
 
   if (SCENE_ENGINE && typeof SCENE_ENGINE.hasScene === "function" && SCENE_ENGINE.hasScene(lessonData)) {
     const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
@@ -242,7 +211,7 @@ function buildDialogueHTML(lessonData) {
 ${cards.map((card, index) => {
   const lines = Array.isArray(card && card.lines) ? card.lines : [];
   if (!lines.length) return "";
-  const titleText = pickCardTitle(card && card.title, lang, index + 1);
+  const titleText = pickCardTitle(card && card.title, index + 1);
   const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
   return `  <section class="lesson-dialogue-card">
     <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
@@ -252,33 +221,20 @@ ${cards.map((card, index) => {
 </div>`;
 }
 
-/** 语法：取当前语言解释。支持新结构 explain:{kr,jp,en} 与旧结构 explanation_*，fallback: lang -> en -> "" */
-function pickGrammarExplanation(pt, lang) {
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const contentLang = getContentLang();
-  const expl = pt && pt.explain;
-  // 新结构：explain: { kr, jp, en }
-  if (expl && typeof expl === "object") {
-    return str(expl[contentLang]) || str(expl.en) || "";
-  }
-  // 旧结构：explanation_zh, explanation_kr, explanation_en, explanation_jp
-  const obj = { kr: (pt && (pt.explanation_kr || pt.kr || pt.ko)), en: (pt && (pt.explanation_en || pt.en)), jp: (pt && (pt.explanation_jp || pt.jp)) };
-  return str(obj[contentLang]) || str(obj.en) || "";
+/** 语法解释：统一走 languageEngine.getContentText */
+function pickGrammarExplanation(pt) {
+  return getContentText(pt, "explain") || getContentText(pt, "explanation") || pick(pt) || "";
 }
 
-/** 语法：取例句列表，兼容 example / examples。支持新结构 translation:{kr,jp,en} 与旧结构扁平 */
-function getGrammarExamples(pt, lang) {
+/** 语法例句：getContentText(example, "translation") 或 pick */
+function getGrammarExamples(pt) {
   const ex = (pt && pt.example) || (pt && pt.examples);
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const contentLang = getContentLang();
   const toItem = (e) => {
     if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
     const zh = str((e && e.zh) || (e && e.cn) || (e && e.line) || (e && e.text));
     const pinyin = str((e && e.pinyin) || (e && e.py));
-    const t = e && e.translation;
-    let trans = "";
-    if (t && typeof t === "object") trans = str(t[contentLang]) || str(t.en) || "";
-    else trans = str(e[contentLang]) || str(e.en) || str((e && e.kr) || (e && e.ko)) || str(e && e.jp);
+    const trans = getContentText(e, "translation") || pick(e) || "";
     return { zh, pinyin, trans };
   };
   if (!ex) return [];
@@ -290,12 +246,12 @@ function getGrammarExamples(pt, lang) {
 function buildGrammarHTML(lessonData) {
   const g = lessonData && lessonData.grammar;
   const lang = getLang();
-  const speakLabel = i18n.t("extension_speak");
-  const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk_empty_grammar")}</div>`;
+  const speakLabel = i18n.t("hsk.extension_speak", "发音");
+  const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar", "暂无语法")}</div>`;
 
   const hero = `<section class="lesson-section-hero lesson-grammar-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("grammar_title"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("grammar_subtitle"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title", "语法"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.grammar_subtitle", "本课语法"))}</p>
 </section>`;
 
   if (!g) return `${hero}${emptyMsg}`;
@@ -311,8 +267,8 @@ function buildGrammarHTML(lessonData) {
     let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
     if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
-    const expl = pickGrammarExplanation(pt, lang);
-    const examples = getGrammarExamples(pt, lang);
+    const expl = pickGrammarExplanation(pt);
+    const examples = getGrammarExamples(pt);
     const idx = String(i + 1).padStart(2, "0");
     const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
     const titleAttrs = titleZh ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"` : "";
@@ -357,27 +313,21 @@ function buildExtensionHTML(lessonData) {
   const lang = getLang();
   const speakLabel = i18n.t("extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("extension_title"))}</h3>
-  <span class="lesson-extension-badge">${escapeHtml(i18n.t("extension_badge"))}</span>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("extension_subtitle"))}</p>
-  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension_tip"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.extension_title", "扩展"))}</h3>
+  <span class="lesson-extension-badge">${escapeHtml(i18n.t("hsk.extension_badge", "扩展"))}</span>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.extension_subtitle", "扩展表达"))}</p>
+  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip", "点击可听发音"))}</p>
 </section>`;
 
   if (!arr.length) {
-    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk_extension_empty", {})}</div>`;
+    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk.extension_empty", "暂无扩展")}</div>`;
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
-  const contentLang = getContentLang();
-
   const cards = arr.map((item, i) => {
     const zh = str((item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
-    // 新结构：translation: { kr, jp, en }
-    let meaning = "";
-    const t = item && item.translation;
-    if (t && typeof t === "object") meaning = str(t[contentLang]) || str(t.en) || "";
-    else meaning = getLocalizedText(item, contentLang, "") || getLocalizedText(item, "en", "");
+    const meaning = getContentText(item, "translation") || pick(item) || "";
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
@@ -408,8 +358,7 @@ function buildAIContext() {
 
   const found = state.lessons && state.lessons.find(function(x) { return Number(x.lessonNo) === Number(no); });
   const titleObj = found && found.title;
-  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-  const title = titleObj ? (typeof titleObj === "object" ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || "") : String(titleObj)) : "";
+  const title = titleObj ? (typeof titleObj === "object" ? pick(titleObj) : String(titleObj)) : "";
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {
@@ -644,10 +593,7 @@ async function openLesson({ lessonNo, file }) {
     }
 
     const titleObj = lessonData && lessonData.title;
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
-    const titleStr = typeof titleObj === "object"
-      ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || (titleObj && titleObj.kr) || (titleObj && titleObj.zh) || (titleObj && titleObj.en) || "")
-      : (typeof titleObj === "string" ? titleObj : "");
+    const titleStr = typeof titleObj === "object" ? pick(titleObj) : (typeof titleObj === "string" ? titleObj : "");
     const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no }) || (lang === "jp" ? `第 ${no} 課` : lang === "kr" ? `제 ${no}과` : lang === "zh" ? `第 ${no} 课` : `Lesson ${no}`);
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
     showStudyMode(headerTitle, "");
