@@ -1,2 +1,7 @@
+/**
+ * Lumina Audio Engine v2 — 统一导出入口
+ */
+import * as AUDIO_ENGINE from "./audioEngine.js";
 import * as TTS_ENGINE from "./ttsEngine.js";
-export { TTS_ENGINE };
+
+export { AUDIO_ENGINE, TTS_ENGINE };

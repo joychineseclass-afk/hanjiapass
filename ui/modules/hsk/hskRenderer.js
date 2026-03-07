@@ -269,23 +269,23 @@ export function bindWordCardActions() {
       const text = hanzi || pinyin || "";
       if (!text) return;
       try {
-        const { TTS_ENGINE } = await import("../../platform/index.js");
-        if (!TTS_ENGINE?.isSpeechSupported?.()) {
-          if (typeof console !== "undefined" && console.warn) console.warn("[TTS] speechSynthesis not supported");
+        const { AUDIO_ENGINE } = await import("../../platform/index.js");
+        if (!AUDIO_ENGINE?.isSpeechSupported?.()) {
+          if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
           return;
         }
-        TTS_ENGINE.stopSpeak();
+        AUDIO_ENGINE.stop();
         document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
         const cardEl = btn.closest(".word-card");
         if (cardEl) cardEl.classList.add("is-speaking");
-        TTS_ENGINE.speakText(text, {
+        AUDIO_ENGINE.playText(text, {
           lang: "zh-CN",
           rate: 0.95,
           onEnd: () => cardEl?.classList.remove("is-speaking"),
           onError: () => cardEl?.classList.remove("is-speaking"),
         });
       } catch (err) {
-        if (typeof console !== "undefined" && console.warn) console.warn("[TTS] speak failed:", err);
+        if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speak failed:", err);
       }
     }
 

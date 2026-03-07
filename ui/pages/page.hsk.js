@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, TTS_ENGINE } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -646,14 +646,14 @@ function bindEvents() {
     const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue']");
     if (!el) return;
     const text = (el.dataset?.speakText || "").trim();
-    if (!text || !TTS_ENGINE?.isSpeechSupported?.()) return;
+    if (!text || !AUDIO_ENGINE?.isSpeechSupported?.()) return;
     e.preventDefault();
     e.stopPropagation();
-    TTS_ENGINE.stopSpeak();
+    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
     const lineEl = el.closest(".lesson-dialogue-line");
     if (lineEl) lineEl.classList.add("is-speaking");
-    TTS_ENGINE.speakText(text, {
+    AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",
       onEnd: () => lineEl?.classList.remove("is-speaking"),
       onError: () => lineEl?.classList.remove("is-speaking"),
