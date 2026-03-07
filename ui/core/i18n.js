@@ -22,10 +22,12 @@ export function t(path, params) {
   if (legacyDict) {
     const lang = LE.getLang();
     const dictKey = lang === "zh" ? "cn" : lang === "ko" ? "kr" : lang;
-    const pack = legacyDict[dictKey] || legacyDict.kr;
-    const v = pack?.[path];
-    if (v != null && typeof v === "string") {
-      return (params && typeof params === "object") ? v.replace(/\{(\w+)\}/g, (_, k) => String(params[k] ?? "")) : v;
+    const pack = legacyDict[dictKey];
+    if (pack) {
+      const v = pack[path];
+      if (v != null && typeof v === "string") {
+        return (params && typeof params === "object") ? v.replace(/\{(\w+)\}/g, (_, k) => String(params[k] ?? "")) : v;
+      }
     }
   }
   return LE.t(path, params);

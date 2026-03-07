@@ -338,6 +338,11 @@ export function getContentText(item, field, options = {}) {
     if (old) { const v = pick(old, strictOpt); if (v) return v; }
   }
 
+  if (field === "explain" || field === "explanation") {
+    const jpVal = item.explainJp ?? item.explanationJp ?? item.explain_jp ?? item.explanation_jp;
+    if (jpVal && (lang === "jp" || lang === "ja")) return str(jpVal);
+  }
+
   return pick(item, strictOpt);
 }
 

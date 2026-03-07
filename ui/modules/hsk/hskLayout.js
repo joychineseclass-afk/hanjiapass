@@ -8,14 +8,14 @@ export function getHSKLayoutHTML() {
     <div class="hsk-head">
       <div class="hsk-title-row">
         <h2 class="text-xl font-bold">
-          <span data-i18n="hsk_title">HSK 학습</span>
+          <span data-i18n="hsk.title">HSK学習</span>
           <span id="hskSubTitle" class="ml-2 text-sm opacity-70"></span>
         </h2>
       </div>
 
       <div class="hsk-controls flex flex-wrap gap-2 items-center mt-3">
         <label class="text-sm">
-          <span data-i18n="hsk_level">레벨</span>
+          <span data-i18n="hsk.level">レベル</span>
           <select id="hskLevel" class="ml-1 border rounded-lg px-2 py-1">
             ${renderLevelOptions(9)}
           </select>
@@ -38,7 +38,7 @@ export function getHSKLayoutHTML() {
       </div>
 
       <div class="mt-2 text-sm opacity-70">
-        💡 <span data-i18n="hsk_tip">레벨을 선택하고 수업을 시작해요.</span>
+        💡 <span data-i18n="hsk.tip">レベルを選んで学習を始めましょう。</span>
       </div>
 
       <!-- Meta bar: 已完成 / 当前课 / 待复习 / 最近学习 -->
@@ -61,7 +61,7 @@ export function getHSKLayoutHTML() {
     <!-- ✅ Directory: 教材目录列表 -->
     <div id="hskLessonListWrap" class="mt-4">
       <section class="hsk-lesson-directory">
-        <div class="hsk-directory-head" data-i18n="hsk_directory_title">학습 목록</div>
+        <div class="hsk-directory-head" data-i18n="hsk.directory_title">コース一覧</div>
         <div id="hskLessonList"></div>
       </section>
     </div>
@@ -73,7 +73,7 @@ export function getHSKLayoutHTML() {
       </div>
       <div class="flex items-center gap-2">
         <button id="hskBackToList" type="button" class="px-3 py-1 rounded-lg border">
-          ← <span data-i18n="lesson.back_to_list">목록으로</span>
+          ← <span data-i18n="lesson.back_to_list">一覧に戻る</span>
         </button>
         <span id="hskStudyTitle" class="font-semibold"></span>
       </div>
@@ -84,24 +84,24 @@ export function getHSKLayoutHTML() {
       <!-- ✅ Study Tabs -->
       <div id="hskStudyTabs" class="mt-3 flex flex-wrap gap-2">
         <button id="hskTabWords" type="button" class="px-3 py-1 rounded-lg border" data-tab="words">
-          <span data-i18n="hsk_tab_words">단어</span>
+          <span data-i18n="hsk.tab.words">単語</span>
         </button>
         <button id="hskTabDialogue" type="button" class="px-3 py-1 rounded-lg border" data-tab="dialogue">
-          <span data-i18n="hsk_tab_dialogue">회화</span>
+          <span data-i18n="hsk.tab.dialogue">会話</span>
         </button>
         <button id="hskTabGrammar" type="button" class="px-3 py-1 rounded-lg border" data-tab="grammar">
-          <span data-i18n="hsk_tab_grammar">문법</span>
+          <span data-i18n="hsk.tab.grammar">文法</span>
         </button>
         <button id="hskTabExtension" type="button" class="px-3 py-1 rounded-lg border" data-tab="extension">
-          <span data-i18n="hsk_tab_extension">확장</span>
+          <span data-i18n="hsk.tab.extension">拡張</span>
         </button>
         <button id="hskTabPractice" type="button" class="px-3 py-1 rounded-lg border" data-tab="practice">
-          <span data-i18n="hsk_tab_practice">연습</span>
+          <span data-i18n="hsk.tab.practice">練習</span>
         </button>
         <button id="hskTabAI" type="button" class="px-3 py-1 rounded-lg border" data-tab="ai">
-          <span data-i18n="hsk_tab_ai">AI 학습</span>
+          <span data-i18n="hsk.tab.ai">AI学習</span>
         </button>
-        <button id="hskReviewBtn" type="button" class="px-3 py-1 rounded-lg border border-amber-400 text-amber-700" data-i18n="review_start">복습</button>
+        <button id="hskReviewBtn" type="button" class="px-3 py-1 rounded-lg border border-amber-400 text-amber-700" data-i18n="review.start">復習</button>
       </div>
     </div>
 
@@ -110,34 +110,34 @@ export function getHSKLayoutHTML() {
       <div id="hskPanelWords" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1"></div>
 
       <div id="hskPanelDialogue" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_dialogue">회화</div>
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.dialogue">会話</div>
         <div id="hskDialogueBody" class="space-y-3"></div>
       </div>
 
       <div id="hskPanelGrammar" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_grammar">문법</div>
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.grammar">文法</div>
         <div id="hskGrammarBody" class="space-y-3"></div>
       </div>
 
       <div id="hskPanelExtension" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_extension">확장</div>
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.extension">拡張</div>
         <div id="hskExtensionBody" class="space-y-3"></div>
       </div>
 
       <div id="hskPanelPractice" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_practice">연습</div>
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.practice">練習</div>
         <div id="hskPracticeBody" class="space-y-3"></div>
       </div>
 
       <div id="hskPanelAI" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk_tab_ai">AI 학습</div>
-        <div class="text-sm opacity-70 mb-3" data-i18n="hsk_ai_tip">
-          오늘 배운 단어/회화를 가지고 AI에게 질문해 보세요.
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.ai">AI学習</div>
+        <div class="text-sm opacity-70 mb-3" data-i18n="hsk.ai_tip">
+          本課の単語・会話でAIに質問しましょう。
         </div>
 
         <div class="flex flex-col gap-3">
           <textarea id="hskAIInput" class="border border-slate-200 rounded-xl p-3 text-sm w-full" rows="4"
-            data-i18n-placeholder="hsk_ai_placeholder"
+            data-i18n-placeholder="hsk.ai_placeholder"
             placeholder="예: ‘你好’랑 ‘您好’ 차이가 뭐예요?"></textarea>
 
           <div class="flex gap-2">
@@ -145,7 +145,7 @@ export function getHSKLayoutHTML() {
               <span data-i18n="hsk_ai_send">보내기</span>
             </button>
             <button id="hskAICopyContext" type="button" class="px-3 py-2 rounded-xl border opacity-80">
-              <span data-i18n="hsk_ai_copy">수업내용 복사</span>
+              <span data-i18n="hsk.ai_copy">レッスン内容をコピー</span>
             </button>
           </div>
 

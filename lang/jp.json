@@ -52,6 +52,7 @@
     "start_learning": "学習開始",
     "search_placeholder": "単語 / ピンイン / 意味で検索",
     "tip": "レベルを選んで学習を始めましょう。",
+    "select_level_tip": "レベルを選択して学習を開始してください。",
     "directory_title": "コース一覧",
     "directory_lesson": "第",
     "lesson_no_format": "第{n}課",

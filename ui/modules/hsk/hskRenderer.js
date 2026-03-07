@@ -91,7 +91,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
     `;
   }).join("");
 
-  const emptyMsg = i18n.t("hsk.empty_lessons", "—");
+  const emptyMsg = i18n.t("hsk.empty_lessons");
   containerEl.innerHTML = `<div class="hsk-directory-rows">${rows || `<div class="hsk-directory-empty">${escapeHtml(emptyMsg)}</div>`}</div>`;
 }
 
@@ -110,13 +110,13 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
 
       let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
       if (mainStr && mainStr.includes("object Object")) mainStr = "";
-      if (!mainStr) mainStr = i18n.t("hsk.meaning_empty", "(暂无释义)");
+      if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
 
       const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
-      const learnLabel = i18n.t("action.learn", i18n.t("lesson.learn", "学習"));
-      const strokeLabel = i18n.t("action.trace", i18n.t("stroke.btn_trace", "なぞり書き"));
-      const audioLabel = i18n.t("action.speak", i18n.t("action.listen", i18n.t("common.listen", "発音")));
+      const learnLabel = i18n.t("action.learn");
+      const strokeLabel = i18n.t("action.trace");
+      const audioLabel = i18n.t("action.speak");
       const strokeDisabled = !han ? " disabled" : "";
       const hanziChars = han ? Array.from(han).map((ch) =>
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
@@ -150,9 +150,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   });
 
   const hero = `<section class="lesson-section-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words", "单词"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle", "本课词汇，点击可听发音。"))}</p>
-  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", "{n}词").replace("{n}", arr.length)) + "</span>" : ""}
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>
+  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}
 </section>`;
   gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 

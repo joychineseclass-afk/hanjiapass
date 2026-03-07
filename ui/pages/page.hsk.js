@@ -90,8 +90,8 @@ function rerenderHSKFromState() {
     if (titleEl) titleEl.textContent = headerTitle;
 
     if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
-      const reviewTitle = i18n.t("hsk.review_range", "复习范围");
-      const reviewDesc = i18n.t("hsk.review_desc", "请回顾前面学过的词汇和对话。");
+      const reviewTitle = i18n.t("hsk.review_range");
+      const reviewDesc = i18n.t("hsk.review_desc");
       const rangeFmt = i18n.t("hsk.review_range_format", { from: rr[0], to: rr[1], total: rr[1] });
       const pw = $("hskPanelWords");
       if (pw) pw.innerHTML = `<div class="rounded-xl border border-slate-200 p-4 bg-slate-50"><div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div><p class="text-slate-700">${escapeHtml(rangeFmt)}</p><p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p></div>`;
@@ -135,11 +135,11 @@ function updateTabsLabels() {
     const btn = $(id);
     if (btn) {
       const span = btn.querySelector("span") || btn;
-      span.textContent = i18n.t(key, key.split(".").pop());
+      span.textContent = i18n.t(key);
     }
   });
   const reviewBtn = $("hskReviewBtn");
-  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start", "復習");
+  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start");
   const reviewLabels = [
     ["hskReviewEntry", "span", "hsk.review_mode"],
     ["hskReviewLesson", null, "hsk.review_this_lesson"],
@@ -150,7 +150,7 @@ function updateTabsLabels() {
     const el = $(id);
     if (!el) return;
     const target = child ? el.querySelector(child) : el;
-    if (target) target.textContent = i18n.t(key, key.split(".").pop());
+    if (target) target.textContent = i18n.t(key);
   });
 }
 
@@ -162,25 +162,25 @@ function updateProgressBlock() {
   const stats = (PROGRESS_SELECTORS && typeof PROGRESS_SELECTORS.getCourseStats === "function" ? PROGRESS_SELECTORS.getCourseStats(courseId, total) : null) || {};
   const { completedLessonCount, dueReviewCount, lastLessonNo, lastActivityAt } = stats;
 
-  const lessonUnit = i18n.t("hsk.meta.lesson_unit", "课");
-  const wordUnit = i18n.t("hsk.meta.word_unit", "词");
+  const lessonUnit = i18n.t("hsk.meta.lesson_unit");
+  const wordUnit = i18n.t("hsk.meta.word_unit");
 
   const chips = [];
   chips.push(
     total > 0
-      ? `${i18n.t("hsk.meta.completed", "완료")} ${completedLessonCount} / ${total} ${lessonUnit}`
+      ? `${i18n.t("hsk.meta.completed")} ${completedLessonCount} / ${total} ${lessonUnit}`
       : "—"
   );
   if (lastLessonNo > 0) {
-    chips.push(`${i18n.t("hsk.meta.current_lesson", "현재")} ${lastLessonNo} ${lessonUnit}`);
+    chips.push(`${i18n.t("hsk.meta.current_lesson")} ${lastLessonNo} ${lessonUnit}`);
   }
   if (dueReviewCount > 0) {
-    chips.push(`${i18n.t("hsk.meta.review_words", "복습")} ${dueReviewCount} ${wordUnit}`);
+    chips.push(`${i18n.t("hsk.meta.review_words")} ${dueReviewCount} ${wordUnit}`);
   }
   if (lastActivityAt > 0) {
     const d = new Date(lastActivityAt);
     const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
-    chips.push(`${i18n.t("hsk.meta.last_study", "최근 학습")} ${dateStr}`);
+    chips.push(`${i18n.t("hsk.meta.last_study")} ${dateStr}`);
   }
 
   el.innerHTML = chips.map((text) => `<span class="hsk-meta-chip">${escapeHtml(text)}</span>`).join("");
@@ -315,11 +315,11 @@ function buildDialogueHTML(lessonData) {
   const lang = getLang();
 
   const hero = `<section class="lesson-section-hero lesson-dialogue-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue", "会话"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.dialogue_subtitle"))}</p>
 </section>`;
 
-  if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue", "暂无会话")}</div>`;
+  if (!cards.length) return `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue")}</div>`;
 
   if (SCENE_ENGINE && typeof SCENE_ENGINE.hasScene === "function" && SCENE_ENGINE.hasScene(lessonData)) {
     const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
@@ -372,12 +372,12 @@ function getGrammarExamples(pt) {
 function buildGrammarHTML(lessonData) {
   const g = lessonData && lessonData.grammar;
   const lang = getLang();
-  const speakLabel = i18n.t("hsk.extension_speak", "发音");
-  const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar", "暂无语法")}</div>`;
+  const speakLabel = i18n.t("hsk.extension_speak");
+  const emptyMsg = `<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar")}</div>`;
 
   const hero = `<section class="lesson-section-hero lesson-grammar-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title", "语法"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.grammar_subtitle", "本课语法"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.grammar_subtitle"))}</p>
 </section>`;
 
   if (!g) return `${hero}${emptyMsg}`;
@@ -437,16 +437,16 @@ function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
   const lang = getLang();
-  const speakLabel = i18n.t("extension_speak");
+  const speakLabel = i18n.t("hsk.extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.extension_title", "扩展"))}</h3>
-  <span class="lesson-extension-badge">${escapeHtml(i18n.t("hsk.extension_badge", "扩展"))}</span>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.extension_subtitle", "扩展表达"))}</p>
-  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip", "点击可听发音"))}</p>
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.extension_title"))}</h3>
+  <span class="lesson-extension-badge">${escapeHtml(i18n.t("hsk.extension_badge"))}</span>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.extension_subtitle"))}</p>
+  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip"))}</p>
 </section>`;
 
   if (!arr.length) {
-    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk.extension_empty", "暂无扩展")}</div>`;
+    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk.extension_empty")}</div>`;
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
