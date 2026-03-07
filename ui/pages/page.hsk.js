@@ -176,9 +176,10 @@ function renderDialogueLine(line, lang, showPinyin) {
 </article>`;
 }
 
-/** 对话渲染：优先 dialogueCards，回退 dialogue；卡片式渲染，无旧 fallback 文本流 */
+/** 对话渲染：优先 dialogueCards，回退 dialogue；每张卡单独渲染，不合并。lessonData 可能为归一化对象，需用 _raw 取原始 dialogueCards */
 function buildDialogueHTML(lessonData) {
-  const cards = getDialogueCards(lessonData);
+  const raw = lessonData?._raw ?? lessonData;
+  const cards = getDialogueCards(raw);
   if (!cards.length) return `<div class="lesson-dialogue-empty">${i18n.t("hsk_empty_dialogue", {})}</div>`;
 
   const lang = getLang();
@@ -189,24 +190,19 @@ function buildDialogueHTML(lessonData) {
   }
 
   const showPinyin = shouldShowPinyin({ level: lessonData?.level, version: lessonData?.version });
-  const cardBlocks = [];
 
-  for (let i = 0; i < cards.length; i++) {
-    const card = cards[i];
-    const lines = Array.isArray(card?.lines) ? card.lines : [];
-    if (!lines.length) continue;
-
-    const titleText = pickCardTitle(card?.title, lang, i + 1);
-    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
-
-    cardBlocks.push(`<section class="lesson-dialogue-card">
-  <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
-  <div class="lesson-dialogue-lines">${lineHtml}</div>
-</section>`);
-  }
-
-  if (!cardBlocks.length) return `<div class="lesson-dialogue-empty">${i18n.t("hsk_empty_dialogue", {})}</div>`;
-  return `<div class="lesson-dialogue-list">${cardBlocks.join("")}</div>`;
+  return `<div class="lesson-dialogue-list">
+${cards.map((card, index) => {
+  const lines = Array.isArray(card?.lines) ? card.lines : [];
+  if (!lines.length) return "";
+  const titleText = pickCardTitle(card?.title, lang, index + 1);
+  const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
+  return `  <section class="lesson-dialogue-card">
+    <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
+    <div class="lesson-dialogue-lines">${lineHtml}</div>
+  </section>`;
+}).filter(Boolean).join("\n")}
+</div>`;
 }
 
 /** 语法：取当前语言解释，缺失时 kr -> en -> zh 回退 */
