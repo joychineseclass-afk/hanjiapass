@@ -27,4 +27,6 @@ export {
   parseHashQuery,
 } from "./courses/courseRouterHook.js";
 export { PROGRESS_ENGINE, PROGRESS_SELECTORS } from "./progress/index.js";
-export * as TTS_ENGINE from "./audio/index.js";
+import * as TTS_ENGINE from "./audio/index.js";
+export { TTS_ENGINE };
+if (typeof window !== "undefined") window.TTS_ENGINE = TTS_ENGINE;
