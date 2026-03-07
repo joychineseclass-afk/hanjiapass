@@ -100,11 +100,11 @@ function showFatal(err) {
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("[app] DOMContentLoaded");
 
-  // 0) 加载 ui/i18n/*.json 模块化文案
+  // 0) 加载 /lang 语言包
   try {
-    await i18n.loadFromJson();
+    await i18n.load();
   } catch (e) {
-    console.warn("[app] i18n.loadFromJson failed:", e?.message);
+    console.warn("[app] i18n.load failed:", e?.message);
   }
 
   // 1) Nav

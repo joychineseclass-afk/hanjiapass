@@ -11,17 +11,17 @@ import { i18n } from "../i18n.js";
 // ✅ 多页面导航：每个都是独立页面
 // ⚠️ teacher 改名为 학부모/선생님
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",      key: "nav_home",        label: "홈",            color: "#3b82f6" },
-  { href: "/pages/hsk.html",       key: "nav_hsk",         label: "HSK 학습",      color: "#22c55e" },
-  { href: "/pages/stroke.html",    key: "nav_stroke",      label: "한자 필순",     color: "#f97316" },
-  { href: "/pages/hanja.html",     key: "nav_hanjagongfu", label: "한자공부",      color: "#a855f7" },
-  { href: "/pages/speaking.html",  key: "nav_speaking",    label: "회화",          color: "#ef4444" },
-  { href: "/pages/travel.html",    key: "nav_travel",      label: "여행중국어",     color: "#06b6d4" },
-  { href: "/pages/culture.html",   key: "nav_culture",     label: "문화",          color: "#eab308" },
-  { href: "/pages/review.html",    key: "nav_review",      label: "복습",          color: "#8b5cf6" },
-  { href: "/pages/resources.html", key: "nav_resources",   label: "자료",          color: "#10b981" },
-  { href: "/pages/teacher.html",   key: "nav_teacher",     label: "학부모/선생님",  color: "#f43f5e" },
-  { href: "/pages/my.html",        key: "nav_my",          label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#home",      key: "nav.home",        label: "홈",            color: "#3b82f6" },
+  { href: "/pages/hsk.html",       key: "nav.hsk",         label: "HSK 학습",      color: "#22c55e" },
+  { href: "/pages/stroke.html",    key: "nav.stroke",      label: "한자 필순",     color: "#f97316" },
+  { href: "/pages/hanja.html",     key: "nav.hanjagongfu", label: "한자공부",      color: "#a855f7" },
+  { href: "/pages/speaking.html",  key: "nav.speaking",    label: "회화",          color: "#ef4444" },
+  { href: "/pages/travel.html",    key: "nav.travel",      label: "여행중국어",     color: "#06b6d4" },
+  { href: "/pages/culture.html",   key: "nav.culture",     label: "문화",          color: "#eab308" },
+  { href: "/pages/review.html",    key: "nav.review",      label: "복습",          color: "#8b5cf6" },
+  { href: "/pages/resources.html", key: "nav.resources",   label: "자료",          color: "#10b981" },
+  { href: "/pages/teacher.html",   key: "nav.teacher",     label: "학부모/선생님",  color: "#f43f5e" },
+  { href: "/pages/my.html",        key: "nav.my",          label: "내 학습",       color: "#64748b" },
 ];
 
 // ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
@@ -77,14 +77,16 @@ function syncLangButtons(rootEl) {
   const btnKR = rootEl.querySelector("#btnKR");
   const btnCN = rootEl.querySelector("#btnCN");
   const btnEN = rootEl.querySelector("#btnEN");
+  const btnJP = rootEl.querySelector("#btnJP");
   const lang = (i18n?.getLang?.() || "ko").toLowerCase();
-  const canon = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+  const canon = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : lang === "jp" ? "jp" : "ko";
 
-  btnKR?.classList.toggle("active", canon === "ko");
+  btnKR?.classList.toggle("active", canon === "ko" || canon === "kr");
   btnCN?.classList.toggle("active", canon === "zh");
   btnEN?.classList.toggle("active", canon === "en");
+  btnJP?.classList.toggle("active", canon === "jp");
 
-  document.documentElement.lang = canon === "ko" ? "ko" : canon === "zh" ? "zh-CN" : "en";
+  document.documentElement.lang = canon === "ko" || canon === "kr" ? "ko" : canon === "zh" ? "zh-CN" : canon === "jp" ? "ja" : "en";
 }
 
 function applyI18n(rootEl) {
@@ -183,15 +185,16 @@ export function mountNavBar(rootEl) {
   rootEl.innerHTML = `
     <div class="topbar">
       <div class="brand">
-        <a href="/index.html#home" data-i18n="brand">***中文学习中心</a>
-        <small data-i18n="subtitle">AI 한자 · 중국어 학습 플랫폼</small>
+        <a href="/index.html#home" data-i18n="brand.name">Lumina Chinese Learning Center</a>
+        <small data-i18n="brand.subtitle">AI 한자 · 중국어 학습 플랫폼</small>
       </div>
 
       <div class="right">
         <div class="lang" aria-label="Language switcher">
-          <button id="btnKR" type="button" aria-label="Korean" data-lang="ko">KR</button>
-          <button id="btnCN" type="button" aria-label="Chinese" data-lang="zh">CN</button>
+          <button id="btnKR" type="button" aria-label="Korean" data-lang="kr">KR</button>
+          <button id="btnCN" type="button" aria-label="Chinese" data-lang="cn">CN</button>
           <button id="btnEN" type="button" aria-label="English" data-lang="en">EN</button>
+          <button id="btnJP" type="button" aria-label="Japanese" data-lang="jp">JP</button>
         </div>
 
         <div class="login">
@@ -230,10 +233,10 @@ export function mountNavBar(rootEl) {
   const langButtons = rootEl.querySelectorAll(".lang button[data-lang]");
 
   langButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const lang = btn.getAttribute("data-lang") || "ko"; // ko | zh | en
+    btn.addEventListener("click", async () => {
+      const lang = btn.getAttribute("data-lang") || "kr"; // kr | cn | en | jp
       try {
-        i18n?.setLang?.(lang);
+        await i18n?.setLang?.(lang);
         localStorage.setItem("joy_lang", lang);
       } catch {}
       applyI18n(rootEl);

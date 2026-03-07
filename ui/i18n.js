@@ -1,8 +1,10 @@
-// /ui/i18n.js (ES Module) — STABLE FULL (compat kr/cn + ko/zh/en)
-// ✅ DICT + t() + apply(root) + onChange/eventbus
-// ✅ 支持 ui/i18n/*.json 模块化文案（商业级总表）
-// ✅ Backward compatible with old lang codes (kr/cn) + new (ko/zh/en)
-// ✅ Emits standard window events on lang change: joy:lang, languageChanged, i18n:changed
+// /ui/i18n.js (ES Module) — Lumina Language Pack Engine v1
+// ✅ 使用 /lang/{kr,cn,en,jp}.json 语言包
+// ✅ 支持 t("lesson.words") 与 t("lesson_words") 兼容
+// ✅ 不破坏现有 i18n.t() 调用方式
+// ✅ 新增语言只需添加 /lang/es.json 等
+
+import * as LangPack from "./core/i18n.js";
 
 let DICT = {
   // ===== Korean =====
@@ -667,23 +669,23 @@ function safeSetLS(key, val) {
 }
 
 // ---------- normalize lang codes (unified) ----------
-// kr/ko/korean → ko; cn/zh/chinese → zh; en stays en
-// getLang() always returns ko|zh|en
+// kr/ko → ko; cn/zh → zh; en; jp/ja → jp
 function normalizeLang(input, fallback = "ko") {
   const raw = String(input || "").trim().toLowerCase();
   if (!raw) return fallback;
 
-  if (raw === "kr" || raw === "ko" || raw === "korean" || raw.startsWith("ko-")) return "ko";
+  if (raw === "kr" || raw === "ko" || raw === "korean" || raw.startsWith("ko")) return "ko";
   if (raw === "cn" || raw === "zh" || raw === "chinese" || raw.startsWith("zh")) return "zh";
-  if (raw === "en" || raw.startsWith("en-")) return "en";
+  if (raw === "en" || raw.startsWith("en")) return "en";
+  if (raw === "jp" || raw === "ja" || raw === "japanese" || raw.startsWith("ja")) return "jp";
 
   return fallback;
 }
 
 function canonToDictKey(canon) {
-  // our DICT keys: kr/cn/en
   if (canon === "ko") return "kr";
   if (canon === "zh") return "cn";
+  if (canon === "jp") return "jp";
   return canon === "en" ? "en" : "kr";
 }
 
@@ -723,31 +725,30 @@ class I18N {
 
     // keep storage consistent
     safeSetLS(this._storageKey, this._lang);
+    LangPack.setLegacyDict?.(DICT);
   }
 
   /**
-   * 从 ui/i18n/*.json 加载文案并合并到 DICT（JSON 键覆盖同名字段）
-   * @param {string} [basePath] - 如 "/ui/i18n/" 或 ""（用 DATA_PATHS.getBase）
+   * 加载 /lang 语言包（Language Pack Engine v1）
    * @returns {Promise<void>}
    */
-  async loadFromJson(basePath) {
+  async load() {
     try {
-      const base = basePath ?? (typeof window !== "undefined" && window.DATA_PATHS?.getBase?.?.()) ?? "";
-      const path = String(base || "").replace(/\/+$/, "") + (base ? "/" : "") + "ui/i18n/";
-      const { loadAllI18n } = await import("./i18n/index.js");
-      const resolved = path.startsWith("http") ? path : (path.startsWith("/") ? path : "/" + path);
-      const loaded = await loadAllI18n(resolved);
-      if (loaded?.kr) Object.assign(DICT.kr, loaded.kr);
-      if (loaded?.cn) Object.assign(DICT.cn, loaded.cn);
-      if (loaded?.en) Object.assign(DICT.en, loaded.en);
+      await LangPack.initLang?.(this._lang);
     } catch (e) {
-      console.warn("[i18n] loadFromJson failed:", e?.message);
+      console.warn("[i18n] load failed:", e?.message);
     }
   }
 
-  // canonical getter — always returns ko|zh|en
+  /** @deprecated 使用 load() */
+  async loadFromJson() {
+    return this.load();
+  }
+
+  // canonical getter — returns ko|zh|en|jp (kr→ko, cn→zh for compat)
   getLang() {
-    return normalizeLang(this._lang, "ko");
+    const pack = LangPack.getLang?.() ?? this._lang;
+    return pack === "kr" ? "ko" : pack === "cn" ? "zh" : pack;
   }
 
   // legacy getter (some old code expects kr/cn)
@@ -755,13 +756,19 @@ class I18N {
     return canonToDictKey(this._lang); // kr|cn|en
   }
 
-  // Accepts kr/cn/ko/zh/en; emits change events
-  setLang(lang) {
+  // Accepts kr/cn/ko/zh/en/jp; emits change events
+  async setLang(lang) {
     const next = normalizeLang(lang, "ko");
     if (next === this._lang) return this._lang;
 
     this._lang = next;
     safeSetLS(this._storageKey, next);
+
+    try {
+      await LangPack.setLang?.(next);
+    } catch (e) {
+      console.warn("[i18n] setLang load failed:", e?.message);
+    }
 
     // legacy handlers
     for (const fn of this._handlers) {
@@ -793,9 +800,11 @@ class I18N {
   }
 
   t(key, params) {
+    const fromPack = LangPack.t?.(key, params);
+    if (fromPack !== key) return fromPack;
+
     const dictKey = canonToDictKey(this._lang); // kr/cn/en
     const pack = DICT[dictKey] || DICT.kr;
-
     const raw =
       (pack && key in pack) ? pack[key]
       : (DICT.kr && key in DICT.kr) ? DICT.kr[key]
