@@ -50,6 +50,7 @@
     "tip": "Select a level to start.",
     "directory_title": "Course List",
     "directory_lesson": "Lesson",
+    "lesson_no_format": "Lesson {n}",
     "directory_enter": "Enter Lesson",
     "meta": {
       "completed": "Completed",

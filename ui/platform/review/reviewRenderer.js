@@ -22,18 +22,20 @@ function escapeHtml(s) {
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "ko").toLowerCase();
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en);
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn);
-  return str(obj.en) || str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
+  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp ?? obj.ja);
+  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.jp ?? obj.ja);
+  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko);
+  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp ?? obj.ja);
 }
 
 function pickExplanation(obj, lang) {
   if (!obj || typeof obj !== "object") return str(obj);
   if (typeof obj === "string") return str(obj);
   const l = (lang || "ko").toLowerCase();
-  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn);
-  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
-  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko);
+  if (l === "ko" || l === "kr") return str(obj.kr ?? obj.ko) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.jp ?? obj.ja);
+  if (l === "zh" || l === "cn") return str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.en) || str(obj.jp ?? obj.ja);
+  if (l === "jp" || l === "ja") return str(obj.jp ?? obj.ja) || str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko);
+  return str(obj.en) || str(obj.zh ?? obj.cn) || str(obj.kr ?? obj.ko) || str(obj.jp ?? obj.ja);
 }
 
 function t(key, params) {
@@ -163,7 +165,7 @@ export function renderReviewMode(container, session, { lang = "ko", onFinish, en
   if (!container) return;
 
   const questions = session?.questions || [];
-  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : lang === "jp" || lang === "ja" ? "jp" : "ko";
 
   if (!questions.length) {
     container.innerHTML = `

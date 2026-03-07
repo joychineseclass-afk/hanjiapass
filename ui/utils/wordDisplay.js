@@ -104,7 +104,7 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
       const g = getGlossaryMeaning(hanzi, "jp", scope);
       if (g) return g;
     }
-    return str(obj.en ?? obj.kr ?? obj.ko) || zh;
+    return str(obj.zh ?? obj.cn) || str(obj.en) || str(obj.kr ?? obj.ko) || zh;
   }
   // zh / cn
   if (zh) return zh;

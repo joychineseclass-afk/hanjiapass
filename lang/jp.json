@@ -38,18 +38,23 @@
     "resources": "資料",
     "teacher": "教師向け",
     "my": "マイ学習",
+    "my_learning": "マイ学習",
     "login": "ログイン"
   },
   "hsk": {
     "title": "HSK学習",
+    "page_title": "HSK学習",
     "level": "レベル",
     "version": "バージョン",
+    "course_list": "コース一覧",
+    "select_level_hint": "レベルを選択して学習を開始してください。",
     "select_level": "レベル選択",
     "start_learning": "学習開始",
     "search_placeholder": "単語 / ピンイン / 意味で検索",
     "tip": "レベルを選んで学習を始めましょう。",
     "directory_title": "コース一覧",
     "directory_lesson": "第",
+    "lesson_no_format": "第 {n} 課",
     "directory_enter": "レッスン開始",
     "meta": {
       "completed": "完了",
@@ -117,7 +122,15 @@
     "total_count": "{n}問",
     "total_score": "得点 {score}/{total}",
     "question_no": "第{n}問",
+    "total_questions": "{n}問",
+    "score": "得点",
     "unanswered": "未回答"
+  },
+  "progress": {
+    "completed": "完了",
+    "current_lesson": "現在のレッスン",
+    "review_words": "復習待ち",
+    "last_study": "最近の学習"
   },
   "review": {
     "mode": "復習モード",
@@ -126,6 +139,8 @@
     "continue": "復習を続ける",
     "current_lesson": "本課",
     "current_level": "本レベル",
+    "this_lesson": "本課",
+    "this_level": "本レベル",
     "all_wrong": "全不正解",
     "correct": "正解",
     "wrong": "不正解",
@@ -174,18 +189,23 @@
     "subtitle": "AI中国語学習プラットフォーム"
   },
   "dialogue": {
-    "subtitle": "本課の会話。中国語をクリックで読み上げ。"
+    "title": "会話",
+    "session": "会話{n}",
+    "subtitle": "本課の会話。中国語をクリックで読み上げ。",
+    "click_to_listen": "クリックで発音"
   },
   "grammar": {
     "title": "文法ポイント",
-    "subtitle": "本課の文法。"
+    "subtitle": "本課の文法。",
+    "example": "例"
   },
   "extension": {
     "speak": "発音",
     "title": "拡張表現",
     "badge": "拡張",
     "subtitle": "本課に関連する拡張表現。",
-    "tip": "聞く→繰り返す→自分で話す。"
+    "tip": "聞く→繰り返す→自分で話す。",
+    "guide": "拡張表現の説明"
   },
   "stroke": {
     "title": "漢字筆順練習",

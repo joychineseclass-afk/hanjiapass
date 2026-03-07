@@ -165,6 +165,6 @@ export function getHSKLayoutHTML() {
 function renderLevelOptions(maxLv = 9) {
   return Array.from({ length: maxLv }, (_, i) => {
     const lv = i + 1;
-    return `<option value="${lv}">HSK ${lv}급</option>`;
+    return `<option value="${lv}" data-lv="${lv}">HSK ${lv}</option>`;
   }).join("");
 }

@@ -50,6 +50,7 @@
     "tip": "选择等级并开始课程",
     "directory_title": "课程目录",
     "directory_lesson": "第",
+    "lesson_no_format": "第 {n} 课",
     "directory_enter": "进入课程",
     "meta": {
       "completed": "已完成",

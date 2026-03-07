@@ -37,11 +37,12 @@ async function resolveStrokeUrlAsync(hanzi) {
   return candidates[0] || `/pages/stroke.html?ch=${ch}`;
 }
 
-// Returns "ko" | "en" | "zh"
+// Returns "ko" | "en" | "zh" | "jp"
 export function normalizeLang(i18nLang) {
   const l = String(i18nLang ?? i18n?.getLang?.() ?? "ko").toLowerCase();
   if (l === "kr" || l === "ko") return "ko";
   if (l === "cn" || l === "zh") return "zh";
+  if (l === "jp" || l === "ja") return "jp";
   if (l === "en") return "en";
   return "ko";
 }
@@ -78,7 +79,6 @@ function pickText(v, lang = "ko") {
 export function renderLessonList(containerEl, lessons, { lang = "ko", currentLessonNo = 0 } = {}) {
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
-  const lessonLabel = i18n?.t?.("hsk.directory_lesson") || i18n?.t?.("hsk_directory_lesson") || "第";
   const arrow = "›";
 
   const rows = list.map((it) => {
@@ -95,20 +95,15 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
       zh = pickText(titleObj, "zh") || pickText(titleObj, "cn") || "";
     }
 
-    let translation = "";
-    if (lang === "ko") {
-      translation = it.titleKo ?? pickText(titleObj, "ko") ?? pickText(titleObj, "kr") ?? "";
-      if (!translation && typeof titleObj === "string") {
-        const parts = String(titleObj).split(/\s*\/\s*/);
-        translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
-      }
-    } else if (lang === "en") {
-      translation = it.titleEn ?? pickText(titleObj, "en") ?? "";
-    } else if (lang === "jp") {
-      translation = it.titleJp ?? pickText(titleObj, "jp") ?? pickText(titleObj, "en") ?? "";
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+    let translation = getLocalizedText(titleObj, contentLang, "") || it.titleJp ?? it.titleEn ?? it.titleKo ?? "";
+    if (!translation && typeof titleObj === "string") {
+      const parts = String(titleObj).split(/\s*\/\s*/);
+      translation = parts.find((p) => !/[\u4e00-\u9fff]/.test(p))?.trim() ?? "";
     }
 
-    const titleDisplay = lang === "zh" ? (zh || translation) : (translation || zh || "-");
+    const titleDisplay = (lang === "zh" || lang === "cn") ? (zh || translation) : (translation || zh || "-");
+    const lessonNoFormatted = i18n?.t?.("hsk.lesson_no_format", { n: lessonNo }) || (contentLang === "jp" ? `第 ${lessonNo} 課` : contentLang === "kr" ? `제 ${lessonNo}과` : contentLang === "cn" ? `第 ${lessonNo} 课` : `Lesson ${lessonNo}`);
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
 
     return `
@@ -118,7 +113,7 @@ export function renderLessonList(containerEl, lessons, { lang = "ko", currentLes
         data-file="${escapeHtmlAttr(file)}"
       >
         <span class="hsk-directory-no">${lessonNo || ""}</span>
-        <span class="hsk-directory-title">${lessonLabel} ${lessonNo} / ${escapeHtml(titleDisplay)}</span>
+        <span class="hsk-directory-title">${escapeHtml(lessonNoFormatted)} / ${escapeHtml(titleDisplay)}</span>
         <span class="hsk-directory-arrow">${arrow}</span>
       </button>
     `;
@@ -171,9 +166,9 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
 
       const posStr = getPosByLang(raw, currentLang, glossaryScope);
 
-      const learnLabel = currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : "Learn";
-      const strokeLabel = currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : "Stroke";
-      const audioLabel = currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : "Audio";
+      const learnLabel = i18n?.t?.("lesson.learn") || (currentLang === "ko" ? "학습" : currentLang === "zh" ? "学习" : currentLang === "jp" ? "学習" : "Learn");
+      const strokeLabel = i18n?.t?.("stroke.btn_trace") || (currentLang === "ko" ? "획" : currentLang === "zh" ? "笔画" : currentLang === "jp" ? "筆順" : "Stroke");
+      const audioLabel = i18n?.t?.("common.listen") || i18n?.t?.("common.speak") || (currentLang === "ko" ? "발음" : currentLang === "zh" ? "发音" : currentLang === "jp" ? "発音" : "Audio");
       const strokeDisabled = !han ? " disabled" : "";
       const hanziChars = han ? Array.from(han).map((ch) =>
         `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`

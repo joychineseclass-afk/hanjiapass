@@ -177,7 +177,7 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     return;
   }
 
-  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : lang === "jp" || lang === "ja" ? "jp" : "ko";
 
   function render() {
     const answers = PracticeState.getAnswers();
@@ -259,7 +259,7 @@ export function rerenderPractice(container, lang = "ko") {
   const questions = PracticeState.getQuestions();
   if (!questions.length) return;
 
-  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : "ko";
+  const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "en" ? "en" : lang === "jp" || lang === "ja" ? "jp" : "ko";
   const answers = PracticeState.getAnswers();
   const submitted = PracticeState.isSubmitted();
   const resultMap = PracticeState.getResultMap();

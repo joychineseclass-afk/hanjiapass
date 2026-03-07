@@ -50,6 +50,7 @@
     "tip": "레벨을 선택하고 수업을 시작해요.",
     "directory_title": "학습 목록",
     "directory_lesson": "제",
+    "lesson_no_format": "제 {n}과",
     "directory_enter": "수업 시작",
     "meta": {
       "completed": "완료",

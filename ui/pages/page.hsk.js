@@ -133,30 +133,34 @@ function updateTabsUI() {
   });
 }
 
-/** 按系统语言取对话翻译。KR: kr/ko, CN: zh, EN: en，缺失时回退 */
+/** 按系统语言取对话翻译。KR/CN/EN/JP 统一 fallback：jp->cn->en->kr */
 function pickDialogueTranslation(line, lang, zhMain = "") {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
   const t = line?.translation;
-  let out = "";
-  if (lang === "ko") out = str(line?.kr ?? line?.ko ?? t?.kr ?? t?.ko ?? line?.zh ?? line?.cn);
-  else if (lang === "en") out = str(line?.en ?? t?.en ?? line?.zh ?? line?.cn);
-  else out = str(line?.zh ?? line?.cn ?? t?.zh ?? line?.kr ?? line?.ko ?? line?.en);
+  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+  const obj = { jp: line?.jp ?? t?.jp, cn: line?.zh ?? line?.cn ?? t?.zh ?? t?.cn, en: line?.en ?? t?.en, kr: line?.kr ?? line?.ko ?? t?.kr ?? t?.ko };
+  const out = str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, ""));
   if (out && zhMain && out === zhMain) return "";
   return out;
 }
 
-/** 取会话标题：card.title[currentLang]，否则用 i18n */
+/** 取会话标题：card.title[currentLang]，JP 缺失时用 i18n 会話{n} */
 function pickCardTitle(obj, lang, cardIndex = 1) {
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
   if (obj != null) {
     if (typeof obj === "string") return str(obj);
-    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
     const v = getLocalizedText(obj, contentLang, "") || getLocalizedText(obj, lang, "");
     if (v) return str(v);
+    if ((contentLang === "jp" || contentLang === "ja") && !str(obj?.jp ?? obj?.ja)) {
+      const sessionText = i18n.t("dialogue.session", { n: cardIndex });
+      if (sessionText && sessionText !== "dialogue.session") return sessionText;
+    }
   }
-  const n = String(cardIndex);
+  const sessionText = i18n.t("dialogue.session", { n: cardIndex });
+  if (sessionText && sessionText !== "dialogue.session") return sessionText;
   const cardLabel = i18n.t("lesson.dialogue_card") || i18n.t("hsk.tab.dialogue") || "会话";
-  return `${cardLabel} ${n}`;
+  return `${cardLabel}${cardIndex}`;
 }
 
 /** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
@@ -236,20 +240,17 @@ function pickGrammarExplanation(pt, lang) {
   return str(getLocalizedText(obj, contentLang, "")) || str(getLocalizedText(obj, lang, "")) || str(obj?.zh ?? obj?.kr ?? obj?.en ?? obj?.jp);
 }
 
-/** 语法：取例句列表，兼容 example / examples 单条或数组 */
+/** 语法：取例句列表，兼容 example / examples，JP fallback: jp->cn->en->kr */
 function getGrammarExamples(pt, lang) {
   const ex = pt?.example ?? pt?.examples;
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const transObj = (e) => ({ jp: str(e?.jp ?? e?.ja), cn: str(e?.zh ?? e?.cn), en: str(e?.en), kr: str(e?.kr ?? e?.ko) });
   const toItem = (e) => {
     if (typeof e === "string") return { zh: e, pinyin: "", trans: "" };
     const zh = str(e?.zh ?? e?.cn ?? e?.line);
     const pinyin = str(e?.pinyin ?? e?.py);
-    const kr = str(e?.kr ?? e?.ko);
-    const en = str(e?.en);
-    let trans = "";
-    if (lang === "ko") trans = kr || en || str(e?.zh ?? e?.cn);
-    else if (lang === "en") trans = en || kr || str(e?.zh ?? e?.cn);
-    else trans = str(e?.zh ?? e?.cn) || kr || en;
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+    const trans = getLocalizedText(transObj(e), contentLang, "") || getLocalizedText(transObj(e), lang, "") || str(e?.zh ?? e?.cn) || str(e?.kr ?? e?.ko) || str(e?.en);
     return { zh, pinyin, trans };
   };
   if (!ex) return [];
@@ -374,7 +375,8 @@ function buildAIContext() {
   const no = state.current.lessonNo;
 
   const titleObj = state.lessons?.find(x => Number(x.lessonNo) === Number(no))?.title;
-  const title = titleObj ? stringifyMaybe(titleObj) : "";
+  const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
+  const title = titleObj ? (typeof titleObj === "object" ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || "") : String(titleObj)) : "";
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {
@@ -384,11 +386,12 @@ function buildAIContext() {
     return `${han}${py ? `(${py})` : ""}${mean ? `: ${mean}` : ""}`;
   }).join("\n");
 
-  const lessonLabel = i18n.t("hsk.directory_lesson") || "Lesson";
-  const questionLabel = i18n.t("practice.question_label") || "Question";
+  const lessonLabel = i18n.t("hsk.lesson_no_format", { n: no }) || (lang === "jp" ? `第 ${no} 課` : lang === "kr" ? `제 ${no}과` : `Lesson ${no}`);
+  const questionLabel = i18n.t("practice.question_label") || (lang === "jp" ? "質問" : "Question");
+  const titleLabel = lang === "jp" ? "タイトル" : "Title";
   return [
-    `${lessonLabel} ${no}`,
-    title ? `Title: ${title}` : "",
+    lessonLabel,
+    title ? `${titleLabel}: ${title}` : "",
     wordsLine ? `Words:\n${wordsLine}` : "",
     "",
     questionLabel + ":",
@@ -434,33 +437,33 @@ function sortLessonsByDistributionOrder(lessons, order) {
   });
 }
 
-/** vocab-distribution 主题的韩语/英语翻译（供课程卡片显示） */
+/** vocab-distribution 主题的多语言翻译（供课程卡片显示）JP: jp->cn->en->kr */
 const HSK1_THEME_TRANSLATIONS = {
-  "打招呼": { ko: "인사하기", en: "Greetings" },
-  "介绍名字": { ko: "이름 소개하기", en: "Introducing names" },
-  "国籍/国家": { ko: "국적 / 국가", en: "Nationality" },
-  "家庭": { ko: "가족", en: "Family" },
-  "数字与数量": { ko: "숫자와 수량", en: "Numbers and quantity" },
-  "年龄": { ko: "나이 묻기", en: "Age" },
-  "日期": { ko: "날짜", en: "Date" },
-  "时间": { ko: "시간", en: "Time" },
-  "打电话": { ko: "전화하기", en: "Making calls" },
-  "问地点/在哪儿": { ko: "장소 묻기 / 어디에", en: "Asking location" },
-  "学校生活": { ko: "학교 생활", en: "School life" },
-  "工作": { ko: "직업", en: "Work" },
-  "爱好": { ko: "취미", en: "Hobbies" },
-  "饮食1": { ko: "음식 1", en: "Food 1" },
-  "饮食2": { ko: "음식 2", en: "Food 2" },
-  "位置/方向": { ko: "위치 / 방향", en: "Location / direction" },
-  "交通/出行": { ko: "교통 / 출행", en: "Transport" },
-  "购物": { ko: "쇼핑", en: "Shopping" },
-  "天气": { ko: "날씨", en: "Weather" },
-  "看病/综合应用": { ko: "병원 / 종합 활용", en: "Doctor visit" },
-  "复习1": { ko: "복습 1", en: "Review 1" },
-  "复习2": { ko: "복습 2", en: "Review 2" },
+  "打招呼": { ko: "인사하기", en: "Greetings", jp: "あいさつ" },
+  "介绍名字": { ko: "이름 소개하기", en: "Introducing names", jp: "名前の紹介" },
+  "国籍/国家": { ko: "국적 / 국가", en: "Nationality", jp: "国籍" },
+  "家庭": { ko: "가족", en: "Family", jp: "家族" },
+  "数字与数量": { ko: "숫자와 수량", en: "Numbers and quantity", jp: "数字と数量" },
+  "年龄": { ko: "나이 묻기", en: "Age", jp: "年齢" },
+  "日期": { ko: "날짜", en: "Date", jp: "日付" },
+  "时间": { ko: "시간", en: "Time", jp: "時間" },
+  "打电话": { ko: "전화하기", en: "Making calls", jp: "電話をかける" },
+  "问地点/在哪儿": { ko: "장소 묻기 / 어디에", en: "Asking location", jp: "場所を聞く" },
+  "学校生活": { ko: "학교 생활", en: "School life", jp: "学校生活" },
+  "工作": { ko: "직업", en: "Work", jp: "仕事" },
+  "爱好": { ko: "취미", en: "Hobbies", jp: "趣味" },
+  "饮食1": { ko: "음식 1", en: "Food 1", jp: "飲食1" },
+  "饮食2": { ko: "음식 2", en: "Food 2", jp: "飲食2" },
+  "位置/方向": { ko: "위치 / 방향", en: "Location / direction", jp: "位置・方向" },
+  "交通/出行": { ko: "교통 / 출행", en: "Transport", jp: "交通" },
+  "购物": { ko: "쇼핑", en: "Shopping", jp: "買い物" },
+  "天气": { ko: "날씨", en: "Weather", jp: "天気" },
+  "看病/综合应用": { ko: "병원 / 종합 활용", en: "Doctor visit", jp: "病院・総合" },
+  "复习1": { ko: "복습 1", en: "Review 1", jp: "復習1" },
+  "复习2": { ko: "복습 2", en: "Review 2", jp: "復習2" },
 };
 
-/** 用 vocab-distribution 的 lessonThemes 覆盖课程标题，并附加翻译（与顺序来源保持一致） */
+/** 用 vocab-distribution 的 lessonThemes 覆盖课程标题，并附加多语言翻译 */
 function applyVocabDistributionTitles(lessons, lessonThemes) {
   if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") return lessons;
   return lessons.map((l) => {
@@ -470,9 +473,15 @@ function applyVocabDistributionTitles(lessons, lessonThemes) {
     const tr = HSK1_THEME_TRANSLATIONS[theme];
     return {
       ...l,
-      title: theme,
+      title: {
+        zh: theme,
+        kr: tr?.ko ?? "",
+        en: tr?.en ?? "",
+        jp: tr?.jp ?? "",
+      },
       titleKo: tr?.ko ?? "",
       titleEn: tr?.en ?? "",
+      titleJp: tr?.jp ?? "",
     };
   });
 }
@@ -602,11 +611,13 @@ async function openLesson({ lessonNo, file }) {
     }
 
     const titleObj = lessonData?.title;
+    const contentLang = lang === "ko" ? "kr" : (lang === "zh" ? "cn" : lang);
     const titleStr = typeof titleObj === "object"
-      ? (titleObj?.[lang] || titleObj?.kr || titleObj?.zh || titleObj?.en || "")
+      ? (getLocalizedText(titleObj, contentLang, "") || getLocalizedText(titleObj, lang, "") || titleObj?.kr || titleObj?.zh || titleObj?.en || "")
       : (typeof titleObj === "string" ? titleObj : "");
-    const headerTitle = titleStr ? `Lesson ${no} / ${titleStr}` : `Lesson ${no}`;
-    showStudyMode(headerTitle, ""); // 详情区只显示 Lesson N / title，不再重复 HSK N · version
+    const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no }) || (lang === "jp" ? `第 ${no} 課` : lang === "kr" ? `제 ${no}과` : lang === "zh" ? `第 ${no} 课` : `Lesson ${no}`);
+    const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
+    showStudyMode(headerTitle, "");
     $("hskStudyBar")?.scrollIntoView({ behavior: "smooth", block: "start" });
     updateProgressBlock();
 

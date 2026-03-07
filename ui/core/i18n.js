@@ -27,7 +27,9 @@ function normalizeLang(input, fallback = "kr") {
 
 /** 用于 loadLanguagePack 的 lang 键 */
 function toPackLang(canon) {
-  return canon === "zh" ? "cn" : canon === "ko" ? "kr" : canon;
+  if (canon === "zh") return "cn";
+  if (canon === "ko") return "kr";
+  return canon; // jp, en, kr, cn 直接对应文件
 }
 
 /** 插值 {n} {score} 等 */
@@ -40,10 +42,20 @@ function interpolate(str, params) {
   });
 }
 
-/** 将 key 转为 dot path：nav_home -> nav.home, hsk_meta_completed -> hsk.meta.completed */
+/** 已知的 key -> path 映射（含下划线的复合键） */
+const KEY_PATH_ALIAS = {
+  review_no_wrong_questions: "review.no_wrong_questions",
+  practice_question_no: "practice.question_no",
+  practice_total_count: "practice.total_count",
+  practice_total_score: "practice.total_score",
+  practice_total_questions: "practice.total_questions",
+};
+
+/** 将 key 转为 dot path：nav_home -> nav.home, review_no_wrong_questions -> review.no_wrong_questions */
 function keyToPath(key) {
   if (!key || typeof key !== "string") return key;
   if (key.includes(".")) return key;
+  if (KEY_PATH_ALIAS[key]) return KEY_PATH_ALIAS[key];
   const parts = key.split("_");
   if (parts.length < 2) return key;
   return parts.join(".");
