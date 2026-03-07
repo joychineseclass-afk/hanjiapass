@@ -10,7 +10,7 @@ import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, TTS_ENGINE } from "../platform/index.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -168,9 +168,10 @@ function renderDialogueLine(line, lang, showPinyin) {
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
   const trans = pickDialogueTranslation(line, lang, zh);
 
+  const zhAttrs = zh ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"` : "";
   return `<article class="lesson-dialogue-line">
   ${spk ? `<div class="lesson-dialogue-speaker">${escapeHtml(spk)}</div>` : ""}
-  <div class="lesson-dialogue-zh">${escapeHtml(zh)}</div>
+  <div class="lesson-dialogue-zh"${zhAttrs}>${escapeHtml(zh)}</div>
   ${py ? `<div class="lesson-dialogue-pinyin">${escapeHtml(py)}</div>` : ""}
   ${trans ? `<div class="lesson-dialogue-translation">${escapeHtml(trans)}</div>` : ""}
 </article>`;
@@ -638,6 +639,25 @@ function bindEvents() {
     const lessonNo = Number(btn.dataset.lessonNo || 1);
     const file = btn.dataset.file || "";
     openLesson({ lessonNo, file });
+  }, { signal });
+
+  // 点读：会话区点击中文句
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-speak-text][data-speak-kind='dialogue']");
+    if (!el) return;
+    const text = (el.dataset?.speakText || "").trim();
+    if (!text || !TTS_ENGINE?.isSpeechSupported?.()) return;
+    e.preventDefault();
+    e.stopPropagation();
+    TTS_ENGINE.stopSpeak();
+    document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
+    const lineEl = el.closest(".lesson-dialogue-line");
+    if (lineEl) lineEl.classList.add("is-speaking");
+    TTS_ENGINE.speakText(text, {
+      lang: "zh-CN",
+      onEnd: () => lineEl?.classList.remove("is-speaking"),
+      onError: () => lineEl?.classList.remove("is-speaking"),
+    });
   }, { signal });
 
   // Tabs

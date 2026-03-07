@@ -253,3 +253,21 @@
   color: #94a3b8;
   padding: 1rem;
 }
+
+/* ===============================
+   🔊 点读交互 (Point-and-read)
+================================== */
+.lesson-dialogue-line [data-speak-text],
+.word-card [data-action="speak"] {
+  cursor: pointer;
+}
+
+.lesson-dialogue-zh[data-speak-text]:hover {
+  background: rgba(37, 99, 235, 0.04);
+}
+
+.is-speaking {
+  outline: 2px solid rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.06);
+  border-radius: 12px;
+}

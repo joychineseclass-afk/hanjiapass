@@ -199,7 +199,7 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
         <div class="word-actions">
           <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
           <button type="button" class="btn btn-stroke" data-action="stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
-          <button type="button" class="btn btn-audio" data-action="audio" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
+          <button type="button" class="btn btn-audio" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
         </div>
       </div>
     `;
@@ -263,18 +263,29 @@ export function bindWordCardActions() {
     if (!hanzi && action !== "learn") return;
     if (action === "stroke" && btn.disabled) return;
 
-    if (action === "audio") {
+    if (action === "speak" || action === "audio") {
       e.preventDefault();
       e.stopPropagation();
-      btn.classList.add("btn-audio-active");
+      const text = hanzi || pinyin || "";
+      if (!text) return;
       try {
-        const { speakChinese } = await import("../../core/tts.js");
-        await speakChinese(hanzi || pinyin, { rate: 0.9, lang: "zh-CN" });
+        const { TTS_ENGINE } = await import("../../platform/index.js");
+        if (!TTS_ENGINE?.isSpeechSupported?.()) {
+          if (typeof console !== "undefined" && console.warn) console.warn("[TTS] speechSynthesis not supported");
+          return;
+        }
+        TTS_ENGINE.stopSpeak();
+        document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
+        const cardEl = btn.closest(".word-card");
+        if (cardEl) cardEl.classList.add("is-speaking");
+        TTS_ENGINE.speakText(text, {
+          lang: "zh-CN",
+          rate: 0.95,
+          onEnd: () => cardEl?.classList.remove("is-speaking"),
+          onError: () => cardEl?.classList.remove("is-speaking"),
+        });
       } catch (err) {
-        console.error("[TTS] failed:", err);
-        if (typeof alert === "function") alert("TTS failed. Check console.");
-      } finally {
-        setTimeout(() => btn.classList.remove("btn-audio-active"), 400);
+        if (typeof console !== "undefined" && console.warn) console.warn("[TTS] speak failed:", err);
       }
     }
 
