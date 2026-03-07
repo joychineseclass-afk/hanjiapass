@@ -93,9 +93,10 @@ export function getDialogueLineZh(line) {
 
 /** 从 dialogue line 取 translation（kr/en） */
 export function getDialogueLineMeaning(line, lang) {
+  if (!line) return "";
   const t = line?.translation ?? line;
-  if (!t || typeof t !== "object") return str(line?.kr ?? line?.ko ?? line?.en ?? "");
-  return pickLang(t, lang);
+  if (t && typeof t === "object") return pickLang(t, lang);
+  return str(line?.kr ?? line?.ko ?? line?.en ?? "");
 }
 
 /** 从 grammar 取 example zh */

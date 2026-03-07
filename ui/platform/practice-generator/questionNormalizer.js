@@ -1,70 +1,53 @@
 /**
  * Practice Generator v2 - 题目标准化
- * 所有生成题目转换为统一结构，兼容 Practice Engine v1
+ * 严格遵循题型蓝图表：options 使用 key A/B/C/D，answer 为字母
  */
 
-import { pickLang } from "./generatorUtils.js";
+import { pickLang, shuffle } from "./generatorUtils.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 const LETTERS = ["A", "B", "C", "D"];
 
 /**
- * 标准化选项格式
- * 支持：字符串数组、对象数组 { key, zh, kr, en }
- * 输出：{ key, zh, pinyin, kr, en }，answer 为 key
+ * 标准化选项为 { key: A|B|C|D, zh, pinyin, kr, en }
+ * 并确定 answer 为正确选项的字母
  */
-function normalizeOptions(rawOptions, answer) {
+function normalizeOptions(rawOptions, rawAnswer) {
   const opts = Array.isArray(rawOptions) ? rawOptions : [];
-  const result = [];
-  const answerStr = typeof answer === "object" ? str(answer?.key ?? answer?.zh) : str(answer);
+  const answerRef = rawAnswer;
 
-  for (let i = 0; i < Math.min(opts.length, 6); i++) {
-    const o = opts[i];
-    const letter = LETTERS[i] ?? String(i + 1);
-    let obj;
+  const contents = opts.map((o) => {
     if (o && typeof o === "object") {
-      obj = {
-        key: str(o.key) || str(o.zh ?? o.cn ?? o.kr ?? o.en) || letter,
+      return {
         zh: str(o.zh ?? o.cn ?? ""),
         pinyin: str(o.pinyin ?? o.py ?? ""),
         kr: str(o.kr ?? o.ko ?? ""),
         en: str(o.en ?? ""),
       };
-    } else {
-      const text = str(o);
-      obj = {
-        key: text || letter,
-        zh: text,
-        pinyin: "",
-        kr: "",
-        en: "",
-      };
     }
-    if (!obj.key) obj.key = letter;
-    result.push(obj);
-  }
+    const t = str(o);
+    return { zh: t, pinyin: "", kr: "", en: "" };
+  }).filter((c) => c.zh || c.kr || c.en);
 
-  // 确保正确答案在选项中
-  const hasAnswer = result.some((r) => r.key === answerStr || r.zh === answerStr);
-  if (!hasAnswer && answerStr && result.length < 6) {
-    result.push({
-      key: answerStr,
-      zh: answerStr,
-      pinyin: "",
-      kr: "",
-      en: "",
-    });
-  }
+  const shuffled = shuffle(contents).slice(0, 4);
+  const options = shuffled.map((c, i) => ({
+    key: LETTERS[i] ?? String(i + 1),
+    zh: c.zh,
+    pinyin: c.pinyin,
+    kr: c.kr,
+    en: c.en,
+  }));
 
-  return result;
+  const answerStr = typeof answerRef === "object" ? str(answerRef?.key ?? answerRef?.zh) : str(answerRef);
+  const found = options.find((o) => o.key === answerStr || o.zh === answerStr || o.kr === answerStr || o.en === answerStr);
+  const answer = found ? found.key : (options[0]?.key ?? "A");
+
+  return { options, answer };
 }
 
 /**
  * 标准化题目为 Practice Engine 兼容格式
- * @param {object} raw - 原始题目
- * @param {string} lessonId
- * @param {number} index
- * @returns {object|null}
+ * 输出符合蓝图表：type, subtype, source, question, prompt, options, answer, explanation, meta
  */
 export function normalizeQuestion(raw, lessonId = "", index = 0) {
   if (!raw || !raw.question) return null;
@@ -73,8 +56,7 @@ export function normalizeQuestion(raw, lessonId = "", index = 0) {
     ? raw.question
     : { zh: str(raw.question), kr: str(raw.question), en: str(raw.question) };
 
-  const options = normalizeOptions(raw.options ?? [], raw.answer);
-  const answer = raw.answer ?? (options[0]?.key ?? "A");
+  const { options, answer } = normalizeOptions(raw.options ?? [], raw.answer);
 
   return {
     id: raw.id || `q_v2_${index + 1}`,
@@ -95,7 +77,7 @@ export function normalizeQuestion(raw, lessonId = "", index = 0) {
         }
       : undefined,
     options,
-    answer: typeof answer === "object" ? str(answer?.key ?? answer?.zh) : str(answer),
+    answer,
     explanation: raw.explanation
       ? {
           zh: str(raw.explanation.zh ?? raw.explanation.cn ?? ""),

@@ -1,6 +1,6 @@
 /**
  * Practice Generator v2 - 题量配置
- * 按等级控制每课目标题量
+ * 严格遵循题型蓝图表：按等级推荐题型组合
  */
 
 export const PRACTICE_COUNT_BY_LEVEL = {
@@ -15,12 +15,18 @@ export const PRACTICE_COUNT_BY_LEVEL = {
   lv9: 20,
 };
 
-/** 题型数量分配（按等级） */
+/**
+ * 题型数量分配（按等级）
+ * HSK1/2: vocab + meaning_to_vocab + dialogue_response + grammar_fill + extension/dialogue_detail
+ * HSK3/4: 3 vocab, 2 dialogue, 2 grammar, 2 sentence_order, 1 extension
+ * HSK5/6: 5 vocab, 4 dialogue, 3 grammar, 3 extension/order
+ * HSK7~9: 6 vocab, 5 dialogue, 4 grammar, 5 extension
+ */
 export const QUOTA_BY_LEVEL = {
   hsk1: { vocab: 2, dialogue: 1, grammar: 1, extension: 1 },
   hsk2: { vocab: 2, dialogue: 1, grammar: 1, extension: 1 },
-  hsk3: { vocab: 4, dialogue: 2, grammar: 2, extension: 2 },
-  hsk4: { vocab: 4, dialogue: 2, grammar: 2, extension: 2 },
+  hsk3: { vocab: 3, dialogue: 2, grammar: 2, sentenceOrder: 2, extension: 1 },
+  hsk4: { vocab: 3, dialogue: 2, grammar: 2, sentenceOrder: 2, extension: 1 },
   hsk5: { vocab: 5, dialogue: 4, grammar: 3, extension: 3 },
   hsk6: { vocab: 5, dialogue: 4, grammar: 3, extension: 3 },
   lv7: { vocab: 6, dialogue: 5, grammar: 4, extension: 5 },
@@ -28,11 +34,6 @@ export const QUOTA_BY_LEVEL = {
   lv9: { vocab: 6, dialogue: 5, grammar: 4, extension: 5 },
 };
 
-/**
- * 获取目标题量
- * @param {{ course?: string, level?: string }} opts
- * @returns {number}
- */
 export function getTargetPracticeCount({ course, level } = {}) {
   const lv = parseInt(String(level || "").replace(/\D/g, ""), 10) || 1;
   if (lv <= 2) return PRACTICE_COUNT_BY_LEVEL.hsk2;
@@ -41,11 +42,6 @@ export function getTargetPracticeCount({ course, level } = {}) {
   return PRACTICE_COUNT_BY_LEVEL.lv7;
 }
 
-/**
- * 获取题型配额
- * @param {number} levelNum - 1-9
- * @returns {object}
- */
 export function getQuotaByLevelNum(levelNum) {
   const lv = Math.min(9, Math.max(1, levelNum));
   if (lv <= 2) return QUOTA_BY_LEVEL.hsk2;
