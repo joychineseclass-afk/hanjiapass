@@ -1,6 +1,6 @@
 /**
  * AI Tutor 四种模式的 UI 渲染
- * explain / roleplay / shadowing / free_talk
+ * 产品化收口：说明文案、结果区、空状态
  */
 
 import { i18n } from "../../i18n.js";
@@ -28,26 +28,45 @@ function pickLang(obj, lang) {
   return str(v != null ? v : "");
 }
 
+function resultAreaHtml(emptyState = true) {
+  const emptyText = t("ai.result_empty", "No response yet.");
+  return `
+    <div class="ai-tutor-result-header">${escapeHtml(t("ai.result_title", "AI Response"))}</div>
+    <div class="ai-tutor-result-content ${emptyState ? "ai-tutor-result-empty" : ""}">
+      ${emptyState ? `<span class="ai-tutor-result-placeholder">${escapeHtml(emptyText)}</span>` : ""}
+    </div>
+  `;
+}
+
 /**
  * 渲染 Explain 面板
  */
 export function renderExplainMode(aiItem, lang) {
   const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
-  const hint = pickLang(aiItem?.hint, lang);
-  const startLabel = t("ai.start", "Start");
-  const explainLabel = t("ai.mode_explain", "Explain");
+  const hint = pickLang(aiItem && aiItem.hint, lang);
+  const desc = t("ai.mode_desc_explain", "Explains the key sentences and expressions in this lesson.");
+  const hasContent = !!(aiItem && (aiItem.target || (aiItem.hint && pickLang(aiItem.hint, lang))));
+
+  if (!hasContent) {
+    return `<div class="ai-tutor-mode-content ai-tutor-explain">
+      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+    </div>`;
+  }
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-explain">
-      <div class="ai-tutor-target">
-        <span class="ai-tutor-label">${escapeHtml(explainLabel)}</span>
+      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <div class="ai-tutor-target-block">
+        <span class="ai-tutor-label">${escapeHtml(t("ai.target", "Target"))}</span>
         <div class="ai-tutor-target-text">${escapeHtml(target || "—")}</div>
-        ${hint ? `<p class="ai-tutor-hint text-sm opacity-75 mt-1">${escapeHtml(hint)}</p>` : ""}
+        ${hint ? `<p class="ai-tutor-hint">${escapeHtml(hint)}</p>` : ""}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run" data-mode="explain">
-        ${escapeHtml(t("ai.start_explain", startLabel))}
+      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
+        ${escapeHtml(t("ai.start_explain", "Start explanation"))}
       </button>
-      <div class="ai-tutor-result-wrap mt-3 hidden"></div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>
   `;
 }
@@ -57,24 +76,33 @@ export function renderExplainMode(aiItem, lang) {
  */
 export function renderRoleplayMode(aiItem, lang) {
   const scenario = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
-  const promptText = pickLang(aiItem?.prompt, lang);
-  const aiRole = t("ai.ai_role", "AI");
-  const studentRole = t("ai.student_role", "Student");
+  const promptText = pickLang(aiItem && aiItem.prompt, lang);
+  const desc = t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
+  const classmate = t("ai.role_classmate", "Classmate");
+  const me = t("ai.role_me", "Me");
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-roleplay">
-      <div class="ai-tutor-scenario">
-        <span class="ai-tutor-label">${escapeHtml(t("ai.scenario", "Scenario"))}</span>
-        <div class="ai-tutor-target-text">${escapeHtml(scenario)}</div>
-        ${promptText ? `<p class="ai-tutor-hint text-sm opacity-75 mt-1">${escapeHtml(promptText)}</p>` : ""}
+      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <div class="ai-tutor-role-block">
+        <div class="ai-tutor-role-row">
+          <span class="ai-tutor-role-label">${escapeHtml(t("ai.scenario", "Scenario"))}:</span>
+          <span class="ai-tutor-role-value">${escapeHtml(scenario)}</span>
+        </div>
+        <div class="ai-tutor-role-row">
+          <span class="ai-tutor-role-label">${escapeHtml(t("ai.ai_role", "AI"))}:</span>
+          <span class="ai-tutor-role-value">${escapeHtml(classmate)}</span>
+        </div>
+        <div class="ai-tutor-role-row">
+          <span class="ai-tutor-role-label">${escapeHtml(t("ai.student_role", "Student"))}:</span>
+          <span class="ai-tutor-role-value">${escapeHtml(me)}</span>
+        </div>
+        ${promptText ? `<p class="ai-tutor-hint mt-2">${escapeHtml(promptText)}</p>` : ""}
       </div>
-      <div class="ai-tutor-roles text-sm opacity-75 mb-2">
-        ${escapeHtml(aiRole)} / ${escapeHtml(studentRole)}
-      </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run" data-mode="roleplay">
+      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
         ${escapeHtml(t("ai.start_roleplay", "Start dialogue"))}
       </button>
-      <div class="ai-tutor-result-wrap mt-3 hidden"></div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>
   `;
 }
@@ -83,21 +111,36 @@ export function renderRoleplayMode(aiItem, lang) {
  * 渲染 Shadowing 面板
  */
 export function renderShadowingMode(aiItem, lang) {
-  const lines = Array.isArray(aiItem?.lines) ? aiItem.lines : [];
+  const lines = Array.isArray(aiItem && aiItem.lines) ? aiItem.lines : [];
+  const desc = t("ai.mode_desc_shadowing", "Repeat line by line to build speaking rhythm and confidence.");
+  const step1 = t("ai.step_see", "See the sentence");
+  const step2 = t("ai.step_repeat", "Repeat after");
+  const step3 = t("ai.step_say", "Say it yourself");
+
+  const stepsHtml = `
+    <div class="ai-tutor-steps">
+      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">1</span> ${escapeHtml(step1)}</div>
+      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">2</span> ${escapeHtml(step2)}</div>
+      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">3</span> ${escapeHtml(step3)}</div>
+    </div>
+  `;
+
   const linesHtml = lines.length
-    ? lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(line)}</div>`).join("")
-    : `<div class="text-sm opacity-70">${escapeHtml(t("ai.no_tasks", "No lines configured."))}</div>`;
+    ? `<div class="ai-tutor-lines-list">${lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(line)}</div>`).join("")}</div>`
+    : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-shadowing">
-      <div class="ai-tutor-lines">
+      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      ${stepsHtml}
+      <div class="ai-tutor-lines-block mt-2">
         <span class="ai-tutor-label">${escapeHtml(t("ai.mode_shadowing", "Shadowing"))}</span>
-        <div class="ai-tutor-lines-list mt-2">${linesHtml}</div>
+        ${linesHtml}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run mt-2" data-mode="shadowing">
+      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run mt-2" ${!lines.length ? "disabled" : ""}>
         ${escapeHtml(t("ai.start_shadowing", "Start shadowing"))}
       </button>
-      <div class="ai-tutor-result-wrap mt-3 hidden"></div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>
   `;
 }
@@ -106,16 +149,21 @@ export function renderShadowingMode(aiItem, lang) {
  * 渲染 Free Talk 面板
  */
 export function renderFreeTalkMode(aiItem, lang) {
-  const placeholder = pickLang(aiItem?.placeholder, lang) || t("ai.placeholder_question", "Type your question");
-  const sendLabel = t("ai.send", "Send");
+  const placeholder = pickLang(aiItem && aiItem.placeholder, lang) || t("ai.placeholder_question", "Type your question");
+  const desc = t("ai.mode_desc_free_talk", "Ask freely using the words and sentences from today's lesson.");
+  const hint = t("ai.free_talk_hint", "Ask questions about this lesson's content.");
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-free_talk">
-      <textarea class="ai-tutor-input w-full border rounded-lg p-3 text-sm" rows="3" placeholder="${escapeHtml(placeholder)}"></textarea>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-send mt-2" data-mode="free_talk">
-        ${escapeHtml(sendLabel)}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3 hidden"></div>
+      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <p class="ai-tutor-hint mb-2">${escapeHtml(hint)}</p>
+      <div class="ai-tutor-input-group">
+        <textarea class="ai-tutor-input" rows="3" placeholder="${escapeHtml(placeholder)}"></textarea>
+        <button type="button" class="ai-btn ai-btn-primary ai-tutor-send mt-2">
+          ${escapeHtml(t("ai.send", "Send"))}
+        </button>
+      </div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>
   `;
 }
@@ -134,6 +182,9 @@ export function renderModeContent(mode, aiItem, lang) {
     case "free_talk":
       return renderFreeTalkMode(aiItem, lang);
     default:
-      return `<div class="text-sm opacity-70">${escapeHtml(t("ai.no_tasks", "No tasks for this mode."))}</div>`;
+      return `<div class="ai-tutor-mode-content">
+        <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>
+        <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      </div>`;
   }
 }

@@ -171,46 +171,68 @@
   border-color: #22c55e;
 }
 
-/* AI Tutor v1 - 模式切换面板 */
+/* AI Tutor v1 - 产品化收口 */
 .ai-tutor-page {
   background: white;
   border: 1px solid var(--line, #e2e8f0);
   border-radius: 12px;
-  padding: 16px;
+  padding: 20px;
 }
 
 .ai-tutor-header {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .ai-tutor-title {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #334155;
-  margin: 0 0 4px 0;
+  margin: 0 0 6px 0;
 }
 
-.ai-tutor-lesson-info {
-  font-size: 0.8125rem;
+.ai-tutor-subtitle {
+  font-size: 0.875rem;
   color: #64748b;
-  margin: 0;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.ai-tutor-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-tutor-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  color: #475569;
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+.ai-tutor-badge-topic {
+  background: rgba(34, 197, 94, 0.08);
+  color: #15803d;
 }
 
 .ai-tutor-modes {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .ai-tutor-tab {
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 8px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   border: 1px solid var(--line, #e2e8f0);
   background: #fff;
   cursor: pointer;
   color: #475569;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .ai-tutor-tab:hover {
@@ -224,17 +246,99 @@
 }
 
 .ai-tutor-body {
-  min-height: 120px;
+  min-height: 160px;
+}
+
+.ai-tutor-mode-card {
+  padding: 16px;
+  background: #fafbfc;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
 }
 
 .ai-tutor-mode-content {
   padding: 0;
 }
 
-.ai-tutor-target,
-.ai-tutor-scenario,
-.ai-tutor-lines {
+.ai-tutor-mode-desc {
+  font-size: 0.875rem;
+  color: #475569;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.ai-tutor-mode-not-ready {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
   margin-bottom: 12px;
+}
+
+.ai-tutor-target-block,
+.ai-tutor-role-block,
+.ai-tutor-lines-block {
+  margin-bottom: 16px;
+}
+
+.ai-tutor-target-block .ai-tutor-target-text {
+  font-size: 1.125rem;
+  padding: 12px;
+  background: white;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.ai-tutor-role-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-tutor-role-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.ai-tutor-role-label {
+  color: #64748b;
+  min-width: 80px;
+}
+
+.ai-tutor-role-value {
+  color: #334155;
+}
+
+.ai-tutor-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ai-tutor-step-item {
+  font-size: 0.8125rem;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ai-tutor-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #22c55e;
+  color: white;
+  border-radius: 50%;
 }
 
 .ai-tutor-label {
@@ -250,37 +354,102 @@
   font-weight: 500;
 }
 
+.ai-tutor-hint {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0;
+}
+
 .ai-tutor-lines-list {
   font-size: 0.9375rem;
   color: #475569;
+  margin-top: 8px;
 }
 
 .ai-tutor-line-item {
-  padding: 4px 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ai-tutor-line-item:last-child {
+  border-bottom: none;
+}
+
+.ai-tutor-input-group {
+  margin-bottom: 0;
+}
+
+.ai-tutor-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 14px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  resize: vertical;
+  display: block;
 }
 
 .ai-tutor-result-wrap {
-  padding: 12px;
-  background: #f8fafc;
-  border-radius: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.ai-tutor-result-wrap:not(.hidden) {
+  padding-top: 4px;
+}
+
+.ai-tutor-result-header {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.ai-tutor-result-content {
+  padding: 14px;
+  background: white;
   border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  min-height: 60px;
+}
+
+.ai-tutor-result-content.ai-tutor-result-empty {
+  background: #f8fafc;
+}
+
+.ai-tutor-result-placeholder {
+  font-size: 0.8125rem;
+  color: #94a3b8;
 }
 
 .ai-tutor-result {
   font-size: 0.875rem;
   color: #334155;
   white-space: pre-wrap;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-.ai-tutor-input {
-  width: 100%;
-  min-height: 72px;
-  padding: 10px 12px;
-  border: 1px solid var(--line, #e2e8f0);
+.ai-tutor-loading {
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.ai-btn {
+  padding: 8px 16px;
   border-radius: 8px;
   font-size: 0.875rem;
-  resize: vertical;
+  font-weight: 500;
+}
+
+.ai-btn-primary {
+  padding: 8px 16px;
+}
+
+.ai-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .ai-btn-active {

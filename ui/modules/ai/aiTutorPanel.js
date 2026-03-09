@@ -1,6 +1,6 @@
 /**
  * AI Tutor v1 面板
- * 模式切换 + 内容区
+ * 模式切换 + 内容区，产品化收口
  */
 
 import { i18n } from "../../i18n.js";
@@ -31,25 +31,14 @@ function pickLang(obj, lang) {
   return str(v != null ? v : "");
 }
 
-function buildLessonSummary(context, lang) {
-  const parts = [];
-  const sep = lang === "jp" ? "・" : " · ";
-  if (context.vocab?.length) {
-    const w = t("lesson.summary.words", "語彙");
-    const u = lang === "jp" ? "語" : lang === "kr" ? "개" : lang === "cn" ? "个" : "";
-    parts.push(u ? `${w} ${context.vocab.length}${u}` : `${context.vocab.length} ${w}`);
-  }
-  if (context.dialogue?.length) {
-    const d = t("lesson.summary.dialogues", "会話");
-    const u = lang === "jp" ? "文" : lang === "kr" ? "문" : lang === "cn" ? "句" : "";
-    parts.push(u ? `${d} ${context.dialogue.length}${u}` : `${context.dialogue.length} ${d}`);
-  }
-  if (context.grammar?.length) {
-    const g = t("lesson.summary.grammar_points", "文法");
-    const u = lang === "jp" ? "項目" : lang === "kr" ? "개" : lang === "cn" ? "点" : "";
-    parts.push(u ? `${g} ${context.grammar.length}${u}` : `${context.grammar.length} ${g}`);
-  }
-  return parts.join(sep);
+function buildLessonSummaryBadges(context, lang) {
+  const badges = [];
+  const topic = context.lessonTitle || "";
+  if (topic) badges.push(`<span class="ai-tutor-badge ai-tutor-badge-topic">${escapeHtml(topic)}</span>`);
+  if (context.vocab?.length) badges.push(`<span class="ai-tutor-badge">${escapeHtml(t("ai.words_count", "Words"))} ${context.vocab.length}</span>`);
+  if (context.dialogue?.length) badges.push(`<span class="ai-tutor-badge">${escapeHtml(t("ai.dialogue_count", "Dialogue"))} ${context.dialogue.length}</span>`);
+  if (context.grammar?.length) badges.push(`<span class="ai-tutor-badge">${escapeHtml(t("ai.grammar_count", "Grammar"))} ${context.grammar.length}</span>`);
+  return badges.join("");
 }
 
 /**
@@ -61,8 +50,9 @@ export function renderAITutorPanel(opts = {}) {
   const items = getLessonAIConfig(lesson);
   const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
 
-  const summary = buildLessonSummary(context, langKey);
+  const badges = buildLessonSummaryBadges(context, langKey);
   const tutorTitle = t("ai.tutor_title", "AI Tutor");
+  const tutorSubtitle = t("ai.tutor_subtitle", "Practice with AI using this lesson's content.");
 
   const modeLabels = {
     explain: t("ai.mode_explain", "Explain"),
@@ -87,7 +77,8 @@ export function renderAITutorPanel(opts = {}) {
 <section class="ai-tutor-page">
   <div class="ai-tutor-header">
     <h3 class="ai-tutor-title">${escapeHtml(tutorTitle)}</h3>
-    <p class="ai-tutor-lesson-info text-sm opacity-75">${escapeHtml(context.lessonTitle || "")} ${summary ? ` · ${escapeHtml(summary)}` : ""}</p>
+    <p class="ai-tutor-subtitle">${escapeHtml(tutorSubtitle)}</p>
+    <div class="ai-tutor-badges">${badges}</div>
   </div>
 
   <div class="ai-tutor-modes">
@@ -95,7 +86,9 @@ export function renderAITutorPanel(opts = {}) {
   </div>
 
   <div class="ai-tutor-body">
-    ${bodyContent}
+    <div class="ai-tutor-mode-card">
+      ${bodyContent}
+    </div>
   </div>
 </section>
   `;
@@ -118,8 +111,11 @@ export function mountAITutorPanel(container, opts = {}) {
     const item = items.find((i) => i.mode === mode) || {};
     tabs.forEach((tab) => tab.classList.toggle("ai-tutor-tab-active", tab.dataset.mode === mode));
     if (body) {
-      body.innerHTML = renderModeContent(mode, item, lang);
-      bindModeEvents(body, mode, item, lesson, lang);
+      const card = body.querySelector(".ai-tutor-mode-card");
+      if (card) {
+        card.innerHTML = renderModeContent(mode, item, lang);
+        bindModeEvents(card, mode, item, lesson, lang);
+      }
     }
   }
 
@@ -134,11 +130,18 @@ export function mountAITutorPanel(container, opts = {}) {
     const doRun = async (userInput = "") => {
       if (!resultWrap) return;
       resultWrap.classList.remove("hidden");
-      resultWrap.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(t("ai.loading", t("common.loading", "加载中...")))}</div>`;
+      const content = resultWrap.querySelector(".ai-tutor-result-content");
+      if (content) {
+        content.classList.remove("ai-tutor-result-empty");
+        content.innerHTML = `<div class="ai-tutor-loading">${escapeHtml(t("ai.loading", t("common.loading", "Loading...")))}</div>`;
+      }
 
       const res = await runTutor(mode, aiItem, lessonData, currentLang, userInput);
       const formatted = formatTutorOutput(mode, res, currentLang);
-      resultWrap.innerHTML = formatted.html || `<div class="text-sm opacity-70">${escapeHtml(t("ai.result", "Result"))}</div>`;
+      if (content) {
+        content.classList.remove("ai-tutor-result-empty");
+        content.innerHTML = formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
+      }
     };
 
     if (runBtn) {
@@ -149,8 +152,14 @@ export function mountAITutorPanel(container, opts = {}) {
       sendBtn.addEventListener("click", () => {
         const val = str(inputEl.value);
         if (!val) {
-          resultWrap?.classList.remove("hidden");
-          if (resultWrap) resultWrap.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(t("hsk.ai_empty", "Please enter a question."))}</div>`;
+          if (resultWrap) {
+            resultWrap.classList.remove("hidden");
+            const content = resultWrap.querySelector(".ai-tutor-result-content");
+            if (content) {
+              content.classList.add("ai-tutor-result-empty");
+              content.innerHTML = `<span class="ai-tutor-result-placeholder">${escapeHtml(t("hsk.ai_empty", "Please enter a question."))}</span>`;
+            }
+          }
           return;
         }
         doRun(val);
@@ -162,6 +171,7 @@ export function mountAITutorPanel(container, opts = {}) {
     tab.addEventListener("click", () => switchMode(tab.dataset.mode));
   });
 
+  const card = body && body.querySelector(".ai-tutor-mode-card");
   const initMode = items[0] && items[0].mode != null ? items[0].mode : "explain";
-  bindModeEvents(body, initMode, items[0], lesson, lang);
+  bindModeEvents(card, initMode, items[0], lesson, lang);
 }

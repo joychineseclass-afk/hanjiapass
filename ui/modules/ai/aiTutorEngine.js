@@ -5,8 +5,13 @@
  */
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
+import { i18n } from "../../i18n.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+function t(key, fallback = "") {
+  return (i18n && typeof i18n.t === "function" ? i18n.t(key, fallback) : null) || fallback || key;
+}
 
 /** 从多语言对象中按 lang 取值 */
 function pickLang(obj, lang) {
@@ -143,7 +148,9 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
       const res = await window.JOY_RUNNER.askAI({ prompt, context: prompt, lang, mode });
       return { text: (res && res.text != null ? res.text : "") || "", raw: res };
     } catch (e) {
-      return { text: `[AI 暂未连接] ${(e && e.message != null ? e.message : "") || ""}`, error: e };
+      if (typeof console !== "undefined" && console.error) console.error("[AI Tutor]", e);
+      const friendly = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
+      return { text: friendly + "\n\n" + (getMockTutorOutput(mode, aiItem, lessonData, lang, userInput).text || ""), error: e };
     }
   }
 
@@ -232,12 +239,14 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
 
 /**
  * 格式化 Tutor 输出为页面可显示结构
- * @param {string} mode
- * @param {object} result - { text }
- * @param {string} lang
+ * 技术错误原文不暴露给用户，替换为友好提示
  */
 export function formatTutorOutput(mode, result, lang) {
-  const text = (result && result.text != null ? result.text : "") || "";
+  let text = (result && result.text != null ? result.text : "") || "";
+  const techErrorPatterns = ["AI not connected", "cannot find", "api/ai-chat", "aiAsk", "JOY_AI"];
+  if (techErrorPatterns.some((p) => text.indexOf(p) >= 0)) {
+    text = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
+  }
   const html = text ? `<div class="ai-tutor-result">${escapeHtml(text).replace(/\n/g, "<br>")}</div>` : "";
   return { text, html };
 }
