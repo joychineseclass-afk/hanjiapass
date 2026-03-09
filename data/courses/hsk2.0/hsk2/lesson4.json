@@ -259,9 +259,277 @@
       "focus": "一起 + V"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "我们一起去吃饭吧！",
+      "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
+      "translations": {
+        "kr": "우리 함께 밥 먹으러 가요!",
+        "en": "Let's eat together!",
+        "jp": "一緒に食事に行きましょう！"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "好啊！这家餐厅的菜很好吃。",
+      "pinyin": "Hǎo a! Zhè jiā cāntīng de cài hěn hǎochī.",
+      "translations": {
+        "kr": "좋아요! 이 식당 음식 맛있어요.",
+        "en": "Great! The food at this restaurant is delicious.",
+        "jp": "いいですね！このレストランの料理は美味しいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "服务员，我们要两杯咖啡和一杯牛奶。",
+      "pinyin": "Fúwùyuán, wǒmen yào liǎng bēi kāfēi hé yī bēi niúnǎi.",
+      "translations": {
+        "kr": "웨이터님, 커피 두 잔이랑 우유 한 잔 주세요.",
+        "en": "Waiter, we'd like two coffees and one milk.",
+        "jp": "店員さん、コーヒー2杯と牛乳1杯お願いします。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "吧 建议句",
+      "explanation": {
+        "cn": "...一起 + V + 吧，表示建议一起做某事。",
+        "kr": "함께 뭔가 하자고 제안합니다.",
+        "en": "Suggest doing together: ...一起 + V + 吧.",
+        "jp": "一緒に〜しましょうと提案します。"
+      },
+      "examples": [
+        {
+          "cn": "我们一起去看电影吧。",
+          "pinyin": "Wǒmen yīqǐ qù kàn diànyǐng ba.",
+          "translations": {
+            "kr": "우리 함께 영화 보러 가요.",
+            "en": "Let's go see a movie together.",
+            "jp": "一緒に映画を見に行きましょう。"
+          }
+        }
+      ]
+    },
+    {
+      "name": "一起",
+      "explanation": {
+        "cn": "一起 + V，表示共同做某事。",
+        "kr": "함께 动词를 합니다.",
+        "en": "一起 + V: do something together.",
+        "jp": "一緒に〜する。"
+      },
+      "examples": [
+        {
+          "cn": "我们一起学习。",
+          "pinyin": "Wǒmen yīqǐ xuéxí.",
+          "translations": {
+            "kr": "우리 함께 공부해요.",
+            "en": "We study together.",
+            "jp": "一緒に勉強します。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「一起...吧」表示？",
+        "kr": "「一起...吧」는?",
+        "en": "What does 一起...吧 express?",
+        "jp": "「一起...吧」は？"
+      },
+      "options": [
+        "疑问",
+        "建议",
+        "否定",
+        "完成"
+      ],
+      "answer": "建议",
+      "explanation": {
+        "kr": "吧表示建议。",
+        "en": "吧 indicates suggestion.",
+        "jp": "吧は提案を表します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「两」用于？",
+        "kr": "「两」는?",
+        "en": "When do we use 两?",
+        "jp": "「两」は？"
+      },
+      "options": [
+        "序数",
+        "基数两个",
+        "百",
+        "千"
+      ],
+      "answer": "基数两个",
+      "explanation": {
+        "kr": "两表示两个。",
+        "en": "两 means two.",
+        "jp": "两は2つを表します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「好吃」的结构是？",
+        "kr": "「好吃」의 구조는?",
+        "en": "What is the structure of 好吃?",
+        "jp": "「好吃」の構造は？"
+      },
+      "options": [
+        "Adj+Adj",
+        "好+V",
+        "V+好",
+        "好+N"
+      ],
+      "answer": "好+V",
+      "explanation": {
+        "kr": "好+动词表示容易/令人满意。",
+        "en": "好+verb = easy to/pleasant to.",
+        "jp": "好+動詞で容易/満足を表す。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「服务员」是？",
+        "kr": "「服务员」은?",
+        "en": "What is 服务员?",
+        "jp": "「服务员」は？"
+      },
+      "options": [
+        "老师",
+        "waiter/server",
+        "医生",
+        "司机"
+      ],
+      "answer": "waiter/server",
+      "explanation": {
+        "kr": "餐厅、酒店的服务人员。",
+        "en": "Service staff at restaurants.",
+        "jp": "レストランなどのサービス担当。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：我们一起去吃饭吧。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: Let's eat together.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "我们一起去吃饭吧。"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「喝咖啡」替换：一起去吃饭吧。",
+        "kr": "「喝咖啡」로 바꿔 말하세요.",
+        "en": "Substitute with 喝咖啡.",
+        "jp": "「喝咖啡」で置き換えて。"
+      },
+      "sampleAnswer": "一起去喝咖啡吧。"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "邀请朋友一起做某事，用「一起...吧」。",
+        "kr": "친구를 뭔가 하자고 초대하세요.",
+        "en": "Invite a friend to do something with 一起...吧.",
+        "jp": "友達を何かに誘ってください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂"
+    ],
+    "grammarReview": [
+      {
+        "name": "吧 建议句",
+        "summary": "...一起 + V + 吧"
+      },
+      {
+        "name": "一起",
+        "summary": "一起 + V"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "好吃",
+      "pinyin": "hǎochī",
+      "translations": {
+        "kr": "맛있다",
+        "en": "delicious",
+        "jp": "美味しい"
+      },
+      "note": "好 + 动词"
+    },
+    {
+      "cn": "两杯",
+      "pinyin": "liǎng bēi",
+      "translations": {
+        "kr": "두 잔",
+        "en": "two cups",
+        "jp": "2杯"
+      },
+      "note": "两 + 量词"
+    },
+    {
+      "cn": "房间",
+      "pinyin": "fángjiān",
+      "translations": {
+        "kr": "방",
+        "en": "room",
+        "jp": "部屋"
+      },
+      "note": "房间可指餐厅包间"
+    }
+  ]
 }

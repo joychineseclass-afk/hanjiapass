@@ -263,9 +263,312 @@
       "focus": "可以 + V"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "你想喝什么？",
+      "pinyin": "Nǐ xiǎng hē shénme?",
+      "translations": {
+        "kr": "뭐 마시고 싶어요?",
+        "en": "What do you want to drink?",
+        "jp": "何を飲みたいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我想喝咖啡。你可以给我一杯吗？",
+      "pinyin": "Wǒ xiǎng hē kāfēi. Nǐ kěyǐ gěi wǒ yī bēi ma?",
+      "translations": {
+        "kr": "커피 마시고 싶어요. 한 잔 줄 수 있어요?",
+        "en": "I want coffee. Can you give me a cup?",
+        "jp": "コーヒーが飲みたいです。一杯くれますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "可以。要牛奶吗？",
+      "pinyin": "Kěyǐ. Yào niúnǎi ma?",
+      "translations": {
+        "kr": "네. 우유 필요해요?",
+        "en": "Sure. Do you want milk?",
+        "jp": "はい。牛乳はいりますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "要，谢谢！",
+      "pinyin": "Yào, xièxie!",
+      "translations": {
+        "kr": "네, 감사해요!",
+        "en": "Yes, thanks!",
+        "jp": "はい、ありがとう！"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "想 + V",
+      "explanation": {
+        "cn": "想 + 动词，表示想要做某事。",
+        "kr": "~하고 싶다.",
+        "en": "想 + verb: want to do something.",
+        "jp": "〜したい：想 + 動詞。"
+      },
+      "examples": [
+        {
+          "cn": "我想去中国。",
+          "pinyin": "Wǒ xiǎng qù Zhōngguó.",
+          "translations": {
+            "kr": "중국에 가고 싶어요.",
+            "en": "I want to go to China.",
+            "jp": "中国に行きたいです。"
+          }
+        }
+      ]
+    },
+    {
+      "name": "什么 疑问",
+      "explanation": {
+        "cn": "V + 什么？询问动作的对象。",
+        "kr": "동작의 대상을 묻습니다.",
+        "en": "V + 什么？ asks what (object).",
+        "jp": "動詞の対象を尋ねる。"
+      },
+      "examples": [
+        {
+          "cn": "你想吃什么？",
+          "pinyin": "Nǐ xiǎng chī shénme?",
+          "translations": {
+            "kr": "뭐 먹고 싶어요?",
+            "en": "What do you want to eat?",
+            "jp": "何を食べたいですか？"
+          }
+        }
+      ]
+    },
+    {
+      "name": "可以",
+      "explanation": {
+        "cn": "可以 + V，表示许可或能力。",
+        "kr": "~할 수 있다.",
+        "en": "可以 + V: can, may.",
+        "jp": "〜できる、〜してもよい。"
+      },
+      "examples": [
+        {
+          "cn": "你可以进来。",
+          "pinyin": "Nǐ kěyǐ jìnlái.",
+          "translations": {
+            "kr": "들어와도 돼요.",
+            "en": "You can come in.",
+            "jp": "入ってきてよいです。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「想喝什么」中「想」表示？",
+        "kr": "「想喝什么」에서 「想」는?",
+        "en": "What does 想 mean in 想喝什么?",
+        "jp": "「想喝什么」の「想」は？"
+      },
+      "options": [
+        "思考",
+        "want to",
+        "可能",
+        "应该"
+      ],
+      "answer": "want to",
+      "explanation": {
+        "kr": "想+动词=想要做。",
+        "en": "想+verb = want to do.",
+        "jp": "想+動詞=〜したい。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「V+什么」询问？",
+        "kr": "「V+什么」는 무엇을 묻나요?",
+        "en": "What does V+什么 ask?",
+        "jp": "「V+什么」は何を尋ねる？"
+      },
+      "options": [
+        "时间",
+        "地点",
+        "动作对象",
+        "原因"
+      ],
+      "answer": "动作对象",
+      "explanation": {
+        "kr": "什么作动词的宾语。",
+        "en": "什么 is the object of the verb.",
+        "jp": "什么是動詞の目的語。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「可以」的否定是？",
+        "kr": "「可以」의 부정은?",
+        "en": "What is the negative of 可以?",
+        "jp": "「可以」の否定は？"
+      },
+      "options": [
+        "不可以",
+        "没可以",
+        "不能",
+        "别可以"
+      ],
+      "answer": "不可以",
+      "explanation": {
+        "kr": "不可以=不能。",
+        "en": "不可以 = cannot.",
+        "jp": "不可以=できない。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "点饮料时「要」表示？",
+        "kr": "음료 주문할 때 「要」는?",
+        "en": "What does 要 mean when ordering?",
+        "jp": "注文時の「要」は？"
+      },
+      "options": [
+        "必须",
+        "want/order",
+        "可能",
+        "建议"
+      ],
+      "answer": "want/order",
+      "explanation": {
+        "kr": "要=想要、点。",
+        "en": "要 = want, order.",
+        "jp": "要=欲しい、注文する。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：你想喝什么？",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: What do you want to drink?",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "你想喝什么？"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「吃」替换：你想喝什么？",
+        "kr": "「吃」로 바꿔 말하세요.",
+        "en": "Substitute with 吃.",
+        "jp": "「吃」で置き換えて。"
+      },
+      "sampleAnswer": "你想吃什么？"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "在咖啡厅点饮料，用「想喝」「要」「可以」。",
+        "kr": "카페에서 음료 주문하세요.",
+        "en": "Order drinks at a café using 想喝, 要, 可以.",
+        "jp": "カフェで飲み物を注文してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "号",
+      "件",
+      "鸡蛋",
+      "元",
+      "张",
+      "要",
+      "百"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "想 + V",
+        "summary": "想 + 动词"
+      },
+      {
+        "name": "什么 疑问",
+        "summary": "V + 什么？"
+      },
+      {
+        "name": "可以",
+        "summary": "可以 + V"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "喝咖啡",
+      "pinyin": "hē kāfēi",
+      "translations": {
+        "kr": "커피 마시다",
+        "en": "drink coffee",
+        "jp": "コーヒーを飲む"
+      },
+      "note": "喝 + 饮料"
+    },
+    {
+      "cn": "一杯牛奶",
+      "pinyin": "yī bēi niúnǎi",
+      "translations": {
+        "kr": "우유 한 잔",
+        "en": "a glass of milk",
+        "jp": "牛乳1杯"
+      },
+      "note": "数词+量词+名词"
+    },
+    {
+      "cn": "要咖啡",
+      "pinyin": "yào kāfēi",
+      "translations": {
+        "kr": "커피 주세요",
+        "en": "want coffee",
+        "jp": "コーヒーをください"
+      },
+      "note": "要 = 想要"
+    }
+  ]
 }

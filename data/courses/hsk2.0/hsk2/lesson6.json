@@ -259,9 +259,278 @@
       "focus": "数字 + 点 + 数字 + 分"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "现在几点了？",
+      "pinyin": "Xiànzài jǐ diǎn le?",
+      "translations": {
+        "kr": "지금 몇 시예요?",
+        "en": "What time is it now?",
+        "jp": "今何時ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我的手表快，手机显示九点十分。",
+      "pinyin": "Wǒ de shǒubiǎo kuài, shǒujī xiǎnshì jiǔ diǎn shí fēn.",
+      "translations": {
+        "kr": "제 시계가 빨라요. 휴대폰은 9시 10분이에요.",
+        "en": "My watch is fast; my phone shows 9:10.",
+        "jp": "私の時計は進んでいます。携帯は9時10分です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "还有一个小时就上课了。",
+      "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
+      "translations": {
+        "kr": "한 시간 후면 수업이에요.",
+        "en": "Class starts in one hour.",
+        "jp": "あと1時間で授業です。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "时间表达",
+      "explanation": {
+        "cn": "现在 + 几 + 点 + 了？询问当前时间。",
+        "kr": "현재 시간을 묻습니다.",
+        "en": "Ask current time: 现在 + 几 + 点 + 了？",
+        "jp": "現在の時刻を尋ねる。"
+      },
+      "examples": [
+        {
+          "cn": "现在几点了？",
+          "pinyin": "Xiànzài jǐ diǎn le?",
+          "translations": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        }
+      ]
+    },
+    {
+      "name": "点 / 分",
+      "explanation": {
+        "cn": "数字 + 点 + 数字 + 分，表示具体时刻。",
+        "kr": "시와 분을 나타냅니다.",
+        "en": "Number + 点 + number + 分 for time.",
+        "jp": "時と分を表す。"
+      },
+      "examples": [
+        {
+          "cn": "九点十分",
+          "pinyin": "jiǔ diǎn shí fēn",
+          "translations": {
+            "kr": "9시 10분",
+            "en": "9:10",
+            "jp": "9時10分"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「现在几点了」询问？",
+        "kr": "「现在几点了」는?",
+        "en": "What does 现在几点了 ask?",
+        "jp": "「现在几点了」は？"
+      },
+      "options": [
+        "日期",
+        "时间",
+        "地点",
+        "原因"
+      ],
+      "answer": "时间",
+      "explanation": {
+        "kr": "询问当前时刻。",
+        "en": "Asks current time.",
+        "jp": "現在の時刻を尋ねる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「九点十分」的结构？",
+        "kr": "「九点十分」의 구조?",
+        "en": "Structure of 九点十分?",
+        "jp": "「九点十分」の構造は？"
+      },
+      "options": [
+        "点+分",
+        "数字+点+数字+分",
+        "时+分",
+        "刻"
+      ],
+      "answer": "数字+点+数字+分",
+      "explanation": {
+        "kr": "点表小时，分表分钟。",
+        "en": "点=hour, 分=minute.",
+        "jp": "点=時、分=分。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「手表快」的意思是？",
+        "kr": "「手表快」의 뜻은?",
+        "en": "What does 手表快 mean?",
+        "jp": "「手表快」の意味は？"
+      },
+      "options": [
+        "表坏了",
+        "表走得快",
+        "表很贵",
+        "表丢了"
+      ],
+      "answer": "表走得快",
+      "explanation": {
+        "kr": "快=走得快，时间超前。",
+        "en": "快 = runs fast.",
+        "jp": "快=進んでいる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「就」在「就上课了」中表示？",
+        "kr": "「就」在「就上课了」에서?",
+        "en": "What does 就 mean in 就上课了?",
+        "jp": "「就上课了」の「就」は？"
+      },
+      "options": [
+        "强调",
+        "即将",
+        "已经",
+        "才"
+      ],
+      "answer": "即将",
+      "explanation": {
+        "kr": "就表示即将发生。",
+        "en": "就 indicates imminent action.",
+        "jp": "就はまもなくを表す。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：现在几点了？",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: What time is it now?",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "现在几点了？"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「八点」替换：九点十分。",
+        "kr": "「八点」로 바꿔 말하세요.",
+        "en": "Substitute with 八点.",
+        "jp": "「八点」で置き換えて。"
+      },
+      "sampleAnswer": "八点十分"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "问对方现在几点，并讨论时间。",
+        "kr": "지금 몇 시인지 물어보고 시간에 대해 이야기하세요.",
+        "en": "Ask the time and discuss schedules.",
+        "jp": "今何時か聞いて、時間について話してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "手表",
+      "手机",
+      "小时",
+      "快",
+      "慢",
+      "就",
+      "时间"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "时间表达",
+        "summary": "现在 + 几 + 点 + 了？"
+      },
+      {
+        "name": "点 / 分",
+        "summary": "数字 + 点 + 数字 + 分"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "手表",
+      "pinyin": "shǒubiǎo",
+      "translations": {
+        "kr": "손목시계",
+        "en": "wristwatch",
+        "jp": "腕時計"
+      },
+      "note": "手+表"
+    },
+    {
+      "cn": "快/慢",
+      "pinyin": "kuài/màn",
+      "translations": {
+        "kr": "빠르다/느리다",
+        "en": "fast/slow",
+        "jp": "速い/遅い"
+      },
+      "note": "形容钟表"
+    },
+    {
+      "cn": "一小时",
+      "pinyin": "yī xiǎoshí",
+      "translations": {
+        "kr": "한 시간",
+        "en": "one hour",
+        "jp": "1時間"
+      },
+      "note": "时间量词"
+    }
+  ]
 }

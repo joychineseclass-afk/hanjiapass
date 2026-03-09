@@ -297,9 +297,283 @@
       "focus": "V + 了"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "因为下雨所以没去。",
+      "pinyin": "Yīnwèi xiàyǔ suǒyǐ méi qù.",
+      "translations": {
+        "kr": "비가 와서 가지 않았어요.",
+        "en": "Because it rained, I didn't go.",
+        "jp": "雨が降ったので行きませんでした。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "昨天已经完了，今天再去。",
+      "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
+      "translations": {
+        "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
+        "en": "Yesterday it was already over, go again today.",
+        "jp": "昨日はもう終わりました。今日また行きます。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "因为……所以……",
+      "explanation": {
+        "cn": "因为……所以……：因为 + 原因 + 所以 + 结果",
+        "kr": "因为……所以……：因为 + 原因 + 所以 + 结果",
+        "en": "因为……所以……: 因为 + 原因 + 所以 + 结果",
+        "jp": "因为……所以……：因为 + 原因 + 所以 + 结果"
+      },
+      "examples": [
+        {
+          "cn": "因为 + 原因 + 所以 + 结果",
+          "pinyin": "",
+          "translations": {
+            "kr": "因为 + 原因 + 所以 + 结果",
+            "en": "因为 + 原因 + 所以 + 结果",
+            "jp": "因为 + 原因 + 所以 + 结果"
+          }
+        }
+      ]
+    },
+    {
+      "name": "没 + V",
+      "explanation": {
+        "cn": "没 + 去",
+        "kr": "没 + 去",
+        "en": "没 + 去",
+        "jp": "没 + 去"
+      },
+      "examples": [
+        {
+          "cn": "没 + 去",
+          "pinyin": "",
+          "translations": {
+            "kr": "没 + 去",
+            "en": "没 + 去",
+            "jp": "没 + 去"
+          }
+        }
+      ]
+    },
+    {
+      "name": "了（完成）",
+      "explanation": {
+        "cn": "V + 了",
+        "kr": "V + 了",
+        "en": "V + 了",
+        "jp": "V + 了"
+      },
+      "examples": [
+        {
+          "cn": "V + 了",
+          "pinyin": "",
+          "translations": {
+            "kr": "V + 了",
+            "en": "V + 了",
+            "jp": "V + 了"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「因为……所以……」的句型是？",
+        "kr": "「因为……所以……」의 문형은?",
+        "en": "What is the pattern for 因为……所以……?",
+        "jp": "「因为……所以……」の文型は？"
+      },
+      "options": [
+        "因为 + 原因 + 所以 + 结果",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "因为 + 原因 + 所以 + 结果",
+      "explanation": {
+        "kr": "因为 + 原因 + 所以 + 结果",
+        "en": "因为 + 原因 + 所以 + 结果",
+        "jp": "因为 + 原因 + 所以 + 结果"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「没 + V」表示？",
+        "kr": "「没 + V」는?",
+        "en": "What does 没 + V indicate?",
+        "jp": "「没 + V」は？"
+      },
+      "options": [
+        "没 + 去",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "没 + 去",
+      "explanation": {
+        "kr": "没 + 去",
+        "en": "没 + 去",
+        "jp": "没 + 去"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「了（完成）」表示？",
+        "kr": "「了（完成）」는?",
+        "en": "What does 了（完成） indicate?",
+        "jp": "「了（完成）」は？"
+      },
+      "options": [
+        "V + 了",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "V + 了",
+      "explanation": {
+        "kr": "V + 了",
+        "en": "V + 了",
+        "jp": "V + 了"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "因为",
+      "所以",
+      "完",
+      "已经",
+      "再",
+      "下雨",
+      "没",
+      "昨天"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "因为……所以……",
+        "summary": "因为 + 原因 + 所以 + 结果"
+      },
+      {
+        "name": "没 + V",
+        "summary": "没 + 去"
+      },
+      {
+        "name": "了（完成）",
+        "summary": "V + 了"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "因为",
+      "pinyin": "yīnwèi",
+      "translations": {
+        "kr": "~때문에",
+        "en": "because",
+        "jp": "〜だから"
+      },
+      "note": ""
+    },
+    {
+      "cn": "所以",
+      "pinyin": "suǒyǐ",
+      "translations": {
+        "kr": "그래서",
+        "en": "therefore",
+        "jp": "だから"
+      },
+      "note": ""
+    },
+    {
+      "cn": "完",
+      "pinyin": "wán",
+      "translations": {
+        "kr": "끝나다",
+        "en": "to finish",
+        "jp": "終わる"
+      },
+      "note": ""
+    },
+    {
+      "cn": "已经",
+      "pinyin": "yǐjīng",
+      "translations": {
+        "kr": "이미",
+        "en": "already",
+        "jp": "もう"
+      },
+      "note": ""
+    }
+  ]
 }

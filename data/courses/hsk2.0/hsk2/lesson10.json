@@ -259,9 +259,278 @@
       "focus": "希望 + 小句"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "我准备学习中文。",
+      "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
+      "translations": {
+        "kr": "저는 중국어 공부할 준비해요.",
+        "en": "I'm preparing to study Chinese.",
+        "jp": "私は中国語を勉強する準備をしています。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "希望你能学好。你知道「新」的意思吗？",
+      "pinyin": "Xīwàng nǐ néng xué hǎo. Nǐ zhīdào 「xīn」 de yìsi ma?",
+      "translations": {
+        "kr": "잘 배우길 바라요. 「新」의 의미 알아요?",
+        "en": "I hope you learn well. Do you know the meaning of 新?",
+        "jp": "よく学べることを願います。「新」の意味を知っていますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "知道，新是为新的开始。",
+      "pinyin": "Zhīdào, xīn shì wèi xīn de kāishǐ.",
+      "translations": {
+        "kr": "알아요. 新은 새로운 시작을 위한 거예요.",
+        "en": "Yes, 新 is for a new beginning.",
+        "jp": "知っています。新は新しい始まりのためです。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "准备 + V",
+      "explanation": {
+        "cn": "准备 + 动词，表示准备做某事。",
+        "kr": "~할 준비를 하다.",
+        "en": "准备 + verb: prepare to do.",
+        "jp": "〜する準備をする。"
+      },
+      "examples": [
+        {
+          "cn": "准备考试",
+          "pinyin": "zhǔnbèi kǎoshì",
+          "translations": {
+            "kr": "시험 준비하다",
+            "en": "prepare for exam",
+            "jp": "試験の準備をする"
+          }
+        }
+      ]
+    },
+    {
+      "name": "希望 + V",
+      "explanation": {
+        "cn": "希望 + 小句，表示愿望。",
+        "kr": "~하기를 바라다.",
+        "en": "希望 + clause: hope that.",
+        "jp": "〜することを願う。"
+      },
+      "examples": [
+        {
+          "cn": "希望你成功",
+          "pinyin": "xīwàng nǐ chénggōng",
+          "translations": {
+            "kr": "성공하길 바라요",
+            "en": "hope you succeed",
+            "jp": "成功することを願います"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「准备+V」表示？",
+        "kr": "「准备+V」는?",
+        "en": "What does 准备+V mean?",
+        "jp": "「准备+V」は？"
+      },
+      "options": [
+        "完成",
+        "prepare to",
+        "进行",
+        "建议"
+      ],
+      "answer": "prepare to",
+      "explanation": {
+        "kr": "准备做某事。",
+        "en": "Prepare to do something.",
+        "jp": "〜する準備をする。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「希望」后面接？",
+        "kr": "「希望」뒤에?",
+        "en": "What follows 希望?",
+        "jp": "「希望」の後は？"
+      },
+      "options": [
+        "名词",
+        "小句/动词",
+        "形容词",
+        "量词"
+      ],
+      "answer": "小句/动词",
+      "explanation": {
+        "kr": "希望+小句。",
+        "en": "希望 + clause.",
+        "jp": "希望+小句。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「知道」的宾语？",
+        "kr": "「知道」의 목적어?",
+        "en": "Object of 知道?",
+        "jp": "「知道」の目的語は？"
+      },
+      "options": [
+        "人",
+        "事/内容",
+        "地方",
+        "时间"
+      ],
+      "answer": "事/内容",
+      "explanation": {
+        "kr": "知道这件事、知道意思。",
+        "en": "知道 this, 知道 meaning.",
+        "jp": "知道这件事、知道意思。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「为」表示？",
+        "kr": "「为」는?",
+        "en": "What does 为 indicate?",
+        "jp": "「为」は？"
+      },
+      "options": [
+        "原因",
+        "目的",
+        "时间",
+        "地点"
+      ],
+      "answer": "目的",
+      "explanation": {
+        "kr": "为=为了，表目的。",
+        "en": "为 = for, purpose.",
+        "jp": "为=为了、目的を表す。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：我准备学习中文。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: I'm preparing to study Chinese.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "我准备学习中文。"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「考试」替换：准备学习。",
+        "kr": "「考试」로 바꿔 말하세요.",
+        "en": "Substitute with 考试.",
+        "jp": "「考试」で置き換えて。"
+      },
+      "sampleAnswer": "准备考试"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "说说你准备做什么，用「准备」「希望」。",
+        "kr": "뭘 준비하는지 말하세요.",
+        "en": "Talk about what you're preparing with 准备/希望.",
+        "jp": "何を準備しているか話してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "准备",
+      "希望",
+      "新",
+      "姓",
+      "意思",
+      "为",
+      "知道"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "准备 + V",
+        "summary": "准备 + 动词"
+      },
+      {
+        "name": "希望 + V",
+        "summary": "希望 + 小句"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "知道",
+      "pinyin": "zhīdào",
+      "translations": {
+        "kr": "알다",
+        "en": "know",
+        "jp": "知る"
+      },
+      "note": "知道+事"
+    },
+    {
+      "cn": "意思",
+      "pinyin": "yìsi",
+      "translations": {
+        "kr": "의미",
+        "en": "meaning",
+        "jp": "意味"
+      },
+      "note": "的意思"
+    },
+    {
+      "cn": "为",
+      "pinyin": "wéi",
+      "translations": {
+        "kr": "~를 위해",
+        "en": "for",
+        "jp": "〜のために"
+      },
+      "note": "为+目的"
+    }
+  ]
 }

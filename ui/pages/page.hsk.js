@@ -99,11 +99,13 @@ function rerenderHSKFromState() {
       renderReviewDialogue($("hskDialogueBody"), getDialogueCards(ld), { lang });
       renderReviewGrammar($("hskGrammarBody"), ld.grammar || [], { lang, vocab: lw || ld.vocab || ld.words || [] });
       renderReviewExtension($("hskExtensionBody"), ld.extension || [], { lang });
+      $("hskReviewBody").innerHTML = buildReviewHTML(ld);
     } else {
       renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
       $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
       $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
       $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
+      $("hskReviewBody").innerHTML = buildReviewHTML(ld);
     }
 
     if (rerenderPractice && $("hskPracticeBody")) {
@@ -133,6 +135,7 @@ function updateTabsLabels() {
     ["hskTabExtension", "hsk.tab.extension"],
     ["hskTabPractice", "hsk.tab.practice"],
     ["hskTabAI", "hsk.tab.ai"],
+    ["hskTabReview", "hsk.tab.review"],
   ];
   tabs.forEach(([id, key]) => {
     const btn = $(id);
@@ -223,6 +226,7 @@ function showListMode() {
   el = $("hskExtensionBody"); if (el) el.innerHTML = "";
   el = $("hskPracticeBody"); if (el) el.innerHTML = "";
   el = $("hskAIResult"); if (el) el.innerHTML = "";
+  el = $("hskReviewBody"); if (el) el.innerHTML = "";
   el = $("hskSceneSection"); if (el) { el.innerHTML = ""; el.classList.add("hidden"); }
 
   state.current = null;
@@ -238,6 +242,7 @@ function updateTabsUI() {
     ["extension", "hskTabExtension", "hskPanelExtension"],
     ["practice", "hskTabPractice", "hskPanelPractice"],
     ["ai", "hskTabAI", "hskPanelAI"],
+    ["review", "hskTabReview", "hskPanelReview"],
   ];
 
   ids.forEach(([tab, btnId, panelId]) => {
@@ -267,7 +272,7 @@ function getDialogueTranslation(item, lang) {
   const key = l === "jp" || l === "ja" ? "jp" : l === "kr" || l === "ko" ? "kr" : l === "cn" || l === "zh" ? "cn" : "en";
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
-  const trans = item.translation ?? item.trans;
+  const trans = item.translation ?? item.trans ?? item.translations;
   if (trans && typeof trans === "object") {
     const v = trans[key] ?? trans[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
     if (v) return str(v);
@@ -410,7 +415,7 @@ function getGrammarExplanation(item, lang) {
   return "";
 }
 
-/** 语法例句：getContentText(example, "translation") 或 pick，JP strict */
+/** 语法例句：支持 examples[].translations，getContentText(example, "translation") 或 pick，JP strict */
 function getGrammarExamples(pt) {
   const ex = (pt && pt.example) || (pt && pt.examples);
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -525,11 +530,17 @@ function getExtensionExplanation(item, lang) {
     const v = meaning[key] ?? meaning[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
     if (v) return str(v);
   }
-  const trans = item.translation;
+  const trans = item.translation ?? item.translations;
   if (trans && typeof trans === "object") {
     const v = trans[key] ?? trans[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
     if (v) return str(v);
   }
+  const note = item.note;
+  if (note && typeof note === "object") {
+    const v = note[key] ?? note[key === "jp" ? "ja" : key === "kr" ? "ko" : key === "cn" ? "zh" : key];
+    if (v) return str(v);
+  }
+  if (typeof note === "string" && note.trim()) return str(note);
   if (key === "kr" && item.kr) return str(item.kr);
   if (key === "en" && item.en) return str(item.en);
   if (key === "jp" && item.jp) return str(item.jp);
@@ -583,6 +594,63 @@ function buildExtensionHTML(lessonData) {
   }).filter(Boolean).join("");
 
   return `${hero}<section class="lesson-extension-list">${cards}</section>`;
+}
+
+/** 复习 tab：学习课显示 lessonWords/relatedOldWords/grammarReview；复习课显示综合回顾 */
+function buildReviewHTML(lessonData) {
+  const raw = (lessonData && lessonData._raw) || lessonData;
+  const r = raw && raw.review;
+  const lang = getLang();
+  const pickSummary = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    const key = lang === "cn" || lang === "zh" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+    const v = (obj[key] ?? obj.summary ?? obj.focus ?? "").trim();
+    return v || String(obj.cn ?? obj.zh ?? "").trim();
+  };
+
+  if (!r || typeof r !== "object") {
+    return `<div class="lesson-review-empty text-sm opacity-70">${escapeHtml(i18n.t("hsk.review_empty") || "暂无复习内容")}</div>`;
+  }
+
+  const parts = [];
+  const isReviewLesson = (raw && raw.type) === "review";
+  const lessonWords = Array.isArray(r.lessonWords) ? r.lessonWords : [];
+  const relatedOldWords = Array.isArray(r.relatedOldWords) ? r.relatedOldWords : [];
+  const grammarReview = Array.isArray(r.grammarReview) ? r.grammarReview : [];
+  const summaryTasks = Array.isArray(r.summaryTasks) ? r.summaryTasks : [];
+  const reviewRange = Array.isArray(r.lessonRange) ? r.lessonRange : Array.isArray(r.reviewRange) ? r.reviewRange : [];
+
+  if (isReviewLesson && reviewRange.length >= 2) {
+    const rangeText = i18n.t("hsk.review_range_lessons", { from: reviewRange[0], to: reviewRange[1] }) || `第 ${reviewRange[0]}～${reviewRange[1]} 课 综合复习`;
+    parts.push(`<div class="lesson-review-range text-sm font-medium mb-3">${escapeHtml(rangeText)}</div>`);
+  }
+
+  if (lessonWords.length) {
+    const label = isReviewLesson ? (i18n.t("hsk.review_words") || "复习词汇") : (i18n.t("hsk.lesson_words_review") || "本课词汇");
+    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(label)}</h4><div class="flex flex-wrap gap-2">${lessonWords.map((w) => `<span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700">${escapeHtml(String(w))}</span>`).join("")}</div></section>`);
+  }
+
+  if (relatedOldWords.length && !isReviewLesson) {
+    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(i18n.t("hsk.related_old_words") || "关联旧词")}</h4><div class="flex flex-wrap gap-2">${relatedOldWords.map((w) => `<span class="px-2 py-1 rounded bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200">${escapeHtml(String(w))}</span>`).join("")}</div></section>`);
+  }
+
+  if (grammarReview.length) {
+    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(i18n.t("hsk.grammar_review") || "语法回顾")}</h4><ul class="space-y-1">${grammarReview.map((g) => {
+      const name = escapeHtml(String(g.name || "").trim() || "-");
+      const sumObj = g.summary && typeof g.summary === "object" ? g.summary : (g.summary ? { cn: g.summary, kr: g.summary, en: g.summary, jp: g.summary } : g);
+      const summary = escapeHtml(pickSummary(sumObj));
+      return `<li><span class="font-medium">${name}</span>${summary ? ` — ${summary}` : ""}</li>`;
+    }).join("")}</ul></section>`);
+  }
+
+  if (summaryTasks.length) {
+    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(i18n.t("hsk.summary_tasks") || "复习任务")}</h4><ul class="space-y-1">${summaryTasks.map((t) => `<li>${escapeHtml(typeof t === "string" ? t : (t && t.cn) || (t && t.text) || "")}</li>`).join("")}</ul></section>`);
+  }
+
+  if (!parts.length) {
+    return `<div class="lesson-review-empty text-sm opacity-70">${escapeHtml(i18n.t("hsk.review_empty") || "暂无复习内容")}</div>`;
+  }
+  return `<div class="lesson-review-content space-y-4">${parts.join("")}</div>`;
 }
 
 function buildAIContext() {
@@ -870,6 +938,8 @@ async function openLesson({ lessonNo, file }) {
       renderReviewDialogue($("hskDialogueBody"), cards, { lang });
       renderReviewGrammar($("hskGrammarBody"), lessonData.grammar || [], { lang, vocab: lessonWords || lessonData.vocab || lessonData.words || [] });
       renderReviewExtension($("hskExtensionBody"), lessonData.extension || [], { lang });
+      const reviewEl = $("hskReviewBody");
+      if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
       if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.touchLessonVocab === "function") PROGRESS_ENGINE.touchLessonVocab({
         courseId,
         lessonId,
@@ -885,6 +955,8 @@ async function openLesson({ lessonNo, file }) {
       $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
       $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
       $("hskExtensionBody").innerHTML = buildExtensionHTML(lessonData);
+      const reviewEl = $("hskReviewBody");
+      if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
     }
 
     // Practice panel: 平台级 Practice Engine

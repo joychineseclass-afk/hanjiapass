@@ -271,7 +271,7 @@ function escapeHtml(s) {
  * @returns {Array<{ mode: string, ... }>}
  */
 export function getLessonAIConfig(lesson) {
-  const arr = (lesson && lesson.ai != null ? lesson.ai : []);
+  const arr = (lesson && (lesson.aiPrompts ?? lesson.ai) != null ? (lesson.aiPrompts ?? lesson.ai) : []);
   if (!Array.isArray(arr)) return [];
   return arr
     .filter((item) => item && (item.mode || item.type))

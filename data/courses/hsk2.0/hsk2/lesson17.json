@@ -293,9 +293,238 @@
       "focus": "真/非常 + Adj"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "你觉得怎么样？",
+      "pinyin": "Nǐ juéde zěnmeyàng?",
+      "translations": {
+        "kr": "어때요?",
+        "en": "What do you think?",
+        "jp": "どう思いますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我觉得非常好！",
+      "pinyin": "Wǒ juéde fēicháng hǎo!",
+      "translations": {
+        "kr": "정말 좋다고 생각해요!",
+        "en": "I think it's very good!",
+        "jp": "とても良いと思います！"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "觉得 + 怎么样",
+      "explanation": {
+        "cn": "觉得 + 怎么样：你觉得 + 怎么样？",
+        "kr": "觉得 + 怎么样：你觉得 + 怎么样？",
+        "en": "觉得 + 怎么样: 你觉得 + 怎么样？",
+        "jp": "觉得 + 怎么样：你觉得 + 怎么样？"
+      },
+      "examples": [
+        {
+          "cn": "你觉得 + 怎么样？",
+          "pinyin": "",
+          "translations": {
+            "kr": "你觉得 + 怎么样？",
+            "en": "你觉得 + 怎么样？",
+            "jp": "你觉得 + 怎么样？"
+          }
+        }
+      ]
+    },
+    {
+      "name": "真/非常",
+      "explanation": {
+        "cn": "真/非常 + Adj",
+        "kr": "真/非常 + Adj",
+        "en": "真/非常 + Adj",
+        "jp": "真/非常 + Adj"
+      },
+      "examples": [
+        {
+          "cn": "真/非常 + Adj",
+          "pinyin": "",
+          "translations": {
+            "kr": "真/非常 + Adj",
+            "en": "真/非常 + Adj",
+            "jp": "真/非常 + Adj"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「觉得 + 怎么样」的句型是？",
+        "kr": "「觉得 + 怎么样」의 문형은?",
+        "en": "What is the pattern for 觉得 + 怎么样?",
+        "jp": "「觉得 + 怎么样」の文型は？"
+      },
+      "options": [
+        "你觉得 + 怎么样？",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "你觉得 + 怎么样？",
+      "explanation": {
+        "kr": "你觉得 + 怎么样？",
+        "en": "你觉得 + 怎么样？",
+        "jp": "你觉得 + 怎么样？"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「真/非常」表示？",
+        "kr": "「真/非常」는?",
+        "en": "What does 真/非常 indicate?",
+        "jp": "「真/非常」は？"
+      },
+      "options": [
+        "真/非常 + Adj",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "真/非常 + Adj",
+      "explanation": {
+        "kr": "真/非常 + Adj",
+        "en": "真/非常 + Adj",
+        "jp": "真/非常 + Adj"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "觉得",
+      "真",
+      "问题",
+      "题",
+      "左边",
+      "眼睛",
+      "笑",
+      "妻子"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "觉得 + 怎么样",
+        "summary": "你觉得 + 怎么样？"
+      },
+      {
+        "name": "真/非常",
+        "summary": "真/非常 + Adj"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "觉得",
+      "pinyin": "juéde",
+      "translations": {
+        "kr": "~라고 생각하다",
+        "en": "to think that ...",
+        "jp": "〜と思う"
+      },
+      "note": ""
+    },
+    {
+      "cn": "真",
+      "pinyin": "zhēn",
+      "translations": {
+        "kr": "정말",
+        "en": "really",
+        "jp": "本当に"
+      },
+      "note": ""
+    },
+    {
+      "cn": "问题",
+      "pinyin": "wèntí",
+      "translations": {
+        "kr": "문제",
+        "en": "question",
+        "jp": "問題"
+      },
+      "note": ""
+    },
+    {
+      "cn": "题",
+      "pinyin": "Tí",
+      "translations": {
+        "kr": "문제",
+        "en": "surname Ti",
+        "jp": "問題"
+      },
+      "note": ""
+    }
+  ]
 }

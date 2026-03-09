@@ -259,9 +259,288 @@
       "focus": "在 + V"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "周末你做什么？",
+      "pinyin": "Zhōumò nǐ zuò shénme?",
+      "translations": {
+        "kr": "주말에 뭐 해요?",
+        "en": "What do you do on weekends?",
+        "jp": "週末は何をしますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我在家休息，晚上去跑步。",
+      "pinyin": "Wǒ zài jiā xiūxi, wǎnshang qù pǎobù.",
+      "translations": {
+        "kr": "집에서 쉬고, 저녁에 달려요.",
+        "en": "I rest at home, run in the evening.",
+        "jp": "家で休んで、夜走ります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "你正在唱歌吗？",
+      "pinyin": "Nǐ zhèngzài chànggē ma?",
+      "translations": {
+        "kr": "지금 노래하고 있어요?",
+        "en": "Are you singing now?",
+        "jp": "今歌っていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "不，我在跳舞，很快乐！",
+      "pinyin": "Bù, wǒ zài tiàowǔ, hěn kuàilè!",
+      "translations": {
+        "kr": "아니요, 춤추고 있어요. 아주 즐거워요!",
+        "en": "No, I'm dancing, very happy!",
+        "jp": "いいえ、踊っています。とても楽しいです！"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "时间词 + 做什么",
+      "explanation": {
+        "cn": "周末 + 你 + 做什么？询问某时做什么。",
+        "kr": "특정 시간에 뭘 하는지 묻습니다.",
+        "en": "Time + 你 + 做什么？ asks activities.",
+        "jp": "ある時に何をするか尋ねる。"
+      },
+      "examples": [
+        {
+          "cn": "周末你做什么？",
+          "pinyin": "Zhōumò nǐ zuò shénme?",
+          "translations": {
+            "kr": "주말에 뭐 해요?",
+            "en": "What do you do on weekends?",
+            "jp": "週末は何をしますか？"
+          }
+        }
+      ]
+    },
+    {
+      "name": "在/正在",
+      "explanation": {
+        "cn": "在 + V，表示动作正在进行。",
+        "kr": "동작이 진행 중임을 나타냅니다.",
+        "en": "在 + V: action in progress.",
+        "jp": "動作が進行中である。"
+      },
+      "examples": [
+        {
+          "cn": "我在学习。",
+          "pinyin": "Wǒ zài xuéxí.",
+          "translations": {
+            "kr": "저는 공부하고 있어요.",
+            "en": "I'm studying.",
+            "jp": "勉強しています。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「周末你做什么」询问？",
+        "kr": "「周末你做什么」는?",
+        "en": "What does 周末你做什么 ask?",
+        "jp": "「周末你做什么」は？"
+      },
+      "options": [
+        "时间",
+        "活动",
+        "地点",
+        "人物"
+      ],
+      "answer": "活动",
+      "explanation": {
+        "kr": "询问周末活动。",
+        "en": "Asks weekend activities.",
+        "jp": "週末の活動を尋ねる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「在+V」表示？",
+        "kr": "「在+V」는?",
+        "en": "What does 在+V express?",
+        "jp": "「在+V」は？"
+      },
+      "options": [
+        "完成",
+        "进行",
+        "将来",
+        "建议"
+      ],
+      "answer": "进行",
+      "explanation": {
+        "kr": "动作正在进行。",
+        "en": "Action in progress.",
+        "jp": "動作が進行中。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「快乐」的意思是？",
+        "kr": "「快乐」의 뜻은?",
+        "en": "What does 快乐 mean?",
+        "jp": "「快乐」の意味は？"
+      },
+      "options": [
+        "快",
+        "happy",
+        "慢",
+        "累"
+      ],
+      "answer": "happy",
+      "explanation": {
+        "kr": "快乐=高兴、开心。",
+        "en": "快乐 = happy.",
+        "jp": "快乐=嬉しい、楽しい。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「跑步」是？",
+        "kr": "「跑步」는?",
+        "en": "What is 跑步?",
+        "jp": "「跑步」は？"
+      },
+      "options": [
+        "走",
+        "run",
+        "坐",
+        "飞"
+      ],
+      "answer": "run",
+      "explanation": {
+        "kr": "跑步=달리기。",
+        "en": "跑步 = running.",
+        "jp": "跑步=走ること。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：周末你做什么？",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: What do you do on weekends?",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "周末你做什么？"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「晚上」替换：周末你做什么。",
+        "kr": "「晚上」로 바꿔 말하세요.",
+        "en": "Substitute with 晚上.",
+        "jp": "「晚上」で置き換えて。"
+      },
+      "sampleAnswer": "晚上你做什么？"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "说说你周末做什么，用「在+V」。",
+        "kr": "주말에 뭘 하는지 말하세요.",
+        "en": "Talk about your weekend with 在+V.",
+        "jp": "週末に何をするか話してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "休息",
+      "玩",
+      "唱歌",
+      "跳舞",
+      "跑步",
+      "晚上",
+      "快乐"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "时间词 + 做什么",
+        "summary": "周末 + 你 + 做什么？"
+      },
+      {
+        "name": "在/正在",
+        "summary": "在 + V"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "休息",
+      "pinyin": "xiūxi",
+      "translations": {
+        "kr": "쉬다",
+        "en": "rest",
+        "jp": "休む"
+      },
+      "note": "休息+一下"
+    },
+    {
+      "cn": "玩",
+      "pinyin": "wán",
+      "translations": {
+        "kr": "놀다",
+        "en": "play",
+        "jp": "遊ぶ"
+      },
+      "note": "玩+游戏"
+    },
+    {
+      "cn": "晚上",
+      "pinyin": "wǎnshang",
+      "translations": {
+        "kr": "저녁",
+        "en": "evening",
+        "jp": "夜"
+      },
+      "note": "时间词"
+    }
+  ]
 }

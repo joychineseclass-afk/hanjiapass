@@ -263,9 +263,300 @@
       "focus": "很 + Adj"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "你今天忙吗？",
+      "pinyin": "Nǐ jīntiān máng ma?",
+      "translations": {
+        "kr": "오늘 바빠요?",
+        "en": "Are you busy today?",
+        "jp": "今日は忙しいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "很忙，但是不累。",
+      "pinyin": "Hěn máng, dànshì bù lěi.",
+      "translations": {
+        "kr": "바빠요. 하지만 피곤하지 않아요.",
+        "en": "Very busy, but not tired.",
+        "jp": "忙しいですが、疲れていません。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "我们休息一下吧。",
+      "pinyin": "Wǒmen xiūxi yīxià ba.",
+      "translations": {
+        "kr": "잠깐 쉬어요.",
+        "en": "Let's take a break.",
+        "jp": "少し休みましょう。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "吗疑问句",
+      "explanation": {
+        "cn": "用「吗」构成是非问句，S + Adj + 吗？",
+        "kr": "「吗」로 예/아니오 의문문을 만듭니다.",
+        "en": "Form yes/no questions with 吗: S + Adj + 吗？",
+        "jp": "「吗」で是非疑問文を作ります。"
+      },
+      "examples": [
+        {
+          "cn": "你今天忙吗？",
+          "pinyin": "Nǐ jīntiān máng ma?",
+          "translations": {
+            "kr": "오늘 바빠요?",
+            "en": "Are you busy today?",
+            "jp": "今日は忙しいですか？"
+          }
+        },
+        {
+          "cn": "他很累吗？",
+          "pinyin": "Tā hěn lěi ma?",
+          "translations": {
+            "kr": "그는 피곤해요?",
+            "en": "Is he tired?",
+            "jp": "彼は疲れていますか？"
+          }
+        }
+      ]
+    },
+    {
+      "name": "形容词谓语句",
+      "explanation": {
+        "cn": "S + 很 + Adj，形容词直接作谓语。",
+        "kr": "형용사가 직접 서술어가 됩니다.",
+        "en": "Adjectives as predicates: S + 很 + Adj.",
+        "jp": "形容詞が直接述語になります。"
+      },
+      "examples": [
+        {
+          "cn": "今天很忙。",
+          "pinyin": "Jīntiān hěn máng.",
+          "translations": {
+            "kr": "오늘 바빠요.",
+            "en": "Today is busy.",
+            "jp": "今日は忙しいです。"
+          }
+        }
+      ]
+    },
+    {
+      "name": "程度副词 很",
+      "explanation": {
+        "cn": "很 + Adj 表示程度。",
+        "kr": "很 + 형용사로 정도를 나타냅니다.",
+        "en": "很 + Adj indicates degree.",
+        "jp": "很 + 形容詞で程度を表します。"
+      },
+      "examples": [
+        {
+          "cn": "教室很大。",
+          "pinyin": "Jiàoshì hěn dà.",
+          "translations": {
+            "kr": "교실이 커요.",
+            "en": "The classroom is big.",
+            "jp": "教室は大きいです。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「你今天忙吗？」的正确回答是？",
+        "kr": "「你今天忙吗？」의 올바른 답은?",
+        "en": "What is the correct answer to 'Are you busy today?'?",
+        "jp": "「你今天忙吗？」の正しい答えは？"
+      },
+      "options": [
+        "很忙",
+        "不忙",
+        "很累",
+        "休息"
+      ],
+      "answer": "很忙",
+      "explanation": {
+        "kr": "忙/不忙 回答忙不忙的问题。",
+        "en": "忙/不忙 answers the busy question.",
+        "jp": "忙/不忙 で忙しいかどうかに答えます。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "S + 很 + Adj 中「很」的作用是？",
+        "kr": "S + 很 + Adj에서 「很」의 역할은?",
+        "en": "What does 很 do in S + 很 + Adj?",
+        "jp": "S + 很 + Adj で「很」の役割は？"
+      },
+      "options": [
+        "否定",
+        "程度",
+        "疑问",
+        "过去"
+      ],
+      "answer": "程度",
+      "explanation": {
+        "kr": "很表示程度，相当于「非常」。",
+        "en": "很 indicates degree, similar to 'very'.",
+        "jp": "很は程度を表し、「非常」に相当します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「休息一下吧」的「吧」表示？",
+        "kr": "「休息一下吧」의 「吧」는?",
+        "en": "What does 吧 mean in '休息一下吧'?",
+        "jp": "「休息一下吧」の「吧」は？"
+      },
+      "options": [
+        "疑问",
+        "建议",
+        "否定",
+        "完成"
+      ],
+      "answer": "建议",
+      "explanation": {
+        "kr": "吧用于建议、提议。",
+        "en": "吧 is used for suggestions.",
+        "jp": "吧は提案に使います。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「但是」连接什么关系？",
+        "kr": "「但是」는 어떤 관계를 연결하나요?",
+        "en": "What does 但是 connect?",
+        "jp": "「但是」は何を結びますか？"
+      },
+      "options": [
+        "因果",
+        "转折",
+        "并列",
+        "条件"
+      ],
+      "answer": "转折",
+      "explanation": {
+        "kr": "但是表示转折，相当于「그러나」。",
+        "en": "但是 indicates contrast, like 'but'.",
+        "jp": "但是は逆接を表します。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Repeat after",
+        "jp": "リピート練習"
+      },
+      "prompt": {
+        "cn": "请跟读：你今天忙吗？",
+        "kr": "따라 읽으세요: 오늘 바빠요?",
+        "en": "Please repeat: Are you busy today?",
+        "jp": "繰り返してください：今日は忙しいですか？"
+      },
+      "sampleAnswer": "你今天忙吗？"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换练习",
+        "kr": "대체 연습",
+        "en": "Substitution drill",
+        "jp": "置き換え練習"
+      },
+      "prompt": {
+        "cn": "用「累」替换：你今天忙吗？",
+        "kr": "「累」로 바꿔 말하세요.",
+        "en": "Substitute with 累: Are you busy today?",
+        "jp": "「累」で置き換えて：今日は忙しいですか？"
+      },
+      "sampleAnswer": "你今天累吗？"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课句型问对方今天忙不忙、累不累。",
+        "kr": "오늘 바쁜지, 피곤한지 물어보세요.",
+        "en": "Ask your partner if they are busy or tired today.",
+        "jp": "相手に今日忙しいか、疲れているか聞いてください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室"
+    ],
+    "relatedOldWords": [],
+    "grammarReview": [
+      {
+        "name": "吗疑问句",
+        "summary": "S + Adj + 吗？"
+      },
+      {
+        "name": "形容词谓语句",
+        "summary": "S + 很 + Adj"
+      },
+      {
+        "name": "程度副词 很",
+        "summary": "很 + Adj"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "每节课",
+      "pinyin": "měi jié kè",
+      "translations": {
+        "kr": "매 수업",
+        "en": "each class",
+        "jp": "毎授業"
+      },
+      "note": "每 + 量词 + 名词"
+    },
+    {
+      "cn": "女人和男人",
+      "pinyin": "nǚrén hé nánrén",
+      "translations": {
+        "kr": "여자와 남자",
+        "en": "women and men",
+        "jp": "女性と男性"
+      },
+      "note": "和连接名词"
+    },
+    {
+      "cn": "但是很累",
+      "pinyin": "dànshì hěn lěi",
+      "translations": {
+        "kr": "하지만 피곤해요",
+        "en": "but very tired",
+        "jp": "しかし疲れています"
+      },
+      "note": "但是表示转折"
+    }
+  ]
 }

@@ -259,9 +259,278 @@
       "focus": "可以 + V"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "我每天学习汉语。",
+      "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
+      "translations": {
+        "kr": "저는 매일 중국어를 배워요.",
+        "en": "I study Chinese every day.",
+        "jp": "私は毎日中国語を勉強します。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "你每节课都来吗？",
+      "pinyin": "Nǐ měi jié kè dōu lái ma?",
+      "translations": {
+        "kr": "매 수업마다 오세요?",
+        "en": "Do you come to every class?",
+        "jp": "毎授業来ますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "是的，我可以开始考试了。",
+      "pinyin": "Shì de, wǒ kěyǐ kāishǐ kǎoshì le.",
+      "translations": {
+        "kr": "네. 이제 시험 볼 수 있어요.",
+        "en": "Yes, I can start the exam now.",
+        "jp": "はい、もう試験を受けられます。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "每 + 时间",
+      "explanation": {
+        "cn": "每 + 天/天 + V，表示频率。",
+        "kr": "빈도를 나타냅니다.",
+        "en": "每 + day/time + V: frequency.",
+        "jp": "頻度を表す。"
+      },
+      "examples": [
+        {
+          "cn": "每天学习",
+          "pinyin": "měi tiān xuéxí",
+          "translations": {
+            "kr": "매일 공부하다",
+            "en": "study every day",
+            "jp": "毎日勉強する"
+          }
+        }
+      ]
+    },
+    {
+      "name": "能愿动词 可以",
+      "explanation": {
+        "cn": "可以 + V，表示能力或许可。",
+        "kr": "능력이나 허가를 나타냅니다.",
+        "en": "可以 + V: ability or permission.",
+        "jp": "能力や許可を表す。"
+      },
+      "examples": [
+        {
+          "cn": "可以开始",
+          "pinyin": "kěyǐ kāishǐ",
+          "translations": {
+            "kr": "시작할 수 있다",
+            "en": "can start",
+            "jp": "始められる"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「每天」表示？",
+        "kr": "「每天」는?",
+        "en": "What does 每天 mean?",
+        "jp": "「每天」は？"
+      },
+      "options": [
+        "一次",
+        "every day",
+        "有时",
+        "从不"
+      ],
+      "answer": "every day",
+      "explanation": {
+        "kr": "每+天=每天。",
+        "en": "每+天 = every day.",
+        "jp": "每+天=毎日。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「可以开始」中「可以」表示？",
+        "kr": "「可以开始」에서 「可以」는?",
+        "en": "What does 可以 mean in 可以开始?",
+        "jp": "「可以开始」の「可以」は？"
+      },
+      "options": [
+        "必须",
+        "ability",
+        "可能",
+        "建议"
+      ],
+      "answer": "ability",
+      "explanation": {
+        "kr": "可以=能够。",
+        "en": "可以 = be able to.",
+        "jp": "可以=できる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「开始」的用法？",
+        "kr": "「开始」의 용법?",
+        "en": "Usage of 开始?",
+        "jp": "「开始」の用法は？"
+      },
+      "options": [
+        "开始+V",
+        "V+开始",
+        "开始+N",
+        "A和C"
+      ],
+      "answer": "A和C",
+      "explanation": {
+        "kr": "开始学习、开始上课。",
+        "en": "开始 study, 开始 class.",
+        "jp": "开始学习、开始上课。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「课」的量词？",
+        "kr": "「课」의 양사?",
+        "en": "Measure word for 课?",
+        "jp": "「课」の量詞は？"
+      },
+      "options": [
+        "个",
+        "节",
+        "门",
+        "B和C"
+      ],
+      "answer": "B和C",
+      "explanation": {
+        "kr": "一节课、一门课。",
+        "en": "一节 class, 一门 course.",
+        "jp": "一节课、一门课。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：我每天学习汉语。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: I study Chinese every day.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "我每天学习汉语。"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「英语」替换：学习汉语。",
+        "kr": "「英语」로 바꿔 말하세요.",
+        "en": "Substitute with 英语.",
+        "jp": "「英语」で置き換えて。"
+      },
+      "sampleAnswer": "学习英语"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "说说你每天做什么，用「每+时间」。",
+        "kr": "매일 뭘 하는지 말하세요.",
+        "en": "Talk about your daily routine with 每+time.",
+        "jp": "毎日何をするか話してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "开始",
+      "考试",
+      "课",
+      "离",
+      "第一",
+      "报纸",
+      "门"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "每 + 时间",
+        "summary": "每 + 天/天 + V"
+      },
+      {
+        "name": "能愿动词 可以",
+        "summary": "可以 + V"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "开始",
+      "pinyin": "kāishǐ",
+      "translations": {
+        "kr": "시작하다",
+        "en": "begin",
+        "jp": "始める"
+      },
+      "note": "开始+V"
+    },
+    {
+      "cn": "考试",
+      "pinyin": "kǎoshì",
+      "translations": {
+        "kr": "시험",
+        "en": "exam",
+        "jp": "試験"
+      },
+      "note": "考试/参加考试"
+    },
+    {
+      "cn": "课",
+      "pinyin": "kè",
+      "translations": {
+        "kr": "수업",
+        "en": "class",
+        "jp": "授業"
+      },
+      "note": "一节课"
+    }
+  ]
 }

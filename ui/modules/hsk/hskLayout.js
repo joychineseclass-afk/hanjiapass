@@ -101,7 +101,10 @@ export function getHSKLayoutHTML() {
         <button id="hskTabAI" type="button" class="px-3 py-1 rounded-lg border" data-tab="ai">
           <span data-i18n="hsk.tab.ai">AI学習</span>
         </button>
-        <button id="hskReviewBtn" type="button" class="px-3 py-1 rounded-lg border border-amber-400 text-amber-700" data-i18n="review.start">復習</button>
+        <button id="hskTabReview" type="button" class="px-3 py-1 rounded-lg border" data-tab="review">
+          <span data-i18n="hsk.tab.review">復習</span>
+        </button>
+        <button id="hskReviewBtn" type="button" class="px-3 py-1 rounded-lg border border-amber-400 text-amber-700" data-i18n="review.start">復習モード</button>
       </div>
     </div>
 
@@ -132,6 +135,11 @@ export function getHSKLayoutHTML() {
       <div id="hskPanelAI" class="hidden p-4">
         <div class="text-sm font-bold mb-3" data-i18n="hsk.tab.ai">AI学習</div>
         <div id="hskAIResult" class="ai-learning-container"></div>
+      </div>
+
+      <div id="hskPanelReview" class="hidden bg-white rounded-2xl shadow p-4">
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.review">復習</div>
+        <div id="hskReviewBody" class="space-y-3"></div>
       </div>
     </div>
 

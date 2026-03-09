@@ -293,9 +293,238 @@
       "focus": "比 + 便宜/贵"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "这个比那个好。",
+      "pinyin": "Zhège bǐ nàge hǎo.",
+      "translations": {
+        "kr": "이게 그거보다 좋아요.",
+        "en": "This is better than that.",
+        "jp": "これはあれより良いです。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "这个便宜，那个贵。",
+      "pinyin": "Zhège piányi, nàge guì.",
+      "translations": {
+        "kr": "이건 싸고 저건 비싸요.",
+        "en": "This is cheap, that's expensive.",
+        "jp": "これは安く、あれは高いです。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "比字句",
+      "explanation": {
+        "cn": "比字句：A + 比 + B + Adj",
+        "kr": "比字句：A + 比 + B + Adj",
+        "en": "比字句: A + 比 + B + Adj",
+        "jp": "比字句：A + 比 + B + Adj"
+      },
+      "examples": [
+        {
+          "cn": "A + 比 + B + Adj",
+          "pinyin": "",
+          "translations": {
+            "kr": "A + 比 + B + Adj",
+            "en": "A + 比 + B + Adj",
+            "jp": "A + 比 + B + Adj"
+          }
+        }
+      ]
+    },
+    {
+      "name": "便宜/贵",
+      "explanation": {
+        "cn": "比 + 便宜/贵",
+        "kr": "比 + 便宜/贵",
+        "en": "比 + 便宜/贵",
+        "jp": "比 + 便宜/贵"
+      },
+      "examples": [
+        {
+          "cn": "比 + 便宜/贵",
+          "pinyin": "",
+          "translations": {
+            "kr": "比 + 便宜/贵",
+            "en": "比 + 便宜/贵",
+            "jp": "比 + 便宜/贵"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「比字句」的句型是？",
+        "kr": "「比字句」의 문형은?",
+        "en": "What is the pattern for 比字句?",
+        "jp": "「比字句」の文型は？"
+      },
+      "options": [
+        "A + 比 + B + Adj",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "A + 比 + B + Adj",
+      "explanation": {
+        "kr": "A + 比 + B + Adj",
+        "en": "A + 比 + B + Adj",
+        "jp": "A + 比 + B + Adj"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「便宜/贵」表示？",
+        "kr": "「便宜/贵」는?",
+        "en": "What does 便宜/贵 indicate?",
+        "jp": "「便宜/贵」は？"
+      },
+      "options": [
+        "比 + 便宜/贵",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "比 + 便宜/贵",
+      "explanation": {
+        "kr": "比 + 便宜/贵",
+        "en": "比 + 便宜/贵",
+        "jp": "比 + 便宜/贵"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "比",
+      "便宜",
+      "贵",
+      "远",
+      "近",
+      "错",
+      "长",
+      "还"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "比字句",
+        "summary": "A + 比 + B + Adj"
+      },
+      {
+        "name": "便宜/贵",
+        "summary": "比 + 便宜/贵"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "比",
+      "pinyin": "Bǐ",
+      "translations": {
+        "kr": "~보다",
+        "en": "Belgium",
+        "jp": "〜より"
+      },
+      "note": ""
+    },
+    {
+      "cn": "便宜",
+      "pinyin": "biànyí",
+      "translations": {
+        "kr": "싸다",
+        "en": "convenient",
+        "jp": "安い"
+      },
+      "note": ""
+    },
+    {
+      "cn": "贵",
+      "pinyin": "guì",
+      "translations": {
+        "kr": "비싸다",
+        "en": "expensive",
+        "jp": "高い"
+      },
+      "note": ""
+    },
+    {
+      "cn": "远",
+      "pinyin": "yuǎn",
+      "translations": {
+        "kr": "멀다",
+        "en": "far",
+        "jp": "遠い"
+      },
+      "note": ""
+    }
+  ]
 }

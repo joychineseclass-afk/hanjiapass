@@ -293,9 +293,238 @@
       "focus": "时间词"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "我们一起去旅行吧！",
+      "pinyin": "Wǒmen yīqǐ qù lǚxíng ba!",
+      "translations": {
+        "kr": "우리 함께 여행 가요!",
+        "en": "Let's travel together!",
+        "jp": "一緒に旅行に行きましょう！"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "去年我去过机场，今年买票去。",
+      "pinyin": "Qùnián wǒ qùguò jīchǎng, jīnnián mǎi piào qù.",
+      "translations": {
+        "kr": "작년에 공항 갔어요. 올해 표 사서 가요.",
+        "en": "Last year I went to the airport, this year I'll buy tickets.",
+        "jp": "去年空港に行きました。今年は切符を買って行きます。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "一起 + V",
+      "explanation": {
+        "cn": "一起 + V：一起 + 去 + 旅行",
+        "kr": "一起 + V：一起 + 去 + 旅行",
+        "en": "一起 + V: 一起 + 去 + 旅行",
+        "jp": "一起 + V：一起 + 去 + 旅行"
+      },
+      "examples": [
+        {
+          "cn": "一起 + 去 + 旅行",
+          "pinyin": "",
+          "translations": {
+            "kr": "一起 + 去 + 旅行",
+            "en": "一起 + 去 + 旅行",
+            "jp": "一起 + 去 + 旅行"
+          }
+        }
+      ]
+    },
+    {
+      "name": "去年/明年",
+      "explanation": {
+        "cn": "时间词",
+        "kr": "时间词",
+        "en": "时间词",
+        "jp": "时间词"
+      },
+      "examples": [
+        {
+          "cn": "时间词",
+          "pinyin": "",
+          "translations": {
+            "kr": "时间词",
+            "en": "时间词",
+            "jp": "时间词"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「一起 + V」的句型是？",
+        "kr": "「一起 + V」의 문형은?",
+        "en": "What is the pattern for 一起 + V?",
+        "jp": "「一起 + V」の文型は？"
+      },
+      "options": [
+        "一起 + 去 + 旅行",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "一起 + 去 + 旅行",
+      "explanation": {
+        "kr": "一起 + 去 + 旅行",
+        "en": "一起 + 去 + 旅行",
+        "jp": "一起 + 去 + 旅行"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「去年/明年」表示？",
+        "kr": "「去年/明年」는?",
+        "en": "What does 去年/明年 indicate?",
+        "jp": "「去年/明年」は？"
+      },
+      "options": [
+        "时间词",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "时间词",
+      "explanation": {
+        "kr": "时间词",
+        "en": "时间词",
+        "jp": "时间词"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "旅游",
+      "票",
+      "去年",
+      "机场",
+      "船",
+      "旁边",
+      "外",
+      "卖"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "一起 + V",
+        "summary": "一起 + 去 + 旅行"
+      },
+      {
+        "name": "去年/明年",
+        "summary": "时间词"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "旅游",
+      "pinyin": "lǚyóu",
+      "translations": {
+        "kr": "여행",
+        "en": "trip",
+        "jp": "旅行"
+      },
+      "note": ""
+    },
+    {
+      "cn": "票",
+      "pinyin": "piào",
+      "translations": {
+        "kr": "표",
+        "en": "ticket",
+        "jp": "切符"
+      },
+      "note": ""
+    },
+    {
+      "cn": "去年",
+      "pinyin": "qùnián",
+      "translations": {
+        "kr": "작년",
+        "en": "last year",
+        "jp": "去年"
+      },
+      "note": ""
+    },
+    {
+      "cn": "机场",
+      "pinyin": "jīchǎng",
+      "translations": {
+        "kr": "공항",
+        "en": "airport",
+        "jp": "空港"
+      },
+      "note": ""
+    }
+  ]
 }

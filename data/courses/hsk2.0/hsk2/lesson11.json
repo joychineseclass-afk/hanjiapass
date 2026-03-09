@@ -293,9 +293,238 @@
       "focus": "得 + V"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "他在学校工作。",
+      "pinyin": "Tā zài xuéxiào gōngzuò.",
+      "translations": {
+        "kr": "그는 학교에서 일해요.",
+        "en": "He works at school.",
+        "jp": "彼は学校で働いています。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "他得上班，但是今天生病了。",
+      "pinyin": "Tā déi shàngbān, dànshì jīntiān shēngbìng le.",
+      "translations": {
+        "kr": "출근해야 하는데 오늘 아팠어요.",
+        "en": "He has to work, but he's sick today.",
+        "jp": "出勤しなければならないが、今日は病気です。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "在 + 地点 + V",
+      "explanation": {
+        "cn": "在 + 地点 + V：在 + 地方 + 工作",
+        "kr": "在 + 地点 + V：在 + 地方 + 工作",
+        "en": "在 + 地点 + V: 在 + 地方 + 工作",
+        "jp": "在 + 地点 + V：在 + 地方 + 工作"
+      },
+      "examples": [
+        {
+          "cn": "在 + 地方 + 工作",
+          "pinyin": "",
+          "translations": {
+            "kr": "在 + 地方 + 工作",
+            "en": "在 + 地方 + 工作",
+            "jp": "在 + 地方 + 工作"
+          }
+        }
+      ]
+    },
+    {
+      "name": "得 必须",
+      "explanation": {
+        "cn": "得 + V",
+        "kr": "得 + V",
+        "en": "得 + V",
+        "jp": "得 + V"
+      },
+      "examples": [
+        {
+          "cn": "得 + V",
+          "pinyin": "",
+          "translations": {
+            "kr": "得 + V",
+            "en": "得 + V",
+            "jp": "得 + V"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「在 + 地点 + V」的句型是？",
+        "kr": "「在 + 地点 + V」의 문형은?",
+        "en": "What is the pattern for 在 + 地点 + V?",
+        "jp": "「在 + 地点 + V」の文型は？"
+      },
+      "options": [
+        "在 + 地方 + 工作",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "在 + 地方 + 工作",
+      "explanation": {
+        "kr": "在 + 地方 + 工作",
+        "en": "在 + 地方 + 工作",
+        "jp": "在 + 地方 + 工作"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「得 必须」表示？",
+        "kr": "「得 必须」는?",
+        "en": "What does 得 必须 indicate?",
+        "jp": "「得 必须」は？"
+      },
+      "options": [
+        "得 + V",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "得 + V",
+      "explanation": {
+        "kr": "得 + V",
+        "en": "得 + V",
+        "jp": "得 + V"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "公司",
+      "上班",
+      "事情",
+      "让",
+      "男人",
+      "得",
+      "生病",
+      "生日"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "在 + 地点 + V",
+        "summary": "在 + 地方 + 工作"
+      },
+      {
+        "name": "得 必须",
+        "summary": "得 + V"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "公司",
+      "pinyin": "gōngsī",
+      "translations": {
+        "kr": "회사",
+        "en": "company",
+        "jp": "会社"
+      },
+      "note": ""
+    },
+    {
+      "cn": "上班",
+      "pinyin": "shàngbān",
+      "translations": {
+        "kr": "출근하다",
+        "en": "to go to work",
+        "jp": "出勤する"
+      },
+      "note": ""
+    },
+    {
+      "cn": "事情",
+      "pinyin": "shìqing",
+      "translations": {
+        "kr": "일",
+        "en": "affair",
+        "jp": "こと"
+      },
+      "note": ""
+    },
+    {
+      "cn": "让",
+      "pinyin": "ràng",
+      "translations": {
+        "kr": "~하게 하다",
+        "en": "to yield",
+        "jp": "〜させる"
+      },
+      "note": ""
+    }
+  ]
 }

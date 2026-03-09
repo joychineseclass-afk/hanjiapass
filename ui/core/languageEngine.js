@@ -51,6 +51,7 @@ const KEY_ALIAS = {
   hsk_tab_grammar: "hsk.tab.grammar",
   hsk_tab_extension: "hsk.tab.extension",
   hsk_tab_ai: "hsk.tab.ai",
+  hsk_tab_review: "hsk.tab.review",
   vocab_subtitle: "hsk.vocab_subtitle",
   vocab_count: "hsk.vocab_count",
   dialogue_subtitle: "hsk.dialogue_subtitle",
@@ -83,6 +84,7 @@ const KEY_ALIAS = {
   hsk_tab_extension: "hsk.tab.extension",
   hsk_tab_practice: "hsk.tab.practice",
   hsk_tab_ai: "hsk.tab.ai",
+  hsk_tab_review: "hsk.tab.review",
   hsk_ai_tip: "hsk.ai_tip",
   hsk_ai_placeholder: "hsk.ai_placeholder",
   hsk_ai_send: "hsk.ai_send",
@@ -319,7 +321,7 @@ export function getContentText(item, field, options = {}) {
   const fields = field ? [field] : ["translation", "meaning", "explain", "explanation"];
 
   for (const f of fields) {
-    const sub = item[f];
+    const sub = item[f] ?? (f === "translation" ? item.translations : undefined);
     if (sub && typeof sub === "object") {
       const v = pick(sub, strictOpt);
       if (v) return v;

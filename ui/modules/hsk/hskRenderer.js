@@ -83,6 +83,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
         data-open-lesson="1"
         data-lesson-no="${lessonNo}"
         data-file="${escapeHtmlAttr(file)}"
+        ${isActive ? ' aria-current="true"' : ""}
       >
         <span class="hsk-directory-no">${lessonNo || ""}</span>
         <span class="hsk-directory-title">${escapeHtml(lessonNoFormatted)} / ${escapeHtml(titleDisplay)}</span>

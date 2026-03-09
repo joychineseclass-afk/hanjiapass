@@ -259,9 +259,274 @@
       "focus": "给 + 人 + 动词"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "这是我的朋友。",
+      "pinyin": "Zhè shì wǒ de péngyou.",
+      "translations": {
+        "kr": "이건 제 친구예요.",
+        "en": "This is my friend.",
+        "jp": "これは私の友達です。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "欢迎！你可以给我介绍一下吗？",
+      "pinyin": "Huānyíng! Nǐ kěyǐ gěi wǒ jièshào yīxià ma?",
+      "translations": {
+        "kr": "환영해요! 저에게 소개해 주실 수 있어요?",
+        "en": "Welcome! Can you introduce him to me?",
+        "jp": "歓迎！紹介してもらえますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "可以。他懂中文，可以回答你的问题。",
+      "pinyin": "Kěyǐ. Tā dǒng Zhōngwén, kěyǐ huídá nǐ de wèntí.",
+      "translations": {
+        "kr": "네. 그는 중국어를 알아요. 질문에 답할 수 있어요.",
+        "en": "Sure. He understands Chinese and can answer your questions.",
+        "jp": "はい。彼は中国語が分かります。質問に答えられます。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "介绍他人",
+      "explanation": {
+        "cn": "这是 + N，介绍某人。",
+        "kr": "某人을 소개할 때 씁니다.",
+        "en": "Introduce someone: 这是 + N.",
+        "jp": "人を紹介する：这是 + N。"
+      },
+      "examples": [
+        {
+          "cn": "这是我的老师。",
+          "pinyin": "Zhè shì wǒ de lǎoshī.",
+          "translations": {
+            "kr": "이분은 제 선생님이에요.",
+            "en": "This is my teacher.",
+            "jp": "これは私の先生です。"
+          }
+        }
+      ]
+    },
+    {
+      "name": "给 + N + V",
+      "explanation": {
+        "cn": "给 + 人 + 动词，表示对某人做某事。",
+        "kr": "某人에게 动词를 합니다.",
+        "en": "给 + person + verb: do something for someone.",
+        "jp": "人に〜する：给 + 人 + 动词。"
+      },
+      "examples": [
+        {
+          "cn": "给我介绍一下。",
+          "pinyin": "Gěi wǒ jièshào yīxià.",
+          "translations": {
+            "kr": "저에게 소개해 주세요.",
+            "en": "Introduce (him) to me.",
+            "jp": "紹介してください。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「给 + N + V」中「给」表示？",
+        "kr": "「给 + N + V」에서 「给」는?",
+        "en": "What does 给 mean in 给 + N + V?",
+        "jp": "「给 + N + V」の「给」は？"
+      },
+      "options": [
+        "从",
+        "对/向",
+        "在",
+        "到"
+      ],
+      "answer": "对/向",
+      "explanation": {
+        "kr": "给表示动作的对象。",
+        "en": "给 indicates the recipient.",
+        "jp": "给は動作の対象を表します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「可以」的意思是？",
+        "kr": "「可以」의 뜻은?",
+        "en": "What does 可以 mean?",
+        "jp": "「可以」の意味は？"
+      },
+      "options": [
+        "必须",
+        "can/may",
+        "可能",
+        "应该"
+      ],
+      "answer": "can/may",
+      "explanation": {
+        "kr": "可以表示许可或能力。",
+        "en": "可以 means can or may.",
+        "jp": "可以は許可や能力を表します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「欢迎」后面常接？",
+        "kr": "「欢迎」뒤에 자주 오는 것은?",
+        "en": "What often follows 欢迎?",
+        "jp": "「欢迎」の後に来るのは？"
+      },
+      "options": [
+        "不",
+        "来/你",
+        "没",
+        "了"
+      ],
+      "answer": "来/你",
+      "explanation": {
+        "kr": "欢迎你来、欢迎你。",
+        "en": "欢迎你来, welcome you.",
+        "jp": "欢迎你来、欢迎你。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「懂」的宾语通常是？",
+        "kr": "「懂」의 목적어는 보통?",
+        "en": "What does 懂 usually take as object?",
+        "jp": "「懂」の目的語は通常？"
+      },
+      "options": [
+        "人",
+        "语言/内容",
+        "地方",
+        "时间"
+      ],
+      "answer": "语言/内容",
+      "explanation": {
+        "kr": "懂中文、懂意思。",
+        "en": "懂 Chinese, 懂 meaning.",
+        "jp": "懂中文、懂意思。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：这是我的朋友。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: This is my friend.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "这是我的朋友。"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「老师」替换：给介绍一下。",
+        "kr": "「老师」로 바꿔 말하세요.",
+        "en": "Substitute with 老师.",
+        "jp": "「老师」で置き換えて。"
+      },
+      "sampleAnswer": "给老师介绍一下。"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "介绍你的朋友，并说他/她会什么。",
+        "kr": "친구를 소개하고 그가 뭘 할 수 있는지 말하세요.",
+        "en": "Introduce your friend and what they can do.",
+        "jp": "友達を紹介し、何ができるか言ってください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐"
+    ],
+    "grammarReview": [
+      {
+        "name": "介绍他人",
+        "summary": "这是 + N"
+      },
+      {
+        "name": "给 + N + V",
+        "summary": "给 + 人 + 动词"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "告诉朋友",
+      "pinyin": "gàosù péngyou",
+      "translations": {
+        "kr": "친구에게 알려주다",
+        "en": "tell a friend",
+        "jp": "友達に伝える"
+      },
+      "note": "告诉 + 人 + 事"
+    },
+    {
+      "cn": "懂中文",
+      "pinyin": "dǒng Zhōngwén",
+      "translations": {
+        "kr": "중국어를 이해하다",
+        "en": "understand Chinese",
+        "jp": "中国語が分かる"
+      },
+      "note": "懂 + 语言"
+    },
+    {
+      "cn": "可能可以",
+      "pinyin": "kěnéng kěyǐ",
+      "translations": {
+        "kr": "아마 할 수 있어요",
+        "en": "might be able to",
+        "jp": "多分できる"
+      },
+      "note": "可能 + 可以"
+    }
+  ]
 }

@@ -259,9 +259,278 @@
       "focus": "非常 + Adj"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "今天很冷！",
+      "pinyin": "Jīntiān hěn lěng!",
+      "translations": {
+        "kr": "오늘 너무 추워요!",
+        "en": "It's very cold today!",
+        "jp": "今日はとても寒いです！"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "是的，你要多穿衣服。",
+      "pinyin": "Shì de, nǐ yào duō chuān yīfu.",
+      "translations": {
+        "kr": "맞아요. 옷 많이 입으세요.",
+        "en": "Yes, wear more clothes.",
+        "jp": "はい、服をたくさん着てください。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "今天天气非常不好，阴天。",
+      "pinyin": "Jīntiān tiānqì fēicháng bù hǎo, yīntiān.",
+      "translations": {
+        "kr": "오늘 날씨가 매우 안 좋아요. 흐려요.",
+        "en": "The weather is very bad today, cloudy.",
+        "jp": "今日の天気はとても悪いです。曇りです。"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "形容词谓语句",
+      "explanation": {
+        "cn": "今天 + 很 + Adj，描述天气或状态。",
+        "kr": "날씨나 상태를 묘사합니다.",
+        "en": "今天 + 很 + Adj describes weather/state.",
+        "jp": "天気や状態を描写する。"
+      },
+      "examples": [
+        {
+          "cn": "今天很冷。",
+          "pinyin": "Jīntiān hěn lěng.",
+          "translations": {
+            "kr": "오늘 추워요.",
+            "en": "It's cold today.",
+            "jp": "今日は寒いです。"
+          }
+        }
+      ]
+    },
+    {
+      "name": "程度副词 非常",
+      "explanation": {
+        "cn": "非常 + Adj，表示程度很高。",
+        "kr": "매우 높은 정도를 나타냅니다.",
+        "en": "非常 + Adj = very, extremely.",
+        "jp": "非常に高い程度を表す。"
+      },
+      "examples": [
+        {
+          "cn": "非常好吃",
+          "pinyin": "fēicháng hǎochī",
+          "translations": {
+            "kr": "매우 맛있어요",
+            "en": "very delicious",
+            "jp": "とても美味しい"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「今天很冷」的结构？",
+        "kr": "「今天很冷」의 구조?",
+        "en": "Structure of 今天很冷?",
+        "jp": "「今天很冷」の構造は？"
+      },
+      "options": [
+        "S+很+Adj",
+        "S+V+O",
+        "V+了",
+        "不+Adj"
+      ],
+      "answer": "S+很+Adj",
+      "explanation": {
+        "kr": "形容词谓语句。",
+        "en": "Adjective as predicate.",
+        "jp": "形容詞述語文。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「非常」比「很」？",
+        "kr": "「非常」와 「很」?",
+        "en": "非常 vs 很?",
+        "jp": "「非常」と「很」は？"
+      },
+      "options": [
+        "非常更强",
+        "一样",
+        "很更强",
+        "不同用法"
+      ],
+      "answer": "非常更强",
+      "explanation": {
+        "kr": "非常程度更高。",
+        "en": "非常 is stronger.",
+        "jp": "非常の方が程度が高い。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「穿」的宾语？",
+        "kr": "「穿」의 목적어?",
+        "en": "Object of 穿?",
+        "jp": "「穿」の目的語は？"
+      },
+      "options": [
+        "吃",
+        "衣服/鞋",
+        "喝",
+        "看"
+      ],
+      "answer": "衣服/鞋",
+      "explanation": {
+        "kr": "穿衣服、穿鞋。",
+        "en": "穿 clothes, 穿 shoes.",
+        "jp": "服を着る、靴を履く。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「阴天」的意思是？",
+        "kr": "「阴天」의 뜻은?",
+        "en": "What does 阴天 mean?",
+        "jp": "「阴天」の意味は？"
+      },
+      "options": [
+        "晴天",
+        "cloudy",
+        "下雨",
+        "下雪"
+      ],
+      "answer": "cloudy",
+      "explanation": {
+        "kr": "阴=云多，不晴。",
+        "en": "阴 = cloudy.",
+        "jp": "阴=曇り。"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读：今天很冷。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat: It's cold today.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": "今天很冷。"
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "用「热」替换：今天很冷。",
+        "kr": "「热」로 바꿔 말하세요.",
+        "en": "Substitute with 热.",
+        "jp": "「热」で置き換えて。"
+      },
+      "sampleAnswer": "今天很热。"
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "描述今天的天气，用「很」「非常」。",
+        "kr": "오늘 날씨를 묘사하세요.",
+        "en": "Describe today's weather with 很/非常.",
+        "jp": "今日の天気を描写してください。"
+      }
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "穿",
+      "雪",
+      "晴",
+      "阴",
+      "非常",
+      "黑",
+      "红"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "形容词谓语句",
+        "summary": "今天 + 很 + Adj"
+      },
+      {
+        "name": "程度副词 非常",
+        "summary": "非常 + Adj"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "穿衣服",
+      "pinyin": "chuān yīfu",
+      "translations": {
+        "kr": "옷 입다",
+        "en": "wear clothes",
+        "jp": "服を着る"
+      },
+      "note": "穿+衣服"
+    },
+    {
+      "cn": "晴天/阴天",
+      "pinyin": "qíngtiān/yīntiān",
+      "translations": {
+        "kr": "맑음/흐림",
+        "en": "sunny/cloudy",
+        "jp": "晴れ/曇り"
+      },
+      "note": "天气词"
+    },
+    {
+      "cn": "非常",
+      "pinyin": "fēicháng",
+      "translations": {
+        "kr": "매우",
+        "en": "very",
+        "jp": "非常に"
+      },
+      "note": "程度副词"
+    }
+  ]
 }

@@ -293,9 +293,238 @@
       "focus": "打篮球、游泳、跑步"
     }
   ],
-  "dialogue": [],
-  "grammar": [],
-  "practice": [],
-  "aiPrompts": [],
-  "review": []
+  "dialogue": [
+    {
+      "speaker": "A",
+      "cn": "我喜欢运动。",
+      "pinyin": "Wǒ xǐhuan yùndòng.",
+      "translations": {
+        "kr": "저는 운동을 좋아해요.",
+        "en": "I like sports.",
+        "jp": "私は運動が好きです。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "你游泳还是打篮球？",
+      "pinyin": "Nǐ yóuyǒng háishì dǎ lánqiú?",
+      "translations": {
+        "kr": "수영해요? 농구해요?",
+        "en": "Do you swim or play basketball?",
+        "jp": "泳ぎますか？バスケをしますか？"
+      }
+    }
+  ],
+  "grammar": [
+    {
+      "name": "喜欢 + N/V",
+      "explanation": {
+        "cn": "喜欢 + N/V：喜欢 + 运动",
+        "kr": "喜欢 + N/V：喜欢 + 运动",
+        "en": "喜欢 + N/V: 喜欢 + 运动",
+        "jp": "喜欢 + N/V：喜欢 + 运动"
+      },
+      "examples": [
+        {
+          "cn": "喜欢 + 运动",
+          "pinyin": "",
+          "translations": {
+            "kr": "喜欢 + 运动",
+            "en": "喜欢 + 运动",
+            "jp": "喜欢 + 运动"
+          }
+        }
+      ]
+    },
+    {
+      "name": "运动类动词",
+      "explanation": {
+        "cn": "打篮球、游泳、跑步",
+        "kr": "打篮球、游泳、跑步",
+        "en": "打篮球、游泳、跑步",
+        "jp": "打篮球、游泳、跑步"
+      },
+      "examples": [
+        {
+          "cn": "打篮球、游泳、跑步",
+          "pinyin": "",
+          "translations": {
+            "kr": "打篮球、游泳、跑步",
+            "en": "打篮球、游泳、跑步",
+            "jp": "打篮球、游泳、跑步"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「喜欢 + N/V」的句型是？",
+        "kr": "「喜欢 + N/V」의 문형은?",
+        "en": "What is the pattern for 喜欢 + N/V?",
+        "jp": "「喜欢 + N/V」の文型は？"
+      },
+      "options": [
+        "喜欢 + 运动",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "喜欢 + 运动",
+      "explanation": {
+        "kr": "喜欢 + 运动",
+        "en": "喜欢 + 运动",
+        "jp": "喜欢 + 运动"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「运动类动词」表示？",
+        "kr": "「运动类动词」는?",
+        "en": "What does 运动类动词 indicate?",
+        "jp": "「运动类动词」は？"
+      },
+      "options": [
+        "打篮球、游泳、跑步",
+        "其他",
+        "不确定",
+        "以上都对"
+      ],
+      "answer": "打篮球、游泳、跑步",
+      "explanation": {
+        "kr": "打篮球、游泳、跑步",
+        "en": "打篮球、游泳、跑步",
+        "jp": "打篮球、游泳、跑步"
+      }
+    }
+  ],
+  "aiPrompts": [
+    {
+      "type": "repeat",
+      "title": {
+        "cn": "跟读",
+        "kr": "따라 읽기",
+        "en": "Repeat",
+        "jp": "リピート"
+      },
+      "prompt": {
+        "cn": "跟读本课对话。",
+        "kr": "따라 읽으세요.",
+        "en": "Repeat the dialogue.",
+        "jp": "繰り返してください。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "substitute",
+      "title": {
+        "cn": "替换",
+        "kr": "대체",
+        "en": "Substitute",
+        "jp": "置き換え"
+      },
+      "prompt": {
+        "cn": "替换练习。",
+        "kr": "대체 연습.",
+        "en": "Substitution drill.",
+        "jp": "置き換え練習。"
+      },
+      "sampleAnswer": ""
+    },
+    {
+      "type": "free_talk",
+      "title": {
+        "cn": "自由对话",
+        "kr": "자유 대화",
+        "en": "Free talk",
+        "jp": "自由会話"
+      },
+      "prompt": {
+        "cn": "用本课内容自由对话。",
+        "kr": "자유 대화하세요.",
+        "en": "Free talk with lesson content.",
+        "jp": "本課の内容で自由会話。"
+      },
+      "sampleAnswer": ""
+    }
+  ],
+  "review": {
+    "lessonWords": [
+      "运动",
+      "游泳",
+      "打篮球",
+      "踢",
+      "身体",
+      "次",
+      "颜色",
+      "白"
+    ],
+    "relatedOldWords": [
+      "忙",
+      "累",
+      "吧",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "给",
+      "告诉",
+      "懂",
+      "一起"
+    ],
+    "grammarReview": [
+      {
+        "name": "喜欢 + N/V",
+        "summary": "喜欢 + 运动"
+      },
+      {
+        "name": "运动类动词",
+        "summary": "打篮球、游泳、跑步"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "cn": "运动",
+      "pinyin": "yùndòng",
+      "translations": {
+        "kr": "운동",
+        "en": "to move",
+        "jp": "運動"
+      },
+      "note": ""
+    },
+    {
+      "cn": "游泳",
+      "pinyin": "yóuyǒng",
+      "translations": {
+        "kr": "수영하다",
+        "en": "swimming",
+        "jp": "泳ぐ"
+      },
+      "note": ""
+    },
+    {
+      "cn": "打篮球",
+      "pinyin": "dǎlánqiú",
+      "translations": {
+        "kr": "농구하다",
+        "en": "to play basketball",
+        "jp": "バスケをする"
+      },
+      "note": ""
+    },
+    {
+      "cn": "踢",
+      "pinyin": "tī",
+      "translations": {
+        "kr": "차다",
+        "en": "to kick",
+        "jp": "蹴る"
+      },
+      "note": ""
+    }
+  ]
 }
