@@ -546,23 +546,23 @@
   "review": {},
   "ai": [
     {
-      "type": "explain",
+      "mode": "explain",
       "title": {
-        "cn": "解释句子",
+        "cn": "句子讲解",
         "kr": "문장 설명",
-        "en": "Explain the sentence",
+        "en": "Sentence Explanation",
         "jp": "文の説明"
       },
       "target": "我是中国人。",
       "hint": {
-        "cn": "解释这句话的意思和用法。",
+        "cn": "请解释这句话的意思和用法。",
         "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
         "en": "Explain the meaning and usage of this sentence.",
         "jp": "この文の意味と使い方を説明してください。"
       }
     },
     {
-      "type": "roleplay",
+      "mode": "roleplay",
       "title": {
         "cn": "情景对话",
         "kr": "상황 대화",
@@ -575,6 +575,35 @@
         "kr": "친구에게 인사하고 자기소개를 해 보세요.",
         "en": "Greet your classmate and introduce yourself.",
         "jp": "友だちにあいさつして自己紹介してみましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你好！",
+        "你叫什么名字？",
+        "我叫李明。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問したい内容を入力してください"
       }
     }
   ],

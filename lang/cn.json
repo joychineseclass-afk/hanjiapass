@@ -188,6 +188,17 @@
     }
   },
   "ai": {
+    "tutor_title": "AI 老师",
+    "placeholder_question": "请输入你想问的问题",
+    "no_tasks": "此模式暂无任务。",
+    "start_shadowing": "开始跟读",
+    "result": "结果",
+    "student_role": "学生",
+    "ai_role": "AI",
+    "mode_explain": "讲解",
+    "mode_roleplay": "情景对话",
+    "mode_shadowing": "跟读练习",
+    "mode_free_talk": "自由提问",
     "title": "AI 学习",
     "ask": "自由提问",
     "explain": "句子讲解",

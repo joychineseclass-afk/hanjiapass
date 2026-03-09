@@ -171,6 +171,118 @@
   border-color: #22c55e;
 }
 
+/* AI Tutor v1 - 模式切换面板 */
+.ai-tutor-page {
+  background: white;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ai-tutor-header {
+  margin-bottom: 16px;
+}
+
+.ai-tutor-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #334155;
+  margin: 0 0 4px 0;
+}
+
+.ai-tutor-lesson-info {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.ai-tutor-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ai-tutor-tab {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  border: 1px solid var(--line, #e2e8f0);
+  background: #fff;
+  cursor: pointer;
+  color: #475569;
+}
+
+.ai-tutor-tab:hover {
+  background: #f8fafc;
+}
+
+.ai-tutor-tab-active {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.55);
+  color: #15803d;
+}
+
+.ai-tutor-body {
+  min-height: 120px;
+}
+
+.ai-tutor-mode-content {
+  padding: 0;
+}
+
+.ai-tutor-target,
+.ai-tutor-scenario,
+.ai-tutor-lines {
+  margin-bottom: 12px;
+}
+
+.ai-tutor-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.ai-tutor-target-text {
+  font-size: 1rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.ai-tutor-lines-list {
+  font-size: 0.9375rem;
+  color: #475569;
+}
+
+.ai-tutor-line-item {
+  padding: 4px 0;
+}
+
+.ai-tutor-result-wrap {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid var(--line, #e2e8f0);
+}
+
+.ai-tutor-result {
+  font-size: 0.875rem;
+  color: #334155;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.ai-tutor-input {
+  width: 100%;
+  min-height: 72px;
+  padding: 10px 12px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  resize: vertical;
+}
+
 .ai-btn-active {
   background: rgba(34, 197, 94, 0.15);
   border-color: #22c55e;
