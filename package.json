@@ -11,6 +11,8 @@
     "sync:lesson-glossary": "node scripts/sync-lesson-glossary.mjs",
     "build:word-pool": "node scripts/build-lesson-word-pool.mjs",
     "check:word-pool": "node scripts/check-lesson-word-pool.mjs",
+    "check:dialogue-v2": "node scripts/generate-dialogue-v2.mjs --check",
+    "gen:dialogue-v2": "node scripts/generate-dialogue-v2.mjs",
     "gen:hsk2-blueprint": "node scripts/generate-hsk2-blueprint.mjs",
     "gen:hsk2-lessons": "node scripts/generate-hsk2-lessons-from-blueprint.mjs",
     "gen:hsk2-full": "node scripts/generate-hsk2-full-content.mjs"

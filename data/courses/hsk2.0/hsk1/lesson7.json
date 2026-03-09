@@ -144,33 +144,6 @@
       ]
     }
   ],
-        {
-          "speaker": "A",
-          "zh": "明天星期几？",
-          "pinyin": "Míngtiān xīngqī jǐ?",
-          "kr": "내일 무슨 요일이에요?",
-          "text": "明天星期几？",
-          "translation": {
-            "kr": "내일 무슨 요일이에요?",
-            "en": "What day is tomorrow?",
-            "jp": "明日は何曜日ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "明天星期二。",
-          "pinyin": "Míngtiān xīngqī èr.",
-          "kr": "내일 화요일이에요.",
-          "text": "明天星期二。",
-          "translation": {
-            "kr": "내일 화요일이에요.",
-            "en": "Tomorrow is Tuesday.",
-            "jp": "明日は火曜日です。"
-          }
-        }
-      ]
-    }
-  ],
   "grammar": [
     {
       "title": "年 + 月 + 日",
