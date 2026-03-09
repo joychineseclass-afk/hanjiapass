@@ -432,10 +432,20 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     return;
   }
 
+  const pickByLang = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    const keys = l === "kr" ? ["kr", "ko"] : l === "cn" ? ["zh", "cn"] : l === "jp" ? ["jp", "ja"] : ["en"];
+    for (const k of keys) {
+      const v = obj[k];
+      if (v && typeof v === "string" && v.trim()) return v.trim();
+    }
+    return "";
+  };
   const getExpl = (g) => {
     const ex = g?.explain ?? g?.explanation;
-    if (ex && typeof ex === "object") return (ex[l] ?? ex.kr ?? ex.ko ?? ex.en ?? ex.zh ?? "") || "";
-    return "";
+    if (ex && typeof ex === "object") return pickByLang(ex);
+    const flatByLang = { kr: g?.explanation_kr ?? g?.explanationKr, zh: g?.explanation_zh ?? g?.explanationZh, en: g?.explanation_en ?? g?.explanationEn, jp: g?.explanation_jp ?? g?.explanationJp };
+    return pickByLang(flatByLang);
   };
   const getExampleZh = (g) => {
     const ex = g?.example ?? g?.examples;
@@ -445,14 +455,14 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
   };
   const getExampleMeaning = (g) => {
     const em = g?.exampleMeaning;
-    if (em && typeof em === "object") return (em[l] ?? em.kr ?? em.ko ?? em.en ?? em.zh ?? "") || "";
+    if (em && typeof em === "object") return pickByLang(em);
     if (typeof em === "string") return em.trim() || "";
     const ex = g?.example ?? g?.examples;
     const first = Array.isArray(ex) ? ex[0] : ex;
     if (first && typeof first === "object") {
       const trans = first.translation;
-      if (trans && typeof trans === "object") return (trans[l] ?? trans.kr ?? trans.ko ?? trans.en ?? trans.zh ?? "") || "";
-      return (first[l] ?? first.kr ?? first.ko ?? first.en ?? first.zh ?? "") || "";
+      if (trans && typeof trans === "object") return pickByLang(trans);
+      return pickByLang(first);
     }
     return "";
   };
@@ -470,7 +480,11 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     const hanziPart = (patternParts[0] || pattern).trim();
     const meaningFromPattern = (patternParts[1] || "").trim();
     const keyForVocab = hanziPart.replace(/\s*[\+\-].*$/, "").trim() || hanziPart.slice(0, 1);
-    const meaning = meaningFromPattern || (g?.meaning && typeof g.meaning === "string" ? g.meaning : "") || getMeaningFromVocab(keyForVocab);
+    let meaning = "";
+    if (meaningFromPattern) meaning = meaningFromPattern;
+    else if (g?.meaning) meaning = typeof g.meaning === "object" ? pickByLang(g.meaning) : String(g.meaning).trim();
+    else if (g?.category) meaning = typeof g.category === "object" ? pickByLang(g.category) : String(g.category).trim();
+    else meaning = getMeaningFromVocab(keyForVocab);
 
     let pinyinToShow = "";
     const isStructurePattern = /\s+\+\s+/.test(pattern);
