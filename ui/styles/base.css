@@ -244,44 +244,11 @@ a, button { -webkit-tap-highlight-color: transparent; }
   transition: transform .25s ease, box-shadow .35s ease;
 }
 
-/* hover pastel layer */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-
-  opacity: 0;
-  transition: opacity .55s ease;
-
-  background: linear-gradient(
-    120deg,
-    #cfe9ff 0%,
-    #d9f8ea 45%,
-    #ffe7d1 100%
-  );
-}
-
-/* subtle glow orb (optional, safe) */
-.hero::after{
-  content:"";
-  position:absolute;
-  width:520px;
-  height:520px;
-  right:-180px;
-  top:-240px;
-  background: radial-gradient(circle, rgba(255,255,255,.45), transparent 65%);
-  filter: blur(90px);
-  pointer-events:none;
-  opacity:.55;
-}
+/* ✅ 已移除 hover 渐变遮字层（.hero::before / ::after），避免覆盖文字 */
 
 .hero:hover{
   transform: translateY(-2px);
   box-shadow: 0 30px 60px rgba(0,0,0,.08);
-}
-.hero:hover::before{
-  opacity: 1;
 }
 
 /* Hero cards: glass (only inside hero) */
@@ -450,29 +417,9 @@ button{
   transition: transform .25s ease, box-shadow .35s ease !important;
 }
 
-.lumina-home .hero::before{
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  pointer-events:none !important;
-
-  opacity: 0 !important;
-  transition: opacity .55s ease !important;
-
-  /* macaron pastel hover layer */
-  background: linear-gradient(
-    120deg,
-    #cfe9ff 0%,
-    #d9f8ea 45%,
-    #ffe7d1 100%
-  ) !important;
-}
+/* ✅ 已移除 lumina-home hero hover 渐变遮字层 */
 
 .lumina-home .hero:hover{
   transform: translateY(-2px) !important;
   box-shadow: 0 30px 60px rgba(0,0,0,.08) !important;
-}
-
-.lumina-home .hero:hover::before{
-  opacity: 1 !important;
 }

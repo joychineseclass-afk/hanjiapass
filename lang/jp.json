@@ -1,4 +1,13 @@
 {
+  "router": {
+    "loading_desc": "ページを読み込み中…",
+    "slow_hint": "ネットワーク/初回読み込みで時間がかかる場合があります…",
+    "error_title": "エラー",
+    "retry": "再試行",
+    "home": "ホームへ",
+    "not_found_title": "ページが見つかりません",
+    "not_found_desc": "登録されていないパスです。"
+  },
   "common": {
     "ok": "OK",
     "cancel": "キャンセル",
@@ -267,6 +276,9 @@
     "player_title": "筆順表示",
     "meaning_title": "単語の意味（HSK）",
     "meaning_hint": "HSK単語帳から意味、ピンイン、例文を表示します。",
+    "meaning_pinyin": "ピンイン",
+    "meaning_korean": "韓国語",
+    "meaning_example": "例文",
     "not_found": "情報が見つかりませんでした。",
     "loading": "読み込み中…",
     "modal_title": "筆順",
@@ -283,5 +295,13 @@
     "feedback_char": "文字追加リクエスト",
     "wrong_hint": "この画から書いてみましょう",
     "complete_toast": "よくできました！"
+  },
+  "hanja": {
+    "title": "漢字学習",
+    "section_vocab": "📖 よく使う漢字",
+    "section_compare": "🔄 中日漢字比較",
+    "coming_soon": "準備中です。漢字学習コンテンツを追加予定です。",
+    "coming_soon_detail": "漢字語彙学習コンテンツが近日追加予定です。",
+    "compare_placeholder": "簡体字・繁体字・韓国漢字の比較機能が追加予定です。"
   }
 }

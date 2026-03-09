@@ -1,4 +1,13 @@
 {
+  "router": {
+    "loading_desc": "페이지를 불러오는 중입니다.",
+    "slow_hint": "네트워크/첫 로딩이라 시간이 조금 걸릴 수 있어요…",
+    "error_title": "오류",
+    "retry": "다시 시도",
+    "home": "홈으로",
+    "not_found_title": "페이지가 없어요",
+    "not_found_desc": "등록되지 않은 경로입니다."
+  },
   "common": {
     "ok": "확인",
     "cancel": "취소",
@@ -247,6 +256,9 @@
     "player_title": "필순 보기",
     "meaning_title": "단어 뜻 (HSK)",
     "meaning_hint": "HSK 단어장에서 뜻, 병음, 예문을 보여줘요.",
+    "meaning_pinyin": "병음",
+    "meaning_korean": "한국어",
+    "meaning_example": "예문",
     "not_found": "정보를 찾지 못했어요.",
     "loading": "불러오는 중…",
     "modal_title": "한자 필순",
@@ -263,5 +275,13 @@
     "feedback_char": "글자 추가 요청",
     "wrong_hint": "이 획부터 써 보세요",
     "complete_toast": "잘했어요!"
+  },
+  "hanja": {
+    "title": "한자공부",
+    "section_vocab": "📖 자주 쓰는 한자",
+    "section_compare": "🔄 중한 한자 비교",
+    "coming_soon": "준비 중입니다. 한자 학습 콘텐츠를 추가할 예정입니다.",
+    "coming_soon_detail": "한자 어휘 학습 콘텐츠가 곧 추가될 예정입니다.",
+    "compare_placeholder": "간체자·번체자·한국 한자 비교 기능이 추가될 예정입니다."
   }
 }

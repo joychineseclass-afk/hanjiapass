@@ -1,4 +1,13 @@
 {
+  "router": {
+    "loading_desc": "Loading page...",
+    "slow_hint": "Network or first load may take a moment...",
+    "error_title": "Error",
+    "retry": "Retry",
+    "home": "Home",
+    "not_found_title": "Page not found",
+    "not_found_desc": "This route is not registered."
+  },
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
@@ -246,6 +255,9 @@
     "player_title": "Stroke demo",
     "meaning_title": "Vocabulary (HSK)",
     "meaning_hint": "Shows pinyin, meaning, and examples from HSK.",
+    "meaning_pinyin": "Pinyin",
+    "meaning_korean": "Korean",
+    "meaning_example": "Example",
     "not_found": "No information found.",
     "loading": "Loading…",
     "modal_title": "Stroke",
@@ -262,5 +274,13 @@
     "feedback_char": "Request character",
     "wrong_hint": "Start from this stroke",
     "complete_toast": "Great!"
+  },
+  "hanja": {
+    "title": "Hanzi Study",
+    "section_vocab": "📖 Common Hanzi",
+    "section_compare": "🔄 Chinese-Korean Hanzi Compare",
+    "coming_soon": "Coming soon. Hanzi learning content will be added.",
+    "coming_soon_detail": "Hanzi vocabulary content coming soon.",
+    "compare_placeholder": "Simplified, Traditional, and Korean Hanzi comparison coming soon."
   }
 }

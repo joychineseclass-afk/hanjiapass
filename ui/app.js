@@ -47,6 +47,7 @@ i18n.init({
   observe: true
 });
 i18n.apply(document);
+window.i18n = i18n;
 
 /* ---------- Mount once (bridge / step runner) ---------- */
 try {

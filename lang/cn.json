@@ -1,4 +1,13 @@
 {
+  "router": {
+    "loading_desc": "正在加载页面…",
+    "slow_hint": "网络或首次加载可能需要一点时间…",
+    "error_title": "错误",
+    "retry": "重试",
+    "home": "返回首页",
+    "not_found_title": "页面不存在",
+    "not_found_desc": "未注册的路径。"
+  },
   "common": {
     "ok": "确定",
     "cancel": "取消",
@@ -247,6 +256,9 @@
     "player_title": "笔顺演示",
     "meaning_title": "词汇释义（HSK）",
     "meaning_hint": "从HSK词库中显示拼音、韩语、例句等信息。",
+    "meaning_pinyin": "拼音",
+    "meaning_korean": "韩语",
+    "meaning_example": "例句",
     "not_found": "未找到相关信息。",
     "loading": "加载中…",
     "modal_title": "笔画",
@@ -263,5 +275,13 @@
     "feedback_char": "反馈缺字",
     "wrong_hint": "请从这一笔开始",
     "complete_toast": "太棒了！"
+  },
+  "hanja": {
+    "title": "汉字功夫",
+    "section_vocab": "📖 常用汉字",
+    "section_compare": "🔄 中韩汉字对比",
+    "coming_soon": "正在建设中，汉字学习内容即将上线。",
+    "coming_soon_detail": "汉字词汇学习内容即将上线。",
+    "compare_placeholder": "未来将加入简体、繁体与韩字对照功能。"
   }
 }

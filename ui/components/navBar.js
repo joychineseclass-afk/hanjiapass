@@ -8,20 +8,19 @@
 
 import { i18n } from "../i18n.js";
 
-// ✅ 多页面导航：每个都是独立页面
-// ⚠️ teacher 改名为 학부모/선생님
+// ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",      key: "nav.home",        label: "홈",            color: "#3b82f6" },
-  { href: "/pages/hsk.html",       key: "nav.hsk",         label: "HSK 학습",      color: "#22c55e" },
-  { href: "/pages/stroke.html",    key: "nav.stroke",      label: "한자 필순",     color: "#f97316" },
-  { href: "/pages/hanja.html",     key: "nav.hanjagongfu", label: "한자공부",      color: "#a855f7" },
-  { href: "/pages/speaking.html",  key: "nav.speaking",    label: "회화",          color: "#ef4444" },
-  { href: "/pages/travel.html",    key: "nav.travel",      label: "여행중국어",     color: "#06b6d4" },
-  { href: "/pages/culture.html",   key: "nav.culture",     label: "문화",          color: "#eab308" },
-  { href: "/pages/review.html",    key: "nav.review",      label: "복습",          color: "#8b5cf6" },
-  { href: "/pages/resources.html", key: "nav.resources",   label: "자료",          color: "#10b981" },
-  { href: "/pages/teacher.html",   key: "nav.teacher",     label: "학부모/선생님",  color: "#f43f5e" },
-  { href: "/pages/my.html",        key: "nav.my",          label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#home",   key: "nav.home",        label: "홈",            color: "#3b82f6" },
+  { href: "/index.html#hsk",    key: "nav.hsk",         label: "HSK 학습",      color: "#22c55e" },
+  { href: "/index.html#stroke", key: "nav.stroke",      label: "한자 필순",     color: "#f97316" },
+  { href: "/index.html#hanja",  key: "nav.hanjagongfu", label: "한자공부",      color: "#a855f7" },
+  { href: "/index.html#speaking",  key: "nav.speaking",  label: "회화",          color: "#ef4444" },
+  { href: "/index.html#travel",   key: "nav.travel",    label: "여행중국어",     color: "#06b6d4" },
+  { href: "/index.html#culture",  key: "nav.culture",   label: "문화",          color: "#eab308" },
+  { href: "/index.html#review",   key: "nav.review",    label: "복습",          color: "#8b5cf6" },
+  { href: "/index.html#resources", key: "nav.resources", label: "자료",        color: "#10b981" },
+  { href: "/index.html#teacher",   key: "nav.teacher",   label: "학부모/선생님",  color: "#f43f5e" },
+  { href: "/index.html#my",       key: "nav.my",        label: "내 학습",       color: "#64748b" },
 ];
 
 // ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
@@ -186,7 +185,7 @@ export function mountNavBar(rootEl) {
     <div class="topbar">
       <div class="brand">
         <a href="/index.html#home" data-i18n="brand.name">Lumina Chinese Learning Center</a>
-        <small data-i18n="brand.subtitle">AI 한자 · 중국어 학습 플랫폼</small>
+        <small data-i18n="brand.subtitle">AI-Powered Global Mandarin Education Platform</small>
       </div>
 
       <div class="right">
@@ -216,14 +215,17 @@ export function mountNavBar(rootEl) {
     a.style.setProperty("--navc", it.color);
     a.textContent = t(it.key, it.label);
 
-    // ✅ Home special:
-    // - On index: preventDefault + force rerender
-    // - On other pages: allow normal navigation to /index.html#home
-    if (String(it.href || "").startsWith("/index.html#home")) {
+    // ✅ SPA 路由：在 index 页时，所有 hash 链接用 router 导航，避免整页刷新
+    if (String(it.href || "").includes("/index.html#")) {
       a.addEventListener("click", (e) => {
-        if (!isIndexPage()) return; // ✅ allow normal navigation
+        if (!isIndexPage()) return;
+        const hash = (it.href || "").split("#")[1];
+        if (!hash) return;
         e.preventDefault();
-        forceHomeOnIndex(rootEl);
+        import("/ui/router.js").then((r) => {
+          r.navigateTo("#" + hash, { force: hash === "home" });
+        }).catch(() => { location.href = it.href; });
+        setActive(rootEl);
       });
     }
 

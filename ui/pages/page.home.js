@@ -17,6 +17,8 @@ function getLang() {
       localStorage.getItem("site_lang") ||
       "kr").toLowerCase();
   if (v.startsWith("zh") || v === "cn") return "cn";
+  if (v.startsWith("en")) return "en";
+  if (v.startsWith("ja") || v === "jp") return "jp";
   return "kr";
 }
 
@@ -113,48 +115,96 @@ const FB = {
     terms: "使用条款",
     copy: "© 2026 Lumina Chinese Learning Center",
   },
+  en: {
+    brand: "Lumina Chinese Learning Center",
+    subtitle: "AI-Powered Global Mandarin Education Platform",
+    brand_line: "Where Language Meets Light.",
+    slogan: "Light the Language. Shape the Future.",
+    subline: "Structured HSK courses, interactive character writing, real-world speaking — next-gen Chinese learning for learners worldwide.",
+    cta1: "Start learning",
+    cta2: "View curriculum",
+    tags: ["HSK 2.0/3.0", "Speaking", "Trace", "AI Speaking"],
+    today_badge: "Today's learning",
+    today_title: "Just 3 minutes now",
+    today_desc: "Continue from where you left off!",
+    today_meta: "3/7 done this week",
+    upd_badge: "Updates",
+    upd_title: "Recent updates",
+    more: "More",
+    upd1: "New: HSK1 Lesson 1 「Greetings」",
+    upd2: "Improved: Directory language sync",
+    upd3: "Coming: Trace feedback effects",
+    planning: "Coming soon",
+    footerLine: "Chinese learning platform for kids and educators",
+    contact: "Contact",
+    email: "Email",
+    privacy: "Privacy",
+    terms: "Terms",
+    copy: "© 2026 Lumina Chinese Learning Center",
+  },
+  jp: {
+    brand: "Lumina Chinese Learning Center",
+    subtitle: "AI漢字・中国語学習プラットフォーム",
+    brand_line: "Where Language Meets Light.",
+    slogan: "Light the Language. Shape the Future.",
+    subline: "構造化HSKコース、インタラクティブ漢字書き、実践スピーキングまで — 世界中の学習者のための次世代中国語学習体験。",
+    cta1: "学習開始",
+    cta2: "カリキュラムを見る",
+    tags: ["HSK 2.0/3.0", "会話", "なぞり書き", "AIスピーキング"],
+    today_badge: "今日の学習",
+    today_title: "今すぐ3分だけ",
+    today_desc: "前回のレッスンを続けて、短時間でも継続！",
+    today_meta: "今週 3/7 完了",
+    upd_badge: "お知らせ/更新",
+    upd_title: "最近の更新",
+    more: "もっと見る",
+    upd1: "新規：HSK1 第1課「挨拶」",
+    upd2: "改善：目次言語同期",
+    upd3: "予告：なぞり書きフィードバック",
+    planning: "準備中",
+    footerLine: "子どもも楽しく、保護者・先生も見つけやすい中国語学習プラットフォーム",
+    contact: "お問い合わせ",
+    email: "メール",
+    privacy: "プライバシー",
+    terms: "利用規約",
+    copy: "© 2026 Lumina Chinese Learning Center",
+  },
 };
 
 function copy() {
   const lang = getLang();
-  const F = FB[lang];
-
+  const F = FB[lang] || FB.kr;
   return {
-    brand: t("brand", F.brand),
-    subtitle: t("subtitle", F.subtitle),
-
-    brand_line: t("home_brand_line", F.brand_line),
-    slogan: t("home_slogan", F.slogan),
-    subline: t("home_subline", F.subline),
-
-    cta1: t("home_cta1", F.cta1),
-    cta2: t("home_cta2", F.cta2),
+    brand: t("brand.name", F.brand),
+    subtitle: t("brand.subtitle", F.subtitle),
+    brand_line: t("home.brand_line", F.brand_line),
+    slogan: t("home.slogan", F.slogan),
+    subline: t("home.subline", F.subline),
+    cta1: t("home.cta1", F.cta1),
+    cta2: t("home.cta2", F.cta2),
     tags: [
-      t("home_tag1", F.tags[0]),
-      t("home_tag2", F.tags[1]), // ✅ 회화 / 会话
-      t("home_tag3", F.tags[2]),
-      t("home_tag4", F.tags[3]),
+      t("home.tag1", F.tags[0]),
+      t("home.tag2", F.tags[1]),
+      t("home.tag3", F.tags[2]),
+      t("home.tag4", F.tags[3]),
     ],
-
-    today_badge: t("home_today_badge", F.today_badge),
-    today_title: t("home_today_title", F.today_title),
-    today_desc: t("home_today_desc", F.today_desc),
-    today_meta: t("home_today_meta", F.today_meta),
-
-    upd_badge: t("home_upd_badge", F.upd_badge),
-    upd_title: t("home_upd_title", F.upd_title),
-    more: t("home_more", F.more),
-    upd1: t("home_upd1", F.upd1),
-    upd2: t("home_upd2", F.upd2),
-    upd3: t("home_upd3", F.upd3),
-    planning: t("home_planning", F.planning),
-
-    footerLine: t("home_footerLine", F.footerLine),
-    contact: t("home_contact", F.contact),
-    email: t("home_email", F.email),
-    privacy: t("home_privacy", F.privacy),
-    terms: t("home_terms", F.terms),
-    copy: t("home_copy", F.copy),
+    today_badge: t("home.today_badge", F.today_badge),
+    today_title: t("home.today_title", F.today_title),
+    today_desc: t("home.today_desc", F.today_desc),
+    today_meta: t("home.today_meta", F.today_meta),
+    upd_badge: t("home.upd_badge", F.upd_badge),
+    upd_title: t("home.upd_title", F.upd_title),
+    more: t("home.more", F.more),
+    upd1: t("home.upd1", F.upd1),
+    upd2: t("home.upd2", F.upd2),
+    upd3: t("home.upd3", F.upd3),
+    planning: t("home.planning", F.planning),
+    footerLine: t("home.footerLine", F.footerLine),
+    contact: t("home.contact", F.contact),
+    email: t("home.email", F.email),
+    privacy: t("home.privacy", F.privacy),
+    terms: t("home.terms", F.terms),
+    copy: t("home.copy", F.copy),
   };
 }
 

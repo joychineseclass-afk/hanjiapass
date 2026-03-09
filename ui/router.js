@@ -1,5 +1,6 @@
 // /ui/router.js
 // ✅ Production-grade hash router
+// ✅ Loading/error UI 使用 i18n（需在 app 中先 init i18n）
 // - registerRoute(hash, loader)
 // - startRouter({ defaultHash, appId, scrollTop })
 // - page module exports: mount/init/default/render (any one)
@@ -64,15 +65,18 @@ function scrollToTopSafe() {
   }
 }
 
-function setLoadingUI(appEl, text = "불러오는 중...") {
+function setLoadingUI(appEl, text) {
   if (!appEl) return;
+  const loadingText = text || (typeof window?.i18n?.t === "function" ? window.i18n.t("common.loading") : null) || "Loading...";
+  const descText = (typeof window?.i18n?.t === "function" ? window.i18n.t("router.loading_desc") : null) || "Loading page...";
+  const slowHint = (typeof window?.i18n?.t === "function" ? window.i18n.t("router.slow_hint") : null) || "Network or first load may take a moment...";
   appEl.innerHTML = `
     <div class="card">
       <div class="hero">
-        <div class="title">⏳ ${escapeHtml(text)}</div>
-        <p class="desc">페이지를 불러오는 중입니다.</p>
+        <div class="title">⏳ ${escapeHtml(loadingText)}</div>
+        <p class="desc">${escapeHtml(descText)}</p>
         <p id="rtSlowHint" class="desc" style="display:none; margin-top:8px;">
-          네트워크/첫 로딩이라 시간이 조금 걸릴 수 있어요…
+          ${escapeHtml(slowHint)}
         </p>
       </div>
     </div>
@@ -88,15 +92,20 @@ function showSlowHint(appEl) {
 function setErrorUI(appEl, title, detail) {
   if (!appEl) return;
 
+  const i18n = window.i18n;
+  const titleText = title || (i18n?.t?.("router.error_title")) || "Error";
+  const retryText = (i18n?.t?.("router.retry")) || "Retry";
+  const homeText = (i18n?.t?.("router.home")) || "Home";
+
   const detailText = detail ? String(detail) : "";
   appEl.innerHTML = `
     <div class="card">
       <div class="hero">
-        <div class="title">⚠️ ${escapeHtml(title || "오류")}</div>
+        <div class="title">⚠️ ${escapeHtml(titleText)}</div>
         <p class="desc" style="white-space:pre-wrap">${escapeHtml(detailText)}</p>
         <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-          <button id="rtRetry" type="button" class="badge">다시 시도</button>
-          <button id="rtHome" type="button" class="badge">홈으로</button>
+          <button id="rtRetry" type="button" class="badge">${escapeHtml(retryText)}</button>
+          <button id="rtHome" type="button" class="badge">${escapeHtml(homeText)}</button>
         </div>
       </div>
     </div>
@@ -111,11 +120,10 @@ function setErrorUI(appEl, title, detail) {
 }
 
 function setNotFoundUI(appEl, hash) {
-  setErrorUI(
-    appEl,
-    "페이지가 없어요",
-    `등록되지 않은 경로입니다: ${hash}\n(메뉴에서 다시 선택해 주세요.)`
-  );
+  const i18n = window.i18n;
+  const titleText = (i18n?.t?.("router.not_found_title")) || "Page not found";
+  const descText = (i18n?.t?.("router.not_found_desc")) || "This route is not registered.";
+  setErrorUI(appEl, titleText, `${descText}: ${hash}`);
 }
 
 async function safeUnmountCurrent() {
