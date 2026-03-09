@@ -261,44 +261,54 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "周末你做什么？",
-      "pinyin": "Zhōumò nǐ zuò shénme?",
-      "translations": {
-        "kr": "주말에 뭐 해요?",
-        "en": "What do you do on weekends?",
-        "jp": "週末は何をしますか？"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "我在家休息，晚上去跑步。",
-      "pinyin": "Wǒ zài jiā xiūxi, wǎnshang qù pǎobù.",
-      "translations": {
-        "kr": "집에서 쉬고, 저녁에 달려요.",
-        "en": "I rest at home, run in the evening.",
-        "jp": "家で休んで、夜走ります。"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "你正在唱歌吗？",
-      "pinyin": "Nǐ zhèngzài chànggē ma?",
-      "translations": {
-        "kr": "지금 노래하고 있어요?",
-        "en": "Are you singing now?",
-        "jp": "今歌っていますか？"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "不，我在跳舞，很快乐！",
-      "pinyin": "Bù, wǒ zài tiàowǔ, hěn kuàilè!",
-      "translations": {
-        "kr": "아니요, 춤추고 있어요. 아주 즐거워요!",
-        "en": "No, I'm dancing, very happy!",
-        "jp": "いいえ、踊っています。とても楽しいです！"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "周末你做什么？",
+          "pinyin": "Zhōumò nǐ zuò shénme?",
+          "translations": {
+            "kr": "주말에 뭐 해요?",
+            "en": "What do you do on weekends?",
+            "jp": "週末は何をしますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "我在家休息，晚上去跑步。",
+          "pinyin": "Wǒ zài jiā xiūxi, wǎnshang qù pǎobù.",
+          "translations": {
+            "kr": "집에서 쉬고, 저녁에 달려요.",
+            "en": "I rest at home, run in the evening.",
+            "jp": "家で休んで、夜走ります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "你正在唱歌吗？",
+          "pinyin": "Nǐ zhèngzài chànggē ma?",
+          "translations": {
+            "kr": "지금 노래하고 있어요?",
+            "en": "Are you singing now?",
+            "jp": "今歌っていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "不，我在跳舞，很快乐！",
+          "pinyin": "Bù, wǒ zài tiàowǔ, hěn kuàilè!",
+          "translations": {
+            "kr": "아니요, 춤추고 있어요. 아주 즐거워요!",
+            "en": "No, I'm dancing, very happy!",
+            "jp": "いいえ、踊っています。とても楽しいです！"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -427,6 +437,27 @@
         "en": "跑步 = running.",
         "jp": "跑步=走ること。"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「唱歌」「跳舞」是？",
+        "kr": "「唱歌」「跳舞」는?",
+        "en": "What are 唱歌 and 跳舞?",
+        "jp": "「唱歌」「跳舞」は？"
+      },
+      "options": [
+        "运动",
+        "活动/爱好",
+        "工作",
+        "学习"
+      ],
+      "answer": "活动/爱好",
+      "explanation": {
+        "kr": "唱歌、跳舞是休闲活动。",
+        "en": "唱歌 and 跳舞 are leisure activities.",
+        "jp": "歌う、踊るはレジャー活動。"
+      }
     }
   ],
   "aiPrompts": [
@@ -513,34 +544,83 @@
   },
   "extension": [
     {
-      "cn": "休息",
-      "pinyin": "xiūxi",
-      "translations": {
-        "kr": "쉬다",
-        "en": "rest",
-        "jp": "休む"
+      "groupTitle": {
+        "cn": "时间词 + 做什么",
+        "kr": "시간어 + 做什么",
+        "en": "Time + 做什么",
+        "jp": "時間語 + 做什么"
       },
-      "note": "休息+一下"
+      "focusGrammar": "时间词 + 做什么",
+      "sentences": [
+        {
+          "cn": "周末你做什么？",
+          "pinyin": "Zhōumò nǐ zuò shénme?",
+          "translations": {
+            "kr": "주말에 뭐 해요?",
+            "en": "What do you do on weekends?",
+            "jp": "週末は何をしますか？"
+          }
+        },
+        {
+          "cn": "我在家休息。",
+          "pinyin": "Wǒ zài jiā xiūxi.",
+          "translations": {
+            "kr": "집에서 쉬어요.",
+            "en": "I rest at home.",
+            "jp": "家で休みます。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "周末 + 你 + 做什么？询问某时做什么。",
+        "kr": "특정 시간에 뭘 하는지 묻습니다.",
+        "en": "Time + 你 + 做什么？ asks activities.",
+        "jp": "ある時に何をするか尋ねる。"
+      }
     },
     {
-      "cn": "玩",
-      "pinyin": "wán",
-      "translations": {
-        "kr": "놀다",
-        "en": "play",
-        "jp": "遊ぶ"
+      "groupTitle": {
+        "cn": "在/正在",
+        "kr": "在/正在",
+        "en": "在/正在",
+        "jp": "在/正在"
       },
-      "note": "玩+游戏"
-    },
-    {
-      "cn": "晚上",
-      "pinyin": "wǎnshang",
-      "translations": {
-        "kr": "저녁",
-        "en": "evening",
-        "jp": "夜"
-      },
-      "note": "时间词"
+      "focusGrammar": "在/正在",
+      "sentences": [
+        {
+          "cn": "我在学习。",
+          "pinyin": "Wǒ zài xuéxí.",
+          "translations": {
+            "kr": "저는 공부하고 있어요.",
+            "en": "I'm studying.",
+            "jp": "勉強しています。"
+          }
+        },
+        {
+          "cn": "你正在唱歌吗？",
+          "pinyin": "Nǐ zhèngzài chànggē ma?",
+          "translations": {
+            "kr": "지금 노래하고 있어요?",
+            "en": "Are you singing now?",
+            "jp": "今歌っていますか？"
+          }
+        },
+        {
+          "cn": "休息",
+          "pinyin": "xiūxi",
+          "translations": {
+            "kr": "쉬다",
+            "en": "rest",
+            "jp": "休む"
+          }
+        }
+      ],
+      "note": {
+        "cn": "在 + V，表示动作正在进行。",
+        "kr": "동작이 진행 중임을 나타냅니다.",
+        "en": "在 + V: action in progress.",
+        "jp": "動作が進行中である。"
+      }
     }
   ]
 }

@@ -265,44 +265,54 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "你想喝什么？",
-      "pinyin": "Nǐ xiǎng hē shénme?",
-      "translations": {
-        "kr": "뭐 마시고 싶어요?",
-        "en": "What do you want to drink?",
-        "jp": "何を飲みたいですか？"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "我想喝咖啡。你可以给我一杯吗？",
-      "pinyin": "Wǒ xiǎng hē kāfēi. Nǐ kěyǐ gěi wǒ yī bēi ma?",
-      "translations": {
-        "kr": "커피 마시고 싶어요. 한 잔 줄 수 있어요?",
-        "en": "I want coffee. Can you give me a cup?",
-        "jp": "コーヒーが飲みたいです。一杯くれますか？"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "可以。要牛奶吗？",
-      "pinyin": "Kěyǐ. Yào niúnǎi ma?",
-      "translations": {
-        "kr": "네. 우유 필요해요?",
-        "en": "Sure. Do you want milk?",
-        "jp": "はい。牛乳はいりますか？"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "要，谢谢！",
-      "pinyin": "Yào, xièxie!",
-      "translations": {
-        "kr": "네, 감사해요!",
-        "en": "Yes, thanks!",
-        "jp": "はい、ありがとう！"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "你想喝什么？",
+          "pinyin": "Nǐ xiǎng hē shénme?",
+          "translations": {
+            "kr": "뭐 마시고 싶어요?",
+            "en": "What do you want to drink?",
+            "jp": "何を飲みたいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "我想喝咖啡。你可以给我一杯吗？",
+          "pinyin": "Wǒ xiǎng hē kāfēi. Nǐ kěyǐ gěi wǒ yī bēi ma?",
+          "translations": {
+            "kr": "커피 마시고 싶어요. 한 잔 줄 수 있어요?",
+            "en": "I want coffee. Can you give me a cup?",
+            "jp": "コーヒーが飲みたいです。一杯くれますか？"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "可以。要牛奶吗？",
+          "pinyin": "Kěyǐ. Yào niúnǎi ma?",
+          "translations": {
+            "kr": "네. 우유 필요해요?",
+            "en": "Sure. Do you want milk?",
+            "jp": "はい。牛乳はいりますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "要，谢谢！",
+          "pinyin": "Yào, xièxie!",
+          "translations": {
+            "kr": "네, 감사해요!",
+            "en": "Yes, thanks!",
+            "jp": "はい、ありがとう！"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -450,6 +460,27 @@
         "kr": "要=想要、点。",
         "en": "要 = want, order.",
         "jp": "要=欲しい、注文する。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「鸡蛋」的量词常用？",
+        "kr": "「鸡蛋」의 양사는?",
+        "en": "Measure word for 鸡蛋?",
+        "jp": "「鸡蛋」の量詞は？"
+      },
+      "options": [
+        "杯",
+        "个",
+        "件",
+        "张"
+      ],
+      "answer": "个",
+      "explanation": {
+        "kr": "一个鸡蛋。",
+        "en": "一个 egg.",
+        "jp": "一个鸡蛋。"
       }
     }
   ],

@@ -261,34 +261,44 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "现在几点了？",
-      "pinyin": "Xiànzài jǐ diǎn le?",
-      "translations": {
-        "kr": "지금 몇 시예요?",
-        "en": "What time is it now?",
-        "jp": "今何時ですか？"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "我的手表快，手机显示九点十分。",
-      "pinyin": "Wǒ de shǒubiǎo kuài, shǒujī xiǎnshì jiǔ diǎn shí fēn.",
-      "translations": {
-        "kr": "제 시계가 빨라요. 휴대폰은 9시 10분이에요.",
-        "en": "My watch is fast; my phone shows 9:10.",
-        "jp": "私の時計は進んでいます。携帯は9時10分です。"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "还有一个小时就上课了。",
-      "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
-      "translations": {
-        "kr": "한 시간 후면 수업이에요.",
-        "en": "Class starts in one hour.",
-        "jp": "あと1時間で授業です。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "现在几点了？",
+          "pinyin": "Xiànzài jǐ diǎn le?",
+          "translations": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "我的手表快，手机显示九点十分。",
+          "pinyin": "Wǒ de shǒubiǎo kuài, shǒujī xiǎnshì jiǔ diǎn shí fēn.",
+          "translations": {
+            "kr": "제 시계가 빨라요. 휴대폰은 9시 10분이에요.",
+            "en": "My watch is fast; my phone shows 9:10.",
+            "jp": "私の時計は進んでいます。携帯は9時10分です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "还有一个小时就上课了。",
+          "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
+          "translations": {
+            "kr": "한 시간 후면 수업이에요.",
+            "en": "Class starts in one hour.",
+            "jp": "あと1時間で授業です。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -417,6 +427,27 @@
         "en": "就 indicates imminent action.",
         "jp": "就はまもなくを表す。"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「时间」的意思是？",
+        "kr": "「时间」의 뜻은?",
+        "en": "What does 时间 mean?",
+        "jp": "「时间」の意味は？"
+      },
+      "options": [
+        "时刻",
+        "时间",
+        "小时",
+        "分钟"
+      ],
+      "answer": "时间",
+      "explanation": {
+        "kr": "时间表示时间、时刻。",
+        "en": "时间 means time.",
+        "jp": "时间は時間を表す。"
+      }
     }
   ],
   "aiPrompts": [
@@ -503,34 +534,92 @@
   },
   "extension": [
     {
-      "cn": "手表",
-      "pinyin": "shǒubiǎo",
-      "translations": {
-        "kr": "손목시계",
-        "en": "wristwatch",
-        "jp": "腕時計"
+      "groupTitle": {
+        "cn": "时间表达",
+        "kr": "시간 표현",
+        "en": "Time expression",
+        "jp": "時間表現"
       },
-      "note": "手+表"
+      "focusGrammar": "时间表达",
+      "sentences": [
+        {
+          "cn": "现在几点了？",
+          "pinyin": "Xiànzài jǐ diǎn le?",
+          "translations": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        },
+        {
+          "cn": "九点十分",
+          "pinyin": "jiǔ diǎn shí fēn",
+          "translations": {
+            "kr": "9시 10분",
+            "en": "9:10",
+            "jp": "9時10分"
+          }
+        },
+        {
+          "cn": "还有一个小时就上课了。",
+          "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
+          "translations": {
+            "kr": "한 시간 후면 수업이에요.",
+            "en": "Class starts in one hour.",
+            "jp": "あと1時間で授業です。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "现在 + 几 + 点 + 了？询问当前时间。数字 + 点 + 数字 + 分。",
+        "kr": "현재 시간을 묻습니다.",
+        "en": "Ask current time: 现在 + 几 + 点 + 了？",
+        "jp": "現在の時刻を尋ねる。"
+      }
     },
     {
-      "cn": "快/慢",
-      "pinyin": "kuài/màn",
-      "translations": {
-        "kr": "빠르다/느리다",
-        "en": "fast/slow",
-        "jp": "速い/遅い"
+      "groupTitle": {
+        "cn": "手表与时间词",
+        "kr": "시계와 시간 어휘",
+        "en": "Watch and time vocab",
+        "jp": "時計と時間語彙"
       },
-      "note": "形容钟表"
-    },
-    {
-      "cn": "一小时",
-      "pinyin": "yī xiǎoshí",
-      "translations": {
-        "kr": "한 시간",
-        "en": "one hour",
-        "jp": "1時間"
-      },
-      "note": "时间量词"
+      "focusGrammar": "点 / 分",
+      "sentences": [
+        {
+          "cn": "手表",
+          "pinyin": "shǒubiǎo",
+          "translations": {
+            "kr": "손목시계",
+            "en": "wristwatch",
+            "jp": "腕時計"
+          }
+        },
+        {
+          "cn": "快/慢",
+          "pinyin": "kuài/màn",
+          "translations": {
+            "kr": "빠르다/느리다",
+            "en": "fast/slow",
+            "jp": "速い/遅い"
+          }
+        },
+        {
+          "cn": "一小时",
+          "pinyin": "yī xiǎoshí",
+          "translations": {
+            "kr": "한 시간",
+            "en": "one hour",
+            "jp": "1時間"
+          }
+        }
+      ],
+      "note": {
+        "cn": "快/慢形容钟表。时间量词：小时。",
+        "kr": "快/慢은 시계를 묘사합니다.",
+        "en": "快/慢 describe watches. 小时 = hour.",
+        "jp": "快/慢は時計を形容。"
+      }
     }
   ]
 }

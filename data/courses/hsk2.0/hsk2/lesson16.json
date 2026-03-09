@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我喜欢运动。",
-      "pinyin": "Wǒ xǐhuan yùndòng.",
-      "translations": {
-        "kr": "저는 운동을 좋아해요.",
-        "en": "I like sports.",
-        "jp": "私は運動が好きです。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "你游泳还是打篮球？",
-      "pinyin": "Nǐ yóuyǒng háishì dǎ lánqiú?",
-      "translations": {
-        "kr": "수영해요? 농구해요?",
-        "en": "Do you swim or play basketball?",
-        "jp": "泳ぎますか？バスケをしますか？"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我喜欢运动。",
+          "pinyin": "Wǒ xǐhuan yùndòng.",
+          "translations": {
+            "kr": "저는 운동을 좋아해요.",
+            "en": "I like sports.",
+            "jp": "私は運動が好きです。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "你游泳还是打篮球？",
+          "pinyin": "Nǐ yóuyǒng háishì dǎ lánqiú?",
+          "translations": {
+            "kr": "수영해요? 농구해요?",
+            "en": "Do you swim or play basketball?",
+            "jp": "泳ぎますか？バスケをしますか？"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "打篮球、游泳、跑步",
         "en": "打篮球、游泳、跑步",
         "jp": "打篮球、游泳、跑步"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「身体」的意思是？",
+        "kr": "「身体」의 뜻은?",
+        "en": "What does 身体 mean?",
+        "jp": "「身体」の意味は？"
+      },
+      "options": [
+        "心",
+        "body",
+        "头",
+        "手"
+      ],
+      "answer": "body",
+      "explanation": {
+        "kr": "身体=몸。",
+        "en": "身体 = body.",
+        "jp": "身体=体。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「次」的量词用法？",
+        "kr": "「次」의 양사 용법?",
+        "en": "Measure word 次?",
+        "jp": "「次」の量詞用法は？"
+      },
+      "options": [
+        "一次",
+        "次数",
+        "A和B",
+        "其他"
+      ],
+      "answer": "A和B",
+      "explanation": {
+        "kr": "一次、两次表示次数。",
+        "en": "一次, 两次 = times.",
+        "jp": "一次、两次で回数を表す。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「颜色」的意思是？",
+        "kr": "「颜色」의 뜻은?",
+        "en": "What does 颜色 mean?",
+        "jp": "「颜色」の意味は？"
+      },
+      "options": [
+        "形状",
+        "color",
+        "大小",
+        "数量"
+      ],
+      "answer": "color",
+      "explanation": {
+        "kr": "颜色=색。",
+        "en": "颜色 = color.",
+        "jp": "颜色=色。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "运动",
-      "pinyin": "yùndòng",
-      "translations": {
-        "kr": "운동",
-        "en": "to move",
-        "jp": "運動"
+      "groupTitle": {
+        "cn": "喜欢 + N/V",
+        "kr": "喜欢 + N/V",
+        "en": "喜欢 + N/V",
+        "jp": "喜欢 + N/V"
       },
-      "note": ""
+      "focusGrammar": "喜欢 + N/V",
+      "sentences": [
+        {
+          "cn": "我喜欢运动。",
+          "pinyin": "Wǒ xǐhuan yùndòng.",
+          "translations": {
+            "kr": "저는 운동을 좋아해요.",
+            "en": "I like sports.",
+            "jp": "私は運動が好きです。"
+          }
+        },
+        {
+          "cn": "喜欢 + 运动",
+          "pinyin": "xǐhuan yùndòng",
+          "translations": {
+            "kr": "운동을 좋아하다",
+            "en": "like sports",
+            "jp": "運動が好き"
+          }
+        }
+      ],
+      "note": {
+        "cn": "喜欢 + N/V：喜欢 + 运动。",
+        "kr": "喜欢 + N/V：喜欢 + 运动。",
+        "en": "喜欢 + N/V: like.",
+        "jp": "喜欢 + N/V：好き。"
+      }
     },
     {
-      "cn": "游泳",
-      "pinyin": "yóuyǒng",
-      "translations": {
-        "kr": "수영하다",
-        "en": "swimming",
-        "jp": "泳ぐ"
+      "groupTitle": {
+        "cn": "运动类动词",
+        "kr": "운동 동사",
+        "en": "Sports verbs",
+        "jp": "運動動詞"
       },
-      "note": ""
-    },
-    {
-      "cn": "打篮球",
-      "pinyin": "dǎlánqiú",
-      "translations": {
-        "kr": "농구하다",
-        "en": "to play basketball",
-        "jp": "バスケをする"
-      },
-      "note": ""
-    },
-    {
-      "cn": "踢",
-      "pinyin": "tī",
-      "translations": {
-        "kr": "차다",
-        "en": "to kick",
-        "jp": "蹴る"
-      },
-      "note": ""
+      "focusGrammar": "运动类动词",
+      "sentences": [
+        {
+          "cn": "打篮球、游泳、跑步",
+          "pinyin": "dǎ lánqiú, yóuyǒng, pǎobù",
+          "translations": {
+            "kr": "농구, 수영, 달리기",
+            "en": "basketball, swim, run",
+            "jp": "バスケ、泳ぐ、走る"
+          }
+        },
+        {
+          "cn": "游泳",
+          "pinyin": "yóuyǒng",
+          "translations": {
+            "kr": "수영하다",
+            "en": "swimming",
+            "jp": "泳ぐ"
+          }
+        },
+        {
+          "cn": "踢",
+          "pinyin": "tī",
+          "translations": {
+            "kr": "차다",
+            "en": "to kick",
+            "jp": "蹴る"
+          }
+        }
+      ],
+      "note": {
+        "cn": "打篮球、游泳、跑步等运动动词。",
+        "kr": "농구, 수영, 달리기 등 운동 동사.",
+        "en": "Sports verbs: 打篮球、游泳、跑步.",
+        "jp": "運動動詞：打篮球、游泳、跑步。"
+      }
     }
   ]
 }

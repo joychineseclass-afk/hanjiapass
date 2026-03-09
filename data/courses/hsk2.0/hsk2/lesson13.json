@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我坐地铁去公司。",
-      "pinyin": "Wǒ zuò dìtiě qù gōngsī.",
-      "translations": {
-        "kr": "저는 지하철 타고 회사에 가요.",
-        "en": "I take the subway to work.",
-        "jp": "私は地下鉄で会社に行きます。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "从家到公司要多久？",
-      "pinyin": "Cóng jiā dào gōngsī yào duōjiǔ?",
-      "translations": {
-        "kr": "집에서 회사까지 얼마나 걸려요?",
-        "en": "How long from home to company?",
-        "jp": "家から会社までどのくらいかかりますか？"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我坐地铁去公司。",
+          "pinyin": "Wǒ zuò dìtiě qù gōngsī.",
+          "translations": {
+            "kr": "저는 지하철 타고 회사에 가요.",
+            "en": "I take the subway to work.",
+            "jp": "私は地下鉄で会社に行きます。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "从家到公司要多久？",
+          "pinyin": "Cóng jiā dào gōngsī yào duōjiǔ?",
+          "translations": {
+            "kr": "집에서 회사까지 얼마나 걸려요?",
+            "en": "How long from home to company?",
+            "jp": "家から会社までどのくらいかかりますか？"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "从 A 到 B",
         "en": "从 A 到 B",
         "jp": "从 A 到 B"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「进」的意思是？",
+        "kr": "「进」의 뜻은?",
+        "en": "What does 进 mean?",
+        "jp": "「进」の意味は？"
+      },
+      "options": [
+        "出",
+        "to enter",
+        "来",
+        "去"
+      ],
+      "answer": "to enter",
+      "explanation": {
+        "kr": "进=들어가다。",
+        "en": "进 = to enter.",
+        "jp": "进=入る。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「出」的意思是？",
+        "kr": "「出」의 뜻은?",
+        "en": "What does 出 mean?",
+        "jp": "「出」の意味は？"
+      },
+      "options": [
+        "进",
+        "to go out",
+        "来",
+        "去"
+      ],
+      "answer": "to go out",
+      "explanation": {
+        "kr": "出=나가다。",
+        "en": "出 = to go out.",
+        "jp": "出=出る。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「走」的意思是？",
+        "kr": "「走」의 뜻은?",
+        "en": "What does 走 mean?",
+        "jp": "「走」の意味は？"
+      },
+      "options": [
+        "跑",
+        "to walk",
+        "坐",
+        "飞"
+      ],
+      "answer": "to walk",
+      "explanation": {
+        "kr": "走=걷다。",
+        "en": "走 = to walk.",
+        "jp": "走=歩く。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "公共汽车",
-      "pinyin": "gōnggòngqìchē",
-      "translations": {
-        "kr": "버스",
-        "en": "bus",
-        "jp": "バス"
+      "groupTitle": {
+        "cn": "V + 去 + 地点",
+        "kr": "V + 去 + 장소",
+        "en": "V + 去 + place",
+        "jp": "V + 去 + 場所"
       },
-      "note": ""
+      "focusGrammar": "V + 去 + 地点",
+      "sentences": [
+        {
+          "cn": "我坐地铁去公司。",
+          "pinyin": "Wǒ zuò dìtiě qù gōngsī.",
+          "translations": {
+            "kr": "저는 지하철 타고 회사에 가요.",
+            "en": "I take the subway to work.",
+            "jp": "私は地下鉄で会社に行きます。"
+          }
+        },
+        {
+          "cn": "坐 + 交通工具 + 去 + 地方",
+          "pinyin": "zuò jiāotōng gōngjù qù dìfāng",
+          "translations": {
+            "kr": "교통수단 타고 장소에 가다",
+            "en": "take transport to place",
+            "jp": "交通手段で場所に行く"
+          }
+        }
+      ],
+      "note": {
+        "cn": "坐 + 交通工具 + 去 + 地方，表示交通方式。",
+        "kr": "교통 수단을 나타냅니다.",
+        "en": "坐 + transport + 去 + place.",
+        "jp": "交通手段を表す。"
+      }
     },
     {
-      "cn": "自行车",
-      "pinyin": "zìxíngchē",
-      "translations": {
-        "kr": "자전거",
-        "en": "bicycle",
-        "jp": "自転車"
+      "groupTitle": {
+        "cn": "从...到...",
+        "kr": "从...到...",
+        "en": "从...到...",
+        "jp": "从...到..."
       },
-      "note": ""
-    },
-    {
-      "cn": "从",
-      "pinyin": "cóng",
-      "translations": {
-        "kr": "~에서",
-        "en": "variant of 从",
-        "jp": "〜から"
-      },
-      "note": ""
-    },
-    {
-      "cn": "到",
-      "pinyin": "dào",
-      "translations": {
-        "kr": "~까지",
-        "en": "to reach",
-        "jp": "〜まで"
-      },
-      "note": ""
+      "focusGrammar": "从...到...",
+      "sentences": [
+        {
+          "cn": "从家到公司要多久？",
+          "pinyin": "Cóng jiā dào gōngsī yào duōjiǔ?",
+          "translations": {
+            "kr": "집에서 회사까지 얼마나 걸려요?",
+            "en": "How long from home to company?",
+            "jp": "家から会社までどのくらいかかりますか？"
+          }
+        },
+        {
+          "cn": "公共汽车",
+          "pinyin": "gōnggòngqìchē",
+          "translations": {
+            "kr": "버스",
+            "en": "bus",
+            "jp": "バス"
+          }
+        },
+        {
+          "cn": "自行车",
+          "pinyin": "zìxíngchē",
+          "translations": {
+            "kr": "자전거",
+            "en": "bicycle",
+            "jp": "自転車"
+          }
+        }
+      ],
+      "note": {
+        "cn": "从 A 到 B，表示起点到终点。",
+        "kr": "A에서 B까지.",
+        "en": "从 A 到 B: from A to B.",
+        "jp": "AからBまで。"
+      }
     }
   ]
 }

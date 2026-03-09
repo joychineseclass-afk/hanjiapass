@@ -261,34 +261,44 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我每天学习汉语。",
-      "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
-      "translations": {
-        "kr": "저는 매일 중국어를 배워요.",
-        "en": "I study Chinese every day.",
-        "jp": "私は毎日中国語を勉強します。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "你每节课都来吗？",
-      "pinyin": "Nǐ měi jié kè dōu lái ma?",
-      "translations": {
-        "kr": "매 수업마다 오세요?",
-        "en": "Do you come to every class?",
-        "jp": "毎授業来ますか？"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "是的，我可以开始考试了。",
-      "pinyin": "Shì de, wǒ kěyǐ kāishǐ kǎoshì le.",
-      "translations": {
-        "kr": "네. 이제 시험 볼 수 있어요.",
-        "en": "Yes, I can start the exam now.",
-        "jp": "はい、もう試験を受けられます。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我每天学习汉语。",
+          "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
+          "translations": {
+            "kr": "저는 매일 중국어를 배워요.",
+            "en": "I study Chinese every day.",
+            "jp": "私は毎日中国語を勉強します。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "你每节课都来吗？",
+          "pinyin": "Nǐ měi jié kè dōu lái ma?",
+          "translations": {
+            "kr": "매 수업마다 오세요?",
+            "en": "Do you come to every class?",
+            "jp": "毎授業来ますか？"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "是的，我可以开始考试了。",
+          "pinyin": "Shì de, wǒ kěyǐ kāishǐ kǎoshì le.",
+          "translations": {
+            "kr": "네. 이제 시험 볼 수 있어요.",
+            "en": "Yes, I can start the exam now.",
+            "jp": "はい、もう試験を受けられます。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -417,6 +427,27 @@
         "en": "一节 class, 一门 course.",
         "jp": "一节课、一门课。"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「报纸」的意思是？",
+        "kr": "「报纸」의 뜻은?",
+        "en": "What does 报纸 mean?",
+        "jp": "「报纸」の意味は？"
+      },
+      "options": [
+        "书",
+        "newspaper",
+        "杂志",
+        "本子"
+      ],
+      "answer": "newspaper",
+      "explanation": {
+        "kr": "报纸=신문。",
+        "en": "报纸 = newspaper.",
+        "jp": "报纸=新聞。"
+      }
     }
   ],
   "aiPrompts": [
@@ -503,34 +534,83 @@
   },
   "extension": [
     {
-      "cn": "开始",
-      "pinyin": "kāishǐ",
-      "translations": {
-        "kr": "시작하다",
-        "en": "begin",
-        "jp": "始める"
+      "groupTitle": {
+        "cn": "每 + 时间",
+        "kr": "每 + 시간",
+        "en": "每 + time",
+        "jp": "每 + 時間"
       },
-      "note": "开始+V"
+      "focusGrammar": "每 + 时间",
+      "sentences": [
+        {
+          "cn": "每天学习",
+          "pinyin": "měi tiān xuéxí",
+          "translations": {
+            "kr": "매일 공부하다",
+            "en": "study every day",
+            "jp": "毎日勉強する"
+          }
+        },
+        {
+          "cn": "我每天学习汉语。",
+          "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
+          "translations": {
+            "kr": "저는 매일 중국어를 배워요.",
+            "en": "I study Chinese every day.",
+            "jp": "私は毎日中国語を勉強します。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "每 + 天/天 + V，表示频率。",
+        "kr": "빈도를 나타냅니다.",
+        "en": "每 + day/time + V: frequency.",
+        "jp": "頻度を表す。"
+      }
     },
     {
-      "cn": "考试",
-      "pinyin": "kǎoshì",
-      "translations": {
-        "kr": "시험",
-        "en": "exam",
-        "jp": "試験"
+      "groupTitle": {
+        "cn": "能愿动词 可以",
+        "kr": "능원동사 可以",
+        "en": "Modal verb 可以",
+        "jp": "能願動詞 可以"
       },
-      "note": "考试/参加考试"
-    },
-    {
-      "cn": "课",
-      "pinyin": "kè",
-      "translations": {
-        "kr": "수업",
-        "en": "class",
-        "jp": "授業"
-      },
-      "note": "一节课"
+      "focusGrammar": "能愿动词 可以",
+      "sentences": [
+        {
+          "cn": "可以开始",
+          "pinyin": "kěyǐ kāishǐ",
+          "translations": {
+            "kr": "시작할 수 있다",
+            "en": "can start",
+            "jp": "始められる"
+          }
+        },
+        {
+          "cn": "开始",
+          "pinyin": "kāishǐ",
+          "translations": {
+            "kr": "시작하다",
+            "en": "begin",
+            "jp": "始める"
+          }
+        },
+        {
+          "cn": "考试",
+          "pinyin": "kǎoshì",
+          "translations": {
+            "kr": "시험",
+            "en": "exam",
+            "jp": "試験"
+          }
+        }
+      ],
+      "note": {
+        "cn": "可以 + V，表示能力或许可。",
+        "kr": "능력이나 허가를 나타냅니다.",
+        "en": "可以 + V: ability or permission.",
+        "jp": "能力や許可を表す。"
+      }
     }
   ]
 }

@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "他工作很努力。",
-      "pinyin": "Tā gōngzuò hěn nǔlì.",
-      "translations": {
-        "kr": "그는 일을 열심히 해요.",
-        "en": "He works very hard.",
-        "jp": "彼は一生懸命働きます。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "但是很累，早上起床就送孩子。",
-      "pinyin": "Dànshì hěn lěi, zǎoshang qǐchuáng jiù sòng háizi.",
-      "translations": {
-        "kr": "하지만 피곤해요. 아침에 일어나자마자 아이를 보내요.",
-        "en": "But very tired, gets up and sends the child in the morning.",
-        "jp": "しかし疲れています。朝起きてすぐ子供を送ります。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "他工作很努力。",
+          "pinyin": "Tā gōngzuò hěn nǔlì.",
+          "translations": {
+            "kr": "그는 일을 열심히 해요.",
+            "en": "He works very hard.",
+            "jp": "彼は一生懸命働きます。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "但是很累，早上起床就送孩子。",
+          "pinyin": "Dànshì hěn lěi, zǎoshang qǐchuáng jiù sòng háizi.",
+          "translations": {
+            "kr": "하지만 피곤해요. 아침에 일어나자마자 아이를 보내요.",
+            "en": "But very tired, gets up and sends the child in the morning.",
+            "jp": "しかし疲れています。朝起きてすぐ子供を送ります。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "...但是...",
         "en": "...但是...",
         "jp": "...但是..."
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「找」的意思是？",
+        "kr": "「找」의 뜻은?",
+        "en": "What does 找 mean?",
+        "jp": "「找」の意味は？"
+      },
+      "options": [
+        "看",
+        "to find",
+        "买",
+        "吃"
+      ],
+      "answer": "to find",
+      "explanation": {
+        "kr": "找=찾다。",
+        "en": "找 = to find.",
+        "jp": "找=探す。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「起床」的意思是？",
+        "kr": "「起床」의 뜻은?",
+        "en": "What does 起床 mean?",
+        "jp": "「起床」の意味は？"
+      },
+      "options": [
+        "睡觉",
+        "to get up",
+        "休息",
+        "工作"
+      ],
+      "answer": "to get up",
+      "explanation": {
+        "kr": "起床=일어나다。",
+        "en": "起床 = to get up.",
+        "jp": "起床=起きる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「送」的意思是？",
+        "kr": "「送」의 뜻은?",
+        "en": "What does 送 mean?",
+        "jp": "「送」の意味は？"
+      },
+      "options": [
+        "收",
+        "to send",
+        "买",
+        "吃"
+      ],
+      "answer": "to send",
+      "explanation": {
+        "kr": "送=보내다。",
+        "en": "送 = to send.",
+        "jp": "送=送る。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "找",
-      "pinyin": "zhǎo",
-      "translations": {
-        "kr": "찾다",
-        "en": "to try to find",
-        "jp": "探す"
+      "groupTitle": {
+        "cn": "程度副词",
+        "kr": "정도 부사",
+        "en": "Degree adverb",
+        "jp": "程度副詞"
       },
-      "note": ""
+      "focusGrammar": "程度副词",
+      "sentences": [
+        {
+          "cn": "他工作很努力。",
+          "pinyin": "Tā gōngzuò hěn nǔlì.",
+          "translations": {
+            "kr": "그는 일을 열심히 해요.",
+            "en": "He works very hard.",
+            "jp": "彼は一生懸命働きます。"
+          }
+        },
+        {
+          "cn": "很 + Adj（努力）",
+          "pinyin": "hěn nǔlì",
+          "translations": {
+            "kr": "매우 열심히",
+            "en": "very hard",
+            "jp": "とても一生懸命"
+          }
+        }
+      ],
+      "note": {
+        "cn": "很 + Adj（努力），表示程度。",
+        "kr": "정도를 나타냅니다.",
+        "en": "很 + Adj: degree.",
+        "jp": "程度を表す。"
+      }
     },
     {
-      "cn": "着",
-      "pinyin": "zhāo",
-      "translations": {
-        "kr": "~하고 있다",
-        "en": "(chess) move",
-        "jp": "〜している"
+      "groupTitle": {
+        "cn": "但是",
+        "kr": "但是",
+        "en": "但是",
+        "jp": "但是"
       },
-      "note": ""
-    },
-    {
-      "cn": "正在",
-      "pinyin": "zhèngzài",
-      "translations": {
-        "kr": "~하고 있다",
-        "en": "just at (that time)",
-        "jp": "〜している"
-      },
-      "note": ""
-    },
-    {
-      "cn": "它",
-      "pinyin": "tā",
-      "translations": {
-        "kr": "그것",
-        "en": "it",
-        "jp": "それ"
-      },
-      "note": ""
+      "focusGrammar": "但是",
+      "sentences": [
+        {
+          "cn": "...但是...",
+          "pinyin": "dànshì",
+          "translations": {
+            "kr": "...하지만...",
+            "en": "...but...",
+            "jp": "...しかし..."
+          }
+        },
+        {
+          "cn": "找",
+          "pinyin": "zhǎo",
+          "translations": {
+            "kr": "찾다",
+            "en": "to try to find",
+            "jp": "探す"
+          }
+        },
+        {
+          "cn": "正在",
+          "pinyin": "zhèngzài",
+          "translations": {
+            "kr": "~하고 있다",
+            "en": "just at (that time)",
+            "jp": "〜している"
+          }
+        }
+      ],
+      "note": {
+        "cn": "...但是...，表示转折。",
+        "kr": "전환을 나타냅니다.",
+        "en": "...但是...: contrast.",
+        "jp": "逆接を表す。"
+      }
     }
   ]
 }

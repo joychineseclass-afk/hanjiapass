@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我们一起去旅行吧！",
-      "pinyin": "Wǒmen yīqǐ qù lǚxíng ba!",
-      "translations": {
-        "kr": "우리 함께 여행 가요!",
-        "en": "Let's travel together!",
-        "jp": "一緒に旅行に行きましょう！"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "去年我去过机场，今年买票去。",
-      "pinyin": "Qùnián wǒ qùguò jīchǎng, jīnnián mǎi piào qù.",
-      "translations": {
-        "kr": "작년에 공항 갔어요. 올해 표 사서 가요.",
-        "en": "Last year I went to the airport, this year I'll buy tickets.",
-        "jp": "去年空港に行きました。今年は切符を買って行きます。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我们一起去旅行吧！",
+          "pinyin": "Wǒmen yīqǐ qù lǚxíng ba!",
+          "translations": {
+            "kr": "우리 함께 여행 가요!",
+            "en": "Let's travel together!",
+            "jp": "一緒に旅行に行きましょう！"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "去年我去过机场，今年买票去。",
+          "pinyin": "Qùnián wǒ qùguò jīchǎng, jīnnián mǎi piào qù.",
+          "translations": {
+            "kr": "작년에 공항 갔어요. 올해 표 사서 가요.",
+            "en": "Last year I went to the airport, this year I'll buy tickets.",
+            "jp": "去年空港に行きました。今年は切符を買って行きます。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "时间词",
         "en": "时间词",
         "jp": "时间词"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「机场」的意思是？",
+        "kr": "「机场」의 뜻은?",
+        "en": "What does 机场 mean?",
+        "jp": "「机场」の意味は？"
+      },
+      "options": [
+        "车站",
+        "airport",
+        "码头",
+        "地铁站"
+      ],
+      "answer": "airport",
+      "explanation": {
+        "kr": "机场=공항。",
+        "en": "机场 = airport.",
+        "jp": "机场=空港。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「卖」的意思是？",
+        "kr": "「卖」의 뜻은?",
+        "en": "What does 卖 mean?",
+        "jp": "「卖」の意味は？"
+      },
+      "options": [
+        "买",
+        "to sell",
+        "送",
+        "给"
+      ],
+      "answer": "to sell",
+      "explanation": {
+        "kr": "卖=팔다。",
+        "en": "卖 = to sell.",
+        "jp": "卖=売る。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「旁边」的意思是？",
+        "kr": "「旁边」의 뜻은?",
+        "en": "What does 旁边 mean?",
+        "jp": "「旁边」の意味は？"
+      },
+      "options": [
+        "里面",
+        "side/beside",
+        "上面",
+        "下面"
+      ],
+      "answer": "side/beside",
+      "explanation": {
+        "kr": "旁边=옆。",
+        "en": "旁边 = beside.",
+        "jp": "旁边=隣。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "旅游",
-      "pinyin": "lǚyóu",
-      "translations": {
-        "kr": "여행",
-        "en": "trip",
-        "jp": "旅行"
+      "groupTitle": {
+        "cn": "一起 + V",
+        "kr": "一起 + V",
+        "en": "一起 + V",
+        "jp": "一起 + V"
       },
-      "note": ""
+      "focusGrammar": "一起 + V",
+      "sentences": [
+        {
+          "cn": "我们一起去旅行吧！",
+          "pinyin": "Wǒmen yīqǐ qù lǚxíng ba!",
+          "translations": {
+            "kr": "우리 함께 여행 가요!",
+            "en": "Let's travel together!",
+            "jp": "一緒に旅行に行きましょう！"
+          }
+        },
+        {
+          "cn": "一起 + 去 + 旅行",
+          "pinyin": "yīqǐ qù lǚxíng",
+          "translations": {
+            "kr": "함께 여행 가다",
+            "en": "travel together",
+            "jp": "一緒に旅行に行く"
+          }
+        }
+      ],
+      "note": {
+        "cn": "一起 + V，表示共同做某事。",
+        "kr": "함께 动词를 합니다.",
+        "en": "一起 + V: do together.",
+        "jp": "一緒に〜する。"
+      }
     },
     {
-      "cn": "票",
-      "pinyin": "piào",
-      "translations": {
-        "kr": "표",
-        "en": "ticket",
-        "jp": "切符"
+      "groupTitle": {
+        "cn": "去年/明年",
+        "kr": "去年/明年",
+        "en": "去年/明年",
+        "jp": "去年/明年"
       },
-      "note": ""
-    },
-    {
-      "cn": "去年",
-      "pinyin": "qùnián",
-      "translations": {
-        "kr": "작년",
-        "en": "last year",
-        "jp": "去年"
-      },
-      "note": ""
-    },
-    {
-      "cn": "机场",
-      "pinyin": "jīchǎng",
-      "translations": {
-        "kr": "공항",
-        "en": "airport",
-        "jp": "空港"
-      },
-      "note": ""
+      "focusGrammar": "去年/明年",
+      "sentences": [
+        {
+          "cn": "去年我去过机场。",
+          "pinyin": "Qùnián wǒ qùguò jīchǎng.",
+          "translations": {
+            "kr": "작년에 공항 갔어요.",
+            "en": "Last year I went to the airport.",
+            "jp": "去年空港に行きました。"
+          }
+        },
+        {
+          "cn": "旅游",
+          "pinyin": "lǚyóu",
+          "translations": {
+            "kr": "여행",
+            "en": "trip",
+            "jp": "旅行"
+          }
+        },
+        {
+          "cn": "票",
+          "pinyin": "piào",
+          "translations": {
+            "kr": "표",
+            "en": "ticket",
+            "jp": "切符"
+          }
+        }
+      ],
+      "note": {
+        "cn": "时间词：去年、明年。",
+        "kr": "시간어: 작년, 내년.",
+        "en": "Time words: last year, next year.",
+        "jp": "時間語：去年、明年。"
+      }
     }
   ]
 }

@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "这个比那个好。",
-      "pinyin": "Zhège bǐ nàge hǎo.",
-      "translations": {
-        "kr": "이게 그거보다 좋아요.",
-        "en": "This is better than that.",
-        "jp": "これはあれより良いです。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "这个便宜，那个贵。",
-      "pinyin": "Zhège piányi, nàge guì.",
-      "translations": {
-        "kr": "이건 싸고 저건 비싸요.",
-        "en": "This is cheap, that's expensive.",
-        "jp": "これは安く、あれは高いです。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "这个比那个好。",
+          "pinyin": "Zhège bǐ nàge hǎo.",
+          "translations": {
+            "kr": "이게 그거보다 좋아요.",
+            "en": "This is better than that.",
+            "jp": "これはあれより良いです。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "这个便宜，那个贵。",
+          "pinyin": "Zhège piányi, nàge guì.",
+          "translations": {
+            "kr": "이건 싸고 저건 비싸요.",
+            "en": "This is cheap, that's expensive.",
+            "jp": "これは安く、あれは高いです。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "比 + 便宜/贵",
         "en": "比 + 便宜/贵",
         "jp": "比 + 便宜/贵"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「便宜」的意思是？",
+        "kr": "「便宜」의 뜻은?",
+        "en": "What does 便宜 mean?",
+        "jp": "「便宜」の意味は？"
+      },
+      "options": [
+        "贵",
+        "cheap",
+        "好",
+        "坏"
+      ],
+      "answer": "cheap",
+      "explanation": {
+        "kr": "便宜=싸다。",
+        "en": "便宜 = cheap.",
+        "jp": "便宜=安い。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「近」的意思是？",
+        "kr": "「近」의 뜻은?",
+        "en": "What does 近 mean?",
+        "jp": "「近」の意味は？"
+      },
+      "options": [
+        "远",
+        "near",
+        "长",
+        "短"
+      ],
+      "answer": "near",
+      "explanation": {
+        "kr": "近=가깝다。",
+        "en": "近 = near.",
+        "jp": "近=近い。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「还」在比较句中表示？",
+        "kr": "「还」在比较句中?",
+        "en": "What does 还 mean in comparison?",
+        "jp": "比較文の「还」は？"
+      },
+      "options": [
+        "已经",
+        "even more",
+        "不",
+        "很"
+      ],
+      "answer": "even more",
+      "explanation": {
+        "kr": "还=더~。",
+        "en": "还 = even more.",
+        "jp": "还=さらに〜。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "比",
-      "pinyin": "Bǐ",
-      "translations": {
-        "kr": "~보다",
-        "en": "Belgium",
-        "jp": "〜より"
+      "groupTitle": {
+        "cn": "比字句",
+        "kr": "比字句",
+        "en": "比 sentence",
+        "jp": "比字句"
       },
-      "note": ""
+      "focusGrammar": "比字句",
+      "sentences": [
+        {
+          "cn": "这个比那个好。",
+          "pinyin": "Zhège bǐ nàge hǎo.",
+          "translations": {
+            "kr": "이게 그거보다 좋아요.",
+            "en": "This is better than that.",
+            "jp": "これはあれより良いです。"
+          }
+        },
+        {
+          "cn": "A + 比 + B + Adj",
+          "pinyin": "A bǐ B adj",
+          "translations": {
+            "kr": "A가 B보다 Adj",
+            "en": "A is more Adj than B",
+            "jp": "AはBよりAdj"
+          }
+        }
+      ],
+      "note": {
+        "cn": "A + 比 + B + Adj，表示比较。",
+        "kr": "비교를 나타냅니다.",
+        "en": "A + 比 + B + Adj: comparison.",
+        "jp": "比較を表す。"
+      }
     },
     {
-      "cn": "便宜",
-      "pinyin": "biànyí",
-      "translations": {
-        "kr": "싸다",
-        "en": "convenient",
-        "jp": "安い"
+      "groupTitle": {
+        "cn": "便宜/贵",
+        "kr": "便宜/贵",
+        "en": "便宜/贵",
+        "jp": "便宜/贵"
       },
-      "note": ""
-    },
-    {
-      "cn": "贵",
-      "pinyin": "guì",
-      "translations": {
-        "kr": "비싸다",
-        "en": "expensive",
-        "jp": "高い"
-      },
-      "note": ""
-    },
-    {
-      "cn": "远",
-      "pinyin": "yuǎn",
-      "translations": {
-        "kr": "멀다",
-        "en": "far",
-        "jp": "遠い"
-      },
-      "note": ""
+      "focusGrammar": "便宜/贵",
+      "sentences": [
+        {
+          "cn": "这个便宜，那个贵。",
+          "pinyin": "Zhège piányi, nàge guì.",
+          "translations": {
+            "kr": "이건 싸고 저건 비싸요.",
+            "en": "This is cheap, that's expensive.",
+            "jp": "これは安く、あれは高いです。"
+          }
+        },
+        {
+          "cn": "比",
+          "pinyin": "Bǐ",
+          "translations": {
+            "kr": "~보다",
+            "en": "than",
+            "jp": "〜より"
+          }
+        },
+        {
+          "cn": "远",
+          "pinyin": "yuǎn",
+          "translations": {
+            "kr": "멀다",
+            "en": "far",
+            "jp": "遠い"
+          }
+        }
+      ],
+      "note": {
+        "cn": "比 + 便宜/贵，表示价格比较。",
+        "kr": "가격 비교를 나타냅니다.",
+        "en": "比 + 便宜/贵: price comparison.",
+        "jp": "価格比較を表す。"
+      }
     }
   ]
 }

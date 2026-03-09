@@ -299,24 +299,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "因为下雨所以没去。",
-      "pinyin": "Yīnwèi xiàyǔ suǒyǐ méi qù.",
-      "translations": {
-        "kr": "비가 와서 가지 않았어요.",
-        "en": "Because it rained, I didn't go.",
-        "jp": "雨が降ったので行きませんでした。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "昨天已经完了，今天再去。",
-      "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
-      "translations": {
-        "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
-        "en": "Yesterday it was already over, go again today.",
-        "jp": "昨日はもう終わりました。今日また行きます。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "因为下雨所以没去。",
+          "pinyin": "Yīnwèi xiàyǔ suǒyǐ méi qù.",
+          "translations": {
+            "kr": "비가 와서 가지 않았어요.",
+            "en": "Because it rained, I didn't go.",
+            "jp": "雨が降ったので行きませんでした。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "昨天已经完了，今天再去。",
+          "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
+          "translations": {
+            "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
+            "en": "Yesterday it was already over, go again today.",
+            "jp": "昨日はもう終わりました。今日また行きます。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -444,6 +454,48 @@
         "en": "V + 了",
         "jp": "V + 了"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「下雨」的意思是？",
+        "kr": "「下雨」의 뜻은?",
+        "en": "What does 下雨 mean?",
+        "jp": "「下雨」の意味は？"
+      },
+      "options": [
+        "晴天",
+        "to rain",
+        "下雪",
+        "刮风"
+      ],
+      "answer": "to rain",
+      "explanation": {
+        "kr": "下雨=비 오다。",
+        "en": "下雨 = to rain.",
+        "jp": "下雨=雨が降る。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「再」的意思是？",
+        "kr": "「再」의 뜻은?",
+        "en": "What does 再 mean?",
+        "jp": "「再」の意味は？"
+      },
+      "options": [
+        "不",
+        "again",
+        "已经",
+        "才"
+      ],
+      "answer": "again",
+      "explanation": {
+        "kr": "再=다시。",
+        "en": "再 = again.",
+        "jp": "再=もう一度。"
+      }
     }
   ],
   "aiPrompts": [
@@ -536,44 +588,83 @@
   },
   "extension": [
     {
-      "cn": "因为",
-      "pinyin": "yīnwèi",
-      "translations": {
-        "kr": "~때문에",
-        "en": "because",
-        "jp": "〜だから"
+      "groupTitle": {
+        "cn": "因为……所以……",
+        "kr": "因为……所以……",
+        "en": "因为……所以……",
+        "jp": "因为……所以……"
       },
-      "note": ""
+      "focusGrammar": "因为……所以……",
+      "sentences": [
+        {
+          "cn": "因为下雨所以没去。",
+          "pinyin": "Yīnwèi xiàyǔ suǒyǐ méi qù.",
+          "translations": {
+            "kr": "비가 와서 가지 않았어요.",
+            "en": "Because it rained, I didn't go.",
+            "jp": "雨が降ったので行きませんでした。"
+          }
+        },
+        {
+          "cn": "因为 + 原因 + 所以 + 结果",
+          "pinyin": "yīnwèi yuányīn suǒyǐ jiéguǒ",
+          "translations": {
+            "kr": "원인 때문에 결과",
+            "en": "because + reason, therefore + result",
+            "jp": "原因だから結果"
+          }
+        }
+      ],
+      "note": {
+        "cn": "因为 + 原因 + 所以 + 结果，表示因果关系。",
+        "kr": "인과 관계를 나타냅니다.",
+        "en": "因为……所以……: cause and effect.",
+        "jp": "因果関係を表す。"
+      }
     },
     {
-      "cn": "所以",
-      "pinyin": "suǒyǐ",
-      "translations": {
-        "kr": "그래서",
-        "en": "therefore",
-        "jp": "だから"
+      "groupTitle": {
+        "cn": "没 + V / 了（完成）",
+        "kr": "没 + V / 了（完成）",
+        "en": "没 + V / 了（完成）",
+        "jp": "没 + V / 了（完成）"
       },
-      "note": ""
-    },
-    {
-      "cn": "完",
-      "pinyin": "wán",
-      "translations": {
-        "kr": "끝나다",
-        "en": "to finish",
-        "jp": "終わる"
-      },
-      "note": ""
-    },
-    {
-      "cn": "已经",
-      "pinyin": "yǐjīng",
-      "translations": {
-        "kr": "이미",
-        "en": "already",
-        "jp": "もう"
-      },
-      "note": ""
+      "focusGrammar": "没 + V",
+      "sentences": [
+        {
+          "cn": "昨天已经完了，今天再去。",
+          "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
+          "translations": {
+            "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
+            "en": "Yesterday it was already over, go again today.",
+            "jp": "昨日はもう終わりました。今日また行きます。"
+          }
+        },
+        {
+          "cn": "因为",
+          "pinyin": "yīnwèi",
+          "translations": {
+            "kr": "~때문에",
+            "en": "because",
+            "jp": "〜だから"
+          }
+        },
+        {
+          "cn": "已经",
+          "pinyin": "yǐjīng",
+          "translations": {
+            "kr": "이미",
+            "en": "already",
+            "jp": "もう"
+          }
+        }
+      ],
+      "note": {
+        "cn": "没 + V 表否定。V + 了 表完成。",
+        "kr": "没 + V는 부정, V + 了는 완료.",
+        "en": "没 + V: negative. V + 了: completion.",
+        "jp": "没 + V：否定。V + 了：完了。"
+      }
     }
   ]
 }

@@ -261,34 +261,44 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我们一起去吃饭吧！",
-      "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
-      "translations": {
-        "kr": "우리 함께 밥 먹으러 가요!",
-        "en": "Let's eat together!",
-        "jp": "一緒に食事に行きましょう！"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "好啊！这家餐厅的菜很好吃。",
-      "pinyin": "Hǎo a! Zhè jiā cāntīng de cài hěn hǎochī.",
-      "translations": {
-        "kr": "좋아요! 이 식당 음식 맛있어요.",
-        "en": "Great! The food at this restaurant is delicious.",
-        "jp": "いいですね！このレストランの料理は美味しいです。"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "服务员，我们要两杯咖啡和一杯牛奶。",
-      "pinyin": "Fúwùyuán, wǒmen yào liǎng bēi kāfēi hé yī bēi niúnǎi.",
-      "translations": {
-        "kr": "웨이터님, 커피 두 잔이랑 우유 한 잔 주세요.",
-        "en": "Waiter, we'd like two coffees and one milk.",
-        "jp": "店員さん、コーヒー2杯と牛乳1杯お願いします。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我们一起去吃饭吧！",
+          "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
+          "translations": {
+            "kr": "우리 함께 밥 먹으러 가요!",
+            "en": "Let's eat together!",
+            "jp": "一緒に食事に行きましょう！"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "好啊！这家餐厅的菜很好吃。",
+          "pinyin": "Hǎo a! Zhè jiā cāntīng de cài hěn hǎochī.",
+          "translations": {
+            "kr": "좋아요! 이 식당 음식 맛있어요.",
+            "en": "Great! The food at this restaurant is delicious.",
+            "jp": "いいですね！このレストランの料理は美味しいです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "服务员，我们要两杯咖啡和一杯牛奶。",
+          "pinyin": "Fúwùyuán, wǒmen yào liǎng bēi kāfēi hé yī bēi niúnǎi.",
+          "translations": {
+            "kr": "웨이터님, 커피 두 잔이랑 우유 한 잔 주세요.",
+            "en": "Waiter, we'd like two coffees and one milk.",
+            "jp": "店員さん、コーヒー2杯と牛乳1杯お願いします。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -417,6 +427,27 @@
         "en": "Service staff at restaurants.",
         "jp": "レストランなどのサービス担当。"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「咖啡」和「牛奶」是？",
+        "kr": "「咖啡」와 「牛奶」는?",
+        "en": "What are 咖啡 and 牛奶?",
+        "jp": "「咖啡」と「牛奶」は？"
+      },
+      "options": [
+        "饮料",
+        "食物",
+        "水果",
+        "蔬菜"
+      ],
+      "answer": "饮料",
+      "explanation": {
+        "kr": "咖啡、牛奶都是饮料。",
+        "en": "Coffee and milk are drinks.",
+        "jp": "コーヒーと牛乳は飲み物です。"
+      }
     }
   ],
   "aiPrompts": [
@@ -502,34 +533,83 @@
   },
   "extension": [
     {
-      "cn": "好吃",
-      "pinyin": "hǎochī",
-      "translations": {
-        "kr": "맛있다",
-        "en": "delicious",
-        "jp": "美味しい"
+      "groupTitle": {
+        "cn": "吧 建议句",
+        "kr": "吧 제안문",
+        "en": "吧 suggestion",
+        "jp": "吧 提案文"
       },
-      "note": "好 + 动词"
+      "focusGrammar": "吧 建议句",
+      "sentences": [
+        {
+          "cn": "我们一起去吃饭吧！",
+          "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
+          "translations": {
+            "kr": "우리 함께 밥 먹으러 가요!",
+            "en": "Let's eat together!",
+            "jp": "一緒に食事に行きましょう！"
+          }
+        },
+        {
+          "cn": "我们一起去看电影吧。",
+          "pinyin": "Wǒmen yīqǐ qù kàn diànyǐng ba.",
+          "translations": {
+            "kr": "우리 함께 영화 보러 가요.",
+            "en": "Let's go see a movie together.",
+            "jp": "一緒に映画を見に行きましょう。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "...一起 + V + 吧，表示建议一起做某事。",
+        "kr": "함께 뭔가 하자고 제안합니다.",
+        "en": "Suggest doing together: ...一起 + V + 吧.",
+        "jp": "一緒に〜しましょうと提案します。"
+      }
     },
     {
-      "cn": "两杯",
-      "pinyin": "liǎng bēi",
-      "translations": {
-        "kr": "두 잔",
-        "en": "two cups",
-        "jp": "2杯"
+      "groupTitle": {
+        "cn": "一起 + V",
+        "kr": "一起 + V",
+        "en": "一起 + V",
+        "jp": "一起 + V"
       },
-      "note": "两 + 量词"
-    },
-    {
-      "cn": "房间",
-      "pinyin": "fángjiān",
-      "translations": {
-        "kr": "방",
-        "en": "room",
-        "jp": "部屋"
-      },
-      "note": "房间可指餐厅包间"
+      "focusGrammar": "一起",
+      "sentences": [
+        {
+          "cn": "我们一起学习。",
+          "pinyin": "Wǒmen yīqǐ xuéxí.",
+          "translations": {
+            "kr": "우리 함께 공부해요.",
+            "en": "We study together.",
+            "jp": "一緒に勉強します。"
+          }
+        },
+        {
+          "cn": "好吃",
+          "pinyin": "hǎochī",
+          "translations": {
+            "kr": "맛있다",
+            "en": "delicious",
+            "jp": "美味しい"
+          }
+        },
+        {
+          "cn": "两杯",
+          "pinyin": "liǎng bēi",
+          "translations": {
+            "kr": "두 잔",
+            "en": "two cups",
+            "jp": "2杯"
+          }
+        }
+      ],
+      "note": {
+        "cn": "一起 + V，表示共同做某事。两 + 量词。",
+        "kr": "함께 动词를 합니다.",
+        "en": "一起 + V: do something together.",
+        "jp": "一緒に〜する。"
+      }
     }
   ]
 }

@@ -265,34 +265,114 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "你今天忙吗？",
-      "pinyin": "Nǐ jīntiān máng ma?",
-      "translations": {
-        "kr": "오늘 바빠요?",
-        "en": "Are you busy today?",
-        "jp": "今日は忙しいですか？"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "你今天忙吗？",
+          "pinyin": "Nǐ jīntiān máng ma?",
+          "translations": {
+            "kr": "오늘 바빠요?",
+            "en": "Are you busy today?",
+            "jp": "今日は忙しいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "很忙，但是不累。",
+          "pinyin": "Hěn máng, dànshì bù lěi.",
+          "translations": {
+            "kr": "바빠요. 하지만 피곤하지 않아요.",
+            "en": "Very busy, but not tired.",
+            "jp": "忙しいですが、疲れていません。"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "我们休息一下吧。",
+          "pinyin": "Wǒmen xiūxi yīxià ba.",
+          "translations": {
+            "kr": "잠깐 쉬어요.",
+            "en": "Let's take a break.",
+            "jp": "少し休みましょう。"
+          }
+        }
+      ]
     },
     {
-      "speaker": "B",
-      "cn": "很忙，但是不累。",
-      "pinyin": "Hěn máng, dànshì bù lěi.",
-      "translations": {
-        "kr": "바빠요. 하지만 피곤하지 않아요.",
-        "en": "Very busy, but not tired.",
-        "jp": "忙しいですが、疲れていません。"
-      }
+      "title": {
+        "cn": "会话2",
+        "kr": "대화 2",
+        "en": "Dialogue 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "你每天都很忙吗？",
+          "pinyin": "Nǐ měi tiān dōu hěn máng ma?",
+          "translations": {
+            "kr": "매일 바빠요?",
+            "en": "Are you busy every day?",
+            "jp": "毎日忙しいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "是的，但是教室里的女人都很累。",
+          "pinyin": "Shì de, dànshì jiàoshì lǐ de nǚrén dōu hěn lěi.",
+          "translations": {
+            "kr": "네. 하지만 교실에 있는 여자들은 다 피곤해요.",
+            "en": "Yes, but the women in the classroom are all tired.",
+            "jp": "はい。でも教室の女性はみんな疲れています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "我们去教室吧。",
+          "pinyin": "Wǒmen qù jiàoshì ba.",
+          "translations": {
+            "kr": "교실로 가요.",
+            "en": "Let's go to the classroom.",
+            "jp": "教室に行きましょう。"
+          }
+        }
+      ]
     },
     {
-      "speaker": "A",
-      "cn": "我们休息一下吧。",
-      "pinyin": "Wǒmen xiūxi yīxià ba.",
-      "translations": {
-        "kr": "잠깐 쉬어요.",
-        "en": "Let's take a break.",
-        "jp": "少し休みましょう。"
-      }
+      "title": {
+        "cn": "会话3",
+        "kr": "대화 3",
+        "en": "Dialogue 3",
+        "jp": "会話3"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "每节课你都很累吗？",
+          "pinyin": "Měi jié kè nǐ dōu hěn lěi ma?",
+          "translations": {
+            "kr": "매 수업마다 피곤해요?",
+            "en": "Are you tired every class?",
+            "jp": "毎授業疲れていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "忙，但是很开心。那个教室很大。",
+          "pinyin": "Máng, dànshì hěn kāixīn. Nàge jiàoshì hěn dà.",
+          "translations": {
+            "kr": "바빠요. 하지만 즐거워요. 그 교실이 커요.",
+            "en": "Busy, but happy. That classroom is big.",
+            "jp": "忙しいですが、楽しいです。あの教室は大きいです。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -375,12 +455,7 @@
         "en": "What is the correct answer to 'Are you busy today?'?",
         "jp": "「你今天忙吗？」の正しい答えは？"
       },
-      "options": [
-        "很忙",
-        "不忙",
-        "很累",
-        "休息"
-      ],
+      "options": ["很忙", "不忙", "很累", "休息"],
       "answer": "很忙",
       "explanation": {
         "kr": "忙/不忙 回答忙不忙的问题。",
@@ -396,12 +471,7 @@
         "en": "What does 很 do in S + 很 + Adj?",
         "jp": "S + 很 + Adj で「很」の役割は？"
       },
-      "options": [
-        "否定",
-        "程度",
-        "疑问",
-        "过去"
-      ],
+      "options": ["否定", "程度", "疑问", "过去"],
       "answer": "程度",
       "explanation": {
         "kr": "很表示程度，相当于「非常」。",
@@ -417,12 +487,7 @@
         "en": "What does 吧 mean in '休息一下吧'?",
         "jp": "「休息一下吧」の「吧」は？"
       },
-      "options": [
-        "疑问",
-        "建议",
-        "否定",
-        "完成"
-      ],
+      "options": ["疑问", "建议", "否定", "完成"],
       "answer": "建议",
       "explanation": {
         "kr": "吧用于建议、提议。",
@@ -438,17 +503,28 @@
         "en": "What does 但是 connect?",
         "jp": "「但是」は何を結びますか？"
       },
-      "options": [
-        "因果",
-        "转折",
-        "并列",
-        "条件"
-      ],
+      "options": ["因果", "转折", "并列", "条件"],
       "answer": "转折",
       "explanation": {
         "kr": "但是表示转折，相当于「그러나」。",
         "en": "但是 indicates contrast, like 'but'.",
         "jp": "但是は逆接を表します。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「教室」的意思是？",
+        "kr": "「教室」의 뜻은?",
+        "en": "What does 教室 mean?",
+        "jp": "「教室」の意味は？"
+      },
+      "options": ["学校", "教室", "办公室", "家"],
+      "answer": "教室",
+      "explanation": {
+        "kr": "教室=上课的地方。",
+        "en": "教室 = classroom, place for class.",
+        "jp": "教室=授業をする場所。"
       }
     }
   ],
@@ -529,34 +605,145 @@
   },
   "extension": [
     {
-      "cn": "每节课",
-      "pinyin": "měi jié kè",
-      "translations": {
-        "kr": "매 수업",
-        "en": "each class",
-        "jp": "毎授業"
+      "groupTitle": {
+        "cn": "吗疑问句练习",
+        "kr": "吗 의문문 연습",
+        "en": "Pattern practice: S + Adj + 吗？",
+        "jp": "吗 疑問文パターン練習"
       },
-      "note": "每 + 量词 + 名词"
+      "focusGrammar": "吗疑问句",
+      "sentences": [
+        {
+          "cn": "你今天忙吗？",
+          "pinyin": "Nǐ jīntiān máng ma?",
+          "translations": {
+            "kr": "오늘 바빠요?",
+            "en": "Are you busy today?",
+            "jp": "今日は忙しいですか？"
+          }
+        },
+        {
+          "cn": "你今天累吗？",
+          "pinyin": "Nǐ jīntiān lěi ma?",
+          "translations": {
+            "kr": "오늘 피곤해요?",
+            "en": "Are you tired today?",
+            "jp": "今日は疲れていますか？"
+          }
+        },
+        {
+          "cn": "她今天忙吗？",
+          "pinyin": "Tā jīntiān máng ma?",
+          "translations": {
+            "kr": "그녀는 오늘 바빠요?",
+            "en": "Is she busy today?",
+            "jp": "彼女は今日忙しいですか？"
+          }
+        },
+        {
+          "cn": "你每天下午都忙吗？",
+          "pinyin": "Nǐ měi tiān xiàwǔ dōu máng ma?",
+          "translations": {
+            "kr": "매일 오후마다 바빠요?",
+            "en": "Are you busy every afternoon?",
+            "jp": "毎日午後忙しいですか？"
+          }
+        }
+      ],
+      "note": {
+        "cn": "用「S + Adj + 吗？」询问对方状态。",
+        "kr": "「S + Adj + 吗？」로 상대방 상태를 묻습니다.",
+        "en": "Use S + Adj + 吗？ to ask about someone's state.",
+        "jp": "「S + Adj + 吗？」で相手の状態を尋ねます。"
+      }
     },
     {
-      "cn": "女人和男人",
-      "pinyin": "nǚrén hé nánrén",
-      "translations": {
-        "kr": "여자와 남자",
-        "en": "women and men",
-        "jp": "女性と男性"
+      "groupTitle": {
+        "cn": "但是 转折练习",
+        "kr": "但是 역접 연습",
+        "en": "Pattern practice: 但是",
+        "jp": "但是 逆接パターン練習"
       },
-      "note": "和连接名词"
+      "focusGrammar": "但是",
+      "sentences": [
+        {
+          "cn": "我很忙，但是不累。",
+          "pinyin": "Wǒ hěn máng, dànshì bù lěi.",
+          "translations": {
+            "kr": "저는 바빠요. 하지만 피곤하지 않아요.",
+            "en": "I'm busy, but not tired.",
+            "jp": "忙しいですが、疲れていません。"
+          }
+        },
+        {
+          "cn": "她很累，但是很开心。",
+          "pinyin": "Tā hěn lěi, dànshì hěn kāixīn.",
+          "translations": {
+            "kr": "그녀는 피곤해요. 하지만 즐거워요.",
+            "en": "She's tired, but happy.",
+            "jp": "彼女は疲れていますが、嬉しいです。"
+          }
+        },
+        {
+          "cn": "我想休息，但是现在不可以。",
+          "pinyin": "Wǒ xiǎng xiūxi, dànshì xiànzài bù kěyǐ.",
+          "translations": {
+            "kr": "쉬고 싶어요. 하지만 지금은 안 돼요.",
+            "en": "I want to rest, but not now.",
+            "jp": "休みたいですが、今はできません。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "「但是」表示转折，连接前后相反的内容。",
+        "kr": "「但是」는 역접을 나타내며 앞뒤를 연결합니다.",
+        "en": "但是 indicates contrast, connecting opposite ideas.",
+        "jp": "「但是」は逆接を表し、前後を結びます。"
+      }
     },
     {
-      "cn": "但是很累",
-      "pinyin": "dànshì hěn lěi",
-      "translations": {
-        "kr": "하지만 피곤해요",
-        "en": "but very tired",
-        "jp": "しかし疲れています"
+      "groupTitle": {
+        "cn": "吧 建议句练习",
+        "kr": "吧 제안문 연습",
+        "en": "Pattern practice: ...吧",
+        "jp": "吧 提案パターン練習"
       },
-      "note": "但是表示转折"
+      "focusGrammar": "吧 建议句",
+      "sentences": [
+        {
+          "cn": "我们休息一下吧。",
+          "pinyin": "Wǒmen xiūxi yīxià ba.",
+          "translations": {
+            "kr": "잠깐 쉬어요.",
+            "en": "Let's take a break.",
+            "jp": "少し休みましょう。"
+          }
+        },
+        {
+          "cn": "我们去教室吧。",
+          "pinyin": "Wǒmen qù jiàoshì ba.",
+          "translations": {
+            "kr": "교실로 가요.",
+            "en": "Let's go to the classroom.",
+            "jp": "教室に行きましょう。"
+          }
+        },
+        {
+          "cn": "你先坐下吧。",
+          "pinyin": "Nǐ xiān zuòxià ba.",
+          "translations": {
+            "kr": "먼저 앉아요.",
+            "en": "Sit down first.",
+            "jp": "先に座ってください。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "「吧」用于建议、提议，语气委婉。",
+        "kr": "「吧」는 제안·권유에 쓰이며 부드러운 어감입니다.",
+        "en": "吧 is used for suggestions, with a soft tone.",
+        "jp": "「吧」は提案に使い、柔らかい語気です。"
+      }
     }
   ]
 }

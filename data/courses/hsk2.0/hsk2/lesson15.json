@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "明年我想去中国。",
-      "pinyin": "Míngnián wǒ xiǎng qù Zhōngguó.",
-      "translations": {
-        "kr": "내년에 중국에 가고 싶어요.",
-        "en": "I want to go to China next year.",
-        "jp": "来年中国に行きたいです。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "可能我们一起去。",
-      "pinyin": "Kěnéng wǒmen yīqǐ qù.",
-      "translations": {
-        "kr": "아마 우리 함께 갈 수 있어요.",
-        "en": "Maybe we can go together.",
-        "jp": "多分一緒に行けるかもしれません。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "明年我想去中国。",
+          "pinyin": "Míngnián wǒ xiǎng qù Zhōngguó.",
+          "translations": {
+            "kr": "내년에 중국에 가고 싶어요.",
+            "en": "I want to go to China next year.",
+            "jp": "来年中国に行きたいです。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "可能我们一起去。",
+          "pinyin": "Kěnéng wǒmen yīqǐ qù.",
+          "translations": {
+            "kr": "아마 우리 함께 갈 수 있어요.",
+            "en": "Maybe we can go together.",
+            "jp": "多分一緒に行けるかもしれません。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "可能 + V",
         "en": "可能 + V",
         "jp": "可能 + V"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「千」的意思是？",
+        "kr": "「千」의 뜻은?",
+        "en": "What does 千 mean?",
+        "jp": "「千」の意味は？"
+      },
+      "options": [
+        "百",
+        "thousand",
+        "万",
+        "十"
+      ],
+      "answer": "thousand",
+      "explanation": {
+        "kr": "千=천。",
+        "en": "千 = thousand.",
+        "jp": "千=千。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「也」的意思是？",
+        "kr": "「也」의 뜻은?",
+        "en": "What does 也 mean?",
+        "jp": "「也」の意味は？"
+      },
+      "options": [
+        "不",
+        "also/too",
+        "很",
+        "都"
+      ],
+      "answer": "also/too",
+      "explanation": {
+        "kr": "也=~도。",
+        "en": "也 = also, too.",
+        "jp": "也=〜も。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「最」的意思是？",
+        "kr": "「最」의 뜻은?",
+        "en": "What does 最 mean?",
+        "jp": "「最」の意味は？"
+      },
+      "options": [
+        "很",
+        "most",
+        "非常",
+        "真"
+      ],
+      "answer": "most",
+      "explanation": {
+        "kr": "最=가장。",
+        "en": "最 = most.",
+        "jp": "最=最も。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "千",
-      "pinyin": "qiān",
-      "translations": {
-        "kr": "천",
-        "en": "thousand",
-        "jp": "千"
+      "groupTitle": {
+        "cn": "想 + V",
+        "kr": "想 + V",
+        "en": "想 + V",
+        "jp": "想 + V"
       },
-      "note": ""
+      "focusGrammar": "想 + V",
+      "sentences": [
+        {
+          "cn": "明年我想去中国。",
+          "pinyin": "Míngnián wǒ xiǎng qù Zhōngguó.",
+          "translations": {
+            "kr": "내년에 중국에 가고 싶어요.",
+            "en": "I want to go to China next year.",
+            "jp": "来年中国に行きたいです。"
+          }
+        },
+        {
+          "cn": "明年 + 想 + 去",
+          "pinyin": "míngnián xiǎng qù",
+          "translations": {
+            "kr": "내년에 가고 싶다",
+            "en": "want to go next year",
+            "jp": "来年行きたい"
+          }
+        }
+      ],
+      "note": {
+        "cn": "想 + V：明年 + 想 + 去。",
+        "kr": "想 + V：明年 + 想 + 去。",
+        "en": "想 + V: want to do.",
+        "jp": "想 + V：〜したい。"
+      }
     },
     {
-      "cn": "公斤",
-      "pinyin": "gōngjīn",
-      "translations": {
-        "kr": "킬로",
-        "en": "kilogram (kg)",
-        "jp": "キロ"
+      "groupTitle": {
+        "cn": "可能",
+        "kr": "可能",
+        "en": "可能",
+        "jp": "可能"
       },
-      "note": ""
-    },
-    {
-      "cn": "也",
-      "pinyin": "Yě",
-      "translations": {
-        "kr": "~도",
-        "en": "surname Ye",
-        "jp": "〜も"
-      },
-      "note": ""
-    },
-    {
-      "cn": "右边",
-      "pinyin": "yòubian",
-      "translations": {
-        "kr": "오른쪽",
-        "en": "right side",
-        "jp": "右"
-      },
-      "note": ""
+      "focusGrammar": "可能",
+      "sentences": [
+        {
+          "cn": "可能我们一起去。",
+          "pinyin": "Kěnéng wǒmen yīqǐ qù.",
+          "translations": {
+            "kr": "아마 우리 함께 갈 수 있어요.",
+            "en": "Maybe we can go together.",
+            "jp": "多分一緒に行けるかもしれません。"
+          }
+        },
+        {
+          "cn": "千",
+          "pinyin": "qiān",
+          "translations": {
+            "kr": "천",
+            "en": "thousand",
+            "jp": "千"
+          }
+        },
+        {
+          "cn": "公斤",
+          "pinyin": "gōngjīn",
+          "translations": {
+            "kr": "킬로",
+            "en": "kilogram (kg)",
+            "jp": "キロ"
+          }
+        }
+      ],
+      "note": {
+        "cn": "可能 + V，表示可能性。",
+        "kr": "가능성을 나타냅니다.",
+        "en": "可能 + V: possibility.",
+        "jp": "可能 + V：可能性。"
+      }
     }
   ]
 }

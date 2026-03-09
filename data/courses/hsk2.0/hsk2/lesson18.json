@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "请你帮我一下。",
-      "pinyin": "Qǐng nǐ bāng wǒ yīxià.",
-      "translations": {
-        "kr": "잠깐 도와주세요.",
-        "en": "Please help me.",
-        "jp": "ちょっと手伝ってください。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "可以，你要问什么？",
-      "pinyin": "Kěyǐ, nǐ yào wèn shénme?",
-      "translations": {
-        "kr": "네, 뭘 물어보고 싶어요?",
-        "en": "Sure, what do you want to ask?",
-        "jp": "はい、何を聞きたいですか？"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "请你帮我一下。",
+          "pinyin": "Qǐng nǐ bāng wǒ yīxià.",
+          "translations": {
+            "kr": "잠깐 도와주세요.",
+            "en": "Please help me.",
+            "jp": "ちょっと手伝ってください。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "可以，你要问什么？",
+          "pinyin": "Kěyǐ, nǐ yào wèn shénme?",
+          "translations": {
+            "kr": "네, 뭘 물어보고 싶어요?",
+            "en": "Sure, what do you want to ask?",
+            "jp": "はい、何を聞きたいですか？"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "帮 + 我 + V",
         "en": "帮 + 我 + V",
         "jp": "帮 + 我 + V"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「您」和「你」的区别？",
+        "kr": "「您」와 「你」의 차이?",
+        "en": "Difference between 您 and 你?",
+        "jp": "「您」と「你」の違いは？"
+      },
+      "options": [
+        "您更礼貌",
+        "一样",
+        "你更礼貌",
+        "不同用法"
+      ],
+      "answer": "您更礼貌",
+      "explanation": {
+        "kr": "您是礼貌的称呼。",
+        "en": "您 is more polite.",
+        "jp": "您は丁寧な呼び方。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「别」的意思是？",
+        "kr": "「别」의 뜻은?",
+        "en": "What does 别 mean?",
+        "jp": "「别」の意味は？"
+      },
+      "options": [
+        "要",
+        "don't",
+        "可以",
+        "应该"
+      ],
+      "answer": "don't",
+      "explanation": {
+        "kr": "别=~하지 마。",
+        "en": "别 = don't.",
+        "jp": "别=〜するな。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「药」的意思是？",
+        "kr": "「药」의 뜻은?",
+        "en": "What does 药 mean?",
+        "jp": "「药」の意味は？"
+      },
+      "options": [
+        "食物",
+        "medicine",
+        "饮料",
+        "水果"
+      ],
+      "answer": "medicine",
+      "explanation": {
+        "kr": "药=약。",
+        "en": "药 = medicine.",
+        "jp": "药=薬。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "帮助",
-      "pinyin": "bāngzhù",
-      "translations": {
-        "kr": "돕다",
-        "en": "assistance",
-        "jp": "助ける"
+      "groupTitle": {
+        "cn": "请 + V",
+        "kr": "请 + V",
+        "en": "请 + V",
+        "jp": "请 + V"
       },
-      "note": ""
+      "focusGrammar": "请 + V",
+      "sentences": [
+        {
+          "cn": "请你帮我一下。",
+          "pinyin": "Qǐng nǐ bāng wǒ yīxià.",
+          "translations": {
+            "kr": "잠깐 도와주세요.",
+            "en": "Please help me.",
+            "jp": "ちょっと手伝ってください。"
+          }
+        },
+        {
+          "cn": "请 + 动词 + 一下",
+          "pinyin": "qǐng dòngcí yīxià",
+          "translations": {
+            "kr": "请 + 동사 + 一下",
+            "en": "please + verb + 一下",
+            "jp": "请 + 動詞 + 一下"
+          }
+        }
+      ],
+      "note": {
+        "cn": "请 + 动词 + 一下，礼貌请求。",
+        "kr": "정중한 요청입니다.",
+        "en": "请 + verb + 一下: polite request.",
+        "jp": "丁寧な依頼。"
+      }
     },
     {
-      "cn": "问",
-      "pinyin": "wèn",
-      "translations": {
-        "kr": "묻다",
-        "en": "to ask",
-        "jp": "聞く"
+      "groupTitle": {
+        "cn": "帮 + 人 + V",
+        "kr": "帮 + 사람 + V",
+        "en": "帮 + person + V",
+        "jp": "帮 + 人 + V"
       },
-      "note": ""
-    },
-    {
-      "cn": "别",
-      "pinyin": "Bié",
-      "translations": {
-        "kr": "~하지 마",
-        "en": "surname Bie",
-        "jp": "〜するな"
-      },
-      "note": ""
-    },
-    {
-      "cn": "您",
-      "pinyin": "nín",
-      "translations": {
-        "kr": "당신 (존칭)",
-        "en": "you (courteous",
-        "jp": "あなた（敬称）"
-      },
-      "note": ""
+      "focusGrammar": "帮 + 人 + V",
+      "sentences": [
+        {
+          "cn": "帮 + 我 + V",
+          "pinyin": "bāng wǒ",
+          "translations": {
+            "kr": "나를 도와 V하다",
+            "en": "help me V",
+            "jp": "私を助けてVする"
+          }
+        },
+        {
+          "cn": "帮助",
+          "pinyin": "bāngzhù",
+          "translations": {
+            "kr": "돕다",
+            "en": "assistance",
+            "jp": "助ける"
+          }
+        },
+        {
+          "cn": "问",
+          "pinyin": "wèn",
+          "translations": {
+            "kr": "묻다",
+            "en": "to ask",
+            "jp": "聞く"
+          }
+        }
+      ],
+      "note": {
+        "cn": "帮 + 我 + V，请求帮助。",
+        "kr": "도움을 요청합니다.",
+        "en": "帮 + 我 + V: ask for help.",
+        "jp": "助けを求める。"
+      }
     }
   ]
 }

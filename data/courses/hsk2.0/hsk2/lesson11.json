@@ -295,24 +295,34 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "他在学校工作。",
-      "pinyin": "Tā zài xuéxiào gōngzuò.",
-      "translations": {
-        "kr": "그는 학교에서 일해요.",
-        "en": "He works at school.",
-        "jp": "彼は学校で働いています。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "他得上班，但是今天生病了。",
-      "pinyin": "Tā déi shàngbān, dànshì jīntiān shēngbìng le.",
-      "translations": {
-        "kr": "출근해야 하는데 오늘 아팠어요.",
-        "en": "He has to work, but he's sick today.",
-        "jp": "出勤しなければならないが、今日は病気です。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "他在学校工作。",
+          "pinyin": "Tā zài xuéxiào gōngzuò.",
+          "translations": {
+            "kr": "그는 학교에서 일해요.",
+            "en": "He works at school.",
+            "jp": "彼は学校で働いています。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "他得上班，但是今天生病了。",
+          "pinyin": "Tā déi shàngbān, dànshì jīntiān shēngbìng le.",
+          "translations": {
+            "kr": "출근해야 하는데 오늘 아팠어요.",
+            "en": "He has to work, but he's sick today.",
+            "jp": "出勤しなければならないが、今日は病気です。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -398,6 +408,69 @@
         "kr": "得 + V",
         "en": "得 + V",
         "jp": "得 + V"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「公司」的意思是？",
+        "kr": "「公司」의 뜻은?",
+        "en": "What does 公司 mean?",
+        "jp": "「公司」の意味は？"
+      },
+      "options": [
+        "学校",
+        "company",
+        "家",
+        "医院"
+      ],
+      "answer": "company",
+      "explanation": {
+        "kr": "公司=회사。",
+        "en": "公司 = company.",
+        "jp": "公司=会社。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「生病」的意思是？",
+        "kr": "「生病」의 뜻은?",
+        "en": "What does 生病 mean?",
+        "jp": "「生病」の意味は？"
+      },
+      "options": [
+        "健康",
+        "to fall ill",
+        "工作",
+        "休息"
+      ],
+      "answer": "to fall ill",
+      "explanation": {
+        "kr": "生病=병나다。",
+        "en": "生病 = to fall ill.",
+        "jp": "生病=病気になる。"
+      }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「生日」的意思是？",
+        "kr": "「生日」의 뜻은?",
+        "en": "What does 生日 mean?",
+        "jp": "「生日」の意味は？"
+      },
+      "options": [
+        "节日",
+        "birthday",
+        "新年",
+        "周末"
+      ],
+      "answer": "birthday",
+      "explanation": {
+        "kr": "生日=생일。",
+        "en": "生日 = birthday.",
+        "jp": "生日=誕生日。"
       }
     }
   ],
@@ -487,44 +560,83 @@
   },
   "extension": [
     {
-      "cn": "公司",
-      "pinyin": "gōngsī",
-      "translations": {
-        "kr": "회사",
-        "en": "company",
-        "jp": "会社"
+      "groupTitle": {
+        "cn": "在 + 地点 + V",
+        "kr": "在 + 장소 + V",
+        "en": "在 + place + V",
+        "jp": "在 + 場所 + V"
       },
-      "note": ""
+      "focusGrammar": "在 + 地点 + V",
+      "sentences": [
+        {
+          "cn": "他在学校工作。",
+          "pinyin": "Tā zài xuéxiào gōngzuò.",
+          "translations": {
+            "kr": "그는 학교에서 일해요.",
+            "en": "He works at school.",
+            "jp": "彼は学校で働いています。"
+          }
+        },
+        {
+          "cn": "在公司上班",
+          "pinyin": "zài gōngsī shàngbān",
+          "translations": {
+            "kr": "회사에서 출근하다",
+            "en": "work at company",
+            "jp": "会社で出勤する"
+          }
+        }
+      ],
+      "note": {
+        "cn": "在 + 地方 + 工作，表示工作地点。",
+        "kr": "일하는 장소를 나타냅니다.",
+        "en": "在 + place + work: work location.",
+        "jp": "働く場所を表す。"
+      }
     },
     {
-      "cn": "上班",
-      "pinyin": "shàngbān",
-      "translations": {
-        "kr": "출근하다",
-        "en": "to go to work",
-        "jp": "出勤する"
+      "groupTitle": {
+        "cn": "得 必须",
+        "kr": "得 필수",
+        "en": "得 must",
+        "jp": "得 必須"
       },
-      "note": ""
-    },
-    {
-      "cn": "事情",
-      "pinyin": "shìqing",
-      "translations": {
-        "kr": "일",
-        "en": "affair",
-        "jp": "こと"
-      },
-      "note": ""
-    },
-    {
-      "cn": "让",
-      "pinyin": "ràng",
-      "translations": {
-        "kr": "~하게 하다",
-        "en": "to yield",
-        "jp": "〜させる"
-      },
-      "note": ""
+      "focusGrammar": "得 必须",
+      "sentences": [
+        {
+          "cn": "他得上班。",
+          "pinyin": "Tā déi shàngbān.",
+          "translations": {
+            "kr": "그는 출근해야 해요.",
+            "en": "He has to go to work.",
+            "jp": "彼は出勤しなければならない。"
+          }
+        },
+        {
+          "cn": "事情",
+          "pinyin": "shìqing",
+          "translations": {
+            "kr": "일",
+            "en": "affair",
+            "jp": "こと"
+          }
+        },
+        {
+          "cn": "让",
+          "pinyin": "ràng",
+          "translations": {
+            "kr": "~하게 하다",
+            "en": "to yield",
+            "jp": "〜させる"
+          }
+        }
+      ],
+      "note": {
+        "cn": "得 + V，表示必须做某事。",
+        "kr": "~해야 한다.",
+        "en": "得 + V: must do.",
+        "jp": "〜しなければならない。"
+      }
     }
   ]
 }

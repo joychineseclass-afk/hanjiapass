@@ -261,34 +261,44 @@
   ],
   "dialogue": [
     {
-      "speaker": "A",
-      "cn": "我准备学习中文。",
-      "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
-      "translations": {
-        "kr": "저는 중국어 공부할 준비해요.",
-        "en": "I'm preparing to study Chinese.",
-        "jp": "私は中国語を勉強する準備をしています。"
-      }
-    },
-    {
-      "speaker": "B",
-      "cn": "希望你能学好。你知道「新」的意思吗？",
-      "pinyin": "Xīwàng nǐ néng xué hǎo. Nǐ zhīdào 「xīn」 de yìsi ma?",
-      "translations": {
-        "kr": "잘 배우길 바라요. 「新」의 의미 알아요?",
-        "en": "I hope you learn well. Do you know the meaning of 新?",
-        "jp": "よく学べることを願います。「新」の意味を知っていますか？"
-      }
-    },
-    {
-      "speaker": "A",
-      "cn": "知道，新是为新的开始。",
-      "pinyin": "Zhīdào, xīn shì wèi xīn de kāishǐ.",
-      "translations": {
-        "kr": "알아요. 新은 새로운 시작을 위한 거예요.",
-        "en": "Yes, 新 is for a new beginning.",
-        "jp": "知っています。新は新しい始まりのためです。"
-      }
+      "title": {
+        "cn": "会话1",
+        "kr": "대화 1",
+        "en": "Dialogue 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "cn": "我准备学习中文。",
+          "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
+          "translations": {
+            "kr": "저는 중국어 공부할 준비해요.",
+            "en": "I'm preparing to study Chinese.",
+            "jp": "私は中国語を勉強する準備をしています。"
+          }
+        },
+        {
+          "speaker": "B",
+          "cn": "希望你能学好。你知道「新」的意思吗？",
+          "pinyin": "Xīwàng nǐ néng xué hǎo. Nǐ zhīdào 「xīn」 de yìsi ma?",
+          "translations": {
+            "kr": "잘 배우길 바라요. 「新」의 의미 알아요?",
+            "en": "I hope you learn well. Do you know the meaning of 新?",
+            "jp": "よく学べることを願います。「新」の意味を知っていますか？"
+          }
+        },
+        {
+          "speaker": "A",
+          "cn": "知道，新是为新的开始。",
+          "pinyin": "Zhīdào, xīn shì wèi xīn de kāishǐ.",
+          "translations": {
+            "kr": "알아요. 新은 새로운 시작을 위한 거예요.",
+            "en": "Yes, 新 is for a new beginning.",
+            "jp": "知っています。新は新しい始まりのためです。"
+          }
+        }
+      ]
     }
   ],
   "grammar": [
@@ -417,6 +427,27 @@
         "en": "为 = for, purpose.",
         "jp": "为=为了、目的を表す。"
       }
+    },
+    {
+      "type": "choice",
+      "prompt": {
+        "cn": "「姓」的意思是？",
+        "kr": "「姓」의 뜻은?",
+        "en": "What does 姓 mean?",
+        "jp": "「姓」の意味は？"
+      },
+      "options": [
+        "名字",
+        "family name",
+        "年龄",
+        "职业"
+      ],
+      "answer": "family name",
+      "explanation": {
+        "kr": "姓=성씨。",
+        "en": "姓 = family name.",
+        "jp": "姓=姓。"
+      }
     }
   ],
   "aiPrompts": [
@@ -503,34 +534,83 @@
   },
   "extension": [
     {
-      "cn": "知道",
-      "pinyin": "zhīdào",
-      "translations": {
-        "kr": "알다",
-        "en": "know",
-        "jp": "知る"
+      "groupTitle": {
+        "cn": "准备 + V",
+        "kr": "准备 + V",
+        "en": "准备 + V",
+        "jp": "准备 + V"
       },
-      "note": "知道+事"
+      "focusGrammar": "准备 + V",
+      "sentences": [
+        {
+          "cn": "准备考试",
+          "pinyin": "zhǔnbèi kǎoshì",
+          "translations": {
+            "kr": "시험 준비하다",
+            "en": "prepare for exam",
+            "jp": "試験の準備をする"
+          }
+        },
+        {
+          "cn": "我准备学习中文。",
+          "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
+          "translations": {
+            "kr": "저는 중국어 공부할 준비해요.",
+            "en": "I'm preparing to study Chinese.",
+            "jp": "私は中国語を勉強する準備をしています。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "准备 + 动词，表示准备做某事。",
+        "kr": "~할 준비를 하다.",
+        "en": "准备 + verb: prepare to do.",
+        "jp": "〜する準備をする。"
+      }
     },
     {
-      "cn": "意思",
-      "pinyin": "yìsi",
-      "translations": {
-        "kr": "의미",
-        "en": "meaning",
-        "jp": "意味"
+      "groupTitle": {
+        "cn": "希望 + V",
+        "kr": "希望 + V",
+        "en": "希望 + V",
+        "jp": "希望 + V"
       },
-      "note": "的意思"
-    },
-    {
-      "cn": "为",
-      "pinyin": "wéi",
-      "translations": {
-        "kr": "~를 위해",
-        "en": "for",
-        "jp": "〜のために"
-      },
-      "note": "为+目的"
+      "focusGrammar": "希望 + V",
+      "sentences": [
+        {
+          "cn": "希望你成功",
+          "pinyin": "xīwàng nǐ chénggōng",
+          "translations": {
+            "kr": "성공하길 바라요",
+            "en": "hope you succeed",
+            "jp": "成功することを願います"
+          }
+        },
+        {
+          "cn": "知道",
+          "pinyin": "zhīdào",
+          "translations": {
+            "kr": "알다",
+            "en": "know",
+            "jp": "知る"
+          }
+        },
+        {
+          "cn": "意思",
+          "pinyin": "yìsi",
+          "translations": {
+            "kr": "의미",
+            "en": "meaning",
+            "jp": "意味"
+          }
+        }
+      ],
+      "note": {
+        "cn": "希望 + 小句，表示愿望。",
+        "kr": "~하기를 바라다.",
+        "en": "希望 + clause: hope that.",
+        "jp": "〜することを願う。"
+      }
     }
   ]
 }
