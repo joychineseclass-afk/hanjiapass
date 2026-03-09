@@ -1,0 +1,2407 @@
+[
+  {
+    "lesson": 1,
+    "type": "study",
+    "title": {
+      "cn": "你今天忙吗",
+      "kr": "오늘 바빠요?",
+      "en": "Are you busy today?",
+      "jp": "今日は忙しいですか？"
+    },
+    "newWords": [
+      {
+        "hanzi": "忙",
+        "pinyin": "máng",
+        "pos": "adj",
+        "translations": {
+          "kr": "바쁘다",
+          "en": "busy",
+          "jp": "忙しい"
+        }
+      },
+      {
+        "hanzi": "累",
+        "pinyin": "lěi",
+        "pos": "adj",
+        "translations": {
+          "kr": "피곤하다",
+          "en": "tired",
+          "jp": "疲れる"
+        }
+      },
+      {
+        "hanzi": "吧",
+        "pinyin": "bā",
+        "pos": "particle",
+        "translations": {
+          "kr": "~자 (제안)",
+          "en": "suggestion particle",
+          "jp": "〜しましょう（提案）"
+        }
+      },
+      {
+        "hanzi": "但是",
+        "pinyin": "dànshì",
+        "pos": "conj",
+        "translations": {
+          "kr": "그러나",
+          "en": "but",
+          "jp": "しかし"
+        }
+      },
+      {
+        "hanzi": "女人",
+        "pinyin": "nǚrén",
+        "pos": "n",
+        "translations": {
+          "kr": "여자",
+          "en": "woman",
+          "jp": "女性"
+        }
+      },
+      {
+        "hanzi": "每",
+        "pinyin": "měi",
+        "pos": "adv",
+        "translations": {
+          "kr": "매",
+          "en": "each",
+          "jp": "毎"
+        }
+      },
+      {
+        "hanzi": "教室",
+        "pinyin": "jiàoshì",
+        "pos": "n",
+        "translations": {
+          "kr": "교실",
+          "en": "classroom",
+          "jp": "教室"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 7,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 7,
+      "totalAvailableWords": 157
+    },
+    "mainGrammar": {
+      "name": "吗疑问句",
+      "focus": "S + Adj + 吗？"
+    },
+    "supportGrammar": [
+      {
+        "name": "形容词谓语句",
+        "focus": "S + 很 + Adj"
+      },
+      {
+        "name": "程度副词 很",
+        "focus": "很 + Adj"
+      }
+    ],
+    "notes": {
+      "theme": "你今天忙吗",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson",
+      "vocabNote": "女人、教室为满足147词无重复分配而提前引入，可在对话中自然融入"
+    }
+  },
+  {
+    "lesson": 2,
+    "type": "study",
+    "title": {
+      "cn": "这是我的家人",
+      "kr": "이것은 제 가족이에요",
+      "en": "This is my family",
+      "jp": "これは私の家族です"
+    },
+    "newWords": [
+      {
+        "hanzi": "哥哥",
+        "pinyin": "gēge",
+        "pos": "n",
+        "translations": {
+          "kr": "형/오빠",
+          "en": "older brother",
+          "jp": "兄"
+        }
+      },
+      {
+        "hanzi": "弟弟",
+        "pinyin": "dìdi",
+        "pos": "n",
+        "translations": {
+          "kr": "남동생",
+          "en": "younger brother",
+          "jp": "弟"
+        }
+      },
+      {
+        "hanzi": "姐姐",
+        "pinyin": "jiějie",
+        "pos": "n",
+        "translations": {
+          "kr": "누나/언니",
+          "en": "older sister",
+          "jp": "姉"
+        }
+      },
+      {
+        "hanzi": "妹妹",
+        "pinyin": "mèimei",
+        "pos": "n",
+        "translations": {
+          "kr": "여동생",
+          "en": "younger sister",
+          "jp": "妹"
+        }
+      },
+      {
+        "hanzi": "孩子",
+        "pinyin": "háizi",
+        "pos": "n",
+        "translations": {
+          "kr": "아이",
+          "en": "child",
+          "jp": "子供"
+        }
+      },
+      {
+        "hanzi": "大家",
+        "pinyin": "dàjiā",
+        "pos": "pron",
+        "translations": {
+          "kr": "모두",
+          "en": "everyone",
+          "jp": "みんな"
+        }
+      },
+      {
+        "hanzi": "介绍",
+        "pinyin": "jièshào",
+        "pos": "v",
+        "translations": {
+          "kr": "소개하다",
+          "en": "to introduce (sb to sb)",
+          "jp": "紹介する"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 14,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 14,
+      "totalAvailableWords": 164
+    },
+    "mainGrammar": {
+      "name": "的 字结构（所属）",
+      "focus": "这/那 + 是 + N + 的"
+    },
+    "supportGrammar": [
+      {
+        "name": "呢 疑问句",
+        "focus": "...呢？"
+      }
+    ],
+    "notes": {
+      "theme": "这是我的家人",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 3,
+    "type": "study",
+    "title": {
+      "cn": "这是我的朋友",
+      "kr": "이것은 제 친구예요",
+      "en": "This is my friend",
+      "jp": "これは私の友達です"
+    },
+    "newWords": [
+      {
+        "hanzi": "给",
+        "pinyin": "gěi",
+        "pos": "prep",
+        "translations": {
+          "kr": "~에게",
+          "en": "to",
+          "jp": "〜に"
+        }
+      },
+      {
+        "hanzi": "告诉",
+        "pinyin": "gàosù",
+        "pos": "v",
+        "translations": {
+          "kr": "알려주다",
+          "en": "to press charges",
+          "jp": "教える"
+        }
+      },
+      {
+        "hanzi": "懂",
+        "pinyin": "dǒng",
+        "pos": "v",
+        "translations": {
+          "kr": "이해하다",
+          "en": "to understand",
+          "jp": "分かる"
+        }
+      },
+      {
+        "hanzi": "欢迎",
+        "pinyin": "huānyíng",
+        "pos": "v",
+        "translations": {
+          "kr": "환영하다",
+          "en": "to welcome",
+          "jp": "歓迎する"
+        }
+      },
+      {
+        "hanzi": "回答",
+        "pinyin": "huídá",
+        "pos": "v",
+        "translations": {
+          "kr": "답하다",
+          "en": "to reply",
+          "jp": "答える"
+        }
+      },
+      {
+        "hanzi": "可能",
+        "pinyin": "kěnéng",
+        "pos": "adv",
+        "translations": {
+          "kr": "아마",
+          "en": "might (happen)",
+          "jp": "かもしれない"
+        }
+      },
+      {
+        "hanzi": "可以",
+        "pinyin": "kěyǐ",
+        "pos": "aux",
+        "translations": {
+          "kr": "~할 수 있다",
+          "en": "can",
+          "jp": "〜できる"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 21,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 21,
+      "totalAvailableWords": 171
+    },
+    "mainGrammar": {
+      "name": "介绍他人",
+      "focus": "这是 + N"
+    },
+    "supportGrammar": [
+      {
+        "name": "给 + N + V",
+        "focus": "给 + 人 + 动词"
+      }
+    ],
+    "notes": {
+      "theme": "这是我的朋友",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 4,
+    "type": "study",
+    "title": {
+      "cn": "我们一起去吃饭吧",
+      "kr": "우리 함께 밥 먹으러 가요",
+      "en": "Let's eat together",
+      "jp": "一緒に食事に行きましょう"
+    },
+    "newWords": [
+      {
+        "hanzi": "一起",
+        "pinyin": "yīqǐ",
+        "pos": "adv",
+        "translations": {
+          "kr": "함께",
+          "en": "in the same place",
+          "jp": "一緒に"
+        }
+      },
+      {
+        "hanzi": "好吃",
+        "pinyin": "hǎochī",
+        "pos": "adj",
+        "translations": {
+          "kr": "맛있다",
+          "en": "tasty",
+          "jp": "美味しい"
+        }
+      },
+      {
+        "hanzi": "服务员",
+        "pinyin": "fúwùyuán",
+        "pos": "n",
+        "translations": {
+          "kr": "웨이터",
+          "en": "waiter",
+          "jp": "店員"
+        }
+      },
+      {
+        "hanzi": "咖啡",
+        "pinyin": "kāfēi",
+        "pos": "n",
+        "translations": {
+          "kr": "커피",
+          "en": "coffee (loanword)",
+          "jp": "コーヒー"
+        }
+      },
+      {
+        "hanzi": "牛奶",
+        "pinyin": "niúnǎi",
+        "pos": "n",
+        "translations": {
+          "kr": "우유",
+          "en": "cow's milk",
+          "jp": "牛乳"
+        }
+      },
+      {
+        "hanzi": "房间",
+        "pinyin": "fángjiān",
+        "pos": "n",
+        "translations": {
+          "kr": "방",
+          "en": "room",
+          "jp": "部屋"
+        }
+      },
+      {
+        "hanzi": "两",
+        "pinyin": "liǎng",
+        "pos": "num",
+        "translations": {
+          "kr": "두",
+          "en": "two",
+          "jp": "二つ"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 28,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 28,
+      "totalAvailableWords": 178
+    },
+    "mainGrammar": {
+      "name": "吧 建议句",
+      "focus": "...一起 + V + 吧"
+    },
+    "supportGrammar": [
+      {
+        "name": "一起",
+        "focus": "一起 + V"
+      }
+    ],
+    "notes": {
+      "theme": "我们一起去吃饭吧",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 5,
+    "type": "study",
+    "title": {
+      "cn": "你想喝什么",
+      "kr": "뭐 마시고 싶어요?",
+      "en": "What do you want to drink?",
+      "jp": "何を飲みたいですか？"
+    },
+    "newWords": [
+      {
+        "hanzi": "号",
+        "pinyin": "háo",
+        "pos": "n",
+        "translations": {
+          "kr": "호/번",
+          "en": "roar",
+          "jp": "号"
+        }
+      },
+      {
+        "hanzi": "件",
+        "pinyin": "jiàn",
+        "pos": "m",
+        "translations": {
+          "kr": "건",
+          "en": "item",
+          "jp": "件"
+        }
+      },
+      {
+        "hanzi": "鸡蛋",
+        "pinyin": "jīdàn",
+        "pos": "n",
+        "translations": {
+          "kr": "계란",
+          "en": "(chicken) egg",
+          "jp": "卵"
+        }
+      },
+      {
+        "hanzi": "元",
+        "pinyin": "Yuán",
+        "pos": "m",
+        "translations": {
+          "kr": "위안",
+          "en": "surname Yuan",
+          "jp": "元"
+        }
+      },
+      {
+        "hanzi": "张",
+        "pinyin": "Zhāng",
+        "pos": "m",
+        "translations": {
+          "kr": "장",
+          "en": "surname Zhang",
+          "jp": "枚"
+        }
+      },
+      {
+        "hanzi": "要",
+        "pinyin": "yāo",
+        "pos": "aux",
+        "translations": {
+          "kr": "~해야 하다",
+          "en": "(bound form) to demand",
+          "jp": "〜しなければならない"
+        }
+      },
+      {
+        "hanzi": "百",
+        "pinyin": "Bǎi",
+        "pos": "num",
+        "translations": {
+          "kr": "백",
+          "en": "surname Bai",
+          "jp": "百"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 35,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 35,
+      "totalAvailableWords": 185
+    },
+    "mainGrammar": {
+      "name": "想 + V",
+      "focus": "想 + 动词"
+    },
+    "supportGrammar": [
+      {
+        "name": "什么 疑问",
+        "focus": "V + 什么？"
+      },
+      {
+        "name": "可以",
+        "focus": "可以 + V"
+      }
+    ],
+    "notes": {
+      "theme": "你想喝什么",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 6,
+    "type": "study",
+    "title": {
+      "cn": "现在几点了",
+      "kr": "지금 몇 시예요?",
+      "en": "What time is it now?",
+      "jp": "今何時ですか？"
+    },
+    "newWords": [
+      {
+        "hanzi": "手表",
+        "pinyin": "shǒubiǎo",
+        "pos": "n",
+        "translations": {
+          "kr": "손목시계",
+          "en": "wristwatch",
+          "jp": "腕時計"
+        }
+      },
+      {
+        "hanzi": "手机",
+        "pinyin": "shǒujī",
+        "pos": "n",
+        "translations": {
+          "kr": "휴대폰",
+          "en": "cell phone",
+          "jp": "携帯"
+        }
+      },
+      {
+        "hanzi": "小时",
+        "pinyin": "xiǎoshí",
+        "pos": "n",
+        "translations": {
+          "kr": "시간",
+          "en": "hour",
+          "jp": "時間"
+        }
+      },
+      {
+        "hanzi": "快",
+        "pinyin": "kuài",
+        "pos": "adj",
+        "translations": {
+          "kr": "빠르다",
+          "en": "rapid",
+          "jp": "速い"
+        }
+      },
+      {
+        "hanzi": "慢",
+        "pinyin": "màn",
+        "pos": "adj",
+        "translations": {
+          "kr": "느리다",
+          "en": "slow",
+          "jp": "遅い"
+        }
+      },
+      {
+        "hanzi": "就",
+        "pinyin": "jiù",
+        "pos": "adv",
+        "translations": {
+          "kr": "바로",
+          "en": "(after a suppositional clause) in that case",
+          "jp": "すぐに"
+        }
+      },
+      {
+        "hanzi": "时间",
+        "pinyin": "shíjiān",
+        "pos": "n",
+        "translations": {
+          "kr": "시간",
+          "en": "time",
+          "jp": "時間"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 42,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 42,
+      "totalAvailableWords": 192
+    },
+    "mainGrammar": {
+      "name": "时间表达",
+      "focus": "现在 + 几 + 点 + 了？"
+    },
+    "supportGrammar": [
+      {
+        "name": "点 / 分",
+        "focus": "数字 + 点 + 数字 + 分"
+      }
+    ],
+    "notes": {
+      "theme": "现在几点了",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 7,
+    "type": "study",
+    "title": {
+      "cn": "今天很冷",
+      "kr": "오늘 너무 추워요",
+      "en": "It's very cold today",
+      "jp": "今日はとても寒いです"
+    },
+    "newWords": [
+      {
+        "hanzi": "穿",
+        "pinyin": "chuān",
+        "pos": "v",
+        "translations": {
+          "kr": "입다",
+          "en": "to wear",
+          "jp": "着る"
+        }
+      },
+      {
+        "hanzi": "雪",
+        "pinyin": "Xuě",
+        "pos": "n",
+        "translations": {
+          "kr": "눈",
+          "en": "surname Xue",
+          "jp": "雪"
+        }
+      },
+      {
+        "hanzi": "晴",
+        "pinyin": "qíng",
+        "pos": "adj",
+        "translations": {
+          "kr": "맑다",
+          "en": "clear",
+          "jp": "晴れる"
+        }
+      },
+      {
+        "hanzi": "阴",
+        "pinyin": "Yīn",
+        "pos": "adj",
+        "translations": {
+          "kr": "흐리다",
+          "en": "surname Yin",
+          "jp": "曇り"
+        }
+      },
+      {
+        "hanzi": "非常",
+        "pinyin": "fēicháng",
+        "pos": "adv",
+        "translations": {
+          "kr": "매우",
+          "en": "very",
+          "jp": "非常に"
+        }
+      },
+      {
+        "hanzi": "黑",
+        "pinyin": "Hēi",
+        "pos": "adj",
+        "translations": {
+          "kr": "검은색",
+          "en": "abbr. for Heilongjiang province 黑龙江",
+          "jp": "黒い"
+        }
+      },
+      {
+        "hanzi": "红",
+        "pinyin": "Hóng",
+        "pos": "adj",
+        "translations": {
+          "kr": "빨간색",
+          "en": "surname Hong",
+          "jp": "赤い"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 49,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 49,
+      "totalAvailableWords": 199
+    },
+    "mainGrammar": {
+      "name": "形容词谓语句",
+      "focus": "今天 + 很 + Adj"
+    },
+    "supportGrammar": [
+      {
+        "name": "程度副词 非常",
+        "focus": "非常 + Adj"
+      }
+    ],
+    "notes": {
+      "theme": "今天很冷",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 8,
+    "type": "study",
+    "title": {
+      "cn": "周末你做什么",
+      "kr": "주말에 뭐 해요?",
+      "en": "What do you do on weekends?",
+      "jp": "週末は何をしますか？"
+    },
+    "newWords": [
+      {
+        "hanzi": "休息",
+        "pinyin": "xiūxi",
+        "pos": "v",
+        "translations": {
+          "kr": "쉬다",
+          "en": "rest",
+          "jp": "休む"
+        }
+      },
+      {
+        "hanzi": "玩",
+        "pinyin": "wán",
+        "pos": "v",
+        "translations": {
+          "kr": "놀다",
+          "en": "to play",
+          "jp": "遊ぶ"
+        }
+      },
+      {
+        "hanzi": "唱歌",
+        "pinyin": "chànggē",
+        "pos": "v",
+        "translations": {
+          "kr": "노래하다",
+          "en": "to sing a song",
+          "jp": "歌う"
+        }
+      },
+      {
+        "hanzi": "跳舞",
+        "pinyin": "tiàowǔ",
+        "pos": "v",
+        "translations": {
+          "kr": "춤추다",
+          "en": "to dance",
+          "jp": "踊る"
+        }
+      },
+      {
+        "hanzi": "跑步",
+        "pinyin": "pǎobù",
+        "pos": "v",
+        "translations": {
+          "kr": "달리다",
+          "en": "to run",
+          "jp": "走る"
+        }
+      },
+      {
+        "hanzi": "晚上",
+        "pinyin": "wǎnshang",
+        "pos": "n",
+        "translations": {
+          "kr": "저녁",
+          "en": "evening",
+          "jp": "夜"
+        }
+      },
+      {
+        "hanzi": "快乐",
+        "pinyin": "kuàilè",
+        "pos": "adj",
+        "translations": {
+          "kr": "즐겁다",
+          "en": "happy",
+          "jp": "楽しい"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 56,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 56,
+      "totalAvailableWords": 206
+    },
+    "mainGrammar": {
+      "name": "时间词 + 做什么",
+      "focus": "周末 + 你 + 做什么？"
+    },
+    "supportGrammar": [
+      {
+        "name": "在/正在",
+        "focus": "在 + V"
+      }
+    ],
+    "notes": {
+      "theme": "周末你做什么",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 9,
+    "type": "study",
+    "title": {
+      "cn": "我每天学习汉语",
+      "kr": "저는 매일 중국어를 배워요",
+      "en": "I study Chinese every day",
+      "jp": "私は毎日中国語を勉強します"
+    },
+    "newWords": [
+      {
+        "hanzi": "开始",
+        "pinyin": "kāishǐ",
+        "pos": "v",
+        "translations": {
+          "kr": "시작하다",
+          "en": "to begin",
+          "jp": "始める"
+        }
+      },
+      {
+        "hanzi": "考试",
+        "pinyin": "kǎoshì",
+        "pos": "n",
+        "translations": {
+          "kr": "시험",
+          "en": "to take an exam",
+          "jp": "試験"
+        }
+      },
+      {
+        "hanzi": "课",
+        "pinyin": "kè",
+        "pos": "n",
+        "translations": {
+          "kr": "수업",
+          "en": "subject",
+          "jp": "授業"
+        }
+      },
+      {
+        "hanzi": "离",
+        "pinyin": "chī",
+        "pos": "prep",
+        "translations": {
+          "kr": "~에서 떨어지다",
+          "en": "mythical beast (archaic)",
+          "jp": "〜から離れる"
+        }
+      },
+      {
+        "hanzi": "第一",
+        "pinyin": "dìyī",
+        "pos": "num",
+        "translations": {
+          "kr": "첫 번째",
+          "en": "first",
+          "jp": "第一"
+        }
+      },
+      {
+        "hanzi": "报纸",
+        "pinyin": "bàozhǐ",
+        "pos": "n",
+        "translations": {
+          "kr": "신문",
+          "en": "newspaper",
+          "jp": "新聞"
+        }
+      },
+      {
+        "hanzi": "门",
+        "pinyin": "Mén",
+        "pos": "n",
+        "translations": {
+          "kr": "문",
+          "en": "surname Men",
+          "jp": "ドア"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 63,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 63,
+      "totalAvailableWords": 213
+    },
+    "mainGrammar": {
+      "name": "每 + 时间",
+      "focus": "每 + 天/天 + V"
+    },
+    "supportGrammar": [
+      {
+        "name": "能愿动词 可以",
+        "focus": "可以 + V"
+      }
+    ],
+    "notes": {
+      "theme": "我每天学习汉语",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 10,
+    "type": "study",
+    "title": {
+      "cn": "我准备学习中文",
+      "kr": "저는 중국어 공부할 준비해요",
+      "en": "I'm preparing to study Chinese",
+      "jp": "私は中国語を勉強する準備をしています"
+    },
+    "newWords": [
+      {
+        "hanzi": "准备",
+        "pinyin": "zhǔnbèi",
+        "pos": "v",
+        "translations": {
+          "kr": "준비하다",
+          "en": "preparation",
+          "jp": "準備する"
+        }
+      },
+      {
+        "hanzi": "希望",
+        "pinyin": "xīwàng",
+        "pos": "v",
+        "translations": {
+          "kr": "희망하다",
+          "en": "to hope",
+          "jp": "希望する"
+        }
+      },
+      {
+        "hanzi": "新",
+        "pinyin": "Xīn",
+        "pos": "adj",
+        "translations": {
+          "kr": "새로운",
+          "en": "abbr. for Xinjiang 疆 or Singapore 坡",
+          "jp": "新しい"
+        }
+      },
+      {
+        "hanzi": "姓",
+        "pinyin": "xìng",
+        "pos": "n",
+        "translations": {
+          "kr": "성",
+          "en": "family name",
+          "jp": "姓"
+        }
+      },
+      {
+        "hanzi": "意思",
+        "pinyin": "yìsi",
+        "pos": "n",
+        "translations": {
+          "kr": "의미",
+          "en": "idea",
+          "jp": "意味"
+        }
+      },
+      {
+        "hanzi": "为",
+        "pinyin": "wéi",
+        "pos": "prep",
+        "translations": {
+          "kr": "~를 위해",
+          "en": "as (in the capacity of)",
+          "jp": "〜のために"
+        }
+      },
+      {
+        "hanzi": "知道",
+        "pinyin": "zhīdào",
+        "pos": "v",
+        "translations": {
+          "kr": "알다",
+          "en": "to know",
+          "jp": "知る"
+        }
+      }
+    ],
+    "newWordCount": 7,
+    "cumulativeNewWordCount": 70,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 70,
+      "totalAvailableWords": 220
+    },
+    "mainGrammar": {
+      "name": "准备 + V",
+      "focus": "准备 + 动词"
+    },
+    "supportGrammar": [
+      {
+        "name": "希望 + V",
+        "focus": "希望 + 小句"
+      }
+    ],
+    "notes": {
+      "theme": "我准备学习中文",
+      "difficulty": "easy",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 11,
+    "type": "study",
+    "title": {
+      "cn": "他在学校工作",
+      "kr": "그는 학교에서 일해요",
+      "en": "He works at school",
+      "jp": "彼は学校で働いています"
+    },
+    "newWords": [
+      {
+        "hanzi": "公司",
+        "pinyin": "gōngsī",
+        "pos": "n",
+        "translations": {
+          "kr": "회사",
+          "en": "company",
+          "jp": "会社"
+        }
+      },
+      {
+        "hanzi": "上班",
+        "pinyin": "shàngbān",
+        "pos": "v",
+        "translations": {
+          "kr": "출근하다",
+          "en": "to go to work",
+          "jp": "出勤する"
+        }
+      },
+      {
+        "hanzi": "事情",
+        "pinyin": "shìqing",
+        "pos": "n",
+        "translations": {
+          "kr": "일",
+          "en": "affair",
+          "jp": "こと"
+        }
+      },
+      {
+        "hanzi": "让",
+        "pinyin": "ràng",
+        "pos": "v",
+        "translations": {
+          "kr": "~하게 하다",
+          "en": "to yield",
+          "jp": "〜させる"
+        }
+      },
+      {
+        "hanzi": "男人",
+        "pinyin": "nánrén",
+        "pos": "n",
+        "translations": {
+          "kr": "남자",
+          "en": "a man",
+          "jp": "男性"
+        }
+      },
+      {
+        "hanzi": "得",
+        "pinyin": "dé",
+        "pos": "aux",
+        "translations": {
+          "kr": "~해야 하다",
+          "en": "to obtain",
+          "jp": "〜しなければならない"
+        }
+      },
+      {
+        "hanzi": "生病",
+        "pinyin": "shēngbìng",
+        "pos": "v",
+        "translations": {
+          "kr": "병나다",
+          "en": "to fall ill",
+          "jp": "病気になる"
+        }
+      },
+      {
+        "hanzi": "生日",
+        "pinyin": "shēngrì",
+        "pos": "n",
+        "translations": {
+          "kr": "생일",
+          "en": "birthday",
+          "jp": "誕生日"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 78,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 78,
+      "totalAvailableWords": 228
+    },
+    "mainGrammar": {
+      "name": "在 + 地点 + V",
+      "focus": "在 + 地方 + 工作"
+    },
+    "supportGrammar": [
+      {
+        "name": "得 必须",
+        "focus": "得 + V"
+      }
+    ],
+    "notes": {
+      "theme": "他在学校工作",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 12,
+    "type": "study",
+    "title": {
+      "cn": "他工作很努力",
+      "kr": "그는 일을 열심히 해요",
+      "en": "He works very hard",
+      "jp": "彼は一生懸命働きます"
+    },
+    "newWords": [
+      {
+        "hanzi": "找",
+        "pinyin": "zhǎo",
+        "pos": "v",
+        "translations": {
+          "kr": "찾다",
+          "en": "to try to find",
+          "jp": "探す"
+        }
+      },
+      {
+        "hanzi": "着",
+        "pinyin": "zhāo",
+        "pos": "particle",
+        "translations": {
+          "kr": "~하고 있다",
+          "en": "(chess) move",
+          "jp": "〜している"
+        }
+      },
+      {
+        "hanzi": "正在",
+        "pinyin": "zhèngzài",
+        "pos": "adv",
+        "translations": {
+          "kr": "~하고 있다",
+          "en": "just at (that time)",
+          "jp": "〜している"
+        }
+      },
+      {
+        "hanzi": "它",
+        "pinyin": "tā",
+        "pos": "pron",
+        "translations": {
+          "kr": "그것",
+          "en": "it",
+          "jp": "それ"
+        }
+      },
+      {
+        "hanzi": "鱼",
+        "pinyin": "Yú",
+        "pos": "n",
+        "translations": {
+          "kr": "물고기",
+          "en": "surname Yu",
+          "jp": "魚"
+        }
+      },
+      {
+        "hanzi": "起床",
+        "pinyin": "qǐchuáng",
+        "pos": "v",
+        "translations": {
+          "kr": "일어나다",
+          "en": "to get out of bed",
+          "jp": "起きる"
+        }
+      },
+      {
+        "hanzi": "早上",
+        "pinyin": "zǎoshang",
+        "pos": "n",
+        "translations": {
+          "kr": "아침",
+          "en": "early morning",
+          "jp": "朝"
+        }
+      },
+      {
+        "hanzi": "送",
+        "pinyin": "sòng",
+        "pos": "v",
+        "translations": {
+          "kr": "보내다",
+          "en": "to send",
+          "jp": "送る"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 86,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 86,
+      "totalAvailableWords": 236
+    },
+    "mainGrammar": {
+      "name": "程度副词",
+      "focus": "很 + Adj（努力）"
+    },
+    "supportGrammar": [
+      {
+        "name": "但是",
+        "focus": "...但是..."
+      }
+    ],
+    "notes": {
+      "theme": "他工作很努力",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 13,
+    "type": "study",
+    "title": {
+      "cn": "我坐地铁去公司",
+      "kr": "저는 지하철 타고 회사에 가요",
+      "en": "I take the subway to work",
+      "jp": "私は地下鉄で会社に行きます"
+    },
+    "newWords": [
+      {
+        "hanzi": "公共汽车",
+        "pinyin": "gōnggòngqìchē",
+        "pos": "n",
+        "translations": {
+          "kr": "버스",
+          "en": "bus",
+          "jp": "バス"
+        }
+      },
+      {
+        "hanzi": "自行车",
+        "pinyin": "zìxíngchē",
+        "pos": "n",
+        "translations": {
+          "kr": "자전거",
+          "en": "bicycle",
+          "jp": "自転車"
+        }
+      },
+      {
+        "hanzi": "从",
+        "pinyin": "cóng",
+        "pos": "prep",
+        "translations": {
+          "kr": "~에서",
+          "en": "variant of 从",
+          "jp": "〜から"
+        }
+      },
+      {
+        "hanzi": "到",
+        "pinyin": "dào",
+        "pos": "prep",
+        "translations": {
+          "kr": "~까지",
+          "en": "to reach",
+          "jp": "〜まで"
+        }
+      },
+      {
+        "hanzi": "进",
+        "pinyin": "jìn",
+        "pos": "v",
+        "translations": {
+          "kr": "들어가다",
+          "en": "to go forward",
+          "jp": "入る"
+        }
+      },
+      {
+        "hanzi": "出",
+        "pinyin": "chū",
+        "pos": "v",
+        "translations": {
+          "kr": "나가다",
+          "en": "to go out",
+          "jp": "出る"
+        }
+      },
+      {
+        "hanzi": "路",
+        "pinyin": "Lù",
+        "pos": "n",
+        "translations": {
+          "kr": "길",
+          "en": "surname Lu",
+          "jp": "道"
+        }
+      },
+      {
+        "hanzi": "走",
+        "pinyin": "zǒu",
+        "pos": "v",
+        "translations": {
+          "kr": "걷다",
+          "en": "to walk",
+          "jp": "歩く"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 94,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 94,
+      "totalAvailableWords": 244
+    },
+    "mainGrammar": {
+      "name": "V + 去 + 地点",
+      "focus": "坐 + 交通工具 + 去 + 地方"
+    },
+    "supportGrammar": [
+      {
+        "name": "从...到...",
+        "focus": "从 A 到 B"
+      }
+    ],
+    "notes": {
+      "theme": "我坐地铁去公司",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 14,
+    "type": "study",
+    "title": {
+      "cn": "我们一起去旅行吧",
+      "kr": "우리 함께 여행 가요",
+      "en": "Let's travel together",
+      "jp": "一緒に旅行に行きましょう"
+    },
+    "newWords": [
+      {
+        "hanzi": "旅游",
+        "pinyin": "lǚyóu",
+        "pos": "n",
+        "translations": {
+          "kr": "여행",
+          "en": "trip",
+          "jp": "旅行"
+        }
+      },
+      {
+        "hanzi": "票",
+        "pinyin": "piào",
+        "pos": "n",
+        "translations": {
+          "kr": "표",
+          "en": "ticket",
+          "jp": "切符"
+        }
+      },
+      {
+        "hanzi": "去年",
+        "pinyin": "qùnián",
+        "pos": "n",
+        "translations": {
+          "kr": "작년",
+          "en": "last year",
+          "jp": "去年"
+        }
+      },
+      {
+        "hanzi": "机场",
+        "pinyin": "jīchǎng",
+        "pos": "n",
+        "translations": {
+          "kr": "공항",
+          "en": "airport",
+          "jp": "空港"
+        }
+      },
+      {
+        "hanzi": "船",
+        "pinyin": "chuán",
+        "pos": "n",
+        "translations": {
+          "kr": "배",
+          "en": "variant of 船",
+          "jp": "船"
+        }
+      },
+      {
+        "hanzi": "旁边",
+        "pinyin": "pángbiān",
+        "pos": "n",
+        "translations": {
+          "kr": "옆",
+          "en": "side",
+          "jp": "隣"
+        }
+      },
+      {
+        "hanzi": "外",
+        "pinyin": "wài",
+        "pos": "n",
+        "translations": {
+          "kr": "밖",
+          "en": "outside",
+          "jp": "外"
+        }
+      },
+      {
+        "hanzi": "卖",
+        "pinyin": "mài",
+        "pos": "v",
+        "translations": {
+          "kr": "팔다",
+          "en": "to sell",
+          "jp": "売る"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 102,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 102,
+      "totalAvailableWords": 252
+    },
+    "mainGrammar": {
+      "name": "一起 + V",
+      "focus": "一起 + 去 + 旅行"
+    },
+    "supportGrammar": [
+      {
+        "name": "去年/明年",
+        "focus": "时间词"
+      }
+    ],
+    "notes": {
+      "theme": "我们一起去旅行吧",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 15,
+    "type": "study",
+    "title": {
+      "cn": "明年我想去中国",
+      "kr": "내년에 중국에 가고 싶어요",
+      "en": "I want to go to China next year",
+      "jp": "来年中国に行きたいです"
+    },
+    "newWords": [
+      {
+        "hanzi": "千",
+        "pinyin": "qiān",
+        "pos": "num",
+        "translations": {
+          "kr": "천",
+          "en": "thousand",
+          "jp": "千"
+        }
+      },
+      {
+        "hanzi": "公斤",
+        "pinyin": "gōngjīn",
+        "pos": "m",
+        "translations": {
+          "kr": "킬로",
+          "en": "kilogram (kg)",
+          "jp": "キロ"
+        }
+      },
+      {
+        "hanzi": "也",
+        "pinyin": "Yě",
+        "pos": "adv",
+        "translations": {
+          "kr": "~도",
+          "en": "surname Ye",
+          "jp": "〜も"
+        }
+      },
+      {
+        "hanzi": "右边",
+        "pinyin": "yòubian",
+        "pos": "n",
+        "translations": {
+          "kr": "오른쪽",
+          "en": "right side",
+          "jp": "右"
+        }
+      },
+      {
+        "hanzi": "向",
+        "pinyin": "Xiàng",
+        "pos": "prep",
+        "translations": {
+          "kr": "~쪽으로",
+          "en": "surname Xiang",
+          "jp": "〜へ"
+        }
+      },
+      {
+        "hanzi": "最",
+        "pinyin": "zuì",
+        "pos": "adv",
+        "translations": {
+          "kr": "가장",
+          "en": "variant of 最",
+          "jp": "最も"
+        }
+      },
+      {
+        "hanzi": "丈夫",
+        "pinyin": "zhàngfu",
+        "pos": "n",
+        "translations": {
+          "kr": "남편",
+          "en": "husband",
+          "jp": "夫"
+        }
+      },
+      {
+        "hanzi": "高",
+        "pinyin": "Gāo",
+        "pos": "adj",
+        "translations": {
+          "kr": "높다",
+          "en": "surname Gao",
+          "jp": "高い"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 110,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 110,
+      "totalAvailableWords": 260
+    },
+    "mainGrammar": {
+      "name": "想 + V",
+      "focus": "明年 + 想 + 去"
+    },
+    "supportGrammar": [
+      {
+        "name": "可能",
+        "focus": "可能 + V"
+      }
+    ],
+    "notes": {
+      "theme": "明年我想去中国",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 16,
+    "type": "study",
+    "title": {
+      "cn": "我喜欢运动",
+      "kr": "저는 운동을 좋아해요",
+      "en": "I like sports",
+      "jp": "私は運動が好きです"
+    },
+    "newWords": [
+      {
+        "hanzi": "运动",
+        "pinyin": "yùndòng",
+        "pos": "n",
+        "translations": {
+          "kr": "운동",
+          "en": "to move",
+          "jp": "運動"
+        }
+      },
+      {
+        "hanzi": "游泳",
+        "pinyin": "yóuyǒng",
+        "pos": "v",
+        "translations": {
+          "kr": "수영하다",
+          "en": "swimming",
+          "jp": "泳ぐ"
+        }
+      },
+      {
+        "hanzi": "打篮球",
+        "pinyin": "dǎlánqiú",
+        "pos": "v",
+        "translations": {
+          "kr": "농구하다",
+          "en": "to play basketball",
+          "jp": "バスケをする"
+        }
+      },
+      {
+        "hanzi": "踢",
+        "pinyin": "tī",
+        "pos": "v",
+        "translations": {
+          "kr": "차다",
+          "en": "to kick",
+          "jp": "蹴る"
+        }
+      },
+      {
+        "hanzi": "身体",
+        "pinyin": "shēntǐ",
+        "pos": "n",
+        "translations": {
+          "kr": "몸",
+          "en": "the body",
+          "jp": "体"
+        }
+      },
+      {
+        "hanzi": "次",
+        "pinyin": "cì",
+        "pos": "m",
+        "translations": {
+          "kr": "번",
+          "en": "next in sequence",
+          "jp": "回"
+        }
+      },
+      {
+        "hanzi": "颜色",
+        "pinyin": "yánsè",
+        "pos": "n",
+        "translations": {
+          "kr": "색",
+          "en": "color",
+          "jp": "色"
+        }
+      },
+      {
+        "hanzi": "白",
+        "pinyin": "Bái",
+        "pos": "adj",
+        "translations": {
+          "kr": "흰색",
+          "en": "surname Bai",
+          "jp": "白い"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 118,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 118,
+      "totalAvailableWords": 268
+    },
+    "mainGrammar": {
+      "name": "喜欢 + N/V",
+      "focus": "喜欢 + 运动"
+    },
+    "supportGrammar": [
+      {
+        "name": "运动类动词",
+        "focus": "打篮球、游泳、跑步"
+      }
+    ],
+    "notes": {
+      "theme": "我喜欢运动",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 17,
+    "type": "study",
+    "title": {
+      "cn": "你觉得怎么样",
+      "kr": "어때요?",
+      "en": "What do you think?",
+      "jp": "どう思いますか？"
+    },
+    "newWords": [
+      {
+        "hanzi": "觉得",
+        "pinyin": "juéde",
+        "pos": "v",
+        "translations": {
+          "kr": "~라고 생각하다",
+          "en": "to think that ...",
+          "jp": "〜と思う"
+        }
+      },
+      {
+        "hanzi": "真",
+        "pinyin": "zhēn",
+        "pos": "adv",
+        "translations": {
+          "kr": "정말",
+          "en": "really",
+          "jp": "本当に"
+        }
+      },
+      {
+        "hanzi": "问题",
+        "pinyin": "wèntí",
+        "pos": "n",
+        "translations": {
+          "kr": "문제",
+          "en": "question",
+          "jp": "問題"
+        }
+      },
+      {
+        "hanzi": "题",
+        "pinyin": "Tí",
+        "pos": "n",
+        "translations": {
+          "kr": "문제",
+          "en": "surname Ti",
+          "jp": "問題"
+        }
+      },
+      {
+        "hanzi": "左边",
+        "pinyin": "zuǒbian",
+        "pos": "n",
+        "translations": {
+          "kr": "왼쪽",
+          "en": "left",
+          "jp": "左"
+        }
+      },
+      {
+        "hanzi": "眼睛",
+        "pinyin": "yǎnjing",
+        "pos": "n",
+        "translations": {
+          "kr": "눈",
+          "en": "eye",
+          "jp": "目"
+        }
+      },
+      {
+        "hanzi": "笑",
+        "pinyin": "xiào",
+        "pos": "v",
+        "translations": {
+          "kr": "웃다",
+          "en": "old variant of 笑",
+          "jp": "笑う"
+        }
+      },
+      {
+        "hanzi": "妻子",
+        "pinyin": "qīzǐ",
+        "pos": "n",
+        "translations": {
+          "kr": "아내",
+          "en": "wife and children",
+          "jp": "妻"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 126,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 126,
+      "totalAvailableWords": 276
+    },
+    "mainGrammar": {
+      "name": "觉得 + 怎么样",
+      "focus": "你觉得 + 怎么样？"
+    },
+    "supportGrammar": [
+      {
+        "name": "真/非常",
+        "focus": "真/非常 + Adj"
+      }
+    ],
+    "notes": {
+      "theme": "你觉得怎么样",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 18,
+    "type": "study",
+    "title": {
+      "cn": "请你帮我一下",
+      "kr": "잠깐 도와주세요",
+      "en": "Please help me",
+      "jp": "ちょっと手伝ってください"
+    },
+    "newWords": [
+      {
+        "hanzi": "帮助",
+        "pinyin": "bāngzhù",
+        "pos": "v",
+        "translations": {
+          "kr": "돕다",
+          "en": "assistance",
+          "jp": "助ける"
+        }
+      },
+      {
+        "hanzi": "问",
+        "pinyin": "wèn",
+        "pos": "v",
+        "translations": {
+          "kr": "묻다",
+          "en": "to ask",
+          "jp": "聞く"
+        }
+      },
+      {
+        "hanzi": "别",
+        "pinyin": "Bié",
+        "pos": "adv",
+        "translations": {
+          "kr": "~하지 마",
+          "en": "surname Bie",
+          "jp": "〜するな"
+        }
+      },
+      {
+        "hanzi": "您",
+        "pinyin": "nín",
+        "pos": "pron",
+        "translations": {
+          "kr": "당신 (존칭)",
+          "en": "you (courteous",
+          "jp": "あなた（敬称）"
+        }
+      },
+      {
+        "hanzi": "洗",
+        "pinyin": "xǐ",
+        "pos": "v",
+        "translations": {
+          "kr": "씻다",
+          "en": "to wash",
+          "jp": "洗う"
+        }
+      },
+      {
+        "hanzi": "药",
+        "pinyin": "yào",
+        "pos": "n",
+        "translations": {
+          "kr": "약",
+          "en": "leaf of the iris",
+          "jp": "薬"
+        }
+      },
+      {
+        "hanzi": "西瓜",
+        "pinyin": "xīguā",
+        "pos": "n",
+        "translations": {
+          "kr": "수박",
+          "en": "watermelon",
+          "jp": "スイカ"
+        }
+      },
+      {
+        "hanzi": "羊肉",
+        "pinyin": "yángròu",
+        "pos": "n",
+        "translations": {
+          "kr": "양고기",
+          "en": "mutton",
+          "jp": "羊肉"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 134,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 134,
+      "totalAvailableWords": 284
+    },
+    "mainGrammar": {
+      "name": "请 + V",
+      "focus": "请 + 动词 + 一下"
+    },
+    "supportGrammar": [
+      {
+        "name": "帮 + 人 + V",
+        "focus": "帮 + 我 + V"
+      }
+    ],
+    "notes": {
+      "theme": "请你帮我一下",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 19,
+    "type": "study",
+    "title": {
+      "cn": "这个比那个好",
+      "kr": "이게 그거보다 좋아요",
+      "en": "This is better than that",
+      "jp": "これはあれより良いです"
+    },
+    "newWords": [
+      {
+        "hanzi": "比",
+        "pinyin": "Bǐ",
+        "pos": "prep",
+        "translations": {
+          "kr": "~보다",
+          "en": "Belgium",
+          "jp": "〜より"
+        }
+      },
+      {
+        "hanzi": "便宜",
+        "pinyin": "biànyí",
+        "pos": "adj",
+        "translations": {
+          "kr": "싸다",
+          "en": "convenient",
+          "jp": "安い"
+        }
+      },
+      {
+        "hanzi": "贵",
+        "pinyin": "guì",
+        "pos": "adj",
+        "translations": {
+          "kr": "비싸다",
+          "en": "expensive",
+          "jp": "高い"
+        }
+      },
+      {
+        "hanzi": "远",
+        "pinyin": "yuǎn",
+        "pos": "adj",
+        "translations": {
+          "kr": "멀다",
+          "en": "far",
+          "jp": "遠い"
+        }
+      },
+      {
+        "hanzi": "近",
+        "pinyin": "jìn",
+        "pos": "adj",
+        "translations": {
+          "kr": "가깝다",
+          "en": "near",
+          "jp": "近い"
+        }
+      },
+      {
+        "hanzi": "错",
+        "pinyin": "Cuò",
+        "pos": "adj",
+        "translations": {
+          "kr": "틀리다",
+          "en": "surname Cuo",
+          "jp": "間違う"
+        }
+      },
+      {
+        "hanzi": "长",
+        "pinyin": "cháng",
+        "pos": "adj",
+        "translations": {
+          "kr": "길다",
+          "en": "length",
+          "jp": "長い"
+        }
+      },
+      {
+        "hanzi": "还",
+        "pinyin": "Huán",
+        "pos": "adv",
+        "translations": {
+          "kr": "아직",
+          "en": "surname Huan",
+          "jp": "まだ"
+        }
+      }
+    ],
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 142,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 142,
+      "totalAvailableWords": 292
+    },
+    "mainGrammar": {
+      "name": "比字句",
+      "focus": "A + 比 + B + Adj"
+    },
+    "supportGrammar": [
+      {
+        "name": "便宜/贵",
+        "focus": "比 + 便宜/贵"
+      }
+    ],
+    "notes": {
+      "theme": "这个比那个好",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 20,
+    "type": "study",
+    "title": {
+      "cn": "因为下雨所以没去",
+      "kr": "비가 와서 가지 않았어요",
+      "en": "Because it rained, I didn't go",
+      "jp": "雨が降ったので行きませんでした"
+    },
+    "newWords": [
+      {
+        "hanzi": "因为",
+        "pinyin": "yīnwèi",
+        "pos": "conj",
+        "translations": {
+          "kr": "~때문에",
+          "en": "because",
+          "jp": "〜だから"
+        }
+      },
+      {
+        "hanzi": "所以",
+        "pinyin": "suǒyǐ",
+        "pos": "conj",
+        "translations": {
+          "kr": "그래서",
+          "en": "therefore",
+          "jp": "だから"
+        }
+      },
+      {
+        "hanzi": "完",
+        "pinyin": "wán",
+        "pos": "v",
+        "translations": {
+          "kr": "끝나다",
+          "en": "to finish",
+          "jp": "終わる"
+        }
+      },
+      {
+        "hanzi": "已经",
+        "pinyin": "yǐjīng",
+        "pos": "adv",
+        "translations": {
+          "kr": "이미",
+          "en": "already",
+          "jp": "もう"
+        }
+      },
+      {
+        "hanzi": "再",
+        "pinyin": "zài",
+        "pos": "adv",
+        "translations": {
+          "kr": "다시",
+          "en": "again",
+          "jp": "もう一度"
+        }
+      }
+    ],
+    "newWordCount": 5,
+    "cumulativeNewWordCount": 147,
+    "availableVocabRange": {
+      "baseHSK1Words": 150,
+      "currentHSK2LearnedWords": 147,
+      "totalAvailableWords": 297
+    },
+    "mainGrammar": {
+      "name": "因为……所以……",
+      "focus": "因为 + 原因 + 所以 + 结果"
+    },
+    "supportGrammar": [
+      {
+        "name": "没 + V",
+        "focus": "没 + 去"
+      },
+      {
+        "name": "了（完成）",
+        "focus": "V + 了"
+      }
+    ],
+    "notes": {
+      "theme": "因为下雨所以没去",
+      "difficulty": "medium",
+      "generationRule": "dialogue/grammar examples/practice must only use words learned up to this lesson"
+    }
+  },
+  {
+    "lesson": 21,
+    "type": "review",
+    "title": {
+      "cn": "综合复习1",
+      "kr": "종합 복습 1",
+      "en": "Comprehensive Review 1",
+      "jp": "総合復習1"
+    },
+    "reviewRange": [
+      1,
+      10
+    ],
+    "newWords": [],
+    "newWordCount": 0,
+    "cumulativeNewWordCount": 70,
+    "reviewWordsFromLessons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "reviewGrammar": [
+      {
+        "name": "吗疑问句",
+        "focus": "S + Adj + 吗？"
+      },
+      {
+        "name": "形容词谓语句",
+        "focus": "S + 很 + Adj"
+      },
+      {
+        "name": "程度副词 很",
+        "focus": "很 + Adj"
+      },
+      {
+        "name": "的 字结构（所属）",
+        "focus": "这/那 + 是 + N + 的"
+      },
+      {
+        "name": "呢 疑问句",
+        "focus": "...呢？"
+      },
+      {
+        "name": "介绍他人",
+        "focus": "这是 + N"
+      },
+      {
+        "name": "给 + N + V",
+        "focus": "给 + 人 + 动词"
+      },
+      {
+        "name": "吧 建议句",
+        "focus": "...一起 + V + 吧"
+      },
+      {
+        "name": "一起",
+        "focus": "一起 + V"
+      },
+      {
+        "name": "想 + V",
+        "focus": "想 + 动词"
+      },
+      {
+        "name": "什么 疑问",
+        "focus": "V + 什么？"
+      },
+      {
+        "name": "可以",
+        "focus": "可以 + V"
+      },
+      {
+        "name": "时间表达",
+        "focus": "现在 + 几 + 点 + 了？"
+      },
+      {
+        "name": "点 / 分",
+        "focus": "数字 + 点 + 数字 + 分"
+      },
+      {
+        "name": "形容词谓语句",
+        "focus": "今天 + 很 + Adj"
+      },
+      {
+        "name": "程度副词 非常",
+        "focus": "非常 + Adj"
+      },
+      {
+        "name": "时间词 + 做什么",
+        "focus": "周末 + 你 + 做什么？"
+      },
+      {
+        "name": "在/正在",
+        "focus": "在 + V"
+      },
+      {
+        "name": "每 + 时间",
+        "focus": "每 + 天/天 + V"
+      },
+      {
+        "name": "能愿动词 可以",
+        "focus": "可以 + V"
+      },
+      {
+        "name": "准备 + V",
+        "focus": "准备 + 动词"
+      },
+      {
+        "name": "希望 + V",
+        "focus": "希望 + 小句"
+      }
+    ],
+    "notes": {
+      "theme": "Review lessons 1-10",
+      "difficulty": "review"
+    }
+  },
+  {
+    "lesson": 22,
+    "type": "review",
+    "title": {
+      "cn": "综合复习2",
+      "kr": "종합 복습 2",
+      "en": "Comprehensive Review 2",
+      "jp": "総合復習2"
+    },
+    "reviewRange": [
+      11,
+      20
+    ],
+    "newWords": [],
+    "newWordCount": 0,
+    "cumulativeNewWordCount": 147,
+    "reviewWordsFromLessons": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "reviewGrammar": [
+      {
+        "name": "在 + 地点 + V",
+        "focus": "在 + 地方 + 工作"
+      },
+      {
+        "name": "得 必须",
+        "focus": "得 + V"
+      },
+      {
+        "name": "程度副词",
+        "focus": "很 + Adj（努力）"
+      },
+      {
+        "name": "但是",
+        "focus": "...但是..."
+      },
+      {
+        "name": "V + 去 + 地点",
+        "focus": "坐 + 交通工具 + 去 + 地方"
+      },
+      {
+        "name": "从...到...",
+        "focus": "从 A 到 B"
+      },
+      {
+        "name": "一起 + V",
+        "focus": "一起 + 去 + 旅行"
+      },
+      {
+        "name": "去年/明年",
+        "focus": "时间词"
+      },
+      {
+        "name": "想 + V",
+        "focus": "明年 + 想 + 去"
+      },
+      {
+        "name": "可能",
+        "focus": "可能 + V"
+      },
+      {
+        "name": "喜欢 + N/V",
+        "focus": "喜欢 + 运动"
+      },
+      {
+        "name": "运动类动词",
+        "focus": "打篮球、游泳、跑步"
+      },
+      {
+        "name": "觉得 + 怎么样",
+        "focus": "你觉得 + 怎么样？"
+      },
+      {
+        "name": "真/非常",
+        "focus": "真/非常 + Adj"
+      },
+      {
+        "name": "请 + V",
+        "focus": "请 + 动词 + 一下"
+      },
+      {
+        "name": "帮 + 人 + V",
+        "focus": "帮 + 我 + V"
+      },
+      {
+        "name": "比字句",
+        "focus": "A + 比 + B + Adj"
+      },
+      {
+        "name": "便宜/贵",
+        "focus": "比 + 便宜/贵"
+      },
+      {
+        "name": "因为……所以……",
+        "focus": "因为 + 原因 + 所以 + 结果"
+      },
+      {
+        "name": "没 + V",
+        "focus": "没 + 去"
+      },
+      {
+        "name": "了（完成）",
+        "focus": "V + 了"
+      }
+    ],
+    "notes": {
+      "theme": "Review lessons 11-20",
+      "difficulty": "review"
+    }
+  }
+]
