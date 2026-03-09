@@ -865,7 +865,6 @@ async function openLesson({ lessonNo, file }) {
 
     // Render panels
     const isReview = (lessonData && lessonData.type) === "review";
-    const reviewRange = (lessonData && lessonData.review && lessonData.review.lessonRange) || [];
     if (isReview) {
       renderReviewWords($("hskPanelWords"), lessonWords, { lang, scope: `hsk${state.lv}` });
       const cards = getDialogueCards(lessonData);
