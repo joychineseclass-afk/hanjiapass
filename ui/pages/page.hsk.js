@@ -97,7 +97,7 @@ function rerenderHSKFromState() {
     if (isReview) {
       renderReviewWords($("hskPanelWords"), lw, { lang, scope: `hsk${state.lv}` });
       renderReviewDialogue($("hskDialogueBody"), getDialogueCards(ld), { lang });
-      renderReviewGrammar($("hskGrammarBody"), ld.grammar || [], { lang });
+      renderReviewGrammar($("hskGrammarBody"), ld.grammar || [], { lang, vocab: lw || ld.vocab || ld.words || [] });
       renderReviewExtension($("hskExtensionBody"), ld.extension || [], { lang });
     } else {
       renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
@@ -869,7 +869,7 @@ async function openLesson({ lessonNo, file }) {
       renderReviewWords($("hskPanelWords"), lessonWords, { lang, scope: `hsk${state.lv}` });
       const cards = getDialogueCards(lessonData);
       renderReviewDialogue($("hskDialogueBody"), cards, { lang });
-      renderReviewGrammar($("hskGrammarBody"), lessonData.grammar || [], { lang });
+      renderReviewGrammar($("hskGrammarBody"), lessonData.grammar || [], { lang, vocab: lessonWords || lessonData.vocab || lessonData.words || [] });
       renderReviewExtension($("hskExtensionBody"), lessonData.extension || [], { lang });
       if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.touchLessonVocab === "function") PROGRESS_ENGINE.touchLessonVocab({
         courseId,

@@ -411,11 +411,18 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   containerEl.innerHTML = `${hero}<div class="review-dialogue-list">${rows.join("")}</div>`;
 }
 
-/** 复习课语法：紧凑列表，标题 + 说明 + 例句 */
-export function renderReviewGrammar(containerEl, grammarArr, { lang } = {}) {
+/** 复习课语法：汉字 (拼音) — 释义 | 说明 | 例句；缺 pinyin/释义 时从 vocab 匹配 */
+export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] } = {}) {
   if (!containerEl) return;
   const arr = Array.isArray(grammarArr) ? grammarArr : [];
   const l = normalizeLang(lang ?? getLang());
+  const vocabList = Array.isArray(vocab) ? vocab : [];
+  const vocabByHanzi = new Map();
+  vocabList.forEach((v) => {
+    const h = (v?.hanzi ?? v?.word ?? "").trim();
+    if (h) vocabByHanzi.set(h, v);
+  });
+
   const hero = `<section class="lesson-section-hero lesson-grammar-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title"))}</h3>
   <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.review_grammar_subtitle") || "复习课语法点")}</p>
@@ -424,6 +431,7 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang } = {}) {
     containerEl.innerHTML = `${hero}<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar")}</div>`;
     return;
   }
+
   const getExpl = (g) => {
     const ex = g?.explain ?? g?.explanation;
     if (ex && typeof ex === "object") return (ex[l] ?? ex.kr ?? ex.ko ?? ex.en ?? ex.zh ?? "") || "";
@@ -435,13 +443,34 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang } = {}) {
     if (ex && typeof ex === "object") return (ex.zh ?? ex.cn ?? ex.line ?? "") || "";
     return typeof ex === "string" ? ex : "";
   };
+  const getMeaningFromVocab = (hanzi) => {
+    const v = vocabByHanzi.get(hanzi);
+    if (!v) return "";
+    const m = v?.meaning;
+    if (m && typeof m === "object") return (m[l] ?? m.kr ?? m.ko ?? m.en ?? m.zh ?? "") || "";
+    return "";
+  };
+  const getPinyinFromVocab = (hanzi) => {
+    const v = vocabByHanzi.get(hanzi);
+    return v ? (v?.pinyin ?? v?.py ?? "").trim() : "";
+  };
+
   const rows = arr.map((g, i) => {
-    const title = typeof (g?.title) === "object" ? (g.title?.zh ?? g.title?.kr ?? g.title?.en ?? "") : (g?.pattern ?? g?.title ?? g?.name ?? "#" + (i + 1));
+    const pattern = String(g?.pattern ?? g?.title ?? g?.name ?? "").trim();
+    const patternParts = pattern.split(/[—–\-]\s*/);
+    const hanziPart = (patternParts[0] || pattern || "#" + (i + 1)).trim();
+    const meaningFromPattern = (patternParts[1] || "").trim();
+    const keyForVocab = hanziPart.replace(/\s*[\+\-].*$/, "").trim() || hanziPart.slice(0, 1);
+    const grammarPinyin = String(g?.pinyin ?? g?.py ?? "").trim();
+    const pinyinPart = grammarPinyin ? grammarPinyin.split(/[—–\-]\s*|\s*\+/)[0]?.trim() || "" : "";
+    const pinyin = pinyinPart || getPinyinFromVocab(keyForVocab) || (keyForVocab ? resolvePinyin(keyForVocab, "") : "");
+    const meaning = meaningFromPattern || getMeaningFromVocab(keyForVocab);
+    const titleLine = meaning ? `${hanziPart} (${pinyin}) — ${meaning}` : (pinyin ? `${hanziPart} (${pinyin})` : hanziPart);
     const expl = getExpl(g);
     const exZh = getExampleZh(g);
-    const zhEsc = escapeHtml(title).replaceAll('"', "&quot;");
+    const zhEsc = escapeHtml(hanziPart).replaceAll('"', "&quot;");
     return `<div class="review-grammar-row">
-  <div class="review-grammar-title" data-speak-text="${zhEsc}">${escapeHtml(title)}</div>
+  <div class="review-grammar-title" data-speak-text="${zhEsc}">${escapeHtml(titleLine)}</div>
   ${expl ? `<div class="review-grammar-expl">${escapeHtml(expl)}</div>` : ""}
   ${exZh ? `<div class="review-grammar-ex">${escapeHtml(exZh)}</div>` : ""}
 </div>`;
