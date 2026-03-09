@@ -799,6 +799,27 @@
   background: #16a34a;
 }
 
+/* review lesson section headers (Vocabulary / Grammar / Sentences) */
+.lesson-practice-section {
+  margin-bottom: 1.5rem;
+}
+.lesson-practice-section:last-child {
+  margin-bottom: 0;
+}
+.lesson-practice-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+.lesson-practice-section-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .lesson-practice-list {
   display: grid;
   grid-template-columns: 1fr;

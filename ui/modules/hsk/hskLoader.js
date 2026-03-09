@@ -465,45 +465,90 @@
     };
   }
 
-  /** 生成复习课练习：固定 10 题（choice / fill / sentence_order），更完整检测 */
+  /**
+   * 生成复习课练习：固定 10 题，按 Part1 Vocabulary / Part2 Grammar / Part3 Sentences 分布
+   * Part1(1~4): 词汇 4 题 - 汉字→释义、释义→汉字、拼音→汉字
+   * Part2(5~7): 语法 3 题 - grammar_fill_choice（choice 形式）、选择正确结构/判断句子
+   * Part3(8~10): 句子 3 题 - 句子排序、对话补全、简单翻译
+   */
   async function generateReviewPractice(lesson, minCount, maxCount) {
     try {
       const { shuffle } = await import("/ui/platform/practice-generator/generatorUtils.js");
       const { normalizeQuestion } = await import("/ui/platform/practice-generator/questionNormalizer.js");
 
       const lang = "ko";
-      const count = Math.min(maxCount, Math.max(minCount, 10));
-      const quota = { vocab: 3, dialogue: 2, grammar: 1, sentenceOrder: 2, extension: 1 };
+      const totalCount = Math.min(maxCount, Math.max(minCount, 10));
       const levelNum = 1;
-
-      const generated = [];
-      const { generateVocabMeaningChoice, generateMeaningToVocabChoice } = await import("/ui/platform/practice-generator/vocabQuestionGenerator.js");
-      const { generateDialogueResponseChoice } = await import("/ui/platform/practice-generator/dialogueQuestionGenerator.js");
-      const { generateGrammarFillChoice } = await import("/ui/platform/practice-generator/grammarQuestionGenerator.js");
-      const { generateSentenceOrderChoice } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
-      const { generateExtensionMeaningChoice } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
-
-      generated.push(...generateVocabMeaningChoice(lesson, quota.vocab ?? 2, lang, levelNum));
-      generated.push(...generateMeaningToVocabChoice(lesson, 1, lang));
-      generated.push(...generateDialogueResponseChoice(lesson, quota.dialogue ?? 1, lang));
-      generated.push(...generateGrammarFillChoice(lesson, quota.grammar ?? 1, lang));
-      generated.push(...generateSentenceOrderChoice(lesson, quota.sentenceOrder ?? 2, lang));
-      generated.push(...generateExtensionMeaningChoice(lesson, quota.extension ?? 1, lang, levelNum));
-
-      const shuffled = shuffle(generated);
-      const result = [];
-      const usedIds = new Set();
       const lessonId = lesson?.id ?? lesson?.courseId ?? "";
 
-      for (const q of shuffled) {
-        if (result.length >= count) break;
-        const normalized = normalizeQuestion(q, lessonId, result.length);
-        if (!normalized || usedIds.has(normalized.id)) continue;
-        usedIds.add(normalized.id);
-        result.push(toPracticeSchema(normalized));
+      const {
+        generateVocabMeaningChoice,
+        generateMeaningToVocabChoice,
+        generatePinyinToVocabChoice,
+      } = await import("/ui/platform/practice-generator/vocabQuestionGenerator.js");
+      const {
+        generateDialogueResponseChoice,
+        generateDialogueMeaningChoice,
+      } = await import("/ui/platform/practice-generator/dialogueQuestionGenerator.js");
+      const {
+        generateGrammarFillChoice,
+        generateGrammarPatternChoice,
+        generateGrammarExampleMeaning,
+      } = await import("/ui/platform/practice-generator/grammarQuestionGenerator.js");
+      const {
+        generateSentenceOrderChoice,
+        generateSentenceCompletionChoice,
+      } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
+      const { generateExtensionMeaningChoice } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
+
+      const pickUnique = (arr, n, usedIds) => {
+        const out = [];
+        for (const q of arr) {
+          if (out.length >= n) break;
+          const norm = normalizeQuestion(q, lessonId, out.length);
+          if (!norm || usedIds.has(norm.id)) continue;
+          usedIds.add(norm.id);
+          out.push(norm);
+        }
+        return out;
+      };
+
+      const usedIds = new Set();
+      const result = [];
+
+      // Part 1: Vocabulary 4 题（汉字→释义、释义→汉字、拼音→汉字，随机分布）
+      const v1 = shuffle(generateVocabMeaningChoice(lesson, 2, lang, levelNum));
+      const v2 = shuffle(generateMeaningToVocabChoice(lesson, 2, lang));
+      const v3 = shuffle(generatePinyinToVocabChoice(lesson, 2, lang));
+      const vocabPool = shuffle([...v1, ...v2, ...v3]);
+      const vocabQuestions = pickUnique(vocabPool, 4, usedIds);
+      for (const q of vocabQuestions) {
+        result.push(toPracticeSchema(q, "vocabulary"));
       }
 
-      return result.slice(0, count);
+      // Part 2: Grammar 3 题（grammar_fill_choice x2，grammar_pattern/example x1，均为 choice）
+      const g1 = shuffle(generateGrammarFillChoice(lesson, 3, lang));
+      const g2 = shuffle(generateGrammarPatternChoice(lesson, 2, lang));
+      const g3 = shuffle(generateGrammarExampleMeaning(lesson, 2, lang));
+      const grammarPool = shuffle([...g1, ...g2, ...g3]);
+      const grammarQuestions = pickUnique(grammarPool, 3, usedIds);
+      for (const q of grammarQuestions) {
+        result.push(toPracticeSchema(q, "grammar"));
+      }
+
+      // Part 3: Sentences 3 题（句子排序、对话补全、简单翻译）
+      const s1 = shuffle(generateSentenceOrderChoice(lesson, 2, lang));
+      const s2 = shuffle(generateSentenceCompletionChoice(lesson, 2, lang));
+      const s3 = shuffle(generateDialogueResponseChoice(lesson, 2, lang));
+      const s4 = shuffle(generateDialogueMeaningChoice(lesson, 2, lang));
+      const s5 = shuffle(generateExtensionMeaningChoice(lesson, 2, lang, levelNum));
+      const sentencePool = shuffle([...s1, ...s2, ...s3, ...s4, ...s5]);
+      const sentenceQuestions = pickUnique(sentencePool, 3, usedIds);
+      for (const q of sentenceQuestions) {
+        result.push(toPracticeSchema(q, "sentences"));
+      }
+
+      return result.slice(0, totalCount);
     } catch (e) {
       console.warn("[HSK_LOADER] generateReviewPractice failed:", e?.message);
       return [];
@@ -511,13 +556,13 @@
   }
 
   /** 将 generator 输出转为 modules/practice 兼容的 schema（保留 options 的 key 格式供 practiceChoice 判题） */
-  function toPracticeSchema(q) {
+  function toPracticeSchema(q, section) {
     if (!q) return null;
     const prompt = q.question || q.prompt || {};
     const promptObj = typeof prompt === "object"
       ? { cn: prompt.zh ?? prompt.cn ?? "", kr: prompt.kr ?? prompt.ko ?? "", en: prompt.en ?? "", jp: prompt.jp ?? "" }
       : { cn: String(prompt), kr: "", en: "", jp: "" };
-    return {
+    const base = {
       id: q.id,
       type: q.type || "choice",
       subtype: q.subtype,
@@ -527,6 +572,8 @@
       explanation: q.explanation,
       score: q.score ?? 1,
     };
+    if (section) base.section = section;
+    return base;
   }
 
   // ✅ Helper: force set version (UI can call this)

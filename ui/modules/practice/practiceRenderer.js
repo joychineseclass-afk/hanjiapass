@@ -33,6 +33,42 @@ function renderQuestion(q, index, { lang, answers, resultMap, submitted }) {
   return renderChoice(q, index, { lang, answers, resultMap, submitted });
 }
 
+/** 按 section 分组渲染（review lesson 显示 Vocabulary / Grammar / Sentences 标题） */
+function buildQuestionsHtmlWithSections(questions, { lang, answers, resultMap, submitted }) {
+  const hasSections = questions.some((q) => q.section);
+  if (!hasSections) {
+    return questions.map((q, i) => renderQuestion(q, i, { lang, answers, resultMap, submitted })).join("");
+  }
+
+  const SECTION_ORDER = ["vocabulary", "grammar", "sentences"];
+  const sectionLabels = {
+    vocabulary: t("practice.section.vocabulary") || "Vocabulary",
+    grammar: t("practice.section.grammar") || "Grammar",
+    sentences: t("practice.section.sentences") || "Sentences",
+  };
+
+  let html = "";
+  let globalIndex = 0;
+  for (const sectionKey of SECTION_ORDER) {
+    const sectionQuestions = questions.filter((q) => q.section === sectionKey);
+    if (!sectionQuestions.length) continue;
+
+    const label = sectionLabels[sectionKey] || sectionKey;
+    html += `<div class="lesson-practice-section" data-section="${escapeHtml(sectionKey)}">
+      <h4 class="lesson-practice-section-title">${escapeHtml(label)}</h4>
+      <div class="lesson-practice-section-questions">`;
+
+    for (const q of sectionQuestions) {
+      html += renderQuestion(q, globalIndex, { lang, answers, resultMap, submitted });
+      globalIndex += 1;
+    }
+
+    html += `</div></div>`;
+  }
+
+  return html;
+}
+
 export function mountPractice(container, { lesson, lang = "ko", onComplete } = {}) {
   if (!container) return;
 
@@ -50,9 +86,12 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     const resultMap = PracticeState.getResultMap();
     const score = PracticeState.getScore();
 
-    const questionsHtml = questions.map((q, i) =>
-      renderQuestion(q, i, { lang: langKey, answers, resultMap, submitted })
-    ).join("");
+    const questionsHtml = buildQuestionsHtmlWithSections(questions, {
+      lang: langKey,
+      answers,
+      resultMap,
+      submitted,
+    });
 
     const scoreLabel = submitted
       ? t("practice.total_score", { score, total: totalScore })
@@ -181,9 +220,12 @@ export function rerenderPractice(container, lang = "ko") {
   const totalScore = PracticeState.getTotalScore();
   const score = PracticeState.getScore();
 
-  const questionsHtml = questions.map((q, i) =>
-    renderQuestion(q, i, { lang: langKey, answers, resultMap, submitted })
-  ).join("");
+  const questionsHtml = buildQuestionsHtmlWithSections(questions, {
+    lang: langKey,
+    answers,
+    resultMap,
+    submitted,
+  });
 
   const scoreLabel = submitted
     ? t("practice.total_score", { score, total: totalScore })

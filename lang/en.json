@@ -179,7 +179,12 @@
     "total_score": "Score {score}/{total}",
     "question_no": "Question {n}",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect"
+    "incorrect": "Incorrect",
+    "section": {
+      "vocabulary": "Vocabulary",
+      "grammar": "Grammar",
+      "sentences": "Sentences"
+    }
   },
   "ai": {
     "type_explain": "Explain",

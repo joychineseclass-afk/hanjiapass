@@ -180,7 +180,12 @@
     "total_score": "总分 {score} / {total}",
     "question_no": "第 {n} 题",
     "unanswered": "未选择",
-    "incorrect": "错误"
+    "incorrect": "错误",
+    "section": {
+      "vocabulary": "单词",
+      "grammar": "语法",
+      "sentences": "句子"
+    }
   },
   "ai": {
     "type_explain": "解释",

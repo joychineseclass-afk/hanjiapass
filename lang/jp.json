@@ -179,7 +179,12 @@
     "total_questions": "{n}問",
     "score": "得点",
     "unanswered": "未回答",
-    "incorrect": "不正解"
+    "incorrect": "不正解",
+    "section": {
+      "vocabulary": "単語",
+      "grammar": "文法",
+      "sentences": "文"
+    }
   },
   "ai": {
     "type_explain": "説明",

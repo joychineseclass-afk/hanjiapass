@@ -180,7 +180,12 @@
     "total_score": "총점 {score} / {total}",
     "question_no": "제 {n}문제",
     "unanswered": "미선택",
-    "incorrect": "오답"
+    "incorrect": "오답",
+    "section": {
+      "vocabulary": "단어",
+      "grammar": "문법",
+      "sentences": "문장"
+    }
   },
   "ai": {
     "type_explain": "설명",

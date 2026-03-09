@@ -29,5 +29,8 @@
   "practice_order_hint": { "cn": "请将词语按正确顺序排列（用空格或逗号分隔）", "kr": "올바른 순서로 입력하세요 (공백 또는 쉼표로 구분)", "en": "Enter words in correct order (space or comma separated)", "jp": "正しい順序で入力（スペースまたはカンマ区切り）" },
   "practice_order_input_label": { "cn": "您的答案：", "kr": "답변:", "en": "Your answer:", "jp": "答え：" },
   "practice_match_left": { "cn": "左", "kr": "왼쪽", "en": "Left", "jp": "左" },
-  "practice_match_right": { "cn": "右", "kr": "오른쪽", "en": "Right", "jp": "右" }
+  "practice_match_right": { "cn": "右", "kr": "오른쪽", "en": "Right", "jp": "右" },
+  "practice_section_vocabulary": { "cn": "单词", "kr": "단어", "en": "Vocabulary", "jp": "単語" },
+  "practice_section_grammar": { "cn": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" },
+  "practice_section_sentences": { "cn": "句子", "kr": "문장", "en": "Sentences", "jp": "文" }
 }

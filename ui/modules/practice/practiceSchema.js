@@ -48,7 +48,9 @@ export function filterSupportedQuestions(items) {
       const { valid, type } = validateQuestion(item);
       if (!valid) return null;
       const normalized = normalizeItem(item, type, i);
-      return { ...normalized, type, id: item.id || `p${i + 1}` };
+      const out = { ...normalized, type, id: item.id || `p${i + 1}` };
+      if (item.section) out.section = item.section;
+      return out;
     })
     .filter(Boolean);
 }
