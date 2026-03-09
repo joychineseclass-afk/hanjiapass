@@ -199,41 +199,10 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你住在哪儿？",
-          "pinyin": "Nǐ zhù zài nǎr?",
-          "kr": "어디에 살아요?",
-          "en": "Where do you live?",
-          "jp": "どこに住んでいますか？",
-          "text": "你住在哪儿？",
-          "translation": {
-            "kr": "어디에 살아요?",
-            "en": "Where do you live?",
-            "jp": "どこに住んでいますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我住在北京。",
-          "pinyin": "Wǒ zhù zài Běijīng.",
-          "kr": "저는 베이징에 살아요.",
-          "en": "I live in Beijing.",
-          "jp": "私は北京に住んでいます。",
-          "text": "我住在北京。",
-          "translation": {
-            "kr": "저는 베이징에 살아요.",
-            "en": "I live in Beijing.",
-            "jp": "私は北京に住んでいます。"
-          }
-        }
+        { "speaker": "A", "zh": "你是学生吗？", "pinyin": "Nǐ shì xuéshēng ma?", "kr": "학생이에요?", "text": "你是学生吗？", "translation": { "kr": "학생이에요?", "en": "Are you a student?", "jp": "学生ですか？" } },
+        { "speaker": "B", "zh": "是。我住在北京，在中国。他是我的朋友，也是我同学。", "pinyin": "Shì. Wǒ zhù zài Běijīng, zài Zhōngguó. Tā shì wǒ péngyou, yě shì wǒ tóngxué.", "kr": "네. 베이징에 살아요, 중국에요. 그는 제 친구이고 동창이에요.", "text": "是。我住在北京，在中国。他是我的朋友，也是我同学。", "translation": { "kr": "네. 베이징에 살아요, 중국에요. 그는 제 친구이고 동창이에요.", "en": "Yes. I live in Beijing, in China. He is my friend and also my classmate.", "jp": "はい。北京に住んでいます、中国です。彼は私の友達で、クラスメートでもあります。" } }
       ]
     }
   ],

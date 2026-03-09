@@ -153,105 +153,25 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "今天天气怎么样？",
-          "pinyin": "Jīntiān tiānqì zěnmeyàng?",
-          "kr": "오늘 날씨 어때요?",
-          "text": "今天天气怎么样？",
-          "translation": {
-            "kr": "오늘 날씨 어때요?",
-            "en": "How's the weather today?",
-            "jp": "今日の天気はどうですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "很好。",
-          "pinyin": "Hěn hǎo.",
-          "kr": "아주 좋아요.",
-          "text": "很好。",
-          "translation": {
-            "kr": "아주 좋아요.",
-            "en": "Very good.",
-            "jp": "とても良いです。"
-          }
-        }
+        { "speaker": "A", "zh": "今天天气怎么样？", "pinyin": "Jīntiān tiānqì zěnmeyàng?", "kr": "오늘 날씨 어때요?", "text": "今天天气怎么样？", "translation": { "kr": "오늘 날씨 어때요?", "en": "How's the weather today?", "jp": "今日の天気はどうですか？" } },
+        { "speaker": "B", "zh": "很好。热吗？太热了。", "pinyin": "Hěn hǎo. Rè ma? Tài rè le.", "kr": "아주 좋아요. 더워요? 너무 더워요.", "text": "很好。热吗？太热了。", "translation": { "kr": "아주 좋아요. 더워요? 너무 더워요.", "en": "Very good. Hot? Too hot.", "jp": "とても良いです。暑い？暑すぎます。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "冷吗？",
-          "pinyin": "Lěng ma?",
-          "kr": "추워요?",
-          "text": "冷吗？",
-          "translation": {
-            "kr": "추워요?",
-            "en": "Is it cold?",
-            "jp": "寒いですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不冷。",
-          "pinyin": "Bù lěng.",
-          "kr": "안 추워요.",
-          "text": "不冷。",
-          "translation": {
-            "kr": "안 추워요.",
-            "en": "Not cold.",
-            "jp": "寒くないです。"
-          }
-        }
+        { "speaker": "A", "zh": "冷吗？下雨吗？", "pinyin": "Lěng ma? Xià yǔ ma?", "kr": "추워요? 비 와요?", "text": "冷吗？下雨吗？", "translation": { "kr": "추워요? 비 와요?", "en": "Cold? Is it raining?", "jp": "寒いですか？雨が降っていますか？" } },
+        { "speaker": "B", "zh": "不冷。不下雨。", "pinyin": "Bù lěng. Bù xià yǔ.", "kr": "안 추워요. 비 안 와요.", "text": "不冷。不下雨。", "translation": { "kr": "안 추워요. 비 안 와요.", "en": "Not cold. Not raining.", "jp": "寒くないです。雨は降っていません。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "热吗？",
-          "pinyin": "Rè ma?",
-          "kr": "더워요?",
-          "text": "热吗？",
-          "translation": {
-            "kr": "더워요?",
-            "en": "Is it hot?",
-            "jp": "暑いですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "很热。",
-          "pinyin": "Hěn rè.",
-          "kr": "매우 더워요.",
-          "text": "很热。",
-          "translation": {
-            "kr": "매우 더워요.",
-            "en": "Very hot.",
-            "jp": "とても暑いです。"
-          }
-        }
+        { "speaker": "A", "zh": "你想做什么？", "pinyin": "Nǐ xiǎng zuò shénme?", "kr": "뭐 하고 싶어요?", "text": "你想做什么？", "translation": { "kr": "뭐 하고 싶어요?", "en": "What do you want to do?", "jp": "何をしたいですか？" } },
+        { "speaker": "B", "zh": "我想说话。你想睡觉吗？", "pinyin": "Wǒ xiǎng shuōhuà. Nǐ xiǎng shuìjiào ma?", "kr": "말하고 싶어요. 자고 싶어요?", "text": "我想说话。你想睡觉吗？", "translation": { "kr": "말하고 싶어요. 자고 싶어요?", "en": "I want to talk. Do you want to sleep?", "jp": "話したいです。寝たいですか？" } },
+        { "speaker": "A", "zh": "想。", "pinyin": "Xiǎng.", "kr": "자고 싶어요.", "text": "想。", "translation": { "kr": "자고 싶어요.", "en": "Yes.", "jp": "寝たいです。" } }
       ]
     }
   ],

@@ -123,81 +123,27 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "今天几号？",
-          "pinyin": "Jīntiān jǐ hào?",
-          "kr": "오늘 며칠이에요?",
-          "text": "今天几号？",
-          "translation": {
-            "kr": "오늘 며칠이에요?",
-            "en": "What's the date today?",
-            "jp": "今日は何日ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "今天五号。",
-          "pinyin": "Jīntiān wǔ hào.",
-          "kr": "오늘 5일이에요.",
-          "text": "今天五号。",
-          "translation": {
-            "kr": "오늘 5일이에요.",
-            "en": "Today is the 5th.",
-            "jp": "今日は5日です。"
-          }
-        }
+        { "speaker": "A", "zh": "今天几号？", "pinyin": "Jīntiān jǐ hào?", "kr": "오늘 며칠이에요?", "text": "今天几号？", "translation": { "kr": "오늘 며칠이에요?", "en": "What's the date today?", "jp": "今日は何日ですか？" } },
+        { "speaker": "B", "zh": "今天五号。", "pinyin": "Jīntiān wǔ hào.", "kr": "오늘 5일이에요.", "text": "今天五号。", "translation": { "kr": "오늘 5일이에요.", "en": "Today is the 5th.", "jp": "今日は5日です。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "今天星期几？",
-          "pinyin": "Jīntiān xīngqī jǐ?",
-          "kr": "오늘 무슨 요일이에요?",
-          "text": "今天星期几？",
-          "translation": {
-            "kr": "오늘 무슨 요일이에요?",
-            "en": "What day is it today?",
-            "jp": "今日は何曜日ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "今天星期一。",
-          "pinyin": "Jīntiān xīngqī yī.",
-          "kr": "오늘 월요일이에요.",
-          "text": "今天星期一。",
-          "translation": {
-            "kr": "오늘 월요일이에요.",
-            "en": "Today is Monday.",
-            "jp": "今日は月曜日です。"
-          }
-        }
+        { "speaker": "A", "zh": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?", "text": "今天星期几？", "translation": { "kr": "오늘 무슨 요일이에요?", "en": "What day is it today?", "jp": "今日は何曜日ですか？" } },
+        { "speaker": "B", "zh": "今天星期一。", "pinyin": "Jīntiān xīngqī yī.", "kr": "오늘 월요일이에요.", "text": "今天星期一。", "translation": { "kr": "오늘 월요일이에요.", "en": "Today is Monday.", "jp": "今日は月曜日です。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
+        { "speaker": "A", "zh": "昨天几号？明天几月几日？", "pinyin": "Zuótiān jǐ hào? Míngtiān jǐ yuè jǐ rì?", "kr": "어제 며칠이었어요? 내일 몇 월 며칠이에요?", "text": "昨天几号？明天几月几日？", "translation": { "kr": "어제 며칠? 내일 몇 월 며칠?", "en": "What was the date yesterday? What's the date tomorrow?", "jp": "昨日は何日？明日は何月何日？" } },
+        { "speaker": "B", "zh": "昨天四号。明天六月八日。", "pinyin": "Zuótiān sì hào. Míngtiān liù yuè bā rì.", "kr": "어제 4일. 내일 6월 8일.", "text": "昨天四号。明天六月八日。", "translation": { "kr": "어제 4일. 내일 6월 8일.", "en": "Yesterday was the 4th. Tomorrow is June 8th.", "jp": "昨日は4日。明日は6月8日。" } }
+      ]
+    }
+  ],
         {
           "speaker": "A",
           "zh": "明天星期几？",

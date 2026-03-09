@@ -123,105 +123,24 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你怎么去学校？",
-          "pinyin": "Nǐ zěnme qù xuéxiào?",
-          "kr": "어떻게 학교에 가요?",
-          "text": "你怎么去学校？",
-          "translation": {
-            "kr": "어떻게 학교에 가요?",
-            "en": "How do you go to school?",
-            "jp": "どうやって学校に行きますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我坐车去。",
-          "pinyin": "Wǒ zuò chē qù.",
-          "kr": "저는 차 타고 가요.",
-          "text": "我坐车去。",
-          "translation": {
-            "kr": "저는 차 타고 가요.",
-            "en": "I go by car.",
-            "jp": "車で行きます。"
-          }
-        }
+        { "speaker": "A", "zh": "你怎么去火车站？", "pinyin": "Nǐ zěnme qù huǒchēzhàn?", "kr": "기차역에 어떻게 가요?", "text": "你怎么去火车站？", "translation": { "kr": "기차역에 어떻게 가요?", "en": "How do you go to the train station?", "jp": "駅にどうやって行きますか？" } },
+        { "speaker": "B", "zh": "我坐出租车去。", "pinyin": "Wǒ zuò chūzūchē qù.", "kr": "택시 타고 가요.", "text": "我坐出租车去。", "translation": { "kr": "택시 타고 가요.", "en": "I take a taxi.", "jp": "タクシーで行きます。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你去哪儿？",
-          "pinyin": "Nǐ qù nǎr?",
-          "kr": "어디 가요?",
-          "text": "你去哪儿？",
-          "translation": {
-            "kr": "어디 가요?",
-            "en": "Where are you going?",
-            "jp": "どこに行きますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我去学校。",
-          "pinyin": "Wǒ qù xuéxiào.",
-          "kr": "저는 학교에 가요.",
-          "text": "我去学校。",
-          "translation": {
-            "kr": "저는 학교에 가요.",
-            "en": "I'm going to school.",
-            "jp": "学校に行きます。"
-          }
-        }
+        { "speaker": "A", "zh": "你去哪儿？坐飞机吗？", "pinyin": "Nǐ qù nǎr? Zuò fēijī ma?", "kr": "어디 가요? 비행기 타요?", "text": "你去哪儿？坐飞机吗？", "translation": { "kr": "어디 가요? 비행기 타요?", "en": "Where are you going? By plane?", "jp": "どこに行きますか？飛行機で？" } },
+        { "speaker": "B", "zh": "是，我坐飞机去。", "pinyin": "Shì, wǒ zuò fēijī qù.", "kr": "네, 비행기 타고 가요.", "text": "是，我坐飞机去。", "translation": { "kr": "네, 비행기 타고 가요.", "en": "Yes, I'm taking a plane.", "jp": "はい、飛行機で行きます。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你回家吗？",
-          "pinyin": "Nǐ huí jiā ma?",
-          "kr": "집에 돌아가요?",
-          "text": "你回家吗？",
-          "translation": {
-            "kr": "집에 돌아가요?",
-            "en": "Are you going home?",
-            "jp": "家に帰りますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "回。",
-          "pinyin": "Huí.",
-          "kr": "돌아가요.",
-          "text": "回。",
-          "translation": {
-            "kr": "돌아가요.",
-            "en": "Yes.",
-            "jp": "帰ります。"
-          }
-        }
+        { "speaker": "A", "zh": "你爸爸开车吗？", "pinyin": "Nǐ bàba kāi chē ma?", "kr": "아버지가 운전해요?", "text": "你爸爸开车吗？", "translation": { "kr": "아버지가 운전해요?", "en": "Does your dad drive?", "jp": "お父さんは運転しますか？" } },
+        { "speaker": "B", "zh": "开。我看见飞机了，学生都去。", "pinyin": "Kāi. Wǒ kànjiàn fēijī le, xuéshēng dōu qù.", "kr": "네. 비행기 봤어요, 학생들 다 가요.", "text": "开。我看见飞机了，学生都去。", "translation": { "kr": "네. 비행기 봤어요, 학생들 다 가요.", "en": "Yes. I saw a plane, all the students are going.", "jp": "はい。飛行機を見ました、学生はみんな行きます。" } }
       ]
     }
   ],

@@ -153,105 +153,24 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "这个多少钱？",
-          "pinyin": "Zhè gè duōshao qián?",
-          "kr": "이거 얼마예요?",
-          "text": "这个多少钱？",
-          "translation": {
-            "kr": "이거 얼마예요?",
-            "en": "How much is this?",
-            "jp": "これはいくらですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "二十块。",
-          "pinyin": "Èrshí kuài.",
-          "kr": "20위안이에요.",
-          "text": "二十块。",
-          "translation": {
-            "kr": "20위안이에요.",
-            "en": "Twenty yuan.",
-            "jp": "20元です。"
-          }
-        }
+        { "speaker": "A", "zh": "商店在哪儿？", "pinyin": "Shāngdiàn zài nǎr?", "kr": "가게가 어디에 있어요?", "text": "商店在哪儿？", "translation": { "kr": "가게가 어디에 있어요?", "en": "Where is the store?", "jp": "店はどこにありますか？" } },
+        { "speaker": "B", "zh": "在那儿。我买一些东西。", "pinyin": "Zài nàr. Wǒ mǎi yīxiē dōngxi.", "kr": "저기에 있어요. 뭐 좀 살 거예요.", "text": "在那儿。我买一些东西。", "translation": { "kr": "저기에 있어요. 뭐 좀 살 거예요.", "en": "Over there. I'm buying some things.", "jp": "あそこにあります。何か買います。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "太贵了。",
-          "pinyin": "Tài guì le.",
-          "kr": "너무 비싸요.",
-          "text": "太贵了。",
-          "translation": {
-            "kr": "너무 비싸요.",
-            "en": "Too expensive.",
-            "jp": "高すぎます。"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好，十五块。",
-          "pinyin": "Hǎo, shíwǔ kuài.",
-          "kr": "좋아요, 15위안이에요.",
-          "text": "好，十五块。",
-          "translation": {
-            "kr": "좋아요, 15위안이에요.",
-            "en": "OK, fifteen yuan.",
-            "jp": "わかりました、15元です。"
-          }
-        }
+        { "speaker": "A", "zh": "你买什么？", "pinyin": "Nǐ mǎi shénme?", "kr": "뭘 사요?", "text": "你买什么？", "translation": { "kr": "뭘 사요?", "en": "What are you buying?", "jp": "何を買いますか？" } },
+        { "speaker": "B", "zh": "我买衣服。", "pinyin": "Wǒ mǎi yīfu.", "kr": "옷 사요.", "text": "我买衣服。", "translation": { "kr": "옷 사요.", "en": "I'm buying clothes.", "jp": "服を買います。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "我要这个。",
-          "pinyin": "Wǒ yào zhè gè.",
-          "kr": "이거 주세요.",
-          "text": "我要这个。",
-          "translation": {
-            "kr": "이거 주세요.",
-            "en": "I'll take this.",
-            "jp": "これをください。"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好的。",
-          "pinyin": "Hǎo de.",
-          "kr": "알겠어요.",
-          "text": "好的。",
-          "translation": {
-            "kr": "알겠어요.",
-            "en": "OK.",
-            "jp": "わかりました。"
-          }
-        }
+        { "speaker": "A", "zh": "这个电脑多少钱？", "pinyin": "Zhè ge diànnǎo duōshao qián?", "kr": "이 컴퓨터 얼마예요?", "text": "这个电脑多少钱？", "translation": { "kr": "이 컴퓨터 얼마예요?", "en": "How much is this computer?", "jp": "このパソコンはいくらですか？" } },
+        { "speaker": "B", "zh": "二十块。那个呢？十五块。", "pinyin": "Èrshí kuài. Nà ge ne? Shíwǔ kuài.", "kr": "20위안이에요. 저건요? 15위안이에요.", "text": "二十块。那个呢？十五块。", "translation": { "kr": "20위안이에요. 저건요? 15위안이에요.", "en": "Twenty yuan. That one? Fifteen yuan.", "jp": "20元です。あれは？15元です。" } }
       ]
     }
   ],

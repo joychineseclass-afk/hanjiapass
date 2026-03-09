@@ -157,59 +157,16 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你去医院了吗？",
-          "pinyin": "Nǐ qù yīyuàn le ma?",
-          "kr": "병원 갔어요?",
-          "text": "你去医院了吗？",
-          "translation": {
-            "kr": "병원 갔어요?",
-            "en": "Did you go to the hospital?",
-            "jp": "病院に行きましたか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "去了。",
-          "pinyin": "Qù le.",
-          "kr": "갔어요.",
-          "text": "去了。",
-          "translation": {
-            "kr": "갔어요.",
-            "en": "Yes, I did.",
-            "jp": "行きました。"
-          }
-        }
+        { "speaker": "A", "zh": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "kr": "병원 갔어요?", "text": "你去医院了吗？", "translation": { "kr": "병원 갔어요?", "en": "Did you go to the hospital?", "jp": "病院に行きましたか？" } },
+        { "speaker": "B", "zh": "没去。", "pinyin": "Méi qù.", "kr": "안 갔어요.", "text": "没去。", "translation": { "kr": "안 갔어요.", "en": "No, I didn't.", "jp": "行っていません。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "现在怎么样？",
-          "pinyin": "Xiànzài zěnmeyàng?",
-          "kr": "지금 어때요?",
-          "text": "现在怎么样？",
-          "translation": {
-            "kr": "지금 어때요?",
-            "en": "How are you now?",
-            "jp": "今どうですか？"
-          }
-        },
+        { "speaker": "A", "zh": "现在怎么样？我们去医院吧。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen qù yīyuàn ba. Nǐ ne?", "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "text": "现在怎么样？我们去医院吧。你呢？", "translation": { "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "en": "How are you now? Let's go to the hospital. And you?", "jp": "今どうですか？病院に行きましょう。あなたは？" } },
         {
           "speaker": "B",
           "zh": "很好。",

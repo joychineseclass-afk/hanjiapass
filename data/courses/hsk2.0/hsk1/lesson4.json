@@ -189,14 +189,14 @@
         },
         {
           "speaker": "B",
-          "zh": "我家有四个人。",
-          "pinyin": "Wǒ jiā yǒu sì gè rén.",
-          "kr": "우리 가족은 네 명이에요.",
-          "text": "我家有四个人。",
+          "zh": "我家有四个人：爸爸、妈妈、儿子、女儿。",
+          "pinyin": "Wǒ jiā yǒu sì gè rén: bàba, māma, érzi, nǚ'ér.",
+          "kr": "우리 가족은 네 명이에요: 아빠, 엄마, 아들, 딸.",
+          "text": "我家有四个人：爸爸、妈妈、儿子、女儿。",
           "translation": {
-            "kr": "우리 가족은 네 명이에요.",
-            "en": "There are four people in my family.",
-            "jp": "私の家族は4人です。"
+            "kr": "우리 가족은 네 명이에요: 아빠, 엄마, 아들, 딸.",
+            "en": "There are four people: dad, mom, son and daughter.",
+            "jp": "家族は4人です：父、母、息子、娘。"
           }
         }
       ]
@@ -257,14 +257,14 @@
         },
         {
           "speaker": "B",
-          "zh": "她是我妈妈。",
-          "pinyin": "Tā shì wǒ māma.",
-          "kr": "그녀는 우리 엄마예요.",
-          "text": "她是我妈妈。",
+          "zh": "她是我的妈妈。她是我的女儿。",
+          "pinyin": "Tā shì wǒ de māma. Tā shì wǒ de nǚ'ér.",
+          "kr": "그녀는 우리 엄마예요. 그녀는 우리 딸이에요.",
+          "text": "她是我的妈妈。她是我的女儿。",
           "translation": {
-            "kr": "그녀는 우리 엄마예요.",
-            "en": "She is my mom.",
-            "jp": "彼女は私の母です。"
+            "kr": "그녀는 우리 엄마예요. 그녀는 우리 딸이에요.",
+            "en": "She is my mom. She is my daughter.",
+            "jp": "彼女は私の母です。彼女は私の娘です。"
           }
         }
       ]

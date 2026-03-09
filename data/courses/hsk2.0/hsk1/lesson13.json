@@ -168,105 +168,24 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你喜欢什么？",
-          "pinyin": "Nǐ xǐhuan shénme?",
-          "kr": "뭘 좋아해요?",
-          "text": "你喜欢什么？",
-          "translation": {
-            "kr": "뭘 좋아해요?",
-            "en": "What do you like?",
-            "jp": "何が好きですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我喜欢狗。",
-          "pinyin": "Wǒ xǐhuan gǒu.",
-          "kr": "저는 개를 좋아해요.",
-          "text": "我喜欢狗。",
-          "translation": {
-            "kr": "저는 개를 좋아해요.",
-            "en": "I like dogs.",
-            "jp": "犬が好きです。"
-          }
-        }
+        { "speaker": "A", "zh": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "kr": "뭘 좋아해요?", "text": "你喜欢什么？", "translation": { "kr": "뭘 좋아해요?", "en": "What do you like?", "jp": "何が好きですか？" } },
+        { "speaker": "B", "zh": "我喜欢狗，我也喜欢猫。", "pinyin": "Wǒ xǐhuan gǒu, wǒ yě xǐhuan māo.", "kr": "개 좋아해요, 고양이도 좋아해요.", "text": "我喜欢狗，我也喜欢猫。", "translation": { "kr": "개 좋아해요, 고양이도 좋아해요.", "en": "I like dogs, I also like cats.", "jp": "犬が好き、猫も好きです。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你看电视吗？",
-          "pinyin": "Nǐ kàn diànshì ma?",
-          "kr": "텔레비전 봐요?",
-          "text": "你看电视吗？",
-          "translation": {
-            "kr": "텔레비전 봐요?",
-            "en": "Do you watch TV?",
-            "jp": "テレビを見ますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "看。",
-          "pinyin": "Kàn.",
-          "kr": "봐요.",
-          "text": "看。",
-          "translation": {
-            "kr": "봐요.",
-            "en": "Yes.",
-            "jp": "見ます。"
-          }
-        }
+        { "speaker": "A", "zh": "你看电视吗？听音乐吗？", "pinyin": "Nǐ kàn diànshì ma? Tīng yīnyuè ma?", "kr": "텔레비전 봐요? 음악 들어요?", "text": "你看电视吗？听音乐吗？", "translation": { "kr": "텔레비전 봐요? 음악 들어요?", "en": "Do you watch TV? Listen to music?", "jp": "テレビを見ますか？音楽を聞きますか？" } },
+        { "speaker": "B", "zh": "看。我爱看电影。", "pinyin": "Kàn. Wǒ ài kàn diànyǐng.", "kr": "봐요. 영화 보는 거 좋아해요.", "text": "看。我爱看电影。", "translation": { "kr": "봐요. 영화 보는 거 좋아해요.", "en": "Yes. I love watching movies.", "jp": "見ます。映画を見るのが好きです。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你喜欢看电影吗？",
-          "pinyin": "Nǐ xǐhuan kàn diànyǐng ma?",
-          "kr": "영화 보는 거 좋아해요?",
-          "text": "你喜欢看电影吗？",
-          "translation": {
-            "kr": "영화 보는 거 좋아해요?",
-            "en": "Do you like watching movies?",
-            "jp": "映画を見るのは好きですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "喜欢。",
-          "pinyin": "Xǐhuan.",
-          "kr": "좋아해요.",
-          "text": "喜欢。",
-          "translation": {
-            "kr": "좋아해요.",
-            "en": "Yes, I do.",
-            "jp": "好きです。"
-          }
-        }
+        { "speaker": "A", "zh": "狗漂亮吗？猫呢？", "pinyin": "Gǒu piàoliang ma? Māo ne?", "kr": "개 예뻐요? 고양이는요?", "text": "狗漂亮吗？猫呢？", "translation": { "kr": "개 예뻐요? 고양이는요?", "en": "Is the dog pretty? What about the cat?", "jp": "犬はきれいですか？猫は？" } },
+        { "speaker": "B", "zh": "狗漂亮，猫也漂亮。", "pinyin": "Gǒu piàoliang, māo yě piàoliang.", "kr": "개 예뻐요, 고양이도 예뻐요.", "text": "狗漂亮，猫也漂亮。", "translation": { "kr": "개 예뻐요, 고양이도 예뻐요.", "en": "The dog is pretty, the cat is pretty too.", "jp": "犬はきれい、猫もきれいです。" } }
       ]
     }
   ],

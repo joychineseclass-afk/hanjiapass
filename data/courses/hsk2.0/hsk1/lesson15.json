@@ -108,105 +108,24 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你喝茶吗？",
-          "pinyin": "Nǐ hē chá ma?",
-          "kr": "차 마셔요?",
-          "text": "你喝茶吗？",
-          "translation": {
-            "kr": "차 마셔요?",
-            "en": "Do you drink tea?",
-            "jp": "お茶を飲みますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "喝。",
-          "pinyin": "Hē.",
-          "kr": "마셔요.",
-          "text": "喝。",
-          "translation": {
-            "kr": "마셔요.",
-            "en": "Yes.",
-            "jp": "飲みます。"
-          }
-        }
+        { "speaker": "A", "zh": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "kr": "차 마셔요?", "text": "你喝茶吗？", "translation": { "kr": "차 마셔요?", "en": "Do you drink tea?", "jp": "お茶を飲みますか？" } },
+        { "speaker": "B", "zh": "喝。", "pinyin": "Hē.", "kr": "마셔요.", "text": "喝。", "translation": { "kr": "마셔요.", "en": "Yes.", "jp": "飲みます。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你喝咖啡吗？",
-          "pinyin": "Nǐ hē kāfēi ma?",
-          "kr": "커피 마셔요?",
-          "text": "你喝咖啡吗？",
-          "translation": {
-            "kr": "커피 마셔요?",
-            "en": "Do you drink coffee?",
-            "jp": "コーヒーを飲みますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不喝。",
-          "pinyin": "Bù hē.",
-          "kr": "안 마셔요.",
-          "text": "不喝。",
-          "translation": {
-            "kr": "안 마셔요.",
-            "en": "No.",
-            "jp": "飲みません。"
-          }
-        }
+        { "speaker": "A", "zh": "在饭馆。你喝茶吗？", "pinyin": "Zài fànguǎn. Nǐ hē chá ma?", "kr": "식당이에요. 차 마셔요?", "text": "在饭馆。你喝茶吗？", "translation": { "kr": "식당이에요. 차 마셔요?", "en": "At the restaurant. Do you drink tea?", "jp": "レストランです。お茶を飲みますか？" } },
+        { "speaker": "B", "zh": "喝。一个杯子。", "pinyin": "Hē. Yī gè bēizi.", "kr": "마셔요. 컵 하나요.", "text": "喝。一个杯子。", "translation": { "kr": "마셔요. 컵 하나요.", "en": "Yes. One cup.", "jp": "飲みます。コップ一つ。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "这个好吃吗？",
-          "pinyin": "Zhè gè hǎo chī ma?",
-          "kr": "이거 맛있어요?",
-          "text": "这个好吃吗？",
-          "translation": {
-            "kr": "이거 맛있어요?",
-            "en": "Is this delicious?",
-            "jp": "これはおいしいですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "很好吃。",
-          "pinyin": "Hěn hǎo chī.",
-          "kr": "아주 맛있어요.",
-          "text": "很好吃。",
-          "translation": {
-            "kr": "아주 맛있어요.",
-            "en": "Very delicious.",
-            "jp": "とてもおいしいです。"
-          }
-        }
+        { "speaker": "A", "zh": "饭馆什么东西好吃？", "pinyin": "Fànguǎn shénme dōngxi hǎo chī?", "kr": "식당에서 뭐가 맛있어요?", "text": "饭馆什么东西好吃？", "translation": { "kr": "식당에서 뭐가 맛있어요?", "en": "What's good at the restaurant?", "jp": "レストランで何がおいしいですか？" } },
+        { "speaker": "B", "zh": "米饭好吃。五块。", "pinyin": "Mǐfàn hǎo chī. Wǔ kuài.", "kr": "밥이 맛있어요. 5위안이에요.", "text": "米饭好吃。五块。", "translation": { "kr": "밥이 맛있어요. 5위안이에요.", "en": "Rice is good. Five yuan.", "jp": "ご飯がおいしいです。5元です。" } }
       ]
     }
   ],

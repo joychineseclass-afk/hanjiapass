@@ -206,37 +206,10 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你上午做什么？",
-          "pinyin": "Nǐ shàngwǔ zuò shénme?",
-          "kr": "오전에 뭐 해요?",
-          "text": "你上午做什么？",
-          "translation": {
-            "kr": "오전에 뭐 해요?",
-            "en": "What do you do in the morning?",
-            "jp": "午前中は何をしますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我学习。",
-          "pinyin": "Wǒ xuéxí.",
-          "kr": "저는 공부해요.",
-          "text": "我学习。",
-          "translation": {
-            "kr": "저는 공부해요.",
-            "en": "I study.",
-            "jp": "勉強します。"
-          }
-        }
+        { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?", "text": "现在几点？", "translation": { "kr": "지금 몇 시예요?", "en": "What time is it now?", "jp": "今何時ですか？" } },
+        { "speaker": "B", "zh": "三点十五分钟。中午十二点。", "pinyin": "Sān diǎn shíwǔ fēnzhōng. Zhōngwǔ shí'èr diǎn.", "kr": "3시 15분이에요. 낮 12시예요.", "text": "三点十五分钟。中午十二点。", "translation": { "kr": "3시 15분이에요. 낮 12시예요.", "en": "Three fifteen. Noon twelve o'clock.", "jp": "3時15分です。お昼12時です。" } }
       ]
     }
   ],

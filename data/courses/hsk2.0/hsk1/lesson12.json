@@ -206,37 +206,10 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "王先生做什么工作？",
-          "pinyin": "Wáng xiānsheng zuò shénme gōngzuò?",
-          "kr": "왕先生은 무슨 일 하세요?",
-          "text": "王先生做什么工作？",
-          "translation": {
-            "kr": "왕先生은 무슨 일 하세요?",
-            "en": "What does Mr. Wang do?",
-            "jp": "王さんは何をしていますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "他是医生。",
-          "pinyin": "Tā shì yīshēng.",
-          "kr": "그는 의사예요.",
-          "text": "他是医生。",
-          "translation": {
-            "kr": "그는 의사예요.",
-            "en": "He's a doctor.",
-            "jp": "医者です。"
-          }
-        }
+        { "speaker": "A", "zh": "李小姐做什么工作？她能说汉语吗？", "pinyin": "Lǐ xiǎojiě zuò shénme gōngzuò? Tā néng shuō Hànyǔ ma?", "kr": "이小姐는 무슨 일 해요? 중국어 할 수 있어요?", "text": "李小姐做什么工作？她能说汉语吗？", "translation": { "kr": "이小姐는 무슨 일 해요? 중국어 할 수 있어요?", "en": "What does Miss Li do? Can she speak Chinese?", "jp": "李さんは何をしていますか？中国語が話せますか？" } },
+        { "speaker": "B", "zh": "她会说汉语。", "pinyin": "Tā huì shuō Hànyǔ.", "kr": "중국어 할 줄 알아요.", "text": "她会说汉语。", "translation": { "kr": "중국어 할 줄 알아요.", "en": "She can speak Chinese.", "jp": "中国語が話せます。" } }
       ]
     }
   ],

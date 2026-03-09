@@ -221,37 +221,10 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "猫在哪儿？",
-          "pinyin": "Māo zài nǎr?",
-          "kr": "고양이가 어디에 있어요?",
-          "text": "猫在哪儿？",
-          "translation": {
-            "kr": "고양이가 어디에 있어요?",
-            "en": "Where is the cat?",
-            "jp": "猫はどこにいますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "在椅子下面。",
-          "pinyin": "Zài yǐzi xiàmiàn.",
-          "kr": "의자 아래에 있어요.",
-          "text": "在椅子下面。",
-          "translation": {
-            "kr": "의자 아래에 있어요.",
-            "en": "Under the chair.",
-            "jp": "椅子の下にあります。"
-          }
-        }
+        { "speaker": "A", "zh": "学校在哪里？书在哪里？", "pinyin": "Xuéxiào zài nǎlǐ? Shū zài nǎlǐ?", "kr": "학교가 어디에 있어요? 책이 어디에 있어요?", "text": "学校在哪里？书在哪里？", "translation": { "kr": "학교가 어디에 있어요? 책이 어디에 있어요?", "en": "Where is the school? Where is the book?", "jp": "学校はどこにありますか？本はどこにありますか？" } },
+        { "speaker": "B", "zh": "学校在前面。书在后面。你住在哪儿？我住在北京。", "pinyin": "Xuéxiào zài qiánmiàn. Shū zài hòumiàn. Nǐ zhù zài nǎr? Wǒ zhù zài Běijīng.", "kr": "학교는 앞에 있어요. 책은 뒤에 있어요. 어디에 살아요? 베이징에 살아요.", "text": "学校在前面。书在后面。你住在哪儿？我住在北京。", "translation": { "kr": "학교는 앞에 있어요. 책은 뒤에 있어요. 어디에 살아요? 베이징에 살아요.", "en": "School is in front. Book is in the back. Where do you live? I live in Beijing.", "jp": "学校は前にあります。本は後ろにあります。どこに住んでいますか？北京に住んでいます。" } }
       ]
     }
   ],
