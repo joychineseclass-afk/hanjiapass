@@ -7,7 +7,7 @@
 import { i18n } from "../../../i18n.js";
 import { buildLessonContext } from "./aiLessonContext.js";
 import { buildPrompt, getModes, getModeLabel } from "./aiPromptBuilder.js";
-import { getLessonAIConfig, buildPrompt as buildAIPrompt, runTutor, formatTutorResult } from "../../../modules/ai/aiEngine.js";
+import { getLessonAIConfig, runTutor, formatTutorResult } from "../../../modules/ai/aiEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -86,6 +86,14 @@ export function renderAIPanel(opts = {}) {
   `;
 }
 
+/** 从多语言对象中按 lang 取值 */
+function pickLang(obj, lang) {
+  if (!obj || typeof obj !== "object") return "";
+  const l = (lang || "kr").toLowerCase();
+  const key = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
+  return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en ?? "");
+}
+
 /** 渲染 lesson.ai 标准化卡片 */
 function renderAICards(lesson, lang) {
   const items = getLessonAIConfig(lesson);
@@ -93,21 +101,29 @@ function renderAICards(lesson, lang) {
 
   const explainLabel = t("ai.type_explain", "解释");
   const roleplayLabel = t("ai.type_roleplay", "情景对话");
+  const startExplainBtn = t("ai.start_explain", "开始讲解");
+  const startRoleplayBtn = t("ai.start_roleplay", "开始练习");
 
-  return items.map((item) => {
+  return items.map((item, index) => {
     const type = item.type || "explain";
     const label = type === "explain" ? explainLabel : roleplayLabel;
-    const target = item.target ?? item.scenario ?? "";
-    const scenario = item.scenario ?? "";
-    const btnLabel = type === "explain" && target
-      ? t("ai.explain_btn", "解释") + "：" + target.slice(0, 20) + (target.length > 20 ? "…" : "")
-      : type === "roleplay"
-        ? t("ai.roleplay_btn", "开始") + "：" + (scenario || t("ai.roleplay_scenario", "对话练习"))
-        : label;
+    const target = str(item.target ?? "");
+    const scenario = str(item.scenario ?? "");
+    const title = pickLang(item.title, lang) || label;
+    const hint = pickLang(item.hint, lang);
+    const promptText = pickLang(item.prompt, lang);
+    const btnLabel = type === "explain" ? startExplainBtn : startRoleplayBtn;
+
+    const targetOrScenario = type === "explain" ? target : scenario;
+    const hintOrPrompt = type === "explain" ? hint : promptText;
+
     return `
-      <div class="ai-tutor-card rounded-xl border border-slate-200 p-3 mb-2 bg-white" data-ai-type="${escapeHtml(type)}" data-target="${escapeHtml(target)}" data-scenario="${escapeHtml(scenario)}">
+      <div class="ai-tutor-card rounded-xl border border-slate-200 p-3 mb-3 bg-white" data-ai-index="${index}" data-ai-type="${escapeHtml(type)}" data-target="${escapeHtml(target)}" data-scenario="${escapeHtml(scenario)}">
         <span class="ai-tutor-badge text-xs font-medium text-slate-500">${escapeHtml(label)}</span>
-        <button type="button" class="ai-tutor-trigger w-full mt-2 px-3 py-2 rounded-lg border text-sm text-left hover:bg-slate-50">
+        <div class="text-sm font-semibold text-slate-800 mt-1">${escapeHtml(title)}</div>
+        ${targetOrScenario ? `<div class="text-sm text-slate-600 mt-1">${escapeHtml(type === "explain" ? t("ai.target", "目标") + "：" : t("ai.scenario", "场景") + "：")}${escapeHtml(targetOrScenario)}</div>` : ""}
+        ${hintOrPrompt ? `<div class="text-xs text-slate-500 mt-1">${escapeHtml(hintOrPrompt)}</div>` : ""}
+        <button type="button" class="ai-tutor-trigger w-full mt-2 px-3 py-2 rounded-lg border border-slate-300 text-sm font-medium hover:bg-slate-50 transition-colors">
           ${escapeHtml(btnLabel)}
         </button>
         <div class="ai-tutor-result-wrap mt-2 hidden"></div>
@@ -123,10 +139,15 @@ function renderAICards(lesson, lang) {
 export function mountAIPanel(container, opts = {}) {
   if (!container) return;
   const { lesson, lang = "ko" } = opts;
+  const items = getLessonAIConfig(lesson);
   const aiCardsHtml = renderAICards(lesson, lang);
   const mainPanelHtml = renderAIPanel({ ...opts, containerId: container.id });
 
-  container.innerHTML = (aiCardsHtml ? `<div class="ai-tutor-cards mb-4">${aiCardsHtml}</div>` : "") + mainPanelHtml;
+  const noAiHtml = `<div class="ai-no-tasks rounded-xl border border-slate-200 p-4 bg-slate-50/50 text-center text-sm text-slate-600">${escapeHtml(t("ai.no_ai_tasks", "本课暂无 AI 学习任务"))}</div>`;
+
+  container.innerHTML = aiCardsHtml
+    ? `<div class="ai-tutor-cards mb-4">${aiCardsHtml}</div>${mainPanelHtml}`
+    : noAiHtml + mainPanelHtml;
 
   const modeBtns = container.querySelectorAll(".ai-mode-btn");
   const copyBtn = container.querySelector(".ai-copy-btn");
@@ -184,20 +205,18 @@ export function mountAIPanel(container, opts = {}) {
     btn.addEventListener("click", async () => {
       const card = btn.closest(".ai-tutor-card");
       if (!card) return;
-      const type = card.dataset.aiType || "explain";
-      const target = card.dataset.target || "";
-      const scenario = card.dataset.scenario || "";
+      const index = parseInt(card.dataset.aiIndex, 10);
+      const aiItem = Array.isArray(lesson?.ai) ? lesson.ai[index] : null;
+      if (!aiItem) return;
       const resultWrap = card.querySelector(".ai-tutor-result-wrap");
       if (!resultWrap) return;
 
       resultWrap.classList.remove("hidden");
-      resultWrap.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(t("common_loading"))}</div>`;
+      resultWrap.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(t("ai.loading", t("common.loading", "加载中...")))}</div>`;
 
-      const context = buildLessonContext(lesson, { lang });
-      const prompt = buildAIPrompt({ type, target, scenario, context, lang });
-      const res = await runTutor({ prompt, lang, type });
+      const res = await runTutor(aiItem, lesson, lang);
       const formatted = formatTutorResult(res, lang);
-      resultWrap.innerHTML = formatted.html || `<div class="text-sm opacity-70">${escapeHtml(t("ai.placeholder"))}</div>`;
+      resultWrap.innerHTML = formatted.html || `<div class="text-sm opacity-70">${escapeHtml(t("ai.placeholder", "AI 功能即将上线"))}</div>`;
     });
   });
 }

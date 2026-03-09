@@ -547,11 +547,35 @@
   "ai": [
     {
       "type": "explain",
-      "target": "我是中国人。"
+      "title": {
+        "cn": "解释句子",
+        "kr": "문장 설명",
+        "en": "Explain the sentence",
+        "jp": "文の説明"
+      },
+      "target": "我是中国人。",
+      "hint": {
+        "cn": "解释这句话的意思和用法。",
+        "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
+        "en": "Explain the meaning and usage of this sentence.",
+        "jp": "この文の意味と使い方を説明してください。"
+      }
     },
     {
       "type": "roleplay",
-      "scenario": "greeting"
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "greeting",
+      "prompt": {
+        "cn": "请和同学打招呼并做自我介绍。",
+        "kr": "친구에게 인사하고 자기소개를 해 보세요.",
+        "en": "Greet your classmate and introduce yourself.",
+        "jp": "友だちにあいさつして自己紹介してみましょう。"
+      }
     }
   ],
   "aiPractice": {

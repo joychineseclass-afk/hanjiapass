@@ -7,24 +7,44 @@ import { i18n } from "../../i18n.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
+/** 从多语言对象中按 lang 取值 */
+function pickLang(obj, lang) {
+  if (!obj || typeof obj !== "object") return "";
+  const l = (lang || "kr").toLowerCase();
+  const key = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
+  return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en ?? "");
+}
+
 /**
  * 构建 AI 提示词
- * @param {object} opts - { type, target?, scenario?, context?, lang }
+ * @param {object} aiItem - lesson.ai 中的单项 { type, target?, scenario?, hint?, prompt?, title? }
+ * @param {object} lessonData - 完整 lesson 对象
+ * @param {string} lang - kr | cn | en | jp
  */
-export function buildPrompt(opts = {}) {
-  const { type, target, scenario, context = {}, lang = "ko" } = opts;
+export function buildPrompt(aiItem, lessonData, lang) {
+  if (!aiItem || !aiItem.type) return "请用中文回答。";
+  const type = aiItem.type;
+  const target = str(aiItem.target);
+  const scenario = str(aiItem.scenario);
+  const hint = pickLang(aiItem.hint, lang);
+  const promptText = pickLang(aiItem.prompt, lang);
+  const lessonTitle = pickLang(lessonData?.title, lang) || "";
+  const vocab = Array.isArray(lessonData?.vocab) ? lessonData.vocab : (lessonData?.words ?? []);
+  const vocabStr = vocab.slice(0, 10).map((v) => (v && (v.hanzi ?? v.word ?? v)) || "").filter(Boolean).join("、");
+
   const parts = [];
 
   if (type === "explain" && target) {
     parts.push(`请解释以下中文内容：${target}`);
-    if (context.lessonTitle) parts.push(`\n本课主题：${context.lessonTitle}`);
-    const vocab = context.vocab ?? [];
-    if (vocab.length) parts.push(`\n相关词汇：${vocab.slice(0, 10).map((v) => v.hanzi || v).join("、")}`);
+    if (hint) parts.push(`\n提示：${hint}`);
+    if (lessonTitle) parts.push(`\n本课主题：${lessonTitle}`);
+    if (vocabStr) parts.push(`\n相关词汇：${vocabStr}`);
   }
 
-  if (type === "roleplay" && scenario) {
-    parts.push(`请进行以下场景的对话练习：${scenario}`);
-    if (context.lessonTitle) parts.push(`\n本课：${context.lessonTitle}`);
+  if (type === "roleplay") {
+    parts.push(`请进行以下场景的对话练习：${scenario || "greeting"}`);
+    if (promptText) parts.push(`\n任务：${promptText}`);
+    if (lessonTitle) parts.push(`\n本课：${lessonTitle}`);
   }
 
   return parts.join("\n") || "请用中文回答。";
@@ -32,23 +52,39 @@ export function buildPrompt(opts = {}) {
 
 /**
  * 调用 AI 服务（占位）
- * @param {object} opts - { prompt, lang, type }
+ * @param {object} aiItem - lesson.ai 中的单项
+ * @param {object} lessonData - 完整 lesson 对象
+ * @param {string} lang - kr | cn | en | jp
  * @returns {Promise<{ text: string }>}
  */
-export async function runTutor(opts = {}) {
-  const { prompt, lang, type } = opts;
-  if (!prompt) return { text: "" };
+export async function runTutor(aiItem, lessonData, lang) {
+  const type = aiItem?.type || "explain";
+  const prompt = buildPrompt(aiItem, lessonData, lang);
 
-  // 占位：实际接入 AI API 时在此实现
+  // 实际接入 AI API 时在此实现
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
-      const res = await window.JOY_RUNNER.askAI({ prompt, context: prompt, lang, mode: type || "explain" });
+      const res = await window.JOY_RUNNER.askAI({ prompt, context: prompt, lang, mode: type });
       return { text: res?.text ?? "" };
     } catch (e) {
       return { text: `[AI 暂未连接] ${e?.message ?? ""}` };
     }
   }
 
+  // 占位：按类型返回可见反馈
+  const placeholderExplain = str(i18n?.t?.("ai.placeholder_explain") ?? "正在准备讲解…");
+  const placeholderRoleplay = str(i18n?.t?.("ai.placeholder_roleplay") ?? "现在进入练习场景…");
+  const target = str(aiItem?.target);
+  const scenario = str(aiItem?.scenario);
+
+  if (type === "explain") {
+    const line = target ? `「${target}」` : "";
+    return { text: `${placeholderExplain} ${line}\n\n（接入 AI 后将在此显示详细讲解）` };
+  }
+  if (type === "roleplay") {
+    const scene = scenario ? `「${scenario}」` : "";
+    return { text: `${placeholderRoleplay} ${scene}\n\n（接入 AI 后将在此进行情景对话）` };
+  }
   return { text: str(i18n?.t?.("ai.placeholder") ?? "AI 功能即将上线，敬请期待。") };
 }
 
