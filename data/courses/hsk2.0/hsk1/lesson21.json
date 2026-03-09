@@ -32,78 +32,7 @@
   "vocab": [],
   "dialogueCards": [],
   "grammar": [],
-  "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「你好吗？」的回答是什么？",
-        "kr": "답은?",
-        "en": "Response to 你好吗?"
-      },
-      "options": [
-        "你好",
-        "我很好",
-        "谢谢"
-      ],
-      "answer": "我很好"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "你叫什么名字？回答：",
-        "kr": "답은?",
-        "en": "Response?"
-      },
-      "options": [
-        "再见",
-        "我叫小明",
-        "不客气"
-      ],
-      "answer": "我叫小明"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「北京」在哪个国家？",
-        "kr": "어느 나라?",
-        "en": "Which country?"
-      },
-      "options": [
-        "美国",
-        "中国",
-        "日本"
-      ],
-      "answer": "中国"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "请选择正确语序：我 / 有 / 三 / 个",
-        "kr": "올바른 순서",
-        "en": "Correct order"
-      },
-      "options": [
-        "我有三个",
-        "三个有我",
-        "有我三个"
-      ],
-      "answer": "我有三个"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "现在几点？用「点」回答。",
-        "kr": "답 예시",
-        "en": "Example answer"
-      },
-      "options": [
-        "上午九点",
-        "今天",
-        "星期"
-      ],
-      "answer": "上午九点"
-    }
-  ],
+  "practice": [],
   "review": {
     "lessonRange": [
       1,

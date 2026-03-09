@@ -349,6 +349,7 @@
   }
 
   // ✅ load lesson via platform course engine
+  // ✅ REVIEW: type===review 时自动加载 range 课程并合并 words/dialogue/grammar/extension，生成 5~8 题练习
   async function loadLessonDetail(level, lessonNo, opts = {}) {
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
@@ -367,19 +368,42 @@
     const source = course.raw || {};
     const doc = course.doc || {};
     const c = doc.content;
-    // vocab 为主，words 兼容
-    const vocabArr = Array.isArray(source.vocab) ? source.vocab
-      : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
+
+    let vocabArr, dialogueArr, grammarArr, extensionArr, practiceArr;
+
+    if (source.type === "review") {
+      const range = source.review?.lessonRange || source.review?.range || [];
+      const from = Number(range[0]) || 1;
+      const to = Number(range[1]) || from;
+
+      const merged = await loadAndMergeReviewRange(lv, version, from, to, opts);
+      vocabArr = merged.vocab;
+      dialogueArr = merged.dialogue;
+      grammarArr = merged.grammar;
+      extensionArr = merged.extension;
+      practiceArr = merged.practice;
+    } else {
+      vocabArr = Array.isArray(source.vocab) ? source.vocab
+        : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
+      dialogueArr = Array.isArray(source.dialogueCards) ? source.dialogueCards
+        : (Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []));
+      grammarArr = Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []);
+      extensionArr = Array.isArray(source.extension) ? source.extension : (Array.isArray(c?.extension) ? c.extension : []);
+      practiceArr = Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []);
+    }
+
     const { normalizeSteps, stepKeys } = await import("/ui/core/lessonSteps.js");
     const stepsRaw = Array.isArray(source.steps) ? source.steps : (Array.isArray(doc.steps) ? doc.steps : undefined);
     const steps = normalizeSteps(stepsRaw, source.type === "review");
     const lesson = {
       ...source,
       vocab: vocabArr,
-      words: vocabArr, // compat
-      dialogue: Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []),
-      grammar: Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []),
-      practice: Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []),
+      words: vocabArr,
+      dialogue: dialogueArr,
+      dialogueCards: dialogueArr,
+      grammar: grammarArr,
+      extension: extensionArr,
+      practice: practiceArr,
       review: source.review || doc.content?.review || {},
       steps,
       stepKeys: stepKeys(steps),
@@ -387,6 +411,122 @@
 
     memSet(memKey, lesson);
     return lesson;
+  }
+
+  /** 加载 range 内课程并合并，生成复习课内容与练习 */
+  async function loadAndMergeReviewRange(lv, version, from, to, opts) {
+    const vocabSeen = new Map();
+    const dialogueList = [];
+    const grammarList = [];
+    const extensionList = [];
+    const lessons = [];
+
+    for (let n = from; n <= to; n++) {
+      const { COURSES } = await import("/ui/platform/index.js");
+      const course = await COURSES.loadCourse(
+        { type: "hsk", level: lv, lessonNo: n },
+        { track: version, file: `lesson${n}.json` }
+      );
+      const raw = course.raw || {};
+      const v = Array.isArray(raw.vocab) ? raw.vocab : (Array.isArray(raw.words) ? raw.words : []);
+      const d = Array.isArray(raw.dialogueCards) ? raw.dialogueCards : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
+      const g = Array.isArray(raw.grammar) ? raw.grammar : [];
+      const e = Array.isArray(raw.extension) ? raw.extension : [];
+
+      lessons.push({ vocab: v, dialogue: d, grammar: g, extension: e });
+
+      for (const w of v) {
+        const key = (w?.hanzi || w?.word || "").trim();
+        if (key && !vocabSeen.has(key)) vocabSeen.set(key, w);
+      }
+      dialogueList.push(...(Array.isArray(d) ? d : []));
+      grammarList.push(...g);
+      extensionList.push(...e);
+    }
+
+    const mergedLesson = {
+      vocab: Array.from(vocabSeen.values()),
+      words: Array.from(vocabSeen.values()),
+      dialogueCards: dialogueList,
+      dialogue: dialogueList,
+      grammar: grammarList,
+      extension: extensionList,
+      level: "HSK" + lv,
+      courseId: `hsk2.0_hsk${lv}`,
+    };
+
+    const practice = await generateReviewPractice(mergedLesson, 5, 8);
+    return {
+      vocab: mergedLesson.vocab,
+      dialogue: mergedLesson.dialogueCards,
+      grammar: mergedLesson.grammar,
+      extension: mergedLesson.extension,
+      practice,
+    };
+  }
+
+  /** 生成复习课练习 5~8 题：choice / fill / sentence_order */
+  async function generateReviewPractice(lesson, minCount, maxCount) {
+    try {
+      const { shuffle } = await import("/ui/platform/practice-generator/generatorUtils.js");
+      const { normalizeQuestion } = await import("/ui/platform/practice-generator/questionNormalizer.js");
+
+      const lang = "ko";
+      const count = Math.min(maxCount, Math.max(minCount, 6));
+      const quota = { vocab: 2, dialogue: 1, grammar: 1, sentenceOrder: 2, extension: 1 };
+      const levelNum = 1;
+
+      const generated = [];
+      const { generateVocabMeaningChoice, generateMeaningToVocabChoice } = await import("/ui/platform/practice-generator/vocabQuestionGenerator.js");
+      const { generateDialogueResponseChoice } = await import("/ui/platform/practice-generator/dialogueQuestionGenerator.js");
+      const { generateGrammarFillChoice } = await import("/ui/platform/practice-generator/grammarQuestionGenerator.js");
+      const { generateSentenceOrderChoice } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
+      const { generateExtensionMeaningChoice } = await import("/ui/platform/practice-generator/extensionQuestionGenerator.js");
+
+      generated.push(...generateVocabMeaningChoice(lesson, quota.vocab ?? 2, lang, levelNum));
+      generated.push(...generateMeaningToVocabChoice(lesson, 1, lang));
+      generated.push(...generateDialogueResponseChoice(lesson, quota.dialogue ?? 1, lang));
+      generated.push(...generateGrammarFillChoice(lesson, quota.grammar ?? 1, lang));
+      generated.push(...generateSentenceOrderChoice(lesson, quota.sentenceOrder ?? 2, lang));
+      generated.push(...generateExtensionMeaningChoice(lesson, quota.extension ?? 1, lang, levelNum));
+
+      const shuffled = shuffle(generated);
+      const result = [];
+      const usedIds = new Set();
+      const lessonId = lesson?.id ?? lesson?.courseId ?? "";
+
+      for (const q of shuffled) {
+        if (result.length >= count) break;
+        const normalized = normalizeQuestion(q, lessonId, result.length);
+        if (!normalized || usedIds.has(normalized.id)) continue;
+        usedIds.add(normalized.id);
+        result.push(toPracticeSchema(normalized));
+      }
+
+      return result.slice(0, count);
+    } catch (e) {
+      console.warn("[HSK_LOADER] generateReviewPractice failed:", e?.message);
+      return [];
+    }
+  }
+
+  /** 将 generator 输出转为 modules/practice 兼容的 schema（保留 options 的 key 格式供 practiceChoice 判题） */
+  function toPracticeSchema(q) {
+    if (!q) return null;
+    const prompt = q.question || q.prompt || {};
+    const promptObj = typeof prompt === "object"
+      ? { cn: prompt.zh ?? prompt.cn ?? "", kr: prompt.kr ?? prompt.ko ?? "", en: prompt.en ?? "", jp: prompt.jp ?? "" }
+      : { cn: String(prompt), kr: "", en: "", jp: "" };
+    return {
+      id: q.id,
+      type: q.type || "choice",
+      subtype: q.subtype,
+      prompt: promptObj,
+      options: Array.isArray(q.options) ? q.options : [],
+      answer: q.answer ?? q.correct ?? q.key,
+      explanation: q.explanation,
+      score: q.score ?? 1,
+    };
   }
 
   // ✅ Helper: force set version (UI can call this)
