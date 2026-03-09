@@ -1,14 +1,28 @@
 {
+  "level": 2,
+  "version": "hsk2.0",
   "lessons": [
-    {
-      "id": 1,
-      "lessonId": 1,
-      "lessonNo": 1,
-      "title": { "ko": "HSK2 第1课", "zh": "HSK2 第1课" },
-      "subtitle": "基础词汇",
-      "file": "hsk2_lesson1.json",
-      "level": "HSK2",
-      "version": "2.0"
-    }
+    { "no": 1, "id": 1, "title": "HSK2 第1课 / 제1과", "subtitle": "基础", "file": "lesson1.json" },
+    { "no": 2, "id": 2, "title": "HSK2 第2课 / 제2과", "subtitle": "基础", "file": "lesson2.json" },
+    { "no": 3, "id": 3, "title": "HSK2 第3课 / 제3과", "subtitle": "基础", "file": "lesson3.json" },
+    { "no": 4, "id": 4, "title": "HSK2 第4课 / 제4과", "subtitle": "基础", "file": "lesson4.json" },
+    { "no": 5, "id": 5, "title": "HSK2 第5课 / 제5과", "subtitle": "基础", "file": "lesson5.json" },
+    { "no": 6, "id": 6, "title": "HSK2 第6课 / 제6과", "subtitle": "基础", "file": "lesson6.json" },
+    { "no": 7, "id": 7, "title": "HSK2 第7课 / 제7과", "subtitle": "基础", "file": "lesson7.json" },
+    { "no": 8, "id": 8, "title": "HSK2 第8课 / 제8과", "subtitle": "基础", "file": "lesson8.json" },
+    { "no": 9, "id": 9, "title": "HSK2 第9课 / 제9과", "subtitle": "基础", "file": "lesson9.json" },
+    { "no": 10, "id": 10, "title": "HSK2 第10课 / 제10과", "subtitle": "基础", "file": "lesson10.json" },
+    { "no": 11, "id": 11, "title": "HSK2 第11课 / 제11과", "subtitle": "基础", "file": "lesson11.json" },
+    { "no": 12, "id": 12, "title": "HSK2 第12课 / 제12과", "subtitle": "基础", "file": "lesson12.json" },
+    { "no": 13, "id": 13, "title": "HSK2 第13课 / 제13과", "subtitle": "基础", "file": "lesson13.json" },
+    { "no": 14, "id": 14, "title": "HSK2 第14课 / 제14과", "subtitle": "基础", "file": "lesson14.json" },
+    { "no": 15, "id": 15, "title": "HSK2 第15课 / 제15과", "subtitle": "基础", "file": "lesson15.json" },
+    { "no": 16, "id": 16, "title": "HSK2 第16课 / 제16과", "subtitle": "基础", "file": "lesson16.json" },
+    { "no": 17, "id": 17, "title": "HSK2 第17课 / 제17과", "subtitle": "基础", "file": "lesson17.json" },
+    { "no": 18, "id": 18, "title": "HSK2 第18课 / 제18과", "subtitle": "基础", "file": "lesson18.json" },
+    { "no": 19, "id": 19, "title": "HSK2 第19课 / 제19과", "subtitle": "基础", "file": "lesson19.json" },
+    { "no": 20, "id": 20, "title": "HSK2 第20课 / 제20과", "subtitle": "基础", "file": "lesson20.json" },
+    { "no": 21, "id": 21, "title": "综合复习一 / 종합 복습 1", "subtitle": "1–10课复习", "file": "lesson21.json" },
+    { "no": 22, "id": 22, "title": "综合复习二 / 종합 복습 2", "subtitle": "11–20课复习", "file": "lesson22.json" }
   ]
 }

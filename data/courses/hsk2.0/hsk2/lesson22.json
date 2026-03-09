@@ -1,0 +1,90 @@
+{
+  "id": "hsk2.0_hsk2_lesson22",
+  "courseId": "hsk2.0_hsk2",
+  "level": "HSK2",
+  "version": "2.0",
+  "lessonNo": 22,
+  "type": "review",
+  "title": {
+    "zh": "综合复习二",
+    "cn": "综合复习二",
+    "pinyin": "zōnghé fùxí èr",
+    "kr": "종합 복습 2",
+    "en": "Comprehensive Review 2",
+    "jp": "総合復習 2"
+  },
+  "summary": {
+    "zh": "第11–20课综合复习",
+    "kr": "11–20과 종합 복습",
+    "en": "Review of lessons 11–20",
+    "jp": "第11–20課総合復習"
+  },
+  "focus": ["词汇", "对话", "语法"],
+  "dialogueCards": [
+    {
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Dialogue 1", "jp": "会話1" },
+      "lines": [
+        {
+          "speaker": "A",
+          "zh": "你好！",
+          "cn": "你好！",
+          "text": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
+        },
+        {
+          "speaker": "B",
+          "zh": "你好！",
+          "cn": "你好！",
+          "text": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
+        }
+      ]
+    }
+  ],
+  "vocab": [],
+  "grammar": [],
+  "extension": [],
+  "practice": [],
+  "review": {
+    "lessonRange": [11, 20],
+    "mode": "review",
+    "questionCount": 10,
+    "focusAreas": ["vocab", "dialogue", "grammar"]
+  },
+  "ai": [
+    {
+      "mode": "explain",
+      "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" },
+      "target": "我在学习中文。",
+      "hint": { "cn": "复习第11–20课重点句型", "kr": "11–20과 핵심 문형 복습", "en": "Review key patterns from lessons 11–20", "jp": "第11–20課の重点文型を復習" }
+    },
+    {
+      "mode": "roleplay",
+      "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" },
+      "scenario": "greeting",
+      "prompt": { "cn": "复习第11–20课对话", "kr": "11–20과 대화 복습", "en": "Review dialogues from lessons 11–20", "jp": "第11–20課の会話を復習" }
+    },
+    {
+      "mode": "shadowing",
+      "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" },
+      "lines": ["你好！", "我在学习中文。"]
+    },
+    {
+      "mode": "free_talk",
+      "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" },
+      "placeholder": { "cn": "请输入你想问的问题", "kr": "질문하고 싶은 내용을 입력하세요", "en": "Type your question", "jp": "質問したい内容を入力してください" }
+    }
+  ],
+  "aiPractice": {
+    "speaking": ["你好", "我在学习中文"],
+    "chatPrompt": "复习第11–20课对话与表达。"
+  },
+  "steps": [
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "회화", "en": "Dialogue", "jp": "会話" } },
+    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" } }
+  ]
+}
