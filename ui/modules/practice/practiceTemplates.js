@@ -13,15 +13,15 @@ export const PROMPT_TEMPLATES = {
   /** 听音选择正确单词 */
   LISTENING: {
     cn: "请听音，选择正确的词语。",
-    kr: "발음을 듣고 올바른 단어를 선택하세요.",
+    kr: "오디오를 듣고 맞는 단어를 고르세요.",
     en: "Listen and choose the correct word.",
     jp: "発音を聞いて、正しい語を選んでください。",
   },
 
-  /** 母语→中文：'감사합니다'에 해당하는 중국어는? */
+  /** 母语→中文：'{native}'에 해당하는 중국어는? */
   NATIVE_TO_ZH: {
     cn: "「{native}」对应的中文是？",
-    kr: "「{native}」에 해당하는 중국어는?",
+    kr: "'{native}'에 해당하는 중국어는?",
     en: "What is the Chinese for \"{native}\"?",
     jp: "「{native}」に対応する中国語は？",
   },
@@ -42,10 +42,10 @@ export const PROMPT_TEMPLATES = {
     jp: "「{meaning}」は中国語で何と言いますか？",
   },
 
-  /** 拼音→中文：根据拼音选择正确的汉字 */
+  /** 拼音→中文：'{pinyin}'의 한자는? */
   PINYIN_TO_ZH: {
     cn: "根据拼音「{pinyin}」选择正确的词语。",
-    kr: "병음 「{pinyin}」에 해당하는 단어를 선택하세요.",
+    kr: "'{pinyin}'의 한자는?",
     en: "Choose the correct word for pinyin \"{pinyin}\".",
     jp: "ピンイン「{pinyin}」に対応する語を選んでください。",
   },
