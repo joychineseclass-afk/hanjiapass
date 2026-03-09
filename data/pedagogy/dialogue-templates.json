@@ -1,0 +1,343 @@
+{
+  "description": "Lumina 对话模板（支持占位符 {noun} {number} {verb} {time} {place}）",
+  "version": "1.0",
+  "templates": {
+    "time": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?" },
+          { "speaker": "B", "zh": "现在{number}点。", "pinyin": "Xiànzài {number} diǎn." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你什么时候{verb}？", "pinyin": "Nǐ shénme shíhou {verb}?" },
+          { "speaker": "B", "zh": "我{time}{verb}。", "pinyin": "Wǒ {time} {verb}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?" },
+          { "speaker": "B", "zh": "{number}点{number}分钟。{time}{number}点。", "pinyin": "{number} diǎn {number} fēnzhōng. {time} {number} diǎn." }
+        ]
+      }
+    ],
+    "introduce": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你叫什么{noun}？", "pinyin": "Nǐ jiào shénme {noun}?" },
+          { "speaker": "B", "zh": "我叫{noun}。", "pinyin": "Wǒ jiào {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "认识你很高兴。", "pinyin": "Rènshi nǐ hěn gāoxìng." },
+          { "speaker": "B", "zh": "我也是。", "pinyin": "Wǒ yě shì." }
+        ]
+      }
+    ],
+    "friend": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你是{noun}吗？", "pinyin": "Nǐ shì {noun} ma?" },
+          { "speaker": "B", "zh": "是。我住在{noun}，在{noun}。", "pinyin": "Shì. Wǒ zhù zài {noun}, zài {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "他是你{noun}吗？", "pinyin": "Tā shì nǐ {noun} ma?" },
+          { "speaker": "B", "zh": "是的，他是我{noun}。", "pinyin": "Shì de, tā shì wǒ {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "你们也是{noun}吗？", "pinyin": "Nǐmen yě shì {noun} ma?" },
+          { "speaker": "B", "zh": "对，我们是{noun}。", "pinyin": "Duì, wǒmen shì {noun}." }
+        ]
+      }
+    ],
+    "family": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你家有几个人？", "pinyin": "Nǐ jiā yǒu jǐ gè rén?" },
+          { "speaker": "B", "zh": "我家有{number}个人：{noun}、{noun}、{noun}、{noun}。", "pinyin": "Wǒ jiā yǒu {number} gè rén: {noun}, {noun}, {noun}, {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}是{noun}吗？", "pinyin": "Nǐ {noun} shì {noun} ma?" },
+          { "speaker": "B", "zh": "不是，他是{noun}。", "pinyin": "Bú shì, tā shì {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "她是谁？", "pinyin": "Tā shì shéi?" },
+          { "speaker": "B", "zh": "她是我的{noun}。她是我的{noun}。", "pinyin": "Tā shì wǒ de {noun}. Tā shì wǒ de {noun}." }
+        ]
+      }
+    ],
+    "number": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你有几个{noun}？", "pinyin": "Nǐ yǒu jǐ gè {noun}?" },
+          { "speaker": "B", "zh": "我有{number}个。", "pinyin": "Wǒ yǒu {number} gè." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}有多少？", "pinyin": "{noun} yǒu duōshao?" },
+          { "speaker": "B", "zh": "{number}个。", "pinyin": "{number} gè." }
+        ]
+      }
+    ],
+    "shopping": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}在哪儿？", "pinyin": "{noun} zài nǎr?" },
+          { "speaker": "B", "zh": "在那儿。我{noun}一些{noun}。", "pinyin": "Zài nàr. Wǒ {noun} yīxiē {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}什么？", "pinyin": "Nǐ {noun} shénme?" },
+          { "speaker": "B", "zh": "我{noun}{noun}。", "pinyin": "Wǒ {noun} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "这个{noun}多少{noun}？", "pinyin": "Zhè ge {noun} duōshao {noun}?" },
+          { "speaker": "B", "zh": "{number}块。那个呢？{number}块。", "pinyin": "{number} kuài. Nà ge ne? {number} kuài." }
+        ]
+      }
+    ],
+    "eat": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}什么？", "pinyin": "Nǐ {noun} shénme?" },
+          { "speaker": "B", "zh": "我{noun}{noun}和{noun}。", "pinyin": "Wǒ {noun} {noun} hé {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}什么？", "pinyin": "Nǐ {noun} shénme?" },
+          { "speaker": "B", "zh": "我{noun}{noun}。", "pinyin": "Wǒ {noun} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "在{noun}。你{noun}{noun}吗？", "pinyin": "Zài {noun}. Nǐ {noun} {noun} ma?" },
+          { "speaker": "B", "zh": "{noun}。{number}个{noun}。", "pinyin": "{noun}. {number} gè {noun}." }
+        ]
+      }
+    ],
+    "study": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你在{noun}{noun}吗？", "pinyin": "Nǐ zài {noun} {noun} ma?" },
+          { "speaker": "B", "zh": "是。我{noun}{noun}。", "pinyin": "Shì. Wǒ {noun} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}{noun}吗？", "pinyin": "Nǐ {noun} {noun} ma?" },
+          { "speaker": "B", "zh": "{noun}。我{noun}{noun}{noun}。", "pinyin": "{noun}. Wǒ {noun} {noun} {noun}." }
+        ]
+      }
+    ],
+    "work": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}什么{noun}？", "pinyin": "Nǐ {noun} shénme {noun}?" },
+          { "speaker": "B", "zh": "我{noun}{noun}。", "pinyin": "Wǒ {noun} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}{noun}能{noun}{noun}吗？", "pinyin": "{noun} {noun} néng {noun} {noun} ma?" },
+          { "speaker": "B", "zh": "会{noun}{noun}。", "pinyin": "Huì {noun} {noun}." }
+        ]
+      }
+    ],
+    "hobby": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?" },
+          { "speaker": "B", "zh": "我喜欢{noun}，我也喜欢{noun}。", "pinyin": "Wǒ xǐhuan {noun}, wǒ yě xǐhuan {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}{noun}吗？{noun}{noun}吗？", "pinyin": "Nǐ {noun} {noun} ma? {noun} {noun} ma?" },
+          { "speaker": "B", "zh": "{noun}。我{noun}{noun}{noun}。", "pinyin": "{noun}. Wǒ {noun} {noun} {noun}." }
+        ]
+      }
+    ],
+    "weather": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "今天{noun}怎么样？", "pinyin": "Jīntiān {noun} zěnmeyàng?" },
+          { "speaker": "B", "zh": "很好。{noun}吗？太{noun}了。", "pinyin": "Hěn hǎo. {noun} ma? Tài {noun} le." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}吗？{noun}吗？", "pinyin": "{noun} ma? {noun} ma?" },
+          { "speaker": "B", "zh": "不{noun}。不{noun}。", "pinyin": "Bù {noun}. Bù {noun}." }
+        ]
+      }
+    ],
+    "transport": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}在哪儿？", "pinyin": "{noun} zài nǎr?" },
+          { "speaker": "B", "zh": "在那儿。坐{noun}去。", "pinyin": "Zài nàr. Zuò {noun} qù." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你{noun}哪儿？", "pinyin": "Nǐ {noun} nǎr?" },
+          { "speaker": "B", "zh": "我{noun}{noun}。你{noun}吗？", "pinyin": "Wǒ {noun} {noun}. Nǐ {noun} ma?" }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}在哪儿？", "pinyin": "{noun} zài nǎr?" },
+          { "speaker": "B", "zh": "在{noun}上。你{noun}吗？", "pinyin": "Zài {noun} shàng. Nǐ {noun} ma?" }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "{noun}在哪儿？", "pinyin": "{noun} zài nǎr?" },
+          { "speaker": "B", "zh": "在{noun}下面。有{noun}，请{noun}。", "pinyin": "Zài {noun} xiàmiàn. Yǒu {noun}, qǐng {noun}." }
+        ]
+      }
+    ],
+    "health": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你怎么了？", "pinyin": "Nǐ zěnme le?" },
+          { "speaker": "B", "zh": "我不舒服。", "pinyin": "Wǒ bù shūfu." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你去{noun}了吗？", "pinyin": "Nǐ qù {noun} le ma?" },
+          { "speaker": "B", "zh": "没{noun}。", "pinyin": "Méi {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "现在怎么样？我们{noun}{noun}吧。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen {noun} {noun} ba. Nǐ ne?" },
+          { "speaker": "B", "zh": "好。", "pinyin": "Hǎo." }
+        ]
+      }
+    ],
+    "greeting": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你好！", "pinyin": "Nǐ hǎo!" },
+          { "speaker": "B", "zh": "你好！", "pinyin": "Nǐ hǎo!" }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "谢谢！", "pinyin": "Xièxie!" },
+          { "speaker": "B", "zh": "不客气。再见！", "pinyin": "Bù kèqi. Zàijiàn!" }
+        ]
+      }
+    ],
+    "phone": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "喂，请{noun}。", "pinyin": "Wéi, qǐng {noun}." },
+          { "speaker": "B", "zh": "你好，{noun}找谁？", "pinyin": "Nǐ hǎo, {noun} zhǎo shéi?" }
+        ]
+      }
+    ],
+    "age": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "你多{noun}？", "pinyin": "Nǐ duō {noun}?" },
+          { "speaker": "B", "zh": "我{number}{noun}。", "pinyin": "Wǒ {number} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "你今年多{noun}？", "pinyin": "Nǐ jīnnián duō {noun}?" },
+          { "speaker": "B", "zh": "我{number}{noun}了。他很{noun}。", "pinyin": "Wǒ {number} {noun} le. Tā hěn {noun}." }
+        ]
+      }
+    ],
+    "date": [
+      {
+        "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+        "lines": [
+          { "speaker": "A", "zh": "今天几{noun}几{noun}？", "pinyin": "Jīntiān jǐ {noun} jǐ {noun}?" },
+          { "speaker": "B", "zh": "今天{noun}月{number}日。", "pinyin": "Jīntiān {number} {noun} {number} {noun}." }
+        ]
+      },
+      {
+        "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+        "lines": [
+          { "speaker": "A", "zh": "今天{noun}几？", "pinyin": "Jīntiān {noun} jǐ?" },
+          { "speaker": "B", "zh": "今天{noun}一。", "pinyin": "Jīntiān {noun} yī." }
+        ]
+      },
+      {
+        "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+        "lines": [
+          { "speaker": "A", "zh": "昨天几号？明天几{noun}几{noun}？", "pinyin": "Zuótiān jǐ hào? Míngtiān jǐ {noun} jǐ {noun}?" },
+          { "speaker": "B", "zh": "昨天{number}号。明天{number}{noun}{number}日。", "pinyin": "Zuótiān {number} hào. Míngtiān {number} {noun} {number} {noun}." }
+        ]
+      }
+    ]
+  },
+  "placeholders": {
+    "noun": ["苹果", "学生", "人", "书", "朋友", "同学", "北京", "中国", "爸爸", "妈妈", "老师", "医生", "学校", "汉语", "电影", "电视", "商店", "衣服", "电脑", "钱", "天气", "医院", "桌子", "椅子", "火车站", "出租车", "飞机"],
+    "number": ["三", "五", "四", "六", "八", "十", "十二", "十五", "二十"],
+    "verb": ["回家", "吃饭", "学习", "睡觉", "买", "来", "去", "回"],
+    "time": ["下午", "上午", "中午"],
+    "place": ["学校", "家", "商店"]
+  }
+}

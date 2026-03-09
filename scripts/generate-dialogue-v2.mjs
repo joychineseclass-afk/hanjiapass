@@ -48,20 +48,24 @@ const SCENE_KEYWORDS = {
 
 /**
  * 根据课程标题、主题、摘要识别场景
- * @returns {string} time | introduce | shopping | daily | study | travel | food | weather | location | number | greeting | phone | work | hobby | health | general
+ * 优先使用 data/pedagogy/lesson-scenes.json 若存在
  */
 function detectScene(lesson, lessonNo, course) {
+  try {
+    const scenesPath = join(ROOT, "data/pedagogy/lesson-scenes.json");
+    if (existsSync(scenesPath)) {
+      const scenes = JSON.parse(readFileSync(scenesPath, "utf-8"));
+      const map = scenes[course] || scenes.hsk1;
+      const s = map?.[String(lessonNo)];
+      if (s && s !== "review") return s;
+    }
+  } catch (_) {}
   const title = typeof lesson.title === "object"
     ? (lesson.title.zh || lesson.title.cn || lesson.title.en || "")
     : String(lesson.title || "");
-  const theme = course === "hsk1" && lessonNo
-    ? getHSK1Theme(lessonNo)
-    : "";
-  const summary = typeof lesson.summary === "object"
-    ? (lesson.summary.zh || lesson.summary.en || "")
-    : "";
+  const theme = course === "hsk1" && lessonNo ? getHSK1Theme(lessonNo) : "";
+  const summary = typeof lesson.summary === "object" ? (lesson.summary.zh || lesson.summary.en || "") : "";
   const text = [title, theme, summary].filter(Boolean).join(" ");
-
   let best = { scene: "general", score: 0 };
   for (const [scene, keywords] of Object.entries(SCENE_KEYWORDS)) {
     const score = keywords.filter((k) => text.includes(k)).length;
