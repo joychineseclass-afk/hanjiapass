@@ -1251,6 +1251,13 @@
   font-style: italic;
 }
 
+.review-grammar-ex-meaning {
+  font-size: 0.875rem;
+  color: #475569;
+  margin-top: 2px;
+  margin-left: 0.5em;
+}
+
 .review-extension-zh {
   font-weight: 500;
   color: #1e293b;
