@@ -1,90 +1,145 @@
 {
-  "id": "hsk2.0_hsk2_lesson21",
-  "courseId": "hsk2.0_hsk2",
-  "level": "HSK2",
-  "version": "2.0",
-  "lessonNo": 21,
+  "lesson": 21,
   "type": "review",
   "title": {
-    "zh": "综合复习一",
-    "cn": "综合复习一",
-    "pinyin": "zōnghé fùxí yī",
+    "cn": "综合复习1",
     "kr": "종합 복습 1",
     "en": "Comprehensive Review 1",
-    "jp": "総合復習 1"
+    "jp": "総合復習1"
   },
-  "summary": {
-    "zh": "第1–10课综合复习",
-    "kr": "1–10과 종합 복습",
-    "en": "Review of lessons 1–10",
-    "jp": "第1–10課総合復習"
-  },
-  "focus": ["词汇", "对话", "语法"],
-  "dialogueCards": [
-    {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Dialogue 1", "jp": "会話1" },
-      "lines": [
-        {
-          "speaker": "A",
-          "zh": "你好！",
-          "cn": "你好！",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
-        },
-        {
-          "speaker": "B",
-          "zh": "你好！",
-          "cn": "你好！",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
-        }
-      ]
-    }
-  ],
+  "words": [],
   "vocab": [],
+  "mainGrammar": {
+    "name": "",
+    "focus": ""
+  },
+  "supportGrammar": [],
+  "dialogue": [],
   "grammar": [],
-  "extension": [],
   "practice": [],
+  "aiPrompts": [],
   "review": {
-    "lessonRange": [1, 10],
-    "mode": "review",
-    "questionCount": 10,
-    "focusAreas": ["vocab", "dialogue", "grammar"]
+    "lessonRange": [
+      1,
+      10
+    ],
+    "lessonIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
   },
-  "ai": [
-    {
-      "mode": "explain",
-      "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" },
-      "target": "我在学习中文。",
-      "hint": { "cn": "复习第1–10课重点句型", "kr": "1–10과 핵심 문형 복습", "en": "Review key patterns from lessons 1–10", "jp": "第1–10課の重点文型を復習" }
-    },
-    {
-      "mode": "roleplay",
-      "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" },
-      "scenario": "greeting",
-      "prompt": { "cn": "复习第1–10课对话", "kr": "1–10과 대화 복습", "en": "Review dialogues from lessons 1–10", "jp": "第1–10課の会話を復習" }
-    },
-    {
-      "mode": "shadowing",
-      "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" },
-      "lines": ["你好！", "我在学习中文。"]
-    },
-    {
-      "mode": "free_talk",
-      "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" },
-      "placeholder": { "cn": "请输入你想问的问题", "kr": "질문하고 싶은 내용을 입력하세요", "en": "Type your question", "jp": "質問したい内容を入力してください" }
-    }
+  "reviewRange": [
+    1,
+    10
   ],
-  "aiPractice": {
-    "speaking": ["你好", "我在学习中文"],
-    "chatPrompt": "复习第1–10课对话与表达。"
-  },
-  "steps": [
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "회화", "en": "Dialogue", "jp": "会話" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" } }
+  "reviewWordsFromLessons": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "reviewGrammar": [
+    {
+      "name": "吗疑问句",
+      "focus": "S + Adj + 吗？"
+    },
+    {
+      "name": "形容词谓语句",
+      "focus": "S + 很 + Adj"
+    },
+    {
+      "name": "程度副词 很",
+      "focus": "很 + Adj"
+    },
+    {
+      "name": "的 字结构（所属）",
+      "focus": "这/那 + 是 + N + 的"
+    },
+    {
+      "name": "呢 疑问句",
+      "focus": "...呢？"
+    },
+    {
+      "name": "介绍他人",
+      "focus": "这是 + N"
+    },
+    {
+      "name": "给 + N + V",
+      "focus": "给 + 人 + 动词"
+    },
+    {
+      "name": "吧 建议句",
+      "focus": "...一起 + V + 吧"
+    },
+    {
+      "name": "一起",
+      "focus": "一起 + V"
+    },
+    {
+      "name": "想 + V",
+      "focus": "想 + 动词"
+    },
+    {
+      "name": "什么 疑问",
+      "focus": "V + 什么？"
+    },
+    {
+      "name": "可以",
+      "focus": "可以 + V"
+    },
+    {
+      "name": "时间表达",
+      "focus": "现在 + 几 + 点 + 了？"
+    },
+    {
+      "name": "点 / 分",
+      "focus": "数字 + 点 + 数字 + 分"
+    },
+    {
+      "name": "形容词谓语句",
+      "focus": "今天 + 很 + Adj"
+    },
+    {
+      "name": "程度副词 非常",
+      "focus": "非常 + Adj"
+    },
+    {
+      "name": "时间词 + 做什么",
+      "focus": "周末 + 你 + 做什么？"
+    },
+    {
+      "name": "在/正在",
+      "focus": "在 + V"
+    },
+    {
+      "name": "每 + 时间",
+      "focus": "每 + 天/天 + V"
+    },
+    {
+      "name": "能愿动词 可以",
+      "focus": "可以 + V"
+    },
+    {
+      "name": "准备 + V",
+      "focus": "准备 + 动词"
+    },
+    {
+      "name": "希望 + V",
+      "focus": "希望 + 小句"
+    }
   ]
 }

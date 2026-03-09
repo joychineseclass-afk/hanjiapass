@@ -1,245 +1,301 @@
 {
-  "id": "hsk2.0_hsk2_lesson18",
-  "courseId": "hsk2.0_hsk2",
-  "level": "HSK2",
-  "version": "2.0",
-  "lessonNo": 18,
-  "type": "lesson",
+  "lesson": 18,
+  "type": "study",
   "title": {
-    "zh": "HSK2 第18课",
-    "kr": "HSK2 제18과",
-    "jp": "HSK2 第18課",
-    "en": "HSK2 Lesson 18"
+    "cn": "请你帮我一下",
+    "kr": "잠깐 도와주세요",
+    "en": "Please help me",
+    "jp": "ちょっと手伝ってください"
   },
-  "summary": {
-    "zh": "HSK2 第18课（模板）",
-    "kr": "HSK2 제18과 (템플릿)",
-    "en": "HSK2 Lesson 18 (template)",
-    "jp": "HSK2 第18課（テンプレート）"
-  },
-  "objectives": [
+  "words": [
     {
-      "zh": "学习本课词汇与句型",
-      "kr": "본 과 어휘와 문형 학습",
-      "en": "Learn vocab and patterns",
-      "jp": "本課の語彙と文型を学習"
+      "hanzi": "帮助",
+      "pinyin": "bāngzhù",
+      "pos": "v",
+      "meaning": {
+        "kr": "돕다",
+        "en": "assistance",
+        "jp": "助ける",
+        "cn": "帮助",
+        "zh": "帮助"
+      },
+      "translations": {
+        "kr": "돕다",
+        "en": "assistance",
+        "jp": "助ける"
+      }
+    },
+    {
+      "hanzi": "问",
+      "pinyin": "wèn",
+      "pos": "v",
+      "meaning": {
+        "kr": "묻다",
+        "en": "to ask",
+        "jp": "聞く",
+        "cn": "问",
+        "zh": "问"
+      },
+      "translations": {
+        "kr": "묻다",
+        "en": "to ask",
+        "jp": "聞く"
+      }
+    },
+    {
+      "hanzi": "别",
+      "pinyin": "Bié",
+      "pos": "adv",
+      "meaning": {
+        "kr": "~하지 마",
+        "en": "surname Bie",
+        "jp": "〜するな",
+        "cn": "别",
+        "zh": "别"
+      },
+      "translations": {
+        "kr": "~하지 마",
+        "en": "surname Bie",
+        "jp": "〜するな"
+      }
+    },
+    {
+      "hanzi": "您",
+      "pinyin": "nín",
+      "pos": "pron",
+      "meaning": {
+        "kr": "당신 (존칭)",
+        "en": "you (courteous",
+        "jp": "あなた（敬称）",
+        "cn": "您",
+        "zh": "您"
+      },
+      "translations": {
+        "kr": "당신 (존칭)",
+        "en": "you (courteous",
+        "jp": "あなた（敬称）"
+      }
+    },
+    {
+      "hanzi": "洗",
+      "pinyin": "xǐ",
+      "pos": "v",
+      "meaning": {
+        "kr": "씻다",
+        "en": "to wash",
+        "jp": "洗う",
+        "cn": "洗",
+        "zh": "洗"
+      },
+      "translations": {
+        "kr": "씻다",
+        "en": "to wash",
+        "jp": "洗う"
+      }
+    },
+    {
+      "hanzi": "药",
+      "pinyin": "yào",
+      "pos": "n",
+      "meaning": {
+        "kr": "약",
+        "en": "leaf of the iris",
+        "jp": "薬",
+        "cn": "药",
+        "zh": "药"
+      },
+      "translations": {
+        "kr": "약",
+        "en": "leaf of the iris",
+        "jp": "薬"
+      }
+    },
+    {
+      "hanzi": "西瓜",
+      "pinyin": "xīguā",
+      "pos": "n",
+      "meaning": {
+        "kr": "수박",
+        "en": "watermelon",
+        "jp": "スイカ",
+        "cn": "西瓜",
+        "zh": "西瓜"
+      },
+      "translations": {
+        "kr": "수박",
+        "en": "watermelon",
+        "jp": "スイカ"
+      }
+    },
+    {
+      "hanzi": "羊肉",
+      "pinyin": "yángròu",
+      "pos": "n",
+      "meaning": {
+        "kr": "양고기",
+        "en": "mutton",
+        "jp": "羊肉",
+        "cn": "羊肉",
+        "zh": "羊肉"
+      },
+      "translations": {
+        "kr": "양고기",
+        "en": "mutton",
+        "jp": "羊肉"
+      }
     }
   ],
   "vocab": [
     {
-      "hanzi": "学习",
-      "pinyin": "xuéxí",
+      "hanzi": "帮助",
+      "pinyin": "bāngzhù",
+      "pos": "v",
       "meaning": {
-        "zh": "学习",
-        "kr": "배우다",
-        "jp": "学習する",
-        "en": "to study"
+        "kr": "돕다",
+        "en": "assistance",
+        "jp": "助ける",
+        "cn": "帮助",
+        "zh": "帮助"
       },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+      "translations": {
+        "kr": "돕다",
+        "en": "assistance",
+        "jp": "助ける"
+      }
+    },
+    {
+      "hanzi": "问",
+      "pinyin": "wèn",
+      "pos": "v",
+      "meaning": {
+        "kr": "묻다",
+        "en": "to ask",
+        "jp": "聞く",
+        "cn": "问",
+        "zh": "问"
+      },
+      "translations": {
+        "kr": "묻다",
+        "en": "to ask",
+        "jp": "聞く"
+      }
+    },
+    {
+      "hanzi": "别",
+      "pinyin": "Bié",
+      "pos": "adv",
+      "meaning": {
+        "kr": "~하지 마",
+        "en": "surname Bie",
+        "jp": "〜するな",
+        "cn": "别",
+        "zh": "别"
+      },
+      "translations": {
+        "kr": "~하지 마",
+        "en": "surname Bie",
+        "jp": "〜するな"
+      }
+    },
+    {
+      "hanzi": "您",
+      "pinyin": "nín",
+      "pos": "pron",
+      "meaning": {
+        "kr": "당신 (존칭)",
+        "en": "you (courteous",
+        "jp": "あなた（敬称）",
+        "cn": "您",
+        "zh": "您"
+      },
+      "translations": {
+        "kr": "당신 (존칭)",
+        "en": "you (courteous",
+        "jp": "あなた（敬称）"
+      }
+    },
+    {
+      "hanzi": "洗",
+      "pinyin": "xǐ",
+      "pos": "v",
+      "meaning": {
+        "kr": "씻다",
+        "en": "to wash",
+        "jp": "洗う",
+        "cn": "洗",
+        "zh": "洗"
+      },
+      "translations": {
+        "kr": "씻다",
+        "en": "to wash",
+        "jp": "洗う"
+      }
+    },
+    {
+      "hanzi": "药",
+      "pinyin": "yào",
+      "pos": "n",
+      "meaning": {
+        "kr": "약",
+        "en": "leaf of the iris",
+        "jp": "薬",
+        "cn": "药",
+        "zh": "药"
+      },
+      "translations": {
+        "kr": "약",
+        "en": "leaf of the iris",
+        "jp": "薬"
+      }
+    },
+    {
+      "hanzi": "西瓜",
+      "pinyin": "xīguā",
+      "pos": "n",
+      "meaning": {
+        "kr": "수박",
+        "en": "watermelon",
+        "jp": "スイカ",
+        "cn": "西瓜",
+        "zh": "西瓜"
+      },
+      "translations": {
+        "kr": "수박",
+        "en": "watermelon",
+        "jp": "スイカ"
+      }
+    },
+    {
+      "hanzi": "羊肉",
+      "pinyin": "yángròu",
+      "pos": "n",
+      "meaning": {
+        "kr": "양고기",
+        "en": "mutton",
+        "jp": "羊肉",
+        "cn": "羊肉",
+        "zh": "羊肉"
+      },
+      "translations": {
+        "kr": "양고기",
+        "en": "mutton",
+        "jp": "羊肉"
       }
     }
   ],
-  "dialogueCards": [
+  "mainGrammar": {
+    "name": "请 + V",
+    "focus": "请 + 动词 + 一下"
+  },
+  "supportGrammar": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "jp": "会話1",
-        "en": "Session 1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        }
-      ]
+      "name": "帮 + 人 + V",
+      "focus": "帮 + 我 + V"
     }
   ],
-  "grammar": [
-    {
-      "pattern": "HSK2 语法点（模板）",
-      "pinyin": "yǔfǎ diǎn",
-      "explain": {
-        "kr": "문법 설명 (템플릿)",
-        "jp": "文法説明（テンプレート）",
-        "en": "Grammar point (template)"
-      },
-      "example": {
-        "zh": "我在学习中文。",
-        "pinyin": "Wǒ zài xuéxí Zhōngwén.",
-        "translation": {
-          "kr": "저는 중국어를 배우고 있어요.",
-          "jp": "私は中国語を勉強しています。",
-          "en": "I am studying Chinese."
-        }
-      }
-    }
-  ],
-  "extension": [
-    {
-      "hanzi": "继续",
-      "pinyin": "jìxù",
-      "phrase": "继续学习",
-      "translation": {
-        "kr": "계속 배우다",
-        "jp": "続けて学習する",
-        "en": "continue learning"
-      },
-      "explain": {
-        "kr": "계속하다",
-        "en": "to continue",
-        "jp": "続ける"
-      }
-    }
-  ],
-  "practice": [
-    {
-      "id": "p18",
-      "type": "choice",
-      "subtype": "vocab_meaning",
-      "prompt": {
-        "cn": "「学习」的意思是？",
-        "kr": "「学习」의 뜻은?",
-        "en": "Meaning of 学习?",
-        "jp": "「学习」の意味は？"
-      },
-      "options": [
-        "学习",
-        "工作",
-        "休息",
-        "吃饭"
-      ],
-      "answer": "学习",
-      "explanation": {
-        "cn": "学习 = to study",
-        "kr": "学习 = 배우다",
-        "en": "学习 = to study",
-        "jp": "学习 = 学習する"
-      }
-    }
-  ],
-  "review": {},
-  "ai": [
-    {
-      "mode": "explain",
-      "title": {
-        "cn": "句子讲解",
-        "kr": "문장 설명",
-        "en": "Sentence Explanation",
-        "jp": "文の説明"
-      },
-      "target": "我在学习中文。",
-      "hint": {
-        "cn": "请解释这句话的意思和用法。",
-        "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
-        "en": "Explain the meaning and usage.",
-        "jp": "この文の意味と使い方を説明してください。"
-      }
-    },
-    {
-      "mode": "roleplay",
-      "title": {
-        "cn": "情景对话",
-        "kr": "상황 대화",
-        "en": "Roleplay",
-        "jp": "ロールプレイ"
-      },
-      "scenario": "greeting",
-      "prompt": {
-        "cn": "请和同学打招呼并做自我介绍。",
-        "kr": "친구에게 인사하고 자기소개를 해 보세요.",
-        "en": "Greet and introduce yourself.",
-        "jp": "友だちにあいさつして自己紹介してみましょう。"
-      }
-    },
-    {
-      "mode": "shadowing",
-      "title": {
-        "cn": "跟读练习",
-        "kr": "따라 읽기",
-        "en": "Shadowing",
-        "jp": "シャドーイング"
-      },
-      "lines": [
-        "你好！",
-        "我在学习中文。"
-      ]
-    },
-    {
-      "mode": "free_talk",
-      "title": {
-        "cn": "自由提问",
-        "kr": "자유 질문",
-        "en": "Free Talk",
-        "jp": "自由質問"
-      },
-      "placeholder": {
-        "cn": "请输入你想问的问题",
-        "kr": "질문하고 싶은 내용을 입력하세요",
-        "en": "Type your question",
-        "jp": "質問したい内容を入力してください"
-      }
-    }
-  ],
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
-  ]
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "aiPrompts": [],
+  "review": []
 }

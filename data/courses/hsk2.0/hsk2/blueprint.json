@@ -2133,14 +2133,44 @@
           "en": "again",
           "jp": "もう一度"
         }
+      },
+      {
+        "hanzi": "下雨",
+        "pinyin": "xiàyǔ",
+        "pos": "v",
+        "translations": {
+          "kr": "비 오다",
+          "en": "to rain",
+          "jp": "雨が降る"
+        }
+      },
+      {
+        "hanzi": "没",
+        "pinyin": "méi",
+        "pos": "adv",
+        "translations": {
+          "kr": "~하지 않다",
+          "en": "not (negative)",
+          "jp": "〜ない"
+        }
+      },
+      {
+        "hanzi": "昨天",
+        "pinyin": "zuótiān",
+        "pos": "n",
+        "translations": {
+          "kr": "어제",
+          "en": "yesterday",
+          "jp": "昨日"
+        }
       }
     ],
-    "newWordCount": 5,
-    "cumulativeNewWordCount": 147,
+    "newWordCount": 8,
+    "cumulativeNewWordCount": 150,
     "availableVocabRange": {
       "baseHSK1Words": 150,
-      "currentHSK2LearnedWords": 147,
-      "totalAvailableWords": 297
+      "currentHSK2LearnedWords": 150,
+      "totalAvailableWords": 300
     },
     "mainGrammar": {
       "name": "因为……所以……",
@@ -2300,7 +2330,7 @@
     ],
     "newWords": [],
     "newWordCount": 0,
-    "cumulativeNewWordCount": 147,
+    "cumulativeNewWordCount": 150,
     "reviewWordsFromLessons": [
       11,
       12,

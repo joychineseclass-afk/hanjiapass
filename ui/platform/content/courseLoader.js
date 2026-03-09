@@ -113,7 +113,7 @@ export async function loadCourseIndex({ courseType, level } = {}) {
     const titleRaw = it.title;
     let title = {};
     if (typeof titleRaw === "object") {
-      title = { zh: str(titleRaw.zh ?? titleRaw.cn), kr: str(titleRaw.kr ?? titleRaw.ko), en: str(titleRaw.en) };
+      title = { zh: str(titleRaw.zh ?? titleRaw.cn), kr: str(titleRaw.kr ?? titleRaw.ko), en: str(titleRaw.en), jp: str(titleRaw.jp ?? titleRaw.ja), cn: str(titleRaw.cn ?? titleRaw.zh) };
     } else {
       const s = str(titleRaw ?? it.subtitle ?? "");
       const parts = s.split(/\s*\/\s*/);

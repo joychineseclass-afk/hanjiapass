@@ -1,245 +1,301 @@
 {
-  "id": "hsk2.0_hsk2_lesson13",
-  "courseId": "hsk2.0_hsk2",
-  "level": "HSK2",
-  "version": "2.0",
-  "lessonNo": 13,
-  "type": "lesson",
+  "lesson": 13,
+  "type": "study",
   "title": {
-    "zh": "HSK2 第13课",
-    "kr": "HSK2 제13과",
-    "jp": "HSK2 第13課",
-    "en": "HSK2 Lesson 13"
+    "cn": "我坐地铁去公司",
+    "kr": "저는 지하철 타고 회사에 가요",
+    "en": "I take the subway to work",
+    "jp": "私は地下鉄で会社に行きます"
   },
-  "summary": {
-    "zh": "HSK2 第13课（模板）",
-    "kr": "HSK2 제13과 (템플릿)",
-    "en": "HSK2 Lesson 13 (template)",
-    "jp": "HSK2 第13課（テンプレート）"
-  },
-  "objectives": [
+  "words": [
     {
-      "zh": "学习本课词汇与句型",
-      "kr": "본 과 어휘와 문형 학습",
-      "en": "Learn vocab and patterns",
-      "jp": "本課の語彙と文型を学習"
+      "hanzi": "公共汽车",
+      "pinyin": "gōnggòngqìchē",
+      "pos": "n",
+      "meaning": {
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス",
+        "cn": "公共汽车",
+        "zh": "公共汽车"
+      },
+      "translations": {
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス"
+      }
+    },
+    {
+      "hanzi": "自行车",
+      "pinyin": "zìxíngchē",
+      "pos": "n",
+      "meaning": {
+        "kr": "자전거",
+        "en": "bicycle",
+        "jp": "自転車",
+        "cn": "自行车",
+        "zh": "自行车"
+      },
+      "translations": {
+        "kr": "자전거",
+        "en": "bicycle",
+        "jp": "自転車"
+      }
+    },
+    {
+      "hanzi": "从",
+      "pinyin": "cóng",
+      "pos": "prep",
+      "meaning": {
+        "kr": "~에서",
+        "en": "variant of 从",
+        "jp": "〜から",
+        "cn": "从",
+        "zh": "从"
+      },
+      "translations": {
+        "kr": "~에서",
+        "en": "variant of 从",
+        "jp": "〜から"
+      }
+    },
+    {
+      "hanzi": "到",
+      "pinyin": "dào",
+      "pos": "prep",
+      "meaning": {
+        "kr": "~까지",
+        "en": "to reach",
+        "jp": "〜まで",
+        "cn": "到",
+        "zh": "到"
+      },
+      "translations": {
+        "kr": "~까지",
+        "en": "to reach",
+        "jp": "〜まで"
+      }
+    },
+    {
+      "hanzi": "进",
+      "pinyin": "jìn",
+      "pos": "v",
+      "meaning": {
+        "kr": "들어가다",
+        "en": "to go forward",
+        "jp": "入る",
+        "cn": "进",
+        "zh": "进"
+      },
+      "translations": {
+        "kr": "들어가다",
+        "en": "to go forward",
+        "jp": "入る"
+      }
+    },
+    {
+      "hanzi": "出",
+      "pinyin": "chū",
+      "pos": "v",
+      "meaning": {
+        "kr": "나가다",
+        "en": "to go out",
+        "jp": "出る",
+        "cn": "出",
+        "zh": "出"
+      },
+      "translations": {
+        "kr": "나가다",
+        "en": "to go out",
+        "jp": "出る"
+      }
+    },
+    {
+      "hanzi": "路",
+      "pinyin": "Lù",
+      "pos": "n",
+      "meaning": {
+        "kr": "길",
+        "en": "surname Lu",
+        "jp": "道",
+        "cn": "路",
+        "zh": "路"
+      },
+      "translations": {
+        "kr": "길",
+        "en": "surname Lu",
+        "jp": "道"
+      }
+    },
+    {
+      "hanzi": "走",
+      "pinyin": "zǒu",
+      "pos": "v",
+      "meaning": {
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩く",
+        "cn": "走",
+        "zh": "走"
+      },
+      "translations": {
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩く"
+      }
     }
   ],
   "vocab": [
     {
-      "hanzi": "学习",
-      "pinyin": "xuéxí",
+      "hanzi": "公共汽车",
+      "pinyin": "gōnggòngqìchē",
+      "pos": "n",
       "meaning": {
-        "zh": "学习",
-        "kr": "배우다",
-        "jp": "学習する",
-        "en": "to study"
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス",
+        "cn": "公共汽车",
+        "zh": "公共汽车"
       },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+      "translations": {
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス"
+      }
+    },
+    {
+      "hanzi": "自行车",
+      "pinyin": "zìxíngchē",
+      "pos": "n",
+      "meaning": {
+        "kr": "자전거",
+        "en": "bicycle",
+        "jp": "自転車",
+        "cn": "自行车",
+        "zh": "自行车"
+      },
+      "translations": {
+        "kr": "자전거",
+        "en": "bicycle",
+        "jp": "自転車"
+      }
+    },
+    {
+      "hanzi": "从",
+      "pinyin": "cóng",
+      "pos": "prep",
+      "meaning": {
+        "kr": "~에서",
+        "en": "variant of 从",
+        "jp": "〜から",
+        "cn": "从",
+        "zh": "从"
+      },
+      "translations": {
+        "kr": "~에서",
+        "en": "variant of 从",
+        "jp": "〜から"
+      }
+    },
+    {
+      "hanzi": "到",
+      "pinyin": "dào",
+      "pos": "prep",
+      "meaning": {
+        "kr": "~까지",
+        "en": "to reach",
+        "jp": "〜まで",
+        "cn": "到",
+        "zh": "到"
+      },
+      "translations": {
+        "kr": "~까지",
+        "en": "to reach",
+        "jp": "〜まで"
+      }
+    },
+    {
+      "hanzi": "进",
+      "pinyin": "jìn",
+      "pos": "v",
+      "meaning": {
+        "kr": "들어가다",
+        "en": "to go forward",
+        "jp": "入る",
+        "cn": "进",
+        "zh": "进"
+      },
+      "translations": {
+        "kr": "들어가다",
+        "en": "to go forward",
+        "jp": "入る"
+      }
+    },
+    {
+      "hanzi": "出",
+      "pinyin": "chū",
+      "pos": "v",
+      "meaning": {
+        "kr": "나가다",
+        "en": "to go out",
+        "jp": "出る",
+        "cn": "出",
+        "zh": "出"
+      },
+      "translations": {
+        "kr": "나가다",
+        "en": "to go out",
+        "jp": "出る"
+      }
+    },
+    {
+      "hanzi": "路",
+      "pinyin": "Lù",
+      "pos": "n",
+      "meaning": {
+        "kr": "길",
+        "en": "surname Lu",
+        "jp": "道",
+        "cn": "路",
+        "zh": "路"
+      },
+      "translations": {
+        "kr": "길",
+        "en": "surname Lu",
+        "jp": "道"
+      }
+    },
+    {
+      "hanzi": "走",
+      "pinyin": "zǒu",
+      "pos": "v",
+      "meaning": {
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩く",
+        "cn": "走",
+        "zh": "走"
+      },
+      "translations": {
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩く"
       }
     }
   ],
-  "dialogueCards": [
+  "mainGrammar": {
+    "name": "V + 去 + 地点",
+    "focus": "坐 + 交通工具 + 去 + 地方"
+  },
+  "supportGrammar": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "jp": "会話1",
-        "en": "Session 1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        }
-      ]
+      "name": "从...到...",
+      "focus": "从 A 到 B"
     }
   ],
-  "grammar": [
-    {
-      "pattern": "HSK2 语法点（模板）",
-      "pinyin": "yǔfǎ diǎn",
-      "explain": {
-        "kr": "문법 설명 (템플릿)",
-        "jp": "文法説明（テンプレート）",
-        "en": "Grammar point (template)"
-      },
-      "example": {
-        "zh": "我在学习中文。",
-        "pinyin": "Wǒ zài xuéxí Zhōngwén.",
-        "translation": {
-          "kr": "저는 중국어를 배우고 있어요.",
-          "jp": "私は中国語を勉強しています。",
-          "en": "I am studying Chinese."
-        }
-      }
-    }
-  ],
-  "extension": [
-    {
-      "hanzi": "继续",
-      "pinyin": "jìxù",
-      "phrase": "继续学习",
-      "translation": {
-        "kr": "계속 배우다",
-        "jp": "続けて学習する",
-        "en": "continue learning"
-      },
-      "explain": {
-        "kr": "계속하다",
-        "en": "to continue",
-        "jp": "続ける"
-      }
-    }
-  ],
-  "practice": [
-    {
-      "id": "p13",
-      "type": "choice",
-      "subtype": "vocab_meaning",
-      "prompt": {
-        "cn": "「学习」的意思是？",
-        "kr": "「学习」의 뜻은?",
-        "en": "Meaning of 学习?",
-        "jp": "「学习」の意味は？"
-      },
-      "options": [
-        "学习",
-        "工作",
-        "休息",
-        "吃饭"
-      ],
-      "answer": "学习",
-      "explanation": {
-        "cn": "学习 = to study",
-        "kr": "学习 = 배우다",
-        "en": "学习 = to study",
-        "jp": "学习 = 学習する"
-      }
-    }
-  ],
-  "review": {},
-  "ai": [
-    {
-      "mode": "explain",
-      "title": {
-        "cn": "句子讲解",
-        "kr": "문장 설명",
-        "en": "Sentence Explanation",
-        "jp": "文の説明"
-      },
-      "target": "我在学习中文。",
-      "hint": {
-        "cn": "请解释这句话的意思和用法。",
-        "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
-        "en": "Explain the meaning and usage.",
-        "jp": "この文の意味と使い方を説明してください。"
-      }
-    },
-    {
-      "mode": "roleplay",
-      "title": {
-        "cn": "情景对话",
-        "kr": "상황 대화",
-        "en": "Roleplay",
-        "jp": "ロールプレイ"
-      },
-      "scenario": "greeting",
-      "prompt": {
-        "cn": "请和同学打招呼并做自我介绍。",
-        "kr": "친구에게 인사하고 자기소개를 해 보세요.",
-        "en": "Greet and introduce yourself.",
-        "jp": "友だちにあいさつして自己紹介してみましょう。"
-      }
-    },
-    {
-      "mode": "shadowing",
-      "title": {
-        "cn": "跟读练习",
-        "kr": "따라 읽기",
-        "en": "Shadowing",
-        "jp": "シャドーイング"
-      },
-      "lines": [
-        "你好！",
-        "我在学习中文。"
-      ]
-    },
-    {
-      "mode": "free_talk",
-      "title": {
-        "cn": "自由提问",
-        "kr": "자유 질문",
-        "en": "Free Talk",
-        "jp": "自由質問"
-      },
-      "placeholder": {
-        "cn": "请输入你想问的问题",
-        "kr": "질문하고 싶은 내용을 입력하세요",
-        "en": "Type your question",
-        "jp": "質問したい内容を入力してください"
-      }
-    }
-  ],
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
-  ]
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "aiPrompts": [],
+  "review": []
 }

@@ -1,90 +1,141 @@
 {
-  "id": "hsk2.0_hsk2_lesson22",
-  "courseId": "hsk2.0_hsk2",
-  "level": "HSK2",
-  "version": "2.0",
-  "lessonNo": 22,
+  "lesson": 22,
   "type": "review",
   "title": {
-    "zh": "综合复习二",
-    "cn": "综合复习二",
-    "pinyin": "zōnghé fùxí èr",
+    "cn": "综合复习2",
     "kr": "종합 복습 2",
     "en": "Comprehensive Review 2",
-    "jp": "総合復習 2"
+    "jp": "総合復習2"
   },
-  "summary": {
-    "zh": "第11–20课综合复习",
-    "kr": "11–20과 종합 복습",
-    "en": "Review of lessons 11–20",
-    "jp": "第11–20課総合復習"
-  },
-  "focus": ["词汇", "对话", "语法"],
-  "dialogueCards": [
-    {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Dialogue 1", "jp": "会話1" },
-      "lines": [
-        {
-          "speaker": "A",
-          "zh": "你好！",
-          "cn": "你好！",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
-        },
-        {
-          "speaker": "B",
-          "zh": "你好！",
-          "cn": "你好！",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" }
-        }
-      ]
-    }
-  ],
+  "words": [],
   "vocab": [],
+  "mainGrammar": {
+    "name": "",
+    "focus": ""
+  },
+  "supportGrammar": [],
+  "dialogue": [],
   "grammar": [],
-  "extension": [],
   "practice": [],
+  "aiPrompts": [],
   "review": {
-    "lessonRange": [11, 20],
-    "mode": "review",
-    "questionCount": 10,
-    "focusAreas": ["vocab", "dialogue", "grammar"]
+    "lessonRange": [
+      11,
+      20
+    ],
+    "lessonIds": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
   },
-  "ai": [
-    {
-      "mode": "explain",
-      "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" },
-      "target": "我在学习中文。",
-      "hint": { "cn": "复习第11–20课重点句型", "kr": "11–20과 핵심 문형 복습", "en": "Review key patterns from lessons 11–20", "jp": "第11–20課の重点文型を復習" }
-    },
-    {
-      "mode": "roleplay",
-      "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" },
-      "scenario": "greeting",
-      "prompt": { "cn": "复习第11–20课对话", "kr": "11–20과 대화 복습", "en": "Review dialogues from lessons 11–20", "jp": "第11–20課の会話を復習" }
-    },
-    {
-      "mode": "shadowing",
-      "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" },
-      "lines": ["你好！", "我在学习中文。"]
-    },
-    {
-      "mode": "free_talk",
-      "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" },
-      "placeholder": { "cn": "请输入你想问的问题", "kr": "질문하고 싶은 내용을 입력하세요", "en": "Type your question", "jp": "質問したい内容を入力してください" }
-    }
+  "reviewRange": [
+    11,
+    20
   ],
-  "aiPractice": {
-    "speaking": ["你好", "我在学习中文"],
-    "chatPrompt": "复习第11–20课对话与表达。"
-  },
-  "steps": [
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "회화", "en": "Dialogue", "jp": "会話" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" } }
+  "reviewWordsFromLessons": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "reviewGrammar": [
+    {
+      "name": "在 + 地点 + V",
+      "focus": "在 + 地方 + 工作"
+    },
+    {
+      "name": "得 必须",
+      "focus": "得 + V"
+    },
+    {
+      "name": "程度副词",
+      "focus": "很 + Adj（努力）"
+    },
+    {
+      "name": "但是",
+      "focus": "...但是..."
+    },
+    {
+      "name": "V + 去 + 地点",
+      "focus": "坐 + 交通工具 + 去 + 地方"
+    },
+    {
+      "name": "从...到...",
+      "focus": "从 A 到 B"
+    },
+    {
+      "name": "一起 + V",
+      "focus": "一起 + 去 + 旅行"
+    },
+    {
+      "name": "去年/明年",
+      "focus": "时间词"
+    },
+    {
+      "name": "想 + V",
+      "focus": "明年 + 想 + 去"
+    },
+    {
+      "name": "可能",
+      "focus": "可能 + V"
+    },
+    {
+      "name": "喜欢 + N/V",
+      "focus": "喜欢 + 运动"
+    },
+    {
+      "name": "运动类动词",
+      "focus": "打篮球、游泳、跑步"
+    },
+    {
+      "name": "觉得 + 怎么样",
+      "focus": "你觉得 + 怎么样？"
+    },
+    {
+      "name": "真/非常",
+      "focus": "真/非常 + Adj"
+    },
+    {
+      "name": "请 + V",
+      "focus": "请 + 动词 + 一下"
+    },
+    {
+      "name": "帮 + 人 + V",
+      "focus": "帮 + 我 + V"
+    },
+    {
+      "name": "比字句",
+      "focus": "A + 比 + B + Adj"
+    },
+    {
+      "name": "便宜/贵",
+      "focus": "比 + 便宜/贵"
+    },
+    {
+      "name": "因为……所以……",
+      "focus": "因为 + 原因 + 所以 + 结果"
+    },
+    {
+      "name": "没 + V",
+      "focus": "没 + 去"
+    },
+    {
+      "name": "了（完成）",
+      "focus": "V + 了"
+    }
   ]
 }

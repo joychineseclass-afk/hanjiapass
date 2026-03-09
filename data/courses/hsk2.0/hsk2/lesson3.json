@@ -1,245 +1,267 @@
 {
-  "id": "hsk2.0_hsk2_lesson3",
-  "courseId": "hsk2.0_hsk2",
-  "level": "HSK2",
-  "version": "2.0",
-  "lessonNo": 3,
-  "type": "lesson",
+  "lesson": 3,
+  "type": "study",
   "title": {
-    "zh": "HSK2 第3课",
-    "kr": "HSK2 제3과",
-    "jp": "HSK2 第3課",
-    "en": "HSK2 Lesson 3"
+    "cn": "这是我的朋友",
+    "kr": "이것은 제 친구예요",
+    "en": "This is my friend",
+    "jp": "これは私の友達です"
   },
-  "summary": {
-    "zh": "HSK2 第3课（模板）",
-    "kr": "HSK2 제3과 (템플릿)",
-    "en": "HSK2 Lesson 3 (template)",
-    "jp": "HSK2 第3課（テンプレート）"
-  },
-  "objectives": [
+  "words": [
     {
-      "zh": "学习本课词汇与句型",
-      "kr": "본 과 어휘와 문형 학습",
-      "en": "Learn vocab and patterns",
-      "jp": "本課の語彙と文型を学習"
+      "hanzi": "给",
+      "pinyin": "gěi",
+      "pos": "prep",
+      "meaning": {
+        "kr": "~에게",
+        "en": "to",
+        "jp": "〜に",
+        "cn": "给",
+        "zh": "给"
+      },
+      "translations": {
+        "kr": "~에게",
+        "en": "to",
+        "jp": "〜に"
+      }
+    },
+    {
+      "hanzi": "告诉",
+      "pinyin": "gàosù",
+      "pos": "v",
+      "meaning": {
+        "kr": "알려주다",
+        "en": "to press charges",
+        "jp": "教える",
+        "cn": "告诉",
+        "zh": "告诉"
+      },
+      "translations": {
+        "kr": "알려주다",
+        "en": "to press charges",
+        "jp": "教える"
+      }
+    },
+    {
+      "hanzi": "懂",
+      "pinyin": "dǒng",
+      "pos": "v",
+      "meaning": {
+        "kr": "이해하다",
+        "en": "to understand",
+        "jp": "分かる",
+        "cn": "懂",
+        "zh": "懂"
+      },
+      "translations": {
+        "kr": "이해하다",
+        "en": "to understand",
+        "jp": "分かる"
+      }
+    },
+    {
+      "hanzi": "欢迎",
+      "pinyin": "huānyíng",
+      "pos": "v",
+      "meaning": {
+        "kr": "환영하다",
+        "en": "to welcome",
+        "jp": "歓迎する",
+        "cn": "欢迎",
+        "zh": "欢迎"
+      },
+      "translations": {
+        "kr": "환영하다",
+        "en": "to welcome",
+        "jp": "歓迎する"
+      }
+    },
+    {
+      "hanzi": "回答",
+      "pinyin": "huídá",
+      "pos": "v",
+      "meaning": {
+        "kr": "답하다",
+        "en": "to reply",
+        "jp": "答える",
+        "cn": "回答",
+        "zh": "回答"
+      },
+      "translations": {
+        "kr": "답하다",
+        "en": "to reply",
+        "jp": "答える"
+      }
+    },
+    {
+      "hanzi": "可能",
+      "pinyin": "kěnéng",
+      "pos": "adv",
+      "meaning": {
+        "kr": "아마",
+        "en": "might (happen)",
+        "jp": "かもしれない",
+        "cn": "可能",
+        "zh": "可能"
+      },
+      "translations": {
+        "kr": "아마",
+        "en": "might (happen)",
+        "jp": "かもしれない"
+      }
+    },
+    {
+      "hanzi": "可以",
+      "pinyin": "kěyǐ",
+      "pos": "aux",
+      "meaning": {
+        "kr": "~할 수 있다",
+        "en": "can",
+        "jp": "〜できる",
+        "cn": "可以",
+        "zh": "可以"
+      },
+      "translations": {
+        "kr": "~할 수 있다",
+        "en": "can",
+        "jp": "〜できる"
+      }
     }
   ],
   "vocab": [
     {
-      "hanzi": "学习",
-      "pinyin": "xuéxí",
+      "hanzi": "给",
+      "pinyin": "gěi",
+      "pos": "prep",
       "meaning": {
-        "zh": "学习",
-        "kr": "배우다",
-        "jp": "学習する",
-        "en": "to study"
+        "kr": "~에게",
+        "en": "to",
+        "jp": "〜に",
+        "cn": "给",
+        "zh": "给"
       },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+      "translations": {
+        "kr": "~에게",
+        "en": "to",
+        "jp": "〜に"
+      }
+    },
+    {
+      "hanzi": "告诉",
+      "pinyin": "gàosù",
+      "pos": "v",
+      "meaning": {
+        "kr": "알려주다",
+        "en": "to press charges",
+        "jp": "教える",
+        "cn": "告诉",
+        "zh": "告诉"
+      },
+      "translations": {
+        "kr": "알려주다",
+        "en": "to press charges",
+        "jp": "教える"
+      }
+    },
+    {
+      "hanzi": "懂",
+      "pinyin": "dǒng",
+      "pos": "v",
+      "meaning": {
+        "kr": "이해하다",
+        "en": "to understand",
+        "jp": "分かる",
+        "cn": "懂",
+        "zh": "懂"
+      },
+      "translations": {
+        "kr": "이해하다",
+        "en": "to understand",
+        "jp": "分かる"
+      }
+    },
+    {
+      "hanzi": "欢迎",
+      "pinyin": "huānyíng",
+      "pos": "v",
+      "meaning": {
+        "kr": "환영하다",
+        "en": "to welcome",
+        "jp": "歓迎する",
+        "cn": "欢迎",
+        "zh": "欢迎"
+      },
+      "translations": {
+        "kr": "환영하다",
+        "en": "to welcome",
+        "jp": "歓迎する"
+      }
+    },
+    {
+      "hanzi": "回答",
+      "pinyin": "huídá",
+      "pos": "v",
+      "meaning": {
+        "kr": "답하다",
+        "en": "to reply",
+        "jp": "答える",
+        "cn": "回答",
+        "zh": "回答"
+      },
+      "translations": {
+        "kr": "답하다",
+        "en": "to reply",
+        "jp": "答える"
+      }
+    },
+    {
+      "hanzi": "可能",
+      "pinyin": "kěnéng",
+      "pos": "adv",
+      "meaning": {
+        "kr": "아마",
+        "en": "might (happen)",
+        "jp": "かもしれない",
+        "cn": "可能",
+        "zh": "可能"
+      },
+      "translations": {
+        "kr": "아마",
+        "en": "might (happen)",
+        "jp": "かもしれない"
+      }
+    },
+    {
+      "hanzi": "可以",
+      "pinyin": "kěyǐ",
+      "pos": "aux",
+      "meaning": {
+        "kr": "~할 수 있다",
+        "en": "can",
+        "jp": "〜できる",
+        "cn": "可以",
+        "zh": "可以"
+      },
+      "translations": {
+        "kr": "~할 수 있다",
+        "en": "can",
+        "jp": "〜できる"
       }
     }
   ],
-  "dialogueCards": [
+  "mainGrammar": {
+    "name": "介绍他人",
+    "focus": "这是 + N"
+  },
+  "supportGrammar": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "jp": "会話1",
-        "en": "Session 1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "你好！",
-          "pinyin": "Nǐ hǎo!",
-          "translation": {
-            "kr": "안녕하세요!",
-            "jp": "こんにちは!",
-            "en": "Hello!"
-          }
-        }
-      ]
+      "name": "给 + N + V",
+      "focus": "给 + 人 + 动词"
     }
   ],
-  "grammar": [
-    {
-      "pattern": "HSK2 语法点（模板）",
-      "pinyin": "yǔfǎ diǎn",
-      "explain": {
-        "kr": "문법 설명 (템플릿)",
-        "jp": "文法説明（テンプレート）",
-        "en": "Grammar point (template)"
-      },
-      "example": {
-        "zh": "我在学习中文。",
-        "pinyin": "Wǒ zài xuéxí Zhōngwén.",
-        "translation": {
-          "kr": "저는 중국어를 배우고 있어요.",
-          "jp": "私は中国語を勉強しています。",
-          "en": "I am studying Chinese."
-        }
-      }
-    }
-  ],
-  "extension": [
-    {
-      "hanzi": "继续",
-      "pinyin": "jìxù",
-      "phrase": "继续学习",
-      "translation": {
-        "kr": "계속 배우다",
-        "jp": "続けて学習する",
-        "en": "continue learning"
-      },
-      "explain": {
-        "kr": "계속하다",
-        "en": "to continue",
-        "jp": "続ける"
-      }
-    }
-  ],
-  "practice": [
-    {
-      "id": "p3",
-      "type": "choice",
-      "subtype": "vocab_meaning",
-      "prompt": {
-        "cn": "「学习」的意思是？",
-        "kr": "「学习」의 뜻은?",
-        "en": "Meaning of 学习?",
-        "jp": "「学习」の意味は？"
-      },
-      "options": [
-        "学习",
-        "工作",
-        "休息",
-        "吃饭"
-      ],
-      "answer": "学习",
-      "explanation": {
-        "cn": "学习 = to study",
-        "kr": "学习 = 배우다",
-        "en": "学习 = to study",
-        "jp": "学习 = 学習する"
-      }
-    }
-  ],
-  "review": {},
-  "ai": [
-    {
-      "mode": "explain",
-      "title": {
-        "cn": "句子讲解",
-        "kr": "문장 설명",
-        "en": "Sentence Explanation",
-        "jp": "文の説明"
-      },
-      "target": "我在学习中文。",
-      "hint": {
-        "cn": "请解释这句话的意思和用法。",
-        "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
-        "en": "Explain the meaning and usage.",
-        "jp": "この文の意味と使い方を説明してください。"
-      }
-    },
-    {
-      "mode": "roleplay",
-      "title": {
-        "cn": "情景对话",
-        "kr": "상황 대화",
-        "en": "Roleplay",
-        "jp": "ロールプレイ"
-      },
-      "scenario": "greeting",
-      "prompt": {
-        "cn": "请和同学打招呼并做自我介绍。",
-        "kr": "친구에게 인사하고 자기소개를 해 보세요.",
-        "en": "Greet and introduce yourself.",
-        "jp": "友だちにあいさつして自己紹介してみましょう。"
-      }
-    },
-    {
-      "mode": "shadowing",
-      "title": {
-        "cn": "跟读练习",
-        "kr": "따라 읽기",
-        "en": "Shadowing",
-        "jp": "シャドーイング"
-      },
-      "lines": [
-        "你好！",
-        "我在学习中文。"
-      ]
-    },
-    {
-      "mode": "free_talk",
-      "title": {
-        "cn": "自由提问",
-        "kr": "자유 질문",
-        "en": "Free Talk",
-        "jp": "自由質問"
-      },
-      "placeholder": {
-        "cn": "请输入你想问的问题",
-        "kr": "질문하고 싶은 내용을 입력하세요",
-        "en": "Type your question",
-        "jp": "質問したい内容を入力してください"
-      }
-    }
-  ],
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
-  ]
+  "dialogue": [],
+  "grammar": [],
+  "practice": [],
+  "aiPrompts": [],
+  "review": []
 }
