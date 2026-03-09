@@ -9,18 +9,21 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
+// 正式路由顺序：Home, HSK, Kids, Business, Travel, Culture, Speaking, Stroke, Hanja, Review, Resources, Teacher
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",   key: "nav.home",        label: "홈",            color: "#3b82f6" },
-  { href: "/index.html#hsk",    key: "nav.hsk",         label: "HSK 학습",      color: "#22c55e" },
-  { href: "/index.html#stroke", key: "nav.stroke",      label: "한자 필순",     color: "#f97316" },
-  { href: "/index.html#hanja",  key: "nav.hanjagongfu", label: "한자공부",      color: "#a855f7" },
-  { href: "/index.html#speaking",  key: "nav.speaking",  label: "회화",          color: "#ef4444" },
-  { href: "/index.html#travel",   key: "nav.travel",    label: "여행중국어",     color: "#06b6d4" },
-  { href: "/index.html#culture",  key: "nav.culture",   label: "문화",          color: "#eab308" },
-  { href: "/index.html#review",   key: "nav.review",    label: "복습",          color: "#8b5cf6" },
-  { href: "/index.html#resources", key: "nav.resources", label: "자료",        color: "#10b981" },
-  { href: "/index.html#teacher",   key: "nav.teacher",   label: "학부모/선생님",  color: "#f43f5e" },
-  { href: "/index.html#my",       key: "nav.my",        label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
+  { href: "/index.html#hsk",     key: "nav.hsk",       label: "HSK 학습",      color: "#22c55e" },
+  { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
+  { href: "/index.html#business", key: "nav.business", label: "비즈니스",      color: "#0ea5e9" },
+  { href: "/index.html#travel",  key: "nav.travel",     label: "여행중국어",    color: "#06b6d4" },
+  { href: "/index.html#culture", key: "nav.culture",   label: "문화",          color: "#eab308" },
+  { href: "/index.html#speaking", key: "nav.speaking", label: "회화",          color: "#ef4444" },
+  { href: "/index.html#stroke",  key: "nav.stroke",    label: "한자 필순",     color: "#f97316" },
+  { href: "/index.html#hanja",   key: "nav.hanjagongfu", label: "한자공부",    color: "#a855f7" },
+  { href: "/index.html#review",  key: "nav.review",    label: "복습",          color: "#8b5cf6" },
+  { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
+  { href: "/index.html#teacher", key: "nav.teacher",   label: "학부모/선생님",  color: "#f43f5e" },
+  { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
 ];
 
 // ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）

@@ -37,6 +37,8 @@
     "home": "首页",
     "courses": "课程",
     "hsk": "HSK学习",
+    "kids": "儿童",
+    "business": "商务",
     "stroke": "汉字笔顺",
     "hanjagongfu": "汉字功夫",
     "hanja": "汉字",
@@ -275,6 +277,50 @@
     "feedback_char": "反馈缺字",
     "wrong_hint": "请从这一笔开始",
     "complete_toast": "太棒了！"
+  },
+  "kids": {
+    "title": "儿童中文",
+    "subtitle": "快乐学中文",
+    "start": "开始",
+    "levels": "基础阶段",
+    "songs": "儿歌",
+    "story": "看图说话",
+    "comingSoon": "即将开放",
+    "basic": "基础中文",
+    "pinyin": "拼音启蒙",
+    "conversation": "会话·儿歌",
+    "pictureTalk": "图片表达"
+  },
+  "business": {
+    "title": "商务中文",
+    "subtitle": "职场实用中文",
+    "start": "开始",
+    "meeting": "会议表达",
+    "email": "商务邮件",
+    "phone": "电话表达",
+    "roleplay": "角色扮演",
+    "comingSoon": "即将开放",
+    "conversation": "商务会话",
+    "reception": "接待表达"
+  },
+  "culture": {
+    "title": "文化",
+    "subtitle": "语言与文化一起学",
+    "comingSoon": "即将开放"
+  },
+  "speaking": {
+    "title": "会话",
+    "subtitle": "实战口语练习",
+    "comingSoon": "即将开放"
+  },
+  "travel": {
+    "title": "旅游中文",
+    "subtitle": "机场·酒店·餐厅·交通会话",
+    "comingSoon": "即将开放",
+    "airport": "机场",
+    "hotel": "酒店",
+    "restaurant": "餐厅",
+    "transport": "交通"
   },
   "hanja": {
     "title": "汉字功夫",

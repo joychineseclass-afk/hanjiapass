@@ -37,6 +37,8 @@
     "home": "ホーム",
     "courses": "コース",
     "hsk": "HSK学習",
+    "kids": "キッズ",
+    "business": "ビジネス",
     "stroke": "筆順",
     "hanjagongfu": "漢字学習",
     "hanja": "漢字",
@@ -295,6 +297,50 @@
     "feedback_char": "文字追加リクエスト",
     "wrong_hint": "この画から書いてみましょう",
     "complete_toast": "よくできました！"
+  },
+  "kids": {
+    "title": "キッズ中国語",
+    "subtitle": "楽しく学ぶ中国語",
+    "start": "スタート",
+    "levels": "基礎レベル",
+    "songs": "童謡",
+    "story": "絵で話す",
+    "comingSoon": "準備中",
+    "basic": "基礎中国語",
+    "pinyin": "ピンイン入門",
+    "conversation": "会話・童謡",
+    "pictureTalk": "絵で表現"
+  },
+  "business": {
+    "title": "ビジネス中国語",
+    "subtitle": "実務で使える中国語",
+    "start": "スタート",
+    "meeting": "会議表現",
+    "email": "ビジネスメール",
+    "phone": "電話表現",
+    "roleplay": "ロールプレイ",
+    "comingSoon": "準備中",
+    "conversation": "ビジネス会話",
+    "reception": "接待表現"
+  },
+  "culture": {
+    "title": "文化",
+    "subtitle": "中国語と文化を一緒に学ぶ",
+    "comingSoon": "準備中"
+  },
+  "speaking": {
+    "title": "会話",
+    "subtitle": "実践スピーキング練習",
+    "comingSoon": "準備中"
+  },
+  "travel": {
+    "title": "旅行中国語",
+    "subtitle": "空港・ホテル・レストラン・交通",
+    "comingSoon": "準備中",
+    "airport": "空港",
+    "hotel": "ホテル",
+    "restaurant": "レストラン",
+    "transport": "交通"
   },
   "hanja": {
     "title": "漢字学習",

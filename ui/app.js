@@ -62,6 +62,8 @@ try {
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
+registerRoute("#kids",      () => import("./pages/page.kids.js"));
+registerRoute("#business",  () => import("./pages/page.business.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
 registerRoute("#speaking",  () => import("./pages/page.speaking.js"));

@@ -37,6 +37,8 @@
     "home": "Home",
     "courses": "Courses",
     "hsk": "HSK Learning",
+    "kids": "Kids",
+    "business": "Business",
     "stroke": "Stroke Order",
     "hanjagongfu": "Hanzi Study",
     "hanja": "Hanzi",
@@ -274,6 +276,50 @@
     "feedback_char": "Request character",
     "wrong_hint": "Start from this stroke",
     "complete_toast": "Great!"
+  },
+  "kids": {
+    "title": "Kids Chinese",
+    "subtitle": "Learn Chinese the fun way",
+    "start": "Start",
+    "levels": "Basic levels",
+    "songs": "Songs",
+    "story": "Picture talk",
+    "comingSoon": "Coming soon",
+    "basic": "Basic Chinese",
+    "pinyin": "Pinyin intro",
+    "conversation": "Conversation & songs",
+    "pictureTalk": "Picture expression"
+  },
+  "business": {
+    "title": "Business Chinese",
+    "subtitle": "Practical Chinese for the workplace",
+    "start": "Start",
+    "meeting": "Meeting expressions",
+    "email": "Business email",
+    "phone": "Phone expressions",
+    "roleplay": "Role play",
+    "comingSoon": "Coming soon",
+    "conversation": "Business conversation",
+    "reception": "Reception expressions"
+  },
+  "culture": {
+    "title": "Culture",
+    "subtitle": "Learn Chinese language and culture together.",
+    "comingSoon": "Coming soon"
+  },
+  "speaking": {
+    "title": "Speaking",
+    "subtitle": "Real-world speaking practice",
+    "comingSoon": "Coming soon"
+  },
+  "travel": {
+    "title": "Travel Chinese",
+    "subtitle": "Airport, hotel, restaurant, transport",
+    "comingSoon": "Coming soon",
+    "airport": "Airport",
+    "hotel": "Hotel",
+    "restaurant": "Restaurant",
+    "transport": "Transport"
   },
   "hanja": {
     "title": "Hanzi Study",
