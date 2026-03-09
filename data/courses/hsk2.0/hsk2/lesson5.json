@@ -541,34 +541,145 @@
   },
   "extension": [
     {
-      "cn": "喝咖啡",
-      "pinyin": "hē kāfēi",
-      "translations": {
-        "kr": "커피 마시다",
-        "en": "drink coffee",
-        "jp": "コーヒーを飲む"
+      "groupTitle": {
+        "cn": "想 + V 句型练习",
+        "kr": "想 + 동사 문형 연습",
+        "en": "Pattern practice: 想 + V",
+        "jp": "想 + 動詞 パターン練習"
       },
-      "note": "喝 + 饮料"
+      "focusGrammar": "想 + V",
+      "sentences": [
+        {
+          "cn": "我想喝咖啡。",
+          "pinyin": "Wǒ xiǎng hē kāfēi.",
+          "translations": {
+            "kr": "저는 커피를 마시고 싶어요.",
+            "en": "I want to drink coffee.",
+            "jp": "私はコーヒーを飲みたいです。"
+          }
+        },
+        {
+          "cn": "我想喝牛奶。",
+          "pinyin": "Wǒ xiǎng hē niúnǎi.",
+          "translations": {
+            "kr": "저는 우유를 마시고 싶어요.",
+            "en": "I want to drink milk.",
+            "jp": "私は牛乳を飲みたいです。"
+          }
+        },
+        {
+          "cn": "我想喝一杯牛奶。",
+          "pinyin": "Wǒ xiǎng hē yī bēi niúnǎi.",
+          "translations": {
+            "kr": "저는 우유 한 잔을 마시고 싶어요.",
+            "en": "I want to drink a cup of milk.",
+            "jp": "私は牛乳を一杯飲みたいです。"
+          }
+        },
+        {
+          "cn": "我想去喝咖啡。",
+          "pinyin": "Wǒ xiǎng qù hē kāfēi.",
+          "translations": {
+            "kr": "저는 커피를 마시러 가고 싶어요.",
+            "en": "I want to go drink coffee.",
+            "jp": "私はコーヒーを飲みに行きたいです。"
+          }
+        }
+      ],
+      "note": {
+        "cn": "用本课词汇反复练习「想 + 动词」结构。",
+        "kr": "이 과의 어휘로 '想 + 동사' 구조를 반복 연습합니다.",
+        "en": "Practice the pattern 想 + verb using this lesson's vocabulary.",
+        "jp": "この課の語彙で『想 + 動詞』構文を繰り返し練習します。"
+      }
     },
     {
-      "cn": "一杯牛奶",
-      "pinyin": "yī bēi niúnǎi",
-      "translations": {
-        "kr": "우유 한 잔",
-        "en": "a glass of milk",
-        "jp": "牛乳1杯"
+      "groupTitle": {
+        "cn": "什么 疑问句型练习",
+        "kr": "什么 의문문 연습",
+        "en": "Pattern practice: V + 什么？",
+        "jp": "什么 疑問文パターン練習"
       },
-      "note": "数词+量词+名词"
+      "focusGrammar": "什么 疑问",
+      "sentences": [
+        {
+          "cn": "你想喝什么？",
+          "pinyin": "Nǐ xiǎng hē shénme?",
+          "translations": {
+            "kr": "뭐 마시고 싶어요?",
+            "en": "What do you want to drink?",
+            "jp": "何を飲みたいですか？"
+          }
+        },
+        {
+          "cn": "你想吃什么？",
+          "pinyin": "Nǐ xiǎng chī shénme?",
+          "translations": {
+            "kr": "뭐 먹고 싶어요?",
+            "en": "What do you want to eat?",
+            "jp": "何を食べたいですか？"
+          }
+        },
+        {
+          "cn": "你想喝咖啡还是牛奶？",
+          "pinyin": "Nǐ xiǎng hē kāfēi háishì niúnǎi?",
+          "translations": {
+            "kr": "커피 마시고 싶어요, 우유요?",
+            "en": "Do you want coffee or milk?",
+            "jp": "コーヒーと牛乳、どちらですか？"
+          }
+        }
+      ],
+      "note": {
+        "cn": "用「V + 什么」询问动作对象。",
+        "kr": "「V + 什么」로 동작의 대상을 묻습니다.",
+        "en": "Use V + 什么？ to ask about the object of the action.",
+        "jp": "「V + 什么」で動作の対象を尋ねます。"
+      }
     },
     {
-      "cn": "要咖啡",
-      "pinyin": "yào kāfēi",
-      "translations": {
-        "kr": "커피 주세요",
-        "en": "want coffee",
-        "jp": "コーヒーをください"
+      "groupTitle": {
+        "cn": "可以 + V 句型练习",
+        "kr": "可以 + V 문형 연습",
+        "en": "Pattern practice: 可以 + V",
+        "jp": "可以 + V パターン練習"
       },
-      "note": "要 = 想要"
+      "focusGrammar": "可以",
+      "sentences": [
+        {
+          "cn": "你可以给我一杯吗？",
+          "pinyin": "Nǐ kěyǐ gěi wǒ yī bēi ma?",
+          "translations": {
+            "kr": "한 잔 줄 수 있어요?",
+            "en": "Can you give me a cup?",
+            "jp": "一杯くれますか？"
+          }
+        },
+        {
+          "cn": "可以。要牛奶吗？",
+          "pinyin": "Kěyǐ. Yào niúnǎi ma?",
+          "translations": {
+            "kr": "네. 우유 필요해요?",
+            "en": "Sure. Do you want milk?",
+            "jp": "はい。牛乳はいりますか？"
+          }
+        },
+        {
+          "cn": "要，谢谢！",
+          "pinyin": "Yào, xièxie!",
+          "translations": {
+            "kr": "네, 감사해요!",
+            "en": "Yes, thanks!",
+            "jp": "はい、ありがとう！"
+          }
+        }
+      ],
+      "note": {
+        "cn": "用「可以」表示许可或请求。",
+        "kr": "「可以」로 허락이나 요청을 표현합니다.",
+        "en": "Use 可以 to express permission or request.",
+        "jp": "「可以」で許可や依頼を表します。"
+      }
     }
   ]
 }

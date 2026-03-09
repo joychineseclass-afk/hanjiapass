@@ -106,6 +106,7 @@
     "empty_dialogue": "暂无会话内容。",
     "empty_grammar": "暂无语法内容。",
     "extension_empty": "暂无扩展表达。",
+    "extension_group": "句型练习",
     "review_range": "复习范围",
     "review_range_lessons": "第 {from}～{to} 课 综合复习",
     "review_range_format": "第 {from}–{to} 课 / 1–{total} 课复习",

@@ -82,13 +82,17 @@ export function renderExplainMode(aiItem, lang) {
 }
 
 /**
- * 渲染 Roleplay 面板
+ * 渲染 Roleplay 面板（情境对话 / substitute）
+ * 支持 aiItem.prompt、aiItem.sampleAnswer
  */
 export function renderRoleplayMode(aiItem, lang) {
   const scenarioKey = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
   const scenarioLabel = getScenarioLabel(scenarioKey);
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const desc = t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
+  const sampleAnswer = typeof (aiItem && aiItem.sampleAnswer) === "string"
+    ? aiItem.sampleAnswer
+    : (aiItem && aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
+  const desc = promptText || t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
   const classmate = t("ai.role_classmate", "Classmate");
   const me = t("ai.role_me", "Me");
 
@@ -109,6 +113,7 @@ export function renderRoleplayMode(aiItem, lang) {
           <span class="ai-tutor-role-value">${escapeHtml(me)}</span>
         </div>
         ${promptText ? `<p class="ai-tutor-hint mt-2">${escapeHtml(promptText)}</p>` : ""}
+        ${sampleAnswer ? `<div class="ai-tutor-sample-answer mt-2"><span class="ai-tutor-label">${escapeHtml(t("ai.sample_answer", "Sample"))}:</span> <span class="ai-tutor-sample-text">${escapeHtml(sampleAnswer)}</span></div>` : ""}
       </div>
       <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
         ${escapeHtml(t("ai.start_roleplay", "Start dialogue"))}
@@ -119,11 +124,17 @@ export function renderRoleplayMode(aiItem, lang) {
 }
 
 /**
- * 渲染 Shadowing 面板
+ * 渲染 Shadowing 面板（跟读 / repeat）
+ * 支持 aiItem.lines、aiItem.sampleAnswer、对话句
  */
 export function renderShadowingMode(aiItem, lang) {
-  const lines = Array.isArray(aiItem && aiItem.lines) ? aiItem.lines : [];
-  const desc = t("ai.mode_desc_shadowing", "Repeat line by line to build speaking rhythm and confidence.");
+  let lines = Array.isArray(aiItem && aiItem.lines) ? aiItem.lines : [];
+  if (!lines.length && aiItem && aiItem.sampleAnswer) {
+    const sa = typeof aiItem.sampleAnswer === "string" ? aiItem.sampleAnswer : (aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
+    if (sa.trim()) lines = [sa.trim()];
+  }
+  const promptText = pickLang(aiItem && aiItem.prompt, lang);
+  const desc = promptText || t("ai.mode_desc_shadowing", "Repeat line by line to build speaking rhythm and confidence.");
   const step1 = t("ai.step_see", "See the sentence");
   const step2 = t("ai.step_repeat", "Repeat after");
   const step3 = t("ai.step_say", "Say it yourself");
@@ -137,7 +148,7 @@ export function renderShadowingMode(aiItem, lang) {
   `;
 
   const linesHtml = lines.length
-    ? `<div class="ai-tutor-lines-list">${lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(line)}</div>`).join("")}</div>`
+    ? `<div class="ai-tutor-lines-list">${lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</div>`).join("")}</div>`
     : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
 
   return `
@@ -157,11 +168,13 @@ export function renderShadowingMode(aiItem, lang) {
 }
 
 /**
- * 渲染 Free Talk 面板
+ * 渲染 Free Talk 面板（自由对话）
+ * 支持 aiItem.prompt 作为情境说明
  */
 export function renderFreeTalkMode(aiItem, lang) {
   const placeholder = pickLang(aiItem && aiItem.placeholder, lang) || t("ai.placeholder_question", "Type your question");
-  const desc = t("ai.mode_desc_free_talk", "Ask freely using the words and sentences from today's lesson.");
+  const promptText = pickLang(aiItem && aiItem.prompt, lang);
+  const desc = promptText || t("ai.mode_desc_free_talk", "Ask freely using the words and sentences from today's lesson.");
   const hint = t("ai.free_talk_hint", "Ask questions about this lesson's content.");
 
   return `

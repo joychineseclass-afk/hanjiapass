@@ -110,6 +110,7 @@
     "empty_dialogue": "会話コンテンツがまだありません。",
     "empty_grammar": "文法コンテンツがまだありません。",
     "extension_empty": "拡張表現がまだありません。",
+    "extension_group": "文型練習",
     "review_range": "復習範囲",
     "review_range_lessons": "第{from}〜{to}課 総合復習",
     "review_range_format": "第{from}–{to}課 / 1–{total}課復習",

@@ -270,13 +270,30 @@ function escapeHtml(s) {
  * @param {object} lesson
  * @returns {Array<{ mode: string, ... }>}
  */
+const TYPE_TO_MODE = { repeat: "shadowing", substitute: "roleplay", free_talk: "free_talk", explain: "explain", roleplay: "roleplay", shadowing: "shadowing" };
+
 export function getLessonAIConfig(lesson) {
   const arr = (lesson && (lesson.aiPrompts ?? lesson.ai) != null ? (lesson.aiPrompts ?? lesson.ai) : []);
   if (!Array.isArray(arr)) return [];
-  return arr
+  const mapped = arr
     .filter((item) => item && (item.mode || item.type))
-    .map((item) => ({
-      ...item,
-      mode: item.mode || item.type,
-    }));
+    .map((item) => {
+      const rawMode = item.mode || item.type;
+      const mode = TYPE_TO_MODE[rawMode] || rawMode;
+      return { ...item, mode };
+    });
+  const hasExplain = mapped.some((i) => i.mode === "explain");
+  if (!hasExplain && mapped.length > 0 && lesson) {
+    const first = lesson.dialogue && lesson.dialogue[0] ? lesson.dialogue[0] : null;
+    const target = first ? (first.cn || first.zh || first.text || "") : "";
+    const hint = first && first.translations ? (first.translations.kr || first.translations.en || first.translations.jp || "") : "";
+    mapped.unshift({
+      mode: "explain",
+      type: "explain",
+      target,
+      hint: hint ? { kr: hint, en: hint, jp: hint } : undefined,
+      title: { cn: "说明", kr: "설명", en: "Explain", jp: "説明" },
+    });
+  }
+  return mapped;
 }

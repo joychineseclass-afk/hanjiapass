@@ -317,18 +317,18 @@ function pickCardTitle(obj, cardIndex = 1) {
 
 /** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
 function getDialogueCards(lesson) {
-  if (lesson && Array.isArray(lesson.dialogueCards) && lesson.dialogueCards.length) {
-    return lesson.dialogueCards;
-  }
+  const arr = (lesson && Array.isArray(lesson.dialogueCards) && lesson.dialogueCards.length)
+    ? lesson.dialogueCards
+    : (lesson && Array.isArray(lesson.dialogue) && lesson.dialogue.length ? lesson.dialogue : []);
 
-  if (lesson && Array.isArray(lesson.dialogue) && lesson.dialogue.length) {
-    const first = lesson.dialogue[0];
-    if (first && first.lines && Array.isArray(first.lines)) {
-      return lesson.dialogue;
-    }
-    return [{ title: null, lines: lesson.dialogue }];
-  }
+  if (!arr.length) return [];
 
+  const first = arr[0];
+  const isCard = first && first.lines && Array.isArray(first.lines);
+  const isLine = first && (first.speaker != null || first.cn != null || first.zh != null || first.text != null);
+
+  if (isCard) return arr;
+  if (isLine) return [{ title: null, lines: arr }];
   return [];
 }
 
@@ -548,7 +548,7 @@ function getExtensionExplanation(item, lang) {
   return "";
 }
 
-/** 扩展表达：hero + 教材卡片列表，phrase/pinyin/example 固定，explanation 随系统语言 */
+/** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容 */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
@@ -566,7 +566,48 @@ function buildExtensionHTML(lessonData) {
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+  const pickObj = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    const key = lang === "cn" || lang === "zh" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+    return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en);
+  };
+  const pickTrans = (tObj) => {
+    if (!tObj || typeof tObj !== "object") return "";
+    const key = lang === "cn" || lang === "zh" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+    return str(tObj[key] ?? tObj.zh ?? tObj.cn ?? tObj.kr ?? tObj.jp ?? tObj.en);
+  };
+
   const cards = arr.map((item, i) => {
+    const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
+    const isGroup = sentences.length > 0 && (item.groupTitle || item.focusGrammar);
+
+    if (isGroup) {
+      const groupTitle = pickObj(item.groupTitle) || str(item.focusGrammar) || (i18n.t("hsk.extension_group", "句型练习") + " " + (i + 1));
+      const note = pickObj(item.note);
+      const sentencesHtml = sentences.map((s) => {
+        const cn = str((s && s.cn) || (s && s.zh) || "");
+        const py = str((s && s.pinyin) || (s && s.py) || "");
+        const trans = pickTrans(s && s.translations) || pickTrans(s && s.translation);
+        const zhEsc = escapeHtml(cn).replaceAll('"', "&quot;");
+        const attrs = cn ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        return `<div class="lesson-extension-sentence">
+          <div class="lesson-extension-sentence-zh"${attrs}>${escapeHtml(cn)}</div>
+          ${py ? `<div class="lesson-extension-sentence-pinyin">${escapeHtml(py)}</div>` : ""}
+          ${trans ? `<div class="lesson-extension-sentence-trans">${escapeHtml(trans)}</div>` : ""}
+          ${cn ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>` : ""}
+        </div>`;
+      }).join("");
+      return `<article class="lesson-extension-group-card">
+  <div class="lesson-extension-group-header">
+    <span class="lesson-extension-group-index">${String(i + 1).padStart(2, "0")}</span>
+    <h4 class="lesson-extension-group-title">${escapeHtml(groupTitle)}</h4>
+    ${item.focusGrammar ? `<span class="lesson-extension-focus">${escapeHtml(str(item.focusGrammar))}</span>` : ""}
+  </div>
+  <div class="lesson-extension-sentences">${sentencesHtml}</div>
+  ${note ? `<div class="lesson-extension-note">${escapeHtml(note)}</div>` : ""}
+</article>`;
+    }
+
     const phrase = str((item && item.phrase) || (item && item.hanzi) || (item && item.zh) || (item && item.cn) || (item && item.line) || "");
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
     const example = str((item && item.example) || (item && item.exampleZh) || "");
@@ -1115,7 +1156,7 @@ function bindEvents() {
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card") || el.closest(".lesson-grammar-card") || el.closest(".review-grammar-row") || el.closest(".lesson-practice-card") || el.closest(".review-question-card") || el.closest(".lesson-practice-option");
+    const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card") || el.closest(".lesson-extension-group-card") || el.closest(".lesson-grammar-card") || el.closest(".review-grammar-row") || el.closest(".lesson-practice-card") || el.closest(".review-question-card") || el.closest(".lesson-practice-option");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",
