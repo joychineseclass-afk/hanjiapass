@@ -126,6 +126,21 @@
         "en": "to introduce (sb to sb)",
         "jp": "紹介する"
       }
+    },
+    {
+      "hanzi": "高",
+      "pinyin": "Gāo",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Gao",
+        "jp": "",
+        "cn": "高",
+        "zh": "高"
+      },
+      "translations": {
+        "en": "surname Gao"
+      }
     }
   ],
   "vocab": [
@@ -247,6 +262,21 @@
         "en": "to introduce (sb to sb)",
         "jp": "紹介する"
       }
+    },
+    {
+      "hanzi": "高",
+      "pinyin": "Gāo",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Gao",
+        "jp": "",
+        "cn": "高",
+        "zh": "高"
+      },
+      "translations": {
+        "en": "surname Gao"
+      }
     }
   ],
   "mainGrammar": {
@@ -261,21 +291,44 @@
   ],
   "dialogue": [
     {
-      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
-      "lines": [
-        { "speaker": "A", "cn": "这是我的家人。", "pinyin": "Zhè shì wǒ de jiārén.", "translations": { "kr": "이것은 제 가족이에요.", "en": "This is my family.", "jp": "これは私の家族です。" } },
-        { "speaker": "B", "cn": "这是谁？", "pinyin": "Zhè shì shuí?", "translations": { "kr": "이분은 누구예요?", "en": "Who is this?", "jp": "これは誰ですか？" } },
-        { "speaker": "A", "cn": "这是我哥哥，这是我弟弟。那是姐姐和妹妹。", "pinyin": "Zhè shì wǒ gēge, zhè shì wǒ dìdi. Nà shì jiějie hé mèimei.", "translations": { "kr": "이건 제 형이에요, 이건 제 남동생이에요. 저건 누나와 여동생이에요.", "en": "This is my older brother, this is my younger brother. That's my sister and younger sister.", "jp": "これは兄、これは弟。あれは姉と妹です。" } },
-        { "speaker": "B", "cn": "大家都很高兴！", "pinyin": "Dàjiā dōu hěn gāoxìng!", "translations": { "kr": "다들 기뻐 보여요!", "en": "Everyone looks happy!", "jp": "みんな嬉しそうですね！" } }
-      ]
+      "speaker": "A",
+      "cn": "这是我的家人。",
+      "pinyin": "Zhè shì wǒ de jiārén.",
+      "translations": {
+        "kr": "이것은 제 가족이에요.",
+        "en": "This is my family.",
+        "jp": "これは私の家族です。"
+      }
     },
     {
-      "title": { "cn": "会话2", "kr": "대화 2", "en": "Dialogue 2", "jp": "会話2" },
-      "lines": [
-        { "speaker": "A", "cn": "这是我的孩子。", "pinyin": "Zhè shì wǒ de háizi.", "translations": { "kr": "이건 제 아이예요.", "en": "This is my child.", "jp": "これは私の子供です。" } },
-        { "speaker": "B", "cn": "好可爱！", "pinyin": "Hǎo kě'ài!", "translations": { "kr": "너무 귀여워요!", "en": "So cute!", "jp": "かわいいですね！" } },
-        { "speaker": "A", "cn": "谢谢。我给你介绍一下，他叫小明。", "pinyin": "Xièxie. Wǒ gěi nǐ jièshào yīxià, tā jiào Xiǎomíng.", "translations": { "kr": "감사해요. 소개할게요, 이름은 소명이에요.", "en": "Thanks. Let me introduce him—his name is Xiaoming.", "jp": "ありがとう。紹介しますね、名前は小明です。" } }
-      ]
+      "speaker": "B",
+      "cn": "这是谁？",
+      "pinyin": "Zhè shì shuí?",
+      "translations": {
+        "kr": "이분은 누구예요?",
+        "en": "Who is this?",
+        "jp": "これは誰ですか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "这是我哥哥，这是我弟弟。那是姐姐和妹妹。",
+      "pinyin": "Zhè shì wǒ gēge, zhè shì wǒ dìdi. Nà shì jiějie hé mèimei.",
+      "translations": {
+        "kr": "이건 제 형이에요, 이건 제 남동생이에요. 저건 누나와 여동생이에요.",
+        "en": "This is my older brother, this is my younger brother. That's my sister and younger sister.",
+        "jp": "これは兄、これは弟。あれは姉と妹です。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "大家都很高兴！",
+      "pinyin": "Dàjiā dōu hěn gāoxìng!",
+      "translations": {
+        "kr": "다들 기뻐 보여요!",
+        "en": "Everyone looks happy!",
+        "jp": "みんな嬉しそうですね！"
+      }
     }
   ],
   "grammar": [
@@ -392,21 +445,18 @@
         "en": "What does 大家 mean?",
         "jp": "「大家」の意味は？"
       },
-      "options": ["家庭", "everyone", "学校", "工作"],
+      "options": [
+        "家庭",
+        "everyone",
+        "学校",
+        "工作"
+      ],
       "answer": "everyone",
-      "explanation": { "kr": "大家表示所有人。", "en": "大家 means everyone.", "jp": "大家はみんなを表します。" }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「介绍」的意思是？",
-        "kr": "「介绍」의 뜻은?",
-        "en": "What does 介绍 mean?",
-        "jp": "「介绍」の意味は？"
-      },
-      "options": ["介绍", "认识", "再见", "谢谢"],
-      "answer": "介绍",
-      "explanation": { "kr": "介绍=소개하다。", "en": "介绍 = to introduce.", "jp": "介绍=紹介する。" }
+      "explanation": {
+        "kr": "大家表示所有人。",
+        "en": "大家 means everyone.",
+        "jp": "大家はみんなを表します。"
+      }
     }
   ],
   "aiPrompts": [
@@ -484,26 +534,209 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室"
+    ],
+    "newWords": [
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍"
+    ],
+    "borrowWords": [
+      "高"
+    ]
+  },
   "extension": [
     {
-      "groupTitle": { "cn": "的 字结构练习", "kr": "的 소유 구조 연습", "en": "Pattern: 这/那 + 是 + N + 的", "jp": "的 所属パターン練習" },
-      "focusGrammar": "的 字结构",
-      "sentences": [
-        { "cn": "这是我的哥哥。", "pinyin": "Zhè shì wǒ de gēge.", "translations": { "kr": "이건 제 형이에요.", "en": "This is my older brother.", "jp": "これは私の兄です。" } },
-        { "cn": "那是我的弟弟。", "pinyin": "Nà shì wǒ de dìdi.", "translations": { "kr": "저건 제 남동생이에요.", "en": "That is my younger brother.", "jp": "あれは私の弟です。" } },
-        { "cn": "这是我的孩子。", "pinyin": "Zhè shì wǒ de háizi.", "translations": { "kr": "이건 제 아이예요.", "en": "This is my child.", "jp": "これは私の子供です。" } }
-      ],
-      "note": { "cn": "用「的」表示所属关系。", "kr": "「的」로 소유 관계를 나타냅니다.", "en": "的 indicates possession.", "jp": "「的」で所属を表します。" }
+      "cn": "介绍家人",
+      "pinyin": "jièshào jiārén",
+      "translations": {
+        "kr": "가족 소개하기",
+        "en": "introduce family",
+        "jp": "家族を紹介する"
+      },
+      "note": "介绍 + 名词"
     },
     {
-      "groupTitle": { "cn": "呢 疑问句练习", "kr": "呢 의문문 연습", "en": "Pattern: ...呢？", "jp": "呢 疑問文練習" },
-      "focusGrammar": "呢 疑问句",
-      "sentences": [
-        { "cn": "你呢？", "pinyin": "Nǐ ne?", "translations": { "kr": "당신은요?", "en": "And you?", "jp": "あなたは？" } },
-        { "cn": "你哥哥呢？", "pinyin": "Nǐ gēge ne?", "translations": { "kr": "형은요?", "en": "What about your brother?", "jp": "お兄さんは？" } },
-        { "cn": "大家呢？", "pinyin": "Dàjiā ne?", "translations": { "kr": "다들은요?", "en": "What about everyone?", "jp": "みんなは？" } }
-      ],
-      "note": { "cn": "「呢」用于追问或省略主语的问句。", "kr": "「呢」는 추가 질문에 씁니다.", "en": "呢 for follow-up questions.", "jp": "「呢」は追加質問に使います。" }
+      "cn": "哥哥和弟弟",
+      "pinyin": "gēge hé dìdi",
+      "translations": {
+        "kr": "형과 남동생",
+        "en": "older and younger brother",
+        "jp": "兄と弟"
+      },
+      "note": "兄弟姐妹的称呼"
+    },
+    {
+      "cn": "大家一起来",
+      "pinyin": "dàjiā yīqǐ lái",
+      "translations": {
+        "kr": "다 같이 오세요",
+        "en": "everyone come together",
+        "jp": "みんなで一緒に来て"
+      },
+      "note": "大家 + 一起"
     }
   ]
 }

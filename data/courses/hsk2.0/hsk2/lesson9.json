@@ -261,12 +261,34 @@
   ],
   "dialogue": [
     {
-      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
-      "lines": [
-        { "speaker": "A", "cn": "我每天学习汉语。", "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.", "translations": { "kr": "저는 매일 중국어를 배워요.", "en": "I study Chinese every day.", "jp": "私は毎日中国語を勉強します。" } },
-        { "speaker": "B", "cn": "你每节课都来吗？", "pinyin": "Nǐ měi jié kè dōu lái ma?", "translations": { "kr": "매 수업마다 오세요?", "en": "Do you come to every class?", "jp": "毎授業来ますか？" } },
-        { "speaker": "A", "cn": "是的，每节课都来。下个月有考试。", "pinyin": "Shì de, měi jié kè dōu lái. Xià ge yuè yǒu kǎoshì.", "translations": { "kr": "네, 매 수업마다 와요. 다음 달에 시험이 있어요.", "en": "Yes, I come to every class. I have an exam next month.", "jp": "はい、毎授業来ます。来月試験があります。" } }
-      ]
+      "speaker": "A",
+      "cn": "我每天学习汉语。",
+      "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
+      "translations": {
+        "kr": "저는 매일 중국어를 배워요.",
+        "en": "I study Chinese every day.",
+        "jp": "私は毎日中国語を勉強します。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "你每节课都来吗？",
+      "pinyin": "Nǐ měi jié kè dōu lái ma?",
+      "translations": {
+        "kr": "매 수업마다 오세요?",
+        "en": "Do you come to every class?",
+        "jp": "毎授業来ますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "是的，我可以开始考试了。",
+      "pinyin": "Shì de, wǒ kěyǐ kāishǐ kǎoshì le.",
+      "translations": {
+        "kr": "네. 이제 시험 볼 수 있어요.",
+        "en": "Yes, I can start the exam now.",
+        "jp": "はい、もう試験を受けられます。"
+      }
     }
   ],
   "grammar": [
@@ -395,27 +417,6 @@
         "en": "一节 class, 一门 course.",
         "jp": "一节课、一门课。"
       }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「报纸」的意思是？",
-        "kr": "「报纸」의 뜻은?",
-        "en": "What does 报纸 mean?",
-        "jp": "「报纸」の意味は？"
-      },
-      "options": [
-        "书",
-        "newspaper",
-        "杂志",
-        "本子"
-      ],
-      "answer": "newspaper",
-      "explanation": {
-        "kr": "报纸=신문。",
-        "en": "报纸 = newspaper.",
-        "jp": "报纸=新聞。"
-      }
     }
   ],
   "aiPrompts": [
@@ -500,72 +501,256 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍",
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以",
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两",
+      "号",
+      "件",
+      "鸡蛋",
+      "元",
+      "张",
+      "要",
+      "百",
+      "手表",
+      "手机",
+      "小时",
+      "快",
+      "慢",
+      "就",
+      "时间",
+      "穿",
+      "雪",
+      "晴",
+      "阴",
+      "非常",
+      "黑",
+      "红",
+      "休息",
+      "玩",
+      "唱歌",
+      "跳舞",
+      "跑步",
+      "晚上",
+      "快乐"
+    ],
+    "newWords": [
+      "开始",
+      "考试",
+      "课",
+      "离",
+      "第一",
+      "报纸",
+      "门"
+    ],
+    "borrowWords": []
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "每 + 时间",
-        "kr": "每 + 시간",
-        "en": "每 + time",
-        "jp": "每 + 時間"
+      "cn": "开始",
+      "pinyin": "kāishǐ",
+      "translations": {
+        "kr": "시작하다",
+        "en": "begin",
+        "jp": "始める"
       },
-      "focusGrammar": "每 + 时间",
-      "sentences": [
-        {
-          "cn": "每天学习",
-          "pinyin": "měi tiān xuéxí",
-          "translations": {
-            "kr": "매일 공부하다",
-            "en": "study every day",
-            "jp": "毎日勉強する"
-          }
-        },
-        {
-          "cn": "我每天学习汉语。",
-          "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
-          "translations": {
-            "kr": "저는 매일 중국어를 배워요.",
-            "en": "I study Chinese every day.",
-            "jp": "私は毎日中国語を勉強します。"
-          }
-        }
-      ],
-      "note": {
-        "cn": "每 + 天/天 + V，表示频率。",
-        "kr": "빈도를 나타냅니다.",
-        "en": "每 + day/time + V: frequency.",
-        "jp": "頻度を表す。"
-      }
+      "note": "开始+V"
     },
     {
-      "groupTitle": {
-        "cn": "能愿动词 可以",
-        "kr": "능원동사 可以",
-        "en": "Modal verb 可以",
-        "jp": "能願動詞 可以"
+      "cn": "考试",
+      "pinyin": "kǎoshì",
+      "translations": {
+        "kr": "시험",
+        "en": "exam",
+        "jp": "試験"
       },
-      "focusGrammar": "能愿动词 可以",
-      "sentences": [
-        { "cn": "我可以开始考试了。", "pinyin": "Wǒ kěyǐ kāishǐ kǎoshì le.", "translations": { "kr": "이제 시험 볼 수 있어요.", "en": "I can start the exam now.", "jp": "もう試験を受けられます。" } },
-        { "cn": "课开始了。", "pinyin": "Kè kāishǐ le.", "translations": { "kr": "수업 시작됐어요.", "en": "Class has started.", "jp": "授業が始まりました。" } },
-        { "cn": "下个月有考试。", "pinyin": "Xià ge yuè yǒu kǎoshì.", "translations": { "kr": "다음 달에 시험이 있어요.", "en": "There's an exam next month.", "jp": "来月試験があります。" } }
-      ],
-      "note": {
-        "cn": "可以 + V，表示能力或许可。",
-        "kr": "능력이나 허가를 나타냅니다.",
-        "en": "可以 + V: ability or permission.",
-        "jp": "能力や許可を表す。"
-      }
+      "note": "考试/参加考试"
     },
     {
-      "groupTitle": { "cn": "离 / 第一 / 报纸 / 门 补词训练", "kr": "离·第一·报纸·门 보충 연습", "en": "Vocabulary: 离, 第一, 报纸, 门", "jp": "离·第一·报纸·门 補足練習" },
-      "focusGrammar": "每 + 时间",
-      "sentences": [
-        { "cn": "我家离学校很近。", "pinyin": "Wǒ jiā lí xuéxiào hěn jìn.", "translations": { "kr": "우리 집이 학교에서 가까워요.", "en": "My home is close to school.", "jp": "家は学校から近いです。" } },
-        { "cn": "这是第一课。", "pinyin": "Zhè shì dìyī kè.", "translations": { "kr": "이건 첫 번째 과예요.", "en": "This is the first lesson.", "jp": "これは第1課です。" } },
-        { "cn": "我每天看报纸。", "pinyin": "Wǒ měi tiān kàn bàozhǐ.", "translations": { "kr": "매일 신문 봐요.", "en": "I read the newspaper every day.", "jp": "毎日新聞を読みます。" } },
-        { "cn": "我选了三门课。", "pinyin": "Wǒ xuǎn le sān mén kè.", "translations": { "kr": "과목 세 개 들었어요.", "en": "I'm taking three courses.", "jp": "3科目選びました。" } }
-      ],
-      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
+      "cn": "课",
+      "pinyin": "kè",
+      "translations": {
+        "kr": "수업",
+        "en": "class",
+        "jp": "授業"
+      },
+      "note": "一节课"
     }
   ]
 }

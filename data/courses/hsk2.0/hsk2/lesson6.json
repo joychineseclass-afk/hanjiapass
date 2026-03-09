@@ -126,6 +126,36 @@
         "en": "time",
         "jp": "時間"
       }
+    },
+    {
+      "hanzi": "还",
+      "pinyin": "Huán",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Huan",
+        "jp": "",
+        "cn": "还",
+        "zh": "还"
+      },
+      "translations": {
+        "en": "surname Huan"
+      }
+    },
+    {
+      "hanzi": "课",
+      "pinyin": "kè",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "subject; course; class; lesson; to levy; tax; form of divination",
+        "jp": "",
+        "cn": "课",
+        "zh": "课"
+      },
+      "translations": {
+        "en": "subject; course; class; lesson; to levy; tax; form of divination"
+      }
     }
   ],
   "vocab": [
@@ -247,6 +277,36 @@
         "en": "time",
         "jp": "時間"
       }
+    },
+    {
+      "hanzi": "还",
+      "pinyin": "Huán",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Huan",
+        "jp": "",
+        "cn": "还",
+        "zh": "还"
+      },
+      "translations": {
+        "en": "surname Huan"
+      }
+    },
+    {
+      "hanzi": "课",
+      "pinyin": "kè",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "subject; course; class; lesson; to levy; tax; form of divination",
+        "jp": "",
+        "cn": "课",
+        "zh": "课"
+      },
+      "translations": {
+        "en": "subject; course; class; lesson; to levy; tax; form of divination"
+      }
     }
   ],
   "mainGrammar": {
@@ -261,44 +321,34 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "cn": "现在几点了？",
-          "pinyin": "Xiànzài jǐ diǎn le?",
-          "translations": {
-            "kr": "지금 몇 시예요?",
-            "en": "What time is it now?",
-            "jp": "今何時ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "我的手表快，手机显示九点十分。",
-          "pinyin": "Wǒ de shǒubiǎo kuài, shǒujī xiǎnshì jiǔ diǎn shí fēn.",
-          "translations": {
-            "kr": "제 시계가 빨라요. 휴대폰은 9시 10분이에요.",
-            "en": "My watch is fast; my phone shows 9:10.",
-            "jp": "私の時計は進んでいます。携帯は9時10分です。"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "还有一个小时就上课了。",
-          "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
-          "translations": {
-            "kr": "한 시간 후면 수업이에요.",
-            "en": "Class starts in one hour.",
-            "jp": "あと1時間で授業です。"
-          }
-        }
-      ]
+      "speaker": "A",
+      "cn": "现在几点了？",
+      "pinyin": "Xiànzài jǐ diǎn le?",
+      "translations": {
+        "kr": "지금 몇 시예요?",
+        "en": "What time is it now?",
+        "jp": "今何時ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我的手表快，手机显示九点十分。",
+      "pinyin": "Wǒ de shǒubiǎo kuài, shǒujī xiǎnshì jiǔ diǎn shí fēn.",
+      "translations": {
+        "kr": "제 시계가 빨라요. 휴대폰은 9시 10분이에요.",
+        "en": "My watch is fast; my phone shows 9:10.",
+        "jp": "私の時計は進んでいます。携帯は9時10分です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "还有一个小时就上课了。",
+      "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
+      "translations": {
+        "kr": "한 시간 후면 수업이에요.",
+        "en": "Class starts in one hour.",
+        "jp": "あと1時間で授業です。"
+      }
     }
   ],
   "grammar": [
@@ -427,27 +477,6 @@
         "en": "就 indicates imminent action.",
         "jp": "就はまもなくを表す。"
       }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「时间」的意思是？",
-        "kr": "「时间」의 뜻은?",
-        "en": "What does 时间 mean?",
-        "jp": "「时间」の意味は？"
-      },
-      "options": [
-        "时刻",
-        "时间",
-        "小时",
-        "分钟"
-      ],
-      "answer": "时间",
-      "explanation": {
-        "kr": "时间表示时间、时刻。",
-        "en": "时间 means time.",
-        "jp": "时间は時間を表す。"
-      }
     }
   ],
   "aiPrompts": [
@@ -532,94 +561,238 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍",
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以",
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两",
+      "号",
+      "件",
+      "鸡蛋",
+      "元",
+      "张",
+      "要",
+      "百"
+    ],
+    "newWords": [
+      "手表",
+      "手机",
+      "小时",
+      "快",
+      "慢",
+      "就",
+      "时间"
+    ],
+    "borrowWords": [
+      "还",
+      "课"
+    ]
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "时间表达",
-        "kr": "시간 표현",
-        "en": "Time expression",
-        "jp": "時間表現"
+      "cn": "手表",
+      "pinyin": "shǒubiǎo",
+      "translations": {
+        "kr": "손목시계",
+        "en": "wristwatch",
+        "jp": "腕時計"
       },
-      "focusGrammar": "时间表达",
-      "sentences": [
-        {
-          "cn": "现在几点了？",
-          "pinyin": "Xiànzài jǐ diǎn le?",
-          "translations": {
-            "kr": "지금 몇 시예요?",
-            "en": "What time is it now?",
-            "jp": "今何時ですか？"
-          }
-        },
-        {
-          "cn": "九点十分",
-          "pinyin": "jiǔ diǎn shí fēn",
-          "translations": {
-            "kr": "9시 10분",
-            "en": "9:10",
-            "jp": "9時10分"
-          }
-        },
-        {
-          "cn": "还有一个小时就上课了。",
-          "pinyin": "Hái yǒu yī gè xiǎoshí jiù shàngkè le.",
-          "translations": {
-            "kr": "한 시간 후면 수업이에요.",
-            "en": "Class starts in one hour.",
-            "jp": "あと1時間で授業です。"
-          }
-        }
-      ],
-      "note": {
-        "cn": "现在 + 几 + 点 + 了？询问当前时间。数字 + 点 + 数字 + 分。",
-        "kr": "현재 시간을 묻습니다.",
-        "en": "Ask current time: 现在 + 几 + 点 + 了？",
-        "jp": "現在の時刻を尋ねる。"
-      }
+      "note": "手+表"
     },
     {
-      "groupTitle": {
-        "cn": "手表与时间词",
-        "kr": "시계와 시간 어휘",
-        "en": "Watch and time vocab",
-        "jp": "時計と時間語彙"
+      "cn": "快/慢",
+      "pinyin": "kuài/màn",
+      "translations": {
+        "kr": "빠르다/느리다",
+        "en": "fast/slow",
+        "jp": "速い/遅い"
       },
-      "focusGrammar": "点 / 分",
-      "sentences": [
-        {
-          "cn": "手表",
-          "pinyin": "shǒubiǎo",
-          "translations": {
-            "kr": "손목시계",
-            "en": "wristwatch",
-            "jp": "腕時計"
-          }
-        },
-        {
-          "cn": "快/慢",
-          "pinyin": "kuài/màn",
-          "translations": {
-            "kr": "빠르다/느리다",
-            "en": "fast/slow",
-            "jp": "速い/遅い"
-          }
-        },
-        {
-          "cn": "一小时",
-          "pinyin": "yī xiǎoshí",
-          "translations": {
-            "kr": "한 시간",
-            "en": "one hour",
-            "jp": "1時間"
-          }
-        }
-      ],
-      "note": {
-        "cn": "快/慢形容钟表。时间量词：小时。",
-        "kr": "快/慢은 시계를 묘사합니다.",
-        "en": "快/慢 describe watches. 小时 = hour.",
-        "jp": "快/慢は時計を形容。"
-      }
+      "note": "形容钟表"
+    },
+    {
+      "cn": "一小时",
+      "pinyin": "yī xiǎoshí",
+      "translations": {
+        "kr": "한 시간",
+        "en": "one hour",
+        "jp": "1時間"
+      },
+      "note": "时间量词"
     }
   ]
 }

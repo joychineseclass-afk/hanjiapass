@@ -11,6 +11,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const BLUEPRINT_PATH = join(ROOT, "data/courses/hsk2.0/hsk2/blueprint.json");
 const OUTPUT_DIR = join(ROOT, "data/courses/hsk2.0/hsk2");
+const HSK1_VOCAB_PATH = join(ROOT, "data/vocab/hsk2.0/hsk1.json");
+const MAX_BORROW_WORDS = 2;
+
+function loadVocab(path) {
+  try {
+    return JSON.parse(readFileSync(path, "utf-8"));
+  } catch {
+    return [];
+  }
+}
 
 function mapWordForLesson(w) {
   const t = w.translations || {};
@@ -29,7 +39,32 @@ function mapWordForLesson(w) {
   };
 }
 
+/** 构建 lessonWordPool：reviewWords + newWords + borrowWords(最多2个) */
+function buildLessonWordPool(lessonNo, blueprint, hsk1Hanzi) {
+  const entry = blueprint.find((b) => b.lesson === lessonNo);
+  if (!entry?.newWords) return null;
+
+  const newWords = (entry.newWords || []).map((w) => w.hanzi || w);
+  // reviewWords = HSK1 全部 + 之前所有课的 newWords
+  const reviewWords = [...hsk1Hanzi];
+  for (let i = 1; i < lessonNo; i++) {
+    const prev = blueprint.find((b) => b.lesson === i);
+    if (prev?.newWords) {
+      for (const w of prev.newWords) {
+        const h = w.hanzi || w;
+        if (h && !reviewWords.includes(h)) reviewWords.push(h);
+      }
+    }
+  }
+
+  const borrowWords = (entry.borrowWords || []).slice(0, MAX_BORROW_WORDS);
+
+  return { reviewWords, newWords, borrowWords };
+}
+
 const blueprint = JSON.parse(readFileSync(BLUEPRINT_PATH, "utf-8"));
+const hsk1Vocab = loadVocab(HSK1_VOCAB_PATH);
+const hsk1Hanzi = hsk1Vocab.map((w) => w.hanzi).filter(Boolean);
 
 for (const entry of blueprint) {
   const no = entry.lesson;
@@ -52,6 +87,11 @@ for (const entry of blueprint) {
     review: [],
   };
 
+  if (!isReview) {
+    const pool = buildLessonWordPool(no, blueprint, hsk1Hanzi);
+    if (pool) lesson.lessonWordPool = pool;
+  }
+
   if (isReview) {
     lesson.reviewRange = entry.reviewRange || [];
     lesson.reviewWordsFromLessons = entry.reviewWordsFromLessons || [];
@@ -64,7 +104,7 @@ for (const entry of blueprint) {
 
   const outPath = join(OUTPUT_DIR, `lesson${no}.json`);
   writeFileSync(outPath, JSON.stringify(lesson, null, 2), "utf-8");
-  console.log(`Wrote lesson${no}.json (${lesson.words.length} words)`);
+  console.log(`Wrote lesson${no}.json (${lesson.words.length} words)${lesson.lessonWordPool ? " + wordPool" : ""}`);
 }
 
-console.log("Done. Generated lesson1~22.json");
+console.log("Done. Generated lesson1~22.json with lessonWordPool.");

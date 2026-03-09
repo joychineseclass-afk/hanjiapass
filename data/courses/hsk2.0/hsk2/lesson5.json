@@ -265,54 +265,44 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "cn": "你想喝什么？",
-          "pinyin": "Nǐ xiǎng hē shénme?",
-          "translations": {
-            "kr": "뭐 마시고 싶어요?",
-            "en": "What do you want to drink?",
-            "jp": "何を飲みたいですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "我想喝咖啡。你可以给我一杯吗？",
-          "pinyin": "Wǒ xiǎng hē kāfēi. Nǐ kěyǐ gěi wǒ yī bēi ma?",
-          "translations": {
-            "kr": "커피 마시고 싶어요. 한 잔 줄 수 있어요?",
-            "en": "I want coffee. Can you give me a cup?",
-            "jp": "コーヒーが飲みたいです。一杯くれますか？"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "可以。要牛奶吗？",
-          "pinyin": "Kěyǐ. Yào niúnǎi ma?",
-          "translations": {
-            "kr": "네. 우유 필요해요?",
-            "en": "Sure. Do you want milk?",
-            "jp": "はい。牛乳はいりますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "要，谢谢！",
-          "pinyin": "Yào, xièxie!",
-          "translations": {
-            "kr": "네, 감사해요!",
-            "en": "Yes, thanks!",
-            "jp": "はい、ありがとう！"
-          }
-        }
-      ]
+      "speaker": "A",
+      "cn": "你想喝什么？",
+      "pinyin": "Nǐ xiǎng hē shénme?",
+      "translations": {
+        "kr": "뭐 마시고 싶어요?",
+        "en": "What do you want to drink?",
+        "jp": "何を飲みたいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "我想喝咖啡。你可以给我一杯吗？",
+      "pinyin": "Wǒ xiǎng hē kāfēi. Nǐ kěyǐ gěi wǒ yī bēi ma?",
+      "translations": {
+        "kr": "커피 마시고 싶어요. 한 잔 줄 수 있어요?",
+        "en": "I want coffee. Can you give me a cup?",
+        "jp": "コーヒーが飲みたいです。一杯くれますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "可以。要牛奶吗？",
+      "pinyin": "Kěyǐ. Yào niúnǎi ma?",
+      "translations": {
+        "kr": "네. 우유 필요해요?",
+        "en": "Sure. Do you want milk?",
+        "jp": "はい。牛乳はいりますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "要，谢谢！",
+      "pinyin": "Yào, xièxie!",
+      "translations": {
+        "kr": "네, 감사해요!",
+        "en": "Yes, thanks!",
+        "jp": "はい、ありがとう！"
+      }
     }
   ],
   "grammar": [
@@ -431,10 +421,10 @@
       "options": [
         "不可以",
         "没可以",
-        "不能",
-        "别可以"
+        "不可以",
+        "A和C"
       ],
-      "answer": "不可以",
+      "answer": "A和C",
       "explanation": {
         "kr": "不可以=不能。",
         "en": "不可以 = cannot.",
@@ -460,27 +450,6 @@
         "kr": "要=想要、点。",
         "en": "要 = want, order.",
         "jp": "要=欲しい、注文する。"
-      }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「鸡蛋」的量词常用？",
-        "kr": "「鸡蛋」의 양사는?",
-        "en": "Measure word for 鸡蛋?",
-        "jp": "「鸡蛋」の量詞は？"
-      },
-      "options": [
-        "杯",
-        "个",
-        "件",
-        "张"
-      ],
-      "answer": "个",
-      "explanation": {
-        "kr": "一个鸡蛋。",
-        "en": "一个 egg.",
-        "jp": "一个鸡蛋。"
       }
     }
   ],
@@ -570,158 +539,228 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍",
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以",
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两"
+    ],
+    "newWords": [
+      "号",
+      "件",
+      "鸡蛋",
+      "元",
+      "张",
+      "要",
+      "百"
+    ],
+    "borrowWords": []
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "想 + V 句型练习",
-        "kr": "想 + 동사 문형 연습",
-        "en": "Pattern practice: 想 + V",
-        "jp": "想 + 動詞 パターン練習"
+      "cn": "喝咖啡",
+      "pinyin": "hē kāfēi",
+      "translations": {
+        "kr": "커피 마시다",
+        "en": "drink coffee",
+        "jp": "コーヒーを飲む"
       },
-      "focusGrammar": "想 + V",
-      "sentences": [
-        {
-          "cn": "我想喝咖啡。",
-          "pinyin": "Wǒ xiǎng hē kāfēi.",
-          "translations": {
-            "kr": "저는 커피를 마시고 싶어요.",
-            "en": "I want to drink coffee.",
-            "jp": "私はコーヒーを飲みたいです。"
-          }
-        },
-        {
-          "cn": "我想喝牛奶。",
-          "pinyin": "Wǒ xiǎng hē niúnǎi.",
-          "translations": {
-            "kr": "저는 우유를 마시고 싶어요.",
-            "en": "I want to drink milk.",
-            "jp": "私は牛乳を飲みたいです。"
-          }
-        },
-        {
-          "cn": "我想喝一杯牛奶。",
-          "pinyin": "Wǒ xiǎng hē yī bēi niúnǎi.",
-          "translations": {
-            "kr": "저는 우유 한 잔을 마시고 싶어요.",
-            "en": "I want to drink a cup of milk.",
-            "jp": "私は牛乳を一杯飲みたいです。"
-          }
-        },
-        {
-          "cn": "我想去喝咖啡。",
-          "pinyin": "Wǒ xiǎng qù hē kāfēi.",
-          "translations": {
-            "kr": "저는 커피를 마시러 가고 싶어요.",
-            "en": "I want to go drink coffee.",
-            "jp": "私はコーヒーを飲みに行きたいです。"
-          }
-        }
-      ],
-      "note": {
-        "cn": "用本课词汇反复练习「想 + 动词」结构。",
-        "kr": "이 과의 어휘로 '想 + 동사' 구조를 반복 연습합니다.",
-        "en": "Practice the pattern 想 + verb using this lesson's vocabulary.",
-        "jp": "この課の語彙で『想 + 動詞』構文を繰り返し練習します。"
-      }
+      "note": "喝 + 饮料"
     },
     {
-      "groupTitle": {
-        "cn": "什么 疑问句型练习",
-        "kr": "什么 의문문 연습",
-        "en": "Pattern practice: V + 什么？",
-        "jp": "什么 疑問文パターン練習"
+      "cn": "一杯牛奶",
+      "pinyin": "yī bēi niúnǎi",
+      "translations": {
+        "kr": "우유 한 잔",
+        "en": "a glass of milk",
+        "jp": "牛乳1杯"
       },
-      "focusGrammar": "什么 疑问",
-      "sentences": [
-        {
-          "cn": "你想喝什么？",
-          "pinyin": "Nǐ xiǎng hē shénme?",
-          "translations": {
-            "kr": "뭐 마시고 싶어요?",
-            "en": "What do you want to drink?",
-            "jp": "何を飲みたいですか？"
-          }
-        },
-        {
-          "cn": "你想吃什么？",
-          "pinyin": "Nǐ xiǎng chī shénme?",
-          "translations": {
-            "kr": "뭐 먹고 싶어요?",
-            "en": "What do you want to eat?",
-            "jp": "何を食べたいですか？"
-          }
-        },
-        {
-          "cn": "你想喝咖啡还是牛奶？",
-          "pinyin": "Nǐ xiǎng hē kāfēi háishì niúnǎi?",
-          "translations": {
-            "kr": "커피 마시고 싶어요, 우유요?",
-            "en": "Do you want coffee or milk?",
-            "jp": "コーヒーと牛乳、どちらですか？"
-          }
-        }
-      ],
-      "note": {
-        "cn": "用「V + 什么」询问动作对象。",
-        "kr": "「V + 什么」로 동작의 대상을 묻습니다.",
-        "en": "Use V + 什么？ to ask about the object of the action.",
-        "jp": "「V + 什么」で動作の対象を尋ねます。"
-      }
+      "note": "数词+量词+名词"
     },
     {
-      "groupTitle": {
-        "cn": "可以 + V 句型练习",
-        "kr": "可以 + V 문형 연습",
-        "en": "Pattern practice: 可以 + V",
-        "jp": "可以 + V パターン練習"
+      "cn": "要咖啡",
+      "pinyin": "yào kāfēi",
+      "translations": {
+        "kr": "커피 주세요",
+        "en": "want coffee",
+        "jp": "コーヒーをください"
       },
-      "focusGrammar": "可以",
-      "sentences": [
-        {
-          "cn": "你可以给我一杯吗？",
-          "pinyin": "Nǐ kěyǐ gěi wǒ yī bēi ma?",
-          "translations": {
-            "kr": "한 잔 줄 수 있어요?",
-            "en": "Can you give me a cup?",
-            "jp": "一杯くれますか？"
-          }
-        },
-        {
-          "cn": "可以。要牛奶吗？",
-          "pinyin": "Kěyǐ. Yào niúnǎi ma?",
-          "translations": {
-            "kr": "네. 우유 필요해요?",
-            "en": "Sure. Do you want milk?",
-            "jp": "はい。牛乳はいりますか？"
-          }
-        },
-        {
-          "cn": "要，谢谢！",
-          "pinyin": "Yào, xièxie!",
-          "translations": {
-            "kr": "네, 감사해요!",
-            "en": "Yes, thanks!",
-            "jp": "はい、ありがとう！"
-          }
-        }
-      ],
-      "note": {
-        "cn": "用「可以」表示许可或请求。",
-        "kr": "「可以」로 허락이나 요청을 표현합니다.",
-        "en": "Use 可以 to express permission or request.",
-        "jp": "「可以」で許可や依頼を表します。"
-      }
-    },
-    {
-      "groupTitle": { "cn": "号 / 件 / 鸡蛋 / 元 / 张 / 百 补词训练", "kr": "号·件·鸡蛋·元·张·百 보충 연습", "en": "Vocabulary: 号, 件, 鸡蛋, 元, 张, 百", "jp": "号·件·鸡蛋·元·张·百 補足練習" },
-      "focusGrammar": "想 + V / V + 什么",
-      "sentences": [
-        { "cn": "我要两个鸡蛋。", "pinyin": "Wǒ yào liǎng ge jīdàn.", "translations": { "kr": "계란 두 개 주세요.", "en": "I'd like two eggs.", "jp": "卵を2つください。" } },
-        { "cn": "这件多少钱？", "pinyin": "Zhè jiàn duōshao qián?", "translations": { "kr": "이거 얼마예요?", "en": "How much is this one?", "jp": "これはいくらですか？" } },
-        { "cn": "一百元。", "pinyin": "Yī bǎi yuán.", "translations": { "kr": "100위안이에요.", "en": "One hundred yuan.", "jp": "100元です。" } },
-        { "cn": "我要一张票。", "pinyin": "Wǒ yào yī zhāng piào.", "translations": { "kr": "표 한 장 주세요.", "en": "I'd like one ticket.", "jp": "チケット1枚ください。" } }
-      ],
-      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
+      "note": "要 = 想要"
     }
   ]
 }

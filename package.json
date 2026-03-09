@@ -8,7 +8,12 @@
     "build:pinyin": "node scripts/build-pinyin-map.mjs",
     "check:pinyin": "node scripts/check-pinyin-needed.mjs",
     "migrate:lesson-words": "node scripts/migrate-lesson-words.mjs",
-    "sync:lesson-glossary": "node scripts/sync-lesson-glossary.mjs"
+    "sync:lesson-glossary": "node scripts/sync-lesson-glossary.mjs",
+    "build:word-pool": "node scripts/build-lesson-word-pool.mjs",
+    "check:word-pool": "node scripts/check-lesson-word-pool.mjs",
+    "gen:hsk2-blueprint": "node scripts/generate-hsk2-blueprint.mjs",
+    "gen:hsk2-lessons": "node scripts/generate-hsk2-lessons-from-blueprint.mjs",
+    "gen:hsk2-full": "node scripts/generate-hsk2-full-content.mjs"
   },
   "dependencies": {
     "pinyin-pro": "^3.21.0"

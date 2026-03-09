@@ -7,6 +7,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { spawnSync } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -464,3 +465,13 @@ for (let no = 1; no <= 22; no++) {
 }
 
 console.log("Done. Generated full content for lesson1~22.json");
+
+// 课程自动检查：dialogueWords ⊆ wordCard，未收录词自动加入
+console.log("\nRunning word pool check...");
+const check = spawnSync("node", [join(ROOT, "scripts/check-lesson-word-pool.mjs")], {
+  cwd: ROOT,
+  stdio: "inherit",
+});
+if (check.status !== 0) {
+  console.warn("Word pool check had issues (check output above)");
+}

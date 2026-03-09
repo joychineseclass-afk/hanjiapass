@@ -261,12 +261,34 @@
   ],
   "dialogue": [
     {
-      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
-      "lines": [
-        { "speaker": "A", "cn": "我准备学习中文。", "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.", "translations": { "kr": "저는 중국어 공부할 준비해요.", "en": "I'm preparing to study Chinese.", "jp": "私は中国語を勉強する準備をしています。" } },
-        { "speaker": "B", "cn": "希望你能学好。", "pinyin": "Xīwàng nǐ néng xué hǎo.", "translations": { "kr": "잘 배우길 바라요.", "en": "I hope you learn well.", "jp": "よく学べることを願います。" } },
-        { "speaker": "A", "cn": "谢谢！我下个月开始上课。", "pinyin": "Xièxie! Wǒ xià ge yuè kāishǐ shàngkè.", "translations": { "kr": "감사해요! 다음 달부터 수업 시작해요.", "en": "Thanks! I'll start class next month.", "jp": "ありがとう！来月から授業を始めます。" } }
-      ]
+      "speaker": "A",
+      "cn": "我准备学习中文。",
+      "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
+      "translations": {
+        "kr": "저는 중국어 공부할 준비해요.",
+        "en": "I'm preparing to study Chinese.",
+        "jp": "私は中国語を勉強する準備をしています。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "希望你能学好。你知道「新」的意思吗？",
+      "pinyin": "Xīwàng nǐ néng xué hǎo. Nǐ zhīdào 「xīn」 de yìsi ma?",
+      "translations": {
+        "kr": "잘 배우길 바라요. 「新」의 의미 알아요?",
+        "en": "I hope you learn well. Do you know the meaning of 新?",
+        "jp": "よく学べることを願います。「新」の意味を知っていますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "知道，新是为新的开始。",
+      "pinyin": "Zhīdào, xīn shì wèi xīn de kāishǐ.",
+      "translations": {
+        "kr": "알아요. 新은 새로운 시작을 위한 거예요.",
+        "en": "Yes, 新 is for a new beginning.",
+        "jp": "知っています。新は新しい始まりのためです。"
+      }
     }
   ],
   "grammar": [
@@ -395,27 +417,6 @@
         "en": "为 = for, purpose.",
         "jp": "为=为了、目的を表す。"
       }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「姓」的意思是？",
-        "kr": "「姓」의 뜻은?",
-        "en": "What does 姓 mean?",
-        "jp": "「姓」の意味は？"
-      },
-      "options": [
-        "名字",
-        "family name",
-        "年龄",
-        "职业"
-      ],
-      "answer": "family name",
-      "explanation": {
-        "kr": "姓=성씨。",
-        "en": "姓 = family name.",
-        "jp": "姓=姓。"
-      }
     }
   ],
   "aiPrompts": [
@@ -500,70 +501,263 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍",
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以",
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两",
+      "号",
+      "件",
+      "鸡蛋",
+      "元",
+      "张",
+      "要",
+      "百",
+      "手表",
+      "手机",
+      "小时",
+      "快",
+      "慢",
+      "就",
+      "时间",
+      "穿",
+      "雪",
+      "晴",
+      "阴",
+      "非常",
+      "黑",
+      "红",
+      "休息",
+      "玩",
+      "唱歌",
+      "跳舞",
+      "跑步",
+      "晚上",
+      "快乐",
+      "开始",
+      "考试",
+      "课",
+      "离",
+      "第一",
+      "报纸",
+      "门"
+    ],
+    "newWords": [
+      "准备",
+      "希望",
+      "新",
+      "姓",
+      "意思",
+      "为",
+      "知道"
+    ],
+    "borrowWords": []
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "准备 + V",
-        "kr": "准备 + V",
-        "en": "准备 + V",
-        "jp": "准备 + V"
+      "cn": "知道",
+      "pinyin": "zhīdào",
+      "translations": {
+        "kr": "알다",
+        "en": "know",
+        "jp": "知る"
       },
-      "focusGrammar": "准备 + V",
-      "sentences": [
-        {
-          "cn": "准备考试",
-          "pinyin": "zhǔnbèi kǎoshì",
-          "translations": {
-            "kr": "시험 준비하다",
-            "en": "prepare for exam",
-            "jp": "試験の準備をする"
-          }
-        },
-        {
-          "cn": "我准备学习中文。",
-          "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
-          "translations": {
-            "kr": "저는 중국어 공부할 준비해요.",
-            "en": "I'm preparing to study Chinese.",
-            "jp": "私は中国語を勉強する準備をしています。"
-          }
-        }
-      ],
-      "note": {
-        "cn": "准备 + 动词，表示准备做某事。",
-        "kr": "~할 준비를 하다.",
-        "en": "准备 + verb: prepare to do.",
-        "jp": "〜する準備をする。"
-      }
+      "note": "知道+事"
     },
     {
-      "groupTitle": {
-        "cn": "希望 + V",
-        "kr": "希望 + V",
-        "en": "希望 + V",
-        "jp": "希望 + V"
+      "cn": "意思",
+      "pinyin": "yìsi",
+      "translations": {
+        "kr": "의미",
+        "en": "meaning",
+        "jp": "意味"
       },
-      "focusGrammar": "希望 + V",
-      "sentences": [
-        { "cn": "希望你成功。", "pinyin": "Xīwàng nǐ chénggōng.", "translations": { "kr": "성공하길 바라요.", "en": "I hope you succeed.", "jp": "成功することを願います。" } },
-        { "cn": "希望你能学好。", "pinyin": "Xīwàng nǐ néng xué hǎo.", "translations": { "kr": "잘 배우길 바라요.", "en": "I hope you learn well.", "jp": "よく学べることを願います。" } }
-      ],
-      "note": {
-        "cn": "希望 + 小句，表示愿望。",
-        "kr": "~하기를 바라다.",
-        "en": "希望 + clause: hope that.",
-        "jp": "〜することを願う。"
-      }
+      "note": "的意思"
     },
     {
-      "groupTitle": { "cn": "新 / 意思 / 为 / 知道 / 姓 补词训练", "kr": "新·意思·为·知道·姓 보충 연습", "en": "Vocabulary: 新, 意思, 为, 知道, 姓", "jp": "新·意思·为·知道·姓 補足練習" },
-      "focusGrammar": "准备 + V / 希望 + 小句",
-      "sentences": [
-        { "cn": "你知道这个字的意思吗？", "pinyin": "Nǐ zhīdào zhè ge zì de yìsi ma?", "translations": { "kr": "이 글자의 의미 알아요?", "en": "Do you know the meaning of this character?", "jp": "この字の意味を知っていますか？" } },
-        { "cn": "学中文是为了新的开始。", "pinyin": "Xué Zhōngwén shì wèi le xīn de kāishǐ.", "translations": { "kr": "중국어 배우는 건 새로운 시작을 위한 거예요.", "en": "Learning Chinese is for a new beginning.", "jp": "中国語を学ぶのは新しい始まりのためです。" } },
-        { "cn": "你姓什么？", "pinyin": "Nǐ xìng shénme?", "translations": { "kr": "성씨가 뭐예요?", "en": "What's your family name?", "jp": "お名前は何ですか？" } }
-      ],
-      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
+      "cn": "为",
+      "pinyin": "wéi",
+      "translations": {
+        "kr": "~를 위해",
+        "en": "for",
+        "jp": "〜のために"
+      },
+      "note": "为+目的"
     }
   ]
 }

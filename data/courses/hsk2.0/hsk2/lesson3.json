@@ -126,6 +126,51 @@
         "en": "can",
         "jp": "〜できる"
       }
+    },
+    {
+      "hanzi": "问题",
+      "pinyin": "wèntí",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "question; problem; issue; topic",
+        "jp": "",
+        "cn": "问题",
+        "zh": "问题"
+      },
+      "translations": {
+        "en": "question; problem; issue; topic"
+      }
+    },
+    {
+      "hanzi": "题",
+      "pinyin": "Tí",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Ti",
+        "jp": "",
+        "cn": "题",
+        "zh": "题"
+      },
+      "translations": {
+        "en": "surname Ti"
+      }
+    },
+    {
+      "hanzi": "问",
+      "pinyin": "wèn",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "to ask; to inquire",
+        "jp": "",
+        "cn": "问",
+        "zh": "问"
+      },
+      "translations": {
+        "en": "to ask; to inquire"
+      }
     }
   ],
   "vocab": [
@@ -247,6 +292,51 @@
         "en": "can",
         "jp": "〜できる"
       }
+    },
+    {
+      "hanzi": "问题",
+      "pinyin": "wèntí",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "question; problem; issue; topic",
+        "jp": "",
+        "cn": "问题",
+        "zh": "问题"
+      },
+      "translations": {
+        "en": "question; problem; issue; topic"
+      }
+    },
+    {
+      "hanzi": "题",
+      "pinyin": "Tí",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "surname Ti",
+        "jp": "",
+        "cn": "题",
+        "zh": "题"
+      },
+      "translations": {
+        "en": "surname Ti"
+      }
+    },
+    {
+      "hanzi": "问",
+      "pinyin": "wèn",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "to ask; to inquire",
+        "jp": "",
+        "cn": "问",
+        "zh": "问"
+      },
+      "translations": {
+        "en": "to ask; to inquire"
+      }
     }
   ],
   "mainGrammar": {
@@ -261,44 +351,34 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "cn": "这是我的朋友。",
-          "pinyin": "Zhè shì wǒ de péngyou.",
-          "translations": {
-            "kr": "이건 제 친구예요.",
-            "en": "This is my friend.",
-            "jp": "これは私の友達です。"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "欢迎！你可以给我介绍一下吗？",
-          "pinyin": "Huānyíng! Nǐ kěyǐ gěi wǒ jièshào yīxià ma?",
-          "translations": {
-            "kr": "환영해요! 저에게 소개해 주실 수 있어요?",
-            "en": "Welcome! Can you introduce him to me?",
-            "jp": "歓迎！紹介してもらえますか？"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "可以。他懂中文，可以回答你的问题。",
-          "pinyin": "Kěyǐ. Tā dǒng Zhōngwén, kěyǐ huídá nǐ de wèntí.",
-          "translations": {
-            "kr": "네. 그는 중국어를 알아요. 질문에 답할 수 있어요.",
-            "en": "Sure. He understands Chinese and can answer your questions.",
-            "jp": "はい。彼は中国語が分かります。質問に答えられます。"
-          }
-        }
-      ]
+      "speaker": "A",
+      "cn": "这是我的朋友。",
+      "pinyin": "Zhè shì wǒ de péngyou.",
+      "translations": {
+        "kr": "이건 제 친구예요.",
+        "en": "This is my friend.",
+        "jp": "これは私の友達です。"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "欢迎！你可以给我介绍一下吗？",
+      "pinyin": "Huānyíng! Nǐ kěyǐ gěi wǒ jièshào yīxià ma?",
+      "translations": {
+        "kr": "환영해요! 저에게 소개해 주실 수 있어요?",
+        "en": "Welcome! Can you introduce him to me?",
+        "jp": "歓迎！紹介してもらえますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "可以。他懂中文，可以回答你的问题。",
+      "pinyin": "Kěyǐ. Tā dǒng Zhōngwén, kěyǐ huídá nǐ de wèntí.",
+      "translations": {
+        "kr": "네. 그는 중국어를 알아요. 질문에 답할 수 있어요.",
+        "en": "Sure. He understands Chinese and can answer your questions.",
+        "jp": "はい。彼は中国語が分かります。質問に答えられます。"
+      }
     }
   ],
   "grammar": [
@@ -427,27 +507,6 @@
         "en": "懂 Chinese, 懂 meaning.",
         "jp": "懂中文、懂意思。"
       }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「回答」的宾语是？",
-        "kr": "「回答」의 목적어는?",
-        "en": "What does 回答 take as object?",
-        "jp": "「回答」の目的語は？"
-      },
-      "options": [
-        "人",
-        "问题",
-        "地方",
-        "时间"
-      ],
-      "answer": "问题",
-      "explanation": {
-        "kr": "回答问题。",
-        "en": "回答 question.",
-        "jp": "質問に答える。"
-      }
     }
   ],
   "aiPrompts": [
@@ -528,71 +587,217 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍"
+    ],
+    "newWords": [
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以"
+    ],
+    "borrowWords": [
+      "问题",
+      "题"
+    ]
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "介绍他人",
-        "kr": "他人 소개",
-        "en": "Introducing others",
-        "jp": "他人を紹介する"
+      "cn": "告诉朋友",
+      "pinyin": "gàosù péngyou",
+      "translations": {
+        "kr": "친구에게 알려주다",
+        "en": "tell a friend",
+        "jp": "友達に伝える"
       },
-      "focusGrammar": "介绍他人",
-      "sentences": [
-        {
-          "cn": "这是我的朋友。",
-          "pinyin": "Zhè shì wǒ de péngyou.",
-          "translations": {
-            "kr": "이건 제 친구예요.",
-            "en": "This is my friend.",
-            "jp": "これは私の友達です。"
-          }
-        },
-        {
-          "cn": "这是我的老师。",
-          "pinyin": "Zhè shì wǒ de lǎoshī.",
-          "translations": {
-            "kr": "이분은 제 선생님이에요.",
-            "en": "This is my teacher.",
-            "jp": "これは私の先生です。"
-          }
-        },
-        {
-          "cn": "欢迎！你可以给我介绍一下吗？",
-          "pinyin": "Huānyíng! Nǐ kěyǐ gěi wǒ jièshào yīxià ma?",
-          "translations": {
-            "kr": "환영해요! 저에게 소개해 주실 수 있어요?",
-            "en": "Welcome! Can you introduce him to me?",
-            "jp": "歓迎！紹介してもらえますか？"
-          }
-        }
-      ],
-      "note": {
-        "cn": "这是 + N，介绍某人。",
-        "kr": "某人을 소개할 때 씁니다.",
-        "en": "Introduce someone: 这是 + N.",
-        "jp": "人を紹介する：这是 + N。"
-      }
+      "note": "告诉 + 人 + 事"
     },
     {
-      "groupTitle": { "cn": "给 + N + V 练习", "kr": "给 + N + V 연습", "en": "Pattern: 给 + N + V", "jp": "给 + N + V 練習" },
-      "focusGrammar": "给 + N + V",
-      "sentences": [
-        { "cn": "给我介绍一下。", "pinyin": "Gěi wǒ jièshào yīxià.", "translations": { "kr": "저에게 소개해 주세요.", "en": "Introduce (him) to me.", "jp": "紹介してください。" } },
-        { "cn": "你告诉他吧。", "pinyin": "Nǐ gàosù tā ba.", "translations": { "kr": "그에게 알려줘요.", "en": "You tell him.", "jp": "彼に伝えてください。" } },
-        { "cn": "他懂中文。", "pinyin": "Tā dǒng Zhōngwén.", "translations": { "kr": "그는 중국어를 알아요.", "en": "He understands Chinese.", "jp": "彼は中国語が分かります。" } }
-      ],
-      "note": { "cn": "给 + 人 + 动词，表示对某人做某事。", "kr": "某人에게 动词를 합니다.", "en": "给 + person + verb.", "jp": "人に〜する：给 + 人 + 动词。" }
+      "cn": "懂中文",
+      "pinyin": "dǒng Zhōngwén",
+      "translations": {
+        "kr": "중국어를 이해하다",
+        "en": "understand Chinese",
+        "jp": "中国語が分かる"
+      },
+      "note": "懂 + 语言"
     },
     {
-      "groupTitle": { "cn": "告诉 / 可能 补词训练", "kr": "告诉·可能 보충 연습", "en": "Vocabulary: 告诉, 可能", "jp": "告诉·可能 補足練習" },
-      "focusGrammar": "给 + N + V / 可能 + V",
-      "sentences": [
-        { "cn": "我告诉你了。", "pinyin": "Wǒ gàosù nǐ le.", "translations": { "kr": "제가 알려줬어요.", "en": "I told you.", "jp": "伝えました。" } },
-        { "cn": "你告诉他了吗？", "pinyin": "Nǐ gàosù tā le ma?", "translations": { "kr": "그에게 알려줬어요?", "en": "Did you tell him?", "jp": "彼に伝えましたか？" } },
-        { "cn": "他可能来。", "pinyin": "Tā kěnéng lái.", "translations": { "kr": "그가 올 수도 있어요.", "en": "He might come.", "jp": "彼は来るかもしれません。" } },
-        { "cn": "明天可能下雨。", "pinyin": "Míngtiān kěnéng xià yǔ.", "translations": { "kr": "내일 비 올 수도 있어요.", "en": "It might rain tomorrow.", "jp": "明日雨が降るかもしれません。" } }
-      ],
-      "note": { "cn": "用本课新词「告诉」「可能」做句型强化。", "kr": "본과 신어 告诉·可能로 문형을 연습합니다.", "en": "Practice with 告诉, 可能.", "jp": "本課の新語 告诉·可能 で文型を練習します。" }
+      "cn": "可能可以",
+      "pinyin": "kěnéng kěyǐ",
+      "translations": {
+        "kr": "아마 할 수 있어요",
+        "en": "might be able to",
+        "jp": "多分できる"
+      },
+      "note": "可能 + 可以"
     }
   ]
 }

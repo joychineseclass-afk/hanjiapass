@@ -126,6 +126,21 @@
         "en": "two",
         "jp": "二つ"
       }
+    },
+    {
+      "hanzi": "要",
+      "pinyin": "yāo",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "(bound form) to demand; to coerce",
+        "jp": "",
+        "cn": "要",
+        "zh": "要"
+      },
+      "translations": {
+        "en": "(bound form) to demand; to coerce"
+      }
     }
   ],
   "vocab": [
@@ -247,6 +262,21 @@
         "en": "two",
         "jp": "二つ"
       }
+    },
+    {
+      "hanzi": "要",
+      "pinyin": "yāo",
+      "pos": "",
+      "meaning": {
+        "kr": "",
+        "en": "(bound form) to demand; to coerce",
+        "jp": "",
+        "cn": "要",
+        "zh": "要"
+      },
+      "translations": {
+        "en": "(bound form) to demand; to coerce"
+      }
     }
   ],
   "mainGrammar": {
@@ -261,44 +291,34 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "cn": "我们一起去吃饭吧！",
-          "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
-          "translations": {
-            "kr": "우리 함께 밥 먹으러 가요!",
-            "en": "Let's eat together!",
-            "jp": "一緒に食事に行きましょう！"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "好啊！这家餐厅的菜很好吃。",
-          "pinyin": "Hǎo a! Zhè jiā cāntīng de cài hěn hǎochī.",
-          "translations": {
-            "kr": "좋아요! 이 식당 음식 맛있어요.",
-            "en": "Great! The food at this restaurant is delicious.",
-            "jp": "いいですね！このレストランの料理は美味しいです。"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "服务员，我们要两杯咖啡和一杯牛奶。",
-          "pinyin": "Fúwùyuán, wǒmen yào liǎng bēi kāfēi hé yī bēi niúnǎi.",
-          "translations": {
-            "kr": "웨이터님, 커피 두 잔이랑 우유 한 잔 주세요.",
-            "en": "Waiter, we'd like two coffees and one milk.",
-            "jp": "店員さん、コーヒー2杯と牛乳1杯お願いします。"
-          }
-        }
-      ]
+      "speaker": "A",
+      "cn": "我们一起去吃饭吧！",
+      "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
+      "translations": {
+        "kr": "우리 함께 밥 먹으러 가요!",
+        "en": "Let's eat together!",
+        "jp": "一緒に食事に行きましょう！"
+      }
+    },
+    {
+      "speaker": "B",
+      "cn": "好啊！这家餐厅的菜很好吃。",
+      "pinyin": "Hǎo a! Zhè jiā cāntīng de cài hěn hǎochī.",
+      "translations": {
+        "kr": "좋아요! 이 식당 음식 맛있어요.",
+        "en": "Great! The food at this restaurant is delicious.",
+        "jp": "いいですね！このレストランの料理は美味しいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "cn": "服务员，我们要两杯咖啡和一杯牛奶。",
+      "pinyin": "Fúwùyuán, wǒmen yào liǎng bēi kāfēi hé yī bēi niúnǎi.",
+      "translations": {
+        "kr": "웨이터님, 커피 두 잔이랑 우유 한 잔 주세요.",
+        "en": "Waiter, we'd like two coffees and one milk.",
+        "jp": "店員さん、コーヒー2杯と牛乳1杯お願いします。"
+      }
     }
   ],
   "grammar": [
@@ -427,27 +447,6 @@
         "en": "Service staff at restaurants.",
         "jp": "レストランなどのサービス担当。"
       }
-    },
-    {
-      "type": "choice",
-      "prompt": {
-        "cn": "「咖啡」和「牛奶」是？",
-        "kr": "「咖啡」와 「牛奶」는?",
-        "en": "What are 咖啡 and 牛奶?",
-        "jp": "「咖啡」と「牛奶」は？"
-      },
-      "options": [
-        "饮料",
-        "食物",
-        "水果",
-        "蔬菜"
-      ],
-      "answer": "饮料",
-      "explanation": {
-        "kr": "咖啡、牛奶都是饮料。",
-        "en": "Coffee and milk are drinks.",
-        "jp": "コーヒーと牛乳は飲み物です。"
-      }
     }
   ],
   "aiPrompts": [
@@ -531,61 +530,223 @@
       }
     ]
   },
+  "lessonWordPool": {
+    "reviewWords": [
+      "爱",
+      "八",
+      "爸爸",
+      "杯子",
+      "北京",
+      "本",
+      "不",
+      "不客气",
+      "菜",
+      "茶",
+      "吃",
+      "出租车",
+      "打电话",
+      "大",
+      "的",
+      "点",
+      "电脑",
+      "电视",
+      "电影",
+      "东西",
+      "都",
+      "读",
+      "对不起",
+      "多",
+      "多少",
+      "儿子",
+      "二",
+      "饭馆",
+      "飞机",
+      "分钟",
+      "高兴",
+      "个",
+      "工作",
+      "狗",
+      "汉语",
+      "好",
+      "喝",
+      "和",
+      "很",
+      "后面",
+      "回",
+      "会",
+      "火车站",
+      "几",
+      "家",
+      "叫",
+      "今天",
+      "九",
+      "开",
+      "看",
+      "看见",
+      "块",
+      "来",
+      "老师",
+      "了",
+      "冷",
+      "里",
+      "零",
+      "六",
+      "妈妈",
+      "吗",
+      "买",
+      "猫",
+      "没",
+      "没关系",
+      "米饭",
+      "名字",
+      "明天",
+      "哪",
+      "那",
+      "呢",
+      "能",
+      "你",
+      "年",
+      "女儿",
+      "朋友",
+      "漂亮",
+      "苹果",
+      "七",
+      "前面",
+      "钱",
+      "请",
+      "去",
+      "热",
+      "人",
+      "认识",
+      "日",
+      "三",
+      "商店",
+      "上",
+      "上午",
+      "少",
+      "什么",
+      "十",
+      "时候",
+      "是",
+      "书",
+      "谁",
+      "水",
+      "水果",
+      "睡觉",
+      "说话",
+      "四",
+      "岁",
+      "他",
+      "她",
+      "太",
+      "天气",
+      "听",
+      "同学",
+      "喂",
+      "我",
+      "我们",
+      "五",
+      "喜欢",
+      "下",
+      "下午",
+      "下雨",
+      "先生",
+      "现在",
+      "想",
+      "小",
+      "小姐",
+      "些",
+      "写",
+      "谢谢",
+      "星期",
+      "学生",
+      "学习",
+      "学校",
+      "一",
+      "衣服",
+      "医生",
+      "医院",
+      "椅子",
+      "有",
+      "月",
+      "再见",
+      "在",
+      "怎么",
+      "怎么样",
+      "这",
+      "中国",
+      "中午",
+      "住",
+      "桌子",
+      "字",
+      "昨天",
+      "坐",
+      "做",
+      "忙",
+      "累",
+      "吧",
+      "但是",
+      "女人",
+      "每",
+      "教室",
+      "哥哥",
+      "弟弟",
+      "姐姐",
+      "妹妹",
+      "孩子",
+      "大家",
+      "介绍",
+      "给",
+      "告诉",
+      "懂",
+      "欢迎",
+      "回答",
+      "可能",
+      "可以"
+    ],
+    "newWords": [
+      "一起",
+      "好吃",
+      "服务员",
+      "咖啡",
+      "牛奶",
+      "房间",
+      "两"
+    ],
+    "borrowWords": [
+      "要"
+    ]
+  },
   "extension": [
     {
-      "groupTitle": {
-        "cn": "吧 建议句",
-        "kr": "吧 제안문",
-        "en": "吧 suggestion",
-        "jp": "吧 提案文"
+      "cn": "好吃",
+      "pinyin": "hǎochī",
+      "translations": {
+        "kr": "맛있다",
+        "en": "delicious",
+        "jp": "美味しい"
       },
-      "focusGrammar": "吧 建议句",
-      "sentences": [
-        {
-          "cn": "我们一起去吃饭吧！",
-          "pinyin": "Wǒmen yīqǐ qù chīfàn ba!",
-          "translations": {
-            "kr": "우리 함께 밥 먹으러 가요!",
-            "en": "Let's eat together!",
-            "jp": "一緒に食事に行きましょう！"
-          }
-        },
-        {
-          "cn": "我们一起去看电影吧。",
-          "pinyin": "Wǒmen yīqǐ qù kàn diànyǐng ba.",
-          "translations": {
-            "kr": "우리 함께 영화 보러 가요.",
-            "en": "Let's go see a movie together.",
-            "jp": "一緒に映画を見に行きましょう。"
-          }
-        }
-      ],
-      "note": {
-        "cn": "...一起 + V + 吧，表示建议一起做某事。",
-        "kr": "함께 뭔가 하자고 제안합니다.",
-        "en": "Suggest doing together: ...一起 + V + 吧.",
-        "jp": "一緒に〜しましょうと提案します。"
-      }
+      "note": "好 + 动词"
     },
     {
-      "groupTitle": { "cn": "一起 + V 练习", "kr": "一起 + V 연습", "en": "Pattern: 一起 + V", "jp": "一起 + V 練習" },
-      "focusGrammar": "一起",
-      "sentences": [
-        { "cn": "我们一起学习。", "pinyin": "Wǒmen yīqǐ xuéxí.", "translations": { "kr": "우리 함께 공부해요.", "en": "We study together.", "jp": "一緒に勉強します。" } },
-        { "cn": "这个菜很好吃。", "pinyin": "Zhè ge cài hěn hǎochī.", "translations": { "kr": "이 요리 맛있어요.", "en": "This dish is delicious.", "jp": "この料理は美味しいです。" } },
-        { "cn": "我要两杯咖啡。", "pinyin": "Wǒ yào liǎng bēi kāfēi.", "translations": { "kr": "커피 두 잔 주세요.", "en": "I'd like two coffees.", "jp": "コーヒー2杯ください。" } }
-      ],
-      "note": { "cn": "一起 + V，两 + 量词。", "kr": "함께 动词를 합니다.", "en": "一起 + V, 两 + measure word.", "jp": "一緒に〜する。两+量詞。" }
+      "cn": "两杯",
+      "pinyin": "liǎng bēi",
+      "translations": {
+        "kr": "두 잔",
+        "en": "two cups",
+        "jp": "2杯"
+      },
+      "note": "两 + 量词"
     },
     {
-      "groupTitle": { "cn": "房间 补词训练", "kr": "房间 보충 연습", "en": "Vocabulary: 房间", "jp": "房间 補足練習" },
-      "focusGrammar": "一起 + V / 吧 建议句",
-      "sentences": [
-        { "cn": "这个房间很大。", "pinyin": "Zhè ge fángjiān hěn dà.", "translations": { "kr": "이 방이 커요.", "en": "This room is big.", "jp": "この部屋は大きいです。" } },
-        { "cn": "我们去房间吧。", "pinyin": "Wǒmen qù fángjiān ba.", "translations": { "kr": "방으로 가요.", "en": "Let's go to the room.", "jp": "部屋に行きましょう。" } },
-        { "cn": "房间里有两张床。", "pinyin": "Fángjiān lǐ yǒu liǎng zhāng chuáng.", "translations": { "kr": "방에 침대가 두 개 있어요.", "en": "There are two beds in the room.", "jp": "部屋にベッドが2つあります。" } }
-      ],
-      "note": { "cn": "用本课新词「房间」做句型强化。", "kr": "본과 신어 房间으로 문형을 연습합니다.", "en": "Practice with 房间.", "jp": "本課の新語 房间 で文型を練習します。" }
+      "cn": "房间",
+      "pinyin": "fángjiān",
+      "translations": {
+        "kr": "방",
+        "en": "room",
+        "jp": "部屋"
+      },
+      "note": "房间可指餐厅包间"
     }
   ]
 }
