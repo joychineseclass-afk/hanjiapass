@@ -448,8 +448,12 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     if (em && typeof em === "object") return (em[l] ?? em.kr ?? em.ko ?? em.en ?? em.zh ?? "") || "";
     if (typeof em === "string") return em.trim() || "";
     const ex = g?.example ?? g?.examples;
-    const trans = Array.isArray(ex) ? ex[0]?.translation : (ex && typeof ex === "object" ? ex.translation : null);
-    if (trans && typeof trans === "object") return (trans[l] ?? trans.kr ?? trans.ko ?? trans.en ?? trans.zh ?? "") || "";
+    const first = Array.isArray(ex) ? ex[0] : ex;
+    if (first && typeof first === "object") {
+      const trans = first.translation;
+      if (trans && typeof trans === "object") return (trans[l] ?? trans.kr ?? trans.ko ?? trans.en ?? trans.zh ?? "") || "";
+      return (first[l] ?? first.kr ?? first.ko ?? first.en ?? first.zh ?? "") || "";
+    }
     return "";
   };
   const getMeaningFromVocab = (hanzi) => {
@@ -469,8 +473,9 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     const meaning = meaningFromPattern || (g?.meaning && typeof g.meaning === "string" ? g.meaning : "") || getMeaningFromVocab(keyForVocab);
 
     let pinyinToShow = "";
+    const isStructurePattern = /\s+\+\s+/.test(pattern);
     const grammarPinyin = String(g?.pinyin ?? g?.py ?? "").trim();
-    if (grammarPinyin) {
+    if (grammarPinyin && !isStructurePattern) {
       pinyinToShow = grammarPinyin.split(/[—–\-]\s*|\s*\+/)[0]?.trim() || grammarPinyin;
     }
 
