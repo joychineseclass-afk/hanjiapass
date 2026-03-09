@@ -223,13 +223,13 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
     const q = str(userInput).toLowerCase();
     let answer = "";
     if (q.includes("你好") || q.includes("您好")) {
-      answer = "「你好」和「您好」都是打招呼用语。「您好」更正式，用于长辈或正式场合。「你好」更常用、更随意。";
-    } else if (q.includes("吗") || q.includes("疑问")) {
-      answer = "「吗」是一般疑问句的句尾助词。在陈述句后加「吗」就变成疑问句。例如：你好吗？";
+      answer = t("ai.free_talk_answer_hello", "\"你好\" and \"您好\" are both greetings. \"您好\" is more polite, \"你好\" is more common.");
+    } else if (q.includes("吗") || q.includes("疑问") || q.includes("ma")) {
+      answer = t("ai.free_talk_answer_ma", "\"吗\" is the question particle. Add it after a statement to form a question. E.g. 你好吗？");
     } else if (q) {
-      answer = `关于「${userInput}」：这是本课相关的好问题。建议先复习本课词汇和对话，再尝试用中文表达。`;
+      answer = t("ai.free_talk_answer_generic", "Good question. Please try asking within the words and sentences from this lesson.");
     } else {
-      answer = "请输入你想问的问题，我会围绕本课内容为你解答。";
+      answer = t("ai.free_talk_answer_empty", "Please enter your question. I'll answer based on this lesson's content.");
     }
     return { text: answer };
   }

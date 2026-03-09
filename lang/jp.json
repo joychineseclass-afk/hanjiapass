@@ -244,7 +244,16 @@
     "step_see": "文を見る",
     "step_repeat": "ついて読む",
     "step_say": "自分で言う",
-    "free_talk_hint": "本課の内容を中心に質問してください。"
+    "free_talk_hint": "本課の内容を中心に質問してください。",
+    "scenario_greeting": "あいさつ",
+    "scenario_self_intro": "自己紹介",
+    "scenario_shopping": "買い物",
+    "scenario_school": "学校",
+    "scenario_restaurant": "レストラン",
+    "free_talk_answer_hello": "「你好」と「您好」はどちらも挨拶表現です。「您好」のほうがより丁寧で、「你好」はより日常的です。",
+    "free_talk_answer_ma": "「吗」は一般疑問文の語尾助詞です。平叙文の後に「吗」をつけると疑問文になります。例：你好吗？",
+    "free_talk_answer_generic": "よい質問です。この課の単語や文の範囲で質問してみてください。",
+    "free_talk_answer_empty": "質問を入力してください。本課の内容を中心に回答します。"
   },
   "progress": {
     "completed": "完了",

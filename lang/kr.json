@@ -245,7 +245,16 @@
     "step_see": "문장 보기",
     "step_repeat": "따라 읽기",
     "step_say": "직접 말하기",
-    "free_talk_hint": "본 과 내용을 중심으로 질문해 주세요."
+    "free_talk_hint": "본 과 내용을 중심으로 질문해 주세요.",
+    "scenario_greeting": "인사하기",
+    "scenario_self_intro": "자기소개",
+    "scenario_shopping": "쇼핑",
+    "scenario_school": "학교",
+    "scenario_restaurant": "식당",
+    "free_talk_answer_hello": "'你好'와 '您好'는 모두 인사말입니다. '您好'는 더 공손한 표현이고, '你好'는 더 일상적인 표현입니다.",
+    "free_talk_answer_ma": "「吗」는 일반 의문문의 어미 조사입니다. 평서문 뒤에 「吗」를 붙이면 의문문이 됩니다. 예: 你好吗？",
+    "free_talk_answer_generic": "좋은 질문이에요. 이 과의 단어와 문장 안에서 다시 질문해 보세요.",
+    "free_talk_answer_empty": "질문을 입력해 주세요. 본 과 내용을 중심으로 답변해 드릴게요."
   },
   "review": {
     "title": "복습",

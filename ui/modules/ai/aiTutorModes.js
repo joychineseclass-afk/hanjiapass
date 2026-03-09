@@ -28,6 +28,16 @@ function pickLang(obj, lang) {
   return str(v != null ? v : "");
 }
 
+/**
+ * scenario 多语言映射（可扩展：HSK2/HSK3/Kids/Business 复用）
+ * 使用 i18n ai.scenario_{key}，无匹配时回退原始 key
+ */
+function getScenarioLabel(scenarioKey) {
+  const key = str(scenarioKey || "greeting").replace(/-/g, "_").toLowerCase();
+  const i18nKey = "ai.scenario_" + key;
+  return t(i18nKey, key);
+}
+
 function resultAreaHtml(emptyState = true) {
   const emptyText = t("ai.result_empty", "No response yet.");
   return `
@@ -75,7 +85,8 @@ export function renderExplainMode(aiItem, lang) {
  * 渲染 Roleplay 面板
  */
 export function renderRoleplayMode(aiItem, lang) {
-  const scenario = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
+  const scenarioKey = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
+  const scenarioLabel = getScenarioLabel(scenarioKey);
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
   const desc = t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
   const classmate = t("ai.role_classmate", "Classmate");
@@ -87,7 +98,7 @@ export function renderRoleplayMode(aiItem, lang) {
       <div class="ai-tutor-role-block">
         <div class="ai-tutor-role-row">
           <span class="ai-tutor-role-label">${escapeHtml(t("ai.scenario", "Scenario"))}:</span>
-          <span class="ai-tutor-role-value">${escapeHtml(scenario)}</span>
+          <span class="ai-tutor-role-value">${escapeHtml(scenarioLabel)}</span>
         </div>
         <div class="ai-tutor-role-row">
           <span class="ai-tutor-role-label">${escapeHtml(t("ai.ai_role", "AI"))}:</span>

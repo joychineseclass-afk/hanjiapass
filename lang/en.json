@@ -244,7 +244,16 @@
     "step_see": "See the sentence",
     "step_repeat": "Repeat after",
     "step_say": "Say it yourself",
-    "free_talk_hint": "Ask questions about this lesson's content."
+    "free_talk_hint": "Ask questions about this lesson's content.",
+    "scenario_greeting": "Greeting",
+    "scenario_self_intro": "Self-introduction",
+    "scenario_shopping": "Shopping",
+    "scenario_school": "School",
+    "scenario_restaurant": "Restaurant",
+    "free_talk_answer_hello": "\"你好\" and \"您好\" are both greetings. \"您好\" is more polite, while \"你好\" is more common and casual.",
+    "free_talk_answer_ma": "\"吗\" is the question particle for yes-no questions. Add it after a statement to form a question. E.g. 你好吗？",
+    "free_talk_answer_generic": "Good question. Please try asking within the words and sentences from this lesson.",
+    "free_talk_answer_empty": "Please enter your question. I'll answer based on this lesson's content."
   },
   "review": {
     "title": "Review",
