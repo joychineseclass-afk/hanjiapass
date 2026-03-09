@@ -1046,7 +1046,7 @@ function bindEvents() {
     e.stopPropagation();
     AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((x) => x.classList.remove("is-speaking"));
-    const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card") || el.closest(".lesson-grammar-card") || el.closest(".lesson-practice-card") || el.closest(".review-question-card") || el.closest(".lesson-practice-option");
+    const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card") || el.closest(".lesson-grammar-card") || el.closest(".review-grammar-row") || el.closest(".lesson-practice-card") || el.closest(".review-question-card") || el.closest(".lesson-practice-option");
     if (lineEl) lineEl.classList.add("is-speaking");
     AUDIO_ENGINE.playText(text, {
       lang: "zh-CN",

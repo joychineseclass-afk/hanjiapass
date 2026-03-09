@@ -5,7 +5,7 @@ import { i18n } from "../../i18n.js";
 import { pick, getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { openStrokePlayer } from "../stroke/index.js";
-import { resolvePinyin } from "../../utils/pinyinEngine.js";
+import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
@@ -411,9 +411,11 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   containerEl.innerHTML = `${hero}<div class="review-dialogue-list">${rows.join("")}</div>`;
 }
 
-/** 复习课语法：pattern (+pinyin) — meaning | explain | example | exampleMeaning；仅当存在 pinyin 时显示拼音 */
-export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] } = {}) {
-  if (!containerEl) return;
+/**
+ * 复习课专用：语法点 list-style 渲染（一条一条纵向列表，紧凑讲义式）
+ * 内容顺序与普通 lesson grammar 一致：pattern → pinyin → meaning → explain → example → exampleMeaning
+ */
+function renderReviewGrammarRows(grammarArr, { lang, vocab = [] } = {}) {
   const arr = Array.isArray(grammarArr) ? grammarArr : [];
   const l = normalizeLang(lang ?? getLang());
   const vocabList = Array.isArray(vocab) ? vocab : [];
@@ -422,15 +424,6 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     const h = (v?.hanzi ?? v?.word ?? "").trim();
     if (h) vocabByHanzi.set(h, v);
   });
-
-  const hero = `<section class="lesson-section-hero lesson-grammar-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.review_grammar_subtitle") || "复习课语法点")}</p>
-</section>`;
-  if (!arr.length) {
-    containerEl.innerHTML = `${hero}<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar")}</div>`;
-    return;
-  }
 
   const pickByLang = (obj) => {
     if (!obj || typeof obj !== "object") return "";
@@ -474,11 +467,12 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     return "";
   };
 
-  const rows = arr.map((g, i) => {
-    const pattern = String(g?.pattern ?? g?.title ?? g?.name ?? "").trim() || "#" + (i + 1);
-    const patternParts = pattern.split(/[—–\-]\s*/);
-    const hanziPart = (patternParts[0] || pattern).trim();
+  return arr.map((g, i) => {
+    const rawPattern = String(g?.pattern ?? g?.title ?? g?.name ?? "").trim() || "#" + (i + 1);
+    const patternParts = rawPattern.split(/[—–\-]\s*/);
+    const hanziPart = (patternParts[0] || rawPattern).trim();
     const meaningFromPattern = (patternParts[1] || "").trim();
+    const pattern = hanziPart;
     const keyForVocab = hanziPart.replace(/\s*[\+\-].*$/, "").trim() || hanziPart.slice(0, 1);
     let meaning = "";
     if (meaningFromPattern) meaning = meaningFromPattern;
@@ -486,29 +480,48 @@ export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] 
     else if (g?.category) meaning = typeof g.category === "object" ? pickByLang(g.category) : String(g.category).trim();
     else meaning = getMeaningFromVocab(keyForVocab);
 
-    let pinyinToShow = "";
-    const isStructurePattern = /\s+\+\s+/.test(pattern);
+    let pinyin = "";
     const grammarPinyin = String(g?.pinyin ?? g?.py ?? "").trim();
-    if (grammarPinyin && !isStructurePattern) {
-      pinyinToShow = grammarPinyin.split(/[—–\-]\s*|\s*\+/)[0]?.trim() || grammarPinyin;
+    if (grammarPinyin) {
+      pinyin = grammarPinyin.split(/[—–\-]\s*/)[0]?.trim() || grammarPinyin;
+    } else {
+      const manualPy = maybeGetManualPinyin(g, "grammarTitle");
+      if (hanziPart && manualPy) pinyin = manualPy;
+      else if (hanziPart) pinyin = resolvePinyin(hanziPart, "");
     }
-
-    const titleLine = meaning
-      ? (pinyinToShow ? `${pattern} (${pinyinToShow}) — ${meaning}` : `${pattern} — ${meaning}`)
-      : (pinyinToShow ? `${pattern} (${pinyinToShow})` : pattern);
 
     const expl = getExpl(g);
     const exZh = getExampleZh(g);
     const exMeaning = getExampleMeaning(g);
     const zhEsc = escapeHtml(hanziPart).replaceAll('"', "&quot;");
+
     return `<div class="review-grammar-row">
-  <div class="review-grammar-title" data-speak-text="${zhEsc}">${escapeHtml(titleLine)}</div>
-  ${expl ? `<div class="review-grammar-expl">${escapeHtml(expl)}</div>` : ""}
-  ${exZh ? `<div class="review-grammar-ex">${escapeHtml(exZh)}</div>` : ""}
-  ${exMeaning ? `<div class="review-grammar-ex-meaning">${escapeHtml(exMeaning)}</div>` : ""}
+  <div class="review-grammar-pattern" data-speak-text="${zhEsc}" data-speak-kind="grammar">${escapeHtml(pattern)}</div>
+  ${pinyin ? `<div class="review-grammar-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+  ${meaning ? `<div class="review-grammar-meaning">${escapeHtml(meaning)}</div>` : ""}
+  ${expl ? `<div class="review-grammar-explain">${escapeHtml(expl)}</div>` : ""}
+  ${exZh ? `<div class="review-grammar-example">${escapeHtml(exZh)}</div>` : ""}
+  ${exMeaning ? `<div class="review-grammar-example-meaning">${escapeHtml(exMeaning)}</div>` : ""}
 </div>`;
-  });
-  containerEl.innerHTML = `${hero}<div class="review-grammar-list">${rows.join("")}</div>`;
+  }).join("");
+}
+
+/** 复习课语法：list-style 纵向列表，紧凑讲义式，仅影响 type===review 的 lesson */
+export function renderReviewGrammar(containerEl, grammarArr, { lang, vocab = [] } = {}) {
+  if (!containerEl) return;
+  const arr = Array.isArray(grammarArr) ? grammarArr : [];
+
+  const hero = `<section class="lesson-section-hero lesson-grammar-hero">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.grammar_title"))}</h3>
+  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.review_grammar_subtitle") || "复习课语法点")}</p>
+</section>`;
+  if (!arr.length) {
+    containerEl.innerHTML = `${hero}<div class="lesson-grammar-empty">${i18n.t("hsk.empty_grammar")}</div>`;
+    return;
+  }
+
+  const rowsHtml = renderReviewGrammarRows(arr, { lang, vocab });
+  containerEl.innerHTML = `${hero}<div class="review-grammar-list">${rowsHtml}</div>`;
 }
 
 /** 复习课扩展：紧凑列表，中文 | 拼音 | 释义 */

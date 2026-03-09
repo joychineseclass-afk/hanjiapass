@@ -1227,35 +1227,73 @@
   min-width: 0;
 }
 
+/* 复习课语法：list-style 纵向列表，紧凑讲义式（非大卡片） */
+.review-grammar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .review-grammar-row {
   flex-direction: column;
   align-items: flex-start;
+  padding: 10px 12px;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 0;
+  gap: 2px;
 }
 
-.review-grammar-title {
+.review-grammar-row:last-child {
+  border-bottom: none;
+}
+
+.review-grammar-row:hover {
+  background: #f8fafc;
+}
+
+.review-grammar-pattern {
   font-weight: 600;
-  color: #1e293b;
   font-size: 1rem;
+  color: #1e293b;
+  line-height: 1.4;
+  cursor: pointer;
 }
 
-.review-grammar-expl {
-  font-size: 0.875rem;
-  color: #475569;
-  margin-top: 4px;
-}
-
-.review-grammar-ex {
+.review-grammar-pinyin {
   font-size: 0.875rem;
   color: #64748b;
-  margin-top: 4px;
-  font-style: italic;
+  line-height: 1.4;
 }
 
-.review-grammar-ex-meaning {
+.review-grammar-meaning {
   font-size: 0.875rem;
   color: #475569;
-  margin-top: 2px;
-  margin-left: 0.5em;
+  line-height: 1.4;
+}
+
+.review-grammar-explain {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.review-grammar-example {
+  font-size: 0.875rem;
+  color: #334155;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.review-grammar-example-meaning {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.review-grammar-row.is-speaking .review-grammar-pattern {
+  color: #2563eb;
 }
 
 .review-extension-zh {
