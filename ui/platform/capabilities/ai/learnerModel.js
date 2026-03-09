@@ -34,7 +34,7 @@ export class LearnerModel {
   }
 
   recordWordResult(word, ok) {
-    const w = String(word ?? "").trim();
+    const w = String(word != null ? word : "").trim();
     if (!w) return;
     const cur = this.state.words[w] || {
       score: 0.5,

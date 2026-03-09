@@ -11,7 +11,7 @@ import { renderModeContent } from "./aiTutorModes.js";
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -27,7 +27,8 @@ function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "kr").toLowerCase();
   const key = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
-  return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en ?? "");
+  const v = obj[key] || obj.zh || obj.cn || obj.kr || obj.jp || obj.en;
+  return str(v != null ? v : "");
 }
 
 function buildLessonSummary(context, lang) {
@@ -79,7 +80,7 @@ export function renderAITutorPanel(opts = {}) {
   }).join("");
 
   const firstItem = items.find((i) => i.mode === "explain") || items[0] || {};
-  const firstMode = firstItem?.mode ?? "explain";
+  const firstMode = firstItem && firstItem.mode != null ? firstItem.mode : "explain";
   const bodyContent = renderModeContent(firstMode, firstItem, lang);
 
   return `
@@ -161,5 +162,6 @@ export function mountAITutorPanel(container, opts = {}) {
     tab.addEventListener("click", () => switchMode(tab.dataset.mode));
   });
 
-  bindModeEvents(body, items[0]?.mode ?? "explain", items[0], lesson, lang);
+  const initMode = items[0] && items[0].mode != null ? items[0].mode : "explain";
+  bindModeEvents(body, initMode, items[0], lesson, lang);
 }

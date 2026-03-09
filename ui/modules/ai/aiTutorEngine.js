@@ -13,7 +13,8 @@ function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "kr").toLowerCase();
   const key = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
-  return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en ?? "");
+  const v = obj[key] || obj.zh || obj.cn || obj.kr || obj.jp || obj.en;
+  return str(v != null ? v : "");
 }
 
 /** 支持的 AI Tutor 模式 */
@@ -29,15 +30,15 @@ export function buildTutorContext(lessonData, lang) {
   const base = buildLessonContext(lessonData, { lang });
   const extension = Array.isArray(lessonData?.extension) ? lessonData.extension : [];
   const extensionList = extension.slice(0, 10).map((e) => ({
-    phrase: str(e.phrase ?? e.hanzi ?? e.zh ?? ""),
-    pinyin: str(e.pinyin ?? e.py ?? ""),
-    translation: pickLang(e.translation ?? e.explain ?? e, lang),
+    phrase: str((e.phrase != null ? e.phrase : e.hanzi) || e.zh || ""),
+    pinyin: str((e.pinyin != null ? e.pinyin : e.py) || ""),
+    translation: pickLang((e.translation != null ? e.translation : e.explain) || e, lang),
   }));
 
   return {
     lessonTitle: base.lessonTitle,
-    level: base.level || lessonData?.level ?? "",
-    version: base.version || lessonData?.version ?? "",
+    level: base.level || (lessonData && lessonData.level) || "",
+    version: base.version || (lessonData && lessonData.version) || "",
     words: base.vocab,
     dialogue: base.dialogue,
     grammar: base.grammar,
@@ -75,7 +76,7 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   ].filter(Boolean).join("\n\n");
 
   if (mode === "explain") {
-    const target = str(aiItem?.target ?? "");
+    const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
     const hint = pickLang(aiItem?.hint, lang);
     return [
       `请像老师一样讲解以下中文内容。`,
@@ -89,7 +90,7 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   }
 
   if (mode === "roleplay") {
-    const scenario = str(aiItem?.scenario ?? "greeting");
+    const scenario = str((aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting") || "greeting");
     const promptText = pickLang(aiItem?.prompt, lang);
     return [
       `请进行情景对话练习。`,
@@ -140,9 +141,9 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
       const res = await window.JOY_RUNNER.askAI({ prompt, context: prompt, lang, mode });
-      return { text: res?.text ?? "", raw: res };
+      return { text: (res && res.text != null ? res.text : "") || "", raw: res };
     } catch (e) {
-      return { text: `[AI 暂未连接] ${e?.message ?? ""}`, error: e };
+      return { text: `[AI 暂未连接] ${(e && e.message != null ? e.message : "") || ""}`, error: e };
     }
   }
 
@@ -154,8 +155,8 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
  */
 function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   const ctx = buildTutorContext(lessonData, lang);
-  const target = str(aiItem?.target ?? "");
-  const scenario = str(aiItem?.scenario ?? "greeting");
+  const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
+  const scenario = str((aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting") || "greeting");
   const lines = Array.isArray(aiItem?.lines) ? aiItem.lines : [];
   const promptText = pickLang(aiItem?.prompt, lang);
 
@@ -236,13 +237,13 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
  * @param {string} lang
  */
 export function formatTutorOutput(mode, result, lang) {
-  const text = result?.text ?? "";
+  const text = (result && result.text != null ? result.text : "") || "";
   const html = text ? `<div class="ai-tutor-result">${escapeHtml(text).replace(/\n/g, "<br>")}</div>` : "";
   return { text, html };
 }
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -256,7 +257,7 @@ function escapeHtml(s) {
  * @returns {Array<{ mode: string, ... }>}
  */
 export function getLessonAIConfig(lesson) {
-  const arr = lesson?.ai ?? [];
+  const arr = (lesson && lesson.ai != null ? lesson.ai : []);
   if (!Array.isArray(arr)) return [];
   return arr
     .filter((item) => item && (item.mode || item.type))

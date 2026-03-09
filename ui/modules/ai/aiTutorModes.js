@@ -8,7 +8,7 @@ import { i18n } from "../../i18n.js";
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 function escapeHtml(s) {
-  return String(s ?? "")
+  return String(s != null ? s : "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -24,14 +24,15 @@ function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "kr").toLowerCase();
   const key = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
-  return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.jp ?? obj.en ?? "");
+  const v = obj[key] || obj.zh || obj.cn || obj.kr || obj.jp || obj.en;
+  return str(v != null ? v : "");
 }
 
 /**
  * 渲染 Explain 面板
  */
 export function renderExplainMode(aiItem, lang) {
-  const target = str(aiItem?.target ?? "");
+  const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
   const hint = pickLang(aiItem?.hint, lang);
   const startLabel = t("ai.start", "Start");
   const explainLabel = t("ai.mode_explain", "Explain");
@@ -55,7 +56,7 @@ export function renderExplainMode(aiItem, lang) {
  * 渲染 Roleplay 面板
  */
 export function renderRoleplayMode(aiItem, lang) {
-  const scenario = str(aiItem?.scenario ?? "greeting");
+  const scenario = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
   const promptText = pickLang(aiItem?.prompt, lang);
   const aiRole = t("ai.ai_role", "AI");
   const studentRole = t("ai.student_role", "Student");

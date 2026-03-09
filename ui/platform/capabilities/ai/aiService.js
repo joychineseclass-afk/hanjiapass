@@ -96,7 +96,7 @@ export const AI_SERVICE = {
     if (task?.word)
       lm.recordWordResult(
         task.word,
-        String(answer ?? "").trim() === String(task.expected ?? "").trim()
+        String(answer != null ? answer : "").trim() === String(task.expected != null ? task.expected : "").trim()
       );
     lm.save();
     return {
