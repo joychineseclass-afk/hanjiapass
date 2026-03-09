@@ -1128,3 +1128,143 @@
   color: #94a3b8;
   text-align: center;
 }
+
+/* ===============================
+   📋 复习课专用：目录式列表
+   单词/会话/语法/扩张 tab 紧凑样式
+================================== */
+.review-word-list,
+.review-dialogue-list,
+.review-grammar-list,
+.review-extension-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-word-row,
+.review-dialogue-row,
+.review-grammar-row,
+.review-extension-row {
+  display: flex;
+  align-items: center;
+  gap: 12px 16px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.review-word-row:hover,
+.review-dialogue-row:hover,
+.review-grammar-row:hover,
+.review-extension-row:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.review-word-row {
+  flex-wrap: wrap;
+}
+
+.review-word-hanzi {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+  min-width: 60px;
+  cursor: pointer;
+}
+
+.review-word-pinyin {
+  color: #64748b;
+  font-size: 0.875rem;
+  min-width: 80px;
+}
+
+.review-word-meaning {
+  flex: 1;
+  color: #475569;
+  min-width: 0;
+}
+
+.review-word-speak-btn,
+.review-dialogue-speak,
+.review-extension-speak {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.review-word-speak-btn:hover,
+.review-dialogue-speak:hover,
+.review-extension-speak:hover {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.review-dialogue-zh {
+  font-weight: 500;
+  color: #1e293b;
+  min-width: 100px;
+}
+
+.review-dialogue-pinyin {
+  color: #64748b;
+  font-size: 0.875rem;
+  min-width: 120px;
+}
+
+.review-dialogue-trans {
+  flex: 1;
+  color: #475569;
+  min-width: 0;
+}
+
+.review-grammar-row {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.review-grammar-title {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+.review-grammar-expl {
+  font-size: 0.875rem;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.review-grammar-ex {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.review-extension-zh {
+  font-weight: 500;
+  color: #1e293b;
+  min-width: 100px;
+}
+
+.review-extension-pinyin {
+  color: #64748b;
+  font-size: 0.875rem;
+  min-width: 100px;
+}
+
+.review-extension-meaning {
+  flex: 1;
+  color: #475569;
+  min-width: 0;
+}

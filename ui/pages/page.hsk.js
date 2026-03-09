@@ -8,7 +8,7 @@ import { pick, getContentText, getLang as getEngineLang, getLessonDisplayTitle }
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
-import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
+import { renderLessonList, renderWordCards, renderReviewWords, renderReviewDialogue, renderReviewGrammar, renderReviewExtension, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
@@ -84,25 +84,27 @@ function rerenderHSKFromState() {
       console.debug("[HSK] render tab", state.tab, "lang=" + lang);
     }
 
-    const titleStr = getLessonDisplayTitle(ld, getLang());
+    let titleStr = getLessonDisplayTitle(ld, getLang());
+    if (isReview && Array.isArray(rr) && rr.length >= 2) {
+      const rangeSuffix = i18n.t("hsk.review_range_suffix", { from: rr[0], to: rr[1] }) || `（${rr[0]}~${rr[1]}课）`;
+      titleStr = (titleStr || "复习") + rangeSuffix;
+    }
     const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no });
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
     const titleEl = $("hskStudyTitle");
     if (titleEl) titleEl.textContent = headerTitle;
 
-    if (isReview && lw.length === 0 && Array.isArray(rr) && rr.length >= 2) {
-      const reviewTitle = i18n.t("hsk.review_range");
-      const reviewDesc = i18n.t("hsk.review_desc");
-      const rangeFmt = i18n.t("hsk.review_range_format", { from: rr[0], to: rr[1], total: rr[1] });
-      const pw = $("hskPanelWords");
-      if (pw) pw.innerHTML = `<div class="rounded-xl border border-slate-200 p-4 bg-slate-50"><div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div><p class="text-slate-700">${escapeHtml(rangeFmt)}</p><p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p></div>`;
+    if (isReview) {
+      renderReviewWords($("hskPanelWords"), lw, { lang, scope: `hsk${state.lv}` });
+      renderReviewDialogue($("hskDialogueBody"), getDialogueCards(ld), { lang });
+      renderReviewGrammar($("hskGrammarBody"), ld.grammar || [], { lang });
+      renderReviewExtension($("hskExtensionBody"), ld.extension || [], { lang });
     } else {
       renderWordCards($("hskPanelWords"), lw, undefined, { lang, scope: `hsk${state.lv}` });
+      $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
+      $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
+      $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
     }
-
-    $("hskDialogueBody").innerHTML = buildDialogueHTML(ld);
-    $("hskGrammarBody").innerHTML = buildGrammarHTML(ld);
-    $("hskExtensionBody").innerHTML = buildExtensionHTML(ld);
 
     if (rerenderPractice && $("hskPracticeBody")) {
       try { rerenderPractice($("hskPracticeBody"), lang); } catch {}
@@ -750,7 +752,19 @@ async function openLesson({ lessonNo, file }) {
 
   try {
     let lessonData = null;
-    if (LESSON_ENGINE && typeof LESSON_ENGINE.loadLessonDetail === "function") {
+    // ✅ HSK 优先使用 HSK_LOADER，确保 review 课(21/22)合并逻辑生效
+    const listItem = state.lessons.find((l) => Number((l && l.lessonNo) || l.lesson || l.no) === no);
+    if (window.HSK_LOADER && typeof window.HSK_LOADER.loadLessonDetail === "function") {
+      try {
+        lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
+          version: state.version,
+          file: file || (listItem && listItem.file) || "",
+        });
+      } catch (loaderErr) {
+        console.warn("[HSK] HSK_LOADER.loadLessonDetail failed:", loaderErr && loaderErr.message);
+      }
+    }
+    if (!lessonData && LESSON_ENGINE && typeof LESSON_ENGINE.loadLessonDetail === "function") {
       try {
         const { lesson } = await LESSON_ENGINE.loadLessonDetail({
           courseType: state.version,
@@ -760,18 +774,11 @@ async function openLesson({ lessonNo, file }) {
         });
         lessonData = lesson;
       } catch (engineErr) {
-        console.warn("[HSK] Lesson Engine loadLessonDetail failed, fallback to HSK_LOADER:", engineErr && engineErr.message);
+        console.warn("[HSK] Lesson Engine loadLessonDetail failed:", engineErr && engineErr.message);
       }
-    }
-    if (!lessonData && window.HSK_LOADER && typeof window.HSK_LOADER.loadLessonDetail === "function") {
-      lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
-        version: state.version,
-        file: file || "",
-      });
     }
     if (!lessonData) throw new Error("Failed to load lesson");
 
-    const listItem = state.lessons.find((l) => Number((l && l.lessonNo) || l.lesson || l.no) === no);
     if (listItem && listItem.title && typeof listItem.title === "object") {
       lessonData.title = { ...(lessonData.title || {}), ...listItem.title };
     }
@@ -831,7 +838,12 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    const titleStr = getLessonDisplayTitle(lessonData, lang);
+    let titleStr = getLessonDisplayTitle(lessonData, lang);
+    const reviewRange = (lessonData && lessonData.review && lessonData.review.lessonRange) || [];
+    if ((lessonData && lessonData.type) === "review" && Array.isArray(reviewRange) && reviewRange.length >= 2) {
+      const rangeSuffix = i18n.t("hsk.review_range_suffix", { from: reviewRange[0], to: reviewRange[1] }) || `（${reviewRange[0]}~${reviewRange[1]}课）`;
+      titleStr = (titleStr || "复习") + rangeSuffix;
+    }
     const lessonNoLabel = i18n.t("hsk.lesson_no_format", { n: no });
     const headerTitle = titleStr ? `${lessonNoLabel} / ${titleStr}` : lessonNoLabel;
     showStudyMode(headerTitle);
@@ -853,18 +865,18 @@ async function openLesson({ lessonNo, file }) {
 
     // Render panels
     const isReview = (lessonData && lessonData.type) === "review";
-    const reviewRange = (lessonData && lessonData.review && lessonData.review.lessonRange);
-    if (isReview && (!lessonWords || lessonWords.length === 0) && Array.isArray(reviewRange) && reviewRange.length >= 2) {
-      const reviewTitle = i18n.t("hsk.review_range") || i18n.t("hsk_review_range") || "复习范围";
-      const reviewDesc = i18n.t("hsk.review_desc") || i18n.t("hsk_review_desc") || "请回顾前面学过的词汇和对话。";
-      const rangeFmt = i18n.t("hsk.review_range_format", { from: reviewRange[0], to: reviewRange[1], total: reviewRange[1] }) || `第 ${reviewRange[0]}–${reviewRange[1]} 课`;
-      $("hskPanelWords").innerHTML = `
-        <div class="rounded-xl border border-slate-200 p-4 bg-slate-50">
-          <div class="font-semibold mb-2 text-slate-800">${escapeHtml(reviewTitle)}</div>
-          <p class="text-slate-700">${escapeHtml(rangeFmt)}</p>
-          <p class="text-sm opacity-70 mt-2 text-slate-600">${escapeHtml(reviewDesc)}</p>
-        </div>
-      `;
+    const reviewRange = (lessonData && lessonData.review && lessonData.review.lessonRange) || [];
+    if (isReview) {
+      renderReviewWords($("hskPanelWords"), lessonWords, { lang, scope: `hsk${state.lv}` });
+      const cards = getDialogueCards(lessonData);
+      renderReviewDialogue($("hskDialogueBody"), cards, { lang });
+      renderReviewGrammar($("hskGrammarBody"), lessonData.grammar || [], { lang });
+      renderReviewExtension($("hskExtensionBody"), lessonData.extension || [], { lang });
+      if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.touchLessonVocab === "function") PROGRESS_ENGINE.touchLessonVocab({
+        courseId,
+        lessonId,
+        vocabItems: (lessonWords || []).map((w) => wordKey(w) || w),
+      });
     } else {
       renderWordCards($("hskPanelWords"), lessonWords, undefined, { lang, scope: `hsk${state.lv}` });
       if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.touchLessonVocab === "function") PROGRESS_ENGINE.touchLessonVocab({
@@ -872,10 +884,10 @@ async function openLesson({ lessonNo, file }) {
         lessonId,
         vocabItems: lessonWords.map((w) => wordKey(w) || w),
       });
+      $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
+      $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
+      $("hskExtensionBody").innerHTML = buildExtensionHTML(lessonData);
     }
-    $("hskDialogueBody").innerHTML = buildDialogueHTML(lessonData);
-    $("hskGrammarBody").innerHTML = buildGrammarHTML(lessonData);
-    $("hskExtensionBody").innerHTML = buildExtensionHTML(lessonData);
 
     // Practice panel: 平台级 Practice Engine
     if (mountPractice && $("hskPracticeBody")) {
