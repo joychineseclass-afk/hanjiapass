@@ -223,7 +223,6 @@ function showListMode() {
   el = $("hskExtensionBody"); if (el) el.innerHTML = "";
   el = $("hskPracticeBody"); if (el) el.innerHTML = "";
   el = $("hskAIResult"); if (el) el.innerHTML = "";
-  el = $("hskAIContext"); if (el) el.classList.add("hidden");
   el = $("hskSceneSection"); if (el) { el.innerHTML = ""; el.classList.add("hidden"); }
 
   state.current = null;
@@ -916,9 +915,7 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    // AI panel: 平台级 AI 对话训练入口
-    $("hskAIInput").value = "";
-    el = $("hskAIContext"); if (el) el.classList.add("hidden");
+    // AI panel: 新 AI Tutor Panel 独占，无旧 hskAIInput / hskAIContext
     if (AI_CAPABILITY && typeof AI_CAPABILITY.mountAIPanel === "function" && $("hskAIResult")) {
       try {
         AI_CAPABILITY.mountAIPanel($("hskAIResult"), {
@@ -1096,39 +1093,7 @@ function bindEvents() {
     renderLessonList(listEl, filtered, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
   }, { signal });
 
-  // AI: copy context / send — 事件委托（元素在 mountAIPanel 内动态渲染）
-  el = $("hskPanelAI");
-  if (el) el.addEventListener("click", async function(ev) {
-    const copyBtn = ev.target.closest("#hskAICopyContext");
-    const sendBtn = ev.target.closest("#hskAISend");
-    if (copyBtn) {
-      const ctx = buildAIContext();
-      try { await navigator.clipboard.writeText(ctx); } catch {}
-      return;
-    }
-    if (!sendBtn) return;
-    const input = String(($("hskAIInput") && $("hskAIInput").value) || "").trim();
-    const out = $("hskAIResponse");
-    if (!out) return;
-    if (!input) {
-      out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk.ai_empty", "Please enter a question."))}</div>`;
-      return;
-    }
-    const lang = getLang();
-    const context = buildAIContext();
-    out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("common.loading", "Loading..."))}</div>`;
-    try {
-      if (!window.JOY_RUNNER || typeof window.JOY_RUNNER.askAI !== "function") {
-        throw new Error("JOY_RUNNER.askAI not found.");
-      }
-      const res = await window.JOY_RUNNER.askAI({ prompt: input, context, lang, mode: "Kids" });
-      const text = (res && res.text) || "";
-      out.innerHTML = `<div class="border rounded-xl p-3"><div class="text-xs opacity-60 mb-2">AI</div><div class="text-sm whitespace-pre-wrap">${escapeHtml(text)}</div></div>`;
-    } catch (e) {
-      console.error(e);
-      out.innerHTML = `<div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">${escapeHtml(e && e.message ? e.message : e)}</div>`;
-    }
-  }, { signal });
+  // AI: 新 aiTutorPanel 内部自处理 copy/send，此处不再绑定旧 #hskAICopyContext / #hskAISend / #hskAIInput
 
   // joy:langChanged — 统一事件名，state-driven 全量重渲染
   window.addEventListener("joy:langChanged", (e) => {
