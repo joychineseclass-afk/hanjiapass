@@ -1286,6 +1286,12 @@
   line-height: 1.4;
 }
 
+.review-grammar-example-pinyin {
+  font-size: 0.8125rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
 .review-grammar-example-meaning {
   font-size: 0.875rem;
   color: #94a3b8;

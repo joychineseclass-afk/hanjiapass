@@ -413,7 +413,7 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
 
 /**
  * 复习课专用：语法点 list-style 渲染（一条一条纵向列表，紧凑讲义式）
- * 内容顺序与普通 lesson grammar 一致：pattern → pinyin → meaning → explain → example → exampleMeaning
+ * 内容顺序：pattern → pinyin → meaning → explain → example → examplePinyin → exampleMeaning
  */
 function renderReviewGrammarRows(grammarArr, { lang, vocab = [] } = {}) {
   const arr = Array.isArray(grammarArr) ? grammarArr : [];
@@ -445,6 +445,14 @@ function renderReviewGrammarRows(grammarArr, { lang, vocab = [] } = {}) {
     if (Array.isArray(ex)) return ex.map((e) => (e?.zh ?? e?.cn ?? e?.line ?? e) || "").filter(Boolean)[0] || "";
     if (ex && typeof ex === "object") return (ex.zh ?? ex.cn ?? ex.line ?? "") || "";
     return typeof ex === "string" ? ex : "";
+  };
+  const getExamplePinyin = (g) => {
+    const py = g?.examplePinyin;
+    if (typeof py === "string" && py.trim()) return py.trim();
+    const ex = g?.example ?? g?.examples;
+    const first = Array.isArray(ex) ? ex[0] : ex;
+    if (first && typeof first === "object") return String(first?.pinyin ?? first?.py ?? "").trim();
+    return "";
   };
   const getExampleMeaning = (g) => {
     const em = g?.exampleMeaning;
@@ -492,6 +500,7 @@ function renderReviewGrammarRows(grammarArr, { lang, vocab = [] } = {}) {
 
     const expl = getExpl(g);
     const exZh = getExampleZh(g);
+    const exPinyin = getExamplePinyin(g);
     const exMeaning = getExampleMeaning(g);
     const zhEsc = escapeHtml(hanziPart).replaceAll('"', "&quot;");
 
@@ -501,6 +510,7 @@ function renderReviewGrammarRows(grammarArr, { lang, vocab = [] } = {}) {
   ${meaning ? `<div class="review-grammar-meaning">${escapeHtml(meaning)}</div>` : ""}
   ${expl ? `<div class="review-grammar-explain">${escapeHtml(expl)}</div>` : ""}
   ${exZh ? `<div class="review-grammar-example">${escapeHtml(exZh)}</div>` : ""}
+  ${exPinyin ? `<div class="review-grammar-example-pinyin">${escapeHtml(exPinyin)}</div>` : ""}
   ${exMeaning ? `<div class="review-grammar-example-meaning">${escapeHtml(exMeaning)}</div>` : ""}
 </div>`;
   }).join("");
