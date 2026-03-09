@@ -430,82 +430,85 @@
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "你好 ___？",
+      "prompt": {
+        "cn": "他___中国人。",
+        "kr": "그는 ___ 중국 사람이다.",
+        "en": "He ___ Chinese.",
+        "jp": "彼は___中国人です。"
+      },
+      "options": ["是", "有", "在", "去"],
+      "answer": "是",
+      "explanation": {
+        "cn": "这里要用判断动词「是」。",
+        "kr": "여기에는 판단 동사 「是」를 써야 합니다.",
+        "en": "Use the copula 「是」 here.",
+        "jp": "ここでは判断動詞「是」を使います。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "fill",
+      "prompt": {
+        "cn": "你好___？",
         "kr": "你好 ___？",
         "en": "你好 ___?",
         "jp": "你好 ___？"
       },
-      "options": [
-        "吗",
-        "好",
-        "在"
-      ],
-      "answer": "吗"
+      "answer": "吗",
+      "explanation": {
+        "cn": "「吗」是一般疑问句的句尾助词。",
+        "kr": "「吗」는 일반 의문문의 어미 조사입니다.",
+        "en": "吗 is the question particle for yes-no questions.",
+        "jp": "「吗」は一般疑問文の語尾助詞です。"
+      }
     },
     {
-      "type": "choice",
-      "question": {
-        "zh": "「你好吗？」的回答是什么？",
-        "kr": "「你好吗？」에 대한 답은?",
-        "en": "What is the response to 你好吗?",
-        "jp": "「你好吗？」への返答は？"
+      "id": "p3",
+      "type": "order",
+      "prompt": {
+        "cn": "请将下列词语按正确语序排列：",
+        "kr": "다음 단어를 올바른 순서로 배열하세요.",
+        "en": "Arrange the following words in correct order:",
+        "jp": "次の語を正しい順序に並べてください。"
       },
-      "options": [
-        "你好",
-        "我很好",
-        "谢谢"
-      ],
-      "answer": "我很好"
+      "items": ["我", "很", "好"],
+      "answer": ["我", "很", "好"],
+      "explanation": {
+        "cn": "正确语序是「我很好」。",
+        "kr": "올바른 어순은 「我很好」입니다.",
+        "en": "The correct order is 我很好.",
+        "jp": "正しい語順は「我很好」です。"
+      }
     },
     {
-      "type": "choice",
-      "question": {
-        "zh": "请选择正确语序：我 / 很 / 好",
-        "kr": "올바른 순서를 선택하세요.",
-        "en": "Correct order for 我 / 很 / 好?",
-        "jp": "正しい語順を選んでください：我 / 很 / 好"
-      },
-      "options": [
-        "我很好",
-        "很好我",
-        "好我很"
+      "id": "p4",
+      "type": "match",
+      "pairs": [
+        { "left": "谢谢", "right": "감사합니다" },
+        { "left": "再见", "right": "안녕히 가세요" },
+        { "left": "对不起", "right": "죄송합니다" }
       ],
-      "answer": "我很好"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「谢谢」？",
-        "kr": "「谢谢」는 어느 것?",
-        "en": "Which one is 谢谢?",
-        "jp": "「谢谢」はどれ？"
-      },
-      "options": [
-        "再见",
-        "谢谢",
-        "不客气"
-      ],
-      "answer": "谢谢"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "A：对不起。 B：___",
-        "kr": "A：对不起。 B：___",
-        "en": "A: Sorry. B: ___",
-        "jp": "A：对不起。 B：___"
-      },
-      "options": [
-        "谢谢",
-        "没关系",
-        "再见"
-      ],
-      "answer": "没关系"
+      "explanation": {
+        "cn": "请将中文与对应翻译配对。",
+        "kr": "중국어와 해당 번역을 연결하세요.",
+        "en": "Match Chinese with the correct translation.",
+        "jp": "中国語と対応する翻訳を組み合わせてください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "type": "explain",
+      "target": "我是中国人。"
+    },
+    {
+      "type": "roleplay",
+      "scenario": "greeting"
+    }
+  ],
   "aiPractice": {
     "speaking": [
       "你好",

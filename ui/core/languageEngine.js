@@ -66,6 +66,8 @@ const KEY_ALIAS = {
   hsk_review_desc: "hsk.review_desc",
   hsk_review_range_format: "hsk.review_range_format",
   review_no_wrong_questions: "review.no_wrong_questions",
+  review_title: "review.title",
+  review_desc: "review.desc",
   review_mode: "hsk.review_mode",
   review_current_lesson: "hsk.review_this_lesson",
   review_current_level: "hsk.review_this_level",

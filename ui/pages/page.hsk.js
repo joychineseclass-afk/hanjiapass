@@ -12,6 +12,7 @@ import { renderLessonList, renderWordCards, bindWordCardActions, wordKey, wordPi
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
+import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 const state = {
@@ -892,6 +893,9 @@ async function openLesson({ lessonNo, file }) {
               vocabItems: ((lesson && lesson.vocab) || (lesson && lesson.words) || []).map(function(w) { return typeof w === "string" ? w : (w && w.hanzi) || (w && w.word) || ""; }).filter(Boolean),
               wrongItems,
             });
+            if (PROGRESS_ENGINE && typeof PROGRESS_ENGINE.markLessonCompleted === "function") PROGRESS_ENGINE.markLessonCompleted({ courseId, lessonId });
+            addWrongItems(wrongItems, { lessonId, courseId });
+            addRecentItem({ lessonId, courseId, total, correct, score, practicedAt: Date.now() });
             updateProgressBlock();
           },
         });

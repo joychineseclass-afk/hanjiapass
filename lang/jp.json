@@ -156,6 +156,7 @@
     "dialogue_card": "会話"
   },
   "practice": {
+    "start": "開始",
     "question": "質問",
     "title": "練習",
     "subtitle": "回答して送信すると、正誤と解説が表示されます。",
@@ -178,7 +179,12 @@
     "incorrect": "不正解"
   },
   "ai": {
-    "placeholder": "例：「你好」と「您好」の違いは？",
+    "type_explain": "説明",
+    "type_roleplay": "状況会話",
+    "explain_btn": "説明",
+    "roleplay_btn": "開始",
+    "roleplay_scenario": "会話練習",
+    "placeholder": "AI機能は近日公開予定です。",
     "send": "送信",
     "copy_lesson": "レッスン内容をコピー",
     "follow_along": "跟読",
@@ -195,6 +201,17 @@
   },
   "review": {
     "title": "復習",
+    "desc": "最近の練習と誤答を確認",
+    "recent_practice": "最近の練習",
+    "wrong_review": "誤答復習",
+    "empty_wrong": "誤答記録はありません",
+    "empty_recent": "最近の練習記録はありません",
+    "your_answer": "あなたの答え",
+    "correct_answer": "正解",
+    "score_format": "得点{score}/{total}",
+    "correct_format": "正解{correct}/{total}",
+    "clear_recent": "最近をクリア",
+    "clear_wrong": "誤答をクリア",
     "question_count": "{n}問",
     "mode": "復習モード",
     "submit": "送信",

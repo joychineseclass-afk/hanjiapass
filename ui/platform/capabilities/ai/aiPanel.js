@@ -1,12 +1,13 @@
 /**
  * 平台级 AI 对话训练面板
  * 4 种训练模式 + 上下文 + prompt 预览 + 复制 + 开始练习（mock）
- * 统一使用 i18n，支持 KR/CN/EN/JP
+ * 支持 lesson.ai 数组：explain / roleplay 标准化入口
  */
 
 import { i18n } from "../../../i18n.js";
 import { buildLessonContext } from "./aiLessonContext.js";
 import { buildPrompt, getModes, getModeLabel } from "./aiPromptBuilder.js";
+import { getLessonAIConfig, buildPrompt as buildAIPrompt, runTutor, formatTutorResult } from "../../../modules/ai/aiEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -85,6 +86,35 @@ export function renderAIPanel(opts = {}) {
   `;
 }
 
+/** 渲染 lesson.ai 标准化卡片 */
+function renderAICards(lesson, lang) {
+  const items = getLessonAIConfig(lesson);
+  if (!items.length) return "";
+
+  const explainLabel = t("ai.type_explain", "解释");
+  const roleplayLabel = t("ai.type_roleplay", "情景对话");
+
+  return items.map((item) => {
+    const type = item.type || "explain";
+    const label = type === "explain" ? explainLabel : roleplayLabel;
+    const target = item.target ?? item.scenario ?? "";
+    const scenario = item.scenario ?? "";
+    const btnLabel = type === "explain" && target
+      ? t("ai.explain_btn", "解释") + "：" + target.slice(0, 20) + (target.length > 20 ? "…" : "")
+      : type === "roleplay"
+        ? t("ai.roleplay_btn", "开始") + "：" + (scenario || t("ai.roleplay_scenario", "对话练习"))
+        : label;
+    return `
+      <div class="ai-tutor-card rounded-xl border border-slate-200 p-3 mb-2 bg-white" data-ai-type="${escapeHtml(type)}" data-target="${escapeHtml(target)}" data-scenario="${escapeHtml(scenario)}">
+        <span class="ai-tutor-badge text-xs font-medium text-slate-500">${escapeHtml(label)}</span>
+        <button type="button" class="ai-tutor-trigger w-full mt-2 px-3 py-2 rounded-lg border text-sm text-left hover:bg-slate-50">
+          ${escapeHtml(btnLabel)}
+        </button>
+        <div class="ai-tutor-result-wrap mt-2 hidden"></div>
+      </div>`;
+  }).join("");
+}
+
 /**
  * 挂载 AI 面板并绑定事件
  * @param {HTMLElement} container
@@ -93,7 +123,10 @@ export function renderAIPanel(opts = {}) {
 export function mountAIPanel(container, opts = {}) {
   if (!container) return;
   const { lesson, lang = "ko" } = opts;
-  container.innerHTML = renderAIPanel({ ...opts, containerId: container.id });
+  const aiCardsHtml = renderAICards(lesson, lang);
+  const mainPanelHtml = renderAIPanel({ ...opts, containerId: container.id });
+
+  container.innerHTML = (aiCardsHtml ? `<div class="ai-tutor-cards mb-4">${aiCardsHtml}</div>` : "") + mainPanelHtml;
 
   const modeBtns = container.querySelectorAll(".ai-mode-btn");
   const copyBtn = container.querySelector(".ai-copy-btn");
@@ -144,5 +177,27 @@ export function mountAIPanel(container, opts = {}) {
       `;
     }
     if (typeof opts.onStart === "function") opts.onStart(fullPrompt, currentMode);
+  });
+
+  // lesson.ai 卡片点击
+  container.querySelectorAll(".ai-tutor-trigger").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const card = btn.closest(".ai-tutor-card");
+      if (!card) return;
+      const type = card.dataset.aiType || "explain";
+      const target = card.dataset.target || "";
+      const scenario = card.dataset.scenario || "";
+      const resultWrap = card.querySelector(".ai-tutor-result-wrap");
+      if (!resultWrap) return;
+
+      resultWrap.classList.remove("hidden");
+      resultWrap.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(t("common_loading"))}</div>`;
+
+      const context = buildLessonContext(lesson, { lang });
+      const prompt = buildAIPrompt({ type, target, scenario, context, lang });
+      const res = await runTutor({ prompt, lang, type });
+      const formatted = formatTutorResult(res, lang);
+      resultWrap.innerHTML = formatted.html || `<div class="text-sm opacity-70">${escapeHtml(t("ai.placeholder"))}</div>`;
+    });
   });
 }
