@@ -1,12 +1,13 @@
 /**
  * Practice Generator v2 - 题量配置
- * 严格遵循题型蓝图表：按等级推荐题型组合
+ * HSK1~4 学生端：choice 为主，fill/match/order 少量
+ * 老师端可 override 题量与题型
  */
 
 export const PRACTICE_COUNT_BY_LEVEL = {
   hsk1: 5,
   hsk2: 5,
-  hsk3: 10,
+  hsk3: 8,
   hsk4: 10,
   hsk5: 15,
   hsk6: 15,

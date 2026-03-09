@@ -1,21 +1,10 @@
 /**
  * Practice Engine v1 - 统一练习题数据结构
  * 支持 choice / fill / match / order 四种题型
- *
- * Schema 示例:
- *
- * choice:
- * { id, type: "choice", prompt: { cn, kr, en, jp }, options: [], answer, explanation: {} }
- *
- * fill:
- * { id, type: "fill", prompt: { cn, kr, en, jp }, answer, explanation: {} }
- *
- * match:
- * { id, type: "match", pairs: [{ left, right }], explanation: {} }
- *
- * order:
- * { id, type: "order", prompt: { cn, kr, en, jp }, items: [], answer: [], explanation: {} }
+ * 题干规范：听音题用 LISTENING，母语→中文用 NATIVE_TO_ZH，见 practiceTemplates.js
  */
+
+import { PROMPT_TEMPLATES } from "./practiceTemplates.js";
 
 export const PRACTICE_TYPES = ["choice", "fill", "match", "order"];
 
@@ -65,8 +54,13 @@ export function filterSupportedQuestions(items) {
 }
 
 function normalizeItem(item, type, index) {
-  const promptOrQuestion = item.prompt ?? item.question;
-  const prompt = typeof promptOrQuestion === "object" ? promptOrQuestion : { cn: String(promptOrQuestion || ""), kr: "", en: "", jp: "" };
+  let promptOrQuestion = item.prompt ?? item.question;
+  let prompt = typeof promptOrQuestion === "object" ? { ...promptOrQuestion } : { cn: String(promptOrQuestion || ""), kr: "", en: "", jp: "" };
+
+  if (type === "choice" && (item.hasListen ?? item.listen ?? item.audioUrl)) {
+    prompt = { ...PROMPT_TEMPLATES.LISTENING };
+  }
+
   const answer = item.answer ?? item.correct ?? item.key;
   const explanation = item.explanation ?? item.explain ?? {};
 

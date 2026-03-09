@@ -1,8 +1,6 @@
 /**
  * Practice Generator v2 - A 类：词义识别类
- * A1 vocab_meaning_choice：题干给中文，选项给目标语言意思
- * A2 meaning_to_vocab_choice：题干给意思，选项给中文
- * A3 pinyin_to_vocab_choice：题干给拼音，选项给中文
+ * 使用 practiceTemplates 规范题干，避免「哪个是谢谢」等不自然表达
  */
 
 import {
@@ -16,6 +14,7 @@ import {
   buildOptionsWithLetterKeys,
 } from "./generatorUtils.js";
 import { buildDistractorsForMeaningChoice, buildDistractorsForZhChoice } from "./distractorBuilder.js";
+import { buildPrompt as buildStem } from "../../modules/practice/practiceTemplates.js";
 
 /**
  * A1. vocab_meaning_choice
@@ -39,16 +38,13 @@ export function generateVocabMeaningChoice(lesson, count, lang, levelNum) {
     const allContents = [correctOption, ...distractors.map((d) => ({ zh: d.zh, pinyin: "", kr: d.kr, en: d.en }))];
     const { options, answer } = buildOptionsWithLetterKeys(allContents, zh);
 
+    const question = buildStem("ZH_TO_MEANING", { zh });
     out.push({
       id: nextId("vocab"),
       type: "choice",
       subtype: "vocab_meaning_choice",
       source: "vocab",
-      question: {
-        zh: `「${zh}」的意思是？`,
-        kr: `「${zh}」의 뜻은?`,
-        en: `What does "${zh}" mean?`,
-      },
+      question,
       prompt: { zh, pinyin },
       options,
       answer,
@@ -84,11 +80,7 @@ export function generateMeaningToVocabChoice(lesson, count, lang) {
     const contents = uniqueZh.map((z) => ({ zh: z, pinyin: "", kr: "", en: "" }));
     const { options, answer } = buildOptionsWithLetterKeys(contents, zh);
 
-    const questionByLang = {
-      zh: `「${meaning}」用中文怎么说？`,
-      kr: `「${meaning}」은 중국어로 무엇입니까?`,
-      en: `What is the Chinese word for "${meaning}"?`,
-    };
+    const questionByLang = buildStem("NATIVE_TO_ZH", { native: meaning });
 
     out.push({
       id: nextId("vocab"),
@@ -131,16 +123,13 @@ export function generatePinyinToVocabChoice(lesson, count, lang) {
     const contents = uniqueZh.map((z) => ({ zh: z, pinyin: "", kr: "", en: "" }));
     const { options, answer } = buildOptionsWithLetterKeys(contents, zh);
 
+    const question = buildStem("PINYIN_TO_ZH", { pinyin });
     out.push({
       id: nextId("vocab"),
       type: "choice",
       subtype: "pinyin_to_vocab_choice",
       source: "vocab",
-      question: {
-        zh: `「${pinyin}」是哪一个？`,
-        kr: `「${pinyin}」은 어느 것?`,
-        en: `Which word is "${pinyin}"?`,
-      },
+      question,
       prompt: { zh: pinyin, pinyin: "" },
       options,
       answer,

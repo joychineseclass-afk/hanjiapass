@@ -18,6 +18,7 @@ import {
   buildOptionsWithLetterKeys,
 } from "./generatorUtils.js";
 import { buildDistractorsForMeaningChoice, buildDistractorsForZhChoice } from "./distractorBuilder.js";
+import { buildPrompt as buildStem } from "../../modules/practice/practiceTemplates.js";
 
 function getDialogueLines(lesson) {
   const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
@@ -75,16 +76,13 @@ export function generateSentenceOrderChoice(lesson, count, lang) {
     const contents = shuffle(optionTexts).slice(0, 4).map((o) => ({ zh: o, pinyin: "", kr: "", en: "" }));
     const { options, answer } = buildOptionsWithLetterKeys(contents, t);
 
+    const question = buildStem("SENTENCE_ORDER", {});
     out.push({
       id: nextId("order"),
       type: "choice",
       subtype: "sentence_order_choice",
       source: "dialogueCards",
-      question: {
-        zh: `下面哪一句顺序正确？`,
-        kr: `올바른 순서의 문장은?`,
-        en: `Which sentence has the correct word order?`,
-      },
+      question,
       prompt: { zh: pieces.join(" / "), pinyin: "" },
       options,
       answer,
@@ -173,16 +171,13 @@ export function generateExtensionMeaningChoice(lesson, count, lang, levelNum) {
     const allContents = [correctOption, ...distractors.map((d) => ({ zh: d.zh, pinyin: "", kr: d.kr, en: d.en }))];
     const { options, answer } = buildOptionsWithLetterKeys(allContents, zh);
 
+    const question = buildStem("EXTENSION_MEANING", { zh });
     out.push({
       id: nextId("ext"),
       type: "choice",
       subtype: "extension_meaning_choice",
       source: "extension",
-      question: {
-        zh: `「${zh}」的意思是？`,
-        kr: `「${zh}」의 뜻은?`,
-        en: `What does "${zh}" mean?`,
-      },
+      question,
       prompt: { zh, pinyin },
       options,
       answer,

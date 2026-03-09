@@ -1,10 +1,12 @@
 /**
  * Practice Engine v1 - 核心逻辑
  * 读取 lesson.practice、判题、返回结果
+ * HSK1~4 学生端：choice 为主，fill/match/order 少量
  */
 
 import { i18n } from "../../i18n.js";
 import { filterSupportedQuestions } from "./practiceSchema.js";
+import { applyStudentStrategy } from "./practiceStrategy.js";
 import * as PracticeState from "./practiceState.js";
 
 function getLang() {
@@ -15,11 +17,18 @@ function getLang() {
   return "kr";
 }
 
-/** 优先使用 lesson.practice 手写题，不自动生成 */
+function parseLevel(lesson) {
+  const raw = lesson?.level ?? lesson?.courseId ?? "";
+  const m = String(raw).match(/(\d+)/);
+  return m ? "hsk" + Math.min(4, Math.max(1, parseInt(m[1], 10))) : "hsk1";
+}
+
+/** 优先使用 lesson.practice 手写题，按学生端策略过滤（choice 为主） */
 export function loadPractice(lesson) {
   PracticeState.resetPracticeState();
   const existing = Array.isArray(lesson?.practice) ? lesson.practice : [];
-  const questions = filterSupportedQuestions(existing);
+  const filtered = filterSupportedQuestions(existing);
+  const questions = applyStudentStrategy(filtered, parseLevel(lesson));
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
 
   PracticeState.setPracticeState({ questions, totalScore });

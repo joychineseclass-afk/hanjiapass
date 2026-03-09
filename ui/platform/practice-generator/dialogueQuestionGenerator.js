@@ -7,6 +7,7 @@
 
 import { getDialogueLineZh, getDialogueLineMeaning, shuffle, nextId, buildOptionsWithLetterKeys } from "./generatorUtils.js";
 import { buildDistractorsForZhChoice } from "./distractorBuilder.js";
+import { buildPrompt as buildStem } from "../../modules/practice/practiceTemplates.js";
 
 function getDialogueLines(lesson) {
   const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
@@ -45,16 +46,13 @@ export function generateDialogueResponseChoice(lesson, count, lang) {
     const contents = optionTexts.map((t) => ({ zh: t, pinyin: "", kr: "", en: "" }));
     const { options, answer } = buildOptionsWithLetterKeys(contents, textB);
 
+    const question = buildStem("DIALOGUE_RESPONSE", { line: textA });
     out.push({
       id: nextId("dialogue"),
       type: "choice",
       subtype: "dialogue_response_choice",
       source: "dialogueCards",
-      question: {
-        zh: `下列哪一句最适合回答「${textA}」？`,
-        kr: `「${textA}」에 가장 알맞은 대답은 무엇입니까?`,
-        en: `Which is the best reply to "${textA}"?`,
-      },
+      question,
       prompt: { zh: textA, pinyin: "" },
       options,
       answer,
