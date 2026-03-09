@@ -253,7 +253,16 @@
     "free_talk_answer_hello": "「你好」と「您好」はどちらも挨拶表現です。「您好」のほうがより丁寧で、「你好」はより日常的です。",
     "free_talk_answer_ma": "「吗」は一般疑問文の語尾助詞です。平叙文の後に「吗」をつけると疑問文になります。例：你好吗？",
     "free_talk_answer_generic": "よい質問です。この課の単語や文の範囲で質問してみてください。",
-    "free_talk_answer_empty": "質問を入力してください。本課の内容を中心に回答します。"
+    "free_talk_answer_empty": "質問を入力してください。本課の内容を中心に回答します。",
+    "explain_meaning": "この文は「{target}」という意味です。",
+    "explain_grammar": "この課の重点文型は「A 是 B」です。「是」は判断・身分説明に使います。",
+    "explain_example": "例：",
+    "explain_vocab": "関連語：",
+    "explain_tip": "「是」の前後の関係に注意して読んでみましょう。",
+    "roleplay_student_reply": "生徒はこう答えます：",
+    "roleplay_task": "友だちにあいさつして自己紹介してみましょう。",
+    "shadowing_heading": "シャドーイング練習：順番に一文ずつ練習しましょう。",
+    "shadowing_step": "ステップ {n}："
   },
   "progress": {
     "completed": "完了",

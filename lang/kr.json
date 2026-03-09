@@ -254,7 +254,16 @@
     "free_talk_answer_hello": "'你好'와 '您好'는 모두 인사말입니다. '您好'는 더 공손한 표현이고, '你好'는 더 일상적인 표현입니다.",
     "free_talk_answer_ma": "「吗」는 일반 의문문의 어미 조사입니다. 평서문 뒤에 「吗」를 붙이면 의문문이 됩니다. 예: 你好吗？",
     "free_talk_answer_generic": "좋은 질문이에요. 이 과의 단어와 문장 안에서 다시 질문해 보세요.",
-    "free_talk_answer_empty": "질문을 입력해 주세요. 본 과 내용을 중심으로 답변해 드릴게요."
+    "free_talk_answer_empty": "질문을 입력해 주세요. 본 과 내용을 중심으로 답변해 드릴게요.",
+    "explain_meaning": "이 문장은 \"{target}\"이라는 뜻입니다.",
+    "explain_grammar": "이 과의 핵심 문형은 \"A 是 B\"입니다. \"是\"는 판단과 신분 설명에 사용합니다.",
+    "explain_example": "예:",
+    "explain_vocab": "관련 단어:",
+    "explain_tip": "\"是\" 앞뒤 관계를 주의해서 읽어 보세요.",
+    "roleplay_student_reply": "학생은 이렇게 대답할 수 있어요:",
+    "roleplay_task": "이제 친구에게 인사하고 자기소개를 해 보세요.",
+    "shadowing_heading": "따라 읽기 연습: 순서대로 한 문장씩 연습해 보세요.",
+    "shadowing_step": "단계 {n}:"
   },
   "review": {
     "title": "복습",

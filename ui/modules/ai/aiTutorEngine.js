@@ -177,15 +177,20 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
 
   if (mode === "explain") {
     const vocabSample = ctx.words?.slice(0, 3).map((w) => `${w.hanzi}(${w.pinyin})`).join("、") || "";
-    const targetLine = target ? `【${target}】\n\n` : "";
+    const targetLine = target ? `${target}\n\n` : "";
+    const meaningLine = target ? t("ai.explain_meaning", { target }) : "";
     return {
       text: [
         targetLine,
-        `${L.grammar}: 这是本课的重点句型。「是」表示判断，A是B = A is B。`,
-        `${L.usage}: 介绍国籍、身份时使用。例如：我是中国人。他是老师。`,
+        meaningLine,
+        t("ai.explain_grammar"),
         "",
-        vocabSample ? `相关词汇: ${vocabSample}` : "",
-        "使用提醒: 注意「是」的声调是第四声。",
+        t("ai.explain_example"),
+        "我是中国人。",
+        "他是老师。",
+        "",
+        vocabSample ? t("ai.explain_vocab") + " " + vocabSample : "",
+        t("ai.explain_tip"),
       ].filter(Boolean).join("\n"),
     };
   }
@@ -196,11 +201,11 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
       text: [
         `【${L.ai}】你好！`,
         "",
-        `${L.student} 可以这样回答:`,
+        t("ai.roleplay_student_reply"),
         `- ${dialogueLines[0] || "你好！"}`,
         `- ${dialogueLines[1] || "你好吗？"} 或 我很好。`,
         "",
-        promptText || "请和同学打招呼并做自我介绍。",
+        promptText || t("ai.roleplay_task"),
       ].join("\n"),
     };
   }
@@ -208,13 +213,13 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   if (mode === "shadowing") {
     const steps = lines.map((line, i) => {
       const n = i + 1;
-      return `${L.step} ${n}: ${line}\n  → ${L.listen} → ${L.repeat} → ${L.say}`;
+      return `${t("ai.shadowing_step", { n })} ${line}\n  → ${L.listen} → ${L.repeat} → ${L.say}`;
     });
     return {
       text: [
-        "跟读练习：请按顺序一句一句练习。",
+        t("ai.shadowing_heading"),
         "",
-        steps.length ? steps.join("\n\n") : `${L.step} 1: ${L.listen}\n${L.step} 2: ${L.repeat}\n${L.step} 3: ${L.say}`,
+        steps.length ? steps.join("\n\n") : `${t("ai.shadowing_step", { n: 1 })} ${L.listen}\n${t("ai.shadowing_step", { n: 2 })} ${L.repeat}\n${t("ai.shadowing_step", { n: 3 })} ${L.say}`,
       ].join("\n"),
     };
   }
