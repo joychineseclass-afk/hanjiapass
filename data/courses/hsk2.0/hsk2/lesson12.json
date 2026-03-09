@@ -314,12 +314,12 @@
         },
         {
           "speaker": "B",
-          "cn": "但是很累，早上起床就送孩子。",
-          "pinyin": "Dànshì hěn lěi, zǎoshang qǐchuáng jiù sòng háizi.",
+          "cn": "但是很累，早上起来就要送孩子上学。",
+          "pinyin": "Dànshì hěn lěi, zǎoshang qǐlái jiù yào sòng háizi shàngxué.",
           "translations": {
-            "kr": "하지만 피곤해요. 아침에 일어나자마자 아이를 보내요.",
-            "en": "But very tired, gets up and sends the child in the morning.",
-            "jp": "しかし疲れています。朝起きてすぐ子供を送ります。"
+            "kr": "하지만 피곤해요. 아침에 일어나면 아이 학교 보내야 해요.",
+            "en": "But he's tired—has to take the kids to school every morning.",
+            "jp": "しかし疲れています。朝起きたら子供を学校に送らなければなりません。"
           }
         }
       ]

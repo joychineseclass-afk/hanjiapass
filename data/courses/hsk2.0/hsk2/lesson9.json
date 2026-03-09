@@ -261,43 +261,11 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
+      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "cn": "我每天学习汉语。",
-          "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.",
-          "translations": {
-            "kr": "저는 매일 중국어를 배워요.",
-            "en": "I study Chinese every day.",
-            "jp": "私は毎日中国語を勉強します。"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "你每节课都来吗？",
-          "pinyin": "Nǐ měi jié kè dōu lái ma?",
-          "translations": {
-            "kr": "매 수업마다 오세요?",
-            "en": "Do you come to every class?",
-            "jp": "毎授業来ますか？"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "是的，我可以开始考试了。",
-          "pinyin": "Shì de, wǒ kěyǐ kāishǐ kǎoshì le.",
-          "translations": {
-            "kr": "네. 이제 시험 볼 수 있어요.",
-            "en": "Yes, I can start the exam now.",
-            "jp": "はい、もう試験を受けられます。"
-          }
-        }
+        { "speaker": "A", "cn": "我每天学习汉语。", "pinyin": "Wǒ měi tiān xuéxí Hànyǔ.", "translations": { "kr": "저는 매일 중국어를 배워요.", "en": "I study Chinese every day.", "jp": "私は毎日中国語を勉強します。" } },
+        { "speaker": "B", "cn": "你每节课都来吗？", "pinyin": "Nǐ měi jié kè dōu lái ma?", "translations": { "kr": "매 수업마다 오세요?", "en": "Do you come to every class?", "jp": "毎授業来ますか？" } },
+        { "speaker": "A", "cn": "是的，每节课都来。下个月有考试。", "pinyin": "Shì de, měi jié kè dōu lái. Xià ge yuè yǒu kǎoshì.", "translations": { "kr": "네, 매 수업마다 와요. 다음 달에 시험이 있어요.", "en": "Yes, I come to every class. I have an exam next month.", "jp": "はい、毎授業来ます。来月試験があります。" } }
       ]
     }
   ],
@@ -577,33 +545,9 @@
       },
       "focusGrammar": "能愿动词 可以",
       "sentences": [
-        {
-          "cn": "可以开始",
-          "pinyin": "kěyǐ kāishǐ",
-          "translations": {
-            "kr": "시작할 수 있다",
-            "en": "can start",
-            "jp": "始められる"
-          }
-        },
-        {
-          "cn": "开始",
-          "pinyin": "kāishǐ",
-          "translations": {
-            "kr": "시작하다",
-            "en": "begin",
-            "jp": "始める"
-          }
-        },
-        {
-          "cn": "考试",
-          "pinyin": "kǎoshì",
-          "translations": {
-            "kr": "시험",
-            "en": "exam",
-            "jp": "試験"
-          }
-        }
+        { "cn": "我可以开始考试了。", "pinyin": "Wǒ kěyǐ kāishǐ kǎoshì le.", "translations": { "kr": "이제 시험 볼 수 있어요.", "en": "I can start the exam now.", "jp": "もう試験を受けられます。" } },
+        { "cn": "课开始了。", "pinyin": "Kè kāishǐ le.", "translations": { "kr": "수업 시작됐어요.", "en": "Class has started.", "jp": "授業が始まりました。" } },
+        { "cn": "下个月有考试。", "pinyin": "Xià ge yuè yǒu kǎoshì.", "translations": { "kr": "다음 달에 시험이 있어요.", "en": "There's an exam next month.", "jp": "来月試験があります。" } }
       ],
       "note": {
         "cn": "可以 + V，表示能力或许可。",
@@ -611,6 +555,17 @@
         "en": "可以 + V: ability or permission.",
         "jp": "能力や許可を表す。"
       }
+    },
+    {
+      "groupTitle": { "cn": "离 / 第一 / 报纸 / 门 补词训练", "kr": "离·第一·报纸·门 보충 연습", "en": "Vocabulary: 离, 第一, 报纸, 门", "jp": "离·第一·报纸·门 補足練習" },
+      "focusGrammar": "每 + 时间",
+      "sentences": [
+        { "cn": "我家离学校很近。", "pinyin": "Wǒ jiā lí xuéxiào hěn jìn.", "translations": { "kr": "우리 집이 학교에서 가까워요.", "en": "My home is close to school.", "jp": "家は学校から近いです。" } },
+        { "cn": "这是第一课。", "pinyin": "Zhè shì dìyī kè.", "translations": { "kr": "이건 첫 번째 과예요.", "en": "This is the first lesson.", "jp": "これは第1課です。" } },
+        { "cn": "我每天看报纸。", "pinyin": "Wǒ měi tiān kàn bàozhǐ.", "translations": { "kr": "매일 신문 봐요.", "en": "I read the newspaper every day.", "jp": "毎日新聞を読みます。" } },
+        { "cn": "我选了三门课。", "pinyin": "Wǒ xuǎn le sān mén kè.", "translations": { "kr": "과목 세 개 들었어요.", "en": "I'm taking three courses.", "jp": "3科目選びました。" } }
+      ],
+      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
     }
   ]
 }

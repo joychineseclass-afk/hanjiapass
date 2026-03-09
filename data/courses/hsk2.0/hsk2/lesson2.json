@@ -273,7 +273,8 @@
       "title": { "cn": "会话2", "kr": "대화 2", "en": "Dialogue 2", "jp": "会話2" },
       "lines": [
         { "speaker": "A", "cn": "这是我的孩子。", "pinyin": "Zhè shì wǒ de háizi.", "translations": { "kr": "이건 제 아이예요.", "en": "This is my child.", "jp": "これは私の子供です。" } },
-        { "speaker": "B", "cn": "我给你介绍一下。", "pinyin": "Wǒ gěi nǐ jièshào yīxià.", "translations": { "kr": "제가 소개해 드릴게요.", "en": "Let me introduce you.", "jp": "紹介しますね。" } }
+        { "speaker": "B", "cn": "好可爱！", "pinyin": "Hǎo kě'ài!", "translations": { "kr": "너무 귀여워요!", "en": "So cute!", "jp": "かわいいですね！" } },
+        { "speaker": "A", "cn": "谢谢。我给你介绍一下，他叫小明。", "pinyin": "Xièxie. Wǒ gěi nǐ jièshào yīxià, tā jiào Xiǎomíng.", "translations": { "kr": "감사해요. 소개할게요, 이름은 소명이에요.", "en": "Thanks. Let me introduce him—his name is Xiaoming.", "jp": "ありがとう。紹介しますね、名前は小明です。" } }
       ]
     }
   ],

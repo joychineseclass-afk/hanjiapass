@@ -261,53 +261,12 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
+      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "cn": "周末你做什么？",
-          "pinyin": "Zhōumò nǐ zuò shénme?",
-          "translations": {
-            "kr": "주말에 뭐 해요?",
-            "en": "What do you do on weekends?",
-            "jp": "週末は何をしますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "我在家休息，晚上去跑步。",
-          "pinyin": "Wǒ zài jiā xiūxi, wǎnshang qù pǎobù.",
-          "translations": {
-            "kr": "집에서 쉬고, 저녁에 달려요.",
-            "en": "I rest at home, run in the evening.",
-            "jp": "家で休んで、夜走ります。"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "你正在唱歌吗？",
-          "pinyin": "Nǐ zhèngzài chànggē ma?",
-          "translations": {
-            "kr": "지금 노래하고 있어요?",
-            "en": "Are you singing now?",
-            "jp": "今歌っていますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "不，我在跳舞，很快乐！",
-          "pinyin": "Bù, wǒ zài tiàowǔ, hěn kuàilè!",
-          "translations": {
-            "kr": "아니요, 춤추고 있어요. 아주 즐거워요!",
-            "en": "No, I'm dancing, very happy!",
-            "jp": "いいえ、踊っています。とても楽しいです！"
-          }
-        }
+        { "speaker": "A", "cn": "周末你做什么？", "pinyin": "Zhōumò nǐ zuò shénme?", "translations": { "kr": "주말에 뭐 해요?", "en": "What do you do on weekends?", "jp": "週末は何をしますか？" } },
+        { "speaker": "B", "cn": "我在家休息，晚上去跑步。", "pinyin": "Wǒ zài jiā xiūxi, wǎnshang qù pǎobù.", "translations": { "kr": "집에서 쉬고, 저녁에 달려요.", "en": "I rest at home, run in the evening.", "jp": "家で休んで、夜走ります。" } },
+        { "speaker": "A", "cn": "你喜欢唱歌还是跳舞？", "pinyin": "Nǐ xǐhuan chànggē háishì tiàowǔ?", "translations": { "kr": "노래 좋아해요, 춤 좋아해요?", "en": "Do you like singing or dancing?", "jp": "歌と踊り、どちらが好きですか？" } },
+        { "speaker": "B", "cn": "我都喜欢，周末玩得很开心。", "pinyin": "Wǒ dōu xǐhuan, zhōumò wán de hěn kāixīn.", "translations": { "kr": "다 좋아해요. 주말에 놀면 즐거워요.", "en": "I like both. I have fun on weekends.", "jp": "どちらも好きです。週末は楽しく過ごします。" } }
       ]
     }
   ],
@@ -606,12 +565,12 @@
           }
         },
         {
-          "cn": "休息",
-          "pinyin": "xiūxi",
+          "cn": "我在家休息。",
+          "pinyin": "Wǒ zài jiā xiūxi.",
           "translations": {
-            "kr": "쉬다",
-            "en": "rest",
-            "jp": "休む"
+            "kr": "집에서 쉬어요.",
+            "en": "I'm resting at home.",
+            "jp": "家で休んでいます。"
           }
         }
       ],
@@ -621,6 +580,16 @@
         "en": "在 + V: action in progress.",
         "jp": "動作が進行中である。"
       }
+    },
+    {
+      "groupTitle": { "cn": "快乐 补词训练", "kr": "快乐 보충 연습", "en": "Vocabulary: 快乐", "jp": "快乐 補足練習" },
+      "focusGrammar": "S + 很 + Adj",
+      "sentences": [
+        { "cn": "周末很快乐。", "pinyin": "Zhōumò hěn kuàilè.", "translations": { "kr": "주말이 즐거워요.", "en": "Weekends are happy.", "jp": "週末は楽しいです。" } },
+        { "cn": "唱歌很快乐。", "pinyin": "Chànggē hěn kuàilè.", "translations": { "kr": "노래 부르면 즐거워요.", "en": "Singing is fun.", "jp": "歌うのは楽しいです。" } },
+        { "cn": "大家都很快乐。", "pinyin": "Dàjiā dōu hěn kuàilè.", "translations": { "kr": "다들 즐거워요.", "en": "Everyone is happy.", "jp": "みんな楽しいです。" } }
+      ],
+      "note": { "cn": "用本课新词「快乐」做句型强化。", "kr": "본과 신어 快乐로 문형을 연습합니다.", "en": "Practice with 快乐.", "jp": "本課の新語 快乐 で文型を練習します。" }
     }
   ]
 }

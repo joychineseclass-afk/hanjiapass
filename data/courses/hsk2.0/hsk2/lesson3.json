@@ -574,48 +574,25 @@
       }
     },
     {
-      "groupTitle": {
-        "cn": "给 + N + V",
-        "kr": "给 + N + V",
-        "en": "给 + N + V",
-        "jp": "给 + N + V"
-      },
+      "groupTitle": { "cn": "给 + N + V 练习", "kr": "给 + N + V 연습", "en": "Pattern: 给 + N + V", "jp": "给 + N + V 練習" },
       "focusGrammar": "给 + N + V",
       "sentences": [
-        {
-          "cn": "给我介绍一下。",
-          "pinyin": "Gěi wǒ jièshào yīxià.",
-          "translations": {
-            "kr": "저에게 소개해 주세요.",
-            "en": "Introduce (him) to me.",
-            "jp": "紹介してください。"
-          }
-        },
-        {
-          "cn": "告诉朋友",
-          "pinyin": "gàosù péngyou",
-          "translations": {
-            "kr": "친구에게 알려주다",
-            "en": "tell a friend",
-            "jp": "友達に伝える"
-          }
-        },
-        {
-          "cn": "懂中文",
-          "pinyin": "dǒng Zhōngwén",
-          "translations": {
-            "kr": "중국어를 이해하다",
-            "en": "understand Chinese",
-            "jp": "中国語が分かる"
-          }
-        }
+        { "cn": "给我介绍一下。", "pinyin": "Gěi wǒ jièshào yīxià.", "translations": { "kr": "저에게 소개해 주세요.", "en": "Introduce (him) to me.", "jp": "紹介してください。" } },
+        { "cn": "你告诉他吧。", "pinyin": "Nǐ gàosù tā ba.", "translations": { "kr": "그에게 알려줘요.", "en": "You tell him.", "jp": "彼に伝えてください。" } },
+        { "cn": "他懂中文。", "pinyin": "Tā dǒng Zhōngwén.", "translations": { "kr": "그는 중국어를 알아요.", "en": "He understands Chinese.", "jp": "彼は中国語が分かります。" } }
       ],
-      "note": {
-        "cn": "给 + 人 + 动词，表示对某人做某事。",
-        "kr": "某人에게 动词를 합니다.",
-        "en": "给 + person + verb: do something for someone.",
-        "jp": "人に〜する：给 + 人 + 动词。"
-      }
+      "note": { "cn": "给 + 人 + 动词，表示对某人做某事。", "kr": "某人에게 动词를 합니다.", "en": "给 + person + verb.", "jp": "人に〜する：给 + 人 + 动词。" }
+    },
+    {
+      "groupTitle": { "cn": "告诉 / 可能 补词训练", "kr": "告诉·可能 보충 연습", "en": "Vocabulary: 告诉, 可能", "jp": "告诉·可能 補足練習" },
+      "focusGrammar": "给 + N + V / 可能 + V",
+      "sentences": [
+        { "cn": "我告诉你了。", "pinyin": "Wǒ gàosù nǐ le.", "translations": { "kr": "제가 알려줬어요.", "en": "I told you.", "jp": "伝えました。" } },
+        { "cn": "你告诉他了吗？", "pinyin": "Nǐ gàosù tā le ma?", "translations": { "kr": "그에게 알려줬어요?", "en": "Did you tell him?", "jp": "彼に伝えましたか？" } },
+        { "cn": "他可能来。", "pinyin": "Tā kěnéng lái.", "translations": { "kr": "그가 올 수도 있어요.", "en": "He might come.", "jp": "彼は来るかもしれません。" } },
+        { "cn": "明天可能下雨。", "pinyin": "Míngtiān kěnéng xià yǔ.", "translations": { "kr": "내일 비 올 수도 있어요.", "en": "It might rain tomorrow.", "jp": "明日雨が降るかもしれません。" } }
+      ],
+      "note": { "cn": "用本课新词「告诉」「可能」做句型强化。", "kr": "본과 신어 告诉·可能로 문형을 연습합니다.", "en": "Practice with 告诉, 可能.", "jp": "本課の新語 告诉·可能 で文型を練習します。" }
     }
   ]
 }

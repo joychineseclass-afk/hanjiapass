@@ -318,12 +318,12 @@
         },
         {
           "speaker": "B",
-          "cn": "昨天已经完了，今天再去。",
-          "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
+          "cn": "没关系，今天再去吧。",
+          "pinyin": "Méi guānxi, jīntiān zài qù ba.",
           "translations": {
-            "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
-            "en": "Yesterday it was already over, go again today.",
-            "jp": "昨日はもう終わりました。今日また行きます。"
+            "kr": "괜찮아요. 오늘 다시 가요.",
+            "en": "That's okay. Let's go again today.",
+            "jp": "大丈夫です。今日また行きましょう。"
           }
         }
       ]
@@ -631,33 +631,9 @@
       },
       "focusGrammar": "没 + V",
       "sentences": [
-        {
-          "cn": "昨天已经完了，今天再去。",
-          "pinyin": "Zuótiān yǐjīng wán le, jīntiān zài qù.",
-          "translations": {
-            "kr": "어제 이미 끝났어요. 오늘 다시 가요.",
-            "en": "Yesterday it was already over, go again today.",
-            "jp": "昨日はもう終わりました。今日また行きます。"
-          }
-        },
-        {
-          "cn": "因为",
-          "pinyin": "yīnwèi",
-          "translations": {
-            "kr": "~때문에",
-            "en": "because",
-            "jp": "〜だから"
-          }
-        },
-        {
-          "cn": "已经",
-          "pinyin": "yǐjīng",
-          "translations": {
-            "kr": "이미",
-            "en": "already",
-            "jp": "もう"
-          }
-        }
+        { "cn": "作业做完了。", "pinyin": "Zuòyè zuò wán le.", "translations": { "kr": "숙제 다 했어요.", "en": "I've finished the homework.", "jp": "宿題が終わりました。" } },
+        { "cn": "昨天已经下雨了。", "pinyin": "Zuótiān yǐjīng xiàyǔ le.", "translations": { "kr": "어제 이미 비 왔어요.", "en": "It already rained yesterday.", "jp": "昨日はもう雨が降りました。" } },
+        { "cn": "今天再去吧。", "pinyin": "Jīntiān zài qù ba.", "translations": { "kr": "오늘 다시 가요.", "en": "Let's go again today.", "jp": "今日また行きましょう。" } }
       ],
       "note": {
         "cn": "没 + V 表否定。V + 了 表完成。",

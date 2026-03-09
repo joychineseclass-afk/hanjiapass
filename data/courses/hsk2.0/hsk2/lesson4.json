@@ -568,48 +568,24 @@
       }
     },
     {
-      "groupTitle": {
-        "cn": "一起 + V",
-        "kr": "一起 + V",
-        "en": "一起 + V",
-        "jp": "一起 + V"
-      },
+      "groupTitle": { "cn": "一起 + V 练习", "kr": "一起 + V 연습", "en": "Pattern: 一起 + V", "jp": "一起 + V 練習" },
       "focusGrammar": "一起",
       "sentences": [
-        {
-          "cn": "我们一起学习。",
-          "pinyin": "Wǒmen yīqǐ xuéxí.",
-          "translations": {
-            "kr": "우리 함께 공부해요.",
-            "en": "We study together.",
-            "jp": "一緒に勉強します。"
-          }
-        },
-        {
-          "cn": "好吃",
-          "pinyin": "hǎochī",
-          "translations": {
-            "kr": "맛있다",
-            "en": "delicious",
-            "jp": "美味しい"
-          }
-        },
-        {
-          "cn": "两杯",
-          "pinyin": "liǎng bēi",
-          "translations": {
-            "kr": "두 잔",
-            "en": "two cups",
-            "jp": "2杯"
-          }
-        }
+        { "cn": "我们一起学习。", "pinyin": "Wǒmen yīqǐ xuéxí.", "translations": { "kr": "우리 함께 공부해요.", "en": "We study together.", "jp": "一緒に勉強します。" } },
+        { "cn": "这个菜很好吃。", "pinyin": "Zhè ge cài hěn hǎochī.", "translations": { "kr": "이 요리 맛있어요.", "en": "This dish is delicious.", "jp": "この料理は美味しいです。" } },
+        { "cn": "我要两杯咖啡。", "pinyin": "Wǒ yào liǎng bēi kāfēi.", "translations": { "kr": "커피 두 잔 주세요.", "en": "I'd like two coffees.", "jp": "コーヒー2杯ください。" } }
       ],
-      "note": {
-        "cn": "一起 + V，表示共同做某事。两 + 量词。",
-        "kr": "함께 动词를 합니다.",
-        "en": "一起 + V: do something together.",
-        "jp": "一緒に〜する。"
-      }
+      "note": { "cn": "一起 + V，两 + 量词。", "kr": "함께 动词를 합니다.", "en": "一起 + V, 两 + measure word.", "jp": "一緒に〜する。两+量詞。" }
+    },
+    {
+      "groupTitle": { "cn": "房间 补词训练", "kr": "房间 보충 연습", "en": "Vocabulary: 房间", "jp": "房间 補足練習" },
+      "focusGrammar": "一起 + V / 吧 建议句",
+      "sentences": [
+        { "cn": "这个房间很大。", "pinyin": "Zhè ge fángjiān hěn dà.", "translations": { "kr": "이 방이 커요.", "en": "This room is big.", "jp": "この部屋は大きいです。" } },
+        { "cn": "我们去房间吧。", "pinyin": "Wǒmen qù fángjiān ba.", "translations": { "kr": "방으로 가요.", "en": "Let's go to the room.", "jp": "部屋に行きましょう。" } },
+        { "cn": "房间里有两张床。", "pinyin": "Fángjiān lǐ yǒu liǎng zhāng chuáng.", "translations": { "kr": "방에 침대가 두 개 있어요.", "en": "There are two beds in the room.", "jp": "部屋にベッドが2つあります。" } }
+      ],
+      "note": { "cn": "用本课新词「房间」做句型强化。", "kr": "본과 신어 房间으로 문형을 연습합니다.", "en": "Practice with 房间.", "jp": "本課の新語 房间 で文型を練習します。" }
     }
   ]
 }

@@ -711,6 +711,17 @@
         "en": "Use 可以 to express permission or request.",
         "jp": "「可以」で許可や依頼を表します。"
       }
+    },
+    {
+      "groupTitle": { "cn": "号 / 件 / 鸡蛋 / 元 / 张 / 百 补词训练", "kr": "号·件·鸡蛋·元·张·百 보충 연습", "en": "Vocabulary: 号, 件, 鸡蛋, 元, 张, 百", "jp": "号·件·鸡蛋·元·张·百 補足練習" },
+      "focusGrammar": "想 + V / V + 什么",
+      "sentences": [
+        { "cn": "我要两个鸡蛋。", "pinyin": "Wǒ yào liǎng ge jīdàn.", "translations": { "kr": "계란 두 개 주세요.", "en": "I'd like two eggs.", "jp": "卵を2つください。" } },
+        { "cn": "这件多少钱？", "pinyin": "Zhè jiàn duōshao qián?", "translations": { "kr": "이거 얼마예요?", "en": "How much is this one?", "jp": "これはいくらですか？" } },
+        { "cn": "一百元。", "pinyin": "Yī bǎi yuán.", "translations": { "kr": "100위안이에요.", "en": "One hundred yuan.", "jp": "100元です。" } },
+        { "cn": "我要一张票。", "pinyin": "Wǒ yào yī zhāng piào.", "translations": { "kr": "표 한 장 주세요.", "en": "I'd like one ticket.", "jp": "チケット1枚ください。" } }
+      ],
+      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
     }
   ]
 }

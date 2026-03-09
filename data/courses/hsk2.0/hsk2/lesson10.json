@@ -261,43 +261,11 @@
   ],
   "dialogue": [
     {
-      "title": {
-        "cn": "会话1",
-        "kr": "대화 1",
-        "en": "Dialogue 1",
-        "jp": "会話1"
-      },
+      "title": { "cn": "会话1", "kr": "대화 1", "en": "Dialogue 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "cn": "我准备学习中文。",
-          "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.",
-          "translations": {
-            "kr": "저는 중국어 공부할 준비해요.",
-            "en": "I'm preparing to study Chinese.",
-            "jp": "私は中国語を勉強する準備をしています。"
-          }
-        },
-        {
-          "speaker": "B",
-          "cn": "希望你能学好。你知道「新」的意思吗？",
-          "pinyin": "Xīwàng nǐ néng xué hǎo. Nǐ zhīdào 「xīn」 de yìsi ma?",
-          "translations": {
-            "kr": "잘 배우길 바라요. 「新」의 의미 알아요?",
-            "en": "I hope you learn well. Do you know the meaning of 新?",
-            "jp": "よく学べることを願います。「新」の意味を知っていますか？"
-          }
-        },
-        {
-          "speaker": "A",
-          "cn": "知道，新是为新的开始。",
-          "pinyin": "Zhīdào, xīn shì wèi xīn de kāishǐ.",
-          "translations": {
-            "kr": "알아요. 新은 새로운 시작을 위한 거예요.",
-            "en": "Yes, 新 is for a new beginning.",
-            "jp": "知っています。新は新しい始まりのためです。"
-          }
-        }
+        { "speaker": "A", "cn": "我准备学习中文。", "pinyin": "Wǒ zhǔnbèi xuéxí Zhōngwén.", "translations": { "kr": "저는 중국어 공부할 준비해요.", "en": "I'm preparing to study Chinese.", "jp": "私は中国語を勉強する準備をしています。" } },
+        { "speaker": "B", "cn": "希望你能学好。", "pinyin": "Xīwàng nǐ néng xué hǎo.", "translations": { "kr": "잘 배우길 바라요.", "en": "I hope you learn well.", "jp": "よく学べることを願います。" } },
+        { "speaker": "A", "cn": "谢谢！我下个月开始上课。", "pinyin": "Xièxie! Wǒ xià ge yuè kāishǐ shàngkè.", "translations": { "kr": "감사해요! 다음 달부터 수업 시작해요.", "en": "Thanks! I'll start class next month.", "jp": "ありがとう！来月から授業を始めます。" } }
       ]
     }
   ],
@@ -577,33 +545,8 @@
       },
       "focusGrammar": "希望 + V",
       "sentences": [
-        {
-          "cn": "希望你成功",
-          "pinyin": "xīwàng nǐ chénggōng",
-          "translations": {
-            "kr": "성공하길 바라요",
-            "en": "hope you succeed",
-            "jp": "成功することを願います"
-          }
-        },
-        {
-          "cn": "知道",
-          "pinyin": "zhīdào",
-          "translations": {
-            "kr": "알다",
-            "en": "know",
-            "jp": "知る"
-          }
-        },
-        {
-          "cn": "意思",
-          "pinyin": "yìsi",
-          "translations": {
-            "kr": "의미",
-            "en": "meaning",
-            "jp": "意味"
-          }
-        }
+        { "cn": "希望你成功。", "pinyin": "Xīwàng nǐ chénggōng.", "translations": { "kr": "성공하길 바라요.", "en": "I hope you succeed.", "jp": "成功することを願います。" } },
+        { "cn": "希望你能学好。", "pinyin": "Xīwàng nǐ néng xué hǎo.", "translations": { "kr": "잘 배우길 바라요.", "en": "I hope you learn well.", "jp": "よく学べることを願います。" } }
       ],
       "note": {
         "cn": "希望 + 小句，表示愿望。",
@@ -611,6 +554,16 @@
         "en": "希望 + clause: hope that.",
         "jp": "〜することを願う。"
       }
+    },
+    {
+      "groupTitle": { "cn": "新 / 意思 / 为 / 知道 / 姓 补词训练", "kr": "新·意思·为·知道·姓 보충 연습", "en": "Vocabulary: 新, 意思, 为, 知道, 姓", "jp": "新·意思·为·知道·姓 補足練習" },
+      "focusGrammar": "准备 + V / 希望 + 小句",
+      "sentences": [
+        { "cn": "你知道这个字的意思吗？", "pinyin": "Nǐ zhīdào zhè ge zì de yìsi ma?", "translations": { "kr": "이 글자의 의미 알아요?", "en": "Do you know the meaning of this character?", "jp": "この字の意味を知っていますか？" } },
+        { "cn": "学中文是为了新的开始。", "pinyin": "Xué Zhōngwén shì wèi le xīn de kāishǐ.", "translations": { "kr": "중국어 배우는 건 새로운 시작을 위한 거예요.", "en": "Learning Chinese is for a new beginning.", "jp": "中国語を学ぶのは新しい始まりのためです。" } },
+        { "cn": "你姓什么？", "pinyin": "Nǐ xìng shénme?", "translations": { "kr": "성씨가 뭐예요?", "en": "What's your family name?", "jp": "お名前は何ですか？" } }
+      ],
+      "note": { "cn": "用本课新词做句型强化。", "kr": "본과 신어로 문형을 연습합니다.", "en": "Practice with lesson vocabulary.", "jp": "本課の新語で文型を練習します。" }
     }
   ]
 }
