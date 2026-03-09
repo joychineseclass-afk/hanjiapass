@@ -129,29 +129,9 @@ export function getHSKLayoutHTML() {
         <div id="hskPracticeBody" class="space-y-3"></div>
       </div>
 
-      <div id="hskPanelAI" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.ai">AI学習</div>
-        <div class="text-sm opacity-70 mb-3" data-i18n="hsk.ai_tip">
-          本課の単語・会話でAIに質問しましょう。
-        </div>
-
-        <div class="flex flex-col gap-3">
-          <textarea id="hskAIInput" class="border border-slate-200 rounded-xl p-3 text-sm w-full" rows="4"
-            data-i18n-placeholder="hsk.ai_placeholder"
-            placeholder="예: ‘你好’랑 ‘您好’ 차이가 뭐예요?"></textarea>
-
-          <div class="flex gap-2">
-            <button id="hskAISend" type="button" class="px-3 py-2 rounded-xl border">
-              <span data-i18n="hsk_ai_send">보내기</span>
-            </button>
-            <button id="hskAICopyContext" type="button" class="px-3 py-2 rounded-xl border opacity-80">
-              <span data-i18n="hsk.ai_copy">レッスン内容をコピー</span>
-            </button>
-          </div>
-
-          <pre id="hskAIContext" class="hidden bg-slate-50 border rounded-xl p-3 text-xs whitespace-pre-wrap"></pre>
-          <div id="hskAIResult" class="text-sm"></div>
-        </div>
+      <div id="hskPanelAI" class="hidden p-4">
+        <div class="text-sm font-bold mb-3" data-i18n="hsk.tab.ai">AI学習</div>
+        <div id="hskAIResult" class="ai-learning-container"></div>
       </div>
     </div>
 

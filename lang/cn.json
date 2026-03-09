@@ -189,6 +189,10 @@
   },
   "ai": {
     "title": "AI 学习",
+    "ask": "自由提问",
+    "explain": "句子讲解",
+    "roleplay": "情景对话",
+    "practice": "AI 练习",
     "start": "开始",
     "type_explain": "解释",
     "type_roleplay": "情景对话",

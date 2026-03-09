@@ -189,6 +189,10 @@
   },
   "ai": {
     "title": "AI 학습",
+    "ask": "자유 질문",
+    "explain": "문장 설명",
+    "roleplay": "상황 대화",
+    "practice": "AI 연습",
     "start": "시작",
     "type_explain": "설명",
     "type_roleplay": "상황 대화",

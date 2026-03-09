@@ -188,6 +188,10 @@
   },
   "ai": {
     "title": "AI Learning",
+    "ask": "Ask AI",
+    "explain": "Sentence Explanation",
+    "roleplay": "Roleplay",
+    "practice": "Practice With AI",
     "start": "Start",
     "type_explain": "Explain",
     "type_roleplay": "Role-play",

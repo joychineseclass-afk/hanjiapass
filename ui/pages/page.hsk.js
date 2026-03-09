@@ -1096,69 +1096,39 @@ function bindEvents() {
     renderLessonList(listEl, filtered, { lang: lang, currentLessonNo: stats.lastLessonNo || 0 });
   }, { signal });
 
-  // AI: copy context
-  el = $("hskAICopyContext"); if (el) el.addEventListener("click", async function() {
-    const ctx = buildAIContext();
-    const pre = $("hskAIContext");
-    if (pre) {
-      pre.textContent = ctx;
-      pre.classList.remove("hidden");
+  // AI: copy context / send — 事件委托（元素在 mountAIPanel 内动态渲染）
+  el = $("hskPanelAI");
+  if (el) el.addEventListener("click", async function(ev) {
+    const copyBtn = ev.target.closest("#hskAICopyContext");
+    const sendBtn = ev.target.closest("#hskAISend");
+    if (copyBtn) {
+      const ctx = buildAIContext();
+      try { await navigator.clipboard.writeText(ctx); } catch {}
+      return;
     }
-    try { await navigator.clipboard.writeText(ctx); } catch {}
+    if (!sendBtn) return;
+    const input = String(($("hskAIInput") && $("hskAIInput").value) || "").trim();
+    const out = $("hskAIResponse");
+    if (!out) return;
+    if (!input) {
+      out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk.ai_empty", "Please enter a question."))}</div>`;
+      return;
+    }
+    const lang = getLang();
+    const context = buildAIContext();
+    out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("common.loading", "Loading..."))}</div>`;
+    try {
+      if (!window.JOY_RUNNER || typeof window.JOY_RUNNER.askAI !== "function") {
+        throw new Error("JOY_RUNNER.askAI not found.");
+      }
+      const res = await window.JOY_RUNNER.askAI({ prompt: input, context, lang, mode: "Kids" });
+      const text = (res && res.text) || "";
+      out.innerHTML = `<div class="border rounded-xl p-3"><div class="text-xs opacity-60 mb-2">AI</div><div class="text-sm whitespace-pre-wrap">${escapeHtml(text)}</div></div>`;
+    } catch (e) {
+      console.error(e);
+      out.innerHTML = `<div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">${escapeHtml(e && e.message ? e.message : e)}</div>`;
+    }
   }, { signal });
-
-  // AI: send (placeholder – integrate later with your AI backend / step runner)
-  el = $("hskAISend"); if (el) el.addEventListener("click", async function() {
-  const input = String(($("hskAIInput") && $("hskAIInput").value) || "").trim();
-  const out = $("hskAIResult");
-  if (!out) return;
-
-  if (!input) {
-    out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("hsk_ai_empty"))}</div>`;
-    return;
-  }
-
-  const lang = getLang(); // "ko" | "zh"
-  const context = buildAIContext();
-
-  // UI: loading
-  out.innerHTML = `<div class="text-sm opacity-70">${escapeHtml(i18n.t("common_loading"))}</div>`;
-
-  try {
-    if (!window.JOY_RUNNER || typeof window.JOY_RUNNER.askAI !== "function") {
-      throw new Error("JOY_RUNNER.askAI not found. (Did you patch lessonStepRunner.js?)");
-    }
-
-    // ✅ Call StepRunner AI
-    const res = await window.JOY_RUNNER.askAI({
-      prompt: input,
-      context,
-      lang,
-      mode: "Kids",
-    });
-
-    const text = (res && res.text) || "";
-
-    out.innerHTML = `
-      <div class="border rounded-xl p-3">
-        <div class="text-xs opacity-60 mb-2">AI</div>
-        <div class="text-sm whitespace-pre-wrap">${escapeHtml(text)}</div>
-      </div>
-    `;
-  } catch (e) {
-    console.error(e);
-    out.innerHTML = `
-      <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
-        AI error: ${escapeHtml(e && e.message ? e.message : e)}
-      </div>
-      <div class="text-xs opacity-60 mt-2">
-        체크: ① lessonStepRunner.js에 JOY_RUNNER.askAI 추가했는지
-        ② aiAsk/AI.ask/JOY_AI.ask 중 하나가 실제로 존재하는지
-        ③ 또는 /api/ai-chat 엔드포인트가 있는지
-      </div>
-    `;
-  }
-});
 
   // joy:langChanged — 统一事件名，state-driven 全量重渲染
   window.addEventListener("joy:langChanged", (e) => {

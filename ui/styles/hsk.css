@@ -86,6 +86,102 @@
 }
 
 /* ===============================
+   🤖 AI Learning 4-Card Layout
+================================== */
+.ai-learning {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ai-card {
+  background: white;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ai-card:last-child {
+  margin-bottom: 0;
+}
+
+.ai-card__title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.ai-card__target,
+.ai-card__scenario {
+  font-size: 0.875rem;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.ai-card__summary {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.ai-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.ai-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ai-card__mode-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.ai-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-right: 6px;
+  font-size: 0.8125rem;
+  border: 1px solid var(--line, #e2e8f0);
+  background: #fff;
+  cursor: pointer;
+}
+
+.ai-btn:last-child {
+  margin-right: 0;
+}
+
+.ai-btn-primary {
+  background: #22c55e;
+  color: #fff;
+  border-color: #22c55e;
+}
+
+.ai-btn-active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+}
+
+.ai-response {
+  margin-top: 12px;
+  min-height: 0;
+}
+
+/* ===============================
    ✍️ Trace Toggle Button (旧类名兼容)
 ================================== */
 .trace-active,
