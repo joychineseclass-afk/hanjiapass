@@ -455,7 +455,7 @@
       courseId: `hsk2.0_hsk${lv}`,
     };
 
-    const practice = await generateReviewPractice(mergedLesson, 5, 8);
+    const practice = await generateReviewPractice(mergedLesson, 10, 10);
     return {
       vocab: mergedLesson.vocab,
       dialogue: mergedLesson.dialogueCards,
@@ -465,15 +465,15 @@
     };
   }
 
-  /** 生成复习课练习 5~8 题：choice / fill / sentence_order */
+  /** 生成复习课练习：固定 10 题（choice / fill / sentence_order），更完整检测 */
   async function generateReviewPractice(lesson, minCount, maxCount) {
     try {
       const { shuffle } = await import("/ui/platform/practice-generator/generatorUtils.js");
       const { normalizeQuestion } = await import("/ui/platform/practice-generator/questionNormalizer.js");
 
       const lang = "ko";
-      const count = Math.min(maxCount, Math.max(minCount, 6));
-      const quota = { vocab: 2, dialogue: 1, grammar: 1, sentenceOrder: 2, extension: 1 };
+      const count = Math.min(maxCount, Math.max(minCount, 10));
+      const quota = { vocab: 3, dialogue: 2, grammar: 1, sentenceOrder: 2, extension: 1 };
       const levelNum = 1;
 
       const generated = [];

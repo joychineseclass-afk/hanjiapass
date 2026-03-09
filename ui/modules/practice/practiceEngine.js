@@ -28,7 +28,7 @@ export function loadPractice(lesson) {
   PracticeState.resetPracticeState();
   const existing = Array.isArray(lesson?.practice) ? lesson.practice : [];
   const filtered = filterSupportedQuestions(existing);
-  const questions = applyStudentStrategy(filtered, parseLevel(lesson));
+  const questions = applyStudentStrategy(filtered, parseLevel(lesson), lesson?.type === "review");
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
 
   PracticeState.setPracticeState({ questions, totalScore });

@@ -35,17 +35,25 @@ export const SUPPLEMENTARY_LIMIT = {
   order: 1,
 };
 
+/** review lesson 题型上限（复习课需更完整检测，放宽 fill/order） */
+export const REVIEW_SUPPLEMENTARY_LIMIT = {
+  fill: 3,
+  match: 1,
+  order: 2,
+};
+
 /**
  * 按策略过滤/排序题目（学生端）
  * 确保 choice 为主，fill/match/order 不超过上限
  * @param {Array} items - 原始题目
  * @param {string} level - hsk1 | hsk2 | hsk3 | hsk4
+ * @param {boolean} [isReview] - 是否为 review lesson，是则使用放宽的题型上限
  * @returns {Array}
  */
-export function applyStudentStrategy(items, level = "hsk1") {
+export function applyStudentStrategy(items, level = "hsk1", isReview = false) {
   if (!Array.isArray(items)) return [];
   const strategy = STUDENT_STRATEGY[level] ?? STUDENT_STRATEGY.hsk1;
-  const limit = SUPPLEMENTARY_LIMIT;
+  const limit = isReview ? REVIEW_SUPPLEMENTARY_LIMIT : SUPPLEMENTARY_LIMIT;
 
   const byType = { choice: [], fill: [], match: [], order: [] };
   items.forEach((q) => {
