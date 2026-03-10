@@ -212,8 +212,9 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
       for (const srcKey of reviewOf) {
         const srcCore = result.core[String(srcKey)];
         if (Array.isArray(srcCore)) {
-          byLesson[srcKey] = [...srcCore];
-          for (const w of srcCore) {
+          const wordObjs = srcCore.filter((w) => w && typeof w === "object" && (w.hanzi || w.word || w.zh));
+          byLesson[String(srcKey)] = wordObjs;
+          for (const w of wordObjs) {
             const k = wordKey(w);
             if (k && !seen.has(k)) {
               seen.add(k);

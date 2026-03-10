@@ -48,12 +48,25 @@ export function normalizeLang(lang) {
 export function wordKey(x) {
   if (x == null) return "";
   if (typeof x === "string") return x.trim();
-  return String(x.hanzi || x.word || x.zh || x.cn || "").trim();
+  return String(x.hanzi || x.word || x.zh || x.cn || x.simplified || x.text || "").trim();
 }
 
 export function wordPinyin(x) {
   if (x == null || typeof x === "string") return "";
   return String(x.pinyin || x.py || "").trim();
+}
+
+/** 将任意词条归一化为 buildWordCard 可用的对象，兼容多数据源字段差异 */
+function normalizeWordForCard(x) {
+  if (x == null) return null;
+  if (typeof x === "string") {
+    const t = x.trim();
+    return t ? { hanzi: t } : null;
+  }
+  if (typeof x !== "object") return null;
+  const han = wordKey(x) || String(x.simplified || x.trad || "").trim();
+  if (!han) return null;
+  return { ...x, hanzi: han, pinyin: x.pinyin ?? x.py ?? "" };
 }
 
 /** 按系统语言取释义，委托给全站统一的 getMeaningByLang */
@@ -99,7 +112,9 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
 /** 构建单个词卡 HTML（与课程单词页相同组件） */
 function buildWordCard(x, { currentLang, glossaryScope } = {}) {
   try {
-    const raw = typeof x === "string" ? { hanzi: x } : (x || {});
+    const normalized = normalizeWordForCard(x);
+    if (!normalized) return "";
+    const raw = normalized;
     const han = wordKey(raw) || String(raw.hanzi || raw.han || raw.word || raw.zh || raw.cn || raw.simplified || raw.trad || "").trim();
     let pinyinStr = wordPinyin(raw);
     if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
@@ -176,6 +191,7 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
  * 复习课专用：使用与课程单词页相同的词卡组件
  * - 有 wordsByLesson 时：按来源课程分组，每组显示词卡网格
  * - 无 wordsByLesson 时：扁平词卡网格（兼容旧逻辑）
+ * wordsByLesson 格式：{ "1": [wordObj, ...], "2": [wordObj, ...], ... }，禁止传 term 字符串数组
  */
 export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } = {}) {
   if (!gridEl) return;
@@ -189,13 +205,21 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
   if (wordsByLesson && typeof wordsByLesson === "object" && Object.keys(wordsByLesson).length > 0) {
     const keys = Object.keys(wordsByLesson).filter((k) => /^\d+$/.test(k)).sort((a, b) => Number(a) - Number(b));
     const sections = keys.map((lessonKey) => {
-      const words = Array.isArray(wordsByLesson[lessonKey]) ? wordsByLesson[lessonKey] : [];
+      const raw = wordsByLesson[lessonKey];
+      const words = Array.isArray(raw) ? raw.filter((w) => w != null) : [];
       const no = Number(lessonKey) || 0;
       const lessonLabel = i18n.t("hsk.lesson_no_format", { n: no }) || `第${no}课`;
-      const cards = words.map((x) => {
+      const validWords = words.map((w) => (typeof w === "string" ? { hanzi: w.trim() } : w)).filter((w) => w && (w.hanzi || w.word || w.zh));
+      if (typeof console !== "undefined" && console.debug) {
+        console.debug(`[ReviewWords] lesson ${no} count: ${validWords.length}`);
+        if (validWords.length > 0 && (no === 1 || no === 2 || no === 3)) {
+          console.debug(`[ReviewWords] lesson ${no} first item:`, validWords[0]);
+        }
+      }
+      const cards = validWords.map((x) => {
         allItems.push(x);
         return buildWordCard(x, { currentLang, glossaryScope });
-      }).join("");
+      }).filter(Boolean).join("");
       return `<section class="review-lesson-group">
   <h4 class="review-lesson-group-title">${escapeHtml(lessonLabel)}</h4>
   <div class="lesson-card-grid word-grid">${cards}</div>
@@ -203,8 +227,9 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
     }).filter(Boolean).join("");
     bodyHtml = `<div class="review-words-by-lesson">${sections}</div>`;
   } else {
-    const cards = arr.map((x) => buildWordCard(x, { currentLang, glossaryScope }));
-    allItems.push(...arr);
+    const validArr = arr.filter((w) => w != null).map((w) => (typeof w === "string" ? { hanzi: w.trim() } : w)).filter((w) => w && (wordKey(w) || (w.hanzi || w.word || w.zh)));
+    const cards = validArr.map((x) => buildWordCard(x, { currentLang, glossaryScope })).filter(Boolean);
+    allItems.push(...validArr);
     bodyHtml = `<div class="lesson-card-grid word-grid">${cards.join("")}</div>`;
   }
 
@@ -224,31 +249,6 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
     });
   }
   bindWordCardActions();
-}
-
-let _reviewWordBound = false;
-function bindReviewWordActions() {
-  if (_reviewWordBound) return;
-  _reviewWordBound = true;
-  document.addEventListener("click", async (e) => {
-    const r = e.target.closest(".review-word-row");
-    if (!r) return;
-    const hanzi = (r.dataset?.wordHanzi || "").trim();
-    const pinyin = (r.dataset?.wordPinyin || "").trim();
-    const text = hanzi || pinyin;
-    if (!text) return;
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      const { AUDIO_ENGINE } = await import("../../platform/index.js");
-      if (AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function") {
-        AUDIO_ENGINE.stop();
-        AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95 });
-      }
-    } catch (err) {
-      console.warn("[AUDIO] review word speak failed:", err);
-    }
-  });
 }
 
 let _wordCardBound = false;

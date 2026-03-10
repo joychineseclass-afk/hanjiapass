@@ -1656,7 +1656,6 @@
   background: #fff;
 }
 
-.review-word-list,
 .review-dialogue-list,
 .review-grammar-list,
 .review-extension-list {
@@ -1665,7 +1664,6 @@
   gap: 12px;
 }
 
-.review-word-row,
 .review-dialogue-row,
 .review-grammar-row,
 .review-extension-row {
@@ -1680,7 +1678,6 @@
   transition: background 0.15s, border-color 0.15s;
 }
 
-.review-word-row:hover,
 .review-dialogue-row:hover,
 .review-grammar-row:hover,
 .review-extension-row:hover {
@@ -1688,31 +1685,6 @@
   border-color: #cbd5e1;
 }
 
-.review-word-row {
-  flex-wrap: wrap;
-}
-
-.review-word-hanzi {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #1e293b;
-  min-width: 60px;
-  cursor: pointer;
-}
-
-.review-word-pinyin {
-  color: #64748b;
-  font-size: 0.875rem;
-  min-width: 80px;
-}
-
-.review-word-meaning {
-  flex: 1;
-  color: #475569;
-  min-width: 0;
-}
-
-.review-word-speak-btn,
 .review-dialogue-speak,
 .review-extension-speak {
   flex-shrink: 0;
@@ -1725,7 +1697,6 @@
   color: #64748b;
 }
 
-.review-word-speak-btn:hover,
 .review-dialogue-speak:hover,
 .review-extension-speak:hover {
   background: #e2e8f0;

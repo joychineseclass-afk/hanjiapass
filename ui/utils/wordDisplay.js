@@ -72,6 +72,7 @@ export function getMeaningByLang(word, lang, fallbackHanzi = "", scope = "") {
 
   const fromEngine = getContentText(word, "meaning", { strict: true, lang: normLang })
     || getContentText(word, "translation", { strict: true, lang: normLang })
+    || getContentText(word, "gloss", { strict: true, lang: normLang })
     || pick(word, { strict: true, lang: normLang });
   if (fromEngine) return fromEngine;
 
