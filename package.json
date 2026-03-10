@@ -16,7 +16,8 @@
     "gen:course": "node scripts/gen-course.mjs",
     "gen:hsk2-blueprint": "node scripts/generate-hsk2-blueprint.mjs",
     "gen:hsk2-lessons": "node scripts/generate-hsk2-lessons-from-blueprint.mjs",
-    "gen:hsk2-full": "node scripts/generate-hsk2-full-content.mjs"
+    "gen:hsk2-full": "node scripts/generate-hsk2-full-content.mjs",
+    "gen:vocab-unmapped": "node scripts/generate-vocab-unmapped.mjs hsk1"
   },
   "dependencies": {
     "pinyin-pro": "^3.21.0"

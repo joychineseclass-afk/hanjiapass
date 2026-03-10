@@ -10,7 +10,7 @@ import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, renderReviewWords, renderReviewDialogue, renderReviewGrammar, renderReviewExtension, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
-import { distributeVocabulary, distributeVocabularyByMap } from "../modules/curriculum/vocabDistributor.js";
+import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
@@ -550,10 +550,30 @@ function getExtensionExplanation(item, lang) {
   return "";
 }
 
-/** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容 */
+/** 扩展词区块 HTML（lesson.extraWords） */
+function buildExtraWordsSection(extraWords, lang) {
+  if (!Array.isArray(extraWords) || extraWords.length === 0) return "";
+  const label = i18n.t("hsk.extension_words") || "扩展词";
+  const chips = extraWords.map((w) => {
+    const han = (w && (w.hanzi || w.word || w.zh)) || "";
+    const py = (w && (w.pinyin || w.py)) || "";
+    const mean = wordMeaning(w, lang);
+    if (!han) return "";
+    const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
+    const attrs = han ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    return `<span class="lesson-extension-word-chip"${attrs}>${escapeHtml(han)}${py ? ` <span class="opacity-70">${escapeHtml(py)}</span>` : ""}${mean ? ` <span class="opacity-70 text-sm">${escapeHtml(mean)}</span>` : ""}</span>`;
+  }).filter(Boolean);
+  return `<section class="lesson-extension-words mb-4">
+  <h4 class="text-sm font-semibold mb-2">${escapeHtml(label)}</h4>
+  <div class="flex flex-wrap gap-2">${chips.join("")}</div>
+</section>`;
+}
+
+/** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容；存在 extraWords 时优先显示 */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
+  const extraWords = getLessonExtraWords(lessonData);
   const lang = getLang();
   const speakLabel = i18n.t("hsk.extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
@@ -563,8 +583,13 @@ function buildExtensionHTML(lessonData) {
   <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip"))}</p>
 </section>`;
 
-  if (!arr.length) {
+  const extraSection = buildExtraWordsSection(extraWords, lang);
+
+  if (!arr.length && !extraSection) {
     return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk.extension_empty")}</div>`;
+  }
+  if (!arr.length) {
+    return `${hero}${extraSection}`;
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -636,7 +661,7 @@ function buildExtensionHTML(lessonData) {
 </article>`;
   }).filter(Boolean).join("");
 
-  return `${hero}<section class="lesson-extension-list">${cards}</section>`;
+  return `${hero}${extraSection}<section class="lesson-extension-list">${cards}</section>`;
 }
 
 /** 复习 tab：学习课显示 lessonWords/relatedOldWords/grammarReview；复习课显示综合回顾 */
@@ -860,10 +885,17 @@ function resolveBlueprintTitle(titleObj, lang) {
   );
 }
 
-/** 获取课程词汇：优先 distributedWords，回退 words / originalWords */
+/** 获取课程核心词汇（单词 tab 用）：优先 coreWords，回退 distributedWords / words / originalWords */
 function getLessonWords(lesson) {
   if (!lesson) return [];
-  const arr = lesson.distributedWords ?? lesson.words ?? lesson.originalWords;
+  const arr = lesson.coreWords ?? lesson.distributedWords ?? lesson.words ?? lesson.originalWords;
+  return Array.isArray(arr) ? arr : [];
+}
+
+/** 获取课程扩展词汇（扩展 tab 用） */
+function getLessonExtraWords(lesson) {
+  if (!lesson) return [];
+  const arr = lesson.extraWords;
   return Array.isArray(arr) ? arr : [];
 }
 
@@ -897,21 +929,33 @@ function applyBlueprintTitles(lessons, blueprint) {
   });
 }
 
-/** 将 distributeVocabulary 结果注入 lessons：distributedWords、words、originalWords */
+/** 将 distribution 结果注入 lessons：coreWords、extraWords、distributedWords、words、originalWords
+ * distribution 格式：{ core: { "1": [...] }, extra: { "1": [...] } } 或旧格式 { "1": [...] }
+ */
 function applyVocabDistribution(lessons, distribution) {
   if (!Array.isArray(lessons) || !distribution || typeof distribution !== "object") return lessons;
+  const hasCoreExtra = distribution.core != null && distribution.extra != null;
   return lessons.map((l) => {
     const no = getLessonNumber(l);
     const key = String(no);
-    const assigned = distribution[key];
-    if (assigned == null) return l;
+    let coreWords = [];
+    let extraWords = [];
+    if (hasCoreExtra) {
+      coreWords = Array.isArray(distribution.core[key]) ? distribution.core[key] : [];
+      extraWords = Array.isArray(distribution.extra[key]) ? distribution.extra[key] : [];
+    } else {
+      const assigned = distribution[key];
+      coreWords = Array.isArray(assigned) ? assigned : [];
+    }
     const originalWords = Array.isArray(l.words) ? l.words : (Array.isArray(l.vocab) ? l.vocab : []);
-    const distributedWords = Array.isArray(assigned) ? assigned : [];
+    const distributedWords = coreWords;
     return {
       ...l,
       originalWords,
+      coreWords,
+      extraWords,
       distributedWords,
-      words: distributedWords.length > 0 ? distributedWords : originalWords,
+      words: coreWords.length > 0 ? coreWords : originalWords,
     };
   });
 }
@@ -982,6 +1026,9 @@ async function loadLessons() {
         let distribution = null;
         if (vocabMap && Object.keys(vocabMap).some((k) => k !== "description" && k !== "version")) {
           distribution = distributeVocabularyByMap(levelKey, vocabMap, vocabList);
+          if (typeof console !== "undefined" && console.debug) {
+            auditVocabularyCoverage(vocabMap, vocabList);
+          }
         }
         if (!distribution || Object.keys(distribution).length === 0) {
           distribution = distributeVocabulary(levelKey, blueprint, vocabList);
@@ -1056,6 +1103,10 @@ async function openLesson({ lessonNo, file }) {
     const fromList = listItem ? getLessonWords(listItem) : [];
     const fromDetail = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
     const lessonWordsRaw = fromList.length > 0 ? fromList : fromDetail;
+    if (listItem) {
+      lessonData.coreWords = listItem.coreWords ?? listItem.distributedWords ?? listItem.words;
+      lessonData.extraWords = listItem.extraWords ?? [];
+    }
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");
     let vocab = [];
     if (needsVocabEnrichment && window.HSK_LOADER && typeof window.HSK_LOADER.loadVocab === "function") {

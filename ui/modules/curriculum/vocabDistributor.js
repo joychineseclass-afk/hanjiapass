@@ -1,6 +1,6 @@
 /**
  * Lumina Vocabulary Distribution Engine
- * 支持：1) 课程映射分配（vocab-map） 2) 顺序切片分配（兜底）
+ * 支持：1) 课程映射分配（vocab-map core/extra） 2) 顺序切片分配（兜底）
  */
 
 /**
@@ -25,9 +25,10 @@ export function isReviewMapItem(mapItem) {
  * 在 vocabList 中查找词条，优先匹配 zh / word / hanzi / simplified / text
  * @param {string} term - 要查找的词（如 "你好"）
  * @param {Array} vocabList - 总词库
+ * @param {Object} opts - { silent: true } 不输出 warn
  * @returns {Object|null} 匹配到的 word object，未找到返回 null
  */
-export function findWordInVocabList(term, vocabList) {
+export function findWordInVocabList(term, vocabList, opts = {}) {
   if (!term || typeof term !== "string") return null;
   const t = String(term).trim();
   if (!t) return null;
@@ -40,16 +41,91 @@ export function findWordInVocabList(term, vocabList) {
       if (v != null && String(v).trim() === t) return w;
     }
   }
-  if (typeof console !== "undefined" && console.warn) {
+  if (!opts.silent && typeof console !== "undefined" && console.warn) {
     console.warn("[VocabMap] missing vocab term:", t);
   }
   return null;
 }
 
 /**
+ * 从 word object 取唯一 key（hanzi / word / zh）
+ */
+function wordKey(w) {
+  if (!w || typeof w !== "object") return "";
+  return String(w.hanzi ?? w.word ?? w.zh ?? "").trim();
+}
+
+/**
+ * 审计词汇覆盖率
+ * @param {Object} vocabMap - 课程词汇映射
+ * @param {Array} vocabList - 总词库
+ * @returns {Object} { total, coreMapped, extraMapped, uniqueMapped, unmappedCount, unmappedTerms }
+ */
+export function auditVocabularyCoverage(vocabMap, vocabList) {
+  const list = Array.isArray(vocabList) ? vocabList : [];
+  const total = list.length;
+  const vocabKeys = new Set(list.map((w) => wordKey(w)).filter(Boolean));
+
+  const coreTerms = new Set();
+  const extraTerms = new Set();
+
+  if (!vocabMap || typeof vocabMap !== "object") {
+    const out = { total, coreMapped: 0, extraMapped: 0, uniqueMapped: 0, unmappedCount: total, unmappedTerms: list.map((w) => wordKey(w)).filter(Boolean) };
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[VocabAudit] total:", total);
+      console.debug("[VocabAudit] no vocab map");
+    }
+    return out;
+  }
+
+  const keys = Object.keys(vocabMap).filter((k) => k !== "description" && k !== "version" && /^\d+$/.test(k));
+
+  for (const key of keys) {
+    const mapItem = vocabMap[key];
+    if (isReviewMapItem(mapItem)) continue;
+
+    const core = Array.isArray(mapItem?.core) ? mapItem.core : [];
+    const extra = Array.isArray(mapItem?.extra) ? mapItem.extra : [];
+    for (const t of core) {
+      if (t && String(t).trim()) coreTerms.add(String(t).trim());
+    }
+    for (const t of extra) {
+      if (t && String(t).trim()) extraTerms.add(String(t).trim());
+    }
+  }
+
+  const uniqueMapped = new Set([...coreTerms, ...extraTerms]);
+  const mappedInVocab = new Set();
+  for (const t of uniqueMapped) {
+    const w = findWordInVocabList(t, list, { silent: true });
+    if (w) mappedInVocab.add(wordKey(w));
+  }
+
+  const coreMapped = [...coreTerms].filter((t) => findWordInVocabList(t, list, { silent: true })).length;
+  const extraMapped = [...extraTerms].filter((t) => findWordInVocabList(t, list, { silent: true })).length;
+  const unmappedTerms = [...vocabKeys].filter((k) => !mappedInVocab.has(k));
+  const unmappedCount = unmappedTerms.length;
+
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug("[VocabAudit] total:", total);
+    console.debug("[VocabAudit] core mapped:", coreMapped);
+    console.debug("[VocabAudit] extra mapped:", extraMapped);
+    console.debug("[VocabAudit] unique mapped:", uniqueMapped.size);
+    console.debug("[VocabAudit] unmapped:", unmappedCount);
+  }
+
+  return {
+    total,
+    coreMapped,
+    extraMapped,
+    uniqueMapped: uniqueMapped.size,
+    unmappedCount,
+    unmappedTerms,
+  };
+}
+
+/**
  * 返回按数字顺序排序的 lesson key 数组
- * @param {Object} blueprint - 课程蓝图
- * @returns {string[]} 例如 ["1","2","3",...,"22"]
  */
 export function getLessonKeysForDistribution(blueprint) {
   if (!blueprint || typeof blueprint !== "object") return [];
@@ -60,14 +136,10 @@ export function getLessonKeysForDistribution(blueprint) {
 const WORDS_PER_LESSON = 7;
 
 /**
- * 顺序切片分配（兜底）：将总词库按 blueprint 顺序机械分配到各课
- * @param {string} level - "hsk1" | "hsk2"
- * @param {Object} blueprint - 已加载的课程蓝图
- * @param {Array} vocabList - HSK 总词库数组
- * @returns {Object} { "1": [...], "2": [...], ... }
+ * 顺序切片分配（兜底）
  */
 export function distributeVocabulary(level, blueprint, vocabList) {
-  const result = {};
+  const result = { core: {}, extra: {} };
   const list = Array.isArray(vocabList) ? vocabList : [];
   const keys = getLessonKeysForDistribution(blueprint);
 
@@ -82,7 +154,8 @@ export function distributeVocabulary(level, blueprint, vocabList) {
   for (const key of keys) {
     const entry = blueprint[key];
     if (isReviewLesson(entry)) {
-      result[key] = [];
+      result.core[key] = [];
+      result.extra[key] = [];
       if (typeof console !== "undefined" && console.debug) {
         console.debug("[VocabDistributor] lesson", key, "review lesson, assigned 0 words");
       }
@@ -92,7 +165,8 @@ export function distributeVocabulary(level, blueprint, vocabList) {
     const take = WORDS_PER_LESSON;
     const slice = list.slice(cursor, cursor + take);
     cursor += slice.length;
-    result[key] = slice;
+    result.core[key] = slice;
+    result.extra[key] = [];
 
     if (typeof console !== "undefined" && console.debug) {
       console.debug("[VocabDistributor] lesson", key, "assigned", slice.length, "words");
@@ -103,14 +177,22 @@ export function distributeVocabulary(level, blueprint, vocabList) {
 }
 
 /**
- * 根据 vocab-map 分配词汇（课程映射分配）
- * @param {string} level - "hsk1" | "hsk2"
- * @param {Object} vocabMap - 课程词汇映射（hsk1-vocab-map.json）
- * @param {Array} vocabList - HSK 总词库数组
- * @returns {Object} { "1": [...], "2": [...], ... }
+ * 解析 mapItem 的 core/extra（兼容旧数组格式）
+ */
+function getCoreExtraTerms(mapItem) {
+  if (isReviewMapItem(mapItem)) return { core: [], extra: [] };
+  if (Array.isArray(mapItem)) return { core: mapItem, extra: [] };
+  const core = Array.isArray(mapItem?.core) ? mapItem.core : [];
+  const extra = Array.isArray(mapItem?.extra) ? mapItem.extra : [];
+  return { core, extra };
+}
+
+/**
+ * 根据 vocab-map 分配词汇（core/extra 结构）
+ * @returns {Object} { core: { "1": [...] }, extra: { "1": [...] } }
  */
 export function distributeVocabularyByMap(level, vocabMap, vocabList) {
-  const result = {};
+  const result = { core: {}, extra: {} };
   const list = Array.isArray(vocabList) ? vocabList : [];
   if (!vocabMap || typeof vocabMap !== "object") return result;
 
@@ -127,10 +209,10 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
       const seen = new Set();
 
       for (const srcKey of reviewOf) {
-        const srcWords = result[String(srcKey)];
-        if (Array.isArray(srcWords)) {
-          for (const w of srcWords) {
-            const k = (w && (w.hanzi || w.word || w.zh)) || "";
+        const srcCore = result.core[String(srcKey)];
+        if (Array.isArray(srcCore)) {
+          for (const w of srcCore) {
+            const k = wordKey(w);
             if (k && !seen.has(k)) {
               seen.add(k);
               aggregated.push(w);
@@ -139,7 +221,8 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
         }
       }
 
-      result[key] = aggregated;
+      result.core[key] = aggregated;
+      result.extra[key] = [];
       if (typeof console !== "undefined" && console.debug) {
         const range = reviewOf.length >= 2 ? `${reviewOf[0]}-${reviewOf[reviewOf.length - 1]}` : reviewOf.join(",");
         console.debug("[VocabMap] lesson", key, "review of lessons", range + ", total", aggregated.length, "words");
@@ -147,16 +230,22 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
       continue;
     }
 
-    const terms = Array.isArray(mapItem) ? mapItem : [];
-    const words = [];
-    for (const term of terms) {
+    const { core: coreTerms, extra: extraTerms } = getCoreExtraTerms(mapItem);
+    const coreWords = [];
+    const extraWords = [];
+    for (const term of coreTerms) {
       const w = findWordInVocabList(term, list);
-      if (w) words.push(w);
+      if (w) coreWords.push(w);
     }
-    result[key] = words;
+    for (const term of extraTerms) {
+      const w = findWordInVocabList(term, list);
+      if (w) extraWords.push(w);
+    }
+    result.core[key] = coreWords;
+    result.extra[key] = extraWords;
 
     if (typeof console !== "undefined" && console.debug) {
-      console.debug("[VocabMap] lesson", key, "mapped", words.length, "words");
+      console.debug("[VocabMap] lesson", key, "mapped core:", coreWords.length, "extra:", extraWords.length);
     }
   }
 
