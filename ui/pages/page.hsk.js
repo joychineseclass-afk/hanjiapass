@@ -550,30 +550,12 @@ function getExtensionExplanation(item, lang) {
   return "";
 }
 
-/** 扩展词区块 HTML（lesson.extraWords） */
-function buildExtraWordsSection(extraWords, lang) {
-  if (!Array.isArray(extraWords) || extraWords.length === 0) return "";
-  const label = i18n.t("hsk.extension_words") || "扩展词";
-  const chips = extraWords.map((w) => {
-    const han = (w && (w.hanzi || w.word || w.zh)) || "";
-    const py = (w && (w.pinyin || w.py)) || "";
-    const mean = wordMeaning(w, lang);
-    if (!han) return "";
-    const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
-    const attrs = han ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-    return `<span class="lesson-extension-word-chip"${attrs}>${escapeHtml(han)}${py ? ` <span class="opacity-70">${escapeHtml(py)}</span>` : ""}${mean ? ` <span class="opacity-70 text-sm">${escapeHtml(mean)}</span>` : ""}</span>`;
-  }).filter(Boolean);
-  return `<section class="lesson-extension-words mb-4">
-  <h4 class="text-sm font-semibold mb-2">${escapeHtml(label)}</h4>
-  <div class="flex flex-wrap gap-2">${chips.join("")}</div>
-</section>`;
-}
-
-/** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容；存在 extraWords 时优先显示 */
+/** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容
+ * 扩展 tab 仅显示真正的扩展内容（句型、文化说明等），不显示词卡
+ */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
-  const extraWords = getLessonExtraWords(lessonData);
   const lang = getLang();
   const speakLabel = i18n.t("hsk.extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
@@ -583,13 +565,9 @@ function buildExtensionHTML(lessonData) {
   <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip"))}</p>
 </section>`;
 
-  const extraSection = buildExtraWordsSection(extraWords, lang);
-
-  if (!arr.length && !extraSection) {
-    return `${hero}<div class="lesson-extension-empty">${i18n.t("hsk.extension_empty")}</div>`;
-  }
   if (!arr.length) {
-    return `${hero}${extraSection}`;
+    const emptyMsg = i18n.t("hsk.extension_no_content") || "本课暂无额外扩展内容。";
+    return `${hero}<div class="lesson-extension-empty">${escapeHtml(emptyMsg)}</div>`;
   }
 
   const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
@@ -661,7 +639,7 @@ function buildExtensionHTML(lessonData) {
 </article>`;
   }).filter(Boolean).join("");
 
-  return `${hero}${extraSection}<section class="lesson-extension-list">${cards}</section>`;
+  return `${hero}<section class="lesson-extension-list">${cards}</section>`;
 }
 
 /** 复习 tab：学习课显示 lessonWords/relatedOldWords/grammarReview；复习课显示综合回顾 */
@@ -885,18 +863,27 @@ function resolveBlueprintTitle(titleObj, lang) {
   );
 }
 
-/** 获取课程核心词汇（单词 tab 用）：优先 coreWords，回退 distributedWords / words / originalWords */
-function getLessonWords(lesson) {
+/** 合并 coreWords + extraWords 为本课必学词汇（单词 tab 用）
+ * 去重，保持顺序（先 core 再 extra），回退 words / originalWords
+ */
+function mergeLessonVocabulary(lesson) {
   if (!lesson) return [];
-  const arr = lesson.coreWords ?? lesson.distributedWords ?? lesson.words ?? lesson.originalWords;
-  return Array.isArray(arr) ? arr : [];
-}
-
-/** 获取课程扩展词汇（扩展 tab 用） */
-function getLessonExtraWords(lesson) {
-  if (!lesson) return [];
-  const arr = lesson.extraWords;
-  return Array.isArray(arr) ? arr : [];
+  const core = Array.isArray(lesson.coreWords) ? lesson.coreWords : (Array.isArray(lesson.distributedWords) ? lesson.distributedWords : []);
+  const extra = Array.isArray(lesson.extraWords) ? lesson.extraWords : [];
+  if (core.length === 0 && extra.length === 0) {
+    const fallback = lesson.words ?? lesson.originalWords;
+    return Array.isArray(fallback) ? fallback : [];
+  }
+  const seen = new Set();
+  const result = [];
+  for (const w of [...core, ...extra]) {
+    const k = wordKey(w);
+    if (k && !seen.has(k)) {
+      seen.add(k);
+      result.push(w);
+    }
+  }
+  return result;
 }
 
 /** 根据当前语言刷新 lesson.displayTitle（仅对有 blueprintTitle 的 lesson） */
@@ -1100,7 +1087,7 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    const fromList = listItem ? getLessonWords(listItem) : [];
+    const fromList = listItem ? mergeLessonVocabulary(listItem) : [];
     const fromDetail = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
     const lessonWordsRaw = fromList.length > 0 ? fromList : fromDetail;
     if (listItem) {

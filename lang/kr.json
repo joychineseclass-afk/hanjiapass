@@ -106,6 +106,7 @@
     "empty_dialogue": "회화 콘텐츠가 아직 없습니다.",
     "empty_grammar": "문법 콘텐츠가 아직 없습니다.",
     "extension_empty": "확장 표현이 아직 없습니다.",
+    "extension_no_content": "이 과에는 추가 확장 내용이 아직 없습니다.",
     "extension_group": "문형 연습",
     "review_range": "복습 범위",
     "review_range_lessons": "제 {from}～{to}과 종합 복습",

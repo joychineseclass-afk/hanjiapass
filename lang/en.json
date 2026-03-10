@@ -106,6 +106,7 @@
     "empty_dialogue": "No dialogue content yet.",
     "empty_grammar": "No grammar content yet.",
     "extension_empty": "No extension items yet.",
+    "extension_no_content": "No additional extension content for this lesson yet.",
     "extension_group": "Pattern practice",
     "review_range": "Review Range",
     "review_range_lessons": "Comprehensive Review Lessons {from}–{to}",
