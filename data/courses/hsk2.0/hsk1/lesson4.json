@@ -542,19 +542,19 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "他是你朋友吗？",
-          "pinyin": "Tā shì nǐ péngyou ma?",
+          "text": "他是谁？",
+          "pinyin": "Tā shì shéi?",
           "translation": {
-            "kr": "그는 당신 친구예요?",
+            "kr": "그는 누구예요?",
             "en": ""
           }
         },
         {
           "speaker": "B",
-          "text": "是，他是我的朋友。",
-          "pinyin": "Shì, tā shì wǒ de péngyou.",
+          "text": "他是我朋友。",
+          "pinyin": "Tā shì wǒ péngyou.",
           "translation": {
-            "kr": "네, 그는 제 친구예요.",
+            "kr": "그는 제 친구예요.",
             "en": ""
           }
         },
@@ -575,29 +575,22 @@
             "kr": "그녀는 제 친구예요.",
             "en": ""
           }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2"
-      },
-      "lines": [
+        },
         {
           "speaker": "A",
-          "text": "她是谁？",
+          "text": "他是谁？",
           "pinyin": "Tā shì shéi?",
           "translation": {
-            "kr": "그녀는 누구예요?",
+            "kr": "그는 누구예요?",
             "en": ""
           }
         },
         {
           "speaker": "B",
-          "text": "她是我朋友。他是我的小朋友。",
-          "pinyin": "Tā shì wǒ péngyou. Tā shì wǒ de xiǎo péngyou.",
+          "text": "他是我的小朋友。",
+          "pinyin": "Tā shì wǒ de xiǎo péngyou.",
           "translation": {
-            "kr": "그녀는 제 친구예요. 그는 제 어린 친구예요.",
+            "kr": "그는 제 어린 친구예요.",
             "en": ""
           }
         }
@@ -605,12 +598,47 @@
     }
   ],
   "dialogueMeta": {
-    "generatedAt": "2026-03-10T14:21:34.846Z",
+    "generatedAt": "2026-03-10T14:43:40.444Z",
     "coverage": 1,
     "communicativeGoal": "介绍家人",
     "dialogueTasks": [
       "确认家庭关系",
       "介绍家庭成员"
     ]
-  }
+  },
+  "generatedExtensions": [
+    {
+      "zh": "他是我爸爸，她是我妈妈。",
+      "pinyin": "Tā shì wǒ bàba, tā shì wǒ māma.",
+      "kr": "그는 우리 아빠, 그녀는 우리 엄마예요.",
+      "en": "",
+      "phrase": "他是我爸爸，她是我妈妈。",
+      "explain": {
+        "kr": "그는 우리 아빠, 그녀는 우리 엄마예요.",
+        "en": ""
+      }
+    },
+    {
+      "zh": "我家的狗、猫。",
+      "pinyin": "Wǒ jiā de gǒu, māo.",
+      "kr": "우리 집 강아지, 고양이.",
+      "en": "",
+      "phrase": "我家的狗、猫。",
+      "explain": {
+        "kr": "우리 집 강아지, 고양이.",
+        "en": ""
+      }
+    },
+    {
+      "zh": "儿子、女儿。",
+      "pinyin": "Érzi, nǚ'ér.",
+      "kr": "아들, 딸.",
+      "en": "",
+      "phrase": "儿子、女儿。",
+      "explain": {
+        "kr": "아들, 딸.",
+        "en": ""
+      }
+    }
+  ]
 }

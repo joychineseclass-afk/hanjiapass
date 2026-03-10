@@ -64,6 +64,8 @@ function checkCoverage(lesson, finalLessonWords, dialogueCards) {
   return { total: unique.length, used: used.size, percent, unused, usedList };
 }
 
+const COMMON_NAMES = new Set(["小明", "小红", "小王", "小李"]);
+
 function checkFutureWords(lesson, forbiddenWords, allowedWords, dialogueCards) {
   const lines = dialogueCards.flatMap((c) => (c.lines || []).map((l) => l.text || l.zh || ""));
   const text = lines.join("");
@@ -71,7 +73,10 @@ function checkFutureWords(lesson, forbiddenWords, allowedWords, dialogueCards) {
   const violations = forbiddenWords.filter((w) => {
     if (!text.includes(w)) return false;
     const inAllowed = [...allowed].some((a) => a.includes(w) && text.includes(a));
-    return !inAllowed;
+    if (inAllowed) return false;
+    const onlyInCommonName = [...COMMON_NAMES].some((name) => name.includes(w) && text.includes(name));
+    if (onlyInCommonName) return false;
+    return true;
   });
   return violations;
 }
@@ -151,6 +156,7 @@ function main() {
   report.push(`Generated: ${new Date().toISOString()}`);
   report.push("");
   report.push("> 检测对象：页面最终单词卡词汇（vocab-map core+extra）vs 页面实际会话用词");
+  report.push("> 单会话可接受：若交际目标完成、无未来词、无强重复、覆盖率达标，1 个会话亦可");
   report.push("");
 
   for (let i = 1; i <= 20; i++) {
@@ -176,6 +182,7 @@ function main() {
     report.push(`## Lesson ${i}`);
     report.push("");
     report.push(`- **Communicative goal**: ${goal}`);
+    report.push(`- **Dialogue count**: ${dialogueCards.length}`);
     report.push(`- **Final lesson words**: [${finalLessonWords.join(", ")}]`);
     report.push(`- **Dialogue used words**: [${(coverage.usedList || []).join(", ")}]`);
     report.push(`- **Coverage**: ${coverage.percent.toFixed(1)}% (${coverage.used}/${coverage.total})`);

@@ -6,8 +6,8 @@
  * - 只使用第1课到当前课词汇
  * - 优先使用本课新词
  * - 本课新词覆盖率 ≥95%
- * - 每课 1~3 个会话，每会话最多 4 轮
- * - 会话自然，不堆词、不重复结构
+ * - 单会话最多 6 轮（Rule A），优先 1 个完整自然对话（Rule C）
+ * - 不因覆盖 1 个词而拆分会话（Rule B），边缘词可进 extension（Rule D）
  *
  * @module curriculum/dialogueGenerator
  */
@@ -42,8 +42,8 @@
  * @property {string[]} allowedWords - current + previous
  * @property {string[]} forbiddenWords - 未来课词
  * @property {number} [preferredCoverage] - 默认 0.95
- * @property {number} [maxDialogues] - 默认 3
- * @property {number} [maxTurnsPerDialogue] - 默认 4
+ * @property {number} [maxDialogues] - 默认 2（优先 1 个完整对话）
+ * @property {number} [maxTurnsPerDialogue] - 默认 6（单会话最多 6 轮）
  */
 
 /** @typedef {Object} GeneratorOutput
@@ -59,65 +59,53 @@
 // ========== 预定义模板（L3, L4, L5 试运行） ==========
 // 严格遵循词汇边界，手写以保证质量
 
-/** L3: 询问国籍与居住地 — dialogueTasks: 询问国籍, 询问住处 — vocab: 中国、人、哪、是、都、呢、北京、住 */
+/** L3: 询问国籍与居住地 — 单会话 6 轮，覆盖国籍+住处 */
 const L3_TEMPLATE = {
   dialogueTasks: ["询问国籍", "询问住处"],
   dialogues: [
     {
       title: "会话1",
-      dialogueTask: "询问国籍",
+      dialogueTask: "询问国籍与居住地",
       goal: "询问国籍与居住地",
       turns: [
         { speaker: "A", zh: "你是哪国人？", pinyin: "Nǐ shì nǎ guó rén?", ko: "어느 나라 사람이에요?" },
         { speaker: "B", zh: "我是中国人。", pinyin: "Wǒ shì Zhōngguó rén.", ko: "저는 중국인이에요." },
         { speaker: "A", zh: "你住哪？", pinyin: "Nǐ zhù nǎ?", ko: "어디에 살아요?" },
         { speaker: "B", zh: "我住北京。", pinyin: "Wǒ zhù Běijīng.", ko: "저는 베이징에 살아요." },
-      ],
-    },
-    {
-      title: "会话2",
-      dialogueTask: "询问住处",
-      goal: "询问国籍与居住地",
-      turns: [
-        { speaker: "A", zh: "你呢？", pinyin: "Nǐ ne?", ko: "당신은요?" },
-        { speaker: "B", zh: "我住北京。", pinyin: "Wǒ zhù Běijīng.", ko: "저는 베이징에 살아요." },
-        { speaker: "A", zh: "北京、中国都好。", pinyin: "Běijīng, Zhōngguó dōu hǎo.", ko: "베이징, 중국 다 좋아요." },
-        { speaker: "B", zh: "是，都好。", pinyin: "Shì, dōu hǎo.", ko: "네, 다 좋아요." },
+        { speaker: "A", zh: "小明呢？", pinyin: "Xiǎomíng ne?", ko: "샤오밍은요?" },
+        { speaker: "B", zh: "我们都住北京。", pinyin: "Wǒmen dōu zhù Běijīng.", ko: "저희 다 베이징에 살아요." },
       ],
     },
   ],
   extensionSentences: [
-    { zh: "你是哪国人？我是中国人。", pinyin: "Nǐ shì nǎ guó rén? Wǒ shì Zhōngguó rén.", ko: "어느 나라 사람이에요? 저는 중국인이에요." },
+    { zh: "北京、中国都好。", pinyin: "Běijīng, Zhōngguó dōu hǎo.", ko: "베이징, 중국 다 좋아요." },
     { zh: "你住哪？我住北京。", pinyin: "Nǐ zhù nǎ? Wǒ zhù Běijīng.", ko: "어디에 살아요? 저는 베이징에 살아요." },
   ],
 };
 
-/** L4: 介绍家人 — dialogueTasks: 确认家庭关系, 介绍家庭成员 — vocab: 他、她、的、我、朋友、小（爸爸妈妈在L5，本课用朋友/小朋友） */
+/** L4: 介绍家人 — 单会话 6 轮，vocab: 他、她、的、我、朋友、小（爸爸/妈妈/家在 L5，放 extension） */
 const L4_TEMPLATE = {
   dialogueTasks: ["确认家庭关系", "介绍家庭成员"],
   dialogues: [
     {
       title: "会话1",
-      dialogueTask: "确认家庭关系",
+      dialogueTask: "确认家庭关系与介绍家庭成员",
       goal: "介绍家人",
       turns: [
-        { speaker: "A", zh: "他是你朋友吗？", pinyin: "Tā shì nǐ péngyou ma?", ko: "그는 당신 친구예요?" },
-        { speaker: "B", zh: "是，他是我的朋友。", pinyin: "Shì, tā shì wǒ de péngyou.", ko: "네, 그는 제 친구예요." },
+        { speaker: "A", zh: "他是谁？", pinyin: "Tā shì shéi?", ko: "그는 누구예요?" },
+        { speaker: "B", zh: "他是我朋友。", pinyin: "Tā shì wǒ péngyou.", ko: "그는 제 친구예요." },
         { speaker: "A", zh: "她呢？", pinyin: "Tā ne?", ko: "그녀는요?" },
         { speaker: "B", zh: "她是我朋友。", pinyin: "Tā shì wǒ péngyou.", ko: "그녀는 제 친구예요." },
-      ],
-    },
-    {
-      title: "会话2",
-      dialogueTask: "介绍家庭成员",
-      goal: "介绍家人",
-      turns: [
-        { speaker: "A", zh: "她是谁？", pinyin: "Tā shì shéi?", ko: "그녀는 누구예요?" },
-        { speaker: "B", zh: "她是我朋友。他是我的小朋友。", pinyin: "Tā shì wǒ péngyou. Tā shì wǒ de xiǎo péngyou.", ko: "그녀는 제 친구예요. 그는 제 어린 친구예요." },
+        { speaker: "A", zh: "他是谁？", pinyin: "Tā shì shéi?", ko: "그는 누구예요?" },
+        { speaker: "B", zh: "他是我的小朋友。", pinyin: "Tā shì wǒ de xiǎo péngyou.", ko: "그는 제 어린 친구예요." },
       ],
     },
   ],
-  extensionSentences: [],
+  extensionSentences: [
+    { zh: "他是我爸爸，她是我妈妈。", pinyin: "Tā shì wǒ bàba, tā shì wǒ māma.", ko: "그는 우리 아빠, 그녀는 우리 엄마예요." },
+    { zh: "我家的狗、猫。", pinyin: "Wǒ jiā de gǒu, māo.", ko: "우리 집 강아지, 고양이." },
+    { zh: "儿子、女儿。", pinyin: "Érzi, nǚ'ér.", ko: "아들, 딸." },
+  ],
 };
 
 /** L5: 询问数量 — dialogueTasks: 询问人数, 询问物品数量 */
@@ -184,8 +172,11 @@ function computeCoverage(dialogues, extensionSentences, currentWords) {
   };
 }
 
+/** 常见人名（教材常用，可豁免未来字检查，如 小明 含 小） */
+const COMMON_NAMES = new Set(["小明", "小红", "小王", "小李"]);
+
 /**
- * 检测未来词（排除作为 allowed 词子串出现的情况，如 多少 含 多）
+ * 检测未来词（排除：allowed 词子串、常见人名字）
  */
 function detectFutureWords(dialogues, forbiddenWords, allowedWords = []) {
   const violations = [];
@@ -193,7 +184,10 @@ function detectFutureWords(dialogues, forbiddenWords, allowedWords = []) {
   for (const w of forbiddenWords) {
     if (!allText.includes(w)) continue;
     const inAllowed = allowedWords.some((a) => a.includes(w) && allText.includes(a));
-    if (!inAllowed) violations.push(w);
+    if (inAllowed) continue;
+    const onlyInCommonName = [...COMMON_NAMES].some((name) => name.includes(w) && allText.includes(name));
+    if (onlyInCommonName) continue;
+    violations.push(w);
   }
   return violations;
 }
@@ -326,8 +320,9 @@ export function generateDialogues(input) {
     warnings.push(`Vocab stacking: ${vocabStack.map((x) => x.text).join("; ")}`);
   }
 
-  if (dialogues.some((d) => d.turns.length > maxTurnsPerDialogue)) {
-    warnings.push(`Some dialogue exceeds ${maxTurnsPerDialogue} turns`);
+  const overLimit = dialogues.filter((d) => d.turns.length > maxTurnsPerDialogue);
+  if (overLimit.length) {
+    warnings.push(`Some dialogue exceeds ${maxTurnsPerDialogue} turns: ${overLimit.map((d) => d.turns.length).join(", ")}`);
   }
 
   if (coverage.percent < preferredCoverage && coverage.unusedWords.length) {
@@ -402,8 +397,8 @@ export function buildGeneratorInput(lesson, vocabDistribution, goals, opts = {})
     allowedWords,
     forbiddenWords,
     preferredCoverage: 0.95,
-    maxDialogues: 3,
-    maxTurnsPerDialogue: 4,
+    maxDialogues: 2,
+    maxTurnsPerDialogue: 6,
     langSupport: ["zh", "pinyin", "ko"],
   };
 }

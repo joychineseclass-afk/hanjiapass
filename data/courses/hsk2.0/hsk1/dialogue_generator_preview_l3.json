@@ -6,11 +6,11 @@
     "询问国籍",
     "询问住处"
   ],
-  "generatedAt": "2026-03-10T14:21:34.841Z",
+  "generatedAt": "2026-03-10T14:43:40.439Z",
   "dialogues": [
     {
       "title": "会话1",
-      "dialogueTask": "询问国籍",
+      "dialogueTask": "询问国籍与居住地",
       "goal": "询问国籍与居住地",
       "turns": [
         {
@@ -36,46 +36,27 @@
           "zh": "我住北京。",
           "pinyin": "Wǒ zhù Běijīng.",
           "ko": "저는 베이징에 살아요."
-        }
-      ]
-    },
-    {
-      "title": "会话2",
-      "dialogueTask": "询问住处",
-      "goal": "询问国籍与居住地",
-      "turns": [
-        {
-          "speaker": "A",
-          "zh": "你呢？",
-          "pinyin": "Nǐ ne?",
-          "ko": "당신은요?"
-        },
-        {
-          "speaker": "B",
-          "zh": "我住北京。",
-          "pinyin": "Wǒ zhù Běijīng.",
-          "ko": "저는 베이징에 살아요."
         },
         {
           "speaker": "A",
-          "zh": "北京、中国都好。",
-          "pinyin": "Běijīng, Zhōngguó dōu hǎo.",
-          "ko": "베이징, 중국 다 좋아요."
+          "zh": "小明呢？",
+          "pinyin": "Xiǎomíng ne?",
+          "ko": "샤오밍은요?"
         },
         {
           "speaker": "B",
-          "zh": "是，都好。",
-          "pinyin": "Shì, dōu hǎo.",
-          "ko": "네, 다 좋아요."
+          "zh": "我们都住北京。",
+          "pinyin": "Wǒmen dōu zhù Běijīng.",
+          "ko": "저희 다 베이징에 살아요."
         }
       ]
     }
   ],
   "extensionSentences": [
     {
-      "zh": "你是哪国人？我是中国人。",
-      "pinyin": "Nǐ shì nǎ guó rén? Wǒ shì Zhōngguó rén.",
-      "ko": "어느 나라 사람이에요? 저는 중국인이에요."
+      "zh": "北京、中国都好。",
+      "pinyin": "Běijīng, Zhōngguó dōu hǎo.",
+      "ko": "베이징, 중국 다 좋아요."
     },
     {
       "zh": "你住哪？我住北京。",

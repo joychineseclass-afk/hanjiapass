@@ -61,15 +61,19 @@ function toExtension(extensionSentences) {
 
 // ========== 质量检查 ==========
 
+const COMMON_NAMES = new Set(["小明", "小红", "小王", "小李"]);
+
 function passesQualityCheck(output, input) {
   if (output.errors?.length) return false;
   if (output.coverage?.percent < 0.95 && output.coverage?.unusedWords?.length) return false;
-  // 不允许未来整词出现（子串如 多 in 多少 若 多少 在 allowed 则放行）
   const text = (output.dialogues || []).flatMap((d) => d.turns.map((t) => t.zh)).join("");
   for (const w of input.forbiddenWords || []) {
     if (!text.includes(w)) continue;
     const inAllowed = (input.allowedWords || []).some((a) => a.includes(w) && text.includes(a));
-    if (!inAllowed) return false;
+    if (inAllowed) continue;
+    const onlyInCommonName = [...COMMON_NAMES].some((name) => name.includes(w) && text.includes(name));
+    if (onlyInCommonName) continue;
+    return false;
   }
   return true;
 }

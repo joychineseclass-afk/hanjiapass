@@ -539,47 +539,22 @@
             "kr": "저는 베이징에 살아요.",
             "en": ""
           }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2"
-      },
-      "lines": [
+        },
         {
           "speaker": "A",
-          "text": "你呢？",
-          "pinyin": "Nǐ ne?",
+          "text": "小明呢？",
+          "pinyin": "Xiǎomíng ne?",
           "translation": {
-            "kr": "당신은요?",
+            "kr": "샤오밍은요?",
             "en": ""
           }
         },
         {
           "speaker": "B",
-          "text": "我住北京。",
-          "pinyin": "Wǒ zhù Běijīng.",
+          "text": "我们都住北京。",
+          "pinyin": "Wǒmen dōu zhù Běijīng.",
           "translation": {
-            "kr": "저는 베이징에 살아요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "A",
-          "text": "北京、中国都好。",
-          "pinyin": "Běijīng, Zhōngguó dōu hǎo.",
-          "translation": {
-            "kr": "베이징, 중국 다 좋아요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "是，都好。",
-          "pinyin": "Shì, dōu hǎo.",
-          "translation": {
-            "kr": "네, 다 좋아요.",
+            "kr": "저희 다 베이징에 살아요.",
             "en": ""
           }
         }
@@ -588,13 +563,13 @@
   ],
   "generatedExtensions": [
     {
-      "zh": "你是哪国人？我是中国人。",
-      "pinyin": "Nǐ shì nǎ guó rén? Wǒ shì Zhōngguó rén.",
-      "kr": "어느 나라 사람이에요? 저는 중국인이에요.",
+      "zh": "北京、中国都好。",
+      "pinyin": "Běijīng, Zhōngguó dōu hǎo.",
+      "kr": "베이징, 중국 다 좋아요.",
       "en": "",
-      "phrase": "你是哪国人？我是中国人。",
+      "phrase": "北京、中国都好。",
       "explain": {
-        "kr": "어느 나라 사람이에요? 저는 중국인이에요.",
+        "kr": "베이징, 중국 다 좋아요.",
         "en": ""
       }
     },
@@ -611,7 +586,7 @@
     }
   ],
   "dialogueMeta": {
-    "generatedAt": "2026-03-10T14:21:34.841Z",
+    "generatedAt": "2026-03-10T14:43:40.439Z",
     "coverage": 1,
     "communicativeGoal": "询问国籍与居住地",
     "dialogueTasks": [

@@ -6,24 +6,24 @@
     "确认家庭关系",
     "介绍家庭成员"
   ],
-  "generatedAt": "2026-03-10T14:21:34.846Z",
+  "generatedAt": "2026-03-10T14:43:40.444Z",
   "dialogues": [
     {
       "title": "会话1",
-      "dialogueTask": "确认家庭关系",
+      "dialogueTask": "确认家庭关系与介绍家庭成员",
       "goal": "介绍家人",
       "turns": [
         {
           "speaker": "A",
-          "zh": "他是你朋友吗？",
-          "pinyin": "Tā shì nǐ péngyou ma?",
-          "ko": "그는 당신 친구예요?"
+          "zh": "他是谁？",
+          "pinyin": "Tā shì shéi?",
+          "ko": "그는 누구예요?"
         },
         {
           "speaker": "B",
-          "zh": "是，他是我的朋友。",
-          "pinyin": "Shì, tā shì wǒ de péngyou.",
-          "ko": "네, 그는 제 친구예요."
+          "zh": "他是我朋友。",
+          "pinyin": "Tā shì wǒ péngyou.",
+          "ko": "그는 제 친구예요."
         },
         {
           "speaker": "A",
@@ -36,30 +36,39 @@
           "zh": "她是我朋友。",
           "pinyin": "Tā shì wǒ péngyou.",
           "ko": "그녀는 제 친구예요."
-        }
-      ]
-    },
-    {
-      "title": "会话2",
-      "dialogueTask": "介绍家庭成员",
-      "goal": "介绍家人",
-      "turns": [
+        },
         {
           "speaker": "A",
-          "zh": "她是谁？",
+          "zh": "他是谁？",
           "pinyin": "Tā shì shéi?",
-          "ko": "그녀는 누구예요?"
+          "ko": "그는 누구예요?"
         },
         {
           "speaker": "B",
-          "zh": "她是我朋友。他是我的小朋友。",
-          "pinyin": "Tā shì wǒ péngyou. Tā shì wǒ de xiǎo péngyou.",
-          "ko": "그녀는 제 친구예요. 그는 제 어린 친구예요."
+          "zh": "他是我的小朋友。",
+          "pinyin": "Tā shì wǒ de xiǎo péngyou.",
+          "ko": "그는 제 어린 친구예요."
         }
       ]
     }
   ],
-  "extensionSentences": [],
+  "extensionSentences": [
+    {
+      "zh": "他是我爸爸，她是我妈妈。",
+      "pinyin": "Tā shì wǒ bàba, tā shì wǒ māma.",
+      "ko": "그는 우리 아빠, 그녀는 우리 엄마예요."
+    },
+    {
+      "zh": "我家的狗、猫。",
+      "pinyin": "Wǒ jiā de gǒu, māo.",
+      "ko": "우리 집 강아지, 고양이."
+    },
+    {
+      "zh": "儿子、女儿。",
+      "pinyin": "Érzi, nǚ'ér.",
+      "ko": "아들, 딸."
+    }
+  ],
   "coverage": {
     "currentWordsTotal": 6,
     "currentWordsUsed": 6,
