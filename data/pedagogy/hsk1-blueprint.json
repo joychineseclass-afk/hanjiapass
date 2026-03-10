@@ -1,0 +1,112 @@
+{
+  "description": "HSK1 课程蓝图（Curriculum Blueprint）— 仅定义结构，不生成内容",
+  "version": "1.0",
+  "1": {
+    "title": "你好！",
+    "grammar": "问候句",
+    "scene": "greeting"
+  },
+  "2": {
+    "title": "你叫什么名字？",
+    "grammar": "叫 + 名字",
+    "scene": "introduce"
+  },
+  "3": {
+    "title": "你是哪国人？",
+    "grammar": "是字句",
+    "scene": "nationality"
+  },
+  "4": {
+    "title": "他是我的朋友。",
+    "grammar": "的（所属）",
+    "scene": "friend"
+  },
+  "5": {
+    "title": "她是我妈妈。",
+    "grammar": "我的 + 名词",
+    "scene": "family"
+  },
+  "6": {
+    "title": "你多大？",
+    "grammar": "几 + 岁",
+    "scene": "age"
+  },
+  "7": {
+    "title": "今天几月几号？",
+    "grammar": "年 + 月 + 日",
+    "scene": "date"
+  },
+  "8": {
+    "title": "现在几点？",
+    "grammar": "点 + 分钟",
+    "scene": "time"
+  },
+  "9": {
+    "title": "喂，请打电话。",
+    "grammar": "打电话",
+    "scene": "phone"
+  },
+  "10": {
+    "title": "书在哪儿？",
+    "grammar": "在 + 地点",
+    "scene": "location"
+  },
+  "11": {
+    "title": "我在学校学习汉语。",
+    "grammar": "在 + 地方 + 动词",
+    "scene": "study"
+  },
+  "12": {
+    "title": "你做什么工作？",
+    "grammar": "做 + 工作",
+    "scene": "work"
+  },
+  "13": {
+    "title": "你喜欢什么？",
+    "grammar": "喜欢 + 名词/动词",
+    "scene": "hobby"
+  },
+  "14": {
+    "title": "你吃什么？",
+    "grammar": "吃 / 喝 + 宾语",
+    "scene": "eat"
+  },
+  "15": {
+    "title": "在饭馆喝茶。",
+    "grammar": "和",
+    "scene": "eat"
+  },
+  "16": {
+    "title": "椅子在哪儿？",
+    "grammar": "上 / 下 / 里",
+    "scene": "location"
+  },
+  "17": {
+    "title": "坐出租车去火车站。",
+    "grammar": "来 / 去 / 回",
+    "scene": "transport"
+  },
+  "18": {
+    "title": "这个多少钱？",
+    "grammar": "这 / 那",
+    "scene": "shopping"
+  },
+  "19": {
+    "title": "今天天气怎么样？",
+    "grammar": "太 + 形容词",
+    "scene": "weather"
+  },
+  "20": {
+    "title": "你怎么了？",
+    "grammar": "怎么 / 怎么样",
+    "scene": "health"
+  },
+  "21": {
+    "title": "复习课1",
+    "scene": "review"
+  },
+  "22": {
+    "title": "复习课2",
+    "scene": "review"
+  }
+}

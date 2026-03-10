@@ -9,6 +9,7 @@ import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, renderReviewWords, renderReviewDialogue, renderReviewGrammar, renderReviewExtension, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
+import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
@@ -812,6 +813,21 @@ function applyVocabDistributionTitles(lessons, lessonThemes) {
   });
 }
 
+/** Blueprint 优先：用蓝图 title 覆盖课程标题（课程目录与详情共用） */
+function applyBlueprintTitles(lessons, blueprint) {
+  if (!Array.isArray(lessons) || !blueprint || typeof blueprint !== "object") return lessons;
+  return lessons.map((l) => {
+    const no = Number((l && l.lessonNo) || (l && l.lesson) || (l && l.id) || (l && l.no) || 0) || 0;
+    const entry = no ? blueprint[String(no)] : null;
+    const title = entry && typeof entry.title === "string" ? entry.title.trim() : "";
+    if (!title) return l;
+    return {
+      ...l,
+      title: { zh: title, kr: title, en: title, jp: title },
+    };
+  });
+}
+
 async function loadLessons() {
   setError("");
   setSubTitle();
@@ -841,6 +857,8 @@ async function loadLessons() {
     const vocabDist = await getVocabDistribution(state.lv, state.version);
     let result = sortLessonsByDistributionOrder(lessons, (vocabDist && vocabDist.order) || null);
     result = applyVocabDistributionTitles(result, (vocabDist && vocabDist.lessonThemes) || null);
+    const blueprint = await loadBlueprint(`hsk${state.lv}`);
+    if (blueprint) result = applyBlueprintTitles(result, blueprint);
 
     state.lessons = result;
     const total = state.lessons.length;
@@ -889,6 +907,12 @@ async function openLesson({ lessonNo, file }) {
 
     if (listItem && listItem.title && typeof listItem.title === "object") {
       lessonData.title = { ...(lessonData.title || {}), ...listItem.title };
+    }
+    const blueprint = await loadBlueprint(`hsk${state.lv}`);
+    const bpEntry = blueprint && blueprint[String(no)];
+    if (bpEntry && typeof bpEntry.title === "string" && bpEntry.title.trim()) {
+      const t = bpEntry.title.trim();
+      lessonData.title = { zh: t, kr: t, en: t, jp: t };
     }
 
     const lessonWordsRaw = Array.isArray(lessonData && lessonData.words) ? lessonData.words : (Array.isArray(lessonData && lessonData.vocab) ? lessonData.vocab : []);
