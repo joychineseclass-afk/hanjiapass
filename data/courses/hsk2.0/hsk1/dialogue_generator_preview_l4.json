@@ -1,0 +1,48 @@
+{
+  "lessonId": "4",
+  "lessonTitle": "家人",
+  "communicativeGoal": "介绍家人",
+  "generatedAt": "2026-03-10T13:25:54.632Z",
+  "dialogues": [
+    {
+      "title": "会话1",
+      "goal": "介绍家人",
+      "turns": [
+        {
+          "speaker": "A",
+          "zh": "他是你爸爸吗？",
+          "pinyin": "Tā shì nǐ bàba ma?",
+          "ko": "그는 당신 아빠예요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "是，他是我的爸爸，他是老师。她是我的妈妈。",
+          "pinyin": "Shì, tā shì wǒ de bàba, tā shì lǎoshī. Tā shì wǒ de māma.",
+          "ko": "네, 그는 우리 아빠예요, 선생님이에요. 그녀는 우리 엄마예요."
+        },
+        {
+          "speaker": "A",
+          "zh": "你家好吗？",
+          "pinyin": "Nǐ jiā hǎo ma?",
+          "ko": "가족 잘 지내요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "好。我家的人：我的爸爸、妈妈、儿子、女儿。",
+          "pinyin": "Hǎo. Wǒ jiā de rén: Wǒ de bàba, māma, érzi, nǚ'ér.",
+          "ko": "네. 우리 가족: 아빠, 엄마, 아들, 딸."
+        }
+      ]
+    }
+  ],
+  "extensionSentences": [],
+  "coverage": {
+    "currentWordsTotal": 9,
+    "currentWordsUsed": 9,
+    "percent": 1,
+    "unusedWords": []
+  },
+  "warnings": [
+    "Vocab stacking: 好。我家的人：我的爸爸、妈妈、儿子、女儿。"
+  ]
+}

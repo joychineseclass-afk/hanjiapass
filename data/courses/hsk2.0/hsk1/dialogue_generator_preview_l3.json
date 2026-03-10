@@ -1,0 +1,50 @@
+{
+  "lessonId": "3",
+  "lessonTitle": "国家",
+  "communicativeGoal": "询问国籍与居住地",
+  "generatedAt": "2026-03-10T13:25:54.627Z",
+  "dialogues": [
+    {
+      "title": "会话1",
+      "goal": "询问国籍与居住地",
+      "turns": [
+        {
+          "speaker": "A",
+          "zh": "你是学生吗？",
+          "pinyin": "Nǐ shì xuésheng ma?",
+          "ko": "학생이에요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "是，我是学生。我朋友是学生，我同学是学生。",
+          "pinyin": "Shì, wǒ shì xuésheng. Wǒ péngyou shì xuésheng, wǒ tóngxué shì xuésheng.",
+          "ko": "네, 저는 학생이에요. 제 친구도 학생이고, 동창도 학생이에요."
+        },
+        {
+          "speaker": "A",
+          "zh": "北京好吗？",
+          "pinyin": "Běijīng hǎo ma?",
+          "ko": "베이징 좋아요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "好。中国很好。",
+          "pinyin": "Hǎo. Zhōngguó hěn hǎo.",
+          "ko": "좋아요. 중국도 좋아요."
+        }
+      ]
+    }
+  ],
+  "extensionSentences": [],
+  "coverage": {
+    "currentWordsTotal": 6,
+    "currentWordsUsed": 5,
+    "percent": 0.8333333333333334,
+    "unusedWords": [
+      "老师"
+    ]
+  },
+  "warnings": [
+    "Coverage 83.3% < 95%. Unused: 老师"
+  ]
+}

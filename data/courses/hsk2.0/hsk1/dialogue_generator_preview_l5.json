@@ -1,0 +1,72 @@
+{
+  "lessonId": "5",
+  "lessonTitle": "数字①",
+  "communicativeGoal": "询问数量",
+  "generatedAt": "2026-03-10T13:25:54.634Z",
+  "dialogues": [
+    {
+      "title": "会话1",
+      "goal": "询问数量",
+      "turns": [
+        {
+          "speaker": "A",
+          "zh": "你家几个人？",
+          "pinyin": "Nǐ jiā jǐ gè rén?",
+          "ko": "가족이 몇 명이에요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "我家五个人。",
+          "pinyin": "Wǒ jiā wǔ gè rén.",
+          "ko": "다섯 명이에요."
+        }
+      ]
+    },
+    {
+      "title": "会话2",
+      "goal": "询问数量",
+      "turns": [
+        {
+          "speaker": "A",
+          "zh": "多少个学生？",
+          "pinyin": "Duōshao gè xuésheng?",
+          "ko": "학생이 몇 명이에요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "三个学生。",
+          "pinyin": "Sān gè xuésheng.",
+          "ko": "학생 세 명이에요."
+        }
+      ]
+    }
+  ],
+  "extensionSentences": [
+    {
+      "zh": "少吗？少。零个。",
+      "pinyin": "Shǎo ma? Shǎo. Líng gè.",
+      "ko": "적어요? 적어요. 영 개예요."
+    },
+    {
+      "zh": "一个、两个、四个。",
+      "pinyin": "Yī gè, liǎng gè, sì gè.",
+      "ko": "하나, 둘, 넷."
+    },
+    {
+      "zh": "六、七、八、九、十。",
+      "pinyin": "Liù, qī, bā, jiǔ, shí.",
+      "ko": "육, 칠, 팔, 구, 십."
+    }
+  ],
+  "coverage": {
+    "currentWordsTotal": 15,
+    "currentWordsUsed": 14,
+    "percent": 0.9333333333333333,
+    "unusedWords": [
+      "二"
+    ]
+  },
+  "warnings": [
+    "Coverage 93.3% < 95%. Unused: 二"
+  ]
+}
