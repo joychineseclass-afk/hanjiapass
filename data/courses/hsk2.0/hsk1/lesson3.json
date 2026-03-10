@@ -121,88 +121,54 @@
       }
     }
   ],
-  "dialogueCards": [
+  "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你是哪国人？",
-          "pinyin": "Nǐ shì nǎ guó rén?",
-          "kr": "어느 나라 사람이에요?",
-          "en": "Which country are you from?",
-          "jp": "どこの国の方ですか？",
-          "text": "你是哪国人？",
-          "translation": {
-            "kr": "어느 나라 사람이에요?",
-            "en": "Which country are you from?",
-            "jp": "どこの国の方ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我是中国人。",
-          "pinyin": "Wǒ shì Zhōngguó rén.",
-          "kr": "저는 중국인이에요.",
-          "en": "I'm Chinese.",
-          "jp": "私は中国人です。",
-          "text": "我是中国人。",
-          "translation": {
-            "kr": "저는 중국인이에요.",
-            "en": "I'm Chinese.",
-            "jp": "私は中国人です。"
-          }
-        }
+        { "speaker": "A", "text": "你是哪国人？", "pinyin": "Nǐ shì nǎ guó rén?", "translation": { "kr": "어느 나라 사람이에요?", "en": "Which country are you from?", "jp": "どこの国の方ですか？" } },
+        { "speaker": "B", "text": "我是中国人。", "pinyin": "Wǒ shì Zhōngguó rén.", "translation": { "kr": "저는 중국인이에요.", "en": "I'm Chinese.", "jp": "私は中国人です。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "他是哪国人？",
-          "pinyin": "Tā shì nǎ guó rén?",
-          "kr": "그는 어느 나라 사람이에요?",
-          "en": "Which country is he from?",
-          "jp": "彼はどこの国の方ですか？",
-          "text": "他是哪国人？",
-          "translation": {
-            "kr": "그는 어느 나라 사람이에요?",
-            "en": "Which country is he from?",
-            "jp": "彼はどこの国の方ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "他是韩国人。",
-          "pinyin": "Tā shì Hánguó rén.",
-          "kr": "그는 한국인이에요.",
-          "en": "He's Korean.",
-          "jp": "彼は韓国人です。",
-          "text": "他是韩国人。",
-          "translation": {
-            "kr": "그는 한국인이에요.",
-            "en": "He's Korean.",
-            "jp": "彼は韓国人です。"
-          }
-        }
+        { "speaker": "A", "text": "他是哪国人？", "pinyin": "Tā shì nǎ guó rén?", "translation": { "kr": "그는 어느 나라 사람이에요?", "en": "Which country is he from?", "jp": "彼はどこの国の方ですか？" } },
+        { "speaker": "B", "text": "他是韩国人。", "pinyin": "Tā shì Hánguó rén.", "translation": { "kr": "그는 한국인이에요.", "en": "He's Korean.", "jp": "彼は韓国人です。" } }
       ]
     },
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "你是学生吗？", "pinyin": "Nǐ shì xuéshēng ma?", "kr": "학생이에요?", "text": "你是学生吗？", "translation": { "kr": "학생이에요?", "en": "Are you a student?", "jp": "学生ですか？" } },
-        { "speaker": "B", "zh": "是。我住在北京，在中国。他是我的朋友，也是我同学。", "pinyin": "Shì. Wǒ zhù zài Běijīng, zài Zhōngguó. Tā shì wǒ péngyou, yě shì wǒ tóngxué.", "kr": "네. 베이징에 살아요, 중국에요. 그는 제 친구이고 동창이에요.", "text": "是。我住在北京，在中国。他是我的朋友，也是我同学。", "translation": { "kr": "네. 베이징에 살아요, 중국에요. 그는 제 친구이고 동창이에요.", "en": "Yes. I live in Beijing, in China. He is my friend and also my classmate.", "jp": "はい。北京に住んでいます、中国です。彼は私の友達で、クラスメートでもあります。" } }
+        { "speaker": "A", "text": "你是学生吗？", "pinyin": "Nǐ shì xuéshēng ma?", "translation": { "kr": "학생이에요?", "en": "Are you a student?", "jp": "学生ですか？" } },
+        { "speaker": "B", "text": "是。我住在北京，在中国。他是我的朋友，也是我同学。", "pinyin": "Shì. Wǒ zhù zài Běijīng, zài Zhōngguó. Tā shì wǒ péngyou, yě shì wǒ tóngxué.", "translation": { "kr": "네. 베이징에 살아요, 중국에요. 그는 제 친구이고 동창이에요.", "en": "Yes. I live in Beijing, in China. He is my friend and also my classmate.", "jp": "はい。北京に住んでいます、中国です。彼は私の友達で、クラスメートでもあります。" } }
+      ]
+    }
+  ],
+  "dialogueCards": [
+    {
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "lines": [
+        { "speaker": "A", "text": "你好！你是学生吗？", "pinyin": "Nǐ hǎo! Nǐ shì xuésheng ma?", "translation": { "kr": "안녕하세요! 학생이에요?", "en": "Hello! Are you a student?", "jp": "こんにちは! 学生ですか？" } },
+        { "speaker": "B", "text": "是，我是学生。", "pinyin": "Shì, wǒ shì xuésheng.", "translation": { "kr": "네, 저는 학생이에요.", "en": "Yes, I'm a student.", "jp": "はい、私は学生です。" } },
+        { "speaker": "A", "text": "你是同学吗？", "pinyin": "Nǐ shì tóngxué ma?", "translation": { "kr": "동창이에요?", "en": "Are you a classmate?", "jp": "クラスメートですか？" } },
+        { "speaker": "B", "text": "是。我认识你。", "pinyin": "Shì. Wǒ rènshi nǐ.", "translation": { "kr": "네. 저는 당신을 알아요.", "en": "Yes. I know you.", "jp": "はい。知っています。" } }
+      ]
+    },
+    {
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+      "lines": [
+        { "speaker": "A", "text": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?", "jp": "お名前は何ですか？" } },
+        { "speaker": "B", "text": "我叫小明。我是学生。", "pinyin": "Wǒ jiào Xiǎomíng. Wǒ shì xuésheng.", "translation": { "kr": "저는 샤오밍이에요. 저는 학생이에요.", "en": "My name is Xiaoming. I'm a student.", "jp": "私は小明です。私は学生です。" } },
+        { "speaker": "A", "text": "北京很好。中国很好。", "pinyin": "Běijīng hěn hǎo. Zhōngguó hěn hǎo.", "translation": { "kr": "베이징은 좋아요. 중국은 좋아요.", "en": "Beijing is nice. China is nice.", "jp": "北京はいいですね。中国はいいですね。" } },
+        { "speaker": "B", "text": "很高兴认识你。再见！", "pinyin": "Hěn gāoxìng rènshi nǐ. Zàijiàn!", "translation": { "kr": "만나서 반가워요. 안녕히 가세요!", "en": "Nice to meet you. Goodbye!", "jp": "お会いできて嬉しいです。さようなら!" } }
+      ]
+    },
+    {
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+      "lines": [
+        { "speaker": "A", "text": "你好！你是学生吗？", "pinyin": "Nǐ hǎo! Nǐ shì xuésheng ma?", "translation": { "kr": "안녕하세요! 학생이에요?", "en": "Hello! Are you a student?", "jp": "こんにちは! 学生ですか？" } },
+        { "speaker": "B", "text": "是。你是同学吗？", "pinyin": "Shì. Nǐ shì tóngxué ma?", "translation": { "kr": "네. 동창이에요?", "en": "Yes. Are you a classmate?", "jp": "はい。クラスメートですか？" } },
+        { "speaker": "A", "text": "是。我认识你。再见！", "pinyin": "Shì. Wǒ rènshi nǐ. Zàijiàn!", "translation": { "kr": "네. 저는 당신을 알아요. 안녕히 가세요!", "en": "Yes. I know you. Goodbye!", "jp": "はい。知っています。さようなら!" } }
       ]
     }
   ],

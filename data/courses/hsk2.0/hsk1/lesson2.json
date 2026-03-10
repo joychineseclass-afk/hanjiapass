@@ -121,65 +121,40 @@
       }
     }
   ],
-  "dialogueCards": [
+  "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "你叫什么名字？",
-          "zh": "你叫什么名字？",
-          "pinyin": "Nǐ jiào shénme míngzi?",
-          "translation": {
-            "kr": "이름이 뭐예요?",
-            "en": "What is your name?"
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "我叫小明。",
-          "zh": "我叫小明。",
-          "pinyin": "Wǒ jiào Xiǎomíng.",
-          "translation": {
-            "kr": "저는 샤오밍이에요.",
-            "en": "My name is Xiaoming."
-          }
-        }
+        { "speaker": "A", "text": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?", "jp": "お名前は何ですか？" } },
+        { "speaker": "B", "text": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "My name is Xiaoming.", "jp": "私は小明です。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "我叫小美。",
-          "zh": "我叫小美。",
-          "pinyin": "Wǒ jiào Xiǎoměi.",
-          "translation": {
-            "kr": "저는 샤오메이예요.",
-            "en": "My name is Xiaomei."
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "很高兴认识你。",
-          "zh": "很高兴认识你。",
-          "pinyin": "Hěn gāoxìng rènshi nǐ.",
-          "translation": {
-            "kr": "만나서 반가워요.",
-            "en": "Nice to meet you."
-          }
-        }
+        { "speaker": "A", "text": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "translation": { "kr": "저는 샤오메이예요.", "en": "My name is Xiaomei.", "jp": "私は小美です。" } },
+        { "speaker": "B", "text": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "만나서 반가워요.", "en": "Nice to meet you.", "jp": "お会いできて嬉しいです。" } }
+      ]
+    }
+  ],
+  "dialogueCards": [
+    {
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "lines": [
+        { "speaker": "A", "text": "你好！你叫什么名字？", "pinyin": "Nǐ hǎo! Nǐ jiào shénme míngzi?", "translation": { "kr": "안녕하세요! 이름이 뭐예요?", "en": "Hello! What is your name?", "jp": "こんにちは! お名前は何ですか？" } },
+        { "speaker": "B", "text": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "My name is Xiaoming.", "jp": "私は小明です。" } },
+        { "speaker": "A", "text": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "만나서 반가워요.", "en": "Nice to meet you.", "jp": "お会いできて嬉しいです。" } },
+        { "speaker": "B", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "en": "Goodbye!", "jp": "さようなら!" } },
+        { "speaker": "A", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "en": "Goodbye!", "jp": "さようなら!" } }
+      ]
+    },
+    {
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
+      "lines": [
+        { "speaker": "A", "text": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?", "jp": "お名前は何ですか？" } },
+        { "speaker": "B", "text": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "translation": { "kr": "저는 샤오메이예요.", "en": "My name is Xiaomei.", "jp": "私は小美です。" } },
+        { "speaker": "A", "text": "我叫小明。很高兴认识你。", "pinyin": "Wǒ jiào Xiǎomíng. Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "저는 샤오밍이에요. 만나서 반가워요.", "en": "My name is Xiaoming. Nice to meet you.", "jp": "私は小明です。お会いできて嬉しいです。" } },
+        { "speaker": "B", "text": "谢谢。再见！", "pinyin": "Xièxie. Zàijiàn!", "translation": { "kr": "감사해요. 안녕히 가세요!", "en": "Thank you. Goodbye!", "jp": "ありがとう。さようなら!" } }
       ]
     }
   ],
