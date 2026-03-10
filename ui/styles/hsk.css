@@ -1656,6 +1656,54 @@
   background: #fff;
 }
 
+/* 复习课紧凑列表：每词一行，便于快速扫读 */
+.review-compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  background: #fff;
+}
+
+.review-compact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 8px 16px;
+  font-size: 0.9375rem;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.review-compact-row:last-child {
+  border-bottom: none;
+}
+
+.review-compact-row:hover {
+  background: #f8fafc;
+}
+
+.review-compact-hanzi {
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 72px;
+  flex-shrink: 0;
+}
+
+.review-compact-pinyin {
+  color: #64748b;
+  font-size: 0.875rem;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.review-compact-meaning {
+  flex: 1;
+  color: #475569;
+  min-width: 0;
+}
+
 .review-dialogue-list,
 .review-grammar-list,
 .review-extension-list {

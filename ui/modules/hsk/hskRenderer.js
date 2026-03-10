@@ -187,11 +187,30 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   bindWordCardActions();
 }
 
+/** 复习课紧凑行：汉字、拼音、释义，无按钮 */
+function buildReviewCompactRow(x, { currentLang, glossaryScope } = {}) {
+  const raw = typeof x === "string" ? { hanzi: x.trim() } : (x || {});
+  const han = wordKey(raw) || String(raw.hanzi || raw.word || raw.zh || "").trim();
+  if (!han) return "";
+  let pinyinStr = wordPinyin(raw);
+  if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
+  let meaningStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
+  if (meaningStr && meaningStr.includes("object Object")) meaningStr = "";
+  if (!meaningStr) meaningStr = i18n.t("hsk.meaning_empty");
+  const speakText = han || pinyinStr;
+  const dataSpeak = speakText ? ` data-speak-text="${escapeHtmlAttr(speakText)}"` : "";
+  return `<div class="review-compact-row"${dataSpeak} role="button" tabindex="0">
+  <span class="review-compact-hanzi">${escapeHtml(han)}</span>
+  <span class="review-compact-pinyin">${escapeHtml(pinyinStr)}</span>
+  <span class="review-compact-meaning">${escapeHtml(meaningStr)}</span>
+</div>`;
+}
+
 /**
- * 复习课专用：使用与课程单词页相同的词卡组件
- * - 有 wordsByLesson 时：按来源课程分组，每组显示词卡网格
- * - 无 wordsByLesson 时：扁平词卡网格（兼容旧逻辑）
- * wordsByLesson 格式：{ "1": [wordObj, ...], "2": [wordObj, ...], ... }，禁止传 term 字符串数组
+ * 复习课专用：紧凑布局（每词一行，便于快速扫读）
+ * - 有 wordsByLesson 时：按来源课程分组，每组紧凑列表
+ * - 无 wordsByLesson 时：扁平紧凑列表（兼容旧逻辑）
+ * 数据仍使用完整课程词汇（core+extra），仅 UI 改为紧凑模式
  */
 export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } = {}) {
   if (!gridEl) return;
@@ -217,21 +236,21 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
           console.debug(`[ReviewWords] lesson ${no} first item:`, validWords[0]);
         }
       }
-      const cards = validWords.map((x) => {
+      const rows = validWords.map((x) => {
         allItems.push(x);
-        return buildWordCard(x, { currentLang, glossaryScope });
+        return buildReviewCompactRow(x, { currentLang, glossaryScope });
       }).filter(Boolean).join("");
       return `<section class="review-lesson-group">
   <h4 class="review-lesson-group-title">${escapeHtml(lessonLabel)}</h4>
-  <div class="lesson-card-grid word-grid">${cards}</div>
+  <div class="review-compact-list">${rows}</div>
 </section>`;
     }).filter(Boolean).join("");
     bodyHtml = `<div class="review-words-by-lesson">${sections}</div>`;
   } else {
     const validArr = arr.filter((w) => w != null).map((w) => (typeof w === "string" ? { hanzi: w.trim() } : w)).filter((w) => w && (wordKey(w) || (w.hanzi || w.word || w.zh)));
-    const cards = validArr.map((x) => buildWordCard(x, { currentLang, glossaryScope })).filter(Boolean);
+    const rows = validArr.map((x) => buildReviewCompactRow(x, { currentLang, glossaryScope })).filter(Boolean);
     allItems.push(...validArr);
-    bodyHtml = `<div class="lesson-card-grid word-grid">${cards.join("")}</div>`;
+    bodyHtml = `<div class="review-compact-list">${rows.join("")}</div>`;
   }
 
   const totalCount = allItems.length;
@@ -260,7 +279,7 @@ export function bindWordCardActions() {
   _wordCardBound = true;
 
   document.addEventListener("click", async (e) => {
-    const reviewRow = e.target.closest(".review-dialogue-row, .review-extension-row");
+    const reviewRow = e.target.closest(".review-dialogue-row, .review-extension-row, .review-compact-row");
     if (reviewRow) {
       const text = (reviewRow.dataset?.speakText || "").trim();
       if (text) {
