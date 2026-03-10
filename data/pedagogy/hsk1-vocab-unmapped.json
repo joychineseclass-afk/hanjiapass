@@ -2,30 +2,7 @@
   "description": "hsk1 未分配词汇 — 尚未进入 core/extra 的词条",
   "version": "1.0",
   "total": 150,
-  "mappedCount": 128,
-  "unmappedCount": 22,
-  "unmappedTerms": [
-    "不",
-    "个",
-    "些",
-    "会",
-    "住",
-    "北京",
-    "吗",
-    "听",
-    "小",
-    "开",
-    "很",
-    "想",
-    "我们",
-    "漂亮",
-    "爱",
-    "看见",
-    "睡觉",
-    "能",
-    "衣服",
-    "说话",
-    "谁",
-    "高兴"
-  ]
+  "mappedCount": 150,
+  "unmappedCount": 0,
+  "unmappedTerms": []
 }
