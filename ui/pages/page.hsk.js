@@ -10,7 +10,7 @@ import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, renderReviewWords, renderReviewDialogue, renderReviewGrammar, renderReviewExtension, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
-import { distributeVocabulary } from "../modules/curriculum/vocabDistributor.js";
+import { distributeVocabulary, distributeVocabularyByMap } from "../modules/curriculum/vocabDistributor.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
@@ -725,6 +725,28 @@ function buildAIContext() {
   ].filter(Boolean).join("\n");
 }
 
+/** 加载 vocab-map：data/pedagogy/${levelKey}-vocab-map.json */
+const _vocabMapCache = new Map();
+async function loadVocabMap(levelKey) {
+  if (_vocabMapCache.has(levelKey)) return _vocabMapCache.get(levelKey);
+  const base = String(window.__APP_BASE__ || "").replace(/\/+$/, "");
+  const root = base ? base + "/" : "/";
+  const url = `${root}data/pedagogy/${levelKey}-vocab-map.json`;
+  try {
+    const res = await fetch(url, { cache: "default" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const map = data && typeof data === "object" ? data : null;
+    if (map && typeof console !== "undefined" && console.debug) {
+      console.debug("[VocabMap] loaded:", levelKey + "-vocab-map.json");
+    }
+    _vocabMapCache.set(levelKey, map);
+    return map;
+  } catch {
+    return null;
+  }
+}
+
 /** 获取 vocab-distribution.json：distribution 键顺序 + lessonThemes 主题标题
  *  返回 { order: string[], lessonThemes: Record<string, string> } 或 null */
 const _vocabDistCache = new Map();
@@ -956,7 +978,14 @@ async function loadLessons() {
         }
       } else {
         const levelKey = `hsk${state.lv}`;
-        const distribution = distributeVocabulary(levelKey, blueprint, vocabList);
+        const vocabMap = await loadVocabMap(levelKey);
+        let distribution = null;
+        if (vocabMap && Object.keys(vocabMap).some((k) => k !== "description" && k !== "version")) {
+          distribution = distributeVocabularyByMap(levelKey, vocabMap, vocabList);
+        }
+        if (!distribution || Object.keys(distribution).length === 0) {
+          distribution = distributeVocabulary(levelKey, blueprint, vocabList);
+        }
         if (distribution && Object.keys(distribution).length > 0) {
           result = applyVocabDistribution(result, distribution);
         }
