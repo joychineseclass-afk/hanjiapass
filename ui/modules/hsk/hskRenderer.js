@@ -96,59 +96,62 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   containerEl.innerHTML = `<div class="hsk-directory-rows">${rows || `<div class="hsk-directory-empty">${escapeHtml(emptyMsg)}</div>`}</div>`;
 }
 
+/** 构建单个词卡 HTML（与课程单词页相同组件） */
+function buildWordCard(x, { currentLang, glossaryScope } = {}) {
+  try {
+    const raw = typeof x === "string" ? { hanzi: x } : (x || {});
+    const han = wordKey(raw) || String(raw.hanzi || raw.han || raw.word || raw.zh || raw.cn || raw.simplified || raw.trad || "").trim();
+    let pinyinStr = wordPinyin(raw);
+    if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
+
+    let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
+    if (mainStr && mainStr.includes("object Object")) mainStr = "";
+    if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
+
+    const posStr = getPosByLang(raw, currentLang, glossaryScope);
+
+    const learnLabel = i18n.t("action.learn");
+    const strokeLabel = i18n.t("action.trace");
+    const audioLabel = i18n.t("action.speak");
+    const strokeDisabled = !han ? " disabled" : "";
+    const hanziChars = han ? Array.from(han).map((ch) =>
+      `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
+    ).join("") : escapeHtml(han);
+
+    const imgUrl = getWordImageUrl(raw);
+    const imgHtml = imgUrl
+      ? `<img class="word-card-image" src="${escapeHtmlAttr(imgUrl)}" alt="${escapeHtmlAttr(han)}" loading="lazy" onerror="this.style.display='none'" />`
+      : "";
+
+    return `
+    <div class="word-card lesson-vocab-card lesson-card" data-word-hanzi="${escapeHtmlAttr(han)}">
+      ${imgHtml}
+      <div class="word-hanzi">${hanziChars}</div>
+      <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
+      ${posStr ? `<div class="word-pos text-sm opacity-75">${escapeHtml(posStr)}</div>` : ""}
+      <div class="word-meaning">
+        <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
+      </div>
+      <div class="word-actions">
+        <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
+        <button type="button" class="btn btn-stroke" data-action="stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
+        <button type="button" class="btn btn-audio" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
+      </div>
+    </div>
+  `;
+  } catch (e) {
+    console.warn("[buildWordCard] failed for item:", x, e);
+    return `<div class="word-card" style="border:1px solid #fecaca;color:#dc2626;"><div class="word-meaning">Error rendering word</div></div>`;
+  }
+}
+
 export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
 
-  const cards = arr.map((x) => {
-    try {
-      const raw = typeof x === "string" ? { hanzi: x } : (x || {});
-      const han = wordKey(raw) || String(raw.hanzi || raw.han || raw.word || raw.zh || raw.cn || raw.simplified || raw.trad || "").trim();
-      let pinyinStr = wordPinyin(raw);
-      if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
-
-      let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
-      if (mainStr && mainStr.includes("object Object")) mainStr = "";
-      if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
-
-      const posStr = getPosByLang(raw, currentLang, glossaryScope);
-
-      const learnLabel = i18n.t("action.learn");
-      const strokeLabel = i18n.t("action.trace");
-      const audioLabel = i18n.t("action.speak");
-      const strokeDisabled = !han ? " disabled" : "";
-      const hanziChars = han ? Array.from(han).map((ch) =>
-        `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
-      ).join("") : escapeHtml(han);
-
-      const imgUrl = getWordImageUrl(raw);
-      const imgHtml = imgUrl
-        ? `<img class="word-card-image" src="${escapeHtmlAttr(imgUrl)}" alt="${escapeHtmlAttr(han)}" loading="lazy" onerror="this.style.display='none'" />`
-        : "";
-
-      return `
-      <div class="word-card lesson-vocab-card lesson-card" data-word-hanzi="${escapeHtmlAttr(han)}">
-        ${imgHtml}
-        <div class="word-hanzi">${hanziChars}</div>
-        <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
-        ${posStr ? `<div class="word-pos text-sm opacity-75">${escapeHtml(posStr)}</div>` : ""}
-        <div class="word-meaning">
-          <div class="word-meaning-main">${escapeHtml(mainStr)}</div>
-        </div>
-        <div class="word-actions">
-          <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
-          <button type="button" class="btn btn-stroke" data-action="stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
-          <button type="button" class="btn btn-audio" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
-        </div>
-      </div>
-    `;
-    } catch (e) {
-      console.warn("[renderWordCards] failed for item:", x, e);
-      return `<div class="word-card" style="border:1px solid #fecaca;color:#dc2626;"><div class="word-meaning">Error rendering word</div></div>`;
-    }
-  });
+  const cards = arr.map((x) => buildWordCard(x, { currentLang, glossaryScope }));
 
   const hero = `<section class="lesson-section-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
@@ -157,7 +160,6 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
 </section>`;
   gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 
-  // 供 bindWordCardActions 查找 learn 时用的 item 与 callback
   if (typeof window !== "undefined") {
     window.__HSK_WORD_ITEMS_BY_HANZI = window.__HSK_WORD_ITEMS_BY_HANZI || new Map();
     arr.forEach((x) => {
@@ -170,35 +172,16 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   bindWordCardActions();
 }
 
-/** 渲染单个词行（复习课用） */
-function renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel }) {
-  const raw = typeof x === "string" ? { hanzi: x } : (x || {});
-  const han = wordKey(raw) || String(raw.hanzi || raw.word || "").trim();
-  let pinyinStr = wordPinyin(raw);
-  if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
-  let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
-  if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
-  const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
-  const attrs = han ? ` data-speak-text="${zhEsc}" data-speak-kind="review-word"` : "";
-  return `<div class="review-word-row" data-word-hanzi="${escapeHtmlAttr(han)}" data-word-pinyin="${escapeHtmlAttr(pinyinStr)}">
-  <span class="review-word-hanzi"${attrs}>${escapeHtml(han)}</span>
-  <span class="review-word-pinyin">${escapeHtml(pinyinStr)}</span>
-  <span class="review-word-meaning">${escapeHtml(mainStr)}</span>
-  <button type="button" class="review-word-speak-btn" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}" title="${escapeHtmlAttr(speakLabel)}">🔊</button>
-</div>`;
-}
-
 /**
- * 复习课专用：单词目录式列表
- * - 有 wordsByLesson 时：按来源课程分组展示（第1课、第2课...）
- * - 无 wordsByLesson 时：扁平列表（兼容旧逻辑）
+ * 复习课专用：使用与课程单词页相同的词卡组件
+ * - 有 wordsByLesson 时：按来源课程分组，每组显示词卡网格
+ * - 无 wordsByLesson 时：扁平词卡网格（兼容旧逻辑）
  */
 export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
-  const speakLabel = i18n.t("action.speak") || "听";
 
   let bodyHtml = "";
   const allItems = [];
@@ -209,20 +192,20 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
       const words = Array.isArray(wordsByLesson[lessonKey]) ? wordsByLesson[lessonKey] : [];
       const no = Number(lessonKey) || 0;
       const lessonLabel = i18n.t("hsk.lesson_no_format", { n: no }) || `第${no}课`;
-      const rows = words.map((x) => {
+      const cards = words.map((x) => {
         allItems.push(x);
-        return renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel });
+        return buildWordCard(x, { currentLang, glossaryScope });
       }).join("");
       return `<section class="review-lesson-group">
   <h4 class="review-lesson-group-title">${escapeHtml(lessonLabel)}</h4>
-  <div class="review-word-list">${rows}</div>
+  <div class="lesson-card-grid word-grid">${cards}</div>
 </section>`;
     }).filter(Boolean).join("");
     bodyHtml = `<div class="review-words-by-lesson">${sections}</div>`;
   } else {
-    const rows = arr.map((x) => renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel }));
+    const cards = arr.map((x) => buildWordCard(x, { currentLang, glossaryScope }));
     allItems.push(...arr);
-    bodyHtml = `<div class="review-word-list">${rows.join("")}</div>`;
+    bodyHtml = `<div class="lesson-card-grid word-grid">${cards.join("")}</div>`;
   }
 
   const totalCount = allItems.length;
@@ -240,7 +223,7 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
       if (h) window.__HSK_WORD_ITEMS_BY_HANZI.set(h, x);
     });
   }
-  bindReviewWordActions();
+  bindWordCardActions();
 }
 
 let _reviewWordBound = false;
