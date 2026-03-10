@@ -267,13 +267,13 @@ export function pick(obj, options = {}) {
  * 4b. getLessonDisplayTitle(lesson, lang?)
  * 统一 lesson 标题：目录页与 detail 共用
  * JP strict lock: 当 lang=jp 时，只返回 jp 字段，绝不 fallback 到 kr/cn
- * 优先 pick(lesson.title, { strict:true })
+ * 优先 displayTitle（blueprint 覆盖），其次 title / name / label
  * 兼容 lesson.title_jp / title_en / title_kr / title_cn
  */
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
   const l = lang ?? getLang();
-  const titleObj = lesson.title || lesson.name || lesson.label;
+  const titleObj = lesson.displayTitle || lesson.title || lesson.name || lesson.label;
   if (typeof titleObj === "object" && titleObj !== null) {
     const v = pick(titleObj, { strict: true, lang: l });
     if (v) return v;

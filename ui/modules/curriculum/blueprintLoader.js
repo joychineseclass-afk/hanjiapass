@@ -1,17 +1,21 @@
 /**
  * Lumina Curriculum Blueprint Loader
  * 加载课程蓝图（仅结构：title, grammar, scene），不生成内容
+ * 路径与 DATA_PATHS / dataPaths 一致：data/pedagogy/{level}-blueprint.json
  */
 
 const CACHE = new Map();
 
-function getBase() {
+function getBlueprintUrl(cacheKey) {
   try {
     const base = window.DATA_PATHS?.getBase?.();
-    if (base && String(base).trim()) return String(base).replace(/\/+$/, "") + "/";
+    const b = base && String(base).trim();
+    const root = b ? String(base).replace(/\/+$/, "") + "/" : "/";
+    return root + `data/pedagogy/${cacheKey}-blueprint.json`;
   } catch {}
   const appBase = String(window.__APP_BASE__ || "").replace(/\/+$/, "");
-  return appBase ? appBase + "/" : "/";
+  const root = appBase ? appBase + "/" : "/";
+  return root + `data/pedagogy/${cacheKey}-blueprint.json`;
 }
 
 /**
@@ -26,10 +30,13 @@ export async function loadBlueprint(level) {
   const hit = CACHE.get(cacheKey);
   if (hit) return hit;
 
-  const url = getBase() + `data/pedagogy/${cacheKey}-blueprint.json`;
+  const url = getBlueprintUrl(cacheKey);
   try {
     const res = await fetch(url);
     if (!res.ok) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn("[Blueprint] load failed (404 or error):", url, "status:", res.status);
+      }
       CACHE.set(cacheKey, null);
       return null;
     }
@@ -44,7 +51,7 @@ export async function loadBlueprint(level) {
     return blueprint;
   } catch (err) {
     if (typeof console !== "undefined" && console.warn) {
-      console.warn("[Blueprint] load failed:", cacheKey, err?.message);
+      console.warn("[Blueprint] load failed:", cacheKey, url, err?.message);
     }
     CACHE.set(cacheKey, null);
     return null;

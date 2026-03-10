@@ -754,8 +754,8 @@ function sortLessonsByDistributionOrder(lessons, order) {
   if (!Array.isArray(lessons) || !Array.isArray(order) || order.length === 0) return lessons;
   const idxMap = new Map(order.map((k, i) => [k, i]));
   return [...lessons].sort((a, b) => {
-    const noA = Number((a && a.lessonNo) || (a && a.lesson) || (a && a.id) || (a && a.no) || 0) || 0;
-    const noB = Number((b && b.lessonNo) || (b && b.lesson) || (b && b.id) || (b && b.no) || 0) || 0;
+    const noA = getLessonNumber(a);
+    const noB = getLessonNumber(b);
     const keyA = noA ? `lesson${noA}` : "";
     const keyB = noB ? `lesson${noB}` : "";
     const iA = idxMap.has(keyA) ? idxMap.get(keyA) : Infinity;
@@ -794,7 +794,7 @@ const HSK1_THEME_TRANSLATIONS = {
 function applyVocabDistributionTitles(lessons, lessonThemes) {
   if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") return lessons;
   return lessons.map((l) => {
-    const no = Number((l && l.lessonNo) || (l && l.lesson) || (l && l.id) || (l && l.no) || 0) || 0;
+    const no = getLessonNumber(l);
     const theme = no ? (lessonThemes[String(no)] || lessonThemes[no]) : null;
     if (!theme || typeof theme !== "string") return l;
     const tr = HSK1_THEME_TRANSLATIONS[theme];
@@ -813,17 +813,44 @@ function applyVocabDistributionTitles(lessons, lessonThemes) {
   });
 }
 
-/** Blueprint 优先：用蓝图 title 覆盖课程标题（课程目录与详情共用） */
+/** 统一课程编号：兼容 lessonNo / no / id / lesson / index */
+function getLessonNumber(lesson) {
+  if (!lesson || typeof lesson !== "object") return 0;
+  const n = Number(lesson.lessonNo ?? lesson.no ?? lesson.id ?? lesson.lesson ?? lesson.index ?? 0) || 0;
+  return n;
+}
+
+/** Blueprint 优先：用蓝图 title 覆盖课程标题（课程目录与详情共用）
+ * 若 blueprint[lessonNo]?.title 存在：覆盖 title、写入 displayTitle、保留 originalTitle
+ */
 function applyBlueprintTitles(lessons, blueprint) {
   if (!Array.isArray(lessons) || !blueprint || typeof blueprint !== "object") return lessons;
   return lessons.map((l) => {
-    const no = Number((l && l.lessonNo) || (l && l.lesson) || (l && l.id) || (l && l.no) || 0) || 0;
-    const entry = no ? blueprint[String(no)] : null;
-    const title = entry && typeof entry.title === "string" ? entry.title.trim() : "";
-    if (!title) return l;
+    const no = getLessonNumber(l);
+    const key = String(no);
+    const entry = no ? blueprint[key] : null;
+    let titleObj = null;
+    if (entry && entry.title != null) {
+      if (typeof entry.title === "string" && entry.title.trim()) {
+        const t = entry.title.trim();
+        titleObj = { zh: t, kr: t, en: t, jp: t, cn: t };
+      } else if (typeof entry.title === "object" && entry.title !== null) {
+        const o = entry.title;
+        titleObj = {
+          zh: String(o.zh ?? o.cn ?? "").trim() || String(o.cn ?? o.zh ?? "").trim(),
+          kr: String(o.kr ?? o.ko ?? "").trim(),
+          en: String(o.en ?? "").trim(),
+          jp: String(o.jp ?? o.ja ?? "").trim(),
+          cn: String(o.cn ?? o.zh ?? "").trim(),
+        };
+      }
+    }
+    if (!titleObj || (!titleObj.zh && !titleObj.cn)) return l;
     return {
       ...l,
-      title: { zh: title, kr: title, en: title, jp: title },
+      originalTitle: l.title,
+      title: titleObj,
+      displayTitle: titleObj,
     };
   });
 }
@@ -858,7 +885,23 @@ async function loadLessons() {
     let result = sortLessonsByDistributionOrder(lessons, (vocabDist && vocabDist.order) || null);
     result = applyVocabDistributionTitles(result, (vocabDist && vocabDist.lessonThemes) || null);
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
-    if (blueprint) result = applyBlueprintTitles(result, blueprint);
+    if (blueprint) {
+      result = applyBlueprintTitles(result, blueprint);
+      if (state.lv === 1 && typeof console !== "undefined" && console.debug) {
+        console.debug("[Blueprint] loaded: hsk1");
+        console.debug("[Blueprint] lesson count:", Object.keys(blueprint).length);
+        const first = result.find((l) => getLessonNumber(l) === 1);
+        const bp1 = blueprint["1"];
+        if (bp1?.title) {
+          const display = (first && (first.displayTitle?.zh ?? first.displayTitle?.cn ?? first.title?.zh ?? first.title?.cn)) || "";
+          console.debug("[Blueprint] matched lesson 1 ->", display || bp1.title);
+        } else {
+          console.debug("[Blueprint] lesson 1 not matched, blueprint[\"1\"]:", bp1 ? "no title" : "missing");
+        }
+      }
+    } else if (state.lv === 1 && typeof console !== "undefined" && console.warn) {
+      console.warn("[Blueprint] hsk1 not loaded, titles will use vocab-distribution or lesson JSON");
+    }
 
     state.lessons = result;
     const total = state.lessons.length;
@@ -879,7 +922,7 @@ async function openLesson({ lessonNo, file }) {
   try {
     let lessonData = null;
     // ✅ HSK 优先使用 HSK_LOADER，确保 review 课(21/22)合并逻辑生效
-    const listItem = state.lessons.find((l) => Number((l && l.lessonNo) || l.lesson || l.no) === no);
+    const listItem = state.lessons.find((l) => getLessonNumber(l) === no);
     if (window.HSK_LOADER && typeof window.HSK_LOADER.loadLessonDetail === "function") {
       try {
         lessonData = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
@@ -910,9 +953,26 @@ async function openLesson({ lessonNo, file }) {
     }
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     const bpEntry = blueprint && blueprint[String(no)];
-    if (bpEntry && typeof bpEntry.title === "string" && bpEntry.title.trim()) {
-      const t = bpEntry.title.trim();
-      lessonData.title = { zh: t, kr: t, en: t, jp: t };
+    if (bpEntry && bpEntry.title != null) {
+      let titleObj = null;
+      if (typeof bpEntry.title === "string" && bpEntry.title.trim()) {
+        const t = bpEntry.title.trim();
+        titleObj = { zh: t, kr: t, en: t, jp: t, cn: t };
+      } else if (typeof bpEntry.title === "object" && bpEntry.title !== null) {
+        const o = bpEntry.title;
+        titleObj = {
+          zh: String(o.zh ?? o.cn ?? "").trim() || String(o.cn ?? o.zh ?? "").trim(),
+          kr: String(o.kr ?? o.ko ?? "").trim(),
+          en: String(o.en ?? "").trim(),
+          jp: String(o.jp ?? o.ja ?? "").trim(),
+          cn: String(o.cn ?? o.zh ?? "").trim(),
+        };
+      }
+      if (titleObj && (titleObj.zh || titleObj.cn)) {
+        lessonData.originalTitle = lessonData.title;
+        lessonData.title = titleObj;
+        lessonData.displayTitle = titleObj;
+      }
     }
 
     const lessonWordsRaw = Array.isArray(lessonData && lessonData.words) ? lessonData.words : (Array.isArray(lessonData && lessonData.vocab) ? lessonData.vocab : []);
