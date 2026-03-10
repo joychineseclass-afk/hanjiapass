@@ -200,15 +200,8 @@
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        { "speaker": "A", "text": "她是你妈妈吗？", "pinyin": "Tā shì nǐ māma ma?", "translation": { "kr": "그녀는 당신 엄마예요?", "en": "Is she your mom?", "jp": "彼女はあなたのお母さんですか？" } },
-        { "speaker": "B", "text": "是，她是我妈妈。", "pinyin": "Shì, tā shì wǒ māma.", "translation": { "kr": "네, 그녀는 우리 엄마예요.", "en": "Yes, she's my mom.", "jp": "はい、彼女は私の母です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
         { "speaker": "A", "text": "你家几个人？", "pinyin": "Nǐ jiā jǐ gè rén?", "translation": { "kr": "가족이 몇 명이에요?", "en": "How many people in your family?", "jp": "ご家族は何人ですか？" } },
-        { "speaker": "B", "text": "我家四个人。爸爸、妈妈、我、儿子。", "pinyin": "Wǒ jiā sì gè rén. Bàba, māma, wǒ, érzi.", "translation": { "kr": "네 명이에요. 아빠, 엄마, 저, 아들.", "en": "Four people. Dad, mom, me, son.", "jp": "4人です。父、母、私、息子。" } }
+        { "speaker": "B", "text": "我家四个人。", "pinyin": "Wǒ jiā sì gè rén.", "translation": { "kr": "네 명이에요.", "en": "Four people.", "jp": "4人です。" } }
       ]
     }
   ],

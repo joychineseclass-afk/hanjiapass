@@ -293,13 +293,6 @@
         { "speaker": "A", "text": "多少个学生？", "pinyin": "Duōshao gè xuésheng?", "translation": { "kr": "학생이 몇 명이에요?", "en": "How many students?", "jp": "学生は何人ですか？" } },
         { "speaker": "B", "text": "三个学生。", "pinyin": "Sān gè xuésheng.", "translation": { "kr": "학생 세 명이에요.", "en": "Three students.", "jp": "学生3人です。" } }
       ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "少吗？", "pinyin": "Shǎo ma?", "translation": { "kr": "적어요?", "en": "Is it few?", "jp": "少ないですか？" } },
-        { "speaker": "B", "text": "少。零个。", "pinyin": "Shǎo. Líng gè.", "translation": { "kr": "적어요. 영 개예요.", "en": "Yes, few. Zero.", "jp": "少ないです。ゼロ個です。" } }
-      ]
     }
   ],
   "grammar": [

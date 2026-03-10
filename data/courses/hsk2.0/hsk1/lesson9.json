@@ -108,78 +108,12 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "喂，你好！",
-          "pinyin": "Wéi, nǐ hǎo!",
-          "kr": "여보세요, 안녕하세요!",
-          "text": "喂，你好！",
-          "translation": {
-            "kr": "여보세요, 안녕하세요!",
-            "en": "Hello!",
-            "jp": "もしもし、こんにちは！"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "你好。",
-          "pinyin": "Nǐ hǎo.",
-          "kr": "안녕하세요.",
-          "text": "你好。",
-          "translation": {
-            "kr": "안녕하세요.",
-            "en": "Hello.",
-            "jp": "こんにちは。"
-          }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "zh": "请问你是谁？",
-          "pinyin": "Qǐngwèn nǐ shì shéi?",
-          "kr": "请问你是谁?",
-          "text": "请问你是谁？",
-          "translation": {
-            "kr": "请问你是谁?",
-            "en": "May I ask who you are?",
-            "jp": "どちら様ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我是小明。",
-          "pinyin": "Wǒ shì Xiǎomíng.",
-          "kr": "저는 샤오밍이에요.",
-          "text": "我是小明。",
-          "translation": {
-            "kr": "저는 샤오밍이에요.",
-            "en": "I'm Xiaoming.",
-            "jp": "小明です。"
-          }
-        }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "请打电话。", "pinyin": "Qǐng dǎ diànhuà.", "translation": { "kr": "전화해 주세요.", "en": "Please call.", "jp": "電話してください。" } },
-        { "speaker": "B", "text": "好。再见！", "pinyin": "Hǎo. Zàijiàn!", "translation": { "kr": "알겠어요. 안녕히 가세요!", "en": "OK. Goodbye!", "jp": "わかりました。さようなら!" } }
+        { "speaker": "A", "text": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "translation": { "kr": "여보세요, 안녕하세요!", "en": "Hello!", "jp": "もしもし、こんにちは！" } },
+        { "speaker": "B", "text": "你好。", "pinyin": "Nǐ hǎo.", "translation": { "kr": "안녕하세요.", "en": "Hello.", "jp": "こんにちは。" } },
+        { "speaker": "A", "text": "请问你是谁？", "pinyin": "Qǐngwèn nǐ shì shéi?", "translation": { "kr": "请问你是谁?", "en": "May I ask who you are?", "jp": "どちら様ですか？" } },
+        { "speaker": "B", "text": "我是小明。", "pinyin": "Wǒ shì Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "I'm Xiaoming.", "jp": "小明です。" } }
       ]
     }
   ],

@@ -141,20 +141,6 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "translation": { "kr": "지금 몇 시예요?", "en": "What time is it now?", "jp": "今何時ですか？" } },
-        { "speaker": "B", "text": "现在三点。", "pinyin": "Xiànzài sān diǎn.", "translation": { "kr": "지금 3시예요.", "en": "It's three o'clock.", "jp": "3時です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
-        { "speaker": "A", "text": "上午几点？", "pinyin": "Shàngwǔ jǐ diǎn?", "translation": { "kr": "오전 몇 시예요?", "en": "What time in the morning?", "jp": "午前何時ですか？" } },
-        { "speaker": "B", "text": "上午九点。", "pinyin": "Shàngwǔ jiǔ diǎn.", "translation": { "kr": "오전 9시예요.", "en": "Nine in the morning.", "jp": "午前9時です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "现在什么时候？", "pinyin": "Xiànzài shénme shíhou?", "translation": { "kr": "지금 몇 시예요?", "en": "What time is it now?", "jp": "今何時ですか？" } },
         { "speaker": "B", "text": "下午三点。", "pinyin": "Xiàwǔ sān diǎn.", "translation": { "kr": "오후 3시예요.", "en": "Three in the afternoon.", "jp": "午後3時です。" } }
       ]
     }

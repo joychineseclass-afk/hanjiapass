@@ -156,21 +156,9 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "你吃什么？", "pinyin": "Nǐ chī shénme?", "translation": { "kr": "뭘 먹어요?", "en": "What do you eat?", "jp": "何を食べますか？" } },
-        { "speaker": "B", "text": "我吃米饭和菜。", "pinyin": "Wǒ chī mǐfàn hé cài.", "translation": { "kr": "밥이랑 반찬 먹어요.", "en": "I eat rice and dishes.", "jp": "ご飯と料理を食べます。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
+        { "speaker": "B", "text": "我吃米饭和菜。", "pinyin": "Wǒ chī mǐfàn hé cài.", "translation": { "kr": "밥이랑 반찬 먹어요.", "en": "I eat rice and dishes.", "jp": "ご飯と料理を食べます。" } },
         { "speaker": "A", "text": "你喝水吗？", "pinyin": "Nǐ hē shuǐ ma?", "translation": { "kr": "물 마셔요?", "en": "Do you drink water?", "jp": "水を飲みますか？" } },
-        { "speaker": "B", "text": "喝。我喝水。", "pinyin": "Hē. Wǒ hē shuǐ.", "translation": { "kr": "마셔요. 물 마셔요.", "en": "Yes. I drink water.", "jp": "飲みます。水を飲みます。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "你吃水果吗？", "pinyin": "Nǐ chī shuǐguǒ ma?", "translation": { "kr": "과일 먹어요?", "en": "Do you eat fruit?", "jp": "果物を食べますか？" } },
-        { "speaker": "B", "text": "吃。我喜欢苹果。", "pinyin": "Chī. Wǒ xǐhuan píngguǒ.", "translation": { "kr": "먹어요. 사과 좋아해요.", "en": "Yes. I like apples.", "jp": "食べます。りんごが好きです。" } }
+        { "speaker": "B", "text": "喝。", "pinyin": "Hē.", "translation": { "kr": "마셔요.", "en": "Yes.", "jp": "飲みます。" } }
       ]
     }
   ],

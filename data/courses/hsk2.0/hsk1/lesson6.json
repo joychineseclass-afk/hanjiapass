@@ -141,21 +141,9 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "你多大？", "pinyin": "Nǐ duō dà?", "translation": { "kr": "몇 살이에요?", "en": "How old are you?", "jp": "おいくつですか？" } },
-        { "speaker": "B", "text": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "translation": { "kr": "저는 스무 살이에요.", "en": "I'm twenty.", "jp": "20歳です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
+        { "speaker": "B", "text": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "translation": { "kr": "저는 스무 살이에요.", "en": "I'm twenty.", "jp": "20歳です。" } },
         { "speaker": "A", "text": "他大吗？", "pinyin": "Tā dà ma?", "translation": { "kr": "그는 커요?", "en": "Is he big?", "jp": "彼は大きいですか？" } },
         { "speaker": "B", "text": "不大，他很小。", "pinyin": "Bù dà, tā hěn xiǎo.", "translation": { "kr": "아니요, 그는 아주 작아요.", "en": "No, he's very small.", "jp": "いいえ、とても小さいです。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "你儿子几岁？", "pinyin": "Nǐ érzi jǐ suì?", "translation": { "kr": "아들이 몇 살이에요?", "en": "How old is your son?", "jp": "息子さんは何歳ですか？" } },
-        { "speaker": "B", "text": "五岁。", "pinyin": "Wǔ suì.", "translation": { "kr": "다섯 살이에요.", "en": "Five years old.", "jp": "5歳です。" } }
       ]
     }
   ],

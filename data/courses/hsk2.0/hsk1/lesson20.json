@@ -123,58 +123,19 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "你怎么了？",
-          "pinyin": "Nǐ zěnme le?",
-          "translation": {
-            "kr": "어디 아파요?",
-            "en": "What's wrong with you?",
-            "jp": "どうしましたか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "我不好。",
-          "pinyin": "Wǒ bù hǎo.",
-          "translation": {
-            "kr": "저는 몸이 안 좋아요.",
-            "en": "I don't feel well.",
-            "jp": "体調が悪いです。"
-          }
-        }
+        { "speaker": "A", "text": "你怎么了？", "pinyin": "Nǐ zěnme le?", "translation": { "kr": "어디 아파요?", "en": "What's wrong with you?", "jp": "どうしましたか？" } },
+        { "speaker": "B", "text": "我不好。", "pinyin": "Wǒ bù hǎo.", "translation": { "kr": "저는 몸이 안 좋아요.", "en": "I don't feel well.", "jp": "体調が悪いです。" } },
+        { "speaker": "A", "text": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "translation": { "kr": "병원 갔어요?", "en": "Did you go to the hospital?", "jp": "病院に行きましたか？" } },
+        { "speaker": "B", "text": "没去。", "pinyin": "Méi qù.", "translation": { "kr": "안 갔어요.", "en": "No, I didn't.", "jp": "行っていません。" } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        { "speaker": "A", "zh": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "kr": "병원 갔어요?", "text": "你去医院了吗？", "translation": { "kr": "병원 갔어요?", "en": "Did you go to the hospital?", "jp": "病院に行きましたか？" } },
-        { "speaker": "B", "zh": "没去。", "pinyin": "Méi qù.", "kr": "안 갔어요.", "text": "没去。", "translation": { "kr": "안 갔어요.", "en": "No, I didn't.", "jp": "行っていません。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
         { "speaker": "A", "text": "现在怎么样？我们去医院。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen qù yīyuàn. Nǐ ne?", "translation": { "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "en": "How are you now? Let's go to the hospital. And you?", "jp": "今どうですか？病院に行きましょう。あなたは？" } },
-        {
-          "speaker": "B",
-          "zh": "很好。",
-          "pinyin": "Hěn hǎo.",
-          "kr": "아주 좋아요.",
-          "text": "很好。",
-          "translation": {
-            "kr": "아주 좋아요.",
-            "en": "Very good.",
-            "jp": "とても良いです。"
-          }
-        }
+        { "speaker": "B", "text": "很好。", "pinyin": "Hěn hǎo.", "translation": { "kr": "아주 좋아요.", "en": "Very good.", "jp": "とても良いです。" } }
       ]
     }
   ],

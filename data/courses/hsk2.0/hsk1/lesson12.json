@@ -138,76 +138,10 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你做什么工作？",
-          "pinyin": "Nǐ zuò shénme gōngzuò?",
-          "kr": "무슨 일 하세요?",
-          "text": "你做什么工作？",
-          "translation": {
-            "kr": "무슨 일 하세요?",
-            "en": "What do you do for work?",
-            "jp": "お仕事は何をしていますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我是医生。",
-          "pinyin": "Wǒ shì yīshēng.",
-          "kr": "저는 의사예요.",
-          "text": "我是医生。",
-          "translation": {
-            "kr": "저는 의사예요.",
-            "en": "I'm a doctor.",
-            "jp": "医者です。"
-          }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "zh": "他是老师吗？",
-          "pinyin": "Tā shì lǎoshī ma?",
-          "kr": "그는 선생님이에요?",
-          "text": "他是老师吗？",
-          "translation": {
-            "kr": "그는 선생님이에요?",
-            "en": "Is he a teacher?",
-            "jp": "彼は先生ですか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "是，他是老师。",
-          "pinyin": "Shì, tā shì lǎoshī.",
-          "kr": "네, 그는 선생님이에요.",
-          "text": "是，他是老师。",
-          "translation": {
-            "kr": "네, 그는 선생님이에요.",
-            "en": "Yes, he's a teacher.",
-            "jp": "はい、先生です。"
-          }
-        }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
+        { "speaker": "A", "text": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "translation": { "kr": "무슨 일 하세요?", "en": "What do you do for work?", "jp": "お仕事は何をしていますか？" } },
+        { "speaker": "B", "text": "我是医生。", "pinyin": "Wǒ shì yīshēng.", "translation": { "kr": "저는 의사예요.", "en": "I'm a doctor.", "jp": "医者です。" } },
         { "speaker": "A", "text": "李小姐会汉语吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma?", "translation": { "kr": "이小姐는 중국어 할 수 있어요?", "en": "Can Miss Li speak Chinese?", "jp": "李さんは中国語ができますか？" } },
         { "speaker": "B", "text": "会。她会汉语。", "pinyin": "Huì. Tā huì Hànyǔ.", "translation": { "kr": "네. 중국어 할 줄 알아요.", "en": "Yes. She can speak Chinese.", "jp": "はい。中国語が話せます。" } }
       ]

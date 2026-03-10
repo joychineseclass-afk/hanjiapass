@@ -156,18 +156,13 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "今天天气热吗？", "pinyin": "Jīntiān tiānqì rè ma?", "translation": { "kr": "오늘 날씨 더워요?", "en": "Is it hot today?", "jp": "今日は暑いですか？" } },
-        { "speaker": "B", "text": "太热了。", "pinyin": "Tài rè le.", "translation": { "kr": "너무 더워요.", "en": "Too hot.", "jp": "暑すぎます。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
+        { "speaker": "B", "text": "太热了。", "pinyin": "Tài rè le.", "translation": { "kr": "너무 더워요.", "en": "Too hot.", "jp": "暑すぎます。" } },
         { "speaker": "A", "text": "下雨吗？", "pinyin": "Xià yǔ ma?", "translation": { "kr": "비 와요?", "en": "Is it raining?", "jp": "雨が降っていますか？" } },
         { "speaker": "B", "text": "不下雨。", "pinyin": "Bù xià yǔ.", "translation": { "kr": "비 안 와요.", "en": "No, it's not raining.", "jp": "降っていません。" } }
       ]
     },
     {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
         { "speaker": "A", "text": "你想做什么？", "pinyin": "Nǐ xiǎng zuò shénme?", "translation": { "kr": "뭐 하고 싶어요?", "en": "What do you want to do?", "jp": "何をしたいですか？" } },
         { "speaker": "B", "text": "我想睡觉。", "pinyin": "Wǒ xiǎng shuìjiào.", "translation": { "kr": "자고 싶어요.", "en": "I want to sleep.", "jp": "寝たいです。" } }

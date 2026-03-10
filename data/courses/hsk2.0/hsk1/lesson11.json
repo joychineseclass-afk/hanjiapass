@@ -156,21 +156,9 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "你在哪儿学习？", "pinyin": "Nǐ zài nǎr xuéxí?", "translation": { "kr": "어디서 공부해요?", "en": "Where do you study?", "jp": "どこで勉強しますか？" } },
-        { "speaker": "B", "text": "我在学校学习汉语。", "pinyin": "Wǒ zài xuéxiào xuéxí Hànyǔ.", "translation": { "kr": "저는 학교에서 중국어 공부해요.", "en": "I study Chinese at school.", "jp": "学校で中国語を勉強します。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
+        { "speaker": "B", "text": "我在学校学习汉语。", "pinyin": "Wǒ zài xuéxiào xuéxí Hànyǔ.", "translation": { "kr": "저는 학교에서 중국어 공부해요.", "en": "I study Chinese at school.", "jp": "学校で中国語を勉強します。" } },
         { "speaker": "A", "text": "你读什么书？", "pinyin": "Nǐ dú shénme shū?", "translation": { "kr": "무슨 책 읽어요?", "en": "What book do you read?", "jp": "どんな本を読みますか？" } },
-        { "speaker": "B", "text": "我读汉语书。三本书。", "pinyin": "Wǒ dú Hànyǔ shū. Sān běn shū.", "translation": { "kr": "중국어 책 읽어요. 책 세 권이에요.", "en": "I read Chinese books. Three books.", "jp": "中国語の本を読みます。3冊です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
-      "lines": [
-        { "speaker": "A", "text": "你写字吗？", "pinyin": "Nǐ xiě zì ma?", "translation": { "kr": "글자 써요?", "en": "Do you write characters?", "jp": "字を書きますか？" } },
-        { "speaker": "B", "text": "写。我写字。", "pinyin": "Xiě. Wǒ xiě zì.", "translation": { "kr": "써요. 글자 써요.", "en": "Yes. I write characters.", "jp": "はい。字を書きます。" } }
+        { "speaker": "B", "text": "我读汉语书。", "pinyin": "Wǒ dú Hànyǔ shū.", "translation": { "kr": "중국어 책 읽어요.", "en": "I read Chinese books.", "jp": "中国語の本を読みます。" } }
       ]
     }
   ],
