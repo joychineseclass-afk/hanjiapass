@@ -58,20 +58,34 @@
 // ========== 预定义模板（L3, L4, L5 试运行） ==========
 // 严格遵循词汇边界，手写以保证质量
 
+/** L3: 询问国籍与居住地 — 只使用 vocab-map 词汇：中国、人、哪、是、都、呢、北京、住 */
 const L3_TEMPLATE = {
   dialogues: [
     {
       title: "会话1",
       goal: "询问国籍与居住地",
       turns: [
-        { speaker: "A", zh: "你是学生吗？", pinyin: "Nǐ shì xuésheng ma?", ko: "학생이에요?" },
-        { speaker: "B", zh: "是，我是学生。我朋友是学生，我同学是学生。", pinyin: "Shì, wǒ shì xuésheng. Wǒ péngyou shì xuésheng, wǒ tóngxué shì xuésheng.", ko: "네, 저는 학생이에요. 제 친구도 학생이고, 동창도 학생이에요." },
-        { speaker: "A", zh: "北京好吗？", pinyin: "Běijīng hǎo ma?", ko: "베이징 좋아요?" },
-        { speaker: "B", zh: "好。中国很好。", pinyin: "Hǎo. Zhōngguó hěn hǎo.", ko: "좋아요. 중국도 좋아요." },
+        { speaker: "A", zh: "你是哪国人？", pinyin: "Nǐ shì nǎ guó rén?", ko: "어느 나라 사람이에요?" },
+        { speaker: "B", zh: "我是中国人。", pinyin: "Wǒ shì Zhōngguó rén.", ko: "저는 중국인이에요." },
+        { speaker: "A", zh: "你住哪？", pinyin: "Nǐ zhù nǎ?", ko: "어디에 살아요?" },
+        { speaker: "B", zh: "我住北京。", pinyin: "Wǒ zhù Běijīng.", ko: "저는 베이징에 살아요." },
+      ],
+    },
+    {
+      title: "会话2",
+      goal: "询问国籍与居住地",
+      turns: [
+        { speaker: "A", zh: "你呢？", pinyin: "Nǐ ne?", ko: "당신은요?" },
+        { speaker: "B", zh: "我住北京。", pinyin: "Wǒ zhù Běijīng.", ko: "저는 베이징에 살아요." },
+        { speaker: "A", zh: "北京、中国都好。", pinyin: "Běijīng, Zhōngguó dōu hǎo.", ko: "베이징, 중국 다 좋아요." },
+        { speaker: "B", zh: "是，都好。", pinyin: "Shì, dōu hǎo.", ko: "네, 다 좋아요." },
       ],
     },
   ],
-  extensionSentences: [],
+  extensionSentences: [
+    { zh: "你是哪国人？我是中国人。", pinyin: "Nǐ shì nǎ guó rén? Wǒ shì Zhōngguó rén.", ko: "어느 나라 사람이에요? 저는 중국인이에요." },
+    { zh: "你住哪？我住北京。", pinyin: "Nǐ zhù nǎ? Wǒ zhù Běijīng.", ko: "어디에 살아요? 저는 베이징에 살아요." },
+  ],
 };
 
 const L4_TEMPLATE = {
@@ -301,28 +315,49 @@ export function generateDialogues(input) {
 
 /**
  * 构建生成器输入（从 lesson + vocabDistribution）
+ * 若传入 opts.currentWords（来自 getFinalLessonWords），则优先使用，与页面单词 tab 一致。
  * @param {Object} lesson - lesson JSON
  * @param {Object} vocabDistribution - vocab-distribution.json
  * @param {Object} goals - hsk1-communication-goals.json goals
+ * @param {Object} [opts] - { currentWords, previousWords, forbiddenWords } 覆盖
  */
-export function buildGeneratorInput(lesson, vocabDistribution, goals) {
+export function buildGeneratorInput(lesson, vocabDistribution, goals, opts = {}) {
   const lessonNo = lesson.lessonNo || parseInt(lesson.id?.match(/\d+$/)?.[0], 10) || 1;
-  const dist = vocabDistribution.distribution || {};
-  const currentWords = (lesson.vocab || []).map((v) => v.hanzi).filter(Boolean);
-  const previousWords = [];
-  for (let i = 1; i < lessonNo; i++) {
-    const key = `lesson${i}`;
-    if (dist[key]) previousWords.push(...dist[key]);
-  }
-  const forbiddenWords = [];
-  for (let i = lessonNo + 1; i <= 22; i++) {
-    const key = `lesson${i}`;
-    if (dist[key]) forbiddenWords.push(...dist[key]);
-  }
+  const dist = vocabDistribution?.distribution || {};
+
+  const currentWords =
+    opts.currentWords !== undefined
+      ? (Array.isArray(opts.currentWords) ? opts.currentWords : [])
+      : (lesson.vocab || []).map((v) => v.hanzi).filter(Boolean);
+
+  const previousWords =
+    opts.previousWords !== undefined
+      ? (Array.isArray(opts.previousWords) ? opts.previousWords : [])
+      : (() => {
+          const out = [];
+          for (let i = 1; i < lessonNo; i++) {
+            const key = `lesson${i}`;
+            if (dist[key]) out.push(...dist[key]);
+          }
+          return out;
+        })();
+
+  const forbiddenWords =
+    opts.forbiddenWords !== undefined
+      ? (Array.isArray(opts.forbiddenWords) ? opts.forbiddenWords : [])
+      : (() => {
+          const out = [];
+          for (let i = lessonNo + 1; i <= 22; i++) {
+            const key = `lesson${i}`;
+            if (dist[key]) out.push(...dist[key]);
+          }
+          return out;
+        })();
+
   const allowedWords = [...new Set([...currentWords, ...previousWords])];
 
   const title = typeof lesson.title === "object" ? lesson.title.zh || lesson.title.en : String(lesson.title || "");
-  const goal = (goals && goals[String(lessonNo)]) || vocabDistribution.lessonThemes?.[String(lessonNo)] || "";
+  const goal = (goals && goals[String(lessonNo)]) || vocabDistribution?.lessonThemes?.[String(lessonNo)] || "";
 
   return {
     lessonId: String(lessonNo),

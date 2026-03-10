@@ -2,7 +2,7 @@
   "lessonId": "4",
   "lessonTitle": "家人",
   "communicativeGoal": "介绍家人",
-  "generatedAt": "2026-03-10T13:25:54.632Z",
+  "generatedAt": "2026-03-10T13:47:12.770Z",
   "dialogues": [
     {
       "title": "会话1",
@@ -37,12 +37,19 @@
   ],
   "extensionSentences": [],
   "coverage": {
-    "currentWordsTotal": 9,
-    "currentWordsUsed": 9,
-    "percent": 1,
-    "unusedWords": []
+    "currentWordsTotal": 6,
+    "currentWordsUsed": 4,
+    "percent": 0.6666666666666666,
+    "unusedWords": [
+      "朋友",
+      "小"
+    ]
   },
   "warnings": [
-    "Vocab stacking: 好。我家的人：我的爸爸、妈妈、儿子、女儿。"
+    "Vocab stacking: 好。我家的人：我的爸爸、妈妈、儿子、女儿。",
+    "Coverage 66.7% < 95%. Unused: 朋友, 小"
+  ],
+  "errors": [
+    "Future word violations: 妈妈, 爸爸, 家, 女儿, 儿子"
   ]
 }

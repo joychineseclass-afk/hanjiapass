@@ -317,11 +317,16 @@ function pickCardTitle(obj, cardIndex = 1) {
   return i18n.t("lesson.dialogue_card", "会话") + cardIndex;
 }
 
-/** 统一获取会话卡片：优先 dialogueCards，否则兼容 dialogue（嵌套/扁平） */
+/** 统一获取会话卡片：generatedDialogues > structuredDialogues > dialogueCards > dialogue */
 function getDialogueCards(lesson) {
-  const arr = (lesson && Array.isArray(lesson.dialogueCards) && lesson.dialogueCards.length)
-    ? lesson.dialogueCards
-    : (lesson && Array.isArray(lesson.dialogue) && lesson.dialogue.length ? lesson.dialogue : []);
+  const arr =
+    (lesson && Array.isArray(lesson.generatedDialogues) && lesson.generatedDialogues.length)
+      ? lesson.generatedDialogues
+      : (lesson && Array.isArray(lesson.structuredDialogues) && lesson.structuredDialogues.length)
+        ? lesson.structuredDialogues
+        : (lesson && Array.isArray(lesson.dialogueCards) && lesson.dialogueCards.length)
+          ? lesson.dialogueCards
+          : (lesson && Array.isArray(lesson.dialogue) && lesson.dialogue.length ? lesson.dialogue : []);
 
   if (!arr.length) return [];
 
@@ -555,7 +560,10 @@ function getExtensionExplanation(item, lang) {
  */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
-  const arr = Array.isArray(raw && raw.extension) ? raw.extension : [];
+  const arr =
+    Array.isArray(raw && raw.generatedExtensions) && raw.generatedExtensions.length
+      ? raw.generatedExtensions
+      : Array.isArray(raw && raw.extension) ? raw.extension : [];
   const lang = getLang();
   const speakLabel = i18n.t("hsk.extension_speak");
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
