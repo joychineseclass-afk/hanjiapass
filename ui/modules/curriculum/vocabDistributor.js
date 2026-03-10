@@ -210,16 +210,24 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
       const byLesson = {};
 
       for (const srcKey of reviewOf) {
-        const srcCore = result.core[String(srcKey)];
-        if (Array.isArray(srcCore)) {
-          const wordObjs = srcCore.filter((w) => w && typeof w === "object" && (w.hanzi || w.word || w.zh));
-          byLesson[String(srcKey)] = wordObjs;
-          for (const w of wordObjs) {
+        const srcCore = Array.isArray(result.core[String(srcKey)]) ? result.core[String(srcKey)] : [];
+        const srcExtra = Array.isArray(result.extra[String(srcKey)]) ? result.extra[String(srcKey)] : [];
+        const combined = [...srcCore, ...srcExtra];
+        const lessonSeen = new Set();
+        const wordObjs = combined
+          .filter((w) => w && typeof w === "object" && (w.hanzi || w.word || w.zh))
+          .filter((w) => {
             const k = wordKey(w);
-            if (k && !seen.has(k)) {
-              seen.add(k);
-              aggregated.push(w);
-            }
+            if (!k || lessonSeen.has(k)) return false;
+            lessonSeen.add(k);
+            return true;
+          });
+        byLesson[String(srcKey)] = wordObjs;
+        for (const w of wordObjs) {
+          const k = wordKey(w);
+          if (k && !seen.has(k)) {
+            seen.add(k);
+            aggregated.push(w);
           }
         }
       }

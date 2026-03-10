@@ -212,7 +212,8 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
       const validWords = words.map((w) => (typeof w === "string" ? { hanzi: w.trim() } : w)).filter((w) => w && (w.hanzi || w.word || w.zh));
       if (typeof console !== "undefined" && console.debug) {
         console.debug(`[ReviewWords] lesson ${no} count: ${validWords.length}`);
-        if (validWords.length > 0 && (no === 1 || no === 2 || no === 3)) {
+        console.debug(`[ReviewWords] lesson ${no} source: core+extra`);
+        if (validWords.length > 0 && (no === 1 || no === 2 || no === 3 || no === 4)) {
           console.debug(`[ReviewWords] lesson ${no} first item:`, validWords[0]);
         }
       }
