@@ -157,8 +157,8 @@
       "lines": [
         { "speaker": "A", "text": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "translation": { "kr": "어디에 살아요?", "en": "Where do you live?", "jp": "どこに住んでいますか？" } },
         { "speaker": "B", "text": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "translation": { "kr": "저는 베이징에 살아요.", "en": "I live in Beijing.", "jp": "北京に住んでいます。" } },
-        { "speaker": "A", "text": "北京在哪里？", "pinyin": "Běijīng zài nǎlǐ?", "translation": { "kr": "베이징은 어디에 있어요?", "en": "Where is Beijing?", "jp": "北京はどこにありますか？" } },
-        { "speaker": "B", "text": "在中国。", "pinyin": "Zài Zhōngguó.", "translation": { "kr": "중국에 있어요.", "en": "In China.", "jp": "中国にあります。" } }
+        { "speaker": "A", "text": "北京在哪里？老师在哪里？家在哪里？", "pinyin": "Běijīng zài nǎlǐ? Lǎoshī zài nǎlǐ? Jiā zài nǎlǐ?", "translation": { "kr": "베이징은 어디에 있어요? 선생님은 어디에 있어요? 집은 어디에 있어요?", "en": "Where is Beijing? Where is the teacher? Where is home?", "jp": "北京はどこにありますか？先生はどこに？家はどこにありますか？" } },
+        { "speaker": "B", "text": "在中国。老师在前面，在上面。家在后面，在下面。", "pinyin": "Zài Zhōngguó. Lǎoshī zài qiánmiàn, zài shàngmiàn. Jiā zài hòumiàn, zài xiàmiàn.", "translation": { "kr": "중국에 있어요. 선생님은 앞에, 위에 있어요. 집은 뒤에, 아래에 있어요.", "en": "In China. Teacher is in front, above. Home is in the back, below.", "jp": "中国にあります。先生は前に上に。家は後ろに下にあります。" } }
       ]
     }
   ],

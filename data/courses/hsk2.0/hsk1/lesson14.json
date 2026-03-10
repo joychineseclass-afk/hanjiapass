@@ -157,8 +157,8 @@
       "lines": [
         { "speaker": "A", "text": "你吃什么？", "pinyin": "Nǐ chī shénme?", "translation": { "kr": "뭘 먹어요?", "en": "What do you eat?", "jp": "何を食べますか？" } },
         { "speaker": "B", "text": "我吃米饭和菜。", "pinyin": "Wǒ chī mǐfàn hé cài.", "translation": { "kr": "밥이랑 반찬 먹어요.", "en": "I eat rice and dishes.", "jp": "ご飯と料理を食べます。" } },
-        { "speaker": "A", "text": "你喝水吗？", "pinyin": "Nǐ hē shuǐ ma?", "translation": { "kr": "물 마셔요?", "en": "Do you drink water?", "jp": "水を飲みますか？" } },
-        { "speaker": "B", "text": "喝。", "pinyin": "Hē.", "translation": { "kr": "마셔요.", "en": "Yes.", "jp": "飲みます。" } }
+        { "speaker": "A", "text": "你喝水吗？你吃水果吗？", "pinyin": "Nǐ hē shuǐ ma? Nǐ chī shuǐguǒ ma?", "translation": { "kr": "물 마셔요? 과일 먹어요?", "en": "Do you drink water? Do you eat fruit?", "jp": "水を飲みますか？果物を食べますか？" } },
+        { "speaker": "B", "text": "喝。吃。我喜欢苹果。", "pinyin": "Hē. Chī. Wǒ xǐhuan píngguǒ.", "translation": { "kr": "마셔요. 먹어요. 사과 좋아해요.", "en": "Yes. Yes. I like apples.", "jp": "飲みます。食べます。りんごが好きです。" } }
       ]
     }
   ],

@@ -113,7 +113,7 @@
         { "speaker": "A", "text": "喂，你好！", "pinyin": "Wéi, nǐ hǎo!", "translation": { "kr": "여보세요, 안녕하세요!", "en": "Hello!", "jp": "もしもし、こんにちは！" } },
         { "speaker": "B", "text": "你好。", "pinyin": "Nǐ hǎo.", "translation": { "kr": "안녕하세요.", "en": "Hello.", "jp": "こんにちは。" } },
         { "speaker": "A", "text": "请问你是谁？", "pinyin": "Qǐngwèn nǐ shì shéi?", "translation": { "kr": "请问你是谁?", "en": "May I ask who you are?", "jp": "どちら様ですか？" } },
-        { "speaker": "B", "text": "我是小明。", "pinyin": "Wǒ shì Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "I'm Xiaoming.", "jp": "小明です。" } }
+        { "speaker": "B", "text": "我是小明。请打电话。", "pinyin": "Wǒ shì Xiǎomíng. Qǐng dǎ diànhuà.", "translation": { "kr": "저는 샤오밍이에요. 전화해 주세요.", "en": "I'm Xiaoming. Please call.", "jp": "小明です。電話してください。" } }
       ]
     }
   ],

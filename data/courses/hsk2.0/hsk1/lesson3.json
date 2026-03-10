@@ -148,10 +148,10 @@
     {
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        { "speaker": "A", "text": "你好！你是学生吗？", "pinyin": "Nǐ hǎo! Nǐ shì xuésheng ma?", "translation": { "kr": "안녕하세요! 학생이에요?", "en": "Hello! Are you a student?", "jp": "こんにちは! 学生ですか？" } },
-        { "speaker": "B", "text": "是，我是学生。", "pinyin": "Shì, wǒ shì xuésheng.", "translation": { "kr": "네, 저는 학생이에요.", "en": "Yes, I'm a student.", "jp": "はい、私は学生です。" } },
-        { "speaker": "A", "text": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?", "jp": "お名前は何ですか？" } },
-        { "speaker": "B", "text": "我叫小明。很高兴认识你。", "pinyin": "Wǒ jiào Xiǎomíng. Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "저는 샤오밍이에요. 만나서 반가워요.", "en": "My name is Xiaoming. Nice to meet you.", "jp": "私は小明です。お会いできて嬉しいです。" } }
+        { "speaker": "A", "text": "你是学生吗？", "pinyin": "Nǐ shì xuésheng ma?", "translation": { "kr": "학생이에요?", "en": "Are you a student?", "jp": "学生ですか？" } },
+        { "speaker": "B", "text": "是，我是学生。我朋友是学生，我同学是老师。", "pinyin": "Shì, wǒ shì xuésheng. Wǒ péngyou shì xuésheng, wǒ tóngxué shì lǎoshī.", "translation": { "kr": "네, 저는 학생이에요. 제 친구도 학생이고, 동창은 선생님이에요.", "en": "Yes, I'm a student. My friend is a student, my classmate is a teacher.", "jp": "はい、私は学生です。友達も学生で、クラスメートは先生です。" } },
+        { "speaker": "A", "text": "北京好吗？", "pinyin": "Běijīng hǎo ma?", "translation": { "kr": "베이징 좋아요?", "en": "Is Beijing nice?", "jp": "北京はいいですか？" } },
+        { "speaker": "B", "text": "好。中国很好。", "pinyin": "Hǎo. Zhōngguó hěn hǎo.", "translation": { "kr": "좋아요. 중국도 좋아요.", "en": "Yes. China is very nice too.", "jp": "はい。中国もとてもいいです。" } }
       ]
     }
   ],

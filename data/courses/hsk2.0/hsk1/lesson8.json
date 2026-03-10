@@ -141,7 +141,9 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "translation": { "kr": "지금 몇 시예요?", "en": "What time is it now?", "jp": "今何時ですか？" } },
-        { "speaker": "B", "text": "下午三点。", "pinyin": "Xiàwǔ sān diǎn.", "translation": { "kr": "오후 3시예요.", "en": "Three in the afternoon.", "jp": "午後3時です。" } }
+        { "speaker": "B", "text": "下午三点。上午九点十分。", "pinyin": "Xiàwǔ sān diǎn. Shàngwǔ jiǔ diǎn shí fēn.", "translation": { "kr": "오후 3시예요. 오전 9시 10분이에요.", "en": "Three in the afternoon. Nine ten in the morning.", "jp": "午後3時です。午前9時10分です。" } },
+        { "speaker": "A", "text": "中午什么时候？", "pinyin": "Zhōngwǔ shénme shíhou?", "translation": { "kr": "점심 몇 시예요?", "en": "What time at noon?", "jp": "昼は何時ですか？" } },
+        { "speaker": "B", "text": "中午十二点。", "pinyin": "Zhōngwǔ shí'èr diǎn.", "translation": { "kr": "점심 12시예요.", "en": "Twelve at noon.", "jp": "昼12時です。" } }
       ]
     }
   ],

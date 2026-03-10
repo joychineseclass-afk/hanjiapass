@@ -158,14 +158,14 @@
         { "speaker": "A", "text": "今天天气热吗？", "pinyin": "Jīntiān tiānqì rè ma?", "translation": { "kr": "오늘 날씨 더워요?", "en": "Is it hot today?", "jp": "今日は暑いですか？" } },
         { "speaker": "B", "text": "太热了。", "pinyin": "Tài rè le.", "translation": { "kr": "너무 더워요.", "en": "Too hot.", "jp": "暑すぎます。" } },
         { "speaker": "A", "text": "下雨吗？", "pinyin": "Xià yǔ ma?", "translation": { "kr": "비 와요?", "en": "Is it raining?", "jp": "雨が降っていますか？" } },
-        { "speaker": "B", "text": "不下雨。", "pinyin": "Bù xià yǔ.", "translation": { "kr": "비 안 와요.", "en": "No, it's not raining.", "jp": "降っていません。" } }
+        { "speaker": "B", "text": "不下雨。今天太冷。", "pinyin": "Bù xià yǔ. Jīntiān tài lěng.", "translation": { "kr": "비 안 와요. 오늘 너무 추워요.", "en": "No, it's not raining. Too cold today.", "jp": "降っていません。今日は寒すぎます。" } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
         { "speaker": "A", "text": "你想做什么？", "pinyin": "Nǐ xiǎng zuò shénme?", "translation": { "kr": "뭐 하고 싶어요?", "en": "What do you want to do?", "jp": "何をしたいですか？" } },
-        { "speaker": "B", "text": "我想睡觉。", "pinyin": "Wǒ xiǎng shuìjiào.", "translation": { "kr": "자고 싶어요.", "en": "I want to sleep.", "jp": "寝たいです。" } }
+        { "speaker": "B", "text": "我想睡觉。我不说话。", "pinyin": "Wǒ xiǎng shuìjiào. Wǒ bù shuōhuà.", "translation": { "kr": "자고 싶어요. 말 안 해요.", "en": "I want to sleep. I don't want to talk.", "jp": "寝たいです。話したくないです。" } }
       ]
     }
   ],

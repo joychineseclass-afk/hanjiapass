@@ -126,9 +126,9 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "你去火车站吗？", "pinyin": "Nǐ qù huǒchēzhàn ma?", "translation": { "kr": "기차역 가요?", "en": "Are you going to the train station?", "jp": "駅に行きますか？" } },
-        { "speaker": "B", "text": "去。坐出租车。", "pinyin": "Qù. Zuò chūzūchē.", "translation": { "kr": "가요. 택시 타요.", "en": "Yes. By taxi.", "jp": "行きます。タクシーで。" } },
-        { "speaker": "A", "text": "你去北京吗？", "pinyin": "Nǐ qù Běijīng ma?", "translation": { "kr": "베이징 가요?", "en": "Are you going to Beijing?", "jp": "北京に行きますか？" } },
-        { "speaker": "B", "text": "是。坐飞机去。", "pinyin": "Shì. Zuò fēijī qù.", "translation": { "kr": "네. 비행기 타고 가요.", "en": "Yes. I'm taking a plane.", "jp": "はい。飛行機で行きます。" } }
+        { "speaker": "B", "text": "去。坐出租车。他开出租车。", "pinyin": "Qù. Zuò chūzūchē. Tā kāi chūzūchē.", "translation": { "kr": "가요. 택시 타요. 그가 택시 운전해요.", "en": "Yes. By taxi. He drives the taxi.", "jp": "行きます。タクシーで。彼が運転します。" } },
+        { "speaker": "A", "text": "你去北京吗？你看见飞机吗？", "pinyin": "Nǐ qù Běijīng ma? Nǐ kànjiàn fēijī ma?", "translation": { "kr": "베이징 가요? 비행기 봤어요?", "en": "Are you going to Beijing? Do you see the plane?", "jp": "北京に行きますか？飛行機が見えますか？" } },
+        { "speaker": "B", "text": "是。坐飞机去。看见。学生都去。", "pinyin": "Shì. Zuò fēijī qù. Kànjiàn. Xuésheng dōu qù.", "translation": { "kr": "네. 비행기 타고 가요. 봤어요. 학생들 다 가요.", "en": "Yes. Taking a plane. Yes. All students are going.", "jp": "はい。飛行機で行きます。見えます。学生はみんな行きます。" } }
       ]
     }
   ],

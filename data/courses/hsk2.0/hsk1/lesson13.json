@@ -173,7 +173,7 @@
         { "speaker": "A", "text": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "translation": { "kr": "뭘 좋아해요?", "en": "What do you like?", "jp": "何が好きですか？" } },
         { "speaker": "B", "text": "我喜欢狗。也喜欢猫。", "pinyin": "Wǒ xǐhuan gǒu. Yě xǐhuan māo.", "translation": { "kr": "개 좋아해요. 고양이도 좋아해요.", "en": "I like dogs. I like cats too.", "jp": "犬が好き。猫も好きです。" } },
         { "speaker": "A", "text": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "translation": { "kr": "텔레비전 봐요?", "en": "Do you watch TV?", "jp": "テレビを見ますか？" } },
-        { "speaker": "B", "text": "看。我爱看电影。", "pinyin": "Kàn. Wǒ ài kàn diànyǐng.", "translation": { "kr": "봐요. 영화 보는 거 좋아해요.", "en": "Yes. I love watching movies.", "jp": "見ます。映画を見るのが好きです。" } }
+        { "speaker": "B", "text": "看。我爱看电影。狗很漂亮。我喜欢听汉语。", "pinyin": "Kàn. Wǒ ài kàn diànyǐng. Gǒu hěn piàoliang. Wǒ xǐhuan tīng Hànyǔ.", "translation": { "kr": "봐요. 영화 보는 거 좋아해요. 개 예뻐요. 중국어 듣는 거 좋아해요.", "en": "Yes. I love watching movies. The dog is pretty. I like listening to Chinese.", "jp": "見ます。映画が好きです。犬はきれいです。中国語を聞くのが好きです。" } }
       ]
     }
   ],

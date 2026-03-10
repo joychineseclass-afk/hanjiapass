@@ -111,7 +111,7 @@
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
         { "speaker": "A", "text": "在饭馆。你喝什么？", "pinyin": "Zài fànguǎn. Nǐ hē shénme?", "translation": { "kr": "식당이에요. 뭘 마셔요?", "en": "At the restaurant. What do you drink?", "jp": "レストランです。何を飲みますか？" } },
-        { "speaker": "B", "text": "茶。", "pinyin": "Chá.", "translation": { "kr": "차요.", "en": "Tea.", "jp": "お茶です。" } },
+        { "speaker": "B", "text": "茶。一个杯子。", "pinyin": "Chá. Yī gè bēizi.", "translation": { "kr": "차요. 컵 하나요.", "en": "Tea. One cup.", "jp": "お茶です。コップ一つ。" } },
         { "speaker": "A", "text": "饭馆什么东西好吃？", "pinyin": "Fànguǎn shénme dōngxi hǎo chī?", "translation": { "kr": "식당에서 뭐가 맛있어요?", "en": "What's good at the restaurant?", "jp": "レストランで何がおいしいですか？" } },
         { "speaker": "B", "text": "米饭好吃。五块。", "pinyin": "Mǐfàn hǎo chī. Wǔ kuài.", "translation": { "kr": "밥이 맛있어요. 5위안이에요.", "en": "Rice is good. Five yuan.", "jp": "ご飯がおいしいです。5元です。" } }
       ]

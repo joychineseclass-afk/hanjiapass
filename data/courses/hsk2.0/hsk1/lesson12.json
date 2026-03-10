@@ -142,8 +142,8 @@
       "lines": [
         { "speaker": "A", "text": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "translation": { "kr": "무슨 일 하세요?", "en": "What do you do for work?", "jp": "お仕事は何をしていますか？" } },
         { "speaker": "B", "text": "我是医生。", "pinyin": "Wǒ shì yīshēng.", "translation": { "kr": "저는 의사예요.", "en": "I'm a doctor.", "jp": "医者です。" } },
-        { "speaker": "A", "text": "李小姐会汉语吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma?", "translation": { "kr": "이小姐는 중국어 할 수 있어요?", "en": "Can Miss Li speak Chinese?", "jp": "李さんは中国語ができますか？" } },
-        { "speaker": "B", "text": "会。她会汉语。", "pinyin": "Huì. Tā huì Hànyǔ.", "translation": { "kr": "네. 중국어 할 줄 알아요.", "en": "Yes. She can speak Chinese.", "jp": "はい。中国語が話せます。" } }
+        { "speaker": "A", "text": "李小姐会汉语吗？张先生能来吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma? Zhāng xiānsheng néng lái ma?", "translation": { "kr": "이小姐는 중국어 할 수 있어요? 장先生는 올 수 있어요?", "en": "Can Miss Li speak Chinese? Can Mr. Zhang come?", "jp": "李さんは中国語ができますか？張さんは来られますか？" } },
+        { "speaker": "B", "text": "会。她能来。", "pinyin": "Huì. Tā néng lái.", "translation": { "kr": "네. 올 수 있어요.", "en": "Yes. She can come.", "jp": "はい。来られます。" } }
       ]
     }
   ],
