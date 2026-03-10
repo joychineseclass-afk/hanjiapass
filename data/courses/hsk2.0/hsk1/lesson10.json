@@ -153,78 +153,24 @@
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "你在哪儿？",
-          "pinyin": "Nǐ zài nǎr?",
-          "kr": "어디에 있어요?",
-          "text": "你在哪儿？",
-          "translation": {
-            "kr": "어디에 있어요?",
-            "en": "Where are you?",
-            "jp": "どこにいますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我在学校。",
-          "pinyin": "Wǒ zài xuéxiào.",
-          "kr": "저는 학교에 있어요.",
-          "text": "我在学校。",
-          "translation": {
-            "kr": "저는 학교에 있어요.",
-            "en": "I'm at school.",
-            "jp": "学校にいます。"
-          }
-        }
+        { "speaker": "A", "text": "你在哪儿？", "pinyin": "Nǐ zài nǎr?", "translation": { "kr": "어디에 있어요?", "en": "Where are you?", "jp": "どこにいますか？" } },
+        { "speaker": "B", "text": "我在北京。", "pinyin": "Wǒ zài Běijīng.", "translation": { "kr": "저는 베이징에 있어요.", "en": "I'm in Beijing.", "jp": "北京にいます。" } }
       ]
     },
     {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
+      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "书在哪儿？",
-          "pinyin": "Shū zài nǎr?",
-          "kr": "책이 어디에 있어요?",
-          "text": "书在哪儿？",
-          "translation": {
-            "kr": "책이 어디에 있어요?",
-            "en": "Where is the book?",
-            "jp": "本はどこにありますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "在桌子上。",
-          "pinyin": "Zài zhuōzi shàng.",
-          "kr": "책상 위에 있어요.",
-          "text": "在桌子上。",
-          "translation": {
-            "kr": "책상 위에 있어요.",
-            "en": "On the table.",
-            "jp": "机の上にあります。"
-          }
-        }
+        { "speaker": "A", "text": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "translation": { "kr": "어디에 살아요?", "en": "Where do you live?", "jp": "どこに住んでいますか？" } },
+        { "speaker": "B", "text": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "translation": { "kr": "저는 베이징에 살아요.", "en": "I live in Beijing.", "jp": "北京に住んでいます。" } }
       ]
     },
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "学校在哪里？书在哪里？", "pinyin": "Xuéxiào zài nǎlǐ? Shū zài nǎlǐ?", "kr": "학교가 어디에 있어요? 책이 어디에 있어요?", "text": "学校在哪里？书在哪里？", "translation": { "kr": "학교가 어디에 있어요? 책이 어디에 있어요?", "en": "Where is the school? Where is the book?", "jp": "学校はどこにありますか？本はどこにありますか？" } },
-        { "speaker": "B", "zh": "学校在前面。书在后面。你住在哪儿？我住在北京。", "pinyin": "Xuéxiào zài qiánmiàn. Shū zài hòumiàn. Nǐ zhù zài nǎr? Wǒ zhù zài Běijīng.", "kr": "학교는 앞에 있어요. 책은 뒤에 있어요. 어디에 살아요? 베이징에 살아요.", "text": "学校在前面。书在后面。你住在哪儿？我住在北京。", "translation": { "kr": "학교는 앞에 있어요. 책은 뒤에 있어요. 어디에 살아요? 베이징에 살아요.", "en": "School is in front. Book is in the back. Where do you live? I live in Beijing.", "jp": "学校は前にあります。本は後ろにあります。どこに住んでいますか？北京に住んでいます。" } }
+        { "speaker": "A", "text": "北京在哪里？", "pinyin": "Běijīng zài nǎlǐ?", "translation": { "kr": "베이징은 어디에 있어요?", "en": "Where is Beijing?", "jp": "北京はどこにありますか？" } },
+        { "speaker": "B", "text": "在中国。家在后面。", "pinyin": "Zài Zhōngguó. Jiā zài hòumiàn.", "translation": { "kr": "중국에 있어요. 집은 뒤에 있어요.", "en": "In China. Home is in the back.", "jp": "中国にあります。家は後ろにあります。" } }
       ]
     }
   ],

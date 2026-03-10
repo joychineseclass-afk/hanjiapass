@@ -176,37 +176,10 @@
       ]
     },
     {
-      "title": {
-        "zh": "会话3",
-        "kr": "회화3",
-        "en": "Session 3",
-        "jp": "会話3"
-      },
+      "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        {
-          "speaker": "A",
-          "zh": "他在吗？",
-          "pinyin": "Tā zài ma?",
-          "kr": "그 있어요?",
-          "text": "他在吗？",
-          "translation": {
-            "kr": "그 있어요?",
-            "en": "Is he there?",
-            "jp": "彼はいますか？"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "他不在。",
-          "pinyin": "Tā bú zài.",
-          "kr": "그 없어요.",
-          "text": "他不在。",
-          "translation": {
-            "kr": "그 없어요.",
-            "en": "He's not here.",
-            "jp": "いません。"
-          }
-        }
+        { "speaker": "A", "text": "请打电话。", "pinyin": "Qǐng dǎ diànhuà.", "translation": { "kr": "전화해 주세요.", "en": "Please call.", "jp": "電話してください。" } },
+        { "speaker": "B", "text": "好。再见！", "pinyin": "Hǎo. Zàijiàn!", "translation": { "kr": "알겠어요. 안녕히 가세요!", "en": "OK. Goodbye!", "jp": "わかりました。さようなら!" } }
       ]
     }
   ],

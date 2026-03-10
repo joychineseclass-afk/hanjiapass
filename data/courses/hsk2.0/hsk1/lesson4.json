@@ -193,28 +193,22 @@
     {
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        { "speaker": "A", "text": "他是老师吗？", "pinyin": "Tā shì lǎoshī ma?", "translation": { "kr": "그는 선생님이에요?", "en": "Is he a teacher?", "jp": "彼は先生ですか？" } },
-        { "speaker": "B", "text": "是，他是老师。", "pinyin": "Shì, tā shì lǎoshī.", "translation": { "kr": "네, 그는 선생님이에요.", "en": "Yes, he's a teacher.", "jp": "はい、彼は先生です。" } },
-        { "speaker": "A", "text": "他是学生吗？", "pinyin": "Tā shì xuésheng ma?", "translation": { "kr": "그는 학생이에요?", "en": "Is he a student?", "jp": "彼は学生ですか？" } },
-        { "speaker": "B", "text": "不是，他是老师。", "pinyin": "Bú shì, tā shì lǎoshī.", "translation": { "kr": "아니요, 그는 선생님이에요.", "en": "No, he's a teacher.", "jp": "いいえ、彼は先生です。" } }
+        { "speaker": "A", "text": "你好！他是你爸爸吗？", "pinyin": "Nǐ hǎo! Tā shì nǐ bàba ma?", "translation": { "kr": "안녕하세요! 그는 당신 아빠예요?", "en": "Hello! Is he your dad?", "jp": "こんにちは! 彼はあなたのお父さんですか？" } },
+        { "speaker": "B", "text": "是，他是我爸爸。他是老师。", "pinyin": "Shì, tā shì wǒ bàba. Tā shì lǎoshī.", "translation": { "kr": "네, 그는 우리 아빠예요. 선생님이에요.", "en": "Yes, he's my dad. He's a teacher.", "jp": "はい、父です。先生です。" } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
         { "speaker": "A", "text": "她是你妈妈吗？", "pinyin": "Tā shì nǐ māma ma?", "translation": { "kr": "그녀는 당신 엄마예요?", "en": "Is she your mom?", "jp": "彼女はあなたのお母さんですか？" } },
-        { "speaker": "B", "text": "是，她是我妈妈。", "pinyin": "Shì, tā shì wǒ māma.", "translation": { "kr": "네, 그녀는 우리 엄마예요.", "en": "Yes, she's my mom.", "jp": "はい、彼女は私の母です。" } },
-        { "speaker": "A", "text": "他是你爸爸吗？", "pinyin": "Tā shì nǐ bàba ma?", "translation": { "kr": "그는 당신 아빠예요?", "en": "Is he your dad?", "jp": "彼はあなたのお父さんですか？" } },
-        { "speaker": "B", "text": "不是，他是我朋友。", "pinyin": "Bú shì, tā shì wǒ péngyou.", "translation": { "kr": "아니요, 그는 제 친구예요.", "en": "No, he's my friend.", "jp": "いいえ、彼は私の友達です。" } }
+        { "speaker": "B", "text": "是，她是我妈妈。", "pinyin": "Shì, tā shì wǒ māma.", "translation": { "kr": "네, 그녀는 우리 엄마예요.", "en": "Yes, she's my mom.", "jp": "はい、彼女は私の母です。" } }
       ]
     },
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "text": "你爸爸是老师吗？", "pinyin": "Nǐ bàba shì lǎoshī ma?", "translation": { "kr": "아버지는 선생님이에요?", "en": "Is your dad a teacher?", "jp": "お父さんは先生ですか？" } },
-        { "speaker": "B", "text": "是，我爸爸是老师。", "pinyin": "Shì, wǒ bàba shì lǎoshī.", "translation": { "kr": "네, 우리 아빠는 선생님이에요.", "en": "Yes, my dad is a teacher.", "jp": "はい、父は先生です。" } },
-        { "speaker": "A", "text": "他是你朋友吗？", "pinyin": "Tā shì nǐ péngyou ma?", "translation": { "kr": "그는 당신 친구예요?", "en": "Is he your friend?", "jp": "彼はあなたの友達ですか？" } },
-        { "speaker": "B", "text": "是，他是我朋友，是我同学。", "pinyin": "Shì, tā shì wǒ péngyou, shì wǒ tóngxué.", "translation": { "kr": "네, 그는 제 친구이고 동창이에요.", "en": "Yes, he's my friend and classmate.", "jp": "はい、彼は私の友達でクラスメートです。" } }
+        { "speaker": "A", "text": "你家几个人？", "pinyin": "Nǐ jiā jǐ gè rén?", "translation": { "kr": "가족이 몇 명이에요?", "en": "How many people in your family?", "jp": "ご家族は何人ですか？" } },
+        { "speaker": "B", "text": "我家四个人。爸爸、妈妈、我、儿子。", "pinyin": "Wǒ jiā sì gè rén. Bàba, māma, wǒ, érzi.", "translation": { "kr": "네 명이에요. 아빠, 엄마, 저, 아들.", "en": "Four people. Dad, mom, me, son.", "jp": "4人です。父、母、私、息子。" } }
       ]
     }
   ],

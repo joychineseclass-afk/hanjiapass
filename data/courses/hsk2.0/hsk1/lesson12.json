@@ -208,8 +208,8 @@
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "李小姐做什么工作？她能说汉语吗？", "pinyin": "Lǐ xiǎojiě zuò shénme gōngzuò? Tā néng shuō Hànyǔ ma?", "kr": "이小姐는 무슨 일 해요? 중국어 할 수 있어요?", "text": "李小姐做什么工作？她能说汉语吗？", "translation": { "kr": "이小姐는 무슨 일 해요? 중국어 할 수 있어요?", "en": "What does Miss Li do? Can she speak Chinese?", "jp": "李さんは何をしていますか？中国語が話せますか？" } },
-        { "speaker": "B", "zh": "她会说汉语。", "pinyin": "Tā huì shuō Hànyǔ.", "kr": "중국어 할 줄 알아요.", "text": "她会说汉语。", "translation": { "kr": "중국어 할 줄 알아요.", "en": "She can speak Chinese.", "jp": "中国語が話せます。" } }
+        { "speaker": "A", "text": "李小姐会汉语吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma?", "translation": { "kr": "이小姐는 중국어 할 수 있어요?", "en": "Can Miss Li speak Chinese?", "jp": "李さんは中国語ができますか？" } },
+        { "speaker": "B", "text": "会。她会汉语。", "pinyin": "Huì. Tā huì Hànyǔ.", "translation": { "kr": "네. 중국어 할 줄 알아요.", "en": "Yes. She can speak Chinese.", "jp": "はい。中国語が話せます。" } }
       ]
     }
   ],

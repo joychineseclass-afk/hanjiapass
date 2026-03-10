@@ -125,22 +125,22 @@
     {
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        { "speaker": "A", "zh": "你怎么去火车站？", "pinyin": "Nǐ zěnme qù huǒchēzhàn?", "kr": "기차역에 어떻게 가요?", "text": "你怎么去火车站？", "translation": { "kr": "기차역에 어떻게 가요?", "en": "How do you go to the train station?", "jp": "駅にどうやって行きますか？" } },
-        { "speaker": "B", "zh": "我坐出租车去。", "pinyin": "Wǒ zuò chūzūchē qù.", "kr": "택시 타고 가요.", "text": "我坐出租车去。", "translation": { "kr": "택시 타고 가요.", "en": "I take a taxi.", "jp": "タクシーで行きます。" } }
+        { "speaker": "A", "text": "你去火车站吗？", "pinyin": "Nǐ qù huǒchēzhàn ma?", "translation": { "kr": "기차역 가요?", "en": "Are you going to the train station?", "jp": "駅に行きますか？" } },
+        { "speaker": "B", "text": "去。坐出租车。", "pinyin": "Qù. Zuò chūzūchē.", "translation": { "kr": "가요. 택시 타요.", "en": "Yes. By taxi.", "jp": "行きます。タクシーで。" } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        { "speaker": "A", "zh": "你去哪儿？坐飞机吗？", "pinyin": "Nǐ qù nǎr? Zuò fēijī ma?", "kr": "어디 가요? 비행기 타요?", "text": "你去哪儿？坐飞机吗？", "translation": { "kr": "어디 가요? 비행기 타요?", "en": "Where are you going? By plane?", "jp": "どこに行きますか？飛行機で？" } },
-        { "speaker": "B", "zh": "是，我坐飞机去。", "pinyin": "Shì, wǒ zuò fēijī qù.", "kr": "네, 비행기 타고 가요.", "text": "是，我坐飞机去。", "translation": { "kr": "네, 비행기 타고 가요.", "en": "Yes, I'm taking a plane.", "jp": "はい、飛行機で行きます。" } }
+        { "speaker": "A", "text": "你去北京吗？", "pinyin": "Nǐ qù Běijīng ma?", "translation": { "kr": "베이징 가요?", "en": "Are you going to Beijing?", "jp": "北京に行きますか？" } },
+        { "speaker": "B", "text": "是。坐飞机去。", "pinyin": "Shì. Zuò fēijī qù.", "translation": { "kr": "네. 비행기 타고 가요.", "en": "Yes. I'm taking a plane.", "jp": "はい。飛行機で行きます。" } }
       ]
     },
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "你爸爸开车吗？", "pinyin": "Nǐ bàba kāi chē ma?", "kr": "아버지가 운전해요?", "text": "你爸爸开车吗？", "translation": { "kr": "아버지가 운전해요?", "en": "Does your dad drive?", "jp": "お父さんは運転しますか？" } },
-        { "speaker": "B", "zh": "开。我看见飞机了，学生都去。", "pinyin": "Kāi. Wǒ kànjiàn fēijī le, xuéshēng dōu qù.", "kr": "네. 비행기 봤어요, 학생들 다 가요.", "text": "开。我看见飞机了，学生都去。", "translation": { "kr": "네. 비행기 봤어요, 학생들 다 가요.", "en": "Yes. I saw a plane, all the students are going.", "jp": "はい。飛行機を見ました、学生はみんな行きます。" } }
+        { "speaker": "A", "text": "你看见飞机吗？", "pinyin": "Nǐ kànjiàn fēijī ma?", "translation": { "kr": "비행기 봤어요?", "en": "Do you see the plane?", "jp": "飛行機が見えますか？" } },
+        { "speaker": "B", "text": "看见。学生都去。", "pinyin": "Kànjiàn. Xuésheng dōu qù.", "translation": { "kr": "봤어요. 학생들 다 가요.", "en": "Yes. All the students are going.", "jp": "見えます。学生はみんな行きます。" } }
       ]
     }
   ],

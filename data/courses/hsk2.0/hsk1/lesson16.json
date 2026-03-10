@@ -140,24 +140,22 @@
     {
       "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
       "lines": [
-        { "speaker": "A", "zh": "书在哪儿？", "pinyin": "Shū zài nǎr?", "kr": "책이 어디에 있어요?", "text": "书在哪儿？", "translation": { "kr": "책이 어디에 있어요?", "en": "Where is the book?", "jp": "本はどこにありますか？" } },
-        { "speaker": "B", "zh": "在桌子上。你来吗？", "pinyin": "Zài zhuōzi shàng. Nǐ lái ma?", "kr": "책상 위에 있어요. 올래요?", "text": "在桌子上。你来吗？", "translation": { "kr": "책상 위에 있어요. 올래요?", "en": "On the table. Are you coming?", "jp": "机の上にあります。来ますか？" } },
-        { "speaker": "A", "zh": "来。", "pinyin": "Lái.", "kr": "올게요.", "text": "来。", "translation": { "kr": "올게요.", "en": "Yes.", "jp": "来ます。" } }
+        { "speaker": "A", "text": "书在哪儿？", "pinyin": "Shū zài nǎr?", "translation": { "kr": "책이 어디에 있어요?", "en": "Where is the book?", "jp": "本はどこにありますか？" } },
+        { "speaker": "B", "text": "在桌子上。", "pinyin": "Zài zhuōzi shàng.", "translation": { "kr": "책상 위에 있어요.", "en": "On the table.", "jp": "机の上にあります。" } }
       ]
     },
     {
       "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
       "lines": [
-        { "speaker": "A", "zh": "椅子在哪儿？", "pinyin": "Yǐzi zài nǎr?", "kr": "의자가 어디에 있어요?", "text": "椅子在哪儿？", "translation": { "kr": "의자가 어디에 있어요?", "en": "Where is the chair?", "jp": "椅子はどこにありますか？" } },
-        { "speaker": "B", "zh": "在桌子下面。有椅子，请坐。", "pinyin": "Zài zhuōzi xiàmiàn. Yǒu yǐzi, qǐng zuò.", "kr": "탁자 아래에 있어요. 의자 있어요, 앉으세요.", "text": "在桌子下面。有椅子，请坐。", "translation": { "kr": "탁자 아래에 있어요. 의자 있어요, 앉으세요.", "en": "Under the table. There's a chair, please sit.", "jp": "机の下にあります。椅子があります、座ってください。" } }
+        { "speaker": "A", "text": "椅子在哪儿？", "pinyin": "Yǐzi zài nǎr?", "translation": { "kr": "의자가 어디에 있어요?", "en": "Where is the chair?", "jp": "椅子はどこにありますか？" } },
+        { "speaker": "B", "text": "在桌子下。有椅子，请坐。", "pinyin": "Zài zhuōzi xià. Yǒu yǐzi, qǐng zuò.", "translation": { "kr": "탁자 아래에 있어요. 의자 있어요, 앉으세요.", "en": "Under the table. There's a chair, please sit.", "jp": "机の下にあります。椅子があります、座ってください。" } }
       ]
     },
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "kr": "어디 가요?", "text": "你去哪儿？", "translation": { "kr": "어디 가요?", "en": "Where are you going?", "jp": "どこに行きますか？" } },
-        { "speaker": "B", "zh": "我去学校。你回吗？", "pinyin": "Wǒ qù xuéxiào. Nǐ huí ma?", "kr": "학교 가요. 돌아갈래요?", "text": "我去学校。你回吗？", "translation": { "kr": "학교 가요. 돌아갈래요?", "en": "I'm going to school. Are you going back?", "jp": "学校に行きます。帰りますか？" } },
-        { "speaker": "A", "zh": "回。", "pinyin": "Huí.", "kr": "돌아갈게요.", "text": "回。", "translation": { "kr": "돌아갈게요.", "en": "Yes.", "jp": "帰ります。" } }
+        { "speaker": "A", "text": "你来吗？", "pinyin": "Nǐ lái ma?", "translation": { "kr": "올래요?", "en": "Are you coming?", "jp": "来ますか？" } },
+        { "speaker": "B", "text": "来。我去学校，下午回。", "pinyin": "Lái. Wǒ qù xuéxiào, xiàwǔ huí.", "translation": { "kr": "올게요. 학교 가요, 오후에 돌아와요.", "en": "Yes. I'm going to school, I'll return in the afternoon.", "jp": "来ます。学校に行って、午後に帰ります。" } }
       ]
     }
   ],

@@ -169,8 +169,8 @@
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "这个电脑多少钱？", "pinyin": "Zhè ge diànnǎo duōshao qián?", "kr": "이 컴퓨터 얼마예요?", "text": "这个电脑多少钱？", "translation": { "kr": "이 컴퓨터 얼마예요?", "en": "How much is this computer?", "jp": "このパソコンはいくらですか？" } },
-        { "speaker": "B", "zh": "二十块。那个呢？十五块。", "pinyin": "Èrshí kuài. Nà ge ne? Shíwǔ kuài.", "kr": "20위안이에요. 저건요? 15위안이에요.", "text": "二十块。那个呢？十五块。", "translation": { "kr": "20위안이에요. 저건요? 15위안이에요.", "en": "Twenty yuan. That one? Fifteen yuan.", "jp": "20元です。あれは？15元です。" } }
+        { "speaker": "A", "text": "这个电脑多少钱？", "pinyin": "Zhè ge diànnǎo duōshao qián?", "translation": { "kr": "이 컴퓨터 얼마예요?", "en": "How much is this computer?", "jp": "このパソコンはいくらですか？" } },
+        { "speaker": "B", "text": "二十块。那个十五块。", "pinyin": "Èrshí kuài. Nà ge shíwǔ kuài.", "translation": { "kr": "20위안이에요. 저건 15위안이에요.", "en": "Twenty yuan. That one fifteen yuan.", "jp": "20元です。あれは15元です。" } }
       ]
     }
   ],

@@ -132,10 +132,8 @@
       "lines": [
         {
           "speaker": "A",
-          "zh": "你怎么了？",
-          "pinyin": "Nǐ zěnme le?",
-          "kr": "어디 아파요?",
           "text": "你怎么了？",
+          "pinyin": "Nǐ zěnme le?",
           "translation": {
             "kr": "어디 아파요?",
             "en": "What's wrong with you?",
@@ -144,10 +142,8 @@
         },
         {
           "speaker": "B",
-          "zh": "我不舒服。",
-          "pinyin": "Wǒ bù shūfu.",
-          "kr": "저는 몸이 안 좋아요.",
-          "text": "我不舒服。",
+          "text": "我不好。",
+          "pinyin": "Wǒ bù hǎo.",
           "translation": {
             "kr": "저는 몸이 안 좋아요.",
             "en": "I don't feel well.",
@@ -166,7 +162,7 @@
     {
       "title": { "zh": "会话3", "kr": "회화3", "en": "Session 3", "jp": "会話3" },
       "lines": [
-        { "speaker": "A", "zh": "现在怎么样？我们去医院吧。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen qù yīyuàn ba. Nǐ ne?", "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "text": "现在怎么样？我们去医院吧。你呢？", "translation": { "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "en": "How are you now? Let's go to the hospital. And you?", "jp": "今どうですか？病院に行きましょう。あなたは？" } },
+        { "speaker": "A", "text": "现在怎么样？我们去医院。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen qù yīyuàn. Nǐ ne?", "translation": { "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "en": "How are you now? Let's go to the hospital. And you?", "jp": "今どうですか？病院に行きましょう。あなたは？" } },
         {
           "speaker": "B",
           "zh": "很好。",
