@@ -97,7 +97,7 @@ function rerenderHSKFromState() {
     if (titleEl) titleEl.textContent = headerTitle;
 
     if (isReview) {
-      renderReviewWords($("hskPanelWords"), lw, { lang, scope: `hsk${state.lv}` });
+      renderReviewWords($("hskPanelWords"), lw, { lang, scope: `hsk${state.lv}`, wordsByLesson: ld.reviewWordsByLesson });
       renderReviewDialogue($("hskDialogueBody"), getDialogueCards(ld), { lang });
       renderReviewGrammar($("hskGrammarBody"), ld.grammar || [], { lang, vocab: lw || ld.vocab || ld.words || [] });
       renderReviewExtension($("hskExtensionBody"), ld.extension || [], { lang });
@@ -916,12 +916,13 @@ function applyBlueprintTitles(lessons, blueprint) {
   });
 }
 
-/** 将 distribution 结果注入 lessons：coreWords、extraWords、distributedWords、words、originalWords
- * distribution 格式：{ core: { "1": [...] }, extra: { "1": [...] } } 或旧格式 { "1": [...] }
+/** 将 distribution 结果注入 lessons：coreWords、extraWords、distributedWords、words、originalWords、reviewWordsByLesson
+ * distribution 格式：{ core: {...}, extra: {...}, reviewWordsByLesson?: { "21": { "1": [...] }, ... } }
  */
 function applyVocabDistribution(lessons, distribution) {
   if (!Array.isArray(lessons) || !distribution || typeof distribution !== "object") return lessons;
   const hasCoreExtra = distribution.core != null && distribution.extra != null;
+  const reviewByLesson = distribution.reviewWordsByLesson;
   return lessons.map((l) => {
     const no = getLessonNumber(l);
     const key = String(no);
@@ -936,6 +937,7 @@ function applyVocabDistribution(lessons, distribution) {
     }
     const originalWords = Array.isArray(l.words) ? l.words : (Array.isArray(l.vocab) ? l.vocab : []);
     const distributedWords = coreWords;
+    const reviewWordsByLesson = reviewByLesson && typeof reviewByLesson[key] === "object" ? reviewByLesson[key] : null;
     return {
       ...l,
       originalWords,
@@ -943,6 +945,7 @@ function applyVocabDistribution(lessons, distribution) {
       extraWords,
       distributedWords,
       words: coreWords.length > 0 ? coreWords : originalWords,
+      ...(reviewWordsByLesson && { reviewWordsByLesson }),
     };
   });
 }
@@ -1093,6 +1096,7 @@ async function openLesson({ lessonNo, file }) {
     if (listItem) {
       lessonData.coreWords = listItem.coreWords ?? listItem.distributedWords ?? listItem.words;
       lessonData.extraWords = listItem.extraWords ?? [];
+      if (listItem.reviewWordsByLesson) lessonData.reviewWordsByLesson = listItem.reviewWordsByLesson;
     }
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");
     let vocab = [];
@@ -1181,7 +1185,7 @@ async function openLesson({ lessonNo, file }) {
     // Render panels
     const isReview = (lessonData && lessonData.type) === "review";
     if (isReview) {
-      renderReviewWords($("hskPanelWords"), lessonWords, { lang, scope: `hsk${state.lv}` });
+      renderReviewWords($("hskPanelWords"), lessonWords, { lang, scope: `hsk${state.lv}`, wordsByLesson: lessonData.reviewWordsByLesson });
       const cards = getDialogueCards(lessonData);
       renderReviewDialogue($("hskDialogueBody"), cards, { lang });
       renderReviewGrammar($("hskGrammarBody"), lessonData.grammar || [], { lang, vocab: lessonWords || lessonData.vocab || lessonData.words || [] });

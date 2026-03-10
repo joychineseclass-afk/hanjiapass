@@ -170,44 +170,72 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   bindWordCardActions();
 }
 
+/** 渲染单个词行（复习课用） */
+function renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel }) {
+  const raw = typeof x === "string" ? { hanzi: x } : (x || {});
+  const han = wordKey(raw) || String(raw.hanzi || raw.word || "").trim();
+  let pinyinStr = wordPinyin(raw);
+  if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
+  let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
+  if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
+  const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
+  const attrs = han ? ` data-speak-text="${zhEsc}" data-speak-kind="review-word"` : "";
+  return `<div class="review-word-row" data-word-hanzi="${escapeHtmlAttr(han)}" data-word-pinyin="${escapeHtmlAttr(pinyinStr)}">
+  <span class="review-word-hanzi"${attrs}>${escapeHtml(han)}</span>
+  <span class="review-word-pinyin">${escapeHtml(pinyinStr)}</span>
+  <span class="review-word-meaning">${escapeHtml(mainStr)}</span>
+  <button type="button" class="review-word-speak-btn" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}" title="${escapeHtmlAttr(speakLabel)}">🔊</button>
+</div>`;
+}
+
 /**
- * 复习课专用：单词目录式列表（一行一个单词，紧凑可浏览）
- * 每行：汉字 | 拼音 | 释义，可点击播放发音
+ * 复习课专用：单词目录式列表
+ * - 有 wordsByLesson 时：按来源课程分组展示（第1课、第2课...）
+ * - 无 wordsByLesson 时：扁平列表（兼容旧逻辑）
  */
-export function renderReviewWords(gridEl, items, { lang, scope } = {}) {
+export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } = {}) {
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
   const speakLabel = i18n.t("action.speak") || "听";
 
-  const rows = arr.map((x) => {
-    const raw = typeof x === "string" ? { hanzi: x } : (x || {});
-    const han = wordKey(raw) || String(raw.hanzi || raw.word || "").trim();
-    let pinyinStr = wordPinyin(raw);
-    if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
-    let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
-    if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
-    const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
-    const attrs = han ? ` data-speak-text="${zhEsc}" data-speak-kind="review-word"` : "";
-    return `<div class="review-word-row" data-word-hanzi="${escapeHtmlAttr(han)}" data-word-pinyin="${escapeHtmlAttr(pinyinStr)}">
-  <span class="review-word-hanzi"${attrs}>${escapeHtml(han)}</span>
-  <span class="review-word-pinyin">${escapeHtml(pinyinStr)}</span>
-  <span class="review-word-meaning">${escapeHtml(mainStr)}</span>
-  <button type="button" class="review-word-speak-btn" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}" title="${escapeHtmlAttr(speakLabel)}">🔊</button>
-</div>`;
-  });
+  let bodyHtml = "";
+  const allItems = [];
 
+  if (wordsByLesson && typeof wordsByLesson === "object" && Object.keys(wordsByLesson).length > 0) {
+    const keys = Object.keys(wordsByLesson).filter((k) => /^\d+$/.test(k)).sort((a, b) => Number(a) - Number(b));
+    const sections = keys.map((lessonKey) => {
+      const words = Array.isArray(wordsByLesson[lessonKey]) ? wordsByLesson[lessonKey] : [];
+      const no = Number(lessonKey) || 0;
+      const lessonLabel = i18n.t("hsk.lesson_no_format", { n: no }) || `第${no}课`;
+      const rows = words.map((x) => {
+        allItems.push(x);
+        return renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel });
+      }).join("");
+      return `<section class="review-lesson-group">
+  <h4 class="review-lesson-group-title">${escapeHtml(lessonLabel)}</h4>
+  <div class="review-word-list">${rows}</div>
+</section>`;
+    }).filter(Boolean).join("");
+    bodyHtml = `<div class="review-words-by-lesson">${sections}</div>`;
+  } else {
+    const rows = arr.map((x) => renderReviewWordRow(x, { currentLang, glossaryScope, speakLabel }));
+    allItems.push(...arr);
+    bodyHtml = `<div class="review-word-list">${rows.join("")}</div>`;
+  }
+
+  const totalCount = allItems.length;
   const hero = `<section class="lesson-section-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
   <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.review_words_subtitle") || "复习课词汇列表")}</p>
-  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}
+  ${totalCount ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: totalCount })) + "</span>" : ""}
 </section>`;
-  gridEl.innerHTML = `<div class="lesson-vocab-wrap review-vocab-wrap">${hero}<div class="review-word-list">${rows.join("")}</div></div>`;
+  gridEl.innerHTML = `<div class="lesson-vocab-wrap review-vocab-wrap">${hero}${bodyHtml}</div>`;
 
   if (typeof window !== "undefined") {
     window.__HSK_WORD_ITEMS_BY_HANZI = window.__HSK_WORD_ITEMS_BY_HANZI || new Map();
-    arr.forEach((x) => {
+    allItems.forEach((x) => {
       const h = wordKey(x);
       if (h) window.__HSK_WORD_ITEMS_BY_HANZI.set(h, x);
     });

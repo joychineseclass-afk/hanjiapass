@@ -192,7 +192,7 @@ function getCoreExtraTerms(mapItem) {
  * @returns {Object} { core: { "1": [...] }, extra: { "1": [...] } }
  */
 export function distributeVocabularyByMap(level, vocabMap, vocabList) {
-  const result = { core: {}, extra: {} };
+  const result = { core: {}, extra: {}, reviewWordsByLesson: {} };
   const list = Array.isArray(vocabList) ? vocabList : [];
   if (!vocabMap || typeof vocabMap !== "object") return result;
 
@@ -207,10 +207,12 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
       const reviewOf = mapItem.reviewOf;
       const aggregated = [];
       const seen = new Set();
+      const byLesson = {};
 
       for (const srcKey of reviewOf) {
         const srcCore = result.core[String(srcKey)];
         if (Array.isArray(srcCore)) {
+          byLesson[srcKey] = [...srcCore];
           for (const w of srcCore) {
             const k = wordKey(w);
             if (k && !seen.has(k)) {
@@ -223,6 +225,7 @@ export function distributeVocabularyByMap(level, vocabMap, vocabList) {
 
       result.core[key] = aggregated;
       result.extra[key] = [];
+      result.reviewWordsByLesson[key] = byLesson;
       if (typeof console !== "undefined" && console.debug) {
         const range = reviewOf.length >= 2 ? `${reviewOf[0]}-${reviewOf[reviewOf.length - 1]}` : reviewOf.join(",");
         console.debug("[VocabMap] lesson", key, "review of lessons", range + ", total", aggregated.length, "words");

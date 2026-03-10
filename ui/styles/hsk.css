@@ -1628,6 +1628,34 @@
    📋 复习课专用：目录式列表
    单词/会话/语法/扩张 tab 紧凑样式
 ================================== */
+.review-words-by-lesson {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.review-lesson-group {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fafbfc;
+}
+
+.review-lesson-group-title {
+  margin: 0;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #334155;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.review-lesson-group .review-word-list {
+  padding: 12px;
+  background: #fff;
+}
+
 .review-word-list,
 .review-dialogue-list,
 .review-grammar-list,
