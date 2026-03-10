@@ -126,7 +126,7 @@ function checkTitleConsistency(lesson, goal, dialogueCards) {
   const forbidden = mismatchKeywords[key];
   const found = forbidden.filter((w) => text.includes(w));
   if (found.length) {
-    return `Dialogue topic mismatch with communicative goal: goal="${goal}" but dialogue contains ${found.join(", ")}`;
+    return `Dialogue topic mismatch with lesson title / communicative goal: goal="${goal}" but dialogue contains ${found.join(", ")}`;
   }
   return null;
 }

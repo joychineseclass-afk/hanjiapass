@@ -1,6 +1,6 @@
 # Lumina Dialogue Quality Report
 
-Generated: 2026-03-10T13:47:23.558Z
+Generated: 2026-03-10T14:21:48.869Z
 
 > 检测对象：页面最终单词卡词汇（vocab-map core+extra）vs 页面实际会话用词
 
@@ -13,7 +13,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [老师, 同学, 高兴]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 我, 很, 不, 对不起, 没关系, 没
+- ❌ **Future word violations**: 我, 很, 对不起, 没关系, 没
 
 
 ## Lesson 2
@@ -25,7 +25,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [谁, 我们]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 我, 小, 很, 字, 什么
+- ❌ **Future word violations**: 小, 很
 
 
 ## Lesson 3
@@ -35,21 +35,13 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Dialogue used words**: [中国, 北京, 人, 哪, 是, 都, 呢, 住]
 - **Coverage**: 100.0% (8/8)
 
-- ❌ **Future word violations**: 我
-
 
 ## Lesson 4
 
 - **Communicative goal**: 介绍家人
 - **Final lesson words**: [他, 她, 的, 我, 朋友, 小]
-- **Dialogue used words**: [他, 她, 的, 我]
-- **Coverage**: 66.7% (4/6)
-- **Missing words**: [朋友, 小]
-  - ⚠️ WARNING: Below 95% target
-
-- ⚠️ **WARNING**: Dialogue topic mismatch with communicative goal: goal="介绍家人" but dialogue contains 老师
-
-- ❌ **Future word violations**: 妈妈, 爸爸, 家, 女儿, 儿子
+- **Dialogue used words**: [朋友, 他, 她, 的, 我, 小]
+- **Coverage**: 100.0% (6/6)
 
 
 ## Lesson 5
@@ -97,8 +89,6 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [分钟]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 在, 上, 下, 什么
-
 
 ## Lesson 9
 
@@ -119,7 +109,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [书, 本, 东西]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 在, 里, 上, 下, 前面, 后面
+- ❌ **Future word violations**: 前面, 后面
 
 
 ## Lesson 11
@@ -131,8 +121,6 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [学生, 会, 说话, 听]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 什么, 在
-
 
 ## Lesson 12
 
@@ -141,7 +129,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Dialogue used words**: [工作, 先生, 小姐, 做]
 - **Coverage**: 100.0% (4/4)
 
-- ❌ **Future word violations**: 什么, 来, 医生
+- ❌ **Future word violations**: 来, 医生
 
 
 ## Lesson 13
@@ -153,7 +141,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [电脑, 想, 看见]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 什么, 漂亮
+- ❌ **Future word violations**: 漂亮
 
 
 ## Lesson 14
@@ -163,7 +151,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Dialogue used words**: [什么, 米饭, 苹果, 水果, 吃, 菜]
 - **Coverage**: 100.0% (6/6)
 
-- ❌ **Future word violations**: 喝, 和, 水
+- ❌ **Future word violations**: 喝, 和
 
 
 ## Lesson 15
@@ -175,7 +163,7 @@ Generated: 2026-03-10T13:47:23.558Z
 - **Missing words**: [和, 水]
   - ⚠️ WARNING: Below 95% target
 
-- ❌ **Future word violations**: 在, 块
+- ❌ **Future word violations**: 块
 
 
 ## Lesson 16

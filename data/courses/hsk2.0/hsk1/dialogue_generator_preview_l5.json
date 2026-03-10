@@ -2,10 +2,15 @@
   "lessonId": "5",
   "lessonTitle": "数字①",
   "communicativeGoal": "询问数量",
-  "generatedAt": "2026-03-10T13:47:12.773Z",
+  "dialogueTasks": [
+    "询问人数",
+    "询问物品数量"
+  ],
+  "generatedAt": "2026-03-10T14:21:34.849Z",
   "dialogues": [
     {
       "title": "会话1",
+      "dialogueTask": "询问人数",
       "goal": "询问数量",
       "turns": [
         {
@@ -24,19 +29,20 @@
     },
     {
       "title": "会话2",
+      "dialogueTask": "询问物品数量",
       "goal": "询问数量",
       "turns": [
         {
           "speaker": "A",
-          "zh": "多少个学生？",
-          "pinyin": "Duōshao gè xuésheng?",
-          "ko": "학생이 몇 명이에요?"
+          "zh": "你家几个人？",
+          "pinyin": "Nǐ jiā jǐ gè rén?",
+          "ko": "가족이 몇 명이에요?"
         },
         {
           "speaker": "B",
-          "zh": "三个学生。",
-          "pinyin": "Sān gè xuésheng.",
-          "ko": "학생 세 명이에요."
+          "zh": "五个人：爸爸、妈妈、我。",
+          "pinyin": "Wǔ gè rén: Bàba, māma, wǒ.",
+          "ko": "다섯 명: 아빠, 엄마, 저."
         }
       ]
     }
@@ -60,11 +66,9 @@
   ],
   "coverage": {
     "currentWordsTotal": 9,
-    "currentWordsUsed": 2,
-    "percent": 0.2222222222222222,
+    "currentWordsUsed": 4,
+    "percent": 0.4444444444444444,
     "unusedWords": [
-      "妈妈",
-      "爸爸",
       "女儿",
       "儿子",
       "狗",
@@ -73,9 +77,9 @@
     ]
   },
   "warnings": [
-    "Coverage 22.2% < 95%. Unused: 妈妈, 爸爸, 女儿, 儿子, 狗, 猫, 些"
+    "Coverage 44.4% < 95%. Unused: 女儿, 儿子, 狗, 猫, 些"
   ],
   "errors": [
-    "Future word violations: 多, 少, 几, 三, 五, 学生, 多少"
+    "Future word violations: 几, 五"
   ]
 }

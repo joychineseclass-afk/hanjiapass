@@ -20,6 +20,7 @@ const ROOT = join(__dirname, "..");
 const HSK1_DIR = join(ROOT, "data/courses/hsk2.0/hsk1");
 const VOCAB_DIST_PATH = join(ROOT, "data/courses/hsk2.0/hsk1/vocab-distribution.json");
 const GOALS_PATH = join(ROOT, "data/pedagogy/hsk1-communication-goals.json");
+const DIALOGUE_BLUEPRINT_PATH = join(ROOT, "data/pedagogy/hsk1-dialogue-blueprint.json");
 const LEVEL_KEY = "hsk1";
 
 // ========== 加载 ==========
@@ -81,6 +82,7 @@ function main() {
   const vocabDist = loadJSON(VOCAB_DIST_PATH);
   const goalsData = loadJSON(GOALS_PATH);
   const goals = goalsData?.goals || {};
+  const dialogueBlueprint = loadJSON(DIALOGUE_BLUEPRINT_PATH);
   const vocabMap = loadVocabMap(LEVEL_KEY);
   const vocabList = loadVocabList(1);
 
@@ -91,6 +93,9 @@ function main() {
   if (!vocabMap || !vocabList?.length) {
     console.error("vocab-map or vocab list not found");
     process.exit(1);
+  }
+  if (!dialogueBlueprint) {
+    console.warn("hsk1-dialogue-blueprint.json not found, dialogueTasks will be empty");
   }
 
   const lessonsToRun = [3, 4, 5];
@@ -104,7 +109,10 @@ function main() {
 
     const lesson = loadJSON(lessonPath);
     const vocabOpts = buildVocabMapOpts(n, LEVEL_KEY, vocabMap, vocabList);
-    const input = buildGeneratorInput(lesson, vocabDist, goals, vocabOpts);
+    const input = buildGeneratorInput(lesson, vocabDist, goals, {
+      ...vocabOpts,
+      dialogueBlueprint: dialogueBlueprint || {},
+    });
     const output = generateDialogues(input);
 
     console.log(`\n--- Lesson ${n} ---`);
@@ -120,6 +128,7 @@ function main() {
       lessonId: String(n),
       lessonTitle: input.lessonTitle,
       communicativeGoal: input.communicativeGoal,
+      dialogueTasks: input.dialogueTasks || [],
       generatedAt: new Date().toISOString(),
       ...output,
     };
@@ -140,6 +149,7 @@ function main() {
           generatedAt: preview.generatedAt,
           coverage: output.coverage?.percent,
           communicativeGoal: input.communicativeGoal,
+          dialogueTasks: input.dialogueTasks || [],
         },
       };
       writeFileSync(lessonPath, JSON.stringify(lessonUpdated, null, 2), "utf-8");

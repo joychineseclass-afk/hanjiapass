@@ -611,8 +611,12 @@
     }
   ],
   "dialogueMeta": {
-    "generatedAt": "2026-03-10T13:47:12.766Z",
+    "generatedAt": "2026-03-10T14:21:34.841Z",
     "coverage": 1,
-    "communicativeGoal": "询问国籍与居住地"
+    "communicativeGoal": "询问国籍与居住地",
+    "dialogueTasks": [
+      "询问国籍",
+      "询问住处"
+    ]
   }
 }

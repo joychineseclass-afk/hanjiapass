@@ -36,7 +36,8 @@
  * @property {string} lessonId
  * @property {string} lessonTitle
  * @property {string} communicativeGoal
- * @property {string[]} currentWords - 本课新词
+ * @property {string[]} dialogueTasks - 会话蓝图中的 dialogueTasks（每 task 对应一会话）
+ * @property {string[]} currentWords - 本课新词（必须与页面单词卡一致）
  * @property {string[]} previousWords - 之前课已学词
  * @property {string[]} allowedWords - current + previous
  * @property {string[]} forbiddenWords - 未来课词
@@ -58,11 +59,13 @@
 // ========== 预定义模板（L3, L4, L5 试运行） ==========
 // 严格遵循词汇边界，手写以保证质量
 
-/** L3: 询问国籍与居住地 — 只使用 vocab-map 词汇：中国、人、哪、是、都、呢、北京、住 */
+/** L3: 询问国籍与居住地 — dialogueTasks: 询问国籍, 询问住处 — vocab: 中国、人、哪、是、都、呢、北京、住 */
 const L3_TEMPLATE = {
+  dialogueTasks: ["询问国籍", "询问住处"],
   dialogues: [
     {
       title: "会话1",
+      dialogueTask: "询问国籍",
       goal: "询问国籍与居住地",
       turns: [
         { speaker: "A", zh: "你是哪国人？", pinyin: "Nǐ shì nǎ guó rén?", ko: "어느 나라 사람이에요?" },
@@ -73,6 +76,7 @@ const L3_TEMPLATE = {
     },
     {
       title: "会话2",
+      dialogueTask: "询问住处",
       goal: "询问国籍与居住地",
       turns: [
         { speaker: "A", zh: "你呢？", pinyin: "Nǐ ne?", ko: "당신은요?" },
@@ -88,26 +92,41 @@ const L3_TEMPLATE = {
   ],
 };
 
+/** L4: 介绍家人 — dialogueTasks: 确认家庭关系, 介绍家庭成员 — vocab: 他、她、的、我、朋友、小（爸爸妈妈在L5，本课用朋友/小朋友） */
 const L4_TEMPLATE = {
+  dialogueTasks: ["确认家庭关系", "介绍家庭成员"],
   dialogues: [
     {
       title: "会话1",
+      dialogueTask: "确认家庭关系",
       goal: "介绍家人",
       turns: [
-        { speaker: "A", zh: "他是你爸爸吗？", pinyin: "Tā shì nǐ bàba ma?", ko: "그는 당신 아빠예요?" },
-        { speaker: "B", zh: "是，他是我的爸爸，他是老师。她是我的妈妈。", pinyin: "Shì, tā shì wǒ de bàba, tā shì lǎoshī. Tā shì wǒ de māma.", ko: "네, 그는 우리 아빠예요, 선생님이에요. 그녀는 우리 엄마예요." },
-        { speaker: "A", zh: "你家好吗？", pinyin: "Nǐ jiā hǎo ma?", ko: "가족 잘 지내요?" },
-        { speaker: "B", zh: "好。我家的人：我的爸爸、妈妈、儿子、女儿。", pinyin: "Hǎo. Wǒ jiā de rén: Wǒ de bàba, māma, érzi, nǚ'ér.", ko: "네. 우리 가족: 아빠, 엄마, 아들, 딸." },
+        { speaker: "A", zh: "他是你朋友吗？", pinyin: "Tā shì nǐ péngyou ma?", ko: "그는 당신 친구예요?" },
+        { speaker: "B", zh: "是，他是我的朋友。", pinyin: "Shì, tā shì wǒ de péngyou.", ko: "네, 그는 제 친구예요." },
+        { speaker: "A", zh: "她呢？", pinyin: "Tā ne?", ko: "그녀는요?" },
+        { speaker: "B", zh: "她是我朋友。", pinyin: "Tā shì wǒ péngyou.", ko: "그녀는 제 친구예요." },
+      ],
+    },
+    {
+      title: "会话2",
+      dialogueTask: "介绍家庭成员",
+      goal: "介绍家人",
+      turns: [
+        { speaker: "A", zh: "她是谁？", pinyin: "Tā shì shéi?", ko: "그녀는 누구예요?" },
+        { speaker: "B", zh: "她是我朋友。他是我的小朋友。", pinyin: "Tā shì wǒ péngyou. Tā shì wǒ de xiǎo péngyou.", ko: "그녀는 제 친구예요. 그는 제 어린 친구예요." },
       ],
     },
   ],
   extensionSentences: [],
 };
 
+/** L5: 询问数量 — dialogueTasks: 询问人数, 询问物品数量 */
 const L5_TEMPLATE = {
+  dialogueTasks: ["询问人数", "询问物品数量"],
   dialogues: [
     {
       title: "会话1",
+      dialogueTask: "询问人数",
       goal: "询问数量",
       turns: [
         { speaker: "A", zh: "你家几个人？", pinyin: "Nǐ jiā jǐ gè rén?", ko: "가족이 몇 명이에요?" },
@@ -116,10 +135,11 @@ const L5_TEMPLATE = {
     },
     {
       title: "会话2",
+      dialogueTask: "询问物品数量",
       goal: "询问数量",
       turns: [
-        { speaker: "A", zh: "多少个学生？", pinyin: "Duōshao gè xuésheng?", ko: "학생이 몇 명이에요?" },
-        { speaker: "B", zh: "三个学生。", pinyin: "Sān gè xuésheng.", ko: "학생 세 명이에요." },
+        { speaker: "A", zh: "你家几个人？", pinyin: "Nǐ jiā jǐ gè rén?", ko: "가족이 몇 명이에요?" },
+        { speaker: "B", zh: "五个人：爸爸、妈妈、我。", pinyin: "Wǔ gè rén: Bàba, māma, wǒ.", ko: "다섯 명: 아빠, 엄마, 저." },
       ],
     },
   ],
@@ -235,12 +255,14 @@ function detectVocabStacking(dialogues, currentWords) {
 
 /**
  * 生成会话
+ * 流程：1) 读取 dialogueTasks 2) 按 task 选取模板 3) 覆盖率与质量检测
  * @param {GeneratorInput} input
  * @returns {GeneratorOutput & { warnings?: string[], errors?: string[] }}
  */
 export function generateDialogues(input) {
   const {
     lessonId,
+    dialogueTasks = [],
     currentWords = [],
     previousWords = [],
     allowedWords = [],
@@ -267,7 +289,17 @@ export function generateDialogues(input) {
     };
   }
 
-  const { dialogues, extensionSentences } = template;
+  // dialogueTasks 主导：只输出与 blueprint 中 task 匹配的会话
+  const templateTasks = template.dialogueTasks || [];
+  const requestedTasks = Array.isArray(dialogueTasks) && dialogueTasks.length ? dialogueTasks : templateTasks;
+  let dialogues = (template.dialogues || []).filter((d) => {
+    const task = d.dialogueTask || d.title;
+    return requestedTasks.length === 0 || requestedTasks.some((t) => task === t || String(task).includes(t));
+  });
+  if (dialogues.length === 0 && template.dialogues?.length) {
+    dialogues = template.dialogues;
+  }
+  const extensionSentences = template.extensionSentences || [];
   const coverage = computeCoverage(dialogues, extensionSentences, currentWords);
 
   // 校验
@@ -358,11 +390,13 @@ export function buildGeneratorInput(lesson, vocabDistribution, goals, opts = {})
 
   const title = typeof lesson.title === "object" ? lesson.title.zh || lesson.title.en : String(lesson.title || "");
   const goal = (goals && goals[String(lessonNo)]) || vocabDistribution?.lessonThemes?.[String(lessonNo)] || "";
+  const dialogueTasks = (opts.dialogueBlueprint && opts.dialogueBlueprint[String(lessonNo)]?.dialogueTasks) || [];
 
   return {
     lessonId: String(lessonNo),
     lessonTitle: title,
     communicativeGoal: goal,
+    dialogueTasks,
     currentWords,
     previousWords,
     allowedWords,

@@ -2,10 +2,15 @@
   "lessonId": "3",
   "lessonTitle": "国家",
   "communicativeGoal": "询问国籍与居住地",
-  "generatedAt": "2026-03-10T13:47:12.766Z",
+  "dialogueTasks": [
+    "询问国籍",
+    "询问住处"
+  ],
+  "generatedAt": "2026-03-10T14:21:34.841Z",
   "dialogues": [
     {
       "title": "会话1",
+      "dialogueTask": "询问国籍",
       "goal": "询问国籍与居住地",
       "turns": [
         {
@@ -36,6 +41,7 @@
     },
     {
       "title": "会话2",
+      "dialogueTask": "询问住处",
       "goal": "询问国籍与居住地",
       "turns": [
         {

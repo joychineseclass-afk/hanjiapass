@@ -2,35 +2,59 @@
   "lessonId": "4",
   "lessonTitle": "家人",
   "communicativeGoal": "介绍家人",
-  "generatedAt": "2026-03-10T13:47:12.770Z",
+  "dialogueTasks": [
+    "确认家庭关系",
+    "介绍家庭成员"
+  ],
+  "generatedAt": "2026-03-10T14:21:34.846Z",
   "dialogues": [
     {
       "title": "会话1",
+      "dialogueTask": "确认家庭关系",
       "goal": "介绍家人",
       "turns": [
         {
           "speaker": "A",
-          "zh": "他是你爸爸吗？",
-          "pinyin": "Tā shì nǐ bàba ma?",
-          "ko": "그는 당신 아빠예요?"
+          "zh": "他是你朋友吗？",
+          "pinyin": "Tā shì nǐ péngyou ma?",
+          "ko": "그는 당신 친구예요?"
         },
         {
           "speaker": "B",
-          "zh": "是，他是我的爸爸，他是老师。她是我的妈妈。",
-          "pinyin": "Shì, tā shì wǒ de bàba, tā shì lǎoshī. Tā shì wǒ de māma.",
-          "ko": "네, 그는 우리 아빠예요, 선생님이에요. 그녀는 우리 엄마예요."
+          "zh": "是，他是我的朋友。",
+          "pinyin": "Shì, tā shì wǒ de péngyou.",
+          "ko": "네, 그는 제 친구예요."
         },
         {
           "speaker": "A",
-          "zh": "你家好吗？",
-          "pinyin": "Nǐ jiā hǎo ma?",
-          "ko": "가족 잘 지내요?"
+          "zh": "她呢？",
+          "pinyin": "Tā ne?",
+          "ko": "그녀는요?"
         },
         {
           "speaker": "B",
-          "zh": "好。我家的人：我的爸爸、妈妈、儿子、女儿。",
-          "pinyin": "Hǎo. Wǒ jiā de rén: Wǒ de bàba, māma, érzi, nǚ'ér.",
-          "ko": "네. 우리 가족: 아빠, 엄마, 아들, 딸."
+          "zh": "她是我朋友。",
+          "pinyin": "Tā shì wǒ péngyou.",
+          "ko": "그녀는 제 친구예요."
+        }
+      ]
+    },
+    {
+      "title": "会话2",
+      "dialogueTask": "介绍家庭成员",
+      "goal": "介绍家人",
+      "turns": [
+        {
+          "speaker": "A",
+          "zh": "她是谁？",
+          "pinyin": "Tā shì shéi?",
+          "ko": "그녀는 누구예요?"
+        },
+        {
+          "speaker": "B",
+          "zh": "她是我朋友。他是我的小朋友。",
+          "pinyin": "Tā shì wǒ péngyou. Tā shì wǒ de xiǎo péngyou.",
+          "ko": "그녀는 제 친구예요. 그는 제 어린 친구예요."
         }
       ]
     }
@@ -38,18 +62,8 @@
   "extensionSentences": [],
   "coverage": {
     "currentWordsTotal": 6,
-    "currentWordsUsed": 4,
-    "percent": 0.6666666666666666,
-    "unusedWords": [
-      "朋友",
-      "小"
-    ]
-  },
-  "warnings": [
-    "Vocab stacking: 好。我家的人：我的爸爸、妈妈、儿子、女儿。",
-    "Coverage 66.7% < 95%. Unused: 朋友, 小"
-  ],
-  "errors": [
-    "Future word violations: 妈妈, 爸爸, 家, 女儿, 儿子"
-  ]
+    "currentWordsUsed": 6,
+    "percent": 1,
+    "unusedWords": []
+  }
 }
