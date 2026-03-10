@@ -10,6 +10,7 @@ import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
 import { renderLessonList, renderWordCards, renderReviewWords, renderReviewDialogue, renderReviewGrammar, renderReviewExtension, bindWordCardActions, wordKey, wordPinyin, wordMeaning, normalizeLang } from "../modules/hsk/hskRenderer.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
+import { distributeVocabulary } from "../modules/curriculum/vocabDistributor.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
@@ -837,6 +838,13 @@ function resolveBlueprintTitle(titleObj, lang) {
   );
 }
 
+/** 获取课程词汇：优先 distributedWords，回退 words / originalWords */
+function getLessonWords(lesson) {
+  if (!lesson) return [];
+  const arr = lesson.distributedWords ?? lesson.words ?? lesson.originalWords;
+  return Array.isArray(arr) ? arr : [];
+}
+
 /** 根据当前语言刷新 lesson.displayTitle（仅对有 blueprintTitle 的 lesson） */
 function refreshBlueprintDisplayTitles(lessons, lang) {
   if (!Array.isArray(lessons)) return;
@@ -863,6 +871,25 @@ function applyBlueprintTitles(lessons, blueprint) {
       ...l,
       originalTitle: l.title,
       blueprintTitle: rawTitle,
+    };
+  });
+}
+
+/** 将 distributeVocabulary 结果注入 lessons：distributedWords、words、originalWords */
+function applyVocabDistribution(lessons, distribution) {
+  if (!Array.isArray(lessons) || !distribution || typeof distribution !== "object") return lessons;
+  return lessons.map((l) => {
+    const no = getLessonNumber(l);
+    const key = String(no);
+    const assigned = distribution[key];
+    if (assigned == null) return l;
+    const originalWords = Array.isArray(l.words) ? l.words : (Array.isArray(l.vocab) ? l.vocab : []);
+    const distributedWords = Array.isArray(assigned) ? assigned : [];
+    return {
+      ...l,
+      originalWords,
+      distributedWords,
+      words: distributedWords.length > 0 ? distributedWords : originalWords,
     };
   });
 }
@@ -910,6 +937,28 @@ async function loadLessons() {
           console.debug("[Blueprint] matched lesson 1 ->", display || (typeof bp1.title === "string" ? bp1.title : bp1.title?.zh));
         } else {
           console.debug("[Blueprint] lesson 1 not matched, blueprint[\"1\"]:", bp1 ? "no title" : "missing");
+        }
+      }
+
+      let vocabList = null;
+      try {
+        if (window.HSK_LOADER && typeof window.HSK_LOADER.loadVocab === "function") {
+          vocabList = await window.HSK_LOADER.loadVocab(state.lv, { version: state.version });
+        }
+      } catch (vocabErr) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn("[VocabDistributor] vocabList load failed:", vocabErr?.message);
+        }
+      }
+      if (!Array.isArray(vocabList) || vocabList.length === 0) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn("[VocabDistributor] vocabList empty or missing, skipping distribution");
+        }
+      } else {
+        const levelKey = `hsk${state.lv}`;
+        const distribution = distributeVocabulary(levelKey, blueprint, vocabList);
+        if (distribution && Object.keys(distribution).length > 0) {
+          result = applyVocabDistribution(result, distribution);
         }
       }
     } else if (state.lv === 1 && typeof console !== "undefined" && console.warn) {
@@ -975,7 +1024,9 @@ async function openLesson({ lessonNo, file }) {
       }
     }
 
-    const lessonWordsRaw = Array.isArray(lessonData && lessonData.words) ? lessonData.words : (Array.isArray(lessonData && lessonData.vocab) ? lessonData.vocab : []);
+    const fromList = listItem ? getLessonWords(listItem) : [];
+    const fromDetail = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
+    const lessonWordsRaw = fromList.length > 0 ? fromList : fromDetail;
     const needsVocabEnrichment = lessonWordsRaw.some((w) => typeof w === "string");
     let vocab = [];
     if (needsVocabEnrichment && window.HSK_LOADER && typeof window.HSK_LOADER.loadVocab === "function") {
@@ -992,6 +1043,11 @@ async function openLesson({ lessonNo, file }) {
       }
       return w || {};
     }).filter((w) => wordKey(w));
+
+    if (lessonWords.length > 0) {
+      lessonData.words = lessonWords;
+      lessonData.vocab = lessonWords;
+    }
 
     state.current = { lessonNo: no, file: file || "", lessonData, lessonWords };
 
