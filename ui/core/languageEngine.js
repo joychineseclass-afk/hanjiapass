@@ -273,7 +273,7 @@ export function pick(obj, options = {}) {
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
   const l = lang ?? getLang();
-  const titleObj = lesson.displayTitle || lesson.title || lesson.name || lesson.label;
+  const titleObj = lesson.displayTitle || lesson.title || lesson.originalTitle || lesson.name || lesson.label;
   if (typeof titleObj === "object" && titleObj !== null) {
     const v = pick(titleObj, { strict: true, lang: l });
     if (v) return v;

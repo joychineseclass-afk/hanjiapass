@@ -701,9 +701,8 @@ function buildAIContext() {
   const ld = state.current.lessonData;
   const no = state.current.lessonNo;
 
-  const found = state.lessons && state.lessons.find(function(x) { return Number(x.lessonNo) === Number(no); });
-  const titleObj = found && found.title;
-  const title = titleObj ? (typeof titleObj === "object" ? pick(titleObj, { strict: true, lang }) : String(titleObj)) : "";
+  const found = state.lessons && state.lessons.find(function(x) { return getLessonNumber(x) === no; });
+  const title = found ? getLessonDisplayTitle(found, lang) : "";
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words.slice(0, 12).map(w => {
@@ -820,8 +819,37 @@ function getLessonNumber(lesson) {
   return n;
 }
 
-/** Blueprint 优先：用蓝图 title 覆盖课程标题（课程目录与详情共用）
- * 若 blueprint[lessonNo]?.title 存在：覆盖 title、写入 displayTitle、保留 originalTitle
+/** 从 blueprint title（string 或 object）解析当前语言的标题，无匹配时回退 zh */
+function resolveBlueprintTitle(titleObj, lang) {
+  if (!titleObj) return "";
+  if (typeof titleObj === "string") return String(titleObj).trim();
+  if (typeof titleObj !== "object") return "";
+  const l = (lang || getLang()).toLowerCase();
+  const key = l === "kr" || l === "ko" ? "ko" : l === "cn" || l === "zh" ? "zh" : l === "jp" || l === "ja" ? "ja" : "en";
+  const altKey = l === "kr" ? "kr" : l === "cn" ? "cn" : l === "jp" ? "jp" : "en";
+  return (
+    String(titleObj[altKey] ?? titleObj[key] ?? "").trim() ||
+    String(titleObj.zh ?? titleObj.cn ?? "").trim() ||
+    String(titleObj.ko ?? titleObj.kr ?? "").trim() ||
+    String(titleObj.en ?? "").trim() ||
+    String(titleObj.ja ?? titleObj.jp ?? "").trim() ||
+    ""
+  );
+}
+
+/** 根据当前语言刷新 lesson.displayTitle（仅对有 blueprintTitle 的 lesson） */
+function refreshBlueprintDisplayTitles(lessons, lang) {
+  if (!Array.isArray(lessons)) return;
+  const l = lang || getLang();
+  lessons.forEach((lesson) => {
+    if (lesson && lesson.blueprintTitle != null) {
+      lesson.displayTitle = resolveBlueprintTitle(lesson.blueprintTitle, l);
+    }
+  });
+}
+
+/** Blueprint 优先：保存 blueprintTitle、originalTitle，不覆盖 lesson.title
+ * displayTitle 由 refreshBlueprintDisplayTitles(lessons, currentLang) 生成
  */
 function applyBlueprintTitles(lessons, blueprint) {
   if (!Array.isArray(lessons) || !blueprint || typeof blueprint !== "object") return lessons;
@@ -829,28 +857,12 @@ function applyBlueprintTitles(lessons, blueprint) {
     const no = getLessonNumber(l);
     const key = String(no);
     const entry = no ? blueprint[key] : null;
-    let titleObj = null;
-    if (entry && entry.title != null) {
-      if (typeof entry.title === "string" && entry.title.trim()) {
-        const t = entry.title.trim();
-        titleObj = { zh: t, kr: t, en: t, jp: t, cn: t };
-      } else if (typeof entry.title === "object" && entry.title !== null) {
-        const o = entry.title;
-        titleObj = {
-          zh: String(o.zh ?? o.cn ?? "").trim() || String(o.cn ?? o.zh ?? "").trim(),
-          kr: String(o.kr ?? o.ko ?? "").trim(),
-          en: String(o.en ?? "").trim(),
-          jp: String(o.jp ?? o.ja ?? "").trim(),
-          cn: String(o.cn ?? o.zh ?? "").trim(),
-        };
-      }
-    }
-    if (!titleObj || (!titleObj.zh && !titleObj.cn)) return l;
+    const rawTitle = entry && entry.title != null ? entry.title : null;
+    if (!rawTitle) return l;
     return {
       ...l,
       originalTitle: l.title,
-      title: titleObj,
-      displayTitle: titleObj,
+      blueprintTitle: rawTitle,
     };
   });
 }
@@ -887,14 +899,15 @@ async function loadLessons() {
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     if (blueprint) {
       result = applyBlueprintTitles(result, blueprint);
+      refreshBlueprintDisplayTitles(result, lang);
       if (state.lv === 1 && typeof console !== "undefined" && console.debug) {
         console.debug("[Blueprint] loaded: hsk1");
         console.debug("[Blueprint] lesson count:", Object.keys(blueprint).length);
         const first = result.find((l) => getLessonNumber(l) === 1);
         const bp1 = blueprint["1"];
         if (bp1?.title) {
-          const display = (first && (first.displayTitle?.zh ?? first.displayTitle?.cn ?? first.title?.zh ?? first.title?.cn)) || "";
-          console.debug("[Blueprint] matched lesson 1 ->", display || bp1.title);
+          const display = (first && (typeof first.displayTitle === "string" ? first.displayTitle : (first.displayTitle?.zh ?? first.displayTitle?.cn ?? first.title?.zh ?? first.title?.cn))) || "";
+          console.debug("[Blueprint] matched lesson 1 ->", display || (typeof bp1.title === "string" ? bp1.title : bp1.title?.zh));
         } else {
           console.debug("[Blueprint] lesson 1 not matched, blueprint[\"1\"]:", bp1 ? "no title" : "missing");
         }
@@ -954,24 +967,11 @@ async function openLesson({ lessonNo, file }) {
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     const bpEntry = blueprint && blueprint[String(no)];
     if (bpEntry && bpEntry.title != null) {
-      let titleObj = null;
-      if (typeof bpEntry.title === "string" && bpEntry.title.trim()) {
-        const t = bpEntry.title.trim();
-        titleObj = { zh: t, kr: t, en: t, jp: t, cn: t };
-      } else if (typeof bpEntry.title === "object" && bpEntry.title !== null) {
-        const o = bpEntry.title;
-        titleObj = {
-          zh: String(o.zh ?? o.cn ?? "").trim() || String(o.cn ?? o.zh ?? "").trim(),
-          kr: String(o.kr ?? o.ko ?? "").trim(),
-          en: String(o.en ?? "").trim(),
-          jp: String(o.jp ?? o.ja ?? "").trim(),
-          cn: String(o.cn ?? o.zh ?? "").trim(),
-        };
-      }
-      if (titleObj && (titleObj.zh || titleObj.cn)) {
+      const resolved = resolveBlueprintTitle(bpEntry.title, lang);
+      if (resolved) {
         lessonData.originalTitle = lessonData.title;
-        lessonData.title = titleObj;
-        lessonData.displayTitle = titleObj;
+        lessonData.blueprintTitle = bpEntry.title;
+        lessonData.displayTitle = resolved;
       }
     }
 
@@ -1299,6 +1299,11 @@ function bindEvents() {
       console.debug("[HSK] joy:langChanged received ->", newLang);
     }
     if (!isHSKPageActive()) return;
+
+    refreshBlueprintDisplayTitles(state.lessons, newLang);
+    if (state.current && state.current.lessonData && state.current.lessonData.blueprintTitle != null) {
+      state.current.lessonData.displayTitle = resolveBlueprintTitle(state.current.lessonData.blueprintTitle, newLang);
+    }
 
     try { i18n.apply(document); } catch {}
     setSubTitle();
