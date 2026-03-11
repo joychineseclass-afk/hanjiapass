@@ -433,6 +433,7 @@
     "noDialogue": "No dialogue",
     "noExtension": "No extension words",
     "sceneImage": "Scene image",
+    "sceneGenerating": "Generating scene image...",
     "kids_scene_title": "Scene",
     "kids_core_sentence": "Core Sentence",
     "kids_dialogue": "Dialogue",

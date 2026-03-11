@@ -444,6 +444,7 @@
     "noDialogue": "会話なし",
     "noExtension": "拡張語なし",
     "sceneImage": "場面イメージ",
+    "sceneGenerating": "場面画像を生成中...",
     "kids_scene_title": "レッスン場面",
     "kids_core_sentence": "核心文",
     "kids_dialogue": "会話",

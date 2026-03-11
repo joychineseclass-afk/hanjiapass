@@ -111,6 +111,18 @@ function ensureStyles() {
       background:linear-gradient(180deg,#eef7ff,#f8fbff);
       border:1px solid rgba(226,232,240,.9);
     }
+    .kids-scene-image-content{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+    }
+    .kids-scene-image-content .kids-scene-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
     .kids-scene-image-wrap .kids-scene-image{
       width:100%;
       height:100%;
@@ -618,15 +630,14 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const toplineText = getLessonTopline(lesson, lessonNo, lang, coreZh, corePy);
   const sceneMeta = resolveKidsSceneMeta(lesson, lang, { lessonNo, book: "kids1" });
   const scenePromptResult = buildKidsScenePrompt(sceneMeta);
-  const sceneAsset = resolveKidsSceneAsset(sceneMeta, scenePromptResult);
+  const sceneCacheKey = `${sceneMeta.promptSeed?.book || "kids1"}-${sceneMeta.promptSeed?.lessonId || "lesson"}-${sceneMeta.type || "classroom_greeting"}`;
   if (typeof window !== "undefined" && window.location?.hostname === "localhost") {
     try { console.log("[KidsScenePrompt]", scenePromptResult.prompt); } catch (_) {}
   }
-  const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneAsset.cacheKey)}" data-scene-mode="${escapeAttr(sceneAsset.mode)}" data-scene-prompt="${escapeAttr(sceneAsset.shortPrompt)}"`;
-  const scenePlaceholderHtml = `
+  const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneCacheKey)}" data-scene-prompt="${escapeAttr(scenePromptResult.shortPrompt)}"`;
+  const loadingPlaceholderHtml = `
     <div class="kids-scene-image-placeholder">
-      <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneAsset.alt)}</div>
-      <div class="kids-scene-image-placeholder-desc">${escapeHtml(sceneAsset.shortPrompt)}</div>
+      <div class="kids-scene-image-placeholder-title">${escapeHtml(t("kids1.sceneGenerating", "场景图片生成中..."))}</div>
     </div>`;
 
   root.innerHTML = `
@@ -653,7 +664,7 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                   </div>
                   <div class="kids-scene-stage">
                     <div class="kids-scene-image-wrap" ${sceneWrapData}>
-                      ${sceneAsset.imageUrl ? `<img class="kids-scene-image" src="${escapeAttr(sceneAsset.imageUrl)}" alt="${escapeAttr(sceneAsset.alt)}" />` : scenePlaceholderHtml}
+                      <div id="kids1SceneImageContent" class="kids-scene-image-content">${loadingPlaceholderHtml}</div>
                       <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
                         ${overlayBubbles || ""}
                       </div>
@@ -686,6 +697,37 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     } catch {}
   });
   bindSpeakAndReadAll(root);
+
+  (async () => {
+    try {
+      const asset = await resolveKidsSceneAsset(sceneMeta, scenePromptResult);
+      const slot = root.querySelector("#kids1SceneImageContent");
+      if (!slot) return;
+      if (asset.mode === "generated" && asset.imageUrl) {
+        slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(asset.imageUrl)}" alt="${escapeAttr(asset.alt)}" />`;
+        const wrap = slot.closest(".kids-scene-image-wrap");
+        if (wrap) wrap.setAttribute("data-scene-mode", "generated");
+      } else {
+        slot.innerHTML = `
+          <div class="kids-scene-image-placeholder">
+            <div class="kids-scene-image-placeholder-title">${escapeHtml(asset.alt)}</div>
+            <div class="kids-scene-image-placeholder-desc">${escapeHtml(asset.shortPrompt)}</div>
+          </div>`;
+        const wrap = slot.closest(".kids-scene-image-wrap");
+        if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
+      }
+    } catch (e) {
+      if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
+      const slot = root.querySelector("#kids1SceneImageContent");
+      if (slot) {
+        slot.innerHTML = `
+          <div class="kids-scene-image-placeholder">
+            <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneMeta.title || "Scene")}</div>
+            <div class="kids-scene-image-placeholder-desc">${escapeHtml(scenePromptResult.shortPrompt)}</div>
+          </div>`;
+      }
+    }
+  })();
 }
 
 export default async function pageKids1(ctxOrRoot) {
