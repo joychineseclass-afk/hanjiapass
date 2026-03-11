@@ -631,6 +631,8 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   if (scenes.length > 0) {
     dialogueSectionHtml = scenes
       .map((scene, idx) => {
+        const sceneIndex = idx;
+        const sceneId = scene?.id || `scene${sceneIndex + 1}`;
         const sceneMeta = resolveKidsSceneMetaForScene(scene, getLang(), { lessonNo, book: "kids1" });
         const sceneCacheKey = `${sceneMeta.promptSeed?.book || "kids1"}-${sceneMeta.promptSeed?.lessonId || "lesson"}-${sceneMeta.type || "classroom_greeting"}`;
         const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneCacheKey)}" data-scene-prompt="${escapeAttr(basePrompt.shortPrompt)}"`;
