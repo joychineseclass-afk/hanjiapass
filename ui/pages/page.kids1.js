@@ -73,12 +73,11 @@ function ensureStyles() {
       padding:14px 16px;
     }
 
-    .kids-core-card{ max-width:760px; margin:0 auto; }
     .kids-core-card .kids-core-main-zh{ font-size:18px; font-weight:800; color:#0f172a; }
     .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
 
-    .kids-dialogue-scene-card.kids-dialog-card{ max-width:760px; margin:0 auto; }
+    .kids-dialogue-scene-card{ max-width:760px; margin:0 auto; }
     .kids-dialogue-head{
       display:flex;
       align-items:center;
@@ -100,22 +99,27 @@ function ensureStyles() {
     }
     .kids-read-all-btn:hover{ opacity:.9; }
 
-    .kids-scene-image{
+    .kids-scene-stage{ width:100%; }
+    .kids-scene-image-wrap{
       position:relative;
       width:100%;
+      max-width:680px;
+      margin:0 auto;
+      min-height:360px;
       aspect-ratio:4/3;
-      border-radius:16px;
+      border-radius:20px;
       overflow:hidden;
-      margin-bottom:16px;
-      background:#f3f4f6;
+      background:linear-gradient(180deg,#eef7ff,#f8fbff);
+      border:1px solid rgba(226,232,240,.9);
     }
-    .kids-scene-image img{
+    .kids-scene-image{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
+      min-height:360px;
     }
-    .kids-scene-image .kids-scene-image-placeholder{
+    .kids-scene-image-placeholder{
       position:absolute;
       inset:0;
       display:flex;
@@ -126,35 +130,35 @@ function ensureStyles() {
       padding:20px;
       font-size:14px;
       color:#64748b;
-      background:#f3f4f6;
+      background:linear-gradient(180deg,#eef7ff,#f8fbff);
     }
     .kids-scene-image-placeholder-title{ font-weight:700; color:#334155; font-size:15px; }
-    .kids-scene-image-placeholder-desc{ font-size:12px; color:#94a3b8; text-align:center; line-height:1.4; }
-
-    .kids-dialog-bubbles{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
+    .kids-scene-image-placeholder-desc{ font-size:12px; color:#94a3b8; max-width:80%; text-align:center; line-height:1.4; }
+    .kids-dialogue-bubbles-overlay{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
     }
-    .kids-dialog-bubbles .bubble{
-      max-width:70%;
-      padding:12px 14px;
-      border-radius:14px;
-      font-size:16px;
+    .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
+    .kids-scene-bubble{
+      position:absolute;
+      display:inline-block;
+      max-width:180px;
+      min-width:90px;
+      width:fit-content;
+      padding:10px 12px;
+      border-radius:16px;
+      font-size:14px;
+      background:#eff6ff;
+      border:1px solid #dbeafe;
+      box-shadow:0 2px 8px rgba(15,23,42,.08);
     }
-    .kids-dialog-bubbles .bubble.left{
-      align-self:flex-start;
-      background:#f3f4f6;
-    }
-    .kids-dialog-bubbles .bubble.right{
-      align-self:flex-end;
-      background:#ffe8b3;
-    }
-    .kids-dialog-bubbles .bubble .zh{ font-weight:700; color:#0f172a; }
-    .kids-dialog-bubbles .bubble .pinyin{ font-size:14px; color:#475569; margin-top:4px; }
-    .kids-dialog-bubbles .bubble .gloss{ font-size:14px; color:#64748b; margin-top:4px; }
-    .kids-dialog-bubbles .bubble .zh.kids-text-zh,.kids-dialog-bubbles .bubble .gloss.kids-text-gloss{ cursor:pointer; }
-    .kids-dialog-bubbles .bubble .zh.kids-text-zh:hover,.kids-dialog-bubbles .bubble .gloss.kids-text-gloss:hover{ opacity:.85; }
+    .kids-scene-bubble.right{ background:#fef3c7; border-color:#fde68a; }
+    .kids-scene-bubble .bubble-zh{ font-weight:700; color:#0f172a; }
+    .kids-scene-bubble .bubble-py{ font-size:12px; color:#475569; margin-top:2px; }
+    .kids-scene-bubble .bubble-gloss{ font-size:12px; color:#64748b; margin-top:4px; }
+    .kids-scene-bubble .bubble-zh.kids-text-zh,.kids-scene-bubble .bubble-gloss.kids-text-gloss{ cursor:pointer; }
+    .kids-scene-bubble .bubble-zh.kids-text-zh:hover,.kids-scene-bubble .bubble-gloss.kids-text-gloss:hover{ opacity:.85; }
     .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-core-main-zh.kids-text-zh:hover,.kids-core-main-gloss.kids-text-gloss:hover{ opacity:.85; }
     .kids-extra-zh.kids-text-zh,.kids-extra-meaning.kids-text-gloss{ cursor:pointer; }
@@ -468,7 +472,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = zhEl.closest(".bubble") || zhEl.closest(".kids-scene-bubble") || zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".kids-extra-item");
+        const lineEl = zhEl.closest(".kids-scene-bubble") || zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".kids-extra-item");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak zh failed:", err); }
@@ -484,7 +488,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = glossEl.closest(".bubble") || glossEl.closest(".kids-scene-bubble") || glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".kids-extra-item");
+        const lineEl = glossEl.closest(".kids-scene-bubble") || glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".kids-extra-item");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: ttsLangForGloss(), rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak gloss failed:", err); }
@@ -553,20 +557,27 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
   const lines = flattenDialogueLines(lesson.dialogues);
-  const dialogBubbles = lines.map((line) => {
+  const positions = getSceneBubblePositions(lines.length);
+  const overlayBubbles = lines.map((line, idx) => {
     const zh = line.zh;
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
     const zhEsc = escapeAttr(zh);
     const meaningEsc = meaning ? escapeAttr(meaning) : "";
+    const pos = positions[idx] || {};
+    const styleParts = [];
+    if (pos.top) styleParts.push(`top:${pos.top}`);
+    if (pos.left) styleParts.push(`left:${pos.left}`);
+    if (pos.right) styleParts.push(`right:${pos.right}`);
+    const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
     const sideClass = line.speaker === "B" ? " right" : " left";
-    const zhCls = zh ? " zh kids-text-zh" : " zh";
+    const zhCls = zh ? " bubble-zh kids-text-zh" : " bubble-zh";
     const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
-    const glossCls = meaning ? " gloss kids-text-gloss" : " gloss";
+    const glossCls = meaning ? " bubble-gloss kids-text-gloss" : " bubble-gloss";
     const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
-    return `<div class="bubble${sideClass}">
+    return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
       <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
-      ${py ? `<div class="pinyin">${escapeHtml(py)}</div>` : ""}
+      ${py ? `<div class="bubble-py">${escapeHtml(py)}</div>` : ""}
       ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
     </div>`;
   }).join("");
@@ -609,9 +620,9 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   if (typeof window !== "undefined" && window.location?.hostname === "localhost") {
     try { console.log("[KidsScenePrompt]", scenePromptResult.prompt); } catch (_) {}
   }
-  const sceneImageHtml = sceneAsset.imageUrl
-    ? `<img src="${escapeAttr(sceneAsset.imageUrl)}" alt="${escapeAttr(sceneAsset.alt)}" />`
-    : `<div class="kids-scene-image-placeholder">
+  const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneAsset.cacheKey)}" data-scene-mode="${escapeAttr(sceneAsset.mode)}" data-scene-prompt="${escapeAttr(sceneAsset.shortPrompt)}"`;
+  const scenePlaceholderHtml = `
+    <div class="kids-scene-image-placeholder">
       <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneAsset.alt)}</div>
       <div class="kids-scene-image-placeholder-desc">${escapeHtml(sceneAsset.shortPrompt)}</div>
     </div>`;
@@ -633,16 +644,18 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                   ${coreMeaning ? `<div class="kids-core-main-gloss kids-text-gloss" data-speak-gloss="${escapeAttr(coreMeaning)}">${escapeHtml(coreMeaning)}</div>` : ""}
                 </section>
 
-                <section class="kids-dialogue-scene-card kids-dialog-card kids-card" data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneAsset.cacheKey)}" data-scene-mode="${escapeAttr(sceneAsset.mode)}">
+                <section class="kids-dialogue-scene-card kids-card">
                   <div class="kids-dialogue-head">
                     <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
                     <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAllLabel)}</button>
                   </div>
-                  <div class="kids-scene-image">
-                    ${sceneImageHtml}
-                  </div>
-                  <div class="kids-dialog-bubbles" id="kids1DialogueList">
-                    ${dialogBubbles || `<div class="lesson-empty-state">${escapeHtml(t("kids1.noDialogue", "暂无对话"))}</div>`}
+                  <div class="kids-scene-stage">
+                    <div class="kids-scene-image-wrap" ${sceneWrapData}>
+                      ${sceneAsset.imageUrl ? `<img class="kids-scene-image" src="${escapeAttr(sceneAsset.imageUrl)}" alt="${escapeAttr(sceneAsset.alt)}" />` : scenePlaceholderHtml}
+                      <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
+                        ${overlayBubbles || ""}
+                      </div>
+                    </div>
                   </div>
                 </section>
 
