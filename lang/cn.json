@@ -397,6 +397,18 @@
     "conversation": "会话·儿歌",
     "pictureTalk": "图片表达"
   },
+  "kids1": {
+    "backToKids": "← 少儿中文",
+    "book1Title": "Kids Book1",
+    "book1Subtitle": "8 课 · 句型 · 对话 · 扩展 · 练习 · AI 辅导",
+    "lessonList": "课程列表",
+    "backToList": "课程列表",
+    "blockTitle": "标题",
+    "extensionUsage": "用于：数字游戏、跟读练习",
+    "practiceHint": "数字游戏、跟读练习等（可在此接入练习引擎）",
+    "aiTutorHint": "与 AI 老师练习本课句型和词汇。",
+    "loadError": "无法加载课程蓝图"
+  },
   "business": {
     "title": "商务中文",
     "subtitle": "职场实用中文",

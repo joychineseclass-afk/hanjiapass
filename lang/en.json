@@ -397,6 +397,18 @@
     "conversation": "Conversation & songs",
     "pictureTalk": "Picture expression"
   },
+  "kids1": {
+    "backToKids": "← Kids Chinese",
+    "book1Title": "Kids Book1",
+    "book1Subtitle": "8 lessons · Core Sentence · Dialogue · Extension · Practice · AI Tutor",
+    "lessonList": "Lesson list",
+    "backToList": "Lesson list",
+    "blockTitle": "Title",
+    "extensionUsage": "For: number games, read-along practice",
+    "practiceHint": "Number games, read-along, etc. (practice engine can be wired here)",
+    "aiTutorHint": "Practice this lesson's sentences and words with the AI tutor.",
+    "loadError": "Could not load course blueprint"
+  },
   "business": {
     "title": "Business Chinese",
     "subtitle": "Practical Chinese for the workplace",

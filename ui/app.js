@@ -63,6 +63,7 @@ try {
 registerRoute("#home",      () => import("./pages/page.home.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
 registerRoute("#kids",      () => import("./pages/page.kids.js"));
+registerRoute("#kids-kids1", () => import("./pages/page.kids1.js"));
 registerRoute("#business",  () => import("./pages/page.business.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));

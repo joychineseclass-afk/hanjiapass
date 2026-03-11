@@ -72,6 +72,10 @@ function renderKids(root) {
         <div class="wrap">
           <h2 class="section-title">${escapeHtml(t("kids.levels", "Course entries"))}</h2>
           <div class="card-grid">
+            <a href="#kids-kids1" class="course-card" style="text-decoration:none; color:inherit;">
+              <div class="card-title">Kids Book1</div>
+              <div class="card-desc">8 课 · Core Sentence · Dialogue · Extension · Practice · AI Tutor</div>
+            </a>
             <div class="course-card">
               <div class="card-title">${escapeHtml(basic)}</div>
               <div class="card-desc">${escapeHtml(comingSoon)}</div>
