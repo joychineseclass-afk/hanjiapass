@@ -77,7 +77,7 @@ function ensureStyles() {
     .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
 
-    .kids-dialogue-scene-card{ max-width:760px; margin:0 auto; }
+    .kids-dialogue-scene-card{ max-width:880px; margin:0 auto; }
     .kids-dialogue-head{
       display:flex;
       align-items:center;
@@ -103,21 +103,17 @@ function ensureStyles() {
     .kids-scene-image-wrap{
       position:relative;
       width:100%;
-      max-width:680px;
-      margin:0 auto;
-      min-height:360px;
       aspect-ratio:4/3;
-      border-radius:20px;
+      border-radius:16px;
       overflow:hidden;
       background:linear-gradient(180deg,#eef7ff,#f8fbff);
       border:1px solid rgba(226,232,240,.9);
     }
-    .kids-scene-image{
+    .kids-scene-image-wrap .kids-scene-image{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
-      min-height:360px;
     }
     .kids-scene-image-placeholder{
       position:absolute;
@@ -138,25 +134,26 @@ function ensureStyles() {
       position:absolute;
       inset:0;
       pointer-events:none;
+      max-width:100%;
     }
     .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
     .kids-scene-bubble{
       position:absolute;
       display:inline-block;
-      max-width:180px;
-      min-width:90px;
+      max-width:70%;
+      min-width:100px;
       width:fit-content;
-      padding:10px 12px;
-      border-radius:16px;
-      font-size:14px;
+      padding:14px 16px;
+      border-radius:14px;
+      font-size:18px;
       background:#eff6ff;
       border:1px solid #dbeafe;
       box-shadow:0 2px 8px rgba(15,23,42,.08);
     }
     .kids-scene-bubble.right{ background:#fef3c7; border-color:#fde68a; }
-    .kids-scene-bubble .bubble-zh{ font-weight:700; color:#0f172a; }
-    .kids-scene-bubble .bubble-py{ font-size:12px; color:#475569; margin-top:2px; }
-    .kids-scene-bubble .bubble-gloss{ font-size:12px; color:#64748b; margin-top:4px; }
+    .kids-scene-bubble .bubble-zh{ font-weight:700; color:#0f172a; font-size:1em; }
+    .kids-scene-bubble .bubble-py{ font-size:0.85em; color:#475569; margin-top:4px; }
+    .kids-scene-bubble .bubble-gloss{ font-size:0.8em; color:#64748b; margin-top:6px; }
     .kids-scene-bubble .bubble-zh.kids-text-zh,.kids-scene-bubble .bubble-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-scene-bubble .bubble-zh.kids-text-zh:hover,.kids-scene-bubble .bubble-gloss.kids-text-gloss:hover{ opacity:.85; }
     .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
