@@ -41,14 +41,16 @@ export async function generateKidsSceneImage(sceneMeta, promptResult) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       const err = data?.error || `HTTP ${res.status}`;
-      if (typeof console !== "undefined") console.warn("[KidsSceneImage] generation failed", err);
-      return { ok: false, error: err };
+      const code = data?.code || "";
+      if (typeof console !== "undefined") console.warn("[KidsSceneImage] generation failed", code || err);
+      return { ok: false, error: err, code };
     }
     const imageUrl = data?.imageUrl || data?.url || "";
     if (!imageUrl) {
       if (typeof console !== "undefined") console.warn("[KidsSceneImage] no imageUrl in response", data);
       return { ok: false, error: "no_image_url" };
     }
+    if (typeof console !== "undefined" && data?.provider) console.log("[KidsSceneImage] provider=" + data.provider);
     return {
       ok: true,
       imageUrl,
