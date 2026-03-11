@@ -677,7 +677,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           typeof scene.description === "string"
             ? scene.description
             : (scene.description && (scene.description[lang] || scene.description.cn || scene.description.en)) || "";
-        const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
+        const imgId = `kids1SceneImageContent_${idx}`;
         return `
           <section class="kids-dialogue-scene-card kids-card">
             <div class="kids-dialogue-head">
@@ -844,8 +844,8 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
         const scenePrompt = buildKidsScenePrompt(sceneMeta);
         try {
           const asset = await resolveKidsSceneAsset(sceneMeta, scenePrompt, sceneCacheKey);
-          const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
-          const slot = document.getElementById(imgId);
+          const imgId = `kids1SceneImageContent_${idx}`;
+          const slot = document.getElementById(imgId.replace("{idx}", `${i}`)) || document.getElementById(imgId);
           if (!slot) continue;
           const url = asset.imageUrl || asset.url;
           if (asset.mode === "generated" && url) {
