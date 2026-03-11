@@ -6,15 +6,39 @@
       "title": "你好！",
       "coreSentence": "你好！",
       "scene": "greeting",
-      "dialogues": [
-        { "character": "xiaomei", "text": "你好，老师！" },
-        { "character": "teacher", "text": "你好，小美！" },
-        { "character": "xiaomei", "text": "再见！" },
-        { "character": "teacher", "text": "再见！" },
-        { "character": "xiaomei", "text": "谢谢。" },
-        { "character": "teacher", "text": "不客气。" },
-        { "character": "xiaomei", "text": "对不起。" },
-        { "character": "teacher", "text": "没关系。" }
+      "scenes": [
+        {
+          "id": "greeting",
+          "title": "打招呼与告别",
+          "characters": ["teacher", "xiaomei"],
+          "description": "老师和小美在教室里互相问候和告别。",
+          "dialogue": [
+            { "character": "xiaomei", "text": "你好，老师！" },
+            { "character": "teacher", "text": "你好，小美！" },
+            { "character": "xiaomei", "text": "再见！" },
+            { "character": "teacher", "text": "再见！" }
+          ]
+        },
+        {
+          "id": "thanks",
+          "title": "表达感谢",
+          "characters": ["xiaomei", "xiaoming"],
+          "description": "小明帮助小美后，小美向小明表达感谢。",
+          "dialogue": [
+            { "character": "xiaomei", "text": "谢谢。" },
+            { "character": "xiaoming", "text": "不客气。" }
+          ]
+        },
+        {
+          "id": "sorry",
+          "title": "表达道歉",
+          "characters": ["xiaomei", "xiaoming"],
+          "description": "小美做错事后向小明道歉，小明表示没关系。",
+          "dialogue": [
+            { "character": "xiaomei", "text": "对不起。" },
+            { "character": "xiaoming", "text": "没关系。" }
+          ]
+        }
       ],
       "extensionWords": [
         "早上好",

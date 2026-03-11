@@ -429,6 +429,94 @@ function getCharacterIdForLine(line) {
   return "";
 }
 
+function buildSceneLines(scene) {
+  const src = Array.isArray(scene?.dialogue) ? scene.dialogue : [];
+  return src.map((d) => {
+    const zh = String(d?.text ?? d?.zh ?? "").trim();
+    return {
+      zh,
+      character: String(d?.character || "").trim(),
+    };
+  }).filter((l) => l.zh);
+}
+
+function sideForCharacter(charId, sceneCharacters) {
+  const list = Array.isArray(sceneCharacters) ? sceneCharacters : [];
+  if (!charId || !list.length) return "left";
+  const idx = list.indexOf(charId);
+  if (idx === 1) return "right";
+  return "left";
+}
+
+function renderKidsMicroScene(scene, lang, glossary, charMap, { isPrimary, sceneWrapData, loadingPlaceholderHtml }) {
+  const lines = buildSceneLines(scene);
+  if (!lines.length) return "";
+  const positions = getSceneBubblePositions(lines.length);
+  const overlayBubbles = lines.map((line, idx) => {
+    const zh = line.zh;
+    const py = getPinyin(zh);
+    const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
+    const zhEsc = escapeAttr(zh);
+    const meaningEsc = meaning ? escapeAttr(meaning) : "";
+    const pos = positions[idx] || {};
+    const styleParts = [];
+    if (pos.top) styleParts.push(`top:${pos.top}`);
+    if (pos.left) styleParts.push(`left:${pos.left}`);
+    if (pos.right) styleParts.push(`right:${pos.right}`);
+    const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
+    const side = sideForCharacter(line.character, scene.characters);
+    const sideClass = side === "right" ? " right" : " left";
+    const character = line.character && charMap.get(line.character);
+    const avatar = character?.avatar || "";
+    const name = character?.name?.zh || "";
+    const hasCharacter = !!(avatar || name);
+    const headHtml = hasCharacter
+      ? `<div class="kids-bubble-head">
+          <span class="kids-bubble-avatar">${escapeHtml(avatar)}</span>
+          <span class="kids-bubble-name">${escapeHtml(name)}</span>
+        </div>`
+      : "";
+    const zhCls = zh ? " bubble-zh kids-bubble-zh kids-text-zh" : " bubble-zh kids-bubble-zh";
+    const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
+    const glossCls = meaning ? " bubble-gloss kids-bubble-gloss kids-text-gloss" : " bubble-gloss kids-bubble-gloss";
+    const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
+    return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
+      ${headHtml}
+      <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
+      ${py ? `<div class="bubble-py kids-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
+      ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
+    </div>`;
+  }).join("");
+
+  const title = String(scene?.title || "").trim();
+  const desc = String(scene?.description || "").trim();
+  const headerHtml = `
+    <div class="kids-scene-title">${escapeHtml(title || "")}</div>
+    ${desc ? `<div class="kids-scene-desc">${escapeHtml(desc)}</div>` : ""}`;
+
+  const imageWrapAttrs = isPrimary ? ` ${sceneWrapData}` : "";
+  const imageInnerHtml = isPrimary
+    ? `<div id="kids1SceneImageContent" class="kids-scene-image-content">${loadingPlaceholderHtml}</div>`
+    : `<div class="kids-scene-image-placeholder">
+         <div class="kids-scene-image-placeholder-title">${escapeHtml(title || "")}</div>
+         ${desc ? `<div class="kids-scene-image-placeholder-desc">${escapeHtml(desc)}</div>` : ""}
+       </div>`;
+
+  return `
+    <section class="kids-dialogue-scene-card kids-card">
+      ${headerHtml}
+      <div class="kids-scene-stage">
+        <div class="kids-scene-image-wrap"${imageWrapAttrs}>
+          ${imageInnerHtml}
+          <div class="kids-dialogue-bubbles-overlay">
+            ${overlayBubbles}
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 // 预留：Kids 场景元数据组装（后续可接 AI 场景引擎）
 export function getKidsSceneMeta(lessonData, lang) {
   const l = normLang(lang || getLang());
@@ -611,49 +699,11 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const corePy = getPinyin(coreZh);
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
-  const lines = flattenDialogueLines(lesson.dialogues);
-  const positions = getSceneBubblePositions(lines.length);
   const characters = await loadCharacters();
   const charMap = new Map();
   (characters || []).forEach((c) => {
     if (c && c.id) charMap.set(String(c.id), c);
   });
-
-  const overlayBubbles = lines.map((line, idx) => {
-    const zh = line.zh;
-    const py = getPinyin(zh);
-    const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
-    const zhEsc = escapeAttr(zh);
-    const meaningEsc = meaning ? escapeAttr(meaning) : "";
-    const pos = positions[idx] || {};
-    const styleParts = [];
-    if (pos.top) styleParts.push(`top:${pos.top}`);
-    if (pos.left) styleParts.push(`left:${pos.left}`);
-    if (pos.right) styleParts.push(`right:${pos.right}`);
-    const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
-    const sideClass = line.speaker === "B" ? " right" : " left";
-    const charId = getCharacterIdForLine(line);
-    const character = charId && charMap.get(charId);
-    const avatar = character?.avatar || "";
-    const name = character?.name?.zh || "";
-    const hasCharacter = !!(avatar || name);
-    const headHtml = hasCharacter
-      ? `<div class="kids-bubble-head">
-          <span class="kids-bubble-avatar">${escapeHtml(avatar)}</span>
-          <span class="kids-bubble-name">${escapeHtml(name)}</span>
-        </div>`
-      : "";
-    const zhCls = zh ? " bubble-zh kids-bubble-zh kids-text-zh" : " bubble-zh kids-bubble-zh";
-    const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
-    const glossCls = meaning ? " bubble-gloss kids-bubble-gloss kids-text-gloss" : " bubble-gloss kids-bubble-gloss";
-    const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
-    return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
-      ${headHtml}
-      <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
-      ${py ? `<div class="bubble-py kids-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
-      ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
-    </div>`;
-  }).join("");
 
   const extensionWords = Array.isArray(lesson.extensionWords) ? lesson.extensionWords : [];
   const extensionCards = extensionWords.map((w, i) => {
@@ -699,6 +749,74 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
       <div class="kids-scene-image-placeholder-title">${escapeHtml(t("kids1.sceneGenerating", "场景图片生成中..."))}</div>
     </div>`;
 
+  const scenes = Array.isArray(lesson.scenes) ? lesson.scenes : [];
+  let dialogueHtml = "";
+  if (scenes.length > 0) {
+    dialogueHtml = scenes
+      .map((scene, idx) =>
+        renderKidsMicroScene(scene, lang, glossary, charMap, {
+          isPrimary: idx === 0,
+          sceneWrapData,
+          loadingPlaceholderHtml,
+        })
+      )
+      .join("");
+  } else {
+    const lines = flattenDialogueLines(lesson.dialogues);
+    const positions = getSceneBubblePositions(lines.length);
+    const overlayBubbles = lines.map((line, idx) => {
+      const zh = line.zh;
+      const py = getPinyin(zh);
+      const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
+      const zhEsc = escapeAttr(zh);
+      const meaningEsc = meaning ? escapeAttr(meaning) : "";
+      const pos = positions[idx] || {};
+      const styleParts = [];
+      if (pos.top) styleParts.push(`top:${pos.top}`);
+      if (pos.left) styleParts.push(`left:${pos.left}`);
+      if (pos.right) styleParts.push(`right:${pos.right}`);
+      const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
+      const sideClass = line.speaker === "B" ? " right" : " left";
+      const charId = getCharacterIdForLine(line);
+      const character = charId && charMap.get(charId);
+      const avatar = character?.avatar || "";
+      const name = character?.name?.zh || "";
+      const hasCharacter = !!(avatar || name);
+      const headHtml = hasCharacter
+        ? `<div class="kids-bubble-head">
+            <span class="kids-bubble-avatar">${escapeHtml(avatar)}</span>
+            <span class="kids-bubble-name">${escapeHtml(name)}</span>
+          </div>`
+        : "";
+      const zhCls = zh ? " bubble-zh kids-bubble-zh kids-text-zh" : " bubble-zh kids-bubble-zh";
+      const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
+      const glossCls = meaning ? " bubble-gloss kids-bubble-gloss kids-text-gloss" : " bubble-gloss kids-bubble-gloss";
+      const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
+      return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
+        ${headHtml}
+        <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
+        ${py ? `<div class="bubble-py kids-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
+        ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
+      </div>`;
+    }).join("");
+    dialogueHtml = `
+      <section class="kids-dialogue-scene-card kids-card">
+        <div class="kids-dialogue-head">
+          <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
+          <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAllLabel)}</button>
+        </div>
+        <div class="kids-scene-stage">
+          <div class="kids-scene-image-wrap" ${sceneWrapData}>
+            <div id="kids1SceneImageContent" class="kids-scene-image-content">${loadingPlaceholderHtml}</div>
+            <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
+              ${overlayBubbles || ""}
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   root.innerHTML = `
     <div class="lumina-kids1">
       <section class="section">
@@ -716,20 +834,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                   ${coreMeaning ? `<div class="kids-core-main-gloss kids-text-gloss" data-speak-gloss="${escapeAttr(coreMeaning)}">${escapeHtml(coreMeaning)}</div>` : ""}
                 </section>
 
-                <section class="kids-dialogue-scene-card kids-card">
-                  <div class="kids-dialogue-head">
-                    <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
-                    <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAllLabel)}</button>
-                  </div>
-                  <div class="kids-scene-stage">
-                    <div class="kids-scene-image-wrap" ${sceneWrapData}>
-                      <div id="kids1SceneImageContent" class="kids-scene-image-content">${loadingPlaceholderHtml}</div>
-                      <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
-                        ${overlayBubbles || ""}
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                ${dialogueHtml}
 
                 <section class="kids-extra-card kids-card">
                   <h3 class="lesson-section-title">${escapeHtml(extensionTitle)}</h3>
