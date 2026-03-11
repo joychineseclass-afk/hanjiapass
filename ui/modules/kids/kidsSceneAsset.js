@@ -7,40 +7,12 @@ import { buildKidsScenePrompt } from "./kidsScenePrompt.js";
 const CACHE_PREFIX = "lumina_kids_scene_";
 const SCENE_IMAGE_CACHE = new Map();
 
-// 场景占位图映射：根据 scene.type 选择本地占位图
-const SCENE_PLACEHOLDER_MAP = {
-  greeting: "/assets/kids-scenes/greeting.jpg",
-  thanks: "/assets/kids-scenes/thanks.jpg",
-  sorry: "/assets/kids-scenes/sorry.jpg",
-  intro: "/assets/kids-scenes/intro.jpg",
-  question: "/assets/kids-scenes/question.jpg",
-  friends: "/assets/kids-scenes/friends.jpg",
-  school: "/assets/kids-scenes/school.jpg",
-  generic: "/assets/kids-scenes/generic.jpg",
-  // 兼容 classroom_* 类型到占位图
-  classroom_greeting: "/assets/kids-scenes/greeting.jpg",
-  classroom_intro: "/assets/kids-scenes/intro.jpg",
-  classroom_self_intro: "/assets/kids-scenes/intro.jpg",
-  classroom_question_answer: "/assets/kids-scenes/question.jpg",
-  classroom_objects: "/assets/kids-scenes/school.jpg",
-  classroom_colors: "/assets/kids-scenes/school.jpg",
-  classroom_animals: "/assets/kids-scenes/friends.jpg",
-  classroom_help_thanks: "/assets/kids-scenes/thanks.jpg",
-  classroom_apology: "/assets/kids-scenes/sorry.jpg",
-};
-
-async function generateSceneImage(sceneMeta) {
-  const type = sceneMeta?.type;
-  if (type && SCENE_PLACEHOLDER_MAP[type]) {
-    return {
-      ok: true,
-      imageUrl: SCENE_PLACEHOLDER_MAP[type],
-      provider: "placeholder",
-    };
-  }
+// 随机占位图：用于 Scene Image Engine MVP 测试，不调用实际 AI API
+async function generateSceneImage(promptResult) {
+  const url = "https://picsum.photos/900/600?random=" + Math.random();
   return {
     ok: true,
-    imageUrl: SCENE_PLACEHOLDER_MAP.generic,
+    imageUrl: url,
     provider: "placeholder",
   };
 }
@@ -119,7 +91,7 @@ export async function resolveKidsSceneAsset(sceneMeta, promptOrResult, explicitC
     return result;
   }
 
-  const gen = await generateSceneImage(sceneMeta);
+  const gen = await generateSceneImage(built);
   if (gen.ok && gen.imageUrl) {
     writeCache(cacheKey, { imageUrl: gen.imageUrl, prompt: built.prompt, provider: gen.provider });
     const result = {
