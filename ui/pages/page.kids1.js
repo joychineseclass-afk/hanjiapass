@@ -52,14 +52,15 @@ function ensureStyles() {
     .lumina-kids1 .btn-back:hover{ background:#cbd5e1; }
 
     .kids-lesson-page{ display:flex; flex-direction:column; gap:16px; }
-    .kids-lesson-header{ display:flex; flex-direction:column; gap:2px; margin-bottom:4px; }
-    .kids-lesson-course{ font-size:16px; font-weight:800; color:#0f172a; }
-    .kids-lesson-meta{ font-size:12px; color:#64748b; }
-    .kids-lesson-title{ font-size:18px; font-weight:800; color:#0f172a; }
+    .kids-lesson-topline{
+      font-size:14px;
+      line-height:1.6;
+      color:var(--muted,#64748b);
+      margin-bottom:14px;
+    }
 
-    .kids-scene-card,
     .kids-core-card,
-    .kids-dialogue-card,
+    .kids-dialogue-scene-card,
     .kids-extra-card,
     .kids-game-entry-card{
       border-radius:18px;
@@ -69,86 +70,94 @@ function ensureStyles() {
       padding:14px 16px;
     }
 
-    .kids-scene-main{ display:flex; gap:12px; align-items:stretch; }
-    .kids-scene-image{
-      flex:0 0 120px;
-      border-radius:16px;
-      background:linear-gradient(135deg,#e0f2fe,#f5f3ff);
+    .kids-core-card .kids-core-main-zh{ font-size:18px; font-weight:800; color:#0f172a; }
+    .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
+    .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
+
+    .kids-dialogue-scene-card{ max-width:760px; }
+    .kids-dialogue-head{
       display:flex;
       align-items:center;
-      justify-content:center;
-      font-size:12px;
-      font-weight:700;
-      color:#475569;
-      text-align:center;
-      padding:8px;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
     }
-    .kids-scene-text{ flex:1; display:flex; flex-direction:column; gap:4px; }
-    .kids-scene-title{ font-size:15px; font-weight:800; color:#0f172a; }
-    .kids-scene-desc{ font-size:13px; color:#64748b; line-height:1.5; }
-    .kids-scene-actions{ margin-top:8px; display:flex; gap:8px; }
+    .kids-dialogue-head .lesson-section-title{ margin:0; }
     .kids-read-all-btn{
-      padding:6px 10px;
-      border-radius:999px;
+      padding:6px 12px;
+      border-radius:12px;
       background:#0ea5e9;
       color:#fff;
       border:none;
       font-size:12px;
       font-weight:700;
       cursor:pointer;
+      flex-shrink:0;
     }
+    .kids-read-all-btn:hover{ opacity:.9; }
 
-    .kids-core-card .kids-core-main-zh{ font-size:18px; font-weight:800; color:#0f172a; }
-    .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
-    .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
-    .kids-core-card .kids-core-actions{ margin-top:6px; }
-
-    .kids-dialogue-card{
-      padding:16px;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 4px 12px rgba(15,23,42,.06);
+    .kids-scene-stage{ width:100%; }
+    .kids-scene-image-wrap{
+      position:relative;
+      width:100%;
+      max-width:720px;
+      min-height:320px;
+      border-radius:20px;
+      overflow:hidden;
+      background:linear-gradient(180deg,#eef7ff,#f8fbff);
       border:1px solid rgba(226,232,240,.9);
-      display:flex;
-      flex-direction:column;
-      gap:10px;
     }
-    .kids-scene-slot{
+    .kids-scene-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      min-height:320px;
+    }
+    .kids-scene-image-placeholder{
+      position:absolute;
+      inset:0;
       display:flex;
-      gap:12px;
       align-items:center;
-      margin-bottom:4px;
-      padding-bottom:12px;
-      border-bottom:1px solid rgba(226,232,240,.7);
+      justify-content:center;
+      font-size:14px;
+      color:#94a3b8;
+      background:linear-gradient(180deg,#eef7ff,#f8fbff);
     }
-    .kids-scene-slot .kids-scene-image{
-      flex:0 0 100px;
-      min-height:80px;
-      border-radius:12px;
-      background:linear-gradient(135deg,#e0f2fe,#f5f3ff);
+    .kids-dialogue-bubbles-overlay{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
     }
-    .kids-scene-slot .kids-scene-meta{ flex:1; display:flex; flex-direction:column; gap:6px; }
-    .kids-scene-slot .kids-scene-title{ font-size:14px; font-weight:800; color:#0f172a; }
-    .kids-scene-slot .kids-scene-desc{ font-size:12px; color:#64748b; }
-    .kids-dialogue-flow{ display:flex; flex-direction:column; gap:10px; }
-    .kids-bubble-row{ display:flex; width:100%; margin:0; align-items:flex-end; gap:10px; }
-    .kids-bubble-row.left{ justify-content:flex-start; }
-    .kids-bubble-row.right{ justify-content:flex-end; }
-    .kids-bubble{
-      max-width:320px;
-      border-radius:16px;
+    .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; }
+    .kids-scene-bubble{
+      position:absolute;
+      display:inline-block;
+      max-width:220px;
+      min-width:90px;
+      width:fit-content;
       padding:10px 12px;
+      border-radius:16px;
+      font-size:14px;
       background:#eff6ff;
       border:1px solid #dbeafe;
-      box-shadow:0 2px 6px rgba(15,23,42,.06);
-      font-size:14px;
+      box-shadow:0 2px 8px rgba(15,23,42,.08);
     }
-    .kids-bubble.right{ background:#fef3c7; border-color:#fde68a; }
-    .kids-bubble-zh{ font-weight:700; color:#0f172a; }
-    .kids-bubble-py{ font-size:13px; color:#475569; margin-top:2px; }
-    .kids-bubble-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
-    .kids-text-zh,.kids-text-gloss{ cursor:pointer; }
-    .kids-text-zh:hover,.kids-text-gloss:hover{ opacity:.85; }
+    .kids-scene-bubble.right{ background:#fef3c7; border-color:#fde68a; }
+    .kids-scene-bubble .bubble-zh{ font-weight:700; color:#0f172a; }
+    .kids-scene-bubble .bubble-py{ font-size:12px; color:#475569; margin-top:2px; }
+    .kids-scene-bubble .bubble-gloss{ font-size:12px; color:#64748b; margin-top:4px; }
+    .kids-scene-bubble .bubble-zh.kids-text-zh,.kids-scene-bubble .bubble-gloss.kids-text-gloss{ cursor:pointer; }
+    .kids-scene-bubble .bubble-zh.kids-text-zh:hover,.kids-scene-bubble .bubble-gloss.kids-text-gloss:hover{ opacity:.85; }
+    .bubble-1{ top:18px; left:18px; }
+    .bubble-2{ top:52px; right:18px; left:auto; }
+    .bubble-3{ top:132px; left:22px; }
+    .bubble-4{ top:180px; right:22px; left:auto; }
+    .bubble-5{ top:220px; left:22px; }
+    .bubble-6{ top:260px; right:22px; left:auto; }
+    .bubble-7{ bottom:60px; left:22px; top:auto; }
+    .bubble-8{ bottom:24px; right:22px; left:auto; top:auto; }
+
     .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-core-main-zh.kids-text-zh:hover,.kids-core-main-gloss.kids-text-gloss:hover{ opacity:.85; }
     .lesson-extension-zh.kids-text-zh,.lesson-extension-meaning.kids-text-gloss{ cursor:pointer; }
@@ -257,6 +266,20 @@ function getLessonDisplayTitle(lesson, lessonNo, lang) {
   const map = KIDS1_LESSON_TITLES[String(lessonNo)];
   if (map && map[L]) return map[L];
   return lesson?.title ? `第${lessonNo}课 · ${lesson.title}` : `第${lessonNo}课`;
+}
+
+function getLessonTopline(lesson, lessonNo, lang, coreZh, corePy) {
+  const bookName = t("kids.book1Title", "Kids Book 1");
+  const full = getLessonDisplayTitle(lesson, lessonNo, lang);
+  const parts = String(full).split(" · ");
+  const lessonNum = parts[0] || `第${lessonNo}课`;
+  const lessonTitle = parts[1] || lesson?.title || "";
+  const zh = String(coreZh || "").trim();
+  const py = String(corePy || "").trim();
+  const out = [bookName, lessonNum, lessonTitle].filter(Boolean);
+  if (zh) out.push(zh);
+  if (py) out.push(py);
+  return out.join(" · ");
 }
 
 function getMeaning(glossary, zh, lang) {
@@ -387,7 +410,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".lesson-extension-card");
+        const lineEl = zhEl.closest(".kids-scene-bubble") || zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".lesson-extension-card");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak zh failed:", err); }
@@ -403,7 +426,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".lesson-extension-card");
+        const lineEl = glossEl.closest(".kids-scene-bubble") || glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".lesson-extension-card");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: ttsLangForGloss(), rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak gloss failed:", err); }
@@ -472,36 +495,24 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
   const lines = flattenDialogueLines(lesson.dialogues);
-  const dialogueRows = lines.map((line) => {
+  const overlayBubbles = lines.map((line, idx) => {
     const zh = line.zh;
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
     const zhEsc = escapeAttr(zh);
     const meaningEsc = meaning ? escapeAttr(meaning) : "";
-    const zhAttrs = zh ? ` class="kids-bubble-zh kids-text-zh" data-speak-zh="${zhEsc}"` : ' class="kids-bubble-zh"';
-    const glossAttrs = meaning ? ` class="kids-bubble-gloss kids-text-gloss" data-speak-gloss="${meaningEsc}"` : ' class="kids-bubble-gloss"';
-    const sideClass = line.speaker === "B" ? "right" : "left";
-    const bubbleExtra = line.speaker === "B" ? " right" : "";
-    if (sideClass === "left") {
-      return `
-        <div class="kids-bubble-row left">
-          <div class="speaker-badge">A</div>
-          <div class="kids-bubble${bubbleExtra}">
-            <div${zhAttrs}>${escapeHtml(zh)}</div>
-            ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
-            ${meaning ? `<div${glossAttrs}>${escapeHtml(meaning)}</div>` : ""}
-          </div>
-        </div>`;
-    }
-    return `
-      <div class="kids-bubble-row right">
-        <div class="kids-bubble${bubbleExtra}">
-          <div${zhAttrs}>${escapeHtml(zh)}</div>
-          ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
-          ${meaning ? `<div${glossAttrs}>${escapeHtml(meaning)}</div>` : ""}
-        </div>
-        <div class="speaker-badge">B</div>
-      </div>`;
+    const n = idx + 1;
+    const posClass = n <= 8 ? ` bubble-${n}` : "";
+    const sideClass = line.speaker === "B" ? " right" : " left";
+    const zhCls = zh ? " bubble-zh kids-text-zh" : " bubble-zh";
+    const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
+    const glossCls = meaning ? " bubble-gloss kids-text-gloss" : " bubble-gloss";
+    const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
+    return `<div class="kids-scene-bubble${sideClass}${posClass}">
+      <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
+      ${py ? `<div class="bubble-py">${escapeHtml(py)}</div>` : ""}
+      ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
+    </div>`;
   }).join("");
 
   const extensionWords = Array.isArray(lesson.extensionWords) ? lesson.extensionWords : [];
@@ -538,12 +549,10 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const aiStartLabel = t("kids1.aiStart", "开始练习");
   const coreTitle = t("kids.coreSentenceTitle", "Core Sentence");
   const dialogueSectionTitle = t("kids.dialogueTitle", "Dialogue");
-  const dialogueSubtitle = t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。");
-  const sceneMeta = getKidsSceneMeta(lesson, lang);
-  const sceneSlotHtml = renderKidsSceneSlot(sceneMeta);
+  const readAllLabel = t("kids1.readAll", "🔊 Read all");
   const backToListLabel = t("kids.backToList", "课程列表");
-  const book1TitleLabel = t("kids.book1Title", "Kids Book 1");
-  const book1MetaLabel = t("kids.book1Meta", "8课 · 核心句 · 对话 · 扩展 · 练习 · AI辅导");
+  const toplineText = getLessonTopline(lesson, lessonNo, lang, coreZh, corePy);
+  const sceneLabel = t("kids1.sceneImage", "场景图片");
 
   root.innerHTML = `
     <div class="lumina-kids1">
@@ -553,11 +562,7 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
             <div class="inner">
               <button type="button" class="btn-back" id="kids1BackToList">← ${escapeHtml(backToListLabel)}</button>
               <section class="kids-lesson-page">
-                <header class="kids-lesson-header">
-                  <span class="kids-lesson-course">${escapeHtml(book1TitleLabel)}</span>
-                  <span class="kids-lesson-meta">${escapeHtml(book1MetaLabel)}</span>
-                  <div class="kids-lesson-title">${escapeHtml(title)}</div>
-                </header>
+                <div class="kids-lesson-topline">${escapeHtml(toplineText)}</div>
 
                 <section class="kids-core-card kids-card">
                   <h3 class="lesson-section-title">${escapeHtml(coreTitle)}</h3>
@@ -566,12 +571,18 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                   ${coreMeaning ? `<div class="kids-core-main-gloss kids-text-gloss" data-speak-gloss="${escapeAttr(coreMeaning)}">${escapeHtml(coreMeaning)}</div>` : ""}
                 </section>
 
-                <section class="kids-dialogue-card kids-card">
-                  ${sceneSlotHtml}
-                  <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
-                  <p class="lesson-section-subtitle">${escapeHtml(dialogueSubtitle)}</p>
-                  <div class="kids-dialogue-flow" id="kids1DialogueList">
-                    ${dialogueRows || `<div class="lesson-empty-state">${escapeHtml(t("kids1.noDialogue", "暂无对话"))}</div>`}
+                <section class="kids-dialogue-scene-card kids-card">
+                  <div class="kids-dialogue-head">
+                    <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
+                    <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAllLabel)}</button>
+                  </div>
+                  <div class="kids-scene-stage">
+                    <div class="kids-scene-image-wrap">
+                      <div class="kids-scene-image-placeholder">${escapeHtml(sceneLabel)}</div>
+                      <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
+                        ${overlayBubbles || ""}
+                      </div>
+                    </div>
                   </div>
                 </section>
 
