@@ -9,9 +9,20 @@
       "scenes": [
         {
           "id": "greeting",
-          "title": "打招呼与告别",
+          "type": "classroom_greeting",
+          "title": {
+            "cn": "打招呼与告别",
+            "kr": "인사와 작별 인사",
+            "en": "Greetings and goodbyes",
+            "jp": "あいさつとさようなら"
+          },
           "characters": ["teacher", "xiaomei"],
-          "description": "老师和小美在教室里互相问候和告别。",
+          "description": {
+            "cn": "老师和小美在教室里互相问候和告别。",
+            "kr": "교실에서 선생님과 샤오메이가 서로 인사하고 작별 인사를 해요。",
+            "en": "In the classroom, the teacher and Xiaomei greet each other and say goodbye politely.",
+            "jp": "教室で先生とシャオメイがていねいにあいさつをして「さようなら」と言います。"
+          },
           "dialogue": [
             { "character": "xiaomei", "text": "你好，老师！" },
             { "character": "teacher", "text": "你好，小美！" },
@@ -21,9 +32,20 @@
         },
         {
           "id": "thanks",
-          "title": "表达感谢",
+          "type": "classroom_help_thanks",
+          "title": {
+            "cn": "表达感谢",
+            "kr": "고마움 표현하기",
+            "en": "Saying thank you",
+            "jp": "ありがとうを伝える"
+          },
           "characters": ["xiaomei", "xiaoming"],
-          "description": "小明帮助小美后，小美向小明表达感谢。",
+          "description": {
+            "cn": "小明帮助小美后，小美向小明表达感谢。",
+            "kr": "샤오밍이 샤오메이를 도와준 뒤, 샤오메이가 공손하게 \"谢谢\"라고 말해요。",
+            "en": "After Xiaoming helps Xiaomei in the classroom, Xiaomei politely says \"谢谢\" and Xiaoming replies kindly.",
+            "jp": "教室でシャオミンがシャオメイを手伝い、シャオメイがていねいに「谢谢」と言い、シャオミンがやさしくこたえます。"
+          },
           "dialogue": [
             { "character": "xiaomei", "text": "谢谢。" },
             { "character": "xiaoming", "text": "不客气。" }
@@ -31,9 +53,20 @@
         },
         {
           "id": "sorry",
-          "title": "表达道歉",
+          "type": "classroom_apology",
+          "title": {
+            "cn": "表达道歉",
+            "kr": "미안함 표현하기",
+            "en": "Saying sorry",
+            "jp": "ごめんなさいを伝える"
+          },
           "characters": ["xiaomei", "xiaoming"],
-          "description": "小美做错事后向小明道歉，小明表示没关系。",
+          "description": {
+            "cn": "小美做错事后向小明道歉，小明表示没关系。",
+            "kr": "샤오메이가 작은 실수를 한 뒤 샤오밍에게 \"对不起\"라고 사과하고, 샤오밍이 \"没关系\"라고 말해요。",
+            "en": "After Xiaomei makes a small mistake in the classroom, she says \"对不起\" to Xiaoming and he kindly answers that it is okay.",
+            "jp": "教室でシャオメイが小さなまちがいをしてシャオミンに「对不起」とあやまり、シャオミンが「没关系」とゆるしてあげます。"
+          },
           "dialogue": [
             { "character": "xiaomei", "text": "对不起。" },
             { "character": "xiaoming", "text": "没关系。" }
