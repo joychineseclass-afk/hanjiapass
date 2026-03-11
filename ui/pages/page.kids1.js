@@ -74,7 +74,7 @@ function ensureStyles() {
     .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
 
-    .kids-dialogue-scene-card{ max-width:760px; }
+    .kids-dialogue-scene-card{ max-width:760px; margin:0 auto; }
     .kids-dialogue-head{
       display:flex;
       align-items:center;
@@ -100,8 +100,10 @@ function ensureStyles() {
     .kids-scene-image-wrap{
       position:relative;
       width:100%;
-      max-width:720px;
-      min-height:320px;
+      max-width:680px;
+      margin:0 auto;
+      min-height:360px;
+      aspect-ratio:4/3;
       border-radius:20px;
       overflow:hidden;
       background:linear-gradient(180deg,#eef7ff,#f8fbff);
@@ -112,7 +114,7 @@ function ensureStyles() {
       height:100%;
       object-fit:cover;
       display:block;
-      min-height:320px;
+      min-height:360px;
     }
     .kids-scene-image-placeholder{
       position:absolute;
@@ -129,11 +131,11 @@ function ensureStyles() {
       inset:0;
       pointer-events:none;
     }
-    .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; }
+    .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
     .kids-scene-bubble{
       position:absolute;
       display:inline-block;
-      max-width:220px;
+      max-width:180px;
       min-width:90px;
       width:fit-content;
       padding:10px 12px;
@@ -149,19 +151,10 @@ function ensureStyles() {
     .kids-scene-bubble .bubble-gloss{ font-size:12px; color:#64748b; margin-top:4px; }
     .kids-scene-bubble .bubble-zh.kids-text-zh,.kids-scene-bubble .bubble-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-scene-bubble .bubble-zh.kids-text-zh:hover,.kids-scene-bubble .bubble-gloss.kids-text-gloss:hover{ opacity:.85; }
-    .bubble-1{ top:18px; left:18px; }
-    .bubble-2{ top:52px; right:18px; left:auto; }
-    .bubble-3{ top:132px; left:22px; }
-    .bubble-4{ top:180px; right:22px; left:auto; }
-    .bubble-5{ top:220px; left:22px; }
-    .bubble-6{ top:260px; right:22px; left:auto; }
-    .bubble-7{ bottom:60px; left:22px; top:auto; }
-    .bubble-8{ bottom:24px; right:22px; left:auto; top:auto; }
-
     .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-core-main-zh.kids-text-zh:hover,.kids-core-main-gloss.kids-text-gloss:hover{ opacity:.85; }
-    .lesson-extension-zh.kids-text-zh,.lesson-extension-meaning.kids-text-gloss{ cursor:pointer; }
-    .lesson-extension-zh.kids-text-zh:hover,.lesson-extension-meaning.kids-text-gloss:hover{ opacity:.85; }
+    .kids-extra-zh.kids-text-zh,.kids-extra-meaning.kids-text-gloss{ cursor:pointer; }
+    .kids-extra-zh.kids-text-zh:hover,.kids-extra-meaning.kids-text-gloss:hover{ opacity:.85; }
     .speaker-badge{
       min-width:22px;
       height:22px;
@@ -189,9 +182,15 @@ function ensureStyles() {
       border-radius:14px;
       border:1px solid #e2e8f0;
       background:#f8fafc;
-      padding:8px 10px;
+      padding:10px 12px;
       font-size:13px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
     }
+    .kids-extra-item .kids-extra-zh{ font-weight:700; color:#0f172a; }
+    .kids-extra-item .kids-extra-py{ font-size:12px; color:#475569; }
+    .kids-extra-item .kids-extra-meaning{ font-size:13px; color:#64748b; }
 
     .kids-game-entry-card-title{ font-size:15px; font-weight:800; color:#0f172a; margin-bottom:4px; }
     .kids-game-entry-desc{ font-size:13px; color:#64748b; margin-bottom:8px; }
@@ -289,6 +288,61 @@ function getMeaning(glossary, zh, lang) {
   if (!entry || typeof entry !== "object") return "";
   const L = normLang(lang);
   return String(entry[L] ?? entry.cn ?? entry.kr ?? entry.en ?? entry.jp ?? "").trim();
+}
+
+function getMeaningByLang(glossary, zh, lang) {
+  const L = normLang(lang);
+  const fromGlossary = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
+  if (fromGlossary) return fromGlossary;
+  const fallback = KIDS1_EXTENSION_MEANINGS[String(zh).trim()];
+  return (fallback && fallback[L]) ? fallback[L] : "";
+}
+
+const KIDS1_EXTENSION_MEANINGS = {
+  "早上好": { cn: "早上问候语", kr: "좋은 아침이에요", en: "Good morning", jp: "おはよう" },
+  "中午好": { cn: "中午问候语", kr: "점심 인사", en: "Good afternoon", jp: "こんにちは" },
+  "晚上好": { cn: "晚上问候语", kr: "좋은 저녁이에요", en: "Good evening", jp: "こんばんは" },
+  "早安": { cn: "早安", kr: "좋은 아침", en: "Good morning", jp: "おはよう" },
+  "晚安": { cn: "晚安", kr: "잘 자요", en: "Good night", jp: "おやすみ" },
+  "他叫什么名字？": { cn: "他叫什么名字？", kr: "그 이름이 뭐예요?", en: "What's his name?", jp: "彼の名前は何ですか？" },
+  "她叫什么名字？": { cn: "她叫什么名字？", kr: "그녀 이름이 뭐예요?", en: "What's her name?", jp: "彼女の名前は何ですか？" },
+  "一": { cn: "一", kr: "일", en: "one", jp: "いち" },
+  "二": { cn: "二", kr: "이", en: "two", jp: "に" },
+  "三": { cn: "三", kr: "삼", en: "three", jp: "さん" },
+  "四": { cn: "四", kr: "사", en: "four", jp: "し/よん" },
+  "五": { cn: "五", kr: "오", en: "five", jp: "ご" },
+  "六": { cn: "六", kr: "육", en: "six", jp: "ろく" },
+  "七": { cn: "七", kr: "칠", en: "seven", jp: "なな" },
+  "八": { cn: "八", kr: "팔", en: "eight", jp: "はち" },
+  "九": { cn: "九", kr: "구", en: "nine", jp: "きゅう" },
+  "十": { cn: "十", kr: "십", en: "ten", jp: "じゅう" },
+  "哥哥": { cn: "哥哥", kr: "형/오빠", en: "older brother", jp: "お兄ちゃん" },
+  "姐姐": { cn: "姐姐", kr: "누나/언니", en: "older sister", jp: "お姉ちゃん" },
+  "弟弟": { cn: "弟弟", kr: "남동생", en: "younger brother", jp: "弟" },
+  "妹妹": { cn: "妹妹", kr: "여동생", en: "younger sister", jp: "妹" },
+  "红色": { cn: "红色", kr: "빨간색", en: "red", jp: "赤" },
+  "蓝色": { cn: "蓝色", kr: "파란색", en: "blue", jp: "青" },
+  "黄色": { cn: "黄色", kr: "노란색", en: "yellow", jp: "黄色" },
+  "绿色": { cn: "绿色", kr: "초록색", en: "green", jp: "緑" },
+  "黑色": { cn: "黑色", kr: "검은색", en: "black", jp: "黒" },
+  "白色": { cn: "白色", kr: "흰색", en: "white", jp: "白" },
+  "熊猫": { cn: "熊猫", kr: "판다", en: "panda", jp: "パンダ" },
+  "小狗": { cn: "小狗", kr: "강아지", en: "puppy/dog", jp: "子犬" },
+  "小猫": { cn: "小猫", kr: "고양이", en: "cat", jp: "猫" },
+  "苹果": { cn: "苹果", kr: "사과", en: "apple", jp: "りんご" },
+  "香蕉": { cn: "香蕉", kr: "바나나", en: "banana", jp: "バナナ" },
+};
+
+function getSceneBubblePositions(dialogueLength) {
+  const n = Math.min(Math.max(0, dialogueLength), 12);
+  if (n <= 2) return [{ top: "20%", left: "8%" }, { top: "28%", right: "8%" }].slice(0, n);
+  if (n === 3) return [{ top: "14%", left: "8%" }, { top: "22%", right: "8%" }, { top: "48%", left: "10%" }];
+  if (n === 4) return [{ top: "12%", left: "8%" }, { top: "18%", right: "8%" }, { top: "48%", left: "10%" }, { top: "56%", right: "10%" }];
+  if (n === 5) return [{ top: "10%", left: "8%" }, { top: "16%", right: "8%" }, { top: "38%", left: "10%" }, { top: "46%", right: "10%" }, { top: "68%", left: "10%" }];
+  if (n === 6) return [{ top: "10%", left: "8%" }, { top: "16%", right: "8%" }, { top: "34%", left: "10%" }, { top: "42%", right: "10%" }, { top: "62%", left: "8%" }, { top: "70%", right: "8%" }];
+  if (n === 7) return [{ top: "8%", left: "8%" }, { top: "14%", right: "8%" }, { top: "28%", left: "10%" }, { top: "36%", right: "10%" }, { top: "52%", left: "8%" }, { top: "60%", right: "8%" }, { top: "76%", left: "10%" }];
+  if (n >= 8) return [{ top: "8%", left: "8%" }, { top: "14%", right: "8%" }, { top: "26%", left: "10%" }, { top: "34%", right: "10%" }, { top: "48%", left: "8%" }, { top: "56%", right: "8%" }, { top: "70%", left: "10%" }, { top: "78%", right: "10%" }].slice(0, n);
+  return [];
 }
 
 function getPinyin(zh, manual) {
@@ -410,7 +464,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = zhEl.closest(".kids-scene-bubble") || zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".lesson-extension-card");
+        const lineEl = zhEl.closest(".kids-scene-bubble") || zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".kids-extra-item");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak zh failed:", err); }
@@ -426,7 +480,7 @@ function bindSpeakAndReadAll(root) {
         const { AUDIO_ENGINE } = await import("../platform/index.js");
         if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
         AUDIO_ENGINE.stop();
-        const lineEl = glossEl.closest(".kids-scene-bubble") || glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".lesson-extension-card");
+        const lineEl = glossEl.closest(".kids-scene-bubble") || glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".kids-extra-item");
         if (lineEl) lineEl.classList.add("is-speaking");
         AUDIO_ENGINE.playText(text, { lang: ttsLangForGloss(), rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
       } catch (err) { console.warn("[kids1] speak gloss failed:", err); }
@@ -495,20 +549,25 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
   const lines = flattenDialogueLines(lesson.dialogues);
+  const positions = getSceneBubblePositions(lines.length);
   const overlayBubbles = lines.map((line, idx) => {
     const zh = line.zh;
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
     const zhEsc = escapeAttr(zh);
     const meaningEsc = meaning ? escapeAttr(meaning) : "";
-    const n = idx + 1;
-    const posClass = n <= 8 ? ` bubble-${n}` : "";
+    const pos = positions[idx] || {};
+    const styleParts = [];
+    if (pos.top) styleParts.push(`top:${pos.top}`);
+    if (pos.left) styleParts.push(`left:${pos.left}`);
+    if (pos.right) styleParts.push(`right:${pos.right}`);
+    const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
     const sideClass = line.speaker === "B" ? " right" : " left";
     const zhCls = zh ? " bubble-zh kids-text-zh" : " bubble-zh";
     const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
     const glossCls = meaning ? " bubble-gloss kids-text-gloss" : " bubble-gloss";
     const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
-    return `<div class="kids-scene-bubble${sideClass}${posClass}">
+    return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
       <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
       ${py ? `<div class="bubble-py">${escapeHtml(py)}</div>` : ""}
       ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
@@ -519,25 +578,20 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const extensionCards = extensionWords.map((w, i) => {
     const zh = String(w).trim();
     const py = getPinyin(zh);
-    const meaning = getMeaning(glossary, zh, lang);
+    const meaning = getMeaningByLang(glossary, zh, lang);
     const zhEsc = escapeAttr(zh);
     const meaningEsc = meaning ? escapeAttr(meaning) : "";
-    const zhCls = zh ? " lesson-extension-zh kids-text-zh" : " lesson-extension-zh";
+    const zhCls = zh ? " kids-extra-zh kids-text-zh" : " kids-extra-zh";
     const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
-    const glossCls = meaning ? " lesson-extension-meaning kids-text-gloss" : " lesson-extension-meaning";
+    const glossCls = meaning ? " kids-extra-meaning kids-text-gloss" : " kids-extra-meaning";
     const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
-    const idx = String(i + 1).padStart(2, "0");
+    const idxStr = String(i + 1).padStart(2, "0");
     return `
-      <article class="lesson-extension-card">
-        <div class="lesson-extension-card-top">
-          <span class="lesson-extension-index">${idx}</span>
-        </div>
-        <div class="lesson-extension-body">
-          <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
-          ${py ? `<div class="lesson-extension-pinyin">${escapeHtml(py)}</div>` : ""}
-          ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
-        </div>
-      </article>`;
+      <div class="kids-extra-item">
+        <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
+        ${py ? `<div class="kids-extra-py">${escapeHtml(py)}</div>` : ""}
+        ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
+      </div>`;
   }).join("");
 
   const extensionTitle = t("kids.extraTitle", "Extension");
