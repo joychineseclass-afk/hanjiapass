@@ -131,7 +131,7 @@ function ensureStyles() {
     .kids-scene-slot .kids-scene-title{ font-size:14px; font-weight:800; color:#0f172a; }
     .kids-scene-slot .kids-scene-desc{ font-size:12px; color:#64748b; }
     .kids-dialogue-flow{ display:flex; flex-direction:column; gap:10px; }
-    .kids-bubble-row{ display:flex; width:100%; align-items:flex-end; gap:10px; }
+    .kids-bubble-row{ display:flex; width:100%; margin:0; align-items:flex-end; gap:10px; }
     .kids-bubble-row.left{ justify-content:flex-start; }
     .kids-bubble-row.right{ justify-content:flex-end; }
     .kids-bubble{
@@ -147,7 +147,12 @@ function ensureStyles() {
     .kids-bubble-zh{ font-weight:700; color:#0f172a; }
     .kids-bubble-py{ font-size:13px; color:#475569; margin-top:2px; }
     .kids-bubble-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
-    .kids-bubble-actions{ margin-top:4px; }
+    .kids-text-zh,.kids-text-gloss{ cursor:pointer; }
+    .kids-text-zh:hover,.kids-text-gloss:hover{ opacity:.85; }
+    .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
+    .kids-core-main-zh.kids-text-zh:hover,.kids-core-main-gloss.kids-text-gloss:hover{ opacity:.85; }
+    .lesson-extension-zh.kids-text-zh,.lesson-extension-meaning.kids-text-gloss{ cursor:pointer; }
+    .lesson-extension-zh.kids-text-zh:hover,.lesson-extension-meaning.kids-text-gloss:hover{ opacity:.85; }
     .speaker-badge{
       min-width:22px;
       height:22px;
@@ -232,6 +237,26 @@ function normLang(lang) {
   if (l === "ko" || l === "kr") return "kr";
   if (l === "ja" || l === "jp") return "jp";
   return "en";
+}
+
+const KIDS1_LESSON_TITLES = {
+  "1": { cn: "第1课 · 你好！", kr: "1과 · 안녕하세요!", en: "Lesson 1 · Hello!", jp: "第1課 · こんにちは！" },
+  "2": { cn: "第2课 · 你叫什么名字？", kr: "2과 · 이름이 뭐예요?", en: "Lesson 2 · What's your name?", jp: "第2課 · 名前は何ですか？" },
+  "3": { cn: "第3课 · 你几岁？", kr: "3과 · 몇 살이에요?", en: "Lesson 3 · How old are you?", jp: "第3課 · 何歳ですか？" },
+  "4": { cn: "第4课 · 你是哪国人？", kr: "4과 · 어느 나라 사람이에요?", en: "Lesson 4 · Where are you from?", jp: "第4課 · どこの国の方ですか？" },
+  "5": { cn: "第5课 · 他是谁？", kr: "5과 · 그는 누구예요?", en: "Lesson 5 · Who is he?", jp: "第5課 · 彼は誰ですか？" },
+  "6": { cn: "第6课 · 这是什么？", kr: "6과 · 이게 뭐예요?", en: "Lesson 6 · What's this?", jp: "第6課 · これは何ですか？" },
+  "7": { cn: "第7课 · 你喜欢什么颜色？", kr: "7과 · 무슨 색을 좋아해요?", en: "Lesson 7 · What color do you like?", jp: "第7課 · 何色が好きですか？" },
+  "8": { cn: "第8课 · 你喜欢什么动物？", kr: "8과 · 무슨 동물을 좋아해요?", en: "Lesson 8 · What animal do you like?", jp: "第8課 · どんな動物が好きですか？" },
+};
+
+function getLessonDisplayTitle(lesson, lessonNo, lang) {
+  const L = normLang(lang);
+  const t = lesson && typeof lesson === "object" ? lesson[`title_${L}`] || lesson[`title_${L === "cn" ? "zh" : L}`] : "";
+  if (t != null && String(t).trim()) return String(t).trim();
+  const map = KIDS1_LESSON_TITLES[String(lessonNo)];
+  if (map && map[L]) return map[L];
+  return lesson?.title ? `第${lessonNo}课 · ${lesson.title}` : `第${lessonNo}课`;
 }
 
 function getMeaning(glossary, zh, lang) {
@@ -325,6 +350,14 @@ async function playSequential(texts) {
   next();
 }
 
+function ttsLangForGloss() {
+  const L = normLang(getLang());
+  if (L === "kr") return "ko-KR";
+  if (L === "jp") return "ja-JP";
+  if (L === "cn") return "zh-CN";
+  return "en";
+}
+
 let _kids1SpeakBound = false;
 function bindSpeakAndReadAll(root) {
   if (_kids1SpeakBound) return;
@@ -337,33 +370,43 @@ function bindSpeakAndReadAll(root) {
       const list = root.querySelector("#kids1DialogueList");
       if (!list) return;
       const texts = [];
-      list.querySelectorAll(".kids-bubble-zh[data-speak-text], .lesson-dialogue-line .lesson-dialogue-zh[data-speak-text]").forEach((el) => {
-        const t = (el.dataset?.speakText || "").trim();
+      list.querySelectorAll(".kids-text-zh[data-speak-zh]").forEach((el) => {
+        const t = (el.dataset?.speakZh || "").trim();
         if (t) texts.push(t);
       });
       await playSequential(texts);
       return;
     }
-    const el = e.target.closest("[data-speak-text][data-speak-kind]");
-    if (!el) return;
-    const text = (el.dataset?.speakText || "").trim();
-    if (!text) return;
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      const { AUDIO_ENGINE } = await import("../platform/index.js");
-      if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
-      AUDIO_ENGINE.stop();
-      const lineEl = el.closest(".kids-bubble-row") || el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card");
-      if (lineEl) lineEl.classList.add("is-speaking");
-      AUDIO_ENGINE.playText(text, {
-        lang: "zh-CN",
-        rate: 0.95,
-        onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); },
-        onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); },
-      });
-    } catch (err) {
-      console.warn("[kids1] speak failed:", err);
+    const zhEl = e.target.closest(".kids-text-zh[data-speak-zh]");
+    if (zhEl) {
+      const text = (zhEl.dataset?.speakZh || "").trim();
+      if (!text) return;
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        const { AUDIO_ENGINE } = await import("../platform/index.js");
+        if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
+        AUDIO_ENGINE.stop();
+        const lineEl = zhEl.closest(".kids-bubble-row") || zhEl.closest(".kids-core-card") || zhEl.closest(".lesson-extension-card");
+        if (lineEl) lineEl.classList.add("is-speaking");
+        AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
+      } catch (err) { console.warn("[kids1] speak zh failed:", err); }
+      return;
+    }
+    const glossEl = e.target.closest(".kids-text-gloss[data-speak-gloss]");
+    if (glossEl) {
+      const text = (glossEl.dataset?.speakGloss || "").trim();
+      if (!text) return;
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        const { AUDIO_ENGINE } = await import("../platform/index.js");
+        if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
+        AUDIO_ENGINE.stop();
+        const lineEl = glossEl.closest(".kids-bubble-row") || glossEl.closest(".kids-core-card") || glossEl.closest(".lesson-extension-card");
+        if (lineEl) lineEl.classList.add("is-speaking");
+        AUDIO_ENGINE.playText(text, { lang: ttsLangForGloss(), rate: 0.95, onEnd: () => { if (lineEl) lineEl.classList.remove("is-speaking"); }, onError: () => { if (lineEl) lineEl.classList.remove("is-speaking"); } });
+      } catch (err) { console.warn("[kids1] speak gloss failed:", err); }
     }
   });
 }
@@ -397,12 +440,13 @@ function renderList(root, blueprint) {
     </div>
   `;
 
+  const lang = normLang(getLang());
   const listEl = root.querySelector("#kids1LessonList");
   entries.forEach(([no, lesson]) => {
     const card = document.createElement("div");
     card.className = "lesson-card";
     card.setAttribute("data-lesson-no", no);
-    card.innerHTML = `<div class="card-title">第 ${no} 课 · ${escapeHtml(lesson.title || "")}</div>`;
+    card.innerHTML = `<div class="card-title">${escapeHtml(getLessonDisplayTitle(lesson, no, lang))}</div>`;
     listEl.appendChild(card);
   });
 
@@ -422,44 +466,39 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   if (!lesson) return renderList(root, blueprint);
 
   const lang = normLang(getLang());
-  const title = lesson.title || `第 ${lessonNo} 课`;
+  const title = getLessonDisplayTitle(lesson, lessonNo, lang);
   const coreZh = String(lesson.coreSentence || "").trim();
   const corePy = getPinyin(coreZh);
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
   const lines = flattenDialogueLines(lesson.dialogues);
-  const dialogueRows = lines.map((line, idx) => {
+  const dialogueRows = lines.map((line) => {
     const zh = line.zh;
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
     const zhEsc = escapeAttr(zh);
-    const attrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="dialogue"` : "";
+    const meaningEsc = meaning ? escapeAttr(meaning) : "";
+    const zhAttrs = zh ? ` class="kids-bubble-zh kids-text-zh" data-speak-zh="${zhEsc}"` : ' class="kids-bubble-zh"';
+    const glossAttrs = meaning ? ` class="kids-bubble-gloss kids-text-gloss" data-speak-gloss="${meaningEsc}"` : ' class="kids-bubble-gloss"';
     const sideClass = line.speaker === "B" ? "right" : "left";
     const bubbleExtra = line.speaker === "B" ? " right" : "";
-    const speakLabel = t("kids1.speak", "🔊 发音");
     if (sideClass === "left") {
       return `
         <div class="kids-bubble-row left">
           <div class="speaker-badge">A</div>
           <div class="kids-bubble${bubbleExtra}">
-            <div class="kids-bubble-zh" ${attrs}>${escapeHtml(zh)}</div>
+            <div${zhAttrs}>${escapeHtml(zh)}</div>
             ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
-            ${meaning ? `<div class="kids-bubble-gloss">${escapeHtml(meaning)}</div>` : ""}
-            <div class="kids-bubble-actions">
-              <button type="button" class="lesson-extension-audio-btn text-xs"${attrs}>${escapeHtml(speakLabel)}</button>
-            </div>
+            ${meaning ? `<div${glossAttrs}>${escapeHtml(meaning)}</div>` : ""}
           </div>
         </div>`;
     }
     return `
       <div class="kids-bubble-row right">
         <div class="kids-bubble${bubbleExtra}">
-          <div class="kids-bubble-zh" ${attrs}>${escapeHtml(zh)}</div>
+          <div${zhAttrs}>${escapeHtml(zh)}</div>
           ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
-          ${meaning ? `<div class="kids-bubble-gloss">${escapeHtml(meaning)}</div>` : ""}
-          <div class="kids-bubble-actions">
-            <button type="button" class="lesson-extension-audio-btn text-xs"${attrs}>${escapeHtml(speakLabel)}</button>
-          </div>
+          ${meaning ? `<div${glossAttrs}>${escapeHtml(meaning)}</div>` : ""}
         </div>
         <div class="speaker-badge">B</div>
       </div>`;
@@ -471,19 +510,21 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang);
     const zhEsc = escapeAttr(zh);
-    const attrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const meaningEsc = meaning ? escapeAttr(meaning) : "";
+    const zhCls = zh ? " lesson-extension-zh kids-text-zh" : " lesson-extension-zh";
+    const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
+    const glossCls = meaning ? " lesson-extension-meaning kids-text-gloss" : " lesson-extension-meaning";
+    const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
     const idx = String(i + 1).padStart(2, "0");
-    const speakLabel = t("kids1.speak", "🔊 发音");
     return `
       <article class="lesson-extension-card">
         <div class="lesson-extension-card-top">
           <span class="lesson-extension-index">${idx}</span>
-          <button type="button" class="lesson-extension-audio-btn"${attrs}>${escapeHtml(speakLabel)}</button>
         </div>
         <div class="lesson-extension-body">
-          <div class="lesson-extension-zh"${attrs}>${escapeHtml(zh)}</div>
+          <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
           ${py ? `<div class="lesson-extension-pinyin">${escapeHtml(py)}</div>` : ""}
-          ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+          ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
         </div>
       </article>`;
   }).join("");
@@ -520,12 +561,9 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
 
                 <section class="kids-core-card kids-card">
                   <h3 class="lesson-section-title">${escapeHtml(coreTitle)}</h3>
-                  <div class="kids-core-main-zh" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">${escapeHtml(coreZh)}</div>
+                  <div class="kids-core-main-zh kids-text-zh" data-speak-zh="${escapeAttr(coreZh)}">${escapeHtml(coreZh)}</div>
                   ${corePy ? `<div class="kids-core-main-py">${escapeHtml(corePy)}</div>` : ""}
-                  ${coreMeaning ? `<div class="kids-core-main-gloss">${escapeHtml(coreMeaning)}</div>` : ""}
-                  <div class="kids-core-actions">
-                    <button type="button" class="lesson-extension-audio-btn text-xs" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">${escapeHtml(t("kids1.speak", "🔊 发音"))}</button>
-                  </div>
+                  ${coreMeaning ? `<div class="kids-core-main-gloss kids-text-gloss" data-speak-gloss="${escapeAttr(coreMeaning)}">${escapeHtml(coreMeaning)}</div>` : ""}
                 </section>
 
                 <section class="kids-dialogue-card kids-card">
