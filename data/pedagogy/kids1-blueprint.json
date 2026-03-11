@@ -7,9 +7,14 @@
       "coreSentence": "你好！",
       "scene": "greeting",
       "dialogues": [
-        ["你好，老师！", "你好，小美！", "再见！", "再见！"],
-        ["谢谢。", "不客气。"],
-        ["对不起。", "没关系。"]
+        { "character": "xiaomei", "text": "你好，老师！" },
+        { "character": "teacher", "text": "你好，小美！" },
+        { "character": "xiaomei", "text": "再见！" },
+        { "character": "teacher", "text": "再见！" },
+        { "character": "xiaomei", "text": "谢谢。" },
+        { "character": "teacher", "text": "不客气。" },
+        { "character": "xiaomei", "text": "对不起。" },
+        { "character": "teacher", "text": "没关系。" }
       ],
       "extensionWords": [
         "早上好",

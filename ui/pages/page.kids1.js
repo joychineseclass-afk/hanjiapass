@@ -403,6 +403,15 @@ function flattenDialogueLines(dialogues) {
   return out;
 }
 
+function getCharacterIdForLine(line) {
+  const direct = String(line.character || "").trim();
+  if (direct) return direct;
+  const spk = String(line.speaker || "").trim().toUpperCase();
+  if (spk === "A") return "xiaomei";
+  if (spk === "B") return "teacher";
+  return "";
+}
+
 // 预留：Kids 场景元数据组装（后续可接 AI 场景引擎）
 export function getKidsSceneMeta(lessonData, lang) {
   const l = normLang(lang || getLang());
@@ -724,7 +733,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     const listEl = root.querySelector("#kids1DialogueCharList");
     if (listEl && lines.length) {
       const hasCharacter = lines.some((line) => {
-        const charId = String(line.character || "").trim();
+        const charId = getCharacterIdForLine(line);
         return !!(charId && map.get(charId));
       });
       if (!hasCharacter) {
@@ -735,7 +744,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
         .map((line) => {
           const text = String(line.zh || "").trim();
           if (!text) return "";
-          const charId = String(line.character || "").trim();
+          const charId = getCharacterIdForLine(line);
           const character = charId && map.get(charId);
           if (character) {
             return renderCharacterBubble(character, escapeHtml(text));
