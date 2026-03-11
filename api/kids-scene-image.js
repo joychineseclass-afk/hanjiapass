@@ -8,20 +8,37 @@ export const config = { runtime: "nodejs" };
 const OPENAI_IMAGE_URL = "https://api.openai.com/v1/images/generations";
 const API_VERSION = String(process.env.GEMINI_API_VERSION || "v1beta").trim();
 
+/** 当前代码实际检查的环境变量名（按优先级） */
+const GEMINI_ENV_NAMES = ["GEMINI_API_KEYS", "GEMINI_API_KEY", "GEMINI_API_KEY_2", "GOOGLE_API_KEY"];
+const OPENAI_ENV_NAME = "OPENAI_API_KEY";
+
+function envStatus(name) {
+  const v = process.env[name];
+  return v != null && String(v).trim() !== "" ? "present" : "missing";
+}
+
 function getGeminiKeys() {
   const fromList = String(process.env.GEMINI_API_KEYS || "").trim();
   if (fromList) {
     const keys = fromList.split(",").map((s) => s.trim()).filter(Boolean);
     if (keys.length) return keys;
   }
-  const k1 = String(process.env.GEMINI_API_KEY || "").trim();
+  const geminiKey =
+    String(process.env.GEMINI_API_KEY || "").trim() ||
+    String(process.env.GOOGLE_API_KEY || "").trim();
   const k2 = String(process.env.GEMINI_API_KEY_2 || "").trim();
-  const google = String(process.env.GOOGLE_API_KEY || "").trim();
-  return [k1, k2, google].filter(Boolean);
+  return [geminiKey, k2].filter(Boolean);
 }
 
 function getOpenAIKey() {
   return String(process.env.OPENAI_API_KEY || "").trim();
+}
+
+function logProviderEnvCheck() {
+  const lines = ["[KidsSceneImage] env check:"];
+  for (const n of GEMINI_ENV_NAMES) lines.push(`  ${n} = ${envStatus(n)}`);
+  lines.push(`  ${OPENAI_ENV_NAME} = ${envStatus(OPENAI_ENV_NAME)}`);
+  console.log(lines.join("\n"));
 }
 
 async function generateWithGemini(apiKey, prompt) {
@@ -102,9 +119,12 @@ export default async function handler(req, res) {
   const prompt = String(body.prompt || "").trim();
   if (!prompt) return res.status(400).json({ error: "missing prompt", code: "MISSING_PROMPT", imageUrl: "" });
 
+  if (process.env.NODE_ENV !== "test") logProviderEnvCheck();
+
   const geminiKeys = getGeminiKeys();
   const openaiKey = getOpenAIKey();
 
+  // Provider 选择逻辑：有 Gemini key 则优先 Gemini，否则用 OpenAI，两者都没有则 NO_IMAGE_PROVIDER_CONFIGURED
   if (geminiKeys.length === 0 && !openaiKey) {
     if (process.env.NODE_ENV !== "test") console.warn("[KidsSceneImage] no image provider available");
     return res.status(503).json({
