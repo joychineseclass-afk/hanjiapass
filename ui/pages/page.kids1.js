@@ -170,9 +170,26 @@ function ensureStyles() {
       box-shadow:0 2px 8px rgba(15,23,42,.08);
     }
     .kids-scene-bubble.right{ background:#fef3c7; border-color:#fde68a; }
-    .kids-scene-bubble .bubble-zh{ font-weight:700; color:#0f172a; font-size:1em; }
-    .kids-scene-bubble .bubble-py{ font-size:0.85em; color:#475569; margin-top:4px; }
-    .kids-scene-bubble .bubble-gloss{ font-size:0.8em; color:#64748b; margin-top:6px; }
+    .kids-scene-bubble .bubble-zh,
+    .kids-scene-bubble .kids-bubble-zh{ font-weight:700; color:#0f172a; font-size:1em; }
+    .kids-scene-bubble .bubble-py,
+    .kids-scene-bubble .kids-bubble-pinyin{ font-size:0.85em; color:#475569; margin-top:4px; }
+    .kids-scene-bubble .bubble-gloss,
+    .kids-scene-bubble .kids-bubble-gloss{ font-size:0.8em; color:#64748b; margin-top:6px; }
+    .kids-scene-bubble .kids-bubble-head{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .kids-scene-bubble .kids-bubble-avatar{
+      font-size:18px;
+    }
+    .kids-scene-bubble .kids-bubble-name{
+      font-size:13px;
+      color:#444;
+    }
     .kids-scene-bubble .bubble-zh.kids-text-zh,.kids-scene-bubble .bubble-gloss.kids-text-gloss{ cursor:pointer; }
     .kids-scene-bubble .bubble-zh.kids-text-zh:hover,.kids-scene-bubble .bubble-gloss.kids-text-gloss:hover{ opacity:.85; }
     .kids-core-main-zh.kids-text-zh,.kids-core-main-gloss.kids-text-gloss{ cursor:pointer; }
@@ -596,6 +613,12 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
 
   const lines = flattenDialogueLines(lesson.dialogues);
   const positions = getSceneBubblePositions(lines.length);
+  const characters = await loadCharacters();
+  const charMap = new Map();
+  (characters || []).forEach((c) => {
+    if (c && c.id) charMap.set(String(c.id), c);
+  });
+
   const overlayBubbles = lines.map((line, idx) => {
     const zh = line.zh;
     const py = getPinyin(zh);
@@ -609,13 +632,25 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     if (pos.right) styleParts.push(`right:${pos.right}`);
     const posStyle = styleParts.length ? ` style="${styleParts.join(";")}"` : "";
     const sideClass = line.speaker === "B" ? " right" : " left";
-    const zhCls = zh ? " bubble-zh kids-text-zh" : " bubble-zh";
+    const charId = getCharacterIdForLine(line);
+    const character = charId && charMap.get(charId);
+    const avatar = character?.avatar || "";
+    const name = character?.name?.zh || "";
+    const hasCharacter = !!(avatar || name);
+    const headHtml = hasCharacter
+      ? `<div class="kids-bubble-head">
+          <span class="kids-bubble-avatar">${escapeHtml(avatar)}</span>
+          <span class="kids-bubble-name">${escapeHtml(name)}</span>
+        </div>`
+      : "";
+    const zhCls = zh ? " bubble-zh kids-bubble-zh kids-text-zh" : " bubble-zh kids-bubble-zh";
     const zhData = zh ? ` data-speak-zh="${zhEsc}"` : "";
-    const glossCls = meaning ? " bubble-gloss kids-text-gloss" : " bubble-gloss";
+    const glossCls = meaning ? " bubble-gloss kids-bubble-gloss kids-text-gloss" : " bubble-gloss kids-bubble-gloss";
     const glossData = meaning ? ` data-speak-gloss="${meaningEsc}"` : "";
     return `<div class="kids-scene-bubble${sideClass}"${posStyle}>
+      ${headHtml}
       <div class="${zhCls.trim()}"${zhData}>${escapeHtml(zh)}</div>
-      ${py ? `<div class="bubble-py">${escapeHtml(py)}</div>` : ""}
+      ${py ? `<div class="bubble-py kids-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
       ${meaning ? `<div class="${glossCls.trim()}"${glossData}>${escapeHtml(meaning)}</div>` : ""}
     </div>`;
   }).join("");
@@ -693,7 +728,6 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                         ${overlayBubbles || ""}
                       </div>
                     </div>
-                    <div class="kids-dialogue-char-list" id="kids1DialogueCharList"></div>
                   </div>
                 </section>
 
@@ -722,43 +756,6 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     } catch {}
   });
   bindSpeakAndReadAll(root);
-
-  // 可选角色层：如果 lesson.dialogues 中提供了 character 字段，则使用角色气泡渲染
-  try {
-    const characters = await loadCharacters();
-    const map = new Map();
-    (characters || []).forEach((c) => {
-      if (c && c.id) map.set(String(c.id), c);
-    });
-    const listEl = root.querySelector("#kids1DialogueCharList");
-    if (listEl && lines.length) {
-      const hasCharacter = lines.some((line) => {
-        const charId = getCharacterIdForLine(line);
-        return !!(charId && map.get(charId));
-      });
-      if (!hasCharacter) {
-        // 当前课没有任何绑定角色的行：不渲染 Character Layer，保持为空
-        return;
-      }
-      const html = lines
-        .map((line) => {
-          const text = String(line.zh || "").trim();
-          if (!text) return "";
-          const charId = getCharacterIdForLine(line);
-          const character = charId && map.get(charId);
-          if (character) {
-            return renderCharacterBubble(character, escapeHtml(text));
-          }
-          // 当前规则：仅渲染带角色的行，其余行在原 scene bubble 层展示，避免重复文本
-          return "";
-        })
-        .filter(Boolean)
-        .join("");
-      listEl.innerHTML = html;
-    }
-  } catch (e) {
-    console.warn("[kids1] character layer failed", e);
-  }
 
   (async () => {
     try {
