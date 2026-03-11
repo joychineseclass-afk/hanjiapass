@@ -790,73 +790,112 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   });
   bindSpeakAndReadAll(root);
 
-  // 可选角色层：如果 lesson.dialogues 中提供了 character 字段，则使用角色气泡渲染
-  try {
-    const characters = await loadCharacters();
-    const map = new Map();
-    (characters || []).forEach((c) => {
-      if (c && c.id) map.set(String(c.id), c);
-    });
-    const listEl = root.querySelector("#kids1DialogueCharList");
-    if (listEl && lines.length) {
-      const hasCharacter = lines.some((line) => {
-        const charId = String(line.character || "").trim();
-        return !!(charId && map.get(charId));
-      });
-      if (!hasCharacter) {
-        // 当前课没有任何绑定角色的行：不渲染 Character Layer，保持为空
-        return;
-      }
-      const html = lines
-        .map((line) => {
-          const text = String(line.zh || "").trim();
-          if (!text) return "";
-          const charId = String(line.character || "").trim();
-          const character = charId && map.get(charId);
-          if (character) {
-            return renderCharacterBubble(character, escapeHtml(text));
-          }
-          // 当前规则：仅渲染带角色的行，其余行在原 scene bubble 层展示，避免重复文本
-          return "";
-        })
-        .filter(Boolean)
-        .join("");
-      listEl.innerHTML = html;
-    }
-  } catch (e) {
-    console.warn("[kids1] character layer failed", e);
-  }
-
-  (async () => {
+  // 旧 schema 下的可选角色层：仅在没有 lesson.scenes 时执行
+  if (!scenes.length) {
     try {
-      const asset = await resolveKidsSceneAsset(sceneMeta, scenePromptResult);
-      const slot = root.querySelector("#kids1SceneImageContent");
-      if (!slot) return;
-      if (asset.mode === "generated" && asset.imageUrl) {
-        slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(asset.imageUrl)}" alt="${escapeAttr(asset.alt)}" />`;
-        const wrap = slot.closest(".kids-scene-image-wrap");
-        if (wrap) wrap.setAttribute("data-scene-mode", "generated");
-      } else {
-        slot.innerHTML = `
-          <div class="kids-scene-image-placeholder">
-            <div class="kids-scene-image-placeholder-title">${escapeHtml(asset.alt)}</div>
-            <div class="kids-scene-image-placeholder-desc">${escapeHtml(asset.shortPrompt)}</div>
-          </div>`;
-        const wrap = slot.closest(".kids-scene-image-wrap");
-        if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
+      const lines = flattenDialogueLines(lesson.dialogues);
+      const characters = await loadCharacters();
+      const map = new Map();
+      (characters || []).forEach((c) => {
+        if (c && c.id) map.set(String(c.id), c);
+      });
+      const listEl = root.querySelector("#kids1DialogueCharList");
+      if (listEl && lines.length) {
+        const hasCharacter = lines.some((line) => {
+          const charId = String(line.character || "").trim();
+          return !!(charId && map.get(charId));
+        });
+        if (!hasCharacter) {
+          // 当前课没有任何绑定角色的行：不渲染 Character Layer，保持为空
+          return;
+        }
+        const html = lines
+          .map((line) => {
+            const text = String(line.zh || "").trim();
+            if (!text) return "";
+            const charId = String(line.character || "").trim();
+            const character = charId && map.get(charId);
+            if (character) {
+              return renderCharacterBubble(character, escapeHtml(text));
+            }
+            // 无角色信息时，退回原 scene bubble 显示
+            return "";
+          })
+          .filter(Boolean)
+          .join("");
+        listEl.innerHTML = html;
       }
     } catch (e) {
-      if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
-      const slot = root.querySelector("#kids1SceneImageContent");
-      if (slot) {
-        slot.innerHTML = `
-          <div class="kids-scene-image-placeholder">
-            <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneMeta.title || "Scene")}</div>
-            <div class="kids-scene-image-placeholder-desc">${escapeHtml(scenePromptResult.shortPrompt)}</div>
-          </div>`;
-      }
+      console.warn("[kids1] character layer failed", e);
     }
-  })();
+  }
+
+  // 场景图片生成：有 scenes 时按 scene 逐个生成，旧 schema 时按 lesson 级生成一张
+  if (scenes.length > 0) {
+    (async () => {
+      const langCode = getLang();
+      for (let i = 0; i < scenes.length; i += 1) {
+        const scene = scenes[i];
+        const sceneMeta = resolveKidsSceneMetaForScene(scene, langCode, { lessonNo, book: "kids1" });
+        const sceneId = scene?.id || `scene${i + 1}`;
+        const sceneCacheKey = `kids1_scene_${lessonNo}_${sceneId}`;
+        const scenePrompt = buildKidsScenePrompt(sceneMeta);
+        try {
+          const asset = await resolveKidsSceneAsset(sceneMeta, scenePrompt, sceneCacheKey);
+          const imgId = `kids1SceneImageContent_${idx}`;
+          const slot = document.getElementById(imgId.replace("{idx}", `${i}`)) || document.getElementById(imgId);
+          if (!slot) continue;
+          const url = asset.imageUrl || asset.url;
+          if (asset.mode === "generated" && url) {
+            slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(url)}" alt="${escapeAttr(asset.alt || sceneMeta.title || "Scene")}" />`;
+            const wrap = slot.closest(".kids-scene-image-wrap");
+            if (wrap) wrap.setAttribute("data-scene-mode", "generated");
+          } else {
+            slot.innerHTML = `
+              <div class="kids-scene-image-placeholder">
+                <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneMeta.title || "Scene")}</div>
+                <div class="kids-scene-image-placeholder-desc">${escapeHtml(scenePrompt.shortPrompt || "")}</div>
+              </div>`;
+            const wrap = slot.closest(".kids-scene-image-wrap");
+            if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
+          }
+        } catch (e) {
+          if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
+        }
+      }
+    })();
+  } else {
+    (async () => {
+      try {
+        const asset = await resolveKidsSceneAsset(baseSceneMeta, basePrompt);
+        const slot = root.querySelector("#kids1SceneImageContent");
+        if (!slot) return;
+        if (asset.mode === "generated" && asset.imageUrl) {
+          slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(asset.imageUrl)}" alt="${escapeAttr(asset.alt)}" />`;
+          const wrap = slot.closest(".kids-scene-image-wrap");
+          if (wrap) wrap.setAttribute("data-scene-mode", "generated");
+        } else {
+          slot.innerHTML = `
+            <div class="kids-scene-image-placeholder">
+              <div class="kids-scene-image-placeholder-title">${escapeHtml(asset.alt)}</div>
+              <div class="kids-scene-image-placeholder-desc">${escapeHtml(asset.shortPrompt)}</div>
+            </div>`;
+          const wrap = slot.closest(".kids-scene-image-wrap");
+          if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
+        }
+      } catch (e) {
+        if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
+        const slot = root.querySelector("#kids1SceneImageContent");
+        if (slot) {
+          slot.innerHTML = `
+            <div class="kids-scene-image-placeholder">
+              <div class="kids-scene-image-placeholder-title">${escapeHtml(baseSceneMeta.title || "Scene")}</div>
+              <div class="kids-scene-image-placeholder-desc">${escapeHtml(basePrompt.shortPrompt)}</div>
+            </div>`;
+        }
+      }
+    })();
+  }
 }
 
 export default async function pageKids1(ctxOrRoot) {
