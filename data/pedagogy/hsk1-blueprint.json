@@ -1,222 +1,204 @@
 {
-  "description": "HSK1 课程蓝图（Curriculum Blueprint）— 仅定义结构，不生成内容",
-  "version": "1.1",
-  "1": {
-    "title": {
-      "zh": "你好！",
-      "ko": "안녕하세요",
-      "en": "Hello",
-      "ja": "こんにちは"
+  "course": "hsk1",
+  "version": "lumina-blueprint-v1",
+  "lessons": {
+    "1": {
+      "title": "你好！",
+      "coreSentence": "你好！",
+      "grammarFocus": ["问候句"],
+      "scene": "greeting",
+      "dialogueTheme": "第一次见面打招呼",
+      "dialogueTemplate": "greeting_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "问候句",
-    "scene": "greeting"
-  },
-  "2": {
-    "title": {
-      "zh": "你叫什么名字？",
-      "ko": "이름이 뭐예요?",
-      "en": "What's your name?",
-      "ja": "お名前は何ですか？"
+    "2": {
+      "title": "你叫什么名字？",
+      "coreSentence": "你叫什么名字？",
+      "grammarFocus": ["叫 + 名字", "什么", "呢"],
+      "scene": "introduce_self",
+      "dialogueTheme": "自我介绍与互相介绍姓名",
+      "dialogueTemplate": "name_intro",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "叫 + 名字",
-    "scene": "introduce"
-  },
-  "3": {
-    "title": {
-      "zh": "你是哪国人？",
-      "ko": "어느 나라 사람이에요?",
-      "en": "Which country are you from?",
-      "ja": "どこの国の方ですか？"
+    "3": {
+      "title": "你是哪国人？",
+      "coreSentence": "你是哪国人？",
+      "grammarFocus": ["是字句", "哪"],
+      "scene": "nationality",
+      "dialogueTheme": "问国籍与回答国籍",
+      "dialogueTemplate": "nationality_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "是字句",
-    "scene": "nationality"
-  },
-  "4": {
-    "title": {
-      "zh": "他是我的朋友。",
-      "ko": "그는 제 친구예요.",
-      "en": "He is my friend.",
-      "ja": "彼は私の友達です。"
+    "4": {
+      "title": "他是我的朋友。",
+      "coreSentence": "他是我的朋友。",
+      "grammarFocus": ["的（所属）", "也"],
+      "scene": "introduce_friend",
+      "dialogueTheme": "介绍朋友与同学关系",
+      "dialogueTemplate": "friend_intro",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "的（所属）",
-    "scene": "friend"
-  },
-  "5": {
-    "title": {
-      "zh": "她是我妈妈。",
-      "ko": "그녀는 제 엄마예요.",
-      "en": "She is my mother.",
-      "ja": "彼女は私の母です。"
+    "5": {
+      "title": "她是我妈妈。",
+      "coreSentence": "她是我妈妈。",
+      "grammarFocus": ["我的 + 名词"],
+      "scene": "family_intro",
+      "dialogueTheme": "介绍家庭成员",
+      "dialogueTemplate": "family_basic",
+      "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
-    "grammar": "我的 + 名词",
-    "scene": "family"
-  },
-  "6": {
-    "title": {
-      "zh": "你多大？",
-      "ko": "몇 살이에요?",
-      "en": "How old are you?",
-      "ja": "おいくつですか？"
+    "6": {
+      "title": "你有几个苹果？",
+      "coreSentence": "你有几个苹果？",
+      "grammarFocus": ["有", "数词 + 量词", "几个"],
+      "scene": "quantity_objects",
+      "dialogueTheme": "询问物品数量",
+      "dialogueTemplate": "count_objects",
+      "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
-    "grammar": "几 + 岁",
-    "scene": "age"
-  },
-  "7": {
-    "title": {
-      "zh": "今天几月几号？",
-      "ko": "오늘 몇 월 며칠이에요?",
-      "en": "What's the date today?",
-      "ja": "今日は何月何日ですか？"
+    "7": {
+      "title": "现在几点？",
+      "coreSentence": "现在几点？",
+      "grammarFocus": ["几点", "现在"],
+      "scene": "time_basic",
+      "dialogueTheme": "询问时间并连接事件",
+      "dialogueTemplate": "time_event",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "年 + 月 + 日",
-    "scene": "date"
-  },
-  "8": {
-    "title": {
-      "zh": "现在几点？",
-      "ko": "지금 몇 시예요?",
-      "en": "What time is it now?",
-      "ja": "今何時ですか？"
+    "8": {
+      "title": "今天几月几号？",
+      "coreSentence": "今天几月几号？",
+      "grammarFocus": ["几月几号", "今天", "明天", "昨天"],
+      "scene": "date_basic",
+      "dialogueTheme": "询问日期",
+      "dialogueTemplate": "date_basic",
+      "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
-    "grammar": "点 + 分钟",
-    "scene": "time"
-  },
-  "9": {
-    "title": {
-      "zh": "喂，请打电话。",
-      "ko": "여보세요, 전화해 주세요.",
-      "en": "Hello, please call.",
-      "ja": "もしもし、電話してください。"
+    "9": {
+      "title": "你今年多大？",
+      "coreSentence": "你今年多大？",
+      "grammarFocus": ["多大", "岁", "今年"],
+      "scene": "age_basic",
+      "dialogueTheme": "询问年龄",
+      "dialogueTemplate": "age_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "打电话",
-    "scene": "phone"
-  },
-  "10": {
-    "title": {
-      "zh": "书在哪儿？",
-      "ko": "책이 어디에 있어요?",
-      "en": "Where is the book?",
-      "ja": "本はどこにありますか？"
+    "10": {
+      "title": "他是老师吗？",
+      "coreSentence": "他是老师吗？",
+      "grammarFocus": ["吗疑问句", "是 + 职业", "呢", "都"],
+      "scene": "job_basic",
+      "dialogueTheme": "询问职业",
+      "dialogueTemplate": "job_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "在 + 地点",
-    "scene": "location"
-  },
-  "11": {
-    "title": {
-      "zh": "我在学校学习汉语。",
-      "ko": "저는 학교에서 중국어를 배워요.",
-      "en": "I study Chinese at school.",
-      "ja": "私は学校で中国語を勉強します。"
+    "11": {
+      "title": "我学习汉语。",
+      "coreSentence": "我学习汉语。",
+      "grammarFocus": ["动词 + 宾语", "也"],
+      "scene": "study_basic",
+      "dialogueTheme": "谈学习内容",
+      "dialogueTemplate": "study_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "在 + 地方 + 动词",
-    "scene": "study"
-  },
-  "12": {
-    "title": {
-      "zh": "你做什么工作？",
-      "ko": "무슨 일 하세요?",
-      "en": "What do you do for work?",
-      "ja": "お仕事は何をされていますか？"
+    "12": {
+      "title": "我在学校。",
+      "coreSentence": "我在学校。",
+      "grammarFocus": ["在（地点）", "这里", "那里"],
+      "scene": "location_basic",
+      "dialogueTheme": "谈人或物所在的位置",
+      "dialogueTemplate": "location_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "做 + 工作",
-    "scene": "work"
-  },
-  "13": {
-    "title": {
-      "zh": "你喜欢什么？",
-      "ko": "뭘 좋아해요?",
-      "en": "What do you like?",
-      "ja": "何が好きですか？"
+    "13": {
+      "title": "我坐地铁去学校。",
+      "coreSentence": "我坐地铁去学校。",
+      "grammarFocus": ["坐 + 交通工具", "去"],
+      "scene": "transport_basic",
+      "dialogueTheme": "谈出行方式",
+      "dialogueTemplate": "transport_basic",
+      "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
-    "grammar": "喜欢 + 名词/动词",
-    "scene": "hobby"
-  },
-  "14": {
-    "title": {
-      "zh": "你吃什么？",
-      "ko": "뭘 먹어요?",
-      "en": "What do you eat?",
-      "ja": "何を食べますか？"
+    "14": {
+      "title": "我们一起吃饭吧。",
+      "coreSentence": "我们一起吃饭吧。",
+      "grammarFocus": ["一起", "吧"],
+      "scene": "invite_meal",
+      "dialogueTheme": "邀请别人吃饭",
+      "dialogueTemplate": "invite_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "吃 / 喝 + 宾语",
-    "scene": "eat"
-  },
-  "15": {
-    "title": {
-      "zh": "在饭馆喝茶。",
-      "ko": "식당에서 차 마시기.",
-      "en": "Drinking tea at a restaurant.",
-      "ja": "レストランでお茶を飲む。"
+    "15": {
+      "title": "今天很冷。",
+      "coreSentence": "今天很冷。",
+      "grammarFocus": ["很 + 形容词"],
+      "scene": "weather_basic",
+      "dialogueTheme": "谈天气和感觉",
+      "dialogueTemplate": "weather_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "和",
-    "scene": "eat"
-  },
-  "16": {
-    "title": {
-      "zh": "椅子在哪儿？",
-      "ko": "의자가 어디에 있어요?",
-      "en": "Where is the chair?",
-      "ja": "椅子はどこにありますか？"
+    "16": {
+      "title": "我喜欢运动。",
+      "coreSentence": "我喜欢运动。",
+      "grammarFocus": ["喜欢", "吗疑问句"],
+      "scene": "hobby_basic",
+      "dialogueTheme": "谈爱好与运动",
+      "dialogueTemplate": "hobby_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "上 / 下 / 里",
-    "scene": "location"
-  },
-  "17": {
-    "title": {
-      "zh": "坐出租车去火车站。",
-      "ko": "택시 타고 기차역 가기.",
-      "en": "Taking a taxi to the train station.",
-      "ja": "タクシーで駅へ行く。"
+    "17": {
+      "title": "我看电视。",
+      "coreSentence": "我看电视。",
+      "grammarFocus": ["动词 + 宾语", "也"],
+      "scene": "entertainment_basic",
+      "dialogueTheme": "谈看电视、电影、听音乐等娱乐活动",
+      "dialogueTemplate": "entertainment_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "来 / 去 / 回",
-    "scene": "transport"
-  },
-  "18": {
-    "title": {
-      "zh": "这个多少钱？",
-      "ko": "이거 얼마예요?",
-      "en": "How much is this?",
-      "ja": "これはいくらですか？"
+    "18": {
+      "title": "我要买苹果。",
+      "coreSentence": "我要买苹果。",
+      "grammarFocus": ["要", "买", "多少", "几"],
+      "scene": "shopping_basic",
+      "dialogueTheme": "买水果和简单购物",
+      "dialogueTemplate": "shopping_basic",
+      "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
-    "grammar": "这 / 那",
-    "scene": "shopping"
-  },
-  "19": {
-    "title": {
-      "zh": "今天天气怎么样？",
-      "ko": "오늘 날씨 어때요?",
-      "en": "How's the weather today?",
-      "ja": "今日の天気はどうですか？"
+    "19": {
+      "title": "我明天去中国。",
+      "coreSentence": "我明天去中国。",
+      "grammarFocus": ["明天", "去", "想", "会"],
+      "scene": "plan_basic",
+      "dialogueTheme": "谈明天和简单计划",
+      "dialogueTemplate": "plan_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "太 + 形容词",
-    "scene": "weather"
-  },
-  "20": {
-    "title": {
-      "zh": "你怎么了？",
-      "ko": "어디 아파요?",
-      "en": "What's wrong with you?",
-      "ja": "どうしましたか？"
+    "20": {
+      "title": "这个很好。",
+      "coreSentence": "这个很好。",
+      "grammarFocus": ["很 + 形容词", "这个", "那个", "觉得"],
+      "scene": "comment_basic",
+      "dialogueTheme": "对人或物进行简单评价",
+      "dialogueTemplate": "comment_basic",
+      "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
-    "grammar": "怎么 / 怎么样",
-    "scene": "health"
-  },
-  "21": {
-    "title": {
-      "zh": "复习课1",
-      "ko": "복습 1",
-      "en": "Review 1",
-      "ja": "復習1"
+    "21": {
+      "title": "综合复习 1",
+      "coreSentence": "综合复习 1",
+      "grammarFocus": ["review"],
+      "scene": "review",
+      "dialogueTheme": "复习前10课",
+      "dialogueTemplate": "review_block_1",
+      "wordStrategy": { "coreWords": 0, "supportWords": 0 }
     },
-    "scene": "review"
-  },
-  "22": {
-    "title": {
-      "zh": "复习课2",
-      "ko": "복습 2",
-      "en": "Review 2",
-      "ja": "復習2"
-    },
-    "scene": "review"
+    "22": {
+      "title": "综合复习 2",
+      "coreSentence": "综合复习 2",
+      "grammarFocus": ["review"],
+      "scene": "review",
+      "dialogueTheme": "复习后10课",
+      "dialogueTemplate": "review_block_2",
+      "wordStrategy": { "coreWords": 0, "supportWords": 0 }
+    }
   }
 }

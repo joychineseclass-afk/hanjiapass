@@ -19,12 +19,13 @@ function getBlueprintUrl(cacheKey) {
 }
 
 /**
- * 加载蓝图
- * @param {string} level - "hsk1" | "hsk2"
- * @returns {Promise<Object>} 蓝图对象，key 为课序号 "1" "2" ... "22"
+ * 加载课程蓝图
+ * hsk1 读取 data/pedagogy/hsk1-blueprint.json，后续可扩展 hsk2 等。
+ * @param {string} courseId - 课程标识，如 "hsk1" | "hsk2"
+ * @returns {Promise<Object|null>} 课序为 key 的蓝图对象 { "1": { title, coreSentence, ... }, "2": {...} }，失败返回 null
  */
-export async function loadBlueprint(level) {
-  const key = String(level || "hsk1").toLowerCase().replace(/^hsk/, "hsk");
+export async function loadBlueprint(courseId) {
+  const key = String(courseId || "hsk1").toLowerCase().replace(/^hsk/, "hsk");
   const cacheKey = key.startsWith("hsk") ? key : `hsk${key}`;
 
   const hit = CACHE.get(cacheKey);
@@ -41,10 +42,17 @@ export async function loadBlueprint(level) {
       return null;
     }
     const data = await res.json();
-    const blueprint = {};
-    for (const k of Object.keys(data)) {
-      if (k !== "description" && k !== "version" && /^\d+$/.test(k)) {
-        blueprint[k] = data[k];
+    // 新结构：data.lessons 为 { "1": {...}, "2": {...} }
+    let blueprint = null;
+    if (data.lessons && typeof data.lessons === "object") {
+      blueprint = data.lessons;
+    } else {
+      // 兼容旧版：课序在顶层
+      blueprint = {};
+      for (const k of Object.keys(data)) {
+        if (k !== "description" && k !== "version" && k !== "course" && /^\d+$/.test(k)) {
+          blueprint[k] = data[k];
+        }
       }
     }
     CACHE.set(cacheKey, blueprint);
