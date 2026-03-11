@@ -5,5 +5,92 @@
   "teacher_assign_homework": { "cn": "布置作业", "kr": "숙제 부여", "en": "Assign homework" },
   "teacher_create_lesson": { "cn": "创建课程", "kr": "수업 만들기", "en": "Create lesson" },
   "teacher_view_progress": { "cn": "查看进度", "kr": "진도 보기", "en": "View progress" },
-  "teacher_review_reports": { "cn": "复习报告", "kr": "복습 리포트", "en": "Review reports" }
+  "teacher_review_reports": { "cn": "复习报告", "kr": "복습 리포트", "en": "Review reports" },
+
+  "teacher_tools_center": { "cn": "教师工具中心", "kr": "교사 도구 센터", "en": "Teacher Tools Center" },
+  "teacher_tools_subtitle": {
+    "cn": "课堂小游戏、课堂教材、AI课堂助手与课堂控制，一站式入口。",
+    "kr": "수업용 게임, 교재, AI 도우미, 수업 컨트롤을 한곳에서 관리합니다.",
+    "en": "Central hub for classroom games, materials, AI assistant and control tools."
+  },
+  "teacher_games": { "cn": "课堂小游戏", "kr": "수업 게임", "en": "Classroom Games" },
+  "teacher_games_desc": {
+    "cn": "仅在教师模式下显示，方便课堂投屏与互动。",
+    "kr": "교사 모드에서만 보이는 수업용 인터랙티브 게임입니다.",
+    "en": "Interactive games for classroom use, visible only in Teacher mode."
+  },
+  "teacher_materials": { "cn": "课堂教材", "kr": "수업 교재", "en": "Classroom Materials" },
+  "teacher_materials_desc": {
+    "cn": "管理你的私有教材与课堂资料。（即将上线）",
+    "kr": "나만의 교재와 수업 자료를 관리합니다. (준비 중)",
+    "en": "Manage your private materials and lesson content. (Coming soon)"
+  },
+  "teacher_ai_assistant": { "cn": "AI课堂助手", "kr": "AI 수업 도우미", "en": "AI Classroom Assistant" },
+  "teacher_ai_desc": {
+    "cn": "用 AI 生成练习、情境对话与课堂活动。（即将上线）",
+    "kr": "AI로 연습 문제와 상황 대화, 활동을 만들어 줍니다. (준비 중)",
+    "en": "Use AI to generate practice, dialogues and activities. (Coming soon)"
+  },
+  "teacher_console": { "cn": "课堂控制台", "kr": "수업 콘솔", "en": "Classroom Console" },
+  "teacher_console_desc": {
+    "cn": "控制课堂进度、点名、投票、计时器等。（即将上线）",
+    "kr": "진도, 출석, 투표, 타이머 등을 제어합니다. (준비 중)",
+    "en": "Control lesson flow, attendance, polls, timers and more. (Coming soon)"
+  },
+
+  "teacher_game_view": { "cn": "课堂小游戏", "kr": "수업 게임", "en": "Classroom Game" },
+  "teacher_game_view_desc": {
+    "cn": "用于课堂投屏的游戏说明页。",
+    "kr": "수업 화면에 띄워 함께 진행할 게임 안내 페이지입니다.",
+    "en": "Game description view for projecting in the classroom."
+  },
+  "teacher_game_not_found": { "cn": "未找到小游戏", "kr": "게임을 찾을 수 없습니다", "en": "Game not found" },
+  "teacher_game_no_steps": { "cn": "暂未配置详细步骤", "kr": "아직 상세 단계가 설정되지 않았습니다.", "en": "Detailed steps are not configured yet." },
+
+  "teacher_enter_classroom": { "cn": "进入课堂", "kr": "수업 모드 들어가기", "en": "Enter Classroom" },
+  "teacher_enter_classroom_desc": {
+    "cn": "选择课程与课次，进入课堂投屏模式。",
+    "kr": "과정과 차시를 선택해 수업 화면으로 들어갑니다.",
+    "en": "Select a course and lesson to start classroom mode."
+  },
+  "teacher_course": { "cn": "课程", "kr": "과정", "en": "Course" },
+  "teacher_course_kids": { "cn": "Kids", "kr": "Kids", "en": "Kids" },
+  "teacher_course_hsk": { "cn": "HSK", "kr": "HSK", "en": "HSK" },
+  "teacher_level": { "cn": "级别/册", "kr": "레벨/권", "en": "Level" },
+  "teacher_lesson": { "cn": "课次", "kr": "차시", "en": "Lesson" },
+  "teacher_enter_classroom_button": { "cn": "进入课堂", "kr": "수업 시작", "en": "Start Classroom" },
+
+  "classroom_title": { "cn": "课堂模式", "kr": "수업 모드", "en": "Classroom Mode" },
+  "classroom_scene": { "cn": "场景", "kr": "장면", "en": "Scene" },
+  "classroom_words": { "cn": "单词 / 核心句", "kr": "단어 / 핵심문장", "en": "Words / Core Sentence" },
+  "classroom_dialogue": { "cn": "对话", "kr": "대화", "en": "Dialogue" },
+  "classroom_practice": { "cn": "练习", "kr": "연습", "en": "Practice" },
+  "classroom_game": { "cn": "游戏", "kr": "게임", "en": "Game" },
+  "classroom_ai": { "cn": "AI助手", "kr": "AI 도우미", "en": "AI Assistant" },
+  "classroom_prev": { "cn": "上一步", "kr": "이전", "en": "Previous" },
+  "classroom_next": { "cn": "下一步", "kr": "다음", "en": "Next" },
+  "classroom_back_to_teacher": { "cn": "返回教师中心", "kr": "교사 센터로 돌아가기", "en": "Back to Teacher Center" },
+  "classroom_no_scene": { "cn": "场景准备中", "kr": "장면 준비 중", "en": "Scene coming soon" },
+  "classroom_no_words": { "cn": "暂无词汇内容", "kr": "단어 내용이 아직 없습니다.", "en": "No words available yet." },
+  "classroom_no_dialogue": { "cn": "暂无对话内容", "kr": "대화 내용이 아직 없습니다.", "en": "Dialogue not available yet." },
+  "classroom_no_practice": { "cn": "本课暂未配置课堂练习。", "kr": "이 차시는 아직 수업용 연습이 없습니다.", "en": "No classroom practice configured for this lesson yet." },
+  "classroom_game_coming": { "cn": "课堂小游戏即将接入。", "kr": "수업용 게임은 곧 제공될 예정입니다.", "en": "Classroom games will be available soon." },
+  "classroom_ai_coming": { "cn": "AI 课堂助手即将接入。", "kr": "AI 수업 도우미는 곧 연결될 예정입니다.", "en": "AI classroom assistant will be available soon." },
+  "classroom_scene_image": { "cn": "场景图片", "kr": "장면 이미지", "en": "Scene Image" },
+  "classroom_words_hint": {
+    "cn": "可带读本课核心句和关键词。",
+    "kr": "이번 차시의 핵심 문장과 키워드를 함께 읽어 주세요.",
+    "en": "Use this step to read the core sentence and key words together."
+  },
+  "classroom_dialogue_hint": {
+    "cn": "按句点读，带学生跟读。",
+    "kr": "한 줄씩 읽어 주고 학생이 따라 말하게 해 주세요.",
+    "en": "Read each line and let students repeat."
+  },
+  "classroom_practice_hint": {
+    "cn": "可让学生口头作答或配合作业系统。",
+    "kr": "학생이 구두로 답하거나 숙제 시스템과 연계해 사용할 수 있습니다.",
+    "en": "Use this step for oral answers or homework integration."
+  },
+  "classroom_init_failed": { "cn": "无法加载课堂数据", "kr": "수업 데이터를 불러오지 못했습니다", "en": "Failed to load classroom data" }
 }

@@ -417,6 +417,10 @@
     "aiStart": "开始练习",
     "noDialogue": "暂无对话",
     "noExtension": "暂无扩展词",
+    "sceneImage": "场景图片",
+    "gameTitle": "用游戏练习",
+    "gameDesc": "本课小游戏入口预留区，未来可接入图片选择、配对、颜色点击等互动练习。",
+    "gameButton": "游戏模式即将上线",
     "loadError": "无法加载课程蓝图"
   },
   "business": {

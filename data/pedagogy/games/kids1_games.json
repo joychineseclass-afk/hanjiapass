@@ -1,0 +1,38 @@
+{
+  "course": "kids1",
+  "games": [
+    {
+      "id": "hello-ball",
+      "title": "Hello Ball",
+      "type": "speaking",
+      "steps": [
+        "老师说「你好！」，同时把球抛给一位学生。",
+        "学生接球后说「你好！」再把球抛给下一位同学。",
+        "全班同学轮流接球打招呼，可以加入「老师好」「大家好」等变化。"
+      ],
+      "description": {
+        "cn": "用抛接球的方式练习打招呼，让孩子在运动中自然开口说中文。",
+        "kr": "공을 주고받으며 인사 표현을 연습하는 게임입니다.",
+        "en": "Practice greetings by throwing and catching a ball. Students say \"你好\" when they catch the ball.",
+        "jp": "ボールを投げたり受け取ったりしながら「你好」のあいさつを練習するゲームです。"
+      }
+    },
+    {
+      "id": "polite-response",
+      "title": "礼貌用语",
+      "type": "response",
+      "steps": [
+        "老师出示「谢谢」「对不起」等卡片。",
+        "学生听到后，一起说出对应的礼貌回应，如「不客气」「没关系」。",
+        "可以加入动作，例如鞠躬、挥手等。"
+      ],
+      "description": {
+        "cn": "通过卡片和动作练习礼貌用语的问与答。",
+        "kr": "카드와 동작을 이용해 예의 바른 표현(감사/사과 등)을 연습합니다.",
+        "en": "Use cards and gestures to practice polite expressions and their responses.",
+        "jp": "カードと動作を使って礼儀正しい表現と返答を練習します。"
+      }
+    }
+  ]
+}
+

@@ -41,18 +41,126 @@ function ensureStyles() {
     .lumina-kids1{ background: var(--soft,#f8fafc); color: var(--text,#0f172a); }
     .lumina-kids1 .wrap{ max-width: var(--max,1120px); margin:0 auto; padding:0 16px; }
     .lumina-kids1 .section{ padding:10px 0 18px; }
-    .lumina-kids1 .card{ background:rgba(255,255,255,.72); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.45); border-radius:calc(var(--radius,18px) + 8px); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden; }
-    .lumina-kids1 .inner{ padding:18px; display:grid; gap:12px; }
+    .lumina-kids1 .card{ background:rgba(255,255,255,.9); backdrop-filter:blur(14px); border:1px solid rgba(226,232,240,.95); border-radius:24px; box-shadow:0 10px 30px rgba(15,23,42,.08); overflow:hidden; }
+    .lumina-kids1 .inner{ padding:18px; display:grid; gap:14px; }
     .lumina-kids1 .page-title{ margin:0; font-size:24px; font-weight:900; }
     .lumina-kids1 .lesson-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
-    .lumina-kids1 .lesson-card{ padding:16px; border:1px solid var(--line,#e2e8f0); border-radius:14px; background:#fff; cursor:pointer; transition:transform .15s, box-shadow .15s; }
-    .lumina-kids1 .lesson-card:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.08); }
+    .lumina-kids1 .lesson-card{ padding:14px; border:1px solid var(--line,#e2e8f0); border-radius:16px; background:#fff; cursor:pointer; transition:transform .12s, box-shadow .12s; }
+    .lumina-kids1 .lesson-card:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(15,23,42,.08); }
     .lumina-kids1 .lesson-card .card-title{ font-weight:800; font-size:15px; }
-    .lumina-kids1 .btn-back{ padding:8px 16px; border-radius:10px; background:#e2e8f0; font-weight:700; cursor:pointer; border:none; }
+    .lumina-kids1 .btn-back{ padding:8px 16px; border-radius:999px; background:#e2e8f0; font-weight:700; cursor:pointer; border:none; font-size:13px; }
     .lumina-kids1 .btn-back:hover{ background:#cbd5e1; }
-    .lumina-kids1 .kids-read-all{ margin-bottom:12px; }
-    .lumina-kids1 .lesson-dialogue-line{ border-color:#e0e7ff; background:#f5f3ff; }
-    .lumina-kids1 .lesson-extension-card{ border-color:#e0e7ff; background:#faf5ff; }
+
+    .kids-lesson-page{ display:flex; flex-direction:column; gap:16px; }
+    .kids-lesson-header{ font-size:18px; font-weight:800; color:#0f172a; margin-bottom:4px; }
+
+    .kids-scene-card,
+    .kids-core-card,
+    .kids-dialogue-card,
+    .kids-extra-card,
+    .kids-game-entry-card{
+      border-radius:18px;
+      background:#fff;
+      border:1px solid rgba(226,232,240,.9);
+      box-shadow:0 4px 12px rgba(15,23,42,.06);
+      padding:14px 16px;
+    }
+
+    .kids-scene-main{ display:flex; gap:12px; align-items:stretch; }
+    .kids-scene-image{
+      flex:0 0 120px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#e0f2fe,#f5f3ff);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:700;
+      color:#475569;
+      text-align:center;
+      padding:8px;
+    }
+    .kids-scene-text{ flex:1; display:flex; flex-direction:column; gap:4px; }
+    .kids-scene-title{ font-size:15px; font-weight:800; color:#0f172a; }
+    .kids-scene-desc{ font-size:13px; color:#64748b; line-height:1.5; }
+    .kids-scene-actions{ margin-top:8px; display:flex; gap:8px; }
+    .kids-read-all-btn{
+      padding:6px 10px;
+      border-radius:999px;
+      background:#0ea5e9;
+      color:#fff;
+      border:none;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .kids-core-card .kids-core-main-zh{ font-size:18px; font-weight:800; color:#0f172a; }
+    .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
+    .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
+    .kids-core-card .kids-core-actions{ margin-top:6px; }
+
+    .kids-dialogue-card{ padding:14px 10px; }
+    .kids-bubble-row{ display:flex; margin-bottom:10px; align-items:flex-end; gap:6px; }
+    .kids-bubble-row.left{ justify-content:flex-start; }
+    .kids-bubble-row.right{ justify-content:flex-end; }
+    .kids-bubble{
+      max-width:72%;
+      border-radius:18px;
+      padding:10px 12px;
+      background:#eff6ff;
+      border:1px solid #dbeafe;
+      box-shadow:0 2px 6px rgba(15,23,42,.06);
+      font-size:14px;
+    }
+    .kids-bubble.right{ background:#fef3c7; border-color:#fde68a; }
+    .kids-bubble-zh{ font-weight:700; color:#0f172a; }
+    .kids-bubble-py{ font-size:13px; color:#475569; margin-top:2px; }
+    .kids-bubble-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
+    .kids-bubble-actions{ margin-top:4px; }
+    .speaker-badge{
+      min-width:22px;
+      height:22px;
+      border-radius:999px;
+      background:#e0f2fe;
+      color:#0369a1;
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .kids-bubble-row.right .speaker-badge{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .kids-extra-card-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+      gap:8px;
+      margin-top:6px;
+    }
+    .kids-extra-item{
+      border-radius:14px;
+      border:1px solid #e2e8f0;
+      background:#f8fafc;
+      padding:8px 10px;
+      font-size:13px;
+    }
+
+    .kids-game-entry-card-title{ font-size:15px; font-weight:800; color:#0f172a; margin-bottom:4px; }
+    .kids-game-entry-desc{ font-size:13px; color:#64748b; margin-bottom:8px; }
+    .kids-game-entry-btn{
+      padding:8px 14px;
+      border-radius:999px;
+      border:none;
+      background:#22c55e;
+      color:#fff;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -124,6 +232,51 @@ function flattenDialogueLines(dialogues) {
     }
   });
   return out;
+}
+
+// 预留：Kids 场景元数据组装（后续可接 AI 场景引擎）
+export function getKidsSceneMeta(lessonData, lang) {
+  const l = normLang(lang || getLang());
+  const sceneKey = lessonData?.scene || "";
+  const titleFallback = {
+    cn: "课堂场景",
+    kr: "수업 장면",
+    en: "Lesson scene",
+    jp: "レッスン場面",
+  }[l] || "Scene";
+  const descFallback = {
+    cn: "老师和同学在练习本课对话。",
+    kr: "선생님과 친구들이 오늘 배운 표현을 연습하고 있어요.",
+    en: "The teacher and students are practicing today's dialogue.",
+    jp: "先生と子どもたちが今日の会話を練習しています。",
+  }[l] || "";
+  return {
+    scene: sceneKey,
+    title: titleFallback,
+    description: descFallback,
+  };
+}
+
+// 预留：Kids 场景卡片渲染（未来可接 AI 图片 / 场景说明）
+export function renderKidsSceneCard(sceneMeta) {
+  const title = sceneMeta?.title || "";
+  const desc = sceneMeta?.description || "";
+  const imgLabel = t("kids1.sceneImage", "Scene Image");
+  const readAll = t("kids1.readAll", "🔊 Read all");
+  return `
+    <section class="kids-scene-card">
+      <div class="kids-scene-main">
+        <div class="kids-scene-image">${escapeHtml(imgLabel)}</div>
+        <div class="kids-scene-text">
+          <div class="kids-scene-title">${escapeHtml(title)}</div>
+          ${desc ? `<div class="kids-scene-desc">${escapeHtml(desc)}</div>` : ""}
+          <div class="kids-scene-actions">
+            <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAll)}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 async function playSequential(texts) {
@@ -250,23 +403,43 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const coreMeaning = getMeaning(glossary, coreZh, lang) || getMeaning(glossary, coreZh.replace(/[！。？，]/g, ""), lang);
 
   const lines = flattenDialogueLines(lesson.dialogues);
-  const dialogueRows = lines.map((line) => {
+  const dialogueRows = lines.map((line, idx) => {
     const zh = line.zh;
     const py = getPinyin(zh);
     const meaning = getMeaning(glossary, zh, lang) || getMeaning(glossary, zh.replace(/[！。？，]/g, ""), lang);
     const zhEsc = escapeAttr(zh);
     const attrs = zh ? ` data-speak-text="${zhEsc}" data-speak-kind="dialogue"` : "";
+    const sideClass = line.speaker === "B" ? "right" : "left";
+    const bubbleExtra = line.speaker === "B" ? " right" : "";
+    const speakLabel = t("kids1.speak", "🔊 发音");
+    if (sideClass === "left") {
+      return `
+        <div class="kids-bubble-row left">
+          <div class="speaker-badge">A</div>
+          <div class="kids-bubble${bubbleExtra}">
+            <div class="kids-bubble-zh" ${attrs}>${escapeHtml(zh)}</div>
+            ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
+            ${meaning ? `<div class="kids-bubble-gloss">${escapeHtml(meaning)}</div>` : ""}
+            <div class="kids-bubble-actions">
+              <button type="button" class="lesson-extension-audio-btn text-xs"${attrs}>${escapeHtml(speakLabel)}</button>
+            </div>
+          </div>
+        </div>`;
+    }
     return `
-      <article class="lesson-dialogue-line lumina-kids1-dialogue-line">
-        <div class="lesson-dialogue-speaker">${escapeHtml(line.speaker)}</div>
-        <div class="lesson-dialogue-zh"${attrs}>${escapeHtml(zh)}</div>
-        ${py ? `<div class="lesson-dialogue-pinyin">${escapeHtml(py)}</div>` : ""}
-        ${meaning ? `<div class="lesson-dialogue-translation">${escapeHtml(meaning)}</div>` : ""}
-        <button type="button" class="lesson-extension-audio-btn mt-2"${attrs}>${escapeHtml(t("kids1.speak", "🔊 发音"))}</button>
-      </article>`;
+      <div class="kids-bubble-row right">
+        <div class="kids-bubble${bubbleExtra}">
+          <div class="kids-bubble-zh" ${attrs}>${escapeHtml(zh)}</div>
+          ${py ? `<div class="kids-bubble-py">${escapeHtml(py)}</div>` : ""}
+          ${meaning ? `<div class="kids-bubble-gloss">${escapeHtml(meaning)}</div>` : ""}
+          <div class="kids-bubble-actions">
+            <button type="button" class="lesson-extension-audio-btn text-xs"${attrs}>${escapeHtml(speakLabel)}</button>
+          </div>
+        </div>
+        <div class="speaker-badge">B</div>
+      </div>`;
   }).join("");
 
-  const readAllLabel = t("kids1.readAll", "🔊 全文朗读");
   const dialogueSectionTitle = t("kids1.dialogueTitle", "Dialogue");
   const dialogueSubtitle = t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。");
 
@@ -301,6 +474,8 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const aiDesc = t("kids1.aiTutorHint", "与 AI 老师练习本课句型和词汇。");
   const aiStartLabel = t("kids1.aiStart", "开始练习");
   const coreTitle = t("kids1.coreSentenceTitle", "Core Sentence");
+  const sceneMeta = getKidsSceneMeta(lesson, lang);
+  const sceneCardHtml = renderKidsSceneCard(sceneMeta);
 
   root.innerHTML = `
     <div class="lumina-kids1">
@@ -309,55 +484,38 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           <div class="card">
             <div class="inner">
               <button type="button" class="btn-back" id="kids1BackToList">← ${escapeHtml(t("kids1.backToList", "课程列表"))}</button>
+              <section class="kids-lesson-page">
+                <header class="kids-lesson-header">${escapeHtml(title)}</header>
 
-              <div class="lesson-section-hero mt-4">
-                <h2 class="lesson-section-title">${escapeHtml(title)}</h2>
-              </div>
+                ${sceneCardHtml}
 
-              <div class="lesson-section-hero">
-                <h3 class="lesson-section-title">${escapeHtml(coreTitle)}</h3>
-                <div class="lesson-dialogue-line" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">
-                  <div class="lesson-dialogue-zh">${escapeHtml(coreZh)}</div>
-                  ${corePy ? `<div class="lesson-dialogue-pinyin">${escapeHtml(corePy)}</div>` : ""}
-                  ${coreMeaning ? `<div class="lesson-dialogue-translation">${escapeHtml(coreMeaning)}</div>` : ""}
-                  <button type="button" class="lesson-extension-audio-btn mt-2" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">${escapeHtml(t("kids1.speak", "🔊 发音"))}</button>
-                </div>
-              </div>
+                <section class="kids-core-card kids-card">
+                  <h3 class="lesson-section-title">${escapeHtml(coreTitle)}</h3>
+                  <div class="kids-core-main-zh" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">${escapeHtml(coreZh)}</div>
+                  ${corePy ? `<div class="kids-core-main-py">${escapeHtml(corePy)}</div>` : ""}
+                  ${coreMeaning ? `<div class="kids-core-main-gloss">${escapeHtml(coreMeaning)}</div>` : ""}
+                  <div class="kids-core-actions">
+                    <button type="button" class="lesson-extension-audio-btn text-xs" data-speak-text="${escapeAttr(coreZh)}" data-speak-kind="dialogue">${escapeHtml(t("kids1.speak", "🔊 发音"))}</button>
+                  </div>
+                </section>
 
-              <div class="lesson-section-hero lesson-dialogue-hero">
-                <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
-                <p class="lesson-section-subtitle">${escapeHtml(dialogueSubtitle)}</p>
-                <div class="kids-read-all">
-                  <button type="button" id="kids1ReadAllBtn" class="lesson-extension-audio-btn">${escapeHtml(readAllLabel)}</button>
-                </div>
-                <div id="kids1DialogueList" class="lesson-dialogue-list">
-                  ${dialogueRows || `<div class="lesson-empty-state">${escapeHtml(t("kids1.noDialogue", "暂无对话"))}</div>`}
-                </div>
-              </div>
+                <section class="kids-dialogue-card kids-card">
+                  <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
+                  <p class="lesson-section-subtitle">${escapeHtml(dialogueSubtitle)}</p>
+                  <div id="kids1DialogueList">
+                    ${dialogueRows || `<div class="lesson-empty-state">${escapeHtml(t("kids1.noDialogue", "暂无对话"))}</div>`}
+                  </div>
+                </section>
 
-              <div class="lesson-section-hero lesson-extension-hero">
-                <h3 class="lesson-section-title">${escapeHtml(extensionTitle)}</h3>
-                <p class="lesson-section-subtitle">${escapeHtml(extensionSubtitle)}</p>
-                <section class="lesson-extension-list">${extensionCards || `<div class="lesson-extension-empty">${escapeHtml(t("kids1.noExtension", "暂无扩展词"))}</div>`}</section>
-              </div>
+                <section class="kids-extra-card kids-card">
+                  <h3 class="lesson-section-title">${escapeHtml(extensionTitle)}</h3>
+                  <p class="lesson-section-subtitle">${escapeHtml(extensionSubtitle)}</p>
+                  <div class="kids-extra-card-grid">
+                    ${extensionCards || `<div class="lesson-extension-empty">${escapeHtml(t("kids1.noExtension", "暂无扩展词"))}</div>`}
+                  </div>
+                </section>
 
-              <div class="lesson-section-hero lesson-practice-hero">
-                <h3 class="lesson-section-title">${escapeHtml(practiceTitle)}</h3>
-                <p class="lesson-section-subtitle">${escapeHtml(practicePlaceholder)}</p>
-                <div class="lesson-practice-fullpage">
-                  <div class="lesson-practice-empty text-sm text-slate-500 p-4 rounded-xl border border-slate-200">${escapeHtml(practicePlaceholder)}</div>
-                </div>
-              </div>
-
-              <div class="lesson-section-hero">
-                <h3 class="lesson-section-title">${escapeHtml(aiTitle)}</h3>
-                <p class="lesson-section-subtitle">${escapeHtml(aiDesc)}</p>
-                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
-                  <div class="text-base font-semibold text-slate-800 mb-2">${escapeHtml(coreZh)}</div>
-                  ${corePy ? `<div class="text-sm text-slate-600 mb-3">${escapeHtml(corePy)}</div>` : ""}
-                  <button type="button" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold" id="kids1AiStartBtn">${escapeHtml(aiStartLabel)}</button>
-                </div>
-              </div>
+              </section>
             </div>
           </div>
         </div>

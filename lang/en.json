@@ -417,6 +417,10 @@
     "aiStart": "Start practice",
     "noDialogue": "No dialogue",
     "noExtension": "No extension words",
+    "sceneImage": "Scene image",
+    "gameTitle": "Practice with games",
+    "gameDesc": "Game entry placeholder for this lesson. In future, picture choice, matching, and color-click games will appear here.",
+    "gameButton": "Game mode coming soon",
     "loadError": "Could not load course blueprint"
   },
   "business": {

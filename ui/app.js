@@ -73,6 +73,8 @@ registerRoute("#culture",   () => import("./pages/page.culture.js"));
 registerRoute("#review",    () => import("./pages/page.review.js"));
 registerRoute("#resources", () => import("./pages/page.resources.js"));
 registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
+registerRoute("#classroom", () => import("./pages/page.classroom.js"));
+registerRoute("#game",      () => import("./pages/page.game.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
 registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 
