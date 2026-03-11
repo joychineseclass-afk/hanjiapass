@@ -45,14 +45,20 @@ function ensureStyles() {
 
 function renderKids(root) {
   ensureStyles();
-  const title = t("kids.title", "Kids Chinese");
-  const subtitle = t("kids.subtitle", "Learn Chinese the fun way");
-  const start = t("kids.start", "Start");
-  const comingSoon = t("kids.comingSoon", "Coming soon");
-  const basic = t("kids.basic", "Basic Chinese");
-  const pinyin = t("kids.pinyin", "Pinyin intro");
+  const homeTitle = t("kids.homeTitle", "Kids Chinese");
+  const homeSubtitle = t("kids.homeSubtitle", "Learn Chinese with fun");
+  const stageBasic = t("kids.stageBasic", "Beginner Stage");
+  const book1Title = t("kids.book1Title", "Kids Book 1");
+  const book1Desc = t("kids.book1Desc", "8 lessons · Core · Dialogue · Extra · Practice · AI Tutor");
+  const comingSoon = t("kids.comingSoon", "Coming Soon");
+  const basicTitle = t("kids.basicChineseTitle", "Basic Chinese");
+  const basicDesc = t("kids.basicChineseDesc", "Coming Soon");
+  const pinyinTitle = t("kids.pinyinIntroTitle", "Pinyin Intro");
+  const pinyinDesc = t("kids.pinyinIntroDesc", "Coming Soon");
   const conversation = t("kids.conversation", "Conversation & songs");
   const pictureTalk = t("kids.pictureTalk", "Picture expression");
+  const songs = t("kids.songs", "Songs");
+  const story = t("kids.story", "Picture talk");
 
   root.innerHTML = `
     <div class="lumina-kids">
@@ -61,8 +67,8 @@ function renderKids(root) {
           <div class="card">
             <div class="inner">
               <span class="badge">${escapeHtml(t("nav.kids", "Kids"))}</span>
-              <h1 class="page-title">${escapeHtml(title)}</h1>
-              <p class="page-desc">${escapeHtml(subtitle)}</p>
+              <h1 class="page-title">${escapeHtml(homeTitle)}</h1>
+              <p class="page-desc">${escapeHtml(homeSubtitle)}</p>
             </div>
           </div>
         </div>
@@ -70,27 +76,27 @@ function renderKids(root) {
 
       <section class="section">
         <div class="wrap">
-          <h2 class="section-title">${escapeHtml(t("kids.levels", "Course entries"))}</h2>
+          <h2 class="section-title">${escapeHtml(stageBasic)}</h2>
           <div class="card-grid">
             <a href="#kids-kids1" class="course-card" style="text-decoration:none; color:inherit;">
-              <div class="card-title">Kids Book1</div>
-              <div class="card-desc">8 课 · Core Sentence · Dialogue · Extension · Practice · AI Tutor</div>
+              <div class="card-title">${escapeHtml(book1Title)}</div>
+              <div class="card-desc">${escapeHtml(book1Desc)}</div>
             </a>
             <div class="course-card">
-              <div class="card-title">${escapeHtml(basic)}</div>
-              <div class="card-desc">${escapeHtml(comingSoon)}</div>
+              <div class="card-title">${escapeHtml(basicTitle)}</div>
+              <div class="card-desc">${escapeHtml(basicDesc)}</div>
             </div>
             <div class="course-card">
-              <div class="card-title">${escapeHtml(pinyin)}</div>
-              <div class="card-desc">${escapeHtml(comingSoon)}</div>
+              <div class="card-title">${escapeHtml(pinyinTitle)}</div>
+              <div class="card-desc">${escapeHtml(pinyinDesc)}</div>
             </div>
             <div class="course-card">
               <div class="card-title">${escapeHtml(conversation)}</div>
-              <div class="card-desc">${escapeHtml(t("kids.songs", "Songs"))} · ${escapeHtml(comingSoon)}</div>
+              <div class="card-desc">${escapeHtml(songs)} · ${escapeHtml(comingSoon)}</div>
             </div>
             <div class="course-card">
               <div class="card-title">${escapeHtml(pictureTalk)}</div>
-              <div class="card-desc">${escapeHtml(t("kids.story", "Picture talk"))} · ${escapeHtml(comingSoon)}</div>
+              <div class="card-desc">${escapeHtml(story)} · ${escapeHtml(comingSoon)}</div>
             </div>
           </div>
         </div>

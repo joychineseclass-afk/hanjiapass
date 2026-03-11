@@ -52,7 +52,10 @@ function ensureStyles() {
     .lumina-kids1 .btn-back:hover{ background:#cbd5e1; }
 
     .kids-lesson-page{ display:flex; flex-direction:column; gap:16px; }
-    .kids-lesson-header{ font-size:18px; font-weight:800; color:#0f172a; margin-bottom:4px; }
+    .kids-lesson-header{ display:flex; flex-direction:column; gap:2px; margin-bottom:4px; }
+    .kids-lesson-course{ font-size:16px; font-weight:800; color:#0f172a; }
+    .kids-lesson-meta{ font-size:12px; color:#64748b; }
+    .kids-lesson-title{ font-size:18px; font-weight:800; color:#0f172a; }
 
     .kids-scene-card,
     .kids-core-card,
@@ -100,14 +103,40 @@ function ensureStyles() {
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
     .kids-core-card .kids-core-actions{ margin-top:6px; }
 
-    .kids-dialogue-card{ padding:14px 10px; display:flex; flex-direction:column; gap:10px; }
-    .kids-dialogue-bubbles{ margin-top:4px; }
-    .kids-bubble-row{ display:flex; margin-bottom:12px; align-items:flex-end; gap:10px; }
+    .kids-dialogue-card{
+      padding:16px;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 4px 12px rgba(15,23,42,.06);
+      border:1px solid rgba(226,232,240,.9);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .kids-scene-slot{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:4px;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(226,232,240,.7);
+    }
+    .kids-scene-slot .kids-scene-image{
+      flex:0 0 100px;
+      min-height:80px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#e0f2fe,#f5f3ff);
+    }
+    .kids-scene-slot .kids-scene-meta{ flex:1; display:flex; flex-direction:column; gap:6px; }
+    .kids-scene-slot .kids-scene-title{ font-size:14px; font-weight:800; color:#0f172a; }
+    .kids-scene-slot .kids-scene-desc{ font-size:12px; color:#64748b; }
+    .kids-dialogue-flow{ display:flex; flex-direction:column; gap:10px; }
+    .kids-bubble-row{ display:flex; width:100%; align-items:flex-end; gap:10px; }
     .kids-bubble-row.left{ justify-content:flex-start; }
     .kids-bubble-row.right{ justify-content:flex-end; }
     .kids-bubble{
-      max-width:420px;
-      border-radius:18px;
+      max-width:320px;
+      border-radius:16px;
       padding:10px 12px;
       background:#eff6ff;
       border:1px solid #dbeafe;
@@ -258,21 +287,18 @@ export function getKidsSceneMeta(lessonData, lang) {
   };
 }
 
-// 预留：Kids 场景卡片渲染（未来可接 AI 图片 / 场景说明）
-export function renderKidsSceneCard(sceneMeta) {
-  const title = sceneMeta?.title || t("kids1.kids_scene_title", "Scene");
+// 场景槽：用于嵌入 .kids-dialogue-card 内部顶部
+export function renderKidsSceneSlot(sceneMeta) {
+  const title = sceneMeta?.title || t("kids.sceneTitle", "Scene");
   const imgLabel = t("kids1.sceneImage", "Scene Image");
   const readAll = t("kids1.readAll", "🔊 Read all");
   return `
-    <div class="kids-scene-main">
-      <div class="kids-scene-image">
-        <div>
-          <div class="kids-scene-title">${escapeHtml(title)}</div>
-          <div class="kids-scene-desc">${escapeHtml(imgLabel)}</div>
-          <div class="kids-scene-actions">
-            <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAll)}</button>
-          </div>
-        </div>
+    <div class="kids-scene-slot">
+      <div class="kids-scene-image"><div></div></div>
+      <div class="kids-scene-meta">
+        <div class="kids-scene-title">${escapeHtml(title)}</div>
+        <div class="kids-scene-desc">${escapeHtml(imgLabel)}</div>
+        <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAll)}</button>
       </div>
     </div>
   `;
@@ -311,7 +337,7 @@ function bindSpeakAndReadAll(root) {
       const list = root.querySelector("#kids1DialogueList");
       if (!list) return;
       const texts = [];
-      list.querySelectorAll(".lesson-dialogue-line .lesson-dialogue-zh[data-speak-text]").forEach((el) => {
+      list.querySelectorAll(".kids-bubble-zh[data-speak-text], .lesson-dialogue-line .lesson-dialogue-zh[data-speak-text]").forEach((el) => {
         const t = (el.dataset?.speakText || "").trim();
         if (t) texts.push(t);
       });
@@ -328,7 +354,7 @@ function bindSpeakAndReadAll(root) {
       const { AUDIO_ENGINE } = await import("../platform/index.js");
       if (!AUDIO_ENGINE?.isSpeechSupported?.()) return;
       AUDIO_ENGINE.stop();
-      const lineEl = el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card");
+      const lineEl = el.closest(".kids-bubble-row") || el.closest(".lesson-dialogue-line") || el.closest(".lesson-extension-card");
       if (lineEl) lineEl.classList.add("is-speaking");
       AUDIO_ENGINE.playText(text, {
         lang: "zh-CN",
@@ -439,9 +465,6 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
       </div>`;
   }).join("");
 
-  const dialogueSectionTitle = t("kids1.dialogueTitle", "Dialogue");
-  const dialogueSubtitle = t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。");
-
   const extensionWords = Array.isArray(lesson.extensionWords) ? lesson.extensionWords : [];
   const extensionCards = extensionWords.map((w, i) => {
     const zh = String(w).trim();
@@ -465,16 +488,21 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
       </article>`;
   }).join("");
 
-  const extensionTitle = t("kids1.extensionTitle", "Extension");
+  const extensionTitle = t("kids.extraTitle", "Extension");
   const extensionSubtitle = t("kids1.extensionUsage", "用于：数字游戏、跟读练习");
   const practiceTitle = t("kids1.practiceTitle", "Practice");
   const practicePlaceholder = t("kids1.practiceHint", "本课练习即将接入。可用于图片选择 / 配对 / 点击颜色等。");
   const aiTitle = t("kids1.aiTutorTitle", "AI Tutor");
   const aiDesc = t("kids1.aiTutorHint", "与 AI 老师练习本课句型和词汇。");
   const aiStartLabel = t("kids1.aiStart", "开始练习");
-  const coreTitle = t("kids1.coreSentenceTitle", "Core Sentence");
+  const coreTitle = t("kids.coreSentenceTitle", "Core Sentence");
+  const dialogueSectionTitle = t("kids.dialogueTitle", "Dialogue");
+  const dialogueSubtitle = t("hsk.dialogue_subtitle", "本课会话，可点击中文朗读。");
   const sceneMeta = getKidsSceneMeta(lesson, lang);
-  const sceneCardHtml = renderKidsSceneCard(sceneMeta);
+  const sceneSlotHtml = renderKidsSceneSlot(sceneMeta);
+  const backToListLabel = t("kids.backToList", "课程列表");
+  const book1TitleLabel = t("kids.book1Title", "Kids Book 1");
+  const book1MetaLabel = t("kids.book1Meta", "8课 · 核心句 · 对话 · 扩展 · 练习 · AI辅导");
 
   root.innerHTML = `
     <div class="lumina-kids1">
@@ -482,11 +510,13 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
         <div class="wrap">
           <div class="card">
             <div class="inner">
-              <button type="button" class="btn-back" id="kids1BackToList">← ${escapeHtml(t("kids1.backToList", "课程列表"))}</button>
+              <button type="button" class="btn-back" id="kids1BackToList">← ${escapeHtml(backToListLabel)}</button>
               <section class="kids-lesson-page">
-                <header class="kids-lesson-header">${escapeHtml(title)}</header>
-
-                ${sceneCardHtml}
+                <header class="kids-lesson-header">
+                  <span class="kids-lesson-course">${escapeHtml(book1TitleLabel)}</span>
+                  <span class="kids-lesson-meta">${escapeHtml(book1MetaLabel)}</span>
+                  <div class="kids-lesson-title">${escapeHtml(title)}</div>
+                </header>
 
                 <section class="kids-core-card kids-card">
                   <h3 class="lesson-section-title">${escapeHtml(coreTitle)}</h3>
@@ -499,9 +529,10 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                 </section>
 
                 <section class="kids-dialogue-card kids-card">
+                  ${sceneSlotHtml}
                   <h3 class="lesson-section-title">${escapeHtml(dialogueSectionTitle)}</h3>
                   <p class="lesson-section-subtitle">${escapeHtml(dialogueSubtitle)}</p>
-                  <div id="kids1DialogueList">
+                  <div class="kids-dialogue-flow" id="kids1DialogueList">
                     ${dialogueRows || `<div class="lesson-empty-state">${escapeHtml(t("kids1.noDialogue", "暂无对话"))}</div>`}
                   </div>
                 </section>
