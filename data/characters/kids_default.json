@@ -1,0 +1,34 @@
+{
+  "characters": [
+    {
+      "id": "teacher",
+      "name": {
+        "zh": "老师",
+        "en": "Teacher",
+        "ko": "선생님"
+      },
+      "avatar": "👩‍🏫",
+      "role": "teacher"
+    },
+    {
+      "id": "xiaomei",
+      "name": {
+        "zh": "小美",
+        "en": "Xiaomei",
+        "ko": "샤오메이"
+      },
+      "avatar": "👧",
+      "role": "student"
+    },
+    {
+      "id": "xiaoming",
+      "name": {
+        "zh": "小明",
+        "en": "Xiaoming",
+        "ko": "샤오밍"
+      },
+      "avatar": "👦",
+      "role": "student"
+    }
+  ]
+}

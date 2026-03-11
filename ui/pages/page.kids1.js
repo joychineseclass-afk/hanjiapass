@@ -7,6 +7,8 @@ import { getLang } from "../core/languageEngine.js";
 import { resolveKidsSceneMeta } from "../modules/kids/kidsSceneMeta.js";
 import { buildKidsScenePrompt } from "../modules/kids/kidsScenePrompt.js";
 import { resolveKidsSceneAsset } from "../modules/kids/kidsSceneAsset.js";
+import { loadCharacters } from "../core/characterLoader.js";
+import { renderCharacterBubble } from "../components/characterBubble.js";
 
 const STYLE_ID = "lumina-kids1-style";
 const GLOSSARY_KEY = "kids1_glossary";
@@ -378,6 +380,19 @@ function flattenDialogueLines(dialogues) {
   const out = [];
   if (!Array.isArray(dialogues)) return out;
   dialogues.forEach((pair) => {
+    // 新格式：{ character, text } 或 { character, zh, ... }
+    if (pair && typeof pair === "object" && !Array.isArray(pair)) {
+      const text = pair.text ?? pair.zh ?? pair.cn ?? pair.line ?? "";
+      const zh = String(text || "").trim();
+      if (!zh) return;
+      out.push({
+        speaker: String(pair.speaker || "").trim(),
+        character: String(pair.character || "").trim(),
+        zh,
+      });
+      return;
+    }
+    // 旧格式：["你好","你好"] 数组对话，按 A/B 归一化
     for (let i = 0; i < (pair && pair.length) || 0; i += 2) {
       const a = pair[i];
       const b = pair[i + 1];
@@ -558,7 +573,7 @@ function renderList(root, blueprint) {
   });
 }
 
-function renderLessonDetail(root, blueprint, glossary, lessonNo) {
+async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   ensureStyles();
   const lessons = blueprint?.lessons || {};
   const lesson = lessons[lessonNo];
@@ -669,6 +684,7 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                         ${overlayBubbles || ""}
                       </div>
                     </div>
+                    <div class="kids-dialogue-char-list" id="kids1DialogueCharList"></div>
                   </div>
                 </section>
 
@@ -697,6 +713,35 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     } catch {}
   });
   bindSpeakAndReadAll(root);
+
+  // 可选角色层：如果 lesson.dialogues 中提供了 character 字段，则使用角色气泡渲染
+  try {
+    const characters = await loadCharacters();
+    const map = new Map();
+    (characters || []).forEach((c) => {
+      if (c && c.id) map.set(String(c.id), c);
+    });
+    const listEl = root.querySelector("#kids1DialogueCharList");
+    if (listEl && lines.length) {
+      const html = lines
+        .map((line) => {
+          const text = String(line.zh || "").trim();
+          if (!text) return "";
+          const charId = String(line.character || "").trim();
+          const character = charId && map.get(charId);
+          if (character) {
+            return renderCharacterBubble(character, escapeHtml(text));
+          }
+          // 无角色信息时，保持简单文本气泡，向后兼容
+          return `<div class="lumina-char-bubble"><div class="lumina-char-text">${escapeHtml(text)}</div></div>`;
+        })
+        .filter(Boolean)
+        .join("");
+      listEl.innerHTML = html;
+    }
+  } catch (e) {
+    console.warn("[kids1] character layer failed", e);
+  }
 
   (async () => {
     try {

@@ -423,3 +423,36 @@ button{
   transform: translateY(-2px) !important;
   box-shadow: 0 30px 60px rgba(0,0,0,.08) !important;
 }
+
+/* =========================================================
+   Lumina Kids Character Bubbles (MVP)
+   - 仅作为可选层，不影响旧对话渲染
+   ========================================================= */
+.lumina-char-bubble{
+  background:#fff7e6;
+  border-radius:12px;
+  padding:12px;
+  margin:8px 0;
+  max-width:320px;
+}
+
+.lumina-char-head{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.lumina-char-avatar{
+  font-size:18px;
+}
+
+.lumina-char-name{
+  font-size:13px;
+  color:#444;
+}
+
+.lumina-char-text{
+  font-size:16px;
+}

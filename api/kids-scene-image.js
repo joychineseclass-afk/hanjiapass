@@ -100,7 +100,22 @@ async function generateWithOpenAI(apiKey, prompt) {
   return { ok: true, imageUrl, revisedPrompt, provider: "openai-image" };
 }
 
+function getRuntimeKind() {
+  if (typeof process.env.VERCEL_RUNTIME !== "undefined") return process.env.VERCEL_RUNTIME;
+  return typeof globalThis.EdgeRuntime !== "undefined" ? "edge" : "node";
+}
+
 export default async function handler(req, res) {
+  // 请求时立即打印运行时与 env（不打印 key 内容），便于排查 NO_IMAGE_PROVIDER_CONFIGURED
+  const runtimeKind = getRuntimeKind();
+  console.log(
+    "[KidsSceneImage] runtime env:\n" +
+      `OPENAI_API_KEY=${envStatus("OPENAI_API_KEY")}\n` +
+      `GEMINI_API_KEY=${envStatus("GEMINI_API_KEY")}\n` +
+      `GOOGLE_API_KEY=${envStatus("GOOGLE_API_KEY")}\n` +
+      `runtime=${runtimeKind}`
+  );
+
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   const origin = req.headers?.origin;
   if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
