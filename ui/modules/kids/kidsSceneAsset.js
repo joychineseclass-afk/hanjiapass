@@ -6,6 +6,7 @@ import { buildKidsScenePrompt } from "./kidsScenePrompt.js";
 import { generateKidsSceneImage } from "./kidsSceneGenerator.js";
 
 const CACHE_PREFIX = "lumina_kids_scene_";
+const SCENE_IMAGE_CACHE = new Map();
 
 /**
  * 生成稳定 cache key：{book}-{lessonId}-{sceneType}
@@ -48,18 +49,26 @@ function writeCache(cacheKey, payload) {
 
 /**
  * 统一解析当前应显示的 scene 资源（异步）：先查缓存，未命中则生成并写缓存。
- * @param {Object} sceneMeta - resolveKidsSceneMeta() 的返回值
- * @param {Object} [promptResult] - buildKidsScenePrompt() 的结果；不传则内部调用一次
+ * @param {Object} sceneMeta - resolveKidsSceneMeta() 或 resolveKidsSceneMetaForScene() 的返回值
+ * @param {Object} [promptOrResult] - buildKidsScenePrompt() 的结果，或省略让内部自行构建
+ * @param {string} [explicitCacheKey] - 可选的显式 scene 级 cache key（如 kids1_scene_1_greeting）
  * @returns {Promise<{ mode: string, imageUrl: string, alt: string, prompt: string, shortPrompt: string, cacheKey: string, provider?: string, error?: string }>}
  */
-export async function resolveKidsSceneAsset(sceneMeta, promptResult) {
-  const built = promptResult || buildKidsScenePrompt(sceneMeta);
-  const cacheKey = getKidsSceneCacheKey(sceneMeta);
+export async function resolveKidsSceneAsset(sceneMeta, promptOrResult, explicitCacheKey) {
+  const built =
+    promptOrResult && typeof promptOrResult === "object" && "prompt" in promptOrResult
+      ? promptOrResult
+      : buildKidsScenePrompt(sceneMeta);
+  const cacheKey = explicitCacheKey || getKidsSceneCacheKey(sceneMeta);
   const alt = sceneMeta?.title || "Scene";
+
+  if (SCENE_IMAGE_CACHE.has(cacheKey)) {
+    return SCENE_IMAGE_CACHE.get(cacheKey);
+  }
 
   const cached = readCache(cacheKey);
   if (cached && cached.imageUrl) {
-    return {
+    const result = {
       mode: "generated",
       imageUrl: cached.imageUrl,
       alt,
@@ -69,12 +78,14 @@ export async function resolveKidsSceneAsset(sceneMeta, promptResult) {
       cacheKey,
       provider: cached.provider || "openai-image",
     };
+    SCENE_IMAGE_CACHE.set(cacheKey, result);
+    return result;
   }
 
   const gen = await generateKidsSceneImage(sceneMeta, built);
   if (gen.ok && gen.imageUrl) {
     writeCache(cacheKey, { imageUrl: gen.imageUrl, prompt: built.prompt, provider: gen.provider });
-    return {
+    const result = {
       mode: "generated",
       imageUrl: gen.imageUrl,
       alt,
@@ -84,9 +95,11 @@ export async function resolveKidsSceneAsset(sceneMeta, promptResult) {
       cacheKey,
       provider: gen.provider || "openai-image",
     };
+    SCENE_IMAGE_CACHE.set(cacheKey, result);
+    return result;
   }
 
-  return {
+  const result = {
     mode: "placeholder",
     imageUrl: "",
     alt,
@@ -96,4 +109,6 @@ export async function resolveKidsSceneAsset(sceneMeta, promptResult) {
     cacheKey,
     error: gen.error || "generation_failed",
   };
+  SCENE_IMAGE_CACHE.set(cacheKey, result);
+  return result;
 }
