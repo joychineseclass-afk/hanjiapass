@@ -153,12 +153,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你在哪儿学习？", "pinyin": "Nǐ zài nǎr xuéxí?", "translation": { "kr": "어디서 공부해요?", "en": "Where do you study?", "jp": "どこで勉強しますか？" } },
-        { "speaker": "B", "text": "我在学校学习汉语。", "pinyin": "Wǒ zài xuéxiào xuéxí Hànyǔ.", "translation": { "kr": "저는 학교에서 중국어 공부해요.", "en": "I study Chinese at school.", "jp": "学校で中国語を勉強します。" } },
-        { "speaker": "A", "text": "你读什么书？你写字吗？", "pinyin": "Nǐ dú shénme shū? Nǐ xiě zì ma?", "translation": { "kr": "무슨 책 읽어요? 글자 써요?", "en": "What book do you read? Do you write characters?", "jp": "どんな本を読みますか？字を書きますか？" } },
-        { "speaker": "B", "text": "我读汉语书。三本书。写，我写字。", "pinyin": "Wǒ dú Hànyǔ shū. Sān běn shū. Xiě, wǒ xiě zì.", "translation": { "kr": "중국어 책 읽어요. 책 세 권. 써요, 글자 써요.", "en": "I read Chinese books. Three books. Yes, I write characters.", "jp": "中国語の本を読みます。3冊。はい、字を書きます。" } }
+        {
+          "speaker": "A",
+          "text": "你学习什么？",
+          "translation": {
+            "en": "What do you study?",
+            "kr": "What do you study?",
+            "jp": "What do you study?"
+          },
+          "pinyin": "nǐ xué xí shén me ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我学习汉语。",
+          "translation": {
+            "en": "I study Chinese.",
+            "kr": "I study Chinese.",
+            "jp": "I study Chinese."
+          },
+          "pinyin": "wǒ xué xí hàn yǔ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "我也学习汉语。你在哪儿学习？",
+          "translation": {
+            "en": "I study Chinese too. Where do you study?",
+            "kr": "I study Chinese too. Where do you study?",
+            "jp": "I study Chinese too. Where do you study?"
+          },
+          "pinyin": "wǒ yě xué xí hàn yǔ 。 nǐ zài nǎ ér xué xí ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我在学校学习。我读中文书。",
+          "translation": {
+            "en": "I study at school. I read Chinese books.",
+            "kr": "I study at school. I read Chinese books.",
+            "jp": "I study at school. I read Chinese books."
+          },
+          "pinyin": "wǒ zài xué xiào xué xí 。 wǒ dú zhōng wén shū 。"
+        }
       ]
     }
   ],
@@ -382,6 +423,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你学习什么？",
+          "translation": {
+            "en": "What do you study?",
+            "kr": "What do you study?",
+            "jp": "What do you study?"
+          },
+          "pinyin": "nǐ xué xí shén me ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我学习汉语。",
+          "translation": {
+            "en": "I study Chinese.",
+            "kr": "I study Chinese.",
+            "jp": "I study Chinese."
+          },
+          "pinyin": "wǒ xué xí hàn yǔ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "我也学习汉语。你在哪儿学习？",
+          "translation": {
+            "en": "I study Chinese too. Where do you study?",
+            "kr": "I study Chinese too. Where do you study?",
+            "jp": "I study Chinese too. Where do you study?"
+          },
+          "pinyin": "wǒ yě xué xí hàn yǔ 。 nǐ zài nǎ ér xué xí ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我在学校学习。我读中文书。",
+          "translation": {
+            "en": "I study at school. I read Chinese books.",
+            "kr": "I study at school. I read Chinese books.",
+            "jp": "I study at school. I read Chinese books."
+          },
+          "pinyin": "wǒ zài xué xiào xué xí 。 wǒ dú zhōng wén shū 。"
+        }
+      ]
     }
   ]
 }

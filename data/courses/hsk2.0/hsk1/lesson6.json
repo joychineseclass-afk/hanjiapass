@@ -138,12 +138,83 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你多大？", "pinyin": "Nǐ duō dà?", "translation": { "kr": "몇 살이에요?", "en": "How old are you?", "jp": "おいくつですか？" } },
-        { "speaker": "B", "text": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "translation": { "kr": "저는 스무 살이에요.", "en": "I'm twenty.", "jp": "20歳です。" } },
-        { "speaker": "A", "text": "他大吗？", "pinyin": "Tā dà ma?", "translation": { "kr": "그는 커요?", "en": "Is he big?", "jp": "彼は大きいですか？" } },
-        { "speaker": "B", "text": "不大，他很小。我儿子五岁了。", "pinyin": "Bù dà, tā hěn xiǎo. Wǒ érzi wǔ suì le.", "translation": { "kr": "아니요, 그는 아주 작아요. 우리 아들은 다섯 살이에요.", "en": "No, he's very small. My son is five years old now.", "jp": "いいえ、とても小さいです。息子は5歳になりました。" } }
+        {
+          "speaker": "A",
+          "text": "你有几个苹果？",
+          "translation": {
+            "en": "How many apples do you have?",
+            "kr": "How many apples do you have?",
+            "jp": "How many apples do you have?"
+          },
+          "pinyin": "nǐ yǒu jǐ gè píng guǒ ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我有五个苹果。",
+          "translation": {
+            "en": "I have five apples.",
+            "kr": "I have five apples.",
+            "jp": "I have five apples."
+          },
+          "pinyin": "wǒ yǒu wǔ gè píng guǒ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "我有三个。一、二、三。",
+          "translation": {
+            "en": "I have three. One, two, three.",
+            "kr": "I have three. One, two, three.",
+            "jp": "I have three. One, two, three."
+          },
+          "pinyin": "wǒ yǒu sān gè 。 yī 、 èr 、 sān 。"
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "多少个？",
+          "translation": {
+            "en": "How many?",
+            "kr": "How many?",
+            "jp": "How many?"
+          },
+          "pinyin": "duō shǎo gè ？"
+        },
+        {
+          "speaker": "B",
+          "text": "六个。你要几个？",
+          "translation": {
+            "en": "Six. How many do you want?",
+            "kr": "Six. How many do you want?",
+            "jp": "Six. How many do you want?"
+          },
+          "pinyin": "liù gè 。 nǐ yào jǐ gè ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我要两个。谢谢。",
+          "translation": {
+            "en": "I want two. Thanks.",
+            "kr": "I want two. Thanks.",
+            "jp": "I want two. Thanks."
+          },
+          "pinyin": "wǒ yào liǎng gè 。 xiè xiè 。"
+        }
       ]
     }
   ],
@@ -367,6 +438,88 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你有几个苹果？",
+          "translation": {
+            "en": "How many apples do you have?",
+            "kr": "How many apples do you have?",
+            "jp": "How many apples do you have?"
+          },
+          "pinyin": "nǐ yǒu jǐ gè píng guǒ ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我有五个苹果。",
+          "translation": {
+            "en": "I have five apples.",
+            "kr": "I have five apples.",
+            "jp": "I have five apples."
+          },
+          "pinyin": "wǒ yǒu wǔ gè píng guǒ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "我有三个。一、二、三。",
+          "translation": {
+            "en": "I have three. One, two, three.",
+            "kr": "I have three. One, two, three.",
+            "jp": "I have three. One, two, three."
+          },
+          "pinyin": "wǒ yǒu sān gè 。 yī 、 èr 、 sān 。"
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "多少个？",
+          "translation": {
+            "en": "How many?",
+            "kr": "How many?",
+            "jp": "How many?"
+          },
+          "pinyin": "duō shǎo gè ？"
+        },
+        {
+          "speaker": "B",
+          "text": "六个。你要几个？",
+          "translation": {
+            "en": "Six. How many do you want?",
+            "kr": "Six. How many do you want?",
+            "jp": "Six. How many do you want?"
+          },
+          "pinyin": "liù gè 。 nǐ yào jǐ gè ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我要两个。谢谢。",
+          "translation": {
+            "en": "I want two. Thanks.",
+            "kr": "I want two. Thanks.",
+            "jp": "I want two. Thanks."
+          },
+          "pinyin": "wǒ yào liǎng gè 。 xiè xiè 。"
+        }
+      ]
     }
   ]
 }

@@ -123,12 +123,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你去火车站吗？", "pinyin": "Nǐ qù huǒchēzhàn ma?", "translation": { "kr": "기차역 가요?", "en": "Are you going to the train station?", "jp": "駅に行きますか？" } },
-        { "speaker": "B", "text": "去。坐出租车。他开出租车。", "pinyin": "Qù. Zuò chūzūchē. Tā kāi chūzūchē.", "translation": { "kr": "가요. 택시 타요. 그가 택시 운전해요.", "en": "Yes. By taxi. He drives the taxi.", "jp": "行きます。タクシーで。彼が運転します。" } },
-        { "speaker": "A", "text": "你去北京吗？你看见飞机吗？", "pinyin": "Nǐ qù Běijīng ma? Nǐ kànjiàn fēijī ma?", "translation": { "kr": "베이징 가요? 비행기 봤어요?", "en": "Are you going to Beijing? Do you see the plane?", "jp": "北京に行きますか？飛行機が見えますか？" } },
-        { "speaker": "B", "text": "是。坐飞机去。看见。学生都去。", "pinyin": "Shì. Zuò fēijī qù. Kànjiàn. Xuésheng dōu qù.", "translation": { "kr": "네. 비행기 타고 가요. 봤어요. 학생들 다 가요.", "en": "Yes. Taking a plane. Yes. All students are going.", "jp": "はい。飛行機で行きます。見えます。学生はみんな行きます。" } }
+        {
+          "speaker": "A",
+          "text": "你周末做什么？",
+          "translation": {
+            "en": "What do you do on the weekend?",
+            "kr": "What do you do on the weekend?",
+            "jp": "What do you do on the weekend?"
+          },
+          "pinyin": "nǐ zhōu mò zuò shén me ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我看电视。我也听音乐。",
+          "translation": {
+            "en": "I watch TV. I listen to music too.",
+            "kr": "I watch TV. I listen to music too.",
+            "jp": "I watch TV. I listen to music too."
+          },
+          "pinyin": "wǒ kàn diàn shì 。 wǒ yě tīng yīn yuè 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你看电影吗？",
+          "translation": {
+            "en": "Do you watch movies?",
+            "kr": "Do you watch movies?",
+            "jp": "Do you watch movies?"
+          },
+          "pinyin": "nǐ kàn diàn yǐng ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "看。我喜欢看电影。",
+          "translation": {
+            "en": "Yes. I like watching movies.",
+            "kr": "Yes. I like watching movies.",
+            "jp": "Yes. I like watching movies."
+          },
+          "pinyin": "kàn 。 wǒ xǐ huan kàn diàn yǐng 。"
+        }
       ]
     }
   ],
@@ -351,6 +392,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你周末做什么？",
+          "translation": {
+            "en": "What do you do on the weekend?",
+            "kr": "What do you do on the weekend?",
+            "jp": "What do you do on the weekend?"
+          },
+          "pinyin": "nǐ zhōu mò zuò shén me ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我看电视。我也听音乐。",
+          "translation": {
+            "en": "I watch TV. I listen to music too.",
+            "kr": "I watch TV. I listen to music too.",
+            "jp": "I watch TV. I listen to music too."
+          },
+          "pinyin": "wǒ kàn diàn shì 。 wǒ yě tīng yīn yuè 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你看电影吗？",
+          "translation": {
+            "en": "Do you watch movies?",
+            "kr": "Do you watch movies?",
+            "jp": "Do you watch movies?"
+          },
+          "pinyin": "nǐ kàn diàn yǐng ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "看。我喜欢看电影。",
+          "translation": {
+            "en": "Yes. I like watching movies.",
+            "kr": "Yes. I like watching movies.",
+            "jp": "Yes. I like watching movies."
+          },
+          "pinyin": "kàn 。 wǒ xǐ huan kàn diàn yǐng 。"
+        }
+      ]
     }
   ]
 }

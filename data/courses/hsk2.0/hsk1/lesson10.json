@@ -153,12 +153,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "translation": { "kr": "어디에 살아요?", "en": "Where do you live?", "jp": "どこに住んでいますか？" } },
-        { "speaker": "B", "text": "我住在北京。", "pinyin": "Wǒ zhù zài Běijīng.", "translation": { "kr": "저는 베이징에 살아요.", "en": "I live in Beijing.", "jp": "北京に住んでいます。" } },
-        { "speaker": "A", "text": "北京在哪里？老师在哪里？家在哪里？", "pinyin": "Běijīng zài nǎlǐ? Lǎoshī zài nǎlǐ? Jiā zài nǎlǐ?", "translation": { "kr": "베이징은 어디에 있어요? 선생님은 어디에 있어요? 집은 어디에 있어요?", "en": "Where is Beijing? Where is the teacher? Where is home?", "jp": "北京はどこにありますか？先生はどこに？家はどこにありますか？" } },
-        { "speaker": "B", "text": "在中国。老师在前面，在上面。家在后面，在下面。", "pinyin": "Zài Zhōngguó. Lǎoshī zài qiánmiàn, zài shàngmiàn. Jiā zài hòumiàn, zài xiàmiàn.", "translation": { "kr": "중국에 있어요. 선생님은 앞에, 위에 있어요. 집은 뒤에, 아래에 있어요.", "en": "In China. Teacher is in front, above. Home is in the back, below.", "jp": "中国にあります。先生は前に上に。家は後ろに下にあります。" } }
+        {
+          "speaker": "A",
+          "text": "他是老师吗？",
+          "translation": {
+            "en": "Is he a teacher?",
+            "kr": "Is he a teacher?",
+            "jp": "Is he a teacher?"
+          },
+          "pinyin": "tā shì lǎo shī ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "是，他是老师。我们都是学生。",
+          "translation": {
+            "en": "Yes, he's a teacher. We're all students.",
+            "kr": "Yes, he's a teacher. We're all students.",
+            "jp": "Yes, he's a teacher. We're all students."
+          },
+          "pinyin": "shì ， tā shì lǎo shī 。 wǒ men dōu shì xué shēng 。"
+        },
+        {
+          "speaker": "A",
+          "text": "她呢？",
+          "translation": {
+            "en": "What about her?",
+            "kr": "What about her?",
+            "jp": "What about her?"
+          },
+          "pinyin": "tā ne ？"
+        },
+        {
+          "speaker": "B",
+          "text": "她也是老师。",
+          "translation": {
+            "en": "She's a teacher too.",
+            "kr": "She's a teacher too.",
+            "jp": "She's a teacher too."
+          },
+          "pinyin": "tā yě shì lǎo shī 。"
+        }
       ]
     }
   ],
@@ -393,6 +434,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "他是老师吗？",
+          "translation": {
+            "en": "Is he a teacher?",
+            "kr": "Is he a teacher?",
+            "jp": "Is he a teacher?"
+          },
+          "pinyin": "tā shì lǎo shī ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "是，他是老师。我们都是学生。",
+          "translation": {
+            "en": "Yes, he's a teacher. We're all students.",
+            "kr": "Yes, he's a teacher. We're all students.",
+            "jp": "Yes, he's a teacher. We're all students."
+          },
+          "pinyin": "shì ， tā shì lǎo shī 。 wǒ men dōu shì xué shēng 。"
+        },
+        {
+          "speaker": "A",
+          "text": "她呢？",
+          "translation": {
+            "en": "What about her?",
+            "kr": "What about her?",
+            "jp": "What about her?"
+          },
+          "pinyin": "tā ne ？"
+        },
+        {
+          "speaker": "B",
+          "text": "她也是老师。",
+          "translation": {
+            "en": "She's a teacher too.",
+            "kr": "She's a teacher too.",
+            "jp": "She's a teacher too."
+          },
+          "pinyin": "tā yě shì lǎo shī 。"
+        }
+      ]
     }
   ]
 }

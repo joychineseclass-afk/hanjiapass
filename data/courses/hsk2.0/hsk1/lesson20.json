@@ -123,19 +123,43 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你怎么了？", "pinyin": "Nǐ zěnme le?", "translation": { "kr": "어디 아파요?", "en": "What's wrong with you?", "jp": "どうしましたか？" } },
-        { "speaker": "B", "text": "我不好。", "pinyin": "Wǒ bù hǎo.", "translation": { "kr": "저는 몸이 안 좋아요.", "en": "I don't feel well.", "jp": "体調が悪いです。" } },
-        { "speaker": "A", "text": "你去医院了吗？", "pinyin": "Nǐ qù yīyuàn le ma?", "translation": { "kr": "병원 갔어요?", "en": "Did you go to the hospital?", "jp": "病院に行きましたか？" } },
-        { "speaker": "B", "text": "没去。", "pinyin": "Méi qù.", "translation": { "kr": "안 갔어요.", "en": "No, I didn't.", "jp": "行っていません。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
-        { "speaker": "A", "text": "现在怎么样？我们去医院。你呢？", "pinyin": "Xiànzài zěnmeyàng? Wǒmen qù yīyuàn. Nǐ ne?", "translation": { "kr": "지금 어때요? 우리 병원 가요. 당신은요?", "en": "How are you now? Let's go to the hospital. And you?", "jp": "今どうですか？病院に行きましょう。あなたは？" } },
-        { "speaker": "B", "text": "很好。", "pinyin": "Hěn hǎo.", "translation": { "kr": "아주 좋아요.", "en": "Very good.", "jp": "とても良いです。" } }
+        {
+          "speaker": "A",
+          "text": "这个很好。",
+          "translation": {
+            "en": "This one is very good.",
+            "kr": "This one is very good.",
+            "jp": "This one is very good."
+          },
+          "pinyin": "zhè ge hěn hǎo 。"
+        },
+        {
+          "speaker": "B",
+          "text": "那个呢？你觉得怎么样？",
+          "translation": {
+            "en": "What about that one? What do you think?",
+            "kr": "What about that one? What do you think?",
+            "jp": "What about that one? What do you think?"
+          },
+          "pinyin": "nà ge ne ？ nǐ jué de zěn me yàng ？"
+        },
+        {
+          "speaker": "A",
+          "text": "那个也很好。",
+          "translation": {
+            "en": "That one is good too.",
+            "kr": "That one is good too.",
+            "jp": "That one is good too."
+          },
+          "pinyin": "nà ge yě hěn hǎo 。"
+        }
       ]
     }
   ],
@@ -379,6 +403,48 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "这个很好。",
+          "translation": {
+            "en": "This one is very good.",
+            "kr": "This one is very good.",
+            "jp": "This one is very good."
+          },
+          "pinyin": "zhè ge hěn hǎo 。"
+        },
+        {
+          "speaker": "B",
+          "text": "那个呢？你觉得怎么样？",
+          "translation": {
+            "en": "What about that one? What do you think?",
+            "kr": "What about that one? What do you think?",
+            "jp": "What about that one? What do you think?"
+          },
+          "pinyin": "nà ge ne ？ nǐ jué de zěn me yàng ？"
+        },
+        {
+          "speaker": "A",
+          "text": "那个也很好。",
+          "translation": {
+            "en": "That one is good too.",
+            "kr": "That one is good too.",
+            "jp": "That one is good too."
+          },
+          "pinyin": "nà ge yě hěn hǎo 。"
+        }
+      ]
     }
   ]
 }

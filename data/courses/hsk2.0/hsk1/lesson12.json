@@ -138,12 +138,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你做什么工作？", "pinyin": "Nǐ zuò shénme gōngzuò?", "translation": { "kr": "무슨 일 하세요?", "en": "What do you do for work?", "jp": "お仕事は何をしていますか？" } },
-        { "speaker": "B", "text": "我是医生。", "pinyin": "Wǒ shì yīshēng.", "translation": { "kr": "저는 의사예요.", "en": "I'm a doctor.", "jp": "医者です。" } },
-        { "speaker": "A", "text": "李小姐会汉语吗？张先生能来吗？", "pinyin": "Lǐ xiǎojiě huì Hànyǔ ma? Zhāng xiānsheng néng lái ma?", "translation": { "kr": "이小姐는 중국어 할 수 있어요? 장先生는 올 수 있어요?", "en": "Can Miss Li speak Chinese? Can Mr. Zhang come?", "jp": "李さんは中国語ができますか？張さんは来られますか？" } },
-        { "speaker": "B", "text": "会。她能来。", "pinyin": "Huì. Tā néng lái.", "translation": { "kr": "네. 올 수 있어요.", "en": "Yes. She can come.", "jp": "はい。来られます。" } }
+        {
+          "speaker": "A",
+          "text": "书在哪儿？",
+          "translation": {
+            "en": "Where is the book?",
+            "kr": "Where is the book?",
+            "jp": "Where is the book?"
+          },
+          "pinyin": "shū zài nǎ ér ？"
+        },
+        {
+          "speaker": "B",
+          "text": "书在这里。",
+          "translation": {
+            "en": "The book is here.",
+            "kr": "The book is here.",
+            "jp": "The book is here."
+          },
+          "pinyin": "shū zài zhè lǐ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你在学校吗？",
+          "translation": {
+            "en": "Are you at school?",
+            "kr": "Are you at school?",
+            "jp": "Are you at school?"
+          },
+          "pinyin": "nǐ zài xué xiào ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "是，我在学校。他在那里。",
+          "translation": {
+            "en": "Yes, I'm at school. He's over there.",
+            "kr": "Yes, I'm at school. He's over there.",
+            "jp": "Yes, I'm at school. He's over there."
+          },
+          "pinyin": "shì ， wǒ zài xué xiào 。 tā zài nà lǐ 。"
+        }
       ]
     }
   ],
@@ -369,6 +410,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "书在哪儿？",
+          "translation": {
+            "en": "Where is the book?",
+            "kr": "Where is the book?",
+            "jp": "Where is the book?"
+          },
+          "pinyin": "shū zài nǎ ér ？"
+        },
+        {
+          "speaker": "B",
+          "text": "书在这里。",
+          "translation": {
+            "en": "The book is here.",
+            "kr": "The book is here.",
+            "jp": "The book is here."
+          },
+          "pinyin": "shū zài zhè lǐ 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你在学校吗？",
+          "translation": {
+            "en": "Are you at school?",
+            "kr": "Are you at school?",
+            "jp": "Are you at school?"
+          },
+          "pinyin": "nǐ zài xué xiào ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "是，我在学校。他在那里。",
+          "translation": {
+            "en": "Yes, I'm at school. He's over there.",
+            "kr": "Yes, I'm at school. He's over there.",
+            "jp": "Yes, I'm at school. He's over there."
+          },
+          "pinyin": "shì ， wǒ zài xué xiào 。 tā zài nà lǐ 。"
+        }
+      ]
     }
   ]
 }

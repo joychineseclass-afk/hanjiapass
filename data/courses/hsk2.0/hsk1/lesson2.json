@@ -123,26 +123,85 @@
   ],
   "originalDialogues": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": { "kr": "이름이 뭐예요?", "en": "What is your name?", "jp": "お名前は何ですか？" } },
-        { "speaker": "B", "text": "我叫小明。", "pinyin": "Wǒ jiào Xiǎomíng.", "translation": { "kr": "저는 샤오밍이에요.", "en": "My name is Xiaoming.", "jp": "私は小明です。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
-        { "speaker": "A", "text": "我叫小美。", "pinyin": "Wǒ jiào Xiǎoměi.", "translation": { "kr": "저는 샤오메이예요.", "en": "My name is Xiaomei.", "jp": "私は小美です。" } },
-        { "speaker": "B", "text": "很高兴认识你。", "pinyin": "Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "만나서 반가워요.", "en": "Nice to meet you.", "jp": "お会いできて嬉しいです。" } }
+        {
+          "speaker": "A",
+          "text": "你叫什么名字？",
+          "translation": {
+            "en": "What's your name?",
+            "kr": "What's your name?",
+            "jp": "What's your name?"
+          },
+          "pinyin": "nǐ jiào shén me míng zì ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我叫李明。你呢？",
+          "translation": {
+            "en": "I'm Li Ming. And you?",
+            "kr": "I'm Li Ming. And you?",
+            "jp": "I'm Li Ming. And you?"
+          },
+          "pinyin": "wǒ jiào lǐ míng 。 nǐ ne ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我叫王芳。认识你很高兴。",
+          "translation": {
+            "en": "I'm Wang Fang. Nice to meet you.",
+            "kr": "I'm Wang Fang. Nice to meet you.",
+            "jp": "I'm Wang Fang. Nice to meet you."
+          },
+          "pinyin": "wǒ jiào wáng fāng 。 rèn shi nǐ hěn gāo xìng 。"
+        }
       ]
     }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你好！你叫什么名字？", "pinyin": "Nǐ hǎo! Nǐ jiào shénme míngzi?", "translation": { "kr": "안녕하세요! 이름이 뭐예요?", "en": "Hello! What is your name?", "jp": "こんにちは! お名前は何ですか？" } },
-        { "speaker": "B", "text": "我叫小明。很高兴认识你。", "pinyin": "Wǒ jiào Xiǎomíng. Hěn gāoxìng rènshi nǐ.", "translation": { "kr": "저는 샤오밍이에요. 만나서 반가워요.", "en": "My name is Xiaoming. Nice to meet you.", "jp": "私は小明です。お会いできて嬉しいです。" } }
+        {
+          "speaker": "A",
+          "text": "你叫什么名字？",
+          "translation": {
+            "en": "What's your name?",
+            "kr": "What's your name?",
+            "jp": "What's your name?"
+          },
+          "pinyin": "nǐ jiào shén me míng zì ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我叫李明。你呢？",
+          "translation": {
+            "en": "I'm Li Ming. And you?",
+            "kr": "I'm Li Ming. And you?",
+            "jp": "I'm Li Ming. And you?"
+          },
+          "pinyin": "wǒ jiào lǐ míng 。 nǐ ne ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我叫王芳。认识你很高兴。",
+          "translation": {
+            "en": "I'm Wang Fang. Nice to meet you.",
+            "kr": "I'm Wang Fang. Nice to meet you.",
+            "jp": "I'm Wang Fang. Nice to meet you."
+          },
+          "pinyin": "wǒ jiào wáng fāng 。 rèn shi nǐ hěn gāo xìng 。"
+        }
       ]
     }
   ],

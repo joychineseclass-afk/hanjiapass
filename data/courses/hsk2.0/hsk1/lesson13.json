@@ -168,12 +168,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你喜欢什么？", "pinyin": "Nǐ xǐhuan shénme?", "translation": { "kr": "뭘 좋아해요?", "en": "What do you like?", "jp": "何が好きですか？" } },
-        { "speaker": "B", "text": "我喜欢狗。也喜欢猫。", "pinyin": "Wǒ xǐhuan gǒu. Yě xǐhuan māo.", "translation": { "kr": "개 좋아해요. 고양이도 좋아해요.", "en": "I like dogs. I like cats too.", "jp": "犬が好き。猫も好きです。" } },
-        { "speaker": "A", "text": "你看电视吗？", "pinyin": "Nǐ kàn diànshì ma?", "translation": { "kr": "텔레비전 봐요?", "en": "Do you watch TV?", "jp": "テレビを見ますか？" } },
-        { "speaker": "B", "text": "看。我爱看电影。狗很漂亮。我喜欢听汉语。", "pinyin": "Kàn. Wǒ ài kàn diànyǐng. Gǒu hěn piàoliang. Wǒ xǐhuan tīng Hànyǔ.", "translation": { "kr": "봐요. 영화 보는 거 좋아해요. 개 예뻐요. 중국어 듣는 거 좋아해요.", "en": "Yes. I love watching movies. The dog is pretty. I like listening to Chinese.", "jp": "見ます。映画が好きです。犬はきれいです。中国語を聞くのが好きです。" } }
+        {
+          "speaker": "A",
+          "text": "你怎么去学校？",
+          "translation": {
+            "en": "How do you go to school?",
+            "kr": "How do you go to school?",
+            "jp": "How do you go to school?"
+          },
+          "pinyin": "nǐ zěn me qù xué xiào ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我坐地铁去学校。",
+          "translation": {
+            "en": "I take the subway to school.",
+            "kr": "I take the subway to school.",
+            "jp": "I take the subway to school."
+          },
+          "pinyin": "wǒ zuò dì tiě qù xué xiào 。"
+        },
+        {
+          "speaker": "A",
+          "text": "他呢？",
+          "translation": {
+            "en": "What about him?",
+            "kr": "What about him?",
+            "jp": "What about him?"
+          },
+          "pinyin": "tā ne ？"
+        },
+        {
+          "speaker": "B",
+          "text": "他坐出租车去。",
+          "translation": {
+            "en": "He goes by taxi.",
+            "kr": "He goes by taxi.",
+            "jp": "He goes by taxi."
+          },
+          "pinyin": "tā zuò chū zū chē qù 。"
+        }
       ]
     }
   ],
@@ -398,6 +439,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你怎么去学校？",
+          "translation": {
+            "en": "How do you go to school?",
+            "kr": "How do you go to school?",
+            "jp": "How do you go to school?"
+          },
+          "pinyin": "nǐ zěn me qù xué xiào ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我坐地铁去学校。",
+          "translation": {
+            "en": "I take the subway to school.",
+            "kr": "I take the subway to school.",
+            "jp": "I take the subway to school."
+          },
+          "pinyin": "wǒ zuò dì tiě qù xué xiào 。"
+        },
+        {
+          "speaker": "A",
+          "text": "他呢？",
+          "translation": {
+            "en": "What about him?",
+            "kr": "What about him?",
+            "jp": "What about him?"
+          },
+          "pinyin": "tā ne ？"
+        },
+        {
+          "speaker": "B",
+          "text": "他坐出租车去。",
+          "translation": {
+            "en": "He goes by taxi.",
+            "kr": "He goes by taxi.",
+            "jp": "He goes by taxi."
+          },
+          "pinyin": "tā zuò chū zū chē qù 。"
+        }
+      ]
     }
   ]
 }

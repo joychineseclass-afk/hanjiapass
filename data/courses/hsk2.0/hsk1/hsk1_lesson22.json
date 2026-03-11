@@ -19,28 +19,51 @@
     "en": "Review of lessons 11–20",
     "jp": "第11–20課総合復習"
   },
-  "focus": ["爱好", "职业", "时间", "打电话", "地点"],
+  "focus": [
+    "爱好",
+    "职业",
+    "时间",
+    "打电话",
+    "地点"
+  ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Dialogue 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
         {
           "speaker": "A",
-          "zh": "你喜欢做什么？",
-          "cn": "你喜欢做什么？",
-          "pinyin": "Nǐ xǐhuān zuò shénme?",
-          "kr": "무엇을 좋아하세요?",
-          "en": "What do you like to do?",
-          "jp": "何をするのが好きですか？"
+          "text": "我们一起吃饭吧。",
+          "translation": {
+            "en": "Let's eat together.",
+            "kr": "Let's eat together.",
+            "jp": "Let's eat together."
+          },
+          "pinyin": "wǒ men yì qǐ chī fàn ba 。"
         },
         {
           "speaker": "B",
-          "zh": "我喜欢看书。",
-          "cn": "我喜欢看书。",
-          "pinyin": "Wǒ xǐhuān kàn shū.",
-          "kr": "저는 책 읽는 것을 좋아합니다.",
-          "en": "I like reading books.",
-          "jp": "私は本を読むのが好きです。"
+          "text": "好。现在几点？",
+          "translation": {
+            "en": "OK. What time is it now?",
+            "kr": "OK. What time is it now?",
+            "jp": "OK. What time is it now?"
+          },
+          "pinyin": "hǎo 。 xiàn zài jǐ diǎn ？"
+        },
+        {
+          "speaker": "A",
+          "text": "现在十二点。今天很冷，我们喝热茶吧。",
+          "translation": {
+            "en": "It's twelve. It's cold today, let's have hot tea.",
+            "kr": "It's twelve. It's cold today, let's have hot tea.",
+            "jp": "It's twelve. It's cold today, let's have hot tea."
+          },
+          "pinyin": "xiàn zài shí èr diǎn 。 jīn tiān hěn lěng ， wǒ men hē rè chá ba 。"
         }
       ]
     }
@@ -66,26 +89,183 @@
     }
   ],
   "practice": [
-    { "type": "choice", "question": { "zh": "「学习」的意思是？", "kr": "의미는?", "en": "Meaning?", "jp": "意味は？" }, "options": ["工作", "学习", "读"], "answer": "学习" },
-    { "type": "choice", "question": { "zh": "你做什么工作？回答：", "kr": "답은?", "en": "Response?", "jp": "答えは？" }, "options": ["我是医生", "我喜欢狗", "我吃米饭"], "answer": "我是医生" },
-    { "type": "choice", "question": { "zh": "「有」的否定是？", "kr": "부정은?", "en": "Negation of 有?", "jp": "否定は？" }, "options": ["不", "没", "没在"], "answer": "没" },
-    { "type": "choice", "question": { "zh": "今天天气热。「热」的反义词是？", "kr": "반대말은?", "en": "Antonym?", "jp": "反対語は？" }, "options": ["冷", "太", "想"], "answer": "冷" },
-    { "type": "choice", "question": { "zh": "A：这个多少钱？ B：___", "kr": "대화", "en": "Dialogue", "jp": "会話" }, "options": ["十块", "我买", "商店"], "answer": "十块" }
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「学习」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?",
+        "jp": "意味は？"
+      },
+      "options": [
+        "工作",
+        "学习",
+        "读"
+      ],
+      "answer": "学习"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "你做什么工作？回答：",
+        "kr": "답은?",
+        "en": "Response?",
+        "jp": "答えは？"
+      },
+      "options": [
+        "我是医生",
+        "我喜欢狗",
+        "我吃米饭"
+      ],
+      "answer": "我是医生"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "「有」的否定是？",
+        "kr": "부정은?",
+        "en": "Negation of 有?",
+        "jp": "否定は？"
+      },
+      "options": [
+        "不",
+        "没",
+        "没在"
+      ],
+      "answer": "没"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "今天天气热。「热」的反义词是？",
+        "kr": "반대말은?",
+        "en": "Antonym?",
+        "jp": "反対語は？"
+      },
+      "options": [
+        "冷",
+        "太",
+        "想"
+      ],
+      "answer": "冷"
+    },
+    {
+      "type": "choice",
+      "question": {
+        "zh": "A：这个多少钱？ B：___",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      },
+      "options": [
+        "十块",
+        "我买",
+        "商店"
+      ],
+      "answer": "十块"
+    }
   ],
   "review": {
-    "lessonRange": [11, 20],
+    "lessonRange": [
+      11,
+      20
+    ],
     "mode": "review",
     "questionCount": 10,
-    "focusAreas": ["vocab", "dialogue", "grammar"]
+    "focusAreas": [
+      "vocab",
+      "dialogue",
+      "grammar"
+    ]
   },
   "aiPractice": {
-    "speaking": ["学习汉语", "我做什么工作", "我喝茶", "今天天气热", "我们去医院"],
+    "speaking": [
+      "学习汉语",
+      "我做什么工作",
+      "我喝茶",
+      "今天天气热",
+      "我们去医院"
+    ],
     "chatPrompt": "复习第11–20课对话：学校、工作、爱好、饮食、位置、交通、购物、天气、看病。"
   },
   "steps": [
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "회화", "en": "Dialogue", "jp": "会話" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" } }
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "회화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "我们一起吃饭吧。",
+          "translation": {
+            "en": "Let's eat together.",
+            "kr": "Let's eat together.",
+            "jp": "Let's eat together."
+          },
+          "pinyin": "wǒ men yì qǐ chī fàn ba 。"
+        },
+        {
+          "speaker": "B",
+          "text": "好。现在几点？",
+          "translation": {
+            "en": "OK. What time is it now?",
+            "kr": "OK. What time is it now?",
+            "jp": "OK. What time is it now?"
+          },
+          "pinyin": "hǎo 。 xiàn zài jǐ diǎn ？"
+        },
+        {
+          "speaker": "A",
+          "text": "现在十二点。今天很冷，我们喝热茶吧。",
+          "translation": {
+            "en": "It's twelve. It's cold today, let's have hot tea.",
+            "kr": "It's twelve. It's cold today, let's have hot tea.",
+            "jp": "It's twelve. It's cold today, let's have hot tea."
+          },
+          "pinyin": "xiàn zài shí èr diǎn 。 jīn tiān hěn lěng ， wǒ men hē rè chá ba 。"
+        }
+      ]
+    }
   ]
 }

@@ -183,55 +183,165 @@
   ],
   "originalDialogues": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "jp": "会話1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你好！", "pinyin": "Nǐ hǎo!", "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" } },
-        { "speaker": "B", "text": "你好！", "pinyin": "Nǐ hǎo!", "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" } },
-        { "speaker": "A", "text": "你好吗？", "pinyin": "Nǐ hǎo ma?", "translation": { "kr": "잘 지내세요?", "jp": "お元気ですか?", "en": "How are you?" } },
-        { "speaker": "B", "text": "我很好。", "pinyin": "Wǒ hěn hǎo.", "translation": { "kr": "저는 잘 지내요.", "jp": "元気です。", "en": "I'm fine." } }
+        {
+          "speaker": "A",
+          "text": "你好！",
+          "translation": {
+            "en": "Hello!",
+            "kr": "Hello!",
+            "jp": "Hello!"
+          },
+          "pinyin": "nǐ hǎo ！"
+        },
+        {
+          "speaker": "B",
+          "text": "你好！",
+          "translation": {
+            "en": "Hello!",
+            "kr": "Hello!",
+            "jp": "Hello!"
+          },
+          "pinyin": "nǐ hǎo ！"
+        },
+        {
+          "speaker": "A",
+          "text": "你好吗？",
+          "translation": {
+            "en": "How are you?",
+            "kr": "How are you?",
+            "jp": "How are you?"
+          },
+          "pinyin": "nǐ hǎo ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我很好。谢谢。",
+          "translation": {
+            "en": "I'm fine. Thank you.",
+            "kr": "I'm fine. Thank you.",
+            "jp": "I'm fine. Thank you."
+          },
+          "pinyin": "wǒ hěn hǎo 。 xiè xiè 。"
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "jp": "会話2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "text": "谢谢你。", "pinyin": "Xièxie nǐ.", "translation": { "kr": "감사해요.", "jp": "ありがとうございます。", "en": "Thank you." } },
-        { "speaker": "B", "text": "不客气。", "pinyin": "Bùkèqi.", "translation": { "kr": "천만에요.", "jp": "どういたしまして。", "en": "You're welcome." } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "jp": "会話3", "en": "Session 3" },
-      "lines": [
-        { "speaker": "A", "text": "对不起。", "pinyin": "Duìbuqǐ.", "translation": { "kr": "죄송합니다.", "jp": "すみません。", "en": "Sorry." } },
-        { "speaker": "B", "text": "没关系。", "pinyin": "Méiguānxi.", "translation": { "kr": "괜찮아요.", "jp": "大丈夫です。", "en": "It's okay." } },
-        { "speaker": "A", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "jp": "さようなら!", "en": "Goodbye!" } },
-        { "speaker": "B", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "jp": "さようなら!", "en": "Goodbye!" } }
+        {
+          "speaker": "A",
+          "text": "再见！",
+          "translation": {
+            "en": "Goodbye!",
+            "kr": "Goodbye!",
+            "jp": "Goodbye!"
+          },
+          "pinyin": "zài jiàn ！"
+        },
+        {
+          "speaker": "B",
+          "text": "再见！不客气。",
+          "translation": {
+            "en": "Goodbye! You're welcome.",
+            "kr": "Goodbye! You're welcome.",
+            "jp": "Goodbye! You're welcome."
+          },
+          "pinyin": "zài jiàn ！ bú kè qì 。"
+        }
       ]
     }
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "jp": "会話1", "en": "Session 1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "你好！", "pinyin": "Nǐ hǎo!", "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" } },
-        { "speaker": "B", "text": "你好！", "pinyin": "Nǐ hǎo!", "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" } },
-        { "speaker": "A", "text": "你好吗？", "pinyin": "Nǐ hǎo ma?", "translation": { "kr": "잘 지내세요?", "jp": "お元気ですか?", "en": "How are you?" } },
-        { "speaker": "B", "text": "我很好。", "pinyin": "Wǒ hěn hǎo.", "translation": { "kr": "저는 잘 지내요.", "jp": "元気です。", "en": "I'm fine." } }
+        {
+          "speaker": "A",
+          "text": "你好！",
+          "translation": {
+            "en": "Hello!",
+            "kr": "Hello!",
+            "jp": "Hello!"
+          },
+          "pinyin": "nǐ hǎo ！"
+        },
+        {
+          "speaker": "B",
+          "text": "你好！",
+          "translation": {
+            "en": "Hello!",
+            "kr": "Hello!",
+            "jp": "Hello!"
+          },
+          "pinyin": "nǐ hǎo ！"
+        },
+        {
+          "speaker": "A",
+          "text": "你好吗？",
+          "translation": {
+            "en": "How are you?",
+            "kr": "How are you?",
+            "jp": "How are you?"
+          },
+          "pinyin": "nǐ hǎo ma ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我很好。谢谢。",
+          "translation": {
+            "en": "I'm fine. Thank you.",
+            "kr": "I'm fine. Thank you.",
+            "jp": "I'm fine. Thank you."
+          },
+          "pinyin": "wǒ hěn hǎo 。 xiè xiè 。"
+        }
       ]
     },
     {
-      "title": { "zh": "会话2", "kr": "회화2", "jp": "会話2", "en": "Session 2" },
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
       "lines": [
-        { "speaker": "A", "text": "谢谢你。", "pinyin": "Xièxie nǐ.", "translation": { "kr": "감사해요.", "jp": "ありがとうございます。", "en": "Thank you." } },
-        { "speaker": "B", "text": "不客气。", "pinyin": "Bùkèqi.", "translation": { "kr": "천만에요.", "jp": "どういたしまして。", "en": "You're welcome." } }
-      ]
-    },
-    {
-      "title": { "zh": "会话3", "kr": "회화3", "jp": "会話3", "en": "Session 3" },
-      "lines": [
-        { "speaker": "A", "text": "对不起。", "pinyin": "Duìbuqǐ.", "translation": { "kr": "죄송합니다.", "jp": "すみません。", "en": "Sorry." } },
-        { "speaker": "B", "text": "没关系。", "pinyin": "Méiguānxi.", "translation": { "kr": "괜찮아요.", "jp": "大丈夫です。", "en": "It's okay." } },
-        { "speaker": "A", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "jp": "さようなら!", "en": "Goodbye!" } },
-        { "speaker": "B", "text": "再见！", "pinyin": "Zàijiàn!", "translation": { "kr": "안녕히 가세요!", "jp": "さようなら!", "en": "Goodbye!" } }
+        {
+          "speaker": "A",
+          "text": "再见！",
+          "translation": {
+            "en": "Goodbye!",
+            "kr": "Goodbye!",
+            "jp": "Goodbye!"
+          },
+          "pinyin": "zài jiàn ！"
+        },
+        {
+          "speaker": "B",
+          "text": "再见！不客气。",
+          "translation": {
+            "en": "Goodbye! You're welcome.",
+            "kr": "Goodbye! You're welcome.",
+            "jp": "Goodbye! You're welcome."
+          },
+          "pinyin": "zài jiàn ！ bú kè qì 。"
+        }
       ]
     }
   ],
@@ -361,7 +471,12 @@
         "en": "He ___ Chinese.",
         "jp": "彼は___中国人です。"
       },
-      "options": ["是", "有", "在", "去"],
+      "options": [
+        "是",
+        "有",
+        "在",
+        "去"
+      ],
       "answer": "是",
       "explanation": {
         "cn": "这里要用判断动词「是」。",
@@ -380,7 +495,12 @@
         "en": "Which word means \"thank you\"?",
         "jp": "感謝を表す語は？"
       },
-      "options": ["再见", "谢谢", "不客气", "对不起"],
+      "options": [
+        "再见",
+        "谢谢",
+        "不客气",
+        "对不起"
+      ],
       "answer": "谢谢",
       "explanation": {
         "cn": "「谢谢」表示感谢。",
@@ -399,7 +519,12 @@
         "en": "What is the Chinese for \"thank you\"?",
         "jp": "「ありがとう」に対応する中国語は？"
       },
-      "options": ["再见", "谢谢", "不客气", "对不起"],
+      "options": [
+        "再见",
+        "谢谢",
+        "不客气",
+        "对不起"
+      ],
       "answer": "谢谢",
       "explanation": {
         "cn": "감사합니다 = 谢谢",
@@ -418,7 +543,12 @@
         "en": "What is the response to \"你好吗?\"?",
         "jp": "「你好吗？」への返答は？"
       },
-      "options": ["你好", "我很好", "谢谢", "再见"],
+      "options": [
+        "你好",
+        "我很好",
+        "谢谢",
+        "再见"
+      ],
       "answer": "我很好",
       "explanation": {
         "cn": "「你好吗？」问身体状况，回答「我很好」。",
@@ -437,7 +567,12 @@
         "en": "Which sentence has the correct word order?",
         "jp": "正しい語順の文はどれですか？"
       },
-      "options": ["我很好", "很好我", "好我很", "我好很"],
+      "options": [
+        "我很好",
+        "很好我",
+        "好我很",
+        "我好很"
+      ],
       "answer": "我很好",
       "explanation": {
         "cn": "正确语序是「我很好」。",

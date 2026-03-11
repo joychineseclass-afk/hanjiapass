@@ -153,19 +153,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "商店在哪儿？", "pinyin": "Shāngdiàn zài nǎr?", "translation": { "kr": "가게가 어디에 있어요?", "en": "Where is the store?", "jp": "店はどこにありますか？" } },
-        { "speaker": "B", "text": "在那儿。我买一些东西。", "pinyin": "Zài nàr. Wǒ mǎi yīxiē dōngxi.", "translation": { "kr": "저기에 있어요. 뭐 좀 살 거예요.", "en": "Over there. I'm buying some things.", "jp": "あそこにあります。何か買います。" } },
-        { "speaker": "A", "text": "你买什么？", "pinyin": "Nǐ mǎi shénme?", "translation": { "kr": "뭘 사요?", "en": "What are you buying?", "jp": "何を買いますか？" } },
-        { "speaker": "B", "text": "我买衣服。", "pinyin": "Wǒ mǎi yīfu.", "translation": { "kr": "옷 사요.", "en": "I'm buying clothes.", "jp": "服を買います。" } }
-      ]
-    },
-    {
-      "title": { "zh": "会话2", "kr": "회화2", "en": "Session 2", "jp": "会話2" },
-      "lines": [
-        { "speaker": "A", "text": "这个电脑多少钱？", "pinyin": "Zhè ge diànnǎo duōshao qián?", "translation": { "kr": "이 컴퓨터 얼마예요?", "en": "How much is this computer?", "jp": "このパソコンはいくらですか？" } },
-        { "speaker": "B", "text": "二十块。那个十五块。", "pinyin": "Èrshí kuài. Nà ge shíwǔ kuài.", "translation": { "kr": "20위안이에요. 저건 15위안이에요.", "en": "Twenty yuan. That one fifteen yuan.", "jp": "20元です。あれは15元です。" } }
+        {
+          "speaker": "A",
+          "text": "我要买苹果。",
+          "translation": {
+            "en": "I want to buy apples.",
+            "kr": "I want to buy apples.",
+            "jp": "I want to buy apples."
+          },
+          "pinyin": "wǒ yào mǎi píng guǒ 。"
+        },
+        {
+          "speaker": "B",
+          "text": "你要几个？",
+          "translation": {
+            "en": "How many do you want?",
+            "kr": "How many do you want?",
+            "jp": "How many do you want?"
+          },
+          "pinyin": "nǐ yào jǐ gè ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我要五个。多少钱？",
+          "translation": {
+            "en": "I want five. How much?",
+            "kr": "I want five. How much?",
+            "jp": "I want five. How much?"
+          },
+          "pinyin": "wǒ yào wǔ gè 。 duō shǎo qián ？"
+        },
+        {
+          "speaker": "B",
+          "text": "十块钱。",
+          "translation": {
+            "en": "Ten yuan.",
+            "kr": "Ten yuan.",
+            "jp": "Ten yuan."
+          },
+          "pinyin": "shí kuài qián 。"
+        }
       ]
     }
   ],
@@ -389,6 +423,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "我要买苹果。",
+          "translation": {
+            "en": "I want to buy apples.",
+            "kr": "I want to buy apples.",
+            "jp": "I want to buy apples."
+          },
+          "pinyin": "wǒ yào mǎi píng guǒ 。"
+        },
+        {
+          "speaker": "B",
+          "text": "你要几个？",
+          "translation": {
+            "en": "How many do you want?",
+            "kr": "How many do you want?",
+            "jp": "How many do you want?"
+          },
+          "pinyin": "nǐ yào jǐ gè ？"
+        },
+        {
+          "speaker": "A",
+          "text": "我要五个。多少钱？",
+          "translation": {
+            "en": "I want five. How much?",
+            "kr": "I want five. How much?",
+            "jp": "I want five. How much?"
+          },
+          "pinyin": "wǒ yào wǔ gè 。 duō shǎo qián ？"
+        },
+        {
+          "speaker": "B",
+          "text": "十块钱。",
+          "translation": {
+            "en": "Ten yuan.",
+            "kr": "Ten yuan.",
+            "jp": "Ten yuan."
+          },
+          "pinyin": "shí kuài qián 。"
+        }
+      ]
     }
   ]
 }

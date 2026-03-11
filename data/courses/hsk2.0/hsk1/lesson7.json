@@ -123,12 +123,53 @@
   ],
   "dialogueCards": [
     {
-      "title": { "zh": "会话1", "kr": "회화1", "en": "Session 1", "jp": "会話1" },
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
       "lines": [
-        { "speaker": "A", "text": "今天几月几日？", "pinyin": "Jīntiān jǐ yuè jǐ rì?", "translation": { "kr": "오늘 몇 월 며칠이에요?", "en": "What's the date today?", "jp": "今日は何月何日ですか？" } },
-        { "speaker": "B", "text": "今天六月五日。", "pinyin": "Jīntiān liù yuè wǔ rì.", "translation": { "kr": "오늘 6월 5일이에요.", "en": "Today is June 5th.", "jp": "今日は6月5日です。" } },
-        { "speaker": "A", "text": "今天星期几？明天呢？昨天呢？", "pinyin": "Jīntiān xīngqī jǐ? Míngtiān ne? Zuótiān ne?", "translation": { "kr": "오늘 무슨 요일이에요? 내일은? 어제는?", "en": "What day is it today? Tomorrow? Yesterday?", "jp": "今日は何曜日ですか？明日は？昨日は？" } },
-        { "speaker": "B", "text": "今天星期一。明天星期二。昨天星期日。", "pinyin": "Jīntiān xīngqī yī. Míngtiān xīngqī èr. Zuótiān xīngqīrì.", "translation": { "kr": "오늘 월요일이에요. 내일 화요일, 어제 일요일이에요.", "en": "Today is Monday. Tomorrow Tuesday. Yesterday was Sunday.", "jp": "今日は月曜日。明日は火曜日。昨日は日曜日でした。" } }
+        {
+          "speaker": "A",
+          "text": "现在几点？",
+          "translation": {
+            "en": "What time is it now?",
+            "kr": "What time is it now?",
+            "jp": "What time is it now?"
+          },
+          "pinyin": "xiàn zài jǐ diǎn ？"
+        },
+        {
+          "speaker": "B",
+          "text": "现在三点。",
+          "translation": {
+            "en": "It's three o'clock now.",
+            "kr": "It's three o'clock now.",
+            "jp": "It's three o'clock now."
+          },
+          "pinyin": "xiàn zài sān diǎn 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你什么时候回家？",
+          "translation": {
+            "en": "When do you go home?",
+            "kr": "When do you go home?",
+            "jp": "When do you go home?"
+          },
+          "pinyin": "nǐ shén me shí hòu huí jiā ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我下午五点回家。",
+          "translation": {
+            "en": "I go home at five in the afternoon.",
+            "kr": "I go home at five in the afternoon.",
+            "jp": "I go home at five in the afternoon."
+          },
+          "pinyin": "wǒ xià wǔ wǔ diǎn huí jiā 。"
+        }
       ]
     }
   ],
@@ -373,6 +414,58 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
+    }
+  ],
+  "originalDialogues": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "现在几点？",
+          "translation": {
+            "en": "What time is it now?",
+            "kr": "What time is it now?",
+            "jp": "What time is it now?"
+          },
+          "pinyin": "xiàn zài jǐ diǎn ？"
+        },
+        {
+          "speaker": "B",
+          "text": "现在三点。",
+          "translation": {
+            "en": "It's three o'clock now.",
+            "kr": "It's three o'clock now.",
+            "jp": "It's three o'clock now."
+          },
+          "pinyin": "xiàn zài sān diǎn 。"
+        },
+        {
+          "speaker": "A",
+          "text": "你什么时候回家？",
+          "translation": {
+            "en": "When do you go home?",
+            "kr": "When do you go home?",
+            "jp": "When do you go home?"
+          },
+          "pinyin": "nǐ shén me shí hòu huí jiā ？"
+        },
+        {
+          "speaker": "B",
+          "text": "我下午五点回家。",
+          "translation": {
+            "en": "I go home at five in the afternoon.",
+            "kr": "I go home at five in the afternoon.",
+            "jp": "I go home at five in the afternoon."
+          },
+          "pinyin": "wǒ xià wǔ wǔ diǎn huí jiā 。"
+        }
+      ]
     }
   ]
 }

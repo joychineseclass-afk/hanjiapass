@@ -1,0 +1,281 @@
+{
+  "1": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你好！", "translation": { "en": "Hello!" } },
+          { "speaker": "B", "text": "你好！", "translation": { "en": "Hello!" } },
+          { "speaker": "A", "text": "你好吗？", "translation": { "en": "How are you?" } },
+          { "speaker": "B", "text": "我很好。谢谢。", "translation": { "en": "I'm fine. Thank you." } }
+        ]
+      },
+      {
+        "lines": [
+          { "speaker": "A", "text": "再见！", "translation": { "en": "Goodbye!" } },
+          { "speaker": "B", "text": "再见！不客气。", "translation": { "en": "Goodbye! You're welcome." } }
+        ]
+      }
+    ]
+  },
+  "2": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你叫什么名字？", "translation": { "en": "What's your name?" } },
+          { "speaker": "B", "text": "我叫李明。你呢？", "translation": { "en": "I'm Li Ming. And you?" } },
+          { "speaker": "A", "text": "我叫王芳。认识你很高兴。", "translation": { "en": "I'm Wang Fang. Nice to meet you." } }
+        ]
+      }
+    ]
+  },
+  "3": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你是哪国人？", "translation": { "en": "Which country are you from?" } },
+          { "speaker": "B", "text": "我是中国人。我是北京人。", "translation": { "en": "I'm Chinese. I'm from Beijing." } },
+          { "speaker": "A", "text": "他是学生吗？", "translation": { "en": "Is he a student?" } },
+          { "speaker": "B", "text": "是，他是我的同学。", "translation": { "en": "Yes, he's my classmate." } }
+        ]
+      }
+    ]
+  },
+  "4": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "他是谁？", "translation": { "en": "Who is he?" } },
+          { "speaker": "B", "text": "他是我的朋友。", "translation": { "en": "He is my friend." } },
+          { "speaker": "A", "text": "她也是你的朋友吗？", "translation": { "en": "Is she your friend too?" } },
+          { "speaker": "B", "text": "是，她也是我的同学。", "translation": { "en": "Yes, she's my classmate too." } }
+        ]
+      }
+    ]
+  },
+  "5": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "她是谁？", "translation": { "en": "Who is she?" } },
+          { "speaker": "B", "text": "她是我妈妈。", "translation": { "en": "She is my mom." } },
+          { "speaker": "A", "text": "他是你爸爸吗？", "translation": { "en": "Is he your dad?" } },
+          { "speaker": "B", "text": "是。我家有五个人：爸爸、妈妈、我、儿子和女儿。", "translation": { "en": "Yes. There are five people in my family: dad, mom, me, son and daughter." } }
+        ]
+      },
+      {
+        "lines": [
+          { "speaker": "A", "text": "你儿子多大？", "translation": { "en": "How old is your son?" } },
+          { "speaker": "B", "text": "我儿子六岁。我女儿三岁。", "translation": { "en": "My son is six. My daughter is three." } }
+        ]
+      }
+    ],
+    "wordsToExtension": []
+  },
+  "6": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你有几个苹果？", "translation": { "en": "How many apples do you have?" } },
+          { "speaker": "B", "text": "我有五个苹果。", "translation": { "en": "I have five apples." } },
+          { "speaker": "A", "text": "我有三个。一、二、三。", "translation": { "en": "I have three. One, two, three." } }
+        ]
+      },
+      {
+        "lines": [
+          { "speaker": "A", "text": "多少个？", "translation": { "en": "How many?" } },
+          { "speaker": "B", "text": "六个。你要几个？", "translation": { "en": "Six. How many do you want?" } },
+          { "speaker": "A", "text": "我要两个。谢谢。", "translation": { "en": "I want two. Thanks." } }
+        ]
+      }
+    ],
+    "wordsToExtension": ["少", "零"]
+  },
+  "7": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "现在几点？", "translation": { "en": "What time is it now?" } },
+          { "speaker": "B", "text": "现在三点。", "translation": { "en": "It's three o'clock now." } },
+          { "speaker": "A", "text": "你什么时候回家？", "translation": { "en": "When do you go home?" } },
+          { "speaker": "B", "text": "我下午五点回家。", "translation": { "en": "I go home at five in the afternoon." } }
+        ]
+      }
+    ]
+  },
+  "8": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "今天几月几号？", "translation": { "en": "What's the date today?" } },
+          { "speaker": "B", "text": "今天三月八号。", "translation": { "en": "Today is March 8th." } },
+          { "speaker": "A", "text": "明天是星期几？", "translation": { "en": "What day is tomorrow?" } },
+          { "speaker": "B", "text": "明天星期二。昨天是星期一。", "translation": { "en": "Tomorrow is Tuesday. Yesterday was Monday." } }
+        ]
+      }
+    ]
+  },
+  "9": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你今年多大？", "translation": { "en": "How old are you this year?" } },
+          { "speaker": "B", "text": "我今年二十岁。", "translation": { "en": "I'm twenty this year." } },
+          { "speaker": "A", "text": "他呢？", "translation": { "en": "What about him?" } },
+          { "speaker": "B", "text": "他今年十八岁。", "translation": { "en": "He's eighteen this year." } }
+        ]
+      }
+    ]
+  },
+  "10": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "他是老师吗？", "translation": { "en": "Is he a teacher?" } },
+          { "speaker": "B", "text": "是，他是老师。我们都是学生。", "translation": { "en": "Yes, he's a teacher. We're all students." } },
+          { "speaker": "A", "text": "她呢？", "translation": { "en": "What about her?" } },
+          { "speaker": "B", "text": "她也是老师。", "translation": { "en": "She's a teacher too." } }
+        ]
+      }
+    ]
+  },
+  "11": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你学习什么？", "translation": { "en": "What do you study?" } },
+          { "speaker": "B", "text": "我学习汉语。", "translation": { "en": "I study Chinese." } },
+          { "speaker": "A", "text": "我也学习汉语。你在哪儿学习？", "translation": { "en": "I study Chinese too. Where do you study?" } },
+          { "speaker": "B", "text": "我在学校学习。我读中文书。", "translation": { "en": "I study at school. I read Chinese books." } }
+        ]
+      }
+    ]
+  },
+  "12": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "书在哪儿？", "translation": { "en": "Where is the book?" } },
+          { "speaker": "B", "text": "书在这里。", "translation": { "en": "The book is here." } },
+          { "speaker": "A", "text": "你在学校吗？", "translation": { "en": "Are you at school?" } },
+          { "speaker": "B", "text": "是，我在学校。他在那里。", "translation": { "en": "Yes, I'm at school. He's over there." } }
+        ]
+      }
+    ]
+  },
+  "13": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你怎么去学校？", "translation": { "en": "How do you go to school?" } },
+          { "speaker": "B", "text": "我坐地铁去学校。", "translation": { "en": "I take the subway to school." } },
+          { "speaker": "A", "text": "他呢？", "translation": { "en": "What about him?" } },
+          { "speaker": "B", "text": "他坐出租车去。", "translation": { "en": "He goes by taxi." } }
+        ]
+      }
+    ]
+  },
+  "14": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "我们一起吃饭吧。", "translation": { "en": "Let's eat together." } },
+          { "speaker": "B", "text": "好。你吃什么？", "translation": { "en": "OK. What do you want to eat?" } },
+          { "speaker": "A", "text": "我吃米饭和菜。你喝什么？", "translation": { "en": "I'll have rice and dishes. What do you drink?" } },
+          { "speaker": "B", "text": "我喝水。", "translation": { "en": "I drink water." } }
+        ]
+      }
+    ]
+  },
+  "15": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "今天很冷。", "translation": { "en": "It's very cold today." } },
+          { "speaker": "B", "text": "是，很冷。你喝热茶吧。", "translation": { "en": "Yes, very cold. Have some hot tea." } },
+          { "speaker": "A", "text": "谢谢。", "translation": { "en": "Thank you." } }
+        ]
+      }
+    ]
+  },
+  "16": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你喜欢运动吗？", "translation": { "en": "Do you like sports?" } },
+          { "speaker": "B", "text": "我喜欢运动。", "translation": { "en": "I like sports." } },
+          { "speaker": "A", "text": "你喜欢什么运动？", "translation": { "en": "What sport do you like?" } },
+          { "speaker": "B", "text": "我喜欢跑步。", "translation": { "en": "I like running." } }
+        ]
+      }
+    ]
+  },
+  "17": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你周末做什么？", "translation": { "en": "What do you do on the weekend?" } },
+          { "speaker": "B", "text": "我看电视。我也听音乐。", "translation": { "en": "I watch TV. I listen to music too." } },
+          { "speaker": "A", "text": "你看电影吗？", "translation": { "en": "Do you watch movies?" } },
+          { "speaker": "B", "text": "看。我喜欢看电影。", "translation": { "en": "Yes. I like watching movies." } }
+        ]
+      }
+    ]
+  },
+  "18": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "我要买苹果。", "translation": { "en": "I want to buy apples." } },
+          { "speaker": "B", "text": "你要几个？", "translation": { "en": "How many do you want?" } },
+          { "speaker": "A", "text": "我要五个。多少钱？", "translation": { "en": "I want five. How much?" } },
+          { "speaker": "B", "text": "十块钱。", "translation": { "en": "Ten yuan." } }
+        ]
+      }
+    ]
+  },
+  "19": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你明天做什么？", "translation": { "en": "What are you doing tomorrow?" } },
+          { "speaker": "B", "text": "我明天去中国。", "translation": { "en": "I'm going to China tomorrow." } },
+          { "speaker": "A", "text": "你想去北京吗？", "translation": { "en": "Do you want to go to Beijing?" } },
+          { "speaker": "B", "text": "想。我会说一点汉语。", "translation": { "en": "Yes. I can speak a little Chinese." } }
+        ]
+      }
+    ]
+  },
+  "20": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "这个很好。", "translation": { "en": "This one is very good." } },
+          { "speaker": "B", "text": "那个呢？你觉得怎么样？", "translation": { "en": "What about that one? What do you think?" } },
+          { "speaker": "A", "text": "那个也很好。", "translation": { "en": "That one is good too." } }
+        ]
+      }
+    ]
+  },
+  "21": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "你好！你叫什么名字？", "translation": { "en": "Hello! What's your name?" } },
+          { "speaker": "B", "text": "我叫李明。你是哪国人？", "translation": { "en": "I'm Li Ming. Which country are you from?" } },
+          { "speaker": "A", "text": "我是中国人。他是我的朋友。", "translation": { "en": "I'm Chinese. He is my friend." } }
+        ]
+      }
+    ]
+  },
+  "22": {
+    "cards": [
+      {
+        "lines": [
+          { "speaker": "A", "text": "我们一起吃饭吧。", "translation": { "en": "Let's eat together." } },
+          { "speaker": "B", "text": "好。现在几点？", "translation": { "en": "OK. What time is it now?" } },
+          { "speaker": "A", "text": "现在十二点。今天很冷，我们喝热茶吧。", "translation": { "en": "It's twelve. It's cold today, let's have hot tea." } }
+        ]
+      }
+    ]
+  }
+}
