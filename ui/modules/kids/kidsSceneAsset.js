@@ -3,10 +3,19 @@
  */
 
 import { buildKidsScenePrompt } from "./kidsScenePrompt.js";
-import { generateKidsSceneImage } from "./kidsSceneGenerator.js";
 
 const CACHE_PREFIX = "lumina_kids_scene_";
 const SCENE_IMAGE_CACHE = new Map();
+
+async function generateSceneImage(prompt) {
+  // MVP: 使用随机占位图测试 Scene Image Engine，不调用真实 AI 接口
+  const url = "https://picsum.photos/900/600?random=" + Math.random();
+  return {
+    ok: true,
+    imageUrl: url,
+    provider: "placeholder",
+  };
+}
 
 /**
  * 生成稳定 cache key：{book}-{lessonId}-{sceneType}
@@ -82,7 +91,7 @@ export async function resolveKidsSceneAsset(sceneMeta, promptOrResult, explicitC
     return result;
   }
 
-  const gen = await generateKidsSceneImage(sceneMeta, built);
+  const gen = await generateSceneImage(built);
   if (gen.ok && gen.imageUrl) {
     writeCache(cacheKey, { imageUrl: gen.imageUrl, prompt: built.prompt, provider: gen.provider });
     const result = {
