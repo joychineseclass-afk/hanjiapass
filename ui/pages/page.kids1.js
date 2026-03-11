@@ -54,7 +54,7 @@ function ensureStyles() {
     .lumina-kids1 .btn-back{ padding:8px 16px; border-radius:999px; background:#e2e8f0; font-weight:700; cursor:pointer; border:none; font-size:13px; }
     .lumina-kids1 .btn-back:hover{ background:#cbd5e1; }
 
-    .kids-lesson-page{ display:flex; flex-direction:column; gap:16px; }
+    .kids-lesson-page{ display:flex; flex-direction:column; gap:16px; width:100%; max-width:960px; margin:0 auto; }
     .kids-lesson-topline{
       font-size:14px;
       line-height:1.6;
@@ -77,7 +77,7 @@ function ensureStyles() {
     .kids-core-card .kids-core-main-py{ font-size:14px; color:#475569; margin-top:4px; }
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
 
-    .kids-dialogue-scene-card{ max-width:880px; margin:0 auto; }
+    .kids-dialogue-scene-card{ width:100%; max-width:880px; margin:0 auto; }
     .kids-dialogue-head{
       display:flex;
       align-items:center;
@@ -103,6 +103,8 @@ function ensureStyles() {
     .kids-scene-image-wrap{
       position:relative;
       width:100%;
+      max-width:none;
+      min-height:420px;
       aspect-ratio:4/3;
       border-radius:16px;
       overflow:hidden;
@@ -118,6 +120,9 @@ function ensureStyles() {
     .kids-scene-image-placeholder{
       position:absolute;
       inset:0;
+      width:100%;
+      height:100%;
+      min-height:420px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -133,8 +138,9 @@ function ensureStyles() {
     .kids-dialogue-bubbles-overlay{
       position:absolute;
       inset:0;
+      width:100%;
+      height:100%;
       pointer-events:none;
-      max-width:100%;
     }
     .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
     .kids-scene-bubble{
@@ -142,7 +148,6 @@ function ensureStyles() {
       display:inline-block;
       max-width:70%;
       min-width:100px;
-      width:fit-content;
       padding:14px 16px;
       border-radius:14px;
       font-size:18px;
