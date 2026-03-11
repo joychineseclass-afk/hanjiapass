@@ -20,6 +20,14 @@ const SCENE_TYPE_PROMPTS = {
     "Classroom scene with colorful items or drawings, children naming colors, bright pastel palette.",
   classroom_animals:
     "Classroom scene with cute animal pictures or toys, children smiling, soft and friendly animals.",
+  classroom_help_thanks:
+    "Children's picture book classroom scene, one child helps another child with books or school items, the helped child says thank you, the other replies kindly, warm and polite mood.",
+  classroom_apology:
+    "Children's picture book classroom scene, a child makes a small mistake like dropping something or bumping a desk, the child says sorry, the other child smiles and says it's okay, gentle and forgiving mood.",
+  classroom_question:
+    "Children's picture book classroom scene, a child or teacher asking a clear question, another child listening carefully, speech bubble style, simple and friendly composition.",
+  classroom_answer:
+    "Children's picture book classroom scene, a child confidently answering a question to the teacher or classmates, supportive and encouraging mood, clear expression.",
 };
 
 /**

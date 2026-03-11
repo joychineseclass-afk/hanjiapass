@@ -85,6 +85,31 @@
       "title": "你叫什么名字？",
       "coreSentence": "你叫什么名字？",
       "scene": "name",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_intro",
+          "title": {
+            "cn": "自我介绍",
+            "kr": "자기 소개",
+            "en": "Self introduction",
+            "jp": "自己紹介"
+          },
+          "description": {
+            "cn": "小朋友在互相问名字并介绍自己。",
+            "kr": "친구들이 서로 이름을 묻고 자기 소개를 해요。",
+            "en": "Children ask each other's names and introduce themselves in the classroom.",
+            "jp": "教室で子どもたちがお互いの名前を聞いて自己紹介をします。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "你叫什么名字？" },
+            { "text": "我叫玛丽。" },
+            { "text": "你呢？" },
+            { "text": "我叫小明。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["你叫什么名字？", "我叫玛丽。"],
         ["你呢？", "我叫小明。"]
@@ -98,6 +123,31 @@
       "title": "你几岁？",
       "coreSentence": "你几岁？",
       "scene": "age",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_self_intro",
+          "title": {
+            "cn": "介绍年龄",
+            "kr": "나이 소개",
+            "en": "Talking about age",
+            "jp": "年齢を言う"
+          },
+          "description": {
+            "cn": "小朋友在教室里互相问“你几岁？”并回答自己的年龄。",
+            "kr": "교실에서 친구들이 서로 \"몇 살이에요?\"라고 묻고 나이를 말해요。",
+            "en": "In the classroom, children ask \"How old are you?\" and answer with their age.",
+            "jp": "教室で子どもたちが「何歳ですか？」と聞き合い、自分の年齢を答えます。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "你几岁？" },
+            { "text": "我五岁。" },
+            { "text": "他呢？" },
+            { "text": "他六岁。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["你几岁？", "我五岁。"],
         ["他呢？", "他六岁。"]
@@ -119,6 +169,31 @@
       "title": "你是哪国人？",
       "coreSentence": "你是哪国人？",
       "scene": "country",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_question_answer",
+          "title": {
+            "cn": "介绍国籍",
+            "kr": "나라 소개하기",
+            "en": "Talking about nationality",
+            "jp": "国籍を言う"
+          },
+          "description": {
+            "cn": "老师和小朋友在教室里互相问“你是哪国人？”。",
+            "kr": "교실에서 선생님과 친구들이 \"어느 나라 사람이에요?\"라고 묻고 답해요。",
+            "en": "In the classroom, the teacher and children ask \"Which country are you from?\" and answer.",
+            "jp": "教室で先生と子どもたちが「どこの国の人ですか？」と質問し合い、答えます。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "你是哪国人？" },
+            { "text": "我是中国人。" },
+            { "text": "她呢？" },
+            { "text": "她是韩国人。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["你是哪国人？", "我是中国人。"],
         ["她呢？", "她是韩国人。"]
@@ -135,12 +210,36 @@
       "title": "他是谁？",
       "coreSentence": "他是谁？",
       "scene": "family",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_question_answer",
+          "title": {
+            "cn": "介绍家人",
+            "kr": "가족 소개하기",
+            "en": "Talking about family members",
+            "jp": "家族を紹介する"
+          },
+          "description": {
+            "cn": "小朋友用“他是谁？”来介绍自己的家人。",
+            "kr": "친구들이 \"그는 누구예요?\"라고 말하며 가족을 소개해요。",
+            "en": "Children use \"Who is he/she?\" to introduce their family members.",
+            "jp": "子どもたちが「彼は誰ですか？」と言って家族を紹介します。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "他是谁？" },
+            { "text": "他是我爸爸。" },
+            { "text": "她是谁？" },
+            { "text": "她是我妈妈。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["他是谁？", "他是我爸爸。"],
         ["她是谁？", "她是我妈妈。"]
       ],
       "extensionWords": [
-      
         "哥哥",
         "姐姐",
         "弟弟",
@@ -151,6 +250,31 @@
       "title": "这是什么？",
       "coreSentence": "这是什么？",
       "scene": "object",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_objects",
+          "title": {
+            "cn": "认识东西",
+            "kr": "물건 알아보기",
+            "en": "Talking about objects",
+            "jp": "ものの名前を言う"
+          },
+          "description": {
+            "cn": "小朋友在教室里用“这是什么？”和“那是什么？”来认识不同的东西。",
+            "kr": "교실에서 친구들이 \"이게 뭐예요?\", \"저게 뭐예요?\"라고 묻고 사물을 배워요。",
+            "en": "In the classroom, children ask \"What is this?\" and \"What is that?\" to learn object names.",
+            "jp": "教室で子どもたちが「これは何ですか？」「あれは何ですか？」と聞いて物の名前を覚えます。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "这是什么？" },
+            { "text": "这是苹果。" },
+            { "text": "那是什么？" },
+            { "text": "那是香蕉。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["这是什么？", "这是苹果。"],
         ["那是什么？", "那是香蕉。"]
@@ -166,6 +290,31 @@
       "title": "你喜欢什么颜色？",
       "coreSentence": "你喜欢什么颜色？",
       "scene": "color",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_colors",
+          "title": {
+            "cn": "喜欢的颜色",
+            "kr": "좋아하는 색",
+            "en": "Favorite colors",
+            "jp": "好きな色"
+          },
+          "description": {
+            "cn": "小朋友在教室里问“你喜欢什么颜色？”，并回答自己喜欢的颜色。",
+            "kr": "교실에서 친구들이 \"무슨 색을 좋아해요?\"라고 묻고 대답해요。",
+            "en": "In the classroom, children ask \"What color do you like?\" and answer with their favorite colors.",
+            "jp": "教室で子どもたちが「何色が好きですか？」と聞き合い、自分の好きな色を答えます。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "你喜欢什么颜色？" },
+            { "text": "我喜欢红色。" },
+            { "text": "她呢？" },
+            { "text": "她喜欢蓝色。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["你喜欢什么颜色？", "我喜欢红色。"],
         ["她呢？", "她喜欢蓝色。"]
@@ -189,6 +338,31 @@
       "title": "你喜欢什么动物？",
       "coreSentence": "你喜欢什么动物？",
       "scene": "animal",
+      "scenes": [
+        {
+          "id": "scene1",
+          "type": "classroom_animals",
+          "title": {
+            "cn": "喜欢的动物",
+            "kr": "좋아하는 동물",
+            "en": "Favorite animals",
+            "jp": "好きな動物"
+          },
+          "description": {
+            "cn": "小朋友在教室里问“你喜欢什么动物？”，并回答自己喜欢的动物。",
+            "kr": "교실에서 친구들이 \"어떤 동물을 좋아해요?\"라고 묻고 대답해요。",
+            "en": "In the classroom, children ask \"What animal do you like?\" and answer with their favorite animals.",
+            "jp": "教室で子どもたちが「どんな動物が好きですか？」と聞き合い、自分の好きな動物を答えます。"
+          },
+          "characters": [],
+          "dialogue": [
+            { "text": "你喜欢什么动物？" },
+            { "text": "我喜欢熊猫。" },
+            { "text": "他呢？" },
+            { "text": "他喜欢小狗。" }
+          ]
+        }
+      ],
       "dialogues": [
         ["你喜欢什么动物？", "我喜欢熊猫。"],
         ["他呢？", "他喜欢小狗。"]

@@ -145,3 +145,65 @@ export function resolveKidsSceneMeta(lessonData, lang, context = {}) {
     },
   };
 }
+
+/**
+ * 基于单个 scene（而不是整课）解析 scene meta，供 per-scene 生图使用。
+ * @param {Object} scene - lesson.scenes[i] 中的单个场景配置
+ * @param {string} lang - 当前系统语言
+ * @param {{ lessonNo?: string|number, book?: string }} context
+ */
+export function resolveKidsSceneMetaForScene(scene, lang, context = {}) {
+  const L = normLang(lang);
+  const lessonNo = context.lessonNo != null ? String(context.lessonNo) : "";
+  const book = context.book || "kids1";
+
+  let type = scene?.type || "";
+  if (!type && scene?.id) {
+    type = SCENE_KEY_TO_TYPE[String(scene.id).toLowerCase()] || "";
+  }
+  if (!type && lessonNo) {
+    type = KIDS1_SCENE_FALLBACK[lessonNo] || "classroom_greeting";
+  }
+  if (!type) type = "classroom_greeting";
+
+  const titleMap = SCENE_TITLES[type] || SCENE_TITLES.classroom_greeting;
+  const descMap = SCENE_DESCRIPTIONS[type] || SCENE_DESCRIPTIONS.classroom_greeting;
+
+  const rawTitle = scene?.title;
+  const rawDesc = scene?.description;
+
+  const title =
+    (typeof rawTitle === "string"
+      ? rawTitle.trim()
+      : rawTitle && (rawTitle[L] || rawTitle.cn || rawTitle.en || rawTitle.kr || rawTitle.jp)) ||
+    titleMap[L] ||
+    titleMap.cn ||
+    "Scene";
+
+  const description =
+    (typeof rawDesc === "string"
+      ? rawDesc.trim()
+      : rawDesc && (rawDesc[L] || rawDesc.cn || rawDesc.en || rawDesc.kr || rawDesc.jp)) ||
+    descMap[L] ||
+    descMap.cn ||
+    "";
+
+  const characters = Array.isArray(scene?.characters) && scene.characters.length ? scene.characters : ["teacher", "student_girl"];
+
+  const sceneId = scene?.id || "scene1";
+
+  return {
+    type,
+    title,
+    description,
+    characters,
+    mood: scene?.mood || "warm",
+    dialogueFocus: scene?.dialogueFocus || "",
+    location: scene?.location || "classroom",
+    promptSeed: {
+      lessonId: lessonNo ? `${book}-lesson${lessonNo}-scene-${sceneId}` : `${book}-scene-${sceneId}`,
+      book,
+      lessonNo: lessonNo ? Number(lessonNo) : 0,
+    },
+  };
+}
