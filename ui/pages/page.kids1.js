@@ -100,12 +100,13 @@ function ensureStyles() {
     .kids-core-card .kids-core-main-gloss{ font-size:13px; color:#64748b; margin-top:4px; }
     .kids-core-card .kids-core-actions{ margin-top:6px; }
 
-    .kids-dialogue-card{ padding:14px 10px; }
-    .kids-bubble-row{ display:flex; margin-bottom:10px; align-items:flex-end; gap:6px; }
+    .kids-dialogue-card{ padding:14px 10px; display:flex; flex-direction:column; gap:10px; }
+    .kids-dialogue-bubbles{ margin-top:4px; }
+    .kids-bubble-row{ display:flex; margin-bottom:12px; align-items:flex-end; gap:10px; }
     .kids-bubble-row.left{ justify-content:flex-start; }
     .kids-bubble-row.right{ justify-content:flex-end; }
     .kids-bubble{
-      max-width:72%;
+      max-width:420px;
       border-radius:18px;
       padding:10px 12px;
       background:#eff6ff;
@@ -259,23 +260,21 @@ export function getKidsSceneMeta(lessonData, lang) {
 
 // 预留：Kids 场景卡片渲染（未来可接 AI 图片 / 场景说明）
 export function renderKidsSceneCard(sceneMeta) {
-  const title = sceneMeta?.title || "";
-  const desc = sceneMeta?.description || "";
+  const title = sceneMeta?.title || t("kids1.kids_scene_title", "Scene");
   const imgLabel = t("kids1.sceneImage", "Scene Image");
   const readAll = t("kids1.readAll", "🔊 Read all");
   return `
-    <section class="kids-scene-card">
-      <div class="kids-scene-main">
-        <div class="kids-scene-image">${escapeHtml(imgLabel)}</div>
-        <div class="kids-scene-text">
+    <div class="kids-scene-main">
+      <div class="kids-scene-image">
+        <div>
           <div class="kids-scene-title">${escapeHtml(title)}</div>
-          ${desc ? `<div class="kids-scene-desc">${escapeHtml(desc)}</div>` : ""}
+          <div class="kids-scene-desc">${escapeHtml(imgLabel)}</div>
           <div class="kids-scene-actions">
             <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAll)}</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   `;
 }
 
