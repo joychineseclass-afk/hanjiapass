@@ -4,6 +4,9 @@
 import { i18n } from "../i18n.js";
 import { resolvePinyin } from "../utils/pinyinEngine.js";
 import { getLang } from "../core/languageEngine.js";
+import { resolveKidsSceneMeta } from "../modules/kids/kidsSceneMeta.js";
+import { buildKidsScenePrompt } from "../modules/kids/kidsScenePrompt.js";
+import { resolveKidsSceneAsset } from "../modules/kids/kidsSceneAsset.js";
 
 const STYLE_ID = "lumina-kids1-style";
 const GLOSSARY_KEY = "kids1_glossary";
@@ -120,12 +123,17 @@ function ensureStyles() {
       position:absolute;
       inset:0;
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
+      gap:8px;
+      padding:20px;
       font-size:14px;
-      color:#94a3b8;
+      color:#64748b;
       background:linear-gradient(180deg,#eef7ff,#f8fbff);
     }
+    .kids-scene-image-placeholder-title{ font-weight:700; color:#334155; font-size:15px; }
+    .kids-scene-image-placeholder-desc{ font-size:12px; color:#94a3b8; max-width:80%; text-align:center; line-height:1.4; }
     .kids-dialogue-bubbles-overlay{
       position:absolute;
       inset:0;
@@ -606,7 +614,18 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const readAllLabel = t("kids1.readAll", "🔊 Read all");
   const backToListLabel = t("kids.backToList", "课程列表");
   const toplineText = getLessonTopline(lesson, lessonNo, lang, coreZh, corePy);
-  const sceneLabel = t("kids1.sceneImage", "场景图片");
+  const sceneMeta = resolveKidsSceneMeta(lesson, lang, { lessonNo, book: "kids1" });
+  const scenePromptResult = buildKidsScenePrompt(sceneMeta);
+  const sceneAsset = resolveKidsSceneAsset(sceneMeta, scenePromptResult);
+  if (typeof window !== "undefined" && window.location?.hostname === "localhost") {
+    try { console.log("[KidsScenePrompt]", scenePromptResult.prompt); } catch (_) {}
+  }
+  const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneAsset.cacheKey)}" data-scene-mode="${escapeAttr(sceneAsset.mode)}" data-scene-prompt="${escapeAttr(sceneAsset.shortPrompt)}"`;
+  const scenePlaceholderHtml = `
+    <div class="kids-scene-image-placeholder">
+      <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneAsset.alt)}</div>
+      <div class="kids-scene-image-placeholder-desc">${escapeHtml(sceneAsset.shortPrompt)}</div>
+    </div>`;
 
   root.innerHTML = `
     <div class="lumina-kids1">
@@ -631,8 +650,8 @@ function renderLessonDetail(root, blueprint, glossary, lessonNo) {
                     <button type="button" id="kids1ReadAllBtn" class="kids-read-all-btn">${escapeHtml(readAllLabel)}</button>
                   </div>
                   <div class="kids-scene-stage">
-                    <div class="kids-scene-image-wrap">
-                      <div class="kids-scene-image-placeholder">${escapeHtml(sceneLabel)}</div>
+                    <div class="kids-scene-image-wrap" ${sceneWrapData}>
+                      ${sceneAsset.imageUrl ? `<img class="kids-scene-image" src="${escapeAttr(sceneAsset.imageUrl)}" alt="${escapeAttr(sceneAsset.alt)}" />` : scenePlaceholderHtml}
                       <div class="kids-dialogue-bubbles-overlay" id="kids1DialogueList">
                         ${overlayBubbles || ""}
                       </div>
