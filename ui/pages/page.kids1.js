@@ -723,6 +723,14 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     });
     const listEl = root.querySelector("#kids1DialogueCharList");
     if (listEl && lines.length) {
+      const hasCharacter = lines.some((line) => {
+        const charId = String(line.character || "").trim();
+        return !!(charId && map.get(charId));
+      });
+      if (!hasCharacter) {
+        // 当前课没有任何绑定角色的行：不渲染 Character Layer，保持为空
+        return;
+      }
       const html = lines
         .map((line) => {
           const text = String(line.zh || "").trim();
@@ -732,8 +740,8 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           if (character) {
             return renderCharacterBubble(character, escapeHtml(text));
           }
-          // 无角色信息时，保持简单文本气泡，向后兼容
-          return `<div class="lumina-char-bubble"><div class="lumina-char-text">${escapeHtml(text)}</div></div>`;
+          // 当前规则：仅渲染带角色的行，其余行在原 scene bubble 层展示，避免重复文本
+          return "";
         })
         .filter(Boolean)
         .join("");
