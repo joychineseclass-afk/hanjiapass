@@ -645,6 +645,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     dialogueSectionHtml = scenes
       .map((scene, idx) => {
         const sceneMeta = resolveKidsSceneMetaForScene(scene, getLang(), { lessonNo, book: "kids1" }) ?? { type: "default_classroom" };
+        const sceneId = scene?.id || `scene${idx + 1}`;
         const sceneCacheKey = `${sceneMeta.promptSeed?.book || "kids1"}-${sceneMeta.promptSeed?.lessonId || "lesson"}-${sceneMeta.type || "classroom_greeting"}`;
         const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneCacheKey)}" data-scene-prompt="${escapeAttr(basePrompt.shortPrompt)}"`;
         const lines = (scene.dialogue || []).map((d) => {
@@ -688,7 +689,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           typeof scene.description === "string"
             ? scene.description
             : (scene.description && (scene.description[lang] || scene.description.cn || scene.description.en)) || "";
-        const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
+        const imgId = `kids1SceneImageContent_${idx}`;
         return `
           <section class="kids-dialogue-scene-card kids-card">
             <div class="kids-dialogue-head">
