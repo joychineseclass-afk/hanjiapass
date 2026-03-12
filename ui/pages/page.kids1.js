@@ -128,14 +128,8 @@ function ensureStyles() {
     .kids-scene-image-wrap .kids-scene-image{
       width:100%;
       height:100%;
-      min-height:420px;
       object-fit:cover;
       display:block;
-    }
-    .kids-scene-image-fallback{
-      width:100%;
-      min-height:420px;
-      background:linear-gradient(180deg,#f8fafc 0%,#e2e8f0 100%);
     }
     .kids-scene-image-placeholder{
       position:absolute;
@@ -169,7 +163,6 @@ function ensureStyles() {
       inset:0;
       width:100%;
       height:100%;
-      z-index:2;
       pointer-events:none;
     }
     .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
@@ -372,17 +365,6 @@ const KIDS1_EXTENSION_MEANINGS = {
   "苹果": { cn: "苹果", kr: "사과", en: "apple", jp: "りんご" },
   "香蕉": { cn: "香蕉", kr: "바나나", en: "banana", jp: "バナナ" },
 };
-
-async function getRandomTestSceneImage() {
-  const list = [
-    "https://picsum.photos/1200/700?random=11",
-    "https://picsum.photos/1200/700?random=21",
-    "https://picsum.photos/1200/700?random=31",
-    "https://picsum.photos/1200/700?random=41",
-  ];
-  const imageUrl = list[Math.floor(Math.random() * list.length)];
-  return { ok: true, imageUrl };
-}
 
 function getSceneBubblePositions(dialogueLength) {
   const n = Math.min(Math.max(0, dialogueLength), 12);
@@ -706,7 +688,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           typeof scene.description === "string"
             ? scene.description
             : (scene.description && (scene.description[lang] || scene.description.cn || scene.description.en)) || "";
-        const imgId = `kids1SceneImageContent_${idx}`;
+        const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
         return `
           <section class="kids-dialogue-scene-card kids-card">
             <div class="kids-dialogue-head">
