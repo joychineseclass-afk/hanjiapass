@@ -128,8 +128,14 @@ function ensureStyles() {
     .kids-scene-image-wrap .kids-scene-image{
       width:100%;
       height:100%;
+      min-height:420px;
       object-fit:cover;
       display:block;
+    }
+    .kids-scene-image-fallback{
+      width:100%;
+      min-height:420px;
+      background:linear-gradient(180deg,#f8fafc 0%,#e2e8f0 100%);
     }
     .kids-scene-image-placeholder{
       position:absolute;
@@ -154,6 +160,7 @@ function ensureStyles() {
       inset:0;
       width:100%;
       height:100%;
+      z-index:2;
       pointer-events:none;
     }
     .kids-dialogue-bubbles-overlay .kids-scene-bubble{ pointer-events:auto; z-index:2; }
@@ -356,6 +363,17 @@ const KIDS1_EXTENSION_MEANINGS = {
   "苹果": { cn: "苹果", kr: "사과", en: "apple", jp: "りんご" },
   "香蕉": { cn: "香蕉", kr: "바나나", en: "banana", jp: "バナナ" },
 };
+
+async function getRandomTestSceneImage() {
+  const list = [
+    "https://picsum.photos/1200/700?random=11",
+    "https://picsum.photos/1200/700?random=21",
+    "https://picsum.photos/1200/700?random=31",
+    "https://picsum.photos/1200/700?random=41",
+  ];
+  const imageUrl = list[Math.floor(Math.random() * list.length)];
+  return { ok: true, imageUrl };
+}
 
 function getSceneBubblePositions(dialogueLength) {
   const n = Math.min(Math.max(0, dialogueLength), 12);
@@ -677,7 +695,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           typeof scene.description === "string"
             ? scene.description
             : (scene.description && (scene.description[lang] || scene.description.cn || scene.description.en)) || "";
-        const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
+        const imgId = `kids1SceneImageContent_${idx}`;
         return `
           <section class="kids-dialogue-scene-card kids-card">
             <div class="kids-dialogue-head">
@@ -832,72 +850,29 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     }
   }
 
-  // 场景图片生成：有 scenes 时按 scene 逐个生成，旧 schema 时按 lesson 级生成一张
-  if (scenes.length > 0) {
-    (async () => {
-      const langCode = getLang();
-      for (let i = 0; i < scenes.length; i += 1) {
-        const scene = scenes[i];
-        const sceneMeta = resolveKidsSceneMetaForScene(scene, langCode, { lessonNo, book: "kids1" });
-        const sceneId = scene?.id || `scene${i + 1}`;
-        const sceneCacheKey = `kids1_scene_${lessonNo}_${sceneId}`;
-        const scenePrompt = buildKidsScenePrompt(sceneMeta);
-        try {
-          const asset = await resolveKidsSceneAsset(sceneMeta, scenePrompt, sceneCacheKey);
-          const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
-          const slot = document.getElementById(imgId);
-          if (!slot) continue;
-          const url = asset.imageUrl || asset.url;
-          if (asset.mode === "generated" && url) {
-            slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(url)}" alt="${escapeAttr(asset.alt || sceneMeta.title || "Scene")}" />`;
-            const wrap = slot.closest(".kids-scene-image-wrap");
-            if (wrap) wrap.setAttribute("data-scene-mode", "generated");
-          } else {
-            slot.innerHTML = `
-              <div class="kids-scene-image-placeholder">
-                <div class="kids-scene-image-placeholder-title">${escapeHtml(sceneMeta.title || "Scene")}</div>
-                <div class="kids-scene-image-placeholder-desc">${escapeHtml(scenePrompt.shortPrompt || "")}</div>
-              </div>`;
-            const wrap = slot.closest(".kids-scene-image-wrap");
-            if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
-          }
-        } catch (e) {
-          if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
-        }
+  // 随机图片测试：会话区单张随机图，不接正式 AI，不 per-scene 多图
+  (async () => {
+    let slot;
+    if (scenes.length > 0) {
+      slot = document.getElementById("kids1SceneImageContent_0");
+    } else {
+      slot = root.querySelector("#kids1SceneImageContent");
+    }
+    if (!slot) return;
+    try {
+      const result = await getRandomTestSceneImage();
+      if (result.ok && result.imageUrl) {
+        slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(result.imageUrl)}" alt="scene image" />`;
+        const wrap = slot.closest(".kids-scene-image-wrap");
+        if (wrap) wrap.setAttribute("data-scene-mode", "test");
+      } else {
+        slot.innerHTML = `<div class="kids-scene-image-fallback"></div>`;
       }
-    })();
-  } else {
-    (async () => {
-      try {
-        const asset = await resolveKidsSceneAsset(baseSceneMeta, basePrompt);
-        const slot = root.querySelector("#kids1SceneImageContent");
-        if (!slot) return;
-        if (asset.mode === "generated" && asset.imageUrl) {
-          slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(asset.imageUrl)}" alt="${escapeAttr(asset.alt)}" />`;
-          const wrap = slot.closest(".kids-scene-image-wrap");
-          if (wrap) wrap.setAttribute("data-scene-mode", "generated");
-        } else {
-          slot.innerHTML = `
-            <div class="kids-scene-image-placeholder">
-              <div class="kids-scene-image-placeholder-title">${escapeHtml(asset.alt)}</div>
-              <div class="kids-scene-image-placeholder-desc">${escapeHtml(asset.shortPrompt)}</div>
-            </div>`;
-          const wrap = slot.closest(".kids-scene-image-wrap");
-          if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
-        }
-      } catch (e) {
-        if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
-        const slot = root.querySelector("#kids1SceneImageContent");
-        if (slot) {
-          slot.innerHTML = `
-            <div class="kids-scene-image-placeholder">
-              <div class="kids-scene-image-placeholder-title">${escapeHtml(baseSceneMeta.title || "Scene")}</div>
-              <div class="kids-scene-image-placeholder-desc">${escapeHtml(basePrompt.shortPrompt)}</div>
-            </div>`;
-        }
-      }
-    })();
-  }
+    } catch (e) {
+      if (typeof console !== "undefined") console.warn("[KidsSceneImage] random test failed", e?.message || e);
+      slot.innerHTML = `<div class="kids-scene-image-fallback"></div>`;
+    }
+  })();
 }
 
 export default async function pageKids1(ctxOrRoot) {
