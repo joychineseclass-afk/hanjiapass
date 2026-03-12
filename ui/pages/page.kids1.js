@@ -149,6 +149,15 @@ function ensureStyles() {
     }
     .kids-scene-image-placeholder-title{ font-weight:700; color:#334155; font-size:15px; }
     .kids-scene-image-placeholder-desc{ font-size:12px; color:#94a3b8; max-width:80%; text-align:center; line-height:1.4; }
+    .kids-scene-image-fallback{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      min-height:420px;
+      background:linear-gradient(180deg,#eef7ff,#f8fbff);
+      border-radius:16px;
+    }
     .kids-dialogue-bubbles-overlay{
       position:absolute;
       inset:0;
@@ -620,7 +629,11 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   const backToListLabel = t("kids.backToList", "课程列表");
   const toplineText = getLessonTopline(lesson, lessonNo, lang, coreZh, corePy);
   const baseSceneMeta = resolveKidsSceneMeta(lesson, lang, { lessonNo, book: "kids1" });
-  const basePrompt = buildKidsScenePrompt(baseSceneMeta);
+  const sceneMetaForAsset =
+    scenes.length > 0
+      ? (resolveKidsSceneMetaForScene(scenes[0], lang, { lessonNo, book: "kids1" }) ?? { type: "default_classroom" })
+      : (baseSceneMeta ?? { type: "default_classroom" });
+  const basePrompt = buildKidsScenePrompt(sceneMetaForAsset);
 
   const loadingPlaceholderHtml = `
     <div class="kids-scene-image-placeholder">
@@ -631,9 +644,8 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
   if (scenes.length > 0) {
     dialogueSectionHtml = scenes
       .map((scene, idx) => {
-        const sceneIndex = idx;
-        const sceneId = scene?.id || `scene${sceneIndex + 1}`;
-        const sceneMeta = resolveKidsSceneMetaForScene(scene, getLang(), { lessonNo, book: "kids1" });
+        const sceneMeta = resolveKidsSceneMetaForScene(scene, getLang(), { lessonNo, book: "kids1" }) ?? { type: "default_classroom" };
+        const sceneId = scene?.id || `scene${idx + 1}`;
         const sceneCacheKey = `${sceneMeta.promptSeed?.book || "kids1"}-${sceneMeta.promptSeed?.lessonId || "lesson"}-${sceneMeta.type || "classroom_greeting"}`;
         const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneCacheKey)}" data-scene-prompt="${escapeAttr(basePrompt.shortPrompt)}"`;
         const lines = (scene.dialogue || []).map((d) => {
@@ -677,7 +689,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           typeof scene.description === "string"
             ? scene.description
             : (scene.description && (scene.description[lang] || scene.description.cn || scene.description.en)) || "";
-        const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
+        const imgId = `kids1SceneImageContent_${idx}`;
         return `
           <section class="kids-dialogue-scene-card kids-card">
             <div class="kids-dialogue-head">
@@ -725,7 +737,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
         </div>`;
       })
       .join("");
-    const sceneMeta = baseSceneMeta;
+    const sceneMeta = baseSceneMeta ?? { type: "default_classroom" };
     const sceneCacheKey = `${sceneMeta.promptSeed?.book || "kids1"}-${sceneMeta.promptSeed?.lessonId || "lesson"}-${sceneMeta.type || "classroom_greeting"}`;
     const sceneWrapData = `data-scene-type="${escapeAttr(sceneMeta.type)}" data-scene-cache-key="${escapeAttr(sceneCacheKey)}" data-scene-prompt="${escapeAttr(basePrompt.shortPrompt)}"`;
     dialogueSectionHtml = `
@@ -832,24 +844,28 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
     }
   }
 
-  // 场景图片生成：有 scenes 时按 scene 逐个生成，旧 schema 时按 lesson 级生成一张
+  // 场景图片生成：有 scenes 时按 scene 逐个生成，旧 schema 时按 lesson 级生成一张；sceneMeta 始终有定义
   if (scenes.length > 0) {
     (async () => {
       const langCode = getLang();
       for (let i = 0; i < scenes.length; i += 1) {
         const scene = scenes[i];
-        const sceneMeta = resolveKidsSceneMetaForScene(scene, langCode, { lessonNo, book: "kids1" });
+        const sceneMeta = resolveKidsSceneMetaForScene(scene, langCode, { lessonNo, book: "kids1" }) ?? { type: "default_classroom" };
         const sceneId = scene?.id || `scene${i + 1}`;
         const sceneCacheKey = `kids1_scene_${lessonNo}_${sceneId}`;
         const scenePrompt = buildKidsScenePrompt(sceneMeta);
         try {
-          const asset = await resolveKidsSceneAsset(sceneMeta, scenePrompt, sceneCacheKey);
-          const imgId = `kids1SceneImageContent_${lessonNo}_${sceneId}`;
+          const result = await resolveKidsSceneAsset(sceneMeta, scenePrompt, sceneCacheKey);
+          const imgId = `kids1SceneImageContent_${i}`;
           const slot = document.getElementById(imgId);
           if (!slot) continue;
-          const url = asset.imageUrl || asset.url;
-          if (asset.mode === "generated" && url) {
-            slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(url)}" alt="${escapeAttr(asset.alt || sceneMeta.title || "Scene")}" />`;
+          if (result?.ok && result?.imageUrl) {
+            slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(result.imageUrl)}" alt="${escapeAttr(result.alt || sceneMeta.title || "Scene")}" />`;
+            const wrap = slot.closest(".kids-scene-image-wrap");
+            if (wrap) wrap.setAttribute("data-scene-mode", "generated");
+          } else if (result?.mode === "generated" && (result?.imageUrl || result?.url)) {
+            const url = result.imageUrl || result.url;
+            slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(url)}" alt="${escapeAttr(result.alt || sceneMeta.title || "Scene")}" />`;
             const wrap = slot.closest(".kids-scene-image-wrap");
             if (wrap) wrap.setAttribute("data-scene-mode", "generated");
           } else {
@@ -863,24 +879,31 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
           }
         } catch (e) {
           if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
+          const imgId = `kids1SceneImageContent_${i}`;
+          const slot = document.getElementById(imgId);
+          if (slot) slot.innerHTML = `<div class="kids-scene-image-fallback"></div>`;
         }
       }
     })();
   } else {
     (async () => {
       try {
-        const asset = await resolveKidsSceneAsset(baseSceneMeta, basePrompt);
+        const result = await resolveKidsSceneAsset(sceneMetaForAsset, basePrompt);
         const slot = root.querySelector("#kids1SceneImageContent");
         if (!slot) return;
-        if (asset.mode === "generated" && asset.imageUrl) {
-          slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(asset.imageUrl)}" alt="${escapeAttr(asset.alt)}" />`;
+        if (result?.ok && result?.imageUrl) {
+          slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(result.imageUrl)}" alt="${escapeAttr(result.alt || "Scene")}" />`;
+          const wrap = slot.closest(".kids-scene-image-wrap");
+          if (wrap) wrap.setAttribute("data-scene-mode", "generated");
+        } else if (result?.mode === "generated" && result?.imageUrl) {
+          slot.innerHTML = `<img class="kids-scene-image" src="${escapeAttr(result.imageUrl)}" alt="${escapeAttr(result.alt)}" />`;
           const wrap = slot.closest(".kids-scene-image-wrap");
           if (wrap) wrap.setAttribute("data-scene-mode", "generated");
         } else {
           slot.innerHTML = `
             <div class="kids-scene-image-placeholder">
-              <div class="kids-scene-image-placeholder-title">${escapeHtml(asset.alt)}</div>
-              <div class="kids-scene-image-placeholder-desc">${escapeHtml(asset.shortPrompt)}</div>
+              <div class="kids-scene-image-placeholder-title">${escapeHtml(result?.alt || sceneMetaForAsset?.title || "Scene")}</div>
+              <div class="kids-scene-image-placeholder-desc">${escapeHtml(result?.shortPrompt || basePrompt?.shortPrompt || "")}</div>
             </div>`;
           const wrap = slot.closest(".kids-scene-image-wrap");
           if (wrap) wrap.setAttribute("data-scene-mode", "placeholder");
@@ -888,13 +911,7 @@ async function renderLessonDetail(root, blueprint, glossary, lessonNo) {
       } catch (e) {
         if (typeof console !== "undefined") console.warn("[KidsSceneImage] resolve failed", e?.message || e);
         const slot = root.querySelector("#kids1SceneImageContent");
-        if (slot) {
-          slot.innerHTML = `
-            <div class="kids-scene-image-placeholder">
-              <div class="kids-scene-image-placeholder-title">${escapeHtml(baseSceneMeta.title || "Scene")}</div>
-              <div class="kids-scene-image-placeholder-desc">${escapeHtml(basePrompt.shortPrompt)}</div>
-            </div>`;
-        }
+        if (slot) slot.innerHTML = `<div class="kids-scene-image-fallback"></div>`;
       }
     })();
   }
