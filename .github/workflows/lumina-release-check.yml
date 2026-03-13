@@ -1,0 +1,80 @@
+name: Lumina Release Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ stable ]
+
+jobs:
+  release-gate:
+    name: Run release checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build check (MVP)
+        run: npm run build:vocab
+
+      - name: Validate JSON files under data/
+        run: |
+          node - <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+
+          function walk(dir) {
+            const entries = fs.readdirSync(dir, { withFileTypes: true });
+            for (const entry of entries) {
+              const fullPath = path.join(dir, entry.name);
+              if (entry.isDirectory()) {
+                walk(fullPath);
+              } else if (entry.isFile() && entry.name.endsWith('.json')) {
+                try {
+                  JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+                } catch (e) {
+                  console.error(`Invalid JSON in ${fullPath}`);
+                  console.error(e.message);
+                  process.exitCode = 1;
+                }
+              }
+            }
+          }
+
+          if (fs.existsSync('data')) {
+            walk('data');
+          } else {
+            console.warn('data/ directory not found; JSON validation skipped.');
+          }
+
+          if (process.exitCode) {
+            process.exit(process.exitCode);
+          }
+          EOF
+
+      - name: Check required route pages and lesson data directory
+        run: |
+          set -e
+          if [ ! -f "ui/pages/page.home.js" ]; then
+            echo "Required file ui/pages/page.home.js is missing."
+            exit 1
+          fi
+
+          if [ ! -f "ui/pages/page.hsk.js" ]; then
+            echo "Required file ui/pages/page.hsk.js is missing."
+            exit 1
+          fi
+
+          if [ ! -d "data/lessons" ]; then
+            echo "Required directory data/lessons/ is missing."
+            exit 1
+          fi
