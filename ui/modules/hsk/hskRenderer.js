@@ -418,9 +418,16 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   }
   const pickTrans = (line) => {
     if (!line || typeof line !== "object") return "";
-    const t = line.translation || line.trans || line.explain;
-    if (t && typeof t === "object") return (t[l] ?? t.kr ?? t.ko ?? t.en ?? t.zh ?? "") || "";
-    return (line.kr ?? line.ko ?? line.en ?? line.zh ?? "") || "";
+    // 与普通 lesson dialogue 保持一致：通过 languageEngine 的 getContentText 读取多语言翻译
+    // strict=true：只取当前语言的翻译，不跨语言 fallback，避免 KR/CN 下误用英文
+    const translated = getContentText(line, "translation", { strict: true, lang: l });
+    if (translated) return translated;
+    // 兼容旧字段（如直接挂在行对象上的 kr/en/zh 等），但仍按当前语言优先
+    if (l === "kr") return (line.kr ?? line.ko ?? "") || "";
+    if (l === "cn") return (line.cn ?? line.zh ?? "") || "";
+    if (l === "jp") return (line.jp ?? line.ja ?? "") || "";
+    // 英文界面或无匹配时，最后再看英文
+    return (line.en ?? "") || "";
   };
   const rows = [];
   for (const card of list) {
