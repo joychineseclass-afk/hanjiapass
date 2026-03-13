@@ -1,0 +1,38 @@
+name: Lumina Auto Rollback (MVP)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  auto-rollback-mvp:
+    name: Auto rollback scaffold (MVP)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show current branch and latest commit
+        run: |
+          echo "=== Lumina Auto Rollback MVP ==="
+          echo "This is a non-destructive scaffold workflow."
+          echo ""
+          echo "Git status:"
+          git status
+          echo ""
+          echo "Current branch:"
+          git rev-parse --abbrev-ref HEAD
+          echo ""
+          echo "Latest commit:"
+          git log -1 --oneline
+
+      - name: Explain rollback scaffold status
+        run: |
+          echo "Lumina Auto Rollback MVP placeholder."
+          echo "No git revert / git push is executed in this workflow."
+          echo "Repository files are not modified."
+          echo ""
+          echo "Auto rollback workflow scaffold is ready"
+          echo "Current MVP does not modify stable"
+          echo "Future version can extend to rollback logic after verification"
+
