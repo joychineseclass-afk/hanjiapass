@@ -90,3 +90,22 @@ lm.save();
 - 使用 `ensureHSKDeps()` 与 `window.HSK_LOADER`，不修改 HSK_LOADER 实现
 - 使用 `window.DATA_PATHS` 获取 URL，兼容子目录部署
 - 不改动 router.js、page.hsk、page.stroke、page.hanja
+
+## Lumina 恢复系统（Restore System）
+
+当需要将仓库恢复到 `stable` 分支的状态时，可以使用简单的一键恢复脚本。
+
+在支持 Bash 的终端中运行：
+
+```bash
+bash scripts/restore-stable.sh
+```
+
+该脚本会：
+
+- 拉取远程最新代码：`git fetch origin`
+- 切换到 `main` 分支：`git checkout main`
+- 强制将本地 `main` 重置为 `origin/stable`：`git reset --hard origin/stable`
+- 将结果强制推送到远程 `main`：`git push --force`
+
+完成后，`main` 分支将与 `stable` 分支保持完全一致。
