@@ -4,245 +4,30 @@
   "practiceCount": 5,
   "lessons": [
 
-    {
-      "lessonNo": 1,
-      "title": { "cn": "你好", "kr": "인사하기", "en": "Greeting" },
-      "sceneGoal": "第一次见面打招呼",
-      "subtitle": "第一次见面",
-      "grammarTargets": ["你好", "你", "我"],
-      "vocabTargets": ["你好", "你", "我"],
-      "extensionTargets": ["您好", "大家好", "很高兴认识你"]
-    },
-
-    {
-      "lessonNo": 2,
-      "title": { "cn": "自我介绍与问名字", "kr": "자기소개와 이름 묻기", "en": "Self Intro & Asking Names" },
-      "sceneGoal": "第一次认识时自我介绍并问名字",
-      "subtitle": "第一次认识时自我介绍并问名字",
-      "grammarTargets": ["我叫", "是", "什么", "呢"],
-      "vocabTargets": ["叫", "名字", "什么", "我", "你"],
-      "extensionTargets": ["我叫…", "我是…", "你叫什么名字"]
-    },
-
-    {
-      "lessonNo": 3,
-      "title": { "cn": "你是哪国人？", "kr": "국적", "en": "Nationality" },
-      "sceneGoal": "问来自哪里",
-      "subtitle": "问来自哪里",
-      "grammarTargets": ["哪国人"],
-      "vocabTargets": ["中国", "韩国", "美国", "日本"],
-      "extensionTargets": ["我是中国人", "你是哪国人"]
-    },
-
-    {
-      "lessonNo": 4,
-      "title": { "cn": "这是我的妈妈", "kr": "가족", "en": "Family Members" },
-      "sceneGoal": "介绍家庭",
-      "subtitle": "介绍家庭",
-      "grammarTargets": ["这", "那", "的"],
-      "vocabTargets": ["爸爸", "妈妈", "这", "那"],
-      "extensionTargets": ["哥哥", "姐姐", "弟弟", "妹妹"]
-    },
-
-    {
-      "lessonNo": 5,
-      "title": { "cn": "这是我的朋友", "kr": "친구와 동학", "en": "Friends and Classmates" },
-      "sceneGoal": "介绍朋友",
-      "subtitle": "介绍朋友",
-      "grammarTargets": ["这是"],
-      "vocabTargets": ["朋友", "同学"],
-      "extensionTargets": ["老师"]
-    },
-
-    {
-      "lessonNo": 6,
-      "title": { "cn": "我在学校", "kr": "학교 생활", "en": "School Life" },
-      "sceneGoal": "在学校聊天",
-      "subtitle": "在学校聊天",
-      "grammarTargets": ["在"],
-      "vocabTargets": ["学校", "学生"],
-      "extensionTargets": ["教室"]
-    },
-
-    {
-      "lessonNo": 7,
-      "title": { "cn": "我的电话号码是……", "kr": "숫자", "en": "Numbers" },
-      "sceneGoal": "报电话号码",
-      "subtitle": "报电话号码",
-      "grammarTargets": ["数字"],
-      "vocabTargets": ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
-      "extensionTargets": ["1–10", "11–100"]
-    },
-
-    {
-      "lessonNo": 8,
-      "title": { "cn": "几个？一个，两个", "kr": "수량", "en": "Quantity" },
-      "sceneGoal": "数东西",
-      "subtitle": "数东西",
-      "grammarTargets": ["几", "个"],
-      "vocabTargets": ["几", "个"],
-      "extensionTargets": ["一个", "两个", "三个"]
-    },
-
-    {
-      "lessonNo": 9,
-      "title": { "cn": "你多大？", "kr": "나이", "en": "Age" },
-      "sceneGoal": "问年龄",
-      "subtitle": "问年龄",
-      "grammarTargets": ["多大", "岁"],
-      "vocabTargets": ["岁"],
-      "extensionTargets": ["我今年……岁"]
-    },
-
-    {
-      "lessonNo": 10,
-      "title": { "cn": "现在几点？", "kr": "시간", "en": "Time" },
-      "sceneGoal": "问现在几点",
-      "subtitle": "问现在几点",
-      "grammarTargets": ["几点"],
-      "vocabTargets": ["点"],
-      "extensionTargets": ["一点–十二点", "半点", "几点几分"]
-    },
-
-    {
-      "lessonNo": 11,
-      "title": { "cn": "今天几月几号？", "kr": "날짜", "en": "Date" },
-      "sceneGoal": "问今天几月几号",
-      "subtitle": "问今天几月几号",
-      "grammarTargets": ["几月几号"],
-      "vocabTargets": ["月", "号"],
-      "extensionTargets": ["一月–十二月", "一号–三十一号"]
-    },
-
-    {
-      "lessonNo": 12,
-      "title": { "cn": "今天星期几？", "kr": "요일", "en": "Days of the Week" },
-      "sceneGoal": "问今天星期几",
-      "subtitle": "问今天星期几",
-      "grammarTargets": ["星期几"],
-      "vocabTargets": ["星期"],
-      "extensionTargets": ["星期一–星期天"]
-    },
-
-    {
-      "lessonNo": 13,
-      "title": { "cn": "我喜欢……", "kr": "취미", "en": "Hobbies" },
-      "sceneGoal": "谈兴趣",
-      "subtitle": "谈兴趣",
-      "grammarTargets": ["喜欢"],
-      "vocabTargets": ["喜欢"],
-      "extensionTargets": ["看书", "看电影", "听音乐"]
-    },
-
-    {
-      "lessonNo": 14,
-      "title": { "cn": "喂，请问……", "kr": "전화하기", "en": "Phone Call" },
-      "sceneGoal": "电话聊天",
-      "subtitle": "电话聊天",
-      "grammarTargets": ["请问"],
-      "vocabTargets": ["电话"],
-      "extensionTargets": ["喂", "找谁", "电话常用表达"]
-    },
-
-    {
-      "lessonNo": 15,
-      "title": { "cn": "吃 / 喝", "kr": "식사", "en": "Eating" },
-      "sceneGoal": "一起吃饭",
-      "subtitle": "一起吃饭",
-      "grammarTargets": ["吃", "喝"],
-      "vocabTargets": ["米饭", "面条"],
-      "extensionTargets": ["水", "茶"]
-    },
-
-    {
-      "lessonNo": 16,
-      "title": { "cn": "购物与买水果", "kr": "쇼핑과 과일 사기", "en": "Shopping & Buying Fruit" },
-      "sceneGoal": "在商店/水果店买东西",
-      "subtitle": "在商店/水果店买东西",
-      "grammarTargets": ["多少钱", "买", "几个"],
-      "vocabTargets": ["钱", "块", "苹果", "香蕉", "橙子"],
-      "extensionTargets": ["太贵了", "便宜一点", "买水果"]
-    },
-
-    {
-      "lessonNo": 17,
-      "title": { "cn": "在哪儿？", "kr": "위치", "en": "Location" },
-      "sceneGoal": "问位置",
-      "subtitle": "问位置",
-      "grammarTargets": ["在哪儿"],
-      "vocabTargets": ["这里", "那里"],
-      "extensionTargets": []
-    },
-
-    {
-      "lessonNo": 18,
-      "title": { "cn": "去学校 / 去商店", "kr": "어디에 가다", "en": "Going Somewhere" },
-      "sceneGoal": "问去哪里",
-      "subtitle": "问去哪里",
-      "grammarTargets": ["去"],
-      "vocabTargets": ["去"],
-      "extensionTargets": ["去学校", "去商店"]
-    },
-
-    {
-      "lessonNo": 19,
-      "title": { "cn": "坐车 / 坐地铁", "kr": "교통", "en": "Transportation" },
-      "sceneGoal": "坐车",
-      "subtitle": "坐车",
-      "grammarTargets": ["坐"],
-      "vocabTargets": ["车"],
-      "extensionTargets": ["坐地铁", "坐出租车"]
-    },
-
-    {
-      "lessonNo": 20,
-      "title": { "cn": "今天天气怎么样？", "kr": "날씨", "en": "Weather" },
-      "sceneGoal": "聊天气",
-      "subtitle": "聊天气",
-      "grammarTargets": ["天气"],
-      "vocabTargets": ["热", "冷"],
-      "extensionTargets": ["下雨"]
-    },
-
-    {
-      "lessonNo": 21,
-      "title": { "cn": "怎么了？我不舒服", "kr": "아프다", "en": "Sick" },
-      "sceneGoal": "看医生",
-      "subtitle": "看医生",
-      "grammarTargets": ["怎么了"],
-      "vocabTargets": ["头疼"],
-      "extensionTargets": ["感冒", "医院", "医生"]
-    },
-
-    {
-      "lessonNo": 22,
-      "title": { "cn": "你做什么工作？", "kr": "직업", "en": "Job" },
-      "sceneGoal": "问职业",
-      "subtitle": "问职业",
-      "grammarTargets": ["做什么工作"],
-      "vocabTargets": ["医生", "老师"],
-      "extensionTargets": ["学生"]
-    },
-
-    {
-      "lessonNo": 23,
-      "title": { "cn": "综合复习1", "kr": "종합 복습 1", "en": "Review 1" },
-      "sceneGoal": "复习 L1–L11",
-      "subtitle": "L1–L11 复习",
-      "grammarTargets": [],
-      "vocabTargets": [],
-      "extensionTargets": []
-    },
-
-    {
-      "lessonNo": 24,
-      "title": { "cn": "综合复习2", "kr": "종합 복습 2", "en": "Review 2" },
-      "sceneGoal": "复习 L12–L22",
-      "subtitle": "L12–L22 复习",
-      "grammarTargets": [],
-      "vocabTargets": [],
-      "extensionTargets": []
-    }
+    { "lessonNo": 1, "title": { "cn": "你好！", "kr": "안녕하세요!", "en": "Hello!" }, "sceneGoal": "第一次见面打招呼", "subtitle": "第一次见面", "grammarTargets": ["你好", "你", "我"], "vocabTargets": ["你好", "你", "我"], "extensionTargets": ["您好", "很高兴认识你"] },
+    { "lessonNo": 2, "title": { "cn": "你叫什么名字？", "kr": "이름이 뭐예요?", "en": "What's your name?" }, "sceneGoal": "互相认识、问名字", "subtitle": "问名字", "grammarTargets": ["叫", "什么", "呢"], "vocabTargets": ["叫", "名字", "什么"], "extensionTargets": ["我叫…", "你叫什么名字"] },
+    { "lessonNo": 3, "title": { "cn": "你是哪国人？", "kr": "어느 나라 사람이에요?", "en": "Which country are you from?" }, "sceneGoal": "问来自哪里", "subtitle": "问国籍", "grammarTargets": ["哪国人"], "vocabTargets": ["中国", "韩国", "美国", "日本"], "extensionTargets": ["我是中国人", "你是哪国人"] },
+    { "lessonNo": 4, "title": { "cn": "他是谁？", "kr": "그 사람 누구예요?", "en": "Who is he?" }, "sceneGoal": "介绍或询问某人是谁", "subtitle": "问是谁", "grammarTargets": ["他", "谁", "这", "那"], "vocabTargets": ["他", "谁", "这", "那"], "extensionTargets": ["这是…", "那是…"] },
+    { "lessonNo": 5, "title": { "cn": "你在哪儿？", "kr": "어디에 있어요?", "en": "Where are you?" }, "sceneGoal": "问位置", "subtitle": "问在哪儿", "grammarTargets": ["在哪儿"], "vocabTargets": ["这里", "那里"], "extensionTargets": [] },
+    { "lessonNo": 6, "title": { "cn": "我学习汉语。", "kr": "저는 중국어를 배워요.", "en": "I study Chinese." }, "sceneGoal": "说自己在学汉语", "subtitle": "学汉语", "grammarTargets": ["学习"], "vocabTargets": ["学习", "汉语"], "extensionTargets": ["汉语", "学习"] },
+    { "lessonNo": 7, "title": { "cn": "这是我的电话号码。", "kr": "제 전화번호예요.", "en": "This is my phone number." }, "sceneGoal": "报电话号码", "subtitle": "电话号码", "grammarTargets": ["数字"], "vocabTargets": ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"], "extensionTargets": ["1–10", "11–100"] },
+    { "lessonNo": 8, "title": { "cn": "苹果多少钱？", "kr": "사과 얼마예요?", "en": "How much is the apple?" }, "sceneGoal": "问价钱、买水果", "subtitle": "问价钱", "grammarTargets": ["多少钱", "几", "个"], "vocabTargets": ["苹果", "钱", "块"], "extensionTargets": ["香蕉", "橙子", "太贵了"] },
+    { "lessonNo": 9, "title": { "cn": "你多大？", "kr": "몇 살이에요?", "en": "How old are you?" }, "sceneGoal": "问年龄", "subtitle": "问年龄", "grammarTargets": ["多大", "岁"], "vocabTargets": ["岁"], "extensionTargets": ["我今年……岁"] },
+    { "lessonNo": 10, "title": { "cn": "现在几点？", "kr": "지금 몇 시예요?", "en": "What time is it now?" }, "sceneGoal": "问现在几点", "subtitle": "问时间", "grammarTargets": ["几点"], "vocabTargets": ["点"], "extensionTargets": ["一点–十二点", "半点"] },
+    { "lessonNo": 11, "title": { "cn": "今天几月几号？", "kr": "오늘 몇 월 며칠이에요?", "en": "What's the date today?" }, "sceneGoal": "问今天几月几号", "subtitle": "问日期", "grammarTargets": ["几月几号"], "vocabTargets": ["月", "号"], "extensionTargets": ["一月–十二月", "一号–三十一号"] },
+    { "lessonNo": 12, "title": { "cn": "今天星期几？", "kr": "오늘 무슨 요일이에요?", "en": "What day is today?" }, "sceneGoal": "问今天星期几", "subtitle": "问星期", "grammarTargets": ["星期几"], "vocabTargets": ["星期"], "extensionTargets": ["星期一–星期天"] },
+    { "lessonNo": 13, "title": { "cn": "我喜欢听音乐。", "kr": "저는 음악 듣는 걸 좋아해요.", "en": "I like listening to music." }, "sceneGoal": "谈兴趣", "subtitle": "谈爱好", "grammarTargets": ["喜欢"], "vocabTargets": ["喜欢"], "extensionTargets": ["看书", "看电影", "听音乐"] },
+    { "lessonNo": 14, "title": { "cn": "喂，请问你找谁？", "kr": "여보세요, 누구 찾으세요?", "en": "Hello, who are you looking for?" }, "sceneGoal": "电话找人", "subtitle": "打电话", "grammarTargets": ["请问", "找"], "vocabTargets": ["电话"], "extensionTargets": ["喂", "找谁", "是我"] },
+    { "lessonNo": 15, "title": { "cn": "我们一起吃饭吧。", "kr": "같이 밥 먹어요.", "en": "Let's eat together." }, "sceneGoal": "一起吃饭", "subtitle": "一起吃饭", "grammarTargets": ["吃", "喝"], "vocabTargets": ["米饭", "面条"], "extensionTargets": ["水", "茶"] },
+    { "lessonNo": 16, "title": { "cn": "你想买什么？", "kr": "뭘 사고 싶어요?", "en": "What do you want to buy?" }, "sceneGoal": "商店里问想买什么", "subtitle": "买东西", "grammarTargets": ["想", "买", "什么"], "vocabTargets": ["买", "想"], "extensionTargets": ["多少钱", "太贵了"] },
+    { "lessonNo": 17, "title": { "cn": "你去哪儿？", "kr": "어디 가요?", "en": "Where are you going?" }, "sceneGoal": "问去哪里", "subtitle": "问去哪儿", "grammarTargets": ["去"], "vocabTargets": ["去"], "extensionTargets": ["去学校", "去商店"] },
+    { "lessonNo": 18, "title": { "cn": "我坐地铁去学校。", "kr": "저는 지하철 타고 학교 가요.", "en": "I take the subway to school." }, "sceneGoal": "说交通方式", "subtitle": "坐车去学校", "grammarTargets": ["坐"], "vocabTargets": ["车", "学校"], "extensionTargets": ["坐地铁", "坐出租车"] },
+    { "lessonNo": 19, "title": { "cn": "今天天气怎么样？", "kr": "오늘 날씨 어때요?", "en": "How's the weather today?" }, "sceneGoal": "聊天气", "subtitle": "聊天气", "grammarTargets": ["天气"], "vocabTargets": ["热", "冷"], "extensionTargets": ["下雨"] },
+    { "lessonNo": 20, "title": { "cn": "你做什么工作？", "kr": "무슨 일 하세요?", "en": "What do you do?" }, "sceneGoal": "问职业", "subtitle": "问工作", "grammarTargets": ["做什么工作"], "vocabTargets": ["医生", "老师"], "extensionTargets": ["学生"] },
+    { "lessonNo": 21, "title": { "cn": "你怎么了？", "kr": "왜 그래요?", "en": "What's wrong with you?" }, "sceneGoal": "问身体或情绪", "subtitle": "问怎么了", "grammarTargets": ["怎么了"], "vocabTargets": ["头疼"], "extensionTargets": ["感冒", "不舒服"] },
+    { "lessonNo": 22, "title": { "cn": "这个很好。", "kr": "이거 좋아요.", "en": "This one is very good." }, "sceneGoal": "评价东西好", "subtitle": "说很好", "grammarTargets": ["这", "很", "好"], "vocabTargets": ["这", "很", "好"], "extensionTargets": ["那个", "不好"] },
+    { "lessonNo": 23, "title": { "cn": "综合复习1", "kr": "종합 복습 1", "en": "Review 1" }, "sceneGoal": "复习 L1–L11", "subtitle": "L1-L11 复习", "grammarTargets": [], "vocabTargets": [], "extensionTargets": [] },
+    { "lessonNo": 24, "title": { "cn": "综合复习2", "kr": "종합 복습 2", "en": "Review 2" }, "sceneGoal": "复习 L12–L22", "subtitle": "L12-L22 复习", "grammarTargets": [], "vocabTargets": [], "extensionTargets": [] }
 
   ]
 }
