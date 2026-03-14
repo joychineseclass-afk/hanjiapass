@@ -6,642 +6,98 @@
   "lessonNo": 5,
   "type": "lesson",
   "title": {
-    "zh": "数字①",
-    "pinyin": "shùzì ①",
-    "kr": "숫자 ①",
-    "en": "Numbers 1",
-    "jp": "数字と数量"
+    "zh": "家庭成员",
+    "pinyin": "jiātíng chéngyuán",
+    "kr": "가족 구성원",
+    "en": "Family members",
+    "jp": "家族の成員"
   },
   "summary": {
-    "zh": "0–10 与基本数量表达",
-    "kr": "0–10과 기본 수량",
-    "en": "0–10 and basic quantity"
+    "zh": "说有/没有兄弟姐妹与家里几口人",
+    "kr": "형제자매 유무와 가족 수 말하기",
+    "en": "Saying have/don't have siblings and family size"
+  },
+  "scene": {
+    "id": "l5_scene",
+    "title": { "zh": "聊天家庭情况", "kr": "가족 이야기하기", "en": "Chatting about family" },
+    "summary": { "zh": "聊天家庭情况", "kr": "가족 상황 이야기", "en": "Talking about family situation" }
   },
   "objectives": [
-    {
-      "zh": "学会数 0–10",
-      "kr": "0–10을 셀 수 있다",
-      "en": "Can count 0–10"
-    },
-    {
-      "zh": "学会用「几」「多少」",
-      "kr": "'几', '多少'를 사용할 수 있다",
-      "en": "Can use 几 and 多少"
-    }
+    { "zh": "学会说有/没有", "kr": "有/没有를 말할 수 있다", "en": "Can say have / don't have" },
+    { "zh": "学会说家里几口人", "kr": "집에 식구가 몇 명인지 말할 수 있다", "en": "Can say how many in the family" }
   ],
   "vocab": [
-    {
-      "hanzi": "一",
-      "pinyin": "yī",
-      "meaning": {
-        "zh": "一",
-        "kr": "하나",
-        "en": "one",
-        "jp": "一"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "二",
-      "pinyin": "èr",
-      "meaning": {
-        "zh": "二",
-        "kr": "둘",
-        "en": "two",
-        "jp": "二"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "三",
-      "pinyin": "sān",
-      "meaning": {
-        "zh": "三",
-        "kr": "셋",
-        "en": "three",
-        "jp": "三"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "四",
-      "pinyin": "sì",
-      "meaning": {
-        "zh": "四",
-        "kr": "넷",
-        "en": "four",
-        "jp": "四"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "五",
-      "pinyin": "wǔ",
-      "meaning": {
-        "zh": "五",
-        "kr": "다섯",
-        "en": "five",
-        "jp": "五"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "六",
-      "pinyin": "liù",
-      "meaning": {
-        "zh": "六",
-        "kr": "여섯",
-        "en": "six",
-        "jp": "六"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "七",
-      "pinyin": "qī",
-      "meaning": {
-        "zh": "七",
-        "kr": "일곱",
-        "en": "seven",
-        "jp": "七"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "八",
-      "pinyin": "bā",
-      "meaning": {
-        "zh": "八",
-        "kr": "여덟",
-        "en": "eight",
-        "jp": "八"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "九",
-      "pinyin": "jiǔ",
-      "meaning": {
-        "zh": "九",
-        "kr": "아홉",
-        "en": "nine",
-        "jp": "九"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "十",
-      "pinyin": "shí",
-      "meaning": {
-        "zh": "十",
-        "kr": "열",
-        "en": "ten",
-        "jp": "十"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "零",
-      "pinyin": "líng",
-      "meaning": {
-        "zh": "零",
-        "kr": "영",
-        "en": "zero",
-        "jp": "ゼロ"
-      },
-      "pos": {
-        "kr": "수사",
-        "en": "numeral",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "多少",
-      "pinyin": "duōshao",
-      "meaning": {
-        "zh": "多少",
-        "kr": "얼마나",
-        "en": "how many/much",
-        "jp": "いくつ"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    },
-    {
-      "hanzi": "几",
-      "pinyin": "jǐ",
-      "meaning": {
-        "zh": "几",
-        "kr": "몇",
-        "en": "how many",
-        "jp": "いくつ"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "数詞"
-      }
-    },
-    {
-      "hanzi": "个",
-      "pinyin": "gè",
-      "meaning": {
-        "zh": "个",
-        "kr": "개",
-        "en": "measure word",
-        "jp": "量詞"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word",
-        "jp": "量詞"
-      }
-    },
-    {
-      "hanzi": "少",
-      "pinyin": "shǎo",
-      "meaning": {
-        "zh": "少",
-        "kr": "적다",
-        "en": "few",
-        "jp": "少ない"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective",
-        "jp": "形容詞"
-      }
-    }
+    { "hanzi": "有", "pinyin": "yǒu", "meaning": { "zh": "有", "kr": "있다", "en": "to have", "jp": "持っている、いる" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "没有", "pinyin": "méiyǒu", "meaning": { "zh": "没有", "kr": "없다", "en": "to not have", "jp": "持っていない、いない" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "哥哥", "pinyin": "gēge", "meaning": { "zh": "哥哥", "kr": "형, 오빠", "en": "older brother", "jp": "兄" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "妹妹", "pinyin": "mèimei", "meaning": { "zh": "妹妹", "kr": "여동생", "en": "younger sister", "jp": "妹" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "家", "pinyin": "jiā", "meaning": { "zh": "家", "kr": "집, 가족", "en": "home; family", "jp": "家" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "口", "pinyin": "kǒu", "meaning": { "zh": "口", "kr": "식구 (인원 단위)", "en": "mouth; (measure for people)", "jp": "口（人数の単位）" }, "pos": { "kr": "양사", "en": "measure word", "jp": "量詞" } },
+    { "hanzi": "人", "pinyin": "rén", "meaning": { "zh": "人", "kr": "사람", "en": "person", "jp": "人" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
   ],
   "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "她是谁？",
-          "translation": {
-            "en": "Who is she?",
-            "kr": "Who is she?",
-            "jp": "Who is she?"
-          },
-          "pinyin": "tā shì shuí ？"
-        },
-        {
-          "speaker": "B",
-          "text": "她是我妈妈。",
-          "translation": {
-            "en": "She is my mom.",
-            "kr": "She is my mom.",
-            "jp": "She is my mom."
-          },
-          "pinyin": "tā shì wǒ mā ma 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他是你爸爸吗？",
-          "translation": {
-            "en": "Is he your dad?",
-            "kr": "Is he your dad?",
-            "jp": "Is he your dad?"
-          },
-          "pinyin": "tā shì nǐ bà ba ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是。我家有五个人：爸爸、妈妈、我、儿子和女儿。",
-          "translation": {
-            "en": "Yes. There are five people in my family: dad, mom, me, son and daughter.",
-            "kr": "Yes. There are five people in my family: dad, mom, me, son and daughter.",
-            "jp": "Yes. There are five people in my family: dad, mom, me, son and daughter."
-          },
-          "pinyin": "shì 。 wǒ jiā yǒu wǔ gè rén ： bà ba 、 mā ma 、 wǒ 、 ér zi hé nǚ ér 。"
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你儿子多大？",
-          "translation": {
-            "en": "How old is your son?",
-            "kr": "How old is your son?",
-            "jp": "How old is your son?"
-          },
-          "pinyin": "nǐ ér zi duō dà ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我儿子六岁。我女儿三岁。",
-          "translation": {
-            "en": "My son is six. My daughter is three.",
-            "kr": "My son is six. My daughter is three.",
-            "jp": "My son is six. My daughter is three."
-          },
-          "pinyin": "wǒ ér zi liù suì 。 wǒ nǚ ér sān suì 。"
-        }
+        { "speaker": "A", "text": "你有兄弟姐妹吗？", "translation": { "en": "Do you have siblings?", "kr": "형제자매 있어?", "jp": "兄弟姉妹はいますか？" }, "pinyin": "Nǐ yǒu xiōngdì jiěmèi ma?" },
+        { "speaker": "B", "text": "我有一个妹妹。", "translation": { "en": "I have one younger sister.", "kr": "나는 여동생이 한 명 있어.", "jp": "妹が一人います。" }, "pinyin": "Wǒ yǒu yī gè mèimei." },
+        { "speaker": "A", "text": "你有哥哥吗？", "translation": { "en": "Do you have an older brother?", "kr": "오빠 있어?", "jp": "兄はいますか？" }, "pinyin": "Nǐ yǒu gēge ma?" },
+        { "speaker": "B", "text": "没有。", "translation": { "en": "No.", "kr": "없어.", "jp": "いいえ。" }, "pinyin": "Méiyǒu." },
+        { "speaker": "A", "text": "你家有几口人？", "translation": { "en": "How many people in your family?", "kr": "너희 집 식구가 몇 명이야?", "jp": "家族は何人ですか？" }, "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?" },
+        { "speaker": "B", "text": "我家有四口人。", "translation": { "en": "There are four people in my family.", "kr": "우리 집은 네 식구야.", "jp": "四人家族です。" }, "pinyin": "Wǒ jiā yǒu sì kǒu rén." }
       ]
     }
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "她是谁？",
-          "translation": {
-            "en": "Who is she?",
-            "kr": "Who is she?",
-            "jp": "Who is she?"
-          },
-          "pinyin": "tā shì shuí ？"
-        },
-        {
-          "speaker": "B",
-          "text": "她是我妈妈。",
-          "translation": {
-            "en": "She is my mom.",
-            "kr": "She is my mom.",
-            "jp": "She is my mom."
-          },
-          "pinyin": "tā shì wǒ mā ma 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他是你爸爸吗？",
-          "translation": {
-            "en": "Is he your dad?",
-            "kr": "Is he your dad?",
-            "jp": "Is he your dad?"
-          },
-          "pinyin": "tā shì nǐ bà ba ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是。我家有五个人：爸爸、妈妈、我、儿子和女儿。",
-          "translation": {
-            "en": "Yes. There are five people in my family: dad, mom, me, son and daughter.",
-            "kr": "Yes. There are five people in my family: dad, mom, me, son and daughter.",
-            "jp": "Yes. There are five people in my family: dad, mom, me, son and daughter."
-          },
-          "pinyin": "shì 。 wǒ jiā yǒu wǔ gè rén ： bà ba 、 mā ma 、 wǒ 、 ér zi hé nǚ ér 。"
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你儿子多大？",
-          "translation": {
-            "en": "How old is your son?",
-            "kr": "How old is your son?",
-            "jp": "How old is your son?"
-          },
-          "pinyin": "nǐ ér zi duō dà ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我儿子六岁。我女儿三岁。",
-          "translation": {
-            "en": "My son is six. My daughter is three.",
-            "kr": "My son is six. My daughter is three.",
-            "jp": "My son is six. My daughter is three."
-          },
-          "pinyin": "wǒ ér zi liù suì 。 wǒ nǚ ér sān suì 。"
-        }
+        { "speaker": "A", "text": "你有兄弟姐妹吗？", "translation": { "en": "Do you have siblings?", "kr": "형제자매 있어?", "jp": "兄弟姉妹はいますか？" }, "pinyin": "Nǐ yǒu xiōngdì jiěmèi ma?" },
+        { "speaker": "B", "text": "我有一个妹妹。", "translation": { "en": "I have one younger sister.", "kr": "나는 여동생이 한 명 있어.", "jp": "妹が一人います。" }, "pinyin": "Wǒ yǒu yī gè mèimei." },
+        { "speaker": "A", "text": "你有哥哥吗？", "translation": { "en": "Do you have an older brother?", "kr": "오빠 있어?", "jp": "兄はいますか？" }, "pinyin": "Nǐ yǒu gēge ma?" },
+        { "speaker": "B", "text": "没有。", "translation": { "en": "No.", "kr": "없어.", "jp": "いいえ。" }, "pinyin": "Méiyǒu." },
+        { "speaker": "A", "text": "你家有几口人？", "translation": { "en": "How many people in your family?", "kr": "너희 집 식구가 몇 명이야?", "jp": "家族は何人ですか？" }, "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?" },
+        { "speaker": "B", "text": "我家有四口人。", "translation": { "en": "There are four people in my family.", "kr": "우리 집은 네 식구야.", "jp": "四人家族です。" }, "pinyin": "Wǒ jiā yǒu sì kǒu rén." }
       ]
     }
   ],
   "grammar": [
     {
-      "title": "几 + 个",
-      "explanation_zh": "「几」问小数量，「个」是量词。",
-      "explanation_kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.",
-      "explanation_en": "几 asks small quantity, 个 is measure word.",
-      "example": {
-        "zh": "几个苹果",
-        "pinyin": "jǐ gè píngguǒ",
-        "kr": "사과 몇 개",
-        "en": "how many apples"
+      "pattern": "有 / 没有",
+      "pinyin": "yǒu / méiyǒu",
+      "explain": {
+        "zh": "「有」表示拥有，「没有」表示不拥有。",
+        "kr": "'有'는 있다, '没有'는 없다.",
+        "en": "有 = to have, 没有 = to not have.",
+        "jp": "「有」は持っている、「没有」は持っていない。"
       },
-      "explain": {
-        "jp": "「几」は少ない数量を聞き、「个」は量詞です。",
-        "en": "几 asks small quantity, 个 is measure word.",
-        "kr": "'几'는 작은 수량을 묻고, '个'는 양사입니다.",
-        "zh": "「几」问小数量，「个」是量词。"
-      }
-    },
-    {
-      "title": "多少",
-      "explanation_zh": "「多少」问数量或价格。",
-      "explanation_kr": "'多少'는 수량이나 가격을 묻습니다.",
-      "explanation_en": "多少 asks quantity or price.",
       "example": {
-        "zh": "多少钱？",
-        "pinyin": "Duōshao qián?",
-        "kr": "얼마예요?",
-        "en": "How much?"
-      },
-      "explain": {
-        "jp": "「多少」は数量や価格を聞きます。",
-        "en": "多少 asks quantity or price.",
-        "kr": "'多少'는 수량이나 가격을 묻습니다.",
-        "zh": "「多少」问数量或价格。"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "zh": "你的电话号码是多少？",
-      "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?",
-      "kr": "전화번호가 뭐예요?",
-      "en": "What's your phone number?",
-      "phrase": "你的电话号码是多少？",
-      "explain": {
-        "kr": "전화번호가 뭐예요?",
-        "en": "What's your phone number?",
-        "jp": "電話番号は何番ですか？"
-      }
-    },
-    {
-      "zh": "我的房间号是二零一。",
-      "pinyin": "Wǒ de fángjiān hào shì èr líng yī.",
-      "kr": "제 방 호수는 201이에요.",
-      "en": "My room number is 201.",
-      "phrase": "我的房间号是二零一。",
-      "explain": {
-        "kr": "제 방 호수는 201이에요.",
-        "en": "My room number is 201.",
-        "jp": "私の部屋番号は201です。"
-      }
-    },
-    {
-      "zh": "一共多少钱？",
-      "pinyin": "Yīgòng duōshao qián?",
-      "kr": "총 얼마예요?",
-      "en": "How much in total?",
-      "phrase": "一共多少钱？",
-      "explain": {
-        "kr": "총 얼마예요?",
-        "en": "How much in total?",
-        "jp": "合計いくらですか？"
-      }
-    },
-    {
-      "zh": "一到十",
-      "pinyin": "Yī dào shí",
-      "kr": "하나부터 열까지",
-      "en": "one to ten",
-      "phrase": "一到十",
-      "explain": {
-        "kr": "하나부터 열까지",
-        "en": "one to ten",
-        "jp": "1から10まで"
-      }
-    },
-    {
-      "zh": "十一到二十",
-      "pinyin": "Shíyī dào èrshí",
-      "kr": "열하나부터 스무까지",
-      "en": "eleven to twenty",
-      "phrase": "十一到二十",
-      "explain": {
-        "kr": "열하나부터 스무까지",
-        "en": "eleven to twenty",
-        "jp": "11から20まで"
+        "zh": "我有妹妹。我没有哥哥。",
+        "pinyin": "Wǒ yǒu mèimei. Wǒ méiyǒu gēge.",
+        "translation": { "kr": "나는 여동생이 있어. 오빠는 없어.", "jp": "妹がいます。兄はいません。", "en": "I have a younger sister. I don't have an older brother." }
       }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「五」是几？",
-        "kr": "五는?",
-        "en": "五 is?"
-      },
-      "options": [
-        "三",
-        "五",
-        "七"
-      ],
-      "answer": "五"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "请选择正确语序：我 / 有 / 三 / 个",
-        "kr": "올바른 순서",
-        "en": "Correct order"
-      },
-      "options": [
-        "我有三个",
-        "三个有我",
-        "有我三个"
-      ],
-      "answer": "我有三个"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「十」？",
-        "kr": "어느 것이 十?",
-        "en": "Which is 十?"
-      },
-      "options": [
-        "一",
-        "十",
-        "零"
-      ],
-      "answer": "十"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「多少」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "几",
-        "多少",
-        "个"
-      ],
-      "answer": "多少"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "你有几___苹果？",
-        "kr": "빈칸",
-        "en": "Fill in"
-      },
-      "options": [
-        "个",
-        "少",
-        "零"
-      ],
-      "answer": "个"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___一个妹妹。", "kr": "나___ 여동생이 한 명 있어.", "en": "I ___ one younger sister.", "jp": "妹が一人___。" }, "options": ["有", "没有", "是", "在"], "answer": "有", "explanation": { "cn": "拥有用「有」。", "kr": "가지고 있을 때 「有」.", "en": "Use 有 for have.", "jp": "持っているは「有」。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「没有」的意思是？", "kr": "「没有」의 뜻은?", "en": "What does 没有 mean?", "jp": "「没有」の意味は？" }, "options": ["有", "没有", "是", "家"], "answer": "没有", "explanation": { "cn": "「没有」即不拥有。", "kr": "「没有」는 없다.", "en": "没有 means don't have.", "jp": "「没有」は持っていない。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "你有___吗？", "kr": "오빠 ___?", "en": "Do you have an older brother?", "jp": "兄___？" }, "options": ["哥哥", "妹妹", "家", "口"], "answer": "哥哥", "explanation": { "cn": "「哥哥」即兄。", "kr": "「哥哥」는 형/오빠.", "en": "哥哥 means older brother.", "jp": "「哥哥」は兄。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「你有哥哥吗？」回答「没有」表示？", "kr": "「你有哥哥吗？」에 「没有」라고 답하면?", "en": "Answering 没有 to 你有哥哥吗? means?", "jp": "「你有哥哥吗？」に「没有」と答えると？" }, "options": ["有哥哥", "没有哥哥", "有一个", "四口人"], "answer": "没有哥哥", "explanation": { "cn": "「没有」表示没有哥哥。", "kr": "「没有」는 오빠/형이 없다는 뜻.", "en": "没有 = don't have (older brother).", "jp": "「没有」は兄がいない。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "「家里有几口人」中「口」的意思是？", "kr": "「几口人」에서 「口」의 뜻은?", "en": "In 几口人, 口 means?", "jp": "「几口人」の「口」の意味は？" }, "options": ["人数单位", "嘴", "家", "人"], "answer": "人数单位", "explanation": { "cn": "「口」在这里是人数量词。", "kr": "「口」는 여기서 인원 단위.", "en": "口 here is measure word for people.", "jp": "「口」は人数の単位。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "一、二、三、四、五",
-      "几个",
-      "多少钱",
-      "十个"
-    ],
-    "chatPrompt": "AI问：你有几个苹果？学生用数字回答。"
-  },
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "你有兄弟姐妹吗？我家有四口人。", "hint": { "cn": "请解释有/没有和几口人的用法。", "kr": "有/没有와 几口人 쓰임을 설명해 보세요.", "en": "Explain 有/没有 and 几口人.", "jp": "有/没有と几口人の使い方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "family_chat", "prompt": { "cn": "和同学聊家里有几口人、有没有兄弟姐妹。", "kr": "친구와 식구 수, 형제자매 유무를 이야기하세요.", "en": "Chat about how many in family and siblings.", "jp": "家族の人数と兄弟姉妹の有無を話しましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你有兄弟姐妹吗？", "我有一个妹妹。", "你有哥哥吗？", "没有。", "你家有几口人？", "我家有四口人。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+  ],
+  "aiPractice": { "speaking": ["你有兄弟姐妹吗", "我有一个妹妹", "没有", "你家有几口人", "我家有四口人"], "chatPrompt": "AI问：你家有几口人？学生用有/没有、几口人回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

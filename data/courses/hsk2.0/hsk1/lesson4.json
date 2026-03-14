@@ -6,599 +6,98 @@
   "lessonNo": 4,
   "type": "lesson",
   "title": {
-    "zh": "家人",
-    "pinyin": "jiārén",
-    "kr": "가족",
-    "en": "Family",
-    "jp": "家族"
+    "zh": "介绍家人",
+    "pinyin": "jièshào jiārén",
+    "kr": "가족 소개",
+    "en": "Introducing family",
+    "jp": "家族の紹介"
   },
   "summary": {
-    "zh": "介绍家庭成员",
-    "kr": "가족 소개",
-    "en": "Introducing family members"
+    "zh": "用这/那介绍家人",
+    "kr": "这/那로 가족 소개",
+    "en": "Introducing family with 这/那"
+  },
+  "scene": {
+    "id": "l4_scene",
+    "title": { "zh": "给朋友看照片", "kr": "친구에게 사진 보여주기", "en": "Showing photos to a friend" },
+    "summary": { "zh": "给朋友看照片", "kr": "친구에게 가족 사진 보여주기", "en": "Showing family photos to a friend" }
   },
   "objectives": [
-    {
-      "zh": "学会介绍家人",
-      "kr": "가족을 소개할 수 있다",
-      "en": "Can introduce family"
-    },
-    {
-      "zh": "学会使用「的」",
-      "kr": "'的'를 사용할 수 있다",
-      "en": "Can use 的"
-    }
+    { "zh": "学会用这/那指人", "kr": "这/那로 사람을 가리킬 수 있다", "en": "Can point to people with 这/那" },
+    { "zh": "学会介绍爸爸妈妈", "kr": "엄마 아빠를 소개할 수 있다", "en": "Can introduce mom and dad" }
   ],
   "vocab": [
-    {
-      "hanzi": "爸爸",
-      "pinyin": "bàba",
-      "meaning": {
-        "zh": "爸爸",
-        "kr": "아빠",
-        "en": "dad",
-        "jp": "お父さん"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "妈妈",
-      "pinyin": "māma",
-      "meaning": {
-        "zh": "妈妈",
-        "kr": "엄마",
-        "en": "mom",
-        "jp": "お母さん"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "儿子",
-      "pinyin": "érzi",
-      "meaning": {
-        "zh": "儿子",
-        "kr": "아들",
-        "en": "son",
-        "jp": "息子"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "女儿",
-      "pinyin": "nǚ'ér",
-      "meaning": {
-        "zh": "女儿",
-        "kr": "딸",
-        "en": "daughter",
-        "jp": "娘"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "家",
-      "pinyin": "jiā",
-      "meaning": {
-        "zh": "家",
-        "kr": "집",
-        "en": "home; family",
-        "jp": "家"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "人",
-      "pinyin": "rén",
-      "meaning": {
-        "zh": "人",
-        "kr": "사람",
-        "en": "person",
-        "jp": "人"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "的",
-      "pinyin": "de",
-      "meaning": {
-        "zh": "的",
-        "kr": "소유 조사",
-        "en": "possessive particle",
-        "jp": "所有の助詞"
-      },
-      "pos": {
-        "kr": "조사",
-        "en": "particle",
-        "jp": "助詞"
-      }
-    },
-    {
-      "hanzi": "他",
-      "pinyin": "tā",
-      "meaning": {
-        "zh": "他",
-        "kr": "그",
-        "en": "he",
-        "jp": "彼"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    },
-    {
-      "hanzi": "她",
-      "pinyin": "tā",
-      "meaning": {
-        "zh": "她",
-        "kr": "그녀",
-        "en": "she",
-        "jp": "彼女"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    }
+    { "hanzi": "这", "pinyin": "zhè", "meaning": { "zh": "这", "kr": "이", "en": "this", "jp": "この" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "那", "pinyin": "nà", "meaning": { "zh": "那", "kr": "저", "en": "that", "jp": "あの" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "谁", "pinyin": "shéi", "meaning": { "zh": "谁", "kr": "누구", "en": "who", "jp": "誰" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "妈妈", "pinyin": "māma", "meaning": { "zh": "妈妈", "kr": "엄마", "en": "mom", "jp": "お母さん" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "爸爸", "pinyin": "bàba", "meaning": { "zh": "爸爸", "kr": "아빠", "en": "dad", "jp": "お父さん" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "他们", "pinyin": "tāmen", "meaning": { "zh": "他们", "kr": "그들", "en": "they", "jp": "彼ら" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "老师", "pinyin": "lǎoshī", "meaning": { "zh": "老师", "kr": "선생님", "en": "teacher", "jp": "先生" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
   ],
   "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "他是谁？",
-          "translation": {
-            "en": "Who is he?",
-            "kr": "Who is he?",
-            "jp": "Who is he?"
-          },
-          "pinyin": "tā shì shuí ？"
-        },
-        {
-          "speaker": "B",
-          "text": "他是我的朋友。",
-          "translation": {
-            "en": "He is my friend.",
-            "kr": "He is my friend.",
-            "jp": "He is my friend."
-          },
-          "pinyin": "tā shì wǒ de péng yǒu 。"
-        },
-        {
-          "speaker": "A",
-          "text": "她也是你的朋友吗？",
-          "translation": {
-            "en": "Is she your friend too?",
-            "kr": "Is she your friend too?",
-            "jp": "Is she your friend too?"
-          },
-          "pinyin": "tā yě shì nǐ de péng yǒu ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是，她也是我的同学。",
-          "translation": {
-            "en": "Yes, she's my classmate too.",
-            "kr": "Yes, she's my classmate too.",
-            "jp": "Yes, she's my classmate too."
-          },
-          "pinyin": "shì ， tā yě shì wǒ de tóng xué 。"
-        }
+        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
+        { "speaker": "B", "text": "这是我的妈妈。", "translation": { "en": "This is my mom.", "kr": "이건 우리 엄마야.", "jp": "これは私の母です。" }, "pinyin": "Zhè shì wǒ de māma." },
+        { "speaker": "A", "text": "那是谁？", "translation": { "en": "Who is that?", "kr": "저 사람 누구야?", "jp": "あれは誰ですか？" }, "pinyin": "Nà shì shéi?" },
+        { "speaker": "B", "text": "那是我的爸爸。", "translation": { "en": "That is my dad.", "kr": "저건 우리 아빠야.", "jp": "あれは私の父です。" }, "pinyin": "Nà shì wǒ de bàba." },
+        { "speaker": "A", "text": "他们是老师吗？", "translation": { "en": "Are they teachers?", "kr": "그들은 선생님이야?", "jp": "彼らは先生ですか？" }, "pinyin": "Tāmen shì lǎoshī ma?" },
+        { "speaker": "B", "text": "不是。", "translation": { "en": "No.", "kr": "아니야.", "jp": "いいえ。" }, "pinyin": "Bú shì." }
       ]
     }
   ],
   "dialogueCards": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "他是谁？",
-          "translation": {
-            "en": "Who is he?",
-            "kr": "Who is he?",
-            "jp": "Who is he?"
-          },
-          "pinyin": "tā shì shuí ？"
-        },
-        {
-          "speaker": "B",
-          "text": "他是我的朋友。",
-          "translation": {
-            "en": "He is my friend.",
-            "kr": "He is my friend.",
-            "jp": "He is my friend."
-          },
-          "pinyin": "tā shì wǒ de péng yǒu 。"
-        },
-        {
-          "speaker": "A",
-          "text": "她也是你的朋友吗？",
-          "translation": {
-            "en": "Is she your friend too?",
-            "kr": "Is she your friend too?",
-            "jp": "Is she your friend too?"
-          },
-          "pinyin": "tā yě shì nǐ de péng yǒu ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是，她也是我的同学。",
-          "translation": {
-            "en": "Yes, she's my classmate too.",
-            "kr": "Yes, she's my classmate too.",
-            "jp": "Yes, she's my classmate too."
-          },
-          "pinyin": "shì ， tā yě shì wǒ de tóng xué 。"
-        }
+        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
+        { "speaker": "B", "text": "这是我的妈妈。", "translation": { "en": "This is my mom.", "kr": "이건 우리 엄마야.", "jp": "これは私の母です。" }, "pinyin": "Zhè shì wǒ de māma." },
+        { "speaker": "A", "text": "那是谁？", "translation": { "en": "Who is that?", "kr": "저 사람 누구야?", "jp": "あれは誰ですか？" }, "pinyin": "Nà shì shéi?" },
+        { "speaker": "B", "text": "那是我的爸爸。", "translation": { "en": "That is my dad.", "kr": "저건 우리 아빠야.", "jp": "あれは私の父です。" }, "pinyin": "Nà shì wǒ de bàba." },
+        { "speaker": "A", "text": "他们是老师吗？", "translation": { "en": "Are they teachers?", "kr": "그들은 선생님이야?", "jp": "彼らは先生ですか？" }, "pinyin": "Tāmen shì lǎoshī ma?" },
+        { "speaker": "B", "text": "不是。", "translation": { "en": "No.", "kr": "아니야.", "jp": "いいえ。" }, "pinyin": "Bú shì." }
       ]
     }
   ],
   "grammar": [
     {
-      "title": "的 — 所属",
-      "explanation_zh": "「的」表示所属关系。",
-      "explanation_kr": "'的'는 소유 관계를 나타냅니다.",
-      "explanation_en": "的 indicates possession.",
-      "example": {
-        "zh": "我爸爸",
-        "pinyin": "wǒ bàba",
-        "kr": "우리 아빠",
-        "en": "my dad"
+      "pattern": "这 / 那",
+      "pinyin": "zhè / nà",
+      "explain": {
+        "zh": "「这」指近处，「那」指远处。用来指人或物。",
+        "kr": "'这'는 가까운 것, '那'는 먼 것. 사람이나 물건을 가리킬 때 씁니다.",
+        "en": "这 = this (near), 那 = that (far). Used to point to people or things.",
+        "jp": "「这」は近く、「那」は遠く。人や物を指します。"
       },
-      "explain": {
-        "jp": "「的」は所有関係を表します。",
-        "en": "的 indicates possession.",
-        "kr": "'的'는 소유 관계를 나타냅니다.",
-        "zh": "「的」表示所属关系。"
-      }
-    },
-    {
-      "title": "他 / 她",
-      "explanation_zh": "「他」指男性，「她」指女性。",
-      "explanation_kr": "'他'는 남성, '她'는 여성을 가리킵니다.",
-      "explanation_en": "他 for male, 她 for female.",
       "example": {
-        "zh": "他是学生。她是老师。",
-        "pinyin": "Tā shì xuésheng. Tā shì lǎoshī.",
-        "kr": "그는 학생. 그녀는 선생님.",
-        "en": "He is a student. She is a teacher."
-      },
-      "explain": {
-        "jp": "「他」は男性、「她」は女性を指します。",
-        "en": "他 for male, 她 for female.",
-        "kr": "'他'는 남성, '她'는 여성을 가리킵니다.",
-        "zh": "「他」指男性，「她」指女性。"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "zh": "我哥哥",
-      "pinyin": "Wǒ gēge",
-      "kr": "제 오빠/형",
-      "en": "my older brother",
-      "phrase": "我哥哥",
-      "explain": {
-        "kr": "제 오빠/형",
-        "en": "my older brother",
-        "jp": "私の兄"
-      }
-    },
-    {
-      "zh": "我姐姐",
-      "pinyin": "Wǒ jiějie",
-      "kr": "제 언니/누나",
-      "en": "my older sister",
-      "phrase": "我姐姐",
-      "explain": {
-        "kr": "제 언니/누나",
-        "en": "my older sister",
-        "jp": "私の姉"
-      }
-    },
-    {
-      "zh": "我家有五口人。",
-      "pinyin": "Wǒ jiā yǒu wǔ kǒu rén.",
-      "kr": "우리 가족은 다섯 명이에요.",
-      "en": "My family has five people.",
-      "phrase": "我家有五口人。",
-      "explain": {
-        "kr": "우리 가족은 다섯 명이에요.",
-        "en": "My family has five people.",
-        "jp": "私の家族は5人です。"
-      }
-    },
-    {
-      "zh": "我们一家人。",
-      "pinyin": "Wǒmen yī jiā rén.",
-      "kr": "우리 한 가족이에요.",
-      "en": "We are one family.",
-      "phrase": "我们一家人。",
-      "explain": {
-        "kr": "우리 한 가족이에요.",
-        "en": "We are one family.",
-        "jp": "私たちは一つの家族です。"
-      }
-    },
-    {
-      "zh": "我们一起住。",
-      "pinyin": "Wǒmen yīqǐ zhù.",
-      "kr": "우리 같이 살아요.",
-      "en": "We live together.",
-      "phrase": "我们一起住。",
-      "explain": {
-        "kr": "우리 같이 살아요.",
-        "en": "We live together.",
-        "jp": "私たちは一緒に住んでいます。"
+        "zh": "这是谁？那是谁？",
+        "pinyin": "Zhè shì shéi? Nà shì shéi?",
+        "translation": { "kr": "이 사람 누구야? 저 사람 누구야?", "jp": "これは誰？あれは誰？", "en": "Who is this? Who is that?" }
       }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「爸爸」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "妈妈",
-        "爸爸",
-        "儿子"
-      ],
-      "answer": "爸爸"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「女儿」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "儿子",
-        "女儿",
-        "爸爸"
-      ],
-      "answer": "女儿"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "我家有___口人。",
-        "kr": "빈칸",
-        "en": "Fill in"
-      },
-      "options": [
-        "的",
-        "家",
-        "四"
-      ],
-      "answer": "四"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "A：你妈妈是老师吗？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
-      },
-      "options": [
-        "是",
-        "不",
-        "家"
-      ],
-      "answer": "是"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「家」？",
-        "kr": "어느 것?",
-        "en": "Which?"
-      },
-      "options": [
-        "人",
-        "家",
-        "的"
-      ],
-      "answer": "家"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "___是谁？", "kr": "___ 누구야?", "en": "___ is who? (this)", "jp": "___は誰？" }, "options": ["这", "那", "他们", "什么"], "answer": "这", "explanation": { "cn": "指近处的人用「这」。", "kr": "가까운 사람은 「这」.", "en": "Use 这 for near.", "jp": "近くは「这」。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「妈妈」的意思是？", "kr": "「妈妈」의 뜻은?", "en": "What does 妈妈 mean?", "jp": "「妈妈」の意味は？" }, "options": ["爸爸", "老师", "妈妈", "他们"], "answer": "妈妈", "explanation": { "cn": "「妈妈」即母亲。", "kr": "「妈妈」는 엄마.", "en": "妈妈 means mom.", "jp": "「妈妈」はお母さん。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "那是我的___。", "kr": "저건 우리 ___야.", "en": "That is my ___.", "jp": "あれは私の___です。" }, "options": ["爸爸", "谁", "这", "那"], "answer": "爸爸", "explanation": { "cn": "「爸爸」即父亲。", "kr": "「爸爸」는 아빠.", "en": "爸爸 means dad.", "jp": "「爸爸」はお父さん。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「这是谁？」的回答可以是？", "kr": "「这是谁？」에 대한 답은?", "en": "Response to 这是谁?", "jp": "「这是谁？」への返答は？" }, "options": ["那是谁", "这是我的妈妈", "不是", "他们"], "answer": "这是我的妈妈", "explanation": { "cn": "介绍人用「这是/那是+我的+称呼」。", "kr": "소개할 때 「这是/那是+我的+호칭」.", "en": "Introduce with 这是/那是 + 我的 + noun.", "jp": "「这是/那是+我的+名前」で紹介。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "问「谁」用哪个词？", "kr": "누구를 물을 때 쓰는 말은?", "en": "Which word asks who?", "jp": "誰を聞く語は？" }, "options": ["谁", "这", "那", "他们"], "answer": "谁", "explanation": { "cn": "「谁」问人。", "kr": "「谁」는 사람을 묻는 말.", "en": "谁 means who.", "jp": "「谁」は誰。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "我爸爸",
-      "我妈妈",
-      "我家有四口人",
-      "他是老师"
-    ],
-    "chatPrompt": "AI问：你家有几口人？学生介绍家人。"
-  },
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "这是谁？那是谁？", "hint": { "cn": "请解释这/那的用法。", "kr": "这/那의 쓰임을 설명해 보세요.", "en": "Explain 这/那 usage.", "jp": "这/那の使い方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "family_photo", "prompt": { "cn": "给朋友看照片，介绍这是谁、那是谁。", "kr": "친구에게 사진을 보여주며 이 사람 누구, 저 사람 누구 소개하세요.", "en": "Show photos and say who this is, who that is.", "jp": "写真を見せて、これは誰、あれは誰と紹介しましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["这是谁？", "这是我的妈妈。", "那是谁？", "那是我的爸爸。", "他们是老师吗？", "不是。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+  ],
+  "aiPractice": { "speaking": ["这是谁", "这是我的妈妈", "那是我的爸爸", "他们是老师吗", "不是"], "chatPrompt": "AI问：这是谁？学生用这是/那是我的...回答。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
-  ],
-  "generatedDialogues": [
-    {
-      "title": {
-        "zh": "会话1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "他是谁？",
-          "pinyin": "Tā shì shéi?",
-          "translation": {
-            "kr": "그는 누구예요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "他是我朋友。",
-          "pinyin": "Tā shì wǒ péngyou.",
-          "translation": {
-            "kr": "그는 제 친구예요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "A",
-          "text": "她呢？",
-          "pinyin": "Tā ne?",
-          "translation": {
-            "kr": "그녀는요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "她是我朋友。",
-          "pinyin": "Tā shì wǒ péngyou.",
-          "translation": {
-            "kr": "그녀는 제 친구예요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "A",
-          "text": "他是谁？",
-          "pinyin": "Tā shì shéi?",
-          "translation": {
-            "kr": "그는 누구예요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "他是我的小朋友。",
-          "pinyin": "Tā shì wǒ de xiǎo péngyou.",
-          "translation": {
-            "kr": "그는 제 어린 친구예요.",
-            "en": ""
-          }
-        }
-      ]
-    }
-  ],
-  "dialogueMeta": {
-    "generatedAt": "2026-03-10T14:43:40.444Z",
-    "coverage": 1,
-    "communicativeGoal": "介绍家人",
-    "dialogueTasks": [
-      "确认家庭关系",
-      "介绍家庭成员"
-    ]
-  },
-  "generatedExtensions": [
-    {
-      "zh": "他是我爸爸，她是我妈妈。",
-      "pinyin": "Tā shì wǒ bàba, tā shì wǒ māma.",
-      "kr": "그는 우리 아빠, 그녀는 우리 엄마예요.",
-      "en": "",
-      "phrase": "他是我爸爸，她是我妈妈。",
-      "explain": {
-        "kr": "그는 우리 아빠, 그녀는 우리 엄마예요.",
-        "en": ""
-      }
-    },
-    {
-      "zh": "我家的狗、猫。",
-      "pinyin": "Wǒ jiā de gǒu, māo.",
-      "kr": "우리 집 강아지, 고양이.",
-      "en": "",
-      "phrase": "我家的狗、猫。",
-      "explain": {
-        "kr": "우리 집 강아지, 고양이.",
-        "en": ""
-      }
-    },
-    {
-      "zh": "儿子、女儿。",
-      "pinyin": "Érzi, nǚ'ér.",
-      "kr": "아들, 딸.",
-      "en": "",
-      "phrase": "儿子、女儿。",
-      "explain": {
-        "kr": "아들, 딸.",
-        "en": ""
-      }
-    }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }
