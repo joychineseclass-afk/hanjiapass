@@ -1,3 +1,15 @@
 {
-  "lessons": []
+  "courseId": "hsk3",
+  "level": 3,
+  "practiceCount": 2,
+  "lessons": [
+    {
+      "lessonNo": 1,
+      "title": { "cn": "【HSK3部署测试】第1课 / 这是新的HSK3目录", "kr": "HSK3 배포 테스트 1과", "en": "HSK3 Deployment Test Lesson 1" },
+      "sceneGoal": "验证HSK3数据读取与部署",
+      "grammarTargets": ["测试语法"],
+      "vocabTargets": ["部署", "测试", "成功"],
+      "extensionTargets": ["部署测试成功"]
+    }
+  ]
 }

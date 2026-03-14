@@ -1,0 +1,103 @@
+{
+  "id": "hsk2.0_hsk3_lesson1",
+  "courseId": "hsk2.0_hsk3",
+  "level": "HSK3",
+  "version": "2.0",
+  "lessonNo": 1,
+  "type": "lesson",
+  "title": {
+    "zh": "【HSK3部署测试】第1课 / 这是新的HSK3目录",
+    "kr": "HSK3 배포 테스트 1과",
+    "en": "HSK3 Deployment Test Lesson 1"
+  },
+  "summary": { "zh": "HSK3最小验证课", "kr": "HSK3 최소 검증", "en": "HSK3 minimal verification" },
+  "scene": {
+    "id": "hsk3_test_scene",
+    "title": { "zh": "HSK3部署测试场景", "en": "HSK3 deployment test" },
+    "summary": { "zh": "验证课程数据读取", "en": "Verify course data load" }
+  },
+  "objectives": [
+    { "zh": "确认部署与数据读取成功", "en": "Confirm deployment and data load" }
+  ],
+  "vocab": [
+    { "hanzi": "部署", "pinyin": "bùshǔ", "meaning": { "zh": "部署", "kr": "배치", "en": "to deploy" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "测试", "pinyin": "cèshì", "meaning": { "zh": "测试", "kr": "테스트", "en": "to test" }, "pos": { "kr": "동사", "en": "verb" } },
+    { "hanzi": "成功", "pinyin": "chénggōng", "meaning": { "zh": "成功", "kr": "성공", "en": "success" }, "pos": { "kr": "동사/명사", "en": "verb/noun" } }
+  ],
+  "originalDialogues": [
+    {
+      "title": { "zh": "HSK3测试对话", "en": "HSK3 test dialogue" },
+      "lines": [
+        { "speaker": "A", "text": "这是HSK3测试课。", "translation": { "en": "This is the HSK3 test lesson.", "kr": "이것은 HSK3 테스트 과입니다." }, "pinyin": "Zhè shì HSK3 cèshì kè." },
+        { "speaker": "B", "text": "部署测试成功。", "translation": { "en": "Deployment test succeeded.", "kr": "배포 테스트 성공." }, "pinyin": "Bùshǔ cèshì chénggōng." }
+      ]
+    }
+  ],
+  "dialogueCards": [
+    {
+      "title": { "zh": "HSK3测试对话", "en": "HSK3 test dialogue" },
+      "lines": [
+        { "speaker": "A", "text": "这是HSK3测试课。", "translation": { "en": "This is the HSK3 test lesson.", "kr": "이것은 HSK3 테스트 과입니다." }, "pinyin": "Zhè shì HSK3 cèshì kè." },
+        { "speaker": "B", "text": "部署测试成功。", "translation": { "en": "Deployment test succeeded.", "kr": "배포 테스트 성공." }, "pinyin": "Bùshǔ cèshì chénggōng." }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "【HSK3测试】语法项",
+      "pinyin": "cèshì yǔfǎ",
+      "explain": {
+        "zh": "这是HSK3最小验证课的语法占位。",
+        "en": "Grammar placeholder for HSK3 verification lesson."
+      },
+      "example": {
+        "zh": "部署测试成功。",
+        "pinyin": "Bùshǔ cèshì chénggōng.",
+        "translation": { "en": "Deployment test succeeded." }
+      }
+    }
+  ],
+  "extension": [
+    { "zh": "部署测试成功", "en": "Deployment test success", "pinyin": "bùshǔ cèshì chénggōng" }
+  ],
+  "practice": [
+    {
+      "id": "p1",
+      "type": "choice",
+      "subtype": "zh_to_meaning",
+      "prompt": { "cn": "「部署」的意思是？", "en": "What does 部署 mean?" },
+      "options": ["to deploy", "to test", "success", "lesson"],
+      "answer": "to deploy",
+      "explanation": { "cn": "部署 = 部署、安排。", "en": "部署 means to deploy." }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": { "cn": "这是HSK3___课。", "en": "This is HSK3 ___ lesson." },
+      "options": ["测试", "部署", "成功", "语法"],
+      "answer": "测试",
+      "explanation": { "cn": "测试课 = test lesson。", "en": "测试课 means test lesson." }
+    }
+  ],
+  "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": { "cn": "HSK3测试讲解", "en": "HSK3 test" },
+      "target": "这是HSK3测试课。",
+      "hint": { "cn": "最小占位", "en": "Minimal placeholder" }
+    }
+  ],
+  "aiPractice": {
+    "speaking": ["部署", "测试", "成功", "这是HSK3测试课"],
+    "chatPrompt": "HSK3 verification placeholder."
+  },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+  ]
+}
