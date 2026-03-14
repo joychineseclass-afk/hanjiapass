@@ -4,10 +4,12 @@
  * 不写死 HSK，支持 hsk2.0 / kids / travel / business / culture
  */
 
+import { isNoCacheEnv } from "../../core/noCacheEnv.js";
+
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 const MEM = new Map();
-const MEM_TTL = 1000 * 60 * 30;
+const MEM_TTL = isNoCacheEnv() ? 0 : 1000 * 60 * 30;
 
 function getBase() {
   try {

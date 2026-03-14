@@ -18,7 +18,8 @@
 // - NEW: lessonDetailUrl() + loadLessonDetail()
 
 (function () {
-  const MEM_CACHE_TTL = 1000 * 60 * 30; // 30min
+  const isNoCache = typeof window !== "undefined" && window.isNoCacheEnv && window.isNoCacheEnv();
+  const MEM_CACHE_TTL = isNoCache ? 0 : 1000 * 60 * 30; // preview/开发 0，正式 30min
   const MEM = new Map();
   const now = () => Date.now();
 

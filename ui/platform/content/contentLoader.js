@@ -6,9 +6,10 @@
 
 import { ensureHSKDeps } from "../../modules/hsk/hskDeps.js";
 import { normalizeSteps } from "../../core/lessonSteps.js";
+import { isNoCacheEnv } from "../../core/noCacheEnv.js";
 
 const MEM = new Map();
-const MEM_TTL = 1000 * 60 * 30;
+const MEM_TTL = isNoCacheEnv() ? 0 : 1000 * 60 * 30;
 
 function safeStr(x) {
   return String(x ?? "").trim();
