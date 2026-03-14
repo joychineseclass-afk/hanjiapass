@@ -985,12 +985,10 @@ async function loadLessons() {
     lessons = Array.isArray(lessons) ? lessons : [];
 
     const vocabDist = await getVocabDistribution(state.lv, state.version);
-    let result = sortLessonsByDistributionOrder(lessons, (vocabDist && vocabDist.order) || null);
-    result = applyVocabDistributionTitles(result, (vocabDist && vocabDist.lessonThemes) || null);
+    // 目录只由 lessons.json 控制：不按 vocab-distribution 重排，不覆盖标题
+    let result = sortLessonsByDistributionOrder(lessons, null);
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     if (blueprint) {
-      result = applyBlueprintTitles(result, blueprint);
-      refreshBlueprintDisplayTitles(result, lang);
       if (state.lv === 1 && typeof console !== "undefined" && console.debug) {
         console.debug("[Blueprint] loaded: hsk1");
         console.debug("[Blueprint] lesson count:", Object.keys(blueprint).length);
