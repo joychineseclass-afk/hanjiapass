@@ -6,11 +6,11 @@
   "lessonNo": 6,
   "type": "lesson",
   "title": {
-    "zh": "介绍朋友",
-    "pinyin": "jièshào péngyou",
-    "kr": "친구 소개하기",
-    "en": "Introducing a friend",
-    "jp": "友達を紹介する"
+    "zh": "你会说汉语吗？",
+    "pinyin": "nǐ huì shuō Hànyǔ ma",
+    "kr": "중국어 할 수 있어요?",
+    "en": "Can you speak Chinese?",
+    "jp": "中国語を話せますか？"
   },
   "summary": {
     "zh": "介绍旁边的朋友或同学",

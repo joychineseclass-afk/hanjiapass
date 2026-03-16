@@ -6,10 +6,10 @@
   "lessonNo": 5,
   "type": "lesson",
   "title": {
-    "zh": "家庭成员",
-    "kr": "가족",
-    "jp": "家族",
-    "en": "Family Members"
+    "zh": "你在哪儿？",
+    "kr": "어디에 있어요?",
+    "jp": "どこにいますか？",
+    "en": "Where are you?"
   },
   "summary": {
     "zh": "介绍家庭成员：这是谁、这是我的妈妈/爸爸",

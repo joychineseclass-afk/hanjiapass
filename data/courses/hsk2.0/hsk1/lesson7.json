@@ -6,11 +6,11 @@
   "lessonNo": 7,
   "type": "lesson",
   "title": {
-    "zh": "年龄与数字",
-    "pinyin": "niánlíng yǔ shùzì",
-    "kr": "나이와 숫자",
-    "en": "Age and numbers",
-    "jp": "年齢と数字"
+    "zh": "你几岁？",
+    "pinyin": "nǐ jǐ suì",
+    "kr": "몇 살이에요?",
+    "en": "How old are you?",
+    "jp": "何歳ですか？"
   },
   "summary": {
     "zh": "问年龄与数字表达",

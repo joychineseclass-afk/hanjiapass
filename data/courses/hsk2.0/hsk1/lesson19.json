@@ -6,11 +6,11 @@
   "lessonNo": 19,
   "type": "lesson",
   "title": {
-    "zh": "天气",
-    "pinyin": "tiānqì",
-    "kr": "날씨",
-    "en": "Weather",
-    "jp": "天気"
+    "zh": "今天天气怎么样？",
+    "pinyin": "jīntiān tiānqì zěnmeyàng",
+    "kr": "오늘 날씨 어때요?",
+    "en": "How's the weather today?",
+    "jp": "今日の天気はどうですか？"
   },
   "summary": {
     "zh": "天气、热、冷、下雨",

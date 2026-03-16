@@ -6,10 +6,10 @@
   "lessonNo": 2,
   "type": "lesson",
   "title": {
-    "zh": "自我介绍",
-    "kr": "자기소개",
-    "jp": "自己紹介",
-    "en": "Self Introduction"
+    "zh": "你叫什么名字？",
+    "kr": "이름이 뭐예요?",
+    "jp": "お名前は？",
+    "en": "What's your name?"
   },
   "summary": {
     "zh": "介绍自己的名字和身份",

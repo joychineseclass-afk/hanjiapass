@@ -6,10 +6,10 @@
   "lessonNo": 3,
   "type": "lesson",
   "title": {
-    "zh": "问名字",
-    "kr": "이름 묻기",
-    "jp": "名前を聞く",
-    "en": "Asking Names"
+    "zh": "你是哪国人？",
+    "kr": "어느 나라 사람이에요?",
+    "jp": "どこの国の人ですか？",
+    "en": "Which country are you from?"
   },
   "summary": {
     "zh": "互相认识、问对方的名字",

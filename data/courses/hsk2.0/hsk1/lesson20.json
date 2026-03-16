@@ -6,11 +6,11 @@
   "lessonNo": 20,
   "type": "lesson",
   "title": {
-    "zh": "看病",
-    "pinyin": "kàn bìng",
-    "kr": "병원",
-    "en": "Seeing a doctor",
-    "jp": "病院・総合"
+    "zh": "你做什么工作？",
+    "pinyin": "nǐ zuò shénme gōngzuò",
+    "kr": "무슨 일 하세요?",
+    "en": "What do you do?",
+    "jp": "お仕事は何ですか？"
   },
   "summary": {
     "zh": "医院、怎么、怎么样",

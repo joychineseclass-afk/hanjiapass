@@ -6,11 +6,11 @@
   "lessonNo": 9,
   "type": "lesson",
   "title": {
-    "zh": "打电话",
-    "pinyin": "dǎ diànhuà",
-    "kr": "전화하기",
-    "en": "Phone call",
-    "jp": "電話をかける"
+    "zh": "现在几点？",
+    "pinyin": "xiànzài jǐ diǎn",
+    "kr": "지금 몇 시예요?",
+    "en": "What time is it now?",
+    "jp": "今何時ですか？"
   },
   "summary": {
     "zh": "打电话找人与礼貌用语",

@@ -6,11 +6,11 @@
   "lessonNo": 17,
   "type": "lesson",
   "title": {
-    "zh": "交通",
-    "pinyin": "jiāotōng",
-    "kr": "교통",
-    "en": "Transport",
-    "jp": "交通"
+    "zh": "我坐地铁去学校。",
+    "pinyin": "wǒ zuò dìtiě qù xuéxiào",
+    "kr": "저는 지하철 타고 학교 가요.",
+    "en": "I take the subway to school.",
+    "jp": "私は地下鉄で学校に行きます。"
   },
   "summary": {
     "zh": "出租车、飞机、火车站",

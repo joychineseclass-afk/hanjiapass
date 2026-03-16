@@ -6,11 +6,11 @@
   "lessonNo": 8,
   "type": "lesson",
   "title": {
-    "zh": "买几个苹果",
-    "pinyin": "mǎi jǐ gè píngguǒ",
-    "kr": "사과 몇 개 사기",
-    "en": "Buying apples",
-    "jp": "りんごをいくつか買う"
+    "zh": "苹果多少钱？",
+    "pinyin": "píngguǒ duōshǎo qián",
+    "kr": "사과 얼마예요?",
+    "en": "How much is the apple?",
+    "jp": "りんごはいくらですか？"
   },
   "summary": {
     "zh": "在水果店问数量与买东西",

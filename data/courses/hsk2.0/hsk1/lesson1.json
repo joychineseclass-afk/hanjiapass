@@ -6,10 +6,10 @@
   "lessonNo": 1,
   "type": "lesson",
   "title": {
-    "zh": "打招呼",
-    "kr": "인사하기",
-    "jp": "あいさつ",
-    "en": "Greeting"
+    "zh": "你好！",
+    "kr": "안녕하세요!",
+    "jp": "こんにちは!",
+    "en": "Hello!"
   },
   "summary": {
     "zh": "第一次见面打招呼",

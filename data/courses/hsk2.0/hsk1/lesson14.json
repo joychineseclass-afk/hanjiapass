@@ -6,11 +6,11 @@
   "lessonNo": 14,
   "type": "lesson",
   "title": {
-    "zh": "吃饭",
-    "pinyin": "chī fàn",
-    "kr": "식사",
-    "en": "Eating",
-    "jp": "飲食1"
+    "zh": "我们一起吃饭吧。",
+    "pinyin": "wǒmen yìqǐ chī fàn ba",
+    "kr": "같이 밥 먹어요.",
+    "en": "Let's eat together.",
+    "jp": "一緒にご飯を食べましょう。"
   },
   "summary": {
     "zh": "吃、喝与食物",

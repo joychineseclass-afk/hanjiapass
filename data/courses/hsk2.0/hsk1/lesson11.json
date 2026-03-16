@@ -6,11 +6,11 @@
   "lessonNo": 11,
   "type": "lesson",
   "title": {
-    "zh": "学校",
-    "pinyin": "xuéxiào",
-    "kr": "학교",
-    "en": "School",
-    "jp": "学校生活"
+    "zh": "今天星期几？",
+    "pinyin": "jīntiān xīngqī jǐ",
+    "kr": "오늘 무슨 요일이에요?",
+    "en": "What day is today?",
+    "jp": "今日は何曜日ですか？"
   },
   "summary": {
     "zh": "学校生活与学习",

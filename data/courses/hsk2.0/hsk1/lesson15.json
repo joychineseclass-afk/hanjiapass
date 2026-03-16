@@ -6,11 +6,11 @@
   "lessonNo": 15,
   "type": "lesson",
   "title": {
-    "zh": "饮料",
-    "pinyin": "yǐnliào",
-    "kr": "음료",
-    "en": "Drinks",
-    "jp": "飲食2"
+    "zh": "你想买什么？",
+    "pinyin": "nǐ xiǎng mǎi shénme",
+    "kr": "뭘 사고 싶어요?",
+    "en": "What do you want to buy?",
+    "jp": "何を買いたいですか？"
   },
   "summary": {
     "zh": "茶、杯子与饭馆",

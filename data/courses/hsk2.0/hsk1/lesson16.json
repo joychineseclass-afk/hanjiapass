@@ -6,11 +6,11 @@
   "lessonNo": 16,
   "type": "lesson",
   "title": {
-    "zh": "在哪儿",
-    "pinyin": "zài nǎr",
-    "kr": "위치",
-    "en": "Location",
-    "jp": "位置・方向"
+    "zh": "你去哪儿？",
+    "pinyin": "nǐ qù nǎr",
+    "kr": "어디 가요?",
+    "en": "Where are you going?",
+    "jp": "どこへ行きますか？"
   },
   "summary": {
     "zh": "来、去、回与位置",

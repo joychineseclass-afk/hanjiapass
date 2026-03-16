@@ -6,11 +6,11 @@
   "lessonNo": 10,
   "type": "lesson",
   "title": {
-    "zh": "时间（几点）",
-    "pinyin": "shíjiān (jǐ diǎn)",
-    "kr": "시간 (몇 시)",
-    "en": "Time (what time)",
-    "jp": "時間（何時）"
+    "zh": "今天几月几号？",
+    "pinyin": "jīntiān jǐ yuè jǐ hào",
+    "kr": "오늘 몇 월 며칠이에요?",
+    "en": "What's the date today?",
+    "jp": "今日は何月何日ですか？"
   },
   "summary": {
     "zh": "问现在几点与几点做某事",
