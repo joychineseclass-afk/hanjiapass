@@ -31,21 +31,6 @@
   ],
   "vocab": [
     {
-      "hanzi": "来",
-      "pinyin": "lái",
-      "meaning": {
-        "zh": "来",
-        "kr": "오다",
-        "en": "to come",
-        "jp": "来る"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
       "hanzi": "去",
       "pinyin": "qù",
       "meaning": {
@@ -76,43 +61,43 @@
       }
     },
     {
-      "hanzi": "坐",
-      "pinyin": "zuò",
+      "hanzi": "家",
+      "pinyin": "jiā",
       "meaning": {
-        "zh": "坐",
-        "kr": "앉다",
-        "en": "to sit",
-        "jp": "座る"
+        "zh": "家",
+        "kr": "집",
+        "en": "home",
+        "jp": "家"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "名词",
+        "en": "noun",
+        "jp": "名詞"
       }
     },
     {
-      "hanzi": "有",
-      "pinyin": "yǒu",
+      "hanzi": "回家",
+      "pinyin": "huí jiā",
       "meaning": {
-        "zh": "有",
-        "kr": "있다",
-        "en": "to have",
-        "jp": "ある"
+        "zh": "回家",
+        "kr": "집에 돌아가다",
+        "en": "to go home",
+        "jp": "家に帰る"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "동사词组",
+        "en": "verb phrase",
+        "jp": "動詞句"
       }
     },
     {
-      "hanzi": "椅子",
-      "pinyin": "yǐzi",
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
       "meaning": {
-        "zh": "椅子",
-        "kr": "의자",
-        "en": "chair",
-        "jp": "椅子"
+        "zh": "现在",
+        "kr": "지금",
+        "en": "now",
+        "jp": "今"
       },
       "pos": {
         "kr": "명사",
@@ -121,18 +106,33 @@
       }
     },
     {
-      "hanzi": "桌子",
-      "pinyin": "zhuōzi",
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
       "meaning": {
-        "zh": "桌子",
-        "kr": "탁자",
-        "en": "table",
-        "jp": "机"
+        "zh": "下午",
+        "kr": "오후",
+        "en": "afternoon",
+        "jp": "午後"
       },
       "pos": {
         "kr": "명사",
         "en": "noun",
         "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "什么时候",
+      "pinyin": "shénme shíhou",
+      "meaning": {
+        "zh": "什么时候",
+        "kr": "언제",
+        "en": "when",
+        "jp": "いつ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
       }
     }
   ],
@@ -333,12 +333,12 @@
   "review": {},
   "aiPractice": {
     "speaking": [
-      "我来学校",
-      "回家",
-      "坐椅子",
-      "有桌子"
+      "我去学校",
+      "我现在回家",
+      "我下午回家",
+      "你什么时候回家"
     ],
-    "chatPrompt": "AI问：你去哪儿？学生回答。"
+    "chatPrompt": "AI问：你去哪儿？学生回答去哪里、什么时候回家。"
   },
   "steps": [
     {

@@ -330,33 +330,33 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "今天很冷。",
+          "text": "这个西瓜怎么样？",
           "translation": {
-            "en": "It's very cold today.",
-            "kr": "It's very cold today.",
-            "jp": "It's very cold today."
+            "en": "How is this watermelon?",
+            "kr": "이 수박 어때요?",
+            "jp": "このスイカはどうですか？"
           },
-          "pinyin": "jīn tiān hěn lěng 。"
+          "pinyin": "zhè gè xī guā zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "是，很冷。你喝热茶吧。",
+          "text": "这个太大了，有小点的吗？",
           "translation": {
-            "en": "Yes, very cold. Have some hot tea.",
-            "kr": "Yes, very cold. Have some hot tea.",
-            "jp": "Yes, very cold. Have some hot tea."
+            "en": "This one is too big. Do you have a smaller one?",
+            "kr": "이건 너무 커요. 더 작은 거 있어요?",
+            "jp": "これは大きすぎます。もっと小さいのはありますか？"
           },
-          "pinyin": "shì ， hěn lěng 。 nǐ hē rè chá ba 。"
+          "pinyin": "zhè gè tài dà le ， yǒu xiǎo diǎn de ma ？"
         },
         {
           "speaker": "A",
-          "text": "谢谢。",
+          "text": "这个呢？不大不小。",
           "translation": {
-            "en": "Thank you.",
-            "kr": "Thank you.",
-            "jp": "Thank you."
+            "en": "What about this one? It's not big and not small.",
+            "kr": "이건요? 안 크고 안 작아요.",
+            "jp": "これは？大きくも小さくもありません。"
           },
-          "pinyin": "xiè xiè 。"
+          "pinyin": "zhè gè ne ？ bù dà bù xiǎo 。"
         }
       ]
     }

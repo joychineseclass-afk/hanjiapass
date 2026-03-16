@@ -31,58 +31,13 @@
   ],
   "vocab": [
     {
-      "hanzi": "出租车",
-      "pinyin": "chūzūchē",
+      "hanzi": "坐",
+      "pinyin": "zuò",
       "meaning": {
-        "zh": "出租车",
-        "kr": "택시",
-        "en": "taxi",
-        "jp": "タクシー"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "飞机",
-      "pinyin": "fēijī",
-      "meaning": {
-        "zh": "飞机",
-        "kr": "비행기",
-        "en": "plane",
-        "jp": "飛行機"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "火车站",
-      "pinyin": "huǒchēzhàn",
-      "meaning": {
-        "zh": "火车站",
-        "kr": "기차역",
-        "en": "train station",
-        "jp": "駅"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "开",
-      "pinyin": "kāi",
-      "meaning": {
-        "zh": "开",
-        "kr": "운전하다",
-        "en": "to drive",
-        "jp": "開ける；運転する"
+        "zh": "坐",
+        "kr": "타다",
+        "en": "to take (a vehicle)",
+        "jp": "乗る"
       },
       "pos": {
         "kr": "동사",
@@ -91,13 +46,43 @@
       }
     },
     {
-      "hanzi": "看见",
-      "pinyin": "kànjiàn",
+      "hanzi": "地铁",
+      "pinyin": "dìtiě",
       "meaning": {
-        "zh": "看见",
-        "kr": "보다",
-        "en": "to see",
-        "jp": "見える"
+        "zh": "地铁",
+        "kr": "지하철",
+        "en": "subway",
+        "jp": "地下鉄"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "公交车",
+      "pinyin": "gōngjiāo chē",
+      "meaning": {
+        "zh": "公交车",
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "走路",
+      "pinyin": "zǒu lù",
+      "meaning": {
+        "zh": "走路",
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩いて行く"
       },
       "pos": {
         "kr": "동사",
@@ -119,6 +104,21 @@
         "en": "adverb",
         "jp": "副詞"
       }
+    },
+    {
+      "hanzi": "远",
+      "pinyin": "yuǎn",
+      "meaning": {
+        "zh": "远",
+        "kr": "멀다",
+        "en": "far",
+        "jp": "遠い"
+      },
+      "pos": {
+        "kr": "형容사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
     }
   ],
   "dialogue": [
@@ -132,33 +132,48 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "怎么去 + 地点",
-      "pinyin": "zěnme qù + dìdiǎn",
+      "pattern": "怎么 + 动词",
+      "pinyin": "zěnme + dòngcí",
       "explain": {
-        "zh": "「怎么去」问方式：怎么去学校？回答：我+坐+交通工具+去+地点。",
-        "kr": "어떻게 가는지 물을 때 「怎么去+장소?」. 답: 我坐地铁去学校.",
-        "en": "怎么去 + place = How do you get to...? Answer: 我坐地铁去学校.",
-        "jp": "どうやって行くか「怎么去+場所？」。答は「我坐地铁去学校」。"
+        "zh": "「怎么」后面加动词问方式：你怎么去学校？可以回答：我坐地铁去学校 / 我走路去学校。",
+        "kr": "「怎么」 + 동사로 방법을 묻는다. 你怎么去学校？→ 我坐地铁去学校.",
+        "en": "怎么 + verb asks about method: 你怎么去学校？→ 我坐地铁去学校。",
+        "jp": "「怎么」+動詞で方法を聞く。你怎么去学校？→ 我坐地铁去学校。"
       },
       "example": {
-        "zh": "你怎么去学校？我坐地铁去学校。你住得远吗？不远。你每天都坐地铁吗？对，我每天都坐地铁。",
-        "pinyin": "Nǐ zěnme qù xuéxiào? Wǒ zuò dìtiě qù xuéxiào. Nǐ zhù de yuǎn ma? Bù yuǎn. Nǐ měi tiān dōu zuò dìtiě ma? Duì, wǒ měi tiān dōu zuò dìtiě.",
-        "translation": { "kr": "학교 어떻게 가? 지하철 타고 가. 멀어? 안 멀어. 매일 지하철 타? 응.", "jp": "どうやって学校へ？地下鉄で。遠い？遠くない。毎日地下鉄？うん。", "en": "How do you get to school? By subway. Is it far? No. Every day? Yes." }
+        "zh": "你怎么去学校？我坐地铁去学校。",
+        "pinyin": "Nǐ zěnme qù xuéxiào? Wǒ zuò dìtiě qù xuéxiào.",
+        "translation": { "kr": "학교 어떻게 가? 지하철 타고 가.", "jp": "どうやって学校へ行く？地下鉄で行く。", "en": "How do you get to school? I take the subway." }
       }
     },
     {
-      "pattern": "每天 + 都",
-      "pinyin": "měi tiān + dōu",
+      "pattern": "坐 + 交通工具",
+      "pinyin": "zuò + jiāotōng gōngjù",
       "explain": {
-        "zh": "「每天」是每一天；「都」表示全部、总是。每天都坐地铁 = 每天都会坐地铁。",
-        "kr": "「每天」는 매일. 「都」는 모두/항상. 每天都坐地铁.",
-        "en": "每天 = every day. 都 = all / always. 每天都坐地铁.",
-        "jp": "「每天」は毎日。「都」は全部/いつも。每天都坐地铁。"
+        "zh": "用「坐+交通工具」说怎么去：坐地铁、坐公交车。",
+        "kr": "「坐+교통수단」으로 어떻게 가는지 말한다: 坐地铁, 坐公交车.",
+        "en": "坐 + means of transport: 坐地铁, 坐公交车.",
+        "jp": "「坐+乗り物」で移動手段を言う：坐地铁、坐公交车。"
       },
       "example": {
-        "zh": "你每天都坐地铁吗？对，我每天都坐地铁。",
-        "pinyin": "Nǐ měi tiān dōu zuò dìtiě ma? Duì, wǒ měi tiān dōu zuò dìtiě.",
-        "translation": { "kr": "매일 지하철 타? 응, 매일 타.", "jp": "毎日地下鉄に乗る？うん、毎日。", "en": "Do you take the subway every day? Yes, I do." }
+        "zh": "我坐地铁去学校。你呢？你坐公交车去学校。",
+        "pinyin": "Wǒ zuò dìtiě qù xuéxiào. Nǐ ne? Nǐ zuò gōngjiāo chē qù xuéxiào.",
+        "translation": { "kr": "나는 지하철 타고 학교에 가. 너는? 너는 버스 타고 가.", "jp": "私は地下鉄で学校へ行く。君は？君はバスで行く。", "en": "I take the subway to school. And you? You take the bus." }
+      }
+    },
+    {
+      "pattern": "都 / 远 / 不远",
+      "pinyin": "dōu / yuǎn / bù yuǎn",
+      "explain": {
+        "zh": "「都」表示全部；「远 / 不远」表示距离远近：住得远吗？不远。",
+        "kr": "「都」는 모두. 「远/不远」은 먼지 안 먼지. 住得远吗？不远.",
+        "en": "都 means all; 远 / 不远 describe distance: 住得远吗？不远。",
+        "jp": "「都」はみんな。「远／不远」は距離を表す。住得远吗？不远。"
+      },
+      "example": {
+        "zh": "你住得远吗？不远。我和同学都坐地铁去学校。",
+        "pinyin": "Nǐ zhù de yuǎn ma? Bù yuǎn. Wǒ hé tóngxué dōu zuò dìtiě qù xuéxiào.",
+        "translation": { "kr": "집 멀어? 안 멀어. 나랑 친구들은 다 지하철 타고 학교에 가.", "jp": "家は遠い？遠くない。私とクラスメートはみんな地下鉄で学校へ行く。", "en": "Do you live far away? Not far. My classmates and I all take the subway to school." }
       }
     }
   ],

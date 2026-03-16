@@ -160,6 +160,21 @@
         "pinyin": "Nǐ zài nǎr gōngzuò? Wǒ zài Běijīng yīyuàn gōngzuò. Tā ne? Tā yě shì yīshēng.",
         "translation": { "kr": "어디서 일해? 베이징 병원에서. 그는? 그도 의사야.", "jp": "どこで働いてる？北京病院で。彼は？彼も医者です。", "en": "Where do you work? At Beijing Hospital. And him? He's a doctor too." }
       }
+    },
+    {
+      "pattern": "也是 / 他呢？",
+      "pinyin": "yě shì / tā ne",
+      "explain": {
+        "zh": "「也是」表示“也一样”；「他呢？」用来问对方或第三个人的情况。",
+        "kr": "「也是」는 \"역시 ~이다\"를, 「他呢？」는 그 사람은 어떤지 묻는다.",
+        "en": "也是 means \"also is\"; 他呢？ asks about another person.",
+        "jp": "「也是」は「〜も…だ」を表し、「他呢？」はその人について尋ねる。"
+      },
+      "example": {
+        "zh": "他是医生。他呢？他也是医生。",
+        "pinyin": "Tā shì yīshēng. Tā ne? Tā yě shì yīshēng.",
+        "translation": { "kr": "그는 의사야. 그는? 그도 의사야.", "jp": "彼は医者です。彼は？彼も医者です。", "en": "He is a doctor. And him? He is a doctor too." }
+      }
     }
   ],
   "extension": [

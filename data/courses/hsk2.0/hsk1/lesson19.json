@@ -398,43 +398,43 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "你明天做什么？",
+          "text": "今天天气怎么样？",
           "translation": {
-            "en": "What are you doing tomorrow?",
-            "kr": "What are you doing tomorrow?",
-            "jp": "What are you doing tomorrow?"
+            "en": "How's the weather today?",
+            "kr": "오늘 날씨 어때요?",
+            "jp": "今日の天気はどうですか？"
           },
-          "pinyin": "nǐ míng tiān zuò shén me ？"
+          "pinyin": "jīn tiān tiān qì zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "我明天去中国。",
+          "text": "今天天气很好，不冷，很暖和。",
           "translation": {
-            "en": "I'm going to China tomorrow.",
-            "kr": "I'm going to China tomorrow.",
-            "jp": "I'm going to China tomorrow."
+            "en": "The weather is very good today. It's not cold, it's warm.",
+            "kr": "오늘 날씨가 아주 좋아요. 춥지 않고 따뜻해요.",
+            "jp": "今日は天気がとてもいいです。寒くなくて暖かいです。"
           },
-          "pinyin": "wǒ míng tiān qù zhōng guó 。"
+          "pinyin": "jīn tiān tiān qì hěn hǎo ， bù lěng ， hěn nuǎn huo 。"
         },
         {
           "speaker": "A",
-          "text": "你想去北京吗？",
+          "text": "明天天气怎么样？",
           "translation": {
-            "en": "Do you want to go to Beijing?",
-            "kr": "Do you want to go to Beijing?",
-            "jp": "Do you want to go to Beijing?"
+            "en": "How's the weather tomorrow?",
+            "kr": "내일 날씨 어때요?",
+            "jp": "明日の天気はどうですか？"
           },
-          "pinyin": "nǐ xiǎng qù běi jīng ma ？"
+          "pinyin": "míng tiān tiān qì zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "想。我会说一点汉语。",
+          "text": "明天下雨，可能很冷。",
           "translation": {
-            "en": "Yes. I can speak a little Chinese.",
-            "kr": "Yes. I can speak a little Chinese.",
-            "jp": "Yes. I can speak a little Chinese."
+            "en": "It will rain tomorrow, it may be very cold.",
+            "kr": "내일 비가 오고, 아주 추울 수 있어요.",
+            "jp": "明日は雨で、とても寒いかもしれません。"
           },
-          "pinyin": "xiǎng 。 wǒ huì shuō yì diǎn hàn yǔ 。"
+          "pinyin": "míng tiān xià yǔ ， kě néng hěn lěng 。"
         }
       ]
     }
