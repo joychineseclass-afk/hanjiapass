@@ -162,39 +162,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "太 + 形容词",
-      "explanation_zh": "「太」表示程度过高。",
-      "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.",
-      "explanation_en": "太 indicates excessive degree.",
-      "example": {
-        "zh": "太热",
-        "pinyin": "tài rè",
-        "kr": "너무 덥다",
-        "en": "too hot"
-      },
+      "pattern": "怎么样",
+      "pinyin": "zěnmeyàng",
       "explain": {
-        "jp": "「太」は程度が高すぎることを表します。",
-        "en": "太 indicates excessive degree.",
-        "kr": "'太'는 정도가 너무 높음을 나타냅니다.",
-        "zh": "「太」表示程度过高。"
+        "zh": "「怎么样」问情况、程度“怎么样、如何”。今天天气怎么样？回答：今天天气很好。/ 很暖和。",
+        "kr": "「怎么样」는 \"어때?\" 상황·정도를 묻습니다. 今天天气怎么样？今天天气很好.",
+        "en": "怎么样 = how about? How is it? 今天天气怎么样？今天天气很好.",
+        "jp": "「怎么样」はどう？状況を聞く。今天天气怎么样？今天天气很好。"
+      },
+      "example": {
+        "zh": "今天天气怎么样？今天天气很好。冷吗？不冷，很暖和。明天天气怎么样？明天下雨。",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng? Jīntiān tiānqì hěn hǎo. Lěng ma? Bù lěng, hěn nuǎnhuo. Míngtiān tiānqì zěnmeyàng? Míngtiān xià yǔ.",
+        "translation": { "kr": "오늘 날씨 어때? 좋아. 추워? 안 추워, 따뜻해. 내일은? 비 와.", "jp": "今日の天気は？いい。寒い？寒くない、暖かい。明日は？雨。", "en": "How's the weather? Nice. Cold? No, warm. Tomorrow? Rain." }
       }
     },
     {
-      "title": "想 + 动词",
-      "explanation_zh": "「想」后接动词表示想做什么。",
-      "explanation_kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
-      "explanation_en": "想 + verb means want to do.",
-      "example": {
-        "zh": "想睡觉",
-        "pinyin": "xiǎng shuìjiào",
-        "kr": "자고 싶다",
-        "en": "want to sleep"
-      },
+      "pattern": "很 + 形容词 / 不 + 形容词",
+      "pinyin": "hěn + xíngróngcí / bù + xíngróngcí",
       "explain": {
-        "jp": "「想」の後に動詞が来ると、〜したいという意味になります。",
-        "en": "想 + verb means want to do.",
-        "kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
-        "zh": "「想」后接动词表示想做什么。"
+        "zh": "「很」表程度；否定用「不」。很好、很暖和；不冷。",
+        "kr": "「很」는 정도. 부정은 「不」. 很好, 不冷.",
+        "en": "很 + adj = very. 不 + adj = not. 很好, 不冷.",
+        "jp": "「很」は程度。「不」で否定。很好、不冷。"
+      },
+      "example": {
+        "zh": "今天天气很好。不冷，很暖和。",
+        "pinyin": "Jīntiān tiānqì hěn hǎo. Bù lěng, hěn nuǎnhuo.",
+        "translation": { "kr": "오늘 날씨 좋아. 안 추워, 따뜻해.", "jp": "今日は天気がいい。寒くない、暖かい。", "en": "The weather is nice. Not cold, warm." }
       }
     }
   ],

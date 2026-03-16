@@ -57,18 +57,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "这是 + 我的 + 朋友/同学",
-      "pinyin": "zhè shì + wǒ de + péngyou/tóngxué",
+      "pattern": "会",
+      "pinyin": "huì",
       "explain": {
-        "zh": "介绍身边的人时用「这是+我的+朋友/同学」。",
-        "kr": "옆에 있는 사람을 소개할 때 「这是+我的+朋友/同学」를 씁니다.",
-        "en": "To introduce someone next to you: 这是 + 我的 + 朋友/同学.",
-        "jp": "隣にいる人を紹介するとき「这是+我的+朋友/同学」を使います。"
+        "zh": "「会」表示能力“会做某事”。会 + 动词：会说汉语、会学习。",
+        "kr": "「会」는 능력 \"~할 수 있다\". 会+동사: 会说汉语.",
+        "en": "会 means can / know how to. 会 + verb: 会说汉语.",
+        "jp": "「会」は能力「〜できる」。会+動詞：会说汉语。"
       },
       "example": {
-        "zh": "这是我的朋友。他是我的同学。",
-        "pinyin": "Zhè shì wǒ de péngyou. Tā shì wǒ de tóngxué.",
-        "translation": { "kr": "이건 내 친구야. 그는 내 동창이야.", "jp": "これは私の友達です。彼は私のクラスメートです。", "en": "This is my friend. He's my classmate." }
+        "zh": "你会说汉语吗？是的，我会汉语。",
+        "pinyin": "Nǐ huì shuō Hànyǔ ma? Shì de, wǒ huì Hànyǔ.",
+        "translation": { "kr": "중국어 할 줄 알아? 응, 나 중국어 해.", "jp": "中国語話せる？はい、話せます。", "en": "Can you speak Chinese? Yes, I can." }
+      }
+    },
+    {
+      "pattern": "学习 + 名词",
+      "pinyin": "xuéxí + míngcí",
+      "explain": {
+        "zh": "「学习」后面接学习的内容。学习汉语、在学校学习。",
+        "kr": "「学习」 뒤에 학습 내용이 옵니다. 学习汉语, 在学校学习.",
+        "en": "学习 takes an object. 学习汉语 = study Chinese.",
+        "jp": "「学习」の後に学習内容が続く。学习汉语。"
+      },
+      "example": {
+        "zh": "你在哪儿学习汉语？我在学校学习汉语。",
+        "pinyin": "Nǐ zài nǎr xuéxí Hànyǔ? Wǒ zài xuéxiào xuéxí Hànyǔ.",
+        "translation": { "kr": "어디서 중국어 배워? 나는 학교에서 중국어 배워.", "jp": "どこで中国語を勉強してる？学校で勉強してる。", "en": "Where do you study Chinese? I study at school." }
       }
     }
   ],

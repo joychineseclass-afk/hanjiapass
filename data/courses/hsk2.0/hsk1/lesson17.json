@@ -132,39 +132,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "坐 + 交通工具",
-      "explanation_zh": "「坐」后接交通工具。",
-      "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.",
-      "explanation_en": "坐 takes transport.",
-      "example": {
-        "zh": "坐出租车",
-        "pinyin": "zuò chūzūchē",
-        "kr": "택시 타다",
-        "en": "take a taxi"
-      },
+      "pattern": "怎么去 + 地点",
+      "pinyin": "zěnme qù + dìdiǎn",
       "explain": {
-        "jp": "「坐」の後に交通手段が続きます。",
-        "en": "坐 takes transport.",
-        "kr": "'坐' 뒤에 교통수단이 옵니다.",
-        "zh": "「坐」后接交通工具。"
+        "zh": "「怎么去」问方式：怎么去学校？回答：我+坐+交通工具+去+地点。",
+        "kr": "어떻게 가는지 물을 때 「怎么去+장소?」. 답: 我坐地铁去学校.",
+        "en": "怎么去 + place = How do you get to...? Answer: 我坐地铁去学校.",
+        "jp": "どうやって行くか「怎么去+場所？」。答は「我坐地铁去学校」。"
+      },
+      "example": {
+        "zh": "你怎么去学校？我坐地铁去学校。你住得远吗？不远。你每天都坐地铁吗？对，我每天都坐地铁。",
+        "pinyin": "Nǐ zěnme qù xuéxiào? Wǒ zuò dìtiě qù xuéxiào. Nǐ zhù de yuǎn ma? Bù yuǎn. Nǐ měi tiān dōu zuò dìtiě ma? Duì, wǒ měi tiān dōu zuò dìtiě.",
+        "translation": { "kr": "학교 어떻게 가? 지하철 타고 가. 멀어? 안 멀어. 매일 지하철 타? 응.", "jp": "どうやって学校へ？地下鉄で。遠い？遠くない。毎日地下鉄？うん。", "en": "How do you get to school? By subway. Is it far? No. Every day? Yes." }
       }
     },
     {
-      "title": "都",
-      "explanation_zh": "「都」表示全部。",
-      "explanation_kr": "'都'는 모두를 나타냅니다.",
-      "explanation_en": "都 means all.",
-      "example": {
-        "zh": "我们都去。",
-        "pinyin": "Wǒmen dōu qù.",
-        "kr": "우리 모두 가요.",
-        "en": "We all go."
-      },
+      "pattern": "每天 + 都",
+      "pinyin": "měi tiān + dōu",
       "explain": {
-        "jp": "「都」は全部を表します。",
-        "en": "都 means all.",
-        "kr": "'都'는 모두를 나타냅니다.",
-        "zh": "「都」表示全部。"
+        "zh": "「每天」是每一天；「都」表示全部、总是。每天都坐地铁 = 每天都会坐地铁。",
+        "kr": "「每天」는 매일. 「都」는 모두/항상. 每天都坐地铁.",
+        "en": "每天 = every day. 都 = all / always. 每天都坐地铁.",
+        "jp": "「每天」は毎日。「都」は全部/いつも。每天都坐地铁。"
+      },
+      "example": {
+        "zh": "你每天都坐地铁吗？对，我每天都坐地铁。",
+        "pinyin": "Nǐ měi tiān dōu zuò dìtiě ma? Duì, wǒ měi tiān dōu zuò dìtiě.",
+        "translation": { "kr": "매일 지하철 타? 응, 매일 타.", "jp": "毎日地下鉄に乗る？うん、毎日。", "en": "Do you take the subway every day? Yes, I do." }
       }
     }
   ],

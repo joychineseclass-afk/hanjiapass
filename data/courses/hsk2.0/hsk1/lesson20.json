@@ -132,57 +132,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "怎么",
-      "explanation_zh": "「怎么」问方式。",
-      "explanation_kr": "'怎么'는 방법을 묻습니다.",
-      "explanation_en": "怎么 asks how.",
-      "example": {
-        "zh": "怎么去？",
-        "pinyin": "Zěnme qù?",
-        "kr": "어떻게 가요?",
-        "en": "How to get there?"
-      },
+      "pattern": "做什么工作",
+      "pinyin": "zuò shénme gōngzuò",
       "explain": {
-        "jp": "「怎么」は方法を聞きます。",
-        "en": "怎么 asks how.",
-        "kr": "'怎么'는 방법을 묻습니다.",
-        "zh": "「怎么」问方式。"
+        "zh": "问职业用「你做什么工作？」。回答：我是+职业（医生/老师…）。",
+        "kr": "직업을 물을 때 「你做什么工作?」. 답: 我是+직업.",
+        "en": "Ask job: 你做什么工作? Answer: 我是 + job (doctor, teacher...).",
+        "jp": "職業は「你做什么工作？」。答は「我是+職業」。"
+      },
+      "example": {
+        "zh": "你做什么工作？我是医生。",
+        "pinyin": "Nǐ zuò shénme gōngzuò? Wǒ shì yīshēng.",
+        "translation": { "kr": "무슨 일 해? 나는 의사야.", "jp": "お仕事は？医者です。", "en": "What do you do? I'm a doctor." }
       }
     },
     {
-      "title": "没 + 有",
-      "explanation_zh": "「有」的否定用「没」。",
-      "explanation_kr": "'有'의 부정은 '没'를 사용합니다.",
-      "explanation_en": "Negate 有 with 没.",
-      "example": {
-        "zh": "没钱",
-        "pinyin": "méi qián",
-        "kr": "돈 없다",
-        "en": "no money"
-      },
+      "pattern": "在 + 地点 + 工作",
+      "pinyin": "zài + dìdiǎn + gōngzuò",
       "explain": {
-        "jp": "「有」の否定には「没」を使います。",
-        "en": "Negate 有 with 没.",
-        "kr": "'有'의 부정은 '没'를 사용합니다.",
-        "zh": "「有」的否定用「没」。"
-      }
-    },
-    {
-      "title": "呢",
-      "explanation_zh": "「呢」用于追问或话题。",
-      "explanation_kr": "'呢'는 재질문이나 화제에 사용합니다.",
-      "explanation_en": "呢 for follow-up or topic.",
-      "example": {
-        "zh": "你呢？",
-        "pinyin": "Nǐ ne?",
-        "kr": "당신은요?",
-        "en": "And you?"
+        "zh": "问工作地点：你在哪儿工作？回答：我在+地点+工作。",
+        "kr": "어디서 일하는지: 你在哪儿工作? 답: 我在+장소+工作.",
+        "en": "Where do you work? 你在哪儿工作？我在北京医院工作.",
+        "jp": "どこで働くか「你在哪儿工作？」。答は「我在+場所+工作」。"
       },
-      "explain": {
-        "jp": "「呢」は追及や話題転換に使います。",
-        "en": "呢 for follow-up or topic.",
-        "kr": "'呢'는 재질문이나 화제에 사용합니다.",
-        "zh": "「呢」用于追问或话题。"
+      "example": {
+        "zh": "你在哪儿工作？我在北京医院工作。他呢？他也是医生。",
+        "pinyin": "Nǐ zài nǎr gōngzuò? Wǒ zài Běijīng yīyuàn gōngzuò. Tā ne? Tā yě shì yīshēng.",
+        "translation": { "kr": "어디서 일해? 베이징 병원에서. 그는? 그도 의사야.", "jp": "どこで働いてる？北京病院で。彼は？彼も医者です。", "en": "Where do you work? At Beijing Hospital. And him? He's a doctor too." }
       }
     }
   ],

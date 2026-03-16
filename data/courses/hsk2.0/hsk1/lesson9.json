@@ -57,18 +57,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "请问 + 你找谁 / 我找 + 人",
-      "pinyin": "qǐngwèn + nǐ zhǎo shéi / wǒ zhǎo + rén",
+      "pattern": "现在几点",
+      "pinyin": "xiànzài jǐ diǎn",
       "explain": {
-        "zh": "接电话时用「请问你找谁？」问对方找谁；打电话的人说「我找+人名」。",
-        "kr": "전화 받을 때 「请问你找谁?」로 누구 찾는지 묻고, 걸 쪽은 「我找+이름」.",
-        "en": "Answering: 请问你找谁? Calling: 我找 + person's name.",
-        "jp": "受話時「请问你找谁？」で誰を探すか聞く。かける側は「我找+名前」。"
+        "zh": "问现在的时间用「现在几点？」。回答：现在+数字+点（或 点+分，如 三点十分）。",
+        "kr": "지금 몇 시인지 물을 때 「现在几点?」. 답: 现在+숫자+点.",
+        "en": "Ask the time with 现在几点? Answer: 现在 + number + 点.",
+        "jp": "今何時かは「现在几点？」。答は「现在+数字+点」。"
       },
       "example": {
-        "zh": "请问你找谁？我找李明。",
-        "pinyin": "Qǐngwèn nǐ zhǎo shéi? Wǒ zhǎo Lǐ Míng.",
-        "translation": { "kr": "누구 찾으세요? 이명 씨 부르고 싶어요.", "jp": "どなたをお探しですか？李明さんをお願いします。", "en": "Who are you looking for? I'm looking for Li Ming." }
+        "zh": "现在几点？现在三点。我们几点上课？三点十分上课。",
+        "pinyin": "Xiànzài jǐ diǎn? Xiànzài sān diǎn. Wǒmen jǐ diǎn shàngkè? Sān diǎn shí fēn shàngkè.",
+        "translation": { "kr": "지금 몇 시야? 세 시. 우리 몇 시에 수업해? 세 시 십 분에.", "jp": "今何時？三時。何時に授業？三時十分。", "en": "What time is it? Three. When do we have class? At 3:10." }
+      }
+    },
+    {
+      "pattern": "几点 + 动词",
+      "pinyin": "jǐ diǎn + dòngcí",
+      "explain": {
+        "zh": "问做某事的时间：某人+几点+动词。如：我们几点上课？回答：三点十分上课。",
+        "kr": "몇 시에 뭘 하는지: 사람+几点+동사. 我们几点上课？",
+        "en": "When do (verb): person + 几点 + verb. 我们几点上课？= When do we have class?",
+        "jp": "いつ何をするか：人+几点+動詞。我们几点上课？"
+      },
+      "example": {
+        "zh": "我们几点上课？三点十分上课。",
+        "pinyin": "Wǒmen jǐ diǎn shàngkè? Sān diǎn shí fēn shàngkè.",
+        "translation": { "kr": "우리 몇 시에 수업해? 세 시 십 분에.", "jp": "何時に授業？三時十分。", "en": "When do we have class? At 3:10." }
       }
     }
   ],

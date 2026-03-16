@@ -57,18 +57,33 @@
   "dialogueCards": [],
   "grammar": [
     {
+      "pattern": "多少钱",
+      "pinyin": "duō shǎo qián",
+      "explain": {
+        "zh": "「多少钱」问价格。事物+多少钱？回答常用「数字+块钱」或「数字+块钱+一个」。",
+        "kr": "「多少钱」는 가격을 묻습니다. 답: 숫자+块钱.",
+        "en": "多少钱 asks the price. Answer with number + 块钱.",
+        "jp": "「多少钱」は値段を聞く。答は「数字+块钱」。"
+      },
+      "example": {
+        "zh": "苹果多少钱？三块钱一个。我买六个苹果。好的，十八块钱。",
+        "pinyin": "Píngguǒ duō shǎo qián? Sān kuài qián yī gè. Wǒ mǎi liù gè píngguǒ. Hǎo de, shíbā kuài qián.",
+        "translation": { "kr": "사과 얼마예요? 세 개에 삼 위안. 사과 여섯 개 사요. 네, 십팔 위안이에요.", "jp": "りんごいくら？三元一個。りんご六つ買います。十八元です。", "en": "How much for apples? Three yuan each. I'll buy six. OK, eighteen yuan." }
+      }
+    },
+    {
       "pattern": "几 + 个",
       "pinyin": "jǐ + gè",
       "explain": {
-        "zh": "「几」问数量（十以内），后面常接量词「个」。",
-        "kr": "'几'는 수량을 묻고(10 이하), 뒤에 양사 '个'를 씁니다.",
-        "en": "几 asks quantity (under ten), often followed by measure word 个.",
-        "jp": "「几」は数量を聞き（10以下）、後に量詞「个」を付けます。"
+        "zh": "「几」问数量，后面常接量词「个」。买+数量+东西：我买六个苹果。",
+        "kr": "「几」는 수량을 묻고, 뒤에 양사 「个」. 我买六个苹果.",
+        "en": "几 asks quantity, often with 个. 我买六个苹果 = I'll buy six apples.",
+        "jp": "「几」は数量を聞き、後に「个」。我买六个苹果。"
       },
       "example": {
-        "zh": "你要几个？我要五个。几个苹果。",
-        "pinyin": "Nǐ yào jǐ gè? Wǒ yào wǔ gè. Jǐ gè píngguǒ.",
-        "translation": { "kr": "몇 개 필요해요? 다섯 개. 사과 몇 개.", "jp": "いくつ要りますか？五つ。りんごいくつ。", "en": "How many? I want five. How many apples." }
+        "zh": "你要几个？我要五个。我买六个苹果。",
+        "pinyin": "Nǐ yào jǐ gè? Wǒ yào wǔ gè. Wǒ mǎi liù gè píngguǒ.",
+        "translation": { "kr": "몇 개 필요해요? 다섯 개. 사과 여섯 개 사요.", "jp": "いくつ？五つ。りんご六つ買います。", "en": "How many? Five. I'll buy six apples." }
       }
     }
   ],

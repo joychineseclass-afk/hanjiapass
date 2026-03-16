@@ -55,33 +55,48 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "这 / 那",
-      "pinyin": "zhè / nà",
+      "pattern": "哪儿",
+      "pinyin": "nǎr",
       "explain": {
-        "zh": "「这」指近处的人或物，「那」指远处。用来指人或物。",
-        "kr": "「这」는 가까운 것, 「那」는 먼 것. 사람이나 물건을 가리킬 때 씁니다.",
-        "en": "这 = this (near), 那 = that (far). Used to point to people or things.",
-        "jp": "「这」は近く、「那」は遠く。人や物を指します。"
+        "zh": "「哪儿」问地点，意思是“哪里”。回答用「在 + 地点」。",
+        "kr": "「哪儿」는 장소를 묻습니다. \"어디\". 답: 在+장소.",
+        "en": "哪儿 asks for place (where). Answer with 在 + place.",
+        "jp": "「哪儿」は場所を聞く（どこ）。答は「在+場所」。"
       },
       "example": {
-        "zh": "这是谁？那是谁？",
-        "pinyin": "Zhè shì shéi? Nà shì shéi?",
-        "translation": { "kr": "이 사람 누구야? 저 사람 누구야?", "jp": "これは誰？あれは誰？", "en": "Who is this? Who is that?" }
+        "zh": "你在哪儿？我在学校。谁在教室里？我和Anna。",
+        "pinyin": "Nǐ zài nǎr? Wǒ zài xuéxiào. Shéi zài jiàoshì lǐ? Wǒ hé Anna.",
+        "translation": { "kr": "너 어디야? 나는 학교에 있어. 교실에 누가 있어? 나랑 Anna.", "jp": "どこにいる？学校にいる。教室に誰がいる？私とAnna。", "en": "Where are you? I'm at school. Who's in the classroom? Anna and I." }
       }
     },
     {
-      "pattern": "的（所属）",
-      "pinyin": "de",
+      "pattern": "在 + 地点",
+      "pinyin": "zài + dìdiǎn",
       "explain": {
-        "zh": "「的」表示所属关系，放在名词前。我的妈妈 = 我 + 的 + 妈妈",
-        "kr": "「的」는 소유를 나타냅니다. 我的妈妈 = 나의 엄마",
-        "en": "的 shows possession. 我的妈妈 = my mom.",
-        "jp": "「的」は所属。我的妈妈＝私の母。"
+        "zh": "「在」表示人或物在某地。结构：某人 + 在 + 地点。",
+        "kr": "「在」는 \"~에 있다\". 구조: 사람+在+장소.",
+        "en": "在 means to be at a place. Pattern: person + 在 + place.",
+        "jp": "「在」は「〜にいる/ある」。人+在+場所。"
       },
       "example": {
-        "zh": "这是我的妈妈。",
-        "pinyin": "Zhè shì wǒ de māma.",
-        "translation": { "kr": "이건 우리 엄마야.", "jp": "これは私の母です。", "en": "This is my mom." }
+        "zh": "我在学校。王老师在教室里。",
+        "pinyin": "Wǒ zài xuéxiào. Wáng lǎoshī zài jiàoshì lǐ.",
+        "translation": { "kr": "나는 학교에 있어. 왕 선생님은 교실에 있어.", "jp": "私は学校にいる。王老师は教室にいる。", "en": "I'm at school. Teacher Wang is in the classroom." }
+      }
+    },
+    {
+      "pattern": "和",
+      "pinyin": "hé",
+      "explain": {
+        "zh": "「和」连接两个名词，表示“和、与”。我和Anna = 我 + 和 + Anna。",
+        "kr": "「和」는 두 명사를 연결합니다. \"와/과\". 我和Anna.",
+        "en": "和 connects two nouns (and, with). 我和Anna = Anna and I.",
+        "jp": "「和」は二つの名詞をつなぐ（と）。我和Anna。"
+      },
+      "example": {
+        "zh": "谁在教室里？我和Anna。",
+        "pinyin": "Shéi zài jiàoshì lǐ? Wǒ hé Anna.",
+        "translation": { "kr": "교실에 누가 있어? 나랑 Anna.", "jp": "教室に誰がいる？私とAnna。", "en": "Who's in the classroom? Anna and I." }
       }
     }
   ],

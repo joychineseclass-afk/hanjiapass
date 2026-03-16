@@ -177,38 +177,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "喜欢 + 宾语",
-      "explanation_zh": "「喜欢」后接喜欢的事物。",
-      "explanation_kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.",
-      "explanation_en": "喜欢 takes object.",
-      "example": {
-        "zh": "喜欢狗",
-        "pinyin": "xǐhuan gǒu",
-        "kr": "개를 좋아하다",
-        "en": "like dogs"
-      },
+      "pattern": "喜欢 + 听/看 + 什么 + 名词",
+      "pinyin": "xǐhuan + tīng/kàn + shénme + míngcí",
       "explain": {
-        "en": "喜欢 takes object.",
-        "kr": "'喜欢' 뒤에 좋아하는 것이 옵니다.",
-        "zh": "「喜欢」后接喜欢的事物。"
+        "zh": "问喜欢什么内容：你喜欢听什么音乐？回答：我喜欢听+具体内容。",
+        "kr": "뭘 좋아하는지 물을 때: 你喜欢听什么音乐? 답: 我喜欢听+내용.",
+        "en": "Ask what you like: 你喜欢听什么音乐? Answer: 我喜欢听 + thing.",
+        "jp": "何が好きか聞く：你喜欢听什么音乐？答：我喜欢听+内容。"
+      },
+      "example": {
+        "zh": "你喜欢听什么音乐？我喜欢听中国音乐。你喜欢看电影吗？喜欢，我也喜欢看电影。",
+        "pinyin": "Nǐ xǐhuan tīng shénme yīnyuè? Wǒ xǐhuan tīng Zhōngguó yīnyuè. Nǐ xǐhuan kàn diànyǐng ma? Xǐhuan, wǒ yě xǐhuan kàn diànyǐng.",
+        "translation": { "kr": "어떤 음악 좋아해? 중국 음악 들어. 영화 좋아해? 나도 좋아해.", "jp": "どんな音楽が好き？中国音楽を聞くのが好き。映画は？私も好き。", "en": "What music do you like? I like Chinese music. Do you like movies? I do too." }
       }
     },
     {
-      "title": "和",
-      "explanation_zh": "「和」连接名词。",
-      "explanation_kr": "'和'는 명사를 연결합니다.",
-      "explanation_en": "和 connects nouns.",
-      "example": {
-        "zh": "狗和猫",
-        "pinyin": "gǒu hé māo",
-        "kr": "개와 고양이",
-        "en": "dogs and cats"
-      },
+      "pattern": "也 + 喜欢",
+      "pinyin": "yě + xǐhuan",
       "explain": {
-        "jp": "「和」は名詞をつなぎます。",
-        "en": "和 connects nouns.",
-        "kr": "'和'는 명사를 연결합니다.",
-        "zh": "「和」连接名词。"
+        "zh": "「也」表示“同样”，放在动词前。我也喜欢 = I also like.",
+        "kr": "「也」는 \"~도\", 동사 앞에 씁니다. 我也喜欢.",
+        "en": "也 = also, before the verb. 我也喜欢 = I also like.",
+        "jp": "「也」は「〜も」。動詞の前。我也喜欢。"
+      },
+      "example": {
+        "zh": "喜欢，我也喜欢看电影。",
+        "pinyin": "Xǐhuan, wǒ yě xǐhuan kàn diànyǐng.",
+        "translation": { "kr": "좋아해, 나도 영화 보는 거 좋아해.", "jp": "好き。私も映画が好き。", "en": "Yes, I like watching movies too." }
       }
     }
   ],

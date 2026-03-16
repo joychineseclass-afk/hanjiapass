@@ -53,33 +53,48 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "你叫什么名字？",
-      "pinyin": "nǐ jiào shénme míngzi",
+      "pattern": "是……（肯定）",
+      "pinyin": "shì",
       "explain": {
-        "zh": "问对方的名字用「你叫什么名字？」。回答用「我叫+名字」。",
-        "kr": "이름을 물을 때 「你叫什么名字？」. 답은 「我叫+이름」.",
-        "en": "Ask names with 你叫什么名字? Answer with 我叫 + name.",
-        "jp": "名前を聞くとき「你叫什么名字？」。答は「我叫+名前」。"
+        "zh": "「是」表示肯定判断，结构：A 是 B。回答国籍：我是 + 国家 + 人。",
+        "kr": "「是」는 긍정 판단. 구조: A 是 B. 국적 답: 我是+나라+人.",
+        "en": "是 indicates affirmative. Pattern: A 是 B. Nationality: 我是 + country + 人.",
+        "jp": "「是」は肯定判断。A 是 B。国籍の答え：我是+国+人。"
       },
       "example": {
-        "zh": "你叫什么名字？我叫李明。",
-        "pinyin": "Nǐ jiào shénme míngzi? Wǒ jiào Lǐ Míng.",
-        "translation": { "kr": "이름이 뭐야? 나는 이명이야.", "jp": "お名前は？李明です。", "en": "What's your name? I'm Li Ming." }
+        "zh": "我是韩国人。你是中国人吗？",
+        "pinyin": "Wǒ shì Hánguó rén. Nǐ shì Zhōngguó rén ma?",
+        "translation": { "kr": "나는 한국인이야. 너 중국인이야?", "jp": "韓国人です。あなたは中国人ですか？", "en": "I'm Korean. Are you Chinese?" }
       }
     },
     {
-      "pattern": "呢（追问）",
-      "pinyin": "ne",
+      "pattern": "吗（一般疑问句）",
+      "pinyin": "ma",
       "explain": {
-        "zh": "「呢」用在句末，表示追问对方同样的问题。如：你呢？= 你叫什么名字呢？",
-        "kr": "「呢」는 문장 끝에 써서 상대에게 같은 걸 묻습니다. 예: 你呢？",
-        "en": "呢 at the end asks the same question to the other. 你呢？= And you?",
-        "jp": "「呢」は文末で相手に同じことを聞く。「你呢？」＝あなたは？"
+        "zh": "「吗」放在陈述句末尾，变成一般疑问句。回答用「是」或「不是」。",
+        "kr": "「吗」를 문장 끝에 붙이면 의문문이 됩니다. 답은 「是」或「不是」.",
+        "en": "吗 at the end turns a statement into a yes/no question. Answer with 是 or 不是.",
+        "jp": "「吗」を文末に付けると疑問文になります。答は「是」或「不是」。"
       },
       "example": {
-        "zh": "你呢？",
-        "pinyin": "Nǐ ne?",
-        "translation": { "kr": "너는?", "jp": "あなたは？", "en": "And you?" }
+        "zh": "你是中国人吗？不是，我是韩国人。",
+        "pinyin": "Nǐ shì Zhōngguó rén ma? Bú shì, wǒ shì Hánguó rén.",
+        "translation": { "kr": "너 중국인이야? 아니, 나는 한국인이야.", "jp": "中国人ですか？いいえ、韓国人です。", "en": "Are you Chinese? No, I'm Korean." }
+      }
+    },
+    {
+      "pattern": "不是",
+      "pinyin": "bú shì",
+      "explain": {
+        "zh": "「不是」是「是」的否定，表示“不是……”。",
+        "kr": "「不是」는 「是」의 부정. \"~가 아니다\".",
+        "en": "不是 is the negative of 是. It means \"is not\".",
+        "jp": "「不是」は「是」の否定。「〜ではない」。"
+      },
+      "example": {
+        "zh": "不是，我是韩国人。",
+        "pinyin": "Bú shì, wǒ shì Hánguó rén.",
+        "translation": { "kr": "아니, 나는 한국인이야.", "jp": "いいえ、韓国人です。", "en": "No, I'm Korean." }
       }
     }
   ],

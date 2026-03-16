@@ -162,39 +162,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "这 / 那",
-      "explanation_zh": "「这」指近处，「那」指远处。",
-      "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.",
-      "explanation_en": "这 for near, 那 for far.",
-      "example": {
-        "zh": "这个，那个",
-        "pinyin": "zhè gè, nà gè",
-        "kr": "이것, 저것",
-        "en": "this one, that one"
-      },
+      "pattern": "来 / 回来",
+      "pinyin": "lái / huílái",
       "explain": {
-        "jp": "「这」は近く、「那」は遠くを指します。",
-        "en": "这 for near, 那 for far.",
-        "kr": "'这'는 가까운 것, '那'는 먼 것.",
-        "zh": "「这」指近处，「那」指远处。"
+        "zh": "「来」表示到说话人这边；「回来」表示从别处回到原处。王老师今天来学校吗？他什么时候回来？",
+        "kr": "「来」는 말하는 쪽으로 오다. 「回来」는 돌아오다. 来学校吗？什么时候回来？",
+        "en": "来 = come (here). 回来 = come back. 来学校吗？什么时候回来？",
+        "jp": "「来」は話者へ来る。「回来」は帰ってくる。来学校吗？什么时候回来？"
+      },
+      "example": {
+        "zh": "王老师今天来学校吗？今天不来，他去北京了。他什么时候回来？星期五回来。",
+        "pinyin": "Wáng lǎoshī jīntiān lái xuéxiào ma? Jīntiān bù lái, tā qù Běijīng le. Tā shénme shíhou huílái? Xīngqī wǔ huílái.",
+        "translation": { "kr": "왕 선생님 오늘 학교 와? 오늘 안 와, 베이징 갔어. 언제 돌아와? 금요일에.", "jp": "王老师は今日学校に来る？来ない。北京に行った。いつ戻る？金曜日に。", "en": "Is Teacher Wang coming today? No, he went to Beijing. When is he back? Friday." }
       }
     },
     {
-      "title": "呢",
-      "explanation_zh": "「呢」用于追问或话题转换。",
-      "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
-      "explanation_en": "呢 for follow-up or topic shift.",
-      "example": {
-        "zh": "那个呢？",
-        "pinyin": "Nà gè ne?",
-        "kr": "저것은요?",
-        "en": "What about that one?"
-      },
+      "pattern": "有 + 名词（电话）",
+      "pinyin": "yǒu + míngcí",
       "explain": {
-        "jp": "「呢」は追及や話題転換に使います。",
-        "en": "呢 for follow-up or topic shift.",
-        "kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
-        "zh": "「呢」用于追问或话题转换。"
+        "zh": "「有」表示拥有。你有王老师的电话吗？回答：有/没有，或 我写给你。",
+        "kr": "「有」는 소유. 你有电话吗？有/没有. 我写给你.",
+        "en": "有 = have. 你有王老师的电话吗？I'll write it for you.",
+        "jp": "「有」は持っている。你有电话吗？我写给你。"
+      },
+      "example": {
+        "zh": "你有王老师的电话吗？我写给你。",
+        "pinyin": "Nǐ yǒu Wáng lǎoshī de diànhuà ma? Wǒ xiě gěi nǐ.",
+        "translation": { "kr": "왕 선생님 전화번호 있어? 적어 줄게.", "jp": "王先生の電話番号ある？書いてあげる。", "en": "Do you have Teacher Wang's number? I'll write it for you." }
       }
     }
   ],

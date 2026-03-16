@@ -85,6 +85,21 @@
         "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ.",
         "translation": { "kr": "저도 만나서 반가워요.", "jp": "私もお会いできて嬉しいです。", "en": "Nice to meet you too." }
       }
+    },
+    {
+      "pattern": "谢谢 / 不客气",
+      "pinyin": "xièxie / bú kèqi",
+      "explain": {
+        "zh": "「谢谢」表示感谢；「不客气」是礼貌的回应，表示“不用谢”。",
+        "kr": "「谢谢」는 감사, 「不客气」는 \"천만에요\".",
+        "en": "谢谢 = thank you; 不客气 = you're welcome.",
+        "jp": "「谢谢」は感謝、「不客气」は「どういたしまして」。"
+      },
+      "example": {
+        "zh": "谢谢。不客气。再见！",
+        "pinyin": "Xièxie. Bú kèqi. Zàijiàn!",
+        "translation": { "kr": "감사해요. 천만에요. 잘 가요!", "jp": "ありがとう。どういたしまして。さようなら！", "en": "Thanks. You're welcome. Bye!" }
+      }
     }
   ],
   "extension": [

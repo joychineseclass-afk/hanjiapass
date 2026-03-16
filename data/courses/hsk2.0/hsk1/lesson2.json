@@ -81,6 +81,21 @@
         "pinyin": "Wǒ shì xuésheng.",
         "translation": { "kr": "저는 학생이에요.", "jp": "私は学生です。", "en": "I'm a student." }
       }
+    },
+    {
+      "pattern": "呢（追问）",
+      "pinyin": "ne",
+      "explain": {
+        "zh": "「呢」用在句末，表示追问对方同样的问题。如：你呢？= 你叫什么名字呢？/ 你呢？= 你也是学生吗？",
+        "kr": "「呢」는 문장 끝에 써서 상대에게 같은 걸 묻습니다. 你呢？= 너는?",
+        "en": "呢 at the end asks the same question to the other. 你呢？= And you?",
+        "jp": "「呢」は文末で相手に同じことを聞く。「你呢？」＝あなたは？"
+      },
+      "example": {
+        "zh": "我叫王明。你呢？我叫Anna。我是学生。你呢？我也是学生。",
+        "pinyin": "Wǒ jiào Wáng Míng. Nǐ ne? Wǒ jiào Anna. Wǒ shì xuésheng. Nǐ ne? Wǒ yě shì xuésheng.",
+        "translation": { "kr": "나는 왕명이야. 너는? 나는 Anna. 나는 학생이야. 너는? 나도 학생이야.", "jp": "王明です。あなたは？Annaです。学生です。あなたは？私も学生です。", "en": "I'm Wang Ming. And you? I'm Anna. I'm a student. And you? I'm a student too." }
+      }
     }
   ],
   "extension": [

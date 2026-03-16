@@ -60,18 +60,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "几点",
-      "pinyin": "jǐ diǎn",
+      "pattern": "几月几号",
+      "pinyin": "jǐ yuè jǐ hào",
       "explain": {
-        "zh": "「几点」问钟点。问现在几点：现在几点？回答：现在+数字+点。问做某事的时间：某人+几点+动词。",
-        "kr": "'几点'는 시각을 묻습니다. 지금 몇 시: 现在几点? 답: 现在+숫자+点. 몇 시에 뭘 하는지: 사람+几点+동사.",
-        "en": "几点 asks the time. What time now: 现在几点? Answer: 现在 + number + 点. When do (verb): person + 几点 + verb.",
-        "jp": "「几点」は時刻を聞く。今何時：现在几点？答え：现在+数字+点。いつ何をする：人+几点+動詞。"
+        "zh": "问日期用「今天几月几号？」。回答：今天+数字+月+数字+号。",
+        "kr": "날짜를 물을 때 「今天几月几号?」. 답: 今天+숫자+月+숫자+号.",
+        "en": "Ask the date with 今天几月几号? Answer: 今天 + month + 月 + day + 号.",
+        "jp": "日付は「今天几月几号？」。答は「今天+数字+月+数字+号」。"
       },
       "example": {
-        "zh": "现在几点？现在九点。你几点上课？我十点上课。",
-        "pinyin": "Xiànzài jǐ diǎn? Xiànzài jiǔ diǎn. Nǐ jǐ diǎn shàngkè? Wǒ shí diǎn shàngkè.",
-        "translation": { "kr": "지금 몇 시? 아홉 시. 몇 시에 수업해? 열 시에.", "jp": "今何時？九時。何時に授業？十時。", "en": "What time? Nine. When do you have class? At ten." }
+        "zh": "今天几月几号？今天三月八号。",
+        "pinyin": "Jīntiān jǐ yuè jǐ hào? Jīntiān sān yuè bā hào.",
+        "translation": { "kr": "오늘 몇 월 며칠이야? 오늘 3월 8일이야.", "jp": "今日は何月何日？三月八日です。", "en": "What's the date today? March 8th." }
+      }
+    },
+    {
+      "pattern": "明天 / 吧（建议）",
+      "pinyin": "míngtiān / ba",
+      "explain": {
+        "zh": "「明天」是明天。「吧」放在句末表示建议或商量，语气较轻松。那我们明天见面吧。",
+        "kr": "「明天」는 내일. 「吧」는 문장 끝에 제안·협의. 那我们明天见面吧.",
+        "en": "明天 = tomorrow. 吧 at the end suggests or softens: Let's meet tomorrow.",
+        "jp": "「明天」は明日。「吧」は文末で提案・軽い勧め。那我们明天见面吧。"
+      },
+      "example": {
+        "zh": "你明天忙吗？不忙。那我们明天见面吧。好啊！",
+        "pinyin": "Nǐ míngtiān máng ma? Bù máng. Nà wǒmen míngtiān jiànmiàn ba. Hǎo a!",
+        "translation": { "kr": "내일 바빠? 안 바빠. 그럼 내일 보자. 좋아!", "jp": "明日忙しい？忙しくない。じゃあ明日会おう。いいよ！", "en": "Are you busy tomorrow? No. Let's meet tomorrow then. Sure!" }
       }
     }
   ],

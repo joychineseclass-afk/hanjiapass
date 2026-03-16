@@ -117,39 +117,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "title": "块",
-      "explanation_zh": "「块」是人民币单位。",
-      "explanation_kr": "'块'는 위안 단위입니다.",
-      "explanation_en": "块 is the unit for yuan.",
-      "example": {
-        "zh": "五块",
-        "pinyin": "wǔ kuài",
-        "kr": "5위안",
-        "en": "five yuan"
-      },
+      "pattern": "想 + 动词（买）",
+      "pinyin": "xiǎng + mǎi",
       "explain": {
-        "jp": "「块」は人民元の単位です。",
-        "en": "块 is the unit for yuan.",
-        "kr": "'块'는 위안 단위입니다.",
-        "zh": "「块」是人民币单位。"
+        "zh": "「想买什么」问对方想买什么。回答：我想买+东西。",
+        "kr": "뭘 사고 싶은지 물을 때 「你想买什么?」. 답: 我想买+물건.",
+        "en": "你想买什么？= What do you want to buy? 我想买 + thing.",
+        "jp": "何を買いたいか「你想买什么？」。答は「我想买+もの」。"
+      },
+      "example": {
+        "zh": "你想买什么？我想买西瓜。",
+        "pinyin": "Nǐ xiǎng mǎi shénme? Wǒ xiǎng mǎi xīguā.",
+        "translation": { "kr": "뭐 사고 싶어? 나는 수박 사고 싶어.", "jp": "何を買いたい？スイカを買いたい。", "en": "What do you want to buy? I want to buy a watermelon." }
       }
     },
     {
-      "title": "东西",
-      "explanation_zh": "「东西」指事物。",
-      "explanation_kr": "'东西'는 물건을 가리킵니다.",
-      "explanation_en": "东西 means thing.",
-      "example": {
-        "zh": "买东西",
-        "pinyin": "mǎi dōngxi",
-        "kr": "물건 사다",
-        "en": "buy things"
-      },
+      "pattern": "怎么样 / 太 + 形容词",
+      "pinyin": "zěnmeyàng / tài + xíngróngcí",
       "explain": {
-        "jp": "「东西」は物を指します。",
-        "en": "东西 means thing.",
-        "kr": "'东西'는 물건을 가리킵니다.",
-        "zh": "「东西」指事物。"
+        "zh": "「怎么样」问“怎么样、如何”。「太」表程度高：太大、太小。不大不小 = 刚好。",
+        "kr": "「怎么样」는 \"어때?\" 「太」는 너무. 太大/太小. 不大不小=딱 맞다.",
+        "en": "怎么样 = how about? 太 + adj = too. 不大不小 = just right.",
+        "jp": "「怎么样」はどう？「太」はあまりに。不大不小＝ちょうどいい。"
+      },
+      "example": {
+        "zh": "这个西瓜怎么样？这个太大了。有小点的吗？这个太好了，不大不小。",
+        "pinyin": "Zhè gè xīguā zěnmeyàng? Zhè gè tài dà le. Yǒu xiǎo diǎn de ma? Zhè gè tài hǎo le, bù dà bù xiǎo.",
+        "translation": { "kr": "이 수박 어때? 너무 커. 작은 거 있어? 이거 딱 좋아, 안 크고 안 작아.", "jp": "このスイカはどう？大きすぎる。小さいのは？ちょうどいい。", "en": "How's this one? Too big. Have a smaller one? This one's just right." }
       }
     }
   ],

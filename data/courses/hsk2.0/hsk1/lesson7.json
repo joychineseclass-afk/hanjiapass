@@ -58,18 +58,33 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "今年 + 多大 / 数字 + 岁",
-      "pinyin": "jīnnián + duō dà / shùzì + suì",
+      "pattern": "几岁 / 多大",
+      "pinyin": "jǐ suì / duō dà",
       "explain": {
-        "zh": "问年龄用「（某人）今年多大？」回答用「数字+岁」。",
-        "kr": "나이를 물을 때 「(누구)今年多大?」, 답은 「숫자+岁」.",
-        "en": "Ask age with (person) 今年多大? Answer with number + 岁.",
-        "jp": "年齢は「(人)今年多大？」で聞き、答えは「数字+岁」。"
+        "zh": "问年龄常用「你几岁？」或「你多大？」。回答都用「数字+岁」。",
+        "kr": "나이를 물을 때 「你几岁?」或「你多大?」. 답은 「숫자+岁」.",
+        "en": "Ask age with 你几岁? or 你多大? Answer with number + 岁.",
+        "jp": "年齢は「你几岁？」或「你多大？」で聞く。答えは「数字+岁」。"
       },
       "example": {
-        "zh": "你今年多大？我二十岁。他十八岁。",
-        "pinyin": "Nǐ jīnnián duō dà? Wǒ èrshí suì. Tā shíbā suì.",
-        "translation": { "kr": "올해 몇 살이야? 나는 스무 살. 그는 열여덟 살.", "jp": "今年何歳？二十歳です。彼は十八歳。", "en": "How old are you? I'm twenty. He's eighteen." }
+        "zh": "你几岁？我十岁。你多大？我二十二岁。",
+        "pinyin": "Nǐ jǐ suì? Wǒ shí suì. Nǐ duō dà? Wǒ èrshí èr suì.",
+        "translation": { "kr": "너 몇 살이야? 나는 열 살. 너 몇 살? 나는 스물두 살.", "jp": "何歳？十歳です。何歳？二十二歳です。", "en": "How old are you? I'm ten. How old? I'm twenty-two." }
+      }
+    },
+    {
+      "pattern": "数字 + 岁",
+      "pinyin": "shùzì + suì",
+      "explain": {
+        "zh": "说年龄时在数字后加「岁」。他呢？= 追问“他多大/几岁”。",
+        "kr": "나이를 말할 때 숫자 뒤에 「岁」. 他呢？= 그 사람은?",
+        "en": "Say age with number + 岁. 他呢？= And him? (how old is he?)",
+        "jp": "年齢は「数字+岁」。他呢？＝彼は？"
+      },
+      "example": {
+        "zh": "我十岁。他呢？他十八岁。",
+        "pinyin": "Wǒ shí suì. Tā ne? Tā shíbā suì.",
+        "translation": { "kr": "나는 열 살. 그는? 그는 열여덟 살.", "jp": "十歳です。彼は？十八歳です。", "en": "I'm ten. And him? He's eighteen." }
       }
     }
   ],

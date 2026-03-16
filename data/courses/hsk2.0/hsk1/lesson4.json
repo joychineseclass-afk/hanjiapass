@@ -56,18 +56,48 @@
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "哪国人",
-      "pinyin": "nǎ guó rén",
+      "pattern": "谁",
+      "pinyin": "shéi",
       "explain": {
-        "zh": "「哪国人」问对方来自哪个国家。结构：哪 + 国 + 人。回答：我是 + 国家 + 人。",
-        "kr": "「哪国人」는 어느 나라 사람인지 묻습니다. 답: 我是+나라+人.",
-        "en": "哪国人 asks which country. Answer: 我是 + country + 人.",
-        "jp": "「哪国人」はどこの国の人か聞く。答：我是+国+人。"
+        "zh": "「谁」问“谁、什么人”。句型：他是谁？回答：他是 + 称呼/名字。",
+        "kr": "「谁」는 \"누구\"를 묻습니다. 他是谁？답: 他是+호칭.",
+        "en": "谁 means who. Pattern: 他是谁? Answer: 他是 + person.",
+        "jp": "「谁」は「誰」を聞く。他是谁？答：他是+呼称。"
       },
       "example": {
-        "zh": "你是哪国人？我是中国人。",
-        "pinyin": "Nǐ shì nǎ guó rén? Wǒ shì Zhōngguó rén.",
-        "translation": { "kr": "어느 나라 사람이야? 나는 중국인이야.", "jp": "どこの国の人ですか？中国人です。", "en": "Which country are you from? I'm Chinese." }
+        "zh": "他是谁？他是我的爸爸。她呢？她是我的妈妈。",
+        "pinyin": "Tā shì shéi? Tā shì wǒ de bàba. Tā ne? Tā shì wǒ de māma.",
+        "translation": { "kr": "그 누구야? 우리 아빠야. 그녀는? 우리 엄마야.", "jp": "彼は誰？私の父です。彼女は？私の母です。", "en": "Who is he? He's my dad. And her? She's my mom." }
+      }
+    },
+    {
+      "pattern": "的（表示所属）",
+      "pinyin": "de",
+      "explain": {
+        "zh": "「的」放在名词前表示所属。我的爸爸 = 我 + 的 + 爸爸。",
+        "kr": "「的」는 명사 앞에서 소유를 나타냅니다. 我的爸爸 = 나의 아빠.",
+        "en": "的 before a noun shows possession. 我的爸爸 = my dad.",
+        "jp": "「的」は名詞の前で所属を表す。我的爸爸＝私の父。"
+      },
+      "example": {
+        "zh": "他是我的爸爸。她是我的妈妈。",
+        "pinyin": "Tā shì wǒ de bàba. Tā shì wǒ de māma.",
+        "translation": { "kr": "그는 우리 아빠야. 그녀는 우리 엄마야.", "jp": "彼は私の父です。彼女は私の母です。", "en": "He's my dad. She's my mom." }
+      }
+    },
+    {
+      "pattern": "很（程度）",
+      "pinyin": "hěn",
+      "explain": {
+        "zh": "「很」放在形容词前表示程度“很……”。如：很爱、很好。",
+        "kr": "「很」는 형용사 앞에서 정도를 나타냅니다. 很爱, 很好.",
+        "en": "很 before an adjective means \"very\". 很爱 = love very much.",
+        "jp": "「很」は形容詞の前で程度を表す。很爱、很好。"
+      },
+      "example": {
+        "zh": "你爱爸爸妈妈吗？爱，我很爱他们。",
+        "pinyin": "Nǐ ài bàba māma ma? Ài, wǒ hěn ài tāmen.",
+        "translation": { "kr": "엄마 아빠 사랑해? 응, 나는 그들 많이 사랑해.", "jp": "お父さんお母さんを愛してる？うん、とても愛してる。", "en": "Do you love your parents? Yes, I love them very much." }
       }
     }
   ],
