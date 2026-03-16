@@ -35,6 +35,12 @@
     { "hanzi": "五", "pinyin": "wǔ", "meaning": { "zh": "五", "kr": "다섯", "en": "five", "jp": "五" }, "pos": { "kr": "수사", "en": "numeral", "jp": "数詞" } },
     { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "en": "thank you", "jp": "ありがとう" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "苹果多少钱？" },
+    { "speaker": "B", "text": "三块钱一个。" },
+    { "speaker": "A", "text": "我买六个苹果。" },
+    { "speaker": "B", "text": "好的，十八块钱。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -48,19 +54,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你要买什么？", "translation": { "en": "What do you want to buy?", "kr": "뭐 사려고?", "jp": "何を買いますか？" }, "pinyin": "Nǐ yào mǎi shénme?" },
-        { "speaker": "B", "text": "我买苹果。", "translation": { "en": "I'm buying apples.", "kr": "사과 사요.", "jp": "りんごを買います。" }, "pinyin": "Wǒ mǎi píngguǒ." },
-        { "speaker": "A", "text": "你要几个？", "translation": { "en": "How many do you want?", "kr": "몇 개 필요해요?", "jp": "いくつ要りますか？" }, "pinyin": "Nǐ yào jǐ gè?" },
-        { "speaker": "B", "text": "我要五个。", "translation": { "en": "I want five.", "kr": "다섯 개 주세요.", "jp": "五つください。" }, "pinyin": "Wǒ yào wǔ gè." },
-        { "speaker": "A", "text": "还要别的吗？", "translation": { "en": "Anything else?", "kr": "다른 거 더 필요해요?", "jp": "他にいりますか？" }, "pinyin": "Hái yào bié de ma?" },
-        { "speaker": "B", "text": "不要了，谢谢。", "translation": { "en": "No, thanks.", "kr": "됐어요, 감사해요.", "jp": "いいえ、ありがとうございます。" }, "pinyin": "Bú yào le, xièxie." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "几 + 个",

@@ -151,58 +151,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "我们一起吃饭吧。",
-          "translation": {
-            "en": "Let's eat together.",
-            "kr": "Let's eat together.",
-            "jp": "Let's eat together."
-          },
-          "pinyin": "wǒ men yì qǐ chī fàn ba 。"
-        },
-        {
-          "speaker": "B",
-          "text": "好。你吃什么？",
-          "translation": {
-            "en": "OK. What do you want to eat?",
-            "kr": "OK. What do you want to eat?",
-            "jp": "OK. What do you want to eat?"
-          },
-          "pinyin": "hǎo 。 nǐ chī shén me ？"
-        },
-        {
-          "speaker": "A",
-          "text": "我吃米饭和菜。你喝什么？",
-          "translation": {
-            "en": "I'll have rice and dishes. What do you drink?",
-            "kr": "I'll have rice and dishes. What do you drink?",
-            "jp": "I'll have rice and dishes. What do you drink?"
-          },
-          "pinyin": "wǒ chī mǐ fàn hé cài 。 nǐ hē shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喝水。",
-          "translation": {
-            "en": "I drink water.",
-            "kr": "I drink water.",
-            "jp": "I drink water."
-          },
-          "pinyin": "wǒ hē shuǐ 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "我们一起吃饭吧。" },
+    { "speaker": "B", "text": "好啊！" },
+    { "speaker": "A", "text": "你想吃什么？" },
+    { "speaker": "B", "text": "我想吃面条。" },
+    { "speaker": "A", "text": "那我们去那家面馆吧。" },
+    { "speaker": "B", "text": "好，我们走吧。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "吃 / 喝 + 宾语",

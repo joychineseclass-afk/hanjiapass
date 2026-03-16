@@ -36,6 +36,12 @@
     { "hanzi": "他", "pinyin": "tā", "meaning": { "zh": "他", "kr": "그", "en": "he", "jp": "彼" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
     { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~는요?", "en": "and him/her? (echo)", "jp": "〜は？" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你几岁？" },
+    { "speaker": "B", "text": "我十岁。" },
+    { "speaker": "A", "text": "你多大？" },
+    { "speaker": "B", "text": "我二十二岁。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -49,19 +55,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你今年多大？", "translation": { "en": "How old are you this year?", "kr": "너 올해 몇 살이야?", "jp": "今年何歳ですか？" }, "pinyin": "Nǐ jīnnián duō dà?" },
-        { "speaker": "B", "text": "我二十岁。", "translation": { "en": "I'm twenty years old.", "kr": "나는 스무 살이야.", "jp": "二十歳です。" }, "pinyin": "Wǒ èrshí suì." },
-        { "speaker": "A", "text": "他呢？", "translation": { "en": "And him?", "kr": "그는?", "jp": "彼は？" }, "pinyin": "Tā ne?" },
-        { "speaker": "B", "text": "他十八岁。", "translation": { "en": "He's eighteen.", "kr": "그는 열여덟 살이야.", "jp": "十八歳です。" }, "pinyin": "Tā shíbā suì." },
-        { "speaker": "A", "text": "你妹妹今年多大？", "translation": { "en": "How old is your younger sister this year?", "kr": "네 여동생 올해 몇 살이야?", "jp": "妹は今年何歳ですか？" }, "pinyin": "Nǐ mèimei jīnnián duō dà?" },
-        { "speaker": "B", "text": "她十岁。", "translation": { "en": "She's ten.", "kr": "그녀는 열 살이야.", "jp": "十歳です。" }, "pinyin": "Tā shí suì." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "今年 + 多大 / 数字 + 岁",

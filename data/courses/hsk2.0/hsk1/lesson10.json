@@ -36,6 +36,14 @@
     { "hanzi": "八", "pinyin": "bā", "meaning": { "zh": "八", "kr": "여덟", "en": "eight", "jp": "八" }, "pos": { "kr": "수사", "en": "numeral", "jp": "数詞" } },
     { "hanzi": "他", "pinyin": "tā", "meaning": { "zh": "他", "kr": "그", "en": "he", "jp": "彼" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "今天几月几号？" },
+    { "speaker": "B", "text": "今天三月八号。" },
+    { "speaker": "A", "text": "你明天忙吗？" },
+    { "speaker": "B", "text": "不忙。" },
+    { "speaker": "A", "text": "那我们明天见面吧。" },
+    { "speaker": "B", "text": "好啊！" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -49,19 +57,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "现在几点？", "translation": { "en": "What time is it now?", "kr": "지금 몇 시야?", "jp": "今何時ですか？" }, "pinyin": "Xiànzài jǐ diǎn?" },
-        { "speaker": "B", "text": "现在九点。", "translation": { "en": "It's nine o'clock.", "kr": "지금 아홉 시야.", "jp": "九時です。" }, "pinyin": "Xiànzài jiǔ diǎn." },
-        { "speaker": "A", "text": "你几点上课？", "translation": { "en": "What time do you have class?", "kr": "너 몇 시에 수업해?", "jp": "何時に授業がありますか？" }, "pinyin": "Nǐ jǐ diǎn shàngkè?" },
-        { "speaker": "B", "text": "我十点上课。", "translation": { "en": "I have class at ten.", "kr": "나는 열 시에 수업해.", "jp": "十時に授業があります。" }, "pinyin": "Wǒ shí diǎn shàngkè." },
-        { "speaker": "A", "text": "他呢？", "translation": { "en": "And him?", "kr": "그는?", "jp": "彼は？" }, "pinyin": "Tā ne?" },
-        { "speaker": "B", "text": "他八点上课。", "translation": { "en": "He has class at eight.", "kr": "그는 여덟 시에 수업해.", "jp": "八時に授業があります。" }, "pinyin": "Tā bā diǎn shàngkè." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "几点",

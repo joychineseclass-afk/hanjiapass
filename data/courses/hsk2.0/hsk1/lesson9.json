@@ -35,6 +35,12 @@
     { "hanzi": "在", "pinyin": "zài", "meaning": { "zh": "在", "kr": "~에 있다", "en": "to be at; to be in", "jp": "〜にいる" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
     { "hanzi": "等", "pinyin": "děng", "meaning": { "zh": "等", "kr": "기다리다", "en": "to wait", "jp": "待つ" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "现在几点？" },
+    { "speaker": "B", "text": "现在三点。" },
+    { "speaker": "A", "text": "我们几点上课？" },
+    { "speaker": "B", "text": "三点十分上课。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -48,19 +54,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "喂！", "translation": { "en": "Hello!", "kr": "여보세요!", "jp": "もしもし!" }, "pinyin": "Wéi!" },
-        { "speaker": "B", "text": "喂！请问你找谁？", "translation": { "en": "Hello! Who are you looking for?", "kr": "여보세요! 누구 찾으세요?", "jp": "もしもし！どなたをお探しですか？" }, "pinyin": "Wéi! Qǐngwèn nǐ zhǎo shéi?" },
-        { "speaker": "A", "text": "我找李明。", "translation": { "en": "I'm looking for Li Ming.", "kr": "이명 씨 부르고 싶어요.", "jp": "李明さんをお願いします。" }, "pinyin": "Wǒ zhǎo Lǐ Míng." },
-        { "speaker": "B", "text": "李明在，你等一下。", "translation": { "en": "Li Ming is here. Hold on.", "kr": "이명 있어요, 잠깐만요.", "jp": "李明います。少々お待ちください。" }, "pinyin": "Lǐ Míng zài, nǐ děng yīxià." },
-        { "speaker": "A", "text": "谢谢。", "translation": { "en": "Thanks.", "kr": "감사해요.", "jp": "ありがとうございます。" }, "pinyin": "Xièxie." },
-        { "speaker": "B", "text": "不客气。", "translation": { "en": "You're welcome.", "kr": "천만에요.", "jp": "どういたしまして。" }, "pinyin": "Bú kèqi." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "请问 + 你找谁 / 我找 + 人",

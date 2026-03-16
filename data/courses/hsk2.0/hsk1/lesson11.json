@@ -151,58 +151,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你学习什么？",
-          "translation": {
-            "en": "What do you study?",
-            "kr": "What do you study?",
-            "jp": "What do you study?"
-          },
-          "pinyin": "nǐ xué xí shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我学习汉语。",
-          "translation": {
-            "en": "I study Chinese.",
-            "kr": "I study Chinese.",
-            "jp": "I study Chinese."
-          },
-          "pinyin": "wǒ xué xí hàn yǔ 。"
-        },
-        {
-          "speaker": "A",
-          "text": "我也学习汉语。你在哪儿学习？",
-          "translation": {
-            "en": "I study Chinese too. Where do you study?",
-            "kr": "I study Chinese too. Where do you study?",
-            "jp": "I study Chinese too. Where do you study?"
-          },
-          "pinyin": "wǒ yě xué xí hàn yǔ 。 nǐ zài nǎ ér xué xí ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我在学校学习。我读中文书。",
-          "translation": {
-            "en": "I study at school. I read Chinese books.",
-            "kr": "I study at school. I read Chinese books.",
-            "jp": "I study at school. I read Chinese books."
-          },
-          "pinyin": "wǒ zài xué xiào xué xí 。 wǒ dú zhōng wén shū 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "今天星期几？" },
+    { "speaker": "B", "text": "今天星期三。" },
+    { "speaker": "A", "text": "你今天有课吗？" },
+    { "speaker": "B", "text": "有，我下午有汉语课。" },
+    { "speaker": "A", "text": "你明天有课吗？" },
+    { "speaker": "B", "text": "没有，我明天没有课。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "学习 + 宾语",

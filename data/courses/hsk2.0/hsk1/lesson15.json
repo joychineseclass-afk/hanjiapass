@@ -106,48 +106,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "今天很冷。",
-          "translation": {
-            "en": "It's very cold today.",
-            "kr": "It's very cold today.",
-            "jp": "It's very cold today."
-          },
-          "pinyin": "jīn tiān hěn lěng 。"
-        },
-        {
-          "speaker": "B",
-          "text": "是，很冷。你喝热茶吧。",
-          "translation": {
-            "en": "Yes, very cold. Have some hot tea.",
-            "kr": "Yes, very cold. Have some hot tea.",
-            "jp": "Yes, very cold. Have some hot tea."
-          },
-          "pinyin": "shì ， hěn lěng 。 nǐ hē rè chá ba 。"
-        },
-        {
-          "speaker": "A",
-          "text": "谢谢。",
-          "translation": {
-            "en": "Thank you.",
-            "kr": "Thank you.",
-            "jp": "Thank you."
-          },
-          "pinyin": "xiè xiè 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "你想买什么？" },
+    { "speaker": "B", "text": "我想买西瓜。" },
+    { "speaker": "A", "text": "这个西瓜怎么样？" },
+    { "speaker": "B", "text": "这个太大了。有小点的吗？" },
+    { "speaker": "A", "text": "这个怎么样？" },
+    { "speaker": "B", "text": "这个太好了，不大不小。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "块",

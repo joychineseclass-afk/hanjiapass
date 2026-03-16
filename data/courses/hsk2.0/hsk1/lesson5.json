@@ -33,6 +33,14 @@
     { "hanzi": "爸爸", "pinyin": "bàba", "meaning": { "zh": "爸爸", "kr": "아빠", "jp": "お父さん", "en": "dad" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
     { "hanzi": "的", "pinyin": "de", "meaning": { "zh": "的", "kr": "~의", "jp": "〜の", "en": "possessive particle" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你在哪儿？" },
+    { "speaker": "B", "text": "我在学校。" },
+    { "speaker": "A", "text": "教室开门了吗？" },
+    { "speaker": "B", "text": "开了。" },
+    { "speaker": "A", "text": "谁在教室里？" },
+    { "speaker": "B", "text": "我和Anna。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -44,17 +52,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
-        { "speaker": "B", "text": "这是我的妈妈。", "translation": { "en": "This is my mom.", "kr": "이건 우리 엄마야.", "jp": "これは私の母です。" }, "pinyin": "Zhè shì wǒ de māma." },
-        { "speaker": "A", "text": "那是谁？", "translation": { "en": "Who is that?", "kr": "저 사람 누구야?", "jp": "あれは誰ですか？" }, "pinyin": "Nà shì shéi?" },
-        { "speaker": "B", "text": "那是我的爸爸。", "translation": { "en": "That is my dad.", "kr": "저건 우리 아빠야.", "jp": "あれは私の父です。" }, "pinyin": "Nà shì wǒ de bàba." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "这 / 那",

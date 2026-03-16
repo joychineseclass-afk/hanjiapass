@@ -151,58 +151,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你明天做什么？",
-          "translation": {
-            "en": "What are you doing tomorrow?",
-            "kr": "What are you doing tomorrow?",
-            "jp": "What are you doing tomorrow?"
-          },
-          "pinyin": "nǐ míng tiān zuò shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我明天去中国。",
-          "translation": {
-            "en": "I'm going to China tomorrow.",
-            "kr": "I'm going to China tomorrow.",
-            "jp": "I'm going to China tomorrow."
-          },
-          "pinyin": "wǒ míng tiān qù zhōng guó 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你想去北京吗？",
-          "translation": {
-            "en": "Do you want to go to Beijing?",
-            "kr": "Do you want to go to Beijing?",
-            "jp": "Do you want to go to Beijing?"
-          },
-          "pinyin": "nǐ xiǎng qù běi jīng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "想。我会说一点汉语。",
-          "translation": {
-            "en": "Yes. I can speak a little Chinese.",
-            "kr": "Yes. I can speak a little Chinese.",
-            "jp": "Yes. I can speak a little Chinese."
-          },
-          "pinyin": "xiǎng 。 wǒ huì shuō yì diǎn hàn yǔ 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "今天天气怎么样？" },
+    { "speaker": "B", "text": "今天天气很好。" },
+    { "speaker": "A", "text": "冷吗？" },
+    { "speaker": "B", "text": "不冷，很暖和。" },
+    { "speaker": "A", "text": "明天天气怎么样？" },
+    { "speaker": "B", "text": "明天下雨。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "太 + 形容词",

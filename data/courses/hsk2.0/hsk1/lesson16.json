@@ -136,58 +136,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你喜欢运动吗？",
-          "translation": {
-            "en": "Do you like sports?",
-            "kr": "Do you like sports?",
-            "jp": "Do you like sports?"
-          },
-          "pinyin": "nǐ xǐ huan yùn dòng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢运动。",
-          "translation": {
-            "en": "I like sports.",
-            "kr": "I like sports.",
-            "jp": "I like sports."
-          },
-          "pinyin": "wǒ xǐ huan yùn dòng 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你喜欢什么运动？",
-          "translation": {
-            "en": "What sport do you like?",
-            "kr": "What sport do you like?",
-            "jp": "What sport do you like?"
-          },
-          "pinyin": "nǐ xǐ huan shén me yùn dòng ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢跑步。",
-          "translation": {
-            "en": "I like running.",
-            "kr": "I like running.",
-            "jp": "I like running."
-          },
-          "pinyin": "wǒ xǐ huan pǎo bù 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "你去哪儿？" },
+    { "speaker": "B", "text": "我去学校。" },
+    { "speaker": "A", "text": "你现在去吗？" },
+    { "speaker": "B", "text": "对，我现在去。" },
+    { "speaker": "A", "text": "你什么时候回家？" },
+    { "speaker": "B", "text": "我下午回家。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "来 / 去 / 回",

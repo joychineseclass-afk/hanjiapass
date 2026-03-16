@@ -166,58 +166,15 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你怎么去学校？",
-          "translation": {
-            "en": "How do you go to school?",
-            "kr": "How do you go to school?",
-            "jp": "How do you go to school?"
-          },
-          "pinyin": "nǐ zěn me qù xué xiào ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我坐地铁去学校。",
-          "translation": {
-            "en": "I take the subway to school.",
-            "kr": "I take the subway to school.",
-            "jp": "I take the subway to school."
-          },
-          "pinyin": "wǒ zuò dì tiě qù xué xiào 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他呢？",
-          "translation": {
-            "en": "What about him?",
-            "kr": "What about him?",
-            "jp": "What about him?"
-          },
-          "pinyin": "tā ne ？"
-        },
-        {
-          "speaker": "B",
-          "text": "他坐出租车去。",
-          "translation": {
-            "en": "He goes by taxi.",
-            "kr": "He goes by taxi.",
-            "jp": "He goes by taxi."
-          },
-          "pinyin": "tā zuò chū zū chē qù 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "你喜欢听音乐吗？" },
+    { "speaker": "B", "text": "喜欢，我很喜欢听音乐。" },
+    { "speaker": "A", "text": "你喜欢听什么音乐？" },
+    { "speaker": "B", "text": "我喜欢听中国音乐。" },
+    { "speaker": "A", "text": "你喜欢看电影吗？" },
+    { "speaker": "B", "text": "喜欢，我也喜欢看电影。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
       "title": "喜欢 + 宾语",

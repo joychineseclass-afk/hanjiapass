@@ -35,6 +35,12 @@
     { "hanzi": "学生", "pinyin": "xuésheng", "meaning": { "zh": "学生", "kr": "학생", "en": "student", "jp": "学生" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
     { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "동창, 반 친구", "en": "classmate", "jp": "クラスメート" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你会说汉语吗？" },
+    { "speaker": "B", "text": "是的，我会汉语。" },
+    { "speaker": "A", "text": "你在哪儿学习汉语？" },
+    { "speaker": "B", "text": "我在学校学习汉语。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -48,19 +54,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
-        { "speaker": "B", "text": "这是我的朋友。", "translation": { "en": "This is my friend.", "kr": "이건 내 친구야.", "jp": "これは私の友達です。" }, "pinyin": "Zhè shì wǒ de péngyou." },
-        { "speaker": "A", "text": "他叫什么？", "translation": { "en": "What's his name?", "kr": "그 이름이 뭐야?", "jp": "彼の名前は？" }, "pinyin": "Tā jiào shénme?" },
-        { "speaker": "B", "text": "他叫王明。", "translation": { "en": "He's called Wang Ming.", "kr": "그는 왕명이야.", "jp": "王明です。" }, "pinyin": "Tā jiào Wáng Míng." },
-        { "speaker": "A", "text": "他是学生吗？", "translation": { "en": "Is he a student?", "kr": "그 학생이야?", "jp": "彼は学生ですか？" }, "pinyin": "Tā shì xuésheng ma?" },
-        { "speaker": "B", "text": "是，他是我的同学。", "translation": { "en": "Yes, he's my classmate.", "kr": "응, 그는 내 동창이야.", "jp": "はい、私のクラスメートです。" }, "pinyin": "Shì, tā shì wǒ de tóngxué." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "这是 + 我的 + 朋友/同学",

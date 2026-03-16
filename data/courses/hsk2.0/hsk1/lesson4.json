@@ -34,6 +34,14 @@
     { "hanzi": "美国", "pinyin": "Měiguó", "meaning": { "zh": "美国", "kr": "미국", "jp": "アメリカ", "en": "America" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
     { "hanzi": "日本", "pinyin": "Rìběn", "meaning": { "zh": "日本", "kr": "일본", "jp": "日本", "en": "Japan" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "他是谁？" },
+    { "speaker": "B", "text": "他是我的爸爸。" },
+    { "speaker": "A", "text": "她呢？" },
+    { "speaker": "B", "text": "她是我的妈妈。" },
+    { "speaker": "A", "text": "你爱爸爸妈妈吗？" },
+    { "speaker": "B", "text": "爱，我很爱他们。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -45,17 +53,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你是哪国人？", "translation": { "en": "Which country are you from?", "kr": "너 어느 나라 사람이야?", "jp": "どこの国の人ですか？" }, "pinyin": "Nǐ shì nǎ guó rén?" },
-        { "speaker": "B", "text": "我是中国人。", "translation": { "en": "I'm Chinese.", "kr": "나는 중국인이야.", "jp": "中国人です。" }, "pinyin": "Wǒ shì Zhōngguó rén." },
-        { "speaker": "A", "text": "你呢？", "translation": { "en": "And you?", "kr": "너는?", "jp": "あなたは？" }, "pinyin": "Nǐ ne?" },
-        { "speaker": "B", "text": "我是韩国人。", "translation": { "en": "I'm Korean.", "kr": "나는 한국인이야.", "jp": "韓国人です。" }, "pinyin": "Wǒ shì Hánguó rén." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "哪国人",
