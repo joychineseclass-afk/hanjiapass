@@ -84,6 +84,16 @@
     return url;
   }
 
+  /** 单词分课表：data/courses/<ver>/hsk<lv>/vocab-distribution.json（每课新词 + reviewRanges） */
+  function vocabDistributionUrl(level, opts) {
+    const lv = normalizeLevel(level);
+    const raw = (opts && opts.version != null ? opts.version : null) ?? localStorage.getItem("hsk_vocab_version") ?? "hsk2.0";
+    const ver = normalizeHskVersion(raw);
+    const url = withVersion(getDataRoot() + `data/courses/${ver}/hsk${lv}/vocab-distribution.json`);
+    if (DEBUG) console.log("[PATH] vocabDistributionUrl", url);
+    return url;
+  }
+
   /** 单课详情 URL，opts.file 可选。新结构: hsk{N}/lesson{M}.json */
   function lessonDetailUrl(level, lessonNo, opts) {
     const lv = normalizeLevel(level);
@@ -154,6 +164,7 @@
     vocabUrl,
     lessonsUrl,
     lessonsIndexUrl,
+    vocabDistributionUrl,
     lessonDetailUrl,
     strokeUrl,
     strokeFileNameForChar,
