@@ -6,27 +6,27 @@
   "lessonNo": 12,
   "type": "lesson",
   "title": {
-    "zh": "工作",
-    "pinyin": "gōngzuò",
-    "kr": "직업",
-    "en": "Work",
-    "jp": "仕事"
+    "zh": "我喜欢听音乐。",
+    "pinyin": "wǒ xǐhuan tīng yīnyuè",
+    "kr": "저는 음악 듣는 걸 좋아해요.",
+    "en": "I like listening to music.",
+    "jp": "私は音楽を聞くのが好きです。"
   },
   "summary": {
-    "zh": "职业与工作",
-    "kr": "직업과 일",
-    "en": "Jobs and work"
+    "zh": "谈爱好，喜欢听音乐、看电影",
+    "kr": "취미 말하기, 음악 듣기·영화 보기",
+    "en": "Talking about hobbies, liking music and movies"
   },
   "objectives": [
     {
-      "zh": "学会说职业",
-      "kr": "직업을 말할 수 있다",
-      "en": "Can talk about jobs"
+      "zh": "学会说喜欢做什么",
+      "kr": "뭘 좋아하는지 말할 수 있다",
+      "en": "Can say what you like to do"
     },
     {
-      "zh": "学会能、会",
-      "kr": "'能', '会'를 사용할 수 있다",
-      "en": "Can use 能 and 会"
+      "zh": "学会用很、也表达程度与同样",
+      "kr": "'很', '也'로 정도와 동의를 표현할 수 있다",
+      "en": "Can use 很 and 也"
     }
   ],
   "vocab": [

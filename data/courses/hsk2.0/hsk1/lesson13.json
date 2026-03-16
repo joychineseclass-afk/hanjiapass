@@ -6,27 +6,27 @@
   "lessonNo": 13,
   "type": "lesson",
   "title": {
-    "zh": "爱好",
-    "pinyin": "àihào",
-    "kr": "취미",
-    "en": "Hobbies",
-    "jp": "趣味"
+    "zh": "请问你找谁？",
+    "pinyin": "qǐngwèn nǐ zhǎo shéi",
+    "kr": "누구 찾으세요?",
+    "en": "Who are you looking for?",
+    "jp": "どなたをお探しですか？"
   },
   "summary": {
-    "zh": "喜欢与爱好",
-    "kr": "좋아하는 것",
-    "en": "Likes and hobbies"
+    "zh": "打电话找人、礼貌询问与请求",
+    "kr": "전화로 사람 찾기, 예의 있게 묻고 요청하기",
+    "en": "Calling to find someone, polite questions and requests"
   },
   "objectives": [
     {
-      "zh": "学会说喜欢什么",
-      "kr": "뭘 좋아하는지 말할 수 있다",
-      "en": "Can say what you like"
+      "zh": "学会用请问礼貌询问",
+      "kr": "「请问」로 예의 있게 물을 수 있다",
+      "en": "Can ask politely with 请问"
     },
     {
-      "zh": "学会看、听",
-      "kr": "'看', '听'를 사용할 수 있다",
-      "en": "Can use 看 and 听"
+      "zh": "学会说找谁、能……吗？",
+      "kr": "누구 찾는지, 「能……吗?」를 말할 수 있다",
+      "en": "Can say who you're looking for and 能……吗？"
     }
   ],
   "vocab": [
@@ -167,43 +167,71 @@
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你喜欢听音乐吗？" },
-    { "speaker": "B", "text": "喜欢，我很喜欢听音乐。" },
-    { "speaker": "A", "text": "你喜欢听什么音乐？" },
-    { "speaker": "B", "text": "我喜欢听中国音乐。" },
-    { "speaker": "A", "text": "你喜欢看电影吗？" },
-    { "speaker": "B", "text": "喜欢，我也喜欢看电影。" }
+    { "speaker": "A", "text": "请问你找谁？" },
+    { "speaker": "B", "text": "我找王老师。" },
+    { "speaker": "A", "text": "那我能等一下吗？" },
+    { "speaker": "B", "text": "可以。" }
   ],
   "dialogueCards": [],
   "grammar": [
     {
-      "pattern": "喜欢 + 听/看 + 什么 + 名词",
-      "pinyin": "xǐhuan + tīng/kàn + shénme + míngcí",
+      "pattern": "请问（礼貌询问）",
+      "pinyin": "qǐngwèn",
       "explain": {
-        "zh": "问喜欢什么内容：你喜欢听什么音乐？回答：我喜欢听+具体内容。",
-        "kr": "뭘 좋아하는지 물을 때: 你喜欢听什么音乐? 답: 我喜欢听+내용.",
-        "en": "Ask what you like: 你喜欢听什么音乐? Answer: 我喜欢听 + thing.",
-        "jp": "何が好きか聞く：你喜欢听什么音乐？答：我喜欢听+内容。"
+        "zh": "「请问」放在问句前表示礼貌地询问。请问你找谁？= 礼貌地问“你找谁？”。",
+        "kr": "「请问」는 질문 앞에 써서 예의 있게 묻습니다. 请问你找谁?",
+        "en": "请问 before a question = May I ask (polite). 请问你找谁？",
+        "jp": "「请问」は質問の前で丁寧に聞く。请问你找谁？"
       },
       "example": {
-        "zh": "你喜欢听什么音乐？我喜欢听中国音乐。你喜欢看电影吗？喜欢，我也喜欢看电影。",
-        "pinyin": "Nǐ xǐhuan tīng shénme yīnyuè? Wǒ xǐhuan tīng Zhōngguó yīnyuè. Nǐ xǐhuan kàn diànyǐng ma? Xǐhuan, wǒ yě xǐhuan kàn diànyǐng.",
-        "translation": { "kr": "어떤 음악 좋아해? 중국 음악 들어. 영화 좋아해? 나도 좋아해.", "jp": "どんな音楽が好き？中国音楽を聞くのが好き。映画は？私も好き。", "en": "What music do you like? I like Chinese music. Do you like movies? I do too." }
+        "zh": "请问你找谁？我找王老师。",
+        "pinyin": "Qǐngwèn nǐ zhǎo shéi? Wǒ zhǎo Wáng lǎoshī.",
+        "translation": { "kr": "누구 찾으세요? 왕 선생님 찾아요.", "jp": "どなたをお探しですか？王老师をお願いします。", "en": "Who are you looking for? I'm looking for Teacher Wang." }
       }
     },
     {
-      "pattern": "也 + 喜欢",
-      "pinyin": "yě + xǐhuan",
+      "pattern": "找 + 人",
+      "pinyin": "zhǎo + rén",
       "explain": {
-        "zh": "「也」表示“同样”，放在动词前。我也喜欢 = I also like.",
-        "kr": "「也」는 \"~도\", 동사 앞에 씁니다. 我也喜欢.",
-        "en": "也 = also, before the verb. 我也喜欢 = I also like.",
-        "jp": "「也」は「〜も」。動詞の前。我也喜欢。"
+        "zh": "「找」表示寻找。找+人：我找王老师。问对方找谁：你找谁？",
+        "kr": "「找」는 찾다. 找+사람: 我找王老师. 你找谁?",
+        "en": "找 = to look for. 找 + person: 我找王老师. 你找谁？",
+        "jp": "「找」は探す。找+人：我找王老师。你找谁？"
       },
       "example": {
-        "zh": "喜欢，我也喜欢看电影。",
-        "pinyin": "Xǐhuan, wǒ yě xǐhuan kàn diànyǐng.",
-        "translation": { "kr": "좋아해, 나도 영화 보는 거 좋아해.", "jp": "好き。私も映画が好き。", "en": "Yes, I like watching movies too." }
+        "zh": "请问你找谁？我找王老师。",
+        "pinyin": "Qǐngwèn nǐ zhǎo shéi? Wǒ zhǎo Wáng lǎoshī.",
+        "translation": { "kr": "누구 찾으세요? 왕 선생님 찾아요.", "jp": "どなたをお探しですか？王老师です。", "en": "Who are you looking for? I'm looking for Teacher Wang." }
+      }
+    },
+    {
+      "pattern": "能 + 动词",
+      "pinyin": "néng + dòngcí",
+      "explain": {
+        "zh": "「能」表示能力或请求许可，后接动词。能+动词：能等一下、能来。",
+        "kr": "「能」는 능력이나 허가 요청. 能+동사: 能等一下.",
+        "en": "能 = can / may (ability or permission). 能 + verb: 能等一下.",
+        "jp": "「能」は可能・許可。能+動詞：能等一下。"
+      },
+      "example": {
+        "zh": "那我能等一下吗？可以。",
+        "pinyin": "Nà wǒ néng děng yīxià ma? Kěyǐ.",
+        "translation": { "kr": "그럼 잠깐 기다려도 될까요? 네, 됩니다.", "jp": "少々お待ちしてもいいですか？はい、どうぞ。", "en": "Can I wait a moment? Yes, you can." }
+      }
+    },
+    {
+      "pattern": "能……吗？",
+      "pinyin": "néng … ma",
+      "explain": {
+        "zh": "「能……吗？」用来请求许可，意思是“可以……吗？”回答常用「可以」或「不能」。",
+        "kr": "「能……吗?」는 허가를 요청. \"~해도 될까요?\" 답: 可以/不能.",
+        "en": "能……吗？= May I ...? / Can I ...? Answer: 可以 or 不能.",
+        "jp": "「能……吗？」は許可を求める。「〜してもいいですか？」答は「可以」或「不能」。"
+      },
+      "example": {
+        "zh": "那我能等一下吗？可以。",
+        "pinyin": "Nà wǒ néng děng yīxià ma? Kěyǐ.",
+        "translation": { "kr": "그럼 잠깐 기다려도 될까요? 네.", "jp": "少々待ってもいいですか？はい。", "en": "Can I wait a moment? Yes." }
       }
     }
   ],
@@ -396,51 +424,51 @@
   "originalDialogues": [
     {
       "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
+        "zh": "主对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
       },
       "lines": [
         {
           "speaker": "A",
-          "text": "你怎么去学校？",
+          "text": "请问你找谁？",
           "translation": {
-            "en": "How do you go to school?",
-            "kr": "How do you go to school?",
-            "jp": "How do you go to school?"
+            "en": "Who are you looking for?",
+            "kr": "누구 찾으세요?",
+            "jp": "どなたをお探しですか？"
           },
-          "pinyin": "nǐ zěn me qù xué xiào ？"
+          "pinyin": "Qǐngwèn nǐ zhǎo shéi?"
         },
         {
           "speaker": "B",
-          "text": "我坐地铁去学校。",
+          "text": "我找王老师。",
           "translation": {
-            "en": "I take the subway to school.",
-            "kr": "I take the subway to school.",
-            "jp": "I take the subway to school."
+            "en": "I'm looking for Teacher Wang.",
+            "kr": "왕 선생님 찾아요.",
+            "jp": "王老师をお願いします。"
           },
-          "pinyin": "wǒ zuò dì tiě qù xué xiào 。"
+          "pinyin": "Wǒ zhǎo Wáng lǎoshī."
         },
         {
           "speaker": "A",
-          "text": "他呢？",
+          "text": "那我能等一下吗？",
           "translation": {
-            "en": "What about him?",
-            "kr": "What about him?",
-            "jp": "What about him?"
+            "en": "Can I wait a moment?",
+            "kr": "그럼 잠깐 기다려도 될까요?",
+            "jp": "少々お待ちしてもいいですか？"
           },
-          "pinyin": "tā ne ？"
+          "pinyin": "Nà wǒ néng děng yīxià ma?"
         },
         {
           "speaker": "B",
-          "text": "他坐出租车去。",
+          "text": "可以。",
           "translation": {
-            "en": "He goes by taxi.",
-            "kr": "He goes by taxi.",
-            "jp": "He goes by taxi."
+            "en": "Yes, you can.",
+            "kr": "네, 됩니다.",
+            "jp": "はい、どうぞ。"
           },
-          "pinyin": "tā zuò chū zū chē qù 。"
+          "pinyin": "Kěyǐ."
         }
       ]
     }
