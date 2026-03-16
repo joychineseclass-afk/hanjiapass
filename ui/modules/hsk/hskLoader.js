@@ -298,15 +298,27 @@
     return Array.isArray(arr) ? arr : null;
   }
 
-  /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序） */
+  /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序）；匹配不到的保留占位词条，绝不整课回退旧 vocab */
   function resolveHanziToVocab(hanziList, fullVocabList) {
-    if (!Array.isArray(hanziList) || !Array.isArray(fullVocabList)) return [];
+    if (!Array.isArray(hanziList)) return [];
     const byHanzi = new Map();
-    fullVocabList.forEach((w) => {
+    (Array.isArray(fullVocabList) ? fullVocabList : []).forEach((w) => {
       const h = (w.hanzi || w.word || "").trim();
       if (h && !byHanzi.has(h)) byHanzi.set(h, w);
     });
-    return hanziList.map((h) => byHanzi.get(String(h).trim())).filter(Boolean);
+    return hanziList.map((h) => {
+      const key = String(h).trim();
+      if (!key) return null;
+      const found = byHanzi.get(key);
+      if (found) return found;
+      return {
+        hanzi: key,
+        word: key,
+        pinyin: "",
+        meaning: { ko: "", en: "", zh: key },
+        ko: "", kr: "", en: "", zh: key, cn: key,
+      };
+    }).filter(Boolean);
   }
 
   /** 加载 vocab-distribution.json，不存在或失败返回 null */
@@ -479,7 +491,7 @@
     const { normalizeSteps, stepKeys } = await import("/ui/core/lessonSteps.js");
     const stepsRaw = Array.isArray(source.steps) ? source.steps : (Array.isArray(doc.steps) ? doc.steps : undefined);
     const steps = normalizeSteps(stepsRaw, source.type === "review");
-    const lesson = {
+    let lesson = {
       ...source,
       vocab: vocabArr,
       words: vocabArr,
@@ -492,6 +504,12 @@
       steps,
       stepKeys: stepKeys(steps),
     };
+
+    // 最终一步：只要存在 vocab-distribution.json，就以它为唯一单词来源覆盖，避免 lessonN.json 内嵌 vocab 回写
+    const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
+    if (Array.isArray(distributionVocab)) {
+      lesson = { ...lesson, vocab: distributionVocab, words: distributionVocab };
+    }
 
     memSet(memKey, lesson);
     return lesson;

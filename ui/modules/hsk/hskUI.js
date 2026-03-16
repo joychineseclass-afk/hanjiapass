@@ -187,7 +187,7 @@ hskLevel?.dispatchEvent(new Event("change"));
     return `/data/courses/${ver}/hsk${lv}/lesson${lessonNo}.json`;
   }
 
-  // ✅ NEW: 读取课件详情（带缓存）
+  // ✅ NEW: 读取课件详情（带缓存）；优先走 HSK_LOADER.loadLessonDetail，使单词 100% 来自 vocab-distribution.json
   async function loadLessonDetail(level, lessonNo, version) {
     const ver = safeText(version || getVersion());
     const lv = safeText(level || "1");
@@ -196,9 +196,18 @@ hskLevel?.dispatchEvent(new Event("change"));
     const hit = LESSON_DETAIL_CACHE.get(key);
     if (hit && Date.now() - hit.ts < LESSON_DETAIL_TTL) return hit.data;
 
+    if (window.HSK_LOADER?.loadLessonDetail) {
+      try {
+        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver });
+        LESSON_DETAIL_CACHE.set(key, { ts: Date.now(), data });
+        return data;
+      } catch (e) {
+        console.warn("[HSK_UI] HSK_LOADER.loadLessonDetail failed, fallback to direct fetch:", e?.message || e);
+      }
+    }
+
     const url = lessonDetailUrl(lv, lessonNo, ver);
     const data = await fetchJson(url);
-
     LESSON_DETAIL_CACHE.set(key, { ts: Date.now(), data });
     return data;
   }
@@ -215,15 +224,23 @@ hskLevel?.dispatchEvent(new Event("change"));
 
   function buildLessonWordList(lesson, allMap) {
     const raw = Array.isArray(lesson?.words) ? lesson.words : [];
-    const keys = raw.map(normalizeWord).filter(Boolean);
-    const set = new Set(keys);
-
+    const getKey = (w) =>
+      typeof w === "object" && w != null ? String(w?.hanzi ?? w?.word ?? "").trim() : normalizeWord(w);
     const list = [];
     let missing = 0;
-    for (const k of set) {
-      const found = allMap.get(k);
+    const seen = new Set();
+    for (const w of raw) {
+      const key = getKey(w);
+      if (!key) continue;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const found = allMap.get(key);
       if (found) list.push(found);
-      else missing++;
+      else if (typeof w === "object" && w !== null && (w.hanzi || w.word)) list.push(w);
+      else {
+        list.push({ hanzi: key, word: key, pinyin: "", meaning: { ko: "", en: "", zh: key } });
+        missing++;
+      }
     }
     return { list, missing };
   }
