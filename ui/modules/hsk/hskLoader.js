@@ -481,8 +481,16 @@
     } else {
       vocabArr = Array.isArray(source.vocab) ? source.vocab
         : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
-      dialogueArr = Array.isArray(source.dialogueCards) ? source.dialogueCards
-        : (Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []));
+      // 会话优先级：1) 非空 dialogueCards 2) 非空 dialogue 3) 非空 doc.content.dialogue 4) 空数组
+      if (Array.isArray(source.dialogueCards) && source.dialogueCards.length > 0) {
+        dialogueArr = source.dialogueCards;
+      } else if (Array.isArray(source.dialogue) && source.dialogue.length > 0) {
+        dialogueArr = source.dialogue;
+      } else if (Array.isArray(c?.dialogue) && c.dialogue.length > 0) {
+        dialogueArr = c.dialogue;
+      } else {
+        dialogueArr = [];
+      }
       grammarArr = Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []);
       extensionArr = Array.isArray(source.extension) ? source.extension : (Array.isArray(c?.extension) ? c.extension : []);
       practiceArr = Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []);
