@@ -35,6 +35,14 @@
     { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다, 만나다", "jp": "知る、会う", "en": "to know; to meet" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
     { "hanzi": "也", "pinyin": "yě", "meaning": { "zh": "也", "kr": "~도", "jp": "〜も", "en": "also" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你好！" },
+    { "speaker": "B", "text": "你好！" },
+    { "speaker": "A", "text": "谢谢。" },
+    { "speaker": "B", "text": "不客气。" },
+    { "speaker": "A", "text": "再见。" },
+    { "speaker": "B", "text": "再见。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -46,17 +54,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你好！", "translation": { "en": "Hello!", "kr": "안녕하세요!", "jp": "こんにちは!" }, "pinyin": "Nǐ hǎo!" },
-        { "speaker": "B", "text": "你好！", "translation": { "en": "Hello!", "kr": "안녕하세요!", "jp": "こんにちは!" }, "pinyin": "Nǐ hǎo!" },
-        { "speaker": "A", "text": "很高兴认识你。", "translation": { "en": "Nice to meet you.", "kr": "만나서 반가워요.", "jp": "お会いできて嬉しいです。" }, "pinyin": "Hěn gāoxìng rènshi nǐ." },
-        { "speaker": "B", "text": "我也很高兴认识你。", "translation": { "en": "Nice to meet you too.", "kr": "저도 만나서 반가워요.", "jp": "私もお会いできて嬉しいです。" }, "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "你好",

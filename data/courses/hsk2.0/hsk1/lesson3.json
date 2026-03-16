@@ -33,6 +33,12 @@
     { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
     { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~는요? (역질문)", "jp": "〜は？", "en": "and you?" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你是哪国人？" },
+    { "speaker": "B", "text": "我是韩国人。" },
+    { "speaker": "A", "text": "你是中国人吗？" },
+    { "speaker": "B", "text": "不是，我是韩国人。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -44,17 +50,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你叫什么名字？", "translation": { "en": "What's your name?", "kr": "이름이 뭐야?", "jp": "お名前は何ですか？" }, "pinyin": "Nǐ jiào shénme míngzi?" },
-        { "speaker": "B", "text": "我叫李明。", "translation": { "en": "I'm Li Ming.", "kr": "나는 이명이야.", "jp": "李明です。" }, "pinyin": "Wǒ jiào Lǐ Míng." },
-        { "speaker": "A", "text": "你呢？", "translation": { "en": "And you?", "kr": "너는?", "jp": "あなたは？" }, "pinyin": "Nǐ ne?" },
-        { "speaker": "B", "text": "我叫王芳。", "translation": { "en": "I'm Wang Fang.", "kr": "나는 왕팡이야.", "jp": "王芳です。" }, "pinyin": "Wǒ jiào Wáng Fāng." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "你叫什么名字？",

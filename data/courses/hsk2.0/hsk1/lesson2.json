@@ -33,6 +33,12 @@
     { "hanzi": "学生", "pinyin": "xuésheng", "meaning": { "zh": "学生", "kr": "학생", "jp": "学生", "en": "student" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
     { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~는요? (역질문)", "jp": "〜は？（繰り返し質問）", "en": "and you? (echo question)" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你好，你叫什么名字？" },
+    { "speaker": "B", "text": "我叫王明。你呢？" },
+    { "speaker": "A", "text": "我叫Anna。" },
+    { "speaker": "B", "text": "很高兴认识你。" }
+  ],
   "originalDialogues": [
     {
       "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
@@ -44,17 +50,7 @@
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你好！我叫李明。", "translation": { "en": "Hello! I'm Li Ming.", "kr": "안녕! 나는 이명이야.", "jp": "こんにちは。李明です。" }, "pinyin": "Nǐ hǎo! Wǒ jiào Lǐ Míng." },
-        { "speaker": "B", "text": "你好！我叫安娜。", "translation": { "en": "Hello! I'm Anna.", "kr": "안녕! 나는 안나야.", "jp": "こんにちは。安娜です。" }, "pinyin": "Nǐ hǎo! Wǒ jiào Ānnà." },
-        { "speaker": "A", "text": "我是学生。你呢？", "translation": { "en": "I'm a student. And you?", "kr": "나는 학생이야. 너는?", "jp": "私は学生です。あなたは？" }, "pinyin": "Wǒ shì xuésheng. Nǐ ne?" },
-        { "speaker": "B", "text": "我也是学生。", "translation": { "en": "I'm a student too.", "kr": "나도 학생이야.", "jp": "私も学生です。" }, "pinyin": "Wǒ yě shì xuésheng." }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
       "pattern": "我叫 + 名字",
