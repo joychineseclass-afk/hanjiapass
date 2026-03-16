@@ -13,20 +13,20 @@
     "jp": "お仕事は何ですか？"
   },
   "summary": {
-    "zh": "医院、怎么、怎么样",
-    "kr": "병원, 어떻게, 어때요",
-    "en": "Hospital, how, how about"
+    "zh": "问职业和工作地点",
+    "kr": "직업과 일하는 곳을 묻기",
+    "en": "Asking about jobs and workplace"
   },
   "objectives": [
     {
-      "zh": "学会说身体不适",
-      "kr": "몸이 안 좋을 때 말할 수 있다",
-      "en": "Can say when unwell"
+      "zh": "学会用「你做什么工作？」问职业",
+      "kr": "「你做什么工作？」로 직업을 물을 수 있다",
+      "en": "Can ask about jobs with 你做什么工作？"
     },
     {
-      "zh": "学会我们、没、呢",
-      "kr": "'我们', '没', '呢'를 사용할 수 있다",
-      "en": "Can use 我们, 没, 呢"
+      "zh": "学会用「在+地点+工作」「也是」介绍工作地点和同事",
+      "kr": "「在+장소+工作」「也是」로 일하는 곳과 동료를 소개할 수 있다",
+      "en": "Can use 在+place+工作 and 也是 to talk about workplace and colleagues"
     }
   ],
   "vocab": [

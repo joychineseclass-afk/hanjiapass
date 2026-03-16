@@ -13,20 +13,20 @@
     "jp": "どこへ行きますか？"
   },
   "summary": {
-    "zh": "来、去、回与位置",
-    "kr": "오다, 가다, 돌아가다와 위치",
-    "en": "Come, go, return and location"
+    "zh": "问去哪里、什么时候回家",
+    "kr": "어디 가는지, 언제 집에 가는지 묻기",
+    "en": "Asking where to go and when to go home"
   },
   "objectives": [
     {
-      "zh": "学会说来去",
-      "kr": "오다, 가다를 말할 수 있다",
-      "en": "Can say come and go"
+      "zh": "学会用「你去哪儿？」问去向",
+      "kr": "「你去哪儿？」로 어디 가는지 물을 수 있다",
+      "en": "Can ask where someone is going with 你去哪儿？"
     },
     {
-      "zh": "学会有、椅子、桌子",
-      "kr": "'有', '椅子', '桌子'를 사용할 수 있다",
-      "en": "Can use 有, 椅子, 桌子"
+      "zh": "学会用「什么时候回家」谈回家的时间",
+      "kr": "「什么时候回家」로 언제 집에 가는지 말할 수 있다",
+      "en": "Can talk about when to go home using 什么时候回家"
     }
   ],
   "vocab": [

@@ -13,20 +13,20 @@
     "jp": "私は地下鉄で学校に行きます。"
   },
   "summary": {
-    "zh": "出租车、飞机、火车站",
-    "kr": "택시, 비행기, 기차역",
-    "en": "Taxi, plane, train station"
+    "zh": "说去学校的交通方式",
+    "kr": "학교에 가는 교통수단 말하기",
+    "en": "Talking about how to get to school"
   },
   "objectives": [
     {
-      "zh": "学会说交通方式",
-      "kr": "교통 수단을 말할 수 있다",
-      "en": "Can talk about transport"
+      "zh": "学会用「怎么去」问交通方式",
+      "kr": "「怎么去」로 교통수단을 물을 수 있다",
+      "en": "Can ask about transport with 怎么去"
     },
     {
-      "zh": "学会开、看见、都",
-      "kr": "'开', '看见', '都'를 사용할 수 있다",
-      "en": "Can use 开, 看见, 都"
+      "zh": "学会用「坐+交通工具」和「每天都」说出行习惯",
+      "kr": "「坐+교통수단」「每天都」로 이동 습관을 말할 수 있다",
+      "en": "Can use 坐 + transport and 每天都 to describe commuting habits"
     }
   ],
   "vocab": [

@@ -19,14 +19,14 @@
   },
   "objectives": [
     {
-      "zh": "学会说天气",
-      "kr": "날씨를 말할 수 있다",
-      "en": "Can talk about weather"
+      "zh": "学会用「今天天气怎么样？」问天气",
+      "kr": "「今天天气怎么样？」으로 날씨를 물을 수 있다",
+      "en": "Can ask about weather with 今天天气怎么样？"
     },
     {
-      "zh": "学会太、想、说话、睡觉",
-      "kr": "'太', '想', '说话', '睡觉'를 사용할 수 있다",
-      "en": "Can use 太, 想, 说话, 睡觉"
+      "zh": "学会用「冷吗？不冷，很暖和。」回答天气感觉",
+      "kr": "「冷吗？不冷，很暖和。」로 춥고 따뜻함을 말할 수 있다",
+      "en": "Can answer about feeling cold or warm with 冷吗？不冷，很暖和。"
     }
   ],
   "vocab": [

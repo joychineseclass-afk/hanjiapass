@@ -13,20 +13,20 @@
     "jp": "何を買いたいですか？"
   },
   "summary": {
-    "zh": "茶、杯子与饭馆",
-    "kr": "차, 컵과 식당",
-    "en": "Tea, cups and restaurant"
+    "zh": "买东西时评价大小和好坏",
+    "kr": "물건 살 때 크기와 좋고 나쁨 말하기",
+    "en": "Commenting on size and quality when shopping"
   },
   "objectives": [
     {
-      "zh": "学会在饭馆点饮料",
-      "kr": "식당에서 음료 주문할 수 있다",
-      "en": "Can order drinks at restaurant"
+      "zh": "学会用「你想买什么？」问想买的东西",
+      "kr": "「你想买什么？」로 무엇을 사고 싶은지 물을 수 있다",
+      "en": "Can ask what someone wants to buy with 你想买什么？"
     },
     {
-      "zh": "学会块、东西",
-      "kr": "'块', '东西'를 사용할 수 있다",
-      "en": "Can use 块 and 东西"
+      "zh": "学会用「怎么样」「太+形容词」「不大不小」评价东西",
+      "kr": "「怎么样」「太+형용사」「不大不小」로 물건을 평가할 수 있다",
+      "en": "Can comment on items using 怎么样, 太 + adjective, 不大不小"
     }
   ],
   "vocab": [

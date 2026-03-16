@@ -13,20 +13,20 @@
     "jp": "王先生は今日学校に来ますか？"
   },
   "summary": {
-    "zh": "买、钱、商店",
-    "kr": "사다, 돈, 가게",
-    "en": "Buy, money, shop"
+    "zh": "说来学校、什么时候回来和给电话",
+    "kr": "학교에 오는지, 언제 돌아오는지, 전화번호를 주고받기",
+    "en": "Talking about coming to school, returning time and giving a phone number"
   },
   "objectives": [
     {
-      "zh": "学会说买东西",
-      "kr": "쇼핑할 수 있다",
-      "en": "Can talk about shopping"
+      "zh": "学会用「来」「回来」说来学校和回来的时间",
+      "kr": "「来」「回来」로 학교에 오는지와 돌아오는 시간을 말할 수 있다",
+      "en": "Can use 来 and 回来 to talk about coming to school and returning"
     },
     {
-      "zh": "学会这、那",
-      "kr": "'这', '那'를 사용할 수 있다",
-      "en": "Can use 这 and 那"
+      "zh": "学会用「有+电话」「写给你」给出联系方式",
+      "kr": "「有+电话」「写给你」로 연락처를 줄 수 있다",
+      "en": "Can use 有 + 电话 and 写给你 to give contact information"
     }
   ],
   "vocab": [
