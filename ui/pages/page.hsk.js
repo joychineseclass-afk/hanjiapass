@@ -1098,7 +1098,12 @@ async function openLesson({ lessonNo, file }) {
 
     const fromList = listItem ? mergeLessonVocabulary(listItem) : [];
     const fromDetail = Array.isArray(lessonData?.words) ? lessonData.words : (Array.isArray(lessonData?.vocab) ? lessonData.vocab : []);
-    const lessonWordsRaw = fromList.length > 0 ? fromList : fromDetail;
+    // HSK1 单词 Tab 以 vocab-distribution 为准：lessonData 来自 HSK_LOADER.loadLessonDetail 已含 distribution 覆盖，优先用 fromDetail，不再被 listItem 旧词覆盖
+    const isHsk1 = Number(state.lv) === 1;
+    const lessonWordsRaw = (isHsk1 && fromDetail.length > 0) ? fromDetail : (fromList.length > 0 ? fromList : fromDetail);
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[HSK] openLesson vocab source", { lessonNo: no, isHsk1, fromListLen: fromList.length, fromDetailLen: fromDetail.length, used: (isHsk1 && fromDetail.length > 0) ? "fromDetail(distribution)" : (fromList.length > 0 ? "fromList" : "fromDetail"), hanzi: lessonWordsRaw.slice(0, 10).map((w) => (w && (w.hanzi || w.word)) || w) });
+    }
     if (listItem) {
       lessonData.coreWords = listItem.coreWords ?? listItem.distributedWords ?? listItem.words;
       lessonData.extraWords = listItem.extraWords ?? [];
