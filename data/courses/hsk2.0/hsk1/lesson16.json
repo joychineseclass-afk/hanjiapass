@@ -1,5 +1,5 @@
 {
-  "id": "hsk2.0_hsk1_lesson16",
+  "id": "hsk1_lesson16",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
@@ -70,7 +70,7 @@
         "jp": "家"
       },
       "pos": {
-        "kr": "名词",
+        "kr": "명사",
         "en": "noun",
         "jp": "名詞"
       }
@@ -85,7 +85,7 @@
         "jp": "家に帰る"
       },
       "pos": {
-        "kr": "동사词组",
+        "kr": "동사구",
         "en": "verb phrase",
         "jp": "動詞句"
       }

@@ -5,6 +5,7 @@
   "lessons": [
     {
       "lessonNo": 1,
+      "id": "hsk1_lesson1",
       "title": { "cn": "你好！", "kr": "안녕하세요!", "en": "Hello!" },
       "sceneGoal": "第一次见面打招呼",
       "subtitle": "打招呼",
@@ -14,6 +15,7 @@
     },
     {
       "lessonNo": 2,
+      "id": "hsk1_lesson2",
       "title": { "cn": "你叫什么名字？", "kr": "이름이 뭐예요?", "en": "What's your name?" },
       "sceneGoal": "互相认识、问名字",
       "subtitle": "问名字",
@@ -23,6 +25,7 @@
     },
     {
       "lessonNo": 3,
+      "id": "hsk1_lesson3",
       "title": { "cn": "你是哪国人？", "kr": "어느 나라 사람이에요?", "en": "Which country are you from?" },
       "sceneGoal": "问来自哪里",
       "subtitle": "问国籍",
@@ -32,6 +35,7 @@
     },
     {
       "lessonNo": 4,
+      "id": "hsk1_lesson4",
       "title": { "cn": "他是谁？", "kr": "그 사람 누구예요?", "en": "Who is he?" },
       "sceneGoal": "介绍家人",
       "subtitle": "介绍家人",
@@ -41,6 +45,7 @@
     },
     {
       "lessonNo": 5,
+      "id": "hsk1_lesson5",
       "title": { "cn": "你在哪儿？", "kr": "어디에 있어요?", "en": "Where are you?" },
       "sceneGoal": "问地点",
       "subtitle": "问在哪儿",
@@ -50,6 +55,7 @@
     },
     {
       "lessonNo": 6,
+      "id": "hsk1_lesson6",
       "title": { "cn": "你会说汉语吗？", "kr": "중국어 할 수 있어요?", "en": "Can you speak Chinese?" },
       "sceneGoal": "说自己会不会汉语",
       "subtitle": "说汉语",
@@ -59,6 +65,7 @@
     },
     {
       "lessonNo": 7,
+      "id": "hsk1_lesson7",
       "title": { "cn": "你几岁？", "kr": "몇 살이에요?", "en": "How old are you?" },
       "sceneGoal": "问年龄",
       "subtitle": "问年龄",
@@ -68,6 +75,7 @@
     },
     {
       "lessonNo": 8,
+      "id": "hsk1_lesson8",
       "title": { "cn": "苹果多少钱？", "kr": "사과 얼마예요?", "en": "How much is the apple?" },
       "sceneGoal": "问价格、买水果",
       "subtitle": "问价钱",
@@ -77,6 +85,7 @@
     },
     {
       "lessonNo": 9,
+      "id": "hsk1_lesson9",
       "title": { "cn": "现在几点？", "kr": "지금 몇 시예요?", "en": "What time is it now?" },
       "sceneGoal": "问时间",
       "subtitle": "问时间",
@@ -86,6 +95,7 @@
     },
     {
       "lessonNo": 10,
+      "id": "hsk1_lesson10",
       "title": { "cn": "今天几月几号？", "kr": "오늘 몇 월 며칠이에요?", "en": "What's the date today?" },
       "sceneGoal": "问日期",
       "subtitle": "问日期",
@@ -95,6 +105,7 @@
     },
     {
       "lessonNo": 11,
+      "id": "hsk1_lesson11",
       "title": { "cn": "今天星期几？", "kr": "오늘 무슨 요일이에요?", "en": "What day is today?" },
       "sceneGoal": "问星期",
       "subtitle": "问星期",
@@ -104,6 +115,7 @@
     },
     {
       "lessonNo": 12,
+      "id": "hsk1_lesson12",
       "title": { "cn": "我喜欢听音乐。", "kr": "저는 음악 듣는 걸 좋아해요.", "en": "I like listening to music." },
       "sceneGoal": "谈爱好",
       "subtitle": "谈爱好",
@@ -113,6 +125,7 @@
     },
     {
       "lessonNo": 13,
+      "id": "hsk1_lesson13",
       "title": { "cn": "请问你找谁？", "kr": "누구 찾으세요?", "en": "Who are you looking for?" },
       "sceneGoal": "打电话找人",
       "subtitle": "打电话",
@@ -122,6 +135,7 @@
     },
     {
       "lessonNo": 14,
+      "id": "hsk1_lesson14",
       "title": { "cn": "我们一起吃饭吧。", "kr": "같이 밥 먹어요.", "en": "Let's eat together." },
       "sceneGoal": "邀请吃饭",
       "subtitle": "一起吃饭",
@@ -131,6 +145,7 @@
     },
     {
       "lessonNo": 15,
+      "id": "hsk1_lesson15",
       "title": { "cn": "你想买什么？", "kr": "뭘 사고 싶어요?", "en": "What do you want to buy?" },
       "sceneGoal": "买东西",
       "subtitle": "买东西",
@@ -140,6 +155,7 @@
     },
     {
       "lessonNo": 16,
+      "id": "hsk1_lesson16",
       "title": { "cn": "你去哪儿？", "kr": "어디 가요?", "en": "Where are you going?" },
       "sceneGoal": "问去向",
       "subtitle": "问去哪儿",
@@ -149,6 +165,7 @@
     },
     {
       "lessonNo": 17,
+      "id": "hsk1_lesson17",
       "title": { "cn": "我坐地铁去学校。", "kr": "저는 지하철 타고 학교 가요.", "en": "I take the subway to school." },
       "sceneGoal": "说交通方式",
       "subtitle": "交通方式",
@@ -158,6 +175,7 @@
     },
     {
       "lessonNo": 18,
+      "id": "hsk1_lesson18",
       "title": { "cn": "王老师今天来学校吗？", "kr": "왕 선생님 오늘 학교에 와요?", "en": "Is Teacher Wang coming to school today?" },
       "sceneGoal": "来和回来",
       "subtitle": "来和回来",
@@ -167,6 +185,7 @@
     },
     {
       "lessonNo": 19,
+      "id": "hsk1_lesson19",
       "title": { "cn": "今天天气怎么样？", "kr": "오늘 날씨 어때요?", "en": "How's the weather today?" },
       "sceneGoal": "聊天气",
       "subtitle": "问天气",
@@ -176,6 +195,7 @@
     },
     {
       "lessonNo": 20,
+      "id": "hsk1_lesson20",
       "title": { "cn": "你做什么工作？", "kr": "무슨 일 하세요?", "en": "What do you do?" },
       "sceneGoal": "问职业",
       "subtitle": "问工作",
@@ -185,6 +205,7 @@
     },
     {
       "lessonNo": 21,
+      "id": "hsk1_lesson21",
       "title": { "cn": "综合复习1", "kr": "종합 복습 1", "en": "Review 1" },
       "sceneGoal": "复习 L1–L10",
       "subtitle": "L1-L10 复习",
@@ -194,6 +215,7 @@
     },
     {
       "lessonNo": 22,
+      "id": "hsk1_lesson22",
       "title": { "cn": "综合复习2", "kr": "종합 복습 2", "en": "Review 2" },
       "sceneGoal": "复习 L11–L20",
       "subtitle": "L11-L20 复习",

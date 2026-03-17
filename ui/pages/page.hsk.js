@@ -1083,7 +1083,7 @@ async function openLesson({ lessonNo, file }) {
     if (!lessonData) throw new Error("Failed to load lesson");
 
     if (listItem && listItem.title && typeof listItem.title === "object") {
-      lessonData.title = { ...(lessonData.title || {}), ...listItem.title };
+      lessonData.title = { ...(listItem.title || {}), ...(lessonData.title || {}) };
     }
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     const bpEntry = blueprint && blueprint[String(no)];
