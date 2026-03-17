@@ -147,7 +147,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "17": {
-      "title": "我看电视。",
+      "title": "我坐地铁去学校。",
       "coreSentence": "我看电视。",
       "grammarFocus": ["动词 + 宾语", "也"],
       "scene": "entertainment_basic",
@@ -156,7 +156,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "18": {
-      "title": "我要买苹果。",
+      "title": "王老师今天来学校吗？",
       "coreSentence": "我要买苹果。",
       "grammarFocus": ["要", "买", "多少", "几"],
       "scene": "shopping_basic",
