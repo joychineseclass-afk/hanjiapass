@@ -165,7 +165,7 @@
       "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
     "19": {
-      "title": "我明天去中国。",
+      "title": "今天天气怎么样？",
       "coreSentence": "我明天去中国。",
       "grammarFocus": ["明天", "去", "想", "会"],
       "scene": "plan_basic",
@@ -174,7 +174,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "20": {
-      "title": "这个很好。",
+      "title": "你做什么工作？",
       "coreSentence": "这个很好。",
       "grammarFocus": ["很 + 形容词", "这个", "那个", "觉得"],
       "scene": "comment_basic",
