@@ -420,7 +420,7 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   
  const dialogLang = normalizeLang(lang ?? getLang());
 
-const pickTrans = (line, lang) => {
+const pickTrans = (line, "ko") => {
   if (!line || typeof line !== "object") return "";
   return line.translation?.[lang] || "";
 };
