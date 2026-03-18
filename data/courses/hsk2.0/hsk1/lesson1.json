@@ -175,7 +175,7 @@
 ],
   "extension": [
   {
-    "text": "您好",
+    "pattern": "您好",
     "pinyin": "nín hǎo",
     "translation": {
       "kr": "안녕하세요(존댓말).",
@@ -184,7 +184,7 @@
     }
   },
   {
-    "text": "大家好",
+    "pattern": "大家好",
     "pinyin": "dàjiā hǎo",
     "translation": {
       "kr": "여러분 안녕하세요.",
