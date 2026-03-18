@@ -417,15 +417,12 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     containerEl.innerHTML = `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue")}</div>`;
     return;
   }
-  const pickTrans = (line) => {
-    if (!line || typeof line !== "object") return "";
-    // 先严格按当前语言取 translation（与普通 lesson dialogue 一致）
-    const translated = getContentText(line, "translation", { strict: true, lang: l });
-    if (translated) return translated;
-    // 再使用非 strict 模式做多语言 fallback（currentLang → 其他语言），仍通过 languageEngine 统一处理
-    const fallback = getContentText(line, "translation", { strict: false, lang: l });
-    if (fallback) return fallback;
-    return "";
+  const pickTrans = (line, lang) => {
+  if (!line || typeof line !== "object") return "";
+
+  return line.translation?.[lang] || "";
+};
+    
   };
   const rows = [];
   for (const card of list) {
@@ -433,7 +430,7 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     for (const line of lines) {
       const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
       const py = String((line?.pinyin ?? line?.py ?? "")).trim();
-      const trans = pickTrans(line);
+      const trans = pickTrans(line, lang);
       if (!zh) continue;
       const pyResolved = py || resolvePinyin(zh, "");
       const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
