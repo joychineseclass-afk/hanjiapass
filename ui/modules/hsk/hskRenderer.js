@@ -418,21 +418,20 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     return;
   }
   
-  const l = normalizeLang(lang ?? getLang());
+ const dialogLang = normalizeLang(lang ?? getLang());
 
-  const pickTrans = (line, lang) => {
+const pickTrans = (line, lang) => {
   if (!line || typeof line !== "object") return "";
-
   return line.translation?.[lang] || "";
 };
-    
-  const rows = [];
-  for (const card of list) {
-    const lines = Array.isArray(card?.lines) ? card.lines : [];
-    for (const line of lines) {
-      const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
-      const py = String((line?.pinyin ?? line?.py ?? "")).trim();
-      const trans = pickTrans(line, 1);
+
+const rows = [];
+for (const card of list) {
+  const lines = Array.isArray(card?.lines) ? card.lines : [];
+  for (const line of lines) {
+    const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
+    const py = String((line?.pinyin ?? line?.py ?? "")).trim();
+    const trans = pickTrans(line, dialogLang);
       if (!zh) continue;
       const pyResolved = py || resolvePinyin(zh, "");
       const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
