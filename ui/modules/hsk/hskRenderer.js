@@ -423,7 +423,6 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   return line.translation?.[lang] || "";
 };
     
-  };
   const rows = [];
   for (const card of list) {
     const lines = Array.isArray(card?.lines) ? card.lines : [];
