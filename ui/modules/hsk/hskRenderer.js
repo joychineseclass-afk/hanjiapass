@@ -417,6 +417,9 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     containerEl.innerHTML = `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue")}</div>`;
     return;
   }
+  
+  const l = normalizeLang(lang ?? getLang());
+
   const pickTrans = (line, lang) => {
   if (!line || typeof line !== "object") return "";
 
@@ -429,7 +432,7 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     for (const line of lines) {
       const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
       const py = String((line?.pinyin ?? line?.py ?? "")).trim();
-      const trans = pickTrans(line, lang);
+      const trans = pickTrans(line, 1);
       if (!zh) continue;
       const pyResolved = py || resolvePinyin(zh, "");
       const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
