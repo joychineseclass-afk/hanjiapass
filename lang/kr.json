@@ -51,7 +51,7 @@
     "my": "내 학습",
     "login": "로그인"
   },
-  "hsk": {
+    "hsk": {
     "title": "HSK 학습",
     "level": "레벨",
     "version": "버전",
@@ -117,9 +117,11 @@
     "related_old_words": "관련 이전 단어",
     "grammar_review": "문법 복습",
     "summary_tasks": "복습 과제",
-    "review_range_suffix": "（{from}~{to}과 복습）",
-    "review_words_subtitle": "복습 단어",
-    "review_grammar_subtitle": "복습 문법",
+      "review_range_suffix": "（{from}~{to}과 복습）",
+      "review_words_subtitle": "복습 단어",
+      "review_grammar_subtitle": "복습 문법",
+      "review_dialogue_subtitle": "복습 회화",
+      "review_extension_subtitle": "복습 확장 표현",
     "review_desc": "앞서 배운 단어와 대화를 복습해 주세요.",
     "back_to_list": "← 목록으로",
     "lesson_unit": "{n}과",

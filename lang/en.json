@@ -120,6 +120,8 @@
     "review_range_suffix": "(Review Lessons {from}–{to})",
     "review_words_subtitle": "Review Vocabulary",
     "review_grammar_subtitle": "Review Grammar",
+    "review_dialogue_subtitle": "Review Dialogue",
+    "review_extension_subtitle": "Review Extension Expressions",
     "review_desc": "Please review the vocabulary and dialogue from previous lessons.",
     "back_to_list": "← Back to list",
     "lesson_unit": "Lesson {n}",

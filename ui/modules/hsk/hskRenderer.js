@@ -81,12 +81,13 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
   const arrow = "›";
+  const displayLang = normalizeLang(lang ?? getLang());
 
   const rows = list.map((it) => {
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
 
-    const titleDisplay = getLessonDisplayTitle(it, lang) || "-";
+    const titleDisplay = getLessonDisplayTitle(it, displayLang) || "-";
 
     const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
@@ -418,9 +419,13 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   }
   const pickTrans = (line) => {
     if (!line || typeof line !== "object") return "";
-    const t = line.translation || line.trans || line.explain;
-    if (t && typeof t === "object") return (t[l] ?? t.kr ?? t.ko ?? t.en ?? t.zh ?? "") || "";
-    return (line.kr ?? line.ko ?? line.en ?? line.zh ?? "") || "";
+    // 先严格按当前语言取 translation（与普通 lesson dialogue 一致）
+    const translated = getContentText(line, "translation", { strict: true, lang: l });
+    if (translated) return translated;
+    // 再使用非 strict 模式做多语言 fallback（currentLang → 其他语言），仍通过 languageEngine 统一处理
+    const fallback = getContentText(line, "translation", { strict: false, lang: l });
+    if (fallback) return fallback;
+    return "";
   };
   const rows = [];
   for (const card of list) {

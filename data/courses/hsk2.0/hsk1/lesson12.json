@@ -1,32 +1,32 @@
 {
-  "id": "hsk2.0_hsk1_lesson12",
+  "id": "hsk1_lesson12",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 12,
   "type": "lesson",
   "title": {
-    "zh": "工作",
-    "pinyin": "gōngzuò",
-    "kr": "직업",
-    "en": "Work",
-    "jp": "仕事"
+    "zh": "我喜欢听音乐。",
+    "pinyin": "wǒ xǐhuan tīng yīnyuè",
+    "kr": "저는 음악 듣는 걸 좋아해요.",
+    "en": "I like listening to music.",
+    "jp": "私は音楽を聞くのが好きです。"
   },
   "summary": {
-    "zh": "职业与工作",
-    "kr": "직업과 일",
-    "en": "Jobs and work"
+    "zh": "谈爱好，喜欢听音乐、看电影",
+    "kr": "취미 말하기, 음악 듣기·영화 보기",
+    "en": "Talking about hobbies, liking music and movies"
   },
   "objectives": [
     {
-      "zh": "学会说职业",
-      "kr": "직업을 말할 수 있다",
-      "en": "Can talk about jobs"
+      "zh": "学会说喜欢做什么",
+      "kr": "뭘 좋아하는지 말할 수 있다",
+      "en": "Can say what you like to do"
     },
     {
-      "zh": "学会能、会",
-      "kr": "'能', '会'를 사용할 수 있다",
-      "en": "Can use 能 and 会"
+      "zh": "学会用很、也表达程度与同样",
+      "kr": "'很', '也'로 정도와 동의를 표현할 수 있다",
+      "en": "Can use 很 and 也"
     }
   ],
   "vocab": [
@@ -136,93 +136,44 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "书在哪儿？",
-          "translation": {
-            "en": "Where is the book?",
-            "kr": "Where is the book?",
-            "jp": "Where is the book?"
-          },
-          "pinyin": "shū zài nǎ ér ？"
-        },
-        {
-          "speaker": "B",
-          "text": "书在这里。",
-          "translation": {
-            "en": "The book is here.",
-            "kr": "The book is here.",
-            "jp": "The book is here."
-          },
-          "pinyin": "shū zài zhè lǐ 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你在学校吗？",
-          "translation": {
-            "en": "Are you at school?",
-            "kr": "Are you at school?",
-            "jp": "Are you at school?"
-          },
-          "pinyin": "nǐ zài xué xiào ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是，我在学校。他在那里。",
-          "translation": {
-            "en": "Yes, I'm at school. He's over there.",
-            "kr": "Yes, I'm at school. He's over there.",
-            "jp": "Yes, I'm at school. He's over there."
-          },
-          "pinyin": "shì ， wǒ zài xué xiào 。 tā zài nà lǐ 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "你喜欢听音乐吗？" },
+    { "speaker": "B", "text": "喜欢，我很喜欢听音乐。" },
+    { "speaker": "A", "text": "你喜欢听什么音乐？" },
+    { "speaker": "B", "text": "我喜欢听中国音乐。" },
+    { "speaker": "A", "text": "你喜欢看电影吗？" },
+    { "speaker": "B", "text": "喜欢，我也喜欢看电影。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "做 + 工作",
-      "explanation_zh": "「做」表示从事。",
-      "explanation_kr": "'做'는 ~을 한다는 뜻입니다.",
-      "explanation_en": "做 indicates doing work.",
-      "example": {
-        "zh": "做什么工作",
-        "pinyin": "zuò shénme gōngzuò",
-        "kr": "무슨 일 하다",
-        "en": "what work do you do"
-      },
+      "pattern": "喜欢 + 动词（听/看）",
+      "pinyin": "xǐhuan + dòngcí",
       "explain": {
-        "jp": "「做」は仕事をすることを表します。",
-        "en": "做 indicates doing work.",
-        "kr": "'做'는 ~을 한다는 뜻입니다.",
-        "zh": "「做」表示从事。"
+        "zh": "「喜欢」后接动词或动词短语，表示喜欢做某事。喜欢听音乐、喜欢看电影。",
+        "kr": "「喜欢」 뒤에 동사(구)가 오면 ~하는 걸 좋아하다. 喜欢听音乐.",
+        "en": "喜欢 + verb (phrase) = like to do. 喜欢听音乐, 喜欢看电影.",
+        "jp": "「喜欢」の後に動詞が来ると、〜するのが好き。喜欢听音乐。"
+      },
+      "example": {
+        "zh": "你喜欢听音乐吗？喜欢，我很喜欢听音乐。你喜欢看电影吗？喜欢，我也喜欢看电影。",
+        "pinyin": "Nǐ xǐhuan tīng yīnyuè ma? Xǐhuan, wǒ hěn xǐhuan tīng yīnyuè. Nǐ xǐhuan kàn diànyǐng ma? Xǐhuan, wǒ yě xǐhuan kàn diànyǐng.",
+        "translation": { "kr": "음악 듣는 거 좋아해? 응, 나 음악 듣는 거 너무 좋아해. 영화 보는 거 좋아해? 나도 좋아해.", "jp": "音楽を聞くのが好き？好き。映画を見るのが好き？私も好き。", "en": "Do you like listening to music? Yes, I do. Do you like watching movies? I do too." }
       }
     },
     {
-      "title": "能 / 会",
-      "explanation_zh": "「能」表示能力，「会」表示会做。",
-      "explanation_kr": "'能'은 능력, '会'는 할 줄 알다.",
-      "explanation_en": "能 for ability, 会 for knowing how.",
-      "example": {
-        "zh": "我能去。我会说汉语。",
-        "pinyin": "Wǒ néng qù. Wǒ huì shuō Hànyǔ.",
-        "kr": "저는 갈 수 있어요. 중국어를 할 줄 알아요.",
-        "en": "I can go. I can speak Chinese."
-      },
+      "pattern": "很 / 也",
+      "pinyin": "hěn / yě",
       "explain": {
-        "jp": "「能」は能力、「会」は〜できることを表します。",
-        "en": "能 for ability, 会 for knowing how.",
-        "kr": "'能'은 능력, '会'는 할 줄 알다.",
-        "zh": "「能」表示能力，「会」表示会做。"
+        "zh": "「很」放在形容词或心理动词前表程度；「也」表示“同样”。",
+        "kr": "「很」는 형용사·심리동사 앞에서 정도. 「也」는 ~도.",
+        "en": "很 = very (before adj/verb). 也 = also.",
+        "jp": "「很」は程度。「也」は〜も。"
+      },
+      "example": {
+        "zh": "我很喜欢听音乐。我也喜欢看电影。",
+        "pinyin": "Wǒ hěn xǐhuan tīng yīnyuè. Wǒ yě xǐhuan kàn diànyǐng.",
+        "translation": { "kr": "나는 음악 듣는 거 너무 좋아해. 나도 영화 보는 거 좋아해.", "jp": "音楽をとても好き。映画も好き。", "en": "I really like music. I also like movies." }
       }
     }
   ],

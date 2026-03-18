@@ -21,7 +21,7 @@ export async function ensureHSKDeps() {
         document.head.appendChild(s);
       });
 
-    // ✅ Loader：classic script（无 export）
+    await import("../../core/noCacheEnv.js");
     await loadScriptOnce("/ui/modules/hsk/hskLoader.js");
 
     // ✅ History：你现在用的是 ESM import（保留）

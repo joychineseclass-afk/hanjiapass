@@ -1,557 +1,134 @@
 {
-  "id": "hsk2.0_hsk1_lesson3",
+  "id": "hsk1_lesson3",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 3,
   "type": "lesson",
   "title": {
-    "zh": "国家",
-    "pinyin": "guójiā",
-    "kr": "국가",
-    "en": "Countries",
-    "jp": "国・国籍"
+    "zh": "你是哪国人？",
+    "kr": "어느 나라 사람이에요?",
+    "jp": "どこの国の人ですか？",
+    "en": "Which country are you from?"
   },
   "summary": {
-    "zh": "介绍国籍与身份",
-    "kr": "국적과 신분 소개",
-    "en": "Introducing nationality and identity"
+    "zh": "互相认识、问对方的名字",
+    "kr": "서로 알고 이름 묻기",
+    "en": "Getting to know each other and asking names"
+  },
+  "scene": {
+    "id": "l3_scene",
+    "title": { "zh": "互相认识", "kr": "서로 알기", "en": "Getting to know each other" },
+    "summary": { "zh": "两个人见面后互相问对方叫什么名字。", "kr": "두 사람이 만나 서로 이름을 묻는다.", "en": "Two people ask each other's names after meeting." }
   },
   "objectives": [
-    {
-      "zh": "学会说来自哪里",
-      "kr": "어디서 왔는지 말할 수 있다",
-      "en": "Can say where you're from"
-    },
-    {
-      "zh": "学会介绍身份",
-      "kr": "신분을 소개할 수 있다",
-      "en": "Can introduce your identity"
-    }
+    { "zh": "学会问「你叫什么名字？」", "kr": "「你叫什么名字？」를 물을 수 있다", "en": "Can ask 你叫什么名字?" },
+    { "zh": "学会用「我叫……」回答", "kr": "「我叫…」로 답할 수 있다", "en": "Can answer with 我叫…" }
   ],
   "vocab": [
-    {
-      "hanzi": "北京",
-      "pinyin": "Běijīng",
-      "meaning": {
-        "zh": "北京",
-        "kr": "베이징",
-        "en": "Beijing",
-        "jp": "北京"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "中国",
-      "pinyin": "Zhōngguó",
-      "meaning": {
-        "zh": "中国",
-        "kr": "중국",
-        "en": "China",
-        "jp": "中国"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "老师",
-      "pinyin": "lǎoshī",
-      "meaning": {
-        "zh": "老师",
-        "kr": "선생님",
-        "en": "teacher",
-        "jp": "先生"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "学生",
-      "pinyin": "xuésheng",
-      "meaning": {
-        "zh": "学生",
-        "kr": "학생",
-        "en": "student",
-        "jp": "学生"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "朋友",
-      "pinyin": "péngyou",
-      "meaning": {
-        "zh": "朋友",
-        "kr": "친구",
-        "en": "friend",
-        "jp": "友達"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "同学",
-      "pinyin": "tóngxué",
-      "meaning": {
-        "zh": "同学",
-        "kr": "동창",
-        "en": "classmate",
-        "jp": "クラスメート"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    }
+    { "hanzi": "什么", "pinyin": "shénme", "meaning": { "zh": "什么", "kr": "무엇", "jp": "何", "en": "what" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "名字", "pinyin": "míngzi", "meaning": { "zh": "名字", "kr": "이름", "jp": "名前", "en": "name" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "叫", "pinyin": "jiào", "meaning": { "zh": "叫", "kr": "~라고 부르다", "jp": "〜という", "en": "to be called" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "jp": "あなた", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~는요? (역질문)", "jp": "〜は？", "en": "and you?" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
+  ],
+  "dialogue": [
+    { "speaker": "A", "text": "你是哪国人？" },
+    { "speaker": "B", "text": "我是韩国人。" },
+    { "speaker": "A", "text": "你是中国人吗？" },
+    { "speaker": "B", "text": "不是，我是韩国人。" }
   ],
   "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "你是哪国人？",
-          "translation": {
-            "en": "Which country are you from?",
-            "kr": "Which country are you from?",
-            "jp": "Which country are you from?"
-          },
-          "pinyin": "nǐ shì nǎ guó rén ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我是中国人。我是北京人。",
-          "translation": {
-            "en": "I'm Chinese. I'm from Beijing.",
-            "kr": "I'm Chinese. I'm from Beijing.",
-            "jp": "I'm Chinese. I'm from Beijing."
-          },
-          "pinyin": "wǒ shì zhōng guó rén 。 wǒ shì běi jīng rén 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他是学生吗？",
-          "translation": {
-            "en": "Is he a student?",
-            "kr": "Is he a student?",
-            "jp": "Is he a student?"
-          },
-          "pinyin": "tā shì xué shēng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是，他是我的同学。",
-          "translation": {
-            "en": "Yes, he's my classmate.",
-            "kr": "Yes, he's my classmate.",
-            "jp": "Yes, he's my classmate."
-          },
-          "pinyin": "shì ， tā shì wǒ de tóng xué 。"
-        }
+        { "speaker": "A", "text": "你叫什么名字？", "translation": { "en": "What's your name?", "kr": "이름이 뭐야?", "jp": "お名前は何ですか？" }, "pinyin": "Nǐ jiào shénme míngzi?" },
+        { "speaker": "B", "text": "我叫李明。", "translation": { "en": "I'm Li Ming.", "kr": "나는 이명이야.", "jp": "李明です。" }, "pinyin": "Wǒ jiào Lǐ Míng." },
+        { "speaker": "A", "text": "你呢？", "translation": { "en": "And you?", "kr": "너는?", "jp": "あなたは？" }, "pinyin": "Nǐ ne?" },
+        { "speaker": "B", "text": "我叫王芳。", "translation": { "en": "I'm Wang Fang.", "kr": "나는 왕팡이야.", "jp": "王芳です。" }, "pinyin": "Wǒ jiào Wáng Fāng." }
       ]
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你是哪国人？",
-          "translation": {
-            "en": "Which country are you from?",
-            "kr": "Which country are you from?",
-            "jp": "Which country are you from?"
-          },
-          "pinyin": "nǐ shì nǎ guó rén ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我是中国人。我是北京人。",
-          "translation": {
-            "en": "I'm Chinese. I'm from Beijing.",
-            "kr": "I'm Chinese. I'm from Beijing.",
-            "jp": "I'm Chinese. I'm from Beijing."
-          },
-          "pinyin": "wǒ shì zhōng guó rén 。 wǒ shì běi jīng rén 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他是学生吗？",
-          "translation": {
-            "en": "Is he a student?",
-            "kr": "Is he a student?",
-            "jp": "Is he a student?"
-          },
-          "pinyin": "tā shì xué shēng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "是，他是我的同学。",
-          "translation": {
-            "en": "Yes, he's my classmate.",
-            "kr": "Yes, he's my classmate.",
-            "jp": "Yes, he's my classmate."
-          },
-          "pinyin": "shì ， tā shì wǒ de tóng xué 。"
-        }
-      ]
-    }
-  ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "A 是 B",
-      "explanation_zh": "「是」连接主语和宾语，表示等同。",
-      "explanation_kr": "'是'는 주어와 목적어를 연결합니다.",
-      "explanation_en": "是 connects subject and object.",
-      "explanation_jp": "「是」は主語と目的語をつなぎ、同等であることを表します。",
-      "example": {
-        "zh": "他是老师。",
-        "pinyin": "Tā shì lǎoshī.",
-        "kr": "그는 선생님이에요.",
-        "en": "He is a teacher.",
-        "jp": "彼は先生です。"
-      },
+      "pattern": "是……（肯定）",
+      "pinyin": "shì",
       "explain": {
-        "jp": "「是」は主語と目的語をつなぎ、同等であることを表します。",
-        "en": "是 connects subject and object.",
-        "kr": "'是'는 주어와 목적어를 연결합니다.",
-        "zh": "「是」连接主语和宾语，表示等同。"
+        "zh": "「是」表示肯定判断，结构：A 是 B。回答国籍：我是 + 国家 + 人。",
+        "kr": "「是」는 긍정 판단. 구조: A 是 B. 국적 답: 我是+나라+人.",
+        "en": "是 indicates affirmative. Pattern: A 是 B. Nationality: 我是 + country + 人.",
+        "jp": "「是」は肯定判断。A 是 B。国籍の答え：我是+国+人。"
+      },
+      "example": {
+        "zh": "我是韩国人。你是中国人吗？",
+        "pinyin": "Wǒ shì Hánguó rén. Nǐ shì Zhōngguó rén ma?",
+        "translation": { "kr": "나는 한국인이야. 너 중국인이야?", "jp": "韓国人です。あなたは中国人ですか？", "en": "I'm Korean. Are you Chinese?" }
       }
     },
     {
-      "title": "不 + 是",
-      "explanation_zh": "否定「是」用「不」。",
-      "explanation_kr": "'是'의 부정은 '不'를 사용합니다.",
-      "explanation_en": "Negate 是 with 不.",
-      "explanation_jp": "「是」の否定には「不」を使います。",
-      "example": {
-        "zh": "他不是老师。",
-        "pinyin": "Tā bú shì lǎoshī.",
-        "kr": "그는 선생님이 아닙니다.",
-        "en": "He is not a teacher.",
-        "jp": "彼は先生ではありません。"
-      },
+      "pattern": "吗（一般疑问句）",
+      "pinyin": "ma",
       "explain": {
-        "jp": "「是」の否定には「不」を使います。",
-        "en": "Negate 是 with 不.",
-        "kr": "'是'의 부정은 '不'를 사용합니다.",
-        "zh": "否定「是」用「不」。"
+        "zh": "「吗」放在陈述句末尾，变成一般疑问句。回答用「是」或「不是」。",
+        "kr": "「吗」를 문장 끝에 붙이면 의문문이 됩니다. 답은 「是」或「不是」.",
+        "en": "吗 at the end turns a statement into a yes/no question. Answer with 是 or 不是.",
+        "jp": "「吗」を文末に付けると疑問文になります。答は「是」或「不是」。"
+      },
+      "example": {
+        "zh": "你是中国人吗？不是，我是韩国人。",
+        "pinyin": "Nǐ shì Zhōngguó rén ma? Bú shì, wǒ shì Hánguó rén.",
+        "translation": { "kr": "너 중국인이야? 아니, 나는 한국인이야.", "jp": "中国人ですか？いいえ、韓国人です。", "en": "Are you Chinese? No, I'm Korean." }
+      }
+    },
+    {
+      "pattern": "不是",
+      "pinyin": "bú shì",
+      "explain": {
+        "zh": "「不是」是「是」的否定，表示“不是……”。",
+        "kr": "「不是」는 「是」의 부정. \"~가 아니다\".",
+        "en": "不是 is the negative of 是. It means \"is not\".",
+        "jp": "「不是」は「是」の否定。「〜ではない」。"
+      },
+      "example": {
+        "zh": "不是，我是韩国人。",
+        "pinyin": "Bú shì, wǒ shì Hánguó rén.",
+        "translation": { "kr": "아니, 나는 한국인이야.", "jp": "いいえ、韓国人です。", "en": "No, I'm Korean." }
       }
     }
   ],
   "extension": [
     {
-      "zh": "我来自北京。",
-      "pinyin": "Wǒ láizì Běijīng.",
-      "kr": "저는 베이징에서 왔어요.",
-      "en": "I'm from Beijing.",
-      "jp": "私は北京出身です。",
-      "phrase": "我来自北京。",
-      "explain": {
-        "kr": "저는 베이징에서 왔어요.",
-        "en": "I'm from Beijing.",
-        "jp": "私は北京出身です。"
-      }
-    },
-    {
-      "zh": "我住在上海。",
-      "pinyin": "Wǒ zhù zài Shànghǎi.",
-      "kr": "저는 상하이에 살아요.",
-      "en": "I live in Shanghai.",
-      "jp": "私は上海に住んでいます。",
-      "phrase": "我住在上海。",
-      "explain": {
-        "kr": "저는 상하이에 살아요.",
-        "en": "I live in Shanghai.",
-        "jp": "私は上海に住んでいます。"
-      }
-    },
-    {
-      "zh": "我在北京工作。",
-      "pinyin": "Wǒ zài Běijīng gōngzuò.",
-      "kr": "저는 베이징에서 일해요.",
-      "en": "I work in Beijing.",
-      "jp": "私は北京で働いています。",
-      "phrase": "我在北京工作。",
-      "explain": {
-        "kr": "저는 베이징에서 일해요.",
-        "en": "I work in Beijing.",
-        "jp": "私は北京で働いています。"
-      }
-    },
-    {
-      "zh": "他住在上海。",
-      "pinyin": "Tā zhù zài Shànghǎi.",
-      "kr": "그는 상하이에 살아요.",
-      "en": "He lives in Shanghai.",
-      "jp": "彼は上海に住んでいます。",
-      "phrase": "他住在上海。",
-      "explain": {
-        "kr": "그는 상하이에 살아요.",
-        "en": "He lives in Shanghai.",
-        "jp": "彼は上海に住んでいます。"
-      }
-    },
-    {
-      "zh": "你住在哪儿？",
-      "pinyin": "Nǐ zhù zài nǎr?",
-      "kr": "어디에 살아요?",
-      "en": "Where do you live?",
-      "jp": "どこに住んでいますか？",
-      "phrase": "你住在哪儿？",
-      "explain": {
-        "kr": "어디에 살아요?",
-        "en": "Where do you live?",
-        "jp": "どこに住んでいますか？"
-      }
+      "zh": "你叫什么名字？",
+      "pinyin": "Nǐ jiào shénme míngzi?",
+      "kr": "이름이 뭐야?",
+      "en": "What's your name?",
+      "phrase": "你叫什么名字？",
+      "explain": { "kr": "처음 만날 때 이름을 물을 때 씁니다.", "en": "Use when asking someone's name when you first meet.", "jp": "初めて会ったときに名前を聞く言い方。" }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「北京」是哪里？",
-        "kr": "北京은 어디?",
-        "en": "Where is 北京?"
-      },
-      "options": [
-        "中国",
-        "北京",
-        "美国"
-      ],
-      "answer": "北京"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「老师」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning of 老师?"
-      },
-      "options": [
-        "学生",
-        "老师",
-        "朋友"
-      ],
-      "answer": "老师"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "我们是___。",
-        "kr": "빈칸 채우기",
-        "en": "Fill in"
-      },
-      "options": [
-        "老师",
-        "同学",
-        "医生"
-      ],
-      "answer": "同学"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "A：他是学生吗？ B：___",
-        "kr": "대화 이해",
-        "en": "Dialogue"
-      },
-      "options": [
-        "是",
-        "不是",
-        "谢谢"
-      ],
-      "answer": "不是"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「朋友」？",
-        "kr": "어느 것이 朋友?",
-        "en": "Which is 朋友?"
-      },
-      "options": [
-        "朋友",
-        "老师",
-        "学生"
-      ],
-      "answer": "朋友"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "你叫___名字？", "kr": "이름이 ___?", "en": "What's your ___?", "jp": "お名前は___？" }, "options": ["什么", "我", "呢", "叫"], "answer": "什么", "explanation": { "cn": "问「什么」表示问名字。", "kr": "「什么」로 이름을 묻는다.", "en": "什么 asks what (name).", "jp": "「什么」で名前を聞く。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「名字」的意思是？", "kr": "「名字」의 뜻은?", "en": "What does 名字 mean?", "jp": "「名字」の意味は？" }, "options": ["学生", "老师", "名字", "什么"], "answer": "名字", "explanation": { "cn": "「名字」即姓名。", "kr": "「名字」는 이름.", "en": "名字 means name.", "jp": "「名字」は名前。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___李明。", "kr": "나___ 이명이야.", "en": "I ___ Li Ming.", "jp": "私___李明です。" }, "options": ["叫", "什么", "呢", "名字"], "answer": "叫", "explanation": { "cn": "介绍名字用「我叫」。", "kr": "이름 소개는 「我叫」.", "en": "Use 叫 for name.", "jp": "名前紹介は「我叫」。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「你叫什么名字？」的回答是？", "kr": "「你叫什么名字？」에 대한 답은?", "en": "Response to 你叫什么名字?", "jp": "「你叫什么名字？」への返答は？" }, "options": ["你好", "我叫李明", "谢谢", "你呢"], "answer": "我叫李明", "explanation": { "cn": "用「我叫+名字」回答。", "kr": "「我叫+이름」으로 답한다.", "en": "Answer with 我叫 + name.", "jp": "「我叫+名前」で答える。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "追问对方名字时可以说？", "kr": "상대에게 이름을 물을 때?", "en": "To ask the other's name you say?", "jp": "相手の名前を聞くときは？" }, "options": ["你叫什么名字", "我叫李明", "你好", "谢谢"], "answer": "你叫什么名字", "explanation": { "cn": "「你叫什么名字？」问对方名字。", "kr": "「你叫什么名字？」로 이름을 묻는다.", "en": "你叫什么名字? asks their name.", "jp": "「你叫什么名字？」で名前を聞く。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "我是中国人",
-      "他是老师",
-      "我们是同学",
-      "北京"
-    ],
-    "chatPrompt": "AI问：你是哪国人？学生回答。"
-  },
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "你叫什么名字？", "hint": { "cn": "请解释这句话的意思和用法。", "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.", "en": "Explain meaning and usage.", "jp": "意味と使い方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "ask_name", "prompt": { "cn": "请和同学互相问「你叫什么名字？」并回答。", "kr": "친구와 「你叫什么名字？」를 묻고 답하세요.", "en": "Ask each other 你叫什么名字? and answer.", "jp": "「你叫什么名字？」と答えを練習しましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你叫什么名字？", "我叫李明。", "你呢？", "我叫王芳。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+  ],
+  "aiPractice": { "speaking": ["你叫什么名字", "我叫李明", "你呢", "我叫王芳"], "chatPrompt": "AI问：你叫什么名字？学生用「我叫……」回答，再问「你呢？」。" },
   "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
-  ],
-  "generatedDialogues": [
-    {
-      "title": {
-        "zh": "会话1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你是哪国人？",
-          "pinyin": "Nǐ shì nǎ guó rén?",
-          "translation": {
-            "kr": "어느 나라 사람이에요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "我是中国人。",
-          "pinyin": "Wǒ shì Zhōngguó rén.",
-          "translation": {
-            "kr": "저는 중국인이에요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "A",
-          "text": "你住哪？",
-          "pinyin": "Nǐ zhù nǎ?",
-          "translation": {
-            "kr": "어디에 살아요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "我住北京。",
-          "pinyin": "Wǒ zhù Běijīng.",
-          "translation": {
-            "kr": "저는 베이징에 살아요.",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "A",
-          "text": "小明呢？",
-          "pinyin": "Xiǎomíng ne?",
-          "translation": {
-            "kr": "샤오밍은요?",
-            "en": ""
-          }
-        },
-        {
-          "speaker": "B",
-          "text": "我们都住北京。",
-          "pinyin": "Wǒmen dōu zhù Běijīng.",
-          "translation": {
-            "kr": "저희 다 베이징에 살아요.",
-            "en": ""
-          }
-        }
-      ]
-    }
-  ],
-  "generatedExtensions": [
-    {
-      "zh": "北京、中国都好。",
-      "pinyin": "Běijīng, Zhōngguó dōu hǎo.",
-      "kr": "베이징, 중국 다 좋아요.",
-      "en": "",
-      "phrase": "北京、中国都好。",
-      "explain": {
-        "kr": "베이징, 중국 다 좋아요.",
-        "en": ""
-      }
-    },
-    {
-      "zh": "你住哪？我住北京。",
-      "pinyin": "Nǐ zhù nǎ? Wǒ zhù Běijīng.",
-      "kr": "어디에 살아요? 저는 베이징에 살아요.",
-      "en": "",
-      "phrase": "你住哪？我住北京。",
-      "explain": {
-        "kr": "어디에 살아요? 저는 베이징에 살아요.",
-        "en": ""
-      }
-    }
-  ],
-  "dialogueMeta": {
-    "generatedAt": "2026-03-10T14:43:40.439Z",
-    "coverage": 1,
-    "communicativeGoal": "询问国籍与居住地",
-    "dialogueTasks": [
-      "询问国籍",
-      "询问住处"
-    ]
-  }
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+  ]
 }

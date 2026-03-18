@@ -1,50 +1,35 @@
 {
-  "id": "hsk2.0_hsk1_lesson16",
+  "id": "hsk1_lesson16",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 16,
   "type": "lesson",
   "title": {
-    "zh": "在哪儿",
-    "pinyin": "zài nǎr",
-    "kr": "위치",
-    "en": "Location",
-    "jp": "位置・方向"
+    "zh": "你去哪儿？",
+    "pinyin": "nǐ qù nǎr",
+    "kr": "어디 가요?",
+    "en": "Where are you going?",
+    "jp": "どこへ行きますか？"
   },
   "summary": {
-    "zh": "来、去、回与位置",
-    "kr": "오다, 가다, 돌아가다와 위치",
-    "en": "Come, go, return and location"
+    "zh": "问去哪里、什么时候回家",
+    "kr": "어디 가는지, 언제 집에 가는지 묻기",
+    "en": "Asking where to go and when to go home"
   },
   "objectives": [
     {
-      "zh": "学会说来去",
-      "kr": "오다, 가다를 말할 수 있다",
-      "en": "Can say come and go"
+      "zh": "学会用「你去哪儿？」问去向",
+      "kr": "「你去哪儿？」로 어디 가는지 물을 수 있다",
+      "en": "Can ask where someone is going with 你去哪儿？"
     },
     {
-      "zh": "学会有、椅子、桌子",
-      "kr": "'有', '椅子', '桌子'를 사용할 수 있다",
-      "en": "Can use 有, 椅子, 桌子"
+      "zh": "学会用「什么时候回家」谈回家的时间",
+      "kr": "「什么时候回家」로 언제 집에 가는지 말할 수 있다",
+      "en": "Can talk about when to go home using 什么时候回家"
     }
   ],
   "vocab": [
-    {
-      "hanzi": "来",
-      "pinyin": "lái",
-      "meaning": {
-        "zh": "来",
-        "kr": "오다",
-        "en": "to come",
-        "jp": "来る"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
     {
       "hanzi": "去",
       "pinyin": "qù",
@@ -76,43 +61,13 @@
       }
     },
     {
-      "hanzi": "坐",
-      "pinyin": "zuò",
+      "hanzi": "家",
+      "pinyin": "jiā",
       "meaning": {
-        "zh": "坐",
-        "kr": "앉다",
-        "en": "to sit",
-        "jp": "座る"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
-      "hanzi": "有",
-      "pinyin": "yǒu",
-      "meaning": {
-        "zh": "有",
-        "kr": "있다",
-        "en": "to have",
-        "jp": "ある"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
-      "hanzi": "椅子",
-      "pinyin": "yǐzi",
-      "meaning": {
-        "zh": "椅子",
-        "kr": "의자",
-        "en": "chair",
-        "jp": "椅子"
+        "zh": "家",
+        "kr": "집",
+        "en": "home",
+        "jp": "家"
       },
       "pos": {
         "kr": "명사",
@@ -121,108 +76,104 @@
       }
     },
     {
-      "hanzi": "桌子",
-      "pinyin": "zhuōzi",
+      "hanzi": "回家",
+      "pinyin": "huí jiā",
       "meaning": {
-        "zh": "桌子",
-        "kr": "탁자",
-        "en": "table",
-        "jp": "机"
+        "zh": "回家",
+        "kr": "집에 돌아가다",
+        "en": "to go home",
+        "jp": "家に帰る"
+      },
+      "pos": {
+        "kr": "동사구",
+        "en": "verb phrase",
+        "jp": "動詞句"
+      }
+    },
+    {
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
+      "meaning": {
+        "zh": "现在",
+        "kr": "지금",
+        "en": "now",
+        "jp": "今"
       },
       "pos": {
         "kr": "명사",
         "en": "noun",
         "jp": "名詞"
       }
-    }
-  ],
-  "dialogueCards": [
+    },
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
+      "meaning": {
+        "zh": "下午",
+        "kr": "오후",
+        "en": "afternoon",
+        "jp": "午後"
       },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你喜欢运动吗？",
-          "translation": {
-            "en": "Do you like sports?",
-            "kr": "Do you like sports?",
-            "jp": "Do you like sports?"
-          },
-          "pinyin": "nǐ xǐ huan yùn dòng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢运动。",
-          "translation": {
-            "en": "I like sports.",
-            "kr": "I like sports.",
-            "jp": "I like sports."
-          },
-          "pinyin": "wǒ xǐ huan yùn dòng 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你喜欢什么运动？",
-          "translation": {
-            "en": "What sport do you like?",
-            "kr": "What sport do you like?",
-            "jp": "What sport do you like?"
-          },
-          "pinyin": "nǐ xǐ huan shén me yùn dòng ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢跑步。",
-          "translation": {
-            "en": "I like running.",
-            "kr": "I like running.",
-            "jp": "I like running."
-          },
-          "pinyin": "wǒ xǐ huan pǎo bù 。"
-        }
-      ]
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "什么时候",
+      "pinyin": "shénme shíhou",
+      "meaning": {
+        "zh": "什么时候",
+        "kr": "언제",
+        "en": "when",
+        "jp": "いつ"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
     }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你去哪儿？" },
+    { "speaker": "B", "text": "我去学校。" },
+    { "speaker": "A", "text": "你现在去吗？" },
+    { "speaker": "B", "text": "对，我现在去。" },
+    { "speaker": "A", "text": "你什么时候回家？" },
+    { "speaker": "B", "text": "我下午回家。" }
+  ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "来 / 去 / 回",
-      "explanation_zh": "「来」向说话人，「去」离开，「回」返回。",
-      "explanation_kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.",
-      "explanation_en": "来 toward speaker, 去 away, 回 return.",
-      "example": {
-        "zh": "来学校，回家",
-        "pinyin": "lái xuéxiào, huí jiā",
-        "kr": "학교 오다, 집 돌아가다",
-        "en": "come to school, go home"
-      },
+      "pattern": "去哪儿 / 去 + 地点",
+      "pinyin": "qù nǎr / qù + dìdiǎn",
       "explain": {
-        "jp": "「来」は話者へ、「去」は離れる、「回」は帰る。",
-        "en": "来 toward speaker, 去 away, 回 return.",
-        "kr": "'来'는 말하는 사람 쪽으로, '去'는 떠남, '回'는 돌아감.",
-        "zh": "「来」向说话人，「去」离开，「回」返回。"
+        "zh": "问去向用「你去哪儿？」。回答：我去+地点。",
+        "kr": "어디 가는지 물을 때 「你去哪儿?」. 답: 我去+장소.",
+        "en": "Ask where (someone) is going: 你去哪儿? Answer: 我去 + place.",
+        "jp": "どこへ行くか「你去哪儿？」。答は「我去+場所」。"
+      },
+      "example": {
+        "zh": "你去哪儿？我去学校。你现在去吗？对，我现在去。",
+        "pinyin": "Nǐ qù nǎr? Wǒ qù xuéxiào. Nǐ xiànzài qù ma? Duì, wǒ xiànzài qù.",
+        "translation": { "kr": "어디 가? 학교 가. 지금 가? 응, 지금 가.", "jp": "どこへ行く？学校へ。今行く？うん、今行く。", "en": "Where are you going? To school. Now? Yes, now." }
       }
     },
     {
-      "title": "有",
-      "explanation_zh": "「有」表示拥有。",
-      "explanation_kr": "'有'는 소유를 나타냅니다.",
-      "explanation_en": "有 indicates possession.",
-      "example": {
-        "zh": "我有书。",
-        "pinyin": "Wǒ yǒu shū.",
-        "kr": "저는 책이 있어요.",
-        "en": "I have a book."
-      },
+      "pattern": "什么时候 + 动词",
+      "pinyin": "shénme shíhou + dòngcí",
       "explain": {
-        "jp": "「有」は所有を表します。",
-        "en": "有 indicates possession.",
-        "kr": "'有'는 소유를 나타냅니다.",
-        "zh": "「有」表示拥有。"
+        "zh": "「什么时候」问时间。什么时候回家？回答：我+时间+回家。",
+        "kr": "「什么时候」는 \"언제\". 什么时候回家？我下午回家.",
+        "en": "什么时候 = when. 什么时候回家？= When do you go home?",
+        "jp": "「什么时候」はいつ。什么时候回家？我下午回家。"
+      },
+      "example": {
+        "zh": "你什么时候回家？我下午回家。",
+        "pinyin": "Nǐ shénme shíhou huí jiā? Wǒ xiàwǔ huí jiā.",
+        "translation": { "kr": "언제 집에 가? 나는 오후에 가.", "jp": "いつ帰る？午後に帰る。", "en": "When do you go home? I go home in the afternoon." }
       }
     }
   ],
@@ -382,12 +333,12 @@
   "review": {},
   "aiPractice": {
     "speaking": [
-      "我来学校",
-      "回家",
-      "坐椅子",
-      "有桌子"
+      "我去学校",
+      "我现在回家",
+      "我下午回家",
+      "你什么时候回家"
     ],
-    "chatPrompt": "AI问：你去哪儿？学生回答。"
+    "chatPrompt": "AI问：你去哪儿？学生回答去哪里、什么时候回家。"
   },
   "steps": [
     {

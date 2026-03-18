@@ -1,16 +1,16 @@
 {
-  "id": "hsk2.0_hsk1_lesson19",
+  "id": "hsk1_lesson19",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 19,
   "type": "lesson",
   "title": {
-    "zh": "天气",
-    "pinyin": "tiānqì",
-    "kr": "날씨",
-    "en": "Weather",
-    "jp": "天気"
+    "zh": "今天天气怎么样？",
+    "pinyin": "jīntiān tiānqì zěnmeyàng",
+    "kr": "오늘 날씨 어때요?",
+    "en": "How's the weather today?",
+    "jp": "今日の天気はどうですか？"
   },
   "summary": {
     "zh": "天气、热、冷、下雨",
@@ -19,14 +19,14 @@
   },
   "objectives": [
     {
-      "zh": "学会说天气",
-      "kr": "날씨를 말할 수 있다",
-      "en": "Can talk about weather"
+      "zh": "学会用「今天天气怎么样？」问天气",
+      "kr": "「今天天气怎么样？」으로 날씨를 물을 수 있다",
+      "en": "Can ask about weather with 今天天气怎么样？"
     },
     {
-      "zh": "学会太、想、说话、睡觉",
-      "kr": "'太', '想', '说话', '睡觉'를 사용할 수 있다",
-      "en": "Can use 太, 想, 说话, 睡觉"
+      "zh": "学会用「冷吗？不冷，很暖和。」回答天气感觉",
+      "kr": "「冷吗？不冷，很暖和。」로 춥고 따뜻함을 말할 수 있다",
+      "en": "Can answer about feeling cold or warm with 冷吗？不冷，很暖和。"
     }
   ],
   "vocab": [
@@ -151,93 +151,44 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你明天做什么？",
-          "translation": {
-            "en": "What are you doing tomorrow?",
-            "kr": "What are you doing tomorrow?",
-            "jp": "What are you doing tomorrow?"
-          },
-          "pinyin": "nǐ míng tiān zuò shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我明天去中国。",
-          "translation": {
-            "en": "I'm going to China tomorrow.",
-            "kr": "I'm going to China tomorrow.",
-            "jp": "I'm going to China tomorrow."
-          },
-          "pinyin": "wǒ míng tiān qù zhōng guó 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你想去北京吗？",
-          "translation": {
-            "en": "Do you want to go to Beijing?",
-            "kr": "Do you want to go to Beijing?",
-            "jp": "Do you want to go to Beijing?"
-          },
-          "pinyin": "nǐ xiǎng qù běi jīng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "想。我会说一点汉语。",
-          "translation": {
-            "en": "Yes. I can speak a little Chinese.",
-            "kr": "Yes. I can speak a little Chinese.",
-            "jp": "Yes. I can speak a little Chinese."
-          },
-          "pinyin": "xiǎng 。 wǒ huì shuō yì diǎn hàn yǔ 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "今天天气怎么样？" },
+    { "speaker": "B", "text": "今天天气很好。" },
+    { "speaker": "A", "text": "冷吗？" },
+    { "speaker": "B", "text": "不冷，很暖和。" },
+    { "speaker": "A", "text": "明天天气怎么样？" },
+    { "speaker": "B", "text": "明天下雨。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "太 + 形容词",
-      "explanation_zh": "「太」表示程度过高。",
-      "explanation_kr": "'太'는 정도가 너무 높음을 나타냅니다.",
-      "explanation_en": "太 indicates excessive degree.",
-      "example": {
-        "zh": "太热",
-        "pinyin": "tài rè",
-        "kr": "너무 덥다",
-        "en": "too hot"
-      },
+      "pattern": "怎么样",
+      "pinyin": "zěnmeyàng",
       "explain": {
-        "jp": "「太」は程度が高すぎることを表します。",
-        "en": "太 indicates excessive degree.",
-        "kr": "'太'는 정도가 너무 높음을 나타냅니다.",
-        "zh": "「太」表示程度过高。"
+        "zh": "「怎么样」问情况、程度“怎么样、如何”。今天天气怎么样？回答：今天天气很好。/ 很暖和。",
+        "kr": "「怎么样」는 \"어때?\" 상황·정도를 묻습니다. 今天天气怎么样？今天天气很好.",
+        "en": "怎么样 = how about? How is it? 今天天气怎么样？今天天气很好.",
+        "jp": "「怎么样」はどう？状況を聞く。今天天气怎么样？今天天气很好。"
+      },
+      "example": {
+        "zh": "今天天气怎么样？今天天气很好。冷吗？不冷，很暖和。明天天气怎么样？明天下雨。",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng? Jīntiān tiānqì hěn hǎo. Lěng ma? Bù lěng, hěn nuǎnhuo. Míngtiān tiānqì zěnmeyàng? Míngtiān xià yǔ.",
+        "translation": { "kr": "오늘 날씨 어때? 좋아. 추워? 안 추워, 따뜻해. 내일은? 비 와.", "jp": "今日の天気は？いい。寒い？寒くない、暖かい。明日は？雨。", "en": "How's the weather? Nice. Cold? No, warm. Tomorrow? Rain." }
       }
     },
     {
-      "title": "想 + 动词",
-      "explanation_zh": "「想」后接动词表示想做什么。",
-      "explanation_kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
-      "explanation_en": "想 + verb means want to do.",
-      "example": {
-        "zh": "想睡觉",
-        "pinyin": "xiǎng shuìjiào",
-        "kr": "자고 싶다",
-        "en": "want to sleep"
-      },
+      "pattern": "很 + 形容词 / 不 + 形容词",
+      "pinyin": "hěn + xíngróngcí / bù + xíngróngcí",
       "explain": {
-        "jp": "「想」の後に動詞が来ると、〜したいという意味になります。",
-        "en": "想 + verb means want to do.",
-        "kr": "'想' 뒤에 동사가 오면 ~하고 싶다.",
-        "zh": "「想」后接动词表示想做什么。"
+        "zh": "「很」表程度；否定用「不」。很好、很暖和；不冷。",
+        "kr": "「很」는 정도. 부정은 「不」. 很好, 不冷.",
+        "en": "很 + adj = very. 不 + adj = not. 很好, 不冷.",
+        "jp": "「很」は程度。「不」で否定。很好、不冷。"
+      },
+      "example": {
+        "zh": "今天天气很好。不冷，很暖和。",
+        "pinyin": "Jīntiān tiānqì hěn hǎo. Bù lěng, hěn nuǎnhuo.",
+        "translation": { "kr": "오늘 날씨 좋아. 안 추워, 따뜻해.", "jp": "今日は天気がいい。寒くない、暖かい。", "en": "The weather is nice. Not cold, warm." }
       }
     }
   ],
@@ -447,43 +398,43 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "你明天做什么？",
+          "text": "今天天气怎么样？",
           "translation": {
-            "en": "What are you doing tomorrow?",
-            "kr": "What are you doing tomorrow?",
-            "jp": "What are you doing tomorrow?"
+            "en": "How's the weather today?",
+            "kr": "오늘 날씨 어때요?",
+            "jp": "今日の天気はどうですか？"
           },
-          "pinyin": "nǐ míng tiān zuò shén me ？"
+          "pinyin": "jīn tiān tiān qì zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "我明天去中国。",
+          "text": "今天天气很好，不冷，很暖和。",
           "translation": {
-            "en": "I'm going to China tomorrow.",
-            "kr": "I'm going to China tomorrow.",
-            "jp": "I'm going to China tomorrow."
+            "en": "The weather is very good today. It's not cold, it's warm.",
+            "kr": "오늘 날씨가 아주 좋아요. 춥지 않고 따뜻해요.",
+            "jp": "今日は天気がとてもいいです。寒くなくて暖かいです。"
           },
-          "pinyin": "wǒ míng tiān qù zhōng guó 。"
+          "pinyin": "jīn tiān tiān qì hěn hǎo ， bù lěng ， hěn nuǎn huo 。"
         },
         {
           "speaker": "A",
-          "text": "你想去北京吗？",
+          "text": "明天天气怎么样？",
           "translation": {
-            "en": "Do you want to go to Beijing?",
-            "kr": "Do you want to go to Beijing?",
-            "jp": "Do you want to go to Beijing?"
+            "en": "How's the weather tomorrow?",
+            "kr": "내일 날씨 어때요?",
+            "jp": "明日の天気はどうですか？"
           },
-          "pinyin": "nǐ xiǎng qù běi jīng ma ？"
+          "pinyin": "míng tiān tiān qì zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "想。我会说一点汉语。",
+          "text": "明天下雨，可能很冷。",
           "translation": {
-            "en": "Yes. I can speak a little Chinese.",
-            "kr": "Yes. I can speak a little Chinese.",
-            "jp": "Yes. I can speak a little Chinese."
+            "en": "It will rain tomorrow, it may be very cold.",
+            "kr": "내일 비가 오고, 아주 추울 수 있어요.",
+            "jp": "明日は雨で、とても寒いかもしれません。"
           },
-          "pinyin": "xiǎng 。 wǒ huì shuō yì diǎn hàn yǔ 。"
+          "pinyin": "míng tiān xià yǔ ， kě néng hěn lěng 。"
         }
       ]
     }

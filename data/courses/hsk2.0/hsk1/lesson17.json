@@ -1,88 +1,43 @@
 {
-  "id": "hsk2.0_hsk1_lesson17",
+  "id": "hsk1_lesson17",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 17,
   "type": "lesson",
   "title": {
-    "zh": "交通",
-    "pinyin": "jiāotōng",
-    "kr": "교통",
-    "en": "Transport",
-    "jp": "交通"
+    "zh": "我坐地铁去学校。",
+    "pinyin": "wǒ zuò dìtiě qù xuéxiào",
+    "kr": "저는 지하철 타고 학교 가요.",
+    "en": "I take the subway to school.",
+    "jp": "私は地下鉄で学校に行きます。"
   },
   "summary": {
-    "zh": "出租车、飞机、火车站",
-    "kr": "택시, 비행기, 기차역",
-    "en": "Taxi, plane, train station"
+    "zh": "说去学校的交通方式",
+    "kr": "학교에 가는 교통수단 말하기",
+    "en": "Talking about how to get to school"
   },
   "objectives": [
     {
-      "zh": "学会说交通方式",
-      "kr": "교통 수단을 말할 수 있다",
-      "en": "Can talk about transport"
+      "zh": "学会用「怎么去」问交通方式",
+      "kr": "「怎么去」로 교통수단을 물을 수 있다",
+      "en": "Can ask about transport with 怎么去"
     },
     {
-      "zh": "学会开、看见、都",
-      "kr": "'开', '看见', '都'를 사용할 수 있다",
-      "en": "Can use 开, 看见, 都"
+      "zh": "学会用「坐+交通工具」和「每天都」说出行习惯",
+      "kr": "「坐+교통수단」「每天都」로 이동 습관을 말할 수 있다",
+      "en": "Can use 坐 + transport and 每天都 to describe commuting habits"
     }
   ],
   "vocab": [
     {
-      "hanzi": "出租车",
-      "pinyin": "chūzūchē",
+      "hanzi": "坐",
+      "pinyin": "zuò",
       "meaning": {
-        "zh": "出租车",
-        "kr": "택시",
-        "en": "taxi",
-        "jp": "タクシー"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "飞机",
-      "pinyin": "fēijī",
-      "meaning": {
-        "zh": "飞机",
-        "kr": "비행기",
-        "en": "plane",
-        "jp": "飛行機"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "火车站",
-      "pinyin": "huǒchēzhàn",
-      "meaning": {
-        "zh": "火车站",
-        "kr": "기차역",
-        "en": "train station",
-        "jp": "駅"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "开",
-      "pinyin": "kāi",
-      "meaning": {
-        "zh": "开",
-        "kr": "운전하다",
-        "en": "to drive",
-        "jp": "開ける；運転する"
+        "zh": "坐",
+        "kr": "타다",
+        "en": "to take (a vehicle)",
+        "jp": "乗る"
       },
       "pos": {
         "kr": "동사",
@@ -91,13 +46,43 @@
       }
     },
     {
-      "hanzi": "看见",
-      "pinyin": "kànjiàn",
+      "hanzi": "地铁",
+      "pinyin": "dìtiě",
       "meaning": {
-        "zh": "看见",
-        "kr": "보다",
-        "en": "to see",
-        "jp": "見える"
+        "zh": "地铁",
+        "kr": "지하철",
+        "en": "subway",
+        "jp": "地下鉄"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "公交车",
+      "pinyin": "gōngjiāo chē",
+      "meaning": {
+        "zh": "公交车",
+        "kr": "버스",
+        "en": "bus",
+        "jp": "バス"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
+      "hanzi": "走路",
+      "pinyin": "zǒu lù",
+      "meaning": {
+        "zh": "走路",
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "歩いて行く"
       },
       "pos": {
         "kr": "동사",
@@ -119,95 +104,76 @@
         "en": "adverb",
         "jp": "副詞"
       }
-    }
-  ],
-  "dialogueCards": [
+    },
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
+      "hanzi": "远",
+      "pinyin": "yuǎn",
+      "meaning": {
+        "zh": "远",
+        "kr": "멀다",
+        "en": "far",
+        "jp": "遠い"
       },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你周末做什么？",
-          "translation": {
-            "en": "What do you do on the weekend?",
-            "kr": "What do you do on the weekend?",
-            "jp": "What do you do on the weekend?"
-          },
-          "pinyin": "nǐ zhōu mò zuò shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我看电视。我也听音乐。",
-          "translation": {
-            "en": "I watch TV. I listen to music too.",
-            "kr": "I watch TV. I listen to music too.",
-            "jp": "I watch TV. I listen to music too."
-          },
-          "pinyin": "wǒ kàn diàn shì 。 wǒ yě tīng yīn yuè 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你看电影吗？",
-          "translation": {
-            "en": "Do you watch movies?",
-            "kr": "Do you watch movies?",
-            "jp": "Do you watch movies?"
-          },
-          "pinyin": "nǐ kàn diàn yǐng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "看。我喜欢看电影。",
-          "translation": {
-            "en": "Yes. I like watching movies.",
-            "kr": "Yes. I like watching movies.",
-            "jp": "Yes. I like watching movies."
-          },
-          "pinyin": "kàn 。 wǒ xǐ huan kàn diàn yǐng 。"
-        }
-      ]
+      "pos": {
+        "kr": "형容사",
+        "en": "adjective",
+        "jp": "形容詞"
+      }
     }
   ],
+  "dialogue": [
+    { "speaker": "A", "text": "你怎么去学校？" },
+    { "speaker": "B", "text": "我坐地铁去学校。" },
+    { "speaker": "A", "text": "你住得远吗？" },
+    { "speaker": "B", "text": "不远。" },
+    { "speaker": "A", "text": "你每天都坐地铁吗？" },
+    { "speaker": "B", "text": "对，我每天都坐地铁。" }
+  ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "坐 + 交通工具",
-      "explanation_zh": "「坐」后接交通工具。",
-      "explanation_kr": "'坐' 뒤에 교통수단이 옵니다.",
-      "explanation_en": "坐 takes transport.",
-      "example": {
-        "zh": "坐出租车",
-        "pinyin": "zuò chūzūchē",
-        "kr": "택시 타다",
-        "en": "take a taxi"
-      },
+      "pattern": "怎么 + 动词",
+      "pinyin": "zěnme + dòngcí",
       "explain": {
-        "jp": "「坐」の後に交通手段が続きます。",
-        "en": "坐 takes transport.",
-        "kr": "'坐' 뒤에 교통수단이 옵니다.",
-        "zh": "「坐」后接交通工具。"
+        "zh": "「怎么」后面加动词问方式：你怎么去学校？可以回答：我坐地铁去学校 / 我走路去学校。",
+        "kr": "「怎么」 + 동사로 방법을 묻는다. 你怎么去学校？→ 我坐地铁去学校.",
+        "en": "怎么 + verb asks about method: 你怎么去学校？→ 我坐地铁去学校。",
+        "jp": "「怎么」+動詞で方法を聞く。你怎么去学校？→ 我坐地铁去学校。"
+      },
+      "example": {
+        "zh": "你怎么去学校？我坐地铁去学校。",
+        "pinyin": "Nǐ zěnme qù xuéxiào? Wǒ zuò dìtiě qù xuéxiào.",
+        "translation": { "kr": "학교 어떻게 가? 지하철 타고 가.", "jp": "どうやって学校へ行く？地下鉄で行く。", "en": "How do you get to school? I take the subway." }
       }
     },
     {
-      "title": "都",
-      "explanation_zh": "「都」表示全部。",
-      "explanation_kr": "'都'는 모두를 나타냅니다.",
-      "explanation_en": "都 means all.",
-      "example": {
-        "zh": "我们都去。",
-        "pinyin": "Wǒmen dōu qù.",
-        "kr": "우리 모두 가요.",
-        "en": "We all go."
-      },
+      "pattern": "坐 + 交通工具",
+      "pinyin": "zuò + jiāotōng gōngjù",
       "explain": {
-        "jp": "「都」は全部を表します。",
-        "en": "都 means all.",
-        "kr": "'都'는 모두를 나타냅니다.",
-        "zh": "「都」表示全部。"
+        "zh": "用「坐+交通工具」说怎么去：坐地铁、坐公交车。",
+        "kr": "「坐+교통수단」으로 어떻게 가는지 말한다: 坐地铁, 坐公交车.",
+        "en": "坐 + means of transport: 坐地铁, 坐公交车.",
+        "jp": "「坐+乗り物」で移動手段を言う：坐地铁、坐公交车。"
+      },
+      "example": {
+        "zh": "我坐地铁去学校。你呢？你坐公交车去学校。",
+        "pinyin": "Wǒ zuò dìtiě qù xuéxiào. Nǐ ne? Nǐ zuò gōngjiāo chē qù xuéxiào.",
+        "translation": { "kr": "나는 지하철 타고 학교에 가. 너는? 너는 버스 타고 가.", "jp": "私は地下鉄で学校へ行く。君は？君はバスで行く。", "en": "I take the subway to school. And you? You take the bus." }
+      }
+    },
+    {
+      "pattern": "都 / 远 / 不远",
+      "pinyin": "dōu / yuǎn / bù yuǎn",
+      "explain": {
+        "zh": "「都」表示全部；「远 / 不远」表示距离远近：住得远吗？不远。",
+        "kr": "「都」는 모두. 「远/不远」은 먼지 안 먼지. 住得远吗？不远.",
+        "en": "都 means all; 远 / 不远 describe distance: 住得远吗？不远。",
+        "jp": "「都」はみんな。「远／不远」は距離を表す。住得远吗？不远。"
+      },
+      "example": {
+        "zh": "你住得远吗？不远。我和同学都坐地铁去学校。",
+        "pinyin": "Nǐ zhù de yuǎn ma? Bù yuǎn. Wǒ hé tóngxué dōu zuò dìtiě qù xuéxiào.",
+        "translation": { "kr": "집 멀어? 안 멀어. 나랑 친구들은 다 지하철 타고 학교에 가.", "jp": "家は遠い？遠くない。私とクラスメートはみんな地下鉄で学校へ行く。", "en": "Do you live far away? Not far. My classmates and I all take the subway to school." }
       }
     }
   ],

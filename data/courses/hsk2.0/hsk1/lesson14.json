@@ -1,16 +1,16 @@
 {
-  "id": "hsk2.0_hsk1_lesson14",
+  "id": "hsk1_lesson14",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 14,
   "type": "lesson",
   "title": {
-    "zh": "吃饭",
-    "pinyin": "chī fàn",
-    "kr": "식사",
-    "en": "Eating",
-    "jp": "飲食1"
+    "zh": "我们一起吃饭吧。",
+    "pinyin": "wǒmen yìqǐ chī fàn ba",
+    "kr": "같이 밥 먹어요.",
+    "en": "Let's eat together.",
+    "jp": "一緒にご飯を食べましょう。"
   },
   "summary": {
     "zh": "吃、喝与食物",
@@ -151,93 +151,44 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "我们一起吃饭吧。",
-          "translation": {
-            "en": "Let's eat together.",
-            "kr": "Let's eat together.",
-            "jp": "Let's eat together."
-          },
-          "pinyin": "wǒ men yì qǐ chī fàn ba 。"
-        },
-        {
-          "speaker": "B",
-          "text": "好。你吃什么？",
-          "translation": {
-            "en": "OK. What do you want to eat?",
-            "kr": "OK. What do you want to eat?",
-            "jp": "OK. What do you want to eat?"
-          },
-          "pinyin": "hǎo 。 nǐ chī shén me ？"
-        },
-        {
-          "speaker": "A",
-          "text": "我吃米饭和菜。你喝什么？",
-          "translation": {
-            "en": "I'll have rice and dishes. What do you drink?",
-            "kr": "I'll have rice and dishes. What do you drink?",
-            "jp": "I'll have rice and dishes. What do you drink?"
-          },
-          "pinyin": "wǒ chī mǐ fàn hé cài 。 nǐ hē shén me ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喝水。",
-          "translation": {
-            "en": "I drink water.",
-            "kr": "I drink water.",
-            "jp": "I drink water."
-          },
-          "pinyin": "wǒ hē shuǐ 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "我们一起吃饭吧。" },
+    { "speaker": "B", "text": "好啊！" },
+    { "speaker": "A", "text": "你想吃什么？" },
+    { "speaker": "B", "text": "我想吃面条。" },
+    { "speaker": "A", "text": "那我们去那家面馆吧。" },
+    { "speaker": "B", "text": "好，我们走吧。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "吃 / 喝 + 宾语",
-      "explanation_zh": "「吃」用于固体，「喝」用于液体。",
-      "explanation_kr": "'吃'는 고체, '喝'는 액체에 사용합니다.",
-      "explanation_en": "吃 for solid, 喝 for liquid.",
-      "example": {
-        "zh": "吃饭，喝水",
-        "pinyin": "chī fàn, hē shuǐ",
-        "kr": "밥 먹다, 물 마시다",
-        "en": "eat, drink water"
-      },
+      "pattern": "一起 + 动词",
+      "pinyin": "yīqǐ + dòngcí",
       "explain": {
-        "jp": "「吃」は固体、「喝」は液体に使います。",
-        "en": "吃 for solid, 喝 for liquid.",
-        "kr": "'吃'는 고체, '喝'는 액체에 사용합니다.",
-        "zh": "「吃」用于固体，「喝」用于液体。"
+        "zh": "「一起」表示“一块儿做某事”，放在动词前。我们一起吃饭吧。",
+        "kr": "「一起」는 \"함께 ~하다\", 동사 앞에 씁니다. 我们一起吃饭吧.",
+        "en": "一起 = together, before the verb. 我们一起吃饭吧 = Let's eat together.",
+        "jp": "「一起」は「一緒に」。動詞の前。我们一起吃饭吧。"
+      },
+      "example": {
+        "zh": "我们一起吃饭吧。好啊！那我们去那家面馆吧。好，我们走吧。",
+        "pinyin": "Wǒmen yīqǐ chī fàn ba. Hǎo a! Nà wǒmen qù nà jiā miànguǎn ba. Hǎo, wǒmen zǒu ba.",
+        "translation": { "kr": "우리 같이 밥 먹자. 좋아! 그럼 그 면관 가자. 가자.", "jp": "一緒にご飯食べよう。いいよ。あの店行こう。行こう。", "en": "Let's eat together. Sure! Let's go to that noodle shop. Let's go." }
       }
     },
     {
-      "title": "和",
-      "explanation_zh": "「和」连接名词。",
-      "explanation_kr": "'和'는 명사를 연결합니다.",
-      "explanation_en": "和 connects nouns.",
-      "example": {
-        "zh": "米饭和菜",
-        "pinyin": "mǐfàn hé cài",
-        "kr": "밥과 요리",
-        "en": "rice and dishes"
-      },
+      "pattern": "想 + 动词",
+      "pinyin": "xiǎng + dòngcí",
       "explain": {
-        "jp": "「和」は名詞をつなぎます。",
-        "en": "和 connects nouns.",
-        "kr": "'和'는 명사를 연결합니다.",
-        "zh": "「和」连接名词。"
+        "zh": "「想」后接动词表示“想做什么”。你想吃什么？我想吃面条。",
+        "kr": "「想」 뒤에 동사 = ~하고 싶다. 你想吃什么？我想吃面条.",
+        "en": "想 + verb = want to do. 你想吃什么？= What do you want to eat?",
+        "jp": "「想」+動詞＝〜したい。你想吃什么？我想吃面条。"
+      },
+      "example": {
+        "zh": "你想吃什么？我想吃面条。",
+        "pinyin": "Nǐ xiǎng chī shénme? Wǒ xiǎng chī miàntiáo.",
+        "translation": { "kr": "뭐 먹고 싶어? 나는 면 먹고 싶어.", "jp": "何が食べたい？麺が食べたい。", "en": "What do you want to eat? I want noodles." }
       }
     }
   ],

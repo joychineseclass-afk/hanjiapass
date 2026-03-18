@@ -51,7 +51,7 @@
     "my": "我的学习",
     "login": "登录"
   },
-  "hsk": {
+    "hsk": {
     "title": "HSK学习",
     "level": "等级",
     "version": "版本",
@@ -117,9 +117,11 @@
     "related_old_words": "关联旧词",
     "grammar_review": "语法回顾",
     "summary_tasks": "复习任务",
-    "review_range_suffix": "（{from}~{to}课复习）",
-    "review_words_subtitle": "复习单词",
-    "review_grammar_subtitle": "复习语法",
+      "review_range_suffix": "（{from}~{to}课复习）",
+      "review_words_subtitle": "复习单词",
+      "review_grammar_subtitle": "复习语法",
+      "review_dialogue_subtitle": "复习课会话",
+      "review_extension_subtitle": "复习课扩展表达",
     "review_desc": "请复习前面学过的词汇和对话。",
     "back_to_list": "← 返回目录",
     "lesson_unit": "第{n}课",

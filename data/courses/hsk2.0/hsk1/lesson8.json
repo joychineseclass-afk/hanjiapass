@@ -1,495 +1,112 @@
 {
-  "id": "hsk2.0_hsk1_lesson8",
+  "id": "hsk1_lesson8",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 8,
   "type": "lesson",
   "title": {
-    "zh": "时间",
-    "pinyin": "shíjiān",
-    "kr": "시간",
-    "en": "Time",
-    "jp": "時間"
+    "zh": "苹果多少钱？",
+    "pinyin": "píngguǒ duōshǎo qián",
+    "kr": "사과 얼마예요?",
+    "en": "How much is the apple?",
+    "jp": "りんごはいくらですか？"
   },
   "summary": {
-    "zh": "点钟、分钟与时段",
-    "kr": "시, 분과 시간대",
-    "en": "O'clock, minutes and time periods"
+    "zh": "在水果店问数量与买东西",
+    "kr": "과일 가게에서 수량 묻고 사기",
+    "en": "Asking quantity and buying at a fruit shop"
+  },
+  "scene": {
+    "id": "l8_scene",
+    "title": { "zh": "水果店买东西", "kr": "과일 가게에서 사기", "en": "Buying at a fruit shop" },
+    "summary": { "zh": "在水果店买水果，问要几个", "kr": "과일 가게에서 과일을 사며 몇 개인지 묻는 상황", "en": "Buying fruit and asking how many" }
   },
   "objectives": [
-    {
-      "zh": "学会说时间",
-      "kr": "시간을 말할 수 있다",
-      "en": "Can tell time"
-    },
-    {
-      "zh": "学会上午、下午",
-      "kr": "'上午', '下午'를 사용할 수 있다",
-      "en": "Can use 上午 and 下午"
-    }
+    { "zh": "学会用几+个问数量", "kr": "几+个로 수량을 물을 수 있다", "en": "Can ask quantity with 几+个" },
+    { "zh": "学会在水果店简单购物", "kr": "과일 가게에서 간단히 쇼핑할 수 있다", "en": "Can do simple shopping at fruit shop" }
   ],
   "vocab": [
-    {
-      "hanzi": "点",
-      "pinyin": "diǎn",
-      "meaning": {
-        "zh": "点",
-        "kr": "시",
-        "en": "o'clock",
-        "jp": "時"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "分钟",
-      "pinyin": "fēnzhōng",
-      "meaning": {
-        "zh": "分钟",
-        "kr": "분",
-        "en": "minute",
-        "jp": "分"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "上午",
-      "pinyin": "shàngwǔ",
-      "meaning": {
-        "zh": "上午",
-        "kr": "오전",
-        "en": "morning",
-        "jp": "午前"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "下午",
-      "pinyin": "xiàwǔ",
-      "meaning": {
-        "zh": "下午",
-        "kr": "오후",
-        "en": "afternoon",
-        "jp": "午後"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "中午",
-      "pinyin": "zhōngwǔ",
-      "meaning": {
-        "zh": "中午",
-        "kr": "정오",
-        "en": "noon",
-        "jp": "昼"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "现在",
-      "pinyin": "xiànzài",
-      "meaning": {
-        "zh": "现在",
-        "kr": "지금",
-        "en": "now",
-        "jp": "今"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "时候",
-      "pinyin": "shíhou",
-      "meaning": {
-        "zh": "时候",
-        "kr": "때",
-        "en": "time",
-        "jp": "時"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    }
+    { "hanzi": "买", "pinyin": "mǎi", "meaning": { "zh": "买", "kr": "사다", "en": "to buy", "jp": "買う" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "苹果", "pinyin": "píngguǒ", "meaning": { "zh": "苹果", "kr": "사과", "en": "apple", "jp": "りんご" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "几", "pinyin": "jǐ", "meaning": { "zh": "几", "kr": "몇", "en": "how many", "jp": "いくつ" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "个", "pinyin": "gè", "meaning": { "zh": "个", "kr": "개 (양사)", "en": "measure word", "jp": "個（量詞）" }, "pos": { "kr": "양사", "en": "measure word", "jp": "量詞" } },
+    { "hanzi": "要", "pinyin": "yào", "meaning": { "zh": "要", "kr": "~을 원하다, ~할 것이다", "en": "to want; will", "jp": "欲しい、〜する" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "五", "pinyin": "wǔ", "meaning": { "zh": "五", "kr": "다섯", "en": "five", "jp": "五" }, "pos": { "kr": "수사", "en": "numeral", "jp": "数詞" } },
+    { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "en": "thank you", "jp": "ありがとう" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } }
   ],
-  "dialogueCards": [
+  "dialogue": [
+    { "speaker": "A", "text": "苹果多少钱？" },
+    { "speaker": "B", "text": "三块钱一个。" },
+    { "speaker": "A", "text": "我买六个苹果。" },
+    { "speaker": "B", "text": "好的，十八块钱。" }
+  ],
+  "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "今天几月几号？",
-          "translation": {
-            "en": "What's the date today?",
-            "kr": "What's the date today?",
-            "jp": "What's the date today?"
-          },
-          "pinyin": "jīn tiān jǐ yuè jǐ hào ？"
-        },
-        {
-          "speaker": "B",
-          "text": "今天三月八号。",
-          "translation": {
-            "en": "Today is March 8th.",
-            "kr": "Today is March 8th.",
-            "jp": "Today is March 8th."
-          },
-          "pinyin": "jīn tiān sān yuè bā hào 。"
-        },
-        {
-          "speaker": "A",
-          "text": "明天是星期几？",
-          "translation": {
-            "en": "What day is tomorrow?",
-            "kr": "What day is tomorrow?",
-            "jp": "What day is tomorrow?"
-          },
-          "pinyin": "míng tiān shì xīng qī jǐ ？"
-        },
-        {
-          "speaker": "B",
-          "text": "明天星期二。昨天是星期一。",
-          "translation": {
-            "en": "Tomorrow is Tuesday. Yesterday was Monday.",
-            "kr": "Tomorrow is Tuesday. Yesterday was Monday.",
-            "jp": "Tomorrow is Tuesday. Yesterday was Monday."
-          },
-          "pinyin": "míng tiān xīng qī èr 。 zuó tiān shì xīng qī yī 。"
-        }
+        { "speaker": "A", "text": "你要买什么？", "translation": { "en": "What do you want to buy?", "kr": "뭐 사려고?", "jp": "何を買いますか？" }, "pinyin": "Nǐ yào mǎi shénme?" },
+        { "speaker": "B", "text": "我买苹果。", "translation": { "en": "I'm buying apples.", "kr": "사과 사요.", "jp": "りんごを買います。" }, "pinyin": "Wǒ mǎi píngguǒ." },
+        { "speaker": "A", "text": "你要几个？", "translation": { "en": "How many do you want?", "kr": "몇 개 필요해요?", "jp": "いくつ要りますか？" }, "pinyin": "Nǐ yào jǐ gè?" },
+        { "speaker": "B", "text": "我要五个。", "translation": { "en": "I want five.", "kr": "다섯 개 주세요.", "jp": "五つください。" }, "pinyin": "Wǒ yào wǔ gè." },
+        { "speaker": "A", "text": "还要别的吗？", "translation": { "en": "Anything else?", "kr": "다른 거 더 필요해요?", "jp": "他にいりますか？" }, "pinyin": "Hái yào bié de ma?" },
+        { "speaker": "B", "text": "不要了，谢谢。", "translation": { "en": "No, thanks.", "kr": "됐어요, 감사해요.", "jp": "いいえ、ありがとうございます。" }, "pinyin": "Bú yào le, xièxie." }
       ]
     }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "点 + 分钟",
-      "explanation_zh": "「点」表示钟点，「分钟」表示分。",
-      "explanation_kr": "'点'는 시, '分钟'는 분을 나타냅니다.",
-      "explanation_en": "点 for o'clock, 分钟 for minutes.",
-      "example": {
-        "zh": "九点十分",
-        "pinyin": "jiǔ diǎn shí fēn",
-        "kr": "9시 10분",
-        "en": "9:10"
+      "pattern": "多少钱",
+      "pinyin": "duō shǎo qián",
+      "explain": {
+        "zh": "「多少钱」问价格。事物+多少钱？回答常用「数字+块钱」或「数字+块钱+一个」。",
+        "kr": "「多少钱」는 가격을 묻습니다. 답: 숫자+块钱.",
+        "en": "多少钱 asks the price. Answer with number + 块钱.",
+        "jp": "「多少钱」は値段を聞く。答は「数字+块钱」。"
       },
-      "explain": {
-        "en": "点 for o'clock, 分钟 for minutes.",
-        "kr": "'点'는 시, '分钟'는 분을 나타냅니다.",
-        "zh": "「点」表示钟点，「分钟」表示分。"
-      }
-    },
-    {
-      "title": "上午 / 下午 / 中午",
-      "explanation_zh": "时段词放在时间前。",
-      "explanation_kr": "시간대는 시간 앞에 옵니다.",
-      "explanation_en": "Time period before the time.",
       "example": {
-        "zh": "下午三点",
-        "pinyin": "xiàwǔ sān diǎn",
-        "kr": "오후 3시",
-        "en": "3 p.m."
+        "zh": "苹果多少钱？三块钱一个。我买六个苹果。好的，十八块钱。",
+        "pinyin": "Píngguǒ duō shǎo qián? Sān kuài qián yī gè. Wǒ mǎi liù gè píngguǒ. Hǎo de, shíbā kuài qián.",
+        "translation": { "kr": "사과 얼마예요? 세 개에 삼 위안. 사과 여섯 개 사요. 네, 십팔 위안이에요.", "jp": "りんごいくら？三元一個。りんご六つ買います。十八元です。", "en": "How much for apples? Three yuan each. I'll buy six. OK, eighteen yuan." }
+      }
+    },
+    {
+      "pattern": "几 + 个",
+      "pinyin": "jǐ + gè",
+      "explain": {
+        "zh": "「几」问数量，后面常接量词「个」。买+数量+东西：我买六个苹果。",
+        "kr": "「几」는 수량을 묻고, 뒤에 양사 「个」. 我买六个苹果.",
+        "en": "几 asks quantity, often with 个. 我买六个苹果 = I'll buy six apples.",
+        "jp": "「几」は数量を聞き、後に「个」。我买六个苹果。"
       },
-      "explain": {
-        "en": "Time period before the time.",
-        "kr": "시간대는 시간 앞에 옵니다.",
-        "zh": "时段词放在时间前。"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "zh": "一点",
-      "pinyin": "Yī diǎn",
-      "kr": "한 시",
-      "en": "one o'clock",
-      "phrase": "一点",
-      "explain": {
-        "kr": "한 시",
-        "en": "one o'clock",
-        "jp": "1時"
-      }
-    },
-    {
-      "zh": "两点半",
-      "pinyin": "Liǎng diǎn bàn",
-      "kr": "두 시 반",
-      "en": "half past two",
-      "phrase": "两点半",
-      "explain": {
-        "kr": "두 시 반",
-        "en": "half past two",
-        "jp": "2時半"
-      }
-    },
-    {
-      "zh": "三点十分",
-      "pinyin": "Sān diǎn shí fēn",
-      "kr": "세 시 십 분",
-      "en": "ten past three",
-      "phrase": "三点十分",
-      "explain": {
-        "kr": "세 시 십 분",
-        "en": "ten past three"
-      }
-    },
-    {
-      "zh": "早上",
-      "pinyin": "Zǎoshang",
-      "kr": "아침",
-      "en": "early morning",
-      "phrase": "早上",
-      "explain": {
-        "kr": "아침",
-        "en": "early morning"
-      }
-    },
-    {
-      "zh": "中午",
-      "pinyin": "Zhōngwǔ",
-      "kr": "점심시간",
-      "en": "noon",
-      "phrase": "中午",
-      "explain": {
-        "kr": "점심시간",
-        "en": "noon"
-      }
-    },
-    {
-      "zh": "晚上",
-      "pinyin": "Wǎnshang",
-      "kr": "저녁",
-      "en": "evening",
-      "phrase": "晚上",
-      "explain": {
-        "kr": "저녁",
-        "en": "evening"
-      }
-    },
-    {
-      "zh": "几点起床？",
-      "pinyin": "Jǐ diǎn qǐchuáng?",
-      "kr": "몇 시에 일어나요?",
-      "en": "What time do you get up?",
-      "phrase": "几点起床？",
-      "explain": {
-        "kr": "몇 시에 일어나요?",
-        "en": "What time do you get up?"
-      }
-    },
-    {
-      "zh": "几点睡觉？",
-      "pinyin": "Jǐ diǎn shuìjiào?",
-      "kr": "몇 시에 자요?",
-      "en": "What time do you go to bed?",
-      "phrase": "几点睡觉？",
-      "explain": {
-        "kr": "몇 시에 자요?",
-        "en": "What time do you go to bed?"
+      "example": {
+        "zh": "你要几个？我要五个。我买六个苹果。",
+        "pinyin": "Nǐ yào jǐ gè? Wǒ yào wǔ gè. Wǒ mǎi liù gè píngguǒ.",
+        "translation": { "kr": "몇 개 필요해요? 다섯 개. 사과 여섯 개 사요.", "jp": "いくつ？五つ。りんご六つ買います。", "en": "How many? Five. I'll buy six apples." }
       }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「点」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "分钟",
-        "点",
-        "现在"
-      ],
-      "answer": "点"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「上午」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "下午",
-        "上午",
-        "中午"
-      ],
-      "answer": "上午"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "现在___点？",
-        "kr": "빈칸",
-        "en": "Fill in"
-      },
-      "options": [
-        "几",
-        "时候",
-        "分钟"
-      ],
-      "answer": "几"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "九___十分",
-        "kr": "빈칸",
-        "en": "Fill in"
-      },
-      "options": [
-        "点",
-        "分钟",
-        "上午"
-      ],
-      "answer": "点"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「现在」？",
-        "kr": "어느 것?",
-        "en": "Which?"
-      },
-      "options": [
-        "现在",
-        "时候",
-        "下午"
-      ],
-      "answer": "现在"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "你要___个？", "kr": "몇 ___ 필요해요?", "en": "How ___ do you want?", "jp": "___つ要りますか？" }, "options": ["几", "什么", "谁", "哪"], "answer": "几", "explanation": { "cn": "问数量用「几」。", "kr": "수량을 물을 때 「几」.", "en": "Use 几 to ask quantity.", "jp": "数量は「几」で聞く。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「苹果」的意思是？", "kr": "「苹果」의 뜻은?", "en": "What does 苹果 mean?", "jp": "「苹果」の意味は？" }, "options": ["买", "苹果", "个", "要"], "answer": "苹果", "explanation": { "cn": "「苹果」即苹果。", "kr": "「苹果」는 사과.", "en": "苹果 means apple.", "jp": "「苹果」はりんご。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___五个。", "kr": "나 ___ 다섯 개.", "en": "I ___ five.", "jp": "___五つ。" }, "options": ["要", "买", "几", "个"], "answer": "要", "explanation": { "cn": "表示想要用「要」。", "kr": "원할 때 「要」.", "en": "要 = want.", "jp": "欲しいは「要」。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「你要几个？」可以回答？", "kr": "「你要几个？」에 대한 답은?", "en": "Response to 你要几个?", "jp": "「你要几个？」への返答は？" }, "options": ["买苹果", "我要五个", "谢谢", "不要"], "answer": "我要五个", "explanation": { "cn": "回答数量用「我要+数字+个」。", "kr": "수량 답은 「我要+숫자+个」.", "en": "Reply with 我要 + number + 个.", "jp": "「我要+数字+个」で答える。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "问「多少个」时用哪两个词？", "kr": "몇 개를 물을 때 쓰는 말은?", "en": "Which two words for how many?", "jp": "いくつを聞くとき使う語は？" }, "options": ["几和个", "买和要", "五和个", "苹果和买"], "answer": "几和个", "explanation": { "cn": "问数量用「几+个」。", "kr": "수량을 물을 때 「几+个」.", "en": "几 + 个 = how many (things).", "jp": "数量は「几+个」。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "现在几点",
-      "上午九点",
-      "下午三点",
-      "中午"
-    ],
-    "chatPrompt": "AI问：现在几点？学生回答时间。"
-  },
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "你要几个？我要五个。", "hint": { "cn": "请解释几+个问数量的用法。", "kr": "几+个로 수량 묻는 쓰임을 설명해 보세요.", "en": "Explain 几+个 for quantity.", "jp": "几+个の数量の聞き方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "fruit_shop", "prompt": { "cn": "在水果店买苹果，问要几个、说要五个。", "kr": "과일 가게에서 사과를 사며 몇 개인지 묻고 다섯 개라고 하세요.", "en": "At fruit shop, buy apples, ask how many and say five.", "jp": "果物屋でりんごを買い、いくつか聞いて五つと言いましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你要买什么？", "我买苹果。", "你要几个？", "我要五个。", "不要了，谢谢。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
   ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "今天几月几号？",
-          "translation": {
-            "en": "What's the date today?",
-            "kr": "What's the date today?",
-            "jp": "What's the date today?"
-          },
-          "pinyin": "jīn tiān jǐ yuè jǐ hào ？"
-        },
-        {
-          "speaker": "B",
-          "text": "今天三月八号。",
-          "translation": {
-            "en": "Today is March 8th.",
-            "kr": "Today is March 8th.",
-            "jp": "Today is March 8th."
-          },
-          "pinyin": "jīn tiān sān yuè bā hào 。"
-        },
-        {
-          "speaker": "A",
-          "text": "明天是星期几？",
-          "translation": {
-            "en": "What day is tomorrow?",
-            "kr": "What day is tomorrow?",
-            "jp": "What day is tomorrow?"
-          },
-          "pinyin": "míng tiān shì xīng qī jǐ ？"
-        },
-        {
-          "speaker": "B",
-          "text": "明天星期二。昨天是星期一。",
-          "translation": {
-            "en": "Tomorrow is Tuesday. Yesterday was Monday.",
-            "kr": "Tomorrow is Tuesday. Yesterday was Monday.",
-            "jp": "Tomorrow is Tuesday. Yesterday was Monday."
-          },
-          "pinyin": "míng tiān xīng qī èr 。 zuó tiān shì xīng qī yī 。"
-        }
-      ]
-    }
+  "aiPractice": { "speaking": ["我买苹果", "你要几个", "我要五个", "谢谢"], "chatPrompt": "AI扮演店员问：你要买什么？你要几个？学生用买苹果、几个、五个回答。" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

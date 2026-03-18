@@ -10,6 +10,10 @@
 // ✅ Version priority:
 //   opts.version -> localStorage(hsk_vocab_version) -> window.APP_VOCAB_VERSION -> default "hsk2.0"
 //
+// ✅ 单词来源优先：data/courses/<ver>/hsk<lv>/vocab-distribution.json
+//   - 存在时：每课单词由 distribution.lessonX 生成，复习课由 reviewRanges 合并
+//   - 词条详情（pinyin/meaning）仍从 data/vocab/<ver>/hsk<lv>.json 解析
+//
 // ✅ Robust:
 // - version 仅允许 hsk2.0 / hsk3.0（禁止 hsk2/hsk3 短写，normalizeVersion 会转成完整形式）
 // - 404 fallback: if hsk3.0 missing -> try hsk2.0
@@ -18,7 +22,8 @@
 // - NEW: lessonDetailUrl() + loadLessonDetail()
 
 (function () {
-  const MEM_CACHE_TTL = 1000 * 60 * 30; // 30min
+  const isNoCache = typeof window !== "undefined" && window.isNoCacheEnv && window.isNoCacheEnv();
+  const MEM_CACHE_TTL = isNoCache ? 0 : 1000 * 60 * 30; // preview/开发 0，正式 30min
   const MEM = new Map();
   const now = () => Date.now();
 
@@ -194,6 +199,11 @@
     return withBase(`data/courses/${version}/hsk${lv}/lessons.json`);
   }
 
+  /** 单词分课表：data/courses/<ver>/hsk<lv>/vocab-distribution.json */
+  function vocabDistributionUrl(lv, version) {
+    return withBase(`data/courses/${version}/hsk${lv}/vocab-distribution.json`);
+  }
+
   // ✅ NEW: lesson detail url (新结构 hsk{N}/lesson{M}.json)
   function lessonDetailUrl(lv, lessonNo, version, file) {
     const n = Number(lessonNo || 1);
@@ -260,6 +270,92 @@
       Number(lesson?.no) ||
       Number(i + 1);
     return Number.isFinite(n) && n > 0 ? n : i + 1;
+  }
+
+  /** 从 distribution 取某课汉字列表（含复习课 reviewRanges 合并） */
+  function getHanziListForLesson(distributionData, lessonNo) {
+    if (!distributionData || typeof distributionData !== "object") return null;
+    const dist = distributionData.distribution;
+    const ranges = distributionData.reviewRanges;
+    if (!dist || typeof dist !== "object") return null;
+
+    const no = Number(lessonNo) || 1;
+    const key = "lesson" + no;
+
+    if (ranges && ranges[key] && Array.isArray(ranges[key])) {
+      const [from, to] = ranges[key];
+      const fromL = Math.max(1, Number(from) || 1);
+      const toL = Math.min(999, Number(to) || fromL);
+      const hanziSet = new Set();
+      for (let i = fromL; i <= toL; i++) {
+        const arr = dist["lesson" + i];
+        if (Array.isArray(arr)) arr.forEach((h) => hanziSet.add(String(h).trim()));
+      }
+      return Array.from(hanziSet);
+    }
+
+    const arr = dist[key];
+    return Array.isArray(arr) ? arr : null;
+  }
+
+  /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序）；匹配不到的保留占位词条，绝不整课回退旧 vocab */
+  function resolveHanziToVocab(hanziList, fullVocabList) {
+    if (!Array.isArray(hanziList)) return [];
+    const byHanzi = new Map();
+    (Array.isArray(fullVocabList) ? fullVocabList : []).forEach((w) => {
+      const h = (w.hanzi || w.word || "").trim();
+      if (h && !byHanzi.has(h)) byHanzi.set(h, w);
+    });
+    return hanziList.map((h) => {
+      const key = String(h).trim();
+      if (!key) return null;
+      const found = byHanzi.get(key);
+      if (found) return found;
+      return {
+        hanzi: key,
+        word: key,
+        pinyin: "",
+        meaning: { ko: "", en: "", zh: key },
+        ko: "", kr: "", en: "", zh: key, cn: key,
+      };
+    }).filter(Boolean);
+  }
+
+  /** 加载 vocab-distribution.json，不存在或失败返回 null */
+  async function loadVocabDistribution(level, opts = {}) {
+    const lv = normalizeLevel(level);
+    const version = getVocabVersion(opts);
+    const url =
+      (window.DATA_PATHS?.vocabDistributionUrl?.(lv, { version })) ||
+      vocabDistributionUrl(lv, version);
+    const memKey = `vocabDistribution:${version}:hsk${lv}`;
+    const cached = memGet(memKey);
+    if (cached) return cached;
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (data && (data.distribution || data.reviewRanges)) {
+        memSet(memKey, data);
+        return data;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * 按 vocab-distribution 生成某课单词列表；无 distribution 时返回 null（调用方用 lesson 文件内 vocab）。
+   * 依赖 loadVocab 提供的全量词库（data/vocab/<ver>/hsk<lv>.json）解析 pinyin/meaning。
+   */
+  async function buildLessonVocabFromDistribution(level, lessonNo, opts = {}) {
+    const dist = await loadVocabDistribution(level, opts);
+    if (!dist) return null;
+    const hanziList = getHanziListForLesson(dist, lessonNo);
+    if (hanziList === null) return null;
+    const fullList = await loadVocab(level, opts);
+    return resolveHanziToVocab(hanziList, fullList);
   }
 
   // -----------------------------
@@ -385,8 +481,16 @@
     } else {
       vocabArr = Array.isArray(source.vocab) ? source.vocab
         : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
-      dialogueArr = Array.isArray(source.dialogueCards) ? source.dialogueCards
-        : (Array.isArray(source.dialogue) ? source.dialogue : (Array.isArray(c?.dialogue) ? c.dialogue : []));
+      // 会话优先级：1) 非空 dialogueCards 2) 非空 dialogue 3) 非空 doc.content.dialogue 4) 空数组
+      if (Array.isArray(source.dialogueCards) && source.dialogueCards.length > 0) {
+        dialogueArr = source.dialogueCards;
+      } else if (Array.isArray(source.dialogue) && source.dialogue.length > 0) {
+        dialogueArr = source.dialogue;
+      } else if (Array.isArray(c?.dialogue) && c.dialogue.length > 0) {
+        dialogueArr = c.dialogue;
+      } else {
+        dialogueArr = [];
+      }
       grammarArr = Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []);
       extensionArr = Array.isArray(source.extension) ? source.extension : (Array.isArray(c?.extension) ? c.extension : []);
       practiceArr = Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []);
@@ -395,7 +499,7 @@
     const { normalizeSteps, stepKeys } = await import("/ui/core/lessonSteps.js");
     const stepsRaw = Array.isArray(source.steps) ? source.steps : (Array.isArray(doc.steps) ? doc.steps : undefined);
     const steps = normalizeSteps(stepsRaw, source.type === "review");
-    const lesson = {
+    let lesson = {
       ...source,
       vocab: vocabArr,
       words: vocabArr,
@@ -408,6 +512,12 @@
       steps,
       stepKeys: stepKeys(steps),
     };
+
+    // 最终一步：只要存在 vocab-distribution.json，就以它为唯一单词来源覆盖，避免 lessonN.json 内嵌 vocab 回写
+    const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
+    if (Array.isArray(distributionVocab)) {
+      lesson = { ...lesson, vocab: distributionVocab, words: distributionVocab };
+    }
 
     memSet(memKey, lesson);
     return lesson;
@@ -583,6 +693,7 @@
       localStorage.setItem("hsk_vocab_version", ver);
     } catch {}
     memClear("vocab:");
+    memClear("vocabDistribution:");
     memClear("lessons:");
     memClear("lessonDetail:");
     try {
@@ -599,6 +710,11 @@
   window.HSK_LOADER = {
     loadVocab,
     loadLessons,
+
+    // ✅ 单词来源：vocab-distribution.json → 按 distribution.lessonX 生成每课单词
+    loadVocabDistribution,
+    buildLessonVocabFromDistribution,
+    vocabDistributionUrl: (lv, opts = {}) => vocabDistributionUrl(normalizeLevel(lv), getVocabVersion(opts)),
 
     // ✅ NEW
     loadLessonDetail,

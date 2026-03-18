@@ -1,434 +1,112 @@
 {
-  "id": "hsk2.0_hsk1_lesson9",
+  "id": "hsk1_lesson9",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 9,
   "type": "lesson",
   "title": {
-    "zh": "打电话",
-    "pinyin": "dǎ diànhuà",
-    "kr": "전화하기",
-    "en": "Phone calls",
-    "jp": "電話をかける"
+    "zh": "现在几点？",
+    "pinyin": "xiànzài jǐ diǎn",
+    "kr": "지금 몇 시예요?",
+    "en": "What time is it now?",
+    "jp": "今何時ですか？"
   },
   "summary": {
-    "zh": "接听电话与礼貌用语",
-    "kr": "전화 받기와 예절 표현",
-    "en": "Answering calls and polite expressions"
+    "zh": "打电话找人与礼貌用语",
+    "kr": "전화로 사람 찾기와 예절 표현",
+    "en": "Calling to find someone and polite expressions"
+  },
+  "scene": {
+    "id": "l9_scene",
+    "title": { "zh": "打电话找人", "kr": "전화로 사람 찾기", "en": "Calling to find someone" },
+    "summary": { "zh": "打电话找人", "kr": "전화해서 상대방을 찾는 상황", "en": "Phone call to find the person you want" }
   },
   "objectives": [
-    {
-      "zh": "学会接电话",
-      "kr": "전화를 받을 수 있다",
-      "en": "Can answer the phone"
-    },
-    {
-      "zh": "学会用「请」「请问」",
-      "kr": "'请', '请问'를 사용할 수 있다",
-      "en": "Can use 请 and 请问"
-    }
+    { "zh": "学会接电话与问找谁", "kr": "전화 받고 누구 찾는지 물을 수 있다", "en": "Can answer and ask who they're looking for" },
+    { "zh": "学会说喂、请问、我找…", "kr": "喂、请问、我找…를 말할 수 있다", "en": "Can say 喂, 请问, 我找..." }
   ],
   "vocab": [
-    {
-      "hanzi": "喂",
-      "pinyin": "wèi",
-      "meaning": {
-        "zh": "喂",
-        "kr": "여보세요",
-        "en": "hello (phone)",
-        "jp": "もしもし"
-      },
-      "pos": {
-        "kr": "감탄사",
-        "en": "interjection",
-        "jp": "感嘆詞"
-      }
-    },
-    {
-      "hanzi": "请",
-      "pinyin": "qǐng",
-      "meaning": {
-        "zh": "请",
-        "kr": "~해 주세요",
-        "en": "please",
-        "jp": "どうぞ"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
-      "hanzi": "打电话",
-      "pinyin": "dǎ diànhuà",
-      "meaning": {
-        "zh": "打电话",
-        "kr": "전화하다",
-        "en": "to call",
-        "jp": "電話をかける"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
-      "hanzi": "谁",
-      "pinyin": "shéi",
-      "meaning": {
-        "zh": "谁",
-        "kr": "누구",
-        "en": "who",
-        "jp": "誰"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    },
-    {
-      "hanzi": "问",
-      "pinyin": "wèn",
-      "meaning": {
-        "zh": "问",
-        "kr": "묻다",
-        "en": "to ask",
-        "jp": "聞く"
-      },
-      "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    }
+    { "hanzi": "喂", "pinyin": "wéi", "meaning": { "zh": "喂", "kr": "여보세요", "en": "hello (on phone)", "jp": "もしもし" }, "pos": { "kr": "감탄사", "en": "interjection", "jp": "感嘆詞" } },
+    { "hanzi": "请问", "pinyin": "qǐngwèn", "meaning": { "zh": "请问", "kr": "여쭤 보다, 실례합니다", "en": "May I ask; excuse me", "jp": "失礼ですが、伺います" }, "pos": { "kr": "동사구", "en": "phrase", "jp": "慣用句" } },
+    { "hanzi": "打电话", "pinyin": "dǎ diànhuà", "meaning": { "zh": "打电话", "kr": "전화하다", "en": "to make a phone call", "jp": "電話をかける" }, "pos": { "kr": "동사구", "en": "verb phrase", "jp": "動詞句" } },
+    { "hanzi": "找", "pinyin": "zhǎo", "meaning": { "zh": "找", "kr": "찾다", "en": "to look for", "jp": "探す" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "谁", "pinyin": "shéi", "meaning": { "zh": "谁", "kr": "누구", "en": "who", "jp": "誰" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "在", "pinyin": "zài", "meaning": { "zh": "在", "kr": "~에 있다", "en": "to be at; to be in", "jp": "〜にいる" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "等", "pinyin": "děng", "meaning": { "zh": "等", "kr": "기다리다", "en": "to wait", "jp": "待つ" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } }
   ],
-  "dialogueCards": [
+  "dialogue": [
+    { "speaker": "A", "text": "现在几点？" },
+    { "speaker": "B", "text": "现在三点。" },
+    { "speaker": "A", "text": "我们几点上课？" },
+    { "speaker": "B", "text": "三点十分上课。" }
+  ],
+  "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "你今年多大？",
-          "translation": {
-            "en": "How old are you this year?",
-            "kr": "How old are you this year?",
-            "jp": "How old are you this year?"
-          },
-          "pinyin": "nǐ jīn nián duō dà ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我今年二十岁。",
-          "translation": {
-            "en": "I'm twenty this year.",
-            "kr": "I'm twenty this year.",
-            "jp": "I'm twenty this year."
-          },
-          "pinyin": "wǒ jīn nián èr shí suì 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他呢？",
-          "translation": {
-            "en": "What about him?",
-            "kr": "What about him?",
-            "jp": "What about him?"
-          },
-          "pinyin": "tā ne ？"
-        },
-        {
-          "speaker": "B",
-          "text": "他今年十八岁。",
-          "translation": {
-            "en": "He's eighteen this year.",
-            "kr": "He's eighteen this year.",
-            "jp": "He's eighteen this year."
-          },
-          "pinyin": "tā jīn nián shí bā suì 。"
-        }
+        { "speaker": "A", "text": "喂！", "translation": { "en": "Hello!", "kr": "여보세요!", "jp": "もしもし!" }, "pinyin": "Wéi!" },
+        { "speaker": "B", "text": "喂！请问你找谁？", "translation": { "en": "Hello! Who are you looking for?", "kr": "여보세요! 누구 찾으세요?", "jp": "もしもし！どなたをお探しですか？" }, "pinyin": "Wéi! Qǐngwèn nǐ zhǎo shéi?" },
+        { "speaker": "A", "text": "我找李明。", "translation": { "en": "I'm looking for Li Ming.", "kr": "이명 씨 부르고 싶어요.", "jp": "李明さんをお願いします。" }, "pinyin": "Wǒ zhǎo Lǐ Míng." },
+        { "speaker": "B", "text": "李明在，你等一下。", "translation": { "en": "Li Ming is here. Hold on.", "kr": "이명 있어요, 잠깐만요.", "jp": "李明います。少々お待ちください。" }, "pinyin": "Lǐ Míng zài, nǐ děng yīxià." },
+        { "speaker": "A", "text": "谢谢。", "translation": { "en": "Thanks.", "kr": "감사해요.", "jp": "ありがとうございます。" }, "pinyin": "Xièxie." },
+        { "speaker": "B", "text": "不客气。", "translation": { "en": "You're welcome.", "kr": "천만에요.", "jp": "どういたしまして。" }, "pinyin": "Bú kèqi." }
       ]
     }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "喂",
-      "explanation_zh": "接电话时用「喂」。",
-      "explanation_kr": "전화 받을 때 '喂'를 사용합니다.",
-      "explanation_en": "Use 喂 when answering the phone.",
-      "example": {
-        "zh": "喂，你好！",
-        "pinyin": "Wéi, nǐ hǎo!",
-        "kr": "여보세요!",
-        "en": "Hello!"
+      "pattern": "现在几点",
+      "pinyin": "xiànzài jǐ diǎn",
+      "explain": {
+        "zh": "问现在的时间用「现在几点？」。回答：现在+数字+点（或 点+分，如 三点十分）。",
+        "kr": "지금 몇 시인지 물을 때 「现在几点?」. 답: 现在+숫자+点.",
+        "en": "Ask the time with 现在几点? Answer: 现在 + number + 点.",
+        "jp": "今何時かは「现在几点？」。答は「现在+数字+点」。"
       },
-      "explain": {
-        "jp": "電話に出るときは「喂」を使います。",
-        "en": "Use 喂 when answering the phone.",
-        "kr": "전화 받을 때 '喂'를 사용합니다.",
-        "zh": "接电话时用「喂」。"
-      }
-    },
-    {
-      "title": "谁 — 疑问词",
-      "explanation_zh": "「谁」问人。",
-      "explanation_kr": "'谁'는 사람을 묻습니다.",
-      "explanation_en": "谁 asks about people.",
       "example": {
-        "zh": "你是谁？",
-        "pinyin": "Nǐ shì shéi?",
-        "kr": "당신은 누구예요?",
-        "en": "Who are you?"
+        "zh": "现在几点？现在三点。我们几点上课？三点十分上课。",
+        "pinyin": "Xiànzài jǐ diǎn? Xiànzài sān diǎn. Wǒmen jǐ diǎn shàngkè? Sān diǎn shí fēn shàngkè.",
+        "translation": { "kr": "지금 몇 시야? 세 시. 우리 몇 시에 수업해? 세 시 십 분에.", "jp": "今何時？三時。何時に授業？三時十分。", "en": "What time is it? Three. When do we have class? At 3:10." }
+      }
+    },
+    {
+      "pattern": "几点 + 动词",
+      "pinyin": "jǐ diǎn + dòngcí",
+      "explain": {
+        "zh": "问做某事的时间：某人+几点+动词。如：我们几点上课？回答：三点十分上课。",
+        "kr": "몇 시에 뭘 하는지: 사람+几点+동사. 我们几点上课？",
+        "en": "When do (verb): person + 几点 + verb. 我们几点上课？= When do we have class?",
+        "jp": "いつ何をするか：人+几点+動詞。我们几点上课？"
       },
-      "explain": {
-        "jp": "「谁」は人を聞くときに使います。",
-        "en": "谁 asks about people.",
-        "kr": "'谁'는 사람을 묻습니다.",
-        "zh": "「谁」问人。"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "zh": "请问……",
-      "pinyin": "Qǐngwèn...",
-      "kr": "실례합니다...",
-      "en": "Excuse me...",
-      "phrase": "请问……",
-      "explain": {
-        "kr": "실례합니다...",
-        "en": "Excuse me...",
-        "jp": "すみません..."
-      }
-    },
-    {
-      "zh": "请等一下。",
-      "pinyin": "Qǐng děng yī xià.",
-      "kr": "잠시만 기다려 주세요.",
-      "en": "Please wait a moment.",
-      "phrase": "请等一下。",
-      "explain": {
-        "kr": "잠시만 기다려 주세요.",
-        "en": "Please wait a moment.",
-        "jp": "少々お待ちください。"
-      }
-    },
-    {
-      "zh": "我知道了。",
-      "pinyin": "Wǒ zhīdào le.",
-      "kr": "알겠어요.",
-      "en": "I got it.",
-      "phrase": "我知道了。",
-      "explain": {
-        "kr": "알겠어요.",
-        "en": "I got it."
-      }
-    },
-    {
-      "zh": "我一会儿给你打电话。",
-      "pinyin": "Wǒ yīhuǐr gěi nǐ dǎ diànhuà.",
-      "kr": "잠시 후에 전화할게요.",
-      "en": "I'll call you in a moment.",
-      "phrase": "我一会儿给你打电话。",
-      "explain": {
-        "kr": "잠시 후에 전화할게요.",
-        "en": "I'll call you in a moment."
-      }
-    },
-    {
-      "zh": "他在吗？",
-      "pinyin": "Tā zài ma?",
-      "kr": "그 있어요?",
-      "en": "Is he there?",
-      "phrase": "他在吗？",
-      "explain": {
-        "kr": "그 있어요?",
-        "en": "Is he there?"
+      "example": {
+        "zh": "我们几点上课？三点十分上课。",
+        "pinyin": "Wǒmen jǐ diǎn shàngkè? Sān diǎn shí fēn shàngkè.",
+        "translation": { "kr": "우리 몇 시에 수업해? 세 시 십 분에.", "jp": "何時に授業？三時十分。", "en": "When do we have class? At 3:10." }
       }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "接电话时先说___。",
-        "kr": "전화 받을 때",
-        "en": "When answering"
-      },
-      "options": [
-        "再见",
-        "喂",
-        "谢谢"
-      ],
-      "answer": "喂"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「请问」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "请",
-        "请问",
-        "问"
-      ],
-      "answer": "请问"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「谁」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "什么",
-        "谁",
-        "哪"
-      ],
-      "answer": "谁"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "A：你是谁？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
-      },
-      "options": [
-        "我打电话",
-        "我是小明",
-        "喂"
-      ],
-      "answer": "我是小明"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「打电话」？",
-        "kr": "어느 것?",
-        "en": "Which?"
-      },
-      "options": [
-        "打电话",
-        "再见",
-        "喂"
-      ],
-      "answer": "打电话"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "___！请问你找谁？", "kr": "___! 누구 찾으세요?", "en": "___! Who are you looking for?", "jp": "___！どなたをお探しですか？" }, "options": ["喂", "谢谢", "在", "找"], "answer": "喂", "explanation": { "cn": "接电话先说「喂」。", "kr": "전화 받을 때 먼저 「喂」.", "en": "Answer phone with 喂 first.", "jp": "電話は「喂」から。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「打电话」的意思是？", "kr": "「打电话」의 뜻은?", "en": "What does 打电话 mean?", "jp": "「打电话」の意味は？" }, "options": ["接电话", "打电话", "找谁", "请问"], "answer": "打电话", "explanation": { "cn": "「打电话」即拨电话。", "kr": "「打电话」는 전화하다.", "en": "打电话 = to make a call.", "jp": "「打电话」は電話をかける。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___李明。", "kr": "나 ___ 이명 씨.", "en": "I'm ___ Li Ming.", "jp": "李明さんを___。" }, "options": ["找", "在", "喂", "等"], "answer": "找", "explanation": { "cn": "找人用「找」。", "kr": "찾을 때 「找」.", "en": "找 = to look for.", "jp": "探すは「找」。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「请问你找谁？」可以回答？", "kr": "「请问你找谁？」에 대한 답은?", "en": "Response to 请问你找谁?", "jp": "「请问你找谁？」への返答は？" }, "options": ["喂", "我找李明", "谢谢", "在"], "answer": "我找李明", "explanation": { "cn": "回答找谁用「我找+人名」。", "kr": "누구 찾는지 답은 「我找+이름」.", "en": "Reply with 我找 + name.", "jp": "「我找+名前」で答える。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "礼貌地问「找谁」怎么说？", "kr": "누구 찾는지 예의 있게 물을 때?", "en": "Polite way to ask who they're looking for?", "jp": "誰を探すか丁寧に聞くとき？" }, "options": ["请问你找谁", "找谁请问你", "你找谁请问"], "answer": "请问你找谁", "explanation": { "cn": "「请问」表示礼貌地问。", "kr": "「请问」는 예의 있게 묻기.", "en": "请问 = May I ask (polite).", "jp": "「请问」は丁寧に聞く。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "喂",
-      "请问你是谁",
-      "我打电话",
-      "再见"
-    ],
-    "chatPrompt": "AI扮演接电话的人，学生练习打电话对话。"
-  },
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "喂！请问你找谁？我找李明。", "hint": { "cn": "请解释打电话找人的说法。", "kr": "전화로 사람 찾는 표현을 설명해 보세요.", "en": "Explain phone call to find someone.", "jp": "電話で人を探す言い方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "phone_call", "prompt": { "cn": "扮演打电话和接电话，用喂、请问、我找…。", "kr": "전화 거는 사람과 받는 사람 역할로 喂、请问、我找…를 쓰세요.", "en": "Roleplay caller and receiver using 喂, 请问, 我找...", "jp": "電話をかける人と受ける人で喂、请问、我找…を使いましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["喂！", "喂！请问你找谁？", "我找李明。", "李明在，你等一下。", "谢谢。", "不客气。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
   ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你今年多大？",
-          "translation": {
-            "en": "How old are you this year?",
-            "kr": "How old are you this year?",
-            "jp": "How old are you this year?"
-          },
-          "pinyin": "nǐ jīn nián duō dà ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我今年二十岁。",
-          "translation": {
-            "en": "I'm twenty this year.",
-            "kr": "I'm twenty this year.",
-            "jp": "I'm twenty this year."
-          },
-          "pinyin": "wǒ jīn nián èr shí suì 。"
-        },
-        {
-          "speaker": "A",
-          "text": "他呢？",
-          "translation": {
-            "en": "What about him?",
-            "kr": "What about him?",
-            "jp": "What about him?"
-          },
-          "pinyin": "tā ne ？"
-        },
-        {
-          "speaker": "B",
-          "text": "他今年十八岁。",
-          "translation": {
-            "en": "He's eighteen this year.",
-            "kr": "He's eighteen this year.",
-            "jp": "He's eighteen this year."
-          },
-          "pinyin": "tā jīn nián shí bā suì 。"
-        }
-      ]
-    }
+  "aiPractice": { "speaking": ["喂", "请问你找谁", "我找李明", "你等一下", "谢谢"], "chatPrompt": "AI接电话：喂！请问你找谁？学生说找谁并礼貌结束。" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

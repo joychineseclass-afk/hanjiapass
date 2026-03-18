@@ -1,43 +1,43 @@
 {
-  "id": "hsk2.0_hsk1_lesson18",
+  "id": "hsk1_lesson18",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 18,
   "type": "lesson",
   "title": {
-    "zh": "买东西",
-    "pinyin": "mǎi dōngxi",
-    "kr": "쇼핑",
-    "en": "Shopping",
-    "jp": "買い物"
+    "zh": "王老师今天来学校吗？",
+    "pinyin": "Wáng lǎoshī jīntiān lái xuéxiào ma",
+    "kr": "왕 선생님 오늘 학교에 와요?",
+    "en": "Is Teacher Wang coming to school today?",
+    "jp": "王先生は今日学校に来ますか？"
   },
   "summary": {
-    "zh": "买、钱、商店",
-    "kr": "사다, 돈, 가게",
-    "en": "Buy, money, shop"
+    "zh": "说来学校、什么时候回来和给电话",
+    "kr": "학교에 오는지, 언제 돌아오는지, 전화번호를 주고받기",
+    "en": "Talking about coming to school, returning time and giving a phone number"
   },
   "objectives": [
     {
-      "zh": "学会说买东西",
-      "kr": "쇼핑할 수 있다",
-      "en": "Can talk about shopping"
+      "zh": "学会用「来」「回来」说来学校和回来的时间",
+      "kr": "「来」「回来」로 학교에 오는지와 돌아오는 시간을 말할 수 있다",
+      "en": "Can use 来 and 回来 to talk about coming to school and returning"
     },
     {
-      "zh": "学会这、那",
-      "kr": "'这', '那'를 사용할 수 있다",
-      "en": "Can use 这 and 那"
+      "zh": "学会用「有+电话」「写给你」给出联系方式",
+      "kr": "「有+电话」「写给你」로 연락처를 줄 수 있다",
+      "en": "Can use 有 + 电话 and 写给你 to give contact information"
     }
   ],
   "vocab": [
     {
-      "hanzi": "买",
-      "pinyin": "mǎi",
+      "hanzi": "来",
+      "pinyin": "lái",
       "meaning": {
-        "zh": "买",
-        "kr": "사다",
-        "en": "to buy",
-        "jp": "買う"
+        "zh": "来",
+        "kr": "오다",
+        "en": "to come",
+        "jp": "来る"
       },
       "pos": {
         "kr": "동사",
@@ -46,13 +46,28 @@
       }
     },
     {
-      "hanzi": "钱",
-      "pinyin": "qián",
+      "hanzi": "回来",
+      "pinyin": "huílai",
       "meaning": {
-        "zh": "钱",
-        "kr": "돈",
-        "en": "money",
-        "jp": "お金"
+        "zh": "回来",
+        "kr": "돌아오다",
+        "en": "to come back",
+        "jp": "帰ってくる"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "电话",
+      "pinyin": "diànhuà",
+      "meaning": {
+        "zh": "电话",
+        "kr": "전화",
+        "en": "phone; telephone",
+        "jp": "電話"
       },
       "pos": {
         "kr": "명사",
@@ -61,243 +76,124 @@
       }
     },
     {
-      "hanzi": "商店",
-      "pinyin": "shāngdiàn",
+      "hanzi": "写",
+      "pinyin": "xiě",
       "meaning": {
-        "zh": "商店",
-        "kr": "가게",
-        "en": "shop",
-        "jp": "店"
+        "zh": "写",
+        "kr": "쓰다",
+        "en": "to write",
+        "jp": "書く"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
       }
     },
     {
-      "hanzi": "衣服",
-      "pinyin": "yīfu",
+      "hanzi": "给",
+      "pinyin": "gěi",
       "meaning": {
-        "zh": "衣服",
-        "kr": "옷",
-        "en": "clothes",
-        "jp": "服"
+        "zh": "给",
+        "kr": "…에게 주다",
+        "en": "to give; to; for",
+        "jp": "〜にあげる"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "些",
-      "pinyin": "xiē",
-      "meaning": {
-        "zh": "些",
-        "kr": "몇",
-        "en": "some",
-        "jp": "いくつか"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word",
-        "jp": "量詞"
-      }
-    },
-    {
-      "hanzi": "那",
-      "pinyin": "nà",
-      "meaning": {
-        "zh": "那",
-        "kr": "저",
-        "en": "that",
-        "jp": "あれ"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    },
-    {
-      "hanzi": "这",
-      "pinyin": "zhè",
-      "meaning": {
-        "zh": "这",
-        "kr": "이",
-        "en": "this",
-        "jp": "これ"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
-      }
-    },
-    {
-      "hanzi": "电脑",
-      "pinyin": "diànnǎo",
-      "meaning": {
-        "zh": "电脑",
-        "kr": "컴퓨터",
-        "en": "computer",
-        "jp": "パソコン"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "介词/동사",
+        "en": "preposition/verb",
+        "jp": "前置詞／動詞"
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "我要买苹果。",
-          "translation": {
-            "en": "I want to buy apples.",
-            "kr": "I want to buy apples.",
-            "jp": "I want to buy apples."
-          },
-          "pinyin": "wǒ yào mǎi píng guǒ 。"
-        },
-        {
-          "speaker": "B",
-          "text": "你要几个？",
-          "translation": {
-            "en": "How many do you want?",
-            "kr": "How many do you want?",
-            "jp": "How many do you want?"
-          },
-          "pinyin": "nǐ yào jǐ gè ？"
-        },
-        {
-          "speaker": "A",
-          "text": "我要五个。多少钱？",
-          "translation": {
-            "en": "I want five. How much?",
-            "kr": "I want five. How much?",
-            "jp": "I want five. How much?"
-          },
-          "pinyin": "wǒ yào wǔ gè 。 duō shǎo qián ？"
-        },
-        {
-          "speaker": "B",
-          "text": "十块钱。",
-          "translation": {
-            "en": "Ten yuan.",
-            "kr": "Ten yuan.",
-            "jp": "Ten yuan."
-          },
-          "pinyin": "shí kuài qián 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "王老师今天来学校吗？" },
+    { "speaker": "B", "text": "今天不来，他去北京了。" },
+    { "speaker": "A", "text": "他什么时候回来？" },
+    { "speaker": "B", "text": "星期五回来。" },
+    { "speaker": "A", "text": "你有王老师的电话吗？" },
+    { "speaker": "B", "text": "我写给你。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "这 / 那",
-      "explanation_zh": "「这」指近处，「那」指远处。",
-      "explanation_kr": "'这'는 가까운 것, '那'는 먼 것.",
-      "explanation_en": "这 for near, 那 for far.",
-      "example": {
-        "zh": "这个，那个",
-        "pinyin": "zhè gè, nà gè",
-        "kr": "이것, 저것",
-        "en": "this one, that one"
-      },
+      "pattern": "来 / 回来",
+      "pinyin": "lái / huílái",
       "explain": {
-        "jp": "「这」は近く、「那」は遠くを指します。",
-        "en": "这 for near, 那 for far.",
-        "kr": "'这'는 가까운 것, '那'는 먼 것.",
-        "zh": "「这」指近处，「那」指远处。"
+        "zh": "「来」表示到说话人这边；「回来」表示从别处回到原处。王老师今天来学校吗？他什么时候回来？",
+        "kr": "「来」는 말하는 쪽으로 오다. 「回来」는 돌아오다. 来学校吗？什么时候回来？",
+        "en": "来 = come (here). 回来 = come back. 来学校吗？什么时候回来？",
+        "jp": "「来」は話者へ来る。「回来」は帰ってくる。来学校吗？什么时候回来？"
+      },
+      "example": {
+        "zh": "王老师今天来学校吗？今天不来，他去北京了。他什么时候回来？星期五回来。",
+        "pinyin": "Wáng lǎoshī jīntiān lái xuéxiào ma? Jīntiān bù lái, tā qù Běijīng le. Tā shénme shíhou huílái? Xīngqī wǔ huílái.",
+        "translation": { "kr": "왕 선생님 오늘 학교 와? 오늘 안 와, 베이징 갔어. 언제 돌아와? 금요일에.", "jp": "王老师は今日学校に来る？来ない。北京に行った。いつ戻る？金曜日に。", "en": "Is Teacher Wang coming today? No, he went to Beijing. When is he back? Friday." }
       }
     },
     {
-      "title": "呢",
-      "explanation_zh": "「呢」用于追问或话题转换。",
-      "explanation_kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
-      "explanation_en": "呢 for follow-up or topic shift.",
-      "example": {
-        "zh": "那个呢？",
-        "pinyin": "Nà gè ne?",
-        "kr": "저것은요?",
-        "en": "What about that one?"
-      },
+      "pattern": "有 + 名词（电话） / 写给 + 人（给）",
+      "pinyin": "yǒu + míngcí / xiě gěi + rén",
       "explain": {
-        "jp": "「呢」は追及や話題転換に使います。",
-        "en": "呢 for follow-up or topic shift.",
-        "kr": "'呢'는 재질문이나 화제 전환에 사용합니다.",
-        "zh": "「呢」用于追问或话题转换。"
+        "zh": "「有」表示拥有：有电话。「给」表示给谁：写给你。你有王老师的电话吗？我写给你。",
+        "kr": "「有」는 가지고 있다. 「给」는 누구에게 주는지. 你有电话吗？我写给你.",
+        "en": "有 shows possession: 有电话. 给 shows giving to someone: 写给你。",
+        "jp": "「有」は持つ、「给」は〜に与える。你有电话吗？我写给你。"
+      },
+      "example": {
+        "zh": "你有王老师的电话吗？我写给你。",
+        "pinyin": "Nǐ yǒu Wáng lǎoshī de diànhuà ma? Wǒ xiě gěi nǐ.",
+        "translation": { "kr": "왕 선생님 전화번호 있어? 적어서 줄게.", "jp": "王先生の電話番号ある？書いてあげる。", "en": "Do you have Teacher Wang's number? I'll write it for you." }
       }
     }
   ],
   "extension": [
     {
-      "zh": "太贵了。",
-      "pinyin": "Tài guì le.",
-      "kr": "너무 비싸요.",
-      "en": "It's too expensive.",
-      "phrase": "太贵了。",
+      "zh": "给我打电话。",
+      "pinyin": "Gěi wǒ dǎ diànhuà.",
+      "kr": "저에게 전화 주세요.",
+      "en": "Call me.",
+      "phrase": "给我打电话。",
       "explain": {
-        "kr": "너무 비싸요.",
-        "en": "It's too expensive.",
-        "jp": "高すぎます。"
+        "kr": "저에게 전화 주세요.",
+        "en": "Please give me a call.",
+        "jp": "私に電話してください。"
       }
     },
     {
-      "zh": "便宜一点吧。",
-      "pinyin": "Piányi yīdiǎn ba.",
-      "kr": "조금 깎아 주세요.",
-      "en": "Can you make it cheaper?",
-      "phrase": "便宜一点吧。",
+      "zh": "我给你发短信。",
+      "pinyin": "Wǒ gěi nǐ fā duǎnxìn.",
+      "kr": "제가 문자 보낼게요.",
+      "en": "I'll send you a message.",
+      "phrase": "我给你发短信。",
       "explain": {
-        "kr": "조금 깎아 주세요.",
-        "en": "Can you make it cheaper?",
-        "jp": "もう少し安くしてください。"
+        "kr": "제가 문자 보낼게요.",
+        "en": "I'll send you a text message.",
+        "jp": "あなたにメッセージを送ります。"
       }
     },
     {
-      "zh": "我要这个。",
-      "pinyin": "Wǒ yào zhè gè.",
-      "kr": "이거 주세요.",
-      "en": "I want this one.",
-      "phrase": "我要这个。",
+      "zh": "你有我的电话吗？",
+      "pinyin": "Nǐ yǒu wǒ de diànhuà ma?",
+      "kr": "제 전화번호 있어요?",
+      "en": "Do you have my phone number?",
+      "phrase": "你有我的电话吗？",
       "explain": {
-        "kr": "이거 주세요.",
-        "en": "I want this one.",
-        "jp": "これをください。"
+        "kr": "제 전화번호 있어요?",
+        "en": "Do you have my phone number?",
+        "jp": "私の電話番号を持っていますか。"
       }
     },
     {
-      "zh": "不要那个。",
-      "pinyin": "Bú yào nà gè.",
-      "kr": "저건 안 할게요.",
-      "en": "I don't want that one.",
-      "phrase": "不要那个。",
+      "zh": "我写给你。",
+      "pinyin": "Wǒ xiě gěi nǐ.",
+      "kr": "제가 써 줄게요.",
+      "en": "I'll write it for you.",
+      "phrase": "我写给你。",
       "explain": {
-        "kr": "저건 안 할게요.",
-        "en": "I don't want that one."
-      }
-    },
-    {
-      "zh": "我再看看。",
-      "pinyin": "Wǒ zài kànkan.",
-      "kr": "다시 살펴볼게요.",
-      "en": "Let me look around some more.",
-      "phrase": "我再看看。",
-      "explain": {
-        "kr": "다시 살펴볼게요.",
-        "en": "Let me look around some more."
+        "kr": "제가 써 줄게요.",
+        "en": "I'll write it down for you.",
+        "jp": "書いてあげます。"
       }
     }
   ],
@@ -305,83 +201,83 @@
     {
       "type": "choice",
       "question": {
-        "zh": "「买」的意思是？",
+        "zh": "「来」的意思是？",
         "kr": "의미는?",
         "en": "Meaning?"
       },
       "options": [
-        "卖",
-        "买",
-        "钱"
+        "去",
+        "来",
+        "回"
       ],
-      "answer": "买"
+      "answer": "来"
     },
     {
       "type": "choice",
       "question": {
-        "zh": "「这」的反义词是？",
-        "kr": "반대말은?",
-        "en": "Antonym?"
+        "zh": "「回来」的意思是？",
+        "kr": "의미는?",
+        "en": "Meaning?"
       },
       "options": [
-        "那",
-        "这",
-        "个"
+        "回来",
+        "电话",
+        "写"
       ],
-      "answer": "那"
+      "answer": "回来"
     },
     {
       "type": "choice",
       "question": {
-        "zh": "这个___钱？",
+        "zh": "你有老师的___吗？",
         "kr": "빈칸",
         "en": "Fill in"
       },
       "options": [
-        "多少",
-        "买",
-        "商店"
+        "给",
+        "电话",
+        "写"
       ],
-      "answer": "多少"
+      "answer": "电话"
     },
     {
       "type": "choice",
       "question": {
-        "zh": "A：你买什么？ B：___",
+        "zh": "A：你有王老师的电话吗？ B：___",
         "kr": "대화",
         "en": "Dialogue"
       },
       "options": [
-        "我买衣服",
-        "十块",
-        "商店"
+        "我写给你",
+        "我去商店",
+        "我买衣服"
       ],
-      "answer": "我买衣服"
+      "answer": "我写给你"
     },
     {
       "type": "choice",
       "question": {
-        "zh": "哪个是「钱」？",
-        "kr": "어느 것?",
-        "en": "Which?"
+        "zh": "哪个句子用了「给」？",
+        "kr": "어느 문장에서 「给」를 썼어요?",
+        "en": "Which sentence uses 给?"
       },
       "options": [
-        "买",
-        "钱",
-        "商店"
+        "我有电话。",
+        "我写给你。",
+        "他回来。"
       ],
-      "answer": "钱"
+      "answer": "我写给你。"
     }
   ],
   "review": {},
   "aiPractice": {
     "speaking": [
-      "我买衣服",
-      "多少钱",
-      "这个那个",
-      "我有钱"
+      "王老师今天来学校吗",
+      "他什么时候回来",
+      "我有老师的电话",
+      "我写给你"
     ],
-    "chatPrompt": "AI问：你买什么？学生回答。"
+    "chatPrompt": "AI问：王老师今天来学校吗？学生回答来、什么时候回来和给电话。"
   },
   "steps": [
     {
@@ -436,43 +332,43 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "我要买苹果。",
+          "text": "你有老师的电话吗？",
           "translation": {
-            "en": "I want to buy apples.",
-            "kr": "I want to buy apples.",
-            "jp": "I want to buy apples."
+            "en": "Do you have the teacher's phone number?",
+            "kr": "선생님 전화번호 있어요?",
+            "jp": "先生の電話番号を持っていますか。"
           },
-          "pinyin": "wǒ yào mǎi píng guǒ 。"
+          "pinyin": "nǐ yǒu lǎoshī de diànhuà ma ？"
         },
         {
           "speaker": "B",
-          "text": "你要几个？",
+          "text": "有，我写给你。",
           "translation": {
-            "en": "How many do you want?",
-            "kr": "How many do you want?",
-            "jp": "How many do you want?"
+            "en": "Yes, I'll write it for you.",
+            "kr": "있어요, 써 줄게요.",
+            "jp": "はい、書いてあげます。"
           },
-          "pinyin": "nǐ yào jǐ gè ？"
+          "pinyin": "yǒu ， wǒ xiě gěi nǐ 。"
         },
         {
           "speaker": "A",
-          "text": "我要五个。多少钱？",
+          "text": "谢谢，你什么时候来学校？",
           "translation": {
-            "en": "I want five. How much?",
-            "kr": "I want five. How much?",
-            "jp": "I want five. How much?"
+            "en": "Thanks. When will you come to school?",
+            "kr": "고마워요. 언제 학교에 와요?",
+            "jp": "ありがとう。いつ学校に来ますか。"
           },
-          "pinyin": "wǒ yào wǔ gè 。 duō shǎo qián ？"
+          "pinyin": "xièxie ， nǐ shénme shíhou lái xuéxiào ？"
         },
         {
           "speaker": "B",
-          "text": "十块钱。",
+          "text": "我明天来，星期五回来。",
           "translation": {
-            "en": "Ten yuan.",
-            "kr": "Ten yuan.",
-            "jp": "Ten yuan."
+            "en": "I'll come tomorrow and come back on Friday.",
+            "kr": "내일 와요, 금요일에 돌아와요.",
+            "jp": "明日来て、金曜日に戻ります。"
           },
-          "pinyin": "shí kuài qián 。"
+          "pinyin": "wǒ míngtiān lái ， xīngqīwǔ huílai 。"
         }
       ]
     }

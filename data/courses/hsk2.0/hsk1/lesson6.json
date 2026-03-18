@@ -1,525 +1,112 @@
 {
-  "id": "hsk2.0_hsk1_lesson6",
+  "id": "hsk1_lesson6",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 6,
   "type": "lesson",
   "title": {
-    "zh": "年龄",
-    "pinyin": "niánlíng",
-    "kr": "나이",
-    "en": "Age",
-    "jp": "年齢"
+    "zh": "你会说汉语吗？",
+    "pinyin": "nǐ huì shuō Hànyǔ ma",
+    "kr": "중국어 할 수 있어요?",
+    "en": "Can you speak Chinese?",
+    "jp": "中国語を話せますか？"
   },
   "summary": {
-    "zh": "问年龄与描述大小",
-    "kr": "나이 묻기와 크기 표현",
-    "en": "Asking age and size"
+    "zh": "介绍旁边的朋友或同学",
+    "kr": "옆에 있는 친구나 동창 소개",
+    "en": "Introducing a friend or classmate beside you"
+  },
+  "scene": {
+    "id": "l6_scene",
+    "title": { "zh": "介绍旁边的朋友/同学", "kr": "옆에 있는 친구·동창 소개", "en": "Introducing the friend or classmate next to you" },
+    "summary": { "zh": "介绍旁边的朋友或同学", "kr": "같이 있는 친구 또는 동창을 소개하는 상황", "en": "Introducing the person next to you" }
   },
   "objectives": [
-    {
-      "zh": "学会问年龄",
-      "kr": "나이를 물을 수 있다",
-      "en": "Can ask age"
-    },
-    {
-      "zh": "学会用大、小",
-      "kr": "'大', '小'를 사용할 수 있다",
-      "en": "Can use 大 and 小"
-    }
+    { "zh": "学会介绍这是谁", "kr": "이 사람이 누구인지 소개할 수 있다", "en": "Can introduce who this person is" },
+    { "zh": "学会说朋友、同学", "kr": "친구, 동창을 말할 수 있다", "en": "Can say friend, classmate" }
   ],
   "vocab": [
-    {
-      "hanzi": "岁",
-      "pinyin": "suì",
-      "meaning": {
-        "zh": "岁",
-        "kr": "살",
-        "en": "years old",
-        "jp": "歳"
-      },
-      "pos": {
-        "kr": "양사",
-        "en": "measure word",
-        "jp": "量詞"
-      }
-    },
-    {
-      "hanzi": "年",
-      "pinyin": "nián",
-      "meaning": {
-        "zh": "年",
-        "kr": "년",
-        "en": "year",
-        "jp": "年"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "多",
-      "pinyin": "duō",
-      "meaning": {
-        "zh": "多",
-        "kr": "많다",
-        "en": "many",
-        "jp": "多い"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective",
-        "jp": "形容詞"
-      }
-    },
-    {
-      "hanzi": "大",
-      "pinyin": "dà",
-      "meaning": {
-        "zh": "大",
-        "kr": "크다",
-        "en": "big",
-        "jp": "大きい"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective",
-        "jp": "形容詞"
-      }
-    },
-    {
-      "hanzi": "小",
-      "pinyin": "xiǎo",
-      "meaning": {
-        "zh": "小",
-        "kr": "작다",
-        "en": "small",
-        "jp": "小さい"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective",
-        "jp": "形容詞"
-      }
-    },
-    {
-      "hanzi": "了",
-      "pinyin": "le",
-      "meaning": {
-        "zh": "了",
-        "kr": "완료 조사",
-        "en": "aspect particle",
-        "jp": "完了の助詞"
-      },
-      "pos": {
-        "kr": "조사",
-        "en": "particle",
-        "jp": "助詞"
-      }
-    },
-    {
-      "hanzi": "不",
-      "pinyin": "bù",
-      "meaning": {
-        "zh": "不",
-        "kr": "아니",
-        "en": "not",
-        "jp": "〜ない"
-      },
-      "pos": {
-        "kr": "부사",
-        "en": "adverb",
-        "jp": "副詞"
-      }
-    }
+    { "hanzi": "这", "pinyin": "zhè", "meaning": { "zh": "这", "kr": "이", "en": "this", "jp": "この" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "谁", "pinyin": "shéi", "meaning": { "zh": "谁", "kr": "누구", "en": "who", "jp": "誰" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "朋友", "pinyin": "péngyou", "meaning": { "zh": "朋友", "kr": "친구", "en": "friend", "jp": "友達" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "他", "pinyin": "tā", "meaning": { "zh": "他", "kr": "그", "en": "he", "jp": "彼" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
+    { "hanzi": "叫", "pinyin": "jiào", "meaning": { "zh": "叫", "kr": "~라고 부르다", "en": "to be called", "jp": "〜という" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
+    { "hanzi": "学生", "pinyin": "xuésheng", "meaning": { "zh": "学生", "kr": "학생", "en": "student", "jp": "学生" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
+    { "hanzi": "同学", "pinyin": "tóngxué", "meaning": { "zh": "同学", "kr": "동창, 반 친구", "en": "classmate", "jp": "クラスメート" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
   ],
-  "dialogueCards": [
+  "dialogue": [
+    { "speaker": "A", "text": "你会说汉语吗？" },
+    { "speaker": "B", "text": "是的，我会汉语。" },
+    { "speaker": "A", "text": "你在哪儿学习汉语？" },
+    { "speaker": "B", "text": "我在学校学习汉语。" }
+  ],
+  "originalDialogues": [
     {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
+      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
       "lines": [
-        {
-          "speaker": "A",
-          "text": "你有几个苹果？",
-          "translation": {
-            "en": "How many apples do you have?",
-            "kr": "How many apples do you have?",
-            "jp": "How many apples do you have?"
-          },
-          "pinyin": "nǐ yǒu jǐ gè píng guǒ ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我有五个苹果。",
-          "translation": {
-            "en": "I have five apples.",
-            "kr": "I have five apples.",
-            "jp": "I have five apples."
-          },
-          "pinyin": "wǒ yǒu wǔ gè píng guǒ 。"
-        },
-        {
-          "speaker": "A",
-          "text": "我有三个。一、二、三。",
-          "translation": {
-            "en": "I have three. One, two, three.",
-            "kr": "I have three. One, two, three.",
-            "jp": "I have three. One, two, three."
-          },
-          "pinyin": "wǒ yǒu sān gè 。 yī 、 èr 、 sān 。"
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "多少个？",
-          "translation": {
-            "en": "How many?",
-            "kr": "How many?",
-            "jp": "How many?"
-          },
-          "pinyin": "duō shǎo gè ？"
-        },
-        {
-          "speaker": "B",
-          "text": "六个。你要几个？",
-          "translation": {
-            "en": "Six. How many do you want?",
-            "kr": "Six. How many do you want?",
-            "jp": "Six. How many do you want?"
-          },
-          "pinyin": "liù gè 。 nǐ yào jǐ gè ？"
-        },
-        {
-          "speaker": "A",
-          "text": "我要两个。谢谢。",
-          "translation": {
-            "en": "I want two. Thanks.",
-            "kr": "I want two. Thanks.",
-            "jp": "I want two. Thanks."
-          },
-          "pinyin": "wǒ yào liǎng gè 。 xiè xiè 。"
-        }
+        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
+        { "speaker": "B", "text": "这是我的朋友。", "translation": { "en": "This is my friend.", "kr": "이건 내 친구야.", "jp": "これは私の友達です。" }, "pinyin": "Zhè shì wǒ de péngyou." },
+        { "speaker": "A", "text": "他叫什么？", "translation": { "en": "What's his name?", "kr": "그 이름이 뭐야?", "jp": "彼の名前は？" }, "pinyin": "Tā jiào shénme?" },
+        { "speaker": "B", "text": "他叫王明。", "translation": { "en": "He's called Wang Ming.", "kr": "그는 왕명이야.", "jp": "王明です。" }, "pinyin": "Tā jiào Wáng Míng." },
+        { "speaker": "A", "text": "他是学生吗？", "translation": { "en": "Is he a student?", "kr": "그 학생이야?", "jp": "彼は学生ですか？" }, "pinyin": "Tā shì xuésheng ma?" },
+        { "speaker": "B", "text": "是，他是我的同学。", "translation": { "en": "Yes, he's my classmate.", "kr": "응, 그는 내 동창이야.", "jp": "はい、私のクラスメートです。" }, "pinyin": "Shì, tā shì wǒ de tóngxué." }
       ]
     }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "几 + 岁",
-      "explanation_zh": "问年龄用「几岁」。",
-      "explanation_kr": "나이를 물을 때 '几岁'를 사용합니다.",
-      "explanation_en": "Ask age with 几岁.",
-      "example": {
-        "zh": "你几岁？",
-        "pinyin": "Nǐ jǐ suì?",
-        "kr": "몇 살이에요?",
-        "en": "How old are you?"
+      "pattern": "会",
+      "pinyin": "huì",
+      "explain": {
+        "zh": "「会」表示能力“会做某事”。会 + 动词：会说汉语、会学习。",
+        "kr": "「会」는 능력 \"~할 수 있다\". 会+동사: 会说汉语.",
+        "en": "会 means can / know how to. 会 + verb: 会说汉语.",
+        "jp": "「会」は能力「〜できる」。会+動詞：会说汉语。"
       },
-      "explain": {
-        "jp": "年齢を聞くときは「几岁」を使います。",
-        "en": "Ask age with 几岁.",
-        "kr": "나이를 물을 때 '几岁'를 사용합니다.",
-        "zh": "问年龄用「几岁」。"
-      }
-    },
-    {
-      "title": "不 + 形容词",
-      "explanation_zh": "否定形容词用「不」。",
-      "explanation_kr": "형용사 부정은 '不'를 사용합니다.",
-      "explanation_en": "Negate adjectives with 不.",
       "example": {
-        "zh": "不大",
-        "pinyin": "bù dà",
-        "kr": "크지 않다",
-        "en": "not big"
+        "zh": "你会说汉语吗？是的，我会汉语。",
+        "pinyin": "Nǐ huì shuō Hànyǔ ma? Shì de, wǒ huì Hànyǔ.",
+        "translation": { "kr": "중국어 할 줄 알아? 응, 나 중국어 해.", "jp": "中国語話せる？はい、話せます。", "en": "Can you speak Chinese? Yes, I can." }
+      }
+    },
+    {
+      "pattern": "学习 + 名词",
+      "pinyin": "xuéxí + míngcí",
+      "explain": {
+        "zh": "「学习」后面接学习的内容。学习汉语、在学校学习。",
+        "kr": "「学习」 뒤에 학습 내용이 옵니다. 学习汉语, 在学校学习.",
+        "en": "学习 takes an object. 学习汉语 = study Chinese.",
+        "jp": "「学习」の後に学習内容が続く。学习汉语。"
       },
-      "explain": {
-        "jp": "形容詞の否定には「不」を使います。",
-        "en": "Negate adjectives with 不.",
-        "kr": "형용사 부정은 '不'를 사용합니다.",
-        "zh": "否定形容词用「不」。"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "zh": "今年多大？",
-      "pinyin": "Jīnnián duō dà?",
-      "kr": "올해 몇 살이에요?",
-      "en": "How old are you this year?",
-      "phrase": "今年多大？",
-      "explain": {
-        "kr": "올해 몇 살이에요?",
-        "en": "How old are you this year?",
-        "jp": "今年何歳ですか？"
-      }
-    },
-    {
-      "zh": "比我大",
-      "pinyin": "Bǐ wǒ dà",
-      "kr": "나보다 나이가 많아요",
-      "en": "older than me",
-      "phrase": "比我大",
-      "explain": {
-        "kr": "나보다 나이가 많아요",
-        "en": "older than me",
-        "jp": "私より年上"
-      }
-    },
-    {
-      "zh": "比我小",
-      "pinyin": "Bǐ wǒ xiǎo",
-      "kr": "나보다 어려요",
-      "en": "younger than me",
-      "phrase": "比我小",
-      "explain": {
-        "kr": "나보다 어려요",
-        "en": "younger than me",
-        "jp": "私より年下"
-      }
-    },
-    {
-      "zh": "他比我大三岁。",
-      "pinyin": "Tā bǐ wǒ dà sān suì.",
-      "kr": "그는 나보다 세 살 많아요.",
-      "en": "He is three years older than me.",
-      "phrase": "他比我大三岁。",
-      "explain": {
-        "kr": "그는 나보다 세 살 많아요.",
-        "en": "He is three years older than me."
-      }
-    },
-    {
-      "zh": "她比我小两岁。",
-      "pinyin": "Tā bǐ wǒ xiǎo liǎng suì.",
-      "kr": "그녀는 나보다 두 살 어려요.",
-      "en": "She is two years younger than me.",
-      "phrase": "她比我小两岁。",
-      "explain": {
-        "kr": "그녀는 나보다 두 살 어려요.",
-        "en": "She is two years younger than me."
+      "example": {
+        "zh": "你在哪儿学习汉语？我在学校学习汉语。",
+        "pinyin": "Nǐ zài nǎr xuéxí Hànyǔ? Wǒ zài xuéxiào xuéxí Hànyǔ.",
+        "translation": { "kr": "어디서 중국어 배워? 나는 학교에서 중국어 배워.", "jp": "どこで中国語を勉強してる？学校で勉強してる。", "en": "Where do you study Chinese? I study at school." }
       }
     }
   ],
   "practice": [
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「岁」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
-      },
-      "options": [
-        "年",
-        "岁",
-        "多"
-      ],
-      "answer": "岁"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "「大」的反义词是？",
-        "kr": "반대말은?",
-        "en": "Antonym?"
-      },
-      "options": [
-        "小",
-        "多",
-        "不"
-      ],
-      "answer": "小"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "你今年___岁？",
-        "kr": "빈칸",
-        "en": "Fill in"
-      },
-      "options": [
-        "几",
-        "了",
-        "不"
-      ],
-      "answer": "几"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "A：你几岁？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
-      },
-      "options": [
-        "我二十岁",
-        "不大",
-        "多了"
-      ],
-      "answer": "我二十岁"
-    },
-    {
-      "type": "choice",
-      "question": {
-        "zh": "哪个是「年」？",
-        "kr": "어느 것?",
-        "en": "Which?"
-      },
-      "options": [
-        "月",
-        "年",
-        "日"
-      ],
-      "answer": "年"
-    }
+    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "这是___的朋友。", "kr": "이건 ___ 친구야.", "en": "This is ___ friend.", "jp": "これは___の友達です。" }, "options": ["我", "他", "你", "他们"], "answer": "我", "explanation": { "cn": "「我的」表示我的。", "kr": "「我的」는 나의.", "en": "我的 = my.", "jp": "「我的」は私の。" } },
+    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「同学」的意思是？", "kr": "「同学」의 뜻은?", "en": "What does 同学 mean?", "jp": "「同学」の意味は？" }, "options": ["朋友", "老师", "同学", "学生"], "answer": "同学", "explanation": { "cn": "「同学」即同班同学。", "kr": "「同学」는 동창.", "en": "同学 means classmate.", "jp": "「同学」はクラスメート。" } },
+    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "他___王明。", "kr": "그는 왕명___.", "en": "He ___ Wang Ming.", "jp": "彼___王明です。" }, "options": ["叫", "是", "有", "在"], "answer": "叫", "explanation": { "cn": "介绍名字用「叫」。", "kr": "이름 소개할 때 「叫」.", "en": "Use 叫 for name.", "jp": "名前は「叫」を使う。" } },
+    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「这是谁？」可以回答？", "kr": "「这是谁？」에 대한 답은?", "en": "Response to 这是谁?", "jp": "「这是谁？」への返答は？" }, "options": ["他叫什么", "这是我的朋友", "他是学生", "叫王明"], "answer": "这是我的朋友", "explanation": { "cn": "介绍人用「这是+我的+朋友/同学」。", "kr": "사람 소개는 「这是+我的+朋友/同学」.", "en": "Introduce with 这是+我的+朋友/同学.", "jp": "「这是+我的+朋友/同学」で紹介。" } },
+    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "「他」指代？", "kr": "「他」는 누구를 가리키나요?", "en": "他 refers to?", "jp": "「他」は誰を指しますか？" }, "options": ["男性第三人称", "你", "我", "她"], "answer": "男性第三人称", "explanation": { "cn": "「他」指男性第三人称。", "kr": "「他」는 남성 3인칭.", "en": "他 = he (third person male).", "jp": "「他」は彼。" } }
   ],
   "review": {},
-  "aiPractice": {
-    "speaking": [
-      "你几岁",
-      "我二十岁",
-      "不大",
-      "很多"
-    ],
-    "chatPrompt": "AI问：你几岁？学生回答年龄。"
-  },
-  "steps": [
-    {
-      "key": "vocab",
-      "label": {
-        "zh": "词汇",
-        "kr": "단어",
-        "en": "Words"
-      }
-    },
-    {
-      "key": "dialogue",
-      "label": {
-        "zh": "对话",
-        "kr": "대화",
-        "en": "Dialogue"
-      }
-    },
-    {
-      "key": "grammar",
-      "label": {
-        "zh": "语法",
-        "kr": "문법",
-        "en": "Grammar"
-      }
-    },
-    {
-      "key": "practice",
-      "label": {
-        "zh": "练习",
-        "kr": "연습",
-        "en": "Practice"
-      }
-    },
-    {
-      "key": "aiPractice",
-      "label": {
-        "zh": "AI练习",
-        "kr": "AI 연습",
-        "en": "AI Practice"
-      }
-    }
+  "ai": [
+    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "这是我的朋友。他叫王明。", "hint": { "cn": "请解释介绍朋友的说法。", "kr": "친구 소개 표현을 설명해 보세요.", "en": "Explain how to introduce a friend.", "jp": "友達の紹介の言い方を説明してください。" } },
+    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "introduce_friend", "prompt": { "cn": "向别人介绍旁边的朋友或同学。", "kr": "옆에 있는 친구나 동창을 소개하세요.", "en": "Introduce the friend or classmate next to you.", "jp": "隣の友達やクラスメートを紹介しましょう。" } },
+    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["这是谁？", "这是我的朋友。", "他叫什么？", "他叫王明。", "他是学生吗？", "是，他是我的同学。"] },
+    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
   ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你有几个苹果？",
-          "translation": {
-            "en": "How many apples do you have?",
-            "kr": "How many apples do you have?",
-            "jp": "How many apples do you have?"
-          },
-          "pinyin": "nǐ yǒu jǐ gè píng guǒ ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我有五个苹果。",
-          "translation": {
-            "en": "I have five apples.",
-            "kr": "I have five apples.",
-            "jp": "I have five apples."
-          },
-          "pinyin": "wǒ yǒu wǔ gè píng guǒ 。"
-        },
-        {
-          "speaker": "A",
-          "text": "我有三个。一、二、三。",
-          "translation": {
-            "en": "I have three. One, two, three.",
-            "kr": "I have three. One, two, three.",
-            "jp": "I have three. One, two, three."
-          },
-          "pinyin": "wǒ yǒu sān gè 。 yī 、 èr 、 sān 。"
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "会话2",
-        "kr": "회화2",
-        "en": "Session 2",
-        "jp": "会話2"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "多少个？",
-          "translation": {
-            "en": "How many?",
-            "kr": "How many?",
-            "jp": "How many?"
-          },
-          "pinyin": "duō shǎo gè ？"
-        },
-        {
-          "speaker": "B",
-          "text": "六个。你要几个？",
-          "translation": {
-            "en": "Six. How many do you want?",
-            "kr": "Six. How many do you want?",
-            "jp": "Six. How many do you want?"
-          },
-          "pinyin": "liù gè 。 nǐ yào jǐ gè ？"
-        },
-        {
-          "speaker": "A",
-          "text": "我要两个。谢谢。",
-          "translation": {
-            "en": "I want two. Thanks.",
-            "kr": "I want two. Thanks.",
-            "jp": "I want two. Thanks."
-          },
-          "pinyin": "wǒ yào liǎng gè 。 xiè xiè 。"
-        }
-      ]
-    }
+  "aiPractice": { "speaking": ["这是谁", "这是我的朋友", "他叫什么", "他叫王明", "他是我的同学"], "chatPrompt": "AI问：这是谁？学生介绍朋友并说他叫什么、是不是同学。" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
+    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
   ]
 }

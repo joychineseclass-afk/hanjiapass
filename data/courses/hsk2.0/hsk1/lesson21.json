@@ -1,16 +1,16 @@
 {
-  "id": "hsk2.0_hsk1_lesson21",
+  "id": "hsk1_lesson21",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 21,
   "type": "review",
   "title": {
-    "zh": "复习 1",
-    "pinyin": "fùxí 1",
-    "kr": "복습 1",
+    "zh": "综合复习1",
+    "pinyin": "zònghé fùxí 1",
+    "kr": "종합 복습 1",
     "en": "Review 1",
-    "jp": "復習1"
+    "jp": "総合復習1"
   },
   "summary": {
     "zh": "第1–10课综合复习",

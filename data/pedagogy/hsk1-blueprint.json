@@ -129,7 +129,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "15": {
-      "title": "今天很冷。",
+      "title": "你想买什么？",
       "coreSentence": "今天很冷。",
       "grammarFocus": ["很 + 形容词"],
       "scene": "weather_basic",
@@ -138,7 +138,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "16": {
-      "title": "我喜欢运动。",
+      "title": "你去哪儿？",
       "coreSentence": "我喜欢运动。",
       "grammarFocus": ["喜欢", "吗疑问句"],
       "scene": "hobby_basic",
@@ -147,7 +147,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "17": {
-      "title": "我看电视。",
+      "title": "我坐地铁去学校。",
       "coreSentence": "我看电视。",
       "grammarFocus": ["动词 + 宾语", "也"],
       "scene": "entertainment_basic",
@@ -156,7 +156,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "18": {
-      "title": "我要买苹果。",
+      "title": "王老师今天来学校吗？",
       "coreSentence": "我要买苹果。",
       "grammarFocus": ["要", "买", "多少", "几"],
       "scene": "shopping_basic",
@@ -165,7 +165,7 @@
       "wordStrategy": { "coreWords": 6, "supportWords": 2 }
     },
     "19": {
-      "title": "我明天去中国。",
+      "title": "今天天气怎么样？",
       "coreSentence": "我明天去中国。",
       "grammarFocus": ["明天", "去", "想", "会"],
       "scene": "plan_basic",
@@ -174,7 +174,7 @@
       "wordStrategy": { "coreWords": 5, "supportWords": 2 }
     },
     "20": {
-      "title": "这个很好。",
+      "title": "你做什么工作？",
       "coreSentence": "这个很好。",
       "grammarFocus": ["很 + 形容词", "这个", "那个", "觉得"],
       "scene": "comment_basic",

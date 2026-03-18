@@ -44,6 +44,30 @@ export async function openLessonDetailFlow(ctx, lesson, idxFallback = 0) {
       version: ver,
       detailCache: ctx.lessonDetailCache,
     });
+    // HSK1 强制以 vocab-distribution.json 为最终单词来源（双保险，不依赖下游 loader 是否已覆盖）
+    if (
+      safeText(dom.hskLevel?.value || "1") === "1" &&
+      window.HSK_LOADER?.buildLessonVocabFromDistribution
+    ) {
+      try {
+        const distVocab =
+          (await window.HSK_LOADER.buildLessonVocabFromDistribution(lv, lessonNo, {
+            version: ver,
+          })) ?? null;
+        if (Array.isArray(distVocab)) {
+          ctx.currentLessonDetail = {
+            ...ctx.currentLessonDetail,
+            vocab: distVocab,
+            words: distVocab,
+          };
+        }
+      } catch (e2) {
+        console.warn(
+          "[HSK_UI] buildLessonVocabFromDistribution failed in openLessonDetailFlow:",
+          e2?.message || e2
+        );
+      }
+    }
     renderLessonDetailView(ctx);
     scrollToTop();
     ctx.focusSearch?.();

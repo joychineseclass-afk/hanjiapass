@@ -48,9 +48,18 @@ export async function loadLessonDetail({ level, lessonNo, version, detailCache }
   const hit = detailCache?.get?.(key);
   if (hit) return hit;
 
+  if (window.HSK_LOADER?.loadLessonDetail) {
+    try {
+      const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver });
+      detailCache?.set?.(key, data);
+      return data;
+    } catch (e) {
+      console.warn("[hskData] HSK_LOADER.loadLessonDetail failed, fallback to direct fetch:", e?.message || e);
+    }
+  }
+
   const url = lessonDetailUrl(lv, lessonNo, ver);
   const data = await fetchJson(url);
-
   detailCache?.set?.(key, data);
   return data;
 }

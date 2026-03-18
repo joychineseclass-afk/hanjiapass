@@ -1,32 +1,32 @@
 {
-  "id": "hsk2.0_hsk1_lesson15",
+  "id": "hsk1_lesson15",
   "courseId": "hsk2.0_hsk1",
   "level": "HSK1",
   "version": "2.0",
   "lessonNo": 15,
   "type": "lesson",
   "title": {
-    "zh": "饮料",
-    "pinyin": "yǐnliào",
-    "kr": "음료",
-    "en": "Drinks",
-    "jp": "飲食2"
+    "zh": "你想买什么？",
+    "pinyin": "nǐ xiǎng mǎi shénme",
+    "kr": "뭘 사고 싶어요?",
+    "en": "What do you want to buy?",
+    "jp": "何を買いたいですか？"
   },
   "summary": {
-    "zh": "茶、杯子与饭馆",
-    "kr": "차, 컵과 식당",
-    "en": "Tea, cups and restaurant"
+    "zh": "买东西时评价大小和好坏",
+    "kr": "물건 살 때 크기와 좋고 나쁨 말하기",
+    "en": "Commenting on size and quality when shopping"
   },
   "objectives": [
     {
-      "zh": "学会在饭馆点饮料",
-      "kr": "식당에서 음료 주문할 수 있다",
-      "en": "Can order drinks at restaurant"
+      "zh": "学会用「你想买什么？」问想买的东西",
+      "kr": "「你想买什么？」로 무엇을 사고 싶은지 물을 수 있다",
+      "en": "Can ask what someone wants to buy with 你想买什么？"
     },
     {
-      "zh": "学会块、东西",
-      "kr": "'块', '东西'를 사용할 수 있다",
-      "en": "Can use 块 and 东西"
+      "zh": "学会用「怎么样」「太+形容词」「不大不小」评价东西",
+      "kr": "「怎么样」「太+형용사」「不大不小」로 물건을 평가할 수 있다",
+      "en": "Can comment on items using 怎么样, 太 + adjective, 不大不小"
     }
   ],
   "vocab": [
@@ -106,83 +106,44 @@
       }
     }
   ],
-  "dialogueCards": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "今天很冷。",
-          "translation": {
-            "en": "It's very cold today.",
-            "kr": "It's very cold today.",
-            "jp": "It's very cold today."
-          },
-          "pinyin": "jīn tiān hěn lěng 。"
-        },
-        {
-          "speaker": "B",
-          "text": "是，很冷。你喝热茶吧。",
-          "translation": {
-            "en": "Yes, very cold. Have some hot tea.",
-            "kr": "Yes, very cold. Have some hot tea.",
-            "jp": "Yes, very cold. Have some hot tea."
-          },
-          "pinyin": "shì ， hěn lěng 。 nǐ hē rè chá ba 。"
-        },
-        {
-          "speaker": "A",
-          "text": "谢谢。",
-          "translation": {
-            "en": "Thank you.",
-            "kr": "Thank you.",
-            "jp": "Thank you."
-          },
-          "pinyin": "xiè xiè 。"
-        }
-      ]
-    }
+  "dialogue": [
+    { "speaker": "A", "text": "你想买什么？" },
+    { "speaker": "B", "text": "我想买西瓜。" },
+    { "speaker": "A", "text": "这个西瓜怎么样？" },
+    { "speaker": "B", "text": "这个太大了。有小点的吗？" },
+    { "speaker": "A", "text": "这个怎么样？" },
+    { "speaker": "B", "text": "这个太好了，不大不小。" }
   ],
+  "dialogueCards": [],
   "grammar": [
     {
-      "title": "块",
-      "explanation_zh": "「块」是人民币单位。",
-      "explanation_kr": "'块'는 위안 단위입니다.",
-      "explanation_en": "块 is the unit for yuan.",
-      "example": {
-        "zh": "五块",
-        "pinyin": "wǔ kuài",
-        "kr": "5위안",
-        "en": "five yuan"
-      },
+      "pattern": "想 + 动词（买）",
+      "pinyin": "xiǎng + mǎi",
       "explain": {
-        "jp": "「块」は人民元の単位です。",
-        "en": "块 is the unit for yuan.",
-        "kr": "'块'는 위안 단위입니다.",
-        "zh": "「块」是人民币单位。"
+        "zh": "「想买什么」问对方想买什么。回答：我想买+东西。",
+        "kr": "뭘 사고 싶은지 물을 때 「你想买什么?」. 답: 我想买+물건.",
+        "en": "你想买什么？= What do you want to buy? 我想买 + thing.",
+        "jp": "何を買いたいか「你想买什么？」。答は「我想买+もの」。"
+      },
+      "example": {
+        "zh": "你想买什么？我想买西瓜。",
+        "pinyin": "Nǐ xiǎng mǎi shénme? Wǒ xiǎng mǎi xīguā.",
+        "translation": { "kr": "뭐 사고 싶어? 나는 수박 사고 싶어.", "jp": "何を買いたい？スイカを買いたい。", "en": "What do you want to buy? I want to buy a watermelon." }
       }
     },
     {
-      "title": "东西",
-      "explanation_zh": "「东西」指事物。",
-      "explanation_kr": "'东西'는 물건을 가리킵니다.",
-      "explanation_en": "东西 means thing.",
-      "example": {
-        "zh": "买东西",
-        "pinyin": "mǎi dōngxi",
-        "kr": "물건 사다",
-        "en": "buy things"
-      },
+      "pattern": "怎么样 / 太 + 形容词",
+      "pinyin": "zěnmeyàng / tài + xíngróngcí",
       "explain": {
-        "jp": "「东西」は物を指します。",
-        "en": "东西 means thing.",
-        "kr": "'东西'는 물건을 가리킵니다.",
-        "zh": "「东西」指事物。"
+        "zh": "「怎么样」问“怎么样、如何”。「太」表程度高：太大、太小。不大不小 = 刚好。",
+        "kr": "「怎么样」는 \"어때?\" 「太」는 너무. 太大/太小. 不大不小=딱 맞다.",
+        "en": "怎么样 = how about? 太 + adj = too. 不大不小 = just right.",
+        "jp": "「怎么样」はどう？「太」はあまりに。不大不小＝ちょうどいい。"
+      },
+      "example": {
+        "zh": "这个西瓜怎么样？这个太大了。有小点的吗？这个太好了，不大不小。",
+        "pinyin": "Zhè gè xīguā zěnmeyàng? Zhè gè tài dà le. Yǒu xiǎo diǎn de ma? Zhè gè tài hǎo le, bù dà bù xiǎo.",
+        "translation": { "kr": "이 수박 어때? 너무 커. 작은 거 있어? 이거 딱 좋아, 안 크고 안 작아.", "jp": "このスイカはどう？大きすぎる。小さいのは？ちょうどいい。", "en": "How's this one? Too big. Have a smaller one? This one's just right." }
       }
     }
   ],
@@ -369,33 +330,33 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "今天很冷。",
+          "text": "这个西瓜怎么样？",
           "translation": {
-            "en": "It's very cold today.",
-            "kr": "It's very cold today.",
-            "jp": "It's very cold today."
+            "en": "How is this watermelon?",
+            "kr": "이 수박 어때요?",
+            "jp": "このスイカはどうですか？"
           },
-          "pinyin": "jīn tiān hěn lěng 。"
+          "pinyin": "zhè gè xī guā zěn me yàng ？"
         },
         {
           "speaker": "B",
-          "text": "是，很冷。你喝热茶吧。",
+          "text": "这个太大了，有小点的吗？",
           "translation": {
-            "en": "Yes, very cold. Have some hot tea.",
-            "kr": "Yes, very cold. Have some hot tea.",
-            "jp": "Yes, very cold. Have some hot tea."
+            "en": "This one is too big. Do you have a smaller one?",
+            "kr": "이건 너무 커요. 더 작은 거 있어요?",
+            "jp": "これは大きすぎます。もっと小さいのはありますか？"
           },
-          "pinyin": "shì ， hěn lěng 。 nǐ hē rè chá ba 。"
+          "pinyin": "zhè gè tài dà le ， yǒu xiǎo diǎn de ma ？"
         },
         {
           "speaker": "A",
-          "text": "谢谢。",
+          "text": "这个呢？不大不小。",
           "translation": {
-            "en": "Thank you.",
-            "kr": "Thank you.",
-            "jp": "Thank you."
+            "en": "What about this one? It's not big and not small.",
+            "kr": "이건요? 안 크고 안 작아요.",
+            "jp": "これは？大きくも小さくもありません。"
           },
-          "pinyin": "xiè xiè 。"
+          "pinyin": "zhè gè ne ？ bù dà bù xiǎo 。"
         }
       ]
     }
