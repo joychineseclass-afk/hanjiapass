@@ -420,7 +420,7 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
   
  const dialogLang = normalizeLang(lang ?? getLang());
 
-const pickTrans = (line, "ko") => {
+const pickTrans = (line, lang) => {
   if (!line || typeof line !== "object") return "";
   return line.translation?.[lang] || "";
 };
@@ -431,7 +431,7 @@ for (const card of list) {
   for (const line of lines) {
     const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
     const py = String((line?.pinyin ?? line?.py ?? "")).trim();
-    const trans = pickTrans(line, dialogLang);
+    const trans = pickTrans(line, "ko");
       if (!zh) continue;
       const pyResolved = py || resolvePinyin(zh, "");
       const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");
