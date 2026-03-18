@@ -36,13 +36,67 @@
     { "hanzi": "也", "pinyin": "yě", "meaning": { "zh": "也", "kr": "~도", "jp": "〜も", "en": "also" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你好！" },
-    { "speaker": "B", "text": "你好！" },
-    { "speaker": "A", "text": "谢谢。" },
-    { "speaker": "B", "text": "不客气。" },
-    { "speaker": "A", "text": "再见。" },
-    { "speaker": "B", "text": "再见。" }
-  ],
+  {
+    "speaker": "A",
+    "text": "你好！",
+    "pinyin": "Nǐ hǎo!",
+    "translation": {
+      "ko": "안녕하세요!",
+      "en": "Hello!",
+      "ja": "こんにちは！"
+    }
+  },
+  {
+    "speaker": "B",
+    "text": "你好！",
+    "pinyin": "Nǐ hǎo!",
+    "translation": {
+      "ko": "안녕하세요!",
+      "en": "Hello!",
+      "ja": "こんにちは！"
+    }
+  },
+  {
+    "speaker": "A",
+    "text": "谢谢。",
+    "pinyin": "Xièxie.",
+    "translation": {
+      "ko": "감사합니다.",
+      "en": "Thank you.",
+      "ja": "ありがとうございます。"
+    }
+  },
+  {
+    "speaker": "B",
+    "text": "不客气。",
+    "pinyin": "Bú kèqi.",
+    "translation": {
+      "ko": "천만에요.",
+      "en": "You're welcome.",
+      "ja": "どういたしまして。"
+    }
+  },
+  {
+    "speaker": "A",
+    "text": "再见。",
+    "pinyin": "Zàijiàn.",
+    "translation": {
+      "ko": "안녕히 가세요.",
+      "en": "Goodbye.",
+      "ja": "さようなら。"
+    }
+  },
+  {
+    "speaker": "B",
+    "text": "再见。",
+    "pinyin": "Zàijiàn.",
+    "translation": {
+      "ko": "안녕히 계세요.",
+      "en": "Goodbye.",
+      "ja": "さようなら。"
+    }
+  }
+]
  
   "dialogueCards": [],
   "grammar": [
