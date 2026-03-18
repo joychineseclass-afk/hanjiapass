@@ -100,78 +100,99 @@
  
   "dialogueCards": [],
   "grammar": [
-    {
-      "pattern": "你好",
-      "pinyin": "nǐ hǎo",
-      "explain": {
-        "zh": "「你好」是最常用的打招呼用语，见面时可以说。",
-        "kr": "「你好」는 가장 흔한 인사말입니다. 만날 때 씁니다.",
-        "en": "你好 is the most common greeting when you meet someone.",
-        "jp": "「你好」は会ったときの一番よく使う挨拶です。"
-      },
-      "example": {
-        "zh": "你好！",
-        "pinyin": "Nǐ hǎo!",
-        "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" }
-      }
+  {
+    "pattern": "你好",
+    "pinyin": "nǐ hǎo",
+    "explanation": {
+      "kr": "가장 기본적인 인사 표현입니다.",
+      "en": "A basic greeting used when meeting someone.",
+      "jp": "基本的な挨拶表現です。"
     },
-    {
-      "pattern": "很高兴认识你",
-      "pinyin": "hěn gāoxìng rènshi nǐ",
-      "explain": {
-        "zh": "第一次见面时表示高兴的说法。「也」表示同样。",
-        "kr": "처음 만날 때 기쁨을 나타냅니다. 「也」는 ~도.",
-        "en": "Used when meeting someone for the first time. 也 means also.",
-        "jp": "初めて会ったときに喜びを表します。「也」は〜も。"
-      },
-      "example": {
-        "zh": "我也很高兴认识你。",
-        "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ.",
-        "translation": { "kr": "저도 만나서 반가워요.", "jp": "私もお会いできて嬉しいです。", "en": "Nice to meet you too." }
-      }
-    },
-    {
-      "pattern": "谢谢 / 不客气",
-      "pinyin": "xièxie / bú kèqi",
-      "explain": {
-        "zh": "「谢谢」表示感谢；「不客气」是礼貌的回应，表示“不用谢”。",
-        "kr": "「谢谢」는 감사, 「不客气」는 \"천만에요\".",
-        "en": "谢谢 = thank you; 不客气 = you're welcome.",
-        "jp": "「谢谢」は感謝、「不客气」は「どういたしまして」。"
-      },
-      "example": {
-        "zh": "谢谢。不客气。再见！",
-        "pinyin": "Xièxie. Bú kèqi. Zàijiàn!",
-        "translation": { "kr": "감사해요. 천만에요. 잘 가요!", "jp": "ありがとう。どういたしまして。さようなら！", "en": "Thanks. You're welcome. Bye!" }
+    "example": {
+      "text": "你好！",
+      "pinyin": "Nǐ hǎo!",
+      "translation": {
+        "kr": "안녕하세요!",
+        "en": "Hello!",
+        "jp": "こんにちは！"
       }
     }
-  ],
-  "extension": [
-    {
-      "zh": "您好。",
-      "pinyin": "Nín hǎo.",
-      "kr": "안녕하세요.（존칭）",
-      "en": "Hello. (formal)",
-      "phrase": "您好。",
-      "explain": { "kr": "长辈或正式场合用「您」。", "en": "Use 您 for elders or formal situations.", "jp": "目上の人や改まった場で「您」を使います。" }
+  },
+  {
+    "pattern": "谢谢",
+    "pinyin": "xièxie",
+    "explanation": {
+      "kr": "감사를 표현할 때 사용합니다.",
+      "en": "Used to express thanks.",
+      "jp": "感謝を表すときに使います。"
     },
+    "example": {
+      "text": "谢谢。",
+      "pinyin": "Xièxie.",
+      "translation": {
+        "kr": "감사합니다.",
+        "en": "Thank you.",
+        "jp": "ありがとうございます。"
+      }
+    }
+  },
+  {
+    "pattern": "不客气",
+    "pinyin": "bú kèqi",
+    "explanation": {
+      "kr": "감사에 대한 응답 표현입니다.",
+      "en": "A response to 'thank you'.",
+      "jp": "「ありがとう」に対する返答です。"
+    },
+    "example": {
+      "text": "不客气。",
+      "pinyin": "Bú kèqi.",
+      "translation": {
+        "kr": "천만에요.",
+        "en": "You're welcome.",
+        "jp": "どういたしまして。"
+      }
+    }
+  },
     {
-      "zh": "大家好。",
-      "pinyin": "Dàjiā hǎo.",
+  "pattern": "再见",
+  "pinyin": "zàijiàn",
+  "explanation": {
+    "kr": "헤어질 때 사용하는 인사 표현입니다.",
+    "en": "Used when saying goodbye.",
+    "jp": "別れるときに使う表現です。"
+  },
+  "example": {
+    "text": "再见。",
+    "pinyin": "Zàijiàn.",
+    "translation": {
+      "kr": "안녕히 가세요 / 안녕히 계세요.",
+      "en": "Goodbye.",
+      "jp": "さようなら。"
+    }
+  }
+}
+],
+  "extension": [
+  {
+    "text": "您好",
+    "pinyin": "nín hǎo",
+    "translation": {
+      "kr": "안녕하세요(존댓말).",
+      "en": "Hello (polite form).",
+      "jp": "こんにちは（丁寧）。"
+    }
+  },
+  {
+    "text": "大家好",
+    "pinyin": "dàjiā hǎo",
+    "translation": {
       "kr": "여러분 안녕하세요.",
       "en": "Hello everyone.",
-      "phrase": "大家好。",
-      "explain": { "kr": "对很多人打招呼时用。", "en": "Use when greeting a group.", "jp": "大勢に挨拶するときに使います。" }
-    },
-    {
-      "zh": "很高兴认识你。",
-      "pinyin": "Hěn gāoxìng rènshi nǐ.",
-      "kr": "만나서 반가워요.",
-      "en": "Nice to meet you.",
-      "phrase": "很高兴认识你。",
-      "explain": { "kr": "처음 만날 때 씁니다.", "en": "Used when meeting for the first time.", "jp": "初めて会ったときに使います。" }
+      "jp": "みなさんこんにちは。"
     }
-  ],
+  }
+],
   "practice": [
     {
       "id": "p1",
