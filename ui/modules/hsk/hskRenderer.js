@@ -580,9 +580,8 @@ export function renderReviewExtension(containerEl, extArr, { lang } = {}) {
     return;
   }
   const getExpl = (item) => {
-    const ex = item?.explain ?? item?.explanation;
-    if (ex && typeof ex === "object") return (ex[l] ?? ex.kr ?? ex.ko ?? ex.en ?? ex.zh ?? "") || "";
-    return "";
+    const translation = item.translation?.[l] || "";
+    return translation;
   };
   const rows = arr.map((item) => {
     const phrase = String((item?.phrase ?? item?.hanzi ?? item?.zh ?? item?.cn ?? "")).trim();
