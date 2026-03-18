@@ -175,21 +175,27 @@
 ],
   "extension": [
   {
-    "pattern": "您好",
-    "pinyin": "nín hǎo",
-    "translation": {
-      "kr": "안녕하세요(존댓말).",
-      "en": "Hello (polite form).",
-      "jp": "こんにちは（丁寧）。"
+    "zh": "您好。",
+    "pinyin": "Nín hǎo.",
+    "kr": "안녕하세요.(존댓말)",
+    "en": "Hello (polite form).",
+    "phrase": "您好。",
+    "explain": {
+      "kr": "어른이나 격식 있는 자리에서 쓰는 인사입니다.",
+      "en": "Used for elders or in formal situations.",
+      "jp": "目上の人や改まった場で使う挨拶です。"
     }
   },
   {
-    "pattern": "大家好",
-    "pinyin": "dàjiā hǎo",
-    "translation": {
-      "kr": "여러분 안녕하세요.",
-      "en": "Hello everyone.",
-      "jp": "みなさんこんにちは。"
+    "zh": "大家好。",
+    "pinyin": "Dàjiā hǎo.",
+    "kr": "여러분 안녕하세요.",
+    "en": "Hello everyone.",
+    "phrase": "大家好。",
+    "explain": {
+      "kr": "여러 사람에게 한 번에 인사할 때 씁니다.",
+      "en": "Used to greet a group of people.",
+      "jp": "大勢の人にまとめて挨拶するときに使います。"
     }
   }
 ],
