@@ -17,12 +17,12 @@
  * 本地 python -m http.server 不会执行本文件；请使用 `vercel dev` 或部署后验证。
  */
 
-import { next } from "@vercel/edge";
+import { next } from "@vercel/functions";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
 export const config = {
-  matcher: "/data/:path*",
+  matcher: ["/data/:path*"],
 };
 
 function isDataJsonPath(pathname) {
