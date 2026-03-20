@@ -555,6 +555,51 @@ function getExtensionExplanation(item, lang) {
   return "";
 }
 
+/**
+ * Extension 主译文（与 explain 分离）：当前界面语言优先，缺省则仅在 kr / en / jp 间回退
+ */
+function getExtensionMeaning(item, lang) {
+  if (!item || typeof item !== "object") return "";
+  const l = (lang || getLang()).toLowerCase();
+  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+  const currentKey =
+    l === "jp" || l === "ja" ? "jp" : l === "kr" || l === "ko" ? "kr" : l === "cn" || l === "zh" ? null : "en";
+
+  const valueForKey = (k) => {
+    if (!k) return "";
+    if (k === "kr") {
+      const v = item.kr ?? item.ko ?? item.translationKr ?? item.translation_kr;
+      if (v) return str(v);
+    } else if (k === "en") {
+      const v = item.en ?? item.english ?? item.translationEn ?? item.translation_en;
+      if (v) return str(v);
+    } else if (k === "jp") {
+      const v = item.jp ?? item.ja ?? item.translationJp ?? item.translation_jp;
+      if (v) return str(v);
+    }
+    const trans = item.translation ?? item.trans ?? item.translations;
+    if (trans && typeof trans === "object") {
+      const v =
+        trans[k] ??
+        trans[k === "jp" ? "ja" : k === "kr" ? "ko" : k];
+      if (v) return str(v);
+    }
+    return "";
+  };
+
+  const order = [];
+  if (currentKey) order.push(currentKey);
+  for (const k of ["kr", "en", "jp"]) {
+    if (k !== currentKey) order.push(k);
+  }
+  for (const k of order) {
+    const v = valueForKey(k);
+    if (v) return v;
+  }
+  return "";
+}
+
 /** 扩展表达：支持句组训练卡片（groupTitle + sentences）与旧单句格式兼容
  * 扩展 tab 仅显示真正的扩展内容（句型、文化说明等），不显示词卡
  */
@@ -625,6 +670,7 @@ function buildExtensionHTML(lessonData) {
     const pinyin = str((item && item.pinyin) || (item && item.py) || "");
     const example = str((item && item.example) || (item && item.exampleZh) || "");
     const examplePinyin = str((item && item.examplePinyin) || (item && item.examplePy) || "");
+    const meaning = getExtensionMeaning(item, lang);
     const explanation = getExtensionExplanation(item, lang);
 
     const idx = String(i + 1).padStart(2, "0");
@@ -640,6 +686,7 @@ function buildExtensionHTML(lessonData) {
   <div class="lesson-extension-body">
     <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
     ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+    ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
     ${explanation ? `<div class="lesson-extension-meaning">${escapeHtml(explanation)}</div>` : ""}
     ${example ? `<div class="lesson-extension-example">${escapeHtml(example)}</div>` : ""}
     ${examplePinyin ? `<div class="lesson-extension-example-pinyin">${escapeHtml(examplePinyin)}</div>` : ""}
