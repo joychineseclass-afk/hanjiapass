@@ -200,47 +200,47 @@
     {
       "id": "p1",
       "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": { "cn": "___好！", "kr": "___! (인사)", "en": "___! (greeting)", "jp": "___!（挨拶）" },
-      "options": ["你", "我", "很", "认识"],
-      "answer": "你",
-      "explanation": { "cn": "打招呼说「你好」。", "kr": "인사는 「你好」.", "en": "Greeting is 你好.", "jp": "挨拶は「你好」。" }
+      "subtype": "dialogue_response",
+      "prompt": { "cn": "对方说「你好！」，你应该说？", "kr": "상대가 「你好!」라고 하면 답할 말은?", "en": "Someone says 你好! You should say?", "jp": "相手が「你好！」と言ったら、あなたは？" },
+      "options": ["你好", "谢谢", "不客气", "再见"],
+      "answer": "你好",
+      "explanation": { "cn": "见面问候常用「你好」。", "kr": "만날 때 인사로 「你好」를 씁니다.", "en": "你好 is used to greet someone.", "jp": "会ったときの挨拶に「你好」を使います。" }
     },
     {
       "id": "p2",
       "type": "choice",
-      "subtype": "zh_to_meaning",
-      "prompt": { "cn": "「很高兴认识你」的意思是？", "kr": "「很高兴认识你」의 뜻은?", "en": "What does 很高兴认识你 mean?", "jp": "「很高兴认识你」の意味は？" },
-      "options": ["再见", "谢谢", "很高兴认识你", "对不起"],
-      "answer": "很高兴认识你",
-      "explanation": { "cn": "第一次见面时表示高兴。", "kr": "처음 만날 때 기쁨을 나타냅니다.", "en": "Shows pleasure at first meeting.", "jp": "初めて会ったときの喜びを表します。" }
+      "subtype": "dialogue_response",
+      "prompt": { "cn": "对方说「谢谢。」，你应该说？", "kr": "상대가 「谢谢.」라고 하면 답할 말은?", "en": "Someone says 谢谢. You should say?", "jp": "相手が「谢谢。」と言ったら、あなたは？" },
+      "options": ["不客气", "再见", "你好", "谢谢"],
+      "answer": "不客气",
+      "explanation": { "cn": "对「谢谢」常用「不客气」回应。", "kr": "「谢谢」에는 「不客气」로 답합니다.", "en": "Respond to 谢谢 with 不客气.", "jp": "「谢谢」には「不客气」で返します。" }
     },
     {
       "id": "p3",
       "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": { "cn": "我___很高兴认识你。", "kr": "저___ 만나서 반가워요.", "en": "I ___ am glad to meet you.", "jp": "私___お会いできて嬉しいです。" },
-      "options": ["也", "你", "好", "认识"],
-      "answer": "也",
-      "explanation": { "cn": "「也」表示同样。", "kr": "「也」는 ~도.", "en": "也 means also.", "jp": "「也」は〜も。" }
+      "subtype": "zh_to_meaning",
+      "prompt": { "cn": "告别时可以说？", "kr": "헤어질 때 쓸 수 있는 말은?", "en": "Which do you say when saying goodbye?", "jp": "別れるときに使う表現は？" },
+      "options": ["再见", "你好", "谢谢", "不客气"],
+      "answer": "再见",
+      "explanation": { "cn": "「再见」用于告别。", "kr": "「再见」는 작별 인사입니다.", "en": "再见 means goodbye.", "jp": "「再见」は別れのあいさつです。" }
     },
     {
       "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
-      "prompt": { "cn": "对方说「你好！」你应该说？", "kr": "상대가 「你好!」라고 하면?", "en": "When someone says 你好!, you say?", "jp": "「你好!」と言われたら？" },
-      "options": ["再见", "你好", "谢谢", "对不起"],
-      "answer": "你好",
-      "explanation": { "cn": "用「你好」回应问候。", "kr": "인사에는 「你好」로 답합니다.", "en": "Respond to greeting with 你好.", "jp": "挨拶には「你好」で返します。" }
+      "subtype": "sentence_blank",
+      "prompt": { "cn": "表示感谢：___。", "kr": "감사할 때: ___.", "en": "To say thanks: ___.", "jp": "感謝を言うとき：___。" },
+      "options": ["谢谢", "不客气", "你好", "再见"],
+      "answer": "谢谢",
+      "explanation": { "cn": "「谢谢」表示感谢。", "kr": "「谢谢」는 감사 표현입니다.", "en": "谢谢 means thank you.", "jp": "「谢谢」は感謝の言葉です。" }
     },
     {
       "id": "p5",
       "type": "choice",
-      "subtype": "sentence_order",
-      "prompt": { "cn": "「我」的意思是？", "kr": "「我」의 뜻은?", "en": "What does 我 mean?", "jp": "「我」の意味は？" },
-      "options": ["你", "我", "也", "好"],
-      "answer": "我",
-      "explanation": { "cn": "「我」即自己。", "kr": "「我」는 나, 저.", "en": "我 means I, me.", "jp": "「我」は私。" }
+      "subtype": "sentence_blank",
+      "prompt": { "cn": "见面打招呼：___！", "kr": "만날 때 인사: ___!", "en": "Greeting when you meet: ___!", "jp": "会ったときの挨拶：___！" },
+      "options": ["你好", "谢谢", "不客气", "再见"],
+      "answer": "你好",
+      "explanation": { "cn": "「你好」用于打招呼。", "kr": "「你好」는 인사 표현입니다.", "en": "你好 is a greeting.", "jp": "「你好」はあいさつです。" }
     }
   ],
   "review": {},
