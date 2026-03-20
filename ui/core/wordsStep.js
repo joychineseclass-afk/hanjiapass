@@ -10,6 +10,8 @@
 // - Click word: prefer WORD_PANEL/WORD_MODAL, else dispatch "word:open"
 // - Debug: window.__words + console logs
 
+import { fetchJsonCached } from "./fetchJsonCached.js";
+
 function getLangFromState(state) {
   return (
     state?.lang ||
@@ -98,9 +100,7 @@ async function loadWordsForLesson(lessonId) {
     console.log("[wordsStep] fallback lesson url =", url);
   }
 
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch lesson data: ${url}`);
-  const json = await res.json();
+  const json = await fetchJsonCached(url, { cache: "no-store" });
 
   // ✅ pack: { lessons:[{id,title,file,subtitle...}] }
   if (Array.isArray(json?.lessons)) {
@@ -134,9 +134,7 @@ async function loadWordsForLesson(lessonId) {
     // ✅ StepA log #3: singleUrl（真正单课文件）
     console.log("[wordsStep:A] singleUrl =", singleUrl);
 
-    const res2 = await fetch(singleUrl, { cache: "no-store" });
-    if (!res2.ok) throw new Error(`Failed to fetch single lesson: ${singleUrl}`);
-    const one = await res2.json();
+    const one = await fetchJsonCached(singleUrl, { cache: "no-store" });
 
     return (
       one?.vocab ||
@@ -171,9 +169,7 @@ export async function loadLessonRaw(lessonId) {
   }
   if (!url) url = `./data/courses/${lessonId}.json`;
 
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch: ${url}`);
-  const json = await res.json();
+  const json = await fetchJsonCached(url, { cache: "no-store" });
 
   if (Array.isArray(json?.lessons)) {
     const idNum = String(lessonId).match(/\d+/g)?.pop() || "";
@@ -183,9 +179,11 @@ export async function loadLessonRaw(lessonId) {
     const baseDir = url.slice(0, url.lastIndexOf("/") + 1);
     const m = String(found.file || "").match(/^hsk\d+_lesson(\d+)\.json$/i);
     const singleFile = m ? `lesson${m[1]}.json` : found.file;
-    const r2 = await fetch(baseDir + singleFile, { cache: "no-store" });
-    if (!r2.ok) return null;
-    return await r2.json();
+    try {
+      return await fetchJsonCached(baseDir + singleFile, { cache: "no-store" });
+    } catch {
+      return null;
+    }
   }
   return json;
 }

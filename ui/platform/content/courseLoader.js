@@ -5,6 +5,7 @@
  */
 
 import { isNoCacheEnv } from "../../core/noCacheEnv.js";
+import { fetchJsonCached } from "../../core/fetchJsonCached.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -63,14 +64,13 @@ function memSet(key, data) {
 async function fetchJson(url) {
   let u = String(url || "");
   if (u.startsWith("./data/")) u = "/" + u.slice(2);
+  const init = { cache: "no-store" };
   try {
-    const res = await fetch(u, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Fetch ${res.status}: ${u}`);
-    return res.json();
+    return await fetchJsonCached(u, init);
   } catch (e) {
     if (typeof location !== "undefined" && u.startsWith("/data/")) {
       try {
-        return await fetch("." + u, { cache: "no-store" }).then((r) => (r.ok ? r.json() : Promise.reject(r)));
+        return await fetchJsonCached("." + u, init);
       } catch {}
     }
     throw e;

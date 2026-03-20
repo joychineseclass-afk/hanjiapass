@@ -8,6 +8,9 @@ import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
+/** 同一 stroke 页路径并发 HEAD 只发一次 */
+const _strokeHeadInflight = new Map();
+
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
   const ch = encodeURIComponent(hanzi || "");
@@ -28,7 +31,14 @@ async function resolveStrokeUrlAsync(hanzi) {
   for (const u of candidates) {
     try {
       const test = u.split("?")[0];
-      const r = await fetch(test, { method: "HEAD" });
+      let headP = _strokeHeadInflight.get(test);
+      if (!headP) {
+        headP = fetch(test, { method: "HEAD" }).finally(() => {
+          if (_strokeHeadInflight.get(test) === headP) _strokeHeadInflight.delete(test);
+        });
+        _strokeHeadInflight.set(test, headP);
+      }
+      const r = await headP;
       if (r.ok) return u;
     } catch {}
   }

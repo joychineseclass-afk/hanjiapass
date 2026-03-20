@@ -1,6 +1,30 @@
 // /ui/modules/hsk/lessonSession.js
 import { deriveLessonId } from "../../core/deriveLessonId.js";
 
+const _lessonLoadInflight = new Map();
+
+/**
+ * 同一 key 并发只跑一次 loadFn；用于避免重复点击 / 切 Tab 触发的并行课件请求。
+ * @param {string} key
+ * @param {() => Promise<any>} loadFn
+ */
+export function dedupeLessonLoad(key, loadFn) {
+  const k = String(key || "").trim() || "_";
+  const existing = _lessonLoadInflight.get(k);
+  if (existing) return existing;
+  const p = Promise.resolve()
+    .then(() => loadFn())
+    .finally(() => {
+      if (_lessonLoadInflight.get(k) === p) _lessonLoadInflight.delete(k);
+    });
+  _lessonLoadInflight.set(k, p);
+  return p;
+}
+
+export function clearLessonLoadDedupe() {
+  _lessonLoadInflight.clear();
+}
+
 export function setCurrentLessonGlobal(lesson, opts = {}) {
   const version =
     opts.version ||
