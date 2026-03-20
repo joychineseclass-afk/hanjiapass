@@ -28,12 +28,9 @@
   ],
   "vocab": [
     { "hanzi": "你好", "pinyin": "nǐhǎo", "meaning": { "zh": "你好", "kr": "안녕하세요", "jp": "こんにちは", "en": "hello" }, "pos": { "kr": "감탄사", "en": "greeting", "jp": "挨拶" } },
-    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "jp": "あなた", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "很", "pinyin": "hěn", "meaning": { "zh": "很", "kr": "매우", "jp": "とても", "en": "very" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } },
-    { "hanzi": "高兴", "pinyin": "gāoxìng", "meaning": { "zh": "高兴", "kr": "기쁘다", "jp": "嬉しい", "en": "happy" }, "pos": { "kr": "형용사", "en": "adjective", "jp": "形容詞" } },
-    { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다, 만나다", "jp": "知る、会う", "en": "to know; to meet" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
-    { "hanzi": "也", "pinyin": "yě", "meaning": { "zh": "也", "kr": "~도", "jp": "〜も", "en": "also" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } }
+    { "hanzi": "谢谢", "pinyin": "xièxie", "meaning": { "zh": "谢谢", "kr": "감사합니다", "jp": "ありがとうございます", "en": "thank you" }, "pos": { "kr": "감탄사", "en": "expression", "jp": "表現" } },
+    { "hanzi": "不客气", "pinyin": "bú kèqi", "meaning": { "zh": "不客气", "kr": "천만에요", "jp": "どういたしまして", "en": "you're welcome" }, "pos": { "kr": "응답 표현", "en": "expression", "jp": "表現" } },
+    { "hanzi": "再见", "pinyin": "zàijiàn", "meaning": { "zh": "再见", "kr": "안녕히 가세요 / 안녕히 계세요", "jp": "さようなら", "en": "goodbye" }, "pos": { "kr": "인사", "en": "farewell", "jp": "挨拶" } }
   ],
   "dialogue": [
   {
