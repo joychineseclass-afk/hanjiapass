@@ -7,15 +7,28 @@
   "type": "lesson",
   "title": {
     "zh": "你做什么工作？",
-    "pinyin": "nǐ zuò shénme gōngzuò",
     "kr": "무슨 일 하세요?",
-    "en": "What do you do?",
-    "jp": "お仕事は何ですか？"
+    "jp": "お仕事は何ですか？",
+    "en": "What do you do?"
   },
   "summary": {
     "zh": "问职业和工作地点",
     "kr": "직업과 일하는 곳을 묻기",
-    "en": "Asking about jobs and workplace"
+    "en": "Asking about jobs and workplace",
+    "jp": "Asking about jobs and workplace"
+  },
+  "scene": {
+    "id": "l20_scene",
+    "title": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    },
+    "summary": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    }
   },
   "objectives": [
     {
@@ -31,149 +44,212 @@
   ],
   "vocab": [
     {
-      "hanzi": "医院",
-      "pinyin": "yīyuàn",
+      "hanzi": "你做什么工作？",
+      "pinyin": "nǐ zuò shén me gōng zuò ？",
       "meaning": {
-        "zh": "医院",
-        "kr": "병원",
-        "en": "hospital",
-        "jp": "病院"
+        "zh": "你做什么工作？",
+        "kr": "무슨 일을 해요?",
+        "jp": "何の仕事をしていますか？",
+        "en": "What do you do for work?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "怎么",
-      "pinyin": "zěnme",
+      "hanzi": "我是医生。",
+      "pinyin": "wǒ shì yī shēng 。",
       "meaning": {
-        "zh": "怎么",
-        "kr": "어떻게",
-        "en": "how",
-        "jp": "どう"
+        "zh": "我是医生。",
+        "kr": "저는 의사예요.",
+        "jp": "医者です。",
+        "en": "I'm a doctor."
       },
       "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "怎么样",
-      "pinyin": "zěnmeyàng",
+      "hanzi": "你在哪儿工作？",
+      "pinyin": "nǐ zài nǎ ér gōng zuò ？",
       "meaning": {
-        "zh": "怎么样",
-        "kr": "어때요",
-        "en": "how about",
-        "jp": "どう"
+        "zh": "你在哪儿工作？",
+        "kr": "어디서 일해요?",
+        "jp": "どこで働いていますか？",
+        "en": "Where do you work?"
       },
       "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "我们",
-      "pinyin": "wǒmen",
+      "hanzi": "我在北京医院工作。",
+      "pinyin": "wǒ zài běi jīng yī yuàn gōng zuò 。",
       "meaning": {
-        "zh": "我们",
-        "kr": "우리",
-        "en": "we",
-        "jp": "私たち"
+        "zh": "我在北京医院工作。",
+        "kr": "베이징 병원에서 일해요.",
+        "jp": "北京の病院で働いています。",
+        "en": "I work at a hospital in Beijing."
       },
       "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "没",
-      "pinyin": "méi",
+      "hanzi": "他呢？",
+      "pinyin": "tā ne ？",
       "meaning": {
-        "zh": "没",
-        "kr": "없다",
-        "en": "not have",
-        "jp": "〜ない"
+        "zh": "他呢？",
+        "kr": "그는요?",
+        "jp": "彼は？",
+        "en": "What about him?"
       },
       "pos": {
-        "kr": "부사",
-        "en": "adverb",
-        "jp": "副詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "呢",
-      "pinyin": "ne",
+      "hanzi": "他也是医生。",
+      "pinyin": "tā yě shì yī shēng 。",
       "meaning": {
-        "zh": "呢",
-        "kr": "~은/는요?",
-        "en": "particle",
-        "jp": "語気助詞"
+        "zh": "他也是医生。",
+        "kr": "그도 의사예요.",
+        "jp": "彼も医者です。",
+        "en": "He is a doctor too."
       },
       "pos": {
-        "kr": "조사",
-        "en": "particle",
-        "jp": "助詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你做什么工作？" },
-    { "speaker": "B", "text": "我是医生。" },
-    { "speaker": "A", "text": "你在哪儿工作？" },
-    { "speaker": "B", "text": "我在北京医院工作。" },
-    { "speaker": "A", "text": "他呢？" },
-    { "speaker": "B", "text": "他也是医生。" }
+    {
+      "speaker": "A",
+      "text": "你做什么工作？",
+      "pinyin": "Nǐ zuò shén me gōng zuò ？",
+      "translation": {
+        "kr": "무슨 일을 해요?",
+        "en": "What do you do for work?",
+        "jp": "何の仕事をしていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我是医生。",
+      "pinyin": "Wǒ shì yī shēng 。",
+      "translation": {
+        "kr": "저는 의사예요.",
+        "en": "I'm a doctor.",
+        "jp": "医者です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你在哪儿工作？",
+      "pinyin": "Nǐ zài nǎ ér gōng zuò ？",
+      "translation": {
+        "kr": "어디서 일해요?",
+        "en": "Where do you work?",
+        "jp": "どこで働いていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我在北京医院工作。",
+      "pinyin": "Wǒ zài běi jīng yī yuàn gōng zuò 。",
+      "translation": {
+        "kr": "베이징 병원에서 일해요.",
+        "en": "I work at a hospital in Beijing.",
+        "jp": "北京の病院で働いています。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "他呢？",
+      "pinyin": "Tā ne ？",
+      "translation": {
+        "kr": "그는요?",
+        "en": "What about him?",
+        "jp": "彼は？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "他也是医生。",
+      "pinyin": "Tā yě shì yī shēng 。",
+      "translation": {
+        "kr": "그도 의사예요.",
+        "en": "He is a doctor too.",
+        "jp": "彼も医者です。"
+      }
+    }
   ],
   "dialogueCards": [],
   "grammar": [
     {
       "pattern": "做什么工作",
       "pinyin": "zuò shénme gōngzuò",
-      "explain": {
-        "zh": "问职业用「你做什么工作？」。回答：我是+职业（医生/老师…）。",
+      "explanation": {
         "kr": "직업을 물을 때 「你做什么工作?」. 답: 我是+직업.",
         "en": "Ask job: 你做什么工作? Answer: 我是 + job (doctor, teacher...).",
         "jp": "職業は「你做什么工作？」。答は「我是+職業」。"
       },
       "example": {
-        "zh": "你做什么工作？我是医生。",
-        "pinyin": "Nǐ zuò shénme gōngzuò? Wǒ shì yīshēng.",
-        "translation": { "kr": "무슨 일 해? 나는 의사야.", "jp": "お仕事は？医者です。", "en": "What do you do? I'm a doctor." }
+        "text": "你做什么工作？",
+        "pinyin": "Nǐ zuò shén me gōng zuò ？",
+        "translation": {
+          "kr": "무슨 일을 해요?",
+          "en": "What do you do for work?",
+          "jp": "何の仕事をしていますか？"
+        }
       }
     },
     {
       "pattern": "在 + 地点 + 工作",
       "pinyin": "zài + dìdiǎn + gōngzuò",
-      "explain": {
-        "zh": "问工作地点：你在哪儿工作？回答：我在+地点+工作。",
+      "explanation": {
         "kr": "어디서 일하는지: 你在哪儿工作? 답: 我在+장소+工作.",
         "en": "Where do you work? 你在哪儿工作？我在北京医院工作.",
         "jp": "どこで働くか「你在哪儿工作？」。答は「我在+場所+工作」。"
       },
       "example": {
-        "zh": "你在哪儿工作？我在北京医院工作。他呢？他也是医生。",
-        "pinyin": "Nǐ zài nǎr gōngzuò? Wǒ zài Běijīng yīyuàn gōngzuò. Tā ne? Tā yě shì yīshēng.",
-        "translation": { "kr": "어디서 일해? 베이징 병원에서. 그는? 그도 의사야.", "jp": "どこで働いてる？北京病院で。彼は？彼も医者です。", "en": "Where do you work? At Beijing Hospital. And him? He's a doctor too." }
+        "text": "你在哪儿工作？",
+        "pinyin": "Nǐ zài nǎ ér gōng zuò ？",
+        "translation": {
+          "kr": "어디서 일해요?",
+          "en": "Where do you work?",
+          "jp": "どこで働いていますか？"
+        }
       }
     },
     {
       "pattern": "也是 / 他呢？",
       "pinyin": "yě shì / tā ne",
-      "explain": {
-        "zh": "「也是」表示“也一样”；「他呢？」用来问对方或第三个人的情况。",
+      "explanation": {
         "kr": "「也是」는 \"역시 ~이다\"를, 「他呢？」는 그 사람은 어떤지 묻는다.",
         "en": "也是 means \"also is\"; 他呢？ asks about another person.",
         "jp": "「也是」は「〜も…だ」を表し、「他呢？」はその人について尋ねる。"
       },
       "example": {
-        "zh": "他是医生。他呢？他也是医生。",
-        "pinyin": "Tā shì yīshēng. Tā ne? Tā yě shì yīshēng.",
-        "translation": { "kr": "그는 의사야. 그는? 그도 의사야.", "jp": "彼は医者です。彼は？彼も医者です。", "en": "He is a doctor. And him? He is a doctor too." }
+        "text": "我是医生。我在北京医院工作。他呢？他也是医生。",
+        "pinyin": "Wǒ shì yī shēng 。 Wǒ zài běi jīng yī yuàn gōng zuò 。 Tā ne ？ Tā yě shì yī shēng 。",
+        "translation": {
+          "kr": "저는 의사예요. 베이징 병원에서 일해요. 그는요? 그도 의사예요.",
+          "en": "I'm a doctor. I work at a hospital in Beijing. What about him? He is a doctor too.",
+          "jp": "医者です。 北京の病院で働いています。 彼は？ 彼も医者です。"
+        }
       }
     }
   ],
@@ -241,85 +317,202 @@
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "「医院」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你做什么工作？」，你应该说？",
+        "kr": "상대가 말할 때: 「你做什么工作？」 답은?",
+        "en": "Someone says: \"你做什么工作？\" You should say?",
+        "jp": "相手が「你做什么工作？」と言ったら、あなたは？"
       },
       "options": [
-        "学校",
-        "医院",
-        "商店"
+        "你在哪儿工作？",
+        "你做什么工作？",
+        "我是医生。",
+        "我在北京医院工作。"
       ],
-      "answer": "医院"
+      "answer": "我是医生。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p2",
       "type": "choice",
-      "question": {
-        "zh": "「怎么」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你在哪儿工作？」，你应该说？",
+        "kr": "상대가 말할 때: 「你在哪儿工作？」 답은?",
+        "en": "Someone says: \"你在哪儿工作？\" You should say?",
+        "jp": "相手が「你在哪儿工作？」と言ったら、あなたは？"
       },
       "options": [
-        "什么",
-        "怎么",
-        "怎么样"
+        "你在哪儿工作？",
+        "你做什么工作？",
+        "我是医生。",
+        "我在北京医院工作。"
       ],
-      "answer": "怎么"
+      "answer": "我在北京医院工作。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p3",
       "type": "choice",
-      "question": {
-        "zh": "我___钱。",
-        "kr": "빈칸",
-        "en": "Fill in"
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
       },
       "options": [
-        "没",
-        "有",
-        "不"
+        "你在哪儿工作？",
+        "你做什么工作？",
+        "我是医生。",
+        "我在北京医院工作。"
       ],
-      "answer": "没"
+      "answer": "你做什么工作？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
     },
     {
+      "id": "p4",
       "type": "choice",
-      "question": {
-        "zh": "A：你好吗？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
       },
       "options": [
-        "我们",
-        "我很好",
-        "呢"
+        "你在哪儿工作？",
+        "你做什么工作？",
+        "我是医生。",
+        "我在北京医院工作。"
       ],
-      "answer": "我很好"
+      "answer": "我是医生。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
     },
     {
+      "id": "p5",
       "type": "choice",
-      "question": {
-        "zh": "哪个是「我们」？",
-        "kr": "어느 것?",
-        "en": "Which?"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
       },
       "options": [
-        "我",
-        "我们",
-        "你"
+        "你在哪儿工作？",
+        "你做什么工作？",
+        "我是医生。",
+        "我在北京医院工作。"
       ],
-      "answer": "我们"
+      "answer": "我在北京医院工作。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "你做什么工作？ 我是医生。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你做什么工作？",
+        "我是医生。",
+        "你在哪儿工作？",
+        "我在北京医院工作。",
+        "他呢？",
+        "他也是医生。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
+  ],
   "aiPractice": {
     "speaking": [
-      "我们去医院",
-      "怎么样",
-      "没钱",
-      "你呢"
+      "你做什么工作？",
+      "我是医生。",
+      "你在哪儿工作？",
+      "我在北京医院工作。",
+      "他呢？"
     ],
-    "chatPrompt": "AI问：你怎么了？学生回答。"
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
   },
   "steps": [
     {
@@ -347,6 +540,14 @@
       }
     },
     {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
       "key": "practice",
       "label": {
         "zh": "练习",
@@ -361,48 +562,6 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
-    }
-  ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "这个很好。",
-          "translation": {
-            "en": "This one is very good.",
-            "kr": "This one is very good.",
-            "jp": "This one is very good."
-          },
-          "pinyin": "zhè ge hěn hǎo 。"
-        },
-        {
-          "speaker": "B",
-          "text": "那个呢？你觉得怎么样？",
-          "translation": {
-            "en": "What about that one? What do you think?",
-            "kr": "What about that one? What do you think?",
-            "jp": "What about that one? What do you think?"
-          },
-          "pinyin": "nà ge ne ？ nǐ jué de zěn me yàng ？"
-        },
-        {
-          "speaker": "A",
-          "text": "那个也很好。",
-          "translation": {
-            "en": "That one is good too.",
-            "kr": "That one is good too.",
-            "jp": "That one is good too."
-          },
-          "pinyin": "nà ge yě hěn hǎo 。"
-        }
-      ]
     }
   ]
 }

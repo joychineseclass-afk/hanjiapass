@@ -7,15 +7,28 @@
   "type": "lesson",
   "title": {
     "zh": "王老师今天来学校吗？",
-    "pinyin": "Wáng lǎoshī jīntiān lái xuéxiào ma",
     "kr": "왕 선생님 오늘 학교에 와요?",
-    "en": "Is Teacher Wang coming to school today?",
-    "jp": "王先生は今日学校に来ますか？"
+    "jp": "王先生は今日学校に来ますか？",
+    "en": "Is Teacher Wang coming to school today?"
   },
   "summary": {
     "zh": "说来学校、什么时候回来和给电话",
     "kr": "학교에 오는지, 언제 돌아오는지, 전화번호를 주고받기",
-    "en": "Talking about coming to school, returning time and giving a phone number"
+    "en": "Talking about coming to school, returning time and giving a phone number",
+    "jp": "Talking about coming to school, returning time and giving a phone number"
+  },
+  "scene": {
+    "id": "l18_scene",
+    "title": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    },
+    "summary": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    }
   },
   "objectives": [
     {
@@ -31,119 +44,194 @@
   ],
   "vocab": [
     {
-      "hanzi": "来",
-      "pinyin": "lái",
+      "hanzi": "王老师今天来学校吗？",
+      "pinyin": "wáng lǎo shī jīn tiān lái xué xiào ma ？",
       "meaning": {
-        "zh": "来",
-        "kr": "오다",
-        "en": "to come",
-        "jp": "来る"
+        "zh": "王老师今天来学校吗？",
+        "kr": "왕 선생님 오늘 학교에 오세요?",
+        "jp": "王老师は今日学校に来ますか？",
+        "en": "Is Teacher Wang coming to school today?"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "回来",
-      "pinyin": "huílai",
+      "hanzi": "今天不来，他去北京了。",
+      "pinyin": "jīn tiān bù lái ， tā qù běi jīng le 。",
       "meaning": {
-        "zh": "回来",
-        "kr": "돌아오다",
-        "en": "to come back",
-        "jp": "帰ってくる"
+        "zh": "今天不来，他去北京了。",
+        "kr": "오늘은 안 오고, 그는 베이징에 갔어요.",
+        "jp": "今日は来ません。彼は北京に行きました。",
+        "en": "He's not coming today; he went to Beijing."
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "电话",
-      "pinyin": "diànhuà",
+      "hanzi": "他什么时候回来？",
+      "pinyin": "tā shén me shí hòu huí lái ？",
       "meaning": {
-        "zh": "电话",
-        "kr": "전화",
-        "en": "phone; telephone",
-        "jp": "電話"
+        "zh": "他什么时候回来？",
+        "kr": "그는 언제 돌아와요?",
+        "jp": "彼はいつ戻りますか？",
+        "en": "When will he come back?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "写",
-      "pinyin": "xiě",
+      "hanzi": "星期五回来。",
+      "pinyin": "xīng qī wǔ huí lái 。",
       "meaning": {
-        "zh": "写",
-        "kr": "쓰다",
-        "en": "to write",
-        "jp": "書く"
+        "zh": "星期五回来。",
+        "kr": "금요일에 돌아와요.",
+        "jp": "金曜日に戻ります。",
+        "en": "I'll be back on Friday."
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "给",
-      "pinyin": "gěi",
+      "hanzi": "你有王老师的电话吗？",
+      "pinyin": "nǐ yǒu wáng lǎo shī de diàn huà ma ？",
       "meaning": {
-        "zh": "给",
-        "kr": "…에게 주다",
-        "en": "to give; to; for",
-        "jp": "〜にあげる"
+        "zh": "你有王老师的电话吗？",
+        "kr": "왕 선생님 전화번호 있어요?",
+        "jp": "王老师の電話番号を持っていますか？",
+        "en": "Do you have Teacher Wang's phone number?"
       },
       "pos": {
-        "kr": "介词/동사",
-        "en": "preposition/verb",
-        "jp": "前置詞／動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我写给你。",
+      "pinyin": "wǒ xiě gěi nǐ 。",
+      "meaning": {
+        "zh": "我写给你。",
+        "kr": "적어 드릴게요.",
+        "jp": "書いてあげます。",
+        "en": "I'll write it for you."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "王老师今天来学校吗？" },
-    { "speaker": "B", "text": "今天不来，他去北京了。" },
-    { "speaker": "A", "text": "他什么时候回来？" },
-    { "speaker": "B", "text": "星期五回来。" },
-    { "speaker": "A", "text": "你有王老师的电话吗？" },
-    { "speaker": "B", "text": "我写给你。" }
+    {
+      "speaker": "A",
+      "text": "王老师今天来学校吗？",
+      "pinyin": "Wáng lǎo shī jīn tiān lái xué xiào ma ？",
+      "translation": {
+        "kr": "왕 선생님 오늘 학교에 오세요?",
+        "en": "Is Teacher Wang coming to school today?",
+        "jp": "王老师は今日学校に来ますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "今天不来，他去北京了。",
+      "pinyin": "Jīn tiān bù lái ， tā qù běi jīng le 。",
+      "translation": {
+        "kr": "오늘은 안 오고, 그는 베이징에 갔어요.",
+        "en": "He's not coming today; he went to Beijing.",
+        "jp": "今日は来ません。彼は北京に行きました。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "他什么时候回来？",
+      "pinyin": "Tā shén me shí hòu huí lái ？",
+      "translation": {
+        "kr": "그는 언제 돌아와요?",
+        "en": "When will he come back?",
+        "jp": "彼はいつ戻りますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "星期五回来。",
+      "pinyin": "Xīng qī wǔ huí lái 。",
+      "translation": {
+        "kr": "금요일에 돌아와요.",
+        "en": "I'll be back on Friday.",
+        "jp": "金曜日に戻ります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你有王老师的电话吗？",
+      "pinyin": "Nǐ yǒu wáng lǎo shī de diàn huà ma ？",
+      "translation": {
+        "kr": "왕 선생님 전화번호 있어요?",
+        "en": "Do you have Teacher Wang's phone number?",
+        "jp": "王老师の電話番号を持っていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我写给你。",
+      "pinyin": "Wǒ xiě gěi nǐ 。",
+      "translation": {
+        "kr": "적어 드릴게요.",
+        "en": "I'll write it for you.",
+        "jp": "書いてあげます。"
+      }
+    }
   ],
   "dialogueCards": [],
   "grammar": [
     {
       "pattern": "来 / 回来",
       "pinyin": "lái / huílái",
-      "explain": {
-        "zh": "「来」表示到说话人这边；「回来」表示从别处回到原处。王老师今天来学校吗？他什么时候回来？",
+      "explanation": {
         "kr": "「来」는 말하는 쪽으로 오다. 「回来」는 돌아오다. 来学校吗？什么时候回来？",
         "en": "来 = come (here). 回来 = come back. 来学校吗？什么时候回来？",
         "jp": "「来」は話者へ来る。「回来」は帰ってくる。来学校吗？什么时候回来？"
       },
       "example": {
-        "zh": "王老师今天来学校吗？今天不来，他去北京了。他什么时候回来？星期五回来。",
-        "pinyin": "Wáng lǎoshī jīntiān lái xuéxiào ma? Jīntiān bù lái, tā qù Běijīng le. Tā shénme shíhou huílái? Xīngqī wǔ huílái.",
-        "translation": { "kr": "왕 선생님 오늘 학교 와? 오늘 안 와, 베이징 갔어. 언제 돌아와? 금요일에.", "jp": "王老师は今日学校に来る？来ない。北京に行った。いつ戻る？金曜日に。", "en": "Is Teacher Wang coming today? No, he went to Beijing. When is he back? Friday." }
+        "text": "王老师今天来学校吗？",
+        "pinyin": "Wáng lǎo shī jīn tiān lái xué xiào ma ？",
+        "translation": {
+          "kr": "왕 선생님 오늘 학교에 오세요?",
+          "en": "Is Teacher Wang coming to school today?",
+          "jp": "王老师は今日学校に来ますか？"
+        }
       }
     },
     {
       "pattern": "有 + 名词（电话） / 写给 + 人（给）",
       "pinyin": "yǒu + míngcí / xiě gěi + rén",
-      "explain": {
-        "zh": "「有」表示拥有：有电话。「给」表示给谁：写给你。你有王老师的电话吗？我写给你。",
+      "explanation": {
         "kr": "「有」는 가지고 있다. 「给」는 누구에게 주는지. 你有电话吗？我写给你.",
         "en": "有 shows possession: 有电话. 给 shows giving to someone: 写给你。",
         "jp": "「有」は持つ、「给」は〜に与える。你有电话吗？我写给你。"
       },
       "example": {
-        "zh": "你有王老师的电话吗？我写给你。",
-        "pinyin": "Nǐ yǒu Wáng lǎoshī de diànhuà ma? Wǒ xiě gěi nǐ.",
-        "translation": { "kr": "왕 선생님 전화번호 있어? 적어서 줄게.", "jp": "王先生の電話番号ある？書いてあげる。", "en": "Do you have Teacher Wang's number? I'll write it for you." }
+        "text": "你有王老师的电话吗？今天不来，他去北京了。他什么时候回来？星期五回来。我写给你。",
+        "pinyin": "Nǐ yǒu wáng lǎo shī de diàn huà ma ？ Jīn tiān bù lái ， tā qù běi jīng le 。 Tā shén me shí hòu huí lái ？ Xīng qī wǔ huí lái 。 Wǒ xiě gěi nǐ 。",
+        "translation": {
+          "kr": "왕 선생님 전화번호 있어요? 오늘은 안 오고, 그는 베이징에 갔어요. 그는 언제 돌아와요? 금요일에 돌아와요. 적어 드릴게요.",
+          "en": "Do you have Teacher Wang's phone number? He's not coming today; he went to Beijing. When will he come back? I'll be back on Friday. I'll write it for you.",
+          "jp": "王老师の電話番号を持っていますか？ 今日は来ません。彼は北京に行きました。 彼はいつ戻りますか？ 金曜日に戻ります。 書いてあげます。"
+        }
       }
     }
   ],
@@ -199,85 +287,202 @@
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "「来」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「王老师今天来学校吗？」，你应该说？",
+        "kr": "상대가 말할 때: 「王老师今天来学校吗？」 답은?",
+        "en": "Someone says: \"王老师今天来学校吗？\" You should say?",
+        "jp": "相手が「王老师今天来学校吗？」と言ったら、あなたは？"
       },
       "options": [
-        "去",
-        "来",
-        "回"
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "王老师今天来学校吗？",
+        "星期五回来。"
       ],
-      "answer": "来"
+      "answer": "今天不来，他去北京了。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p2",
       "type": "choice",
-      "question": {
-        "zh": "「回来」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「他什么时候回来？」，你应该说？",
+        "kr": "상대가 말할 때: 「他什么时候回来？」 답은?",
+        "en": "Someone says: \"他什么时候回来？\" You should say?",
+        "jp": "相手が「他什么时候回来？」と言ったら、あなたは？"
       },
       "options": [
-        "回来",
-        "电话",
-        "写"
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "王老师今天来学校吗？",
+        "星期五回来。"
       ],
-      "answer": "回来"
+      "answer": "星期五回来。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p3",
       "type": "choice",
-      "question": {
-        "zh": "你有老师的___吗？",
-        "kr": "빈칸",
-        "en": "Fill in"
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
       },
       "options": [
-        "给",
-        "电话",
-        "写"
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "王老师今天来学校吗？",
+        "星期五回来。"
       ],
-      "answer": "电话"
+      "answer": "王老师今天来学校吗？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
     },
     {
+      "id": "p4",
       "type": "choice",
-      "question": {
-        "zh": "A：你有王老师的电话吗？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
       },
       "options": [
-        "我写给你",
-        "我去商店",
-        "我买衣服"
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "王老师今天来学校吗？",
+        "星期五回来。"
       ],
-      "answer": "我写给你"
+      "answer": "今天不来，他去北京了。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
     },
     {
+      "id": "p5",
       "type": "choice",
-      "question": {
-        "zh": "哪个句子用了「给」？",
-        "kr": "어느 문장에서 「给」를 썼어요?",
-        "en": "Which sentence uses 给?"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
       },
       "options": [
-        "我有电话。",
-        "我写给你。",
-        "他回来。"
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "王老师今天来学校吗？",
+        "星期五回来。"
       ],
-      "answer": "我写给你。"
+      "answer": "星期五回来。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "王老师今天来学校吗？ 今天不来，他去北京了。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "王老师今天来学校吗？",
+        "今天不来，他去北京了。",
+        "他什么时候回来？",
+        "星期五回来。",
+        "你有王老师的电话吗？",
+        "我写给你。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
+  ],
   "aiPractice": {
     "speaking": [
-      "王老师今天来学校吗",
-      "他什么时候回来",
-      "我有老师的电话",
-      "我写给你"
+      "王老师今天来学校吗？",
+      "今天不来，他去北京了。",
+      "他什么时候回来？",
+      "星期五回来。",
+      "你有王老师的电话吗？"
     ],
-    "chatPrompt": "AI问：王老师今天来学校吗？学生回答来、什么时候回来和给电话。"
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
   },
   "steps": [
     {
@@ -305,6 +510,14 @@
       }
     },
     {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
       "key": "practice",
       "label": {
         "zh": "练习",
@@ -319,58 +532,6 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
-    }
-  ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你有老师的电话吗？",
-          "translation": {
-            "en": "Do you have the teacher's phone number?",
-            "kr": "선생님 전화번호 있어요?",
-            "jp": "先生の電話番号を持っていますか。"
-          },
-          "pinyin": "nǐ yǒu lǎoshī de diànhuà ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "有，我写给你。",
-          "translation": {
-            "en": "Yes, I'll write it for you.",
-            "kr": "있어요, 써 줄게요.",
-            "jp": "はい、書いてあげます。"
-          },
-          "pinyin": "yǒu ， wǒ xiě gěi nǐ 。"
-        },
-        {
-          "speaker": "A",
-          "text": "谢谢，你什么时候来学校？",
-          "translation": {
-            "en": "Thanks. When will you come to school?",
-            "kr": "고마워요. 언제 학교에 와요?",
-            "jp": "ありがとう。いつ学校に来ますか。"
-          },
-          "pinyin": "xièxie ， nǐ shénme shíhou lái xuéxiào ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我明天来，星期五回来。",
-          "translation": {
-            "en": "I'll come tomorrow and come back on Friday.",
-            "kr": "내일 와요, 금요일에 돌아와요.",
-            "jp": "明日来て、金曜日に戻ります。"
-          },
-          "pinyin": "wǒ míngtiān lái ， xīngqīwǔ huílai 。"
-        }
-      ]
     }
   ]
 }

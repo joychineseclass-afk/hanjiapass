@@ -7,15 +7,28 @@
   "type": "lesson",
   "title": {
     "zh": "请问你找谁？",
-    "pinyin": "qǐngwèn nǐ zhǎo shéi",
     "kr": "누구 찾으세요?",
-    "en": "Who are you looking for?",
-    "jp": "どなたをお探しですか？"
+    "jp": "どなたをお探しですか？",
+    "en": "Who are you looking for?"
   },
   "summary": {
     "zh": "打电话找人、礼貌询问与请求",
     "kr": "전화로 사람 찾기, 예의 있게 묻고 요청하기",
-    "en": "Calling to find someone, polite questions and requests"
+    "en": "Calling to find someone, polite questions and requests",
+    "jp": "Calling to find someone, polite questions and requests"
+  },
+  "scene": {
+    "id": "l13_scene",
+    "title": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    },
+    "summary": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    }
   },
   "objectives": [
     {
@@ -31,207 +44,180 @@
   ],
   "vocab": [
     {
-      "hanzi": "喜欢",
-      "pinyin": "xǐhuan",
+      "hanzi": "请问你找谁？",
+      "pinyin": "qǐng wèn nǐ zhǎo shuí ？",
       "meaning": {
-        "zh": "喜欢",
-        "kr": "좋아하다",
-        "en": "to like",
-        "jp": "好き"
+        "zh": "请问你找谁？",
+        "kr": "실례지만 누구 찾으세요?",
+        "jp": "失礼ですが、どなたをお探しですか？",
+        "en": "May I ask who you are looking for?"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "爱",
-      "pinyin": "ài",
+      "hanzi": "我找王老师。",
+      "pinyin": "wǒ zhǎo wáng lǎo shī 。",
       "meaning": {
-        "zh": "爱",
-        "kr": "사랑하다",
-        "en": "to love",
-        "jp": "愛する"
+        "zh": "我找王老师。",
+        "kr": "왕 선생님 찾아요.",
+        "jp": "王老师を探しています。",
+        "en": "I'm looking for Teacher Wang."
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "看",
-      "pinyin": "kàn",
+      "hanzi": "那我能等一下吗？",
+      "pinyin": "nà wǒ néng děng yí xià ma ？",
       "meaning": {
-        "zh": "看",
-        "kr": "보다",
-        "en": "to look; to watch",
-        "jp": "見る"
+        "zh": "那我能等一下吗？",
+        "kr": "그럼 잠깐 기다려도 될까요?",
+        "jp": "では少し待ってもいいですか？",
+        "en": "Then can I wait a moment?"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "听",
-      "pinyin": "tīng",
+      "hanzi": "可以。",
+      "pinyin": "kě yǐ 。",
       "meaning": {
-        "zh": "听",
-        "kr": "듣다",
-        "en": "to listen",
-        "jp": "聞く"
+        "zh": "可以。",
+        "kr": "네, 괜찮아요.",
+        "jp": "はい、大丈夫です。",
+        "en": "Yes, that's fine."
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
-      }
-    },
-    {
-      "hanzi": "狗",
-      "pinyin": "gǒu",
-      "meaning": {
-        "zh": "狗",
-        "kr": "개",
-        "en": "dog",
-        "jp": "犬"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "猫",
-      "pinyin": "māo",
-      "meaning": {
-        "zh": "猫",
-        "kr": "고양이",
-        "en": "cat",
-        "jp": "猫"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "电影",
-      "pinyin": "diànyǐng",
-      "meaning": {
-        "zh": "电影",
-        "kr": "영화",
-        "en": "movie",
-        "jp": "映画"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "电视",
-      "pinyin": "diànshì",
-      "meaning": {
-        "zh": "电视",
-        "kr": "텔레비전",
-        "en": "TV",
-        "jp": "テレビ"
-      },
-      "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "漂亮",
-      "pinyin": "piàoliang",
-      "meaning": {
-        "zh": "漂亮",
-        "kr": "예쁘다",
-        "en": "pretty",
-        "jp": "きれい"
-      },
-      "pos": {
-        "kr": "형용사",
-        "en": "adjective",
-        "jp": "形容詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "请问你找谁？" },
-    { "speaker": "B", "text": "我找王老师。" },
-    { "speaker": "A", "text": "那我能等一下吗？" },
-    { "speaker": "B", "text": "可以。" }
+    {
+      "speaker": "A",
+      "text": "请问你找谁？",
+      "pinyin": "Qǐng wèn nǐ zhǎo shuí ？",
+      "translation": {
+        "kr": "실례지만 누구 찾으세요?",
+        "en": "May I ask who you are looking for?",
+        "jp": "失礼ですが、どなたをお探しですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我找王老师。",
+      "pinyin": "Wǒ zhǎo wáng lǎo shī 。",
+      "translation": {
+        "kr": "왕 선생님 찾아요.",
+        "en": "I'm looking for Teacher Wang.",
+        "jp": "王老师を探しています。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "那我能等一下吗？",
+      "pinyin": "Nà wǒ néng děng yí xià ma ？",
+      "translation": {
+        "kr": "그럼 잠깐 기다려도 될까요?",
+        "en": "Then can I wait a moment?",
+        "jp": "では少し待ってもいいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "可以。",
+      "pinyin": "Kě yǐ 。",
+      "translation": {
+        "kr": "네, 괜찮아요.",
+        "en": "Yes, that's fine.",
+        "jp": "はい、大丈夫です。"
+      }
+    }
   ],
   "dialogueCards": [],
   "grammar": [
     {
       "pattern": "请问（礼貌询问）",
       "pinyin": "qǐngwèn",
-      "explain": {
-        "zh": "「请问」放在问句前表示礼貌地询问。请问你找谁？= 礼貌地问“你找谁？”。",
+      "explanation": {
         "kr": "「请问」는 질문 앞에 써서 예의 있게 묻습니다. 请问你找谁?",
         "en": "请问 before a question = May I ask (polite). 请问你找谁？",
         "jp": "「请问」は質問の前で丁寧に聞く。请问你找谁？"
       },
       "example": {
-        "zh": "请问你找谁？我找王老师。",
-        "pinyin": "Qǐngwèn nǐ zhǎo shéi? Wǒ zhǎo Wáng lǎoshī.",
-        "translation": { "kr": "누구 찾으세요? 왕 선생님 찾아요.", "jp": "どなたをお探しですか？王老师をお願いします。", "en": "Who are you looking for? I'm looking for Teacher Wang." }
+        "text": "请问你找谁？",
+        "pinyin": "Qǐng wèn nǐ zhǎo shuí ？",
+        "translation": {
+          "kr": "실례지만 누구 찾으세요?",
+          "en": "May I ask who you are looking for?",
+          "jp": "失礼ですが、どなたをお探しですか？"
+        }
       }
     },
     {
       "pattern": "找 + 人",
       "pinyin": "zhǎo + rén",
-      "explain": {
-        "zh": "「找」表示寻找。找+人：我找王老师。问对方找谁：你找谁？",
+      "explanation": {
         "kr": "「找」는 찾다. 找+사람: 我找王老师. 你找谁?",
         "en": "找 = to look for. 找 + person: 我找王老师. 你找谁？",
         "jp": "「找」は探す。找+人：我找王老师。你找谁？"
       },
       "example": {
-        "zh": "请问你找谁？我找王老师。",
-        "pinyin": "Qǐngwèn nǐ zhǎo shéi? Wǒ zhǎo Wáng lǎoshī.",
-        "translation": { "kr": "누구 찾으세요? 왕 선생님 찾아요.", "jp": "どなたをお探しですか？王老师です。", "en": "Who are you looking for? I'm looking for Teacher Wang." }
+        "text": "我找王老师。",
+        "pinyin": "Wǒ zhǎo wáng lǎo shī 。",
+        "translation": {
+          "kr": "왕 선생님 찾아요.",
+          "en": "I'm looking for Teacher Wang.",
+          "jp": "王老师を探しています。"
+        }
       }
     },
     {
       "pattern": "能 + 动词",
       "pinyin": "néng + dòngcí",
-      "explain": {
-        "zh": "「能」表示能力或请求许可，后接动词。能+动词：能等一下、能来。",
+      "explanation": {
         "kr": "「能」는 능력이나 허가 요청. 能+동사: 能等一下.",
         "en": "能 = can / may (ability or permission). 能 + verb: 能等一下.",
         "jp": "「能」は可能・許可。能+動詞：能等一下。"
       },
       "example": {
-        "zh": "那我能等一下吗？可以。",
-        "pinyin": "Nà wǒ néng děng yīxià ma? Kěyǐ.",
-        "translation": { "kr": "그럼 잠깐 기다려도 될까요? 네, 됩니다.", "jp": "少々お待ちしてもいいですか？はい、どうぞ。", "en": "Can I wait a moment? Yes, you can." }
+        "text": "那我能等一下吗？",
+        "pinyin": "Nà wǒ néng děng yí xià ma ？",
+        "translation": {
+          "kr": "그럼 잠깐 기다려도 될까요?",
+          "en": "Then can I wait a moment?",
+          "jp": "では少し待ってもいいですか？"
+        }
       }
     },
     {
       "pattern": "能……吗？",
       "pinyin": "néng … ma",
-      "explain": {
-        "zh": "「能……吗？」用来请求许可，意思是“可以……吗？”回答常用「可以」或「不能」。",
+      "explanation": {
         "kr": "「能……吗?」는 허가를 요청. \"~해도 될까요?\" 답: 可以/不能.",
         "en": "能……吗？= May I ...? / Can I ...? Answer: 可以 or 不能.",
         "jp": "「能……吗？」は許可を求める。「〜してもいいですか？」答は「可以」或「不能」。"
       },
       "example": {
-        "zh": "那我能等一下吗？可以。",
-        "pinyin": "Nà wǒ néng děng yīxià ma? Kěyǐ.",
-        "translation": { "kr": "그럼 잠깐 기다려도 될까요? 네.", "jp": "少々待ってもいいですか？はい。", "en": "Can I wait a moment? Yes." }
+        "text": "可以。",
+        "pinyin": "Kě yǐ 。",
+        "translation": {
+          "kr": "네, 괜찮아요.",
+          "en": "Yes, that's fine.",
+          "jp": "はい、大丈夫です。"
+        }
       }
     }
   ],
@@ -299,85 +285,199 @@
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "「喜欢」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「请问你找谁？」，你应该说？",
+        "kr": "상대가 말할 때: 「请问你找谁？」 답은?",
+        "en": "Someone says: \"请问你找谁？\" You should say?",
+        "jp": "相手が「请问你找谁？」と言ったら、あなたは？"
       },
       "options": [
-        "爱",
-        "喜欢",
-        "看"
+        "可以。",
+        "那我能等一下吗？",
+        "请问你找谁？",
+        "我找王老师。"
       ],
-      "answer": "喜欢"
+      "answer": "我找王老师。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p2",
       "type": "choice",
-      "question": {
-        "zh": "「电影」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「那我能等一下吗？」，你应该说？",
+        "kr": "상대가 말할 때: 「那我能等一下吗？」 답은?",
+        "en": "Someone says: \"那我能等一下吗？\" You should say?",
+        "jp": "相手が「那我能等一下吗？」と言ったら、あなたは？"
       },
       "options": [
-        "电视",
-        "电影",
-        "看"
+        "可以。",
+        "那我能等一下吗？",
+        "请问你找谁？",
+        "我找王老师。"
       ],
-      "answer": "电影"
+      "answer": "可以。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p3",
       "type": "choice",
-      "question": {
-        "zh": "我___看电视。",
-        "kr": "빈칸",
-        "en": "Fill in"
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
       },
       "options": [
-        "喜欢",
-        "爱",
-        "看"
+        "可以。",
+        "那我能等一下吗？",
+        "请问你找谁？",
+        "我找王老师。"
       ],
-      "answer": "看"
+      "answer": "请问你找谁？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
     },
     {
+      "id": "p4",
       "type": "choice",
-      "question": {
-        "zh": "A：你喜欢猫吗？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
       },
       "options": [
-        "喜欢",
-        "不",
-        "看"
+        "可以。",
+        "那我能等一下吗？",
+        "请问你找谁？",
+        "我找王老师。"
       ],
-      "answer": "喜欢"
+      "answer": "我找王老师。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
     },
     {
+      "id": "p5",
       "type": "choice",
-      "question": {
-        "zh": "哪个是「漂亮」？",
-        "kr": "어느 것?",
-        "en": "Which?"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
       },
       "options": [
-        "漂亮",
-        "喜欢",
-        "爱"
+        "可以。",
+        "那我能等一下吗？",
+        "请问你找谁？",
+        "我找王老师。"
       ],
-      "answer": "漂亮"
+      "answer": "可以。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "请问你找谁？ 我找王老师。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "请问你找谁？",
+        "我找王老师。",
+        "那我能等一下吗？",
+        "可以。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
+  ],
   "aiPractice": {
     "speaking": [
-      "我喜欢狗",
-      "爱看电影",
-      "看电视",
-      "很漂亮"
+      "请问你找谁？",
+      "我找王老师。",
+      "那我能等一下吗？",
+      "可以。"
     ],
-    "chatPrompt": "AI问：你喜欢什么？学生回答。"
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
   },
   "steps": [
     {
@@ -405,6 +505,14 @@
       }
     },
     {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
       "key": "practice",
       "label": {
         "zh": "练习",
@@ -419,58 +527,6 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
-    }
-  ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "主对话",
-        "kr": "대화",
-        "en": "Dialogue",
-        "jp": "会話"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "请问你找谁？",
-          "translation": {
-            "en": "Who are you looking for?",
-            "kr": "누구 찾으세요?",
-            "jp": "どなたをお探しですか？"
-          },
-          "pinyin": "Qǐngwèn nǐ zhǎo shéi?"
-        },
-        {
-          "speaker": "B",
-          "text": "我找王老师。",
-          "translation": {
-            "en": "I'm looking for Teacher Wang.",
-            "kr": "왕 선생님 찾아요.",
-            "jp": "王老师をお願いします。"
-          },
-          "pinyin": "Wǒ zhǎo Wáng lǎoshī."
-        },
-        {
-          "speaker": "A",
-          "text": "那我能等一下吗？",
-          "translation": {
-            "en": "Can I wait a moment?",
-            "kr": "그럼 잠깐 기다려도 될까요?",
-            "jp": "少々お待ちしてもいいですか？"
-          },
-          "pinyin": "Nà wǒ néng děng yīxià ma?"
-        },
-        {
-          "speaker": "B",
-          "text": "可以。",
-          "translation": {
-            "en": "Yes, you can.",
-            "kr": "네, 됩니다.",
-            "jp": "はい、どうぞ。"
-          },
-          "pinyin": "Kěyǐ."
-        }
-      ]
     }
   ]
 }

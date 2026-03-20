@@ -7,15 +7,28 @@
   "type": "lesson",
   "title": {
     "zh": "你想买什么？",
-    "pinyin": "nǐ xiǎng mǎi shénme",
     "kr": "뭘 사고 싶어요?",
-    "en": "What do you want to buy?",
-    "jp": "何を買いたいですか？"
+    "jp": "何を買いたいですか？",
+    "en": "What do you want to buy?"
   },
   "summary": {
     "zh": "买东西时评价大小和好坏",
     "kr": "물건 살 때 크기와 좋고 나쁨 말하기",
-    "en": "Commenting on size and quality when shopping"
+    "en": "Commenting on size and quality when shopping",
+    "jp": "Commenting on size and quality when shopping"
+  },
+  "scene": {
+    "id": "l15_scene",
+    "title": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    },
+    "summary": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    }
   },
   "objectives": [
     {
@@ -31,119 +44,194 @@
   ],
   "vocab": [
     {
-      "hanzi": "茶",
-      "pinyin": "chá",
+      "hanzi": "你想买什么？",
+      "pinyin": "nǐ xiǎng mǎi shén me ？",
       "meaning": {
-        "zh": "茶",
-        "kr": "차",
-        "en": "tea",
-        "jp": "お茶"
+        "zh": "你想买什么？",
+        "kr": "뭘 사고 싶어요?",
+        "jp": "何を買いたいですか？",
+        "en": "What do you want to buy?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "杯子",
-      "pinyin": "bēizi",
+      "hanzi": "我想买西瓜。",
+      "pinyin": "wǒ xiǎng mǎi xī guā 。",
       "meaning": {
-        "zh": "杯子",
-        "kr": "컵",
-        "en": "cup",
-        "jp": "コップ"
+        "zh": "我想买西瓜。",
+        "kr": "수박 사고 싶어요.",
+        "jp": "スイカを買いたいです。",
+        "en": "I want to buy a watermelon."
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "饭馆",
-      "pinyin": "fànguǎn",
+      "hanzi": "这个西瓜怎么样？",
+      "pinyin": "zhè ge xī guā zěn me yàng ？",
       "meaning": {
-        "zh": "饭馆",
-        "kr": "식당",
-        "en": "restaurant",
-        "jp": "レストラン"
+        "zh": "这个西瓜怎么样？",
+        "kr": "이 수박 어때요?",
+        "jp": "このスイカはどうですか？",
+        "en": "How about this watermelon?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "块",
-      "pinyin": "kuài",
+      "hanzi": "这个太大了。有小点的吗？",
+      "pinyin": "zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？",
       "meaning": {
-        "zh": "块",
-        "kr": "위안",
-        "en": "yuan",
-        "jp": "元（量詞）"
+        "zh": "这个太大了。有小点的吗？",
+        "kr": "이건 너무 커요. 조금 작은 거 있어요?",
+        "jp": "これは大きすぎます。もう少し小さいのはありますか？",
+        "en": "This one is too big. Do you have a smaller one?"
       },
       "pos": {
-        "kr": "양사",
-        "en": "measure word",
-        "jp": "量詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "东西",
-      "pinyin": "dōngxi",
+      "hanzi": "这个怎么样？",
+      "pinyin": "zhè ge zěn me yàng ？",
       "meaning": {
-        "zh": "东西",
-        "kr": "것",
-        "en": "thing",
-        "jp": "もの"
+        "zh": "这个怎么样？",
+        "kr": "이건 어때요?",
+        "jp": "これはどうですか？",
+        "en": "How about this one?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "这个太好了，不大不小。",
+      "pinyin": "zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+      "meaning": {
+        "zh": "这个太好了，不大不小。",
+        "kr": "이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+        "jp": "これはちょうどいい、大きすぎず小さすぎず。",
+        "en": "This one is great—not too big or too small."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你想买什么？" },
-    { "speaker": "B", "text": "我想买西瓜。" },
-    { "speaker": "A", "text": "这个西瓜怎么样？" },
-    { "speaker": "B", "text": "这个太大了。有小点的吗？" },
-    { "speaker": "A", "text": "这个怎么样？" },
-    { "speaker": "B", "text": "这个太好了，不大不小。" }
+    {
+      "speaker": "A",
+      "text": "你想买什么？",
+      "pinyin": "Nǐ xiǎng mǎi shén me ？",
+      "translation": {
+        "kr": "뭘 사고 싶어요?",
+        "en": "What do you want to buy?",
+        "jp": "何を買いたいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我想买西瓜。",
+      "pinyin": "Wǒ xiǎng mǎi xī guā 。",
+      "translation": {
+        "kr": "수박 사고 싶어요.",
+        "en": "I want to buy a watermelon.",
+        "jp": "スイカを買いたいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "这个西瓜怎么样？",
+      "pinyin": "Zhè ge xī guā zěn me yàng ？",
+      "translation": {
+        "kr": "이 수박 어때요?",
+        "en": "How about this watermelon?",
+        "jp": "このスイカはどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "这个太大了。有小点的吗？",
+      "pinyin": "Zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？",
+      "translation": {
+        "kr": "이건 너무 커요. 조금 작은 거 있어요?",
+        "en": "This one is too big. Do you have a smaller one?",
+        "jp": "これは大きすぎます。もう少し小さいのはありますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "这个怎么样？",
+      "pinyin": "Zhè ge zěn me yàng ？",
+      "translation": {
+        "kr": "이건 어때요?",
+        "en": "How about this one?",
+        "jp": "これはどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "这个太好了，不大不小。",
+      "pinyin": "Zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+      "translation": {
+        "kr": "이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+        "en": "This one is great—not too big or too small.",
+        "jp": "これはちょうどいい、大きすぎず小さすぎず。"
+      }
+    }
   ],
   "dialogueCards": [],
   "grammar": [
     {
       "pattern": "想 + 动词（买）",
       "pinyin": "xiǎng + mǎi",
-      "explain": {
-        "zh": "「想买什么」问对方想买什么。回答：我想买+东西。",
+      "explanation": {
         "kr": "뭘 사고 싶은지 물을 때 「你想买什么?」. 답: 我想买+물건.",
         "en": "你想买什么？= What do you want to buy? 我想买 + thing.",
         "jp": "何を買いたいか「你想买什么？」。答は「我想买+もの」。"
       },
       "example": {
-        "zh": "你想买什么？我想买西瓜。",
-        "pinyin": "Nǐ xiǎng mǎi shénme? Wǒ xiǎng mǎi xīguā.",
-        "translation": { "kr": "뭐 사고 싶어? 나는 수박 사고 싶어.", "jp": "何を買いたい？スイカを買いたい。", "en": "What do you want to buy? I want to buy a watermelon." }
+        "text": "你想买什么？",
+        "pinyin": "Nǐ xiǎng mǎi shén me ？",
+        "translation": {
+          "kr": "뭘 사고 싶어요?",
+          "en": "What do you want to buy?",
+          "jp": "何を買いたいですか？"
+        }
       }
     },
     {
       "pattern": "怎么样 / 太 + 形容词",
       "pinyin": "zěnmeyàng / tài + xíngróngcí",
-      "explain": {
-        "zh": "「怎么样」问“怎么样、如何”。「太」表程度高：太大、太小。不大不小 = 刚好。",
+      "explanation": {
         "kr": "「怎么样」는 \"어때?\" 「太」는 너무. 太大/太小. 不大不小=딱 맞다.",
         "en": "怎么样 = how about? 太 + adj = too. 不大不小 = just right.",
         "jp": "「怎么样」はどう？「太」はあまりに。不大不小＝ちょうどいい。"
       },
       "example": {
-        "zh": "这个西瓜怎么样？这个太大了。有小点的吗？这个太好了，不大不小。",
-        "pinyin": "Zhè gè xīguā zěnmeyàng? Zhè gè tài dà le. Yǒu xiǎo diǎn de ma? Zhè gè tài hǎo le, bù dà bù xiǎo.",
-        "translation": { "kr": "이 수박 어때? 너무 커. 작은 거 있어? 이거 딱 좋아, 안 크고 안 작아.", "jp": "このスイカはどう？大きすぎる。小さいのは？ちょうどいい。", "en": "How's this one? Too big. Have a smaller one? This one's just right." }
+        "text": "这个西瓜怎么样？我想买西瓜。这个太大了。有小点的吗？这个怎么样？这个太好了，不大不小。",
+        "pinyin": "Zhè ge xī guā zěn me yàng ？ Wǒ xiǎng mǎi xī guā 。 Zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？ Zhè ge zěn me yàng ？ Zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+        "translation": {
+          "kr": "이 수박 어때요? 수박 사고 싶어요. 이건 너무 커요. 조금 작은 거 있어요? 이건 어때요? 이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+          "en": "How about this watermelon? I want to buy a watermelon. This one is too big. Do you have a smaller one? How about this one? This one is great—not too big or too small.",
+          "jp": "このスイカはどうですか？ スイカを買いたいです。 これは大きすぎます。もう少し小さいのはありますか？ これはどうですか？ これはちょうどいい、大きすぎず小さすぎず。"
+        }
       }
     }
   ],
@@ -180,7 +268,8 @@
       "phrase": "这个好吃吗？",
       "explain": {
         "kr": "이거 맛있어요?",
-        "en": "Is this delicious?"
+        "en": "Is this delicious?",
+        "jp": "Is this delicious?"
       }
     },
     {
@@ -191,91 +280,209 @@
       "phrase": "我不要咖啡。",
       "explain": {
         "kr": "커피는 안 주세요.",
-        "en": "I don't want coffee."
+        "en": "I don't want coffee.",
+        "jp": "I don't want coffee."
       }
     }
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "「茶」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你想买什么？」，你应该说？",
+        "kr": "상대가 말할 때: 「你想买什么？」 답은?",
+        "en": "Someone says: \"你想买什么？\" You should say?",
+        "jp": "相手が「你想买什么？」と言ったら、あなたは？"
       },
       "options": [
-        "水",
-        "茶",
-        "杯子"
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个太大了。有小点的吗？",
+        "这个西瓜怎么样？"
       ],
-      "answer": "茶"
+      "answer": "我想买西瓜。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p2",
       "type": "choice",
-      "question": {
-        "zh": "「饭馆」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「这个西瓜怎么样？」，你应该说？",
+        "kr": "상대가 말할 때: 「这个西瓜怎么样？」 답은?",
+        "en": "Someone says: \"这个西瓜怎么样？\" You should say?",
+        "jp": "相手が「这个西瓜怎么样？」と言ったら、あなたは？"
       },
       "options": [
-        "商店",
-        "饭馆",
-        "家"
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个太大了。有小点的吗？",
+        "这个西瓜怎么样？"
       ],
-      "answer": "饭馆"
+      "answer": "这个太大了。有小点的吗？",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p3",
       "type": "choice",
-      "question": {
-        "zh": "这个___多少钱？",
-        "kr": "빈칸",
-        "en": "Fill in"
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
       },
       "options": [
-        "块",
-        "东西",
-        "茶"
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个太大了。有小点的吗？",
+        "这个西瓜怎么样？"
       ],
-      "answer": "茶"
+      "answer": "你想买什么？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
     },
     {
+      "id": "p4",
       "type": "choice",
-      "question": {
-        "zh": "A：你喝什么？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
       },
       "options": [
-        "我喝茶",
-        "五块",
-        "杯子"
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个太大了。有小点的吗？",
+        "这个西瓜怎么样？"
       ],
-      "answer": "我喝茶"
+      "answer": "我想买西瓜。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
     },
     {
+      "id": "p5",
       "type": "choice",
-      "question": {
-        "zh": "哪个是「东西」？",
-        "kr": "어느 것?",
-        "en": "Which?"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
       },
       "options": [
-        "东西",
-        "块",
-        "茶"
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个太大了。有小点的吗？",
+        "这个西瓜怎么样？"
       ],
-      "answer": "东西"
+      "answer": "这个太大了。有小点的吗？",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "你想买什么？ 我想买西瓜。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你想买什么？",
+        "我想买西瓜。",
+        "这个西瓜怎么样？",
+        "这个太大了。有小点的吗？",
+        "这个怎么样？",
+        "这个太好了，不大不小。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
+  ],
   "aiPractice": {
     "speaking": [
-      "我喝茶",
-      "一个杯子",
-      "五块",
-      "买东西"
+      "你想买什么？",
+      "我想买西瓜。",
+      "这个西瓜怎么样？",
+      "这个太大了。有小点的吗？",
+      "这个怎么样？"
     ],
-    "chatPrompt": "AI问：你喝什么？学生回答。"
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
   },
   "steps": [
     {
@@ -303,6 +510,14 @@
       }
     },
     {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
       "key": "practice",
       "label": {
         "zh": "练习",
@@ -317,48 +532,6 @@
         "kr": "AI 연습",
         "en": "AI Practice"
       }
-    }
-  ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "这个西瓜怎么样？",
-          "translation": {
-            "en": "How is this watermelon?",
-            "kr": "이 수박 어때요?",
-            "jp": "このスイカはどうですか？"
-          },
-          "pinyin": "zhè gè xī guā zěn me yàng ？"
-        },
-        {
-          "speaker": "B",
-          "text": "这个太大了，有小点的吗？",
-          "translation": {
-            "en": "This one is too big. Do you have a smaller one?",
-            "kr": "이건 너무 커요. 더 작은 거 있어요?",
-            "jp": "これは大きすぎます。もっと小さいのはありますか？"
-          },
-          "pinyin": "zhè gè tài dà le ， yǒu xiǎo diǎn de ma ？"
-        },
-        {
-          "speaker": "A",
-          "text": "这个呢？不大不小。",
-          "translation": {
-            "en": "What about this one? It's not big and not small.",
-            "kr": "이건요? 안 크고 안 작아요.",
-            "jp": "これは？大きくも小さくもありません。"
-          },
-          "pinyin": "zhè gè ne ？ bù dà bù xiǎo 。"
-        }
-      ]
     }
   ]
 }

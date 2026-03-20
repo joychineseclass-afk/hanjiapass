@@ -14,42 +14,186 @@
   "summary": {
     "zh": "介绍家庭成员：这是谁、这是我的妈妈/爸爸",
     "kr": "가족 소개: 이 사람 누구, 우리 엄마/아빠",
-    "en": "Introducing family: who is this, this is my mom/dad"
+    "en": "Introducing family: who is this, this is my mom/dad",
+    "jp": "Introducing family: who is this, this is my mom/dad"
   },
   "scene": {
     "id": "l5_scene",
-    "title": { "zh": "介绍家庭", "kr": "가족 소개", "en": "Introducing family" },
-    "summary": { "zh": "给朋友看照片，介绍这是谁、那是谁。", "kr": "친구에게 사진을 보여주며 이 사람 누구, 저 사람 누구 소개한다.", "en": "Show photos to a friend and say who this is, who that is." }
+    "title": {
+      "zh": "介绍家庭",
+      "kr": "가족 소개",
+      "en": "Introducing family"
+    },
+    "summary": {
+      "zh": "给朋友看照片，介绍这是谁、那是谁。",
+      "kr": "친구에게 사진을 보여주며 이 사람 누구, 저 사람 누구 소개한다.",
+      "en": "Show photos to a friend and say who this is, who that is."
+    }
   },
   "objectives": [
-    { "zh": "学会用「这是/那是……」介绍家人", "kr": "「这是/那是…」로 가족을 소개할 수 있다", "en": "Can introduce family with 这是/那是…" },
-    { "zh": "学会问「这是谁？」", "kr": "「这是谁？」를 물을 수 있다", "en": "Can ask 这是谁?" }
+    {
+      "zh": "学会用「这是/那是……」介绍家人",
+      "kr": "「这是/那是…」로 가족을 소개할 수 있다",
+      "en": "Can introduce family with 这是/那是…"
+    },
+    {
+      "zh": "学会问「这是谁？」",
+      "kr": "「这是谁？」를 물을 수 있다",
+      "en": "Can ask 这是谁?"
+    }
   ],
   "vocab": [
-    { "hanzi": "这", "pinyin": "zhè", "meaning": { "zh": "这", "kr": "이", "jp": "この", "en": "this" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "那", "pinyin": "nà", "meaning": { "zh": "那", "kr": "저", "jp": "あの", "en": "that" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "谁", "pinyin": "shéi", "meaning": { "zh": "谁", "kr": "누구", "jp": "誰", "en": "who" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "妈妈", "pinyin": "māma", "meaning": { "zh": "妈妈", "kr": "엄마", "jp": "お母さん", "en": "mom" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "爸爸", "pinyin": "bàba", "meaning": { "zh": "爸爸", "kr": "아빠", "jp": "お父さん", "en": "dad" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "的", "pinyin": "de", "meaning": { "zh": "的", "kr": "~의", "jp": "〜の", "en": "possessive particle" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
+    {
+      "hanzi": "你在哪儿？",
+      "pinyin": "nǐ zài nǎ ér ？",
+      "meaning": {
+        "zh": "你在哪儿？",
+        "kr": "어디에 있어요?",
+        "jp": "どこにいますか？",
+        "en": "Where are you?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我在学校。",
+      "pinyin": "wǒ zài xué xiào 。",
+      "meaning": {
+        "zh": "我在学校。",
+        "kr": "저는 학교에 있어요.",
+        "jp": "学校にいます。",
+        "en": "I'm at school."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "教室开门了吗？",
+      "pinyin": "jiào shì kāi mén le ma ？",
+      "meaning": {
+        "zh": "教室开门了吗？",
+        "kr": "교실 문 열렸어요?",
+        "jp": "教室は開いていますか？",
+        "en": "Is the classroom open?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "开了。",
+      "pinyin": "kāi le 。",
+      "meaning": {
+        "zh": "开了。",
+        "kr": "열렸어요.",
+        "jp": "開いています。",
+        "en": "It's open."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "谁在教室里？",
+      "pinyin": "shuí zài jiào shì lǐ ？",
+      "meaning": {
+        "zh": "谁在教室里？",
+        "kr": "교실에 누가 있어요?",
+        "jp": "教室に誰がいますか？",
+        "en": "Who is in the classroom?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我和Anna。",
+      "pinyin": "wǒ hé A n n a 。",
+      "meaning": {
+        "zh": "我和Anna。",
+        "kr": "Anna랑 저요.",
+        "jp": "Annaと私です。",
+        "en": "Anna and I."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你在哪儿？" },
-    { "speaker": "B", "text": "我在学校。" },
-    { "speaker": "A", "text": "教室开门了吗？" },
-    { "speaker": "B", "text": "开了。" },
-    { "speaker": "A", "text": "谁在教室里？" },
-    { "speaker": "B", "text": "我和Anna。" }
-  ],
-  "originalDialogues": [
     {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "这是谁？", "translation": { "en": "Who is this?", "kr": "이 사람 누구야?", "jp": "これは誰ですか？" }, "pinyin": "Zhè shì shéi?" },
-        { "speaker": "B", "text": "这是我的妈妈。", "translation": { "en": "This is my mom.", "kr": "이건 우리 엄마야.", "jp": "これは私の母です。" }, "pinyin": "Zhè shì wǒ de māma." },
-        { "speaker": "A", "text": "那是谁？", "translation": { "en": "Who is that?", "kr": "저 사람 누구야?", "jp": "あれは誰ですか？" }, "pinyin": "Nà shì shéi?" },
-        { "speaker": "B", "text": "那是我的爸爸。", "translation": { "en": "That is my dad.", "kr": "저건 우리 아빠야.", "jp": "あれは私の父です。" }, "pinyin": "Nà shì wǒ de bàba." }
-      ]
+      "speaker": "A",
+      "text": "你在哪儿？",
+      "pinyin": "Nǐ zài nǎ ér ？",
+      "translation": {
+        "kr": "어디에 있어요?",
+        "en": "Where are you?",
+        "jp": "どこにいますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我在学校。",
+      "pinyin": "Wǒ zài xué xiào 。",
+      "translation": {
+        "kr": "저는 학교에 있어요.",
+        "en": "I'm at school.",
+        "jp": "学校にいます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "教室开门了吗？",
+      "pinyin": "Jiào shì kāi mén le ma ？",
+      "translation": {
+        "kr": "교실 문 열렸어요?",
+        "en": "Is the classroom open?",
+        "jp": "教室は開いていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "开了。",
+      "pinyin": "Kāi le 。",
+      "translation": {
+        "kr": "열렸어요.",
+        "en": "It's open.",
+        "jp": "開いています。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "谁在教室里？",
+      "pinyin": "Shuí zài jiào shì lǐ ？",
+      "translation": {
+        "kr": "교실에 누가 있어요?",
+        "en": "Who is in the classroom?",
+        "jp": "教室に誰がいますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我和Anna。",
+      "pinyin": "Wǒ hé A n n a 。",
+      "translation": {
+        "kr": "Anna랑 저요.",
+        "en": "Anna and I.",
+        "jp": "Annaと私です。"
+      }
     }
   ],
   "dialogueCards": [],
@@ -57,46 +201,55 @@
     {
       "pattern": "哪儿",
       "pinyin": "nǎr",
-      "explain": {
-        "zh": "「哪儿」问地点，意思是“哪里”。回答用「在 + 地点」。",
+      "explanation": {
         "kr": "「哪儿」는 장소를 묻습니다. \"어디\". 답: 在+장소.",
         "en": "哪儿 asks for place (where). Answer with 在 + place.",
         "jp": "「哪儿」は場所を聞く（どこ）。答は「在+場所」。"
       },
       "example": {
-        "zh": "你在哪儿？我在学校。谁在教室里？我和Anna。",
-        "pinyin": "Nǐ zài nǎr? Wǒ zài xuéxiào. Shéi zài jiàoshì lǐ? Wǒ hé Anna.",
-        "translation": { "kr": "너 어디야? 나는 학교에 있어. 교실에 누가 있어? 나랑 Anna.", "jp": "どこにいる？学校にいる。教室に誰がいる？私とAnna。", "en": "Where are you? I'm at school. Who's in the classroom? Anna and I." }
+        "text": "你在哪儿？",
+        "pinyin": "Nǐ zài nǎ ér ？",
+        "translation": {
+          "kr": "어디에 있어요?",
+          "en": "Where are you?",
+          "jp": "どこにいますか？"
+        }
       }
     },
     {
       "pattern": "在 + 地点",
       "pinyin": "zài + dìdiǎn",
-      "explain": {
-        "zh": "「在」表示人或物在某地。结构：某人 + 在 + 地点。",
+      "explanation": {
         "kr": "「在」는 \"~에 있다\". 구조: 사람+在+장소.",
         "en": "在 means to be at a place. Pattern: person + 在 + place.",
         "jp": "「在」は「〜にいる/ある」。人+在+場所。"
       },
       "example": {
-        "zh": "我在学校。王老师在教室里。",
-        "pinyin": "Wǒ zài xuéxiào. Wáng lǎoshī zài jiàoshì lǐ.",
-        "translation": { "kr": "나는 학교에 있어. 왕 선생님은 교실에 있어.", "jp": "私は学校にいる。王老师は教室にいる。", "en": "I'm at school. Teacher Wang is in the classroom." }
+        "text": "我在学校。",
+        "pinyin": "Wǒ zài xué xiào 。",
+        "translation": {
+          "kr": "저는 학교에 있어요.",
+          "en": "I'm at school.",
+          "jp": "学校にいます。"
+        }
       }
     },
     {
       "pattern": "和",
       "pinyin": "hé",
-      "explain": {
-        "zh": "「和」连接两个名词，表示“和、与”。我和Anna = 我 + 和 + Anna。",
+      "explanation": {
         "kr": "「和」는 두 명사를 연결합니다. \"와/과\". 我和Anna.",
         "en": "和 connects two nouns (and, with). 我和Anna = Anna and I.",
         "jp": "「和」は二つの名詞をつなぐ（と）。我和Anna。"
       },
       "example": {
-        "zh": "谁在教室里？我和Anna。",
-        "pinyin": "Shéi zài jiàoshì lǐ? Wǒ hé Anna.",
-        "translation": { "kr": "교실에 누가 있어? 나랑 Anna.", "jp": "教室に誰がいる？私とAnna。", "en": "Who's in the classroom? Anna and I." }
+        "text": "教室开门了吗？开了。谁在教室里？我和Anna。",
+        "pinyin": "Jiào shì kāi mén le ma ？ Kāi le 。 Shuí zài jiào shì lǐ ？ Wǒ hé A n n a 。",
+        "translation": {
+          "kr": "교실 문 열렸어요? 열렸어요. 교실에 누가 있어요? Anna랑 저요.",
+          "en": "Is the classroom open? It's open. Who is in the classroom? Anna and I.",
+          "jp": "教室は開いていますか？ 開いています。 教室に誰がいますか？ Annaと私です。"
+        }
       }
     }
   ],
@@ -107,7 +260,11 @@
       "kr": "형, 오빠",
       "en": "older brother",
       "phrase": "哥哥",
-      "explain": { "kr": "남자 형제 중 나이가 더 큰 사람.", "en": "Older brother.", "jp": "兄。" }
+      "explain": {
+        "kr": "남자 형제 중 나이가 더 큰 사람.",
+        "en": "Older brother.",
+        "jp": "兄。"
+      }
     },
     {
       "zh": "姐姐",
@@ -115,7 +272,11 @@
       "kr": "누나, 언니",
       "en": "older sister",
       "phrase": "姐姐",
-      "explain": { "kr": "여자 형제 중 나이가 더 큰 사람.", "en": "Older sister.", "jp": "姉。" }
+      "explain": {
+        "kr": "여자 형제 중 나이가 더 큰 사람.",
+        "en": "Older sister.",
+        "jp": "姉。"
+      }
     },
     {
       "zh": "弟弟",
@@ -123,7 +284,11 @@
       "kr": "남동생",
       "en": "younger brother",
       "phrase": "弟弟",
-      "explain": { "kr": "남자 형제 중 나이가 더 작은 사람.", "en": "Younger brother.", "jp": "弟。" }
+      "explain": {
+        "kr": "남자 형제 중 나이가 더 작은 사람.",
+        "en": "Younger brother.",
+        "jp": "弟。"
+      }
     },
     {
       "zh": "妹妹",
@@ -131,7 +296,11 @@
       "kr": "여동생",
       "en": "younger sister",
       "phrase": "妹妹",
-      "explain": { "kr": "여자 형제 중 나이가 더 작은 사람.", "en": "Younger sister.", "jp": "妹。" }
+      "explain": {
+        "kr": "여자 형제 중 나이가 더 작은 사람.",
+        "en": "Younger sister.",
+        "jp": "妹。"
+      }
     },
     {
       "zh": "这是我的哥哥。",
@@ -139,30 +308,260 @@
       "kr": "이건 우리 오빠/형이야.",
       "en": "This is my older brother.",
       "phrase": "这是我的哥哥。",
-      "explain": { "kr": "가족 소개할 때 这是/那是+我的+称呼", "en": "When introducing family: 这是/那是 + 我的 + noun", "jp": "家族紹介は 这是/那是+我的+呼称" }
+      "explain": {
+        "kr": "가족 소개할 때 这是/那是+我的+称呼",
+        "en": "When introducing family: 这是/那是 + 我的 + noun",
+        "jp": "家族紹介は 这是/那是+我的+呼称"
+      }
     }
   ],
   "practice": [
-    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "___是谁？", "kr": "___ 누구야? (가까이)", "en": "___ is who? (near)", "jp": "___は誰？（近く）" }, "options": ["这", "那", "的", "谁"], "answer": "这", "explanation": { "cn": "指近处的人用「这」。", "kr": "가까운 사람은 「这」.", "en": "Use 这 for near.", "jp": "近くは「这」。" } },
-    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「妈妈」的意思是？", "kr": "「妈妈」의 뜻은?", "en": "What does 妈妈 mean?", "jp": "「妈妈」の意味は？" }, "options": ["爸爸", "老师", "妈妈", "他们"], "answer": "妈妈", "explanation": { "cn": "「妈妈」即母亲。", "kr": "「妈妈」는 엄마.", "en": "妈妈 means mom.", "jp": "「妈妈」はお母さん。" } },
-    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "那是我的___。", "kr": "저건 우리 ___야.", "en": "That is my ___.", "jp": "あれは私の___です。" }, "options": ["爸爸", "谁", "这", "那"], "answer": "爸爸", "explanation": { "cn": "「爸爸」即父亲。", "kr": "「爸爸」는 아빠.", "en": "爸爸 means dad.", "jp": "「爸爸」はお父さん。" } },
-    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「这是谁？」的回答可以是？", "kr": "「这是谁？」에 대한 답은?", "en": "Response to 这是谁?", "jp": "「这是谁？」への返答は？" }, "options": ["那是谁", "这是我的妈妈", "不是", "他们"], "answer": "这是我的妈妈", "explanation": { "cn": "介绍人用「这是/那是+我的+称呼」。", "kr": "소개할 때 「这是/那是+我的+호칭」.", "en": "Introduce with 这是/那是 + 我的 + noun.", "jp": "「这是/那是+我的+名前」で紹介。" } },
-    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "问「谁」用哪个词？", "kr": "누구를 물을 때 쓰는 말은?", "en": "Which word asks who?", "jp": "誰を聞く語は？" }, "options": ["谁", "这", "那", "的"], "answer": "谁", "explanation": { "cn": "「谁」问人。", "kr": "「谁」는 사람을 묻는 말.", "en": "谁 means who.", "jp": "「谁」は誰。" } }
+    {
+      "id": "p1",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你在哪儿？」，你应该说？",
+        "kr": "상대가 말할 때: 「你在哪儿？」 답은?",
+        "en": "Someone says: \"你在哪儿？\" You should say?",
+        "jp": "相手が「你在哪儿？」と言ったら、あなたは？"
+      },
+      "options": [
+        "教室开门了吗？",
+        "开了。",
+        "你在哪儿？",
+        "我在学校。"
+      ],
+      "answer": "我在学校。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「教室开门了吗？」，你应该说？",
+        "kr": "상대가 말할 때: 「教室开门了吗？」 답은?",
+        "en": "Someone says: \"教室开门了吗？\" You should say?",
+        "jp": "相手が「教室开门了吗？」と言ったら、あなたは？"
+      },
+      "options": [
+        "教室开门了吗？",
+        "开了。",
+        "你在哪儿？",
+        "我在学校。"
+      ],
+      "answer": "开了。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
+      },
+      "options": [
+        "教室开门了吗？",
+        "开了。",
+        "你在哪儿？",
+        "我在学校。"
+      ],
+      "answer": "你在哪儿？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
+    },
+    {
+      "id": "p4",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
+      },
+      "options": [
+        "教室开门了吗？",
+        "开了。",
+        "你在哪儿？",
+        "我在学校。"
+      ],
+      "answer": "我在学校。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
+    },
+    {
+      "id": "p5",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+      },
+      "options": [
+        "教室开门了吗？",
+        "开了。",
+        "你在哪儿？",
+        "我在学校。"
+      ],
+      "answer": "开了。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
+    }
   ],
   "review": {},
   "ai": [
-    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "这是谁？这是我的妈妈。", "hint": { "cn": "请解释这/那和「的」的用法。", "kr": "这/那와 「的」의 쓰임을 설명해 보세요.", "en": "Explain 这/那 and 的.", "jp": "这/那と「的」の使い方を説明してください。" } },
-    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "family_photo", "prompt": { "cn": "给朋友看照片，介绍这是谁、那是谁。", "kr": "친구에게 사진을 보여주며 이 사람 누구, 저 사람 누구 소개하세요.", "en": "Show photos and say who this is, who that is.", "jp": "写真を見せて、これは誰、あれは誰と紹介しましょう。" } },
-    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["这是谁？", "这是我的妈妈。", "那是谁？", "那是我的爸爸。"] },
-    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "你在哪儿？ 我在学校。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你在哪儿？",
+        "我在学校。",
+        "教室开门了吗？",
+        "开了。",
+        "谁在教室里？",
+        "我和Anna。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
   ],
-  "aiPractice": { "speaking": ["这是谁", "这是我的妈妈", "那是我的爸爸"], "chatPrompt": "AI问：这是谁？学生用「这是/那是我的……」回答。" },
+  "aiPractice": {
+    "speaking": [
+      "你在哪儿？",
+      "我在学校。",
+      "教室开门了吗？",
+      "开了。",
+      "谁在教室里？"
+    ],
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
   ]
 }
