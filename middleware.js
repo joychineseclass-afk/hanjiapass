@@ -1,22 +1,3 @@
-/**
- * Vercel Edge Middleware — 仅拦截 GET/HEAD 的 /data/**/*.json
- *
- * 1) Referer / Origin：无 Sec-Fetch 的老客户端或脚本若带 Referer/Origin，须与当前 Host（或 ALLOWED_DATA_HOSTS）一致
- * 2) Sec-Fetch-Site：cross-site 一律拒绝（现代浏览器跨站拉 JSON）
- * 3) 频率：配置 Upstash Redis 后按 x-forwarded-for 首段 IP 滑动窗口限流（全站 /data JSON 合计）
- *
- * 环境变量（均为可选，除 Upstash 外可零配置只开 1)+2)）：
- * - DATA_GUARD_DISABLED=1          关闭本中间件
- * - ALLOWED_DATA_HOSTS=a.com,b.com  除请求 Host 外额外允许的 Referer/Origin 主机名
- * - DATA_GUARD_PER_MINUTE=220      每 IP 每分钟允许次数（默认 220，需 Upstash）
- * - DATA_GUARD_BURST_WINDOW=5      短窗口秒数（默认 5）
- * - DATA_GUARD_BURST_MAX=45        短窗口内最大次数（默认 45，防止瞬时刷）
- * - UPSTASH_REDIS_REST_URL         与 TOKEN 同时存在时启用 Redis 限流
- * - UPSTASH_REDIS_REST_TOKEN
- *
- * 本地 python -m http.server 不会执行本文件；请使用 `vercel dev` 或部署后验证。
- */
-
 import { next } from "@vercel/functions";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
