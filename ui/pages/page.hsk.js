@@ -13,7 +13,10 @@ import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
-import { LESSON_ENGINE, AI_CAPABILITY, mountPractice, rerenderPractice, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
+import { LESSON_ENGINE, AI_CAPABILITY, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
+import * as PracticeEngine from "../modules/practice/practiceEngine.js";
+import * as PracticeState from "../modules/practice/practiceState.js";
+import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
@@ -51,6 +54,118 @@ function isHSKPageActive() {
 
 function getLang() {
   return normalizeLang(getEngineLang());
+}
+
+/** 与 modules/practice/practiceRenderer 一致，供练习题干/选项显示规则使用 */
+function practiceLangKeyFromUiLang(lang) {
+  const l = String(lang || "ko").toLowerCase();
+  if (l === "zh" || l === "cn") return "cn";
+  if (l === "en") return "en";
+  if (l === "jp" || l === "ja") return "jp";
+  return "kr";
+}
+
+const _HANZI_IN_STEM = /[\u4e00-\u9fff]/;
+
+/** 与 modules/practice/practiceChoice pickPrompt 一致 */
+function _practicePickPrompt(obj, langKey) {
+  if (!obj || typeof obj !== "object") return "";
+  const lang = langKey;
+  const key = lang === "cn" || lang === "zh" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+  const v = obj[key] ?? obj.cn ?? obj.zh ?? "";
+  return (typeof v === "string" && v.trim() ? v.trim() : "") || "";
+}
+
+/** 与 practiceChoice.renderChoice 同一套题干展示文案（用于判断是否含汉字） */
+function practiceStemDisplayText(q, langKey) {
+  const prompt = q.prompt ?? q.question ?? {};
+  const fromPick = _practicePickPrompt(prompt, langKey);
+  if (fromPick) return fromPick;
+  if (typeof q.question === "string") return String(q.question).trim();
+  return "";
+}
+
+function _ensureChoiceOptionOrig(o) {
+  if (!o || typeof o !== "object") return;
+  if (!o.__hskChoiceOptOrig) {
+    o.__hskChoiceOptOrig = {
+      kr: o.kr,
+      ko: o.ko,
+      en: o.en,
+      jp: o.jp,
+      ja: o.ja,
+      cn: o.cn,
+      zh: o.zh,
+    };
+  }
+}
+
+function _restoreChoiceOptionFields(o) {
+  if (!o || typeof o !== "object") return;
+  const orig = o.__hskChoiceOptOrig;
+  if (!orig) return;
+  o.kr = orig.kr;
+  o.ko = orig.ko;
+  o.en = orig.en;
+  o.jp = orig.jp;
+  o.ja = orig.ja;
+  o.cn = orig.cn;
+  o.zh = orig.zh;
+}
+
+/**
+ * 选择题选项显示层：题干含汉字 → 保留各语字段（优先系统语）；题干为拼音/外语 → 临时清空 kr/en/jp 使渲染回退到中文。
+ * 不修改 key，不影响判题。仅内存对象，不写回 JSON。
+ */
+function applyHskChoiceOptionDisplayPatch(langKey) {
+  const qs = PracticeState.getQuestions();
+  if (!Array.isArray(qs)) return;
+  for (const q of qs) {
+    if (String(q.type || "choice").toLowerCase() !== "choice") continue;
+    const opts = Array.isArray(q.options) ? q.options : [];
+    const stem = practiceStemDisplayText(q, langKey);
+    const stemHasHanzi = _HANZI_IN_STEM.test(stem);
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      _ensureChoiceOptionOrig(o);
+      _restoreChoiceOptionFields(o);
+      if (stemHasHanzi) continue;
+      ["kr", "ko", "en", "jp", "ja"].forEach((k) => {
+        delete o[k];
+      });
+    }
+  }
+}
+
+function restoreHskChoiceOptionDisplayPatch() {
+  const qs = PracticeState.getQuestions();
+  if (!Array.isArray(qs)) return;
+  for (const q of qs) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) _restoreChoiceOptionFields(o);
+  }
+}
+
+function mountPractice(container, opts) {
+  const langKey = practiceLangKeyFromUiLang(opts && opts.lang);
+  const origLoad = PracticeEngine.loadPractice;
+  PracticeEngine.loadPractice = function (lesson) {
+    const r = origLoad(lesson);
+    applyHskChoiceOptionDisplayPatch(langKey);
+    return r;
+  };
+  try {
+    mountPracticeFromEngine(container, opts);
+  } finally {
+    PracticeEngine.loadPractice = origLoad;
+  }
+}
+
+function rerenderPractice(container, lang) {
+  const langKey = practiceLangKeyFromUiLang(lang);
+  applyHskChoiceOptionDisplayPatch(langKey);
+  rerenderPracticeFromEngine(container, lang);
+  restoreHskChoiceOptionDisplayPatch();
 }
 
 function getCourseId() {
