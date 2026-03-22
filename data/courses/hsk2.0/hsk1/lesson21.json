@@ -1183,7 +1183,472 @@
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "translation": {
+            "kr": "안녕하세요!",
+            "en": "Hello!",
+            "jp": "こんにちは！"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "谢谢。",
+          "pinyin": "Xièxie.",
+          "translation": {
+            "kr": "감사합니다.",
+            "en": "Thank you.",
+            "jp": "ありがとうございます。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不客气。",
+          "pinyin": "Bú kèqi.",
+          "translation": {
+            "kr": "천만에요.",
+            "en": "You're welcome.",
+            "jp": "どういたしまして。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "再见。",
+          "pinyin": "Zàijiàn.",
+          "translation": {
+            "kr": "안녕히 가세요.",
+            "en": "Goodbye.",
+            "jp": "さようなら。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你好，你叫什么名字？",
+          "pinyin": "Nǐ hǎo ， nǐ jiào shén me míng zì ？",
+          "translation": {
+            "kr": "안녕하세요, 이름이 뭐예요?",
+            "en": "Hello, what's your name?",
+            "jp": "こんにちは、お名前は何ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我叫王明。你呢？",
+          "pinyin": "Wǒ jiào wáng míng 。 nǐ ne ？",
+          "translation": {
+            "kr": "저는 왕밍이에요. 당신은요?",
+            "en": "I'm Wang Ming. And you?",
+            "jp": "王明です。あなたは？"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "我叫Anna。",
+          "pinyin": "Wǒ jiào A n n a 。",
+          "translation": {
+            "kr": "저는 Anna예요.",
+            "en": "I'm Anna.",
+            "jp": "Annaです。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "很高兴认识你。",
+          "pinyin": "Hěn gāo xìng rèn shi nǐ 。",
+          "translation": {
+            "kr": "만나서 반가워요.",
+            "en": "Nice to meet you.",
+            "jp": "はじめまして。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你是哪国人？",
+          "pinyin": "Nǐ shì nǎ guó rén ？",
+          "translation": {
+            "kr": "어느 나라 사람이에요?",
+            "en": "Which country are you from?",
+            "jp": "どこの国の人ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我是韩国人。",
+          "pinyin": "Wǒ shì hán guó rén 。",
+          "translation": {
+            "kr": "저는 한국인이에요.",
+            "en": "I'm Korean.",
+            "jp": "韓国人です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你是中国人吗？",
+          "pinyin": "Nǐ shì zhōng guó rén ma ？",
+          "translation": {
+            "kr": "중국인이에요?",
+            "en": "Are you Chinese?",
+            "jp": "中国人ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不是，我是韩国人。",
+          "pinyin": "Bú shì ， wǒ shì hán guó rén 。",
+          "translation": {
+            "kr": "아니요, 저는 한국인이에요.",
+            "en": "No, I'm Korean.",
+            "jp": "いいえ、韓国人です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "他是谁？",
+          "pinyin": "Tā shì shuí ？",
+          "translation": {
+            "kr": "그는 누구예요?",
+            "en": "Who is he?",
+            "jp": "彼は誰ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "他是我的爸爸。",
+          "pinyin": "Tā shì wǒ de bà ba 。",
+          "translation": {
+            "kr": "그는 제 아빠예요.",
+            "en": "He is my dad.",
+            "jp": "彼は私の父です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "她呢？",
+          "pinyin": "Tā ne ？",
+          "translation": {
+            "kr": "그녀는요?",
+            "en": "What about her?",
+            "jp": "彼女は？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "她是我的妈妈。",
+          "pinyin": "Tā shì wǒ de mā ma 。",
+          "translation": {
+            "kr": "그녀는 제 엄마예요.",
+            "en": "She is my mom.",
+            "jp": "彼女は私の母です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你爱爸爸妈妈吗？",
+          "pinyin": "Nǐ ài bà ba mā ma ma ？",
+          "translation": {
+            "kr": "아빠 엄마 사랑해요?",
+            "en": "Do you love your mom and dad?",
+            "jp": "お父さんとお母さんを愛していますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "爱，我很爱他们。",
+          "pinyin": "Ài ， wǒ hěn ài tā men 。",
+          "translation": {
+            "kr": "사랑해요, 저는 그들을 아주 사랑해요.",
+            "en": "Yes, I love them very much.",
+            "jp": "はい、とても愛しています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你在哪儿？",
+          "pinyin": "Nǐ zài nǎ ér ？",
+          "translation": {
+            "kr": "어디에 있어요?",
+            "en": "Where are you?",
+            "jp": "どこにいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我在学校。",
+          "pinyin": "Wǒ zài xué xiào 。",
+          "translation": {
+            "kr": "저는 학교에 있어요.",
+            "en": "I'm at school.",
+            "jp": "学校にいます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "教室开门了吗？",
+          "pinyin": "Jiào shì kāi mén le ma ？",
+          "translation": {
+            "kr": "교실 문 열렸어요?",
+            "en": "Is the classroom open?",
+            "jp": "教室は開いていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "开了。",
+          "pinyin": "Kāi le 。",
+          "translation": {
+            "kr": "열렸어요.",
+            "en": "It's open.",
+            "jp": "開いています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "谁在教室里？",
+          "pinyin": "Shuí zài jiào shì lǐ ？",
+          "translation": {
+            "kr": "교실에 누가 있어요?",
+            "en": "Who is in the classroom?",
+            "jp": "教室に誰がいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我和Anna。",
+          "pinyin": "Wǒ hé A n n a 。",
+          "translation": {
+            "kr": "Anna랑 저요.",
+            "en": "Anna and I.",
+            "jp": "Annaと私です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你会说汉语吗？",
+          "pinyin": "Nǐ huì shuō hàn yǔ ma ？",
+          "translation": {
+            "kr": "중국어 할 수 있어요?",
+            "en": "Can you speak Chinese?",
+            "jp": "中国語を話せますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "是的，我会汉语。",
+          "pinyin": "Shì de ， wǒ huì hàn yǔ 。",
+          "translation": {
+            "kr": "네, 중국어 할 수 있어요.",
+            "en": "Yes, I can speak Chinese.",
+            "jp": "はい、中国語ができます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你在哪儿学习汉语？",
+          "pinyin": "Nǐ zài nǎ ér xué xí hàn yǔ ？",
+          "translation": {
+            "kr": "어디서 중국어를 배워요?",
+            "en": "Where do you study Chinese?",
+            "jp": "どこで中国語を勉強していますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我在学校学习汉语。",
+          "pinyin": "Wǒ zài xué xiào xué xí hàn yǔ 。",
+          "translation": {
+            "kr": "저는 학교에서 중국어를 배워요.",
+            "en": "I study Chinese at school.",
+            "jp": "学校で中国語を勉強しています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你几岁？",
+          "pinyin": "Nǐ jǐ suì ？",
+          "translation": {
+            "kr": "몇 살이에요?",
+            "en": "How old are you?",
+            "jp": "何歳ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我十岁。",
+          "pinyin": "Wǒ shí suì 。",
+          "translation": {
+            "kr": "저는 열 살이에요.",
+            "en": "I'm ten years old.",
+            "jp": "十歳です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你多大？",
+          "pinyin": "Nǐ duō dà ？",
+          "translation": {
+            "kr": "나이가 어떻게 되세요?",
+            "en": "How old are you?",
+            "jp": "おいくつですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我二十二岁。",
+          "pinyin": "Wǒ èr shí èr suì 。",
+          "translation": {
+            "kr": "저는 스물두 살이에요.",
+            "en": "I'm twenty-two years old.",
+            "jp": "二十二歳です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "苹果多少钱？",
+          "pinyin": "Píng guǒ duō shǎo qián ？",
+          "translation": {
+            "kr": "사과 얼마예요?",
+            "en": "How much are the apples?",
+            "jp": "りんごはいくらですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "三块钱一个。",
+          "pinyin": "Sān kuài qián yí gè 。",
+          "translation": {
+            "kr": "하나에 삼 위안이에요.",
+            "en": "Three yuan each.",
+            "jp": "一個三円です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "我买六个苹果。",
+          "pinyin": "Wǒ mǎi liù gè píng guǒ 。",
+          "translation": {
+            "kr": "사과 여섯 개 살게요.",
+            "en": "I'll buy six apples.",
+            "jp": "りんごを六つ買います。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "好的，十八块钱。",
+          "pinyin": "Hǎo de ， shí bā kuài qián 。",
+          "translation": {
+            "kr": "네, 십팔 위안이에요.",
+            "en": "OK, eighteen yuan.",
+            "jp": "はい、十八元です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "现在几点？",
+          "pinyin": "Xiàn zài jǐ diǎn ？",
+          "translation": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "现在三点。",
+          "pinyin": "Xiàn zài sān diǎn 。",
+          "translation": {
+            "kr": "지금 세 시예요.",
+            "en": "It's three o'clock now.",
+            "jp": "今三時です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "我们几点上课？",
+          "pinyin": "Wǒ men jǐ diǎn shàng kè ？",
+          "translation": {
+            "kr": "몇 시에 수업해요?",
+            "en": "What time do we have class?",
+            "jp": "何時に授業がありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "三点十分上课。",
+          "pinyin": "Sān diǎn shí fēn shàng kè 。",
+          "translation": {
+            "kr": "세 시 십 분에 수업이에요.",
+            "en": "Class starts at 3:10.",
+            "jp": "三時十分に授業があります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "今天几月几号？",
+          "pinyin": "Jīn tiān jǐ yuè jǐ hào ？",
+          "translation": {
+            "kr": "오늘은 몇 월 며칠이에요?",
+            "en": "What's the date today?",
+            "jp": "今日は何月何日ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "今天三月八号。",
+          "pinyin": "Jīn tiān sān yuè bā hào 。",
+          "translation": {
+            "kr": "오늘은 삼월 팔일이에요.",
+            "en": "Today is March 8th.",
+            "jp": "今日は三月八日です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你明天忙吗？",
+          "pinyin": "Nǐ míng tiān máng ma ？",
+          "translation": {
+            "kr": "내일 바빠요?",
+            "en": "Are you busy tomorrow?",
+            "jp": "明日は忙しいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不忙。",
+          "pinyin": "Bù máng 。",
+          "translation": {
+            "kr": "안 바빠요.",
+            "en": "I'm not busy.",
+            "jp": "忙しくないです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "那我们明天见面吧。",
+          "pinyin": "Nà wǒ men míng tiān jiàn miàn ba 。",
+          "translation": {
+            "kr": "그럼 내일 만나요.",
+            "en": "Then let's meet tomorrow.",
+            "jp": "じゃあ明日会いましょう。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "好啊！",
+          "pinyin": "Hǎo a ！",
+          "translation": {
+            "kr": "좋아요!",
+            "en": "Great!",
+            "jp": "いいですね！"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "你好",
