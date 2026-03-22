@@ -569,7 +569,10 @@
       );
       const raw = course.raw || {};
       const v = Array.isArray(raw.vocab) ? raw.vocab : (Array.isArray(raw.words) ? raw.words : []);
-      const d = Array.isArray(raw.dialogueCards) ? raw.dialogueCards : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
+      const d =
+        Array.isArray(raw.dialogueCards) && raw.dialogueCards.length > 0
+          ? raw.dialogueCards
+          : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
       const g = Array.isArray(raw.grammar) ? raw.grammar : [];
       const e = Array.isArray(raw.extension) ? raw.extension : [];
 
