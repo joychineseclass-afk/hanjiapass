@@ -14,7 +14,6 @@ import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverag
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import { LESSON_ENGINE, AI_CAPABILITY, IMAGE_ENGINE, SCENE_ENGINE, PROGRESS_ENGINE, PROGRESS_SELECTORS, AUDIO_ENGINE, renderReviewMode, prepareReviewSession } from "../platform/index.js";
-import * as PracticeEngine from "../modules/practice/practiceEngine.js";
 import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
@@ -114,13 +113,12 @@ function _restoreChoiceOptionFields(o) {
 }
 
 /**
- * 选择题选项显示层：题干含汉字 → 保留各语字段（优先系统语）；题干为拼音/外语 → 临时清空 kr/en/jp 使渲染回退到中文。
- * 不修改 key，不影响判题。仅内存对象，不写回 JSON。
+ * 选择题选项显示层：题干含汉字 → 保留各语字段（优先系统语）；题干为拼音/外语 → 删除 kr/ko/en/jp/ja 使渲染回退到 zh/cn。
+ * 不修改 key，不影响判题。仅作用于传入数组中的对象（克隆后的 practice 或 PracticeState 内题目）。
  */
-function applyHskChoiceOptionDisplayPatch(langKey) {
-  const qs = PracticeState.getQuestions();
-  if (!Array.isArray(qs)) return;
-  for (const q of qs) {
+function applyChoiceDisplayToQuestionList(questions, langKey) {
+  if (!Array.isArray(questions)) return;
+  for (const q of questions) {
     if (String(q.type || "choice").toLowerCase() !== "choice") continue;
     const opts = Array.isArray(q.options) ? q.options : [];
     const stem = practiceStemDisplayText(q, langKey);
@@ -137,6 +135,25 @@ function applyHskChoiceOptionDisplayPatch(langKey) {
   }
 }
 
+/** 克隆 lesson.practice（含选项对象），不修改课程原始数据；再对克隆应用选项显示规则 */
+function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
+  if (!lesson || typeof lesson !== "object") return lesson;
+  const raw = Array.isArray(lesson.practice) ? lesson.practice : [];
+  const clonedPractice = raw.map((q) => {
+    const next = { ...q };
+    if (Array.isArray(q.options)) {
+      next.options = q.options.map((o) => {
+        if (!o || typeof o !== "object") return o;
+        const { __hskChoiceOptOrig: _drop, ...rest } = o;
+        return { ...rest };
+      });
+    }
+    return next;
+  });
+  applyChoiceDisplayToQuestionList(clonedPractice, langKey);
+  return { ...lesson, practice: clonedPractice };
+}
+
 function restoreHskChoiceOptionDisplayPatch() {
   const qs = PracticeState.getQuestions();
   if (!Array.isArray(qs)) return;
@@ -147,25 +164,19 @@ function restoreHskChoiceOptionDisplayPatch() {
 }
 
 function mountPractice(container, opts) {
+  if (!container) return;
   const langKey = practiceLangKeyFromUiLang(opts && opts.lang);
-  const origLoad = PracticeEngine.loadPractice;
-  PracticeEngine.loadPractice = function (lesson) {
-    const r = origLoad(lesson);
-    applyHskChoiceOptionDisplayPatch(langKey);
-    return r;
-  };
-  try {
-    mountPracticeFromEngine(container, opts);
-  } finally {
-    PracticeEngine.loadPractice = origLoad;
-  }
+  const lesson = opts && opts.lesson;
+  const lessonForPractice = lesson ? buildLessonWithClonedPracticeForDisplay(lesson, langKey) : lesson;
+  mountPracticeFromEngine(container, { ...(opts || {}), lesson: lessonForPractice });
 }
 
 function rerenderPractice(container, lang) {
+  if (!container) return;
   const langKey = practiceLangKeyFromUiLang(lang);
-  applyHskChoiceOptionDisplayPatch(langKey);
-  rerenderPracticeFromEngine(container, lang);
   restoreHskChoiceOptionDisplayPatch();
+  applyChoiceDisplayToQuestionList(PracticeState.getQuestions(), langKey);
+  rerenderPracticeFromEngine(container, lang);
 }
 
 function getCourseId() {
