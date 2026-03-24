@@ -138,22 +138,61 @@ function _cleanPinyin(text) {
   return cleaned;
 }
 
-/** Strict UI language prompt picker: only use target language, no fallback to other languages */
-function _practicePickPromptStrict(obj, langKey) {
-  if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "prompt object");
-  
-  // Only try the target language, no fallbacks
-  const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
-    : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
-    : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
-    : ["en"];
-    
-  for (const k of targetKeys) {
-    const v = obj[k];
-    if (typeof v === "string" && v.trim()) return v.trim();
+/** 最终统一语言获取：严格单一来源，禁止fallback混用 */
+function _getStrictLangText(obj, langKey, context = "text") {
+  if (!obj || typeof obj !== "object") {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Missing object for ${context} (${langKey})`);
+    }
+    return _safeGetTextWithFallback("", `${context} object`);
   }
   
-  return _safeGetTextWithFallback("", `prompt ${langKey} language`);
+  // 严格语言映射：只允许目标语言
+  const allowedKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
+    : langKey === "kr" || langKey === "ko" ? ["kr", "ko"] 
+    : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
+    : ["en"];
+  
+  // 尝试目标语言的变体
+  for (const key of allowedKeys) {
+    const value = obj[key];
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+  
+  // 严格模式：没有目标语言数据就返回空，不fallback
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No ${langKey} text for ${context}, available: ${Object.keys(obj).filter(k => obj[k] && obj[k].trim()).join(",")}`);
+  }
+  
+  return _safeGetTextWithFallback("", `${context} ${langKey}`);
+}
+
+/** 彻底清理污染字段：删除所有解释、用法、示例等字段 */
+function _stripAllPollutedFields(obj) {
+  if (!obj || typeof obj !== "object") return;
+  
+  // 删除所有解释类字段
+  const pollutedFields = [
+    // 解释类
+    'explain', 'explanation', 'explainKr', 'explainEn', 'explainJp', 'explainCn',
+    'explanation_kr', 'explanation_en', 'explanation_jp', 'explanation_cn',
+    // 语法/扩展类
+    'grammar', 'grammarExplain', 'extension', 'extensionExplain',
+    // 用法/示例类
+    'usage', 'example', 'examples', 'notes', 'note',
+    // 翻译类（在题干中不允许）
+    'translation', 'translations', 'trans',
+    // 其他可能污染的字段
+    'meaning', 'gloss', 'definition', 'definitions'
+  ];
+  
+  pollutedFields.forEach(field => {
+    if (obj.hasOwnProperty(field)) {
+      delete obj[field];
+    }
+  });
 }
 
 /** 与 practiceChoice.pickPrompt 键位一致；各语种缺省时按链回填，避免日语等界面题干空白 */
@@ -357,63 +396,76 @@ function _pickFromLangObject(obj, langKey) {
   return _safeGetTextWithFallback("", "all language fields");
 }
 
-/** 句译类选项：只用 translation / 扁平译文字段，不读 explain / explanation */
+/** 最终统一句子翻译获取：严格单一语言，只允许翻译字段 */
 function pickSentenceTranslationForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return _safeGetTextWithFallback("", "option object");
-  const tr = orig.translation ?? orig.translations ?? orig.trans;
-  if (tr && typeof tr === "object") {
-    const t = _pickFromLangObject(tr, langKey);
-    if (t) return t;
+  if (!orig || typeof orig !== "object") {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Invalid option object for translation (${langKey})`);
+    }
+    return _safeGetTextWithFallback("", "option object");
   }
-  return _pickFromLangObject(
-    { kr: orig.kr, ko: orig.ko, en: orig.en, jp: orig.jp, ja: orig.ja, cn: orig.cn, zh: orig.zh },
-    langKey,
-  );
+  
+  // 先清理污染字段
+  const cleanedOrig = { ...orig };
+  _stripAllPollutedFields(cleanedOrig);
+  
+  // 1. 优先使用 translation[lang] 对象，但只允许目标语言
+  const transObj = cleanedOrig.translation ?? cleanedOrig.translations ?? cleanedOrig.trans;
+  if (transObj && typeof transObj === "object") {
+    const strictTrans = _getStrictLangText(transObj, langKey, "translation object");
+    if (strictTrans && strictTrans !== "[Missing Data]") {
+      return strictTrans;
+    }
+  }
+  
+  // 2. 尝试平铺的翻译字段，但只允许目标语言
+  const flatTrans = _getStrictLangText(cleanedOrig, langKey, "flat translation");
+  if (flatTrans && flatTrans !== "[Missing Data]") {
+    return flatTrans;
+  }
+  
+  // 严格模式：没有翻译就返回空，不fallback到其他语言
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No valid translation for ${langKey}, available fields: ${Object.keys(cleanedOrig).join(",")}`);
+  }
+  
+  return _safeGetTextWithFallback("", `translation ${langKey}`);
 }
 
-/** 词义类选项：仅使用短释义字段，严格过滤长定义和解释 */
+/** 最终统一选项词义获取：严格单一语言，只允许短释义 */
 function pickShortMeaningForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return _safeGetTextWithFallback("", "option object");
-  
-  // 1. Try meaning[lang] object first
-  const m = orig.meaning;
-  if (m && typeof m === "object") {
-    const t = _pickFromLangObject(m, langKey);
-    if (t && _isShortMeaning(t)) return t;
+  if (!orig || typeof orig !== "object") {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Invalid option object for meaning (${langKey})`);
+    }
+    return _safeGetTextWithFallback("", "option object");
   }
   
-  // 2. Try flat language fields, but only if they're short meanings
-  const flatCandidates = {
-    kr: orig.kr, ko: orig.ko,
-    en: orig.en, 
-    jp: orig.jp, ja: orig.ja,
-    cn: orig.cn, zh: orig.zh
-  };
+  // 先清理污染字段
+  const cleanedOrig = { ...orig };
+  _stripAllPollutedFields(cleanedOrig);
   
-  // Get language order for current UI language
-  const order = langKey === "jp" ? ["jp", "ja", "en", "kr", "ko", "cn", "zh"]
-    : langKey === "kr" ? ["kr", "ko", "en", "jp", "ja", "cn", "zh"]
-    : langKey === "en" ? ["en", "kr", "ko", "jp", "ja", "cn", "zh"]
-    : ["cn", "zh", "kr", "ko", "en", "jp", "ja"];
-  
-  for (const k of order) {
-    const candidate = flatCandidates[k];
-    if (candidate && _isShortMeaning(candidate)) {
-      return candidate.trim();
+  // 1. 优先使用 meaning[lang] 对象，但只允许目标语言
+  const meaningObj = cleanedOrig.meaning;
+  if (meaningObj && typeof meaningObj === "object") {
+    const strictMeaning = _getStrictLangText(meaningObj, langKey, "meaning object");
+    if (strictMeaning && strictMeaning !== "[Missing Data]" && _isShortMeaning(strictMeaning)) {
+      return strictMeaning;
     }
   }
   
-  // 3. Final fallback: try any remaining field, but still filter
-  for (const k of order) {
-    const candidate = flatCandidates[k];
-    if (candidate && candidate.trim()) {
-      if (_isShortMeaning(candidate)) {
-        return candidate.trim();
-      }
-    }
+  // 2. 尝试平铺的语言字段，但只允许目标语言
+  const flatText = _getStrictLangText(cleanedOrig, langKey, "option flat text");
+  if (flatText && flatText !== "[Missing Data]" && _isShortMeaning(flatText)) {
+    return flatText;
   }
   
-  return _safeGetTextWithFallback("", "short meaning all sources");
+  // 严格模式：没有合适的短释义就返回空，不fallback到其他语言
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No valid short meaning for ${langKey}, available fields: ${Object.keys(cleanedOrig).join(",")}`);
+  }
+  
+  return _safeGetTextWithFallback("", `short meaning ${langKey}`);
 }
 
 function _stripOptionExplainFields(o) {
@@ -497,13 +549,42 @@ function patchChoiceOptionForDisplayMode(o, kind, langKey) {
   }
 }
 
-/** 与 practiceChoice.renderChoice 同一套题干展示文案（用于判断是否含汉字） */
+/** 最终统一题干显示：严格单一语言，彻底隔离污染 */
 function practiceStemDisplayText(q, langKey) {
+  if (!q || typeof q !== "object") {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Invalid question object for stem (${langKey})`);
+    }
+    return _safeGetTextWithFallback("", "question stem");
+  }
+  
+  // 优先使用 prompt 对象，但只允许目标语言
   const prompt = q.prompt ?? q.question ?? {};
-  // Use strict language picker for question stem - no fallback to other languages
-  const fromPick = _practicePickPromptStrict(prompt, langKey);
-  if (fromPick) return fromPick;
-  if (typeof q.question === "string") return _safeGetTextWithFallback(String(q.question).trim(), "question string");
+  if (prompt && typeof prompt === "object") {
+    // 先清理污染字段
+    const cleanedPrompt = { ...prompt };
+    _stripAllPollutedFields(cleanedPrompt);
+    
+    // 严格获取目标语言文本
+    const strictText = _getStrictLangText(cleanedPrompt, langKey, "prompt");
+    if (strictText && strictText !== "[Missing Data]") {
+      return strictText;
+    }
+  }
+  
+  // 回退到字符串格式的 question
+  if (typeof q.question === "string") {
+    const questionText = String(q.question).trim();
+    if (questionText) {
+      return questionText;
+    }
+  }
+  
+  // 严格模式：没有数据就返回空，不fallback
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No valid stem text for ${langKey}, question keys: ${Object.keys(q).join(",")}`);
+  }
+  
   return _safeGetTextWithFallback("", "question stem");
 }
 
@@ -544,37 +625,82 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
   }
 }
 
-/** 克隆 lesson.practice（含选项对象），不修改课程原始数据；再对克隆应用选项显示规则 */
+/** 最终统一练习数据处理：彻底隔离污染，严格语言控制 */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
-  if (!lesson || typeof lesson !== "object") return lesson;
+  if (!lesson || typeof lesson !== "object") {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Invalid lesson object for ${langKey}`);
+    }
+    return lesson;
+  }
+  
   const raw = Array.isArray(lesson.practice) ? lesson.practice : [];
-  const clonedPractice = raw.map((q) => {
-    const next = { ...q };
-    if (String(q.type || "choice").toLowerCase() === "choice") {
-      next.prompt = mergePracticePromptForDisplay(q);
-      if (next.prompt && typeof next.prompt === "object") backfillPracticePromptEmptyLocales(next.prompt);
+  if (!raw.length) {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] No practice questions in lesson for ${langKey}`);
     }
-    
-    // Clean pinyin fields to remove English contamination
-    if (next.pinyin) next.pinyin = _cleanPinyin(next.pinyin);
-    if (next.py) next.py = _cleanPinyin(next.py);
-    
-    if (Array.isArray(q.options)) {
-      next.options = q.options.map((o) => {
-        if (!o || typeof o !== "object") return o;
-        const { __hskChoiceOptOrig: _drop, ...rest } = o;
-        const cleaned = { ...rest };
-        
-        // Clean pinyin fields in options too
-        if (cleaned.pinyin) cleaned.pinyin = _cleanPinyin(cleaned.pinyin);
-        if (cleaned.py) cleaned.py = _cleanPinyin(cleaned.py);
-        
-        return cleaned;
-      });
+    return { ...lesson, practice: [] };
+  }
+  
+  const clonedPractice = raw.map((q, index) => {
+    try {
+      // 深度克隆题目
+      const next = JSON.parse(JSON.stringify(q));
+      
+      // 统一清理所有污染字段
+      _stripAllPollutedFields(next);
+      
+      // 清理拼音字段（完全独立处理）
+      if (next.pinyin) next.pinyin = _cleanPinyin(next.pinyin);
+      if (next.py) next.py = _cleanPinyin(next.py);
+      
+      // 处理选择题选项
+      if (Array.isArray(next.options)) {
+        next.options = next.options.map((o, optIndex) => {
+          if (!o || typeof o !== "object") {
+            if (typeof console !== "undefined" && console.warn) {
+              console.warn(`[HSK Language] Invalid option ${optIndex} in question ${index} for ${langKey}`);
+            }
+            return o;
+          }
+          
+          // 清理选项中的污染字段
+          const cleanedOption = { ...o };
+          _stripAllPollutedFields(cleanedOption);
+          
+          // 清理选项中的拼音
+          if (cleanedOption.pinyin) cleanedOption.pinyin = _cleanPinyin(cleanedOption.pinyin);
+          if (cleanedOption.py) cleanedOption.py = _cleanPinyin(cleanedOption.py);
+          
+          return cleanedOption;
+        });
+      }
+      
+      // 对于选择题，应用显示规则（但使用严格语言控制）
+      if (String(next.type || "choice").toLowerCase() === "choice") {
+        // 不再使用 backfill，保持严格语言控制
+        if (next.prompt && typeof next.prompt === "object") {
+          _stripAllPollutedFields(next.prompt);
+        }
+      }
+      
+      return next;
+      
+    } catch (error) {
+      if (typeof console !== "undefined" && console.error) {
+        console.error(`[HSK Language] Error processing question ${index} for ${langKey}:`, error);
+      }
+      return q; // 返回原题作为fallback
     }
-    return next;
   });
+  
+  // 应用选项显示规则（但已通过严格语言控制）
   applyChoiceDisplayToQuestionList(clonedPractice, langKey);
+  
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug(`[HSK Language] Processed ${clonedPractice.length} questions for ${langKey}`);
+  }
+  
   return { ...lesson, practice: clonedPractice };
 }
 
@@ -598,8 +724,43 @@ function mountPractice(container, opts) {
 function rerenderPractice(container, lang) {
   if (!container) return;
   const langKey = practiceLangKeyFromUiLang(lang);
+  
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug(`[HSK Language] Rerendering practice with ${langKey}`);
+  }
+  
   restoreHskChoiceOptionDisplayPatch();
-  applyChoiceDisplayToQuestionList(PracticeState.getQuestions(), langKey);
+  
+  // 对现有题目也应用严格的语言控制
+  const currentQuestions = PracticeState.getQuestions();
+  if (Array.isArray(currentQuestions)) {
+    currentQuestions.forEach((q, index) => {
+      // 清理题干污染字段
+      if (q.prompt && typeof q.prompt === "object") {
+        _stripAllPollutedFields(q.prompt);
+      }
+      _stripAllPollutedFields(q);
+      
+      // 清理拼音
+      if (q.pinyin) q.pinyin = _cleanPinyin(q.pinyin);
+      if (q.py) q.py = _cleanPinyin(q.py);
+      
+      // 清理选项
+      if (Array.isArray(q.options)) {
+        q.options.forEach((o, optIndex) => {
+          if (o && typeof o === "object") {
+            _stripAllPollutedFields(o);
+            if (o.pinyin) o.pinyin = _cleanPinyin(o.pinyin);
+            if (o.py) o.py = _cleanPinyin(o.py);
+          }
+        });
+      }
+    });
+    
+    // 应用显示规则
+    applyChoiceDisplayToQuestionList(currentQuestions, langKey);
+  }
+  
   rerenderPracticeFromEngine(container, lang);
 }
 
