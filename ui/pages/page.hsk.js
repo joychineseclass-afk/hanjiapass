@@ -66,13 +66,292 @@ function practiceLangKeyFromUiLang(lang) {
 
 const _HANZI_IN_STEM = /[\u4e00-\u9fff]/;
 
-/** 与 modules/practice/practiceChoice pickPrompt 一致 */
+function _trimStr(v) {
+  return typeof v === "string" && v.trim() ? v.trim() : "";
+}
+
+/** 与 practiceChoice.pickPrompt 键位一致；各语种缺省时按链回填，避免日语等界面题干空白 */
 function _practicePickPrompt(obj, langKey) {
   if (!obj || typeof obj !== "object") return "";
-  const lang = langKey;
-  const key = lang === "cn" || lang === "zh" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
-  const v = obj[key] ?? obj.cn ?? obj.zh ?? "";
-  return (typeof v === "string" && v.trim() ? v.trim() : "") || "";
+  const primary =
+    langKey === "cn" || langKey === "zh"
+      ? ["cn", "zh"]
+      : langKey === "kr" || langKey === "ko"
+        ? ["kr", "ko"]
+        : langKey === "jp" || langKey === "ja"
+          ? ["jp", "ja"]
+          : ["en"];
+  const fallbacks = ["cn", "zh", "kr", "ko", "en", "jp", "ja"];
+  const tryKeys = [...new Set([...primary, ...fallbacks])];
+  for (const k of tryKeys) {
+    const v = obj[k];
+    if (typeof v === "string" && v.trim()) return v.trim();
+  }
+  return "";
+}
+
+/** 将生成器里的多语言 question 合并进 prompt，避免 normalize 只保留短 prompt 导致丢 KR/EN/JP 模板句 */
+function mergePracticePromptForDisplay(q) {
+  const p = q.prompt;
+  const qu = q.question;
+  if (typeof p === "string" || typeof qu === "string") {
+    const ps = _trimStr(typeof p === "string" ? p : "");
+    const qs = _trimStr(typeof qu === "string" ? qu : "");
+    const base = ps || qs;
+    if (!base) return typeof p === "object" && p && !Array.isArray(p) ? { ...p } : typeof qu === "object" && qu && !Array.isArray(qu) ? { ...qu } : {};
+    return { cn: base, zh: base, kr: base, ko: base, en: base, jp: base, ja: base };
+  }
+  const pObj = p && typeof p === "object" && !Array.isArray(p) ? { ...p } : {};
+  const qObj = qu && typeof qu === "object" && !Array.isArray(qu) ? qu : null;
+  if (!qObj) return Object.keys(pObj).length ? pObj : {};
+  const keys = ["cn", "zh", "kr", "ko", "en", "jp", "ja"];
+  for (const k of keys) {
+    const qv = _trimStr(qObj[k]);
+    if (!qv) continue;
+    const hasP =
+      _trimStr(pObj[k]) ||
+      (k === "kr" ? _trimStr(pObj.ko) : "") ||
+      (k === "cn" ? _trimStr(pObj.zh) : "") ||
+      (k === "jp" ? _trimStr(pObj.ja) : "");
+    if (!hasP) {
+      if (k === "ko") pObj.ko = qv;
+      else if (k === "zh") pObj.zh = qv;
+      else if (k === "ja") pObj.ja = qv;
+      else pObj[k] = qv;
+    }
+  }
+  return pObj;
+}
+
+/** 仅填空槽位：jp 缺用 en→kr→cn；kr 缺用 en→cn；en 缺用 kr→cn */
+function backfillPracticePromptEmptyLocales(promptObj) {
+  if (!promptObj || typeof promptObj !== "object") return;
+  if (!_trimStr(promptObj.jp) && !_trimStr(promptObj.ja)) {
+    const fb =
+      _trimStr(promptObj.en) ||
+      _trimStr(promptObj.kr) ||
+      _trimStr(promptObj.ko) ||
+      _trimStr(promptObj.cn) ||
+      _trimStr(promptObj.zh);
+    if (fb) {
+      promptObj.jp = fb;
+      promptObj.ja = fb;
+    }
+  }
+  if (!_trimStr(promptObj.kr) && !_trimStr(promptObj.ko)) {
+    const fb =
+      _trimStr(promptObj.en) ||
+      _trimStr(promptObj.cn) ||
+      _trimStr(promptObj.zh) ||
+      _trimStr(promptObj.jp) ||
+      _trimStr(promptObj.ja);
+    if (fb) {
+      promptObj.kr = fb;
+      promptObj.ko = fb;
+    }
+  }
+  if (!_trimStr(promptObj.en)) {
+    const fb =
+      _trimStr(promptObj.kr) ||
+      _trimStr(promptObj.ko) ||
+      _trimStr(promptObj.cn) ||
+      _trimStr(promptObj.zh) ||
+      _trimStr(promptObj.jp) ||
+      _trimStr(promptObj.ja);
+    if (fb) promptObj.en = fb;
+  }
+  if (!_trimStr(promptObj.cn) && !_trimStr(promptObj.zh)) {
+    const fb =
+      _trimStr(promptObj.en) ||
+      _trimStr(promptObj.kr) ||
+      _trimStr(promptObj.ko) ||
+      _trimStr(promptObj.jp) ||
+      _trimStr(promptObj.ja);
+    if (fb) {
+      promptObj.cn = fb;
+      promptObj.zh = fb;
+    }
+  }
+}
+
+function _optionHasLetterKey(o) {
+  return !!(o && typeof o === "object" && _trimStr(o.key));
+}
+
+function _optionsLookLikeLetterKeyedMeanings(opts) {
+  if (!Array.isArray(opts) || !opts.length) return false;
+  if (!opts.every((x) => x && typeof x === "object")) return false;
+  if (!opts.some((o) => _optionHasLetterKey(o))) return false;
+  return opts.some((o) => {
+    const z = _trimStr(o.zh ?? o.cn);
+    return z && _HANZI_IN_STEM.test(z) && (_trimStr(o.kr) || _trimStr(o.ko) || _trimStr(o.en) || _trimStr(o.jp) || _trimStr(o.ja));
+  });
+}
+
+/**
+ * 选择题展示模式（与判题 key 无关，只影响选项/题干克隆上的展示字段）
+ * zh_options：选项只显示中文
+ * meaning_ui：汉字→释义类，选项只显示当前界面语短释义，不用 explain
+ * sentence_translation：整句/对话理解，选项只显示当前界面语句译，不用词汇义/语法说明
+ * mixed_keep：不改写选项（如手写课中中韩英混排题干+中文串选项）
+ */
+function practiceChoiceDisplayKind(q) {
+  const st = String(q.subtype ?? q.subType ?? "").toLowerCase();
+  const listen = !!(q.audioUrl ?? q.listen ?? q.hasListen);
+  if (listen) return "zh_options";
+
+  if (st.includes("pinyin_to_vocab")) return "zh_options";
+  if (st.includes("meaning_to_vocab") || st.includes("native_to_zh")) return "zh_options";
+
+  if (st.includes("vocab_meaning_choice") || st.includes("extension_meaning_choice")) return "meaning_ui";
+
+  if (
+    st.includes("dialogue_meaning_choice") ||
+    st.includes("grammar_example_meaning") ||
+    st.includes("sentence_meaning") ||
+    st.includes("sentence_translation") ||
+    st.includes("choose_translation")
+  ) {
+    return "sentence_translation";
+  }
+
+  if (st.includes("zh_to_meaning")) {
+    const opts = q.options;
+    if (!Array.isArray(opts) || !opts.length) return "infer";
+    const first = opts[0];
+    if (typeof first === "string") return "zh_options";
+    if (_optionsLookLikeLetterKeyedMeanings(opts)) return "meaning_ui";
+    return "zh_options";
+  }
+
+  if (st.includes("extension") && st.includes("meaning")) return "meaning_ui";
+
+  if (st.includes("dialogue_response") || st.includes("dialogue_detail")) return "zh_options";
+  if (st.includes("grammar_fill") || st.includes("grammar_pattern")) return "zh_options";
+  if (st.includes("sentence_blank") || st.includes("sentence_completion")) return "zh_options";
+  if (st.includes("sentence_order")) return "zh_options";
+
+  return "infer";
+}
+
+function practiceChoiceDisplayKindResolved(q, langKey) {
+  let kind = practiceChoiceDisplayKind(q);
+  if (kind !== "infer") return kind;
+  const opts = q.options;
+  const stem = practiceStemDisplayText(q, langKey);
+  const stemHz = _HANZI_IN_STEM.test(stem);
+  const allStrings = Array.isArray(opts) && opts.length && opts.every((x) => typeof x === "string");
+  if (allStrings) {
+    const anyHz = opts.some((s) => _HANZI_IN_STEM.test(String(s)));
+    return anyHz ? "zh_options" : "mixed_keep";
+  }
+  if (!stemHz) return "zh_options";
+  return "mixed_keep";
+}
+
+function _pickFromLangObject(obj, langKey) {
+  if (!obj || typeof obj !== "object") return "";
+  const order =
+    langKey === "jp"
+      ? ["jp", "ja", "en", "kr", "ko", "cn", "zh"]
+      : langKey === "kr"
+        ? ["kr", "ko", "en", "jp", "ja", "cn", "zh"]
+        : langKey === "en"
+          ? ["en", "kr", "ko", "jp", "ja", "cn", "zh"]
+          : ["cn", "zh", "kr", "ko", "en", "jp", "ja"];
+  for (const k of order) {
+    const v = _trimStr(obj[k]);
+    if (v) return v;
+  }
+  return "";
+}
+
+/** 句译类选项：只用 translation / 扁平译文字段，不读 explain / explanation */
+function pickSentenceTranslationForOption(orig, langKey) {
+  if (!orig || typeof orig !== "object") return "";
+  const tr = orig.translation ?? orig.translations ?? orig.trans;
+  if (tr && typeof tr === "object") {
+    const t = _pickFromLangObject(tr, langKey);
+    if (t) return t;
+  }
+  return _pickFromLangObject(
+    { kr: orig.kr, ko: orig.ko, en: orig.en, jp: orig.jp, ja: orig.ja, cn: orig.cn, zh: orig.zh },
+    langKey,
+  );
+}
+
+/** 词义类选项：优先 meaning / gloss，不用 explain、explanation */
+function pickShortMeaningForOption(orig, langKey) {
+  if (!orig || typeof orig !== "object") return "";
+  const m = orig.meaning;
+  if (m && typeof m === "object") {
+    const t = _pickFromLangObject(m, langKey);
+    if (t) return t;
+  }
+  const g = orig.gloss;
+  if (g && typeof g === "object") {
+    const t = _pickFromLangObject(g, langKey);
+    if (t) return t;
+  }
+  const flatNoZhFirst = _pickFromLangObject(
+    { kr: orig.kr, ko: orig.ko, en: orig.en, jp: orig.jp, ja: orig.ja, cn: orig.cn, zh: orig.zh },
+    langKey,
+  );
+  if (flatNoZhFirst) return flatNoZhFirst;
+  return _pickFromLangObject({ cn: orig.cn, zh: orig.zh }, langKey);
+}
+
+function _stripOptionExplainFields(o) {
+  if (!o || typeof o !== "object") return;
+  delete o.explain;
+  delete o.explanation;
+}
+
+function _applyDisplayOnlyText(o, langKey, text) {
+  if (!o || typeof o !== "object") return;
+  ["kr", "ko", "en", "jp", "ja", "cn", "zh", "pinyin", "py", "meaning", "gloss", "translation", "translations", "trans"].forEach((k) => {
+    delete o[k];
+  });
+  _stripOptionExplainFields(o);
+  if (!text) return;
+  if (langKey === "kr") {
+    o.kr = text;
+    o.ko = text;
+  } else if (langKey === "en") o.en = text;
+  else if (langKey === "jp") {
+    o.jp = text;
+    o.ja = text;
+  } else {
+    o.cn = text;
+    o.zh = text;
+  }
+}
+
+function patchChoiceOptionForDisplayMode(o, kind, langKey) {
+  if (!o || typeof o !== "object") return;
+  _ensureChoiceOptionOrig(o);
+  _restoreChoiceOptionFields(o);
+  _stripOptionExplainFields(o);
+
+  if (kind === "mixed_keep") return;
+
+  if (kind === "zh_options") {
+    ["kr", "ko", "en", "jp", "ja"].forEach((k) => {
+      delete o[k];
+    });
+    return;
+  }
+
+  const orig = o.__hskChoiceOptOrig;
+  if (kind === "meaning_ui") {
+    const text = pickShortMeaningForOption(orig, langKey);
+    _applyDisplayOnlyText(o, langKey, text);
+    return;
+  }
+  if (kind === "sentence_translation") {
+    const text = pickSentenceTranslationForOption(orig, langKey);
+    _applyDisplayOnlyText(o, langKey, text);
+  }
 }
 
 /** 与 practiceChoice.renderChoice 同一套题干展示文案（用于判断是否含汉字） */
@@ -86,51 +365,37 @@ function practiceStemDisplayText(q, langKey) {
 
 function _ensureChoiceOptionOrig(o) {
   if (!o || typeof o !== "object") return;
-  if (!o.__hskChoiceOptOrig) {
-    o.__hskChoiceOptOrig = {
-      kr: o.kr,
-      ko: o.ko,
-      en: o.en,
-      jp: o.jp,
-      ja: o.ja,
-      cn: o.cn,
-      zh: o.zh,
-    };
-  }
+  if (o.__hskChoiceOptOrig) return;
+  const { __hskChoiceOptOrig: _drop, ...rest } = o;
+  o.__hskChoiceOptOrig = { ...rest };
 }
 
 function _restoreChoiceOptionFields(o) {
   if (!o || typeof o !== "object") return;
-  const orig = o.__hskChoiceOptOrig;
-  if (!orig) return;
-  o.kr = orig.kr;
-  o.ko = orig.ko;
-  o.en = orig.en;
-  o.jp = orig.jp;
-  o.ja = orig.ja;
-  o.cn = orig.cn;
-  o.zh = orig.zh;
+  const snap = o.__hskChoiceOptOrig;
+  if (!snap || typeof snap !== "object") return;
+  Object.keys(o).forEach((k) => {
+    if (k === "__hskChoiceOptOrig") return;
+    delete o[k];
+  });
+  Object.assign(o, snap);
+  o.__hskChoiceOptOrig = snap;
 }
 
 /**
- * 选择题选项显示层：题干含汉字 → 保留各语字段（优先系统语）；题干为拼音/外语 → 删除 kr/ko/en/jp/ja 使渲染回退到 zh/cn。
- * 不修改 key，不影响判题。仅作用于传入数组中的对象（克隆后的 practice 或 PracticeState 内题目）。
+ * 选择题选项显示层：按 subtype / 推断模式选用字段，不修改 key，不影响判题。
+ * 仅作用于克隆后的 practice 或 PracticeState 内题目对象。
  */
 function applyChoiceDisplayToQuestionList(questions, langKey) {
   if (!Array.isArray(questions)) return;
   for (const q of questions) {
     if (String(q.type || "choice").toLowerCase() !== "choice") continue;
+    if (q.prompt && typeof q.prompt === "object") backfillPracticePromptEmptyLocales(q.prompt);
+    const kind = practiceChoiceDisplayKindResolved(q, langKey);
     const opts = Array.isArray(q.options) ? q.options : [];
-    const stem = practiceStemDisplayText(q, langKey);
-    const stemHasHanzi = _HANZI_IN_STEM.test(stem);
     for (const o of opts) {
       if (!o || typeof o !== "object") continue;
-      _ensureChoiceOptionOrig(o);
-      _restoreChoiceOptionFields(o);
-      if (stemHasHanzi) continue;
-      ["kr", "ko", "en", "jp", "ja"].forEach((k) => {
-        delete o[k];
-      });
+      patchChoiceOptionForDisplayMode(o, kind, langKey);
     }
   }
 }
@@ -141,6 +406,10 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   const raw = Array.isArray(lesson.practice) ? lesson.practice : [];
   const clonedPractice = raw.map((q) => {
     const next = { ...q };
+    if (String(q.type || "choice").toLowerCase() === "choice") {
+      next.prompt = mergePracticePromptForDisplay(q);
+      if (next.prompt && typeof next.prompt === "object") backfillPracticePromptEmptyLocales(next.prompt);
+    }
     if (Array.isArray(q.options)) {
       next.options = q.options.map((o) => {
         if (!o || typeof o !== "object") return o;
