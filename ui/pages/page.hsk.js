@@ -741,65 +741,107 @@ function _isQuestionValidForLanguage(q, langKey) {
   return true;
 }
 
-/** 统一的语言安全练习池构建函数 v2 */
+/** 显示验证函数：支持UI语言和允许的fallback语言 */
+function isQuestionValidForDisplay(q, langKey) {
+  if (!q || typeof q !== "object") return false;
+  
+  // 定义允许的fallback策略
+  const allowedLanguages = {
+    'jp': ['jp', 'ja', 'en'],  // 日语UI允许日语+English
+    'ja': ['jp', 'ja', 'en'],
+    'kr': ['kr', 'ko', 'en'],  // 韩语UI允许韩语+English  
+    'ko': ['kr', 'ko', 'en'],
+    'en': ['en'],              // 英语UI只允许英语
+    'zh': ['zh', 'cn', 'en'], // 中文UI允许中文+English
+    'cn': ['zh', 'cn', 'en']
+  };
+  
+  const allowed = allowedLanguages[langKey] || ['en'];
+  
+  // 检查题目是否符合任何允许的语言
+  for (const allowedLang of allowed) {
+    if (_isQuestionValidForLanguage(q, allowedLang)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+/** 统一的语言安全练习池构建函数 v2.1 */
 function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) {
   if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
     if (typeof console !== "undefined" && console.warn) {
-      console.warn(`[HSK Language v2] No raw questions provided for ${langKey}`);
+      console.warn(`[HSK Language v2.1] No raw questions provided for ${langKey}`);
     }
     return [];
   }
   
-  // Step 1: 主语言过滤
+  // Step 1: 主语言过滤（严格目标语言）
   const mainLanguageQuestions = rawQuestions.filter(q => 
     _isQuestionValidForLanguage(q, langKey)
   );
   
   if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2] Main filter: ${mainLanguageQuestions.length}/${rawQuestions.length} for ${langKey}`);
+    console.debug(`[HSK Language v2.1] Main filter: ${mainLanguageQuestions.length}/${rawQuestions.length} for ${langKey}`);
   }
   
-  // Step 2: Fallback语言过滤 (English only)
+  // Step 2: 收集允许的fallback题目
   let finalPool = [...mainLanguageQuestions];
   
   if (finalPool.length < minQuestions) {
-    const englishQuestions = rawQuestions.filter(q => 
-      _isQuestionValidForLanguage(q, "en")
-    );
+    // 根据UI语言确定允许的fallback语言
+    const fallbackLanguages = {
+      'jp': ['en'], 'ja': ['en'],  // 日语UI允许English fallback
+      'kr': ['en'], 'ko': ['en'],  // 韩语UI允许English fallback
+      'en': [],                        // 英语UI无fallback
+      'zh': ['en'], 'cn': ['en']   // 中文UI允许English fallback
+    };
+    
+    const allowedFallbacks = fallbackLanguages[langKey] || [];
+    let fallbackQuestions = [];
+    
+    // 收集所有允许的fallback题目
+    for (const fallbackLang of allowedFallbacks) {
+      const questionsForLang = rawQuestions.filter(q => 
+        _isQuestionValidForLanguage(q, fallbackLang)
+      );
+      fallbackQuestions = [...fallbackQuestions, ...questionsForLang];
+    }
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2] English fallback available: ${englishQuestions.length}`);
+      console.debug(`[HSK Language v2.1] Fallback languages: [${allowedFallbacks.join(',')}], available: ${fallbackQuestions.length}`);
     }
     
     // Step 3: 只填补缺少的空位
     const needed = minQuestions - finalPool.length;
-    const fallbackToAdd = englishQuestions.slice(0, needed);
+    const fallbackToAdd = fallbackQuestions.slice(0, needed);
     
     finalPool = [...finalPool, ...fallbackToAdd];
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2] Added ${fallbackToAdd.length} fallback questions`);
+      console.debug(`[HSK Language v2.1] Added ${fallbackToAdd.length} fallback questions`);
     }
   }
   
-  // Step 4: 最终验证
+  // Step 4: 最终验证 - 使用显示验证（允许UI语言+fallback语言）
   const validatedPool = finalPool.filter(q => 
-    _isQuestionValidForLanguage(q, langKey)
+    isQuestionValidForDisplay(q, langKey)
   );
   
   if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2] Final validation: ${validatedPool.length}/${finalPool.length} valid`);
+    console.debug(`[HSK Language v2.1] Final validation: ${validatedPool.length}/${finalPool.length} valid`);
   }
   
   // Step 5: 返回验证后的池子（不随机化，让调用者决定）
   return validatedPool;
 }
 
-/** 重构的练习数据处理入口：使用统一的语言安全池 v2 */
+/** 重构的练习数据处理入口：使用统一的语言安全池 v2.1 */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || typeof lesson !== "object") {
     if (typeof console !== "undefined" && console.warn) {
-      console.warn(`[HSK Language v2] Invalid lesson object for ${langKey}`);
+      console.warn(`[HSK Language v2.1] Invalid lesson object for ${langKey}`);
     }
     return lesson;
   }
@@ -807,7 +849,7 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   const raw = Array.isArray(lesson.practice) ? lesson.practice : [];
   if (!raw.length) {
     if (typeof console !== "undefined" && console.warn) {
-      console.warn(`[HSK Language v2] No practice questions in lesson for ${langKey}`);
+      console.warn(`[HSK Language v2.1] No practice questions in lesson for ${langKey}`);
     }
     return { ...lesson, practice: [] };
   }
@@ -816,7 +858,7 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   const languageSafePool = buildLanguageSafePracticePool(raw, langKey, 3);
   
   if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2] Built safe pool: ${languageSafePool.length} questions for ${langKey}`);
+    console.debug(`[HSK Language v2.1] Built safe pool: ${languageSafePool.length} questions for ${langKey}`);
   }
   
   // 处理和清理题目（深度克隆 + 清理污染）
@@ -901,7 +943,7 @@ function rerenderPractice(container, lang) {
   const langKey = practiceLangKeyFromUiLang(lang);
   
   if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2] Rerendering practice with ${langKey}`);
+    console.debug(`[HSK Language v2.1] Rerendering practice with ${langKey}`);
   }
   
   restoreHskChoiceOptionDisplayPatch();
@@ -909,11 +951,11 @@ function rerenderPractice(container, lang) {
   // 获取现有题目并使用统一的语言安全池构建
   const currentQuestions = PracticeState.getQuestions();
   if (Array.isArray(currentQuestions)) {
-    // 使用统一的语言安全池构建函数
+    // 使用统一的语言安全池构建函数 v2.1
     const languageSafePool = buildLanguageSafePracticePool(currentQuestions, langKey, 3);
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2] Rerender safe pool: ${languageSafePool.length} questions for ${langKey}`);
+      console.debug(`[HSK Language v2.1] Rerender safe pool: ${languageSafePool.length} questions for ${langKey}`);
     }
     
     // 对安全池中的题目应用清理和语言控制
@@ -941,7 +983,7 @@ function rerenderPractice(container, lang) {
     });
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2] Rerender filtering: ${languageSafePool.length}/${currentQuestions.length} questions valid for ${langKey}`);
+      console.debug(`[HSK Language v2.1] Rerender filtering: ${languageSafePool.length}/${currentQuestions.length} questions valid for ${langKey}`);
     }
     
     // 应用显示规则（使用受控fallback）
