@@ -841,12 +841,89 @@ function _isQuestionValidForLanguageWithPartialOptions(q, langKey) {
   return true;
 }
 
-/** 统一的语言安全练习池构建函数 v2.1 */
+/** 诊断题目验证：返回详细拒绝原因 */
+function debugQuestionValidation(q, langKey, index) {
+  const result = {
+    index,
+    stem: '',
+    stemValid: false,
+    totalOptions: 0,
+    validOptions: 0,
+    rejectedReason: '',
+    stemRegexResult: false,
+    optionRegexResults: []
+  };
+  
+  // 获取题干文本
+  const prompt = q.prompt ?? q.question ?? {};
+  let stemText = "";
+  
+  if (prompt && typeof prompt === "object") {
+    stemText = _getControlledLangText(prompt, langKey, "prompt");
+  }
+  
+  if (!stemText && typeof q.question === "string") {
+    stemText = q.question.trim();
+  }
+  
+  result.stem = stemText;
+  
+  // 检查题干是否为空
+  if (!stemText) {
+    result.rejectedReason = 'empty stem';
+    return result;
+  }
+  
+  // 检查题干语言
+  result.stemRegexResult = isTextValidForLang(stemText, langKey);
+  result.stemValid = result.stemRegexResult;
+  
+  if (!result.stemValid) {
+    result.rejectedReason = 'invalid stem language';
+    return result;
+  }
+  
+  // 检查选项
+  if (q.type === "choice" && Array.isArray(q.options)) {
+    result.totalOptions = q.options.length;
+    
+    const validOptions = q.options.filter((o, optIndex) => {
+      if (!o || typeof o !== "object") {
+        result.optionRegexResults.push({ index: optIndex, valid: false, reason: 'not object' });
+        return false;
+      }
+      
+      const optionText = _getControlledLangText(o, langKey, "option");
+      const optionValid = optionText && isTextValidForLang(optionText, langKey);
+      
+      result.optionRegexResults.push({ 
+        index: optIndex, 
+        text: optionText, 
+        valid: optionValid, 
+        reason: optionValid ? 'valid' : 'invalid language' 
+      });
+      
+      return optionValid;
+    });
+    
+    result.validOptions = validOptions.length;
+    
+    if (validOptions.length < 2) {
+      result.rejectedReason = 'insufficient valid options';
+      return result;
+    }
+  }
+  
+  result.rejectedReason = 'none'; // 通过验证
+  return result;
+}
+
+/** 统一的语言安全练习池构建函数 v2.1 - 诊断版 */
 function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) {
   // DEBUG: 输入数据检查
-  console.log('[DEBUG] rawQuestions:', rawQuestions?.length);
-  console.log('[DEBUG] langKey:', langKey);
-  console.log('[DEBUG] minQuestions:', minQuestions);
+  console.log('[DIAGNOSIS] rawQuestions.length:', rawQuestions?.length);
+  console.log('[DIAGNOSIS] langKey:', langKey);
+  console.log('[DIAGNOSIS] minQuestions:', minQuestions);
   
   if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
     if (typeof console !== "undefined" && console.warn) {
@@ -855,26 +932,38 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
     return [];
   }
   
-  // DEBUG: 样本题目检查
-  console.log('[DEBUG] sample question:', rawQuestions?.[0]);
+  // DEBUG: 前3个题目
+  console.log('[DIAGNOSIS] first 3 raw questions:', rawQuestions.slice(0, 3).map((q, i) => ({
+    index: i,
+    type: q.type,
+    hasPrompt: !!q.prompt,
+    hasQuestion: !!q.question,
+    optionsCount: q.options?.length || 0
+  })));
   
-  // Step 1: 主语言过滤（严格目标语言）
-  const mainLanguageQuestions = rawQuestions.filter(q => 
-    _isQuestionValidForLanguage(q, langKey)
+  // Step 1: 主语言过滤诊断
+  const mainLanguageRejections = [];
+  const mainLanguageQuestions = rawQuestions.filter((q, index) => {
+    const diagnosis = debugQuestionValidation(q, langKey, index);
+    if (diagnosis.rejectedReason !== 'none') {
+      mainLanguageRejections.push(diagnosis);
+      return false;
+    }
+    return true;
+  });
+  
+  console.log('[DIAGNOSIS] mainLanguageQuestions.length:', mainLanguageQuestions.length);
+  console.log('[DIAGNOSIS] main language rejections:', mainLanguageRejections.length);
+  console.log('[DIAGNOSIS] main language rejection reasons:', 
+    mainLanguageRejections.map(r => `${r.index}: ${r.rejectedReason}`).join(', ')
   );
-  
-  console.log('[DEBUG] mainLanguageQuestions:', mainLanguageQuestions.length);
-  
-  if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2.1] Main filter: ${mainLanguageQuestions.length}/${rawQuestions.length} for ${langKey}`);
-  }
   
   // Step 2: 收集允许的fallback题目
   let finalPool = [...mainLanguageQuestions];
   let englishQuestions = [];
+  let englishRejections = [];
   
   if (finalPool.length < minQuestions) {
-    // 根据UI语言确定允许的fallback语言
     const fallbackLanguages = {
       'jp': ['en'], 'ja': ['en'],  // 日语UI允许English fallback
       'kr': ['en'], 'ko': ['en'],  // 韩语UI允许English fallback
@@ -885,11 +974,17 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
     const allowedFallbacks = fallbackLanguages[langKey] || [];
     let fallbackQuestions = [];
     
-    // 收集所有允许的fallback题目
     for (const fallbackLang of allowedFallbacks) {
-      const questionsForLang = rawQuestions.filter(q => 
-        _isQuestionValidForLanguage(q, fallbackLang)
-      );
+      const questionsForLang = rawQuestions.filter((q, index) => {
+        const diagnosis = debugQuestionValidation(q, fallbackLang, index);
+        if (diagnosis.rejectedReason !== 'none') {
+          if (fallbackLang === 'en') {
+            englishRejections.push(diagnosis);
+          }
+          return false;
+        }
+        return true;
+      });
       fallbackQuestions = [...fallbackQuestions, ...questionsForLang];
       
       if (fallbackLang === 'en') {
@@ -897,12 +992,11 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
       }
     }
     
-    console.log('[DEBUG] englishQuestions:', englishQuestions?.length || 0);
-    console.log('[DEBUG] fallbackQuestions total:', fallbackQuestions.length);
-    
-    if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2.1] Fallback languages: [${allowedFallbacks.join(',')}], available: ${fallbackQuestions.length}`);
-    }
+    console.log('[DIAGNOSIS] englishQuestions.length:', englishQuestions?.length || 0);
+    console.log('[DIAGNOSIS] english rejections:', englishRejections.length);
+    console.log('[DIAGNOSIS] english rejection reasons:', 
+      englishRejections.map(r => `${r.index}: ${r.rejectedReason}`).join(', ')
+    );
     
     // Step 3: 只填补缺少的空位
     const needed = minQuestions - finalPool.length;
@@ -910,29 +1004,60 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
     
     finalPool = [...finalPool, ...fallbackToAdd];
     
-    console.log('[DEBUG] finalPool before validation:', finalPool.length);
-    console.log('[DEBUG] needed:', needed);
-    console.log('[DEBUG] fallbackToAdd:', fallbackToAdd.length);
-    
-    if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language v2.1] Added ${fallbackToAdd.length} fallback questions`);
-    }
+    console.log('[DIAGNOSIS] finalPool before validation:', finalPool.length);
+    console.log('[DIAGNOSIS] needed:', needed);
+    console.log('[DIAGNOSIS] fallbackToAdd:', fallbackToAdd.length);
   } else {
-    console.log('[DEBUG] finalPool before validation (no fallback needed):', finalPool.length);
+    console.log('[DIAGNOSIS] finalPool before validation (no fallback needed):', finalPool.length);
   }
   
-  // Step 4: 最终验证 - 使用显示验证（允许UI语言+fallback语言）
-  const validatedPool = finalPool.filter(q => 
-    isQuestionValidForDisplay(q, langKey)
+  // Step 4: 最终验证诊断
+  const finalRejections = [];
+  const validatedPool = finalPool.filter((q, index) => {
+    const diagnosis = debugQuestionValidation(q, langKey, index);
+    if (diagnosis.rejectedReason !== 'none') {
+      finalRejections.push(diagnosis);
+      return false;
+    }
+    return true;
+  });
+  
+  console.log('[DIAGNOSIS] validatedPool.length:', validatedPool.length);
+  console.log('[DIAGNOSIS] final rejections:', finalRejections.length);
+  console.log('[DIAGNOSIS] final rejection reasons:', 
+    finalRejections.map(r => `${r.index}: ${r.rejectedReason}`).join(', ')
   );
   
-  console.log('[DEBUG] validatedPool:', validatedPool.length);
+  // Step 5: 完整拒绝摘要
+  console.log('[DIAGNOSIS] === FULL REJECTION SUMMARY ===');
+  console.log('[DIAGNOSIS] main language valid count:', mainLanguageQuestions.length);
+  console.log('[DIAGNOSIS] fallback valid count:', englishQuestions?.length || 0);
+  console.log('[DIAGNOSIS] final pool count:', validatedPool.length);
+  console.log('[DIAGNOSIS] total rejected:', mainLanguageRejections.length + englishRejections.length + finalRejections.length);
   
-  if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language v2.1] Final validation: ${validatedPool.length}/${finalPool.length} valid`);
+  // 详细拒绝信息
+  if (mainLanguageRejections.length > 0) {
+    console.log('[DIAGNOSIS] Main language rejections details:');
+    mainLanguageRejections.forEach(r => {
+      console.log(`  [${r.index}] ${r.rejectedReason} | stem: "${r.stem}" | stemValid: ${r.stemValid} | options: ${r.validOptions}/${r.totalOptions}`);
+    });
   }
   
-  // Step 5: 返回验证后的池子（不随机化，让调用者决定）
+  if (englishRejections.length > 0) {
+    console.log('[DIAGNOSIS] English fallback rejections details:');
+    englishRejections.forEach(r => {
+      console.log(`  [${r.index}] ${r.rejectedReason} | stem: "${r.stem}" | stemValid: ${r.stemValid} | options: ${r.validOptions}/${r.totalOptions}`);
+    });
+  }
+  
+  if (finalRejections.length > 0) {
+    console.log('[DIAGNOSIS] Final validation rejections details:');
+    finalRejections.forEach(r => {
+      console.log(`  [${r.index}] ${r.rejectedReason} | stem: "${r.stem}" | stemValid: ${r.stemValid} | options: ${r.validOptions}/${r.totalOptions}`);
+    });
+  }
+  
+  // Step 6: 返回验证后的池子
   return validatedPool;
 }
 
