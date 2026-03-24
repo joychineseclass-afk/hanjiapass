@@ -70,9 +70,23 @@ function _trimStr(v) {
   return typeof v === "string" && v.trim() ? v.trim() : "";
 }
 
+/** Safety guard: Never return empty string, always fallback with logging */
+function _safeGetTextWithFallback(text, context = "text") {
+  if (text && typeof text === "string" && text.trim()) {
+    return text.trim();
+  }
+  
+  // Log warning for debugging
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Safety] Empty ${context}, using fallback`);
+  }
+  
+  return "[Missing Data]";
+}
+
 /** 与 practiceChoice.pickPrompt 键位一致；各语种缺省时按链回填，避免日语等界面题干空白 */
 function _practicePickPrompt(obj, langKey) {
-  if (!obj || typeof obj !== "object") return "";
+  if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "prompt object");
   const primary =
     langKey === "cn" || langKey === "zh"
       ? ["cn", "zh"]
@@ -87,7 +101,7 @@ function _practicePickPrompt(obj, langKey) {
     const v = obj[k];
     if (typeof v === "string" && v.trim()) return v.trim();
   }
-  return "";
+  return _safeGetTextWithFallback("", "prompt all languages");
 }
 
 /** 将生成器里的多语言 question 合并进 prompt，避免 normalize 只保留短 prompt 导致丢 KR/EN/JP 模板句 */
@@ -245,12 +259,17 @@ function practiceChoiceDisplayKindResolved(q, langKey) {
     const anyHz = opts.some((s) => _HANZI_IN_STEM.test(String(s)));
     return anyHz ? "zh_options" : "mixed_keep";
   }
-  if (!stemHz) return "zh_options";
-  return "mixed_keep";
+  // Fixed logic: If stem HAS Chinese → show system language, if NO Chinese → show Chinese
+  if (!stemHz) {
+    // Stem has NO Chinese → show options in Chinese
+    return "zh_options";
+  }
+  // Stem HAS Chinese → show options in system language (meaning_ui for meanings, sentence_translation for translations)
+  return _optionsLookLikeLetterKeyedMeanings(opts) ? "meaning_ui" : "sentence_translation";
 }
 
 function _pickFromLangObject(obj, langKey) {
-  if (!obj || typeof obj !== "object") return "";
+  if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "language object");
   const order =
     langKey === "jp"
       ? ["jp", "ja", "en", "kr", "ko", "cn", "zh"]
@@ -263,12 +282,12 @@ function _pickFromLangObject(obj, langKey) {
     const v = _trimStr(obj[k]);
     if (v) return v;
   }
-  return "";
+  return _safeGetTextWithFallback("", "all language fields");
 }
 
 /** 句译类选项：只用 translation / 扁平译文字段，不读 explain / explanation */
 function pickSentenceTranslationForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return "";
+  if (!orig || typeof orig !== "object") return _safeGetTextWithFallback("", "option object");
   const tr = orig.translation ?? orig.translations ?? orig.trans;
   if (tr && typeof tr === "object") {
     const t = _pickFromLangObject(tr, langKey);
@@ -282,7 +301,7 @@ function pickSentenceTranslationForOption(orig, langKey) {
 
 /** 词义类选项：优先 meaning / gloss，不用 explain、explanation */
 function pickShortMeaningForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return "";
+  if (!orig || typeof orig !== "object") return _safeGetTextWithFallback("", "option object");
   const m = orig.meaning;
   if (m && typeof m === "object") {
     const t = _pickFromLangObject(m, langKey);
@@ -359,8 +378,8 @@ function practiceStemDisplayText(q, langKey) {
   const prompt = q.prompt ?? q.question ?? {};
   const fromPick = _practicePickPrompt(prompt, langKey);
   if (fromPick) return fromPick;
-  if (typeof q.question === "string") return String(q.question).trim();
-  return "";
+  if (typeof q.question === "string") return _safeGetTextWithFallback(String(q.question).trim(), "question string");
+  return _safeGetTextWithFallback("", "question stem");
 }
 
 function _ensureChoiceOptionOrig(o) {
