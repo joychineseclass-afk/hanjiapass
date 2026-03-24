@@ -690,7 +690,13 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
 
 /** 检查题目是否有当前UI语言的有效文本（升级版：语言验证） */
 function _isQuestionValidForLanguage(q, langKey) {
-  if (!q || typeof q !== "object") return false;
+  // DEBUG: 验证函数调用
+  console.log('[DEBUG] _isQuestionValidForLanguage called for langKey:', langKey);
+  
+  if (!q || typeof q !== "object") {
+    console.log('[DEBUG] Question is not object:', q);
+    return false;
+  }
   
   // 获取题干文本
   const prompt = q.prompt ?? q.question ?? {};
@@ -705,8 +711,13 @@ function _isQuestionValidForLanguage(q, langKey) {
     stemText = q.question.trim();
   }
   
+  console.log('[DEBUG] stemText for', langKey, ':', stemText);
+  
   // 验证题干文本是否真正属于目标语言
-  if (!stemText || !isTextValidForLang(stemText, langKey)) {
+  const stemValid = stemText && isTextValidForLang(stemText, langKey);
+  console.log('[DEBUG] stemValid:', stemValid, 'isTextValidForLang result:', isTextValidForLang(stemText, langKey));
+  
+  if (!stemValid) {
     if (typeof console !== "undefined" && console.warn) {
       console.warn('[LANG INVALID] Stem text for', langKey, ':', stemText);
     }
@@ -715,19 +726,30 @@ function _isQuestionValidForLanguage(q, langKey) {
   
   // 检查选项语言可用性（如果是选择题）
   if (q.type === "choice" && Array.isArray(q.options)) {
-    const validOptions = q.options.filter(o => {
-      if (!o || typeof o !== "object") return false;
+    console.log('[DEBUG] Checking options for choice question, total options:', q.options.length);
+    
+    const validOptions = q.options.filter((o, index) => {
+      if (!o || typeof o !== "object") {
+        console.log('[DEBUG] Option', index, 'is not object:', o);
+        return false;
+      }
       
       // 获取选项文本
       const optionText = _getControlledLangText(o, langKey, "option");
+      console.log('[DEBUG] Option', index, 'text for', langKey, ':', optionText);
       
       // 验证选项文本是否真正属于目标语言
-      if (!optionText || !isTextValidForLang(optionText, langKey)) {
+      const optionValid = optionText && isTextValidForLang(optionText, langKey);
+      console.log('[DEBUG] Option', index, 'valid:', optionValid);
+      
+      if (!optionValid) {
         return false;
       }
       
       return true;
     });
+    
+    console.log('[DEBUG] Valid options count:', validOptions.length, '/', q.options.length);
     
     // 至少要有2个有效选项
     if (validOptions.length < 2) {
@@ -738,6 +760,7 @@ function _isQuestionValidForLanguage(q, langKey) {
     }
   }
   
+  console.log('[DEBUG] Question is valid for', langKey);
   return true;
 }
 
@@ -760,7 +783,7 @@ function isQuestionValidForDisplay(q, langKey) {
   
   // 检查题目是否符合任何允许的语言
   for (const allowedLang of allowed) {
-    if (_isQuestionValidForLanguage(q, allowedLang)) {
+    if (_isQuestionValidForLanguageWithPartialOptions(q, allowedLang)) {
       return true;
     }
   }
@@ -768,8 +791,63 @@ function isQuestionValidForDisplay(q, langKey) {
   return false;
 }
 
+/** 检查题目有效性：允许部分有效选项 */
+function _isQuestionValidForLanguageWithPartialOptions(q, langKey) {
+  if (!q || typeof q !== "object") return false;
+  
+  // 获取题干文本
+  const prompt = q.prompt ?? q.question ?? {};
+  let stemText = "";
+  
+  if (prompt && typeof prompt === "object") {
+    stemText = _getControlledLangText(prompt, langKey, "prompt");
+  }
+  
+  // 如果prompt没有，检查字符串question
+  if (!stemText && typeof q.question === "string") {
+    stemText = q.question.trim();
+  }
+  
+  // 验证题干文本是否真正属于目标语言
+  if (!stemText || !isTextValidForLang(stemText, langKey)) {
+    return false;
+  }
+  
+  // 检查选项语言可用性（如果是选择题）- 允许部分有效选项
+  if (q.type === "choice" && Array.isArray(q.options)) {
+    const validOptions = q.options.filter(o => {
+      if (!o || typeof o !== "object") return false;
+      
+      // 获取选项文本
+      const optionText = _getControlledLangText(o, langKey, "option");
+      
+      // 验证选项文本是否真正属于目标语言
+      if (!optionText || !isTextValidForLang(optionText, langKey)) {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    // 至少要有2个有效选项（允许部分有效）
+    if (validOptions.length < 2) {
+      return false;
+    }
+    
+    // 更新题目选项为有效选项（移除无效选项）
+    q.options = validOptions;
+  }
+  
+  return true;
+}
+
 /** 统一的语言安全练习池构建函数 v2.1 */
 function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) {
+  // DEBUG: 输入数据检查
+  console.log('[DEBUG] rawQuestions:', rawQuestions?.length);
+  console.log('[DEBUG] langKey:', langKey);
+  console.log('[DEBUG] minQuestions:', minQuestions);
+  
   if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language v2.1] No raw questions provided for ${langKey}`);
@@ -777,10 +855,15 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
     return [];
   }
   
+  // DEBUG: 样本题目检查
+  console.log('[DEBUG] sample question:', rawQuestions?.[0]);
+  
   // Step 1: 主语言过滤（严格目标语言）
   const mainLanguageQuestions = rawQuestions.filter(q => 
     _isQuestionValidForLanguage(q, langKey)
   );
+  
+  console.log('[DEBUG] mainLanguageQuestions:', mainLanguageQuestions.length);
   
   if (typeof console !== "undefined" && console.debug) {
     console.debug(`[HSK Language v2.1] Main filter: ${mainLanguageQuestions.length}/${rawQuestions.length} for ${langKey}`);
@@ -788,6 +871,7 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
   
   // Step 2: 收集允许的fallback题目
   let finalPool = [...mainLanguageQuestions];
+  let englishQuestions = [];
   
   if (finalPool.length < minQuestions) {
     // 根据UI语言确定允许的fallback语言
@@ -807,7 +891,14 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
         _isQuestionValidForLanguage(q, fallbackLang)
       );
       fallbackQuestions = [...fallbackQuestions, ...questionsForLang];
+      
+      if (fallbackLang === 'en') {
+        englishQuestions = questionsForLang;
+      }
     }
+    
+    console.log('[DEBUG] englishQuestions:', englishQuestions?.length || 0);
+    console.log('[DEBUG] fallbackQuestions total:', fallbackQuestions.length);
     
     if (typeof console !== "undefined" && console.debug) {
       console.debug(`[HSK Language v2.1] Fallback languages: [${allowedFallbacks.join(',')}], available: ${fallbackQuestions.length}`);
@@ -819,15 +910,23 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
     
     finalPool = [...finalPool, ...fallbackToAdd];
     
+    console.log('[DEBUG] finalPool before validation:', finalPool.length);
+    console.log('[DEBUG] needed:', needed);
+    console.log('[DEBUG] fallbackToAdd:', fallbackToAdd.length);
+    
     if (typeof console !== "undefined" && console.debug) {
       console.debug(`[HSK Language v2.1] Added ${fallbackToAdd.length} fallback questions`);
     }
+  } else {
+    console.log('[DEBUG] finalPool before validation (no fallback needed):', finalPool.length);
   }
   
   // Step 4: 最终验证 - 使用显示验证（允许UI语言+fallback语言）
   const validatedPool = finalPool.filter(q => 
     isQuestionValidForDisplay(q, langKey)
   );
+  
+  console.log('[DEBUG] validatedPool:', validatedPool.length);
   
   if (typeof console !== "undefined" && console.debug) {
     console.debug(`[HSK Language v2.1] Final validation: ${validatedPool.length}/${finalPool.length} valid`);
@@ -839,6 +938,12 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, minQuestions = 3) 
 
 /** 重构的练习数据处理入口：使用统一的语言安全池 v2.1 */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
+  // DEBUG: 输入数据检查
+  console.log('[DEBUG] buildLessonWithClonedPracticeForDisplay called');
+  console.log('[DEBUG] incoming raw:', lesson?.practice?.length);
+  console.log('[DEBUG] lesson object keys:', lesson ? Object.keys(lesson) : 'null');
+  console.log('[DEBUG] langKey:', langKey);
+  
   if (!lesson || typeof lesson !== "object") {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language v2.1] Invalid lesson object for ${langKey}`);
@@ -847,6 +952,8 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   }
   
   const raw = Array.isArray(lesson.practice) ? lesson.practice : [];
+  console.log('[DEBUG] raw after extraction:', raw.length);
+  
   if (!raw.length) {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language v2.1] No practice questions in lesson for ${langKey}`);
@@ -860,6 +967,8 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (typeof console !== "undefined" && console.debug) {
     console.debug(`[HSK Language v2.1] Built safe pool: ${languageSafePool.length} questions for ${langKey}`);
   }
+  
+  console.log('[DEBUG] languageSafePool result:', languageSafePool.length);
   
   // 处理和清理题目（深度克隆 + 清理污染）
   const clonedPractice = languageSafePool.map((q, index) => {
@@ -931,16 +1040,31 @@ function restoreHskChoiceOptionDisplayPatch() {
 }
 
 function mountPractice(container, opts) {
+  // DEBUG: 输入数据检查
+  console.log('[DEBUG] mountPractice called');
+  console.log('[DEBUG] mountPractice opts:', opts ? 'exists' : 'null');
+  console.log('[DEBUG] mountPractice lesson:', opts?.lesson ? 'exists' : 'null');
+  
   if (!container) return;
   const langKey = practiceLangKeyFromUiLang(opts && opts.lang);
+  console.log('[DEBUG] mountPractice langKey:', langKey);
+  
   const lesson = opts && opts.lesson;
   const lessonForPractice = lesson ? buildLessonWithClonedPracticeForDisplay(lesson, langKey) : lesson;
+  
+  console.log('[DEBUG] mountPractice lessonForPractice practice length:', lessonForPractice?.practice?.length);
+  
   mountPracticeFromEngine(container, { ...(opts || {}), lesson: lessonForPractice });
 }
 
 function rerenderPractice(container, lang) {
+  // DEBUG: 输入数据检查
+  console.log('[DEBUG] rerenderPractice called');
+  
   if (!container) return;
   const langKey = practiceLangKeyFromUiLang(lang);
+  
+  console.log('[DEBUG] rerenderPractice langKey:', langKey);
   
   if (typeof console !== "undefined" && console.debug) {
     console.debug(`[HSK Language v2.1] Rerendering practice with ${langKey}`);
@@ -950,9 +1074,13 @@ function rerenderPractice(container, lang) {
   
   // 获取现有题目并使用统一的语言安全池构建
   const currentQuestions = PracticeState.getQuestions();
+  console.log('[DEBUG] currentQuestions:', currentQuestions?.length);
+  
   if (Array.isArray(currentQuestions)) {
     // 使用统一的语言安全池构建函数 v2.1
     const languageSafePool = buildLanguageSafePracticePool(currentQuestions, langKey, 3);
+    
+    console.log('[DEBUG] rerenderPractice languageSafePool result:', languageSafePool.length);
     
     if (typeof console !== "undefined" && console.debug) {
       console.debug(`[HSK Language v2.1] Rerender safe pool: ${languageSafePool.length} questions for ${langKey}`);
