@@ -183,6 +183,31 @@ function _getControlledLangText(obj, langKey, context = "text") {
   return "";
 }
 
+/** 验证文本是否真正属于目标语言 */
+function isTextValidForLang(text, langKey) {
+  if (!text || typeof text !== 'string') return false;
+
+  switch (langKey) {
+    case 'jp':
+    case 'ja':
+      return /[ぁ-んァ-ン一-龯]/.test(text);
+
+    case 'kr':
+    case 'ko':
+      return /[가-힣]/.test(text);
+
+    case 'en':
+      return /^[A-Za-z0-9 ,.'"?-]+$/.test(text);
+
+    case 'zh':
+    case 'cn':
+      return /[\u4e00-\u9fff]/.test(text);
+
+    default:
+      return false;
+  }
+}
+
 /** 清理污染字段：只删除解释类字段，保留meaning/translation等有效字段 */
 function _stripPollutedFields(obj) {
   if (!obj || typeof obj !== "object") return;
@@ -408,7 +433,7 @@ function _pickFromLangObject(obj, langKey) {
   return _safeGetTextWithFallback("", "all language fields");
 }
 
-/** 受控fallback句子翻译获取：UI语言 → English → Chinese */
+/** 受控fallback句子翻译获取：UI语言 → English → Chinese + 语言验证 */
 function pickSentenceTranslationForOption(orig, langKey) {
   if (!orig || typeof orig !== "object") {
     if (typeof console !== "undefined" && console.warn) {
@@ -425,14 +450,14 @@ function pickSentenceTranslationForOption(orig, langKey) {
   const transObj = cleanedOrig.translation ?? cleanedOrig.translations ?? cleanedOrig.trans;
   if (transObj && typeof transObj === "object") {
     const trans = _getControlledLangText(transObj, langKey, "translation object");
-    if (trans) {
+    if (trans && isTextValidForLang(trans, langKey)) {
       return trans;
     }
   }
   
   // 2. 尝试平铺的翻译字段
   const flatTrans = _getControlledLangText(cleanedOrig, langKey, "flat translation");
-  if (flatTrans) {
+  if (flatTrans && isTextValidForLang(flatTrans, langKey)) {
     return flatTrans;
   }
   
@@ -444,7 +469,7 @@ function pickSentenceTranslationForOption(orig, langKey) {
   return "";
 }
 
-/** 受控fallback选项词义获取：UI语言 → English → Chinese */
+/** 受控fallback选项词义获取：UI语言 → English → Chinese + 语言验证 */
 function pickShortMeaningForOption(orig, langKey) {
   if (!orig || typeof orig !== "object") {
     if (typeof console !== "undefined" && console.warn) {
@@ -461,7 +486,7 @@ function pickShortMeaningForOption(orig, langKey) {
   const meaningObj = cleanedOrig.meaning;
   if (meaningObj && typeof meaningObj === "object") {
     const meaning = _getControlledLangText(meaningObj, langKey, "meaning object");
-    if (meaning && _isShortMeaning(meaning)) {
+    if (meaning && _isShortMeaning(meaning) && isTextValidForLang(meaning, langKey)) {
       return meaning;
     }
   }
@@ -470,21 +495,21 @@ function pickShortMeaningForOption(orig, langKey) {
   const glossObj = cleanedOrig.gloss;
   if (glossObj && typeof glossObj === "object") {
     const gloss = _getControlledLangText(glossObj, langKey, "gloss object");
-    if (gloss && _isShortMeaning(gloss)) {
+    if (gloss && _isShortMeaning(gloss) && isTextValidForLang(gloss, langKey)) {
       return gloss;
     }
   }
   
   // 3. 尝试平铺的语言字段
   const flatText = _getControlledLangText(cleanedOrig, langKey, "option flat text");
-  if (flatText && _isShortMeaning(flatText)) {
+  if (flatText && _isShortMeaning(flatText) && isTextValidForLang(flatText, langKey)) {
     return flatText;
   }
   
-  // 4. 宽松模式：尝试任何可用的短文本
+  // 4. 宽松模式：尝试任何可用的短文本，但必须通过语言验证
   for (const key of ["kr", "ko", "en", "jp", "ja", "cn", "zh"]) {
     const value = cleanedOrig[key];
-    if (value && _isShortMeaning(value)) {
+    if (value && _isShortMeaning(value) && isTextValidForLang(value, langKey)) {
       if (typeof console !== "undefined" && console.warn) {
         console.warn(`[HSK Language] Using fallback meaning: ${langKey} → ${key} for option`);
       }
@@ -663,49 +688,29 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
   }
 }
 
-/** 检查题目是否有当前UI语言的有效文本 */
+/** 检查题目是否有当前UI语言的有效文本（升级版：语言验证） */
 function _isQuestionValidForLanguage(q, langKey) {
   if (!q || typeof q !== "object") return false;
   
-  // 检查题干语言可用性
+  // 获取题干文本
   const prompt = q.prompt ?? q.question ?? {};
-  let hasValidStem = false;
+  let stemText = "";
   
   if (prompt && typeof prompt === "object") {
-    // 检查prompt对象中的目标语言
-    const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
-      : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
-      : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
-      : ["en"];
-    
-    hasValidStem = targetKeys.some(key => {
-      const value = prompt[key];
-      return value && typeof value === "string" && value.trim();
-    });
+    stemText = _getControlledLangText(prompt, langKey, "prompt");
   }
   
   // 如果prompt没有，检查字符串question
-  if (!hasValidStem && typeof q.question === "string") {
-    hasValidStem = q.question.trim().length > 0;
+  if (!stemText && typeof q.question === "string") {
+    stemText = q.question.trim();
   }
   
-  // 如果题干无效，检查受控fallback
-  if (!hasValidStem) {
-    // 尝试English fallback
-    const enKeys = ["en"];
-    hasValidStem = enKeys.some(key => {
-      const value = (prompt && typeof prompt === "object") ? prompt[key] : null;
-      return value && typeof value === "string" && value.trim();
-    });
-    
-    // 尝试Chinese fallback
-    if (!hasValidStem) {
-      const cnKeys = ["cn", "zh"];
-      hasValidStem = cnKeys.some(key => {
-        const value = (prompt && typeof prompt === "object") ? prompt[key] : null;
-        return value && typeof value === "string" && value.trim();
-      });
+  // 验证题干文本是否真正属于目标语言
+  if (!stemText || !isTextValidForLang(stemText, langKey)) {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn('[LANG INVALID] Stem text for', langKey, ':', stemText);
     }
+    return false;
   }
   
   // 检查选项语言可用性（如果是选择题）
@@ -713,28 +718,15 @@ function _isQuestionValidForLanguage(q, langKey) {
     const validOptions = q.options.filter(o => {
       if (!o || typeof o !== "object") return false;
       
-      // 检查选项是否有目标语言文本
-      const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
-        : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
-        : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
-        : ["en"];
+      // 获取选项文本
+      const optionText = _getControlledLangText(o, langKey, "option");
       
-      let hasValidOption = targetKeys.some(key => {
-        const value = o[key];
-        return value && typeof value === "string" && value.trim();
-      });
-      
-      // 如果没有目标语言，检查受控fallback
-      if (!hasValidOption) {
-        // English fallback
-        hasValidOption = o.en && typeof o.en === "string" && o.en.trim();
-        // Chinese fallback
-        if (!hasValidOption) {
-          hasValidOption = (o.cn || o.zh) && typeof (o.cn || o.zh) === "string" && (o.cn || o.zh).trim();
-        }
+      // 验证选项文本是否真正属于目标语言
+      if (!optionText || !isTextValidForLang(optionText, langKey)) {
+        return false;
       }
       
-      return hasValidOption;
+      return true;
     });
     
     // 至少要有2个有效选项
@@ -746,7 +738,7 @@ function _isQuestionValidForLanguage(q, langKey) {
     }
   }
   
-  return hasValidStem;
+  return true;
 }
 
 /** 统一练习数据处理入口：语言安全过滤 + 受控fallback */
