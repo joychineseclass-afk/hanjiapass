@@ -84,6 +84,41 @@ function _safeGetTextWithFallback(text, context = "text") {
   return "[Missing Data]";
 }
 
+/** Strict short-text filter: reject long definitions, dictionary-style text, and explanations */
+function _isShortMeaning(text) {
+  if (!text || typeof text !== "string") return false;
+  const trimmed = text.trim();
+  
+  // Length check: reject if too long
+  if (trimmed.length > 40) return false;
+  
+  // Dictionary/explanation patterns to reject
+  const badPatterns = [
+    /；/, // Chinese semicolon
+    /;/, // English semicolon  
+    /\([^)]*\([^)]*\)/, // Nested parentheses (dictionary style)
+    /\d+\./, // Numbered definitions (1. 2. 3.)
+    /：/, // Chinese colon
+    /例[如句]/, // Examples
+    /同义词/,
+    /反义词/,
+    /词性/,
+    /用法/,
+    /例如/,
+  ];
+  
+  // Reject if any bad pattern found
+  for (const pattern of badPatterns) {
+    if (pattern.test(trimmed)) return false;
+  }
+  
+  // Reject if has multiple commas (likely list/explanation)
+  const commaCount = (trimmed.match(/,/g) || []).length;
+  if (commaCount > 2) return false;
+  
+  return true;
+}
+
 /** 与 practiceChoice.pickPrompt 键位一致；各语种缺省时按链回填，避免日语等界面题干空白 */
 function _practicePickPrompt(obj, langKey) {
   if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "prompt object");
@@ -299,40 +334,92 @@ function pickSentenceTranslationForOption(orig, langKey) {
   );
 }
 
-/** 词义类选项：优先 meaning / gloss，不用 explain、explanation */
+/** 词义类选项：仅使用短释义字段，严格过滤长定义和解释 */
 function pickShortMeaningForOption(orig, langKey) {
   if (!orig || typeof orig !== "object") return _safeGetTextWithFallback("", "option object");
+  
+  // 1. Try meaning[lang] object first
   const m = orig.meaning;
   if (m && typeof m === "object") {
     const t = _pickFromLangObject(m, langKey);
-    if (t) return t;
+    if (t && _isShortMeaning(t)) return t;
   }
-  const g = orig.gloss;
-  if (g && typeof g === "object") {
-    const t = _pickFromLangObject(g, langKey);
-    if (t) return t;
+  
+  // 2. Try flat language fields, but only if they're short meanings
+  const flatCandidates = {
+    kr: orig.kr, ko: orig.ko,
+    en: orig.en, 
+    jp: orig.jp, ja: orig.ja,
+    cn: orig.cn, zh: orig.zh
+  };
+  
+  // Get language order for current UI language
+  const order = langKey === "jp" ? ["jp", "ja", "en", "kr", "ko", "cn", "zh"]
+    : langKey === "kr" ? ["kr", "ko", "en", "jp", "ja", "cn", "zh"]
+    : langKey === "en" ? ["en", "kr", "ko", "jp", "ja", "cn", "zh"]
+    : ["cn", "zh", "kr", "ko", "en", "jp", "ja"];
+  
+  for (const k of order) {
+    const candidate = flatCandidates[k];
+    if (candidate && _isShortMeaning(candidate)) {
+      return candidate.trim();
+    }
   }
-  const flatNoZhFirst = _pickFromLangObject(
-    { kr: orig.kr, ko: orig.ko, en: orig.en, jp: orig.jp, ja: orig.ja, cn: orig.cn, zh: orig.zh },
-    langKey,
-  );
-  if (flatNoZhFirst) return flatNoZhFirst;
-  return _pickFromLangObject({ cn: orig.cn, zh: orig.zh }, langKey);
+  
+  // 3. Final fallback: try any remaining field, but still filter
+  for (const k of order) {
+    const candidate = flatCandidates[k];
+    if (candidate && candidate.trim()) {
+      if (_isShortMeaning(candidate)) {
+        return candidate.trim();
+      }
+    }
+  }
+  
+  return _safeGetTextWithFallback("", "short meaning all sources");
 }
 
 function _stripOptionExplainFields(o) {
   if (!o || typeof o !== "object") return;
+  // Remove all explanation/polluted sources
   delete o.explain;
   delete o.explanation;
+  delete o.explainKr;
+  delete o.explainEn;
+  delete o.explainJp;
+  delete o.explainCn;
+  delete o.explanation_kr;
+  delete o.explanation_en;
+  delete o.explanation_jp;
+  delete o.explanation_cn;
+  delete o.grammar;
+  delete o.grammarExplain;
+  delete o.extension;
+  delete o.extensionExplain;
+  delete o.usage;
+  delete o.example;
+  delete o.examples;
+  delete o.notes;
+  delete o.note;
 }
 
 function _applyDisplayOnlyText(o, langKey, text) {
   if (!o || typeof o !== "object") return;
+  
+  // First strip all polluted/explanation fields
+  _stripOptionExplainFields(o);
+  
+  // Then clear all language/meaning fields to prevent contamination
   ["kr", "ko", "en", "jp", "ja", "cn", "zh", "pinyin", "py", "meaning", "gloss", "translation", "translations", "trans"].forEach((k) => {
     delete o[k];
   });
+  
+  // Strip again to ensure no polluted fields remain
   _stripOptionExplainFields(o);
+  
   if (!text) return;
+  
+  // Set only the clean, filtered text in the target language
   if (langKey === "kr") {
     o.kr = text;
     o.ko = text;
