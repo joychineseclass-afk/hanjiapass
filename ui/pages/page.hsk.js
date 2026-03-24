@@ -759,7 +759,7 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   }
   
   // 第一步：语言安全过滤 - 只保留有当前UI语言有效文本的题目
-  const languageSafeQuestions = raw.filter((q, index) => {
+  let languageSafeQuestions = raw.filter((q, index) => {
     const isValid = _isQuestionValidForLanguage(q, langKey);
     if (!isValid) {
       if (typeof console !== "undefined" && console.warn) {
@@ -771,6 +771,39 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   
   if (typeof console !== "undefined" && console.debug) {
     console.debug(`[HSK Language] Language-safe filtering: ${languageSafeQuestions.length}/${raw.length} questions valid for ${langKey}`);
+  }
+  
+  // 安全fallback：如果过滤后题目太少，允许受控fallback
+  if (languageSafeQuestions.length < 3) {  // 至少需要3道题
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Too few valid questions for ${langKey}, applying controlled fallback`);
+    }
+    
+    // 尝试English fallback
+    const fallbackQuestions = raw.filter((q, index) => {
+      const isValid = _isQuestionValidForLanguage(q, "en");
+      if (isValid) {
+        // 验证English文本确实有效
+        const prompt = q.prompt ?? q.question ?? {};
+        let stemText = "";
+        if (prompt && typeof prompt === "object") {
+          stemText = _getControlledLangText(prompt, "en", "prompt");
+        }
+        if (!stemText && typeof q.question === "string") {
+          stemText = q.question.trim();
+        }
+        if (stemText && isTextValidForLang(stemText, "en")) {
+          return true;
+        }
+      }
+      return false;
+    });
+    
+    languageSafeQuestions = [...languageSafeQuestions, ...fallbackQuestions];
+    
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug(`[HSK Language] After English fallback: ${languageSafeQuestions.length} questions for ${langKey}`);
+    }
   }
   
   // 第二步：统一处理和清理
@@ -874,8 +907,37 @@ function rerenderPractice(container, lang) {
       return isValid;
     });
     
-    // 对有效题目应用清理和语言控制
-    validQuestions.forEach((q, index) => {
+    // 安全fallback：如果有效题目太少，尝试English fallback
+    let finalQuestions = validQuestions;
+    if (finalQuestions.length < 3) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn(`[HSK Language] Too few valid questions for ${langKey} during rerender, applying fallback`);
+      }
+      
+      const fallbackQuestions = currentQuestions.filter((q, index) => {
+        const isValid = _isQuestionValidForLanguage(q, "en");
+        if (isValid) {
+          // 验证English文本确实有效
+          const prompt = q.prompt ?? q.question ?? {};
+          let stemText = "";
+          if (prompt && typeof prompt === "object") {
+            stemText = _getControlledLangText(prompt, "en", "prompt");
+          }
+          if (!stemText && typeof q.question === "string") {
+            stemText = q.question.trim();
+          }
+          if (stemText && isTextValidForLang(stemText, "en")) {
+            return true;
+          }
+        }
+        return false;
+      });
+      
+      finalQuestions = [...validQuestions, ...fallbackQuestions];
+    }
+    
+    // 对最终题目应用清理和语言控制
+    finalQuestions.forEach((q, index) => {
       // 清理题干污染字段（保留meaning/translation）
       if (q.prompt && typeof q.prompt === "object") {
         _stripPollutedFields(q.prompt);
@@ -899,11 +961,11 @@ function rerenderPractice(container, lang) {
     });
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language] Rerender filtering: ${validQuestions.length}/${currentQuestions.length} questions valid for ${langKey}`);
+      console.debug(`[HSK Language] Rerender filtering: ${finalQuestions.length}/${currentQuestions.length} questions valid for ${langKey}`);
     }
     
     // 应用显示规则（使用受控fallback）
-    applyChoiceDisplayToQuestionList(validQuestions, langKey);
+    applyChoiceDisplayToQuestionList(finalQuestions, langKey);
   }
   
   rerenderPracticeFromEngine(container, lang);
