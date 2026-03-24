@@ -799,15 +799,31 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
       return false;
     });
     
-    languageSafeQuestions = [...languageSafeQuestions, ...fallbackQuestions];
+    // 对fallback题目也应用语言验证（防止混合语言泄露）
+    const safeFallback = fallbackQuestions.filter(q =>
+      _isQuestionValidForLanguage(q, langKey)
+    );
+    
+    languageSafeQuestions = [...languageSafeQuestions, ...safeFallback];
     
     if (typeof console !== "undefined" && console.debug) {
       console.debug(`[HSK Language] After English fallback: ${languageSafeQuestions.length} questions for ${langKey}`);
     }
   }
   
-  // 第二步：统一处理和清理
-  const clonedPractice = languageSafeQuestions.map((q, index) => {
+  // 最终安全过滤：确保所有题目都通过语言验证
+  const finalQuestions = languageSafeQuestions.filter(q =>
+    _isQuestionValidForLanguage(q, langKey)
+  );
+  
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug('[LANG FILTER MAIN]', languageSafeQuestions.length);
+    console.debug('[LANG FILTER FALLBACK]', safeFallback?.length || 0);
+    console.debug('[LANG FILTER FINAL]', finalQuestions.length);
+  }
+  
+  // 第二步：统一处理和清理（使用最终验证的题目）
+  const clonedPractice = finalQuestions.map((q, index) => {
     try {
       // 深度克隆题目
       const next = JSON.parse(JSON.stringify(q));
@@ -933,7 +949,23 @@ function rerenderPractice(container, lang) {
         return false;
       });
       
-      finalQuestions = [...validQuestions, ...fallbackQuestions];
+      // 对fallback题目也应用语言验证（防止混合语言泄露）
+      const safeFallback = fallbackQuestions.filter(q =>
+        _isQuestionValidForLanguage(q, langKey)
+      );
+      
+      finalQuestions = [...validQuestions, ...safeFallback];
+      
+      // 最终安全过滤：确保所有题目都通过语言验证
+      finalQuestions = finalQuestions.filter(q =>
+        _isQuestionValidForLanguage(q, langKey)
+      );
+      
+      if (typeof console !== "undefined" && console.debug) {
+        console.debug('[LANG FILTER RERENDER MAIN]', validQuestions.length);
+        console.debug('[LANG FILTER RERENDER FALLBACK]', safeFallback.length);
+        console.debug('[LANG FILTER RERENDER FINAL]', finalQuestions.length);
+      }
     }
     
     // 对最终题目应用清理和语言控制
