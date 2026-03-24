@@ -119,6 +119,43 @@ function _isShortMeaning(text) {
   return true;
 }
 
+/** Strict pinyin cleaner: allow only valid pinyin characters, remove English and explanations */
+function _cleanPinyin(text) {
+  if (!text || typeof text !== "string") return "";
+  
+  // Remove English words and explanations (2+ consecutive Latin letters)
+  let cleaned = text.replace(/[a-zA-Z]{2,}/g, "");
+  
+  // Allow only: Latin letters, tone marks, spaces, apostrophes, hyphens, basic punctuation
+  cleaned = cleaned.replace(/[^a-zA-ZāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǪ\s'-]/g, "");
+  
+  // Remove multiple spaces
+  cleaned = cleaned.replace(/\s+/g, " ").trim();
+  
+  // Remove leading/trailing punctuation
+  cleaned = cleaned.replace(/^[^\wāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǪ]+|[^\wāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǪ]+$/g, "");
+  
+  return cleaned;
+}
+
+/** Strict UI language prompt picker: only use target language, no fallback to other languages */
+function _practicePickPromptStrict(obj, langKey) {
+  if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "prompt object");
+  
+  // Only try the target language, no fallbacks
+  const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
+    : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
+    : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
+    : ["en"];
+    
+  for (const k of targetKeys) {
+    const v = obj[k];
+    if (typeof v === "string" && v.trim()) return v.trim();
+  }
+  
+  return _safeGetTextWithFallback("", `prompt ${langKey} language`);
+}
+
 /** 与 practiceChoice.pickPrompt 键位一致；各语种缺省时按链回填，避免日语等界面题干空白 */
 function _practicePickPrompt(obj, langKey) {
   if (!obj || typeof obj !== "object") return _safeGetTextWithFallback("", "prompt object");
@@ -463,7 +500,8 @@ function patchChoiceOptionForDisplayMode(o, kind, langKey) {
 /** 与 practiceChoice.renderChoice 同一套题干展示文案（用于判断是否含汉字） */
 function practiceStemDisplayText(q, langKey) {
   const prompt = q.prompt ?? q.question ?? {};
-  const fromPick = _practicePickPrompt(prompt, langKey);
+  // Use strict language picker for question stem - no fallback to other languages
+  const fromPick = _practicePickPromptStrict(prompt, langKey);
   if (fromPick) return fromPick;
   if (typeof q.question === "string") return _safeGetTextWithFallback(String(q.question).trim(), "question string");
   return _safeGetTextWithFallback("", "question stem");
@@ -516,11 +554,22 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
       next.prompt = mergePracticePromptForDisplay(q);
       if (next.prompt && typeof next.prompt === "object") backfillPracticePromptEmptyLocales(next.prompt);
     }
+    
+    // Clean pinyin fields to remove English contamination
+    if (next.pinyin) next.pinyin = _cleanPinyin(next.pinyin);
+    if (next.py) next.py = _cleanPinyin(next.py);
+    
     if (Array.isArray(q.options)) {
       next.options = q.options.map((o) => {
         if (!o || typeof o !== "object") return o;
         const { __hskChoiceOptOrig: _drop, ...rest } = o;
-        return { ...rest };
+        const cleaned = { ...rest };
+        
+        // Clean pinyin fields in options too
+        if (cleaned.pinyin) cleaned.pinyin = _cleanPinyin(cleaned.pinyin);
+        if (cleaned.py) cleaned.py = _cleanPinyin(cleaned.py);
+        
+        return cleaned;
       });
     }
     return next;
