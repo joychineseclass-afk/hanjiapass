@@ -804,22 +804,35 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
       _isQuestionValidForLanguage(q, langKey)
     );
     
-    languageSafeQuestions = [...languageSafeQuestions, ...safeFallback];
+    // 只填补缺少的空位，不批量合并
+    let finalQuestions = [...languageSafeQuestions];
+    if (finalQuestions.length < 3) {
+      const needed = 3 - finalQuestions.length;
+      finalQuestions = [
+        ...finalQuestions,
+        ...safeFallback.slice(0, needed)
+      ];
+    }
+    
+    // 最终安全过滤：确保所有题目都通过语言验证
+    finalQuestions = finalQuestions.filter(q =>
+      _isQuestionValidForLanguage(q, langKey)
+    );
     
     if (typeof console !== "undefined" && console.debug) {
-      console.debug(`[HSK Language] After English fallback: ${languageSafeQuestions.length} questions for ${langKey}`);
+      console.debug('[LANG FILTER MAIN]', languageSafeQuestions.length);
+      console.debug('[LANG FILTER FALLBACK]', safeFallback?.length || 0);
+      console.debug('[LANG FILTER FINAL]', finalQuestions.length);
     }
-  }
-  
-  // 最终安全过滤：确保所有题目都通过语言验证
-  const finalQuestions = languageSafeQuestions.filter(q =>
-    _isQuestionValidForLanguage(q, langKey)
-  );
-  
-  if (typeof console !== "undefined" && console.debug) {
-    console.debug('[LANG FILTER MAIN]', languageSafeQuestions.length);
-    console.debug('[LANG FILTER FALLBACK]', safeFallback?.length || 0);
-    console.debug('[LANG FILTER FINAL]', finalQuestions.length);
+  } else {
+    // 如果不需要fallback，直接使用主过滤结果
+    var finalQuestions = languageSafeQuestions;
+    
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug('[LANG FILTER MAIN]', languageSafeQuestions.length);
+      console.debug('[LANG FILTER FALLBACK]', 0);
+      console.debug('[LANG FILTER FINAL]', finalQuestions.length);
+    }
   }
   
   // 第二步：统一处理和清理（使用最终验证的题目）
@@ -954,7 +967,15 @@ function rerenderPractice(container, lang) {
         _isQuestionValidForLanguage(q, langKey)
       );
       
-      finalQuestions = [...validQuestions, ...safeFallback];
+      // 只填补缺少的空位，不批量合并
+      finalQuestions = [...validQuestions];
+      if (finalQuestions.length < 3) {
+        const needed = 3 - finalQuestions.length;
+        finalQuestions = [
+          ...finalQuestions,
+          ...safeFallback.slice(0, needed)
+        ];
+      }
       
       // 最终安全过滤：确保所有题目都通过语言验证
       finalQuestions = finalQuestions.filter(q =>
