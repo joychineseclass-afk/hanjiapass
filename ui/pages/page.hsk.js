@@ -663,7 +663,93 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
   }
 }
 
-/** 统一练习数据处理入口：受控fallback，统一流程 */
+/** 检查题目是否有当前UI语言的有效文本 */
+function _isQuestionValidForLanguage(q, langKey) {
+  if (!q || typeof q !== "object") return false;
+  
+  // 检查题干语言可用性
+  const prompt = q.prompt ?? q.question ?? {};
+  let hasValidStem = false;
+  
+  if (prompt && typeof prompt === "object") {
+    // 检查prompt对象中的目标语言
+    const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
+      : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
+      : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
+      : ["en"];
+    
+    hasValidStem = targetKeys.some(key => {
+      const value = prompt[key];
+      return value && typeof value === "string" && value.trim();
+    });
+  }
+  
+  // 如果prompt没有，检查字符串question
+  if (!hasValidStem && typeof q.question === "string") {
+    hasValidStem = q.question.trim().length > 0;
+  }
+  
+  // 如果题干无效，检查受控fallback
+  if (!hasValidStem) {
+    // 尝试English fallback
+    const enKeys = ["en"];
+    hasValidStem = enKeys.some(key => {
+      const value = (prompt && typeof prompt === "object") ? prompt[key] : null;
+      return value && typeof value === "string" && value.trim();
+    });
+    
+    // 尝试Chinese fallback
+    if (!hasValidStem) {
+      const cnKeys = ["cn", "zh"];
+      hasValidStem = cnKeys.some(key => {
+        const value = (prompt && typeof prompt === "object") ? prompt[key] : null;
+        return value && typeof value === "string" && value.trim();
+      });
+    }
+  }
+  
+  // 检查选项语言可用性（如果是选择题）
+  if (q.type === "choice" && Array.isArray(q.options)) {
+    const validOptions = q.options.filter(o => {
+      if (!o || typeof o !== "object") return false;
+      
+      // 检查选项是否有目标语言文本
+      const targetKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
+        : langKey === "kr" || langKey === "ko" ? ["kr", "ko"]
+        : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
+        : ["en"];
+      
+      let hasValidOption = targetKeys.some(key => {
+        const value = o[key];
+        return value && typeof value === "string" && value.trim();
+      });
+      
+      // 如果没有目标语言，检查受控fallback
+      if (!hasValidOption) {
+        // English fallback
+        hasValidOption = o.en && typeof o.en === "string" && o.en.trim();
+        // Chinese fallback
+        if (!hasValidOption) {
+          hasValidOption = (o.cn || o.zh) && typeof (o.cn || o.zh) === "string" && (o.cn || o.zh).trim();
+        }
+      }
+      
+      return hasValidOption;
+    });
+    
+    // 至少要有2个有效选项
+    if (validOptions.length < 2) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn(`[HSK Language] Question has insufficient valid options for ${langKey}: ${validOptions.length}/${q.options.length}`);
+      }
+      return false;
+    }
+  }
+  
+  return hasValidStem;
+}
+
+/** 统一练习数据处理入口：语言安全过滤 + 受控fallback */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || typeof lesson !== "object") {
     if (typeof console !== "undefined" && console.warn) {
@@ -680,7 +766,23 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
     return { ...lesson, practice: [] };
   }
   
-  const clonedPractice = raw.map((q, index) => {
+  // 第一步：语言安全过滤 - 只保留有当前UI语言有效文本的题目
+  const languageSafeQuestions = raw.filter((q, index) => {
+    const isValid = _isQuestionValidForLanguage(q, langKey);
+    if (!isValid) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn(`[HSK Language] Skipping question ${index} - no valid text for ${langKey}`);
+      }
+    }
+    return isValid;
+  });
+  
+  if (typeof console !== "undefined" && console.debug) {
+    console.debug(`[HSK Language] Language-safe filtering: ${languageSafeQuestions.length}/${raw.length} questions valid for ${langKey}`);
+  }
+  
+  // 第二步：统一处理和清理
+  const clonedPractice = languageSafeQuestions.map((q, index) => {
     try {
       // 深度克隆题目
       const next = JSON.parse(JSON.stringify(q));
@@ -733,7 +835,7 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   applyChoiceDisplayToQuestionList(clonedPractice, langKey);
   
   if (typeof console !== "undefined" && console.debug) {
-    console.debug(`[HSK Language] Processed ${clonedPractice.length} questions for ${langKey}`);
+    console.debug(`[HSK Language] Final processing: ${clonedPractice.length} questions for ${langKey}`);
   }
   
   return { ...lesson, practice: clonedPractice };
@@ -766,10 +868,22 @@ function rerenderPractice(container, lang) {
   
   restoreHskChoiceOptionDisplayPatch();
   
-  // 对现有题目也应用受控的语言控制
+  // 获取现有题目并应用语言安全过滤
   const currentQuestions = PracticeState.getQuestions();
   if (Array.isArray(currentQuestions)) {
-    currentQuestions.forEach((q, index) => {
+    // 应用语言安全过滤 - 移除无效题目
+    const validQuestions = currentQuestions.filter((q, index) => {
+      const isValid = _isQuestionValidForLanguage(q, langKey);
+      if (!isValid) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn(`[HSK Language] Filtering out invalid question ${index} for ${langKey} during rerender`);
+        }
+      }
+      return isValid;
+    });
+    
+    // 对有效题目应用清理和语言控制
+    validQuestions.forEach((q, index) => {
       // 清理题干污染字段（保留meaning/translation）
       if (q.prompt && typeof q.prompt === "object") {
         _stripPollutedFields(q.prompt);
@@ -792,8 +906,12 @@ function rerenderPractice(container, lang) {
       }
     });
     
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug(`[HSK Language] Rerender filtering: ${validQuestions.length}/${currentQuestions.length} questions valid for ${langKey}`);
+    }
+    
     // 应用显示规则（使用受控fallback）
-    applyChoiceDisplayToQuestionList(currentQuestions, langKey);
+    applyChoiceDisplayToQuestionList(validQuestions, langKey);
   }
   
   rerenderPracticeFromEngine(container, lang);
