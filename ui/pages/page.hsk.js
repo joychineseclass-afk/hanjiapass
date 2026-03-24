@@ -138,8 +138,8 @@ function _cleanPinyin(text) {
   return cleaned;
 }
 
-/** 最终统一语言获取：严格单一来源，禁止fallback混用 */
-function _getStrictLangText(obj, langKey, context = "text") {
+/** 受控fallback语言获取：UI语言 → English → Chinese → Missing */
+function _getControlledLangText(obj, langKey, context = "text") {
   if (!obj || typeof obj !== "object") {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language] Missing object for ${context} (${langKey})`);
@@ -147,33 +147,47 @@ function _getStrictLangText(obj, langKey, context = "text") {
     return _safeGetTextWithFallback("", `${context} object`);
   }
   
-  // 严格语言映射：只允许目标语言
-  const allowedKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
+  // 主要语言映射
+  const primaryKeys = langKey === "cn" || langKey === "zh" ? ["cn", "zh"]
     : langKey === "kr" || langKey === "ko" ? ["kr", "ko"] 
     : langKey === "jp" || langKey === "ja" ? ["jp", "ja"]
     : ["en"];
   
-  // 尝试目标语言的变体
-  for (const key of allowedKeys) {
+  // 受控fallback链：UI语言 → English → Chinese
+  const fallbackChain = [
+    ...primaryKeys,
+    "en",  // English作为第一fallback
+    "cn", "zh"  // Chinese作为最后fallback
+  ];
+  
+  const availableKeys = Object.keys(obj).filter(k => obj[k] && typeof obj[k] === "string" && obj[k].trim());
+  
+  for (const key of fallbackChain) {
     const value = obj[key];
     if (typeof value === "string" && value.trim()) {
+      // 如果使用了fallback，记录日志
+      if (!primaryKeys.includes(key)) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn(`[HSK Language] Fallback triggered: ${langKey} → ${key} for ${context}, available: [${availableKeys.join(",")}]`);
+        }
+      }
       return value.trim();
     }
   }
   
-  // 严格模式：没有目标语言数据就返回空，不fallback
+  // 最后fallback：返回空而不是"[Missing Data]"
   if (typeof console !== "undefined" && console.warn) {
-    console.warn(`[HSK Language] No ${langKey} text for ${context}, available: ${Object.keys(obj).filter(k => obj[k] && obj[k].trim()).join(",")}`);
+    console.warn(`[HSK Language] No text available for ${context} (${langKey}), tried: [${fallbackChain.join(",")}]`);
   }
   
-  return _safeGetTextWithFallback("", `${context} ${langKey}`);
+  return "";
 }
 
-/** 彻底清理污染字段：删除所有解释、用法、示例等字段 */
-function _stripAllPollutedFields(obj) {
+/** 清理污染字段：只删除解释类字段，保留meaning/translation等有效字段 */
+function _stripPollutedFields(obj) {
   if (!obj || typeof obj !== "object") return;
   
-  // 删除所有解释类字段
+  // 只删除真正的污染字段（解释、用法、示例等）
   const pollutedFields = [
     // 解释类
     'explain', 'explanation', 'explainKr', 'explainEn', 'explainJp', 'explainCn',
@@ -182,10 +196,8 @@ function _stripAllPollutedFields(obj) {
     'grammar', 'grammarExplain', 'extension', 'extensionExplain',
     // 用法/示例类
     'usage', 'example', 'examples', 'notes', 'note',
-    // 翻译类（在题干中不允许）
-    'translation', 'translations', 'trans',
-    // 其他可能污染的字段
-    'meaning', 'gloss', 'definition', 'definitions'
+    // 其他说明类
+    'definition', 'definitions', 'desc', 'description'
   ];
   
   pollutedFields.forEach(field => {
@@ -396,76 +408,96 @@ function _pickFromLangObject(obj, langKey) {
   return _safeGetTextWithFallback("", "all language fields");
 }
 
-/** 最终统一句子翻译获取：严格单一语言，只允许翻译字段 */
+/** 受控fallback句子翻译获取：UI语言 → English → Chinese */
 function pickSentenceTranslationForOption(orig, langKey) {
   if (!orig || typeof orig !== "object") {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language] Invalid option object for translation (${langKey})`);
     }
-    return _safeGetTextWithFallback("", "option object");
+    return "";
   }
   
-  // 先清理污染字段
+  // 清理污染字段（保留translation）
   const cleanedOrig = { ...orig };
-  _stripAllPollutedFields(cleanedOrig);
+  _stripPollutedFields(cleanedOrig);
   
-  // 1. 优先使用 translation[lang] 对象，但只允许目标语言
+  // 1. 优先使用 translation[lang] 对象
   const transObj = cleanedOrig.translation ?? cleanedOrig.translations ?? cleanedOrig.trans;
   if (transObj && typeof transObj === "object") {
-    const strictTrans = _getStrictLangText(transObj, langKey, "translation object");
-    if (strictTrans && strictTrans !== "[Missing Data]") {
-      return strictTrans;
+    const trans = _getControlledLangText(transObj, langKey, "translation object");
+    if (trans) {
+      return trans;
     }
   }
   
-  // 2. 尝试平铺的翻译字段，但只允许目标语言
-  const flatTrans = _getStrictLangText(cleanedOrig, langKey, "flat translation");
-  if (flatTrans && flatTrans !== "[Missing Data]") {
+  // 2. 尝试平铺的翻译字段
+  const flatTrans = _getControlledLangText(cleanedOrig, langKey, "flat translation");
+  if (flatTrans) {
     return flatTrans;
   }
   
-  // 严格模式：没有翻译就返回空，不fallback到其他语言
+  // 最后fallback：返回空而不是"[Missing Data]"
   if (typeof console !== "undefined" && console.warn) {
-    console.warn(`[HSK Language] No valid translation for ${langKey}, available fields: ${Object.keys(cleanedOrig).join(",")}`);
+    console.warn(`[HSK Language] No valid translation for ${langKey}, available: ${Object.keys(cleanedOrig).join(",")}`);
   }
   
-  return _safeGetTextWithFallback("", `translation ${langKey}`);
+  return "";
 }
 
-/** 最终统一选项词义获取：严格单一语言，只允许短释义 */
+/** 受控fallback选项词义获取：UI语言 → English → Chinese */
 function pickShortMeaningForOption(orig, langKey) {
   if (!orig || typeof orig !== "object") {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language] Invalid option object for meaning (${langKey})`);
     }
-    return _safeGetTextWithFallback("", "option object");
+    return "";
   }
   
-  // 先清理污染字段
+  // 清理污染字段（保留meaning/gloss）
   const cleanedOrig = { ...orig };
-  _stripAllPollutedFields(cleanedOrig);
+  _stripPollutedFields(cleanedOrig);
   
-  // 1. 优先使用 meaning[lang] 对象，但只允许目标语言
+  // 1. 优先使用 meaning[lang] 对象
   const meaningObj = cleanedOrig.meaning;
   if (meaningObj && typeof meaningObj === "object") {
-    const strictMeaning = _getStrictLangText(meaningObj, langKey, "meaning object");
-    if (strictMeaning && strictMeaning !== "[Missing Data]" && _isShortMeaning(strictMeaning)) {
-      return strictMeaning;
+    const meaning = _getControlledLangText(meaningObj, langKey, "meaning object");
+    if (meaning && _isShortMeaning(meaning)) {
+      return meaning;
     }
   }
   
-  // 2. 尝试平铺的语言字段，但只允许目标语言
-  const flatText = _getStrictLangText(cleanedOrig, langKey, "option flat text");
-  if (flatText && flatText !== "[Missing Data]" && _isShortMeaning(flatText)) {
+  // 2. 尝试 gloss[lang] 对象
+  const glossObj = cleanedOrig.gloss;
+  if (glossObj && typeof glossObj === "object") {
+    const gloss = _getControlledLangText(glossObj, langKey, "gloss object");
+    if (gloss && _isShortMeaning(gloss)) {
+      return gloss;
+    }
+  }
+  
+  // 3. 尝试平铺的语言字段
+  const flatText = _getControlledLangText(cleanedOrig, langKey, "option flat text");
+  if (flatText && _isShortMeaning(flatText)) {
     return flatText;
   }
   
-  // 严格模式：没有合适的短释义就返回空，不fallback到其他语言
-  if (typeof console !== "undefined" && console.warn) {
-    console.warn(`[HSK Language] No valid short meaning for ${langKey}, available fields: ${Object.keys(cleanedOrig).join(",")}`);
+  // 4. 宽松模式：尝试任何可用的短文本
+  for (const key of ["kr", "ko", "en", "jp", "ja", "cn", "zh"]) {
+    const value = cleanedOrig[key];
+    if (value && _isShortMeaning(value)) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn(`[HSK Language] Using fallback meaning: ${langKey} → ${key} for option`);
+      }
+      return value.trim();
+    }
   }
   
-  return _safeGetTextWithFallback("", `short meaning ${langKey}`);
+  // 最后fallback：返回空而不是"[Missing Data]"
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No valid short meaning for ${langKey}, available: ${Object.keys(cleanedOrig).join(",")}`);
+  }
+  
+  return "";
 }
 
 function _stripOptionExplainFields(o) {
@@ -549,26 +581,26 @@ function patchChoiceOptionForDisplayMode(o, kind, langKey) {
   }
 }
 
-/** 最终统一题干显示：严格单一语言，彻底隔离污染 */
+/** 受控fallback题干显示：UI语言 → English → Chinese */
 function practiceStemDisplayText(q, langKey) {
   if (!q || typeof q !== "object") {
     if (typeof console !== "undefined" && console.warn) {
       console.warn(`[HSK Language] Invalid question object for stem (${langKey})`);
     }
-    return _safeGetTextWithFallback("", "question stem");
+    return "";
   }
   
-  // 优先使用 prompt 对象，但只允许目标语言
+  // 优先使用 prompt 对象
   const prompt = q.prompt ?? q.question ?? {};
   if (prompt && typeof prompt === "object") {
-    // 先清理污染字段
+    // 清理污染字段（保留meaning/translation）
     const cleanedPrompt = { ...prompt };
-    _stripAllPollutedFields(cleanedPrompt);
+    _stripPollutedFields(cleanedPrompt);
     
-    // 严格获取目标语言文本
-    const strictText = _getStrictLangText(cleanedPrompt, langKey, "prompt");
-    if (strictText && strictText !== "[Missing Data]") {
-      return strictText;
+    // 受控fallback获取文本
+    const text = _getControlledLangText(cleanedPrompt, langKey, "prompt");
+    if (text) {
+      return text;
     }
   }
   
@@ -580,12 +612,18 @@ function practiceStemDisplayText(q, langKey) {
     }
   }
   
-  // 严格模式：没有数据就返回空，不fallback
-  if (typeof console !== "undefined" && console.warn) {
-    console.warn(`[HSK Language] No valid stem text for ${langKey}, question keys: ${Object.keys(q).join(",")}`);
+  // 最后尝试从题目对象直接获取
+  const directText = _getControlledLangText(q, langKey, "question direct");
+  if (directText) {
+    return directText;
   }
   
-  return _safeGetTextWithFallback("", "question stem");
+  // 禁止返回空字符串，至少返回一个占位符
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No stem text available for ${langKey}, question keys: ${Object.keys(q).join(",")}`);
+  }
+  
+  return "?";  // 返回占位符而不是空
 }
 
 function _ensureChoiceOptionOrig(o) {
@@ -625,7 +663,7 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
   }
 }
 
-/** 最终统一练习数据处理：彻底隔离污染，严格语言控制 */
+/** 统一练习数据处理入口：受控fallback，统一流程 */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || typeof lesson !== "object") {
     if (typeof console !== "undefined" && console.warn) {
@@ -647,14 +685,14 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
       // 深度克隆题目
       const next = JSON.parse(JSON.stringify(q));
       
-      // 统一清理所有污染字段
-      _stripAllPollutedFields(next);
+      // 统一清理污染字段（保留meaning/translation）
+      _stripPollutedFields(next);
       
-      // 清理拼音字段（完全独立处理）
+      // 清理拼音字段（只使用pinyin，不参与fallback）
       if (next.pinyin) next.pinyin = _cleanPinyin(next.pinyin);
       if (next.py) next.py = _cleanPinyin(next.py);
       
-      // 处理选择题选项
+      // 统一处理选择题选项
       if (Array.isArray(next.options)) {
         next.options = next.options.map((o, optIndex) => {
           if (!o || typeof o !== "object") {
@@ -666,9 +704,9 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
           
           // 清理选项中的污染字段
           const cleanedOption = { ...o };
-          _stripAllPollutedFields(cleanedOption);
+          _stripPollutedFields(cleanedOption);
           
-          // 清理选项中的拼音
+          // 清理选项中的拼音（独立处理）
           if (cleanedOption.pinyin) cleanedOption.pinyin = _cleanPinyin(cleanedOption.pinyin);
           if (cleanedOption.py) cleanedOption.py = _cleanPinyin(cleanedOption.py);
           
@@ -676,12 +714,9 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
         });
       }
       
-      // 对于选择题，应用显示规则（但使用严格语言控制）
-      if (String(next.type || "choice").toLowerCase() === "choice") {
-        // 不再使用 backfill，保持严格语言控制
-        if (next.prompt && typeof next.prompt === "object") {
-          _stripAllPollutedFields(next.prompt);
-        }
+      // 统一处理题干
+      if (next.prompt && typeof next.prompt === "object") {
+        _stripPollutedFields(next.prompt);
       }
       
       return next;
@@ -694,7 +729,7 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
     }
   });
   
-  // 应用选项显示规则（但已通过严格语言控制）
+  // 应用选项显示规则（使用受控fallback）
   applyChoiceDisplayToQuestionList(clonedPractice, langKey);
   
   if (typeof console !== "undefined" && console.debug) {
@@ -731,17 +766,17 @@ function rerenderPractice(container, lang) {
   
   restoreHskChoiceOptionDisplayPatch();
   
-  // 对现有题目也应用严格的语言控制
+  // 对现有题目也应用受控的语言控制
   const currentQuestions = PracticeState.getQuestions();
   if (Array.isArray(currentQuestions)) {
     currentQuestions.forEach((q, index) => {
-      // 清理题干污染字段
+      // 清理题干污染字段（保留meaning/translation）
       if (q.prompt && typeof q.prompt === "object") {
-        _stripAllPollutedFields(q.prompt);
+        _stripPollutedFields(q.prompt);
       }
-      _stripAllPollutedFields(q);
+      _stripPollutedFields(q);
       
-      // 清理拼音
+      // 清理拼音（独立处理，不参与fallback）
       if (q.pinyin) q.pinyin = _cleanPinyin(q.pinyin);
       if (q.py) q.py = _cleanPinyin(q.py);
       
@@ -749,7 +784,7 @@ function rerenderPractice(container, lang) {
       if (Array.isArray(q.options)) {
         q.options.forEach((o, optIndex) => {
           if (o && typeof o === "object") {
-            _stripAllPollutedFields(o);
+            _stripPollutedFields(o);
             if (o.pinyin) o.pinyin = _cleanPinyin(o.pinyin);
             if (o.py) o.py = _cleanPinyin(o.py);
           }
@@ -757,7 +792,7 @@ function rerenderPractice(container, lang) {
       }
     });
     
-    // 应用显示规则
+    // 应用显示规则（使用受控fallback）
     applyChoiceDisplayToQuestionList(currentQuestions, langKey);
   }
   
