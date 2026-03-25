@@ -583,26 +583,6 @@ function mountPractice(container, opts) {
 }
 
 /**
- * 获取 rerender 时当前语言下的显示文本
- */
-function refreshPracticeDisplayOnly(currentQuestions, langKey) {
-  if (!Array.isArray(currentQuestions)) return;
-
-  // 先清空旧 display patch
-  for (const q of currentQuestions) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-
-  // 再重新应用新的显示规则
-  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
-}
-
-/**
  * Practice rerender
  * ✅ 只重新应用显示逻辑
  * ❌ 不再重建题池
@@ -683,35 +663,6 @@ function syncPracticeQuestionListDisplayFields(questions, langKey) {
   }
 }
 
-/**
- * 统一做 practice 显示刷新：
- * 1. 重新应用 display mode
- * 2. 同步 __displayText -> renderer 可见字段
- */
-function refreshPracticeDisplayOnly(currentQuestions, langKey) {
-  if (!Array.isArray(currentQuestions)) return;
-
-  // 清旧 patch
-  for (const q of currentQuestions) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-
-  // 重新生成显示文本
-  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
-
-  // 同步给 renderer
-  syncPracticeQuestionListDisplayFields(currentQuestions, langKey);
-}
-
-/**
- * 如果 practice 引擎依赖 prompt 对象，也同步一个当前语言可读题干
- * 这里只桥接显示，不改原题 schema 结构
- */
 function syncPracticeStemDisplayField(question, langKey) {
   if (!question || typeof question !== "object") return;
 
