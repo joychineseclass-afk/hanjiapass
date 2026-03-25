@@ -1852,36 +1852,6 @@ ${cards
 </div>`;
 }
 
-
-/** 语法例句 */
-function getGrammarExamples(pt) {
-  const ex = (pt && pt.example) || (pt && pt.examples);
-  const lang = normalizePracticeLangAliases(getLang());
-
-  const toItem = (e) => {
-    if (typeof e === "string") {
-      return { zh: e, pinyin: "", trans: "" };
-    }
-
-    const zh = _trimStr(e && (e.zh || e.cn || e.line || e.text));
-    const pinyin = _trimStr(e && (e.pinyin || e.py));
-
-    let trans = "";
-    const transObj = e && (e.translation || e.translations || e.trans);
-    if (transObj && typeof transObj === "object") {
-      trans = _getControlledLangText(transObj, lang, "grammar example translation");
-    } else {
-      trans = getContentText(e, "translation", { strict: true, lang }) || "";
-    }
-
-    return { zh, pinyin, trans };
-  };
-
-  if (!ex) return [];
-  if (Array.isArray(ex)) return ex.map(toItem).filter((x) => x.zh);
-  return [toItem(ex)].filter((x) => x.zh);
-}
-
 /** 语法渲染 */
 function buildGrammarHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
