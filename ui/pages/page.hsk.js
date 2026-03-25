@@ -1852,56 +1852,6 @@ ${cards
 </div>`;
 }
 
-/** 语法解释：只读 explanation 类字段 */
-function getGrammarExplanation(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-  const explain = item.explain ?? item.explanation;
-
-  if (explain && typeof explain === "object") {
-    if (l === "kr") return _trimStr(explain.kr) || _trimStr(explain.ko) || "";
-    if (l === "jp") return _trimStr(explain.jp) || _trimStr(explain.ja) || "";
-    if (l === "cn") return _trimStr(explain.cn) || _trimStr(explain.zh) || "";
-    return _trimStr(explain.en) || "";
-  }
-
-  if (l === "kr") {
-    return (
-      _trimStr(item.explainKr) ||
-      _trimStr(item.explanationKr) ||
-      _trimStr(item.explain_kr) ||
-      _trimStr(item.explanation_kr) ||
-      ""
-    );
-  }
-  if (l === "jp") {
-    return (
-      _trimStr(item.explainJp) ||
-      _trimStr(item.explanationJp) ||
-      _trimStr(item.explain_jp) ||
-      _trimStr(item.explanation_jp) ||
-      ""
-    );
-  }
-  if (l === "cn") {
-    return (
-      _trimStr(item.explainCn) ||
-      _trimStr(item.explanationCn) ||
-      _trimStr(item.explain_zh) ||
-      _trimStr(item.explanation_zh) ||
-      ""
-    );
-  }
-
-  return (
-    _trimStr(item.explainEn) ||
-    _trimStr(item.explanationEn) ||
-    _trimStr(item.explain_en) ||
-    _trimStr(item.explanation_en) ||
-    ""
-  );
-}
 
 /** 语法例句 */
 function getGrammarExamples(pt) {
