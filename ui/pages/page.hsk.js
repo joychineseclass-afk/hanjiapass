@@ -618,25 +618,6 @@ function mountPractice(container, opts) {
   });
 }
 
-/**
- * 获取 rerender 时当前语言下的显示文本
- */
-function refreshPracticeDisplayOnly(currentQuestions, langKey) {
-  if (!Array.isArray(currentQuestions)) return;
-
-  // 先清空旧 display patch
-  for (const q of currentQuestions) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-
-  // 再重新应用新的显示规则
-  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
-}
 
 /**
  * Practice rerender
