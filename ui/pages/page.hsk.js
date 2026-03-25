@@ -2128,25 +2128,6 @@ async function loadVocabMap(levelKey) {
   }
 }
 
-function rerenderPractice(container, lang) {
-  if (!container) return;
-
-  const langKey = practiceLangKeyFromUiLang(lang);
-
-  // ⭐ 不再重新 build pool（这是导致题目消失的核心原因）
-  const questions = PracticeState.getQuestions();
-
-  if (!Array.isArray(questions) || questions.length === 0) {
-    console.warn("[Practice] No questions in state");
-    return;
-  }
-
-  // ⭐ 只做“显示层处理”，不做过滤！
-  applyChoiceDisplayToQuestionList(questions, langKey);
-
-  // ⭐ 只rerender UI
-  rerenderPracticeFromEngine(container, lang);
-}
 
 function mountPractice(container, opts) {
   if (!container) return;
