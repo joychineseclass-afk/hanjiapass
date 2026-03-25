@@ -2129,27 +2129,6 @@ async function loadVocabMap(levelKey) {
 }
 
 
-function mountPractice(container, opts) {
-  if (!container) return;
-
-  const langKey = practiceLangKeyFromUiLang(opts?.lang);
-
-  const lesson = opts?.lesson;
-
-  if (!lesson) return;
-
-  // ⭐ 只在这里 build 一次
-  const safeLesson = buildLessonWithClonedPracticeForDisplay(
-    lesson,
-    langKey
-  );
-
-  mountPracticeFromEngine(container, {
-    ...(opts || {}),
-    lesson: safeLesson,
-  });
-}
-
 window.addEventListener("joy:langChanged", (e) => {
   const newLang =
     (e && e.detail && e.detail.lang) || getLang();
