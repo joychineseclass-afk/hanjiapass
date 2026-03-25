@@ -1091,66 +1091,6 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
 }
 
 /**
- * Practice display patch restore
- * 这里只清空 display 层，不碰原始字段
- */
-function restoreHskChoiceOptionDisplayPatch() {
-  const qs = PracticeState.getQuestions();
-  if (!Array.isArray(qs)) return;
-
-  for (const q of qs) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-}
-
-/**
- * Practice mount
- * ✅ 只在 mount 时构建语言安全题池
- */
-function mountPractice(container, opts) {
-  if (!container) return;
-
-  const langKey = practiceLangKeyFromUiLang(opts && opts.lang);
-  const lesson = opts && opts.lesson;
-
-  const lessonForPractice = lesson
-    ? buildLessonWithClonedPracticeForDisplay(lesson, langKey)
-    : lesson;
-
-  mountPracticeFromEngine(container, {
-    ...(opts || {}),
-    lesson: lessonForPractice,
-  });
-}
-
-
-/**
- * Practice rerender
- * ✅ 只重新应用显示逻辑
- * ❌ 不再重建题池
- * ❌ 不再重新过滤题目
- */
-function rerenderPractice(container, lang) {
-  if (!container) return;
-
-  const langKey = practiceLangKeyFromUiLang(lang);
-
-  restoreHskChoiceOptionDisplayPatch();
-
-  const currentQuestions = PracticeState.getQuestions();
-  if (Array.isArray(currentQuestions) && currentQuestions.length) {
-    hydratePracticeDisplayBridge(currentQuestions, langKey);
-  }
-
-  rerenderPracticeFromEngine(container, lang);
-}
-
-/**
  * ===============================
  * Practice Display Bridge
  * ===============================
