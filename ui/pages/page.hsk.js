@@ -310,239 +310,6 @@ function isTextValidForLang(text, langKey) {
   return _LATIN_RE.test(t);
 }
 
-/**
- * ===============================
- * Practice Display Core (FIXED)
- * ===============================
- * Strategy:
- * 1) NEVER mutate original data destructively
- * 2) NEVER validate raw object directly
- * 3) ONLY validate final display text
- * 4) rerender ≠ rebuild pool
- */
-
-/**
- * Decide display mode
- */
-function practiceChoiceDisplayKind(q) {
-  const st = String(q.subtype ?? q.subType ?? "").toLowerCase();
-  const listen = !!(q.audioUrl ?? q.listen ?? q.hasListen);
-
-  if (listen) return "zh_options";
-
-  if (st.includes("pinyin_to_vocab")) return "zh_options";
-  if (st.includes("meaning_to_vocab")) return "zh_options";
-
-  if (st.includes("meaning_choice")) return "meaning_ui";
-  if (st.includes("sentence") || st.includes("translation")) return "sentence_translation";
-
-  return "infer";
-}
-
-/**
- * Resolve display kind
- */
-function practiceChoiceDisplayKindResolved(q, langKey) {
-  let kind = practiceChoiceDisplayKind(q);
-  if (kind !== "infer") return kind;
-
-  const stem = practiceStemDisplayText(q, langKey);
-  const hasChinese = _HANZI_RE.test(stem);
-
-  // 🔥 核心规则（修复版）
-  if (!hasChinese) {
-    return "zh_options";
-  }
-
-  return "sentence_translation";
-}
-
-/**
- * Get final stem display text
- * 🔥 修复点：只返回最终显示，不做验证逻辑
- */
-function practiceStemDisplayText(q, langKey) {
-  if (!q || typeof q !== "object") return "";
-
-  const prompt = q.prompt ?? q.question;
-
-  // object
-  if (prompt && typeof prompt === "object") {
-    return _getControlledLangText(prompt, langKey, "prompt");
-  }
-
-  // string
-  if (typeof prompt === "string") {
-    return prompt.trim();
-  }
-
-  return "";
-}
-
-/**
- * Pick meaning for option (SAFE)
- */
-function pickShortMeaningForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return "";
-
-  const m = orig.meaning;
-  if (m && typeof m === "object") {
-    const v = _getControlledLangText(m, langKey, "meaning");
-    if (_isShortMeaning(v)) return v;
-  }
-
-  const g = orig.gloss;
-  if (g && typeof g === "object") {
-    const v = _getControlledLangText(g, langKey, "gloss");
-    if (_isShortMeaning(v)) return v;
-  }
-
-  return "";
-}
-
-/**
- * Pick translation for option (SAFE)
- */
-function pickSentenceTranslationForOption(orig, langKey) {
-  if (!orig || typeof orig !== "object") return "";
-
-  const t = orig.translation ?? orig.translations ?? orig.trans;
-  if (t && typeof t === "object") {
-    return _getControlledLangText(t, langKey, "translation");
-  }
-
-  return "";
-}
-
-/**
- * 🔥 关键修复：只覆盖显示字段，不删除原字段
- */
-function _applyDisplayOnlyText(o, langKey, text) {
-  if (!o || typeof o !== "object") return;
-
-  // 不再 delete 全部字段！！
-  o.__displayText = text || "";
-
-  // 标记语言
-  o.__displayLang = langKey;
-}
-
-/**
- * Patch option display (SAFE)
- */
-function patchChoiceOptionForDisplayMode(o, kind, langKey) {
-  if (!o || typeof o !== "object") return;
-
-  const orig = o;
-
-  if (kind === "zh_options") {
-    const text = orig.cn || orig.zh || "";
-    _applyDisplayOnlyText(o, "cn", text);
-    return;
-  }
-
-  if (kind === "meaning_ui") {
-    const text = pickShortMeaningForOption(orig, langKey);
-    _applyDisplayOnlyText(o, langKey, text);
-    return;
-  }
-
-  if (kind === "sentence_translation") {
-    const text = pickSentenceTranslationForOption(orig, langKey);
-    _applyDisplayOnlyText(o, langKey, text);
-    return;
-  }
-}
-
-/**
- * Apply display patch to question list
- */
-function applyChoiceDisplayToQuestionList(questions, langKey) {
-  if (!Array.isArray(questions)) return;
-
-  for (const q of questions) {
-    if (String(q.type || "choice") !== "choice") continue;
-
-    const kind = practiceChoiceDisplayKindResolved(q, langKey);
-    const opts = Array.isArray(q.options) ? q.options : [];
-
-    for (const o of opts) {
-      patchChoiceOptionForDisplayMode(o, kind, langKey);
-    }
-  }
-}
-
-/**
- * 🔥 核心修复：验证只基于“最终显示文本”
- */
-function isQuestionDisplaySafe(q, langKey) {
-  const stem = practiceStemDisplayText(q, langKey);
-  if (!isTextValidForLang(stem, langKey)) return false;
-
-  if (q.type === "choice" && Array.isArray(q.options)) {
-    const valid = q.options.filter(o => {
-      const txt = o.__displayText || "";
-      return isTextValidForLang(txt, langKey);
-    });
-
-    return valid.length >= 2;
-  }
-
-  return true;
-}
-
-/**
- * 🔥 修复版：构建题池（只负责组池）
- */
-function buildLanguageSafePracticePool(rawQuestions, langKey, min = 3) {
-  if (!Array.isArray(rawQuestions)) return [];
-
-  const main = rawQuestions.filter(q =>
-    isTextValidForLang(practiceStemDisplayText(q, langKey), langKey)
-  );
-
-  let pool = [...main];
-
-  // fallback（仅 English）
-  if (pool.length < min) {
-    const en = rawQuestions.filter(q =>
-      isTextValidForLang(practiceStemDisplayText(q, "en"), "en")
-    );
-
-    const need = min - pool.length;
-    pool = [...pool, ...en.slice(0, need)];
-  }
-
-  return pool;
-}
-
-/**
- * 🔥 重要：只在 mount 时调用
- */
-function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
-  if (!lesson || !Array.isArray(lesson.practice)) {
-    return { ...lesson, practice: [] };
-  }
-
-  const raw = lesson.practice;
-
-  // 1️⃣ 构建题池
-  const pool = buildLanguageSafePracticePool(raw, langKey, 3);
-
-  // 2️⃣ 深拷贝
-  const cloned = pool.map(q => JSON.parse(JSON.stringify(q)));
-
-  // 3️⃣ 应用显示规则
-  applyChoiceDisplayToQuestionList(cloned, langKey);
-
-  // 4️⃣ 最终显示验证（轻量）
-  const final = cloned.filter(q => isQuestionDisplaySafe(q, langKey));
-
-  return {
-    ...lesson,
-    practice: final
-  };
-}
 
 /**
  * Practice display patch restore
@@ -1114,22 +881,27 @@ function practiceChoiceDisplayKind(q) {
 }
 
 /**
- * Resolve display kind
+ * 🔥 修复核心逻辑（你之前问题就在这里）
  */
 function practiceChoiceDisplayKindResolved(q, langKey) {
   let kind = practiceChoiceDisplayKind(q);
   if (kind !== "infer") return kind;
 
+  const opts = q.options;
   const stem = practiceStemDisplayText(q, langKey);
-  const hasChinese = _HANZI_RE.test(stem);
 
-  // 🔥 核心规则（修复版）
-  if (!hasChinese) {
-    return "zh_options";
-  }
+  const hasChinese = /[\u4e00-\u9fff]/.test(stem);
 
-  return "sentence_translation";
+  // 👉 关键规则（你之前错在这里）
+  // ❗ 没有中文 → 用中文选项
+  if (!hasChinese) return "zh_options";
+
+  // ❗ 有中文 → 用系统语言
+  return _optionsLookLikeLetterKeyedMeanings(opts)
+    ? "meaning_ui"
+    : "sentence_translation";
 }
+
 
 /**
  * Get final stem display text
@@ -2105,27 +1877,6 @@ function practiceChoiceDisplayKind(q) {
   return "infer";
 }
 
-/**
- * 🔥 修复核心逻辑（你之前问题就在这里）
- */
-function practiceChoiceDisplayKindResolved(q, langKey) {
-  let kind = practiceChoiceDisplayKind(q);
-  if (kind !== "infer") return kind;
-
-  const opts = q.options;
-  const stem = practiceStemDisplayText(q, langKey);
-
-  const hasChinese = /[\u4e00-\u9fff]/.test(stem);
-
-  // 👉 关键规则（你之前错在这里）
-  // ❗ 没有中文 → 用中文选项
-  if (!hasChinese) return "zh_options";
-
-  // ❗ 有中文 → 用系统语言
-  return _optionsLookLikeLetterKeyedMeanings(opts)
-    ? "meaning_ui"
-    : "sentence_translation";
-}
 
 
 /**
