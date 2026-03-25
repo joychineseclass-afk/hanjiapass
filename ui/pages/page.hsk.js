@@ -1090,66 +1090,6 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   };
 }
 
-/**
- * ===============================
- * Practice Display Bridge
- * ===============================
- * Purpose:
- * Keep engine-compatible visible fields in sync with __displayText
- * without destroying original semantic data too early.
- */
-
-/** 把 __displayText 同步到当前 UI 对应字段，供 practiceRenderer 读取 */
-function syncPracticeOptionDisplayFields(options, langKey) {
-  if (!Array.isArray(options)) return;
-
-  const lk = normalizePracticeLangAliases(langKey);
-
-  for (const o of options) {
-    if (!o || typeof o !== "object") continue;
-
-    const text = _trimStr(o.__displayText);
-    if (!text) continue;
-
-    // 先清掉显示层语言字段，避免旧显示残留
-    delete o.kr;
-    delete o.ko;
-    delete o.en;
-    delete o.jp;
-    delete o.ja;
-    delete o.cn;
-    delete o.zh;
-
-    if (lk === "kr") {
-      o.kr = text;
-      o.ko = text;
-    } else if (lk === "jp") {
-      o.jp = text;
-      o.ja = text;
-    } else if (lk === "cn") {
-      o.cn = text;
-      o.zh = text;
-    } else {
-      o.en = text;
-    }
-  }
-}
-
-/** 把题目当前显示模式下的选项文本桥接到 renderer 可读字段 */
-function syncPracticeQuestionDisplayFields(question, langKey) {
-  if (!question || typeof question !== "object") return;
-  const opts = Array.isArray(question.options) ? question.options : [];
-  syncPracticeOptionDisplayFields(opts, langKey);
-}
-
-/** 批量桥接 */
-function syncPracticeQuestionListDisplayFields(questions, langKey) {
-  if (!Array.isArray(questions)) return;
-  for (const q of questions) {
-    syncPracticeQuestionDisplayFields(q, langKey);
-  }
-}
-
 
 /**
  * ===============================
