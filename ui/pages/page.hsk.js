@@ -582,6 +582,7 @@ function mountPractice(container, opts) {
   });
 }
 
+
 /**
  * Practice rerender
  * ✅ 只重新应用显示逻辑
@@ -663,6 +664,35 @@ function syncPracticeQuestionListDisplayFields(questions, langKey) {
   }
 }
 
+/**
+ * 统一做 practice 显示刷新：
+ * 1. 重新应用 display mode
+ * 2. 同步 __displayText -> renderer 可见字段
+ */
+function refreshPracticeDisplayOnly(currentQuestions, langKey) {
+  if (!Array.isArray(currentQuestions)) return;
+
+  // 清旧 patch
+  for (const q of currentQuestions) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      delete o.__displayText;
+      delete o.__displayLang;
+    }
+  }
+
+  // 重新生成显示文本
+  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
+
+  // 同步给 renderer
+  syncPracticeQuestionListDisplayFields(currentQuestions, langKey);
+}
+
+/**
+ * 如果 practice 引擎依赖 prompt 对象，也同步一个当前语言可读题干
+ * 这里只桥接显示，不改原题 schema 结构
+ */
 function syncPracticeStemDisplayField(question, langKey) {
   if (!question || typeof question !== "object") return;
 
@@ -1408,425 +1438,6 @@ function syncPracticeQuestionListDisplayFields(questions, langKey) {
   }
 }
 
-/**
- * 统一做 practice 显示刷新：
- * 1. 重新应用 display mode
- * 2. 同步 __displayText -> renderer 可见字段
- */
-function refreshPracticeDisplayOnly(currentQuestions, langKey) {
-  if (!Array.isArray(currentQuestions)) return;
-
-  // 清旧 patch
-  for (const q of currentQuestions) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-
-  // 重新生成显示文本
-  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
-
-  // 同步给 renderer
-  syncPracticeQuestionListDisplayFields(currentQuestions, langKey);
-}
-
-/**
- * 如果 practice 引擎依赖 prompt 对象，也同步一个当前语言可读题干
- * 这里只桥接显示，不改原题 schema 结构
- */
-function syncPracticeStemDisplayField(question, langKey) {
-  if (!question || typeof question !== "object") return;
-
-  const stem = practiceStemDisplayText(question, langKey);
-  if (!stem) return;
-
-  const lk = normalizePracticeLangAliases(langKey);
-
-  if (!question.prompt || typeof question.prompt !== "object") {
-    question.prompt = {};
-  }
-
-  if (lk === "kr") {
-    question.prompt.kr = stem;
-    question.prompt.ko = stem;
-  } else if (lk === "jp") {
-    question.prompt.jp = stem;
-    question.prompt.ja = stem;
-  } else if (lk === "cn") {
-    question.prompt.cn = stem;
-    question.prompt.zh = stem;
-  } else {
-    question.prompt.en = stem;
-  }
-}
-
-function syncPracticeStemDisplayList(questions, langKey) {
-  if (!Array.isArray(questions)) return;
-  for (const q of questions) {
-    syncPracticeStemDisplayField(q, langKey);
-  }
-}
-
-/**
- * 最终统一调用：
- * 给 mount / rerender 使用
- */
-function hydratePracticeDisplayBridge(questions, langKey) {
-  if (!Array.isArray(questions)) return;
-  refreshPracticeDisplayOnly(questions, langKey);
-  syncPracticeStemDisplayList(questions, langKey);
-}
-
-/**
- * ===============================
- * Dialogue / Grammar / Extension
- * ===============================
- */
-
-/**
- * Dialogue translation
- * Strict within current language family only.
- * No cross-language fallback here.
- */
-function getDialogueTranslation(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-
-  const str = (v) => _trimStr(v);
-
-  const trans = item.translation ?? item.trans ?? item.translations;
-  if (trans && typeof trans === "object") {
-    if (l === "kr") return str(trans.kr) || str(trans.ko) || "";
-    if (l === "jp") return str(trans.jp) || str(trans.ja) || "";
-    if (l === "cn") return str(trans.cn) || str(trans.zh) || "";
-    return str(trans.en) || "";
-  }
-
-  if (l === "kr") {
-    return str(item.kr) || str(item.ko) || str(item.translationKr) || str(item.translation_kr) || "";
-  }
-  if (l === "jp") {
-    return str(item.jp) || str(item.ja) || str(item.translationJp) || str(item.translation_jp) || "";
-  }
-  if (l === "cn") {
-    return str(item.cn) || str(item.zh) || str(item.translationCn) || str(item.translation_cn) || "";
-  }
-  return str(item.en) || str(item.translationEn) || str(item.translation_en) || "";
-}
-
-function pickDialogueTranslation(line, zhMain = "") {
-  const lang = getLang();
-  const out = getDialogueTranslation(line, lang);
-  if (out && zhMain && out === zhMain) return "";
-  return out;
-}
-
-/**
- * Dialogue/scene/review card title
- * Prefer strict current language, then zh/cn as fallback
- */
-function pickCardTitle(obj, cardIndex = 1) {
-  if (obj != null && typeof obj === "string") return obj.trim();
-
-  const lang = normalizePracticeLangAliases(getLang());
-  const v =
-    _getStrictLangText(obj, lang) ||
-    _trimStr(obj && obj.zh) ||
-    _trimStr(obj && obj.cn) ||
-    "";
-
-  if (v) return v;
-
-  const sessionText = i18n.t("dialogue.session", { n: cardIndex });
-  if (sessionText && sessionText !== "dialogue.session") return sessionText;
-  return (i18n.t("lesson.dialogue_card") || "会话") + cardIndex;
-}
-
-/**
- * Grammar explanation
- * Only explanation-like fields, no translation/meaning fallback
- */
-function getGrammarExplanation(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-  const str = (v) => _trimStr(v);
-
-  const explain = item.explain ?? item.explanation;
-  if (explain && typeof explain === "object") {
-    if (l === "kr") return str(explain.kr) || str(explain.ko) || "";
-    if (l === "jp") return str(explain.jp) || str(explain.ja) || "";
-    if (l === "cn") return str(explain.cn) || str(explain.zh) || "";
-    return str(explain.en) || "";
-  }
-
-  if (l === "kr") {
-    return str(item.explainKr) || str(item.explanationKr) || str(item.explain_kr) || str(item.explanation_kr) || "";
-  }
-  if (l === "jp") {
-    return str(item.explainJp) || str(item.explanationJp) || str(item.explain_jp) || str(item.explanation_jp) || "";
-  }
-  if (l === "cn") {
-    return str(item.explainCn) || str(item.explanationCn) || str(item.explain_zh) || str(item.explanation_zh) || "";
-  }
-  return str(item.explainEn) || str(item.explanationEn) || str(item.explain_en) || str(item.explanation_en) || "";
-}
-
-/**
- * Grammar examples
- * Keep it conservative:
- * zh + pinyin + translation only
- */
-function getGrammarExamples(pt) {
-  const ex = (pt && pt.example) || (pt && pt.examples);
-  const lang = normalizePracticeLangAliases(getLang());
-
-  const toItem = (e) => {
-    if (typeof e === "string") {
-      return { zh: e, pinyin: "", trans: "" };
-    }
-
-    const zh = _trimStr(e && (e.zh || e.cn || e.line || e.text));
-    const pinyin = _trimStr(e && (e.pinyin || e.py));
-
-    let trans = "";
-    const transObj = e && (e.translation || e.translations || e.trans);
-    if (transObj && typeof transObj === "object") {
-      trans = _getControlledLangText(transObj, lang, "grammar example translation");
-    } else {
-      trans = getContentText(e, "translation", { strict: true, lang }) || "";
-    }
-
-    return { zh, pinyin, trans };
-  };
-
-  if (!ex) return [];
-  if (Array.isArray(ex)) return ex.map(toItem).filter((x) => x.zh);
-  return [toItem(ex)].filter((x) => x.zh);
-}
-
-/**
- * Extension explanation
- * Only explanation / note-like content.
- * Do NOT mix with main meaning/translation.
- */
-function getExtensionExplanation(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-  const str = (v) => _trimStr(v);
-
-  const explain = item.explain ?? item.explanation;
-  if (explain && typeof explain === "object") {
-    if (l === "kr") return str(explain.kr) || str(explain.ko) || "";
-    if (l === "jp") return str(explain.jp) || str(explain.ja) || "";
-    if (l === "cn") return str(explain.cn) || str(explain.zh) || "";
-    return str(explain.en) || "";
-  }
-
-  if (l === "kr") {
-    const flat = str(item.explainKr) || str(item.explanationKr) || str(item.explain_kr) || str(item.explanation_kr);
-    if (flat) return flat;
-  }
-  if (l === "jp") {
-    const flat = str(item.explainJp) || str(item.explanationJp) || str(item.explain_jp) || str(item.explanation_jp);
-    if (flat) return flat;
-  }
-  if (l === "cn") {
-    const flat = str(item.explainCn) || str(item.explanationCn) || str(item.explain_zh) || str(item.explanation_zh);
-    if (flat) return flat;
-  }
-  if (l === "en") {
-    const flat = str(item.explainEn) || str(item.explanationEn) || str(item.explain_en) || str(item.explanation_en);
-    if (flat) return flat;
-  }
-
-  const note = item.note;
-  if (note && typeof note === "object") {
-    return _getStrictLangText(note, l) || "";
-  }
-  if (typeof note === "string" && note.trim()) {
-    return str(note);
-  }
-
-  return "";
-}
-
-/**
- * Extension main meaning
- * Current UI language first, then English, then Chinese.
- * Never jump kr <-> jp randomly.
- */
-function getExtensionMeaning(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-
-  // 1) flat language fields
-  if (l === "kr") {
-    return (
-      _trimStr(item.kr) ||
-      _trimStr(item.ko) ||
-      _trimStr(item.translationKr) ||
-      _trimStr(item.translation_kr) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      ""
-    );
-  }
-
-  if (l === "jp") {
-    return (
-      _trimStr(item.jp) ||
-      _trimStr(item.ja) ||
-      _trimStr(item.translationJp) ||
-      _trimStr(item.translation_jp) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      ""
-    );
-  }
-
-  if (l === "cn") {
-    return (
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      ""
-    );
-  }
-
-  // en
-  return (
-    _trimStr(item.en) ||
-    _trimStr(item.translationEn) ||
-    _trimStr(item.translation_en) ||
-    _trimStr(item.cn) ||
-    _trimStr(item.zh) ||
-    ""
-  );
-}
-
-/**
- * Extension tab
- * Keep meaning and explanation separated
- */
-function buildExtensionHTML(lessonData) {
-  const raw = (lessonData && lessonData._raw) || lessonData;
-  const arr =
-    Array.isArray(raw && raw.generatedExtensions) && raw.generatedExtensions.length
-      ? raw.generatedExtensions
-      : Array.isArray(raw && raw.extension)
-        ? raw.extension
-        : [];
-
-  const lang = getLang();
-  const speakLabel = i18n.t("hsk.extension_speak");
-
-  const hero = `<section class="lesson-section-hero lesson-extension-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.section.extension") || i18n.t("hsk.extension_title"))}</h3>
-  <span class="lesson-extension-badge">${escapeHtml(i18n.t("hsk.extension_badge"))}</span>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.desc.extension") || i18n.t("hsk.extension_subtitle"))}</p>
-  <p class="lesson-extension-tip">${escapeHtml(i18n.t("extension.tip"))}</p>
-</section>`;
-
-  if (!arr.length) {
-    const emptyMsg = i18n.t("hsk.extension_no_content") || "本课暂无额外扩展内容。";
-    return `${hero}<div class="lesson-extension-empty">${escapeHtml(emptyMsg)}</div>`;
-  }
-
-  const str = (v) => _trimStr(v);
-
-  const pickObj = (obj) => {
-    if (!obj || typeof obj !== "object") return "";
-    return _getControlledLangText(obj, lang, "extension object");
-  };
-
-  const pickTrans = (obj) => {
-    if (!obj || typeof obj !== "object") return "";
-    return _getControlledLangText(obj, lang, "extension translation");
-  };
-
-  const cards = arr.map((item, i) => {
-    const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
-    const isGroup = sentences.length > 0 && (item.groupTitle || item.focusGrammar);
-
-    if (isGroup) {
-      const groupTitle =
-        pickObj(item.groupTitle) ||
-        str(item.focusGrammar) ||
-        `${i18n.t("hsk.extension_group", "句型练习")} ${i + 1}`;
-
-      const note = pickObj(item.note);
-
-      const sentencesHtml = sentences.map((s) => {
-        const cn = str((s && s.cn) || (s && s.zh) || "");
-        const py = str((s && s.pinyin) || (s && s.py) || "");
-        const trans = pickTrans(s && (s.translations || s.translation));
-        const zhEsc = escapeHtml(cn).replaceAll('"', "&quot;");
-        const attrs = cn ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-
-        return `<div class="lesson-extension-sentence">
-          <div class="lesson-extension-sentence-zh"${attrs}>${escapeHtml(cn)}</div>
-          ${py ? `<div class="lesson-extension-sentence-pinyin">${escapeHtml(py)}</div>` : ""}
-          ${trans ? `<div class="lesson-extension-sentence-trans">${escapeHtml(trans)}</div>` : ""}
-          ${cn ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>` : ""}
-        </div>`;
-      }).join("");
-
-      return `<article class="lesson-extension-group-card">
-  <div class="lesson-extension-group-header">
-    <span class="lesson-extension-group-index">${String(i + 1).padStart(2, "0")}</span>
-    <h4 class="lesson-extension-group-title">${escapeHtml(groupTitle)}</h4>
-    ${item.focusGrammar ? `<span class="lesson-extension-focus">${escapeHtml(str(item.focusGrammar))}</span>` : ""}
-  </div>
-  <div class="lesson-extension-sentences">${sentencesHtml}</div>
-  ${note ? `<div class="lesson-extension-note">${escapeHtml(note)}</div>` : ""}
-</article>`;
-    }
-
-    const phrase = str(item && (item.phrase || item.hanzi || item.zh || item.cn || item.line));
-    const pinyin = str(item && (item.pinyin || item.py));
-    const example = str(item && (item.example || item.exampleZh));
-    const examplePinyin = str(item && (item.examplePinyin || item.examplePy));
-    const meaning = getExtensionMeaning(item, lang);
-    const explanation = getExtensionExplanation(item, lang);
-
-    const idx = String(i + 1).padStart(2, "0");
-    const zhEsc = escapeHtml(phrase).replaceAll('"', "&quot;");
-    const zhAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-    const btnAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-
-    return `<article class="lesson-extension-card">
-  <div class="lesson-extension-card-top">
-    <span class="lesson-extension-index">${idx}</span>
-    <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
-  </div>
-  <div class="lesson-extension-body">
-    <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
-    ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
-    ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
-    ${explanation ? `<div class="lesson-extension-explanation">${escapeHtml(explanation)}</div>` : ""}
-    ${example ? `<div class="lesson-extension-example">${escapeHtml(example)}</div>` : ""}
-    ${examplePinyin ? `<div class="lesson-extension-example-pinyin">${escapeHtml(examplePinyin)}</div>` : ""}
-  </div>
-</article>`;
-  }).filter(Boolean).join("");
-
-  return `${hero}<section class="lesson-extension-list">${cards}</section>`;
-}
 
 /**
  * ===============================
