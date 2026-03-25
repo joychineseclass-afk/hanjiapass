@@ -1,3 +1,760 @@
+// /ui/pages/page.hsk.js
+// HSK Page - cleaned incremental version
+// Strategy:
+// 1) Keep page skeleton stable
+// 2) Fix practice pipeline step by step
+// 3) Avoid mutating validation logic
+// 4) Keep extension meaning/explanation separated
+
+import { i18n } from "../i18n.js";
+import { pick, getContentText, getLang as getEngineLang, getLessonDisplayTitle } from "../core/languageEngine.js";
+import { mountNavBar } from "../components/navBar.js";
+import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
+import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
+import {
+  renderLessonList,
+  renderWordCards,
+  renderReviewWords,
+  renderReviewDialogue,
+  renderReviewGrammar,
+  renderReviewExtension,
+  bindWordCardActions,
+  wordKey,
+  wordPinyin,
+  wordMeaning,
+  normalizeLang
+} from "../modules/hsk/hskRenderer.js";
+import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
+import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
+import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
+import { loadGlossary } from "../utils/glossary.js";
+import {
+  LESSON_ENGINE,
+  AI_CAPABILITY,
+  IMAGE_ENGINE,
+  SCENE_ENGINE,
+  PROGRESS_ENGINE,
+  PROGRESS_SELECTORS,
+  AUDIO_ENGINE,
+  renderReviewMode,
+  prepareReviewSession
+} from "../platform/index.js";
+import * as PracticeState from "../modules/practice/practiceState.js";
+import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
+import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
+import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
+
+const state = {
+  lv: 1,
+  version: "hsk2.0",
+  lessons: [],
+  current: null,
+  tab: "words",
+  searchKeyword: "",
+  reviewMode: null,
+};
+
+let el;
+
+const _HANZI_RE = /[\u4e00-\u9fff]/;
+const _KOREAN_RE = /[가-힣]/;
+const _JAPANESE_RE = /[ぁ-んァ-ン]/;
+const _LATIN_RE = /[A-Za-z]/;
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function escapeHtml(s) {
+  return String(s != null ? s : "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function stringifyMaybe(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  try {
+    return JSON.stringify(v);
+  } catch {
+    return String(v);
+  }
+}
+
+function _trimStr(v) {
+  return typeof v === "string" && v.trim() ? v.trim() : "";
+}
+
+function getLang() {
+  return normalizeLang(getEngineLang());
+}
+
+function getHskState() {
+  return {
+    version: state.version,
+    level: state.lv,
+    lessonId: state.current ? (state.current.lessonData?.id || getCourseId() + "_lesson" + state.current.lessonNo) : "",
+    lessonNo: state.current?.lessonNo || 0,
+    file: state.current?.file || "",
+    activeTab: state.tab,
+    reviewMode: state.reviewMode,
+    searchKeyword: state.searchKeyword,
+  };
+}
+
+function isHSKPageActive() {
+  const hash = ((typeof location !== "undefined" && location.hash) || "").toLowerCase();
+  const path = ((typeof location !== "undefined" && location.pathname) || "").toLowerCase();
+  return hash.includes("hsk") || path.includes("hsk");
+}
+
+function getCourseId() {
+  return `${state.version}_hsk${state.lv}`;
+}
+
+function practiceLangKeyFromUiLang(lang) {
+  const l = String(lang || "ko").toLowerCase();
+  if (l === "zh" || l === "cn") return "cn";
+  if (l === "en") return "en";
+  if (l === "jp" || l === "ja") return "jp";
+  return "kr";
+}
+
+function normalizePracticeLangAliases(langKey) {
+  const k = String(langKey || "").toLowerCase();
+  if (k === "ko") return "kr";
+  if (k === "ja") return "jp";
+  if (k === "zh") return "cn";
+  return k || "kr";
+}
+
+function _safeGetTextWithFallback(text, context = "text") {
+  const out = _trimStr(text);
+  if (out) return out;
+
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Safety] Missing ${context}`);
+  }
+  return "";
+}
+
+/**
+ * Controlled text getter
+ * Rule:
+ * current UI lang -> English -> Chinese
+ * Never jump randomly into unrelated languages
+ */
+function _getControlledLangText(obj, langKey, context = "text") {
+  if (!obj || typeof obj !== "object") return "";
+
+  const key = normalizePracticeLangAliases(langKey);
+  const primary =
+    key === "kr" ? ["kr", "ko"] :
+    key === "jp" ? ["jp", "ja"] :
+    key === "cn" ? ["cn", "zh"] :
+    ["en"];
+
+  const order = [...primary, "en", "cn", "zh"];
+  const tried = [];
+
+  for (const k of order) {
+    tried.push(k);
+    const value = _trimStr(obj[k]);
+    if (value) {
+      if (!primary.includes(k) && typeof console !== "undefined" && console.warn) {
+        console.warn(`[HSK Language] Fallback triggered for ${context}: ${key} -> ${k}`);
+      }
+      return value;
+    }
+  }
+
+  if (typeof console !== "undefined" && console.warn) {
+    console.warn(`[HSK Language] No available text for ${context}; tried=${tried.join(",")}`);
+  }
+  return "";
+}
+
+/**
+ * Strict direct getter
+ * No fallback. Only current language family.
+ */
+function _getStrictLangText(obj, langKey) {
+  if (!obj || typeof obj !== "object") return "";
+  const key = normalizePracticeLangAliases(langKey);
+
+  if (key === "kr") return _trimStr(obj.kr) || _trimStr(obj.ko) || "";
+  if (key === "jp") return _trimStr(obj.jp) || _trimStr(obj.ja) || "";
+  if (key === "cn") return _trimStr(obj.cn) || _trimStr(obj.zh) || "";
+  return _trimStr(obj.en) || "";
+}
+
+/**
+ * Keep only real explanation-like polluted fields removable.
+ * Do NOT delete meaning / translation sources here.
+ */
+function _stripPollutedFields(obj) {
+  if (!obj || typeof obj !== "object") return;
+
+  const pollutedFields = [
+    "explain",
+    "explanation",
+    "explainKr",
+    "explainEn",
+    "explainJp",
+    "explainCn",
+    "explanation_kr",
+    "explanation_en",
+    "explanation_jp",
+    "explanation_cn",
+    "usage",
+    "example",
+    "examples",
+    "notes",
+    "note",
+    "definition",
+    "definitions",
+    "desc",
+    "description"
+  ];
+
+  pollutedFields.forEach((field) => {
+    if (Object.prototype.hasOwnProperty.call(obj, field)) {
+      delete obj[field];
+    }
+  });
+}
+
+function _stripOptionExplainFields(o) {
+  if (!o || typeof o !== "object") return;
+  delete o.explain;
+  delete o.explanation;
+  delete o.explainKr;
+  delete o.explainEn;
+  delete o.explainJp;
+  delete o.explainCn;
+  delete o.explanation_kr;
+  delete o.explanation_en;
+  delete o.explanation_jp;
+  delete o.explanation_cn;
+  delete o.usage;
+  delete o.example;
+  delete o.examples;
+  delete o.notes;
+  delete o.note;
+  delete o.definition;
+  delete o.definitions;
+  delete o.desc;
+  delete o.description;
+}
+
+/**
+ * Short meaning detector
+ * Used only for compact option text, not for sentence translation.
+ */
+function _isShortMeaning(text) {
+  const t = _trimStr(text);
+  if (!t) return false;
+  if (t.length > 40) return false;
+  if (/；|;|：/.test(t)) return false;
+  if (/(例如|用法|同义词|反义词|词性)/.test(t)) return false;
+  if (((t.match(/,/g) || []).length) > 2) return false;
+  return true;
+}
+
+/**
+ * Pure pinyin cleaner
+ * Keep only pinyin-ish characters.
+ */
+function _cleanPinyin(text) {
+  if (!text || typeof text !== "string") return "";
+  let cleaned = text;
+
+  // remove obvious long English fragments
+  cleaned = cleaned.replace(/[A-Za-z]{3,}/g, (m) => {
+    const hasTone = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/i.test(m);
+    return hasTone ? m : "";
+  });
+
+  cleaned = cleaned.replace(/[^A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü\s'’-]/g, "");
+  cleaned = cleaned.replace(/\s+/g, " ").trim();
+
+  return cleaned;
+}
+
+/**
+ * Lightweight language validity checker.
+ * This is ONLY for displayed text, not raw object validation.
+ */
+function isTextValidForLang(text, langKey) {
+  const t = _trimStr(text);
+  if (!t) return false;
+
+  const key = normalizePracticeLangAliases(langKey);
+
+  if (key === "kr") {
+    return _KOREAN_RE.test(t);
+  }
+
+  if (key === "jp") {
+    return _JAPANESE_RE.test(t) || /[一-龯]/.test(t);
+  }
+
+  if (key === "cn") {
+    return _HANZI_RE.test(t);
+  }
+
+  // en
+  return _LATIN_RE.test(t);
+}
+
+/**
+ * ===============================
+ * Practice Display Core (FIXED)
+ * ===============================
+ * Strategy:
+ * 1) NEVER mutate original data destructively
+ * 2) NEVER validate raw object directly
+ * 3) ONLY validate final display text
+ * 4) rerender ≠ rebuild pool
+ */
+
+/**
+ * Decide display mode
+ */
+function practiceChoiceDisplayKind(q) {
+  const st = String(q.subtype ?? q.subType ?? "").toLowerCase();
+  const listen = !!(q.audioUrl ?? q.listen ?? q.hasListen);
+
+  if (listen) return "zh_options";
+
+  if (st.includes("pinyin_to_vocab")) return "zh_options";
+  if (st.includes("meaning_to_vocab")) return "zh_options";
+
+  if (st.includes("meaning_choice")) return "meaning_ui";
+  if (st.includes("sentence") || st.includes("translation")) return "sentence_translation";
+
+  return "infer";
+}
+
+/**
+ * Resolve display kind
+ */
+function practiceChoiceDisplayKindResolved(q, langKey) {
+  let kind = practiceChoiceDisplayKind(q);
+  if (kind !== "infer") return kind;
+
+  const stem = practiceStemDisplayText(q, langKey);
+  const hasChinese = _HANZI_RE.test(stem);
+
+  // 🔥 核心规则（修复版）
+  if (!hasChinese) {
+    return "zh_options";
+  }
+
+  return "sentence_translation";
+}
+
+/**
+ * Get final stem display text
+ * 🔥 修复点：只返回最终显示，不做验证逻辑
+ */
+function practiceStemDisplayText(q, langKey) {
+  if (!q || typeof q !== "object") return "";
+
+  const prompt = q.prompt ?? q.question;
+
+  // object
+  if (prompt && typeof prompt === "object") {
+    return _getControlledLangText(prompt, langKey, "prompt");
+  }
+
+  // string
+  if (typeof prompt === "string") {
+    return prompt.trim();
+  }
+
+  return "";
+}
+
+/**
+ * Pick meaning for option (SAFE)
+ */
+function pickShortMeaningForOption(orig, langKey) {
+  if (!orig || typeof orig !== "object") return "";
+
+  const m = orig.meaning;
+  if (m && typeof m === "object") {
+    const v = _getControlledLangText(m, langKey, "meaning");
+    if (_isShortMeaning(v)) return v;
+  }
+
+  const g = orig.gloss;
+  if (g && typeof g === "object") {
+    const v = _getControlledLangText(g, langKey, "gloss");
+    if (_isShortMeaning(v)) return v;
+  }
+
+  return "";
+}
+
+/**
+ * Pick translation for option (SAFE)
+ */
+function pickSentenceTranslationForOption(orig, langKey) {
+  if (!orig || typeof orig !== "object") return "";
+
+  const t = orig.translation ?? orig.translations ?? orig.trans;
+  if (t && typeof t === "object") {
+    return _getControlledLangText(t, langKey, "translation");
+  }
+
+  return "";
+}
+
+/**
+ * 🔥 关键修复：只覆盖显示字段，不删除原字段
+ */
+function _applyDisplayOnlyText(o, langKey, text) {
+  if (!o || typeof o !== "object") return;
+
+  // 不再 delete 全部字段！！
+  o.__displayText = text || "";
+
+  // 标记语言
+  o.__displayLang = langKey;
+}
+
+/**
+ * Patch option display (SAFE)
+ */
+function patchChoiceOptionForDisplayMode(o, kind, langKey) {
+  if (!o || typeof o !== "object") return;
+
+  const orig = o;
+
+  if (kind === "zh_options") {
+    const text = orig.cn || orig.zh || "";
+    _applyDisplayOnlyText(o, "cn", text);
+    return;
+  }
+
+  if (kind === "meaning_ui") {
+    const text = pickShortMeaningForOption(orig, langKey);
+    _applyDisplayOnlyText(o, langKey, text);
+    return;
+  }
+
+  if (kind === "sentence_translation") {
+    const text = pickSentenceTranslationForOption(orig, langKey);
+    _applyDisplayOnlyText(o, langKey, text);
+    return;
+  }
+}
+
+/**
+ * Apply display patch to question list
+ */
+function applyChoiceDisplayToQuestionList(questions, langKey) {
+  if (!Array.isArray(questions)) return;
+
+  for (const q of questions) {
+    if (String(q.type || "choice") !== "choice") continue;
+
+    const kind = practiceChoiceDisplayKindResolved(q, langKey);
+    const opts = Array.isArray(q.options) ? q.options : [];
+
+    for (const o of opts) {
+      patchChoiceOptionForDisplayMode(o, kind, langKey);
+    }
+  }
+}
+
+/**
+ * 🔥 核心修复：验证只基于“最终显示文本”
+ */
+function isQuestionDisplaySafe(q, langKey) {
+  const stem = practiceStemDisplayText(q, langKey);
+  if (!isTextValidForLang(stem, langKey)) return false;
+
+  if (q.type === "choice" && Array.isArray(q.options)) {
+    const valid = q.options.filter(o => {
+      const txt = o.__displayText || "";
+      return isTextValidForLang(txt, langKey);
+    });
+
+    return valid.length >= 2;
+  }
+
+  return true;
+}
+
+/**
+ * 🔥 修复版：构建题池（只负责组池）
+ */
+function buildLanguageSafePracticePool(rawQuestions, langKey, min = 3) {
+  if (!Array.isArray(rawQuestions)) return [];
+
+  const main = rawQuestions.filter(q =>
+    isTextValidForLang(practiceStemDisplayText(q, langKey), langKey)
+  );
+
+  let pool = [...main];
+
+  // fallback（仅 English）
+  if (pool.length < min) {
+    const en = rawQuestions.filter(q =>
+      isTextValidForLang(practiceStemDisplayText(q, "en"), "en")
+    );
+
+    const need = min - pool.length;
+    pool = [...pool, ...en.slice(0, need)];
+  }
+
+  return pool;
+}
+
+/**
+ * 🔥 重要：只在 mount 时调用
+ */
+function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
+  if (!lesson || !Array.isArray(lesson.practice)) {
+    return { ...lesson, practice: [] };
+  }
+
+  const raw = lesson.practice;
+
+  // 1️⃣ 构建题池
+  const pool = buildLanguageSafePracticePool(raw, langKey, 3);
+
+  // 2️⃣ 深拷贝
+  const cloned = pool.map(q => JSON.parse(JSON.stringify(q)));
+
+  // 3️⃣ 应用显示规则
+  applyChoiceDisplayToQuestionList(cloned, langKey);
+
+  // 4️⃣ 最终显示验证（轻量）
+  const final = cloned.filter(q => isQuestionDisplaySafe(q, langKey));
+
+  return {
+    ...lesson,
+    practice: final
+  };
+}
+
+/**
+ * Practice display patch restore
+ * 这里只清空 display 层，不碰原始字段
+ */
+function restoreHskChoiceOptionDisplayPatch() {
+  const qs = PracticeState.getQuestions();
+  if (!Array.isArray(qs)) return;
+
+  for (const q of qs) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      delete o.__displayText;
+      delete o.__displayLang;
+    }
+  }
+}
+
+/**
+ * Practice mount
+ * ✅ 只在 mount 时构建语言安全题池
+ */
+function mountPractice(container, opts) {
+  if (!container) return;
+
+  const langKey = practiceLangKeyFromUiLang(opts && opts.lang);
+  const lesson = opts && opts.lesson;
+
+  const lessonForPractice = lesson
+    ? buildLessonWithClonedPracticeForDisplay(lesson, langKey)
+    : lesson;
+
+  mountPracticeFromEngine(container, {
+    ...(opts || {}),
+    lesson: lessonForPractice,
+  });
+}
+
+/**
+ * 获取 rerender 时当前语言下的显示文本
+ */
+function refreshPracticeDisplayOnly(currentQuestions, langKey) {
+  if (!Array.isArray(currentQuestions)) return;
+
+  // 先清空旧 display patch
+  for (const q of currentQuestions) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      delete o.__displayText;
+      delete o.__displayLang;
+    }
+  }
+
+  // 再重新应用新的显示规则
+  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
+}
+
+/**
+ * Practice rerender
+ * ✅ 只重新应用显示逻辑
+ * ❌ 不再重建题池
+ * ❌ 不再重新过滤题目
+ */
+function rerenderPractice(container, lang) {
+  if (!container) return;
+
+  const langKey = practiceLangKeyFromUiLang(lang);
+
+  restoreHskChoiceOptionDisplayPatch();
+
+  const currentQuestions = PracticeState.getQuestions();
+  if (Array.isArray(currentQuestions) && currentQuestions.length) {
+   hydratePracticeDisplayBridge(currentQuestions, langKey);
+  }
+
+  rerenderPracticeFromEngine(container, lang);
+}
+
+/**
+ * ===============================
+ * Practice Display Bridge
+ * ===============================
+ * Purpose:
+ * Keep engine-compatible visible fields in sync with __displayText
+ * without destroying original semantic data too early.
+ */
+
+/** 把 __displayText 同步到当前 UI 对应字段，供 practiceRenderer 读取 */
+function syncPracticeOptionDisplayFields(options, langKey) {
+  if (!Array.isArray(options)) return;
+
+  const lk = normalizePracticeLangAliases(langKey);
+
+  for (const o of options) {
+    if (!o || typeof o !== "object") continue;
+
+    const text = _trimStr(o.__displayText);
+    if (!text) continue;
+
+    // 先清掉显示层语言字段，避免旧显示残留
+    delete o.kr;
+    delete o.ko;
+    delete o.en;
+    delete o.jp;
+    delete o.ja;
+    delete o.cn;
+    delete o.zh;
+
+    if (lk === "kr") {
+      o.kr = text;
+      o.ko = text;
+    } else if (lk === "jp") {
+      o.jp = text;
+      o.ja = text;
+    } else if (lk === "cn") {
+      o.cn = text;
+      o.zh = text;
+    } else {
+      o.en = text;
+    }
+  }
+}
+
+/** 把题目当前显示模式下的选项文本桥接到 renderer 可读字段 */
+function syncPracticeQuestionDisplayFields(question, langKey) {
+  if (!question || typeof question !== "object") return;
+  const opts = Array.isArray(question.options) ? question.options : [];
+  syncPracticeOptionDisplayFields(opts, langKey);
+}
+
+/** 批量桥接 */
+function syncPracticeQuestionListDisplayFields(questions, langKey) {
+  if (!Array.isArray(questions)) return;
+  for (const q of questions) {
+    syncPracticeQuestionDisplayFields(q, langKey);
+  }
+}
+
+/**
+ * 统一做 practice 显示刷新：
+ * 1. 重新应用 display mode
+ * 2. 同步 __displayText -> renderer 可见字段
+ */
+function refreshPracticeDisplayOnly(currentQuestions, langKey) {
+  if (!Array.isArray(currentQuestions)) return;
+
+  // 清旧 patch
+  for (const q of currentQuestions) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      delete o.__displayText;
+      delete o.__displayLang;
+    }
+  }
+
+  // 重新生成显示文本
+  applyChoiceDisplayToQuestionList(currentQuestions, langKey);
+
+  // 同步给 renderer
+  syncPracticeQuestionListDisplayFields(currentQuestions, langKey);
+}
+
+/**
+ * 如果 practice 引擎依赖 prompt 对象，也同步一个当前语言可读题干
+ * 这里只桥接显示，不改原题 schema 结构
+ */
+function syncPracticeStemDisplayField(question, langKey) {
+  if (!question || typeof question !== "object") return;
+
+  const stem = practiceStemDisplayText(question, langKey);
+  if (!stem) return;
+
+  const lk = normalizePracticeLangAliases(langKey);
+
+  if (!question.prompt || typeof question.prompt !== "object") {
+    question.prompt = {};
+  }
+
+  if (lk === "kr") {
+    question.prompt.kr = stem;
+    question.prompt.ko = stem;
+  } else if (lk === "jp") {
+    question.prompt.jp = stem;
+    question.prompt.ja = stem;
+  } else if (lk === "cn") {
+    question.prompt.cn = stem;
+    question.prompt.zh = stem;
+  } else {
+    question.prompt.en = stem;
+  }
+}
+
+function syncPracticeStemDisplayList(questions, langKey) {
+  if (!Array.isArray(questions)) return;
+  for (const q of questions) {
+    syncPracticeStemDisplayField(q, langKey);
+  }
+}
+
+/**
+ * 最终统一调用：
+ * 给 mount / rerender 使用
+ */
+function hydratePracticeDisplayBridge(questions, langKey) {
+  if (!Array.isArray(questions)) return;
+  refreshPracticeDisplayOnly(questions, langKey);
+  syncPracticeStemDisplayList(questions, langKey);
+}
+
 /**
  * ===============================
  * Dialogue / Grammar / Extension
