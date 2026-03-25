@@ -862,23 +862,6 @@ function buildExtensionHTML(lessonData) {
  * 4) rerender ≠ rebuild pool
  */
 
-/**
- * Decide display mode
- */
-function practiceChoiceDisplayKind(q) {
-  const st = String(q.subtype ?? q.subType ?? "").toLowerCase();
-  const listen = !!(q.audioUrl ?? q.listen ?? q.hasListen);
-
-  if (listen) return "zh_options";
-
-  if (st.includes("pinyin_to_vocab")) return "zh_options";
-  if (st.includes("meaning_to_vocab")) return "zh_options";
-
-  if (st.includes("meaning_choice")) return "meaning_ui";
-  if (st.includes("sentence") || st.includes("translation")) return "sentence_translation";
-
-  return "infer";
-}
 
 /**
  * 🔥 修复核心逻辑（你之前问题就在这里）
