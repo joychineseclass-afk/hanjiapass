@@ -1449,6 +1449,673 @@ async function loadLessons() {
 
 /**
  * ===============================
+ * Final Event / Mount Layer
+ * ===============================
+ */
+
+function bindEvents() {
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  // ===== Level change =====
+  el = $("hskLevel");
+  if (el) {
+    el.addEventListener(
+      "change",
+      async function (e) {
+        state.lv = Number(e.target.value || 1);
+        showListMode();
+        await loadLessons();
+        updateProgressBlock();
+      },
+      { signal }
+    );
+  }
+
+  // ===== Version change =====
+  el = $("hskVersion");
+  if (el) {
+    el.addEventListener(
+      "change",
+      async function (e) {
+        const ver =
+          (window.HSK_LOADER &&
+            typeof window.HSK_LOADER.normalizeVersion === "function"
+            ? window.HSK_LOADER.normalizeVersion(e.target.value)
+            : null) ||
+          (e.target.value === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+
+        state.version = ver;
+
+        try {
+          if (
+            window.HSK_LOADER &&
+            typeof window.HSK_LOADER.setVersion === "function"
+          ) {
+            window.HSK_LOADER.setVersion(ver);
+          }
+        } catch {}
+
+        await loadLessons();
+        updateProgressBlock();
+
+        if (state.current && state.current.lessonData) {
+          const { lessonNo, file } = state.current;
+          await openLesson({ lessonNo, file });
+        } else {
+          showListMode();
+        }
+      },
+      { signal }
+    );
+  }
+
+  // ===== Back to list =====
+  el = $("hskBackToList");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function () {
+        showListMode();
+        const wrap = $("hskLessonListWrap");
+        if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
+      },
+      { signal }
+    );
+  }
+
+  // ===== Review mode =====
+  function enterReviewMode(mode, lessonId = "", levelKey = "") {
+    const container = $("hskReviewContainer");
+    if (!container || !renderReviewMode) return;
+
+    const { session, questions } = prepareReviewSession({
+      mode,
+      lessonId,
+      levelKey,
+    });
+
+    if (!questions.length) {
+      container.innerHTML = `<div class="review-empty-state p-4"><p>${escapeHtml(
+        i18n.t("review_no_wrong_questions")
+      )}</p></div>`;
+      container.classList.remove("hidden");
+      return;
+    }
+
+    container.classList.remove("hidden");
+
+    renderReviewMode(container, session, {
+      lang: getLang(),
+      onFinish: ({ action }) => {
+        if (action === "back") {
+          container.classList.add("hidden");
+          container.innerHTML = "";
+        } else if (action === "continue") {
+          const next = prepareReviewSession({ mode, lessonId, levelKey });
+          if (!next.questions.length) {
+            container.innerHTML = `<div class="review-empty-state p-4"><p>${escapeHtml(
+              i18n.t("review_no_wrong_questions")
+            )}</p></div>`;
+            return;
+          }
+          renderReviewMode(container, next.session, {
+            lang: getLang(),
+            onFinish: ({ action: nextAction }) => {
+              if (nextAction === "back") {
+                container.classList.add("hidden");
+                container.innerHTML = "";
+              }
+            },
+          });
+        }
+      },
+    });
+
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  el = $("hskReviewLesson");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function () {
+        const lessonId =
+          (state.current &&
+            state.current.lessonData &&
+            state.current.lessonData.id) ||
+          (state.current
+            ? getCourseId() + "_lesson" + state.current.lessonNo
+            : "");
+
+        if (!lessonId) {
+          const stats =
+            (PROGRESS_SELECTORS &&
+            typeof PROGRESS_SELECTORS.getCourseStats === "function"
+              ? PROGRESS_SELECTORS.getCourseStats(
+                  getCourseId(),
+                  (state.lessons && state.lessons.length) || 0
+                )
+              : null) || {};
+          const lastNo = stats.lastLessonNo || 1;
+          enterReviewMode("lesson", `${getCourseId()}_lesson${lastNo}`);
+        } else {
+          enterReviewMode("lesson", lessonId);
+        }
+      },
+      { signal }
+    );
+  }
+
+  el = $("hskReviewLevel");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function () {
+        enterReviewMode("level", "", getCourseId());
+      },
+      { signal }
+    );
+  }
+
+  el = $("hskReviewAll");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function () {
+        enterReviewMode("all");
+      },
+      { signal }
+    );
+  }
+
+  el = $("hskReviewBtn");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function () {
+        const lessonId =
+          (state.current &&
+            state.current.lessonData &&
+            state.current.lessonData.id) ||
+          (state.current
+            ? getCourseId() + "_lesson" + state.current.lessonNo
+            : "");
+        enterReviewMode("lesson", lessonId);
+      },
+      { signal }
+    );
+  }
+
+  // ===== Lesson click =====
+  el = $("hskLessonList");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function (e) {
+        const btn = e.target.closest('button[data-open-lesson="1"]');
+        if (!btn) return;
+
+        const lessonNo = Number(btn.dataset.lessonNo || 1);
+        const file = btn.dataset.file || "";
+
+        openLesson({ lessonNo, file });
+      },
+      { signal }
+    );
+  }
+
+  // ===== Audio click =====
+  document.addEventListener(
+    "click",
+    (e) => {
+      const target = e.target.closest(
+        "[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension'], [data-speak-text][data-speak-kind='grammar'], [data-speak-text][data-speak-kind='practice']"
+      );
+      if (!target) return;
+
+      const text = (target.dataset && target.dataset.speakText || "").trim();
+      if (
+        !text ||
+        !(
+          AUDIO_ENGINE &&
+          typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+          AUDIO_ENGINE.isSpeechSupported()
+        )
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      AUDIO_ENGINE.stop();
+      document
+        .querySelectorAll(".is-speaking")
+        .forEach((x) => x.classList.remove("is-speaking"));
+
+      const lineEl =
+        target.closest(".lesson-dialogue-line") ||
+        target.closest(".lesson-extension-card") ||
+        target.closest(".lesson-extension-group-card") ||
+        target.closest(".lesson-grammar-card") ||
+        target.closest(".review-grammar-row") ||
+        target.closest(".lesson-practice-card") ||
+        target.closest(".review-question-card") ||
+        target.closest(".lesson-practice-option");
+
+      if (lineEl) lineEl.classList.add("is-speaking");
+
+      AUDIO_ENGINE.playText(text, {
+        lang: "zh-CN",
+        onEnd: function () {
+          if (lineEl) lineEl.classList.remove("is-speaking");
+        },
+        onError: function () {
+          if (lineEl) lineEl.classList.remove("is-speaking");
+        },
+      });
+    },
+    { signal }
+  );
+
+  // ===== Tabs =====
+  el = $("hskStudyTabs");
+  if (el) {
+    el.addEventListener(
+      "click",
+      function (e) {
+        const btn = e.target.closest("button[data-tab]");
+        if (!btn) return;
+
+        state.tab = btn.dataset.tab;
+        updateTabsUI();
+
+        const step = state.tab === "ai" ? "aiPractice" : state.tab;
+
+        if (state.current && state.current.lessonData) {
+          const courseId = getCourseId();
+          const lessonId =
+            state.current.lessonData.id ||
+            courseId + "_lesson" + state.current.lessonNo;
+
+          if (
+            PROGRESS_ENGINE &&
+            typeof PROGRESS_ENGINE.markStepCompleted === "function"
+          ) {
+            PROGRESS_ENGINE.markStepCompleted({
+              courseId,
+              lessonId,
+              step,
+            });
+          }
+
+          updateProgressBlock();
+        }
+
+        // ⭐ 关键：切到 practice tab 时只 rerender，不重建
+        if (state.tab === "practice") {
+          const practiceEl = $("hskPracticeBody");
+          if (practiceEl) {
+            try {
+              rerenderPractice(practiceEl, getLang());
+            } catch (err) {
+              console.warn("[HSK] practice tab rerender failed:", err);
+            }
+          }
+        }
+      },
+      { signal }
+    );
+  }
+
+  // ===== Search =====
+  el = $("hskSearch");
+  if (el) {
+    el.addEventListener(
+      "input",
+      function () {
+        const q = String(($("hskSearch") && $("hskSearch").value) || "")
+          .trim()
+          .toLowerCase();
+
+        const lang = getLang();
+        const listEl = $("hskLessonList");
+        if (!listEl) return;
+
+        const filtered = !q
+          ? state.lessons
+          : state.lessons.filter((it) => {
+              const title = JSON.stringify(
+                (it && it.title) || (it && it.name) || ""
+              ).toLowerCase();
+              const pinyin = String(
+                (it && it.pinyinTitle) || (it && it.pinyin) || ""
+              ).toLowerCase();
+              const file = String((it && it.file) || "").toLowerCase();
+              return title.includes(q) || pinyin.includes(q) || file.includes(q);
+            });
+
+        const total = (state.lessons && state.lessons.length) || 0;
+        const stats =
+          (PROGRESS_SELECTORS &&
+          typeof PROGRESS_SELECTORS.getCourseStats === "function"
+            ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total)
+            : null) || {};
+
+        renderLessonList(listEl, filtered, {
+          lang,
+          currentLessonNo: stats.lastLessonNo || 0,
+        });
+      },
+      { signal }
+    );
+  }
+
+  // ===== Language changed =====
+  window.addEventListener(
+    "joy:langChanged",
+    (e) => {
+      const newLang = (e && e.detail && e.detail.lang) || getLang();
+
+      if (!isHSKPageActive()) return;
+
+      refreshBlueprintDisplayTitles(state.lessons, newLang);
+
+      if (
+        state.current &&
+        state.current.lessonData &&
+        state.current.lessonData.blueprintTitle != null
+      ) {
+        state.current.lessonData.displayTitle = resolveBlueprintTitle(
+          state.current.lessonData.blueprintTitle,
+          newLang
+        );
+      }
+
+      try {
+        i18n.apply(document);
+      } catch {}
+
+      setSubTitle();
+      rerenderHSKFromState();
+
+      // ⭐ 关键：单独刷新 practice 显示层，不重建池
+      const practiceEl = $("hskPracticeBody");
+      if (practiceEl) {
+        try {
+          rerenderPractice(practiceEl, newLang);
+        } catch (err) {
+          console.warn("[HSK] practice rerender after lang change failed:", err);
+        }
+      }
+    },
+    { signal }
+  );
+
+  // ===== i18n bus =====
+  try {
+    if (i18n && typeof i18n.on === "function") {
+      i18n.on("change", function () {
+        window.dispatchEvent(
+          new CustomEvent("joy:langChanged", {
+            detail: { lang: i18n?.getLang?.() },
+          })
+        );
+      });
+    }
+  } catch {}
+}
+
+export async function mount() {
+  const navRoot = $("siteNav");
+  const app = $("app");
+
+  if (!navRoot || !app) {
+    console.error("HSK Page Error: missing #siteNav or #app");
+    return false;
+  }
+
+  await ensureHSKDeps();
+
+  const scope = `hsk${state.lv}`;
+  loadGlossary("kr", scope).catch(() => {});
+  loadGlossary("en", scope).catch(() => {});
+  loadGlossary("jp", scope).catch(() => {});
+
+  navRoot.dataset.mode = "mini";
+  mountNavBar(navRoot);
+
+  app.innerHTML = getHSKLayoutHTML();
+
+  const savedVer = localStorage.getItem("hsk_vocab_version") || state.version;
+  state.version =
+    (window.HSK_LOADER &&
+      typeof window.HSK_LOADER.normalizeVersion === "function"
+      ? window.HSK_LOADER.normalizeVersion(savedVer)
+      : null) ||
+    (savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0");
+
+  if ($("hskLevel")) $("hskLevel").value = String(state.lv);
+  if ($("hskVersion")) $("hskVersion").value = String(state.version);
+
+  try {
+    i18n.apply(document);
+  } catch {}
+
+  bindWordCardActions();
+  bindEvents();
+
+  await loadLessons();
+  showListMode();
+
+  return true;
+}
+
+/**
+ * ===============================
+ * Final Helpers / Exports
+ * ===============================
+ * Keep this tail simple.
+ * No extra fallback logic here.
+ */
+
+function restoreHskChoiceOptionDisplayPatch() {
+  const qs = PracticeState.getQuestions();
+  if (!Array.isArray(qs)) return;
+
+  for (const q of qs) {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    for (const o of opts) {
+      if (!o || typeof o !== "object") continue;
+      delete o.__displayText;
+      delete o.__displayLang;
+    }
+  }
+}
+
+function updateTabsLabels() {
+  const tabs = [
+    ["hskTabWords", "hsk.tab.words"],
+    ["hskTabDialogue", "hsk.tab.dialogue"],
+    ["hskTabGrammar", "hsk.tab.grammar"],
+    ["hskTabExtension", "hsk.tab.extension"],
+    ["hskTabPractice", "hsk.tab.practice"],
+    ["hskTabAI", "hsk.tab.ai"],
+    ["hskTabReview", "hsk.tab.review"],
+  ];
+
+  tabs.forEach(([id, key]) => {
+    const btn = $(id);
+    if (!btn) return;
+    const span = btn.querySelector("span") || btn;
+    span.textContent = i18n.t(key);
+  });
+
+  const reviewBtn = $("hskReviewBtn");
+  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start");
+
+  const reviewLabels = [
+    ["hskReviewEntry", "span", "hsk.review_mode"],
+    ["hskReviewLesson", null, "hsk.review_this_lesson"],
+    ["hskReviewLevel", null, "hsk.review_this_level"],
+    ["hskReviewAll", null, "hsk.review_all_wrong"],
+  ];
+
+  reviewLabels.forEach(([id, child, key]) => {
+    const node = $(id);
+    if (!node) return;
+    const target = child ? node.querySelector(child) : node;
+    if (target) target.textContent = i18n.t(key);
+  });
+}
+
+function updateProgressBlock() {
+  const block = $("hskProgressBlock");
+  if (!block) return;
+
+  const courseId = getCourseId();
+  const total = (state.lessons && state.lessons.length) || 0;
+
+  const stats =
+    (PROGRESS_SELECTORS &&
+      typeof PROGRESS_SELECTORS.getCourseStats === "function"
+      ? PROGRESS_SELECTORS.getCourseStats(courseId, total)
+      : null) || {};
+
+  const {
+    completedLessonCount = 0,
+    dueReviewCount = 0,
+    lastLessonNo = 0,
+    lastActivityAt = 0,
+  } = stats;
+
+  const lessonUnit = i18n.t("hsk.meta.lesson_unit");
+  const wordUnit = i18n.t("hsk.meta.word_unit");
+
+  const chips = [];
+
+  chips.push(
+    total > 0
+      ? `${i18n.t("hsk.meta.completed")} ${completedLessonCount} / ${total} ${lessonUnit}`
+      : "—"
+  );
+
+  if (lastLessonNo > 0) {
+    chips.push(`${i18n.t("hsk.meta.current_lesson")} ${lastLessonNo} ${lessonUnit}`);
+  }
+
+  if (dueReviewCount > 0) {
+    chips.push(`${i18n.t("hsk.meta.review_words")} ${dueReviewCount} ${wordUnit}`);
+  }
+
+  if (lastActivityAt > 0) {
+    const d = new Date(lastActivityAt);
+    const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+    chips.push(`${i18n.t("hsk.meta.last_study")} ${dateStr}`);
+  }
+
+  block.innerHTML = chips
+    .map((text) => `<span class="hsk-meta-chip">${escapeHtml(text)}</span>`)
+    .join("");
+}
+
+function setError(msg = "") {
+  const err = $("hskError");
+  if (!err) return;
+
+  if (!msg) {
+    err.classList.add("hidden");
+    err.textContent = "";
+    return;
+  }
+
+  err.classList.remove("hidden");
+  err.textContent = msg;
+}
+
+function setSubTitle() {
+  const sub = $("hskSubTitle");
+  if (!sub) return;
+  sub.textContent = `HSK ${state.lv} · ${state.version}`;
+}
+
+function showStudyMode(titleText = "") {
+  const listWrap = $("hskLessonListWrap");
+  const studyBar = $("hskStudyBar");
+  const studyPanels = $("hskStudyPanels");
+  const titleEl = $("hskStudyTitle");
+
+  if (listWrap) listWrap.classList.add("hidden");
+  if (studyBar) studyBar.classList.remove("hidden");
+  if (studyPanels) studyPanels.classList.remove("hidden");
+  if (titleEl) titleEl.textContent = titleText || "";
+}
+
+function showListMode() {
+  const studyBar = $("hskStudyBar");
+  const studyPanels = $("hskStudyPanels");
+  const listWrap = $("hskLessonListWrap");
+
+  if (studyBar) studyBar.classList.add("hidden");
+  if (studyPanels) studyPanels.classList.add("hidden");
+  if (listWrap) listWrap.classList.remove("hidden");
+
+  const ids = [
+    "hskPanelWords",
+    "hskDialogueBody",
+    "hskGrammarBody",
+    "hskExtensionBody",
+    "hskPracticeBody",
+    "hskAIResult",
+    "hskReviewBody",
+  ];
+
+  ids.forEach((id) => {
+    const node = $(id);
+    if (node) node.innerHTML = "";
+  });
+
+  const sceneSection = $("hskSceneSection");
+  if (sceneSection) {
+    sceneSection.innerHTML = "";
+    sceneSection.classList.add("hidden");
+  }
+
+  state.current = null;
+  state.tab = "words";
+  updateTabsUI();
+}
+
+function updateTabsUI() {
+  const ids = [
+    ["words", "hskTabWords", "hskPanelWords"],
+    ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
+    ["grammar", "hskTabGrammar", "hskPanelGrammar"],
+    ["extension", "hskTabExtension", "hskPanelExtension"],
+    ["practice", "hskTabPractice", "hskPanelPractice"],
+    ["ai", "hskTabAI", "hskPanelAI"],
+    ["review", "hskTabReview", "hskPanelReview"],
+  ];
+
+  ids.forEach(([tab, btnId, panelId]) => {
+    const btn = $(btnId);
+    const panel = $(panelId);
+    const active = state.tab === tab;
+
+    if (btn) {
+      btn.classList.toggle("active", active);
+      btn.style.background = active ? "rgba(34,197,94,0.10)" : "";
+      btn.style.borderColor = active ? "rgba(34,197,94,0.55)" : "";
+    }
+
+    if (panel) {
+      panel.classList.toggle("hidden", !active);
+    }
+  });
+}
+/**
+ * ===============================
  * Lesson Peripheral Helpers
  * ===============================
  * Cover / Scene / Progress / Review compatibility
