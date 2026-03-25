@@ -1920,20 +1920,6 @@ export async function mount() {
  * No extra fallback logic here.
  */
 
-function restoreHskChoiceOptionDisplayPatch() {
-  const qs = PracticeState.getQuestions();
-  if (!Array.isArray(qs)) return;
-
-  for (const q of qs) {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    for (const o of opts) {
-      if (!o || typeof o !== "object") continue;
-      delete o.__displayText;
-      delete o.__displayLang;
-    }
-  }
-}
-
 function updateTabsLabels() {
   const tabs = [
     ["hskTabWords", "hsk.tab.words"],
