@@ -1933,64 +1933,7 @@ function buildGrammarHTML(lessonData) {
   return `${hero}<section class="lesson-grammar-list">${cards}</section>`;
 }
 
-/** Extension explanation：只读 explain / note */
-function getExtensionExplanation(item, lang) {
-  if (!item || typeof item !== "object") return "";
 
-  const l = normalizePracticeLangAliases(lang || getLang());
-  const explain = item.explain ?? item.explanation;
-
-  if (explain && typeof explain === "object") {
-    if (l === "kr") return _trimStr(explain.kr) || _trimStr(explain.ko) || "";
-    if (l === "jp") return _trimStr(explain.jp) || _trimStr(explain.ja) || "";
-    if (l === "cn") return _trimStr(explain.cn) || _trimStr(explain.zh) || "";
-    return _trimStr(explain.en) || "";
-  }
-
-  if (l === "kr") {
-    const flat =
-      _trimStr(item.explainKr) ||
-      _trimStr(item.explanationKr) ||
-      _trimStr(item.explain_kr) ||
-      _trimStr(item.explanation_kr);
-    if (flat) return flat;
-  }
-
-  if (l === "jp") {
-    const flat =
-      _trimStr(item.explainJp) ||
-      _trimStr(item.explanationJp) ||
-      _trimStr(item.explain_jp) ||
-      _trimStr(item.explanation_jp);
-    if (flat) return flat;
-  }
-
-  if (l === "cn") {
-    const flat =
-      _trimStr(item.explainCn) ||
-      _trimStr(item.explanationCn) ||
-      _trimStr(item.explain_zh) ||
-      _trimStr(item.explanation_zh);
-    if (flat) return flat;
-  }
-
-  if (l === "en") {
-    const flat =
-      _trimStr(item.explainEn) ||
-      _trimStr(item.explanationEn) ||
-      _trimStr(item.explain_en) ||
-      _trimStr(item.explanation_en);
-    if (flat) return flat;
-  }
-
-  const note = item.note;
-  if (note && typeof note === "object") {
-    return _getStrictLangText(note, l) || "";
-  }
-  if (typeof note === "string" && note.trim()) return _trimStr(note);
-
-  return "";
-}
 
 /** Extension 主译文：当前语言 -> English -> Chinese，不乱跳 */
 function getExtensionMeaning(item, lang) {
