@@ -1935,63 +1935,6 @@ function buildGrammarHTML(lessonData) {
 
 
 
-/** Extension 主译文：当前语言 -> English -> Chinese，不乱跳 */
-function getExtensionMeaning(item, lang) {
-  if (!item || typeof item !== "object") return "";
-
-  const l = normalizePracticeLangAliases(lang || getLang());
-
-  if (l === "kr") {
-    return (
-      _trimStr(item.kr) ||
-      _trimStr(item.ko) ||
-      _trimStr(item.translationKr) ||
-      _trimStr(item.translation_kr) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      ""
-    );
-  }
-
-  if (l === "jp") {
-    return (
-      _trimStr(item.jp) ||
-      _trimStr(item.ja) ||
-      _trimStr(item.translationJp) ||
-      _trimStr(item.translation_jp) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      ""
-    );
-  }
-
-  if (l === "cn") {
-    return (
-      _trimStr(item.cn) ||
-      _trimStr(item.zh) ||
-      _trimStr(item.en) ||
-      _trimStr(item.translationEn) ||
-      _trimStr(item.translation_en) ||
-      ""
-    );
-  }
-
-  return (
-    _trimStr(item.en) ||
-    _trimStr(item.translationEn) ||
-    _trimStr(item.translation_en) ||
-    _trimStr(item.cn) ||
-    _trimStr(item.zh) ||
-    ""
-  );
-}
-
 /** Extension 渲染 */
 function buildExtensionHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
