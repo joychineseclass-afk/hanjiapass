@@ -2200,34 +2200,6 @@ function enterReviewMode(mode, lessonId = "", levelKey = "") {
   });
 }
 
-/**
- * ===============================
- * Small Utility Tail
- * ===============================
- */
-
-function _optionHasLetterKey(o) {
-  return !!(o && typeof o === "object" && _trimStr(o.key));
-}
-
-function _optionsLookLikeLetterKeyedMeanings(opts) {
-  if (!Array.isArray(opts) || !opts.length) return false;
-  if (!opts.every((x) => x && typeof x === "object")) return false;
-  if (!opts.some((o) => _optionHasLetterKey(o))) return false;
-
-  return opts.some((o) => {
-    const z = _trimStr(o.zh ?? o.cn);
-    return (
-      z &&
-      _HANZI_RE.test(z) &&
-      (_trimStr(o.kr) ||
-        _trimStr(o.ko) ||
-        _trimStr(o.en) ||
-        _trimStr(o.jp) ||
-        _trimStr(o.ja))
-    );
-  });
-}
 
 /**
  * ===============================
