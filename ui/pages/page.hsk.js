@@ -1338,7 +1338,7 @@ function applyVocabDistribution(lessons, distribution) {
     };
   });
 }
-第9段：loadLessons（完整版）
+
 /**
  * ===============================
  * Lesson List Loading
