@@ -1473,12 +1473,15 @@ async function ensureHskLessonVocabTargetsByNo() {
       const no = Number(it?.lessonNo ?? it?.no ?? 0) || 0;
       if (!no) continue;
       const targets = Array.isArray(it?.vocabTargets) ? it.vocabTargets : [];
-      const set = new Set();
+      const ordered = [];
+      const seen = new Set();
       for (const t of targets) {
         const s = String(t || "").trim();
-        if (s) set.add(s);
+        if (!s || seen.has(s)) continue;
+        seen.add(s);
+        ordered.push(s);
       }
-      map.set(no, set);
+      map.set(no, ordered);
     }
   } catch {
     /* empty map */
@@ -1525,7 +1528,7 @@ async function collectPriorRegularLessonHanziSet(lessonNo, targetsByNo) {
     const ld = item.res && item.res.lesson;
     if (!ld || String(ld.type || "") === "review") continue;
     const pNo = Number(ld.lessonNo ?? item.n) || item.n;
-    const allow = tMap.get(pNo) || new Set();
+    const allow = tMap.get(pNo) || [];
     for (const h of collectRegularLessonPanelHanziKeys(ld, allow)) set.add(h);
   }
   return set;
@@ -1596,7 +1599,7 @@ async function openLesson({ lessonNo, file } = {}) {
     });
   } else {
     const targetsByNo = await ensureHskLessonVocabTargetsByNo();
-    const lessonSplitAllowlist = targetsByNo.get(no) || new Set();
+    const lessonSplitAllowlist = targetsByNo.get(no) || [];
     const priorHanzi = await collectPriorRegularLessonHanziSet(no, targetsByNo);
     panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, priorHanzi, {
       lessonSplitAllowlist,
