@@ -581,6 +581,11 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   const rows = list.map((it) => {
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
+    console.log("[HSK-TITLE-CHECK-20260326]", {
+      lessonNo: it.lessonNo || it.no,
+      displayTitle: it.displayTitle,
+      title: it.title
+    });
     const isRegularL1toL20 =
       String(it?.type || "lesson") !== "review" && lessonNo >= 1 && lessonNo <= 20;
     const titleDisplay = isRegularL1toL20
