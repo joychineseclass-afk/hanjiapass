@@ -1451,7 +1451,7 @@ async function loadLessons() {
       }
     }
 
-    console.log("[DISPLAYTITLE-FINAL]", result.slice(0, 3).map((x) => ({
+    console.log("[DISPLAYTITLE-FIXED]", result.slice(0, 3).map((x) => ({
       lessonNo: x.lessonNo,
       displayTitle: x.displayTitle,
       title: x.title

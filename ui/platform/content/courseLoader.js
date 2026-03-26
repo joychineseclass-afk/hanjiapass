@@ -119,12 +119,31 @@ export async function loadCourseIndex({ courseType, level } = {}) {
       const s = str(displayTitleRaw);
       displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
     }
+    const titleAsDisplay =
+      title && typeof title === "object"
+        ? {
+            zh: str(title.zh ?? title.cn),
+            cn: str(title.cn ?? title.zh),
+            kr: str(title.kr ?? title.ko),
+            en: str(title.en),
+            jp: str(title.jp ?? title.ja),
+          }
+        : null;
+    const noNum = Number(no) || 0;
+    const isRegularL1toL20 =
+      String(it?.type || "lesson") !== "review" && noNum >= 1 && noNum <= 20;
+    const finalDisplayTitle =
+      displayTitle && typeof displayTitle === "object"
+        ? displayTitle
+        : titleAsDisplay && typeof titleAsDisplay === "object"
+        ? titleAsDisplay
+        : null;
     return {
       lessonNo: no,
       id: str(it?.id) || `${ct}_${lv}_lesson${no}`,
       file: str(it?.file) || `lesson${no}.json`,
       title,
-      displayTitle: displayTitle ?? it?.displayTitle ?? null,
+      displayTitle: isRegularL1toL20 ? (finalDisplayTitle || { zh: "", cn: "", kr: "", en: "", jp: "" }) : finalDisplayTitle,
       type: str(it?.type) || "lesson",
     };
   };
