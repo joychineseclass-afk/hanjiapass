@@ -1141,6 +1141,18 @@ function resolveBlueprintTitle(titleObj, lang) {
   return typeof v === "string" && v.trim() ? v.trim() : "";
 }
 
+function getCatalogTitleStrict(lesson, lang) {
+  if (!lesson) return "";
+  const no = getLessonNumber(lesson);
+  const isRegularL1toL20 =
+    String(lesson.type || "lesson") !== "review" && no >= 1 && no <= 20;
+  if (!isRegularL1toL20) return getLessonDisplayTitle(lesson, lang);
+  const obj = lesson.displayTitle;
+  if (typeof obj === "string") return obj.trim();
+  if (obj && typeof obj === "object") return pick(obj, { strict: true, lang: lang || getLang() }) || "";
+  return "";
+}
+
 function refreshBlueprintDisplayTitles(lessons, lang) {
   if (!Array.isArray(lessons)) return;
   const l = lang || getLang();
@@ -1185,6 +1197,9 @@ function applyVocabDistributionTitles(lessons, lessonThemes) {
 
   return lessons.map((lesson) => {
     const no = getLessonNumber(lesson);
+    const isRegularL1toL20 =
+      String(lesson?.type || "lesson") !== "review" && no >= 1 && no <= 20;
+    if (isRegularL1toL20) return lesson;
     const theme = no ? (lessonThemes[String(no)] || lessonThemes[no]) : null;
     if (!theme || typeof theme !== "string") return lesson;
 
@@ -1621,7 +1636,7 @@ async function openLesson({ lessonNo, file } = {}) {
     lessonWords: panelWords,
   };
 
-  const titleFromCatalog = listEntry ? getLessonDisplayTitle(listEntry, lang) : "";
+  const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
   const titleText = titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
 
   showStudyMode(titleText);
