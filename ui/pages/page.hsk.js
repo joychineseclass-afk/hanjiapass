@@ -55,6 +55,8 @@ const state = {
   tab: "words",
   searchKeyword: "",
   reviewMode: null,
+  /** Map<lessonNo, Set<string>> 来自 lessons.json 的 vocabTargets，仅用于普通新课对话受控拆词 */
+  hskLessonVocabTargetsByNo: null,
 };
 
 let el;
@@ -1334,6 +1336,7 @@ function applyVocabDistribution(lessons, distribution) {
 async function loadLessons() {
   setError("");
   setSubTitle();
+  state.hskLessonVocabTargetsByNo = null;
 
   const lang = getLang();
   const listEl = $("hskLessonList");
@@ -1450,7 +1453,41 @@ async function loadLessons() {
   }
 }
 
-async function collectPriorRegularLessonHanziSet(lessonNo) {
+async function ensureHskLessonVocabTargetsByNo() {
+  if (state.hskLessonVocabTargetsByNo instanceof Map) {
+    return state.hskLessonVocabTargetsByNo;
+  }
+  const map = new Map();
+  const base = String(window.__APP_BASE__ || "").replace(/\/+$/, "");
+  const root = base ? base + "/" : "/";
+  const url = `${root}data/courses/${state.version}/hsk${state.lv}/lessons.json`;
+  try {
+    const res = await fetch(url, { cache: "default" });
+    if (!res.ok) {
+      state.hskLessonVocabTargetsByNo = map;
+      return map;
+    }
+    const data = await res.json();
+    const list = Array.isArray(data?.lessons) ? data.lessons : [];
+    for (const it of list) {
+      const no = Number(it?.lessonNo ?? it?.no ?? 0) || 0;
+      if (!no) continue;
+      const targets = Array.isArray(it?.vocabTargets) ? it.vocabTargets : [];
+      const set = new Set();
+      for (const t of targets) {
+        const s = String(t || "").trim();
+        if (s) set.add(s);
+      }
+      map.set(no, set);
+    }
+  } catch {
+    /* empty map */
+  }
+  state.hskLessonVocabTargetsByNo = map;
+  return map;
+}
+
+async function collectPriorRegularLessonHanziSet(lessonNo, targetsByNo) {
   const set = new Set();
   const n0 = Number(lessonNo) || 0;
   if (n0 <= 1) return set;
@@ -1458,6 +1495,7 @@ async function collectPriorRegularLessonHanziSet(lessonNo) {
 
   const ct = state.version;
   const lv = `hsk${state.lv}`;
+  const tMap = targetsByNo instanceof Map ? targetsByNo : new Map();
 
   const loads = [];
   for (let n = 1; n < n0; n++) {
@@ -1486,7 +1524,9 @@ async function collectPriorRegularLessonHanziSet(lessonNo) {
     }
     const ld = item.res && item.res.lesson;
     if (!ld || String(ld.type || "") === "review") continue;
-    for (const h of collectRegularLessonPanelHanziKeys(ld)) set.add(h);
+    const pNo = Number(ld.lessonNo ?? item.n) || item.n;
+    const allow = tMap.get(pNo) || new Set();
+    for (const h of collectRegularLessonPanelHanziKeys(ld, allow)) set.add(h);
   }
   return set;
 }
@@ -1555,8 +1595,12 @@ async function openLesson({ lessonNo, file } = {}) {
       upstreamField,
     });
   } else {
-    const priorHanzi = await collectPriorRegularLessonHanziSet(no);
-    panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, priorHanzi);
+    const targetsByNo = await ensureHskLessonVocabTargetsByNo();
+    const lessonSplitAllowlist = targetsByNo.get(no) || new Set();
+    const priorHanzi = await collectPriorRegularLessonHanziSet(no, targetsByNo);
+    panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, priorHanzi, {
+      lessonSplitAllowlist,
+    });
   }
 
   state.tab = "words";

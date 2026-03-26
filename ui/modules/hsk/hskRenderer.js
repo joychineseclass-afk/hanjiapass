@@ -169,7 +169,54 @@ function collectDialogueTeachingUnitsInOrder(lessonData) {
 }
 
 /**
- * 普通新课：新单词区仅来自 lesson 定稿 dialogue；用 lesson.vocab 仅做拼音/释义 enrich，不扩大词条集合。
+ * 在「对话教学单位」基础上做受控拆分：
+ * - 整单位始终先保留；仅当该单位本身也是本课 vocabTargets 中的「标准教学目标词」时，才允许从中拆出子项。
+ * - 子项仍须 ∈ vocabTargets；单字仅拆明确列入的汉字；多字仅拆白名单中的真子串（长度≥2）。
+ * - 若对话单位未列入本课目标（仅偶然出现在句中），不拆，避免把白名单当成逐字开关。
+ */
+function expandDialogueUnitsWithControlledSplit(dialUnits, lessonSplitAllowlist) {
+  if (!lessonSplitAllowlist || lessonSplitAllowlist.size === 0) {
+    return dialUnits.slice();
+  }
+  const allow = lessonSplitAllowlist;
+  const allowArr = [...allow].filter((t) => typeof t === "string" && String(t).trim());
+  const out = [];
+  const seen = new Set();
+
+  for (const u of dialUnits) {
+    const h = wordKey(u);
+    if (!h) continue;
+    if (!seen.has(h)) {
+      seen.add(h);
+      out.push({ hanzi: h });
+    }
+    if (h.length < 2) continue;
+
+    if (!allow.has(h)) continue;
+
+    const hanChars = Array.from(h).filter((ch) => /[\u4e00-\u9fff]/.test(ch));
+    for (const ch of hanChars) {
+      if (!allow.has(ch)) continue;
+      if (seen.has(ch)) continue;
+      seen.add(ch);
+      out.push({ hanzi: ch });
+    }
+
+    for (const term of allowArr) {
+      if (term.length < 2) continue;
+      if (term === h) continue;
+      if (!h.includes(term)) continue;
+      if (seen.has(term)) continue;
+      seen.add(term);
+      out.push({ hanzi: term });
+    }
+  }
+  return out;
+}
+
+/**
+ * 普通新课：新单词区仅来自 lesson 定稿 dialogue；用 lesson.vocab 仅做拼音/释义 enrich。
+ * 可选 lessonSplitAllowlist：本课 lessons.json vocabTargets；仅当「对话整单位」本身也在该集合中时，才允许向外出单字/子串卡（非逐字开关）。
  * @param {object} lessonData - 归一化后的 lesson
  * @param {Array} lessonVocabForEnrich - 通常为 startLesson 的 vocab 列表
  * @param {Set<string>} priorHanziSet - 前几课已学汉字（同规则派生）
@@ -180,11 +227,12 @@ export function deriveRegularLessonPanelWordList(
   priorHanziSet,
   opts = {}
 ) {
-  const { diagnosticLog = true } = opts;
+  const { diagnosticLog = true, lessonSplitAllowlist = null } = opts;
   const prior = priorHanziSet instanceof Set ? priorHanziSet : new Set();
   const enrich = Array.isArray(lessonVocabForEnrich) ? lessonVocabForEnrich : [];
 
-  const dialUnits = collectDialogueTeachingUnitsInOrder(lessonData);
+  const baseUnits = collectDialogueTeachingUnitsInOrder(lessonData);
+  const dialUnits = expandDialogueUnitsWithControlledSplit(baseUnits, lessonSplitAllowlist);
   const dialogueZhs = collectDialogueHanziSet(lessonData);
   const enriched = enrichPanelFromLessonVocab(dialUnits, enrich);
 
@@ -204,11 +252,13 @@ export function deriveRegularLessonPanelWordList(
       "[HSK-WORD-SOURCE]",
       JSON.stringify({
         phase: "summary",
-        baseLayerUsed: "lesson_dialogue_only",
+        baseLayerUsed: "lesson_dialogue_plus_controlled_split",
         lessonNo: Number(lessonData?.lessonNo) || 0,
         counts: {
           panelWordsFinal: out.length,
-          fromDialogueTeachingUnits: dialUnits.length,
+          dialogueTeachingUnits: baseUnits.length,
+          afterControlledSplit: dialUnits.length,
+          splitAllowlistSize: lessonSplitAllowlist?.size ?? 0,
           priorHanziExcluded: prior.size,
         },
       })
@@ -219,10 +269,16 @@ export function deriveRegularLessonPanelWordList(
 }
 
 /** 用于前几课「已学」集合：与 panel 派生规则一致（不含 prior 互斥） */
-export function collectRegularLessonPanelHanziKeys(lessonData) {
-  const list = deriveRegularLessonPanelWordList(lessonData, [], new Set(), {
-    diagnosticLog: false,
-  });
+export function collectRegularLessonPanelHanziKeys(lessonData, lessonSplitAllowlist) {
+  const list = deriveRegularLessonPanelWordList(
+    lessonData,
+    [],
+    new Set(),
+    {
+      diagnosticLog: false,
+      lessonSplitAllowlist: lessonSplitAllowlist || null,
+    }
+  );
   return new Set(list.map((w) => wordKey(w)).filter(Boolean));
 }
 
