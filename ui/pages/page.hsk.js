@@ -1614,14 +1614,8 @@ async function openLesson({ lessonNo, file } = {}) {
     lessonWords: panelWords,
   };
 
-  const titleText = listEntry
-    ? getLessonDisplayTitle(listEntry, lang)
-    : typeof lessonData.title === "object"
-    ? lessonData.title?.[lang] ||
-      lessonData.title?.zh ||
-      lessonData.title?.en ||
-      ""
-    : String(lessonData.title || "");
+  const titleFromCatalog = listEntry ? getLessonDisplayTitle(listEntry, lang) : "";
+  const titleText = titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
 
   showStudyMode(titleText);
   updateLessonContextWindow(no);
