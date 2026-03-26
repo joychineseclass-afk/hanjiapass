@@ -113,7 +113,9 @@ export async function loadCourseIndex({ courseType, level } = {}) {
   const normLessonItem = (it) => {
     const no = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
     const titleRaw = it.title;
+    const displayTitleRaw = it.displayTitle;
     let title = {};
+    let displayTitle = undefined;
     if (typeof titleRaw === "object") {
       title = { zh: str(titleRaw.zh ?? titleRaw.cn), kr: str(titleRaw.kr ?? titleRaw.ko), en: str(titleRaw.en), jp: str(titleRaw.jp ?? titleRaw.ja), cn: str(titleRaw.cn ?? titleRaw.zh) };
     } else {
@@ -123,11 +125,24 @@ export async function loadCourseIndex({ courseType, level } = {}) {
       const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(it.subtitle ?? "");
       title = { zh, kr, en: "" };
     }
+    if (typeof displayTitleRaw === "object" && displayTitleRaw) {
+      displayTitle = {
+        zh: str(displayTitleRaw.zh ?? displayTitleRaw.cn),
+        cn: str(displayTitleRaw.cn ?? displayTitleRaw.zh),
+        kr: str(displayTitleRaw.kr ?? displayTitleRaw.ko),
+        en: str(displayTitleRaw.en),
+        jp: str(displayTitleRaw.jp ?? displayTitleRaw.ja),
+      };
+    } else if (typeof displayTitleRaw === "string" && str(displayTitleRaw)) {
+      const s = str(displayTitleRaw);
+      displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
+    }
     return {
       lessonNo: no,
       id: str(it.id) || `${ct}_${lv}_lesson${no}`,
       file: str(it.file) || `lesson${no}.json`,
       title,
+      displayTitle,
       type: str(it.type) || "lesson",
     };
   };
