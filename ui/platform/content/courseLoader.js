@@ -84,7 +84,51 @@ async function fetchJson(url) {
  * @returns {Promise<{ courseId, courseType, level, title, lessons }>}
  */
 export async function loadCourseIndex({ courseType, level } = {}) {
-  console.log("[RUN-CHECK-courseLoader-20260326-A]");
+  const ct = str(courseType) || "hsk2.0";
+  const lv = str(level) || "hsk1";
+  const normLessonItem = (it) => {
+    const no = Number(it?.lessonNo ?? it?.no ?? it?.lesson ?? it?.id ?? 0) || 0;
+    const titleRaw = it?.title;
+    const displayTitleRaw = it?.displayTitle;
+    let title = {};
+    let displayTitle = undefined;
+    if (typeof titleRaw === "object" && titleRaw) {
+      title = {
+        zh: str(titleRaw.zh ?? titleRaw.cn),
+        kr: str(titleRaw.kr ?? titleRaw.ko),
+        en: str(titleRaw.en),
+        jp: str(titleRaw.jp ?? titleRaw.ja),
+        cn: str(titleRaw.cn ?? titleRaw.zh)
+      };
+    } else {
+      const s = str(titleRaw ?? it?.subtitle ?? "");
+      const parts = s.split(/\s*\/\s*/);
+      const zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || "";
+      const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(it?.subtitle ?? "");
+      title = { zh, kr, en: "" };
+    }
+    if (typeof displayTitleRaw === "object" && displayTitleRaw) {
+      displayTitle = {
+        zh: str(displayTitleRaw.zh ?? displayTitleRaw.cn),
+        cn: str(displayTitleRaw.cn ?? displayTitleRaw.zh),
+        kr: str(displayTitleRaw.kr ?? displayTitleRaw.ko),
+        en: str(displayTitleRaw.en),
+        jp: str(displayTitleRaw.jp ?? displayTitleRaw.ja)
+      };
+    } else if (typeof displayTitleRaw === "string" && str(displayTitleRaw)) {
+      const s = str(displayTitleRaw);
+      displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
+    }
+    return {
+      lessonNo: no,
+      id: str(it?.id) || `${ct}_${lv}_lesson${no}`,
+      file: str(it?.file) || `lesson${no}.json`,
+      title,
+      displayTitle: displayTitle ?? it?.displayTitle ?? null,
+      type: str(it?.type) || "lesson",
+    };
+  };
+
   const GCE = window.GLOBAL_COURSE_ENGINE;
   if (GCE?.loadCourse) {
     try {
@@ -94,15 +138,12 @@ export async function loadCourseIndex({ courseType, level } = {}) {
         courseType: manifest.courseType === "hsk" ? manifest.version : manifest.courseType,
         level: manifest.level,
         title: manifest.title,
-        lessons: manifest.lessons ?? [],
+        lessons: Array.isArray(manifest.lessons) ? manifest.lessons.map(normLessonItem) : [],
       };
     } catch (e) {
       console.warn("[courseLoader] GLOBAL_COURSE_ENGINE.loadCourse failed, fallback:", e?.message);
     }
   }
-
-  const ct = str(courseType) || "hsk2.0";
-  const lv = str(level) || "hsk1";
   const cacheKey = `index:${ct}:${lv}`;
   const cached = memGet(cacheKey);
   if (cached) return cached;
@@ -110,48 +151,6 @@ export async function loadCourseIndex({ courseType, level } = {}) {
   const url = buildIndexUrl(ct, lv);
   const data = await fetchJson(url);
   const list = Array.isArray(data) ? data : data?.lessons ?? data?.data ?? [];
-
-  const normLessonItem = (it) => {
-    const no = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
-    const titleRaw = it.title;
-    const displayTitleRaw = it.displayTitle;
-    let title = {};
-    let displayTitle = undefined;
-    if (typeof titleRaw === "object") {
-      title = { zh: str(titleRaw.zh ?? titleRaw.cn), kr: str(titleRaw.kr ?? titleRaw.ko), en: str(titleRaw.en), jp: str(titleRaw.jp ?? titleRaw.ja), cn: str(titleRaw.cn ?? titleRaw.zh) };
-    } else {
-      const s = str(titleRaw ?? it.subtitle ?? "");
-      const parts = s.split(/\s*\/\s*/);
-      const zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || "";
-      const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(it.subtitle ?? "");
-      title = { zh, kr, en: "" };
-    }
-    if (typeof displayTitleRaw === "object" && displayTitleRaw) {
-      displayTitle = {
-        zh: str(displayTitleRaw.zh ?? displayTitleRaw.cn),
-        cn: str(displayTitleRaw.cn ?? displayTitleRaw.zh),
-        kr: str(displayTitleRaw.kr ?? displayTitleRaw.ko),
-        en: str(displayTitleRaw.en),
-        jp: str(displayTitleRaw.jp ?? displayTitleRaw.ja),
-      };
-    } else if (typeof displayTitleRaw === "string" && str(displayTitleRaw)) {
-      const s = str(displayTitleRaw);
-      displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
-    }
-    console.log("[RUN-CHECK-normLessonItem-20260326-A]", {
-      lessonNo: it.lessonNo,
-      rawDisplayTitle: it.displayTitle,
-      normalizedDisplayTitle: displayTitle
-    });
-    return {
-      lessonNo: no,
-      id: str(it.id) || `${ct}_${lv}_lesson${no}`,
-      file: str(it.file) || `lesson${no}.json`,
-      title,
-      displayTitle: displayTitle ?? it.displayTitle ?? null,
-      type: str(it.type) || "lesson",
-    };
-  };
 
   const out = {
     courseId: `${ct}_${lv}`,
