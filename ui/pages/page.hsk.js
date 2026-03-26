@@ -24,6 +24,8 @@ import {
   wordMeaning,
   normalizeLang,
   selectHskWordPanelVocabulary,
+  deriveRegularLessonPanelWordList,
+  collectRegularLessonPanelHanziKeys,
 } from "../modules/hsk/hskRenderer.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
@@ -1448,6 +1450,47 @@ async function loadLessons() {
   }
 }
 
+async function collectPriorRegularLessonHanziSet(lessonNo) {
+  const set = new Set();
+  const n0 = Number(lessonNo) || 0;
+  if (n0 <= 1) return set;
+  if (!LESSON_ENGINE || typeof LESSON_ENGINE.loadLessonDetail !== "function") return set;
+
+  const ct = state.version;
+  const lv = `hsk${state.lv}`;
+
+  const loads = [];
+  for (let n = 1; n < n0; n++) {
+    const entry = state.lessons && state.lessons.find((x) => getLessonNumber(x) === n);
+    const file = (entry && entry.file) || `lesson${n}.json`;
+    loads.push(
+      LESSON_ENGINE.loadLessonDetail({
+        courseType: ct,
+        level: lv,
+        lessonNo: n,
+        file,
+      })
+        .then((res) => ({ n, res }))
+        .catch((err) => ({ n, err }))
+    );
+  }
+  const results = await Promise.all(loads);
+  for (const item of results) {
+    if (item.err) {
+      console.warn(
+        "[HSK] prior lesson panel vocab load failed:",
+        item.n,
+        item.err?.message || item.err
+      );
+      continue;
+    }
+    const ld = item.res && item.res.lesson;
+    if (!ld || String(ld.type || "") === "review") continue;
+    for (const h of collectRegularLessonPanelHanziKeys(ld)) set.add(h);
+  }
+  return set;
+}
+
 async function openLesson({ lessonNo, file } = {}) {
   const no = Number(lessonNo || 1) || 1;
   const f = String(file || "");
@@ -1500,13 +1543,21 @@ async function openLesson({ lessonNo, file } = {}) {
   const lang = getLang();
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
-  const panelWords = selectHskWordPanelVocabulary(lessonWords, {
-    lessonData,
-    listEntry,
-    courseLessons: state.lessons,
-    lessonNo: no,
-    upstreamField,
-  });
+
+  const isReviewLesson = String(lessonData.type || "") === "review";
+  let panelWords;
+  if (isReviewLesson) {
+    panelWords = selectHskWordPanelVocabulary(lessonWords, {
+      lessonData,
+      listEntry,
+      courseLessons: state.lessons,
+      lessonNo: no,
+      upstreamField,
+    });
+  } else {
+    const priorHanzi = await collectPriorRegularLessonHanziSet(no);
+    panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, priorHanzi);
+  }
 
   state.tab = "words";
   state.current = {

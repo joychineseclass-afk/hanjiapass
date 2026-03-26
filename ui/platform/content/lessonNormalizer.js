@@ -68,11 +68,11 @@ function extractDialogueLines(raw) {
   return d;
 }
 
-/** dialogue 归一化：line/zh/cn、lines，兼容 line 字段 */
+/** dialogue 归一化：line/zh/cn、lines，兼容 line / text（HSK lesson 定稿常用 text） */
 function normDialogue(raw) {
   const src = extractDialogueLines(raw);
   return src.map((line) => {
-    const zh = str(line?.zh ?? line?.cn ?? line?.line ?? "");
+    const zh = str(line?.zh ?? line?.cn ?? line?.line ?? line?.text ?? "");
     const py = str(line?.pinyin ?? line?.py ?? "");
     const item = {
       speaker: str(line?.speaker ?? line?.spk ?? ""),
