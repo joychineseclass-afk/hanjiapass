@@ -1149,7 +1149,7 @@ function refreshBlueprintDisplayTitles(lessons, lang) {
     if (!lesson || lesson.blueprintTitle == null) return;
     const no = getLessonNumber(lesson);
     const isRegularL1toL20 = String(lesson.type || "lesson") !== "review" && no >= 1 && no <= 20;
-    if (isRegularL1toL20 && lesson.displayTitle != null) return;
+    if (isRegularL1toL20) return;
     if (lesson && lesson.blueprintTitle != null) {
       lesson.displayTitle = resolveBlueprintTitle(lesson.blueprintTitle, l);
     }
@@ -1163,6 +1163,9 @@ function applyBlueprintTitles(lessons, blueprint) {
 
   return lessons.map((lesson) => {
     const no = getLessonNumber(lesson);
+    const isRegularL1toL20 =
+      String(lesson?.type || "lesson") !== "review" && no >= 1 && no <= 20;
+    if (isRegularL1toL20) return lesson;
     const entry = no ? blueprint[String(no)] : null;
     const rawTitle = entry && entry.title != null ? entry.title : null;
     if (!rawTitle) return lesson;
