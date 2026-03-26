@@ -49,6 +49,20 @@ export const POS_KR_TO_ZH = Object.fromEntries(
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
+/**
+ * 常见初级表达：词库常标为「叹词/感叹词」，教学场景改为更易懂的类别（多语言与词卡语言一致）
+ */
+const TEACHING_PHRASE_POS = {
+  你好: { zh: "问候语", cn: "问候语", kr: "인사", ko: "인사", en: "greeting", jp: "あいさつ", ja: "あいさつ" },
+  您好: { zh: "问候语", cn: "问候语", kr: "인사", ko: "인사", en: "greeting", jp: "あいさつ", ja: "あいさつ" },
+  谢谢: { zh: "礼貌用语", cn: "礼貌用语", kr: "예의 표현", ko: "예의 표현", en: "courtesy phrase", jp: "丁寧な表現", ja: "丁寧な表現" },
+  多谢: { zh: "礼貌用语", cn: "礼貌用语", kr: "예의 표현", ko: "예의 표현", en: "courtesy phrase", jp: "丁寧な表現", ja: "丁寧な表現" },
+  不客气: { zh: "礼貌用语", cn: "礼貌用语", kr: "예의 표현", ko: "예의 표현", en: "courtesy phrase", jp: "丁寧な表現", ja: "丁寧な表現" },
+  没关系: { zh: "礼貌用语", cn: "礼貌用语", kr: "예의 표현", ko: "예의 표현", en: "courtesy phrase", jp: "丁寧な表現", ja: "丁寧な表現" },
+  再见: { zh: "告别用语", cn: "告别用语", kr: "작별 인사", ko: "작별 인사", en: "farewell", jp: "別れのあいさつ", ja: "別れのあいさつ" },
+  拜拜: { zh: "告别用语", cn: "告别用语", kr: "작별 인사", ko: "작별 인사", en: "farewell", jp: "別れのあいさつ", ja: "別れのあいさつ" },
+};
+
 /** lang 归一化为 glossary 文件用的 key（kr-hsk1, en-hsk1） */
 function glossaryLang(lang) {
   const l = String(lang || "").toLowerCase();
@@ -98,6 +112,18 @@ export function getPosByLang(word, lang, scope = "") {
   if (!word) return "";
   const p = word.pos;
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "");
+
+  const phrase = TEACHING_PHRASE_POS[hanzi];
+  if (phrase) {
+    const normLang = lang === "ko" || lang === "kr" ? "kr" : lang === "zh" || lang === "cn" ? "cn" : lang === "ja" || lang === "jp" ? "jp" : "en";
+    const out =
+      phrase[normLang] ||
+      (normLang === "kr" ? phrase.ko || phrase.kr : "") ||
+      phrase.zh ||
+      phrase.en ||
+      "";
+    if (out) return out;
+  }
 
   if (typeof p === "object" && p != null) {
     const normLang = lang === "ko" ? "kr" : lang === "zh" ? "cn" : lang === "ja" ? "jp" : lang;

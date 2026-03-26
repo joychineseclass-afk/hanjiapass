@@ -22,7 +22,8 @@ import {
   wordKey,
   wordPinyin,
   wordMeaning,
-  normalizeLang
+  normalizeLang,
+  selectHskWordPanelVocabulary,
 } from "../modules/hsk/hskRenderer.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
@@ -1490,17 +1491,24 @@ async function openLesson({ lessonNo, file } = {}) {
       : [];
   }
 
+  const lang = getLang();
+  const listEntry =
+    state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
+  const panelWords = selectHskWordPanelVocabulary(lessonWords, {
+    lessonData,
+    listEntry,
+    courseLessons: state.lessons,
+    lessonNo: no,
+  });
+
   state.tab = "words";
   state.current = {
     lessonNo: no,
     file: f || lessonData.file || "",
     lessonData,
-    lessonWords,
+    lessonWords: panelWords,
   };
 
-  const lang = getLang();
-  const listEntry =
-    state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
   const titleText = listEntry
     ? getLessonDisplayTitle(listEntry, lang)
     : typeof lessonData.title === "object"
@@ -1515,7 +1523,7 @@ async function openLesson({ lessonNo, file } = {}) {
 
   const wordsPanel = $("hskPanelWords");
   if (wordsPanel) {
-    renderWordCards(wordsPanel, lessonWords, null, {
+    renderWordCards(wordsPanel, panelWords, null, {
       lang,
       scope: `hsk${state.lv}`,
     });
@@ -1523,7 +1531,7 @@ async function openLesson({ lessonNo, file } = {}) {
 
   const courseId = getCourseId();
   const lessonId = lessonData.id || `${courseId}_lesson${no}`;
-  touchLessonVocabSafe(courseId, lessonId, lessonWords);
+  touchLessonVocabSafe(courseId, lessonId, panelWords);
 
   const dialogueEl = $("hskDialogueBody");
   if (dialogueEl) dialogueEl.innerHTML = buildDialogueHTML(lessonData);
