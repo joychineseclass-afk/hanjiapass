@@ -1451,6 +1451,13 @@ async function loadLessons() {
       }
     }
 
+    for (const item of result) {
+      console.log("[HSK-DISPLAYTITLE-AFTER-NORM]", {
+        lessonNo: item.lessonNo,
+        displayTitle: item.displayTitle,
+        title: item.title
+      });
+    }
     state.lessons = result;
     refreshBlueprintDisplayTitles(state.lessons, lang);
 

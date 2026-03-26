@@ -142,7 +142,7 @@ export async function loadCourseIndex({ courseType, level } = {}) {
       id: str(it.id) || `${ct}_${lv}_lesson${no}`,
       file: str(it.file) || `lesson${no}.json`,
       title,
-      displayTitle,
+      displayTitle: displayTitle ?? it.displayTitle ?? null,
       type: str(it.type) || "lesson",
     };
   };
