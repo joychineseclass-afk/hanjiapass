@@ -182,11 +182,113 @@ function isLikelyFullSentenceVocab(han, dialogueExactSet, isReviewLesson) {
   return false;
 }
 
+function classifyListEntryBucket(h, listEntry) {
+  if (!listEntry || !h) return null;
+  const has = (arr) => Array.isArray(arr) && arr.some((w) => wordKey(w) === h);
+  if (has(listEntry.coreWords)) return "listEntry.coreWords";
+  if (has(listEntry.distributedWords)) return "listEntry.distributedWords";
+  if (has(listEntry.extraWords)) return "listEntry.extraWords";
+  const fb = listEntry.words ?? listEntry.originalWords;
+  if (has(fb)) return "listEntry.words|originalWords";
+  return null;
+}
+
+function lessonItemsHasHanzi(items, h) {
+  return Array.isArray(items) && items.some((w) => wordKey(w) === h);
+}
+
+/**
+ * 仅诊断：不改变取词结果
+ */
+function logHskWordSourceDiagnostics({
+  lessonData,
+  listEntry,
+  lessonNo,
+  upstreamField,
+  items,
+  fromListMerged,
+  baseFromList,
+  isReview,
+  dialogueZhs,
+  prior,
+  usedRelaxedFallback,
+  out,
+}) {
+  const exprLen = Array.isArray(lessonData?.expressions) ? lessonData.expressions.length : 0;
+  const extLen = Array.isArray(lessonData?.extension) ? lessonData.extension.length : 0;
+  const listMergeLenAlways = mergeListEntryCoreVocab(listEntry).length;
+
+  console.log(
+    "[HSK-WORD-SOURCE]",
+    JSON.stringify({
+      phase: "summary",
+      lessonNo: Number(lessonNo) || 0,
+      lessonType: lessonData?.type ?? "",
+      isReview,
+      upstreamLessonWordsField: upstreamField || "unknown",
+      counts: {
+        lessonVocabItemsInput: items.length,
+        mergeListEntryCoreVocab: fromListMerged.length,
+        mergeListEntryCoreVocab_listEntryOnly: listMergeLenAlways,
+        lessonDataVocab: Array.isArray(lessonData?.vocab) ? lessonData.vocab.length : 0,
+        lessonDataWords: Array.isArray(lessonData?.words) ? lessonData.words.length : 0,
+        dialogueLinesForFilter: dialogueZhs.size,
+        priorHanziExcludedInStrictPass: prior.size,
+        panelWordsFinal: out.length,
+        lessonExpressions: exprLen,
+        lessonExtensionBlocks: extLen,
+      },
+      baseLayerUsed: isReview
+        ? "review:lessonVocabItems_only"
+        : baseFromList
+        ? "mergeListEntryCoreVocab(listEntry)"
+        : "lessonVocabItems (no list merge)",
+      relaxedFallbackPass: usedRelaxedFallback,
+      pipelineNotes: [
+        "dialogue|expressions|extension are not merged into vocab inside selectHskWordPanelVocabulary",
+        "cross_lesson set is prior lessons mergeListEntryCoreVocab only; used to drop tokens in strict pass",
+      ],
+    })
+  );
+
+  const byHan = lessonVocabLookupByHanzi(items);
+  for (const w of out) {
+    const h = wordKey(w);
+    if (!h) continue;
+    const listBucket = classifyListEntryBucket(h, listEntry);
+    const inInputItems = lessonItemsHasHanzi(items, h);
+    const enrichedFromLessonJson = inInputItems && !!(byHan.get(h) && typeof byHan.get(h) === "object");
+
+    let primaryTrack = "unknown";
+    if (isReview) {
+      primaryTrack = inInputItems ? "lessonVocabItems.review_vocab" : "review_item_not_in_input?";
+    } else if (baseFromList) {
+      primaryTrack = listBucket || "list_merge_order_but_unclassified";
+    } else {
+      primaryTrack = upstreamField || "lessonVocabItems.fallback_no_list";
+    }
+
+    console.log(
+      "[HSK-WORD-SOURCE]",
+      JSON.stringify({
+        phase: "word",
+        hanzi: h,
+        primaryTrack,
+        listEntryBucket: listBucket,
+        inLessonVocabItems: inInputItems,
+        metadataEnrichedFromLessonJson: enrichedFromLessonJson,
+        strictVsRelaxed: usedRelaxedFallback ? "relaxed_rebuild_skipped_prior_filter" : "strict_pass",
+        renderTarget: "renderWordCards(panelWords)",
+      })
+    );
+  }
+}
+
 /**
  * HSK 学习页「单词区」：优先本课教学目标词（目录项 core/extra），去掉会话整句与前几课已学词；复习课保留复习逻辑。
  */
 export function selectHskWordPanelVocabulary(lessonVocabItems, ctx = {}) {
-  const { lessonData, listEntry, courseLessons, lessonNo } = ctx;
+  const { lessonData, listEntry, courseLessons, lessonNo, upstreamField } = ctx;
   const items = Array.isArray(lessonVocabItems) ? lessonVocabItems : [];
 
   if (!lessonData) return items;
@@ -195,12 +297,14 @@ export function selectHskWordPanelVocabulary(lessonVocabItems, ctx = {}) {
   const dialogueZhs = collectDialogueHanziSet(lessonData);
   const prior = isReview ? new Set() : collectPriorLessonHanziSet(courseLessons, lessonNo);
 
+  const fromListMerged = !isReview ? mergeListEntryCoreVocab(listEntry) : [];
   let base;
+  let baseFromList = false;
   if (isReview) {
     base = items;
   } else {
-    const fromList = mergeListEntryCoreVocab(listEntry);
-    base = fromList.length ? fromList : items;
+    base = fromListMerged.length ? fromListMerged : items;
+    baseFromList = fromListMerged.length > 0;
   }
 
   const enriched = enrichPanelFromLessonVocab(base, items);
@@ -216,7 +320,9 @@ export function selectHskWordPanelVocabulary(lessonVocabItems, ctx = {}) {
     out.push(w);
   }
 
+  let usedRelaxedFallback = false;
   if (!out.length && !isReview && items.length) {
+    usedRelaxedFallback = true;
     const seen2 = new Set();
     for (const w of enriched) {
       const h = wordKey(w);
@@ -226,6 +332,21 @@ export function selectHskWordPanelVocabulary(lessonVocabItems, ctx = {}) {
       out.push(w);
     }
   }
+
+  logHskWordSourceDiagnostics({
+    lessonData,
+    listEntry,
+    lessonNo,
+    upstreamField,
+    items,
+    fromListMerged,
+    baseFromList,
+    isReview,
+    dialogueZhs,
+    prior,
+    usedRelaxedFallback,
+    out,
+  });
 
   return out;
 }

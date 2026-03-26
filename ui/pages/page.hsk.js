@@ -1483,7 +1483,13 @@ async function openLesson({ lessonNo, file } = {}) {
       : {};
 
   let lessonWords = Array.isArray(started.lessonWords) ? started.lessonWords : [];
+  let upstreamField = "LESSON_ENGINE.startLesson.lessonWords";
   if (!lessonWords.length) {
+    upstreamField = Array.isArray(lessonData.vocab)
+      ? "lessonData.vocab"
+      : Array.isArray(lessonData.words)
+      ? "lessonData.words"
+      : "empty";
     lessonWords = Array.isArray(lessonData.vocab)
       ? lessonData.vocab
       : Array.isArray(lessonData.words)
@@ -1499,6 +1505,7 @@ async function openLesson({ lessonNo, file } = {}) {
     listEntry,
     courseLessons: state.lessons,
     lessonNo: no,
+    upstreamField,
   });
 
   state.tab = "words";
