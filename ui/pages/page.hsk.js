@@ -1356,6 +1356,7 @@ function applyVocabDistribution(lessons, distribution) {
  */
 
 async function loadLessons() {
+  console.log("[RUN-CHECK-pagehsk-20260326-A]");
   setError("");
   setSubTitle();
   state.hskLessonVocabTargetsByNo = null;
@@ -1451,6 +1452,11 @@ async function loadLessons() {
       }
     }
 
+    console.log("[RUN-CHECK-before-state-lessons-20260326-A]", result.slice(0, 3).map((x) => ({
+      lessonNo: x.lessonNo,
+      displayTitle: x.displayTitle,
+      title: x.title
+    })));
     for (const item of result) {
       console.log("[HSK-DISPLAYTITLE-AFTER-NORM]", {
         lessonNo: item.lessonNo,

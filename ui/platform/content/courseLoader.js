@@ -84,6 +84,7 @@ async function fetchJson(url) {
  * @returns {Promise<{ courseId, courseType, level, title, lessons }>}
  */
 export async function loadCourseIndex({ courseType, level } = {}) {
+  console.log("[RUN-CHECK-courseLoader-20260326-A]");
   const GCE = window.GLOBAL_COURSE_ENGINE;
   if (GCE?.loadCourse) {
     try {
@@ -137,6 +138,11 @@ export async function loadCourseIndex({ courseType, level } = {}) {
       const s = str(displayTitleRaw);
       displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
     }
+    console.log("[RUN-CHECK-normLessonItem-20260326-A]", {
+      lessonNo: it.lessonNo,
+      rawDisplayTitle: it.displayTitle,
+      normalizedDisplayTitle: displayTitle
+    });
     return {
       lessonNo: no,
       id: str(it.id) || `${ct}_${lv}_lesson${no}`,
