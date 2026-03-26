@@ -150,109 +150,28 @@ function dialogueLineAsTeachingUnit(line) {
   return { hanzi: t };
 }
 
-function collectFilteredVocabObjects(lessonData) {
-  const v = Array.isArray(lessonData?.vocab) ? lessonData.vocab : [];
-  const out = [];
-  for (const item of v) {
-    if (!item || typeof item !== "object") continue;
-    const h = wordKey(item);
-    if (!h) continue;
-    if (isLikelyFullSentenceVocab(h, new Set(), false)) continue;
-    out.push(item);
-  }
-  return out;
-}
-
-function collectExtensionTeachingObjects(lessonData) {
-  const ext = Array.isArray(lessonData?.extension) ? lessonData.extension : [];
-  const out = [];
-  for (const e of ext) {
-    if (!e || typeof e !== "object") continue;
-    const ph = String(e.phrase ?? e.zh ?? "").trim();
-    if (!ph) continue;
-    const core = stripTrailingDialoguePunct(ph.replace(/[·…]+/g, "").trim());
-    if (!core || /[，、,；;？?]/.test(core)) continue;
-    const hanCount = Array.from(core).filter((ch) => /[\u4e00-\u9fff]/.test(ch)).length;
-    if (hanCount < 1 || hanCount > 12) continue;
-    if (isLikelyFullSentenceVocab(core, new Set(), false)) continue;
-    out.push({ hanzi: core });
-  }
-  return out;
-}
-
-function collectExpressionsTeachingObjects(lessonData) {
-  const ex = lessonData?.expressions;
-  if (!Array.isArray(ex)) return [];
-  const out = [];
-  for (const e of ex) {
-    if (e == null) continue;
-    if (typeof e === "string") {
-      const t = stripTrailingDialoguePunct(e.trim());
-      if (t && !/[，、？]/.test(t) && t.length <= 12) out.push({ hanzi: t });
-      continue;
-    }
-    if (typeof e === "object") {
-      const h = wordKey(e) || String(e.zh ?? e.phrase ?? "").trim();
-      const t = stripTrailingDialoguePunct(h);
-      if (t && !/[，、？]/.test(t)) out.push({ hanzi: t, ...e });
-    }
-  }
-  return out;
-}
-
-function collectGrammarTeachingObjects(lessonData) {
-  const g = Array.isArray(lessonData?.grammar) ? lessonData.grammar : [];
-  const out = [];
-  for (const pt of g) {
-    if (!pt || typeof pt !== "object") continue;
-    const pat = pt.pattern ?? pt.title ?? pt.name ?? "";
-    const frags = String(pat).match(/[\u4e00-\u9fff]+/g) || [];
-    for (const f of frags) {
-      if (f.length >= 1 && f.length <= 12 && !isLikelyFullSentenceVocab(f, new Set(), false)) {
-        out.push({ hanzi: f });
-      }
-    }
-    const ex = pt.example;
-    const exText = typeof ex === "string" ? ex : ex?.text ?? ex?.zh ?? "";
-    const st = stripTrailingDialoguePunct(String(exText || "").trim());
-    if (st && !/[，、,；;？?]/.test(st)) {
-      const hanCount = Array.from(st).filter((ch) => /[\u4e00-\u9fff]/.test(ch)).length;
-      if (hanCount >= 1 && hanCount <= 8 && !isLikelyFullSentenceVocab(st, new Set(), false)) {
-        out.push({ hanzi: st });
-      }
-    }
-  }
-  return out;
-}
-
-function collectDialogueTeachingObjects(lessonData) {
+/**
+ * 仅从定稿 dialogue 按行顺序抽取教学单位（不拆固定表达；含逗号/问号的整行不进词区）。
+ */
+function collectDialogueTeachingUnitsInOrder(lessonData) {
   const lines = Array.isArray(lessonData?.dialogue) ? lessonData.dialogue : [];
+  const seen = new Set();
   const out = [];
   for (const line of lines) {
     const u = dialogueLineAsTeachingUnit(line);
-    if (u) out.push(u);
-  }
-  return out;
-}
-
-function mergeTeachingCandidatesOrdered(...parts) {
-  const seen = new Set();
-  const out = [];
-  for (const part of parts) {
-    for (const x of part) {
-      const h = wordKey(x);
-      if (!h || seen.has(h)) continue;
-      seen.add(h);
-      out.push(x && typeof x === "object" ? { ...x } : { hanzi: h });
-    }
+    if (!u) continue;
+    const h = wordKey(u);
+    if (!h || seen.has(h)) continue;
+    seen.add(h);
+    out.push({ hanzi: h });
   }
   return out;
 }
 
 /**
- * 普通新课：从 lesson 定稿（vocab / extension / expressions / grammar / dialogue）派生单词区，不读 vocab-map。
+ * 普通新课：新单词区仅来自 lesson 定稿 dialogue；用 lesson.vocab 仅做拼音/释义 enrich，不扩大词条集合。
  * @param {object} lessonData - 归一化后的 lesson
- * @param {Array} lessonVocabForEnrich - 通常为 startLesson 的 vocab 列表，用于补全拼音/释义
+ * @param {Array} lessonVocabForEnrich - 通常为 startLesson 的 vocab 列表
  * @param {Set<string>} priorHanziSet - 前几课已学汉字（同规则派生）
  */
 export function deriveRegularLessonPanelWordList(
@@ -265,22 +184,9 @@ export function deriveRegularLessonPanelWordList(
   const prior = priorHanziSet instanceof Set ? priorHanziSet : new Set();
   const enrich = Array.isArray(lessonVocabForEnrich) ? lessonVocabForEnrich : [];
 
-  const vocabObjs = collectFilteredVocabObjects(lessonData);
-  const extObjs = collectExtensionTeachingObjects(lessonData);
-  const exprObjs = collectExpressionsTeachingObjects(lessonData);
-  const gramObjs = collectGrammarTeachingObjects(lessonData);
-  const dialObjs = collectDialogueTeachingObjects(lessonData);
-
-  const merged = mergeTeachingCandidatesOrdered(
-    vocabObjs,
-    extObjs,
-    exprObjs,
-    gramObjs,
-    dialObjs
-  );
-
+  const dialUnits = collectDialogueTeachingUnitsInOrder(lessonData);
   const dialogueZhs = collectDialogueHanziSet(lessonData);
-  const enriched = enrichPanelFromLessonVocab(merged, enrich);
+  const enriched = enrichPanelFromLessonVocab(dialUnits, enrich);
 
   const out = [];
   const seen = new Set();
@@ -293,31 +199,16 @@ export function deriveRegularLessonPanelWordList(
     out.push(w);
   }
 
-  if (!out.length && enrich.length) {
-    for (const item of enrich) {
-      const h = wordKey(item);
-      if (!h || seen.has(h)) continue;
-      if (prior.has(h)) continue;
-      if (isLikelyFullSentenceVocab(h, dialogueZhs, false)) continue;
-      seen.add(h);
-      out.push(item);
-    }
-  }
-
   if (diagnosticLog && typeof console !== "undefined" && console.log) {
     console.log(
       "[HSK-WORD-SOURCE]",
       JSON.stringify({
         phase: "summary",
-        baseLayerUsed: "lesson_canonical_derive",
+        baseLayerUsed: "lesson_dialogue_only",
         lessonNo: Number(lessonData?.lessonNo) || 0,
         counts: {
           panelWordsFinal: out.length,
-          fromVocab: vocabObjs.length,
-          fromExtension: extObjs.length,
-          fromExpressions: exprObjs.length,
-          fromGrammar: gramObjs.length,
-          fromDialogueShortUnits: dialObjs.length,
+          fromDialogueTeachingUnits: dialUnits.length,
           priorHanziExcluded: prior.size,
         },
       })
