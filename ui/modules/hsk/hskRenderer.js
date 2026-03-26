@@ -137,33 +137,67 @@ function stripTrailingDialoguePunct(s) {
     .trim();
 }
 
-/** 从定稿对话行抽「教学短单位」：排除含逗号/问号整句，避免整句进词卡 */
-function dialogueLineAsTeachingUnit(line) {
-  const raw = String(line?.zh ?? line?.cn ?? line?.line ?? line?.text ?? "").trim();
-  if (!raw) return null;
-  if (/[，、,；;？?]/.test(raw)) return null;
-  const t = stripTrailingDialoguePunct(raw);
+/**
+ * 从一句定稿文本得到单个教学短单位（已去句末标点）；含句内逗号/问号片段则丢弃。
+ */
+function teachingUnitFromSegment(segment) {
+  let t = String(segment || "")
+    .replace(/[？?！!]+$/g, "")
+    .trim();
+  t = stripTrailingDialoguePunct(t);
   if (!t) return null;
+  if (/[，、,；;？?]/.test(t)) return null;
   const hanCount = Array.from(t).filter((ch) => /[\u4e00-\u9fff]/.test(ch)).length;
-  if (hanCount < 1 || hanCount > 8) return null;
+  /* 上限 10：覆盖 HSK1 第14/18 课等 9 字问句，仍拒绝冗长段落 */
+  if (hanCount < 1 || hanCount > 10) return null;
   if (isLikelyFullSentenceVocab(t, new Set(), false)) return null;
   return { hanzi: t };
 }
 
+/** 对无句内逗号的一节按「。」再切（兼容「我叫王明。你呢？」单行） */
+function segmentsFromClauseChunk(chunk) {
+  const c = String(chunk || "").trim();
+  if (!c) return [];
+  const parts = c.split(/。/).map((s) => s.trim()).filter(Boolean);
+  const pieces = parts.length ? parts : [c];
+  const out = [];
+  for (const p of pieces) {
+    const u = teachingUnitFromSegment(p);
+    if (u) out.push(u);
+  }
+  return out;
+}
+
 /**
- * 仅从定稿 dialogue 按行顺序抽取教学单位（不拆固定表达；含逗号/问号的整行不进词区）。
+ * 从定稿 dialogue 一行拆出 0..n 个教学单位：先按 ，、 分句，再按 。 分节；与第1课单行格式兼容，并覆盖第2课起常见「一句多顿号/句号」写法。
+ * 仍只使用 dialogue 字段，不读 extension/grammar。
+ */
+function dialogueLineToTeachingUnits(line) {
+  const raw0 = String(line?.zh ?? line?.cn ?? line?.line ?? line?.text ?? "").trim();
+  if (!raw0) return [];
+  const chunks = raw0.split(/[，、]/).map((s) => s.trim()).filter(Boolean);
+  if (!chunks.length) return [];
+  const out = [];
+  for (const ch of chunks) {
+    out.push(...segmentsFromClauseChunk(ch));
+  }
+  return out;
+}
+
+/**
+ * 仅从定稿 dialogue 按行顺序抽取教学单位（同行内去重保留先出现顺序）。
  */
 function collectDialogueTeachingUnitsInOrder(lessonData) {
   const lines = Array.isArray(lessonData?.dialogue) ? lessonData.dialogue : [];
   const seen = new Set();
   const out = [];
   for (const line of lines) {
-    const u = dialogueLineAsTeachingUnit(line);
-    if (!u) continue;
-    const h = wordKey(u);
-    if (!h || seen.has(h)) continue;
-    seen.add(h);
-    out.push({ hanzi: h });
+    for (const u of dialogueLineToTeachingUnits(line)) {
+      const h = wordKey(u);
+      if (!h || seen.has(h)) continue;
+      seen.add(h);
+      out.push({ hanzi: h });
+    }
   }
   return out;
 }
