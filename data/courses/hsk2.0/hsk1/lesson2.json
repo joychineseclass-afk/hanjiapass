@@ -14,40 +14,136 @@
   "summary": {
     "zh": "介绍自己的名字和身份",
     "kr": "이름과 신분 소개",
-    "en": "Introducing your name and identity"
+    "en": "Introducing your name and identity",
+    "jp": "Introducing your name and identity"
   },
   "scene": {
     "id": "l2_scene",
-    "title": { "zh": "介绍自己", "kr": "자기 소개", "en": "Introducing yourself" },
-    "summary": { "zh": "在新班级里介绍自己的名字和身份。", "kr": "새 반에서 이름과 신분을 소개한다.", "en": "Introduce your name and identity in a new class." }
+    "title": {
+      "zh": "介绍自己",
+      "kr": "자기 소개",
+      "en": "Introducing yourself"
+    },
+    "summary": {
+      "zh": "在新班级里介绍自己的名字和身份。",
+      "kr": "새 반에서 이름과 신분을 소개한다.",
+      "en": "Introduce your name and identity in a new class."
+    }
   },
   "objectives": [
-    { "zh": "学会用「我叫……」介绍名字", "kr": "「我叫…」로 이름을 소개할 수 있다", "en": "Can introduce your name with 我叫…" },
-    { "zh": "学会用「我是……」介绍身份", "kr": "「我是…」로 신분을 말할 수 있다", "en": "Can say your identity with 我是…" }
+    {
+      "zh": "学会用「我叫……」介绍名字",
+      "kr": "「我叫…」로 이름을 소개할 수 있다",
+      "en": "Can introduce your name with 我叫…"
+    },
+    {
+      "zh": "学会用「我是……」介绍身份",
+      "kr": "「我是…」로 신분을 말할 수 있다",
+      "en": "Can say your identity with 我是…"
+    }
   ],
   "vocab": [
-    { "hanzi": "叫", "pinyin": "jiào", "meaning": { "zh": "叫", "kr": "~라고 부르다", "jp": "〜という", "en": "to be called" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
-    { "hanzi": "名字", "pinyin": "míngzi", "meaning": { "zh": "名字", "kr": "이름", "jp": "名前", "en": "name" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "是", "pinyin": "shì", "meaning": { "zh": "是", "kr": "~이다", "jp": "〜である", "en": "to be" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
-    { "hanzi": "学生", "pinyin": "xuésheng", "meaning": { "zh": "学生", "kr": "학생", "jp": "学生", "en": "student" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "呢", "pinyin": "ne", "meaning": { "zh": "呢", "kr": "~는요? (역질문)", "jp": "〜は？（繰り返し質問）", "en": "and you? (echo question)" }, "pos": { "kr": "조사", "en": "particle", "jp": "助詞" } }
+    {
+      "hanzi": "你好，你叫什么名字？",
+      "pinyin": "nǐ hǎo ， nǐ jiào shén me míng zì ？",
+      "meaning": {
+        "zh": "你好，你叫什么名字？",
+        "kr": "안녕하세요, 이름이 뭐예요?",
+        "jp": "こんにちは、お名前は何ですか？",
+        "en": "Hello, what's your name?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我叫王明。你呢？",
+      "pinyin": "wǒ jiào wáng míng 。 nǐ ne ？",
+      "meaning": {
+        "zh": "我叫王明。你呢？",
+        "kr": "저는 왕밍이에요. 당신은요?",
+        "jp": "王明です。あなたは？",
+        "en": "I'm Wang Ming. And you?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我叫Anna。",
+      "pinyin": "wǒ jiào A n n a 。",
+      "meaning": {
+        "zh": "我叫Anna。",
+        "kr": "저는 Anna예요.",
+        "jp": "Annaです。",
+        "en": "I'm Anna."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "很高兴认识你。",
+      "pinyin": "hěn gāo xìng rèn shi nǐ 。",
+      "meaning": {
+        "zh": "很高兴认识你。",
+        "kr": "만나서 반가워요.",
+        "jp": "はじめまして。",
+        "en": "Nice to meet you."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你好，你叫什么名字？" },
-    { "speaker": "B", "text": "我叫王明。你呢？" },
-    { "speaker": "A", "text": "我叫Anna。" },
-    { "speaker": "B", "text": "很高兴认识你。" }
-  ],
-  "originalDialogues": [
     {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你好！我叫李明。", "translation": { "en": "Hello! I'm Li Ming.", "kr": "안녕! 나는 이명이야.", "jp": "こんにちは。李明です。" }, "pinyin": "Nǐ hǎo! Wǒ jiào Lǐ Míng." },
-        { "speaker": "B", "text": "你好！我叫安娜。", "translation": { "en": "Hello! I'm Anna.", "kr": "안녕! 나는 안나야.", "jp": "こんにちは。安娜です。" }, "pinyin": "Nǐ hǎo! Wǒ jiào Ānnà." },
-        { "speaker": "A", "text": "我是学生。你呢？", "translation": { "en": "I'm a student. And you?", "kr": "나는 학생이야. 너는?", "jp": "私は学生です。あなたは？" }, "pinyin": "Wǒ shì xuésheng. Nǐ ne?" },
-        { "speaker": "B", "text": "我也是学生。", "translation": { "en": "I'm a student too.", "kr": "나도 학생이야.", "jp": "私も学生です。" }, "pinyin": "Wǒ yě shì xuésheng." }
-      ]
+      "speaker": "A",
+      "text": "你好，你叫什么名字？",
+      "pinyin": "Nǐ hǎo ， nǐ jiào shén me míng zì ？",
+      "translation": {
+        "kr": "안녕하세요, 이름이 뭐예요?",
+        "en": "Hello, what's your name?",
+        "jp": "こんにちは、お名前は何ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我叫王明。你呢？",
+      "pinyin": "Wǒ jiào wáng míng 。 nǐ ne ？",
+      "translation": {
+        "kr": "저는 왕밍이에요. 당신은요?",
+        "en": "I'm Wang Ming. And you?",
+        "jp": "王明です。あなたは？"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "我叫Anna。",
+      "pinyin": "Wǒ jiào A n n a 。",
+      "translation": {
+        "kr": "저는 Anna예요.",
+        "en": "I'm Anna.",
+        "jp": "Annaです。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "很高兴认识你。",
+      "pinyin": "Hěn gāo xìng rèn shi nǐ 。",
+      "translation": {
+        "kr": "만나서 반가워요.",
+        "en": "Nice to meet you.",
+        "jp": "はじめまして。"
+      }
     }
   ],
   "dialogueCards": [],
@@ -55,46 +151,55 @@
     {
       "pattern": "我叫 + 名字",
       "pinyin": "wǒ jiào + míngzi",
-      "explain": {
-        "zh": "用「叫」介绍自己的名字。结构：我叫 + 名字",
+      "explanation": {
         "kr": "「叫」로 이름을 소개합니다. 구조: 我叫 + 이름",
         "en": "Use 叫 to introduce your name. Pattern: 我叫 + name",
         "jp": "「叫」で名前を紹介します。構造：我叫 + 名前"
       },
       "example": {
-        "zh": "我叫李明。",
-        "pinyin": "Wǒ jiào Lǐ Míng.",
-        "translation": { "kr": "저는 이명이에요.", "jp": "私は李明です。", "en": "I'm Li Ming." }
+        "text": "我叫王明。你呢？",
+        "pinyin": "Wǒ jiào wáng míng 。 nǐ ne ？",
+        "translation": {
+          "kr": "저는 왕밍이에요. 당신은요?",
+          "en": "I'm Wang Ming. And you?",
+          "jp": "王明です。あなたは？"
+        }
       }
     },
     {
       "pattern": "我是 + 身份",
       "pinyin": "wǒ shì + shēnfèn",
-      "explain": {
-        "zh": "用「是」介绍身份。结构：我是 + 学生/老师/医生……",
+      "explanation": {
         "kr": "「是」로 신분을 말합니다. 구조: 我是 + 학생/선생님…",
         "en": "Use 是 to state identity. Pattern: 我是 + student/teacher…",
         "jp": "「是」で身分を言います。構造：我是 + 学生/老师…"
       },
       "example": {
-        "zh": "我是学生。",
+        "text": "我是学生。",
         "pinyin": "Wǒ shì xuésheng.",
-        "translation": { "kr": "저는 학생이에요.", "jp": "私は学生です。", "en": "I'm a student." }
+        "translation": {
+          "kr": "저는 학생이에요.",
+          "en": "I'm a student.",
+          "jp": "私は学生です。"
+        }
       }
     },
     {
       "pattern": "呢（追问）",
       "pinyin": "ne",
-      "explain": {
-        "zh": "「呢」用在句末，表示追问对方同样的问题。如：你呢？= 你叫什么名字呢？/ 你呢？= 你也是学生吗？",
+      "explanation": {
         "kr": "「呢」는 문장 끝에 써서 상대에게 같은 걸 묻습니다. 你呢？= 너는?",
         "en": "呢 at the end asks the same question to the other. 你呢？= And you?",
         "jp": "「呢」は文末で相手に同じことを聞く。「你呢？」＝あなたは？"
       },
       "example": {
-        "zh": "我叫王明。你呢？我叫Anna。我是学生。你呢？我也是学生。",
-        "pinyin": "Wǒ jiào Wáng Míng. Nǐ ne? Wǒ jiào Anna. Wǒ shì xuésheng. Nǐ ne? Wǒ yě shì xuésheng.",
-        "translation": { "kr": "나는 왕명이야. 너는? 나는 Anna. 나는 학생이야. 너는? 나도 학생이야.", "jp": "王明です。あなたは？Annaです。学生です。あなたは？私も学生です。", "en": "I'm Wang Ming. And you? I'm Anna. I'm a student. And you? I'm a student too." }
+        "text": "我叫Anna。很高兴认识你。",
+        "pinyin": "Wǒ jiào A n n a 。 Hěn gāo xìng rèn shi nǐ 。",
+        "translation": {
+          "kr": "저는 Anna예요. 만나서 반가워요.",
+          "en": "I'm Anna. Nice to meet you.",
+          "jp": "Annaです。 はじめまして。"
+        }
       }
     }
   ],
@@ -105,7 +210,11 @@
       "kr": "나는 …라고 해요.",
       "en": "I'm called … / I'm ….",
       "phrase": "我叫……。",
-      "explain": { "kr": "이름을 말할 때 씁니다.", "en": "Use when saying your name.", "jp": "名前を言うときに使います。" }
+      "explain": {
+        "kr": "이름을 말할 때 씁니다.",
+        "en": "Use when saying your name.",
+        "jp": "名前を言うときに使います。"
+      }
     },
     {
       "zh": "我是……。",
@@ -113,30 +222,272 @@
       "kr": "나는 …이에요.",
       "en": "I am ….",
       "phrase": "我是……。",
-      "explain": { "kr": "직업이나 신분을 말할 때 씁니다.", "en": "Use when saying your job or identity.", "jp": "職業や身分を言うときに使います。" }
+      "explain": {
+        "kr": "직업이나 신분을 말할 때 씁니다.",
+        "en": "Use when saying your job or identity.",
+        "jp": "職業や身分を言うときに使います。"
+      }
     }
   ],
   "practice": [
-    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___李明。", "kr": "나___ 이명이야.", "en": "I ___ Li Ming.", "jp": "私___李明です。" }, "options": ["叫", "是", "你", "名字"], "answer": "叫", "explanation": { "cn": "介绍名字用「我叫」。", "kr": "이름 소개는 「我叫」.", "en": "Use 叫 for name.", "jp": "名前紹介は「我叫」。" } },
-    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「名字」的意思是？", "kr": "「名字」의 뜻은?", "en": "What does 名字 mean?", "jp": "「名字」の意味は？" }, "options": ["学生", "老师", "名字", "叫"], "answer": "名字", "explanation": { "cn": "「名字」即姓名。", "kr": "「名字」는 이름.", "en": "名字 means name.", "jp": "「名字」は名前。" } },
-    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___学生。", "kr": "나___ 학생이야.", "en": "I ___ a student.", "jp": "私___学生です。" }, "options": ["叫", "是", "你", "名字"], "answer": "是", "explanation": { "cn": "说明身份用「是」。", "kr": "신분은 「是」.", "en": "Use 是 for identity.", "jp": "身分は「是」。" } },
-    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「你呢？」表示什么？", "kr": "「你呢？」는 무슨 뜻?", "en": "What does 你呢? mean?", "jp": "「你呢？」は何を聞く？" }, "options": ["你好", "你呢？是问对方同样的问题", "再见", "谢谢"], "answer": "你呢？是问对方同样的问题", "explanation": { "cn": "「呢」用于追问对方。", "kr": "「呢」는 상대에게 같은 걸 묻는 말.", "en": "呢 asks the other person the same.", "jp": "「呢」は相手に同じことを聞く。" } },
-    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "介绍自己名字的句子是？", "kr": "이름을 소개하는 문장은?", "en": "Which sentence introduces your name?", "jp": "名前を紹介する文は？" }, "options": ["我叫李明", "我是学生", "你好", "谢谢"], "answer": "我叫李明", "explanation": { "cn": "「我叫+名字」介绍名字。", "kr": "「我叫+이름」으로 이름 소개.", "en": "我叫 + name introduces name.", "jp": "「我叫+名前」で名前を紹介。" } }
+    {
+      "id": "p1",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你好，你叫什么名字？」，你应该说？",
+        "kr": "상대가 말할 때: 「你好，你叫什么名字？」 답은?",
+        "en": "Someone says: \"你好，你叫什么名字？\" You should say?",
+        "jp": "相手が「你好，你叫什么名字？」と言ったら、あなたは？"
+      },
+      "options": [
+        "很高兴认识你。",
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。"
+      ],
+      "answer": "我叫王明。你呢？",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「我叫Anna。」，你应该说？",
+        "kr": "상대가 말할 때: 「我叫Anna。」 답은?",
+        "en": "Someone says: \"我叫Anna。\" You should say?",
+        "jp": "相手が「我叫Anna。」と言ったら、あなたは？"
+      },
+      "options": [
+        "很高兴认识你。",
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。"
+      ],
+      "answer": "很高兴认识你。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
+      },
+      "options": [
+        "很高兴认识你。",
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。"
+      ],
+      "answer": "你好，你叫什么名字？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
+    },
+    {
+      "id": "p4",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
+      },
+      "options": [
+        "很高兴认识你。",
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。"
+      ],
+      "answer": "我叫王明。你呢？",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
+    },
+    {
+      "id": "p5",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+      },
+      "options": [
+        "很高兴认识你。",
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。"
+      ],
+      "answer": "很高兴认识你。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
+    }
   ],
   "review": {},
   "ai": [
-    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "我叫李明。我是学生。", "hint": { "cn": "请解释「叫」和「是」的用法。", "kr": "「叫」「是」의 쓰임을 설명해 보세요.", "en": "Explain 叫 and 是.", "jp": "「叫」と「是」の使い方を説明してください。" } },
-    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "self_intro", "prompt": { "cn": "请用「我叫……」「我是……」介绍自己。", "kr": "「我叫…」「我是…」로 자기 소개하세요.", "en": "Introduce yourself with 我叫… and 我是….", "jp": "「我叫…」「我是…」で自己紹介しましょう。" } },
-    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你好！我叫李明。", "你好！我叫安娜。", "我是学生。你呢？", "我也是学生。"] },
-    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "你好，你叫什么名字？ 我叫王明。你呢？",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你好，你叫什么名字？",
+        "我叫王明。你呢？",
+        "我叫Anna。",
+        "很高兴认识你。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
   ],
-  "aiPractice": { "speaking": ["我叫李明", "我是学生", "你呢", "我也是学生"], "chatPrompt": "AI说：你好！学生用「我叫……」「我是学生」介绍自己。" },
+  "aiPractice": {
+    "speaking": [
+      "你好，你叫什么名字？",
+      "我叫王明。你呢？",
+      "我叫Anna。",
+      "很高兴认识你。"
+    ],
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
-  ]
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ],
+  "vocabTargets": [
+    "我",
+    "叫",
+    "呢",
+    "名字",
+    "高兴",
+    "认识"
+  ],
+  "displayTitle": {
+    "cn": "你叫什么名字？",
+    "zh": "你叫什么名字？",
+    "en": "你叫什么名字？",
+    "kr": "你叫什么名字？",
+    "jp": "你叫什么名字？"
+  }
 }

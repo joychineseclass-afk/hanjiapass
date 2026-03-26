@@ -2,6 +2,8 @@
 // ✅ Data layer: version / fetchJson / lesson detail url + loader calls
 
 import { safeText } from "./hskDom.js";
+import { fetchJsonCached } from "../../../core/fetchJsonCached.js";
+import { dedupeLessonLoad } from "../lessonSession.js";
 
 /** version 仅允许 hsk2.0 / hsk3.0 */
 export function getVersion(dom) {
@@ -14,9 +16,7 @@ export function getVersion(dom) {
 }
 
 export async function fetchJson(url) {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`HTTP ${res.status} - ${url}`);
-  return res.json();
+  return fetchJsonCached(String(url), { cache: "no-store" });
 }
 
 export function getLessonNo(lesson, idxFallback = 0) {
@@ -39,29 +39,34 @@ export function lessonDetailUrl(level, lessonNo, version) {
   return `/data/courses/${ver}/hsk${lv}/lesson${no}.json`;
 }
 
-export async function loadLessonDetail({ level, lessonNo, version, detailCache }) {
+export async function loadLessonDetail({ level, lessonNo, version, detailCache, file } = {}) {
   const raw = safeText(version || "hsk2.0");
   const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   const lv = safeText(level || "1");
-  const key = `${ver}:${lv}:${lessonNo}`;
+  const filePart = safeText(file || "");
+  const key = `${ver}:${lv}:${lessonNo}:${filePart}`;
 
   const hit = detailCache?.get?.(key);
   if (hit) return hit;
 
-  if (window.HSK_LOADER?.loadLessonDetail) {
-    try {
-      const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver });
-      detailCache?.set?.(key, data);
-      return data;
-    } catch (e) {
-      console.warn("[hskData] HSK_LOADER.loadLessonDetail failed, fallback to direct fetch:", e?.message || e);
-    }
-  }
+  const dedupeKey = `hskData:${key}`;
 
-  const url = lessonDetailUrl(lv, lessonNo, ver);
-  const data = await fetchJson(url);
-  detailCache?.set?.(key, data);
-  return data;
+  return dedupeLessonLoad(dedupeKey, async () => {
+    if (window.HSK_LOADER?.loadLessonDetail) {
+      try {
+        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver, file: filePart || undefined });
+        detailCache?.set?.(key, data);
+        return data;
+      } catch (e) {
+        console.warn("[hskData] HSK_LOADER.loadLessonDetail failed, fallback to direct fetch:", e?.message || e);
+      }
+    }
+
+    const url = lessonDetailUrl(lv, lessonNo, ver);
+    const data = await fetchJson(url);
+    detailCache?.set?.(key, data);
+    return data;
+  });
 }
 
 export async function loadLevelData({ level, version }) {

@@ -8,6 +8,9 @@ import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
+/** 同一 stroke 页路径并发 HEAD 只发一次 */
+const _strokeHeadInflight = new Map();
+
 /** 解析笔顺页 URL，避免 /pages/pages/ 重复 */
 function resolveStrokeUrl(hanzi) {
   const ch = encodeURIComponent(hanzi || "");
@@ -28,7 +31,14 @@ async function resolveStrokeUrlAsync(hanzi) {
   for (const u of candidates) {
     try {
       const test = u.split("?")[0];
-      const r = await fetch(test, { method: "HEAD" });
+      let headP = _strokeHeadInflight.get(test);
+      if (!headP) {
+        headP = fetch(test, { method: "HEAD" }).finally(() => {
+          if (_strokeHeadInflight.get(test) === headP) _strokeHeadInflight.delete(test);
+        });
+        _strokeHeadInflight.set(test, headP);
+      }
+      const r = await headP;
       if (r.ok) return u;
     } catch {}
   }
@@ -77,6 +87,491 @@ export function wordMeaning(x, lang) {
   return getMeaningByLang(x, l, wordKey(x) || "");
 }
 
+function getLessonListNo(lesson) {
+  return Number(lesson?.lessonNo ?? lesson?.no ?? lesson?.id ?? lesson?.lesson ?? lesson?.index ?? 0) || 0;
+}
+
+/** 与 page.hsk mergeLessonVocabulary 一致：优先 distribution 的 core/extra */
+function mergeListEntryCoreVocab(lesson) {
+  if (!lesson) return [];
+
+  const core = Array.isArray(lesson.coreWords)
+    ? lesson.coreWords
+    : Array.isArray(lesson.distributedWords)
+    ? lesson.distributedWords
+    : [];
+
+  const extra = Array.isArray(lesson.extraWords) ? lesson.extraWords : [];
+
+  if (core.length === 0 && extra.length === 0) {
+    const fallback = lesson.words ?? lesson.originalWords;
+    return Array.isArray(fallback) ? fallback : [];
+  }
+
+  const seen = new Set();
+  const result = [];
+  for (const w of [...core, ...extra]) {
+    const k = wordKey(w);
+    if (k && !seen.has(k)) {
+      seen.add(k);
+      result.push(w);
+    }
+  }
+  return result;
+}
+
+function collectDialogueHanziSet(lessonData) {
+  const set = new Set();
+  const lines = Array.isArray(lessonData?.dialogue) ? lessonData.dialogue : [];
+  for (const line of lines) {
+    if (!line || typeof line !== "object") continue;
+    const zh = String(line.zh ?? line.cn ?? line.line ?? line.text ?? "").trim();
+    if (zh) set.add(zh);
+  }
+  return set;
+}
+
+function stripTrailingDialoguePunct(s) {
+  return String(s || "")
+    .replace(/[。！？!?\s]+$/g, "")
+    .trim();
+}
+
+/**
+ * 从一句定稿文本得到单个教学短单位（已去句末标点）；含句内逗号/问号片段则丢弃。
+ */
+function teachingUnitFromSegment(segment) {
+  let t = String(segment || "")
+    .replace(/[？?！!]+$/g, "")
+    .trim();
+  t = stripTrailingDialoguePunct(t);
+  if (!t) return null;
+  if (/[，、,；;？?]/.test(t)) return null;
+  const hanCount = Array.from(t).filter((ch) => /[\u4e00-\u9fff]/.test(ch)).length;
+  /* 上限 10：覆盖 HSK1 第14/18 课等 9 字问句，仍拒绝冗长段落 */
+  if (hanCount < 1 || hanCount > 10) return null;
+  if (isLikelyFullSentenceVocab(t, new Set(), false)) return null;
+  return { hanzi: t };
+}
+
+/** 对无句内逗号的一节按「。」再切（兼容「我叫王明。你呢？」单行） */
+function segmentsFromClauseChunk(chunk) {
+  const c = String(chunk || "").trim();
+  if (!c) return [];
+  const parts = c.split(/。/).map((s) => s.trim()).filter(Boolean);
+  const pieces = parts.length ? parts : [c];
+  const out = [];
+  for (const p of pieces) {
+    const u = teachingUnitFromSegment(p);
+    if (u) out.push(u);
+  }
+  return out;
+}
+
+/**
+ * 从定稿 dialogue 一行拆出 0..n 个教学单位：先按 ，、 分句，再按 。 分节；与第1课单行格式兼容，并覆盖第2课起常见「一句多顿号/句号」写法。
+ * 仍只使用 dialogue 字段，不读 extension/grammar。
+ */
+function dialogueLineToTeachingUnits(line) {
+  const raw0 = String(line?.zh ?? line?.cn ?? line?.line ?? line?.text ?? "").trim();
+  if (!raw0) return [];
+  const chunks = raw0.split(/[，、]/).map((s) => s.trim()).filter(Boolean);
+  if (!chunks.length) return [];
+  const out = [];
+  for (const ch of chunks) {
+    out.push(...segmentsFromClauseChunk(ch));
+  }
+  return out;
+}
+
+/**
+ * 仅从定稿 dialogue 按行顺序抽取教学单位（同行内去重保留先出现顺序）。
+ */
+function collectDialogueTeachingUnitsInOrder(lessonData) {
+  const lines = Array.isArray(lessonData?.dialogue) ? lessonData.dialogue : [];
+  const seen = new Set();
+  const out = [];
+  for (const line of lines) {
+    for (const u of dialogueLineToTeachingUnits(line)) {
+      const h = wordKey(u);
+      if (!h || seen.has(h)) continue;
+      seen.add(h);
+      out.push({ hanzi: h });
+    }
+  }
+  return out;
+}
+
+/** @param {string[]|Set<string>|null|undefined} allowlist */
+function coerceTargetsOrder(allowlist) {
+  if (!allowlist) return [];
+  const seq =
+    allowlist instanceof Set
+      ? [...allowlist]
+      : Array.isArray(allowlist)
+      ? allowlist
+      : [];
+  const out = [];
+  const seen = new Set();
+  for (const t of seq) {
+    const s = typeof t === "string" ? t.trim() : String(t || "").trim();
+    if (!s || seen.has(s)) continue;
+    seen.add(s);
+    out.push(s);
+  }
+  return out;
+}
+
+/**
+ * 在「对话教学单位」基础上做受控拆分：
+ * - 整单位始终先保留；仅当该单位本身也是本课 vocabTargets 中的「标准教学目标词」时，才允许从中拆出子项。
+ * - 子项仍须 ∈ vocabTargets；单字仅拆明确列入的汉字；多字仅拆白名单中的真子串（长度≥2）。
+ * - 若对话单位未列入本课目标（仅偶然出现在句中），不拆，避免把白名单当成逐字开关。
+ */
+function expandDialogueUnitsWithControlledSplit(dialUnits, lessonSplitAllowlist) {
+  const ordered = coerceTargetsOrder(lessonSplitAllowlist);
+  if (!ordered.length) {
+    return dialUnits.slice();
+  }
+  const allow = new Set(ordered);
+  const allowArr = ordered;
+  const out = [];
+  const seen = new Set();
+
+  for (const u of dialUnits) {
+    const h = wordKey(u);
+    if (!h) continue;
+    if (!seen.has(h)) {
+      seen.add(h);
+      out.push({ hanzi: h });
+    }
+    if (h.length < 2) continue;
+
+    if (!allow.has(h)) continue;
+
+    const hanChars = Array.from(h).filter((ch) => /[\u4e00-\u9fff]/.test(ch));
+    for (const ch of hanChars) {
+      if (!allow.has(ch)) continue;
+      if (seen.has(ch)) continue;
+      seen.add(ch);
+      out.push({ hanzi: ch });
+    }
+
+    for (const term of allowArr) {
+      if (term.length < 2) continue;
+      if (term === h) continue;
+      if (!h.includes(term)) continue;
+      if (seen.has(term)) continue;
+      seen.add(term);
+      out.push({ hanzi: term });
+    }
+  }
+  return out;
+}
+
+/**
+ * 普通新课：单词卡主顺序来自 lessons.json（及单课 json）人工确认的 vocabTargets；lesson.vocab 仅做拼音/释义 enrich。
+ * 若本课 vocabTargets 非空：严格按该列表顺序出卡（排除前几课已学），不做对话派生与整句过滤。
+ * 若为空：回退为「定稿 dialogue → 受控拆分（lessonSplitAllowlist 作门闸）」。
+ * @param {object} lessonData - 归一化后的 lesson
+ * @param {Array} lessonVocabForEnrich - 通常为 startLesson 的 vocab 列表
+ * @param {Set<string>} priorHanziSet - 前几课已学汉字（同规则派生）
+ * @param {object} [opts]
+ * @param {string[]|Set<string>|null} [opts.lessonSplitAllowlist] - 本课 vocabTargets
+ */
+export function deriveRegularLessonPanelWordList(
+  lessonData,
+  lessonVocabForEnrich,
+  priorHanziSet,
+  opts = {}
+) {
+  const { diagnosticLog = true, lessonSplitAllowlist = null } = opts;
+  const prior = priorHanziSet instanceof Set ? priorHanziSet : new Set();
+  const enrich = Array.isArray(lessonVocabForEnrich) ? lessonVocabForEnrich : [];
+
+  const targetsOrder = coerceTargetsOrder(lessonSplitAllowlist);
+  let baseUnits = [];
+  let dialUnits = [];
+  let baseLayerUsed = "lesson_dialogue_plus_controlled_split";
+
+  if (targetsOrder.length > 0) {
+    baseLayerUsed = "lessons_vocab_targets_order";
+    dialUnits = targetsOrder.map((t) => ({ hanzi: t }));
+  } else {
+    baseUnits = collectDialogueTeachingUnitsInOrder(lessonData);
+    dialUnits = expandDialogueUnitsWithControlledSplit(baseUnits, lessonSplitAllowlist);
+  }
+
+  const dialogueZhs = collectDialogueHanziSet(lessonData);
+  const enriched = enrichPanelFromLessonVocab(dialUnits, enrich);
+
+  const out = [];
+  const seen = new Set();
+  const skipSentenceFilter = targetsOrder.length > 0;
+  for (const w of enriched) {
+    const h = wordKey(w);
+    if (!h || seen.has(h)) continue;
+    if (prior.has(h)) continue;
+    if (!skipSentenceFilter && isLikelyFullSentenceVocab(h, dialogueZhs, false)) continue;
+    seen.add(h);
+    out.push(w);
+  }
+
+  if (diagnosticLog && typeof console !== "undefined" && console.log) {
+    console.log(
+      "[HSK-WORD-SOURCE]",
+      JSON.stringify({
+        phase: "summary",
+        baseLayerUsed,
+        lessonNo: Number(lessonData?.lessonNo) || 0,
+        counts: {
+          panelWordsFinal: out.length,
+          dialogueTeachingUnits: baseUnits.length,
+          afterControlledSplit: dialUnits.length,
+          vocabTargetsOrderLen: targetsOrder.length,
+          priorHanziExcluded: prior.size,
+        },
+      })
+    );
+  }
+
+  return out;
+}
+
+/** 用于前几课「已学」集合：与 panel 派生规则一致（不含 prior 互斥） */
+export function collectRegularLessonPanelHanziKeys(lessonData, lessonSplitAllowlist) {
+  const list = deriveRegularLessonPanelWordList(
+    lessonData,
+    [],
+    new Set(),
+    {
+      diagnosticLog: false,
+      lessonSplitAllowlist: lessonSplitAllowlist || null,
+    }
+  );
+  return new Set(list.map((w) => wordKey(w)).filter(Boolean));
+}
+
+function collectPriorLessonHanziSet(courseLessons, currentLessonNo) {
+  const set = new Set();
+  const cur = Number(currentLessonNo) || 0;
+  if (!Array.isArray(courseLessons) || cur <= 1) return set;
+
+  for (const lesson of courseLessons) {
+    const no = getLessonListNo(lesson);
+    if (no <= 0 || no >= cur) continue;
+    for (const w of mergeListEntryCoreVocab(lesson)) {
+      const h = wordKey(w);
+      if (h) set.add(h);
+    }
+  }
+  return set;
+}
+
+function lessonVocabLookupByHanzi(lessonVocabItems) {
+  const map = new Map();
+  const arr = Array.isArray(lessonVocabItems) ? lessonVocabItems : [];
+  for (const x of arr) {
+    const h = wordKey(x);
+    if (h && !map.has(h)) map.set(h, x);
+  }
+  return map;
+}
+
+function enrichPanelFromLessonVocab(baseList, lessonVocabItems) {
+  const byHan = lessonVocabLookupByHanzi(lessonVocabItems);
+  return baseList.map((w) => {
+    const h = wordKey(w);
+    if (!h) return w;
+    const full = byHan.get(h);
+    return full && typeof full === "object" ? { ...full, ...w } : w;
+  });
+}
+
+function isLikelyFullSentenceVocab(han, dialogueExactSet, isReviewLesson) {
+  if (!han) return true;
+  if (dialogueExactSet && dialogueExactSet.has(han)) {
+    if (isReviewLesson) return han.length >= 8;
+    return true;
+  }
+  if (/[。！？…]/.test(han)) return true;
+  if (isReviewLesson) return han.length > 28;
+  if (han.length >= 15) return true;
+  const hanCount = Array.from(han).filter((ch) => /[\u4e00-\u9fff]/.test(ch)).length;
+  if (hanCount >= 10) return true;
+  if (han.includes("，") && hanCount >= 6) return true;
+  return false;
+}
+
+function classifyListEntryBucket(h, listEntry) {
+  if (!listEntry || !h) return null;
+  const has = (arr) => Array.isArray(arr) && arr.some((w) => wordKey(w) === h);
+  if (has(listEntry.coreWords)) return "listEntry.coreWords";
+  if (has(listEntry.distributedWords)) return "listEntry.distributedWords";
+  if (has(listEntry.extraWords)) return "listEntry.extraWords";
+  const fb = listEntry.words ?? listEntry.originalWords;
+  if (has(fb)) return "listEntry.words|originalWords";
+  return null;
+}
+
+function lessonItemsHasHanzi(items, h) {
+  return Array.isArray(items) && items.some((w) => wordKey(w) === h);
+}
+
+/**
+ * 仅诊断：不改变取词结果
+ */
+function logHskWordSourceDiagnostics({
+  lessonData,
+  listEntry,
+  lessonNo,
+  upstreamField,
+  items,
+  fromListMerged,
+  baseFromList,
+  isReview,
+  dialogueZhs,
+  prior,
+  usedRelaxedFallback,
+  out,
+}) {
+  const exprLen = Array.isArray(lessonData?.expressions) ? lessonData.expressions.length : 0;
+  const extLen = Array.isArray(lessonData?.extension) ? lessonData.extension.length : 0;
+  const listMergeLenAlways = mergeListEntryCoreVocab(listEntry).length;
+
+  console.log(
+    "[HSK-WORD-SOURCE]",
+    JSON.stringify({
+      phase: "summary",
+      lessonNo: Number(lessonNo) || 0,
+      lessonType: lessonData?.type ?? "",
+      isReview,
+      upstreamLessonWordsField: upstreamField || "unknown",
+      counts: {
+        lessonVocabItemsInput: items.length,
+        mergeListEntryCoreVocab: fromListMerged.length,
+        mergeListEntryCoreVocab_listEntryOnly: listMergeLenAlways,
+        lessonDataVocab: Array.isArray(lessonData?.vocab) ? lessonData.vocab.length : 0,
+        lessonDataWords: Array.isArray(lessonData?.words) ? lessonData.words.length : 0,
+        dialogueLinesForFilter: dialogueZhs.size,
+        priorHanziExcludedInStrictPass: prior.size,
+        panelWordsFinal: out.length,
+        lessonExpressions: exprLen,
+        lessonExtensionBlocks: extLen,
+      },
+      baseLayerUsed: isReview
+        ? "review:lessonVocabItems_only"
+        : baseFromList
+        ? "mergeListEntryCoreVocab(listEntry)"
+        : "lessonVocabItems (no list merge)",
+      relaxedFallbackPass: usedRelaxedFallback,
+      pipelineNotes: [
+        "dialogue|expressions|extension are not merged into vocab inside selectHskWordPanelVocabulary",
+        "cross_lesson set is prior lessons mergeListEntryCoreVocab only; used to drop tokens in strict pass",
+      ],
+    })
+  );
+
+  const byHan = lessonVocabLookupByHanzi(items);
+  for (const w of out) {
+    const h = wordKey(w);
+    if (!h) continue;
+    const listBucket = classifyListEntryBucket(h, listEntry);
+    const inInputItems = lessonItemsHasHanzi(items, h);
+    const enrichedFromLessonJson = inInputItems && !!(byHan.get(h) && typeof byHan.get(h) === "object");
+
+    let primaryTrack = "unknown";
+    if (isReview) {
+      primaryTrack = inInputItems ? "lessonVocabItems.review_vocab" : "review_item_not_in_input?";
+    } else if (baseFromList) {
+      primaryTrack = listBucket || "list_merge_order_but_unclassified";
+    } else {
+      primaryTrack = upstreamField || "lessonVocabItems.fallback_no_list";
+    }
+
+    console.log(
+      "[HSK-WORD-SOURCE]",
+      JSON.stringify({
+        phase: "word",
+        hanzi: h,
+        primaryTrack,
+        listEntryBucket: listBucket,
+        inLessonVocabItems: inInputItems,
+        metadataEnrichedFromLessonJson: enrichedFromLessonJson,
+        strictVsRelaxed: usedRelaxedFallback ? "relaxed_rebuild_skipped_prior_filter" : "strict_pass",
+        renderTarget: "renderWordCards(panelWords)",
+      })
+    );
+  }
+}
+
+/**
+ * HSK 学习页「单词区」：优先本课教学目标词（目录项 core/extra），去掉会话整句与前几课已学词；复习课保留复习逻辑。
+ */
+export function selectHskWordPanelVocabulary(lessonVocabItems, ctx = {}) {
+  const { lessonData, listEntry, courseLessons, lessonNo, upstreamField } = ctx;
+  const items = Array.isArray(lessonVocabItems) ? lessonVocabItems : [];
+
+  if (!lessonData) return items;
+
+  const isReview = String(lessonData.type || "") === "review";
+  const dialogueZhs = collectDialogueHanziSet(lessonData);
+  const prior = isReview ? new Set() : collectPriorLessonHanziSet(courseLessons, lessonNo);
+
+  const fromListMerged = !isReview ? mergeListEntryCoreVocab(listEntry) : [];
+  let base;
+  let baseFromList = false;
+  if (isReview) {
+    base = items;
+  } else {
+    base = fromListMerged.length ? fromListMerged : items;
+    baseFromList = fromListMerged.length > 0;
+  }
+
+  const enriched = enrichPanelFromLessonVocab(base, items);
+  const out = [];
+  const seen = new Set();
+
+  for (const w of enriched) {
+    const h = wordKey(w);
+    if (!h || seen.has(h)) continue;
+    if (!isReview && prior.has(h)) continue;
+    if (isLikelyFullSentenceVocab(h, dialogueZhs, isReview)) continue;
+    seen.add(h);
+    out.push(w);
+  }
+
+  let usedRelaxedFallback = false;
+  if (!out.length && !isReview && items.length) {
+    usedRelaxedFallback = true;
+    const seen2 = new Set();
+    for (const w of enriched) {
+      const h = wordKey(w);
+      if (!h || seen2.has(h)) continue;
+      if (isLikelyFullSentenceVocab(h, dialogueZhs, false)) continue;
+      seen2.add(h);
+      out.push(w);
+    }
+  }
+
+  logHskWordSourceDiagnostics({
+    lessonData,
+    listEntry,
+    lessonNo,
+    upstreamField,
+    items,
+    fromListMerged,
+    baseFromList,
+    isReview,
+    dialogueZhs,
+    prior,
+    usedRelaxedFallback,
+    out,
+  });
+
+  return out;
+}
+
 export function renderLessonList(containerEl, lessons, { lang, currentLessonNo = 0 } = {}) {
   if (!containerEl) return;
   const list = Array.isArray(lessons) ? lessons : [];
@@ -86,8 +581,24 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   const rows = list.map((it) => {
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
-
-    const titleDisplay = getLessonDisplayTitle(it, displayLang) || "-";
+    console.log("[HSK-TITLE-CHECK-20260326]", {
+      lessonNo: it.lessonNo || it.no,
+      displayTitle: it.displayTitle,
+      title: it.title
+    });
+    const isRegularL1toL20 =
+      String(it?.type || "lesson") !== "review" && lessonNo >= 1 && lessonNo <= 20;
+    const titleDisplay = isRegularL1toL20
+      ? (() => {
+          const t = it?.displayTitle;
+          if (typeof t === "string") return t.trim() || "-";
+          if (t && typeof t === "object") {
+            const v = pick(t, { strict: true, lang: displayLang });
+            return (typeof v === "string" && v.trim()) ? v.trim() : "-";
+          }
+          return "-";
+        })()
+      : getLessonDisplayTitle(it, displayLang) || "-";
 
     const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
@@ -417,23 +928,21 @@ export function renderReviewDialogue(containerEl, cards, { lang } = {}) {
     containerEl.innerHTML = `${hero}<div class="lesson-empty-state">${i18n.t("hsk.empty_dialogue")}</div>`;
     return;
   }
-  const pickTrans = (line) => {
-    if (!line || typeof line !== "object") return "";
-    // 先严格按当前语言取 translation（与普通 lesson dialogue 一致）
-    const translated = getContentText(line, "translation", { strict: true, lang: l });
-    if (translated) return translated;
-    // 再使用非 strict 模式做多语言 fallback（currentLang → 其他语言），仍通过 languageEngine 统一处理
-    const fallback = getContentText(line, "translation", { strict: false, lang: l });
-    if (fallback) return fallback;
-    return "";
-  };
-  const rows = [];
-  for (const card of list) {
-    const lines = Array.isArray(card?.lines) ? card.lines : [];
-    for (const line of lines) {
-      const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
-      const py = String((line?.pinyin ?? line?.py ?? "")).trim();
-      const trans = pickTrans(line);
+  
+ const dialogLang = normalizeLang(lang ?? getLang());
+
+const pickTrans = (line, lang) => {
+  if (!line || typeof line !== "object") return "";
+  return line.translation?.[lang] || "";
+};
+
+const rows = [];
+for (const card of list) {
+  const lines = Array.isArray(card?.lines) ? card.lines : [];
+  for (const line of lines) {
+    const zh = String((line?.text ?? line?.zh ?? line?.cn ?? line?.line ?? "")).trim();
+    const py = String((line?.pinyin ?? line?.py ?? "")).trim();
+    const trans = pickTrans(line, "ko");
       if (!zh) continue;
       const pyResolved = py || resolvePinyin(zh, "");
       const zhEsc = escapeHtml(zh).replaceAll('"', "&quot;");

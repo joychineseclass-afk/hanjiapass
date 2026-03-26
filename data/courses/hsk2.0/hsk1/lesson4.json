@@ -14,43 +14,186 @@
   "summary": {
     "zh": "问来自哪里、说自己是哪国人",
     "kr": "어느 나라 사람인지 묻고 말하기",
-    "en": "Asking and saying which country you are from"
+    "en": "Asking and saying which country you are from",
+    "jp": "Asking and saying which country you are from"
   },
   "scene": {
     "id": "l4_scene",
-    "title": { "zh": "问来自哪里", "kr": "어디서 왔는지 묻기", "en": "Asking where someone is from" },
-    "summary": { "zh": "见面后问对方是哪国人，介绍自己的国家。", "kr": "만난 후 어느 나라 사람인지 묻고 자기 나라를 소개한다.", "en": "After meeting, ask which country they are from and say your country." }
+    "title": {
+      "zh": "问来自哪里",
+      "kr": "어디서 왔는지 묻기",
+      "en": "Asking where someone is from"
+    },
+    "summary": {
+      "zh": "见面后问对方是哪国人，介绍自己的国家。",
+      "kr": "만난 후 어느 나라 사람인지 묻고 자기 나라를 소개한다.",
+      "en": "After meeting, ask which country they are from and say your country."
+    }
   },
   "objectives": [
-    { "zh": "学会问「你是哪国人？」", "kr": "「你是哪国人？」를 물을 수 있다", "en": "Can ask 你是哪国人?" },
-    { "zh": "学会说「我是……人」", "kr": "「我是…人」을 말할 수 있다", "en": "Can say 我是…人" }
+    {
+      "zh": "学会问「你是哪国人？」",
+      "kr": "「你是哪国人？」를 물을 수 있다",
+      "en": "Can ask 你是哪国人?"
+    },
+    {
+      "zh": "学会说「我是……人」",
+      "kr": "「我是…人」을 말할 수 있다",
+      "en": "Can say 我是…人"
+    }
   ],
   "vocab": [
-    { "hanzi": "哪", "pinyin": "nǎ", "meaning": { "zh": "哪", "kr": "어느", "jp": "どの", "en": "which" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "国", "pinyin": "guó", "meaning": { "zh": "国", "kr": "나라", "jp": "国", "en": "country" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "人", "pinyin": "rén", "meaning": { "zh": "人", "kr": "사람", "jp": "人", "en": "person" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "中国", "pinyin": "Zhōngguó", "meaning": { "zh": "中国", "kr": "중국", "jp": "中国", "en": "China" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "韩国", "pinyin": "Hánguó", "meaning": { "zh": "韩国", "kr": "한국", "jp": "韓国", "en": "Korea" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "美国", "pinyin": "Měiguó", "meaning": { "zh": "美国", "kr": "미국", "jp": "アメリカ", "en": "America" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } },
-    { "hanzi": "日本", "pinyin": "Rìběn", "meaning": { "zh": "日本", "kr": "일본", "jp": "日本", "en": "Japan" }, "pos": { "kr": "명사", "en": "noun", "jp": "名詞" } }
+    {
+      "hanzi": "他是谁？",
+      "pinyin": "tā shì shuí ？",
+      "meaning": {
+        "zh": "他是谁？",
+        "kr": "그는 누구예요?",
+        "jp": "彼は誰ですか？",
+        "en": "Who is he?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "他是我的爸爸。",
+      "pinyin": "tā shì wǒ de bà ba 。",
+      "meaning": {
+        "zh": "他是我的爸爸。",
+        "kr": "그는 제 아빠예요.",
+        "jp": "彼は私の父です。",
+        "en": "He is my dad."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "她呢？",
+      "pinyin": "tā ne ？",
+      "meaning": {
+        "zh": "她呢？",
+        "kr": "그녀는요?",
+        "jp": "彼女は？",
+        "en": "What about her?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "她是我的妈妈。",
+      "pinyin": "tā shì wǒ de mā ma 。",
+      "meaning": {
+        "zh": "她是我的妈妈。",
+        "kr": "그녀는 제 엄마예요.",
+        "jp": "彼女は私の母です。",
+        "en": "She is my mom."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你爱爸爸妈妈吗？",
+      "pinyin": "nǐ ài bà ba mā ma ma ？",
+      "meaning": {
+        "zh": "你爱爸爸妈妈吗？",
+        "kr": "아빠 엄마 사랑해요?",
+        "jp": "お父さんとお母さんを愛していますか？",
+        "en": "Do you love your mom and dad?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "爱，我很爱他们。",
+      "pinyin": "ài ， wǒ hěn ài tā men 。",
+      "meaning": {
+        "zh": "爱，我很爱他们。",
+        "kr": "사랑해요, 저는 그들을 아주 사랑해요.",
+        "jp": "はい、とても愛しています。",
+        "en": "Yes, I love them very much."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "他是谁？" },
-    { "speaker": "B", "text": "他是我的爸爸。" },
-    { "speaker": "A", "text": "她呢？" },
-    { "speaker": "B", "text": "她是我的妈妈。" },
-    { "speaker": "A", "text": "你爱爸爸妈妈吗？" },
-    { "speaker": "B", "text": "爱，我很爱他们。" }
-  ],
-  "originalDialogues": [
     {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你是哪国人？", "translation": { "en": "Which country are you from?", "kr": "너 어느 나라 사람이야?", "jp": "どこの国の人ですか？" }, "pinyin": "Nǐ shì nǎ guó rén?" },
-        { "speaker": "B", "text": "我是中国人。", "translation": { "en": "I'm Chinese.", "kr": "나는 중국인이야.", "jp": "中国人です。" }, "pinyin": "Wǒ shì Zhōngguó rén." },
-        { "speaker": "A", "text": "你呢？", "translation": { "en": "And you?", "kr": "너는?", "jp": "あなたは？" }, "pinyin": "Nǐ ne?" },
-        { "speaker": "B", "text": "我是韩国人。", "translation": { "en": "I'm Korean.", "kr": "나는 한국인이야.", "jp": "韓国人です。" }, "pinyin": "Wǒ shì Hánguó rén." }
-      ]
+      "speaker": "A",
+      "text": "他是谁？",
+      "pinyin": "Tā shì shuí ？",
+      "translation": {
+        "kr": "그는 누구예요?",
+        "en": "Who is he?",
+        "jp": "彼は誰ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "他是我的爸爸。",
+      "pinyin": "Tā shì wǒ de bà ba 。",
+      "translation": {
+        "kr": "그는 제 아빠예요.",
+        "en": "He is my dad.",
+        "jp": "彼は私の父です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "她呢？",
+      "pinyin": "Tā ne ？",
+      "translation": {
+        "kr": "그녀는요?",
+        "en": "What about her?",
+        "jp": "彼女は？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "她是我的妈妈。",
+      "pinyin": "Tā shì wǒ de mā ma 。",
+      "translation": {
+        "kr": "그녀는 제 엄마예요.",
+        "en": "She is my mom.",
+        "jp": "彼女は私の母です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你爱爸爸妈妈吗？",
+      "pinyin": "Nǐ ài bà ba mā ma ma ？",
+      "translation": {
+        "kr": "아빠 엄마 사랑해요?",
+        "en": "Do you love your mom and dad?",
+        "jp": "お父さんとお母さんを愛していますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "爱，我很爱他们。",
+      "pinyin": "Ài ， wǒ hěn ài tā men 。",
+      "translation": {
+        "kr": "사랑해요, 저는 그들을 아주 사랑해요.",
+        "en": "Yes, I love them very much.",
+        "jp": "はい、とても愛しています。"
+      }
     }
   ],
   "dialogueCards": [],
@@ -58,46 +201,55 @@
     {
       "pattern": "谁",
       "pinyin": "shéi",
-      "explain": {
-        "zh": "「谁」问“谁、什么人”。句型：他是谁？回答：他是 + 称呼/名字。",
+      "explanation": {
         "kr": "「谁」는 \"누구\"를 묻습니다. 他是谁？답: 他是+호칭.",
         "en": "谁 means who. Pattern: 他是谁? Answer: 他是 + person.",
         "jp": "「谁」は「誰」を聞く。他是谁？答：他是+呼称。"
       },
       "example": {
-        "zh": "他是谁？他是我的爸爸。她呢？她是我的妈妈。",
-        "pinyin": "Tā shì shéi? Tā shì wǒ de bàba. Tā ne? Tā shì wǒ de māma.",
-        "translation": { "kr": "그 누구야? 우리 아빠야. 그녀는? 우리 엄마야.", "jp": "彼は誰？私の父です。彼女は？私の母です。", "en": "Who is he? He's my dad. And her? She's my mom." }
+        "text": "他是谁？",
+        "pinyin": "Tā shì shuí ？",
+        "translation": {
+          "kr": "그는 누구예요?",
+          "en": "Who is he?",
+          "jp": "彼は誰ですか？"
+        }
       }
     },
     {
       "pattern": "的（表示所属）",
       "pinyin": "de",
-      "explain": {
-        "zh": "「的」放在名词前表示所属。我的爸爸 = 我 + 的 + 爸爸。",
+      "explanation": {
         "kr": "「的」는 명사 앞에서 소유를 나타냅니다. 我的爸爸 = 나의 아빠.",
         "en": "的 before a noun shows possession. 我的爸爸 = my dad.",
         "jp": "「的」は名詞の前で所属を表す。我的爸爸＝私の父。"
       },
       "example": {
-        "zh": "他是我的爸爸。她是我的妈妈。",
-        "pinyin": "Tā shì wǒ de bàba. Tā shì wǒ de māma.",
-        "translation": { "kr": "그는 우리 아빠야. 그녀는 우리 엄마야.", "jp": "彼は私の父です。彼女は私の母です。", "en": "He's my dad. She's my mom." }
+        "text": "他是我的爸爸。",
+        "pinyin": "Tā shì wǒ de bà ba 。",
+        "translation": {
+          "kr": "그는 제 아빠예요.",
+          "en": "He is my dad.",
+          "jp": "彼は私の父です。"
+        }
       }
     },
     {
       "pattern": "很（程度）",
       "pinyin": "hěn",
-      "explain": {
-        "zh": "「很」放在形容词前表示程度“很……”。如：很爱、很好。",
+      "explanation": {
         "kr": "「很」는 형용사 앞에서 정도를 나타냅니다. 很爱, 很好.",
         "en": "很 before an adjective means \"very\". 很爱 = love very much.",
         "jp": "「很」は形容詞の前で程度を表す。很爱、很好。"
       },
       "example": {
-        "zh": "你爱爸爸妈妈吗？爱，我很爱他们。",
-        "pinyin": "Nǐ ài bàba māma ma? Ài, wǒ hěn ài tāmen.",
-        "translation": { "kr": "엄마 아빠 사랑해? 응, 나는 그들 많이 사랑해.", "jp": "お父さんお母さんを愛してる？うん、とても愛してる。", "en": "Do you love your parents? Yes, I love them very much." }
+        "text": "爱，我很爱他们。她呢？她是我的妈妈。你爱爸爸妈妈吗？",
+        "pinyin": "Ài ， wǒ hěn ài tā men 。 Tā ne ？ Tā shì wǒ de mā ma 。 Nǐ ài bà ba mā ma ma ？",
+        "translation": {
+          "kr": "사랑해요, 저는 그들을 아주 사랑해요. 그녀는요? 그녀는 제 엄마예요. 아빠 엄마 사랑해요?",
+          "en": "Yes, I love them very much. What about her? She is my mom. Do you love your mom and dad?",
+          "jp": "はい、とても愛しています。 彼女は？ 彼女は私の母です。 お父さんとお母さんを愛していますか？"
+        }
       }
     }
   ],
@@ -108,7 +260,11 @@
       "kr": "나는 중국인이에요.",
       "en": "I'm Chinese.",
       "phrase": "我是中国人。",
-      "explain": { "kr": "국적을 말할 때 我是+国家+人", "en": "For nationality: 我是 + country + 人", "jp": "国籍は 我是+国+人" }
+      "explain": {
+        "kr": "국적을 말할 때 我是+国家+人",
+        "en": "For nationality: 我是 + country + 人",
+        "jp": "国籍は 我是+国+人"
+      }
     },
     {
       "zh": "我是韩国人。",
@@ -116,7 +272,11 @@
       "kr": "나는 한국인이에요.",
       "en": "I'm Korean.",
       "phrase": "我是韩国人。",
-      "explain": { "kr": "한국인일 때.", "en": "When you are Korean.", "jp": "韓国人のとき。" }
+      "explain": {
+        "kr": "한국인일 때.",
+        "en": "When you are Korean.",
+        "jp": "韓国人のとき。"
+      }
     },
     {
       "zh": "我是美国人。",
@@ -124,7 +284,11 @@
       "kr": "나는 미국인이에요.",
       "en": "I'm American.",
       "phrase": "我是美国人。",
-      "explain": { "kr": "미국인일 때.", "en": "When you are American.", "jp": "アメリカ人のとき。" }
+      "explain": {
+        "kr": "미국인일 때.",
+        "en": "When you are American.",
+        "jp": "アメリカ人のとき。"
+      }
     },
     {
       "zh": "我是日本人。",
@@ -132,30 +296,277 @@
       "kr": "나는 일본인이에요.",
       "en": "I'm Japanese.",
       "phrase": "我是日本人。",
-      "explain": { "kr": "일본인일 때.", "en": "When you are Japanese.", "jp": "日本人のとき。" }
+      "explain": {
+        "kr": "일본인일 때.",
+        "en": "When you are Japanese.",
+        "jp": "日本人のとき。"
+      }
     }
   ],
   "practice": [
-    { "id": "p1", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "你是___国人？", "kr": "너 ___ 나라 사람이야?", "en": "Which ___ are you from?", "jp": "どこの___の人ですか？" }, "options": ["哪", "什么", "谁", "这"], "answer": "哪", "explanation": { "cn": "问国家用「哪国」。", "kr": "나라를 물을 때 「哪国」.", "en": "Use 哪国 for country.", "jp": "国を聞くとき「哪国」。" } },
-    { "id": "p2", "type": "choice", "subtype": "zh_to_meaning", "prompt": { "cn": "「中国」的意思是？", "kr": "「中国」의 뜻은?", "en": "What does 中国 mean?", "jp": "「中国」の意味は？" }, "options": ["韩国", "中国", "美国", "日本"], "answer": "中国", "explanation": { "cn": "「中国」即 China。", "kr": "「中国」는 중국.", "en": "中国 means China.", "jp": "「中国」は中国。" } },
-    { "id": "p3", "type": "choice", "subtype": "sentence_blank", "prompt": { "cn": "我___中国人。", "kr": "나___ 중국인이야.", "en": "I ___ Chinese.", "jp": "私___中国人です。" }, "options": ["是", "叫", "哪", "国"], "answer": "是", "explanation": { "cn": "说国籍用「是」。", "kr": "국적은 「是」.", "en": "Use 是 for nationality.", "jp": "国籍は「是」。" } },
-    { "id": "p4", "type": "choice", "subtype": "dialogue_response", "prompt": { "cn": "「你是哪国人？」的回答可以是？", "kr": "「你是哪国人？」에 대한 답은?", "en": "Response to 你是哪国人?", "jp": "「你是哪国人？」への返答は？" }, "options": ["你好", "我是韩国人", "谢谢", "叫什么"], "answer": "我是韩国人", "explanation": { "cn": "回答国籍用「我是+国家+人」。", "kr": "국적 답은 「我是+나라+人」.", "en": "Reply with 我是 + country + 人.", "jp": "「我是+国+人」で答える。" } },
-    { "id": "p5", "type": "choice", "subtype": "sentence_order", "prompt": { "cn": "问国籍的正确说法是？", "kr": "국적을 물을 때 맞는 말은?", "en": "Correct way to ask nationality?", "jp": "国籍を聞く正しい言い方は？" }, "options": ["哪国人", "国人哪", "人哪国"], "answer": "哪国人", "explanation": { "cn": "哪+国+人=哪国人。", "kr": "哪+国+人=哪国人.", "en": "哪国人 = which country person.", "jp": "哪国人＝どこの国の人。" } }
+    {
+      "id": "p1",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「他是谁？」，你应该说？",
+        "kr": "상대가 말할 때: 「他是谁？」 답은?",
+        "en": "Someone says: \"他是谁？\" You should say?",
+        "jp": "相手が「他是谁？」と言ったら、あなたは？"
+      },
+      "options": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。"
+      ],
+      "answer": "他是我的爸爸。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「她呢？」，你应该说？",
+        "kr": "상대가 말할 때: 「她呢？」 답은?",
+        "en": "Someone says: \"她呢？\" You should say?",
+        "jp": "相手が「她呢？」と言ったら、あなたは？"
+      },
+      "options": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。"
+      ],
+      "answer": "她是我的妈妈。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
+      },
+      "options": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。"
+      ],
+      "answer": "他是谁？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
+    },
+    {
+      "id": "p4",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
+      },
+      "options": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。"
+      ],
+      "answer": "他是我的爸爸。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
+    },
+    {
+      "id": "p5",
+      "type": "choice",
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+      },
+      "options": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。"
+      ],
+      "answer": "她是我的妈妈。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
+    }
   ],
   "review": {},
   "ai": [
-    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "你是哪国人？我是中国人。", "hint": { "cn": "请解释问国籍和回答的说法。", "kr": "국적을 묻고 답하는 말을 설명해 보세요.", "en": "Explain how to ask and answer nationality.", "jp": "国籍の聞き方と答え方を説明してください。" } },
-    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "nationality", "prompt": { "cn": "请和同学互相问「你是哪国人？」并回答。", "kr": "친구와 「你是哪国人？」를 묻고 답하세요.", "en": "Ask each other 你是哪国人? and answer.", "jp": "「你是哪国人？」と答えを練習しましょう。" } },
-    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你是哪国人？", "我是中国人。", "你呢？", "我是韩国人。"] },
-    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "他是谁？ 他是我的爸爸。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "他是谁？",
+        "他是我的爸爸。",
+        "她呢？",
+        "她是我的妈妈。",
+        "你爱爸爸妈妈吗？",
+        "爱，我很爱他们。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
   ],
-  "aiPractice": { "speaking": ["你是哪国人", "我是中国人", "你呢", "我是韩国人"], "chatPrompt": "AI问：你是哪国人？学生用「我是……人」回答。" },
+  "aiPractice": {
+    "speaking": [
+      "他是谁？",
+      "他是我的爸爸。",
+      "她呢？",
+      "她是我的妈妈。",
+      "你爱爸爸妈妈吗？"
+    ],
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
-  ]
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ],
+  "vocabTargets": [
+    "他",
+    "她",
+    "谁",
+    "爸爸",
+    "妈妈",
+    "爱",
+    "很",
+    "他们"
+  ],
+  "displayTitle": {
+    "cn": "他是谁？",
+    "zh": "他是谁？",
+    "en": "他是谁？",
+    "kr": "他是谁？",
+    "jp": "他是谁？"
+  }
 }

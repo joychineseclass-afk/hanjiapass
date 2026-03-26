@@ -2,6 +2,9 @@
 // ✅ HSK UI (ESM) — exports initHSKUI()
 // Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY / window.LEARN_PANEL
 
+import { fetchJsonCached } from "../../core/fetchJsonCached.js";
+import { clearLessonLoadDedupe } from "./lessonSession.js";
+
 export function initHSKUI(opts = {}) {
   const $ = (id) => document.getElementById(id);
 
@@ -29,6 +32,7 @@ export function initHSKUI(opts = {}) {
 // ✅ 保留你原有的缓存机制（双保险）
 try { CACHE.clear(); } catch {}
 try { LESSON_DETAIL_CACHE.clear(); } catch {}
+try { clearLessonLoadDedupe(); } catch {}
 
 // ✅ 清当前课程全局，避免跨版本 lessonId 污染
 window.__HSK_CURRENT_LESSON_ID = "";
@@ -164,9 +168,7 @@ hskLevel?.dispatchEvent(new Event("change"));
 
   // ✅ NEW: 简单 fetch JSON（课件详情用）
   async function fetchJson(url) {
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status} - ${url}`);
-    return res.json();
+    return fetchJsonCached(String(url), { cache: "no-store" });
   }
 
   // ✅ NEW: 解析 lessonNo（兼容 id / lesson / title）

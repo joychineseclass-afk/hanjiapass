@@ -4,6 +4,8 @@
  * 新增语言只需添加 /lang/es.json 等，无需改代码
  */
 
+import { fetchJsonCached } from "./fetchJsonCached.js";
+
 const CACHE = new Map();
 
 /**
@@ -40,9 +42,7 @@ export async function loadLanguagePack(lang) {
   const url = base.startsWith("http") ? `${base}/${fileLang}.json` : `${base}/${fileLang}.json`;
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const pack = await res.json();
+    const pack = await fetchJsonCached(url, { cache: "no-store" });
     if (pack && typeof pack === "object") {
       CACHE.set(fileLang, pack);
       return pack;

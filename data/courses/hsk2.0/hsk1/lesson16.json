@@ -7,15 +7,28 @@
   "type": "lesson",
   "title": {
     "zh": "你去哪儿？",
-    "pinyin": "nǐ qù nǎr",
     "kr": "어디 가요?",
-    "en": "Where are you going?",
-    "jp": "どこへ行きますか？"
+    "jp": "どこへ行きますか？",
+    "en": "Where are you going?"
   },
   "summary": {
     "zh": "问去哪里、什么时候回家",
     "kr": "어디 가는지, 언제 집에 가는지 묻기",
-    "en": "Asking where to go and when to go home"
+    "en": "Asking where to go and when to go home",
+    "jp": "Asking where to go and when to go home"
+  },
+  "scene": {
+    "id": "l16_scene",
+    "title": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    },
+    "summary": {
+      "zh": "",
+      "kr": "",
+      "en": ""
+    }
   },
   "objectives": [
     {
@@ -31,149 +44,194 @@
   ],
   "vocab": [
     {
-      "hanzi": "去",
-      "pinyin": "qù",
+      "hanzi": "你去哪儿？",
+      "pinyin": "nǐ qù nǎ ér ？",
       "meaning": {
-        "zh": "去",
-        "kr": "가다",
-        "en": "to go",
-        "jp": "行く"
+        "zh": "你去哪儿？",
+        "kr": "어디 가요?",
+        "jp": "どこへ行きますか？",
+        "en": "Where are you going?"
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "回",
-      "pinyin": "huí",
+      "hanzi": "我去学校。",
+      "pinyin": "wǒ qù xué xiào 。",
       "meaning": {
-        "zh": "回",
-        "kr": "돌아가다",
-        "en": "to return",
-        "jp": "帰る"
+        "zh": "我去学校。",
+        "kr": "학교에 가요.",
+        "jp": "学校へ行きます。",
+        "en": "I'm going to school."
       },
       "pos": {
-        "kr": "동사",
-        "en": "verb",
-        "jp": "動詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "家",
-      "pinyin": "jiā",
+      "hanzi": "你现在去吗？",
+      "pinyin": "nǐ xiàn zài qù ma ？",
       "meaning": {
-        "zh": "家",
-        "kr": "집",
-        "en": "home",
-        "jp": "家"
+        "zh": "你现在去吗？",
+        "kr": "지금 가요?",
+        "jp": "今行きますか？",
+        "en": "Are you going now?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "回家",
-      "pinyin": "huí jiā",
+      "hanzi": "对，我现在去。",
+      "pinyin": "duì ， wǒ xiàn zài qù 。",
       "meaning": {
-        "zh": "回家",
-        "kr": "집에 돌아가다",
-        "en": "to go home",
-        "jp": "家に帰る"
+        "zh": "对，我现在去。",
+        "kr": "네, 지금 가요.",
+        "jp": "はい、今行きます。",
+        "en": "Yes, I'm going now."
       },
       "pos": {
-        "kr": "동사구",
-        "en": "verb phrase",
-        "jp": "動詞句"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "现在",
-      "pinyin": "xiànzài",
+      "hanzi": "你什么时候回家？",
+      "pinyin": "nǐ shén me shí hòu huí jiā ？",
       "meaning": {
-        "zh": "现在",
-        "kr": "지금",
-        "en": "now",
-        "jp": "今"
+        "zh": "你什么时候回家？",
+        "kr": "언제 집에 가요?",
+        "jp": "いつ家に帰りますか？",
+        "en": "When are you going home?"
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     },
     {
-      "hanzi": "下午",
-      "pinyin": "xiàwǔ",
+      "hanzi": "我下午回家。",
+      "pinyin": "wǒ xià wǔ huí jiā 。",
       "meaning": {
-        "zh": "下午",
-        "kr": "오후",
-        "en": "afternoon",
-        "jp": "午後"
+        "zh": "我下午回家。",
+        "kr": "오후에 집에 가요.",
+        "jp": "午後に家に帰ります。",
+        "en": "I'll go home in the afternoon."
       },
       "pos": {
-        "kr": "명사",
-        "en": "noun",
-        "jp": "名詞"
-      }
-    },
-    {
-      "hanzi": "什么时候",
-      "pinyin": "shénme shíhou",
-      "meaning": {
-        "zh": "什么时候",
-        "kr": "언제",
-        "en": "when",
-        "jp": "いつ"
-      },
-      "pos": {
-        "kr": "대명사",
-        "en": "pronoun",
-        "jp": "代名詞"
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
       }
     }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你去哪儿？" },
-    { "speaker": "B", "text": "我去学校。" },
-    { "speaker": "A", "text": "你现在去吗？" },
-    { "speaker": "B", "text": "对，我现在去。" },
-    { "speaker": "A", "text": "你什么时候回家？" },
-    { "speaker": "B", "text": "我下午回家。" }
+    {
+      "speaker": "A",
+      "text": "你去哪儿？",
+      "pinyin": "Nǐ qù nǎ ér ？",
+      "translation": {
+        "kr": "어디 가요?",
+        "en": "Where are you going?",
+        "jp": "どこへ行きますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我去学校。",
+      "pinyin": "Wǒ qù xué xiào 。",
+      "translation": {
+        "kr": "학교에 가요.",
+        "en": "I'm going to school.",
+        "jp": "学校へ行きます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你现在去吗？",
+      "pinyin": "Nǐ xiàn zài qù ma ？",
+      "translation": {
+        "kr": "지금 가요?",
+        "en": "Are you going now?",
+        "jp": "今行きますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "对，我现在去。",
+      "pinyin": "Duì ， wǒ xiàn zài qù 。",
+      "translation": {
+        "kr": "네, 지금 가요.",
+        "en": "Yes, I'm going now.",
+        "jp": "はい、今行きます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你什么时候回家？",
+      "pinyin": "Nǐ shén me shí hòu huí jiā ？",
+      "translation": {
+        "kr": "언제 집에 가요?",
+        "en": "When are you going home?",
+        "jp": "いつ家に帰りますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我下午回家。",
+      "pinyin": "Wǒ xià wǔ huí jiā 。",
+      "translation": {
+        "kr": "오후에 집에 가요.",
+        "en": "I'll go home in the afternoon.",
+        "jp": "午後に家に帰ります。"
+      }
+    }
   ],
   "dialogueCards": [],
   "grammar": [
     {
       "pattern": "去哪儿 / 去 + 地点",
       "pinyin": "qù nǎr / qù + dìdiǎn",
-      "explain": {
-        "zh": "问去向用「你去哪儿？」。回答：我去+地点。",
+      "explanation": {
         "kr": "어디 가는지 물을 때 「你去哪儿?」. 답: 我去+장소.",
         "en": "Ask where (someone) is going: 你去哪儿? Answer: 我去 + place.",
         "jp": "どこへ行くか「你去哪儿？」。答は「我去+場所」。"
       },
       "example": {
-        "zh": "你去哪儿？我去学校。你现在去吗？对，我现在去。",
-        "pinyin": "Nǐ qù nǎr? Wǒ qù xuéxiào. Nǐ xiànzài qù ma? Duì, wǒ xiànzài qù.",
-        "translation": { "kr": "어디 가? 학교 가. 지금 가? 응, 지금 가.", "jp": "どこへ行く？学校へ。今行く？うん、今行く。", "en": "Where are you going? To school. Now? Yes, now." }
+        "text": "你去哪儿？",
+        "pinyin": "Nǐ qù nǎ ér ？",
+        "translation": {
+          "kr": "어디 가요?",
+          "en": "Where are you going?",
+          "jp": "どこへ行きますか？"
+        }
       }
     },
     {
       "pattern": "什么时候 + 动词",
       "pinyin": "shénme shíhou + dòngcí",
-      "explain": {
-        "zh": "「什么时候」问时间。什么时候回家？回答：我+时间+回家。",
+      "explanation": {
         "kr": "「什么时候」는 \"언제\". 什么时候回家？我下午回家.",
         "en": "什么时候 = when. 什么时候回家？= When do you go home?",
         "jp": "「什么时候」はいつ。什么时候回家？我下午回家。"
       },
       "example": {
-        "zh": "你什么时候回家？我下午回家。",
-        "pinyin": "Nǐ shénme shíhou huí jiā? Wǒ xiàwǔ huí jiā.",
-        "translation": { "kr": "언제 집에 가? 나는 오후에 가.", "jp": "いつ帰る？午後に帰る。", "en": "When do you go home? I go home in the afternoon." }
+        "text": "你什么时候回家？我去学校。你现在去吗？对，我现在去。我下午回家。",
+        "pinyin": "Nǐ shén me shí hòu huí jiā ？ Wǒ qù xué xiào 。 Nǐ xiàn zài qù ma ？ Duì ， wǒ xiàn zài qù 。 Wǒ xià wǔ huí jiā 。",
+        "translation": {
+          "kr": "언제 집에 가요? 학교에 가요. 지금 가요? 네, 지금 가요. 오후에 집에 가요.",
+          "en": "When are you going home? I'm going to school. Are you going now? Yes, I'm going now. I'll go home in the afternoon.",
+          "jp": "いつ家に帰りますか？ 学校へ行きます。 今行きますか？ はい、今行きます。 午後に家に帰ります。"
+        }
       }
     }
   ],
@@ -210,7 +268,8 @@
       "phrase": "前面",
       "explain": {
         "kr": "앞",
-        "en": "front"
+        "en": "front",
+        "jp": "front"
       }
     },
     {
@@ -221,7 +280,8 @@
       "phrase": "后面",
       "explain": {
         "kr": "뒤",
-        "en": "back"
+        "en": "back",
+        "jp": "back"
       }
     },
     {
@@ -232,7 +292,8 @@
       "phrase": "里面",
       "explain": {
         "kr": "안",
-        "en": "inside"
+        "en": "inside",
+        "jp": "inside"
       }
     },
     {
@@ -243,7 +304,8 @@
       "phrase": "外面",
       "explain": {
         "kr": "밖",
-        "en": "outside"
+        "en": "outside",
+        "jp": "outside"
       }
     },
     {
@@ -254,91 +316,209 @@
       "phrase": "在……旁边",
       "explain": {
         "kr": "... 옆에",
-        "en": "next to..."
+        "en": "next to...",
+        "jp": "next to..."
       }
     }
   ],
   "practice": [
     {
+      "id": "p1",
       "type": "choice",
-      "question": {
-        "zh": "「来」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你去哪儿？」，你应该说？",
+        "kr": "상대가 말할 때: 「你去哪儿？」 답은?",
+        "en": "Someone says: \"你去哪儿？\" You should say?",
+        "jp": "相手が「你去哪儿？」と言ったら、あなたは？"
       },
       "options": [
-        "去",
-        "来",
-        "回"
+        "对，我现在去。",
+        "你去哪儿？",
+        "你现在去吗？",
+        "我去学校。"
       ],
-      "answer": "来"
+      "answer": "我去学校。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p2",
       "type": "choice",
-      "question": {
-        "zh": "「有」的意思是？",
-        "kr": "의미는?",
-        "en": "Meaning?"
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你现在去吗？」，你应该说？",
+        "kr": "상대가 말할 때: 「你现在去吗？」 답은?",
+        "en": "Someone says: \"你现在去吗？\" You should say?",
+        "jp": "相手が「你现在去吗？」と言ったら、あなたは？"
       },
       "options": [
-        "在",
-        "有",
-        "去"
+        "对，我现在去。",
+        "你去哪儿？",
+        "你现在去吗？",
+        "我去学校。"
       ],
-      "answer": "有"
+      "answer": "对，我现在去。",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
     },
     {
+      "id": "p3",
       "type": "choice",
-      "question": {
-        "zh": "我___家。",
-        "kr": "빈칸",
-        "en": "Fill in"
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "下面哪一句是本课的问句？",
+        "kr": "아래 중 이번 과의 질문 문장은?",
+        "en": "Which line below is a question in this lesson?",
+        "jp": "次のうち、この課の疑問文はどれですか？"
       },
       "options": [
-        "回",
-        "来",
-        "去"
+        "对，我现在去。",
+        "你去哪儿？",
+        "你现在去吗？",
+        "我去学校。"
       ],
-      "answer": "回"
+      "answer": "你去哪儿？",
+      "explanation": {
+        "cn": "问句常带有「吗」或问号「？」。",
+        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
+        "en": "Questions often use 吗 or 「？」。",
+        "jp": "疑問文には「吗」や「？」がよく付きます。"
+      }
     },
     {
+      "id": "p4",
       "type": "choice",
-      "question": {
-        "zh": "A：你有椅子吗？ B：___",
-        "kr": "대화",
-        "en": "Dialogue"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "选择本课对话中的句子：___",
+        "kr": "이번 과 대화 문장 고르기: ___",
+        "en": "Pick a sentence from this lesson’s dialogue: ___",
+        "jp": "この課の会話の文を選ぶ：___"
       },
       "options": [
-        "有",
-        "不",
-        "去"
+        "对，我现在去。",
+        "你去哪儿？",
+        "你现在去吗？",
+        "我去学校。"
       ],
-      "answer": "有"
+      "answer": "我去学校。",
+      "explanation": {
+        "cn": "选项均出自本课对话。",
+        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
+        "en": "All options come from this lesson’s dialogue.",
+        "jp": "選択肢はすべてこの課の会話に出てきます。"
+      }
     },
     {
+      "id": "p5",
       "type": "choice",
-      "question": {
-        "zh": "哪个是「桌子」？",
-        "kr": "어느 것?",
-        "en": "Which?"
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "下面哪一句出现在本课对话里？",
+        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
+        "en": "Which sentence appears in this lesson’s dialogue?",
+        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
       },
       "options": [
-        "椅子",
-        "桌子",
-        "有"
+        "对，我现在去。",
+        "你去哪儿？",
+        "你现在去吗？",
+        "我去学校。"
       ],
-      "answer": "桌子"
+      "answer": "对，我现在去。",
+      "explanation": {
+        "cn": "请回忆本课对话内容。",
+        "kr": "이번 과 대화를 떠올려 보세요.",
+        "en": "Recall this lesson’s dialogue.",
+        "jp": "この課の会話を思い出してください。"
+      }
     }
   ],
   "review": {},
+  "ai": [
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "你去哪儿？ 我去学校。",
+      "hint": {
+        "cn": "请结合本课对话解释句子意思。",
+        "kr": "이번 과 대화와 함께 문장 뜻을 설명해 보세요.",
+        "en": "Explain the sentence using this lesson’s dialogue.",
+        "jp": "この課の会話を踏まえて文の意味を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "lesson_dialogue",
+      "prompt": {
+        "cn": "请用本课对话中的句子进行角色扮演。",
+        "kr": "이번 과 대화 문장으로 역할극을 해 보세요.",
+        "en": "Roleplay using sentences from this lesson’s dialogue.",
+        "jp": "この課の会話の文でロールプレイをしましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你去哪儿？",
+        "我去学校。",
+        "你现在去吗？",
+        "对，我现在去。",
+        "你什么时候回家？",
+        "我下午回家。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
+  ],
   "aiPractice": {
     "speaking": [
-      "我去学校",
-      "我现在回家",
-      "我下午回家",
-      "你什么时候回家"
+      "你去哪儿？",
+      "我去学校。",
+      "你现在去吗？",
+      "对，我现在去。",
+      "你什么时候回家？"
     ],
-    "chatPrompt": "AI问：你去哪儿？学生回答去哪里、什么时候回家。"
+    "chatPrompt": "请用本课对话中的句子与同伴练习问答。"
   },
   "steps": [
     {
@@ -366,6 +546,14 @@
       }
     },
     {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
       "key": "practice",
       "label": {
         "zh": "练习",
@@ -382,56 +570,21 @@
       }
     }
   ],
-  "originalDialogues": [
-    {
-      "title": {
-        "zh": "会话1",
-        "kr": "회화1",
-        "en": "Session 1",
-        "jp": "会話1"
-      },
-      "lines": [
-        {
-          "speaker": "A",
-          "text": "你喜欢运动吗？",
-          "translation": {
-            "en": "Do you like sports?",
-            "kr": "Do you like sports?",
-            "jp": "Do you like sports?"
-          },
-          "pinyin": "nǐ xǐ huan yùn dòng ma ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢运动。",
-          "translation": {
-            "en": "I like sports.",
-            "kr": "I like sports.",
-            "jp": "I like sports."
-          },
-          "pinyin": "wǒ xǐ huan yùn dòng 。"
-        },
-        {
-          "speaker": "A",
-          "text": "你喜欢什么运动？",
-          "translation": {
-            "en": "What sport do you like?",
-            "kr": "What sport do you like?",
-            "jp": "What sport do you like?"
-          },
-          "pinyin": "nǐ xǐ huan shén me yùn dòng ？"
-        },
-        {
-          "speaker": "B",
-          "text": "我喜欢跑步。",
-          "translation": {
-            "en": "I like running.",
-            "kr": "I like running.",
-            "jp": "I like running."
-          },
-          "pinyin": "wǒ xǐ huan pǎo bù 。"
-        }
-      ]
-    }
-  ]
+  "vocabTargets": [
+    "去",
+    "现在",
+    "对",
+    "什么时候",
+    "回",
+    "家",
+    "回家",
+    "下午"
+  ],
+  "displayTitle": {
+    "cn": "你去哪儿？",
+    "zh": "你去哪儿？",
+    "en": "你去哪儿？",
+    "kr": "你去哪儿？",
+    "jp": "你去哪儿？"
+  }
 }

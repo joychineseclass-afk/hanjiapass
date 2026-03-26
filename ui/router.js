@@ -22,6 +22,7 @@ let navToken = 0;
 let _appEl = null;
 let _defaultHash = "#home";
 let _scrollTop = true;
+let _hashDebounceTimer = null;
 
 function $(id) {
   return document.getElementById(id);
@@ -194,11 +195,14 @@ export function startRouter(opts = {}) {
   _scrollTop = !!scrollTop;
 
   window.addEventListener("hashchange", () => {
-    handleRouteChange({
-      appEl: _appEl,
-      defaultHash: _defaultHash,
-      scrollTop: _scrollTop,
-    });
+    clearTimeout(_hashDebounceTimer);
+    _hashDebounceTimer = setTimeout(() => {
+      handleRouteChange({
+        appEl: _appEl,
+        defaultHash: _defaultHash,
+        scrollTop: _scrollTop,
+      });
+    }, 50);
   });
 
   if (!location.hash) location.hash = _defaultHash;
@@ -217,8 +221,6 @@ export function startRouter(opts = {}) {
 export const initRouter = startRouter;
 
 async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false }) {
-  const token = ++navToken;
-
   let hash = normalizeHash(location.hash);
   if (!hash) {
     location.hash = defaultHash;
@@ -239,7 +241,8 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     return;
   }
 
-  
+  const token = ++navToken;
+
   currentHash = hash;
   emitRouteEvent();
 

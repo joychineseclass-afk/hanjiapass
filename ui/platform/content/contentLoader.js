@@ -7,6 +7,7 @@
 import { ensureHSKDeps } from "../../modules/hsk/hskDeps.js";
 import { normalizeSteps } from "../../core/lessonSteps.js";
 import { isNoCacheEnv } from "../../core/noCacheEnv.js";
+import { fetchJsonCached } from "../../core/fetchJsonCached.js";
 
 const MEM = new Map();
 const MEM_TTL = isNoCacheEnv() ? 0 : 1000 * 60 * 30;
@@ -54,11 +55,8 @@ async function fetchJson(url, opts = {}) {
   let u = String(url || "");
   if (u.startsWith("./data/")) u = "/" + u.slice(2);
   const cacheOpt = opts.cache ?? "no-store";
-  const attempt = async (target) => {
-    const res = await fetch(target, { cache: cacheOpt });
-    if (!res.ok) throw new Error(`Fetch failed ${res.status}: ${target}`);
-    return res.json();
-  };
+  const init = { cache: cacheOpt };
+  const attempt = async (target) => fetchJsonCached(target, init);
   try {
     return await attempt(u);
   } catch (e) {

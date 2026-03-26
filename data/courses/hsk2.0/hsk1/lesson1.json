@@ -19,39 +19,151 @@
   },
   "scene": {
     "id": "l1_scene",
-    "title": { "zh": "第一次见面", "kr": "처음 만남", "en": "First meeting" },
-    "summary": { "zh": "两个人在路上第一次见面，互相问好。", "kr": "두 사람이 처음 만나 인사하다.", "en": "Two people meet for the first time and greet each other." }
+    "title": {
+      "zh": "第一次见面",
+      "kr": "처음 만남",
+      "en": "First meeting"
+    },
+    "summary": {
+      "zh": "两个人在路上第一次见面，互相问好。",
+      "kr": "두 사람이 처음 만나 인사하다.",
+      "en": "Two people meet for the first time and greet each other."
+    }
   },
   "objectives": [
-    { "zh": "学会用「你好」打招呼", "kr": "「你好」로 인사할 수 있다", "en": "Can greet with 你好" },
-    { "zh": "学会说「很高兴认识你」", "kr": "「很高兴认识你」를 말할 수 있다", "en": "Can say 很高兴认识你" }
+    {
+      "zh": "学会用「你好」打招呼",
+      "kr": "「你好」로 인사할 수 있다",
+      "en": "Can greet with 你好"
+    },
+    {
+      "zh": "学会说「很高兴认识你」",
+      "kr": "「很高兴认识你」를 말할 수 있다",
+      "en": "Can say 很高兴认识你"
+    }
   ],
   "vocab": [
-    { "hanzi": "你好", "pinyin": "nǐhǎo", "meaning": { "zh": "你好", "kr": "안녕하세요", "jp": "こんにちは", "en": "hello" }, "pos": { "kr": "감탄사", "en": "greeting", "jp": "挨拶" } },
-    { "hanzi": "你", "pinyin": "nǐ", "meaning": { "zh": "你", "kr": "너, 당신", "jp": "あなた", "en": "you" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "我", "pinyin": "wǒ", "meaning": { "zh": "我", "kr": "나, 저", "jp": "私", "en": "I; me" }, "pos": { "kr": "대명사", "en": "pronoun", "jp": "代名詞" } },
-    { "hanzi": "很", "pinyin": "hěn", "meaning": { "zh": "很", "kr": "매우", "jp": "とても", "en": "very" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } },
-    { "hanzi": "高兴", "pinyin": "gāoxìng", "meaning": { "zh": "高兴", "kr": "기쁘다", "jp": "嬉しい", "en": "happy" }, "pos": { "kr": "형용사", "en": "adjective", "jp": "形容詞" } },
-    { "hanzi": "认识", "pinyin": "rènshi", "meaning": { "zh": "认识", "kr": "알다, 만나다", "jp": "知る、会う", "en": "to know; to meet" }, "pos": { "kr": "동사", "en": "verb", "jp": "動詞" } },
-    { "hanzi": "也", "pinyin": "yě", "meaning": { "zh": "也", "kr": "~도", "jp": "〜も", "en": "also" }, "pos": { "kr": "부사", "en": "adverb", "jp": "副詞" } }
+    {
+      "hanzi": "你好",
+      "pinyin": "nǐhǎo",
+      "meaning": {
+        "zh": "你好",
+        "kr": "안녕하세요",
+        "jp": "こんにちは",
+        "en": "hello"
+      },
+      "pos": {
+        "kr": "감탄사",
+        "en": "greeting",
+        "jp": "挨拶"
+      }
+    },
+    {
+      "hanzi": "谢谢",
+      "pinyin": "xièxie",
+      "meaning": {
+        "zh": "谢谢",
+        "kr": "감사합니다",
+        "jp": "ありがとうございます",
+        "en": "thank you"
+      },
+      "pos": {
+        "kr": "감탄사",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "不客气",
+      "pinyin": "bú kèqi",
+      "meaning": {
+        "zh": "不客气",
+        "kr": "천만에요",
+        "jp": "どういたしまして",
+        "en": "you're welcome"
+      },
+      "pos": {
+        "kr": "응답 표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "再见",
+      "pinyin": "zàijiàn",
+      "meaning": {
+        "zh": "再见",
+        "kr": "안녕히 가세요 / 안녕히 계세요",
+        "jp": "さようなら",
+        "en": "goodbye"
+      },
+      "pos": {
+        "kr": "인사",
+        "en": "farewell",
+        "jp": "挨拶"
+      }
+    }
   ],
   "dialogue": [
-    { "speaker": "A", "text": "你好！" },
-    { "speaker": "B", "text": "你好！" },
-    { "speaker": "A", "text": "谢谢。" },
-    { "speaker": "B", "text": "不客气。" },
-    { "speaker": "A", "text": "再见。" },
-    { "speaker": "B", "text": "再见。" }
-  ],
-  "originalDialogues": [
     {
-      "title": { "zh": "主对话", "kr": "대화", "en": "Dialogue", "jp": "会話" },
-      "lines": [
-        { "speaker": "A", "text": "你好！", "translation": { "en": "Hello!", "kr": "안녕하세요!", "jp": "こんにちは!" }, "pinyin": "Nǐ hǎo!" },
-        { "speaker": "B", "text": "你好！", "translation": { "en": "Hello!", "kr": "안녕하세요!", "jp": "こんにちは!" }, "pinyin": "Nǐ hǎo!" },
-        { "speaker": "A", "text": "很高兴认识你。", "translation": { "en": "Nice to meet you.", "kr": "만나서 반가워요.", "jp": "お会いできて嬉しいです。" }, "pinyin": "Hěn gāoxìng rènshi nǐ." },
-        { "speaker": "B", "text": "我也很高兴认识你。", "translation": { "en": "Nice to meet you too.", "kr": "저도 만나서 반가워요.", "jp": "私もお会いできて嬉しいです。" }, "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ." }
-      ]
+      "speaker": "A",
+      "text": "你好！",
+      "pinyin": "Nǐ hǎo!",
+      "translation": {
+        "kr": "안녕하세요!",
+        "en": "Hello!",
+        "jp": "こんにちは！"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "你好！",
+      "pinyin": "Nǐ hǎo!",
+      "translation": {
+        "kr": "안녕하세요!",
+        "en": "Hello!",
+        "jp": "こんにちは！"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "谢谢。",
+      "pinyin": "Xièxie.",
+      "translation": {
+        "kr": "감사합니다.",
+        "en": "Thank you.",
+        "jp": "ありがとうございます。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "不客气。",
+      "pinyin": "Bú kèqi.",
+      "translation": {
+        "kr": "천만에요.",
+        "en": "You're welcome.",
+        "jp": "どういたしまして。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "再见。",
+      "pinyin": "Zàijiàn.",
+      "translation": {
+        "kr": "안녕히 가세요.",
+        "en": "Goodbye.",
+        "jp": "さようなら。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "再见。",
+      "pinyin": "Zàijiàn.",
+      "translation": {
+        "kr": "안녕히 계세요.",
+        "en": "Goodbye.",
+        "jp": "さようなら。"
+      }
     }
   ],
   "dialogueCards": [],
@@ -59,46 +171,73 @@
     {
       "pattern": "你好",
       "pinyin": "nǐ hǎo",
-      "explain": {
-        "zh": "「你好」是最常用的打招呼用语，见面时可以说。",
-        "kr": "「你好」는 가장 흔한 인사말입니다. 만날 때 씁니다.",
-        "en": "你好 is the most common greeting when you meet someone.",
-        "jp": "「你好」は会ったときの一番よく使う挨拶です。"
+      "explanation": {
+        "kr": "가장 기본적인 인사 표현입니다.",
+        "en": "A basic greeting used when meeting someone.",
+        "jp": "基本的な挨拶表現です。"
       },
       "example": {
-        "zh": "你好！",
+        "text": "你好！",
         "pinyin": "Nǐ hǎo!",
-        "translation": { "kr": "안녕하세요!", "jp": "こんにちは!", "en": "Hello!" }
+        "translation": {
+          "kr": "안녕하세요!",
+          "en": "Hello!",
+          "jp": "こんにちは！"
+        }
       }
     },
     {
-      "pattern": "很高兴认识你",
-      "pinyin": "hěn gāoxìng rènshi nǐ",
-      "explain": {
-        "zh": "第一次见面时表示高兴的说法。「也」表示同样。",
-        "kr": "처음 만날 때 기쁨을 나타냅니다. 「也」는 ~도.",
-        "en": "Used when meeting someone for the first time. 也 means also.",
-        "jp": "初めて会ったときに喜びを表します。「也」は〜も。"
+      "pattern": "谢谢",
+      "pinyin": "xièxie",
+      "explanation": {
+        "kr": "감사를 표현할 때 사용합니다.",
+        "en": "Used to express thanks.",
+        "jp": "感謝を表すときに使います。"
       },
       "example": {
-        "zh": "我也很高兴认识你。",
-        "pinyin": "Wǒ yě hěn gāoxìng rènshi nǐ.",
-        "translation": { "kr": "저도 만나서 반가워요.", "jp": "私もお会いできて嬉しいです。", "en": "Nice to meet you too." }
+        "text": "谢谢。",
+        "pinyin": "Xièxie.",
+        "translation": {
+          "kr": "감사합니다.",
+          "en": "Thank you.",
+          "jp": "ありがとうございます。"
+        }
       }
     },
     {
-      "pattern": "谢谢 / 不客气",
-      "pinyin": "xièxie / bú kèqi",
-      "explain": {
-        "zh": "「谢谢」表示感谢；「不客气」是礼貌的回应，表示“不用谢”。",
-        "kr": "「谢谢」는 감사, 「不客气」는 \"천만에요\".",
-        "en": "谢谢 = thank you; 不客气 = you're welcome.",
-        "jp": "「谢谢」は感謝、「不客气」は「どういたしまして」。"
+      "pattern": "不客气",
+      "pinyin": "bú kèqi",
+      "explanation": {
+        "kr": "감사에 대한 응답 표현입니다.",
+        "en": "A response to 'thank you'.",
+        "jp": "「ありがとう」に対する返答です。"
       },
       "example": {
-        "zh": "谢谢。不客气。再见！",
-        "pinyin": "Xièxie. Bú kèqi. Zàijiàn!",
-        "translation": { "kr": "감사해요. 천만에요. 잘 가요!", "jp": "ありがとう。どういたしまして。さようなら！", "en": "Thanks. You're welcome. Bye!" }
+        "text": "不客气。",
+        "pinyin": "Bú kèqi.",
+        "translation": {
+          "kr": "천만에요.",
+          "en": "You're welcome.",
+          "jp": "どういたしまして。"
+        }
+      }
+    },
+    {
+      "pattern": "再见",
+      "pinyin": "zàijiàn",
+      "explanation": {
+        "kr": "헤어질 때 사용하는 인사 표현입니다.",
+        "en": "Used when saying goodbye.",
+        "jp": "別れるときに使う表現です。"
+      },
+      "example": {
+        "text": "再见。",
+        "pinyin": "Zàijiàn.",
+        "translation": {
+          "kr": "안녕히 가세요 / 안녕히 계세요.",
+          "en": "Goodbye.",
+          "jp": "さようなら。"
+        }
       }
     }
   ],
@@ -106,10 +245,14 @@
     {
       "zh": "您好。",
       "pinyin": "Nín hǎo.",
-      "kr": "안녕하세요.（존칭）",
-      "en": "Hello. (formal)",
+      "kr": "안녕하세요.(존댓말)",
+      "en": "Hello (polite form).",
       "phrase": "您好。",
-      "explain": { "kr": "长辈或正式场合用「您」。", "en": "Use 您 for elders or formal situations.", "jp": "目上の人や改まった場で「您」を使います。" }
+      "explain": {
+        "kr": "어른이나 격식 있는 자리에서 쓰는 인사입니다.",
+        "en": "Used for elders or in formal situations.",
+        "jp": "目上の人や改まった場で使う挨拶です。"
+      }
     },
     {
       "zh": "大家好。",
@@ -117,81 +260,271 @@
       "kr": "여러분 안녕하세요.",
       "en": "Hello everyone.",
       "phrase": "大家好。",
-      "explain": { "kr": "对很多人打招呼时用。", "en": "Use when greeting a group.", "jp": "大勢に挨拶するときに使います。" }
-    },
-    {
-      "zh": "很高兴认识你。",
-      "pinyin": "Hěn gāoxìng rènshi nǐ.",
-      "kr": "만나서 반가워요.",
-      "en": "Nice to meet you.",
-      "phrase": "很高兴认识你。",
-      "explain": { "kr": "처음 만날 때 씁니다.", "en": "Used when meeting for the first time.", "jp": "初めて会ったときに使います。" }
+      "explain": {
+        "kr": "여러 사람에게 한 번에 인사할 때 씁니다.",
+        "en": "Used to greet a group of people.",
+        "jp": "大勢の人にまとめて挨拶するときに使います。"
+      }
     }
   ],
   "practice": [
     {
       "id": "p1",
       "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": { "cn": "___好！", "kr": "___! (인사)", "en": "___! (greeting)", "jp": "___!（挨拶）" },
-      "options": ["你", "我", "很", "认识"],
-      "answer": "你",
-      "explanation": { "cn": "打招呼说「你好」。", "kr": "인사는 「你好」.", "en": "Greeting is 你好.", "jp": "挨拶は「你好」。" }
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你好！」，你应该说？",
+        "kr": "상대가 「你好!」라고 하면 답할 말은?",
+        "en": "Someone says 你好! You should say?",
+        "jp": "相手が「你好！」と言ったら、あなたは？"
+      },
+      "options": [
+        "你好",
+        "谢谢",
+        "不客气",
+        "再见"
+      ],
+      "answer": "你好",
+      "explanation": {
+        "cn": "见面问候常用「你好」。",
+        "kr": "만날 때 인사로 「你好」를 씁니다.",
+        "en": "你好 is used to greet someone.",
+        "jp": "会ったときの挨拶に「你好」を使います。"
+      }
     },
     {
       "id": "p2",
       "type": "choice",
-      "subtype": "zh_to_meaning",
-      "prompt": { "cn": "「很高兴认识你」的意思是？", "kr": "「很高兴认识你」의 뜻은?", "en": "What does 很高兴认识你 mean?", "jp": "「很高兴认识你」の意味は？" },
-      "options": ["再见", "谢谢", "很高兴认识你", "对不起"],
-      "answer": "很高兴认识你",
-      "explanation": { "cn": "第一次见面时表示高兴。", "kr": "처음 만날 때 기쁨을 나타냅니다.", "en": "Shows pleasure at first meeting.", "jp": "初めて会ったときの喜びを表します。" }
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「谢谢。」，你应该说？",
+        "kr": "상대가 「谢谢.」라고 하면 답할 말은?",
+        "en": "Someone says 谢谢. You should say?",
+        "jp": "相手が「谢谢。」と言ったら、あなたは？"
+      },
+      "options": [
+        "不客气",
+        "再见",
+        "你好",
+        "谢谢"
+      ],
+      "answer": "不客气",
+      "explanation": {
+        "cn": "对「谢谢」常用「不客气」回应。",
+        "kr": "「谢谢」에는 「不客气」로 답합니다.",
+        "en": "Respond to 谢谢 with 不客气.",
+        "jp": "「谢谢」には「不客气」で返します。"
+      }
     },
     {
       "id": "p3",
       "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": { "cn": "我___很高兴认识你。", "kr": "저___ 만나서 반가워요.", "en": "I ___ am glad to meet you.", "jp": "私___お会いできて嬉しいです。" },
-      "options": ["也", "你", "好", "认识"],
-      "answer": "也",
-      "explanation": { "cn": "「也」表示同样。", "kr": "「也」는 ~도.", "en": "也 means also.", "jp": "「也」は〜も。" }
+      "subtype": "zh_to_meaning",
+      "prompt": {
+        "cn": "告别时可以说？",
+        "kr": "헤어질 때 쓸 수 있는 말은?",
+        "en": "Which do you say when saying goodbye?",
+        "jp": "別れるときに使う表現は？"
+      },
+      "options": [
+        "再见",
+        "你好",
+        "谢谢",
+        "不客气"
+      ],
+      "answer": "再见",
+      "explanation": {
+        "cn": "「再见」用于告别。",
+        "kr": "「再见」는 작별 인사입니다.",
+        "en": "再见 means goodbye.",
+        "jp": "「再见」は別れのあいさつです。"
+      }
     },
     {
       "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
-      "prompt": { "cn": "对方说「你好！」你应该说？", "kr": "상대가 「你好!」라고 하면?", "en": "When someone says 你好!, you say?", "jp": "「你好!」と言われたら？" },
-      "options": ["再见", "你好", "谢谢", "对不起"],
-      "answer": "你好",
-      "explanation": { "cn": "用「你好」回应问候。", "kr": "인사에는 「你好」로 답합니다.", "en": "Respond to greeting with 你好.", "jp": "挨拶には「你好」で返します。" }
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "表示感谢：___。",
+        "kr": "감사할 때: ___.",
+        "en": "To say thanks: ___.",
+        "jp": "感謝を言うとき：___。"
+      },
+      "options": [
+        "谢谢",
+        "不客气",
+        "你好",
+        "再见"
+      ],
+      "answer": "谢谢",
+      "explanation": {
+        "cn": "「谢谢」表示感谢。",
+        "kr": "「谢谢」는 감사 표현입니다.",
+        "en": "谢谢 means thank you.",
+        "jp": "「谢谢」は感謝の言葉です。"
+      }
     },
     {
       "id": "p5",
       "type": "choice",
-      "subtype": "sentence_order",
-      "prompt": { "cn": "「我」的意思是？", "kr": "「我」의 뜻은?", "en": "What does 我 mean?", "jp": "「我」の意味は？" },
-      "options": ["你", "我", "也", "好"],
-      "answer": "我",
-      "explanation": { "cn": "「我」即自己。", "kr": "「我」는 나, 저.", "en": "我 means I, me.", "jp": "「我」は私。" }
+      "subtype": "sentence_blank",
+      "prompt": {
+        "cn": "见面打招呼：___！",
+        "kr": "만날 때 인사: ___!",
+        "en": "Greeting when you meet: ___!",
+        "jp": "会ったときの挨拶：___！"
+      },
+      "options": [
+        "你好",
+        "谢谢",
+        "不客气",
+        "再见"
+      ],
+      "answer": "你好",
+      "explanation": {
+        "cn": "「你好」用于打招呼。",
+        "kr": "「你好」는 인사 표현입니다.",
+        "en": "你好 is a greeting.",
+        "jp": "「你好」はあいさつです。"
+      }
     }
   ],
   "review": {},
   "ai": [
-    { "mode": "explain", "title": { "cn": "句子讲解", "kr": "문장 설명", "en": "Sentence Explanation", "jp": "文の説明" }, "target": "很高兴认识你。", "hint": { "cn": "请解释这句话的意思和用法。", "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.", "en": "Explain the meaning and usage.", "jp": "この文の意味と使い方を説明してください。" } },
-    { "mode": "roleplay", "title": { "cn": "情景对话", "kr": "상황 대화", "en": "Roleplay", "jp": "ロールプレイ" }, "scenario": "greeting", "prompt": { "cn": "请和同学第一次见面，用「你好」和「很高兴认识你」打招呼。", "kr": "친구와 처음 만나 「你好」「很高兴认识你」로 인사하세요.", "en": "Greet a classmate for the first time with 你好 and 很高兴认识你.", "jp": "初めて会う友達に「你好」「很高兴认识你」で挨拶しましょう。" } },
-    { "mode": "shadowing", "title": { "cn": "跟读练习", "kr": "따라 읽기", "en": "Shadowing", "jp": "シャドーイング" }, "lines": ["你好！", "你好！", "很高兴认识你。", "我也很高兴认识你。"] },
-    { "mode": "free_talk", "title": { "cn": "自由提问", "kr": "자유 질문", "en": "Free Talk", "jp": "自由質問" }, "placeholder": { "cn": "请输入你想问的问题", "kr": "질문하고 싶은 내용을 입력하세요", "en": "Type your question", "jp": "質問を入力してください" } }
+    {
+      "mode": "explain",
+      "title": {
+        "cn": "句子讲解",
+        "kr": "문장 설명",
+        "en": "Sentence Explanation",
+        "jp": "文の説明"
+      },
+      "target": "很高兴认识你。",
+      "hint": {
+        "cn": "请解释这句话的意思和用法。",
+        "kr": "이 문장의 뜻과 쓰임을 설명해 보세요.",
+        "en": "Explain the meaning and usage.",
+        "jp": "この文の意味と使い方を説明してください。"
+      }
+    },
+    {
+      "mode": "roleplay",
+      "title": {
+        "cn": "情景对话",
+        "kr": "상황 대화",
+        "en": "Roleplay",
+        "jp": "ロールプレイ"
+      },
+      "scenario": "greeting",
+      "prompt": {
+        "cn": "请和同学第一次见面，用「你好」和「很高兴认识你」打招呼。",
+        "kr": "친구와 처음 만나 「你好」「很高兴认识你」로 인사하세요.",
+        "en": "Greet a classmate for the first time with 你好 and 很高兴认识你.",
+        "jp": "初めて会う友達に「你好」「很高兴认识你」で挨拶しましょう。"
+      }
+    },
+    {
+      "mode": "shadowing",
+      "title": {
+        "cn": "跟读练习",
+        "kr": "따라 읽기",
+        "en": "Shadowing",
+        "jp": "シャドーイング"
+      },
+      "lines": [
+        "你好！",
+        "你好！",
+        "很高兴认识你。",
+        "我也很高兴认识你。"
+      ]
+    },
+    {
+      "mode": "free_talk",
+      "title": {
+        "cn": "自由提问",
+        "kr": "자유 질문",
+        "en": "Free Talk",
+        "jp": "自由質問"
+      },
+      "placeholder": {
+        "cn": "请输入你想问的问题",
+        "kr": "질문하고 싶은 내용을 입력하세요",
+        "en": "Type your question",
+        "jp": "質問を入力してください"
+      }
+    }
   ],
   "aiPractice": {
-    "speaking": ["你好", "很高兴认识你", "我也很高兴认识你"],
+    "speaking": [
+      "你好",
+      "很高兴认识你",
+      "我也很高兴认识你"
+    ],
     "chatPrompt": "AI先说：你好！学生回答，然后互相说很高兴认识你。"
   },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice" } },
-    { "key": "aiPractice", "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice" } }
-  ]
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice"
+      }
+    }
+  ],
+  "vocabTargets": [
+    "你",
+    "好",
+    "你好",
+    "谢谢",
+    "不客气",
+    "再见"
+  ],
+  "displayTitle": {
+    "cn": "你好！",
+    "zh": "你好！",
+    "en": "你好！",
+    "kr": "你好！",
+    "jp": "你好！"
+  }
 }

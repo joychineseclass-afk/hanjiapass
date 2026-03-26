@@ -25,7 +25,24 @@
   const isNoCache = typeof window !== "undefined" && window.isNoCacheEnv && window.isNoCacheEnv();
   const MEM_CACHE_TTL = isNoCache ? 0 : 1000 * 60 * 30; // preview/开发 0，正式 30min
   const MEM = new Map();
+  const lessonDetailInflight = new Map();
   const now = () => Date.now();
+
+  let _fetchJsonCachedModPromise = null;
+  async function getFetchJsonCached() {
+    if (!_fetchJsonCachedModPromise) {
+      _fetchJsonCachedModPromise = import("/ui/core/fetchJsonCached.js");
+    }
+    const m = await _fetchJsonCachedModPromise;
+    return m.fetchJsonCached;
+  }
+
+  function clearFetchJsonLayer() {
+    lessonDetailInflight.clear();
+    import("/ui/core/fetchJsonCached.js")
+      .then((m) => m.clearFetchJsonCache())
+      .catch(() => {});
+  }
 
   const safeText = (x) => String(x ?? "").trim();
   const normalizeWord = (s) => safeText(s).replace(/\s+/g, " ").trim();
@@ -220,19 +237,20 @@
   // Fetch with robust fallback
   // -----------------------------
   async function fetchJson(url, opts = {}) {
-    const res = await fetch(url, { cache: "no-store" });
-    if (res.ok) return res.json();
-
-    // ✅ 404 fallback: if requesting hsk3.0 but repo doesn't have it yet, fallback to hsk2.0
-    if (res.status === 404 && opts.fallbackTo2 && url.includes("/hsk3.0/")) {
-      const url2 = url.replace("/hsk3.0/", "/hsk2.0/");
-      console.warn("[HSK_LOADER] 404 fallback =>", url2);
-      const res2 = await fetch(url2, { cache: "no-store" });
-      if (!res2.ok) throw new Error(`HTTP ${res2.status} - ${url2}`);
-      return res2.json();
+    const fetchJsonCached = await getFetchJsonCached();
+    const init = { cache: "no-store" };
+    try {
+      return await fetchJsonCached(url, init);
+    } catch (e) {
+      // ✅ 404 fallback: if requesting hsk3.0 but repo doesn't have it yet, fallback to hsk2.0
+      const st = e && (e.status ?? e.cause?.status);
+      if (st === 404 && opts.fallbackTo2 && String(url).includes("/hsk3.0/")) {
+        const url2 = String(url).replace("/hsk3.0/", "/hsk2.0/");
+        console.warn("[HSK_LOADER] 404 fallback =>", url2);
+        return fetchJsonCached(url2, init);
+      }
+      throw e;
     }
-
-    throw new Error(`HTTP ${res.status} - ${url}`);
   }
 
   function extractArray(data) {
@@ -332,9 +350,8 @@
     const cached = memGet(memKey);
     if (cached) return cached;
     try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) return null;
-      const data = await res.json();
+      const fetchJsonCached = await getFetchJsonCached();
+      const data = await fetchJsonCached(url, { cache: "no-store" });
       if (data && (data.distribution || data.reviewRanges)) {
         memSet(memKey, data);
         return data;
@@ -450,11 +467,17 @@
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
     const no = Number(lessonNo || 1) || 1;
+    const filePart = safeText(opts.file || "");
 
-    const memKey = `lessonDetail:${version}:${lv}:${no}`;
+    const memKey = `lessonDetail:${version}:${lv}:${no}:${filePart}`;
     const cached = memGet(memKey);
     if (cached) return cached;
 
+    const inflightP = lessonDetailInflight.get(memKey);
+    if (inflightP) return inflightP;
+
+    const loadPromise = (async () => {
+      try {
     const { COURSES } = await import("/ui/platform/index.js");
     const course = await COURSES.loadCourse(
       { type: "hsk", level: lv, lessonNo: no },
@@ -521,6 +544,13 @@
 
     memSet(memKey, lesson);
     return lesson;
+      } finally {
+        lessonDetailInflight.delete(memKey);
+      }
+    })();
+
+    lessonDetailInflight.set(memKey, loadPromise);
+    return loadPromise;
   }
 
   /** 加载 range 内课程并合并，生成复习课内容与练习 */
@@ -539,7 +569,10 @@
       );
       const raw = course.raw || {};
       const v = Array.isArray(raw.vocab) ? raw.vocab : (Array.isArray(raw.words) ? raw.words : []);
-      const d = Array.isArray(raw.dialogueCards) ? raw.dialogueCards : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
+      const d =
+        Array.isArray(raw.dialogueCards) && raw.dialogueCards.length > 0
+          ? raw.dialogueCards
+          : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
       const g = Array.isArray(raw.grammar) ? raw.grammar : [];
       const e = Array.isArray(raw.extension) ? raw.extension : [];
 
@@ -696,6 +729,11 @@
     memClear("vocabDistribution:");
     memClear("lessons:");
     memClear("lessonDetail:");
+    lessonDetailInflight.clear();
+    clearFetchJsonLayer();
+    import("/ui/modules/hsk/lessonSession.js")
+      .then((m) => m.clearLessonLoadDedupe?.())
+      .catch(() => {});
     try {
       localStorage.removeItem("joy_current_lesson");
       localStorage.removeItem("hsk_last_lesson");
@@ -728,6 +766,10 @@
     getVersion: (opts) => getVocabVersion(opts || {}),
     normalizeVersion,
     setVersion,
-    clearCache: () => memClear(),
+    clearCache: () => {
+      memClear();
+      lessonDetailInflight.clear();
+      clearFetchJsonLayer();
+    },
   };
 })();

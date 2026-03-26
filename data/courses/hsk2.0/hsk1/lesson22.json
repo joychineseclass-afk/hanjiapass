@@ -29,9 +29,3106 @@
       "en": "Review dialogue and grammar"
     }
   ],
-  "vocab": [],
-  "dialogueCards": [],
-  "grammar": [],
+  "vocab": [
+    {
+      "hanzi": "今天星期几？",
+      "pinyin": "jīn tiān xīng qī jǐ ？",
+      "meaning": {
+        "zh": "今天星期几？",
+        "kr": "오늘은 무슨 요일이에요?",
+        "jp": "今日は何曜日ですか？",
+        "en": "What day is it today?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "今天星期三。",
+      "pinyin": "jīn tiān xīng qī sān 。",
+      "meaning": {
+        "zh": "今天星期三。",
+        "kr": "오늘은 수요일이에요.",
+        "jp": "今日は水曜日です。",
+        "en": "Today is Wednesday."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你今天有课吗？",
+      "pinyin": "nǐ jīn tiān yǒu kè ma ？",
+      "meaning": {
+        "zh": "你今天有课吗？",
+        "kr": "오늘 수업 있어요?",
+        "jp": "今日は授業がありますか？",
+        "en": "Do you have class today?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "有，我下午有汉语课。",
+      "pinyin": "yǒu ， wǒ xià wǔ yǒu hàn yǔ kè 。",
+      "meaning": {
+        "zh": "有，我下午有汉语课。",
+        "kr": "네, 오후에 중국어 수업 있어요.",
+        "jp": "はい、午後に中国語の授業があります。",
+        "en": "Yes, I have Chinese class this afternoon."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你明天有课吗？",
+      "pinyin": "nǐ míng tiān yǒu kè ma ？",
+      "meaning": {
+        "zh": "你明天有课吗？",
+        "kr": "내일 수업 있어요?",
+        "jp": "明日は授業がありますか？",
+        "en": "Do you have class tomorrow?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "没有，我明天没有课。",
+      "pinyin": "méi yǒu ， wǒ míng tiān méi yǒu kè 。",
+      "meaning": {
+        "zh": "没有，我明天没有课。",
+        "kr": "아니요, 내일 수업 없어요.",
+        "jp": "いいえ、明日は授業がありません。",
+        "en": "No, I don't have class tomorrow."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你喜欢听音乐吗？",
+      "pinyin": "nǐ xǐ huan tīng yīn yuè ma ？",
+      "meaning": {
+        "zh": "你喜欢听音乐吗？",
+        "kr": "음악 듣는 거 좋아해요?",
+        "jp": "音楽を聞くのは好きですか？",
+        "en": "Do you like listening to music?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "喜欢，我很喜欢听音乐。",
+      "pinyin": "xǐ huan ， wǒ hěn xǐ huan tīng yīn yuè 。",
+      "meaning": {
+        "zh": "喜欢，我很喜欢听音乐。",
+        "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요.",
+        "jp": "はい、音楽を聞くのがとても好きです。",
+        "en": "Yes, I really like listening to music."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你喜欢听什么音乐？",
+      "pinyin": "nǐ xǐ huan tīng shén me yīn yuè ？",
+      "meaning": {
+        "zh": "你喜欢听什么音乐？",
+        "kr": "어떤 음악 듣는 걸 좋아해요?",
+        "jp": "どんな音楽を聞くのが好きですか？",
+        "en": "What music do you like to listen to?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我喜欢听中国音乐。",
+      "pinyin": "wǒ xǐ huan tīng zhōng guó yīn yuè 。",
+      "meaning": {
+        "zh": "我喜欢听中国音乐。",
+        "kr": "중국 음악 듣는 걸 좋아해요.",
+        "jp": "中国の音楽を聞くのが好きです。",
+        "en": "I like listening to Chinese music."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你喜欢看电影吗？",
+      "pinyin": "nǐ xǐ huan kàn diàn yǐng ma ？",
+      "meaning": {
+        "zh": "你喜欢看电影吗？",
+        "kr": "영화 보는 거 좋아해요?",
+        "jp": "映画を見るのは好きですか？",
+        "en": "Do you like watching movies?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "喜欢，我也喜欢看电影。",
+      "pinyin": "xǐ huan ， wǒ yě xǐ huan kàn diàn yǐng 。",
+      "meaning": {
+        "zh": "喜欢，我也喜欢看电影。",
+        "kr": "좋아요, 저도 영화 보는 거 좋아해요.",
+        "jp": "はい、私も映画を見るのが好きです。",
+        "en": "Yes, I like watching movies too."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "请问你找谁？",
+      "pinyin": "qǐng wèn nǐ zhǎo shuí ？",
+      "meaning": {
+        "zh": "请问你找谁？",
+        "kr": "실례지만 누구 찾으세요?",
+        "jp": "失礼ですが、どなたをお探しですか？",
+        "en": "May I ask who you are looking for?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我找王老师。",
+      "pinyin": "wǒ zhǎo wáng lǎo shī 。",
+      "meaning": {
+        "zh": "我找王老师。",
+        "kr": "왕 선생님 찾아요.",
+        "jp": "王老师を探しています。",
+        "en": "I'm looking for Teacher Wang."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "那我能等一下吗？",
+      "pinyin": "nà wǒ néng děng yí xià ma ？",
+      "meaning": {
+        "zh": "那我能等一下吗？",
+        "kr": "그럼 잠깐 기다려도 될까요?",
+        "jp": "では少し待ってもいいですか？",
+        "en": "Then can I wait a moment?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "可以。",
+      "pinyin": "kě yǐ 。",
+      "meaning": {
+        "zh": "可以。",
+        "kr": "네, 괜찮아요.",
+        "jp": "はい、大丈夫です。",
+        "en": "Yes, that's fine."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我们一起吃饭吧。",
+      "pinyin": "wǒ men yì qǐ chī fàn ba 。",
+      "meaning": {
+        "zh": "我们一起吃饭吧。",
+        "kr": "같이 밥 먹어요.",
+        "jp": "一緒にご飯を食べましょう。",
+        "en": "Let's eat together."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "好啊！",
+      "pinyin": "hǎo a ！",
+      "meaning": {
+        "zh": "好啊！",
+        "kr": "좋아요!",
+        "jp": "いいですね！",
+        "en": "Great!"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你想吃什么？",
+      "pinyin": "nǐ xiǎng chī shén me ？",
+      "meaning": {
+        "zh": "你想吃什么？",
+        "kr": "뭘 먹고 싶어요?",
+        "jp": "何を食べたいですか？",
+        "en": "What do you want to eat?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我想吃面条。",
+      "pinyin": "wǒ xiǎng chī miàn tiáo 。",
+      "meaning": {
+        "zh": "我想吃面条。",
+        "kr": "면 먹고 싶어요.",
+        "jp": "麺を食べたいです。",
+        "en": "I want to eat noodles."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "那我们去那家面馆吧。",
+      "pinyin": "nà wǒ men qù nà jiā miàn guǎn ba 。",
+      "meaning": {
+        "zh": "那我们去那家面馆吧。",
+        "kr": "그럼 그 면관에 가요.",
+        "jp": "じゃああの麺屋に行きましょう。",
+        "en": "Then let's go to that noodle shop."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "好，我们走吧。",
+      "pinyin": "hǎo ， wǒ men zǒu ba 。",
+      "meaning": {
+        "zh": "好，我们走吧。",
+        "kr": "좋아요, 가요.",
+        "jp": "はい、行きましょう。",
+        "en": "OK, let's go."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你想买什么？",
+      "pinyin": "nǐ xiǎng mǎi shén me ？",
+      "meaning": {
+        "zh": "你想买什么？",
+        "kr": "뭘 사고 싶어요?",
+        "jp": "何を買いたいですか？",
+        "en": "What do you want to buy?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我想买西瓜。",
+      "pinyin": "wǒ xiǎng mǎi xī guā 。",
+      "meaning": {
+        "zh": "我想买西瓜。",
+        "kr": "수박 사고 싶어요.",
+        "jp": "スイカを買いたいです。",
+        "en": "I want to buy a watermelon."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "这个西瓜怎么样？",
+      "pinyin": "zhè ge xī guā zěn me yàng ？",
+      "meaning": {
+        "zh": "这个西瓜怎么样？",
+        "kr": "이 수박 어때요?",
+        "jp": "このスイカはどうですか？",
+        "en": "How about this watermelon?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "这个太大了。有小点的吗？",
+      "pinyin": "zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？",
+      "meaning": {
+        "zh": "这个太大了。有小点的吗？",
+        "kr": "이건 너무 커요. 조금 작은 거 있어요?",
+        "jp": "これは大きすぎます。もう少し小さいのはありますか？",
+        "en": "This one is too big. Do you have a smaller one?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "这个怎么样？",
+      "pinyin": "zhè ge zěn me yàng ？",
+      "meaning": {
+        "zh": "这个怎么样？",
+        "kr": "이건 어때요?",
+        "jp": "これはどうですか？",
+        "en": "How about this one?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "这个太好了，不大不小。",
+      "pinyin": "zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+      "meaning": {
+        "zh": "这个太好了，不大不小。",
+        "kr": "이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+        "jp": "これはちょうどいい、大きすぎず小さすぎず。",
+        "en": "This one is great—not too big or too small."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你去哪儿？",
+      "pinyin": "nǐ qù nǎ ér ？",
+      "meaning": {
+        "zh": "你去哪儿？",
+        "kr": "어디 가요?",
+        "jp": "どこへ行きますか？",
+        "en": "Where are you going?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我去学校。",
+      "pinyin": "wǒ qù xué xiào 。",
+      "meaning": {
+        "zh": "我去学校。",
+        "kr": "학교에 가요.",
+        "jp": "学校へ行きます。",
+        "en": "I'm going to school."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你现在去吗？",
+      "pinyin": "nǐ xiàn zài qù ma ？",
+      "meaning": {
+        "zh": "你现在去吗？",
+        "kr": "지금 가요?",
+        "jp": "今行きますか？",
+        "en": "Are you going now?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "对，我现在去。",
+      "pinyin": "duì ， wǒ xiàn zài qù 。",
+      "meaning": {
+        "zh": "对，我现在去。",
+        "kr": "네, 지금 가요.",
+        "jp": "はい、今行きます。",
+        "en": "Yes, I'm going now."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你什么时候回家？",
+      "pinyin": "nǐ shén me shí hòu huí jiā ？",
+      "meaning": {
+        "zh": "你什么时候回家？",
+        "kr": "언제 집에 가요?",
+        "jp": "いつ家に帰りますか？",
+        "en": "When are you going home?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我下午回家。",
+      "pinyin": "wǒ xià wǔ huí jiā 。",
+      "meaning": {
+        "zh": "我下午回家。",
+        "kr": "오후에 집에 가요.",
+        "jp": "午後に家に帰ります。",
+        "en": "I'll go home in the afternoon."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你怎么去学校？",
+      "pinyin": "nǐ zěn me qù xué xiào ？",
+      "meaning": {
+        "zh": "你怎么去学校？",
+        "kr": "학교를 어떻게 가요?",
+        "jp": "どうやって学校へ行きますか？",
+        "en": "How do you get to school?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我坐地铁去学校。",
+      "pinyin": "wǒ zuò dì tiě qù xué xiào 。",
+      "meaning": {
+        "zh": "我坐地铁去学校。",
+        "kr": "지하철 타고 학교에 가요.",
+        "jp": "地下鉄で学校へ行きます。",
+        "en": "I take the subway to school."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你住得远吗？",
+      "pinyin": "nǐ zhù dé yuǎn ma ？",
+      "meaning": {
+        "zh": "你住得远吗？",
+        "kr": "멀리 살아요?",
+        "jp": "遠くに住んでいますか？",
+        "en": "Do you live far away?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "不远。",
+      "pinyin": "bù yuǎn 。",
+      "meaning": {
+        "zh": "不远。",
+        "kr": "멀지 않아요.",
+        "jp": "遠くないです。",
+        "en": "It's not far."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你每天都坐地铁吗？",
+      "pinyin": "nǐ měi tiān dōu zuò dì tiě ma ？",
+      "meaning": {
+        "zh": "你每天都坐地铁吗？",
+        "kr": "매일 지하철 타요?",
+        "jp": "毎日地下鉄に乗りますか？",
+        "en": "Do you take the subway every day?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "对，我每天都坐地铁。",
+      "pinyin": "duì ， wǒ měi tiān dōu zuò dì tiě 。",
+      "meaning": {
+        "zh": "对，我每天都坐地铁。",
+        "kr": "네, 저는 매일 지하철을 타요.",
+        "jp": "はい、毎日地下鉄に乗ります。",
+        "en": "Yes, I take the subway every day."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "王老师今天来学校吗？",
+      "pinyin": "wáng lǎo shī jīn tiān lái xué xiào ma ？",
+      "meaning": {
+        "zh": "王老师今天来学校吗？",
+        "kr": "왕 선생님 오늘 학교에 오세요?",
+        "jp": "王老师は今日学校に来ますか？",
+        "en": "Is Teacher Wang coming to school today?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "今天不来，他去北京了。",
+      "pinyin": "jīn tiān bù lái ， tā qù běi jīng le 。",
+      "meaning": {
+        "zh": "今天不来，他去北京了。",
+        "kr": "오늘은 안 오고, 그는 베이징에 갔어요.",
+        "jp": "今日は来ません。彼は北京に行きました。",
+        "en": "He's not coming today; he went to Beijing."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "他什么时候回来？",
+      "pinyin": "tā shén me shí hòu huí lái ？",
+      "meaning": {
+        "zh": "他什么时候回来？",
+        "kr": "그는 언제 돌아와요?",
+        "jp": "彼はいつ戻りますか？",
+        "en": "When will he come back?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "星期五回来。",
+      "pinyin": "xīng qī wǔ huí lái 。",
+      "meaning": {
+        "zh": "星期五回来。",
+        "kr": "금요일에 돌아와요.",
+        "jp": "金曜日に戻ります。",
+        "en": "I'll be back on Friday."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你有王老师的电话吗？",
+      "pinyin": "nǐ yǒu wáng lǎo shī de diàn huà ma ？",
+      "meaning": {
+        "zh": "你有王老师的电话吗？",
+        "kr": "왕 선생님 전화번호 있어요?",
+        "jp": "王老师の電話番号を持っていますか？",
+        "en": "Do you have Teacher Wang's phone number?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我写给你。",
+      "pinyin": "wǒ xiě gěi nǐ 。",
+      "meaning": {
+        "zh": "我写给你。",
+        "kr": "적어 드릴게요.",
+        "jp": "書いてあげます。",
+        "en": "I'll write it for you."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "今天天气怎么样？",
+      "pinyin": "jīn tiān tiān qì zěn me yàng ？",
+      "meaning": {
+        "zh": "今天天气怎么样？",
+        "kr": "오늘 날씨가 어때요?",
+        "jp": "今日の天気はどうですか？",
+        "en": "How's the weather today?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "今天天气很好。",
+      "pinyin": "jīn tiān tiān qì hěn hǎo 。",
+      "meaning": {
+        "zh": "今天天气很好。",
+        "kr": "오늘 날씨가 아주 좋아요.",
+        "jp": "今日は天気がとてもいいです。",
+        "en": "The weather is very nice today."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "冷吗？",
+      "pinyin": "lěng ma ？",
+      "meaning": {
+        "zh": "冷吗？",
+        "kr": "추워요?",
+        "jp": "寒いですか？",
+        "en": "Is it cold?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "不冷，很暖和。",
+      "pinyin": "bù lěng ， hěn nuǎn huo 。",
+      "meaning": {
+        "zh": "不冷，很暖和。",
+        "kr": "안 춥고 아주 따뜻해요.",
+        "jp": "寒くなくて、とても暖かいです。",
+        "en": "It's not cold; it's very warm."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "明天天气怎么样？",
+      "pinyin": "míng tiān tiān qì zěn me yàng ？",
+      "meaning": {
+        "zh": "明天天气怎么样？",
+        "kr": "내일 날씨가 어때요?",
+        "jp": "明日の天気はどうですか？",
+        "en": "How's the weather tomorrow?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "明天下雨。",
+      "pinyin": "míng tiān xià yǔ 。",
+      "meaning": {
+        "zh": "明天下雨。",
+        "kr": "내일 비 와요.",
+        "jp": "明日は雨です。",
+        "en": "It will rain tomorrow."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你做什么工作？",
+      "pinyin": "nǐ zuò shén me gōng zuò ？",
+      "meaning": {
+        "zh": "你做什么工作？",
+        "kr": "무슨 일을 해요?",
+        "jp": "何の仕事をしていますか？",
+        "en": "What do you do for work?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我是医生。",
+      "pinyin": "wǒ shì yī shēng 。",
+      "meaning": {
+        "zh": "我是医生。",
+        "kr": "저는 의사예요.",
+        "jp": "医者です。",
+        "en": "I'm a doctor."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "你在哪儿工作？",
+      "pinyin": "nǐ zài nǎ ér gōng zuò ？",
+      "meaning": {
+        "zh": "你在哪儿工作？",
+        "kr": "어디서 일해요?",
+        "jp": "どこで働いていますか？",
+        "en": "Where do you work?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "我在北京医院工作。",
+      "pinyin": "wǒ zài běi jīng yī yuàn gōng zuò 。",
+      "meaning": {
+        "zh": "我在北京医院工作。",
+        "kr": "베이징 병원에서 일해요.",
+        "jp": "北京の病院で働いています。",
+        "en": "I work at a hospital in Beijing."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "他呢？",
+      "pinyin": "tā ne ？",
+      "meaning": {
+        "zh": "他呢？",
+        "kr": "그는요?",
+        "jp": "彼は？",
+        "en": "What about him?"
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    },
+    {
+      "hanzi": "他也是医生。",
+      "pinyin": "tā yě shì yī shēng 。",
+      "meaning": {
+        "zh": "他也是医生。",
+        "kr": "그도 의사예요.",
+        "jp": "彼も医者です。",
+        "en": "He is a doctor too."
+      },
+      "pos": {
+        "kr": "표현",
+        "en": "expression",
+        "jp": "表現"
+      }
+    }
+  ],
+  "dialogue": [
+    {
+      "speaker": "A",
+      "text": "今天星期几？",
+      "pinyin": "Jīn tiān xīng qī jǐ ？",
+      "translation": {
+        "kr": "오늘은 무슨 요일이에요?",
+        "en": "What day is it today?",
+        "jp": "今日は何曜日ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "今天星期三。",
+      "pinyin": "Jīn tiān xīng qī sān 。",
+      "translation": {
+        "kr": "오늘은 수요일이에요.",
+        "en": "Today is Wednesday.",
+        "jp": "今日は水曜日です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你今天有课吗？",
+      "pinyin": "Nǐ jīn tiān yǒu kè ma ？",
+      "translation": {
+        "kr": "오늘 수업 있어요?",
+        "en": "Do you have class today?",
+        "jp": "今日は授業がありますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "有，我下午有汉语课。",
+      "pinyin": "Yǒu ， wǒ xià wǔ yǒu hàn yǔ kè 。",
+      "translation": {
+        "kr": "네, 오후에 중국어 수업 있어요.",
+        "en": "Yes, I have Chinese class this afternoon.",
+        "jp": "はい、午後に中国語の授業があります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你明天有课吗？",
+      "pinyin": "Nǐ míng tiān yǒu kè ma ？",
+      "translation": {
+        "kr": "내일 수업 있어요?",
+        "en": "Do you have class tomorrow?",
+        "jp": "明日は授業がありますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "没有，我明天没有课。",
+      "pinyin": "Méi yǒu ， wǒ míng tiān méi yǒu kè 。",
+      "translation": {
+        "kr": "아니요, 내일 수업 없어요.",
+        "en": "No, I don't have class tomorrow.",
+        "jp": "いいえ、明日は授業がありません。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你喜欢听音乐吗？",
+      "pinyin": "Nǐ xǐ huan tīng yīn yuè ma ？",
+      "translation": {
+        "kr": "음악 듣는 거 좋아해요?",
+        "en": "Do you like listening to music?",
+        "jp": "音楽を聞くのは好きですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "喜欢，我很喜欢听音乐。",
+      "pinyin": "Xǐ huan ， wǒ hěn xǐ huan tīng yīn yuè 。",
+      "translation": {
+        "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요.",
+        "en": "Yes, I really like listening to music.",
+        "jp": "はい、音楽を聞くのがとても好きです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你喜欢听什么音乐？",
+      "pinyin": "Nǐ xǐ huan tīng shén me yīn yuè ？",
+      "translation": {
+        "kr": "어떤 음악 듣는 걸 좋아해요?",
+        "en": "What music do you like to listen to?",
+        "jp": "どんな音楽を聞くのが好きですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我喜欢听中国音乐。",
+      "pinyin": "Wǒ xǐ huan tīng zhōng guó yīn yuè 。",
+      "translation": {
+        "kr": "중국 음악 듣는 걸 좋아해요.",
+        "en": "I like listening to Chinese music.",
+        "jp": "中国の音楽を聞くのが好きです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你喜欢看电影吗？",
+      "pinyin": "Nǐ xǐ huan kàn diàn yǐng ma ？",
+      "translation": {
+        "kr": "영화 보는 거 좋아해요?",
+        "en": "Do you like watching movies?",
+        "jp": "映画を見るのは好きですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "喜欢，我也喜欢看电影。",
+      "pinyin": "Xǐ huan ， wǒ yě xǐ huan kàn diàn yǐng 。",
+      "translation": {
+        "kr": "좋아요, 저도 영화 보는 거 좋아해요.",
+        "en": "Yes, I like watching movies too.",
+        "jp": "はい、私も映画を見るのが好きです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "请问你找谁？",
+      "pinyin": "Qǐng wèn nǐ zhǎo shuí ？",
+      "translation": {
+        "kr": "실례지만 누구 찾으세요?",
+        "en": "May I ask who you are looking for?",
+        "jp": "失礼ですが、どなたをお探しですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我找王老师。",
+      "pinyin": "Wǒ zhǎo wáng lǎo shī 。",
+      "translation": {
+        "kr": "왕 선생님 찾아요.",
+        "en": "I'm looking for Teacher Wang.",
+        "jp": "王老师を探しています。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "那我能等一下吗？",
+      "pinyin": "Nà wǒ néng děng yí xià ma ？",
+      "translation": {
+        "kr": "그럼 잠깐 기다려도 될까요?",
+        "en": "Then can I wait a moment?",
+        "jp": "では少し待ってもいいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "可以。",
+      "pinyin": "Kě yǐ 。",
+      "translation": {
+        "kr": "네, 괜찮아요.",
+        "en": "Yes, that's fine.",
+        "jp": "はい、大丈夫です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "我们一起吃饭吧。",
+      "pinyin": "Wǒ men yì qǐ chī fàn ba 。",
+      "translation": {
+        "kr": "같이 밥 먹어요.",
+        "en": "Let's eat together.",
+        "jp": "一緒にご飯を食べましょう。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "好啊！",
+      "pinyin": "Hǎo a ！",
+      "translation": {
+        "kr": "좋아요!",
+        "en": "Great!",
+        "jp": "いいですね！"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你想吃什么？",
+      "pinyin": "Nǐ xiǎng chī shén me ？",
+      "translation": {
+        "kr": "뭘 먹고 싶어요?",
+        "en": "What do you want to eat?",
+        "jp": "何を食べたいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我想吃面条。",
+      "pinyin": "Wǒ xiǎng chī miàn tiáo 。",
+      "translation": {
+        "kr": "면 먹고 싶어요.",
+        "en": "I want to eat noodles.",
+        "jp": "麺を食べたいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "那我们去那家面馆吧。",
+      "pinyin": "Nà wǒ men qù nà jiā miàn guǎn ba 。",
+      "translation": {
+        "kr": "그럼 그 면관에 가요.",
+        "en": "Then let's go to that noodle shop.",
+        "jp": "じゃああの麺屋に行きましょう。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "好，我们走吧。",
+      "pinyin": "Hǎo ， wǒ men zǒu ba 。",
+      "translation": {
+        "kr": "좋아요, 가요.",
+        "en": "OK, let's go.",
+        "jp": "はい、行きましょう。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你想买什么？",
+      "pinyin": "Nǐ xiǎng mǎi shén me ？",
+      "translation": {
+        "kr": "뭘 사고 싶어요?",
+        "en": "What do you want to buy?",
+        "jp": "何を買いたいですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我想买西瓜。",
+      "pinyin": "Wǒ xiǎng mǎi xī guā 。",
+      "translation": {
+        "kr": "수박 사고 싶어요.",
+        "en": "I want to buy a watermelon.",
+        "jp": "スイカを買いたいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "这个西瓜怎么样？",
+      "pinyin": "Zhè ge xī guā zěn me yàng ？",
+      "translation": {
+        "kr": "이 수박 어때요?",
+        "en": "How about this watermelon?",
+        "jp": "このスイカはどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "这个太大了。有小点的吗？",
+      "pinyin": "Zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？",
+      "translation": {
+        "kr": "이건 너무 커요. 조금 작은 거 있어요?",
+        "en": "This one is too big. Do you have a smaller one?",
+        "jp": "これは大きすぎます。もう少し小さいのはありますか？"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "这个怎么样？",
+      "pinyin": "Zhè ge zěn me yàng ？",
+      "translation": {
+        "kr": "이건 어때요?",
+        "en": "How about this one?",
+        "jp": "これはどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "这个太好了，不大不小。",
+      "pinyin": "Zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+      "translation": {
+        "kr": "이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+        "en": "This one is great—not too big or too small.",
+        "jp": "これはちょうどいい、大きすぎず小さすぎず。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你去哪儿？",
+      "pinyin": "Nǐ qù nǎ ér ？",
+      "translation": {
+        "kr": "어디 가요?",
+        "en": "Where are you going?",
+        "jp": "どこへ行きますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我去学校。",
+      "pinyin": "Wǒ qù xué xiào 。",
+      "translation": {
+        "kr": "학교에 가요.",
+        "en": "I'm going to school.",
+        "jp": "学校へ行きます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你现在去吗？",
+      "pinyin": "Nǐ xiàn zài qù ma ？",
+      "translation": {
+        "kr": "지금 가요?",
+        "en": "Are you going now?",
+        "jp": "今行きますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "对，我现在去。",
+      "pinyin": "Duì ， wǒ xiàn zài qù 。",
+      "translation": {
+        "kr": "네, 지금 가요.",
+        "en": "Yes, I'm going now.",
+        "jp": "はい、今行きます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你什么时候回家？",
+      "pinyin": "Nǐ shén me shí hòu huí jiā ？",
+      "translation": {
+        "kr": "언제 집에 가요?",
+        "en": "When are you going home?",
+        "jp": "いつ家に帰りますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我下午回家。",
+      "pinyin": "Wǒ xià wǔ huí jiā 。",
+      "translation": {
+        "kr": "오후에 집에 가요.",
+        "en": "I'll go home in the afternoon.",
+        "jp": "午後に家に帰ります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你怎么去学校？",
+      "pinyin": "Nǐ zěn me qù xué xiào ？",
+      "translation": {
+        "kr": "학교를 어떻게 가요?",
+        "en": "How do you get to school?",
+        "jp": "どうやって学校へ行きますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我坐地铁去学校。",
+      "pinyin": "Wǒ zuò dì tiě qù xué xiào 。",
+      "translation": {
+        "kr": "지하철 타고 학교에 가요.",
+        "en": "I take the subway to school.",
+        "jp": "地下鉄で学校へ行きます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你住得远吗？",
+      "pinyin": "Nǐ zhù dé yuǎn ma ？",
+      "translation": {
+        "kr": "멀리 살아요?",
+        "en": "Do you live far away?",
+        "jp": "遠くに住んでいますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "不远。",
+      "pinyin": "Bù yuǎn 。",
+      "translation": {
+        "kr": "멀지 않아요.",
+        "en": "It's not far.",
+        "jp": "遠くないです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你每天都坐地铁吗？",
+      "pinyin": "Nǐ měi tiān dōu zuò dì tiě ma ？",
+      "translation": {
+        "kr": "매일 지하철 타요?",
+        "en": "Do you take the subway every day?",
+        "jp": "毎日地下鉄に乗りますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "对，我每天都坐地铁。",
+      "pinyin": "Duì ， wǒ měi tiān dōu zuò dì tiě 。",
+      "translation": {
+        "kr": "네, 저는 매일 지하철을 타요.",
+        "en": "Yes, I take the subway every day.",
+        "jp": "はい、毎日地下鉄に乗ります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "王老师今天来学校吗？",
+      "pinyin": "Wáng lǎo shī jīn tiān lái xué xiào ma ？",
+      "translation": {
+        "kr": "왕 선생님 오늘 학교에 오세요?",
+        "en": "Is Teacher Wang coming to school today?",
+        "jp": "王老师は今日学校に来ますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "今天不来，他去北京了。",
+      "pinyin": "Jīn tiān bù lái ， tā qù běi jīng le 。",
+      "translation": {
+        "kr": "오늘은 안 오고, 그는 베이징에 갔어요.",
+        "en": "He's not coming today; he went to Beijing.",
+        "jp": "今日は来ません。彼は北京に行きました。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "他什么时候回来？",
+      "pinyin": "Tā shén me shí hòu huí lái ？",
+      "translation": {
+        "kr": "그는 언제 돌아와요?",
+        "en": "When will he come back?",
+        "jp": "彼はいつ戻りますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "星期五回来。",
+      "pinyin": "Xīng qī wǔ huí lái 。",
+      "translation": {
+        "kr": "금요일에 돌아와요.",
+        "en": "I'll be back on Friday.",
+        "jp": "金曜日に戻ります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你有王老师的电话吗？",
+      "pinyin": "Nǐ yǒu wáng lǎo shī de diàn huà ma ？",
+      "translation": {
+        "kr": "왕 선생님 전화번호 있어요?",
+        "en": "Do you have Teacher Wang's phone number?",
+        "jp": "王老师の電話番号を持っていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我写给你。",
+      "pinyin": "Wǒ xiě gěi nǐ 。",
+      "translation": {
+        "kr": "적어 드릴게요.",
+        "en": "I'll write it for you.",
+        "jp": "書いてあげます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "今天天气怎么样？",
+      "pinyin": "Jīn tiān tiān qì zěn me yàng ？",
+      "translation": {
+        "kr": "오늘 날씨가 어때요?",
+        "en": "How's the weather today?",
+        "jp": "今日の天気はどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "今天天气很好。",
+      "pinyin": "Jīn tiān tiān qì hěn hǎo 。",
+      "translation": {
+        "kr": "오늘 날씨가 아주 좋아요.",
+        "en": "The weather is very nice today.",
+        "jp": "今日は天気がとてもいいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "冷吗？",
+      "pinyin": "Lěng ma ？",
+      "translation": {
+        "kr": "추워요?",
+        "en": "Is it cold?",
+        "jp": "寒いですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "不冷，很暖和。",
+      "pinyin": "Bù lěng ， hěn nuǎn huo 。",
+      "translation": {
+        "kr": "안 춥고 아주 따뜻해요.",
+        "en": "It's not cold; it's very warm.",
+        "jp": "寒くなくて、とても暖かいです。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "明天天气怎么样？",
+      "pinyin": "Míng tiān tiān qì zěn me yàng ？",
+      "translation": {
+        "kr": "내일 날씨가 어때요?",
+        "en": "How's the weather tomorrow?",
+        "jp": "明日の天気はどうですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "明天下雨。",
+      "pinyin": "Míng tiān xià yǔ 。",
+      "translation": {
+        "kr": "내일 비 와요.",
+        "en": "It will rain tomorrow.",
+        "jp": "明日は雨です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你做什么工作？",
+      "pinyin": "Nǐ zuò shén me gōng zuò ？",
+      "translation": {
+        "kr": "무슨 일을 해요?",
+        "en": "What do you do for work?",
+        "jp": "何の仕事をしていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我是医生。",
+      "pinyin": "Wǒ shì yī shēng 。",
+      "translation": {
+        "kr": "저는 의사예요.",
+        "en": "I'm a doctor.",
+        "jp": "医者です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你在哪儿工作？",
+      "pinyin": "Nǐ zài nǎ ér gōng zuò ？",
+      "translation": {
+        "kr": "어디서 일해요?",
+        "en": "Where do you work?",
+        "jp": "どこで働いていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我在北京医院工作。",
+      "pinyin": "Wǒ zài běi jīng yī yuàn gōng zuò 。",
+      "translation": {
+        "kr": "베이징 병원에서 일해요.",
+        "en": "I work at a hospital in Beijing.",
+        "jp": "北京の病院で働いています。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "他呢？",
+      "pinyin": "Tā ne ？",
+      "translation": {
+        "kr": "그는요?",
+        "en": "What about him?",
+        "jp": "彼は？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "他也是医生。",
+      "pinyin": "Tā yě shì yī shēng 。",
+      "translation": {
+        "kr": "그도 의사예요.",
+        "en": "He is a doctor too.",
+        "jp": "彼も医者です。"
+      }
+    }
+  ],
+  "dialogueCards": [
+    {
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "今天星期几？",
+          "pinyin": "Jīn tiān xīng qī jǐ ？",
+          "translation": {
+            "kr": "오늘은 무슨 요일이에요?",
+            "en": "What day is it today?",
+            "jp": "今日は何曜日ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "今天星期三。",
+          "pinyin": "Jīn tiān xīng qī sān 。",
+          "translation": {
+            "kr": "오늘은 수요일이에요.",
+            "en": "Today is Wednesday.",
+            "jp": "今日は水曜日です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你今天有课吗？",
+          "pinyin": "Nǐ jīn tiān yǒu kè ma ？",
+          "translation": {
+            "kr": "오늘 수업 있어요?",
+            "en": "Do you have class today?",
+            "jp": "今日は授業がありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "有，我下午有汉语课。",
+          "pinyin": "Yǒu ， wǒ xià wǔ yǒu hàn yǔ kè 。",
+          "translation": {
+            "kr": "네, 오후에 중국어 수업 있어요.",
+            "en": "Yes, I have Chinese class this afternoon.",
+            "jp": "はい、午後に中国語の授業があります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你明天有课吗？",
+          "pinyin": "Nǐ míng tiān yǒu kè ma ？",
+          "translation": {
+            "kr": "내일 수업 있어요?",
+            "en": "Do you have class tomorrow?",
+            "jp": "明日は授業がありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "没有，我明天没有课。",
+          "pinyin": "Méi yǒu ， wǒ míng tiān méi yǒu kè 。",
+          "translation": {
+            "kr": "아니요, 내일 수업 없어요.",
+            "en": "No, I don't have class tomorrow.",
+            "jp": "いいえ、明日は授業がありません。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你喜欢听音乐吗？",
+          "pinyin": "Nǐ xǐ huan tīng yīn yuè ma ？",
+          "translation": {
+            "kr": "음악 듣는 거 좋아해요?",
+            "en": "Do you like listening to music?",
+            "jp": "音楽を聞くのは好きですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "喜欢，我很喜欢听音乐。",
+          "pinyin": "Xǐ huan ， wǒ hěn xǐ huan tīng yīn yuè 。",
+          "translation": {
+            "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요.",
+            "en": "Yes, I really like listening to music.",
+            "jp": "はい、音楽を聞くのがとても好きです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你喜欢听什么音乐？",
+          "pinyin": "Nǐ xǐ huan tīng shén me yīn yuè ？",
+          "translation": {
+            "kr": "어떤 음악 듣는 걸 좋아해요?",
+            "en": "What music do you like to listen to?",
+            "jp": "どんな音楽を聞くのが好きですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我喜欢听中国音乐。",
+          "pinyin": "Wǒ xǐ huan tīng zhōng guó yīn yuè 。",
+          "translation": {
+            "kr": "중국 음악 듣는 걸 좋아해요.",
+            "en": "I like listening to Chinese music.",
+            "jp": "中国の音楽を聞くのが好きです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你喜欢看电影吗？",
+          "pinyin": "Nǐ xǐ huan kàn diàn yǐng ma ？",
+          "translation": {
+            "kr": "영화 보는 거 좋아해요?",
+            "en": "Do you like watching movies?",
+            "jp": "映画を見るのは好きですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "喜欢，我也喜欢看电影。",
+          "pinyin": "Xǐ huan ， wǒ yě xǐ huan kàn diàn yǐng 。",
+          "translation": {
+            "kr": "좋아요, 저도 영화 보는 거 좋아해요.",
+            "en": "Yes, I like watching movies too.",
+            "jp": "はい、私も映画を見るのが好きです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "请问你找谁？",
+          "pinyin": "Qǐng wèn nǐ zhǎo shuí ？",
+          "translation": {
+            "kr": "실례지만 누구 찾으세요?",
+            "en": "May I ask who you are looking for?",
+            "jp": "失礼ですが、どなたをお探しですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我找王老师。",
+          "pinyin": "Wǒ zhǎo wáng lǎo shī 。",
+          "translation": {
+            "kr": "왕 선생님 찾아요.",
+            "en": "I'm looking for Teacher Wang.",
+            "jp": "王老师を探しています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "那我能等一下吗？",
+          "pinyin": "Nà wǒ néng děng yí xià ma ？",
+          "translation": {
+            "kr": "그럼 잠깐 기다려도 될까요?",
+            "en": "Then can I wait a moment?",
+            "jp": "では少し待ってもいいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "可以。",
+          "pinyin": "Kě yǐ 。",
+          "translation": {
+            "kr": "네, 괜찮아요.",
+            "en": "Yes, that's fine.",
+            "jp": "はい、大丈夫です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "我们一起吃饭吧。",
+          "pinyin": "Wǒ men yì qǐ chī fàn ba 。",
+          "translation": {
+            "kr": "같이 밥 먹어요.",
+            "en": "Let's eat together.",
+            "jp": "一緒にご飯を食べましょう。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "好啊！",
+          "pinyin": "Hǎo a ！",
+          "translation": {
+            "kr": "좋아요!",
+            "en": "Great!",
+            "jp": "いいですね！"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你想吃什么？",
+          "pinyin": "Nǐ xiǎng chī shén me ？",
+          "translation": {
+            "kr": "뭘 먹고 싶어요?",
+            "en": "What do you want to eat?",
+            "jp": "何を食べたいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我想吃面条。",
+          "pinyin": "Wǒ xiǎng chī miàn tiáo 。",
+          "translation": {
+            "kr": "면 먹고 싶어요.",
+            "en": "I want to eat noodles.",
+            "jp": "麺を食べたいです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "那我们去那家面馆吧。",
+          "pinyin": "Nà wǒ men qù nà jiā miàn guǎn ba 。",
+          "translation": {
+            "kr": "그럼 그 면관에 가요.",
+            "en": "Then let's go to that noodle shop.",
+            "jp": "じゃああの麺屋に行きましょう。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "好，我们走吧。",
+          "pinyin": "Hǎo ， wǒ men zǒu ba 。",
+          "translation": {
+            "kr": "좋아요, 가요.",
+            "en": "OK, let's go.",
+            "jp": "はい、行きましょう。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你想买什么？",
+          "pinyin": "Nǐ xiǎng mǎi shén me ？",
+          "translation": {
+            "kr": "뭘 사고 싶어요?",
+            "en": "What do you want to buy?",
+            "jp": "何を買いたいですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我想买西瓜。",
+          "pinyin": "Wǒ xiǎng mǎi xī guā 。",
+          "translation": {
+            "kr": "수박 사고 싶어요.",
+            "en": "I want to buy a watermelon.",
+            "jp": "スイカを買いたいです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "这个西瓜怎么样？",
+          "pinyin": "Zhè ge xī guā zěn me yàng ？",
+          "translation": {
+            "kr": "이 수박 어때요?",
+            "en": "How about this watermelon?",
+            "jp": "このスイカはどうですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "这个太大了。有小点的吗？",
+          "pinyin": "Zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？",
+          "translation": {
+            "kr": "이건 너무 커요. 조금 작은 거 있어요?",
+            "en": "This one is too big. Do you have a smaller one?",
+            "jp": "これは大きすぎます。もう少し小さいのはありますか？"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "这个怎么样？",
+          "pinyin": "Zhè ge zěn me yàng ？",
+          "translation": {
+            "kr": "이건 어때요?",
+            "en": "How about this one?",
+            "jp": "これはどうですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "这个太好了，不大不小。",
+          "pinyin": "Zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+          "translation": {
+            "kr": "이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+            "en": "This one is great—not too big or too small.",
+            "jp": "これはちょうどいい、大きすぎず小さすぎず。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你去哪儿？",
+          "pinyin": "Nǐ qù nǎ ér ？",
+          "translation": {
+            "kr": "어디 가요?",
+            "en": "Where are you going?",
+            "jp": "どこへ行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我去学校。",
+          "pinyin": "Wǒ qù xué xiào 。",
+          "translation": {
+            "kr": "학교에 가요.",
+            "en": "I'm going to school.",
+            "jp": "学校へ行きます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你现在去吗？",
+          "pinyin": "Nǐ xiàn zài qù ma ？",
+          "translation": {
+            "kr": "지금 가요?",
+            "en": "Are you going now?",
+            "jp": "今行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "对，我现在去。",
+          "pinyin": "Duì ， wǒ xiàn zài qù 。",
+          "translation": {
+            "kr": "네, 지금 가요.",
+            "en": "Yes, I'm going now.",
+            "jp": "はい、今行きます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你什么时候回家？",
+          "pinyin": "Nǐ shén me shí hòu huí jiā ？",
+          "translation": {
+            "kr": "언제 집에 가요?",
+            "en": "When are you going home?",
+            "jp": "いつ家に帰りますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我下午回家。",
+          "pinyin": "Wǒ xià wǔ huí jiā 。",
+          "translation": {
+            "kr": "오후에 집에 가요.",
+            "en": "I'll go home in the afternoon.",
+            "jp": "午後に家に帰ります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你怎么去学校？",
+          "pinyin": "Nǐ zěn me qù xué xiào ？",
+          "translation": {
+            "kr": "학교를 어떻게 가요?",
+            "en": "How do you get to school?",
+            "jp": "どうやって学校へ行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我坐地铁去学校。",
+          "pinyin": "Wǒ zuò dì tiě qù xué xiào 。",
+          "translation": {
+            "kr": "지하철 타고 학교에 가요.",
+            "en": "I take the subway to school.",
+            "jp": "地下鉄で学校へ行きます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你住得远吗？",
+          "pinyin": "Nǐ zhù dé yuǎn ma ？",
+          "translation": {
+            "kr": "멀리 살아요?",
+            "en": "Do you live far away?",
+            "jp": "遠くに住んでいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不远。",
+          "pinyin": "Bù yuǎn 。",
+          "translation": {
+            "kr": "멀지 않아요.",
+            "en": "It's not far.",
+            "jp": "遠くないです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你每天都坐地铁吗？",
+          "pinyin": "Nǐ měi tiān dōu zuò dì tiě ma ？",
+          "translation": {
+            "kr": "매일 지하철 타요?",
+            "en": "Do you take the subway every day?",
+            "jp": "毎日地下鉄に乗りますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "对，我每天都坐地铁。",
+          "pinyin": "Duì ， wǒ měi tiān dōu zuò dì tiě 。",
+          "translation": {
+            "kr": "네, 저는 매일 지하철을 타요.",
+            "en": "Yes, I take the subway every day.",
+            "jp": "はい、毎日地下鉄に乗ります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "王老师今天来学校吗？",
+          "pinyin": "Wáng lǎo shī jīn tiān lái xué xiào ma ？",
+          "translation": {
+            "kr": "왕 선생님 오늘 학교에 오세요?",
+            "en": "Is Teacher Wang coming to school today?",
+            "jp": "王老师は今日学校に来ますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "今天不来，他去北京了。",
+          "pinyin": "Jīn tiān bù lái ， tā qù běi jīng le 。",
+          "translation": {
+            "kr": "오늘은 안 오고, 그는 베이징에 갔어요.",
+            "en": "He's not coming today; he went to Beijing.",
+            "jp": "今日は来ません。彼は北京に行きました。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "他什么时候回来？",
+          "pinyin": "Tā shén me shí hòu huí lái ？",
+          "translation": {
+            "kr": "그는 언제 돌아와요?",
+            "en": "When will he come back?",
+            "jp": "彼はいつ戻りますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "星期五回来。",
+          "pinyin": "Xīng qī wǔ huí lái 。",
+          "translation": {
+            "kr": "금요일에 돌아와요.",
+            "en": "I'll be back on Friday.",
+            "jp": "金曜日に戻ります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你有王老师的电话吗？",
+          "pinyin": "Nǐ yǒu wáng lǎo shī de diàn huà ma ？",
+          "translation": {
+            "kr": "왕 선생님 전화번호 있어요?",
+            "en": "Do you have Teacher Wang's phone number?",
+            "jp": "王老师の電話番号を持っていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我写给你。",
+          "pinyin": "Wǒ xiě gěi nǐ 。",
+          "translation": {
+            "kr": "적어 드릴게요.",
+            "en": "I'll write it for you.",
+            "jp": "書いてあげます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "今天天气怎么样？",
+          "pinyin": "Jīn tiān tiān qì zěn me yàng ？",
+          "translation": {
+            "kr": "오늘 날씨가 어때요?",
+            "en": "How's the weather today?",
+            "jp": "今日の天気はどうですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "今天天气很好。",
+          "pinyin": "Jīn tiān tiān qì hěn hǎo 。",
+          "translation": {
+            "kr": "오늘 날씨가 아주 좋아요.",
+            "en": "The weather is very nice today.",
+            "jp": "今日は天気がとてもいいです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "冷吗？",
+          "pinyin": "Lěng ma ？",
+          "translation": {
+            "kr": "추워요?",
+            "en": "Is it cold?",
+            "jp": "寒いですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不冷，很暖和。",
+          "pinyin": "Bù lěng ， hěn nuǎn huo 。",
+          "translation": {
+            "kr": "안 춥고 아주 따뜻해요.",
+            "en": "It's not cold; it's very warm.",
+            "jp": "寒くなくて、とても暖かいです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "明天天气怎么样？",
+          "pinyin": "Míng tiān tiān qì zěn me yàng ？",
+          "translation": {
+            "kr": "내일 날씨가 어때요?",
+            "en": "How's the weather tomorrow?",
+            "jp": "明日の天気はどうですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "明天下雨。",
+          "pinyin": "Míng tiān xià yǔ 。",
+          "translation": {
+            "kr": "내일 비 와요.",
+            "en": "It will rain tomorrow.",
+            "jp": "明日は雨です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你做什么工作？",
+          "pinyin": "Nǐ zuò shén me gōng zuò ？",
+          "translation": {
+            "kr": "무슨 일을 해요?",
+            "en": "What do you do for work?",
+            "jp": "何の仕事をしていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我是医生。",
+          "pinyin": "Wǒ shì yī shēng 。",
+          "translation": {
+            "kr": "저는 의사예요.",
+            "en": "I'm a doctor.",
+            "jp": "医者です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你在哪儿工作？",
+          "pinyin": "Nǐ zài nǎ ér gōng zuò ？",
+          "translation": {
+            "kr": "어디서 일해요?",
+            "en": "Where do you work?",
+            "jp": "どこで働いていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我在北京医院工作。",
+          "pinyin": "Wǒ zài běi jīng yī yuàn gōng zuò 。",
+          "translation": {
+            "kr": "베이징 병원에서 일해요.",
+            "en": "I work at a hospital in Beijing.",
+            "jp": "北京の病院で働いています。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "他呢？",
+          "pinyin": "Tā ne ？",
+          "translation": {
+            "kr": "그는요?",
+            "en": "What about him?",
+            "jp": "彼は？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "他也是医生。",
+          "pinyin": "Tā yě shì yī shēng 。",
+          "translation": {
+            "kr": "그도 의사예요.",
+            "en": "He is a doctor too.",
+            "jp": "彼も医者です。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "今天星期几",
+      "pinyin": "jīntiān xīngqī jǐ",
+      "explanation": {
+        "kr": "요일을 물을 때 「今天星期几?」. 답: 今天+星期+숫자.",
+        "en": "Ask day of week: 今天星期几? Answer: 今天 + 星期 + number.",
+        "jp": "曜日は「今天星期几？」。答は「今天+星期+数字」。"
+      },
+      "example": {
+        "text": "今天星期几？",
+        "pinyin": "Jīn tiān xīng qī jǐ ？",
+        "translation": {
+          "kr": "오늘은 무슨 요일이에요?",
+          "en": "What day is it today?",
+          "jp": "今日は何曜日ですか？"
+        }
+      }
+    },
+    {
+      "pattern": "有 / 没有",
+      "pinyin": "yǒu / méi yǒu",
+      "explanation": {
+        "kr": "「有」는 소유·존재. 부정은 「没有」. 有课/没有课.",
+        "en": "有 = have / there is. Negative: 没有. 有课 / 没有课.",
+        "jp": "「有」は持つ・ある。否定は「没有」。有课/没有课。"
+      },
+      "example": {
+        "text": "没有，我明天没有课。今天星期三。你今天有课吗？有，我下午有汉语课。你明天有课吗？",
+        "pinyin": "Méi yǒu ， wǒ míng tiān méi yǒu kè 。 Jīn tiān xīng qī sān 。 Nǐ jīn tiān yǒu kè ma ？ Yǒu ， wǒ xià wǔ yǒu hàn yǔ kè 。 Nǐ míng tiān yǒu kè ma ？",
+        "translation": {
+          "kr": "아니요, 내일 수업 없어요. 오늘은 수요일이에요. 오늘 수업 있어요? 네, 오후에 중국어 수업 있어요. 내일 수업 있어요?",
+          "en": "No, I don't have class tomorrow. Today is Wednesday. Do you have class today? Yes, I have Chinese class this afternoon. Do you have class tomorrow?",
+          "jp": "いいえ、明日は授業がありません。 今日は水曜日です。 今日は授業がありますか？ はい、午後に中国語の授業があります。 明日は授業がありますか？"
+        }
+      }
+    },
+    {
+      "pattern": "喜欢 + 动词（听/看）",
+      "pinyin": "xǐhuan + dòngcí",
+      "explanation": {
+        "kr": "「喜欢」 뒤에 동사(구)가 오면 ~하는 걸 좋아하다. 喜欢听音乐.",
+        "en": "喜欢 + verb (phrase) = like to do. 喜欢听音乐, 喜欢看电影.",
+        "jp": "「喜欢」の後に動詞が来ると、〜するのが好き。喜欢听音乐。"
+      },
+      "example": {
+        "text": "你喜欢听音乐吗？",
+        "pinyin": "Nǐ xǐ huan tīng yīn yuè ma ？",
+        "translation": {
+          "kr": "음악 듣는 거 좋아해요?",
+          "en": "Do you like listening to music?",
+          "jp": "音楽を聞くのは好きですか？"
+        }
+      }
+    },
+    {
+      "pattern": "很 / 也",
+      "pinyin": "hěn / yě",
+      "explanation": {
+        "kr": "「很」는 형용사·심리동사 앞에서 정도. 「也」는 ~도.",
+        "en": "很 = very (before adj/verb). 也 = also.",
+        "jp": "「很」は程度。「也」は〜も。"
+      },
+      "example": {
+        "text": "喜欢，我很喜欢听音乐。你喜欢听什么音乐？我喜欢听中国音乐。你喜欢看电影吗？喜欢，我也喜欢看电影。",
+        "pinyin": "Xǐ huan ， wǒ hěn xǐ huan tīng yīn yuè 。 Nǐ xǐ huan tīng shén me yīn yuè ？ Wǒ xǐ huan tīng zhōng guó yīn yuè 。 Nǐ xǐ huan kàn diàn yǐng ma ？ Xǐ huan ， wǒ yě xǐ huan kàn diàn yǐng 。",
+        "translation": {
+          "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요. 어떤 음악 듣는 걸 좋아해요? 중국 음악 듣는 걸 좋아해요. 영화 보는 거 좋아해요? 좋아요, 저도 영화 보는 거 좋아해요.",
+          "en": "Yes, I really like listening to music. What music do you like to listen to? I like listening to Chinese music. Do you like watching movies? Yes, I like watching movies too.",
+          "jp": "はい、音楽を聞くのがとても好きです。 どんな音楽を聞くのが好きですか？ 中国の音楽を聞くのが好きです。 映画を見るのは好きですか？ はい、私も映画を見るのが好きです。"
+        }
+      }
+    },
+    {
+      "pattern": "请问（礼貌询问）",
+      "pinyin": "qǐngwèn",
+      "explanation": {
+        "kr": "「请问」는 질문 앞에 써서 예의 있게 묻습니다. 请问你找谁?",
+        "en": "请问 before a question = May I ask (polite). 请问你找谁？",
+        "jp": "「请问」は質問の前で丁寧に聞く。请问你找谁？"
+      },
+      "example": {
+        "text": "请问你找谁？",
+        "pinyin": "Qǐng wèn nǐ zhǎo shuí ？",
+        "translation": {
+          "kr": "실례지만 누구 찾으세요?",
+          "en": "May I ask who you are looking for?",
+          "jp": "失礼ですが、どなたをお探しですか？"
+        }
+      }
+    },
+    {
+      "pattern": "找 + 人",
+      "pinyin": "zhǎo + rén",
+      "explanation": {
+        "kr": "「找」는 찾다. 找+사람: 我找王老师. 你找谁?",
+        "en": "找 = to look for. 找 + person: 我找王老师. 你找谁？",
+        "jp": "「找」は探す。找+人：我找王老师。你找谁？"
+      },
+      "example": {
+        "text": "我找王老师。",
+        "pinyin": "Wǒ zhǎo wáng lǎo shī 。",
+        "translation": {
+          "kr": "왕 선생님 찾아요.",
+          "en": "I'm looking for Teacher Wang.",
+          "jp": "王老师を探しています。"
+        }
+      }
+    },
+    {
+      "pattern": "能 + 动词",
+      "pinyin": "néng + dòngcí",
+      "explanation": {
+        "kr": "「能」는 능력이나 허가 요청. 能+동사: 能等一下.",
+        "en": "能 = can / may (ability or permission). 能 + verb: 能等一下.",
+        "jp": "「能」は可能・許可。能+動詞：能等一下。"
+      },
+      "example": {
+        "text": "那我能等一下吗？",
+        "pinyin": "Nà wǒ néng děng yí xià ma ？",
+        "translation": {
+          "kr": "그럼 잠깐 기다려도 될까요?",
+          "en": "Then can I wait a moment?",
+          "jp": "では少し待ってもいいですか？"
+        }
+      }
+    },
+    {
+      "pattern": "能……吗？",
+      "pinyin": "néng … ma",
+      "explanation": {
+        "kr": "「能……吗?」는 허가를 요청. \"~해도 될까요?\" 답: 可以/不能.",
+        "en": "能……吗？= May I ...? / Can I ...? Answer: 可以 or 不能.",
+        "jp": "「能……吗？」は許可を求める。「〜してもいいですか？」答は「可以」或「不能」。"
+      },
+      "example": {
+        "text": "可以。",
+        "pinyin": "Kě yǐ 。",
+        "translation": {
+          "kr": "네, 괜찮아요.",
+          "en": "Yes, that's fine.",
+          "jp": "はい、大丈夫です。"
+        }
+      }
+    },
+    {
+      "pattern": "一起 + 动词",
+      "pinyin": "yīqǐ + dòngcí",
+      "explanation": {
+        "kr": "「一起」는 \"함께 ~하다\", 동사 앞에 씁니다. 我们一起吃饭吧.",
+        "en": "一起 = together, before the verb. 我们一起吃饭吧 = Let's eat together.",
+        "jp": "「一起」は「一緒に」。動詞の前。我们一起吃饭吧。"
+      },
+      "example": {
+        "text": "我们一起吃饭吧。",
+        "pinyin": "Wǒ men yì qǐ chī fàn ba 。",
+        "translation": {
+          "kr": "같이 밥 먹어요.",
+          "en": "Let's eat together.",
+          "jp": "一緒にご飯を食べましょう。"
+        }
+      }
+    },
+    {
+      "pattern": "想 + 动词",
+      "pinyin": "xiǎng + dòngcí",
+      "explanation": {
+        "kr": "「想」 뒤에 동사 = ~하고 싶다. 你想吃什么？我想吃面条.",
+        "en": "想 + verb = want to do. 你想吃什么？= What do you want to eat?",
+        "jp": "「想」+動詞＝〜したい。你想吃什么？我想吃面条。"
+      },
+      "example": {
+        "text": "你想吃什么？好啊！我想吃面条。那我们去那家面馆吧。好，我们走吧。",
+        "pinyin": "Nǐ xiǎng chī shén me ？ Hǎo a ！ Wǒ xiǎng chī miàn tiáo 。 Nà wǒ men qù nà jiā miàn guǎn ba 。 Hǎo ， wǒ men zǒu ba 。",
+        "translation": {
+          "kr": "뭘 먹고 싶어요? 좋아요! 면 먹고 싶어요. 그럼 그 면관에 가요. 좋아요, 가요.",
+          "en": "What do you want to eat? Great! I want to eat noodles. Then let's go to that noodle shop. OK, let's go.",
+          "jp": "何を食べたいですか？ いいですね！ 麺を食べたいです。 じゃああの麺屋に行きましょう。 はい、行きましょう。"
+        }
+      }
+    },
+    {
+      "pattern": "想 + 动词（买）",
+      "pinyin": "xiǎng + mǎi",
+      "explanation": {
+        "kr": "뭘 사고 싶은지 물을 때 「你想买什么?」. 답: 我想买+물건.",
+        "en": "你想买什么？= What do you want to buy? 我想买 + thing.",
+        "jp": "何を買いたいか「你想买什么？」。答は「我想买+もの」。"
+      },
+      "example": {
+        "text": "你想买什么？",
+        "pinyin": "Nǐ xiǎng mǎi shén me ？",
+        "translation": {
+          "kr": "뭘 사고 싶어요?",
+          "en": "What do you want to buy?",
+          "jp": "何を買いたいですか？"
+        }
+      }
+    },
+    {
+      "pattern": "怎么样 / 太 + 形容词",
+      "pinyin": "zěnmeyàng / tài + xíngróngcí",
+      "explanation": {
+        "kr": "「怎么样」는 \"어때?\" 「太」는 너무. 太大/太小. 不大不小=딱 맞다.",
+        "en": "怎么样 = how about? 太 + adj = too. 不大不小 = just right.",
+        "jp": "「怎么样」はどう？「太」はあまりに。不大不小＝ちょうどいい。"
+      },
+      "example": {
+        "text": "这个西瓜怎么样？我想买西瓜。这个太大了。有小点的吗？这个怎么样？这个太好了，不大不小。",
+        "pinyin": "Zhè ge xī guā zěn me yàng ？ Wǒ xiǎng mǎi xī guā 。 Zhè ge tài dà le 。 yǒu xiǎo diǎn de ma ？ Zhè ge zěn me yàng ？ Zhè ge tài hǎo le ， bú dà bù xiǎo 。",
+        "translation": {
+          "kr": "이 수박 어때요? 수박 사고 싶어요. 이건 너무 커요. 조금 작은 거 있어요? 이건 어때요? 이거 정말 좋아요, 너무 크지도 작지도 않아요.",
+          "en": "How about this watermelon? I want to buy a watermelon. This one is too big. Do you have a smaller one? How about this one? This one is great—not too big or too small.",
+          "jp": "このスイカはどうですか？ スイカを買いたいです。 これは大きすぎます。もう少し小さいのはありますか？ これはどうですか？ これはちょうどいい、大きすぎず小さすぎず。"
+        }
+      }
+    },
+    {
+      "pattern": "去哪儿 / 去 + 地点",
+      "pinyin": "qù nǎr / qù + dìdiǎn",
+      "explanation": {
+        "kr": "어디 가는지 물을 때 「你去哪儿?」. 답: 我去+장소.",
+        "en": "Ask where (someone) is going: 你去哪儿? Answer: 我去 + place.",
+        "jp": "どこへ行くか「你去哪儿？」。答は「我去+場所」。"
+      },
+      "example": {
+        "text": "你去哪儿？",
+        "pinyin": "Nǐ qù nǎ ér ？",
+        "translation": {
+          "kr": "어디 가요?",
+          "en": "Where are you going?",
+          "jp": "どこへ行きますか？"
+        }
+      }
+    },
+    {
+      "pattern": "什么时候 + 动词",
+      "pinyin": "shénme shíhou + dòngcí",
+      "explanation": {
+        "kr": "「什么时候」는 \"언제\". 什么时候回家？我下午回家.",
+        "en": "什么时候 = when. 什么时候回家？= When do you go home?",
+        "jp": "「什么时候」はいつ。什么时候回家？我下午回家。"
+      },
+      "example": {
+        "text": "你什么时候回家？我去学校。你现在去吗？对，我现在去。我下午回家。",
+        "pinyin": "Nǐ shén me shí hòu huí jiā ？ Wǒ qù xué xiào 。 Nǐ xiàn zài qù ma ？ Duì ， wǒ xiàn zài qù 。 Wǒ xià wǔ huí jiā 。",
+        "translation": {
+          "kr": "언제 집에 가요? 학교에 가요. 지금 가요? 네, 지금 가요. 오후에 집에 가요.",
+          "en": "When are you going home? I'm going to school. Are you going now? Yes, I'm going now. I'll go home in the afternoon.",
+          "jp": "いつ家に帰りますか？ 学校へ行きます。 今行きますか？ はい、今行きます。 午後に家に帰ります。"
+        }
+      }
+    },
+    {
+      "pattern": "怎么 + 动词",
+      "pinyin": "zěnme + dòngcí",
+      "explanation": {
+        "kr": "「怎么」 + 동사로 방법을 묻는다. 你怎么去学校？→ 我坐地铁去学校.",
+        "en": "怎么 + verb asks about method: 你怎么去学校？→ 我坐地铁去学校。",
+        "jp": "「怎么」+動詞で方法を聞く。你怎么去学校？→ 我坐地铁去学校。"
+      },
+      "example": {
+        "text": "你怎么去学校？",
+        "pinyin": "Nǐ zěn me qù xué xiào ？",
+        "translation": {
+          "kr": "학교를 어떻게 가요?",
+          "en": "How do you get to school?",
+          "jp": "どうやって学校へ行きますか？"
+        }
+      }
+    },
+    {
+      "pattern": "坐 + 交通工具",
+      "pinyin": "zuò + jiāotōng gōngjù",
+      "explanation": {
+        "kr": "「坐+교통수단」으로 어떻게 가는지 말한다: 坐地铁, 坐公交车.",
+        "en": "坐 + means of transport: 坐地铁, 坐公交车.",
+        "jp": "「坐+乗り物」で移動手段を言う：坐地铁、坐公交车。"
+      },
+      "example": {
+        "text": "我坐地铁去学校。",
+        "pinyin": "Wǒ zuò dì tiě qù xué xiào 。",
+        "translation": {
+          "kr": "지하철 타고 학교에 가요.",
+          "en": "I take the subway to school.",
+          "jp": "地下鉄で学校へ行きます。"
+        }
+      }
+    },
+    {
+      "pattern": "都 / 远 / 不远",
+      "pinyin": "dōu / yuǎn / bù yuǎn",
+      "explanation": {
+        "kr": "「都」는 모두. 「远/不远」은 먼지 안 먼지. 住得远吗？不远.",
+        "en": "都 means all; 远 / 不远 describe distance: 住得远吗？不远。",
+        "jp": "「都」はみんな。「远／不远」は距離を表す。住得远吗？不远。"
+      },
+      "example": {
+        "text": "不远。你住得远吗？你每天都坐地铁吗？对，我每天都坐地铁。",
+        "pinyin": "Bù yuǎn 。 Nǐ zhù dé yuǎn ma ？ Nǐ měi tiān dōu zuò dì tiě ma ？ Duì ， wǒ měi tiān dōu zuò dì tiě 。",
+        "translation": {
+          "kr": "멀지 않아요. 멀리 살아요? 매일 지하철 타요? 네, 저는 매일 지하철을 타요.",
+          "en": "It's not far. Do you live far away? Do you take the subway every day? Yes, I take the subway every day.",
+          "jp": "遠くないです。 遠くに住んでいますか？ 毎日地下鉄に乗りますか？ はい、毎日地下鉄に乗ります。"
+        }
+      }
+    },
+    {
+      "pattern": "来 / 回来",
+      "pinyin": "lái / huílái",
+      "explanation": {
+        "kr": "「来」는 말하는 쪽으로 오다. 「回来」는 돌아오다. 来学校吗？什么时候回来？",
+        "en": "来 = come (here). 回来 = come back. 来学校吗？什么时候回来？",
+        "jp": "「来」は話者へ来る。「回来」は帰ってくる。来学校吗？什么时候回来？"
+      },
+      "example": {
+        "text": "王老师今天来学校吗？",
+        "pinyin": "Wáng lǎo shī jīn tiān lái xué xiào ma ？",
+        "translation": {
+          "kr": "왕 선생님 오늘 학교에 오세요?",
+          "en": "Is Teacher Wang coming to school today?",
+          "jp": "王老师は今日学校に来ますか？"
+        }
+      }
+    },
+    {
+      "pattern": "有 + 名词（电话） / 写给 + 人（给）",
+      "pinyin": "yǒu + míngcí / xiě gěi + rén",
+      "explanation": {
+        "kr": "「有」는 가지고 있다. 「给」는 누구에게 주는지. 你有电话吗？我写给你.",
+        "en": "有 shows possession: 有电话. 给 shows giving to someone: 写给你。",
+        "jp": "「有」は持つ、「给」は〜に与える。你有电话吗？我写给你。"
+      },
+      "example": {
+        "text": "你有王老师的电话吗？今天不来，他去北京了。他什么时候回来？星期五回来。我写给你。",
+        "pinyin": "Nǐ yǒu wáng lǎo shī de diàn huà ma ？ Jīn tiān bù lái ， tā qù běi jīng le 。 Tā shén me shí hòu huí lái ？ Xīng qī wǔ huí lái 。 Wǒ xiě gěi nǐ 。",
+        "translation": {
+          "kr": "왕 선생님 전화번호 있어요? 오늘은 안 오고, 그는 베이징에 갔어요. 그는 언제 돌아와요? 금요일에 돌아와요. 적어 드릴게요.",
+          "en": "Do you have Teacher Wang's phone number? He's not coming today; he went to Beijing. When will he come back? I'll be back on Friday. I'll write it for you.",
+          "jp": "王老师の電話番号を持っていますか？ 今日は来ません。彼は北京に行きました。 彼はいつ戻りますか？ 金曜日に戻ります。 書いてあげます。"
+        }
+      }
+    },
+    {
+      "pattern": "怎么样",
+      "pinyin": "zěnmeyàng",
+      "explanation": {
+        "kr": "「怎么样」는 \"어때?\" 상황·정도를 묻습니다. 今天天气怎么样？今天天气很好.",
+        "en": "怎么样 = how about? How is it? 今天天气怎么样？今天天气很好.",
+        "jp": "「怎么样」はどう？状況を聞く。今天天气怎么样？今天天气很好。"
+      },
+      "example": {
+        "text": "今天天气怎么样？",
+        "pinyin": "Jīn tiān tiān qì zěn me yàng ？",
+        "translation": {
+          "kr": "오늘 날씨가 어때요?",
+          "en": "How's the weather today?",
+          "jp": "今日の天気はどうですか？"
+        }
+      }
+    },
+    {
+      "pattern": "很 + 形容词 / 不 + 形容词",
+      "pinyin": "hěn + xíngróngcí / bù + xíngróngcí",
+      "explanation": {
+        "kr": "「很」는 정도. 부정은 「不」. 很好, 不冷.",
+        "en": "很 + adj = very. 不 + adj = not. 很好, 不冷.",
+        "jp": "「很」は程度。「不」で否定。很好、不冷。"
+      },
+      "example": {
+        "text": "不冷，很暖和。今天天气很好。冷吗？明天天气怎么样？明天下雨。",
+        "pinyin": "Bù lěng ， hěn nuǎn huo 。 Jīn tiān tiān qì hěn hǎo 。 Lěng ma ？ Míng tiān tiān qì zěn me yàng ？ Míng tiān xià yǔ 。",
+        "translation": {
+          "kr": "안 춥고 아주 따뜻해요. 오늘 날씨가 아주 좋아요. 추워요? 내일 날씨가 어때요? 내일 비 와요.",
+          "en": "It's not cold; it's very warm. The weather is very nice today. Is it cold? How's the weather tomorrow? It will rain tomorrow.",
+          "jp": "寒くなくて、とても暖かいです。 今日は天気がとてもいいです。 寒いですか？ 明日の天気はどうですか？ 明日は雨です。"
+        }
+      }
+    },
+    {
+      "pattern": "做什么工作",
+      "pinyin": "zuò shénme gōngzuò",
+      "explanation": {
+        "kr": "직업을 물을 때 「你做什么工作?」. 답: 我是+직업.",
+        "en": "Ask job: 你做什么工作? Answer: 我是 + job (doctor, teacher...).",
+        "jp": "職業は「你做什么工作？」。答は「我是+職業」。"
+      },
+      "example": {
+        "text": "你做什么工作？",
+        "pinyin": "Nǐ zuò shén me gōng zuò ？",
+        "translation": {
+          "kr": "무슨 일을 해요?",
+          "en": "What do you do for work?",
+          "jp": "何の仕事をしていますか？"
+        }
+      }
+    },
+    {
+      "pattern": "在 + 地点 + 工作",
+      "pinyin": "zài + dìdiǎn + gōngzuò",
+      "explanation": {
+        "kr": "어디서 일하는지: 你在哪儿工作? 답: 我在+장소+工作.",
+        "en": "Where do you work? 你在哪儿工作？我在北京医院工作.",
+        "jp": "どこで働くか「你在哪儿工作？」。答は「我在+場所+工作」。"
+      },
+      "example": {
+        "text": "你在哪儿工作？",
+        "pinyin": "Nǐ zài nǎ ér gōng zuò ？",
+        "translation": {
+          "kr": "어디서 일해요?",
+          "en": "Where do you work?",
+          "jp": "どこで働いていますか？"
+        }
+      }
+    },
+    {
+      "pattern": "也是 / 他呢？",
+      "pinyin": "yě shì / tā ne",
+      "explanation": {
+        "kr": "「也是」는 \"역시 ~이다\"를, 「他呢？」는 그 사람은 어떤지 묻는다.",
+        "en": "也是 means \"also is\"; 他呢？ asks about another person.",
+        "jp": "「也是」は「〜も…だ」を表し、「他呢？」はその人について尋ねる。"
+      },
+      "example": {
+        "text": "我是医生。我在北京医院工作。他呢？他也是医生。",
+        "pinyin": "Wǒ shì yī shēng 。 Wǒ zài běi jīng yī yuàn gōng zuò 。 Tā ne ？ Tā yě shì yī shēng 。",
+        "translation": {
+          "kr": "저는 의사예요. 베이징 병원에서 일해요. 그는요? 그도 의사예요.",
+          "en": "I'm a doctor. I work at a hospital in Beijing. What about him? He is a doctor too.",
+          "jp": "医者です。 北京の病院で働いています。 彼は？ 彼も医者です。"
+        }
+      }
+    }
+  ],
+  "extension": [
+    {
+      "zh": "上课",
+      "pinyin": "Shàng kè",
+      "kr": "수업하다",
+      "en": "to have class",
+      "phrase": "上课",
+      "explain": {
+        "kr": "수업하다",
+        "en": "to have class",
+        "jp": "授業をする"
+      }
+    },
+    {
+      "zh": "看书",
+      "pinyin": "Kàn shū",
+      "kr": "책 읽다",
+      "en": "to read books",
+      "phrase": "看书",
+      "explain": {
+        "kr": "책 읽다",
+        "en": "to read books",
+        "jp": "本を読む"
+      }
+    },
+    {
+      "zh": "写字",
+      "pinyin": "Xiě zì",
+      "kr": "글자 쓰다",
+      "en": "to write characters",
+      "phrase": "写字",
+      "explain": {
+        "kr": "글자 쓰다",
+        "en": "to write characters",
+        "jp": "字を書く"
+      }
+    },
+    {
+      "zh": "读中文",
+      "pinyin": "Dú Zhōngwén",
+      "kr": "중국어 읽다",
+      "en": "to read Chinese",
+      "phrase": "读中文",
+      "explain": {
+        "kr": "중국어 읽다",
+        "en": "to read Chinese",
+        "jp": "to read Chinese"
+      }
+    },
+    {
+      "zh": "今天有课。",
+      "pinyin": "Jīntiān yǒu kè.",
+      "kr": "오늘 수업 있어요.",
+      "en": "I have class today.",
+      "phrase": "今天有课。",
+      "explain": {
+        "kr": "오늘 수업 있어요.",
+        "en": "I have class today.",
+        "jp": "I have class today."
+      }
+    },
+    {
+      "zh": "在公司工作",
+      "pinyin": "Zài gōngsī gōngzuò",
+      "kr": "회사에서 일하다",
+      "en": "to work at a company",
+      "phrase": "在公司工作",
+      "explain": {
+        "kr": "회사에서 일하다",
+        "en": "to work at a company",
+        "jp": "会社で働く"
+      }
+    },
+    {
+      "zh": "他是老师。",
+      "pinyin": "Tā shì lǎoshī.",
+      "kr": "그는 선생님이에요.",
+      "en": "He is a teacher.",
+      "phrase": "他是老师。",
+      "explain": {
+        "kr": "그는 선생님이에요.",
+        "en": "He is a teacher.",
+        "jp": "彼は先生です。"
+      }
+    },
+    {
+      "zh": "她是医生。",
+      "pinyin": "Tā shì yīshēng.",
+      "kr": "그녀는 의사예요.",
+      "en": "She is a doctor.",
+      "phrase": "她是医生。",
+      "explain": {
+        "kr": "그녀는 의사예요.",
+        "en": "She is a doctor.",
+        "jp": "彼女は医者です。"
+      }
+    },
+    {
+      "zh": "王先生",
+      "pinyin": "Wáng xiānsheng",
+      "kr": "왕 선생님/씨",
+      "en": "Mr. Wang",
+      "phrase": "王先生",
+      "explain": {
+        "kr": "왕 선생님/씨",
+        "en": "Mr. Wang",
+        "jp": "王さん"
+      }
+    },
+    {
+      "zh": "李小姐",
+      "pinyin": "Lǐ xiǎojiě",
+      "kr": "이 아가씨",
+      "en": "Miss Li",
+      "phrase": "李小姐",
+      "explain": {
+        "kr": "이 아가씨",
+        "en": "Miss Li",
+        "jp": "李さん"
+      }
+    },
+    {
+      "zh": "看电影",
+      "pinyin": "Kàn diànyǐng",
+      "kr": "영화 보다",
+      "en": "to watch movies",
+      "phrase": "看电影",
+      "explain": {
+        "kr": "영화 보다",
+        "en": "to watch movies",
+        "jp": "映画を見る"
+      }
+    },
+    {
+      "zh": "听音乐",
+      "pinyin": "Tīng yīnyuè",
+      "kr": "음악 듣다",
+      "en": "to listen to music",
+      "phrase": "听音乐",
+      "explain": {
+        "kr": "음악 듣다",
+        "en": "to listen to music",
+        "jp": "音楽を聞く"
+      }
+    },
+    {
+      "zh": "运动",
+      "pinyin": "Yùndòng",
+      "kr": "운동",
+      "en": "exercise",
+      "phrase": "运动",
+      "explain": {
+        "kr": "운동",
+        "en": "exercise",
+        "jp": "運動"
+      }
+    },
+    {
+      "zh": "我不喜欢……",
+      "pinyin": "Wǒ bù xǐhuan...",
+      "kr": "저는 ... 안 좋아해요.",
+      "en": "I don't like...",
+      "phrase": "我不喜欢……",
+      "explain": {
+        "kr": "저는 ... 안 좋아해요.",
+        "en": "I don't like...",
+        "jp": "私は...が好きじゃありません。"
+      }
+    },
+    {
+      "zh": "早餐",
+      "pinyin": "Zǎocān",
+      "kr": "아침 식사",
+      "en": "breakfast",
+      "phrase": "早餐",
+      "explain": {
+        "kr": "아침 식사",
+        "en": "breakfast",
+        "jp": "朝食"
+      }
+    },
+    {
+      "zh": "午饭",
+      "pinyin": "Wǔfàn",
+      "kr": "점심",
+      "en": "lunch",
+      "phrase": "午饭",
+      "explain": {
+        "kr": "점심",
+        "en": "lunch",
+        "jp": "昼食"
+      }
+    },
+    {
+      "zh": "晚饭",
+      "pinyin": "Wǎnfàn",
+      "kr": "저녁 식사",
+      "en": "dinner",
+      "phrase": "晚饭",
+      "explain": {
+        "kr": "저녁 식사",
+        "en": "dinner",
+        "jp": "夕食"
+      }
+    },
+    {
+      "zh": "好吃",
+      "pinyin": "Hǎo chī",
+      "kr": "맛있어요",
+      "en": "delicious",
+      "phrase": "好吃",
+      "explain": {
+        "kr": "맛있어요",
+        "en": "delicious",
+        "jp": "おいしい"
+      }
+    },
+    {
+      "zh": "好喝",
+      "pinyin": "Hǎo hē",
+      "kr": "맛있어요 (음료)",
+      "en": "tasty (for drinks)",
+      "phrase": "好喝",
+      "explain": {
+        "kr": "맛있어요 (음료)",
+        "en": "tasty (for drinks)",
+        "jp": "tasty (for drinks)"
+      }
+    },
+    {
+      "zh": "我喜欢吃……",
+      "pinyin": "Wǒ xǐhuan chī...",
+      "kr": "저는 ... 먹는 거 좋아해요.",
+      "en": "I like to eat...",
+      "phrase": "我喜欢吃……",
+      "explain": {
+        "kr": "저는 ... 먹는 거 좋아해요.",
+        "en": "I like to eat...",
+        "jp": "I like to eat..."
+      }
+    },
+    {
+      "zh": "我喜欢喝……",
+      "pinyin": "Wǒ xǐhuan hē...",
+      "kr": "저는 ... 마시는 거 좋아해요.",
+      "en": "I like to drink...",
+      "phrase": "我喜欢喝……",
+      "explain": {
+        "kr": "저는 ... 마시는 거 좋아해요.",
+        "en": "I like to drink...",
+        "jp": "I like to drink..."
+      }
+    },
+    {
+      "zh": "我要一杯茶。",
+      "pinyin": "Wǒ yào yī bēi chá.",
+      "kr": "차 한 잔 주세요.",
+      "en": "I'd like a cup of tea.",
+      "phrase": "我要一杯茶。",
+      "explain": {
+        "kr": "차 한 잔 주세요.",
+        "en": "I'd like a cup of tea.",
+        "jp": "お茶を一杯ください。"
+      }
+    },
+    {
+      "zh": "给我一杯水。",
+      "pinyin": "Gěi wǒ yī bēi shuǐ.",
+      "kr": "물 한 잔 주세요.",
+      "en": "Give me a glass of water.",
+      "phrase": "给我一杯水。",
+      "explain": {
+        "kr": "물 한 잔 주세요.",
+        "en": "Give me a glass of water.",
+        "jp": "水を一杯ください。"
+      }
+    },
+    {
+      "zh": "这个好吃吗？",
+      "pinyin": "Zhè gè hǎo chī ma?",
+      "kr": "이거 맛있어요?",
+      "en": "Is this delicious?",
+      "phrase": "这个好吃吗？",
+      "explain": {
+        "kr": "이거 맛있어요?",
+        "en": "Is this delicious?",
+        "jp": "Is this delicious?"
+      }
+    },
+    {
+      "zh": "我不要咖啡。",
+      "pinyin": "Wǒ bú yào kāfēi.",
+      "kr": "커피는 안 주세요.",
+      "en": "I don't want coffee.",
+      "phrase": "我不要咖啡。",
+      "explain": {
+        "kr": "커피는 안 주세요.",
+        "en": "I don't want coffee.",
+        "jp": "I don't want coffee."
+      }
+    },
+    {
+      "zh": "左边",
+      "pinyin": "Zuǒbiān",
+      "kr": "왼쪽",
+      "en": "left side",
+      "phrase": "左边",
+      "explain": {
+        "kr": "왼쪽",
+        "en": "left side",
+        "jp": "左"
+      }
+    },
+    {
+      "zh": "右边",
+      "pinyin": "Yòubiān",
+      "kr": "오른쪽",
+      "en": "right side",
+      "phrase": "右边",
+      "explain": {
+        "kr": "오른쪽",
+        "en": "right side",
+        "jp": "右"
+      }
+    },
+    {
+      "zh": "前面",
+      "pinyin": "Qiánmiàn",
+      "kr": "앞",
+      "en": "front",
+      "phrase": "前面",
+      "explain": {
+        "kr": "앞",
+        "en": "front",
+        "jp": "front"
+      }
+    },
+    {
+      "zh": "后面",
+      "pinyin": "Hòumiàn",
+      "kr": "뒤",
+      "en": "back",
+      "phrase": "后面",
+      "explain": {
+        "kr": "뒤",
+        "en": "back",
+        "jp": "back"
+      }
+    },
+    {
+      "zh": "里面",
+      "pinyin": "Lǐmiàn",
+      "kr": "안",
+      "en": "inside",
+      "phrase": "里面",
+      "explain": {
+        "kr": "안",
+        "en": "inside",
+        "jp": "inside"
+      }
+    },
+    {
+      "zh": "外面",
+      "pinyin": "Wàimiàn",
+      "kr": "밖",
+      "en": "outside",
+      "phrase": "外面",
+      "explain": {
+        "kr": "밖",
+        "en": "outside",
+        "jp": "outside"
+      }
+    },
+    {
+      "zh": "在……旁边",
+      "pinyin": "Zài... pángbiān",
+      "kr": "... 옆에",
+      "en": "next to...",
+      "phrase": "在……旁边",
+      "explain": {
+        "kr": "... 옆에",
+        "en": "next to...",
+        "jp": "next to..."
+      }
+    },
+    {
+      "zh": "坐地铁",
+      "pinyin": "Zuò dìtiě",
+      "kr": "지하철 타다",
+      "en": "to take the subway",
+      "phrase": "坐地铁",
+      "explain": {
+        "kr": "지하철 타다",
+        "en": "to take the subway",
+        "jp": "地下鉄に乗る"
+      }
+    },
+    {
+      "zh": "坐公交车",
+      "pinyin": "Zuò gōngjiāo chē",
+      "kr": "버스 타다",
+      "en": "to take the bus",
+      "phrase": "坐公交车",
+      "explain": {
+        "kr": "버스 타다",
+        "en": "to take the bus",
+        "jp": "バスに乗る"
+      }
+    },
+    {
+      "zh": "走路",
+      "pinyin": "Zǒu lù",
+      "kr": "걷다",
+      "en": "to walk",
+      "phrase": "走路",
+      "explain": {
+        "kr": "걷다",
+        "en": "to walk",
+        "jp": "to walk"
+      }
+    },
+    {
+      "zh": "开车",
+      "pinyin": "Kāi chē",
+      "kr": "운전하다",
+      "en": "to drive",
+      "phrase": "开车",
+      "explain": {
+        "kr": "운전하다",
+        "en": "to drive",
+        "jp": "to drive"
+      }
+    },
+    {
+      "zh": "一起去",
+      "pinyin": "Yīqǐ qù",
+      "kr": "같이 가다",
+      "en": "to go together",
+      "phrase": "一起去",
+      "explain": {
+        "kr": "같이 가다",
+        "en": "to go together",
+        "jp": "to go together"
+      }
+    },
+    {
+      "zh": "给我打电话。",
+      "pinyin": "Gěi wǒ dǎ diànhuà.",
+      "kr": "저에게 전화 주세요.",
+      "en": "Call me.",
+      "phrase": "给我打电话。",
+      "explain": {
+        "kr": "저에게 전화 주세요.",
+        "en": "Please give me a call.",
+        "jp": "私に電話してください。"
+      }
+    },
+    {
+      "zh": "我给你发短信。",
+      "pinyin": "Wǒ gěi nǐ fā duǎnxìn.",
+      "kr": "제가 문자 보낼게요.",
+      "en": "I'll send you a message.",
+      "phrase": "我给你发短信。",
+      "explain": {
+        "kr": "제가 문자 보낼게요.",
+        "en": "I'll send you a text message.",
+        "jp": "あなたにメッセージを送ります。"
+      }
+    },
+    {
+      "zh": "你有我的电话吗？",
+      "pinyin": "Nǐ yǒu wǒ de diànhuà ma?",
+      "kr": "제 전화번호 있어요?",
+      "en": "Do you have my phone number?",
+      "phrase": "你有我的电话吗？",
+      "explain": {
+        "kr": "제 전화번호 있어요?",
+        "en": "Do you have my phone number?",
+        "jp": "私の電話番号を持っていますか。"
+      }
+    },
+    {
+      "zh": "我写给你。",
+      "pinyin": "Wǒ xiě gěi nǐ.",
+      "kr": "제가 써 줄게요.",
+      "en": "I'll write it for you.",
+      "phrase": "我写给你。",
+      "explain": {
+        "kr": "제가 써 줄게요.",
+        "en": "I'll write it down for you.",
+        "jp": "書いてあげます。"
+      }
+    },
+    {
+      "zh": "今天天气很好。",
+      "pinyin": "Jīntiān tiānqì hěn hǎo.",
+      "kr": "오늘 날씨가 아주 좋아요.",
+      "en": "The weather is nice today.",
+      "phrase": "今天天气很好。",
+      "explain": {
+        "kr": "오늘 날씨가 아주 좋아요.",
+        "en": "The weather is nice today.",
+        "jp": "今日は天気がとても良いです。"
+      }
+    },
+    {
+      "zh": "很冷",
+      "pinyin": "Hěn lěng",
+      "kr": "매우 추워요",
+      "en": "very cold",
+      "phrase": "很冷",
+      "explain": {
+        "kr": "매우 추워요",
+        "en": "very cold",
+        "jp": "とても寒い"
+      }
+    },
+    {
+      "zh": "很热",
+      "pinyin": "Hěn rè",
+      "kr": "매우 더워요",
+      "en": "very hot",
+      "phrase": "很热",
+      "explain": {
+        "kr": "매우 더워요",
+        "en": "very hot",
+        "jp": "とても暑い"
+      }
+    },
+    {
+      "zh": "下雨了。",
+      "pinyin": "Xià yǔ le.",
+      "kr": "비 와요.",
+      "en": "It's raining.",
+      "phrase": "下雨了。",
+      "explain": {
+        "kr": "비 와요.",
+        "en": "It's raining.",
+        "jp": "It's raining."
+      }
+    },
+    {
+      "zh": "有风",
+      "pinyin": "Yǒu fēng",
+      "kr": "바람 불어요",
+      "en": "it's windy",
+      "phrase": "有风",
+      "explain": {
+        "kr": "바람 불어요",
+        "en": "it's windy",
+        "jp": "it's windy"
+      }
+    },
+    {
+      "zh": "好天气",
+      "pinyin": "Hǎo tiānqì",
+      "kr": "좋은 날씨",
+      "en": "nice weather",
+      "phrase": "好天气",
+      "explain": {
+        "kr": "좋은 날씨",
+        "en": "nice weather",
+        "jp": "nice weather"
+      }
+    },
+    {
+      "zh": "不舒服",
+      "pinyin": "Bù shūfu",
+      "kr": "몸이 안 좋아요",
+      "en": "unwell",
+      "phrase": "不舒服",
+      "explain": {
+        "kr": "몸이 안 좋아요",
+        "en": "unwell",
+        "jp": "体調が悪い"
+      }
+    },
+    {
+      "zh": "去医院",
+      "pinyin": "Qù yīyuàn",
+      "kr": "병원 가다",
+      "en": "to go to the hospital",
+      "phrase": "去医院",
+      "explain": {
+        "kr": "병원 가다",
+        "en": "to go to the hospital",
+        "jp": "病院に行く"
+      }
+    },
+    {
+      "zh": "现在怎么样？",
+      "pinyin": "Xiànzài zěnmeyàng?",
+      "kr": "지금 어때요?",
+      "en": "How are you now?",
+      "phrase": "现在怎么样？",
+      "explain": {
+        "kr": "지금 어때요?",
+        "en": "How are you now?",
+        "jp": "今どうですか？"
+      }
+    },
+    {
+      "zh": "好一点了。",
+      "pinyin": "Hǎo yīdiǎn le.",
+      "kr": "조금 나아졌어요.",
+      "en": "I'm feeling a bit better.",
+      "phrase": "好一点了。",
+      "explain": {
+        "kr": "조금 나아졌어요.",
+        "en": "I'm feeling a bit better.",
+        "jp": "少し良くなりました。"
+      }
+    },
+    {
+      "zh": "没问题。",
+      "pinyin": "Méi wèntí.",
+      "kr": "문제없어요.",
+      "en": "No problem.",
+      "phrase": "没问题。",
+      "explain": {
+        "kr": "문제없어요.",
+        "en": "No problem.",
+        "jp": "問題ありません。"
+      }
+    }
+  ],
   "practice": [],
   "review": {
     "lessonRange": [
@@ -77,26 +3174,6 @@
         "zh": "AI练习",
         "kr": "AI 연습",
         "en": "AI Practice"
-      }
-    }
-  ],
-  "extension": [
-    {
-      "phrase": "你几点起床？",
-      "pinyin": "Nǐ jǐ diǎn qǐchuáng?",
-      "explain": {
-        "kr": "몇 시에 일어나요?",
-        "jp": "何時に起きますか？",
-        "en": "What time do you get up?"
-      }
-    },
-    {
-      "phrase": "你做什么工作？",
-      "pinyin": "Nǐ zuò shénme gōngzuò?",
-      "explain": {
-        "kr": "무슨 일 하세요?",
-        "jp": "お仕事は何をしていますか？",
-        "en": "What do you do for work?"
       }
     }
   ]

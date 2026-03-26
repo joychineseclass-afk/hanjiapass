@@ -23,6 +23,9 @@
     "rebuild:hsk1-dialogue": "node scripts/rebuild-hsk1-dialogue-from-blueprint.mjs"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
+    "@vercel/functions": "^3.4.3",
     "pinyin-pro": "^3.21.0"
   }
 }
