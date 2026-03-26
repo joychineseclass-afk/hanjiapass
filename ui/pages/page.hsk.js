@@ -1447,6 +1447,109 @@ async function loadLessons() {
   }
 }
 
+async function openLesson({ lessonNo, file } = {}) {
+  const no = Number(lessonNo || 1) || 1;
+  const f = String(file || "");
+
+  if (!LESSON_ENGINE || typeof LESSON_ENGINE.loadLessonDetail !== "function") {
+    setError("Lesson engine not available");
+    return;
+  }
+
+  let lessonData;
+  try {
+    const res = await LESSON_ENGINE.loadLessonDetail({
+      courseType: state.version,
+      level: `hsk${state.lv}`,
+      lessonNo: no,
+      file: f,
+    });
+    lessonData = res && res.lesson;
+  } catch (e) {
+    console.error(e);
+    setError("Lesson load failed: " + (e?.message || e));
+    return;
+  }
+
+  if (!lessonData) {
+    setError("Lesson load failed: empty lesson");
+    return;
+  }
+
+  const started =
+    LESSON_ENGINE.startLesson && typeof LESSON_ENGINE.startLesson === "function"
+      ? LESSON_ENGINE.startLesson({ lesson: lessonData }) || {}
+      : {};
+
+  let lessonWords = Array.isArray(started.lessonWords) ? started.lessonWords : [];
+  if (!lessonWords.length) {
+    lessonWords = Array.isArray(lessonData.vocab)
+      ? lessonData.vocab
+      : Array.isArray(lessonData.words)
+      ? lessonData.words
+      : [];
+  }
+
+  state.tab = "words";
+  state.current = {
+    lessonNo: no,
+    file: f || lessonData.file || "",
+    lessonData,
+    lessonWords,
+  };
+
+  const lang = getLang();
+  const listEntry =
+    state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
+  const titleText = listEntry
+    ? getLessonDisplayTitle(listEntry, lang)
+    : typeof lessonData.title === "object"
+    ? lessonData.title?.[lang] ||
+      lessonData.title?.zh ||
+      lessonData.title?.en ||
+      ""
+    : String(lessonData.title || "");
+
+  showStudyMode(titleText);
+  updateLessonContextWindow(no);
+
+  const wordsPanel = $("hskPanelWords");
+  if (wordsPanel) {
+    renderWordCards(wordsPanel, lessonWords, null, {
+      lang,
+      scope: `hsk${state.lv}`,
+    });
+  }
+
+  const courseId = getCourseId();
+  const lessonId = lessonData.id || `${courseId}_lesson${no}`;
+  touchLessonVocabSafe(courseId, lessonId, lessonWords);
+
+  const dialogueEl = $("hskDialogueBody");
+  if (dialogueEl) dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+
+  const grammarEl = $("hskGrammarBody");
+  if (grammarEl) grammarEl.innerHTML = buildGrammarHTML(lessonData);
+
+  const extensionEl = $("hskExtensionBody");
+  if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
+
+  const reviewEl = $("hskReviewBody");
+  if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
+
+  const practiceEl = $("hskPracticeBody");
+  if (practiceEl) {
+    mountPractice(practiceEl, { lesson: lessonData, lang });
+  }
+
+  mountAIPanelSafe(lessonData, lang);
+  renderLessonCover(lessonData);
+  renderLessonSceneSection(lessonData, lang);
+  markLessonStartedSafe(lessonData, no);
+  updateTabsUI();
+  updateProgressBlock();
+}
+
 /**
  * ===============================
  * Final Event / Mount Layer
