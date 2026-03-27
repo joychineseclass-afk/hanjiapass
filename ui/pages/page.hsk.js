@@ -46,6 +46,10 @@ import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
+import {
+  resolveChoiceDisplayKindWithInfer,
+  stemTextWithFallback,
+} from "../modules/hsk/practiceDisplayStrategy.js";
 
 const state = {
   lv: 1,
@@ -60,11 +64,6 @@ const state = {
 };
 
 let el;
-
-const _HANZI_RE = /[\u4e00-\u9fff]/;
-const _KOREAN_RE = /[가-힣]/;
-const _JAPANESE_RE = /[ぁ-んァ-ン]/;
-const _LATIN_RE = /[A-Za-z]/;
 
 function $(id) {
   return document.getElementById(id);
@@ -290,33 +289,6 @@ function _cleanPinyin(text) {
 }
 
 /**
- * Lightweight language validity checker.
- * This is ONLY for displayed text, not raw object validation.
- */
-function isTextValidForLang(text, langKey) {
-  const t = _trimStr(text);
-  if (!t) return false;
-
-  const key = normalizePracticeLangAliases(langKey);
-
-  if (key === "kr") {
-    return _KOREAN_RE.test(t);
-  }
-
-  if (key === "jp") {
-    return _JAPANESE_RE.test(t) || /[一-龯]/.test(t);
-  }
-
-  if (key === "cn") {
-    return _HANZI_RE.test(t);
-  }
-
-  // en
-  return _LATIN_RE.test(t);
-}
-
-
-/**
  * Practice display patch restore
  * 这里只清空 display 层，不碰原始字段
  */
@@ -347,22 +319,6 @@ function mountPractice(container, opts) {
   const lessonForPractice = lesson
     ? buildLessonWithClonedPracticeForDisplay(lesson, langKey)
     : lesson;
-
-  try {
-    const l = lessonForPractice || {};
-    const rawP = Array.isArray(lesson?.practice) ? lesson.practice : [];
-    const outP = Array.isArray(l.practice) ? l.practice : [];
-    console.log("[HSK-PRACTICE-SOURCE]", {
-      lessonId: l.id,
-      lessonNo: l.lessonNo,
-      langKey,
-      topKeys: l && typeof l === "object" ? Object.keys(l) : [],
-      rawPracticeLen: rawP.length,
-      afterDisplayPipelineLen: outP.length,
-    });
-  } catch (e) {
-    console.warn("[HSK-PRACTICE-SOURCE] log failed:", e?.message || e);
-  }
 
   mountPracticeFromEngine(container, {
     ...(opts || {}),
@@ -874,67 +830,15 @@ function buildExtensionHTML(lessonData) {
 
 /**
  * ===============================
- * Practice Display Core (FIXED)
+ * Practice Display（语义策略，不按 UI 语言丢题）
  * ===============================
- * Strategy:
- * 1) NEVER mutate original data destructively
- * 2) NEVER validate raw object directly
- * 3) ONLY validate final display text
- * 4) rerender ≠ rebuild pool
+ * - 题干：系统语言优先 + 多语言回退
+ * - 选项展示模式：resolveChoiceDisplayKindWithInfer（subtype + 形态推断）
+ * - 仅做结构性可渲染校验，不因「选项不是韩语」等理由过滤题目
  */
 
-
-/**
- * 🔥 修复核心逻辑（你之前问题就在这里）
- */
-function practiceChoiceDisplayKindResolved(q, langKey) {
-  let kind = practiceChoiceDisplayKind(q);
-  if (kind !== "infer") return kind;
-
-  const opts = q.options;
-  if (
-    Array.isArray(opts) &&
-    opts.length >= 2 &&
-    opts.every((x) => typeof x === "string" && _trimStr(x))
-  ) {
-    return "zh_options";
-  }
-
-  const stem = practiceStemDisplayText(q, langKey);
-
-  const hasChinese = /[\u4e00-\u9fff]/.test(stem);
-
-  // 👉 关键规则（你之前错在这里）
-  // ❗ 没有中文 → 用中文选项
-  if (!hasChinese) return "zh_options";
-
-  // ❗ 有中文 → 用系统语言
-  return _optionsLookLikeLetterKeyedMeanings(opts)
-    ? "meaning_ui"
-    : "sentence_translation";
-}
-
-
-/**
- * Get final stem display text
- * 🔥 修复点：只返回最终显示，不做验证逻辑
- */
 function practiceStemDisplayText(q, langKey) {
-  if (!q || typeof q !== "object") return "";
-
-  const prompt = q.prompt ?? q.question;
-
-  // object
-  if (prompt && typeof prompt === "object") {
-    return _getControlledLangText(prompt, langKey, "prompt");
-  }
-
-  // string
-  if (typeof prompt === "string") {
-    return prompt.trim();
-  }
-
-  return "";
+  return stemTextWithFallback(_getControlledLangText, q, langKey);
 }
 
 /**
@@ -947,12 +851,14 @@ function pickShortMeaningForOption(orig, langKey) {
   if (m && typeof m === "object") {
     const v = _getControlledLangText(m, langKey, "meaning");
     if (_isShortMeaning(v)) return v;
+    if (_trimStr(v)) return v;
   }
 
   const g = orig.gloss;
   if (g && typeof g === "object") {
     const v = _getControlledLangText(g, langKey, "gloss");
     if (_isShortMeaning(v)) return v;
+    if (_trimStr(v)) return v;
   }
 
   return "";
@@ -966,10 +872,28 @@ function pickSentenceTranslationForOption(orig, langKey) {
 
   const t = orig.translation ?? orig.translations ?? orig.trans;
   if (t && typeof t === "object") {
-    return _getControlledLangText(t, langKey, "translation");
+    const v = _getControlledLangText(t, langKey, "translation");
+    if (_trimStr(v)) return v;
   }
 
   return "";
+}
+
+/** 将 string 选项规范为对象，便于 patch / 判题一致 */
+function coerceChoiceStringOptions(q, kind) {
+  const opts = Array.isArray(q.options) ? q.options : [];
+  for (let i = 0; i < opts.length; i++) {
+    if (typeof opts[i] !== "string") continue;
+    const s = opts[i].trim();
+    if (!s) continue;
+    if (kind === "zh_options") {
+      opts[i] = { cn: s, zh: s };
+    } else if (kind === "meaning_ui") {
+      opts[i] = { meaning: { kr: s, ko: s, en: s, jp: s, cn: s, zh: s } };
+    } else if (kind === "sentence_translation") {
+      opts[i] = { translation: { kr: s, ko: s, en: s, jp: s, cn: s, zh: s } };
+    }
+  }
 }
 
 /**
@@ -1021,113 +945,45 @@ function applyChoiceDisplayToQuestionList(questions, langKey) {
   for (const q of questions) {
     if (String(q.type || "choice") !== "choice") continue;
 
-    const kind = practiceChoiceDisplayKindResolved(q, langKey);
-    const opts = Array.isArray(q.options) ? q.options : [];
+    const kind = resolveChoiceDisplayKindWithInfer(q);
+    coerceChoiceStringOptions(q, kind);
 
+    const opts = Array.isArray(q.options) ? q.options : [];
     for (const o of opts) {
       patchChoiceOptionForDisplayMode(o, kind, langKey);
     }
   }
 }
 
-/**
- * 🔥 核心修复：验证只基于“最终显示文本”
- */
-function isQuestionDisplaySafe(q, langKey) {
+/** 仅过滤明显无法渲染的题目（题干全无、选择题选项不足）；不因语言形态丢弃 */
+function isQuestionStructurallyRenderable(q, langKey) {
   const stem = practiceStemDisplayText(q, langKey);
-  if (!isTextValidForLang(stem, langKey)) return false;
-
-  if (q.type === "choice" && Array.isArray(q.options)) {
-    const kind = practiceChoiceDisplayKindResolved(q, langKey);
-    const valid = q.options.filter((o) => {
-      let txt = "";
-      if (typeof o === "string") txt = _trimStr(o);
-      else txt = _trimStr(o && o.__displayText);
-      if (kind === "zh_options") {
-        return /[\u4e00-\u9fff]/.test(txt) || isTextValidForLang(txt, "cn");
-      }
-      return isTextValidForLang(txt, langKey);
-    });
-
-    return valid.length >= 2;
+  if (!stem) return false;
+  const t = String(q.type || "choice").toLowerCase();
+  if (t === "choice") {
+    return Array.isArray(q.options) && q.options.length >= 2;
   }
-
   return true;
 }
 
 /**
- * 🔥 修复版：构建题池（只负责组池）
- */
-function buildLanguageSafePracticePool(rawQuestions, langKey, min = 3) {
-  if (!Array.isArray(rawQuestions)) return [];
-
-  const main = rawQuestions.filter(q =>
-    isTextValidForLang(practiceStemDisplayText(q, langKey), langKey)
-  );
-
-  let pool = [...main];
-
-  // fallback（仅 English）
-  if (pool.length < min) {
-    const en = rawQuestions.filter(q =>
-      isTextValidForLang(practiceStemDisplayText(q, "en"), "en")
-    );
-
-    const need = min - pool.length;
-    pool = [...pool, ...en.slice(0, need)];
-  }
-
-  return pool;
-}
-
-/**
- * 🔥 重要：只在 mount 时调用
+ * 只在 mount 时：深拷贝 + 语义展示管线（不按 UI 语言筛题池）
  */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || !Array.isArray(lesson.practice)) {
-    try {
-      console.log("[HSK-PRACTICE-RESOLVE]", {
-        lessonId: lesson?.id,
-        lessonNo: lesson?.lessonNo,
-        langKey,
-        reason: "no_lesson_or_practice_array",
-        rawLen: 0,
-        poolLen: 0,
-        finalLen: 0,
-      });
-    } catch {}
     return { ...lesson, practice: [] };
   }
 
   const raw = lesson.practice;
+  const cloned = raw.map((q) => JSON.parse(JSON.stringify(q)));
 
-  // 1️⃣ 构建题池
-  const pool = buildLanguageSafePracticePool(raw, langKey, 3);
-
-  // 2️⃣ 深拷贝
-  const cloned = pool.map(q => JSON.parse(JSON.stringify(q)));
-
-  // 3️⃣ 应用显示规则
   hydratePracticeDisplayBridge(cloned, langKey);
 
-  // 4️⃣ 最终显示验证（轻量）
-  const final = cloned.filter(q => isQuestionDisplaySafe(q, langKey));
-
-  try {
-    console.log("[HSK-PRACTICE-RESOLVE]", {
-      lessonId: lesson?.id,
-      lessonNo: lesson?.lessonNo,
-      langKey,
-      reason: "pipeline",
-      rawLen: raw.length,
-      poolLen: pool.length,
-      finalLen: final.length,
-    });
-  } catch {}
+  const final = cloned.filter((q) => isQuestionStructurallyRenderable(q, langKey));
 
   return {
     ...lesson,
-    practice: final
+    practice: final,
   };
 }
 
@@ -1641,20 +1497,6 @@ async function openLesson({ lessonNo, file } = {}) {
   if (!lessonData) {
     setError("Lesson load failed: empty lesson");
     return;
-  }
-
-  try {
-    const p = lessonData.practice;
-    console.log("[HSK-CURRENT-LESSON-SHAPE]", {
-      lessonId: lessonData.id,
-      lessonNo: lessonData.lessonNo,
-      topKeys: Object.keys(lessonData || {}),
-      hasPracticeArray: Array.isArray(p),
-      practiceLen: Array.isArray(p) ? p.length : 0,
-      firstPracticeKeys: Array.isArray(p) && p[0] && typeof p[0] === "object" ? Object.keys(p[0]) : [],
-    });
-  } catch (e) {
-    console.warn("[HSK-CURRENT-LESSON-SHAPE] log failed:", e?.message || e);
   }
 
   const started =
@@ -2615,93 +2457,6 @@ function mountAIPanelSafe(lessonData, lang) {
   aiRoot.innerHTML = "";
 }
 
-function _optionHasLetterKey(o) {
-  return !!(o && typeof o === "object" && _trimStr(o.key));
-}
-
-function _optionsLookLikeLetterKeyedMeanings(opts) {
-  if (!Array.isArray(opts) || !opts.length) return false;
-  if (!opts.every((x) => x && typeof x === "object")) return false;
-  if (!opts.some((o) => _optionHasLetterKey(o))) return false;
-
-  return opts.some((o) => {
-    const z = _trimStr(o.zh ?? o.cn);
-    return (
-      z &&
-      /[\u4e00-\u9fff]/.test(z) &&
-      (_trimStr(o.kr) ||
-        _trimStr(o.ko) ||
-        _trimStr(o.en) ||
-        _trimStr(o.jp) ||
-        _trimStr(o.ja))
-    );
-  });
-}
-
-/**
- * 选择题展示模式（只影响显示，不影响判题）
- */
-function practiceChoiceDisplayKind(q) {
-  const st = String(q.subtype ?? q.subType ?? "").toLowerCase();
-  const listen = !!(q.audioUrl ?? q.listen ?? q.hasListen);
-
-  // 听力 → 一律中文选项
-  if (listen) return "zh_options";
-
-  // 对话应答题：选项为中文词（常为 string[]），应用中文选项模式（须在泛化 dialogue 分支之前）
-  if (st.includes("dialogue_response")) return "zh_options";
-
-  // 拼音 → 中文
-  if (st.includes("pinyin_to_vocab")) return "zh_options";
-
-  // 外语 → 中文
-  if (st.includes("meaning_to_vocab") || st.includes("native_to_zh"))
-    return "zh_options";
-
-  // 词义题
-  if (
-    st.includes("vocab_meaning_choice") ||
-    st.includes("extension_meaning_choice")
-  ) {
-    return "meaning_ui";
-  }
-
-  // 句子理解
-  if (
-    st.includes("dialogue") ||
-    st.includes("sentence") ||
-    st.includes("translation")
-  ) {
-    return "sentence_translation";
-  }
-
-  // 中文 → 释义
-  if (st.includes("zh_to_meaning")) {
-    const opts = q.options;
-    if (!Array.isArray(opts) || !opts.length) return "infer";
-
-    const first = opts[0];
-    if (typeof first === "string") return "zh_options";
-
-    if (_optionsLookLikeLetterKeyedMeanings(opts)) return "meaning_ui";
-
-    return "zh_options";
-  }
-
-  // grammar / 填空 / 排序 → 中文
-  if (
-    st.includes("grammar") ||
-    st.includes("blank") ||
-    st.includes("order")
-  ) {
-    return "zh_options";
-  }
-
-  return "infer";
-}
-
-
-
 /**
  * ===============================
  * Dialogue / Grammar / Extension / Review / AI
@@ -3263,7 +3018,6 @@ function runHSKSanityCheck() {
     // 检查核心依赖
     const required = [
       "buildLessonWithClonedPracticeForDisplay",
-      "buildLanguageSafePracticePool",
       "applyChoiceDisplayToQuestionList",
       "rerenderHSKFromState",
       "mountPractice",
