@@ -75,6 +75,11 @@ export function mountPractice(container, { lesson, lang = "ko", onComplete } = {
     ts: "2026-03-27-real-entry",
   });
 
+  console.log("[LUMINA-PRACTICE-BUILD-MARK]", {
+    build: "practice-debug-2026-03-27-a",
+    file: "ui/modules/practice/practiceRenderer.js",
+  });
+
   if (!container) return;
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);

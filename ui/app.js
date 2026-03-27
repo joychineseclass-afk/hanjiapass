@@ -21,6 +21,11 @@ console.log("[HSK-REAL-ENTRY-BOOT]", {
   ts: "2026-03-27-real-entry",
 });
 
+console.log("[LUMINA-BUILD-MARK]", {
+  build: "practice-debug-2026-03-27-a",
+  file: "ui/app.js",
+});
+
 /* ---------- Global helper: open step modal ---------- */
 window.joyOpenStep = function joyOpenStep(step, lessonId, opts = {}) {
   const engine = window.LESSON_ENGINE;
