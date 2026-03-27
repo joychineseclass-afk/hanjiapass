@@ -117,13 +117,22 @@ function normGrammar(raw) {
 /** practice 归一化 */
 function normPractice(raw) {
   const src = Array.isArray(raw?.practice) ? raw.practice : [];
-  return src.map((p) => ({
-    type: str(p?.type ?? "choice"),
-    question: typeof p?.question === "object" ? normI18n(p.question) : { zh: str(p?.question ?? "") },
-    options: Array.isArray(p?.options) ? p.options : [],
-    answer: str(p?.answer ?? ""),
-    prompt: typeof p?.prompt === "object" ? normI18n(p.prompt) : { zh: str(p?.prompt ?? "") },
-  }));
+  return src.map((p) => {
+    const out = {
+      type: str(p?.type ?? "choice"),
+      question: typeof p?.question === "object" ? normI18n(p.question) : { zh: str(p?.question ?? "") },
+      options: Array.isArray(p?.options) ? p.options : [],
+      prompt: typeof p?.prompt === "object" ? normI18n(p.prompt) : { zh: str(p?.prompt ?? "") },
+    };
+    if (p?.id != null && String(p.id).trim()) out.id = String(p.id).trim();
+    if (p?.subtype != null && String(p.subtype).trim()) out.subtype = String(p.subtype).trim();
+    if (p?.explanation != null) out.explanation = p.explanation;
+    if (typeof p?.score === "number") out.score = p.score;
+    if (p?.section != null && String(p.section).trim()) out.section = String(p.section).trim();
+    if (p?.answer != null) out.answer = p.answer;
+    else out.answer = "";
+    return out;
+  });
 }
 
 /** aiPractice 归一化：ai / ai_interaction */

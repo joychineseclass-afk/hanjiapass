@@ -348,6 +348,22 @@ function mountPractice(container, opts) {
     ? buildLessonWithClonedPracticeForDisplay(lesson, langKey)
     : lesson;
 
+  try {
+    const l = lessonForPractice || {};
+    const rawP = Array.isArray(lesson?.practice) ? lesson.practice : [];
+    const outP = Array.isArray(l.practice) ? l.practice : [];
+    console.log("[HSK-PRACTICE-SOURCE]", {
+      lessonId: l.id,
+      lessonNo: l.lessonNo,
+      langKey,
+      topKeys: l && typeof l === "object" ? Object.keys(l) : [],
+      rawPracticeLen: rawP.length,
+      afterDisplayPipelineLen: outP.length,
+    });
+  } catch (e) {
+    console.warn("[HSK-PRACTICE-SOURCE] log failed:", e?.message || e);
+  }
+
   mountPracticeFromEngine(container, {
     ...(opts || {}),
     lesson: lessonForPractice,
@@ -876,6 +892,14 @@ function practiceChoiceDisplayKindResolved(q, langKey) {
   if (kind !== "infer") return kind;
 
   const opts = q.options;
+  if (
+    Array.isArray(opts) &&
+    opts.length >= 2 &&
+    opts.every((x) => typeof x === "string" && _trimStr(x))
+  ) {
+    return "zh_options";
+  }
+
   const stem = practiceStemDisplayText(q, langKey);
 
   const hasChinese = /[\u4e00-\u9fff]/.test(stem);
@@ -1014,8 +1038,14 @@ function isQuestionDisplaySafe(q, langKey) {
   if (!isTextValidForLang(stem, langKey)) return false;
 
   if (q.type === "choice" && Array.isArray(q.options)) {
-    const valid = q.options.filter(o => {
-      const txt = o.__displayText || "";
+    const kind = practiceChoiceDisplayKindResolved(q, langKey);
+    const valid = q.options.filter((o) => {
+      let txt = "";
+      if (typeof o === "string") txt = _trimStr(o);
+      else txt = _trimStr(o && o.__displayText);
+      if (kind === "zh_options") {
+        return /[\u4e00-\u9fff]/.test(txt) || isTextValidForLang(txt, "cn");
+      }
       return isTextValidForLang(txt, langKey);
     });
 
@@ -1055,6 +1085,17 @@ function buildLanguageSafePracticePool(rawQuestions, langKey, min = 3) {
  */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || !Array.isArray(lesson.practice)) {
+    try {
+      console.log("[HSK-PRACTICE-RESOLVE]", {
+        lessonId: lesson?.id,
+        lessonNo: lesson?.lessonNo,
+        langKey,
+        reason: "no_lesson_or_practice_array",
+        rawLen: 0,
+        poolLen: 0,
+        finalLen: 0,
+      });
+    } catch {}
     return { ...lesson, practice: [] };
   }
 
@@ -1071,6 +1112,18 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
 
   // 4️⃣ 最终显示验证（轻量）
   const final = cloned.filter(q => isQuestionDisplaySafe(q, langKey));
+
+  try {
+    console.log("[HSK-PRACTICE-RESOLVE]", {
+      lessonId: lesson?.id,
+      lessonNo: lesson?.lessonNo,
+      langKey,
+      reason: "pipeline",
+      rawLen: raw.length,
+      poolLen: pool.length,
+      finalLen: final.length,
+    });
+  } catch {}
 
   return {
     ...lesson,
@@ -1588,6 +1641,20 @@ async function openLesson({ lessonNo, file } = {}) {
   if (!lessonData) {
     setError("Lesson load failed: empty lesson");
     return;
+  }
+
+  try {
+    const p = lessonData.practice;
+    console.log("[HSK-CURRENT-LESSON-SHAPE]", {
+      lessonId: lessonData.id,
+      lessonNo: lessonData.lessonNo,
+      topKeys: Object.keys(lessonData || {}),
+      hasPracticeArray: Array.isArray(p),
+      practiceLen: Array.isArray(p) ? p.length : 0,
+      firstPracticeKeys: Array.isArray(p) && p[0] && typeof p[0] === "object" ? Object.keys(p[0]) : [],
+    });
+  } catch (e) {
+    console.warn("[HSK-CURRENT-LESSON-SHAPE] log failed:", e?.message || e);
   }
 
   const started =
@@ -2580,6 +2647,9 @@ function practiceChoiceDisplayKind(q) {
 
   // 听力 → 一律中文选项
   if (listen) return "zh_options";
+
+  // 对话应答题：选项为中文词（常为 string[]），应用中文选项模式（须在泛化 dialogue 分支之前）
+  if (st.includes("dialogue_response")) return "zh_options";
 
   // 拼音 → 中文
   if (st.includes("pinyin_to_vocab")) return "zh_options";
