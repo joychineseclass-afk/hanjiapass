@@ -51,6 +51,11 @@ import {
   stemTextWithFallback,
 } from "../modules/hsk/practiceDisplayStrategy.js";
 
+console.log("[HSK-PRACTICE-DEBUG-BOOT]", {
+  file: "page.hsk.js",
+  ts: "2026-03-27-debug",
+});
+
 const state = {
   lv: 1,
   version: "hsk2.0",
@@ -2015,6 +2020,17 @@ function bindEvents() {
 
         state.tab = btn.dataset.tab;
         updateTabsUI();
+
+        if (state.tab === "practice") {
+          const ld = state.current && state.current.lessonData;
+          const lessonId = ld ? ld.id || "" : "";
+          const lessonNo = state.current ? state.current.lessonNo : 0;
+          console.log("[HSK-PRACTICE-TAB-ENTERED]", {
+            lessonId,
+            lessonNo,
+            ts: "2026-03-27-debug",
+          });
+        }
 
         const step = state.tab === "ai" ? "aiPractice" : state.tab;
 

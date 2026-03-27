@@ -9,6 +9,11 @@ import { filterSupportedQuestions } from "./practiceSchema.js";
 import { applyStudentStrategy } from "./practiceStrategy.js";
 import * as PracticeState from "./practiceState.js";
 
+console.log("[HSK-PRACTICE-ENGINE-BOOT]", {
+  file: "practiceEngine.js",
+  ts: "2026-03-27-debug",
+});
+
 function getLang() {
   const l = String(i18n?.getLang?.() ?? "ko").toLowerCase();
   if (l === "zh" || l === "cn") return "cn";
