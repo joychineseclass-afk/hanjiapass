@@ -64,6 +64,23 @@ function pickFourOptions(answer, vocab) {
   return [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
+function pickNotInDialogueLine(vocabTexts) {
+  const inLesson = new Set(vocabTexts || []);
+  const candidates = Object.keys(LINE_I18N).filter((t) => {
+    if (!t || t.length < 2) return false;
+    if (inLesson.has(t)) return false;
+    return true;
+  });
+  return candidates[0] || "今天我不去学校。";
+}
+
+function buildDialogueNotAppearedOptions(vocabTexts, distractor) {
+  const lessonLines = [...new Set((vocabTexts || []).filter(Boolean))].filter((t) => t !== distractor);
+  const appeared = lessonLines.slice(0, 3);
+  const set = new Set([...appeared, distractor]);
+  return [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+}
+
 function buildPractice(vocabTexts, lines) {
   const V = vocabTexts;
   const d = lines;
@@ -157,18 +174,18 @@ function buildPractice(vocabTexts, lines) {
       type: "choice",
       subtype: "sentence_blank",
       prompt: {
-        cn: "下面哪一句出现在本课对话里？",
-        kr: "아래 중 이번 과 대화에 나오는 문장은?",
-        en: "Which sentence appears in this lesson’s dialogue?",
-        jp: "次のうち、この課の会話に出てくる文はどれですか？",
+        cn: "下面哪一句没有出现在本课对话里？",
+        kr: "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        en: "Which sentence did NOT appear in this lesson dialogue?",
+        jp: "次のうち、この課の会話に出てこない文はどれですか？",
       },
-      options: pickFourOptions(a5, V),
-      answer: a5,
+      options: buildDialogueNotAppearedOptions(V, pickNotInDialogueLine(V)),
+      answer: pickNotInDialogueLine(V),
       explanation: {
-        cn: "请回忆本课对话内容。",
-        kr: "이번 과 대화를 떠올려 보세요.",
-        en: "Recall this lesson’s dialogue.",
-        jp: "この課の会話を思い出してください。",
+        cn: "正确答案是未在本课对话中出现的句子。",
+        kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        en: "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        jp: "正解は、この課の会話に出てこない文です。",
       },
     },
   ];

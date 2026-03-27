@@ -423,23 +423,23 @@
       "type": "choice",
       "subtype": "sentence_blank",
       "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+        "cn": "下面哪一句没有出现在本课对话里？",
+        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        "en": "Which sentence did NOT appear in this lesson dialogue?",
+        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
       },
       "options": [
-        "对，我现在去。",
         "你去哪儿？",
         "你现在去吗？",
+        "三块钱一个。",
         "我去学校。"
       ],
-      "answer": "对，我现在去。",
+      "answer": "三块钱一个。",
       "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "正确答案是未在本课对话中出现的句子。",
+        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
@@ -569,22 +569,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "去",
-    "现在",
-    "对",
-    "什么时候",
-    "回",
-    "家",
-    "回家",
-    "下午"
-  ],
-  "displayTitle": {
-    "cn": "你去哪儿？",
-    "zh": "你去哪儿？",
-    "en": "你去哪儿？",
-    "kr": "你去哪儿？",
-    "jp": "你去哪儿？"
-  }
+  ]
 }

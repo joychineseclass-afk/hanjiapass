@@ -387,23 +387,23 @@
       "type": "choice",
       "subtype": "sentence_blank",
       "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+        "cn": "下面哪一句没有出现在本课对话里？",
+        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        "en": "Which sentence did NOT appear in this lesson dialogue?",
+        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
       },
       "options": [
         "今天不来，他去北京了。",
+        "三块钱一个。",
         "他什么时候回来？",
-        "王老师今天来学校吗？",
-        "星期五回来。"
+        "王老师今天来学校吗？"
       ],
-      "answer": "星期五回来。",
+      "answer": "三块钱一个。",
       "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "正确答案是未在本课对话中出现的句子。",
+        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
@@ -533,19 +533,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "来",
-    "回来",
-    "电话",
-    "写",
-    "给"
-  ],
-  "displayTitle": {
-    "cn": "王老师今天来学校吗？",
-    "zh": "王老师今天来学校吗？",
-    "en": "王老师今天来学校吗？",
-    "kr": "王老师今天来学校吗？",
-    "jp": "王老师今天来学校吗？"
-  }
+  ]
 }

@@ -417,23 +417,23 @@
       "type": "choice",
       "subtype": "sentence_blank",
       "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+        "cn": "下面哪一句没有出现在本课对话里？",
+        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        "en": "Which sentence did NOT appear in this lesson dialogue?",
+        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
       },
       "options": [
         "教室开门了吗？",
-        "开了。",
         "你在哪儿？",
+        "三块钱一个。",
         "我在学校。"
       ],
-      "answer": "开了。",
+      "answer": "三块钱一个。",
       "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "正确答案是未在本课对话中出现的句子。",
+        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
@@ -563,22 +563,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "哪儿",
-    "在",
-    "学校",
-    "教室",
-    "开",
-    "门",
-    "里",
-    "和"
-  ],
-  "displayTitle": {
-    "cn": "你在哪儿？",
-    "zh": "你在哪儿？",
-    "en": "你在哪儿？",
-    "kr": "你在哪儿？",
-    "jp": "你在哪儿？"
-  }
+  ]
 }

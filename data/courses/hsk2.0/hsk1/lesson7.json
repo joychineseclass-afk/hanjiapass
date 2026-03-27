@@ -288,23 +288,23 @@
       "type": "choice",
       "subtype": "sentence_blank",
       "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+        "cn": "下面哪一句没有出现在本课对话里？",
+        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        "en": "Which sentence did NOT appear in this lesson dialogue?",
+        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
       },
       "options": [
         "你多大？",
         "你几岁？",
-        "我二十二岁。",
+        "三块钱一个。",
         "我十岁。"
       ],
-      "answer": "我二十二岁。",
+      "answer": "三块钱一个。",
       "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "正确答案是未在本课对话中出现的句子。",
+        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
@@ -431,18 +431,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "几",
-    "岁",
-    "多大",
-    "二十"
-  ],
-  "displayTitle": {
-    "cn": "你几岁？",
-    "zh": "你几岁？",
-    "en": "你几岁？",
-    "kr": "你几岁？",
-    "jp": "你几岁？"
-  }
+  ]
 }

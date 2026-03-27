@@ -338,23 +338,23 @@
       "type": "choice",
       "subtype": "sentence_blank",
       "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
+        "cn": "下面哪一句没有出现在本课对话里？",
+        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        "en": "Which sentence did NOT appear in this lesson dialogue?",
+        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
       },
       "options": [
-        "不忙。",
         "今天几月几号？",
         "今天三月八号。",
-        "你明天忙吗？"
+        "你明天忙吗？",
+        "三块钱一个。"
       ],
-      "answer": "不忙。",
+      "answer": "三块钱一个。",
       "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "正确答案是未在本课对话中出现的句子。",
+        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
@@ -484,22 +484,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "今天",
-    "明天",
-    "月",
-    "号",
-    "忙",
-    "见面",
-    "吧",
-    "好啊"
-  ],
-  "displayTitle": {
-    "cn": "今天几月几号？",
-    "zh": "今天几月几号？",
-    "en": "今天几月几号？",
-    "kr": "今天几月几号？",
-    "jp": "今天几月几号？"
-  }
+  ]
 }
