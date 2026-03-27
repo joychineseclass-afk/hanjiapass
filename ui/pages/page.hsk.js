@@ -855,7 +855,47 @@ function buildExtensionHTML(lessonData) {
  */
 
 function practiceStemDisplayText(q, langKey) {
-  return stemTextWithFallback(_getControlledLangText, q, langKey);
+  const stem = stemTextWithFallback(_getControlledLangText, q, langKey);
+  return normalizeResponseStylePrompt(stem, q, langKey);
+}
+
+function normalizeResponseStylePrompt(stem, q, langKey) {
+  const text = _trimStr(stem);
+  if (!text) return "";
+  const subtype = String(q?.subtype ?? q?.subType ?? "").toLowerCase();
+  if (!subtype.includes("dialogue_response")) return text;
+
+  const lk = normalizePracticeLangAliases(langKey);
+
+  if (lk === "en") {
+    let out = text.replace(
+      /Someone says:?\s*["“]?(.+?)["”]?\s*You should say\?/i,
+      'If someone says "$1", what would you say?'
+    );
+    out = out.replace(/You should say\?/gi, "what would you say?");
+    return out;
+  }
+
+  if (lk === "jp") {
+    return text.replace(
+      /^相手が「(.+?)」と言ったら、あなたは？$/,
+      "相手が「$1」と言ったら、どう答えますか？"
+    );
+  }
+
+  if (lk === "kr") {
+    let out = text.replace(
+      /^상대가 말할 때:\s*「(.+?)」\s*답은\?$/,
+      "상대가 「$1」라고 말하면, 뭐라고 대답할까요?"
+    );
+    out = out.replace(
+      /^상대가\s*「(.+?)」라고 하면 답할 말은\?$/,
+      "상대가 「$1」라고 말하면, 뭐라고 대답할까요?"
+    );
+    return out;
+  }
+
+  return text;
 }
 
 /**
