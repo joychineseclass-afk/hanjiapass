@@ -320,6 +320,18 @@ function mountPractice(container, opts) {
     ? buildLessonWithClonedPracticeForDisplay(lesson, langKey)
     : lesson;
 
+  try {
+    const fp = lessonForPractice && lessonForPractice.practice;
+    console.log("[HSK-PRACTICE-MOUNT]", {
+      lessonId: lessonForPractice?.id,
+      lessonNo: lessonForPractice?.lessonNo,
+      finalCountPassedToEngine: Array.isArray(fp) ? fp.length : 0,
+      firstTwoFinal: Array.isArray(fp) ? fp.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+    });
+  } catch (e) {
+    console.warn("[HSK-PRACTICE-MOUNT] log failed:", e?.message || e);
+  }
+
   mountPracticeFromEngine(container, {
     ...(opts || {}),
     lesson: lessonForPractice,
@@ -966,11 +978,58 @@ function isQuestionStructurallyRenderable(q, langKey) {
   return true;
 }
 
+function _structuralDropReason(q, langKey) {
+  const stem = practiceStemDisplayText(q, langKey);
+  if (!stem) return "empty stem after system-lang + fallback (prompt/question)";
+  const t = String(q.type || "choice").toLowerCase();
+  if (t === "choice" && (!Array.isArray(q.options) || q.options.length < 2)) {
+    return `choice needs options.length >= 2, got ${Array.isArray(q.options) ? q.options.length : "none"}`;
+  }
+  return "unknown";
+}
+
+function _abbrPracticeItemForLog(q) {
+  if (!q || typeof q !== "object") return q;
+  const prompt = q.prompt;
+  const question = q.question;
+  return {
+    id: q.id,
+    type: q.type,
+    subtype: q.subtype,
+    optionsLen: Array.isArray(q.options) ? q.options.length : null,
+    optionsHead: Array.isArray(q.options)
+      ? q.options.slice(0, 2).map((o) =>
+          typeof o === "string" ? o.slice(0, 40) : JSON.stringify(o).slice(0, 80)
+        )
+      : q.options,
+    prompt:
+      prompt && typeof prompt === "object"
+        ? Object.keys(prompt)
+        : typeof prompt === "string"
+        ? prompt.slice(0, 60)
+        : prompt,
+    question:
+      question && typeof question === "object"
+        ? Object.keys(question)
+        : typeof question === "string"
+        ? question.slice(0, 60)
+        : question,
+    zh_options: q.zh_options,
+  };
+}
+
 /**
  * 只在 mount 时：深拷贝 + 语义展示管线（不按 UI 语言筛题池）
  */
 function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || !Array.isArray(lesson.practice)) {
+    console.log("[HSK-PRACTICE-STRATEGY]", {
+      stage: "buildLessonWithClonedPracticeForDisplay",
+      inputCount: 0,
+      outputCount: 0,
+      reason: "lesson.practice missing or not array",
+      perQuestion: [],
+    });
     return { ...lesson, practice: [] };
   }
 
@@ -979,7 +1038,53 @@ function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
 
   hydratePracticeDisplayBridge(cloned, langKey);
 
+  const perQuestion = cloned.map((q) => {
+    const kind = resolveChoiceDisplayKindWithInfer(q);
+    const stem = practiceStemDisplayText(q, langKey);
+    const opts = Array.isArray(q.options) ? q.options : [];
+    let renderable = true;
+    let renderIssue = "";
+    try {
+      renderable = opts.some((o) => {
+        if (typeof o === "string") return _trimStr(o).length > 0;
+        if (!o || typeof o !== "object") return false;
+        return _trimStr(o.__displayText || o.cn || o.zh || o.kr || o.en || "").length > 0;
+      });
+    } catch (e) {
+      renderIssue = e?.message || String(e);
+    }
+    if (String(q.type || "choice").toLowerCase() === "choice" && opts.length < 2) {
+      renderable = false;
+      renderIssue = "options < 2";
+    }
+    if (!stem) {
+      renderable = false;
+      renderIssue = "empty stem";
+    }
+    const ok = isQuestionStructurallyRenderable(q, langKey);
+    return {
+      id: q.id,
+      type: q.type,
+      subtype: q.subtype,
+      displayKind: kind,
+      stemLen: stem ? stem.length : 0,
+      optionsCount: opts.length,
+      optionsRenderable: renderable,
+      renderIssue: renderIssue || undefined,
+      passesStructural: ok,
+      dropReason: ok ? null : _structuralDropReason(q, langKey),
+    };
+  });
+
   const final = cloned.filter((q) => isQuestionStructurallyRenderable(q, langKey));
+
+  console.log("[HSK-PRACTICE-STRATEGY]", {
+    stage: "buildLessonWithClonedPracticeForDisplay",
+    inputCount: cloned.length,
+    outputCount: final.length,
+    langKey,
+    perQuestion,
+  });
 
   return {
     ...lesson,
@@ -1480,14 +1585,15 @@ async function openLesson({ lessonNo, file } = {}) {
   }
 
   let lessonData;
+  let loadRes;
   try {
-    const res = await LESSON_ENGINE.loadLessonDetail({
+    loadRes = await LESSON_ENGINE.loadLessonDetail({
       courseType: state.version,
       level: `hsk${state.lv}`,
       lessonNo: no,
       file: f,
     });
-    lessonData = res && res.lesson;
+    lessonData = loadRes && loadRes.lesson;
   } catch (e) {
     console.error(e);
     setError("Lesson load failed: " + (e?.message || e));
@@ -1497,6 +1603,39 @@ async function openLesson({ lessonNo, file } = {}) {
   if (!lessonData) {
     setError("Lesson load failed: empty lesson");
     return;
+  }
+
+  try {
+    const raw = loadRes && loadRes.raw;
+    const rp = raw && raw.practice;
+    console.log("[HSK-PRACTICE-RAW]", {
+      lessonId: raw?.id ?? lessonData?.id,
+      lessonNo: raw?.lessonNo ?? lessonData?.lessonNo ?? no,
+      hasPracticeArray: Array.isArray(rp),
+      rawPracticeLength: Array.isArray(rp) ? rp.length : 0,
+      firstTwoRaw: Array.isArray(rp) ? rp.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+    });
+    const np = lessonData.practice;
+    console.log("[HSK-PRACTICE-NORMALIZED]", {
+      lessonId: lessonData.id,
+      lessonNo: lessonData.lessonNo,
+      normalizedPracticeLength: Array.isArray(np) ? np.length : 0,
+      firstTwoNormalized: Array.isArray(np) ? np.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+      preservedFieldsSample:
+        np && np[0] && typeof np[0] === "object"
+          ? {
+              id: np[0].id,
+              type: np[0].type,
+              subtype: np[0].subtype,
+              prompt: np[0].prompt,
+              question: np[0].question,
+              options: np[0].options,
+              zh_options: np[0].zh_options,
+            }
+          : null,
+    });
+  } catch (e) {
+    console.warn("[HSK-PRACTICE-RAW] / [HSK-PRACTICE-NORMALIZED] log failed:", e?.message || e);
   }
 
   const started =

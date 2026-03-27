@@ -38,21 +38,82 @@ export function validateQuestion(q) {
   return { valid: true, type };
 }
 
+/** 与 validateQuestion 一致，供过滤阶段日志说明丢弃原因 */
+export function getQuestionUnsupportedReason(q) {
+  if (!q || typeof q !== "object") return "not an object";
+  const type = normalizePracticeType(q.type);
+  if (!type) return `unsupported or empty type: ${String(q.type)}`;
+  const promptOrQuestion = q.prompt ?? q.question;
+  if ((type === "choice" || type === "fill" || type === "order") && !promptOrQuestion) {
+    return `missing prompt/question (required for ${type})`;
+  }
+  if (type === "match") {
+    const pairs = q.pairs ?? q.items;
+    if (!Array.isArray(pairs) || pairs.length < 2) {
+      return "match: need pairs or items array with length >= 2";
+    }
+  }
+  if (type === "order") {
+    const items = q.items ?? q.options ?? [];
+    if (!Array.isArray(items) || items.length < 2) {
+      return "order: need items or options array with length >= 2";
+    }
+  }
+  return null;
+}
+
 /**
  * 过滤并标准化题目
  */
 export function filterSupportedQuestions(items) {
-  if (!Array.isArray(items)) return [];
-  return items
-    .map((item, i) => {
-      const { valid, type } = validateQuestion(item);
-      if (!valid) return null;
-      const normalized = normalizeItem(item, type, i);
-      const out = { ...normalized, type, id: item.id || `p${i + 1}` };
-      if (item.section) out.section = item.section;
-      return out;
-    })
-    .filter(Boolean);
+  if (!Array.isArray(items)) {
+    console.log("[HSK-PRACTICE-FILTER]", {
+      stage: "filterSupportedQuestions",
+      inputCount: 0,
+      outputCount: 0,
+      dropped: [],
+    });
+    return [];
+  }
+  const dropped = [];
+  const out = [];
+  items.forEach((item, i) => {
+    const reason = getQuestionUnsupportedReason(item);
+    if (reason) {
+      dropped.push({
+        index: i,
+        id: item?.id,
+        type: item?.type,
+        subtype: item?.subtype,
+        reason,
+      });
+      return;
+    }
+    const { valid, type } = validateQuestion(item);
+    if (!valid) {
+      dropped.push({
+        index: i,
+        id: item?.id,
+        type: item?.type,
+        subtype: item?.subtype,
+        reason: "validateQuestion failed (internal mismatch — check getQuestionUnsupportedReason)",
+      });
+      return;
+    }
+    const normalized = normalizeItem(item, type, i);
+    const row = { ...normalized, type, id: item.id || `p${i + 1}` };
+    if (item.section) row.section = item.section;
+    out.push(row);
+  });
+
+  console.log("[HSK-PRACTICE-FILTER]", {
+    stage: "filterSupportedQuestions",
+    inputCount: items.length,
+    outputCount: out.length,
+    dropped,
+  });
+
+  return out;
 }
 
 function normalizeItem(item, type, index) {
