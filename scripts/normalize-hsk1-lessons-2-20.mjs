@@ -64,14 +64,71 @@ function pickFourOptions(answer, vocab) {
   return [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-function pickNotInDialogueLine(vocabTexts) {
+function pickNotInDialogueLine(vocabTexts, exclude = new Set()) {
   const inLesson = new Set(vocabTexts || []);
   const candidates = Object.keys(LINE_I18N).filter((t) => {
     if (!t || t.length < 2) return false;
     if (inLesson.has(t)) return false;
+    if (exclude.has(t)) return false;
     return true;
   });
   return candidates[0] || "今天我不去学校。";
+}
+
+/** 问句：含「？/吗」等；选项里仅允许一个非问句作为正确答案 */
+function isQuestionSentence(t) {
+  const s = String(t || "").trim();
+  if (!s) return false;
+  if (s.includes("？") || s.includes("?")) return true;
+  if (s.includes("吗")) return true;
+  return false;
+}
+
+/**
+ * p3：哪一句不是问句？保证四个选项里恰有一句为陈述/非问句。
+ * @returns {{ options: string[], answer: string }}
+ */
+function buildNotQuestionChoice(vocabTexts) {
+  const V = [...new Set((vocabTexts || []).filter(Boolean))];
+  const inLesson = new Set(V);
+  const lessonQuestions = V.filter(isQuestionSentence);
+  const lessonStatements = V.filter((t) => !isQuestionSentence(t));
+
+  const poolQuestionDistractors = [];
+  const pushUniqueQ = (line) => {
+    if (!line || poolQuestionDistractors.includes(line)) return;
+    if (isQuestionSentence(line)) poolQuestionDistractors.push(line);
+  };
+  for (const t of lessonQuestions) pushUniqueQ(t);
+  if (poolQuestionDistractors.length < 3) {
+    for (const key of Object.keys(LINE_I18N)) {
+      if (inLesson.has(key)) continue;
+      pushUniqueQ(key);
+      if (poolQuestionDistractors.length >= 3) break;
+    }
+  }
+
+  let answer;
+  if (lessonStatements.length >= 1) {
+    answer = lessonStatements[0];
+  } else {
+    answer =
+      Object.keys(LINE_I18N).find((t) => !inLesson.has(t) && !isQuestionSentence(t)) || "谢谢。";
+  }
+
+  const distractors = poolQuestionDistractors.filter((t) => t !== answer).slice(0, 3);
+  while (distractors.length < 3) {
+    const filler =
+      Object.keys(LINE_I18N).find(
+        (t) => t !== answer && isQuestionSentence(t) && !distractors.includes(t),
+      ) || "你好吗？";
+    if (!distractors.includes(filler)) distractors.push(filler);
+  }
+
+  const set = new Set([answer, ...distractors.slice(0, 3)]);
+  while (set.size < 4) set.add(answer);
+  const options = [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
+  return { options, answer };
 }
 
 function buildDialogueNotAppearedOptions(vocabTexts, distractor) {
@@ -88,9 +145,9 @@ function buildPractice(vocabTexts, lines) {
   const t1 = d[1]?.text || V[1];
   const t2 = d[2]?.text || V[Math.min(2, V.length - 1)];
   const t3 = d[3]?.text || V[Math.min(3, V.length - 1)];
-  const qLine = V.find((t) => t.includes("？") || t.includes("?") || t.includes("吗")) || V[0];
-  const a4 = V[Math.min(1, V.length - 1)];
-  const a5 = V[Math.min(3, V.length - 1)];
+  const distractorP4 = pickNotInDialogueLine(V);
+  const distractorP5 = pickNotInDialogueLine(V, new Set([distractorP4]));
+  const p3 = buildNotQuestionChoice(V);
 
   return [
     {
@@ -136,18 +193,18 @@ function buildPractice(vocabTexts, lines) {
       type: "choice",
       subtype: "zh_to_meaning",
       prompt: {
-        cn: "下面哪一句是本课的问句？",
-        kr: "아래 중 이번 과의 질문 문장은?",
-        en: "Which line below is a question in this lesson?",
-        jp: "次のうち、この課の疑問文はどれですか？",
+        cn: "下面哪一句不是问句？",
+        kr: "아래 중 질문 문장이 아닌 것은?",
+        en: "Which line below is NOT a question?",
+        jp: "次のうち、疑問文ではないのはどれですか？",
       },
-      options: pickFourOptions(qLine, V),
-      answer: qLine,
+      options: p3.options,
+      answer: p3.answer,
       explanation: {
-        cn: "问句常带有「吗」或问号「？」。",
-        kr: "의문문에는 「吗」나 「？」가 자주 붙습니다.",
-        en: "Questions often use 吗 or 「？」。",
-        jp: "疑問文には「吗」や「？」がよく付きます。",
+        cn: "问句常带「吗」或「？」；其余为陈述或应答。",
+        kr: "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
+        en: "Questions often use 吗 or 「？」; the others are statements or replies.",
+        jp: "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。",
       },
     },
     {
@@ -155,18 +212,18 @@ function buildPractice(vocabTexts, lines) {
       type: "choice",
       subtype: "sentence_blank",
       prompt: {
-        cn: "选择本课对话中的句子：___",
-        kr: "이번 과 대화 문장 고르기: ___",
-        en: "Pick a sentence from this lesson’s dialogue: ___",
-        jp: "この課の会話の文を選ぶ：___",
+        cn: "下面哪一句没有出现在本课对话里？",
+        kr: "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        en: "Which sentence did NOT appear in this lesson dialogue?",
+        jp: "次のうち、この課の会話に出てこない文はどれですか？",
       },
-      options: pickFourOptions(a4, V),
-      answer: a4,
+      options: buildDialogueNotAppearedOptions(V, distractorP4),
+      answer: distractorP4,
       explanation: {
-        cn: "选项均出自本课对话。",
-        kr: "보기는 모두 이번 과 대화에서 나옵니다.",
-        en: "All options come from this lesson’s dialogue.",
-        jp: "選択肢はすべてこの課の会話に出てきます。",
+        cn: "正确答案是未在本课对话中出现的句子。",
+        kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        en: "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        jp: "正解は、この課の会話に出てこない文です。",
       },
     },
     {
@@ -179,8 +236,8 @@ function buildPractice(vocabTexts, lines) {
         en: "Which sentence did NOT appear in this lesson dialogue?",
         jp: "次のうち、この課の会話に出てこない文はどれですか？",
       },
-      options: buildDialogueNotAppearedOptions(V, pickNotInDialogueLine(V)),
-      answer: pickNotInDialogueLine(V),
+      options: buildDialogueNotAppearedOptions(V, distractorP5),
+      answer: distractorP5,
       explanation: {
         cn: "正确答案是未在本课对话中出现的句子。",
         kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
