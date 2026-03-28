@@ -425,78 +425,29 @@ function buildSlot2ZhToPinyin(V, lessonNo, transMap) {
   };
 }
 
-function buildSlot4Fill(V, neighborArr) {
-  for (const line of V) {
-    const fragments = [];
-    for (const term of V) {
-      if (term.length < 2 || term === line) continue;
-      if (line.includes(term)) fragments.push(term);
-    }
-    fragments.sort((a, b) => b.length - a.length);
-    const term = fragments[0];
-    if (!term) continue;
-    const idx = line.indexOf(term);
-    if (idx < 0) continue;
-    const blanked =
-      line.slice(0, idx) + "___" + line.slice(idx + term.length);
-    const wrong = [];
-    for (const o of V) {
-      if (o === term || o === line) continue;
-      if (o.length >= 2 && o.length <= 8) wrong.push(o);
-    }
-    for (const o of neighborArr) {
-      if (wrong.length >= 8) break;
-      if (!V.includes(o) && o.length >= 2 && o !== term) wrong.push(o);
-    }
-    const wrongSorted = sortDistractorZh([...new Set(wrong)], V, neighborArr);
-    const optStrs = [term, ...wrongSorted];
-    const four = [...new Set(optStrs)].sort((a, b) => a.localeCompare(b, "zh-Hans-CN")).slice(0, 4);
-    if (four.length < 4) continue;
-    if (!four.includes(term)) continue;
-    return {
-      id: "p4",
-      type: "choice",
-      subtype: "sentence_blank",
-      prompt: {
-        cn: `填空：${blanked}`,
-        kr: `빈칸에 알맞은 말을 고르세요: ${blanked}`,
-        en: `Choose the word for the blank: ${blanked}`,
-        jp: `空所に入る語を選んでください: ${blanked}`,
-      },
-      options: four,
-      answer: term,
-      explanation: {
-        cn: `完整句子：${line}`,
-        kr: `완전한 문장: ${line}`,
-        en: `Full line: ${line}`,
-        jp: `全文: ${line}`,
-      },
-    };
-  }
-  const correct = V[0] || "你好";
-  return {
-    id: "p4",
-    type: "choice",
-    subtype: "sentence_blank",
-    prompt: {
-      cn: "选择本课正确的句子：___",
-      kr: "본 과에서 맞는 문장을 고르세요: ___",
-      en: "Pick the correct line from this lesson: ___",
-      jp: "この課の正しい文を選びます: ___",
-    },
-    options: pickFourOptions(correct, V),
-    answer: correct,
-    explanation: {
-      cn: "选项优先来自本课对话。",
-      kr: "보기는 우선 이번 과 대화에서 고릅니다.",
-      en: "Options are taken from this lesson’s dialogue first.",
-      jp: "選択肢はまずこの課の会話から選びます。",
-    },
+/**
+ * 第二组对话应答（与 p3 不同行），避免「本课正确句子」类无唯一解题型。
+ */
+function pickSecondDialogueExchange(d, V, t0, t1) {
+  const lines = (d || []).map((x) => x?.text).filter(Boolean);
+  const tryPair = (i, j) => {
+    const a = lines[i];
+    const b = lines[j];
+    if (!a || !b) return null;
+    if (a === t0 && b === t1) return null;
+    return { t2: a, t3: b };
   };
+  let pair = tryPair(2, 3) || tryPair(4, 5) || tryPair(1, 2);
+  if (pair) return pair;
+  const u = [...new Set(V)];
+  if (u.length >= 4) return { t2: u[2], t3: u[3] };
+  if (u.length >= 2) return { t2: u[u.length - 2], t3: u[u.length - 1] };
+  return { t2: u[0] || t0, t3: u[1] || u[0] || t1 };
 }
 
 /**
  * Lumina static mix v1 — fixed slots p1–p5 (single-choice only).
+ * p4: dialogue_response（第二组对白），不再使用 sentence_blank 挖空/整句四选一。
  */
 function buildPractice(vocabTexts, lines, lessonNo, neighborLines, transMap) {
   const V = vocabTexts;
@@ -529,9 +480,54 @@ function buildPractice(vocabTexts, lines, lessonNo, neighborLines, transMap) {
     },
   };
 
-  const slot4 = buildSlot4Fill(V, neighborArr);
-
   const neighborSet = new Set(neighborArr);
+  const usedExclusionDistractors = new Set();
+  const { t2, t3 } = pickSecondDialogueExchange(d, V, t0, t1);
+  let slot4;
+  if (t2 === t0 && t3 === t1) {
+    const distractorP4 = pickNotInDialogueLine(V, usedExclusionDistractors, neighborSet);
+    usedExclusionDistractors.add(distractorP4);
+    slot4 = {
+      id: "p4",
+      type: "choice",
+      subtype: "sentence_blank",
+      prompt: {
+        cn: "下面哪一句没有出现在本课对话里？",
+        kr: "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
+        en: "Which sentence did NOT appear in this lesson dialogue?",
+        jp: "次のうち、この課の会話に出てこない文はどれですか？",
+      },
+      options: buildDialogueNotAppearedOptions(V, distractorP4),
+      answer: distractorP4,
+      explanation: {
+        cn: "正确答案是未在本课对话中出现的句子。",
+        kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
+        en: "The correct answer is the sentence that does not appear in this lesson dialogue.",
+        jp: "正解は、この課の会話に出てこない文です。",
+      },
+    };
+  } else {
+    slot4 = {
+      id: "p4",
+      type: "choice",
+      subtype: "dialogue_response",
+      prompt: {
+        cn: `对方说「${t2}」，你应该说？`,
+        kr: `상대가 말할 때: 「${t2}」 답은?`,
+        en: `Someone says: "${t2}" You should say?`,
+        jp: `相手が「${t2}」と言ったら、あなたは？`,
+      },
+      options: pickFourOptions(t3, V),
+      answer: t3,
+      explanation: {
+        cn: "请根据本课对话选择应答句。",
+        kr: "이번 과 대화에 맞는 응답을 고르세요.",
+        en: "Pick the reply that fits this lesson’s dialogue.",
+        jp: "この課の会話に合う返答を選びます。",
+      },
+    };
+  }
+
   let slot5;
   if (lessonNo % 2 === 0) {
     const nq = buildNotQuestionChoice(V);
@@ -555,7 +551,7 @@ function buildPractice(vocabTexts, lines, lessonNo, neighborLines, transMap) {
       },
     };
   } else {
-    const distractor = pickNotInDialogueLine(V, new Set(), neighborSet);
+    const distractor = pickNotInDialogueLine(V, usedExclusionDistractors, neighborSet);
     slot5 = {
       id: "p5",
       type: "choice",
