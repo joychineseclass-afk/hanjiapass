@@ -44,6 +44,108 @@
   ],
   "vocab": [
     {
+      "hanzi": "你",
+      "pinyin": "nǐ",
+      "meaning": {
+        "zh": "你",
+        "kr": "너, 당신",
+        "jp": "あなた",
+        "en": "you"
+      },
+      "pos": {
+        "zh": "代词",
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      },
+      "senseNote": {
+        "zh": "说话时用来称呼对方。",
+        "kr": "말할 때 상대를 가리킬 때 씁니다.",
+        "en": "Used to refer to the person you are speaking to.",
+        "jp": "話し相手を指すときに使います。"
+      },
+      "examples": [
+        {
+          "zh": "你好吗？",
+          "pinyin": "nǐ hǎo ma？",
+          "translation": {
+            "kr": "잘 지내요?",
+            "en": "How are you?",
+            "jp": "元気ですか？"
+          }
+        },
+        {
+          "zh": "你是老师吗？",
+          "pinyin": "nǐ shì lǎo shī ma？",
+          "translation": {
+            "kr": "선생님이에요?",
+            "en": "Are you a teacher?",
+            "jp": "先生ですか？"
+          }
+        },
+        {
+          "zh": "你呢？",
+          "pinyin": "nǐ ne？",
+          "translation": {
+            "kr": "당신은요?",
+            "en": "And you?",
+            "jp": "あなたは？"
+          }
+        }
+      ]
+    },
+    {
+      "hanzi": "好",
+      "pinyin": "hǎo",
+      "meaning": {
+        "zh": "好",
+        "kr": "좋다",
+        "jp": "良い、いい",
+        "en": "good; OK"
+      },
+      "pos": {
+        "zh": "形容词",
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      },
+      "senseNote": {
+        "zh": "表示不错、可以、让人满意。",
+        "kr": "괜찮다, 만족스럽다는 뜻으로 씁니다.",
+        "en": "Means \"good\", \"fine\", or \"OK\".",
+        "jp": "「いい」「大丈夫」などの意味で使います。"
+      },
+      "examples": [
+        {
+          "zh": "很好。",
+          "pinyin": "hěn hǎo。",
+          "translation": {
+            "kr": "아주 좋아요.",
+            "en": "Very good.",
+            "jp": "とても良いです。"
+          }
+        },
+        {
+          "zh": "好吗？",
+          "pinyin": "hǎo ma？",
+          "translation": {
+            "kr": "괜찮아요?",
+            "en": "Is it OK?",
+            "jp": "いいですか？"
+          }
+        },
+        {
+          "zh": "好！",
+          "pinyin": "hǎo！",
+          "translation": {
+            "kr": "좋아요!",
+            "en": "OK! / Good!",
+            "jp": "いいです！"
+          }
+        }
+      ]
+    },
+    {
       "hanzi": "你好！",
       "pinyin": "nǐ hǎo",
       "meaning": {
@@ -68,10 +170,46 @@
         "en": "Thank you."
       },
       "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
+        "zh": "礼貌用语",
+        "kr": "예의 표현",
+        "en": "courtesy phrase",
+        "jp": "丁寧な表現"
+      },
+      "senseNote": {
+        "zh": "用于向别人表达感谢。",
+        "kr": "다른 사람에게 감사할 때 씁니다.",
+        "en": "Used to thank someone.",
+        "jp": "相手に感謝するときに使います。"
+      },
+      "examples": [
+        {
+          "zh": "谢谢你。",
+          "pinyin": "xiè xie nǐ。",
+          "translation": {
+            "kr": "고마워요.",
+            "en": "Thank you.",
+            "jp": "ありがとう。"
+          }
+        },
+        {
+          "zh": "谢谢老师。",
+          "pinyin": "xiè xie lǎo shī。",
+          "translation": {
+            "kr": "선생님 감사합니다.",
+            "en": "Thank you, teacher.",
+            "jp": "先生、ありがとうございます。"
+          }
+        },
+        {
+          "zh": "谢谢！",
+          "pinyin": "xiè xie！",
+          "translation": {
+            "kr": "고마워요!",
+            "en": "Thanks!",
+            "jp": "ありがとう！"
+          }
+        }
+      ]
     },
     {
       "hanzi": "不客气。",
@@ -83,10 +221,46 @@
         "en": "You're welcome."
       },
       "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
+        "zh": "礼貌用语",
+        "kr": "예의 표현",
+        "en": "courtesy phrase",
+        "jp": "丁寧な表現"
+      },
+      "senseNote": {
+        "zh": "别人说「谢谢」时的礼貌回答。",
+        "kr": "상대가 「谢谢」라고 할 때 정중하게 답할 때 씁니다.",
+        "en": "A polite reply when someone says \"谢谢\".",
+        "jp": "相手が「谢谢」と言ったときの丁寧な返事です。"
+      },
+      "examples": [
+        {
+          "zh": "不客气。",
+          "pinyin": "bú kè qì。",
+          "translation": {
+            "kr": "천만에요.",
+            "en": "You're welcome.",
+            "jp": "どういたしまして。"
+          }
+        },
+        {
+          "zh": "不客气，再见。",
+          "pinyin": "bú kè qì，zài jiàn。",
+          "translation": {
+            "kr": "천만에요, 안녕히 가세요.",
+            "en": "You're welcome. Goodbye.",
+            "jp": "どういたしまして。さようなら。"
+          }
+        },
+        {
+          "zh": "不客气，没关系。",
+          "pinyin": "bú kè qì，méi guān xi。",
+          "translation": {
+            "kr": "천만에요, 괜찮아요.",
+            "en": "You're welcome. It's OK.",
+            "jp": "どういたしまして。大丈夫です。"
+          }
+        }
+      ]
     },
     {
       "hanzi": "再见。",

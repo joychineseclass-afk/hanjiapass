@@ -17,7 +17,8 @@
       "senseNote": { "zh": "常用来形容性质或状态。", "kr": "성질이나 상태를 말할 때 자주 씁니다.", "en": "Often used to describe a quality or state.", "jp": "性質や状態を表すのによく使います。" },
       "examples": [
         { "zh": "很好。", "pinyin": "hěn hǎo。", "translation": { "kr": "아주 좋아요.", "en": "Very good.", "jp": "とても良いです。" } },
-        { "zh": "你好！", "pinyin": "nǐ hǎo！", "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" } }
+        { "zh": "你好！", "pinyin": "nǐ hǎo！", "translation": { "kr": "안녕하세요!", "en": "Hello!", "jp": "こんにちは！" } },
+        { "zh": "好吗？", "pinyin": "hǎo ma？", "translation": { "kr": "괜찮아요?", "en": "OK?", "jp": "いいですか？" } }
       ]
     }
   ],

@@ -184,8 +184,10 @@ function translationFromExample(tr, uiLang) {
   return "";
 }
 
+const MAX_WORD_STUDY_EXAMPLES = 3;
+
 /**
- * 最多 2 条例句：中文 + 拼音 + 系统语言翻译
+ * 最多 3 条例句：中文 + 拼音 + 系统语言翻译（课程 JSON vocab.examples）
  */
 function collectExampleItems(raw, uiLang) {
   const out = [];
@@ -213,12 +215,12 @@ function collectExampleItems(raw, uiLang) {
         const tr = translationFromExample(ex.translation ?? ex.trans, uiLang);
         push(z, p, tr);
       }
-      if (out.length >= 2) return out;
+      if (out.length >= MAX_WORD_STUDY_EXAMPLES) return out;
     }
   }
 
   const single = raw.example;
-  if (single && typeof single === "object" && out.length < 2) {
+  if (single && typeof single === "object" && out.length < MAX_WORD_STUDY_EXAMPLES) {
     push(
       single.text ?? single.zh ?? single.cn,
       single.pinyin ?? single.py ?? "",
@@ -227,7 +229,7 @@ function collectExampleItems(raw, uiLang) {
   }
 
   const ez = str(raw.exampleZh ?? raw.example_zh ?? raw.exampleZH);
-  if (ez && out.length < 2 && !seen.has(ez)) {
+  if (ez && out.length < MAX_WORD_STUDY_EXAMPLES && !seen.has(ez)) {
     const epy = str(raw.examplePinyin ?? raw.example_pinyin ?? raw.examplePY ?? "");
     let tr = "";
     if (raw.exampleTranslation && typeof raw.exampleTranslation === "object") {
@@ -247,7 +249,7 @@ function collectExampleItems(raw, uiLang) {
     push(ez, epy, tr);
   }
 
-  return out.slice(0, 2);
+  return out.slice(0, MAX_WORD_STUDY_EXAMPLES);
 }
 
 function render(wrapRoot, root, raw) {
