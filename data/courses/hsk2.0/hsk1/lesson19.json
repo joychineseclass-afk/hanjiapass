@@ -45,7 +45,7 @@
   "vocab": [
     {
       "hanzi": "今天天气怎么样？",
-      "pinyin": "jīn tiān tiān qì zěn me yàng ？",
+      "pinyin": "jīn tiān tiān qì zěn me yàng",
       "meaning": {
         "zh": "今天天气怎么样？",
         "kr": "오늘 날씨가 어때요?",
@@ -60,7 +60,7 @@
     },
     {
       "hanzi": "今天天气很好。",
-      "pinyin": "jīn tiān tiān qì hěn hǎo 。",
+      "pinyin": "jīn tiān tiān qì hěn hǎo",
       "meaning": {
         "zh": "今天天气很好。",
         "kr": "오늘 날씨가 아주 좋아요.",
@@ -75,7 +75,7 @@
     },
     {
       "hanzi": "冷吗？",
-      "pinyin": "lěng ma ？",
+      "pinyin": "lěng ma",
       "meaning": {
         "zh": "冷吗？",
         "kr": "추워요?",
@@ -90,7 +90,7 @@
     },
     {
       "hanzi": "不冷，很暖和。",
-      "pinyin": "bù lěng ， hěn nuǎn huo 。",
+      "pinyin": "bù lěng hěn nuǎn huo",
       "meaning": {
         "zh": "不冷，很暖和。",
         "kr": "안 춥고 아주 따뜻해요.",
@@ -105,7 +105,7 @@
     },
     {
       "hanzi": "明天天气怎么样？",
-      "pinyin": "míng tiān tiān qì zěn me yàng ？",
+      "pinyin": "míng tiān tiān qì zěn me yàng",
       "meaning": {
         "zh": "明天天气怎么样？",
         "kr": "내일 날씨가 어때요?",
@@ -120,7 +120,7 @@
     },
     {
       "hanzi": "明天下雨。",
-      "pinyin": "míng tiān xià yǔ 。",
+      "pinyin": "míng tiān xià yǔ",
       "meaning": {
         "zh": "明天下雨。",
         "kr": "내일 비 와요.",
@@ -313,6 +313,98 @@
     {
       "id": "p1",
       "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "「오늘 날씨가 아주 좋아요.」用中文怎么说？",
+        "kr": "'오늘 날씨가 아주 좋아요.'에 해당하는 중국어는?",
+        "en": "What is the Chinese for \"오늘 날씨가 아주 좋아요.\"?",
+        "jp": "「오늘 날씨가 아주 좋아요.」に対応する中国語は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "不冷，很暖和。",
+          "cn": "不冷，很暖和。"
+        },
+        {
+          "key": "B",
+          "zh": "今天天气很好。",
+          "cn": "今天天气很好。"
+        },
+        {
+          "key": "C",
+          "zh": "今天天气怎么样？",
+          "cn": "今天天气怎么样？"
+        },
+        {
+          "key": "D",
+          "zh": "冷吗？",
+          "cn": "冷吗？"
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "cn": "「오늘 날씨가 아주 좋아요.」：今天天气很好。",
+        "kr": "「오늘 날씨가 아주 좋아요.」: 今天天气很好。",
+        "en": "\"오늘 날씨가 아주 좋아요.\" → 今天天气很好。.",
+        "jp": "「오늘 날씨가 아주 좋아요.」→ 今天天气很好。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「今天天气很好。」的拼音是？",
+        "kr": "「今天天气很好。」의 병음은?",
+        "en": "What is the pinyin of \"今天天气很好。\"?",
+        "jp": "「今天天气很好。」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "jīn tiān tiān qì hěn hǎo",
+          "cn": "jīn tiān tiān qì hěn hǎo",
+          "kr": "jīn tiān tiān qì hěn hǎo",
+          "en": "jīn tiān tiān qì hěn hǎo",
+          "jp": "jīn tiān tiān qì hěn hǎo"
+        },
+        {
+          "key": "B",
+          "zh": "jīn tiān tiān qì zěn me yàng",
+          "cn": "jīn tiān tiān qì zěn me yàng",
+          "kr": "jīn tiān tiān qì zěn me yàng",
+          "en": "jīn tiān tiān qì zěn me yàng",
+          "jp": "jīn tiān tiān qì zěn me yàng"
+        },
+        {
+          "key": "C",
+          "zh": "lěng ma",
+          "cn": "lěng ma",
+          "kr": "lěng ma",
+          "en": "lěng ma",
+          "jp": "lěng ma"
+        },
+        {
+          "key": "D",
+          "zh": "bù lěng hěn nuǎn huo",
+          "cn": "bù lěng hěn nuǎn huo",
+          "kr": "bù lěng hěn nuǎn huo",
+          "en": "bù lěng hěn nuǎn huo",
+          "jp": "bù lěng hěn nuǎn huo"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「今天天气很好。」：jīn tiān tiān qì hěn hǎo",
+        "kr": "「今天天气很好。」: jīn tiān tiān qì hěn hǎo",
+        "en": "\"今天天气很好。\" → jīn tiān tiān qì hěn hǎo.",
+        "jp": "「今天天气很好。」→ jīn tiān tiān qì hěn hǎo"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方说「今天天气怎么样？」，你应该说？",
@@ -335,14 +427,14 @@
       }
     },
     {
-      "id": "p2",
+      "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "sentence_blank",
       "prompt": {
-        "cn": "对方说「冷吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「冷吗？」 답은?",
-        "en": "Someone says: \"冷吗？\" You should say?",
-        "jp": "相手が「冷吗？」と言ったら、あなたは？"
+        "cn": "选择本课正确的句子：___",
+        "kr": "본 과에서 맞는 문장을 고르세요: ___",
+        "en": "Pick the correct line from this lesson: ___",
+        "jp": "この課の正しい文を選びます: ___"
       },
       "options": [
         "不冷，很暖和。",
@@ -350,60 +442,12 @@
         "今天天气怎么样？",
         "冷吗？"
       ],
-      "answer": "不冷，很暖和。",
+      "answer": "今天天气怎么样？",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
-      }
-    },
-    {
-      "id": "p3",
-      "type": "choice",
-      "subtype": "zh_to_meaning",
-      "prompt": {
-        "cn": "下面哪一句不是问句？",
-        "kr": "아래 중 질문 문장이 아닌 것은?",
-        "en": "Which line below is NOT a question?",
-        "jp": "次のうち、疑問文ではないのはどれですか？"
-      },
-      "options": [
-        "今天天气很好。",
-        "今天天气怎么样？",
-        "冷吗？",
-        "明天天气怎么样？"
-      ],
-      "answer": "今天天气很好。",
-      "explanation": {
-        "cn": "问句常带「吗」或「？」；其余为陈述或应答。",
-        "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
-        "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
-        "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "今天天气很好。",
-        "今天天气怎么样？",
-        "冷吗？",
-        "三块钱一个。"
-      ],
-      "answer": "三块钱一个。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
+        "cn": "选项优先来自本课对话。",
+        "kr": "보기는 우선 이번 과 대화에서 고릅니다.",
+        "en": "Options are taken from this lesson’s dialogue first.",
+        "jp": "選択肢はまずこの課の会話から選びます。"
       }
     },
     {
@@ -420,9 +464,9 @@
         "今天天气很好。",
         "今天天气怎么样？",
         "冷吗？",
-        "三点十分上课。"
+        "王老师今天来学校吗？"
       ],
-      "answer": "三点十分上课。",
+      "answer": "王老师今天来学校吗？",
       "explanation": {
         "cn": "正确答案是未在本课对话中出现的句子。",
         "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",

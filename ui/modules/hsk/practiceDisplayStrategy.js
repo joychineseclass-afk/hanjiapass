@@ -47,6 +47,9 @@ export function resolveChoiceDisplayKind(q) {
 
   if (st.includes("pinyin_to_vocab")) return "zh_options";
 
+  /** 汉字 → 拼音选项（拉丁字符，放在 cn/zh 字段供展示） */
+  if (st.includes("zh_to_pinyin")) return "zh_options";
+
   if (st.includes("meaning_to_vocab") || st.includes("native_to_zh")) return "zh_options";
 
   if (st.includes("sentence_blank") || st.includes("sentence_order")) return "zh_options";

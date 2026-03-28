@@ -45,7 +45,7 @@
   "vocab": [
     {
       "hanzi": "他是谁？",
-      "pinyin": "tā shì shuí ？",
+      "pinyin": "tā shì shuí",
       "meaning": {
         "zh": "他是谁？",
         "kr": "그는 누구예요?",
@@ -60,7 +60,7 @@
     },
     {
       "hanzi": "他是我的爸爸。",
-      "pinyin": "tā shì wǒ de bà ba 。",
+      "pinyin": "tā shì wǒ de bà ba",
       "meaning": {
         "zh": "他是我的爸爸。",
         "kr": "그는 제 아빠예요.",
@@ -75,7 +75,7 @@
     },
     {
       "hanzi": "她呢？",
-      "pinyin": "tā ne ？",
+      "pinyin": "tā ne",
       "meaning": {
         "zh": "她呢？",
         "kr": "그녀는요?",
@@ -90,7 +90,7 @@
     },
     {
       "hanzi": "她是我的妈妈。",
-      "pinyin": "tā shì wǒ de mā ma 。",
+      "pinyin": "tā shì wǒ de mā ma",
       "meaning": {
         "zh": "她是我的妈妈。",
         "kr": "그녀는 제 엄마예요.",
@@ -105,7 +105,7 @@
     },
     {
       "hanzi": "你爱爸爸妈妈吗？",
-      "pinyin": "nǐ ài bà ba mā ma ma ？",
+      "pinyin": "nǐ ài bà ba mā ma ma",
       "meaning": {
         "zh": "你爱爸爸妈妈吗？",
         "kr": "아빠 엄마 사랑해요?",
@@ -120,7 +120,7 @@
     },
     {
       "hanzi": "爱，我很爱他们。",
-      "pinyin": "ài ， wǒ hěn ài tā men 。",
+      "pinyin": "ài wǒ hěn ài tā men",
       "meaning": {
         "zh": "爱，我很爱他们。",
         "kr": "사랑해요, 저는 그들을 아주 사랑해요.",
@@ -307,6 +307,106 @@
     {
       "id": "p1",
       "type": "choice",
+      "subtype": "vocab_meaning_choice",
+      "prompt": {
+        "cn": "「她是我的妈妈。」的意思是？",
+        "kr": "「她是我的妈妈。」의 뜻은?",
+        "en": "What does \"她是我的妈妈。\" mean?",
+        "jp": "「她是我的妈妈。」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "meaning": {
+            "kr": "그녀는 제 엄마예요.",
+            "en": "She is my mom.",
+            "jp": "彼女は私の母です。",
+            "zh": "她是我的妈妈。",
+            "cn": "她是我的妈妈。"
+          }
+        },
+        {
+          "key": "B",
+          "meaning": {
+            "kr": "그녀는요?",
+            "en": "What about her?",
+            "jp": "彼女は？",
+            "zh": "她呢？",
+            "cn": "她呢？"
+          }
+        },
+        {
+          "key": "C",
+          "meaning": {
+            "kr": "그는 누구예요?",
+            "en": "Who is he?",
+            "jp": "彼は誰ですか？",
+            "zh": "他是谁？",
+            "cn": "他是谁？"
+          }
+        },
+        {
+          "key": "D",
+          "meaning": {
+            "kr": "그는 제 아빠예요.",
+            "en": "He is my dad.",
+            "jp": "彼は私の父です。",
+            "zh": "他是我的爸爸。",
+            "cn": "他是我的爸爸。"
+          }
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「她是我的妈妈。」：She is my mom.",
+        "kr": "「她是我的妈妈。」는 그녀는 제 엄마예요.입니다.",
+        "en": "\"她是我的妈妈。\" means She is my mom..",
+        "jp": "「她是我的妈妈。」は 彼女は私の母です。 です。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "pinyin_to_vocab_choice",
+      "prompt": {
+        "cn": "根据拼音「tā shì wǒ de mā ma」选择正确的词语。",
+        "kr": "'tā shì wǒ de mā ma'의 한자는?",
+        "en": "Choose the Chinese that matches pinyin \"tā shì wǒ de mā ma\".",
+        "jp": "ピンイン「tā shì wǒ de mā ma」に合う語を選んでください。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "爱，我很爱他们。",
+          "cn": "爱，我很爱他们。"
+        },
+        {
+          "key": "B",
+          "zh": "你爱爸爸妈妈吗？",
+          "cn": "你爱爸爸妈妈吗？"
+        },
+        {
+          "key": "C",
+          "zh": "他是谁？",
+          "cn": "他是谁？"
+        },
+        {
+          "key": "D",
+          "zh": "她是我的妈妈。",
+          "cn": "她是我的妈妈。"
+        }
+      ],
+      "answer": "D",
+      "explanation": {
+        "cn": "「tā shì wǒ de mā ma」：她是我的妈妈。",
+        "kr": "「tā shì wǒ de mā ma」: 她是我的妈妈。",
+        "en": "\"tā shì wǒ de mā ma\" is 她是我的妈妈。.",
+        "jp": "「tā shì wǒ de mā ma」→ 她是我的妈妈。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方说「他是谁？」，你应该说？",
@@ -329,14 +429,14 @@
       }
     },
     {
-      "id": "p2",
+      "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "sentence_blank",
       "prompt": {
-        "cn": "对方说「她呢？」，你应该说？",
-        "kr": "상대가 말할 때: 「她呢？」 답은?",
-        "en": "Someone says: \"她呢？\" You should say?",
-        "jp": "相手が「她呢？」と言ったら、あなたは？"
+        "cn": "选择本课正确的句子：___",
+        "kr": "본 과에서 맞는 문장을 고르세요: ___",
+        "en": "Pick the correct line from this lesson: ___",
+        "jp": "この課の正しい文を選びます: ___"
       },
       "options": [
         "他是谁？",
@@ -344,16 +444,16 @@
         "她呢？",
         "她是我的妈妈。"
       ],
-      "answer": "她是我的妈妈。",
+      "answer": "他是谁？",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
+        "cn": "选项优先来自本课对话。",
+        "kr": "보기는 우선 이번 과 대화에서 고릅니다.",
+        "en": "Options are taken from this lesson’s dialogue first.",
+        "jp": "選択肢はまずこの課の会話から選びます。"
       }
     },
     {
-      "id": "p3",
+      "id": "p5",
       "type": "choice",
       "subtype": "zh_to_meaning",
       "prompt": {
@@ -374,54 +474,6 @@
         "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
         "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
         "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "三块钱一个。",
-        "他是谁？",
-        "他是我的爸爸。",
-        "她呢？"
-      ],
-      "answer": "三块钱一个。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
-      }
-    },
-    {
-      "id": "p5",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "三点十分上课。",
-        "他是谁？",
-        "他是我的爸爸。",
-        "她呢？"
-      ],
-      "answer": "三点十分上课。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],

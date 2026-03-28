@@ -1,5 +1,5 @@
 /**
- * Normalize hsk1 lesson2–lesson20 to match lesson1.json structure.
+ * Normalize hsk1 lesson1–lesson20 to a unified schema + Lumina Practice Variety v1 (static 5-slot mix).
  * Run from repo root: node scripts/normalize-hsk1-lessons-2-20.mjs
  */
 import fs from "fs";
@@ -25,6 +25,8 @@ function vocabPinyin(text) {
   return pinyin(text, { toneType: "symbol", type: "string", v: true }).replace(/\s+/g, " ").trim();
 }
 
+const LETTERS = ["A", "B", "C", "D"];
+
 function uniqDialogueTexts(dialogue) {
   const seen = new Set();
   const out = [];
@@ -37,17 +39,62 @@ function uniqDialogueTexts(dialogue) {
   return out;
 }
 
-function buildVocabEntries(texts) {
+/** text -> {kr,en,jp} for dialogue lines (LINE_I18N or raw translation) */
+function buildTranslationMap(rawDialogue) {
+  const m = new Map();
+  for (const ln of rawDialogue || []) {
+    const t = ln.text || "";
+    if (!t || m.has(t)) continue;
+    const tr = LINE_I18N[t] || ln.translation;
+    if (tr && (tr.kr || tr.en || tr.jp)) {
+      m.set(t, { kr: tr.kr || "", en: tr.en || "", jp: tr.jp || "" });
+    }
+  }
+  return m;
+}
+
+function resolveMeaning(zh, transMap) {
+  if (LINE_I18N[zh]) return LINE_I18N[zh];
+  return transMap.get(zh) || { kr: "", en: "", jp: "" };
+}
+
+/** Neighbour lesson dialogue lines (n±1) for themed distractors */
+function buildNeighborLineSet(lessonNo, rawByLesson) {
+  const set = new Set();
+  for (const m of [lessonNo - 1, lessonNo + 1]) {
+    if (m < 1 || m > 20) continue;
+    const raw = rawByLesson[m];
+    if (!raw) continue;
+    for (const t of uniqDialogueTexts(raw.dialogue || [])) set.add(t);
+  }
+  return set;
+}
+
+function stripForPinyin(s) {
+  return String(s || "").replace(/[。！？，、\s]/g, "").trim();
+}
+
+/** 干扰项顺序：本课 → 邻课 → 其余（各组内按拼音序） */
+function sortDistractorZh(list, V, neighborArr) {
+  const inV = list.filter((z) => V.includes(z));
+  const inN = list.filter((z) => !V.includes(z) && neighborArr.includes(z));
+  const tail = list.filter((z) => !V.includes(z) && !neighborArr.includes(z));
+  const cmp = (a, b) => a.localeCompare(b, "zh-Hans-CN");
+  return [...inV.sort(cmp), ...inN.sort(cmp), ...tail.sort(cmp)];
+}
+
+function buildVocabEntries(texts, transMap) {
   return texts.map((hanzi) => {
-    const tr = LINE_I18N[hanzi];
+    const tr = resolveMeaning(hanzi, transMap);
+    const core = stripForPinyin(hanzi);
     return {
       hanzi,
-      pinyin: vocabPinyin(hanzi),
+      pinyin: core ? vocabPinyin(core) : vocabPinyin(hanzi),
       meaning: {
         zh: hanzi,
-        kr: tr?.kr || "",
-        jp: tr?.jp || "",
-        en: tr?.en || "",
+        kr: tr.kr || "",
+        jp: tr.jp || "",
+        en: tr.en || "",
       },
       pos: { kr: "표현", en: "expression", jp: "表現" },
     };
@@ -64,15 +111,19 @@ function pickFourOptions(answer, vocab) {
   return [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-function pickNotInDialogueLine(vocabTexts, exclude = new Set()) {
+function pickNotInDialogueLine(vocabTexts, exclude = new Set(), neighborLines = new Set()) {
   const inLesson = new Set(vocabTexts || []);
-  const candidates = Object.keys(LINE_I18N).filter((t) => {
-    if (!t || t.length < 2) return false;
-    if (inLesson.has(t)) return false;
-    if (exclude.has(t)) return false;
-    return true;
-  });
-  return candidates[0] || "今天我不去学校。";
+  const ordered = [];
+  for (const t of neighborLines) {
+    if (!t || t.length < 2 || inLesson.has(t) || exclude.has(t)) continue;
+    if (!LINE_I18N[t]) continue;
+    ordered.push(t);
+  }
+  for (const t of Object.keys(LINE_I18N)) {
+    if (inLesson.has(t) || exclude.has(t) || t.length < 2) continue;
+    if (!ordered.includes(t)) ordered.push(t);
+  }
+  return ordered[0] || "今天我不去学校。";
 }
 
 /** 问句：含「？/吗」等；选项里仅允许一个非问句作为正确答案 */
@@ -138,58 +189,354 @@ function buildDialogueNotAppearedOptions(vocabTexts, distractor) {
   return [...set].sort((a, b) => a.localeCompare(b, "zh-Hans-CN"));
 }
 
-function buildPractice(vocabTexts, lines) {
+function pickPinyinTargets(V) {
+  return V.filter((t) => {
+    const c = stripForPinyin(t);
+    return c.length >= 2 && c.length <= 16;
+  });
+}
+
+function buildSlot1ZhToMeaning(V, neighborArr, lessonNo, transMap) {
+  const target = V[(lessonNo - 1) % V.length] || V[0];
+  const pool = [];
+  const seenZh = new Set();
+  const pushRow = (zh) => {
+    if (!zh || seenZh.has(zh)) return;
+    const m = resolveMeaning(zh, transMap);
+    if (!m.kr && !m.en) return;
+    seenZh.add(zh);
+    pool.push({ zh, m });
+  };
+  pushRow(target);
+  for (const z of V) pushRow(z);
+  for (const z of neighborArr) pushRow(z);
+  for (const z of Object.keys(LINE_I18N)) pushRow(z);
+  const uniqRows = [];
+  const used = new Set();
+  for (const row of pool) {
+    if (used.has(row.zh)) continue;
+    used.add(row.zh);
+    uniqRows.push(row);
+    if (uniqRows.length >= 4) break;
+  }
+  while (uniqRows.length < 4) {
+    const z = Object.keys(LINE_I18N).find((k) => !used.has(k));
+    if (!z) break;
+    const m = resolveMeaning(z, transMap);
+    if (!m.kr && !m.en) {
+      used.add(z);
+      uniqRows.push({ zh: z, m: { kr: z, en: z, jp: z } });
+    } else {
+      used.add(z);
+      uniqRows.push({ zh: z, m });
+    }
+  }
+  const sorted = uniqRows.sort((a, b) => (a.m.kr || a.m.en).localeCompare(b.m.kr || b.m.en, "ko"));
+  const options = sorted.map((row, i) => ({
+    key: LETTERS[i],
+    meaning: {
+      kr: row.m.kr || row.m.en,
+      en: row.m.en || row.m.kr,
+      jp: row.m.jp || "",
+      zh: row.zh,
+      cn: row.zh,
+    },
+  }));
+  const answer = options.find((o) => (o.meaning.zh || o.meaning.cn) === target)?.key || "A";
+  const rm = resolveMeaning(target, transMap);
+  return {
+    id: "p1",
+    type: "choice",
+    subtype: "vocab_meaning_choice",
+    prompt: {
+      cn: `「${target}」的意思是？`,
+      kr: `「${target}」의 뜻은?`,
+      en: `What does "${target}" mean?`,
+      jp: `「${target}」の意味は？`,
+    },
+    options,
+    answer,
+    explanation: {
+      cn: `「${target}」：${rm.en || rm.jp || "见本课对话翻译"}`,
+      kr: `「${target}」는 ${rm.kr || rm.en || ""}입니다.`,
+      en: `"${target}" means ${rm.en || rm.kr || ""}.`,
+      jp: `「${target}」は ${rm.jp || rm.en || ""} です。`,
+    },
+  };
+}
+
+function buildSlot1MeaningToZh(V, neighborArr, lessonNo, transMap) {
+  const target = V[lessonNo % V.length] || V[0];
+  const optsZh = [];
+  const seen = new Set();
+  const pushZ = (z) => {
+    if (!z || seen.has(z)) return;
+    seen.add(z);
+    optsZh.push(z);
+  };
+  pushZ(target);
+  for (const z of V) pushZ(z);
+  for (const z of neighborArr) pushZ(z);
+  for (const z of Object.keys(LINE_I18N)) pushZ(z);
+  const uniqZh = [...new Set(optsZh)];
+  const rest = sortDistractorZh(
+    uniqZh.filter((z) => z !== target),
+    V,
+    neighborArr,
+  );
+  const core = [target, ...rest.slice(0, 3)];
+  while (core.length < 4) {
+    const z = Object.keys(LINE_I18N).find((k) => !core.includes(k));
+    if (!z) break;
+    core.push(z);
+  }
+  const sortedZh = [...new Set(core)].sort((a, b) => a.localeCompare(b, "zh-Hans-CN")).slice(0, 4);
+  const options = sortedZh.map((zh, i) => ({
+    key: LETTERS[i],
+    zh,
+    cn: zh,
+  }));
+  const answer = options.find((o) => o.zh === target)?.key || "A";
+  const rm = resolveMeaning(target, transMap);
+  const hint = rm.kr || rm.en || rm.jp || target;
+  return {
+    id: "p1",
+    type: "choice",
+    subtype: "meaning_to_vocab_choice",
+    prompt: {
+      cn: `「${hint}」用中文怎么说？`,
+      kr: `'${hint}'에 해당하는 중국어는?`,
+      en: `What is the Chinese for "${hint}"?`,
+      jp: `「${hint}」に対応する中国語は？`,
+    },
+    options,
+    answer,
+    explanation: {
+      cn: `「${hint}」：${target}`,
+      kr: `「${hint}」: ${target}`,
+      en: `"${hint}" → ${target}.`,
+      jp: `「${hint}」→ ${target}`,
+    },
+  };
+}
+
+function buildSlot2PinyinToZh(V, neighborArr, lessonNo, transMap) {
+  const cand = pickPinyinTargets(V);
+  const target = cand[(lessonNo - 1) % cand.length] || V[0];
+  const py = vocabPinyin(stripForPinyin(target));
+  const optsZh = [];
+  const seen = new Set();
+  const pushZ = (z) => {
+    if (!z || seen.has(z)) return;
+    seen.add(z);
+    optsZh.push(z);
+  };
+  pushZ(target);
+  for (const z of V) pushZ(z);
+  for (const z of neighborArr) pushZ(z);
+  for (const z of Object.keys(LINE_I18N)) pushZ(z);
+  const uniqZh2 = [...new Set(optsZh)];
+  const rest2 = sortDistractorZh(uniqZh2.filter((z) => z !== target), V, neighborArr);
+  const core2 = [target, ...rest2.slice(0, 3)];
+  while (core2.length < 4) {
+    const z = Object.keys(LINE_I18N).find((k) => !core2.includes(k));
+    if (!z) break;
+    core2.push(z);
+  }
+  const sortedZh2 = [...new Set(core2)].sort((a, b) => a.localeCompare(b, "zh-Hans-CN")).slice(0, 4);
+  const options = sortedZh2.map((zh, i) => ({
+    key: LETTERS[i],
+    zh,
+    cn: zh,
+  }));
+  const answer = options.find((o) => o.zh === target)?.key || "A";
+  return {
+    id: "p2",
+    type: "choice",
+    subtype: "pinyin_to_vocab_choice",
+    prompt: {
+      cn: `根据拼音「${py}」选择正确的词语。`,
+      kr: `'${py}'의 한자는?`,
+      en: `Choose the Chinese that matches pinyin "${py}".`,
+      jp: `ピンイン「${py}」に合う語を選んでください。`,
+    },
+    options,
+    answer,
+    explanation: {
+      cn: `「${py}」：${target}`,
+      kr: `「${py}」: ${target}`,
+      en: `"${py}" is ${target}.`,
+      jp: `「${py}」→ ${target}`,
+    },
+  };
+}
+
+function buildSlot2ZhToPinyin(V, lessonNo, transMap) {
+  const cand = pickPinyinTargets(V);
+  const target = cand[lessonNo % Math.max(cand.length, 1)] || V[0];
+  const correctPy = vocabPinyin(stripForPinyin(target));
+  const pyList = [];
+  const seenPy = new Set([correctPy]);
+  const pushPy = (z) => {
+    if (!z || z === target) return;
+    const p = vocabPinyin(stripForPinyin(z));
+    if (!p || seenPy.has(p)) return;
+    seenPy.add(p);
+    pyList.push(p);
+  };
+  for (const z of V) pushPy(z);
+  for (const z of Object.keys(LINE_I18N)) pushPy(z);
+  const FALLBACK_PY = ["nǐ hǎo", "xiè xie", "zài jiàn", "bú kè qi", "wǒ shì", "hěn hǎo"];
+  for (const p of FALLBACK_PY) {
+    if (pyList.length >= 3) break;
+    if (!seenPy.has(p)) {
+      seenPy.add(p);
+      pyList.push(p);
+    }
+  }
+  const finalFour = [correctPy, ...pyList].slice(0, 4);
+  const options = finalFour.map((p, i) => ({
+    key: LETTERS[i],
+    zh: p,
+    cn: p,
+    kr: p,
+    en: p,
+    jp: p,
+  }));
+  const answer = options.find((o) => o.zh === correctPy)?.key || "A";
+  return {
+    id: "p2",
+    type: "choice",
+    subtype: "zh_to_pinyin_choice",
+    prompt: {
+      cn: `「${target}」的拼音是？`,
+      kr: `「${target}」의 병음은?`,
+      en: `What is the pinyin of "${target}"?`,
+      jp: `「${target}」のピンインは？`,
+    },
+    options,
+    answer,
+    explanation: {
+      cn: `「${target}」：${correctPy}`,
+      kr: `「${target}」: ${correctPy}`,
+      en: `"${target}" → ${correctPy}.`,
+      jp: `「${target}」→ ${correctPy}`,
+    },
+  };
+}
+
+function buildSlot4Fill(V, neighborArr) {
+  for (const line of V) {
+    const fragments = [];
+    for (const term of V) {
+      if (term.length < 2 || term === line) continue;
+      if (line.includes(term)) fragments.push(term);
+    }
+    fragments.sort((a, b) => b.length - a.length);
+    const term = fragments[0];
+    if (!term) continue;
+    const idx = line.indexOf(term);
+    if (idx < 0) continue;
+    const blanked =
+      line.slice(0, idx) + "___" + line.slice(idx + term.length);
+    const wrong = [];
+    for (const o of V) {
+      if (o === term || o === line) continue;
+      if (o.length >= 2 && o.length <= 8) wrong.push(o);
+    }
+    for (const o of neighborArr) {
+      if (wrong.length >= 8) break;
+      if (!V.includes(o) && o.length >= 2 && o !== term) wrong.push(o);
+    }
+    const wrongSorted = sortDistractorZh([...new Set(wrong)], V, neighborArr);
+    const optStrs = [term, ...wrongSorted];
+    const four = [...new Set(optStrs)].sort((a, b) => a.localeCompare(b, "zh-Hans-CN")).slice(0, 4);
+    if (four.length < 4) continue;
+    if (!four.includes(term)) continue;
+    return {
+      id: "p4",
+      type: "choice",
+      subtype: "sentence_blank",
+      prompt: {
+        cn: `填空：${blanked}`,
+        kr: `빈칸에 알맞은 말을 고르세요: ${blanked}`,
+        en: `Choose the word for the blank: ${blanked}`,
+        jp: `空所に入る語を選んでください: ${blanked}`,
+      },
+      options: four,
+      answer: term,
+      explanation: {
+        cn: `完整句子：${line}`,
+        kr: `완전한 문장: ${line}`,
+        en: `Full line: ${line}`,
+        jp: `全文: ${line}`,
+      },
+    };
+  }
+  const correct = V[0] || "你好";
+  return {
+    id: "p4",
+    type: "choice",
+    subtype: "sentence_blank",
+    prompt: {
+      cn: "选择本课正确的句子：___",
+      kr: "본 과에서 맞는 문장을 고르세요: ___",
+      en: "Pick the correct line from this lesson: ___",
+      jp: "この課の正しい文を選びます: ___",
+    },
+    options: pickFourOptions(correct, V),
+    answer: correct,
+    explanation: {
+      cn: "选项优先来自本课对话。",
+      kr: "보기는 우선 이번 과 대화에서 고릅니다.",
+      en: "Options are taken from this lesson’s dialogue first.",
+      jp: "選択肢はまずこの課の会話から選びます。",
+    },
+  };
+}
+
+/**
+ * Lumina static mix v1 — fixed slots p1–p5 (single-choice only).
+ */
+function buildPractice(vocabTexts, lines, lessonNo, neighborLines, transMap) {
   const V = vocabTexts;
   const d = lines;
+  const neighborArr = [...neighborLines];
+
+  const slot1 = lessonNo % 2 === 0 ? buildSlot1ZhToMeaning(V, neighborArr, lessonNo, transMap) : buildSlot1MeaningToZh(V, neighborArr, lessonNo, transMap);
+
+  const slot2 = lessonNo % 2 === 0 ? buildSlot2PinyinToZh(V, neighborArr, lessonNo, transMap) : buildSlot2ZhToPinyin(V, lessonNo, transMap);
+
   const t0 = d[0]?.text || V[0];
   const t1 = d[1]?.text || V[1];
-  const t2 = d[2]?.text || V[Math.min(2, V.length - 1)];
-  const t3 = d[3]?.text || V[Math.min(3, V.length - 1)];
-  const distractorP4 = pickNotInDialogueLine(V);
-  const distractorP5 = pickNotInDialogueLine(V, new Set([distractorP4]));
-  const p3 = buildNotQuestionChoice(V);
+  const slot3 = {
+    id: "p3",
+    type: "choice",
+    subtype: "dialogue_response",
+    prompt: {
+      cn: `对方说「${t0}」，你应该说？`,
+      kr: `상대가 말할 때: 「${t0}」 답은?`,
+      en: `Someone says: "${t0}" You should say?`,
+      jp: `相手が「${t0}」と言ったら、あなたは？`,
+    },
+    options: pickFourOptions(t1, V),
+    answer: t1,
+    explanation: {
+      cn: "请根据本课对话选择应答句。",
+      kr: "이번 과 대화에 맞는 응답을 고르세요.",
+      en: "Pick the reply that fits this lesson’s dialogue.",
+      jp: "この課の会話に合う返答を選びます。",
+    },
+  };
 
-  return [
-    {
-      id: "p1",
-      type: "choice",
-      subtype: "dialogue_response",
-      prompt: {
-        cn: `对方说「${t0}」，你应该说？`,
-        kr: `상대가 말할 때: 「${t0}」 답은?`,
-        en: `Someone says: "${t0}" You should say?`,
-        jp: `相手が「${t0}」と言ったら、あなたは？`,
-      },
-      options: pickFourOptions(t1, V),
-      answer: t1,
-      explanation: {
-        cn: "请根据本课对话选择应答句。",
-        kr: "이번 과 대화에 맞는 응답을 고르세요.",
-        en: "Pick the reply that fits this lesson’s dialogue.",
-        jp: "この課の会話に合う返答を選びます。",
-      },
-    },
-    {
-      id: "p2",
-      type: "choice",
-      subtype: "dialogue_response",
-      prompt: {
-        cn: `对方说「${t2}」，你应该说？`,
-        kr: `상대가 말할 때: 「${t2}」 답은?`,
-        en: `Someone says: "${t2}" You should say?`,
-        jp: `相手が「${t2}」と言ったら、あなたは？`,
-      },
-      options: pickFourOptions(t3, V),
-      answer: t3,
-      explanation: {
-        cn: "请根据本课对话选择应答句。",
-        kr: "이번 과 대화에 맞는 응답을 고르세요.",
-        en: "Pick the reply that fits this lesson’s dialogue.",
-        jp: "この課の会話に合う返答を選びます。",
-      },
-    },
-    {
-      id: "p3",
+  const slot4 = buildSlot4Fill(V, neighborArr);
+
+  const neighborSet = new Set(neighborArr);
+  let slot5;
+  if (lessonNo % 2 === 0) {
+    const nq = buildNotQuestionChoice(V);
+    slot5 = {
+      id: "p5",
       type: "choice",
       subtype: "zh_to_meaning",
       prompt: {
@@ -198,35 +545,18 @@ function buildPractice(vocabTexts, lines) {
         en: "Which line below is NOT a question?",
         jp: "次のうち、疑問文ではないのはどれですか？",
       },
-      options: p3.options,
-      answer: p3.answer,
+      options: nq.options,
+      answer: nq.answer,
       explanation: {
         cn: "问句常带「吗」或「？」；其余为陈述或应答。",
         kr: "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
         en: "Questions often use 吗 or 「？」; the others are statements or replies.",
         jp: "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。",
       },
-    },
-    {
-      id: "p4",
-      type: "choice",
-      subtype: "sentence_blank",
-      prompt: {
-        cn: "下面哪一句没有出现在本课对话里？",
-        kr: "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        en: "Which sentence did NOT appear in this lesson dialogue?",
-        jp: "次のうち、この課の会話に出てこない文はどれですか？",
-      },
-      options: buildDialogueNotAppearedOptions(V, distractorP4),
-      answer: distractorP4,
-      explanation: {
-        cn: "正确答案是未在本课对话中出现的句子。",
-        kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        en: "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        jp: "正解は、この課の会話に出てこない文です。",
-      },
-    },
-    {
+    };
+  } else {
+    const distractor = pickNotInDialogueLine(V, new Set(), neighborSet);
+    slot5 = {
       id: "p5",
       type: "choice",
       subtype: "sentence_blank",
@@ -236,16 +566,18 @@ function buildPractice(vocabTexts, lines) {
         en: "Which sentence did NOT appear in this lesson dialogue?",
         jp: "次のうち、この課の会話に出てこない文はどれですか？",
       },
-      options: buildDialogueNotAppearedOptions(V, distractorP5),
-      answer: distractorP5,
+      options: buildDialogueNotAppearedOptions(V, distractor),
+      answer: distractor,
       explanation: {
         cn: "正确答案是未在本课对话中出现的句子。",
         kr: "정답은 이번 과 대화에 나오지 않은 문장입니다.",
         en: "The correct answer is the sentence that does not appear in this lesson dialogue.",
         jp: "正解は、この課の会話に出てこない文です。",
       },
-    },
-  ];
+    };
+  }
+
+  return [slot1, slot2, slot3, slot4, slot5];
 }
 
 function patternLineScore(pattern, text) {
@@ -411,13 +743,15 @@ function normalizeObjectives(ob) {
 function buildEnrichedDialogue(rawDialogue) {
   return (rawDialogue || []).map((ln) => {
     const text = ln.text || "";
-    const tr = LINE_I18N[text];
-    if (!tr) throw new Error(`Missing LINE_I18N for: ${text}`);
+    const tr = LINE_I18N[text] || ln.translation;
+    if (!tr || (!tr.kr && !tr.en && !tr.jp)) {
+      throw new Error(`Missing translation for dialogue line: ${text}`);
+    }
     return {
       speaker: ln.speaker || "A",
       text,
-      pinyin: linePinyin(text),
-      translation: { kr: tr.kr, en: tr.en, jp: tr.jp },
+      pinyin: ln.pinyin || linePinyin(text),
+      translation: { kr: tr.kr || "", en: tr.en || "", jp: tr.jp || tr.en || "" },
     };
   });
 }
@@ -466,11 +800,13 @@ function buildAI(lines, vocabTexts) {
   ];
 }
 
-function normalizeLesson(raw, lessonNo, stepsTemplate) {
+function normalizeLesson(raw, lessonNo, stepsTemplate, neighborLines, rawDialogueForTrans) {
+  const dialogueSrc = rawDialogueForTrans || raw.dialogue;
+  const transMap = buildTranslationMap(dialogueSrc);
   const enrichedDialogue = buildEnrichedDialogue(raw.dialogue);
   const vocabTexts = uniqDialogueTexts(raw.dialogue);
-  const vocab = buildVocabEntries(vocabTexts);
-  const practice = buildPractice(vocabTexts, raw.dialogue || []);
+  const vocab = buildVocabEntries(vocabTexts, transMap);
+  const practice = buildPractice(vocabTexts, raw.dialogue || [], lessonNo, neighborLines, transMap);
 
   return {
     id: `hsk1_lesson${lessonNo}`,
@@ -499,14 +835,21 @@ function normalizeLesson(raw, lessonNo, stepsTemplate) {
   };
 }
 
-const lesson1 = JSON.parse(fs.readFileSync(L1_PATH, "utf8"));
-const stepsTemplate = lesson1.steps;
-
-for (let n = 2; n <= 20; n++) {
+const rawByLesson = {};
+for (let n = 1; n <= 20; n++) {
   const p = path.join(DIR, `lesson${n}.json`);
   const raw = JSON.parse(fs.readFileSync(p, "utf8"));
   delete raw.originalDialogues;
-  const out = normalizeLesson(raw, n, stepsTemplate);
+  rawByLesson[n] = raw;
+}
+
+const stepsTemplate = rawByLesson[1].steps;
+
+for (let n = 1; n <= 20; n++) {
+  const raw = rawByLesson[n];
+  const neighborLines = buildNeighborLineSet(n, rawByLesson);
+  const p = path.join(DIR, `lesson${n}.json`);
+  const out = normalizeLesson(raw, n, stepsTemplate, neighborLines, raw.dialogue);
   fs.writeFileSync(p, JSON.stringify(out, null, 2) + "\n", "utf8");
   console.log("wrote lesson", n);
 }

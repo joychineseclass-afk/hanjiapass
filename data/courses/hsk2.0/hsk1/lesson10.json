@@ -45,7 +45,7 @@
   "vocab": [
     {
       "hanzi": "今天几月几号？",
-      "pinyin": "jīn tiān jǐ yuè jǐ hào ？",
+      "pinyin": "jīn tiān jǐ yuè jǐ hào",
       "meaning": {
         "zh": "今天几月几号？",
         "kr": "오늘은 몇 월 며칠이에요?",
@@ -60,7 +60,7 @@
     },
     {
       "hanzi": "今天三月八号。",
-      "pinyin": "jīn tiān sān yuè bā hào 。",
+      "pinyin": "jīn tiān sān yuè bā hào",
       "meaning": {
         "zh": "今天三月八号。",
         "kr": "오늘은 삼월 팔일이에요.",
@@ -75,7 +75,7 @@
     },
     {
       "hanzi": "你明天忙吗？",
-      "pinyin": "nǐ míng tiān máng ma ？",
+      "pinyin": "nǐ míng tiān máng ma",
       "meaning": {
         "zh": "你明天忙吗？",
         "kr": "내일 바빠요?",
@@ -90,7 +90,7 @@
     },
     {
       "hanzi": "不忙。",
-      "pinyin": "bù máng 。",
+      "pinyin": "bù máng",
       "meaning": {
         "zh": "不忙。",
         "kr": "안 바빠요.",
@@ -105,7 +105,7 @@
     },
     {
       "hanzi": "那我们明天见面吧。",
-      "pinyin": "nà wǒ men míng tiān jiàn miàn ba 。",
+      "pinyin": "nà wǒ men míng tiān jiàn miàn ba",
       "meaning": {
         "zh": "那我们明天见面吧。",
         "kr": "그럼 내일 만나요.",
@@ -120,7 +120,7 @@
     },
     {
       "hanzi": "好啊！",
-      "pinyin": "hǎo a ！",
+      "pinyin": "hǎo a",
       "meaning": {
         "zh": "好啊！",
         "kr": "좋아요!",
@@ -240,6 +240,106 @@
     {
       "id": "p1",
       "type": "choice",
+      "subtype": "vocab_meaning_choice",
+      "prompt": {
+        "cn": "「不忙。」的意思是？",
+        "kr": "「不忙。」의 뜻은?",
+        "en": "What does \"不忙。\" mean?",
+        "jp": "「不忙。」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "meaning": {
+            "kr": "내일 바빠요?",
+            "en": "Are you busy tomorrow?",
+            "jp": "明日は忙しいですか？",
+            "zh": "你明天忙吗？",
+            "cn": "你明天忙吗？"
+          }
+        },
+        {
+          "key": "B",
+          "meaning": {
+            "kr": "안 바빠요.",
+            "en": "I'm not busy.",
+            "jp": "忙しくないです。",
+            "zh": "不忙。",
+            "cn": "不忙。"
+          }
+        },
+        {
+          "key": "C",
+          "meaning": {
+            "kr": "오늘은 몇 월 며칠이에요?",
+            "en": "What's the date today?",
+            "jp": "今日は何月何日ですか？",
+            "zh": "今天几月几号？",
+            "cn": "今天几月几号？"
+          }
+        },
+        {
+          "key": "D",
+          "meaning": {
+            "kr": "오늘은 삼월 팔일이에요.",
+            "en": "Today is March 8th.",
+            "jp": "今日は三月八日です。",
+            "zh": "今天三月八号。",
+            "cn": "今天三月八号。"
+          }
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "cn": "「不忙。」：I'm not busy.",
+        "kr": "「不忙。」는 안 바빠요.입니다.",
+        "en": "\"不忙。\" means I'm not busy..",
+        "jp": "「不忙。」は 忙しくないです。 です。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "pinyin_to_vocab_choice",
+      "prompt": {
+        "cn": "根据拼音「bù máng」选择正确的词语。",
+        "kr": "'bù máng'의 한자는?",
+        "en": "Choose the Chinese that matches pinyin \"bù máng\".",
+        "jp": "ピンイン「bù máng」に合う語を選んでください。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "不忙。",
+          "cn": "不忙。"
+        },
+        {
+          "key": "B",
+          "zh": "好啊！",
+          "cn": "好啊！"
+        },
+        {
+          "key": "C",
+          "zh": "今天几月几号？",
+          "cn": "今天几月几号？"
+        },
+        {
+          "key": "D",
+          "zh": "今天三月八号。",
+          "cn": "今天三月八号。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「bù máng」：不忙。",
+        "kr": "「bù máng」: 不忙。",
+        "en": "\"bù máng\" is 不忙。.",
+        "jp": "「bù máng」→ 不忙。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方说「今天几月几号？」，你应该说？",
@@ -262,14 +362,14 @@
       }
     },
     {
-      "id": "p2",
+      "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "sentence_blank",
       "prompt": {
-        "cn": "对方说「你明天忙吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你明天忙吗？」 답은?",
-        "en": "Someone says: \"你明天忙吗？\" You should say?",
-        "jp": "相手が「你明天忙吗？」と言ったら、あなたは？"
+        "cn": "选择本课正确的句子：___",
+        "kr": "본 과에서 맞는 문장을 고르세요: ___",
+        "en": "Pick the correct line from this lesson: ___",
+        "jp": "この課の正しい文を選びます: ___"
       },
       "options": [
         "不忙。",
@@ -277,16 +377,16 @@
         "今天三月八号。",
         "你明天忙吗？"
       ],
-      "answer": "不忙。",
+      "answer": "今天几月几号？",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
+        "cn": "选项优先来自本课对话。",
+        "kr": "보기는 우선 이번 과 대화에서 고릅니다.",
+        "en": "Options are taken from this lesson’s dialogue first.",
+        "jp": "選択肢はまずこの課の会話から選びます。"
       }
     },
     {
-      "id": "p3",
+      "id": "p5",
       "type": "choice",
       "subtype": "zh_to_meaning",
       "prompt": {
@@ -307,54 +407,6 @@
         "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
         "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
         "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "今天几月几号？",
-        "今天三月八号。",
-        "你明天忙吗？",
-        "三块钱一个。"
-      ],
-      "answer": "三块钱一个。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
-      }
-    },
-    {
-      "id": "p5",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "今天几月几号？",
-        "今天三月八号。",
-        "你明天忙吗？",
-        "三点十分上课。"
-      ],
-      "answer": "三点十分上课。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],

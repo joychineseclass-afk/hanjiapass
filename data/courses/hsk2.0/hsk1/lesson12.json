@@ -45,7 +45,7 @@
   "vocab": [
     {
       "hanzi": "你喜欢听音乐吗？",
-      "pinyin": "nǐ xǐ huan tīng yīn yuè ma ？",
+      "pinyin": "nǐ xǐ huan tīng yīn yuè ma",
       "meaning": {
         "zh": "你喜欢听音乐吗？",
         "kr": "음악 듣는 거 좋아해요?",
@@ -60,7 +60,7 @@
     },
     {
       "hanzi": "喜欢，我很喜欢听音乐。",
-      "pinyin": "xǐ huan ， wǒ hěn xǐ huan tīng yīn yuè 。",
+      "pinyin": "xǐ huan wǒ hěn xǐ huan tīng yīn yuè",
       "meaning": {
         "zh": "喜欢，我很喜欢听音乐。",
         "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요.",
@@ -75,7 +75,7 @@
     },
     {
       "hanzi": "你喜欢听什么音乐？",
-      "pinyin": "nǐ xǐ huan tīng shén me yīn yuè ？",
+      "pinyin": "nǐ xǐ huan tīng shén me yīn yuè",
       "meaning": {
         "zh": "你喜欢听什么音乐？",
         "kr": "어떤 음악 듣는 걸 좋아해요?",
@@ -90,7 +90,7 @@
     },
     {
       "hanzi": "我喜欢听中国音乐。",
-      "pinyin": "wǒ xǐ huan tīng zhōng guó yīn yuè 。",
+      "pinyin": "wǒ xǐ huan tīng zhōng guó yīn yuè",
       "meaning": {
         "zh": "我喜欢听中国音乐。",
         "kr": "중국 음악 듣는 걸 좋아해요.",
@@ -105,7 +105,7 @@
     },
     {
       "hanzi": "你喜欢看电影吗？",
-      "pinyin": "nǐ xǐ huan kàn diàn yǐng ma ？",
+      "pinyin": "nǐ xǐ huan kàn diàn yǐng ma",
       "meaning": {
         "zh": "你喜欢看电影吗？",
         "kr": "영화 보는 거 좋아해요?",
@@ -120,7 +120,7 @@
     },
     {
       "hanzi": "喜欢，我也喜欢看电影。",
-      "pinyin": "xǐ huan ， wǒ yě xǐ huan kàn diàn yǐng 。",
+      "pinyin": "xǐ huan wǒ yě xǐ huan kàn diàn yǐng",
       "meaning": {
         "zh": "喜欢，我也喜欢看电影。",
         "kr": "좋아요, 저도 영화 보는 거 좋아해요.",
@@ -301,6 +301,106 @@
     {
       "id": "p1",
       "type": "choice",
+      "subtype": "vocab_meaning_choice",
+      "prompt": {
+        "cn": "「喜欢，我也喜欢看电影。」的意思是？",
+        "kr": "「喜欢，我也喜欢看电影。」의 뜻은?",
+        "en": "What does \"喜欢，我也喜欢看电影。\" mean?",
+        "jp": "「喜欢，我也喜欢看电影。」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "meaning": {
+            "kr": "어떤 음악 듣는 걸 좋아해요?",
+            "en": "What music do you like to listen to?",
+            "jp": "どんな音楽を聞くのが好きですか？",
+            "zh": "你喜欢听什么音乐？",
+            "cn": "你喜欢听什么音乐？"
+          }
+        },
+        {
+          "key": "B",
+          "meaning": {
+            "kr": "음악 듣는 거 좋아해요?",
+            "en": "Do you like listening to music?",
+            "jp": "音楽を聞くのは好きですか？",
+            "zh": "你喜欢听音乐吗？",
+            "cn": "你喜欢听音乐吗？"
+          }
+        },
+        {
+          "key": "C",
+          "meaning": {
+            "kr": "좋아요, 저는 음악 듣는 걸 아주 좋아해요.",
+            "en": "Yes, I really like listening to music.",
+            "jp": "はい、音楽を聞くのがとても好きです。",
+            "zh": "喜欢，我很喜欢听音乐。",
+            "cn": "喜欢，我很喜欢听音乐。"
+          }
+        },
+        {
+          "key": "D",
+          "meaning": {
+            "kr": "좋아요, 저도 영화 보는 거 좋아해요.",
+            "en": "Yes, I like watching movies too.",
+            "jp": "はい、私も映画を見るのが好きです。",
+            "zh": "喜欢，我也喜欢看电影。",
+            "cn": "喜欢，我也喜欢看电影。"
+          }
+        }
+      ],
+      "answer": "D",
+      "explanation": {
+        "cn": "「喜欢，我也喜欢看电影。」：Yes, I like watching movies too.",
+        "kr": "「喜欢，我也喜欢看电影。」는 좋아요, 저도 영화 보는 거 좋아해요.입니다.",
+        "en": "\"喜欢，我也喜欢看电影。\" means Yes, I like watching movies too..",
+        "jp": "「喜欢，我也喜欢看电影。」は はい、私も映画を見るのが好きです。 です。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "pinyin_to_vocab_choice",
+      "prompt": {
+        "cn": "根据拼音「xǐ huan wǒ yě xǐ huan kàn diàn yǐng」选择正确的词语。",
+        "kr": "'xǐ huan wǒ yě xǐ huan kàn diàn yǐng'의 한자는?",
+        "en": "Choose the Chinese that matches pinyin \"xǐ huan wǒ yě xǐ huan kàn diàn yǐng\".",
+        "jp": "ピンイン「xǐ huan wǒ yě xǐ huan kàn diàn yǐng」に合う語を選んでください。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "你喜欢看电影吗？",
+          "cn": "你喜欢看电影吗？"
+        },
+        {
+          "key": "B",
+          "zh": "你喜欢听什么音乐？",
+          "cn": "你喜欢听什么音乐？"
+        },
+        {
+          "key": "C",
+          "zh": "你喜欢听音乐吗？",
+          "cn": "你喜欢听音乐吗？"
+        },
+        {
+          "key": "D",
+          "zh": "喜欢，我也喜欢看电影。",
+          "cn": "喜欢，我也喜欢看电影。"
+        }
+      ],
+      "answer": "D",
+      "explanation": {
+        "cn": "「xǐ huan wǒ yě xǐ huan kàn diàn yǐng」：喜欢，我也喜欢看电影。",
+        "kr": "「xǐ huan wǒ yě xǐ huan kàn diàn yǐng」: 喜欢，我也喜欢看电影。",
+        "en": "\"xǐ huan wǒ yě xǐ huan kàn diàn yǐng\" is 喜欢，我也喜欢看电影。.",
+        "jp": "「xǐ huan wǒ yě xǐ huan kàn diàn yǐng」→ 喜欢，我也喜欢看电影。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方说「你喜欢听音乐吗？」，你应该说？",
@@ -323,14 +423,14 @@
       }
     },
     {
-      "id": "p2",
+      "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "sentence_blank",
       "prompt": {
-        "cn": "对方说「你喜欢听什么音乐？」，你应该说？",
-        "kr": "상대가 말할 때: 「你喜欢听什么音乐？」 답은?",
-        "en": "Someone says: \"你喜欢听什么音乐？\" You should say?",
-        "jp": "相手が「你喜欢听什么音乐？」と言ったら、あなたは？"
+        "cn": "选择本课正确的句子：___",
+        "kr": "본 과에서 맞는 문장을 고르세요: ___",
+        "en": "Pick the correct line from this lesson: ___",
+        "jp": "この課の正しい文を選びます: ___"
       },
       "options": [
         "你喜欢听什么音乐？",
@@ -338,16 +438,16 @@
         "我喜欢听中国音乐。",
         "喜欢，我很喜欢听音乐。"
       ],
-      "answer": "我喜欢听中国音乐。",
+      "answer": "你喜欢听音乐吗？",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
+        "cn": "选项优先来自本课对话。",
+        "kr": "보기는 우선 이번 과 대화에서 고릅니다.",
+        "en": "Options are taken from this lesson’s dialogue first.",
+        "jp": "選択肢はまずこの課の会話から選びます。"
       }
     },
     {
-      "id": "p3",
+      "id": "p5",
       "type": "choice",
       "subtype": "zh_to_meaning",
       "prompt": {
@@ -368,54 +468,6 @@
         "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
         "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
         "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "你喜欢听什么音乐？",
-        "你喜欢听音乐吗？",
-        "三块钱一个。",
-        "喜欢，我很喜欢听音乐。"
-      ],
-      "answer": "三块钱一个。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
-      }
-    },
-    {
-      "id": "p5",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "你喜欢听什么音乐？",
-        "你喜欢听音乐吗？",
-        "三点十分上课。",
-        "喜欢，我很喜欢听音乐。"
-      ],
-      "answer": "三点十分上课。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],

@@ -45,7 +45,7 @@
   "vocab": [
     {
       "hanzi": "你去哪儿？",
-      "pinyin": "nǐ qù nǎ ér ？",
+      "pinyin": "nǐ qù nǎ ér",
       "meaning": {
         "zh": "你去哪儿？",
         "kr": "어디 가요?",
@@ -60,7 +60,7 @@
     },
     {
       "hanzi": "我去学校。",
-      "pinyin": "wǒ qù xué xiào 。",
+      "pinyin": "wǒ qù xué xiào",
       "meaning": {
         "zh": "我去学校。",
         "kr": "학교에 가요.",
@@ -75,7 +75,7 @@
     },
     {
       "hanzi": "你现在去吗？",
-      "pinyin": "nǐ xiàn zài qù ma ？",
+      "pinyin": "nǐ xiàn zài qù ma",
       "meaning": {
         "zh": "你现在去吗？",
         "kr": "지금 가요?",
@@ -90,7 +90,7 @@
     },
     {
       "hanzi": "对，我现在去。",
-      "pinyin": "duì ， wǒ xiàn zài qù 。",
+      "pinyin": "duì wǒ xiàn zài qù",
       "meaning": {
         "zh": "对，我现在去。",
         "kr": "네, 지금 가요.",
@@ -105,7 +105,7 @@
     },
     {
       "hanzi": "你什么时候回家？",
-      "pinyin": "nǐ shén me shí hòu huí jiā ？",
+      "pinyin": "nǐ shén me shí hòu huí jiā",
       "meaning": {
         "zh": "你什么时候回家？",
         "kr": "언제 집에 가요?",
@@ -120,7 +120,7 @@
     },
     {
       "hanzi": "我下午回家。",
-      "pinyin": "wǒ xià wǔ huí jiā 。",
+      "pinyin": "wǒ xià wǔ huí jiā",
       "meaning": {
         "zh": "我下午回家。",
         "kr": "오후에 집에 가요.",
@@ -325,6 +325,106 @@
     {
       "id": "p1",
       "type": "choice",
+      "subtype": "vocab_meaning_choice",
+      "prompt": {
+        "cn": "「对，我现在去。」的意思是？",
+        "kr": "「对，我现在去。」의 뜻은?",
+        "en": "What does \"对，我现在去。\" mean?",
+        "jp": "「对，我现在去。」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "meaning": {
+            "kr": "네, 지금 가요.",
+            "en": "Yes, I'm going now.",
+            "jp": "はい、今行きます。",
+            "zh": "对，我现在去。",
+            "cn": "对，我现在去。"
+          }
+        },
+        {
+          "key": "B",
+          "meaning": {
+            "kr": "어디 가요?",
+            "en": "Where are you going?",
+            "jp": "どこへ行きますか？",
+            "zh": "你去哪儿？",
+            "cn": "你去哪儿？"
+          }
+        },
+        {
+          "key": "C",
+          "meaning": {
+            "kr": "지금 가요?",
+            "en": "Are you going now?",
+            "jp": "今行きますか？",
+            "zh": "你现在去吗？",
+            "cn": "你现在去吗？"
+          }
+        },
+        {
+          "key": "D",
+          "meaning": {
+            "kr": "학교에 가요.",
+            "en": "I'm going to school.",
+            "jp": "学校へ行きます。",
+            "zh": "我去学校。",
+            "cn": "我去学校。"
+          }
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「对，我现在去。」：Yes, I'm going now.",
+        "kr": "「对，我现在去。」는 네, 지금 가요.입니다.",
+        "en": "\"对，我现在去。\" means Yes, I'm going now..",
+        "jp": "「对，我现在去。」は はい、今行きます。 です。"
+      }
+    },
+    {
+      "id": "p2",
+      "type": "choice",
+      "subtype": "pinyin_to_vocab_choice",
+      "prompt": {
+        "cn": "根据拼音「duì wǒ xiàn zài qù」选择正确的词语。",
+        "kr": "'duì wǒ xiàn zài qù'의 한자는?",
+        "en": "Choose the Chinese that matches pinyin \"duì wǒ xiàn zài qù\".",
+        "jp": "ピンイン「duì wǒ xiàn zài qù」に合う語を選んでください。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "对，我现在去。",
+          "cn": "对，我现在去。"
+        },
+        {
+          "key": "B",
+          "zh": "你去哪儿？",
+          "cn": "你去哪儿？"
+        },
+        {
+          "key": "C",
+          "zh": "你什么时候回家？",
+          "cn": "你什么时候回家？"
+        },
+        {
+          "key": "D",
+          "zh": "你现在去吗？",
+          "cn": "你现在去吗？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「duì wǒ xiàn zài qù」：对，我现在去。",
+        "kr": "「duì wǒ xiàn zài qù」: 对，我现在去。",
+        "en": "\"duì wǒ xiàn zài qù\" is 对，我现在去。.",
+        "jp": "「duì wǒ xiàn zài qù」→ 对，我现在去。"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方说「你去哪儿？」，你应该说？",
@@ -347,14 +447,14 @@
       }
     },
     {
-      "id": "p2",
+      "id": "p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "sentence_blank",
       "prompt": {
-        "cn": "对方说「你现在去吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你现在去吗？」 답은?",
-        "en": "Someone says: \"你现在去吗？\" You should say?",
-        "jp": "相手が「你现在去吗？」と言ったら、あなたは？"
+        "cn": "选择本课正确的句子：___",
+        "kr": "본 과에서 맞는 문장을 고르세요: ___",
+        "en": "Pick the correct line from this lesson: ___",
+        "jp": "この課の正しい文を選びます: ___"
       },
       "options": [
         "对，我现在去。",
@@ -362,16 +462,16 @@
         "你现在去吗？",
         "我去学校。"
       ],
-      "answer": "对，我现在去。",
+      "answer": "你去哪儿？",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
+        "cn": "选项优先来自本课对话。",
+        "kr": "보기는 우선 이번 과 대화에서 고릅니다.",
+        "en": "Options are taken from this lesson’s dialogue first.",
+        "jp": "選択肢はまずこの課の会話から選びます。"
       }
     },
     {
-      "id": "p3",
+      "id": "p5",
       "type": "choice",
       "subtype": "zh_to_meaning",
       "prompt": {
@@ -392,54 +492,6 @@
         "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
         "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
         "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "你去哪儿？",
-        "你现在去吗？",
-        "三块钱一个。",
-        "我去学校。"
-      ],
-      "answer": "三块钱一个。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
-      }
-    },
-    {
-      "id": "p5",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句没有出现在本课对话里？",
-        "kr": "다음 중 이번 과 대화에 나오지 않는 문장은 무엇입니까?",
-        "en": "Which sentence did NOT appear in this lesson dialogue?",
-        "jp": "次のうち、この課の会話に出てこない文はどれですか？"
-      },
-      "options": [
-        "你去哪儿？",
-        "你现在去吗？",
-        "三点十分上课。",
-        "我去学校。"
-      ],
-      "answer": "三点十分上课。",
-      "explanation": {
-        "cn": "正确答案是未在本课对话中出现的句子。",
-        "kr": "정답은 이번 과 대화에 나오지 않은 문장입니다.",
-        "en": "The correct answer is the sentence that does not appear in this lesson dialogue.",
-        "jp": "正解は、この課の会話に出てこない文です。"
       }
     }
   ],
