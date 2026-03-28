@@ -4,7 +4,6 @@
 import { i18n } from "../../i18n.js";
 import { pick, getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
-import { openStrokePlayer } from "../stroke/index.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
@@ -661,7 +660,7 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
       </div>
       <div class="word-actions">
         <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
-        <button type="button" class="btn btn-stroke" data-action="stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
+        <button type="button" class="btn btn-stroke" data-action="open-stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
         <button type="button" class="btn btn-audio" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
       </div>
     </div>
@@ -819,14 +818,26 @@ export function bindWordCardActions() {
       e.stopPropagation();
       const char = (charSpan.dataset.char || "").trim();
       const wordId = (charSpan.dataset.word || "").trim();
-      if (!char) return;
-      const lessonId = (window.__HSK_PAGE_CTX && window.__HSK_PAGE_CTX.lessonNo) || window.__HSK_CURRENT_LESSON_ID || "";
+      const text = wordId || char;
+      if (!text) return;
       try {
-        await openStrokePlayer(char, {
-          ctx: { from: "hsk", lessonId, wordId },
+        const { AUDIO_ENGINE } = await import("../../platform/index.js");
+        if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+          if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
+          return;
+        }
+        AUDIO_ENGINE.stop();
+        document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
+        const cardEl = charSpan.closest(".word-card");
+        if (cardEl) cardEl.classList.add("is-speaking");
+        AUDIO_ENGINE.playText(text, {
+          lang: "zh-CN",
+          rate: 0.95,
+          onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
+          onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
         });
       } catch (err) {
-        console.warn("[stroke] openStrokePlayer failed:", err);
+        if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] word-hanzi-char speak failed:", err);
       }
       return;
     }
@@ -839,7 +850,7 @@ export function bindWordCardActions() {
     const pinyin = (btn.dataset.pinyin || "").trim();
 
     if (!hanzi && action !== "learn") return;
-    if (action === "stroke" && btn.disabled) return;
+    if (action === "open-stroke" && btn.disabled) return;
 
     if (action === "speak" || action === "audio") {
       e.preventDefault();
@@ -867,7 +878,7 @@ export function bindWordCardActions() {
       }
     }
 
-    if (action === "stroke") {
+    if (action === "open-stroke") {
       e.preventDefault();
       e.stopPropagation();
       btn.classList.add("btn-stroke-active");
