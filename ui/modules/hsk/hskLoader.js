@@ -316,6 +316,54 @@
     return Array.isArray(arr) ? arr : null;
   }
 
+  /**
+   * 合并课内 vocab 与 distribution 解析结果：distribution 决定顺序与基础拼音/释义，
+   * 课 JSON 中的 senseNote、examples、多语 pos 等教材字段按「去尾标点后汉字一致」对齐写回。
+   * （否则 vocab-distribution 覆盖后学习弹窗永远读不到 lesson 里的例句。）
+   */
+  function normalizeVocabHanziKey(h) {
+    const s = String(h ?? "").trim();
+    if (!s) return "";
+    return s.replace(/[\s\u3002\uFF01\uFF0C\uFF1F\uFF1A\uFF1B!?,。；：]+$/u, "");
+  }
+
+  function mergeVocabFromLessonFile(distributionList, lessonVocabList) {
+    if (!Array.isArray(distributionList)) return distributionList;
+    if (!Array.isArray(lessonVocabList) || lessonVocabList.length === 0) return distributionList;
+
+    const byNorm = new Map();
+    for (const w of lessonVocabList) {
+      const rawKey = (w && (w.hanzi || w.word)) ? String(w.hanzi || w.word).trim() : "";
+      const k = normalizeVocabHanziKey(rawKey);
+      if (k && !byNorm.has(k)) byNorm.set(k, w);
+    }
+
+    return distributionList.map((item) => {
+      const k = normalizeVocabHanziKey(item && (item.hanzi || item.word));
+      const src = k ? byNorm.get(k) : null;
+      if (!src) return item;
+
+      const out = { ...item };
+      if (Array.isArray(src.examples)) out.examples = src.examples;
+      if (Array.isArray(src.exampleSentences)) out.exampleSentences = src.exampleSentences;
+      if (Array.isArray(src.sampleExamples)) out.sampleExamples = src.sampleExamples;
+      if (src.senseNote != null) out.senseNote = src.senseNote;
+      if (src.explanation != null) out.explanation = src.explanation;
+      if (src.description != null) out.description = src.description;
+      if (src.note != null) out.note = src.note;
+      if (src.explain != null) out.explain = src.explain;
+
+      if (src.pos != null && typeof src.pos === "object") {
+        out.pos = { ...(typeof item.pos === "object" && item.pos ? item.pos : {}), ...src.pos };
+      }
+
+      if (src.meaning != null && typeof src.meaning === "object" && out.meaning && typeof out.meaning === "object") {
+        out.meaning = { ...out.meaning, ...src.meaning };
+      }
+      return out;
+    });
+  }
+
   /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序）；匹配不到的保留占位词条，绝不整课回退旧 vocab */
   function resolveHanziToVocab(hanziList, fullVocabList) {
     if (!Array.isArray(hanziList)) return [];
@@ -536,10 +584,11 @@
       stepKeys: stepKeys(steps),
     };
 
-    // 最终一步：只要存在 vocab-distribution.json，就以它为唯一单词来源覆盖，避免 lessonN.json 内嵌 vocab 回写
+    // 最终一步：distribution 决定词表顺序与全库兜底；再把课 JSON 里的教材扩展字段合并回来
     const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
     if (Array.isArray(distributionVocab)) {
-      lesson = { ...lesson, vocab: distributionVocab, words: distributionVocab };
+      const mergedVocab = mergeVocabFromLessonFile(distributionVocab, vocabArr);
+      lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
     }
 
     memSet(memKey, lesson);
@@ -752,6 +801,7 @@
     // ✅ 单词来源：vocab-distribution.json → 按 distribution.lessonX 生成每课单词
     loadVocabDistribution,
     buildLessonVocabFromDistribution,
+    mergeVocabFromLessonFile,
     vocabDistributionUrl: (lv, opts = {}) => vocabDistributionUrl(normalizeLevel(lv), getVocabVersion(opts)),
 
     // ✅ NEW

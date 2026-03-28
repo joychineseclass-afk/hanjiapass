@@ -84,12 +84,12 @@
           }
         },
         {
-          "zh": "你呢？",
-          "pinyin": "nǐ ne？",
+          "zh": "你很好。",
+          "pinyin": "nǐ hěn hǎo。",
           "translation": {
-            "kr": "당신은요?",
-            "en": "And you?",
-            "jp": "あなたは？"
+            "kr": "너 아주 좋아요.",
+            "en": "You are very good.",
+            "jp": "あなたはとてもいいです。"
           }
         }
       ]
@@ -155,10 +155,46 @@
         "en": "Hello!"
       },
       "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
+        "zh": "问候语",
+        "kr": "인사",
+        "en": "greeting",
+        "jp": "あいさつ"
+      },
+      "senseNote": {
+        "zh": "见面时向别人问好。",
+        "kr": "만날 때 상대에게 인사할 때 씁니다.",
+        "en": "A greeting when you meet someone.",
+        "jp": "会ったときに使うあいさつです。"
+      },
+      "examples": [
+        {
+          "zh": "你好！",
+          "pinyin": "nǐ hǎo！",
+          "translation": {
+            "kr": "안녕하세요!",
+            "en": "Hello!",
+            "jp": "こんにちは！"
+          }
+        },
+        {
+          "zh": "你好，谢谢。",
+          "pinyin": "nǐ hǎo，xiè xie。",
+          "translation": {
+            "kr": "안녕하세요, 감사합니다.",
+            "en": "Hello. Thank you.",
+            "jp": "こんにちは。ありがとう。"
+          }
+        },
+        {
+          "zh": "你好，再见。",
+          "pinyin": "nǐ hǎo，zài jiàn。",
+          "translation": {
+            "kr": "안녕하세요, 안녕히 가세요.",
+            "en": "Hello. Goodbye.",
+            "jp": "こんにちは。さようなら。"
+          }
+        }
+      ]
     },
     {
       "hanzi": "谢谢。",
@@ -201,12 +237,12 @@
           }
         },
         {
-          "zh": "谢谢！",
-          "pinyin": "xiè xie！",
+          "zh": "谢谢，再见。",
+          "pinyin": "xiè xie，zài jiàn。",
           "translation": {
-            "kr": "고마워요!",
-            "en": "Thanks!",
-            "jp": "ありがとう！"
+            "kr": "감사합니다, 안녕히 가세요.",
+            "en": "Thank you. Goodbye.",
+            "jp": "ありがとうございます。さようなら。"
           }
         }
       ]
@@ -272,10 +308,46 @@
         "en": "Goodbye."
       },
       "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
+        "zh": "告别用语",
+        "kr": "작별 인사",
+        "en": "farewell",
+        "jp": "別れのあいさつ"
+      },
+      "senseNote": {
+        "zh": "分别时向别人告别。",
+        "kr": "헤어질 때 인사할 때 씁니다.",
+        "en": "Said when parting.",
+        "jp": "別れるときのあいさつです。"
+      },
+      "examples": [
+        {
+          "zh": "再见。",
+          "pinyin": "zài jiàn。",
+          "translation": {
+            "kr": "안녕히 가세요.",
+            "en": "Goodbye.",
+            "jp": "さようなら。"
+          }
+        },
+        {
+          "zh": "好，再见。",
+          "pinyin": "hǎo，zài jiàn。",
+          "translation": {
+            "kr": "네, 안녕히 가세요.",
+            "en": "OK, goodbye.",
+            "jp": "はい、さようなら。"
+          }
+        },
+        {
+          "zh": "谢谢，再见。",
+          "pinyin": "xiè xie，zài jiàn。",
+          "translation": {
+            "kr": "감사합니다, 안녕히 가세요.",
+            "en": "Thank you. Goodbye.",
+            "jp": "ありがとう。さようなら。"
+          }
+        }
+      ]
     }
   ],
   "dialogue": [

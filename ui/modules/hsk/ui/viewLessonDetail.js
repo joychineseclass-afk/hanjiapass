@@ -55,10 +55,15 @@ export async function openLessonDetailFlow(ctx, lesson, idxFallback = 0) {
             version: ver,
           })) ?? null;
         if (Array.isArray(distVocab)) {
+          const enrichFrom = Array.isArray(ctx.currentLessonDetail?.vocab)
+            ? ctx.currentLessonDetail.vocab
+            : [];
+          const merged =
+            window.HSK_LOADER.mergeVocabFromLessonFile?.(distVocab, enrichFrom) ?? distVocab;
           ctx.currentLessonDetail = {
             ...ctx.currentLessonDetail,
-            vocab: distVocab,
-            words: distVocab,
+            vocab: merged,
+            words: merged,
           };
         }
       } catch (e2) {
