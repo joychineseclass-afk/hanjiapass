@@ -1762,7 +1762,9 @@ async function openLesson({ lessonNo, file } = {}) {
   if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
 
   const reviewEl = $("hskReviewBody");
-  if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
+  if (reviewEl) {
+    reviewEl.innerHTML = buildLessonContentReviewHTML(lessonData, panelWords);
+  }
 
   const practiceEl = $("hskPracticeBody");
   if (practiceEl) {
@@ -1831,7 +1833,9 @@ function rerenderHSKFromState() {
   if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
 
   const reviewEl = $("hskReviewBody");
-  if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
+  if (reviewEl) {
+    reviewEl.innerHTML = buildLessonContentReviewHTML(lessonData, lessonWords);
+  }
 
   const practiceEl = $("hskPracticeBody");
   if (practiceEl) {
@@ -2031,24 +2035,6 @@ function bindEvents() {
     );
   }
 
-  el = $("hskReviewBtn");
-  if (el) {
-    el.addEventListener(
-      "click",
-      function () {
-        const lessonId =
-          (state.current &&
-            state.current.lessonData &&
-            state.current.lessonData.id) ||
-          (state.current
-            ? getCourseId() + "_lesson" + state.current.lessonNo
-            : "");
-        enterReviewMode("lesson", lessonId);
-      },
-      { signal }
-    );
-  }
-
   // ===== Lesson click =====
   el = $("hskLessonList");
   if (el) {
@@ -2104,7 +2090,8 @@ function bindEvents() {
         target.closest(".review-grammar-row") ||
         target.closest(".lesson-practice-card") ||
         target.closest(".review-question-card") ||
-        target.closest(".lesson-practice-option");
+        target.closest(".lesson-practice-option") ||
+        target.closest(".lesson-review-summary-word-item");
 
       if (lineEl) lineEl.classList.add("is-speaking");
 
@@ -2350,9 +2337,6 @@ function updateTabsLabels() {
     const span = btn.querySelector("span") || btn;
     span.textContent = i18n.t(key);
   });
-
-  const reviewBtn = $("hskReviewBtn");
-  if (reviewBtn) reviewBtn.textContent = i18n.t("review.start");
 
   const reviewLabels = [
     ["hskReviewEntry", "span", "hsk.review_mode"],
@@ -2918,126 +2902,301 @@ function buildGrammarHTML(lessonData) {
 
 
 
-/** 复习 tab */
-function buildReviewHTML(lessonData) {
+/**
+ * 「复习」tab：本课内容总复习（单词 / 会话 / 语法 / 扩展），数据来自 lessonData + 与单词 tab 一致的 lessonWords。
+ * 不使用 lessonData.review、wrongQuestions、错题复习 store。
+ */
+function buildLessonContentReviewHTML(lessonData, lessonWords) {
   const raw = (lessonData && lessonData._raw) || lessonData;
-  const r = raw && raw.review;
   const lang = getLang();
+  const speakLabel = i18n.t("hsk.extension_speak");
+  const showPinyin = shouldShowPinyin({
+    level: lessonData && lessonData.level,
+    version: lessonData && lessonData.version,
+  });
 
-  const pickSummary = (obj) => {
-    if (!obj || typeof obj !== "object") return "";
-    const key =
-      lang === "cn" || lang === "zh"
-        ? "cn"
-        : lang === "kr" || lang === "ko"
-        ? "kr"
-        : lang === "jp" || lang === "ja"
-        ? "jp"
-        : "en";
+  const str = (v) => _trimStr(v);
 
-    return (
-      _trimStr(obj[key]) ||
-      _trimStr(obj.summary) ||
-      _trimStr(obj.focus) ||
-      _trimStr(obj.cn) ||
-      _trimStr(obj.zh) ||
-      ""
-    );
-  };
+  const wordsSource =
+    Array.isArray(lessonWords) && lessonWords.length
+      ? lessonWords
+      : Array.isArray(raw && raw.vocab) && raw.vocab.length
+        ? raw.vocab
+        : Array.isArray(raw && raw.words)
+          ? raw.words
+          : [];
 
-  if (!r || typeof r !== "object") {
-    return `<div class="lesson-review-empty text-sm opacity-70">${escapeHtml(
-      i18n.t("hsk.review_empty") || "暂无复习内容"
-    )}</div>`;
-  }
+  const wordsSectionHtml = (() => {
+    const items = [];
+    for (const w of wordsSource) {
+      const han = wordKey(w);
+      if (!han) continue;
+      let py = typeof w === "object" ? wordPinyin(w) : "";
+      if (showPinyin && han && !py) py = resolvePinyin(han, py);
+      const meaning =
+        typeof w === "object" ? wordMeaning(w, lang) : "";
+      const zhEsc = escapeHtml(han).replaceAll('"', "&quot;");
+      const zhAttrs = ` data-speak-text="${zhEsc}" data-speak-kind="dialogue"`;
 
-  const parts = [];
-  const isReviewLesson = raw && raw.type === "review";
-  const lessonWords = Array.isArray(r.lessonWords) ? r.lessonWords : [];
-  const relatedOldWords = Array.isArray(r.relatedOldWords) ? r.relatedOldWords : [];
-  const grammarReview = Array.isArray(r.grammarReview) ? r.grammarReview : [];
-  const summaryTasks = Array.isArray(r.summaryTasks) ? r.summaryTasks : [];
-  const reviewRange = Array.isArray(r.lessonRange)
-    ? r.lessonRange
-    : Array.isArray(r.reviewRange)
-    ? r.reviewRange
-    : [];
+      let examplesHtml = "";
+      if (w && typeof w === "object" && Array.isArray(w.examples) && w.examples.length) {
+        examplesHtml = `<div class="lesson-review-summary-word-examples space-y-2 mt-2">${w.examples
+          .map((ex) => {
+            const zh = str(ex.zh || ex.cn || ex.line || ex.text);
+            if (!zh) return "";
+            let exPy = str(ex.pinyin || ex.py);
+            if (showPinyin && zh && !exPy) exPy = resolvePinyin(zh, exPy);
+            const transObj = ex.translation || ex.translations || ex.trans;
+            let trans = "";
+            if (transObj && typeof transObj === "object") {
+              trans = _getControlledLangText(transObj, lang, "word example");
+            }
+            const exEsc = escapeHtml(zh).replaceAll('"', "&quot;");
+            const exAttrs = ` data-speak-text="${exEsc}" data-speak-kind="dialogue"`;
+            return `<div class="lesson-review-summary-word-example border-l-2 border-slate-200 pl-2">
+  <div class="lesson-review-summary-ex-zh"${exAttrs}>${escapeHtml(zh)}</div>
+  ${exPy ? `<div class="text-sm opacity-80">${escapeHtml(exPy)}</div>` : ""}
+  ${trans ? `<div class="text-sm opacity-80">${escapeHtml(trans)}</div>` : ""}
+</div>`;
+          })
+          .filter(Boolean)
+          .join("")}</div>`;
+      }
 
-  if (isReviewLesson && reviewRange.length >= 2) {
-    const rangeText =
-      i18n.t("hsk.review_range_lessons", {
-        from: reviewRange[0],
-        to: reviewRange[1],
-      }) || `第 ${reviewRange[0]}～${reviewRange[1]} 课 综合复习`;
-    parts.push(
-      `<div class="lesson-review-range text-sm font-medium mb-3">${escapeHtml(rangeText)}</div>`
-    );
-  }
+      items.push(`<article class="lesson-review-summary-word-item rounded-lg border border-slate-100 dark:border-slate-600 p-3">
+  <div class="font-medium"${zhAttrs}>${escapeHtml(han)}</div>
+  ${py ? `<div class="text-sm opacity-80">${escapeHtml(py)}</div>` : ""}
+  ${meaning ? `<div class="text-sm mt-1">${escapeHtml(meaning)}</div>` : ""}
+  ${examplesHtml}
+</article>`);
+    }
+    if (!items.length) return "";
+    const h = escapeHtml(i18n.t("hsk.lesson_review_section_words"));
+    return `<section class="lesson-review-summary-section space-y-3">
+  <h3 class="lesson-review-summary-heading text-base font-semibold">${h}</h3>
+  <div class="lesson-review-summary-words space-y-2">${items.join("")}</div>
+</section>`;
+  })();
 
-  if (lessonWords.length) {
-    const label = isReviewLesson
-      ? i18n.t("hsk.review_words") || "复习词汇"
-      : i18n.t("hsk.lesson_words_review") || "本课词汇";
-    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(
-      label
-    )}</h4><div class="flex flex-wrap gap-2">${lessonWords
-      .map(
-        (w) =>
-          `<span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700">${escapeHtml(
-            String(w)
-          )}</span>`
-      )
-      .join("")}</div></section>`);
-  }
+  const dialogueSectionHtml = (() => {
+    const cards = getDialogueCards(raw);
+    let bodyHtml = "";
 
-  if (relatedOldWords.length && !isReviewLesson) {
-    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(
-      i18n.t("hsk.related_old_words") || "关联旧词"
-    )}</h4><div class="flex flex-wrap gap-2">${relatedOldWords
-      .map(
-        (w) =>
-          `<span class="px-2 py-1 rounded bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200">${escapeHtml(
-            String(w)
-          )}</span>`
-      )
-      .join("")}</div></section>`);
-  }
+    if (
+      SCENE_ENGINE &&
+      typeof SCENE_ENGINE.hasScene === "function" &&
+      SCENE_ENGINE.hasScene(lessonData)
+    ) {
+      const scene = SCENE_ENGINE.getSceneFromLesson(lessonData);
+      const framesHtml = SceneRenderer.renderSceneFrames(scene, lessonData, lang);
+      if (framesHtml) bodyHtml = framesHtml;
+    }
 
-  if (grammarReview.length) {
-    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(
-      i18n.t("hsk.grammar_review") || "语法回顾"
-    )}</h4><ul class="space-y-1">${grammarReview
-      .map((g) => {
-        const name = escapeHtml(_trimStr(g.name) || "-");
-        const summaryObj =
-          g.summary && typeof g.summary === "object"
-            ? g.summary
-            : g.summary
-            ? { cn: g.summary, kr: g.summary, en: g.summary, jp: g.summary }
-            : g;
-        const summary = escapeHtml(pickSummary(summaryObj));
-        return `<li><span class="font-medium">${name}</span>${
-          summary ? ` — ${summary}` : ""
-        }</li>`;
+    if (!bodyHtml && cards.length) {
+      bodyHtml = `<div class="lesson-review-summary-dialogue-list space-y-3">${cards
+        .map((card, index) => {
+          const lines = Array.isArray(card && card.lines) ? card.lines : [];
+          if (!lines.length) return "";
+          const titleText = pickCardTitle(card && card.title, index + 1);
+          const lineHtml = lines
+            .map((line) => renderDialogueLine(line, lang, showPinyin))
+            .join("");
+          return `<section class="lesson-dialogue-card">
+    <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
+    <div class="lesson-dialogue-lines">${lineHtml}</div>
+  </section>`;
+        })
+        .filter(Boolean)
+        .join("\n")}</div>`;
+    }
+
+    if (!bodyHtml) return "";
+    const h = escapeHtml(i18n.t("hsk.lesson_review_section_dialogue"));
+    return `<section class="lesson-review-summary-section space-y-3">
+  <h3 class="lesson-review-summary-heading text-base font-semibold">${h}</h3>
+  ${bodyHtml}
+</section>`;
+  })();
+
+  const grammarSectionHtml = (() => {
+    const g = raw && raw.grammar;
+    if (!g) return "";
+    const arr = Array.isArray(g) ? g : Array.isArray(g && g.points) ? g.points : [];
+    if (!arr.length) return "";
+
+    const cards = arr
+      .map((pt, i) => {
+        const titleZh =
+          typeof pt?.title === "object"
+            ? pt.title.zh || pt.title.kr || pt.title.en || ""
+            : pt?.pattern || pt?.title || pt?.name || "#" + (i + 1);
+
+        let titlePy = maybeGetManualPinyin(pt, "grammarTitle");
+        if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
+
+        const expl = getGrammarExplanation(pt, lang);
+        const examples = getGrammarExamples(pt);
+        const idx = String(i + 1).padStart(2, "0");
+        const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
+        const titleAttrs = titleZh
+          ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
+          : "";
+        const btnAttrs = titleZh
+          ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
+          : "";
+
+        let examplesHtml = "";
+        if (examples.length) {
+          examplesHtml = examples
+            .map((ex) => {
+              let exPy = ex.pinyin;
+              if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
+              const exEsc = escapeHtml(ex.zh).replaceAll('"', "&quot;");
+              const exAttrs = ex.zh
+                ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"`
+                : "";
+              return `<div class="lesson-grammar-example">
+  <div class="lesson-grammar-example-zh"${exAttrs}>${escapeHtml(ex.zh)}</div>
+  ${exPy ? `<div class="lesson-grammar-example-pinyin">${escapeHtml(exPy)}</div>` : ""}
+  ${ex.trans ? `<div class="lesson-grammar-example-meaning">${escapeHtml(ex.trans)}</div>` : ""}
+</div>`;
+            })
+            .join("");
+        }
+
+        return `<article class="lesson-grammar-card">
+  <div class="lesson-grammar-card-top">
+    <span class="lesson-grammar-index">${idx}</span>
+    <button type="button" class="lesson-grammar-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+  </div>
+  <div class="lesson-grammar-head">
+    <div class="lesson-grammar-zh"${titleAttrs}>${escapeHtml(titleZh)}</div>
+    ${titlePy ? `<div class="lesson-grammar-pinyin">${escapeHtml(titlePy)}</div>` : ""}
+  </div>
+  ${expl ? `<div class="lesson-grammar-expl">${escapeHtml(expl)}</div>` : ""}
+  ${examplesHtml ? `<div class="lesson-grammar-examples">${examplesHtml}</div>` : ""}
+</article>`;
       })
-      .join("")}</ul></section>`);
-  }
+      .join("");
 
-  if (summaryTasks.length) {
-    parts.push(`<section class="lesson-review-section"><h4 class="text-sm font-semibold mb-2">${escapeHtml(
-      i18n.t("hsk.summary_tasks") || "复习任务"
-    )}</h4><ul class="space-y-1">${summaryTasks
-      .map((t) => `<li>${escapeHtml(typeof t === "string" ? t : t?.cn || t?.text || "")}</li>`)
-      .join("")}</ul></section>`);
-  }
+    const h = escapeHtml(i18n.t("hsk.lesson_review_section_grammar"));
+    return `<section class="lesson-review-summary-section space-y-3">
+  <h3 class="lesson-review-summary-heading text-base font-semibold">${h}</h3>
+  <section class="lesson-grammar-list">${cards}</section>
+</section>`;
+  })();
 
-  if (!parts.length) {
+  const extensionSectionHtml = (() => {
+    const arr =
+      Array.isArray(raw && raw.generatedExtensions) && raw.generatedExtensions.length
+        ? raw.generatedExtensions
+        : Array.isArray(raw && raw.extension)
+          ? raw.extension
+          : [];
+    if (!arr.length) return "";
+
+    const pickObj = (obj) => {
+      if (!obj || typeof obj !== "object") return "";
+      return _getControlledLangText(obj, lang, "extension object");
+    };
+
+    const pickTrans = (obj) => {
+      if (!obj || typeof obj !== "object") return "";
+      return _getControlledLangText(obj, lang, "extension translation");
+    };
+
+    const cards = arr
+      .map((item, i) => {
+        const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
+        const isGroup = sentences.length > 0 && (item.groupTitle || item.focusGrammar);
+
+        if (isGroup) {
+          const groupTitle =
+            pickObj(item.groupTitle) ||
+            str(item.focusGrammar) ||
+            `${i18n.t("hsk.extension_group", "句型练习")} ${i + 1}`;
+
+          const note = pickObj(item.note);
+
+          const sentencesHtml = sentences
+            .map((s) => {
+              const cn = str((s && s.cn) || (s && s.zh) || "");
+              const py = str((s && s.pinyin) || (s && s.py) || "");
+              const trans = pickTrans(s && (s.translations || s.translation));
+              const zhEsc = escapeHtml(cn).replaceAll('"', "&quot;");
+              const attrs = cn ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+
+              return `<div class="lesson-extension-sentence">
+          <div class="lesson-extension-sentence-zh"${attrs}>${escapeHtml(cn)}</div>
+          ${py ? `<div class="lesson-extension-sentence-pinyin">${escapeHtml(py)}</div>` : ""}
+          ${trans ? `<div class="lesson-extension-sentence-trans">${escapeHtml(trans)}</div>` : ""}
+        </div>`;
+            })
+            .join("");
+
+          return `<article class="lesson-extension-group-card">
+  <div class="lesson-extension-group-header">
+    <span class="lesson-extension-group-index">${String(i + 1).padStart(2, "0")}</span>
+    <h4 class="lesson-extension-group-title">${escapeHtml(groupTitle)}</h4>
+    ${item.focusGrammar ? `<span class="lesson-extension-focus">${escapeHtml(str(item.focusGrammar))}</span>` : ""}
+  </div>
+  <div class="lesson-extension-sentences">${sentencesHtml}</div>
+  ${note ? `<div class="lesson-extension-note">${escapeHtml(note)}</div>` : ""}
+</article>`;
+        }
+
+        const phrase = str(item && (item.phrase || item.hanzi || item.zh || item.cn || item.line));
+        const pinyin = str(item && (item.pinyin || item.py));
+        const example = str(item && (item.example || item.exampleZh));
+        const examplePinyin = str(item && (item.examplePinyin || item.examplePy));
+        const meaning = getExtensionMeaning(item, lang);
+        const explanation = getExtensionExplanation(item, lang);
+
+        const idx = String(i + 1).padStart(2, "0");
+        const zhEsc = escapeHtml(phrase).replaceAll('"', "&quot;");
+        const zhAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        const btnAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+
+        return `<article class="lesson-extension-card">
+  <div class="lesson-extension-card-top">
+    <span class="lesson-extension-index">${idx}</span>
+    <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+  </div>
+  <div class="lesson-extension-body">
+    <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
+    ${pinyin ? `<div class="lesson-extension-pinyin">${escapeHtml(pinyin)}</div>` : ""}
+    ${meaning ? `<div class="lesson-extension-meaning">${escapeHtml(meaning)}</div>` : ""}
+    ${explanation ? `<div class="lesson-extension-explanation">${escapeHtml(explanation)}</div>` : ""}
+    ${example ? `<div class="lesson-extension-example">${escapeHtml(example)}</div>` : ""}
+    ${examplePinyin ? `<div class="lesson-extension-example-pinyin">${escapeHtml(examplePinyin)}</div>` : ""}
+  </div>
+</article>`;
+      })
+      .filter(Boolean)
+      .join("");
+
+    if (!cards) return "";
+    const h = escapeHtml(i18n.t("hsk.lesson_review_section_extension"));
+    return `<section class="lesson-review-summary-section space-y-3">
+  <h3 class="lesson-review-summary-heading text-base font-semibold">${h}</h3>
+  <section class="lesson-extension-list">${cards}</section>
+</section>`;
+  })();
+
+  const chunks = [
+    wordsSectionHtml,
+    dialogueSectionHtml,
+    grammarSectionHtml,
+    extensionSectionHtml,
+  ].filter(Boolean);
+
+  if (!chunks.length) {
     return `<div class="lesson-review-empty text-sm opacity-70">${escapeHtml(
-      i18n.t("hsk.review_empty") || "暂无复习内容"
+      i18n.t("hsk.lesson_review_empty_all")
     )}</div>`;
   }
 
-  return `<div class="lesson-review-content space-y-4">${parts.join("")}</div>`;
+  return `<div class="lesson-review-summary-root lesson-review-content space-y-6">${chunks.join("")}</div>`;
 }
 
 /** AI context */

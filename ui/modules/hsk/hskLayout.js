@@ -104,7 +104,6 @@ export function getHSKLayoutHTML() {
         <button id="hskTabReview" type="button" class="px-3 py-1 rounded-lg border" data-tab="review">
           <span data-i18n="hsk.tab.review">復習</span>
         </button>
-        <button id="hskReviewBtn" type="button" class="px-3 py-1 rounded-lg border border-amber-400 text-amber-700" data-i18n="review.start">復習モード</button>
       </div>
     </div>
 
@@ -138,7 +137,7 @@ export function getHSKLayoutHTML() {
       </div>
 
       <div id="hskPanelReview" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk.tab.review">復習</div>
+        <div class="text-sm font-bold mb-2" data-i18n="hsk.lesson_content_review_title">本课内容总复习</div>
         <div id="hskReviewBody" class="space-y-3"></div>
       </div>
     </div>
