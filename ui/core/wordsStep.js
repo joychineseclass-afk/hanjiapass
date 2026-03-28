@@ -367,7 +367,11 @@ export async function openWordsStep({ lessonId, state }) {
       const m = String(lessonId || "").match(/hsk(\d+)/i);
       const scope = m ? `hsk${m[1]}` : "hsk1";
       const onClickWord = (w) => openWordDetail(w, lang);
-      window.HSK_RENDER.renderWordCards(root, words, onClickWord, { lang, scope });
+      window.HSK_RENDER.renderWordCards(root, words, onClickWord, {
+        lang,
+        scope,
+        lessonVocab: Array.isArray(words) ? words : [],
+      });
       return;
     } catch (e) {
       console.warn("[wordsStep] renderWordCards failed, fallback:", e);

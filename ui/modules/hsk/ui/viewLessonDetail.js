@@ -256,7 +256,16 @@ function renderLessonTabVocab(ctx, container) {
     cardWrap,
     filtered,
     (item) => window.LEARN_PANEL?.open?.(item),
-    { lang: ctx.LANG, scope, query: q, showTag: "학습", compact: false }
+    {
+      lang: ctx.LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+      lessonVocab: Array.isArray(ctx.currentLessonDetail?.vocab)
+        ? ctx.currentLessonDetail.vocab
+        : [],
+    }
   );
 
   setStatus(dom, `(${filtered.length})`);

@@ -67,6 +67,45 @@ export function normalizeVocabHanziKeyForPanel(h) {
   return s.replace(/[\s\u3002\uFF01\uFF0C\uFF1F\uFF1A\uFF1B!?,。；：]+$/u, "");
 }
 
+/** 按去尾标点后的汉字键在列表中找第一条词条（Learn 传参解析用） */
+export function findWordStudyEntryByNormKey(list, clickHanzi) {
+  const norm = normalizeVocabHanziKeyForPanel(String(clickHanzi ?? "").trim());
+  if (!norm || !Array.isArray(list)) return null;
+  for (const x of list) {
+    if (x == null || typeof x !== "object") continue;
+    const k = normalizeVocabHanziKeyForPanel(wordKey(x));
+    if (k === norm) return x;
+  }
+  return null;
+}
+
+/**
+ * Learn 按钮：合并 Map 里的 raw、当前 panel 行、课 JSON vocab（panel 优先覆盖），避免只打开全量词库的薄词条。
+ */
+export function resolveFullWordStudyItem(rawItem, clickHanzi) {
+  const h0 = String(clickHanzi ?? "").trim() || wordKey(rawItem) || "";
+  const panelList =
+    typeof window !== "undefined" && Array.isArray(window.__HSK_LAST_PANEL_WORDS)
+      ? window.__HSK_LAST_PANEL_WORDS
+      : null;
+  const lessonArr =
+    typeof window !== "undefined" && Array.isArray(window.__HSK_LESSON_VOCAB_FOR_STUDY)
+      ? window.__HSK_LESSON_VOCAB_FOR_STUDY
+      : [];
+
+  const fromPanel = findWordStudyEntryByNormKey(panelList, h0);
+  const fromLesson = findWordStudyEntryByNormKey(lessonArr, h0);
+
+  const base =
+    rawItem && typeof rawItem === "object" ? { ...rawItem } : { hanzi: h0 };
+
+  const out = { ...base };
+  if (fromLesson && typeof fromLesson === "object") Object.assign(out, fromLesson);
+  if (fromPanel && typeof fromPanel === "object") Object.assign(out, fromPanel);
+  out.hanzi = wordKey(fromPanel) || wordKey(fromLesson) || wordKey(base) || h0;
+  return out;
+}
+
 export function wordPinyin(x) {
   if (x == null || typeof x === "string") return "";
   return String(x.pinyin || x.py || "").trim();
@@ -682,8 +721,9 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
   }
 }
 
-export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}) {
+export function renderWordCards(gridEl, items, onClickWord, opts = {}) {
   if (!gridEl) return;
+  const { lang, scope, lessonVocab } = opts;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
@@ -698,6 +738,10 @@ export function renderWordCards(gridEl, items, onClickWord, { lang, scope } = {}
   gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
 
   if (typeof window !== "undefined") {
+    window.__HSK_LAST_PANEL_WORDS = arr.slice();
+    if (Object.prototype.hasOwnProperty.call(opts, "lessonVocab")) {
+      window.__HSK_LESSON_VOCAB_FOR_STUDY = Array.isArray(lessonVocab) ? lessonVocab.slice() : [];
+    }
     window.__HSK_WORD_ITEMS_BY_HANZI = window.__HSK_WORD_ITEMS_BY_HANZI || new Map();
     arr.forEach((x) => {
       const h = wordKey(x);
@@ -734,7 +778,8 @@ function buildReviewCompactRow(x, { currentLang, glossaryScope } = {}) {
  * - 无 wordsByLesson 时：扁平紧凑列表（兼容旧逻辑）
  * 数据仍使用完整课程词汇（core+extra），仅 UI 改为紧凑模式
  */
-export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } = {}) {
+export function renderReviewWords(gridEl, items, opts = {}) {
+  const { lang, scope, wordsByLesson, lessonVocab } = opts;
   if (!gridEl) return;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
@@ -784,6 +829,10 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
   gridEl.innerHTML = `<div class="lesson-vocab-wrap review-vocab-wrap">${hero}${bodyHtml}</div>`;
 
   if (typeof window !== "undefined") {
+    window.__HSK_LAST_PANEL_WORDS = allItems.slice();
+    if (Object.prototype.hasOwnProperty.call(opts, "lessonVocab")) {
+      window.__HSK_LESSON_VOCAB_FOR_STUDY = Array.isArray(lessonVocab) ? lessonVocab.slice() : [];
+    }
     window.__HSK_WORD_ITEMS_BY_HANZI = window.__HSK_WORD_ITEMS_BY_HANZI || new Map();
     allItems.forEach((x) => {
       const h = wordKey(x);
@@ -892,7 +941,10 @@ export function bindWordCardActions() {
       e.preventDefault();
       e.stopPropagation();
       const map = window.__HSK_WORD_ITEMS_BY_HANZI;
-      const item = (map && typeof map.get === "function" ? map.get(hanzi) : null) || { hanzi: hanzi, pinyin: pinyin };
+      const rawItem =
+        (map && typeof map.get === "function" ? map.get(hanzi) : null) ||
+        { hanzi: hanzi, pinyin: pinyin };
+      const item = resolveFullWordStudyItem(rawItem, hanzi);
       const fn = window.__HSK_ON_CLICK_WORD;
       if (typeof fn === "function") fn(item);
       else if (window.LEARN_PANEL && typeof window.LEARN_PANEL.open === "function") window.LEARN_PANEL.open(item);

@@ -518,7 +518,16 @@ hskLevel?.dispatchEvent(new Event("change"));
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
+      {
+        lang: LANG,
+        scope,
+        query: q,
+        showTag: "학습",
+        compact: false,
+        lessonVocab: Array.isArray(currentLessonDetail?.vocab)
+          ? currentLessonDetail.vocab
+          : [],
+      }
     );
 
     setStatus(`(${filtered.length})`);
@@ -772,7 +781,14 @@ hskLevel?.dispatchEvent(new Event("change"));
       wrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
+      {
+        lang: LANG,
+        scope,
+        query: q,
+        showTag: "학습",
+        compact: false,
+        lessonVocab: [],
+      }
     );
 
     setStatus(`(${filtered.length}/${recent.length})`);
@@ -928,7 +944,16 @@ hskLevel?.dispatchEvent(new Event("change"));
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
+      {
+        lang: LANG,
+        scope,
+        query: q,
+        showTag: "학습",
+        compact: false,
+        lessonVocab: Array.isArray(currentLessonDetail?.vocab)
+          ? currentLessonDetail.vocab
+          : [],
+      }
     );
 
     setStatus(`(${filtered.length}/${lessonWords.length})`);
@@ -987,7 +1012,14 @@ hskLevel?.dispatchEvent(new Event("change"));
       cardWrap,
       filtered,
       (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
+      {
+        lang: LANG,
+        scope,
+        query: q,
+        showTag: "학습",
+        compact: false,
+        lessonVocab: [],
+      }
     );
 
     setStatus(`(${filtered.length}/${ALL.length})`);
