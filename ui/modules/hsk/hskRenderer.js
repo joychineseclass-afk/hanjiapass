@@ -638,7 +638,6 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
 
     const learnLabel = i18n.t("action.learn");
     const strokeLabel = i18n.t("action.trace");
-    const audioLabel = i18n.t("action.speak");
     const strokeDisabled = !han ? " disabled" : "";
     const hanziChars = han ? Array.from(han).map((ch) =>
       `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
@@ -661,7 +660,6 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
       <div class="word-actions">
         <button type="button" class="btn btn-learn" data-action="learn" data-hanzi="${escapeHtmlAttr(han)}">${escapeHtml(learnLabel)}</button>
         <button type="button" class="btn btn-stroke" data-action="open-stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
-        <button type="button" class="btn btn-audio" data-action="speak" data-hanzi="${escapeHtmlAttr(han)}" data-pinyin="${escapeHtmlAttr(pinyinStr)}">${escapeHtml(audioLabel)}</button>
       </div>
     </div>
   `;
@@ -851,32 +849,6 @@ export function bindWordCardActions() {
 
     if (!hanzi && action !== "learn") return;
     if (action === "open-stroke" && btn.disabled) return;
-
-    if (action === "speak" || action === "audio") {
-      e.preventDefault();
-      e.stopPropagation();
-      const text = hanzi || pinyin || "";
-      if (!text) return;
-      try {
-        const { AUDIO_ENGINE } = await import("../../platform/index.js");
-        if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-          if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
-          return;
-        }
-        AUDIO_ENGINE.stop();
-        document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
-        const cardEl = btn.closest(".word-card");
-        if (cardEl) cardEl.classList.add("is-speaking");
-        AUDIO_ENGINE.playText(text, {
-          lang: "zh-CN",
-          rate: 0.95,
-          onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
-          onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
-        });
-      } catch (err) {
-        if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speak failed:", err);
-      }
-    }
 
     if (action === "open-stroke") {
       e.preventDefault();
