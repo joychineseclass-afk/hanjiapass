@@ -1,5 +1,5 @@
 /**
- * 课内「复习」tab：将 lessonData 转为精炼复盘数据并渲染（非各 tab 内容搬运）。
+ * 课内「复习」tab：课程内容总览（单词 / 会话 / 语法 / 扩展），与错题测验 UI（#hskReviewContainer）分离。
  */
 
 import { i18n } from "../../i18n.js";
@@ -12,10 +12,12 @@ import {
 } from "./hskRenderer.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../../utils/pinyinEngine.js";
 
-const MAX_CORE_WORDS = 8;
-const MAX_CORE_SENTENCES = 8;
-const MAX_KEY_POINTS = 5;
-const MAX_EXTRA = 4;
+/** 与单词 tab 对齐，避免单页过长 */
+const MAX_WORD_ROWS = 80;
+const MAX_DIALOGUE_LINES = 48;
+const MAX_GRAMMAR_POINTS = 12;
+const MAX_GRAMMAR_EXAMPLES_PER_POINT = 4;
+const MAX_EXTENSION_ROWS = 36;
 
 const trim = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -138,6 +140,10 @@ function linePinyin(line, zh, showPinyin) {
   return trim(py);
 }
 
+function lineSpeaker(line) {
+  return trim((line && line.speaker) || (line && line.spk) || "");
+}
+
 function sentenceQuality(row) {
   let q = 0;
   if (row.trans) q += 4;
@@ -148,20 +154,6 @@ function sentenceQuality(row) {
   const src = row.sourceRank ?? 3;
   q += (3 - src) * 0.5;
   return q;
-}
-
-function mergeSentenceRow(map, row) {
-  const k = sentenceDedupKey(row.zh);
-  if (!k) return;
-  const prev = map.get(k);
-  if (!prev) {
-    map.set(k, { ...row });
-    return;
-  }
-  const qn = sentenceQuality(row);
-  const qo = sentenceQuality(prev);
-  if (qn > qo) map.set(k, { ...row, order: Math.min(prev.order, row.order) });
-  else if (qn === qo && row.order < prev.order) map.set(k, { ...prev, order: row.order });
 }
 
 function grammarTitle(pt, i) {
@@ -293,7 +285,7 @@ function wordRowQuality(w, lang) {
  * @param {object} options
  * @param {string} options.lang - UI 语言键（与 getLang 一致）
  * @param {Array} [options.lessonWords] - 与单词 tab 一致的面板词表；缺省则用 vocab/words
- * @returns {{ coreWords: object[], coreSentences: object[], keyPoints: object[], extraExpressions: object[] }}
+ * @returns {{ words: object[], dialogue: object[], grammar: object[], extension: object[] }}
  */
 export function buildLessonReviewData(lessonData, options = {}) {
   const raw = (lessonData && lessonData._raw) || lessonData;
@@ -336,117 +328,63 @@ export function buildLessonReviewData(lessonData, options = {}) {
     new Set(uniqueHanziOrder.map((k) => wordMap.get(k).zh))
   );
 
-  const coreWordCandidates = filteredKeys
+  const wordCandidates = filteredKeys
     .map((k) => wordMap.get(k))
     .sort((a, b) => b._q - a._q || b.zh.length - a.zh.length);
 
-  const coreWords = coreWordCandidates.slice(0, MAX_CORE_WORDS).map(({ zh, pinyin, meaning, exampleLine }) => ({
+  const words = wordCandidates.slice(0, MAX_WORD_ROWS).map(({ zh, pinyin, meaning, exampleLine }) => ({
     zh,
     pinyin,
     meaning,
     exampleLine: exampleLine || "",
   }));
 
-  const sentenceMap = new Map();
-  let order = 0;
+  /** 仅会话卡片/对白行，不含词汇例句、语法例句 */
+  const dialogue = [];
+  const dialogueSeen = new Set();
   const cards = collectDialogueCards(raw);
   for (const card of cards) {
     const lines = Array.isArray(card && card.lines) ? card.lines : [];
     for (const line of lines) {
       const zh = lineZh(line);
       if (!zh || zh.length < 2) continue;
-      const trans = lineTranslation(line, lang);
-      mergeSentenceRow(sentenceMap, {
+      const dk = sentenceDedupKey(zh);
+      if (dialogueSeen.has(dk)) continue;
+      dialogueSeen.add(dk);
+      dialogue.push({
         zh,
         pinyin: linePinyin(line, zh, showPinyin),
-        trans,
-        sourceRank: 0,
-        order: order++,
+        trans: lineTranslation(line, lang),
+        speaker: lineSpeaker(line),
       });
+      if (dialogue.length >= MAX_DIALOGUE_LINES) break;
     }
-  }
-
-  for (const w of wordsSource) {
-    if (!w || typeof w !== "object" || !Array.isArray(w.examples)) continue;
-    for (const ex of w.examples) {
-      const zh = trim(ex.zh || ex.cn || ex.line || ex.text);
-      if (!zh || zh.length < 2) continue;
-      let py = trim(ex.pinyin || ex.py);
-      if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
-      const transObj = ex.translation || ex.translations || ex.trans;
-      const trans =
-        transObj && typeof transObj === "object"
-          ? controlledLangText(transObj, lang, "vocab ex")
-          : "";
-      mergeSentenceRow(sentenceMap, {
-        zh,
-        pinyin: py,
-        trans,
-        sourceRank: 1,
-        order: order++,
-      });
-    }
+    if (dialogue.length >= MAX_DIALOGUE_LINES) break;
   }
 
   const g = raw && raw.grammar;
   const grammarArr = Array.isArray(g) ? g : Array.isArray(g && g.points) ? g.points : [];
-  for (const pt of grammarArr) {
-    const examples = grammarToExampleItems(pt, lang);
-    for (const ex of examples) {
-      const zh = ex.zh;
-      if (!zh || zh.length < 2) continue;
-      let py = ex.pinyin;
-      if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
-      mergeSentenceRow(sentenceMap, {
-        zh,
-        pinyin: py,
-        trans: ex.trans,
-        sourceRank: 2,
-        order: order++,
-      });
-    }
-  }
 
-  const mergedList = [...sentenceMap.values()].sort((a, b) => {
-    if (a.sourceRank !== b.sourceRank) return a.sourceRank - b.sourceRank;
-    const dq = sentenceQuality(b) - sentenceQuality(a);
-    if (dq !== 0) return dq;
-    return a.order - b.order;
-  });
-
-  const coreSentences = mergedList.slice(0, MAX_CORE_SENTENCES).map(({ zh, pinyin, trans }) => ({
-    zh,
-    pinyin,
-    trans,
-  }));
-
-  const usedSentenceKeys = new Set(coreSentences.map((s) => sentenceDedupKey(s.zh)));
-
-  const keyPoints = [];
-  for (let i = 0; i < grammarArr.length && keyPoints.length < MAX_KEY_POINTS; i++) {
+  const grammar = [];
+  for (let i = 0; i < grammarArr.length && grammar.length < MAX_GRAMMAR_POINTS; i++) {
     const pt = grammarArr[i];
     const name = grammarTitle(pt, i);
-    const expl = shortenNote(grammarExplanation(pt, lang), 100);
-    const exItems = grammarToExampleItems(pt, lang);
-    const ex0 = exItems[0];
-    let exZh = "";
-    let exPy = "";
-    let exTrans = "";
-    if (ex0 && ex0.zh) {
-      exZh = ex0.zh;
-      exPy = ex0.pinyin;
-      if (showPinyin && exZh && !exPy) exPy = resolvePinyin(exZh, exPy);
-      exTrans = ex0.trans;
-    }
-    if (!trim(name) && !expl && !exZh) continue;
-    keyPoints.push({
-      name: name || `·`,
-      note: expl,
-      exampleZh: exZh,
-      examplePinyin: exPy,
-      exampleTrans: exTrans,
+    const expl = grammarExplanation(pt, lang);
+    const exItems = grammarToExampleItems(pt, lang)
+      .slice(0, MAX_GRAMMAR_EXAMPLES_PER_POINT)
+      .map((ex) => {
+        let py = ex.pinyin;
+        if (showPinyin && ex.zh && !py) py = resolvePinyin(ex.zh, py);
+        return { zh: ex.zh, pinyin: py || "", trans: ex.trans || "" };
+      })
+      .filter((ex) => ex.zh);
+
+    if (!trim(name) && !trim(expl) && !exItems.length) continue;
+    grammar.push({
+      name: name || "·",
+      note: trim(expl) ? shortenNote(expl, 200) : "",
+      examples: exItems,
     });
-    if (exZh) usedSentenceKeys.add(sentenceDedupKey(exZh));
   }
 
   const extArr =
@@ -456,14 +394,14 @@ export function buildLessonReviewData(lessonData, options = {}) {
         ? raw.extension
         : [];
 
-  const extraMap = new Map();
-  const bumpExtra = (row) => {
+  const extMap = new Map();
+  const bumpExt = (row) => {
     const k = sentenceDedupKey(row.zh);
-    if (!k || usedSentenceKeys.has(k)) return;
-    const prev = extraMap.get(k);
+    if (!k) return;
+    const prev = extMap.get(k);
     const qn = sentenceQuality({ zh: row.zh, pinyin: row.pinyin, trans: row.trans, sourceRank: 0 });
     const qo = prev ? sentenceQuality({ zh: prev.zh, pinyin: prev.pinyin, trans: prev.trans, sourceRank: 0 }) : -1;
-    if (!prev || qn > qo) extraMap.set(k, row);
+    if (!prev || qn > qo) extMap.set(k, row);
   };
 
   for (const item of extArr) {
@@ -477,8 +415,22 @@ export function buildLessonReviewData(lessonData, options = {}) {
         const transObj = s.translations || s.translation;
         const trans =
           transObj && typeof transObj === "object" ? controlledLangText(transObj, lang, "ext") : "";
-        const note = trim(item.note && typeof item.note === "object" ? controlledLangText(item.note, lang, "ext note") : "");
-        bumpExtra({ zh, pinyin: py, trans, note });
+        const groupHint = trim(
+          typeof item.groupTitle === "string"
+            ? item.groupTitle
+            : item.groupTitle && typeof item.groupTitle === "object"
+              ? controlledLangText(item.groupTitle, lang, "ext group")
+              : ""
+        );
+        const fg = trim(
+          typeof item.focusGrammar === "string"
+            ? item.focusGrammar
+            : item.focusGrammar && typeof item.focusGrammar === "object"
+              ? controlledLangText(item.focusGrammar, lang, "ext fg")
+              : ""
+        );
+        const note = [groupHint, fg].filter(Boolean).join(" · ");
+        bumpExt({ zh, pinyin: py, trans, note });
       }
     } else {
       const zh = trim(item.phrase || item.hanzi || item.zh || item.cn || item.line);
@@ -511,15 +463,15 @@ export function buildLessonReviewData(lessonData, options = {}) {
             ""
           );
         })(),
-        80
+        120
       );
-      bumpExtra({ zh, pinyin: py, trans, note });
+      bumpExt({ zh, pinyin: py, trans, note: note || "" });
     }
   }
 
-  const extraExpressions = [...extraMap.values()]
+  const extension = [...extMap.values()]
     .sort((a, b) => sentenceQuality(b) - sentenceQuality(a))
-    .slice(0, MAX_EXTRA)
+    .slice(0, MAX_EXTENSION_ROWS)
     .map(({ zh, pinyin, trans, note }) => ({
       zh,
       pinyin,
@@ -527,7 +479,7 @@ export function buildLessonReviewData(lessonData, options = {}) {
       note: note || "",
     }));
 
-  return { coreWords, coreSentences, keyPoints, extraExpressions };
+  return { words, dialogue, grammar, extension };
 }
 
 function escapeHtml(s) {
@@ -549,7 +501,7 @@ function speakAttrs(zh) {
  * @param {ReturnType<typeof buildLessonReviewData>} reviewData
  */
 export function renderLessonReviewHTML(reviewData) {
-  const { coreWords, coreSentences, keyPoints, extraExpressions } = reviewData;
+  const { words, dialogue, grammar, extension } = reviewData;
 
   const blocks = [];
 
@@ -558,13 +510,13 @@ export function renderLessonReviewHTML(reviewData) {
   <div class="hsk-lr-item flex-1 min-w-0">${inner}</div>
 </div>`;
 
-  if (coreWords.length) {
-    const title = escapeHtml(i18n.t("hsk.review_block_core_words"));
-    const items = coreWords
+  if (words.length) {
+    const title = escapeHtml(i18n.t("hsk.lesson_review_section_words"));
+    const items = words
       .map((w, i) =>
         rowShell(
           i + 1,
-          `<div class="hsk-lr-speak-row">
+          `<div class="hsk-lr-speak-row lesson-review-summary-word-item">
   <div class="hsk-lr-zh font-medium"${speakAttrs(w.zh)}>${escapeHtml(w.zh)}</div>
   ${w.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(w.pinyin)}</div>` : ""}
   ${w.meaning ? `<div class="hsk-lr-mean text-sm mt-0.5">${escapeHtml(w.meaning)}</div>` : ""}
@@ -573,19 +525,20 @@ export function renderLessonReviewHTML(reviewData) {
         )
       )
       .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6">
+    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="words">
   <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
   <div class="hsk-lr-list space-y-0">${items}</div>
 </section>`);
   }
 
-  if (coreSentences.length) {
-    const title = escapeHtml(i18n.t("hsk.review_block_core_sentences"));
-    const items = coreSentences
+  if (dialogue.length) {
+    const title = escapeHtml(i18n.t("hsk.lesson_review_section_dialogue"));
+    const items = dialogue
       .map((s, i) =>
         rowShell(
           i + 1,
           `<div class="hsk-lr-speak-row">
+  ${s.speaker ? `<div class="text-xs opacity-60 mb-0.5">${escapeHtml(s.speaker)}</div>` : ""}
   <div class="hsk-lr-zh"${speakAttrs(s.zh)}>${escapeHtml(s.zh)}</div>
   ${s.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(s.pinyin)}</div>` : ""}
   ${s.trans ? `<div class="hsk-lr-mean text-sm mt-0.5">${escapeHtml(s.trans)}</div>` : ""}
@@ -593,40 +546,43 @@ export function renderLessonReviewHTML(reviewData) {
         )
       )
       .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6">
+    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="dialogue">
   <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
   <div class="hsk-lr-list space-y-0">${items}</div>
 </section>`);
   }
 
-  if (keyPoints.length) {
-    const title = escapeHtml(i18n.t("hsk.review_block_key_points"));
-    const items = keyPoints
+  if (grammar.length) {
+    const title = escapeHtml(i18n.t("hsk.lesson_review_section_grammar"));
+    const items = grammar
       .map((k, i) => {
-        const exLine =
-          k.exampleZh &&
-          `<div class="hsk-lr-speak-row hsk-lr-sub text-sm mt-1 pl-2 border-l-2 border-amber-200/80">
-  <span class="hsk-lr-zh"${speakAttrs(k.exampleZh)}>${escapeHtml(k.exampleZh)}</span>
-  ${k.examplePinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(k.examplePinyin)}</div>` : ""}
-  ${k.exampleTrans ? `<div class="opacity-80 text-sm">${escapeHtml(k.exampleTrans)}</div>` : ""}
-</div>`;
+        const exBlocks = (k.examples || [])
+          .map(
+            (ex) =>
+              `<div class="hsk-lr-speak-row hsk-lr-sub text-sm mt-1 pl-2 border-l-2 border-amber-200/80">
+  <span class="hsk-lr-zh"${speakAttrs(ex.zh)}>${escapeHtml(ex.zh)}</span>
+  ${ex.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(ex.pinyin)}</div>` : ""}
+  ${ex.trans ? `<div class="opacity-80 text-sm">${escapeHtml(ex.trans)}</div>` : ""}
+</div>`
+          )
+          .join("");
         return rowShell(
           i + 1,
           `<div class="font-medium text-slate-800 dark:text-slate-100">${escapeHtml(k.name)}</div>
   ${k.note ? `<div class="text-sm mt-0.5 opacity-90">${escapeHtml(k.note)}</div>` : ""}
-  ${exLine || ""}`
+  ${exBlocks}`
         );
       })
       .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6">
+    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="grammar">
   <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
   <div class="hsk-lr-list space-y-0">${items}</div>
 </section>`);
   }
 
-  if (extraExpressions.length) {
-    const title = escapeHtml(i18n.t("hsk.review_block_extra"));
-    const items = extraExpressions
+  if (extension.length) {
+    const title = escapeHtml(i18n.t("hsk.lesson_review_section_extension"));
+    const items = extension
       .map((e, i) =>
         rowShell(
           i + 1,
@@ -639,14 +595,14 @@ export function renderLessonReviewHTML(reviewData) {
         )
       )
       .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6">
+    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="extension">
   <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
   <div class="hsk-lr-list space-y-0">${items}</div>
 </section>`);
   }
 
   if (!blocks.length) {
-    return `<div class="lesson-review-empty text-sm opacity-70">${escapeHtml(i18n.t("hsk.lesson_review_empty_all"))}</div>`;
+    return `<div class="lesson-review-empty text-sm text-slate-500 dark:text-slate-400">${escapeHtml(i18n.t("hsk.lesson_review_empty_all"))}</div>`;
   }
 
   return `<div class="hsk-lesson-review lesson-review-summary-root text-[15px] leading-relaxed max-w-2xl">${blocks.join("")}</div>`;
