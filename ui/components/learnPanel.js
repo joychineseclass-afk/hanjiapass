@@ -124,6 +124,12 @@ function hskScopeFromCtx() {
 function pickWordNote(raw, uiLang) {
   if (!raw || typeof raw !== "object") return "";
   const candidates = [
+    raw.senseNote,
+    raw.sense_note,
+    raw.usageDesc,
+    raw.usage_desc,
+    raw.usageDescription,
+    raw.usage_description,
     raw.levelNote,
     raw.level_note,
     raw.hskNote,
@@ -252,51 +258,42 @@ function render(wrapRoot, root, raw) {
   const note = pickWordNote(w, uiLang);
   const examples = collectExampleItems(w, uiLang).filter((x) => x.zh);
 
-  const labelPy = i18n.t("word_study_label_pinyin");
-  const labelPos = i18n.t("word_study_label_pos");
-  const labelMean = i18n.t("word_study_label_meaning");
   const labelNote = i18n.t("word_study_label_note");
-  const labelEx = i18n.t("word_study_label_examples");
 
-  const rows = [];
-  if (pinyin) {
-    rows.push(`<div class="word-study-row"><span class="word-study-k">${esc(labelPy)}</span><span class="word-study-v">${esc(pinyin)}</span></div>`);
-  }
-  if (pos) {
-    rows.push(`<div class="word-study-row"><span class="word-study-k">${esc(labelPos)}</span><span class="word-study-v">${esc(pos)}</span></div>`);
-  }
-  if (meaning) {
-    rows.push(`<div class="word-study-row"><span class="word-study-k">${esc(labelMean)}</span><span class="word-study-v">${esc(meaning)}</span></div>`);
-  }
-  if (note) {
-    rows.push(`<div class="word-study-row"><span class="word-study-k">${esc(labelNote)}</span><span class="word-study-v">${esc(note)}</span></div>`);
-  }
+  const heroInner = [
+    `<div class="word-study-hanzi">${esc(hanzi || "—")}</div>`,
+    pinyin ? `<div class="word-study-pinyin">${esc(pinyin)}</div>` : "",
+    pos ? `<div class="word-study-pos">${esc(pos)}</div>` : "",
+    meaning ? `<div class="word-study-meaning">${esc(meaning)}</div>` : "",
+  ].filter(Boolean).join("");
 
-  let examplesHtml = "";
-  if (examples.length) {
-    const blocks = examples.map(
-      (ex, i) => `
-      <div class="word-study-example" data-ex="${i + 1}">
+  const noteHtml = note
+    ? `<section class="word-study-section word-study-note-block">
+        <h3 class="word-study-block-title">${esc(labelNote)}</h3>
+        <p class="word-study-note-body">${esc(note)}</p>
+      </section>`
+    : "";
+
+  const examplesHtml = examples.length
+    ? examples
+        .map(
+          (ex, i) => `
+      <section class="word-study-section word-study-example-block">
+        <h3 class="word-study-block-title">${esc(i18n.t("word_study_example_no", { n: i + 1 }))}</h3>
         <div class="word-study-ex-zh">${esc(ex.zh)}</div>
         ${ex.py ? `<div class="word-study-ex-py">${esc(ex.py)}</div>` : ""}
         ${ex.trans ? `<div class="word-study-ex-tr">${esc(ex.trans)}</div>` : ""}
-      </div>`
-    );
-    examplesHtml = `
-      <section class="word-study-section word-study-examples">
-        <h3 class="word-study-section-title">${esc(labelEx)}</h3>
-        ${blocks.join("")}
-      </section>`;
-  }
+      </section>`
+        )
+        .join("")
+    : "";
 
   root.innerHTML = `
     <div class="word-study-card">
-      <div class="word-study-head">
-        <div class="word-study-hanzi">${esc(hanzi || "—")}</div>
-      </div>
-      <div class="word-study-meta">
-        ${rows.join("")}
-      </div>
+      <header class="word-study-hero">
+        ${heroInner}
+      </header>
+      ${noteHtml}
       ${examplesHtml}
     </div>
   `;

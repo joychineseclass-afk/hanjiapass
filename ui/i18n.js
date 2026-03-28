@@ -39,8 +39,9 @@ let DICT = {
     word_study_label_pinyin: "병음",
     word_study_label_pos: "품사",
     word_study_label_meaning: "뜻",
-    word_study_label_note: "설명",
+    word_study_label_note: "의미 설명",
     word_study_label_examples: "예문",
+    word_study_example_no: "예문 {n}",
 
     // ===== Home (page.home.js) =====
 home_kicker: "✨ 오늘도 한 걸음",
@@ -302,8 +303,9 @@ hsk_ai_next_tip: "다음 단계: AI API 연결(또는 StepRunner 연동)하면 �
     word_study_label_pinyin: "拼音",
     word_study_label_pos: "词性",
     word_study_label_meaning: "释义",
-    word_study_label_note: "说明",
+    word_study_label_note: "词义说明",
     word_study_label_examples: "例句",
+    word_study_example_no: "例句 {n}",
 
 // ===== Home (page.home.js) =====
 home_kicker: "✨ 今天也前进一步",
@@ -638,8 +640,9 @@ vocab_count: "{n} words",
     word_study_label_pinyin: "Pinyin",
     word_study_label_pos: "Part of speech",
     word_study_label_meaning: "Meaning",
-    word_study_label_note: "Note",
+    word_study_label_note: "Sense & usage",
     word_study_label_examples: "Examples",
+    word_study_example_no: "Example {n}",
 
     grammar_title: "Grammar Points",
     grammar_subtitle: "Grammar for this lesson.",
@@ -690,8 +693,9 @@ vocab_count: "{n} words",
     word_study_label_pinyin: "ピンイン",
     word_study_label_pos: "品詞",
     word_study_label_meaning: "意味",
-    word_study_label_note: "説明",
+    word_study_label_note: "語義の説明",
     word_study_label_examples: "例文",
+    word_study_example_no: "例文 {n}",
   },
 };
 
