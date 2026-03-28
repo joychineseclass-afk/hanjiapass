@@ -1,6 +1,6 @@
 // /ui/modules/hsk/hskUI.js
 // ✅ HSK UI (ESM) — exports initHSKUI()
-// Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY / window.LEARN_PANEL
+// Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY
 
 import { fetchJsonCached } from "../../core/fetchJsonCached.js";
 import { clearLessonLoadDedupe } from "./lessonSession.js";
@@ -514,21 +514,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      {
-        lang: LANG,
-        scope,
-        query: q,
-        showTag: "학습",
-        compact: false,
-        lessonVocab: Array.isArray(currentLessonDetail?.vocab)
-          ? currentLessonDetail.vocab
-          : [],
-      }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length})`);
   }
@@ -777,19 +769,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      wrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      {
-        lang: LANG,
-        scope,
-        query: q,
-        showTag: "학습",
-        compact: false,
-        lessonVocab: [],
-      }
-    );
+    window.HSK_RENDER.renderWordCards(wrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${recent.length})`);
   }
@@ -940,21 +926,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      {
-        lang: LANG,
-        scope,
-        query: q,
-        showTag: "학습",
-        compact: false,
-        lessonVocab: Array.isArray(currentLessonDetail?.vocab)
-          ? currentLessonDetail.vocab
-          : [],
-      }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${lessonWords.length})`);
   }
@@ -1008,19 +986,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      {
-        lang: LANG,
-        scope,
-        query: q,
-        showTag: "학습",
-        compact: false,
-        lessonVocab: [],
-      }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${ALL.length})`);
   }

@@ -128,7 +128,6 @@
   gap: 6px;
 }
 
-.word-actions .btn-learn,
 .word-actions .btn-stroke,
 .word-actions .btn-audio {
   padding: 6px 10px;
@@ -140,7 +139,6 @@
   transition: background 0.15s, border-color 0.15s;
 }
 
-.word-actions .btn-learn:hover,
 .word-actions .btn-stroke:hover,
 .word-actions .btn-audio:hover {
   background: #f1f5f9;

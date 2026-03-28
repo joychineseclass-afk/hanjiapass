@@ -1745,7 +1745,6 @@ async function openLesson({ lessonNo, file } = {}) {
     renderWordCards(wordsPanel, panelWords, null, {
       lang,
       scope: `hsk${state.lv}`,
-      lessonVocab: Array.isArray(lessonData.vocab) ? lessonData.vocab : [],
     });
   }
 
@@ -1819,7 +1818,6 @@ function rerenderHSKFromState() {
     renderWordCards(wordsPanel, lessonWords, null, {
       lang,
       scope: `hsk${state.lv}`,
-      lessonVocab: Array.isArray(lessonData.vocab) ? lessonData.vocab : [],
     });
   }
 

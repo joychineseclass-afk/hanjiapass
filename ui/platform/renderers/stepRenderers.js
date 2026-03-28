@@ -42,11 +42,7 @@ export function renderVocabStep({ lesson, lang = "ko", scope = "" } = {}) {
   if (useRenderer) {
     const grid = document.createElement("div");
     grid.className = "word-grid-wrap";
-    window.HSK_RENDER.renderWordCards(grid, words, undefined, {
-      lang,
-      scope,
-      lessonVocab: words,
-    });
+    window.HSK_RENDER.renderWordCards(grid, words, undefined, { lang, scope });
     return grid.innerHTML;
   }
 

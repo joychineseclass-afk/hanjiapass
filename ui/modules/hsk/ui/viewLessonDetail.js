@@ -252,21 +252,13 @@ function renderLessonTabVocab(ctx, container) {
   }
 
   const scope = `hsk${safeText(dom.hskLevel?.value || "1")}`;
-  window.HSK_RENDER.renderWordCards(
-    cardWrap,
-    filtered,
-    (item) => window.LEARN_PANEL?.open?.(item),
-    {
-      lang: ctx.LANG,
-      scope,
-      query: q,
-      showTag: "학습",
-      compact: false,
-      lessonVocab: Array.isArray(ctx.currentLessonDetail?.vocab)
-        ? ctx.currentLessonDetail.vocab
-        : [],
-    }
-  );
+  window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+    lang: ctx.LANG,
+    scope,
+    query: q,
+    showTag: "학습",
+    compact: false,
+  });
 
   setStatus(dom, `(${filtered.length})`);
 }
