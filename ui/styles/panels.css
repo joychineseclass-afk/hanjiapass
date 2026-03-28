@@ -386,7 +386,7 @@
 
 .learn-modal{
   width: 100%;
-  max-width: 560px;
+  max-width: 640px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,.25);
@@ -435,88 +435,134 @@
   overflow: auto;
 }
 
-/* ---------- Word study card（词条 → 词义说明 → 例句 1/2） ---------- */
-.word-study-card{
+/* ---------- 教材型单词学习卡 ---------- */
+.word-study-card--textbook{
   display: flex;
   flex-direction: column;
   gap: 0;
+  text-align: left;
 }
 .word-study-hero{
-  text-align: center;
-  padding: 4px 0 20px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 8px 0 22px;
+  margin-bottom: 2px;
+  border-bottom: 2px solid #e2e8f0;
+}
+.word-study-field{
+  margin-bottom: 16px;
+}
+.word-study-field:last-child{
+  margin-bottom: 0;
+}
+.word-study-field-label{
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+.word-study-field-value{
+  line-height: 1.45;
 }
 .word-study-hanzi{
-  font-size: 1.85rem;
+  font-size: 1.9rem;
   font-weight: 800;
   color: #0f172a;
-  line-height: 1.35;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
 }
 .word-study-pinyin{
-  margin-top: 8px;
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 500;
-  color: #2563eb;
-  letter-spacing: 0.04em;
+  color: #1d4ed8;
+  letter-spacing: 0.05em;
 }
 .word-study-pos{
-  margin-top: 10px;
-  font-size: 0.9375rem;
-  color: #64748b;
+  font-size: 1rem;
+  color: #475569;
   font-weight: 600;
 }
 .word-study-meaning{
-  margin-top: 10px;
-  font-size: 1.0625rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #1e293b;
-  line-height: 1.5;
+  color: #0f172a;
 }
 .word-study-section{
-  padding-top: 20px;
+  padding-top: 22px;
 }
 .word-study-note-block{
-  border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 22px;
 }
 .word-study-block-title{
   margin: 0 0 12px;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #0f172a;
-  line-height: 1.4;
+  line-height: 1.35;
+}
+.word-study-major-title{
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  border-bottom: 1px solid #cbd5e1;
 }
 .word-study-note-body{
   margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-size: 0.97rem;
+  line-height: 1.7;
   color: #334155;
 }
-.word-study-example-block{
-  padding-bottom: 4px;
+.word-study-examples-region{
+  padding-top: 22px;
 }
-.word-study-example-block + .word-study-example-block{
+.word-study-example-unit{
+  padding: 16px 0 20px;
   border-top: 1px solid #f1f5f9;
-  padding-top: 20px;
-  margin-top: 0;
+}
+.word-study-examples-region .word-study-example-unit:first-of-type{
+  border-top: 0;
+  padding-top: 0;
+}
+.word-study-ex-line{
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 8px 14px;
+  align-items: start;
+  margin-top: 12px;
+}
+.word-study-ex-line:first-of-type{
+  margin-top: 10px;
+}
+@media (max-width: 420px){
+  .word-study-ex-line{
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+.word-study-ex-tag{
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  padding-top: 3px;
 }
 .word-study-ex-zh{
-  font-size: 1.0625rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #0f172a;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 .word-study-ex-py{
-  margin-top: 8px;
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
   color: #2563eb;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
 }
 .word-study-ex-tr{
-  margin-top: 10px;
-  font-size: 0.9375rem;
-  color: #475569;
-  line-height: 1.55;
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.6;
 }

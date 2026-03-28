@@ -1,10 +1,12 @@
 // /ui/components/learnPanel.js
-// 单词学习卡：仅展示当前词条（词语 / 拼音 / 词性 / 释义 / 可选说明与例句）
+// 教材型「单词学习卡」：词语 / 拼音 / 词性 / 释义 → 词义说明 → 例句 1/2（中文 + 拼音 + 系统语言译文）
+// 数据来自课程 JSON 的 vocab 词条对象（经词卡 LEARN_PANEL.open 传入）；无文案的区块不渲染，不使用「暂无」类占位。
 // window.LEARN_PANEL.open(item) · learn:set · learn:open
 
 import { i18n } from "../i18n.js";
 import { getLang, pick } from "../core/languageEngine.js";
 import { getMeaningByLang, getPosByLang } from "../utils/wordDisplay.js";
+import { resolvePinyin } from "../utils/pinyinEngine.js";
 
 let mounted = false;
 
@@ -120,9 +122,22 @@ function hskScopeFromCtx() {
   return `hsk${n}`;
 }
 
-/** 简短词义说明：仅当数据中存在专用字段时返回，不做占位 */
+/** 词义说明：多字段回退；支持字符串或 { kr, cn, en, jp, zh, ko } */
 function pickWordNote(raw, uiLang) {
   if (!raw || typeof raw !== "object") return "";
+  const structured = [raw.explanation, raw.description, raw.note, raw.explain];
+  for (const s of structured) {
+    if (s == null) continue;
+    if (typeof s === "string") {
+      const t = str(s);
+      if (t) return t;
+      continue;
+    }
+    if (typeof s === "object") {
+      const t = pick(s, { strict: false, lang: uiLang });
+      if (str(t)) return str(t);
+    }
+  }
   const candidates = [
     raw.senseNote,
     raw.sense_note,
@@ -159,11 +174,6 @@ function pickWordNote(raw, uiLang) {
       if (str(t)) return str(t);
     }
   }
-  const ex = raw.explain;
-  if (ex && typeof ex === "object") {
-    const t = pick(ex, { strict: false, lang: uiLang });
-    if (str(t)) return str(t);
-  }
   return "";
 }
 
@@ -192,12 +202,13 @@ function collectExampleItems(raw, uiLang) {
     });
   };
 
-  if (Array.isArray(raw.examples)) {
-    for (const ex of raw.examples) {
+  const exArrays = [raw.examples, raw.exampleSentences, raw.sampleExamples].filter(Array.isArray);
+  for (const arr of exArrays) {
+    for (const ex of arr) {
       if (!ex) continue;
       if (typeof ex === "string") push(ex, "", "");
       else {
-        const z = ex.zh ?? ex.text ?? ex.cn ?? ex.sentence;
+        const z = ex.zh ?? ex.text ?? ex.cn ?? ex.sentence ?? ex.line;
         const p = ex.pinyin ?? ex.py ?? "";
         const tr = translationFromExample(ex.translation ?? ex.trans, uiLang);
         push(z, p, tr);
@@ -251,21 +262,42 @@ function render(wrapRoot, root, raw) {
   const scope = hskScopeFromCtx();
   const w = typeof raw === "string" ? { hanzi: raw } : (raw && typeof raw === "object" ? { ...raw } : {});
 
-  const hanzi = str(w.hanzi ?? w.word ?? w.zh ?? w.cn ?? w.simplified ?? "");
-  const pinyin = str(w.pinyin ?? w.py ?? "");
-  const pos = getPosByLang(w, posUiLang(uiLang), scope);
-  const meaning = getMeaningByLang(w, uiLang, hanzi, scope);
+  const hanzi = str(w.hanzi ?? w.word ?? w.zh ?? w.cn ?? w.text ?? w.simplified ?? "");
+  const pinyinRaw = str(w.pinyin ?? w.py ?? w.pron ?? "");
+  const pinyin = str(resolvePinyin(hanzi, pinyinRaw));
+  const pos = str(getPosByLang(w, posUiLang(uiLang), scope));
+  const meaning = str(getMeaningByLang(w, uiLang, hanzi, scope));
   const note = pickWordNote(w, uiLang);
   const examples = collectExampleItems(w, uiLang).filter((x) => x.zh);
 
+  const labelWord = i18n.t("word_study_row_word");
+  const labelPyRow = i18n.t("word_study_row_pinyin");
+  const labelPosRow = i18n.t("word_study_row_pos");
+  const labelMeanRow = i18n.t("word_study_row_meaning");
   const labelNote = i18n.t("word_study_label_note");
+  const labelExSection = i18n.t("word_study_section_examples");
+  const labelExZh = i18n.t("word_study_ex_line_zh");
+  const labelExPy = i18n.t("word_study_ex_line_py");
+  const labelExTr = i18n.t("word_study_ex_line_tr");
 
-  const heroInner = [
-    `<div class="word-study-hanzi">${esc(hanzi || "—")}</div>`,
-    pinyin ? `<div class="word-study-pinyin">${esc(pinyin)}</div>` : "",
-    pos ? `<div class="word-study-pos">${esc(pos)}</div>` : "",
-    meaning ? `<div class="word-study-meaning">${esc(meaning)}</div>` : "",
-  ].filter(Boolean).join("");
+  const dash = "\u2014";
+  const heroInner = `
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelWord)}</div>
+      <div class="word-study-field-value word-study-hanzi">${esc(hanzi || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelPyRow)}</div>
+      <div class="word-study-field-value word-study-pinyin">${esc(pinyin || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelPosRow)}</div>
+      <div class="word-study-field-value word-study-pos">${esc(pos || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelMeanRow)}</div>
+      <div class="word-study-field-value word-study-meaning">${esc(meaning || dash)}</div>
+    </div>`;
 
   const noteHtml = note
     ? `<section class="word-study-section word-study-note-block">
@@ -275,27 +307,39 @@ function render(wrapRoot, root, raw) {
     : "";
 
   const examplesHtml = examples.length
-    ? examples
-        .map(
-          (ex, i) => `
-      <section class="word-study-section word-study-example-block">
-        <h3 class="word-study-block-title">${esc(i18n.t("word_study_example_no", { n: i + 1 }))}</h3>
-        <div class="word-study-ex-zh">${esc(ex.zh)}</div>
-        ${ex.py ? `<div class="word-study-ex-py">${esc(ex.py)}</div>` : ""}
-        ${ex.trans ? `<div class="word-study-ex-tr">${esc(ex.trans)}</div>` : ""}
+    ? `<section class="word-study-examples-region" aria-label="${esc(labelExSection)}">
+        <h2 class="word-study-major-title">${esc(labelExSection)}</h2>
+        ${examples
+          .map(
+            (ex, i) => `
+        <div class="word-study-example-unit">
+          <h3 class="word-study-block-title">${esc(i18n.t("word_study_example_no", { n: i + 1 }))}</h3>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExZh)}</span>
+            <div class="word-study-ex-zh">${esc(ex.zh)}</div>
+          </div>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExPy)}</span>
+            <div class="word-study-ex-py">${esc(ex.py || dash)}</div>
+          </div>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExTr)}</span>
+            <div class="word-study-ex-tr">${esc(ex.trans || dash)}</div>
+          </div>
+        </div>`
+          )
+          .join("")}
       </section>`
-        )
-        .join("")
     : "";
 
   root.innerHTML = `
-    <div class="word-study-card">
-      <header class="word-study-hero">
+    <article class="word-study-card word-study-card--textbook">
+      <header class="word-study-hero" aria-label="${esc(i18n.t("word_study_title"))}">
         ${heroInner}
       </header>
       ${noteHtml}
       ${examplesHtml}
-    </div>
+    </article>
   `;
 
   window.dispatchEvent(new CustomEvent("learn:rendered", { detail: w }));
