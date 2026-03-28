@@ -759,11 +759,11 @@ export function renderLessonReviewHTML(reviewData) {
   const lis = items
     .map(
       (it) =>
-        `<li class="lesson-review-item hsk-lr-compact py-1.5 border-b border-slate-100/90 dark:border-slate-700/80 last:border-0 text-[14px] leading-snug text-slate-800 dark:text-slate-100">${formatCompactLine(it)}</li>`
+        `<li class="lesson-review-item hsk-lr-compact block cursor-pointer rounded-[10px] border border-slate-200/90 bg-slate-50/90 px-3 py-2 text-[14px] leading-relaxed text-slate-800 transition-colors duration-150 dark:border-slate-600/40 dark:bg-slate-800/40 dark:text-slate-100 hover:border-slate-300 hover:bg-slate-100/95 dark:hover:border-slate-500/55 dark:hover:bg-slate-800/60">${formatCompactLine(it)}</li>`
     )
     .join("");
 
   return `<div class="hsk-lesson-review lesson-review-summary-root max-w-2xl">
-  <ul class="hsk-lesson-review-list list-none m-0 p-0">${lis}</ul>
+  <ul class="hsk-lesson-review-list m-0 flex list-none flex-col gap-2 p-0">${lis}</ul>
 </div>`;
 }
