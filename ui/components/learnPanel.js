@@ -186,6 +186,10 @@ function translationFromExample(tr, uiLang) {
 
 const MAX_WORD_STUDY_EXAMPLES = 3;
 
+/** 设为 false 可关闭例句/词义说明打点：`window.__WORD_STUDY_TRACE__ = false` */
+const WORD_STUDY_TRACE =
+  typeof window !== "undefined" && window.__WORD_STUDY_TRACE__ !== false;
+
 /**
  * 最多 3 条例句：中文 + 拼音 + 系统语言翻译（课程 JSON vocab.examples）
  */
@@ -271,6 +275,22 @@ function render(wrapRoot, root, raw) {
   const meaning = str(getMeaningByLang(w, uiLang, hanzi, scope));
   const note = pickWordNote(w, uiLang);
   const examples = collectExampleItems(w, uiLang).filter((x) => x.zh);
+
+  if (WORD_STUDY_TRACE && typeof console !== "undefined" && console.info) {
+    const rawEx = w.examples;
+    console.info("[word-study] learnPanel.render(open) item", {
+      hanzi,
+      pinyin,
+      pos,
+      meaning,
+      senseNote: w.senseNote ?? w.sense_note,
+      examples: rawEx,
+      examplesIsArray: Array.isArray(rawEx),
+      examplesLen: Array.isArray(rawEx) ? rawEx.length : null,
+      noteResolvedLen: note ? note.length : 0,
+      examplesCollectedLen: examples.length,
+    });
+  }
 
   const labelWord = i18n.t("word_study_row_word");
   const labelPyRow = i18n.t("word_study_row_pinyin");

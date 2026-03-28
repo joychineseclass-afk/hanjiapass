@@ -1778,6 +1778,78 @@ async function openLesson({ lessonNo, file } = {}) {
 }
 
 /**
+ * 语言切换等场景：按 state.current 重绘 HSK 学习区（不重新 fetch）。
+ * 挂到 window 供 runHSKSanityCheck 校验；缺失时 joy:langChanged 会抛 ReferenceError 并中断后续 UI 更新。
+ */
+function rerenderHSKFromState() {
+  const lang = getLang();
+  const listEl = $("hskLessonList");
+
+  if (!state.current || !state.current.lessonData) {
+    if (listEl && Array.isArray(state.lessons) && state.lessons.length) {
+      const total = state.lessons.length;
+      const stats =
+        (PROGRESS_SELECTORS &&
+        typeof PROGRESS_SELECTORS.getCourseStats === "function"
+          ? PROGRESS_SELECTORS.getCourseStats(getCourseId(), total)
+          : null) || {};
+      renderLessonList(listEl, state.lessons, {
+        lang,
+        currentLessonNo: stats.lastLessonNo || 0,
+      });
+    }
+    return;
+  }
+
+  const { lessonData, lessonWords, lessonNo } = state.current;
+  const no = Number(lessonNo || 1) || 1;
+  const listEntry =
+    state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
+  const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
+  const isReviewLesson = String(lessonData.type || "") === "review";
+  const titleText =
+    titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
+
+  showStudyMode(titleText);
+  updateLessonContextWindow(no);
+
+  const wordsPanel = $("hskPanelWords");
+  if (wordsPanel) {
+    renderWordCards(wordsPanel, lessonWords, null, {
+      lang,
+      scope: `hsk${state.lv}`,
+    });
+  }
+
+  const dialogueEl = $("hskDialogueBody");
+  if (dialogueEl) dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+
+  const grammarEl = $("hskGrammarBody");
+  if (grammarEl) grammarEl.innerHTML = buildGrammarHTML(lessonData);
+
+  const extensionEl = $("hskExtensionBody");
+  if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
+
+  const reviewEl = $("hskReviewBody");
+  if (reviewEl) reviewEl.innerHTML = buildReviewHTML(lessonData);
+
+  const practiceEl = $("hskPracticeBody");
+  if (practiceEl) {
+    mountPractice(practiceEl, { lesson: lessonData, lang });
+  }
+
+  mountAIPanelSafe(lessonData, lang);
+  renderLessonCover(lessonData);
+  renderLessonSceneSection(lessonData, lang);
+  updateTabsUI();
+  updateProgressBlock();
+}
+
+if (typeof window !== "undefined") {
+  window.rerenderHSKFromState = rerenderHSKFromState;
+}
+
+/**
  * ===============================
  * Final Event / Mount Layer
  * ===============================

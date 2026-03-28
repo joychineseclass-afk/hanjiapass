@@ -60,6 +60,13 @@ export function wordKey(x) {
   return String(x.hanzi || x.word || x.zh || x.cn || x.simplified || x.text || "").trim();
 }
 
+/** 与 hskLoader.normalizeVocabHanziKey 一致：面板 enrich 与课内 vocab 按去尾标点键对齐 */
+export function normalizeVocabHanziKeyForPanel(h) {
+  const s = String(h ?? "").trim();
+  if (!s) return "";
+  return s.replace(/[\s\u3002\uFF01\uFF0C\uFF1F\uFF1A\uFF1B!?,。；：]+$/u, "");
+}
+
 export function wordPinyin(x) {
   if (x == null || typeof x === "string") return "";
   return String(x.pinyin || x.py || "").trim();
@@ -372,7 +379,10 @@ function lessonVocabLookupByHanzi(lessonVocabItems) {
   const arr = Array.isArray(lessonVocabItems) ? lessonVocabItems : [];
   for (const x of arr) {
     const h = wordKey(x);
-    if (h && !map.has(h)) map.set(h, x);
+    if (!h) continue;
+    const norm = normalizeVocabHanziKeyForPanel(h);
+    if (norm && !map.has(norm)) map.set(norm, x);
+    if (h !== norm && !map.has(h)) map.set(h, x);
   }
   return map;
 }
@@ -382,7 +392,8 @@ function enrichPanelFromLessonVocab(baseList, lessonVocabItems) {
   return baseList.map((w) => {
     const h = wordKey(w);
     if (!h) return w;
-    const full = byHan.get(h);
+    const norm = normalizeVocabHanziKeyForPanel(h);
+    const full = byHan.get(norm) || byHan.get(h);
     return full && typeof full === "object" ? { ...full, ...w } : w;
   });
 }
