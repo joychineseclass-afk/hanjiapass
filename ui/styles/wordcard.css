@@ -23,17 +23,82 @@
   display: block;
 }
 
-.word-hanzi {
-  font-size: 36px;
-  font-weight: 600;
+/* 整词发音区：与导航 pill hover 同系浅色，偏薄荷绿（复用全局 token） */
+.word-speak-zone {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 12px);
+  transition: background var(--dur, 0.18s) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+    border-color var(--dur, 0.18s) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+    box-shadow var(--dur, 0.18s) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
 }
 
-.word-hanzi-char {
-  cursor: pointer;
-  border-radius: 4px;
+.word-speak-zone:hover {
+  background: color-mix(in srgb, var(--hero-mid, #a7f3d0) 38%, transparent);
+  border-color: color-mix(in srgb, var(--btn-b, #34d399) 32%, transparent);
+  box-shadow: none;
 }
-.word-hanzi-char:hover {
-  background: rgba(0, 0, 0, 0.06);
+
+.word-speak-zone:focus {
+  outline: none;
+}
+
+.word-speak-zone:focus-visible {
+  background: color-mix(in srgb, var(--hero-mid, #a7f3d0) 42%, transparent);
+  border-color: color-mix(in srgb, var(--btn-b, #34d399) 40%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--btn-b, #34d399) 28%, transparent);
+}
+
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .word-speak-zone:hover {
+    background: rgba(167, 243, 208, 0.38);
+    border-color: rgba(52, 211, 153, 0.32);
+  }
+  .word-speak-zone:focus-visible {
+    background: rgba(167, 243, 208, 0.42);
+    border-color: rgba(52, 211, 153, 0.38);
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.28);
+  }
+}
+
+.word-speak-zone .word-hanzi {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.word-speak-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--muted, #475569);
+  opacity: 0.85;
+  transition: color var(--dur, 0.18s) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1)),
+    opacity var(--dur, 0.18s) var(--ease, cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+.word-speak-zone:hover .word-speak-icon,
+.word-speak-zone:focus-visible .word-speak-icon {
+  color: var(--btn-b, #34d399);
+  opacity: 1;
+}
+
+.word-hanzi--empty {
+  font-size: 36px;
+  font-weight: 600;
 }
 
 .word-pinyin {

@@ -773,7 +773,7 @@
    🔊 点读交互 (Point-and-read)
 ================================== */
 .lesson-dialogue-line [data-speak-text],
-.word-card [data-action="speak"] {
+.word-card .word-speak-zone {
   cursor: pointer;
 }
 

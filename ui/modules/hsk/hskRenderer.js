@@ -638,10 +638,12 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
 
     const learnLabel = i18n.t("action.learn");
     const strokeLabel = i18n.t("action.trace");
+    const speakAria = i18n.t("action.speak");
     const strokeDisabled = !han ? " disabled" : "";
-    const hanziChars = han ? Array.from(han).map((ch) =>
-      `<span class="word-hanzi-char" data-char="${escapeHtmlAttr(ch)}" data-word="${escapeHtmlAttr(han)}" role="button" tabindex="0">${escapeHtml(ch)}</span>`
-    ).join("") : escapeHtml(han);
+    const speakIconSvg = `<svg class="word-speak-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M17.83 6.17a8 8 0 010 11.66"/></svg>`;
+    const wordSpeakHtml = han
+      ? `<button type="button" class="word-speak-zone" data-speak-text="${escapeHtmlAttr(han)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon">${speakIconSvg}</span></button>`
+      : `<div class="word-hanzi word-hanzi--empty">${escapeHtml(han)}</div>`;
 
     const imgUrl = getWordImageUrl(raw);
     const imgHtml = imgUrl
@@ -651,7 +653,7 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
     return `
     <div class="word-card lesson-vocab-card lesson-card" data-word-hanzi="${escapeHtmlAttr(han)}">
       ${imgHtml}
-      <div class="word-hanzi">${hanziChars}</div>
+      ${wordSpeakHtml}
       <div class="word-pinyin">${escapeHtml(pinyinStr)}</div>
       ${posStr ? `<div class="word-pos text-sm opacity-75">${escapeHtml(posStr)}</div>` : ""}
       <div class="word-meaning">
@@ -782,6 +784,29 @@ export function renderReviewWords(gridEl, items, { lang, scope, wordsByLesson } 
 
 let _wordCardBound = false;
 
+async function playWordCardSpeak(text, cardEl) {
+  const t = String(text || "").trim();
+  if (!t) return;
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
+    if (cardEl) cardEl.classList.add("is-speaking");
+    AUDIO_ENGINE.playText(t, {
+      lang: "zh-CN",
+      rate: 0.95,
+      onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
+      onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
+    });
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] word speak failed:", err);
+  }
+}
+
 /** 文档级事件委托，确保 rerender 后点击仍有效 */
 export function bindWordCardActions() {
   if (_wordCardBound) return;
@@ -810,33 +835,12 @@ export function bindWordCardActions() {
     const card = e.target.closest(".word-card");
     if (!card) return;
 
-    const charSpan = e.target.closest(".word-hanzi-char");
-    if (charSpan) {
+    const speakZone = e.target.closest(".word-speak-zone");
+    if (speakZone && card.contains(speakZone)) {
       e.preventDefault();
       e.stopPropagation();
-      const char = (charSpan.dataset.char || "").trim();
-      const wordId = (charSpan.dataset.word || "").trim();
-      const text = wordId || char;
-      if (!text) return;
-      try {
-        const { AUDIO_ENGINE } = await import("../../platform/index.js");
-        if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-          if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
-          return;
-        }
-        AUDIO_ENGINE.stop();
-        document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
-        const cardEl = charSpan.closest(".word-card");
-        if (cardEl) cardEl.classList.add("is-speaking");
-        AUDIO_ENGINE.playText(text, {
-          lang: "zh-CN",
-          rate: 0.95,
-          onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
-          onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
-        });
-      } catch (err) {
-        if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] word-hanzi-char speak failed:", err);
-      }
+      const text = (speakZone.dataset.speakText || "").trim();
+      await playWordCardSpeak(text, card);
       return;
     }
 
