@@ -1,5 +1,5 @@
 /**
- * 课内「复习」tab：统一紧凑词条清单（去重、按来源顺序），与错题测验 #hskReviewContainer 分离。
+ * 课内「复习」tab：两步构建（收集候选项 → 标准化去重择优 → 合并句过滤），紧凑列表。
  */
 
 import { i18n } from "../../i18n.js";
@@ -18,7 +18,23 @@ import { getSceneFromLesson, getSceneDialogueMap } from "../../platform/scene/sc
 const MAX_WORD_ROWS = 80;
 const MAX_TOTAL_ITEMS = 140;
 
+/** 常见问候/礼貌语在复习中的先后（用于第1课等排序，未命中则回退 source 顺序） */
+const HSK1_GREETING_ORDER = ["你好", "谢谢", "不客气", "再见", "您好", "大家好"];
+
 const trim = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
+
+const FW_PUNCT = new Map([
+  ["，", ","],
+  ["。", "."],
+  ["！", "!"],
+  ["？", "?"],
+  ["；", ";"],
+  ["：", ":"],
+  ["（", "("],
+  ["）", ")"],
+  ["【", "["],
+  ["】", "]"],
+]);
 
 function normalizePracticeLangAliases(langKey) {
   const k = String(langKey || "").toLowerCase();
@@ -48,12 +64,30 @@ function controlledLangText(obj, langKey, context) {
   return "";
 }
 
-/** 去重主键：去尾标点、空白归一、小写（用于「你好」≈「你好！」） */
-function contentDedupKey(zh) {
-  let s = trim(zh).replace(/\s+/g, " ");
-  const punctEnd = /[。！？，、；：.!?,…～~]+$/u;
-  while (punctEnd.test(s)) s = s.replace(punctEnd, "").trim();
-  return s.toLowerCase();
+function normalizeFullWidthPunct(s) {
+  let t = "";
+  for (const ch of s) {
+    t += FW_PUNCT.get(ch) || ch;
+  }
+  return t;
+}
+
+/** 展示用：去首尾空白、NFKC、全半角标点统一 */
+function normalizeTextForReview(s) {
+  let t = trim(s).normalize("NFKC");
+  t = normalizeFullWidthPunct(t);
+  return t.replace(/\s+/g, " ");
+}
+
+/**
+ * 分组主键：去尾标点、小写拉丁、去掉句末括号说明（如 呢（追问）→ 呢）
+ */
+function normalizedGroupingKey(s) {
+  let t = normalizeTextForReview(s);
+  t = t.replace(/[（(][^)）]{1,20}[)）]\s*$/u, "").trim();
+  const punctEnd = /[。！？,.!?…~～，、；：]+$/u;
+  while (punctEnd.test(t)) t = t.replace(punctEnd, "").trim();
+  return t.toLowerCase();
 }
 
 function longerMeaning(a, b) {
@@ -64,16 +98,15 @@ function longerMeaning(a, b) {
   return y.length > x.length ? y : x;
 }
 
-function pickDisplayText(a, b) {
-  const ta = trim(a);
-  const tb = trim(b);
+function pickRicherText(a, b) {
+  const ta = normalizeTextForReview(a);
+  const tb = normalizeTextForReview(b);
   if (!ta) return b;
   if (!tb) return a;
   if (tb.length > ta.length) return b;
   return a;
 }
 
-/** 与 page.hsk / 对话 tab 一致 */
 function collectDialogueCards(lesson) {
   const arr =
     lesson && Array.isArray(lesson.generatedDialogues) && lesson.generatedDialogues.length
@@ -188,7 +221,7 @@ function shortenText(text, maxLen) {
   return t.slice(0, maxLen - 1) + "…";
 }
 
-function grammarPatternReviewLine(pt, lang) {
+function grammarPatternLine(pt, lang) {
   if (!pt || typeof pt !== "object") return null;
   let raw = "";
   if (typeof pt.pattern === "string") raw = trim(pt.pattern);
@@ -198,10 +231,11 @@ function grammarPatternReviewLine(pt, lang) {
   } else raw = trim(pt.name || "");
   if (!raw || raw.length > 36) return null;
   if (!/[\u4e00-\u9fff]/.test(raw)) return null;
+  if (/\+/.test(raw)) return null;
   const explain = pt.explain ?? pt.explanation;
   let meaning = "";
   if (explain && typeof explain === "object") {
-    meaning = shortenText(controlledLangText(explain, lang, "grammar pat"), 72);
+    meaning = shortenText(controlledLangText(explain, lang, "grammar pat"), 120);
   }
   return { zh: raw, pinyin: "", trans: meaning };
 }
@@ -233,80 +267,246 @@ function wordRowQuality(w, lang) {
 }
 
 /**
- * @typedef {{ text: string, pinyin: string, pos: string, meaning: string, type: 'word'|'sentence' }} ReviewItem
+ * @typedef {{
+ *   text: string,
+ *   normalizedText: string,
+ *   pinyin: string,
+ *   pos: string,
+ *   meaning: string,
+ *   note: string,
+ *   source: string,
+ *   priority: number,
+ *   kind: 'word'|'sentence'
+ * }} ReviewCandidate
  */
 
-function itemRichness(it) {
-  let n = 0;
-  if (trim(it.pinyin)) n += 2;
-  if (trim(it.meaning)) n += 3;
-  if (trim(it.pos)) n += 1;
-  if (it.type === "word") n += 5;
-  return n;
+const SOURCE_PRIORITY_BASE = {
+  vocab: 0,
+  dialogue: 1000,
+  scene: 1500,
+  grammar_pattern: 2800,
+  grammar_example: 3200,
+  extension: 4500,
+};
+
+function sourceTier(source) {
+  if (source === "vocab") return 0;
+  if (source === "dialogue" || source === "scene") return 1;
+  if (source === "grammar_pattern" || source === "grammar_example") return 3;
+  if (source === "extension") return 4;
+  return 2;
 }
 
-function mergeReviewItems(a, b) {
-  const type = a.type === "word" || b.type === "word" ? "word" : "sentence";
+function pedagogyIndexForText(text) {
+  const k = normalizedGroupingKey(text);
+  for (let i = 0; i < HSK1_GREETING_ORDER.length; i++) {
+    if (normalizedGroupingKey(HSK1_GREETING_ORDER[i]) === k) return i;
+  }
+  return -1;
+}
+
+function scoreCandidateForBestPick(a) {
+  let s = 0;
+  s += trim(a.meaning).length * 3;
+  s += trim(a.note).length;
+  s += trim(a.pinyin).length;
+  s += trim(a.pos).length * 2;
+  if (a.kind === "word") s += 80;
+  s += SOURCE_PRIORITY_BASE[a.source] != null ? 2000 - SOURCE_PRIORITY_BASE[a.source] / 10 : 0;
+  s -= Math.min(trim(a.text).length, 100) * 0.4;
+  return s;
+}
+
+function mergeTwoCandidates(primary, secondary) {
   return {
-    text: pickDisplayText(a.text, b.text),
-    pinyin: trim(a.pinyin) || trim(b.pinyin) || "",
-    pos: trim(a.pos) || trim(b.pos) || "",
-    meaning: longerMeaning(a.meaning, b.meaning),
-    type,
+    text: pickRicherText(primary.text, secondary.text),
+    normalizedText: primary.normalizedText,
+    pinyin: trim(primary.pinyin) || trim(secondary.pinyin) || "",
+    pos: trim(primary.pos) || trim(secondary.pos) || "",
+    meaning: longerMeaning(primary.meaning, secondary.meaning),
+    note: longerMeaning(primary.note, secondary.note),
+    source: primary.source,
+    priority: Math.min(primary.priority, secondary.priority),
+    kind: primary.kind === "word" || secondary.kind === "word" ? "word" : "sentence",
   };
+}
+
+/** 按 normalizedText 分组合并，每组择优一条 */
+function dedupeByNormalizedKey(candidates) {
+  /** @type {Map<string, ReviewCandidate>} */
+  const best = new Map();
+  for (const c of candidates) {
+    const key = c.normalizedText;
+    if (!key) continue;
+    const cur = best.get(key);
+    if (!cur) {
+      best.set(key, { ...c });
+      continue;
+    }
+    const sCur = scoreCandidateForBestPick(cur);
+    const sNew = scoreCandidateForBestPick(c);
+    if (sNew > sCur) {
+      best.set(key, mergeTwoCandidates(c, cur));
+    } else if (sNew < sCur) {
+      best.set(key, mergeTwoCandidates(cur, c));
+    } else {
+      const preferNew =
+        SOURCE_PRIORITY_BASE[c.source] < SOURCE_PRIORITY_BASE[cur.source] ||
+        (SOURCE_PRIORITY_BASE[c.source] === SOURCE_PRIORITY_BASE[cur.source] && c.priority < cur.priority);
+      best.set(key, preferNew ? mergeTwoCandidates(c, cur) : mergeTwoCandidates(cur, c));
+    }
+  }
+  return [...best.values()];
+}
+
+const SEG_SPLIT = /[，。！？；、,.!?…~～]+/u;
+
+function splitMeaningfulSegments(text) {
+  const t = normalizeTextForReview(text);
+  if (!t) return [];
+  return t
+    .split(SEG_SPLIT)
+    .map((x) => trim(x))
+    .filter((x) => x.length >= 2);
+}
+
+function registerAcceptedFragments(text, keySet, introTpl) {
+  const nk = normalizedGroupingKey(text);
+  if (nk) keySet.add(nk);
+  for (const seg of splitMeaningfulSegments(text)) {
+    const sk = normalizedGroupingKey(seg);
+    if (sk) keySet.add(sk);
+  }
+  for (const seg of splitMeaningfulSegments(text)) {
+    if (/^我叫/u.test(seg)) introTpl.add("我叫");
+    if (/^我是/u.test(seg)) introTpl.add("我是");
+  }
 }
 
 /**
- * 统一去重桶：先录入者决定排序；后者仅合并补全字段。
+ * 合并型冗余：主要片段已在已接受条目中独立出现过（≥2 段全部可覆盖）
  */
-function createReviewItemRegistry() {
-  /** @type {Map<string, { item: ReviewItem, order: number, richness: number }>} */
-  const map = new Map();
-  let seq = 0;
+function isCompositeGlueSentence(text, acceptedKeys, introTpl) {
+  const t = normalizeTextForReview(text);
+  if (t.length < 8) return false;
+  const segs = splitMeaningfulSegments(text);
+  if (segs.length < 2) return false;
 
+  let covered = 0;
+  for (const seg of segs) {
+    const sk = normalizedGroupingKey(seg);
+    if (sk && acceptedKeys.has(sk)) {
+      covered++;
+      continue;
+    }
+    if (/^我叫/u.test(seg) && introTpl.has("我叫")) {
+      covered++;
+      continue;
+    }
+    if (/^我是/u.test(seg) && introTpl.has("我是")) {
+      covered++;
+      continue;
+    }
+  }
+
+  if (covered < segs.length) return false;
+  return true;
+}
+
+/** 省略号模板：前面已有完整「我叫/我是」句时去掉 …… 教学条 */
+function isEllipsisTemplateRedundant(text, introTpl) {
+  if (!/[…．]{2,}/u.test(text) && !/……/.test(text)) return false;
+  if (/我叫/.test(text) && introTpl.has("我叫")) return true;
+  if (/我是/.test(text) && introTpl.has("我是")) return true;
+  return false;
+}
+
+/** 已有「我叫」教学句后，去掉仅换人名、无「呢」等追加信息的短「我叫……。」 */
+function isNameOnlyIntroVariant(text, introTpl) {
+  const t = normalizeTextForReview(text);
+  if (!introTpl.has("我叫")) return false;
+  if (t.includes("，") || t.includes(",")) return false;
+  if (t.includes("呢")) return false;
+  return /^我叫.{1,22}[。！？]$/u.test(t);
+}
+
+/**
+ * @typedef {{ text: string, pinyin: string, pos: string, meaning: string, type: 'word'|'sentence' }} ReviewItem
+ */
+
+function candidateToItem(c) {
+  const meaning = trim(c.meaning);
+  const note = trim(c.note);
+  const merged = note && meaning ? `${meaning}（${note}）` : meaning || note;
   return {
-    ingest(candidate) {
-      const key = contentDedupKey(candidate.text);
-      if (!key) return;
-      const r = itemRichness(candidate);
-      const cur = map.get(key);
-      if (!cur) {
-        map.set(key, { item: { ...candidate }, order: seq++, richness: r });
-        return;
-      }
-      cur.item = mergeReviewItems(cur.item, candidate);
-      cur.richness = Math.max(cur.richness, r);
-    },
-    valuesSorted() {
-      return [...map.values()].sort((a, b) => a.order - b.order).map((x) => x.item);
-    },
+    text: normalizeTextForReview(c.text),
+    pinyin: trim(c.pinyin),
+    pos: trim(c.pos),
+    meaning: merged,
+    type: c.kind === "word" ? "word" : "sentence",
   };
+}
+
+function compareFinalItems(a, b) {
+  const ca = a._cand;
+  const cb = b._cand;
+
+  const pa = pedagogyIndexForText(ca.text);
+  const pb = pedagogyIndexForText(cb.text);
+  if (pa >= 0 && pb >= 0 && pa !== pb) return pa - pb;
+  if (pa >= 0 && pb < 0) return -1;
+  if (pa < 0 && pb >= 0) return 1;
+
+  const ta = sourceTier(ca.source);
+  const tb = sourceTier(cb.source);
+  if (ta !== tb) return ta - tb;
+
+  if (ca.kind !== cb.kind) {
+    if (ca.kind === "word") return -1;
+    if (cb.kind === "word") return 1;
+  }
+
+  return ca.priority - cb.priority;
 }
 
 /**
  * @param {object} lessonData
  * @param {object} options
- * @param {string} options.lang
- * @param {Array} [options.lessonWords]
  * @returns {{ items: ReviewItem[] }}
  */
 export function buildLessonReviewData(lessonData, options = {}) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const lang = options.lang || "kr";
   const langNorm = normalizeLang(lang);
-  const glossaryScope =
-    options.glossaryScope ||
-    (options.lessonLevel != null &&
-    options.lessonLevel !== "" &&
-    String(options.lessonLevel).match(/^\d+$/)
-      ? `hsk${options.lessonLevel}`
-      : "");
+  const glossaryScope = options.glossaryScope || "";
+  const posLang =
+    langNorm === "kr" ? "ko" : langNorm === "cn" ? "zh" : langNorm === "jp" ? "ja" : "en";
+
   const showPinyin = shouldShowPinyin({
     level: (lessonData && lessonData.level) || options.lessonLevel,
     version: (lessonData && lessonData.version) || options.lessonVersion,
   });
 
-  const reg = createReviewItemRegistry();
+  /** @type {ReviewCandidate[]} */
+  const candidates = [];
+  let pri = 0;
+
+  const pushCandidate = (c) => {
+    const text = normalizeTextForReview(c.text);
+    if (!text) return;
+    const nk = normalizedGroupingKey(text);
+    if (!nk) return;
+    candidates.push({
+      ...c,
+      text,
+      normalizedText: nk,
+      pinyin: trim(c.pinyin || ""),
+      pos: trim(c.pos || ""),
+      meaning: trim(c.meaning || ""),
+      note: trim(c.note || ""),
+      priority: c.priority != null ? c.priority : pri++,
+    });
+  };
 
   const wordsSource =
     Array.isArray(options.lessonWords) && options.lessonWords.length
@@ -325,8 +525,6 @@ export function buildLessonReviewData(lessonData, options = {}) {
     if (!key) continue;
     let pinyin = typeof w === "object" ? wordPinyin(w) : "";
     const meaning = typeof w === "object" ? wordMeaning(w, lang) : "";
-    const posLang =
-      langNorm === "kr" ? "ko" : langNorm === "cn" ? "zh" : langNorm === "jp" ? "ja" : "en";
     const pos =
       typeof w === "object" && w ? getPosByLang({ ...w, hanzi: wordKey(w) || w.hanzi }, posLang, glossaryScope) : "";
     if (showPinyin && zh && !pinyin) pinyin = resolvePinyin(zh, pinyin);
@@ -345,44 +543,53 @@ export function buildLessonReviewData(lessonData, options = {}) {
     .sort((a, b) => b._q - a._q || b.zh.length - a.zh.length)
     .slice(0, MAX_WORD_ROWS);
 
-  for (const w of wordRows) {
-    reg.ingest({
+  wordRows.forEach((w, idx) => {
+    pushCandidate({
       text: w.zh,
       pinyin: w.pinyin || "",
       pos: w.pos || "",
       meaning: w.meaning || "",
-      type: "word",
+      note: "",
+      source: "vocab",
+      priority: SOURCE_PRIORITY_BASE.vocab + idx,
+      kind: "word",
     });
-  }
+  });
 
-  const pushSentence = (zh, pinyin, meaning) => {
+  const pushSentence = (zh, pinyin, meaning, source, pBase) => {
     const t = trim(zh);
     if (t.length < 2) return;
-    reg.ingest({
+    let py = trim(pinyin);
+    if (showPinyin && t && !py) py = resolvePinyin(t, py);
+    pushCandidate({
       text: t,
-      pinyin: trim(pinyin),
+      pinyin: py,
       pos: "",
       meaning: trim(meaning),
-      type: "sentence",
+      note: "",
+      source,
+      priority: pBase,
+      kind: "sentence",
     });
   };
 
   const cards = collectDialogueCards(raw);
+  let dIdx = 0;
   for (const card of cards) {
     const lines = Array.isArray(card && card.lines) ? card.lines : [];
     for (const line of lines) {
       const zh = lineZh(line);
-      let py = linePinyin(line, zh, showPinyin);
-      pushSentence(zh, py, lineTranslation(line, lang));
+      pushSentence(zh, linePinyin(line, zh, showPinyin), lineTranslation(line, lang), "dialogue", SOURCE_PRIORITY_BASE.dialogue + dIdx++);
     }
   }
 
   const scene = getSceneFromLesson(raw);
+  let sIdx = 0;
   if (scene) {
     const dmap = getSceneDialogueMap(scene, raw);
     for (const { line } of dmap.values()) {
       const zh = lineZh(line);
-      pushSentence(zh, linePinyin(line, zh, showPinyin), lineTranslation(line, lang));
+      pushSentence(zh, linePinyin(line, zh, showPinyin), lineTranslation(line, lang), "scene", SOURCE_PRIORITY_BASE.scene + sIdx++);
     }
   }
 
@@ -393,6 +600,7 @@ export function buildLessonReviewData(lessonData, options = {}) {
         ? raw.extension
         : [];
 
+  let eIdx = 0;
   for (const item of extArr) {
     const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
     if (sentences.length && (item.groupTitle || item.focusGrammar)) {
@@ -403,7 +611,7 @@ export function buildLessonReviewData(lessonData, options = {}) {
         const transObj = s.translations || s.translation;
         const trans =
           transObj && typeof transObj === "object" ? controlledLangText(transObj, lang, "ext") : "";
-        pushSentence(zh, py, trans);
+        pushSentence(zh, py, trans, "extension", SOURCE_PRIORITY_BASE.extension + eIdx++);
       }
     } else {
       const zh = trim(item.phrase || item.hanzi || item.zh || item.cn || item.line);
@@ -423,29 +631,84 @@ export function buildLessonReviewData(lessonData, options = {}) {
           trim(item.zh) ||
           "";
       }
-      pushSentence(zh, py, trans);
+      const ex = item.explain ?? item.explanation;
+      const note =
+        ex && typeof ex === "object"
+          ? shortenText(controlledLangText(ex, lang, "ext expl"), 100)
+          : trim(item.explainKr) || trim(item.explainEn) || "";
+      pushCandidate({
+        text: zh,
+        pinyin: py,
+        pos: "",
+        meaning: trans,
+        note,
+        source: "extension",
+        priority: SOURCE_PRIORITY_BASE.extension + eIdx++,
+        kind: "sentence",
+      });
     }
   }
 
   const g = raw && raw.grammar;
   const grammarArr = Array.isArray(g) ? g : Array.isArray(g && g.points) ? g.points : [];
+  let gPat = 0;
+  let gEx = 0;
   for (const pt of grammarArr) {
-    const pat = grammarPatternReviewLine(pt, lang);
+    const pat = grammarPatternLine(pt, lang);
     if (pat && pat.zh) {
       let py = pat.pinyin;
       if (showPinyin && pat.zh && !py) py = resolvePinyin(pat.zh, py);
-      pushSentence(pat.zh, py, pat.trans || "");
+      pushCandidate({
+        text: pat.zh,
+        pinyin: py || "",
+        pos: "",
+        meaning: pat.trans || "",
+        note: "",
+        source: "grammar_pattern",
+        priority: SOURCE_PRIORITY_BASE.grammar_pattern + gPat++,
+        kind: "sentence",
+      });
     }
     const exItems = grammarToExampleItems(pt, lang);
     for (const ex of exItems) {
       let py = ex.pinyin;
       if (showPinyin && ex.zh && !py) py = resolvePinyin(ex.zh, py);
-      pushSentence(ex.zh, py, ex.trans || "");
+      pushSentence(ex.zh, py, ex.trans || "", "grammar_example", SOURCE_PRIORITY_BASE.grammar_example + gEx++);
     }
   }
 
-  let items = reg.valuesSorted().slice(0, MAX_TOTAL_ITEMS);
-  return { items };
+  const merged = dedupeByNormalizedKey(candidates);
+
+  const withMeta = merged.map((c) => ({
+    _cand: c,
+    item: candidateToItem(c),
+  }));
+
+  withMeta.sort(compareFinalItems);
+
+  const acceptedKeys = new Set();
+  const introTpl = new Set();
+  const out = [];
+
+  for (const row of withMeta) {
+    const c = row._cand;
+    const it = row.item;
+
+    if (isEllipsisTemplateRedundant(it.text, introTpl)) {
+      continue;
+    }
+    if (isNameOnlyIntroVariant(it.text, introTpl)) {
+      continue;
+    }
+    if (it.type === "sentence" && isCompositeGlueSentence(it.text, acceptedKeys, introTpl)) {
+      continue;
+    }
+
+    registerAcceptedFragments(it.text, acceptedKeys, introTpl);
+    out.push(it);
+  }
+
+  return { items: out.slice(0, MAX_TOTAL_ITEMS) };
 }
 
 function escapeHtml(s) {
