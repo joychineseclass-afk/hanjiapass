@@ -1,5 +1,5 @@
 /**
- * 课内「复习」tab：课程内容总览（单词 / 会话 / 语法 / 扩展），与错题测验 UI（#hskReviewContainer）分离。
+ * 课内「复习」tab：统一紧凑词条清单（去重、按来源顺序），与错题测验 #hskReviewContainer 分离。
  */
 
 import { i18n } from "../../i18n.js";
@@ -9,15 +9,14 @@ import {
   wordPinyin,
   wordMeaning,
   normalizeVocabHanziKeyForPanel,
+  normalizeLang,
 } from "./hskRenderer.js";
+import { getPosByLang } from "../../utils/wordDisplay.js";
 import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../../utils/pinyinEngine.js";
+import { getSceneFromLesson, getSceneDialogueMap } from "../../platform/scene/sceneEngine.js";
 
-/** 与单词 tab 对齐，避免单页过长 */
 const MAX_WORD_ROWS = 80;
-const MAX_DIALOGUE_LINES = 48;
-const MAX_GRAMMAR_POINTS = 12;
-const MAX_GRAMMAR_EXAMPLES_PER_POINT = 4;
-const MAX_EXTENSION_ROWS = 36;
+const MAX_TOTAL_ITEMS = 140;
 
 const trim = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -49,12 +48,32 @@ function controlledLangText(obj, langKey, context) {
   return "";
 }
 
-function sentenceDedupKey(zh) {
-  const s = trim(zh).replace(/\s+/g, " ");
-  return s.replace(/[。！？，、；：.!?,]+$/u, "").toLowerCase();
+/** 去重主键：去尾标点、空白归一、小写（用于「你好」≈「你好！」） */
+function contentDedupKey(zh) {
+  let s = trim(zh).replace(/\s+/g, " ");
+  const punctEnd = /[。！？，、；：.!?,…～~]+$/u;
+  while (punctEnd.test(s)) s = s.replace(punctEnd, "").trim();
+  return s.toLowerCase();
 }
 
-/** 与 page.hsk getDialogueCards 一致 */
+function longerMeaning(a, b) {
+  const x = trim(a);
+  const y = trim(b);
+  if (!x) return y;
+  if (!y) return x;
+  return y.length > x.length ? y : x;
+}
+
+function pickDisplayText(a, b) {
+  const ta = trim(a);
+  const tb = trim(b);
+  if (!ta) return b;
+  if (!tb) return a;
+  if (tb.length > ta.length) return b;
+  return a;
+}
+
+/** 与 page.hsk / 对话 tab 一致 */
 function collectDialogueCards(lesson) {
   const arr =
     lesson && Array.isArray(lesson.generatedDialogues) && lesson.generatedDialogues.length
@@ -140,70 +159,6 @@ function linePinyin(line, zh, showPinyin) {
   return trim(py);
 }
 
-function lineSpeaker(line) {
-  return trim((line && line.speaker) || (line && line.spk) || "");
-}
-
-function sentenceQuality(row) {
-  let q = 0;
-  if (row.trans) q += 4;
-  if (row.pinyin) q += 2;
-  const z = row.zh || "";
-  if (z.length >= 4) q += 2;
-  else if (z.length >= 2) q += 1;
-  const src = row.sourceRank ?? 3;
-  q += (3 - src) * 0.5;
-  return q;
-}
-
-function grammarTitle(pt, i) {
-  if (typeof pt?.title === "object") {
-    return trim(pt.title.zh || pt.title.kr || pt.title.en || pt.title.jp || "");
-  }
-  return trim(pt?.pattern || pt?.title || pt?.name) || `#${i + 1}`;
-}
-
-function grammarExplanation(pt, lang) {
-  if (!pt || typeof pt !== "object") return "";
-  const l = normalizePracticeLangAliases(lang);
-  const str = trim;
-  const explain = pt.explain ?? pt.explanation;
-  if (explain && typeof explain === "object") {
-    if (l === "kr") return str(explain.kr) || str(explain.ko) || "";
-    if (l === "jp") return str(explain.jp) || str(explain.ja) || "";
-    if (l === "cn") return str(explain.cn) || str(explain.zh) || "";
-    return str(explain.en) || "";
-  }
-  if (l === "kr") {
-    return (
-      str(pt.explainKr) ||
-      str(pt.explanationKr) ||
-      str(pt.explain_kr) ||
-      str(pt.explanation_kr) ||
-      ""
-    );
-  }
-  if (l === "jp") {
-    return (
-      str(pt.explainJp) ||
-      str(pt.explanationJp) ||
-      str(pt.explain_jp) ||
-      str(pt.explanation_jp) ||
-      ""
-    );
-  }
-  if (l === "cn") {
-    return (
-      str(pt.explainCn) ||
-      str(pt.explanationCn) ||
-      str(pt.explain_zh) ||
-      str(pt.explanation_zh) ||
-      ""
-    );
-  }
-  return str(pt.explainEn) || str(pt.explanationEn) || str(pt.explain_en) || str(pt.explanation_en) || "";
-}
-
 function grammarToExampleItems(pt, lang) {
   const ex = (pt && pt.example) || (pt && pt.examples);
   const toItem = (e) => {
@@ -226,31 +181,29 @@ function grammarToExampleItems(pt, lang) {
   return [toItem(ex)].filter((x) => x.zh);
 }
 
-function shortenNote(text, maxLen = 96) {
+function shortenText(text, maxLen) {
   const t = trim(text);
   if (!t) return "";
   if (t.length <= maxLen) return t;
   return t.slice(0, maxLen - 1) + "…";
 }
 
-function pickOneWordExample(w, lang, showPinyin) {
-  if (!w || typeof w !== "object" || !Array.isArray(w.examples) || !w.examples.length) {
-    return "";
+function grammarPatternReviewLine(pt, lang) {
+  if (!pt || typeof pt !== "object") return null;
+  let raw = "";
+  if (typeof pt.pattern === "string") raw = trim(pt.pattern);
+  else if (typeof pt.title === "string") raw = trim(pt.title);
+  else if (pt.title && typeof pt.title === "object") {
+    raw = trim(pt.title.zh || pt.title.cn || pt.title.kr || pt.title.en || pt.title.jp || "");
+  } else raw = trim(pt.name || "");
+  if (!raw || raw.length > 36) return null;
+  if (!/[\u4e00-\u9fff]/.test(raw)) return null;
+  const explain = pt.explain ?? pt.explanation;
+  let meaning = "";
+  if (explain && typeof explain === "object") {
+    meaning = shortenText(controlledLangText(explain, lang, "grammar pat"), 72);
   }
-  const ex = w.examples[0];
-  const zh = trim(ex.zh || ex.cn || ex.line || ex.text);
-  if (!zh) return "";
-  let py = trim(ex.pinyin || ex.py);
-  if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
-  const transObj = ex.translation || ex.translations || ex.trans;
-  const trans =
-    transObj && typeof transObj === "object"
-      ? controlledLangText(transObj, lang, "word ex")
-      : "";
-  let line = zh;
-  if (py) line += `（${py}）`;
-  if (trans) line += ` — ${trans}`;
-  return line;
+  return { zh: raw, pinyin: "", trans: meaning };
 }
 
 function filterSubsumedSingleChars(keysInOrder, hanziSet) {
@@ -274,26 +227,86 @@ function wordRowQuality(w, lang) {
   if (typeof w === "object" && w) {
     if (wordMeaning(w, lang)) q += 1;
     if (wordPinyin(w)) q += 1;
-    if (Array.isArray(w.examples) && w.examples.length) q += 2;
   }
   if (zh.length >= 2) q += 1;
   return q;
 }
 
 /**
+ * @typedef {{ text: string, pinyin: string, pos: string, meaning: string, type: 'word'|'sentence' }} ReviewItem
+ */
+
+function itemRichness(it) {
+  let n = 0;
+  if (trim(it.pinyin)) n += 2;
+  if (trim(it.meaning)) n += 3;
+  if (trim(it.pos)) n += 1;
+  if (it.type === "word") n += 5;
+  return n;
+}
+
+function mergeReviewItems(a, b) {
+  const type = a.type === "word" || b.type === "word" ? "word" : "sentence";
+  return {
+    text: pickDisplayText(a.text, b.text),
+    pinyin: trim(a.pinyin) || trim(b.pinyin) || "",
+    pos: trim(a.pos) || trim(b.pos) || "",
+    meaning: longerMeaning(a.meaning, b.meaning),
+    type,
+  };
+}
+
+/**
+ * 统一去重桶：先录入者决定排序；后者仅合并补全字段。
+ */
+function createReviewItemRegistry() {
+  /** @type {Map<string, { item: ReviewItem, order: number, richness: number }>} */
+  const map = new Map();
+  let seq = 0;
+
+  return {
+    ingest(candidate) {
+      const key = contentDedupKey(candidate.text);
+      if (!key) return;
+      const r = itemRichness(candidate);
+      const cur = map.get(key);
+      if (!cur) {
+        map.set(key, { item: { ...candidate }, order: seq++, richness: r });
+        return;
+      }
+      cur.item = mergeReviewItems(cur.item, candidate);
+      cur.richness = Math.max(cur.richness, r);
+    },
+    valuesSorted() {
+      return [...map.values()].sort((a, b) => a.order - b.order).map((x) => x.item);
+    },
+  };
+}
+
+/**
  * @param {object} lessonData
  * @param {object} options
- * @param {string} options.lang - UI 语言键（与 getLang 一致）
- * @param {Array} [options.lessonWords] - 与单词 tab 一致的面板词表；缺省则用 vocab/words
- * @returns {{ words: object[], dialogue: object[], grammar: object[], extension: object[] }}
+ * @param {string} options.lang
+ * @param {Array} [options.lessonWords]
+ * @returns {{ items: ReviewItem[] }}
  */
 export function buildLessonReviewData(lessonData, options = {}) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const lang = options.lang || "kr";
+  const langNorm = normalizeLang(lang);
+  const glossaryScope =
+    options.glossaryScope ||
+    (options.lessonLevel != null &&
+    options.lessonLevel !== "" &&
+    String(options.lessonLevel).match(/^\d+$/)
+      ? `hsk${options.lessonLevel}`
+      : "");
   const showPinyin = shouldShowPinyin({
     level: (lessonData && lessonData.level) || options.lessonLevel,
     version: (lessonData && lessonData.version) || options.lessonVersion,
   });
+
+  const reg = createReviewItemRegistry();
 
   const wordsSource =
     Array.isArray(options.lessonWords) && options.lessonWords.length
@@ -310,14 +323,14 @@ export function buildLessonReviewData(lessonData, options = {}) {
     if (!zh) continue;
     const key = normalizeVocabHanziKeyForPanel(zh);
     if (!key) continue;
-    const row = {
-      zh,
-      pinyin: typeof w === "object" ? wordPinyin(w) : "",
-      meaning: typeof w === "object" ? wordMeaning(w, lang) : "",
-      exampleLine: typeof w === "object" ? pickOneWordExample(w, lang, showPinyin) : "",
-      _q: wordRowQuality(w, lang),
-    };
-    if (showPinyin && row.zh && !row.pinyin) row.pinyin = resolvePinyin(row.zh, row.pinyin);
+    let pinyin = typeof w === "object" ? wordPinyin(w) : "";
+    const meaning = typeof w === "object" ? wordMeaning(w, lang) : "";
+    const posLang =
+      langNorm === "kr" ? "ko" : langNorm === "cn" ? "zh" : langNorm === "jp" ? "ja" : "en";
+    const pos =
+      typeof w === "object" && w ? getPosByLang({ ...w, hanzi: wordKey(w) || w.hanzi }, posLang, glossaryScope) : "";
+    if (showPinyin && zh && !pinyin) pinyin = resolvePinyin(zh, pinyin);
+    const row = { zh, pinyin, meaning, pos, _q: wordRowQuality(w, lang) };
     const prev = wordMap.get(key);
     if (!prev || row._q > prev._q) wordMap.set(key, row);
   }
@@ -327,64 +340,50 @@ export function buildLessonReviewData(lessonData, options = {}) {
     uniqueHanziOrder,
     new Set(uniqueHanziOrder.map((k) => wordMap.get(k).zh))
   );
-
-  const wordCandidates = filteredKeys
+  const wordRows = filteredKeys
     .map((k) => wordMap.get(k))
-    .sort((a, b) => b._q - a._q || b.zh.length - a.zh.length);
+    .sort((a, b) => b._q - a._q || b.zh.length - a.zh.length)
+    .slice(0, MAX_WORD_ROWS);
 
-  const words = wordCandidates.slice(0, MAX_WORD_ROWS).map(({ zh, pinyin, meaning, exampleLine }) => ({
-    zh,
-    pinyin,
-    meaning,
-    exampleLine: exampleLine || "",
-  }));
+  for (const w of wordRows) {
+    reg.ingest({
+      text: w.zh,
+      pinyin: w.pinyin || "",
+      pos: w.pos || "",
+      meaning: w.meaning || "",
+      type: "word",
+    });
+  }
 
-  /** 仅会话卡片/对白行，不含词汇例句、语法例句 */
-  const dialogue = [];
-  const dialogueSeen = new Set();
+  const pushSentence = (zh, pinyin, meaning) => {
+    const t = trim(zh);
+    if (t.length < 2) return;
+    reg.ingest({
+      text: t,
+      pinyin: trim(pinyin),
+      pos: "",
+      meaning: trim(meaning),
+      type: "sentence",
+    });
+  };
+
   const cards = collectDialogueCards(raw);
   for (const card of cards) {
     const lines = Array.isArray(card && card.lines) ? card.lines : [];
     for (const line of lines) {
       const zh = lineZh(line);
-      if (!zh || zh.length < 2) continue;
-      const dk = sentenceDedupKey(zh);
-      if (dialogueSeen.has(dk)) continue;
-      dialogueSeen.add(dk);
-      dialogue.push({
-        zh,
-        pinyin: linePinyin(line, zh, showPinyin),
-        trans: lineTranslation(line, lang),
-        speaker: lineSpeaker(line),
-      });
-      if (dialogue.length >= MAX_DIALOGUE_LINES) break;
+      let py = linePinyin(line, zh, showPinyin);
+      pushSentence(zh, py, lineTranslation(line, lang));
     }
-    if (dialogue.length >= MAX_DIALOGUE_LINES) break;
   }
 
-  const g = raw && raw.grammar;
-  const grammarArr = Array.isArray(g) ? g : Array.isArray(g && g.points) ? g.points : [];
-
-  const grammar = [];
-  for (let i = 0; i < grammarArr.length && grammar.length < MAX_GRAMMAR_POINTS; i++) {
-    const pt = grammarArr[i];
-    const name = grammarTitle(pt, i);
-    const expl = grammarExplanation(pt, lang);
-    const exItems = grammarToExampleItems(pt, lang)
-      .slice(0, MAX_GRAMMAR_EXAMPLES_PER_POINT)
-      .map((ex) => {
-        let py = ex.pinyin;
-        if (showPinyin && ex.zh && !py) py = resolvePinyin(ex.zh, py);
-        return { zh: ex.zh, pinyin: py || "", trans: ex.trans || "" };
-      })
-      .filter((ex) => ex.zh);
-
-    if (!trim(name) && !trim(expl) && !exItems.length) continue;
-    grammar.push({
-      name: name || "·",
-      note: trim(expl) ? shortenNote(expl, 200) : "",
-      examples: exItems,
-    });
+  const scene = getSceneFromLesson(raw);
+  if (scene) {
+    const dmap = getSceneDialogueMap(scene, raw);
+    for (const { line } of dmap.values()) {
+      const zh = lineZh(line);
+      pushSentence(zh, linePinyin(line, zh, showPinyin), lineTranslation(line, lang));
+    }
   }
 
   const extArr =
@@ -394,47 +393,20 @@ export function buildLessonReviewData(lessonData, options = {}) {
         ? raw.extension
         : [];
 
-  const extMap = new Map();
-  const bumpExt = (row) => {
-    const k = sentenceDedupKey(row.zh);
-    if (!k) return;
-    const prev = extMap.get(k);
-    const qn = sentenceQuality({ zh: row.zh, pinyin: row.pinyin, trans: row.trans, sourceRank: 0 });
-    const qo = prev ? sentenceQuality({ zh: prev.zh, pinyin: prev.pinyin, trans: prev.trans, sourceRank: 0 }) : -1;
-    if (!prev || qn > qo) extMap.set(k, row);
-  };
-
   for (const item of extArr) {
     const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
     if (sentences.length && (item.groupTitle || item.focusGrammar)) {
       for (const s of sentences) {
         const zh = trim(s.cn || s.zh || "");
-        if (zh.length < 2) continue;
         let py = trim(s.pinyin || s.py);
         if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
         const transObj = s.translations || s.translation;
         const trans =
           transObj && typeof transObj === "object" ? controlledLangText(transObj, lang, "ext") : "";
-        const groupHint = trim(
-          typeof item.groupTitle === "string"
-            ? item.groupTitle
-            : item.groupTitle && typeof item.groupTitle === "object"
-              ? controlledLangText(item.groupTitle, lang, "ext group")
-              : ""
-        );
-        const fg = trim(
-          typeof item.focusGrammar === "string"
-            ? item.focusGrammar
-            : item.focusGrammar && typeof item.focusGrammar === "object"
-              ? controlledLangText(item.focusGrammar, lang, "ext fg")
-              : ""
-        );
-        const note = [groupHint, fg].filter(Boolean).join(" · ");
-        bumpExt({ zh, pinyin: py, trans, note });
+        pushSentence(zh, py, trans);
       }
     } else {
       const zh = trim(item.phrase || item.hanzi || item.zh || item.cn || item.line);
-      if (zh.length < 2) continue;
       let py = trim(item.pinyin || item.py);
       if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
       const transObj = item.translation || item.translations || item.trans;
@@ -451,35 +423,29 @@ export function buildLessonReviewData(lessonData, options = {}) {
           trim(item.zh) ||
           "";
       }
-      const note = shortenNote(
-        (() => {
-          const ex = item.explain ?? item.explanation;
-          if (ex && typeof ex === "object") return controlledLangText(ex, lang, "ext expl");
-          return (
-            trim(item.explainKr) ||
-            trim(item.explainEn) ||
-            trim(item.explainJp) ||
-            trim(item.explainCn) ||
-            ""
-          );
-        })(),
-        120
-      );
-      bumpExt({ zh, pinyin: py, trans, note: note || "" });
+      pushSentence(zh, py, trans);
     }
   }
 
-  const extension = [...extMap.values()]
-    .sort((a, b) => sentenceQuality(b) - sentenceQuality(a))
-    .slice(0, MAX_EXTENSION_ROWS)
-    .map(({ zh, pinyin, trans, note }) => ({
-      zh,
-      pinyin,
-      trans,
-      note: note || "",
-    }));
+  const g = raw && raw.grammar;
+  const grammarArr = Array.isArray(g) ? g : Array.isArray(g && g.points) ? g.points : [];
+  for (const pt of grammarArr) {
+    const pat = grammarPatternReviewLine(pt, lang);
+    if (pat && pat.zh) {
+      let py = pat.pinyin;
+      if (showPinyin && pat.zh && !py) py = resolvePinyin(pat.zh, py);
+      pushSentence(pat.zh, py, pat.trans || "");
+    }
+    const exItems = grammarToExampleItems(pt, lang);
+    for (const ex of exItems) {
+      let py = ex.pinyin;
+      if (showPinyin && ex.zh && !py) py = resolvePinyin(ex.zh, py);
+      pushSentence(ex.zh, py, ex.trans || "");
+    }
+  }
 
-  return { words, dialogue, grammar, extension };
+  let items = reg.valuesSorted().slice(0, MAX_TOTAL_ITEMS);
+  return { items };
 }
 
 function escapeHtml(s) {
@@ -497,113 +463,44 @@ function speakAttrs(zh) {
   return ` data-speak-text="${esc}" data-speak-kind="dialogue"`;
 }
 
+function formatCompactLine(it) {
+  const text = escapeHtml(trim(it.text));
+  const py = trim(it.pinyin);
+  const pos = trim(it.pos);
+  const mean = trim(it.meaning);
+  const pyPart = py ? ` ${escapeHtml(py)}` : "";
+  if (it.type === "word") {
+    if (pos && mean) {
+      return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(pos)} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+    }
+    if (mean) {
+      return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+    }
+    return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
+  }
+  if (mean) {
+    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+  }
+  return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
+}
+
 /**
  * @param {ReturnType<typeof buildLessonReviewData>} reviewData
  */
 export function renderLessonReviewHTML(reviewData) {
-  const { words, dialogue, grammar, extension } = reviewData;
+  const { items } = reviewData;
+  if (!items || !items.length) {
+    return `<div class="lesson-review-empty text-sm text-slate-500 dark:text-slate-400 py-1">${escapeHtml(i18n.t("hsk.lesson_review_empty_all"))}</div>`;
+  }
 
-  const blocks = [];
+  const lis = items
+    .map(
+      (it) =>
+        `<li class="lesson-review-item hsk-lr-compact py-1.5 border-b border-slate-100/90 dark:border-slate-700/80 last:border-0 text-[14px] leading-snug text-slate-800 dark:text-slate-100">${formatCompactLine(it)}</li>`
+    )
+    .join("");
 
-  const rowShell = (n, inner) => `<div class="hsk-lr-row flex gap-3 border-b border-slate-100 dark:border-slate-700 pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
-  <span class="hsk-lr-num text-sm opacity-40 w-6 shrink-0 text-right pt-0.5">${n}</span>
-  <div class="hsk-lr-item flex-1 min-w-0">${inner}</div>
+  return `<div class="hsk-lesson-review lesson-review-summary-root max-w-2xl">
+  <ul class="hsk-lesson-review-list list-none m-0 p-0">${lis}</ul>
 </div>`;
-
-  if (words.length) {
-    const title = escapeHtml(i18n.t("hsk.lesson_review_section_words"));
-    const items = words
-      .map((w, i) =>
-        rowShell(
-          i + 1,
-          `<div class="hsk-lr-speak-row lesson-review-summary-word-item">
-  <div class="hsk-lr-zh font-medium"${speakAttrs(w.zh)}>${escapeHtml(w.zh)}</div>
-  ${w.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(w.pinyin)}</div>` : ""}
-  ${w.meaning ? `<div class="hsk-lr-mean text-sm mt-0.5">${escapeHtml(w.meaning)}</div>` : ""}
-  ${w.exampleLine ? `<div class="hsk-lr-sub text-sm opacity-80 mt-1 pl-2 border-l-2 border-emerald-200">${escapeHtml(w.exampleLine)}</div>` : ""}
-</div>`
-        )
-      )
-      .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="words">
-  <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
-  <div class="hsk-lr-list space-y-0">${items}</div>
-</section>`);
-  }
-
-  if (dialogue.length) {
-    const title = escapeHtml(i18n.t("hsk.lesson_review_section_dialogue"));
-    const items = dialogue
-      .map((s, i) =>
-        rowShell(
-          i + 1,
-          `<div class="hsk-lr-speak-row">
-  ${s.speaker ? `<div class="text-xs opacity-60 mb-0.5">${escapeHtml(s.speaker)}</div>` : ""}
-  <div class="hsk-lr-zh"${speakAttrs(s.zh)}>${escapeHtml(s.zh)}</div>
-  ${s.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(s.pinyin)}</div>` : ""}
-  ${s.trans ? `<div class="hsk-lr-mean text-sm mt-0.5">${escapeHtml(s.trans)}</div>` : ""}
-</div>`
-        )
-      )
-      .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="dialogue">
-  <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
-  <div class="hsk-lr-list space-y-0">${items}</div>
-</section>`);
-  }
-
-  if (grammar.length) {
-    const title = escapeHtml(i18n.t("hsk.lesson_review_section_grammar"));
-    const items = grammar
-      .map((k, i) => {
-        const exBlocks = (k.examples || [])
-          .map(
-            (ex) =>
-              `<div class="hsk-lr-speak-row hsk-lr-sub text-sm mt-1 pl-2 border-l-2 border-amber-200/80">
-  <span class="hsk-lr-zh"${speakAttrs(ex.zh)}>${escapeHtml(ex.zh)}</span>
-  ${ex.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(ex.pinyin)}</div>` : ""}
-  ${ex.trans ? `<div class="opacity-80 text-sm">${escapeHtml(ex.trans)}</div>` : ""}
-</div>`
-          )
-          .join("");
-        return rowShell(
-          i + 1,
-          `<div class="font-medium text-slate-800 dark:text-slate-100">${escapeHtml(k.name)}</div>
-  ${k.note ? `<div class="text-sm mt-0.5 opacity-90">${escapeHtml(k.note)}</div>` : ""}
-  ${exBlocks}`
-        );
-      })
-      .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="grammar">
-  <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
-  <div class="hsk-lr-list space-y-0">${items}</div>
-</section>`);
-  }
-
-  if (extension.length) {
-    const title = escapeHtml(i18n.t("hsk.lesson_review_section_extension"));
-    const items = extension
-      .map((e, i) =>
-        rowShell(
-          i + 1,
-          `<div class="hsk-lr-speak-row">
-  <div class="hsk-lr-zh"${speakAttrs(e.zh)}>${escapeHtml(e.zh)}</div>
-  ${e.pinyin ? `<div class="hsk-lr-py text-sm opacity-75">${escapeHtml(e.pinyin)}</div>` : ""}
-  ${e.trans ? `<div class="hsk-lr-mean text-sm mt-0.5">${escapeHtml(e.trans)}</div>` : ""}
-  ${e.note ? `<div class="text-sm opacity-75 mt-0.5">${escapeHtml(e.note)}</div>` : ""}
-</div>`
-        )
-      )
-      .join("");
-    blocks.push(`<section class="hsk-lr-block mb-6" data-lesson-review-section="extension">
-  <h3 class="hsk-lr-block-title text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300 mb-2">${title}</h3>
-  <div class="hsk-lr-list space-y-0">${items}</div>
-</section>`);
-  }
-
-  if (!blocks.length) {
-    return `<div class="lesson-review-empty text-sm text-slate-500 dark:text-slate-400">${escapeHtml(i18n.t("hsk.lesson_review_empty_all"))}</div>`;
-  }
-
-  return `<div class="hsk-lesson-review lesson-review-summary-root text-[15px] leading-relaxed max-w-2xl">${blocks.join("")}</div>`;
 }

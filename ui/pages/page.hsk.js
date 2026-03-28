@@ -1772,6 +1772,7 @@ async function openLesson({ lessonNo, file } = {}) {
       lessonWords: panelWords,
       lessonLevel: lessonData.level,
       lessonVersion: lessonData.version,
+      glossaryScope: `hsk${state.lv}`,
     });
     reviewEl.innerHTML = renderLessonReviewHTML(reviewData);
   }
@@ -1849,6 +1850,7 @@ function rerenderHSKFromState() {
       lessonWords,
       lessonLevel: lessonData.level,
       lessonVersion: lessonData.version,
+      glossaryScope: `hsk${state.lv}`,
     });
     reviewEl.innerHTML = renderLessonReviewHTML(reviewData);
   }
@@ -2107,6 +2109,7 @@ function bindEvents() {
         target.closest(".lesson-practice-card") ||
         target.closest(".review-question-card") ||
         target.closest(".lesson-practice-option") ||
+        target.closest(".lesson-review-item") ||
         target.closest(".lesson-review-summary-word-item") ||
         target.closest(".hsk-lr-speak-row");
 

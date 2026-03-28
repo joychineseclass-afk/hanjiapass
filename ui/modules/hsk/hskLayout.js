@@ -136,9 +136,8 @@ export function getHSKLayoutHTML() {
         <div id="hskAIResult" class="ai-learning-container"></div>
       </div>
 
-      <div id="hskPanelReview" class="hidden bg-white rounded-2xl shadow p-4">
-        <div class="text-sm font-bold mb-2" data-i18n="hsk.lesson_content_review_title">本课内容总复习</div>
-        <div id="hskReviewBody" class="space-y-3"></div>
+      <div id="hskPanelReview" class="hidden bg-white rounded-2xl shadow p-3">
+        <div id="hskReviewBody" class="space-y-1"></div>
       </div>
     </div>
 
