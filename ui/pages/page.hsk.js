@@ -1712,6 +1712,9 @@ async function openLesson({ lessonNo, file } = {}) {
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
 
   const isReviewLesson = String(lessonData.type || "") === "review";
+  if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
+    state.tab = "words";
+  }
   let panelWords;
   if (isReviewLesson) {
     panelWords = selectHskWordPanelVocabulary(lessonWords, {
@@ -1746,10 +1749,17 @@ async function openLesson({ lessonNo, file } = {}) {
 
   const wordsPanel = $("hskPanelWords");
   if (wordsPanel) {
-    renderWordCards(wordsPanel, panelWords, null, {
-      lang,
-      scope: `hsk${state.lv}`,
-    });
+    if (isReviewLesson) {
+      renderReviewWords(wordsPanel, panelWords, {
+        lang,
+        scope: `hsk${state.lv}`,
+      });
+    } else {
+      renderWordCards(wordsPanel, panelWords, null, {
+        lang,
+        scope: `hsk${state.lv}`,
+      });
+    }
   }
 
   const courseId = getCourseId();
@@ -1757,13 +1767,34 @@ async function openLesson({ lessonNo, file } = {}) {
   touchLessonVocabSafe(courseId, lessonId, panelWords);
 
   const dialogueEl = $("hskDialogueBody");
-  if (dialogueEl) dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+  if (dialogueEl) {
+    if (isReviewLesson) {
+      renderReviewDialogue(dialogueEl, lessonData, { lang });
+    } else {
+      dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+    }
+  }
 
   const grammarEl = $("hskGrammarBody");
-  if (grammarEl) grammarEl.innerHTML = buildGrammarHTML(lessonData);
+  if (grammarEl) {
+    if (isReviewLesson) {
+      const g = lessonData.grammar;
+      const gArr = Array.isArray(g) ? g : Array.isArray(g?.points) ? g.points : [];
+      renderReviewGrammar(grammarEl, gArr, { lang, vocab: panelWords });
+    } else {
+      grammarEl.innerHTML = buildGrammarHTML(lessonData);
+    }
+  }
 
   const extensionEl = $("hskExtensionBody");
-  if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
+  if (extensionEl) {
+    if (isReviewLesson) {
+      const ext = lessonData.extension;
+      renderReviewExtension(extensionEl, Array.isArray(ext) ? ext : [], { lang });
+    } else {
+      extensionEl.innerHTML = buildExtensionHTML(lessonData);
+    }
+  }
 
   const reviewEl = $("hskReviewBody");
   if (reviewEl) {
@@ -1820,6 +1851,9 @@ function rerenderHSKFromState() {
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
   const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
   const isReviewLesson = String(lessonData.type || "") === "review";
+  if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
+    state.tab = "words";
+  }
   const titleText =
     titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
 
@@ -1828,20 +1862,48 @@ function rerenderHSKFromState() {
 
   const wordsPanel = $("hskPanelWords");
   if (wordsPanel) {
-    renderWordCards(wordsPanel, lessonWords, null, {
-      lang,
-      scope: `hsk${state.lv}`,
-    });
+    if (isReviewLesson) {
+      renderReviewWords(wordsPanel, lessonWords, {
+        lang,
+        scope: `hsk${state.lv}`,
+      });
+    } else {
+      renderWordCards(wordsPanel, lessonWords, null, {
+        lang,
+        scope: `hsk${state.lv}`,
+      });
+    }
   }
 
   const dialogueEl = $("hskDialogueBody");
-  if (dialogueEl) dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+  if (dialogueEl) {
+    if (isReviewLesson) {
+      renderReviewDialogue(dialogueEl, lessonData, { lang });
+    } else {
+      dialogueEl.innerHTML = buildDialogueHTML(lessonData);
+    }
+  }
 
   const grammarEl = $("hskGrammarBody");
-  if (grammarEl) grammarEl.innerHTML = buildGrammarHTML(lessonData);
+  if (grammarEl) {
+    if (isReviewLesson) {
+      const g = lessonData.grammar;
+      const gArr = Array.isArray(g) ? g : Array.isArray(g?.points) ? g.points : [];
+      renderReviewGrammar(grammarEl, gArr, { lang, vocab: lessonWords });
+    } else {
+      grammarEl.innerHTML = buildGrammarHTML(lessonData);
+    }
+  }
 
   const extensionEl = $("hskExtensionBody");
-  if (extensionEl) extensionEl.innerHTML = buildExtensionHTML(lessonData);
+  if (extensionEl) {
+    if (isReviewLesson) {
+      const ext = lessonData.extension;
+      renderReviewExtension(extensionEl, Array.isArray(ext) ? ext : [], { lang });
+    } else {
+      extensionEl.innerHTML = buildExtensionHTML(lessonData);
+    }
+  }
 
   const reviewEl = $("hskReviewBody");
   if (reviewEl) {
@@ -2491,6 +2553,14 @@ function showListMode() {
 }
 
 function updateTabsUI() {
+  const hideReviewTab = (() => {
+    const cur = state.current;
+    if (!cur || !cur.lessonData) return false;
+    const lessonNo = Number(cur.lessonNo) || 0;
+    const isRev = String(cur.lessonData.type || "") === "review";
+    return isRev && (lessonNo === 21 || lessonNo === 22);
+  })();
+
   const ids = [
     ["words", "hskTabWords", "hskPanelWords"],
     ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
@@ -2504,6 +2574,21 @@ function updateTabsUI() {
   ids.forEach(([tab, btnId, panelId]) => {
     const btn = $(btnId);
     const panel = $(panelId);
+
+    if (tab === "review" && hideReviewTab) {
+      if (btn) {
+        btn.classList.add("hidden");
+        btn.setAttribute("aria-hidden", "true");
+      }
+      if (panel) panel.classList.add("hidden");
+      return;
+    }
+
+    if (tab === "review" && btn) {
+      btn.classList.remove("hidden");
+      btn.removeAttribute("aria-hidden");
+    }
+
     const active = state.tab === tab;
 
     if (btn) {
