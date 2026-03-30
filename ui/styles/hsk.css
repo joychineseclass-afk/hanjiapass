@@ -1625,6 +1625,61 @@
 }
 
 /* ===============================
+   课内「复习」tab：轻量紧凑目录条
+   （hskLessonReview.renderLessonReviewHTML）
+   一行一条、窄于正式 .hsk-lesson-directory，勿混用选择器
+================================== */
+.hsk-review-compact-dir {
+  max-width: 30rem;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hsk-review-compact-dir .review-list,
+.hsk-review-compact-dir .hsk-lesson-review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hsk-review-compact-dir .lesson-review-item {
+  display: block;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.38;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-review-compact-dir .lesson-review-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.hsk-review-compact-dir .lesson-review-item--word .hsk-lr-line-zh {
+  font-weight: 600;
+}
+
+.hsk-review-compact-dir .lesson-review-item:not(.lesson-review-item--word) .hsk-lr-line-zh {
+  font-weight: 500;
+}
+
+.hsk-review-compact-dir .hsk-lr-sep {
+  color: #94a3b8;
+  font-weight: 400;
+  padding: 0 0.12em;
+}
+
+/* ===============================
    📋 复习课专用：目录式列表
    单词/会话/语法/扩张 tab 紧凑样式
 ================================== */

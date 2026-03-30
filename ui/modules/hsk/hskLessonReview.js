@@ -732,17 +732,18 @@ function formatCompactLine(it) {
   const pos = trim(it.pos);
   const mean = trim(it.meaning);
   const pyPart = py ? ` ${escapeHtml(py)}` : "";
+  const sep = ` <span class="hsk-lr-sep">/</span> `;
   if (it.type === "word") {
     if (pos && mean) {
-      return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(pos)} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(pos)}${sep}${escapeHtml(mean)}`;
     }
     if (mean) {
-      return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(mean)}`;
     }
-    return `<span class="hsk-lr-line-zh font-medium"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
+    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
   }
   if (mean) {
-    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart} <span class="opacity-70">/</span> ${escapeHtml(mean)}`;
+    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(mean)}`;
   }
   return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
 }
@@ -757,13 +758,13 @@ export function renderLessonReviewHTML(reviewData) {
   }
 
   const lis = items
-    .map(
-      (it) =>
-        `<li class="lesson-review-item hsk-lr-compact block cursor-pointer rounded-[10px] border border-slate-200/90 bg-slate-50/90 px-3 py-2 text-[14px] leading-relaxed text-slate-800 transition-colors duration-150 dark:border-slate-600/40 dark:bg-slate-800/40 dark:text-slate-100 hover:border-slate-300 hover:bg-slate-100/95 dark:hover:border-slate-500/55 dark:hover:bg-slate-800/60">${formatCompactLine(it)}</li>`
-    )
+    .map((it) => {
+      const mod = it.type === "word" ? " lesson-review-item--word" : "";
+      return `<li class="lesson-review-item review-item hsk-lr-compact${mod}" role="listitem">${formatCompactLine(it)}</li>`;
+    })
     .join("");
 
-  return `<div class="hsk-lesson-review lesson-review-summary-root max-w-2xl">
-  <ul class="hsk-lesson-review-list m-0 flex list-none flex-col gap-2 p-0">${lis}</ul>
+  return `<div class="hsk-lesson-review lesson-review-summary-root hsk-review-compact-dir">
+  <ul class="hsk-lesson-review-list review-list" role="list">${lis}</ul>
 </div>`;
 }
