@@ -44,6 +44,36 @@
   ],
   "vocab": [
     {
+      "hanzi": "是",
+      "pinyin": "shì",
+      "meaning": {
+        "zh": "是",
+        "kr": "이다",
+        "en": "to be; yes",
+        "jp": "～です"
+      },
+      "pos": {
+        "kr": "동사",
+        "en": "verb",
+        "jp": "動詞"
+      }
+    },
+    {
+      "hanzi": "不",
+      "pinyin": "bù",
+      "meaning": {
+        "zh": "不",
+        "kr": "아니다",
+        "en": "not",
+        "jp": "～ない"
+      },
+      "pos": {
+        "kr": "부정",
+        "en": "negation",
+        "jp": "否定"
+      }
+    },
+    {
       "hanzi": "你是哪国人？",
       "pinyin": "nǐ shì nǎ guó rén",
       "meaning": {

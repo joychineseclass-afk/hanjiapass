@@ -44,6 +44,36 @@
   ],
   "vocab": [
     {
+      "hanzi": "五",
+      "pinyin": "wǔ",
+      "meaning": {
+        "zh": "五",
+        "kr": "오",
+        "en": "five",
+        "jp": "五"
+      },
+      "pos": {
+        "kr": "수사",
+        "en": "numeral",
+        "jp": "数詞"
+      }
+    },
+    {
+      "hanzi": "北京",
+      "pinyin": "Běijīng",
+      "meaning": {
+        "zh": "北京",
+        "kr": "베이징",
+        "en": "Beijing",
+        "jp": "北京"
+      },
+      "pos": {
+        "kr": "고유명사",
+        "en": "proper noun",
+        "jp": "固有名詞"
+      }
+    },
+    {
       "hanzi": "王老师今天来学校吗？",
       "pinyin": "wáng lǎo shī jīn tiān lái xué xiào ma",
       "meaning": {

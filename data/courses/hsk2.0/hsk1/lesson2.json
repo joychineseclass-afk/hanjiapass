@@ -44,6 +44,36 @@
   ],
   "vocab": [
     {
+      "hanzi": "什么",
+      "pinyin": "shénme",
+      "meaning": {
+        "zh": "什么",
+        "kr": "무엇",
+        "en": "what",
+        "jp": "何"
+      },
+      "pos": {
+        "kr": "의문사",
+        "en": "question word",
+        "jp": "疑問詞"
+      }
+    },
+    {
+      "hanzi": "很",
+      "pinyin": "hěn",
+      "meaning": {
+        "zh": "很",
+        "kr": "매우",
+        "en": "very",
+        "jp": "とても"
+      },
+      "pos": {
+        "kr": "부사",
+        "en": "adverb",
+        "jp": "副詞"
+      }
+    },
+    {
       "hanzi": "你好，你叫什么名字？",
       "pinyin": "nǐ hǎo nǐ jiào shén me míng zì",
       "meaning": {

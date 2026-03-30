@@ -44,6 +44,21 @@
   ],
   "vocab": [
     {
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
+      "meaning": {
+        "zh": "下午",
+        "kr": "오후",
+        "en": "afternoon",
+        "jp": "午後"
+      },
+      "pos": {
+        "kr": "명사",
+        "en": "noun",
+        "jp": "名詞"
+      }
+    },
+    {
       "hanzi": "今天星期几？",
       "pinyin": "jīn tiān xīng qī jǐ",
       "meaning": {

@@ -44,6 +44,21 @@
   ],
   "vocab": [
     {
+      "hanzi": "这",
+      "pinyin": "zhè",
+      "meaning": {
+        "zh": "这",
+        "kr": "이",
+        "en": "this",
+        "jp": "この"
+      },
+      "pos": {
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      }
+    },
+    {
       "hanzi": "你想买什么？",
       "pinyin": "nǐ xiǎng mǎi shén me",
       "meaning": {

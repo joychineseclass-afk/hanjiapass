@@ -44,6 +44,21 @@
   ],
   "vocab": [
     {
+      "hanzi": "那",
+      "pinyin": "nà",
+      "meaning": {
+        "zh": "那",
+        "kr": "그러면",
+        "en": "then; in that case",
+        "jp": "それでは"
+      },
+      "pos": {
+        "kr": "접속",
+        "en": "connector",
+        "jp": "接続"
+      }
+    },
+    {
       "hanzi": "今天几月几号？",
       "pinyin": "jīn tiān jǐ yuè jǐ hào",
       "meaning": {
