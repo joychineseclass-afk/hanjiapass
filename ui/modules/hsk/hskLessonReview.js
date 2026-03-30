@@ -731,19 +731,19 @@ function formatCompactLine(it) {
   const py = trim(it.pinyin);
   const pos = trim(it.pos);
   const mean = trim(it.meaning);
-  const pyPart = py ? ` ${escapeHtml(py)}` : "";
+  const pyPart = py ? ` <span class="hsk-lr-pinyin">${escapeHtml(py)}</span>` : "";
   const sep = ` <span class="hsk-lr-sep">/</span> `;
   if (it.type === "word") {
     if (pos && mean) {
-      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(pos)}${sep}${escapeHtml(mean)}`;
+      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}<span class="hsk-lr-pos">${escapeHtml(pos)}</span>${sep}<span class="hsk-lr-mean">${escapeHtml(mean)}</span>`;
     }
     if (mean) {
-      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(mean)}`;
+      return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}<span class="hsk-lr-mean">${escapeHtml(mean)}</span>`;
     }
     return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
   }
   if (mean) {
-    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}${escapeHtml(mean)}`;
+    return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}${sep}<span class="hsk-lr-mean">${escapeHtml(mean)}</span>`;
   }
   return `<span class="hsk-lr-line-zh"${speakAttrs(trim(it.text))}>${text}</span>${pyPart}`;
 }
