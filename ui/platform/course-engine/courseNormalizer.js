@@ -45,6 +45,8 @@ export function normalizeLesson(rawLesson, context = {}) {
     courseType,
     version,
     level,
+    /** 与 platform lessonNormalizer 一致；page.hsk 用 type==='review' 分支复习 UI（勿只放在 meta） */
+    type: str(normalized?.type ?? raw?.type ?? "lesson"),
     title: normalized.title ?? {},
     vocab: Array.isArray(normalized.vocab) ? normalized.vocab : [],
     dialogueCards: Array.isArray(raw?.dialogueCards) ? raw.dialogueCards : buildDialogueCardsFromFlat(normalized.dialogue),
@@ -58,7 +60,7 @@ export function normalizeLesson(rawLesson, context = {}) {
       courseId,
       lessonNo,
       file,
-      type: str(raw?.type ?? "lesson"),
+      type: str(normalized?.type ?? raw?.type ?? "lesson"),
     },
     _raw: raw,
   };
@@ -82,6 +84,7 @@ function createEmptyLesson(context) {
     courseType,
     version,
     level,
+    type: "lesson",
     title: {},
     vocab: [],
     dialogueCards: [],

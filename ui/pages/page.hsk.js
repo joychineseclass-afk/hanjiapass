@@ -87,6 +87,62 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** GCE 曾只把 type 放在 meta；判断复习课需同时看顶层与 meta */
+function lessonIsReview(lessonData) {
+  return (
+    String(lessonData?.type || lessonData?.meta?.type || "")
+      .toLowerCase()
+      .trim() === "review"
+  );
+}
+
+/**
+ * 平台 loadLessonDetail 优先走 GLOBAL_COURSE_ENGINE，不会合并 vocab-distribution / review range。
+ * 复习课（及第 21/22 课）必须再经 HSK_LOADER 拉平真实词表与会话合并数据。
+ */
+async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
+  await ensureHSKDeps();
+  if (!lessonData || !window.HSK_LOADER?.loadLessonDetail) return lessonData;
+  const no = Number(lessonNo) || 1;
+  const f = String(file || "");
+  if (!lessonIsReview(lessonData) && no !== 21 && no !== 22) return lessonData;
+  try {
+    const L = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
+      version: state.version,
+      file: f || undefined,
+    });
+    if (!L || typeof L !== "object") return lessonData;
+    const mergedType = String(L.type || lessonData.type || lessonData.meta?.type || "lesson").trim();
+    const next = {
+      ...lessonData,
+      type: mergedType,
+      vocab: Array.isArray(L.vocab) ? L.vocab : lessonData.vocab,
+      words: Array.isArray(L.words) ? L.words : lessonData.words,
+      dialogue: L.dialogue != null ? L.dialogue : lessonData.dialogue,
+      dialogueCards:
+        L.dialogueCards != null
+          ? L.dialogueCards
+          : L.dialogue != null
+            ? L.dialogue
+            : lessonData.dialogueCards,
+      grammar: L.grammar != null ? L.grammar : lessonData.grammar,
+      extension: L.extension != null ? L.extension : lessonData.extension,
+      practice:
+        Array.isArray(L.practice) && L.practice.length ? L.practice : lessonData.practice,
+      review: L.review ?? lessonData.review,
+      steps: L.steps ?? lessonData.steps,
+      stepKeys: L.stepKeys ?? lessonData.stepKeys,
+    };
+    if (lessonData.meta && typeof lessonData.meta === "object") {
+      next.meta = { ...lessonData.meta, type: mergedType };
+    }
+    return next;
+  } catch (e) {
+    console.warn("[HSK] mergeReviewLessonFromHskLoader failed:", e?.message || e);
+    return lessonData;
+  }
+}
+
 function stringifyMaybe(v) {
   if (v == null) return "";
   if (typeof v === "string") return v;
@@ -1654,6 +1710,8 @@ async function openLesson({ lessonNo, file } = {}) {
     return;
   }
 
+  lessonData = await mergeReviewLessonFromHskLoader(lessonData, no, f);
+
   try {
     const raw = loadRes && loadRes.raw;
     const rp = raw && raw.practice;
@@ -1711,7 +1769,7 @@ async function openLesson({ lessonNo, file } = {}) {
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
 
-  const isReviewLesson = String(lessonData.type || "") === "review";
+  const isReviewLesson = lessonIsReview(lessonData);
   if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
     state.tab = "words";
   }
@@ -1850,7 +1908,7 @@ function rerenderHSKFromState() {
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
   const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
-  const isReviewLesson = String(lessonData.type || "") === "review";
+  const isReviewLesson = lessonIsReview(lessonData);
   if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
     state.tab = "words";
   }
@@ -2555,10 +2613,9 @@ function showListMode() {
 function updateTabsUI() {
   const hideReviewTab = (() => {
     const cur = state.current;
-    if (!cur || !cur.lessonData) return false;
+    if (!cur) return false;
     const lessonNo = Number(cur.lessonNo) || 0;
-    const isRev = String(cur.lessonData.type || "") === "review";
-    return isRev && (lessonNo === 21 || lessonNo === 22);
+    return lessonNo === 21 || lessonNo === 22;
   })();
 
   const ids = [
