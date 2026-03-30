@@ -584,12 +584,8 @@
       stepKeys: stepKeys(steps),
     };
 
-    // 最终一步：distribution 决定词表顺序与全库兜底；再把课 JSON 里的教材扩展字段合并回来
-    const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
-    if (Array.isArray(distributionVocab) && distributionVocab.length > 0) {
-      const mergedVocab = mergeVocabFromLessonFile(distributionVocab, vocabArr);
-      lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
-    } else if (source.type === "review") {
+    // 复习课：单词区仅以 loadAndMergeReviewRange 合并的 vocab 为权威，不走 vocab-distribution 静态名单
+    if (source.type === "review") {
       try {
         const { filterMergedVocabForReviewLesson } = await import("/ui/modules/hsk/hskRenderer.js");
         const tmpLesson = { dialogue: dialogueArr, dialogueCards: dialogueArr };
@@ -597,6 +593,13 @@
         lesson = { ...lesson, vocab: filtered, words: filtered };
       } catch (e) {
         console.warn("[HSK_LOADER] filterMergedVocabForReviewLesson failed:", e && e.message ? e.message : e);
+      }
+    } else {
+      // 普通课：distribution 决定词表顺序与全库兜底；课 JSON 字段按汉字键 enrich
+      const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
+      if (Array.isArray(distributionVocab) && distributionVocab.length > 0) {
+        const mergedVocab = mergeVocabFromLessonFile(distributionVocab, vocabArr);
+        lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
       }
     }
 
