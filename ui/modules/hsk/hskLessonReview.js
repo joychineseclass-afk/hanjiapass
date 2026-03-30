@@ -758,10 +758,10 @@ export function renderLessonReviewHTML(reviewData) {
   }
 
   const lis = items
-    .map((it) => {
-      const mod = it.type === "word" ? " lesson-review-item--word" : "";
-      return `<li class="lesson-review-item review-item hsk-lr-compact${mod}" role="listitem">${formatCompactLine(it)}</li>`;
-    })
+    .map(
+      (it) =>
+        `<li class="lesson-review-item review-item hsk-lr-compact" role="listitem">${formatCompactLine(it)}</li>`
+    )
     .join("");
 
   return `<div class="hsk-lesson-review lesson-review-summary-root hsk-review-compact-dir">

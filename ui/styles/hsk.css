@@ -1674,12 +1674,9 @@
   border-color: #cbd5e1;
 }
 
-.hsk-review-compact-dir .lesson-review-item--word .hsk-lr-line-zh {
+/* 单词与句子统一：仅中文主体加粗；拼音/词性/释义由各自 class 控制常规字重 */
+.hsk-review-compact-dir .lesson-review-item .hsk-lr-line-zh {
   font-weight: 600;
-}
-
-.hsk-review-compact-dir .lesson-review-item:not(.lesson-review-item--word) .hsk-lr-line-zh {
-  font-weight: 500;
 }
 
 .hsk-review-compact-dir .hsk-lr-sep {
