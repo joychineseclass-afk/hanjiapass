@@ -625,19 +625,20 @@
     const lessons = [];
 
     for (let n = from; n <= to; n++) {
-      const { COURSES } = await import("/ui/platform/index.js");
-      const course = await COURSES.loadCourse(
-        { type: "hsk", level: lv, lessonNo: n },
-        { track: version, file: `lesson${n}.json` }
-      );
-      const raw = course.raw || {};
-      const v = Array.isArray(raw.vocab) ? raw.vocab : (Array.isArray(raw.words) ? raw.words : []);
+      // 复习课合并来源必须与普通课页面一致：使用 loader 收口后的词表（distribution -> loader）
+      const normalLesson = await loadLessonDetail(lv, n, {
+        version,
+        file: `lesson${n}.json`,
+      });
+      const v = Array.isArray(normalLesson?.vocab)
+        ? normalLesson.vocab
+        : (Array.isArray(normalLesson?.words) ? normalLesson.words : []);
       const d =
-        Array.isArray(raw.dialogueCards) && raw.dialogueCards.length > 0
-          ? raw.dialogueCards
-          : (Array.isArray(raw.dialogue) ? raw.dialogue : []);
-      const g = Array.isArray(raw.grammar) ? raw.grammar : [];
-      const e = Array.isArray(raw.extension) ? raw.extension : [];
+        Array.isArray(normalLesson?.dialogueCards) && normalLesson.dialogueCards.length > 0
+          ? normalLesson.dialogueCards
+          : (Array.isArray(normalLesson?.dialogue) ? normalLesson.dialogue : []);
+      const g = Array.isArray(normalLesson?.grammar) ? normalLesson.grammar : [];
+      const e = Array.isArray(normalLesson?.extension) ? normalLesson.extension : [];
 
       lessons.push({ vocab: v, dialogue: d, grammar: g, extension: e });
 
