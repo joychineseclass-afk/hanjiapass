@@ -239,70 +239,17 @@
   ],
   "grammar": [
     {
-      "pattern": "你好",
-      "pinyin": "nǐ hǎo",
+      "pattern": "本课暂无重点语法",
+      "pinyin": "",
       "explanation": {
-        "kr": "가장 기본적인 인사 표현입니다.",
-        "en": "A basic greeting used when meeting someone.",
-        "jp": "基本的な挨拶表現です。"
+        "zh": "本课以礼貌表达与基础会话为主，暂不单列语法点。",
+        "en": "This lesson focuses on core expressions and short dialogues, so there is no dedicated grammar point.",
+        "kr": "이번 과는 기본 표현과 짧은 회화 중심으로, 별도 문법 포인트를 두지 않습니다.",
+        "jp": "この課は基本表現と短い会話が中心のため、独立した文法ポイントはありません。"
       },
       "example": {
-        "text": "你好！",
-        "pinyin": "Nǐ hǎo ！",
-        "translation": {
-          "kr": "",
-          "en": "",
-          "jp": ""
-        }
-      }
-    },
-    {
-      "pattern": "谢谢",
-      "pinyin": "xièxie",
-      "explanation": {
-        "kr": "감사를 표현할 때 사용합니다.",
-        "en": "Used to express thanks.",
-        "jp": "感謝を表すときに使います。"
-      },
-      "example": {
-        "text": "谢谢。",
-        "pinyin": "Xiè xiè 。",
-        "translation": {
-          "kr": "",
-          "en": "",
-          "jp": ""
-        }
-      }
-    },
-    {
-      "pattern": "不客气",
-      "pinyin": "bú kèqi",
-      "explanation": {
-        "kr": "감사에 대한 응답 표현입니다.",
-        "en": "A response to 'thank you'.",
-        "jp": "「ありがとう」に対する返答です。"
-      },
-      "example": {
-        "text": "不客气。",
-        "pinyin": "Bú kè qì 。",
-        "translation": {
-          "kr": "",
-          "en": "",
-          "jp": ""
-        }
-      }
-    },
-    {
-      "pattern": "再见",
-      "pinyin": "zàijiàn",
-      "explanation": {
-        "kr": "헤어질 때 사용하는 인사 표현입니다.",
-        "en": "Used when saying goodbye.",
-        "jp": "別れるときに使う表現です。"
-      },
-      "example": {
-        "text": "再见。。",
-        "pinyin": "Zài jiàn  。",
+        "text": "",
+        "pinyin": "",
         "translation": {
           "kr": "",
           "en": "",

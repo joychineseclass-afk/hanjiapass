@@ -139,7 +139,25 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
-    }
+    },
+    "senseNote": {
+      "zh": "别人说“谢谢”时的常用回应。",
+      "en": "A common response when someone says thank you.",
+      "ko": "상대가 감사하는 말을 할 때 쓰는 응답 표현입니다.",
+      "jp": "相手に感謝されたときの定番の返答です。"
+    },
+    "examples": [
+      {
+        "zh": "不客气。",
+        "pinyin": "Bú kèqi.",
+        "translation": {
+          "zh": "不客气。",
+          "en": "You are welcome.",
+          "ko": "천만에요.",
+          "jp": "どういたしまして。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0009",
@@ -400,7 +418,25 @@
       "en": "expression",
       "ko": "표현",
       "jp": "表現"
-    }
+    },
+    "senseNote": {
+      "zh": "用于道歉或表达抱歉。",
+      "en": "Used to apologize or say sorry.",
+      "ko": "사과하거나 미안함을 표현할 때 씁니다.",
+      "jp": "謝るときに使います。"
+    },
+    "examples": [
+      {
+        "zh": "对不起。",
+        "pinyin": "Duìbuqǐ.",
+        "translation": {
+          "zh": "对不起。",
+          "en": "Sorry.",
+          "ko": "죄송합니다.",
+          "jp": "すみません。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0024",
@@ -1138,7 +1174,25 @@
       "en": "expression",
       "ko": "표현",
       "jp": "表現"
-    }
+    },
+    "senseNote": {
+      "zh": "回应“对不起”，表示不介意。",
+      "en": "A response to sorry, meaning it is okay.",
+      "ko": "사과 표현에 대해 괜찮다고 답할 때 씁니다.",
+      "jp": "謝罪への返答で、気にしないという意味です。"
+    },
+    "examples": [
+      {
+        "zh": "没关系。",
+        "pinyin": "Méi guānxi.",
+        "translation": {
+          "zh": "没关系。",
+          "en": "It is okay.",
+          "ko": "괜찮아요.",
+          "jp": "大丈夫です。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0066",
@@ -2205,7 +2259,25 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
-    }
+    },
+    "senseNote": {
+      "zh": "用于表达感谢。",
+      "en": "Used to express thanks.",
+      "ko": "감사를 표현할 때 씁니다.",
+      "jp": "感謝を伝えるときに使います。"
+    },
+    "examples": [
+      {
+        "zh": "谢谢。",
+        "pinyin": "Xièxie.",
+        "translation": {
+          "zh": "谢谢。",
+          "en": "Thank you.",
+          "ko": "감사합니다.",
+          "jp": "ありがとうございます。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0127",
@@ -2415,7 +2487,25 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
-    }
+    },
+    "senseNote": {
+      "zh": "告别时使用的表达。",
+      "en": "Used when saying goodbye.",
+      "ko": "헤어질 때 쓰는 작별 인사입니다.",
+      "jp": "別れるときに使う表現です。"
+    },
+    "examples": [
+      {
+        "zh": "再见。",
+        "pinyin": "Zàijiàn.",
+        "translation": {
+          "zh": "再见。",
+          "en": "Goodbye.",
+          "ko": "안녕히 가세요/계세요.",
+          "jp": "さようなら。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0139",
@@ -2620,5 +2710,47 @@
       "level": "hsk1",
       "version": "hsk2.0"
     }
+  },
+  {
+    "id": "hsk2.0:hsk1:0151",
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning": {
+      "zh": "你好",
+      "en": "hello",
+      "ko": "",
+      "jp": "こんにちは"
+    },
+    "tags": {
+      "generated": false
+    },
+    "pos": {
+      "zh": "惯用语",
+      "en": "expression",
+      "ko": "표현",
+      "jp": "表現"
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    },
+    "senseNote": {
+      "zh": "见面时最常用的问候语。",
+      "en": "The most common greeting when meeting someone.",
+      "ko": "만났을 때 가장 기본적으로 쓰는 인사말입니다.",
+      "jp": "会ったときに最もよく使う挨拶です。"
+    },
+    "examples": [
+      {
+        "zh": "你好。",
+        "pinyin": "Nǐ hǎo.",
+        "translation": {
+          "zh": "你好。",
+          "en": "Hello.",
+          "ko": "안녕하세요.",
+          "jp": "こんにちは。"
+        }
+      }
+    ]
   }
 ]
