@@ -139,6 +139,33 @@
       zh: safeText(m.zh || m.cn) || hanzi,
     };
 
+    const rawPos = raw && raw.pos;
+    let pos;
+    if (rawPos != null) {
+      const p = normalizeLangValue(rawPos);
+      if (typeof p === "string") {
+        const zhPos = safeText(p);
+        if (zhPos) pos = { zh: zhPos, cn: zhPos };
+      } else if (p && typeof p === "object") {
+        const kr = safeText(p.kr || p.ko);
+        const ko = safeText(p.ko || p.kr);
+        const zh = safeText(p.zh || p.cn);
+        const cn = safeText(p.cn || p.zh);
+        const en = safeText(p.en || p.english);
+        const jp = safeText(p.jp || p.ja);
+        const ja = safeText(p.ja || p.jp);
+        const out = {};
+        if (kr) out.kr = kr;
+        if (ko) out.ko = ko;
+        if (zh) out.zh = zh;
+        if (cn) out.cn = cn;
+        if (en) out.en = en;
+        if (jp) out.jp = jp;
+        if (ja) out.ja = ja;
+        if (Object.keys(out).length) pos = out;
+      }
+    }
+
     const rawEx = raw && (raw.example || raw.sentence || raw.eg || raw.ex);
     const ex = typeof rawEx === "object" ? rawEx : { zh: rawEx || "" };
     const example = (ex && (ex.zh || ex.ko || ex.en)) ? {
@@ -158,6 +185,7 @@
       hanzi,
       pinyin: safeText(pinyin),
       meaning,
+      pos,
       example: example && (example.zh || example.ko || example.en) ? example : undefined,
       tags: Object.keys(tags).length ? tags : undefined,
       word: hanzi,
