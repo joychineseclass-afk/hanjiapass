@@ -288,14 +288,9 @@ function expandDialogueUnitsWithControlledSplit(dialUnits, lessonSplitAllowlist)
 }
 
 /**
- * 普通新课：单词卡主顺序来自 lessons.json（及单课 json）人工确认的 vocabTargets；lesson.vocab 仅做拼音/释义 enrich。
- * 若本课 vocabTargets 非空：严格按该列表顺序出卡（排除前几课已学），不做对话派生与整句过滤。
- * 若为空：回退为「定稿 dialogue → 受控拆分（lessonSplitAllowlist 作门闸）」。
- * @param {object} lessonData - 归一化后的 lesson
- * @param {Array} lessonVocabForEnrich - 通常为 startLesson 的 vocab 列表
- * @param {Set<string>} priorHanziSet - 前几课已学汉字（同规则派生）
- * @param {object} [opts]
- * @param {string[]|Set<string>|null} [opts.lessonSplitAllowlist] - 本课 vocabTargets
+ * 普通新课：词条集合完全由上游（distribution）决定。
+ * - 不再按 vocabTargets / prior lesson / 对话拆分做二次过滤
+ * - lessonVocabForEnrich 仅用于补充 metadata，不作为显示门槛
  */
 export function deriveRegularLessonPanelWordList(
   lessonData,
@@ -303,34 +298,15 @@ export function deriveRegularLessonPanelWordList(
   priorHanziSet,
   opts = {}
 ) {
-  const { diagnosticLog = true, lessonSplitAllowlist = null } = opts;
-  const prior = priorHanziSet instanceof Set ? priorHanziSet : new Set();
+  const { diagnosticLog = true } = opts;
   const enrich = Array.isArray(lessonVocabForEnrich) ? lessonVocabForEnrich : [];
-
-  const targetsOrder = coerceTargetsOrder(lessonSplitAllowlist);
-  let baseUnits = [];
-  let dialUnits = [];
-  let baseLayerUsed = "lesson_dialogue_plus_controlled_split";
-
-  if (targetsOrder.length > 0) {
-    baseLayerUsed = "lessons_vocab_targets_order";
-    dialUnits = targetsOrder.map((t) => ({ hanzi: t }));
-  } else {
-    baseUnits = collectDialogueTeachingUnitsInOrder(lessonData);
-    dialUnits = expandDialogueUnitsWithControlledSplit(baseUnits, lessonSplitAllowlist);
-  }
-
-  const dialogueZhs = collectDialogueHanziSet(lessonData);
-  const enriched = enrichPanelFromLessonVocab(dialUnits, enrich);
+  const enriched = enrichPanelFromLessonVocab(enrich, enrich);
 
   const out = [];
   const seen = new Set();
-  const skipSentenceFilter = targetsOrder.length > 0;
   for (const w of enriched) {
     const h = wordKey(w);
     if (!h || seen.has(h)) continue;
-    if (prior.has(h)) continue;
-    if (!skipSentenceFilter && isLikelyFullSentenceVocab(h, dialogueZhs, false)) continue;
     seen.add(h);
     out.push(w);
   }
@@ -340,14 +316,11 @@ export function deriveRegularLessonPanelWordList(
       "[HSK-WORD-SOURCE]",
       JSON.stringify({
         phase: "summary",
-        baseLayerUsed,
+        baseLayerUsed: "distribution_upstream_no_secondary_filter",
         lessonNo: Number(lessonData?.lessonNo) || 0,
         counts: {
           panelWordsFinal: out.length,
-          dialogueTeachingUnits: baseUnits.length,
-          afterControlledSplit: dialUnits.length,
-          vocabTargetsOrderLen: targetsOrder.length,
-          priorHanziExcluded: prior.size,
+          upstreamItems: enrich.length,
         },
       })
     );
@@ -360,7 +333,9 @@ export function deriveRegularLessonPanelWordList(
 export function collectRegularLessonPanelHanziKeys(lessonData, lessonSplitAllowlist) {
   const list = deriveRegularLessonPanelWordList(
     lessonData,
-    [],
+    Array.isArray(lessonData?.vocab)
+      ? lessonData.vocab
+      : (Array.isArray(lessonData?.words) ? lessonData.words : []),
     new Set(),
     {
       diagnosticLog: false,

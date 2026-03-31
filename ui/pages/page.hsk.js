@@ -97,15 +97,15 @@ function lessonIsReview(lessonData) {
 }
 
 /**
- * 平台 loadLessonDetail 优先走 GLOBAL_COURSE_ENGINE，不会合并 vocab-distribution / review range。
- * 复习课（及第 21/22 课）必须再经 HSK_LOADER 拉平真实词表与会话合并数据。
+ * 平台 loadLessonDetail 优先走 GLOBAL_COURSE_ENGINE；HSK 页面统一再经 HSK_LOADER 对齐课件详情。
+ * - 普通课：确保单词集合来自 vocab-distribution
+ * - 复习课：保持既有 review range 聚合逻辑
  */
 async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
   await ensureHSKDeps();
   if (!lessonData || !window.HSK_LOADER?.loadLessonDetail) return lessonData;
   const no = Number(lessonNo) || 1;
   const f = String(file || "");
-  if (!lessonIsReview(lessonData) && no !== 21 && no !== 22) return lessonData;
   try {
     const L = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
       version: state.version,
@@ -1783,12 +1783,8 @@ async function openLesson({ lessonNo, file } = {}) {
       upstreamField,
     });
   } else {
-    const targetsByNo = await ensureHskLessonVocabTargetsByNo();
-    const lessonSplitAllowlist = targetsByNo.get(no) || [];
-    const priorHanzi = await collectPriorRegularLessonHanziSet(no, targetsByNo);
-    panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, priorHanzi, {
-      lessonSplitAllowlist,
-    });
+    // 普通课：显示集合完全以上游 distribution 结果为准，不做 targets/prior 二次过滤
+    panelWords = deriveRegularLessonPanelWordList(lessonData, lessonWords, new Set(), {});
   }
 
   state.tab = "words";
