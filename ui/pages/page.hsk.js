@@ -1674,8 +1674,8 @@ async function collectPriorRegularLessonHanziSet(lessonNo, targetsByNo) {
     const ld = item.res && item.res.lesson;
     if (!ld || String(ld.type || "") === "review") continue;
     const pNo = Number(ld.lessonNo ?? item.n) || item.n;
-    const allow = tMap.get(pNo) || [];
-    for (const h of collectRegularLessonPanelHanziKeys(ld, allow)) set.add(h);
+    const priorPanelWords = Array.isArray(ld?.vocab) ? ld.vocab : [];
+    for (const h of collectRegularLessonPanelHanziKeys(priorPanelWords)) set.add(h);
   }
   return set;
 }

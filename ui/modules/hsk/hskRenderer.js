@@ -288,27 +288,37 @@ function expandDialogueUnitsWithControlledSplit(dialUnits, lessonSplitAllowlist)
 }
 
 /**
- * 普通新课：词条集合完全由上游（distribution）决定。
- * - 不再按 vocabTargets / prior lesson / 对话拆分做二次过滤
- * - lessonVocabForEnrich 仅用于补充 metadata，不作为显示门槛
+ * 普通课单词面板（lesson1~20）：
+ * - 显示集合唯一来源：panelWordsFromLoader（上游由 distribution -> loader 收口后的结果）
+ * - 渲染层不再猜测 lessonData.vocab / lessonData.words 等字段
+ * - 仅做稳定去重与最小兜底，不再做二次过滤
+ * - lesson 元数据补充发生在 loader 阶段；本函数不以元数据存在与否作为显示门槛
  */
 export function deriveRegularLessonPanelWordList(
   lessonData,
-  lessonVocabForEnrich,
+  panelWordsFromLoader,
   priorHanziSet,
   opts = {}
 ) {
   const { diagnosticLog = true } = opts;
-  const enrich = Array.isArray(lessonVocabForEnrich) ? lessonVocabForEnrich : [];
-  const enriched = enrichPanelFromLessonVocab(enrich, enrich);
+  const upstream = Array.isArray(panelWordsFromLoader) ? panelWordsFromLoader : [];
 
   const out = [];
   const seen = new Set();
-  for (const w of enriched) {
+  for (const w of upstream) {
     const h = wordKey(w);
     if (!h || seen.has(h)) continue;
     seen.add(h);
-    out.push(w);
+    if (typeof w === "string") {
+      out.push({
+        hanzi: h,
+        word: h,
+        pinyin: "",
+        meaning: { ko: "", en: "", zh: h },
+      });
+      continue;
+    }
+    out.push(w && typeof w === "object" ? w : { hanzi: h, word: h });
   }
 
   if (diagnosticLog && typeof console !== "undefined" && console.log) {
@@ -320,7 +330,7 @@ export function deriveRegularLessonPanelWordList(
         lessonNo: Number(lessonData?.lessonNo) || 0,
         counts: {
           panelWordsFinal: out.length,
-          upstreamItems: enrich.length,
+          upstreamItems: upstream.length,
         },
       })
     );
@@ -329,19 +339,11 @@ export function deriveRegularLessonPanelWordList(
   return out;
 }
 
-/** 用于前几课「已学」集合：与 panel 派生规则一致（不含 prior 互斥） */
-export function collectRegularLessonPanelHanziKeys(lessonData, lessonSplitAllowlist) {
-  const list = deriveRegularLessonPanelWordList(
-    lessonData,
-    Array.isArray(lessonData?.vocab)
-      ? lessonData.vocab
-      : (Array.isArray(lessonData?.words) ? lessonData.words : []),
-    new Set(),
-    {
-      diagnosticLog: false,
-      lessonSplitAllowlist: lessonSplitAllowlist || null,
-    }
-  );
+/** 从普通课正式输入（panelWordsFromLoader）提取汉字键；不做任何字段猜测。 */
+export function collectRegularLessonPanelHanziKeys(panelWordsFromLoader) {
+  const list = deriveRegularLessonPanelWordList(null, panelWordsFromLoader, new Set(), {
+    diagnosticLog: false,
+  });
   return new Set(list.map((w) => wordKey(w)).filter(Boolean));
 }
 
