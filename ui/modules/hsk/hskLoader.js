@@ -536,7 +536,7 @@
     const doc = course.doc || {};
     const c = doc.content;
 
-    let vocabArr, dialogueArr, grammarArr, extensionArr, practiceArr;
+    let vocabArr, lessonVocabForEnrich, dialogueArr, grammarArr, extensionArr, practiceArr;
 
     if (source.type === "review") {
       const range = source.review?.lessonRange || source.review?.range || [];
@@ -550,8 +550,10 @@
       extensionArr = merged.extension;
       practiceArr = merged.practice;
     } else {
-      vocabArr = Array.isArray(source.vocab) ? source.vocab
+      lessonVocabForEnrich = Array.isArray(source.vocab) ? source.vocab
         : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
+      // 普通课单词区只认 distribution；课内 vocab 仅用于 enrich examples/senseNote，不作为词表 fallback。
+      vocabArr = [];
       // 会话优先级：1) 非空 dialogueCards 2) 非空 dialogue 3) 非空 doc.content.dialogue 4) 空数组
       if (Array.isArray(source.dialogueCards) && source.dialogueCards.length > 0) {
         dialogueArr = source.dialogueCards;
@@ -595,12 +597,12 @@
         console.warn("[HSK_LOADER] filterMergedVocabForReviewLesson failed:", e && e.message ? e.message : e);
       }
     } else {
-      // 普通课：distribution 决定词表顺序与全库兜底；课 JSON 字段按汉字键 enrich
+      // 普通课：单词区唯一来源为 distribution；课 JSON 字段仅按汉字键 enrich
       const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
-      if (Array.isArray(distributionVocab) && distributionVocab.length > 0) {
-        const mergedVocab = mergeVocabFromLessonFile(distributionVocab, vocabArr);
-        lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
-      }
+      const mergedVocab = Array.isArray(distributionVocab)
+        ? mergeVocabFromLessonFile(distributionVocab, lessonVocabForEnrich)
+        : [];
+      lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
     }
 
     memSet(memKey, lesson);

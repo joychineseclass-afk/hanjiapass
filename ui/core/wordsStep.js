@@ -1,9 +1,7 @@
 // /ui/core/wordsStep.js
 // ✅ Words Step (Stable)
-// - Load words from:
-//   1) loader.loadLesson(lessonId) if exists
-//   2) DATA_PATHS.lessonsUrl(lessonId) -> (pack {lessons:[]}) -> fetch single lesson
-//   3) fallback ./data/courses/${lessonId}.json
+// - HSK lessons: only use HSK_LOADER.loadLessonDetail (distribution-driven words)
+// - Non-HSK lessons: keep legacy pack/single fetch compatibility
 // - Render:
 //   A) if window.HSK_RENDER.renderWordCards exists -> render into modal container
 //   B) fallback: simple list rendering
@@ -43,22 +41,30 @@ function normalizeWord(w) {
   return w || {};
 }
 
+function parseHskLessonRef(lessonId) {
+  const s = String(lessonId || "");
+  const m = s.match(/^hsk(\d+)_lesson(\d+)$/i);
+  if (!m) return null;
+  return { level: String(Number(m[1])), lessonNo: Number(m[2]) || 1 };
+}
+
 // ---------- 1) Load lesson words ----------
 async function loadWordsForLesson(lessonId) {
   // ✅ StepA log #1: 入口 lessonId
   console.log("[wordsStep:A] lessonId =", lessonId);
 
-  // 1) 优先 loader
-  const loader =
-    window.HSK_LOADER ||
-    window.hskLoader ||
-    window.JOY_LOADER ||
-    null;
+  const hskRef = parseHskLessonRef(lessonId);
+  const hskLoader = window.HSK_LOADER || window.hskLoader || null;
 
-  if (loader?.loadLesson) {
+  // HSK 课程：只走 lessonDetail（普通课词表来源固定为 vocab-distribution）
+  if (hskRef && hskLoader?.loadLessonDetail) {
     try {
-      const data = await loader.loadLesson(lessonId);
-
+      const version =
+        hskLoader.getVersion?.() ||
+        localStorage.getItem("hsk_vocab_version") ||
+        window.APP_VOCAB_VERSION ||
+        "hsk2.0";
+      const data = await hskLoader.loadLessonDetail(hskRef.level, hskRef.lessonNo, { version });
       const list =
         data?.vocab ||
         data?.words ||
@@ -66,18 +72,16 @@ async function loadWordsForLesson(lessonId) {
         data?.newWords ||
         data?.vocabulary ||
         [];
-
-      // （可选）不算StepA三条log，但很有用：告诉你走的是 loader 分支
-      console.log("[wordsStep] loader.loadLesson used, words =", Array.isArray(list) ? list.length : 0);
-
+      console.log("[wordsStep] HSK_LOADER.loadLessonDetail used, words =", Array.isArray(list) ? list.length : 0);
       return list;
     } catch (e) {
-      console.warn("[wordsStep] loader.loadLesson failed, fallback to fetch:", e);
-      // 继续走下面 fetch 分支
+      console.warn("[wordsStep] HSK_LOADER.loadLessonDetail failed, return empty list:", e);
+      return [];
     }
   }
 
-  // 2) DATA_PATHS.lessonsUrl
+  // 非 HSK 课程保留 legacy 读取方式
+  // 1) DATA_PATHS.lessonsUrl
   const dp = window.DATA_PATHS || null;
   let url = null;
 
@@ -93,7 +97,7 @@ async function loadWordsForLesson(lessonId) {
     }
   }
 
-  // 3) fallback 单课路径
+  // 2) fallback 单课路径
   if (!url) {
     url = `./data/courses/${lessonId}.json`;
     // 不算StepA三条log，但也很关键：确认是不是走了 fallback

@@ -190,18 +190,6 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   }
   try {
     const raw = await fetchJson(url);
-    const lessonVocabFromFile = Array.isArray(raw.vocab) ? raw.vocab : [];
-    // 单词来源优先：distribution 顺序 + 全库兜底，再合并课 JSON 里的 senseNote / examples
-    await ensureHSKDeps();
-    const distributionVocab =
-      (await window.HSK_LOADER?.buildLessonVocabFromDistribution?.(lv, no, { version: ver })) ?? null;
-    if (Array.isArray(distributionVocab)) {
-      const merged =
-        window.HSK_LOADER?.mergeVocabFromLessonFile?.(distributionVocab, lessonVocabFromFile) ??
-        distributionVocab;
-      raw.vocab = merged;
-      raw.words = merged;
-    }
     const result = {
       raw,
       doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file: url }),
@@ -213,17 +201,6 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
     if (altUrl && altUrl !== url) {
       try {
         const raw = await fetchJson(altUrl);
-        const lessonVocabFromFile = Array.isArray(raw.vocab) ? raw.vocab : [];
-        await ensureHSKDeps();
-        const distributionVocab =
-          (await window.HSK_LOADER?.buildLessonVocabFromDistribution?.(lv, no, { version: ver })) ?? null;
-        if (Array.isArray(distributionVocab)) {
-          const merged =
-            window.HSK_LOADER?.mergeVocabFromLessonFile?.(distributionVocab, lessonVocabFromFile) ??
-            distributionVocab;
-          raw.vocab = merged;
-          raw.words = merged;
-        }
         const result = {
           raw,
           doc: legacyHskToLessonDoc(raw, { track: ver, level: lv, lessonNo: no, file: altUrl }),
