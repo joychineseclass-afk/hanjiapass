@@ -159,7 +159,10 @@
       }
     ],
     "pos": {
-      "zh": "对对方表达感谢的回应语"
+      "zh": "对对方表达感谢的回应语",
+      "kr": "상대의 감사에 답하는 표현",
+      "en": "response to someone's thanks",
+      "jp": "相手の感謝への返答表現"
     }
   },
   {
@@ -418,9 +421,10 @@
     },
     "pos": {
       "zh": "表示道歉语",
-      "en": "expression",
+      "en": "apology expression",
       "ko": "표현",
-      "jp": "表現"
+      "jp": "謝罪表現",
+      "kr": "사과 표현"
     },
     "senseNote": {
       "zh": "用于道歉或表达抱歉。",
@@ -1174,9 +1178,10 @@
     },
     "pos": {
       "zh": "对道歉的回应语",
-      "en": "expression",
+      "en": "response to an apology",
       "ko": "표현",
-      "jp": "表現"
+      "jp": "謝罪への返答表現",
+      "kr": "사과에 대한 응답 표현"
     },
     "senseNote": {
       "zh": "回应“对不起”，表示不介意。",
@@ -2282,7 +2287,10 @@
       }
     ],
     "pos": {
-      "zh": "表达感谢"
+      "zh": "表达感谢",
+      "kr": "감사 표현",
+      "en": "expression of thanks",
+      "jp": "感謝表現"
     }
   },
   {
@@ -2513,7 +2521,10 @@
       }
     ],
     "pos": {
-      "zh": "告别用语"
+      "zh": "告别用语",
+      "kr": "작별 표현",
+      "en": "farewell expression",
+      "jp": "別れの表現"
     }
   },
   {
@@ -2735,9 +2746,10 @@
     },
     "pos": {
       "zh": "见面打招呼问候语",
-      "en": "expression",
+      "en": "meeting greeting expression",
       "ko": "표현",
-      "jp": "表現"
+      "jp": "会ったときの挨拶表現",
+      "kr": "만날 때 쓰는 인사말"
     },
     "meta": {
       "level": "hsk1",
