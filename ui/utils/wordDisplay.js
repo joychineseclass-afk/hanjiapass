@@ -113,8 +113,20 @@ export function getPosByLang(word, lang, scope = "") {
   const p = word.pos;
   const hanzi = str(word.hanzi ?? word.word ?? word.zh ?? word.cn ?? "");
 
+  const hasPosObject =
+    typeof p === "object" &&
+    p != null &&
+    !!(
+      str(p.zh ?? p.cn) ||
+      str(p.kr ?? p.ko) ||
+      str(p.en ?? p.english) ||
+      str(p.jp ?? p.ja)
+    );
+  const hasPosString = typeof p === "string" && !!str(p);
+  const canUseTeachingPhraseFallback = !hasPosObject && !hasPosString;
+
   const phrase = TEACHING_PHRASE_POS[hanzi];
-  if (phrase) {
+  if (canUseTeachingPhraseFallback && phrase) {
     const normLang = lang === "ko" || lang === "kr" ? "kr" : lang === "zh" || lang === "cn" ? "cn" : lang === "ja" || lang === "jp" ? "jp" : "en";
     const out =
       phrase[normLang] ||
