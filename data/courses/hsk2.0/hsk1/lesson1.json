@@ -42,7 +42,110 @@
       "en": "Can say 很高兴认识你"
     }
   ],
+<<<<<<< HEAD
   "vocab": [],
+=======
+  "vocab": [
+    {
+      "hanzi": "你",
+      "pinyin": "nǐ",
+      "meaning": {
+        "zh": "你",
+        "kr": "너, 당신",
+        "jp": "あなた",
+        "en": "you"
+      },
+      "pos": {
+        "zh": "代词",
+        "kr": "대명사",
+        "en": "pronoun",
+        "jp": "代名詞"
+      },
+      
+    
+    {
+      "hanzi": "好",
+      "pinyin": "hǎo",
+      "meaning": {
+        "zh": "好",
+        "kr": "좋다",
+        "jp": "良い、いい",
+        "en": "good; OK"
+      },
+      "pos": {
+        "zh": "形容词",
+        "kr": "형용사",
+        "en": "adjective",
+        "jp": "形容詞"
+      },
+     
+        
+    {
+      "hanzi": "你好！",
+      "pinyin": "nǐ hǎo",
+      "meaning": {
+        "zh": "你好！",
+        "kr": "안녕하세요!",
+        "jp": "こんにちは！",
+        "en": "Hello!"
+      },
+      "pos": {
+        "zh": "问候语",
+        "kr": "인사",
+        "en": "greeting",
+        "jp": "あいさつ"
+      },
+      
+    {
+      "hanzi": "谢谢。",
+      "pinyin": "xiè xiè",
+      "meaning": {
+        "zh": "谢谢。",
+        "kr": "감사합니다.",
+        "jp": "ありがとうございます。",
+        "en": "Thank you."
+      },
+      "pos": {
+        "zh": "礼貌用语",
+        "kr": "예의 표현",
+        "en": "courtesy phrase",
+        "jp": "丁寧な表現"
+      },
+      
+    {
+      "hanzi": "不客气。",
+      "pinyin": "bú kè qì",
+      "meaning": {
+        "zh": "不客气。",
+        "kr": "천만에요.",
+        "jp": "どういたしまして。",
+        "en": "You're welcome."
+      },
+      "pos": {
+        "zh": "礼貌用语",
+        "kr": "예의 표현",
+        "en": "courtesy phrase",
+        "jp": "丁寧な表現"
+      },
+     
+    {
+      "hanzi": "再见。",
+      "pinyin": "zài jiàn",
+      "meaning": {
+        "zh": "再见。",
+        "kr": "안녕히 가세요.",
+        "jp": "さようなら。",
+        "en": "Goodbye."
+      },
+      "pos": {
+        "zh": "告别用语",
+        "kr": "작별 인사",
+        "en": "farewell",
+        "jp": "別れのあいさつ"
+      },
+     
+  ],
+>>>>>>> f7113c003e0d42e63e547283f77205709facd3b0
   "dialogue": [
     {
       "speaker": "A",
@@ -170,8 +273,8 @@
         "jp": "別れるときに使う表現です。"
       },
       "example": {
-        "text": "再见。你好！再见。",
-        "pinyin": "Zài jiàn 。 Nǐ hǎo ！ Zài jiàn 。",
+        "text": "再见。。",
+        "pinyin": "Zài jiàn  。",
         "translation": {
           "kr": "",
           "en": "",
