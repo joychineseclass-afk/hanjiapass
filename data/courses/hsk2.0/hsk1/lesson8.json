@@ -42,68 +42,7 @@
       "en": "Can do simple shopping at fruit shop"
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "苹果多少钱？",
-      "pinyin": "píng guǒ duō shǎo qián",
-      "meaning": {
-        "zh": "苹果多少钱？",
-        "kr": "사과 얼마예요?",
-        "jp": "りんごはいくらですか？",
-        "en": "How much are the apples?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "三块钱一个。",
-      "pinyin": "sān kuài qián yí gè",
-      "meaning": {
-        "zh": "三块钱一个。",
-        "kr": "하나에 삼 위안이에요.",
-        "jp": "一個三円です。",
-        "en": "Three yuan each."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我买六个苹果。",
-      "pinyin": "wǒ mǎi liù gè píng guǒ",
-      "meaning": {
-        "zh": "我买六个苹果。",
-        "kr": "사과 여섯 개 살게요.",
-        "jp": "りんごを六つ買います。",
-        "en": "I'll buy six apples."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "好的，十八块钱。",
-      "pinyin": "hǎo de shí bā kuài qián",
-      "meaning": {
-        "zh": "好的，十八块钱。",
-        "kr": "네, 십팔 위안이에요.",
-        "jp": "はい、十八元です。",
-        "en": "OK, eighteen yuan."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",

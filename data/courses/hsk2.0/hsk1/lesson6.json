@@ -42,68 +42,7 @@
       "en": "Can say friend, classmate"
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "你会说汉语吗？",
-      "pinyin": "nǐ huì shuō hàn yǔ ma",
-      "meaning": {
-        "zh": "你会说汉语吗？",
-        "kr": "중국어 할 수 있어요?",
-        "jp": "中国語を話せますか？",
-        "en": "Can you speak Chinese?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "是的，我会汉语。",
-      "pinyin": "shì de wǒ huì hàn yǔ",
-      "meaning": {
-        "zh": "是的，我会汉语。",
-        "kr": "네, 중국어 할 수 있어요.",
-        "jp": "はい、中国語ができます。",
-        "en": "Yes, I can speak Chinese."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "你在哪儿学习汉语？",
-      "pinyin": "nǐ zài nǎ ér xué xí hàn yǔ",
-      "meaning": {
-        "zh": "你在哪儿学习汉语？",
-        "kr": "어디서 중국어를 배워요?",
-        "jp": "どこで中国語を勉強していますか？",
-        "en": "Where do you study Chinese?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我在学校学习汉语。",
-      "pinyin": "wǒ zài xué xiào xué xí hàn yǔ",
-      "meaning": {
-        "zh": "我在学校学习汉语。",
-        "kr": "저는 학교에서 중국어를 배워요.",
-        "jp": "学校で中国語を勉強しています。",
-        "en": "I study Chinese at school."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",

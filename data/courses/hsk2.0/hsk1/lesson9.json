@@ -42,68 +42,7 @@
       "en": "Can say 喂, 请问, 我找..."
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "现在几点？",
-      "pinyin": "xiàn zài jǐ diǎn",
-      "meaning": {
-        "zh": "现在几点？",
-        "kr": "지금 몇 시예요?",
-        "jp": "今何時ですか？",
-        "en": "What time is it now?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "现在三点。",
-      "pinyin": "xiàn zài sān diǎn",
-      "meaning": {
-        "zh": "现在三点。",
-        "kr": "지금 세 시예요.",
-        "jp": "今三時です。",
-        "en": "It's three o'clock now."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我们几点上课？",
-      "pinyin": "wǒ men jǐ diǎn shàng kè",
-      "meaning": {
-        "zh": "我们几点上课？",
-        "kr": "몇 시에 수업해요?",
-        "jp": "何時に授業がありますか？",
-        "en": "What time do we have class?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "三点十分上课。",
-      "pinyin": "sān diǎn shí fēn shàng kè",
-      "meaning": {
-        "zh": "三点十分上课。",
-        "kr": "세 시 십 분에 수업이에요.",
-        "jp": "三時十分に授業があります。",
-        "en": "Class starts at 3:10."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",

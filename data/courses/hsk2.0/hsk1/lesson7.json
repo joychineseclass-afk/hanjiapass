@@ -42,68 +42,7 @@
       "en": "Can say age with number + 岁"
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "你几岁？",
-      "pinyin": "nǐ jǐ suì",
-      "meaning": {
-        "zh": "你几岁？",
-        "kr": "몇 살이에요?",
-        "jp": "何歳ですか？",
-        "en": "How old are you?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我十岁。",
-      "pinyin": "wǒ shí suì",
-      "meaning": {
-        "zh": "我十岁。",
-        "kr": "저는 열 살이에요.",
-        "jp": "十歳です。",
-        "en": "I'm ten years old."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "你多大？",
-      "pinyin": "nǐ duō dà",
-      "meaning": {
-        "zh": "你多大？",
-        "kr": "나이가 어떻게 되세요?",
-        "jp": "おいくつですか？",
-        "en": "How old are you?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我二十二岁。",
-      "pinyin": "wǒ èr shí èr suì",
-      "meaning": {
-        "zh": "我二十二岁。",
-        "kr": "저는 스물두 살이에요.",
-        "jp": "二十二歳です。",
-        "en": "I'm twenty-two years old."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",

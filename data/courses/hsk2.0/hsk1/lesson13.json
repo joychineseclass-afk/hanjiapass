@@ -42,68 +42,7 @@
       "en": "Can say who you're looking for and 能……吗？"
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "请问你找谁？",
-      "pinyin": "qǐng wèn nǐ zhǎo shuí",
-      "meaning": {
-        "zh": "请问你找谁？",
-        "kr": "실례지만 누구 찾으세요?",
-        "jp": "失礼ですが、どなたをお探しですか？",
-        "en": "May I ask who you are looking for?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我找王老师。",
-      "pinyin": "wǒ zhǎo wáng lǎo shī",
-      "meaning": {
-        "zh": "我找王老师。",
-        "kr": "왕 선생님 찾아요.",
-        "jp": "王老师を探しています。",
-        "en": "I'm looking for Teacher Wang."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "那我能等一下吗？",
-      "pinyin": "nà wǒ néng děng yí xià ma",
-      "meaning": {
-        "zh": "那我能等一下吗？",
-        "kr": "그럼 잠깐 기다려도 될까요?",
-        "jp": "では少し待ってもいいですか？",
-        "en": "Then can I wait a moment?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "可以。",
-      "pinyin": "kě yǐ",
-      "meaning": {
-        "zh": "可以。",
-        "kr": "네, 괜찮아요.",
-        "jp": "はい、大丈夫です。",
-        "en": "Yes, that's fine."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",
