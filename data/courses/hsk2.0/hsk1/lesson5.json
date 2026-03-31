@@ -47,7 +47,7 @@
     {
       "speaker": "A",
       "text": "你在哪儿？",
-      "pinyin": "Nǐ zài nǎ ér ？",
+      "pinyin": "Nǐ zài nǎr?",
       "translation": {
         "kr": "어디에 있어요?",
         "en": "Where are you?",
@@ -56,56 +56,147 @@
     },
     {
       "speaker": "B",
-      "text": "我在学校。",
-      "pinyin": "Wǒ zài xué xiào 。",
+      "text": "我在家里。",
+      "pinyin": "Wǒ zài jiā lǐ.",
       "translation": {
-        "kr": "저는 학교에 있어요.",
-        "en": "I'm at school.",
-        "jp": "学校にいます。"
+        "kr": "저는 집에 있어요.",
+        "en": "I'm at home.",
+        "jp": "私は家にいます。"
       }
     },
     {
       "speaker": "A",
-      "text": "教室开门了吗？",
-      "pinyin": "Jiào shì kāi mén le ma ？",
+      "text": "我的书在哪儿？",
+      "pinyin": "Wǒ de shū zài nǎr?",
       "translation": {
-        "kr": "교실 문 열렸어요?",
-        "en": "Is the classroom open?",
-        "jp": "教室は開いていますか？"
+        "kr": "제 책은 어디에 있어요?",
+        "en": "Where is my book?",
+        "jp": "私の本はどこにありますか？"
       }
     },
     {
       "speaker": "B",
-      "text": "开了。",
-      "pinyin": "Kāi le 。",
+      "text": "你的书在桌子上。",
+      "pinyin": "Nǐ de shū zài zhuōzi shàng.",
       "translation": {
-        "kr": "열렸어요.",
-        "en": "It's open.",
-        "jp": "開いています。"
+        "kr": "네 책은 책상 위에 있어요.",
+        "en": "Your book is on the table.",
+        "jp": "あなたの本は机の上にあります。"
       }
     },
     {
       "speaker": "A",
-      "text": "谁在教室里？",
-      "pinyin": "Shuí zài jiào shì lǐ ？",
+      "text": "猫在哪儿？",
+      "pinyin": "Māo zài nǎr?",
       "translation": {
-        "kr": "교실에 누가 있어요?",
-        "en": "Who is in the classroom?",
-        "jp": "教室に誰がいますか？"
+        "kr": "고양이는 어디에 있어요?",
+        "en": "Where is the cat?",
+        "jp": "猫はどこにいますか？"
       }
     },
     {
       "speaker": "B",
-      "text": "我和Anna。",
-      "pinyin": "Wǒ hé A n n a 。",
+      "text": "猫在椅子下面。",
+      "pinyin": "Māo zài yǐzi xiàmiàn.",
       "translation": {
-        "kr": "Anna랑 저요.",
-        "en": "Anna and I.",
-        "jp": "Annaと私です。"
+        "kr": "고양이는 의자 아래에 있어요.",
+        "en": "The cat is under the chair.",
+        "jp": "猫は椅子の下にいます。"
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你在哪儿？",
+          "pinyin": "Nǐ zài nǎr?",
+          "translation": {
+            "kr": "어디에 있어요?",
+            "en": "Where are you?",
+            "jp": "どこにいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我在家里。",
+          "pinyin": "Wǒ zài jiā lǐ.",
+          "translation": {
+            "kr": "저는 집에 있어요.",
+            "en": "I'm at home.",
+            "jp": "私は家にいます。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "我的书在哪儿？",
+          "pinyin": "Wǒ de shū zài nǎr?",
+          "translation": {
+            "kr": "제 책은 어디에 있어요?",
+            "en": "Where is my book?",
+            "jp": "私の本はどこにありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "你的书在桌子上。",
+          "pinyin": "Nǐ de shū zài zhuōzi shàng.",
+          "translation": {
+            "kr": "네 책은 책상 위에 있어요.",
+            "en": "Your book is on the table.",
+            "jp": "あなたの本は机の上にあります。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "猫在哪儿？",
+          "pinyin": "Māo zài nǎr?",
+          "translation": {
+            "kr": "고양이는 어디에 있어요?",
+            "en": "Where is the cat?",
+            "jp": "猫はどこにいますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "猫在椅子下面。",
+          "pinyin": "Māo zài yǐzi xiàmiàn.",
+          "translation": {
+            "kr": "고양이는 의자 아래에 있어요.",
+            "en": "The cat is under the chair.",
+            "jp": "猫は椅子の下にいます。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "哪儿",

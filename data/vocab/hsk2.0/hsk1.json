@@ -2773,5 +2773,56 @@
         }
       }
     ]
+  },
+  {
+    "id": "hsk2.0:hsk1:0152",
+    "hanzi": "哪儿",
+    "pinyin": "nǎr",
+    "meaning": {
+      "zh": "哪儿",
+      "en": "where",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0153",
+    "hanzi": "上面",
+    "pinyin": "shàngmiàn",
+    "meaning": {
+      "zh": "上面",
+      "en": "on top of; above",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0154",
+    "hanzi": "下面",
+    "pinyin": "xiàmiàn",
+    "meaning": {
+      "zh": "下面",
+      "en": "below; under",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
   }
 ]
