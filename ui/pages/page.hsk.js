@@ -1636,28 +1636,24 @@ async function ensureHskLessonVocabTargetsByNo() {
   return map;
 }
 
-async function collectPriorRegularLessonHanziSet(lessonNo, targetsByNo) {
+async function collectPriorRegularLessonHanziSet(lessonNo, _targetsByNo) {
   const set = new Set();
   const n0 = Number(lessonNo) || 0;
   if (n0 <= 1) return set;
-  if (!LESSON_ENGINE || typeof LESSON_ENGINE.loadLessonDetail !== "function") return set;
-
-  const ct = state.version;
-  const lv = `hsk${state.lv}`;
-  const tMap = targetsByNo instanceof Map ? targetsByNo : new Map();
+  await ensureHSKDeps();
+  if (!window.HSK_LOADER?.loadLessonDetail) return set;
 
   const loads = [];
   for (let n = 1; n < n0; n++) {
     const entry = state.lessons && state.lessons.find((x) => getLessonNumber(x) === n);
     const file = (entry && entry.file) || `lesson${n}.json`;
     loads.push(
-      LESSON_ENGINE.loadLessonDetail({
-        courseType: ct,
-        level: lv,
-        lessonNo: n,
-        file,
-      })
-        .then((res) => ({ n, res }))
+      window.HSK_LOADER
+        .loadLessonDetail(state.lv, n, {
+          version: state.version,
+          file,
+        })
+        .then((lesson) => ({ n, lesson }))
         .catch((err) => ({ n, err }))
     );
   }
@@ -1671,10 +1667,11 @@ async function collectPriorRegularLessonHanziSet(lessonNo, targetsByNo) {
       );
       continue;
     }
-    const ld = item.res && item.res.lesson;
+    const ld = item.lesson;
     if (!ld || String(ld.type || "") === "review") continue;
-    const pNo = Number(ld.lessonNo ?? item.n) || item.n;
-    const priorPanelWords = Array.isArray(ld?.vocab) ? ld.vocab : [];
+    const priorPanelWords = Array.isArray(ld?.vocab)
+      ? ld.vocab
+      : (Array.isArray(ld?.words) ? ld.words : []);
     for (const h of collectRegularLessonPanelHanziKeys(priorPanelWords)) set.add(h);
   }
   return set;
