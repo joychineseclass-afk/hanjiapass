@@ -42,54 +42,32 @@
       "en": "Can say 很高兴认识你"
     }
   ],
-
   "vocab": [],
-
   "dialogue": [
     {
       "speaker": "A",
-      "text": "你好！",
-      "pinyin": "Nǐ hǎo!",
+      "text": "你好",
+      "pinyin": "Nǐ hǎo",
       "translation": {
-        "kr": "안녕하세요!",
-        "en": "Hello!",
-        "jp": "こんにちは！"
+        "kr": "안녕하세요.",
+        "en": "Hello.",
+        "jp": "こんにちは。"
       }
     },
     {
       "speaker": "B",
-      "text": "你好！",
-      "pinyin": "Nǐ hǎo!",
+      "text": "你好",
+      "pinyin": "Nǐ hǎo",
       "translation": {
-        "kr": "안녕하세요!",
-        "en": "Hello!",
-        "jp": "こんにちは！"
+        "kr": "안녕하세요.",
+        "en": "Hello.",
+        "jp": "こんにちは。"
       }
     },
     {
       "speaker": "A",
-      "text": "谢谢。",
-      "pinyin": "Xièxie.",
-      "translation": {
-        "kr": "감사합니다.",
-        "en": "Thank you.",
-        "jp": "ありがとうございます。"
-      }
-    },
-    {
-      "speaker": "B",
-      "text": "不客气。",
-      "pinyin": "Bú kèqi.",
-      "translation": {
-        "kr": "천만에요.",
-        "en": "You're welcome.",
-        "jp": "どういたしまして。"
-      }
-    },
-    {
-      "speaker": "A",
-      "text": "再见。",
-      "pinyin": "Zàijiàn.",
+      "text": "再见",
+      "pinyin": "Zàijiàn",
       "translation": {
         "kr": "안녕히 가세요.",
         "en": "Goodbye.",
@@ -98,16 +76,167 @@
     },
     {
       "speaker": "B",
-      "text": "再见。",
-      "pinyin": "Zàijiàn.",
+      "text": "再见",
+      "pinyin": "Zàijiàn",
       "translation": {
         "kr": "안녕히 계세요.",
         "en": "Goodbye.",
         "jp": "さようなら。"
       }
+    },
+    {
+      "speaker": "A",
+      "text": "谢谢",
+      "pinyin": "Xièxie",
+      "translation": {
+        "kr": "감사합니다.",
+        "en": "Thank you.",
+        "jp": "ありがとうございます。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "不客气",
+      "pinyin": "Bú kèqi",
+      "translation": {
+        "kr": "천만에요.",
+        "en": "You are welcome.",
+        "jp": "どういたしまして。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "对不起",
+      "pinyin": "Duìbuqǐ",
+      "translation": {
+        "kr": "죄송합니다.",
+        "en": "Sorry.",
+        "jp": "すみません。"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "没关系",
+      "pinyin": "Méi guānxi",
+      "translation": {
+        "kr": "괜찮아요.",
+        "en": "It is okay.",
+        "jp": "大丈夫です。"
+      }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你好",
+          "pinyin": "Nǐ hǎo",
+          "translation": {
+            "kr": "안녕하세요.",
+            "en": "Hello.",
+            "jp": "こんにちは。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "你好",
+          "pinyin": "Nǐ hǎo",
+          "translation": {
+            "kr": "안녕하세요.",
+            "en": "Hello.",
+            "jp": "こんにちは。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "再见",
+          "pinyin": "Zàijiàn",
+          "translation": {
+            "kr": "안녕히 가세요.",
+            "en": "Goodbye.",
+            "jp": "さようなら。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "再见",
+          "pinyin": "Zàijiàn",
+          "translation": {
+            "kr": "안녕히 계세요.",
+            "en": "Goodbye.",
+            "jp": "さようなら。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "谢谢",
+          "pinyin": "Xièxie",
+          "translation": {
+            "kr": "감사합니다.",
+            "en": "Thank you.",
+            "jp": "ありがとうございます。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不客气",
+          "pinyin": "Bú kèqi",
+          "translation": {
+            "kr": "천만에요.",
+            "en": "You are welcome.",
+            "jp": "どういたしまして。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "对不起",
+          "pinyin": "Duìbuqǐ",
+          "translation": {
+            "kr": "죄송합니다.",
+            "en": "Sorry.",
+            "jp": "すみません。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "没关系",
+          "pinyin": "Méi guānxi",
+          "translation": {
+            "kr": "괜찮아요.",
+            "en": "It is okay.",
+            "jp": "大丈夫です。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "你好",

@@ -394,6 +394,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "惯用语",
+      "en": "expression",
+      "ko": "표현",
+      "jp": "表現"
     }
   },
   {
@@ -1126,6 +1132,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "惯用语",
+      "en": "expression",
+      "ko": "표현",
+      "jp": "表現"
     }
   },
   {
