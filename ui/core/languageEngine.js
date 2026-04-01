@@ -264,23 +264,74 @@ export function pick(obj, options = {}) {
 }
 
 /**
+ * 判断 displayTitle 对象是否为「假多语言」：至少两个语种字段有内容且全文相同（复制粘贴式本地化）。
+ * 此类对象不作为严格多语言主源，应回退到 canonical title。
+ */
+function displayTitleIsFakeLocalizedCopy(obj) {
+  if (!obj || typeof obj !== "object") return false;
+  const vals = [];
+  for (const k of ["zh", "cn", "kr", "ko", "en", "jp", "ja"]) {
+    const v = obj[k];
+    if (v != null && typeof v === "string" && v.trim()) vals.push(v.trim());
+  }
+  if (vals.length < 2) return false;
+  const first = vals[0];
+  return vals.every((x) => x === first);
+}
+
+function pickTitleFromObject(titleObj, lang) {
+  if (titleObj == null) return "";
+  if (typeof titleObj === "string" || typeof titleObj === "number") {
+    return str(String(titleObj));
+  }
+  if (typeof titleObj === "object") {
+    const v = pick(titleObj, { strict: true, lang });
+    if (v) return v;
+    if (lang === "jp" || lang === "ja") return "";
+    return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
+  }
+  return "";
+}
+
+/**
  * 4b. getLessonDisplayTitle(lesson, lang?)
- * 统一 lesson 标题：目录页与 detail 共用
- * JP strict lock: 当 lang=jp 时，只返回 jp 字段，绝不 fallback 到 kr/cn
- * 优先 displayTitle（blueprint 覆盖），其次 title / name / label
- * 兼容 lesson.title_jp / title_en / title_kr / title_cn
+ * HSK 等课程统一 lesson 标题：目录、学习页、AI 上下文共用同一套规则。
+ *
+ * Canonical：lesson.title（及 originalTitle / name / label）为内容主源，可为多语言对象。
+ * displayTitle：可选展示层。对象且为「真」多语言（非假复制）时按当前语言 strict 取值；
+ * 假多语言对象（多键同文）不优先于 title，避免切语言后仍全是中文却看似成功。
+ * 字符串 displayTitle：蓝图/运行时单语快照等显式覆盖，在 canonical 之前尝试（与 refreshBlueprintDisplayTitles 一致）。
+ *
+ * 读取顺序：非假 displayTitle 对象 strict → 字符串 displayTitle → title 等多语言 strict+非 jp 时 cn/zh 回退
+ * → 假多语言 displayTitle 宽松 pick → 扁平 title_xx 等兼容字段。
+ * JP：strict 下不 fallback 到 kr/cn（与 pick 约定一致）。
  */
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
   const l = lang ?? getLang();
-  const titleObj = lesson.displayTitle || lesson.title || lesson.originalTitle || lesson.name || lesson.label;
-  if (typeof titleObj === "object" && titleObj !== null) {
-    const v = pick(titleObj, { strict: true, lang: l });
+  const baseRaw = lesson.title ?? lesson.originalTitle ?? lesson.name ?? lesson.label;
+  const disp = lesson.displayTitle;
+
+  if (disp && typeof disp === "object" && !displayTitleIsFakeLocalizedCopy(disp)) {
+    const v = pick(disp, { strict: true, lang: l });
     if (v) return v;
-    if (l === "jp" || l === "ja") return "";
-    return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
   }
-  if (typeof titleObj === "string") return str(titleObj);
+
+  if (disp && typeof disp === "string" && str(disp)) {
+    return str(disp);
+  }
+
+  const fromBase = pickTitleFromObject(baseRaw, l);
+  if (fromBase) return fromBase;
+
+  if (disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp)) {
+    // 假多语言对象仅作 cn/zh/en/kr 等兜底；jp 缺译时不应用中文冒充日文（与 pick 的 JP strict 一致）
+    if (l !== "jp" && l !== "ja") {
+      const v = pick(disp, { strict: false, lang: l });
+      if (v) return v;
+    }
+  }
+
   const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
   if (flat) return str(flat);
   if (l === "jp" || l === "ja") return str(lesson.title_jp ?? lesson.title_ja ?? "") || "";

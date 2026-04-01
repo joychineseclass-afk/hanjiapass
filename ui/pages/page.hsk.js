@@ -1265,18 +1265,6 @@ function resolveBlueprintTitle(titleObj, lang) {
   return typeof v === "string" && v.trim() ? v.trim() : "";
 }
 
-function getCatalogTitleStrict(lesson, lang) {
-  if (!lesson) return "";
-  const no = getLessonNumber(lesson);
-  const isRegularL1toL20 =
-    String(lesson.type || "lesson") !== "review" && no >= 1 && no <= 20;
-  if (!isRegularL1toL20) return getLessonDisplayTitle(lesson, lang);
-  const obj = lesson.displayTitle;
-  if (typeof obj === "string") return obj.trim();
-  if (obj && typeof obj === "object") return pick(obj, { strict: true, lang: lang || getLang() }) || "";
-  return "";
-}
-
 function refreshBlueprintDisplayTitles(lessons, lang) {
   if (!Array.isArray(lessons)) return;
   const l = lang || getLang();
@@ -1797,8 +1785,10 @@ async function openLesson({ lessonNo, file } = {}) {
     lessonWords: panelWords,
   };
 
-  const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
-  const titleText = titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
+  const titleText =
+    (listEntry && getLessonDisplayTitle(listEntry, lang)) ||
+    getLessonDisplayTitle(lessonData, lang) ||
+    "";
 
   showStudyMode(titleText);
   updateLessonContextWindow(no);
@@ -1905,13 +1895,14 @@ function rerenderHSKFromState() {
   const no = Number(lessonNo || 1) || 1;
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
-  const titleFromCatalog = listEntry ? getCatalogTitleStrict(listEntry, lang) : "";
   const isReviewLesson = lessonIsReview(lessonData);
   if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
     state.tab = "words";
   }
   const titleText =
-    titleFromCatalog || (isReviewLesson ? getLessonDisplayTitle(lessonData, lang) : "");
+    (listEntry && getLessonDisplayTitle(listEntry, lang)) ||
+    getLessonDisplayTitle(lessonData, lang) ||
+    "";
 
   showStudyMode(titleText);
   updateLessonContextWindow(no);
@@ -3069,7 +3060,10 @@ function buildAIContext() {
 
   const found =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
-  const title = found ? getLessonDisplayTitle(found, lang) : "";
+  const title =
+    (found && getLessonDisplayTitle(found, lang)) ||
+    getLessonDisplayTitle(ld, lang) ||
+    "";
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words

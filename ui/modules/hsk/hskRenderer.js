@@ -2,7 +2,7 @@
 // 统一使用 i18n.t() + languageEngine.pick/getContentText，禁止散乱 item.kr/item.en 判断
 
 import { i18n } from "../../i18n.js";
-import { pick, getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
+import { getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
@@ -612,24 +612,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   const rows = list.map((it) => {
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
-    console.log("[HSK-TITLE-CHECK-20260326]", {
-      lessonNo: it.lessonNo || it.no,
-      displayTitle: it.displayTitle,
-      title: it.title
-    });
-    const isRegularL1toL20 =
-      String(it?.type || "lesson") !== "review" && lessonNo >= 1 && lessonNo <= 20;
-    const titleDisplay = isRegularL1toL20
-      ? (() => {
-          const t = it?.displayTitle;
-          if (typeof t === "string") return t.trim() || "-";
-          if (t && typeof t === "object") {
-            const v = pick(t, { strict: true, lang: displayLang });
-            return (typeof v === "string" && v.trim()) ? v.trim() : "-";
-          }
-          return "-";
-        })()
-      : getLessonDisplayTitle(it, displayLang) || "-";
+    const titleDisplay = getLessonDisplayTitle(it, displayLang) || "-";
 
     const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
