@@ -290,7 +290,7 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "请选出与韩语原句意义相符的常用中文。",
+        "cn": "下面哪一句中文与韩语原句的意思一致？",
         "kr": "'감사합니다.'에 해당하는 중국어는?",
         "en": "Which Chinese phrase matches the meaning of the Korean cue in this lesson?",
         "jp": "韓国語の原句に対応する中国語はどれですか。"
@@ -382,10 +382,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你好！」，你应该说？",
-        "kr": "상대가 말할 때: 「你好！」 답은?",
-        "en": "Someone says: \"你好！\" You should say?",
-        "jp": "相手が「你好！」と言ったら、あなたは？"
+        "cn": "对方说「你好！」，下面哪一句应答最合适？",
+        "kr": "상대가 「你好！」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你好！\"?",
+        "jp": "相手が「你好！」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "不客气。",
@@ -406,10 +406,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「谢谢。」，你应该说？",
-        "kr": "상대가 말할 때: 「谢谢。」 답은?",
-        "en": "Someone says: \"谢谢。\" You should say?",
-        "jp": "相手が「谢谢。」と言ったら、あなたは？"
+        "cn": "对方说「谢谢。」，下面哪一句应答最合适？",
+        "kr": "상대가 「谢谢。」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"谢谢。\"?",
+        "jp": "相手が「谢谢。」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "不客气。",

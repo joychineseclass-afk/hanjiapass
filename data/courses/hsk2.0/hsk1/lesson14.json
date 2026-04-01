@@ -336,10 +336,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「我们一起吃饭吧。」，你应该说？",
-        "kr": "상대가 말할 때: 「我们一起吃饭吧。」 답은?",
-        "en": "Someone says: \"我们一起吃饭吧。\" You should say?",
-        "jp": "相手が「我们一起吃饭吧。」と言ったら、あなたは？"
+        "cn": "对方说「我们一起吃饭吧。」，下面哪一句应答最合适？",
+        "kr": "상대가 「我们一起吃饭吧。」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"我们一起吃饭吧。\"?",
+        "jp": "相手が「我们一起吃饭吧。」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "好啊！",
@@ -360,10 +360,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你想吃什么？」，你应该说？",
-        "kr": "상대가 말할 때: 「你想吃什么？」 답은?",
-        "en": "Someone says: \"你想吃什么？\" You should say?",
-        "jp": "相手が「你想吃什么？」と言ったら、あなたは？"
+        "cn": "对方说「你想吃什么？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你想吃什么？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你想吃什么？\"?",
+        "jp": "相手が「你想吃什么？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "好啊！",

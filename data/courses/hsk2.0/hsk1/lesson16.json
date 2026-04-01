@@ -336,10 +336,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你去哪儿？」，你应该说？",
-        "kr": "상대가 말할 때: 「你去哪儿？」 답은?",
-        "en": "Someone says: \"你去哪儿？\" You should say?",
-        "jp": "相手が「你去哪儿？」と言ったら、あなたは？"
+        "cn": "对方说「你去哪儿？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你去哪儿？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你去哪儿？\"?",
+        "jp": "相手が「你去哪儿？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "对，我现在去。",
@@ -360,10 +360,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你现在去吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你现在去吗？」 답은?",
-        "en": "Someone says: \"你现在去吗？\" You should say?",
-        "jp": "相手が「你现在去吗？」と言ったら、あなたは？"
+        "cn": "对方说「你现在去吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你现在去吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你现在去吗？\"?",
+        "jp": "相手が「你现在去吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "对，我现在去。",

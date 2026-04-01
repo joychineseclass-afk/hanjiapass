@@ -300,10 +300,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「王老师今天来学校吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「王老师今天来学校吗？」 답은?",
-        "en": "Someone says: \"王老师今天来学校吗？\" You should say?",
-        "jp": "相手が「王老师今天来学校吗？」と言ったら、あなたは？"
+        "cn": "对方说「王老师今天来学校吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「王老师今天来学校吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"王老师今天来学校吗？\"?",
+        "jp": "相手が「王老师今天来学校吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "今天不来，他去北京了。",
@@ -324,10 +324,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「他什么时候回来？」，你应该说？",
-        "kr": "상대가 말할 때: 「他什么时候回来？」 답은?",
-        "en": "Someone says: \"他什么时候回来？\" You should say?",
-        "jp": "相手が「他什么时候回来？」と言ったら、あなたは？"
+        "cn": "对方说「他什么时候回来？」，下面哪一句应答最合适？",
+        "kr": "상대가 「他什么时候回来？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"他什么时候回来？\"?",
+        "jp": "相手が「他什么时候回来？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "今天不来，他去北京了。",

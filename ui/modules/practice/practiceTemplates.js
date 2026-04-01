@@ -18,12 +18,12 @@ export const PROMPT_TEMPLATES = {
     jp: "発音を聞いて、正しい語を選んでください。",
   },
 
-  /** 母语→中文：'{native}'에 해당하는 중국어는? */
+  /** 母语/释义→选中文词语（复习课生成器等；避免「谢谢用中文怎么说」类自相矛盾问法） */
   NATIVE_TO_ZH: {
-    cn: "「{native}」对应的中文是？",
-    kr: "'{native}'에 해당하는 중국어는?",
-    en: "What is the Chinese for \"{native}\"?",
-    jp: "「{native}」に対応する中国語は？",
+    cn: "下面哪一项中文与「{native}」的意思相符？",
+    kr: "「{native}」의 뜻에 맞는 중국어는?",
+    en: "Which Chinese option matches this meaning: \"{native}\"?",
+    jp: "次のうち「{native}」の意味に合う中国語はどれですか？",
   },
 
   /** 中文→意思：「谢谢」的意思是？ */
@@ -34,12 +34,12 @@ export const PROMPT_TEMPLATES = {
     jp: "「{zh}」の意味は？",
   },
 
-  /** 意思→中文：「감사합니다」用中文怎么说？ */
+  /** 给定提示（外语/释义）选中文表达 — 与 ZH_TO_MEANING（「谢谢」是什么意思）分工 */
   MEANING_TO_ZH: {
-    cn: "「{meaning}」用中文怎么说？",
-    kr: "「{meaning}」은 중국어로 무엇입니까?",
-    en: "What is the Chinese word for \"{meaning}\"?",
-    jp: "「{meaning}」は中国語で何と言いますか？",
+    cn: "下面哪一项是表达「{meaning}」的常用中文？",
+    kr: "「{meaning}」을 나타내는 자주 쓰는 중국어는?",
+    en: "Which option is the usual Chinese for this: \"{meaning}\"?",
+    jp: "「{meaning}」を表すよく使う中国語はどれですか？",
   },
 
   /** 拼音→中文：'{pinyin}'의 한자는? */
@@ -149,7 +149,8 @@ export function detectPromptTemplate(q) {
 
   if (hasListen) return "LISTENING";
   if (subtype.includes("meaning_to_vocab") || subtype.includes("native_to_zh")) return "NATIVE_TO_ZH";
-  if (subtype.includes("vocab_meaning") || subtype.includes("zh_to_meaning")) return "ZH_TO_MEANING";
+  if (subtype.includes("vocab_meaning")) return "ZH_TO_MEANING";
+  if (subtype.includes("zh_to_meaning")) return null;
   if (subtype.includes("pinyin_to_vocab")) return "PINYIN_TO_ZH";
   if (subtype.includes("sentence_order")) return "SENTENCE_ORDER";
   if (subtype.includes("dialogue_response")) return "DIALOGUE_RESPONSE";

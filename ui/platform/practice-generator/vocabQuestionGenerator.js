@@ -92,9 +92,10 @@ export function generateMeaningToVocabChoice(lesson, count, lang) {
       options,
       answer,
       explanation: {
-        zh: `「${meaning}」：${zh}`,
-        kr: `「${meaning}」: ${zh}`,
-        en: `"${meaning}" is ${zh} in Chinese.`,
+        zh: `「${meaning}」对应的中文常用「${zh}」。`,
+        kr: `「${meaning}」에 해당하는 중국어는 「${zh}」입니다.`,
+        en: `The usual Chinese for that meaning is "${zh}".`,
+        jp: `その意味に合う中国語は「${zh}」です。`,
       },
       score: 1,
     });

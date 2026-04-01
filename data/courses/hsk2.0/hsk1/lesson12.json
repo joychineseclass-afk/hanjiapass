@@ -312,10 +312,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你喜欢听音乐吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你喜欢听音乐吗？」 답은?",
-        "en": "Someone says: \"你喜欢听音乐吗？\" You should say?",
-        "jp": "相手が「你喜欢听音乐吗？」と言ったら、あなたは？"
+        "cn": "对方说「你喜欢听音乐吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你喜欢听音乐吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你喜欢听音乐吗？\"?",
+        "jp": "相手が「你喜欢听音乐吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你喜欢听什么音乐？",
@@ -336,10 +336,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你喜欢听什么音乐？」，你应该说？",
-        "kr": "상대가 말할 때: 「你喜欢听什么音乐？」 답은?",
-        "en": "Someone says: \"你喜欢听什么音乐？\" You should say?",
-        "jp": "相手が「你喜欢听什么音乐？」と言ったら、あなたは？"
+        "cn": "对方说「你喜欢听什么音乐？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你喜欢听什么音乐？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你喜欢听什么音乐？\"?",
+        "jp": "相手が「你喜欢听什么音乐？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你喜欢听什么音乐？",

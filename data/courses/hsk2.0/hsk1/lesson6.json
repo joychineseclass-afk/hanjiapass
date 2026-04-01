@@ -332,10 +332,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你会说汉语吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你会说汉语吗？」 답은?",
-        "en": "Someone says: \"你会说汉语吗？\" You should say?",
-        "jp": "相手が「你会说汉语吗？」と言ったら、あなたは？"
+        "cn": "对方说「你会说汉语吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你会说汉语吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你会说汉语吗？\"?",
+        "jp": "相手が「你会说汉语吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你会说汉语吗？",
@@ -356,10 +356,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你在哪儿学习汉语？」，你应该说？",
-        "kr": "상대가 말할 때: 「你在哪儿学习汉语？」 답은?",
-        "en": "Someone says: \"你在哪儿学习汉语？\" You should say?",
-        "jp": "相手が「你在哪儿学习汉语？」と言ったら、あなたは？"
+        "cn": "对方说「你在哪儿学习汉语？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你在哪儿学习汉语？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你在哪儿学习汉语？\"?",
+        "jp": "相手が「你在哪儿学习汉语？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你会说汉语吗？",

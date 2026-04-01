@@ -282,7 +282,7 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "请选出与韩语原句意义相符的常用中文。",
+        "cn": "下面哪一句中文与韩语原句的意思一致？",
         "kr": "'저는 스물두 살이에요.'에 해당하는 중국어는?",
         "en": "Which Chinese sentence matches the meaning of the Korean cue in this lesson?",
         "jp": "韓国語の原句に対応する中国語はどれですか。"
@@ -374,10 +374,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你几岁？」，你应该说？",
-        "kr": "상대가 말할 때: 「你几岁？」 답은?",
-        "en": "Someone says: \"你几岁？\" You should say?",
-        "jp": "相手が「你几岁？」と言ったら、あなたは？"
+        "cn": "对方说「你几岁？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你几岁？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你几岁？\"?",
+        "jp": "相手が「你几岁？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你多大？",
@@ -398,10 +398,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你多大？」，你应该说？",
-        "kr": "상대가 말할 때: 「你多大？」 답은?",
-        "en": "Someone says: \"你多大？\" You should say?",
-        "jp": "相手が「你多大？」と言ったら、あなたは？"
+        "cn": "对方说「你多大？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你多大？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你多大？\"?",
+        "jp": "相手が「你多大？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你多大？",

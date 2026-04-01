@@ -200,7 +200,7 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "请选出与韩语原句意义相符的常用中文。",
+        "cn": "下面哪一句中文与韩语原句的意思一致？",
         "kr": "'이건 너무 커요. 조금 작은 거 있어요?'에 해당하는 중국어는?",
         "en": "Which Chinese sentence matches the meaning of the Korean cue in this lesson?",
         "jp": "韓国語の原句に対応する中国語はどれですか。"
@@ -292,10 +292,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你想买什么？」，你应该说？",
-        "kr": "상대가 말할 때: 「你想买什么？」 답은?",
-        "en": "Someone says: \"你想买什么？\" You should say?",
-        "jp": "相手が「你想买什么？」と言ったら、あなたは？"
+        "cn": "对方说「你想买什么？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你想买什么？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你想买什么？\"?",
+        "jp": "相手が「你想买什么？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你想买什么？",
@@ -316,10 +316,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「这个西瓜怎么样？」，你应该说？",
-        "kr": "상대가 말할 때: 「这个西瓜怎么样？」 답은?",
-        "en": "Someone says: \"这个西瓜怎么样？\" You should say?",
-        "jp": "相手が「这个西瓜怎么样？」と言ったら、あなたは？"
+        "cn": "对方说「这个西瓜怎么样？」，下面哪一句应答最合适？",
+        "kr": "상대가 「这个西瓜怎么样？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"这个西瓜怎么样？\"?",
+        "jp": "相手が「这个西瓜怎么样？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "你想买什么？",

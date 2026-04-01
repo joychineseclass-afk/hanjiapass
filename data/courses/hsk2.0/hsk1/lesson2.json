@@ -274,10 +274,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你好，你叫什么名字？」，你应该说？",
-        "kr": "상대가 말할 때: 「你好，你叫什么名字？」 답은?",
-        "en": "Someone says: \"你好，你叫什么名字？\" You should say?",
-        "jp": "相手が「你好，你叫什么名字？」と言ったら、あなたは？"
+        "cn": "对方说「你好，你叫什么名字？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你好，你叫什么名字？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你好，你叫什么名字？\"?",
+        "jp": "相手が「你好，你叫什么名字？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "很高兴认识你。",
@@ -298,10 +298,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「我叫Anna。」，你应该说？",
-        "kr": "상대가 말할 때: 「我叫Anna。」 답은?",
-        "en": "Someone says: \"我叫Anna。\" You should say?",
-        "jp": "相手が「我叫Anna。」と言ったら、あなたは？"
+        "cn": "对方说「我叫Anna。」，下面哪一句应答最合适？",
+        "kr": "상대가 「我叫Anna。」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"我叫Anna。\"?",
+        "jp": "相手が「我叫Anna。」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "很高兴认识你。",
@@ -328,7 +328,7 @@
         "jp": "次のうち、疑問文ではないのはどれですか？"
       },
       "options": [
-        "今天几月几号？",
+        "你叫什么名字？",
         "你好，你叫什么名字？",
         "我叫王明。你呢？",
         "我叫Anna。"

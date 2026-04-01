@@ -292,10 +292,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「今天几月几号？」，你应该说？",
-        "kr": "상대가 말할 때: 「今天几月几号？」 답은?",
-        "en": "Someone says: \"今天几月几号？\" You should say?",
-        "jp": "相手が「今天几月几号？」と言ったら、あなたは？"
+        "cn": "对方说「今天几月几号？」，下面哪一句应答最合适？",
+        "kr": "상대가 「今天几月几号？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"今天几月几号？\"?",
+        "jp": "相手が「今天几月几号？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "不忙。",
@@ -316,10 +316,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你明天忙吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「你明天忙吗？」 답은?",
-        "en": "Someone says: \"你明天忙吗？\" You should say?",
-        "jp": "相手が「你明天忙吗？」と言ったら、あなたは？"
+        "cn": "对方说「你明天忙吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你明天忙吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你明天忙吗？\"?",
+        "jp": "相手が「你明天忙吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "不忙。",

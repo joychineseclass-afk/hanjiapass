@@ -231,10 +231,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「苹果多少钱？」，你应该说？",
-        "kr": "상대가 말할 때: 「苹果多少钱？」 답은?",
-        "en": "Someone says: \"苹果多少钱？\" You should say?",
-        "jp": "相手が「苹果多少钱？」と言ったら、あなたは？"
+        "cn": "对方说「苹果多少钱？」，下面哪一句应答最合适？",
+        "kr": "상대가 「苹果多少钱？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"苹果多少钱？\"?",
+        "jp": "相手が「苹果多少钱？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "好的，十八块钱。",
@@ -255,10 +255,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「我买六个苹果。」，你应该说？",
-        "kr": "상대가 말할 때: 「我买六个苹果。」 답은?",
-        "en": "Someone says: \"我买六个苹果。\" You should say?",
-        "jp": "相手が「我买六个苹果。」と言ったら、あなたは？"
+        "cn": "对方说「我买六个苹果。」，下面哪一句应答最合适？",
+        "kr": "상대가 「我买六个苹果。」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"我买六个苹果。\"?",
+        "jp": "相手が「我买六个苹果。」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "好的，十八块钱。",

@@ -318,10 +318,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「他是谁？」，你应该说？",
-        "kr": "상대가 말할 때: 「他是谁？」 답은?",
-        "en": "Someone says: \"他是谁？\" You should say?",
-        "jp": "相手が「他是谁？」と言ったら、あなたは？"
+        "cn": "对方说「他是谁？」，下面哪一句应答最合适？",
+        "kr": "상대가 「他是谁？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"他是谁？\"?",
+        "jp": "相手が「他是谁？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "他是谁？",
@@ -342,10 +342,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「她呢？」，你应该说？",
-        "kr": "상대가 말할 때: 「她呢？」 답은?",
-        "en": "Someone says: \"她呢？\" You should say?",
-        "jp": "相手が「她呢？」と言ったら、あなたは？"
+        "cn": "对方说「她呢？」，下面哪一句应答最合适？",
+        "kr": "상대가 「她呢？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"她呢？\"?",
+        "jp": "相手が「她呢？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "他是谁？",

@@ -228,7 +228,7 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "请选出与韩语原句意义相符的常用中文。",
+        "cn": "下面哪一句中文与韩语原句的意思一致？",
         "kr": "'왕 선생님 찾아요.'에 해당하는 중국어는?",
         "en": "Which Chinese sentence matches the meaning of the Korean cue in this lesson?",
         "jp": "韓国語の原句に対応する中国語はどれですか。"
@@ -320,10 +320,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「请问你找谁？」，你应该说？",
-        "kr": "상대가 말할 때: 「请问你找谁？」 답은?",
-        "en": "Someone says: \"请问你找谁？\" You should say?",
-        "jp": "相手が「请问你找谁？」と言ったら、あなたは？"
+        "cn": "对方说「请问你找谁？」，下面哪一句应答最合适？",
+        "kr": "상대가 「请问你找谁？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"请问你找谁？\"?",
+        "jp": "相手が「请问你找谁？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "可以。",
@@ -344,10 +344,10 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「那我能等一下吗？」，你应该说？",
-        "kr": "상대가 말할 때: 「那我能等一下吗？」 답은?",
-        "en": "Someone says: \"那我能等一下吗？\" You should say?",
-        "jp": "相手が「那我能等一下吗？」と言ったら、あなたは？"
+        "cn": "对方说「那我能等一下吗？」，下面哪一句应答最合适？",
+        "kr": "상대가 「那我能等一下吗？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"那我能等一下吗？\"?",
+        "jp": "相手が「那我能等一下吗？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "可以。",
