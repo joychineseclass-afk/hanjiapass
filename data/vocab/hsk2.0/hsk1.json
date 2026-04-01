@@ -5,7 +5,7 @@
     "pinyin": "ài",
     "meaning": {
       "zh": "爱",
-      "en": "to love; to be fond of; to like; affection; to be inclined (to do sth); to tend to (happen)",
+      "en": "to love; to like",
       "ko": ""
     },
     "tags": {
@@ -79,7 +79,7 @@
     "pinyin": "Běijīng",
     "meaning": {
       "zh": "北京",
-      "en": "Beijing, capital of the People's Republic of China",
+      "en": "Beijing",
       "ko": ""
     },
     "tags": {
@@ -96,7 +96,7 @@
     "pinyin": "běn",
     "meaning": {
       "zh": "本",
-      "en": "root; stem; origin; source; this; the current; original; inherent; originally; classifier for books, periodicals, files etc",
+      "en": "measure word (books); root; origin",
       "ko": ""
     },
     "tags": {
@@ -113,7 +113,7 @@
     "pinyin": "bù",
     "meaning": {
       "zh": "不",
-      "en": "no; not so; (bound form) not; un-",
+      "en": "not; no",
       "ko": ""
     },
     "tags": {
@@ -130,7 +130,7 @@
     "pinyin": "bùkèqi",
     "meaning": {
       "zh": "不客气",
-      "en": "you're welcome; don't mention it; impolite; rude; blunt",
+      "en": "you're welcome; don't mention it",
       "ko": ""
     },
     "tags": {
@@ -171,7 +171,7 @@
     "pinyin": "cài",
     "meaning": {
       "zh": "菜",
-      "en": "dish (type of food); vegetable; cuisine; (coll.) (one's) type; (of one's skills etc) weak; poor",
+      "en": "dish; vegetable",
       "ko": ""
     },
     "tags": {
@@ -205,7 +205,7 @@
     "pinyin": "chī",
     "meaning": {
       "zh": "吃",
-      "en": "to eat; to consume; to eat at (a cafeteria etc); to eradicate; to destroy; to absorb; to suffer (shock, injury, defeat etc)",
+      "en": "to eat",
       "ko": ""
     },
     "tags": {
@@ -256,7 +256,7 @@
     "pinyin": "dà",
     "meaning": {
       "zh": "大",
-      "en": "big; large; great; older (than another person); eldest (as in 姐); greatly; freely; fully; (dialect) father; (dialect) uncle (father's brother)",
+      "en": "big; large",
       "ko": ""
     },
     "tags": {
@@ -273,7 +273,7 @@
     "pinyin": "de",
     "meaning": {
       "zh": "的",
-      "en": "of; ~'s (possessive particle); (used after an attribute); (used to form a nominal expression); (used at the end of a declarative sentence for emphasis); also pr. [dì] or [di] in poetry and songs",
+      "en": "possessive particle; of",
       "ko": ""
     },
     "tags": {
@@ -290,7 +290,7 @@
     "pinyin": "diǎn",
     "meaning": {
       "zh": "点",
-      "en": "point; dot; drop; speck; o'clock; point (in space or time); to draw a dot; to check on a list; to choose; to order (food in a restaurant); to touch briefly; to hint; to light; to ignite; to pour a liquid drop by drop; (old) one fifth of a two-hour watch 更; dot stroke in Chinese characters; classifier for items",
+      "en": "a little; o'clock; dot",
       "ko": ""
     },
     "tags": {
@@ -375,7 +375,7 @@
     "pinyin": "Dū",
     "meaning": {
       "zh": "都",
-      "en": "surname Du",
+      "en": "all; both",
       "ko": ""
     },
     "tags": {
@@ -409,7 +409,7 @@
     "pinyin": "duìbuqǐ",
     "meaning": {
       "zh": "对不起",
-      "en": "I'm sorry; excuse me; I beg your pardon; to let (sb) down; to disappoint",
+      "en": "sorry; excuse me",
       "ko": ""
     },
     "tags": {
@@ -451,7 +451,7 @@
     "pinyin": "duō",
     "meaning": {
       "zh": "多",
-      "en": "many; much; too many; in excess; (after a numeral) ... odd; how (to what extent) (Taiwan pr. [duó]); (bound form) multi-; poly-",
+      "en": "many; much; a lot",
       "ko": ""
     },
     "tags": {
@@ -576,7 +576,7 @@
     "pinyin": "gāoxìng",
     "meaning": {
       "zh": "高兴",
-      "en": "happy; glad; willing (to do sth); in a cheerful mood",
+      "en": "happy; glad",
       "ko": ""
     },
     "tags": {
@@ -610,7 +610,7 @@
     "pinyin": "gōngzuò",
     "meaning": {
       "zh": "工作",
-      "en": "to work; (of a machine) to operate; job; work; task",
+      "en": "job; work; to work",
       "ko": ""
     },
     "tags": {
@@ -661,7 +661,7 @@
     "pinyin": "hǎo",
     "meaning": {
       "zh": "好",
-      "en": "good; appropriate; proper; all right!; (before a verb) easy to; (before a verb) good to; (before an adjective for exclamatory effect) so; (verb complement indicating completion); (of two people) close; on intimate terms; (after a personal pronoun) hello",
+      "en": "good; well",
       "ko": ""
     },
     "tags": {
@@ -695,7 +695,7 @@
     "pinyin": "hé",
     "meaning": {
       "zh": "和",
-      "en": "old variant of 和",
+      "en": "and; with",
       "ko": ""
     },
     "tags": {
@@ -712,7 +712,7 @@
     "pinyin": "hěn",
     "meaning": {
       "zh": "很",
-      "en": "(adverb of degree); quite; very; awfully",
+      "en": "very; quite",
       "ko": ""
     },
     "tags": {
@@ -729,7 +729,7 @@
     "pinyin": "hòumian",
     "meaning": {
       "zh": "后面",
-      "en": "the back; the rear; the last bit; behind; near the end; at the back; later; afterwards",
+      "en": "behind; back; after",
       "ko": ""
     },
     "tags": {
@@ -746,7 +746,7 @@
     "pinyin": "huí",
     "meaning": {
       "zh": "回",
-      "en": "to circle; to go back; to turn around; to answer; to return; to revolve; Hui ethnic group (Chinese Muslims); time; classifier for acts of a play; section or chapter (of a classic book)",
+      "en": "to return; to go back",
       "ko": ""
     },
     "tags": {
@@ -763,7 +763,7 @@
     "pinyin": "huì",
     "meaning": {
       "zh": "会",
-      "en": "can; to have the skill; to know how to; to be likely to; to be sure to; to meet; to get together; meeting; gathering; (suffix) union; group; association; (bound form) a moment (Taiwan pr. [huǐ])",
+      "en": "can; to know how to",
       "ko": ""
     },
     "tags": {
@@ -797,7 +797,7 @@
     "pinyin": "jī",
     "meaning": {
       "zh": "几",
-      "en": "small table",
+      "en": "how many; several; a few",
       "ko": ""
     },
     "tags": {
@@ -814,7 +814,7 @@
     "pinyin": "jiā",
     "meaning": {
       "zh": "家",
-      "en": "used in 家伙 and 家俱",
+      "en": "home; family",
       "ko": ""
     },
     "tags": {
@@ -831,7 +831,7 @@
     "pinyin": "jiào",
     "meaning": {
       "zh": "叫",
-      "en": "to shout; to call; to order; to ask; to be called; by (indicates agent in the passive mood)",
+      "en": "to be called; to call",
       "ko": ""
     },
     "tags": {
@@ -888,7 +888,7 @@
     "pinyin": "kāi",
     "meaning": {
       "zh": "开",
-      "en": "to open (transitive or intransitive); (of ships, vehicles, troops etc) to start; to turn on; to put in operation; to operate; to run; to boil; to write out (a prescription, check, invoice etc); (directional complement) away; off; carat (gold); abbr. for Kelvin, 开尔文; abbr. for 开本, book format",
+      "en": "to open; to turn on; to start",
       "ko": ""
     },
     "tags": {
@@ -905,7 +905,7 @@
     "pinyin": "kān",
     "meaning": {
       "zh": "看",
-      "en": "to look after; to take care of; to watch; to guard",
+      "en": "to look; to watch; to see",
       "ko": ""
     },
     "tags": {
@@ -939,7 +939,7 @@
     "pinyin": "kuài",
     "meaning": {
       "zh": "块",
-      "en": "lump; chunk; piece; classifier for pieces of cloth, cake, soap etc; (coll.) classifier for money and currency units",
+      "en": "piece; (classifier)",
       "ko": ""
     },
     "tags": {
@@ -956,7 +956,7 @@
     "pinyin": "lái",
     "meaning": {
       "zh": "来",
-      "en": "to come; (used as a substitute for a more specific verb); hither (directional complement for motion toward the speaker, as in 回来); ever since (as in 自古以来); for the past (amount of time); (prefix) the coming ...; the next ... (as in 来世); (between two verbs) in order to; (after a round number) approximately; (used after 得 to indicate possibility, as in 谈得来, or after 不 to indicate impossibility, as in 吃不来)",
+      "en": "to come",
       "ko": ""
     },
     "tags": {
@@ -990,7 +990,7 @@
     "pinyin": "le",
     "meaning": {
       "zh": "了",
-      "en": "(completed action marker); (modal particle indicating change of state, situation now); (modal particle intensifying preceding clause)",
+      "en": "(aspect particle); completed action",
       "ko": ""
     },
     "tags": {
@@ -1007,7 +1007,7 @@
     "pinyin": "Lěng",
     "meaning": {
       "zh": "冷",
-      "en": "surname Leng",
+      "en": "cold",
       "ko": ""
     },
     "tags": {
@@ -1024,7 +1024,7 @@
     "pinyin": "lǐ",
     "meaning": {
       "zh": "里",
-      "en": "variant of 里",
+      "en": "inside; in",
       "ko": ""
     },
     "tags": {
@@ -1041,7 +1041,7 @@
     "pinyin": "líng",
     "meaning": {
       "zh": "零",
-      "en": "zero; nought; zero sign; fractional; fragmentary; odd (of numbers); (placed between two numbers to indicate a smaller quantity followed by a larger one); fraction; (in mathematics) remainder (after division); extra; to wither and fall; to wither",
+      "en": "zero",
       "ko": ""
     },
     "tags": {
@@ -1098,7 +1098,7 @@
     "pinyin": "má",
     "meaning": {
       "zh": "吗",
-      "en": "(coll.) what?",
+      "en": "(question particle)",
       "ko": ""
     },
     "tags": {
@@ -1132,7 +1132,7 @@
     "pinyin": "māo",
     "meaning": {
       "zh": "猫",
-      "en": "cat; (dialect) to hide oneself; (coll.) modem",
+      "en": "cat",
       "ko": ""
     },
     "tags": {
@@ -1149,7 +1149,7 @@
     "pinyin": "méi",
     "meaning": {
       "zh": "没",
-      "en": "(negative prefix for verbs) have not; not",
+      "en": "not have; there is not",
       "ko": ""
     },
     "tags": {
@@ -1276,7 +1276,7 @@
     "pinyin": "Nā",
     "meaning": {
       "zh": "那",
-      "en": "surname Na",
+      "en": "that; those",
       "ko": ""
     },
     "tags": {
@@ -1293,7 +1293,7 @@
     "pinyin": "ne",
     "meaning": {
       "zh": "呢",
-      "en": "particle indicating that a previously asked question is to be applied to the preceding word (\"What about ...?\", \"And ...?\"); particle for inquiring about location (\"Where is ...?\"); particle signaling a pause, to emphasize the preceding words and allow the listener time to take them on board (\"ok?\", \"are you with me?\"); (at the end of a declarative sentence) particle indicating continuation of a state or action; particle indicating strong affirmation",
+      "en": "(particle) and …?; how about …?",
       "ko": ""
     },
     "tags": {
@@ -1310,7 +1310,7 @@
     "pinyin": "Néng",
     "meaning": {
       "zh": "能",
-      "en": "surname Neng",
+      "en": "can; be able to",
       "ko": ""
     },
     "tags": {
@@ -1327,7 +1327,7 @@
     "pinyin": "nǐ",
     "meaning": {
       "zh": "你",
-      "en": "you (informal, as opposed to courteous 您)",
+      "en": "you",
       "ko": ""
     },
     "tags": {
@@ -1452,7 +1452,7 @@
     "pinyin": "qiánmiàn",
     "meaning": {
       "zh": "前面",
-      "en": "ahead; in front; preceding; above; also pr. [qián mian]",
+      "en": "in front; ahead",
       "ko": ""
     },
     "tags": {
@@ -1486,7 +1486,7 @@
     "pinyin": "qǐng",
     "meaning": {
       "zh": "请",
-      "en": "to ask; to invite; please (do sth); to treat (to a meal etc); to request",
+      "en": "please",
       "ko": ""
     },
     "tags": {
@@ -1503,7 +1503,7 @@
     "pinyin": "qù",
     "meaning": {
       "zh": "去",
-      "en": "to go; to go to (a place); (of a time etc) last; just passed; to send; to remove; to get rid of; to reduce; to be apart from in space or time; to die (euphemism); to play (a part); (when used either before or after a verb) to go in order to do sth; (after a verb of motion indicates movement away from the speaker); (used after certain verbs to indicate detachment or separation)",
+      "en": "to go",
       "ko": ""
     },
     "tags": {
@@ -1520,7 +1520,7 @@
     "pinyin": "rè",
     "meaning": {
       "zh": "热",
-      "en": "to warm up; to heat up; hot (of weather); heat; fervent",
+      "en": "hot",
       "ko": ""
     },
     "tags": {
@@ -1554,7 +1554,7 @@
     "pinyin": "rènshi",
     "meaning": {
       "zh": "认识",
-      "en": "to know; to recognize; to be familiar with; to get acquainted with sb; knowledge; understanding; awareness; cognition",
+      "en": "to know; to recognize",
       "ko": ""
     },
     "tags": {
@@ -1662,7 +1662,7 @@
     "pinyin": "shǎo",
     "meaning": {
       "zh": "少",
-      "en": "few; less; to lack; to be missing; to stop (doing sth); seldom",
+      "en": "few; little",
       "ko": ""
     },
     "tags": {
@@ -1736,7 +1736,7 @@
     "pinyin": "shì",
     "meaning": {
       "zh": "是",
-      "en": "to be (followed by substantives only); correct; right; true; (respectful acknowledgement of a command) very well; (adverb for emphatic assertion)",
+      "en": "to be; yes",
       "ko": ""
     },
     "tags": {
@@ -1838,7 +1838,7 @@
     "pinyin": "shuōhuà",
     "meaning": {
       "zh": "说话",
-      "en": "to speak; to say; to talk; to gossip; to tell stories; talk; word",
+      "en": "to speak; to talk",
       "ko": ""
     },
     "tags": {
@@ -1895,7 +1895,7 @@
     "pinyin": "tā",
     "meaning": {
       "zh": "他",
-      "en": "he; him (used for either sex when the sex is unknown or unimportant); (used before sb's name for emphasis); (used as a meaningless mock object); (literary) other",
+      "en": "he; him",
       "ko": ""
     },
     "tags": {
@@ -1929,7 +1929,7 @@
     "pinyin": "tài",
     "meaning": {
       "zh": "太",
-      "en": "highest; greatest; too (much); very; extremely",
+      "en": "too; very",
       "ko": ""
     },
     "tags": {
@@ -1980,7 +1980,7 @@
     "pinyin": "tóngxué",
     "meaning": {
       "zh": "同学",
-      "en": "to study at the same school; fellow student; classmate",
+      "en": "classmate",
       "ko": ""
     },
     "tags": {
@@ -2088,7 +2088,7 @@
     "pinyin": "xià",
     "meaning": {
       "zh": "下",
-      "en": "down; downwards; below; lower; later; next (week etc); second (of two parts); to decline; to go down; to arrive at (a decision, conclusion etc); measure word to show the frequency of an action",
+      "en": "down; below; next",
       "ko": ""
     },
     "tags": {
@@ -2139,7 +2139,7 @@
     "pinyin": "xiānsheng",
     "meaning": {
       "zh": "先生",
-      "en": "teacher; gentleman; sir; mister (Mr.); husband; (dialect) doctor",
+      "en": "Mr.; sir; teacher",
       "ko": ""
     },
     "tags": {
@@ -2156,7 +2156,7 @@
     "pinyin": "xiànzài",
     "meaning": {
       "zh": "现在",
-      "en": "now; at present; at the moment; modern; current; nowadays",
+      "en": "now",
       "ko": ""
     },
     "tags": {
@@ -2173,7 +2173,7 @@
     "pinyin": "xiǎng",
     "meaning": {
       "zh": "想",
-      "en": "to think (about); to think of; to devise; to think (that); to believe (that); to desire; to want (to); to miss (feel wistful about the absence of)",
+      "en": "to think; to want",
       "ko": ""
     },
     "tags": {
@@ -2207,7 +2207,7 @@
     "pinyin": "xiǎojie",
     "meaning": {
       "zh": "小姐",
-      "en": "young lady; miss; (slang) prostitute",
+      "en": "Miss; young lady",
       "ko": ""
     },
     "tags": {
@@ -2224,7 +2224,7 @@
     "pinyin": "xiē",
     "meaning": {
       "zh": "些",
-      "en": "classifier indicating a small amount or small number greater than 1: some, a few, several",
+      "en": "some; a few",
       "ko": ""
     },
     "tags": {
@@ -2258,7 +2258,7 @@
     "pinyin": "xièxie",
     "meaning": {
       "zh": "谢谢",
-      "en": "to thank; thanks; thank you",
+      "en": "thank you",
       "ko": ""
     },
     "tags": {
@@ -2367,7 +2367,7 @@
     "pinyin": "yī",
     "meaning": {
       "zh": "一",
-      "en": "one; single; a (article); as soon as; entire; whole; all; throughout; \"one\" radical in Chinese characters (Kangxi radical 1); also pr. [yāo] for greater clarity when spelling out numbers digit by digit",
+      "en": "one",
       "ko": ""
     },
     "tags": {
@@ -2458,7 +2458,7 @@
     "pinyin": "yǒu",
     "meaning": {
       "zh": "有",
-      "en": "to have; there is; (bound form) having; with; -ful; -ed; -al (as in 意 intentional)",
+      "en": "to have; there is",
       "ko": ""
     },
     "tags": {
@@ -2533,7 +2533,7 @@
     "pinyin": "zài",
     "meaning": {
       "zh": "在",
-      "en": "to exist; to be alive; (of sb or sth) to be (located) at; (used before a verb to indicate an action in progress)",
+      "en": "at; in; to be (located)",
       "ko": ""
     },
     "tags": {
@@ -2567,7 +2567,7 @@
     "pinyin": "zěnmeyàng",
     "meaning": {
       "zh": "怎么样",
-      "en": "how?; how about?; how was it?; how are things?",
+      "en": "how; how about",
       "ko": ""
     },
     "tags": {
@@ -2584,7 +2584,7 @@
     "pinyin": "zhè",
     "meaning": {
       "zh": "这",
-      "en": "(pronoun) this; these; (bound form) this; the (followed by a noun); (bound form) this; these (followed by a classifier) (in this sense, commonly pr. [zhèi], esp. in Beijing)",
+      "en": "this; these",
       "ko": ""
     },
     "tags": {
@@ -2635,7 +2635,7 @@
     "pinyin": "zhù",
     "meaning": {
       "zh": "住",
-      "en": "to live; to dwell; to stay; to reside; to stop; (suffix indicating firmness, steadiness, or coming to a halt)",
+      "en": "to live; to stay",
       "ko": ""
     },
     "tags": {
@@ -2669,7 +2669,7 @@
     "pinyin": "zì",
     "meaning": {
       "zh": "字",
-      "en": "letter; symbol; character; word; courtesy or style name traditionally given to males aged 20 in dynastic China",
+      "en": "character; word",
       "ko": ""
     },
     "tags": {
@@ -2720,7 +2720,7 @@
     "pinyin": "zuò",
     "meaning": {
       "zh": "做",
-      "en": "to make; to produce; to write; to compose; to do; to engage in; to hold (a party etc); (of a person) to be (an intermediary, a good student etc); to become (husband and wife, friends etc); (of a thing) to serve as; to be used for; to assume (an air or manner)",
+      "en": "to do; to make",
       "ko": ""
     },
     "tags": {

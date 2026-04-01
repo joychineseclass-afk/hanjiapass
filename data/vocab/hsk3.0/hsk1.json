@@ -5,7 +5,7 @@
     "pinyin": "ài",
     "meaning": {
       "zh": "爱",
-      "en": "love, like, be fond of, be keen on, cherish, be apt to",
+      "en": "to love; to like",
       "ko": ""
     },
     "tags": {
@@ -345,7 +345,7 @@
     "pinyin": "běijīng",
     "meaning": {
       "zh": "北京",
-      "en": "capital of Red China, Beijing, Peking, Beijing (Peking), Peiping",
+      "en": "Beijing",
       "ko": ""
     },
     "tags": {
@@ -362,7 +362,7 @@
     "pinyin": "běn",
     "meaning": {
       "zh": "本",
-      "en": "det.: this",
+      "en": "measure word (books); root; origin",
       "ko": ""
     },
     "tags": {
@@ -532,7 +532,7 @@
     "pinyin": "bù kè qi",
     "meaning": {
       "zh": "不客气",
-      "en": "you're welcome, don't mention it, impolite, rude, blunt",
+      "en": "you're welcome; don't mention it",
       "ko": ""
     },
     "tags": {
@@ -566,7 +566,7 @@
     "pinyin": "bù",
     "meaning": {
       "zh": "不",
-      "en": "non, do not, no, nowise, not, nope, nae, no more, nix",
+      "en": "not; no",
       "ko": ""
     },
     "tags": {
@@ -583,7 +583,7 @@
     "pinyin": "cài",
     "meaning": {
       "zh": "菜",
-      "en": "vegetable, greens, dish, course, food",
+      "en": "dish; vegetable",
       "ko": ""
     },
     "tags": {
@@ -770,7 +770,7 @@
     "pinyin": "chī",
     "meaning": {
       "zh": "吃",
-      "en": "feed, have, be subject to, absorb, chow, live on, eat, have one's meals, be a strain, exhaust, fare, take in, live off, annihilate, wipe out, partake, suffer, ingest, consume, graze, lunch, manducate, incur, take, get, use up, make, taste, soak up",
+      "en": "to eat",
       "ko": ""
     },
     "tags": {
@@ -1025,7 +1025,7 @@
     "pinyin": "dà",
     "meaning": {
       "zh": "大",
-      "en": "great, macro, old, very, vast, tall, big, high, much",
+      "en": "big; large",
       "ko": ""
     },
     "tags": {
@@ -1127,7 +1127,7 @@
     "pinyin": "de",
     "meaning": {
       "zh": "的",
-      "en": "particle: emphasizing an action/situation",
+      "en": "possessive particle; of",
       "ko": ""
     },
     "tags": {
@@ -1263,7 +1263,7 @@
     "pinyin": "diǎn",
     "meaning": {
       "zh": "点",
-      "en": "m.[proximation]",
+      "en": "a little; o'clock; dot",
       "ko": ""
     },
     "tags": {
@@ -1484,7 +1484,7 @@
     "pinyin": "dōu",
     "meaning": {
       "zh": "都",
-      "en": "all, even, already",
+      "en": "all; both",
       "ko": ""
     },
     "tags": {
@@ -1552,7 +1552,7 @@
     "pinyin": "duìbùqǐ",
     "meaning": {
       "zh": "对不起",
-      "en": "be unfair to, I'm sorry, let ... down, let sb. down, excuse me",
+      "en": "sorry; excuse me",
       "ko": ""
     },
     "tags": {
@@ -1569,7 +1569,7 @@
     "pinyin": "duō",
     "meaning": {
       "zh": "多",
-      "en": "many, much, more, more than the correct/required number, excessive, too much, much/far more",
+      "en": "many; much; a lot",
       "ko": ""
     },
     "tags": {
@@ -1926,7 +1926,7 @@
     "pinyin": "gāoxìng",
     "meaning": {
       "zh": "高兴",
-      "en": "glad, happy, cheerful, merry, pleased",
+      "en": "happy; glad",
       "ko": ""
     },
     "tags": {
@@ -2062,7 +2062,7 @@
     "pinyin": "gōngzuò",
     "meaning": {
       "zh": "工作",
-      "en": "work, job",
+      "en": "job; work; to work",
       "ko": ""
     },
     "tags": {
@@ -2300,7 +2300,7 @@
     "pinyin": "hǎo",
     "meaning": {
       "zh": "好",
-      "en": "good",
+      "en": "good; well",
       "ko": ""
     },
     "tags": {
@@ -2419,7 +2419,7 @@
     "pinyin": "hé",
     "meaning": {
       "zh": "和",
-      "en": "and, with, gentle, peaceful",
+      "en": "and; with",
       "ko": ""
     },
     "tags": {
@@ -2436,7 +2436,7 @@
     "pinyin": "hěn",
     "meaning": {
       "zh": "很",
-      "en": "pretty, thrice, monstrously, gey, quite, mighty, stinking, sopping, some, assai, full, most, clinking, much, thumping, awfully, fiendishly, thundering, very, real, really, bally, proper, grossly, powerful, so, rattling, well, considerably, greatly, terribly",
+      "en": "very; quite",
       "ko": ""
     },
     "tags": {
@@ -2555,7 +2555,7 @@
     "pinyin": "huí",
     "meaning": {
       "zh": "回",
-      "en": "return, go back",
+      "en": "to return; to go back",
       "ko": ""
     },
     "tags": {
@@ -2657,7 +2657,7 @@
     "pinyin": "huì",
     "meaning": {
       "zh": "会",
-      "en": "to be able, can, will, to meet",
+      "en": "can; to know how to",
       "ko": ""
     },
     "tags": {
@@ -2742,7 +2742,7 @@
     "pinyin": "jǐ",
     "meaning": {
       "zh": "几",
-      "en": "det.: how many, a few, several, some",
+      "en": "how many; several; a few",
       "ko": ""
     },
     "tags": {
@@ -2810,7 +2810,7 @@
     "pinyin": "jiā",
     "meaning": {
       "zh": "家",
-      "en": "family, household, home, house",
+      "en": "home; family",
       "ko": ""
     },
     "tags": {
@@ -2929,7 +2929,7 @@
     "pinyin": "jiào",
     "meaning": {
       "zh": "叫",
-      "en": "to be called",
+      "en": "to be called; to call",
       "ko": ""
     },
     "tags": {
@@ -3133,7 +3133,7 @@
     "pinyin": "kāi",
     "meaning": {
       "zh": "开",
-      "en": "open, open up, reclaim (land), open out, come loose, start, begin, operate, turn on (light), run (business), hold (meeting/etc.), divide into, reveal",
+      "en": "to open; to turn on; to start",
       "ko": ""
     },
     "tags": {
@@ -3201,7 +3201,7 @@
     "pinyin": "kàn",
     "meaning": {
       "zh": "看",
-      "en": "see, look at, watch, read, look upon, regard, look after, call on, visit",
+      "en": "to look; to watch; to see",
       "ko": ""
     },
     "tags": {
@@ -3388,7 +3388,7 @@
     "pinyin": "kuài",
     "meaning": {
       "zh": "块",
-      "en": "m.[general]",
+      "en": "piece; (classifier)",
       "ko": ""
     },
     "tags": {
@@ -3422,7 +3422,7 @@
     "pinyin": "lái",
     "meaning": {
       "zh": "来",
-      "en": "to",
+      "en": "to come",
       "ko": ""
     },
     "tags": {
@@ -3507,7 +3507,7 @@
     "pinyin": "le",
     "meaning": {
       "zh": "了",
-      "en": "entirely",
+      "en": "(aspect particle); completed action",
       "ko": ""
     },
     "tags": {
@@ -3541,7 +3541,7 @@
     "pinyin": "lěng",
     "meaning": {
       "zh": "冷",
-      "en": "cool, rare, cold, unfrequented, feel cold, chill, frosty (in manner), shot from hiding, strange",
+      "en": "cold",
       "ko": ""
     },
     "tags": {
@@ -3558,7 +3558,7 @@
     "pinyin": "lǐ",
     "meaning": {
       "zh": "里",
-      "en": "inside",
+      "en": "inside; in",
       "ko": ""
     },
     "tags": {
@@ -3609,7 +3609,7 @@
     "pinyin": "líng",
     "meaning": {
       "zh": "零",
-      "en": "det.: zero, naught, nil",
+      "en": "zero",
       "ko": ""
     },
     "tags": {
@@ -3796,7 +3796,7 @@
     "pinyin": "mā",
     "meaning": {
       "zh": "吗",
-      "en": "particle: calling for agreement or disagreement",
+      "en": "(question particle)",
       "ko": ""
     },
     "tags": {
@@ -3881,7 +3881,7 @@
     "pinyin": "méi",
     "meaning": {
       "zh": "没",
-      "en": "not",
+      "en": "not have; there is not",
       "ko": ""
     },
     "tags": {
@@ -4255,7 +4255,7 @@
     "pinyin": "nà",
     "meaning": {
       "zh": "那",
-      "en": "det.: that",
+      "en": "that; those",
       "ko": ""
     },
     "tags": {
@@ -4510,7 +4510,7 @@
     "pinyin": "ne",
     "meaning": {
       "zh": "呢",
-      "en": "particle: marking quesitons about subject already mentioned; indicating strong affirmation",
+      "en": "(particle) and …?; how about …?",
       "ko": ""
     },
     "tags": {
@@ -4527,7 +4527,7 @@
     "pinyin": "néng",
     "meaning": {
       "zh": "能",
-      "en": "can or to be capable of",
+      "en": "can; be able to",
       "ko": ""
     },
     "tags": {
@@ -4969,7 +4969,7 @@
     "pinyin": "qǐng",
     "meaning": {
       "zh": "请",
-      "en": "request, ask (a favor), engage, hire (teacher/etc.), Please...",
+      "en": "please",
       "ko": ""
     },
     "tags": {
@@ -5071,7 +5071,7 @@
     "pinyin": "qù",
     "meaning": {
       "zh": "去",
-      "en": "to go, to leave, in order to",
+      "en": "to go",
       "ko": ""
     },
     "tags": {
@@ -5139,7 +5139,7 @@
     "pinyin": "rènshì",
     "meaning": {
       "zh": "认识",
-      "en": "know, recognize",
+      "en": "to know; to recognize",
       "ko": ""
     },
     "tags": {
@@ -5445,7 +5445,7 @@
     "pinyin": "shǎo",
     "meaning": {
       "zh": "少",
-      "en": "lack, be deficient, lose, be missing",
+      "en": "few; little",
       "ko": ""
     },
     "tags": {
@@ -5666,7 +5666,7 @@
     "pinyin": "shì",
     "meaning": {
       "zh": "是",
-      "en": "is, are, am, yes, to be, variant of 是[shi4], (used in given names)",
+      "en": "to be; yes",
       "ko": ""
     },
     "tags": {
@@ -5887,7 +5887,7 @@
     "pinyin": "shuōhuà",
     "meaning": {
       "zh": "说话",
-      "en": "philosophize, thrum, talk, peach, babble out, speech, articulate, chat, speak, babble, gossip, blab out, sing, address, tattle, blab, mouth, say",
+      "en": "to speak; to talk",
       "ko": ""
     },
     "tags": {
@@ -5955,7 +5955,7 @@
     "pinyin": "tā",
     "meaning": {
       "zh": "他",
-      "en": "he, she, it, they (referring to inanimate things in object position)",
+      "en": "he; him",
       "ko": ""
     },
     "tags": {
@@ -6023,7 +6023,7 @@
     "pinyin": "tài",
     "meaning": {
       "zh": "太",
-      "en": "excessively, too, extremely, very",
+      "en": "too; very",
       "ko": ""
     },
     "tags": {
@@ -6142,7 +6142,7 @@
     "pinyin": "tóngxué",
     "meaning": {
       "zh": "同学",
-      "en": "class fellow, fellow student, condisciple, classmate, schoolmate, schoolfellow, form of address used in speaking to a student",
+      "en": "classmate",
       "ko": ""
     },
     "tags": {
@@ -6550,7 +6550,7 @@
     "pinyin": "xià",
     "meaning": {
       "zh": "下",
-      "en": "under (condition/fact etc.)",
+      "en": "down; below; next",
       "ko": ""
     },
     "tags": {
@@ -6703,7 +6703,7 @@
     "pinyin": "xiānshēng",
     "meaning": {
       "zh": "先生",
-      "en": "doctor of Chinese medicine, Don, mulla, Ms., sir., teacher, gentleman, gospodin, Signor, signor, fortune-teller, babu, baboo, Herr, Mister, bey, mister, bwana, husband, siree, buckra, sirrah, senor, guv, sahib, Mr., rabbi, don, signore, Dan, sir, m'sieur, effendi, Tuan, baas, Monsieur, lording, monsieur, doctor, Mr, milord, Mynheer, signior, esquire, bookkeeper, Senor, rabboni, Senhor, sieur, sen",
+      "en": "Mr.; sir; teacher",
       "ko": ""
     },
     "tags": {
@@ -6720,7 +6720,7 @@
     "pinyin": "xiàn zài",
     "meaning": {
       "zh": "现在",
-      "en": "now, at present, at the moment, modern, current, nowadays",
+      "en": "now",
       "ko": ""
     },
     "tags": {
@@ -6737,7 +6737,7 @@
     "pinyin": "xiǎng",
     "meaning": {
       "zh": "想",
-      "en": "think, suppose, reckon, consider, want to, would like to, feel like (doing sth.)",
+      "en": "to think; to want",
       "ko": ""
     },
     "tags": {
@@ -6788,7 +6788,7 @@
     "pinyin": "xiǎojiě",
     "meaning": {
       "zh": "小姐",
-      "en": "Signorina, Senorita, senorita, signorina, young lady, damosel, Dona, mum, young lady, damoiselle, missy, tootsy, demoiselle, damsel, Miss, Fraulein, miss, sheila, sister, toots, senhorita, damozel, Ladyship, ladyship, Mademoiselle, mademoiselle",
+      "en": "Miss; young lady",
       "ko": ""
     },
     "tags": {
@@ -6907,7 +6907,7 @@
     "pinyin": "xièxiè",
     "meaning": {
       "zh": "谢谢",
-      "en": "thank",
+      "en": "thank you",
       "ko": ""
     },
     "tags": {
@@ -7196,7 +7196,7 @@
     "pinyin": "yī",
     "meaning": {
       "zh": "一",
-      "en": "det.: one",
+      "en": "one",
       "ko": ""
     },
     "tags": {
@@ -7434,7 +7434,7 @@
     "pinyin": "yǒu",
     "meaning": {
       "zh": "有",
-      "en": "have, possess",
+      "en": "to have; there is",
       "ko": ""
     },
     "tags": {
@@ -7672,7 +7672,7 @@
     "pinyin": "zài",
     "meaning": {
       "zh": "在",
-      "en": "in, at, on, etc.",
+      "en": "at; in; to be (located)",
       "ko": ""
     },
     "tags": {
@@ -7825,7 +7825,7 @@
     "pinyin": "zhè",
     "meaning": {
       "zh": "这",
-      "en": "now, this, det.: this, it",
+      "en": "this; these",
       "ko": ""
     },
     "tags": {
@@ -8182,7 +8182,7 @@
     "pinyin": "zhù",
     "meaning": {
       "zh": "住",
-      "en": "inhabit, cease, stay, visit, shack, dwell, stop, people, live, reside, populate, dig",
+      "en": "to live; to stay",
       "ko": ""
     },
     "tags": {
@@ -8233,7 +8233,7 @@
     "pinyin": "zì",
     "meaning": {
       "zh": "字",
-      "en": "graphic symbol, writing, pronunciation (of a word), form of a written character, receipt, printing type, script, name taken at the age of 20, courtesy name, wordage, character, grapheme, contract, scripts, symbolic representation, style of handwriting, word",
+      "en": "character; word",
       "ko": ""
     },
     "tags": {
@@ -8437,7 +8437,7 @@
     "pinyin": "zuò",
     "meaning": {
       "zh": "做",
-      "en": "make, do",
+      "en": "to do; to make",
       "ko": ""
     },
     "tags": {
