@@ -202,7 +202,7 @@
       "explain": {
         "kr": "맛있어요 (음료)",
         "en": "tasty (for drinks)",
-        "jp": "tasty (for drinks)"
+        "jp": "おいしい（飲み物向け）"
       }
     },
     {
@@ -214,7 +214,7 @@
       "explain": {
         "kr": "저는 ... 먹는 거 좋아해요.",
         "en": "I like to eat...",
-        "jp": "I like to eat..."
+        "jp": "……を食べるのが好きです"
       }
     },
     {
@@ -226,7 +226,7 @@
       "explain": {
         "kr": "저는 ... 마시는 거 좋아해요.",
         "en": "I like to drink...",
-        "jp": "I like to drink..."
+        "jp": "……を飲むのが好きです"
       }
     }
   ],
@@ -285,10 +285,10 @@
       ],
       "answer": "D",
       "explanation": {
-        "cn": "「好啊！」：Great!",
+        "cn": "「好啊！」：表示同意、好呀。",
         "kr": "「好啊！」는 좋아요!입니다.",
-        "en": "\"好啊！\" means Great!.",
-        "jp": "「好啊！」は いいですね！ です。"
+        "en": "\"好啊！\" means \"Great!\" or \"Sounds good!\".",
+        "jp": "「好啊！」は「いいですね」という意味です。"
       }
     },
     {

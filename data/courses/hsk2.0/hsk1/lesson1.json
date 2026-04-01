@@ -290,10 +290,10 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "「감사합니다.」用中文怎么说？",
+        "cn": "请选出与韩语原句意义相符的常用中文。",
         "kr": "'감사합니다.'에 해당하는 중국어는?",
-        "en": "What is the Chinese for \"감사합니다.\"?",
-        "jp": "「감사합니다.」に対応する中国語は？"
+        "en": "Which Chinese phrase matches the meaning of the Korean cue in this lesson?",
+        "jp": "韓国語の原句に対応する中国語はどれですか。"
       },
       "options": [
         {
@@ -319,10 +319,10 @@
       ],
       "answer": "C",
       "explanation": {
-        "cn": "「감사합니다.」：谢谢。",
-        "kr": "「감사합니다.」: 谢谢。",
-        "en": "\"감사합니다.\" → 谢谢。.",
-        "jp": "「감사합니다.」→ 谢谢。"
+        "cn": "韩语表示感谢时，对应的中文常用「谢谢。」。",
+        "kr": "감사를 표현할 때 쓰는 중국어는 「谢谢」입니다.",
+        "en": "To express thanks, Chinese often uses \"谢谢\".",
+        "jp": "感謝を表すときの中国語は「谢谢」です。"
       }
     },
     {
