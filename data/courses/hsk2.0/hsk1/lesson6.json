@@ -56,12 +56,32 @@
     },
     {
       "speaker": "B",
-      "text": "是的，我会汉语。",
-      "pinyin": "Shì de ， wǒ huì hàn yǔ 。",
+      "text": "会，我会说一点儿。",
+      "pinyin": "Huì, wǒ huì shuō yìdiǎnr.",
       "translation": {
-        "kr": "네, 중국어 할 수 있어요.",
-        "en": "Yes, I can speak Chinese.",
-        "jp": "はい、中国語ができます。"
+        "kr": "네, 조금 할 수 있어요.",
+        "en": "Yes, I can speak a little.",
+        "jp": "はい、少し話せます。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你认识这个字吗？",
+      "pinyin": "Nǐ rènshi zhège zì ma?",
+      "translation": {
+        "kr": "이 글자를 알아요?",
+        "en": "Do you know this character?",
+        "jp": "この字を知っていますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "是的，认识。",
+      "pinyin": "Shì de, rènshi.",
+      "translation": {
+        "kr": "네, 알아요.",
+        "en": "Yes, I do.",
+        "jp": "はい、知っています。"
       }
     },
     {
@@ -85,7 +105,88 @@
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你会说汉语吗？",
+          "pinyin": "Nǐ huì shuō hàn yǔ ma ？",
+          "translation": {
+            "kr": "중국어 할 수 있어요?",
+            "en": "Can you speak Chinese?",
+            "jp": "中国語を話せますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "会，我会说一点儿。",
+          "pinyin": "Huì, wǒ huì shuō yìdiǎnr.",
+          "translation": {
+            "kr": "네, 조금 할 수 있어요.",
+            "en": "Yes, I can speak a little.",
+            "jp": "はい、少し話せます。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "你认识这个字吗？",
+          "pinyin": "Nǐ rènshi zhège zì ma?",
+          "translation": {
+            "kr": "이 글자를 알아요?",
+            "en": "Do you know this character?",
+            "jp": "この字を知っていますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "是的，认识。",
+          "pinyin": "Shì de, rènshi.",
+          "translation": {
+            "kr": "네, 알아요.",
+            "en": "Yes, I do.",
+            "jp": "はい、知っています。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你在哪儿学习汉语？",
+          "pinyin": "Nǐ zài nǎ ér xué xí hàn yǔ ？",
+          "translation": {
+            "kr": "어디서 중국어를 배워요?",
+            "en": "Where do you study Chinese?",
+            "jp": "どこで中国語を勉強していますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我在学校学习汉语。",
+          "pinyin": "Wǒ zài xué xiào xué xí hàn yǔ 。",
+          "translation": {
+            "kr": "저는 학교에서 중국어를 배워요.",
+            "en": "I study Chinese at school.",
+            "jp": "学校で中国語を勉強しています。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "会",

@@ -2824,5 +2824,22 @@
       "level": "hsk1",
       "version": "hsk2.0"
     }
+  },
+  {
+    "id": "hsk2.0:hsk1:0155",
+    "hanzi": "一点儿",
+    "pinyin": "yìdiǎnr",
+    "meaning": {
+      "zh": "一点儿",
+      "en": "a little; a bit",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
   }
 ]
