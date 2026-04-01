@@ -287,7 +287,10 @@ function pickTitleFromObject(titleObj, lang) {
   if (typeof titleObj === "object") {
     const v = pick(titleObj, { strict: true, lang });
     if (v) return v;
-    if (lang === "jp" || lang === "ja") return "";
+    // JP 缺 title.jp：回退到 canonical 中文（title.cn / title.zh），不冒充日文、也不空串
+    if (lang === "jp" || lang === "ja") {
+      return str(titleObj.cn ?? titleObj.zh ?? "") || "";
+    }
     return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
   }
   return "";
@@ -302,9 +305,9 @@ function pickTitleFromObject(titleObj, lang) {
  * 假多语言对象（多键同文）不优先于 title，避免切语言后仍全是中文却看似成功。
  * 字符串 displayTitle：蓝图/运行时单语快照等显式覆盖，在 canonical 之前尝试（与 refreshBlueprintDisplayTitles 一致）。
  *
- * 读取顺序：非假 displayTitle 对象 strict → 字符串 displayTitle → title 等多语言 strict+非 jp 时 cn/zh 回退
- * → 假多语言 displayTitle 宽松 pick → 扁平 title_xx 等兼容字段。
- * JP：strict 下不 fallback 到 kr/cn（与 pick 约定一致）。
+ * 读取顺序：非假 displayTitle 对象 strict → 字符串 displayTitle → title 等多语言 strict
+ * → title 在 jp 缺译时回退 cn/zh（canonical 中文，不冒充 displayTitle 假多语言）
+ * → 假多语言 displayTitle 宽松 pick（jp 仍跳过，避免假 jp）→ 扁平 title_xx 等兼容字段。
  */
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
@@ -334,7 +337,13 @@ export function getLessonDisplayTitle(lesson, lang) {
 
   const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
   if (flat) return str(flat);
-  if (l === "jp" || l === "ja") return str(lesson.title_jp ?? lesson.title_ja ?? "") || "";
+  if (l === "jp" || l === "ja") {
+    return (
+      str(lesson.title_jp ?? lesson.title_ja ?? "") ||
+      str(lesson.title_cn ?? lesson.title_zh ?? "") ||
+      ""
+    );
+  }
   return str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
 }
 
