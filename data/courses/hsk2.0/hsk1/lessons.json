@@ -244,40 +244,6 @@
       "lessonNo": 8,
       "id": "hsk1_lesson8",
       "title": {
-        "cn": "苹果多少钱？",
-        "kr": "사과 얼마예요?",
-        "en": "How much is the apple?"
-      },
-      "sceneGoal": "问价格、买水果",
-      "subtitle": "问价钱",
-      "grammarTargets": [
-        "多少钱"
-      ],
-      "vocabTargets": [
-        "苹果",
-        "钱",
-        "块",
-        "买",
-        "个",
-        "好的"
-      ],
-      "extensionTargets": [
-        "两个",
-        "三个",
-        "几个"
-      ],
-      "displayTitle": {
-        "cn": "苹果多少钱？",
-        "zh": "苹果多少钱？",
-        "en": "苹果多少钱？",
-        "kr": "苹果多少钱？",
-        "jp": "苹果多少钱？"
-      }
-    },
-    {
-      "lessonNo": 9,
-      "id": "hsk1_lesson9",
-      "title": {
         "cn": "现在几点？",
         "kr": "지금 몇 시예요?",
         "en": "What time is it now?"
@@ -307,8 +273,8 @@
       }
     },
     {
-      "lessonNo": 10,
-      "id": "hsk1_lesson10",
+      "lessonNo": 9,
+      "id": "hsk1_lesson9",
       "title": {
         "cn": "今天几月几号？",
         "kr": "오늘 몇 월 며칠이에요?",
@@ -353,8 +319,8 @@
       }
     },
     {
-      "lessonNo": 11,
-      "id": "hsk1_lesson11",
+      "lessonNo": 10,
+      "id": "hsk1_lesson10",
       "title": {
         "cn": "今天星期几？",
         "kr": "오늘 무슨 요일이에요?",
@@ -387,6 +353,40 @@
         "en": "今天星期几？",
         "kr": "今天星期几？",
         "jp": "今天星期几？"
+      }
+    },
+    {
+      "lessonNo": 11,
+      "id": "hsk1_lesson11",
+      "title": {
+        "cn": "苹果多少钱？",
+        "kr": "사과 얼마예요?",
+        "en": "How much is the apple?"
+      },
+      "sceneGoal": "问价格、买水果",
+      "subtitle": "问价钱",
+      "grammarTargets": [
+        "多少钱"
+      ],
+      "vocabTargets": [
+        "苹果",
+        "钱",
+        "块",
+        "买",
+        "个",
+        "好的"
+      ],
+      "extensionTargets": [
+        "两个",
+        "三个",
+        "几个"
+      ],
+      "displayTitle": {
+        "cn": "苹果多少钱？",
+        "zh": "苹果多少钱？",
+        "en": "苹果多少钱？",
+        "kr": "苹果多少钱？",
+        "jp": "苹果多少钱？"
       }
     },
     {
