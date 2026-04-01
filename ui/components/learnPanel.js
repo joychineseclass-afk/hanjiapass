@@ -1,19 +1,12 @@
-import { modalTpl, createModalSystem } from "./modalBase.js";
 // /ui/components/learnPanel.js
-// ✅完善不返工版（KO-first, stable, extensible, ESM-compatible）
-//
-// 目标：
-// - 一次挂载，不重复 mount
-// - 事件驱动 + 也提供 window.LEARN_PANEL.open()
-// - 兼容数据结构：string / {ko, kr, zh, cn, en} / array / nested object
-// - 提供 strokeMount 挂载点：外部模块或 StrokePlayer 自动 mount
-// - 兼容你现有字段命名（word/hanzi/hz/simplified... meaning/ko/kr... exampleZh...）
-//
-// Events:
-//   openLearnPanel / closeLearnPanel
-//   learn:set         (传入 word 对象)
-//   learn:rendered    (渲染完成广播)
-//   learn:open        (同 learn:set + open)
+// 教材型「单词学习卡」：词语 / 拼音 / 词性 / 释义 → 词义说明 → 例句 1/2（中文 + 拼音 + 系统语言译文）
+// 数据来自课程 JSON 的 vocab 词条对象（经词卡 LEARN_PANEL.open 传入）；无文案的区块不渲染，不使用「暂无」类占位。
+// window.LEARN_PANEL.open(item) · learn:set · learn:open
+
+import { i18n } from "../i18n.js";
+import { getLang, pick } from "../core/languageEngine.js";
+import { getMeaningByLang, getPosByLang } from "../utils/wordDisplay.js";
+import { resolvePinyin } from "../utils/pinyinEngine.js";
 
 let mounted = false;
 
@@ -23,7 +16,6 @@ export function mountLearnPanel(opts = {}) {
 
   const { container = document.body } = opts;
 
-  // 防止重复插入 DOM（即便 mounted 被热更新打断）
   const existed = document.getElementById("learn-panel-root");
   if (existed) existed.remove();
 
@@ -32,98 +24,81 @@ export function mountLearnPanel(opts = {}) {
   wrap.innerHTML = tpl();
   container.appendChild(wrap);
 
-const overlay = wrap.querySelector("#learn-panel");
-const backBtn = wrap.querySelector("#learnBack");
-const closeXBtn = wrap.querySelector("#learnCloseX");
-const body = wrap.querySelector("#learnBody");
+  const overlay = wrap.querySelector("#learn-panel");
+  const backBtn = wrap.querySelector("#learnBack");
+  const closeXBtn = wrap.querySelector("#learnCloseX");
+  const body = wrap.querySelector("#learnBody");
 
-// --- open/close ---
-const open = () => overlay?.classList.remove("hidden");
-const close = () => overlay?.classList.add("hidden");
+  const open = () => overlay?.classList.remove("hidden");
+  const close = () => overlay?.classList.add("hidden");
 
-// X 关闭
-closeXBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  close();
-});
-
-// ← 返回（退回单词栏：本质是关闭 + 滚动回单词区域）
-backBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  close();
-  // 可选：回到单词卡区域
-  document.querySelector("#hskGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
-// 点黑背景关闭
-overlay?.addEventListener("click", (e) => {
-  if (e.target === overlay) close();
-});
-
-// Esc 关闭（只绑定一次）
-if (!document.body.dataset.learnEscBound) {
-  document.body.dataset.learnEscBound = "1";
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") close();
+  closeXBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    close();
   });
-}
 
-  // --- external events ---
+  backBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    close();
+    document.querySelector("#hskGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  overlay?.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
+  });
+
+  if (!document.body.dataset.learnEscBound) {
+    document.body.dataset.learnEscBound = "1";
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
+
   window.addEventListener("openLearnPanel", open);
   window.addEventListener("closeLearnPanel", close);
 
-  // learn:set：设置内容并打开
   window.addEventListener("learn:set", (e) => {
     const data = e?.detail || {};
-    render(body, data);
+    render(wrap, body, data);
     open();
   });
 
-  // learn:open：同 learn:set（更语义化）
   window.addEventListener("learn:open", (e) => {
     const data = e?.detail || {};
-    render(body, data);
+    render(wrap, body, data);
     open();
   });
 
-  // ✅ 给点击词卡用：window.LEARN_PANEL.open(item)
   window.LEARN_PANEL = {
     open: (data) => {
-      render(body, data);
+      render(wrap, body, data);
       open();
     },
     close,
-    set: (data) => render(body, data),
+    set: (data) => render(wrap, body, data),
     isMounted: true,
   };
 
   return window.LEARN_PANEL;
 }
 
-/* ===============================
-   Template
-================================== */
 function tpl() {
   return `
-    <div id="learn-panel" class="learn-overlay hidden" aria-label="Learn Panel">
+    <div id="learn-panel" class="learn-overlay hidden" aria-label="Word study">
       <div class="learn-modal" role="dialog" aria-modal="true">
         <div class="learn-topbar">
-          <button id="learnBack" type="button" class="learn-btn">← 뒤로</button>
-          <div class="learn-title" data-i18n="learn_title">단어 학습</div>
-          <button id="learnCloseX" type="button" class="learn-x" aria-label="Close">×</button>
+          <button id="learnBack" type="button" class="learn-btn" data-i18n="word_study_back"></button>
+          <div id="learnPanelTitle" class="learn-title"></div>
+          <button id="learnCloseX" type="button" class="learn-x" data-i18n-aria-label="common_close">×</button>
         </div>
-
         <div id="learnBody" class="learn-body"></div>
       </div>
     </div>
   `;
 }
 
-/* ===============================
-   Render helpers
-================================== */
 function esc(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -131,305 +106,263 @@ function esc(s) {
     .replaceAll(">", "&gt;");
 }
 
-// ✅ KO-first pickText: never [object Object]
-function pickText(v, lang = "ko") {
-  if (v == null) return "";
-  if (typeof v === "string") return v.trim();
-  if (typeof v === "number" || typeof v === "boolean") return String(v);
+const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
-  if (Array.isArray(v)) {
-    return v.map((x) => pickText(x, lang)).filter(Boolean).join(" / ");
-  }
+function posUiLang(uiLang) {
+  if (uiLang === "kr") return "ko";
+  if (uiLang === "cn") return "zh";
+  return uiLang;
+}
 
-  if (typeof v === "object") {
-    const L = String(lang || "").toLowerCase();
+function hskScopeFromCtx() {
+  const lv = window.__HSK_PAGE_CTX?.level;
+  if (lv == null || lv === "") return "";
+  const n = Number(lv);
+  if (!Number.isFinite(n) || n < 1) return "";
+  return `hsk${n}`;
+}
 
-    // 优先：lang -> ko/kr -> zh/cn -> en
-    const direct =
-      pickText(v?.[L], lang) ||
-      pickText(v?.ko, lang) ||
-      pickText(v?.kr, lang) ||
-      pickText(v?.zh, lang) ||
-      pickText(v?.cn, lang) ||
-      pickText(v?.en, lang);
-
-    if (direct) return direct;
-
-    for (const k of Object.keys(v)) {
-      const t = pickText(v[k], lang);
+/** 词义说明：多字段回退；支持字符串或 { kr, cn, en, jp, zh, ko } */
+function pickWordNote(raw, uiLang) {
+  if (!raw || typeof raw !== "object") return "";
+  const structured = [raw.explanation, raw.description, raw.note, raw.explain];
+  for (const s of structured) {
+    if (s == null) continue;
+    if (typeof s === "string") {
+      const t = str(s);
       if (t) return t;
+      continue;
+    }
+    if (typeof s === "object") {
+      const t = pick(s, { strict: false, lang: uiLang });
+      if (str(t)) return str(t);
     }
   }
-
+  const candidates = [
+    raw.senseNote,
+    raw.sense_note,
+    raw.usageDesc,
+    raw.usage_desc,
+    raw.usageDescription,
+    raw.usage_description,
+    raw.levelNote,
+    raw.level_note,
+    raw.hskNote,
+    raw.hsk_note,
+    raw.usageNote,
+    raw.usage_note,
+    raw.teachingNote,
+    raw.teaching_note,
+    raw.wordNote,
+    raw.word_note,
+    raw.glossNote,
+    raw.gloss_note,
+    raw.shortDef,
+    raw.short_def,
+    raw.definitionShort,
+    raw.definition_short,
+  ];
+  for (const c of candidates) {
+    if (c == null) continue;
+    if (typeof c === "string") {
+      const t = str(c);
+      if (t && t !== "[object Object]") return t;
+      continue;
+    }
+    if (typeof c === "object") {
+      const t = pick(c, { strict: false, lang: uiLang });
+      if (str(t)) return str(t);
+    }
+  }
   return "";
 }
 
-function cleanText(v, lang = "ko") {
-  const t = pickText(v, lang);
-  const s = String(t ?? "").trim();
-  if (!s || s === "[object Object]") return "";
-  return s;
+function translationFromExample(tr, uiLang) {
+  if (tr == null) return "";
+  if (typeof tr === "string") return str(tr);
+  if (typeof tr === "object") return str(pick(tr, { strict: false, lang: uiLang }));
+  return "";
 }
 
-function normalizeWordObj(raw = {}) {
-  // ✅ 兼容你 loader/renderer 的字段：word / hanzi / simplified / traditional ...
-  const word =
-    raw?.word ??
-    raw?.hanzi ??
-    raw?.hz ??
-    raw?.simplified ??
-    raw?.traditional ??
-    raw?.zh ??
-    raw?.cn ??
-    "";
+const MAX_WORD_STUDY_EXAMPLES = 3;
 
-  const pinyin = raw?.pinyin ?? raw?.py ?? raw?.pron ?? "";
+/** 设为 false 可关闭例句/词义说明打点：`window.__WORD_STUDY_TRACE__ = false` */
+const WORD_STUDY_TRACE =
+  typeof window !== "undefined" && window.__WORD_STUDY_TRACE__ !== false;
 
-  // ✅ meaning 兼容
-  const meaning =
-    raw?.meaning ??
-    raw?.ko ??
-    raw?.kr ??
-    raw?.translation ??
-    raw?.뜻 ??
-    "";
+/**
+ * 最多 3 条例句：中文 + 拼音 + 系统语言翻译（课程 JSON vocab.examples）
+ */
+function collectExampleItems(raw, uiLang) {
+  const out = [];
+  const seen = new Set();
 
-  // ✅ 例句兼容（你 hskRenderer.js 那套字段）
-  const exampleZh =
-    raw?.exampleZh ??
-    raw?.exampleZH ??
-    raw?.example_zh ??
-    raw?.sentenceZh ??
-    raw?.sentenceZH ??
-    raw?.example ??
-    raw?.sentence ??
-    "";
-
-  const examplePinyin =
-    raw?.examplePinyin ??
-    raw?.sentencePinyin ??
-    raw?.example_py ??
-    raw?.examplePY ??
-    "";
-
-  const exampleExplainKr =
-    raw?.exampleExplainKr ??
-    raw?.exampleKR ??
-    raw?.explainKr ??
-    raw?.krExplain ??
-    raw?.example?.kr ??
-    "";
-
-  const exampleExplainCn =
-    raw?.exampleExplainCn ??
-    raw?.exampleCN ??
-    raw?.explainCn ??
-    raw?.cnExplain ??
-    raw?.example?.zh ??
-    "";
-
-  return {
-    ...raw,
-    word,
-    pinyin,
-    meaning,
-    exampleZh,
-    examplePinyin,
-    exampleExplainKr,
-    exampleExplainCn,
+  const push = (zh, py, trans) => {
+    const z = str(zh);
+    if (!z || seen.has(z)) return;
+    seen.add(z);
+    out.push({
+      zh: z,
+      py: str(py),
+      trans: str(trans),
+    });
   };
-}
 
-function extractHanChars(wordText) {
-  const s = String(wordText || "");
-  const m = s.match(/[\u3400-\u9FFF]/g);
-  return m ? Array.from(new Set(m)) : [];
-}
-
-// 🔊 朗读（优先你现有 AIUI，没有就用浏览器自带语音）
-function speakFallback(text, lang = "zh-CN") {
-  const t = String(text || "").trim();
-  if (!t) return;
-
-  // ① 如果你已有 AI 朗读
-  if (typeof window.AIUI?.speak === "function") {
-    window.AIUI.speak(t, lang);
-    return;
+  const exArrays = [raw.examples, raw.exampleSentences, raw.sampleExamples].filter(Array.isArray);
+  for (const arr of exArrays) {
+    for (const ex of arr) {
+      if (!ex) continue;
+      if (typeof ex === "string") push(ex, "", "");
+      else {
+        const z = ex.zh ?? ex.text ?? ex.cn ?? ex.sentence ?? ex.line;
+        const p = ex.pinyin ?? ex.py ?? "";
+        const tr = translationFromExample(ex.translation ?? ex.trans, uiLang);
+        push(z, p, tr);
+      }
+      if (out.length >= MAX_WORD_STUDY_EXAMPLES) return out;
+    }
   }
 
-  // ② 浏览器自带语音（兜底）
-  if ("speechSynthesis" in window) {
-    const u = new SpeechSynthesisUtterance(t);
-    u.lang = lang;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
-    return;
+  const single = raw.example;
+  if (single && typeof single === "object" && out.length < MAX_WORD_STUDY_EXAMPLES) {
+    push(
+      single.text ?? single.zh ?? single.cn,
+      single.pinyin ?? single.py ?? "",
+      translationFromExample(single.translation, uiLang)
+    );
   }
 
-  alert("이 브라우저는 음성 기능을 지원하지 않아요.");
+  const ez = str(raw.exampleZh ?? raw.example_zh ?? raw.exampleZH);
+  if (ez && out.length < MAX_WORD_STUDY_EXAMPLES && !seen.has(ez)) {
+    const epy = str(raw.examplePinyin ?? raw.example_pinyin ?? raw.examplePY ?? "");
+    let tr = "";
+    if (raw.exampleTranslation && typeof raw.exampleTranslation === "object") {
+      tr = translationFromExample(raw.exampleTranslation, uiLang);
+    }
+    if (!tr) {
+      tr = str(
+        raw.exampleExplainKr ||
+          raw.exampleKR ||
+          raw.explainKr ||
+          raw.exampleExplainEn ||
+          raw.exampleExplainCn ||
+          raw.exampleExplainJp ||
+          ""
+      );
+    }
+    push(ez, epy, tr);
+  }
+
+  return out.slice(0, MAX_WORD_STUDY_EXAMPLES);
 }
 
-/* ===============================
-   Main render (stable)
-================================== */
-function render(root, raw) {
+function render(wrapRoot, root, raw) {
   if (!root) return;
 
-  const lang = window.APP_LANG || window.site_lang || "ko";
-  const w = normalizeWordObj(raw);
+  i18n.apply?.(wrapRoot || document.getElementById("learn-panel-root") || document);
 
-  const wordText = cleanText(w.word, lang) || cleanText(w.word, "zh");
-  const pinyinText = cleanText(w.pinyin, lang);
-  const meaningText = cleanText(w.meaning, lang);
+  const titleEl = document.getElementById("learnPanelTitle");
+  if (titleEl) titleEl.textContent = i18n.t("word_study_title");
 
-  const exZh = cleanText(w.exampleZh, "zh");
-  const exPy = cleanText(w.examplePinyin, lang);
-  const exKr = cleanText(w.exampleExplainKr, "ko");
-  const exCn = cleanText(w.exampleExplainCn, "zh");
+  const uiLang = getLang();
+  const scope = hskScopeFromCtx();
+  const w = typeof raw === "string" ? { hanzi: raw } : (raw && typeof raw === "object" ? { ...raw } : {});
 
-  const hanChars = extractHanChars(wordText);
+  const hanzi = str(w.hanzi ?? w.word ?? w.zh ?? w.cn ?? w.text ?? w.simplified ?? "");
+  const pinyinRaw = str(w.pinyin ?? w.py ?? w.pron ?? "");
+  const pinyin = str(resolvePinyin(hanzi, pinyinRaw));
+  const pos = str(getPosByLang(w, posUiLang(uiLang), scope));
+  const meaning = str(getMeaningByLang(w, uiLang, hanzi, scope));
+  const note = pickWordNote(w, uiLang);
+  const examples = collectExampleItems(w, uiLang).filter((x) => x.zh);
+
+  if (WORD_STUDY_TRACE && typeof console !== "undefined" && console.info) {
+    const rawEx = w.examples;
+    console.info("[word-study] learnPanel.render(open) item", {
+      hanzi,
+      pinyin,
+      pos,
+      meaning,
+      senseNote: w.senseNote ?? w.sense_note,
+      examples: rawEx,
+      examplesIsArray: Array.isArray(rawEx),
+      examplesLen: Array.isArray(rawEx) ? rawEx.length : null,
+      noteResolvedLen: note ? note.length : 0,
+      examplesCollectedLen: examples.length,
+    });
+  }
+
+  const labelWord = i18n.t("word_study_row_word");
+  const labelPyRow = i18n.t("word_study_row_pinyin");
+  const labelPosRow = i18n.t("word_study_row_pos");
+  const labelMeanRow = i18n.t("word_study_row_meaning");
+  const labelNote = i18n.t("word_study_label_note");
+  const labelExSection = i18n.t("word_study_section_examples");
+  const labelExZh = i18n.t("word_study_ex_line_zh");
+  const labelExPy = i18n.t("word_study_ex_line_py");
+  const labelExTr = i18n.t("word_study_ex_line_tr");
+
+  const dash = "\u2014";
+  const heroInner = `
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelWord)}</div>
+      <div class="word-study-field-value word-study-hanzi">${esc(hanzi || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelPyRow)}</div>
+      <div class="word-study-field-value word-study-pinyin">${esc(pinyin || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelPosRow)}</div>
+      <div class="word-study-field-value word-study-pos">${esc(pos || dash)}</div>
+    </div>
+    <div class="word-study-field">
+      <div class="word-study-field-label">${esc(labelMeanRow)}</div>
+      <div class="word-study-field-value word-study-meaning">${esc(meaning || dash)}</div>
+    </div>`;
+
+  const noteHtml = note
+    ? `<section class="word-study-section word-study-note-block">
+        <h3 class="word-study-block-title">${esc(labelNote)}</h3>
+        <p class="word-study-note-body">${esc(note)}</p>
+      </section>`
+    : "";
+
+  const examplesHtml = examples.length
+    ? `<section class="word-study-examples-region" aria-label="${esc(labelExSection)}">
+        <h2 class="word-study-major-title">${esc(labelExSection)}</h2>
+        ${examples
+          .map(
+            (ex, i) => `
+        <div class="word-study-example-unit">
+          <h3 class="word-study-block-title">${esc(i18n.t("word_study_example_no", { n: i + 1 }))}</h3>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExZh)}</span>
+            <div class="word-study-ex-zh">${esc(ex.zh)}</div>
+          </div>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExPy)}</span>
+            <div class="word-study-ex-py">${esc(ex.py || dash)}</div>
+          </div>
+          <div class="word-study-ex-line">
+            <span class="word-study-ex-tag">${esc(labelExTr)}</span>
+            <div class="word-study-ex-tr">${esc(ex.trans || dash)}</div>
+          </div>
+        </div>`
+          )
+          .join("")}
+      </section>`
+    : "";
 
   root.innerHTML = `
-    <!-- ✅ Summary card -->
-    <div class="rounded-2xl border p-4">
-      <div class="flex items-start justify-between gap-3">
-        <div>
-          <div class="text-3xl font-extrabold">${esc(wordText || "(빈 항목)")}</div>
-          <div class="text-sm text-gray-600 mt-1">
-            ${esc([pinyinText, meaningText].filter(Boolean).join(" · ")) || "&nbsp;"}
-          </div>
-        </div>
-
-        <div class="flex gap-2">
-          <button id="btnLearnAskAI" type="button"
-            class="px-3 py-2 rounded-xl bg-orange-500 text-white font-bold text-sm">
-            AI
-          </button>
-
-          <button id="btnLearnSpeak" type="button"
-            class="px-3 py-2 rounded-xl bg-slate-100 font-bold text-sm">
-            🔊
-          </button>
-        </div>
-      </div>
-
-      <div class="mt-4 text-sm text-gray-700 space-y-1">
-        ${exZh ? `<div>${esc(exZh)}</div>` : `<div class="text-xs text-gray-400">예문 없음</div>`}
-        ${exPy ? `<div class="text-blue-600">${esc(exPy)}</div>` : ""}
-        ${exKr ? `<div class="text-gray-500">${esc(exKr)}</div>` : ""}
-        ${(!exKr && exCn) ? `<div class="text-gray-500">${esc(exCn)}</div>` : ""}
-      </div>
-
-      <div class="mt-4 flex flex-wrap gap-2">
-        <button id="btnLearnToRecent" type="button"
-          class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
-          ⭐ 최근 학습 저장
-        </button>
-      </div>
-    </div>
-
-    <!-- ✅ Stroke mount -->
-    <div class="rounded-2xl border p-4">
-      <div class="font-extrabold mb-2">필순</div>
-      <div id="strokeMount"></div>
-      ${
-        hanChars.length
-          ? `<div class="text-xs text-gray-500 mt-2">글자: ${esc(hanChars.join(" "))}</div>`
-          : `<div class="text-xs text-gray-400 mt-2">표시할 한자가 없어요.</div>`
-      }
-    </div>
-
-    <!-- ✅ Extra actions (extensible) -->
-    <div class="rounded-2xl border p-4">
-      <div class="font-extrabold mb-2">학습</div>
-      <div class="flex flex-wrap gap-2">
-        <button id="btnLearnPractice" type="button"
-          class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
-          ✍️ 연습 만들기
-        </button>
-        <button id="btnLearnGrammar" type="button"
-          class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">
-          📘 문법 보기
-        </button>
-      </div>
-      <div class="text-xs text-gray-400 mt-2">
-        (이 영역은 나중에 회화/문법/연습 카드로 확장하기 쉬워요)
-      </div>
-    </div>
+    <article class="word-study-card word-study-card--textbook">
+      <header class="word-study-hero" aria-label="${esc(i18n.t("word_study_title"))}">
+        ${heroInner}
+      </header>
+      ${noteHtml}
+      ${examplesHtml}
+    </article>
   `;
 
-  // ✅ AI
-  root.querySelector("#btnLearnAskAI")?.addEventListener("click", () => {
-    // 你的 AI 面板若用事件：openAIPanel / ai:push / ai:send
-    window.dispatchEvent(new CustomEvent("openAIPanel"));
-
-    const prompt = [
-      `"${wordText}"를 한국어로 쉽게 설명해줘.`,
-      meaningText ? `뜻: ${meaningText}` : "",
-      pinyinText ? `병음: ${pinyinText}` : "",
-      exZh ? `예문(중문): ${exZh}` : "",
-      "뜻/발음/예문을 더 자연스럽게 다듬어줘.",
-    ].filter(Boolean).join("\n");
-
-    window.dispatchEvent(
-      new CustomEvent("ai:push", { detail: { who: "user", text: prompt } })
-    );
-    window.dispatchEvent(
-      new CustomEvent("ai:send", { detail: { text: prompt, source: "learnPanel" } })
-    );
-
-    // 也兼容你旧的 AIUI
-    window.AIUI?.open?.();
-  });
-
-  // ✅ Speak
-  root.querySelector("#btnLearnSpeak")?.addEventListener("click", () => {
-  speakFallback(wordText, "zh-CN");
-});
-
-  // ✅ Recent save
-  root.querySelector("#btnLearnToRecent")?.addEventListener("click", () => {
-    try {
-      window.HSK_HISTORY?.push?.(w);
-      window.HSK_HISTORY?.save?.(w);
-      window.saveHistory?.(w);
-    } catch {}
-  });
-
-  // ✅ placeholder actions (future)
-  root.querySelector("#btnLearnPractice")?.addEventListener("click", () => {
-    window.dispatchEvent(new CustomEvent("practice:open", { detail: w }));
-  });
-
-  root.querySelector("#btnLearnGrammar")?.addEventListener("click", () => {
-    window.dispatchEvent(new CustomEvent("grammar:open", { detail: w }));
-  });
-
-  // ✅ Stroke auto mount
-  tryMountStroke(root.querySelector("#strokeMount"), hanChars);
-
-  // ✅ Broadcast rendered
   window.dispatchEvent(new CustomEvent("learn:rendered", { detail: w }));
-}
-
-function tryMountStroke(mountEl, hanChars) {
-  if (!mountEl) return;
-  mountEl.innerHTML = "";
-
-  if (!hanChars?.length) return;
-
-  const fn = window.StrokePlayer?.mountStrokeSwitcher;
-  if (typeof fn !== "function") {
-    mountEl.innerHTML =
-      `<div class="text-sm text-gray-500">필순 모듈이 아직 준비되지 않았어요.</div>`;
-    return;
-  }
-
-  try {
-    fn(mountEl, hanChars);
-  } catch (e) {
-    mountEl.innerHTML =
-      `<div class="text-sm text-red-600">필순 로드 실패</div>`;
-    console.error(e);
-  }
 }

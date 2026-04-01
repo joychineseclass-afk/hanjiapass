@@ -64,7 +64,7 @@ function buildDialogueCards(cards, blueprintEntry) {
 function getLessonFilePath(lessonNo, lessonsIndex) {
   if (lessonNo >= 21 && lessonsIndex) {
     const entry = lessonsIndex.lessons.find((l) => (l.no || l.id) === lessonNo);
-    const file = entry?.file || (lessonNo === 21 ? "hsk1_lesson21.json" : "hsk1_lesson22.json");
+    const file = entry?.file || `lesson${lessonNo}.json`;
     return join(HSK1_DIR, file);
   }
   return join(HSK1_DIR, `lesson${lessonNo}.json`);

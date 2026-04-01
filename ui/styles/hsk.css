@@ -773,7 +773,7 @@
    🔊 点读交互 (Point-and-read)
 ================================== */
 .lesson-dialogue-line [data-speak-text],
-.word-card [data-action="speak"] {
+.word-card .word-speak-zone {
   cursor: pointer;
 }
 
@@ -1622,6 +1622,82 @@
   font-size: 0.875rem;
   color: #94a3b8;
   text-align: center;
+}
+
+/* ===============================
+   课内「复习」tab：轻量紧凑目录条
+   （hskLessonReview.renderLessonReviewHTML）
+   一行一条、窄于正式 .hsk-lesson-directory，勿混用选择器
+================================== */
+.hsk-review-compact-dir {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hsk-review-compact-dir .review-list,
+.hsk-review-compact-dir .hsk-lesson-review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+  box-sizing: border-box;
+}
+
+.hsk-review-compact-dir .lesson-review-item {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 7px 14px;
+  font-size: 15px;
+  line-height: 1.48;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 1px solid #e8edf3;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow-wrap: break-word;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-review-compact-dir .lesson-review-item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* 单词与句子统一：仅中文主体加粗；拼音/词性/释义由各自 class 控制常规字重 */
+.hsk-review-compact-dir .lesson-review-item .hsk-lr-line-zh {
+  font-weight: 600;
+}
+
+.hsk-review-compact-dir .hsk-lr-sep {
+  color: #94a3b8;
+  font-weight: 400;
+  padding: 0 0.12em;
+}
+
+.hsk-review-compact-dir .hsk-lr-pinyin {
+  color: #5b6a7d;
+  font-weight: 400;
+}
+
+.hsk-review-compact-dir .hsk-lr-pos {
+  color: #475569;
+  font-weight: 500;
+}
+
+.hsk-review-compact-dir .hsk-lr-mean {
+  color: #334155;
+  font-weight: 400;
 }
 
 /* ===============================

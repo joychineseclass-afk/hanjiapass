@@ -70,6 +70,16 @@ function buildQuestionsHtmlWithSections(questions, { lang, answers, resultMap, s
 }
 
 export function mountPractice(container, { lesson, lang = "ko", onComplete } = {}) {
+  console.log("[HSK-REAL-PRACTICE-BOOT]", {
+    file: "ui/modules/practice/practiceRenderer.js",
+    ts: "2026-03-27-real-entry",
+  });
+
+  console.log("[LUMINA-PRACTICE-BUILD-MARK]", {
+    build: "practice-debug-2026-03-27-a",
+    file: "ui/modules/practice/practiceRenderer.js",
+  });
+
   if (!container) return;
 
   const { questions, totalScore } = PracticeEngine.loadPractice(lesson);

@@ -44,30 +44,6 @@ export async function openLessonDetailFlow(ctx, lesson, idxFallback = 0) {
       version: ver,
       detailCache: ctx.lessonDetailCache,
     });
-    // HSK1 强制以 vocab-distribution.json 为最终单词来源（双保险，不依赖下游 loader 是否已覆盖）
-    if (
-      safeText(dom.hskLevel?.value || "1") === "1" &&
-      window.HSK_LOADER?.buildLessonVocabFromDistribution
-    ) {
-      try {
-        const distVocab =
-          (await window.HSK_LOADER.buildLessonVocabFromDistribution(lv, lessonNo, {
-            version: ver,
-          })) ?? null;
-        if (Array.isArray(distVocab)) {
-          ctx.currentLessonDetail = {
-            ...ctx.currentLessonDetail,
-            vocab: distVocab,
-            words: distVocab,
-          };
-        }
-      } catch (e2) {
-        console.warn(
-          "[HSK_UI] buildLessonVocabFromDistribution failed in openLessonDetailFlow:",
-          e2?.message || e2
-        );
-      }
-    }
     renderLessonDetailView(ctx);
     scrollToTop();
     ctx.focusSearch?.();
@@ -247,12 +223,13 @@ function renderLessonTabVocab(ctx, container) {
   }
 
   const scope = `hsk${safeText(dom.hskLevel?.value || "1")}`;
-  window.HSK_RENDER.renderWordCards(
-    cardWrap,
-    filtered,
-    (item) => window.LEARN_PANEL?.open?.(item),
-    { lang: ctx.LANG, scope, query: q, showTag: "학습", compact: false }
-  );
+  window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+    lang: ctx.LANG,
+    scope,
+    query: q,
+    showTag: "학습",
+    compact: false,
+  });
 
   setStatus(dom, `(${filtered.length})`);
 }

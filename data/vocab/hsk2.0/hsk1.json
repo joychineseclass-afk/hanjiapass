@@ -31,6 +31,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -133,6 +139,30 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "senseNote": {
+      "zh": "别人说“谢谢”时的常用回应。",
+      "en": "A common response when someone says thank you.",
+      "ko": "상대가 감사하는 말을 할 때 쓰는 응답 표현입니다.",
+      "jp": "相手に感謝されたときの定番の返答です。"
+    },
+    "examples": [
+      {
+        "zh": "不客气。",
+        "pinyin": "Bú kèqi.",
+        "translation": {
+          "zh": "不客气。",
+          "en": "You are welcome.",
+          "ko": "천만에요.",
+          "jp": "どういたしまして。"
+        }
+      }
+    ],
+    "pos": {
+      "zh": "对对方表达感谢的回应语",
+      "kr": "상대의 감사에 답하는 표현",
+      "en": "response to someone's thanks",
+      "jp": "相手の感謝への返答表現"
     }
   },
   {
@@ -388,7 +418,32 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
-    }
+    },
+    "pos": {
+      "zh": "表示道歉语",
+      "en": "apology expression",
+      "ko": "표현",
+      "jp": "謝罪表現",
+      "kr": "사과 표현"
+    },
+    "senseNote": {
+      "zh": "用于道歉或表达抱歉。",
+      "en": "Used to apologize or say sorry.",
+      "ko": "사과하거나 미안함을 표현할 때 씁니다.",
+      "jp": "謝るときに使います。"
+    },
+    "examples": [
+      {
+        "zh": "对不起。",
+        "pinyin": "Duìbuqǐ.",
+        "translation": {
+          "zh": "对不起。",
+          "en": "Sorry.",
+          "ko": "죄송합니다.",
+          "jp": "すみません。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0024",
@@ -456,6 +511,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -813,6 +874,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1000,6 +1067,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1102,7 +1175,32 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
-    }
+    },
+    "pos": {
+      "zh": "对道歉的回应语",
+      "en": "response to an apology",
+      "ko": "표현",
+      "jp": "謝罪への返答表現",
+      "kr": "사과에 대한 응답 표현"
+    },
+    "senseNote": {
+      "zh": "回应“对不起”，表示不介意。",
+      "en": "A response to sorry, meaning it is okay.",
+      "ko": "사과 표현에 대해 괜찮다고 답할 때 씁니다.",
+      "jp": "謝罪への返答で、気にしないという意味です。"
+    },
+    "examples": [
+      {
+        "zh": "没关系。",
+        "pinyin": "Méi guānxi.",
+        "translation": {
+          "zh": "没关系。",
+          "en": "It is okay.",
+          "ko": "괜찮아요.",
+          "jp": "大丈夫です。"
+        }
+      }
+    ]
   },
   {
     "id": "hsk2.0:hsk1:0066",
@@ -1340,6 +1438,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1493,6 +1597,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1595,6 +1705,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1748,6 +1864,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -1935,6 +2057,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -2139,6 +2267,30 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "senseNote": {
+      "zh": "用于表达感谢。",
+      "en": "Used to express thanks.",
+      "ko": "감사를 표현할 때 씁니다.",
+      "jp": "感謝を伝えるときに使います。"
+    },
+    "examples": [
+      {
+        "zh": "谢谢。",
+        "pinyin": "Xièxie.",
+        "translation": {
+          "zh": "谢谢。",
+          "en": "Thank you.",
+          "ko": "감사합니다.",
+          "jp": "ありがとうございます。"
+        }
+      }
+    ],
+    "pos": {
+      "zh": "表达感谢",
+      "kr": "감사 표현",
+      "en": "expression of thanks",
+      "jp": "感謝表現"
     }
   },
   {
@@ -2224,6 +2376,12 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "pos": {
+      "zh": "数词",
+      "en": "numeral",
+      "ko": "수사",
+      "jp": "数詞"
     }
   },
   {
@@ -2343,6 +2501,30 @@
     "meta": {
       "level": "hsk1",
       "version": "hsk2.0"
+    },
+    "senseNote": {
+      "zh": "告别时使用的表达。",
+      "en": "Used when saying goodbye.",
+      "ko": "헤어질 때 쓰는 작별 인사입니다.",
+      "jp": "別れるときに使う表現です。"
+    },
+    "examples": [
+      {
+        "zh": "再见。",
+        "pinyin": "Zàijiàn.",
+        "translation": {
+          "zh": "再见。",
+          "en": "Goodbye.",
+          "ko": "안녕히 가세요/계세요.",
+          "jp": "さようなら。"
+        }
+      }
+    ],
+    "pos": {
+      "zh": "告别用语",
+      "kr": "작별 표현",
+      "en": "farewell expression",
+      "jp": "別れの表現"
     }
   },
   {
@@ -2539,6 +2721,134 @@
     "meaning": {
       "zh": "做",
       "en": "to make; to produce; to write; to compose; to do; to engage in; to hold (a party etc); (of a person) to be (an intermediary, a good student etc); to become (husband and wife, friends etc); (of a thing) to serve as; to be used for; to assume (an air or manner)",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0151",
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning": {
+      "zh": "你好",
+      "en": "hello",
+      "ko": "",
+      "jp": "こんにちは"
+    },
+    "tags": {
+      "generated": false
+    },
+    "pos": {
+      "zh": "见面打招呼问候语",
+      "en": "meeting greeting expression",
+      "ko": "표현",
+      "jp": "会ったときの挨拶表現",
+      "kr": "만날 때 쓰는 인사말"
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    },
+    "senseNote": {
+      "zh": "见面时最常用的问候语。",
+      "en": "The most common greeting when meeting someone.",
+      "ko": "만났을 때 가장 기본적으로 쓰는 인사말입니다.",
+      "jp": "会ったときに最もよく使う挨拶です。"
+    },
+    "examples": [
+      {
+        "zh": "你好。",
+        "pinyin": "Nǐ hǎo.",
+        "translation": {
+          "zh": "你好。",
+          "en": "Hello.",
+          "ko": "안녕하세요.",
+          "jp": "こんにちは。"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hsk2.0:hsk1:0152",
+    "hanzi": "哪儿",
+    "pinyin": "nǎr",
+    "meaning": {
+      "zh": "哪儿",
+      "en": "where",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0153",
+    "hanzi": "上面",
+    "pinyin": "shàngmiàn",
+    "meaning": {
+      "zh": "上面",
+      "en": "on top of; above",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0154",
+    "hanzi": "下面",
+    "pinyin": "xiàmiàn",
+    "meaning": {
+      "zh": "下面",
+      "en": "below; under",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0155",
+    "hanzi": "一点儿",
+    "pinyin": "yìdiǎnr",
+    "meaning": {
+      "zh": "一点儿",
+      "en": "a little; a bit",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
+  },
+  {
+    "id": "hsk2.0:hsk1:0156",
+    "hanzi": "下课",
+    "pinyin": "xiàkè",
+    "meaning": {
+      "zh": "下课",
+      "en": "to finish class; class is over",
       "ko": ""
     },
     "tags": {

@@ -2,6 +2,7 @@
   "courseId": "hsk1",
   "level": "HSK1",
   "practiceCount": 5,
+  "_luminaAuthoritativeNote": "Lumina：本文件为课程目录与元数据。普通课正式词表在 vocab-distribution.json；vocabTargets 为教学目标/拆词辅助，须 ⊆ 该课 distribution.lessonN（不要求相等）。校验：npm run check:hsk1-vocab-targets；CI：npm run check:hsk1-vocab-targets:strict。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -9,7 +10,8 @@
       "title": {
         "cn": "你好！",
         "kr": "안녕하세요!",
-        "en": "Hello!"
+        "en": "Hello!",
+        "jp": "こんにちは！"
       },
       "sceneGoal": "第一次见面打招呼",
       "subtitle": "打招呼",
@@ -39,7 +41,8 @@
       "title": {
         "cn": "你叫什么名字？",
         "kr": "이름이 뭐예요?",
-        "en": "What's your name?"
+        "en": "What's your name?",
+        "jp": "あなたの名前は何ですか。"
       },
       "sceneGoal": "互相认识、问名字",
       "subtitle": "问名字",
@@ -71,9 +74,10 @@
       "title": {
         "cn": "你是哪国人？",
         "kr": "어느 나라 사람이에요?",
-        "en": "Which country are you from?"
+        "en": "Which country are you from?",
+        "jp": "あなたはどこの国の人ですか。"
       },
-      "sceneGoal": "问来自哪里",
+      "sceneGoal": "问国籍",
       "subtitle": "问国籍",
       "grammarTargets": [
         "是……",
@@ -102,7 +106,8 @@
       "title": {
         "cn": "他是谁？",
         "kr": "그 사람 누구예요?",
-        "en": "Who is he?"
+        "en": "Who is he?",
+        "jp": "彼は誰ですか。"
       },
       "sceneGoal": "介绍家人",
       "subtitle": "介绍家人",
@@ -141,7 +146,8 @@
       "title": {
         "cn": "你在哪儿？",
         "kr": "어디에 있어요?",
-        "en": "Where are you?"
+        "en": "Where are you?",
+        "jp": "あなたはどこにいますか。"
       },
       "sceneGoal": "问地点",
       "subtitle": "问在哪儿",
@@ -175,7 +181,8 @@
       "title": {
         "cn": "你会说汉语吗？",
         "kr": "중국어 할 수 있어요?",
-        "en": "Can you speak Chinese?"
+        "en": "Can you speak Chinese?",
+        "jp": "中国語は話せますか。"
       },
       "sceneGoal": "说自己会不会汉语",
       "subtitle": "说汉语",
@@ -204,7 +211,8 @@
       "title": {
         "cn": "你几岁？",
         "kr": "몇 살이에요?",
-        "en": "How old are you?"
+        "en": "How old are you?",
+        "jp": "何歳ですか。"
       },
       "sceneGoal": "问年龄",
       "subtitle": "问年龄",
@@ -244,43 +252,10 @@
       "lessonNo": 8,
       "id": "hsk1_lesson8",
       "title": {
-        "cn": "苹果多少钱？",
-        "kr": "사과 얼마예요?",
-        "en": "How much is the apple?"
-      },
-      "sceneGoal": "问价格、买水果",
-      "subtitle": "问价钱",
-      "grammarTargets": [
-        "多少钱"
-      ],
-      "vocabTargets": [
-        "苹果",
-        "钱",
-        "块",
-        "买",
-        "个",
-        "好的"
-      ],
-      "extensionTargets": [
-        "两个",
-        "三个",
-        "几个"
-      ],
-      "displayTitle": {
-        "cn": "苹果多少钱？",
-        "zh": "苹果多少钱？",
-        "en": "苹果多少钱？",
-        "kr": "苹果多少钱？",
-        "jp": "苹果多少钱？"
-      }
-    },
-    {
-      "lessonNo": 9,
-      "id": "hsk1_lesson9",
-      "title": {
         "cn": "现在几点？",
         "kr": "지금 몇 시예요?",
-        "en": "What time is it now?"
+        "en": "What time is it now?",
+        "jp": "今何時ですか。"
       },
       "sceneGoal": "问时间",
       "subtitle": "问时间",
@@ -307,12 +282,13 @@
       }
     },
     {
-      "lessonNo": 10,
-      "id": "hsk1_lesson10",
+      "lessonNo": 9,
+      "id": "hsk1_lesson9",
       "title": {
         "cn": "今天几月几号？",
         "kr": "오늘 몇 월 며칠이에요?",
-        "en": "What's the date today?"
+        "en": "What's the date today?",
+        "jp": "今日は何月何日ですか。"
       },
       "sceneGoal": "问日期",
       "subtitle": "问日期",
@@ -353,12 +329,13 @@
       }
     },
     {
-      "lessonNo": 11,
-      "id": "hsk1_lesson11",
+      "lessonNo": 10,
+      "id": "hsk1_lesson10",
       "title": {
         "cn": "今天星期几？",
         "kr": "오늘 무슨 요일이에요?",
-        "en": "What day is today?"
+        "en": "What day is today?",
+        "jp": "今日は何曜日ですか。"
       },
       "sceneGoal": "问星期",
       "subtitle": "问星期",
@@ -390,12 +367,48 @@
       }
     },
     {
+      "lessonNo": 11,
+      "id": "hsk1_lesson11",
+      "title": {
+        "cn": "苹果多少钱？",
+        "kr": "사과 얼마예요?",
+        "en": "How much is the apple?",
+        "jp": "リンゴはいくらですか。"
+      },
+      "sceneGoal": "问价格、买水果",
+      "subtitle": "问价钱",
+      "grammarTargets": [
+        "多少钱"
+      ],
+      "vocabTargets": [
+        "苹果",
+        "钱",
+        "块",
+        "买",
+        "个",
+        "好的"
+      ],
+      "extensionTargets": [
+        "两个",
+        "三个",
+        "几个"
+      ],
+      "displayTitle": {
+        "cn": "苹果多少钱？",
+        "zh": "苹果多少钱？",
+        "en": "苹果多少钱？",
+        "kr": "苹果多少钱？",
+        "jp": "苹果多少钱？"
+      }
+    },
+    {
       "lessonNo": 12,
       "id": "hsk1_lesson12",
       "title": {
         "cn": "我喜欢听音乐。",
         "kr": "저는 음악 듣는 걸 좋아해요.",
-        "en": "I like listening to music."
+        "en": "I like listening to music.",
+        "jp": "音楽を聞くのが好きです。"
       },
       "sceneGoal": "谈爱好",
       "subtitle": "谈爱好",
@@ -428,7 +441,8 @@
       "title": {
         "cn": "请问你找谁？",
         "kr": "누구 찾으세요?",
-        "en": "Who are you looking for?"
+        "en": "Who are you looking for?",
+        "jp": "どなたをお探しですか。"
       },
       "sceneGoal": "打电话找人",
       "subtitle": "打电话",
@@ -462,7 +476,8 @@
       "title": {
         "cn": "我们一起吃饭吧。",
         "kr": "같이 밥 먹어요.",
-        "en": "Let's eat together."
+        "en": "Let's eat together.",
+        "jp": "一緒に食事をしましょう。"
       },
       "sceneGoal": "邀请吃饭",
       "subtitle": "一起吃饭",
@@ -497,7 +512,8 @@
       "title": {
         "cn": "你想买什么？",
         "kr": "뭘 사고 싶어요?",
-        "en": "What do you want to buy?"
+        "en": "What do you want to buy?",
+        "jp": "何を買いたいですか。"
       },
       "sceneGoal": "买东西",
       "subtitle": "买东西",
@@ -535,7 +551,8 @@
       "title": {
         "cn": "你去哪儿？",
         "kr": "어디 가요?",
-        "en": "Where are you going?"
+        "en": "Where are you going?",
+        "jp": "どこへ行きますか。"
       },
       "sceneGoal": "问去向",
       "subtitle": "问去哪儿",
@@ -568,7 +585,8 @@
       "title": {
         "cn": "我坐地铁去学校。",
         "kr": "저는 지하철 타고 학교 가요.",
-        "en": "I take the subway to school."
+        "en": "I take the subway to school.",
+        "jp": "地下鉄で学校へ行きます。"
       },
       "sceneGoal": "说交通方式",
       "subtitle": "交通方式",
@@ -604,7 +622,8 @@
       "title": {
         "cn": "王老师今天来学校吗？",
         "kr": "왕 선생님 오늘 학교에 와요?",
-        "en": "Is Teacher Wang coming to school today?"
+        "en": "Is Teacher Wang coming to school today?",
+        "jp": "王先生は今日学校に来ますか。"
       },
       "sceneGoal": "来和回来",
       "subtitle": "来和回来",
@@ -634,7 +653,8 @@
       "title": {
         "cn": "今天天气怎么样？",
         "kr": "오늘 날씨 어때요?",
-        "en": "How's the weather today?"
+        "en": "How's the weather today?",
+        "jp": "今日の天気はどうですか。"
       },
       "sceneGoal": "聊天气",
       "subtitle": "问天气",
@@ -662,7 +682,8 @@
       "title": {
         "cn": "你做什么工作？",
         "kr": "무슨 일 하세요?",
-        "en": "What do you do?"
+        "en": "What do you do?",
+        "jp": "何の仕事をしていますか。"
       },
       "sceneGoal": "问职业",
       "subtitle": "问工作",
@@ -695,7 +716,8 @@
       "title": {
         "cn": "综合复习1",
         "kr": "종합 복습 1",
-        "en": "Review 1"
+        "en": "Review 1",
+        "jp": "総合復習1"
       },
       "sceneGoal": "复习 L1–L10",
       "subtitle": "L1-L10 复习",
@@ -709,7 +731,8 @@
       "title": {
         "cn": "综合复习2",
         "kr": "종합 복습 2",
-        "en": "Review 2"
+        "en": "Review 2",
+        "jp": "総合復習2"
       },
       "sceneGoal": "复习 L11–L20",
       "subtitle": "L11-L20 复习",

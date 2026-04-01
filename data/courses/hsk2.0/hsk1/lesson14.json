@@ -15,19 +15,19 @@
     "zh": "吃、喝与食物",
     "kr": "먹기, 마시기와 음식",
     "en": "Eating, drinking and food",
-    "jp": "Eating, drinking and food"
+    "jp": "食事の提案、何を食べたいか"
   },
   "scene": {
     "id": "l14_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "约吃饭与点菜",
+      "kr": "밥 약속과 메뉴",
+      "en": "Eating together and ordering"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "提议一起吃饭，问想吃什么、想吃什么面。",
+      "kr": "같이 밥 먹자고 하고, 무엇을 먹고 싶은지 묻는다.",
+      "en": "Suggest eating together and ask what someone wants to eat."
     }
   },
   "objectives": [
@@ -42,98 +42,7 @@
       "en": "Can use 和 to connect"
     }
   ],
-  "vocab": [
-    {
-      "hanzi": "我们一起吃饭吧。",
-      "pinyin": "wǒ men yì qǐ chī fàn ba 。",
-      "meaning": {
-        "zh": "我们一起吃饭吧。",
-        "kr": "같이 밥 먹어요.",
-        "jp": "一緒にご飯を食べましょう。",
-        "en": "Let's eat together."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "好啊！",
-      "pinyin": "hǎo a ！",
-      "meaning": {
-        "zh": "好啊！",
-        "kr": "좋아요!",
-        "jp": "いいですね！",
-        "en": "Great!"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "你想吃什么？",
-      "pinyin": "nǐ xiǎng chī shén me ？",
-      "meaning": {
-        "zh": "你想吃什么？",
-        "kr": "뭘 먹고 싶어요?",
-        "jp": "何を食べたいですか？",
-        "en": "What do you want to eat?"
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "我想吃面条。",
-      "pinyin": "wǒ xiǎng chī miàn tiáo 。",
-      "meaning": {
-        "zh": "我想吃面条。",
-        "kr": "면 먹고 싶어요.",
-        "jp": "麺を食べたいです。",
-        "en": "I want to eat noodles."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "那我们去那家面馆吧。",
-      "pinyin": "nà wǒ men qù nà jiā miàn guǎn ba 。",
-      "meaning": {
-        "zh": "那我们去那家面馆吧。",
-        "kr": "그럼 그 면관에 가요.",
-        "jp": "じゃああの麺屋に行きましょう。",
-        "en": "Then let's go to that noodle shop."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    },
-    {
-      "hanzi": "好，我们走吧。",
-      "pinyin": "hǎo ， wǒ men zǒu ba 。",
-      "meaning": {
-        "zh": "好，我们走吧。",
-        "kr": "좋아요, 가요.",
-        "jp": "はい、行きましょう。",
-        "en": "OK, let's go."
-      },
-      "pos": {
-        "kr": "표현",
-        "en": "expression",
-        "jp": "表現"
-      }
-    }
-  ],
+  "vocab": [],
   "dialogue": [
     {
       "speaker": "A",
@@ -293,7 +202,7 @@
       "explain": {
         "kr": "맛있어요 (음료)",
         "en": "tasty (for drinks)",
-        "jp": "tasty (for drinks)"
+        "jp": "おいしい（飲み物向け）"
       }
     },
     {
@@ -305,7 +214,7 @@
       "explain": {
         "kr": "저는 ... 먹는 거 좋아해요.",
         "en": "I like to eat...",
-        "jp": "I like to eat..."
+        "jp": "……を食べるのが好きです"
       }
     },
     {
@@ -317,7 +226,7 @@
       "explain": {
         "kr": "저는 ... 마시는 거 좋아해요.",
         "en": "I like to drink...",
-        "jp": "I like to drink..."
+        "jp": "……を飲むのが好きです"
       }
     }
   ],
@@ -325,36 +234,136 @@
     {
       "id": "p1",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "vocab_meaning_choice",
       "prompt": {
-        "cn": "对方说「我们一起吃饭吧。」，你应该说？",
-        "kr": "상대가 말할 때: 「我们一起吃饭吧。」 답은?",
-        "en": "Someone says: \"我们一起吃饭吧。\" You should say?",
-        "jp": "相手が「我们一起吃饭吧。」と言ったら、あなたは？"
+        "cn": "「好啊！」的意思是？",
+        "kr": "「好啊！」의 뜻은?",
+        "en": "What does \"好啊！\" mean?",
+        "jp": "「好啊！」の意味は？"
       },
       "options": [
-        "好啊！",
-        "你想吃什么？",
-        "我们一起吃饭吧。",
-        "我想吃面条。"
+        {
+          "key": "A",
+          "meaning": {
+            "kr": "같이 밥 먹어요.",
+            "en": "Let's eat together.",
+            "jp": "一緒にご飯を食べましょう。",
+            "zh": "我们一起吃饭吧。",
+            "cn": "我们一起吃饭吧。"
+          }
+        },
+        {
+          "key": "B",
+          "meaning": {
+            "kr": "면 먹고 싶어요.",
+            "en": "I want to eat noodles.",
+            "jp": "麺を食べたいです。",
+            "zh": "我想吃面条。",
+            "cn": "我想吃面条。"
+          }
+        },
+        {
+          "key": "C",
+          "meaning": {
+            "kr": "뭘 먹고 싶어요?",
+            "en": "What do you want to eat?",
+            "jp": "何を食べたいですか？",
+            "zh": "你想吃什么？",
+            "cn": "你想吃什么？"
+          }
+        },
+        {
+          "key": "D",
+          "meaning": {
+            "kr": "좋아요!",
+            "en": "Great!",
+            "jp": "いいですね！",
+            "zh": "好啊！",
+            "cn": "好啊！"
+          }
+        }
       ],
-      "answer": "好啊！",
+      "answer": "D",
       "explanation": {
-        "cn": "请根据本课对话选择应答句。",
-        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
-        "en": "Pick the reply that fits this lesson’s dialogue.",
-        "jp": "この課の会話に合う返答を選びます。"
+        "cn": "「好啊！」：表示同意、好呀。",
+        "kr": "「好啊！」는 좋아요!입니다.",
+        "en": "\"好啊！\" means \"Great!\" or \"Sounds good!\".",
+        "jp": "「好啊！」は「いいですね」という意味です。"
       }
     },
     {
       "id": "p2",
       "type": "choice",
+      "subtype": "pinyin_to_vocab_choice",
+      "prompt": {
+        "cn": "根据拼音「hǎo a」选择正确的词语。",
+        "kr": "'hǎo a'의 한자는?",
+        "en": "Choose the Chinese that matches pinyin \"hǎo a\".",
+        "jp": "ピンイン「hǎo a」に合う語を選んでください。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "好，我们走吧。",
+          "cn": "好，我们走吧。"
+        },
+        {
+          "key": "B",
+          "zh": "好啊！",
+          "cn": "好啊！"
+        },
+        {
+          "key": "C",
+          "zh": "那我们去那家面馆吧。",
+          "cn": "那我们去那家面馆吧。"
+        },
+        {
+          "key": "D",
+          "zh": "你想吃什么？",
+          "cn": "你想吃什么？"
+        }
+      ],
+      "answer": "B",
+      "explanation": {
+        "cn": "「hǎo a」：好啊！",
+        "kr": "「hǎo a」: 好啊！",
+        "en": "\"hǎo a\" is 好啊！.",
+        "jp": "「hǎo a」→ 好啊！"
+      }
+    },
+    {
+      "id": "p3",
+      "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「你想吃什么？」，你应该说？",
-        "kr": "상대가 말할 때: 「你想吃什么？」 답은?",
-        "en": "Someone says: \"你想吃什么？\" You should say?",
-        "jp": "相手が「你想吃什么？」と言ったら、あなたは？"
+        "cn": "对方说「我们一起吃饭吧。」，下面哪一句应答最合适？",
+        "kr": "상대가 「我们一起吃饭吧。」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"我们一起吃饭吧。\"?",
+        "jp": "相手が「我们一起吃饭吧。」と言ったとき、最もふさわしい返答はどれですか？"
+      },
+      "options": [
+        "好啊！",
+        "你想吃什么？",
+        "我们一起吃饭吧。",
+        "我想吃面条。"
+      ],
+      "answer": "好啊！",
+      "explanation": {
+        "cn": "请根据本课对话选择应答句。",
+        "kr": "이번 과 대화에 맞는 응답을 고르세요.",
+        "en": "Pick the reply that fits this lesson’s dialogue.",
+        "jp": "この課の会話に合う返答を選びます。"
+      }
+    },
+    {
+      "id": "p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「你想吃什么？」，下面哪一句应答最合适？",
+        "kr": "상대가 「你想吃什么？」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Which reply is most appropriate when someone says \"你想吃什么？\"?",
+        "jp": "相手が「你想吃什么？」と言ったとき、最もふさわしい返答はどれですか？"
       },
       "options": [
         "好啊！",
@@ -371,75 +380,27 @@
       }
     },
     {
-      "id": "p3",
+      "id": "p5",
       "type": "choice",
       "subtype": "zh_to_meaning",
       "prompt": {
-        "cn": "下面哪一句是本课的问句？",
-        "kr": "아래 중 이번 과의 질문 문장은?",
-        "en": "Which line below is a question in this lesson?",
-        "jp": "次のうち、この課の疑問文はどれですか？"
+        "cn": "下面哪一句不是问句？",
+        "kr": "아래 중 질문 문장이 아닌 것은?",
+        "en": "Which line below is NOT a question?",
+        "jp": "次のうち、疑問文ではないのはどれですか？"
       },
       "options": [
-        "好啊！",
+        "今天几月几号？",
+        "今天天气怎么样？",
         "你想吃什么？",
-        "我们一起吃饭吧。",
-        "我想吃面条。"
+        "我们一起吃饭吧。"
       ],
-      "answer": "你想吃什么？",
+      "answer": "我们一起吃饭吧。",
       "explanation": {
-        "cn": "问句常带有「吗」或问号「？」。",
-        "kr": "의문문에는 「吗」나 「？」가 자주 붙습니다.",
-        "en": "Questions often use 吗 or 「？」。",
-        "jp": "疑問文には「吗」や「？」がよく付きます。"
-      }
-    },
-    {
-      "id": "p4",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "选择本课对话中的句子：___",
-        "kr": "이번 과 대화 문장 고르기: ___",
-        "en": "Pick a sentence from this lesson’s dialogue: ___",
-        "jp": "この課の会話の文を選ぶ：___"
-      },
-      "options": [
-        "好啊！",
-        "你想吃什么？",
-        "我们一起吃饭吧。",
-        "我想吃面条。"
-      ],
-      "answer": "好啊！",
-      "explanation": {
-        "cn": "选项均出自本课对话。",
-        "kr": "보기는 모두 이번 과 대화에서 나옵니다.",
-        "en": "All options come from this lesson’s dialogue.",
-        "jp": "選択肢はすべてこの課の会話に出てきます。"
-      }
-    },
-    {
-      "id": "p5",
-      "type": "choice",
-      "subtype": "sentence_blank",
-      "prompt": {
-        "cn": "下面哪一句出现在本课对话里？",
-        "kr": "아래 중 이번 과 대화에 나오는 문장은?",
-        "en": "Which sentence appears in this lesson’s dialogue?",
-        "jp": "次のうち、この課の会話に出てくる文はどれですか？"
-      },
-      "options": [
-        "好啊！",
-        "你想吃什么？",
-        "我们一起吃饭吧。",
-        "我想吃面条。"
-      ],
-      "answer": "我想吃面条。",
-      "explanation": {
-        "cn": "请回忆本课对话内容。",
-        "kr": "이번 과 대화를 떠올려 보세요.",
-        "en": "Recall this lesson’s dialogue.",
-        "jp": "この課の会話を思い出してください。"
+        "cn": "问句常带「吗」或「？」；其余为陈述或应答。",
+        "kr": "의문문은 「吗」나 「？」가 붙는 경우가 많고, 나머지는 평서/응답입니다.",
+        "en": "Questions often use 吗 or 「？」; the others are statements or replies.",
+        "jp": "疑問文は「吗」や「？」を伴うことが多く、他は平叙文や応答です。"
       }
     }
   ],
@@ -569,21 +530,5 @@
         "en": "AI Practice"
       }
     }
-  ],
-  "vocabTargets": [
-    "一起",
-    "吃",
-    "饭",
-    "想",
-    "面条",
-    "面馆",
-    "走吧"
-  ],
-  "displayTitle": {
-    "cn": "我们一起吃饭吧。",
-    "zh": "我们一起吃饭吧。",
-    "en": "我们一起吃饭吧。",
-    "kr": "我们一起吃饭吧。",
-    "jp": "我们一起吃饭吧。"
-  }
+  ]
 }

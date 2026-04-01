@@ -190,14 +190,6 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
   }
   try {
     const raw = await fetchJson(url);
-    // 单词来源优先：data/courses/<ver>/hsk<lv>/vocab-distribution.json → 按 distribution.lessonX 生成本课单词
-    await ensureHSKDeps();
-    const distributionVocab =
-      (await window.HSK_LOADER?.buildLessonVocabFromDistribution?.(lv, no, { version: ver })) ?? null;
-    if (Array.isArray(distributionVocab)) {
-      raw.vocab = distributionVocab;
-      raw.words = distributionVocab;
-    }
     const result = {
       raw,
       doc: legacyHskToLessonDoc(raw, { track, level: lv, lessonNo: no, file: url }),
@@ -209,13 +201,6 @@ async function loadHskLesson({ track, level, lessonNo, file }) {
     if (altUrl && altUrl !== url) {
       try {
         const raw = await fetchJson(altUrl);
-        await ensureHSKDeps();
-        const distributionVocab =
-          (await window.HSK_LOADER?.buildLessonVocabFromDistribution?.(lv, no, { version: ver })) ?? null;
-        if (Array.isArray(distributionVocab)) {
-          raw.vocab = distributionVocab;
-          raw.words = distributionVocab;
-        }
         const result = {
           raw,
           doc: legacyHskToLessonDoc(raw, { track: ver, level: lv, lessonNo: no, file: altUrl }),

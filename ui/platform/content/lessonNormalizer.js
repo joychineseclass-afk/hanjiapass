@@ -114,16 +114,26 @@ function normGrammar(raw) {
   });
 }
 
-/** practice 归一化 */
+/** practice 归一化：合并归一字段并保留题目里额外元数据（displayHint、audio、tags 等） */
 function normPractice(raw) {
   const src = Array.isArray(raw?.practice) ? raw.practice : [];
-  return src.map((p) => ({
-    type: str(p?.type ?? "choice"),
-    question: typeof p?.question === "object" ? normI18n(p.question) : { zh: str(p?.question ?? "") },
-    options: Array.isArray(p?.options) ? p.options : [],
-    answer: str(p?.answer ?? ""),
-    prompt: typeof p?.prompt === "object" ? normI18n(p.prompt) : { zh: str(p?.prompt ?? "") },
-  }));
+  return src.map((p) => {
+    if (!p || typeof p !== "object") return p;
+    const core = {
+      type: str(p?.type ?? "choice"),
+      question: typeof p?.question === "object" ? normI18n(p.question) : { zh: str(p?.question ?? "") },
+      options: Array.isArray(p?.options) ? p.options : [],
+      prompt: typeof p?.prompt === "object" ? normI18n(p.prompt) : { zh: str(p?.prompt ?? "") },
+    };
+    if (p?.id != null && String(p.id).trim()) core.id = String(p.id).trim();
+    if (p?.subtype != null && String(p.subtype).trim()) core.subtype = String(p.subtype).trim();
+    if (p?.explanation != null) core.explanation = p.explanation;
+    if (typeof p?.score === "number") core.score = p.score;
+    if (p?.section != null && String(p.section).trim()) core.section = String(p.section).trim();
+    if (p?.answer != null) core.answer = p.answer;
+    else core.answer = "";
+    return { ...p, ...core };
+  });
 }
 
 /** aiPractice 归一化：ai / ai_interaction */

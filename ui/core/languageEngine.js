@@ -264,27 +264,144 @@ export function pick(obj, options = {}) {
 }
 
 /**
- * 4b. getLessonDisplayTitle(lesson, lang?)
- * 统一 lesson 标题：目录页与 detail 共用
- * JP strict lock: 当 lang=jp 时，只返回 jp 字段，绝不 fallback 到 kr/cn
- * 优先 displayTitle（blueprint 覆盖），其次 title / name / label
- * 兼容 lesson.title_jp / title_en / title_kr / title_cn
+ * 判断 displayTitle 对象是否为「假多语言」：至少两个语种字段有内容且全文相同（复制粘贴式本地化）。
+ * 此类对象不作为严格多语言主源，应回退到 canonical title。
  */
+function displayTitleIsFakeLocalizedCopy(obj) {
+  if (!obj || typeof obj !== "object") return false;
+  const vals = [];
+  for (const k of ["zh", "cn", "kr", "ko", "en", "jp", "ja"]) {
+    const v = obj[k];
+    if (v != null && typeof v === "string" && v.trim()) vals.push(v.trim());
+  }
+  if (vals.length < 2) return false;
+  const first = vals[0];
+  return vals.every((x) => x === first);
+}
+
+function pickTitleFromObject(titleObj, lang) {
+  if (titleObj == null) return "";
+  if (typeof titleObj === "string" || typeof titleObj === "number") {
+    return str(String(titleObj));
+  }
+  if (typeof titleObj === "object") {
+    const v = pick(titleObj, { strict: true, lang });
+    if (v) return v;
+    // JP 缺 title.jp：回退到 canonical 中文（title.cn / title.zh），不冒充日文、也不空串
+    if (lang === "jp" || lang === "ja") {
+      return str(titleObj.cn ?? titleObj.zh ?? "") || "";
+    }
+    return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
+  }
+  return "";
+}
+
+/**
+ * 4b. getLessonDisplayTitle(lesson, lang?)
+ * HSK 等课程统一 lesson 标题：目录、学习页、AI 上下文共用同一套规则。
+ *
+ * Canonical：lesson.title（及 originalTitle / name / label）为内容主源，可为多语言对象。
+ * displayTitle：可选展示层。
+ * - 对象且为「真」多语言（非假复制）时按当前语言 strict 取值，优先于 title。
+ * - 假多语言对象（多键同文）不压在 title.jp/kr/en 上。
+ * - 字符串 displayTitle：仅作蓝图/单语快照类「展示覆盖」，优先级低于多语言 title[lang]，
+ *   避免中文字符串压在已补齐的 title.jp 之前。
+ *
+ * 读取顺序：真多语言 displayTitle 对象 strict → title[lang]（含 jp/kr/en/cn；jp 缺译回退 cn/zh）
+ * → 字符串 displayTitle → 假多语言 displayTitle 宽松 pick（jp 仍跳过）→ 扁平 title_xx 等。
+ */
+function logHskTitleDiag(lesson, payload) {
+  const no = Number(lesson?.lessonNo ?? lesson?.no ?? 0);
+  if (no < 1 || no > 3) return;
+  if (typeof console === "undefined" || !console.log) return;
+  try {
+    console.log("[HSK-TITLE-DIAG]", payload);
+  } catch {}
+}
+
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
   const l = lang ?? getLang();
-  const titleObj = lesson.displayTitle || lesson.title || lesson.originalTitle || lesson.name || lesson.label;
-  if (typeof titleObj === "object" && titleObj !== null) {
-    const v = pick(titleObj, { strict: true, lang: l });
-    if (v) return v;
-    if (l === "jp" || l === "ja") return "";
-    return str(titleObj.cn ?? titleObj.zh ?? titleObj.en ?? titleObj.kr ?? titleObj.jp ?? "") || "";
+  const baseRaw = lesson.title ?? lesson.originalTitle ?? lesson.name ?? lesson.label;
+  const disp = lesson.displayTitle;
+
+  let result = "";
+  let stepUsed = "empty";
+
+  const dispFake = !!(disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp));
+
+  if (disp && typeof disp === "object" && !displayTitleIsFakeLocalizedCopy(disp)) {
+    const v = pick(disp, { strict: true, lang: l });
+    if (v) {
+      result = v;
+      stepUsed = "displayTitle_strict_non_fake";
+    }
   }
-  if (typeof titleObj === "string") return str(titleObj);
-  const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
-  if (flat) return str(flat);
-  if (l === "jp" || l === "ja") return str(lesson.title_jp ?? lesson.title_ja ?? "") || "";
-  return str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
+
+  if (!result) {
+    const fromBase = pickTitleFromObject(baseRaw, l);
+    if (fromBase) {
+      result = fromBase;
+      stepUsed = "title_canonical";
+    }
+  }
+
+  if (!result && disp && typeof disp === "string" && str(disp)) {
+    result = str(disp);
+    stepUsed = "displayTitle_string";
+  }
+
+  if (!result && disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp)) {
+    if (l !== "jp" && l !== "ja") {
+      const v = pick(disp, { strict: false, lang: l });
+      if (v) {
+        result = v;
+        stepUsed = "displayTitle_fake_loose";
+      }
+    }
+  }
+
+  if (!result) {
+    const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
+    if (flat) {
+      result = str(flat);
+      stepUsed = "flat_title_field";
+    }
+  }
+
+  if (!result) {
+    if (l === "jp" || l === "ja") {
+      result =
+        str(lesson.title_jp ?? lesson.title_ja ?? "") ||
+        str(lesson.title_cn ?? lesson.title_zh ?? "") ||
+        "";
+      stepUsed = result ? "jp_fallback_block" : "jp_fallback_empty";
+    } else {
+      result = str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
+      stepUsed = "generic_flat_fallback";
+    }
+  }
+
+  const no = Number(lesson?.lessonNo ?? lesson?.no ?? 0);
+  if (no >= 1 && no <= 3) {
+    logHskTitleDiag(lesson, {
+      phase: "getLessonDisplayTitle",
+      lessonNo: no,
+      paramLang: lang === undefined ? "(undefined→getLang)" : lang,
+      effectiveLang: l,
+      engineGetLang: getLang(),
+      dispType: disp == null ? "null" : typeof disp,
+      dispFake,
+      stepUsed,
+      picked: result,
+      titleKeys: baseRaw && typeof baseRaw === "object" ? Object.keys(baseRaw) : typeof baseRaw,
+      titleJpPresent: !!(baseRaw && typeof baseRaw === "object" && str(baseRaw.jp ?? baseRaw.ja)),
+      titleJp: baseRaw && typeof baseRaw === "object" ? str(baseRaw.jp ?? baseRaw.ja) : "",
+      displayTitleJp: disp && typeof disp === "object" ? str(disp.jp ?? disp.ja) : "",
+    });
+  }
+
+  return result;
 }
 
 /**

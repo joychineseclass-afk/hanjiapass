@@ -1,6 +1,6 @@
 // /ui/modules/hsk/hskUI.js
 // ✅ HSK UI (ESM) — exports initHSKUI()
-// Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY / window.LEARN_PANEL
+// Depends on globals: window.HSK_LOADER / window.HSK_RENDER / window.HSK_HISTORY
 
 import { fetchJsonCached } from "../../core/fetchJsonCached.js";
 import { clearLessonLoadDedupe } from "./lessonSession.js";
@@ -189,18 +189,33 @@ hskLevel?.dispatchEvent(new Event("change"));
     return `/data/courses/${ver}/hsk${lv}/lesson${lessonNo}.json`;
   }
 
-  // ✅ NEW: 读取课件详情（带缓存）；优先走 HSK_LOADER.loadLessonDetail，使单词 100% 来自 vocab-distribution.json
+  /** 与 page.hsk practiceLangKeyFromUiLang 对齐，供复习课练习缓存键与生成语言一致 */
+  function practiceLangForHskLoader() {
+    const raw = safeText(LANG || "kr");
+    const l = raw.toLowerCase();
+    if (l === "zh" || l === "cn") return "cn";
+    if (l === "en") return "en";
+    if (l === "jp" || l === "ja") return "jp";
+    return "kr";
+  }
+
+  // 读取课件详情：优先 HSK_LOADER（普通课词表 = vocab-distribution；复习课 21/22 依赖 practiceLang 缓存）
   async function loadLessonDetail(level, lessonNo, version) {
     const ver = safeText(version || getVersion());
     const lv = safeText(level || "1");
-    const key = `${ver}:${lv}:${lessonNo}`;
+    const no = Number(lessonNo) || 1;
+    const langSuffix = no === 21 || no === 22 ? practiceLangForHskLoader() : "";
+    const key = `${ver}:${lv}:${lessonNo}:${langSuffix}`;
 
     const hit = LESSON_DETAIL_CACHE.get(key);
     if (hit && Date.now() - hit.ts < LESSON_DETAIL_TTL) return hit.data;
 
     if (window.HSK_LOADER?.loadLessonDetail) {
       try {
-        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver });
+        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, {
+          version: ver,
+          practiceLang: practiceLangForHskLoader(),
+        });
         LESSON_DETAIL_CACHE.set(key, { ts: Date.now(), data });
         return data;
       } catch (e) {
@@ -514,12 +529,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length})`);
   }
@@ -768,12 +784,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      wrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
-    );
+    window.HSK_RENDER.renderWordCards(wrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${recent.length})`);
   }
@@ -924,12 +941,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${lessonWords.length})`);
   }
@@ -983,12 +1001,13 @@ hskLevel?.dispatchEvent(new Event("change"));
     }
 
     const scope = `hsk${hskLevel?.value || 1}`;
-    window.HSK_RENDER.renderWordCards(
-      cardWrap,
-      filtered,
-      (item) => window.LEARN_PANEL?.open?.(item),
-      { lang: LANG, scope, query: q, showTag: "학습", compact: false }
-    );
+    window.HSK_RENDER.renderWordCards(cardWrap, filtered, null, {
+      lang: LANG,
+      scope,
+      query: q,
+      showTag: "학습",
+      compact: false,
+    });
 
     setStatus(`(${filtered.length}/${ALL.length})`);
   }

@@ -61,6 +61,35 @@ function memSet(key, data) {
   MEM.set(key, { ts: Date.now(), data });
 }
 
+/** 合并多语言 title：仅非空字符串写入；空串/null/undefined 不覆盖已有有效值 */
+function mergeTitleLocales(base, patch) {
+  const out = base && typeof base === "object" ? { ...base } : {};
+  if (!patch || typeof patch !== "object") return out;
+  for (const k of ["zh", "cn", "kr", "en", "jp"]) {
+    const pv = patch[k];
+    const t = typeof pv === "string" ? pv.trim() : "";
+    if (t) out[k] = t;
+  }
+  return out;
+}
+
+function buildLessonTitleFromRaw(titleRaw, subtitle) {
+  if (typeof titleRaw === "object" && titleRaw) {
+    return {
+      zh: str(titleRaw.zh ?? titleRaw.cn),
+      kr: str(titleRaw.kr ?? titleRaw.ko),
+      en: str(titleRaw.en),
+      jp: str(titleRaw.jp ?? titleRaw.ja),
+      cn: str(titleRaw.cn ?? titleRaw.zh),
+    };
+  }
+  const s = str(titleRaw ?? subtitle ?? "");
+  const parts = s.split(/\s*\/\s*/);
+  const zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || "";
+  const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(subtitle ?? "");
+  return { zh, kr, en: "", jp: "", cn: zh };
+}
+
 async function fetchJson(url) {
   let u = String(url || "");
   if (u.startsWith("./data/")) u = "/" + u.slice(2);
@@ -90,35 +119,8 @@ export async function loadCourseIndex({ courseType, level } = {}) {
     const no = Number(it?.lessonNo ?? it?.no ?? it?.lesson ?? it?.id ?? 0) || 0;
     const titleRaw = it?.title;
     const displayTitleRaw = it?.displayTitle;
-    let title = {};
+    const title = buildLessonTitleFromRaw(titleRaw, it?.subtitle);
     let displayTitle = undefined;
-    if (typeof titleRaw === "object" && titleRaw) {
-      title = {
-        zh: str(titleRaw.zh ?? titleRaw.cn),
-        kr: str(titleRaw.kr ?? titleRaw.ko),
-        en: str(titleRaw.en),
-        jp: str(titleRaw.jp ?? titleRaw.ja),
-        cn: str(titleRaw.cn ?? titleRaw.zh)
-      };
-    } else {
-      const s = str(titleRaw ?? it?.subtitle ?? "");
-      const parts = s.split(/\s*\/\s*/);
-      const zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || "";
-      const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(it?.subtitle ?? "");
-      title = { zh, kr, en: "" };
-    }
-    if (typeof displayTitleRaw === "object" && displayTitleRaw) {
-      displayTitle = {
-        zh: str(displayTitleRaw.zh ?? displayTitleRaw.cn),
-        cn: str(displayTitleRaw.cn ?? displayTitleRaw.zh),
-        kr: str(displayTitleRaw.kr ?? displayTitleRaw.ko),
-        en: str(displayTitleRaw.en),
-        jp: str(displayTitleRaw.jp ?? displayTitleRaw.ja)
-      };
-    } else if (typeof displayTitleRaw === "string" && str(displayTitleRaw)) {
-      const s = str(displayTitleRaw);
-      displayTitle = { zh: s, cn: s, kr: s, en: s, jp: s };
-    }
     const titleAsDisplay =
       title && typeof title === "object"
         ? {
@@ -129,6 +131,22 @@ export async function loadCourseIndex({ courseType, level } = {}) {
             jp: str(title.jp ?? title.ja),
           }
         : null;
+    if (typeof displayTitleRaw === "object" && displayTitleRaw) {
+      const fromDisplay = {
+        zh: str(displayTitleRaw.zh ?? displayTitleRaw.cn),
+        cn: str(displayTitleRaw.cn ?? displayTitleRaw.zh),
+        kr: str(displayTitleRaw.kr ?? displayTitleRaw.ko),
+        en: str(displayTitleRaw.en),
+        jp: str(displayTitleRaw.jp ?? displayTitleRaw.ja),
+      };
+      displayTitle = mergeTitleLocales(fromDisplay, titleAsDisplay);
+    } else if (typeof displayTitleRaw === "string" && str(displayTitleRaw)) {
+      const s = str(displayTitleRaw);
+      displayTitle = mergeTitleLocales(
+        { zh: s, cn: s, kr: s, en: s, jp: s },
+        titleAsDisplay
+      );
+    }
     const noNum = Number(no) || 0;
     const isRegularL1toL20 =
       String(it?.type || "lesson") !== "review" && noNum >= 1 && noNum <= 20;

@@ -20,7 +20,13 @@
     "gen:hsk2-lessons": "node scripts/generate-hsk2-lessons-from-blueprint.mjs",
     "gen:hsk2-full": "node scripts/generate-hsk2-full-content.mjs",
     "gen:vocab-unmapped": "node scripts/generate-vocab-unmapped.mjs hsk1",
-    "rebuild:hsk1-dialogue": "node scripts/rebuild-hsk1-dialogue-from-blueprint.mjs"
+    "rebuild:hsk1-dialogue": "node scripts/rebuild-hsk1-dialogue-from-blueprint.mjs",
+    "check:hsk1-vocab-targets": "node scripts/check-hsk1-vocab-targets.mjs",
+    "check:hsk1-vocab-targets:strict": "node scripts/check-hsk1-vocab-targets.mjs --strict",
+    "verify:hsk1-review": "node scripts/verify-hsk1-review-canonical.mjs",
+    "check:hsk1-mixed-language": "node scripts/check-hsk1-mixed-language.mjs",
+    "check:hsk1-lesson-metadata": "node scripts/check-hsk1-lesson-metadata.mjs",
+    "check:hsk1-practice": "node scripts/check-hsk1-practice.mjs"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",

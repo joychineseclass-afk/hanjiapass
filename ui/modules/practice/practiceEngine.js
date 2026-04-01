@@ -9,6 +9,11 @@ import { filterSupportedQuestions } from "./practiceSchema.js";
 import { applyStudentStrategy } from "./practiceStrategy.js";
 import * as PracticeState from "./practiceState.js";
 
+console.log("[HSK-PRACTICE-ENGINE-BOOT]", {
+  file: "practiceEngine.js",
+  ts: "2026-03-27-debug",
+});
+
 function getLang() {
   const l = String(i18n?.getLang?.() ?? "ko").toLowerCase();
   if (l === "zh" || l === "cn") return "cn";
@@ -30,6 +35,27 @@ export function loadPractice(lesson) {
   const filtered = filterSupportedQuestions(existing);
   const questions = applyStudentStrategy(filtered, parseLevel(lesson), lesson?.type === "review");
   const totalScore = questions.reduce((sum, q) => sum + (Number(q.score) || 1), 0);
+
+  const strategyDropped =
+    filtered.length > questions.length
+      ? filtered
+          .filter((q) => !questions.includes(q))
+          .map((q) => ({
+            id: q.id,
+            type: q.type,
+            subtype: q.subtype,
+            reason: "applyStudentStrategy: supplementary type cap or ordering (see practiceStrategy.js)",
+          }))
+      : [];
+
+  console.log("[HSK-PRACTICE-FILTER]", {
+    stage: "applyStudentStrategy",
+    inputCount: filtered.length,
+    outputCount: questions.length,
+    level: parseLevel(lesson),
+    isReviewLesson: lesson?.type === "review",
+    dropped: strategyDropped,
+  });
 
   PracticeState.setPracticeState({ questions, totalScore });
   return { questions, totalScore };
