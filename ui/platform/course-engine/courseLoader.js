@@ -69,14 +69,20 @@ export async function loadCourseManifest(input = {}) {
     const no = Number(it.lessonNo ?? it.no ?? it.lesson ?? it.id ?? 0) || 0;
     const titleRaw = it.title;
     let title = {};
-    if (typeof titleRaw === "object") {
-      title = { zh: str(titleRaw.zh ?? titleRaw.cn), kr: str(titleRaw.kr ?? titleRaw.ko), en: str(titleRaw.en) };
+    if (typeof titleRaw === "object" && titleRaw) {
+      title = {
+        zh: str(titleRaw.zh ?? titleRaw.cn),
+        kr: str(titleRaw.kr ?? titleRaw.ko),
+        en: str(titleRaw.en),
+        jp: str(titleRaw.jp ?? titleRaw.ja),
+        cn: str(titleRaw.cn ?? titleRaw.zh),
+      };
     } else {
       const s = str(titleRaw ?? it.subtitle ?? "");
       const parts = s.split(/\s*\/\s*/);
       const zh = parts.find((p) => /[\u4e00-\u9fff]/.test(p)) || "";
       const kr = parts.find((p) => !/[\u4e00-\u9fff]/.test(p) && p.trim()) || str(it.subtitle ?? "");
-      title = { zh, kr, en: "" };
+      title = { zh, kr, en: "", jp: "", cn: zh };
     }
     return {
       lessonNo: no,
