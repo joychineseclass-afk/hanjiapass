@@ -301,13 +301,14 @@ function pickTitleFromObject(titleObj, lang) {
  * HSK 等课程统一 lesson 标题：目录、学习页、AI 上下文共用同一套规则。
  *
  * Canonical：lesson.title（及 originalTitle / name / label）为内容主源，可为多语言对象。
- * displayTitle：可选展示层。对象且为「真」多语言（非假复制）时按当前语言 strict 取值；
- * 假多语言对象（多键同文）不优先于 title，避免切语言后仍全是中文却看似成功。
- * 字符串 displayTitle：蓝图/运行时单语快照等显式覆盖，在 canonical 之前尝试（与 refreshBlueprintDisplayTitles 一致）。
+ * displayTitle：可选展示层。
+ * - 对象且为「真」多语言（非假复制）时按当前语言 strict 取值，优先于 title。
+ * - 假多语言对象（多键同文）不压在 title.jp/kr/en 上。
+ * - 字符串 displayTitle：仅作蓝图/单语快照类「展示覆盖」，优先级低于多语言 title[lang]，
+ *   避免中文字符串压在已补齐的 title.jp 之前。
  *
- * 读取顺序：非假 displayTitle 对象 strict → 字符串 displayTitle → title 等多语言 strict
- * → title 在 jp 缺译时回退 cn/zh（canonical 中文，不冒充 displayTitle 假多语言）
- * → 假多语言 displayTitle 宽松 pick（jp 仍跳过，避免假 jp）→ 扁平 title_xx 等兼容字段。
+ * 读取顺序：真多语言 displayTitle 对象 strict → title[lang]（含 jp/kr/en/cn；jp 缺译回退 cn/zh）
+ * → 字符串 displayTitle → 假多语言 displayTitle 宽松 pick（jp 仍跳过）→ 扁平 title_xx 等。
  */
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
@@ -320,12 +321,12 @@ export function getLessonDisplayTitle(lesson, lang) {
     if (v) return v;
   }
 
+  const fromBase = pickTitleFromObject(baseRaw, l);
+  if (fromBase) return fromBase;
+
   if (disp && typeof disp === "string" && str(disp)) {
     return str(disp);
   }
-
-  const fromBase = pickTitleFromObject(baseRaw, l);
-  if (fromBase) return fromBase;
 
   if (disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp)) {
     // 假多语言对象仅作 cn/zh/en/kr 等兜底；jp 缺译时不应用中文冒充日文（与 pick 的 JP strict 一致）
