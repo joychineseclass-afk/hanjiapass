@@ -6,7 +6,7 @@
   "lessonNo": 9,
   "type": "lesson",
   "title": {
-    "zh": "今天几月几号？",
+    "zh": "今天几月几日？",
     "kr": "오늘 몇 월 며칠이에요?",
     "jp": "今日は何月何日ですか？",
     "en": "What's the date today?"
@@ -46,8 +46,8 @@
   "dialogue": [
     {
       "speaker": "A",
-      "text": "今天几月几号？",
-      "pinyin": "Jīn tiān jǐ yuè jǐ hào ？",
+      "text": "今天几月几日？",
+      "pinyin": "Jīntiān jǐ yuè jǐ rì?",
       "translation": {
         "kr": "오늘은 몇 월 며칠이에요?",
         "en": "What's the date today?",
@@ -56,56 +56,97 @@
     },
     {
       "speaker": "B",
-      "text": "今天三月八号。",
-      "pinyin": "Jīn tiān sān yuè bā hào 。",
+      "text": "今天5月5日。",
+      "pinyin": "Jīntiān wǔ yuè wǔ rì.",
       "translation": {
-        "kr": "오늘은 삼월 팔일이에요.",
-        "en": "Today is March 8th.",
-        "jp": "今日は三月八日です。"
+        "kr": "오늘은 5월 5일이에요.",
+        "en": "Today is May 5th.",
+        "jp": "今日は5月5日です。"
       }
     },
     {
       "speaker": "A",
-      "text": "你明天忙吗？",
-      "pinyin": "Nǐ míng tiān máng ma ？",
+      "text": "你什么时候去中国？",
+      "pinyin": "Nǐ shénme shíhou qù Zhōngguó?",
       "translation": {
-        "kr": "내일 바빠요?",
-        "en": "Are you busy tomorrow?",
-        "jp": "明日は忙しいですか？"
+        "kr": "너는 언제 중국에 가요?",
+        "en": "When will you go to China?",
+        "jp": "あなたはいつ中国へ行きますか？"
       }
     },
     {
       "speaker": "B",
-      "text": "不忙。",
-      "pinyin": "Bù máng 。",
+      "text": "我2027年5月5日去中国。",
+      "pinyin": "Wǒ èr líng èr qī nián wǔ yuè wǔ rì qù Zhōngguó.",
       "translation": {
-        "kr": "안 바빠요.",
-        "en": "I'm not busy.",
-        "jp": "忙しくないです。"
-      }
-    },
-    {
-      "speaker": "A",
-      "text": "那我们明天见面吧。",
-      "pinyin": "Nà wǒ men míng tiān jiàn miàn ba 。",
-      "translation": {
-        "kr": "그럼 내일 만나요.",
-        "en": "Then let's meet tomorrow.",
-        "jp": "じゃあ明日会いましょう。"
-      }
-    },
-    {
-      "speaker": "B",
-      "text": "好啊！",
-      "pinyin": "Hǎo a ！",
-      "translation": {
-        "kr": "좋아요!",
-        "en": "Great!",
-        "jp": "いいですね！"
+        "kr": "저는 2027년 5월 5일에 중국에 가요.",
+        "en": "I will go to China on May 5, 2027.",
+        "jp": "私は2027年5月5日に中国へ行きます。"
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "今天几月几日？",
+          "pinyin": "Jīntiān jǐ yuè jǐ rì?",
+          "translation": {
+            "kr": "오늘은 몇 월 며칠이에요?",
+            "en": "What's the date today?",
+            "jp": "今日は何月何日ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "今天5月5日。",
+          "pinyin": "Jīntiān wǔ yuè wǔ rì.",
+          "translation": {
+            "kr": "오늘은 5월 5일이에요.",
+            "en": "Today is May 5th.",
+            "jp": "今日は5月5日です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你什么时候去中国？",
+          "pinyin": "Nǐ shénme shíhou qù Zhōngguó?",
+          "translation": {
+            "kr": "너는 언제 중국에 가요?",
+            "en": "When will you go to China?",
+            "jp": "あなたはいつ中国へ行きますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我2027年5月5日去中国。",
+          "pinyin": "Wǒ èr líng èr qī nián wǔ yuè wǔ rì qù Zhōngguó.",
+          "translation": {
+            "kr": "저는 2027년 5월 5일에 중국에 가요.",
+            "en": "I will go to China on May 5, 2027.",
+            "jp": "私は2027年5月5日に中国へ行きます。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "几月几号",
