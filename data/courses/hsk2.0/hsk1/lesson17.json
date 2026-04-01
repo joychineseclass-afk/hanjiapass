@@ -15,19 +15,19 @@
     "zh": "说去学校的交通方式",
     "kr": "학교에 가는 교통수단 말하기",
     "en": "Talking about how to get to school",
-    "jp": "Talking about how to get to school"
+    "jp": "学校への行き方と交通手段"
   },
   "scene": {
     "id": "l17_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "怎么去学校",
+      "kr": "학교에 어떻게 가는지",
+      "en": "How you get to school"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问交通方式与远近，说坐地铁、每天都坐。",
+      "kr": "어떻게 가는지, 멀지 않은지 묻고 지하철·매일 등을 말한다.",
+      "en": "Ask how someone commutes and whether it is far; say by subway."
     }
   },
   "objectives": [

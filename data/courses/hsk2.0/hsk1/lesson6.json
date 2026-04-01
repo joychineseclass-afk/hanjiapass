@@ -12,34 +12,34 @@
     "en": "Can you speak Chinese?"
   },
   "summary": {
-    "zh": "介绍旁边的朋友或同学",
-    "kr": "옆에 있는 친구나 동창 소개",
-    "en": "Introducing a friend or classmate beside you",
-    "jp": "Introducing a friend or classmate beside you"
+    "zh": "询问会不会汉语、认不认识字",
+    "kr": "중국어 할 수 있는지, 글자 아는지 묻기",
+    "en": "Asking if someone can speak Chinese or recognizes characters",
+    "jp": "中国語ができるか、字を知っているかを尋ねる"
   },
   "scene": {
     "id": "l6_scene",
     "title": {
-      "zh": "介绍旁边的朋友/同学",
-      "kr": "옆에 있는 친구·동창 소개",
-      "en": "Introducing the friend or classmate next to you"
+      "zh": "聊中文学习",
+      "kr": "중국어 공부 이야기",
+      "en": "Talking about learning Chinese"
     },
     "summary": {
-      "zh": "介绍旁边的朋友或同学",
-      "kr": "같이 있는 친구 또는 동창을 소개하는 상황",
-      "en": "Introducing the person next to you"
+      "zh": "问会不会说汉语、认不认识这个字。",
+      "kr": "중국어 할 줄 아는지, 이 한자 아는지 묻는 상황.",
+      "en": "Ask whether you can speak Chinese and know a character."
     }
   },
   "objectives": [
     {
-      "zh": "学会介绍这是谁",
-      "kr": "이 사람이 누구인지 소개할 수 있다",
-      "en": "Can introduce who this person is"
+      "zh": "学会用「会」问会不会说汉语",
+      "kr": "「会」로 중국어 할 수 있는지 물을 수 있다",
+      "en": "Can ask if someone can speak Chinese with 会"
     },
     {
-      "zh": "学会说朋友、同学",
-      "kr": "친구, 동창을 말할 수 있다",
-      "en": "Can say friend, classmate"
+      "zh": "学会用「认识」问认不认识字",
+      "kr": "「认识」로 글자를 아는지 물을 수 있다",
+      "en": "Can ask if someone recognizes a character with 认识"
     }
   ],
   "vocab": [],

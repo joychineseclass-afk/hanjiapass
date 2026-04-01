@@ -15,19 +15,19 @@
     "zh": "打电话找人、礼貌询问与请求",
     "kr": "전화로 사람 찾기, 예의 있게 묻고 요청하기",
     "en": "Calling to find someone, polite questions and requests",
-    "jp": "Calling to find someone, polite questions and requests"
+    "jp": "訪問先で誰を尋ねる、丁寧に依頼する"
   },
   "scene": {
     "id": "l13_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "办公室找人",
+      "kr": "사무실에서 사람 찾기",
+      "en": "Finding someone at the office"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "用「请问」礼貌询问找谁，说明找谁、能否等一下。",
+      "kr": "「请问」로 예의 있게 누구 찾는지 묻고, 기다리고 싶은지 말한다.",
+      "en": "Use 请问 to ask who someone is looking for and whether to wait."
     }
   },
   "objectives": [

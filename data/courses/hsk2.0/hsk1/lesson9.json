@@ -12,34 +12,34 @@
     "en": "What's the date today?"
   },
   "summary": {
-    "zh": "问现在几点与几点做某事",
-    "kr": "지금 몇 시인지, 몇 시에 뭘 하는지 묻기",
-    "en": "Asking what time it is and when you do something",
-    "jp": "Asking what time it is and when you do something"
+    "zh": "询问日期、月日与「什么时候」",
+    "kr": "날짜, 월·일과 「什么时候」 묻기",
+    "en": "Asking the date (month and day) and when something happens",
+    "jp": "日付（月・日）と「いつ」を尋ねる"
   },
   "scene": {
-    "id": "l10_scene",
+    "id": "l9_scene",
     "title": {
-      "zh": "问现在几点",
-      "kr": "지금 몇 시인지 묻기",
-      "en": "Asking what time it is now"
+      "zh": "问几月几日",
+      "kr": "몇 월 며칠인지 묻기",
+      "en": "Asking month and day"
     },
     "summary": {
-      "zh": "问现在几点、几点上课",
-      "kr": "지금 몇 시인지, 몇 시에 수업하는지 묻는 상황",
-      "en": "Asking the time and when class is"
+      "zh": "问今天几月几日，并约定或询问什么时候去某地。",
+      "kr": "오늘 몇 월 며칠인지 묻고, 언제 가는지 약속하거나 묻는다.",
+      "en": "Ask today's date and when someone will go somewhere."
     }
   },
   "objectives": [
     {
-      "zh": "学会问现在几点",
-      "kr": "지금 몇 시인지 물을 수 있다",
-      "en": "Can ask what time it is"
+      "zh": "学会问「今天几月几日？」并说出月、日",
+      "kr": "「今天几月几日？」를 묻고 월·일을 말할 수 있다",
+      "en": "Can ask 今天几月几日? and say month and day"
     },
     {
-      "zh": "学会说几点做某事",
-      "kr": "몇 시에 뭘 한다고 말할 수 있다",
-      "en": "Can say at what time you do something"
+      "zh": "学会用「什么时候」问时间计划",
+      "kr": "「什么时候」로 일정을 물을 수 있다",
+      "en": "Can ask plans with 什么时候"
     }
   ],
   "vocab": [],

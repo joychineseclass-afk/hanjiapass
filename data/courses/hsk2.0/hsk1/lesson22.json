@@ -16,7 +16,21 @@
   "summary": {
     "zh": "第11–20课综合复习",
     "kr": "11–20과 종합 복습",
-    "en": "Review of lessons 11–20"
+    "en": "Review of lessons 11–20",
+    "jp": "第11～20課の総合復習"
+  },
+  "scene": {
+    "id": "l22_review_scene",
+    "title": {
+      "zh": "综合复习（第11–20课）",
+      "kr": "종합 복습(11–20과)",
+      "en": "Review: lessons 11–20"
+    },
+    "summary": {
+      "zh": "系统复习第11–20课词汇、对话与语法要点。",
+      "kr": "11–20과 단어·회화·문법 요점을 종합 복습한다.",
+      "en": "Review vocabulary, dialogues, and grammar from lessons 11–20."
+    }
   },
   "objectives": [
     {

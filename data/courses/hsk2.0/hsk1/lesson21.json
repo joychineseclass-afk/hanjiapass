@@ -16,7 +16,21 @@
   "summary": {
     "zh": "第1–10课综合复习",
     "kr": "1–10과 종합 복습",
-    "en": "Review of lessons 1–10"
+    "en": "Review of lessons 1–10",
+    "jp": "第1～10課の総合復習"
+  },
+  "scene": {
+    "id": "l21_review_scene",
+    "title": {
+      "zh": "综合复习（第1–10课）",
+      "kr": "종합 복습(1–10과)",
+      "en": "Review: lessons 1–10"
+    },
+    "summary": {
+      "zh": "系统复习第1–10课词汇、对话与语法要点。",
+      "kr": "1–10과 단어·회화·문법 요점을 종합 복습한다.",
+      "en": "Review vocabulary, dialogues, and grammar from lessons 1–10."
+    }
   },
   "objectives": [
     {

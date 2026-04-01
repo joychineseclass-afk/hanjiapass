@@ -15,19 +15,19 @@
     "zh": "买东西时评价大小和好坏",
     "kr": "물건 살 때 크기와 좋고 나쁨 말하기",
     "en": "Commenting on size and quality when shopping",
-    "jp": "Commenting on size and quality when shopping"
+    "jp": "買い物のときの大きさや良しあし"
   },
   "scene": {
     "id": "l15_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "买西瓜与评价",
+      "kr": "수박 사기와 평가",
+      "en": "Buying watermelon and evaluating"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "在摊位问想买什么，用「怎么样」「太……」评价大小与好坏。",
+      "kr": "가게에서 물건을 고르며 크기·품질을 「怎么样」「太…」로 말한다.",
+      "en": "At a stall, say what you want to buy and comment on size and quality."
     }
   },
   "objectives": [

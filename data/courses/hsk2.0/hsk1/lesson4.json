@@ -12,34 +12,34 @@
     "en": "Who is he?"
   },
   "summary": {
-    "zh": "问来自哪里、说自己是哪国人",
-    "kr": "어느 나라 사람인지 묻고 말하기",
-    "en": "Asking and saying which country you are from",
-    "jp": "Asking and saying which country you are from"
+    "zh": "询问他是谁，介绍爸爸、妈妈与家人",
+    "kr": "그 사람 누구인지 묻고 아빠·엄마 등 가족 소개",
+    "en": "Asking who someone is; introducing parents and family",
+    "jp": "彼が誰かを尋ね、父・母など家族を紹介する"
   },
   "scene": {
     "id": "l4_scene",
     "title": {
-      "zh": "问来自哪里",
-      "kr": "어디서 왔는지 묻기",
-      "en": "Asking where someone is from"
+      "zh": "介绍家人",
+      "kr": "가족 소개",
+      "en": "Introducing family"
     },
     "summary": {
-      "zh": "见面后问对方是哪国人，介绍自己的国家。",
-      "kr": "만난 후 어느 나라 사람인지 묻고 자기 나라를 소개한다.",
-      "en": "After meeting, ask which country they are from and say your country."
+      "zh": "用「他是谁？」「她呢？」询问，并介绍爸爸、妈妈。",
+      "kr": "「他是谁？」「她呢？」로 묻고 아빠·엄마를 소개한다.",
+      "en": "Ask 他是谁 and 她呢, and introduce parents."
     }
   },
   "objectives": [
     {
-      "zh": "学会问「你是哪国人？」",
-      "kr": "「你是哪国人？」를 물을 수 있다",
-      "en": "Can ask 你是哪国人?"
+      "zh": "学会问「他是谁？」「她呢？」",
+      "kr": "「他是谁？」「她呢？」를 물을 수 있다",
+      "en": "Can ask 他是谁? and 她呢?"
     },
     {
-      "zh": "学会说「我是……人」",
-      "kr": "「我是…人」을 말할 수 있다",
-      "en": "Can say 我是…人"
+      "zh": "学会说「他是我的爸爸/妈妈」",
+      "kr": "「他是我的爸爸/妈妈」를 말할 수 있다",
+      "en": "Can say 他是我的爸爸 / 她是我的妈妈"
     }
   ],
   "vocab": [],

@@ -12,34 +12,34 @@
     "en": "What time is it now?"
   },
   "summary": {
-    "zh": "打电话找人与礼貌用语",
-    "kr": "전화로 사람 찾기와 예절 표현",
-    "en": "Calling to find someone and polite expressions",
-    "jp": "Calling to find someone and polite expressions"
+    "zh": "询问现在几点、上课时间与整点表达",
+    "kr": "지금 몇 시인지, 수업 시간·정시 표현",
+    "en": "Asking the time, class time, and on-the-hour expressions",
+    "jp": "現在の時刻、授業の時間、時刻の言い方"
   },
   "scene": {
-    "id": "l9_scene",
+    "id": "l8_scene",
     "title": {
-      "zh": "打电话找人",
-      "kr": "전화로 사람 찾기",
-      "en": "Calling to find someone"
+      "zh": "看时间与上课时间",
+      "kr": "시간과 수업 시간",
+      "en": "Time and class schedule"
     },
     "summary": {
-      "zh": "打电话找人",
-      "kr": "전화해서 상대방을 찾는 상황",
-      "en": "Phone call to find the person you want"
+      "zh": "在校园或日常场景中问现在几点、上午几点上课。",
+      "kr": "학교 등에서 지금 몇 시인지, 오전 몇 시에 수업하는지 묻는다.",
+      "en": "Ask what time it is now and what time class starts."
     }
   },
   "objectives": [
     {
-      "zh": "学会接电话与问找谁",
-      "kr": "전화 받고 누구 찾는지 물을 수 있다",
-      "en": "Can answer and ask who they're looking for"
+      "zh": "学会问「现在几点？」并回答整点时间",
+      "kr": "「现在几点？」를 묻고 정시로 답할 수 있다",
+      "en": "Can ask 现在几点? and answer with on-the-hour times"
     },
     {
-      "zh": "学会说喂、请问、我找…",
-      "kr": "喂、请问、我找…를 말할 수 있다",
-      "en": "Can say 喂, 请问, 我找..."
+      "zh": "学会说「几点上课」等与课程相关的时间",
+      "kr": "「几点上课」 등 수업과 관련된 시간을 말할 수 있다",
+      "en": "Can say 几点上课 and related class times"
     }
   ],
   "vocab": [],

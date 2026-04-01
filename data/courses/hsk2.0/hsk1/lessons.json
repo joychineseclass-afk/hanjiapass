@@ -74,7 +74,7 @@
         "kr": "어느 나라 사람이에요?",
         "en": "Which country are you from?"
       },
-      "sceneGoal": "问来自哪里",
+      "sceneGoal": "问国籍",
       "subtitle": "问国籍",
       "grammarTargets": [
         "是……",

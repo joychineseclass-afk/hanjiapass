@@ -15,10 +15,10 @@
     "zh": "在水果店问数量与买东西",
     "kr": "과일 가게에서 수량 묻고 사기",
     "en": "Asking quantity and buying at a fruit shop",
-    "jp": "Asking quantity and buying at a fruit shop"
+    "jp": "果物店で個数を尋ねて買う"
   },
   "scene": {
-    "id": "l8_scene",
+    "id": "l11_scene",
     "title": {
       "zh": "水果店买东西",
       "kr": "과일 가게에서 사기",

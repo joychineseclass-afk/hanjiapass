@@ -15,19 +15,19 @@
     "zh": "问去哪里、什么时候回家",
     "kr": "어디 가는지, 언제 집에 가는지 묻기",
     "en": "Asking where to go and when to go home",
-    "jp": "Asking where to go and when to go home"
+    "jp": "行き先と帰宅の時間を尋ねる"
   },
   "scene": {
     "id": "l16_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问去向与是否现在去",
+      "kr": "어디 가는지, 지금 가는지",
+      "en": "Where someone is going and when"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问「你去哪儿？」「你现在去吗？」，说去学校与回家时间。",
+      "kr": "「你去哪儿？」「你现在去吗？」를 묻고 학교·귀가 시간을 말한다.",
+      "en": "Ask where someone is going and when they go home."
     }
   },
   "objectives": [

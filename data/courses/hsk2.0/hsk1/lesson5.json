@@ -12,34 +12,34 @@
     "en": "Where are you?"
   },
   "summary": {
-    "zh": "介绍家庭成员：这是谁、这是我的妈妈/爸爸",
-    "kr": "가족 소개: 이 사람 누구, 우리 엄마/아빠",
-    "en": "Introducing family: who is this, this is my mom/dad",
-    "jp": "Introducing family: who is this, this is my mom/dad"
+    "zh": "询问与说明位置：在哪儿、在+地点",
+    "kr": "어디에 있는지 묻고 「在+장소」로 말하기",
+    "en": "Asking and saying where something or someone is",
+    "jp": "どこにいるかを尋ね、「在+場所」で表す"
   },
   "scene": {
     "id": "l5_scene",
     "title": {
-      "zh": "介绍家庭",
-      "kr": "가족 소개",
-      "en": "Introducing family"
+      "zh": "说位置",
+      "kr": "위치 말하기",
+      "en": "Saying where things are"
     },
     "summary": {
-      "zh": "给朋友看照片，介绍这是谁、那是谁。",
-      "kr": "친구에게 사진을 보여주며 이 사람 누구, 저 사람 누구 소개한다.",
-      "en": "Show photos to a friend and say who this is, who that is."
+      "zh": "问人在哪儿、东西在哪儿，用「在」回答。",
+      "kr": "사람·물건이 어디에 있는지 묻고 「在」로 답한다.",
+      "en": "Ask where people and things are; answer with 在."
     }
   },
   "objectives": [
     {
-      "zh": "学会用「这是/那是……」介绍家人",
-      "kr": "「这是/那是…」로 가족을 소개할 수 있다",
-      "en": "Can introduce family with 这是/那是…"
+      "zh": "学会问「你在哪儿？」「我的书在哪儿？」",
+      "kr": "「你在哪儿？」「我的书在哪儿？」를 물을 수 있다",
+      "en": "Can ask 你在哪儿? and 我的书在哪儿?"
     },
     {
-      "zh": "学会问「这是谁？」",
-      "kr": "「这是谁？」를 물을 수 있다",
-      "en": "Can ask 这是谁?"
+      "zh": "学会用「在+地点」表示位置",
+      "kr": "「在+장소」로 위치를 말할 수 있다",
+      "en": "Can say location with 在 + place"
     }
   ],
   "vocab": [],

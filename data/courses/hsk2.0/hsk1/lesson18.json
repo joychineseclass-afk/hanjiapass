@@ -15,19 +15,19 @@
     "zh": "说来学校、什么时候回来和给电话",
     "kr": "학교에 오는지, 언제 돌아오는지, 전화번호를 주고받기",
     "en": "Talking about coming to school, returning time and giving a phone number",
-    "jp": "Talking about coming to school, returning time and giving a phone number"
+    "jp": "先生の出欠、帰り時間と連絡先"
   },
   "scene": {
     "id": "l18_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "老师是否来校与联系",
+      "kr": "선생님 출석과 연락",
+      "en": "Teacher's visit and contact info"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问老师今天来不来学校，何时回来，并留下电话或写给你。",
+      "kr": "선생님 오늘 학교에 오는지, 언제 돌아오는지 묻고 연락처를 남긴다.",
+      "en": "Ask if the teacher is coming, when they return, and leave contact info."
     }
   },
   "objectives": [

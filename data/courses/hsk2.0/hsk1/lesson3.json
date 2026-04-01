@@ -12,34 +12,34 @@
     "en": "Which country are you from?"
   },
   "summary": {
-    "zh": "互相认识、问对方的名字",
-    "kr": "서로 알고 이름 묻기",
-    "en": "Getting to know each other and asking names",
-    "jp": "Getting to know each other and asking names"
+    "zh": "询问国籍，用「吗」「不是」回答",
+    "kr": "국적 묻기, 「吗」「不是」로 답하기",
+    "en": "Asking nationality; answering with 吗 and 不是",
+    "jp": "国籍を尋ね、「吗」「不是」で答える"
   },
   "scene": {
     "id": "l3_scene",
     "title": {
-      "zh": "互相认识",
-      "kr": "서로 알기",
-      "en": "Getting to know each other"
+      "zh": "问是哪国人",
+      "kr": "어느 나라 사람인지 묻기",
+      "en": "Asking which country someone is from"
     },
     "summary": {
-      "zh": "两个人见面后互相问对方叫什么名字。",
-      "kr": "두 사람이 만나 서로 이름을 묻는다.",
-      "en": "Two people ask each other's names after meeting."
+      "zh": "礼貌地询问对方是哪国人，并介绍自己的国籍。",
+      "kr": "예의 있게 어느 나라 사람인지 묻고 자기 국적을 말한다.",
+      "en": "Politely ask where someone is from and say your nationality."
     }
   },
   "objectives": [
     {
-      "zh": "学会问「你叫什么名字？」",
-      "kr": "「你叫什么名字？」를 물을 수 있다",
-      "en": "Can ask 你叫什么名字?"
+      "zh": "学会问「你是哪国人？」「你是韩国人吗？」",
+      "kr": "「你是哪国人？」「你是韩国人吗？」를 물을 수 있다",
+      "en": "Can ask 你是哪国人? and 你是韩国人吗?"
     },
     {
-      "zh": "学会用「我叫……」回答",
-      "kr": "「我叫…」로 답할 수 있다",
-      "en": "Can answer with 我叫…"
+      "zh": "学会用「我是……人」「不是」回答",
+      "kr": "「我是…人」「不是」로 답할 수 있다",
+      "en": "Can answer with 我是…人 and 不是"
     }
   ],
   "vocab": [],

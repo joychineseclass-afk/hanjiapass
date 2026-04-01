@@ -15,19 +15,19 @@
     "zh": "天气、热、冷、下雨",
     "kr": "날씨, 더위, 추위, 비",
     "en": "Weather, hot, cold, rain",
-    "jp": "Weather, hot, cold, rain"
+    "jp": "天気、寒暖、雨"
   },
   "scene": {
     "id": "l19_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "聊天气与冷暖",
+      "kr": "날씨와 추위·더위",
+      "en": "Weather and hot/cold"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问今天天气怎么样，谈冷、暖和与下雨。",
+      "kr": "오늘 날씨 어떤지 묻고 춥다·따뜻하다·비 등을 말한다.",
+      "en": "Ask how the weather is and talk about cold, warm, and rain."
     }
   },
   "objectives": [

@@ -15,19 +15,19 @@
     "zh": "吃、喝与食物",
     "kr": "먹기, 마시기와 음식",
     "en": "Eating, drinking and food",
-    "jp": "Eating, drinking and food"
+    "jp": "食事の提案、何を食べたいか"
   },
   "scene": {
     "id": "l14_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "约吃饭与点菜",
+      "kr": "밥 약속과 메뉴",
+      "en": "Eating together and ordering"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "提议一起吃饭，问想吃什么、想吃什么面。",
+      "kr": "같이 밥 먹자고 하고, 무엇을 먹고 싶은지 묻는다.",
+      "en": "Suggest eating together and ask what someone wants to eat."
     }
   },
   "objectives": [

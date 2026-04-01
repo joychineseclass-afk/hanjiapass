@@ -15,19 +15,19 @@
     "zh": "问职业和工作地点",
     "kr": "직업과 일하는 곳을 묻기",
     "en": "Asking about jobs and workplace",
-    "jp": "Asking about jobs and workplace"
+    "jp": "職業と勤務先を尋ねる"
   },
   "scene": {
     "id": "l20_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问职业与工作地点",
+      "kr": "직업과 직장",
+      "en": "Job and workplace"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问做什么工作、在哪儿工作，介绍职业与同事。",
+      "kr": "무슨 일을 하는지, 어디서 일하는지 묻고 직업·동료를 말한다.",
+      "en": "Ask what someone does and where they work; introduce colleagues."
     }
   },
   "objectives": [

@@ -15,19 +15,19 @@
     "zh": "谈爱好，喜欢听音乐、看电影",
     "kr": "취미 말하기, 음악 듣기·영화 보기",
     "en": "Talking about hobbies, liking music and movies",
-    "jp": "Talking about hobbies, liking music and movies"
+    "jp": "趣味について、音楽や映画が好きだと言う"
   },
   "scene": {
     "id": "l12_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "聊爱好与音乐",
+      "kr": "취미와 음악 이야기",
+      "en": "Hobbies and music"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问喜欢听什么，谈论听音乐、看电影等爱好。",
+      "kr": "무엇을 좋아하는지 묻고 음악·영화 등 취미를 이야기한다.",
+      "en": "Ask what someone likes; talk about music, movies, and hobbies."
     }
   },
   "objectives": [

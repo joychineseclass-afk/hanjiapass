@@ -12,34 +12,34 @@
     "en": "What day is today?"
   },
   "summary": {
-    "zh": "学校生活与学习",
-    "kr": "학교 생활과 학습",
-    "en": "School life and learning",
-    "jp": "School life and learning"
+    "zh": "询问星期几、有无课程与简单学习安排",
+    "kr": "무슨 요일인지, 수업 있는지와 간단한 일정",
+    "en": "Weekdays, whether there is class, and simple schedules",
+    "jp": "曜日、授業の有無、簡単な予定"
   },
   "scene": {
-    "id": "l11_scene",
+    "id": "l10_scene",
     "title": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问星期与课程",
+      "kr": "요일과 수업 묻기",
+      "en": "Weekday and classes"
     },
     "summary": {
-      "zh": "",
-      "kr": "",
-      "en": ""
+      "zh": "问今天星期几、今天有没有课。",
+      "kr": "오늘 무슨 요일인지, 오늘 수업이 있는지 묻는 상황.",
+      "en": "Ask what day it is today and whether there is class."
     }
   },
   "objectives": [
     {
-      "zh": "学会说学习活动",
-      "kr": "학습 활동을 말할 수 있다",
-      "en": "Can talk about learning"
+      "zh": "学会问「今天星期几？」并说出星期",
+      "kr": "「今天星期几？」를 묻고 요일을 말할 수 있다",
+      "en": "Can ask 今天星期几? and say the weekday"
     },
     {
-      "zh": "学会读、写、书",
-      "kr": "'读', '写', '书'를 사용할 수 있다",
-      "en": "Can use 读, 写, 书"
+      "zh": "学会问「你今天有课吗？」等与课程相关的问题",
+      "kr": "「你今天有课吗？」 등 수업 관련 질문을 할 수 있다",
+      "en": "Can ask 你今天有课吗? and similar class-related questions"
     }
   ],
   "vocab": [],
