@@ -1,5 +1,6 @@
 // /ui/modules/hsk/ui/hskData.js
 // ✅ Data layer: version / fetchJson / lesson detail url + loader calls
+// HSK1：loadLessonDetail 委托 HSK_LOADER；普通课词表 = vocab-distribution；复习课 21/22 传 practiceLang 与缓存一致
 
 import { safeText } from "./hskDom.js";
 import { fetchJsonCached } from "../../../core/fetchJsonCached.js";
@@ -39,12 +40,33 @@ export function lessonDetailUrl(level, lessonNo, version) {
   return `/data/courses/${ver}/hsk${lv}/lesson${no}.json`;
 }
 
-export async function loadLessonDetail({ level, lessonNo, version, detailCache, file } = {}) {
+function resolvePracticeLangKeyFromEnv() {
+  try {
+    const ls =
+      typeof localStorage !== "undefined"
+        ? safeText(localStorage.getItem("joy_lang") || localStorage.getItem("site_lang"))
+        : "";
+    if (!ls) return "";
+    const l = ls.toLowerCase();
+    if (l === "zh" || l === "cn") return "cn";
+    if (l === "en") return "en";
+    if (l === "jp" || l === "ja") return "jp";
+    return "kr";
+  } catch {
+    return "";
+  }
+}
+
+export async function loadLessonDetail({ level, lessonNo, version, detailCache, file, practiceLang } = {}) {
   const raw = safeText(version || "hsk2.0");
   const ver = window.DATA_PATHS?.normalizeHskVersion?.(raw) || (raw === "hsk3.0" ? "hsk3.0" : "hsk2.0");
   const lv = safeText(level || "1");
   const filePart = safeText(file || "");
-  const key = `${ver}:${lv}:${lessonNo}:${filePart}`;
+  const no = Number(lessonNo) || 1;
+  const pl =
+    safeText(practiceLang) ||
+    (no === 21 || no === 22 ? resolvePracticeLangKeyFromEnv() || "kr" : "");
+  const key = `${ver}:${lv}:${lessonNo}:${filePart}${pl ? `:${pl}` : ""}`;
 
   const hit = detailCache?.get?.(key);
   if (hit) return hit;
@@ -54,7 +76,9 @@ export async function loadLessonDetail({ level, lessonNo, version, detailCache, 
   return dedupeLessonLoad(dedupeKey, async () => {
     if (window.HSK_LOADER?.loadLessonDetail) {
       try {
-        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, { version: ver, file: filePart || undefined });
+        const loaderOpts = { version: ver, file: filePart || undefined };
+        if (no === 21 || no === 22) loaderOpts.practiceLang = pl || "kr";
+        const data = await window.HSK_LOADER.loadLessonDetail(lv, lessonNo, loaderOpts);
         detailCache?.set?.(key, data);
         return data;
       } catch (e) {

@@ -1,5 +1,5 @@
 {
-  "description": "Lumina HSK1 场景课程词汇分布（22课）",
+  "description": "Lumina HSK1 场景课程词汇分布（22课）。reviewRanges：lesson21→第1–10课，lesson22→第11–20课；HSK_LOADER 对 hsk1 lesson21/22 强制相同 canonical 范围。",
   "totalWords": 150,
   "lessonThemes": {
     "1": "打招呼",

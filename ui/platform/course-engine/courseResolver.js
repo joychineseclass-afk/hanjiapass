@@ -57,7 +57,7 @@ export function resolveCoursePath(input = {}) {
   } else if (!lessonFile.endsWith(".json")) {
     lessonFile = `lesson${lessonNo}.json`;
   }
-  // 保留 hsk1_lesson21.json 等完整文件名，不转换为 lesson21.json
+  // 若 file 为 hsk1_lessonN.json 等形式则按规则展开；HSK1 复习课 canonical 文件为 lesson21.json / lesson22.json
 
   const lessonUrl = withBase(`${basePath}/${lessonFile}`);
 

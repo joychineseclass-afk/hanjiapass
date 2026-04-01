@@ -1,6 +1,7 @@
 // /ui/core/wordsStep.js
 // ✅ Words Step (Stable)
-// - HSK lessons: only use HSK_LOADER.loadLessonDetail (distribution-driven words)
+// - HSK：仅 HSK_LOADER.loadLessonDetail；普通课正式词表 = vocab-distribution（课 JSON vocab 仅 enrich）
+// - 复习课 21/22：传 practiceLang（与 UI 语言一致）以便与 loader 缓存键对齐
 // - Non-HSK lessons: keep legacy pack/single fetch compatibility
 // - Render:
 //   A) if window.HSK_RENDER.renderWordCards exists -> render into modal container
@@ -48,6 +49,22 @@ function parseHskLessonRef(lessonId) {
   return { level: String(Number(m[1])), lessonNo: Number(m[2]) || 1 };
 }
 
+function practiceLangKeyForWordsStep() {
+  try {
+    const ls =
+      localStorage.getItem("joy_lang") ||
+      localStorage.getItem("site_lang") ||
+      "kr";
+    const l = String(ls).toLowerCase();
+    if (l === "zh" || l === "cn") return "cn";
+    if (l === "en") return "en";
+    if (l === "jp" || l === "ja") return "jp";
+    return "kr";
+  } catch {
+    return "kr";
+  }
+}
+
 // ---------- 1) Load lesson words ----------
 async function loadWordsForLesson(lessonId) {
   // ✅ StepA log #1: 入口 lessonId
@@ -64,7 +81,10 @@ async function loadWordsForLesson(lessonId) {
         localStorage.getItem("hsk_vocab_version") ||
         window.APP_VOCAB_VERSION ||
         "hsk2.0";
-      const data = await hskLoader.loadLessonDetail(hskRef.level, hskRef.lessonNo, { version });
+      const no = hskRef.lessonNo;
+      const loaderOpts = { version };
+      if (no === 21 || no === 22) loaderOpts.practiceLang = practiceLangKeyForWordsStep();
+      const data = await hskLoader.loadLessonDetail(hskRef.level, no, loaderOpts);
       const list =
         data?.vocab ||
         data?.words ||

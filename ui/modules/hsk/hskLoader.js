@@ -2,6 +2,22 @@
 // ✅ Classic Script (NO export) — registers window.HSK_LOADER
 // Provides: loadVocab(level, opts), loadLessons(level, opts), loadLessonDetail(level, lessonNo, opts)
 //
+// =============================================================================
+// Lumina HSK — 权威数据源（请勿在其它文件「再立一套」主词表）
+// -----------------------------------------------------------------------------
+// 普通课（1~20）
+//   • 正式单词集合与顺序：唯一权威 = data/courses/<ver>/hsk<lv>/vocab-distribution.json
+//     → distribution.lessonN 的汉字列表；释义/拼音 = data/vocab/<ver>/hsk<lv>.json
+//   • lessonN.json 的 vocab/words：仅作 enrich（例句、senseNote、词性等），绝不是正式词表 fallback
+//   • dialogue / grammar / extension / practice：唯一权威 = 对应 lessonN.json
+// lessons.json
+//   • 课程目录与元数据（lessonNo、file、title、vocabTargets…）；不是普通课主词表
+// 复习课（21/22）
+//   • 词/会话/语法/扩展：运行时按 review range 聚合「范围内普通课」经本 loader 收口后的 loadLessonDetail
+//   • practice：运行时 generateReviewPractice（非 lesson21/22.json 静态字段）；opts.practiceLang 影响题干语言
+//   • HSK1 固定：lesson21 → 聚合第1–10课；lesson22 → 聚合第11–20课（代码强制 canonical，与 vocab-distribution.reviewRanges 对齐）
+// =============================================================================
+//
 // ✅ Versioned paths (repo):
 //   vocab:        /data/vocab/<ver>/hsk<lv>.json
 //   lessons: /data/courses/<ver>/hsk<lv>/lessons.json
@@ -10,8 +26,7 @@
 // ✅ Version priority:
 //   opts.version -> localStorage(hsk_vocab_version) -> window.APP_VOCAB_VERSION -> default "hsk2.0"
 //
-// ✅ 单词来源优先：data/courses/<ver>/hsk<lv>/vocab-distribution.json
-//   - 存在时：每课单词由 distribution.lessonX 生成，复习课由 reviewRanges 合并
+// ✅ 分课词表：data/courses/<ver>/hsk<lv>/vocab-distribution.json（见上方权威说明）
 //   - 词条详情（pinyin/meaning）仍从 data/vocab/<ver>/hsk<lv>.json 解析
 //
 // ✅ Robust:
@@ -318,6 +333,45 @@
     return Number.isFinite(n) && n > 0 ? n : i + 1;
   }
 
+  /**
+   * 复习题生成器释义语言（与 generatorUtils.pickLang 一致）：kr | en | cn | jp
+   * 优先 opts.practiceLang / opts.lang，否则 joy_lang / site_lang，默认 kr。
+   */
+  /**
+   * HSK1 复习课 canonical 范围（与 data/.../vocab-distribution.json reviewRanges 一致）。
+   * lesson21 → 1–10；lesson22 → 11–20。其它层级/课号仍读 review.lessonRange。
+   */
+  function resolveCanonicalHSK1ReviewRange(lv, lessonNo, rawReview) {
+    const lvn = String(normalizeLevel(lv));
+    const no = Number(lessonNo) || 0;
+    if (lvn === "1" && no === 21) return { from: 1, to: 10 };
+    if (lvn === "1" && no === 22) return { from: 11, to: 20 };
+    const range = rawReview?.lessonRange || rawReview?.range || [];
+    const fromRaw = Number(range[0]);
+    const toRaw = Number(range[1]);
+    const from = Number.isFinite(fromRaw) && fromRaw > 0 ? fromRaw : 1;
+    const to = Number.isFinite(toRaw) && toRaw > 0 ? toRaw : from;
+    return { from, to: Math.max(from, to) };
+  }
+
+  function resolvePracticeLangForGenerators(opts) {
+    const explicit = safeText(opts && (opts.practiceLang || opts.lang));
+    if (explicit) {
+      const m = explicit.toLowerCase();
+      if (m === "ko" || m === "kr") return "kr";
+      if (m === "en") return "en";
+      if (m === "zh" || m === "cn") return "cn";
+      if (m === "jp" || m === "ja") return "jp";
+    }
+    try {
+      if (typeof localStorage !== "undefined") {
+        const ls = safeText(localStorage.getItem("joy_lang") || localStorage.getItem("site_lang"));
+        if (ls) return resolvePracticeLangForGenerators({ practiceLang: ls });
+      }
+    } catch {}
+    return "kr";
+  }
+
   /** 从 distribution 取某课汉字列表（含复习课 reviewRanges 合并） */
   function getHanziListForLesson(distributionData, lessonNo) {
     if (!distributionData || typeof distributionData !== "object") return null;
@@ -345,9 +399,9 @@
   }
 
   /**
-   * 合并课内 vocab 与 distribution 解析结果：distribution 决定顺序与基础拼音/释义，
-   * 课 JSON 中的 senseNote、examples、多语 pos 等教材字段按「去尾标点后汉字一致」对齐写回。
-   * （否则 vocab-distribution 覆盖后学习弹窗永远读不到 lesson 里的例句。）
+   * Enrich-only：将 lesson JSON 中的 vocab 按汉字对齐到「已由 distribution 决定的」词条上。
+   * distribution 决定：有哪些词、顺序、基础拼音/释义（来自全库 vocab）。
+   * 课 JSON 仅补充：senseNote、examples、多语 pos 等；不参与「正式词表集合」决策。
    */
   function normalizeVocabHanziKey(h) {
     const s = String(h ?? "").trim();
@@ -355,6 +409,7 @@
     return s.replace(/[\s\u3002\uFF01\uFF0C\uFF1F\uFF1A\uFF1B!?,。；：]+$/u, "");
   }
 
+  /** @param {Array} distributionList 已由 distribution 决定的正式词表 */
   function mergeVocabFromLessonFile(distributionList, lessonVocabList) {
     if (!Array.isArray(distributionList)) return distributionList;
     if (!Array.isArray(lessonVocabList) || lessonVocabList.length === 0) return distributionList;
@@ -392,7 +447,7 @@
     });
   }
 
-  /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序）；匹配不到的保留占位词条，绝不整课回退旧 vocab */
+  /** 用全量词库按汉字解析出完整词条列表（保持 distribution 顺序）；匹配不到的保留占位词条。绝不回退为「课 JSON vocab 整表」。 */
   function resolveHanziToVocab(hanziList, fullVocabList) {
     if (!Array.isArray(hanziList)) return [];
     const byHanzi = new Map();
@@ -439,8 +494,9 @@
   }
 
   /**
-   * 按 vocab-distribution 生成某课单词列表；无 distribution 时返回 null（调用方用 lesson 文件内 vocab）。
-   * 依赖 loadVocab 提供的全量词库（data/vocab/<ver>/hsk<lv>.json）解析 pinyin/meaning。
+   * 按 vocab-distribution 生成某课正式单词列表。
+   * 返回 null 表示无法从 distribution 构建；普通课调用方将使用空词表并 console.warn，不回退到课内 vocab。
+   * 依赖 loadVocab（data/vocab/<ver>/hsk<lv>.json）解析 pinyin/meaning。
    */
   async function buildLessonVocabFromDistribution(level, lessonNo, opts = {}) {
     const dist = await loadVocabDistribution(level, opts);
@@ -537,15 +593,15 @@
     return normalized;
   }
 
-  // ✅ load lesson via platform course engine
-  // ✅ REVIEW: type===review 时自动加载 range 课程并合并 words/dialogue/grammar/extension，生成 5~8 题练习
+  // loadLesson：普通课词表 = distribution + enrich；复习课 = range 聚合 + 运行时 practice（见文件头权威说明）
   async function loadLessonDetail(level, lessonNo, opts = {}) {
     const lv = normalizeLevel(level);
     const version = getVocabVersion(opts);
     const no = Number(lessonNo || 1) || 1;
     const filePart = safeText(opts.file || "");
-
-    const memKey = `lessonDetail:${version}:${lv}:${no}:${filePart}`;
+    const isReviewLessonSlot = no === 21 || no === 22;
+    const practiceLangCacheKey = isReviewLessonSlot ? resolvePracticeLangForGenerators(opts) : "";
+    const memKey = `lessonDetail:${version}:${lv}:${no}:${filePart}:${practiceLangCacheKey}`;
     const cached = memGet(memKey);
     if (cached) return cached;
 
@@ -564,12 +620,28 @@
     const doc = course.doc || {};
     const c = doc.content;
 
-    let vocabArr, lessonVocabForEnrich, dialogueArr, grammarArr, extensionArr, practiceArr;
+    let vocabArr, lessonVocabEnrichOnly, dialogueArr, grammarArr, extensionArr, practiceArr;
 
     if (source.type === "review") {
-      const range = source.review?.lessonRange || source.review?.range || [];
-      const from = Number(range[0]) || 1;
-      const to = Number(range[1]) || from;
+      const declaredRange = source.review?.lessonRange || source.review?.range || [];
+      const canon = resolveCanonicalHSK1ReviewRange(lv, no, source.review);
+      const from = canon.from;
+      const to = canon.to;
+      if (String(normalizeLevel(lv)) === "1" && (no === 21 || no === 22)) {
+        if (Number(declaredRange[0]) !== from || Number(declaredRange[1]) !== to) {
+          try {
+            console.warn(
+              "[HSK_LOADER] HSK1 lesson",
+              no,
+              "声明的 review.lessonRange",
+              declaredRange,
+              "与 canonical",
+              [from, to],
+              "不符，已按 canonical 聚合。"
+            );
+          } catch {}
+        }
+      }
 
       const merged = await loadAndMergeReviewRange(lv, version, from, to, opts);
       vocabArr = merged.vocab;
@@ -578,9 +650,9 @@
       extensionArr = merged.extension;
       practiceArr = merged.practice;
     } else {
-      lessonVocabForEnrich = Array.isArray(source.vocab) ? source.vocab
+      lessonVocabEnrichOnly = Array.isArray(source.vocab) ? source.vocab
         : (Array.isArray(source.words) ? source.words : (Array.isArray(c?.vocab) ? c.vocab : (Array.isArray(c?.words) ? c.words : [])));
-      // 普通课单词区只认 distribution；课内 vocab 仅用于 enrich examples/senseNote，不作为词表 fallback。
+      // 普通课：正式词表仅来自 distribution；此处课内数组仅作 enrich，不作 fallback。
       vocabArr = [];
       // 会话优先级：1) 非空 dialogueCards 2) 非空 dialogue 3) 非空 doc.content.dialogue 4) 空数组
       if (Array.isArray(source.dialogueCards) && source.dialogueCards.length > 0) {
@@ -594,6 +666,7 @@
       }
       grammarArr = Array.isArray(source.grammar) ? source.grammar : (Array.isArray(c?.grammar) ? c.grammar : []);
       extensionArr = Array.isArray(source.extension) ? source.extension : (Array.isArray(c?.extension) ? c.extension : []);
+      // 普通课练习唯一真源：lesson JSON 的 practice（不经本 loader 改写内容）
       practiceArr = Array.isArray(source.practice) ? source.practice : (Array.isArray(c?.practice) ? c.practice : []);
     }
 
@@ -614,7 +687,7 @@
       stepKeys: stepKeys(steps),
     };
 
-    // 复习课：单词区仅以 loadAndMergeReviewRange 合并的 vocab 为权威，不走 vocab-distribution 静态名单
+    // 复习课：词/会话/语法/扩展 = range 内聚合结果；非 lesson 文件内冗长静态词表
     if (source.type === "review") {
       try {
         const { filterMergedVocabForReviewLesson } = await import("/ui/modules/hsk/hskRenderer.js");
@@ -625,12 +698,32 @@
         console.warn("[HSK_LOADER] filterMergedVocabForReviewLesson failed:", e && e.message ? e.message : e);
       }
     } else {
-      // 普通课：单词区唯一来源为 distribution；课 JSON 字段仅按汉字键 enrich
       const distributionVocab = await buildLessonVocabFromDistribution(lv, no, { version });
       const mergedVocab = Array.isArray(distributionVocab)
-        ? mergeVocabFromLessonFile(distributionVocab, lessonVocabForEnrich)
+        ? mergeVocabFromLessonFile(distributionVocab, lessonVocabEnrichOnly)
         : [];
+      if (!Array.isArray(distributionVocab) || distributionVocab.length === 0) {
+        try {
+          console.warn(
+            "[HSK_LOADER] 普通课词表为空：无法从 vocab-distribution 构建 lesson",
+            no,
+            "。课 JSON 的 vocab 不会作为正式词表兜底。请检查 vocab-distribution.json / 网络。"
+          );
+        } catch {}
+      }
       lesson = { ...lesson, vocab: mergedVocab, words: mergedVocab };
+    }
+
+    if (source.type === "review" && String(normalizeLevel(lv)) === "1" && (no === 21 || no === 22)) {
+      const c = resolveCanonicalHSK1ReviewRange(lv, no, source.review);
+      lesson = {
+        ...lesson,
+        review: {
+          ...(lesson.review || {}),
+          lessonRange: [c.from, c.to],
+          range: [c.from, c.to],
+        },
+      };
     }
 
     memSet(memKey, lesson);
@@ -644,19 +737,52 @@
     return loadPromise;
   }
 
-  /** 加载 range 内课程并合并，生成复习课内容与练习 */
+  /**
+   * 复习聚合规则（稳定、可复现）：
+   * - 遍历 n = from … to（含端点），严格只加载 lesson{n}.json 经 loadLessonDetail 的结果。
+   * - 单词：按课序；汉字键首次出现保留（早课优先），与 distribution 在单课内的顺序一致。
+   * - 会话行：按课序追加，不做跨课合并去重（保留重复行若各课自有重复）。
+   * - 语法 / 扩展：按课序；grammarDedupKey / extensionDedupKey 首次出现保留（早课优先）。
+   */
   async function loadAndMergeReviewRange(lv, version, from, to, opts) {
     const vocabSeen = new Map();
+    const grammarSeen = new Set();
+    const extensionSeen = new Set();
     const dialogueList = [];
     const grammarList = [];
     const extensionList = [];
-    const lessons = [];
+
+    function grammarDedupKey(g) {
+      if (!g || typeof g !== "object") return "__g_empty__";
+      const p = safeText(g.pattern);
+      if (p) return "pat:" + p;
+      const t = g.title;
+      if (typeof t === "string" && safeText(t)) return "tit:" + safeText(t);
+      if (t && typeof t === "object") return "tit:" + safeText(t.zh || t.cn || t.kr || t.en || t.ko);
+      try {
+        return "gjson:" + JSON.stringify(g).slice(0, 200);
+      } catch {
+        return "__g_fallback__";
+      }
+    }
+    function extensionDedupKey(x) {
+      if (!x || typeof x !== "object") return "__ex_empty__";
+      const k = safeText(x.phrase || x.zh || x.cn || x.hanzi || x.line || x.text);
+      if (k) return "ex:" + k;
+      try {
+        return "exjson:" + JSON.stringify(x).slice(0, 200);
+      } catch {
+        return "__ex_fallback__";
+      }
+    }
 
     for (let n = from; n <= to; n++) {
       // 复习课合并来源必须与普通课页面一致：使用 loader 收口后的词表（distribution -> loader）
       const normalLesson = await loadLessonDetail(lv, n, {
         version,
         file: `lesson${n}.json`,
+        practiceLang: opts.practiceLang,
+        lang: opts.lang,
       });
       const v = Array.isArray(normalLesson?.vocab)
         ? normalLesson.vocab
@@ -665,18 +791,26 @@
         Array.isArray(normalLesson?.dialogueCards) && normalLesson.dialogueCards.length > 0
           ? normalLesson.dialogueCards
           : (Array.isArray(normalLesson?.dialogue) ? normalLesson.dialogue : []);
-      const g = Array.isArray(normalLesson?.grammar) ? normalLesson.grammar : [];
-      const e = Array.isArray(normalLesson?.extension) ? normalLesson.extension : [];
-
-      lessons.push({ vocab: v, dialogue: d, grammar: g, extension: e });
+      const gArr = Array.isArray(normalLesson?.grammar) ? normalLesson.grammar : [];
+      const eArr = Array.isArray(normalLesson?.extension) ? normalLesson.extension : [];
 
       for (const w of v) {
         const key = (w?.hanzi || w?.word || "").trim();
         if (key && !vocabSeen.has(key)) vocabSeen.set(key, w);
       }
       dialogueList.push(...(Array.isArray(d) ? d : []));
-      grammarList.push(...g);
-      extensionList.push(...e);
+      for (const gItem of gArr) {
+        const gk = grammarDedupKey(gItem);
+        if (grammarSeen.has(gk)) continue;
+        grammarSeen.add(gk);
+        grammarList.push(gItem);
+      }
+      for (const extItem of eArr) {
+        const ek = extensionDedupKey(extItem);
+        if (extensionSeen.has(ek)) continue;
+        extensionSeen.add(ek);
+        extensionList.push(extItem);
+      }
     }
 
     const mergedLesson = {
@@ -690,7 +824,7 @@
       courseId: `hsk2.0_hsk${lv}`,
     };
 
-    const practice = await generateReviewPractice(mergedLesson, 10, 10);
+    const practice = await generateReviewPractice(mergedLesson, 10, 10, opts);
     return {
       vocab: mergedLesson.vocab,
       dialogue: mergedLesson.dialogueCards,
@@ -701,17 +835,15 @@
   }
 
   /**
-   * 生成复习课练习：固定 10 题，按 Part1 Vocabulary / Part2 Grammar / Part3 Sentences 分布
-   * Part1(1~4): 词汇 4 题 - 汉字→释义、释义→汉字、拼音→汉字
-   * Part2(5~7): 语法 3 题 - grammar_fill_choice（choice 形式）、选择正确结构/判断句子
-   * Part3(8~10): 句子 3 题 - 句子排序、对话补全、简单翻译
+   * 复习课练习：唯一来源为本函数运行时生成（输入 = 聚合后的 mergedLesson）。
+   * 语言：opts.practiceLang / opts.lang → resolvePracticeLangForGenerators（勿硬编码单一语种）。
    */
-  async function generateReviewPractice(lesson, minCount, maxCount) {
+  async function generateReviewPractice(lesson, minCount, maxCount, opts = {}) {
     try {
       const { shuffle } = await import("/ui/platform/practice-generator/generatorUtils.js");
       const { normalizeQuestion } = await import("/ui/platform/practice-generator/questionNormalizer.js");
 
-      const lang = "ko";
+      const lang = resolvePracticeLangForGenerators(opts);
       const totalCount = Math.min(maxCount, Math.max(minCount, 10));
       const levelNum = 1;
       const lessonId = lesson?.id ?? lesson?.courseId ?? "";
@@ -847,7 +979,10 @@
     mergeVocabFromLessonFile,
     vocabDistributionUrl: (lv, opts = {}) => vocabDistributionUrl(normalizeLevel(lv), getVocabVersion(opts)),
 
-    // ✅ NEW
+    /**
+     * loadLessonDetail(level, lessonNo, opts?)
+     * opts: { version, file?, practiceLang? } — practiceLang 用于复习课 21/22 的练习语言与缓存分键（kr|en|cn|jp）
+     */
     loadLessonDetail,
     lessonDetailUrl: (lv, lessonNo, opts = {}) => {
       const version = getVocabVersion(opts || {});

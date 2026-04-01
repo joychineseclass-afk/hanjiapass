@@ -68,7 +68,10 @@ const state = {
   tab: "words",
   searchKeyword: "",
   reviewMode: null,
-  /** Map<lessonNo, Set<string>> 来自 lessons.json 的 vocabTargets，仅用于普通新课对话受控拆词 */
+  /**
+   * 来自 lessons.json 的 vocabTargets（每课教学目标子集 / 对话拆词白名单）。
+   * 不是正式词表：正式词表以 vocab-distribution 为准；二者允许不等，校验见 scripts/check-hsk1-vocab-targets.mjs。
+   */
   hskLessonVocabTargetsByNo: null,
 };
 
@@ -97,9 +100,10 @@ function lessonIsReview(lessonData) {
 }
 
 /**
- * 平台 loadLessonDetail 优先走 GLOBAL_COURSE_ENGINE；HSK 页面统一再经 HSK_LOADER 对齐课件详情。
- * - 普通课：确保单词集合来自 vocab-distribution
- * - 复习课：保持既有 review range 聚合逻辑
+ * Lumina HSK：LESSON_ENGINE 拉取原始课件后，统一经 HSK_LOADER.loadLessonDetail 收口（与 data 权威规则一致）。
+ * - lessons.json：仅课程目录/元数据，不是普通课主词表。
+ * - 普通课：正式词表 = vocab-distribution；课内 vocab 仅 enrich；practice = 对应 lessonN.json（禁止用引擎侧另一份 practice 覆盖）。
+ * - 复习课：词/会话/语法/扩展 = review range 内聚合；practice = 运行时生成（opts.practiceLang 传 UI 语言）。
  */
 async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
   await ensureHSKDeps();
@@ -110,9 +114,11 @@ async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
     const L = await window.HSK_LOADER.loadLessonDetail(state.lv, no, {
       version: state.version,
       file: f || undefined,
+      practiceLang: practiceLangKeyFromUiLang(getLang()),
     });
     if (!L || typeof L !== "object") return lessonData;
     const mergedType = String(L.type || lessonData.type || lessonData.meta?.type || "lesson").trim();
+    const mergedPractice = Array.isArray(L.practice) ? L.practice : [];
     const next = {
       ...lessonData,
       type: mergedType,
@@ -127,8 +133,7 @@ async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
             : lessonData.dialogueCards,
       grammar: L.grammar != null ? L.grammar : lessonData.grammar,
       extension: L.extension != null ? L.extension : lessonData.extension,
-      practice:
-        Array.isArray(L.practice) && L.practice.length ? L.practice : lessonData.practice,
+      practice: mergedPractice,
       review: L.review ?? lessonData.review,
       steps: L.steps ?? lessonData.steps,
       stepKeys: L.stepKeys ?? lessonData.stepKeys,
@@ -1521,7 +1526,7 @@ async function loadLessons() {
 
     const vocabDist = await getVocabDistribution(state.lv, state.version);
 
-    // 当前先不依赖 distribution 排序，保持 lessons.json 目录顺序
+    // lessons.json：目录与元数据（标题、file、vocabTargets…）；列表顺序保持其顺序，不改为按 distribution 排序
     let result = lessons;
 
     // optional theme titles
