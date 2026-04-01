@@ -310,42 +310,98 @@ function pickTitleFromObject(titleObj, lang) {
  * 读取顺序：真多语言 displayTitle 对象 strict → title[lang]（含 jp/kr/en/cn；jp 缺译回退 cn/zh）
  * → 字符串 displayTitle → 假多语言 displayTitle 宽松 pick（jp 仍跳过）→ 扁平 title_xx 等。
  */
+function logHskTitleDiag(lesson, payload) {
+  const no = Number(lesson?.lessonNo ?? lesson?.no ?? 0);
+  if (no < 1 || no > 3) return;
+  if (typeof console === "undefined" || !console.log) return;
+  try {
+    console.log("[HSK-TITLE-DIAG]", payload);
+  } catch {}
+}
+
 export function getLessonDisplayTitle(lesson, lang) {
   if (!lesson) return "";
   const l = lang ?? getLang();
   const baseRaw = lesson.title ?? lesson.originalTitle ?? lesson.name ?? lesson.label;
   const disp = lesson.displayTitle;
 
+  let result = "";
+  let stepUsed = "empty";
+
+  const dispFake = !!(disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp));
+
   if (disp && typeof disp === "object" && !displayTitleIsFakeLocalizedCopy(disp)) {
     const v = pick(disp, { strict: true, lang: l });
-    if (v) return v;
-  }
-
-  const fromBase = pickTitleFromObject(baseRaw, l);
-  if (fromBase) return fromBase;
-
-  if (disp && typeof disp === "string" && str(disp)) {
-    return str(disp);
-  }
-
-  if (disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp)) {
-    // 假多语言对象仅作 cn/zh/en/kr 等兜底；jp 缺译时不应用中文冒充日文（与 pick 的 JP strict 一致）
-    if (l !== "jp" && l !== "ja") {
-      const v = pick(disp, { strict: false, lang: l });
-      if (v) return v;
+    if (v) {
+      result = v;
+      stepUsed = "displayTitle_strict_non_fake";
     }
   }
 
-  const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
-  if (flat) return str(flat);
-  if (l === "jp" || l === "ja") {
-    return (
-      str(lesson.title_jp ?? lesson.title_ja ?? "") ||
-      str(lesson.title_cn ?? lesson.title_zh ?? "") ||
-      ""
-    );
+  if (!result) {
+    const fromBase = pickTitleFromObject(baseRaw, l);
+    if (fromBase) {
+      result = fromBase;
+      stepUsed = "title_canonical";
+    }
   }
-  return str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
+
+  if (!result && disp && typeof disp === "string" && str(disp)) {
+    result = str(disp);
+    stepUsed = "displayTitle_string";
+  }
+
+  if (!result && disp && typeof disp === "object" && displayTitleIsFakeLocalizedCopy(disp)) {
+    if (l !== "jp" && l !== "ja") {
+      const v = pick(disp, { strict: false, lang: l });
+      if (v) {
+        result = v;
+        stepUsed = "displayTitle_fake_loose";
+      }
+    }
+  }
+
+  if (!result) {
+    const flat = lesson["title_" + l] ?? lesson["title_" + (l === "kr" ? "ko" : l === "cn" ? "zh" : l === "jp" ? "ja" : l)];
+    if (flat) {
+      result = str(flat);
+      stepUsed = "flat_title_field";
+    }
+  }
+
+  if (!result) {
+    if (l === "jp" || l === "ja") {
+      result =
+        str(lesson.title_jp ?? lesson.title_ja ?? "") ||
+        str(lesson.title_cn ?? lesson.title_zh ?? "") ||
+        "";
+      stepUsed = result ? "jp_fallback_block" : "jp_fallback_empty";
+    } else {
+      result = str(lesson.title_cn ?? lesson.title_zh ?? lesson.title_jp ?? lesson.title_en ?? lesson.title_kr ?? "");
+      stepUsed = "generic_flat_fallback";
+    }
+  }
+
+  const no = Number(lesson?.lessonNo ?? lesson?.no ?? 0);
+  if (no >= 1 && no <= 3) {
+    logHskTitleDiag(lesson, {
+      phase: "getLessonDisplayTitle",
+      lessonNo: no,
+      paramLang: lang === undefined ? "(undefined→getLang)" : lang,
+      effectiveLang: l,
+      engineGetLang: getLang(),
+      dispType: disp == null ? "null" : typeof disp,
+      dispFake,
+      stepUsed,
+      picked: result,
+      titleKeys: baseRaw && typeof baseRaw === "object" ? Object.keys(baseRaw) : typeof baseRaw,
+      titleJpPresent: !!(baseRaw && typeof baseRaw === "object" && str(baseRaw.jp ?? baseRaw.ja)),
+      titleJp: baseRaw && typeof baseRaw === "object" ? str(baseRaw.jp ?? baseRaw.ja) : "",
+      displayTitleJp: disp && typeof disp === "object" ? str(disp.jp ?? disp.ja) : "",
+    });
+  }
+
+  return result;
 }
 
 /**

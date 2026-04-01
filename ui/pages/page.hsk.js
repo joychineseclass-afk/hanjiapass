@@ -1275,7 +1275,22 @@ function refreshBlueprintDisplayTitles(lessons, lang) {
     const isRegularL1toL20 = String(lesson.type || "lesson") !== "review" && no >= 1 && no <= 20;
     if (isRegularL1toL20) return;
     if (lesson && lesson.blueprintTitle != null) {
-      lesson.displayTitle = resolveBlueprintTitle(lesson.blueprintTitle, l);
+      const nextDisplayTitle = resolveBlueprintTitle(lesson.blueprintTitle, l);
+      lesson.displayTitle = nextDisplayTitle;
+      if (no >= 1 && no <= 3) {
+        try {
+          console.log("[HSK-TITLE-DIAG]", {
+            phase: "refreshBlueprintDisplayTitles",
+            lessonNo: no,
+            lang: l,
+            blueprintTitle: lesson.blueprintTitle,
+            title: lesson.title ?? null,
+            displayTitle: lesson.displayTitle ?? null,
+            displayTitleType: typeof lesson.displayTitle,
+            pickedBlueprintDisplayTitle: nextDisplayTitle,
+          });
+        } catch {}
+      }
     }
   });
 }
@@ -1482,6 +1497,7 @@ async function loadLessons() {
 
   try {
     let lessons = [];
+    let lessonsDataSource = "none";
 
     // 1) Lesson Engine first
     if (LESSON_ENGINE && typeof LESSON_ENGINE.loadCourseIndex === "function") {
@@ -1491,6 +1507,7 @@ async function loadLessons() {
           level: `hsk${state.lv}`,
         });
         lessons = Array.isArray(index?.lessons) ? index.lessons : [];
+        if (lessons.length) lessonsDataSource = "LESSON_ENGINE.loadCourseIndex";
       } catch (engineErr) {
         console.warn(
           "[HSK] Lesson Engine loadCourseIndex failed, fallback to HSK_LOADER:",
@@ -1508,6 +1525,7 @@ async function loadLessons() {
       lessons = await window.HSK_LOADER.loadLessons(state.lv, {
         version: state.version,
       });
+      lessonsDataSource = "HSK_LOADER.loadLessons";
     }
 
     lessons = Array.isArray(lessons) ? lessons : [];
@@ -1563,13 +1581,35 @@ async function loadLessons() {
       }
     }
 
-    console.log("[DISPLAYTITLE-FIXED]", result.slice(0, 3).map((x) => ({
-      lessonNo: x.lessonNo,
-      displayTitle: x.displayTitle,
-      title: x.title
-    })));
     state.lessons = result;
     refreshBlueprintDisplayTitles(state.lessons, lang);
+    try {
+      window.__HSK_LESSONS_DATA_SOURCE__ = lessonsDataSource;
+      window.__HSK_TITLE_DIAG_LESSONS__ = state.lessons.slice(0, 3).map((x) => ({
+        lessonNo: x.lessonNo,
+        file: x.file || "",
+        type: x.type || "lesson",
+        title: x.title ?? null,
+        displayTitle: x.displayTitle ?? null,
+        titleJp: x?.title?.jp ?? x?.title?.ja ?? null,
+        hasBlueprintTitle: x.blueprintTitle != null,
+        blueprintTitle: x.blueprintTitle ?? null,
+        originalTitle: x.originalTitle ?? null,
+      }));
+      console.log("[HSK-TITLE-DIAG]", {
+        phase: "loadLessons:postRefresh",
+        lang,
+        engineGetLang: getEngineLang(),
+        lessonsDataSource,
+        note:
+          lessonsDataSource === "LESSON_ENGINE.loadCourseIndex"
+            ? "目录项经 courseLoader.normLessonItem 规范化（与原始 lessons.json 字段可能不完全一致）"
+            : lessonsDataSource === "HSK_LOADER.loadLessons"
+            ? "目录项来自 HSK_LOADER（含 lessons.json 原始字段 + loader 默认）"
+            : "无目录数据",
+        lessons: window.__HSK_TITLE_DIAG_LESSONS__,
+      });
+    } catch {}
 
     const total = state.lessons.length;
     const stats =

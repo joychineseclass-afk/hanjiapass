@@ -613,6 +613,34 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
     const titleDisplay = getLessonDisplayTitle(it, displayLang) || "-";
+    if (lessonNo >= 1 && lessonNo <= 3) {
+      try {
+        console.log("[HSK-TITLE-DIAG]", {
+          phase: "renderLessonList",
+          lessonNo,
+          engineGetLang: getLang(),
+          normalizedLangForList: displayLang,
+          title: it?.title ?? null,
+          displayTitle: it?.displayTitle ?? null,
+          titleJp: it?.title?.jp ?? it?.title?.ja ?? null,
+          hasTitleJp: !!String(it?.title?.jp ?? it?.title?.ja ?? "").trim(),
+          displayTitleType:
+            typeof it?.displayTitle === "string"
+              ? "string"
+              : it?.displayTitle && typeof it.displayTitle === "object"
+                ? "object"
+                : typeof it?.displayTitle,
+          picked: titleDisplay,
+          lessonsDataSource:
+            typeof window !== "undefined" ? window.__HSK_LESSONS_DATA_SOURCE__ : "",
+          source: {
+            file,
+            hasBlueprintTitle: it?.blueprintTitle != null,
+            hasOriginalTitle: it?.originalTitle != null,
+          },
+        });
+      } catch {}
+    }
 
     const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
