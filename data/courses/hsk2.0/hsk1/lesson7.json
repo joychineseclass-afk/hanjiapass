@@ -66,26 +66,177 @@
     },
     {
       "speaker": "A",
-      "text": "你多大？",
-      "pinyin": "Nǐ duō dà ？",
+      "text": "你女儿几岁？",
+      "pinyin": "Nǐ nǚ'ér jǐ suì?",
       "translation": {
-        "kr": "나이가 어떻게 되세요?",
-        "en": "How old are you?",
-        "jp": "おいくつですか？"
+        "kr": "딸은 몇 살이에요?",
+        "en": "How old is your daughter?",
+        "jp": "あなたの娘は何歳ですか？"
       }
     },
     {
       "speaker": "B",
-      "text": "我二十二岁。",
-      "pinyin": "Wǒ èr shí èr suì 。",
+      "text": "我女儿五岁。",
+      "pinyin": "Wǒ nǚ'ér wǔ suì.",
       "translation": {
-        "kr": "저는 스물두 살이에요.",
-        "en": "I'm twenty-two years old.",
-        "jp": "二十二歳です。"
+        "kr": "제 딸은 다섯 살이에요.",
+        "en": "My daughter is five years old.",
+        "jp": "私の娘は五歳です。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "这是你儿子吗？",
+      "pinyin": "Zhè shì nǐ érzi ma?",
+      "translation": {
+        "kr": "이 사람은 당신 아들이에요?",
+        "en": "Is this your son?",
+        "jp": "これはあなたの息子ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "是的。",
+      "pinyin": "Shì de.",
+      "translation": {
+        "kr": "네.",
+        "en": "Yes.",
+        "jp": "はい。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "他几岁？",
+      "pinyin": "Tā jǐ suì?",
+      "translation": {
+        "kr": "그는 몇 살이에요?",
+        "en": "How old is he?",
+        "jp": "彼は何歳ですか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "他七岁。",
+      "pinyin": "Tā qī suì.",
+      "translation": {
+        "kr": "그는 일곱 살이에요.",
+        "en": "He is seven years old.",
+        "jp": "彼は七歳です。"
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你几岁？",
+          "pinyin": "Nǐ jǐ suì ？",
+          "translation": {
+            "kr": "몇 살이에요?",
+            "en": "How old are you?",
+            "jp": "何歳ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我十岁。",
+          "pinyin": "Wǒ shí suì 。",
+          "translation": {
+            "kr": "저는 열 살이에요.",
+            "en": "I'm ten years old.",
+            "jp": "十歳です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你女儿几岁？",
+          "pinyin": "Nǐ nǚ'ér jǐ suì?",
+          "translation": {
+            "kr": "딸은 몇 살이에요?",
+            "en": "How old is your daughter?",
+            "jp": "あなたの娘は何歳ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我女儿五岁。",
+          "pinyin": "Wǒ nǚ'ér wǔ suì.",
+          "translation": {
+            "kr": "제 딸은 다섯 살이에요.",
+            "en": "My daughter is five years old.",
+            "jp": "私の娘は五歳です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "这是你儿子吗？",
+          "pinyin": "Zhè shì nǐ érzi ma?",
+          "translation": {
+            "kr": "이 사람은 당신 아들이에요?",
+            "en": "Is this your son?",
+            "jp": "これはあなたの息子ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "是的。",
+          "pinyin": "Shì de.",
+          "translation": {
+            "kr": "네.",
+            "en": "Yes.",
+            "jp": "はい。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "他几岁？",
+          "pinyin": "Tā jǐ suì?",
+          "translation": {
+            "kr": "그는 몇 살이에요?",
+            "en": "How old is he?",
+            "jp": "彼は何歳ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "他七岁。",
+          "pinyin": "Tā qī suì.",
+          "translation": {
+            "kr": "그는 일곱 살이에요.",
+            "en": "He is seven years old.",
+            "jp": "彼は七歳です。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "几岁 / 多大",
