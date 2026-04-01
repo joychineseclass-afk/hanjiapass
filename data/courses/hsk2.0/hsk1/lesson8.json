@@ -47,7 +47,7 @@
     {
       "speaker": "A",
       "text": "现在几点？",
-      "pinyin": "Xiàn zài jǐ diǎn ？",
+      "pinyin": "Xiànzài jǐ diǎn?",
       "translation": {
         "kr": "지금 몇 시예요?",
         "en": "What time is it now?",
@@ -56,36 +56,227 @@
     },
     {
       "speaker": "B",
-      "text": "现在三点。",
-      "pinyin": "Xiàn zài sān diǎn 。",
+      "text": "现在八点十分。",
+      "pinyin": "Xiànzài bā diǎn shí fēn.",
       "translation": {
-        "kr": "지금 세 시예요.",
-        "en": "It's three o'clock now.",
-        "jp": "今三時です。"
+        "kr": "지금 여덟 시 십 분이에요.",
+        "en": "It's 8:10 now.",
+        "jp": "今八時十分です。"
       }
     },
     {
       "speaker": "A",
-      "text": "我们几点上课？",
-      "pinyin": "Wǒ men jǐ diǎn shàng kè ？",
+      "text": "今天上午几点上课？",
+      "pinyin": "Jīntiān shàngwǔ jǐ diǎn shàngkè?",
       "translation": {
-        "kr": "몇 시에 수업해요?",
-        "en": "What time do we have class?",
-        "jp": "何時に授業がありますか？"
+        "kr": "오늘 오전 몇 시에 수업해요?",
+        "en": "What time is class this morning?",
+        "jp": "今日の午前は何時に授業がありますか？"
       }
     },
     {
       "speaker": "B",
-      "text": "三点十分上课。",
-      "pinyin": "Sān diǎn shí fēn shàng kè 。",
+      "text": "九点上课。",
+      "pinyin": "Jiǔ diǎn shàngkè.",
       "translation": {
-        "kr": "세 시 십 분에 수업이에요.",
-        "en": "Class starts at 3:10.",
-        "jp": "三時十分に授業があります。"
+        "kr": "아홉 시에 수업해요.",
+        "en": "Class starts at 9.",
+        "jp": "九時に授業があります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "几点下课？",
+      "pinyin": "Jǐ diǎn xiàkè?",
+      "translation": {
+        "kr": "몇 시에 수업이 끝나요?",
+        "en": "What time does class end?",
+        "jp": "何時に授業が終わりますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "中午十二点下课。",
+      "pinyin": "Zhōngwǔ shí'èr diǎn xiàkè.",
+      "translation": {
+        "kr": "정오 열두 시에 수업이 끝나요.",
+        "en": "Class ends at 12 noon.",
+        "jp": "正午十二時に授業が終わります。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "我们下午上课吗？",
+      "pinyin": "Wǒmen xiàwǔ shàngkè ma?",
+      "translation": {
+        "kr": "우리 오후에 수업해요?",
+        "en": "Do we have class in the afternoon?",
+        "jp": "午後は授業がありますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "下午不上课。",
+      "pinyin": "Xiàwǔ bú shàngkè.",
+      "translation": {
+        "kr": "오후에는 수업이 없어요.",
+        "en": "We don't have class in the afternoon.",
+        "jp": "午後は授業がありません。"
+      }
+    },
+    {
+      "speaker": "A",
+      "text": "你几点睡觉？",
+      "pinyin": "Nǐ jǐ diǎn shuìjiào?",
+      "translation": {
+        "kr": "너는 몇 시에 자요?",
+        "en": "What time do you go to sleep?",
+        "jp": "何時に寝ますか？"
+      }
+    },
+    {
+      "speaker": "B",
+      "text": "我十点睡觉。",
+      "pinyin": "Wǒ shí diǎn shuìjiào.",
+      "translation": {
+        "kr": "나는 열 시에 자요.",
+        "en": "I go to sleep at 10.",
+        "jp": "私は十時に寝ます。"
       }
     }
   ],
-  "dialogueCards": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话1",
+        "kr": "회화1",
+        "en": "Session 1",
+        "jp": "会話1"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "现在几点？",
+          "pinyin": "Xiànzài jǐ diǎn?",
+          "translation": {
+            "kr": "지금 몇 시예요?",
+            "en": "What time is it now?",
+            "jp": "今何時ですか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "现在八点十分。",
+          "pinyin": "Xiànzài bā diǎn shí fēn.",
+          "translation": {
+            "kr": "지금 여덟 시 십 분이에요.",
+            "en": "It's 8:10 now.",
+            "jp": "今八時十分です。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "今天上午几点上课？",
+          "pinyin": "Jīntiān shàngwǔ jǐ diǎn shàngkè?",
+          "translation": {
+            "kr": "오늘 오전 몇 시에 수업해요?",
+            "en": "What time is class this morning?",
+            "jp": "今日の午前は何時に授業がありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "九点上课。",
+          "pinyin": "Jiǔ diǎn shàngkè.",
+          "translation": {
+            "kr": "아홉 시에 수업해요.",
+            "en": "Class starts at 9.",
+            "jp": "九時に授業があります。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "几点下课？",
+          "pinyin": "Jǐ diǎn xiàkè?",
+          "translation": {
+            "kr": "몇 시에 수업이 끝나요?",
+            "en": "What time does class end?",
+            "jp": "何時に授業が終わりますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "中午十二点下课。",
+          "pinyin": "Zhōngwǔ shí'èr diǎn xiàkè.",
+          "translation": {
+            "kr": "정오 열두 시에 수업이 끝나요.",
+            "en": "Class ends at 12 noon.",
+            "jp": "正午十二時に授業が終わります。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2",
+        "kr": "회화2",
+        "en": "Session 2",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "我们下午上课吗？",
+          "pinyin": "Wǒmen xiàwǔ shàngkè ma?",
+          "translation": {
+            "kr": "우리 오후에 수업해요?",
+            "en": "Do we have class in the afternoon?",
+            "jp": "午後は授業がありますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "下午不上课。",
+          "pinyin": "Xiàwǔ bú shàngkè.",
+          "translation": {
+            "kr": "오후에는 수업이 없어요.",
+            "en": "We don't have class in the afternoon.",
+            "jp": "午後は授業がありません。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话3",
+        "kr": "회화3",
+        "en": "Session 3",
+        "jp": "会話3"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你几点睡觉？",
+          "pinyin": "Nǐ jǐ diǎn shuìjiào?",
+          "translation": {
+            "kr": "너는 몇 시에 자요?",
+            "en": "What time do you go to sleep?",
+            "jp": "何時に寝ますか？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我十点睡觉。",
+          "pinyin": "Wǒ shí diǎn shuìjiào.",
+          "translation": {
+            "kr": "나는 열 시에 자요.",
+            "en": "I go to sleep at 10.",
+            "jp": "私は十時に寝ます。"
+          }
+        }
+      ]
+    }
+  ],
   "grammar": [
     {
       "pattern": "现在几点",

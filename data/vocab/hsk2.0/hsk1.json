@@ -2841,5 +2841,22 @@
       "level": "hsk1",
       "version": "hsk2.0"
     }
+  },
+  {
+    "id": "hsk2.0:hsk1:0156",
+    "hanzi": "下课",
+    "pinyin": "xiàkè",
+    "meaning": {
+      "zh": "下课",
+      "en": "to finish class; class is over",
+      "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk2.0"
+    }
   }
 ]
