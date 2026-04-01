@@ -196,12 +196,12 @@
       "lines": [
         {
           "speaker": "A",
-          "text": "这是你儿子吗？",
-          "pinyin": "Zhè shì nǐ érzi ma?",
+          "text": "他是你儿子吗？",
+          "pinyin": "Tā shì nǐ érzi ma?",
           "translation": {
-            "kr": "이 사람은 당신 아들이에요?",
-            "en": "Is this your son?",
-            "jp": "これはあなたの息子ですか？"
+            "kr": "그는 당신 아들이에요?",
+            "en": "Is he your son?",
+            "jp": "彼はあなたの息子ですか？"
           }
         },
         {
