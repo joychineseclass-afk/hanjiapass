@@ -2,7 +2,7 @@
   "courseId": "hsk1",
   "level": "HSK1",
   "practiceCount": 5,
-  "_luminaAuthoritativeNote": "Lumina：本文件为课程目录与元数据（lessonNo、file、title、vocabTargets 等）。普通课正式词表不在此，请以 vocab-distribution.json 为准；vocabTargets 为教学目标子集/拆词辅助。校验：npm run check:hsk1-vocab-targets（默认警告不失败；--strict 可失败构建）。",
+  "_luminaAuthoritativeNote": "Lumina：本文件为课程目录与元数据。普通课正式词表在 vocab-distribution.json；vocabTargets 为教学目标/拆词辅助，须 ⊆ 该课 distribution.lessonN（不要求相等）。校验：npm run check:hsk1-vocab-targets；CI：npm run check:hsk1-vocab-targets:strict。",
   "lessons": [
     {
       "lessonNo": 1,

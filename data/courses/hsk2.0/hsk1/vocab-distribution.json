@@ -1,6 +1,6 @@
 {
-  "description": "Lumina HSK1 场景课程词汇分布（22课）。reviewRanges：lesson21→第1–10课，lesson22→第11–20课；HSK_LOADER 对 hsk1 lesson21/22 强制相同 canonical 范围。",
-  "totalWords": 150,
+  "description": "Lumina HSK1 场景课程词汇分布（22课）。reviewRanges：lesson21→第1–10课，lesson22→第11–20课；HSK_LOADER 对 hsk1 lesson21/22 强制相同 canonical 范围。lessons.json 的 vocabTargets 须 ⊆ 本课 distribution（见 npm run check:hsk1-vocab-targets:strict）。",
+  "totalWords": 173,
   "lessonThemes": {
     "1": "打招呼",
     "2": "介绍名字",
@@ -75,6 +75,7 @@
       "爸爸",
       "妈妈",
       "爱",
+      "很",
       "的",
       "他们"
     ],
@@ -83,6 +84,11 @@
       "哪儿",
       "家",
       "里",
+      "学校",
+      "教室",
+      "门",
+      "开",
+      "和",
       "书",
       "猫",
       "桌子",
@@ -105,6 +111,7 @@
     "lesson7": [
       "几",
       "岁",
+      "多大",
       "女儿",
       "儿子",
       "一",
@@ -116,7 +123,8 @@
       "七",
       "八",
       "九",
-      "十"
+      "十",
+      "二十"
     ],
     "lesson8": [
       "现在",
@@ -135,9 +143,14 @@
       "明天",
       "月",
       "日",
+      "号",
       "时候",
       "去",
-      "年"
+      "年",
+      "忙",
+      "见面",
+      "吧",
+      "好啊"
     ],
     "lesson10": [
       "星期",
@@ -156,6 +169,9 @@
     ],
     "lesson12": [
       "喜欢",
+      "很",
+      "什么",
+      "中国",
       "听",
       "音乐",
       "看",
@@ -164,6 +180,7 @@
     "lesson13": [
       "请",
       "请问",
+      "那",
       "找",
       "王",
       "老师",
@@ -181,6 +198,7 @@
       "走吧"
     ],
     "lesson15": [
+      "买",
       "西瓜",
       "怎么样",
       "太",
@@ -193,6 +211,8 @@
     "lesson16": [
       "去",
       "对",
+      "现在",
+      "下午",
       "什么时候",
       "回",
       "家",
@@ -226,9 +246,11 @@
       "做",
       "工作",
       "医生",
-      "医院"
+      "医院",
+      "北京"
     ],
     "lesson21": [],
     "lesson22": []
-  }
+  },
+  "_luminaNote_vocabTargetsRule": "lessons.json 的 vocabTargets 为「教学目标/拆词辅助」子集，须 ⊆ 该课 distribution.lessonN；distribution 可更宽。strict 校验仅判 targets 越界，不要求二者相等。"
 }

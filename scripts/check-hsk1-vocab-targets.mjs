@@ -1,6 +1,15 @@
 /**
- * 轻量校验：lessons.json 每课 vocabTargets ⊆ vocab-distribution.json 对应 distribution.lessonN
- * 默认：打印警告并 exit 0（不阻断构建）。严格模式：node ... --strict 或 STRICT_HSK1_VOCAB=1 → exit 1
+ * HSK1：校验 lessons.json 中普通课（1–20）的 vocabTargets ⊆ vocab-distribution.json 对应 distribution.lessonN
+ *
+ * 语义：
+ *   • distribution = 该课「正式词表」集合（宽）
+ *   • vocabTargets = 教学目标/拆词辅助（窄），每个词必须出现在本课 distribution 中
+ *   • 不要求二者相等；strict 仅失败于「targets 越界」
+ *
+ * 用法：
+ *   node scripts/check-hsk1-vocab-targets.mjs           → 有违例时 console.warn，exit 0
+ *   node scripts/check-hsk1-vocab-targets.mjs --strict   → 有违例时 console.error，exit 1（CI）
+ *   STRICT_HSK1_VOCAB=1 node scripts/check-hsk1-vocab-targets.mjs
  */
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
@@ -25,7 +34,7 @@ function main() {
   const dist = distDoc.distribution || {};
   const list = Array.isArray(lessonsDoc.lessons) ? lessonsDoc.lessons : [];
 
-  let errors = 0;
+  const violations = [];
   for (const entry of list) {
     const no = Number(entry.lessonNo ?? entry.no ?? 0);
     if (!no || no > 20) continue;
@@ -37,24 +46,28 @@ function main() {
       const s = String(t || "").trim();
       if (!s) continue;
       if (!set.has(s)) {
-        const msg = `[check-hsk1-vocab-targets] lesson ${no}: vocabTargets 含「${s}」但不在 ${key}（vocab-distribution）中`;
-        if (strict) console.error(msg);
-        else console.warn(msg);
-        errors++;
+        violations.push({ lessonNo: no, key, word: s });
       }
     }
   }
 
-  if (errors) {
-    const tail = `共 ${errors} 条 — 请同步 vocab-distribution 或调整 vocabTargets（${strict ? "strict 模式将失败" : "默认仅警告"}）`;
-    if (strict) {
-      console.error("[check-hsk1-vocab-targets]", tail);
-      process.exit(1);
+  const log = strict ? console.error.bind(console) : console.warn.bind(console);
+
+  if (violations.length) {
+    for (const v of violations) {
+      log(
+        `[check-hsk1-vocab-targets] STRICT 违例 · lesson ${v.lessonNo}: vocabTargets「${v.word}」∉ ${v.key}（vocab-distribution）。应：从 targets 删除、或将该词合规则并入本课 distribution。`
+      );
     }
-    console.warn("[check-hsk1-vocab-targets]", tail);
-    process.exit(0);
+    log(
+      `[check-hsk1-vocab-targets] 小结：${violations.length} 条越界（vocabTargets 不是本课正式词表的子集）· 模式=${strict ? "strict→exit 1" : "warn→exit 0"}`
+    );
+    process.exit(strict ? 1 : 0);
   }
-  console.log("[check-hsk1-vocab-targets] OK — vocabTargets ⊆ distribution（1~20）");
+
+  console.log(
+    "[check-hsk1-vocab-targets] OK — 普通课 1–20：vocabTargets ⊆ distribution.lessonN（允许 distribution 更宽；未检查 targets 是否过窄）"
+  );
 }
 
 main();
