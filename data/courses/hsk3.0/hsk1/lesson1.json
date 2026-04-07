@@ -6,137 +6,146 @@
   "lessonNo": 1,
   "type": "lesson",
   "title": {
-    "zh": "入门：数字与家庭词",
-    "cn": "入门：数字与家庭词",
-    "kr": "입문: 숫자와 가족 표현",
-    "en": "Introduction: numbers and family words",
-    "jp": "入門：数字と家族の語"
+    "zh": "第1课｜你好！",
+    "cn": "第1课｜你好！",
+    "kr": "제1과｜안녕하세요!",
+    "en": "Lesson 1 | Hello!",
+    "jp": "第1課｜こんにちは！"
   },
   "summary": {
-    "zh": "通过短对话接触数字「八」「百」与亲属词「爸爸」，并认识若干常用单字词。",
-    "kr": "짧은 대화로 숫자 「八」「百」와 가족어 「爸爸」를 익히고, 자주 쓰는 한자어를 만납니다.",
-    "en": "Short lines introduce 八/百, 爸爸, and a few common one-character words.",
-    "jp": "短い文で「八」「百」と「爸爸」など、よく使う語に触れます。"
+    "zh": "学习问候、道别、道歉与致谢，掌握「您」与「你」的用法。",
+    "kr": "인사·작별·사과·감사 표현을 배우고 「您」과 「你」의 쓰임을 익힙니다.",
+    "en": "Greetings, goodbyes, apologies, and thanks — plus 您 vs 你.",
+    "jp": "あいさつ・別れ・謝罪・感謝を学び、「您」と「你」の使い分けに慣れます。"
   },
   "scene": {
     "id": "hsk30_l1_scene",
     "title": {
-      "zh": "课堂热身",
-      "kr": "수업 워밍업",
-      "en": "Warm-up",
-      "jp": "ウォームアップ"
+      "zh": "校园与日常",
+      "kr": "학교와 일상",
+      "en": "School and daily life",
+      "jp": "学校と日常"
     },
     "summary": {
-      "zh": "两人在课前热身，练习数字并提到家人。",
-      "kr": "두 사람이 수업 전에 숫자를 연습하며 가족 이야기를 꺼냅니다.",
-      "en": "Two learners warm up with numbers and a family word.",
-      "jp": "二人が数字と家族の語でウォームアップします。"
+      "zh": "会话一：师生见面问好；会话二：同学之间道歉与致谢。",
+      "kr": "회화1: 선생님과 인사·작별; 회화2: 친구 사이의 사과와 감사.",
+      "en": "Dialogue 1: greeting a teacher; Dialogue 2: apologizing and thanking.",
+      "jp": "会話1：先生へのあいさつ；会話2：謝罪とお礼。"
     }
   },
   "objectives": [
     {
-      "zh": "能认读「八」「百」",
-      "kr": "「八」「百」를 읽을 수 있다",
-      "en": "Recognize 八 and 百",
-      "jp": "「八」「百」を読める"
+      "zh": "能用「您好」「你好」等完成见面问候与道别",
+      "kr": "「您好」「你好」 등으로 만남 인사와 작별을 할 수 있다",
+      "en": "Use 您好 / 你好 for greetings and 再见 for goodbyes",
+      "jp": "「您好」「你好」であいさつ、「再见」で別れを言える"
     },
     {
-      "zh": "能在句中识别「爸爸」",
-      "kr": "문장 안에서 「爸爸」를 알아볼 수 있다",
-      "en": "Spot 爸爸 in a short line",
-      "jp": "短い文の中で「爸爸」を見つけられる"
+      "zh": "能在合适情境使用「对不起」「谢谢」「没关系」「不客气」",
+      "kr": "「对不起」「谢谢」「没关系」「不客气」를 상황에 맞게 쓸 수 있다",
+      "en": "Use 对不起 / 谢谢 / 没关系 / 不客气 appropriately",
+      "jp": "「对不起」「谢谢」「没关系」「不客气」を場面に合わせて使える"
     }
   ],
   "vocab": [],
-  "dialogue": [
-    {
-      "speaker": "A",
-      "text": "八",
-      "pinyin": "bā",
-      "translation": {
-        "kr": "여덟.",
-        "en": "Eight.",
-        "jp": "八。"
-      }
-    },
-    {
-      "speaker": "B",
-      "text": "百",
-      "pinyin": "bǎi",
-      "translation": {
-        "kr": "백.",
-        "en": "Hundred.",
-        "jp": "百。"
-      }
-    },
-    {
-      "speaker": "A",
-      "text": "爸爸",
-      "pinyin": "bàba",
-      "translation": {
-        "kr": "아빠.",
-        "en": "Dad.",
-        "jp": "お父さん。"
-      }
-    },
-    {
-      "speaker": "B",
-      "text": "爱",
-      "pinyin": "ài",
-      "translation": {
-        "kr": "사랑하다.",
-        "en": "Love.",
-        "jp": "愛する。"
-      }
-    }
-  ],
+  "dialogue": [],
   "dialogueCards": [
     {
       "title": {
-        "zh": "热身对话",
-        "kr": "워밍업 대화",
-        "en": "Warm-up",
-        "jp": "ウォームアップ会話"
+        "zh": "会话一｜见面问好",
+        "kr": "회화 1｜만나서 인사",
+        "en": "Dialogue 1 | Greetings",
+        "jp": "会話1｜あいさつ"
       },
       "lines": [
         {
-          "speaker": "A",
-          "text": "八",
-          "pinyin": "bā",
+          "speaker": "李明",
+          "text": "王老师，您好！",
+          "pinyin": "Wáng lǎoshī, nín hǎo!",
           "translation": {
-            "kr": "여덟.",
-            "en": "Eight.",
-            "jp": "八。"
+            "kr": "왕 선생님, 안녕하세요!",
+            "en": "Hello, Teacher Wang!",
+            "jp": "王先生、こんにちは！"
           }
         },
         {
-          "speaker": "B",
-          "text": "百",
-          "pinyin": "bǎi",
+          "speaker": "王老师",
+          "text": "你好，李明！",
+          "pinyin": "Nǐ hǎo, Lǐ Míng!",
           "translation": {
-            "kr": "백.",
-            "en": "Hundred.",
-            "jp": "百。"
+            "kr": "안녕, 이명!",
+            "en": "Hello, Li Ming!",
+            "jp": "李明さん、こんにちは！"
           }
         },
         {
-          "speaker": "A",
-          "text": "爸爸",
-          "pinyin": "bàba",
+          "speaker": "李明",
+          "text": "老师，再见！",
+          "pinyin": "Lǎoshī, zàijiàn!",
           "translation": {
-            "kr": "아빠.",
-            "en": "Dad.",
-            "jp": "お父さん。"
+            "kr": "선생님, 안녕히 가세요!",
+            "en": "Goodbye, teacher!",
+            "jp": "先生、さようなら！"
           }
         },
         {
-          "speaker": "B",
-          "text": "爱",
-          "pinyin": "ài",
+          "speaker": "王老师",
+          "text": "再见！",
+          "pinyin": "Zàijiàn!",
           "translation": {
-            "kr": "사랑하다.",
-            "en": "Love.",
-            "jp": "愛する。"
+            "kr": "안녕히 가세요!",
+            "en": "Goodbye!",
+            "jp": "さようなら！"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜道歉",
+        "kr": "회화 2｜사과",
+        "en": "Dialogue 2 | Apology",
+        "jp": "会話2｜謝罪"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "王美，对不起！",
+          "pinyin": "Wáng Měi, duìbuqǐ!",
+          "translation": {
+            "kr": "왕메이, 미안해!",
+            "en": "Wang Mei, sorry!",
+            "jp": "王美さん、ごめんなさい！"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "没关系。",
+          "pinyin": "Méi guānxi.",
+          "translation": {
+            "kr": "괜찮아.",
+            "en": "That's okay.",
+            "jp": "大丈夫です。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "谢谢！",
+          "pinyin": "Xièxie!",
+          "translation": {
+            "kr": "고마워!",
+            "en": "Thank you!",
+            "jp": "ありがとう！"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "不客气。",
+          "pinyin": "Bú kèqi.",
+          "translation": {
+            "kr": "천만에.",
+            "en": "You're welcome.",
+            "jp": "どういたしまして。"
           }
         }
       ]
@@ -144,49 +153,100 @@
   ],
   "grammar": [
     {
-      "pattern": "数词：八 / 百",
-      "pinyin": "",
+      "pattern": "您 / 你",
+      "pinyin": "nín / nǐ",
       "explanation": {
-        "zh": "「八」表 8，「百」表 100；本课先建立字形与读音印象。",
-        "en": "八 = 8, 百 = 100; this lesson focuses on recognition and reading.",
-        "kr": "「八」는 8, 「百」는 100; 이번 과에서는 형태와 발음에 익숙해집니다.",
-        "jp": "「八」は 8、「百」は 100。まずは字形と読みに慣れましょう。"
+        "zh": "「您」是敬称，多用于长辈、师长或不熟悉的人；「你」是一般第二人称，用于平辈或较随意的场合。对老师可说「您好」，同学之间常用「你好」。",
+        "kr": "「您」은 높임말로 어른·스승·낯선 사람에게 자주 쓰입니다. 「你」는 일반적인 2인칭으로 또래나 편한 상황에 쓰입니다. 스승에게는 「您好」, 친구에게는 「你好」가 흔합니다.",
+        "en": "您 is polite “you” (elders, teachers, strangers). 你 is neutral “you” (peers, informal contexts). 您好 addresses a teacher; 你好 is common among classmates.",
+        "jp": "「您」は敬称（目上・先生・初対面など）。「你」は一般的な「あなた」（同輩・くだけた場面）。先生には「您好」、仲間には「你好」がよく使われます。"
       },
-      "example": {
-        "text": "八，百。",
-        "pinyin": "bā，bǎi。",
-        "translation": {
-          "kr": "여덟, 백.",
-          "en": "Eight, hundred.",
-          "jp": "八、百。"
+      "examples": [
+        {
+          "zh": "王老师，您好！",
+          "pinyin": "Wáng lǎoshī, nín hǎo!",
+          "translation": {
+            "kr": "왕 선생님, 안녕하세요!",
+            "en": "Hello, Teacher Wang!",
+            "jp": "王先生、こんにちは！"
+          }
+        },
+        {
+          "zh": "你好，李明！",
+          "pinyin": "Nǐ hǎo, Lǐ Míng!",
+          "translation": {
+            "kr": "안녕, 이명!",
+            "en": "Hello, Li Ming!",
+            "jp": "李明さん、こんにちは！"
+          }
         }
-      }
+      ]
     }
   ],
   "extension": [
     {
-      "zh": "白天",
-      "pinyin": "bái tiān",
-      "kr": "낮, 주간",
-      "en": "daytime",
-      "phrase": "白天",
-      "explain": {
-        "kr": "해가 뜬 시간대를 가리킬 때 씁니다.",
-        "en": "Refers to the time when the sun is up.",
-        "jp": "日中・昼の時間帯を指します。"
-      }
-    },
-    {
-      "zh": "爱好",
-      "pinyin": "àihào",
-      "kr": "취미",
-      "en": "hobby",
-      "phrase": "爱好",
-      "explain": {
-        "kr": "좋아하는 활동을 말할 때 쓰는 명사입니다.",
-        "en": "Noun for something you enjoy doing.",
-        "jp": "好きな活動を表す名詞です。"
-      }
+      "groupTitle": {
+        "zh": "阅读小材料｜礼貌用语卡",
+        "kr": "읽기 자료｜예의 바른 표현 카드",
+        "en": "Reading | Polite expressions card",
+        "jp": "読み物｜丁寧な表現カード"
+      },
+      "sentences": [
+        {
+          "zh": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "translations": {
+            "kr": "안녕하세요!",
+            "en": "Hello!",
+            "jp": "こんにちは！"
+          }
+        },
+        {
+          "zh": "再见！",
+          "pinyin": "Zàijiàn!",
+          "translations": {
+            "kr": "안녕히 가세요!",
+            "en": "Goodbye!",
+            "jp": "さようなら！"
+          }
+        },
+        {
+          "zh": "谢谢！",
+          "pinyin": "Xièxie!",
+          "translations": {
+            "kr": "감사합니다!",
+            "en": "Thank you!",
+            "jp": "ありがとう！"
+          }
+        },
+        {
+          "zh": "不客气。",
+          "pinyin": "Bú kèqi.",
+          "translations": {
+            "kr": "천만에요.",
+            "en": "You're welcome.",
+            "jp": "どういたしまして。"
+          }
+        },
+        {
+          "zh": "对不起。",
+          "pinyin": "Duìbuqǐ.",
+          "translations": {
+            "kr": "죄송합니다.",
+            "en": "Sorry.",
+            "jp": "すみません。"
+          }
+        },
+        {
+          "zh": "没关系。",
+          "pinyin": "Méi guānxi.",
+          "translations": {
+            "kr": "괜찮아요.",
+            "en": "It's okay.",
+            "jp": "大丈夫です。"
+          }
+        }
+      ]
     }
   ],
   "practice": [
@@ -195,23 +255,23 @@
       "type": "choice",
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
-        "cn": "下面哪一项是本课出现的数词？",
-        "kr": "다음 중 이번 과에 나온 수사는?",
-        "en": "Which item is a number word from this lesson?",
-        "jp": "次のうち、この課に出てくる数詞はどれですか？"
+        "cn": "下面哪一句表示「谢谢」？",
+        "kr": "다음 중 「감사합니다」에 해당하는 문장은?",
+        "en": "Which line means “thank you”?",
+        "jp": "「ありがとう」に当てはまる文はどれですか？"
       },
       "options": [
-        { "key": "A", "zh": "八", "cn": "八" },
-        { "key": "B", "zh": "千", "cn": "千" },
-        { "key": "C", "zh": "两", "cn": "两" },
-        { "key": "D", "zh": "零", "cn": "零" }
+        { "key": "A", "zh": "谢谢！", "cn": "谢谢！" },
+        { "key": "B", "zh": "对不起！", "cn": "对不起！" },
+        { "key": "C", "zh": "没关系。", "cn": "没关系。" },
+        { "key": "D", "zh": "再见！", "cn": "再见！" }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "本课对话与词表包含「八」。",
-        "kr": "이번 과 대화·어휘에 「八」가 포함됩니다.",
-        "en": "This lesson includes 八.",
-        "jp": "この課には「八」が含まれます。"
+        "cn": "「谢谢」表示感谢。",
+        "kr": "「谢谢」는 감사를 나타냅니다.",
+        "en": "谢谢 means “thank you”.",
+        "jp": "「谢谢」は感謝の表現です。"
       }
     },
     {
@@ -219,23 +279,23 @@
       "type": "choice",
       "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「爸爸」的拼音是？",
-        "kr": "「爸爸」의 병음은?",
-        "en": "What is the pinyin of 爸爸?",
-        "jp": "「爸爸」のピンインは？"
+        "cn": "「对不起」的拼音是？",
+        "kr": "「对不起」의 병음은?",
+        "en": "What is the pinyin of 对不起?",
+        "jp": "「对不起」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "bàba", "cn": "bàba" },
-        { "key": "B", "zh": "bái tiān", "cn": "bái tiān" },
-        { "key": "C", "zh": "bǎi", "cn": "bǎi" },
-        { "key": "D", "zh": "bā", "cn": "bā" }
+        { "key": "A", "zh": "duìbuqǐ", "cn": "duìbuqǐ" },
+        { "key": "B", "zh": "xièxie", "cn": "xièxie" },
+        { "key": "C", "zh": "méi guānxi", "cn": "méi guānxi" },
+        { "key": "D", "zh": "zàijiàn", "cn": "zàijiàn" }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「爸爸」读作 bàba。",
-        "kr": "「爸爸」는 bàba로 읽습니다.",
-        "en": "爸爸 is read bàba.",
-        "jp": "「爸爸」は bàba と読みます。"
+        "cn": "「对不起」读作 duìbuqǐ。",
+        "kr": "「对不起」는 duìbuqǐ로 읽습니다.",
+        "en": "对不起 is read duìbuqǐ.",
+        "jp": "「对不起」は duìbuqǐ と読みます。"
       }
     },
     {
@@ -243,25 +303,44 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "对方说「八」，下面哪一句与本课词表最相关？",
-        "kr": "상대가 「八」라고 했을 때, 이번 과 어휘와 가장 가까운 항은?",
-        "en": "Someone says 八. Which line is closest to this lesson’s vocab?",
-        "jp": "相手が「八」と言ったとき、この課の語彙に最も近いのは？"
+        "cn": "对方说「谢谢！」，下面哪一句应答最合适？",
+        "kr": "상대가 「谢谢！」라고 했을 때 가장 알맞은 응답은?",
+        "en": "Someone says “谢谢!” — what is the best reply?",
+        "jp": "相手が「谢谢！」と言ったとき、最もふさわしい返答は？"
       },
-      "options": ["百", "你好", "谢谢", "再见"],
-      "answer": "百",
+      "options": ["对不起。", "不客气。", "没关系。", "再见。"],
+      "answer": "不客气。",
       "explanation": {
-        "cn": "本课同时学习「八」与「百」两个数词。",
-        "kr": "이번 과에서 「八」와 「百」를 함께 다룹니다.",
-        "en": "This lesson pairs 八 with 百.",
-        "jp": "この課では「八」と「百」をセットで学びます。"
+        "cn": "对「谢谢」常回答「不客气」。",
+        "kr": "「谢谢」에는 보통 「不客气」로 답합니다.",
+        "en": "A common reply to 谢谢 is 不客气.",
+        "jp": "「谢谢」への返答としてよく使うのは「不客气」です。"
+      }
+    },
+    {
+      "id": "hsk30_l1_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "向老师问好时，更适合用下面哪一句？",
+        "kr": "선생님께 인사할 때 더 알맞은 말은?",
+        "en": "Which is more appropriate when greeting a teacher?",
+        "jp": "先生にあいさつするとき、よりふさわしいのは？"
+      },
+      "options": ["王老师，您好！", "王美，没关系。", "汤姆，再见！", "李明，不客气。"],
+      "answer": "王老师，您好！",
+      "explanation": {
+        "cn": "对师长用「您」并说「您好」更得体。",
+        "kr": "스승에게는 「您」과 「您好」이 더 알맞습니다.",
+        "en": "Use 您 and 您好 when addressing a teacher.",
+        "jp": "先生には「您」「您好」が適切です。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["八", "百", "爸爸"],
-    "chatPrompt": "请用本课学过的「八」「百」「爸爸」各说一句话。"
+    "speaking": ["您好！", "你好！", "谢谢！", "不客气。", "对不起。", "没关系。", "再见！"],
+    "chatPrompt": "请用本课学过的问候语与礼貌用语编两句对话。"
   },
   "steps": [
     {
