@@ -1,0 +1,10 @@
+{
+  "description": "Lumina HSK 3.0 一级课程词汇分布（骨架）。后续课次在 distribution 中追加 lessonN，并与 lessons.json、lessonN.json 对齐。",
+  "totalWords": 8,
+  "lessonThemes": {
+    "1": "入门：数字与家庭词"
+  },
+  "distribution": {
+    "lesson1": ["爱", "八", "爸爸", "白", "白天", "吧", "爱好", "百"]
+  }
+}

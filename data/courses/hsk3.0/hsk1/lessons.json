@@ -1,0 +1,31 @@
+{
+  "courseId": "hsk1",
+  "level": "HSK1",
+  "_luminaNote": "HSK 3.0 一级骨架：当前仅第 1 课可学。后续课次请在本数组追加条目，并补充 data/courses/hsk3.0/hsk1/lessonN.json 与 vocab-distribution.json 中 distribution.lessonN。",
+  "lessons": [
+    {
+      "lessonNo": 1,
+      "id": "hsk1_lesson1",
+      "file": "lesson1.json",
+      "title": {
+        "cn": "入门：数字与家庭词",
+        "zh": "入门：数字与家庭词",
+        "kr": "입문: 숫자와 가족 표현",
+        "en": "Introduction: numbers and family words",
+        "jp": "入門：数字と家族の語"
+      },
+      "sceneGoal": "熟悉本课若干 HSK3 一级词条",
+      "subtitle": "爱 / 八 / 爸爸",
+      "grammarTargets": ["数词与基本名词"],
+      "vocabTargets": ["爱", "八", "爸爸", "白", "白天", "吧", "爱好", "百"],
+      "extensionTargets": [],
+      "displayTitle": {
+        "cn": "第1课",
+        "zh": "第1课",
+        "kr": "제1과",
+        "en": "Lesson 1",
+        "jp": "第1課"
+      }
+    }
+  ]
+}
