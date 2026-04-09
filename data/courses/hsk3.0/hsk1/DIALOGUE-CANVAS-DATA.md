@@ -23,6 +23,19 @@
 - 类型：多语言对象或字符串。
 - **有则**显示在卡片标题下的场景说明；**无则**不渲染说明区，布局仍正常。
 
+### 预留扩展（可选，当前不触发大图与自由排版 UI）
+
+以下字段**已读入并输出为 `data-*`**（或极少量 class），便于日后接场景图、主题与坐标布局；**缺省时不改变现有默认画布外观**。
+
+| 字段 | 类型 | 默认回退 |
+|------|------|----------|
+| `dialogueCards[].sceneImage` | 字符串 URL | 无则不输出 `data-scene-image`，无图。 |
+| `dialogueCards[].bubbleStyle` | 字符串（主题/变体 slug） | 无则不输出 `data-bubble-style`。 |
+| `dialogueCards[].lines[].position` | `{ "x": number \| string, "y": number \| string }` | 无或空则不输出坐标；若任一行含 `x`/`y`，卡片根节点增加 `data-layout="free"`（仅占位，当前不据此改 flex 流）。 |
+| `dialogueCards[].lines[].align` | `"left"` \| `"right"` \| `"center"`（大小写不敏感） | **无**则仍按行号 **左/右交替**（与 lesson1 试点一致）。`center` 时气泡行居中。 |
+
+**说明**：不接 Gemini / 图片生成 API；`sceneImage` 仅预留属性，不渲染 `<img>`。
+
 ### `lines[]`（必填，且非空）
 
 每行**最低建议字段**：
@@ -33,6 +46,8 @@
 | `pinyin` | 强烈建议 | 无则按课程设置可能自动推拼音。 |
 | `translation` | 强烈建议 | 多语言对象，键与全站一致（如 `kr`、`en`、`jp`）；用于系统语言译文。 |
 | `speaker` | 可选 | 有则显示在气泡内；**可省略**（如旁白一句），省略时不显示说话人一行。 |
+| `align` | 可选 | 见上表「预留扩展」。 |
+| `position` | 可选 | 见上表「预留扩展」。 |
 
 ## 校验清单（接入新课）
 

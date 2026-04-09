@@ -3052,8 +3052,51 @@ function renderDialogueLine(line, lang, showPinyin) {
 </article>`;
 }
 
+/**
+ * 预留 lines[].align：left / right / center；缺省则按行号左右交替（与既有试点一致）
+ */
+function resolveSceneCanvasBubbleSide(line, lineIndex0) {
+  const a = String((line && line.align) || "").trim().toLowerCase();
+  if (a === "left" || a === "right" || a === "center") return a;
+  return lineIndex0 % 2 === 0 ? "left" : "right";
+}
+
+/** 预留 lines[].position.{x,y}：仅输出 data 属性，当前样式不解读坐标（避免布局突变） */
+function sceneCanvasLinePositionDataAttrs(line) {
+  const pos = line && line.position;
+  if (!pos || typeof pos !== "object") return "";
+  const x = pos.x;
+  const y = pos.y;
+  const esc = (v) => escapeHtml(String(v)).replaceAll('"', "&quot;");
+  const parts = [];
+  if (x != null && String(x).trim() !== "") parts.push(`data-pos-x="${esc(x)}"`);
+  if (y != null && String(y).trim() !== "") parts.push(`data-pos-y="${esc(y)}"`);
+  return parts.length ? ` ${parts.join(" ")}` : "";
+}
+
+/** 预留 dialogueCards[].sceneImage / bubbleStyle；仅 data-*，不渲染 img、不接生图 */
+function sceneCanvasCardReservedDataAttrs(card, lines) {
+  const parts = [];
+  const img = card && card.sceneImage;
+  if (img != null && String(img).trim() !== "") {
+    parts.push(`data-scene-image="${escapeHtml(String(img).trim()).replaceAll('"', "&quot;")}"`);
+  }
+  const bstyle = card && card.bubbleStyle;
+  if (bstyle != null && String(bstyle).trim() !== "") {
+    parts.push(`data-bubble-style="${escapeHtml(String(bstyle).trim()).replaceAll('"', "&quot;")}"`);
+  }
+  const hasFreePos =
+    Array.isArray(lines) &&
+    lines.some((ln) => {
+      const p = ln && ln.position;
+      return p && typeof p === "object" && (p.x != null || p.y != null);
+    });
+  if (hasFreePos) parts.push(`data-layout="free"`);
+  return parts.length ? ` ${parts.join(" ")}` : "";
+}
+
 /** 场景画布模式：左右交错气泡（保留 lesson-dialogue-line 以兼容点读高亮） */
-function renderDialogueLineSceneCanvasBubble(line, showPinyin, side) {
+function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0) {
   const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
   const zh = String(
     (line && line.text) ||
@@ -3071,10 +3114,17 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, side) {
     ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
     : "";
 
+  const side = resolveSceneCanvasBubbleSide(line, lineIndex0);
   const sideClass =
-    side === "right" ? "hsk1-scene-bubble-line--right" : "hsk1-scene-bubble-line--left";
+    side === "right"
+      ? "hsk1-scene-bubble-line--right"
+      : side === "center"
+        ? "hsk1-scene-bubble-line--center"
+        : "hsk1-scene-bubble-line--left";
 
-  return `<article class="lesson-dialogue-line hsk1-scene-bubble-line ${sideClass}">
+  const posAttrs = sceneCanvasLinePositionDataAttrs(line);
+
+  return `<article class="lesson-dialogue-line hsk1-scene-bubble-line ${sideClass}"${posAttrs}>
   <div class="hsk1-scene-bubble">
   ${spk ? `<div class="hsk1-scene-bubble-speaker">${escapeHtml(spk)}</div>` : ""}
   <div class="lesson-dialogue-zh hsk1-scene-bubble-zh"${zhAttrs}>${escapeHtml(zh)}</div>
@@ -3100,17 +3150,12 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
       const aria = dialogueSessionAriaLabel(sessionNo);
       const headingPrimary = pickCardHeadingPrimary(card && card.title, sessionNo);
       const summaryText = pickCardSummary(card && card.summary);
+      const cardReservedAttrs = sceneCanvasCardReservedDataAttrs(card, lines);
       const lineHtml = lines
-        .map((line, li) =>
-          renderDialogueLineSceneCanvasBubble(
-            line,
-            showPinyin,
-            li % 2 === 0 ? "left" : "right"
-          )
-        )
+        .map((line, li) => renderDialogueLineSceneCanvasBubble(line, showPinyin, li))
         .join("");
 
-      return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card">
+      return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card"${cardReservedAttrs}>
   <header class="hsk1-dialogue-scene-card-head">
     <div class="hsk1-dialogue-scene-card-head-row">
       <span class="hsk1-dialogue-scene-card-no" aria-label="${escapeHtml(aria).replaceAll('"', "&quot;")}">${escapeHtml(noLabel)}</span>

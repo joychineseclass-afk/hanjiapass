@@ -899,6 +899,13 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   padding-left: 1.25rem;
 }
 
+/* 预留 lines[].align:center；无该 class 时布局与试点一致 */
+.hsk1-scene-bubble-line--center {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .hsk1-scene-bubble {
   max-width: min(92%, 19.5rem);
   padding: 8px 12px;
