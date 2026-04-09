@@ -754,6 +754,36 @@ function getGrammarExplanation(item, lang) {
 }
 
 /**
+ * 语法点「一眼能懂」的短提示（系统语言）；与 explanation 长文独立，互不替代。
+ * 数据：grammar[].hint = { zh, kr|ko, en, jp|ja } 或扁平 hintKr 等。
+ */
+function getGrammarPatternHint(item, lang) {
+  if (!item || typeof item !== "object") return "";
+
+  const l = normalizePracticeLangAliases(lang || getLang());
+  const str = (v) => _trimStr(v);
+
+  const hint = item.hint;
+  if (hint && typeof hint === "object") {
+    if (l === "kr") return str(hint.kr) || str(hint.ko) || "";
+    if (l === "jp") return str(hint.jp) || str(hint.ja) || "";
+    if (l === "cn") return str(hint.cn) || str(hint.zh) || "";
+    return str(hint.en) || "";
+  }
+
+  if (l === "kr") {
+    return str(item.hintKr) || str(item.hint_kr) || "";
+  }
+  if (l === "jp") {
+    return str(item.hintJp) || str(item.hint_jp) || "";
+  }
+  if (l === "cn") {
+    return str(item.hintCn) || str(item.hintZh) || str(item.hint_zh) || "";
+  }
+  return str(item.hintEn) || str(item.hint_en) || "";
+}
+
+/**
  * Grammar examples
  * Keep it conservative:
  * zh + pinyin + translation only
@@ -3265,6 +3295,7 @@ function buildGrammarHTML(lessonData) {
       if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
       const expl = getGrammarExplanation(pt, lang);
+      const hintBlurb = getGrammarPatternHint(pt, lang);
       const examples = getGrammarExamples(pt);
       const idx = String(i + 1).padStart(2, "0");
       const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
@@ -3303,6 +3334,7 @@ function buildGrammarHTML(lessonData) {
     <div class="lesson-grammar-zh"${titleAttrs}>${escapeHtml(titleZh)}</div>
     ${titlePy ? `<div class="lesson-grammar-pinyin">${escapeHtml(titlePy)}</div>` : ""}
   </div>
+  ${hintBlurb ? `<div class="lesson-grammar-hint">${escapeHtml(hintBlurb)}</div>` : ""}
   ${expl ? `<div class="lesson-grammar-expl">${escapeHtml(expl)}</div>` : ""}
   ${examplesHtml ? `<div class="lesson-grammar-examples">${examplesHtml}</div>` : ""}
 </article>`;
