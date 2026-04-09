@@ -2092,6 +2092,72 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   border-color: #cbd5e1;
 }
 
+/* HSK3.0 HSK1：整体朗读轻量播放器（锚点后插入） */
+.hsk-bulk-player-host {
+  margin: 8px 0 12px;
+  max-width: 100%;
+}
+
+.hsk-bulk-player {
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.hsk-bulk-player__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.hsk-bulk-player__play {
+  flex: 0 0 auto;
+  min-width: 36px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.hsk-bulk-player__scrub {
+  flex: 1 1 140px;
+  min-width: 100px;
+  max-width: 100%;
+  accent-color: #22c55e;
+}
+
+.hsk-bulk-player__rate {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #334155;
+}
+
+.hsk-bulk-player__close {
+  flex: 0 0 auto;
+  min-width: 28px;
+  padding: 4px 6px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.hsk-bulk-player__close:hover {
+  color: #64748b;
+}
+
 /* ===============================
    📋 复习课专用：目录式列表
    单词/会话/语法/扩张 tab 紧凑样式

@@ -125,50 +125,6 @@ function dialogueSessionIntroTts(sessionIndex1Based) {
   return `Dialogue ${n}`;
 }
 
-/** HSK3.0 HSK1：会话全文朗读（先 회화 n，再逐句中文→翻译） */
-async function runHsk30Hsk1DialogueFullSpeak(lessonData) {
-  const mod = await import("../modules/hsk/hskRenderer.js");
-  const gen = mod.startNewHskSpeakChain();
-  try {
-    const { AUDIO_ENGINE } = await import("../platform/index.js");
-    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-      return;
-    }
-    AUDIO_ENGINE.stop();
-    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
-
-    const raw = (lessonData && lessonData._raw) || lessonData;
-    const cards = getDialogueCards(raw);
-    if (!cards.length) return;
-
-    for (let ci = 0; ci < cards.length; ci++) {
-      const card = cards[ci];
-      const lines = Array.isArray(card && card.lines) ? card.lines : [];
-      if (!lines.length) continue;
-
-      await mod.speakUiLangTextOnce(dialogueSessionIntroTts(ci + 1), gen);
-      await mod.batchPauseBetweenSegments(gen);
-
-      for (let li = 0; li < lines.length; li++) {
-        const line = lines[li];
-        const zh = String(
-          (line && line.text) ||
-            (line && line.zh) ||
-            (line && line.cn) ||
-            (line && line.line) ||
-            ""
-        ).trim();
-        if (!zh) continue;
-        const trans = pickDialogueTranslation(line, zh);
-        await mod.speakZhThenMeaningPromise(zh, String(trans || "").trim(), gen);
-        await mod.batchPauseBetweenSegments(gen);
-      }
-    }
-  } catch (e) {
-    if (typeof console !== "undefined" && console.warn) console.warn("[HSK] dialogue full speak failed:", e);
-  }
-}
-
 /**
  * Lumina HSK：LESSON_ENGINE 拉取原始课件后，统一经 HSK_LOADER.loadLessonDetail 收口（与 data 权威规则一致）。
  * - lessons.json：仅课程目录/元数据，不是普通课主词表。
@@ -2422,8 +2378,10 @@ function bindEvents() {
         e.stopPropagation();
         const words = state.current && state.current.lessonWords;
         if (!Array.isArray(words) || !words.length) return;
-        const { speakAllHsk30Hsk1LessonWords } = await import("../modules/hsk/hskRenderer.js");
-        await speakAllHsk30Hsk1LessonWords(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        const anchor = document.getElementById("hskWordBulkSpeakAnchor");
+        const { buildWordBulkTimeline, openBulkSpeakPlayer } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const tl = buildWordBulkTimeline(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        await openBulkSpeakPlayer("words", tl, anchor || wbtn.parentElement);
         return;
       }
 
@@ -2434,7 +2392,15 @@ function bindEvents() {
         e.stopPropagation();
         const ld = state.current && state.current.lessonData;
         if (!ld) return;
-        await runHsk30Hsk1DialogueFullSpeak(ld);
+        const anchor =
+          document.getElementById("hskDialogueBulkSpeakAnchor") || fbtn.parentElement;
+        const { buildDialogueBulkTimeline, openBulkSpeakPlayer } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const tl = buildDialogueBulkTimeline(ld, {
+          getDialogueCards,
+          pickDialogueTranslation,
+          dialogueSessionIntroTts,
+        });
+        await openBulkSpeakPlayer("dialogue", tl, anchor);
         return;
       }
 
@@ -3304,7 +3270,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
 
   const heroHead =
     speakPilot && !lessonStripInner
-      ? `<div class="hsk-dialogue-hero-head hsk-dialogue-hero-head--with-speak">
+      ? `<div class="hsk-dialogue-hero-head hsk-dialogue-hero-head--with-speak" id="hskDialogueBulkSpeakAnchor">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
   ${fullSpeakBtn}
 </div>`
@@ -3316,7 +3282,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
 
   const lessonStripWrap =
     lessonStripInner && speakPilot
-      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row">${lessonStripInner}${fullSpeakBtn}</div>`
+      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row" id="hskDialogueBulkSpeakAnchor">${lessonStripInner}${fullSpeakBtn}</div>`
       : lessonStripInner
         ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripInner}</div>`
         : "";

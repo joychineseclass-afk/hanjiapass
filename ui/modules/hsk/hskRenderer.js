@@ -779,7 +779,7 @@ export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
 
   const countAndSpeakRow =
     arr.length
-      ? `<div class="lesson-vocab-hero-count-row">
+      ? `<div class="lesson-vocab-hero-count-row" id="hskWordBulkSpeakAnchor">
     <span class="lesson-section-count">${escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length }))}</span>
     <button type="button" class="hsk-speak-all-words-btn" id="hskSpeakAllWordsBtn" aria-label="${speakAllLabel}" title="${speakAllLabel}">${speakAllLabel}</button>
   </div>`
