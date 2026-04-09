@@ -129,6 +129,8 @@ export class HskBulkTtsPlayer {
     this._inGap = false;
     /** 用户在中途暂停了当前 utterance，需用 resume() 续播，勿重新 _step */
     this._needsSynthResume = false;
+    /** 已向 synth 提交当前句且尚未 onend（用于 pause 时 speaking 短暂为 false 的浏览器差异，含循环模式） */
+    this._utteranceInFlight = false;
     /** 整体朗读播完时间线后是否从头再来 */
     this.bulkLoop = false;
     /** @type {null | "words" | "dialogue"} */
@@ -145,7 +147,7 @@ export class HskBulkTtsPlayer {
   setPlaybackRate(r) {
     const n = Number(r);
     if (!Number.isFinite(n)) return;
-    this.userRate = Math.min(2, Math.max(0.5, n));
+    this.userRate = Math.min(2, Math.max(0.25, n));
   }
 
   setUiCallback(fn) {
@@ -201,6 +203,7 @@ export class HskBulkTtsPlayer {
     this._gapRemainMs = 0;
     this._gapDeadline = 0;
     this._needsSynthResume = false;
+    this._utteranceInFlight = false;
     try {
       window.speechSynthesis?.cancel();
     } catch (_) {}
@@ -240,8 +243,16 @@ export class HskBulkTtsPlayer {
       return;
     }
     try {
-      if (window.speechSynthesis?.speaking && !window.speechSynthesis.paused) {
-        window.speechSynthesis.pause();
+      const synth = window.speechSynthesis;
+      const step = this.timeline[this.idx];
+      const inSpeakStep = step && step.type === "speak";
+      const synthBusy =
+        !!(synth?.speaking && !synth.paused) ||
+        (inSpeakStep && this._utteranceInFlight);
+      if (synthBusy) {
+        try {
+          synth.pause();
+        } catch (_) {}
         this._needsSynthResume = true;
       }
     } catch (_) {}
@@ -349,16 +360,20 @@ export class HskBulkTtsPlayer {
     u.lang = step.lang || "zh-CN";
     u.rate = Math.min(10, Math.max(0.1, 0.95 * this.userRate));
     u.onend = () => {
+      this._utteranceInFlight = false;
       this.idx++;
       this._step();
     };
     u.onerror = () => {
+      this._utteranceInFlight = false;
       this.idx++;
       this._step();
     };
     try {
+      this._utteranceInFlight = true;
       window.speechSynthesis.speak(u);
     } catch (_) {
+      this._utteranceInFlight = false;
       this.idx++;
       this._step();
     }
@@ -387,6 +402,7 @@ function renderPlayerBarHTML() {
     <button type="button" class="hsk-bulk-player__play" data-bulk-act="toggle" title="Play/Pause">▶</button>
     <input type="range" class="hsk-bulk-player__scrub" min="0" max="1000" value="0" step="1" data-bulk-act="scrub" aria-label="Progress" />
     <select class="hsk-bulk-player__rate" data-bulk-act="rate" aria-label="Speed">
+      <option value="0.25">0.25×</option>
       <option value="0.5">0.5×</option>
       <option value="1" selected>1×</option>
       <option value="1.5">1.5×</option>
