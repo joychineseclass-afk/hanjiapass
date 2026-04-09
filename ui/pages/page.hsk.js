@@ -50,6 +50,7 @@ import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
+import { getLocalizedSceneText } from "../platform/scene/sceneUtils.js";
 import {
   resolveChoiceDisplayKindWithInfer,
   stemTextWithFallback,
@@ -643,6 +644,37 @@ function pickCardSummary(summaryObj) {
     "";
 
   return v;
+}
+
+/**
+ * 卡片主标题：优先取「｜」后的短语，避免与会话编号重复堆叠「会话一」等前缀（便于批量课推广）
+ */
+function pickCardHeadingPrimary(titleObj, cardIndex) {
+  const full = pickCardTitle(titleObj, cardIndex);
+  const parts = full.split(/[｜|]/);
+  if (parts.length >= 2) {
+    const tail = parts.slice(1).join("｜").trim();
+    if (tail) return tail;
+  }
+  return full;
+}
+
+function dialogueSessionAriaLabel(sessionIndex1Based) {
+  const t = i18n.t("dialogue.session", { n: sessionIndex1Based });
+  if (t && t !== "dialogue.session") return t;
+  return `Session ${sessionIndex1Based}`;
+}
+
+/** 整课场景一行标题（不展示 scene.summary，避免与各卡 summary 重复） */
+function buildHsk1SceneCanvasLessonStrip(raw, lang) {
+  if (!raw?.scene || typeof raw.scene !== "object" || !SCENE_ENGINE?.getSceneFromLesson) {
+    return "";
+  }
+  const scene = SCENE_ENGINE.getSceneFromLesson(raw);
+  if (!scene?.title) return "";
+  const title = getLocalizedSceneText(scene.title, lang);
+  if (!title) return "";
+  return `<p class="hsk1-dialogue-lesson-strip">${escapeHtml(title)}</p>`;
 }
 
 /** HSK 3.0 · HSK1 · 第1课试点：会话区「一会话一画布」展示 */
@@ -3020,21 +3052,21 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, side) {
 </article>`;
 }
 
-function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPinyin) {
-  let sceneIntroHtml = "";
-  if (raw?.scene && typeof raw.scene === "object" && SCENE_ENGINE?.getSceneFromLesson) {
-    const scene = SCENE_ENGINE.getSceneFromLesson(raw);
-    if (scene) {
-      const h = SceneRenderer.renderSceneHeader(scene, lang);
-      if (h) sceneIntroHtml = `<div class="hsk1-dialogue-lesson-scene-intro">${h}</div>`;
-    }
-  }
+function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
+  const heroCanvas = `<section class="lesson-section-hero lesson-dialogue-hero hsk1-dialogue-hero--scene-canvas">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+</section>`;
+
+  const lessonStripHtml = buildHsk1SceneCanvasLessonStrip(raw, lang);
 
   const blocks = cards
     .map((card, index) => {
       const lines = Array.isArray(card && card.lines) ? card.lines : [];
       if (!lines.length) return "";
-      const titleText = pickCardTitle(card && card.title, index + 1);
+      const sessionNo = index + 1;
+      const noLabel = String(sessionNo).padStart(2, "0");
+      const aria = dialogueSessionAriaLabel(sessionNo);
+      const headingPrimary = pickCardHeadingPrimary(card && card.title, sessionNo);
       const summaryText = pickCardSummary(card && card.summary);
       const lineHtml = lines
         .map((line, li) =>
@@ -3048,7 +3080,10 @@ function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPin
 
       return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card">
   <header class="hsk1-dialogue-scene-card-head">
-    <h4 class="lesson-dialogue-card-title hsk1-dialogue-scene-card-title">${escapeHtml(titleText)}</h4>
+    <div class="hsk1-dialogue-scene-card-head-row">
+      <span class="hsk1-dialogue-scene-card-no" aria-label="${escapeHtml(aria).replaceAll('"', "&quot;")}">${escapeHtml(noLabel)}</span>
+      <h4 class="hsk1-dialogue-scene-card-heading">${escapeHtml(headingPrimary)}</h4>
+    </div>
     ${summaryText ? `<p class="hsk1-dialogue-scene-card-summary">${escapeHtml(summaryText)}</p>` : ""}
   </header>
   <div class="hsk1-dialogue-canvas">
@@ -3059,7 +3094,7 @@ function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPin
     .filter(Boolean)
     .join("\n");
 
-  return `${hero}${sceneIntroHtml}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
+  return `${heroCanvas}${lessonStripHtml ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripHtml}</div>` : ""}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
 }
 
 /** 对话渲染 */
@@ -3093,7 +3128,7 @@ function buildDialogueHTML(lessonData) {
   });
 
   if (shouldUseHsk30Hsk1Lesson1SceneCanvasDialogue(lessonData)) {
-    return buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPinyin);
+    return buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin);
   }
 
   return `${hero}<div class="lesson-dialogue-list">

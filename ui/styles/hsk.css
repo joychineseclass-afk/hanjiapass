@@ -784,31 +784,33 @@
 /* ===============================
    HSK 3.0 · HSK1 试点：一会话一画布（简洁教学风，非 Kids 幼龄化）
 ================================== */
-.hsk1-dialogue-lesson-scene-intro {
-  margin-bottom: 18px;
+.hsk1-dialogue-hero--scene-canvas {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.hsk1-dialogue-lesson-scene-intro .scene-header {
+.hsk1-dialogue-hero--scene-canvas .lesson-section-title {
   margin: 0;
-  padding: 14px 16px;
-  border-radius: 14px;
+}
+
+.hsk1-dialogue-lesson-strip-wrap {
+  margin-bottom: 14px;
+}
+
+.hsk1-dialogue-lesson-strip {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #64748b;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-}
-
-.hsk1-dialogue-lesson-scene-intro .scene-title {
-  font-size: 1.05rem;
-}
-
-.hsk1-dialogue-lesson-scene-intro .scene-summary {
-  font-size: 0.9rem;
-  color: #64748b;
-  margin: 0.35em 0 0;
-  line-height: 1.55;
+  border-radius: 10px;
 }
 
 .hsk1-dialogue-scene-list {
-  gap: 22px;
+  gap: 18px;
 }
 
 .hsk1-dialogue-scene-card {
@@ -818,33 +820,60 @@
 }
 
 .hsk1-dialogue-scene-card-head {
-  padding: 16px 18px 12px;
+  padding: 12px 14px 10px;
   border-bottom: 1px solid #f1f5f9;
   background: #fff;
 }
 
-.hsk1-dialogue-scene-card-title {
-  margin: 0 0 6px;
+.hsk1-dialogue-scene-card-head-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hsk1-dialogue-scene-card-no {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.hsk1-dialogue-scene-card-heading {
+  margin: 0;
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #0f172a;
 }
 
 .hsk1-dialogue-scene-card-summary {
-  margin: 0;
-  font-size: 0.875rem;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.8125rem;
   color: #64748b;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .hsk1-dialogue-canvas {
-  padding: 16px 14px 18px;
-  min-height: 80px;
-  background: linear-gradient(165deg, #f0f9ff 0%, #f8fafc 48%, #f1f5f9 100%);
+  padding: 10px 10px 12px;
+  background: linear-gradient(165deg, #eff6ff 0%, #f8fafc 55%, #f1f5f9 100%);
   border-top: 1px solid rgba(226, 232, 240, 0.85);
 }
 
 .hsk1-dialogue-bubbles {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 7px;
+  width: 100%;
+  max-width: 26.5rem;
+  margin: 0 auto;
 }
 
 article.lesson-dialogue-line.hsk1-scene-bubble-line {
@@ -862,49 +891,65 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
 
 .hsk1-scene-bubble-line--left {
   justify-content: flex-start;
+  padding-right: 1.25rem;
 }
 
 .hsk1-scene-bubble-line--right {
   justify-content: flex-end;
+  padding-left: 1.25rem;
 }
 
 .hsk1-scene-bubble {
-  max-width: 88%;
-  padding: 10px 14px;
-  border-radius: 14px;
+  max-width: min(92%, 19.5rem);
+  padding: 8px 12px;
+  border-radius: 12px;
   border: 1px solid rgba(226, 232, 240, 0.95);
   background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
 }
 
 .hsk1-scene-bubble-line--right .hsk1-scene-bubble {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(167, 243, 208, 0.65);
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(167, 243, 208, 0.55);
 }
 
 .hsk1-scene-bubble-speaker {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #0ea5e9;
-  margin-bottom: 6px;
+  color: #64748b;
+  margin-bottom: 4px;
   letter-spacing: 0.02em;
 }
 
+.hsk1-scene-bubble-line--left .hsk1-scene-bubble-speaker {
+  color: #0284c7;
+}
+
 .hsk1-scene-bubble-line--right .hsk1-scene-bubble-speaker {
-  color: #059669;
+  color: #047857;
 }
 
 .hsk1-scene-bubble-zh {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #0f172a;
 }
 
 .hsk1-scene-bubble-pinyin {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 3px;
+  line-height: 1.4;
 }
 
 .hsk1-scene-bubble-trans {
-  font-size: 0.875rem;
-  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-top: 5px;
+  line-height: 1.45;
 }
 
 .is-speaking,
