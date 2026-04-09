@@ -4,6 +4,7 @@
 
 import { i18n } from "../../i18n.js";
 import { renderResult } from "./practiceResult.js";
+import { isHsk30Hsk1PilotContext } from "../hsk/hsk30PilotScope.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -14,6 +15,10 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function escapeAttr(s) {
+  return escapeHtml(s).replaceAll('"', "&quot;");
 }
 
 function t(key, params) {
@@ -29,6 +34,13 @@ export function renderMatch(q, index, { lang, answers, resultMap, submitted }) {
   const matchLabel = t("practice.type_match");
   const leftLabel = t("practice.match_left");
   const rightLabel = t("practice.match_right");
+  const speakLabel = t("practice.listen");
+  const pilot = isHsk30Hsk1PilotContext();
+  const qidEsc = escapeAttr(String(q.id || ""));
+  const pilotCardAttr = pilot && q.id ? ` data-hsk30-practice-id="${qidEsc}"` : "";
+  const listenBtn = pilot
+    ? `<button type="button" class="lesson-practice-audio-btn hsk30-practice-listen" data-hsk30-practice-id="${qidEsc}">🔊 ${escapeHtml(speakLabel)}</button>`
+    : "";
 
   const leftItems = pairs.map((p) => str(p.left ?? p[0]));
   const rightItems = pairs.map((p) => str(p.right ?? p[1]));
@@ -63,10 +75,11 @@ export function renderMatch(q, index, { lang, answers, resultMap, submitted }) {
   const resultHtml = submitted && result ? renderResult(q, result, { lang }) : "";
 
   return `
-<article class="lumina-card practice-card lesson-practice-card practice-match-card" data-question-id="${escapeHtml(q.id)}">
+<article class="lumina-card practice-card lesson-practice-card practice-match-card" data-question-id="${escapeHtml(q.id)}"${pilotCardAttr}>
   <div class="practice-header lesson-practice-card-top">
     <span class="practice-header-no lesson-practice-index">${qNo}</span>
     <span class="practice-type-badge">${escapeHtml(matchLabel)}</span>
+    ${listenBtn}
   </div>
   <div class="practice-match-pairs">${matchHtml}</div>
   ${resultHtml}

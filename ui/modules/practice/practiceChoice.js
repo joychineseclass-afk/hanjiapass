@@ -5,6 +5,7 @@
 import { i18n } from "../../i18n.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
 import { renderResult } from "./practiceResult.js";
+import { isHsk30Hsk1PilotContext } from "../hsk/hsk30PilotScope.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 const LETTERS = ["A", "B", "C", "D", "E"];
@@ -57,7 +58,10 @@ export function renderChoice(q, index, { lang, answers, resultMap, submitted }) 
   const qPy = getPinyin(questionZh);
   const speakLabel = t("practice.listen");
   const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
-  const questionSpeakAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
+  const pilot = isHsk30Hsk1PilotContext();
+  const questionSpeakAttrs = !pilot && questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
+  const qidEsc = escapeHtml(String(q.id || "")).replaceAll('"', "&quot;");
+  const pilotCardAttr = pilot && q.id ? ` data-hsk30-practice-id="${qidEsc}"` : "";
 
   const optsHtml = options.map((o, i) => {
     const optDisplay = getOptionDisplay(o, lang);
@@ -66,7 +70,7 @@ export function renderChoice(q, index, { lang, answers, resultMap, submitted }) 
     const isSelected = selected === optValue;
     const optPy = /[\u4e00-\u9fff]/.test(optDisplay) ? getPinyin(optDisplay) : "";
     const oEsc = escapeHtml(optDisplay).replaceAll('"', "&quot;");
-    const oAttrs = optDisplay ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
+    const oAttrs = !pilot && optDisplay ? ` data-speak-text="${oEsc}" data-speak-kind="practice"` : "";
 
     let stateClasses = "practice-option lesson-practice-option";
     if (submitted && result) {
@@ -91,11 +95,15 @@ export function renderChoice(q, index, { lang, answers, resultMap, submitted }) 
 
   const resultHtml = submitted && result ? renderResult(q, result, { lang }) : "";
 
+  const listenBtn = pilot
+    ? `<button type="button" class="lesson-practice-audio-btn hsk30-practice-listen" data-hsk30-practice-id="${qidEsc}">🔊 ${escapeHtml(speakLabel)}</button>`
+    : `<button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>🔊 ${escapeHtml(speakLabel)}</button>`;
+
   return `
-<article class="lumina-card practice-card lesson-practice-card" data-question-id="${escapeHtml(q.id)}">
+<article class="lumina-card practice-card lesson-practice-card" data-question-id="${escapeHtml(q.id)}"${pilotCardAttr}>
   <div class="practice-header lesson-practice-card-top">
     <span class="practice-header-no lesson-practice-index">${qNo}</span>
-    <button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>🔊 ${escapeHtml(speakLabel)}</button>
+    ${listenBtn}
   </div>
   <div class="practice-question lesson-practice-question">
     <div class="lesson-practice-question-zh"${questionSpeakAttrs}>${escapeHtml(questionZh)}</div>

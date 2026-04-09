@@ -1036,6 +1036,62 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
   });
 }
 
+/**
+ * HSK3.0 HSK1 试点：多段「中文 → 停顿 → 系统语言」链（语法 / 扩展 / 练习单卡）。
+ * @param {{ zh?: string, ui?: string }[]} segments — 有 zh+ui 走 speakZhThenMeaningPromise；仅 zh 或仅 ui 亦可
+ * @param {HTMLElement | null} highlightEl
+ */
+export async function speakHsk30ZhUiSegmentChain(segments, highlightEl) {
+  const list = Array.isArray(segments)
+    ? segments
+        .map((s) => ({
+          zh: String(s?.zh ?? "").trim(),
+          ui: String(s?.ui ?? "").trim(),
+        }))
+        .filter((s) => s.zh || s.ui)
+    : [];
+  if (!list.length) return;
+
+  bumpWordSpeakGeneration();
+  const gen = _wordSpeakGeneration;
+
+  const clearHighlight = () => {
+    if (gen === _wordSpeakGeneration && highlightEl) {
+      try {
+        highlightEl.classList.remove("is-speaking");
+      } catch (_) {}
+    }
+  };
+
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+    if (highlightEl) highlightEl.classList.add("is-speaking");
+
+    for (let i = 0; i < list.length; i++) {
+      if (gen !== _wordSpeakGeneration) return;
+      if (i > 0) await batchPauseBetweenSegments(gen);
+      if (gen !== _wordSpeakGeneration) return;
+      const seg = list[i];
+      if (seg.zh && seg.ui) {
+        await speakZhThenMeaningPromise(seg.zh, seg.ui, gen);
+      } else if (seg.zh) {
+        await speakZhThenMeaningPromise(seg.zh, "", gen);
+      } else if (seg.ui) {
+        await speakUiLangTextOnce(seg.ui, gen);
+      }
+    }
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] HSK30 segment chain failed:", err);
+  } finally {
+    clearHighlight();
+  }
+}
+
 function dialogueLineSpeakLoopKey(zh, tr) {
   return `${String(zh || "").trim()}\n${String(tr || "").trim()}`;
 }

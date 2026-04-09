@@ -5,6 +5,7 @@
 import { i18n } from "../../i18n.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
 import { renderResult } from "./practiceResult.js";
+import { isHsk30Hsk1PilotContext } from "../hsk/hsk30PilotScope.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -46,7 +47,13 @@ export function renderOrder(q, index, { lang, answers, resultMap, submitted }) {
   const orderLabel = t("practice.type_order");
   const speakLabel = t("practice.listen");
   const qEsc = escapeHtml(questionZh).replaceAll('"', "&quot;");
-  const questionSpeakAttrs = questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
+  const pilot = isHsk30Hsk1PilotContext();
+  const questionSpeakAttrs = !pilot && questionZh ? ` data-speak-text="${qEsc}" data-speak-kind="practice"` : "";
+  const qidEsc = escapeHtml(String(q.id || "")).replaceAll('"', "&quot;");
+  const pilotCardAttr = pilot && q.id ? ` data-hsk30-practice-id="${qidEsc}"` : "";
+  const listenBtn = pilot
+    ? `<button type="button" class="lesson-practice-audio-btn hsk30-practice-listen" data-hsk30-practice-id="${qidEsc}">🔊 ${escapeHtml(speakLabel)}</button>`
+    : `<button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>🔊 ${escapeHtml(speakLabel)}</button>`;
 
   const shuffled = [...items].sort(() => Math.random() - 0.5);
   const inputVal = Array.isArray(selected) ? selected.join(" ") : (typeof selected === "string" ? selected : "");
@@ -66,11 +73,11 @@ export function renderOrder(q, index, { lang, answers, resultMap, submitted }) {
   const resultHtml = submitted && result ? renderResult(q, result, { lang }) : "";
 
   return `
-<article class="lumina-card practice-card lesson-practice-card practice-order-card" data-question-id="${escapeHtml(q.id)}">
+<article class="lumina-card practice-card lesson-practice-card practice-order-card" data-question-id="${escapeHtml(q.id)}"${pilotCardAttr}>
   <div class="practice-header lesson-practice-card-top">
     <span class="practice-header-no lesson-practice-index">${qNo}</span>
     <span class="practice-type-badge">${escapeHtml(orderLabel)}</span>
-    <button type="button" class="lesson-practice-audio-btn"${questionSpeakAttrs}>🔊 ${escapeHtml(speakLabel)}</button>
+    ${listenBtn}
   </div>
   <div class="practice-question lesson-practice-question">
     <div class="lesson-practice-question-zh"${questionSpeakAttrs}>${escapeHtml(questionZh)}</div>

@@ -836,6 +836,175 @@ function getGrammarExamples(pt) {
   return [toItem(ex)].filter((x) => x.zh);
 }
 
+function getGrammarPointsArray(raw) {
+  const g = raw && raw.grammar;
+  if (!g) return [];
+  return Array.isArray(g) ? g : Array.isArray(g.points) ? g.points : [];
+}
+
+function getExtensionItemsArray(raw) {
+  return Array.isArray(raw?.generatedExtensions) && raw.generatedExtensions.length
+    ? raw.generatedExtensions
+    : Array.isArray(raw?.extension)
+      ? raw.extension
+      : [];
+}
+
+/** HSK3.0 HSK1：语法卡朗读段（不含拼音 / 词性） */
+function buildGrammarSpeakSegments(pt, lang) {
+  const str = (v) => _trimStr(v);
+  const titleZh =
+    typeof pt?.title === "object"
+      ? str(pt.title.zh || pt.title.cn || "")
+      : str(pt?.pattern || pt?.title || pt?.name || "");
+  const hintUi = getGrammarPatternHint(pt, lang);
+  const explUi = getGrammarExplanation(pt, lang);
+  const examples = getGrammarExamples(pt);
+  const segs = [];
+  if (titleZh) segs.push({ zh: titleZh, ui: "" });
+  if (hintUi) segs.push({ ui: hintUi });
+  if (explUi && explUi !== hintUi) segs.push({ ui: explUi });
+  for (const ex of examples) {
+    if (ex.zh) segs.push({ zh: ex.zh, ui: str(ex.trans || "") });
+  }
+  return segs;
+}
+
+/** 扩展：非组卡 */
+function buildExtensionFlatSpeakSegments(item, lang) {
+  const str = (v) => _trimStr(v);
+  const phrase = str(item?.phrase || item?.hanzi || item?.zh || item?.cn || item?.line);
+  const meaning = getExtensionMeaning(item, lang);
+  const explanation = getExtensionExplanation(item, lang);
+  const example = str(item?.example || item?.exampleZh);
+  const segs = [];
+  if (phrase) segs.push({ zh: phrase, ui: meaning || "" });
+  else if (meaning) segs.push({ ui: meaning });
+  if (explanation && explanation !== meaning) segs.push({ ui: explanation });
+  if (example) {
+    const exMean = str(item?.exampleTranslation || item?.exampleMean || item?.exampleKr || "");
+    segs.push({ zh: example, ui: exMean });
+  }
+  return segs;
+}
+
+/** 扩展：组卡（阅读材料等） */
+function buildExtensionGroupSpeakSegments(item, lang) {
+  const str = (v) => _trimStr(v);
+  const pickObj = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    return _getControlledLangText(obj, lang, "extension object");
+  };
+  const pickTrans = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    return _getControlledLangText(obj, lang, "extension translation");
+  };
+  const gt = item?.groupTitle;
+  const titleZh = gt && typeof gt === "object" ? str(gt.zh || gt.cn) : "";
+  const titleUi = pickObj(item?.groupTitle) || str(item?.focusGrammar || "");
+  const note = pickObj(item?.note);
+  const sentences = Array.isArray(item?.sentences) ? item.sentences : [];
+  const segs = [];
+  if (titleZh) segs.push({ zh: titleZh, ui: titleUi && titleUi !== titleZh ? titleUi : "" });
+  else if (titleUi) segs.push({ ui: titleUi });
+  if (note) segs.push({ ui: note });
+  for (const s of sentences) {
+    const cn = str(s?.cn || s?.zh || "");
+    const trans = pickTrans(s?.translations || s?.translation);
+    if (cn) segs.push({ zh: cn, ui: trans || "" });
+  }
+  return segs;
+}
+
+function buildPracticeMatchSpeakSegments(q, langKey) {
+  const str = (v) => _trimStr(v);
+  const pairs = q.pairs ?? [];
+  const segs = [];
+  for (const p of pairs) {
+    const left = str(p?.left ?? p?.[0]);
+    const right = str(p?.right ?? p?.[1]);
+    if (left || right) segs.push({ zh: left || "", ui: right && right !== left ? right : "" });
+  }
+  return segs;
+}
+
+/** 练习单题：题干 + 选项/排序项 + 解析 */
+function buildPracticeSpeakSegmentsUnified(q, langKey) {
+  const str = (v) => _trimStr(v);
+  const type = String(q.type || "choice").toLowerCase();
+  if (type === "match") return buildPracticeMatchSpeakSegments(q, langKey);
+
+  const prompt = q.prompt ?? q.question ?? {};
+  const stemCn =
+    prompt && typeof prompt === "object"
+      ? str(prompt.cn || prompt.zh || "")
+      : str(typeof q.question === "string" ? q.question : "");
+  const stemUi = practiceStemDisplayText(q, langKey);
+  const segs = [];
+  if (stemCn) segs.push({ zh: stemCn, ui: stemUi && stemUi !== stemCn ? stemUi : "" });
+  else if (stemUi) segs.push({ ui: stemUi });
+
+  if (type === "choice") {
+    const options = Array.isArray(q.options) ? q.options : [];
+    const LETTERS = ["A", "B", "C", "D", "E", "F"];
+    const pickPromptLocal = (obj, lk) => {
+      if (!obj || typeof obj !== "object") return "";
+      const key =
+        lk === "cn" || lk === "zh"
+          ? "cn"
+          : lk === "kr" || lk === "ko"
+            ? "kr"
+            : lk === "jp" || lk === "ja"
+              ? "jp"
+              : "en";
+      return str(obj[key] ?? obj.cn ?? obj.zh ?? "");
+    };
+    const getOptDisplay = (o) => {
+      if (o == null) return "";
+      if (typeof o === "string") return o;
+      return pickPromptLocal(o, langKey) || str(o.zh ?? o.cn ?? o.kr ?? o.en ?? "");
+    };
+    options.forEach((o, i) => {
+      const letter = LETTERS[i] ?? String(i + 1);
+      const zhOpt = typeof o === "string" ? o : str(o.zh || o.cn || o.kr || o.en || "");
+      const uiOpt = getOptDisplay(o);
+      const lineZh = zhOpt ? `选项 ${letter}：${zhOpt}` : `选项 ${letter}`;
+      segs.push({ zh: lineZh, ui: uiOpt && uiOpt !== zhOpt ? uiOpt : "" });
+    });
+  }
+
+  if (type === "order") {
+    const items = q.items ?? q.options ?? [];
+    for (const it of items) {
+      const line = str(typeof it === "string" ? it : it?.text ?? it?.zh ?? it?.cn ?? "");
+      if (line) segs.push({ zh: line, ui: "" });
+    }
+  }
+
+  const expl = q.explanation;
+  if (expl && typeof expl === "object") {
+    const expTxt = _getControlledLangText(expl, langKey, "practice explanation");
+    if (expTxt) segs.push({ ui: expTxt });
+  }
+
+  return segs;
+}
+
+/** 朗读用题池：优先已 mount 的 PracticeState，避免 loadPractice 重复 reset */
+async function resolvePracticeQuestionsForSpeak(lesson) {
+  const cached = PracticeState.getQuestions();
+  if (Array.isArray(cached) && cached.length) return cached;
+  const { filterSupportedQuestions } = await import("../modules/practice/practiceSchema.js");
+  const { applyStudentStrategy } = await import("../modules/practice/practiceStrategy.js");
+  const ld = lesson?._raw || lesson;
+  const rawPractice = Array.isArray(ld?.practice) ? ld.practice : [];
+  const filtered = filterSupportedQuestions(rawPractice);
+  const raw = String(ld?.level ?? ld?.courseId ?? "");
+  const m = raw.match(/(\d+)/);
+  const level = m ? "hsk" + Math.min(4, Math.max(1, parseInt(m[1], 10))) : "hsk1";
+  return applyStudentStrategy(filtered, level, ld?.type === "review");
+}
+
 /**
  * Extension explanation
  * Only explanation / note-like content.
@@ -960,6 +1129,7 @@ function buildExtensionHTML(lessonData) {
         : [];
 
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
   const speakLabel = i18n.t("hsk.extension_speak");
 
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
@@ -1003,21 +1173,30 @@ function buildExtensionHTML(lessonData) {
         const py = str((s && s.pinyin) || (s && s.py) || "");
         const trans = pickTrans(s && (s.translations || s.translation));
         const zhEsc = escapeHtml(cn).replaceAll('"', "&quot;");
-        const attrs = cn ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        const attrs = cn && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        const sentBtn =
+          cn && !speakPilot
+            ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>`
+            : "";
 
         return `<div class="lesson-extension-sentence">
           <div class="lesson-extension-sentence-zh"${attrs}>${escapeHtml(cn)}</div>
           ${py ? `<div class="lesson-extension-sentence-pinyin">${escapeHtml(py)}</div>` : ""}
           ${trans ? `<div class="lesson-extension-sentence-trans">${escapeHtml(trans)}</div>` : ""}
-          ${cn ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>` : ""}
+          ${sentBtn}
         </div>`;
       }).join("");
+
+      const groupListenBtn = speakPilot
+        ? `<button type="button" class="lesson-extension-audio-btn hsk30-ext-listen" data-hsk30-ext-group-idx="${i}">${escapeHtml(speakLabel)}</button>`
+        : "";
 
       return `<article class="lesson-extension-group-card">
   <div class="lesson-extension-group-header">
     <span class="lesson-extension-group-index">${String(i + 1).padStart(2, "0")}</span>
     <h4 class="lesson-extension-group-title">${escapeHtml(groupTitle)}</h4>
     ${item.focusGrammar ? `<span class="lesson-extension-focus">${escapeHtml(str(item.focusGrammar))}</span>` : ""}
+    ${groupListenBtn}
   </div>
   <div class="lesson-extension-sentences">${sentencesHtml}</div>
   ${note ? `<div class="lesson-extension-note">${escapeHtml(note)}</div>` : ""}
@@ -1033,13 +1212,19 @@ function buildExtensionHTML(lessonData) {
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(phrase).replaceAll('"', "&quot;");
-    const zhAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-    const btnAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const zhAttrs = phrase && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const btnAttrs = speakPilot
+      ? phrase
+        ? ` type="button" class="lesson-extension-audio-btn hsk30-ext-listen" data-hsk30-ext-flat-idx="${i}"`
+        : ` type="button" class="lesson-extension-audio-btn" disabled`
+      : phrase
+        ? ` type="button" class="lesson-extension-audio-btn" data-speak-text="${zhEsc}" data-speak-kind="extension"`
+        : ` type="button" class="lesson-extension-audio-btn" disabled`;
 
     return `<article class="lesson-extension-card">
   <div class="lesson-extension-card-top">
     <span class="lesson-extension-index">${idx}</span>
-    <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+    <button${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
   <div class="lesson-extension-body">
     <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
@@ -2479,6 +2664,115 @@ function bindEvents() {
         return;
       }
 
+      const gListen = e.target.closest(".hsk30-card-listen[data-hsk30-grammar-idx]");
+      if (gListen && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const gi = Number(gListen.dataset.hsk30GrammarIdx);
+        if (!Number.isFinite(gi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const pts = getGrammarPointsArray(raw);
+        const pt = pts[gi];
+        if (!pt) return;
+        const cardEl = gListen.closest(".lesson-grammar-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildGrammarSpeakSegments(pt, getLang());
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        return;
+      }
+
+      const extFlat = e.target.closest(".hsk30-ext-listen[data-hsk30-ext-flat-idx]");
+      if (extFlat && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const fi = Number(extFlat.dataset.hsk30ExtFlatIdx);
+        if (!Number.isFinite(fi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const arr = getExtensionItemsArray(raw);
+        const item = arr[fi];
+        if (!item) return;
+        const cardEl = extFlat.closest(".lesson-extension-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildExtensionFlatSpeakSegments(item, getLang());
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        return;
+      }
+
+      const extGroup = e.target.closest(".hsk30-ext-listen[data-hsk30-ext-group-idx]");
+      if (extGroup && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const gi = Number(extGroup.dataset.hsk30ExtGroupIdx);
+        if (!Number.isFinite(gi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const arr = getExtensionItemsArray(raw);
+        const item = arr[gi];
+        if (!item) return;
+        const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
+        const isGroup = sentences.length > 0 && (item.groupTitle || item.focusGrammar);
+        if (!isGroup) return;
+        const cardEl = extGroup.closest(".lesson-extension-group-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildExtensionGroupSpeakSegments(item, getLang());
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        return;
+      }
+
+      const prListen = e.target.closest(".hsk30-practice-listen[data-hsk30-practice-id]");
+      if (prListen && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const qid = String(prListen.dataset.hsk30PracticeId || "").trim();
+        if (!qid) return;
+        const ld = state.current?.lessonData;
+        if (!ld) return;
+        const questions = await resolvePracticeQuestionsForSpeak(ld);
+        const q = questions.find((x) => String(x?.id || "") === qid);
+        if (!q) return;
+        const langKey = practiceLangKeyFromUiLang(getLang());
+        const cardEl = prListen.closest(".lesson-practice-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildPracticeSpeakSegmentsUnified(q, langKey);
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        return;
+      }
+
       const dzPilot = e.target.closest(".lesson-dialogue-zh[data-speak-kind='dialogue']");
       if (
         dzPilot &&
@@ -3469,6 +3763,7 @@ function buildGrammarHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const g = raw && raw.grammar;
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
   const speakLabel = i18n.t("hsk.extension_speak");
   const emptyMsg = `<div class="lesson-grammar-empty">${escapeHtml(i18n.t("hsk.empty_grammar"))}</div>`;
 
@@ -3502,12 +3797,15 @@ function buildGrammarHTML(lessonData) {
       const examples = getGrammarExamples(pt);
       const idx = String(i + 1).padStart(2, "0");
       const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
-      const titleAttrs = titleZh
-        ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
-        : "";
-      const btnAttrs = titleZh
-        ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
-        : "";
+      const titleAttrs =
+        titleZh && !speakPilot ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"` : "";
+      const btnAttrs = speakPilot
+        ? titleZh
+          ? ` type="button" class="lesson-grammar-audio-btn hsk30-card-listen" data-hsk30-grammar-idx="${i}"`
+          : ` type="button" class="lesson-grammar-audio-btn" disabled`
+        : titleZh
+          ? ` type="button" class="lesson-grammar-audio-btn" data-speak-text="${titleEsc}" data-speak-kind="grammar"`
+          : ` type="button" class="lesson-grammar-audio-btn" disabled`;
 
       let examplesHtml = "";
       if (examples.length) {
@@ -3516,9 +3814,8 @@ function buildGrammarHTML(lessonData) {
             let exPy = ex.pinyin;
             if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
             const exEsc = escapeHtml(ex.zh).replaceAll('"', "&quot;");
-            const exAttrs = ex.zh
-              ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"`
-              : "";
+            const exAttrs =
+              ex.zh && !speakPilot ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"` : "";
             return `<div class="lesson-grammar-example">
   <div class="lesson-grammar-example-zh"${exAttrs}>${escapeHtml(ex.zh)}</div>
   ${exPy ? `<div class="lesson-grammar-example-pinyin">${escapeHtml(exPy)}</div>` : ""}
@@ -3531,7 +3828,7 @@ function buildGrammarHTML(lessonData) {
       return `<article class="lesson-grammar-card">
   <div class="lesson-grammar-card-top">
     <span class="lesson-grammar-index">${idx}</span>
-    <button type="button" class="lesson-grammar-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+    <button${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
   <div class="lesson-grammar-head">
     <div class="lesson-grammar-zh"${titleAttrs}>${escapeHtml(titleZh)}</div>
