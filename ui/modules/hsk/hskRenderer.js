@@ -713,8 +713,8 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
 }
 
 /**
- * HSK3.0 正式学习用紧凑词条：信息密度高于大词卡，较复习区单行列表更易读（字号/行距更大）。
- * 保留 word-card + word-speak-zone + btn-stroke，复用 bindWordCardActions。
+ * HSK3.0 正式学习用紧凑词条：与复习区同一套「/」分隔单行流（buildReviewCompactRow），
+ * 中文略大、整行连续不换栏；释义后紧跟 따라쓰기（inline，非左右分栏）。
  */
 function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
   try {
@@ -734,33 +734,28 @@ function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
     const strokeLabel = i18n.t("action.trace");
     const speakAria = i18n.t("action.speak");
     const strokeDisabled = !han ? " disabled" : "";
-    const speakIconSvg = `<svg class="word-speak-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M17.83 6.17a8 8 0 010 11.66"/></svg>`;
-    const wordSpeakHtml = han
-      ? `<button type="button" class="word-speak-zone hsk-learn-vocab-speak" data-speak-text="${escapeHtmlAttr(han)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon">${speakIconSvg}</span></button>`
-      : `<div class="word-hanzi word-hanzi--empty">${escapeHtml(han)}</div>`;
+    const speakIconSvg = `<svg class="word-speak-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M17.83 6.17a8 8 0 010 11.66"/></svg>`;
+    const sep = ` <span class="hsk-lr-sep">/</span> `;
 
-    let subInner = "";
-    if (pinyinStr && posStr) {
-      subInner = `<span class="hsk-learn-vocab-py">${escapeHtml(pinyinStr)}</span><span class="hsk-learn-vocab-dot" aria-hidden="true"> · </span><span class="hsk-learn-vocab-pos">${escapeHtml(posStr)}</span>`;
-    } else if (pinyinStr) {
-      subInner = `<span class="hsk-learn-vocab-py">${escapeHtml(pinyinStr)}</span>`;
-    } else if (posStr) {
-      subInner = `<span class="hsk-learn-vocab-pos">${escapeHtml(posStr)}</span>`;
-    }
-    const subHtml = subInner ? `<div class="hsk-learn-vocab-entry__sub">${subInner}</div>` : "";
+    const zhBlock = han
+      ? `<button type="button" class="word-speak-zone hsk-learn-vocab-zhbtn" data-speak-text="${escapeHtmlAttr(han)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="hsk-lr-line-zh word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon" aria-hidden="true">${speakIconSvg}</span></button>`
+      : `<span class="hsk-lr-line-zh">${escapeHtml(han)}</span>`;
+
+    const chunks = [zhBlock];
+    if (pinyinStr) chunks.push(`<span class="hsk-lr-pinyin">${escapeHtml(pinyinStr)}</span>`);
+    if (posStr) chunks.push(`<span class="hsk-lr-pos">${escapeHtml(posStr)}</span>`);
+    chunks.push(`<span class="hsk-lr-mean">${escapeHtml(mainStr)}</span>`);
+
+    const lineCore = chunks.join(sep);
+    const traceBtn = `<button type="button" class="btn btn-stroke btn-stroke--learn" data-action="open-stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>`;
 
     return `
     <li class="word-card hsk-learn-vocab-entry" data-word-hanzi="${escapeHtmlAttr(han)}">
-      <div class="hsk-learn-vocab-entry__top">${wordSpeakHtml}</div>
-      ${subHtml}
-      <div class="hsk-learn-vocab-entry__meanrow">
-        <span class="hsk-learn-vocab-mean">${escapeHtml(mainStr)}</span>
-        <button type="button" class="btn btn-stroke btn-stroke--learn" data-action="open-stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
-      </div>
+      <span class="hsk-learn-vocab-line">${lineCore}<span class="hsk-learn-vocab-trace-slot">${traceBtn}</span></span>
     </li>`;
   } catch (e) {
     console.warn("[buildLearnVocabEntry] failed for item:", x, e);
-    return `<li class="word-card hsk-learn-vocab-entry hsk-learn-vocab-entry--error"><div class="hsk-learn-vocab-mean">Error rendering word</div></li>`;
+    return `<li class="word-card hsk-learn-vocab-entry hsk-learn-vocab-entry--error"><span class="hsk-lr-mean">Error rendering word</span></li>`;
   }
 }
 
@@ -783,7 +778,7 @@ export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
 </section>`;
 
   if (compactLearn) {
-    gridEl.innerHTML = `<div class="lesson-vocab-wrap lesson-vocab-wrap--compact-learn">${hero}<div class="hsk-learn-vocab-dir"><ul class="hsk-learn-vocab-list" role="list">${bodyHtml}</ul></div></div>`;
+    gridEl.innerHTML = `<div class="lesson-vocab-wrap lesson-vocab-wrap--compact-learn">${hero}<div class="hsk-learn-vocab-dir hsk-review-compact-dir"><ul class="hsk-learn-vocab-list" role="list">${bodyHtml}</ul></div></div>`;
   } else {
     gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${bodyHtml}</div></div>`;
   }
