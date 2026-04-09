@@ -772,11 +772,23 @@ export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
     ? arr.map((x) => buildLearnVocabEntry(x, { currentLang, glossaryScope })).join("")
     : arr.map((x) => buildWordCard(x, { currentLang, glossaryScope })).join("");
 
-  const hero = `<section class="lesson-section-hero">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
-  <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>
-  ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}
-</section>`;
+  const heroTextBlock = `
+    <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
+    <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>
+    ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}`;
+
+  const hero = compactLearn
+    ? `<section class="lesson-section-hero lesson-vocab-hero--compact-toolbar">
+  <div class="lesson-vocab-hero-row">
+    <div class="lesson-vocab-hero-text">${heroTextBlock}</div>
+    ${
+      arr.length
+        ? `<button type="button" class="hsk-speak-all-words-btn" id="hskSpeakAllWordsBtn" aria-label="${escapeHtml(i18n.t("hsk.speak_all_words"))}" title="${escapeHtml(i18n.t("hsk.speak_all_words"))}">🔊</button>`
+        : ""
+    }
+  </div>
+</section>`
+    : `<section class="lesson-section-hero">${heroTextBlock}</section>`;
 
   if (compactLearn) {
     gridEl.innerHTML = `<div class="lesson-vocab-wrap lesson-vocab-wrap--compact-learn">${hero}<div class="hsk-learn-vocab-dir hsk-review-compact-dir"><ul class="hsk-learn-vocab-list" role="list">${bodyHtml}</ul></div></div>`;
@@ -880,13 +892,49 @@ function cancelLearnVocabSpeakGapTimer() {
   }
 }
 
+/** 批量朗读（单词间 / 会话句间）暂停，需与 bump 一并取消 */
+let _batchPauseTimer = null;
+
+function cancelBatchPauseTimer() {
+  if (_batchPauseTimer != null) {
+    clearTimeout(_batchPauseTimer);
+    _batchPauseTimer = null;
+  }
+}
+
 function bumpWordSpeakGeneration() {
   _wordSpeakGeneration += 1;
   cancelLearnVocabSpeakGapTimer();
+  cancelBatchPauseTimer();
+}
+
+/** 新一条朗读链（与批量会话全文等共用 generation） */
+export function startNewHskSpeakChain() {
+  bumpWordSpeakGeneration();
+  return _wordSpeakGeneration;
+}
+
+export function getHskSpeakGeneration() {
+  return _wordSpeakGeneration;
+}
+
+function randomGapMs(min, max) {
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+
+/** 批量朗读：段与段之间的停顿（新点读会 bump 并清掉定时器） */
+export function batchPauseBetweenSegments(gen) {
+  return new Promise((resolve) => {
+    cancelBatchPauseTimer();
+    _batchPauseTimer = setTimeout(() => {
+      _batchPauseTimer = null;
+      resolve();
+    }, randomGapMs(350, 550));
+  });
 }
 
 /** 系统语言释义朗读用的 TTS 语言码（与 kids1 ttsLangForGloss 一致） */
-function ttsBcp47ForUiMeaningLang() {
+export function ttsBcp47ForUiMeaningLang() {
   const l = normalizeLang(getLang());
   if (l === "kr") return "ko-KR";
   if (l === "jp") return "ja-JP";
@@ -895,10 +943,85 @@ function ttsBcp47ForUiMeaningLang() {
   return "ko-KR";
 }
 
+/** 纯系统语言一句（用于「회화 1」等提示音） */
+export async function speakUiLangTextOnce(text, gen) {
+  const t = String(text || "").trim();
+  if (!t) return;
+  const { AUDIO_ENGINE } = await import("../../platform/index.js");
+  if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
+  await new Promise((resolve) => {
+    if (gen !== _wordSpeakGeneration) {
+      resolve();
+      return;
+    }
+    AUDIO_ENGINE.playText(t, {
+      lang: ttsBcp47ForUiMeaningLang(),
+      rate: 0.95,
+      onEnd: () => resolve(),
+      onError: () => resolve(),
+    });
+  });
+}
+
 /**
- * HSK3.0 HSK1 紧凑单词区：先读中文，停顿约 0.4~0.7s，再读系统语言释义（无释义则仅中文）。
+ * 中文 → 短暂停顿 → 系统语言释义（无释义则仅中文）。不 bump generation，由调用方传入 gen。
+ * @returns {Promise<void>}
  */
-async function playLearnCompactVocabSpeak(zh, meaningRaw, cardEl) {
+export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
+  const hanStr = String(zh || "").trim();
+  if (!hanStr) return;
+  const meanStr = String(meaningRaw || "").trim();
+
+  const { AUDIO_ENGINE } = await import("../../platform/index.js");
+  if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
+
+  await new Promise((resolve) => {
+    const done = () => resolve();
+    if (gen !== _wordSpeakGeneration) {
+      done();
+      return;
+    }
+    if (!meanStr) {
+      AUDIO_ENGINE.playText(hanStr, {
+        lang: "zh-CN",
+        rate: 0.95,
+        onEnd: done,
+        onError: done,
+      });
+      return;
+    }
+    AUDIO_ENGINE.playText(hanStr, {
+      lang: "zh-CN",
+      rate: 0.95,
+      onEnd: () => {
+        if (gen !== _wordSpeakGeneration) {
+          done();
+          return;
+        }
+        cancelLearnVocabSpeakGapTimer();
+        _learnVocabSpeakGapTimer = setTimeout(() => {
+          _learnVocabSpeakGapTimer = null;
+          if (gen !== _wordSpeakGeneration) {
+            done();
+            return;
+          }
+          AUDIO_ENGINE.playText(meanStr, {
+            lang: ttsBcp47ForUiMeaningLang(),
+            rate: 0.95,
+            onEnd: done,
+            onError: done,
+          });
+        }, randomGapMs(400, 700));
+      },
+      onError: done,
+    });
+  });
+}
+
+/**
+ * HSK3.0 HSK1 试点：会话行等 — 中文后读系统语言翻译（与紧凑单词区同一链）。
+ */
+export async function speakZhThenUiTranslationPilot(zh, meaningRaw, highlightEl) {
   const hanStr = String(zh || "").trim();
   if (!hanStr) return;
   bumpWordSpeakGeneration();
@@ -907,53 +1030,89 @@ async function playLearnCompactVocabSpeak(zh, meaningRaw, cardEl) {
 
   const finish = () => {
     if (gen !== _wordSpeakGeneration) return;
-    if (cardEl) cardEl.classList.remove("is-speaking");
+    if (highlightEl) highlightEl.classList.remove("is-speaking");
   };
 
   try {
     const { AUDIO_ENGINE } = await import("../../platform/index.js");
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-      if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
       return;
     }
     AUDIO_ENGINE.stop();
-    document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
-    if (cardEl) cardEl.classList.add("is-speaking");
-
-    if (!meanStr) {
-      AUDIO_ENGINE.playText(hanStr, {
-        lang: "zh-CN",
-        rate: 0.95,
-        onEnd: finish,
-        onError: finish,
-      });
-      return;
-    }
-
-    const gapMs = 400 + Math.floor(Math.random() * 301);
-
-    AUDIO_ENGINE.playText(hanStr, {
-      lang: "zh-CN",
-      rate: 0.95,
-      onEnd: () => {
-        if (gen !== _wordSpeakGeneration) return;
-        _learnVocabSpeakGapTimer = setTimeout(() => {
-          _learnVocabSpeakGapTimer = null;
-          if (gen !== _wordSpeakGeneration) return;
-          AUDIO_ENGINE.playText(meanStr, {
-            lang: ttsBcp47ForUiMeaningLang(),
-            rate: 0.95,
-            onEnd: finish,
-            onError: finish,
-          });
-        }, gapMs);
-      },
-      onError: finish,
-    });
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+    if (highlightEl) highlightEl.classList.add("is-speaking");
+    await speakZhThenMeaningPromise(hanStr, meanStr, gen);
+    finish();
   } catch (err) {
-    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] learn compact speak failed:", err);
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] zh+translation pilot failed:", err);
     finish();
   }
+}
+
+/**
+ * HSK3.0 HSK1 紧凑单词区：按列表顺序全文朗读，每词「中文→释义」，词之间再停顿。
+ */
+export async function speakAllHsk30Hsk1LessonWords(items, opts = {}) {
+  const arr = Array.isArray(items) ? items : [];
+  if (!arr.length) return;
+
+  bumpWordSpeakGeneration();
+  const gen = _wordSpeakGeneration;
+  const { lang, scope } = opts;
+  const currentLang = normalizeLang(lang ?? getLang());
+  const glossaryScope = scope || "";
+
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+
+    const rowEls = document.querySelectorAll(".hsk-learn-vocab-list .hsk-learn-vocab-entry");
+
+    const slice = [];
+    for (const x of arr) {
+      const raw = normalizeWordForCard(x);
+      if (!raw) continue;
+      const han = wordKey(raw) || String(raw.hanzi || raw.word || raw.zh || "").trim();
+      if (!han) continue;
+      let rawMeaning = getMeaningByLang(raw, currentLang, han, glossaryScope);
+      if (rawMeaning && rawMeaning.includes("object Object")) rawMeaning = "";
+      const meaningForTts = String(rawMeaning || "").trim();
+      slice.push({ han, meaningForTts });
+    }
+
+    for (let i = 0; i < slice.length; i++) {
+      if (gen !== _wordSpeakGeneration) return;
+      const { han, meaningForTts } = slice[i];
+      const row = rowEls[i];
+      if (row && row.classList) row.classList.add("is-speaking");
+
+      await speakZhThenMeaningPromise(han, meaningForTts, gen);
+
+      if (row && row.classList) row.classList.remove("is-speaking");
+      if (gen !== _wordSpeakGeneration) return;
+
+      if (i < slice.length - 1) await batchPauseBetweenSegments(gen);
+    }
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speak all words failed:", err);
+  } finally {
+    document.querySelectorAll(".hsk-learn-vocab-list .hsk-learn-vocab-entry.is-speaking").forEach((el) =>
+      el.classList.remove("is-speaking")
+    );
+  }
+}
+
+/**
+ * HSK3.0 HSK1 紧凑单词区：先读中文，停顿约 0.4~0.7s，再读系统语言释义（无释义则仅中文）。
+ */
+async function playLearnCompactVocabSpeak(zh, meaningRaw, cardEl) {
+  const hanStr = String(zh || "").trim();
+  if (!hanStr) return;
+  await speakZhThenUiTranslationPilot(zh, meaningRaw, cardEl);
 }
 
 async function playWordCardSpeak(text, cardEl) {

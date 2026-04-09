@@ -88,6 +88,8 @@
       "review": "Review"
     },
     "vocab_subtitle": "Vocabulary for this lesson. Click to hear pronunciation.",
+    "speak_all_words": "Play all words",
+    "dialogue_speak_full": "Play full dialogue",
     "vocab_count": "{n} words",
     "dialogue_subtitle": "Dialogue for this lesson. Click Chinese to hear it read aloud.",
     "grammar_title": "Grammar Points",

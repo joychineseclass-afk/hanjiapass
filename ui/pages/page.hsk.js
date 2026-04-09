@@ -110,6 +110,65 @@ function shouldUseCompactLearnVocabLayout() {
   return String(state.version || "").toLowerCase() === "hsk3.0" && Number(state.lv) === 1;
 }
 
+/** HSK3.0 · HSK1 试点：会话/单词朗读链（中文→系统语言释义） */
+function shouldUseHsk30Hsk1SpeakPilot() {
+  return String(state.version || "").toLowerCase() === "hsk3.0" && Number(state.lv) === 1;
+}
+
+/** 全文朗读：对话 1/2/3 提示音（系统语言 TTS） */
+function dialogueSessionIntroTts(sessionIndex1Based) {
+  const l = normalizeLang(getLang());
+  const n = Number(sessionIndex1Based) || 1;
+  if (l === "kr") return `회화 ${n}`;
+  if (l === "jp") return `会話 ${n}`;
+  if (l === "cn") return `对话 ${n}`;
+  return `Dialogue ${n}`;
+}
+
+/** HSK3.0 HSK1：会话全文朗读（先 회화 n，再逐句中文→翻译） */
+async function runHsk30Hsk1DialogueFullSpeak(lessonData) {
+  const mod = await import("../modules/hsk/hskRenderer.js");
+  const gen = mod.startNewHskSpeakChain();
+  try {
+    const { AUDIO_ENGINE } = await import("../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+
+    const raw = (lessonData && lessonData._raw) || lessonData;
+    const cards = getDialogueCards(raw);
+    if (!cards.length) return;
+
+    for (let ci = 0; ci < cards.length; ci++) {
+      const card = cards[ci];
+      const lines = Array.isArray(card && card.lines) ? card.lines : [];
+      if (!lines.length) continue;
+
+      await mod.speakUiLangTextOnce(dialogueSessionIntroTts(ci + 1), gen);
+      await mod.batchPauseBetweenSegments(gen);
+
+      for (let li = 0; li < lines.length; li++) {
+        const line = lines[li];
+        const zh = String(
+          (line && line.text) ||
+            (line && line.zh) ||
+            (line && line.cn) ||
+            (line && line.line) ||
+            ""
+        ).trim();
+        if (!zh) continue;
+        const trans = pickDialogueTranslation(line, zh);
+        await mod.speakZhThenMeaningPromise(zh, String(trans || "").trim(), gen);
+        await mod.batchPauseBetweenSegments(gen);
+      }
+    }
+  } catch (e) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[HSK] dialogue full speak failed:", e);
+  }
+}
+
 /**
  * Lumina HSK：LESSON_ENGINE 拉取原始课件后，统一经 HSK_LOADER.loadLessonDetail 收口（与 data 权威规则一致）。
  * - lessons.json：仅课程目录/元数据，不是普通课主词表。
@@ -2352,10 +2411,60 @@ function bindEvents() {
     );
   }
 
-  // ===== Audio click =====
+  // ===== 朗读：HSK3.0 HSK1 工具栏 + 会话/扩展等点读 =====
   document.addEventListener(
     "click",
-    (e) => {
+    async (e) => {
+      const wbtn = e.target.closest("#hskSpeakAllWordsBtn");
+      if (wbtn) {
+        if (!shouldUseCompactLearnVocabLayout()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const words = state.current && state.current.lessonWords;
+        if (!Array.isArray(words) || !words.length) return;
+        const { speakAllHsk30Hsk1LessonWords } = await import("../modules/hsk/hskRenderer.js");
+        await speakAllHsk30Hsk1LessonWords(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        return;
+      }
+
+      const fbtn = e.target.closest("#hskDialogueSpeakFullBtn");
+      if (fbtn) {
+        if (!shouldUseHsk30Hsk1SpeakPilot()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const ld = state.current && state.current.lessonData;
+        if (!ld) return;
+        await runHsk30Hsk1DialogueFullSpeak(ld);
+        return;
+      }
+
+      const dzPilot = e.target.closest(".lesson-dialogue-zh[data-speak-kind='dialogue']");
+      if (
+        dzPilot &&
+        shouldUseHsk30Hsk1SpeakPilot() &&
+        dzPilot.dataset.speakTranslation != null &&
+        String(dzPilot.dataset.speakTranslation || "").trim() !== ""
+      ) {
+        const zh = (dzPilot.dataset.speakText || "").trim();
+        const tr = (dzPilot.dataset.speakTranslation || "").trim();
+        if (
+          !zh ||
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const lineEl = dzPilot.closest(".lesson-dialogue-line");
+        const { speakZhThenUiTranslationPilot } = await import("../modules/hsk/hskRenderer.js");
+        await speakZhThenUiTranslationPilot(zh, tr, lineEl || null);
+        return;
+      }
+
       const target = e.target.closest(
         "[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension'], [data-speak-text][data-speak-kind='grammar'], [data-speak-text][data-speak-kind='practice']"
       );
@@ -3068,7 +3177,7 @@ function getDialogueCards(lesson) {
 }
 
 /** 渲染单条对话行 */
-function renderDialogueLine(line, lang, showPinyin) {
+function renderDialogueLine(line, lang, showPinyin, speakPilot = false) {
   const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
   const zh = String(
     (line && line.text) ||
@@ -3082,9 +3191,13 @@ function renderDialogueLine(line, lang, showPinyin) {
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
 
   const trans = pickDialogueTranslation(line, zh);
-  const zhAttrs = zh
+  const transTrim = trans ? String(trans).trim() : "";
+  let zhAttrs = zh
     ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
     : "";
+  if (zh && speakPilot && transTrim) {
+    zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
+  }
 
   return `<article class="lesson-dialogue-line">
   ${spk ? `<div class="lesson-dialogue-speaker">${escapeHtml(spk)}</div>` : ""}
@@ -3138,7 +3251,7 @@ function sceneCanvasCardReservedDataAttrs(card, lines) {
 }
 
 /** 场景画布模式：左右交错气泡（保留 lesson-dialogue-line 以兼容点读高亮） */
-function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0) {
+function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0, speakPilot = false) {
   const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
   const zh = String(
     (line && line.text) ||
@@ -3153,9 +3266,13 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0) {
   if (py) py = normalizePinyinDisplayAllLowercase(py);
 
   const trans = pickDialogueTranslation(line, zh);
-  const zhAttrs = zh
+  const transTrim = trans ? String(trans).trim() : "";
+  let zhAttrs = zh
     ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
     : "";
+  if (zh && speakPilot && transTrim) {
+    zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
+  }
 
   const side = resolveSceneCanvasBubbleSide(line, lineIndex0);
   const sideClass =
@@ -3177,9 +3294,15 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0) {
 </article>`;
 }
 
-function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
+function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, speakPilot) {
+  const fullSpeakBtn = speakPilot
+    ? `<button type="button" class="hsk-dialogue-speak-full-btn" id="hskDialogueSpeakFullBtn" aria-label="${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}" title="${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}">🔊 ${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}</button>`
+    : "";
   const heroCanvas = `<section class="lesson-section-hero lesson-dialogue-hero hsk1-dialogue-hero--scene-canvas">
-  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+  <div class="hsk-dialogue-hero-toolbar">
+    <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+    ${fullSpeakBtn}
+  </div>
 </section>`;
 
   const lessonStripHtml = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
@@ -3195,7 +3318,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
       const summaryText = pickCardSummary(card && card.summary);
       const cardReservedAttrs = sceneCanvasCardReservedDataAttrs(card, lines);
       const lineHtml = lines
-        .map((line, li) => renderDialogueLineSceneCanvasBubble(line, showPinyin, li))
+        .map((line, li) => renderDialogueLineSceneCanvasBubble(line, showPinyin, li, speakPilot))
         .join("");
 
       return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card"${cardReservedAttrs}>
@@ -3222,6 +3345,7 @@ function buildDialogueHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const cards = getDialogueCards(raw);
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
 
   const hero = `<section class="lesson-section-hero lesson-dialogue-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
@@ -3248,7 +3372,7 @@ function buildDialogueHTML(lessonData) {
   });
 
   if (shouldUseHsk30Hsk1SceneCanvasDialogue(lessonData)) {
-    return buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin);
+    return buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, speakPilot);
   }
 
   return `${hero}<div class="lesson-dialogue-list">
@@ -3257,7 +3381,7 @@ ${cards
     const lines = Array.isArray(card && card.lines) ? card.lines : [];
     if (!lines.length) return "";
     const titleText = pickCardTitle(card && card.title, index + 1);
-    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
+    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin, speakPilot)).join("");
     return `<section class="lesson-dialogue-card">
     <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
     <div class="lesson-dialogue-lines">${lineHtml}</div>

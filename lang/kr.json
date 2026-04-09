@@ -88,6 +88,8 @@
       "review": "복습"
     },
     "vocab_subtitle": "본문 단어입니다. 클릭하면 발음을 들을 수 있어요.",
+    "speak_all_words": "전체 단어 듣기",
+    "dialogue_speak_full": "전체 회화 듣기",
     "vocab_count": "{n}단어",
     "dialogue_subtitle": "본문 대화입니다. 중국어를 클릭하면 읽어줍니다.",
     "grammar_title": "문법 포인트",

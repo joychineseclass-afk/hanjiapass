@@ -2012,6 +2012,73 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   cursor: not-allowed;
 }
 
+/* HSK3.0 HSK1：单词区「全部朗读」、会话区「全文朗读」顶部按钮 */
+.lesson-vocab-hero--compact-toolbar .lesson-vocab-hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px 14px;
+}
+
+.lesson-vocab-hero--compact-toolbar .lesson-vocab-hero-text {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.hsk-speak-all-words-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-speak-all-words-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.hsk-dialogue-hero-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 14px;
+  width: 100%;
+}
+
+.hsk1-dialogue-hero--scene-canvas .hsk-dialogue-hero-toolbar .lesson-section-title {
+  margin: 0;
+}
+
+.hsk-dialogue-speak-full-btn {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-dialogue-speak-full-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
 /* ===============================
    📋 复习课专用：目录式列表
    单词/会话/语法/扩张 tab 紧凑样式
