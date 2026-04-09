@@ -1,0 +1,114 @@
+{
+  "id": "hsk1_lesson2",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 2,
+  "type": "lesson",
+  "title": {
+    "zh": "第2课｜轻量画布验证",
+    "cn": "第2课｜轻量画布验证",
+    "kr": "제2과 UI 검증",
+    "en": "Lesson 2 | Canvas smoke test",
+    "jp": "第2課｜表示検証"
+  },
+  "summary": {
+    "zh": "用于验证 HSK3.0 HSK1 多课次会话画布与标题兜底。",
+    "kr": "HSK3.0 HSK1 다회차 대화 캔버스·제목 폴백 검증용.",
+    "en": "Smoke test for multi-lesson dialogue canvas.",
+    "jp": "複数課でのキャンバス表示確認用。"
+  },
+  "scene": {
+    "id": "hsk30_l2_scene",
+    "title": {
+      "zh": "自我介绍",
+      "kr": "자기소개",
+      "en": "Introducing yourself",
+      "jp": "自己紹介"
+    }
+  },
+  "objectives": [],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问名字",
+        "kr": "회화 1｜이름 묻기",
+        "en": "Dialogue 1 | Names",
+        "jp": "会話1｜名前"
+      },
+      "summary": {
+        "zh": "同学之间询问姓名。",
+        "kr": "학생들이 서로 이름을 묻습니다.",
+        "en": "Students ask each other’s names.",
+        "jp": "学生同士で名前を尋ねます。"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "你好，你叫什么名字？",
+          "pinyin": "Nǐ hǎo, nǐ jiào shénme míngzi?",
+          "translation": {
+            "kr": "안녕, 이름이 뭐야?",
+            "en": "Hi, what’s your name?",
+            "jp": "こんにちは、お名前は？"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我叫王明。",
+          "pinyin": "Wǒ jiào Wáng Míng.",
+          "translation": {
+            "kr": "저는 왕밍이에요.",
+            "en": "I’m Wang Ming.",
+            "jp": "王明です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话2你好",
+        "kr": "회화 2",
+        "en": "Dialogue 2 Hi",
+        "jp": "会話2"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "很高兴认识你。",
+          "pinyin": "Hěn gāoxìng rènshi nǐ.",
+          "translation": {
+            "kr": "만나서 반가워.",
+            "en": "Nice to meet you.",
+            "jp": "はじめまして。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "我也是。",
+          "pinyin": "Wǒ yě shì.",
+          "translation": {
+            "kr": "나도.",
+            "en": "Me too.",
+            "jp": "私も。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [],
+  "extension": [],
+  "practice": [],
+  "review": {},
+  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" } },
+    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
+    { "key": "aiPractice", "label": { "zh": "AI 练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI 練習" } }
+  ]
+}

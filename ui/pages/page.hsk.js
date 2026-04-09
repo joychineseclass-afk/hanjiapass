@@ -647,16 +647,48 @@ function pickCardSummary(summaryObj) {
 }
 
 /**
- * 卡片主标题：优先取「｜」后的短语，避免与会话编号重复堆叠「会话一」等前缀（便于批量课推广）
+ * 会话卡标题展示：有分隔符取后半段；否则尝试去掉「会话一 / Dialogue 1」等前缀；都失败则原样。
+ * 用于 HSK3.0·HSK1 画布模式，与左侧 01/02 编号并列时不重复堆字。
  */
 function pickCardHeadingPrimary(titleObj, cardIndex) {
-  const full = pickCardTitle(titleObj, cardIndex);
+  const full = pickCardTitle(titleObj, cardIndex).trim();
+  if (!full) return "";
+
   const parts = full.split(/[｜|]/);
   if (parts.length >= 2) {
     const tail = parts.slice(1).join("｜").trim();
     if (tail) return tail;
   }
+
+  const head = parts[0].trim();
+  const stripped = stripDialogueCardTitleSessionPrefix(head);
+  if (stripped && stripped !== head) return stripped;
   return full;
+}
+
+/**
+ * 剥离常见「会话/对话 + 编号」类前缀（无 ｜ 时的兜底）
+ */
+function stripDialogueCardTitleSessionPrefix(text) {
+  let s = String(text || "").trim();
+  if (!s) return s;
+
+  const rules = [
+    /^会话\s*[一二三四五六七八九十百千两〇零0-9]{1,4}\s*[：:｜|\-－—]?\s*/u,
+    /^对话\s*[一二三四五六七八九十百千两〇零0-9]{1,4}\s*[：:｜|\-－—]?\s*/u,
+    /^会话\s*\d{1,2}\s*[：:｜|\-－—]?\s*/,
+    /^对话\s*\d{1,2}\s*[：:｜|\-－—]?\s*/,
+    /^Dialogue\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/i,
+    /^Session\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/i,
+    /^회화\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/u,
+    /^第\s*\d{1,2}\s*[课課]\s*[｜|]?\s*/,
+  ];
+
+  for (const re of rules) {
+    const next = s.replace(re, "").trim();
+    if (next !== s) return next || s;
+  }
+  return s;
 }
 
 function dialogueSessionAriaLabel(sessionIndex1Based) {
@@ -666,7 +698,7 @@ function dialogueSessionAriaLabel(sessionIndex1Based) {
 }
 
 /** 整课场景一行标题（不展示 scene.summary，避免与各卡 summary 重复） */
-function buildHsk1SceneCanvasLessonStrip(raw, lang) {
+function buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang) {
   if (!raw?.scene || typeof raw.scene !== "object" || !SCENE_ENGINE?.getSceneFromLesson) {
     return "";
   }
@@ -677,13 +709,13 @@ function buildHsk1SceneCanvasLessonStrip(raw, lang) {
   return `<p class="hsk1-dialogue-lesson-strip">${escapeHtml(title)}</p>`;
 }
 
-/** HSK 3.0 · HSK1 · 第1课试点：会话区「一会话一画布」展示 */
-function shouldUseHsk30Hsk1Lesson1SceneCanvasDialogue(lessonData) {
+/** HSK 3.0 · HSK1：会话区「一会话一画布」展示（全课次，与 HSK2.0 无关） */
+function shouldUseHsk30Hsk1SceneCanvasDialogue(lessonData) {
   if (String(state.version || "").toLowerCase() !== "hsk3.0") return false;
   if (Number(state.lv) !== 1) return false;
   const raw = (lessonData && lessonData._raw) || lessonData || {};
   const no = Number(raw.lessonNo ?? state.current?.lessonNo ?? 0);
-  return no === 1;
+  return no >= 1;
 }
 
 /**
@@ -3052,12 +3084,12 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, side) {
 </article>`;
 }
 
-function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
+function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin) {
   const heroCanvas = `<section class="lesson-section-hero lesson-dialogue-hero hsk1-dialogue-hero--scene-canvas">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
 </section>`;
 
-  const lessonStripHtml = buildHsk1SceneCanvasLessonStrip(raw, lang);
+  const lessonStripHtml = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
 
   const blocks = cards
     .map((card, index) => {
@@ -3127,8 +3159,8 @@ function buildDialogueHTML(lessonData) {
     version: lessonData && lessonData.version,
   });
 
-  if (shouldUseHsk30Hsk1Lesson1SceneCanvasDialogue(lessonData)) {
-    return buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin);
+  if (shouldUseHsk30Hsk1SceneCanvasDialogue(lessonData)) {
+    return buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin);
   }
 
   return `${hero}<div class="lesson-dialogue-list">
