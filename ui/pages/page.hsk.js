@@ -2385,6 +2385,30 @@ function bindEvents() {
         return;
       }
 
+      const wloop = e.target.closest("#hskSpeakAllWordsLoopBtn");
+      if (wloop) {
+        if (!shouldUseCompactLearnVocabLayout()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const {
+          getBulkTtsPlayer,
+          openBulkSpeakPlayer,
+          closeBulkSpeakPlayer,
+          buildWordBulkTimeline,
+        } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const p = getBulkTtsPlayer();
+        if (p.bulkLoop && p.loopKind === "words") {
+          closeBulkSpeakPlayer();
+          return;
+        }
+        const words = state.current && state.current.lessonWords;
+        if (!Array.isArray(words) || !words.length) return;
+        const anchor = document.getElementById("hskWordBulkSpeakAnchor");
+        const tl = buildWordBulkTimeline(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        await openBulkSpeakPlayer("words", tl, anchor || wloop.parentElement, { loop: true });
+        return;
+      }
+
       const fbtn = e.target.closest("#hskDialogueSpeakFullBtn");
       if (fbtn) {
         if (!shouldUseHsk30Hsk1SpeakPilot()) return;
@@ -2401,6 +2425,57 @@ function bindEvents() {
           dialogueSessionIntroTts,
         });
         await openBulkSpeakPlayer("dialogue", tl, anchor);
+        return;
+      }
+
+      const floop = e.target.closest("#hskDialogueSpeakFullLoopBtn");
+      if (floop) {
+        if (!shouldUseHsk30Hsk1SpeakPilot()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const {
+          getBulkTtsPlayer,
+          openBulkSpeakPlayer,
+          closeBulkSpeakPlayer,
+          buildDialogueBulkTimeline,
+        } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const p = getBulkTtsPlayer();
+        if (p.bulkLoop && p.loopKind === "dialogue") {
+          closeBulkSpeakPlayer();
+          return;
+        }
+        const ld = state.current && state.current.lessonData;
+        if (!ld) return;
+        const anchor =
+          document.getElementById("hskDialogueBulkSpeakAnchor") || floop.parentElement;
+        const tl = buildDialogueBulkTimeline(ld, {
+          getDialogueCards,
+          pickDialogueTranslation,
+          dialogueSessionIntroTts,
+        });
+        await openBulkSpeakPlayer("dialogue", tl, anchor, { loop: true });
+        return;
+      }
+
+      const dlineLoop = e.target.closest(".hsk-dialogue-line-loopbtn");
+      if (dlineLoop && shouldUseHsk30Hsk1SpeakPilot()) {
+        const zh = (dlineLoop.dataset.speakText || "").trim();
+        const tr = (dlineLoop.dataset.speakTranslation || "").trim();
+        if (!zh || !tr) return;
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const lineEl = dlineLoop.closest(".lesson-dialogue-line");
+        const { toggleDialogueLineSpeakLoop } = await import("../modules/hsk/hskRenderer.js");
+        await toggleDialogueLineSpeakLoop(zh, tr, lineEl || null);
         return;
       }
 
@@ -3165,9 +3240,16 @@ function renderDialogueLine(line, lang, showPinyin, speakPilot = false) {
     zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
   }
 
+  const zAttrQ = escapeHtml(zh).replaceAll('"', "&quot;");
+  const trAttrQ = escapeHtml(transTrim).replaceAll('"', "&quot;");
+  const lineLoopBtn =
+    zh && speakPilot && transTrim
+      ? `<button type="button" class="hsk-dialogue-line-loopbtn" data-speak-text="${zAttrQ}" data-speak-translation="${trAttrQ}" aria-label="반복" title="반복">🔁</button>`
+      : "";
+
   return `<article class="lesson-dialogue-line">
   ${spk ? `<div class="lesson-dialogue-speaker">${escapeHtml(spk)}</div>` : ""}
-  <div class="lesson-dialogue-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+  <div class="hsk-dialogue-zh-row">${zh ? `<div class="lesson-dialogue-zh"${zhAttrs}>${escapeHtml(zh)}</div>${lineLoopBtn}` : ""}</div>
   ${py ? `<div class="lesson-dialogue-pinyin">${escapeHtml(py)}</div>` : ""}
   ${trans ? `<div class="lesson-dialogue-translation">${escapeHtml(trans)}</div>` : ""}
 </article>`;
@@ -3240,6 +3322,13 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0, speak
     zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
   }
 
+  const zAttrQSc = zh ? escapeHtml(zh).replaceAll('"', "&quot;") : "";
+  const trAttrQSc = transTrim ? escapeHtml(transTrim).replaceAll('"', "&quot;") : "";
+  const sceneLineLoopBtn =
+    zh && speakPilot && transTrim
+      ? `<button type="button" class="hsk-dialogue-line-loopbtn" data-speak-text="${zAttrQSc}" data-speak-translation="${trAttrQSc}" aria-label="반복" title="반복">🔁</button>`
+      : "";
+
   const side = resolveSceneCanvasBubbleSide(line, lineIndex0);
   const sideClass =
     side === "right"
@@ -3253,7 +3342,7 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0, speak
   return `<article class="lesson-dialogue-line hsk1-scene-bubble-line ${sideClass}"${posAttrs}>
   <div class="hsk1-scene-bubble">
   ${spk ? `<div class="hsk1-scene-bubble-speaker">${escapeHtml(spk)}</div>` : ""}
-  <div class="lesson-dialogue-zh hsk1-scene-bubble-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+  <div class="hsk1-scene-bubble-zh-row">${zh ? `<div class="lesson-dialogue-zh hsk1-scene-bubble-zh"${zhAttrs}>${escapeHtml(zh)}</div>${sceneLineLoopBtn}` : ""}</div>
   ${py ? `<div class="lesson-dialogue-pinyin hsk1-scene-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
   ${trans ? `<div class="lesson-dialogue-translation hsk1-scene-bubble-trans">${escapeHtml(trans)}</div>` : ""}
   </div>
@@ -3265,6 +3354,9 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
   const fullSpeakBtn = speakPilot
     ? `<button type="button" class="hsk-dialogue-speak-full-btn" id="hskDialogueSpeakFullBtn" aria-label="${fullSpeakLabel}" title="${fullSpeakLabel}">${fullSpeakLabel}</button>`
     : "";
+  const fullSpeakLoopBtn = speakPilot
+    ? `<button type="button" class="hsk-dialogue-speak-loop-btn" id="hskDialogueSpeakFullLoopBtn" aria-label="🔁 전체 회화 반복" title="🔁 전체 회화 반복">🔁 전체 회화 반복</button>`
+    : "";
 
   const lessonStripInner = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
 
@@ -3272,7 +3364,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
     speakPilot && !lessonStripInner
       ? `<div class="hsk-dialogue-hero-head hsk-dialogue-hero-head--with-speak" id="hskDialogueBulkSpeakAnchor">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
-  ${fullSpeakBtn}
+  ${fullSpeakBtn}${fullSpeakLoopBtn}
 </div>`
       : `<h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>`;
 
@@ -3282,7 +3374,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
 
   const lessonStripWrap =
     lessonStripInner && speakPilot
-      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row" id="hskDialogueBulkSpeakAnchor">${lessonStripInner}${fullSpeakBtn}</div>`
+      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row" id="hskDialogueBulkSpeakAnchor">${lessonStripInner}${fullSpeakBtn}${fullSpeakLoopBtn}</div>`
       : lessonStripInner
         ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripInner}</div>`
         : "";

@@ -2026,7 +2026,8 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   margin: 0;
 }
 
-.hsk-speak-all-words-btn {
+.hsk-speak-all-words-btn,
+.hsk-speak-loop-words-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2042,7 +2043,8 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.hsk-speak-all-words-btn:hover {
+.hsk-speak-all-words-btn:hover,
+.hsk-speak-loop-words-btn:hover {
   background: #f1f5f9;
   border-color: #cbd5e1;
 }
@@ -2071,7 +2073,8 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   margin: 0;
 }
 
-.hsk-dialogue-speak-full-btn {
+.hsk-dialogue-speak-full-btn,
+.hsk-dialogue-speak-loop-btn {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
@@ -2087,9 +2090,40 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.hsk-dialogue-speak-full-btn:hover {
+.hsk-dialogue-speak-full-btn:hover,
+.hsk-dialogue-speak-loop-btn:hover {
   background: #f1f5f9;
   border-color: #cbd5e1;
+}
+
+.hsk-dialogue-zh-row,
+.hsk1-scene-bubble-zh-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 6px;
+}
+
+.hsk-learn-vocab-loopbtn,
+.hsk-dialogue-line-loopbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  border-radius: 6px;
+  color: #475569;
+}
+
+.hsk-learn-vocab-loopbtn:hover,
+.hsk-dialogue-line-loopbtn:hover {
+  background: rgba(15, 23, 42, 0.06);
 }
 
 /* HSK3.0 HSK1：整体朗读轻量播放器（锚点后插入） */

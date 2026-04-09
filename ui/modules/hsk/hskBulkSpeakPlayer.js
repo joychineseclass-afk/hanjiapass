@@ -129,6 +129,10 @@ export class HskBulkTtsPlayer {
     this._inGap = false;
     /** 用户在中途暂停了当前 utterance，需用 resume() 续播，勿重新 _step */
     this._needsSynthResume = false;
+    /** 整体朗读播完时间线后是否从头再来 */
+    this.bulkLoop = false;
+    /** @type {null | "words" | "dialogue"} */
+    this.loopKind = null;
     this._onUi = null;
   }
 
@@ -285,6 +289,8 @@ export class HskBulkTtsPlayer {
   stop() {
     this.hardStop();
     this.idx = 0;
+    this.bulkLoop = false;
+    this.loopKind = null;
     this._emit();
   }
 
@@ -307,6 +313,12 @@ export class HskBulkTtsPlayer {
       return;
     }
     if (this.idx >= this.timeline.length) {
+      if (this.bulkLoop && this.timeline.length > 0) {
+        this.idx = 0;
+        this._emit();
+        this._step();
+        return;
+      }
       this.playing = false;
       this._emit();
       return;
@@ -436,13 +448,23 @@ function bindPlayerUi(player, root) {
 }
 
 /**
+ * 关闭整体朗读条并停止播放（含循环标记）
+ */
+export function closeBulkSpeakPlayer() {
+  removeHost();
+  getBulkTtsPlayer().stop();
+}
+
+/**
  * @param {"words"|"dialogue"} _kind
  * @param {BulkSpeakStep[]} timeline
  * @param {HTMLElement | null} anchor
+ * @param {{ loop?: boolean }} [opts]
  */
-export async function openBulkSpeakPlayer(_kind, timeline, anchor) {
-  const { startNewHskSpeakChain } = await import("./hskRenderer.js");
+export async function openBulkSpeakPlayer(_kind, timeline, anchor, opts = {}) {
+  const { startNewHskSpeakChain, clearHsk30SingleItemLoopState } = await import("./hskRenderer.js");
   startNewHskSpeakChain();
+  clearHsk30SingleItemLoopState();
   try {
     window.speechSynthesis?.cancel();
   } catch (_) {}
@@ -455,6 +477,8 @@ export async function openBulkSpeakPlayer(_kind, timeline, anchor) {
   player.hardStop();
   player.setTimeline(timeline);
   player.setPlaybackRate(1);
+  player.bulkLoop = !!opts.loop;
+  player.loopKind = opts.loop ? _kind : null;
 
   _hostEl = document.createElement("div");
   _hostEl.className = "hsk-bulk-player-host";

@@ -742,7 +742,12 @@ function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
       ? `<button type="button" class="word-speak-zone hsk-learn-vocab-zhbtn" data-speak-text="${escapeHtmlAttr(han)}" data-speak-meaning="${escapeHtmlAttr(meaningForTts)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="hsk-lr-line-zh word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon" aria-hidden="true">${speakIconSvg}</span></button>`
       : `<span class="hsk-lr-line-zh">${escapeHtml(han)}</span>`;
 
-    const chunks = [zhBlock];
+    const loopBtn =
+      han
+        ? `<button type="button" class="hsk-learn-vocab-loopbtn" data-speak-loop-han="${escapeHtmlAttr(han)}" data-speak-meaning="${escapeHtmlAttr(meaningForTts)}" aria-label="반복" title="반복">🔁</button>`
+        : "";
+
+    const chunks = [zhBlock, loopBtn].filter(Boolean);
     if (pinyinStr) chunks.push(`<span class="hsk-lr-pinyin">${escapeHtml(pinyinStr)}</span>`);
     if (posStr) chunks.push(`<span class="hsk-lr-pos">${escapeHtml(posStr)}</span>`);
     chunks.push(`<span class="hsk-lr-mean">${escapeHtml(mainStr)}</span>`);
@@ -782,6 +787,7 @@ export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
       ? `<div class="lesson-vocab-hero-count-row" id="hskWordBulkSpeakAnchor">
     <span class="lesson-section-count">${escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length }))}</span>
     <button type="button" class="hsk-speak-all-words-btn" id="hskSpeakAllWordsBtn" aria-label="${speakAllLabel}" title="${speakAllLabel}">${speakAllLabel}</button>
+    <button type="button" class="hsk-speak-loop-words-btn" id="hskSpeakAllWordsLoopBtn" aria-label="🔁 단어 전체 반복" title="🔁 단어 전체 반복">🔁 단어 전체 반복</button>
   </div>`
       : "";
 
@@ -910,6 +916,16 @@ function bumpWordSpeakGeneration() {
   cancelBatchPauseTimer();
 }
 
+/** HSK3.0 HSK1：单条循环（单词/会话行）互斥状态，与整体朗读无关 bump */
+let _compactWordLoopKey = "";
+let _dialogueLineLoopKey = "";
+
+/** 仅清除单条循环标记（整体朗读 open 时与 bump 配合，使旧循环尽快退出） */
+export function clearHsk30SingleItemLoopState() {
+  _compactWordLoopKey = "";
+  _dialogueLineLoopKey = "";
+}
+
 /** 新一条朗读链（与批量会话全文等共用 generation） */
 export function startNewHskSpeakChain() {
   bumpWordSpeakGeneration();
@@ -1018,6 +1034,105 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
       onError: done,
     });
   });
+}
+
+function dialogueLineSpeakLoopKey(zh, tr) {
+  return `${String(zh || "").trim()}\n${String(tr || "").trim()}`;
+}
+
+/**
+ * 紧凑词条：🔁 循环当前词；再点同一按钮停止。
+ */
+export async function toggleCompactWordSpeakLoop(han, meaningRaw, cardEl) {
+  const hanStr = String(han || "").trim();
+  if (!hanStr) return;
+  const meaningForTts = meaningRaw != null ? String(meaningRaw) : "";
+
+  if (_compactWordLoopKey === hanStr) {
+    _compactWordLoopKey = "";
+    bumpWordSpeakGeneration();
+    if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
+    return;
+  }
+
+  _dialogueLineLoopKey = "";
+  bumpWordSpeakGeneration();
+  const gen = _wordSpeakGeneration;
+  _compactWordLoopKey = hanStr;
+
+  const { closeBulkSpeakPlayer } = await import("./hskBulkSpeakPlayer.js");
+  closeBulkSpeakPlayer();
+
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      _compactWordLoopKey = "";
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+
+    while (_compactWordLoopKey === hanStr && gen === _wordSpeakGeneration) {
+      if (cardEl && cardEl.classList) cardEl.classList.add("is-speaking");
+      await speakZhThenMeaningPromise(hanStr, meaningForTts, gen);
+      if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
+      if (_compactWordLoopKey !== hanStr || gen !== _wordSpeakGeneration) break;
+      await batchPauseBetweenSegments(gen);
+    }
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] compact word loop failed:", err);
+  } finally {
+    if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
+    if (_compactWordLoopKey === hanStr) _compactWordLoopKey = "";
+  }
+}
+
+/**
+ * 会话行：🔁 循环当前句（中文→译）；再点同一按钮停止。
+ */
+export async function toggleDialogueLineSpeakLoop(zh, tr, lineEl) {
+  const zhStr = String(zh || "").trim();
+  if (!zhStr) return;
+  const trStr = String(tr || "");
+  const key = dialogueLineSpeakLoopKey(zhStr, trStr);
+
+  if (_dialogueLineLoopKey === key) {
+    _dialogueLineLoopKey = "";
+    bumpWordSpeakGeneration();
+    if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
+    return;
+  }
+
+  _compactWordLoopKey = "";
+  bumpWordSpeakGeneration();
+  const gen = _wordSpeakGeneration;
+  _dialogueLineLoopKey = key;
+
+  const { closeBulkSpeakPlayer } = await import("./hskBulkSpeakPlayer.js");
+  closeBulkSpeakPlayer();
+
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      _dialogueLineLoopKey = "";
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
+
+    while (_dialogueLineLoopKey === key && gen === _wordSpeakGeneration) {
+      if (lineEl && lineEl.classList) lineEl.classList.add("is-speaking");
+      await speakZhThenMeaningPromise(zhStr, trStr, gen);
+      if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
+      if (_dialogueLineLoopKey !== key || gen !== _wordSpeakGeneration) break;
+      await batchPauseBetweenSegments(gen);
+    }
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] dialogue line loop failed:", err);
+  } finally {
+    if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
+    if (_dialogueLineLoopKey === key) _dialogueLineLoopKey = "";
+  }
 }
 
 /**
@@ -1167,6 +1282,20 @@ export function bindWordCardActions() {
         }
       }
       return;
+    }
+
+    const vocabLoop = e.target.closest(".hsk-learn-vocab-loopbtn");
+    if (vocabLoop) {
+      const entry = e.target.closest(".hsk-learn-vocab-entry");
+      if (entry && entry.contains(vocabLoop)) {
+        e.preventDefault();
+        e.stopPropagation();
+        const han = (vocabLoop.dataset.speakLoopHan || "").trim();
+        const meaning = vocabLoop.dataset.speakMeaning != null ? String(vocabLoop.dataset.speakMeaning) : "";
+        if (!han) return;
+        await toggleCompactWordSpeakLoop(han, meaning, entry);
+        return;
+      }
     }
 
     const card = e.target.closest(".word-card");
