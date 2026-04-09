@@ -712,21 +712,81 @@ function buildWordCard(x, { currentLang, glossaryScope } = {}) {
   }
 }
 
+/**
+ * HSK3.0 正式学习用紧凑词条：信息密度高于大词卡，较复习区单行列表更易读（字号/行距更大）。
+ * 保留 word-card + word-speak-zone + btn-stroke，复用 bindWordCardActions。
+ */
+function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
+  try {
+    const normalized = normalizeWordForCard(x);
+    if (!normalized) return "";
+    const raw = normalized;
+    const han = wordKey(raw) || String(raw.hanzi || raw.han || raw.word || raw.zh || raw.cn || raw.simplified || raw.trad || "").trim();
+    let pinyinStr = wordPinyin(raw);
+    if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
+
+    let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
+    if (mainStr && mainStr.includes("object Object")) mainStr = "";
+    if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
+
+    const posStr = getPosByLang(raw, currentLang, glossaryScope) || "";
+
+    const strokeLabel = i18n.t("action.trace");
+    const speakAria = i18n.t("action.speak");
+    const strokeDisabled = !han ? " disabled" : "";
+    const speakIconSvg = `<svg class="word-speak-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 010 7.07M17.83 6.17a8 8 0 010 11.66"/></svg>`;
+    const wordSpeakHtml = han
+      ? `<button type="button" class="word-speak-zone hsk-learn-vocab-speak" data-speak-text="${escapeHtmlAttr(han)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon">${speakIconSvg}</span></button>`
+      : `<div class="word-hanzi word-hanzi--empty">${escapeHtml(han)}</div>`;
+
+    let subInner = "";
+    if (pinyinStr && posStr) {
+      subInner = `<span class="hsk-learn-vocab-py">${escapeHtml(pinyinStr)}</span><span class="hsk-learn-vocab-dot" aria-hidden="true"> · </span><span class="hsk-learn-vocab-pos">${escapeHtml(posStr)}</span>`;
+    } else if (pinyinStr) {
+      subInner = `<span class="hsk-learn-vocab-py">${escapeHtml(pinyinStr)}</span>`;
+    } else if (posStr) {
+      subInner = `<span class="hsk-learn-vocab-pos">${escapeHtml(posStr)}</span>`;
+    }
+    const subHtml = subInner ? `<div class="hsk-learn-vocab-entry__sub">${subInner}</div>` : "";
+
+    return `
+    <li class="word-card hsk-learn-vocab-entry" data-word-hanzi="${escapeHtmlAttr(han)}">
+      <div class="hsk-learn-vocab-entry__top">${wordSpeakHtml}</div>
+      ${subHtml}
+      <div class="hsk-learn-vocab-entry__meanrow">
+        <span class="hsk-learn-vocab-mean">${escapeHtml(mainStr)}</span>
+        <button type="button" class="btn btn-stroke btn-stroke--learn" data-action="open-stroke" data-hanzi="${escapeHtmlAttr(han)}"${strokeDisabled}>${escapeHtml(strokeLabel)}</button>
+      </div>
+    </li>`;
+  } catch (e) {
+    console.warn("[buildLearnVocabEntry] failed for item:", x, e);
+    return `<li class="word-card hsk-learn-vocab-entry hsk-learn-vocab-entry--error"><div class="hsk-learn-vocab-mean">Error rendering word</div></li>`;
+  }
+}
+
 export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
   if (!gridEl) return;
-  const { lang, scope } = opts;
+  const { lang, scope, layout } = opts;
   const arr = Array.isArray(items) ? items : [];
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
 
-  const cards = arr.map((x) => buildWordCard(x, { currentLang, glossaryScope }));
+  const compactLearn = layout === "compact-learn";
+  const bodyHtml = compactLearn
+    ? arr.map((x) => buildLearnVocabEntry(x, { currentLang, glossaryScope })).join("")
+    : arr.map((x) => buildWordCard(x, { currentLang, glossaryScope })).join("");
 
   const hero = `<section class="lesson-section-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
   <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>
   ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}
 </section>`;
-  gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${cards.join("")}</div></div>`;
+
+  if (compactLearn) {
+    gridEl.innerHTML = `<div class="lesson-vocab-wrap lesson-vocab-wrap--compact-learn">${hero}<div class="hsk-learn-vocab-dir"><ul class="hsk-learn-vocab-list" role="list">${bodyHtml}</ul></div></div>`;
+  } else {
+    gridEl.innerHTML = `<div class="lesson-vocab-wrap">${hero}<div class="lesson-card-grid word-grid">${bodyHtml}</div></div>`;
+  }
 
   bindWordCardActions();
 }

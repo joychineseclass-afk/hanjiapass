@@ -105,6 +105,11 @@ function lessonIsReview(lessonData) {
   );
 }
 
+/** HSK3.0 · HSK1 试点：单词区使用紧凑正式学习词条（非大卡片网格） */
+function shouldUseCompactLearnVocabLayout() {
+  return String(state.version || "").toLowerCase() === "hsk3.0" && Number(state.lv) === 1;
+}
+
 /**
  * Lumina HSK：LESSON_ENGINE 拉取原始课件后，统一经 HSK_LOADER.loadLessonDetail 收口（与 data 权威规则一致）。
  * - lessons.json：仅课程目录/元数据，不是普通课主词表。
@@ -1969,6 +1974,7 @@ async function openLesson({ lessonNo, file } = {}) {
       renderWordCards(wordsPanel, panelWords, null, {
         lang,
         scope: `hsk${state.lv}`,
+        layout: shouldUseCompactLearnVocabLayout() ? "compact-learn" : "cards",
       });
     }
   }
@@ -2083,6 +2089,7 @@ function rerenderHSKFromState() {
       renderWordCards(wordsPanel, lessonWords, null, {
         lang,
         scope: `hsk${state.lv}`,
+        layout: shouldUseCompactLearnVocabLayout() ? "compact-learn" : "cards",
       });
     }
   }
