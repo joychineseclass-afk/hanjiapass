@@ -772,23 +772,25 @@ export function renderWordCards(gridEl, items, _onClickWord, opts = {}) {
     ? arr.map((x) => buildLearnVocabEntry(x, { currentLang, glossaryScope })).join("")
     : arr.map((x) => buildWordCard(x, { currentLang, glossaryScope })).join("");
 
+  const speakAllLabel = escapeHtml(i18n.t("hsk.speak_all_words"));
   const heroTextBlock = `
     <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.words"))}</h3>
-    <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>
-    ${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}`;
+    <p class="lesson-section-subtitle">${escapeHtml(i18n.t("hsk.vocab_subtitle"))}</p>`;
+
+  const countAndSpeakRow =
+    arr.length
+      ? `<div class="lesson-vocab-hero-count-row">
+    <span class="lesson-section-count">${escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length }))}</span>
+    <button type="button" class="hsk-speak-all-words-btn" id="hskSpeakAllWordsBtn" aria-label="${speakAllLabel}" title="${speakAllLabel}">${speakAllLabel}</button>
+  </div>`
+      : "";
 
   const hero = compactLearn
-    ? `<section class="lesson-section-hero lesson-vocab-hero--compact-toolbar">
-  <div class="lesson-vocab-hero-row">
-    <div class="lesson-vocab-hero-text">${heroTextBlock}</div>
-    ${
-      arr.length
-        ? `<button type="button" class="hsk-speak-all-words-btn" id="hskSpeakAllWordsBtn" aria-label="${escapeHtml(i18n.t("hsk.speak_all_words"))}" title="${escapeHtml(i18n.t("hsk.speak_all_words"))}">🔊</button>`
-        : ""
-    }
-  </div>
+    ? `<section class="lesson-section-hero lesson-vocab-hero--compact-inline">
+  ${heroTextBlock}
+  ${countAndSpeakRow}
 </section>`
-    : `<section class="lesson-section-hero">${heroTextBlock}</section>`;
+    : `<section class="lesson-section-hero">${heroTextBlock}${arr.length ? '<span class="lesson-section-count">' + escapeHtml(i18n.t("hsk.vocab_count", { n: arr.length })) + "</span>" : ""}</section>`;
 
   if (compactLearn) {
     gridEl.innerHTML = `<div class="lesson-vocab-wrap lesson-vocab-wrap--compact-learn">${hero}<div class="hsk-learn-vocab-dir hsk-review-compact-dir"><ul class="hsk-learn-vocab-list" role="list">${bodyHtml}</ul></div></div>`;

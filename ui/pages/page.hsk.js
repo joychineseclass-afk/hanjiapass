@@ -3295,17 +3295,31 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0, speak
 }
 
 function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, speakPilot) {
+  const fullSpeakLabel = escapeHtml(i18n.t("hsk.dialogue_speak_full"));
   const fullSpeakBtn = speakPilot
-    ? `<button type="button" class="hsk-dialogue-speak-full-btn" id="hskDialogueSpeakFullBtn" aria-label="${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}" title="${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}">🔊 ${escapeHtml(i18n.t("hsk.dialogue_speak_full"))}</button>`
+    ? `<button type="button" class="hsk-dialogue-speak-full-btn" id="hskDialogueSpeakFullBtn" aria-label="${fullSpeakLabel}" title="${fullSpeakLabel}">${fullSpeakLabel}</button>`
     : "";
+
+  const lessonStripInner = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
+
+  const heroHead =
+    speakPilot && !lessonStripInner
+      ? `<div class="hsk-dialogue-hero-head hsk-dialogue-hero-head--with-speak">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+  ${fullSpeakBtn}
+</div>`
+      : `<h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>`;
+
   const heroCanvas = `<section class="lesson-section-hero lesson-dialogue-hero hsk1-dialogue-hero--scene-canvas">
-  <div class="hsk-dialogue-hero-toolbar">
-    <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
-    ${fullSpeakBtn}
-  </div>
+  ${heroHead}
 </section>`;
 
-  const lessonStripHtml = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
+  const lessonStripWrap =
+    lessonStripInner && speakPilot
+      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row">${lessonStripInner}${fullSpeakBtn}</div>`
+      : lessonStripInner
+        ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripInner}</div>`
+        : "";
 
   const blocks = cards
     .map((card, index) => {
@@ -3337,7 +3351,7 @@ function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, spe
     .filter(Boolean)
     .join("\n");
 
-  return `${heroCanvas}${lessonStripHtml ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripHtml}</div>` : ""}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
+  return `${heroCanvas}${lessonStripWrap}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
 }
 
 /** 对话渲染 */

@@ -92,8 +92,8 @@
       "review": "復習"
     },
     "vocab_subtitle": "本課の単語。クリックで発音を聞けます。",
-    "speak_all_words": "すべての単語を再生",
-    "dialogue_speak_full": "全文を再生",
+    "speak_all_words": "🔊 すべての単語を再生",
+    "dialogue_speak_full": "🔊 全文を再生",
     "vocab_count": "{n}語",
     "dialogue_subtitle": "本課の会話。中国語をクリックで読み上げ。",
     "grammar_title": "文法ポイント",
