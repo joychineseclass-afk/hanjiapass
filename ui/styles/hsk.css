@@ -1345,17 +1345,16 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   margin-top: 4px;
 }
 
-/* 系统语言一句话：语法点直观提示（短），位于拼音与长说明之间 */
+/* 第三行：与单词卡「释义」同级，直给功能对应（韩/英/日等），不重复标题与拼音 */
 .lesson-grammar-hint {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.45;
-  color: #334155;
-  margin: 8px 0 0;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(241, 245, 249, 0.95);
-  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  margin: 6px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
 }
 
 .lesson-grammar-expl {

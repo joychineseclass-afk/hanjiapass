@@ -165,16 +165,16 @@
   ],
   "grammar": [
     {
-      "pattern": "有字句",
-      "pinyin": "yǒu zìjù",
+      "pattern": "有",
+      "pinyin": "yǒu",
       "hint": {
-        "zh": "有 / yǒu · 有、在",
-        "kr": "有 / yǒu / 있다",
-        "en": "有 / yǒu / have; there is/are",
-        "jp": "有 / yǒu / ある・いる"
+        "zh": "有、在",
+        "kr": "있다",
+        "en": "have; there is/are",
+        "jp": "ある・いる"
       },
       "explanation": {
-        "zh": "动词「有」表示领有或存在，如「我家有四口人」「有一个妹妹」。",
+        "zh": "「有字句」：动词「有」表示领有或存在，如「我家有四口人」「有一个妹妹」。",
         "kr": "동사 「有」는 소유·존재를 나타냅니다(我家有四口人, 有一个妹妹).",
         "en": "有 expresses possession or existence: having family members, etc.",
         "jp": "「有」は所有・存在を表します。"
@@ -195,10 +195,10 @@
       "pattern": "没有",
       "pinyin": "méiyǒu",
       "hint": {
-        "zh": "没有 / méiyǒu",
-        "kr": "méiyǒu / 없다",
-        "en": "méiyǒu / no; don’t have",
-        "jp": "méiyǒu / ない"
+        "zh": "无、否定",
+        "kr": "없다",
+        "en": "don’t have; no",
+        "jp": "ない"
       },
       "explanation": {
         "zh": "「没有」是「有」的否定，表示不存在或不具有，可单独回答问句。",
@@ -222,10 +222,10 @@
       "pattern": "几 + 量词",
       "pinyin": "jǐ + liàngcí",
       "hint": {
-        "zh": "几 + 量 · jǐ + liàngcí",
-        "kr": "jǐ + liàngcí / 몇 + 양사",
-        "en": "jǐ + liàngcí / how many + MW",
-        "jp": "jǐ + liàngcí / いくつ＋量詞"
+        "zh": "问数量",
+        "kr": "몇 + 양사",
+        "en": "how many + MW",
+        "jp": "いくつ＋量詞"
       },
       "explanation": {
         "zh": "疑问代词「几」询问数量，常后接量词，如「几口人」问家庭人口。",
@@ -249,10 +249,10 @@
       "pattern": "数词 + 量词",
       "pinyin": "shùcí + liàngcí",
       "hint": {
-        "zh": "数 + 量 · shùcí + liàngcí",
-        "kr": "shùcí + liàngcí / 숫자 + 양사",
-        "en": "shùcí + liàngcí / numeral + classifier",
-        "jp": "shùcí + liàngcí / 数詞＋量詞"
+        "zh": "数字 + 量词",
+        "kr": "숫자 + 양사",
+        "en": "numeral + classifier",
+        "jp": "数詞＋量詞"
       },
       "explanation": {
         "zh": "汉语中数词与名词之间常加量词，如「一个妹妹」「四口人」。",
