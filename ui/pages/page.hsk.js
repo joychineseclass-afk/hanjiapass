@@ -629,6 +629,32 @@ function pickCardTitle(obj, cardIndex = 1) {
 }
 
 /**
+ * 可选：会话卡片的场景说明（多语言对象或字符串）
+ */
+function pickCardSummary(summaryObj) {
+  if (summaryObj == null) return "";
+  if (typeof summaryObj === "string") return summaryObj.trim();
+
+  const lang = normalizePracticeLangAliases(getLang());
+  const v =
+    _getStrictLangText(summaryObj, lang) ||
+    _trimStr(summaryObj && summaryObj.zh) ||
+    _trimStr(summaryObj && summaryObj.cn) ||
+    "";
+
+  return v;
+}
+
+/** HSK 3.0 · HSK1 · 第1课试点：会话区「一会话一画布」展示 */
+function shouldUseHsk30Hsk1Lesson1SceneCanvasDialogue(lessonData) {
+  if (String(state.version || "").toLowerCase() !== "hsk3.0") return false;
+  if (Number(state.lv) !== 1) return false;
+  const raw = (lessonData && lessonData._raw) || lessonData || {};
+  const no = Number(raw.lessonNo ?? state.current?.lessonNo ?? 0);
+  return no === 1;
+}
+
+/**
  * Grammar explanation
  * Only explanation-like fields, no translation/meaning fallback
  */
@@ -2962,6 +2988,80 @@ function renderDialogueLine(line, lang, showPinyin) {
 </article>`;
 }
 
+/** 场景画布模式：左右交错气泡（保留 lesson-dialogue-line 以兼容点读高亮） */
+function renderDialogueLineSceneCanvasBubble(line, showPinyin, side) {
+  const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
+  const zh = String(
+    (line && line.text) ||
+      (line && line.zh) ||
+      (line && line.cn) ||
+      (line && line.line) ||
+      ""
+  ).trim();
+
+  let py = maybeGetManualPinyin(line, "dialogue");
+  if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
+
+  const trans = pickDialogueTranslation(line, zh);
+  const zhAttrs = zh
+    ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
+    : "";
+
+  const sideClass =
+    side === "right" ? "hsk1-scene-bubble-line--right" : "hsk1-scene-bubble-line--left";
+
+  return `<article class="lesson-dialogue-line hsk1-scene-bubble-line ${sideClass}">
+  <div class="hsk1-scene-bubble">
+  ${spk ? `<div class="hsk1-scene-bubble-speaker">${escapeHtml(spk)}</div>` : ""}
+  <div class="lesson-dialogue-zh hsk1-scene-bubble-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+  ${py ? `<div class="lesson-dialogue-pinyin hsk1-scene-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
+  ${trans ? `<div class="lesson-dialogue-translation hsk1-scene-bubble-trans">${escapeHtml(trans)}</div>` : ""}
+  </div>
+</article>`;
+}
+
+function buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPinyin) {
+  let sceneIntroHtml = "";
+  if (raw?.scene && typeof raw.scene === "object" && SCENE_ENGINE?.getSceneFromLesson) {
+    const scene = SCENE_ENGINE.getSceneFromLesson(raw);
+    if (scene) {
+      const h = SceneRenderer.renderSceneHeader(scene, lang);
+      if (h) sceneIntroHtml = `<div class="hsk1-dialogue-lesson-scene-intro">${h}</div>`;
+    }
+  }
+
+  const blocks = cards
+    .map((card, index) => {
+      const lines = Array.isArray(card && card.lines) ? card.lines : [];
+      if (!lines.length) return "";
+      const titleText = pickCardTitle(card && card.title, index + 1);
+      const summaryText = pickCardSummary(card && card.summary);
+      const lineHtml = lines
+        .map((line, li) =>
+          renderDialogueLineSceneCanvasBubble(
+            line,
+            showPinyin,
+            li % 2 === 0 ? "left" : "right"
+          )
+        )
+        .join("");
+
+      return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card">
+  <header class="hsk1-dialogue-scene-card-head">
+    <h4 class="lesson-dialogue-card-title hsk1-dialogue-scene-card-title">${escapeHtml(titleText)}</h4>
+    ${summaryText ? `<p class="hsk1-dialogue-scene-card-summary">${escapeHtml(summaryText)}</p>` : ""}
+  </header>
+  <div class="hsk1-dialogue-canvas">
+    <div class="hsk1-dialogue-bubbles">${lineHtml}</div>
+  </div>
+</section>`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
+  return `${hero}${sceneIntroHtml}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
+}
+
 /** 对话渲染 */
 function buildDialogueHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
@@ -2991,6 +3091,10 @@ function buildDialogueHTML(lessonData) {
     level: lessonData && lessonData.level,
     version: lessonData && lessonData.version,
   });
+
+  if (shouldUseHsk30Hsk1Lesson1SceneCanvasDialogue(lessonData)) {
+    return buildHsk1Lesson1SceneCanvasDialogueHTML(raw, cards, hero, lang, showPinyin);
+  }
 
   return `${hero}<div class="lesson-dialogue-list">
 ${cards

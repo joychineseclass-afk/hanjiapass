@@ -781,6 +781,132 @@
   background: rgba(37, 99, 235, 0.04);
 }
 
+/* ===============================
+   HSK 3.0 · HSK1 试点：一会话一画布（简洁教学风，非 Kids 幼龄化）
+================================== */
+.hsk1-dialogue-lesson-scene-intro {
+  margin-bottom: 18px;
+}
+
+.hsk1-dialogue-lesson-scene-intro .scene-header {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.hsk1-dialogue-lesson-scene-intro .scene-title {
+  font-size: 1.05rem;
+}
+
+.hsk1-dialogue-lesson-scene-intro .scene-summary {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0.35em 0 0;
+  line-height: 1.55;
+}
+
+.hsk1-dialogue-scene-list {
+  gap: 22px;
+}
+
+.hsk1-dialogue-scene-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.hsk1-dialogue-scene-card-head {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #fff;
+}
+
+.hsk1-dialogue-scene-card-title {
+  margin: 0 0 6px;
+}
+
+.hsk1-dialogue-scene-card-summary {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.55;
+}
+
+.hsk1-dialogue-canvas {
+  padding: 16px 14px 18px;
+  min-height: 80px;
+  background: linear-gradient(165deg, #f0f9ff 0%, #f8fafc 48%, #f1f5f9 100%);
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.hsk1-dialogue-bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+article.lesson-dialogue-line.hsk1-scene-bubble-line {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hsk1-scene-bubble-line {
+  display: flex;
+  width: 100%;
+  margin: 0;
+}
+
+.hsk1-scene-bubble-line--left {
+  justify-content: flex-start;
+}
+
+.hsk1-scene-bubble-line--right {
+  justify-content: flex-end;
+}
+
+.hsk1-scene-bubble {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.hsk1-scene-bubble-line--right .hsk1-scene-bubble {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(167, 243, 208, 0.65);
+}
+
+.hsk1-scene-bubble-speaker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0ea5e9;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.hsk1-scene-bubble-line--right .hsk1-scene-bubble-speaker {
+  color: #059669;
+}
+
+.hsk1-scene-bubble-zh {
+  font-size: 1.125rem;
+}
+
+.hsk1-scene-bubble-pinyin {
+  font-size: 0.9375rem;
+}
+
+.hsk1-scene-bubble-trans {
+  font-size: 0.875rem;
+  color: #334155;
+}
+
 .is-speaking,
 .lesson-status-speaking {
   outline: 2px solid rgba(37, 99, 235, 0.35);

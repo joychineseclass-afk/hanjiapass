@@ -57,6 +57,12 @@
         "en": "Dialogue 1 | Greetings",
         "jp": "会話1｜あいさつ"
       },
+      "summary": {
+        "zh": "校园内师生相遇，完成问候与道别。",
+        "kr": "교정에서 선생님과 마주쳐 인사하고 작별합니다.",
+        "en": "On campus, student and teacher greet each other and say goodbye.",
+        "jp": "校内で先生と出会い、あいさつと別れの言葉を交わします。"
+      },
       "lines": [
         {
           "speaker": "李明",
@@ -106,6 +112,12 @@
         "kr": "회화 2｜사과",
         "en": "Dialogue 2 | Apology",
         "jp": "会話2｜謝罪"
+      },
+      "summary": {
+        "zh": "同学之间发生碰撞，致歉并表示感谢。",
+        "kr": "친구끼리 부딪힌 뒤 사과하고 고마움을 표합니다.",
+        "en": "After bumping into each other, classmates apologize and say thanks.",
+        "jp": "同級生同士でぶつかったあと、謝罪とお礼の言葉を交わします。"
       },
       "lines": [
         {
