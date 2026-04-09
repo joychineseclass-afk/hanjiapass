@@ -212,19 +212,45 @@ export class HskBulkTtsPlayer {
 
   /** 从当前 utterance 暂停点继续（不重建队列、不移动 idx） */
   resumeSynthFromPause() {
+    const syn = window.speechSynthesis;
     try {
-      if (this._needsSynthResume || window.speechSynthesis?.paused) {
-        window.speechSynthesis.resume();
+      if (syn && (this._needsSynthResume || syn.paused)) {
+        syn.resume();
       }
     } catch (_) {}
-    this._needsSynthResume = false;
+    try {
+      // 若仍 paused，保留 _needsSynthResume，避免下一次误走 play()→_step() 重开同一句或无声
+      if (syn && !syn.paused) {
+        this._needsSynthResume = false;
+      }
+    } catch (_) {
+      this._needsSynthResume = false;
+    }
     this.playing = true;
     this._emit();
+    requestAnimationFrame(() => {
+      try {
+        const s = window.speechSynthesis;
+        if (s?.paused) {
+          try {
+            s.resume();
+          } catch (_) {}
+        }
+        if (s && !s.paused) {
+          this._needsSynthResume = false;
+        }
+      } catch (_) {}
+      this._emit();
+    });
   }
 
   play() {
     if (!this.timeline.length) return;
     if (this._needsSynthResume || this.isSynthPaused()) {
+      this.resumeSynthFromPause();
+      return;
+    }
+    if (window.speechSynthesis?.paused) {
       this.resumeSynthFromPause();
       return;
     }
@@ -265,6 +291,10 @@ export class HskBulkTtsPlayer {
       this.resumeSynthFromPause();
       return;
     }
+    if (window.speechSynthesis?.paused) {
+      this.resumeSynthFromPause();
+      return;
+    }
     if (this._gapRemainMs > 0) {
       this.playing = true;
       this._resumeGap();
@@ -292,6 +322,10 @@ export class HskBulkTtsPlayer {
     } catch (_) {}
     if (!this.playing && this.idx < this.timeline.length) {
       this.resume();
+      return;
+    }
+    if (this.playing && window.speechSynthesis?.paused) {
+      this.resumeSynthFromPause();
       return;
     }
     this.play();
@@ -361,11 +395,13 @@ export class HskBulkTtsPlayer {
     u.rate = Math.min(10, Math.max(0.1, 0.95 * this.userRate));
     u.onend = () => {
       this._utteranceInFlight = false;
+      this._needsSynthResume = false;
       this.idx++;
       this._step();
     };
     u.onerror = () => {
       this._utteranceInFlight = false;
+      this._needsSynthResume = false;
       this.idx++;
       this._step();
     };
@@ -374,6 +410,7 @@ export class HskBulkTtsPlayer {
       window.speechSynthesis.speak(u);
     } catch (_) {
       this._utteranceInFlight = false;
+      this._needsSynthResume = false;
       this.idx++;
       this._step();
     }
@@ -423,10 +460,12 @@ function bindPlayerUi(player, root) {
     if (!playBtn) return;
     let active = false;
     try {
-      active =
-        !!(window.speechSynthesis?.speaking && !window.speechSynthesis.paused) || !!player._inGap;
+      if (player.playing) {
+        const syn = window.speechSynthesis;
+        active = !!(syn?.speaking && !syn.paused) || !!player._inGap;
+      }
     } catch (_) {
-      active = !!player._inGap;
+      active = !!(player.playing && player._inGap);
     }
     playBtn.textContent = active ? "⏸" : "▶";
   };
