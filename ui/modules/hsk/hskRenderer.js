@@ -725,9 +725,10 @@ function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
     let pinyinStr = wordPinyin(raw);
     if (!pinyinStr && han) pinyinStr = resolvePinyin(han, pinyinStr);
 
-    let mainStr = getMeaningByLang(raw, currentLang, han, glossaryScope);
-    if (mainStr && mainStr.includes("object Object")) mainStr = "";
-    if (!mainStr) mainStr = i18n.t("hsk.meaning_empty");
+    let rawMeaning = getMeaningByLang(raw, currentLang, han, glossaryScope);
+    if (rawMeaning && rawMeaning.includes("object Object")) rawMeaning = "";
+    const meaningForTts = String(rawMeaning || "").trim();
+    const mainStr = meaningForTts || i18n.t("hsk.meaning_empty");
 
     const posStr = getPosByLang(raw, currentLang, glossaryScope) || "";
 
@@ -738,7 +739,7 @@ function buildLearnVocabEntry(x, { currentLang, glossaryScope } = {}) {
     const sep = ` <span class="hsk-lr-sep">/</span> `;
 
     const zhBlock = han
-      ? `<button type="button" class="word-speak-zone hsk-learn-vocab-zhbtn" data-speak-text="${escapeHtmlAttr(han)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="hsk-lr-line-zh word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon" aria-hidden="true">${speakIconSvg}</span></button>`
+      ? `<button type="button" class="word-speak-zone hsk-learn-vocab-zhbtn" data-speak-text="${escapeHtmlAttr(han)}" data-speak-meaning="${escapeHtmlAttr(meaningForTts)}" aria-label="${escapeHtmlAttr(`${speakAria} ${han}`)}"><span class="hsk-lr-line-zh word-hanzi">${escapeHtml(han)}</span><span class="word-speak-icon" aria-hidden="true">${speakIconSvg}</span></button>`
       : `<span class="hsk-lr-line-zh">${escapeHtml(han)}</span>`;
 
     const chunks = [zhBlock];
@@ -867,9 +868,98 @@ export function renderReviewWords(gridEl, items, opts = {}) {
 
 let _wordCardBound = false;
 
+/** 打断 HSK3.0 紧凑词条「中文→停顿→释义」链上的间隙定时器 */
+let _learnVocabSpeakGapTimer = null;
+/** 任一点读开始自增，用于丢弃过期的 onEnd / setTimeout */
+let _wordSpeakGeneration = 0;
+
+function cancelLearnVocabSpeakGapTimer() {
+  if (_learnVocabSpeakGapTimer != null) {
+    clearTimeout(_learnVocabSpeakGapTimer);
+    _learnVocabSpeakGapTimer = null;
+  }
+}
+
+function bumpWordSpeakGeneration() {
+  _wordSpeakGeneration += 1;
+  cancelLearnVocabSpeakGapTimer();
+}
+
+/** 系统语言释义朗读用的 TTS 语言码（与 kids1 ttsLangForGloss 一致） */
+function ttsBcp47ForUiMeaningLang() {
+  const l = normalizeLang(getLang());
+  if (l === "kr") return "ko-KR";
+  if (l === "jp") return "ja-JP";
+  if (l === "cn") return "zh-CN";
+  if (l === "en") return "en-US";
+  return "ko-KR";
+}
+
+/**
+ * HSK3.0 HSK1 紧凑单词区：先读中文，停顿约 0.4~0.7s，再读系统语言释义（无释义则仅中文）。
+ */
+async function playLearnCompactVocabSpeak(zh, meaningRaw, cardEl) {
+  const hanStr = String(zh || "").trim();
+  if (!hanStr) return;
+  bumpWordSpeakGeneration();
+  const gen = _wordSpeakGeneration;
+  const meanStr = String(meaningRaw || "").trim();
+
+  const finish = () => {
+    if (gen !== _wordSpeakGeneration) return;
+    if (cardEl) cardEl.classList.remove("is-speaking");
+  };
+
+  try {
+    const { AUDIO_ENGINE } = await import("../../platform/index.js");
+    if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
+      if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
+      return;
+    }
+    AUDIO_ENGINE.stop();
+    document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
+    if (cardEl) cardEl.classList.add("is-speaking");
+
+    if (!meanStr) {
+      AUDIO_ENGINE.playText(hanStr, {
+        lang: "zh-CN",
+        rate: 0.95,
+        onEnd: finish,
+        onError: finish,
+      });
+      return;
+    }
+
+    const gapMs = 400 + Math.floor(Math.random() * 301);
+
+    AUDIO_ENGINE.playText(hanStr, {
+      lang: "zh-CN",
+      rate: 0.95,
+      onEnd: () => {
+        if (gen !== _wordSpeakGeneration) return;
+        _learnVocabSpeakGapTimer = setTimeout(() => {
+          _learnVocabSpeakGapTimer = null;
+          if (gen !== _wordSpeakGeneration) return;
+          AUDIO_ENGINE.playText(meanStr, {
+            lang: ttsBcp47ForUiMeaningLang(),
+            rate: 0.95,
+            onEnd: finish,
+            onError: finish,
+          });
+        }, gapMs);
+      },
+      onError: finish,
+    });
+  } catch (err) {
+    if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] learn compact speak failed:", err);
+    finish();
+  }
+}
+
 async function playWordCardSpeak(text, cardEl) {
   const t = String(text || "").trim();
   if (!t) return;
+  bumpWordSpeakGeneration();
   try {
     const { AUDIO_ENGINE } = await import("../../platform/index.js");
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
@@ -904,6 +994,7 @@ export function bindWordCardActions() {
       if (text) {
         e.preventDefault();
         e.stopPropagation();
+        bumpWordSpeakGeneration();
         try {
           const { AUDIO_ENGINE } = await import("../../platform/index.js");
           if (AUDIO_ENGINE?.playText) {
@@ -925,6 +1016,11 @@ export function bindWordCardActions() {
       e.preventDefault();
       e.stopPropagation();
       const text = (speakZone.dataset.speakText || "").trim();
+      if (speakZone.classList.contains("hsk-learn-vocab-zhbtn")) {
+        const meaning = (speakZone.dataset.speakMeaning != null ? speakZone.dataset.speakMeaning : "").trim();
+        await playLearnCompactVocabSpeak(text, meaning, card);
+        return;
+      }
       await playWordCardSpeak(text, card);
       return;
     }
