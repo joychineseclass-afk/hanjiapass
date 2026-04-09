@@ -33,7 +33,12 @@ import {
 } from "../modules/hsk/hskLessonReview.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
-import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
+import {
+  resolvePinyin,
+  maybeGetManualPinyin,
+  shouldShowPinyin,
+  normalizePinyinDisplayAllLowercase,
+} from "../utils/pinyinEngine.js";
 import { loadGlossary } from "../utils/glossary.js";
 import {
   LESSON_ENGINE,
@@ -3108,6 +3113,7 @@ function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0) {
 
   let py = maybeGetManualPinyin(line, "dialogue");
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
+  if (py) py = normalizePinyinDisplayAllLowercase(py);
 
   const trans = pickDialogueTranslation(line, zh);
   const zhAttrs = zh

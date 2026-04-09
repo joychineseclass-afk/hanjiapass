@@ -153,3 +153,11 @@ export function maybeGetManualPinyin(raw, context = "vocab") {
 export function normalizePinyinInput(text) {
   return String(text ?? "").replace(/\s+/g, " ").trim();
 }
+
+/**
+ * 会话画布等显示用：拉丁字母一律小写，保留声调符号（含 ü 等）；不改动中文/译文。
+ * 仅作用于展示字符串，不回写数据源。
+ */
+export function normalizePinyinDisplayAllLowercase(text) {
+  return String(text ?? "").toLowerCase();
+}
