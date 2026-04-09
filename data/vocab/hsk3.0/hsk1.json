@@ -8464,5 +8464,22 @@
       "level": "hsk1",
       "version": "hsk3.0"
     }
+  },
+  {
+    "id": "hsk3.0:hsk1:0499",
+    "hanzi": "只",
+    "pinyin": "zhǐ",
+    "meaning": {
+      "zh": "只",
+      "en": "only; merely",
+      "ko": "만; 오직"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
   }
 ]

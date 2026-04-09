@@ -6,28 +6,47 @@
   "lessonNo": 2,
   "type": "lesson",
   "title": {
-    "zh": "第2课｜轻量画布验证",
-    "cn": "第2课｜轻量画布验证",
-    "kr": "제2과 UI 검증",
-    "en": "Lesson 2 | Canvas smoke test",
-    "jp": "第2課｜表示検証"
+    "zh": "第2课｜你叫什么名字？",
+    "cn": "第2课｜你叫什么名字？",
+    "kr": "제2과｜이름이 뭐예요?",
+    "en": "Lesson 2 | What’s your name?",
+    "jp": "第2課｜お名前は？"
   },
   "summary": {
-    "zh": "用于验证 HSK3.0 HSK1 多课次会话画布与标题兜底。",
-    "kr": "HSK3.0 HSK1 다회차 대화 캔버스·제목 폴백 검증용.",
-    "en": "Smoke test for multi-lesson dialogue canvas.",
-    "jp": "複数課でのキャンバス表示確認用。"
+    "zh": "学习询问姓名、自我介绍与认识新同学，掌握「叫」「是」「吗」等基础句型。",
+    "kr": "이름 묻기·자기소개·새 친구 사귀기를 배우고 「叫」「是」「吗」 등 기본 문형을 익힙니다.",
+    "en": "Ask names, introduce yourself, and meet classmates — 叫, 是, 吗, and more.",
+    "jp": "名前を尋ねる・自己紹介・新しいクラスメートとのあいさつ、「叫」「是」「吗」などの基本文型を学びます。"
   },
   "scene": {
     "id": "hsk30_l2_scene",
     "title": {
-      "zh": "自我介绍",
-      "kr": "자기소개",
-      "en": "Introducing yourself",
-      "jp": "自己紹介"
+      "zh": "自我介绍与认识新同学",
+      "kr": "자기소개와 새 친구",
+      "en": "Introducing yourself and meeting classmates",
+      "jp": "自己紹介と新しいクラスメート"
+    },
+    "summary": {
+      "zh": "会话一：第一次见面，询问姓名和身份；会话二：新同学之间互相认识。",
+      "kr": "회화1: 첫 만남에서 이름과 신분 묻기; 회화2: 새 친구끼리 서로 알아가기.",
+      "en": "Dialogue 1: first meeting, name and role; Dialogue 2: classmates getting to know each other.",
+      "jp": "会話1：初対面で名前と身分；会話2：新しいクラスメート同士のあいさつ。"
     }
   },
-  "objectives": [],
+  "objectives": [
+    {
+      "zh": "能用「你叫什么名字？」「我叫……」完成自我介绍与询问姓名",
+      "kr": "「你叫什么名字？」「我叫……」로 자기소개와 이름 묻기를 할 수 있다",
+      "en": "Use 你叫什么名字？ and 我叫… to ask and give names",
+      "jp": "「你叫什么名字？」「我叫……」で名前を尋ねたり名乗ったりできる"
+    },
+    {
+      "zh": "能用「是……吗？」「是，我是……」谈论身份",
+      "kr": "「是……吗？」「是，我是……」로 신분을 말할 수 있다",
+      "en": "Use 是…吗？ and 是，我是… to talk about identity",
+      "jp": "「是……吗？」「是，我是……」で身分について話せる"
+    }
+  ],
   "vocab": [],
   "dialogue": [],
   "dialogueCards": [
@@ -35,80 +54,387 @@
       "title": {
         "zh": "会话一｜问名字",
         "kr": "회화 1｜이름 묻기",
-        "en": "Dialogue 1 | Names",
-        "jp": "会話1｜名前"
+        "en": "Dialogue 1 | What’s your name?",
+        "jp": "会話1｜名前を聞く"
       },
       "summary": {
-        "zh": "同学之间询问姓名。",
-        "kr": "학생들이 서로 이름을 묻습니다.",
-        "en": "Students ask each other’s names.",
-        "jp": "学生同士で名前を尋ねます。"
+        "zh": "第一次见面，询问姓名和身份。",
+        "kr": "첫 만남에서 이름과 신분을 묻습니다.",
+        "en": "First meeting: asking for a name and whether someone is a new student.",
+        "jp": "初対面で名前と身分を尋ねます。"
       },
       "lines": [
         {
-          "speaker": "A",
-          "text": "你好，你叫什么名字？",
-          "pinyin": "Nǐ hǎo, nǐ jiào shénme míngzi?",
+          "speaker": "王美",
+          "text": "你好！请问，你叫什么名字？",
+          "pinyin": "Nǐ hǎo! Qǐngwèn, nǐ jiào shénme míngzi?",
           "translation": {
-            "kr": "안녕, 이름이 뭐야?",
-            "en": "Hi, what’s your name?",
-            "jp": "こんにちは、お名前は？"
+            "kr": "안녕하세요! 실례지만 이름이 뭐예요?",
+            "en": "Hi! Excuse me — what’s your name?",
+            "jp": "こんにちは！すみません、お名前は？"
           }
         },
         {
-          "speaker": "B",
-          "text": "我叫王明。",
-          "pinyin": "Wǒ jiào Wáng Míng.",
+          "speaker": "汤姆",
+          "text": "你好！我叫汤姆。",
+          "pinyin": "Nǐ hǎo! Wǒ jiào Tāngmǔ.",
           "translation": {
-            "kr": "저는 왕밍이에요.",
-            "en": "I’m Wang Ming.",
-            "jp": "王明です。"
+            "kr": "안녕하세요! 저는 탐이에요.",
+            "en": "Hi! My name is Tom.",
+            "jp": "こんにちは！トムです。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "你是新来的学生吗？",
+          "pinyin": "Nǐ shì xīnlái de xuéshēng ma?",
+          "translation": {
+            "kr": "새로 온 학생이에요?",
+            "en": "Are you a new student?",
+            "jp": "新しく来た学生さんですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "是，我是新来的学生。",
+          "pinyin": "Shì, wǒ shì xīnlái de xuéshēng.",
+          "translation": {
+            "kr": "네, 저는 새로 온 학생이에요.",
+            "en": "Yes, I’m a new student.",
+            "jp": "はい、新しく来た学生です。"
           }
         }
       ]
     },
     {
       "title": {
-        "zh": "会话2你好",
-        "kr": "회화 2",
-        "en": "Dialogue 2 Hi",
-        "jp": "会話2"
+        "zh": "会话二｜认识新同学",
+        "kr": "회화 2｜새 친구 알아가기",
+        "en": "Dialogue 2 | Meeting classmates",
+        "jp": "会話2｜新しいクラスメート"
+      },
+      "summary": {
+        "zh": "新同学之间互相认识。",
+        "kr": "새 친구끼리 서로 알아갑니다.",
+        "en": "New classmates introduce themselves and say nice to meet you.",
+        "jp": "新しいクラスメート同士があいさつを交わします。"
       },
       "lines": [
         {
-          "speaker": "A",
-          "text": "很高兴认识你。",
-          "pinyin": "Hěn gāoxìng rènshi nǐ.",
+          "speaker": "李明",
+          "text": "你好！我叫李明。",
+          "pinyin": "Nǐ hǎo! Wǒ jiào Lǐ Míng.",
           "translation": {
-            "kr": "만나서 반가워.",
-            "en": "Nice to meet you.",
-            "jp": "はじめまして。"
+            "kr": "안녕하세요! 저는 리밍이에요.",
+            "en": "Hi! I’m Li Ming.",
+            "jp": "こんにちは！李明です。"
           }
         },
         {
-          "speaker": "B",
-          "text": "我也是。",
-          "pinyin": "Wǒ yě shì.",
+          "speaker": "汤姆",
+          "text": "你好！我叫汤姆。",
+          "pinyin": "Nǐ hǎo! Wǒ jiào Tāngmǔ.",
           "translation": {
-            "kr": "나도.",
-            "en": "Me too.",
-            "jp": "私も。"
+            "kr": "안녕하세요! 저는 탐이에요.",
+            "en": "Hi! I’m Tom.",
+            "jp": "こんにちは！トムです。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "认识你很高兴。",
+          "pinyin": "Rènshi nǐ hěn gāoxìng.",
+          "translation": {
+            "kr": "만나서 반가워요.",
+            "en": "Nice to meet you.",
+            "jp": "はじめまして、よろしくお願いします。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "认识你我也很高兴。",
+          "pinyin": "Rènshi nǐ wǒ yě hěn gāoxìng.",
+          "translation": {
+            "kr": "저도 만나서 반가워요.",
+            "en": "Nice to meet you too.",
+            "jp": "こちらこそ、はじめまして。"
           }
         }
       ]
     }
   ],
-  "grammar": [],
-  "extension": [],
-  "practice": [],
+  "grammar": [
+    {
+      "pattern": "叫 + 名字",
+      "pinyin": "jiào + míngzi",
+      "explanation": {
+        "zh": "用「叫」引出姓名，常见结构为「我叫 + 姓名」。问句可用「你叫什么名字？」。",
+        "kr": "「叫」로 이름을 말하며 「我叫 + 이름」이 흔합니다. 질문은 「你叫什么名字？」.",
+        "en": "叫 introduces a name: 我叫 + name. Ask with 你叫什么名字？.",
+        "jp": "「叫」で名前を言い、「我叫＋名前」がよく使われます。質問は「你叫什么名字？」。"
+      },
+      "examples": [
+        {
+          "zh": "我叫汤姆。",
+          "pinyin": "Wǒ jiào Tāngmǔ.",
+          "translation": {
+            "kr": "저는 탐이에요.",
+            "en": "My name is Tom.",
+            "jp": "トムです。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "是字句",
+      "pinyin": "shì zìjù",
+      "explanation": {
+        "zh": "用「是」表示判断或身份，结构常为「主语 + 是 + 说明」。",
+        "kr": "「是」로 판단·신분을 나타내며 「주어 + 是 + 설명」 구조가 흔합니다.",
+        "en": "是 links subject and predicate for identity or classification.",
+        "jp": "「は」に相当する「是」で、主語と説明を結びます。"
+      },
+      "examples": [
+        {
+          "zh": "我是新来的学生。",
+          "pinyin": "Wǒ shì xīnlái de xuéshēng.",
+          "translation": {
+            "kr": "저는 새로 온 학생이에요.",
+            "en": "I’m a new student.",
+            "jp": "私は新しく来た学生です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "吗问句",
+      "pinyin": "ma wènjù",
+      "explanation": {
+        "zh": "陈述句末加语气助词「吗」构成是非问句，回答常用「是」或「不是」。",
+        "kr": "평서문 끝에 「吗」를 붙여 예/아니오 질문을 만들고 「是／不是」로 답합니다.",
+        "en": "Add 吗 to turn a statement into a yes/no question; answer with 是 / 不是.",
+        "jp": "文末に「吗」を付けてYes/No疑問文にし、「是／不是」で答えます。"
+      },
+      "examples": [
+        {
+          "zh": "你是新来的学生吗？",
+          "pinyin": "Nǐ shì xīnlái de xuéshēng ma?",
+          "translation": {
+            "kr": "새로 온 학생이에요?",
+            "en": "Are you a new student?",
+            "jp": "新しく来た学生ですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "的字结构",
+      "pinyin": "de zì jiégòu",
+      "explanation": {
+        "zh": "结构助词「的」连接修饰语与中心语，如「新来的 + 学生」表示「新来的」修饰「学生」。",
+        "kr": "구조조사 「의」에 해당하는 「的」가 수식어와 중심어를 잇습니다(예: 新来的学生).",
+        "en": "的 links a modifier to a noun, e.g. 新来的学生 “new (arrived) student”.",
+        "jp": "「的」は修飾語と中心語をつなぎます（例：新来的学生）。"
+      },
+      "examples": [
+        {
+          "zh": "新来的学生",
+          "pinyin": "xīnlái de xuéshēng",
+          "translation": {
+            "kr": "새로 온 학생",
+            "en": "new student",
+            "jp": "新しく来た学生"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "也",
+      "pinyin": "yě",
+      "explanation": {
+        "zh": "副词「也」表示同样，用于补充与对方相同的情况。",
+        "kr": "부사 「也」는 「또한／역시」로, 상대와 같은 상황을 덧붙입니다.",
+        "en": "也 means “also” or “too,” adding the same situation as the other person.",
+        "jp": "副詞「も」に近い「也」で、相手と同じことを付け加えます。"
+      },
+      "examples": [
+        {
+          "zh": "认识你我也很高兴。",
+          "pinyin": "Rènshi nǐ wǒ yě hěn gāoxìng.",
+          "translation": {
+            "kr": "저도 만나서 반가워요.",
+            "en": "I’m happy to meet you too.",
+            "jp": "こちらこそうれしいです。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜学生信息卡",
+        "kr": "읽기 자료｜학생 정보 카드",
+        "en": "Reading | Student info card",
+        "jp": "読み物｜学生情報カード"
+      },
+      "sentences": [
+        {
+          "zh": "姓名：李明",
+          "pinyin": "Xìngmíng: Lǐ Míng",
+          "translations": {
+            "kr": "성명: 리밍",
+            "en": "Name: Li Ming",
+            "jp": "氏名：李明"
+          }
+        },
+        {
+          "zh": "国籍：中国",
+          "pinyin": "Guójí: Zhōngguó",
+          "translations": {
+            "kr": "국적: 중국",
+            "en": "Nationality: China",
+            "jp": "国籍：中国"
+          }
+        },
+        {
+          "zh": "身份：学生",
+          "pinyin": "Shēnfèn: xuéshēng",
+          "translations": {
+            "kr": "신분: 학생",
+            "en": "Status: student",
+            "jp": "身分：学生"
+          }
+        },
+        {
+          "zh": "学校：光明中学",
+          "pinyin": "Xuéxiào: Guāngmíng Zhōngxué",
+          "translations": {
+            "kr": "학교: 광밍 중학교",
+            "en": "School: Guangming Middle School",
+            "jp": "学校：光明中学"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l2_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来询问对方的姓名？",
+        "kr": "다음 중 상대 이름을 묻는 말은?",
+        "en": "Which sentence asks someone’s name?",
+        "jp": "相手の名前を尋ねるのはどれですか？"
+      },
+      "options": [
+        { "key": "A", "zh": "你叫什么名字？", "cn": "你叫什么名字？" },
+        { "key": "B", "zh": "你是学生吗？", "cn": "你是学生吗？" },
+        { "key": "C", "zh": "很高兴认识你。", "cn": "很高兴认识你。" },
+        { "key": "D", "zh": "请问，老师好！", "cn": "请问，老师好！" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「你叫什么名字？」用于询问姓名。",
+        "kr": "「你叫什么名字？」는 이름을 묻는 표현입니다.",
+        "en": "你叫什么名字？ asks for someone’s name.",
+        "jp": "「你叫什么名字？」は名前を尋ねる表現です。"
+      }
+    },
+    {
+      "id": "hsk30_l2_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「请问」的拼音是？",
+        "kr": "「请问」의 병음은?",
+        "en": "What is the pinyin of 请问?",
+        "jp": "「请问」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "qǐngwèn", "cn": "qǐngwèn" },
+        { "key": "B", "zh": "qǐng wèn", "cn": "qǐng wèn" },
+        { "key": "C", "zh": "qīngwèn", "cn": "qīngwèn" },
+        { "key": "D", "zh": "qǐngwèng", "cn": "qǐngwèng" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「请问」读作 qǐngwèn。",
+        "kr": "「请问」는 qǐngwèn으로 읽습니다.",
+        "en": "请问 is read qǐngwèn.",
+        "jp": "「请问」は qǐngwèn と読みます。"
+      }
+    },
+    {
+      "id": "hsk30_l2_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "对方说「我叫李明。」，下面哪一句应答最合适？",
+        "kr": "상대가 「我叫李明。」이라고 했을 때 가장 알맞은 말은?",
+        "en": "Someone says “我叫李明。” — what is a natural reply?",
+        "jp": "相手が「我叫李明。」と言ったとき、自然なのは？"
+      },
+      "options": ["你好！我叫汤姆。", "再见！", "没关系。", "对不起。"],
+      "answer": "你好！我叫汤姆。",
+      "explanation": {
+        "cn": "互相自我介绍时常用「你好！我叫……」。",
+        "kr": "서로 자기소개할 때 「你好！我叫……」가 자연스럽습니다.",
+        "en": "你好! 我叫… is natural when exchanging names.",
+        "jp": "名乗り合うときは「你好！我叫……」が自然です。"
+      }
+    },
+    {
+      "id": "hsk30_l2_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "问句「你是新来的学生吗？」若表示肯定，应回答：",
+        "kr": "「你是新来的学生吗？」에 긍정으로 답할 때 알맞은 것은?",
+        "en": "To answer 你是新来的学生吗？ positively, you say:",
+        "jp": "「你是新来的学生吗？」に肯定で答えるのは？"
+      },
+      "options": ["是，我是新来的学生。", "不，我不是老师。", "没有。", "请问。"],
+      "answer": "是，我是新来的学生。",
+      "explanation": {
+        "cn": "「是……吗？」问句的肯定回答常用「是，……」。",
+        "kr": "「是……吗？」에 긍정으로는 「是，……」가 흔합니다.",
+        "en": "For 是…吗？ questions, 是，… affirms.",
+        "jp": "「是……吗？」への肯定は「是，……」がよく使われます。"
+      }
+    }
+  ],
   "review": {},
-  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "aiPractice": {
+    "speaking": ["你叫什么名字？", "我叫李明。", "你是学生吗？", "是，我是学生。", "认识你很高兴。"],
+    "chatPrompt": "请用本课句型编一段自我介绍并询问对方姓名。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
-    { "key": "aiPractice", "label": { "zh": "AI 练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI 練習" } }
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
   ]
 }

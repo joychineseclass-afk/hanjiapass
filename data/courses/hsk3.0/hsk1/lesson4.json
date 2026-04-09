@@ -6,138 +6,423 @@
   "lessonNo": 4,
   "type": "lesson",
   "title": {
-    "zh": "第4课｜画布验证 L4",
-    "cn": "第4课｜画布验证 L4",
-    "kr": "제4과 캔버스 검증",
-    "en": "Lesson 4 | Edge cases",
-    "jp": "第4課｜境界検証"
+    "zh": "第4课｜你家有几口人？",
+    "cn": "第4课｜你家有几口人？",
+    "kr": "제4과｜가족이 몇 명이에요?",
+    "en": "Lesson 4 | How many people are in your family?",
+    "jp": "第4課｜ご家族は何人ですか。"
   },
   "summary": {
-    "zh": "无 scene.title、纯标题、单行、省略 speaker。",
-    "kr": "scene.title 없음·짧은 제목·한 줄·화자 생략.",
-    "en": "No scene.title, plain titles, one line, missing speaker.",
-    "jp": "scene.title なし・短いタイトル・1行・話者省略。"
+    "zh": "学习介绍家庭成员与人数，掌握「有」「没有」与常用量词。",
+    "kr": "가족 구성원과 인원을 말하는 법과 「有」「没有」·관용량사를 익힙니다.",
+    "en": "Family members, how many people, 有 / 没有, and common measure words.",
+    "jp": "家族の人数と「有」「没有」、よく使う量詞を学びます。"
   },
   "scene": {
-    "id": "hsk30_l4_scene"
+    "id": "hsk30_l4_scene",
+    "title": {
+      "zh": "家庭成员与人数",
+      "kr": "가족 구성원과 인원",
+      "en": "Family members and household size",
+      "jp": "家族と人数"
+    },
+    "summary": {
+      "zh": "会话一：介绍家里有几口人和有哪些家人；会话二：询问有没有弟弟妹妹。",
+      "kr": "회화1: 가구 인원과 가족; 회화2: 남동생·여동생 유무.",
+      "en": "Dialogue 1: how many and who; Dialogue 2: siblings yes/no.",
+      "jp": "会話1：何人で誰がいるか；会話2：兄弟の有無。"
+    }
   },
-  "objectives": [],
+  "objectives": [
+    {
+      "zh": "能用「你家有几口人？」「我家有……口人」谈论家庭人数",
+      "kr": "「你家有几口人？」「我家有……口人」로 가족 수를 말할 수 있다",
+      "en": "Use 你家有几口人？ and 我家有…口人 for household size",
+      "jp": "「你家有几口人？」「我家有……口人」で家族の人数を言える"
+    },
+    {
+      "zh": "能用「有 / 没有」回答有没有某位家人",
+      "kr": "「有／没有」로 가족의 유무를 답할 수 있다",
+      "en": "Answer with 有 / 没有 whether someone is in the family",
+      "jp": "「有／没有」で家族の有無に答えられる"
+    }
+  ],
   "vocab": [],
   "dialogue": [],
   "dialogueCards": [
     {
       "title": {
-        "zh": "超市购物",
-        "kr": "마트에서",
-        "en": "At the supermarket",
-        "jp": "スーパーで"
+        "zh": "会话一｜说家人",
+        "kr": "회화 1｜가족 말하기",
+        "en": "Dialogue 1 | Family members",
+        "jp": "会話1｜家族について"
       },
       "summary": {
-        "zh": "无分隔符标题，仅多语言短名；三句两人。",
-        "kr": "구분자 없는 짧은 제목·세 문장.",
-        "en": "Plain multilingual title; three lines, two roles.",
-        "jp": "区切りなし短タイトル、三行二役。"
+        "zh": "介绍家里有几口人和有哪些家人。",
+        "kr": "가구 인원과 가족 구성을 말합니다.",
+        "en": "Saying how many people and who they are.",
+        "jp": "何人で、誰がいるかを言います。"
       },
       "lines": [
         {
-          "speaker": "甲",
-          "text": "牛奶在哪里？",
-          "pinyin": "Niúnǎi zài nǎlǐ?",
+          "speaker": "王美",
+          "text": "李明，你家有几口人？",
+          "pinyin": "Lǐ Míng, nǐ jiā yǒu jǐ kǒu rén?",
           "translation": {
-            "kr": "우유가 어디 있어요?",
-            "en": "Where is the milk?",
-            "jp": "牛乳はどこですか。"
+            "kr": "리밍, 집에 가족이 몇 명이에요?",
+            "en": "Li Ming, how many people are in your family?",
+            "jp": "李明さん、ご家族は何人ですか。"
           }
         },
         {
-          "speaker": "乙",
-          "text": "在那边。",
-          "pinyin": "Zài nàbian.",
+          "speaker": "李明",
+          "text": "我家有四口人。",
+          "pinyin": "Wǒ jiā yǒu sì kǒu rén.",
           "translation": {
-            "kr": "저쪽이에요.",
-            "en": "Over there.",
-            "jp": "あちらです。"
+            "kr": "집에는 네 명이에요.",
+            "en": "There are four people in my family.",
+            "jp": "うちは四人です。"
           }
         },
         {
-          "speaker": "甲",
-          "text": "谢谢！",
-          "pinyin": "Xièxie!",
+          "speaker": "王美",
+          "text": "你家里有谁？",
+          "pinyin": "Nǐ jiālǐ yǒu shéi?",
           "translation": {
-            "kr": "고마워요!",
-            "en": "Thanks!",
-            "jp": "ありがとう！"
+            "kr": "집에 누가 있어요?",
+            "en": "Who’s in your family?",
+            "jp": "ご家族には誰がいますか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "有爸爸、妈妈、哥哥和我。",
+          "pinyin": "Yǒu bàba, māma, gēge hé wǒ.",
+          "translation": {
+            "kr": "아빠, 엄마, 오빠, 그리고 저요.",
+            "en": "My father, mother, older brother, and me.",
+            "jp": "父と母と兄と私です。"
           }
         }
       ]
     },
     {
       "title": {
-        "zh": "Dialogue 2 | 收银",
-        "kr": "대화 2｜계산",
-        "en": "Dialogue 2 | Checkout",
-        "jp": "会話2｜会計"
-      },
-      "lines": [
-        {
-          "speaker": "收银员",
-          "text": "一共三十块。",
-          "pinyin": "Yīgòng sānshí kuài.",
-          "translation": {
-            "kr": "모두 30위안입니다.",
-            "en": "Thirty yuan in total.",
-            "jp": "全部で30元です。"
-          }
-        }
-      ]
-    },
-    {
-      "title": {
-        "zh": "旁白一句",
-        "kr": "나레이션",
-        "en": "Narration",
-        "jp": "ナレーション"
+        "zh": "会话二｜问兄弟姐妹",
+        "kr": "회화 2｜형제·자매 묻기",
+        "en": "Dialogue 2 | Siblings",
+        "jp": "会話2｜兄弟について"
       },
       "summary": {
-        "zh": "本卡第二行省略 speaker，测 UI 留白。",
-        "kr": "두 번째 줄에 화자 생략.",
-        "en": "Second line omits speaker.",
-        "jp": "2行目は話者なし。"
+        "zh": "询问有没有弟弟妹妹。",
+        "kr": "남동생·여동생이 있는지 묻습니다.",
+        "en": "Asking whether someone has younger siblings.",
+        "jp": "弟や妹がいるかどうかを尋ねます。"
       },
       "lines": [
         {
-          "speaker": "主持人",
-          "text": "今天的课到此结束。",
-          "pinyin": "Jīntiān de kè dào cǐ jiéshù.",
+          "speaker": "汤姆",
+          "text": "你有妹妹吗？",
+          "pinyin": "Nǐ yǒu mèimei ma?",
           "translation": {
-            "kr": "오늘 수업은 여기까지입니다.",
-            "en": "That’s all for today.",
-            "jp": "今日の授業はここまでです。"
+            "kr": "여동생이 있어요?",
+            "en": "Do you have a younger sister?",
+            "jp": "妹はいますか。"
           }
         },
         {
-          "text": "再见！",
-          "pinyin": "Zàijiàn!",
+          "speaker": "李明",
+          "text": "有，我有一个妹妹。",
+          "pinyin": "Yǒu, wǒ yǒu yí gè mèimei.",
           "translation": {
-            "kr": "안녕히 가세요!",
-            "en": "Goodbye!",
-            "jp": "さようなら！"
+            "kr": "있어요, 여동생이 한 명 있어요.",
+            "en": "Yes, I have one younger sister.",
+            "jp": "はい、妹が一人います。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "你有弟弟吗？",
+          "pinyin": "Nǐ yǒu dìdi ma?",
+          "translation": {
+            "kr": "남동생이 있어요?",
+            "en": "Do you have a younger brother?",
+            "jp": "弟はいますか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "没有。",
+          "pinyin": "Méiyǒu.",
+          "translation": {
+            "kr": "없어요.",
+            "en": "No.",
+            "jp": "いいえ、いません。"
           }
         }
       ]
     }
   ],
-  "grammar": [],
-  "extension": [],
-  "practice": [],
+  "grammar": [
+    {
+      "pattern": "有字句",
+      "pinyin": "yǒu zìjù",
+      "explanation": {
+        "zh": "动词「有」表示领有或存在，如「我家有四口人」「有一个妹妹」。",
+        "kr": "동사 「有」는 소유·존재를 나타냅니다(我家有四口人, 有一个妹妹).",
+        "en": "有 expresses possession or existence: having family members, etc.",
+        "jp": "「有」は所有・存在を表します。"
+      },
+      "examples": [
+        {
+          "zh": "我家有四口人。",
+          "pinyin": "Wǒ jiā yǒu sì kǒu rén.",
+          "translation": {
+            "kr": "집에는 네 명이에요.",
+            "en": "There are four people in my family.",
+            "jp": "うちは四人です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "没有",
+      "pinyin": "méiyǒu",
+      "explanation": {
+        "zh": "「没有」是「有」的否定，表示不存在或不具有，可单独回答问句。",
+        "kr": "「没有」는 「有」의 부정으로 없음·비소유를 나타내며 짧게 답할 수 있습니다.",
+        "en": "没有 negates 有: “don’t have” or “there isn’t”; can stand alone as an answer.",
+        "jp": "「没有」は「有」の否定で、「いない・持っていない」と答えられます。"
+      },
+      "examples": [
+        {
+          "zh": "你有弟弟吗？没有。",
+          "pinyin": "Nǐ yǒu dìdi ma? Méiyǒu.",
+          "translation": {
+            "kr": "남동생 있어요? 없어요.",
+            "en": "Do you have a younger brother? No.",
+            "jp": "弟はいますか。いいえ、いません。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "几 + 量词",
+      "pinyin": "jǐ + liàngcí",
+      "explanation": {
+        "zh": "疑问代词「几」询问数量，常后接量词，如「几口人」问家庭人口。",
+        "kr": "의문대명사 「几」는 수를 묻고 뒤에 양사가 옵니다(几口人).",
+        "en": "几 asks “how many” before a measure word, e.g. 几口人.",
+        "jp": "「几」は数量を尋ね、量詞の前に置きます（几口人）。"
+      },
+      "examples": [
+        {
+          "zh": "你家有几口人？",
+          "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?",
+          "translation": {
+            "kr": "집에 가족이 몇 명이에요?",
+            "en": "How many people are in your family?",
+            "jp": "ご家族は何人ですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "数词 + 量词",
+      "pinyin": "shùcí + liàngcí",
+      "explanation": {
+        "zh": "汉语中数词与名词之间常加量词，如「一个妹妹」「四口人」。",
+        "kr": "명사 앞에 수사+양사 조합이 흔합니다(一个妹妹, 四口人).",
+        "en": "Numbers often need a measure word before the noun: 一个妹妹, 四口人.",
+        "jp": "数詞と名詞の間に量詞を入れることが多いです（一个妹妹など）。"
+      },
+      "examples": [
+        {
+          "zh": "我有一个妹妹。",
+          "pinyin": "Wǒ yǒu yí gè mèimei.",
+          "translation": {
+            "kr": "여동생이 한 명 있어요.",
+            "en": "I have one younger sister.",
+            "jp": "妹が一人います。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜家庭信息表",
+        "kr": "읽기 자료｜가족 정보표",
+        "en": "Reading | Family info sheet",
+        "jp": "読み物｜家族情報表"
+      },
+      "sentences": [
+        {
+          "zh": "家里有四口人：",
+          "pinyin": "Jiālǐ yǒu sì kǒu rén:",
+          "translations": {
+            "kr": "집에는 네 명입니다:",
+            "en": "There are four people at home:",
+            "jp": "家族は四人です："
+          }
+        },
+        {
+          "zh": "爸爸",
+          "pinyin": "bàba",
+          "translations": {
+            "kr": "아빠",
+            "en": "father",
+            "jp": "父"
+          }
+        },
+        {
+          "zh": "妈妈",
+          "pinyin": "māma",
+          "translations": {
+            "kr": "엄마",
+            "en": "mother",
+            "jp": "母"
+          }
+        },
+        {
+          "zh": "哥哥",
+          "pinyin": "gēge",
+          "translations": {
+            "kr": "오빠(형)",
+            "en": "older brother",
+            "jp": "兄"
+          }
+        },
+        {
+          "zh": "我",
+          "pinyin": "wǒ",
+          "translations": {
+            "kr": "나(저)",
+            "en": "me",
+            "jp": "私"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l4_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来询问家里有几个人？",
+        "kr": "다음 중 집에 몇 명인지 묻는 말은?",
+        "en": "Which asks how many people are in the family?",
+        "jp": "家族が何人かを尋ねるのはどれですか？"
+      },
+      "options": [
+        { "key": "A", "zh": "你家有几口人？", "cn": "你家有几口人？" },
+        { "key": "B", "zh": "你是哪国人？", "cn": "你是哪国人？" },
+        { "key": "C", "zh": "你会写汉字吗？", "cn": "你会写汉字吗？" },
+        { "key": "D", "zh": "你叫什么名字？", "cn": "你叫什么名字？" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「你家有几口人？」询问家庭人口数量。",
+        "kr": "「你家有几口人？」는 가구 인원을 묻습니다.",
+        "en": "你家有几口人？ asks how many people are in the household.",
+        "jp": "「你家有几口人？」は家族の人数を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l4_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「没有」的拼音是？",
+        "kr": "「没有」의 병음은?",
+        "en": "What is the pinyin of 没有?",
+        "jp": "「没有」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "méiyǒu", "cn": "méiyǒu" },
+        { "key": "B", "zh": "méi yǒu", "cn": "méi yǒu" },
+        { "key": "C", "zh": "mèiyǒu", "cn": "mèiyǒu" },
+        { "key": "D", "zh": "méiyòu", "cn": "méiyòu" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「没有」读作 méiyǒu。",
+        "kr": "「没有」는 méiyǒu로 읽습니다.",
+        "en": "没有 is read méiyǒu.",
+        "jp": "「没有」は méiyǒu と読みます。"
+      }
+    },
+    {
+      "id": "hsk30_l4_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "问句「你有弟弟吗？」若表示「没有弟弟」，应回答：",
+        "kr": "「你有弟弟吗？」에 「남동생 없음」으로 답할 때:",
+        "en": "To answer 你有弟弟吗? when you don’t have a younger brother:",
+        "jp": "「你有弟弟吗？」に「弟はいない」と答えるのは？"
+      },
+      "options": ["没有。", "有，我是学生。", "是，四口人。", "会，我会写汉字。"],
+      "answer": "没有。",
+      "explanation": {
+        "cn": "「有……吗？」的否定回答常用「没有。」",
+        "kr": "「有……吗？」에 대한 부정 답은 「没有。」가 흔합니다.",
+        "en": "A common negative answer to 有…吗？ is 没有.",
+        "jp": "「有……吗？」への否定の答えは「没有。」がよく使われます。"
+      }
+    },
+    {
+      "id": "hsk30_l4_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我家有四口人。」这句话里，「四」表示的是：",
+        "kr": "「我家有四口人。」에서 「四」가 나타내는 것은?",
+        "en": "In 我家有四口人。, 四 refers to:",
+        "jp": "「我家有四口人。」の「四」は何を表す？"
+      },
+      "options": ["家庭人口数量", "四个汉字", "四门课", "四个朋友"],
+      "answer": "家庭人口数量",
+      "explanation": {
+        "cn": "「几口人」结构里数词说明家里一共有多少人。",
+        "kr": "「几口人」에서 수사는 가구 인원을 나타냅니다.",
+        "en": "The number in …口人 counts people in the household.",
+        "jp": "「几口人」の数詞は家族の人数を表します。"
+      }
+    }
+  ],
   "review": {},
-  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "aiPractice": {
+    "speaking": ["你家有几口人？", "我家有四口人。", "你家里有谁？", "你有妹妹吗？", "有。", "没有。"],
+    "chatPrompt": "请用本课词语介绍你的家庭：有几口人、家里有谁。"
+  },
   "steps": [
-    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" } },
-    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" } },
-    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" } },
-    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
-    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
-    { "key": "aiPractice", "label": { "zh": "AI 练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI 練習" } }
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
   ]
 }
