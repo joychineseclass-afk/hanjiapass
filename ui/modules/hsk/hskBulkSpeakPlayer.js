@@ -127,6 +127,8 @@ export class HskBulkTtsPlayer {
     this._gapRemainMs = 0;
     this._gapDeadline = 0;
     this._inGap = false;
+    /** 用户在中途暂停了当前 utterance，需用 resume() 续播，勿重新 _step */
+    this._needsSynthResume = false;
     this._onUi = null;
   }
 
@@ -194,20 +196,29 @@ export class HskBulkTtsPlayer {
     this._inGap = false;
     this._gapRemainMs = 0;
     this._gapDeadline = 0;
+    this._needsSynthResume = false;
     try {
       window.speechSynthesis?.cancel();
     } catch (_) {}
     this.playing = false;
   }
 
+  /** 从当前 utterance 暂停点继续（不重建队列、不移动 idx） */
+  resumeSynthFromPause() {
+    try {
+      if (this._needsSynthResume || window.speechSynthesis?.paused) {
+        window.speechSynthesis.resume();
+      }
+    } catch (_) {}
+    this._needsSynthResume = false;
+    this.playing = true;
+    this._emit();
+  }
+
   play() {
     if (!this.timeline.length) return;
-    if (this.isSynthPaused()) {
-      try {
-        window.speechSynthesis.resume();
-      } catch (_) {}
-      this.playing = true;
-      this._emit();
+    if (this._needsSynthResume || this.isSynthPaused()) {
+      this.resumeSynthFromPause();
       return;
     }
     this.playing = true;
@@ -220,10 +231,14 @@ export class HskBulkTtsPlayer {
       this._gapTimer = null;
       this._gapRemainMs = Math.max(0, this._gapDeadline - Date.now());
       this._inGap = false;
+      this.playing = false;
+      this._emit();
+      return;
     }
     try {
       if (window.speechSynthesis?.speaking && !window.speechSynthesis.paused) {
         window.speechSynthesis.pause();
+        this._needsSynthResume = true;
       }
     } catch (_) {}
     this.playing = false;
@@ -231,14 +246,10 @@ export class HskBulkTtsPlayer {
   }
 
   resume() {
-    try {
-      if (window.speechSynthesis?.paused) {
-        window.speechSynthesis.resume();
-        this.playing = true;
-        this._emit();
-        return;
-      }
-    } catch (_) {}
+    if (this._needsSynthResume || this.isSynthPaused()) {
+      this.resumeSynthFromPause();
+      return;
+    }
     if (this._gapRemainMs > 0) {
       this.playing = true;
       this._resumeGap();
@@ -250,8 +261,8 @@ export class HskBulkTtsPlayer {
 
   togglePlayPause() {
     if (!this.timeline.length) return;
-    if (this.isSynthPaused()) {
-      this.resume();
+    if (this._needsSynthResume || this.isSynthPaused()) {
+      this.resumeSynthFromPause();
       return;
     }
     if (this._inGap && this._gapTimer) {
@@ -259,7 +270,7 @@ export class HskBulkTtsPlayer {
       return;
     }
     try {
-      if (window.speechSynthesis?.speaking) {
+      if (window.speechSynthesis?.speaking && !window.speechSynthesis.paused) {
         this.pause();
         return;
       }
