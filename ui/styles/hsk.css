@@ -936,27 +936,33 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   color: #047857;
 }
 
+/* 层级：中文 > 拼音 > 系统语言释义（HSK3.0·HSK1 画布气泡；对比度兼顾浅色底与后续轻微着色底） */
 .hsk1-scene-bubble-zh {
   font-size: 1.1875rem;
   font-weight: 700;
   line-height: 1.45;
   color: #0f172a;
+  letter-spacing: 0.01em;
 }
 
 .hsk1-scene-bubble-pinyin {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #64748b;
-  margin-top: 3px;
-  line-height: 1.4;
+  font-size: 1rem;
+  font-weight: 600;
+  font-variation-settings: "wght" 600;
+  color: #1e293b;
+  margin-top: 4px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
 }
 
 .hsk1-scene-bubble-trans {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #94a3b8;
-  margin-top: 5px;
-  line-height: 1.45;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-variation-settings: "wght" 500;
+  color: #475569;
+  margin-top: 6px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
 .is-speaking,
