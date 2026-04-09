@@ -1,0 +1,134 @@
+{
+  "id": "hsk1_lesson3",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 3,
+  "type": "lesson",
+  "title": {
+    "zh": "第3课｜画布验证 L3",
+    "cn": "第3课｜画布验证 L3",
+    "kr": "제3과 캔버스 검증",
+    "en": "Lesson 3 | Canvas check",
+    "jp": "第3課｜検証"
+  },
+  "summary": {
+    "zh": "验证英文标题格式、无 summary 卡片、多行对话。",
+    "kr": "영문 제목·요약 없는 카드·다줄 대화 검증.",
+    "en": "Tests EN pipe titles, card without summary, longer exchanges.",
+    "jp": "英語タイトル・summary なし・複数行の検証。"
+  },
+  "scene": {
+    "id": "hsk30_l3_scene",
+    "title": {
+      "zh": "商店与问路",
+      "kr": "가게와 길 묻기",
+      "en": "Shop and directions",
+      "jp": "店と道順"
+    }
+  },
+  "objectives": [],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "对话一｜柜台前",
+        "kr": "대화 1｜계산대",
+        "en": "Dialogue 1 | At the counter",
+        "jp": "会話1｜レジ前"
+      },
+      "summary": {
+        "zh": "顾客向店员询问价格（多行、两人交替）。",
+        "kr": "손님이 점원에게 가격을 묻습니다.",
+        "en": "Customer asks the clerk about prices.",
+        "jp": "客が店員に値段を聞きます。"
+      },
+      "lines": [
+        {
+          "speaker": "顾客",
+          "text": "这个多少钱？",
+          "pinyin": "Zhège duōshao qián?",
+          "translation": {
+            "kr": "이거 얼마예요?",
+            "en": "How much is this?",
+            "jp": "いくらですか。"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "十八块。",
+          "pinyin": "Shíbā kuài.",
+          "translation": {
+            "kr": "18위안이에요.",
+            "en": "Eighteen yuan.",
+            "jp": "18元です。"
+          }
+        },
+        {
+          "speaker": "顾客",
+          "text": "太贵了，便宜一点儿吧。",
+          "pinyin": "Tài guì le, piányi yīdiǎnr ba.",
+          "translation": {
+            "kr": "너무 비싸요, 좀 깎아 주세요.",
+            "en": "Too expensive — a bit cheaper?",
+            "jp": "高すぎます、もう少し安く。"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "好吧，十六块。",
+          "pinyin": "Hǎo ba, shíliù kuài.",
+          "translation": {
+            "kr": "알겠어요, 16위안.",
+            "en": "OK — sixteen yuan.",
+            "jp": "では16元にします。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三买东西",
+        "kr": "회화 3 쇼핑",
+        "en": "Session 3 shopping",
+        "jp": "会話3 買い物"
+      },
+      "lines": [
+        {
+          "speaker": "老师",
+          "text": "今天我们学「便宜」。",
+          "pinyin": "Jīntiān wǒmen xué 「piányi」.",
+          "translation": {
+            "kr": "오늘은 「便宜」를 배웁니다.",
+            "en": "Today we learn 便宜.",
+            "jp": "今日は「便宜」を学びます。"
+          }
+        },
+        {
+          "speaker": "学生",
+          "text": "便宜是什么意思？",
+          "pinyin": "Piányi shì shénme yìsi?",
+          "translation": {
+            "kr": "便宜가 무슨 뜻이에요?",
+            "en": "What does 便宜 mean?",
+            "jp": "便宜はどういう意味ですか。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [],
+  "extension": [],
+  "practice": [],
+  "review": {},
+  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" } },
+    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
+    { "key": "aiPractice", "label": { "zh": "AI 练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI 練習" } }
+  ]
+}

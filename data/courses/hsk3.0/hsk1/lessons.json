@@ -1,7 +1,7 @@
 {
   "courseId": "hsk1",
   "level": "HSK1",
-  "_luminaNote": "HSK 3.0 一级：第 1 课为正式教材《你好！》。第 2 课当前为会话画布多课次轻量验证用，可替换为正式内容。后续课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "_luminaNote": "HSK 3.0 一级：第 1 课为正式教材《你好！》。第 2–4 课当前为会话画布轻量验证用，可替换为正式内容。会话画布数据规范见同目录 DIALOGUE-CANVAS-DATA.md。后续课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -45,6 +45,46 @@
         "kr": "제2과",
         "en": "Lesson 2",
         "jp": "第2課"
+      }
+    },
+    {
+      "lessonNo": 3,
+      "id": "hsk1_lesson3",
+      "file": "lesson3.json",
+      "title": {
+        "cn": "画布验证 L3",
+        "zh": "画布验证 L3",
+        "kr": "캔버스 L3",
+        "en": "Canvas L3",
+        "jp": "検証 L3"
+      },
+      "subtitle": "标题格式 · 行数",
+      "displayTitle": {
+        "cn": "第3课",
+        "zh": "第3课",
+        "kr": "제3과",
+        "en": "Lesson 3",
+        "jp": "第3課"
+      }
+    },
+    {
+      "lessonNo": 4,
+      "id": "hsk1_lesson4",
+      "file": "lesson4.json",
+      "title": {
+        "cn": "画布验证 L4",
+        "zh": "画布验证 L4",
+        "kr": "캔버스 L4",
+        "en": "Canvas L4",
+        "jp": "検証 L4"
+      },
+      "subtitle": "无 scene.title · 省略 speaker",
+      "displayTitle": {
+        "cn": "第4课",
+        "zh": "第4课",
+        "kr": "제4과",
+        "en": "Lesson 4",
+        "jp": "第4課"
       }
     }
   ]

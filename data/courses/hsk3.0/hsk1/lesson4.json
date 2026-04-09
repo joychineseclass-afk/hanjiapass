@@ -1,0 +1,143 @@
+{
+  "id": "hsk1_lesson4",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 4,
+  "type": "lesson",
+  "title": {
+    "zh": "第4课｜画布验证 L4",
+    "cn": "第4课｜画布验证 L4",
+    "kr": "제4과 캔버스 검증",
+    "en": "Lesson 4 | Edge cases",
+    "jp": "第4課｜境界検証"
+  },
+  "summary": {
+    "zh": "无 scene.title、纯标题、单行、省略 speaker。",
+    "kr": "scene.title 없음·짧은 제목·한 줄·화자 생략.",
+    "en": "No scene.title, plain titles, one line, missing speaker.",
+    "jp": "scene.title なし・短いタイトル・1行・話者省略。"
+  },
+  "scene": {
+    "id": "hsk30_l4_scene"
+  },
+  "objectives": [],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "超市购物",
+        "kr": "마트에서",
+        "en": "At the supermarket",
+        "jp": "スーパーで"
+      },
+      "summary": {
+        "zh": "无分隔符标题，仅多语言短名；三句两人。",
+        "kr": "구분자 없는 짧은 제목·세 문장.",
+        "en": "Plain multilingual title; three lines, two roles.",
+        "jp": "区切りなし短タイトル、三行二役。"
+      },
+      "lines": [
+        {
+          "speaker": "甲",
+          "text": "牛奶在哪里？",
+          "pinyin": "Niúnǎi zài nǎlǐ?",
+          "translation": {
+            "kr": "우유가 어디 있어요?",
+            "en": "Where is the milk?",
+            "jp": "牛乳はどこですか。"
+          }
+        },
+        {
+          "speaker": "乙",
+          "text": "在那边。",
+          "pinyin": "Zài nàbian.",
+          "translation": {
+            "kr": "저쪽이에요.",
+            "en": "Over there.",
+            "jp": "あちらです。"
+          }
+        },
+        {
+          "speaker": "甲",
+          "text": "谢谢！",
+          "pinyin": "Xièxie!",
+          "translation": {
+            "kr": "고마워요!",
+            "en": "Thanks!",
+            "jp": "ありがとう！"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "Dialogue 2 | 收银",
+        "kr": "대화 2｜계산",
+        "en": "Dialogue 2 | Checkout",
+        "jp": "会話2｜会計"
+      },
+      "lines": [
+        {
+          "speaker": "收银员",
+          "text": "一共三十块。",
+          "pinyin": "Yīgòng sānshí kuài.",
+          "translation": {
+            "kr": "모두 30위안입니다.",
+            "en": "Thirty yuan in total.",
+            "jp": "全部で30元です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "旁白一句",
+        "kr": "나레이션",
+        "en": "Narration",
+        "jp": "ナレーション"
+      },
+      "summary": {
+        "zh": "本卡第二行省略 speaker，测 UI 留白。",
+        "kr": "두 번째 줄에 화자 생략.",
+        "en": "Second line omits speaker.",
+        "jp": "2行目は話者なし。"
+      },
+      "lines": [
+        {
+          "speaker": "主持人",
+          "text": "今天的课到此结束。",
+          "pinyin": "Jīntiān de kè dào cǐ jiéshù.",
+          "translation": {
+            "kr": "오늘 수업은 여기까지입니다.",
+            "en": "That’s all for today.",
+            "jp": "今日の授業はここまでです。"
+          }
+        },
+        {
+          "text": "再见！",
+          "pinyin": "Zàijiàn!",
+          "translation": {
+            "kr": "안녕히 가세요!",
+            "en": "Goodbye!",
+            "jp": "さようなら！"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [],
+  "extension": [],
+  "practice": [],
+  "review": {},
+  "aiPractice": { "speaking": [], "chatPrompt": "" },
+  "steps": [
+    { "key": "vocab", "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" } },
+    { "key": "dialogue", "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" } },
+    { "key": "grammar", "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" } },
+    { "key": "extension", "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" } },
+    { "key": "practice", "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" } },
+    { "key": "aiPractice", "label": { "zh": "AI 练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI 練習" } }
+  ]
+}
