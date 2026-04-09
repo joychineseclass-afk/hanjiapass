@@ -116,26 +116,58 @@ export function buildDialogueBulkTimeline(lessonData, ctx) {
   return out;
 }
 
+/**
+ * 播放器唯一真实状态（不要再用多个松散布尔互相推断）
+ * - idle: 已停、未在播（含 hardStop / setTimeline 后）
+ * - play_utt: 正在输出 TTS 句（含已 speak、等待 onend）
+ * - play_gap: 句间静音倒计时中
+ * - paused_utt: 用户在句内暂停（仅 speechSynthesis.resume，禁止 _step 重开同句）
+ * - paused_gap: 用户在 gap 内暂停（仅恢复 setTimeout，不移动 idx）
+ * - ended: 时间线自然结束且未循环
+ */
+export const BulkTransport = {
+  IDLE: "idle",
+  PLAY_UTT: "play_utt",
+  PLAY_GAP: "play_gap",
+  PAUSED_UTT: "paused_utt",
+  PAUSED_GAP: "paused_gap",
+  ENDED: "ended",
+};
+
 export class HskBulkTtsPlayer {
   constructor() {
     /** @type {BulkSpeakStep[]} */
     this.timeline = [];
     this.idx = 0;
     this.userRate = 1;
-    this.playing = false;
+    /** @type {string} 见 BulkTransport */
+    this._transport = BulkTransport.IDLE;
     this._gapTimer = null;
     this._gapRemainMs = 0;
     this._gapDeadline = 0;
     this._inGap = false;
-    /** 用户在中途暂停了当前 utterance，需用 resume() 续播，勿重新 _step */
-    this._needsSynthResume = false;
-    /** 已向 synth 提交当前句且尚未 onend（用于 pause 时 speaking 短暂为 false 的浏览器差异，含循环模式） */
+    /** 已向 synth 提交当前句且尚未 onend（pause 时 speaking 偶发为 false） */
     this._utteranceInFlight = false;
     /** 整体朗读播完时间线后是否从头再来 */
     this.bulkLoop = false;
     /** @type {null | "words" | "dialogue"} */
     this.loopKind = null;
     this._onUi = null;
+  }
+
+  /** 对外兼容：原 playing === 正在输出（非用户暂停） */
+  get playing() {
+    return this.isOutputActive();
+  }
+
+  /** 正在输出音频或句间计时（显示 ⏸） */
+  isOutputActive() {
+    return this._transport === BulkTransport.PLAY_UTT || this._transport === BulkTransport.PLAY_GAP;
+  }
+
+  /** 用户暂停中（显示 ▶，点继续走 resumePlayback） */
+  isPausedByUser() {
+    return this._transport === BulkTransport.PAUSED_UTT || this._transport === BulkTransport.PAUSED_GAP;
   }
 
   setTimeline(steps) {
@@ -158,20 +190,12 @@ export class HskBulkTtsPlayer {
     if (this._onUi) {
       try {
         this._onUi({
-          playing: this.playing,
+          playing: this.isOutputActive(),
           progress: this.getProgress(),
           idx: this.idx,
           total: this.timeline.length,
         });
       } catch (_) {}
-    }
-  }
-
-  isSynthPaused() {
-    try {
-      return !!(window.speechSynthesis && window.speechSynthesis.paused);
-    } catch {
-      return false;
     }
   }
 
@@ -189,7 +213,7 @@ export class HskBulkTtsPlayer {
     if (i >= n) i = n - 1;
     this.hardStop();
     this.idx = i;
-    this.playing = true;
+    this._transport = BulkTransport.PLAY_UTT;
     this._emit();
     this._step();
   }
@@ -202,133 +226,111 @@ export class HskBulkTtsPlayer {
     this._inGap = false;
     this._gapRemainMs = 0;
     this._gapDeadline = 0;
-    this._needsSynthResume = false;
     this._utteranceInFlight = false;
     try {
       window.speechSynthesis?.cancel();
     } catch (_) {}
-    this.playing = false;
+    this._transport = BulkTransport.IDLE;
   }
 
-  /** 从当前 utterance 暂停点继续（不重建队列、不移动 idx） */
-  resumeSynthFromPause() {
-    const syn = window.speechSynthesis;
-    try {
-      if (syn && (this._needsSynthResume || syn.paused)) {
-        syn.resume();
-      }
-    } catch (_) {}
-    try {
-      // 若仍 paused，保留 _needsSynthResume，避免下一次误走 play()→_step() 重开同一句或无声
-      if (syn && !syn.paused) {
-        this._needsSynthResume = false;
-      }
-    } catch (_) {
-      this._needsSynthResume = false;
-    }
-    this.playing = true;
-    this._emit();
-    requestAnimationFrame(() => {
-      try {
-        const s = window.speechSynthesis;
-        if (s?.paused) {
-          try {
-            s.resume();
-          } catch (_) {}
-        }
-        if (s && !s.paused) {
-          this._needsSynthResume = false;
-        }
-      } catch (_) {}
-      this._emit();
-    });
-  }
-
-  play() {
-    if (!this.timeline.length) return;
-    if (this._needsSynthResume || this.isSynthPaused()) {
-      this.resumeSynthFromPause();
-      return;
-    }
-    if (window.speechSynthesis?.paused) {
-      this.resumeSynthFromPause();
-      return;
-    }
-    this.playing = true;
-    this._step();
-  }
-
-  pause() {
-    if (this._inGap && this._gapTimer) {
+  /**
+   * 唯一 pause 入口：仅处理 play_utt / play_gap
+   */
+  pausePlayback() {
+    if (this._transport === BulkTransport.PLAY_GAP && this._gapTimer) {
       clearTimeout(this._gapTimer);
       this._gapTimer = null;
       this._gapRemainMs = Math.max(0, this._gapDeadline - Date.now());
       this._inGap = false;
-      this.playing = false;
+      this._transport = BulkTransport.PAUSED_GAP;
       this._emit();
       return;
     }
-    try {
-      const synth = window.speechSynthesis;
-      const step = this.timeline[this.idx];
-      const inSpeakStep = step && step.type === "speak";
-      const synthBusy =
-        !!(synth?.speaking && !synth.paused) ||
-        (inSpeakStep && this._utteranceInFlight);
-      if (synthBusy) {
-        try {
-          synth.pause();
-        } catch (_) {}
-        this._needsSynthResume = true;
-      }
-    } catch (_) {}
-    this.playing = false;
-    this._emit();
+    if (this._transport === BulkTransport.PLAY_UTT) {
+      try {
+        window.speechSynthesis?.pause();
+      } catch (_) {}
+      this._transport = BulkTransport.PAUSED_UTT;
+      this._emit();
+      return;
+    }
   }
 
-  resume() {
-    if (this._needsSynthResume || this.isSynthPaused()) {
-      this.resumeSynthFromPause();
-      return;
-    }
-    if (window.speechSynthesis?.paused) {
-      this.resumeSynthFromPause();
-      return;
-    }
-    if (this._gapRemainMs > 0) {
-      this.playing = true;
+  /**
+   * 唯一 resume 入口：paused_utt → synth.resume；paused_gap → 原剩余时长定时器
+   * 不调用 _step() 重开当前句
+   */
+  resumePlayback() {
+    if (this._transport === BulkTransport.PAUSED_GAP) {
+      this._transport = BulkTransport.PLAY_GAP;
       this._resumeGap();
+      this._emit();
       return;
     }
-    this.playing = true;
-    this._step();
+    if (this._transport === BulkTransport.PAUSED_UTT) {
+      const syn = window.speechSynthesis;
+      try {
+        syn?.resume();
+      } catch (_) {}
+      this._transport = BulkTransport.PLAY_UTT;
+      this._emit();
+      requestAnimationFrame(() => {
+        try {
+          if (window.speechSynthesis?.paused) window.speechSynthesis.resume();
+        } catch (_) {}
+        if (this._transport === BulkTransport.PLAY_UTT) this._emit();
+      });
+      return;
+    }
   }
 
+  /** @deprecated 统一用 pausePlayback */
+  pause() {
+    this.pausePlayback();
+  }
+
+  /** @deprecated 统一用 resumePlayback */
+  resume() {
+    this.resumePlayback();
+  }
+
+  /**
+   * 开始或继续：idle 且仍有段 → _step；已用户暂停 → resumePlayback
+   */
+  startOrContinuePlayback() {
+    if (!this.timeline.length) return;
+    if (this.isPausedByUser()) {
+      this.resumePlayback();
+      return;
+    }
+    if (this._transport === BulkTransport.IDLE && this.idx < this.timeline.length) {
+      this._transport = BulkTransport.PLAY_UTT;
+      this._step();
+      return;
+    }
+  }
+
+  play() {
+    this.startOrContinuePlayback();
+  }
+
+  /**
+   * 唯一用户切换入口：输出中 → pause；暂停中 → resume；idle 且有剩余 → 开始
+   */
   togglePlayPause() {
     if (!this.timeline.length) return;
-    if (this._needsSynthResume || this.isSynthPaused()) {
-      this.resumeSynthFromPause();
+    if (this.isPausedByUser()) {
+      this.resumePlayback();
       return;
     }
-    if (this._inGap && this._gapTimer) {
-      this.pause();
+    if (this.isOutputActive()) {
+      this.pausePlayback();
       return;
     }
-    try {
-      if (window.speechSynthesis?.speaking && !window.speechSynthesis.paused) {
-        this.pause();
-        return;
-      }
-    } catch (_) {}
-    if (!this.playing && this.idx < this.timeline.length) {
-      this.resume();
-      return;
+    if (this._transport === BulkTransport.IDLE && this.idx < this.timeline.length) {
+      this._transport = BulkTransport.PLAY_UTT;
+      this._step();
     }
-    if (this.playing && window.speechSynthesis?.paused) {
-      this.resumeSynthFromPause();
-      return;
-    }
-    this.play();
   }
 
   stop() {
@@ -348,23 +350,28 @@ export class HskBulkTtsPlayer {
       this._gapTimer = null;
       this._inGap = false;
       this.idx++;
+      this._transport = BulkTransport.PLAY_UTT;
       this._step();
     }, ms);
   }
 
   _step() {
-    if (!this.playing) {
-      this._emit();
+    if (this._transport === BulkTransport.PAUSED_UTT || this._transport === BulkTransport.PAUSED_GAP) {
       return;
     }
+    if (this._transport !== BulkTransport.PLAY_UTT && this._transport !== BulkTransport.PLAY_GAP) {
+      return;
+    }
+
     if (this.idx >= this.timeline.length) {
       if (this.bulkLoop && this.timeline.length > 0) {
         this.idx = 0;
+        this._transport = BulkTransport.PLAY_UTT;
         this._emit();
         this._step();
         return;
       }
-      this.playing = false;
+      this._transport = BulkTransport.ENDED;
       this._emit();
       return;
     }
@@ -378,31 +385,34 @@ export class HskBulkTtsPlayer {
         ms = this._gapRemainMs;
         this._gapRemainMs = 0;
       }
+      this._transport = BulkTransport.PLAY_GAP;
       this._inGap = true;
       this._gapDeadline = Date.now() + ms;
       this._gapTimer = setTimeout(() => {
         this._gapTimer = null;
         this._inGap = false;
         this.idx++;
+        this._transport = BulkTransport.PLAY_UTT;
         this._step();
       }, ms);
       return;
     }
 
     this._inGap = false;
+    this._transport = BulkTransport.PLAY_UTT;
     const u = new SpeechSynthesisUtterance(step.text);
     u.lang = step.lang || "zh-CN";
     u.rate = Math.min(10, Math.max(0.1, 0.95 * this.userRate));
     u.onend = () => {
       this._utteranceInFlight = false;
-      this._needsSynthResume = false;
       this.idx++;
+      this._transport = BulkTransport.PLAY_UTT;
       this._step();
     };
     u.onerror = () => {
       this._utteranceInFlight = false;
-      this._needsSynthResume = false;
       this.idx++;
+      this._transport = BulkTransport.PLAY_UTT;
       this._step();
     };
     try {
@@ -410,8 +420,8 @@ export class HskBulkTtsPlayer {
       window.speechSynthesis.speak(u);
     } catch (_) {
       this._utteranceInFlight = false;
-      this._needsSynthResume = false;
       this.idx++;
+      this._transport = BulkTransport.PLAY_UTT;
       this._step();
     }
   }
@@ -458,16 +468,7 @@ function bindPlayerUi(player, root) {
 
   const syncPlayIcon = () => {
     if (!playBtn) return;
-    let active = false;
-    try {
-      if (player.playing) {
-        const syn = window.speechSynthesis;
-        active = !!(syn?.speaking && !syn.paused) || !!player._inGap;
-      }
-    } catch (_) {
-      active = !!(player.playing && player._inGap);
-    }
-    playBtn.textContent = active ? "⏸" : "▶";
+    playBtn.textContent = player.isOutputActive() ? "⏸" : "▶";
   };
 
   player.setUiCallback(() => {
@@ -545,7 +546,7 @@ export async function openBulkSpeakPlayer(_kind, timeline, anchor, opts = {}) {
 
   bindPlayerUi(player, _hostEl);
 
-  player.playing = true;
   player.idx = 0;
+  player._transport = BulkTransport.PLAY_UTT;
   player._step();
 }
