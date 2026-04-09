@@ -39,6 +39,10 @@ import {
   shouldShowPinyin,
   normalizePinyinDisplayAllLowercase,
 } from "../utils/pinyinEngine.js";
+import {
+  collectLessonPinyinToHanziMap,
+  resolvePinyinDisplayToSpeakZh,
+} from "../utils/hsk30UiMeaningMixedTts.js";
 import { loadGlossary } from "../utils/glossary.js";
 import {
   LESSON_ENGINE,
@@ -933,121 +937,9 @@ function buildPracticeMatchSpeakSegments(q, langKey, pinyinHanziMap) {
   return segs;
 }
 
-/**
- * 无声调、去空格：用于将选项里的拼音与课内「汉字→拼音」对齐
- */
-function normalizePinyinKeyForSpeakMatch(s) {
-  if (!s || typeof s !== "string") return "";
-  return String(s)
-    .toLowerCase()
-    .replace(/ü/g, "v")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z]/g, "");
-}
-
-/** 从课时数据收集「拼音键 → 汉字」，供 HSK3.0·HSK1 练习朗读将拼音选项转为中文发音 */
-function collectLessonPinyinToHanziMap(lesson) {
-  const map = new Map();
-  if (!lesson || typeof lesson !== "object") return map;
-
-  const add = (han, manualPy) => {
-    const h = _trimStr(han);
-    if (!h || !/[\u4e00-\u9fff]/.test(h)) return;
-    const plain = h.replace(/[\s\u3002\uFF01\uFF0C\uFF1F\uFF1A\uFF1B!?,。；：]+$/u, "");
-    const py = _trimStr(manualPy) || resolvePinyin(plain, "");
-    const key = normalizePinyinKeyForSpeakMatch(py);
-    if (key && plain) map.set(key, plain);
-  };
-
-  const walkVocab = (arr) => {
-    if (!Array.isArray(arr)) return;
-    for (const w of arr) {
-      if (!w || typeof w !== "object") continue;
-      add(w.hanzi || w.word || w.zh || w.cn, w.pinyin || w.py);
-    }
-  };
-
-  walkVocab(lesson.vocab);
-  walkVocab(lesson.words);
-  walkVocab(lesson.coreWords);
-  walkVocab(lesson.distributedWords);
-  walkVocab(lesson.extraWords);
-
-  const dialogueCards = Array.isArray(lesson.dialogueCards) ? lesson.dialogueCards : [];
-  for (const card of dialogueCards) {
-    const lines = Array.isArray(card?.lines) ? card.lines : [];
-    for (const line of lines) {
-      if (!line || typeof line !== "object") continue;
-      add(line.text || line.zh || line.cn, line.pinyin || line.py);
-    }
-  }
-
-  const dialogues = Array.isArray(lesson.dialogue) ? lesson.dialogue : [];
-  for (const line of dialogues) {
-    if (!line || typeof line !== "object") continue;
-    add(line.text || line.zh, line.pinyin || line.py);
-  }
-
-  const ext = Array.isArray(lesson.extension) ? lesson.extension : [];
-  for (const item of ext) {
-    if (!item || typeof item !== "object") continue;
-    add(item.phrase || item.hanzi || item.zh || item.cn, item.pinyin || item.py);
-    add(item.example || item.exampleZh, item.examplePinyin || item.examplePy);
-  }
-
-  const grammar = Array.isArray(lesson.grammar) ? lesson.grammar : [];
-  for (const g of grammar) {
-    if (!g || typeof g !== "object") continue;
-    add(g.pattern || (typeof g.title === "object" ? g.title.zh || g.title.cn : g.title), g.pinyin || g.py);
-    const exs = Array.isArray(g.examples) ? g.examples : g.example ? [g.example] : [];
-    for (const e of exs) {
-      if (!e || typeof e !== "object") continue;
-      add(e.zh || e.cn || e.line || e.text, e.pinyin || e.py);
-    }
-  }
-
-  const practice = Array.isArray(lesson.practice) ? lesson.practice : [];
-  for (const pq of practice) {
-    const opts = Array.isArray(pq?.options) ? pq.options : [];
-    for (const o of opts) {
-      if (typeof o === "string") {
-        if (/[\u4e00-\u9fff]/.test(o)) add(o, "");
-      } else if (o && typeof o === "object") {
-        const z = o.zh || o.cn;
-        if (z && /[\u4e00-\u9fff]/.test(z)) add(z, o.pinyin || o.py);
-        const hz = _trimStr(o.speakZh || o.hanzi || o.ttsZh);
-        if (hz && /[\u4e00-\u9fff]/.test(hz)) add(hz, o.pinyin || o.py);
-      }
-    }
-  }
-
-  const speaking = lesson.aiPractice && Array.isArray(lesson.aiPractice.speaking) ? lesson.aiPractice.speaking : [];
-  for (const s of speaking) {
-    if (typeof s === "string" && /[\u4e00-\u9fff]/.test(s)) add(s, "");
-  }
-
-  return map;
-}
-
-/**
- * 练习题面显示文本 → 中文 TTS 用字：拼音形式时优先映射为汉字（HSK3.0·HSK1）
- */
+/** 练习选项拼音 → 汉字 TTS（委托 hsk30UiMeaningMixedTts） */
 function resolvePracticeTextToSpeakZh(rawDisplay, optionObj, map) {
-  const raw = _trimStr(rawDisplay);
-  if (!raw) return raw;
-  if (optionObj && typeof optionObj === "object") {
-    const explicit = _trimStr(
-      optionObj.speakZh || optionObj.hanzi || optionObj.ttsZh || optionObj.wordZh,
-    );
-    if (explicit && /[\u4e00-\u9fff]/.test(explicit)) return explicit;
-  }
-  if (/[\u4e00-\u9fff]/.test(raw)) return raw;
-  if (!map || map.size === 0) return raw;
-  const key = normalizePinyinKeyForSpeakMatch(raw);
-  if (!key || key.length < 2) return raw;
-  if (map.has(key)) return map.get(key);
-  return raw;
+  return resolvePinyinDisplayToSpeakZh(rawDisplay, optionObj, map);
 }
 
 /** 练习单题：题干 + 选项/排序项 + 解析 */
@@ -2825,7 +2717,8 @@ function bindEvents() {
         const cardEl = gListen.closest(".lesson-grammar-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildGrammarSpeakSegments(pt, getLang());
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
         return;
       }
 
@@ -2851,7 +2744,8 @@ function bindEvents() {
         const cardEl = extFlat.closest(".lesson-extension-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildExtensionFlatSpeakSegments(item, getLang());
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
         return;
       }
 
@@ -2880,7 +2774,8 @@ function bindEvents() {
         const cardEl = extGroup.closest(".lesson-extension-group-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildExtensionGroupSpeakSegments(item, getLang());
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
         return;
       }
 
@@ -2908,7 +2803,7 @@ function bindEvents() {
         const cardEl = prListen.closest(".lesson-practice-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildPracticeSpeakSegmentsUnified(q, langKey, ld);
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null);
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: ld });
         return;
       }
 

@@ -5,6 +5,11 @@ import { i18n } from "../../i18n.js";
 import { getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
+import {
+  collectLessonPinyinToHanziMap,
+  resolvePinyinDisplayToSpeakZh,
+  tokenizeMixedUiMeaning,
+} from "../../utils/hsk30UiMeaningMixedTts.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
 
 /** 同一 stroke 页路径并发 HEAD 只发一次 */
@@ -981,11 +986,66 @@ export async function speakUiLangTextOnce(text, gen) {
   });
 }
 
+async function playZhCnOnce(text, gen) {
+  const t = String(text || "").trim();
+  if (!t) return;
+  const { AUDIO_ENGINE } = await import("../../platform/index.js");
+  if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
+  await new Promise((resolve) => {
+    if (gen !== _wordSpeakGeneration) {
+      resolve();
+      return;
+    }
+    AUDIO_ENGINE.playText(t, {
+      lang: "zh-CN",
+      rate: 0.95,
+      onEnd: () => resolve(),
+      onError: () => resolve(),
+    });
+  });
+}
+
+/**
+ * 系统语言释义中夹杂汉字 / 拼音：分段用对应 TTS（HSK3.0·HSK1 试点 + 传入课时时启用）
+ */
+async function speakMixedUiMeaningText(meanStr, gen, pinyinMap) {
+  const map = pinyinMap && pinyinMap.size ? pinyinMap : new Map();
+  const parts = tokenizeMixedUiMeaning(meanStr);
+  if (!parts.length) return;
+  for (let k = 0; k < parts.length; k++) {
+    if (gen !== _wordSpeakGeneration) return;
+    if (k > 0) {
+      await new Promise((resolve) => {
+        cancelLearnVocabSpeakGapTimer();
+        _learnVocabSpeakGapTimer = setTimeout(() => {
+          _learnVocabSpeakGapTimer = null;
+          resolve();
+        }, randomGapMs(100, 220));
+      });
+    }
+    if (gen !== _wordSpeakGeneration) return;
+    const p = parts[k];
+    if (p.kind === "ui") {
+      await speakUiLangTextOnce(p.text, gen);
+    } else if (p.kind === "zh") {
+      await playZhCnOnce(p.text, gen);
+    } else if (p.kind === "py") {
+      const resolved = resolvePinyinDisplayToSpeakZh(p.text, null, map);
+      if (/[\u4e00-\u9fff]/.test(resolved)) {
+        await playZhCnOnce(resolved, gen);
+      } else {
+        await speakUiLangTextOnce(p.text, gen);
+      }
+    }
+  }
+}
+
 /**
  * 中文 → 短暂停顿 → 系统语言释义（无释义则仅中文）。不 bump generation，由调用方传入 gen。
+ * opts.mixedUiMeaning + opts.pinyinMap：释义内汉字 / 拼音按中文与课内映射朗读（试点）
  * @returns {Promise<void>}
  */
-export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
+export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) {
   const hanStr = String(zh || "").trim();
   if (!hanStr) return;
   const meanStr = String(meaningRaw || "").trim();
@@ -1023,6 +1083,11 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
             done();
             return;
           }
+          const useMixed = opts && opts.mixedUiMeaning;
+          if (useMixed) {
+            speakMixedUiMeaningText(meanStr, gen, opts.pinyinMap || new Map()).then(done).catch(done);
+            return;
+          }
           AUDIO_ENGINE.playText(meanStr, {
             lang: ttsBcp47ForUiMeaningLang(),
             rate: 0.95,
@@ -1040,8 +1105,9 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen) {
  * HSK3.0 HSK1 试点：多段「中文 → 停顿 → 系统语言」链（语法 / 扩展 / 练习单卡）。
  * @param {{ zh?: string, ui?: string }[]} segments — 有 zh+ui 走 speakZhThenMeaningPromise；仅 zh 或仅 ui 亦可
  * @param {HTMLElement | null} highlightEl
+ * @param {{ lessonForPinyinMap?: object }} [chainOpts] — 传入当前课时则释义内汉字/拼音按中文与课内拼音映射朗读
  */
-export async function speakHsk30ZhUiSegmentChain(segments, highlightEl) {
+export async function speakHsk30ZhUiSegmentChain(segments, highlightEl, chainOpts = {}) {
   const list = Array.isArray(segments)
     ? segments
         .map((s) => ({
@@ -1051,6 +1117,16 @@ export async function speakHsk30ZhUiSegmentChain(segments, highlightEl) {
         .filter((s) => s.zh || s.ui)
     : [];
   if (!list.length) return;
+
+  /** 由调用方在 HSK3.0·HSK1 试点场景传入 lesson，避免与 __HSK_PAGE_CTX 双轨判断不一致 */
+  const useMixedMeaning = chainOpts && chainOpts.lessonForPinyinMap != null;
+  const rawLesson = useMixedMeaning
+    ? chainOpts.lessonForPinyinMap._raw || chainOpts.lessonForPinyinMap
+    : null;
+  const pinyinMap = useMixedMeaning && rawLesson ? collectLessonPinyinToHanziMap(rawLesson) : new Map();
+  const meaningOpts = useMixedMeaning
+    ? { mixedUiMeaning: true, pinyinMap }
+    : {};
 
   bumpWordSpeakGeneration();
   const gen = _wordSpeakGeneration;
@@ -1078,11 +1154,15 @@ export async function speakHsk30ZhUiSegmentChain(segments, highlightEl) {
       if (gen !== _wordSpeakGeneration) return;
       const seg = list[i];
       if (seg.zh && seg.ui) {
-        await speakZhThenMeaningPromise(seg.zh, seg.ui, gen);
+        await speakZhThenMeaningPromise(seg.zh, seg.ui, gen, meaningOpts);
       } else if (seg.zh) {
         await speakZhThenMeaningPromise(seg.zh, "", gen);
       } else if (seg.ui) {
-        await speakUiLangTextOnce(seg.ui, gen);
+        if (useMixedMeaning) {
+          await speakMixedUiMeaningText(seg.ui, gen, pinyinMap);
+        } else {
+          await speakUiLangTextOnce(seg.ui, gen);
+        }
       }
     }
   } catch (err) {
