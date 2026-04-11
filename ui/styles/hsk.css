@@ -269,23 +269,14 @@
   border-bottom: 1px solid var(--line, #e2e8f0);
 }
 
-/* 全文朗读与「本课重点讲解」标题同一行、近距离成组 */
-.ai-lesson-focus-title-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 10px;
+/* 全文朗读单独一行，置于「本课重点讲解」标题上方，靠左 */
+.ai-lesson-focus-speak-row {
   width: 100%;
-}
-
-.ai-lesson-focus-title-row .ai-lesson-focus-page-title {
-  flex: 1;
-  min-width: min(12rem, 100%);
-  margin: 0;
+  margin: 0 0 0.45rem 0;
+  text-align: left;
 }
 
 .ai-lesson-focus-speak-all {
-  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -335,13 +326,14 @@
 }
 
 .ai-lesson-focus-page-title {
+  margin: 0 0 0.35rem 0;
   font-size: 1rem;
   font-weight: 700;
   color: #0f172a;
 }
 
 .ai-lesson-focus-course-line {
-  margin: 0.4rem 0 0 0;
+  margin: 0;
   font-size: 0.9375rem;
   color: #475569;
 }
