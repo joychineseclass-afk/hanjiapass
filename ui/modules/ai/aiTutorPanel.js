@@ -194,6 +194,21 @@ export function mountAITutorPanel(container, opts = {}) {
       });
     }
 
+    if (mode === "free_talk" && inputEl) {
+      wrap.querySelectorAll(".ai-free-talk-example-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const idx = chip.getAttribute("data-example-index");
+          if (!idx) return;
+          const text = str(t(`ai.free_question_example_${idx}`, ""));
+          if (!text) return;
+          inputEl.value = text;
+          try {
+            inputEl.focus();
+          } catch (_) {}
+        });
+      });
+    }
+
     const speakAllBtn = wrap.querySelector(".ai-lesson-focus-speak-all");
     if (speakAllBtn && mode === "explain") {
       const focusRoot = wrap.querySelector(".ai-lesson-focus");

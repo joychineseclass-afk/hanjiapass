@@ -40,10 +40,11 @@ function getScenarioLabel(scenarioKey) {
   return t(i18nKey, key);
 }
 
-function resultAreaHtml(emptyState = true) {
+function resultAreaHtml(emptyState = true, resultTitleKey = "ai.result_title") {
   const emptyText = t("ai.result_empty", "No response yet.");
+  const titleFallback = resultTitleKey === "ai.free_question_answer_title" ? "Answer" : "AI Response";
   return `
-    <div class="ai-tutor-result-header">${escapeHtml(t("ai.result_title", "AI Response"))}</div>
+    <div class="ai-tutor-result-header">${escapeHtml(t(resultTitleKey, titleFallback))}</div>
     <div class="ai-tutor-result-content ${emptyState ? "ai-tutor-result-empty" : ""}">
       ${emptyState ? `<span class="ai-tutor-result-placeholder">${escapeHtml(emptyText)}</span>` : ""}
     </div>
@@ -169,26 +170,44 @@ export function renderShadowingMode(aiItem, lang) {
 }
 
 /**
- * 渲染 Free Talk 面板（自由对话）
- * 支持 aiItem.prompt 作为情境说明
+ * 渲染 Free Talk 面板（本课范围内自由问答）
+ * 文案走 lang：ai.free_question_*；课程 JSON 的 placeholder 可覆盖默认占位提示
  */
 export function renderFreeTalkMode(aiItem, lang) {
-  const placeholder = pickLang(aiItem && aiItem.placeholder, lang) || t("ai.placeholder_question", "Type your question");
-  const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const desc = promptText || t("ai.mode_desc_free_talk", "Ask freely using the words and sentences from today's lesson.");
-  const hint = t("ai.free_talk_hint", "Ask questions about this lesson's content.");
+  const placeholder =
+    str(pickLang(aiItem && aiItem.placeholder, lang)) ||
+    t("ai.free_question_placeholder", 'e.g. What\'s the difference between 「你」 and 「您」?');
+  const intro = t("ai.free_question_intro", "Ask about words, phrases, and dialogue from this lesson.");
+  const scope = t(
+    "ai.free_question_scope",
+    "Answers focus on meanings, differences, usage, this lesson’s dialogue, and short examples—within this lesson."
+  );
+  const examplesLabel = t("ai.free_question_examples_label", "Example questions");
+  const chips = [1, 2, 3, 4]
+    .map((n) => {
+      const label = t(`ai.free_question_example_${n}`, "");
+      return `
+      <button type="button" class="ai-free-talk-example-chip" data-example-index="${n}">
+        ${escapeHtml(label)}
+      </button>`;
+    })
+    .join("");
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-free_talk">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
-      <p class="ai-tutor-hint mb-2">${escapeHtml(hint)}</p>
+      <p class="ai-tutor-mode-desc ai-tutor-free-talk-intro">${escapeHtml(intro)}</p>
+      <p class="ai-tutor-free-talk-scope">${escapeHtml(scope)}</p>
+      <div class="ai-free-talk-examples" role="group" aria-label="${escapeHtml(examplesLabel)}">
+        <span class="ai-free-talk-examples-label">${escapeHtml(examplesLabel)}</span>
+        <div class="ai-free-talk-chips">${chips}</div>
+      </div>
       <div class="ai-tutor-input-group">
         <textarea class="ai-tutor-input" rows="3" placeholder="${escapeHtml(placeholder)}"></textarea>
         <button type="button" class="ai-btn ai-btn-primary ai-tutor-send mt-2">
-          ${escapeHtml(t("ai.send", "Send"))}
+          ${escapeHtml(t("ai.free_question_submit", "Ask"))}
         </button>
       </div>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true, "ai.free_question_answer_title")}</div>
     </div>
   `;
 }
