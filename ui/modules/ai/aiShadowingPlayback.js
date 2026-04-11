@@ -1,5 +1,5 @@
 /**
- * 따라 말하기：驱动页面唯一句子列表（顺序领读、暂停继续、单句重播、下一句）
+ * 따라 말하기：单一顺序调度器（pendingReplay / pendingSkip / pause 均接回同一主循环）
  */
 
 import { speakText, stopSpeak, isSpeechSupported } from "../../platform/audio/ttsEngine.js";
@@ -83,18 +83,13 @@ function setPrimaryButton(session) {
 }
 
 function setSecondaryButtons(session) {
-  const on = (session.phase === "playing" || session.phase === "paused") && !session.replayRunning;
+  const on = (session.phase === "playing" || session.phase === "paused");
   if (session.btnReplay) session.btnReplay.disabled = !on;
   if (session.btnNext) session.btnNext.disabled = !on;
 }
 
 function showBar(session, on) {
   session.bar?.classList.toggle("hidden", !on);
-}
-
-function bumpGeneration(session) {
-  session.gen = (session.gen || 0) + 1;
-  return session.gen;
 }
 
 function createSession(wrap, texts, items, n) {
@@ -105,12 +100,12 @@ function createSession(wrap, texts, items, n) {
     n,
     i: 0,
     r: 0,
-    gen: 0,
     phase: "idle",
     paused: false,
     aborted: false,
-    replayRunning: false,
-    driverRunning: false,
+    unifiedDriving: false,
+    pendingReplay: false,
+    pendingSkip: false,
     statusEl: wrap.querySelector(".ai-shadowing-playback-status"),
     bar: wrap.querySelector(".ai-shadowing-playback-bar"),
     btn: wrap.querySelector(".ai-shadowing-run"),
@@ -119,9 +114,18 @@ function createSession(wrap, texts, items, n) {
   };
 }
 
+function markLineDone(session, index) {
+  const el = session.items[index];
+  if (!el) return;
+  el.classList.remove("is-active", "is-playing");
+  el.classList.add("is-done");
+}
+
 function setCompleted(session) {
   session.phase = "completed";
   session.paused = false;
+  session.pendingReplay = false;
+  session.pendingSkip = false;
   clearLineStates(session.wrap);
   session.items.forEach((el) => el.classList.add("is-done"));
   if (session.statusEl) {
@@ -149,30 +153,80 @@ function resumeFromPause(session) {
 }
 
 /**
- * 顺序领读主循环：r 为当前句已完成的遍数 0..3，r===3 时收尾并进入下一句
+ * 唯一主循环：顺序句 × 每句 3 遍；pendingReplay 插入 3 遍后接回；pendingSkip 在本遍 speak 结束后接回
  */
-async function runDriver(session) {
-  if (session.driverRunning) return;
-  const gen = bumpGeneration(session);
-  session.driverRunning = true;
+async function unifiedDrive(session) {
+  if (session.unifiedDriving) return;
+  session.unifiedDriving = true;
   session.phase = "playing";
   setPrimaryButton(session);
   setSecondaryButtons(session);
 
   try {
-    while (session.i < session.n && !session.aborted) {
-      if (session.gen !== gen) return;
-
+    while (!session.aborted) {
       while (session.paused && session.phase === "paused") {
         await waitResume(session);
-        if (session.gen !== gen) return;
+      }
+      if (session.aborted) break;
+
+      if (session.i >= session.n) {
+        setCompleted(session);
+        break;
+      }
+
+      if (session.pendingSkip) {
+        session.pendingSkip = false;
+        markLineDone(session, session.i);
+        session.i += 1;
+        session.r = 0;
+        continue;
+      }
+
+      if (session.pendingReplay) {
+        session.pendingReplay = false;
+        const idx = session.i;
+        const el = session.items[idx];
+        let skipOut = false;
+        for (let k = 0; k < 3 && !session.aborted; k++) {
+          while (session.paused && session.phase === "paused") {
+            await waitResume(session);
+          }
+          if (session.aborted) break;
+          if (session.pendingSkip) {
+            session.pendingSkip = false;
+            markLineDone(session, idx);
+            session.i = idx + 1;
+            session.r = 0;
+            skipOut = true;
+            break;
+          }
+          el.classList.add("is-active");
+          el.classList.remove("is-done");
+          setStatusText(session, idx + 1, session.n, k + 1);
+          syncLineHighlight(session);
+          el.classList.add("is-playing");
+          await speakOnceZh(session.texts[idx]);
+          el.classList.remove("is-playing");
+          if (session.pendingSkip) {
+            session.pendingSkip = false;
+            markLineDone(session, idx);
+            session.i = idx + 1;
+            session.r = 0;
+            skipOut = true;
+            break;
+          }
+        }
+        if (skipOut) continue;
+        markLineDone(session, idx);
+        session.i = idx + 1;
+        session.r = 0;
+        continue;
       }
 
       const el = session.items[session.i];
 
       if (session.r >= 3) {
-        el.classList.remove("is-active", "is-playing");
-        el.classList.add("is-done");
+        markLineDone(session, session.i);
         session.i += 1;
         session.r = 0;
         continue;
@@ -186,22 +240,31 @@ async function runDriver(session) {
       await speakOnceZh(session.texts[session.i]);
       el.classList.remove("is-playing");
 
-      if (session.gen !== gen) return;
+      if (session.aborted) break;
+
+      if (session.pendingSkip) {
+        session.pendingSkip = false;
+        markLineDone(session, session.i);
+        session.i += 1;
+        session.r = 0;
+        continue;
+      }
+
+      if (session.pendingReplay) {
+        continue;
+      }
 
       if (session.paused && session.phase === "paused") {
         continue;
       }
-      if (session.aborted) return;
 
       session.r += 1;
     }
-
-    if (!session.aborted && session.i >= session.n && session.gen === gen) {
-      setCompleted(session);
-    }
   } finally {
-    if (session.gen === gen) {
-      session.driverRunning = false;
+    session.unifiedDriving = false;
+    if (!session.aborted && session.phase !== "completed") {
+      setPrimaryButton(session);
+      setSecondaryButtons(session);
     }
   }
 }
@@ -213,7 +276,6 @@ export function cancelShadowingPlayback(wrap) {
   const s = wrap && shadowSessions.get(wrap);
   if (s) {
     s.aborted = true;
-    bumpGeneration(s);
     s.paused = false;
     s._resume?.();
     shadowSessions.delete(wrap);
@@ -278,9 +340,10 @@ export async function toggleShadowingPlayback(wrap, aiItem) {
 
   if (session.phase === "completed") {
     session.aborted = false;
-    bumpGeneration(session);
     session.i = 0;
     session.r = 0;
+    session.pendingReplay = false;
+    session.pendingSkip = false;
     session.items.forEach((el) => el.classList.remove("is-done", "is-active", "is-playing"));
     clearLineStates(session.wrap);
     if (session.statusEl) session.statusEl.textContent = "";
@@ -290,7 +353,7 @@ export async function toggleShadowingPlayback(wrap, aiItem) {
     if (!isSpeechSupported() && session.statusEl) {
       session.statusEl.textContent = t("ai.shadowing_tts_unsupported", "브라우저 음성을 사용할 수 없습니다.");
     }
-    runDriver(session);
+    unifiedDrive(session);
     return;
   }
 
@@ -298,6 +361,8 @@ export async function toggleShadowingPlayback(wrap, aiItem) {
     session.aborted = false;
     session.i = 0;
     session.r = 0;
+    session.pendingReplay = false;
+    session.pendingSkip = false;
     clearLineStates(wrap);
     showBar(session, true);
     setPrimaryButton(session);
@@ -305,100 +370,46 @@ export async function toggleShadowingPlayback(wrap, aiItem) {
     if (!isSpeechSupported() && session.statusEl) {
       session.statusEl.textContent = t("ai.shadowing_tts_unsupported", "브라우저 음성을 사용할 수 없습니다.");
     }
-    runDriver(session);
+    unifiedDrive(session);
   }
 }
 
 /**
- * 单句重播：当前句再 3 遍。暂停：保持 i/r；播放中：结束后进下一句并重启 driver
+ * 이 문장 다시：只设 pendingReplay + stopSpeak，由 unifiedDrive 插入 3 遍后接回顺序
  */
-export async function replayShadowingSentence(wrap, aiItem) {
+export function replayShadowingSentence(wrap, aiItem) {
   const session = shadowSessions.get(wrap);
-  if (!session || session.replayRunning) return;
+  if (!session) return;
   if (session.phase !== "playing" && session.phase !== "paused") return;
   if (session.i >= session.n) return;
 
-  const snapI = session.i;
-  const snapR = session.r;
-  const wasPaused = session.phase === "paused";
-
-  session.replayRunning = true;
-  setSecondaryButtons(session);
-
-  if (!wasPaused) {
-    stopSpeak();
-    bumpGeneration(session);
-    resumeFromPause(session);
-  }
-
-  const el = session.items[snapI];
-  for (let k = 0; k < 3; k++) {
-    if (session.aborted) break;
-    setStatusText(session, snapI + 1, session.n, k + 1);
-    el?.classList.add("is-active", "is-playing");
-    syncLineHighlight(session);
-    await speakOnceZh(session.texts[snapI]);
-    el?.classList.remove("is-playing");
-  }
-
-  session.replayRunning = false;
-
-  if (wasPaused) {
-    session.i = snapI;
-    session.r = snapR;
-    session.phase = "paused";
-    session.paused = true;
-    setStatusText(session, session.i + 1, session.n, session.r + 1);
-    syncLineHighlight(session);
-  } else {
-    el?.classList.remove("is-active");
-    el?.classList.add("is-done");
-    session.i = snapI + 1;
-    session.r = 0;
-    session.phase = "playing";
+  session.pendingReplay = true;
+  stopSpeak();
+  if (session.phase === "paused") {
     session.paused = false;
-    if (session.i >= session.n) {
-      setCompleted(session);
-      return;
-    }
-    setStatusText(session, session.i + 1, session.n, 1);
-    syncLineHighlight(session);
-    runDriver(session);
+    session.phase = "playing";
+    resumeFromPause(session);
+    setPrimaryButton(session);
+    setSecondaryButtons(session);
   }
-
-  setPrimaryButton(session);
-  setSecondaryButtons(session);
 }
 
 /**
- * 下一句：跳过当前句剩余遍数
+ * 다음 문장：设 pendingSkip + stopSpeak，主循环在本遍 speak 结束或下轮开头接回
  */
 export function skipShadowingNext(wrap, aiItem) {
   const session = shadowSessions.get(wrap);
-  if (!session || session.replayRunning) return;
+  if (!session) return;
   if (session.phase !== "playing" && session.phase !== "paused") return;
   if (session.i >= session.n) return;
 
+  session.pendingSkip = true;
   stopSpeak();
-  bumpGeneration(session);
-  resumeFromPause(session);
-
-  session.items[session.i]?.classList.remove("is-active", "is-playing");
-  session.items[session.i]?.classList.add("is-done");
-
-  session.i += 1;
-  session.r = 0;
-
-  if (session.i >= session.n) {
-    setCompleted(session);
-    return;
+  if (session.phase === "paused") {
+    session.paused = false;
+    session.phase = "playing";
+    resumeFromPause(session);
+    setPrimaryButton(session);
+    setSecondaryButtons(session);
   }
-
-  session.phase = "playing";
-  session.paused = false;
-  setStatusText(session, session.i + 1, session.n, 1);
-  syncLineHighlight(session);
-  setPrimaryButton(session);
-  setSecondaryButtons(session);
-  runDriver(session);
 }
