@@ -945,6 +945,17 @@ function randomGapMs(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
 }
 
+/** 停顿计时期间若用户暂停，则阻塞直到继续（generation 变化则提前结束） */
+async function pauseAwareDelay(ms, gen, waitWhilePaused) {
+  const start = Date.now();
+  const waitFn = typeof waitWhilePaused === "function" ? waitWhilePaused : async () => {};
+  while (Date.now() - start < ms) {
+    if (gen !== _wordSpeakGeneration) return;
+    await waitFn();
+    await new Promise((r) => setTimeout(r, 40));
+  }
+}
+
 /** 批量朗读：段与段之间的停顿（新点读会 bump 并清掉定时器） */
 export function batchPauseBetweenSegments(gen) {
   return new Promise((resolve) => {
@@ -1007,22 +1018,20 @@ async function playZhCnOnce(text, gen) {
 
 /**
  * 系统语言释义中夹杂汉字 / 拼音：分段用对应 TTS（HSK3.0·HSK1 试点 + 传入课时时启用）
+ * @param {{ waitWhilePaused?: () => Promise<void> }} [speakOpts]
  */
-async function speakMixedUiMeaningText(meanStr, gen, pinyinMap) {
+export async function speakMixedUiMeaningText(meanStr, gen, pinyinMap, speakOpts = {}) {
   const map = pinyinMap && pinyinMap.size ? pinyinMap : new Map();
+  const waitFn = typeof speakOpts.waitWhilePaused === "function" ? speakOpts.waitWhilePaused : async () => {};
   const parts = tokenizeMixedUiMeaning(meanStr);
   if (!parts.length) return;
   for (let k = 0; k < parts.length; k++) {
     if (gen !== _wordSpeakGeneration) return;
     if (k > 0) {
-      await new Promise((resolve) => {
-        cancelLearnVocabSpeakGapTimer();
-        _learnVocabSpeakGapTimer = setTimeout(() => {
-          _learnVocabSpeakGapTimer = null;
-          resolve();
-        }, randomGapMs(100, 220));
-      });
+      await pauseAwareDelay(randomGapMs(100, 220), gen, waitFn);
     }
+    if (gen !== _wordSpeakGeneration) return;
+    await waitFn();
     if (gen !== _wordSpeakGeneration) return;
     const p = parts[k];
     if (p.kind === "ui") {
@@ -1053,6 +1062,8 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
   const { AUDIO_ENGINE } = await import("../../platform/index.js");
   if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
 
+  const waitFn = typeof opts.waitWhilePaused === "function" ? opts.waitWhilePaused : async () => {};
+
   await new Promise((resolve) => {
     const done = () => resolve();
     if (gen !== _wordSpeakGeneration) {
@@ -1072,29 +1083,46 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
       lang: "zh-CN",
       rate: 0.95,
       onEnd: () => {
-        if (gen !== _wordSpeakGeneration) {
-          done();
-          return;
-        }
-        cancelLearnVocabSpeakGapTimer();
-        _learnVocabSpeakGapTimer = setTimeout(() => {
-          _learnVocabSpeakGapTimer = null;
+        (async () => {
+          if (gen !== _wordSpeakGeneration) {
+            done();
+            return;
+          }
+          cancelLearnVocabSpeakGapTimer();
+          try {
+            await pauseAwareDelay(randomGapMs(400, 700), gen, waitFn);
+          } catch (_) {}
+          if (gen !== _wordSpeakGeneration) {
+            done();
+            return;
+          }
+          await waitFn();
           if (gen !== _wordSpeakGeneration) {
             done();
             return;
           }
           const useMixed = opts && opts.mixedUiMeaning;
           if (useMixed) {
-            speakMixedUiMeaningText(meanStr, gen, opts.pinyinMap || new Map()).then(done).catch(done);
+            try {
+              await speakMixedUiMeaningText(meanStr, gen, opts.pinyinMap || new Map(), opts);
+            } catch (_) {}
+            done();
             return;
           }
-          AUDIO_ENGINE.playText(meanStr, {
-            lang: ttsBcp47ForUiMeaningLang(),
-            rate: 0.95,
-            onEnd: done,
-            onError: done,
+          await new Promise((r2) => {
+            if (gen !== _wordSpeakGeneration) {
+              r2();
+              return;
+            }
+            AUDIO_ENGINE.playText(meanStr, {
+              lang: ttsBcp47ForUiMeaningLang(),
+              rate: 0.95,
+              onEnd: r2,
+              onError: r2,
+            });
           });
-        }, randomGapMs(400, 700));
+          done();
+        })().catch(done);
       },
       onError: done,
     });

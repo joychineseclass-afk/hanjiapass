@@ -13,7 +13,7 @@ import {
   replayShadowingSentence,
   skipShadowingNext,
 } from "./aiShadowingPlayback.js";
-import { runLessonFocusSpeakAll } from "./aiLessonFocusSpeak.js";
+import { handleLessonFocusSpeakClick, resetLessonFocusSpeakSession } from "./aiLessonFocusSpeak.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
 import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
 
@@ -123,6 +123,7 @@ export function mountAITutorPanel(container, opts = {}) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
         cancelShadowingPlayback(card);
+        resetLessonFocusSpeakSession();
         try {
           AUDIO_ENGINE.stop();
           startNewHskSpeakChain();
@@ -192,7 +193,7 @@ export function mountAITutorPanel(container, opts = {}) {
     if (speakAllBtn && mode === "explain") {
       const focusRoot = wrap.querySelector(".ai-lesson-focus");
       speakAllBtn.addEventListener("click", () => {
-        runLessonFocusSpeakAll(lessonData, currentLang, focusRoot, speakAllBtn);
+        handleLessonFocusSpeakClick(lessonData, currentLang, focusRoot, speakAllBtn);
       });
     }
   }
