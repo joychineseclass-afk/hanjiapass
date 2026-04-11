@@ -1,11 +1,12 @@
 // /api/gemini.js
-export const config = { runtime: "nodejs" };
+export const config = { runtime: "nodejs", maxDuration: 60 };
 
 /* =========================
    0) Model candidates（失败自动降级）
 ========================= */
 const DEFAULT_MODEL_CANDIDATES = [
   process.env.GEMINI_MODEL,
+  "gemini-2.0-flash",
   "gemini-3-flash-preview",
   "gemini-1.5-flash",
   "gemini-1.5-pro",
@@ -42,10 +43,69 @@ function isLikelyModelNotFound(details) {
   );
 }
 
+function summarizeApiKey(keys) {
+  const k = keys[0] || "";
+  return {
+    keyCount: keys.length,
+    hasGeminiKey: keys.length > 0,
+    keyLength: k.length,
+    keyPrefix: k.length >= 4 ? `${k.slice(0, 4)}…` : k.length ? "(short)" : "(none)",
+  };
+}
+
 function extractText(data) {
+  const blockReason = data?.promptFeedback?.blockReason;
+  if (blockReason) {
+    return { text: "", blockReason };
+  }
   const parts = data?.candidates?.[0]?.content?.parts;
-  if (!Array.isArray(parts)) return "";
-  return parts.map(p => p?.text || "").join("").trim();
+  if (!Array.isArray(parts) || !parts.length) {
+    const fr = data?.candidates?.[0]?.finishReason;
+    return { text: "", finishReason: fr || undefined, apiError: data?.error };
+  }
+  const text = parts.map(p => p?.text || "").join("").trim();
+  return { text };
+}
+
+/** Vercel 部分环境下 req.body 未解析时，从流中读取 JSON */
+async function readPostJson(req) {
+  let body = req.body;
+  if (Buffer.isBuffer(body)) {
+    try {
+      body = JSON.parse(body.toString("utf8"));
+    } catch {
+      body = {};
+    }
+  }
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body || "{}");
+    } catch {
+      body = {};
+    }
+  }
+  if (body && typeof body === "object" && Object.keys(body).length > 0) {
+    return body;
+  }
+  const cl = Number(req.headers["content-length"] || 0);
+  if (cl <= 0) return {};
+  try {
+    if (typeof req.text === "function") {
+      const t = await req.text();
+      return t ? JSON.parse(t) : {};
+    }
+  } catch (e) {
+    console.warn("[api/gemini] req.text() parse failed:", e?.message || e);
+  }
+  try {
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const raw = Buffer.concat(chunks).toString("utf8");
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.warn("[api/gemini] stream body read failed:", e?.message || e);
+  }
+  return {};
 }
 
 /* =========================
@@ -140,14 +200,32 @@ export default async function handler(req, res) {
 
   try {
     const keys = getApiKeys();
+    const keyInfo = summarizeApiKey(keys);
+    console.info("[api/gemini] POST entered", keyInfo);
+
     if (!keys.length) {
-      return res.status(500).json({ error: "Missing GEMINI API key(s) in Environment Variables." });
+      console.error("[api/gemini] MISSING_GEMINI_KEY — set GEMINI_API_KEY (or GEMINI_API_KEYS) on Vercel Project → Environment Variables, then redeploy Production.");
+      return res.status(500).json({
+        error: "Missing GEMINI API key(s) in Environment Variables.",
+        code: "MISSING_GEMINI_KEY",
+      });
     }
 
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body || "{}")
-        : (req.body || {});
+    const body = await readPostJson(req);
+    const promptFromBody = String(body.prompt || body.message || "").trim();
+    console.info("[api/gemini] body parsed", {
+      hasPrompt: !!promptFromBody,
+      promptLength: promptFromBody.length,
+      mode: body.mode,
+      explainLang: body.explainLang,
+      hasContext: body.context != null,
+      lessonQA: !!(body.context && body.context.lessonQA),
+      bodyKeys: body && typeof body === "object" ? Object.keys(body) : [],
+    });
+
+    if (!promptFromBody) {
+      console.warn("[api/gemini] empty prompt after parse — check Content-Type: application/json and Vercel body parsing.");
+    }
 
     // ✅ 新增：mode / context（可选）
     const explainLang = String(body.explainLang || "ko").trim();
@@ -155,7 +233,7 @@ export default async function handler(req, res) {
     const context = body.context || null;
 
     // ✅ 输入保护（避免超长）
-    const userPromptRaw = String(body.prompt || body.message || "").trim();
+    const userPromptRaw = promptFromBody;
     const userPrompt = clampString(userPromptRaw, context?.lessonQA ? 4500 : 2000);
     if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
 
@@ -229,9 +307,15 @@ ${contextText ? contextText : "(none)"}
     `.trim();
 
     const finalPrompt = `${systemPrompt}\n\n【学生问题】\n${userPrompt}`;
+    console.info("[api/gemini] model request prepared", {
+      mode,
+      finalPromptLength: finalPrompt.length,
+      contextJsonLength: contextText.length,
+      lessonQA: !!(context && context.lessonQA),
+    });
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    const timeout = setTimeout(() => controller.abort(), 55000);
 
     let lastError = null;
 
@@ -240,6 +324,7 @@ ${contextText ? contextText : "(none)"}
         const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:generateContent`;
 
         try {
+          console.info("[api/gemini] gemini fetch start", { model, apiVersion: API_VERSION });
           const resp = await fetch(url, {
             method: "POST",
             headers: {
@@ -258,6 +343,12 @@ ${contextText ? contextText : "(none)"}
           catch { data = { error: { message: rawText } }; }
 
           if (!resp.ok) {
+            const errMsg = data?.error?.message || data?.error || rawText?.slice?.(0, 500) || "";
+            console.warn("[api/gemini] gemini HTTP error", {
+              status: resp.status,
+              model,
+              message: String(errMsg).slice(0, 400),
+            });
             if (isLikelyModelNotFound(data)) {
               lastError = { status: resp.status, triedModel: model, details: data };
               continue;
@@ -266,20 +357,35 @@ ${contextText ? contextText : "(none)"}
             break;
           }
 
-          clearTimeout(timeout);
+          const extracted = extractText(data);
+          const text = extracted.text || "";
+          if (extracted.blockReason) {
+            console.warn("[api/gemini] prompt blocked", { model, blockReason: extracted.blockReason });
+          }
+          if (extracted.finishReason && extracted.finishReason !== "STOP") {
+            console.warn("[api/gemini] unusual finishReason", { model, finishReason: extracted.finishReason });
+          }
 
-          const text = extractText(data);
-          return res.status(200).json({
-            text: text || "(응답 없음)",
-            modelUsed: model,
-            apiVersion: API_VERSION,
-            explainLang,
-            mode,
-            fallback: false
-          });
+          if (text && text.trim()) {
+            clearTimeout(timeout);
+            console.info("[api/gemini] gemini success", { model, textLength: text.length });
+            return res.status(200).json({
+              text,
+              modelUsed: model,
+              apiVersion: API_VERSION,
+              explainLang,
+              mode,
+              fallback: false,
+            });
+          }
+
+          console.warn("[api/gemini] empty text from model, try next", { model, hasCandidates: !!data?.candidates?.length });
+          lastError = { triedModel: model, emptyText: true, snippet: rawText?.slice?.(0, 200) };
 
         } catch (e) {
-          lastError = { error: e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e)), triedModel: model };
+          const msg = e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e));
+          console.warn("[api/gemini] gemini fetch exception", { model, error: msg });
+          lastError = { error: msg, triedModel: model };
           if (e?.name === "AbortError") break;
         }
       }
@@ -287,6 +393,7 @@ ${contextText ? contextText : "(none)"}
 
     clearTimeout(timeout);
 
+    console.warn("[api/gemini] all models failed or empty, using offline fallback", lastError);
     const offline = offlineFallback(userPrompt, explainLang);
     return res.status(200).json({
       text: offline,
@@ -295,7 +402,7 @@ ${contextText ? contextText : "(none)"}
       explainLang,
       mode,
       fallback: true,
-      lastError
+      lastError,
     });
 
   } catch (e) {

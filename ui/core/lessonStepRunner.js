@@ -237,34 +237,87 @@ export function mountLessonStepRunner() {
     return "teach";
   }
 
-  /** Lumina Tutor 正式唯一入口：POST /api/gemini（失败抛错，由 runTutor 回退 mock） */
+  function geminiEndpointUrl() {
+    try {
+      const o = typeof window !== "undefined" ? window.location.origin : "";
+      if (o) return `${o.replace(/\/$/, "")}/api/gemini`;
+    } catch (_) {}
+    return "/api/gemini";
+  }
+
+  /** Lumina Tutor 正式唯一入口：POST /api/gemini（失败抛错，由 runTutor 回退） */
   api.askAI = async function askAI({ prompt, context = "", lang = "ko", mode = "Kids", contextObj } = {}) {
     const fullPrompt =
       (typeof prompt === "string" && prompt.trim())
         ? prompt.trim()
         : String(context || "").trim();
 
+    const url = geminiEndpointUrl();
+    const payload = {
+      prompt: fullPrompt,
+      explainLang: toExplainLang(lang),
+      mode: toGeminiMode(mode),
+      context: contextObj != null ? contextObj : undefined,
+    };
+
+    const logBase = {
+      url,
+      promptLength: fullPrompt.length,
+      mode: payload.mode,
+      explainLang: payload.explainLang,
+      hasContext: contextObj != null,
+      lessonQA: !!(contextObj && contextObj.lessonQA),
+    };
+
     try {
-      const r = await fetch("/api/gemini", {
+      console.info("[LUMINA askAI] request", logBase);
+
+      const r = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prompt: fullPrompt,
-          explainLang: toExplainLang(lang),
-          mode: toGeminiMode(mode),
-          context: contextObj != null ? contextObj : undefined,
-        }),
+        body: JSON.stringify(payload),
       });
-      if (r.ok) {
-        const data = await r.json();
-        return normalizeAIResult(data);
-      }
-      console.warn("[JOY_RUNNER.askAI] /api/gemini HTTP", r.status);
-    } catch (e) {
-      console.warn("[JOY_RUNNER.askAI] /api/gemini failed:", e);
-    }
 
-    throw new Error("AI not connected: /api/gemini unavailable.");
+      const rawText = await r.text();
+      let data = {};
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch (parseErr) {
+        console.error("[LUMINA askAI] response not JSON", {
+          httpStatus: r.status,
+          contentType: r.headers.get("content-type"),
+          snippet: String(rawText || "").slice(0, 240),
+          parseErr: parseErr?.message || parseErr,
+        });
+        throw new Error(`ASKAI_BAD_JSON: HTTP ${r.status}`);
+      }
+
+      if (!r.ok) {
+        const code = data.code || data.error || "";
+        console.error("[LUMINA askAI] HTTP error", {
+          httpStatus: r.status,
+          code,
+          snippet: String(data.error || rawText || "").slice(0, 400),
+        });
+        throw new Error(`ASKAI_HTTP_${r.status}: ${String(code || "").slice(0, 120)}`);
+      }
+
+      const normalized = normalizeAIResult(data);
+      console.info("[LUMINA askAI] response ok", {
+        textLength: (normalized.text || "").length,
+        responseFallback: !!(data && data.fallback),
+        modelUsed: data.modelUsed,
+      });
+      return normalized;
+    } catch (e) {
+      const name = e?.name === "TypeError" ? "network_or_cors" : e?.name;
+      console.error("[LUMINA askAI] failed", {
+        ...logBase,
+        errorName: name,
+        errorMessage: e?.message || String(e),
+      });
+      throw e;
+    }
   };
 
   function normalizeAIResult(out) {

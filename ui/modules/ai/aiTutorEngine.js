@@ -402,9 +402,20 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
 
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
+      if (mode === "free_talk" && typeof console !== "undefined" && console.info) {
+        console.info("[LUMINA runTutor free_talk] calling askAI", {
+          lessonId: lessonData?.id,
+          courseId: lessonData?.courseId,
+          promptLength: (prompt || "").length,
+          hasLessonQA: !!(contextObj && contextObj.lessonQA),
+        });
+      }
       const res = await window.JOY_RUNNER.askAI({ prompt, lang, mode, contextObj });
       return { text: (res && res.text != null ? res.text : "") || "", raw: res };
     } catch (e) {
+      if (mode === "free_talk" && typeof console !== "undefined" && console.error) {
+        console.error("[LUMINA runTutor] askAI rejected", { mode, message: e?.message || String(e) });
+      }
       if (typeof console !== "undefined" && console.warn) console.warn("[AI Tutor] API unavailable, using mock:", e);
       const mock = getMockTutorOutput(mode, aiItem, lessonData, lang, userInput);
       if (mode === "shadowing") {
