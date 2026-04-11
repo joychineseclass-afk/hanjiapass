@@ -817,13 +817,6 @@
   margin-bottom: 12px;
 }
 
-.ai-situation-student-k {
-  display: block;
-  font-size: 0.75rem;
-  color: #64748b;
-  margin-bottom: 4px;
-}
-
 .ai-situation-student-refs {
   margin: 0;
   padding-left: 0;
@@ -833,7 +826,7 @@
   line-height: 1.5;
 }
 
-/* 参考答案与喇叭同一行紧跟：勿用 flex:1 把按钮撑到行尾 */
+/* 🔊 나: 中文答句 — 喇叭在行首，与「나:」+正文同一行自然排布 */
 .ai-situation-ref-item {
   margin: 0 0 0.5rem 0;
 }
@@ -842,32 +835,50 @@
   margin-bottom: 0;
 }
 
-.ai-situation-ref-wrap {
-  display: inline;
-  line-height: inherit;
-}
-
-.ai-situation-ref-text {
-  display: inline;
+.ai-situation-ref-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.45rem;
 }
 
 .ai-situation-ref-speak {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.5rem;
   height: 1.5rem;
-  margin: 0 0 0 0.3rem;
+  margin: 0;
   padding: 0;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   background: #fff;
   font-size: 0.7rem;
   line-height: 1;
-  vertical-align: 0.1em;
   cursor: pointer;
   color: #64748b;
   box-sizing: border-box;
+}
+
+.ai-situation-ref-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.35em;
+  min-width: 0;
+}
+
+.ai-situation-ref-me {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #475569;
+}
+
+.ai-situation-ref-zh {
+  color: #0f172a;
+  font-weight: 500;
 }
 
 .ai-situation-ref-speak:hover {

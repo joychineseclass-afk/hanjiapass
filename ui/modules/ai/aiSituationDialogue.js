@@ -303,11 +303,12 @@ function scenarioCardHtml(sc, lang) {
 }
 
 function studentRefsListHtml(studentRefs) {
-  const playLabel = t("ai.situation_play_student_ref", "이 예시 답안 듣기");
+  const playLabel = t("ai.situation_play_student_ref", "이 답안 듣기");
+  const mePrefix = str(t("ai.situation_ref_me_prefix", "나:")) || "나:";
   return (Array.isArray(studentRefs) ? studentRefs : [])
     .map(
       (line, idx) =>
-        `<li class="ai-situation-ref-item"><span class="ai-situation-ref-wrap"><span class="ai-situation-ref-text">${escapeHtml(line)}</span><button type="button" class="ai-situation-ref-speak" data-student-ref-index="${idx}" aria-label="${escapeHtml(playLabel)}"><span class="ai-situation-ref-speak-ic" aria-hidden="true">🔊</span></button></span></li>`,
+        `<li class="ai-situation-ref-item"><span class="ai-situation-ref-row"><button type="button" class="ai-situation-ref-speak" data-student-ref-index="${idx}" aria-label="${escapeHtml(playLabel)}"><span class="ai-situation-ref-speak-ic" aria-hidden="true">🔊</span></button><span class="ai-situation-ref-line"><span class="ai-situation-ref-me">${escapeHtml(mePrefix)}</span><span class="ai-situation-ref-zh">${escapeHtml(line)}</span></span></span></li>`,
     )
     .join("");
 }
@@ -321,7 +322,6 @@ export function renderSituationDialogueShell(plan, lang) {
   const practiceTitle = t("ai.situation_practice_block_title", "대화 연습");
   const replayLabel = t("ai.situation_replay", "다시 듣기");
   const teacherPrompt = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
-  const studentHint = t("ai.situation_student_refs_label", "학생 답변 예시");
   const nextLabel = t("ai.situation_next", "다음");
   const doneLine = t("ai.situation_complete", "대화 연습이 끝났어요.");
   const restartLabel = t("ai.situation_restart", "다시 시작");
@@ -345,7 +345,6 @@ export function renderSituationDialogueShell(plan, lang) {
           <p class="ai-situation-asr-unsupported hidden" data-asr-unsupported>${escapeHtml(t("ai.situation_speech_unsupported", "이 브라우저에서는 음성 인식을 사용할 수 없어요. 텍스트로 연습해 보세요."))}</p>
         </div>
         <div class="ai-situation-student-block">
-          <span class="ai-situation-student-k">${escapeHtml(studentHint)}</span>
           <ul class="ai-situation-student-refs" data-student-refs></ul>
         </div>
         <div class="ai-situation-user-answer hidden" data-user-answer-wrap>
