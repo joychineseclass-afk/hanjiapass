@@ -12,6 +12,13 @@ import {
   SITUATION_ASR_CODE,
 } from "./aiSituationZhSpeech.js";
 
+/**
+ * 상황 대화：음성 답변(녹음·Web Speech) 노출 여부.
+ * false 이면 UI 에서 녹음/인식/피드백을 숨기고 다음 만 사용 — 실제 기기에서 ASR 이 불안정할 때 사용.
+ * true 로 바꾸면 아래 마운트 로직·DOM 이 다시 활성화됨(코어 모듈 aiSituationZhSpeech.js 는 그대로 유지).
+ */
+const SITUATION_VOICE_ANSWER_ENABLED = false;
+
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
 function t(key, fallback = "") {
@@ -317,14 +324,22 @@ export function renderSituationDialogueShell(plan, lang) {
           <button type="button" class="ai-btn ai-btn-secondary ai-situation-replay" data-replay-btn>${escapeHtml(replayLabel)}</button>
         </div>
         <p class="ai-situation-teacher-prompt" data-teacher-prompt>${escapeHtml(teacherPrompt)}</p>
+        ${
+          SITUATION_VOICE_ANSWER_ENABLED
+            ? `
         <div class="ai-situation-speak-zone" data-speak-zone>
           <button type="button" class="ai-btn ai-btn-secondary ai-situation-record-btn" data-record-btn>${escapeHtml(t("ai.situation_record_start", "녹음 시작"))}</button>
           <p class="ai-situation-asr-unsupported hidden" data-asr-unsupported>${escapeHtml(t("ai.situation_speech_unsupported", "이 브라우저에서는 음성 인식을 사용할 수 없어요. 텍스트로 연습해 보세요."))}</p>
-        </div>
+        </div>`
+            : ""
+        }
         <div class="ai-situation-student-block">
           <span class="ai-situation-student-k">${escapeHtml(studentHint)}</span>
           <ul class="ai-situation-student-refs" data-student-refs></ul>
         </div>
+        ${
+          SITUATION_VOICE_ANSWER_ENABLED
+            ? `
         <div class="ai-situation-user-answer hidden" data-user-answer-wrap>
           <span class="ai-situation-user-answer-k">${escapeHtml(t("ai.situation_my_answer", "내 대답"))}</span>
           <span class="ai-situation-user-answer-zh" data-user-transcript></span>
@@ -333,7 +348,12 @@ export function renderSituationDialogueShell(plan, lang) {
         <div class="ai-situation-actions-row">
           <button type="button" class="ai-btn ai-btn-secondary ai-situation-retry-speak hidden" data-retry-speak-btn>${escapeHtml(t("ai.situation_retry_speak", "다시 말하기"))}</button>
           <button type="button" class="ai-btn ai-btn-primary ai-situation-next" data-next-btn>${escapeHtml(nextLabel)}</button>
-        </div>
+        </div>`
+            : `
+        <div class="ai-situation-actions-row">
+          <button type="button" class="ai-btn ai-btn-primary ai-situation-next" data-next-btn>${escapeHtml(nextLabel)}</button>
+        </div>`
+        }
       </div>
       <div class="ai-situation-done hidden" data-situation-done>
         <p class="ai-situation-done-text">${escapeHtml(doneLine)}</p>
@@ -441,8 +461,15 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   const asrUnsupportedEl = rootEl.querySelector("[data-asr-unsupported]");
   const chips = rootEl.querySelectorAll(".ai-situation-scenario-chip");
 
-  const recognizer = createZhSituationRecognizer();
+  const recognizer = SITUATION_VOICE_ANSWER_ENABLED ? createZhSituationRecognizer() : null;
   let recording = false;
+
+  function abortSituationRecognizer() {
+    if (!recognizer) return;
+    try {
+      recognizer.abort();
+    } catch (_) {}
+  }
 
   function currentScenario() {
     return plan.scenarios[scenarioIndex] || plan.scenarios[0];
@@ -459,9 +486,7 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   }
 
   function renderRound() {
-    try {
-      recognizer.abort();
-    } catch (_) {}
+    abortSituationRecognizer();
     recording = false;
 
     const sc = currentScenario();
@@ -480,12 +505,14 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     }
 
     clearUserAnswerUi();
-    if (recordBtn) {
+    if (SITUATION_VOICE_ANSWER_ENABLED && recordBtn) {
       const sup = isSituationZhSpeechSupported();
       recordBtn.disabled = !sup;
       recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
     }
-    if (asrUnsupportedEl) asrUnsupportedEl.classList.toggle("hidden", isSituationZhSpeechSupported());
+    if (SITUATION_VOICE_ANSWER_ENABLED && asrUnsupportedEl) {
+      asrUnsupportedEl.classList.toggle("hidden", isSituationZhSpeechSupported());
+    }
 
     if (nextBtn) nextBtn.textContent = t("ai.situation_next", "다음");
 
@@ -539,9 +566,7 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   }
 
   function resetRoundState() {
-    try {
-      recognizer.abort();
-    } catch (_) {}
+    abortSituationRecognizer();
     recording = false;
     try {
       AUDIO_ENGINE.stop();
@@ -602,7 +627,7 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     });
   }
 
-  if (recordBtn && isSituationZhSpeechSupported()) {
+  if (SITUATION_VOICE_ANSWER_ENABLED && recordBtn && isSituationZhSpeechSupported()) {
     recordBtn.addEventListener("click", async () => {
       const sc = currentScenario();
       const rounds = sc.rounds || [];
@@ -671,11 +696,9 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     });
   }
 
-  if (retrySpeakBtn) {
+  if (SITUATION_VOICE_ANSWER_ENABLED && retrySpeakBtn) {
     retrySpeakBtn.addEventListener("click", () => {
-      try {
-        recognizer.abort();
-      } catch (_) {}
+      abortSituationRecognizer();
       recording = false;
       if (recordBtn) {
         recordBtn.disabled = !isSituationZhSpeechSupported();
@@ -687,9 +710,7 @@ export function mountSituationDialogue(rootEl, plan, lang) {
 
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
-      try {
-        recognizer.abort();
-      } catch (_) {}
+      abortSituationRecognizer();
       recording = false;
       const sc = currentScenario();
       const rounds = sc.rounds || [];
