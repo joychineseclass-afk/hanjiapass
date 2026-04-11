@@ -278,7 +278,7 @@
     "situation_student_refs_label": "Sample replies",
     "situation_next": "Next",
     "situation_replay": "Play again",
-    "situation_teacher_prompt": "If I say this, how would you answer?",
+    "situation_teacher_prompt": "If I say this, how would you respond?",
     "situation_complete": "You’ve finished this dialogue practice.",
     "situation_restart": "Practice again",
     "situation_round_n": "Round {n}",

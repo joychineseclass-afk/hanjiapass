@@ -48,12 +48,54 @@ function chineseTtsText(raw) {
   return s || String(raw ?? "").trim();
 }
 
-function speakSituationAiLine(zhLine) {
-  const text = chineseTtsText(zhLine);
-  if (!text || typeof window === "undefined") return;
+/** 与 hskRenderer.ttsBcp47ForUiMeaningLang 一致：提示语按界面语言朗读 */
+function ttsBcp47ForUiLang(uiLang) {
+  const l = String(uiLang || "kr").toLowerCase();
+  if (l === "kr" || l === "ko") return "ko-KR";
+  if (l === "jp" || l === "ja") return "ja-JP";
+  if (l === "cn" || l === "zh") return "zh-CN";
+  if (l === "en") return "en-US";
+  return "ko-KR";
+}
+
+/**
+ * 当前轮完整朗读：先 zh-CN 读 AI 台词，再按系统语言读提示语（대화 시작 / 다음 / 다시 듣기 共用）
+ */
+function speakSituationRoundFull(zhLine, uiLang) {
+  if (typeof window === "undefined") return;
+  const zh = chineseTtsText(zhLine);
+  const promptText = str(
+    t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?"),
+  );
+  const promptLang = ttsBcp47ForUiLang(uiLang);
+
+  const playPrompt = () => {
+    if (!promptText) return;
+    try {
+      AUDIO_ENGINE.playText(promptText, { lang: promptLang, rate: 0.95 });
+    } catch (_) {}
+  };
+
+  if (!zh) {
+    playPrompt();
+    return;
+  }
+  if (!promptText) {
+    try {
+      AUDIO_ENGINE.playText(zh, { lang: "zh-CN", rate: 0.95 });
+    } catch (_) {}
+    return;
+  }
+
   try {
-    AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95 });
-  } catch (_) {}
+    AUDIO_ENGINE.playText(zh, {
+      lang: "zh-CN",
+      rate: 0.95,
+      onEnd: playPrompt,
+    });
+  } catch (_) {
+    playPrompt();
+  }
 }
 
 /** 师生会话：学生先向老师问好 → 练习轮次用 (老师句, 学生句) */
@@ -296,8 +338,6 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   const refsEl = rootEl.querySelector("[data-student-refs]");
   const chips = rootEl.querySelectorAll(".ai-situation-scenario-chip");
 
-  const teacherPromptText = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
-
   function currentScenario() {
     return plan.scenarios[scenarioIndex] || plan.scenarios[0];
   }
@@ -311,14 +351,16 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     const n = roundIndex + 1;
     if (metaEl) metaEl.textContent = formatRoundLabel(n);
     if (aiLineEl) aiLineEl.innerHTML = `<span class="ai-situation-ai-k">AI：</span><span class="ai-situation-ai-zh">${escapeHtml(r.aiLine)}</span>`;
-    if (teacherPromptEl) teacherPromptEl.textContent = teacherPromptText;
+    if (teacherPromptEl) {
+      teacherPromptEl.textContent = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
+    }
     if (refsEl) {
       refsEl.innerHTML = r.studentRefs.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
     }
 
     if (nextBtn) nextBtn.textContent = t("ai.situation_next", "다음");
 
-    speakSituationAiLine(r.aiLine);
+    speakSituationRoundFull(r.aiLine, lang);
   }
 
   function showPractice(show) {
@@ -380,7 +422,12 @@ export function mountSituationDialogue(rootEl, plan, lang) {
       const sc = currentScenario();
       const rounds = sc.rounds || [];
       const r = rounds[roundIndex];
-      if (r && r.aiLine) speakSituationAiLine(r.aiLine);
+      if (r && r.aiLine) {
+        try {
+          AUDIO_ENGINE.stop();
+        } catch (_) {}
+        speakSituationRoundFull(r.aiLine, lang);
+      }
     });
   }
 

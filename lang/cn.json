@@ -250,7 +250,7 @@
     "situation_student_refs_label": "学生答语示例",
     "situation_next": "下一步",
     "situation_replay": "再听一遍",
-    "situation_teacher_prompt": "如果我这样说，你怎么回答？",
+    "situation_teacher_prompt": "如果我这样说，你会怎么回答呢？",
     "situation_complete": "本轮对话练习已完成。",
     "situation_restart": "再练一次",
     "situation_round_n": "第 {n} 轮",

@@ -275,7 +275,7 @@
     "situation_student_refs_label": "答えの例",
     "situation_next": "次へ",
     "situation_replay": "もう一度聞く",
-    "situation_teacher_prompt": "私がこう言ったら、どう返しますか？",
+    "situation_teacher_prompt": "私がこう言ったら、どう答えますか。",
     "situation_complete": "この会話練習は終わりです。",
     "situation_restart": "もう一度",
     "situation_round_n": "ラウンド {n}",
