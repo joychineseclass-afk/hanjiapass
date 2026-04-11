@@ -872,6 +872,7 @@
   background: #f8fafc;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  white-space: pre-wrap;
 }
 
 .ai-situation-actions-row {

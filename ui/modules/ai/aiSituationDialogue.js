@@ -6,7 +6,11 @@
 import { i18n } from "../../i18n.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
 import { buildAcceptableSet, judgeSituationRound } from "./aiSituationJudge.js";
-import { createZhSituationRecognizer, isSituationZhSpeechSupported } from "./aiSituationZhSpeech.js";
+import {
+  createZhSituationRecognizer,
+  isSituationZhSpeechSupported,
+  SITUATION_ASR_CODE,
+} from "./aiSituationZhSpeech.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -343,6 +347,12 @@ function formatRoundLabel(n) {
   return t("ai.situation_round_n", "라운드 {n}").replace(/\{n\}/g, String(n));
 }
 
+const ASR_LOG = "[SituationASR]";
+
+function logSituationAsr(...args) {
+  if (typeof console !== "undefined" && console.log) console.log(ASR_LOG, ...args);
+}
+
 function buildSituationFeedback(tier, round, heard) {
   const expected = str(round.studentRefs?.[0]) || str(round.acceptable?.[0]) || "—";
   const h = str(heard) || t("ai.situation_asr_empty", "(인식 없음)");
@@ -363,6 +373,45 @@ function buildSituationFeedback(tier, round, heard) {
   )
     .replace("{expected}", expected)
     .replace("{heard}", h);
+}
+
+/**
+ * 录音/识别失败类 UI（与 judge 的「识别到但不匹配」区分）
+ */
+function messageForAsrSystemFailure(code, stopPayload) {
+  const err = stopPayload && stopPayload.speechError;
+
+  if (code === SITUATION_ASR_CODE.PERMISSION_DENIED) {
+    return t("ai.situation_asr_err_permission", "마이크 권한이 필요해요. 브라우저 설정에서 허용해 주세요.");
+  }
+  if (code === SITUATION_ASR_CODE.MIC_OPEN_FAILED) {
+    return t("ai.situation_asr_err_mic", "마이크를 열 수 없어요. 장치 연결을 확인해 주세요.");
+  }
+  if (code === SITUATION_ASR_CODE.NO_AUDIO_INPUT) {
+    return t(
+      "ai.situation_asr_err_no_audio",
+      "소리가 거의 들리지 않았어요. 마이크를 가까이 두고 다시 말해 보세요.",
+    );
+  }
+  if (code === SITUATION_ASR_CODE.NOT_SUPPORTED) {
+    return t("ai.situation_speech_unsupported", "이 브라우저에서는 음성 인식을 사용할 수 없어요.");
+  }
+  if (code === SITUATION_ASR_CODE.NO_RESULT) {
+    return t("ai.situation_asr_err_no_hear", "잘 들리지 않았어요. 조금 더 크게 말해 보세요.");
+  }
+  if (code === SITUATION_ASR_CODE.RECOGNITION_ERROR && err && err.error === "network") {
+    return t(
+      "ai.situation_asr_err_service",
+      "음성 인식 서비스에 일시적으로 연결할 수 없어요. 잠시 후 다시 시도해 주세요.",
+    );
+  }
+  if (code === SITUATION_ASR_CODE.RECOGNITION_ERROR) {
+    return t(
+      "ai.situation_asr_err_recognition",
+      "음성 인식 중 오류가 났어요. 다시 말하기를 눌러 주세요.",
+    );
+  }
+  return t("ai.situation_asr_err_generic", "문제가 발생했어요. 다시 말하기를 눌러 주세요.");
 }
 
 /**
@@ -454,6 +503,33 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
   }
 
+  /** 有识别文本但与本轮参考不匹配（与系统层失败区分） */
+  function showRecognizedMismatch(transcriptRaw, round) {
+    const text = str(transcriptRaw);
+    logSituationAsr("failure_layer", "recognized_but_not_matched", "raw_text=", JSON.stringify(text));
+    if (userAnswerWrap) userAnswerWrap.classList.remove("hidden");
+    if (userTranscriptEl) userTranscriptEl.textContent = text || "—";
+    if (feedbackBox) {
+      feedbackBox.classList.remove("hidden");
+      const lead = t(
+        "ai.situation_asr_mismatch_lead",
+        "음성은 인식됐지만, 이번 표현과는 조금 달라요.",
+      );
+      feedbackBox.textContent = `${lead}\n${buildSituationFeedback("bad", round, text)}`;
+    }
+    if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
+  }
+
+  function showAsrSystemFailure(code, stopPayload) {
+    if (userAnswerWrap) userAnswerWrap.classList.add("hidden");
+    if (userTranscriptEl) userTranscriptEl.textContent = "";
+    if (feedbackBox) {
+      feedbackBox.classList.remove("hidden");
+      feedbackBox.textContent = messageForAsrSystemFailure(code, stopPayload);
+    }
+    if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
+  }
+
   function showPractice(show) {
     if (practiceEl) practiceEl.classList.toggle("hidden", !show);
   }
@@ -537,30 +613,60 @@ export function mountSituationDialogue(rootEl, plan, lang) {
         try {
           AUDIO_ENGINE.stop();
         } catch (_) {}
+        const started = await recognizer.start();
+        if (!started.ok) {
+          recording = false;
+          recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
+          logSituationAsr(
+            "start_failed",
+            started.code,
+            started.error && started.error.name,
+            started.error && started.error.message,
+          );
+          showAsrSystemFailure(started.code || SITUATION_ASR_CODE.RECOGNITION_ERROR, {
+            speechError: started.error
+              ? {
+                  error: String(started.error.name || "Error"),
+                  message: String(started.error.message || ""),
+                }
+              : null,
+          });
+          return;
+        }
         recording = true;
         recordBtn.textContent = t("ai.situation_record_stop", "녹음 종료");
-        recognizer.start();
         return;
       }
 
       recording = false;
       recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
-      const raw = await recognizer.stop();
-      const trimmed = str(raw);
+      const stopRes = await recognizer.stop();
+      logSituationAsr(
+        "stop_summary",
+        "finalCode=",
+        stopRes.finalCode,
+        "recognition.lang=",
+        stopRes.recognitionLang,
+        "micStreamAcquired=",
+        stopRes.micStreamAcquired,
+        "maxAudioLevel=",
+        stopRes.maxAudioLevel,
+      );
+
+      const trimmed = str(stopRes.rawText).trim();
       if (!trimmed) {
-        if (feedbackBox) {
-          feedbackBox.classList.remove("hidden");
-          feedbackBox.textContent = t(
-            "ai.situation_asr_failed",
-            "음성이 인식되지 않았어요. 다시 말하기를 눌러 주세요.",
-          );
+        if (stopRes.finalCode === SITUATION_ASR_CODE.OK) {
+          logSituationAsr("unexpected empty with OK code");
         }
-        if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
-        if (userAnswerWrap) userAnswerWrap.classList.add("hidden");
+        showAsrSystemFailure(stopRes.finalCode, stopRes);
         return;
       }
 
       const { tier } = judgeSituationRound(trimmed, r);
+      if (tier === "bad") {
+        showRecognizedMismatch(trimmed, r);
+        return;
+      }
       showAnswerAndFeedback(trimmed, tier, r);
     });
   }
