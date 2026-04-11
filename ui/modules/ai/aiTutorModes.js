@@ -4,6 +4,8 @@
  */
 
 import { i18n } from "../../i18n.js";
+import { renderLessonFocusHtml } from "./aiLessonFocus.js";
+import { buildSituationDialoguePlan, renderSituationDialogueShell } from "./aiSituationDialogue.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -49,49 +51,31 @@ function resultAreaHtml(emptyState = true) {
 }
 
 /**
- * 渲染 Explain 面板
+ * 渲染 Explain 面板：本课重点讲解区（固定模板，非 AI 聊天/按钮触发）
  */
-export function renderExplainMode(aiItem, lang) {
-  const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
-  const hint = pickLang(aiItem && aiItem.hint, lang);
-  const desc = t("ai.mode_desc_explain", "Explains the key sentences and expressions in this lesson.");
-  const hasContent = !!(aiItem && (aiItem.target || (aiItem.hint && pickLang(aiItem.hint, lang))));
-
-  if (!hasContent) {
-    return `<div class="ai-tutor-mode-content ai-tutor-explain">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+export function renderExplainMode(_aiItem, lang, lesson) {
+  if (!lesson) {
+    return `<div class="ai-tutor-mode-content ai-tutor-explain ai-lesson-focus-empty">
       <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>`;
   }
-
   return `
     <div class="ai-tutor-mode-content ai-tutor-explain">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
-      <div class="ai-tutor-target-block">
-        <span class="ai-tutor-label">${escapeHtml(t("ai.target", "Target"))}</span>
-        <div class="ai-tutor-target-text">${escapeHtml(target || "—")}</div>
-        ${hint ? `<p class="ai-tutor-hint">${escapeHtml(hint)}</p>` : ""}
-      </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
-        ${escapeHtml(t("ai.start_explain", "Start explanation"))}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      ${renderLessonFocusHtml(lesson, lang)}
     </div>
   `;
 }
 
 /**
- * 渲染 Roleplay 面板（情境对话 / substitute）
- * 支持 aiItem.prompt、aiItem.sampleAnswer
+ * 渲染 Roleplay 面板（상황 대화）：固定场景卡 + 逐轮练习器（无 AI 长文回复区）
  */
-export function renderRoleplayMode(aiItem, lang) {
+export function renderRoleplayMode(aiItem, lang, lesson) {
+  const plan = lesson ? buildSituationDialoguePlan(lesson, lang) : null;
+  if (plan) return renderSituationDialogueShell(plan, lang);
+
   const scenarioKey = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
   const scenarioLabel = getScenarioLabel(scenarioKey);
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const sampleAnswer = typeof (aiItem && aiItem.sampleAnswer) === "string"
-    ? aiItem.sampleAnswer
-    : (aiItem && aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
   const desc = promptText || t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
   const classmate = t("ai.role_classmate", "Classmate");
   const me = t("ai.role_me", "Me");
@@ -112,13 +96,8 @@ export function renderRoleplayMode(aiItem, lang) {
           <span class="ai-tutor-role-label">${escapeHtml(t("ai.student_role", "Student"))}:</span>
           <span class="ai-tutor-role-value">${escapeHtml(me)}</span>
         </div>
-        ${promptText ? `<p class="ai-tutor-hint mt-2">${escapeHtml(promptText)}</p>` : ""}
-        ${sampleAnswer ? `<div class="ai-tutor-sample-answer mt-2"><span class="ai-tutor-label">${escapeHtml(t("ai.sample_answer", "Sample"))}:</span> <span class="ai-tutor-sample-text">${escapeHtml(sampleAnswer)}</span></div>` : ""}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
-        ${escapeHtml(t("ai.start_roleplay", "Start dialogue"))}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.situation_no_lesson_data", "이 과의 회화 데이터가 없어 상황 대화를 준비할 수 없습니다."))}</div>
     </div>
   `;
 }
@@ -134,35 +113,57 @@ export function renderShadowingMode(aiItem, lang) {
     if (sa.trim()) lines = [sa.trim()];
   }
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const desc = promptText || t("ai.mode_desc_shadowing", "Repeat line by line to build speaking rhythm and confidence.");
-  const step1 = t("ai.step_see", "See the sentence");
-  const step2 = t("ai.step_repeat", "Repeat after");
-  const step3 = t("ai.step_say", "Say it yourself");
+  const sessionTitle = t("ai.shadowing_card_title", "따라 말하기");
+  const sessionLead = t("ai.shadowing_card_lead", "문장을 듣고, 따라 읽고, 직접 말해 보세요.");
+  const howTitle = t("ai.shadowing_how_title", "따라 말하기 방법");
+  const stepListen = t("ai.shadowing_step_listen", "먼저 들어보세요");
+  const stepRepeat = t("ai.shadowing_step_repeat", "따라 읽어보세요");
+  const stepSay = t("ai.shadowing_step_say", "직접 말해보세요");
+  const sentencesLabel = t("ai.shadowing_sentences_label", "연습 문장");
 
   const stepsHtml = `
-    <div class="ai-tutor-steps">
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">1</span> ${escapeHtml(step1)}</div>
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">2</span> ${escapeHtml(step2)}</div>
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">3</span> ${escapeHtml(step3)}</div>
+    <div class="ai-shadowing-how-inline">
+      <div class="ai-shadowing-guide-how-title">${escapeHtml(howTitle)}</div>
+      <ol class="ai-shadowing-guide-steps ai-shadowing-guide-steps--inline" aria-label="${escapeHtml(howTitle)}">
+        <li>${escapeHtml(stepListen)}</li>
+        <li>${escapeHtml(stepRepeat)}</li>
+        <li>${escapeHtml(stepSay)}</li>
+      </ol>
     </div>
   `;
 
   const linesHtml = lines.length
-    ? `<div class="ai-tutor-lines-list">${lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</div>`).join("")}</div>`
+    ? `<ol class="ai-tutor-lines-list ai-shadowing-preview-lines" role="list">${lines.map((line) => `<li class="ai-tutor-line-item ai-shadowing-line-item">${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</li>`).join("")}</ol>`
     : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-shadowing">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <div class="ai-shadowing-session-head">
+        <h3 class="ai-shadowing-session-title">${escapeHtml(sessionTitle)}</h3>
+        <p class="ai-shadowing-session-lead">${escapeHtml(sessionLead)}</p>
+        ${promptText ? `<p class="ai-shadowing-extra-desc">${escapeHtml(promptText)}</p>` : ""}
+      </div>
       ${stepsHtml}
       <div class="ai-tutor-lines-block mt-2">
-        <span class="ai-tutor-label">${escapeHtml(t("ai.mode_shadowing", "Shadowing"))}</span>
+        <span class="ai-tutor-label">${escapeHtml(sentencesLabel)}</span>
         ${linesHtml}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run mt-2" ${!lines.length ? "disabled" : ""}>
-        ${escapeHtml(t("ai.start_shadowing", "Start shadowing"))}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      <div class="ai-shadowing-controls-row">
+        <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run" ${!lines.length ? "disabled" : ""}>
+          ${escapeHtml(t("ai.shadowing_btn_start", "따라 읽기 시작"))}
+        </button>
+        <div class="ai-shadowing-secondary-btns">
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-replay" disabled>
+            ${escapeHtml(t("ai.shadowing_replay", "이 문장 다시"))}
+          </button>
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-next" disabled>
+            ${escapeHtml(t("ai.shadowing_next", "다음 문장"))}
+          </button>
+        </div>
+      </div>
+      <div class="ai-shadowing-playback-bar hidden" aria-live="polite">
+        <span class="ai-shadowing-playback-status"></span>
+      </div>
     </div>
   `;
 }
@@ -195,12 +196,12 @@ export function renderFreeTalkMode(aiItem, lang) {
 /**
  * 根据 mode 渲染对应面板
  */
-export function renderModeContent(mode, aiItem, lang) {
+export function renderModeContent(mode, aiItem, lang, lesson) {
   switch (mode) {
     case "explain":
-      return renderExplainMode(aiItem, lang);
+      return renderExplainMode(aiItem, lang, lesson);
     case "roleplay":
-      return renderRoleplayMode(aiItem, lang);
+      return renderRoleplayMode(aiItem, lang, lesson);
     case "shadowing":
       return renderShadowingMode(aiItem, lang);
     case "free_talk":

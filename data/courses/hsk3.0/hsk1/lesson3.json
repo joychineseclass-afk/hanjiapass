@@ -1,0 +1,426 @@
+{
+  "id": "hsk1_lesson3",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 3,
+  "type": "lesson",
+  "title": {
+    "zh": "第3课｜你是哪国人？",
+    "cn": "第3课｜你是哪国人？",
+    "kr": "제3과｜어느 나라 사람이에요?",
+    "en": "Lesson 3 | What country are you from?",
+    "jp": "第3課｜どこの国の人ですか。"
+  },
+  "summary": {
+    "zh": "学习询问与表达国籍，以及会不会说汉语、写汉字。",
+    "kr": "국적을 묻고 말하는 법과 한어 말하기·한자 쓰기 가능 여부를 익힙니다.",
+    "en": "Nationality, and whether you can speak Chinese or write characters.",
+    "jp": "国籍を尋ねる・述べること、中国語が話せるか・漢字が書けるかを学びます。"
+  },
+  "scene": {
+    "id": "hsk30_l3_scene",
+    "title": {
+      "zh": "国籍与语言能力",
+      "kr": "국적과 언어 능력",
+      "en": "Nationality and language skills",
+      "jp": "国籍と言語能力"
+    },
+    "summary": {
+      "zh": "会话一：询问国籍和身份；会话二：表达会不会说汉语、写汉字。",
+      "kr": "회화1: 국적과 신분; 회화2: 한어 말하기·한자 쓰기 가능 여부.",
+      "en": "Dialogue 1: nationality and student status; Dialogue 2: speaking and writing Chinese.",
+      "jp": "会話1：国籍と身分；会話2：中国語を話す・漢字を書くことができるか。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你是哪国人？」「我是……人」谈论国籍",
+      "kr": "「你是哪国人？」「我是……人」로 국적을 말할 수 있다",
+      "en": "Use 你是哪国人？ and 我是…人 to talk about nationality",
+      "jp": "「你是哪国人？」「我是……人」で国籍について話せる"
+    },
+    {
+      "zh": "能用「你会……吗？」「会，我会……」表达会不会某项语言技能",
+      "kr": "「你会……吗？」「会，我会……」로 할 수 있는지 말할 수 있다",
+      "en": "Use 你会…吗？ and 会，我会… for ability",
+      "jp": "「你会……吗？」「会，我会……」でできるかどうかを言える"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问国籍",
+        "kr": "회화 1｜국적 묻기",
+        "en": "Dialogue 1 | Nationality",
+        "jp": "会話1｜国籍を聞く"
+      },
+      "summary": {
+        "zh": "询问国籍和身份。",
+        "kr": "국적과 학생 여부를 묻습니다.",
+        "en": "Asking where someone is from and if they are a student.",
+        "jp": "国籍と学生かどうかを尋ねます。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "汤姆，你是哪国人？",
+          "pinyin": "Tāngmǔ, nǐ shì nǎ guó rén?",
+          "translation": {
+            "kr": "탐, 어느 나라 사람이에요?",
+            "en": "Tom, what country are you from?",
+            "jp": "トムさん、どこの国の人ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我是美国人。你呢？",
+          "pinyin": "Wǒ shì Měiguó rén. Nǐ ne?",
+          "translation": {
+            "kr": "저는 미국 사람이에요. 당신은요?",
+            "en": "I’m American. How about you?",
+            "jp": "アメリカ人です。あなたは？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我是中国人。",
+          "pinyin": "Wǒ shì Zhōngguó rén.",
+          "translation": {
+            "kr": "저는 중국 사람이에요.",
+            "en": "I’m Chinese.",
+            "jp": "中国人です。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "你是学生吗？",
+          "pinyin": "Nǐ shì xuéshēng ma?",
+          "translation": {
+            "kr": "학생이에요?",
+            "en": "Are you a student?",
+            "jp": "学生ですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "是，我是学生。",
+          "pinyin": "Shì, wǒ shì xuéshēng.",
+          "translation": {
+            "kr": "네, 저는 학생이에요.",
+            "en": "Yes, I’m a student.",
+            "jp": "はい、学生です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜说语言",
+        "kr": "회화 2｜언어 말하기",
+        "en": "Dialogue 2 | Speaking Chinese",
+        "jp": "会話2｜言語について"
+      },
+      "summary": {
+        "zh": "表达会不会说汉语、写汉字。",
+        "kr": "한어 말하기·한자 쓰기 가능 여부를 말합니다.",
+        "en": "Saying whether you can speak Chinese and write characters.",
+        "jp": "中国語を話せるか、漢字を書けるかを言います。"
+      },
+      "lines": [
+        {
+          "speaker": "王老师",
+          "text": "汤姆，你会说汉语吗？",
+          "pinyin": "Tāngmǔ, nǐ huì shuō Hànyǔ ma?",
+          "translation": {
+            "kr": "탐, 중국어 할 줄 알아요?",
+            "en": "Tom, can you speak Chinese?",
+            "jp": "トムさん、中国語が話せますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "会，我会说一点儿汉语。",
+          "pinyin": "Huì, wǒ huì shuō yīdiǎnr Hànyǔ.",
+          "translation": {
+            "kr": "네, 중국어를 조금 할 수 있어요.",
+            "en": "Yes, I can speak a little Chinese.",
+            "jp": "はい、中国語を少し話せます。"
+          }
+        },
+        {
+          "speaker": "王老师",
+          "text": "你会写汉字吗？",
+          "pinyin": "Nǐ huì xiě Hànzì ma?",
+          "translation": {
+            "kr": "한자 쓸 줄 알아요?",
+            "en": "Can you write Chinese characters?",
+            "jp": "漢字が書けますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "会，我会写汉字。",
+          "pinyin": "Huì, wǒ huì xiě Hànzì.",
+          "translation": {
+            "kr": "네, 한자 쓸 수 있어요.",
+            "en": "Yes, I can write characters.",
+            "jp": "はい、漢字が書けます。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "哪 + 名词",
+      "pinyin": "nǎ + míngcí",
+      "hint": {
+        "zh": "哪个、哪种",
+        "kr": "어느 + 명사",
+        "en": "which + noun",
+        "jp": "どの＋名詞"
+      },
+      "explanation": {
+        "zh": "疑问代词「哪」用于问类别或选择，如「哪国人」问国籍。",
+        "kr": "의문대명사 「哪」는 종류·선택을 묻습니다(예: 哪国人).",
+        "en": "哪 asks which kind; 哪国人 means “what nationality”.",
+        "jp": "疑問詞「哪」は種類を尋ね、「哪国人」は国籍を聞きます。"
+      },
+      "examples": [
+        {
+          "zh": "你是哪国人？",
+          "pinyin": "Nǐ shì nǎ guó rén?",
+          "translation": {
+            "kr": "어느 나라 사람이에요?",
+            "en": "What country are you from?",
+            "jp": "どこの国の人ですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "会 + 动词",
+      "pinyin": "huì + dòngcí",
+      "hint": {
+        "zh": "会不会（能力）",
+        "kr": "~할 수 있다",
+        "en": "can + verb",
+        "jp": "～できる"
+      },
+      "explanation": {
+        "zh": "能愿动词「会」表示具备某种能力，后接动词，如「会说」「会写」。",
+        "kr": "능원동사 「会」는 능력을 나타내며 동사와 결합합니다(会说, 会写).",
+        "en": "会 + verb marks ability: can speak, can write, etc.",
+        "jp": "可能を表す「会」は動詞に続きます（会说・会写）。"
+      },
+      "examples": [
+        {
+          "zh": "你会写汉字吗？",
+          "pinyin": "Nǐ huì xiě Hànzì ma?",
+          "translation": {
+            "kr": "한자 쓸 줄 알아요?",
+            "en": "Can you write Chinese characters?",
+            "jp": "漢字が書けますか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "是",
+      "pinyin": "shì",
+      "hint": {
+        "zh": "我是……（国籍／身份）",
+        "kr": "…이다",
+        "en": "I am …",
+        "jp": "～だ／です"
+      },
+      "explanation": {
+        "zh": "「是字句」：说明国籍、身份时常用「我是 + 说明」，如「我是中国人」「我是学生」。",
+        "kr": "국적·신분은 「我是 + 설명」으로 말합니다(我是中国人, 我是学生).",
+        "en": "Use 我是 + predicate for nationality or role.",
+        "jp": "国籍や身分は「我是＋説明」で言います。"
+      },
+      "examples": [
+        {
+          "zh": "我是中国人。",
+          "pinyin": "Wǒ shì Zhōngguó rén.",
+          "translation": {
+            "kr": "저는 중국 사람이에요.",
+            "en": "I’m Chinese.",
+            "jp": "中国人です。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜个人信息卡",
+        "kr": "읽기 자료｜개인 정보 카드",
+        "en": "Reading | Personal info card",
+        "jp": "読み物｜個人情報カード"
+      },
+      "sentences": [
+        {
+          "zh": "名字：汤姆",
+          "pinyin": "Míngzi: Tāngmǔ",
+          "translations": {
+            "kr": "이름: 탐",
+            "en": "Name: Tom",
+            "jp": "名前：トム"
+          }
+        },
+        {
+          "zh": "国籍：美国",
+          "pinyin": "Guójí: Měiguó",
+          "translations": {
+            "kr": "국적: 미국",
+            "en": "Nationality: USA",
+            "jp": "国籍：アメリカ"
+          }
+        },
+        {
+          "zh": "语言：会说一点儿汉语",
+          "pinyin": "Yǔyán: huì shuō yīdiǎnr Hànyǔ",
+          "translations": {
+            "kr": "언어: 중국어를 조금 할 수 있음",
+            "en": "Languages: can speak a little Chinese",
+            "jp": "言語：中国語を少し話せる"
+          }
+        },
+        {
+          "zh": "身份：学生",
+          "pinyin": "Shēnfèn: xuéshēng",
+          "translations": {
+            "kr": "신분: 학생",
+            "en": "Status: student",
+            "jp": "身分：学生"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l3_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来询问国籍？",
+        "kr": "다음 중 국적을 묻는 말은?",
+        "en": "Which sentence asks about nationality?",
+        "jp": "国籍を尋ねるのはどれですか？"
+      },
+      "options": [
+        { "key": "A", "zh": "你是哪国人？", "cn": "你是哪国人？" },
+        { "key": "B", "zh": "你家有几口人？", "cn": "你家有几口人？" },
+        { "key": "C", "zh": "你叫什么名字？", "cn": "你叫什么名字？" },
+        { "key": "D", "zh": "你会写汉字吗？", "cn": "你会写汉字吗？" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「你是哪国人？」询问对方是哪国人。",
+        "kr": "「你是哪国人？」는 상대의 국적을 묻습니다.",
+        "en": "你是哪国人？ asks what country someone is from.",
+        "jp": "「你是哪国人？」は国籍を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l3_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「汉语」的拼音是？",
+        "kr": "「汉语」의 병음은?",
+        "en": "What is the pinyin of 汉语?",
+        "jp": "「汉语」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "Hànyǔ", "cn": "Hànyǔ" },
+        { "key": "B", "zh": "Hànyū", "cn": "Hànyū" },
+        { "key": "C", "zh": "Hānyǔ", "cn": "Hānyǔ" },
+        { "key": "D", "zh": "Hányǔ", "cn": "Hányǔ" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「汉语」读作 Hànyǔ。",
+        "kr": "「汉语」는 Hànyǔ로 읽습니다.",
+        "en": "汉语 is read Hànyǔ.",
+        "jp": "「汉语」は Hànyǔ と読みます。"
+      }
+    },
+    {
+      "id": "hsk30_l3_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "老师问「你会说汉语吗？」，若表示「会，但只会一点儿」，下面哪一句最合适？",
+        "kr": "「你会说汉语吗？」에 「조금만 할 수 있다」에 해당하는 답은?",
+        "en": "Teacher asks 你会说汉语吗? — best answer for “yes, but only a little”:",
+        "jp": "「你会说汉语吗？」に「少しだけできる」と答えるのは？"
+      },
+      "options": ["会，我会说一点儿汉语。", "不会，我是美国人。", "是，我是学生。", "没有。"],
+      "answer": "会，我会说一点儿汉语。",
+      "explanation": {
+        "cn": "表示程度不高时常用「一点儿」与「会」搭配。",
+        "kr": "정도가 낮음을 나타낼 때 「一点儿」와 「会」를 함께 씁니다.",
+        "en": "一点儿 with 会 expresses a small amount of ability.",
+        "jp": "程度が低いときは「一点儿」と「会」を使います。"
+      }
+    },
+    {
+      "id": "hsk30_l3_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「中文」与「汉语」在本课都常指汉语，下面哪一句更侧重「口头说」？",
+        "kr": "「말하기」에 더 가까운 표현이 포함된 문장은?",
+        "en": "Which line focuses more on speaking?",
+        "jp": "「話す」ことにより近い文は？"
+      },
+      "options": ["我会说一点儿汉语。", "我会写汉字。", "我是中国人。", "你是学生吗？"],
+      "answer": "我会说一点儿汉语。",
+      "explanation": {
+        "cn": "「说」表示口头表达；「写」表示书写。",
+        "kr": "「说」는 말하기, 「写」는 쓰기를 나타냅니다.",
+        "en": "说 is speaking; 写 is writing.",
+        "jp": "「说」は話すこと、「写」は書くことです。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": ["你是哪国人？", "我是中国人。", "你会说汉语吗？", "会，我会说一点儿汉语。", "你会写汉字吗？"],
+    "chatPrompt": "请用本课句型介绍自己的国籍，并说说会不会说汉语、写汉字。"
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
+  ]
+}

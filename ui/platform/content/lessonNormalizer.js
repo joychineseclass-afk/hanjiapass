@@ -141,11 +141,15 @@ function normAiPractice(raw) {
   const src = raw?.aiPractice ?? raw?.ai ?? raw?.ai_interaction ?? {};
   if (!src || typeof src !== "object") return {};
   const prompt = typeof src?.prompt === "object" ? normI18n(src.prompt) : { zh: str(src?.prompt ?? src?.chatPrompt ?? src?.chat_prompt ?? "") };
-  return {
+  const out = {
     prompt,
     speaking: Array.isArray(src?.speaking) ? src.speaking : [],
     chatPrompt: str(src?.chatPrompt ?? src?.chat_prompt ?? ""),
   };
+  if (src?.situationDialogue && typeof src.situationDialogue === "object") {
+    out.situationDialogue = src.situationDialogue;
+  }
+  return out;
 }
 
 /** objectives 归一化 */

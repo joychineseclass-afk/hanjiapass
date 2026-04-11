@@ -529,11 +529,11 @@
   {
     "id": "hsk3.0:hsk1:0032",
     "hanzi": "不客气",
-    "pinyin": "bù kè qi",
+    "pinyin": "bú kèqi",
     "meaning": {
       "zh": "不客气",
       "en": "you're welcome; don't mention it",
-      "ko": ""
+      "ko": "천만에요; 별말씀을요"
     },
     "tags": {
       "generated": false
@@ -1549,11 +1549,11 @@
   {
     "id": "hsk3.0:hsk1:0092",
     "hanzi": "对不起",
-    "pinyin": "duìbùqǐ",
+    "pinyin": "duìbuqǐ",
     "meaning": {
       "zh": "对不起",
       "en": "sorry; excuse me",
-      "ko": ""
+      "ko": "미안합니다; 죄송합니다"
     },
     "tags": {
       "generated": false
@@ -2301,7 +2301,7 @@
     "meaning": {
       "zh": "好",
       "en": "good; well",
-      "ko": ""
+      "ko": "좋다"
     },
     "tags": {
       "generated": false
@@ -3490,8 +3490,8 @@
     "pinyin": "lǎoshī",
     "meaning": {
       "zh": "老师",
-      "en": "rabbi, professor, swami, instructor, teacher, mast",
-      "ko": ""
+      "en": "teacher",
+      "ko": "선생님"
     },
     "tags": {
       "generated": false
@@ -3895,11 +3895,11 @@
   {
     "id": "hsk3.0:hsk1:0230",
     "hanzi": "没关系",
-    "pinyin": "méiguānxì",
+    "pinyin": "méi guānxi",
     "meaning": {
       "zh": "没关系",
-      "en": "it doesn't matter, never mind",
-      "ko": ""
+      "en": "it doesn't matter; never mind",
+      "ko": "괜찮아요; 상관없어요"
     },
     "tags": {
       "generated": false
@@ -4545,7 +4545,7 @@
     "meaning": {
       "zh": "你",
       "en": "you",
-      "ko": ""
+      "ko": "너; 당신"
     },
     "tags": {
       "generated": false
@@ -4595,8 +4595,8 @@
     "pinyin": "nín",
     "meaning": {
       "zh": "您",
-      "en": "you",
-      "ko": ""
+      "en": "you (polite)",
+      "ko": "당신(존칭)"
     },
     "tags": {
       "generated": false
@@ -6904,11 +6904,11 @@
   {
     "id": "hsk3.0:hsk1:0407",
     "hanzi": "谢谢",
-    "pinyin": "xièxiè",
+    "pinyin": "xièxie",
     "meaning": {
       "zh": "谢谢",
       "en": "thank you",
-      "ko": ""
+      "ko": "감사합니다; 고마워요"
     },
     "tags": {
       "generated": false
@@ -7655,8 +7655,8 @@
     "pinyin": "zàijiàn",
     "meaning": {
       "zh": "再见",
-      "en": "good-bye, see you again",
-      "ko": ""
+      "en": "goodbye; see you again",
+      "ko": "안녕히 가세요; 안녕히 계세요; 또 봐요"
     },
     "tags": {
       "generated": false
@@ -8439,6 +8439,40 @@
       "zh": "做",
       "en": "to do; to make",
       "ko": ""
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0498",
+    "hanzi": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning": {
+      "zh": "你好",
+      "en": "hello; hi",
+      "ko": "안녕하세요; 안녕"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0499",
+    "hanzi": "只",
+    "pinyin": "zhǐ",
+    "meaning": {
+      "zh": "只",
+      "en": "only; merely",
+      "ko": "만; 오직"
     },
     "tags": {
       "generated": false

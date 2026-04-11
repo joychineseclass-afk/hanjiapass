@@ -7,6 +7,16 @@ import { i18n } from "../../i18n.js";
 import { getLessonAIConfig, runTutor, formatTutorOutput } from "./aiTutorEngine.js";
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { renderModeContent } from "./aiTutorModes.js";
+import { buildSituationDialoguePlan, mountSituationDialogue } from "./aiSituationDialogue.js";
+import {
+  toggleShadowingPlayback,
+  cancelShadowingPlayback,
+  replayShadowingSentence,
+  skipShadowingNext,
+} from "./aiShadowingPlayback.js";
+import { handleLessonFocusSpeakClick, resetLessonFocusSpeakSession } from "./aiLessonFocusSpeak.js";
+import { AUDIO_ENGINE } from "../../platform/index.js";
+import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -71,7 +81,7 @@ export function renderAITutorPanel(opts = {}) {
 
   const firstItem = items.find((i) => i.mode === "explain") || items[0] || {};
   const firstMode = firstItem && firstItem.mode != null ? firstItem.mode : "explain";
-  const bodyContent = renderModeContent(firstMode, firstItem, lang);
+  const bodyContent = renderModeContent(firstMode, firstItem, lang, lesson);
 
   return `
 <section class="ai-tutor-page">
@@ -113,7 +123,13 @@ export function mountAITutorPanel(container, opts = {}) {
     if (body) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
-        card.innerHTML = renderModeContent(mode, item, lang);
+        cancelShadowingPlayback(card);
+        resetLessonFocusSpeakSession();
+        try {
+          AUDIO_ENGINE.stop();
+          startNewHskSpeakChain();
+        } catch (_) {}
+        card.innerHTML = renderModeContent(mode, item, lang, lesson);
         bindModeEvents(card, mode, item, lesson, lang);
       }
     }
@@ -144,8 +160,20 @@ export function mountAITutorPanel(container, opts = {}) {
       }
     };
 
-    if (runBtn) {
-      runBtn.addEventListener("click", () => doRun());
+    if (runBtn && mode !== "explain") {
+      if (mode === "shadowing") {
+        runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
+        const rep = wrap.querySelector(".ai-shadowing-replay");
+        const nxt = wrap.querySelector(".ai-shadowing-next");
+        if (rep) rep.addEventListener("click", () => replayShadowingSentence(wrap, aiItem));
+        if (nxt) nxt.addEventListener("click", () => skipShadowingNext(wrap, aiItem));
+      } else if (mode === "roleplay") {
+        const plan = buildSituationDialoguePlan(lessonData, currentLang);
+        if (plan) mountSituationDialogue(wrap, plan, currentLang);
+        else runBtn.addEventListener("click", () => doRun());
+      } else {
+        runBtn.addEventListener("click", () => doRun());
+      }
     }
 
     if (sendBtn && inputEl) {
@@ -165,6 +193,14 @@ export function mountAITutorPanel(container, opts = {}) {
         doRun(val);
       });
     }
+
+    const speakAllBtn = wrap.querySelector(".ai-lesson-focus-speak-all");
+    if (speakAllBtn && mode === "explain") {
+      const focusRoot = wrap.querySelector(".ai-lesson-focus");
+      speakAllBtn.addEventListener("click", () => {
+        handleLessonFocusSpeakClick(lessonData, currentLang, focusRoot, speakAllBtn);
+      });
+    }
   }
 
   tabs.forEach((tab) => {
@@ -172,6 +208,7 @@ export function mountAITutorPanel(container, opts = {}) {
   });
 
   const card = body && body.querySelector(".ai-tutor-mode-card");
-  const initMode = items[0] && items[0].mode != null ? items[0].mode : "explain";
-  bindModeEvents(card, initMode, items[0], lesson, lang);
+  const firstItem = items.find((i) => i.mode === "explain") || items[0] || {};
+  const firstMode = firstItem && firstItem.mode != null ? firstItem.mode : "explain";
+  bindModeEvents(card, firstMode, firstItem, lesson, lang);
 }

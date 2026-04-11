@@ -33,7 +33,16 @@ import {
 } from "../modules/hsk/hskLessonReview.js";
 import { loadBlueprint } from "../modules/curriculum/blueprintLoader.js";
 import { distributeVocabulary, distributeVocabularyByMap, auditVocabularyCoverage } from "../modules/curriculum/vocabDistributor.js";
-import { resolvePinyin, maybeGetManualPinyin, shouldShowPinyin } from "../utils/pinyinEngine.js";
+import {
+  resolvePinyin,
+  maybeGetManualPinyin,
+  shouldShowPinyin,
+  normalizePinyinDisplayAllLowercase,
+} from "../utils/pinyinEngine.js";
+import {
+  collectLessonPinyinToHanziMap,
+  resolvePinyinDisplayToSpeakZh,
+} from "../utils/hsk30UiMeaningMixedTts.js";
 import { loadGlossary } from "../utils/glossary.js";
 import {
   LESSON_ENGINE,
@@ -50,6 +59,7 @@ import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
+import { getLocalizedSceneText } from "../platform/scene/sceneUtils.js";
 import {
   resolveChoiceDisplayKindWithInfer,
   stemTextWithFallback,
@@ -97,6 +107,26 @@ function lessonIsReview(lessonData) {
       .toLowerCase()
       .trim() === "review"
   );
+}
+
+/** HSK3.0 · HSK1 试点：单词区使用紧凑正式学习词条（非大卡片网格） */
+function shouldUseCompactLearnVocabLayout() {
+  return String(state.version || "").toLowerCase() === "hsk3.0" && Number(state.lv) === 1;
+}
+
+/** HSK3.0 · HSK1 试点：会话/单词朗读链（中文→系统语言释义） */
+function shouldUseHsk30Hsk1SpeakPilot() {
+  return String(state.version || "").toLowerCase() === "hsk3.0" && Number(state.lv) === 1;
+}
+
+/** 全文朗读：对话 1/2/3 提示音（系统语言 TTS） */
+function dialogueSessionIntroTts(sessionIndex1Based) {
+  const l = normalizeLang(getLang());
+  const n = Number(sessionIndex1Based) || 1;
+  if (l === "kr") return `회화 ${n}`;
+  if (l === "jp") return `会話 ${n}`;
+  if (l === "cn") return `对话 ${n}`;
+  return `Dialogue ${n}`;
 }
 
 /**
@@ -629,6 +659,95 @@ function pickCardTitle(obj, cardIndex = 1) {
 }
 
 /**
+ * 可选：会话卡片的场景说明（多语言对象或字符串）
+ */
+function pickCardSummary(summaryObj) {
+  if (summaryObj == null) return "";
+  if (typeof summaryObj === "string") return summaryObj.trim();
+
+  const lang = normalizePracticeLangAliases(getLang());
+  const v =
+    _getStrictLangText(summaryObj, lang) ||
+    _trimStr(summaryObj && summaryObj.zh) ||
+    _trimStr(summaryObj && summaryObj.cn) ||
+    "";
+
+  return v;
+}
+
+/**
+ * 会话卡标题展示：有分隔符取后半段；否则尝试去掉「会话一 / Dialogue 1」等前缀；都失败则原样。
+ * 用于 HSK3.0·HSK1 画布模式，与左侧 01/02 编号并列时不重复堆字。
+ */
+function pickCardHeadingPrimary(titleObj, cardIndex) {
+  const full = pickCardTitle(titleObj, cardIndex).trim();
+  if (!full) return "";
+
+  const parts = full.split(/[｜|]/);
+  if (parts.length >= 2) {
+    const tail = parts.slice(1).join("｜").trim();
+    if (tail) return tail;
+  }
+
+  const head = parts[0].trim();
+  const stripped = stripDialogueCardTitleSessionPrefix(head);
+  if (stripped && stripped !== head) return stripped;
+  return full;
+}
+
+/**
+ * 剥离常见「会话/对话 + 编号」类前缀（无 ｜ 时的兜底）
+ */
+function stripDialogueCardTitleSessionPrefix(text) {
+  let s = String(text || "").trim();
+  if (!s) return s;
+
+  const rules = [
+    /^会话\s*[一二三四五六七八九十百千两〇零0-9]{1,4}\s*[：:｜|\-－—]?\s*/u,
+    /^对话\s*[一二三四五六七八九十百千两〇零0-9]{1,4}\s*[：:｜|\-－—]?\s*/u,
+    /^会话\s*\d{1,2}\s*[：:｜|\-－—]?\s*/,
+    /^对话\s*\d{1,2}\s*[：:｜|\-－—]?\s*/,
+    /^Dialogue\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/i,
+    /^Session\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/i,
+    /^회화\s*\d{1,2}\s*[：:.｜|\-－—]?\s*/u,
+    /^第\s*\d{1,2}\s*[课課]\s*[｜|]?\s*/,
+  ];
+
+  for (const re of rules) {
+    const next = s.replace(re, "").trim();
+    if (next !== s) return next || s;
+  }
+  return s;
+}
+
+function dialogueSessionAriaLabel(sessionIndex1Based) {
+  const t = i18n.t("dialogue.session", { n: sessionIndex1Based });
+  if (t && t !== "dialogue.session") return t;
+  return `Session ${sessionIndex1Based}`;
+}
+
+/** 整课场景一行标题（不展示 scene.summary，避免与各卡 summary 重复） */
+function buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang) {
+  if (!raw?.scene || typeof raw.scene !== "object" || !SCENE_ENGINE?.getSceneFromLesson) {
+    return "";
+  }
+  const scene = SCENE_ENGINE.getSceneFromLesson(raw);
+  if (!scene?.title) return "";
+  const title = getLocalizedSceneText(scene.title, lang);
+  if (!title) return "";
+  return `<p class="hsk1-dialogue-lesson-strip">${escapeHtml(title)}</p>`;
+}
+
+/** HSK 3.0 · HSK1：会话区「一会话一画布」展示（全课次，与 HSK2.0 无关） */
+function shouldUseHsk30Hsk1SceneCanvasDialogue(lessonData) {
+  if (String(state.version || "").toLowerCase() !== "hsk3.0") return false;
+  if (Number(state.lv) !== 1) return false;
+  const raw = (lessonData && lessonData._raw) || lessonData || {};
+  const no = Number(raw.lessonNo ?? state.current?.lessonNo ?? 0);
+  return no >= 1;
+}
+
+/**
  * Grammar explanation
  * Only explanation-like fields, no translation/meaning fallback
  */
@@ -656,6 +775,36 @@ function getGrammarExplanation(item, lang) {
     return str(item.explainCn) || str(item.explanationCn) || str(item.explain_zh) || str(item.explanation_zh) || "";
   }
   return str(item.explainEn) || str(item.explanationEn) || str(item.explain_en) || str(item.explanation_en) || "";
+}
+
+/**
+ * 语法点「一眼能懂」的短提示（系统语言）；与 explanation 长文独立，互不替代。
+ * 数据：grammar[].hint = { zh, kr|ko, en, jp|ja } 或扁平 hintKr 等。
+ */
+function getGrammarPatternHint(item, lang) {
+  if (!item || typeof item !== "object") return "";
+
+  const l = normalizePracticeLangAliases(lang || getLang());
+  const str = (v) => _trimStr(v);
+
+  const hint = item.hint;
+  if (hint && typeof hint === "object") {
+    if (l === "kr") return str(hint.kr) || str(hint.ko) || "";
+    if (l === "jp") return str(hint.jp) || str(hint.ja) || "";
+    if (l === "cn") return str(hint.cn) || str(hint.zh) || "";
+    return str(hint.en) || "";
+  }
+
+  if (l === "kr") {
+    return str(item.hintKr) || str(item.hint_kr) || "";
+  }
+  if (l === "jp") {
+    return str(item.hintJp) || str(item.hint_jp) || "";
+  }
+  if (l === "cn") {
+    return str(item.hintCn) || str(item.hintZh) || str(item.hint_zh) || "";
+  }
+  return str(item.hintEn) || str(item.hint_en) || "";
 }
 
 /**
@@ -689,6 +838,202 @@ function getGrammarExamples(pt) {
   if (!ex) return [];
   if (Array.isArray(ex)) return ex.map(toItem).filter((x) => x.zh);
   return [toItem(ex)].filter((x) => x.zh);
+}
+
+function getGrammarPointsArray(raw) {
+  const g = raw && raw.grammar;
+  if (!g) return [];
+  return Array.isArray(g) ? g : Array.isArray(g.points) ? g.points : [];
+}
+
+function getExtensionItemsArray(raw) {
+  return Array.isArray(raw?.generatedExtensions) && raw.generatedExtensions.length
+    ? raw.generatedExtensions
+    : Array.isArray(raw?.extension)
+      ? raw.extension
+      : [];
+}
+
+/** HSK3.0 HSK1：语法卡朗读段（不含拼音 / 词性） */
+function buildGrammarSpeakSegments(pt, lang) {
+  const str = (v) => _trimStr(v);
+  const titleZh =
+    typeof pt?.title === "object"
+      ? str(pt.title.zh || pt.title.cn || "")
+      : str(pt?.pattern || pt?.title || pt?.name || "");
+  const hintUi = getGrammarPatternHint(pt, lang);
+  const explUi = getGrammarExplanation(pt, lang);
+  const examples = getGrammarExamples(pt);
+  const segs = [];
+  if (titleZh) segs.push({ zh: titleZh, ui: "" });
+  if (hintUi) segs.push({ ui: hintUi });
+  if (explUi && explUi !== hintUi) segs.push({ ui: explUi });
+  for (const ex of examples) {
+    if (ex.zh) segs.push({ zh: ex.zh, ui: str(ex.trans || "") });
+  }
+  return segs;
+}
+
+/** 扩展：非组卡 */
+function buildExtensionFlatSpeakSegments(item, lang) {
+  const str = (v) => _trimStr(v);
+  const phrase = str(item?.phrase || item?.hanzi || item?.zh || item?.cn || item?.line);
+  const meaning = getExtensionMeaning(item, lang);
+  const explanation = getExtensionExplanation(item, lang);
+  const example = str(item?.example || item?.exampleZh);
+  const segs = [];
+  if (phrase) segs.push({ zh: phrase, ui: meaning || "" });
+  else if (meaning) segs.push({ ui: meaning });
+  if (explanation && explanation !== meaning) segs.push({ ui: explanation });
+  if (example) {
+    const exMean = str(item?.exampleTranslation || item?.exampleMean || item?.exampleKr || "");
+    segs.push({ zh: example, ui: exMean });
+  }
+  return segs;
+}
+
+/** 扩展：组卡（阅读材料等） */
+function buildExtensionGroupSpeakSegments(item, lang) {
+  const str = (v) => _trimStr(v);
+  const pickObj = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    return _getControlledLangText(obj, lang, "extension object");
+  };
+  const pickTrans = (obj) => {
+    if (!obj || typeof obj !== "object") return "";
+    return _getControlledLangText(obj, lang, "extension translation");
+  };
+  const gt = item?.groupTitle;
+  const titleZh = gt && typeof gt === "object" ? str(gt.zh || gt.cn) : "";
+  const titleUi = pickObj(item?.groupTitle) || str(item?.focusGrammar || "");
+  const note = pickObj(item?.note);
+  const sentences = Array.isArray(item?.sentences) ? item.sentences : [];
+  const segs = [];
+  if (titleZh) segs.push({ zh: titleZh, ui: titleUi && titleUi !== titleZh ? titleUi : "" });
+  else if (titleUi) segs.push({ ui: titleUi });
+  if (note) segs.push({ ui: note });
+  for (const s of sentences) {
+    const cn = str(s?.cn || s?.zh || "");
+    const trans = pickTrans(s?.translations || s?.translation);
+    if (cn) segs.push({ zh: cn, ui: trans || "" });
+  }
+  return segs;
+}
+
+function buildPracticeMatchSpeakSegments(q, langKey, pinyinHanziMap) {
+  const str = (v) => _trimStr(v);
+  const map = pinyinHanziMap && pinyinHanziMap.size ? pinyinHanziMap : null;
+  const pairs = q.pairs ?? [];
+  const segs = [];
+  for (const p of pairs) {
+    const left = str(p?.left ?? p?.[0]);
+    const right = str(p?.right ?? p?.[1]);
+    const leftSpeak = map ? resolvePracticeTextToSpeakZh(left, typeof p === "object" ? p : null, map) : left;
+    const rightSpeak = map ? resolvePracticeTextToSpeakZh(right, typeof p === "object" ? p : null, map) : right;
+    const zhPart = leftSpeak || "";
+    const uiPart = rightSpeak && rightSpeak !== leftSpeak ? rightSpeak : "";
+    if (left || right) segs.push({ zh: zhPart, ui: uiPart });
+  }
+  return segs;
+}
+
+/** 练习选项拼音 → 汉字 TTS（委托 hsk30UiMeaningMixedTts） */
+function resolvePracticeTextToSpeakZh(rawDisplay, optionObj, map) {
+  return resolvePinyinDisplayToSpeakZh(rawDisplay, optionObj, map);
+}
+
+/** 练习单题：题干 + 选项/排序项 + 解析 */
+function buildPracticeSpeakSegmentsUnified(q, langKey, lessonData) {
+  const str = (v) => _trimStr(v);
+  const type = String(q.type || "choice").toLowerCase();
+  const usePinyinMap =
+    shouldUseHsk30Hsk1SpeakPilot() && lessonData && typeof lessonData === "object";
+  const rawLesson = lessonData?._raw || lessonData;
+  const pinyinHanziMap = usePinyinMap ? collectLessonPinyinToHanziMap(rawLesson) : null;
+
+  if (type === "match") return buildPracticeMatchSpeakSegments(q, langKey, pinyinHanziMap);
+
+  const prompt = q.prompt ?? q.question ?? {};
+  const stemCnRaw =
+    prompt && typeof prompt === "object"
+      ? str(prompt.cn || prompt.zh || "")
+      : str(typeof q.question === "string" ? q.question : "");
+  const stemCn =
+    pinyinHanziMap && pinyinHanziMap.size
+      ? resolvePracticeTextToSpeakZh(stemCnRaw, null, pinyinHanziMap)
+      : stemCnRaw;
+  const stemUi = practiceStemDisplayText(q, langKey);
+  const segs = [];
+  if (stemCn) segs.push({ zh: stemCn, ui: stemUi && stemUi !== stemCn ? stemUi : "" });
+  else if (stemUi) segs.push({ ui: stemUi });
+
+  if (type === "choice") {
+    const options = Array.isArray(q.options) ? q.options : [];
+    const LETTERS = ["A", "B", "C", "D", "E", "F"];
+    const pickPromptLocal = (obj, lk) => {
+      if (!obj || typeof obj !== "object") return "";
+      const key =
+        lk === "cn" || lk === "zh"
+          ? "cn"
+          : lk === "kr" || lk === "ko"
+            ? "kr"
+            : lk === "jp" || lk === "ja"
+              ? "jp"
+              : "en";
+      return str(obj[key] ?? obj.cn ?? obj.zh ?? "");
+    };
+    const getOptDisplay = (o) => {
+      if (o == null) return "";
+      if (typeof o === "string") return o;
+      return pickPromptLocal(o, langKey) || str(o.zh ?? o.cn ?? o.kr ?? o.en ?? "");
+    };
+    options.forEach((o, i) => {
+      const letter = LETTERS[i] ?? String(i + 1);
+      const zhOptRaw = typeof o === "string" ? o : str(o.zh || o.cn || o.kr || o.en || "");
+      const zhOpt =
+        pinyinHanziMap && pinyinHanziMap.size
+          ? resolvePracticeTextToSpeakZh(zhOptRaw, typeof o === "object" ? o : null, pinyinHanziMap)
+          : zhOptRaw;
+      const uiOpt = getOptDisplay(o);
+      const lineZh = zhOpt ? `选项 ${letter}：${zhOpt}` : `选项 ${letter}`;
+      segs.push({ zh: lineZh, ui: uiOpt && uiOpt !== zhOptRaw ? uiOpt : "" });
+    });
+  }
+
+  if (type === "order") {
+    const items = q.items ?? q.options ?? [];
+    for (const it of items) {
+      const lineRaw = str(typeof it === "string" ? it : it?.text ?? it?.zh ?? it?.cn ?? "");
+      const line =
+        pinyinHanziMap && pinyinHanziMap.size
+          ? resolvePracticeTextToSpeakZh(lineRaw, typeof it === "object" ? it : null, pinyinHanziMap)
+          : lineRaw;
+      if (line) segs.push({ zh: line, ui: "" });
+    }
+  }
+
+  const expl = q.explanation;
+  if (expl && typeof expl === "object") {
+    const expTxt = _getControlledLangText(expl, langKey, "practice explanation");
+    if (expTxt) segs.push({ ui: expTxt });
+  }
+
+  return segs;
+}
+
+/** 朗读用题池：优先已 mount 的 PracticeState，避免 loadPractice 重复 reset */
+async function resolvePracticeQuestionsForSpeak(lesson) {
+  const cached = PracticeState.getQuestions();
+  if (Array.isArray(cached) && cached.length) return cached;
+  const { filterSupportedQuestions } = await import("../modules/practice/practiceSchema.js");
+  const { applyStudentStrategy } = await import("../modules/practice/practiceStrategy.js");
+  const ld = lesson?._raw || lesson;
+  const rawPractice = Array.isArray(ld?.practice) ? ld.practice : [];
+  const filtered = filterSupportedQuestions(rawPractice);
+  const raw = String(ld?.level ?? ld?.courseId ?? "");
+  const m = raw.match(/(\d+)/);
+  const level = m ? "hsk" + Math.min(4, Math.max(1, parseInt(m[1], 10))) : "hsk1";
+  return applyStudentStrategy(filtered, level, ld?.type === "review");
 }
 
 /**
@@ -815,6 +1160,7 @@ function buildExtensionHTML(lessonData) {
         : [];
 
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
   const speakLabel = i18n.t("hsk.extension_speak");
 
   const hero = `<section class="lesson-section-hero lesson-extension-hero">
@@ -858,21 +1204,30 @@ function buildExtensionHTML(lessonData) {
         const py = str((s && s.pinyin) || (s && s.py) || "");
         const trans = pickTrans(s && (s.translations || s.translation));
         const zhEsc = escapeHtml(cn).replaceAll('"', "&quot;");
-        const attrs = cn ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        const attrs = cn && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+        const sentBtn =
+          cn && !speakPilot
+            ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>`
+            : "";
 
         return `<div class="lesson-extension-sentence">
           <div class="lesson-extension-sentence-zh"${attrs}>${escapeHtml(cn)}</div>
           ${py ? `<div class="lesson-extension-sentence-pinyin">${escapeHtml(py)}</div>` : ""}
           ${trans ? `<div class="lesson-extension-sentence-trans">${escapeHtml(trans)}</div>` : ""}
-          ${cn ? `<button type="button" class="lesson-extension-audio-btn text-xs mt-1" data-speak-text="${zhEsc}" data-speak-kind="extension">${escapeHtml(speakLabel)}</button>` : ""}
+          ${sentBtn}
         </div>`;
       }).join("");
+
+      const groupListenBtn = speakPilot
+        ? `<button type="button" class="lesson-extension-audio-btn hsk30-ext-listen" data-hsk30-ext-group-idx="${i}">${escapeHtml(speakLabel)}</button>`
+        : "";
 
       return `<article class="lesson-extension-group-card">
   <div class="lesson-extension-group-header">
     <span class="lesson-extension-group-index">${String(i + 1).padStart(2, "0")}</span>
     <h4 class="lesson-extension-group-title">${escapeHtml(groupTitle)}</h4>
     ${item.focusGrammar ? `<span class="lesson-extension-focus">${escapeHtml(str(item.focusGrammar))}</span>` : ""}
+    ${groupListenBtn}
   </div>
   <div class="lesson-extension-sentences">${sentencesHtml}</div>
   ${note ? `<div class="lesson-extension-note">${escapeHtml(note)}</div>` : ""}
@@ -888,13 +1243,19 @@ function buildExtensionHTML(lessonData) {
 
     const idx = String(i + 1).padStart(2, "0");
     const zhEsc = escapeHtml(phrase).replaceAll('"', "&quot;");
-    const zhAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
-    const btnAttrs = phrase ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const zhAttrs = phrase && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+    const btnAttrs = speakPilot
+      ? phrase
+        ? ` type="button" class="lesson-extension-audio-btn hsk30-ext-listen" data-hsk30-ext-flat-idx="${i}"`
+        : ` type="button" class="lesson-extension-audio-btn" disabled`
+      : phrase
+        ? ` type="button" class="lesson-extension-audio-btn" data-speak-text="${zhEsc}" data-speak-kind="extension"`
+        : ` type="button" class="lesson-extension-audio-btn" disabled`;
 
     return `<article class="lesson-extension-card">
   <div class="lesson-extension-card-top">
     <span class="lesson-extension-index">${idx}</span>
-    <button type="button" class="lesson-extension-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+    <button${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
   <div class="lesson-extension-body">
     <div class="lesson-extension-zh"${zhAttrs}>${escapeHtml(phrase)}</div>
@@ -1844,6 +2205,7 @@ async function openLesson({ lessonNo, file } = {}) {
       renderWordCards(wordsPanel, panelWords, null, {
         lang,
         scope: `hsk${state.lv}`,
+        layout: shouldUseCompactLearnVocabLayout() ? "compact-learn" : "cards",
       });
     }
   }
@@ -1958,6 +2320,7 @@ function rerenderHSKFromState() {
       renderWordCards(wordsPanel, lessonWords, null, {
         lang,
         scope: `hsk${state.lv}`,
+        layout: shouldUseCompactLearnVocabLayout() ? "compact-learn" : "cards",
       });
     }
   }
@@ -2220,10 +2583,257 @@ function bindEvents() {
     );
   }
 
-  // ===== Audio click =====
+  // ===== 朗读：HSK3.0 HSK1 工具栏 + 会话/扩展等点读 =====
   document.addEventListener(
     "click",
-    (e) => {
+    async (e) => {
+      const wbtn = e.target.closest("#hskSpeakAllWordsBtn");
+      if (wbtn) {
+        if (!shouldUseCompactLearnVocabLayout()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const words = state.current && state.current.lessonWords;
+        if (!Array.isArray(words) || !words.length) return;
+        const anchor = document.getElementById("hskWordBulkSpeakAnchor");
+        const { buildWordBulkTimeline, openBulkSpeakPlayer } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const tl = buildWordBulkTimeline(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        await openBulkSpeakPlayer("words", tl, anchor || wbtn.parentElement);
+        return;
+      }
+
+      const wloop = e.target.closest("#hskSpeakAllWordsLoopBtn");
+      if (wloop) {
+        if (!shouldUseCompactLearnVocabLayout()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const {
+          getBulkTtsPlayer,
+          openBulkSpeakPlayer,
+          closeBulkSpeakPlayer,
+          buildWordBulkTimeline,
+        } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const p = getBulkTtsPlayer();
+        if (p.bulkLoop && p.loopKind === "words") {
+          closeBulkSpeakPlayer();
+          return;
+        }
+        const words = state.current && state.current.lessonWords;
+        if (!Array.isArray(words) || !words.length) return;
+        const anchor = document.getElementById("hskWordBulkSpeakAnchor");
+        const tl = buildWordBulkTimeline(words, { lang: getLang(), scope: `hsk${state.lv}` });
+        await openBulkSpeakPlayer("words", tl, anchor || wloop.parentElement, { loop: true });
+        return;
+      }
+
+      const fbtn = e.target.closest("#hskDialogueSpeakFullBtn");
+      if (fbtn) {
+        if (!shouldUseHsk30Hsk1SpeakPilot()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const ld = state.current && state.current.lessonData;
+        if (!ld) return;
+        const anchor =
+          document.getElementById("hskDialogueBulkSpeakAnchor") || fbtn.parentElement;
+        const { buildDialogueBulkTimeline, openBulkSpeakPlayer } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const tl = buildDialogueBulkTimeline(ld, {
+          getDialogueCards,
+          pickDialogueTranslation,
+          dialogueSessionIntroTts,
+        });
+        await openBulkSpeakPlayer("dialogue", tl, anchor);
+        return;
+      }
+
+      const floop = e.target.closest("#hskDialogueSpeakFullLoopBtn");
+      if (floop) {
+        if (!shouldUseHsk30Hsk1SpeakPilot()) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const {
+          getBulkTtsPlayer,
+          openBulkSpeakPlayer,
+          closeBulkSpeakPlayer,
+          buildDialogueBulkTimeline,
+        } = await import("../modules/hsk/hskBulkSpeakPlayer.js");
+        const p = getBulkTtsPlayer();
+        if (p.bulkLoop && p.loopKind === "dialogue") {
+          closeBulkSpeakPlayer();
+          return;
+        }
+        const ld = state.current && state.current.lessonData;
+        if (!ld) return;
+        const anchor =
+          document.getElementById("hskDialogueBulkSpeakAnchor") || floop.parentElement;
+        const tl = buildDialogueBulkTimeline(ld, {
+          getDialogueCards,
+          pickDialogueTranslation,
+          dialogueSessionIntroTts,
+        });
+        await openBulkSpeakPlayer("dialogue", tl, anchor, { loop: true });
+        return;
+      }
+
+      const dlineLoop = e.target.closest(".hsk-dialogue-line-loopbtn");
+      if (dlineLoop && shouldUseHsk30Hsk1SpeakPilot()) {
+        const zh = (dlineLoop.dataset.speakText || "").trim();
+        const tr = (dlineLoop.dataset.speakTranslation || "").trim();
+        if (!zh || !tr) return;
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const lineEl = dlineLoop.closest(".lesson-dialogue-line");
+        const { toggleDialogueLineSpeakLoop } = await import("../modules/hsk/hskRenderer.js");
+        await toggleDialogueLineSpeakLoop(zh, tr, lineEl || null);
+        return;
+      }
+
+      const gListen = e.target.closest(".hsk30-card-listen[data-hsk30-grammar-idx]");
+      if (gListen && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const gi = Number(gListen.dataset.hsk30GrammarIdx);
+        if (!Number.isFinite(gi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const pts = getGrammarPointsArray(raw);
+        const pt = pts[gi];
+        if (!pt) return;
+        const cardEl = gListen.closest(".lesson-grammar-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildGrammarSpeakSegments(pt, getLang());
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        return;
+      }
+
+      const extFlat = e.target.closest(".hsk30-ext-listen[data-hsk30-ext-flat-idx]");
+      if (extFlat && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const fi = Number(extFlat.dataset.hsk30ExtFlatIdx);
+        if (!Number.isFinite(fi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const arr = getExtensionItemsArray(raw);
+        const item = arr[fi];
+        if (!item) return;
+        const cardEl = extFlat.closest(".lesson-extension-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildExtensionFlatSpeakSegments(item, getLang());
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        return;
+      }
+
+      const extGroup = e.target.closest(".hsk30-ext-listen[data-hsk30-ext-group-idx]");
+      if (extGroup && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const gi = Number(extGroup.dataset.hsk30ExtGroupIdx);
+        if (!Number.isFinite(gi)) return;
+        const raw = state.current?.lessonData?._raw || state.current?.lessonData;
+        const arr = getExtensionItemsArray(raw);
+        const item = arr[gi];
+        if (!item) return;
+        const sentences = Array.isArray(item && item.sentences) ? item.sentences : [];
+        const isGroup = sentences.length > 0 && (item.groupTitle || item.focusGrammar);
+        if (!isGroup) return;
+        const cardEl = extGroup.closest(".lesson-extension-group-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildExtensionGroupSpeakSegments(item, getLang());
+        const lessonCtx = state.current?.lessonData || raw;
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        return;
+      }
+
+      const prListen = e.target.closest(".hsk30-practice-listen[data-hsk30-practice-id]");
+      if (prListen && shouldUseHsk30Hsk1SpeakPilot()) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        const qid = String(prListen.dataset.hsk30PracticeId || "").trim();
+        if (!qid) return;
+        const ld = state.current?.lessonData;
+        if (!ld) return;
+        const questions = await resolvePracticeQuestionsForSpeak(ld);
+        const q = questions.find((x) => String(x?.id || "") === qid);
+        if (!q) return;
+        const langKey = practiceLangKeyFromUiLang(getLang());
+        const cardEl = prListen.closest(".lesson-practice-card");
+        const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
+        const segs = buildPracticeSpeakSegmentsUnified(q, langKey, ld);
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: ld });
+        return;
+      }
+
+      const dzPilot = e.target.closest(".lesson-dialogue-zh[data-speak-kind='dialogue']");
+      if (
+        dzPilot &&
+        shouldUseHsk30Hsk1SpeakPilot() &&
+        dzPilot.dataset.speakTranslation != null &&
+        String(dzPilot.dataset.speakTranslation || "").trim() !== ""
+      ) {
+        const zh = (dzPilot.dataset.speakText || "").trim();
+        const tr = (dzPilot.dataset.speakTranslation || "").trim();
+        if (
+          !zh ||
+          !(
+            AUDIO_ENGINE &&
+            typeof AUDIO_ENGINE.isSpeechSupported === "function" &&
+            AUDIO_ENGINE.isSpeechSupported()
+          )
+        ) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const lineEl = dzPilot.closest(".lesson-dialogue-line");
+        const { speakZhThenUiTranslationPilot } = await import("../modules/hsk/hskRenderer.js");
+        await speakZhThenUiTranslationPilot(zh, tr, lineEl || null);
+        return;
+      }
+
       const target = e.target.closest(
         "[data-speak-text][data-speak-kind='dialogue'], [data-speak-text][data-speak-kind='extension'], [data-speak-text][data-speak-kind='grammar'], [data-speak-text][data-speak-kind='practice']"
       );
@@ -2936,7 +3546,7 @@ function getDialogueCards(lesson) {
 }
 
 /** 渲染单条对话行 */
-function renderDialogueLine(line, lang, showPinyin) {
+function renderDialogueLine(line, lang, showPinyin, speakPilot = false) {
   const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
   const zh = String(
     (line && line.text) ||
@@ -2950,16 +3560,184 @@ function renderDialogueLine(line, lang, showPinyin) {
   if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
 
   const trans = pickDialogueTranslation(line, zh);
-  const zhAttrs = zh
+  const transTrim = trans ? String(trans).trim() : "";
+  let zhAttrs = zh
     ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
     : "";
+  if (zh && speakPilot && transTrim) {
+    zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
+  }
+
+  const zAttrQ = escapeHtml(zh).replaceAll('"', "&quot;");
+  const trAttrQ = escapeHtml(transTrim).replaceAll('"', "&quot;");
+  const lineLoopBtn =
+    zh && speakPilot && transTrim
+      ? `<button type="button" class="hsk-dialogue-line-loopbtn" data-speak-text="${zAttrQ}" data-speak-translation="${trAttrQ}" aria-label="반복" title="반복">🔁</button>`
+      : "";
 
   return `<article class="lesson-dialogue-line">
   ${spk ? `<div class="lesson-dialogue-speaker">${escapeHtml(spk)}</div>` : ""}
-  <div class="lesson-dialogue-zh"${zhAttrs}>${escapeHtml(zh)}</div>
+  <div class="hsk-dialogue-zh-row">${zh ? `<div class="lesson-dialogue-zh"${zhAttrs}>${escapeHtml(zh)}</div>${lineLoopBtn}` : ""}</div>
   ${py ? `<div class="lesson-dialogue-pinyin">${escapeHtml(py)}</div>` : ""}
   ${trans ? `<div class="lesson-dialogue-translation">${escapeHtml(trans)}</div>` : ""}
 </article>`;
+}
+
+/**
+ * 预留 lines[].align：left / right / center；缺省则按行号左右交替（与既有试点一致）
+ */
+function resolveSceneCanvasBubbleSide(line, lineIndex0) {
+  const a = String((line && line.align) || "").trim().toLowerCase();
+  if (a === "left" || a === "right" || a === "center") return a;
+  return lineIndex0 % 2 === 0 ? "left" : "right";
+}
+
+/** 预留 lines[].position.{x,y}：仅输出 data 属性，当前样式不解读坐标（避免布局突变） */
+function sceneCanvasLinePositionDataAttrs(line) {
+  const pos = line && line.position;
+  if (!pos || typeof pos !== "object") return "";
+  const x = pos.x;
+  const y = pos.y;
+  const esc = (v) => escapeHtml(String(v)).replaceAll('"', "&quot;");
+  const parts = [];
+  if (x != null && String(x).trim() !== "") parts.push(`data-pos-x="${esc(x)}"`);
+  if (y != null && String(y).trim() !== "") parts.push(`data-pos-y="${esc(y)}"`);
+  return parts.length ? ` ${parts.join(" ")}` : "";
+}
+
+/** 预留 dialogueCards[].sceneImage / bubbleStyle；仅 data-*，不渲染 img、不接生图 */
+function sceneCanvasCardReservedDataAttrs(card, lines) {
+  const parts = [];
+  const img = card && card.sceneImage;
+  if (img != null && String(img).trim() !== "") {
+    parts.push(`data-scene-image="${escapeHtml(String(img).trim()).replaceAll('"', "&quot;")}"`);
+  }
+  const bstyle = card && card.bubbleStyle;
+  if (bstyle != null && String(bstyle).trim() !== "") {
+    parts.push(`data-bubble-style="${escapeHtml(String(bstyle).trim()).replaceAll('"', "&quot;")}"`);
+  }
+  const hasFreePos =
+    Array.isArray(lines) &&
+    lines.some((ln) => {
+      const p = ln && ln.position;
+      return p && typeof p === "object" && (p.x != null || p.y != null);
+    });
+  if (hasFreePos) parts.push(`data-layout="free"`);
+  return parts.length ? ` ${parts.join(" ")}` : "";
+}
+
+/** 场景画布模式：左右交错气泡（保留 lesson-dialogue-line 以兼容点读高亮） */
+function renderDialogueLineSceneCanvasBubble(line, showPinyin, lineIndex0, speakPilot = false) {
+  const spk = String((line && line.spk) || (line && line.speaker) || "").trim();
+  const zh = String(
+    (line && line.text) ||
+      (line && line.zh) ||
+      (line && line.cn) ||
+      (line && line.line) ||
+      ""
+  ).trim();
+
+  let py = maybeGetManualPinyin(line, "dialogue");
+  if (showPinyin && zh && !py) py = resolvePinyin(zh, py);
+  if (py) py = normalizePinyinDisplayAllLowercase(py);
+
+  const trans = pickDialogueTranslation(line, zh);
+  const transTrim = trans ? String(trans).trim() : "";
+  let zhAttrs = zh
+    ? ` data-speak-text="${escapeHtml(zh).replaceAll('"', "&quot;")}" data-speak-kind="dialogue"`
+    : "";
+  if (zh && speakPilot && transTrim) {
+    zhAttrs += ` data-speak-translation="${escapeHtml(transTrim).replaceAll('"', "&quot;")}"`;
+  }
+
+  const zAttrQSc = zh ? escapeHtml(zh).replaceAll('"', "&quot;") : "";
+  const trAttrQSc = transTrim ? escapeHtml(transTrim).replaceAll('"', "&quot;") : "";
+  const sceneLineLoopBtn =
+    zh && speakPilot && transTrim
+      ? `<button type="button" class="hsk-dialogue-line-loopbtn" data-speak-text="${zAttrQSc}" data-speak-translation="${trAttrQSc}" aria-label="반복" title="반복">🔁</button>`
+      : "";
+
+  const side = resolveSceneCanvasBubbleSide(line, lineIndex0);
+  const sideClass =
+    side === "right"
+      ? "hsk1-scene-bubble-line--right"
+      : side === "center"
+        ? "hsk1-scene-bubble-line--center"
+        : "hsk1-scene-bubble-line--left";
+
+  const posAttrs = sceneCanvasLinePositionDataAttrs(line);
+
+  return `<article class="lesson-dialogue-line hsk1-scene-bubble-line ${sideClass}"${posAttrs}>
+  <div class="hsk1-scene-bubble">
+  ${spk ? `<div class="hsk1-scene-bubble-speaker">${escapeHtml(spk)}</div>` : ""}
+  <div class="hsk1-scene-bubble-zh-row">${zh ? `<div class="lesson-dialogue-zh hsk1-scene-bubble-zh"${zhAttrs}>${escapeHtml(zh)}</div>${sceneLineLoopBtn}` : ""}</div>
+  ${py ? `<div class="lesson-dialogue-pinyin hsk1-scene-bubble-pinyin">${escapeHtml(py)}</div>` : ""}
+  ${trans ? `<div class="lesson-dialogue-translation hsk1-scene-bubble-trans">${escapeHtml(trans)}</div>` : ""}
+  </div>
+</article>`;
+}
+
+function buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, speakPilot) {
+  const fullSpeakLabel = escapeHtml(i18n.t("hsk.dialogue_speak_full"));
+  const fullSpeakBtn = speakPilot
+    ? `<button type="button" class="hsk-dialogue-speak-full-btn" id="hskDialogueSpeakFullBtn" aria-label="${fullSpeakLabel}" title="${fullSpeakLabel}">${fullSpeakLabel}</button>`
+    : "";
+  const fullSpeakLoopBtn = speakPilot
+    ? `<button type="button" class="hsk-dialogue-speak-loop-btn" id="hskDialogueSpeakFullLoopBtn" aria-label="🔁 전체 회화 반복" title="🔁 전체 회화 반복">🔁 전체 회화 반복</button>`
+    : "";
+
+  const lessonStripInner = buildHsk30Hsk1SceneCanvasLessonStrip(raw, lang);
+
+  const heroHead =
+    speakPilot && !lessonStripInner
+      ? `<div class="hsk-dialogue-hero-head hsk-dialogue-hero-head--with-speak" id="hskDialogueBulkSpeakAnchor">
+  <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
+  ${fullSpeakBtn}${fullSpeakLoopBtn}
+</div>`
+      : `<h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>`;
+
+  const heroCanvas = `<section class="lesson-section-hero lesson-dialogue-hero hsk1-dialogue-hero--scene-canvas">
+  ${heroHead}
+</section>`;
+
+  const lessonStripWrap =
+    lessonStripInner && speakPilot
+      ? `<div class="hsk1-dialogue-lesson-strip-wrap hsk1-dialogue-topic-row" id="hskDialogueBulkSpeakAnchor">${lessonStripInner}${fullSpeakBtn}${fullSpeakLoopBtn}</div>`
+      : lessonStripInner
+        ? `<div class="hsk1-dialogue-lesson-strip-wrap">${lessonStripInner}</div>`
+        : "";
+
+  const blocks = cards
+    .map((card, index) => {
+      const lines = Array.isArray(card && card.lines) ? card.lines : [];
+      if (!lines.length) return "";
+      const sessionNo = index + 1;
+      const noLabel = String(sessionNo).padStart(2, "0");
+      const aria = dialogueSessionAriaLabel(sessionNo);
+      const headingPrimary = pickCardHeadingPrimary(card && card.title, sessionNo);
+      const summaryText = pickCardSummary(card && card.summary);
+      const cardReservedAttrs = sceneCanvasCardReservedDataAttrs(card, lines);
+      const lineHtml = lines
+        .map((line, li) => renderDialogueLineSceneCanvasBubble(line, showPinyin, li, speakPilot))
+        .join("");
+
+      return `<section class="lesson-dialogue-card hsk1-dialogue-scene-card"${cardReservedAttrs}>
+  <header class="hsk1-dialogue-scene-card-head">
+    <div class="hsk1-dialogue-scene-card-head-row">
+      <span class="hsk1-dialogue-scene-card-no" aria-label="${escapeHtml(aria).replaceAll('"', "&quot;")}">${escapeHtml(noLabel)}</span>
+      <h4 class="hsk1-dialogue-scene-card-heading">${escapeHtml(headingPrimary)}</h4>
+    </div>
+    ${summaryText ? `<p class="hsk1-dialogue-scene-card-summary">${escapeHtml(summaryText)}</p>` : ""}
+  </header>
+  <div class="hsk1-dialogue-canvas">
+    <div class="hsk1-dialogue-bubbles">${lineHtml}</div>
+  </div>
+</section>`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
+  return `${heroCanvas}${lessonStripWrap}<div class="lesson-dialogue-list hsk1-dialogue-scene-list">${blocks}</div>`;
 }
 
 /** 对话渲染 */
@@ -2967,6 +3745,7 @@ function buildDialogueHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const cards = getDialogueCards(raw);
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
 
   const hero = `<section class="lesson-section-hero lesson-dialogue-hero">
   <h3 class="lesson-section-title">${escapeHtml(i18n.t("hsk.tab.dialogue"))}</h3>
@@ -2992,13 +3771,17 @@ function buildDialogueHTML(lessonData) {
     version: lessonData && lessonData.version,
   });
 
+  if (shouldUseHsk30Hsk1SceneCanvasDialogue(lessonData)) {
+    return buildHsk30Hsk1SceneCanvasDialogueHTML(raw, cards, lang, showPinyin, speakPilot);
+  }
+
   return `${hero}<div class="lesson-dialogue-list">
 ${cards
   .map((card, index) => {
     const lines = Array.isArray(card && card.lines) ? card.lines : [];
     if (!lines.length) return "";
     const titleText = pickCardTitle(card && card.title, index + 1);
-    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin)).join("");
+    const lineHtml = lines.map((line) => renderDialogueLine(line, lang, showPinyin, speakPilot)).join("");
     return `<section class="lesson-dialogue-card">
     <h4 class="lesson-dialogue-card-title">${escapeHtml(titleText)}</h4>
     <div class="lesson-dialogue-lines">${lineHtml}</div>
@@ -3014,6 +3797,7 @@ function buildGrammarHTML(lessonData) {
   const raw = (lessonData && lessonData._raw) || lessonData;
   const g = raw && raw.grammar;
   const lang = getLang();
+  const speakPilot = shouldUseHsk30Hsk1SpeakPilot();
   const speakLabel = i18n.t("hsk.extension_speak");
   const emptyMsg = `<div class="lesson-grammar-empty">${escapeHtml(i18n.t("hsk.empty_grammar"))}</div>`;
 
@@ -3043,15 +3827,19 @@ function buildGrammarHTML(lessonData) {
       if (showPinyin && titleZh && !titlePy) titlePy = resolvePinyin(titleZh, titlePy);
 
       const expl = getGrammarExplanation(pt, lang);
+      const hintBlurb = getGrammarPatternHint(pt, lang);
       const examples = getGrammarExamples(pt);
       const idx = String(i + 1).padStart(2, "0");
       const titleEsc = escapeHtml(titleZh).replaceAll('"', "&quot;");
-      const titleAttrs = titleZh
-        ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
-        : "";
-      const btnAttrs = titleZh
-        ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"`
-        : "";
+      const titleAttrs =
+        titleZh && !speakPilot ? ` data-speak-text="${titleEsc}" data-speak-kind="grammar"` : "";
+      const btnAttrs = speakPilot
+        ? titleZh
+          ? ` type="button" class="lesson-grammar-audio-btn hsk30-card-listen" data-hsk30-grammar-idx="${i}"`
+          : ` type="button" class="lesson-grammar-audio-btn" disabled`
+        : titleZh
+          ? ` type="button" class="lesson-grammar-audio-btn" data-speak-text="${titleEsc}" data-speak-kind="grammar"`
+          : ` type="button" class="lesson-grammar-audio-btn" disabled`;
 
       let examplesHtml = "";
       if (examples.length) {
@@ -3060,9 +3848,8 @@ function buildGrammarHTML(lessonData) {
             let exPy = ex.pinyin;
             if (showPinyin && ex.zh && !exPy) exPy = resolvePinyin(ex.zh, exPy);
             const exEsc = escapeHtml(ex.zh).replaceAll('"', "&quot;");
-            const exAttrs = ex.zh
-              ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"`
-              : "";
+            const exAttrs =
+              ex.zh && !speakPilot ? ` data-speak-text="${exEsc}" data-speak-kind="grammar"` : "";
             return `<div class="lesson-grammar-example">
   <div class="lesson-grammar-example-zh"${exAttrs}>${escapeHtml(ex.zh)}</div>
   ${exPy ? `<div class="lesson-grammar-example-pinyin">${escapeHtml(exPy)}</div>` : ""}
@@ -3075,12 +3862,13 @@ function buildGrammarHTML(lessonData) {
       return `<article class="lesson-grammar-card">
   <div class="lesson-grammar-card-top">
     <span class="lesson-grammar-index">${idx}</span>
-    <button type="button" class="lesson-grammar-audio-btn"${btnAttrs}>${escapeHtml(speakLabel)}</button>
+    <button${btnAttrs}>${escapeHtml(speakLabel)}</button>
   </div>
   <div class="lesson-grammar-head">
     <div class="lesson-grammar-zh"${titleAttrs}>${escapeHtml(titleZh)}</div>
     ${titlePy ? `<div class="lesson-grammar-pinyin">${escapeHtml(titlePy)}</div>` : ""}
   </div>
+  ${hintBlurb ? `<div class="lesson-grammar-hint">${escapeHtml(hintBlurb)}</div>` : ""}
   ${expl ? `<div class="lesson-grammar-expl">${escapeHtml(expl)}</div>` : ""}
   ${examplesHtml ? `<div class="lesson-grammar-examples">${examplesHtml}</div>` : ""}
 </article>`;

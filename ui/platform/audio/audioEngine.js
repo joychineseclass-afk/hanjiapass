@@ -27,3 +27,18 @@ export function stop() {
   browserTTS.stop();
   audioFile.stop();
 }
+
+/** 暂停当前浏览器 TTS（与 stop 不同：可 resume 续播同一句） */
+export function pauseSpeech() {
+  if (typeof window === "undefined" || !window.speechSynthesis || typeof window.speechSynthesis.pause !== "function") return;
+  try {
+    window.speechSynthesis.pause();
+  } catch (_) {}
+}
+
+export function resumeSpeech() {
+  if (typeof window === "undefined" || !window.speechSynthesis || typeof window.speechSynthesis.resume !== "function") return;
+  try {
+    window.speechSynthesis.resume();
+  } catch (_) {}
+}

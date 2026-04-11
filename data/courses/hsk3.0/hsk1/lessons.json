@@ -1,0 +1,103 @@
+{
+  "courseId": "hsk1",
+  "level": "HSK1",
+  "_luminaNote": "HSK 3.0 一级：第 1–4 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "lessons": [
+    {
+      "lessonNo": 1,
+      "id": "hsk1_lesson1",
+      "file": "lesson1.json",
+      "title": {
+        "cn": "你好！",
+        "zh": "你好！",
+        "kr": "안녕하세요!",
+        "en": "Hello!",
+        "jp": "こんにちは！"
+      },
+      "sceneGoal": "学习见面问候、道别与道歉致谢等礼貌用语，区分「您」与「你」的使用情境",
+      "subtitle": "问候 · 礼貌用语",
+      "grammarTargets": ["您", "你", "您 / 你"],
+      "vocabTargets": ["您", "你", "好", "你好", "谢谢", "不客气", "对不起", "没关系", "再见", "老师"],
+      "extensionTargets": ["礼貌用语卡"],
+      "displayTitle": {
+        "cn": "第1课",
+        "zh": "第1课",
+        "kr": "제1과",
+        "en": "Lesson 1",
+        "jp": "第1課"
+      }
+    },
+    {
+      "lessonNo": 2,
+      "id": "hsk1_lesson2",
+      "file": "lesson2.json",
+      "title": {
+        "cn": "你叫什么名字？",
+        "zh": "你叫什么名字？",
+        "kr": "이름이 뭐예요?",
+        "en": "What’s your name?",
+        "jp": "お名前は？"
+      },
+      "sceneGoal": "学习自我介绍、询问姓名与认识新同学，掌握「叫」「是」「吗」等基础表达",
+      "subtitle": "姓名 · 身份",
+      "grammarTargets": ["叫 + 名字", "是", "吗", "的", "也"],
+      "vocabTargets": ["叫", "名字", "什么", "是", "不", "新", "来", "的", "学生", "请", "请问", "认识", "很", "高兴", "也", "我", "吗"],
+      "extensionTargets": ["学生信息卡"],
+      "displayTitle": {
+        "cn": "第2课",
+        "zh": "第2课",
+        "kr": "제2과",
+        "en": "Lesson 2",
+        "jp": "第2課"
+      }
+    },
+    {
+      "lessonNo": 3,
+      "id": "hsk1_lesson3",
+      "file": "lesson3.json",
+      "title": {
+        "cn": "你是哪国人？",
+        "zh": "你是哪国人？",
+        "kr": "어느 나라 사람이에요?",
+        "en": "What country are you from?",
+        "jp": "どこの国の人ですか。"
+      },
+      "sceneGoal": "学习询问与表达国籍，以及会不会说汉语、写汉字等语言能力",
+      "subtitle": "国籍 · 语言",
+      "grammarTargets": ["哪 + 名词", "会 + 动词", "是"],
+      "vocabTargets": ["中国", "国", "哪", "中文", "汉语", "说", "一点儿", "会", "写", "汉字", "朋友", "人", "学生", "字"],
+      "extensionTargets": ["个人信息卡"],
+      "displayTitle": {
+        "cn": "第3课",
+        "zh": "第3课",
+        "kr": "제3과",
+        "en": "Lesson 3",
+        "jp": "第3課"
+      }
+    },
+    {
+      "lessonNo": 4,
+      "id": "hsk1_lesson4",
+      "file": "lesson4.json",
+      "title": {
+        "cn": "你家有几口人？",
+        "zh": "你家有几口人？",
+        "kr": "가족이 몇 명이에요?",
+        "en": "How many people are in your family?",
+        "jp": "ご家族は何人ですか。"
+      },
+      "sceneGoal": "学习介绍家庭成员与人数，掌握「有」「没有」与常用量词",
+      "subtitle": "家庭 · 人数",
+      "grammarTargets": ["有", "没有", "几 + 量词", "数词 + 量词"],
+      "vocabTargets": ["家", "家人", "爸爸", "妈妈", "哥哥", "姐姐", "弟弟", "妹妹", "儿子", "女儿", "有", "没有", "几", "口", "两", "四", "孩子", "只"],
+      "extensionTargets": ["家庭信息表"],
+      "displayTitle": {
+        "cn": "第4课",
+        "zh": "第4课",
+        "kr": "제4과",
+        "en": "Lesson 4",
+        "jp": "第4課"
+      }
+    }
+  ]
+}

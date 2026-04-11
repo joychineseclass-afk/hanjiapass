@@ -256,6 +256,224 @@
   border-radius: 10px;
 }
 
+/* 本课重点讲解区（explain）：教材式分段，非聊天气泡 */
+.ai-lesson-focus {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.ai-lesson-focus-head {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--line, #e2e8f0);
+}
+
+/* 全文朗读单独一行，置于「本课重点讲解」标题上方，靠左 */
+.ai-lesson-focus-speak-row {
+  width: 100%;
+  margin: 0 0 0.45rem 0;
+  text-align: left;
+}
+
+.ai-lesson-focus-speak-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8125rem;
+  padding: 5px 10px;
+  font-weight: 500;
+}
+
+.ai-lesson-focus-speak-ic {
+  font-size: 0.95rem;
+  line-height: 1;
+  opacity: 0.92;
+}
+
+.ai-lesson-focus-speak-txt {
+  white-space: nowrap;
+}
+
+/* 上半屏：略压缩间距，先抓大意 */
+.ai-lesson-focus-section--fold {
+  margin-bottom: 0.75rem;
+}
+
+.ai-lesson-focus-section--fold .ai-lesson-focus-h {
+  margin-bottom: 0.35rem;
+}
+
+.ai-lesson-focus-ability-list {
+  margin: 0.25rem 0 0 1rem;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.ai-lesson-focus-ability-list li {
+  margin-bottom: 0.25rem;
+}
+
+.ai-lesson-focus-scene-lead {
+  margin-bottom: 0.35rem;
+}
+
+.ai-lesson-focus-scene-line {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #475569;
+}
+
+.ai-lesson-focus-page-title {
+  margin: 0 0 0.35rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-course-line {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: #475569;
+}
+
+.ai-lesson-focus-section {
+  margin-bottom: 1.1rem;
+}
+
+.ai-lesson-focus-section--tips {
+  margin-bottom: 0;
+  padding: 0.75rem 0.85rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-h {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+}
+
+.ai-lesson-focus-p {
+  margin: 0 0 0.5rem 0;
+}
+
+.ai-lesson-focus-summary {
+  color: #475569;
+}
+
+.ai-lesson-focus-list {
+  margin: 0.35rem 0 0 1.1rem;
+  padding: 0;
+}
+
+.ai-lesson-focus-list li {
+  margin-bottom: 0.35rem;
+}
+
+.ai-lesson-focus-muted {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ai-lesson-focus-core-item {
+  margin-bottom: 0.65rem;
+  list-style: none;
+  margin-left: 0;
+  padding: 0.5rem 0.65rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-core {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.ai-lesson-focus-core .ai-lesson-focus-core-item {
+  margin-left: 0;
+}
+
+.ai-lesson-focus-gloss {
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.ai-lesson-focus-usage {
+  margin-top: 0.4rem;
+  font-size: 0.8125rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.ai-lesson-focus-usage-k {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-teacher-guide {
+  margin: 0.75rem 0 0.5rem 0;
+  padding: 0.65rem 0.75rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-subh {
+  margin: 0 0 0.45rem 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.ai-lesson-focus-teacher-bullets {
+  margin: 0.35rem 0 0.5rem 1rem;
+}
+
+.ai-lesson-focus-quotes-lead {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.ai-lesson-focus-mini-scene {
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-quotes {
+  margin-top: 0.65rem;
+}
+
+.ai-lesson-focus-quote {
+  margin: 0 0 0.65rem 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 3px solid #3b82f6;
+  background: #fff;
+  border-radius: 0 8px 8px 0;
+}
+
+.ai-lesson-focus-zh {
+  font-size: 0.9375rem;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-tr {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
 .ai-tutor-mode-content {
   padding: 0;
 }
@@ -434,6 +652,459 @@
 .ai-tutor-loading {
   font-size: 0.8125rem;
   color: #64748b;
+}
+
+/* —— 상황 대화：固定场景卡 + 逐轮练习 —— */
+.ai-situation-dialogue .ai-situation-picker {
+  margin-bottom: 12px;
+}
+
+.ai-situation-picker-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.ai-situation-picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-situation-scenario-chip {
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #e2e8f0);
+  background: #fff;
+  color: #475569;
+  cursor: pointer;
+}
+
+.ai-situation-scenario-chip:hover {
+  border-color: #cbd5e1;
+}
+
+.ai-situation-scenario-chip--active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.ai-situation-scenario-card {
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  margin-bottom: 14px;
+}
+
+.ai-situation-card-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  align-items: baseline;
+}
+
+.ai-situation-card-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.ai-situation-card-k {
+  flex: 0 0 88px;
+  color: #64748b;
+  font-size: 0.8125rem;
+}
+
+.ai-situation-card-v {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-card-block {
+  margin-top: 10px;
+}
+
+.ai-situation-card-goal {
+  margin: 6px 0 0 0;
+  font-size: 0.875rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.ai-situation-expr-list {
+  margin: 6px 0 0 1rem;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.ai-situation-card-muted {
+  margin: 6px 0 0 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ai-situation-start-row {
+  margin-bottom: 4px;
+}
+
+.ai-situation-practice {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.ai-situation-practice-head {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.ai-situation-round-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.ai-situation-ai-line {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ai-situation-ai-k {
+  font-weight: 600;
+  color: #475569;
+  margin-right: 6px;
+}
+
+.ai-situation-ai-zh {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-replay-row {
+  margin: 6px 0 10px 0;
+}
+
+.ai-situation-replay {
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+}
+
+.ai-situation-teacher-prompt {
+  margin: 0 0 12px 0;
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #3730a3;
+  background: #eef2ff;
+  border-radius: 8px;
+  border-left: 3px solid #6366f1;
+}
+
+.ai-situation-student-block {
+  margin-bottom: 12px;
+}
+
+.ai-situation-student-k {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ai-situation-student-refs {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.ai-situation-speak-zone {
+  margin-bottom: 10px;
+}
+
+.ai-situation-record-btn {
+  font-size: 0.8125rem;
+}
+
+.ai-situation-asr-unsupported {
+  font-size: 0.75rem;
+  color: #b45309;
+  margin: 6px 0 0 0;
+}
+
+.ai-situation-user-answer {
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+.ai-situation-user-answer-k {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ai-situation-user-answer-zh {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-feedback {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #334155;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  white-space: pre-wrap;
+}
+
+.ai-situation-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ai-situation-next {
+  margin-top: 0;
+}
+
+.ai-situation-done {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+.ai-situation-done-text {
+  margin: 0 0 10px 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #166534;
+}
+
+.ai-situation-restart {
+  margin: 0 auto;
+}
+
+/* —— AI Tutor · Shadowing 训练引导（非聊天式） —— */
+.ai-tutor-result-header--shadowing {
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.ai-tutor-result-content--shadowing {
+  border-style: solid;
+  border-color: #e2e8f0;
+  background: #fafafa;
+}
+
+.ai-shadowing-session-head {
+  margin-bottom: 12px;
+}
+
+.ai-shadowing-session-title {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.ai-shadowing-session-lead {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.ai-shadowing-extra-desc {
+  margin: 8px 0 0 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.ai-shadowing-how-inline {
+  margin: 12px 0 14px 0;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.ai-shadowing-guide-how-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.ai-shadowing-guide-steps {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.ai-shadowing-guide-steps--inline {
+  list-style: decimal;
+}
+
+.ai-tutor-lines-list.ai-shadowing-preview-lines {
+  margin: 6px 0 0 0;
+  padding-left: 1.25rem;
+  list-style: decimal;
+}
+
+.ai-tutor-lines-list.ai-shadowing-preview-lines .ai-tutor-line-item {
+  padding: 4px 0;
+  font-size: 0.9375rem;
+  color: #0f172a;
+  line-height: 1.45;
+}
+
+.ai-shadowing-line-item.is-active {
+  margin: 2px 0;
+  padding: 6px 8px !important;
+  background: #e0f2fe;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px #7dd3fc;
+}
+
+.ai-shadowing-line-item.is-playing {
+  background: #dbeafe;
+}
+
+.ai-shadowing-line-item.is-done {
+  opacity: 0.88;
+  color: #475569;
+}
+
+.ai-shadowing-playback-bar {
+  margin-top: 8px;
+  min-height: 1.15em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.ai-shadowing-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 10px;
+}
+
+.ai-shadowing-secondary-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.ai-btn-secondary {
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ai-btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.ai-btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ai-shadowing-guide-card {
+  text-align: left;
+}
+
+.ai-shadowing-guide-card .ai-shadowing-guide-title {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ai-shadowing-guide-card .ai-shadowing-guide-lead {
+  margin: 0 0 12px 0;
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.ai-shadowing-guide-card .ai-shadowing-guide-how {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.ai-shadowing-guide-card .ai-shadowing-lines-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 6px;
+}
+
+.ai-shadowing-line-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: decimal;
+  font-size: 0.9375rem;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.ai-shadowing-line-list li {
+  padding: 5px 0;
+}
+
+.ai-shadowing-line-empty {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ai-shadowing-offline-footnote {
+  margin: 12px 0 0 0;
+  font-size: 0.6875rem;
+  color: #94a3b8;
+  line-height: 1.4;
 }
 
 .ai-btn {
@@ -779,6 +1450,190 @@
 
 .lesson-dialogue-zh[data-speak-text]:hover {
   background: rgba(37, 99, 235, 0.04);
+}
+
+/* ===============================
+   HSK 3.0 · HSK1 试点：一会话一画布（简洁教学风，非 Kids 幼龄化）
+================================== */
+.hsk1-dialogue-hero--scene-canvas {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.hsk1-dialogue-hero--scene-canvas .lesson-section-title {
+  margin: 0 0 8px;
+}
+
+.hsk1-dialogue-lesson-strip-wrap {
+  margin-bottom: 14px;
+}
+
+.hsk1-dialogue-lesson-strip {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.hsk1-dialogue-scene-list {
+  gap: 18px;
+}
+
+.hsk1-dialogue-scene-card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.hsk1-dialogue-scene-card-head {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #fff;
+}
+
+.hsk1-dialogue-scene-card-head-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hsk1-dialogue-scene-card-no {
+  flex-shrink: 0;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.hsk1-dialogue-scene-card-heading {
+  margin: 0;
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #0f172a;
+}
+
+.hsk1-dialogue-scene-card-summary {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.8125rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.hsk1-dialogue-canvas {
+  padding: 10px 10px 12px;
+  background: linear-gradient(165deg, #eff6ff 0%, #f8fafc 55%, #f1f5f9 100%);
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.hsk1-dialogue-bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  max-width: 26.5rem;
+  margin: 0 auto;
+}
+
+article.lesson-dialogue-line.hsk1-scene-bubble-line {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hsk1-scene-bubble-line {
+  display: flex;
+  width: 100%;
+  margin: 0;
+}
+
+.hsk1-scene-bubble-line--left {
+  justify-content: flex-start;
+  padding-right: 1.25rem;
+}
+
+.hsk1-scene-bubble-line--right {
+  justify-content: flex-end;
+  padding-left: 1.25rem;
+}
+
+/* 预留 lines[].align:center；无该 class 时布局与试点一致 */
+.hsk1-scene-bubble-line--center {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.hsk1-scene-bubble {
+  max-width: min(92%, 19.5rem);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+}
+
+.hsk1-scene-bubble-line--right .hsk1-scene-bubble {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(167, 243, 208, 0.55);
+}
+
+.hsk1-scene-bubble-speaker {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+
+.hsk1-scene-bubble-line--left .hsk1-scene-bubble-speaker {
+  color: #0284c7;
+}
+
+.hsk1-scene-bubble-line--right .hsk1-scene-bubble-speaker {
+  color: #047857;
+}
+
+/* 层级：中文 > 拼音 > 系统语言释义（HSK3.0·HSK1 画布气泡；对比度兼顾浅色底与后续轻微着色底） */
+.hsk1-scene-bubble-zh {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #0f172a;
+  letter-spacing: 0.01em;
+}
+
+.hsk1-scene-bubble-pinyin {
+  font-size: 1rem;
+  font-weight: 600;
+  font-variation-settings: "wght" 600;
+  color: #1e293b;
+  margin-top: 4px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+
+.hsk1-scene-bubble-trans {
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-variation-settings: "wght" 500;
+  color: #475569;
+  margin-top: 6px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
 .is-speaking,
@@ -1161,11 +2016,32 @@
   margin-top: 4px;
 }
 
+/* 第三行：与单词卡「释义」同级，直给功能对应（韩/英/日等），不重复标题与拼音 */
+.lesson-grammar-hint {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1e293b;
+  margin: 6px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
 .lesson-grammar-expl {
   font-size: 0.9375rem;
   color: #64748b;
   line-height: 1.5;
   margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.lesson-grammar-head + .lesson-grammar-expl {
+  margin-top: 10px;
+}
+
+.lesson-grammar-hint + .lesson-grammar-expl {
+  margin-top: 8px;
 }
 
 .lesson-grammar-examples {
@@ -1698,6 +2574,293 @@
 .hsk-review-compact-dir .hsk-lr-mean {
   color: #334155;
   font-weight: 400;
+}
+
+/* ===============================
+   HSK3.0 正式课·紧凑词条（page.hsk 在 hsk3.0 + HSK1 传 layout=compact-learn）
+   与复习区相同：「中文 / 拼音 / 词性 / 释义」单行流 + 释义后紧跟 inline 따라쓰기
+   外层加 hsk-review-compact-dir 复用 .hsk-lr-* 颜色；中文略大于复习区正文
+================================== */
+.hsk-learn-vocab-dir {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hsk-learn-vocab-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-entry.word-card {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 14px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #e8edf3;
+  background: #f8fafc;
+  box-shadow: none;
+  cursor: default;
+  list-style: none;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-entry.word-card:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* 一整条连续词条：自然换行，禁止左右分栏式排版 */
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-line {
+  display: block;
+  font-size: 16px;
+  line-height: 1.52;
+  color: #1e293b;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 内联点读：不独占一行、不拉满宽度 */
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-zhbtn.word-speak-zone {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 3px 0 0;
+  vertical-align: baseline;
+  gap: 4px;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-zhbtn .hsk-lr-line-zh.word-hanzi {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-zhbtn .word-speak-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* 释义后紧跟按钮：inline-block，不用 flex 顶到行末 */
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-trace-slot {
+  display: inline;
+  white-space: normal;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-trace-slot .btn-stroke--learn {
+  display: inline-block;
+  vertical-align: baseline;
+  margin: 0 0 0 0.35em;
+  padding: 3px 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f1f5f9;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-trace-slot .btn-stroke--learn:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+.lesson-vocab-wrap--compact-learn .hsk-learn-vocab-trace-slot .btn-stroke--learn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* HSK3.0 HSK1：单词「全部朗读」紧贴词数；会话「全文朗读」紧贴主题行 */
+.lesson-vocab-hero--compact-inline .lesson-vocab-hero-count-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 8px;
+  max-width: 100%;
+}
+
+.lesson-vocab-hero--compact-inline .lesson-section-count {
+  margin: 0;
+}
+
+.hsk-speak-all-words-btn,
+.hsk-speak-loop-words-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 11px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-speak-all-words-btn:hover,
+.hsk-speak-loop-words-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.hsk-dialogue-hero-head--with-speak {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin-bottom: 0;
+}
+
+.hsk-dialogue-hero-head--with-speak .lesson-section-title {
+  margin: 0;
+}
+
+.hsk1-dialogue-topic-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.hsk1-dialogue-topic-row .hsk1-dialogue-lesson-strip {
+  margin: 0;
+}
+
+.hsk-dialogue-speak-full-btn,
+.hsk-dialogue-speak-loop-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hsk-dialogue-speak-full-btn:hover,
+.hsk-dialogue-speak-loop-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.hsk-dialogue-zh-row,
+.hsk1-scene-bubble-zh-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 6px;
+}
+
+.hsk-learn-vocab-loopbtn,
+.hsk-dialogue-line-loopbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  border-radius: 6px;
+  color: #475569;
+}
+
+.hsk-learn-vocab-loopbtn:hover,
+.hsk-dialogue-line-loopbtn:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+/* HSK3.0 HSK1：整体朗读轻量播放器（锚点后插入） */
+.hsk-bulk-player-host {
+  margin: 8px 0 12px;
+  max-width: 100%;
+}
+
+.hsk-bulk-player {
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.hsk-bulk-player__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.hsk-bulk-player__play {
+  flex: 0 0 auto;
+  min-width: 36px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.hsk-bulk-player__scrub {
+  flex: 1 1 140px;
+  min-width: 100px;
+  max-width: 100%;
+  accent-color: #22c55e;
+}
+
+.hsk-bulk-player__rate {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #334155;
+}
+
+.hsk-bulk-player__close {
+  flex: 0 0 auto;
+  min-width: 28px;
+  padding: 4px 6px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.hsk-bulk-player__close:hover {
+  color: #64748b;
 }
 
 /* ===============================

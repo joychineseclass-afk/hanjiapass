@@ -40,10 +40,16 @@ export function buildTutorContext(lessonData, lang) {
     translation: pickLang((e.translation != null ? e.translation : e.explain) || e, lang),
   }));
 
+  const ver =
+    (lessonData && lessonData.version != null ? String(lessonData.version) : "") ||
+    (base && base.version != null ? String(base.version) : "") ||
+    "";
+
   return {
+    courseId: (lessonData && lessonData.courseId != null ? lessonData.courseId : "") || "",
     lessonTitle: base.lessonTitle,
     level: base.level || (lessonData && lessonData.level) || "",
-    version: base.version || (lessonData && lessonData.version) || "",
+    version: ver,
     words: base.vocab,
     dialogue: base.dialogue,
     grammar: base.grammar,
@@ -51,7 +57,170 @@ export function buildTutorContext(lessonData, lang) {
     lessonId: base.lessonId,
     lessonNo: base.lessonNo,
     lang,
+    lessonSummary: pickLang(lessonData?.summary, lang),
+    sceneSummary: lessonData?.scene && typeof lessonData.scene === "object" ? pickLang(lessonData.scene.summary, lang) : "",
+    scene: base.scene || null,
   };
+}
+
+/**
+ * 供 /api/gemini 等后端使用的紧凑课内上下文（控制体积）
+ */
+export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
+  const ctx = buildTutorContext(lessonData, lang);
+  const linesHint = Array.isArray(aiItem?.lines) ? aiItem.lines.slice(0, 10) : undefined;
+  return {
+    source: "lumina_tutor",
+    courseId: ctx.courseId || undefined,
+    lessonId: ctx.lessonId || undefined,
+    lessonNo: ctx.lessonNo || undefined,
+    lessonTitle: ctx.lessonTitle || undefined,
+    level: ctx.level || undefined,
+    version: ctx.version || undefined,
+    lang: ctx.lang,
+    tutorMode: mode,
+    lessonSummary: ctx.lessonSummary || undefined,
+    sceneTitle: ctx.scene?.title || undefined,
+    sceneSummary: ctx.sceneSummary || ctx.scene?.summary || undefined,
+    vocab: (ctx.words || []).slice(0, 12).map((w) => ({
+      hanzi: w.hanzi,
+      pinyin: w.pinyin || undefined,
+      meaning: w.meaning || undefined,
+    })),
+    dialogue: (ctx.dialogue || []).slice(0, 10).map((d) => ({
+      speaker: d.speaker || undefined,
+      zh: d.zh,
+      pinyin: d.pinyin || undefined,
+      trans: d.trans || undefined,
+    })),
+    grammar: (ctx.grammar || []).slice(0, 5).map((g) => ({
+      title: g.title,
+      explanation: g.explanation || undefined,
+    })),
+    tutorTarget: aiItem?.target != null ? String(aiItem.target) : undefined,
+    shadowingLines: linesHint,
+    constraints: {
+      outputLength: "short_to_medium",
+      levelCap: "HSK1",
+      chineseKeepOriginal: true,
+      explanationFollowsUiLang: true,
+    },
+    ...(mode === "explain"
+      ? {
+          explainLecture: {
+            outlineVersion: 1,
+            focalTarget: aiItem?.target != null ? String(aiItem.target) : undefined,
+            sections: [
+              "lesson_theme",
+              "core_expressions",
+              "usage_context",
+              "dialogue_examples",
+              "mini_check",
+            ],
+          },
+        }
+      : {}),
+  };
+}
+
+/** 从课文中收集可跟读的中文句子（dialogueCards / dialogue 优先，可辅以 extension） */
+function collectLessonChineseLines(lessonData) {
+  const out = [];
+  const seen = new Set();
+  const push = (s) => {
+    const t = str(s);
+    if (!t || seen.has(t)) return;
+    seen.add(t);
+    out.push(t);
+  };
+
+  const cards = Array.isArray(lessonData?.dialogueCards) ? lessonData.dialogueCards : [];
+  for (const c of cards) {
+    const lines = Array.isArray(c?.lines) ? c.lines : [];
+    for (const ln of lines) {
+      push((ln.text != null ? ln.text : ln.zh != null ? ln.zh : ln.cn) || "");
+    }
+  }
+  const legacy = Array.isArray(lessonData?.dialogue) ? lessonData.dialogue : [];
+  for (const ln of legacy) {
+    push((ln.zh != null ? ln.zh : ln.cn != null ? ln.cn : ln.text) || "");
+  }
+
+  const ext = Array.isArray(lessonData?.extension) ? lessonData.extension : [];
+  for (const g of ext) {
+    const sents = Array.isArray(g?.sentences) ? g.sentences : [];
+    for (const s of sents) {
+      push(s.zh != null ? s.zh : s.cn || "");
+    }
+  }
+
+  const ap = lessonData?.aiPractice && typeof lessonData.aiPractice === "object" ? lessonData.aiPractice : {};
+  const speaking = Array.isArray(ap.speaking) ? ap.speaking : [];
+  for (const s of speaking) push(s);
+
+  return out.slice(0, 24);
+}
+
+/**
+ * 无 aiPrompts/ai 时，将 aiPractice + 课内语料映射为 Tutor 配置项（HSK3.0 HSK1 等）
+ * 优先级由 getLessonAIConfig 保证：仅在前两者缺省或为空数组时启用
+ */
+function mapAiPracticeToTutorItems(lesson) {
+  const ap = lesson?.aiPractice && typeof lesson.aiPractice === "object" ? lesson.aiPractice : {};
+  const chatPrompt = str(ap.chatPrompt);
+  const lines = collectLessonChineseLines(lesson);
+
+  const grammar0 = Array.isArray(lesson?.grammar) && lesson.grammar[0] ? lesson.grammar[0] : null;
+  const grammarTarget = grammar0
+    ? str(grammar0.pattern != null ? grammar0.pattern : pickLang(grammar0.title, "kr") || pickLang(grammar0.hint, "kr"))
+    : "";
+  const firstDialogueZh = lines[0] || "";
+  const explainTarget = grammarTarget || firstDialogueZh || pickLang(lesson?.title, "kr") || "本课";
+
+  const hintObj = lesson?.summary && typeof lesson.summary === "object" ? lesson.summary : null;
+  const promptFromChat = chatPrompt
+    ? { zh: chatPrompt, cn: chatPrompt, kr: chatPrompt, en: chatPrompt, jp: chatPrompt }
+    : null;
+
+  const titles = {
+    explain: { cn: "讲解本课", kr: "본과 설명", en: "Explain", jp: "本課の解説" },
+    roleplay: { cn: "情景对话", kr: "상황 대화", en: "Roleplay", jp: "ロールプレイ" },
+    shadowing: { cn: "跟读练习", kr: "따라 말하기", en: "Shadowing", jp: "シャドーイング" },
+    free_talk: { cn: "自由问答", kr: "자유 질문", en: "Free talk", jp: "自由な質問" },
+  };
+
+  return [
+    {
+      mode: "explain",
+      type: "explain",
+      target: explainTarget,
+      hint: hintObj || undefined,
+      title: titles.explain,
+      _fromAiPractice: true,
+    },
+    {
+      mode: "roleplay",
+      type: "roleplay",
+      scenario: "greeting",
+      prompt: promptFromChat || hintObj || { cn: "根据本课对话进行角色扮演。", kr: "본과 대화를 바탕으로 역할을 나누어 연습합니다.", en: "Role-play using this lesson’s dialogue.", jp: "本課の会話を使ってロールプレイします。" },
+      title: titles.roleplay,
+      _fromAiPractice: true,
+    },
+    {
+      mode: "shadowing",
+      type: "shadowing",
+      lines: lines.length ? lines : [],
+      title: titles.shadowing,
+      _fromAiPractice: true,
+    },
+    {
+      mode: "free_talk",
+      type: "free_talk",
+      prompt: promptFromChat || hintObj || { cn: "围绕本课主题提问。", kr: "본과 주제로 질문해 보세요.", en: "Ask about this lesson’s topic.", jp: "本課のテーマについて質問してください。" },
+      title: titles.free_talk,
+      _fromAiPractice: true,
+    },
+  ];
 }
 
 /**
@@ -65,11 +234,22 @@ export function buildTutorContext(lessonData, lang) {
 export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "") {
   const ctx = buildTutorContext(lessonData, lang);
   const langKey = lang === "zh" || lang === "cn" ? "zh" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en";
+  const explainLangLabel = langKey === "zh" ? "中文" : langKey === "kr" ? "韩语" : langKey === "jp" ? "日语" : "英语";
 
   const vocabStr = ctx.words?.slice(0, 15).map((w) => `${w.hanzi}${w.pinyin ? `(${w.pinyin})` : ""}${w.meaning ? `: ${w.meaning}` : ""}`).join("\n") || "";
   const dialogueStr = ctx.dialogue?.map((d) => `[${d.speaker}] ${d.zh}${d.trans ? ` → ${d.trans}` : ""}`).join("\n") || "";
   const grammarStr = ctx.grammar?.map((g) => `- ${g.title}: ${g.explanation || ""}`).join("\n") || "";
   const extStr = ctx.extension?.map((e) => `- ${e.phrase}${e.pinyin ? ` (${e.pinyin})` : ""}: ${e.translation || ""}`).join("\n") || "";
+
+  const metaBlock = [
+    `[课元] courseId=${ctx.courseId || "-"} | lessonId=${ctx.lessonId || "-"} | lessonNo=${ctx.lessonNo ?? "-"}`,
+    `[标题] ${ctx.lessonTitle || "本课"}`,
+    `[界面语言] ${langKey}（说明、讲解使用${explainLangLabel}；中文与拼音保持原样）`,
+    ctx.lessonSummary ? `[本课主题] ${ctx.lessonSummary}` : "",
+    ctx.sceneSummary ? `[场景摘要] ${ctx.sceneSummary}` : "",
+    `[难度] 控制在 ${ctx.level || "HSK1"} 范围，避免明显超纲`,
+    `[篇幅] 适中，避免过长`,
+  ].filter(Boolean).join("\n");
 
   const baseContext = [
     `课程: ${ctx.lessonTitle || "本课"}`,
@@ -81,28 +261,63 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   ].filter(Boolean).join("\n\n");
 
   if (mode === "explain") {
-    const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
-    const hint = pickLang(aiItem?.hint, lang);
+    const focalTarget = str(aiItem && aiItem.target != null ? aiItem.target : "");
+    const focalHint = pickLang(aiItem?.hint, lang);
+    const sceneTitle = ctx.scene?.title ? str(ctx.scene.title) : "";
+    const objectivesLines = Array.isArray(lessonData?.objectives)
+      ? lessonData.objectives
+        .slice(0, 5)
+        .map((o) => pickLang(o, lang))
+        .filter(Boolean)
+      : [];
+
     return [
-      `请像老师一样讲解以下中文内容。`,
-      `目标: ${target}`,
-      hint ? `提示: ${hint}` : "",
-      `系统语言: ${langKey}`,
-      `要求: 简洁、适合学习者，用${langKey === "zh" ? "中文" : langKey === "kr" ? "韩语" : langKey === "jp" ? "日语" : "英语"}解释。`,
+      metaBlock,
       "",
-      baseContext,
-    ].filter(Boolean).join("\n");
+      "【角色与体裁】你是面对初学者的中文老师，本任务为「整课串讲」，不是百科词条解释，也不是自由聊天。",
+      `【输出语言】除直接引用的中文/拼音外，说明文字请使用${explainLangLabel}。`,
+      "【中文与拼音】教材中的汉字、句子、拼音须保持原样，不要改写或自造拼音。",
+      focalTarget
+        ? `【重点焦点】请在讲解中单独用一小段突出：「${focalTarget}」${focalHint ? `（参考：${focalHint}）` : ""}；但全文必须同时覆盖整课主题、词汇与对话，不能只讲这一点。`
+        : "【重点】无单独 focal 时，请仍按下面结构讲满一整课。",
+      "",
+      "【必须采用的输出结构】按以下五段依次撰写，每段简短，整体篇幅适合网页阅读（勿过长）：",
+      "1）本课主题：用一两句话说明这课学什么、为何学。",
+      "2）核心表达：列出本课最重要的 2～4 个词语或句型（可带拼音），各用一句话说明作用。",
+      "3）使用场景：说明这些表达在什么情境下使用（可联系下方场景摘要）。",
+      "4）对话示例讲解：从「本课对话原文」中选取 1～2 句，简要说明含义或用法（必须引用原文中的句子，勿编造课内没有的对话）。",
+      "5）小练习或提问：最后给一道极简短的理解检查（如小问句、填空或二选一），只用本课已出现的内容。",
+      "",
+      "【课名与概要】",
+      `课名：${ctx.lessonTitle || "本课"}`,
+      ctx.lessonSummary ? `概要：${ctx.lessonSummary}` : "",
+      sceneTitle ? `场景标题：${sceneTitle}` : "",
+      ctx.sceneSummary ? `场景说明：${ctx.sceneSummary}` : "",
+      objectivesLines.length ? `学习目标要点：\n${objectivesLines.map((o) => `- ${o}`).join("\n")}` : "",
+      "",
+      "【本课词汇】",
+      vocabStr || "（若列表为空，请依据下方对话与语法归纳本课词语。）",
+      "",
+      "【本课语法】",
+      grammarStr || "（若无单独语法块，可结合对话略讲。）",
+      "",
+      "【本课对话原文】（讲解第 4 段必须从中引用）",
+      dialogueStr || "（若无对话行，可改用「扩展参考」中的句子做示例。）",
+      extStr ? `【扩展参考】\n${extStr}` : "",
+    ].filter(Boolean).join("\n\n");
   }
 
   if (mode === "roleplay") {
     const scenario = str((aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting") || "greeting");
     const promptText = pickLang(aiItem?.prompt, lang);
     return [
-      `请进行情景对话练习。`,
-      `场景: ${scenario}`,
-      promptText ? `任务: ${promptText}` : "",
+      metaBlock,
+      "",
+      `请进行情景对话练习（角色扮演）。`,
+      `场景 key: ${scenario}`,
+      promptText ? `任务说明: ${promptText}` : "",
       `学生水平: ${ctx.level || "HSK1"}`,
-      `要求: 只使用本课相关表达，简单自然。`,
+      `要求: 只使用本课相关表达；可先给一句示范再让学生接话。`,
       "",
       baseContext,
     ].filter(Boolean).join("\n");
@@ -112,24 +327,30 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
     const lines = Array.isArray(aiItem?.lines) ? aiItem.lines : [];
     const linesStr = lines.join("\n");
     return [
-      `请引导学生一句一句跟读。`,
+      metaBlock,
+      "",
+      `请引导学生进行跟读（shadowing）练习。`,
       `句子列表:\n${linesStr}`,
-      `要求: 一步一步给提示，先听、再跟读、再自己说。`,
+      `要求: 逐步提示「先听 → 再跟读 → 再自己说」；内容适合口语跟读，不要改成无关话题。`,
       "",
       baseContext,
     ].filter(Boolean).join("\n");
   }
 
   if (mode === "free_talk") {
+    const guide = pickLang(aiItem?.prompt, lang) || str(aiItem?.chatPrompt);
     return [
-      `学生问题: ${userInput || "(无)"}`,
-      `要求: 简短、教学型回答，尽量围绕本课内容，不要偏题太远。`,
+      metaBlock,
+      "",
+      `学生输入: ${userInput || "(尚未输入)"}`,
+      guide ? `本课自由对话引导: ${guide}` : "",
+      `要求: 简短、教学型回答；尽量只用本课词汇与句型；用${explainLangLabel}回复说明。`,
       "",
       baseContext,
     ].filter(Boolean).join("\n");
   }
 
-  return baseContext;
+  return [metaBlock, "", baseContext].filter(Boolean).join("\n");
 }
 
 /**
@@ -142,19 +363,98 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
  */
 export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
   const prompt = buildTutorPrompt(mode, aiItem, lessonData, lang, userInput);
+  const contextObj = buildTutorApiContext(lessonData, lang, mode, aiItem);
 
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
-      const res = await window.JOY_RUNNER.askAI({ prompt, context: prompt, lang, mode });
+      const res = await window.JOY_RUNNER.askAI({ prompt, lang, mode, contextObj });
       return { text: (res && res.text != null ? res.text : "") || "", raw: res };
     } catch (e) {
-      if (typeof console !== "undefined" && console.error) console.error("[AI Tutor]", e);
+      if (typeof console !== "undefined" && console.warn) console.warn("[AI Tutor] API unavailable, using mock:", e);
+      const mock = getMockTutorOutput(mode, aiItem, lessonData, lang, userInput);
+      if (mode === "shadowing") {
+        return { text: mock.text || "", error: e, usedMock: true };
+      }
       const friendly = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
-      return { text: friendly + "\n\n" + (getMockTutorOutput(mode, aiItem, lessonData, lang, userInput).text || ""), error: e };
+      return { text: [friendly, mock.text].filter(Boolean).join("\n\n"), error: e, usedMock: true };
     }
   }
 
   return getMockTutorOutput(mode, aiItem, lessonData, lang, userInput);
+}
+
+function explainHeadingLabels(lang) {
+  const l = (lang || "kr").toLowerCase();
+  if (l === "zh" || l === "cn") {
+    return { h1: "1. 本课主题", h2: "2. 核心表达", h3: "3. 使用场景", h4: "4. 对话示例讲解", h5: "5. 小练习" };
+  }
+  if (l === "ko" || l === "kr") {
+    return { h1: "1. 본과 주제", h2: "2. 핵심 표현", h3: "3. 사용 상황", h4: "4. 대화 예시 설명", h5: "5. 확인 질문" };
+  }
+  if (l === "jp" || l === "ja") {
+    return { h1: "1. 本課のテーマ", h2: "2. 重要な表現", h3: "3. 使う場面", h4: "4. 会話例の解説", h5: "5. 小さな確認" };
+  }
+  return {
+    h1: "1. Lesson theme",
+    h2: "2. Key expressions",
+    h3: "3. Usage contexts",
+    h4: "4. Dialogue walk-through",
+    h5: "5. Quick check",
+  };
+}
+
+/** explain 离线 mock：五段式本课串讲（与 prompt 结构对齐，便于无 API 时预览） */
+function buildExplainMockLessonText(ctx, lang, focalTarget, lessonData) {
+  const H = explainHeadingLabels(lang);
+  const themePara = ctx.lessonSummary || pickLang(lessonData?.title, lang) || ctx.lessonTitle || "—";
+  const coreItems = (ctx.words && ctx.words.length)
+    ? ctx.words.slice(0, 4).map((w) => `· ${w.hanzi}${w.pinyin ? `（${w.pinyin}）` : ""}${w.meaning ? ` — ${w.meaning}` : ""}`)
+    : [];
+  const coreBlock = coreItems.length
+    ? coreItems
+    : ["· （请结合下方对话中的问候语与礼貌用语。）"];
+  const sceneUse = [ctx.scene?.title, ctx.sceneSummary].filter(Boolean).join(" — ") || themePara;
+  const dLines = ctx.dialogue?.slice(0, 2) || [];
+  const dialoguePart = dLines.length
+    ? dLines.map((d) => {
+      const zh = d.zh || "";
+      const py = d.pinyin ? `（${d.pinyin}）` : "";
+      const tr = d.trans ? `\n  → ${d.trans}` : "";
+      return `${d.speaker ? `${d.speaker}：` : ""}${zh}${py}${tr}`;
+    }).join("\n\n")
+    : "（教材对话行）";
+  const focalNote = focalTarget
+    ? (lang === "kr" || lang === "ko"
+      ? `【강조】${focalTarget} — 본과 대화 속에서 쓰임을 함께 짚어 보세요.`
+      : lang === "jp" || lang === "ja"
+        ? `【重点】${focalTarget} — 会話の中での使い分けに注目してください。`
+        : `【重点】${focalTarget} — 请结合对话体会用法。`)
+    : "";
+
+  const mini =
+    lang === "kr" || lang === "ko"
+      ? "「谢谢」를 들었을 때 더 자연스러운 응답은?\nA) 对不起  B) 不客气  C) 没关系"
+      : lang === "jp" || lang === "ja"
+        ? "「谢谢」に対してよく使う返答は？\nA) 对不起  B) 不客气  C) 没关系"
+        : "听到「谢谢」时，更常见的应答是？\nA) 对不起  B) 不客气  C) 没关系";
+
+  return [
+    `${H.h1}`,
+    themePara,
+    "",
+    `${H.h2}`,
+    ...coreBlock,
+    focalNote,
+    "",
+    `${H.h3}`,
+    sceneUse,
+    "",
+    `${H.h4}`,
+    dialoguePart,
+    "",
+    `${H.h5}`,
+    mini,
+  ].filter(Boolean).join("\n");
 }
 
 /**
@@ -176,23 +476,7 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   const L = langLabels[lang === "zh" || lang === "cn" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en"] || langLabels.en;
 
   if (mode === "explain") {
-    const vocabSample = ctx.words?.slice(0, 3).map((w) => `${w.hanzi}(${w.pinyin})`).join("、") || "";
-    const targetLine = target ? `${target}\n\n` : "";
-    const meaningLine = target ? t("ai.explain_meaning", { target }) : "";
-    return {
-      text: [
-        targetLine,
-        meaningLine,
-        t("ai.explain_grammar"),
-        "",
-        t("ai.explain_example"),
-        "我是中国人。",
-        "他是老师。",
-        "",
-        vocabSample ? t("ai.explain_vocab") + " " + vocabSample : "",
-        t("ai.explain_tip"),
-      ].filter(Boolean).join("\n"),
-    };
+    return { text: buildExplainMockLessonText(ctx, lang, target, lessonData) };
   }
 
   if (mode === "roleplay") {
@@ -211,17 +495,11 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   }
 
   if (mode === "shadowing") {
-    const steps = lines.map((line, i) => {
-      const n = i + 1;
-      return `${t("ai.shadowing_step", { n })} ${line}\n  → ${L.listen} → ${L.repeat} → ${L.say}`;
-    });
-    return {
-      text: [
-        t("ai.shadowing_heading"),
-        "",
-        steps.length ? steps.join("\n\n") : `${t("ai.shadowing_step", { n: 1 })} ${L.listen}\n${t("ai.shadowing_step", { n: 2 })} ${L.repeat}\n${t("ai.shadowing_step", { n: 3 })} ${L.say}`,
-      ].join("\n"),
-    };
+    const lineStrs = lines.map((line) =>
+      str(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || ""),
+    ).filter(Boolean);
+    const body = lineStrs.map((line, i) => `${i + 1}. ${line}`).join("\n");
+    return { text: body };
   }
 
   if (mode === "free_talk") {
@@ -248,7 +526,7 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
  */
 export function formatTutorOutput(mode, result, lang) {
   let text = (result && result.text != null ? result.text : "") || "";
-  const techErrorPatterns = ["AI not connected", "cannot find", "api/ai-chat", "aiAsk", "JOY_AI"];
+  const techErrorPatterns = ["AI not connected", "cannot find", "api/ai-chat", "aiAsk", "JOY_AI", "/api/gemini"];
   if (techErrorPatterns.some((p) => text.indexOf(p) >= 0)) {
     text = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
   }
@@ -272,9 +550,43 @@ function escapeHtml(s) {
  */
 const TYPE_TO_MODE = { repeat: "shadowing", substitute: "roleplay", free_talk: "free_talk", explain: "explain", roleplay: "roleplay", shadowing: "shadowing" };
 
+function finalizeTutorItems(mapped, lesson) {
+  const hasExplain = mapped.some((i) => i.mode === "explain");
+  if (!hasExplain && mapped.length > 0 && lesson) {
+    const flat = buildLessonContext(lesson, { lang: "kr" });
+    const first = flat.dialogue?.[0];
+    const target = first ? str(first.zh) : "";
+    const hint = first ? str(first.trans) : "";
+    mapped.unshift({
+      mode: "explain",
+      type: "explain",
+      target,
+      hint: hint ? { kr: hint, en: hint, jp: hint, zh: hint } : undefined,
+      title: { cn: "说明", kr: "설명", en: "Explain", jp: "説明" },
+    });
+  }
+  return mapped;
+}
+
+/**
+ * 读取 Tutor 配置：aiPrompts > ai > aiPractice（映射）
+ */
 export function getLessonAIConfig(lesson) {
-  const arr = (lesson && (lesson.aiPrompts ?? lesson.ai) != null ? (lesson.aiPrompts ?? lesson.ai) : []);
-  if (!Array.isArray(arr)) return [];
+  const raw = lesson?.aiPrompts ?? lesson?.ai;
+  const hasExplicit = Array.isArray(raw) && raw.length > 0;
+
+  if (!hasExplicit && lesson?.aiPractice && typeof lesson.aiPractice === "object") {
+    const mapped = mapAiPracticeToTutorItems(lesson)
+      .filter((item) => item && item.mode)
+      .map((item) => {
+        const rawMode = item.mode || item.type;
+        const mode = TYPE_TO_MODE[rawMode] || rawMode;
+        return { ...item, mode };
+      });
+    return finalizeTutorItems(mapped, lesson);
+  }
+
+  const arr = Array.isArray(raw) ? raw : [];
   const mapped = arr
     .filter((item) => item && (item.mode || item.type))
     .map((item) => {
@@ -282,18 +594,5 @@ export function getLessonAIConfig(lesson) {
       const mode = TYPE_TO_MODE[rawMode] || rawMode;
       return { ...item, mode };
     });
-  const hasExplain = mapped.some((i) => i.mode === "explain");
-  if (!hasExplain && mapped.length > 0 && lesson) {
-    const first = lesson.dialogue && lesson.dialogue[0] ? lesson.dialogue[0] : null;
-    const target = first ? (first.cn || first.zh || first.text || "") : "";
-    const hint = first && first.translations ? (first.translations.kr || first.translations.en || first.translations.jp || "") : "";
-    mapped.unshift({
-      mode: "explain",
-      type: "explain",
-      target,
-      hint: hint ? { kr: hint, en: hint, jp: hint } : undefined,
-      title: { cn: "说明", kr: "설명", en: "Explain", jp: "説明" },
-    });
-  }
-  return mapped;
+  return finalizeTutorItems(mapped, lesson);
 }
