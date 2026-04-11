@@ -1,6 +1,6 @@
 /**
  * 本课说明区全文朗读：分段队列 + 暂停/继续（speechSynthesis.pause/resume）
- * TTS 预处理：/ → 系统语言自然连接词；保留 stripParenPinyin 与 mixed 拼音规则
+ * TTS 预处理：/ → 连接词（两侧均为汉字时用「和」，否则按系统语言）；保留 stripParenPinyin 与 mixed 拼音规则
  */
 
 import * as LE from "../../core/i18n.js";
@@ -20,7 +20,14 @@ function t(key, fb) {
   return LE.t(key, fb) || fb || key;
 }
 
-/** 系统语言下 / 的朗读连接（仅 TTS，不改页面） */
+/** 片段是否含至少一个汉字（CJK 统一表意区），用于判定「中文 / 中文」 */
+function segmentHasHanzi(s) {
+  const t = String(s ?? "").trim();
+  if (!t) return false;
+  return /[\u4e00-\u9fff]/.test(t);
+}
+
+/** 系统语言下 / 的朗读连接（仅 TTS，不改页面）；不含「两侧均汉字」场景 */
 function slashConnector(uiLang) {
   const l = String(uiLang || "kr").toLowerCase();
   if (l === "kr" || l === "ko") return " 와 ";
@@ -30,10 +37,25 @@ function slashConnector(uiLang) {
   return "和";
 }
 
+/**
+ * 将 / 换为朗读用连接词：两侧均为汉字短语时一律「和」（与 UI 语言无关），否则按系统语言。
+ * 应在 stripParenPinyinForSpeak 之后调用，避免干扰汉字+拼音去重。
+ */
 export function applySlashTtsForSpeak(text, uiLang) {
   if (text == null || text === "") return "";
-  const conn = slashConnector(uiLang);
-  return String(text).replace(/\s*\/\s*/g, conn);
+  const str = String(text);
+  if (!str.includes("/")) return str;
+  const parts = str.split(/\s*\/\s*/);
+  if (parts.length < 2) return str;
+  const fallback = slashConnector(uiLang);
+  let out = parts[0];
+  for (let i = 1; i < parts.length; i++) {
+    const left = parts[i - 1];
+    const right = parts[i];
+    const conn = segmentHasHanzi(left) && segmentHasHanzi(right) ? "和" : fallback;
+    out += conn + right;
+  }
+  return out;
 }
 
 function preprocessSegmentsForTts(segments, uiLang) {
