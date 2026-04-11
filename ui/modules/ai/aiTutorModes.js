@@ -5,6 +5,7 @@
 
 import { i18n } from "../../i18n.js";
 import { renderLessonFocusHtml } from "./aiLessonFocus.js";
+import { buildSituationDialoguePlan, renderSituationDialogueShell } from "./aiSituationDialogue.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -66,16 +67,15 @@ export function renderExplainMode(_aiItem, lang, lesson) {
 }
 
 /**
- * 渲染 Roleplay 面板（情境对话 / substitute）
- * 支持 aiItem.prompt、aiItem.sampleAnswer
+ * 渲染 Roleplay 面板（상황 대화）：固定场景卡 + 逐轮练习器（无 AI 长文回复区）
  */
-export function renderRoleplayMode(aiItem, lang) {
+export function renderRoleplayMode(aiItem, lang, lesson) {
+  const plan = lesson ? buildSituationDialoguePlan(lesson, lang) : null;
+  if (plan) return renderSituationDialogueShell(plan, lang);
+
   const scenarioKey = str(aiItem && aiItem.scenario != null ? aiItem.scenario : "greeting");
   const scenarioLabel = getScenarioLabel(scenarioKey);
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const sampleAnswer = typeof (aiItem && aiItem.sampleAnswer) === "string"
-    ? aiItem.sampleAnswer
-    : (aiItem && aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
   const desc = promptText || t("ai.mode_desc_roleplay", "Practice greetings and self-introduction in a real-life style.");
   const classmate = t("ai.role_classmate", "Classmate");
   const me = t("ai.role_me", "Me");
@@ -96,13 +96,8 @@ export function renderRoleplayMode(aiItem, lang) {
           <span class="ai-tutor-role-label">${escapeHtml(t("ai.student_role", "Student"))}:</span>
           <span class="ai-tutor-role-value">${escapeHtml(me)}</span>
         </div>
-        ${promptText ? `<p class="ai-tutor-hint mt-2">${escapeHtml(promptText)}</p>` : ""}
-        ${sampleAnswer ? `<div class="ai-tutor-sample-answer mt-2"><span class="ai-tutor-label">${escapeHtml(t("ai.sample_answer", "Sample"))}:</span> <span class="ai-tutor-sample-text">${escapeHtml(sampleAnswer)}</span></div>` : ""}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
-        ${escapeHtml(t("ai.start_roleplay", "Start dialogue"))}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.situation_no_lesson_data", "이 과의 회화 데이터가 없어 상황 대화를 준비할 수 없습니다."))}</div>
     </div>
   `;
 }
@@ -206,7 +201,7 @@ export function renderModeContent(mode, aiItem, lang, lesson) {
     case "explain":
       return renderExplainMode(aiItem, lang, lesson);
     case "roleplay":
-      return renderRoleplayMode(aiItem, lang);
+      return renderRoleplayMode(aiItem, lang, lesson);
     case "shadowing":
       return renderShadowingMode(aiItem, lang);
     case "free_talk":

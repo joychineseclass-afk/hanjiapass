@@ -654,6 +654,187 @@
   color: #64748b;
 }
 
+/* —— 상황 대화：固定场景卡 + 逐轮练习 —— */
+.ai-situation-dialogue .ai-situation-picker {
+  margin-bottom: 12px;
+}
+
+.ai-situation-picker-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.ai-situation-picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-situation-scenario-chip {
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #e2e8f0);
+  background: #fff;
+  color: #475569;
+  cursor: pointer;
+}
+
+.ai-situation-scenario-chip:hover {
+  border-color: #cbd5e1;
+}
+
+.ai-situation-scenario-chip--active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.ai-situation-scenario-card {
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  margin-bottom: 14px;
+}
+
+.ai-situation-card-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  align-items: baseline;
+}
+
+.ai-situation-card-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.ai-situation-card-k {
+  flex: 0 0 88px;
+  color: #64748b;
+  font-size: 0.8125rem;
+}
+
+.ai-situation-card-v {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-card-block {
+  margin-top: 10px;
+}
+
+.ai-situation-card-goal {
+  margin: 6px 0 0 0;
+  font-size: 0.875rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.ai-situation-expr-list {
+  margin: 6px 0 0 1rem;
+  padding: 0;
+  font-size: 0.875rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.ai-situation-card-muted {
+  margin: 6px 0 0 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ai-situation-start-row {
+  margin-bottom: 4px;
+}
+
+.ai-situation-practice {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.ai-situation-practice-head {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.ai-situation-round-meta {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+.ai-situation-ai-line {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ai-situation-ai-k {
+  font-weight: 600;
+  color: #475569;
+  margin-right: 6px;
+}
+
+.ai-situation-ai-zh {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-student-block {
+  margin-bottom: 12px;
+}
+
+.ai-situation-student-k {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ai-situation-student-refs {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.ai-situation-next {
+  margin-top: 4px;
+}
+
+.ai-situation-done {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+.ai-situation-done-text {
+  margin: 0 0 10px 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #166534;
+}
+
+.ai-situation-restart {
+  margin: 0 auto;
+}
+
 /* —— AI Tutor · Shadowing 训练引导（非聊天式） —— */
 .ai-tutor-result-header--shadowing {
   color: #334155;

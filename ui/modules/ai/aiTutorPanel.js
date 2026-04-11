@@ -7,6 +7,7 @@ import { i18n } from "../../i18n.js";
 import { getLessonAIConfig, runTutor, formatTutorOutput } from "./aiTutorEngine.js";
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { renderModeContent } from "./aiTutorModes.js";
+import { buildSituationDialoguePlan, mountSituationDialogue } from "./aiSituationDialogue.js";
 import {
   toggleShadowingPlayback,
   cancelShadowingPlayback,
@@ -166,6 +167,10 @@ export function mountAITutorPanel(container, opts = {}) {
         const nxt = wrap.querySelector(".ai-shadowing-next");
         if (rep) rep.addEventListener("click", () => replayShadowingSentence(wrap, aiItem));
         if (nxt) nxt.addEventListener("click", () => skipShadowingNext(wrap, aiItem));
+      } else if (mode === "roleplay") {
+        const plan = buildSituationDialoguePlan(lessonData, currentLang);
+        if (plan) mountSituationDialogue(wrap, plan, currentLang);
+        else runBtn.addEventListener("click", () => doRun());
       } else {
         runBtn.addEventListener("click", () => doRun());
       }

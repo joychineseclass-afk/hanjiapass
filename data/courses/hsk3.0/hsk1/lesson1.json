@@ -358,7 +358,56 @@
   "review": {},
   "aiPractice": {
     "speaking": ["您好！", "你好！", "谢谢！", "不客气。", "对不起。", "没关系。", "再见！"],
-    "chatPrompt": "请用本课学过的问候语与礼貌用语编两句对话。"
+    "chatPrompt": "请用本课学过的问候语与礼貌用语编两句对话。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l1_peer_greeting",
+          "situation": {
+            "zh": "同学之间问候与致谢",
+            "kr": "친구와 짧은 인사",
+            "en": "Short greeting with a friend",
+            "jp": "友だちとの短いあいさつ"
+          },
+          "aiRole": { "zh": "同学（汤姆）", "kr": "친구", "en": "Friend", "jp": "友だち" },
+          "studentRole": { "zh": "我（王美）", "kr": "나", "en": "Me", "jp": "自分" },
+          "goal": {
+            "zh": "用本课道歉与致谢用语完成 2～3 轮对话。",
+            "kr": "본과에서 배운 사과·감사 표현으로 2~3문장 대화를 연습합니다.",
+            "en": "Practice 2–3 short turns using apology and thanks from this lesson.",
+            "jp": "本課の謝罪・感謝の表現で短い会話を練習します。"
+          },
+          "expressions": ["对不起 / 没关系", "谢谢 / 不客气"],
+          "rounds": [
+            { "aiLine": "王美，对不起！", "studentRefs": ["没关系。"] },
+            { "aiLine": "谢谢！", "studentRefs": ["不客气。"] }
+          ]
+        },
+        {
+          "id": "l1_teacher_greeting",
+          "situation": {
+            "zh": "向老师问好",
+            "kr": "선생님께 인사하기",
+            "en": "Greeting a teacher",
+            "jp": "先生にあいさつ"
+          },
+          "aiRole": { "zh": "老师（王老师）", "kr": "선생님", "en": "Teacher", "jp": "先生" },
+          "studentRole": { "zh": "学生（李明）", "kr": "학생", "en": "Student", "jp": "生徒" },
+          "goal": {
+            "zh": "对师长用「您」与「您好」，区分「你」与「你好」。",
+            "kr": "상황에 맞게 「您」과 「你」를 구분해 말해 봅니다.",
+            "en": "Use 您 / 您好 appropriately when speaking to a teacher.",
+            "jp": "場面に合わせて「您」と「你」を使い分けます。"
+          },
+          "expressions": ["您好 / 你好", "老师", "再见"],
+          "rounds": [
+            { "aiLine": "你好，李明！", "studentRefs": ["王老师，您好！"] },
+            { "aiLine": "再见！", "studentRefs": ["老师，再见！"] }
+          ]
+        }
+      ]
+    }
   },
   "steps": [
     {
