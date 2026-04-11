@@ -169,9 +169,19 @@ export function renderShadowingMode(aiItem, lang) {
         <span class="ai-tutor-label">${escapeHtml(sentencesLabel)}</span>
         ${linesHtml}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run mt-2" ${!lines.length ? "disabled" : ""}>
-        ${escapeHtml(t("ai.start_shadowing", "Start shadowing"))}
-      </button>
+      <div class="ai-shadowing-controls-row">
+        <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run" ${!lines.length ? "disabled" : ""}>
+          ${escapeHtml(t("ai.shadowing_btn_start", "따라 읽기 시작"))}
+        </button>
+        <div class="ai-shadowing-secondary-btns">
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-replay" disabled>
+            ${escapeHtml(t("ai.shadowing_replay", "이 문장 다시"))}
+          </button>
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-next" disabled>
+            ${escapeHtml(t("ai.shadowing_next", "다음 문장"))}
+          </button>
+        </div>
+      </div>
       <div class="ai-shadowing-playback-bar hidden" aria-live="polite">
         <span class="ai-shadowing-playback-status"></span>
       </div>

@@ -7,7 +7,12 @@ import { i18n } from "../../i18n.js";
 import { getLessonAIConfig, runTutor, formatTutorOutput } from "./aiTutorEngine.js";
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { renderModeContent } from "./aiTutorModes.js";
-import { toggleShadowingPlayback, cancelShadowingPlayback } from "./aiShadowingPlayback.js";
+import {
+  toggleShadowingPlayback,
+  cancelShadowingPlayback,
+  replayShadowingSentence,
+  skipShadowingNext,
+} from "./aiShadowingPlayback.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -149,6 +154,10 @@ export function mountAITutorPanel(container, opts = {}) {
     if (runBtn) {
       if (mode === "shadowing") {
         runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
+        const rep = wrap.querySelector(".ai-shadowing-replay");
+        const nxt = wrap.querySelector(".ai-shadowing-next");
+        if (rep) rep.addEventListener("click", () => replayShadowingSentence(wrap, aiItem));
+        if (nxt) nxt.addEventListener("click", () => skipShadowingNext(wrap, aiItem));
       } else {
         runBtn.addEventListener("click", () => doRun());
       }

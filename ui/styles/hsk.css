@@ -541,6 +541,40 @@
   letter-spacing: 0.02em;
 }
 
+.ai-shadowing-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 10px;
+}
+
+.ai-shadowing-secondary-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.ai-btn-secondary {
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ai-btn-secondary:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.ai-btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .ai-shadowing-guide-card {
   text-align: left;
 }
