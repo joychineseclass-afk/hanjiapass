@@ -228,46 +228,66 @@ export function mountLessonStepRunner() {
 
   // 2) A single method that HSK page can call
   // It will try several existing AI entry points (so it works even if your internals change)
-  api.askAI = async function askAI({ prompt, context = "", lang = "ko", mode = "Kids" } = {}) {
-    const fullPrompt = [context, prompt].filter(Boolean).join("\n\n");
+  function toExplainLang(langCode) {
+    const l = String(langCode || "ko").toLowerCase();
+    if (l === "zh" || l === "cn") return "zh";
+    if (l === "jp" || l === "ja") return "ja";
+    if (l === "en") return "en";
+    return "ko";
+  }
 
-    // (A) If your project already has an AI function, use it first
-    // Try common names you might already have:
+  /** Tutor / 面板 mode → /api/gemini body.mode */
+  function toGeminiMode(mode) {
+    const m = String(mode || "").toLowerCase();
+    if (m === "free_talk") return "ask";
+    return "teach";
+  }
+
+  api.askAI = async function askAI({ prompt, context = "", lang = "ko", mode = "Kids", contextObj } = {}) {
+    const fullPrompt =
+      (typeof prompt === "string" && prompt.trim())
+        ? prompt.trim()
+        : String(context || "").trim();
+
+    // (A) 全局注入的 AI（优先）
     const candidates = [
-      window.aiAsk,                 // function(prompt, opts)
-      window.AI?.ask,               // AI.ask(prompt, opts)
-      window.JOY_AI?.ask,           // JOY_AI.ask(prompt, opts)
-      window.openAIChat?.ask,       // openAIChat.ask(prompt, opts)
+      window.aiAsk,
+      window.AI?.ask,
+      window.JOY_AI?.ask,
+      window.openAIChat?.ask,
     ].filter(Boolean);
 
     for (const fn of candidates) {
       try {
-        const out = await fn(fullPrompt, { lang, mode, context });
+        const out = await fn(fullPrompt, { lang, mode, context: contextObj ?? context });
         if (out != null) return normalizeAIResult(out);
       } catch (e) {
-        // keep trying next candidate
         console.warn("[JOY_RUNNER.askAI] candidate failed:", e);
       }
     }
 
-    // (B) If you have a backend endpoint, use it (optional)
-    // If you DON'T have /api/ai-chat, this will fail gracefully.
+    // (B) 仓库默认：Vercel /api/gemini（与 api/gemini.js 对齐）
     try {
-      const r = await fetch("/api/ai-chat", {
+      const r = await fetch("/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: fullPrompt, lang, mode, context }),
+        body: JSON.stringify({
+          prompt: fullPrompt,
+          explainLang: toExplainLang(lang),
+          mode: toGeminiMode(mode),
+          context: contextObj != null ? contextObj : undefined,
+        }),
       });
       if (r.ok) {
         const data = await r.json();
         return normalizeAIResult(data);
       }
+      console.warn("[JOY_RUNNER.askAI] /api/gemini HTTP", r.status);
     } catch (e) {
-      console.warn("[JOY_RUNNER.askAI] /api/ai-chat failed:", e);
+      console.warn("[JOY_RUNNER.askAI] /api/gemini failed:", e);
     }
 
-    // (C) If no AI wired yet
-    throw new Error("AI not connected: cannot find aiAsk/AI.ask/JOY_AI.ask and /api/ai-chat not available.");
+    throw new Error("AI not connected: globals and /api/gemini unavailable.");
   };
 
   function normalizeAIResult(out) {
