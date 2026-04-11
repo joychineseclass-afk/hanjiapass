@@ -111,6 +111,19 @@ function speakSituationRoundFull(zhLine, uiLang) {
   }
 }
 
+/** 학생 답변 예시：单条朗读，与 AI 台词共用 chineseTtsText（去拼音括号，避免重复念） */
+function speakStudentReferenceAnswer(rawLine) {
+  if (typeof window === "undefined") return;
+  const zh = chineseTtsText(rawLine);
+  if (!zh) return;
+  try {
+    AUDIO_ENGINE.stop();
+  } catch (_) {}
+  try {
+    AUDIO_ENGINE.playText(zh, { lang: "zh-CN", rate: 0.95 });
+  } catch (_) {}
+}
+
 /** 师生会话：学生先向老师问好 → 练习轮次用 (老师句, 学生句) */
 function isTeacherStudentOpening(lines) {
   const t0 = lineText(lines[0]);
@@ -294,6 +307,16 @@ function scenarioCardHtml(sc, lang) {
       </div>
     </div>
   `;
+}
+
+function studentRefsListHtml(studentRefs) {
+  const playLabel = t("ai.situation_play_student_ref", "이 예시 답안 듣기");
+  return (Array.isArray(studentRefs) ? studentRefs : [])
+    .map(
+      (line, idx) =>
+        `<li class="ai-situation-ref-item"><span class="ai-situation-ref-line">${escapeHtml(line)}</span><button type="button" class="ai-situation-ref-speak" data-student-ref-index="${idx}" aria-label="${escapeHtml(playLabel)}"><span class="ai-situation-ref-speak-ic" aria-hidden="true">🔊</span></button></li>`,
+    )
+    .join("");
 }
 
 /**
@@ -501,7 +524,7 @@ export function mountSituationDialogue(rootEl, plan, lang) {
       teacherPromptEl.textContent = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
     }
     if (refsEl) {
-      refsEl.innerHTML = r.studentRefs.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+      refsEl.innerHTML = studentRefsListHtml(r.studentRefs);
     }
 
     clearUserAnswerUi();
@@ -610,6 +633,21 @@ export function mountSituationDialogue(rootEl, plan, lang) {
       showDone(false);
       showPractice(true);
       renderRound();
+    });
+  }
+
+  if (refsEl) {
+    refsEl.addEventListener("click", (e) => {
+      const btn = e.target && e.target.closest && e.target.closest(".ai-situation-ref-speak");
+      if (!btn || !refsEl.contains(btn)) return;
+      const idx = Number(btn.getAttribute("data-student-ref-index"));
+      if (Number.isNaN(idx)) return;
+      const sc = currentScenario();
+      const rounds = sc.rounds || [];
+      const r = rounds[roundIndex];
+      const line = r && Array.isArray(r.studentRefs) ? r.studentRefs[idx] : "";
+      if (!line) return;
+      speakStudentReferenceAnswer(line);
     });
   }
 

@@ -826,10 +826,62 @@
 
 .ai-situation-student-refs {
   margin: 0;
-  padding-left: 1.1rem;
+  padding-left: 0;
+  list-style: none;
   font-size: 0.9375rem;
   color: #334155;
   line-height: 1.5;
+}
+
+.ai-situation-ref-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ai-situation-ref-item:last-child {
+  margin-bottom: 0;
+}
+
+.ai-situation-ref-line {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-situation-ref-speak {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #64748b;
+  box-sizing: border-box;
+}
+
+.ai-situation-ref-speak:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.ai-situation-ref-speak:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 1px;
+}
+
+.ai-situation-ref-speak-ic {
+  display: block;
+  line-height: 1;
 }
 
 .ai-situation-speak-zone {
