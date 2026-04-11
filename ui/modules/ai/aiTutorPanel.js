@@ -13,6 +13,9 @@ import {
   replayShadowingSentence,
   skipShadowingNext,
 } from "./aiShadowingPlayback.js";
+import { runLessonFocusSpeakAll } from "./aiLessonFocusSpeak.js";
+import { AUDIO_ENGINE } from "../../platform/index.js";
+import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -120,6 +123,10 @@ export function mountAITutorPanel(container, opts = {}) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
         cancelShadowingPlayback(card);
+        try {
+          AUDIO_ENGINE.stop();
+          startNewHskSpeakChain();
+        } catch (_) {}
         card.innerHTML = renderModeContent(mode, item, lang, lesson);
         bindModeEvents(card, mode, item, lesson, lang);
       }
@@ -178,6 +185,14 @@ export function mountAITutorPanel(container, opts = {}) {
           return;
         }
         doRun(val);
+      });
+    }
+
+    const speakAllBtn = wrap.querySelector(".ai-lesson-focus-speak-all");
+    if (speakAllBtn && mode === "explain") {
+      const focusRoot = wrap.querySelector(".ai-lesson-focus");
+      speakAllBtn.addEventListener("click", () => {
+        runLessonFocusSpeakAll(lessonData, currentLang, focusRoot, speakAllBtn);
       });
     }
   }

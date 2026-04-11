@@ -299,11 +299,16 @@ export function renderLessonFocusHtml(lesson, lang) {
     ? `<p class="ai-lesson-focus-p ai-lesson-focus-summary">${escapeHtml(summary)}</p>`
     : "";
 
+  const speakBtnLabel = t("ai.lesson_focus_speak_all", "全文朗读");
+
   return `
 <div class="ai-lesson-focus">
   <header class="ai-lesson-focus-head">
-    <h4 class="ai-lesson-focus-page-title">${escapeHtml(H.page)}</h4>
-    <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
+    <div class="ai-lesson-focus-head-main">
+      <h4 class="ai-lesson-focus-page-title">${escapeHtml(H.page)}</h4>
+      <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
+    </div>
+    <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}">${escapeHtml(speakBtnLabel)}</button>
   </header>
 
   <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
@@ -334,4 +339,103 @@ export function renderLessonFocusHtml(lesson, lang) {
     <ul class="ai-lesson-focus-list ai-lesson-focus-tips">${tipsBlock}</ul>
   </section>
 </div>`.trim();
+}
+
+/**
+ * 去掉全角/半角括号内的拼音，避免 TTS 与汉字重复朗读
+ */
+export function stripParenPinyinForSpeak(s) {
+  let x = String(s ?? "");
+  x = x.replace(/（[a-zA-Zāáǎàēéěèīíǐìōóǒòūúǔùüǖǘǚǜ\s，,.·\-—0-9]+）/gu, "");
+  x = x.replace(/\([a-zA-Zāáǎàēéěèīíǐìōóǒòūúǔùü\s,.\-·—0-9]+\)/g, "");
+  return x.replace(/\s+/g, " ").trim();
+}
+
+/**
+ * 供「全文朗读」：与页面展示顺序一致，分段交给 speakHsk30ZhUiSegmentChain（汉字中文读、释义系统语言读；括号内拼音不读）
+ * @returns {{ zh?: string, ui?: string }[]}
+ */
+export function buildLessonFocusSpeakSegments(lesson, lang) {
+  const ctx = buildLessonContext(lesson, { lang });
+  const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "";
+  const summary = pickLang(lesson?.summary, lang) || "";
+  const objLines = buildObjectiveLines(lesson, lang);
+  const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
+  const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
+  const tips = collectTipsFinal(lang);
+  const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
+  const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
+
+  const H = {
+    page: t("ai.lesson_focus_page_title", "本课重点讲解"),
+    a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
+    b: t("ai.lesson_focus_section_hsk1", "本课能力点"),
+    c: t("ai.lesson_focus_section_expressions", "重点表达精选"),
+    d: t("ai.lesson_focus_section_scene_dialogue", "场景与对话"),
+    e: t("ai.lesson_focus_section_tips", "易混提醒"),
+  };
+
+  const segs = [];
+  const pushUi = (u) => {
+    const s = str(u);
+    if (s) segs.push({ ui: s });
+  };
+  const pushZhUi = (zh, ui) => {
+    const z = str(stripParenPinyinForSpeak(zh));
+    const u = str(ui);
+    if (z && u) segs.push({ zh: z, ui: u });
+    else if (z) segs.push({ zh: z });
+    else if (u) segs.push({ ui: u });
+  };
+
+  pushUi(H.page);
+  if (title) {
+    if (/[\u4e00-\u9fff]/.test(title)) segs.push({ zh: stripParenPinyinForSpeak(title) });
+    else pushUi(title);
+  }
+
+  pushUi(H.a);
+  const showSummaryLead = summary && objLines.length <= 1;
+  if (showSummaryLead && summary) pushUi(summary);
+  for (const o of objLines) pushUi(o);
+
+  pushUi(H.b);
+  for (const x of abilityItems) pushUi(x);
+
+  pushUi(H.c);
+  for (const r of coreRows) {
+    pushZhUi(r.expr, r.usage);
+  }
+
+  pushUi(H.d);
+  const st = ctx.scene?.title ? str(ctx.scene.title) : "";
+  const sceneIdx = segs.length;
+  if (st) pushUi(st);
+  const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
+  for (const c of cards.slice(0, 2)) {
+    const ct = pickLang(c.title, lang);
+    const cs = pickLang(c.summary, lang);
+    if (!cs && !ct) continue;
+    const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
+    const line = ct && short ? `${ct}：${short}` : ct || short;
+    pushUi(line);
+  }
+  if (segs.length === sceneIdx && ctx.scene?.summary) {
+    const ss = str(ctx.scene.summary);
+    pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
+  }
+
+  pushUi(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"));
+  for (const b of teacherBullets) pushUi(b);
+
+  for (const d of quotes) {
+    const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${str(d.zh)}`;
+    const tr = str(d.trans);
+    pushZhUi(zhLine, tr);
+  }
+
+  pushUi(H.e);
+  for (const tip of tips) pushUi(tip);
+
+  return segs.filter((s) => str(s.zh) || str(s.ui));
 }

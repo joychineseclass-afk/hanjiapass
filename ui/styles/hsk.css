@@ -264,9 +264,26 @@
 }
 
 .ai-lesson-focus-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px 12px;
   margin-bottom: 0.75rem;
   padding-bottom: 0.55rem;
   border-bottom: 1px solid var(--line, #e2e8f0);
+}
+
+.ai-lesson-focus-head-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-lesson-focus-speak-all {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  font-weight: 500;
 }
 
 /* 上半屏：略压缩间距，先抓大意 */
