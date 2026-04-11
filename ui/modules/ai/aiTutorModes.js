@@ -4,6 +4,7 @@
  */
 
 import { i18n } from "../../i18n.js";
+import { renderLessonFocusHtml } from "./aiLessonFocus.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -49,34 +50,17 @@ function resultAreaHtml(emptyState = true) {
 }
 
 /**
- * 渲染 Explain 面板
+ * 渲染 Explain 面板：本课重点讲解区（固定模板，非 AI 聊天/按钮触发）
  */
-export function renderExplainMode(aiItem, lang) {
-  const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
-  const hint = pickLang(aiItem && aiItem.hint, lang);
-  const desc = t("ai.mode_desc_explain", "Explains the key sentences and expressions in this lesson.");
-  const hasContent = !!(aiItem && (aiItem.target || (aiItem.hint && pickLang(aiItem.hint, lang))));
-
-  if (!hasContent) {
-    return `<div class="ai-tutor-mode-content ai-tutor-explain">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+export function renderExplainMode(_aiItem, lang, lesson) {
+  if (!lesson) {
+    return `<div class="ai-tutor-mode-content ai-tutor-explain ai-lesson-focus-empty">
       <div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
     </div>`;
   }
-
   return `
     <div class="ai-tutor-mode-content ai-tutor-explain">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
-      <div class="ai-tutor-target-block">
-        <span class="ai-tutor-label">${escapeHtml(t("ai.target", "Target"))}</span>
-        <div class="ai-tutor-target-text">${escapeHtml(target || "—")}</div>
-        ${hint ? `<p class="ai-tutor-hint">${escapeHtml(hint)}</p>` : ""}
-      </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run">
-        ${escapeHtml(t("ai.start_explain", "Start explanation"))}
-      </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      ${renderLessonFocusHtml(lesson, lang)}
     </div>
   `;
 }
@@ -217,10 +201,10 @@ export function renderFreeTalkMode(aiItem, lang) {
 /**
  * 根据 mode 渲染对应面板
  */
-export function renderModeContent(mode, aiItem, lang) {
+export function renderModeContent(mode, aiItem, lang, lesson) {
   switch (mode) {
     case "explain":
-      return renderExplainMode(aiItem, lang);
+      return renderExplainMode(aiItem, lang, lesson);
     case "roleplay":
       return renderRoleplayMode(aiItem, lang);
     case "shadowing":

@@ -256,6 +256,106 @@
   border-radius: 10px;
 }
 
+/* 本课重点讲解区（explain）：教材式分段，非聊天气泡 */
+.ai-lesson-focus {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.ai-lesson-focus-head {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line, #e2e8f0);
+}
+
+.ai-lesson-focus-page-title {
+  margin: 0 0 0.35rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-course-line {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: #475569;
+}
+
+.ai-lesson-focus-section {
+  margin-bottom: 1.1rem;
+}
+
+.ai-lesson-focus-section--tips {
+  margin-bottom: 0;
+  padding: 0.75rem 0.85rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-h {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+}
+
+.ai-lesson-focus-p {
+  margin: 0 0 0.5rem 0;
+}
+
+.ai-lesson-focus-summary {
+  color: #475569;
+}
+
+.ai-lesson-focus-list {
+  margin: 0.35rem 0 0 1.1rem;
+  padding: 0;
+}
+
+.ai-lesson-focus-list li {
+  margin-bottom: 0.35rem;
+}
+
+.ai-lesson-focus-muted {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.ai-lesson-focus-mini-scene {
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-quotes {
+  margin-top: 0.65rem;
+}
+
+.ai-lesson-focus-quote {
+  margin: 0 0 0.65rem 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 3px solid #3b82f6;
+  background: #fff;
+  border-radius: 0 8px 8px 0;
+}
+
+.ai-lesson-focus-zh {
+  font-size: 0.9375rem;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-tr {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
 .ai-tutor-mode-content {
   padding: 0;
 }

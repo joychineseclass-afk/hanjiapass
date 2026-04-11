@@ -77,7 +77,7 @@ export function renderAITutorPanel(opts = {}) {
 
   const firstItem = items.find((i) => i.mode === "explain") || items[0] || {};
   const firstMode = firstItem && firstItem.mode != null ? firstItem.mode : "explain";
-  const bodyContent = renderModeContent(firstMode, firstItem, lang);
+  const bodyContent = renderModeContent(firstMode, firstItem, lang, lesson);
 
   return `
 <section class="ai-tutor-page">
@@ -120,7 +120,7 @@ export function mountAITutorPanel(container, opts = {}) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
         cancelShadowingPlayback(card);
-        card.innerHTML = renderModeContent(mode, item, lang);
+        card.innerHTML = renderModeContent(mode, item, lang, lesson);
         bindModeEvents(card, mode, item, lesson, lang);
       }
     }
@@ -151,7 +151,7 @@ export function mountAITutorPanel(container, opts = {}) {
       }
     };
 
-    if (runBtn) {
+    if (runBtn && mode !== "explain") {
       if (mode === "shadowing") {
         runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
         const rep = wrap.querySelector(".ai-shadowing-replay");
@@ -187,6 +187,7 @@ export function mountAITutorPanel(container, opts = {}) {
   });
 
   const card = body && body.querySelector(".ai-tutor-mode-card");
-  const initMode = items[0] && items[0].mode != null ? items[0].mode : "explain";
-  bindModeEvents(card, initMode, items[0], lesson, lang);
+  const firstItem = items.find((i) => i.mode === "explain") || items[0] || {};
+  const firstMode = firstItem && firstItem.mode != null ? firstItem.mode : "explain";
+  bindModeEvents(card, firstMode, firstItem, lesson, lang);
 }
