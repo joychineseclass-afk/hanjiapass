@@ -111,7 +111,6 @@ function speakSituationRoundFull(zhLine, uiLang) {
   }
 }
 
-/** 학생 답변 예시：单条朗读，与 AI 台词共用 chineseTtsText（去拼音括号，避免重复念） */
 function speakStudentReferenceAnswer(rawLine) {
   if (typeof window === "undefined") return;
   const zh = chineseTtsText(rawLine);
@@ -310,12 +309,7 @@ function scenarioCardHtml(sc, lang) {
 }
 
 function studentRefsListHtml(studentRefs) {
-  const playLabel = t("ai.situation_play_student_ref", "이 예시 답안 듣기");
-  return (Array.isArray(studentRefs) ? studentRefs : [])
-    .map(
-      (line, idx) =>
-        `<li class="ai-situation-ref-item"><span class="ai-situation-ref-line">${escapeHtml(line)}</span><button type="button" class="ai-situation-ref-speak" data-student-ref-index="${idx}" aria-label="${escapeHtml(playLabel)}"><span class="ai-situation-ref-speak-ic" aria-hidden="true">🔊</span></button></li>`,
-    )
+
     .join("");
 }
 
@@ -328,7 +322,6 @@ export function renderSituationDialogueShell(plan, lang) {
   const practiceTitle = t("ai.situation_practice_block_title", "대화 연습");
   const replayLabel = t("ai.situation_replay", "다시 듣기");
   const teacherPrompt = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
-  const studentHint = t("ai.situation_student_refs_label", "학생 답변 예시");
   const nextLabel = t("ai.situation_next", "다음");
   const doneLine = t("ai.situation_complete", "대화 연습이 끝났어요.");
   const restartLabel = t("ai.situation_restart", "다시 시작");
@@ -357,7 +350,6 @@ export function renderSituationDialogueShell(plan, lang) {
             : ""
         }
         <div class="ai-situation-student-block">
-          <span class="ai-situation-student-k">${escapeHtml(studentHint)}</span>
           <ul class="ai-situation-student-refs" data-student-refs></ul>
         </div>
         ${
