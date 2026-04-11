@@ -832,8 +832,58 @@
   line-height: 1.5;
 }
 
-.ai-situation-next {
+.ai-situation-speak-zone {
+  margin-bottom: 10px;
+}
+
+.ai-situation-record-btn {
+  font-size: 0.8125rem;
+}
+
+.ai-situation-asr-unsupported {
+  font-size: 0.75rem;
+  color: #b45309;
+  margin: 6px 0 0 0;
+}
+
+.ai-situation-user-answer {
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+}
+
+.ai-situation-user-answer-k {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ai-situation-user-answer-zh {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.ai-situation-feedback {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: #334155;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.ai-situation-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
   margin-top: 4px;
+}
+
+.ai-situation-next {
+  margin-top: 0;
 }
 
 .ai-situation-done {

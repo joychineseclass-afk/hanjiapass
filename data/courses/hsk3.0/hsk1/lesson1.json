@@ -380,8 +380,18 @@
           },
           "expressions": ["对不起 / 没关系", "谢谢 / 不客气"],
           "rounds": [
-            { "aiLine": "王美，对不起！", "studentRefs": ["没关系。"] },
-            { "aiLine": "谢谢！", "studentRefs": ["不客气。"] }
+            {
+              "aiLine": "王美，对不起！",
+              "studentRefs": ["没关系。"],
+              "acceptable": ["没关系", "没关系。"],
+              "closeAnswers": ["不客气", "不客气。"]
+            },
+            {
+              "aiLine": "谢谢！",
+              "studentRefs": ["不客气。"],
+              "acceptable": ["不客气", "不客气。"],
+              "closeAnswers": ["没关系", "没关系。"]
+            }
           ]
         },
         {
@@ -402,8 +412,18 @@
           },
           "expressions": ["您好 / 你好", "老师", "再见"],
           "rounds": [
-            { "aiLine": "你好，李明！", "studentRefs": ["王老师，您好！"] },
-            { "aiLine": "再见！", "studentRefs": ["老师，再见！"] }
+            {
+              "aiLine": "你好，李明！",
+              "studentRefs": ["王老师，您好！"],
+              "acceptable": ["王老师，您好！", "王老师您好", "王老师，您好"],
+              "closeAnswers": ["你好", "你好！", "您好", "您好！"]
+            },
+            {
+              "aiLine": "再见！",
+              "studentRefs": ["老师，再见！"],
+              "acceptable": ["老师，再见！", "老师再见！"],
+              "closeAnswers": ["再见", "再见！"]
+            }
           ]
         }
       ]

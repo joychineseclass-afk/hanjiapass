@@ -5,6 +5,8 @@
 
 import { i18n } from "../../i18n.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
+import { buildAcceptableSet, judgeSituationRound } from "./aiSituationJudge.js";
+import { createZhSituationRecognizer, isSituationZhSpeechSupported } from "./aiSituationZhSpeech.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -138,10 +140,16 @@ function buildScenariosFromDialogueCard(card, lang) {
   }
 
   rounds = rounds
-    .map((r) => ({
-      aiLine: str(r.aiLine),
-      studentRefs: (Array.isArray(r.studentRefs) ? r.studentRefs : []).map(str).filter(Boolean),
-    }))
+    .map((r) => {
+      const studentRefs = (Array.isArray(r.studentRefs) ? r.studentRefs : []).map(str).filter(Boolean);
+      const acceptable = buildAcceptableSet(studentRefs, r.acceptable);
+      return {
+        aiLine: str(r.aiLine),
+        studentRefs,
+        acceptable,
+        closeAnswers: Array.isArray(r.closeAnswers) ? r.closeAnswers.map(str).filter(Boolean) : [],
+      };
+    })
     .filter((r) => r.aiLine && r.studentRefs.length);
 
   if (rounds.length < 1) return [];
@@ -187,14 +195,20 @@ export function buildSituationDialoguePlan(lesson, lang) {
         const expressions = Array.isArray(sc.expressions) ? sc.expressions.map(str).filter(Boolean).slice(0, 6) : [];
         const rounds = Array.isArray(sc.rounds)
           ? sc.rounds
-            .map((r) => ({
-              aiLine: str(r.aiLine != null ? r.aiLine : r.ai),
-              studentRefs: Array.isArray(r.studentRefs)
+            .map((r) => {
+              const studentRefs = Array.isArray(r.studentRefs)
                 ? r.studentRefs.map(str).filter(Boolean).slice(0, 2)
                 : r.studentRef
                   ? [str(r.studentRef)]
-                  : [],
-            }))
+                  : [];
+              const acceptable = buildAcceptableSet(studentRefs, r.acceptable);
+              return {
+                aiLine: str(r.aiLine != null ? r.aiLine : r.ai),
+                studentRefs,
+                acceptable,
+                closeAnswers: Array.isArray(r.closeAnswers) ? r.closeAnswers.map(str).filter(Boolean) : [],
+              };
+            })
             .filter((r) => r.aiLine && r.studentRefs.length)
             .slice(0, 4)
           : [];
@@ -299,11 +313,23 @@ export function renderSituationDialogueShell(plan, lang) {
           <button type="button" class="ai-btn ai-btn-secondary ai-situation-replay" data-replay-btn>${escapeHtml(replayLabel)}</button>
         </div>
         <p class="ai-situation-teacher-prompt" data-teacher-prompt>${escapeHtml(teacherPrompt)}</p>
+        <div class="ai-situation-speak-zone" data-speak-zone>
+          <button type="button" class="ai-btn ai-btn-secondary ai-situation-record-btn" data-record-btn>${escapeHtml(t("ai.situation_record_start", "녹음 시작"))}</button>
+          <p class="ai-situation-asr-unsupported hidden" data-asr-unsupported>${escapeHtml(t("ai.situation_speech_unsupported", "이 브라우저에서는 음성 인식을 사용할 수 없어요. 텍스트로 연습해 보세요."))}</p>
+        </div>
         <div class="ai-situation-student-block">
           <span class="ai-situation-student-k">${escapeHtml(studentHint)}</span>
           <ul class="ai-situation-student-refs" data-student-refs></ul>
         </div>
-        <button type="button" class="ai-btn ai-btn-primary ai-situation-next" data-next-btn>${escapeHtml(nextLabel)}</button>
+        <div class="ai-situation-user-answer hidden" data-user-answer-wrap>
+          <span class="ai-situation-user-answer-k">${escapeHtml(t("ai.situation_my_answer", "내 대답"))}</span>
+          <span class="ai-situation-user-answer-zh" data-user-transcript></span>
+        </div>
+        <div class="ai-situation-feedback hidden" data-feedback-box role="status"></div>
+        <div class="ai-situation-actions-row">
+          <button type="button" class="ai-btn ai-btn-secondary ai-situation-retry-speak hidden" data-retry-speak-btn>${escapeHtml(t("ai.situation_retry_speak", "다시 말하기"))}</button>
+          <button type="button" class="ai-btn ai-btn-primary ai-situation-next" data-next-btn>${escapeHtml(nextLabel)}</button>
+        </div>
       </div>
       <div class="ai-situation-done hidden" data-situation-done>
         <p class="ai-situation-done-text">${escapeHtml(doneLine)}</p>
@@ -315,6 +341,28 @@ export function renderSituationDialogueShell(plan, lang) {
 
 function formatRoundLabel(n) {
   return t("ai.situation_round_n", "라운드 {n}").replace(/\{n\}/g, String(n));
+}
+
+function buildSituationFeedback(tier, round, heard) {
+  const expected = str(round.studentRefs?.[0]) || str(round.acceptable?.[0]) || "—";
+  const h = str(heard) || t("ai.situation_asr_empty", "(인식 없음)");
+  if (tier === "correct") {
+    return t("ai.situation_fb_ok", '잘했어요! 「{answer}」라고 자연스럽게 말했어요.').replace("{answer}", expected);
+  }
+  if (tier === "close") {
+    return t(
+      "ai.situation_fb_close",
+      '좋아요. 뜻은 비슷하지만, 이 과에서는 「{expected}」를 먼저 익혀요. (들은 말: 「{heard}」)',
+    )
+      .replace("{expected}", expected)
+      .replace("{heard}", h);
+  }
+  return t(
+    "ai.situation_fb_bad",
+    '이 상황에서는 「{expected}」라고 말하면 더 자연스러워요. (들은 말: 「{heard}」)',
+  )
+    .replace("{expected}", expected)
+    .replace("{heard}", h);
 }
 
 /**
@@ -336,13 +384,37 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   const teacherPromptEl = rootEl.querySelector("[data-teacher-prompt]");
   const replayBtn = rootEl.querySelector("[data-replay-btn]");
   const refsEl = rootEl.querySelector("[data-student-refs]");
+  const recordBtn = rootEl.querySelector("[data-record-btn]");
+  const userAnswerWrap = rootEl.querySelector("[data-user-answer-wrap]");
+  const userTranscriptEl = rootEl.querySelector("[data-user-transcript]");
+  const feedbackBox = rootEl.querySelector("[data-feedback-box]");
+  const retrySpeakBtn = rootEl.querySelector("[data-retry-speak-btn]");
+  const asrUnsupportedEl = rootEl.querySelector("[data-asr-unsupported]");
   const chips = rootEl.querySelectorAll(".ai-situation-scenario-chip");
+
+  const recognizer = createZhSituationRecognizer();
+  let recording = false;
 
   function currentScenario() {
     return plan.scenarios[scenarioIndex] || plan.scenarios[0];
   }
 
+  function clearUserAnswerUi() {
+    if (userAnswerWrap) userAnswerWrap.classList.add("hidden");
+    if (userTranscriptEl) userTranscriptEl.textContent = "";
+    if (feedbackBox) {
+      feedbackBox.classList.add("hidden");
+      feedbackBox.textContent = "";
+    }
+    if (retrySpeakBtn) retrySpeakBtn.classList.add("hidden");
+  }
+
   function renderRound() {
+    try {
+      recognizer.abort();
+    } catch (_) {}
+    recording = false;
+
     const sc = currentScenario();
     const rounds = sc.rounds || [];
     if (!rounds.length || roundIndex >= rounds.length) return;
@@ -358,9 +430,28 @@ export function mountSituationDialogue(rootEl, plan, lang) {
       refsEl.innerHTML = r.studentRefs.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
     }
 
+    clearUserAnswerUi();
+    if (recordBtn) {
+      const sup = isSituationZhSpeechSupported();
+      recordBtn.disabled = !sup;
+      recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
+    }
+    if (asrUnsupportedEl) asrUnsupportedEl.classList.toggle("hidden", isSituationZhSpeechSupported());
+
     if (nextBtn) nextBtn.textContent = t("ai.situation_next", "다음");
 
     speakSituationRoundFull(r.aiLine, lang);
+  }
+
+  function showAnswerAndFeedback(transcriptRaw, tier, round) {
+    const text = str(transcriptRaw);
+    if (userAnswerWrap) userAnswerWrap.classList.remove("hidden");
+    if (userTranscriptEl) userTranscriptEl.textContent = text || "—";
+    if (feedbackBox) {
+      feedbackBox.classList.remove("hidden");
+      feedbackBox.textContent = buildSituationFeedback(tier, round, text);
+    }
+    if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
   }
 
   function showPractice(show) {
@@ -372,6 +463,10 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   }
 
   function resetRoundState() {
+    try {
+      recognizer.abort();
+    } catch (_) {}
+    recording = false;
     try {
       AUDIO_ENGINE.stop();
     } catch (_) {}
@@ -431,8 +526,65 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     });
   }
 
+  if (recordBtn && isSituationZhSpeechSupported()) {
+    recordBtn.addEventListener("click", async () => {
+      const sc = currentScenario();
+      const rounds = sc.rounds || [];
+      const r = rounds[roundIndex];
+      if (!r) return;
+
+      if (!recording) {
+        try {
+          AUDIO_ENGINE.stop();
+        } catch (_) {}
+        recording = true;
+        recordBtn.textContent = t("ai.situation_record_stop", "녹음 종료");
+        recognizer.start();
+        return;
+      }
+
+      recording = false;
+      recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
+      const raw = await recognizer.stop();
+      const trimmed = str(raw);
+      if (!trimmed) {
+        if (feedbackBox) {
+          feedbackBox.classList.remove("hidden");
+          feedbackBox.textContent = t(
+            "ai.situation_asr_failed",
+            "음성이 인식되지 않았어요. 다시 말하기를 눌러 주세요.",
+          );
+        }
+        if (retrySpeakBtn) retrySpeakBtn.classList.remove("hidden");
+        if (userAnswerWrap) userAnswerWrap.classList.add("hidden");
+        return;
+      }
+
+      const { tier } = judgeSituationRound(trimmed, r);
+      showAnswerAndFeedback(trimmed, tier, r);
+    });
+  }
+
+  if (retrySpeakBtn) {
+    retrySpeakBtn.addEventListener("click", () => {
+      try {
+        recognizer.abort();
+      } catch (_) {}
+      recording = false;
+      if (recordBtn) {
+        recordBtn.disabled = !isSituationZhSpeechSupported();
+        recordBtn.textContent = t("ai.situation_record_start", "녹음 시작");
+      }
+      clearUserAnswerUi();
+    });
+  }
+
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
+      try {
+        recognizer.abort();
+      } catch (_) {}
+      recording = false;
       const sc = currentScenario();
       const rounds = sc.rounds || [];
       if (roundIndex < rounds.length - 1) {
