@@ -277,6 +277,8 @@
     "situation_practice_block_title": "대화 연습",
     "situation_student_refs_label": "학생 답변 예시",
     "situation_next": "다음",
+    "situation_replay": "다시 듣기",
+    "situation_teacher_prompt": "제가 이렇게 말하면, 어떻게 대답할까요?",
     "situation_complete": "대화 연습이 끝났어요.",
     "situation_restart": "다시 시작",
     "situation_round_n": "라운드 {n}",

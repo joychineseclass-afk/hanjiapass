@@ -4,6 +4,7 @@
  */
 
 import { i18n } from "../../i18n.js";
+import { AUDIO_ENGINE } from "../../platform/index.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -36,6 +37,23 @@ function lineText(line) {
 function lineSpeaker(line) {
   if (!line || typeof line !== "object") return "";
   return str(line.speaker != null ? line.speaker : "");
+}
+
+/** 仅朗读中文正文：去掉常见拼音括号，避免与汉字重复念 */
+function chineseTtsText(raw) {
+  let s = String(raw ?? "").trim();
+  if (!s) return "";
+  s = s.replace(/[（(][^）)]*[）)]/g, (m) => (/[a-zA-Zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüńḿ]/.test(m) ? "" : m));
+  s = s.replace(/\s+/g, " ").trim();
+  return s || String(raw ?? "").trim();
+}
+
+function speakSituationAiLine(zhLine) {
+  const text = chineseTtsText(zhLine);
+  if (!text || typeof window === "undefined") return;
+  try {
+    AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95 });
+  } catch (_) {}
 }
 
 /** 师生会话：学生先向老师问好 → 练习轮次用 (老师句, 学生句) */
@@ -218,6 +236,8 @@ export function renderSituationDialogueShell(plan, lang) {
   const sc = plan.scenarios[plan.defaultIndex];
   const startLabel = t("ai.start_roleplay", "대화 시작");
   const practiceTitle = t("ai.situation_practice_block_title", "대화 연습");
+  const replayLabel = t("ai.situation_replay", "다시 듣기");
+  const teacherPrompt = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
   const studentHint = t("ai.situation_student_refs_label", "학생 답변 예시");
   const nextLabel = t("ai.situation_next", "다음");
   const doneLine = t("ai.situation_complete", "대화 연습이 끝났어요.");
@@ -233,6 +253,10 @@ export function renderSituationDialogueShell(plan, lang) {
         <div class="ai-situation-practice-head">${escapeHtml(practiceTitle)}</div>
         <div class="ai-situation-round-meta" data-round-meta></div>
         <div class="ai-situation-ai-line" data-ai-line></div>
+        <div class="ai-situation-replay-row">
+          <button type="button" class="ai-btn ai-btn-secondary ai-situation-replay" data-replay-btn>${escapeHtml(replayLabel)}</button>
+        </div>
+        <p class="ai-situation-teacher-prompt" data-teacher-prompt>${escapeHtml(teacherPrompt)}</p>
         <div class="ai-situation-student-block">
           <span class="ai-situation-student-k">${escapeHtml(studentHint)}</span>
           <ul class="ai-situation-student-refs" data-student-refs></ul>
@@ -267,8 +291,12 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   const restartBtn = rootEl.querySelector(".ai-situation-restart");
   const metaEl = rootEl.querySelector("[data-round-meta]");
   const aiLineEl = rootEl.querySelector("[data-ai-line]");
+  const teacherPromptEl = rootEl.querySelector("[data-teacher-prompt]");
+  const replayBtn = rootEl.querySelector("[data-replay-btn]");
   const refsEl = rootEl.querySelector("[data-student-refs]");
   const chips = rootEl.querySelectorAll(".ai-situation-scenario-chip");
+
+  const teacherPromptText = t("ai.situation_teacher_prompt", "제가 이렇게 말하면, 어떻게 대답할까요?");
 
   function currentScenario() {
     return plan.scenarios[scenarioIndex] || plan.scenarios[0];
@@ -283,11 +311,14 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     const n = roundIndex + 1;
     if (metaEl) metaEl.textContent = formatRoundLabel(n);
     if (aiLineEl) aiLineEl.innerHTML = `<span class="ai-situation-ai-k">AI：</span><span class="ai-situation-ai-zh">${escapeHtml(r.aiLine)}</span>`;
+    if (teacherPromptEl) teacherPromptEl.textContent = teacherPromptText;
     if (refsEl) {
       refsEl.innerHTML = r.studentRefs.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
     }
 
     if (nextBtn) nextBtn.textContent = t("ai.situation_next", "다음");
+
+    speakSituationAiLine(r.aiLine);
   }
 
   function showPractice(show) {
@@ -299,6 +330,9 @@ export function mountSituationDialogue(rootEl, plan, lang) {
   }
 
   function resetRoundState() {
+    try {
+      AUDIO_ENGINE.stop();
+    } catch (_) {}
     roundIndex = 0;
     showPractice(false);
     showDone(false);
@@ -341,6 +375,15 @@ export function mountSituationDialogue(rootEl, plan, lang) {
     });
   }
 
+  if (replayBtn) {
+    replayBtn.addEventListener("click", () => {
+      const sc = currentScenario();
+      const rounds = sc.rounds || [];
+      const r = rounds[roundIndex];
+      if (r && r.aiLine) speakSituationAiLine(r.aiLine);
+    });
+  }
+
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
       const sc = currentScenario();
@@ -349,6 +392,9 @@ export function mountSituationDialogue(rootEl, plan, lang) {
         roundIndex += 1;
         renderRound();
       } else {
+        try {
+          AUDIO_ENGINE.stop();
+        } catch (_) {}
         showPractice(false);
         showDone(true);
       }

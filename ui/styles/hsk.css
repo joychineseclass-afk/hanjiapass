@@ -792,6 +792,27 @@
   font-weight: 600;
 }
 
+.ai-situation-replay-row {
+  margin: 6px 0 10px 0;
+}
+
+.ai-situation-replay {
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+}
+
+.ai-situation-teacher-prompt {
+  margin: 0 0 12px 0;
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #3730a3;
+  background: #eef2ff;
+  border-radius: 8px;
+  border-left: 3px solid #6366f1;
+}
+
 .ai-situation-student-block {
   margin-bottom: 12px;
 }
