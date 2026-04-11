@@ -220,14 +220,8 @@ export function mountLessonStepRunner() {
 }
 // ✅ Expose a small stable API for other pages (like HSK) to call AI
 (function exposeRunnerAPI() {
-  // Try to find any runner instance / function you already have
   const api = window.JOY_RUNNER || {};
 
-  // 1) If you already have a "runner" object, attach it here (optional)
-  // api.runner = api.runner || window.LessonStepRunner || window.lessonStepRunner || null;
-
-  // 2) A single method that HSK page can call
-  // It will try several existing AI entry points (so it works even if your internals change)
   function toExplainLang(langCode) {
     const l = String(langCode || "ko").toLowerCase();
     if (l === "zh" || l === "cn") return "zh";
@@ -243,30 +237,13 @@ export function mountLessonStepRunner() {
     return "teach";
   }
 
+  /** Lumina Tutor 正式唯一入口：POST /api/gemini（失败抛错，由 runTutor 回退 mock） */
   api.askAI = async function askAI({ prompt, context = "", lang = "ko", mode = "Kids", contextObj } = {}) {
     const fullPrompt =
       (typeof prompt === "string" && prompt.trim())
         ? prompt.trim()
         : String(context || "").trim();
 
-    // (A) 全局注入的 AI（优先）
-    const candidates = [
-      window.aiAsk,
-      window.AI?.ask,
-      window.JOY_AI?.ask,
-      window.openAIChat?.ask,
-    ].filter(Boolean);
-
-    for (const fn of candidates) {
-      try {
-        const out = await fn(fullPrompt, { lang, mode, context: contextObj ?? context });
-        if (out != null) return normalizeAIResult(out);
-      } catch (e) {
-        console.warn("[JOY_RUNNER.askAI] candidate failed:", e);
-      }
-    }
-
-    // (B) 仓库默认：Vercel /api/gemini（与 api/gemini.js 对齐）
     try {
       const r = await fetch("/api/gemini", {
         method: "POST",
@@ -287,7 +264,7 @@ export function mountLessonStepRunner() {
       console.warn("[JOY_RUNNER.askAI] /api/gemini failed:", e);
     }
 
-    throw new Error("AI not connected: globals and /api/gemini unavailable.");
+    throw new Error("AI not connected: /api/gemini unavailable.");
   };
 
   function normalizeAIResult(out) {
