@@ -105,6 +105,21 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
       chineseKeepOriginal: true,
       explanationFollowsUiLang: true,
     },
+    ...(mode === "explain"
+      ? {
+          explainLecture: {
+            outlineVersion: 1,
+            focalTarget: aiItem?.target != null ? String(aiItem.target) : undefined,
+            sections: [
+              "lesson_theme",
+              "core_expressions",
+              "usage_context",
+              "dialogue_examples",
+              "mini_check",
+            ],
+          },
+        }
+      : {}),
   };
 }
 
@@ -246,19 +261,50 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   ].filter(Boolean).join("\n\n");
 
   if (mode === "explain") {
-    const target = str(aiItem && aiItem.target != null ? aiItem.target : "");
-    const hint = pickLang(aiItem?.hint, lang);
+    const focalTarget = str(aiItem && aiItem.target != null ? aiItem.target : "");
+    const focalHint = pickLang(aiItem?.hint, lang);
+    const sceneTitle = ctx.scene?.title ? str(ctx.scene.title) : "";
+    const objectivesLines = Array.isArray(lessonData?.objectives)
+      ? lessonData.objectives
+        .slice(0, 5)
+        .map((o) => pickLang(o, lang))
+        .filter(Boolean)
+      : [];
+
     return [
       metaBlock,
       "",
-      `请像中文教师一样讲解本课内容（不是泛泛闲聊）。`,
-      `讲解目标: ${target}`,
-      hint ? `补充提示: ${hint}` : "",
-      `系统语言代码: ${langKey}`,
-      `要求: 结构清晰、适合初学者；用${explainLangLabel}解释；结合上面对话与语法点。`,
+      "【角色与体裁】你是面对初学者的中文老师，本任务为「整课串讲」，不是百科词条解释，也不是自由聊天。",
+      `【输出语言】除直接引用的中文/拼音外，说明文字请使用${explainLangLabel}。`,
+      "【中文与拼音】教材中的汉字、句子、拼音须保持原样，不要改写或自造拼音。",
+      focalTarget
+        ? `【重点焦点】请在讲解中单独用一小段突出：「${focalTarget}」${focalHint ? `（参考：${focalHint}）` : ""}；但全文必须同时覆盖整课主题、词汇与对话，不能只讲这一点。`
+        : "【重点】无单独 focal 时，请仍按下面结构讲满一整课。",
       "",
-      baseContext,
-    ].filter(Boolean).join("\n");
+      "【必须采用的输出结构】按以下五段依次撰写，每段简短，整体篇幅适合网页阅读（勿过长）：",
+      "1）本课主题：用一两句话说明这课学什么、为何学。",
+      "2）核心表达：列出本课最重要的 2～4 个词语或句型（可带拼音），各用一句话说明作用。",
+      "3）使用场景：说明这些表达在什么情境下使用（可联系下方场景摘要）。",
+      "4）对话示例讲解：从「本课对话原文」中选取 1～2 句，简要说明含义或用法（必须引用原文中的句子，勿编造课内没有的对话）。",
+      "5）小练习或提问：最后给一道极简短的理解检查（如小问句、填空或二选一），只用本课已出现的内容。",
+      "",
+      "【课名与概要】",
+      `课名：${ctx.lessonTitle || "本课"}`,
+      ctx.lessonSummary ? `概要：${ctx.lessonSummary}` : "",
+      sceneTitle ? `场景标题：${sceneTitle}` : "",
+      ctx.sceneSummary ? `场景说明：${ctx.sceneSummary}` : "",
+      objectivesLines.length ? `学习目标要点：\n${objectivesLines.map((o) => `- ${o}`).join("\n")}` : "",
+      "",
+      "【本课词汇】",
+      vocabStr || "（若列表为空，请依据下方对话与语法归纳本课词语。）",
+      "",
+      "【本课语法】",
+      grammarStr || "（若无单独语法块，可结合对话略讲。）",
+      "",
+      "【本课对话原文】（讲解第 4 段必须从中引用）",
+      dialogueStr || "（若无对话行，可改用「扩展参考」中的句子做示例。）",
+      extStr ? `【扩展参考】\n${extStr}` : "",
+    ].filter(Boolean).join("\n\n");
   }
 
   if (mode === "roleplay") {
@@ -337,6 +383,80 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
   return getMockTutorOutput(mode, aiItem, lessonData, lang, userInput);
 }
 
+function explainHeadingLabels(lang) {
+  const l = (lang || "kr").toLowerCase();
+  if (l === "zh" || l === "cn") {
+    return { h1: "1. 本课主题", h2: "2. 核心表达", h3: "3. 使用场景", h4: "4. 对话示例讲解", h5: "5. 小练习" };
+  }
+  if (l === "ko" || l === "kr") {
+    return { h1: "1. 본과 주제", h2: "2. 핵심 표현", h3: "3. 사용 상황", h4: "4. 대화 예시 설명", h5: "5. 확인 질문" };
+  }
+  if (l === "jp" || l === "ja") {
+    return { h1: "1. 本課のテーマ", h2: "2. 重要な表現", h3: "3. 使う場面", h4: "4. 会話例の解説", h5: "5. 小さな確認" };
+  }
+  return {
+    h1: "1. Lesson theme",
+    h2: "2. Key expressions",
+    h3: "3. Usage contexts",
+    h4: "4. Dialogue walk-through",
+    h5: "5. Quick check",
+  };
+}
+
+/** explain 离线 mock：五段式本课串讲（与 prompt 结构对齐，便于无 API 时预览） */
+function buildExplainMockLessonText(ctx, lang, focalTarget, lessonData) {
+  const H = explainHeadingLabels(lang);
+  const themePara = ctx.lessonSummary || pickLang(lessonData?.title, lang) || ctx.lessonTitle || "—";
+  const coreItems = (ctx.words && ctx.words.length)
+    ? ctx.words.slice(0, 4).map((w) => `· ${w.hanzi}${w.pinyin ? `（${w.pinyin}）` : ""}${w.meaning ? ` — ${w.meaning}` : ""}`)
+    : [];
+  const coreBlock = coreItems.length
+    ? coreItems
+    : ["· （请结合下方对话中的问候语与礼貌用语。）"];
+  const sceneUse = [ctx.scene?.title, ctx.sceneSummary].filter(Boolean).join(" — ") || themePara;
+  const dLines = ctx.dialogue?.slice(0, 2) || [];
+  const dialoguePart = dLines.length
+    ? dLines.map((d) => {
+      const zh = d.zh || "";
+      const py = d.pinyin ? `（${d.pinyin}）` : "";
+      const tr = d.trans ? `\n  → ${d.trans}` : "";
+      return `${d.speaker ? `${d.speaker}：` : ""}${zh}${py}${tr}`;
+    }).join("\n\n")
+    : "（教材对话行）";
+  const focalNote = focalTarget
+    ? (lang === "kr" || lang === "ko"
+      ? `【강조】${focalTarget} — 본과 대화 속에서 쓰임을 함께 짚어 보세요.`
+      : lang === "jp" || lang === "ja"
+        ? `【重点】${focalTarget} — 会話の中での使い分けに注目してください。`
+        : `【重点】${focalTarget} — 请结合对话体会用法。`)
+    : "";
+
+  const mini =
+    lang === "kr" || lang === "ko"
+      ? "「谢谢」를 들었을 때 더 자연스러운 응답은?\nA) 对不起  B) 不客气  C) 没关系"
+      : lang === "jp" || lang === "ja"
+        ? "「谢谢」に対してよく使う返答は？\nA) 对不起  B) 不客气  C) 没关系"
+        : "听到「谢谢」时，更常见的应答是？\nA) 对不起  B) 不客气  C) 没关系";
+
+  return [
+    `${H.h1}`,
+    themePara,
+    "",
+    `${H.h2}`,
+    ...coreBlock,
+    focalNote,
+    "",
+    `${H.h3}`,
+    sceneUse,
+    "",
+    `${H.h4}`,
+    dialoguePart,
+    "",
+    `${H.h5}`,
+    mini,
+  ].filter(Boolean).join("\n");
+}
+
 /**
  * Mock 输出（像样的教学反馈）
  */
@@ -356,23 +476,7 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   const L = langLabels[lang === "zh" || lang === "cn" ? "cn" : lang === "kr" || lang === "ko" ? "kr" : lang === "jp" || lang === "ja" ? "jp" : "en"] || langLabels.en;
 
   if (mode === "explain") {
-    const vocabSample = ctx.words?.slice(0, 3).map((w) => `${w.hanzi}(${w.pinyin})`).join("、") || "";
-    const targetLine = target ? `${target}\n\n` : "";
-    const meaningLine = target ? t("ai.explain_meaning", { target }) : "";
-    return {
-      text: [
-        targetLine,
-        meaningLine,
-        t("ai.explain_grammar"),
-        "",
-        t("ai.explain_example"),
-        "我是中国人。",
-        "他是老师。",
-        "",
-        vocabSample ? t("ai.explain_vocab") + " " + vocabSample : "",
-        t("ai.explain_tip"),
-      ].filter(Boolean).join("\n"),
-    };
+    return { text: buildExplainMockLessonText(ctx, lang, target, lessonData) };
   }
 
   if (mode === "roleplay") {
