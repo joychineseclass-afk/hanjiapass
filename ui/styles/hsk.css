@@ -515,6 +515,32 @@
   line-height: 1.45;
 }
 
+.ai-shadowing-line-item.is-active {
+  margin: 2px 0;
+  padding: 6px 8px !important;
+  background: #e0f2fe;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px #7dd3fc;
+}
+
+.ai-shadowing-line-item.is-playing {
+  background: #dbeafe;
+}
+
+.ai-shadowing-line-item.is-done {
+  opacity: 0.88;
+  color: #475569;
+}
+
+.ai-shadowing-playback-bar {
+  margin-top: 8px;
+  min-height: 1.15em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
 .ai-shadowing-guide-card {
   text-align: left;
 }

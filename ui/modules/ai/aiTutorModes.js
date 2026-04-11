@@ -48,18 +48,6 @@ function resultAreaHtml(emptyState = true) {
   `;
 }
 
-/** Shadowing 结果区：学习模块标题，非「AI 回复」 */
-function shadowingResultAreaHtml(emptyState = true) {
-  const emptyText = t("ai.result_empty", "No response yet.");
-  const header = t("ai.shadowing_guide_header", "연습 가이드");
-  return `
-    <div class="ai-tutor-result-header ai-tutor-result-header--shadowing">${escapeHtml(header)}</div>
-    <div class="ai-tutor-result-content ai-tutor-result-content--shadowing ${emptyState ? "ai-tutor-result-empty" : ""}">
-      ${emptyState ? `<span class="ai-tutor-result-placeholder">${escapeHtml(emptyText)}</span>` : ""}
-    </div>
-  `;
-}
-
 /**
  * 渲染 Explain 面板
  */
@@ -166,7 +154,7 @@ export function renderShadowingMode(aiItem, lang) {
   `;
 
   const linesHtml = lines.length
-    ? `<ol class="ai-tutor-lines-list ai-shadowing-preview-lines">${lines.map((line) => `<li class="ai-tutor-line-item">${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</li>`).join("")}</ol>`
+    ? `<ol class="ai-tutor-lines-list ai-shadowing-preview-lines" role="list">${lines.map((line) => `<li class="ai-tutor-line-item ai-shadowing-line-item">${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</li>`).join("")}</ol>`
     : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
 
   return `
@@ -181,10 +169,12 @@ export function renderShadowingMode(aiItem, lang) {
         <span class="ai-tutor-label">${escapeHtml(sentencesLabel)}</span>
         ${linesHtml}
       </div>
-      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run mt-2" ${!lines.length ? "disabled" : ""}>
+      <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run mt-2" ${!lines.length ? "disabled" : ""}>
         ${escapeHtml(t("ai.start_shadowing", "Start shadowing"))}
       </button>
-      <div class="ai-tutor-result-wrap ai-tutor-result-wrap--shadowing mt-3">${shadowingResultAreaHtml(true)}</div>
+      <div class="ai-shadowing-playback-bar hidden" aria-live="polite">
+        <span class="ai-shadowing-playback-status"></span>
+      </div>
     </div>
   `;
 }

@@ -416,76 +416,11 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   return { text: "" };
 }
 
-function normalizeShadowingLineStrings(aiItem) {
-  let lines = Array.isArray(aiItem?.lines) ? aiItem.lines : [];
-  if (!lines.length && aiItem && aiItem.sampleAnswer) {
-    const sa = typeof aiItem.sampleAnswer === "string"
-      ? aiItem.sampleAnswer
-      : (aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
-    if (str(sa)) lines = [sa.trim()];
-  }
-  return lines
-    .map((line) => str(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || ""))
-    .filter(Boolean);
-}
-
-/**
- * Shadowing：训练引导卡（不展示聊天式大段 AI 文本，以课内句子列表为主）
- */
-function formatShadowingGuideOutput(result, lang, aiItem) {
-  const lines = normalizeShadowingLineStrings(aiItem);
-  const usedMock = !!(result && result.usedMock);
-  const title = t("ai.shadowing_card_title", "따라 말하기");
-  const lead = t("ai.shadowing_card_lead", "문장을 듣고, 따라 읽고, 직접 말해 보세요.");
-  const howTitle = t("ai.shadowing_how_title", "따라 말하기 방법");
-  const stepListen = t("ai.shadowing_step_listen", "먼저 들어보세요");
-  const stepRepeat = t("ai.shadowing_step_repeat", "따라 읽어보세요");
-  const stepSay = t("ai.shadowing_step_say", "직접 말해보세요");
-  const emptyHint = t("ai.shadowing_lines_empty", "本课暂无可跟读句子。");
-
-  const stepsOl = `<ol class="ai-shadowing-guide-steps" aria-label="${escapeHtml(howTitle)}">
-    <li>${escapeHtml(stepListen)}</li>
-    <li>${escapeHtml(stepRepeat)}</li>
-    <li>${escapeHtml(stepSay)}</li>
-  </ol>`;
-
-  const linesOl = lines.length
-    ? `<ol class="ai-shadowing-line-list">${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ol>`
-    : `<p class="ai-shadowing-line-empty">${escapeHtml(emptyHint)}</p>`;
-
-  const foot = usedMock
-    ? `<p class="ai-shadowing-offline-footnote">${escapeHtml(t("ai.shadowing_offline_hint", "· 오프라인 연습 가이드"))}</p>`
-    : "";
-
-  const html = `
-<section class="ai-shadowing-guide-card">
-  <h4 class="ai-shadowing-guide-title">${escapeHtml(title)}</h4>
-  <p class="ai-shadowing-guide-lead">${escapeHtml(lead)}</p>
-  <div class="ai-shadowing-guide-how">
-    <div class="ai-shadowing-guide-how-title">${escapeHtml(howTitle)}</div>
-    ${stepsOl}
-  </div>
-  <div class="ai-shadowing-lines-block">
-    <div class="ai-shadowing-lines-label">${escapeHtml(t("ai.shadowing_sentences_label", "연습 문장"))}</div>
-    ${linesOl}
-  </div>
-  ${foot}
-</section>`.trim();
-
-  const text = lines.length ? lines.map((line, i) => `${i + 1}. ${line}`).join("\n") : emptyHint;
-  return { text, html };
-}
-
 /**
  * 格式化 Tutor 输出为页面可显示结构
  * 技术错误原文不暴露给用户，替换为友好提示
- * @param {object} [opts] — shadowing 需传 { aiItem } 以渲染训练引导卡
  */
-export function formatTutorOutput(mode, result, lang, opts = {}) {
-  if (mode === "shadowing" && opts.aiItem) {
-    return formatShadowingGuideOutput(result, lang, opts.aiItem);
-  }
-
+export function formatTutorOutput(mode, result, lang) {
   let text = (result && result.text != null ? result.text : "") || "";
   const techErrorPatterns = ["AI not connected", "cannot find", "api/ai-chat", "aiAsk", "JOY_AI", "/api/gemini"];
   if (techErrorPatterns.some((p) => text.indexOf(p) >= 0)) {

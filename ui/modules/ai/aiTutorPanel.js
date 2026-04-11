@@ -7,6 +7,7 @@ import { i18n } from "../../i18n.js";
 import { getLessonAIConfig, runTutor, formatTutorOutput } from "./aiTutorEngine.js";
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { renderModeContent } from "./aiTutorModes.js";
+import { toggleShadowingPlayback, cancelShadowingPlayback } from "./aiShadowingPlayback.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -113,6 +114,7 @@ export function mountAITutorPanel(container, opts = {}) {
     if (body) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
+        cancelShadowingPlayback(card);
         card.innerHTML = renderModeContent(mode, item, lang);
         bindModeEvents(card, mode, item, lesson, lang);
       }
@@ -137,7 +139,7 @@ export function mountAITutorPanel(container, opts = {}) {
       }
 
       const res = await runTutor(mode, aiItem, lessonData, currentLang, userInput);
-      const formatted = formatTutorOutput(mode, res, currentLang, { aiItem });
+      const formatted = formatTutorOutput(mode, res, currentLang);
       if (content) {
         content.classList.remove("ai-tutor-result-empty");
         content.innerHTML = formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
@@ -145,7 +147,11 @@ export function mountAITutorPanel(container, opts = {}) {
     };
 
     if (runBtn) {
-      runBtn.addEventListener("click", () => doRun());
+      if (mode === "shadowing") {
+        runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
+      } else {
+        runBtn.addEventListener("click", () => doRun());
+      }
     }
 
     if (sendBtn && inputEl) {
