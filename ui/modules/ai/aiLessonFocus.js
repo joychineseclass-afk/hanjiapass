@@ -304,11 +304,11 @@ export function renderLessonFocusHtml(lesson, lang) {
   return `
 <div class="ai-lesson-focus">
   <header class="ai-lesson-focus-head">
-    <div class="ai-lesson-focus-head-main">
+    <div class="ai-lesson-focus-title-row">
       <h4 class="ai-lesson-focus-page-title">${escapeHtml(H.page)}</h4>
-      <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
+      <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}"><span class="ai-lesson-focus-speak-ic" aria-hidden="true">🔊</span><span class="ai-lesson-focus-speak-txt">${escapeHtml(speakBtnLabel)}</span></button>
     </div>
-    <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}">${escapeHtml(speakBtnLabel)}</button>
+    <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
   </header>
 
   <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
