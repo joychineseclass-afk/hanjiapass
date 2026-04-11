@@ -111,6 +111,7 @@ function speakSituationRoundFull(zhLine, uiLang) {
   }
 }
 
+/** 학생 답변 예시：单条朗读（与 AI 台词共用 chineseTtsText） */
 function speakStudentReferenceAnswer(rawLine) {
   if (typeof window === "undefined") return;
   const zh = chineseTtsText(rawLine);
@@ -309,7 +310,13 @@ function scenarioCardHtml(sc, lang) {
 }
 
 function studentRefsListHtml(studentRefs) {
-
+  const playLabel = t("ai.situation_play_student_ref", "이 답안 듣기");
+  const mePrefix = str(t("ai.situation_ref_me_prefix", "나:")) || "나:";
+  return (Array.isArray(studentRefs) ? studentRefs : [])
+    .map(
+      (line, idx) =>
+        `<li class="ai-situation-ref-item"><span class="ai-situation-ref-row"><button type="button" class="ai-situation-ref-speak" data-student-ref-index="${idx}" aria-label="${escapeHtml(playLabel)}"><span class="ai-situation-ref-speak-ic" aria-hidden="true">🔊</span></button><span class="ai-situation-ref-line"><span class="ai-situation-ref-me">${escapeHtml(mePrefix)}</span><span class="ai-situation-ref-zh">${escapeHtml(line)}</span></span></span></li>`,
+    )
     .join("");
 }
 
