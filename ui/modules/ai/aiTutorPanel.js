@@ -137,7 +137,7 @@ export function mountAITutorPanel(container, opts = {}) {
       }
 
       const res = await runTutor(mode, aiItem, lessonData, currentLang, userInput);
-      const formatted = formatTutorOutput(mode, res, currentLang);
+      const formatted = formatTutorOutput(mode, res, currentLang, { aiItem });
       if (content) {
         content.classList.remove("ai-tutor-result-empty");
         content.innerHTML = formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;

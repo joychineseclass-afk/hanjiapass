@@ -48,6 +48,18 @@ function resultAreaHtml(emptyState = true) {
   `;
 }
 
+/** Shadowing 结果区：学习模块标题，非「AI 回复」 */
+function shadowingResultAreaHtml(emptyState = true) {
+  const emptyText = t("ai.result_empty", "No response yet.");
+  const header = t("ai.shadowing_guide_header", "연습 가이드");
+  return `
+    <div class="ai-tutor-result-header ai-tutor-result-header--shadowing">${escapeHtml(header)}</div>
+    <div class="ai-tutor-result-content ai-tutor-result-content--shadowing ${emptyState ? "ai-tutor-result-empty" : ""}">
+      ${emptyState ? `<span class="ai-tutor-result-placeholder">${escapeHtml(emptyText)}</span>` : ""}
+    </div>
+  `;
+}
+
 /**
  * 渲染 Explain 面板
  */
@@ -134,35 +146,45 @@ export function renderShadowingMode(aiItem, lang) {
     if (sa.trim()) lines = [sa.trim()];
   }
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
-  const desc = promptText || t("ai.mode_desc_shadowing", "Repeat line by line to build speaking rhythm and confidence.");
-  const step1 = t("ai.step_see", "See the sentence");
-  const step2 = t("ai.step_repeat", "Repeat after");
-  const step3 = t("ai.step_say", "Say it yourself");
+  const sessionTitle = t("ai.shadowing_card_title", "따라 말하기");
+  const sessionLead = t("ai.shadowing_card_lead", "문장을 듣고, 따라 읽고, 직접 말해 보세요.");
+  const howTitle = t("ai.shadowing_how_title", "따라 말하기 방법");
+  const stepListen = t("ai.shadowing_step_listen", "먼저 들어보세요");
+  const stepRepeat = t("ai.shadowing_step_repeat", "따라 읽어보세요");
+  const stepSay = t("ai.shadowing_step_say", "직접 말해보세요");
+  const sentencesLabel = t("ai.shadowing_sentences_label", "연습 문장");
 
   const stepsHtml = `
-    <div class="ai-tutor-steps">
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">1</span> ${escapeHtml(step1)}</div>
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">2</span> ${escapeHtml(step2)}</div>
-      <div class="ai-tutor-step-item"><span class="ai-tutor-step-num">3</span> ${escapeHtml(step3)}</div>
+    <div class="ai-shadowing-how-inline">
+      <div class="ai-shadowing-guide-how-title">${escapeHtml(howTitle)}</div>
+      <ol class="ai-shadowing-guide-steps ai-shadowing-guide-steps--inline" aria-label="${escapeHtml(howTitle)}">
+        <li>${escapeHtml(stepListen)}</li>
+        <li>${escapeHtml(stepRepeat)}</li>
+        <li>${escapeHtml(stepSay)}</li>
+      </ol>
     </div>
   `;
 
   const linesHtml = lines.length
-    ? `<div class="ai-tutor-lines-list">${lines.map((line, i) => `<div class="ai-tutor-line-item">${i + 1}. ${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</div>`).join("")}</div>`
+    ? `<ol class="ai-tutor-lines-list ai-shadowing-preview-lines">${lines.map((line) => `<li class="ai-tutor-line-item">${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</li>`).join("")}</ol>`
     : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-shadowing">
-      <p class="ai-tutor-mode-desc">${escapeHtml(desc)}</p>
+      <div class="ai-shadowing-session-head">
+        <h3 class="ai-shadowing-session-title">${escapeHtml(sessionTitle)}</h3>
+        <p class="ai-shadowing-session-lead">${escapeHtml(sessionLead)}</p>
+        ${promptText ? `<p class="ai-shadowing-extra-desc">${escapeHtml(promptText)}</p>` : ""}
+      </div>
       ${stepsHtml}
       <div class="ai-tutor-lines-block mt-2">
-        <span class="ai-tutor-label">${escapeHtml(t("ai.mode_shadowing", "Shadowing"))}</span>
+        <span class="ai-tutor-label">${escapeHtml(sentencesLabel)}</span>
         ${linesHtml}
       </div>
       <button type="button" class="ai-btn ai-btn-primary ai-tutor-run mt-2" ${!lines.length ? "disabled" : ""}>
         ${escapeHtml(t("ai.start_shadowing", "Start shadowing"))}
       </button>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true)}</div>
+      <div class="ai-tutor-result-wrap ai-tutor-result-wrap--shadowing mt-3">${shadowingResultAreaHtml(true)}</div>
     </div>
   `;
 }
