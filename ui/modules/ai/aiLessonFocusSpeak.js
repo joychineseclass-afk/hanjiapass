@@ -6,7 +6,7 @@
 import * as LE from "../../core/i18n.js";
 import { getLang } from "../../core/languageEngine.js";
 import { buildLessonFocusSpeakSegments, stripParenPinyinForSpeak } from "./aiLessonFocus.js";
-import { collectLessonPinyinToHanziMap } from "../utils/hsk30UiMeaningMixedTts.js";
+import { collectLessonPinyinToHanziMap } from "../../utils/hsk30UiMeaningMixedTts.js";
 
 /** @type {{ active: boolean, paused: boolean, highlightEl: HTMLElement | null, btn: HTMLButtonElement | null }} */
 let lfSession = {
