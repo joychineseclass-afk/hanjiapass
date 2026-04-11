@@ -149,7 +149,11 @@ export function mountAITutorPanel(container, opts = {}) {
       const content = resultWrap.querySelector(".ai-tutor-result-content");
       if (content) {
         content.classList.remove("ai-tutor-result-empty");
-        content.innerHTML = `<div class="ai-tutor-loading">${escapeHtml(t("ai.loading", t("common.loading", "Loading...")))}</div>`;
+        const loadingMsg =
+          mode === "free_talk"
+            ? t("ai.lesson_qa_loading", t("ai.loading", t("common.loading", "Loading...")))
+            : t("ai.loading", t("common.loading", "Loading..."));
+        content.innerHTML = `<div class="ai-tutor-loading">${escapeHtml(loadingMsg)}</div>`;
       }
 
       const res = await runTutor(mode, aiItem, lessonData, currentLang, userInput);

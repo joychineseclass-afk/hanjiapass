@@ -156,10 +156,11 @@ export default async function handler(req, res) {
 
     // ✅ 输入保护（避免超长）
     const userPromptRaw = String(body.prompt || body.message || "").trim();
-    const userPrompt = clampString(userPromptRaw, 2000);
+    const userPrompt = clampString(userPromptRaw, context?.lessonQA ? 4500 : 2000);
     if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
 
-    const contextText = context ? safeJsonStringify(context, 4000) : "";
+    const contextMax = context?.lessonQA ? 8000 : 4000;
+    const contextText = context ? safeJsonStringify(context, contextMax) : "";
 
     const langMapName = { ko: "韩语", en: "英语", ja: "日语", zh: "中文" };
     const explainLangName = langMapName[explainLang] || "韩语";
@@ -172,6 +173,16 @@ export default async function handler(req, res) {
 - 针对学生内容出 3 道练习题：1)选择题 2)填空 3)排序/替换
 - 每题给出答案（用 ${explainLangName}）
 - 仍然保持结构输出（中文/拼音/解释/例句 或 题目）
+        `.trim();
+      }
+      if (mode === "ask" && context?.lessonQA) {
+        return `
+【任务：本课问答 lesson_qa】
+- 你必须优先使用下方「可用上下文」JSON 中的本课标题、学习目标、词汇、对话行、语法说明来回答；不要凭空编造课内没有的对话。
+- 先用 ${explainLangName} 做简短、直接的回答，再补一句场景或用法说明；全文适合 HSK 初学者，避免学术腔与过长段落。
+- 引用中文词语或句子时保留汉字原文，可附拼音；不要用 ${explainLangName} 替代中文原文。
+- 例句最多 1 句，优先来自本课对话或本课词语；若无合适再自拟极简例句。
+- 不使用 markdown 符号（如 ** ## --- 等）；少用条目符号堆砌，读起来像老师在说话即可。
         `.trim();
       }
       if (mode === "ask") {
@@ -201,7 +212,9 @@ export default async function handler(req, res) {
 
 ${modeGuide}
 
-【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
+${context?.lessonQA ? `【输出结构：本课问答】
+- 用自然段落即可：先直接回答，再一句补充；需要时给出至多 1 个本课相关例句（中文原文 + 可选拼音 + ${explainLangName}简短说明）。
+- 不要强制「1.2.3.4」编号式长列表；不要像百科或论文。` : `【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
 1. 中文词语 / 句子
 2. 拼音（标准、可朗读）
 3. ${explainLangName}解释（简洁、适合初学者）
@@ -209,7 +222,7 @@ ${modeGuide}
 
 【例句格式固定】（非常重要）
 例句1：<中文句子> | <拼音> | <${explainLangName}解释>
-例句2：<中文句子> | <拼音> | <${explainLangName}解释>
+例句2：<中文句子> | <拼音> | <${explainLangName}解释>`}
 
 【可用上下文】（如果提供了 context）
 ${contextText ? contextText : "(none)"}

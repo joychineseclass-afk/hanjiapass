@@ -290,6 +290,8 @@
     "free_question_placeholder": "例：「你」和「您」有什么区别？",
     "free_question_submit": "提问",
     "free_question_answer_title": "回答",
+    "lesson_qa_loading": "正在准备回答…",
+    "lesson_qa_fallback_network": "暂时无法连接讲解服务，请稍后再试提问。",
     "scenario_greeting": "打招呼",
     "scenario_self_intro": "自我介绍",
     "scenario_shopping": "购物",

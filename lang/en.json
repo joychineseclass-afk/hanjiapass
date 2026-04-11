@@ -318,6 +318,8 @@
     "free_question_placeholder": "e.g. When should I use 「不客气」?",
     "free_question_submit": "Ask question",
     "free_question_answer_title": "Answer",
+    "lesson_qa_loading": "Preparing your answer…",
+    "lesson_qa_fallback_network": "We couldn’t reach the tutor right now. Please try again in a moment.",
     "scenario_greeting": "Greeting",
     "scenario_self_intro": "Self-introduction",
     "scenario_shopping": "Shopping",

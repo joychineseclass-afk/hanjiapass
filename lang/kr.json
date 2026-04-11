@@ -318,6 +318,8 @@
     "free_question_placeholder": "예: 「你」와 「您」, 어떻게 달라요?",
     "free_question_submit": "질문하기",
     "free_question_answer_title": "답변",
+    "lesson_qa_loading": "답변을 준비하고 있어요…",
+    "lesson_qa_fallback_network": "지금은 답변 연결이 잠시 불안정해요. 잠시 후 다시 질문해 주세요.",
     "scenario_greeting": "인사하기",
     "scenario_self_intro": "자기소개",
     "scenario_shopping": "쇼핑",

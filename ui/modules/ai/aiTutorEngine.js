@@ -65,11 +65,17 @@ export function buildTutorContext(lessonData, lang) {
 
 /**
  * 供 /api/gemini 等后端使用的紧凑课内上下文（控制体积）
+ * @param {{ userInput?: string }} [options]
  */
-export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
+export function buildTutorApiContext(lessonData, lang, mode, aiItem, options = {}) {
   const ctx = buildTutorContext(lessonData, lang);
   const linesHint = Array.isArray(aiItem?.lines) ? aiItem.lines.slice(0, 10) : undefined;
-  return {
+  const userInput = str(options.userInput || "");
+
+  const vocabSlice = mode === "free_talk" ? 24 : 12;
+  const dialogueSlice = mode === "free_talk" ? 18 : 10;
+
+  const base = {
     source: "lumina_tutor",
     courseId: ctx.courseId || undefined,
     lessonId: ctx.lessonId || undefined,
@@ -78,16 +84,16 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
     level: ctx.level || undefined,
     version: ctx.version || undefined,
     lang: ctx.lang,
-    tutorMode: mode,
+    tutorMode: mode === "free_talk" ? "lesson_qa" : mode,
     lessonSummary: ctx.lessonSummary || undefined,
     sceneTitle: ctx.scene?.title || undefined,
     sceneSummary: ctx.sceneSummary || ctx.scene?.summary || undefined,
-    vocab: (ctx.words || []).slice(0, 12).map((w) => ({
+    vocab: (ctx.words || []).slice(0, vocabSlice).map((w) => ({
       hanzi: w.hanzi,
       pinyin: w.pinyin || undefined,
       meaning: w.meaning || undefined,
     })),
-    dialogue: (ctx.dialogue || []).slice(0, 10).map((d) => ({
+    dialogue: (ctx.dialogue || []).slice(0, dialogueSlice).map((d) => ({
       speaker: d.speaker || undefined,
       zh: d.zh,
       pinyin: d.pinyin || undefined,
@@ -101,7 +107,7 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
     shadowingLines: linesHint,
     constraints: {
       outputLength: "short_to_medium",
-      levelCap: "HSK1",
+      levelCap: ctx.level || "HSK1",
       chineseKeepOriginal: true,
       explanationFollowsUiLang: true,
     },
@@ -121,6 +127,25 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem) {
         }
       : {}),
   };
+
+  if (mode === "free_talk") {
+    const objectives = Array.isArray(lessonData?.objectives)
+      ? lessonData.objectives.slice(0, 8).map((o) => pickLang(o, lang)).filter(Boolean)
+      : [];
+    const ext = (ctx.extension || []).slice(0, 12).map((e) => ({
+      phrase: e.phrase,
+      pinyin: e.pinyin || undefined,
+      translation: e.translation || undefined,
+    }));
+    base.lessonQA = {
+      version: 1,
+      studentQuestion: userInput.slice(0, 800),
+      objectives: objectives.length ? objectives : undefined,
+      keyExpressions: ext.length ? ext : undefined,
+    };
+  }
+
+  return base;
 }
 
 /** 从课文中收集可跟读的中文句子（dialogueCards / dialogue 优先，可辅以 extension） */
@@ -338,15 +363,25 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   }
 
   if (mode === "free_talk") {
+    const q = str(userInput);
     const guide = pickLang(aiItem?.prompt, lang) || str(aiItem?.chatPrompt);
+    /** 本段进入 /api/gemini 的 prompt（与 JSON 上下文配合；避免重复粘贴整课对话以控制长度） */
     return [
+      "【任务类型】本课范围内自由问答（lesson_qa），不是开放式闲聊。",
+      "【你的角色】面向中文初学者（以本课难度为准）的老师；解释要短、清楚、少术语。",
+      `【解释语言】除直接引用的中文词语/原句外，说明文字一律使用${explainLangLabel}。`,
+      "【中文呈现】提到本课词语、固定表达、对话句时保留中文原文，可附拼音；不要用翻译替代原文。",
+      "【回答结构】",
+      "（1）先用一两句直接回答学习者的问题；",
+      "（2）再补一句简短说明：为什么或适用场景/对象差异；",
+      "（3）最多 1 个例句：尽量选自本课对话或本课词汇；若无合适例句再自拟简单句。",
+      "【范围】优先依据请求 JSON「可用上下文」中的标题、词汇、对话、语法、学习目标；不要写成百科长文；不要明显超纲。",
+      "【超纲问题】若问题远离本课，先给本课范围内最接近的说明，再温和提醒回到本课内容，不要长篇展开。",
+      guide ? `【课程备忘】${guide}` : "",
+      "",
       metaBlock,
       "",
-      `学生输入: ${userInput || "(尚未输入)"}`,
-      guide ? `本课自由对话引导: ${guide}` : "",
-      `要求: 简短、教学型回答；尽量只用本课词汇与句型；用${explainLangLabel}回复说明。`,
-      "",
-      baseContext,
+      `【学习者提问】\n${q || "（尚未输入）"}`,
     ].filter(Boolean).join("\n");
   }
 
@@ -354,7 +389,7 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
 }
 
 /**
- * 运行 Tutor（本轮 mock，后续替换为真实 AI API）
+ * 运行 Tutor：优先 JOY_RUNNER.askAI → POST /api/gemini；失败时按模式回退（free_talk 用温和网络提示）
  * @param {string} mode
  * @param {object} aiItem
  * @param {object} lessonData
@@ -363,7 +398,7 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
  */
 export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
   const prompt = buildTutorPrompt(mode, aiItem, lessonData, lang, userInput);
-  const contextObj = buildTutorApiContext(lessonData, lang, mode, aiItem);
+  const contextObj = buildTutorApiContext(lessonData, lang, mode, aiItem, { userInput });
 
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
@@ -374,6 +409,16 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
       const mock = getMockTutorOutput(mode, aiItem, lessonData, lang, userInput);
       if (mode === "shadowing") {
         return { text: mock.text || "", error: e, usedMock: true };
+      }
+      if (mode === "free_talk") {
+        return {
+          text: t(
+            "ai.lesson_qa_fallback_network",
+            "We couldn’t reach the tutor right now. Please try again in a moment.",
+          ),
+          error: e,
+          usedMock: true,
+        };
       }
       const friendly = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
       return { text: [friendly, mock.text].filter(Boolean).join("\n\n"), error: e, usedMock: true };
