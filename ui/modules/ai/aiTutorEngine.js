@@ -6,6 +6,7 @@
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { i18n } from "../../i18n.js";
+import { classifyFreeQuestionIntent } from "./freeQuestionIntent.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -86,8 +87,12 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem, options = {
     lang: ctx.lang,
     tutorMode: mode === "free_talk" ? "lesson_qa" : mode,
     lessonSummary: ctx.lessonSummary || undefined,
-    sceneTitle: ctx.scene?.title || undefined,
-    sceneSummary: ctx.sceneSummary || ctx.scene?.summary || undefined,
+    ...(mode === "free_talk"
+      ? {}
+      : {
+          sceneTitle: ctx.scene?.title || undefined,
+          sceneSummary: ctx.sceneSummary || ctx.scene?.summary || undefined,
+        }),
     vocab: (ctx.words || []).slice(0, vocabSlice).map((w) => ({
       hanzi: w.hanzi,
       pinyin: w.pinyin || undefined,
@@ -137,9 +142,11 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem, options = {
       pinyin: e.pinyin || undefined,
       translation: e.translation || undefined,
     }));
+    const questionIntent = classifyFreeQuestionIntent(userInput);
     base.lessonQA = {
       version: 1,
       studentQuestion: userInput.slice(0, 800),
+      questionIntent,
       objectives: objectives.length ? objectives : undefined,
       keyExpressions: ext.length ? ext : undefined,
     };
@@ -365,18 +372,28 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
   if (mode === "free_talk") {
     const q = str(userInput);
     const guide = pickLang(aiItem?.prompt, lang) || str(aiItem?.chatPrompt);
+    const intent = classifyFreeQuestionIntent(q);
+    const intentHint =
+      intent === "difference"
+        ? "【问题类型提示】表达对比（区别题）——先讲两者主要不同与使用对象/礼貌度，再给至多 1 个本课简单例子；禁止写成两条独立词条。"
+        : intent === "usage"
+          ? "【问题类型提示】使用场景——优先说明对谁说、什么场合、礼貌程度，并联系本课；不要从生词字典式释义开头。"
+          : intent === "sentence_explain"
+            ? "【问题类型提示】句子讲解——先说明句意与用途，需要时给更简单改写；不要列字段标签。"
+            : "【问题类型提示】一般理解——先直接答，再一句场景或搭配提示。";
     /** 本段进入 /api/gemini 的 prompt（与 JSON 上下文配合；避免重复粘贴整课对话以控制长度） */
     return [
       "【任务类型】本课范围内自由问答（lesson_qa），不是开放式闲聊。",
-      "【你的角色】面向中文初学者（以本课难度为准）的老师；解释要短、清楚、少术语。",
+      "【你的角色】本课任课老师，对初学者口语解释；禁止词典卡片体、禁止「中文：/拼音：/韩语解释：」这类标签行。",
       `【解释语言】除直接引用的中文词语/原句外，说明文字一律使用${explainLangLabel}。`,
-      "【中文呈现】提到本课词语、固定表达、对话句时保留中文原文，可附拼音；不要用翻译替代原文。",
+      "【中文呈现】凡本课词语、固定说法、对话句均保留汉字原文；需要时把拼音轻轻夹在句中，不要单独开「拼音：」栏。",
+      intentHint,
       "【回答结构】",
-      "（1）先用一两句直接回答学习者的问题；",
-      "（2）再补一句简短说明：为什么或适用场景/对象差异；",
-      "（3）最多 1 个例句：尽量选自本课对话或本课词汇；若无合适例句再自拟简单句。",
-      "【范围】优先依据请求 JSON「可用上下文」中的标题、词汇、对话、语法、学习目标；不要写成百科长文；不要明显超纲。",
-      "【超纲问题】若问题远离本课，先给本课范围内最接近的说明，再温和提醒回到本课内容，不要长篇展开。",
+      "（1）第一句就答在问题上；",
+      "（2）再补一两句：原因、对象差异或典型场景；",
+      "（3）全篇最多 1 个例句，用引号嵌入叙述；优先本课对话或本课词。",
+      "【篇幅】通常 2～4 个小句，不要长段、不要讲义体。",
+      "【范围】以 JSON 里本课标题、目标、重点表达、词汇、对话、语法为主；超纲时先给本课内最接近的答案，再一句轻提示，勿拒答。",
       guide ? `【课程备忘】${guide}` : "",
       "",
       metaBlock,

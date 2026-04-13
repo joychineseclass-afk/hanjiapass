@@ -1,4 +1,6 @@
 // /api/gemini.js
+import { classifyFreeQuestionIntent } from "../ui/modules/ai/freeQuestionIntent.js";
+
 export const config = { runtime: "nodejs", maxDuration: 60 };
 
 /* =========================
@@ -307,11 +309,50 @@ export default async function handler(req, res) {
     const userPrompt = clampString(userPromptRaw, context?.lessonQA ? 4500 : 2000);
     if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
 
+    const qaMeta = context?.lessonQA && typeof context.lessonQA === "object" ? context.lessonQA : null;
+    const lessonQAIntent =
+      qaMeta?.questionIntent &&
+      ["difference", "usage", "sentence_explain", "meaning"].includes(String(qaMeta.questionIntent))
+        ? String(qaMeta.questionIntent)
+        : classifyFreeQuestionIntent(userPrompt);
+
     const contextMax = context?.lessonQA ? 8000 : 4000;
     const contextText = context ? safeJsonStringify(context, contextMax) : "";
 
     const langMapName = { ko: "韩语", en: "英语", ja: "日语", zh: "中文" };
     const explainLangName = langMapName[explainLang] || "韩语";
+
+    const lessonQAIntentGuide = (() => {
+      switch (lessonQAIntent) {
+        case "difference":
+          return `
+【问题类型：表达对比】（本题为「区别/对比」类）
+- 学习者是在比较两种说法或两个词。禁止写成「A 一条释义 + B 一条释义」或两栏词条。
+- 先直接说明两者最主要差别（语气、礼貌程度、常用对象/关系），再各用一小句补「通常对谁、在什么关系里用」。
+- 最后用引号给出至多 1 个本课范围内的简单对照例子即可（不要把例子拆成「例句1：」字段）。
+`.trim();
+        case "usage":
+          return `
+【问题类型：使用场景】
+- 不要从生词释义开头。优先回答：常对谁说、在什么场合、礼貌程度大致如何。
+- 再联系本课对话或本课学习目标里出现的场景，用一两句话串起来。
+- 需要举例时最多 1 句，用引号写中文原句，嵌入叙述中。
+`.trim();
+        case "sentence_explain":
+          return `
+【问题类型：句子讲解】
+- 先用 ${explainLangName} 把句意说清楚（初学者能懂）；再补一句常用场景或说话目的。
+- 若学习者要「更简单」，可给一个更短、更口语的改写，但仍用引号保留中文原句或关键词。
+- 至多 1 个补充小例，避免堆砌。
+`.trim();
+        default:
+          return `
+【问题类型：词义/一般理解】
+- 先正面回答「是什么/怎么说」，再一句场景或搭配提示；不要写成词典词条。
+- 仍须保留所涉中文词语的汉字原文。
+`.trim();
+      }
+    })();
 
     // ✅ 根据 mode 微调任务
     const modeGuide = (() => {
@@ -326,11 +367,20 @@ export default async function handler(req, res) {
       if (mode === "ask" && context?.lessonQA) {
         return `
 【任务：本课问答 lesson_qa】
-- 你必须优先使用下方「可用上下文」JSON 中的本课标题、学习目标、词汇、对话行、语法说明来回答；不要凭空编造课内没有的对话。
-- 先用 ${explainLangName} 做简短、直接的回答，再补一句场景或用法说明；全文适合 HSK 初学者，避免学术腔与过长段落。
-- 引用中文词语或句子时保留汉字原文，可附拼音；不要用 ${explainLangName} 替代中文原文。
-- 例句最多 1 句，优先来自本课对话或本课词语；若无合适再自拟极简例句。
-- 不使用 markdown 符号（如 ** ## --- 等）；少用条目符号堆砌，读起来像老师在说话即可。
+- 你是「本课范围内的中文初学者课」任课老师，不是百科或词典数据库。回答要短、清楚、口语化，像课堂上随口解释。
+- 必须优先使用下方「可用上下文」JSON 中的本课标题、学习目标、重点表达、词汇、对话行、语法说明；不要编造课内没有的对话原文。
+- 说明文字一律用 ${explainLangName}；凡出现教材中的中文词语、固定搭配、对话句，必须保留汉字原文（不要用 ${explainLangName} 翻译顶替原文）。需要时可把拼音轻轻夹在自然句里，但不要单独开「拼音：」一行。
+- 篇幅：通常 2～4 个小句为宜；不要长段落、不要讲义体。
+- 例句：全篇最多 1 个；优先选自本课对话或本课词语，没有合适再自拟极简句；把例句嵌进叙述，用引号标示中文即可。
+- 若问题明显超出本课，先用本课能给出的最接近说明作答，再用一句温和提示「更广的用法以后课会学到」之类，不要拒答、不要展开成语法书。
+- 不使用 markdown 符号（如 ** ## --- 等）；不要用「-」做很长列表。
+
+【禁止“词条模板感”（本课问答必须遵守）】
+- 严禁出现类似字段名或标签行：中文：、拼音：、韩语：、韩文：、英语：、日语：、解释：、释义：、例句1：、例句2：、注：、翻译：
+- 禁止像数据库字段那样「键：值」分行堆叠；禁止「例句1｜例句2」式栏目。
+- 读起来要像老师对初学者说话，而不是导出词典卡片。
+
+${lessonQAIntentGuide}
         `.trim();
       }
       if (mode === "ask") {
@@ -361,8 +411,10 @@ export default async function handler(req, res) {
 ${modeGuide}
 
 ${context?.lessonQA ? `【输出结构：本课问答】
-- 用自然段落即可：先直接回答，再一句补充；需要时给出至多 1 个本课相关例句（中文原文 + 可选拼音 + ${explainLangName}简短说明）。
-- 不要强制「1.2.3.4」编号式长列表；不要像百科或论文。` : `【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
+- 自然连续的小段话：第一句就触及问题核心；再视需要补 1～2 句说明原因、对象或场景。
+- 全文 2～4 个小句为主；至多嵌入 1 个带引号的中文例句（例句里可含必要拼音，但不要单列「拼音：」栏）。
+- 不要「1.2.3.4」编号长列表；不要百科、论文或技术文档口吻。
+- （内部参考）问题类型判定：${lessonQAIntent}` : `【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
 1. 中文词语 / 句子
 2. 拼音（标准、可朗读）
 3. ${explainLangName}解释（简洁、适合初学者）
