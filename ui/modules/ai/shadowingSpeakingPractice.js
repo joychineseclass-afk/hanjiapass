@@ -1,9 +1,9 @@
 /**
  * 따라 말하기：getUserMedia + MediaRecorder 真实录音闭环 + Web Speech 中文识别 + 评分
- * 注意：freeTalkSpeechInput 第二次 toggle 只 stop，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
+ * 注意：shadowing STT 第二次 toggle 只 stop，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
  */
 
-import { createFreeTalkSpeechInputSession, isFreeTalkSpeechInputSupported } from "./freeTalkSpeechInput.js";
+import { createShadowingZhSpeechSession, isShadowingZhSttSupported } from "./shadowingSpeechRecognition.js";
 import { speakText } from "../../platform/audio/ttsEngine.js";
 import {
   startMediaRecorderCapture,
@@ -14,10 +14,17 @@ import {
 } from "./shadowingAudioCapture.js";
 
 const LOG = "[AI Speaking]";
+const STT_LOG = "[AI Speaking][STT]";
 
 function log(...args) {
   if (typeof console !== "undefined" && console.log) {
     console.log(LOG, ...args);
+  }
+}
+
+function sttLog(...args) {
+  if (typeof console !== "undefined" && console.log) {
+    console.log(STT_LOG, ...args);
   }
 }
 
@@ -65,13 +72,23 @@ function levenshtein(a, b) {
  */
 export function scoreShadowingUtterance(targetZh, recognizedRaw) {
   const target = normalizeChineseForMatch(targetZh);
-  const rec = normalizeChineseForMatch(recognizedRaw);
+  const raw = str(recognizedRaw);
 
   if (!target) {
     return { score: 0, band: "retry", reason: "empty_target" };
   }
+  if (!raw) {
+    return { score: 0, band: "retry", reason: "stt_empty" };
+  }
+
+  const hasCjk = /[\u4e00-\u9fff]/.test(raw);
+  if (!hasCjk) {
+    return { score: 0, band: "retry", reason: "no_cjk_in_recognition" };
+  }
+
+  const rec = normalizeChineseForMatch(raw);
   if (!rec) {
-    return { score: 0, band: "retry", reason: "no_speech" };
+    return { score: 0, band: "retry", reason: "stt_empty" };
   }
 
   if (target === rec) {
@@ -102,17 +119,68 @@ export function scoreShadowingUtterance(targetZh, recognizedRaw) {
  */
 export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText, t) {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
+  const preview = str(recognizedText).slice(0, 200);
 
-  if (result.reason === "no_speech" || result.reason === "empty_target") {
+  if (result.reason === "empty_target") {
     return {
       title: safeT("ai.shadowing_feedback_title_retry", "再试一次"),
       body: safeT("ai.shadowing_feedback_no_speech", "没有听清楚，请大声、清楚地说一遍。"),
       score: result.score ?? 0,
       band: result.band,
+      recognizedPreview: preview,
+    };
+  }
+
+  if (result.reason === "stt_empty") {
+    return {
+      title: safeT("ai.shadowing_stt_empty_title", "未识别到文字"),
+      body: safeT(
+        "ai.shadowing_stt_empty_body",
+        "本轮未从语音识别得到有效文本。请稍长按话筒、说完再松，或换 Chrome/Edge 并重试。",
+      ),
+      score: result.score ?? 0,
+      band: result.band,
+      recognizedPreview: preview,
+    };
+  }
+
+  if (result.reason === "no_cjk_in_recognition") {
+    return {
+      title: safeT("ai.shadowing_stt_no_cjk_title", "未识别到中文"),
+      body: safeT(
+        "ai.shadowing_stt_no_cjk_body",
+        "识别结果里没有汉字。请用中文说出目标词/句，或检查 recognition.lang 是否为中文。",
+      ),
+      score: result.score ?? 0,
+      band: result.band,
+      recognizedPreview: preview,
+    };
+  }
+
+  if (result.reason === "no_speech") {
+    return {
+      title: safeT("ai.shadowing_feedback_title_retry", "再试一次"),
+      body: safeT("ai.shadowing_feedback_no_speech", "没有听清楚，请大声、清楚地说一遍。"),
+      score: result.score ?? 0,
+      band: result.band,
+      recognizedPreview: preview,
     };
   }
 
   const band = result.band;
+  if (band === "retry" && result.reason === "similarity" && preview) {
+    return {
+      title: safeT("ai.shadowing_feedback_mismatch_title", "识别到了，但还不够接近"),
+      body: safeT("ai.shadowing_feedback_mismatch_body", "听到：「{heard}」。请对照上面的中文再说一遍。").replace(
+        "{heard}",
+        preview,
+      ),
+      score: result.score,
+      band,
+      recognizedPreview: preview,
+    };
+  }
+
   let bodyKey = "ai.shadowing_feedback_retry_1";
   if (band === "excellent") bodyKey = "ai.shadowing_feedback_excellent_1";
   else if (band === "good") bodyKey = "ai.shadowing_feedback_good_1";
@@ -132,7 +200,7 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
     body: safeT(bodyKey, ""),
     score: result.score,
     band,
-    recognizedPreview: str(recognizedText).slice(0, 200),
+    recognizedPreview: preview,
   };
 }
 
@@ -211,7 +279,7 @@ function formatBlobLine(blobResult, durationMs, safeT) {
 export function mountShadowingSpeakingPractice(wrap, t) {
   if (!wrap) return () => {};
 
-  const speech = createFreeTalkSpeechInputSession({ uiLang: "cn" });
+  const speech = createShadowingZhSpeechSession();
   let activeMicBtn = null;
   /** @type {null | Awaited<ReturnType<typeof startMediaRecorderCapture>>} */
   let mediaSession = null;
@@ -241,12 +309,20 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     }
     const refreshDbg = () => {
       const s = getRecordingSupportInfo();
+      const d = typeof speech.getLastDebug === "function" ? speech.getLastDebug() : {};
       dbg.textContent = [
         `secureContext: ${s.secureContext}`,
         `mediaDevices: ${s.mediaDevices}`,
         `MediaRecorder: ${s.mediaRecorder}`,
-        `SpeechRecognition: ${s.speechRecognition}`,
-        `freeTalkSR_supported: ${isFreeTalkSpeechInputSupported()}`,
+        `SpeechRecognition supported: ${s.speechRecognition}`,
+        `recognition.lang: ${d.recognitionLang ?? "n/a"}`,
+        `recognition started: ${d.started}`,
+        `last transcript raw (finals): ${d.lastRawFinals ?? ""}`,
+        `last transcript raw (full): ${d.lastRawFull ?? ""}`,
+        `last transcript normalized: ${d.lastNormalizedOut ?? ""}`,
+        `target text: ${d.lastTargetText ?? ""}`,
+        `last stt error: ${d.lastSttError || "(none)"}`,
+        `match status: ${d.matchStatus ?? "idle"}`,
         `mediaSession: ${mediaSession ? "active" : "null"}`,
       ].join("\n");
     };
@@ -408,7 +484,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       statusEl.textContent = t("ai.shadowing_speak_now", "请说吧");
     }
 
-    if (!isFreeTalkSpeechInputSupported()) {
+    if (!isShadowingZhSttSupported()) {
       log("SpeechRecognition API missing");
       endRecordingUi();
       abortMediaSession(mediaSession);
@@ -428,6 +504,9 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
     pendingBlobResult = null;
 
+    speech.setTargetTextForDebug(targetZh);
+    speech.setMatchStatusForDebug("listening");
+
     log("speech.toggle() start — registering onResult/onError for this session");
     speech.toggle({
       onResult: async (text) => {
@@ -438,7 +517,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
         const blobLine = formatBlobLine(blobResult, durationMs, t);
         const result = scoreShadowingUtterance(targetZh, text);
+        sttLog("target text=", JSON.stringify(targetZh));
+        sttLog("match result=", JSON.stringify(result));
+        speech.setMatchStatusForDebug(`${result.band}:${result.reason}`);
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         const msg = buildShadowingFeedbackMessage(result, targetZh, text, t);
+        // 浏览器 STT 不稳定时：可将此 Blob POST 到后端 ASR（zh-CN），评分以服务端 transcript 为准。
         row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
         row._hanjiShadowingLastBlobMeta = blobResult
           ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
@@ -447,6 +531,8 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       },
       onError: async (code, detail) => {
         log("speech onError", "code=", code, "detail=", detail);
+        speech.setMatchStatusForDebug(`error:${code}`);
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         const blobResult = pendingBlobResult;
         pendingBlobResult = null;
         endRecordingUi();
@@ -498,6 +584,34 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           );
           return;
         }
+        if (code === "language_not_supported") {
+          showFeedback(
+            blobLine +
+              infrastructureBlock(
+                t,
+                t("ai.shadowing_err_stt_lang_title", "浏览器不支持中文语音识别"),
+                t(
+                  "ai.shadowing_err_stt_lang_body",
+                  "当前环境无法使用 zh-CN 语音识别（language-not-supported）。可换 Chrome/Edge，或后续改用服务端识别。",
+                ),
+              ),
+          );
+          return;
+        }
+        if (code === "service_not_allowed") {
+          showFeedback(
+            blobLine +
+              infrastructureBlock(
+                t,
+                t("ai.shadowing_err_stt_service_title", "语音识别服务不可用"),
+                t(
+                  "ai.shadowing_err_stt_service_body",
+                  "浏览器禁止或无法连接语音识别服务（service-not_allowed）。请检查网络与浏览器设置。",
+                ),
+              ),
+          );
+          return;
+        }
 
         const noInput = code === "no_result" || code === "no_speech";
         const hasAudio = blobResult && blobResult.sizeBytes > 800;
@@ -528,9 +642,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           return;
         }
 
+        const detailStr = detail != null && detail !== "" ? String(detail) : "";
         const msg = {
           title: t("ai.shadowing_err_stt_generic_title", "语音识别出错"),
-          body: t("ai.shadowing_err_stt_generic_body", "代码：{code}").replace("{code}", escapeHtml(String(code))),
+          body:
+            t("ai.shadowing_err_stt_generic_body", "代码：{code}").replace("{code}", escapeHtml(String(code))) +
+            (detailStr ? ` (${escapeHtml(detailStr)})` : ""),
           score: 0,
           band: "retry",
         };
