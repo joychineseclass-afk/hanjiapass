@@ -1,6 +1,12 @@
 /**
  * 따라 말하기：getUserMedia + MediaRecorder 真实录音闭环 + Web Speech 中文识别 + 评分
- * 注意：shadowing STT 第二次 toggle 只 stop，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
+ *
+ * 架构（必读）：
+ * - 浏览器 SpeechRecognition **仅作前端即时预览**；引擎/网络差异大，**STT 空 transcript 不代表用户未开口**。
+ * - **row._hanjiShadowingLastBlob** 为后续 **服务端 ASR / 发音评分** 的正式输入；**正式评分应以后端识别为准**。
+ * - 浏览器未识别出文本时，**不得**与「未录音」混同，也**不应**给出正式 0 分（见 recording_ok_no_browser_stt）。
+ *
+ * 注意：shadowing STT 第二次 toggle 只 recognition.stop()，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
  */
 
 import { createShadowingZhSpeechSession, isShadowingZhSttSupported } from "./shadowingSpeechRecognition.js";
@@ -114,12 +120,32 @@ export function scoreShadowingUtterance(targetZh, recognizedRaw) {
   return { score, band, reason: "similarity" };
 }
 
+/** 录音已成功，但浏览器 STT 未给出可用文本：不给出正式分数 */
+export function buildRecordingOkNoBrowserSttResult() {
+  return { score: /** @type {null} */ (null), band: "pending", reason: "recording_ok_no_browser_stt" };
+}
+
 /**
- * @param {(k: string, fb?: string) => string} t
+ * @param {{ interimFallback?: boolean }} [opts]
  */
-export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText, t) {
+export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText, t, opts = {}) {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
   const preview = str(recognizedText).slice(0, 200);
+  const interimFallback = !!opts.interimFallback;
+
+  if (result.reason === "recording_ok_no_browser_stt") {
+    return {
+      title: safeT("ai.shadowing_recording_ok_no_stt_title", "已录音，浏览器未稳定识别"),
+      body: safeT(
+        "ai.shadowing_recording_ok_no_stt_body",
+        "本次音频已保存。浏览器语音识别未返回可靠文本，建议重试或交由服务端评测；正式分数以后端识别为准。",
+      ),
+      score: null,
+      band: result.band,
+      recognizedPreview: preview,
+      omitScore: true,
+    };
+  }
 
   if (result.reason === "empty_target") {
     return {
@@ -169,6 +195,9 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
 
   const band = result.band;
   if (band === "retry" && result.reason === "similarity" && preview) {
+    const interimPreviewNote = interimFallback
+      ? safeT("ai.shadowing_stt_interim_preview_note", "预览识别结果（interim fallback），仅供参考")
+      : "";
     return {
       title: safeT("ai.shadowing_feedback_mismatch_title", "识别到了，但还不够接近"),
       body: safeT("ai.shadowing_feedback_mismatch_body", "听到：「{heard}」。请对照上面的中文再说一遍。").replace(
@@ -178,6 +207,7 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
       score: result.score,
       band,
       recognizedPreview: preview,
+      interimPreviewNote,
     };
   }
 
@@ -195,19 +225,25 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
           ? "ai.shadowing_level_ok"
           : "ai.shadowing_level_retry";
 
+  const interimPreviewNote = interimFallback
+    ? safeT("ai.shadowing_stt_interim_preview_note", "预览识别结果（interim fallback），仅供参考")
+    : "";
+
   return {
     title: safeT(titleKey, band),
     body: safeT(bodyKey, ""),
     score: result.score,
     band,
     recognizedPreview: preview,
+    interimPreviewNote,
   };
 }
 
-function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "") {
+function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "", feedbackOpts = {}) {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
+  const omitScore = msg.omitScore === true || (msg.score == null && msg.reason === "recording_ok_no_browser_stt");
   const score =
-    msg.score != null
+    !omitScore && msg.score != null
       ? `<div class="ai-shadowing-feedback-score"><span class="ai-shadowing-feedback-score-label">${escapeHtml(safeT("ai.shadowing_score_label", "得分"))}</span> <strong>${msg.score}</strong> / 100</div>`
       : "";
   const rec =
@@ -215,11 +251,18 @@ function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "") {
       ? `<div class="ai-shadowing-feedback-rec"><span class="ai-shadowing-feedback-rec-label">${escapeHtml(safeT("ai.shadowing_recognized_label", "识别"))}</span> ${escapeHtml(String(recognizedText).trim())}</div>`
       : "";
   const body = msg.body ? `<div class="ai-shadowing-feedback-body">${escapeHtml(msg.body)}</div>` : "";
+  const interimNote =
+    msg.interimPreviewNote && String(msg.interimPreviewNote).trim()
+      ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(String(msg.interimPreviewNote).trim())}</div>`
+      : "";
+  const devStt = feedbackOpts.devSttHtml ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${feedbackOpts.devSttHtml}</div>` : "";
   return `${extraTopHtml}<div class="ai-shadowing-feedback-inner">
     <div class="ai-shadowing-feedback-title">${escapeHtml(msg.title)}</div>
+    ${interimNote}
     ${score}
     ${rec}
     ${body}
+    ${devStt}
   </div>`;
 }
 
@@ -272,6 +315,31 @@ function formatBlobLine(blobResult, durationMs, safeT) {
   return `<div class="ai-shadowing-feedback-blob">${escapeHtml(raw.replace("{seconds}", sec).replace("{sizeKb}", kb))}</div>`;
 }
 
+/** @param {unknown} payload */
+function parseSttPayload(payload) {
+  if (payload && typeof payload === "object" && "text" in payload) {
+    const o = /** @type {{ text?: string, interimFallback?: boolean, rawFinal?: string, rawInterim?: string }} */ (payload);
+    return {
+      text: str(o.text),
+      interimFallback: !!o.interimFallback,
+      rawFinal: o.rawFinal != null ? String(o.rawFinal) : "",
+      rawInterim: o.rawInterim != null ? String(o.rawInterim) : "",
+    };
+  }
+  return { text: str(payload), interimFallback: false, rawFinal: "", rawInterim: "" };
+}
+
+function buildDevSttHtml(targetZh, rawFinal, rawInterim, chosen, sourceLabel) {
+  const lines = [
+    `target: ${targetZh}`,
+    `final transcript: ${rawFinal}`,
+    `interim transcript: ${rawInterim}`,
+    `chosen transcript: ${chosen}`,
+    `chosen source: ${sourceLabel}`,
+  ];
+  return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
+}
+
 /**
  * 挂载：话筒 = 真实录音 + 中文识别 + 评分；喇叭 = 仅播汉字
  * @returns {() => void} cleanup
@@ -316,10 +384,15 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         `MediaRecorder: ${s.mediaRecorder}`,
         `SpeechRecognition supported: ${s.speechRecognition}`,
         `recognition.lang: ${d.recognitionLang ?? "n/a"}`,
+        `interimResults: ${d.interimResults}`,
+        `continuous: ${d.continuous}`,
         `recognition started: ${d.started}`,
+        `waitingFinalize: ${d.waitingFinalize}`,
         `last transcript raw (finals): ${d.lastRawFinals ?? ""}`,
-        `last transcript raw (full): ${d.lastRawFull ?? ""}`,
+        `last transcript raw (interim): ${d.lastRawInterim ?? ""}`,
         `last transcript normalized: ${d.lastNormalizedOut ?? ""}`,
+        `last chosen source: ${d.lastChosenSource ?? "none"}`,
+        `interim fallback used: ${d.lastInterimFallback}`,
         `target text: ${d.lastTargetText ?? ""}`,
         `last stt error: ${d.lastSttError || "(none)"}`,
         `match status: ${d.matchStatus ?? "idle"}`,
@@ -509,25 +582,30 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
     log("speech.toggle() start — registering onResult/onError for this session");
     speech.toggle({
-      onResult: async (text) => {
-        log("speech onResult", str(text).slice(0, 160));
+      onResult: async (payload) => {
+        const p = parseSttPayload(payload);
+        log("speech onResult", p.text.slice(0, 160), p.interimFallback ? "[interim fallback]" : "");
         const blobResult = pendingBlobResult;
         pendingBlobResult = null;
         endRecordingUi();
         const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
         const blobLine = formatBlobLine(blobResult, durationMs, t);
-        const result = scoreShadowingUtterance(targetZh, text);
+        const result = scoreShadowingUtterance(targetZh, p.text);
         sttLog("target text=", JSON.stringify(targetZh));
         sttLog("match result=", JSON.stringify(result));
         speech.setMatchStatusForDebug(`${result.band}:${result.reason}`);
         if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
-        const msg = buildShadowingFeedbackMessage(result, targetZh, text, t);
-        // 浏览器 STT 不稳定时：可将此 Blob POST 到后端 ASR（zh-CN），评分以服务端 transcript 为准。
+        const msg = buildShadowingFeedbackMessage(result, targetZh, p.text, t, { interimFallback: p.interimFallback });
+        const chosenSource = p.interimFallback ? "interim" : "final";
+        const devSttHtml = debugOn
+          ? buildDevSttHtml(targetZh, p.rawFinal, p.rawInterim, p.text, chosenSource)
+          : "";
+        // 正式评测输入：见架构说明（文件头）。浏览器 STT 仅预览。
         row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
         row._hanjiShadowingLastBlobMeta = blobResult
           ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
           : null;
-        showFeedback(buildFeedbackHtml(msg, text, t, blobLine));
+        showFeedback(buildFeedbackHtml(msg, p.text, t, blobLine, { devSttHtml }));
       },
       onError: async (code, detail) => {
         log("speech onError", "code=", code, "detail=", detail);
@@ -616,16 +694,19 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         const noInput = code === "no_result" || code === "no_speech";
         const hasAudio = blobResult && blobResult.sizeBytes > 800;
         if (noInput && hasAudio) {
-          const msg = {
-            title: t("ai.shadowing_err_stt_no_text_title", "未识别到文字"),
-            body: t(
-              "ai.shadowing_err_stt_no_text_body",
-              "已保存本次录音，但未识别到中文内容。请大声、清晰地说，或检查浏览器语音识别服务。",
-            ),
-            score: 0,
-            band: "retry",
-          };
-          showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
+          const result = buildRecordingOkNoBrowserSttResult();
+          const msg = buildShadowingFeedbackMessage(result, targetZh, "", t);
+          const d = typeof speech.getLastDebug === "function" ? speech.getLastDebug() : {};
+          const devSttHtml = debugOn
+            ? buildDevSttHtml(
+                targetZh,
+                d.lastRawFinals ?? "",
+                d.lastRawInterim ?? "",
+                "",
+                "none",
+              )
+            : "";
+          showFeedback(buildFeedbackHtml(msg, "", t, blobLine, { devSttHtml }));
           return;
         }
         if (noInput) {
@@ -635,10 +716,14 @@ export function mountShadowingSpeakingPractice(wrap, t) {
               "ai.shadowing_feedback_no_speech_short",
               "未检测到有效语音。请确认麦克风已开启并靠近嘴边后再试。",
             ),
-            score: 0,
+            score: null,
             band: "retry",
+            omitScore: true,
           };
-          showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
+          const devSttHtml = debugOn
+            ? buildDevSttHtml(targetZh, "", "", "", "none")
+            : "";
+          showFeedback(buildFeedbackHtml(msg, "", t, blobLine, { devSttHtml }));
           return;
         }
 

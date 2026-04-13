@@ -1412,6 +1412,25 @@
   color: #475569;
 }
 
+.ai-shadowing-feedback-interim-note {
+  font-size: 0.6875rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ai-shadowing-stt-dev-pre {
+  margin-top: 8px;
+  padding: 8px;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: #334155;
+  background: #f8fafc;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 .ai-shadowing-extra-desc {
   margin: 8px 0 0 0;
   font-size: 0.8125rem;
