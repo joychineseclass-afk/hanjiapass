@@ -30,6 +30,87 @@ function clipGloss(s, maxLen = 72) {
   return `${x.slice(0, Math.max(0, maxLen - 1))}…`;
 }
 
+/** 释义是否与汉字本体重复（禁止第三列再显示一遍中文） */
+function isTrivialEchoOfZh(zh, gloss) {
+  const z = normalizeZhKey(str(zh));
+  const g = normalizeZhKey(str(gloss));
+  if (!g) return true;
+  return z === g;
+}
+
+/** 嵌套多语言对象：按当前 UI 语言优先（如 CN 缺 zh 时先 en，再 jp，再 kr） */
+function pickNestedByUiLang(obj, lang) {
+  if (!obj || typeof obj !== "object") return "";
+  const n = normLang(lang);
+  if (n === "cn") return str(obj.zh ?? obj.cn ?? obj.en ?? obj.jp ?? obj.ja ?? obj.kr ?? obj.ko ?? "");
+  if (n === "kr") return str(obj.kr ?? obj.ko ?? obj.en ?? obj.jp ?? obj.zh ?? obj.cn ?? "");
+  if (n === "jp") return str(obj.jp ?? obj.ja ?? obj.en ?? obj.kr ?? obj.zh ?? obj.cn ?? "");
+  return str(obj.en ?? obj.kr ?? obj.jp ?? obj.zh ?? obj.cn ?? "");
+}
+
+/**
+ * 单词区第三列：仅从多语言字段 / 词汇表取义，不回退为 hanzi/zh
+ * 优先级：translation → meaning → gloss → explain → 顶层 kr 等 → 内置词汇表（非重复时）
+ */
+function pickWordMeaningFromItem(o, zhCanon, lang) {
+  if (o == null) {
+    const g = glossLexeme(str(zhCanon), lang);
+    return g && !isTrivialEchoOfZh(zhCanon, g) ? clipGloss(g, 72) : "";
+  }
+  if (typeof o !== "object") {
+    const g = glossLexeme(str(zhCanon), lang);
+    return g && !isTrivialEchoOfZh(zhCanon, g) ? clipGloss(g, 72) : "";
+  }
+
+  const tr = o.translation ?? o.translations;
+  let t = "";
+  if (tr && typeof tr === "object") {
+    t = pickNestedByUiLang(tr, lang);
+  }
+  const m = o.meaning;
+  if (!t && m && typeof m === "object") {
+    t = pickNestedByUiLang(m, lang);
+  }
+  if (!t && m && typeof m === "string" && m.trim()) {
+    t = str(m);
+  }
+  const gl = o.gloss;
+  if (!t && gl && typeof gl === "object") {
+    t = pickNestedByUiLang(gl, lang);
+  }
+  if (!t) {
+    const n = normLang(lang);
+    if (n === "kr") t = str(o.kr ?? o.ko ?? "");
+    else if (n === "jp") t = str(o.jp ?? o.ja ?? "");
+    else if (n === "en") t = str(o.en ?? "");
+    else if (n === "cn") t = str(o.cn ?? o.zh ?? o.zhShort ?? "");
+  }
+  const ex = o.explain ?? o.explanation;
+  if (!t && ex && typeof ex === "object") {
+    t = pickNestedByUiLang(ex, lang);
+  }
+  if (!t) {
+    t = str(o.translation?.kr ?? o.translations?.kr ?? o.meaning?.kr ?? o.gloss?.kr ?? "");
+  }
+  if (t && !isTrivialEchoOfZh(zhCanon, t)) return clipGloss(t, 72);
+
+  const g = glossLexeme(str(zhCanon), lang);
+  if (g && !isTrivialEchoOfZh(zhCanon, g)) return clipGloss(g, 72);
+  return "";
+}
+
+function wordAreaMeaningFromVocab(w, lang) {
+  const han = str(w?.hanzi ?? w?.word ?? "");
+  const zhCanon = normalizeZhKey(han) || han;
+  return pickWordMeaningFromItem(w, zhCanon, lang);
+}
+
+function wordAreaMeaningFromDialogueLine(line, lang) {
+  const z = lineZh(line);
+  const zhCanon = normalizeZhKey(z) || z;
+  return pickWordMeaningFromItem(line, zhCanon, lang);
+}
+
 /**
  * 从 translation / translations 对象按系统语言取值
  */
@@ -90,55 +171,6 @@ function lineMeaningForShadowing(line, lang) {
   return "";
 }
 
-function meaningFromExtensionShort(ex, lang) {
-  const tr = ex?.translation ?? ex?.translations;
-  if (tr && typeof tr === "object") {
-    const t = translationObjPick(tr, lang);
-    if (t) return clipGloss(t, 72);
-  }
-  const k = normLang(lang);
-  if (k === "kr") return str(ex?.kr ?? ex?.ko ?? "");
-  if (k === "jp") return str(ex?.jp ?? ex?.ja ?? "");
-  if (k === "en") return str(ex?.en ?? "");
-  if (k === "cn") return str(ex?.cn ?? ex?.zhShort ?? "");
-  return "";
-}
-
-/**
- * 单词条目释义：优先 vocab.translation → meaning（多语言对象）→ explain 短义项 → 词汇表兜底
- */
-function vocabMeaningForShadowing(w, lang) {
-  if (!w || typeof w !== "object") return "";
-  const han = str(w.hanzi ?? w.word ?? "");
-  const tr = w.translation ?? w.translations;
-  if (tr && typeof tr === "object") {
-    let t = "";
-    if (normLang(lang) === "cn") {
-      t = str(tr.zh ?? tr.cn ?? "");
-      if (!t && han) t = glossLexeme(normalizeZhKey(han), lang);
-      if (!t) t = translationObjPick(tr, lang);
-    } else {
-      t = translationObjPick(tr, lang);
-    }
-    if (t) return clipGloss(t, 72);
-  }
-  const m = w.meaning;
-  if (m && typeof m === "object") {
-    const t = pickLang(m, lang);
-    if (t) return clipGloss(t, 72);
-  }
-  if (typeof m === "string" && m.trim()) {
-    return clipGloss(m, 72);
-  }
-  const ex = w.explain ?? w.explanation;
-  if (ex && typeof ex === "object") {
-    const t = pickLang(ex, lang);
-    if (t) return clipGloss(t, 48);
-  }
-  if (han) return clipGloss(glossLexeme(han, lang), 72);
-  return "";
-}
-
 const SHADOWING_LEX_GLOSS = {
   您: { kr: "당신(존칭)", cn: "您（敬称）", en: "you (polite)", jp: "あなた（敬）" },
   你: { kr: "너; 당신", cn: "你", en: "you", jp: "きみ" },
@@ -185,11 +217,10 @@ function buildCuratedExpressionItems(lesson, ctx, lang) {
     zs.forEach((z, i) => {
       if (!/[\u4e00-\u9fff]/.test(z)) return;
       const manualPy = pys[i] || pys[0] || "";
-      const gloss = glossLexeme(z, lang);
       out.push({
         zh: z,
         pinyin: resolvePinyin(z, manualPy),
-        meaning: gloss,
+        meaning: pickWordMeaningFromItem(null, z, lang),
         note: "",
       });
     });
@@ -250,13 +281,10 @@ function extensionExpressionItems(lesson, lang) {
     if (!zhRaw || !/[\u4e00-\u9fff]/.test(zhRaw)) continue;
     const py = str(ex.pinyin ?? "");
     const zhOne = normalizeZhKey(zhRaw) || zhRaw.replace(/。$/g, "").trim();
-    let mean = meaningFromExtensionShort(ex, lang);
-    if (!mean) mean = glossLexeme(zhOne, lang);
-    mean = clipGloss(mean, 72);
     out.push({
       zh: zhOne,
       pinyin: resolvePinyin(zhOne, py),
-      meaning: mean,
+      meaning: pickWordMeaningFromItem(ex, zhOne, lang),
       note: "",
     });
   }
@@ -269,7 +297,7 @@ function extensionExpressionItems(lesson, lang) {
 export function buildShadowingPracticeData(lesson, lang, _t) {
   const ctx = buildLessonContext(lesson, {
     lang,
-    wordsWithMeaning: (w) => vocabMeaningForShadowing(w, lang),
+    wordsWithMeaning: (w) => wordAreaMeaningFromVocab(w, lang),
   });
 
   const flatDialogue = getFlatLessonDialogue(lesson);
@@ -284,7 +312,7 @@ export function buildShadowingPracticeData(lesson, lang, _t) {
       wordParts.push({
         zh: han,
         pinyin: resolvePinyin(han, str(w.pinyin ?? w.py ?? "")),
-        meaning: vocabMeaningForShadowing(w, lang),
+        meaning: wordAreaMeaningFromVocab(w, lang),
         note: "",
       });
     }
@@ -295,7 +323,7 @@ export function buildShadowingPracticeData(lesson, lang, _t) {
       wordParts.push({
         zh: z,
         pinyin: resolvePinyin(z, str(line.pinyin ?? line.py ?? "")),
-        meaning: lineMeaningForShadowing(line, lang),
+        meaning: wordAreaMeaningFromDialogueLine(line, lang),
         note: "",
       });
     }
