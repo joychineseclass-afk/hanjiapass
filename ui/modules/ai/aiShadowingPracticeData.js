@@ -1,6 +1,6 @@
 /**
- * 따라 말하기：从 lesson 构建「单词 / 表达 / 句子」三层数据（不写死课文）
- * 仅保留练说所需：汉字、拼音、系统语言简短释义（不用法说明、不与 본과 설명 重复）
+ * 따라 말하기：单词区 + 句子区（无单独「表达」区块）
+ * 汉字/拼音固定；释义严格跟随系统语言；句子区与单词区按规范化汉字去重
  */
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
@@ -23,7 +23,6 @@ function pickLang(obj, lang) {
   return str(obj[key] ?? obj.zh ?? obj.cn ?? obj.kr ?? obj.en ?? obj.jp ?? "");
 }
 
-/** 释义过长时截断（练说区只显示短译） */
 function clipGloss(s, maxLen = 72) {
   const x = str(s);
   if (!x) return "";
@@ -32,7 +31,7 @@ function clipGloss(s, maxLen = 72) {
 }
 
 /**
- * 从 translation 对象按系统语言取值，缺 key 时按常见回退（避免 CN 界面无译）
+ * 从 translation / translations 对象按系统语言取值
  */
 function translationObjPick(tr, lang) {
   if (!tr || typeof tr !== "object") return "";
@@ -59,33 +58,44 @@ function getFlatLessonDialogue(lesson) {
   return Array.isArray(lesson?.dialogue) ? lesson.dialogue : [];
 }
 
+function getRawVocab(lesson) {
+  return Array.isArray(lesson?.vocab) ? lesson.vocab : Array.isArray(lesson?.words) ? lesson.words : [];
+}
+
 function lineZh(line) {
   return str(
     line?.zh != null ? line.zh : line?.cn != null ? line.cn : line?.text != null ? line.text : line?.line != null ? line.line : "",
   );
 }
 
-/**
- * 会话行 → 系统语言简短译文（来自 translation / 课文字段，不取 explain 长说明）
- */
 function lineMeaningForShadowing(line, lang) {
-  const tr = line?.translation;
+  const z = lineZh(line);
+  const tr = line?.translation ?? line?.translations;
   if (tr && typeof tr === "object") {
-    const t = translationObjPick(tr, lang);
+    let t = "";
+    if (normLang(lang) === "cn") {
+      t = str(tr.zh ?? tr.cn ?? "");
+      if (!t) t = glossLexeme(normalizeZhKey(z), lang);
+      if (!t) t = translationObjPick(tr, lang);
+    } else {
+      t = translationObjPick(tr, lang);
+    }
     if (t) return clipGloss(t, 96);
   }
   const k = normLang(lang);
   if (k === "kr") return clipGloss(str(line?.kr ?? line?.ko ?? ""), 96);
   if (k === "jp") return clipGloss(str(line?.jp ?? line?.ja ?? ""), 96);
   if (k === "en") return clipGloss(str(line?.en ?? ""), 96);
-  if (k === "cn") return clipGloss(str(line?.cn ?? line?.zh ?? ""), 96);
+  if (k === "cn") return clipGloss(str(line?.cn ?? line?.zh ?? "") || glossLexeme(normalizeZhKey(z), lang), 96);
   return "";
 }
 
-/**
- * 教材 extension 顶层的 kr/en/jp/zh 短译（不用 explain 段落）
- */
 function meaningFromExtensionShort(ex, lang) {
+  const tr = ex?.translation ?? ex?.translations;
+  if (tr && typeof tr === "object") {
+    const t = translationObjPick(tr, lang);
+    if (t) return clipGloss(t, 72);
+  }
   const k = normLang(lang);
   if (k === "kr") return str(ex?.kr ?? ex?.ko ?? "");
   if (k === "jp") return str(ex?.jp ?? ex?.ja ?? "");
@@ -95,19 +105,52 @@ function meaningFromExtensionShort(ex, lang) {
 }
 
 /**
- * 与「本课核心表达」拆条对齐的汉字 → 各语言简短义项（非用法说明句）
- * 仅用于 curated 规则拆条，避免复用 ai.lesson_focus_group_usage_* 长说明
+ * 单词条目释义：优先 vocab.translation → meaning（多语言对象）→ explain 短义项 → 词汇表兜底
  */
+function vocabMeaningForShadowing(w, lang) {
+  if (!w || typeof w !== "object") return "";
+  const han = str(w.hanzi ?? w.word ?? "");
+  const tr = w.translation ?? w.translations;
+  if (tr && typeof tr === "object") {
+    let t = "";
+    if (normLang(lang) === "cn") {
+      t = str(tr.zh ?? tr.cn ?? "");
+      if (!t && han) t = glossLexeme(normalizeZhKey(han), lang);
+      if (!t) t = translationObjPick(tr, lang);
+    } else {
+      t = translationObjPick(tr, lang);
+    }
+    if (t) return clipGloss(t, 72);
+  }
+  const m = w.meaning;
+  if (m && typeof m === "object") {
+    const t = pickLang(m, lang);
+    if (t) return clipGloss(t, 72);
+  }
+  if (typeof m === "string" && m.trim()) {
+    return clipGloss(m, 72);
+  }
+  const ex = w.explain ?? w.explanation;
+  if (ex && typeof ex === "object") {
+    const t = pickLang(ex, lang);
+    if (t) return clipGloss(t, 48);
+  }
+  if (han) return clipGloss(glossLexeme(han, lang), 72);
+  return "";
+}
+
 const SHADOWING_LEX_GLOSS = {
   您: { kr: "당신(존칭)", cn: "您（敬称）", en: "you (polite)", jp: "あなた（敬）" },
   你: { kr: "너; 당신", cn: "你", en: "you", jp: "きみ" },
   您好: { kr: "안녕하세요", cn: "您好", en: "hello (polite)", jp: "こんにちは（丁寧）" },
-  你好: { kr: "안녕", cn: "你好", en: "hello", jp: "こんにちは" },
+  你好: { kr: "안녕하세요; 안녕", cn: "你好", en: "hello", jp: "こんにちは" },
   对不起: { kr: "미안합니다", cn: "对不起", en: "sorry", jp: "すみません" },
   没关系: { kr: "괜찮아요", cn: "没关系", en: "it's OK", jp: "大丈夫" },
   谢谢: { kr: "감사합니다", cn: "谢谢", en: "thank you", jp: "ありがとう" },
   不客气: { kr: "천만에요", cn: "不客气", en: "you're welcome", jp: "どういたしまして" },
-  再见: { kr: "안녕히 가요", cn: "再见", en: "goodbye", jp: "さようなら" },
+  再见: { kr: "안녕히 가세요", cn: "再见", en: "goodbye", jp: "さようなら" },
+  老师: { kr: "선생님", cn: "老师", en: "teacher", jp: "先生" },
+  好: { kr: "좋다", cn: "好", en: "good", jp: "よい" },
   大家好: { kr: "여러분 안녕하세요", cn: "大家好", en: "hello everyone", jp: "みなさんこんにちは" },
 };
 
@@ -123,9 +166,6 @@ function normalizeZhKey(zhRaw) {
   return str(zhRaw).replace(/[。！？，、．·…\s]/g, "");
 }
 
-/**
- * 与 aiLessonFocus 检测条件对齐，但释义仅用简短词汇级翻译
- */
 function buildCuratedExpressionItems(lesson, ctx, lang) {
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
   const g0 = Array.isArray(lesson?.grammar) ? lesson.grammar[0] : null;
@@ -168,7 +208,7 @@ function buildCuratedExpressionItems(lesson, ctx, lang) {
     pushSplit("谢谢 / 不客气", "xièxie / bú kèqi");
   }
 
-  if (out.length) return dedupeByZh(out.slice(0, 12));
+  if (out.length) return dedupeByZh(out.slice(0, 20));
 
   return [];
 }
@@ -181,6 +221,23 @@ function dedupeByZh(items) {
     if (!k || seen.has(k)) continue;
     seen.add(k);
     r.push(it);
+  }
+  return r;
+}
+
+/** 单词区：同一汉字串只保留一条（去掉句读后与「谢谢」「谢谢！」合并） */
+function dedupeWordItemsByCanonicalZh(items) {
+  const seen = new Set();
+  const r = [];
+  for (const it of items) {
+    const canon = normalizeZhKey(str(it.zh)) || str(it.zh).trim();
+    if (!canon || !/[\u4e00-\u9fff]/.test(canon) || seen.has(canon)) continue;
+    seen.add(canon);
+    r.push({
+      ...it,
+      zh: canon,
+      pinyin: str(it.pinyin) || resolvePinyin(canon, ""),
+    });
   }
   return r;
 }
@@ -207,48 +264,49 @@ function extensionExpressionItems(lesson, lang) {
 }
 
 /**
- * @returns {{ words: object[], expressions: object[], sentences: object[] }}
- * 每项：{ zh, pinyin, meaning, type, id } — meaning 为系统语言简短译，无用法说明
+ * @returns {{ words: object[], sentences: object[] }}
  */
 export function buildShadowingPracticeData(lesson, lang, _t) {
   const ctx = buildLessonContext(lesson, {
     lang,
-    wordsWithMeaning: (w) => pickLang(w && w.meaning, lang) || str((w && (w.hanzi != null ? w.hanzi : w.word)) || ""),
+    wordsWithMeaning: (w) => vocabMeaningForShadowing(w, lang),
   });
 
   const flatDialogue = getFlatLessonDialogue(lesson);
+  const rawVocab = getRawVocab(lesson);
 
-  const words = [];
-  const seenWord = new Set();
+  const wordParts = [];
 
-  const pushWord = (zh, pyManual, mean) => {
-    const z = str(zh);
-    if (!z || !/[\u4e00-\u9fff]/.test(z) || seenWord.has(z)) return;
-    seenWord.add(z);
-    words.push({
-      zh: z,
-      pinyin: resolvePinyin(z, str(pyManual)),
-      meaning: clipGloss(str(mean), 72),
-      note: "",
-    });
-  };
-
-  if (ctx.vocab && ctx.vocab.length) {
-    for (const w of ctx.vocab) {
-      pushWord(w.hanzi, w.pinyin, w.meaning);
+  if (rawVocab.length) {
+    for (const w of rawVocab.slice(0, 40)) {
+      const han = str(w.hanzi ?? w.word ?? "");
+      if (!han || !/[\u4e00-\u9fff]/.test(han)) continue;
+      wordParts.push({
+        zh: han,
+        pinyin: resolvePinyin(han, str(w.pinyin ?? w.py ?? "")),
+        meaning: vocabMeaningForShadowing(w, lang),
+        note: "",
+      });
     }
   } else {
     for (const line of flatDialogue) {
       const z = lineZh(line);
-      if (!z || z.length > 4) continue;
-      pushWord(z, line.pinyin ?? line.py, lineMeaningForShadowing(line, lang));
+      if (!z || z.length > 4 || !/[\u4e00-\u9fff]/.test(z)) continue;
+      wordParts.push({
+        zh: z,
+        pinyin: resolvePinyin(z, str(line.pinyin ?? line.py ?? "")),
+        meaning: lineMeaningForShadowing(line, lang),
+        note: "",
+      });
     }
   }
 
-  let expressions = [];
-  expressions = expressions.concat(buildCuratedExpressionItems(lesson, ctx, lang));
-  expressions = expressions.concat(extensionExpressionItems(lesson, lang));
-  expressions = dedupeByZh(expressions);
+  wordParts.push(...buildCuratedExpressionItems(lesson, ctx, lang));
+  wordParts.push(...extensionExpressionItems(lesson, lang));
+
+  const words = dedupeWordItemsByCanonicalZh(wordParts);
+
+  const spokenWordSet = new Set(words.map((w) => str(w.zh)).filter(Boolean));
 
   const sentences = [];
   const seenSentZh = new Set();
@@ -256,6 +314,8 @@ export function buildShadowingPracticeData(lesson, lang, _t) {
     const z = lineZh(line);
     if (!z || seenSentZh.has(z)) continue;
     seenSentZh.add(z);
+    const key = normalizeZhKey(z);
+    if (key && spokenWordSet.has(key)) continue;
     sentences.push({
       zh: z,
       pinyin: resolvePinyin(z, str(line.pinyin != null ? line.pinyin : line.py) || ""),
@@ -269,10 +329,6 @@ export function buildShadowingPracticeData(lesson, lang, _t) {
     it.id = `shadow-w-${i}`;
     it.type = "word";
   });
-  expressions.forEach((it, i) => {
-    it.id = `shadow-e-${i}`;
-    it.type = "expression";
-  });
   sentences.forEach((it, i) => {
     it.id = `shadow-s-${i}`;
     it.type = "sentence";
@@ -280,15 +336,11 @@ export function buildShadowingPracticeData(lesson, lang, _t) {
 
   return {
     words,
-    expressions,
     sentences,
   };
 }
 
-/**
- * 顺序：单词 → 表达 → 句子（用于跟读队列）
- */
 export function flattenShadowingPlaybackOrder(data) {
-  const { words = [], expressions = [], sentences = [] } = data || {};
-  return [...words, ...expressions, ...sentences].map((x) => str(x.zh)).filter(Boolean);
+  const { words = [], sentences = [] } = data || {};
+  return [...words, ...sentences].map((x) => str(x.zh)).filter(Boolean);
 }

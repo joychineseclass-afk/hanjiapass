@@ -132,8 +132,8 @@ export function renderShadowingMode(_aiItem, lang, lesson) {
     "한 줄씩 듣고 따라 말해 보세요. 마이크를 눌러 말하면 간단한 피드백과 점수를 드려요.",
   );
 
-  const data = lesson ? buildShadowingPracticeData(lesson, lang, t) : { words: [], expressions: [], sentences: [] };
-  const total = data.words.length + data.expressions.length + data.sentences.length;
+  const data = lesson ? buildShadowingPracticeData(lesson, lang, t) : { words: [], sentences: [] };
+  const total = data.words.length + data.sentences.length;
 
   function trainRowHtml(item) {
     const zh = String(item?.zh != null ? item.zh : "").trim();
@@ -173,11 +173,10 @@ export function renderShadowingMode(_aiItem, lang, lesson) {
   }
 
   const secWords = t("ai.shadowing_section_words_speak", "단어 말하기");
-  const secExpr = t("ai.shadowing_section_expr_speak", "표현 말하기");
   const secSent = t("ai.shadowing_section_sent_speak", "문장 말하기");
 
   const bodyHtml = total
-    ? `${sectionBlock(secWords, data.words)}${sectionBlock(secExpr, data.expressions)}${sectionBlock(secSent, data.sentences)}`
+    ? `${sectionBlock(secWords, data.words)}${sectionBlock(secSent, data.sentences)}`
     : `<div class="ai-tutor-mode-not-ready ai-shadowing-empty">${escapeHtml(t("ai.shadowing_no_content", "本课暂无可跟读内容。请先确认教材对话与词汇已加载。"))}</div>`;
 
   return `
