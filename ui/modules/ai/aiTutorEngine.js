@@ -6,7 +6,7 @@
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { i18n } from "../../i18n.js";
-import { classifyFreeQuestionIntent } from "./freeQuestionIntent.js";
+import { classifyFreeQuestionIntent, LUMINA_LESSON_QA_PROMPT_REV } from "./freeQuestionIntent.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -419,13 +419,20 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
 
   if (typeof window !== "undefined" && window.JOY_RUNNER?.askAI) {
     try {
-      if (mode === "free_talk" && typeof console !== "undefined" && console.info) {
-        console.info("[LUMINA runTutor free_talk] calling askAI", {
-          lessonId: lessonData?.id,
-          courseId: lessonData?.courseId,
-          promptLength: (prompt || "").length,
-          hasLessonQA: !!(contextObj && contextObj.lessonQA),
-        });
+      if (mode === "free_talk") {
+        window.__HANJIAPASS_LUMINA_LESSON_QA_REV__ = LUMINA_LESSON_QA_PROMPT_REV;
+        if (typeof console !== "undefined" && console.info) {
+          console.info(
+            `[HANJIAPASS] LUMINA lessonQA ${LUMINA_LESSON_QA_PROMPT_REV}（出现本行=新前端 bundle；可在控制台执行 window.__HANJIAPASS_LUMINA_LESSON_QA_REV__）`,
+            {
+              lessonId: lessonData?.id,
+              courseId: lessonData?.courseId,
+              promptLength: (prompt || "").length,
+              hasLessonQA: !!(contextObj && contextObj.lessonQA),
+              questionIntent: contextObj?.lessonQA?.questionIntent,
+            },
+          );
+        }
       }
       const res = await window.JOY_RUNNER.askAI({ prompt, lang, mode, contextObj });
       return { text: (res && res.text != null ? res.text : "") || "", raw: res };

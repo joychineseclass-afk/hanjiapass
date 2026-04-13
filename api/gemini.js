@@ -1,5 +1,5 @@
 // /api/gemini.js
-import { classifyFreeQuestionIntent } from "../ui/modules/ai/freeQuestionIntent.js";
+import { classifyFreeQuestionIntent, LUMINA_LESSON_QA_PROMPT_REV } from "../ui/modules/ai/freeQuestionIntent.js";
 
 export const config = { runtime: "nodejs", maxDuration: 60 };
 
@@ -248,6 +248,7 @@ export default async function handler(req, res) {
       envPresence: diag.envPresence,
       vercelEnv: process.env.VERCEL_ENV || null,
       deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
+      luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
     });
   }
 
@@ -491,6 +492,9 @@ ${contextText ? contextText : "(none)"}
           if (text && text.trim()) {
             clearTimeout(timeout);
             console.info("[api/gemini] gemini success", { model, textLength: text.length });
+            if (context?.lessonQA) {
+              res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
+            }
             return res.status(200).json({
               text,
               modelUsed: model,
@@ -500,6 +504,7 @@ ${contextText ? contextText : "(none)"}
               fallback: false,
               hasGeminiKey: true,
               keyCount: keys.length,
+              ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
             });
           }
 
@@ -519,6 +524,9 @@ ${contextText ? contextText : "(none)"}
 
     console.warn("[api/gemini] all models failed or empty, using offline fallback", lastError);
     const offline = offlineFallback(userPrompt, explainLang);
+    if (context?.lessonQA) {
+      res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
+    }
     return res.status(200).json({
       text: offline,
       modelUsed: null,
@@ -529,6 +537,7 @@ ${contextText ? contextText : "(none)"}
       lastError,
       hasGeminiKey: keys.length > 0,
       keyCount: keys.length,
+      ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
     });
 
   } catch (e) {
