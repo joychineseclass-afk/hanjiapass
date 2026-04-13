@@ -16,16 +16,64 @@ const API_VERSION = (process.env.GEMINI_API_VERSION || "v1beta").trim();
 
 /* =========================
    1) Keys（自动轮换）
+   读取顺序与 kids-scene-image 等对齐；兼容 Vercel 上常见命名
 ========================= */
+/** 参与「是否有值」统计的变量名（不记录具体值） */
+const GEMINI_KEY_ENV_NAMES = [
+  "GEMINI_API_KEYS",
+  "GEMINI_API_KEY",
+  "GEMINI_API_KEY_2",
+  "GOOGLE_API_KEY",
+  "GOOGLE_GENERATIVE_AI_API_KEY",
+];
+
+function splitKeyList(raw) {
+  const s = String(raw || "").trim();
+  if (!s) return [];
+  return s
+    .split(/[\s,;|]+/u)
+    .map(part => part.trim())
+    .filter(Boolean);
+}
+
 function getApiKeys() {
-  const fromList = String(process.env.GEMINI_API_KEYS || "").trim();
-  if (fromList) {
-    const keys = fromList.split(",").map(s => s.trim()).filter(Boolean);
-    if (keys.length) return keys;
+  const seen = new Set();
+  const out = [];
+
+  const pushKey = k => {
+    if (!k || seen.has(k)) return;
+    seen.add(k);
+    out.push(k);
+  };
+
+  for (const k of splitKeyList(process.env.GEMINI_API_KEYS)) pushKey(k);
+
+  for (const name of GEMINI_KEY_ENV_NAMES) {
+    if (name === "GEMINI_API_KEYS") continue;
+    const v = String(process.env[name] || "").trim();
+    if (v) pushKey(v);
   }
-  const k1 = String(process.env.GEMINI_API_KEY || "").trim();
-  const k2 = String(process.env.GEMINI_API_KEY_2 || "").trim();
-  return [k1, k2].filter(Boolean);
+
+  return out;
+}
+
+/** 安全：仅布尔与计数，便于对照 Vercel 是否注入成功 */
+function getGeminiKeyEnvDiagnostics(resolvedKeys) {
+  let presentEnvNameCount = 0;
+  const envPresence = {};
+  for (const n of GEMINI_KEY_ENV_NAMES) {
+    const raw = process.env[n];
+    const ok = raw !== undefined && String(raw).trim() !== "";
+    envPresence[n] = ok;
+    if (ok) presentEnvNameCount += 1;
+  }
+  const keys = resolvedKeys ?? getApiKeys();
+  return {
+    hasGeminiKey: keys.length > 0,
+    keyCount: keys.length,
+    presentEnvNameCount,
+    envPresence,
+  };
 }
 
 function isLikelyModelNotFound(details) {
@@ -185,12 +233,19 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(204).end();
 
   if (req.method === "GET") {
+    const keys = getApiKeys();
+    const diag = getGeminiKeyEnvDiagnostics(keys);
     return res.status(200).json({
       ok: true,
       message: "Gemini endpoint alive. POST { prompt, explainLang, mode?, context? }",
       apiVersion: API_VERSION,
       modelCandidates: DEFAULT_MODEL_CANDIDATES,
-      keyCount: getApiKeys().length
+      hasGeminiKey: diag.hasGeminiKey,
+      keyCount: diag.keyCount,
+      presentEnvNameCount: diag.presentEnvNameCount,
+      envPresence: diag.envPresence,
+      vercelEnv: process.env.VERCEL_ENV || null,
+      deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
     });
   }
 
@@ -201,13 +256,28 @@ export default async function handler(req, res) {
   try {
     const keys = getApiKeys();
     const keyInfo = summarizeApiKey(keys);
+    const diag = getGeminiKeyEnvDiagnostics(keys);
     console.info("[api/gemini] POST entered", keyInfo);
 
     if (!keys.length) {
-      console.error("[api/gemini] MISSING_GEMINI_KEY — set GEMINI_API_KEY (or GEMINI_API_KEYS) on Vercel Project → Environment Variables, then redeploy Production.");
+      console.error(
+        "[api/gemini] MISSING_GEMINI_KEY — no usable key after checking:",
+        GEMINI_KEY_ENV_NAMES.join(", "),
+        "| presentEnvNameCount=",
+        diag.presentEnvNameCount,
+        "| envPresence=",
+        diag.envPresence
+      );
       return res.status(500).json({
         error: "Missing GEMINI API key(s) in Environment Variables.",
         code: "MISSING_GEMINI_KEY",
+        hasGeminiKey: false,
+        keyCount: 0,
+        presentEnvNameCount: diag.presentEnvNameCount,
+        envPresence: diag.envPresence,
+        checkedEnvNames: GEMINI_KEY_ENV_NAMES,
+        vercelEnv: process.env.VERCEL_ENV || null,
+        deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
       });
     }
 
@@ -376,6 +446,8 @@ ${contextText ? contextText : "(none)"}
               explainLang,
               mode,
               fallback: false,
+              hasGeminiKey: true,
+              keyCount: keys.length,
             });
           }
 
@@ -403,6 +475,8 @@ ${contextText ? contextText : "(none)"}
       mode,
       fallback: true,
       lastError,
+      hasGeminiKey: keys.length > 0,
+      keyCount: keys.length,
     });
 
   } catch (e) {
