@@ -7,6 +7,7 @@
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { i18n } from "../../i18n.js";
 import { classifyFreeQuestionIntent, LUMINA_LESSON_QA_PROMPT_REV } from "./freeQuestionIntent.js";
+import { sanitizeLessonQAOutput } from "./lessonQaSanitize.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -142,11 +143,10 @@ export function buildTutorApiContext(lessonData, lang, mode, aiItem, options = {
       pinyin: e.pinyin || undefined,
       translation: e.translation || undefined,
     }));
-    const questionIntent = classifyFreeQuestionIntent(userInput);
+    /** 意图仅用于本地 prompt 文案；不放入 context JSON，避免模型照抄 difference/usage 等 */
     base.lessonQA = {
       version: 1,
       studentQuestion: userInput.slice(0, 800),
-      questionIntent,
       objectives: objectives.length ? objectives : undefined,
       keyExpressions: ext.length ? ext : undefined,
     };
@@ -373,20 +373,21 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
     const q = str(userInput);
     const guide = pickLang(aiItem?.prompt, lang) || str(aiItem?.chatPrompt);
     const intent = classifyFreeQuestionIntent(q);
+    /** 不用「任务类型/问题类型」等易被模型照抄的中文标记；意图仅作写作提示 */
     const intentHint =
       intent === "difference"
-        ? "【问题类型提示】表达对比（区别题）——先讲两者主要不同与使用对象/礼貌度，再给至多 1 个本课简单例子；禁止写成两条独立词条。"
+        ? "[Instruction] Compare two expressions: state the main difference in politeness or addressee first, then one short contrast example in quotes if needed. Never output two dictionary entries."
         : intent === "usage"
-          ? "【问题类型提示】使用场景——优先说明对谁说、什么场合、礼貌程度，并联系本课；不要从生词字典式释义开头。"
+          ? "[Instruction] Focus on who/when/politeness and link to this lesson. Do not open with a glossary-style definition."
           : intent === "sentence_explain"
-            ? "【问题类型提示】句子讲解——先说明句意与用途，需要时给更简单改写；不要列字段标签。"
-            : "【问题类型提示】一般理解——先直接答，再一句场景或搭配提示。";
+            ? "[Instruction] Paraphrase meaning first, then usage; simpler rewrite in quotes if asked. No field labels."
+            : "[Instruction] Answer directly, then one sentence of context or collocation.";
     /** 本段进入 /api/gemini 的 prompt（与 JSON 上下文配合；避免重复粘贴整课对话以控制长度） */
     return [
-      "【任务类型】本课范围内自由问答（lesson_qa），不是开放式闲聊。",
-      "【你的角色】本课任课老师，对初学者口语解释；禁止词典卡片体、禁止「中文：/拼音：/韩语解释：」这类标签行。",
+      "[Scope] In-lesson Q&A only. [Critical] Your reply must NEVER include: 中文：, 拼音：, 한국어해석, 任务类型, lesson_qa, difference, usage, sentence_explain, meaning, or any colon-label lines. Output only teacher prose.",
+      "【你的角色】本课任课老师，对初学者口语讲解；禁止词典卡片、禁止字段名加冒号的分行。",
       `【解释语言】除直接引用的中文词语/原句外，说明文字一律使用${explainLangLabel}。`,
-      "【中文呈现】凡本课词语、固定说法、对话句均保留汉字原文；需要时把拼音轻轻夹在句中，不要单独开「拼音：」栏。",
+      "【中文呈现】本课词语与对话句保留汉字原文；拼音如需则写在自然句中，禁止单独一行「拼音：」。",
       intentHint,
       "【回答结构】",
       "（1）第一句就答在问题上；",
@@ -429,7 +430,7 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
               courseId: lessonData?.courseId,
               promptLength: (prompt || "").length,
               hasLessonQA: !!(contextObj && contextObj.lessonQA),
-              questionIntent: contextObj?.lessonQA?.questionIntent,
+              questionIntent: classifyFreeQuestionIntent(userInput),
             },
           );
         }
@@ -610,8 +611,22 @@ export function formatTutorOutput(mode, result, lang) {
   if (techErrorPatterns.some((p) => text.indexOf(p) >= 0)) {
     text = t("ai.not_connected_friendly", "AI connection is not ready yet. You can still use the guided practice mode.");
   }
+  const rawBeforeSanitize = mode === "free_talk" ? text : "";
+  if (mode === "free_talk" && text) {
+    const cleaned = sanitizeLessonQAOutput(text);
+    text = cleaned.trim()
+      ? cleaned
+      : t(
+          "ai.lesson_qa_answer_filtered",
+          "We adjusted the wording for readability. If something is missing, please ask again in a moment.",
+        );
+  }
   const html = text ? `<div class="ai-tutor-result">${escapeHtml(text).replace(/\n/g, "<br>")}</div>` : "";
-  return { text, html };
+  const out = { text, html };
+  if (mode === "free_talk" && rawBeforeSanitize && typeof window !== "undefined" && window.__HANJIAPASS_DEBUG_LQA__) {
+    out._debugLessonQARaw = rawBeforeSanitize;
+  }
+  return out;
 }
 
 function escapeHtml(s) {
