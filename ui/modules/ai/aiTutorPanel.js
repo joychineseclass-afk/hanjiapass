@@ -23,10 +23,7 @@ import {
   createFreeTalkSpeechInputSession,
   isFreeTalkSpeechInputSupported,
 } from "./freeTalkSpeechInput.js";
-import {
-  mountFreeTalkAnswerSpeakButton,
-  resetFreeTalkAnswerTts,
-} from "./freeTalkAnswerTts.js";
+import { mountFreeTalkAnswerSpeakButton, stopFreeTalkAnswerTts } from "./freeTalkAnswerTts.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -133,6 +130,7 @@ export function mountAITutorPanel(container, opts = {}) {
     if (body) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
+        stopFreeTalkAnswerTts();
         if (typeof card._freeTalkCleanup === "function") {
           try {
             card._freeTalkCleanup();
@@ -171,6 +169,8 @@ export function mountAITutorPanel(container, opts = {}) {
       const content = resultWrap.querySelector(".ai-tutor-result-content");
 
       if (mode === "free_talk") {
+        stopFreeTalkAnswerTts();
+
         const courseId = lessonData?.courseId != null ? String(lessonData.courseId) : "";
         const lessonId =
           lessonData?.id != null
@@ -271,6 +271,9 @@ export function mountAITutorPanel(container, opts = {}) {
     if (sendBtn && inputEl) {
       sendBtn.addEventListener("click", () => {
         const val = str(inputEl.value);
+        if (wrap.classList.contains("ai-tutor-free_talk") && val) {
+          stopFreeTalkAnswerTts();
+        }
         if (!val) {
           if (wrap.classList.contains("ai-tutor-free_talk")) {
             freeTalkAnswerPlain = "";
@@ -329,7 +332,7 @@ export function mountAITutorPanel(container, opts = {}) {
             showVoiceHintMessage(t("ai.free_talk_voice_not_supported", ""));
             return;
           }
-          resetFreeTalkAnswerTts();
+          stopFreeTalkAnswerTts();
           speechSession.toggle({
             onResult: (text) => {
               if (inputEl) inputEl.value = text;
@@ -364,12 +367,13 @@ export function mountAITutorPanel(container, opts = {}) {
       wrap._freeTalkCleanup = () => {
         speechSession.abort();
         freeTalkSpeechSession = null;
-        resetFreeTalkAnswerTts();
+        stopFreeTalkAnswerTts();
       };
 
       if (inputEl) {
         wrap.querySelectorAll(".ai-free-talk-example-chip").forEach((chip) => {
           chip.addEventListener("click", () => {
+            stopFreeTalkAnswerTts();
             const idx = chip.getAttribute("data-example-index");
             if (!idx) return;
             const text = str(t(`ai.free_question_example_${idx}`, ""));

@@ -55,6 +55,7 @@ import {
   renderReviewMode,
   prepareReviewSession
 } from "../platform/index.js";
+import { stopFreeTalkAnswerTts } from "../modules/ai/freeTalkAnswerTts.js";
 import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
@@ -2897,6 +2898,9 @@ function bindEvents() {
         if (!btn) return;
 
         state.tab = btn.dataset.tab;
+        if (state.tab !== "ai") {
+          stopFreeTalkAnswerTts();
+        }
         updateTabsUI();
 
         if (state.tab === "practice") {
@@ -3985,6 +3989,9 @@ if (el)
     if (!btn) return;
 
     state.tab = btn.dataset.tab;
+    if (state.tab !== "ai") {
+      stopFreeTalkAnswerTts();
+    }
     updateTabsUI();
 
     // ⭐ 只有切到 practice 时才 rerender

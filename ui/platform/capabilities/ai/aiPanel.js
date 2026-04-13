@@ -4,6 +4,7 @@
  */
 
 import { mountAITutorPanel } from "../../../modules/ai/aiTutorPanel.js";
+import { stopFreeTalkAnswerTts } from "../../../modules/ai/freeTalkAnswerTts.js";
 
 /**
  * 渲染 AI 面板 HTML（委托给 AI Tutor 面板，由 mountAIPanel 填充）
@@ -19,5 +20,6 @@ export function renderAIPanel(opts = {}) {
  */
 export function mountAIPanel(container, opts = {}) {
   if (!container) return;
+  stopFreeTalkAnswerTts();
   mountAITutorPanel(container, opts);
 }
