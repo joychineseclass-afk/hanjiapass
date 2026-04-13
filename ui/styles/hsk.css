@@ -1262,6 +1262,94 @@
   list-style: decimal;
 }
 
+.ai-shadowing-practice-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ai-shadowing-section-title {
+  margin: 0 0 8px 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.ai-shadowing-card-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-shadowing-card-list .ai-shadowing-line-item {
+  list-style: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+
+.ai-shadowing-card-inner {
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 10px;
+}
+
+.ai-shadowing-card-zh {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+}
+
+.ai-shadowing-card-py {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.ai-shadowing-card-mean {
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.ai-shadowing-card-speaker {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+
+.ai-shadowing-card-note {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.ai-shadowing-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ai-shadowing-card-actions .ai-btn-secondary {
+  min-height: 34px;
+}
+
+.ai-shadowing-empty {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #f8fafc;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
 .ai-tutor-lines-list.ai-shadowing-preview-lines {
   margin: 6px 0 0 0;
   padding-left: 1.25rem;

@@ -13,8 +13,20 @@ function t(key, fallback = "") {
   return (i18n && typeof i18n.t === "function" ? i18n.t(key, fallback) : null) || fallback || key;
 }
 
-/** @param {object} aiItem */
-export function normalizeShadowingLines(aiItem) {
+/** 从 DOM 卡片读取「只读中文」队列（data-shadow-zh） */
+export function getShadowingPlaybackTextsFromDom(wrap) {
+  if (!wrap) return [];
+  return Array.from(wrap.querySelectorAll(".ai-shadowing-line-item"))
+    .map((el) => str(el.getAttribute("data-shadow-zh") || ""))
+    .filter(Boolean);
+}
+
+/** @param {object} aiItem — 无 lesson 数据时的兜底 */
+export function normalizeShadowingLines(aiItem, wrap) {
+  if (wrap) {
+    const fromDom = getShadowingPlaybackTextsFromDom(wrap);
+    if (fromDom.length) return fromDom;
+  }
   let lines = Array.isArray(aiItem?.lines) ? aiItem.lines : [];
   if (!lines.length && aiItem && aiItem.sampleAnswer) {
     const sa = typeof aiItem.sampleAnswer === "string"
@@ -25,6 +37,19 @@ export function normalizeShadowingLines(aiItem) {
   return lines
     .map((line) => str(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || ""))
     .filter(Boolean);
+}
+
+export function isShadowingSessionBusy(wrap) {
+  const s = wrap && shadowSessions.get(wrap);
+  return !!(s && (s.phase === "playing" || s.phase === "paused"));
+}
+
+/** 单条预览：仅中文，不打断进行中跟读（主循环 busy 时忽略） */
+export function speakShadowingLinePreview(zh, wrap) {
+  if (wrap && isShadowingSessionBusy(wrap)) return;
+  const t = str(zh);
+  if (!t) return;
+  speakText(t, { lang: "zh-CN", rate: 0.95 });
 }
 
 function speakOnceZh(text) {
@@ -303,7 +328,7 @@ export function cancelShadowingPlayback(wrap) {
 export async function toggleShadowingPlayback(wrap, aiItem) {
   if (!wrap) return;
 
-  const texts = normalizeShadowingLines(aiItem);
+  const texts = normalizeShadowingLines(aiItem, wrap);
   const items = wrap.querySelectorAll(".ai-shadowing-line-item");
   if (!texts.length || !items.length) return;
 

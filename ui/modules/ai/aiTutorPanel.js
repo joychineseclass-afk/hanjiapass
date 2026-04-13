@@ -13,6 +13,7 @@ import {
   cancelShadowingPlayback,
   replayShadowingSentence,
   skipShadowingNext,
+  speakShadowingLinePreview,
 } from "./aiShadowingPlayback.js";
 import { handleLessonFocusSpeakClick, resetLessonFocusSpeakSession } from "./aiLessonFocusSpeak.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
@@ -254,6 +255,15 @@ export function mountAITutorPanel(container, opts = {}) {
 
     if (runBtn && mode !== "explain") {
       if (mode === "shadowing") {
+        wrap.querySelectorAll(".ai-shadowing-card-listen").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const li = btn.closest(".ai-shadowing-line-item");
+            const zh = li && li.getAttribute("data-shadow-zh");
+            if (zh) speakShadowingLinePreview(zh, wrap);
+          });
+        });
         runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
         const rep = wrap.querySelector(".ai-shadowing-replay");
         const nxt = wrap.querySelector(".ai-shadowing-next");

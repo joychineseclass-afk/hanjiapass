@@ -6,6 +6,7 @@
 import { i18n } from "../../i18n.js";
 import { renderLessonFocusHtml } from "./aiLessonFocus.js";
 import { buildSituationDialoguePlan, renderSituationDialogueShell } from "./aiSituationDialogue.js";
+import { buildShadowingPracticeData } from "./aiShadowingPracticeData.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -122,15 +123,9 @@ export function renderRoleplayMode(aiItem, lang, lesson) {
 }
 
 /**
- * 渲染 Shadowing 面板（跟读 / repeat）
- * 支持 aiItem.lines、aiItem.sampleAnswer、对话句
+ * 渲染 Shadowing 面板：单词 / 表达 / 句子 三层卡片（数据来自 lesson）
  */
-export function renderShadowingMode(aiItem, lang) {
-  let lines = Array.isArray(aiItem && aiItem.lines) ? aiItem.lines : [];
-  if (!lines.length && aiItem && aiItem.sampleAnswer) {
-    const sa = typeof aiItem.sampleAnswer === "string" ? aiItem.sampleAnswer : (aiItem.sampleAnswer && (aiItem.sampleAnswer.cn || aiItem.sampleAnswer.zh)) || "";
-    if (sa.trim()) lines = [sa.trim()];
-  }
+export function renderShadowingMode(aiItem, lang, lesson) {
   const promptText = pickLang(aiItem && aiItem.prompt, lang);
   const sessionTitle = t("ai.shadowing_card_title", "따라 말하기");
   const sessionLead = t("ai.shadowing_card_lead", "문장을 듣고, 따라 읽고, 직접 말해 보세요.");
@@ -138,7 +133,9 @@ export function renderShadowingMode(aiItem, lang) {
   const stepListen = t("ai.shadowing_step_listen", "먼저 들어보세요");
   const stepRepeat = t("ai.shadowing_step_repeat", "따라 읽어보세요");
   const stepSay = t("ai.shadowing_step_say", "직접 말해보세요");
-  const sentencesLabel = t("ai.shadowing_sentences_label", "연습 문장");
+
+  const data = lesson ? buildShadowingPracticeData(lesson, lang, t) : { words: [], expressions: [], sentences: [] };
+  const total = data.words.length + data.expressions.length + data.sentences.length;
 
   const stepsHtml = `
     <div class="ai-shadowing-how-inline">
@@ -151,9 +148,45 @@ export function renderShadowingMode(aiItem, lang) {
     </div>
   `;
 
-  const linesHtml = lines.length
-    ? `<ol class="ai-tutor-lines-list ai-shadowing-preview-lines" role="list">${lines.map((line) => `<li class="ai-tutor-line-item ai-shadowing-line-item">${escapeHtml(typeof line === "string" ? line : (line && (line.cn || line.zh || line.text)) || "")}</li>`).join("")}</ol>`
-    : `<div class="ai-tutor-mode-not-ready">${escapeHtml(t("ai.mode_not_ready", "This mode is not ready yet."))}</div>`;
+  function cardHtml(item) {
+    const zh = String(item?.zh != null ? item.zh : "").trim();
+    const safeAttr = escapeHtml(zh);
+    const note = String(item?.note != null ? item.note : "").trim()
+      ? `<div class="ai-shadowing-card-note">${escapeHtml(String(item.note).trim())}</div>`
+      : "";
+    const sp = String(item?.speaker != null ? item.speaker : "").trim()
+      ? `<div class="ai-shadowing-card-speaker">${escapeHtml(String(item.speaker).trim())}</div>`
+      : "";
+    return `<li class="ai-tutor-line-item ai-shadowing-line-item" data-shadow-zh="${safeAttr}">
+      <div class="ai-shadowing-card-inner">
+        ${sp}
+        <div class="ai-shadowing-card-zh">${escapeHtml(zh)}</div>
+        <div class="ai-shadowing-card-py">${escapeHtml(String(item?.pinyin != null ? item.pinyin : "").trim())}</div>
+        <div class="ai-shadowing-card-mean">${escapeHtml(String(item?.meaning != null ? item.meaning : "").trim())}</div>
+        ${note}
+        <div class="ai-shadowing-card-actions">
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-card-listen">${escapeHtml(t("ai.shadowing_card_listen", "听"))}</button>
+          <button type="button" class="ai-btn ai-btn-secondary ai-shadowing-card-mic" disabled title="${escapeHtml(t("ai.shadowing_card_record_soon", "录音跟读将后续开放"))}">${escapeHtml(t("ai.shadowing_card_record", "跟读"))}</button>
+        </div>
+      </div>
+    </li>`;
+  }
+
+  function sectionBlock(sectionTitle, items) {
+    if (!items.length) return "";
+    return `<section class="ai-shadowing-section" aria-label="${escapeHtml(sectionTitle)}">
+      <h4 class="ai-shadowing-section-title">${escapeHtml(sectionTitle)}</h4>
+      <ul class="ai-shadowing-card-list" role="list">${items.map(cardHtml).join("")}</ul>
+    </section>`;
+  }
+
+  const secWords = t("ai.shadowing_section_words", "单词跟读");
+  const secExpr = t("ai.shadowing_section_expressions", "核心表达跟读");
+  const secSent = t("ai.shadowing_section_sentences", "对话句子跟读");
+
+  const bodyHtml = total
+    ? `${sectionBlock(secWords, data.words)}${sectionBlock(secExpr, data.expressions)}${sectionBlock(secSent, data.sentences)}`
+    : `<div class="ai-tutor-mode-not-ready ai-shadowing-empty">${escapeHtml(t("ai.shadowing_no_content", "本课暂无可跟读内容。请先确认教材对话与词汇已加载。"))}</div>`;
 
   return `
     <div class="ai-tutor-mode-content ai-tutor-shadowing">
@@ -163,12 +196,11 @@ export function renderShadowingMode(aiItem, lang) {
         ${promptText ? `<p class="ai-shadowing-extra-desc">${escapeHtml(promptText)}</p>` : ""}
       </div>
       ${stepsHtml}
-      <div class="ai-tutor-lines-block mt-2">
-        <span class="ai-tutor-label">${escapeHtml(sentencesLabel)}</span>
-        ${linesHtml}
+      <div class="ai-shadowing-practice-body mt-2">
+        ${bodyHtml}
       </div>
       <div class="ai-shadowing-controls-row">
-        <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run" ${!lines.length ? "disabled" : ""}>
+        <button type="button" class="ai-btn ai-btn-primary ai-tutor-run ai-shadowing-run" ${!total ? "disabled" : ""}>
           ${escapeHtml(t("ai.shadowing_btn_start", "따라 읽기 시작"))}
         </button>
         <div class="ai-shadowing-secondary-btns">
@@ -248,7 +280,7 @@ export function renderModeContent(mode, aiItem, lang, lesson) {
     case "roleplay":
       return renderRoleplayMode(aiItem, lang, lesson);
     case "shadowing":
-      return renderShadowingMode(aiItem, lang);
+      return renderShadowingMode(aiItem, lang, lesson);
     case "free_talk":
       return renderFreeTalkMode(aiItem, lang);
     default:
