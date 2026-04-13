@@ -1,9 +1,25 @@
 /**
- * 따라 말하기：口语训练 — 中文目标 vs 浏览器语音识别结果，基础分档 + 反馈
+ * 따라 말하기：getUserMedia + MediaRecorder 真实录音闭环 + Web Speech 中文识别 + 评分
+ * 注意：freeTalkSpeechInput 第二次 toggle 只 stop，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
  */
 
-import { createFreeTalkSpeechInputSession } from "./freeTalkSpeechInput.js";
+import { createFreeTalkSpeechInputSession, isFreeTalkSpeechInputSupported } from "./freeTalkSpeechInput.js";
 import { speakText } from "../../platform/audio/ttsEngine.js";
+import {
+  startMediaRecorderCapture,
+  stopMediaRecorderCapture,
+  abortMediaSession,
+  getRecordingSupportInfo,
+  getBlobAudioDurationMs,
+} from "./shadowingAudioCapture.js";
+
+const LOG = "[AI Speaking]";
+
+function log(...args) {
+  if (typeof console !== "undefined" && console.log) {
+    console.log(LOG, ...args);
+  }
+}
 
 const str = (v) => (typeof v === "string" ? v.trim() : v != null ? String(v).trim() : "");
 
@@ -120,7 +136,7 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
   };
 }
 
-function buildFeedbackHtml(msg, recognizedText, t) {
+function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "") {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
   const score =
     msg.score != null
@@ -131,7 +147,7 @@ function buildFeedbackHtml(msg, recognizedText, t) {
       ? `<div class="ai-shadowing-feedback-rec"><span class="ai-shadowing-feedback-rec-label">${escapeHtml(safeT("ai.shadowing_recognized_label", "识别"))}</span> ${escapeHtml(String(recognizedText).trim())}</div>`
       : "";
   const body = msg.body ? `<div class="ai-shadowing-feedback-body">${escapeHtml(msg.body)}</div>` : "";
-  return `<div class="ai-shadowing-feedback-inner">
+  return `${extraTopHtml}<div class="ai-shadowing-feedback-inner">
     <div class="ai-shadowing-feedback-title">${escapeHtml(msg.title)}</div>
     ${score}
     ${rec}
@@ -139,8 +155,57 @@ function buildFeedbackHtml(msg, recognizedText, t) {
   </div>`;
 }
 
+function mapGetUserMediaError(e, t) {
+  const name = e && e.name ? String(e.name) : "";
+  const message = e && e.message ? String(e.message) : String(e || "");
+  log("getUserMedia error", "name=", name, "message=", message, e);
+  if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+    return {
+      title: t("ai.shadowing_err_mic_denied_title", "无法使用麦克风"),
+      body: t(
+        "ai.shadowing_err_mic_denied_body",
+        "浏览器未授予麦克风权限，请在地址栏中允许麦克风后重试。",
+      ),
+    };
+  }
+  if (name === "NotFoundError" || name === "DevicesNotFoundError") {
+    return {
+      title: t("ai.shadowing_err_no_mic_title", "未检测到麦克风"),
+      body: t("ai.shadowing_err_no_mic_body", "请连接麦克风设备后重试。"),
+    };
+  }
+  if (name === "NotSecureContext") {
+    return {
+      title: t("ai.shadowing_err_insecure_title", "需要安全连接"),
+      body: t(
+        "ai.shadowing_err_insecure_body",
+        "录音需要 HTTPS 或 localhost。请使用 https 访问，或本地打开页面。",
+      ),
+    };
+  }
+  return {
+    title: t("ai.shadowing_err_mic_failed_title", "无法开启麦克风"),
+    body: t("ai.shadowing_err_mic_failed_body", "无法访问麦克风：{detail}").replace("{detail}", escapeHtml(message)),
+  };
+}
+
+function infrastructureBlock(t, title, body) {
+  return `<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+    <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+    <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+  </div>`;
+}
+
+function formatBlobLine(blobResult, durationMs, safeT) {
+  if (!blobResult || !blobResult.blob || blobResult.sizeBytes <= 0) return "";
+  const sec = durationMs > 0 ? (durationMs / 1000).toFixed(1) : "?";
+  const kb = (blobResult.sizeBytes / 1024).toFixed(1);
+  const raw = safeT("ai.shadowing_blob_saved", "已录到音频：约 {seconds} 秒 / {sizeKb} KB");
+  return `<div class="ai-shadowing-feedback-blob">${escapeHtml(raw.replace("{seconds}", sec).replace("{sizeKb}", kb))}</div>`;
+}
+
 /**
- * 挂载：话筒 = 中文识别（zh-CN）+ 评分；喇叭 = 仅播汉字
+ * 挂载：话筒 = 真实录音 + 中文识别 + 评分；喇叭 = 仅播汉字
  * @returns {() => void} cleanup
  */
 export function mountShadowingSpeakingPractice(wrap, t) {
@@ -148,10 +213,45 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
   const speech = createFreeTalkSpeechInputSession({ uiLang: "cn" });
   let activeMicBtn = null;
+  /** @type {null | Awaited<ReturnType<typeof startMediaRecorderCapture>>} */
+  let mediaSession = null;
+  /** 第二次点击 stop 时先写入，供第一次 toggle 注册的 onResult/onError 读取 */
+  let pendingBlobResult = null;
 
   function cleanup() {
+    log("cleanup: abort speech + media");
     speech.abort();
+    abortMediaSession(mediaSession);
+    mediaSession = null;
+    pendingBlobResult = null;
     activeMicBtn = null;
+  }
+
+  const debugOn =
+    typeof localStorage !== "undefined" && localStorage.getItem("HANJI_DEBUG_SHADOWING") === "1";
+  if (debugOn) {
+    let dbg = wrap.querySelector(".ai-shadowing-audio-debug");
+    if (!dbg) {
+      dbg = document.createElement("div");
+      dbg.className = "ai-shadowing-audio-debug";
+      dbg.setAttribute("aria-hidden", "true");
+      const head = wrap.querySelector(".ai-shadowing-session-head");
+      if (head) head.appendChild(dbg);
+      else wrap.prepend(dbg);
+    }
+    const refreshDbg = () => {
+      const s = getRecordingSupportInfo();
+      dbg.textContent = [
+        `secureContext: ${s.secureContext}`,
+        `mediaDevices: ${s.mediaDevices}`,
+        `MediaRecorder: ${s.mediaRecorder}`,
+        `SpeechRecognition: ${s.speechRecognition}`,
+        `freeTalkSR_supported: ${isFreeTalkSpeechInputSupported()}`,
+        `mediaSession: ${mediaSession ? "active" : "null"}`,
+      ].join("\n");
+    };
+    refreshDbg();
+    wrap._shadowingDbgRefresh = refreshDbg;
   }
 
   wrap.querySelectorAll(".ai-shadowing-train-listen").forEach((btn) => {
@@ -169,85 +269,278 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const row = btn.closest(".ai-shadowing-train-item");
-      if (!row) return;
-      const targetZh = row.getAttribute("data-shadow-zh") || "";
-      const feedbackEl = row.querySelector(".ai-shadowing-train-feedback");
-      const statusEl = row.querySelector(".ai-shadowing-train-status");
+      void handleMicClick(btn);
+    });
+  });
 
-      if (speech.isListening()) {
-        if (activeMicBtn === btn) {
-          speech.toggle({
-            onResult() {},
-            onError() {},
-            onListeningChange() {},
-          });
-        } else {
-          speech.abort();
-          activeMicBtn = null;
-        }
+  async function handleMicClick(btn) {
+    const row = btn.closest(".ai-shadowing-train-item");
+    if (!row) return;
+    const targetZh = row.getAttribute("data-shadow-zh") || "";
+    const feedbackEl = row.querySelector(".ai-shadowing-train-feedback");
+    const statusEl = row.querySelector(".ai-shadowing-train-status");
+
+    const showFeedback = (html) => {
+      if (feedbackEl) {
+        feedbackEl.hidden = false;
+        feedbackEl.innerHTML = html;
+      }
+    };
+
+    const endRecordingUi = () => {
+      row.classList.remove("is-recording");
+      btn.classList.remove("is-recording");
+      btn.setAttribute("aria-pressed", "false");
+      if (statusEl) statusEl.hidden = true;
+      activeMicBtn = null;
+    };
+
+    if (speech.isListening()) {
+      if (activeMicBtn !== btn) {
+        speech.abort();
+        abortMediaSession(mediaSession);
+        mediaSession = null;
+        pendingBlobResult = null;
         return;
       }
 
-      if (activeMicBtn && activeMicBtn !== btn) {
-        speech.abort();
-      }
-
-      activeMicBtn = btn;
-      row.classList.add("is-recording");
-      btn.classList.add("is-recording");
-      btn.setAttribute("aria-pressed", "true");
+      log("mic: stop sequence — MediaRecorder.stop then SpeechRecognition.stop");
       if (statusEl) {
-        statusEl.textContent = t("ai.shadowing_speak_now", "请说吧");
         statusEl.hidden = false;
-      }
-      if (feedbackEl) {
-        feedbackEl.innerHTML = "";
-        feedbackEl.hidden = true;
+        statusEl.textContent = t("ai.shadowing_status_processing", "处理中…");
       }
 
+      try {
+        pendingBlobResult = await stopMediaRecorderCapture(mediaSession);
+        log("MediaRecorder finished", pendingBlobResult ? pendingBlobResult.sizeBytes : 0);
+      } catch (err) {
+        log("stopMediaRecorderCapture threw", err && err.name, err && err.message, err);
+        pendingBlobResult = null;
+      }
+      mediaSession = null;
+      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+
+      log("calling speech.toggle() to stop recognition (uses handlers from first toggle)");
       speech.toggle({
-        onResult: (text) => {
-          row.classList.remove("is-recording");
-          btn.classList.remove("is-recording");
-          btn.setAttribute("aria-pressed", "false");
-          if (statusEl) statusEl.hidden = true;
-          activeMicBtn = null;
-          const result = scoreShadowingUtterance(targetZh, text);
-          const msg = buildShadowingFeedbackMessage(result, targetZh, text, t);
-          if (feedbackEl) {
-            feedbackEl.hidden = false;
-            feedbackEl.innerHTML = buildFeedbackHtml(msg, text, t);
-          }
-        },
-        onError: (code) => {
-          row.classList.remove("is-recording");
-          btn.classList.remove("is-recording");
-          btn.setAttribute("aria-pressed", "false");
-          if (statusEl) statusEl.hidden = true;
-          activeMicBtn = null;
-          const noInput = code === "no_result" || code === "no_speech";
-          const result = noInput
-            ? { score: 0, band: "retry", reason: "no_speech" }
-            : { score: 0, band: "retry", reason: "no_speech" };
-          const msg = buildShadowingFeedbackMessage(result, targetZh, "", t);
-          if (feedbackEl) {
-            feedbackEl.hidden = false;
-            feedbackEl.innerHTML = buildFeedbackHtml(msg, "", t);
-          }
-        },
-        onListeningChange: (listening) => {
-          if (!listening) {
-            row.classList.remove("is-recording");
-            btn.classList.remove("is-recording");
-            btn.setAttribute("aria-pressed", "false");
-            if (statusEl) statusEl.hidden = true;
-            activeMicBtn = null;
-          }
-        },
+        onResult: () => {},
+        onError: () => {},
+        onListeningChange: () => {},
       });
+      return;
+    }
+
+    if (activeMicBtn && activeMicBtn !== btn) {
+      speech.abort();
+      abortMediaSession(mediaSession);
+      mediaSession = null;
+      pendingBlobResult = null;
+    }
+
+    activeMicBtn = btn;
+    row.classList.add("is-recording");
+    btn.classList.add("is-recording");
+    btn.setAttribute("aria-pressed", "true");
+    if (feedbackEl) {
+      feedbackEl.innerHTML = "";
+      feedbackEl.hidden = true;
+    }
+
+    const sup = getRecordingSupportInfo();
+    log("mic: start — support", sup);
+    if (!sup.secureContext) {
+      endRecordingUi();
+      showFeedback(
+        infrastructureBlock(
+          t,
+          t("ai.shadowing_err_insecure_title", "需要安全连接"),
+          t(
+            "ai.shadowing_err_insecure_body",
+            "录音需要 HTTPS 或 localhost。请使用 https 访问，或本地打开页面。",
+          ),
+        ),
+      );
+      return;
+    }
+    if (!sup.mediaDevices) {
+      endRecordingUi();
+      showFeedback(
+        infrastructureBlock(
+          t,
+          t("ai.shadowing_err_no_getusermedia_title", "无法访问麦克风 API"),
+          t("ai.shadowing_err_no_getusermedia_body", "当前环境不支持 navigator.mediaDevices.getUserMedia。"),
+        ),
+      );
+      return;
+    }
+    if (!sup.mediaRecorder) {
+      endRecordingUi();
+      showFeedback(
+        infrastructureBlock(
+          t,
+          t("ai.shadowing_err_no_mediarecorder_title", "不支持录音"),
+          t("ai.shadowing_err_no_mediarecorder_body", "当前浏览器不支持 MediaRecorder，请使用最新 Chrome / Edge。"),
+        ),
+      );
+      return;
+    }
+
+    if (statusEl) {
+      statusEl.hidden = false;
+      statusEl.textContent = t("ai.shadowing_status_requesting_mic", "正在请求麦克风权限…");
+    }
+
+    try {
+      log("getUserMedia + MediaRecorder.start");
+      mediaSession = await startMediaRecorderCapture();
+    } catch (e) {
+      log("startMediaRecorderCapture failed", e && e.name, e && e.message, e);
+      abortMediaSession(mediaSession);
+      mediaSession = null;
+      endRecordingUi();
+      const { title, body } = mapGetUserMediaError(e, t);
+      showFeedback(infrastructureBlock(t, title, body));
+      return;
+    }
+
+    if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+
+    if (statusEl) {
+      statusEl.textContent = t("ai.shadowing_speak_now", "请说吧");
+    }
+
+    if (!isFreeTalkSpeechInputSupported()) {
+      log("SpeechRecognition API missing");
+      endRecordingUi();
+      abortMediaSession(mediaSession);
+      mediaSession = null;
+      showFeedback(
+        infrastructureBlock(
+          t,
+          t("ai.shadowing_err_stt_unsupported_title", "不支持语音识别"),
+          t(
+            "ai.shadowing_err_stt_unsupported_body",
+            "当前浏览器不支持 Web Speech API。请使用 Chrome / Edge。麦克风录音已停止。",
+          ),
+        ),
+      );
+      return;
+    }
+
+    pendingBlobResult = null;
+
+    log("speech.toggle() start — registering onResult/onError for this session");
+    speech.toggle({
+      onResult: async (text) => {
+        log("speech onResult", str(text).slice(0, 160));
+        const blobResult = pendingBlobResult;
+        pendingBlobResult = null;
+        endRecordingUi();
+        const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
+        const blobLine = formatBlobLine(blobResult, durationMs, t);
+        const result = scoreShadowingUtterance(targetZh, text);
+        const msg = buildShadowingFeedbackMessage(result, targetZh, text, t);
+        row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
+        row._hanjiShadowingLastBlobMeta = blobResult
+          ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
+          : null;
+        showFeedback(buildFeedbackHtml(msg, text, t, blobLine));
+      },
+      onError: async (code, detail) => {
+        log("speech onError", "code=", code, "detail=", detail);
+        const blobResult = pendingBlobResult;
+        pendingBlobResult = null;
+        endRecordingUi();
+        const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
+        const blobLine = formatBlobLine(blobResult, durationMs, t);
+        row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
+        row._hanjiShadowingLastBlobMeta = blobResult
+          ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
+          : null;
+
+        if (code === "not_supported") {
+          abortMediaSession(mediaSession);
+          mediaSession = null;
+          showFeedback(
+            blobLine +
+              infrastructureBlock(
+                t,
+                t("ai.shadowing_err_stt_unsupported_title", "不支持语音识别"),
+                t(
+                  "ai.shadowing_err_stt_unsupported_body",
+                  "当前浏览器不支持 Web Speech 识别。可换用 Chrome / Edge。",
+                ),
+              ),
+          );
+          return;
+        }
+        if (code === "permission_denied") {
+          showFeedback(
+            blobLine +
+              infrastructureBlock(
+                t,
+                t("ai.shadowing_err_stt_denied_title", "语音识别权限被拒绝"),
+                t("ai.shadowing_err_stt_denied_body", "请允许语音识别相关权限后重试。"),
+              ),
+          );
+          return;
+        }
+        if (code === "start_failed") {
+          abortMediaSession(mediaSession);
+          mediaSession = null;
+          const d = detail != null ? String(detail) : "";
+          showFeedback(
+            blobLine +
+              infrastructureBlock(
+                t,
+                t("ai.shadowing_err_stt_start_title", "语音识别未能启动"),
+                t("ai.shadowing_err_stt_start_body", "详情：{detail}").replace("{detail}", escapeHtml(d)),
+              ),
+          );
+          return;
+        }
+
+        const noInput = code === "no_result" || code === "no_speech";
+        const hasAudio = blobResult && blobResult.sizeBytes > 800;
+        if (noInput && hasAudio) {
+          const msg = {
+            title: t("ai.shadowing_err_stt_no_text_title", "未识别到文字"),
+            body: t(
+              "ai.shadowing_err_stt_no_text_body",
+              "已保存本次录音，但未识别到中文内容。请大声、清晰地说，或检查浏览器语音识别服务。",
+            ),
+            score: 0,
+            band: "retry",
+          };
+          showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
+          return;
+        }
+        if (noInput) {
+          const msg = {
+            title: t("ai.shadowing_feedback_title_retry", "再试一次"),
+            body: t(
+              "ai.shadowing_feedback_no_speech_short",
+              "未检测到有效语音。请确认麦克风已开启并靠近嘴边后再试。",
+            ),
+            score: 0,
+            band: "retry",
+          };
+          showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
+          return;
+        }
+
+        const msg = {
+          title: t("ai.shadowing_err_stt_generic_title", "语音识别出错"),
+          body: t("ai.shadowing_err_stt_generic_body", "代码：{code}").replace("{code}", escapeHtml(String(code))),
+          score: 0,
+          band: "retry",
+        };
+        showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
+      },
+      onListeningChange: (listening) => {
+        log("speech onListeningChange", listening);
+      },
     });
-  });
+  }
 
   return cleanup;
 }
