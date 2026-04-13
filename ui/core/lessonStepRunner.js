@@ -304,9 +304,16 @@ export function mountLessonStepRunner() {
 
       const normalized = normalizeAIResult(data);
       console.info("[LUMINA askAI] response ok", {
+        httpStatus: r.status,
         textLength: (normalized.text || "").length,
         responseFallback: !!(data && data.fallback),
         modelUsed: data.modelUsed,
+        luminaResponseSource: data.luminaResponseSource,
+        rawGeminiTextLength: data.rawGeminiTextLength,
+        sanitizedEmpty: data.sanitizedEmpty,
+        keyCount: data.keyCount,
+        hasGeminiKey: data.hasGeminiKey,
+        lastErrorSnippet: data.lastError ? String(JSON.stringify(data.lastError)).slice(0, 200) : null,
       });
       return normalized;
     } catch (e) {

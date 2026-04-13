@@ -501,6 +501,7 @@ ${contextText ? contextText : "(none)"}
           const text = extracted.text || "";
           if (extracted.blockReason) {
             console.warn("[api/gemini] prompt blocked", { model, blockReason: extracted.blockReason });
+            lastError = { triedModel: model, blockReason: extracted.blockReason, emptyText: true };
           }
           if (extracted.finishReason && extracted.finishReason !== "STOP") {
             console.warn("[api/gemini] unusual finishReason", { model, finishReason: extracted.finishReason });
@@ -508,11 +509,22 @@ ${contextText ? contextText : "(none)"}
 
           if (text && text.trim()) {
             clearTimeout(timeout);
+            const rawGeminiTextLength = text.length;
             let outText = context?.lessonQA ? sanitizeLessonQAOutput(text) : text;
-            if (context?.lessonQA && !String(outText || "").trim()) {
+            const sanitizedEmpty = !!(context?.lessonQA && !String(outText || "").trim());
+            if (sanitizedEmpty) {
               outText = offlineFallback(userPrompt, explainLang, true);
             }
-            console.info("[api/gemini] gemini success", { model, textLength: outText.length });
+            const luminaResponseSource = sanitizedEmpty ? "offline_after_sanitize" : "gemini";
+            const usedFallback = sanitizedEmpty;
+            console.info("[api/gemini] gemini success", {
+              model,
+              rawGeminiTextLength,
+              outTextLength: outText.length,
+              luminaResponseSource,
+              sanitizedEmpty,
+              lessonQA: !!(context && context.lessonQA),
+            });
             if (context?.lessonQA) {
               res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
             }
@@ -522,15 +534,35 @@ ${contextText ? contextText : "(none)"}
               apiVersion: API_VERSION,
               explainLang,
               mode,
-              fallback: false,
+              fallback: usedFallback,
               hasGeminiKey: true,
               keyCount: keys.length,
-              ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
+              ...(context?.lessonQA
+                ? {
+                    luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
+                    luminaResponseSource,
+                    rawGeminiTextLength,
+                    sanitizedEmpty,
+                  }
+                : {}),
             });
           }
 
-          console.warn("[api/gemini] empty text from model, try next", { model, hasCandidates: !!data?.candidates?.length });
-          lastError = { triedModel: model, emptyText: true, snippet: rawText?.slice?.(0, 200) };
+          console.warn("[api/gemini] empty text from model, try next", {
+            model,
+            hasCandidates: !!data?.candidates?.length,
+            blockReason: extracted.blockReason,
+            finishReason: extracted.finishReason,
+          });
+          if (!lastError || !lastError.blockReason) {
+            lastError = {
+              triedModel: model,
+              emptyText: true,
+              blockReason: extracted.blockReason,
+              finishReason: extracted.finishReason,
+              snippet: rawText?.slice?.(0, 200),
+            };
+          }
 
         } catch (e) {
           const msg = e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e));
@@ -543,7 +575,12 @@ ${contextText ? contextText : "(none)"}
 
     clearTimeout(timeout);
 
-    console.warn("[api/gemini] all models failed or empty, using offline fallback", lastError);
+    console.warn("[api/gemini] all models failed or empty, using offline fallback", {
+      lastError,
+      mode,
+      lessonQA: !!(context && context.lessonQA),
+      keyCount: keys.length,
+    });
     const offline = offlineFallback(userPrompt, explainLang, !!context?.lessonQA);
     if (context?.lessonQA) {
       res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
@@ -558,7 +595,14 @@ ${contextText ? contextText : "(none)"}
       lastError,
       hasGeminiKey: keys.length > 0,
       keyCount: keys.length,
-      ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
+      ...(context?.lessonQA
+        ? {
+            luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
+            luminaResponseSource: "offline_all_models_failed",
+            rawGeminiTextLength: 0,
+            sanitizedEmpty: false,
+          }
+        : {}),
     });
 
   } catch (e) {

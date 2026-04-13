@@ -436,6 +436,22 @@ export async function runTutor(mode, aiItem, lessonData, lang, userInput = "") {
         }
       }
       const res = await window.JOY_RUNNER.askAI({ prompt, lang, mode, contextObj });
+      const api = res && res.raw && typeof res.raw === "object" ? res.raw : {};
+      if (mode === "free_talk" && typeof console !== "undefined" && console.info) {
+        console.info("[HANJIAPASS] runTutor free_talk → 页面最终使用 res.text（经 formatTutorOutput 再 sanitize 一次）", {
+          displaySource: "JOY_RUNNER.askAI → normalizeAIResult.text",
+          textLength: String(res && res.text != null ? res.text : "").length,
+          textPreview: String(res && res.text != null ? res.text : "").slice(0, 160),
+          fallback: api.fallback,
+          luminaResponseSource: api.luminaResponseSource,
+          modelUsed: api.modelUsed,
+          rawGeminiTextLength: api.rawGeminiTextLength,
+          sanitizedEmpty: api.sanitizedEmpty,
+          lastError: api.lastError,
+          hasGeminiKey: api.hasGeminiKey,
+          keyCount: api.keyCount,
+        });
+      }
       return { text: (res && res.text != null ? res.text : "") || "", raw: res };
     } catch (e) {
       if (mode === "free_talk" && typeof console !== "undefined" && console.error) {
