@@ -230,7 +230,7 @@
     "mode_desc_roleplay": "像真实情景一样练习打招呼和自我介绍。",
     "mode_desc_shadowing": "逐条对着麦克风说中文，获得识别、分数与反馈，专门练开口。",
     "shadowing_speaking_title": "口语练习",
-    "shadowing_speaking_lead": "逐条对着麦克风说中文，系统会识别并给出简单分数。",
+    "shadowing_speaking_lead": "逐条先听再跟说。点麦克风开口，会有简单反馈与分数。",
     "shadowing_speaking_intro": "看清汉字、拼音和释义后，点右侧话筒录音；再点一次结束录音。",
     "shadowing_train_listen_hint": "听示范（仅中文）",
     "shadowing_speak_mic": "点击录音",

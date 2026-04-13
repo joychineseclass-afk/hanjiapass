@@ -125,11 +125,12 @@ export function renderRoleplayMode(aiItem, lang, lesson) {
 /**
  * 渲染 Shadowing 面板：口语训练（单词 / 表达 / 句子，条状 + 话筒为主）
  */
-export function renderShadowingMode(aiItem, lang, lesson) {
-  const promptText = pickLang(aiItem && aiItem.prompt, lang);
+export function renderShadowingMode(_aiItem, lang, lesson) {
   const sessionTitle = t("ai.shadowing_speaking_title", "말하기 연습");
-  const sessionLead = t("ai.shadowing_speaking_lead", "한 줄씩 마이크에 대고 중국어로 말해 보세요. 인식과 간단한 점수를 드려요.");
-  const introLine = t("ai.shadowing_speaking_intro", "한자·병음·뜻을 확인한 뒤, 오른쪽 마이크를 눌러 녹음하세요. 다시 누르면 녹음이 끝납니다.");
+  const sessionLead = t(
+    "ai.shadowing_speaking_lead",
+    "한 줄씩 듣고 따라 말해 보세요. 마이크를 눌러 말하면 간단한 피드백과 점수를 드려요.",
+  );
 
   const data = lesson ? buildShadowingPracticeData(lesson, lang, t) : { words: [], expressions: [], sentences: [] };
   const total = data.words.length + data.expressions.length + data.sentences.length;
@@ -139,20 +140,19 @@ export function renderShadowingMode(aiItem, lang, lesson) {
     const safeAttr = escapeHtml(zh);
     const id = String(item?.id != null ? item.id : "").trim();
     const typ = String(item?.type != null ? item.type : "").trim();
-    const note = String(item?.note != null ? item.note : "").trim()
-      ? `<div class="ai-shadowing-train-note">${escapeHtml(String(item.note).trim())}</div>`
-      : "";
-    const sp = String(item?.speaker != null ? item.speaker : "").trim()
-      ? `<div class="ai-shadowing-train-speaker">${escapeHtml(String(item.speaker).trim())}</div>`
-      : "";
+    const py = String(item?.pinyin != null ? item.pinyin : "").trim();
+    const mean = String(item?.meaning != null ? item.meaning : "").trim();
+    let rowParts = `<span class="ai-shadowing-train-z">${escapeHtml(zh)}</span>`;
+    if (py) {
+      rowParts += `<span class="ai-shadowing-train-slash" aria-hidden="true"> / </span><span class="ai-shadowing-train-p">${escapeHtml(py)}</span>`;
+    }
+    if (mean) {
+      rowParts += `<span class="ai-shadowing-train-slash" aria-hidden="true"> / </span><span class="ai-shadowing-train-m">${escapeHtml(mean)}</span>`;
+    }
     return `<li class="ai-tutor-line-item ai-shadowing-line-item ai-shadowing-train-item"${id ? ` id="${escapeHtml(id)}"` : ""} data-item-type="${escapeHtml(typ)}" data-shadow-zh="${safeAttr}">
       <div class="ai-shadowing-train-cols">
         <div class="ai-shadowing-train-text">
-          ${sp}
-          <div class="ai-shadowing-train-zh">${escapeHtml(zh)}</div>
-          <div class="ai-shadowing-train-py">${escapeHtml(String(item?.pinyin != null ? item.pinyin : "").trim())}</div>
-          <div class="ai-shadowing-train-mean">${escapeHtml(String(item?.meaning != null ? item.meaning : "").trim())}</div>
-          ${note}
+          <div class="ai-shadowing-train-rowline">${rowParts}</div>
         </div>
         <div class="ai-shadowing-train-side">
           <button type="button" class="ai-btn ai-shadowing-train-listen" title="${escapeHtml(t("ai.shadowing_train_listen_hint", "听示范（仅中文）"))}" aria-label="${escapeHtml(t("ai.shadowing_train_listen_hint", "听示范"))}">🔊</button>
@@ -185,8 +185,6 @@ export function renderShadowingMode(aiItem, lang, lesson) {
       <div class="ai-shadowing-session-head">
         <h3 class="ai-shadowing-session-title">${escapeHtml(sessionTitle)}</h3>
         <p class="ai-shadowing-session-lead">${escapeHtml(sessionLead)}</p>
-        <p class="ai-shadowing-speaking-intro">${escapeHtml(introLine)}</p>
-        ${promptText ? `<p class="ai-shadowing-extra-desc">${escapeHtml(promptText)}</p>` : ""}
       </div>
       <div class="ai-shadowing-practice-body mt-2">
         ${bodyHtml}

@@ -1228,15 +1228,42 @@
   line-height: 1.5;
 }
 
-.ai-shadowing-speaking-intro {
-  margin: 8px 0 0 0;
-  font-size: 0.8125rem;
-  color: #64748b;
-  line-height: 1.5;
-}
-
 .ai-tutor-shadowing--speaking .ai-shadowing-session-title {
   color: #0c4a6e;
+}
+
+.ai-shadowing-train-rowline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 2px;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: #0f172a;
+}
+
+.ai-shadowing-train-z {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ai-shadowing-train-slash {
+  color: #94a3b8;
+  font-weight: 500;
+  flex: 0 0 auto;
+}
+
+.ai-shadowing-train-p {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.ai-shadowing-train-m {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #475569;
 }
 
 .ai-shadowing-train-list {
@@ -1309,43 +1336,6 @@
   border-color: #b91c1c !important;
   color: #fff !important;
   box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.35);
-}
-
-.ai-shadowing-train-zh {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #0f172a;
-  line-height: 1.35;
-}
-
-.ai-shadowing-train-py {
-  margin-top: 4px;
-  font-size: 0.8125rem;
-  color: #64748b;
-  letter-spacing: 0.02em;
-}
-
-.ai-shadowing-train-mean {
-  margin-top: 6px;
-  font-size: 0.8125rem;
-  color: #475569;
-  line-height: 1.45;
-}
-
-.ai-shadowing-train-speaker {
-  display: inline-block;
-  margin-bottom: 4px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: #94a3b8;
-  letter-spacing: 0.04em;
-}
-
-.ai-shadowing-train-note {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  color: #64748b;
-  line-height: 1.45;
 }
 
 .ai-shadowing-train-status {
