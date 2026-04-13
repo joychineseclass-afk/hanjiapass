@@ -709,6 +709,52 @@
   color: #64748b;
 }
 
+/* 자유 질문：渐进式等待（轻量，非流式） */
+.ai-free-talk-loading-root {
+  margin: 0;
+}
+
+.ai-free-talk-loading-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.ai-free-talk-loading-spinner {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.35em;
+  border-radius: 50%;
+  background: #94a3b8;
+  animation: ai-free-talk-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes ai-free-talk-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.ai-free-talk-loading-text {
+  flex: 1;
+  min-width: 0;
+  transition: opacity 0.2s ease;
+}
+
 /* —— 상황 대화：固定场景卡 + 逐轮练习 —— */
 .ai-situation-dialogue .ai-situation-picker {
   margin-bottom: 12px;

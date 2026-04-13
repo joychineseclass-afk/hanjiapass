@@ -17,6 +17,8 @@ import {
 import { handleLessonFocusSpeakClick, resetLessonFocusSpeakSession } from "./aiLessonFocusSpeak.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
 import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
+import { getCachedAnswer, setCachedAnswer, shouldCacheFreeTalkAnswer } from "./freeTalkCache.js";
+import { startFreeTalkLoadingHints } from "./freeTalkLoadingHints.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -147,12 +149,65 @@ export function mountAITutorPanel(container, opts = {}) {
       if (!resultWrap) return;
       resultWrap.classList.remove("hidden");
       const content = resultWrap.querySelector(".ai-tutor-result-content");
+
+      if (mode === "free_talk") {
+        const courseId = lessonData?.courseId != null ? String(lessonData.courseId) : "";
+        const lessonId =
+          lessonData?.id != null
+            ? String(lessonData.id)
+            : lessonData?.lessonId != null
+              ? String(lessonData.lessonId)
+              : "";
+        const uiLang = currentLang;
+
+        const cached = getCachedAnswer(courseId, lessonId, uiLang, userInput);
+        if (cached?.answerText) {
+          if (content) {
+            content.classList.remove("ai-tutor-result-empty");
+            const formatted = formatTutorOutput(mode, { text: cached.answerText }, currentLang);
+            content.innerHTML = formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
+          }
+          return;
+        }
+
+        console.info("[HANJIPASS freeTalk] ask start", { courseId, lessonId, uiLang });
+
+        let stopHints = () => {};
+        if (sendBtn) sendBtn.disabled = true;
+        try {
+          if (content) {
+            content.classList.remove("ai-tutor-result-empty");
+            const loadingWrap = document.createElement("div");
+            loadingWrap.className = "ai-free-talk-loading-root";
+            content.innerHTML = "";
+            content.appendChild(loadingWrap);
+            stopHints = startFreeTalkLoadingHints(loadingWrap, t);
+          }
+
+          const res = await runTutor(mode, aiItem, lessonData, currentLang, userInput);
+
+          const formatted = formatTutorOutput(mode, res, currentLang);
+          if (shouldCacheFreeTalkAnswer(res) && formatted.text) {
+            setCachedAnswer(courseId, lessonId, uiLang, userInput, formatted.text, "gemini");
+          } else {
+            console.info("[HANJIPASS freeTalk] skip cache");
+          }
+
+          if (content) {
+            content.classList.remove("ai-tutor-result-empty");
+            content.innerHTML =
+              formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
+          }
+        } finally {
+          stopHints();
+          if (sendBtn) sendBtn.disabled = false;
+        }
+        return;
+      }
+
       if (content) {
         content.classList.remove("ai-tutor-result-empty");
-        const loadingMsg =
-          mode === "free_talk"
-            ? t("ai.lesson_qa_loading", t("ai.loading", t("common.loading", "Loading...")))
-            : t("ai.loading", t("common.loading", "Loading..."));
+        const loadingMsg = t("ai.loading", t("common.loading", "Loading..."));
         content.innerHTML = `<div class="ai-tutor-loading">${escapeHtml(loadingMsg)}</div>`;
       }
 
