@@ -8,13 +8,8 @@ import { getLessonAIConfig, runTutor, formatTutorOutput } from "./aiTutorEngine.
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { renderModeContent } from "./aiTutorModes.js";
 import { buildSituationDialoguePlan, mountSituationDialogue } from "./aiSituationDialogue.js";
-import {
-  toggleShadowingPlayback,
-  cancelShadowingPlayback,
-  replayShadowingSentence,
-  skipShadowingNext,
-  speakShadowingLinePreview,
-} from "./aiShadowingPlayback.js";
+import { cancelShadowingPlayback } from "./aiShadowingPlayback.js";
+import { mountShadowingSpeakingPractice } from "./shadowingSpeakingPractice.js";
 import { handleLessonFocusSpeakClick, resetLessonFocusSpeakSession } from "./aiLessonFocusSpeak.js";
 import { AUDIO_ENGINE } from "../../platform/index.js";
 import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
@@ -138,6 +133,12 @@ export function mountAITutorPanel(container, opts = {}) {
           } catch (_) {}
           card._freeTalkCleanup = null;
         }
+        if (typeof card._shadowingCleanup === "function") {
+          try {
+            card._shadowingCleanup();
+          } catch (_) {}
+          card._shadowingCleanup = null;
+        }
         cancelShadowingPlayback(card);
         resetLessonFocusSpeakSession();
         try {
@@ -253,23 +254,15 @@ export function mountAITutorPanel(container, opts = {}) {
       }
     };
 
+    if (mode === "shadowing") {
+      try {
+        if (typeof wrap._shadowingCleanup === "function") wrap._shadowingCleanup();
+      } catch (_) {}
+      wrap._shadowingCleanup = mountShadowingSpeakingPractice(wrap, t);
+    }
+
     if (runBtn && mode !== "explain") {
-      if (mode === "shadowing") {
-        wrap.querySelectorAll(".ai-shadowing-card-listen").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const li = btn.closest(".ai-shadowing-line-item");
-            const zh = li && li.getAttribute("data-shadow-zh");
-            if (zh) speakShadowingLinePreview(zh, wrap);
-          });
-        });
-        runBtn.addEventListener("click", () => toggleShadowingPlayback(wrap, aiItem));
-        const rep = wrap.querySelector(".ai-shadowing-replay");
-        const nxt = wrap.querySelector(".ai-shadowing-next");
-        if (rep) rep.addEventListener("click", () => replayShadowingSentence(wrap, aiItem));
-        if (nxt) nxt.addEventListener("click", () => skipShadowingNext(wrap, aiItem));
-      } else if (mode === "roleplay") {
+      if (mode === "roleplay") {
         const plan = buildSituationDialoguePlan(lessonData, currentLang);
         if (plan) mountSituationDialogue(wrap, plan, currentLang);
         else runBtn.addEventListener("click", () => doRun());

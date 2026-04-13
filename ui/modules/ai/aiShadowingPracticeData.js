@@ -187,6 +187,19 @@ export function buildShadowingPracticeData(lesson, lang, t) {
     });
   }
 
+  words.forEach((it, i) => {
+    it.id = `shadow-w-${i}`;
+    it.type = "word";
+  });
+  expressions.forEach((it, i) => {
+    it.id = `shadow-e-${i}`;
+    it.type = "expression";
+  });
+  sentences.forEach((it, i) => {
+    it.id = `shadow-s-${i}`;
+    it.type = "sentence";
+  });
+
   return {
     words,
     expressions,
