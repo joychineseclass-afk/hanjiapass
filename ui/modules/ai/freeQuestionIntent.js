@@ -4,7 +4,7 @@
  */
 
 /** 与 lesson_qa prompt 改版同步；部署验证时可在控制台 / Network / GET /api/gemini 对照 */
-export const LUMINA_LESSON_QA_PROMPT_REV = "lesson_qa_v2";
+export const LUMINA_LESSON_QA_PROMPT_REV = "lesson_qa_v3_style";
 
 /**
  * 从完整 tutor prompt 中取出「学习者提问」段落；若无标记则全文用于分类。

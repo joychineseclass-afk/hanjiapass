@@ -1,6 +1,6 @@
 // /api/gemini.js
 import { classifyFreeQuestionIntent, LUMINA_LESSON_QA_PROMPT_REV } from "../ui/modules/ai/freeQuestionIntent.js";
-import { sanitizeLessonQAOutput, firstHanziFromLearnerQuestion } from "../ui/modules/ai/lessonQaSanitize.js";
+import { postProcessLessonQAOutput, firstHanziFromLearnerQuestion, lessonQaServerOfflineMessage } from "../ui/modules/ai/lessonQaSanitize.js";
 
 export const config = { runtime: "nodejs", maxDuration: 60 };
 
@@ -224,13 +224,7 @@ async function readPostJson(req) {
 function offlineFallback(userPrompt, explainLang, isLessonQA = false) {
   if (isLessonQA) {
     const hint = firstHanziFromLearnerQuestion(userPrompt);
-    const out = {
-      ko: `지금 AI 연결이 잠시 불안정해 자세한 설명을 드리기 어려워요. 잠시 후 같은 질문을 다시 보내 주세요. 질문에 나온 표현은 본과 복습과 함께 「${hint}」를 중심으로 천천히 살펴보면 좋아요.`,
-      en: `The tutor link is unstable right now, so I can’t give a full answer. Please try again in a moment. You can review the expression 「${hint}」with this lesson’s vocabulary and dialogue.`,
-      ja: `いま接続が不安定なため、詳しい説明ができません。しばらくして同じ質問をもう一度送ってください。本課の語句・会話とあわせて「${hint}」を復習してみてください。`,
-      zh: `目前连接不稳定，暂时无法详细讲解。请稍后在同一界面重试。可结合本课词语与对话，重点看看「${hint}」。`,
-    };
-    return out[explainLang] || out.ko;
+    return lessonQaServerOfflineMessage(explainLang, hint);
   }
 
   const langName = { ko: "한국어", en: "English", ja: "日本語", zh: "中文" }[explainLang] || "한국어";
@@ -451,25 +445,24 @@ export default async function handler(req, res) {
     const langMapName = { ko: "韩语", en: "英语", ja: "日语", zh: "中文" };
     const explainLangName = langMapName[explainLang] || "韩语";
 
-    /** 不向模型展示「问题类型」等可被复述的标题；仅用短横线说明写法 */
+    /** 意图微调（不出现英文枚举名给学生看；此处仅教师侧说明） */
     const lessonQAIntentGuide = (() => {
       switch (lessonQAIntent) {
         case "difference":
           return `
-- 学习者在比较两种说法：先一句话说清礼貌程度或常用对象有何不同，再各补一句典型使用关系；至多 1 个带引号的对照小例。
-- 禁止写成两条独立「释义」或两栏对比表。
+- 本题是「两说法对比」：第一段必须先点明礼貌程度或使用对象的核心差别；第二段用本课里的人物关系举一个带引号的中文对照小例；第三段一句提醒「先分清场合」即可。禁止写成两条独立释义或对比表。
 `.trim();
         case "usage":
           return `
-- 优先说明：常对谁说、在什么场合、语气礼貌度如何；再联系本课对话或目标里出现的情境，用一两句串起来；至多 1 个带引号的中文例，嵌在叙述里。
+- 本题问「对谁用、什么场合」：第一段先直接说对象与典型场景；第二段用本课对话里出现的关系（如师生、朋友）串起来，带引号引用本课中文；第三段一句提醒即可。勿泛讲整个汉语礼貌体系。
 `.trim();
         case "sentence_explain":
           return `
-- 先用 ${explainLangName} 把句意说清楚；再补一句常用场景或说话目的。若要更简单，可给更短口语改写，引号保留原句关键词；至多 1 个小例。
+- 本题要「讲简单」或「句意」：第一段用 ${explainLangName} 把整句意思说清；第二段点出句中 1～2 个关键表达（汉字保留），可联系本课一句；第三段一句提醒。禁止逐词拆成词条清单。
 `.trim();
         default:
           return `
-- 先正面回答「是什么、怎么用」，再一句场景或搭配提示；保留所涉词语的汉字原文。
+- 本题是一般词义：第一段给本课里最贴切的意思；第二段用本课词语或对话举一个带引号的短例；第三段一句提醒。禁止词条卡片格式。
 `.trim();
       }
     })();
@@ -486,22 +479,22 @@ export default async function handler(req, res) {
       }
       if (mode === "ask" && context?.lessonQA) {
         return `
-【任务：本课问答】
-- 你是本课「中文初学者」任课老师。回答短、清楚、口语化，像课堂随口讲解；不要百科腔、讲义体、技术文档体。
-- 优先使用下方 JSON 上下文中的本课标题、学习目标、重点表达、词汇、对话行、语法；不要编造课内没有的对话。
-- 说明语用 ${explainLangName}；教材里的中文词语、固定搭配、对话句必须保留汉字原文（不要用说明语翻译顶替原文）。需要时把拼音夹在自然句里，禁止单独一行「拼音：」。
-- 通常 2～4 个小句；全篇最多 1 个带引号的中文小例，嵌在叙述里。超纲时先给本课最接近的说法，再一句温和提示即可。
-- 不使用 markdown；不要长编号列表。
+【定版：本课自由提问（lesson_qa）— Lumina 任课老师】
+你是本课中文老师，面向 HSK1 初学者。语气自然、温和，像课堂上随口讲清楚；不要百科、不要讲义、不要技术文档腔。
 
-【绝对禁止写入你的回答（不得以任何形式出现，含作小标题、中英混写、仿字段）】
-任务类型、问题类型、lesson_qa、difference、usage、sentence_explain、meaning、
-中文：、拼音：、韩语解释：、韩文：、英语解释：、日语解释：、한국어해석、例句1：、例句2：、
-「中文：xxx」「拼音：xxx」式分行、管道符分列「xxx | xxx | xxx」的词条行。
-你的输出只能是连续自然段落，像老师对学生说话；不要展示内部分类、意图名、系统标签、思考步骤。
+【固定结构：三段式，必须遵守】
+① 第一段：用 ${explainLangName} 直接回答学生问题的核心（不要开场套话、不要先拆术语）。
+② 第二段：必须回到「本课」——引用或呼应下方 JSON 中的本课对话、重点词、学习目标之一处；用引号「」写出中文原词或原句；不要编造课内没有的课文。
+③ 第三段：只写一句简短的学习提醒或鼓励（如：先记使用场合、先分清关系）。
 
-【禁止“词条模板感”】
-- 禁止键值分行堆叠；禁止词典卡片、数据库字段感。
-- 下列词若出现在你的输出中即视为严重错误：任务类型、difference、usage、sentence_explain、meaning。
+【篇幅】全文约 3～6 句为宜，也可分成 2～4 个短段；禁止长篇大论、禁止「首先/其次/最后」展开论述。
+【语言】说明语一律 ${explainLangName}；中文词语与固定说法必须保留汉字；拼音仅在个别易混处极少量附带，禁止句句堆拼音。
+【形式】不使用 markdown、不用编号列表、不用小标题栏。
+
+【绝对禁止写入学生可见正文】
+不得以任何形式出现：任务类型、问题类型、lesson_qa、以及英文词 difference、usage、sentence_explain、meaning；
+不得出现字段式标题或分行：中文：、拼音：、韩语解释：、한국어해석：、例句1： 等；
+不要管道符分列、不要键值对堆叠。
 
 ${lessonQAIntentGuide}
         `.trim();
@@ -533,10 +526,8 @@ ${lessonQAIntentGuide}
 
 ${modeGuide}
 
-${context?.lessonQA ? `【输出结构：本课问答】
-- 自然连续小段话：第一句就答在问题核心上；再视需要 1～2 句补原因、对象或场景。
-- 全文 2～4 个小句；至多 1 个带引号的中文例，拼音若需要则写在自然句里。
-- 不要编号长列表；不要复述本提示中的任何标记或方括号用语。` : `【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
+${context?.lessonQA ? `【输出形态】
+连续自然段：先答→本课例子→一句提醒；短、清、像老师对同学说话；不要复述本提示里的指令词。` : `【输出结构】（尽量保持；quiz 模式可用“题目”替代例句）
 1. 中文词语 / 句子
 2. 拼音（标准、可朗读）
 3. ${explainLangName}解释（简洁、适合初学者）
@@ -661,7 +652,7 @@ ${contextText ? contextText : "(none)"}
           if (text && text.trim()) {
             clearTimeout(timeout);
             const rawGeminiTextLength = text.length;
-            let outText = context?.lessonQA ? sanitizeLessonQAOutput(text) : text;
+            let outText = context?.lessonQA ? postProcessLessonQAOutput(text) : text;
             const sanitizedEmpty = !!(context?.lessonQA && !String(outText || "").trim());
             if (sanitizedEmpty) {
               outText = offlineFallback(userPrompt, explainLang, true);

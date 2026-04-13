@@ -7,7 +7,7 @@
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { i18n } from "../../i18n.js";
 import { classifyFreeQuestionIntent, LUMINA_LESSON_QA_PROMPT_REV } from "./freeQuestionIntent.js";
-import { sanitizeLessonQAOutput } from "./lessonQaSanitize.js";
+import { postProcessLessonQAOutput, lessonQaEmptyFriendlyMessage } from "./lessonQaSanitize.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -376,25 +376,22 @@ export function buildTutorPrompt(mode, aiItem, lessonData, lang, userInput = "")
     /** 不用「任务类型/问题类型」等易被模型照抄的中文标记；意图仅作写作提示 */
     const intentHint =
       intent === "difference"
-        ? "[Instruction] Compare two expressions: state the main difference in politeness or addressee first, then one short contrast example in quotes if needed. Never output two dictionary entries."
+        ? "【意图】两说法对比：第一段写核心差异（礼貌/对象）；第二段用本课人物关系举带引号中文例；第三段一句提醒。"
         : intent === "usage"
-          ? "[Instruction] Focus on who/when/politeness and link to this lesson. Do not open with a glossary-style definition."
+          ? "【意图】使用场合：第一段写对谁、何时；第二段扣本课对话关系举中文例；第三段一句提醒。"
           : intent === "sentence_explain"
-            ? "[Instruction] Paraphrase meaning first, then usage; simpler rewrite in quotes if asked. No field labels."
-            : "[Instruction] Answer directly, then one sentence of context or collocation.";
+            ? "【意图】句意/更简单：第一段用口语说清整句；第二段点 1～2 个关键词并联系本课；第三段一句提醒。"
+            : "【意图】词义：第一段本课贴切义；第二段本课短例；第三段一句提醒。";
     /** 本段进入 /api/gemini 的 prompt（与 JSON 上下文配合；避免重复粘贴整课对话以控制长度） */
     return [
-      "[Scope] In-lesson Q&A only. [Critical] Your reply must NEVER include: 中文：, 拼音：, 한국어해석, 任务类型, lesson_qa, difference, usage, sentence_explain, meaning, or any colon-label lines. Output only teacher prose.",
-      "【你的角色】本课任课老师，对初学者口语讲解；禁止词典卡片、禁止字段名加冒号的分行。",
+      "[Scope] In-lesson Q&A. Never output colon-label lines or English meta-words. Output only teacher prose in natural paragraphs.",
+      "【定版结构】① 第一段直接答问题核心。② 第二段必须回到本课：用引号引用本课对话或词语。③ 第三段仅一句学习提醒或鼓励。",
+      "【你的角色】本课任课老师，HSK1 初学者能懂；不要百科、不要讲义编号体。",
       `【解释语言】除直接引用的中文词语/原句外，说明文字一律使用${explainLangLabel}。`,
-      "【中文呈现】本课词语与对话句保留汉字原文；拼音如需则写在自然句中，禁止单独一行「拼音：」。",
+      "【中文】保留汉字；拼音极少、禁止满篇。",
       intentHint,
-      "【回答结构】",
-      "（1）第一句就答在问题上；",
-      "（2）再补一两句：原因、对象差异或典型场景；",
-      "（3）全篇最多 1 个例句，用引号嵌入叙述；优先本课对话或本课词。",
-      "【篇幅】通常 2～4 个小句，不要长段、不要讲义体。",
-      "【范围】以 JSON 里本课标题、目标、重点表达、词汇、对话、语法为主；超纲时先给本课内最接近的答案，再一句轻提示，勿拒答。",
+      "【篇幅】约 3～6 句或 2～4 短段；禁止长篇。",
+      "【范围】以 JSON 本课内容为主；超纲时点到为止。",
       guide ? `【课程备忘】${guide}` : "",
       "",
       metaBlock,
@@ -629,13 +626,19 @@ export function formatTutorOutput(mode, result, lang) {
   }
   const rawBeforeSanitize = mode === "free_talk" ? text : "";
   if (mode === "free_talk" && text) {
-    const cleaned = sanitizeLessonQAOutput(text);
-    text = cleaned.trim()
-      ? cleaned
-      : t(
-          "ai.lesson_qa_answer_filtered",
-          "We adjusted the wording for readability. If something is missing, please ask again in a moment.",
-        );
+    const el =
+      lang === "zh" || lang === "cn"
+        ? "zh"
+        : lang === "en"
+          ? "en"
+          : lang === "jp" || lang === "ja"
+            ? "ja"
+            : "ko";
+    let cleaned = postProcessLessonQAOutput(text);
+    if (!cleaned.trim()) {
+      cleaned = lessonQaEmptyFriendlyMessage(el);
+    }
+    text = cleaned;
   }
   const html = text ? `<div class="ai-tutor-result">${escapeHtml(text).replace(/\n/g, "<br>")}</div>` : "";
   const out = { text, html };
