@@ -652,6 +652,76 @@
   margin-bottom: 0;
 }
 
+.ai-free-talk-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.ai-free-talk-voice-btn {
+  flex-shrink: 0;
+  width: 44px;
+  min-height: 44px;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ai-free-talk-voice-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.ai-free-talk-voice-btn:focus-visible {
+  outline: 2px solid #94a3b8;
+  outline-offset: 2px;
+}
+
+.ai-free-talk-voice-btn.is-listening {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  box-shadow: 0 0 0 1px #bae6fd inset;
+  animation: ai-free-talk-voice-pulse 1.2s ease-in-out infinite;
+}
+
+.ai-free-talk-voice-btn.is-disabled,
+.ai-free-talk-voice-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@keyframes ai-free-talk-voice-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px #bae6fd inset;
+  }
+  50% {
+    box-shadow: 0 0 0 2px #7dd3fc inset;
+  }
+}
+
+.ai-free-talk-voice-hint {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: #64748b;
+  min-height: 1.25em;
+}
+
+.ai-free-talk-input-row .ai-tutor-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+
 .ai-tutor-input {
   width: 100%;
   min-height: 80px;
@@ -678,6 +748,59 @@
   font-weight: 600;
   color: #475569;
   margin-bottom: 8px;
+}
+
+.ai-tutor-result-header--free-talk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-tutor-result-title-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-free-talk-answer-speak {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ai-free-talk-answer-speak:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.ai-free-talk-answer-speak:focus-visible {
+  outline: 2px solid #94a3b8;
+  outline-offset: 2px;
+}
+
+.ai-free-talk-answer-speak:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ai-free-talk-answer-speak.is-playing {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+}
+
+.ai-free-talk-answer-speak.is-paused {
+  background: #fef3c7;
+  border-color: #fcd34d;
 }
 
 .ai-tutor-result-content {

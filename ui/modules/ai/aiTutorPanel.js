@@ -19,6 +19,14 @@ import { AUDIO_ENGINE } from "../../platform/index.js";
 import { startNewHskSpeakChain } from "../hsk/hskRenderer.js";
 import { getCachedAnswer, setCachedAnswer, shouldCacheFreeTalkAnswer } from "./freeTalkCache.js";
 import { startFreeTalkLoadingHints } from "./freeTalkLoadingHints.js";
+import {
+  createFreeTalkSpeechInputSession,
+  isFreeTalkSpeechInputSupported,
+} from "./freeTalkSpeechInput.js";
+import {
+  mountFreeTalkAnswerSpeakButton,
+  resetFreeTalkAnswerTts,
+} from "./freeTalkAnswerTts.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -125,6 +133,12 @@ export function mountAITutorPanel(container, opts = {}) {
     if (body) {
       const card = body.querySelector(".ai-tutor-mode-card");
       if (card) {
+        if (typeof card._freeTalkCleanup === "function") {
+          try {
+            card._freeTalkCleanup();
+          } catch (_) {}
+          card._freeTalkCleanup = null;
+        }
         cancelShadowingPlayback(card);
         resetLessonFocusSpeakSession();
         try {
@@ -140,10 +154,16 @@ export function mountAITutorPanel(container, opts = {}) {
   function bindModeEvents(wrap, mode, aiItem, lessonData, currentLang) {
     if (!wrap) return;
 
+    let freeTalkAnswerPlain = "";
+    let refreshFreeTalkAnswerSpeak = () => {};
+    /** @type {null | ReturnType<typeof createFreeTalkSpeechInputSession>} */
+    let freeTalkSpeechSession = null;
+
     const runBtn = wrap.querySelector(".ai-tutor-run");
     const sendBtn = wrap.querySelector(".ai-tutor-send");
     const resultWrap = wrap.querySelector(".ai-tutor-result-wrap");
     const inputEl = wrap.querySelector(".ai-tutor-input");
+    const voiceBtn = wrap.querySelector(".ai-free-talk-voice-btn");
 
     const doRun = async (userInput = "") => {
       if (!resultWrap) return;
@@ -166,14 +186,24 @@ export function mountAITutorPanel(container, opts = {}) {
             content.classList.remove("ai-tutor-result-empty");
             const formatted = formatTutorOutput(mode, { text: cached.answerText }, currentLang);
             content.innerHTML = formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
+            freeTalkAnswerPlain = formatted.text || "";
+            refreshFreeTalkAnswerSpeak();
           }
           return;
         }
 
         console.info("[HANJIPASS freeTalk] ask start", { courseId, lessonId, uiLang });
 
+        if (freeTalkSpeechSession?.isListening?.()) {
+          freeTalkSpeechSession.abort();
+        }
+
+        freeTalkAnswerPlain = "";
+        refreshFreeTalkAnswerSpeak();
+
         let stopHints = () => {};
         if (sendBtn) sendBtn.disabled = true;
+        if (voiceBtn) voiceBtn.disabled = true;
         try {
           if (content) {
             content.classList.remove("ai-tutor-result-empty");
@@ -197,10 +227,13 @@ export function mountAITutorPanel(container, opts = {}) {
             content.classList.remove("ai-tutor-result-empty");
             content.innerHTML =
               formatted.html || `<span class="ai-tutor-result-placeholder">${escapeHtml(t("ai.result_empty", "No response yet."))}</span>`;
+            freeTalkAnswerPlain = formatted.text || "";
+            refreshFreeTalkAnswerSpeak();
           }
         } finally {
           stopHints();
           if (sendBtn) sendBtn.disabled = false;
+          if (voiceBtn) voiceBtn.disabled = !isFreeTalkSpeechInputSupported();
         }
         return;
       }
@@ -239,6 +272,10 @@ export function mountAITutorPanel(container, opts = {}) {
       sendBtn.addEventListener("click", () => {
         const val = str(inputEl.value);
         if (!val) {
+          if (wrap.classList.contains("ai-tutor-free_talk")) {
+            freeTalkAnswerPlain = "";
+            refreshFreeTalkAnswerSpeak();
+          }
           if (resultWrap) {
             resultWrap.classList.remove("hidden");
             const content = resultWrap.querySelector(".ai-tutor-result-content");
@@ -253,19 +290,97 @@ export function mountAITutorPanel(container, opts = {}) {
       });
     }
 
-    if (mode === "free_talk" && inputEl) {
-      wrap.querySelectorAll(".ai-free-talk-example-chip").forEach((chip) => {
-        chip.addEventListener("click", () => {
-          const idx = chip.getAttribute("data-example-index");
-          if (!idx) return;
-          const text = str(t(`ai.free_question_example_${idx}`, ""));
-          if (!text) return;
-          inputEl.value = text;
-          try {
-            inputEl.focus();
-          } catch (_) {}
+    if (mode === "free_talk") {
+      const voiceHint = wrap.querySelector(".ai-free-talk-voice-hint");
+      const answerSpeakBtn = wrap.querySelector(".ai-free-talk-answer-speak");
+
+      refreshFreeTalkAnswerSpeak = mountFreeTalkAnswerSpeakButton(
+        answerSpeakBtn,
+        () => freeTalkAnswerPlain,
+        currentLang,
+        t,
+      );
+
+      const speechSession = createFreeTalkSpeechInputSession({ uiLang: currentLang });
+      freeTalkSpeechSession = speechSession;
+
+      function showVoiceHintMessage(msg) {
+        if (!voiceHint) return;
+        voiceHint.textContent = msg || "";
+        voiceHint.hidden = !msg;
+        if (msg) {
+          window.setTimeout(() => {
+            if (voiceHint.textContent === msg) {
+              voiceHint.textContent = "";
+              voiceHint.hidden = true;
+            }
+          }, 4200);
+        }
+      }
+
+      if (voiceBtn) {
+        const voiceOk = isFreeTalkSpeechInputSupported();
+        if (!voiceOk) {
+          voiceBtn.disabled = true;
+          voiceBtn.classList.add("is-disabled");
+        }
+        voiceBtn.addEventListener("click", () => {
+          if (!voiceOk) {
+            showVoiceHintMessage(t("ai.free_talk_voice_not_supported", ""));
+            return;
+          }
+          resetFreeTalkAnswerTts();
+          speechSession.toggle({
+            onResult: (text) => {
+              if (inputEl) inputEl.value = text;
+              voiceBtn.classList.remove("is-listening");
+            },
+            onError: (code) => {
+              voiceBtn.classList.remove("is-listening");
+              if (code === "permission_denied") {
+                showVoiceHintMessage(t("ai.free_talk_voice_permission_denied", ""));
+              } else if (code === "not_supported") {
+                showVoiceHintMessage(t("ai.free_talk_voice_not_supported", ""));
+              } else {
+                showVoiceHintMessage(t("ai.free_talk_voice_retry", ""));
+              }
+            },
+            onListeningChange: (listening) => {
+              voiceBtn.classList.toggle("is-listening", listening);
+              if (voiceHint) {
+                if (listening) {
+                  voiceHint.textContent = t("ai.free_talk_voice_listening", "");
+                  voiceHint.hidden = false;
+                } else if (!voiceHint.textContent || voiceHint.textContent === t("ai.free_talk_voice_listening", "")) {
+                  voiceHint.textContent = "";
+                  voiceHint.hidden = true;
+                }
+              }
+            },
+          });
         });
-      });
+      }
+
+      wrap._freeTalkCleanup = () => {
+        speechSession.abort();
+        freeTalkSpeechSession = null;
+        resetFreeTalkAnswerTts();
+      };
+
+      if (inputEl) {
+        wrap.querySelectorAll(".ai-free-talk-example-chip").forEach((chip) => {
+          chip.addEventListener("click", () => {
+            const idx = chip.getAttribute("data-example-index");
+            if (!idx) return;
+            const text = str(t(`ai.free_question_example_${idx}`, ""));
+            if (!text) return;
+            inputEl.value = text;
+            try {
+              inputEl.focus();
+            } catch (_) {}
+          });
+        });
+      }
     }
 
     const speakAllBtn = wrap.querySelector(".ai-lesson-focus-speak-all");

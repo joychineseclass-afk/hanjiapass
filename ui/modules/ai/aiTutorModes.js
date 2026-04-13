@@ -51,6 +51,24 @@ function resultAreaHtml(emptyState = true, resultTitleKey = "ai.result_title") {
   `;
 }
 
+/** 自由提问：답변 标题左侧朗读按钮 */
+function freeTalkResultAreaHtml() {
+  const emptyText = t("ai.result_empty", "No response yet.");
+  const titleText = t("ai.free_question_answer_title", "Answer");
+  const playLbl = t("ai.free_talk_play_answer", "Listen to answer");
+  return `
+    <div class="ai-tutor-result-header ai-tutor-result-header--free-talk">
+      <button type="button" class="ai-free-talk-answer-speak" disabled aria-label="${escapeHtml(playLbl)}" title="${escapeHtml(playLbl)}">
+        <span class="ai-free-talk-answer-speak-ic" aria-hidden="true">🔊</span>
+      </button>
+      <span class="ai-tutor-result-title-text">${escapeHtml(titleText)}</span>
+    </div>
+    <div class="ai-tutor-result-content ai-tutor-result-empty">
+      <span class="ai-tutor-result-placeholder">${escapeHtml(emptyText)}</span>
+    </div>
+  `;
+}
+
 /**
  * 渲染 Explain 面板：本课重点讲解区（固定模板，非 AI 聊天/按钮触发）
  */
@@ -193,6 +211,8 @@ export function renderFreeTalkMode(aiItem, lang) {
     })
     .join("");
 
+  const voiceLbl = t("ai.free_talk_voice_input", "Voice question");
+
   return `
     <div class="ai-tutor-mode-content ai-tutor-free_talk">
       <p class="ai-tutor-mode-desc ai-tutor-free-talk-intro">${escapeHtml(intro)}</p>
@@ -202,12 +222,18 @@ export function renderFreeTalkMode(aiItem, lang) {
         <div class="ai-free-talk-chips">${chips}</div>
       </div>
       <div class="ai-tutor-input-group">
-        <textarea class="ai-tutor-input" rows="3" placeholder="${escapeHtml(placeholder)}"></textarea>
+        <div class="ai-free-talk-input-row">
+          <button type="button" class="ai-free-talk-voice-btn" aria-label="${escapeHtml(voiceLbl)}" title="${escapeHtml(voiceLbl)}">
+            <span class="ai-free-talk-voice-ic" aria-hidden="true">🎤</span>
+          </button>
+          <textarea class="ai-tutor-input" rows="3" placeholder="${escapeHtml(placeholder)}"></textarea>
+        </div>
+        <p class="ai-free-talk-voice-hint" hidden aria-live="polite"></p>
         <button type="button" class="ai-btn ai-btn-primary ai-tutor-send mt-2">
           ${escapeHtml(t("ai.free_question_submit", "Ask"))}
         </button>
       </div>
-      <div class="ai-tutor-result-wrap mt-3">${resultAreaHtml(true, "ai.free_question_answer_title")}</div>
+      <div class="ai-tutor-result-wrap mt-3">${freeTalkResultAreaHtml()}</div>
     </div>
   `;
 }
