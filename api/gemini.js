@@ -104,18 +104,73 @@ function summarizeApiKey(keys) {
   };
 }
 
+/**
+ * @returns {{ text: string, blockReason?: string, finishReason?: string, apiError?: unknown, emptyParts?: boolean, blockSource?: string }}
+ */
 function extractText(data) {
-  const blockReason = data?.promptFeedback?.blockReason;
-  if (blockReason) {
-    return { text: "", blockReason };
+  const pfBlock = data?.promptFeedback?.blockReason;
+  const cand0 = data?.candidates?.[0];
+  const finishReason = cand0?.finishReason;
+  if (pfBlock) {
+    return { text: "", blockReason: String(pfBlock), finishReason, blockSource: "prompt_feedback" };
   }
-  const parts = data?.candidates?.[0]?.content?.parts;
+  const parts = cand0?.content?.parts;
   if (!Array.isArray(parts) || !parts.length) {
-    const fr = data?.candidates?.[0]?.finishReason;
-    return { text: "", finishReason: fr || undefined, apiError: data?.error };
+    return {
+      text: "",
+      finishReason: finishReason || undefined,
+      emptyParts: true,
+      apiError: data?.error,
+    };
   }
   const text = parts.map(p => p?.text || "").join("").trim();
-  return { text };
+  if (!text && (finishReason === "SAFETY" || finishReason === "BLOCKLIST")) {
+    return {
+      text: "",
+      blockReason: String(finishReason),
+      finishReason,
+      blockSource: "candidate_finish",
+    };
+  }
+  return { text, finishReason };
+}
+
+function safeErrMessage(data, rawFallback) {
+  const m = data?.error?.message ?? data?.error;
+  if (typeof m === "string") return m.slice(0, 800);
+  if (m && typeof m === "object") return JSON.stringify(m).slice(0, 800);
+  return String(rawFallback || "").slice(0, 500);
+}
+
+function googleApiErrorCode(data) {
+  const e = data?.error;
+  if (!e || typeof e !== "object") return null;
+  if (e.code != null) return String(e.code);
+  if (e.status != null) return String(e.status);
+  return null;
+}
+
+/**
+ * @param {object} p
+ * @returns {{ type: string, message: string, status: number | null, model: string | null, code: string | null, blockReason: string | null }}
+ */
+function buildLastError(p) {
+  return {
+    type: p.type,
+    message: String(p.message || "").slice(0, 1200),
+    status: p.status != null ? Number(p.status) : null,
+    model: p.model != null ? String(p.model) : null,
+    code: p.code != null ? String(p.code) : null,
+    blockReason: p.blockReason != null ? String(p.blockReason) : null,
+  };
+}
+
+function deploymentMeta() {
+  return {
+    deploymentEnv: process.env.VERCEL_ENV || process.env.NODE_ENV || "unknown",
+    vercelUrl: process.env.VERCEL_URL || null,
+    deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
+  };
 }
 
 /** Vercel 部分环境下 req.body 未解析时，从流中读取 JSON */
@@ -262,8 +317,16 @@ export default async function handler(req, res) {
       keyCount: diag.keyCount,
       presentEnvNameCount: diag.presentEnvNameCount,
       envPresence: diag.envPresence,
-      vercelEnv: process.env.VERCEL_ENV || null,
-      deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
+      checkedEnvNames: GEMINI_KEY_ENV_NAMES,
+      triedModels: [],
+      fallback: false,
+      luminaResponseSource: "health_check",
+      modelUsed: null,
+      rawGeminiTextLength: 0,
+      sanitizedEmpty: false,
+      blockReason: null,
+      lastError: null,
+      ...deploymentMeta(),
       luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
     });
   }
@@ -290,13 +353,28 @@ export default async function handler(req, res) {
       return res.status(500).json({
         error: "Missing GEMINI API key(s) in Environment Variables.",
         code: "MISSING_GEMINI_KEY",
+        text: null,
         hasGeminiKey: false,
         keyCount: 0,
         presentEnvNameCount: diag.presentEnvNameCount,
         envPresence: diag.envPresence,
         checkedEnvNames: GEMINI_KEY_ENV_NAMES,
-        vercelEnv: process.env.VERCEL_ENV || null,
-        deploymentId: process.env.VERCEL_DEPLOYMENT_ID || null,
+        triedModels: [],
+        fallback: true,
+        luminaResponseSource: "missing_key",
+        modelUsed: null,
+        rawGeminiTextLength: 0,
+        sanitizedEmpty: false,
+        blockReason: null,
+        lastError: buildLastError({
+          type: "missing_key",
+          message: "No GEMINI_API_KEY (or compatible) in server environment.",
+          status: 500,
+          model: null,
+          code: "MISSING_GEMINI_KEY",
+          blockReason: null,
+        }),
+        ...deploymentMeta(),
       });
     }
 
@@ -324,7 +402,33 @@ export default async function handler(req, res) {
     // ✅ 输入保护（避免超长）
     const userPromptRaw = promptFromBody;
     const userPrompt = clampString(userPromptRaw, context?.lessonQA ? 4500 : 2000);
-    if (!userPrompt) return res.status(400).json({ error: "Empty prompt." });
+    if (!userPrompt) {
+      const d400 = getGeminiKeyEnvDiagnostics(keys);
+      return res.status(400).json({
+        error: "Empty prompt.",
+        fallback: true,
+        luminaResponseSource: "bad_request",
+        modelUsed: null,
+        rawGeminiTextLength: 0,
+        sanitizedEmpty: false,
+        blockReason: null,
+        triedModels: [],
+        lastError: buildLastError({
+          type: "bad_request",
+          message: "prompt / message body empty",
+          status: 400,
+          model: null,
+          code: "EMPTY_PROMPT",
+          blockReason: null,
+        }),
+        hasGeminiKey: keys.length > 0,
+        keyCount: keys.length,
+        presentEnvNameCount: d400.presentEnvNameCount,
+        envPresence: d400.envPresence,
+        checkedEnvNames: GEMINI_KEY_ENV_NAMES,
+        ...deploymentMeta(),
+      });
+    }
 
     const qaMeta = context?.lessonQA && typeof context.lessonQA === "object" ? context.lessonQA : null;
     const lessonQAIntent =
@@ -457,9 +561,22 @@ ${contextText ? contextText : "(none)"}
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 55000);
 
-    let lastError = null;
+    const triedModels = [];
+    let lastAggregateError = null;
 
-    for (const apiKey of keys) {
+    const baseFields = {
+      hasGeminiKey: true,
+      keyCount: keys.length,
+      checkedEnvNames: GEMINI_KEY_ENV_NAMES,
+      envPresence: diag.envPresence,
+      presentEnvNameCount: diag.presentEnvNameCount,
+      ...deploymentMeta(),
+      apiVersion: API_VERSION,
+      explainLang,
+      mode,
+    };
+
+    outer: for (const apiKey of keys) {
       for (const model of DEFAULT_MODEL_CANDIDATES) {
         const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:generateContent`;
 
@@ -479,31 +596,65 @@ ${contextText ? contextText : "(none)"}
 
           const rawText = await resp.text();
           let data = {};
-          try { data = JSON.parse(rawText); }
-          catch { data = { error: { message: rawText } }; }
+          try {
+            data = JSON.parse(rawText);
+          } catch {
+            data = { error: { message: rawText } };
+          }
 
           if (!resp.ok) {
-            const errMsg = data?.error?.message || data?.error || rawText?.slice?.(0, 500) || "";
-            console.warn("[api/gemini] gemini HTTP error", {
+            const errMsg = safeErrMessage(data, rawText);
+            const code = googleApiErrorCode(data);
+            triedModels.push({
+              model,
+              ok: false,
+              status: resp.status,
+              textLength: 0,
+              blockReason: null,
+              errorType: "model_http_error",
+              message: errMsg.slice(0, 400),
+              code,
+            });
+            lastAggregateError = buildLastError({
+              type: "model_http_error",
+              message: errMsg,
               status: resp.status,
               model,
-              message: String(errMsg).slice(0, 400),
+              code,
+              blockReason: null,
             });
-            if (isLikelyModelNotFound(data)) {
-              lastError = { status: resp.status, triedModel: model, details: data };
-              continue;
-            }
-            lastError = { status: resp.status, triedModel: model, details: data };
-            break;
+            console.warn("[api/gemini] gemini HTTP error", { status: resp.status, model, code, message: errMsg.slice(0, 200) });
+            if (isLikelyModelNotFound(data)) continue;
+            continue;
           }
 
           const extracted = extractText(data);
           const text = extracted.text || "";
-          if (extracted.blockReason) {
-            console.warn("[api/gemini] prompt blocked", { model, blockReason: extracted.blockReason });
-            lastError = { triedModel: model, blockReason: extracted.blockReason, emptyText: true };
+
+          if (extracted.blockReason && !String(text).trim()) {
+            triedModels.push({
+              model,
+              ok: false,
+              status: 200,
+              textLength: 0,
+              blockReason: extracted.blockReason,
+              errorType: "model_blocked",
+              message: `Input/output blocked (${extracted.blockSource || "unknown"})`,
+              code: null,
+            });
+            lastAggregateError = buildLastError({
+              type: "model_blocked",
+              message: `Blocked: ${extracted.blockReason}`,
+              status: 200,
+              model,
+              code: null,
+              blockReason: extracted.blockReason,
+            });
+            console.warn("[api/gemini] blocked", { model, blockReason: extracted.blockReason });
+            continue;
           }
-          if (extracted.finishReason && extracted.finishReason !== "STOP") {
+
+          if (extracted.finishReason && extracted.finishReason !== "STOP" && extracted.finishReason !== "MAX_TOKENS") {
             console.warn("[api/gemini] unusual finishReason", { model, finishReason: extracted.finishReason });
           }
 
@@ -515,99 +666,172 @@ ${contextText ? contextText : "(none)"}
             if (sanitizedEmpty) {
               outText = offlineFallback(userPrompt, explainLang, true);
             }
-            const luminaResponseSource = sanitizedEmpty ? "offline_after_sanitize" : "gemini";
+            const luminaResponseSource = sanitizedEmpty ? "sanitize_to_empty" : "gemini";
             const usedFallback = sanitizedEmpty;
+
+            triedModels.push({
+              model,
+              ok: true,
+              status: 200,
+              textLength: rawGeminiTextLength,
+              blockReason: null,
+              errorType: sanitizedEmpty ? "sanitize_to_empty" : "ok",
+              message: sanitizedEmpty ? "Model returned text but sanitize removed all visible lines" : "ok",
+              code: null,
+            });
+
             console.info("[api/gemini] gemini success", {
               model,
               rawGeminiTextLength,
-              outTextLength: outText.length,
               luminaResponseSource,
               sanitizedEmpty,
-              lessonQA: !!(context && context.lessonQA),
             });
+
             if (context?.lessonQA) {
               res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
             }
+
             return res.status(200).json({
               text: outText,
               modelUsed: model,
-              apiVersion: API_VERSION,
-              explainLang,
-              mode,
               fallback: usedFallback,
-              hasGeminiKey: true,
-              keyCount: keys.length,
-              ...(context?.lessonQA
-                ? {
-                    luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
-                    luminaResponseSource,
-                    rawGeminiTextLength,
-                    sanitizedEmpty,
-                  }
-                : {}),
+              luminaResponseSource,
+              rawGeminiTextLength,
+              sanitizedEmpty,
+              blockReason: null,
+              lastError: usedFallback
+                ? buildLastError({
+                    type: "sanitize_to_empty",
+                    message: "lesson_qa sanitizer removed all lines; using offline copy",
+                    status: 200,
+                    model,
+                    code: null,
+                    blockReason: null,
+                  })
+                : null,
+              triedModels,
+              ...baseFields,
+              ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
             });
           }
 
-          console.warn("[api/gemini] empty text from model, try next", {
+          const emptyType = extracted.finishReason === "SAFETY" || extracted.blockReason ? "model_blocked" : "model_empty_text";
+          const br = extracted.blockReason || (extracted.finishReason === "SAFETY" ? "SAFETY" : null);
+          triedModels.push({
             model,
-            hasCandidates: !!data?.candidates?.length,
-            blockReason: extracted.blockReason,
-            finishReason: extracted.finishReason,
+            ok: false,
+            status: 200,
+            textLength: 0,
+            blockReason: br,
+            errorType: emptyType,
+            message: extracted.emptyParts ? "No candidates/parts" : "Empty text",
+            code: extracted.finishReason || null,
           });
-          if (!lastError || !lastError.blockReason) {
-            lastError = {
-              triedModel: model,
-              emptyText: true,
-              blockReason: extracted.blockReason,
-              finishReason: extracted.finishReason,
-              snippet: rawText?.slice?.(0, 200),
-            };
-          }
-
+          lastAggregateError = buildLastError({
+            type: emptyType,
+            message: extracted.emptyParts ? "Empty candidates or parts" : "Model returned empty text",
+            status: 200,
+            model,
+            code: extracted.finishReason ? String(extracted.finishReason) : null,
+            blockReason: br,
+          });
+          console.warn("[api/gemini] empty text from model, try next", { model, finishReason: extracted.finishReason });
         } catch (e) {
-          const msg = e?.name === "AbortError" ? "Request timeout" : (e?.message || String(e));
+          const isAbort = e?.name === "AbortError";
+          const msg = isAbort ? "Request timeout (55s)" : (e?.message || String(e));
+          triedModels.push({
+            model,
+            ok: false,
+            status: isAbort ? 408 : 0,
+            textLength: 0,
+            blockReason: null,
+            errorType: isAbort ? "request_timeout" : "fetch_exception",
+            message: msg.slice(0, 400),
+            code: null,
+          });
+          lastAggregateError = buildLastError({
+            type: isAbort ? "request_timeout" : "fetch_exception",
+            message: msg,
+            status: isAbort ? 408 : null,
+            model,
+            code: null,
+            blockReason: null,
+          });
           console.warn("[api/gemini] gemini fetch exception", { model, error: msg });
-          lastError = { error: msg, triedModel: model };
-          if (e?.name === "AbortError") break;
+          if (isAbort) break outer;
         }
       }
     }
 
     clearTimeout(timeout);
 
-    console.warn("[api/gemini] all models failed or empty, using offline fallback", {
-      lastError,
-      mode,
-      lessonQA: !!(context && context.lessonQA),
-      keyCount: keys.length,
-    });
     const offline = offlineFallback(userPrompt, explainLang, !!context?.lessonQA);
+    const finalLastError =
+      lastAggregateError ||
+      buildLastError({
+        type: "all_models_failed",
+        message: "Every model candidate returned HTTP error, blocked, or empty text.",
+        status: null,
+        model: triedModels.length ? triedModels[triedModels.length - 1].model : null,
+        code: null,
+        blockReason: null,
+      });
+
+    console.warn("[api/gemini] all models failed or empty, using offline fallback", {
+      triedCount: triedModels.length,
+      lastType: finalLastError.type,
+    });
+
     if (context?.lessonQA) {
       res.setHeader("X-Lumina-LessonQA-Rev", LUMINA_LESSON_QA_PROMPT_REV);
     }
+
     return res.status(200).json({
       text: offline,
       modelUsed: null,
-      apiVersion: API_VERSION,
-      explainLang,
-      mode,
       fallback: true,
-      lastError,
-      hasGeminiKey: keys.length > 0,
-      keyCount: keys.length,
-      ...(context?.lessonQA
-        ? {
-            luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV,
-            luminaResponseSource: "offline_all_models_failed",
-            rawGeminiTextLength: 0,
-            sanitizedEmpty: false,
-          }
-        : {}),
+      luminaResponseSource: "all_models_failed",
+      rawGeminiTextLength: 0,
+      sanitizedEmpty: false,
+      blockReason: finalLastError.blockReason,
+      lastError: finalLastError,
+      triedModels,
+      ...baseFields,
+      ...(context?.lessonQA ? { luminaLessonQAPromptRev: LUMINA_LESSON_QA_PROMPT_REV } : {}),
     });
 
   } catch (e) {
+    const msg = e?.message || String(e);
+    let k = [];
+    let diag = { envPresence: {}, presentEnvNameCount: 0 };
+    try {
+      k = getApiKeys();
+      diag = getGeminiKeyEnvDiagnostics(k);
+    } catch (_) {}
     return res.status(500).json({
-      error: "Server error: " + (e?.message || String(e)),
+      error: "Server error: " + msg,
+      text: null,
+      fallback: true,
+      luminaResponseSource: "server_exception",
+      modelUsed: null,
+      rawGeminiTextLength: 0,
+      sanitizedEmpty: false,
+      blockReason: null,
+      triedModels: [],
+      lastError: buildLastError({
+        type: "server_exception",
+        message: msg.slice(0, 800),
+        status: 500,
+        model: null,
+        code: "SERVER_ERROR",
+        blockReason: null,
+      }),
+      hasGeminiKey: k.length > 0,
+      keyCount: k.length,
+      presentEnvNameCount: diag.presentEnvNameCount,
+      envPresence: diag.envPresence,
+      checkedEnvNames: GEMINI_KEY_ENV_NAMES,
+      ...deploymentMeta(),
     });
   }
 }
