@@ -391,6 +391,7 @@ function buildUploadingFeedbackHtml(blobLine, t) {
  *   reason: string,
  *   provider: string,
  *   asrStatus: string,
+ *   serverReason?: string,
  *   debugMessage?: string,
  *   triedModels?: string,
  *   lastTriedModel?: string,
@@ -398,21 +399,31 @@ function buildUploadingFeedbackHtml(blobLine, t) {
  * }} ctx
  */
 function buildShadowingFormalDebugHtml(ctx) {
-  const lines = [
+  /** 服务端结构化字段（仅 HANJI_DEBUG_SHADOWING=1 时展示本块） */
+  const serverHead = [];
+  const sr = ctx.serverReason != null && String(ctx.serverReason).trim() !== "" ? String(ctx.serverReason).trim() : "";
+  if (sr) serverHead.push(`reason: ${sr}`);
+  if (ctx.triedModels) serverHead.push(`triedModels: ${ctx.triedModels}`);
+  if (ctx.lastTriedModel) serverHead.push(`lastTriedModel: ${ctx.lastTriedModel}`);
+  if (ctx.httpStatus != null && ctx.httpStatus !== "") serverHead.push(`httpStatus: ${ctx.httpStatus}`);
+  if (ctx.debugMessage) serverHead.push(`debugMessage: ${ctx.debugMessage}`);
+
+  const lines = [];
+  if (serverHead.length) {
+    lines.push(...serverHead, "---");
+  }
+
+  lines.push(
     `target: ${ctx.target}`,
     `browser preview transcript: ${ctx.browserPreview}`,
     `server transcript: ${ctx.serverTranscript}`,
     `normalized transcript: ${ctx.normalized}`,
     `chosen source: ${ctx.chosenSource}`,
     `score: ${ctx.score}`,
-    `reason: ${ctx.reason}`,
-    `provider: ${ctx.provider}`,
-    `asr request status: ${ctx.asrStatus}`,
-  ];
-  if (ctx.debugMessage) lines.push(`debugMessage: ${ctx.debugMessage}`);
-  if (ctx.triedModels) lines.push(`tried models: ${ctx.triedModels}`);
-  if (ctx.lastTriedModel) lines.push(`last tried model: ${ctx.lastTriedModel}`);
-  if (ctx.httpStatus != null && ctx.httpStatus !== "") lines.push(`http status: ${ctx.httpStatus}`);
+  );
+  if (!sr) lines.push(`reason: ${ctx.reason}`);
+  lines.push(`provider: ${ctx.provider}`, `asr request status: ${ctx.asrStatus}`);
+
   return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
 }
 
@@ -546,10 +557,23 @@ export function mountShadowingSpeakingPractice(wrap, t) {
                 reason: `http_${postResult.status}`,
                 provider: "gemini",
                 asrStatus,
-                httpStatus: postResult.status,
+                serverReason:
+                  data && typeof data === "object" && data.reason != null ? String(data.reason) : "",
+                httpStatus:
+                  data && typeof data === "object" && data.httpStatus != null
+                    ? data.httpStatus
+                    : postResult.status,
                 debugMessage:
                   data && typeof data === "object" && data.debugMessage != null
                     ? String(data.debugMessage).slice(0, 800)
+                    : "",
+                triedModels:
+                  data && typeof data === "object" && Array.isArray(data.triedModels)
+                    ? data.triedModels.join(", ")
+                    : "",
+                lastTriedModel:
+                  data && typeof data === "object" && data.lastTriedModel != null
+                    ? String(data.lastTriedModel)
                     : "",
               }),
             )
@@ -587,6 +611,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
     function asrServerDebugPatch() {
       return {
+        serverReason: data && data.reason != null ? String(data.reason) : "",
         debugMessage:
           data && data.debugMessage != null ? String(data.debugMessage).slice(0, 800) : "",
         triedModels: Array.isArray(data.triedModels) ? data.triedModels.join(", ") : "",

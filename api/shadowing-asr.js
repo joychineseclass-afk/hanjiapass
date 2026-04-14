@@ -5,6 +5,11 @@
  * 模型选择：**独立**于 /api/gemini.js（不使用 GEMINI_MODEL 聊天默认，避免误继承旧模型名）。
  * 仅使用：GEMINI_ASR_MODEL（可选覆盖） + 本文件内 ASR 专用 fallback 列表。
  *
+ * Vercel 建议：
+ * - 若曾设置 GEMINI_ASR_MODEL=gemini-1.5-flash-8b → **删除**该变量，或改为 **gemini-2.0-flash**（与 Google 当前可用名一致）。
+ * - **不要**指望 GEMINI_MODEL（聊天）影响本路由；本路由会打日志标明已忽略。
+ * - 删除 GEMINI_ASR_MODEL 时的默认链（代码内）：gemini-2.0-flash → gemini-2.0-flash-001 → gemini-1.5-flash → gemini-1.5-pro
+ *
  * Provider：Google Gemini 多模态（音频→文本）。
  */
 
@@ -64,6 +69,28 @@ function getApiKeys() {
   return out;
 }
 
+/** 每次请求打一次，便于在 Vercel Function Log 对照「旧 env 覆盖」vs「代码默认链」 */
+function logAsrEnvSnapshot() {
+  const rawAsr = process.env.GEMINI_ASR_MODEL;
+  const rawChat = process.env.GEMINI_MODEL;
+  const asrSet = rawAsr != null && String(rawAsr).trim() !== "";
+  const chatSet = rawChat != null && String(rawChat).trim() !== "";
+
+  console.info("[shadowing-asr] ========== env snapshot (this route only) ==========");
+  console.info(
+    "[shadowing-asr] env GEMINI_ASR_MODEL:",
+    asrSet ? `"${String(rawAsr).trim()}"` : "(unset — candidate list starts from code defaults below)",
+  );
+  console.info(
+    "[shadowing-asr] env GEMINI_MODEL:",
+    chatSet
+      ? `"${String(rawChat).trim()}" — IGNORED for /api/shadowing-asr (chat /api/gemini only; does NOT set ASR candidates)`
+      : "(unset) — IGNORED for ASR (no effect)",
+  );
+  console.info("[shadowing-asr] apiVersion:", API_VERSION, "| method:", GENERATE_METHOD);
+  console.info("[shadowing-asr] =====================================================");
+}
+
 /**
  * 构建 ASR 模型列表（去重、记录来源）。不使用 process.env.GEMINI_MODEL。
  */
@@ -76,9 +103,13 @@ function buildAsrModelCandidates() {
     const name = String(rawName || "").trim();
     if (!name) return;
     if (DISALLOWED_ASR_MODELS.has(name)) {
-      console.warn(
-        `[shadowing-asr] skip disallowed model id: ${name} (${sourceLabel}) — remove from GEMINI_ASR_MODEL on server if set`,
-      );
+      if (sourceLabel === "env:GEMINI_ASR_MODEL") {
+        console.warn(
+          `[shadowing-asr] WARN skipped disallowed model from env: ${name} — remove GEMINI_ASR_MODEL in Vercel or set e.g. gemini-2.0-flash; ${name} is not used`,
+        );
+      } else {
+        console.warn(`[shadowing-asr] skip disallowed model id: ${name} (${sourceLabel})`);
+      }
       return;
     }
     if (seen.has(name)) return;
@@ -88,20 +119,22 @@ function buildAsrModelCandidates() {
 
   const envAsr = process.env.GEMINI_ASR_MODEL;
   if (envAsr && String(envAsr).trim()) {
-    console.info(`[shadowing-asr] env GEMINI_ASR_MODEL raw: "${String(envAsr).trim()}" → will try first (override)`);
+    console.info(`[shadowing-asr] parsing GEMINI_ASR_MODEL: "${String(envAsr).trim()}" (if valid, tried first before code defaults)`);
     push(String(envAsr).trim(), "env:GEMINI_ASR_MODEL");
   } else {
-    console.info("[shadowing-asr] env GEMINI_ASR_MODEL: (unset) — first candidates from code:default_asr_list only until overridden");
+    console.info("[shadowing-asr] GEMINI_ASR_MODEL unset — using code default fallback order only");
   }
-
-  console.info("[shadowing-asr] note: GEMINI_MODEL (chat) is NOT read — ASR uses only GEMINI_ASR_MODEL + ASR defaults");
 
   for (const m of DEFAULT_ASR_MODELS_ORDER) {
     push(m, "code:default_asr_list");
   }
 
-  const summary = out.map((x) => `${x.name}[${x.source}]`).join(", ");
-  console.info("[shadowing-asr] fallback models (ordered, deduped):", summary || "(empty)");
+  const names = out.map((x) => x.name);
+  console.info("[shadowing-asr] candidate models (ordered, deduped):", JSON.stringify(names));
+  console.info(
+    "[shadowing-asr] candidate detail:",
+    out.map((x) => `${x.name}[${x.source}]`).join(" → ") || "(empty)",
+  );
   return out;
 }
 
@@ -215,14 +248,21 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
   let lastHttpStatus = 0;
   let lastModelTried = "";
 
-  console.info("[shadowing-asr] api version:", API_VERSION, "| method:", GENERATE_METHOD, "| candidates:", candidates.length);
+  console.info(
+    "[shadowing-asr] transcribeWithGemini start | apiVersion:",
+    API_VERSION,
+    "| method:",
+    GENERATE_METHOD,
+    "| candidateCount:",
+    candidates.length,
+  );
 
   for (const { name: model, source } of candidates) {
     lastModelTried = model;
     triedModels.push(model);
     const url = `https://generativelanguage.googleapis.com/${API_VERSION}/models/${model}:${GENERATE_METHOD}`;
 
-    console.info(`[shadowing-asr] selected model: ${model} | source: ${source}`);
+    console.info(`[shadowing-asr] trying model: ${model} | source: ${source}`);
 
     try {
       const resp = await fetch(url, {
@@ -266,14 +306,20 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
       lastErrorSnippet = errMsg.slice(0, 400);
 
       if (!resp.ok) {
-        console.warn("[shadowing-asr] model request failed", {
+        console.warn("[shadowing-asr] model failed (non-OK)", {
           model,
           httpStatus: resp.status,
+          triedModels,
           messagePreview: errMsg.slice(0, 180),
         });
 
         if (isAuthQuotaOrPermissionError(resp.status, errMsg)) {
-          console.error("[shadowing-asr] fatal: auth/quota/permission — not trying more models");
+          console.error(
+            "[shadowing-asr] fatal: auth/quota/permission — stop fallback | httpStatus:",
+            resp.status,
+            "| triedModels:",
+            JSON.stringify(triedModels),
+          );
           return {
             ok: false,
             fatalReason: "provider_error",
@@ -285,16 +331,29 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
         }
 
         if (isRecoverableModelError(resp.status, errMsg)) {
-          console.info("[shadowing-asr] recoverable error — trying next model in fallback list");
+          console.info(
+            "[shadowing-asr] recoverable model/API error — continue fallback | httpStatus:",
+            resp.status,
+            "| next if any",
+          );
           continue;
         }
 
-        console.info("[shadowing-asr] non-classified HTTP error — trying next model");
+        console.info("[shadowing-asr] non-classified client error — continue try next model | httpStatus:", resp.status);
         continue;
       }
 
       const text = extractGeminiText(data);
-      console.info("[shadowing-asr] hit model (success):", model, "| transcriptLen:", text.length);
+      console.info(
+        "[shadowing-asr] hit model:",
+        model,
+        "| httpStatus:",
+        resp.status,
+        "| transcriptLen:",
+        text.length,
+        "| source:",
+        source,
+      );
       return {
         ok: true,
         transcript: text,
@@ -309,10 +368,11 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
     }
   }
 
-  console.error("[shadowing-asr] all ASR model candidates failed", {
-    triedModels,
+  console.error("[shadowing-asr] all ASR candidates exhausted (no_working_asr_model)", {
+    triedModels: JSON.stringify(triedModels),
+    lastTriedModel: lastModelTried,
     lastHttpStatus,
-    lastModelTried,
+    reason: "no_working_asr_model",
   });
 
   return {
@@ -321,6 +381,7 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
     debugMessage: lastErrorSnippet || "all_models_failed",
     triedModels,
     lastTriedModel: lastModelTried,
+    httpStatus: lastHttpStatus || undefined,
   };
 }
 
@@ -357,6 +418,7 @@ export default async function handler(req, res) {
   setCors(req, res);
   if (req.method === "OPTIONS") return res.status(204).end();
 
+  logAsrEnvSnapshot();
   const asrCandidates = buildAsrModelCandidates();
 
   if (req.method === "GET") {
@@ -370,7 +432,8 @@ export default async function handler(req, res) {
       method: GENERATE_METHOD,
       asrModelsResolved: asrCandidates.map((c) => ({ model: c.name, source: c.source })),
       geminiAsrModelEnv: process.env.GEMINI_ASR_MODEL ? String(process.env.GEMINI_ASR_MODEL).trim() : null,
-      note: "GEMINI_MODEL (chat) is not used for this route",
+      geminiModelEnvIgnored: process.env.GEMINI_MODEL ? String(process.env.GEMINI_MODEL).trim() : null,
+      note: "GEMINI_MODEL is ignored for ASR; only GEMINI_ASR_MODEL + code defaults apply",
     });
   }
 
@@ -470,44 +533,50 @@ export default async function handler(req, res) {
 
     if (!out.ok) {
       if (out.fatalReason === "provider_error") {
-        return jsonResponse(
-          res,
-          200,
-          baseFailure("provider_error", {
-            debugMessage: out.debugMessage,
-            triedModels: out.triedModels,
-            lastTriedModel: out.lastTriedModel,
-            httpStatus: out.httpStatus,
-            message: "Provider rejected the request (auth/quota/permission)",
-          }),
-        );
-      }
-      return jsonResponse(
-        res,
-        200,
-        baseFailure("no_working_asr_model", {
+        const payload = baseFailure("provider_error", {
           debugMessage: out.debugMessage,
           triedModels: out.triedModels,
           lastTriedModel: out.lastTriedModel,
-          message: "No ASR model in the fallback list succeeded",
-        }),
-      );
+          httpStatus: out.httpStatus,
+          message: "Provider rejected the request (auth/quota/permission)",
+        });
+        console.error("[shadowing-asr] response OUT", {
+          reason: payload.reason,
+          triedModels: payload.triedModels,
+          lastTriedModel: payload.lastTriedModel,
+          httpStatus: payload.httpStatus,
+        });
+        return jsonResponse(res, 200, payload);
+      }
+      const payload = baseFailure("no_working_asr_model", {
+        debugMessage: out.debugMessage,
+        triedModels: out.triedModels,
+        lastTriedModel: out.lastTriedModel,
+        httpStatus: out.httpStatus,
+        message: "No ASR model in the fallback list succeeded",
+      });
+      console.error("[shadowing-asr] response OUT", {
+        reason: payload.reason,
+        triedModels: payload.triedModels,
+        lastTriedModel: payload.lastTriedModel,
+        httpStatus: payload.httpStatus,
+      });
+      return jsonResponse(res, 200, payload);
     }
 
     const raw = String(out.transcript || "").trim();
     const normalized = normalizeTranscript(raw);
     if (!normalized || !hasChineseChars(normalized)) {
       console.info("[shadowing-asr] empty or non-Chinese transcript after normalize");
-      return jsonResponse(
-        res,
-        200,
-        Object.assign(baseFailure("empty_transcript", { provider: "gemini", model: out.model }), {
-          transcript: raw,
-          normalizedTranscript: normalized,
-        }),
-      );
+      const p = Object.assign(baseFailure("empty_transcript", { provider: "gemini", model: out.model }), {
+        transcript: raw,
+        normalizedTranscript: normalized,
+      });
+      console.info("[shadowing-asr] response OUT", { reason: p.reason, model: out.model });
+      return jsonResponse(res, 200, p);
     }
 
+    console.info("[shadowing-asr] response OUT", { success: true, hitModel: out.model, reason: null });
     return jsonResponse(res, 200, baseSuccess(raw, normalized, "gemini", out.model));
   } catch (e) {
     const msg = e?.message || String(e);
