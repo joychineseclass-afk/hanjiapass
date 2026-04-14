@@ -7,6 +7,9 @@
  * - **row._hanjiShadowingLastBlob** 为上传服务端 ASR 的正式输入；浏览器 STT 空结果不代表用户未开口。
  *
  * 注意：shadowing STT 第二次 toggle 只 recognition.stop()；预览回调在首次 toggle 注册。
+ *
+ * 【阶段状态】保留当前跟读 UI/主链实现；**当前阶段：等待正式额度接入后再联调**。
+ * 仅 localStorage `HANJI_DEBUG_SHADOWING=1` 时展示服务端调试字段；**非 debug 只显示简洁本地化错误文案**。
  */
 
 import { createShadowingZhSpeechSession, isShadowingZhSttSupported } from "./shadowingSpeechRecognition.js";

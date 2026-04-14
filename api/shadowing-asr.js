@@ -11,6 +11,9 @@
  * - 删除 GEMINI_ASR_MODEL 时的默认链（代码内）：gemini-2.0-flash → gemini-2.0-flash-001 → gemini-1.5-flash → gemini-1.5-pro
  *
  * Provider：Google Gemini 多模态（音频→文本）。
+ *
+ * 【阶段状态】保留本路由与模型 fallback 链；**当前阶段：等待正式额度接入后再联调**。
+ * 非 debug 场景以产品文案为准；**不再**围绕免费额度做额外工程优化。
  */
 
 import formidable from "formidable";
