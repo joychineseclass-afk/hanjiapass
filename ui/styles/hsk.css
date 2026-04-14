@@ -1392,6 +1392,7 @@
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-stt-debug,
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-formal-debug-shell,
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-audio-debug,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) #hanji-shadowing-debug-panel-top,
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-formal-debug-pre,
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) pre.ai-shadowing-stt-dev-pre,
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-browser-preview-note {
@@ -1408,6 +1409,7 @@
 [data-hanji-debug-shadowing="0"] .ai-shadowing-stt-debug,
 [data-hanji-debug-shadowing="0"] .ai-shadowing-formal-debug-shell,
 [data-hanji-debug-shadowing="0"] .ai-shadowing-audio-debug,
+[data-hanji-debug-shadowing="0"] #hanji-shadowing-debug-panel-top,
 [data-hanji-debug-shadowing="0"] .ai-shadowing-formal-debug-pre,
 [data-hanji-debug-shadowing="0"] pre.ai-shadowing-stt-dev-pre {
   display: none !important;

@@ -67,7 +67,22 @@ function syncShadowingDebugAttr(wrapEl) {
 }
 
 /**
+ * 非 debug：从跟读根容器移除顶部调试面板（该节点不在 feedbackEl 内，sanitize 管不到，须单独 purge）。
+ * @param {Element | null} wrapEl
+ */
+function purgeShadowingTopDebugPanelIfLearner(wrapEl) {
+  if (!wrapEl || isShadowingDebugOn()) return;
+  try {
+    wrapEl.querySelectorAll(".ai-shadowing-audio-debug, #hanji-shadowing-debug-panel-top").forEach((el) => el.remove());
+  } catch (_) {}
+  try {
+    delete wrapEl._shadowingDbgRefresh;
+  } catch (_) {}
+}
+
+/**
  * 最终写入跟读反馈区前的收口：非 debug 时若仍混入调试 DOM/特征词，剔除并告警（不作为主逻辑，仅兜底）。
+ * 注意：跟读正式反馈里不应出现 <pre>；任意 <pre> 一律视为调试块并移除。
  * @param {string} html
  */
 function sanitizeShadowingLearnerFeedbackHtml(html) {
@@ -75,13 +90,12 @@ function sanitizeShadowingLearnerFeedbackHtml(html) {
   if (isShadowingDebugOn()) return html;
   let out = html;
   let pass = 0;
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 8; i++) {
     const next = out
       .replace(/<div\b[^>]*\bai-shadowing-formal-debug-shell\b[^>]*>[\s\S]*?<\/div>/gi, "")
       .replace(/<div\b[^>]*\bai-shadowing-stt-debug\b[^>]*>[\s\S]*?<\/div>/gi, "")
       .replace(/<div\b[^>]*\bai-shadowing-stt-dev\b[^>]*>[\s\S]*?<\/div>/gi, "")
-      .replace(/<pre\b[^>]*\bai-shadowing-formal-debug-pre\b[^>]*>[\s\S]*?<\/pre>/gi, "")
-      .replace(/<pre\b[^>]*\bai-shadowing-stt-dev-pre\b[^>]*>[\s\S]*?<\/pre>/gi, "");
+      .replace(/<pre\b[^>]*>[\s\S]*?<\/pre>/gi, "");
     if (next === out) break;
     pass += 1;
     out = next;
@@ -92,10 +106,13 @@ function sanitizeShadowingLearnerFeedbackHtml(html) {
   const markers = [
     "reason:",
     "triedModels",
+    "lastTriedModel",
     "httpStatus",
     "debugMessage",
     "browser preview transcript",
     "server transcript",
+    "recognition.lang",
+    "last ASR",
   ];
   for (const m of markers) {
     if (out.includes(m)) {
@@ -431,6 +448,7 @@ function parseSttPayload(payload) {
 }
 
 function buildDevSttHtml(targetZh, rawFinal, rawInterim, chosen, sourceLabel) {
+  if (!isShadowingDebugOn()) return "";
   const lines = [
     `target: ${targetZh}`,
     `final transcript: ${rawFinal}`,
@@ -536,17 +554,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
   }
 
   syncShadowingDebugAttr(wrap);
-  if (!isShadowingDebugOn()) {
-    try {
-      wrap.querySelectorAll(".ai-shadowing-audio-debug").forEach((el) => el.remove());
-    } catch (_) {}
-    try {
-      delete wrap._shadowingDbgRefresh;
-    } catch (_) {}
-  } else {
+  purgeShadowingTopDebugPanelIfLearner(wrap);
+  if (isShadowingDebugOn()) {
     let dbg = wrap.querySelector(".ai-shadowing-audio-debug");
     if (!dbg) {
       dbg = document.createElement("div");
+      dbg.id = "hanji-shadowing-debug-panel-top";
       dbg.className = "ai-shadowing-audio-debug";
       dbg.setAttribute("aria-hidden", "true");
       const head = wrap.querySelector(".ai-shadowing-session-head");
@@ -601,6 +614,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     const { row, targetZh, blobResult, blobLine, lessonId, itemId, t, showFeedback, speech } = ctx;
 
     syncShadowingDebugAttr(wrap);
+    purgeShadowingTopDebugPanelIfLearner(wrap);
 
     /** 非 debug：ASR 错误卡片只保留标题+正文，不拼录音字节行（避免与验收「仅两行文案」冲突） */
     const learnerHeadHtml = isShadowingDebugOn() ? blobLine : "";
@@ -875,6 +889,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
   });
 
   async function handleMicClick(btn) {
+    purgeShadowingTopDebugPanelIfLearner(wrap);
     const row = btn.closest(".ai-shadowing-train-item");
     if (!row) return;
     const targetZh = row.getAttribute("data-shadow-zh") || "";
