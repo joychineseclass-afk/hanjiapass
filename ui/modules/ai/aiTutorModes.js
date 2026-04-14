@@ -210,7 +210,8 @@ export function renderFreeTalkMode(aiItem, lang) {
   );
   const examplesLabel = t("ai.free_question_examples_label", "Example questions");
   const exampleList = pickFreeAskExampleList(aiItem?.freeAskExamples, lang);
-  const chips = [1, 2, 3, 4]
+  const chipCount = exampleList.length > 0 ? Math.min(8, exampleList.length) : 4;
+  const chips = Array.from({ length: chipCount }, (_, i) => i + 1)
     .map((n) => {
       const label = str(exampleList[n - 1]) || t(`ai.free_question_example_${n}`, "");
       return `

@@ -5,7 +5,7 @@
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import * as LE from "../../core/i18n.js";
-import { getAiLearning, pickLessonLang } from "./aiLearningShared.js";
+import { getAiLearning, pickLessonLang, mapMultilingualLines } from "./aiLearningShared.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -36,6 +36,11 @@ function t(key, fallback = "") {
 /** 本课能力点：由对话/语法信号推导，不写整级 HSK1 总述；最多 3 条 */
 function buildLessonAbilityItems(lesson, ctx, lang) {
   const al = getAiLearning(lesson);
+  const le = al?.lessonExplain;
+  if (le?.practiceFocus?.length && Array.isArray(le.practiceFocus)) {
+    const lines = mapMultilingualLines(le.practiceFocus, lang);
+    if (lines.length) return lines.slice(0, 4);
+  }
   if (al?.abilityPoints?.length && Array.isArray(al.abilityPoints)) {
     const fromJson = al.abilityPoints.map((o) => pickLessonLang(o, lang)).filter(Boolean);
     if (fromJson.length >= 1) return fromJson.slice(0, 3);
@@ -74,6 +79,13 @@ function buildLessonAbilityItems(lesson, ctx, lang) {
 
 /** 本课学习目标：2～4 条，紧贴课文数据 */
 function buildObjectiveLines(lesson, lang) {
+  const al = getAiLearning(lesson);
+  const le = al?.lessonExplain;
+  if (le?.learningGoals?.length && Array.isArray(le.learningGoals)) {
+    const lines = mapMultilingualLines(le.learningGoals, lang);
+    if (lines.length) return lines.slice(0, 4);
+  }
+
   const summary = pickLang(lesson?.summary, lang) || "";
   const fromData = Array.isArray(lesson?.objectives)
     ? lesson.objectives.map((o) => pickLang(o, lang)).filter(Boolean)
@@ -206,6 +218,9 @@ function renderCoreUsageHtml(rows, lang) {
 /** 课堂点题：短句，一条一点 */
 function buildTeacherBullets(lesson, ctx, lang) {
   const al = getAiLearning(lesson);
+  if (al?.lessonExplain?.scenarioSummary && typeof al.lessonExplain.scenarioSummary === "object") {
+    return [];
+  }
   if (al && (al.coreExpressions?.length || al.focusTips?.length || al.abilityPoints?.length)) {
     const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
     const out = [];
@@ -248,6 +263,11 @@ function buildTeacherBullets(lesson, ctx, lang) {
 
 function collectTipsFinal(lesson, lang) {
   const al = getAiLearning(lesson);
+  const le = al?.lessonExplain;
+  if (le?.confusionPoints?.length && Array.isArray(le.confusionPoints)) {
+    const tips = mapMultilingualLines(le.confusionPoints, lang);
+    if (tips.length) return tips.slice(0, 4);
+  }
   if (al?.focusTips?.length && Array.isArray(al.focusTips)) {
     const tips = al.focusTips.map((tip) => pickLessonLang(tip, lang)).filter(Boolean);
     if (tips.length) return tips.slice(0, 4);
@@ -281,6 +301,18 @@ function buildCompactSceneHtml(lesson, ctx, lang) {
   return parts.join("");
 }
 
+/** 情境与对话：有 lessonExplain.scenarioSummary 时优先用本课概括，避免与第1课通用模板混用 */
+function buildSceneSectionHtml(lesson, ctx, lang) {
+  const le = getAiLearning(lesson)?.lessonExplain;
+  if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
+    const text = pickLessonLang(le.scenarioSummary, lang);
+    if (text) {
+      return `<p class="ai-lesson-focus-p ai-lesson-focus-scenario-summary">${escapeHtml(text)}</p>`;
+    }
+  }
+  return buildCompactSceneHtml(lesson, ctx, lang);
+}
+
 /**
  * 生成本课重点讲解 HTML（进入 tab 即展示，无按钮、无 AI 回复区）
  */
@@ -288,6 +320,7 @@ export function renderLessonFocusHtml(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "—";
   const summary = pickLang(lesson?.summary, lang) || "";
+  const le = getAiLearning(lesson)?.lessonExplain;
 
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
@@ -297,16 +330,21 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
+  const usePracticeFocusLabel = !!(le?.practiceFocus?.length && Array.isArray(le.practiceFocus));
   const H = {
     page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
-    b: t("ai.lesson_focus_section_hsk1", "本课能力点"),
-    c: t("ai.lesson_focus_section_expressions", "重点表达精选"),
+    b: usePracticeFocusLabel
+      ? t("ai.lesson_focus_section_practice_focus", "这课练什么说法")
+      : t("ai.lesson_focus_section_hsk1", "本课能力点"),
+    c: le
+      ? t("ai.lesson_focus_section_core_pick", "核心表达挑着看")
+      : t("ai.lesson_focus_section_expressions", "重点表达精选"),
     d: t("ai.lesson_focus_section_scene_dialogue", "场景与对话"),
     e: t("ai.lesson_focus_section_tips", "易混提醒"),
   };
 
-  const showSummaryLead = summary && objLines.length <= 1;
+  const showSummaryLead = !le && summary && objLines.length <= 1;
   const objBlock = objLines.length
     ? `<ul class="ai-lesson-focus-list">${objLines.map((o) => `<li>${escapeHtml(o)}</li>`).join("")}</ul>`
     : `<p class="ai-lesson-focus-p">${escapeHtml(summary || t("ai.lesson_focus_no_core", "请结合本课对话学习。"))}</p>`;
@@ -315,7 +353,7 @@ export function renderLessonFocusHtml(lesson, lang) {
     ? `<ul class="ai-lesson-focus-list ai-lesson-focus-core">${renderCoreUsageHtml(coreRows, lang)}</ul>`
     : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_core", "请结合下方对话与练习中的句子学习本课表达。"))}</p>`;
 
-  const sceneBlock = buildCompactSceneHtml(lesson, ctx, lang);
+  const sceneBlock = buildSceneSectionHtml(lesson, ctx, lang);
 
   const abilityBlock = abilityItems.length
     ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list">${abilityItems.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`
@@ -403,6 +441,7 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "";
   const summary = pickLang(lesson?.summary, lang) || "";
+  const le = getAiLearning(lesson)?.lessonExplain;
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
   const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
@@ -410,11 +449,16 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
+  const usePracticeFocusLabel = !!(le?.practiceFocus?.length && Array.isArray(le.practiceFocus));
   const H = {
     page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
-    b: t("ai.lesson_focus_section_hsk1", "本课能力点"),
-    c: t("ai.lesson_focus_section_expressions", "重点表达精选"),
+    b: usePracticeFocusLabel
+      ? t("ai.lesson_focus_section_practice_focus", "这课练什么说法")
+      : t("ai.lesson_focus_section_hsk1", "本课能力点"),
+    c: le
+      ? t("ai.lesson_focus_section_core_pick", "核心表达挑着看")
+      : t("ai.lesson_focus_section_expressions", "重点表达精选"),
     d: t("ai.lesson_focus_section_scene_dialogue", "场景与对话"),
     e: t("ai.lesson_focus_section_tips", "易混提醒"),
   };
@@ -439,7 +483,7 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   }
 
   pushUi(H.a);
-  const showSummaryLead = summary && objLines.length <= 1;
+  const showSummaryLead = !le && summary && objLines.length <= 1;
   if (showSummaryLead && summary) pushUi(summary);
   for (const o of objLines) pushUi(o);
 
@@ -452,21 +496,26 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   }
 
   pushUi(H.d);
-  const st = ctx.scene?.title ? str(ctx.scene.title) : "";
   const sceneIdx = segs.length;
-  if (st) pushUi(st);
-  const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
-  for (const c of cards.slice(0, 2)) {
-    const ct = pickLang(c.title, lang);
-    const cs = pickLang(c.summary, lang);
-    if (!cs && !ct) continue;
-    const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
-    const line = ct && short ? `${ct}：${short}` : ct || short;
-    pushUi(line);
-  }
-  if (segs.length === sceneIdx && ctx.scene?.summary) {
-    const ss = str(ctx.scene.summary);
-    pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
+  if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
+    const ss = pickLessonLang(le.scenarioSummary, lang);
+    if (ss) pushUi(ss);
+  } else {
+    const st = ctx.scene?.title ? str(ctx.scene.title) : "";
+    if (st) pushUi(st);
+    const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
+    for (const c of cards.slice(0, 2)) {
+      const ct = pickLang(c.title, lang);
+      const cs = pickLang(c.summary, lang);
+      if (!cs && !ct) continue;
+      const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
+      const line = ct && short ? `${ct}：${short}` : ct || short;
+      pushUi(line);
+    }
+    if (segs.length === sceneIdx && ctx.scene?.summary) {
+      const ss = str(ctx.scene.summary);
+      pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
+    }
   }
 
   pushUi(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"));

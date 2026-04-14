@@ -43,10 +43,16 @@ export function pickFreeAskExampleList(exObj, lang) {
     exObj.zh ||
     exObj.cn;
   if (!Array.isArray(arr)) return [];
-  return arr.map((s) => str(s)).filter(Boolean).slice(0, 6);
+  return arr.map((s) => str(s)).filter(Boolean).slice(0, 8);
 }
 
 export function pickFreeAskPlaceholder(al, lang) {
   if (!al?.freeAskPlaceholder || typeof al.freeAskPlaceholder !== "object") return "";
   return pickLessonLang(al.freeAskPlaceholder, lang);
+}
+
+/** @param {object[]} arr */
+export function mapMultilingualLines(arr, lang) {
+  if (!Array.isArray(arr)) return [];
+  return arr.map((o) => (o && typeof o === "object" ? pickLessonLang(o, lang) : str(o))).filter(Boolean);
 }
