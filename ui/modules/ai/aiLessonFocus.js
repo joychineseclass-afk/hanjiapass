@@ -5,6 +5,7 @@
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import * as LE from "../../core/i18n.js";
+import { getAiLearning, pickLessonLang } from "./aiLearningShared.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -34,6 +35,12 @@ function t(key, fallback = "") {
 
 /** 本课能力点：由对话/语法信号推导，不写整级 HSK1 总述；最多 3 条 */
 function buildLessonAbilityItems(lesson, ctx, lang) {
+  const al = getAiLearning(lesson);
+  if (al?.abilityPoints?.length && Array.isArray(al.abilityPoints)) {
+    const fromJson = al.abilityPoints.map((o) => pickLessonLang(o, lang)).filter(Boolean);
+    if (fromJson.length >= 1) return fromJson.slice(0, 3);
+  }
+
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
   const g0 = Array.isArray(lesson?.grammar) ? lesson.grammar[0] : null;
   const pat = str(g0?.pattern != null ? g0.pattern : "");
@@ -120,6 +127,20 @@ function buildObjectiveLines(lesson, lang) {
  * @returns {{ expr: string, py: string, gloss: string, usage: string }[]}
  */
 function collectCuratedExpressionGroups(lesson, ctx, lang) {
+  const al = getAiLearning(lesson);
+  if (al?.coreExpressions?.length && Array.isArray(al.coreExpressions)) {
+    const mapped = al.coreExpressions
+      .slice(0, 4)
+      .map((ce) => {
+        const expr = str(ce.expr != null ? ce.expr : ce.pattern);
+        const py = str(ce.pinyin != null ? ce.pinyin : "");
+        const usage = ce.usage && typeof ce.usage === "object" ? pickLessonLang(ce.usage, lang) : str(ce.usage);
+        return { expr, py, gloss: "", usage: usage || t("ai.lesson_focus_usage_fallback", "在本课对话里按角色与场合使用。") };
+      })
+      .filter((r) => r.expr);
+    if (mapped.length) return mapped;
+  }
+
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
   const g0 = Array.isArray(lesson?.grammar) ? lesson.grammar[0] : null;
   const pat = str(g0?.pattern != null ? g0.pattern : "");
@@ -135,10 +156,14 @@ function collectCuratedExpressionGroups(lesson, ctx, lang) {
     });
   };
 
+  const lessonNo = Number(lesson?.lessonNo);
+  const l1StyleGreeting =
+    lessonNo === 1 || (lessonNo <= 1 && (/您好/.test(joined) || /王老师/.test(joined)));
+
   if (/您|你/.test(joined) || /您|你/.test(pat)) {
     add("您 / 你", patPy || "nín / nǐ", "ai.lesson_focus_group_usage_nin_ni", "按对象选用敬称「您」或一般「你」。");
   }
-  if (/您好/.test(joined) || /你好/.test(joined)) {
+  if (l1StyleGreeting && (/您好/.test(joined) || /你好/.test(joined))) {
     add("您好 / 你好", "nín hǎo / nǐ hǎo", "ai.lesson_focus_group_usage_greeting", "「您好」更正式；「你好」常用于平辈、同学。");
   }
   if (/对不起/.test(joined) && /没关系/.test(joined)) {
@@ -180,6 +205,20 @@ function renderCoreUsageHtml(rows, lang) {
 
 /** 课堂点题：短句，一条一点 */
 function buildTeacherBullets(lesson, ctx, lang) {
+  const al = getAiLearning(lesson);
+  if (al && (al.coreExpressions?.length || al.focusTips?.length || al.abilityPoints?.length)) {
+    const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
+    const out = [];
+    for (const c of cards.slice(0, 2)) {
+      const ct = pickLessonLang(c.title, lang);
+      const cs = pickLessonLang(c.summary, lang);
+      if (ct && cs) out.push(`${ct} — ${cs}`);
+      else if (cs) out.push(cs);
+      else if (ct) out.push(ct);
+    }
+    if (out.length) return out.slice(0, 4);
+  }
+
   const joined = (ctx.dialogue || []).map((l) => str(l.zh)).join("\n");
   const bullets = [];
 
@@ -207,7 +246,12 @@ function buildTeacherBullets(lesson, ctx, lang) {
   return out.slice(0, 4);
 }
 
-function collectTipsFinal(lang) {
+function collectTipsFinal(lesson, lang) {
+  const al = getAiLearning(lesson);
+  if (al?.focusTips?.length && Array.isArray(al.focusTips)) {
+    const tips = al.focusTips.map((tip) => pickLessonLang(tip, lang)).filter(Boolean);
+    if (tips.length) return tips.slice(0, 4);
+  }
   return [
     t("ai.lesson_focus_tip_final_1", "「您」偏敬称（师长、长辈）；「你」多用在平辈、熟人。"),
     t("ai.lesson_focus_tip_final_2", "「没关系」应道歉；「不客气」应谢谢——别混。"),
@@ -248,7 +292,7 @@ export function renderLessonFocusHtml(lesson, lang) {
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
   const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
-  const tips = collectTipsFinal(lang);
+  const tips = collectTipsFinal(lesson, lang);
   const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
 
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
@@ -362,7 +406,7 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
   const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
-  const tips = collectTipsFinal(lang);
+  const tips = collectTipsFinal(lesson, lang);
   const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 

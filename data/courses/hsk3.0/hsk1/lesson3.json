@@ -394,8 +394,181 @@
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你是哪国人？", "我是中国人。", "你会说汉语吗？", "会，我会说一点儿汉语。", "你会写汉字吗？"],
-    "chatPrompt": "请用本课句型介绍自己的国籍，并说说会不会说汉语、写汉字。"
+    "speaking": ["你是哪国人？", "我是……人。", "你呢？", "你会说汉语吗？", "会，我会说一点儿汉语。", "你会写汉字吗？", "会，我会写汉字。"],
+    "chatPrompt": "请围绕国籍、「会」表示能力、说汉语与写汉字，用本课句型问答；不要写成第1课的纯问候练习。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l3_nationality",
+          "situation": {
+            "zh": "会话一：问国籍与学生身份",
+            "kr": "회화 1: 국적·학생 여부",
+            "en": "Dialogue 1: nationality and student status",
+            "jp": "会話1：国籍と学生かどうか"
+          },
+          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "goal": {
+            "zh": "用「你是哪国人？」「我是……人」「你呢？」「你是学生吗？」完成简短问答。",
+            "kr": "「你是哪国人？」「我是……人」「你呢？」「你是学生吗？」로 짧게 묻고 답합니다.",
+            "en": "Practice 你是哪国人？, 我是…人, 你呢？, and 你是学生吗？.",
+            "jp": "「你是哪国人？」「我是……人」「你呢？」「你是学生吗？」で短く問答する。"
+          },
+          "expressions": ["你是哪国人？", "我是美国人。", "你呢？", "你是学生吗？", "是，我是学生。"],
+          "rounds": [
+            {
+              "aiLine": "汤姆，你是哪国人？",
+              "studentRefs": ["我是美国人。你呢？"],
+              "acceptable": ["我是美国人。你呢？", "我是美国人", "美国人"],
+              "closeAnswers": ["美国", "美国人"]
+            },
+            {
+              "aiLine": "你是学生吗？",
+              "studentRefs": ["是，我是学生。"],
+              "acceptable": ["是，我是学生。", "是，我是学生", "是"],
+              "closeAnswers": ["是学生", "是"]
+            }
+          ]
+        },
+        {
+          "id": "l3_language_skills",
+          "situation": {
+            "zh": "会话二：会不会说汉语、写汉字",
+            "kr": "회화 2: 한어 말하기·한자 쓰기",
+            "en": "Dialogue 2: speaking and writing Chinese",
+            "jp": "会話2：中国語を話す・漢字を書く"
+          },
+          "aiRole": { "zh": "王老师", "kr": "왕 선생님", "en": "Teacher Wang", "jp": "王先生" },
+          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "goal": {
+            "zh": "用「你会……吗？」「会，我会……」回答会不会说汉语、写汉字，并可用「一点儿」表示程度。",
+            "kr": "「你会……吗？」「会，我会……」로 말하기·쓰기 능력을 말하고 「一点儿」로 정도를 덧붙입니다.",
+            "en": "Use 你会…吗？ / 会，我会… for speaking and writing; add 一点儿 for degree.",
+            "jp": "「你会……吗？」「会，我会……」で話す・書く能力を言い、「一点儿」で程度を示す。"
+          },
+          "expressions": ["你会说汉语吗？", "会，我会说一点儿汉语。", "你会写汉字吗？", "会，我会写汉字。"],
+          "rounds": [
+            {
+              "aiLine": "汤姆，你会说汉语吗？",
+              "studentRefs": ["会，我会说一点儿汉语。"],
+              "acceptable": ["会，我会说一点儿汉语。", "会，我会说汉语", "会"],
+              "closeAnswers": ["一点儿", "会说"]
+            },
+            {
+              "aiLine": "你会写汉字吗？",
+              "studentRefs": ["会，我会写汉字。"],
+              "acceptable": ["会，我会写汉字。", "会，我会写", "会"],
+              "closeAnswers": ["写汉字", "会写"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "freeAskPlaceholder": {
+      "zh": "例如：「哪国人」和「几口人」的问法有什么不同？",
+      "kr": "예: 「哪国人」와 「几口人」는 어떻게 달라요?",
+      "en": "e.g. How is 哪国人 different from asking 几口人?",
+      "jp": "例:「哪国人」と「几口人」の聞き方の違いは？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「哪」在「哪国人」里是什么意思？",
+        "「会说」和「会写」有什么不同？",
+        "「一点儿」放在句子里起什么作用？",
+        "「汉语」和「中文」可以混用吗？本课怎么用的？"
+      ],
+      "kr": [
+        "「你是哪国人？」와 「你是学生吗？」는 어떤 점이 다른가요?",
+        "「会」는 어떤 능력을 말할 때 쓰나요?",
+        "「一点儿」는 얼마나 할 줄 알 때 쓰나요?",
+        "말하기(说)와 쓰기(写)를 구분해서 어떻게 질문하나요?"
+      ],
+      "en": [
+        "What does 哪 do in 你是哪国人？?",
+        "How do you ask “can speak” vs “can write” in this lesson?",
+        "When is 一点儿 used after 会?",
+        "How do you say you are from a country with 我是…人?"
+      ],
+      "jp": [
+        "「哪国人」の「哪」はどういう意味ですか。",
+        "「会说」と「会写」の言い方の違いを教えてください。",
+        "「一点儿」はどんなときに使いますか。",
+        "国を言うとき「我是……人」のパターンを説明してください。"
+      ]
+    },
+    "focusTips": [
+      {
+        "zh": "问国籍用「哪国人」，回答常用「我是 + 国名 + 人」。",
+        "kr": "국적은 「哪国人」로 묻고, 답은 「我是 + 국명 + 人」 패턴이 흔합니다.",
+        "en": "Ask nationality with 哪国人; answers often use 我是 + country + 人.",
+        "jp": "国籍は「哪国人」で聞き、答えは「我是＋国名＋人」がよく使われます。"
+      },
+      {
+        "zh": "「会 + 动词」表示会不会某种技能；说汉语用「说」，写汉字用「写」。",
+        "kr": "「会 + 동사」는 할 줄 아는지를 말하고, 말하기는 「说」, 쓰기는 「写」와 어울립니다.",
+        "en": "会 + verb marks ability; 说 for speaking Chinese, 写 for writing characters.",
+        "jp": "「会＋動詞」は能力。「中国語を話す」は「说」、「漢字を書く」は「写」。"
+      }
+    ],
+    "abilityPoints": [
+      {
+        "zh": "能询问与说明国籍，并用「你呢？」承接话题。",
+        "kr": "국적을 묻고 말하며 「你呢？」로 화제를 이어갈 수 있다.",
+        "en": "Ask and state nationality, and continue with 你呢？.",
+        "jp": "国籍を尋ね・述べ、「你呢？」で話を続けられる。"
+      },
+      {
+        "zh": "能用「你会……吗？」「会，我会……」说明会不会说汉语、写汉字。",
+        "kr": "「你会……吗？」「会，我会……」로 한어 말하기·한자 쓰기 여부를 말할 수 있다.",
+        "en": "Use 你会…吗？ / 会，我会… for speaking and writing skills.",
+        "jp": "「你会……吗？」「会，我会……」で話す・書けるかを言える。"
+      }
+    ],
+    "coreExpressions": [
+      {
+        "expr": "你是哪国人？ / 我是……人",
+        "pinyin": "nǐ shì nǎ guó rén? / wǒ shì … rén",
+        "usage": {
+          "zh": "询问与说明国籍的固定搭配。",
+          "kr": "국적을 묻고 답하는 대표 패턴입니다.",
+          "en": "Core pattern for asking and answering nationality.",
+          "jp": "国籍を尋ねる・答える基本形。"
+        }
+      },
+      {
+        "expr": "你呢？",
+        "pinyin": "nǐ ne?",
+        "usage": {
+          "zh": "在回答后把同样的问题反问对方。",
+          "kr": "답한 뒤 같은 질문을 상대에게 돌려 묻습니다.",
+          "en": "Throws the same question back after answering.",
+          "jp": "答えたあと、同じ質問を相手に返す。"
+        }
+      },
+      {
+        "expr": "你会说汉语吗？ / 会，我会说一点儿汉语。",
+        "pinyin": "nǐ huì shuō Hànyǔ ma? / huì, wǒ huì shuō yīdiǎnr Hànyǔ",
+        "usage": {
+          "zh": "「会」问能力；「一点儿」表示程度不高。",
+          "kr": "「会」로 능력을 묻고 「一点儿」로 정도가 낮음을 덧붙입니다.",
+          "en": "会 asks ability; 一点儿 softens the level.",
+          "jp": "「会」で能力を聞き、「一点儿」で程度が低いことを示す。"
+        }
+      },
+      {
+        "expr": "你会写汉字吗？ / 会，我会写汉字。",
+        "pinyin": "nǐ huì xiě Hànzì ma? / huì, wǒ huì xiě Hànzì",
+        "usage": {
+          "zh": "区分口头「说」与书写「写」。",
+          "kr": "말하기(说)와 쓰기(写)를 구분해 묻습니다.",
+          "en": "Contrasts speaking with writing characters.",
+          "jp": "話すことと漢字を書くことを区別して尋ねる。"
+        }
+      }
+    ]
   },
   "steps": [
     {

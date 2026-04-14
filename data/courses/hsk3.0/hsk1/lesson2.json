@@ -438,8 +438,181 @@
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你叫什么名字？", "我叫李明。", "你是学生吗？", "是，我是学生。", "认识你很高兴。"],
-    "chatPrompt": "请用本课句型编一段自我介绍并询问对方姓名。"
+    "speaking": ["你叫什么名字？", "我叫……", "请问", "你是新来的学生吗？", "是，我是新来的学生。", "认识你很高兴。", "我叫汤姆。"],
+    "chatPrompt": "请围绕「姓名、身份、是不是学生」用本课句型提问和回答，不要停留在泛泛的「你好」寒暄。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l2_first_meeting",
+          "situation": {
+            "zh": "第一次见面：问姓名与是否新生",
+            "kr": "첫 만남: 이름·신입생 여부 묻기",
+            "en": "First meeting: name and new-student status",
+            "jp": "初対面：名前と新入生かどうか"
+          },
+          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
+          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "goal": {
+            "zh": "用「请问」「你叫什么名字？」「我叫……」「是……吗？」完成问答。",
+            "kr": "「请问」「你叫什么名字？」「我叫……」「是……吗？」로 질문·답하기.",
+            "en": "Use 请问, 你叫什么名字？, 我叫…, and 是…吗？ in short Q&A.",
+            "jp": "「请问」「你叫什么名字？」「我叫……」「是……吗？」で問い答えする。"
+          },
+          "expressions": ["请问", "你叫什么名字？", "我叫……", "你是新来的学生吗？", "是，我是新来的学生。"],
+          "rounds": [
+            {
+              "aiLine": "你好！请问，你叫什么名字？",
+              "studentRefs": ["你好！我叫汤姆。"],
+              "acceptable": ["你好！我叫汤姆。", "我叫汤姆。", "我叫汤姆"],
+              "closeAnswers": ["汤姆", "我叫汤姆"]
+            },
+            {
+              "aiLine": "你是新来的学生吗？",
+              "studentRefs": ["是，我是新来的学生。"],
+              "acceptable": ["是，我是新来的学生。", "是，我是学生", "是"],
+              "closeAnswers": ["我是新来的学生", "是"]
+            }
+          ]
+        },
+        {
+          "id": "l2_classmates",
+          "situation": {
+            "zh": "新同学互相认识：自我介绍与「认识你很高兴」",
+            "kr": "새 친구: 자기소개와 「认识你很高兴」",
+            "en": "New classmates: names and “nice to meet you”",
+            "jp": "新しいクラスメート：名乗りと「认识你很高兴」"
+          },
+          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "goal": {
+            "zh": "互相说「我叫……」，并练习「认识你很高兴」的回应。",
+            "kr": "서로 「我叫……」를 말하고 「认识你很高兴」에 이어 「认识你我也很高兴」까지 연습합니다.",
+            "en": "Exchange 我叫… and practice 认识你很高兴 / 认识你我也很高兴.",
+            "jp": "「我叫……」を言い合い、「认识你很高兴」に続く返しを練習する。"
+          },
+          "expressions": ["你好！我叫……", "认识你很高兴", "认识你我也很高兴"],
+          "rounds": [
+            {
+              "aiLine": "你好！我叫李明。",
+              "studentRefs": ["你好！我叫汤姆。"],
+              "acceptable": ["你好！我叫汤姆。", "我叫汤姆。", "我叫汤姆"],
+              "closeAnswers": ["你好", "我叫汤姆"]
+            },
+            {
+              "aiLine": "认识你很高兴。",
+              "studentRefs": ["认识你我也很高兴。"],
+              "acceptable": ["认识你我也很高兴。", "认识你我也很高兴"],
+              "closeAnswers": ["我也很高兴", "很高兴"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "freeAskPlaceholder": {
+      "zh": "例如：「请问」什么时候用？「吗」和「呢」有什么不同？",
+      "kr": "예: 「请问」는 언제 쓰나요? 「吗」와 「呢」는 어떻게 달라요?",
+      "en": "e.g. When do you use 请问? How are 吗 and 呢 different?",
+      "jp": "例:「请问」はいつ使いますか。「吗」と「呢」の違いは？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「请问」和直接说「你叫什么名字」语气有什么不同？",
+        "「你是新来的学生吗？」若要用否定回答，可以怎么说？",
+        "「认识你很高兴」和「很高兴认识你」一样吗？",
+        "「我叫」后面一定要接中文名吗？"
+      ],
+      "kr": [
+        "「请问」는 예의를 더 드러내는 말인가요?",
+        "「是……吗？」질문에 「不是」으로 부정 답할 때 문장을 어떻게 만드나요?",
+        "「的」는 이 과에서 어떤 역할이에요? (新来的学生)",
+        "「也」는 어디에 놓고, 뜻이 어떻게 달라지나요?"
+      ],
+      "en": [
+        "How does 请问 change the tone when asking a name?",
+        "How do you give a negative answer to 你是新来的学生吗？?",
+        "What does 也 do in 认识你我也很高兴？",
+        "When do you use 叫 to say your name?"
+      ],
+      "jp": [
+        "「请问」はどんなときに使いますか。",
+        "「是……吗？」の否定の言い方を教えてください。",
+        "「认识你很高兴」と「很高兴认识你」の違いは？",
+        "「的」は「新来的学生」でどういう役割ですか。"
+      ]
+    },
+    "focusTips": [
+      {
+        "zh": "「请问」常放在问句前，语气更客气；本课问姓名时常与「你叫什么名字」连用。",
+        "kr": "「请问」는 질문 앞에 붙여 예의를 더하고, 이 과에서는 이름을 묻는 말과 자주 함께 씁니다.",
+        "en": "请问 often softens a question; here it pairs naturally with asking someone’s name.",
+        "jp": "「请问」は丁寧さを添える言葉で、名前を尋ねる表現とよく一緒に使われます。"
+      },
+      {
+        "zh": "「吗」把陈述变成是非问；回答常用「是 / 不是」或完整重复谓语部分。",
+        "kr": "「吗」는 평서문을 예/아니오 질문으로 바꾸고, 답은 「是/不是」 등으로 맞춥니다.",
+        "en": "吗 turns a statement into a yes/no question; answer with 是 / 不是 or a full short sentence.",
+        "jp": "「吗」は平叙文をYes/No疑問にし、「是／不是」などで答えます。"
+      }
+    ],
+    "abilityPoints": [
+      {
+        "zh": "能礼貌询问姓名并用「我叫……」介绍自己。",
+        "kr": "예의 있게 이름을 묻고 「我叫……」로 자기소개할 수 있다.",
+        "en": "Ask for a name politely and introduce yourself with 我叫….",
+        "jp": "丁寧に名前を尋ね、「我叫……」で自己紹介できる。"
+      },
+      {
+        "zh": "能用「是……吗？」询问身份，并用「是 / 不是」或完整句回答。",
+        "kr": "「是……吗？」로 신분을 묻고 「是/不是」 또는 짧은 완전한 문장으로 답할 수 있다.",
+        "en": "Use 是…吗？ to ask about identity and answer with 是/不是 or a full reply.",
+        "jp": "「是……吗？」で身分を尋ね、「是／不是」や短い文で答えられる。"
+      }
+    ],
+    "coreExpressions": [
+      {
+        "expr": "请问 / 你叫什么名字？",
+        "pinyin": "qǐngwèn / nǐ jiào shénme míngzi?",
+        "usage": {
+          "zh": "先客气开口，再询问对方姓名。",
+          "kr": "먼저 예의를 갖춘 뒤 상대 이름을 묻습니다.",
+          "en": "A polite lead-in before asking someone’s name.",
+          "jp": "丁寧に切り出してから名前を尋ねます。"
+        }
+      },
+      {
+        "expr": "我叫……",
+        "pinyin": "wǒ jiào …",
+        "usage": {
+          "zh": "用「叫」引出自己的名字。",
+          "kr": "「叫」로 자신의 이름을 말합니다.",
+          "en": "叫 introduces how you are called / your name.",
+          "jp": "「叫」で自分の名前を言います。"
+        }
+      },
+      {
+        "expr": "是……吗？ / 是，我是……",
+        "pinyin": "shì … ma? / shì, wǒ shì …",
+        "usage": {
+          "zh": "询问对方是不是某种身份；肯定回答用「是」起句。",
+          "kr": "어떤 신분인지 확인하고, 긍정 답은 「是」로 시작합니다.",
+          "en": "Yes/no questions about identity; affirm with 是,…. ",
+          "jp": "身分を確認するYes/No疑問。肯定は「是」で始めます。"
+        }
+      },
+      {
+        "expr": "认识你很高兴",
+        "pinyin": "rènshi nǐ hěn gāoxìng",
+        "usage": {
+          "zh": "初识常用套语；可接「认识你我也很高兴」。",
+          "kr": "처음 만난 뒤 인사로 자주 쓰고, 「认识你我也很高兴」로 이어집니다.",
+          "en": "Common after introductions; pairs with 认识你我也很高兴.",
+          "jp": "初対面のあいさつで、続けて「认识你我也很高兴」が来ることもあります。"
+        }
+      }
+    ]
   },
   "steps": [
     {

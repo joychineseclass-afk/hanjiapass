@@ -7,6 +7,7 @@ import { i18n } from "../../i18n.js";
 import { renderLessonFocusHtml } from "./aiLessonFocus.js";
 import { buildSituationDialoguePlan, renderSituationDialogueShell } from "./aiSituationDialogue.js";
 import { buildShadowingPracticeData } from "./aiShadowingPracticeData.js";
+import { pickFreeAskExampleList, pickLessonLang } from "./aiLearningShared.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -197,7 +198,9 @@ export function renderShadowingMode(_aiItem, lang, lesson) {
  * 文案走 lang：ai.free_question_*；课程 JSON 的 placeholder 可覆盖默认占位提示
  */
 export function renderFreeTalkMode(aiItem, lang) {
+  const phObj = aiItem?.freeAskPlaceholder;
   const placeholder =
+    (phObj && typeof phObj === "object" ? pickLessonLang(phObj, lang) : "") ||
     str(pickLang(aiItem && aiItem.placeholder, lang)) ||
     t("ai.free_question_placeholder", 'e.g. What\'s the difference between 「你」 and 「您」?');
   const intro = t("ai.free_question_intro", "Ask about words, phrases, and dialogue from this lesson.");
@@ -206,11 +209,12 @@ export function renderFreeTalkMode(aiItem, lang) {
     "Answers focus on meanings, differences, usage, this lesson’s dialogue, and short examples—within this lesson."
   );
   const examplesLabel = t("ai.free_question_examples_label", "Example questions");
+  const exampleList = pickFreeAskExampleList(aiItem?.freeAskExamples, lang);
   const chips = [1, 2, 3, 4]
     .map((n) => {
-      const label = t(`ai.free_question_example_${n}`, "");
+      const label = str(exampleList[n - 1]) || t(`ai.free_question_example_${n}`, "");
       return `
-      <button type="button" class="ai-free-talk-example-chip" data-example-index="${n}">
+      <button type="button" class="ai-free-talk-example-chip" data-example-index="${n}" data-example-text="${escapeHtml(label)}">
         ${escapeHtml(label)}
       </button>`;
     })

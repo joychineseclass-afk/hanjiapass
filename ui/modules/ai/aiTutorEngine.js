@@ -221,6 +221,10 @@ function mapAiPracticeToTutorItems(lesson) {
     free_talk: { cn: "自由问答", kr: "자유 질문", en: "Free talk", jp: "自由な質問" },
   };
 
+  const lessonNo = Number(lesson?.lessonNo);
+  const roleplayScenarioKey =
+    lessonNo === 1 ? "greeting" : lessonNo === 2 ? "self_intro" : lessonNo <= 4 ? "school" : "school";
+
   return [
     {
       mode: "explain",
@@ -233,7 +237,7 @@ function mapAiPracticeToTutorItems(lesson) {
     {
       mode: "roleplay",
       type: "roleplay",
-      scenario: "greeting",
+      scenario: roleplayScenarioKey,
       prompt: promptFromChat || hintObj || { cn: "根据本课对话进行角色扮演。", kr: "본과 대화를 바탕으로 역할을 나누어 연습합니다.", en: "Role-play using this lesson’s dialogue.", jp: "本課の会話を使ってロールプレイします。" },
       title: titles.roleplay,
       _fromAiPractice: true,
@@ -506,7 +510,7 @@ function buildExplainMockLessonText(ctx, lang, focalTarget, lessonData) {
     : [];
   const coreBlock = coreItems.length
     ? coreItems
-    : ["· （请结合下方对话中的问候语与礼貌用语。）"];
+    : ["· （请结合本课对话中的核心句型与词语。）"];
   const sceneUse = [ctx.scene?.title, ctx.sceneSummary].filter(Boolean).join(" — ") || themePara;
   const dLines = ctx.dialogue?.slice(0, 2) || [];
   const dialoguePart = dLines.length
@@ -525,12 +529,29 @@ function buildExplainMockLessonText(ctx, lang, focalTarget, lessonData) {
         : `【重点】${focalTarget} — 请结合对话体会用法。`)
     : "";
 
-  const mini =
-    lang === "kr" || lang === "ko"
-      ? "「谢谢」를 들었을 때 더 자연스러운 응답은?\nA) 对不起  B) 不客气  C) 没关系"
-      : lang === "jp" || lang === "ja"
-        ? "「谢谢」に対してよく使う返答は？\nA) 对不起  B) 不客气  C) 没关系"
-        : "听到「谢谢」时，更常见的应答是？\nA) 对不起  B) 不客气  C) 没关系";
+  const g0ex = Array.isArray(lessonData?.grammar?.[0]?.examples) ? lessonData.grammar[0].examples[0] : null;
+  const sampleZh = str(g0ex?.zh != null ? g0ex.zh : "");
+  let mini = "";
+  if (sampleZh) {
+    if (lang === "kr" || lang === "ko") {
+      mini = `작은 확인: 아래 본과 예문을 소리 내어 읽어 보세요.\n${sampleZh}`;
+    } else if (lang === "jp" || lang === "ja") {
+      mini = `確認：次の本課の例文を声に出して読んでみましょう。\n${sampleZh}`;
+    } else if (lang === "zh" || lang === "cn") {
+      mini = `小练习：请读一读本课语法示例句。\n${sampleZh}`;
+    } else {
+      mini = `Quick check: read this lesson’s example sentence aloud.\n${sampleZh}`;
+    }
+  } else {
+    mini =
+      lang === "kr" || lang === "ko"
+        ? "본과 표현 하나를 골라 짧게 말해 보세요."
+        : lang === "jp" || lang === "ja"
+          ? "本課の表現を一つ選んで、短く言ってみましょう。"
+          : lang === "zh" || lang === "cn"
+            ? "任选本课一个表达，试着说一说。"
+            : "Pick one expression from this lesson and say it briefly.";
+  }
 
   return [
     `${H.h1}`,
@@ -574,17 +595,23 @@ function getMockTutorOutput(mode, aiItem, lessonData, lang, userInput) {
   }
 
   if (mode === "roleplay") {
-    const dialogueLines = ctx.dialogue?.slice(0, 2).map((d) => d.zh).filter(Boolean) || ["你好！", "你好吗？"];
+    const dialogueLines = ctx.dialogue?.slice(0, 2).map((d) => d.zh).filter(Boolean);
+    const d0 =
+      dialogueLines?.[0] ||
+      str((lessonData?.title && (lessonData.title.zh != null ? lessonData.title.zh : lessonData.title.cn)) || "") ||
+      "……";
+    const d1 = dialogueLines?.[1] || "";
     return {
       text: [
-        `【${L.ai}】你好！`,
+        `【${L.ai}】${d0}`,
         "",
         t("ai.roleplay_student_reply"),
-        `- ${dialogueLines[0] || "你好！"}`,
-        `- ${dialogueLines[1] || "你好吗？"} 或 我很好。`,
+        d1 ? `- ${d1}` : "",
         "",
         promptText || t("ai.roleplay_task"),
-      ].join("\n"),
+      ]
+        .filter((line) => line !== "")
+        .join("\n"),
     };
   }
 
@@ -664,6 +691,19 @@ function escapeHtml(s) {
  */
 const TYPE_TO_MODE = { repeat: "shadowing", substitute: "roleplay", free_talk: "free_talk", explain: "explain", roleplay: "roleplay", shadowing: "shadowing" };
 
+/** 将 lesson.aiLearning 中的自由提问文案挂到 free_talk 项，供占位与示例芯片使用 */
+function attachAiLearningFreeTalkFields(mapped, lesson) {
+  const al = lesson?.aiLearning;
+  if (!al || typeof al !== "object") return mapped;
+  return mapped.map((item) => {
+    if (item.mode !== "free_talk") return item;
+    const next = { ...item };
+    if (al.freeAskExamples && typeof al.freeAskExamples === "object") next.freeAskExamples = al.freeAskExamples;
+    if (al.freeAskPlaceholder && typeof al.freeAskPlaceholder === "object") next.freeAskPlaceholder = al.freeAskPlaceholder;
+    return next;
+  });
+}
+
 function finalizeTutorItems(mapped, lesson) {
   const hasExplain = mapped.some((i) => i.mode === "explain");
   if (!hasExplain && mapped.length > 0 && lesson) {
@@ -690,23 +730,29 @@ export function getLessonAIConfig(lesson) {
   const hasExplicit = Array.isArray(raw) && raw.length > 0;
 
   if (!hasExplicit && lesson?.aiPractice && typeof lesson.aiPractice === "object") {
-    const mapped = mapAiPracticeToTutorItems(lesson)
-      .filter((item) => item && item.mode)
-      .map((item) => {
-        const rawMode = item.mode || item.type;
-        const mode = TYPE_TO_MODE[rawMode] || rawMode;
-        return { ...item, mode };
-      });
+    const mapped = attachAiLearningFreeTalkFields(
+      mapAiPracticeToTutorItems(lesson)
+        .filter((item) => item && item.mode)
+        .map((item) => {
+          const rawMode = item.mode || item.type;
+          const mode = TYPE_TO_MODE[rawMode] || rawMode;
+          return { ...item, mode };
+        }),
+      lesson,
+    );
     return finalizeTutorItems(mapped, lesson);
   }
 
   const arr = Array.isArray(raw) ? raw : [];
-  const mapped = arr
+  const mapped = attachAiLearningFreeTalkFields(
+    arr
     .filter((item) => item && (item.mode || item.type))
-    .map((item) => {
-      const rawMode = item.mode || item.type;
-      const mode = TYPE_TO_MODE[rawMode] || rawMode;
-      return { ...item, mode };
-    });
+      .map((item) => {
+        const rawMode = item.mode || item.type;
+        const mode = TYPE_TO_MODE[rawMode] || rawMode;
+        return { ...item, mode };
+      }),
+    lesson,
+  );
   return finalizeTutorItems(mapped, lesson);
 }

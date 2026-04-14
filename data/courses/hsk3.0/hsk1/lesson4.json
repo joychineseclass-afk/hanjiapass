@@ -420,8 +420,181 @@
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你家有几口人？", "我家有四口人。", "你家里有谁？", "你有妹妹吗？", "有。", "没有。"],
-    "chatPrompt": "请用本课词语介绍你的家庭：有几口人、家里有谁。"
+    "speaking": ["你家有几口人？", "我家有四口人。", "你家里有谁？", "有爸爸、妈妈、哥哥和我。", "你有妹妹吗？", "有，我有一个妹妹。", "你有弟弟吗？", "没有。"],
+    "chatPrompt": "请围绕家庭人数、成员和「有/没有」用本课词语问答；不要写成问候或只问名字。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l4_family_size",
+          "situation": {
+            "zh": "会话一：几口人、家里有谁",
+            "kr": "회화 1: 몇 명·누가 함께 사는지",
+            "en": "Dialogue 1: how many and who",
+            "jp": "会話1：何人で誰がいるか"
+          },
+          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
+          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "goal": {
+            "zh": "用「几口人」「有……口人」「家里有谁？」「有……和……」介绍家庭。",
+            "kr": "「几口人」「有……口人」「家里有谁？」「有……和……」로 가족을 말합니다.",
+            "en": "Use 几口人, 有…口人, 家里有谁?, and listing with 有…和…. ",
+            "jp": "「几口人」「有……口人」「家里有谁？」「有……和……」で家族を言う。"
+          },
+          "expressions": ["你家有几口人？", "我家有四口人。", "你家里有谁？", "有爸爸、妈妈、哥哥和我。"],
+          "rounds": [
+            {
+              "aiLine": "李明，你家有几口人？",
+              "studentRefs": ["我家有四口人。"],
+              "acceptable": ["我家有四口人。", "我家有四口人", "四口人"],
+              "closeAnswers": ["四口", "四人"]
+            },
+            {
+              "aiLine": "你家里有谁？",
+              "studentRefs": ["有爸爸、妈妈、哥哥和我。"],
+              "acceptable": ["有爸爸、妈妈、哥哥和我。", "有爸爸、妈妈、哥哥和我"],
+              "closeAnswers": ["爸爸", "妈妈", "哥哥"]
+            }
+          ]
+        },
+        {
+          "id": "l4_siblings",
+          "situation": {
+            "zh": "会话二：有没有弟弟妹妹",
+            "kr": "회화 2: 남동생·여동생 유무",
+            "en": "Dialogue 2: younger siblings",
+            "jp": "会話2：弟や妹の有無"
+          },
+          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "goal": {
+            "zh": "用「有……吗？」提问，用「有，……」或「没有。」回答。",
+            "kr": "「有……吗？」로 묻고 「有，……」 또는 「没有。」로 답합니다.",
+            "en": "Ask with 有…吗？ and answer with 有,… or 没有。.",
+            "jp": "「有……吗？」で聞き、「有，……」か「没有。」で答える。"
+          },
+          "expressions": ["你有妹妹吗？", "有，我有一个妹妹。", "你有弟弟吗？", "没有。"],
+          "rounds": [
+            {
+              "aiLine": "你有妹妹吗？",
+              "studentRefs": ["有，我有一个妹妹。"],
+              "acceptable": ["有，我有一个妹妹。", "有，我有妹妹", "有"],
+              "closeAnswers": ["妹妹", "一个妹妹"]
+            },
+            {
+              "aiLine": "你有弟弟吗？",
+              "studentRefs": ["没有。"],
+              "acceptable": ["没有。", "没有"],
+              "closeAnswers": ["没", "不是"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "freeAskPlaceholder": {
+      "zh": "例如：「几口人」和「几个」有什么不同？",
+      "kr": "예: 「几口人」와 「几个」는 언제 달라요?",
+      "en": "e.g. When do you use 几口人 vs 几个?",
+      "jp": "例:「几口人」と「几个」はどう違いますか。"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「有」在「我家有四口人」里表示什么？",
+        "问家里有谁，为什么要用「你家里有谁？」这种说法？",
+        "「一个妹妹」里的「一个」可以换成别的数词吗？",
+        "「没有。」单独回答时，前面问句通常是什么结构？"
+      ],
+      "kr": [
+        "「几口人」는 가족 인원에만 쓰나요?",
+        "「有」와 「没有」로 가족 유무를 어떻게 말하나요?",
+        "「和」는 나열할 때 어디에 놓나요?",
+        "「妹妹」와 「弟弟」를 구분해서 질문하는 패턴을 알려 주세요."
+      ],
+      "en": [
+        "What does 有 express in 我家有四口人？?",
+        "How is 几口人 different from 几个 in this course stage?",
+        "When do you answer with just 没有。?",
+        "How do you list family members with 和?"
+      ],
+      "jp": [
+        "「有」「没有」は家族についてどう使い分けますか。",
+        "「几口人」は何を数えますか。",
+        "「一个妹妹」の「一个」は何の役割ですか。",
+        "「和」は家族を並べるときどう使いますか。"
+      ]
+    },
+    "focusTips": [
+      {
+        "zh": "问家庭人口用「几口人」，回答常用「我家有 + 数字 + 口人」。",
+        "kr": "가족 수는 「几口人」로 묻고 「我家有 + 숫자 + 口人」로 답하는 경우가 많습니다.",
+        "en": "Household size uses 几口人; answers often use 我家有 + number + 口人.",
+        "jp": "家族の人数は「几口人」、答えは「我家有＋数字＋口人」がよく使われます。"
+      },
+      {
+        "zh": "「有……吗？」问有没有；否定回答可单独说「没有。」",
+        "kr": "「有……吗？」는 있는지 묻고, 부정은 짧게 「没有。」로도 답할 수 있습니다.",
+        "en": "有…吗? asks whether something exists; 没有 can stand alone as a negative reply.",
+        "jp": "「有……吗？」で有無を聞き、否定は「没有。」だけでも言えます。"
+      }
+    ],
+    "abilityPoints": [
+      {
+        "zh": "能询问并说明家里有几口人、家里有哪些成员。",
+        "kr": "집에 몇 명인지, 누가 있는지 묻고 말할 수 있다.",
+        "en": "Ask and say how many people are at home and who they are.",
+        "jp": "家に何人いて誰がいるかを尋ね・述べられる。"
+      },
+      {
+        "zh": "能用「有/没有」回答有没有某位亲人，并用「一个」等数量说明。",
+        "kr": "「有/没有」로 가족의 유무를 말하고 「一个」 등으로 수를 붙입니다.",
+        "en": "Use 有/没有 for relatives and add 一个 for counting.",
+        "jp": "「有／没有」で家族の有無を言い、「一个」などで数えます。"
+      }
+    ],
+    "coreExpressions": [
+      {
+        "expr": "你家有几口人？ / 我家有……口人",
+        "pinyin": "nǐ jiā yǒu jǐ kǒu rén? / wǒ jiā yǒu … kǒu rén",
+        "usage": {
+          "zh": "询问与说明家庭人口数量的常用句式。",
+          "kr": "가구 인원을 묻고 답하는 대표 표현입니다.",
+          "en": "Common pattern for household size.",
+          "jp": "家族の人数を尋ねる・言う基本形。"
+        }
+      },
+      {
+        "expr": "你家里有谁？ / 有……和……",
+        "pinyin": "nǐ jiālǐ yǒu shéi? / yǒu … hé …",
+        "usage": {
+          "zh": "追问成员并列举，用「和」连接。",
+          "kr": "구성원을 더 묻고 「和」로 나열합니다.",
+          "en": "Asks who is in the family and lists with 和.",
+          "jp": "誰がいるかをさらに聞き、「和」で列挙する。"
+        }
+      },
+      {
+        "expr": "你有妹妹吗？ / 有，我有一个妹妹。",
+        "pinyin": "nǐ yǒu mèimei ma? / yǒu, wǒ yǒu yí gè mèimei",
+        "usage": {
+          "zh": "「有……吗？」问有无；肯定常带数量短语。",
+          "kr": "「有……吗？」로 유무를 묻고, 긍정은 수량을 붙이기도 합니다.",
+          "en": "有…吗? for existence; affirm with a quantity phrase.",
+          "jp": "「有……吗？」で有無を聞き、肯定では数量を付けることがある。"
+        }
+      },
+      {
+        "expr": "你有弟弟吗？ / 没有。",
+        "pinyin": "nǐ yǒu dìdi ma? / méiyǒu",
+        "usage": {
+          "zh": "没有单独成句，表示「没有弟弟」等否定。",
+          "kr": "「没有。」만으로도 부정 답이 됩니다.",
+          "en": "没有 alone can answer a 有…吗? question negatively.",
+          "jp": "「没有。」だけで否定の答えになれる。"
+        }
+      }
+    ]
   },
   "steps": [
     {

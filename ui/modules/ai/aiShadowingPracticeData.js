@@ -5,6 +5,7 @@
 
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import { resolvePinyin } from "../../utils/pinyinEngine.js";
+import { getAiLearning, pickLessonLang } from "./aiLearningShared.js";
 
 const str = (v) => (typeof v === "string" ? v.trim() : v != null ? String(v).trim() : "");
 
@@ -199,6 +200,24 @@ function normalizeZhKey(zhRaw) {
 }
 
 function buildCuratedExpressionItems(lesson, ctx, lang) {
+  const al = getAiLearning(lesson);
+  if (al?.coreExpressions?.length && Array.isArray(al.coreExpressions)) {
+    const out = [];
+    for (const ce of al.coreExpressions.slice(0, 8)) {
+      const expr = str(ce.expr != null ? ce.expr : ce.pattern);
+      if (!expr || !/[\u4e00-\u9fff]/.test(expr)) continue;
+      const py = str(ce.pinyin != null ? ce.pinyin : "");
+      const mean = ce.usage && typeof ce.usage === "object" ? pickLessonLang(ce.usage, lang) : str(ce.usage);
+      out.push({
+        zh: expr.trim(),
+        pinyin: py,
+        meaning: mean || "",
+        note: "",
+      });
+    }
+    if (out.length) return dedupeByZh(out).slice(0, 20);
+  }
+
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
   const g0 = Array.isArray(lesson?.grammar) ? lesson.grammar[0] : null;
   const pat = str(g0?.pattern != null ? g0.pattern : "");
@@ -226,10 +245,14 @@ function buildCuratedExpressionItems(lesson, ctx, lang) {
     });
   };
 
+  const lessonNo = Number(lesson?.lessonNo);
+  const l1StyleGreeting =
+    lessonNo === 1 || (lessonNo <= 1 && (/您好/.test(joined) || /王老师/.test(joined)));
+
   if (/您|你/.test(joined) || /您|你/.test(pat)) {
     pushSplit("您 / 你", patPy || "nín / nǐ");
   }
-  if (/您好/.test(joined) || /你好/.test(joined)) {
+  if (l1StyleGreeting && (/您好/.test(joined) || /你好/.test(joined))) {
     pushSplit("您好 / 你好", "nín hǎo / nǐ hǎo");
   }
   if (/对不起/.test(joined) && /没关系/.test(joined)) {

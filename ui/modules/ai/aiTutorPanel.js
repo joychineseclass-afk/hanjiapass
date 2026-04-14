@@ -379,7 +379,8 @@ export function mountAITutorPanel(container, opts = {}) {
             stopFreeTalkAnswerTts();
             const idx = chip.getAttribute("data-example-index");
             if (!idx) return;
-            const text = str(t(`ai.free_question_example_${idx}`, ""));
+            const text =
+              str(chip.getAttribute("data-example-text")) || str(t(`ai.free_question_example_${idx}`, ""));
             if (!text) return;
             inputEl.value = text;
             try {
