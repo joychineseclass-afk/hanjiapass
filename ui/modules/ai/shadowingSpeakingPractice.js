@@ -391,6 +391,10 @@ function buildUploadingFeedbackHtml(blobLine, t) {
  *   reason: string,
  *   provider: string,
  *   asrStatus: string,
+ *   debugMessage?: string,
+ *   triedModels?: string,
+ *   lastTriedModel?: string,
+ *   httpStatus?: string | number,
  * }} ctx
  */
 function buildShadowingFormalDebugHtml(ctx) {
@@ -405,6 +409,10 @@ function buildShadowingFormalDebugHtml(ctx) {
     `provider: ${ctx.provider}`,
     `asr request status: ${ctx.asrStatus}`,
   ];
+  if (ctx.debugMessage) lines.push(`debugMessage: ${ctx.debugMessage}`);
+  if (ctx.triedModels) lines.push(`tried models: ${ctx.triedModels}`);
+  if (ctx.lastTriedModel) lines.push(`last tried model: ${ctx.lastTriedModel}`);
+  if (ctx.httpStatus != null && ctx.httpStatus !== "") lines.push(`http status: ${ctx.httpStatus}`);
   return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
 }
 
@@ -525,7 +533,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
       if (!postResult.ok) {
         const title = t("ai.shadowing_server_error_title", "语音识别失败");
-        const body = `${t("ai.shadowing_server_error_body", "服务端处理失败，请稍后重试。")} (HTTP ${postResult.status})`;
+        const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
         const dbg = debugOn
           ? wrapDbg(
               buildShadowingFormalDebugHtml({
@@ -536,8 +544,13 @@ export function mountShadowingSpeakingPractice(wrap, t) {
                 chosenSource: "none",
                 score: "—",
                 reason: `http_${postResult.status}`,
-                provider: "—",
+                provider: "gemini",
                 asrStatus,
+                httpStatus: postResult.status,
+                debugMessage:
+                  data && typeof data === "object" && data.debugMessage != null
+                    ? String(data.debugMessage).slice(0, 800)
+                    : "",
               }),
             )
           : "";
@@ -572,8 +585,19 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     const provider = String(data.provider || "gemini");
     const success = data.success === true;
 
+    function asrServerDebugPatch() {
+      return {
+        debugMessage:
+          data && data.debugMessage != null ? String(data.debugMessage).slice(0, 800) : "",
+        triedModels: Array.isArray(data.triedModels) ? data.triedModels.join(", ") : "",
+        lastTriedModel: data.lastTriedModel != null ? String(data.lastTriedModel) : "",
+        httpStatus: data.httpStatus != null ? data.httpStatus : "",
+      };
+    }
+
     function debugBlock(chosenSource, scoreVal, reasonStr) {
       if (!debugOn) return "";
+      const patch = asrServerDebugPatch();
       return buildShadowingFormalDebugHtml({
         target: targetZh,
         browserPreview: browserSnap.text || "",
@@ -584,6 +608,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         reason: reasonStr,
         provider,
         asrStatus,
+        ...patch,
       });
     }
     function wrapDbg(inner) {
@@ -634,9 +659,65 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         return;
       }
 
+      if (reason === "provider_error") {
+        const title = t("ai.shadowing_asr_provider_unavailable_title", "无法使用语音服务");
+        const body = t(
+          "ai.shadowing_asr_provider_unavailable_body",
+          "服务器语音服务暂时不可用，请稍后重试。",
+        );
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
+      if (reason === "no_working_asr_model" || reason === "model_not_available") {
+        const title = t("ai.shadowing_asr_no_model_title", "无法加载语音识别模型");
+        const body = t(
+          "ai.shadowing_asr_no_model_body",
+          "暂时无法完成语音识别，请稍后再试。",
+        );
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
+      if (reason === "server_error") {
+        const title = t("ai.shadowing_server_error_title", "语音识别失败");
+        const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
       const title = t("ai.shadowing_server_error_title", "语音识别失败");
-      const body = t("ai.shadowing_server_error_body", "服务端处理失败，请稍后重试。");
-      const detail = data.detail != null ? String(data.detail).slice(0, 200) : "";
+      const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
       const previewNote =
         browserSnap.text && browserSnap.text.trim()
           ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
@@ -644,7 +725,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       showFeedback(
         `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
           <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
-          <div class="ai-shadowing-feedback-body">${escapeHtml(body)}${detail ? ` (${escapeHtml(detail)})` : ""}</div>
+          <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
         </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
       );
       if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
