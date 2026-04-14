@@ -67,6 +67,48 @@ function syncShadowingDebugAttr(wrapEl) {
 }
 
 /**
+ * 最终写入跟读反馈区前的收口：非 debug 时若仍混入调试 DOM/特征词，剔除并告警（不作为主逻辑，仅兜底）。
+ * @param {string} html
+ */
+function sanitizeShadowingLearnerFeedbackHtml(html) {
+  if (typeof html !== "string" || html === "") return html;
+  if (isShadowingDebugOn()) return html;
+  let out = html;
+  let pass = 0;
+  for (let i = 0; i < 6; i++) {
+    const next = out
+      .replace(/<div\b[^>]*\bai-shadowing-formal-debug-shell\b[^>]*>[\s\S]*?<\/div>/gi, "")
+      .replace(/<div\b[^>]*\bai-shadowing-stt-debug\b[^>]*>[\s\S]*?<\/div>/gi, "")
+      .replace(/<div\b[^>]*\bai-shadowing-stt-dev\b[^>]*>[\s\S]*?<\/div>/gi, "")
+      .replace(/<pre\b[^>]*\bai-shadowing-formal-debug-pre\b[^>]*>[\s\S]*?<\/pre>/gi, "")
+      .replace(/<pre\b[^>]*\bai-shadowing-stt-dev-pre\b[^>]*>[\s\S]*?<\/pre>/gi, "");
+    if (next === out) break;
+    pass += 1;
+    out = next;
+  }
+  if (pass > 0 && typeof console !== "undefined" && console.warn) {
+    console.warn("[shadowing] sanitizeShadowingLearnerFeedbackHtml: removed debug-only nodes from learner HTML");
+  }
+  const markers = [
+    "reason:",
+    "triedModels",
+    "httpStatus",
+    "debugMessage",
+    "browser preview transcript",
+    "server transcript",
+  ];
+  for (const m of markers) {
+    if (out.includes(m)) {
+      if (typeof console !== "undefined" && console.warn) {
+        console.warn("[shadowing] sanitize: learner HTML may still contain debug token:", m);
+      }
+      break;
+    }
+  }
+  return out;
+}
+
+/**
  * 浏览器 STT 预览脚注：仅 debug 模式显示，避免 transcript 进入正式学习区。
  * @param {(k: string, fb?: string) => string} t
  */
@@ -485,10 +527,23 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     mediaSession = null;
     pendingBlobResult = null;
     activeMicBtn = null;
+    try {
+      wrap.querySelectorAll(".ai-shadowing-audio-debug").forEach((el) => el.remove());
+    } catch (_) {}
+    try {
+      delete wrap._shadowingDbgRefresh;
+    } catch (_) {}
   }
 
   syncShadowingDebugAttr(wrap);
-  if (isShadowingDebugOn()) {
+  if (!isShadowingDebugOn()) {
+    try {
+      wrap.querySelectorAll(".ai-shadowing-audio-debug").forEach((el) => el.remove());
+    } catch (_) {}
+    try {
+      delete wrap._shadowingDbgRefresh;
+    } catch (_) {}
+  } else {
     let dbg = wrap.querySelector(".ai-shadowing-audio-debug");
     if (!dbg) {
       dbg = document.createElement("div");
@@ -499,6 +554,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       else wrap.prepend(dbg);
     }
     const refreshDbg = () => {
+      if (!isShadowingDebugOn()) return;
       const s = getRecordingSupportInfo();
       const d = typeof speech.getLastDebug === "function" ? speech.getLastDebug() : {};
       dbg.textContent = [
@@ -546,6 +602,9 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
     syncShadowingDebugAttr(wrap);
 
+    /** 非 debug：ASR 错误卡片只保留标题+正文，不拼录音字节行（避免与验收「仅两行文案」冲突） */
+    const learnerHeadHtml = isShadowingDebugOn() ? blobLine : "";
+
     const browserSnap = row._hanjiBrowserPreview || {
       text: "",
       rawFinal: "",
@@ -555,8 +614,11 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     /** @type {Record<string, unknown>} */
     let data = {};
 
-    function wrapDbg(inner) {
-      if (!isShadowingDebugOn() || !inner) return "";
+    /** 惰性求值：非 debug 时不得调用 buildShadowingFormalDebugHtml */
+    function wrapDbg(lazyInner) {
+      if (!isShadowingDebugOn()) return "";
+      const inner = typeof lazyInner === "function" ? lazyInner() : lazyInner;
+      if (!inner) return "";
       return `<div class="ai-shadowing-stt-dev ai-shadowing-stt-debug ai-shadowing-formal-debug-shell" aria-hidden="true">${inner}</div>`;
     }
 
@@ -572,12 +634,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       const postResult = await postShadowingAsr(form);
       asrStatus = `http_${postResult.status}`;
       data = postResult.data && typeof postResult.data === "object" ? postResult.data : {};
-      wrap._shadowingLastAsrResponse = data;
+      if (isShadowingDebugOn()) wrap._shadowingLastAsrResponse = data;
 
       if (!postResult.ok) {
         const title = t("ai.shadowing_server_error_title", "语音识别失败");
         const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
-        const dbg = wrapDbg(
+        const dbg = wrapDbg(() =>
           buildShadowingFormalDebugHtml({
             target: targetZh,
             browserPreview: browserSnap.text || "",
@@ -608,8 +670,8 @@ export function mountShadowingSpeakingPractice(wrap, t) {
                 : "",
           }),
         );
-        showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${dbg}`);
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        showFeedback(`${learnerHeadHtml}${infrastructureBlock(t, title, body)}${dbg}`);
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
     } catch (e) {
@@ -617,7 +679,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       asrStatus = `network_error`;
       const title = t("ai.shadowing_asr_network_title", "上传失败");
       const body = t("ai.shadowing_asr_network_body", "无法连接语音识别服务，请检查网络后重试。");
-      const devHtml = wrapDbg(
+      const devHtml = wrapDbg(() =>
         buildShadowingFormalDebugHtml({
           target: targetZh,
           browserPreview: browserSnap.text || "",
@@ -630,8 +692,8 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           asrStatus,
         }),
       );
-      showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${devHtml}`);
-      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+      showFeedback(`${learnerHeadHtml}${infrastructureBlock(t, title, body)}${devHtml}`);
+      if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
       return;
     }
 
@@ -679,12 +741,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         );
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -696,12 +758,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         );
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -713,12 +775,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         );
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -730,12 +792,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         );
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -747,12 +809,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         );
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -761,12 +823,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
         const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
-          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+          </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
         );
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
       }
 
@@ -774,12 +836,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
       const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
       showFeedback(
-        `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+        `${learnerHeadHtml}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
           <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
           <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
-        </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        </div>${previewNote}${wrapDbg(() => debugBlock("none", "—", reason))}`,
       );
-      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+      if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
       return;
     }
 
@@ -801,7 +863,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         devSttHtml: debugBlock("server", result.score, result.reason),
       })}`,
     );
-    if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+    if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
   }
 
   wrap.querySelectorAll(".ai-shadowing-train-mic").forEach((btn) => {
@@ -822,7 +884,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     const showFeedback = (html) => {
       if (feedbackEl) {
         feedbackEl.hidden = false;
-        feedbackEl.innerHTML = html;
+        feedbackEl.innerHTML = sanitizeShadowingLearnerFeedbackHtml(html);
       }
     };
 
@@ -857,7 +919,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         pendingBlobResult = null;
       }
       mediaSession = null;
-      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+      if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
 
       log("stop recognition (preview session)");
       if (speech.isListening()) {
@@ -988,7 +1050,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       return;
     }
 
-    if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+    if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
 
     if (statusEl) {
       statusEl.textContent = t("ai.shadowing_speak_now", "请说吧");
@@ -1018,12 +1080,12 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           };
           sttLog("preview only", p.text.slice(0, 120));
           speech.setMatchStatusForDebug("browser_preview");
-          if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+          if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         },
         onError: (code, detail) => {
           sttLog("preview STT error (non-formal)", code, detail);
           speech.setMatchStatusForDebug(`preview_err:${code}`);
-          if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+          if (isShadowingDebugOn() && wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         },
         onListeningChange: (listening) => {
           log("speech onListeningChange (preview)", listening);
