@@ -199,11 +199,15 @@ function isRecoverableModelError(httpStatus, message) {
   return false;
 }
 
-/** 不应再换模型：鉴权、配额、key */
+/** HTTP 429：用量/限流，单独映射为 reason quota_exceeded（与鉴权类 provider_error 区分） */
+function isQuotaExceededStatus(httpStatus) {
+  return httpStatus === 429;
+}
+
+/** 不应再换模型：鉴权、权限、key（不含 429，见 isQuotaExceededStatus） */
 function isAuthQuotaOrPermissionError(httpStatus, message) {
   const m = String(message || "").toLowerCase();
   if (httpStatus === 401 || httpStatus === 403) return true;
-  if (httpStatus === 429) return true;
   if (m.includes("api key") || m.includes("permission denied") || m.includes("quota")) return true;
   return false;
 }
@@ -313,9 +317,24 @@ async function transcribeWithGemini(buffer, mimeType, targetText, apiKey, candid
           messagePreview: errMsg.slice(0, 180),
         });
 
+        if (isQuotaExceededStatus(resp.status)) {
+          console.error(
+            "[shadowing-asr] fatal: quota/rate limit (429) — stop fallback | triedModels:",
+            JSON.stringify(triedModels),
+          );
+          return {
+            ok: false,
+            fatalReason: "quota_exceeded",
+            httpStatus: resp.status,
+            debugMessage: errMsg,
+            triedModels,
+            lastTriedModel: model,
+          };
+        }
+
         if (isAuthQuotaOrPermissionError(resp.status, errMsg)) {
           console.error(
-            "[shadowing-asr] fatal: auth/quota/permission — stop fallback | httpStatus:",
+            "[shadowing-asr] fatal: auth/permission (non-429) — stop fallback | httpStatus:",
             resp.status,
             "| triedModels:",
             JSON.stringify(triedModels),
@@ -532,13 +551,29 @@ export default async function handler(req, res) {
     const out = await transcribeWithGemini(buffer, mimeType, targetText, apiKey, asrCandidates);
 
     if (!out.ok) {
+      if (out.fatalReason === "quota_exceeded") {
+        const payload = baseFailure("quota_exceeded", {
+          debugMessage: out.debugMessage,
+          triedModels: out.triedModels,
+          lastTriedModel: out.lastTriedModel,
+          httpStatus: out.httpStatus,
+          message: "Gemini API rate limit or quota exceeded (429)",
+        });
+        console.error("[shadowing-asr] response OUT", {
+          reason: payload.reason,
+          triedModels: payload.triedModels,
+          lastTriedModel: payload.lastTriedModel,
+          httpStatus: payload.httpStatus,
+        });
+        return jsonResponse(res, 200, payload);
+      }
       if (out.fatalReason === "provider_error") {
         const payload = baseFailure("provider_error", {
           debugMessage: out.debugMessage,
           triedModels: out.triedModels,
           lastTriedModel: out.lastTriedModel,
           httpStatus: out.httpStatus,
-          message: "Provider rejected the request (auth/quota/permission)",
+          message: "Provider rejected the request (auth/permission)",
         });
         console.error("[shadowing-asr] response OUT", {
           reason: payload.reason,

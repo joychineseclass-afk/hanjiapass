@@ -325,6 +325,8 @@
     "shadowing_err_recording_empty_body": "Hold the mic longer and speak clearly, then try again.",
     "shadowing_asr_provider_unavailable_title": "Speech service unavailable",
     "shadowing_asr_provider_unavailable_body": "The server speech service is temporarily unavailable. Please try again later.",
+    "shadowing_asr_quota_exceeded_title": "Speech recognition limit reached",
+    "shadowing_asr_quota_exceeded_body": "Speech recognition usage is temporarily over the limit. Please try again in a moment.",
     "shadowing_asr_no_model_title": "Could not load speech model",
     "shadowing_asr_no_model_body": "Speech recognition could not run right now. Please try again in a moment.",
     "shadowing_section_words": "Words",

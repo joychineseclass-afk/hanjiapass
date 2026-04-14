@@ -1384,6 +1384,12 @@
   font-family: ui-monospace, monospace;
 }
 
+/* 仅 localStorage HANJI_DEBUG_SHADOWING=1 时注入 data-hanji-debug-shadowing；防止调试块误显式 */
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-stt-dev,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-audio-debug {
+  display: none !important;
+}
+
 .ai-shadowing-feedback-inner .ai-shadowing-feedback-title {
   font-weight: 700;
   color: #0f172a;

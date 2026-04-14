@@ -297,6 +297,8 @@
     "shadowing_err_recording_empty_body": "请长按话筒并清晰说话后再试。",
     "shadowing_asr_provider_unavailable_title": "无法使用语音服务",
     "shadowing_asr_provider_unavailable_body": "服务器语音服务暂时不可用，请稍后重试。",
+    "shadowing_asr_quota_exceeded_title": "语音识别用量已达上限",
+    "shadowing_asr_quota_exceeded_body": "当前语音识别用量已超限，请稍后再试。",
     "shadowing_asr_no_model_title": "无法加载语音识别模型",
     "shadowing_asr_no_model_body": "暂时无法完成语音识别，请稍后再试。",
     "shadowing_section_words": "单词跟读",

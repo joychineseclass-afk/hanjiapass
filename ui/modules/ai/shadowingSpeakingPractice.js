@@ -422,7 +422,6 @@ function buildShadowingFormalDebugHtml(ctx) {
     `score: ${ctx.score}`,
   );
   if (!sr) lines.push(`reason: ${ctx.reason}`);
-  lines.push(`provider: ${ctx.provider}`, `asr request status: ${ctx.asrStatus}`);
 
   return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
 }
@@ -452,6 +451,9 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
   const debugOn =
     typeof localStorage !== "undefined" && localStorage.getItem("HANJI_DEBUG_SHADOWING") === "1";
+  try {
+    wrap.setAttribute("data-hanji-debug-shadowing", debugOn ? "1" : "0");
+  } catch (_) {}
   if (debugOn) {
     let dbg = wrap.querySelector(".ai-shadowing-audio-debug");
     if (!dbg) {
@@ -528,6 +530,11 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     /** @type {Record<string, unknown>} */
     let data = {};
 
+    function wrapDbg(inner) {
+      if (!debugOn) return "";
+      return inner ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${inner}</div>` : "";
+    }
+
     try {
       const form = new FormData();
       form.append("audio", blobResult.blob, pickAudioFilename(blobResult.mimeType));
@@ -545,39 +552,37 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       if (!postResult.ok) {
         const title = t("ai.shadowing_server_error_title", "语音识别失败");
         const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
-        const dbg = debugOn
-          ? wrapDbg(
-              buildShadowingFormalDebugHtml({
-                target: targetZh,
-                browserPreview: browserSnap.text || "",
-                serverTranscript: "",
-                normalized: "",
-                chosenSource: "none",
-                score: "—",
-                reason: `http_${postResult.status}`,
-                provider: "gemini",
-                asrStatus,
-                serverReason:
-                  data && typeof data === "object" && data.reason != null ? String(data.reason) : "",
-                httpStatus:
-                  data && typeof data === "object" && data.httpStatus != null
-                    ? data.httpStatus
-                    : postResult.status,
-                debugMessage:
-                  data && typeof data === "object" && data.debugMessage != null
-                    ? String(data.debugMessage).slice(0, 800)
-                    : "",
-                triedModels:
-                  data && typeof data === "object" && Array.isArray(data.triedModels)
-                    ? data.triedModels.join(", ")
-                    : "",
-                lastTriedModel:
-                  data && typeof data === "object" && data.lastTriedModel != null
-                    ? String(data.lastTriedModel)
-                    : "",
-              }),
-            )
-          : "";
+        const dbg = wrapDbg(
+          buildShadowingFormalDebugHtml({
+            target: targetZh,
+            browserPreview: browserSnap.text || "",
+            serverTranscript: "",
+            normalized: "",
+            chosenSource: "none",
+            score: "—",
+            reason: `http_${postResult.status}`,
+            provider: "gemini",
+            asrStatus,
+            serverReason:
+              data && typeof data === "object" && data.reason != null ? String(data.reason) : "",
+            httpStatus:
+              data && typeof data === "object" && data.httpStatus != null
+                ? data.httpStatus
+                : postResult.status,
+            debugMessage:
+              data && typeof data === "object" && data.debugMessage != null
+                ? String(data.debugMessage).slice(0, 800)
+                : "",
+            triedModels:
+              data && typeof data === "object" && Array.isArray(data.triedModels)
+                ? data.triedModels.join(", ")
+                : "",
+            lastTriedModel:
+              data && typeof data === "object" && data.lastTriedModel != null
+                ? String(data.lastTriedModel)
+                : "",
+          }),
+        );
         showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${dbg}`);
         if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
         return;
@@ -587,19 +592,19 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       asrStatus = `network_error`;
       const title = t("ai.shadowing_asr_network_title", "上传失败");
       const body = t("ai.shadowing_asr_network_body", "无法连接语音识别服务，请检查网络后重试。");
-      const devHtml = debugOn
-        ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${buildShadowingFormalDebugHtml({
-            target: targetZh,
-            browserPreview: browserSnap.text || "",
-            serverTranscript: "",
-            normalized: "",
-            chosenSource: "none",
-            score: "—",
-            reason: "network",
-            provider: "—",
-            asrStatus,
-          })}</div>`
-        : "";
+      const devHtml = wrapDbg(
+        buildShadowingFormalDebugHtml({
+          target: targetZh,
+          browserPreview: browserSnap.text || "",
+          serverTranscript: "",
+          normalized: "",
+          chosenSource: "none",
+          score: "—",
+          reason: "network",
+          provider: "—",
+          asrStatus,
+        }),
+      );
       showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${devHtml}`);
       if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
       return;
@@ -635,9 +640,6 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         asrStatus,
         ...patch,
       });
-    }
-    function wrapDbg(inner) {
-      return inner ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${inner}</div>` : "";
     }
 
     if (!success) {
@@ -676,6 +678,26 @@ export function mountShadowingSpeakingPractice(wrap, t) {
             : "";
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
+      if (reason === "quota_exceeded") {
+        const title = t("ai.shadowing_asr_quota_exceeded_title", "语音识别用量已达上限");
+        const body = t(
+          "ai.shadowing_asr_quota_exceeded_body",
+          "当前语音识别用量已超限，请稍后再试。",
+        );
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
             <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
           </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,

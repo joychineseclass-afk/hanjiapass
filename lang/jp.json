@@ -322,6 +322,8 @@
     "shadowing_err_recording_empty_body": "マイクを長めに押して、はっきり話してからもう一度お試しください。",
     "shadowing_asr_provider_unavailable_title": "音声サービスを利用できません",
     "shadowing_asr_provider_unavailable_body": "サーバー側の音声認識サービスを現在ご利用いただけません。しばらくしてから再度お試しください。",
+    "shadowing_asr_quota_exceeded_title": "音声認識の利用上限",
+    "shadowing_asr_quota_exceeded_body": "現在、音声認識の利用量が上限に達しています。しばらくしてから再度お試しください。",
     "shadowing_asr_no_model_title": "音声認識モデルを読み込めませんでした",
     "shadowing_asr_no_model_body": "音声認識を完了できませんでした。しばらくしてから再度お試しください。",
     "shadowing_section_words": "単語のシャドーイング",
