@@ -32,6 +32,7 @@
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
     "@vercel/functions": "^3.4.3",
+    "formidable": "^3.5.4",
     "pinyin-pro": "^3.21.0"
   }
 }

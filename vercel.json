@@ -1,5 +1,9 @@
 {
-
+  "functions": {
+    "api/shadowing-asr.js": {
+      "maxDuration": 60
+    }
+  },
   "outputDirectory": ".",
   "headers": [
     {

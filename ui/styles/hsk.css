@@ -1390,6 +1390,15 @@
   margin-bottom: 6px;
 }
 
+.ai-shadowing-feedback--pending .ai-shadowing-feedback-title {
+  color: #0369a1;
+}
+
+.ai-shadowing-feedback--pending .ai-shadowing-feedback-body {
+  color: #64748b;
+  font-size: 0.8125rem;
+}
+
 .ai-shadowing-feedback-score {
   margin-bottom: 4px;
   font-size: 0.8125rem;

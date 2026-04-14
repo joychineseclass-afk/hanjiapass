@@ -1,15 +1,16 @@
 /**
- * 따라 말하기：getUserMedia + MediaRecorder 真实录音闭环 + Web Speech 中文识别 + 评分
+ * 따라 말하기：getUserMedia + MediaRecorder 录音 + **后端 ASR 正式评分** + 浏览器 Speech 仅预览
  *
  * 架构（必读）：
- * - 浏览器 SpeechRecognition **仅作前端即时预览**；引擎/网络差异大，**STT 空 transcript 不代表用户未开口**。
- * - **row._hanjiShadowingLastBlob** 为后续 **服务端 ASR / 发音评分** 的正式输入；**正式评分应以后端识别为准**。
- * - 浏览器未识别出文本时，**不得**与「未录音」混同，也**不应**给出正式 0 分（见 recording_ok_no_browser_stt）。
+ * - **正式 transcript / 正式分数** 仅来自 **POST /api/shadowing-asr**（服务端 Gemini 多模态转写）；不得用浏览器 STT 作为正式评分依据。
+ * - 浏览器 SpeechRecognition **仅可选预览**；失败、空串不影响正式主链。
+ * - **row._hanjiShadowingLastBlob** 为上传服务端 ASR 的正式输入；浏览器 STT 空结果不代表用户未开口。
  *
- * 注意：shadowing STT 第二次 toggle 只 recognition.stop()，不更新回调，故 onResult/onError 必须在第一次 toggle 传入。
+ * 注意：shadowing STT 第二次 toggle 只 recognition.stop()；预览回调在首次 toggle 注册。
  */
 
 import { createShadowingZhSpeechSession, isShadowingZhSttSupported } from "./shadowingSpeechRecognition.js";
+import { postShadowingAsr } from "./shadowingAsrClient.js";
 import { speakText } from "../../platform/audio/ttsEngine.js";
 import {
   startMediaRecorderCapture,
@@ -120,18 +121,24 @@ export function scoreShadowingUtterance(targetZh, recognizedRaw) {
   return { score, band, reason: "similarity" };
 }
 
+/** 正式评分：与服务端 transcript 对齐（MVP 规则同 scoreShadowingUtterance） */
+export function scoreShadowingServerMvp(targetZh, transcriptRaw) {
+  return scoreShadowingUtterance(targetZh, transcriptRaw);
+}
+
 /** 录音已成功，但浏览器 STT 未给出可用文本：不给出正式分数 */
 export function buildRecordingOkNoBrowserSttResult() {
   return { score: /** @type {null} */ (null), band: "pending", reason: "recording_ok_no_browser_stt" };
 }
 
 /**
- * @param {{ interimFallback?: boolean }} [opts]
+ * @param {{ interimFallback?: boolean, formalAsr?: boolean }} [opts]
  */
 export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText, t, opts = {}) {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
   const preview = str(recognizedText).slice(0, 200);
   const interimFallback = !!opts.interimFallback;
+  const formalAsr = !!opts.formalAsr;
 
   if (result.reason === "recording_ok_no_browser_stt") {
     return {
@@ -198,16 +205,27 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
     const interimPreviewNote = interimFallback
       ? safeT("ai.shadowing_stt_interim_preview_note", "预览识别结果（interim fallback），仅供参考")
       : "";
+    const title = formalAsr
+      ? safeT("ai.shadowing_server_mismatch_title", "识别结果与目标不够接近")
+      : safeT("ai.shadowing_feedback_mismatch_title", "识别到了，但还不够接近");
+    const body = formalAsr
+      ? safeT(
+          "ai.shadowing_server_mismatch_body",
+          "服务端听到：「{heard}」。请再接近目标发音说一次。",
+        ).replace("{heard}", preview)
+      : safeT("ai.shadowing_feedback_mismatch_body", "听到：「{heard}」。请对照上面的中文再说一遍。").replace(
+          "{heard}",
+          preview,
+        );
     return {
-      title: safeT("ai.shadowing_feedback_mismatch_title", "识别到了，但还不够接近"),
-      body: safeT("ai.shadowing_feedback_mismatch_body", "听到：「{heard}」。请对照上面的中文再说一遍。").replace(
-        "{heard}",
-        preview,
-      ),
+      title,
+      body,
       score: result.score,
       band,
       recognizedPreview: preview,
       interimPreviewNote,
+      scoreLabelKey: formalAsr ? "ai.shadowing_official_score_label" : undefined,
+      recognizedLabelKey: formalAsr ? "ai.shadowing_official_recognition_label" : undefined,
     };
   }
 
@@ -236,19 +254,23 @@ export function buildShadowingFeedbackMessage(result, _targetZh, recognizedText,
     band,
     recognizedPreview: preview,
     interimPreviewNote,
+    scoreLabelKey: formalAsr ? "ai.shadowing_official_score_label" : undefined,
+    recognizedLabelKey: formalAsr ? "ai.shadowing_official_recognition_label" : undefined,
   };
 }
 
 function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "", feedbackOpts = {}) {
   const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
   const omitScore = msg.omitScore === true || (msg.score == null && msg.reason === "recording_ok_no_browser_stt");
+  const scoreLabelKey = msg.scoreLabelKey || "ai.shadowing_score_label";
+  const recLabelKey = msg.recognizedLabelKey || "ai.shadowing_recognized_label";
   const score =
     !omitScore && msg.score != null
-      ? `<div class="ai-shadowing-feedback-score"><span class="ai-shadowing-feedback-score-label">${escapeHtml(safeT("ai.shadowing_score_label", "得分"))}</span> <strong>${msg.score}</strong> / 100</div>`
+      ? `<div class="ai-shadowing-feedback-score"><span class="ai-shadowing-feedback-score-label">${escapeHtml(safeT(scoreLabelKey, safeT("ai.shadowing_score_label", "得分")))}</span> <strong>${msg.score}</strong> / 100</div>`
       : "";
   const rec =
     recognizedText && String(recognizedText).trim()
-      ? `<div class="ai-shadowing-feedback-rec"><span class="ai-shadowing-feedback-rec-label">${escapeHtml(safeT("ai.shadowing_recognized_label", "识别"))}</span> ${escapeHtml(String(recognizedText).trim())}</div>`
+      ? `<div class="ai-shadowing-feedback-rec"><span class="ai-shadowing-feedback-rec-label">${escapeHtml(safeT(recLabelKey, safeT("ai.shadowing_recognized_label", "识别")))}</span> ${escapeHtml(String(recognizedText).trim())}</div>`
       : "";
   const body = msg.body ? `<div class="ai-shadowing-feedback-body">${escapeHtml(msg.body)}</div>` : "";
   const interimNote =
@@ -340,6 +362,52 @@ function buildDevSttHtml(targetZh, rawFinal, rawInterim, chosen, sourceLabel) {
   return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
 }
 
+function pickAudioFilename(mimeType) {
+  const m = String(mimeType || "");
+  if (m.includes("mp4")) return "shadowing.mp4";
+  if (m.includes("ogg")) return "shadowing.ogg";
+  if (m.includes("wav")) return "shadowing.wav";
+  return "shadowing.webm";
+}
+
+function buildUploadingFeedbackHtml(blobLine, t) {
+  const safeT = typeof t === "function" ? t : (k, fb) => fb || k;
+  const title = safeT("ai.shadowing_asr_uploading_title", "正在上传音频并识别");
+  const body = safeT("ai.shadowing_asr_uploading_body", "正在进行正式语音评测，请稍候…");
+  return `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--pending">
+    <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+    <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+  </div>`;
+}
+
+/**
+ * @param {{
+ *   target: string,
+ *   browserPreview: string,
+ *   serverTranscript: string,
+ *   normalized: string,
+ *   chosenSource: string,
+ *   score: string | number,
+ *   reason: string,
+ *   provider: string,
+ *   asrStatus: string,
+ * }} ctx
+ */
+function buildShadowingFormalDebugHtml(ctx) {
+  const lines = [
+    `target: ${ctx.target}`,
+    `browser preview transcript: ${ctx.browserPreview}`,
+    `server transcript: ${ctx.serverTranscript}`,
+    `normalized transcript: ${ctx.normalized}`,
+    `chosen source: ${ctx.chosenSource}`,
+    `score: ${ctx.score}`,
+    `reason: ${ctx.reason}`,
+    `provider: ${ctx.provider}`,
+    `asr request status: ${ctx.asrStatus}`,
+  ];
+  return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
+}
+
 /**
  * 挂载：话筒 = 真实录音 + 中文识别 + 评分；喇叭 = 仅播汉字
  * @returns {() => void} cleanup
@@ -397,6 +465,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         `last stt error: ${d.lastSttError || "(none)"}`,
         `match status: ${d.matchStatus ?? "idle"}`,
         `mediaSession: ${mediaSession ? "active" : "null"}`,
+        `last ASR (server): ${wrap._shadowingLastAsrResponse ? JSON.stringify(wrap._shadowingLastAsrResponse).slice(0, 600) : "(none)"}`,
       ].join("\n");
     };
     refreshDbg();
@@ -413,6 +482,192 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       speakText(zh, { lang: "zh-CN", rate: 0.95 });
     });
   });
+
+  /**
+   * 正式评分主链：上传 Blob → /api/shadowing-asr → 展示服务端 transcript 与分数
+   */
+  async function runShadowingFormalAsr(ctx) {
+    const {
+      row,
+      targetZh,
+      blobResult,
+      blobLine,
+      lessonId,
+      itemId,
+      t,
+      showFeedback,
+      debugOn,
+      speech,
+    } = ctx;
+
+    const browserSnap = row._hanjiBrowserPreview || {
+      text: "",
+      rawFinal: "",
+      rawInterim: "",
+    };
+    let asrStatus = "pending";
+    /** @type {Record<string, unknown>} */
+    let data = {};
+
+    try {
+      const form = new FormData();
+      form.append("audio", blobResult.blob, pickAudioFilename(blobResult.mimeType));
+      form.append("targetText", targetZh);
+      form.append("lang", "zh-CN");
+      form.append("mode", "shadowing");
+      if (lessonId) form.append("lessonId", lessonId);
+      if (itemId) form.append("itemId", itemId);
+
+      const postResult = await postShadowingAsr(form);
+      asrStatus = `http_${postResult.status}`;
+      data = postResult.data && typeof postResult.data === "object" ? postResult.data : {};
+      wrap._shadowingLastAsrResponse = data;
+
+      if (!postResult.ok) {
+        const title = t("ai.shadowing_server_error_title", "语音识别失败");
+        const body = `${t("ai.shadowing_server_error_body", "服务端处理失败，请稍后重试。")} (HTTP ${postResult.status})`;
+        const dbg = debugOn
+          ? wrapDbg(
+              buildShadowingFormalDebugHtml({
+                target: targetZh,
+                browserPreview: browserSnap.text || "",
+                serverTranscript: "",
+                normalized: "",
+                chosenSource: "none",
+                score: "—",
+                reason: `http_${postResult.status}`,
+                provider: "—",
+                asrStatus,
+              }),
+            )
+          : "";
+        showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${dbg}`);
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+    } catch (e) {
+      log("postShadowingAsr network error", e && e.message, e);
+      asrStatus = `network_error`;
+      const title = t("ai.shadowing_asr_network_title", "上传失败");
+      const body = t("ai.shadowing_asr_network_body", "无法连接语音识别服务，请检查网络后重试。");
+      const devHtml = debugOn
+        ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${buildShadowingFormalDebugHtml({
+            target: targetZh,
+            browserPreview: browserSnap.text || "",
+            serverTranscript: "",
+            normalized: "",
+            chosenSource: "none",
+            score: "—",
+            reason: "network",
+            provider: "—",
+            asrStatus,
+          })}</div>`
+        : "";
+      showFeedback(`${blobLine}${infrastructureBlock(t, title, body)}${devHtml}`);
+      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+      return;
+    }
+
+    const transcriptRaw = String(data.normalizedTranscript || data.transcript || "").trim();
+    const provider = String(data.provider || "gemini");
+    const success = data.success === true;
+
+    function debugBlock(chosenSource, scoreVal, reasonStr) {
+      if (!debugOn) return "";
+      return buildShadowingFormalDebugHtml({
+        target: targetZh,
+        browserPreview: browserSnap.text || "",
+        serverTranscript: String(data.transcript || ""),
+        normalized: String(data.normalizedTranscript || transcriptRaw || ""),
+        chosenSource,
+        score: scoreVal,
+        reason: reasonStr,
+        provider,
+        asrStatus,
+      });
+    }
+    function wrapDbg(inner) {
+      return inner ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${inner}</div>` : "";
+    }
+
+    if (!success) {
+      const reason = String(data.reason || "unknown");
+      speech.setMatchStatusForDebug(`asr_fail:${reason}`);
+
+      if (reason === "service_not_configured") {
+        const title = t("ai.shadowing_asr_not_configured_title", "未配置正式语音识别");
+        const body = t(
+          "ai.shadowing_asr_not_configured_body",
+          "当前服务器未配置语音识别服务。请联系管理员或稍后再试。",
+        );
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
+      if (reason === "empty_transcript" || reason === "audio_too_small") {
+        const title = t("ai.shadowing_server_empty_title", "未识别到有效中文");
+        const body = t(
+          "ai.shadowing_server_empty_body",
+          "已收到录音，但服务端未识别出有效中文文本。请重试或稍后评测。",
+        );
+        const previewNote =
+          browserSnap.text && browserSnap.text.trim()
+            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+            : "";
+        showFeedback(
+          `${blobLine}<div class="ai-shadowing-feedback-inner">
+            <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+            <div class="ai-shadowing-feedback-body">${escapeHtml(body)}</div>
+          </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+        );
+        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        return;
+      }
+
+      const title = t("ai.shadowing_server_error_title", "语音识别失败");
+      const body = t("ai.shadowing_server_error_body", "服务端处理失败，请稍后重试。");
+      const detail = data.detail != null ? String(data.detail).slice(0, 200) : "";
+      const previewNote =
+        browserSnap.text && browserSnap.text.trim()
+          ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
+          : "";
+      showFeedback(
+        `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
+          <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
+          <div class="ai-shadowing-feedback-body">${escapeHtml(body)}${detail ? ` (${escapeHtml(detail)})` : ""}</div>
+        </div>${previewNote}${wrapDbg(debugBlock("none", "—", reason))}`,
+      );
+      if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+      return;
+    }
+
+    const result = scoreShadowingServerMvp(targetZh, transcriptRaw);
+    sttLog("server ASR target=", JSON.stringify(targetZh), "transcript=", JSON.stringify(transcriptRaw), "match=", JSON.stringify(result));
+    speech.setMatchStatusForDebug(`asr_ok:${result.band}:${result.reason}`);
+
+    const msg = buildShadowingFeedbackMessage(result, targetZh, transcriptRaw, t, { formalAsr: true });
+    const browserNote =
+      browserSnap.text && browserSnap.text.trim() && browserSnap.text.trim() !== transcriptRaw.trim()
+        ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_note", "浏览器预览（仅供参考，非正式评分）"))}</div>`
+        : "";
+
+    showFeedback(
+      `${blobLine}${browserNote}${buildFeedbackHtml(msg, transcriptRaw, t, "", {
+        devSttHtml: debugBlock("server", result.score, result.reason),
+      })}`,
+    );
+    if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+  }
 
   wrap.querySelectorAll(".ai-shadowing-train-mic").forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -469,11 +724,59 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       mediaSession = null;
       if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
 
-      log("calling speech.toggle() to stop recognition (uses handlers from first toggle)");
-      speech.toggle({
-        onResult: () => {},
-        onError: () => {},
-        onListeningChange: () => {},
+      log("stop recognition (preview session)");
+      if (speech.isListening()) {
+        speech.toggle({
+          onResult: () => {},
+          onError: () => {},
+          onListeningChange: () => {},
+        });
+      }
+
+      const blobResult = pendingBlobResult;
+      pendingBlobResult = null;
+      endRecordingUi();
+
+      if (!blobResult?.blob || blobResult.sizeBytes <= 0) {
+        showFeedback(
+          infrastructureBlock(
+            t,
+            t("ai.shadowing_err_recording_empty_title", "未录到有效音频"),
+            t("ai.shadowing_err_recording_empty_body", "请长按话筒并清晰说话后再试。"),
+          ),
+        );
+        return;
+      }
+
+      const durationMs = blobResult.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
+      const blobLine = formatBlobLine(blobResult, durationMs, t);
+      row._hanjiShadowingLastBlob = blobResult.blob;
+      row._hanjiShadowingLastBlobMeta = {
+        sizeBytes: blobResult.sizeBytes,
+        mimeType: blobResult.mimeType,
+        durationMs,
+      };
+
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = t("ai.shadowing_status_uploading", "上传中…");
+      }
+      showFeedback(buildUploadingFeedbackHtml(blobLine, t));
+
+      const lessonId = wrap.getAttribute("data-lesson-id") || "";
+      const itemId = row.id || row.getAttribute("id") || "";
+
+      void runShadowingFormalAsr({
+        row,
+        targetZh,
+        blobResult,
+        blobLine,
+        lessonId,
+        itemId,
+        t,
+        showFeedback,
+        debugOn,
+        speech,
       });
       return;
     }
@@ -558,190 +861,41 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     }
 
     if (!isShadowingZhSttSupported()) {
-      log("SpeechRecognition API missing");
-      endRecordingUi();
-      abortMediaSession(mediaSession);
-      mediaSession = null;
-      showFeedback(
-        infrastructureBlock(
-          t,
-          t("ai.shadowing_err_stt_unsupported_title", "不支持语音识别"),
-          t(
-            "ai.shadowing_err_stt_unsupported_body",
-            "当前浏览器不支持 Web Speech API。请使用 Chrome / Edge。麦克风录音已停止。",
-          ),
-        ),
-      );
-      return;
+      log("SpeechRecognition unavailable — skip browser preview; formal ASR still runs");
     }
 
     pendingBlobResult = null;
+    row._hanjiBrowserPreview = { text: "", rawFinal: "", rawInterim: "", interimFallback: false };
 
     speech.setTargetTextForDebug(targetZh);
-    speech.setMatchStatusForDebug("listening");
+    speech.setMatchStatusForDebug("idle");
 
-    log("speech.toggle() start — registering onResult/onError for this session");
-    speech.toggle({
-      onResult: async (payload) => {
-        const p = parseSttPayload(payload);
-        log("speech onResult", p.text.slice(0, 160), p.interimFallback ? "[interim fallback]" : "");
-        const blobResult = pendingBlobResult;
-        pendingBlobResult = null;
-        endRecordingUi();
-        const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
-        const blobLine = formatBlobLine(blobResult, durationMs, t);
-        const result = scoreShadowingUtterance(targetZh, p.text);
-        sttLog("target text=", JSON.stringify(targetZh));
-        sttLog("match result=", JSON.stringify(result));
-        speech.setMatchStatusForDebug(`${result.band}:${result.reason}`);
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
-        const msg = buildShadowingFeedbackMessage(result, targetZh, p.text, t, { interimFallback: p.interimFallback });
-        const chosenSource = p.interimFallback ? "interim" : "final";
-        const devSttHtml = debugOn
-          ? buildDevSttHtml(targetZh, p.rawFinal, p.rawInterim, p.text, chosenSource)
-          : "";
-        // 正式评测输入：见架构说明（文件头）。浏览器 STT 仅预览。
-        row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
-        row._hanjiShadowingLastBlobMeta = blobResult
-          ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
-          : null;
-        showFeedback(buildFeedbackHtml(msg, p.text, t, blobLine, { devSttHtml }));
-      },
-      onError: async (code, detail) => {
-        log("speech onError", "code=", code, "detail=", detail);
-        speech.setMatchStatusForDebug(`error:${code}`);
-        if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
-        const blobResult = pendingBlobResult;
-        pendingBlobResult = null;
-        endRecordingUi();
-        const durationMs = blobResult?.blob ? await getBlobAudioDurationMs(blobResult.blob) : 0;
-        const blobLine = formatBlobLine(blobResult, durationMs, t);
-        row._hanjiShadowingLastBlob = blobResult?.blob ?? null;
-        row._hanjiShadowingLastBlobMeta = blobResult
-          ? { sizeBytes: blobResult.sizeBytes, mimeType: blobResult.mimeType, durationMs }
-          : null;
-
-        if (code === "not_supported") {
-          abortMediaSession(mediaSession);
-          mediaSession = null;
-          showFeedback(
-            blobLine +
-              infrastructureBlock(
-                t,
-                t("ai.shadowing_err_stt_unsupported_title", "不支持语音识别"),
-                t(
-                  "ai.shadowing_err_stt_unsupported_body",
-                  "当前浏览器不支持 Web Speech 识别。可换用 Chrome / Edge。",
-                ),
-              ),
-          );
-          return;
-        }
-        if (code === "permission_denied") {
-          showFeedback(
-            blobLine +
-              infrastructureBlock(
-                t,
-                t("ai.shadowing_err_stt_denied_title", "语音识别权限被拒绝"),
-                t("ai.shadowing_err_stt_denied_body", "请允许语音识别相关权限后重试。"),
-              ),
-          );
-          return;
-        }
-        if (code === "start_failed") {
-          abortMediaSession(mediaSession);
-          mediaSession = null;
-          const d = detail != null ? String(detail) : "";
-          showFeedback(
-            blobLine +
-              infrastructureBlock(
-                t,
-                t("ai.shadowing_err_stt_start_title", "语音识别未能启动"),
-                t("ai.shadowing_err_stt_start_body", "详情：{detail}").replace("{detail}", escapeHtml(d)),
-              ),
-          );
-          return;
-        }
-        if (code === "language_not_supported") {
-          showFeedback(
-            blobLine +
-              infrastructureBlock(
-                t,
-                t("ai.shadowing_err_stt_lang_title", "浏览器不支持中文语音识别"),
-                t(
-                  "ai.shadowing_err_stt_lang_body",
-                  "当前环境无法使用 zh-CN 语音识别（language-not-supported）。可换 Chrome/Edge，或后续改用服务端识别。",
-                ),
-              ),
-          );
-          return;
-        }
-        if (code === "service_not_allowed") {
-          showFeedback(
-            blobLine +
-              infrastructureBlock(
-                t,
-                t("ai.shadowing_err_stt_service_title", "语音识别服务不可用"),
-                t(
-                  "ai.shadowing_err_stt_service_body",
-                  "浏览器禁止或无法连接语音识别服务（service-not_allowed）。请检查网络与浏览器设置。",
-                ),
-              ),
-          );
-          return;
-        }
-
-        const noInput = code === "no_result" || code === "no_speech";
-        const hasAudio = blobResult && blobResult.sizeBytes > 800;
-        if (noInput && hasAudio) {
-          const result = buildRecordingOkNoBrowserSttResult();
-          const msg = buildShadowingFeedbackMessage(result, targetZh, "", t);
-          const d = typeof speech.getLastDebug === "function" ? speech.getLastDebug() : {};
-          const devSttHtml = debugOn
-            ? buildDevSttHtml(
-                targetZh,
-                d.lastRawFinals ?? "",
-                d.lastRawInterim ?? "",
-                "",
-                "none",
-              )
-            : "";
-          showFeedback(buildFeedbackHtml(msg, "", t, blobLine, { devSttHtml }));
-          return;
-        }
-        if (noInput) {
-          const msg = {
-            title: t("ai.shadowing_feedback_title_retry", "再试一次"),
-            body: t(
-              "ai.shadowing_feedback_no_speech_short",
-              "未检测到有效语音。请确认麦克风已开启并靠近嘴边后再试。",
-            ),
-            score: null,
-            band: "retry",
-            omitScore: true,
+    if (isShadowingZhSttSupported()) {
+      speech.setMatchStatusForDebug("listening");
+      log("speech.toggle — browser STT preview only (non-formal)");
+      speech.toggle({
+        onResult: (payload) => {
+          const p = parseSttPayload(payload);
+          row._hanjiBrowserPreview = {
+            text: p.text,
+            rawFinal: p.rawFinal,
+            rawInterim: p.rawInterim,
+            interimFallback: p.interimFallback,
           };
-          const devSttHtml = debugOn
-            ? buildDevSttHtml(targetZh, "", "", "", "none")
-            : "";
-          showFeedback(buildFeedbackHtml(msg, "", t, blobLine, { devSttHtml }));
-          return;
-        }
-
-        const detailStr = detail != null && detail !== "" ? String(detail) : "";
-        const msg = {
-          title: t("ai.shadowing_err_stt_generic_title", "语音识别出错"),
-          body:
-            t("ai.shadowing_err_stt_generic_body", "代码：{code}").replace("{code}", escapeHtml(String(code))) +
-            (detailStr ? ` (${escapeHtml(detailStr)})` : ""),
-          score: 0,
-          band: "retry",
-        };
-        showFeedback(buildFeedbackHtml(msg, "", t, blobLine));
-      },
-      onListeningChange: (listening) => {
-        log("speech onListeningChange", listening);
-      },
-    });
+          sttLog("preview only", p.text.slice(0, 120));
+          speech.setMatchStatusForDebug("browser_preview");
+          if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        },
+        onError: (code, detail) => {
+          sttLog("preview STT error (non-formal)", code, detail);
+          speech.setMatchStatusForDebug(`preview_err:${code}`);
+          if (wrap._shadowingDbgRefresh) wrap._shadowingDbgRefresh();
+        },
+        onListeningChange: (listening) => {
+          log("speech onListeningChange (preview)", listening);
+        },
+      });
+    }
   }
 
   return cleanup;
