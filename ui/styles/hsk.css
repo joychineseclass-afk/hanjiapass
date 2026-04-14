@@ -1384,9 +1384,32 @@
   font-family: ui-monospace, monospace;
 }
 
-/* 仅 localStorage HANJI_DEBUG_SHADOWING=1 时注入 data-hanji-debug-shadowing；防止调试块误显式 */
+/*
+ * 跟读调试块兜底：须配合 JS 在 .ai-tutor-mode-card 上设 data-hanji-debug-shadowing="0"|"1"
+ * 非 "1" 时强制不显示任何调试 DOM（含误插入的 pre）
+ */
 .ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-stt-dev,
-.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-audio-debug {
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-stt-debug,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-formal-debug-shell,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-audio-debug,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-formal-debug-pre,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) pre.ai-shadowing-stt-dev-pre,
+.ai-tutor-mode-card:not([data-hanji-debug-shadowing="1"]) .ai-shadowing-browser-preview-note {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+[data-hanji-debug-shadowing="0"] .ai-shadowing-stt-dev,
+[data-hanji-debug-shadowing="0"] .ai-shadowing-stt-debug,
+[data-hanji-debug-shadowing="0"] .ai-shadowing-formal-debug-shell,
+[data-hanji-debug-shadowing="0"] .ai-shadowing-audio-debug,
+[data-hanji-debug-shadowing="0"] .ai-shadowing-formal-debug-pre,
+[data-hanji-debug-shadowing="0"] pre.ai-shadowing-stt-dev-pre {
   display: none !important;
 }
 

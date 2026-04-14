@@ -49,6 +49,34 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** 跟读调试 UI：仅 localStorage HANJI_DEBUG_SHADOWING=1。须运行时读取，勿依赖挂载时闭包。 */
+function isShadowingDebugOn() {
+  try {
+    return typeof localStorage !== "undefined" && localStorage.getItem("HANJI_DEBUG_SHADOWING") === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** 供 CSS 兜底：在跟读容器上同步 data-hanji-debug-shadowing */
+function syncShadowingDebugAttr(wrapEl) {
+  if (!wrapEl || typeof wrapEl.setAttribute !== "function") return;
+  try {
+    wrapEl.setAttribute("data-hanji-debug-shadowing", isShadowingDebugOn() ? "1" : "0");
+  } catch (_) {}
+}
+
+/**
+ * 浏览器 STT 预览脚注：仅 debug 模式显示，避免 transcript 进入正式学习区。
+ * @param {(k: string, fb?: string) => string} t
+ */
+function shadowingBrowserPreviewFooterIfDebug(t, browserSnapText) {
+  if (!isShadowingDebugOn()) return "";
+  const tx = str(browserSnapText);
+  if (!tx) return "";
+  return `<div class="ai-shadowing-feedback-interim-note ai-shadowing-browser-preview-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(tx)}</div>`;
+}
+
 /**
  * 比对用：去空白与常见标点
  */
@@ -276,11 +304,17 @@ function buildFeedbackHtml(msg, recognizedText, t, extraTopHtml = "", feedbackOp
       ? `<div class="ai-shadowing-feedback-rec"><span class="ai-shadowing-feedback-rec-label">${escapeHtml(safeT(recLabelKey, safeT("ai.shadowing_recognized_label", "识别")))}</span> ${escapeHtml(String(recognizedText).trim())}</div>`
       : "";
   const body = msg.body ? `<div class="ai-shadowing-feedback-body">${escapeHtml(msg.body)}</div>` : "";
+  const dbg = isShadowingDebugOn();
   const interimNote =
-    msg.interimPreviewNote && String(msg.interimPreviewNote).trim()
+    dbg &&
+    msg.interimPreviewNote &&
+    String(msg.interimPreviewNote).trim()
       ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(String(msg.interimPreviewNote).trim())}</div>`
       : "";
-  const devStt = feedbackOpts.devSttHtml ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${feedbackOpts.devSttHtml}</div>` : "";
+  const devStt =
+    dbg && feedbackOpts.devSttHtml
+      ? `<div class="ai-shadowing-stt-dev ai-shadowing-stt-debug ai-shadowing-formal-debug-shell" aria-hidden="true">${feedbackOpts.devSttHtml}</div>`
+      : "";
   return `${extraTopHtml}<div class="ai-shadowing-feedback-inner">
     <div class="ai-shadowing-feedback-title">${escapeHtml(msg.title)}</div>
     ${interimNote}
@@ -402,6 +436,7 @@ function buildUploadingFeedbackHtml(blobLine, t) {
  * }} ctx
  */
 function buildShadowingFormalDebugHtml(ctx) {
+  if (!isShadowingDebugOn()) return "";
   /** 服务端结构化字段（仅 HANJI_DEBUG_SHADOWING=1 时展示本块） */
   const serverHead = [];
   const sr = ctx.serverReason != null && String(ctx.serverReason).trim() !== "" ? String(ctx.serverReason).trim() : "";
@@ -426,7 +461,7 @@ function buildShadowingFormalDebugHtml(ctx) {
   );
   if (!sr) lines.push(`reason: ${ctx.reason}`);
 
-  return `<pre class="ai-shadowing-stt-dev-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
+  return `<pre class="ai-shadowing-stt-dev-pre ai-shadowing-formal-debug-pre">${lines.map(escapeHtml).join("\n")}</pre>`;
 }
 
 /**
@@ -452,12 +487,8 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     activeMicBtn = null;
   }
 
-  const debugOn =
-    typeof localStorage !== "undefined" && localStorage.getItem("HANJI_DEBUG_SHADOWING") === "1";
-  try {
-    wrap.setAttribute("data-hanji-debug-shadowing", debugOn ? "1" : "0");
-  } catch (_) {}
-  if (debugOn) {
+  syncShadowingDebugAttr(wrap);
+  if (isShadowingDebugOn()) {
     let dbg = wrap.querySelector(".ai-shadowing-audio-debug");
     if (!dbg) {
       dbg = document.createElement("div");
@@ -511,18 +542,9 @@ export function mountShadowingSpeakingPractice(wrap, t) {
    * 正式评分主链：上传 Blob → /api/shadowing-asr → 展示服务端 transcript 与分数
    */
   async function runShadowingFormalAsr(ctx) {
-    const {
-      row,
-      targetZh,
-      blobResult,
-      blobLine,
-      lessonId,
-      itemId,
-      t,
-      showFeedback,
-      debugOn,
-      speech,
-    } = ctx;
+    const { row, targetZh, blobResult, blobLine, lessonId, itemId, t, showFeedback, speech } = ctx;
+
+    syncShadowingDebugAttr(wrap);
 
     const browserSnap = row._hanjiBrowserPreview || {
       text: "",
@@ -534,8 +556,8 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     let data = {};
 
     function wrapDbg(inner) {
-      if (!debugOn) return "";
-      return inner ? `<div class="ai-shadowing-stt-dev" aria-hidden="true">${inner}</div>` : "";
+      if (!isShadowingDebugOn() || !inner) return "";
+      return `<div class="ai-shadowing-stt-dev ai-shadowing-stt-debug ai-shadowing-formal-debug-shell" aria-hidden="true">${inner}</div>`;
     }
 
     try {
@@ -629,7 +651,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
     }
 
     function debugBlock(chosenSource, scoreVal, reasonStr) {
-      if (!debugOn) return "";
+      if (!isShadowingDebugOn()) return "";
       const patch = asrServerDebugPatch();
       return buildShadowingFormalDebugHtml({
         target: targetZh,
@@ -655,10 +677,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           "ai.shadowing_asr_not_configured_body",
           "当前服务器未配置语音识别服务。请联系管理员或稍后再试。",
         );
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -675,10 +694,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           "ai.shadowing_server_empty_body",
           "已收到录音，但服务端未识别出有效中文文本。请重试或稍后评测。",
         );
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -695,10 +711,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           "ai.shadowing_asr_quota_exceeded_body",
           "当前语音识别用量已超限，请稍后再试。",
         );
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -715,10 +728,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           "ai.shadowing_asr_provider_unavailable_body",
           "服务器语音服务暂时不可用，请稍后重试。",
         );
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -735,10 +745,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
           "ai.shadowing_asr_no_model_body",
           "暂时无法完成语音识别，请稍后再试。",
         );
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -752,10 +759,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
       if (reason === "server_error") {
         const title = t("ai.shadowing_server_error_title", "语音识别失败");
         const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
-        const previewNote =
-          browserSnap.text && browserSnap.text.trim()
-            ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-            : "";
+        const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
         showFeedback(
           `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
             <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -768,10 +772,7 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
       const title = t("ai.shadowing_server_error_title", "语音识别失败");
       const body = t("ai.shadowing_server_error_body", "服务端暂时不可用，请稍后重试。");
-      const previewNote =
-        browserSnap.text && browserSnap.text.trim()
-          ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_footer", "浏览器预览（非正式评分）："))} ${escapeHtml(browserSnap.text.trim())}</div>`
-          : "";
+      const previewNote = shadowingBrowserPreviewFooterIfDebug(t, browserSnap.text);
       showFeedback(
         `${blobLine}<div class="ai-shadowing-feedback-inner ai-shadowing-feedback--error">
           <div class="ai-shadowing-feedback-title">${escapeHtml(title)}</div>
@@ -788,7 +789,10 @@ export function mountShadowingSpeakingPractice(wrap, t) {
 
     const msg = buildShadowingFeedbackMessage(result, targetZh, transcriptRaw, t, { formalAsr: true });
     const browserNote =
-      browserSnap.text && browserSnap.text.trim() && browserSnap.text.trim() !== transcriptRaw.trim()
+      isShadowingDebugOn() &&
+      browserSnap.text &&
+      browserSnap.text.trim() &&
+      browserSnap.text.trim() !== transcriptRaw.trim()
         ? `<div class="ai-shadowing-feedback-interim-note">${escapeHtml(t("ai.shadowing_browser_preview_note", "浏览器预览（仅供参考，非正式评分）"))}</div>`
         : "";
 
@@ -906,7 +910,6 @@ export function mountShadowingSpeakingPractice(wrap, t) {
         itemId,
         t,
         showFeedback,
-        debugOn,
         speech,
       });
       return;

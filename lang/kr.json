@@ -325,7 +325,7 @@
     "shadowing_err_recording_empty_body": "마이크를 길게 누르고 또렷하게 말한 뒤 다시 시도해 주세요.",
     "shadowing_asr_provider_unavailable_title": "음성 인식 서비스를 사용할 수 없어요",
     "shadowing_asr_provider_unavailable_body": "서버 음성 인식 서비스를 현재 사용할 수 없어요. 잠시 후 다시 시도해 주세요.",
-    "shadowing_asr_quota_exceeded_title": "음성 인식 사용량 초과",
+    "shadowing_asr_quota_exceeded_title": "음성 인식 사용량이 초과되었어요",
     "shadowing_asr_quota_exceeded_body": "현재 음성 인식 사용량이 초과되었어요. 잠시 후 다시 시도해 주세요.",
     "shadowing_asr_no_model_title": "음성 인식 모델을 불러오지 못했어요",
     "shadowing_asr_no_model_body": "음성 인식 모델을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.",
