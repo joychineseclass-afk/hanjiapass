@@ -1,0 +1,688 @@
+{
+  "id": "hsk1_lesson6",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 6,
+  "type": "lesson",
+  "title": {
+    "zh": "第6课｜现在几点？",
+    "cn": "第6课｜现在几点？",
+    "kr": "제6과 | 지금 몇 시예요?",
+    "en": "Lesson 6 | What Time Is It Now?",
+    "jp": "第6課｜今何時ですか？"
+  },
+  "summary": {
+    "zh": "学习询问与表达时间，掌握「点」「分」「半」及上午、下午、晚上等时段用语。",
+    "kr": "시간을 묻고 말하는 법과 「点」「分」「半」, 오전·오후·저녁 등 시대 표현을 익힙니다.",
+    "en": "Telling time: 点 / 分 / 半, morning, afternoon, evening.",
+    "jp": "「点」「分」「半」と午前・午後・夜などの言い方を学びます。"
+  },
+  "scene": {
+    "id": "hsk30_l6_scene",
+    "title": {
+      "zh": "时间与作息",
+      "kr": "시간과 하루 일과",
+      "en": "Time and daily routine",
+      "jp": "時間と生活リズム"
+    },
+    "summary": {
+      "zh": "会话一：问现在几点与上课；会话二：问上午下午上课时间；会话三：说起床睡觉。",
+      "kr": "회화1: 지금 몇 시·수업; 회화2: 오전·오후 수업 시간; 회화3: 기상·취침.",
+      "en": "Dialogue 1: what time / class; 2: morning & afternoon; 3: sleep & wake.",
+      "jp": "会話1：今何時・授業；2：午前午後；3：起床と就寝。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「现在几点？」「现在……点……分」询问与说明当前时间",
+      "kr": "「现在几点？」「现在……点……分」로 지금 시각을 묻고 말할 수 있다",
+      "en": "Ask 现在几点? and say 现在…点…分",
+      "jp": "「现在几点？」「现在……点……分」で時刻を尋ね言える"
+    },
+    {
+      "zh": "能用「上午/下午/晚上」「上课、下课、起床、睡觉」谈论作息安排",
+      "kr": "「上午／下午／晚上」「上课·下课·起床·睡觉」로 일과를 말할 수 있다",
+      "en": "Use time-of-day words and 上课/下课/起床/睡觉",
+      "jp": "「上午／下午／晚上」と授業・起居の表現を使える"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问时间",
+        "kr": "회화 1｜시간 묻기",
+        "en": "Dialogue 1 | What time",
+        "jp": "会話1｜時間を尋ねる"
+      },
+      "summary": {
+        "zh": "问「现在几点」，说到「零七分」「十分钟」上课。",
+        "kr": "「现在几点」를 묻고 「零七分」「十分」 수업까지 말합니다.",
+        "en": "Asking the time and class at ten past.",
+        "jp": "「现在几点」と「十分」からの授業。"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "王美，现在几点？",
+          "pinyin": "Wáng Měi, xiànzài jǐ diǎn?",
+          "translation": {
+            "kr": "왕메이, 지금 몇 시예요?",
+            "en": "Wang Mei, what time is it now?",
+            "jp": "王美さん、今何時ですか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "现在八点多了。",
+          "pinyin": "Xiànzài bā diǎn duō le.",
+          "translation": {
+            "kr": "지금 여덟 시 넘었어요.",
+            "en": "It’s past eight now.",
+            "jp": "今は八時を過ぎています。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "八点几分了？",
+          "pinyin": "Bā diǎn jǐ fēn le?",
+          "translation": {
+            "kr": "여덟 시 몇 분이에요?",
+            "en": "How many minutes past eight?",
+            "jp": "八時何分ですか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "现在八点零七分。",
+          "pinyin": "Xiànzài bā diǎn líng qī fēn.",
+          "translation": {
+            "kr": "지금 여덟 시 칠 분이에요.",
+            "en": "It’s eight oh seven now.",
+            "jp": "今は八時七分です。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "三分钟后上课吗？",
+          "pinyin": "Sān fēnzhōng hòu shàngkè ma?",
+          "translation": {
+            "kr": "삼 분 뒤에 수업이에요?",
+            "en": "Does class start in three minutes?",
+            "jp": "三分後に授業ですか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "是的，八点十分上课。",
+          "pinyin": "Shì de, bā diǎn shí fēn shàngkè.",
+          "translation": {
+            "kr": "네, 여덟 시 십 분에 수업이에요.",
+            "en": "Yes, class starts at eight ten.",
+            "jp": "はい、八時十分に授業です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜询问上午和下午的时间",
+        "kr": "회화 2｜오전·오후 시간",
+        "en": "Dialogue 2 | Morning & afternoon",
+        "jp": "会話2｜午前と午後の時間"
+      },
+      "summary": {
+        "zh": "问「上午几点上课」「几点下课」，说到「中午」「下午」。",
+        "kr": "「上午 몇 시 수업」「몇 시 下课」을 묻고 「中午」「下午」를 말합니다.",
+        "en": "Class times morning/noon/afternoon.",
+        "jp": "午前・昼・午後の授業時間。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "你上午几点上课？",
+          "pinyin": "Nǐ shàngwǔ jǐ diǎn shàngkè?",
+          "translation": {
+            "kr": "오전 몇 시에 수업이에요?",
+            "en": "What time is your class in the morning?",
+            "jp": "午前は何時から授業ですか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "我上午八点十分上课。",
+          "pinyin": "Wǒ shàngwǔ bā diǎn shí fēn shàngkè.",
+          "translation": {
+            "kr": "오전 여덟 시 십 분에 수업이에요.",
+            "en": "My class starts at eight ten in the morning.",
+            "jp": "午前は八時十分から授業です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "几点下课？",
+          "pinyin": "Jǐ diǎn xiàkè?",
+          "translation": {
+            "kr": "몇 시에 끝나요?",
+            "en": "What time does class end?",
+            "jp": "何時に終わりますか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "我中午十二点下课。",
+          "pinyin": "Wǒ zhōngwǔ shí'èr diǎn xiàkè.",
+          "translation": {
+            "kr": "점심 열두 시에 끝나요.",
+            "en": "I finish at twelve noon.",
+            "jp": "昼は十二時に終わります。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "下午呢？",
+          "pinyin": "Xiàwǔ ne?",
+          "translation": {
+            "kr": "오후는요?",
+            "en": "What about the afternoon?",
+            "jp": "午後は？"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "下午两点到四点上课。",
+          "pinyin": "Xiàwǔ liǎng diǎn dào sì diǎn shàngkè.",
+          "translation": {
+            "kr": "오후 두 시부터 네 시까지 수업이에요.",
+            "en": "Afternoon class is from two to four.",
+            "jp": "午後は二時から四時まで授業です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜说作息",
+        "kr": "회화 3｜생활 리듬",
+        "en": "Dialogue 3 | Daily routine",
+        "jp": "会話3｜生活リズム"
+      },
+      "summary": {
+        "zh": "问「早上几点起床」「晚上几点睡觉」，用「半」说时间。",
+        "kr": "「早上 몇 시 起床」「晚上 몇 시 睡觉」을 묻고 「半」을 씁니다.",
+        "en": "Wake/sleep times with 半.",
+        "jp": "起床・就寝の時間と「半」。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "你早上几点起床？",
+          "pinyin": "Nǐ zǎoshang jǐ diǎn qǐchuáng?",
+          "translation": {
+            "kr": "아침 몇 시에 일어나요?",
+            "en": "What time do you get up in the morning?",
+            "jp": "朝は何時に起きますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我七点半起床。",
+          "pinyin": "Wǒ qī diǎn bàn qǐchuáng.",
+          "translation": {
+            "kr": "일곱 시 반에 일어나요.",
+            "en": "I get up at half past seven.",
+            "jp": "七時半に起きます。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你晚上几点睡觉？",
+          "pinyin": "Nǐ wǎnshang jǐ diǎn shuìjiào?",
+          "translation": {
+            "kr": "저녁 몇 시에 자요?",
+            "en": "What time do you go to bed at night?",
+            "jp": "夜は何時に寝ますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我十点半睡觉。",
+          "pinyin": "Wǒ shí diǎn bàn shuìjiào.",
+          "translation": {
+            "kr": "열 시 반에 잠들어요.",
+            "en": "I go to bed at half past ten.",
+            "jp": "十時半に寝ます。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "时间表达",
+      "pinyin": "shíjiān biǎodá",
+      "hint": {
+        "zh": "钟点",
+        "kr": "시각 표현",
+        "en": "telling time",
+        "jp": "時刻の言い方"
+      },
+      "explanation": {
+        "zh": "先说「点」再说「分」，可以说「八点十分」「八点零七分」。询问用「现在几点？」「几点……？」。",
+        "kr": "먼저 「点」 그다음 「分」. 「八点十分」「八点零七分」처럼 말하고 「现在几点？」로 묻습니다.",
+        "en": "点 then 分; ask with 现在几点?.",
+        "jp": "「点」のあと「分」。「现在几点？」で尋ねる。"
+      },
+      "examples": [
+        {
+          "zh": "现在八点零七分。",
+          "pinyin": "Xiànzài bā diǎn líng qī fēn.",
+          "translation": {
+            "kr": "지금 여덟 시 칠 분이에요.",
+            "en": "It’s eight oh seven now.",
+            "jp": "今は八時七分です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "时间作状语",
+      "pinyin": "shíjiān zuò zhuàngyǔ",
+      "hint": {
+        "zh": "什么时候做",
+        "kr": "시간 맨트",
+        "en": "time as adverbial",
+        "jp": "時間を状語に"
+      },
+      "explanation": {
+        "zh": "表示时间的词语可放在动词前说明动作发生的时间，如「上午八点十分上课」「晚上十点半睡觉」。",
+        "kr": "시간 표현을 동사 앞에 두어 「上午八点十分上课」처럼 말합니다.",
+        "en": "Time phrases precede the verb: morning class at 8:10, etc.",
+        "jp": "時間を動詞の前に置いて「いつ」を言う。"
+      },
+      "examples": [
+        {
+          "zh": "我上午八点十分上课。",
+          "pinyin": "Wǒ shàngwǔ bā diǎn shí fēn shàngkè.",
+          "translation": {
+            "kr": "저는 오전 여덟 시 십 분에 수업이에요.",
+            "en": "My class starts at 8:10 in the morning.",
+            "jp": "午前は八時十分に授業があります。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "点、分、半",
+      "pinyin": "diǎn, fēn, bàn",
+      "hint": {
+        "zh": "时 / 分 / 半",
+        "kr": "시·분·반",
+        "en": "o’clock / minute / half",
+        "jp": "点・分・半"
+      },
+      "explanation": {
+        "zh": "「点」表示整点或钟点位置，「分」表示分钟，「半」表示半小时，如「七点半」「十点半」。",
+        "kr": "「点」는 시,「分」은 분,「半」은 삼십 분(七点半, 十点半).",
+        "en": "点 = hour hand position; 分 = minutes; 半 = half past.",
+        "jp": "「点」「分」「半」で時と分を言う。"
+      },
+      "examples": [
+        {
+          "zh": "我七点半起床。",
+          "pinyin": "Wǒ qī diǎn bàn qǐchuáng.",
+          "translation": {
+            "kr": "일곱 시 반에 일어나요.",
+            "en": "I get up at seven thirty.",
+            "jp": "七時半に起きます。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜今天的时间表",
+        "kr": "읽기 자료｜오늘의 시간표",
+        "en": "Reading | Today’s schedule",
+        "jp": "読み物｜今日のスケジュール"
+      },
+      "sentences": [
+        {
+          "zh": "上午　9点　上课",
+          "pinyin": "shàngwǔ　jiǔ diǎn　shàngkè",
+          "translations": {
+            "kr": "오전 9시　수업",
+            "en": "Morning　9:00　class",
+            "jp": "午前　9時　授業"
+          }
+        },
+        {
+          "zh": "中午　12点　下课",
+          "pinyin": "zhōngwǔ　shí'èr diǎn　xiàkè",
+          "translations": {
+            "kr": "점심 12시　수업 끝",
+            "en": "Noon　12:00　class ends",
+            "jp": "昼　12時　終了"
+          }
+        },
+        {
+          "zh": "下午　2点　上课",
+          "pinyin": "xiàwǔ　liǎng diǎn　shàngkè",
+          "translations": {
+            "kr": "오후 2시　수업",
+            "en": "Afternoon　2:00　class",
+            "jp": "午後　2時　授業"
+          }
+        },
+        {
+          "zh": "晚上　10点　睡觉",
+          "pinyin": "wǎnshang　shí diǎn　shuìjiào",
+          "translations": {
+            "kr": "저녁 10시　취침",
+            "en": "Evening　10:00　sleep",
+            "jp": "夜　10時　就寝"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l6_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来问「现在几点」？",
+        "kr": "다음 중 「지금 몇 시」를 묻는 말은?",
+        "en": "Which asks what time it is now?",
+        "jp": "「今何時ですか」と尋ねるのはどれ？"
+      },
+      "options": [
+        { "key": "A", "zh": "现在几点？", "cn": "现在几点？" },
+        { "key": "B", "zh": "你几岁？", "cn": "你几岁？" },
+        { "key": "C", "zh": "今天星期几？", "cn": "今天星期几？" },
+        { "key": "D", "zh": "你会说汉语吗？", "cn": "你会说汉语吗？" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「现在几点？」询问当前时间。",
+        "kr": "「现在几点？」는 지금 시각을 묻습니다.",
+        "en": "现在几点？ asks the current time.",
+        "jp": "「现在几点？」は今の時刻を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l6_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「半」在「七点半」中读作？",
+        "kr": "「七点半」에서 「半」의 병음은?",
+        "en": "In 七点半, the pinyin of 半 is?",
+        "jp": "「七点半」の「半」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "bàn", "cn": "bàn" },
+        { "key": "B", "zh": "bān", "cn": "bān" },
+        { "key": "C", "zh": "bǎn", "cn": "bǎn" },
+        { "key": "D", "zh": "bàng", "cn": "bàng" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「半」读 bàn，表示半小时。",
+        "kr": "「半」는 bàn로 읽으며 삼십 분을 나타냅니다.",
+        "en": "半 is read bàn (half an hour).",
+        "jp": "「半」は bàn と読み、三十分を表します。"
+      }
+    },
+    {
+      "id": "hsk30_l6_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "你想说「下午两点到四点上课」，应说：",
+        "kr": "「오후 두 시부터 네 시까지 수업」이라고 말하려면:",
+        "en": "To say class is from 2 to 4 p.m.:",
+        "jp": "「午後2時から4時まで授業」を言うのは？"
+      },
+      "options": ["下午两点到四点上课。", "现在八点零七分。", "昨天五月一日。", "我今年五岁。"],
+      "answer": "下午两点到四点上课。",
+      "explanation": {
+        "cn": "用「下午」+ 时间 +「到」+ 时间 +「上课」说明下午上课时段。",
+        "kr": "「下午」＋시간＋「到」＋시간＋「上课」으로 오후 시간대를 말합니다.",
+        "en": "下午…到…上课 gives the afternoon time range.",
+        "jp": "「下午……到……上课」で午後の時間帯を言う。"
+      }
+    },
+    {
+      "id": "hsk30_l6_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我七点半起床。」这句话里，「起床」表示：",
+        "kr": "「我七点半起床。」에서 「起床」는 무엇을 뜻하나요?",
+        "en": "In 我七点半起床。, 起床 means:",
+        "jp": "「我七点半起床。」の「起床」は？"
+      },
+      "options": ["起床、醒来开始一天", "去商店", "下课回家", "问别人几岁"],
+      "answer": "起床、醒来开始一天",
+      "explanation": {
+        "cn": "「起床」表示从床上起来，开始一天的活动。",
+        "kr": "「起床」는 잠자리에서 일어나 하루를 시작함을 뜻합니다.",
+        "en": "起床 means to get up from bed.",
+        "jp": "「起床」は起きて一日を始めること。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": ["现在几点？", "现在八点零七分。", "八点十分上课。", "你上午几点上课？", "我中午十二点下课。", "下午两点到四点上课。", "你早上几点起床？", "我七点半起床。", "我十点半睡觉。"],
+    "chatPrompt": "请围绕「现在几点」「点、分、半」与上午/下午/晚上、上课/下课/起床/睡觉用本课词语问答；不要写成问候或问姓名。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l6_what_time",
+          "situation": {
+            "zh": "会话一：问现在几点与上课",
+            "kr": "회화 1: 지금 몇 시·수업",
+            "en": "Dialogue 1: time and class",
+            "jp": "会話1：今何時と授業"
+          },
+          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
+          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "goal": {
+            "zh": "用「现在几点？」「现在……点……分」说明时间，并说到「……分钟后上课」。",
+            "kr": "「现在几点？」「现在……点……分」로 시각을 말하고 「……分钟后上课」를 씁니다.",
+            "en": "Ask the time and say 现在…点…分 and class time.",
+            "jp": "「现在几点？」と「现在……点……分」で時刻を言う。"
+          },
+          "expressions": ["现在几点？", "现在八点零七分。", "八点十分上课。"],
+          "rounds": [
+            {
+              "aiLine": "汤姆，现在几点？",
+              "studentRefs": ["现在八点零七分。"],
+              "acceptable": ["现在八点零七分。", "八点零七分"],
+              "closeAnswers": ["八点", "八分"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会问「现在几点？」并能用「现在……点……分」说出具体时间（含「零」与「半」）。",
+        "kr": "「现在几点？」로 묻고 「现在……点……分」로 구체적 시각(「零」「半」 포함)을 말한다.",
+        "en": "Ask 现在几点? and answer with 现在…点…分 including 零 and 半.",
+        "jp": "「现在几点？」と「现在……点……分」で「零」「半」を使える。"
+      },
+      {
+        "zh": "能用「上午/中午/下午/晚上」配合钟点说明上课、下课与作息。",
+        "kr": "「上午／中午／下午／晚上」와 시각을 함께 써 수업·下课·일과를 말한다.",
+        "en": "Use time-of-day words with clock times for class and routine.",
+        "jp": "「上午／中午／下午／晚上」と時刻で授業や生活を言う。"
+      },
+      {
+        "zh": "能使用「上课、下课、起床、睡觉」描述一天的安排。",
+        "kr": "「上课·下课·起床·睡觉」로 하루 일정을 말한다.",
+        "en": "Describe the day with 上课 / 下课 / 起床 / 睡觉.",
+        "jp": "「上课」「下课」「起床」「睡觉」で一日を説明できる。"
+      }
+    ],
+    "lessonExplain": {
+      "learningGoals": [
+        {
+          "zh": "掌握询问时间的常用句「现在几点？」以及回答的语序（点 → 分）。",
+          "kr": "「现在几点？」와 답의 어순(点→分)을 익힌다.",
+          "en": "Master 现在几点? and the 点-then-分 order.",
+          "jp": "「现在几点？」と「点→分」の語順を身につける。"
+        },
+        {
+          "zh": "能区分「上午、中午、下午、晚上、早上」并放在动词短语前作时间说明。",
+          "kr": "「上午·中午·下午·晚上·早上」를 구분해 동사 구 앞에 둔다.",
+          "en": "Tell apart 上午…早上 and place them before verbs.",
+          "jp": "「上午」などを区別し、動作の前に置ける。"
+        },
+        {
+          "zh": "会用「到」连接两个钟点表示一段时间，如「两点到四点」。",
+          "kr": "「到」로 두 시점을 잇어 「两点到四点」처럼 말한다.",
+          "en": "Use 到 between two times for a range.",
+          "jp": "「到」で「两点から四点」のような幅を言う。"
+        },
+        {
+          "zh": "本课讲时间与作息，不是问候、年龄或日期话题。",
+          "kr": "이 과는 시간·일과가 중심이며 인사·나이·날짜 이야기가 아닙니다.",
+          "en": "This lesson is time and routine—not greetings or dates.",
+          "jp": "本課は時間と生活。あいさつや年齢・日付の話ではない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：问现在几点、几分，说到几分钟后上课。会话二：问上午下午上课与下课时间。会话三：问早上起床与晚上睡觉时间，用「半」。",
+        "kr": "회화1: 지금 몇 시·몇 분·몇 분 후 수업; 회화2: 오전·오후 수업·下课; 회화3: 기상·취침과 「半」.",
+        "en": "Three dialogues: current time, school schedule, sleep routine.",
+        "jp": "会話：今の時刻、授業の時間帯、起床と就寝。"
+      },
+      "confusionPoints": [
+        {
+          "zh": "「二点」在口语里常说「两点」表示两点钟——本课对话用「两点到四点」。",
+          "kr": "시각을 말할 때 「两点」가 자주 쓰입니다(两点到四点).",
+          "en": "Spoken time often uses 两点 for 2 o’clock.",
+          "jp": "時刻の「二」は口語で「两点」と言うことが多い。"
+        },
+        {
+          "zh": "「零七分」表示 07 分，「十分」这里是十分钟，不是「十分」形容词。",
+          "kr": "「零七分」은 07분, 「十分」은 여기서 10분.",
+          "en": "零七分 = 07 minutes; 十分 here means ten minutes.",
+          "jp": "「零七分」は分の桁、「十分」はここでは10分。"
+        },
+        {
+          "zh": "「中午」多指午饭前后到十二点左右，「下午」从中午过后算起。",
+          "kr": "「中午」는 점심 무렵, 「下午」는 오후 시간대.",
+          "en": "中午 ≈ noon; 下午 = afternoon.",
+          "jp": "「中午」は昼頃、「下午」は午後。"
+        }
+      ]
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「八点零七分」怎么读？「半」放在点前面还是后面？",
+      "kr": "예: 「八点零七分」는 어떻게 읽나요? 「半」은 「点」 앞·뒤 어디에 붙나요?",
+      "en": "e.g. How do you read 八点零七分? Does 半 go before or after 点?",
+      "jp": "例:「八点零七分」の読み方。「半」は「点」の前か後か。"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「现在」和「今天」问时间时有什么区别？",
+        "「上课」和「下课」一般怎么和时间连用？",
+        "「早上」和「上午」可以互换吗？",
+        "「零」在时间里什么时候用？",
+        "怎么问「你晚上几点睡觉」更自然？"
+      ],
+      "kr": [
+        "시간을 물을 때 「现在」와 「今天」는 어떻게 달라요?",
+        "「上课」「下课」는 보통 시간과 어떻게 붙나요?",
+        "「早上」와 「上午」는 바꿔 쓸 수 있나요?",
+        "시간 말할 때 「零」는 언제 쓰나요?",
+        "「晚上几点睡觉」를 자연스럽게 묻는 말은?"
+      ],
+      "en": [
+        "When asking about time, 现在 vs 今天?",
+        "How do 上课 and 下课 usually go with times?",
+        "Are 早上 and 上午 interchangeable?",
+        "When do you say 零 for minutes?",
+        "Natural way to ask what time someone goes to bed?"
+      ],
+      "jp": [
+        "時間を尋ねるとき「现在」と「今天」の違いは？",
+        "「上课」「下课」は時刻とどう組み合わせる？",
+        "「早上」と「上午」は同じ？",
+        "分の「零」はいつ使う？",
+        "「何時に寝ますか」を自然に言うには？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "现在几点？",
+        "pinyin": "xiànzài jǐ diǎn?",
+        "usage": {
+          "zh": "询问当前钟点。",
+          "kr": "지금 몇 시인지 묻습니다.",
+          "en": "Ask what time it is now.",
+          "jp": "今何時かを尋ねる。"
+        }
+      },
+      {
+        "expr": "……点……分",
+        "pinyin": "… diǎn … fēn",
+        "usage": {
+          "zh": "说明具体时间，可说「八点十分」「八点零七分」。",
+          "kr": "구체 시각을 말할 때 씁니다.",
+          "en": "Hours and minutes.",
+          "jp": "時と分を言うとき。"
+        }
+      },
+      {
+        "expr": "……点半",
+        "pinyin": "… diǎn bàn",
+        "usage": {
+          "zh": "表示半点，如「七点半」「十点半」。",
+          "kr": "삼십 분을 「半」으로 말합니다.",
+          "en": "Half past the hour.",
+          "jp": "「半」で三十分。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
+  ]
+}

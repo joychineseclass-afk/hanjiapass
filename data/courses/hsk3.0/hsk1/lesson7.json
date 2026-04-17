@@ -1,0 +1,668 @@
+{
+  "id": "hsk1_lesson7",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 7,
+  "type": "lesson",
+  "title": {
+    "zh": "第7课｜今天几月几日？",
+    "cn": "第7课｜今天几月几日？",
+    "kr": "제7과 | 오늘은 몇 월 며칠이에요?",
+    "en": "Lesson 7 | What Date Is It Today?",
+    "jp": "第7課｜今日は何月何日ですか？"
+  },
+  "summary": {
+    "zh": "学习表达日期与星期，掌握「昨天、今天、明天」与「什么时候」等提问方式。",
+    "kr": "날짜와 요일을 말하는 법과 「昨天·今天·明天」, 「什么时候」 질문을 익힙니다.",
+    "en": "Dates and weekdays; 昨天 / 今天 / 明天; 什么时候.",
+    "jp": "日付と曜日、「昨天」「今天」「明天」、「什么时候」を学びます。"
+  },
+  "scene": {
+    "id": "hsk30_l7_scene",
+    "title": {
+      "zh": "日期与星期",
+      "kr": "날짜와 요일",
+      "en": "Date and weekday",
+      "jp": "日付と曜日"
+    },
+    "summary": {
+      "zh": "会话一：问几月几日与昨天；会话二：问星期与休息；会话三：问什么时候休息。",
+      "kr": "회화1: 몇 월 며칠·어제; 회화2: 무슨 요일·휴식; 회화3: 언제 쉬는지.",
+      "en": "Dialogue 1: date & yesterday; 2: weekday & rest; 3: when to rest.",
+      "jp": "会話1：月日と昨日；2：曜日と休み；3：いつ休むか。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「今天几月几日？」「昨天……」「明天……」谈论日期",
+      "kr": "「今天几月几日？」「昨天……」「明天……」로 날짜를 말할 수 있다",
+      "en": "Use 今天几月几日? and 昨天 / 明天",
+      "jp": "「今天几月几日？」「昨天」「明天」で日付を言える"
+    },
+    {
+      "zh": "能用「今天星期几？」「什么时候……？」询问星期与时间安排",
+      "kr": "「今天星期几？」「什么时候……？」로 요일과 시간을 물을 수 있다",
+      "en": "Ask with 今天星期几? and 什么时候…?",
+      "jp": "「今天星期几？」「什么时候？」で尋ねられる"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问日期",
+        "kr": "회화 1｜날짜 묻기",
+        "en": "Dialogue 1 | Date",
+        "jp": "会話1｜日付を尋ねる"
+      },
+      "summary": {
+        "zh": "问「今天几月几日」，确认「昨天」是不是某一天，并说到「休息」。",
+        "kr": "「今天几月几日」를 묻고 「昨天」이 맞는지 확인하며 「休息」를 말합니다.",
+        "en": "Today’s date, yesterday, and rest days.",
+        "jp": "今日の日付、昨日、休み。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "汤姆，今天几月几日？",
+          "pinyin": "Tāngmǔ, jīntiān jǐ yuè jǐ rì?",
+          "translation": {
+            "kr": "톰, 오늘은 몇 월 며칠이에요?",
+            "en": "Tom, what’s the date today?",
+            "jp": "トム、今日は何月何日ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "今天五月二日。",
+          "pinyin": "Jīntiān wǔ yuè èr rì.",
+          "translation": {
+            "kr": "오늘은 오월 이일이에요.",
+            "en": "Today is May 2nd.",
+            "jp": "今日は五月二日です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "昨天是五月一日吗？",
+          "pinyin": "Zuótiān shì wǔ yuè yī rì ma?",
+          "translation": {
+            "kr": "어제는 오월 일일이었어요?",
+            "en": "Was yesterday May 1st?",
+            "jp": "昨日は五月一日でしたか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "是的，昨天是五月一日。",
+          "pinyin": "Shì de, zuótiān shì wǔ yuè yī rì.",
+          "translation": {
+            "kr": "네, 어제는 오월 일일이었어요.",
+            "en": "Yes, yesterday was May 1st.",
+            "jp": "はい、昨日は五月一日でした。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你们五月一日休息了吗？",
+          "pinyin": "Nǐmen wǔ yuè yī rì xiūxi le ma?",
+          "translation": {
+            "kr": "너희는 오월 일일에 쉬었어요?",
+            "en": "Did you have May 1st off?",
+            "jp": "五月一日は休みでしたか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "是的，休息了。",
+          "pinyin": "Shì de, xiūxi le.",
+          "translation": {
+            "kr": "네, 쉬었어요.",
+            "en": "Yes, we did.",
+            "jp": "はい、休みました。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜问星期",
+        "kr": "회화 2｜요일 묻기",
+        "en": "Dialogue 2 | Weekday",
+        "jp": "会話2｜曜日"
+      },
+      "summary": {
+        "zh": "问「今天星期几」，说明「明天」星期六上不上课、休不休息。",
+        "kr": "「今天星期几」를 묻고 「明天」 토요일 수업·휴식을 말합니다.",
+        "en": "Weekday today; Saturday class or rest.",
+        "jp": "今日の曜日と土曜日の授業・休み。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "今天星期几？",
+          "pinyin": "Jīntiān xīngqī jǐ?",
+          "translation": {
+            "kr": "오늘 무슨 요일이에요?",
+            "en": "What day is it today?",
+            "jp": "今日は何曜日ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "今天星期五。",
+          "pinyin": "Jīntiān xīngqīwǔ.",
+          "translation": {
+            "kr": "오늘은 금요일이에요.",
+            "en": "Today is Friday.",
+            "jp": "今日は金曜日です。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "明天星期六你们休息吗？",
+          "pinyin": "Míngtiān xīngqīliù nǐmen xiūxi ma?",
+          "translation": {
+            "kr": "내일 토요일인데 너희는 쉬어요?",
+            "en": "Do you rest tomorrow on Saturday?",
+            "jp": "明日の土曜日は休みですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不休息，星期六上课。",
+          "pinyin": "Bù xiūxi, xīngqīliù shàngkè.",
+          "translation": {
+            "kr": "안 쉬어요, 토요일에 수업이 있어요.",
+            "en": "No, we have class on Saturday.",
+            "jp": "休みません、土曜日は授業があります。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜星期天休息",
+        "kr": "회화 3｜일요일 휴식",
+        "en": "Dialogue 3 | Sunday off",
+        "jp": "会話3｜日曜の休み"
+      },
+      "summary": {
+        "zh": "问「明天是不是星期天」，用「什么时候」问休息。",
+        "kr": "「내일 일요일이냐」를 묻고 「什么时候」로 쉬는 때를 묻습니다.",
+        "en": "Tomorrow Sunday? When do you rest?",
+        "jp": "明日は日曜？いつ休む？"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "明天是星期天吗？",
+          "pinyin": "Míngtiān shì xīngqītiān ma?",
+          "translation": {
+            "kr": "내일이 일요일이에요?",
+            "en": "Is tomorrow Sunday?",
+            "jp": "明日は日曜日ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "是，明天是星期天。",
+          "pinyin": "Shì, míngtiān shì xīngqītiān.",
+          "translation": {
+            "kr": "네, 내일은 일요일이에요.",
+            "en": "Yes, tomorrow is Sunday.",
+            "jp": "はい、明日は日曜日です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你们什么时候休息？",
+          "pinyin": "Nǐmen shénme shíhou xiūxi?",
+          "translation": {
+            "kr": "너희는 언제 쉬어요?",
+            "en": "When do you rest?",
+            "jp": "いつ休みですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "星期天休息。",
+          "pinyin": "Xīngqītiān xiūxi.",
+          "translation": {
+            "kr": "일요일에 쉬어요.",
+            "en": "We rest on Sunday.",
+            "jp": "日曜日に休みます。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "日期表达",
+      "pinyin": "rìqī biǎodá",
+      "hint": {
+        "zh": "月 / 日",
+        "kr": "월·일",
+        "en": "month / day",
+        "jp": "月・日"
+      },
+      "explanation": {
+        "zh": "说日期常用「……月……日」，如「五月二日」。询问用「今天几月几日？」。「昨天」「今天」「明天」可放在句首说明是哪一天。",
+        "kr": "「……月……日」로 날짜를 말하고 「今天几月几日？」로 묻습니다.",
+        "en": "…月…日 for dates; 今天几月几日? to ask.",
+        "jp": "「……月……日」、「今天几月几日？」で日付を言う・尋ねる。"
+      },
+      "examples": [
+        {
+          "zh": "今天五月二日。",
+          "pinyin": "Jīntiān wǔ yuè èr rì.",
+          "translation": {
+            "kr": "오늘은 오월 이일이에요.",
+            "en": "Today is May 2nd.",
+            "jp": "今日は五月二日です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "星期表达",
+      "pinyin": "xīngqī biǎodá",
+      "hint": {
+        "zh": "星期几",
+        "kr": "요일",
+        "en": "weekday",
+        "jp": "曜日"
+      },
+      "explanation": {
+        "zh": "问星期用「今天星期几？」。回答常用「今天星期一」到「今天星期日/星期天」。「星期六」「星期天」常和「明天」「休息」一起出现。",
+        "kr": "「今天星期几？」로 묻고 「今天星期五」처럼 답합니다.",
+        "en": "今天星期几? → 今天星期五.",
+        "jp": "「今天星期几？」と「今天星期五」など。"
+      },
+      "examples": [
+        {
+          "zh": "今天星期几？",
+          "pinyin": "Jīntiān xīngqī jǐ?",
+          "translation": {
+            "kr": "오늘 무슨 요일이에요?",
+            "en": "What day is it today?",
+            "jp": "今日は何曜日ですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "什么时候",
+      "pinyin": "shénme shíhou",
+      "hint": {
+        "zh": "问时间",
+        "kr": "언제",
+        "en": "when",
+        "jp": "いつ"
+      },
+      "explanation": {
+        "zh": "疑问短语「什么时候」用来问做某事的时间，如「你们什么时候休息？」回答可以说「星期天休息」。",
+        "kr": "「什么时候」는 ‘언제’로, 「你们什么时候休息？」처럼 씁니다.",
+        "en": "什么时候 asks when something happens.",
+        "jp": "「什么时候」は「いつ」の意味で使う。"
+      },
+      "examples": [
+        {
+          "zh": "你们什么时候休息？",
+          "pinyin": "Nǐmen shénme shíhou xiūxi?",
+          "translation": {
+            "kr": "너희는 언제 쉬어요?",
+            "en": "When do you rest?",
+            "jp": "いつ休みますか。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "layout": "calendarGrid",
+      "groupTitle": {
+        "zh": "阅读小材料｜五月日历",
+        "kr": "읽기 자료｜5월 달력",
+        "en": "Reading | May calendar",
+        "jp": "読み物｜五月のカレンダー"
+      },
+      "calendar": {
+        "year": 2026,
+        "month": 5,
+        "weekStartsOn": 1,
+        "monthLabel": {
+          "zh": "2026年5月",
+          "kr": "2026년 5월",
+          "en": "May 2026",
+          "jp": "2026年5月"
+        }
+      },
+      "sentences": [
+        {
+          "zh": "口头练习：点击格子听「五月一日」「五月二日」。",
+          "pinyin": "kǒutóu liànxí: diǎnjī gézi tīng 「wǔ yuè yī rì」「wǔ yuè èr rì」",
+          "translations": {
+            "kr": "말하기: 칸을 눌러 「五月一日」「五月二日」를 들어 보세요.",
+            "en": "Tap a day to hear dates like 五月一日.",
+            "jp": "マスをタップして「五月一日」「五月二日」を聞きましょう。"
+          }
+        },
+        {
+          "zh": "会话里说：昨天五月一日，今天五月二日。",
+          "pinyin": "Huìhuà lǐ shuō: zuótiān wǔ yuè yī rì, jīntiān wǔ yuè èr rì.",
+          "translations": {
+            "kr": "대화: 어제 오월 일일, 오늘 오월 이일.",
+            "en": "In the dialogue: yesterday May 1, today May 2.",
+            "jp": "会話では：昨日は五月一日、今日は五月二日。"
+          }
+        }
+      ],
+      "note": {
+        "zh": "日历为 2026 年 5 月示例；星期一为第一列。可点选日期听读。",
+        "kr": "달력은 2026년 5월 예시이며 월요일이 첫 열입니다. 날짜를 눌러 들을 수 있습니다.",
+        "en": "Sample May 2026 grid; week starts Monday. Tap a date to listen.",
+        "jp": "2026年5月の例。月曜始まり。日付をタップして聞けます。"
+      }
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l7_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来问今天的日期（几月几日）？",
+        "kr": "다음 중 오늘 날짜(몇 월 며칠)를 묻는 말은?",
+        "en": "Which asks today’s date (month and day)?",
+        "jp": "今日の月日を尋ねるのはどれ？"
+      },
+      "options": [
+        { "key": "A", "zh": "今天几月几日？", "cn": "今天几月几日？" },
+        { "key": "B", "zh": "现在几点？", "cn": "现在几点？" },
+        { "key": "C", "zh": "你叫什么名字？", "cn": "你叫什么名字？" },
+        { "key": "D", "zh": "你是哪国人？", "cn": "你是哪国人？" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「今天几月几日？」用于询问今天的月与日。",
+        "kr": "「今天几月几日？」는 오늘의 월·일을 묻습니다.",
+        "en": "今天几月几日? asks the month and day today.",
+        "jp": "「今天几月几日？」は今日の月日を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l7_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「昨天」的拼音是？",
+        "kr": "「昨天」의 병음은?",
+        "en": "What is the pinyin of 昨天?",
+        "jp": "「昨天」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "zuótiān", "cn": "zuótiān" },
+        { "key": "B", "zh": "zhóutiān", "cn": "zhóutiān" },
+        { "key": "C", "zh": "zuòtiān", "cn": "zuòtiān" },
+        { "key": "D", "zh": "zuótián", "cn": "zuótián" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「昨天」读作 zuótiān。",
+        "kr": "「昨天」는 zuótiān로 읽습니다.",
+        "en": "昨天 is read zuótiān.",
+        "jp": "「昨天」は zuótiān と読みます。"
+      }
+    },
+    {
+      "id": "hsk30_l7_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "你想问「今天星期几？」，应说：",
+        "kr": "「오늘 무슨 요일?」이라고 묻으려면:",
+        "en": "To ask what weekday it is today:",
+        "jp": "「今日は何曜日ですか」と尋ねるのは？"
+      },
+      "options": ["今天星期几？", "今天几月几日？", "现在几点？", "你家有几口人？"],
+      "answer": "今天星期几？",
+      "explanation": {
+        "cn": "「今天星期几？」用来询问今天是星期几。",
+        "kr": "「今天星期几？」는 오늘 요일을 묻습니다.",
+        "en": "今天星期几? asks the weekday.",
+        "jp": "「今天星期几？」は曜日を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l7_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「你们什么时候休息？」里的「什么时候」表示：",
+        "kr": "「你们什么时候休息？」에서 「什么时候」는 무엇을 묻나요?",
+        "en": "In 你们什么时候休息？, 什么时候 asks:",
+        "jp": "「你们什么时候休息？」の「什么时候」は？"
+      },
+      "options": ["做某事的时间", "物体的颜色", "家庭人口", "国籍"],
+      "answer": "做某事的时间",
+      "explanation": {
+        "cn": "「什么时候」用来提问在何时发生某事。",
+        "kr": "「什么时候」는 어떤 일이 언제 일어나는지 묻습니다.",
+        "en": "什么时候 asks when something happens.",
+        "jp": "「什么时候」はいつ起こるかを尋ねます。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": ["今天几月几日？", "今天五月二日。", "昨天是五月一日吗？", "是的，昨天是五月一日。", "今天星期几？", "今天星期五。", "你们什么时候休息？", "星期天休息。"],
+    "chatPrompt": "请围绕「今天几月几日」「昨天、今天、明天」「星期几」「什么时候休息」用本课词语问答；不要写成问候、姓名或「你好吗」类套话。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l7_date_weekday",
+          "situation": {
+            "zh": "会话一：问日期与昨天",
+            "kr": "회화 1: 날짜와 어제",
+            "en": "Dialogue 1: date & yesterday",
+            "jp": "会話1：日付と昨日"
+          },
+          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
+          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "goal": {
+            "zh": "用「今天几月几日？」「昨天是……吗？」「是的，……」谈论五月一日、五月二日与休息。",
+            "kr": "「今天几月几日？」「昨天是……吗？」「是的，……」로 날짜와 휴식을 말합니다.",
+            "en": "Use date questions and 昨天 / 是的 for May 1–2 and rest.",
+            "jp": "日付の質問と「昨天」「是的」で話す。"
+          },
+          "expressions": ["今天几月几日？", "今天五月二日。", "昨天是五月一日吗？", "是的，昨天是五月一日。"],
+          "rounds": [
+            {
+              "aiLine": "李明，今天几月几日？",
+              "studentRefs": ["今天五月二日。"],
+              "acceptable": ["今天五月二日。", "五月二日"],
+              "closeAnswers": ["二日", "5月2日"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会问「今天几月几日？」并能用「……月……日」回答今天的日期。",
+        "kr": "「今天几月几日？」를 묻고 「……月……日」로 오늘 날짜를 말한다.",
+        "en": "Ask 今天几月几日? and answer with …月…日.",
+        "jp": "「今天几月几日？」と「……月……日」で答えられる。"
+      },
+      {
+        "zh": "能区分「昨天」「今天」「明天」，并用于简单叙述。",
+        "kr": "「昨天」「今天」「明天」를 구분해 짧게 이야기한다.",
+        "en": "Use 昨天 / 今天 / 明天 in short statements.",
+        "jp": "「昨天」「今天」「明天」を区別して使う。"
+      },
+      {
+        "zh": "会问「今天星期几？」「你们什么时候休息？」并能回答「星期天休息」等。",
+        "kr": "「今天星期几？」「你们什么时候休息？」를 묻고 「星期天休息」 등으로 답한다.",
+        "en": "Ask weekday and when people rest; answer 星期天休息.",
+        "jp": "曜日と休みのときを尋ね、「星期天休息」などで答える。"
+      }
+    ],
+    "lessonExplain": {
+      "learningGoals": [
+        {
+          "zh": "掌握「几月几日」问句与「月、日、号」在阅读中的常见搭配（本课以会话「五月一日」等为主）。",
+          "kr": "「几月几日」 질문과 「月·日·号」 표기를 익힙니다(본과는 「五月一日」 등).",
+          "en": "几月几日 questions and 月/日 in context.",
+          "jp": "「几月几日」と「月」「日」の使い方。"
+        },
+        {
+          "zh": "能使用「星期……」「星期天/星期日」表达星期与休息日。",
+          "kr": "「星期……」「星期天／星期日」로 요일과 쉬는 날을 말한다.",
+          "en": "星期… and 星期天/星期日 for weekdays and Sunday.",
+          "jp": "「星期」と「星期天／星期日」で曜日と休日を言う。"
+        },
+        {
+          "zh": "会用「什么时候」提问，并结合「在、时候」理解「什么时候休息」一类问句。",
+          "kr": "「什么时候」로 묻고 「在·时候」와 함께 「什么时候休息」를 이해한다.",
+          "en": "什么时候 questions; 什么时候休息.",
+          "jp": "「什么时候」と「什么时候休息」。"
+        },
+        {
+          "zh": "本课讲日期与星期，不是「你好吗」或只练自我介绍。",
+          "kr": "이 과는 날짜·요일이 중심이며 「你好吗」나 자기소개만 반복하지 않습니다.",
+          "en": "This lesson is dates/weekdays—not 你好吗 drills.",
+          "jp": "本課は日付と曜日。「你好吗」の練習ではない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：问今天几月几日，确认昨天是否五月一日，问五月一日休息了吗。会话二：问星期几、明天星期六休不休息。会话三：问明天是否星期天、什么时候休息。",
+        "kr": "회화1: 오늘 날짜·어제·휴식; 회화2: 요일·토요일; 회화3: 일요일·언제 쉬는지.",
+        "en": "Three dialogues: calendar, weekday, when to rest.",
+        "jp": "三つの会話：日付、曜日、休みの時間。"
+      },
+      "confusionPoints": [
+        {
+          "zh": "「星期几」问星期；「几月几日」问日期——问题和回答要配对。",
+          "kr": "「星期几」는 요일, 「几月几日」는 날짜—질문과 답을 맞춥니다.",
+          "en": "星期几 ≠ 几月几日.",
+          "jp": "「星期几」と「几月几日」は別の質問。"
+        },
+        {
+          "zh": "「星期天」与「星期日」常可互换指周日；本课「星期天休息」是自然说法。",
+          "kr": "「星期天」과 「星期日」는 일요일을 가리킬 때 자주 바꿔 씁니다.",
+          "en": "星期天 / 星期日 both refer to Sunday.",
+          "jp": "「星期天」「星期日」は日曜を指す言い方。"
+        },
+        {
+          "zh": "「什么时候」问时间或时机，回答可用「星期天」等时间短语。",
+          "kr": "「什么时候」는 시점을 묻고 「星期天」 등으로 답합니다.",
+          "en": "什么时候 → answer with a time like 星期天.",
+          "jp": "「什么时候」には「星期天」のような答え。"
+        }
+      ]
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「几月几日」和「星期几」怎么选？「昨天」放在句首怎么说？",
+      "kr": "예: 「几月几日」와 「星期几」는 언제 쓰나요? 「昨天」는 문장 앞에 어떻게 붙나요?",
+      "en": "e.g. 几月几日 vs 星期几? How do you start a sentence with 昨天?",
+      "jp": "例:「几月几日」と「星期几」の使い分け。「昨天」を文頭に。"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "说日期时，「日」和「号」有什么不一样？",
+        "「明天星期六你们休息吗？」怎么回答更自然？",
+        "「什么时候」可以问哪些事情？",
+        "「在」和「什么时候」能一起用吗？本课怎么出现？",
+        "日历上怎么快速找到「五月一日」？"
+      ],
+      "kr": [
+        "날짜를 말할 때 「日」와 「号」는 어떻게 달라요?",
+        "「明天星期六你们休息吗？」에 자연스럽게 답하려면?",
+        "「什么时候」로 무엇을 물을 수 있나요?",
+        "「在」는 「什么时候」와 같이 어떻게 쓰이나요? 본과 예문은?",
+        "달력에서 「五月一日」을 빠르게 찾는 법은?"
+      ],
+      "en": [
+        "Difference between 日 and 号 in dates?",
+        "Natural answers to 明天星期六你们休息吗？?",
+        "What kinds of things can 什么时候 ask about?",
+        "How does 在 appear with 什么时候 in this lesson?",
+        "Tips for finding May 1st on a calendar?"
+      ],
+      "jp": [
+        "「日」と「号」の違いは？",
+        "「明天星期六你们休息吗？」への自然な答えは？",
+        "「什么时候」で何を尋ねられる？",
+        "「在」は「什么时候」とどう関係する？",
+        "カレンダーで「五月一日」を見つけるコツは？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "今天几月几日？ / 今天五月二日。",
+        "pinyin": "jīntiān jǐ yuè jǐ rì? / jīntiān wǔ yuè èr rì",
+        "usage": {
+          "zh": "询问与回答今天的月日。",
+          "kr": "오늘 날짜를 묻고 답합니다.",
+          "en": "Ask and say today’s date.",
+          "jp": "今日の月日を尋ね答える。"
+        }
+      },
+      {
+        "expr": "昨天…… / 明天……",
+        "pinyin": "zuótiān … / míngtiān …",
+        "usage": {
+          "zh": "分别指说话的前一天与后一天。",
+          "kr": "말하는 날의 전날·다음 날.",
+          "en": "Yesterday / tomorrow relative to today.",
+          "jp": "昨日／明日。"
+        }
+      },
+      {
+        "expr": "今天星期几？ / 你们什么时候休息？",
+        "pinyin": "jīntiān xīngqī jǐ? / nǐmen shénme shíhou xiūxi?",
+        "usage": {
+          "zh": "问星期与「什么时候」做某事。",
+          "kr": "요일과 ‘언제’를 묻습니다.",
+          "en": "Weekday and when to rest.",
+          "jp": "曜日といつ休むか。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
+  ]
+}

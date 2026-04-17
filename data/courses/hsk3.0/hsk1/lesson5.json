@@ -1,0 +1,681 @@
+{
+  "id": "hsk1_lesson5",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 5,
+  "type": "lesson",
+  "title": {
+    "zh": "第5课｜你几岁？",
+    "cn": "第5课｜你几岁？",
+    "kr": "제5과 | 몇 살이에요?",
+    "en": "Lesson 5 | How Old Are You?",
+    "jp": "第5課｜何歳ですか？"
+  },
+  "summary": {
+    "zh": "学习询问与回答年龄，掌握「今年」「岁」「了」及「真 + 形容词」等表达。",
+    "kr": "나이를 묻고 답하는 법과 「今年」「岁」「了」, 「真＋형용사」 표현을 익힙니다.",
+    "en": "Asking and answering age, 今年 / 岁 / 了, and 真 + adjective.",
+    "jp": "年齢を尋ね答えること、「今年」「岁」「了」、「真＋形容詞」などを学びます。"
+  },
+  "scene": {
+    "id": "hsk30_l5_scene",
+    "title": {
+      "zh": "年龄与外貌",
+      "kr": "나이와 외모",
+      "en": "Age and appearance",
+      "jp": "年齢と外見"
+    },
+    "summary": {
+      "zh": "会话一：问年龄；会话二：说家人；会话三：介绍朋友。",
+      "kr": "회화1: 나이 묻기; 회화2: 가족 말하기; 회화3: 친구 소개.",
+      "en": "Dialogue 1: age; Dialogue 2: family; Dialogue 3: friends.",
+      "jp": "会話1：年齢；会話2：家族；会話3：友だち紹介。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你几岁？」「我今年……岁」询问与回答年龄",
+      "kr": "「你几岁？」「我今年……岁」로 나이를 묻고 답할 수 있다",
+      "en": "Ask and answer age with 你几岁？ and 我今年…岁",
+      "jp": "「你几岁？」「我今年……岁」で年齢を尋ね答えられる"
+    },
+    {
+      "zh": "能用「他/她几岁了？」「他/她……岁了」说明他人年龄",
+      "kr": "「他／她几岁了？」「他／她……岁了」로 남의 나이를 말할 수 있다",
+      "en": "Use 他/她几岁了？ and 他/她…岁了 for others’ age",
+      "jp": "「他／她几岁了？」「他／她……岁了」で他人の年齢を言える"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问年龄",
+        "kr": "회화 1｜나이 묻기",
+        "en": "Dialogue 1 | Age",
+        "jp": "会話1｜年齢を尋ねる"
+      },
+      "summary": {
+        "zh": "同学之间询问「你几岁」并说明「今年」几岁。",
+        "kr": "「你几岁」를 묻고 「今年」 몇 살인지 말합니다.",
+        "en": "Asking 你几岁 and saying how old this year.",
+        "jp": "「你几岁」を聞き、「今年」の年齢を言います。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "小雨，你几岁？",
+          "pinyin": "Xiǎo Yǔ, nǐ jǐ suì?",
+          "translation": {
+            "kr": "샤오위, 너 몇 살이야?",
+            "en": "Xiao Yu, how old are you?",
+            "jp": "シャオユー、何歳？"
+          }
+        },
+        {
+          "speaker": "小雨",
+          "text": "我今年五岁。",
+          "pinyin": "Wǒ jīnnián wǔ suì.",
+          "translation": {
+            "kr": "저는 올해 다섯 살이에요.",
+            "en": "I’m five years old this year.",
+            "jp": "今年五歳です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "小军呢？",
+          "pinyin": "Xiǎo Jūn ne?",
+          "translation": {
+            "kr": "샤오쥔은요?",
+            "en": "How about Xiao Jun?",
+            "jp": "シャオジュンは？"
+          }
+        },
+        {
+          "speaker": "小雨",
+          "text": "他今年八岁。",
+          "pinyin": "Tā jīnnián bā suì.",
+          "translation": {
+            "kr": "그는 올해 여덟 살이에요.",
+            "en": "He’s eight this year.",
+            "jp": "彼は今年八歳です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜说家人",
+        "kr": "회화 2｜가족 이야기",
+        "en": "Dialogue 2 | Family",
+        "jp": "会話2｜家族について"
+      },
+      "summary": {
+        "zh": "谈论「她几岁了」，并用「真 + 形容词」夸奖。",
+        "kr": "「她几岁了」를 말하고 「真＋형용사」로 칭찬합니다.",
+        "en": "Talking about her age and praising with 真 + adjective.",
+        "jp": "「她几岁了」と「真＋形容詞」でほめる。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "李娜几岁了？",
+          "pinyin": "Lǐ Nà jǐ suì le?",
+          "translation": {
+            "kr": "리나는 몇 살이에요?",
+            "en": "How old is Li Na?",
+            "jp": "リーナは何歳ですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "她三岁了。",
+          "pinyin": "Tā sān suì le.",
+          "translation": {
+            "kr": "셋 살이에요.",
+            "en": "She’s three.",
+            "jp": "三歳です。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "她真漂亮。",
+          "pinyin": "Tā zhēn piàoliang.",
+          "translation": {
+            "kr": "정말 예뻐요.",
+            "en": "She’s really pretty.",
+            "jp": "とてもかわいいですね。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "对，她很漂亮。",
+          "pinyin": "Duì, tā hěn piàoliang.",
+          "translation": {
+            "kr": "맞아요, 아주 예뻐요.",
+            "en": "Right, she’s very pretty.",
+            "jp": "そうですね、とてもきれいです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜介绍朋友",
+        "kr": "회화 3｜친구 소개",
+        "en": "Dialogue 3 | Introducing a friend",
+        "jp": "会話3｜友だちを紹介"
+      },
+      "summary": {
+        "zh": "确认是不是哥哥，并说明「朋友」与年龄。",
+        "kr": "형인지 확인하고 「朋友」와 나이를 말합니다.",
+        "en": "Checking if he’s an older brother and giving age.",
+        "jp": "兄かどうか確認し、「朋友」と年齢を言う。"
+      },
+      "lines": [
+        {
+          "speaker": "A",
+          "text": "他是你哥哥吗？",
+          "pinyin": "Tā shì nǐ gēge ma?",
+          "translation": {
+            "kr": "그는 네 오빠야?",
+            "en": "Is he your older brother?",
+            "jp": "彼はあなたのお兄さんですか。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "不是，他是我朋友。",
+          "pinyin": "Bù shì, tā shì wǒ péngyou.",
+          "translation": {
+            "kr": "아니에요, 제 친구예요.",
+            "en": "No, he’s my friend.",
+            "jp": "いいえ、友だちです。"
+          }
+        },
+        {
+          "speaker": "A",
+          "text": "他几岁了？",
+          "pinyin": "Tā jǐ suì le?",
+          "translation": {
+            "kr": "그는 몇 살이에요?",
+            "en": "How old is he?",
+            "jp": "彼は何歳ですか。"
+          }
+        },
+        {
+          "speaker": "B",
+          "text": "他十岁了。",
+          "pinyin": "Tā shí suì le.",
+          "translation": {
+            "kr": "열 살이에요.",
+            "en": "He’s ten.",
+            "jp": "十歳です。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "几岁",
+      "pinyin": "jǐ suì",
+      "hint": {
+        "zh": "问年龄",
+        "kr": "나이 묻기",
+        "en": "how old",
+        "jp": "何歳"
+      },
+      "explanation": {
+        "zh": "疑问短语「几岁」用来询问年龄，常放在「你」「他」「她」后面，如「你几岁？」「他几岁了？」。",
+        "kr": "「几岁」는 나이를 묻는 말로 「你」「他」「她」 뒤에 옵니다.",
+        "en": "几岁 asks age, often after 你 / 他 / 她.",
+        "jp": "「几岁」は年齢を尋ね、「你」「他」「她」の後に置きます。"
+      },
+      "examples": [
+        {
+          "zh": "你几岁？",
+          "pinyin": "Nǐ jǐ suì?",
+          "translation": {
+            "kr": "몇 살이에요?",
+            "en": "How old are you?",
+            "jp": "何歳ですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "今年",
+      "pinyin": "jīnnián",
+      "hint": {
+        "zh": "this year",
+        "kr": "올해",
+        "en": "this year",
+        "jp": "今年"
+      },
+      "explanation": {
+        "zh": "时间名词「今年」表示说话时的这一年，常说「我今年五岁」说明现在的年龄。",
+        "kr": "「今年」는 말하는 해를 가리키며 「我今年五岁」처럼 씁니다.",
+        "en": "今年 means this year, as in 我今年五岁.",
+        "jp": "「今年」はこの年、「我今年五岁」のように使います。"
+      },
+      "examples": [
+        {
+          "zh": "我今年五岁。",
+          "pinyin": "Wǒ jīnnián wǔ suì.",
+          "translation": {
+            "kr": "저는 올해 다섯 살이에요.",
+            "en": "I’m five this year.",
+            "jp": "今年は五歳です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "了",
+      "pinyin": "le",
+      "hint": {
+        "zh": "语气 / 变化",
+        "kr": "어조·변화",
+        "en": "particle le",
+        "jp": "助詞「了」"
+      },
+      "explanation": {
+        "zh": "句末「了」可表示情况变化或语气完结，如「她三岁了」强调已经到了三岁。",
+        "kr": "문장 끝 「了」는 상황 변화나 어조를 나타냅니다(她三岁了).",
+        "en": "了 at the end can mark a new situation, e.g. she’s turned three.",
+        "jp": "文末の「了」は変化や語気のまとまりを表すことがあります。"
+      },
+      "examples": [
+        {
+          "zh": "她三岁了。",
+          "pinyin": "Tā sān suì le.",
+          "translation": {
+            "kr": "셋 살이 됐어요.",
+            "en": "She’s three now.",
+            "jp": "三歳になりました。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "真 + 形容词",
+      "pinyin": "zhēn + xíngróngcí",
+      "hint": {
+        "zh": "强调",
+        "kr": "강조",
+        "en": "really + adj.",
+        "jp": "本当に～"
+      },
+      "explanation": {
+        "zh": "副词「真」放在形容词前加强语气，表示「的确、非常」，如「真漂亮」「真高兴」。",
+        "kr": "부사 「真」은 형용사 앞에서 ‘정말’의 뜻을 더합니다(真漂亮).",
+        "en": "真 before an adjective strengthens it: really pretty, etc.",
+        "jp": "「真」は形容詞の前で「本当に」を強めます。"
+      },
+      "examples": [
+        {
+          "zh": "她真漂亮。",
+          "pinyin": "Tā zhēn piàoliang.",
+          "translation": {
+            "kr": "정말 예뻐요.",
+            "en": "She’s really pretty.",
+            "jp": "とてもきれいですね。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜年龄登记表",
+        "kr": "읽기 자료｜나이 등록표",
+        "en": "Reading | Age registration",
+        "jp": "読み物｜年齢登録表"
+      },
+      "sentences": [
+        {
+          "zh": "姓名　　　年龄",
+          "pinyin": "xìngmíng　　　niánlíng",
+          "translations": {
+            "kr": "이름　　나이",
+            "en": "Name　　Age",
+            "jp": "名前　　年齢"
+          }
+        },
+        {
+          "zh": "小雨　　　5岁",
+          "pinyin": "Xiǎo Yǔ　　　wǔ suì",
+          "translations": {
+            "kr": "샤오위　　5세",
+            "en": "Xiao Yu　　5",
+            "jp": "シャオユー　　5歳"
+          }
+        },
+        {
+          "zh": "小军　　　8岁",
+          "pinyin": "Xiǎo Jūn　　　bā suì",
+          "translations": {
+            "kr": "샤오쥔　　8세",
+            "en": "Xiao Jun　　8",
+            "jp": "シャオジュン　　8歳"
+          }
+        },
+        {
+          "zh": "李娜　　　3岁",
+          "pinyin": "Lǐ Nà　　　sān suì",
+          "translations": {
+            "kr": "리나　　3세",
+            "en": "Li Na　　3",
+            "jp": "リーナ　　3歳"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l5_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句用来询问年龄？",
+        "kr": "다음 중 나이를 묻는 말은?",
+        "en": "Which sentence asks someone’s age?",
+        "jp": "年齢を尋ねるのはどれですか？"
+      },
+      "options": [
+        { "key": "A", "zh": "你几岁？", "cn": "你几岁？" },
+        { "key": "B", "zh": "现在几点？", "cn": "现在几点？" },
+        { "key": "C", "zh": "今天几月几日？", "cn": "今天几月几日？" },
+        { "key": "D", "zh": "你家有几口人？", "cn": "你家有几口人？" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「你几岁？」用于询问对方年龄。",
+        "kr": "「你几岁？」는 상대의 나이를 묻습니다.",
+        "en": "你几岁？ asks how old someone is.",
+        "jp": "「你几岁？」は年齢を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l5_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「今年」的拼音是？",
+        "kr": "「今年」의 병음은?",
+        "en": "What is the pinyin of 今年?",
+        "jp": "「今年」のピンインは？"
+      },
+      "options": [
+        { "key": "A", "zh": "jīnnián", "cn": "jīnnián" },
+        { "key": "B", "zh": "jīng nián", "cn": "jīng nián" },
+        { "key": "C", "zh": "jìnnián", "cn": "jìnnián" },
+        { "key": "D", "zh": "jīnniǎn", "cn": "jīnniǎn" }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「今年」读作 jīnnián。",
+        "kr": "「今年」는 jīnnián로 읽습니다.",
+        "en": "今年 is read jīnnián.",
+        "jp": "「今年」は jīnnián と読みます。"
+      }
+    },
+    {
+      "id": "hsk30_l5_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "别人问「你几岁？」，你想回答「我今年五岁」，应说：",
+        "kr": "「你几岁?」에 「올해 다섯 살」이라고 답할 때:",
+        "en": "To answer 你几岁? with “I’m five this year”:",
+        "jp": "「你几岁？」に「今年五歳です」と答えるのは？"
+      },
+      "options": ["我今年五岁。", "现在八点。", "今天星期一。", "我家有四口人。"],
+      "answer": "我今年五岁。",
+      "explanation": {
+        "cn": "用「我今年……岁」说明自己今年的年龄。",
+        "kr": "「我今年……岁」로 올해 나이를 말합니다.",
+        "en": "我今年…岁 states your age this year.",
+        "jp": "「我今年……岁」で今年の年齢を言います。"
+      }
+    },
+    {
+      "id": "hsk30_l5_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「她真漂亮。」里的「真」表示：",
+        "kr": "「她真漂亮。」에서 「真」의 역할은?",
+        "en": "In 她真漂亮。, 真 shows that she is:",
+        "jp": "「她真漂亮。」の「真」は何を表す？"
+      },
+      "options": ["加强夸奖语气", "表示问题", "表示时间", "表示否定"],
+      "answer": "加强夸奖语气",
+      "explanation": {
+        "cn": "「真」放在形容词前，加强「的确、非常」的语气。",
+        "kr": "「真」은 형용사 앞에서 칭찬·감탄을 강조합니다.",
+        "en": "真 before an adjective strengthens praise.",
+        "jp": "「真」は形容詞の前で程度を強めます。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": ["你几岁？", "我今年五岁。", "他今年八岁。", "她几岁了？", "她三岁了。", "她真漂亮。", "对，她很漂亮。", "他几岁了？", "他十岁了。"],
+    "chatPrompt": "请围绕年龄、「今年」「岁」「他/她/他们」与「真 + 形容词」用本课词语问答；不要写成问候或只问名字。",
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l5_age_classmate",
+          "situation": {
+            "zh": "会话一：问同学几岁",
+            "kr": "회화 1: 친구 나이 묻기",
+            "en": "Dialogue 1: classmate’s age",
+            "jp": "会話1：同級生の年齢"
+          },
+          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
+          "studentRole": { "zh": "小雨", "kr": "샤오위", "en": "Xiao Yu", "jp": "小雨" },
+          "goal": {
+            "zh": "用「你几岁？」提问，用「我今年……岁」回答；能转问「……呢？」并回答「他今年……岁」。",
+            "kr": "「你几岁？」로 묻고 「我今年……岁」로 답하며 「……呢？」와 「他今年……岁」를 씁니다.",
+            "en": "Ask 你几岁?, answer 我今年…岁, and use 他今年…岁.",
+            "jp": "「你几岁？」「我今年……岁」「他今年……岁」を使う。"
+          },
+          "expressions": ["你几岁？", "我今年五岁。", "小军呢？", "他今年八岁。"],
+          "rounds": [
+            {
+              "aiLine": "小雨，你几岁？",
+              "studentRefs": ["我今年五岁。"],
+              "acceptable": ["我今年五岁。", "我今年五岁", "五岁"],
+              "closeAnswers": ["五岁", "5岁"]
+            },
+            {
+              "aiLine": "小军呢？",
+              "studentRefs": ["他今年八岁。"],
+              "acceptable": ["他今年八岁。", "他今年八岁", "八岁"],
+              "closeAnswers": ["八岁", "8岁"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会问「你几岁？」并能用「我今年……岁」回答自己的年龄。",
+        "kr": "「你几岁？」로 묻고 「我今年……岁」로 자신의 나이를 말할 수 있다.",
+        "en": "Ask 你几岁? and answer with 我今年…岁.",
+        "jp": "「你几岁？」と「我今年……岁」で自分の年齢を言える。"
+      },
+      {
+        "zh": "会问「他/她几岁了？」并能用「他/她……岁了」说明别人年龄。",
+        "kr": "「他／她几岁了？」로 묻고 「他／她……岁了」로 남의 나이를 말한다.",
+        "en": "Ask 他/她几岁了? and answer 他/她…岁了.",
+        "jp": "「他／她几岁了？」「他／她……岁了」で他人の年齢を言える。"
+      },
+      {
+        "zh": "能用「真 + 形容词」夸奖，如「真漂亮」。",
+        "kr": "「真＋형용사」로 「真漂亮」처럼 칭찬할 수 있다.",
+        "en": "Praise with 真 + adjective, e.g. 真漂亮.",
+        "jp": "「真＋形容詞」で「真漂亮」のようにほめられる。"
+      }
+    ],
+    "lessonExplain": {
+      "learningGoals": [
+        {
+          "zh": "掌握「几岁」「今年」「岁」「了」在问年龄、说年龄时的基本用法。",
+          "kr": "나이를 묻고 말할 때 「几岁」「今年」「岁」「了」의 기본 쓰임을 익힌다.",
+          "en": "Use 几岁, 今年, 岁, and 了 to ask and tell age.",
+          "jp": "「几岁」「今年」「岁」「了」で年齢を尋ね答える。"
+        },
+        {
+          "zh": "能区分「他」「她」「他们」，并在句子中说清是谁几岁。",
+          "kr": "「他」「她」「他们」를 구분해 누가 몇 살인지 문장으로 말한다.",
+          "en": "Distinguish 他 / 她 / 他们 and say who is how old.",
+          "jp": "「他」「她」「他们」を区別し、誰が何歳か言い分ける。"
+        },
+        {
+          "zh": "会用「真 + 形容词」表达夸奖，如「真漂亮」，并配合「对」表示同意。",
+          "kr": "「真＋형용사」로 칭찬하고 「对」로 동의를 나타낸다.",
+          "en": "Use 真 + adjective to praise; use 对 to agree.",
+          "jp": "「真＋形容詞」でほめ、「对」で同意する。"
+        },
+        {
+          "zh": "本课讲年龄与外貌夸奖，不是问候、姓名或国籍话题。",
+          "kr": "이 과는 나이와 외모 칭찬이 중심이며 인사·이름·국적 이야기가 아닙니다.",
+          "en": "This lesson is age and praise—not greetings or names.",
+          "jp": "本課は年齢とほめ言葉が中心で、あいさつや名前ではない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：李明问小雨几岁、小军几岁，用「今年」说年龄。会话二：问李娜几岁，用「真漂亮」夸奖。会话三：确认是不是哥哥，说明是朋友并回答几岁。本课核心是年龄与「真」，不要混成第1课的问候套话。",
+        "kr": "회화1: 몇 살인지와 올해 나이; 회화2: 리나 나이와 「真漂亮」; 회화3: 형인지 친구인지와 나이. 본과는 나이·「真」이 중심이며 제1과 인사 문구와 섞지 않습니다.",
+        "en": "Dialogues focus on age and 真 + adjective—not Lesson 1 greetings.",
+        "jp": "会話は年齢と「真」が中心。第1課のあいさつに戻らない。"
+      },
+      "confusionPoints": [
+        {
+          "zh": "「几岁」问年龄；「多少」多用来问数量或时间长短——不要混用。",
+          "kr": "「几岁」는 나이, 「多少」는 수량·시간 등에 자주 쓰입니다.",
+          "en": "几岁 = age; 多少 = how much/many, etc.",
+          "jp": "「几岁」は年齢。「多少」は量などに使うことが多い。"
+        },
+        {
+          "zh": "「他」指男性，「她」指女性；说「他们」可指多个他/她（混合群体）。",
+          "kr": "「他」는 남성, 「她」는 여성; 「他们」는 복수 그룹.",
+          "en": "他/她 gender; 他们 = they.",
+          "jp": "「他／她」の性、「他们」は複数。"
+        },
+        {
+          "zh": "「了」在「她三岁了」里表示到了这个年龄，语气自然完结。",
+          "kr": "「她三岁了」의 「了」는 나이에 도달했음을 나타냅니다.",
+          "en": "了 in 她三岁了 marks the new age stage.",
+          "jp": "「她三岁了」の「了」は変化・到達のニュアンス。"
+        }
+      ]
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「你几岁？」和「我今年五岁」怎么搭配？「真」一般放在哪里？",
+      "kr": "예: 「你几岁?」「我今年五岁」는 어떻게 이어요? 「真」은 어디에 붙나요?",
+      "en": "e.g. How do 你几岁? and 我今年五岁 go together? Where does 真 go?",
+      "jp": "例:「你几岁？」と「我今年五岁」のつなぎ方。「真」の位置は？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「今年」一定要说吗？什么时候省略？",
+        "「他几岁了」和「他几岁」有什么差别？",
+        "「真漂亮」可以换成别的形容词吗？",
+        "「对」在这课一般怎么用？",
+        "问小朋友年龄时，语气要注意什么？"
+      ],
+      "kr": [
+        "「今年」는 꼭 말해야 하나요? 언제 생략하나요?",
+        "「他几岁了」와 「他几岁」는 어떻게 달라요?",
+        "「真漂亮」 대신 다른 형용사를 쓸 수 있나요?",
+        "이 과에서 「对」는 보통 어떻게 쓰나요?",
+        "어린이에게 나이를 물을 때 어조는 어떻게 할까요?"
+      ],
+      "en": [
+        "Do I always need 今年? When can I leave it out?",
+        "What’s the difference between 他几岁了 and 他几岁?",
+        "Can I say 真… with adjectives other than 漂亮?",
+        "How is 对 used in this lesson?",
+        "Any tips on tone when asking a child’s age?"
+      ],
+      "jp": [
+        "「今年」は必ず言いますか。省略は？",
+        "「他几岁了」と「他几岁」の違いは？",
+        "「真」は「漂亮」以外の形容詞にも使えますか。",
+        "この課の「对」の使い方は？",
+        "子どもに年齢を聞くときの言い方は？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你几岁？ / 我今年五岁。",
+        "pinyin": "nǐ jǐ suì? / wǒ jīnnián wǔ suì",
+        "usage": {
+          "zh": "询问与回答年龄，「今年」说明是今年的年龄。",
+          "kr": "나이를 묻고 답하며 「今年」로 올해 나이를 말합니다.",
+          "en": "Ask/answer age; 今年 specifies this year.",
+          "jp": "年齢を尋ね答える。「今年」で今年の年齢。"
+        }
+      },
+      {
+        "expr": "他今年八岁。 / 她三岁了。",
+        "pinyin": "tā jīnnián bā suì. / tā sān suì le.",
+        "usage": {
+          "zh": "说明男孩、女孩的年龄，「了」可出现在句末。",
+          "kr": "남녀 아이의 나이를 말하고 문장 끝에 「了」가 올 수 있습니다.",
+          "en": "His/her age; 了 can close the sentence.",
+          "jp": "彼／彼女の年齢。文末に「了」。"
+        }
+      },
+      {
+        "expr": "真漂亮",
+        "pinyin": "zhēn piàoliang",
+        "usage": {
+          "zh": "「真 + 形容词」夸奖外貌或状态。",
+          "kr": "「真＋형용사」로 외모나 상태를 칭찬합니다.",
+          "en": "真 + adjective for praise.",
+          "jp": "「真＋形容詞」でほめる。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+    },
+    {
+      "key": "dialogue",
+      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+    },
+    {
+      "key": "grammar",
+      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+    },
+    {
+      "key": "extension",
+      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+    },
+    {
+      "key": "practice",
+      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+    },
+    {
+      "key": "aiPractice",
+      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+    }
+  ]
+}

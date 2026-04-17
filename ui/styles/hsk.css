@@ -2504,6 +2504,91 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   line-height: 1.5;
 }
 
+/* HSK3.0 扩展：月历网格（page.hsk.js layout=calendarGrid） */
+.lesson-extension-calendar-wrap .hsk30-cal-panel {
+  margin-top: 4px;
+  padding: 14px 12px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+}
+
+.hsk30-cal-monthline {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.hsk30-cal-wdheadrow {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.hsk30-cal-wdhead {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: none;
+}
+
+.hsk30-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.hsk30-cal-cell {
+  min-height: 52px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 2px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.hsk30-cal-cell.is-empty {
+  background: transparent;
+  border-color: transparent;
+  min-height: 44px;
+}
+
+.hsk30-cal-daynum {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.hsk30-cal-wdsub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+.hsk30-cal-cell[data-speak-text] {
+  cursor: pointer;
+}
+
+.hsk30-cal-cell[data-speak-text]:hover {
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.lesson-extension-sentences-after-cal {
+  margin-top: 16px;
+}
+
 /* 点读：点击中文或发音按钮 */
 .lesson-extension-zh[data-speak-text] {
   cursor: pointer;

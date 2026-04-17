@@ -8481,5 +8481,39 @@
       "level": "hsk1",
       "version": "hsk3.0"
     }
+  },
+  {
+    "id": "hsk3.0:hsk1:0500",
+    "hanzi": "分钟",
+    "pinyin": "fēnzhōng",
+    "meaning": {
+      "zh": "分钟",
+      "en": "minute",
+      "ko": "분"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0501",
+    "hanzi": "漂亮",
+    "pinyin": "piàoliang",
+    "meaning": {
+      "zh": "漂亮",
+      "en": "pretty; beautiful",
+      "ko": "예쁜; 아름다운"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
   }
 ]

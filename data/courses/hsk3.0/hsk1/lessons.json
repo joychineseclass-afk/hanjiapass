@@ -1,7 +1,7 @@
 {
   "courseId": "hsk1",
   "level": "HSK1",
-  "_luminaNote": "HSK 3.0 一级：第 1–4 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "_luminaNote": "HSK 3.0 一级：第 1–7 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -97,6 +97,78 @@
         "kr": "제4과",
         "en": "Lesson 4",
         "jp": "第4課"
+      }
+    },
+    {
+      "lessonNo": 5,
+      "id": "hsk1_lesson5",
+      "file": "lesson5.json",
+      "title": {
+        "cn": "你几岁？",
+        "zh": "你几岁？",
+        "kr": "몇 살이에요?",
+        "en": "How Old Are You?",
+        "jp": "何歳ですか？"
+      },
+      "sceneGoal": "学习询问与回答年龄，掌握「今年」「岁」「了」及「真 + 形容词」等表达",
+      "subtitle": "年龄 · 他她他们",
+      "grammarTargets": ["几岁", "今年", "了", "真 + 形容词"],
+      "vocabTargets": ["小朋友", "岁", "今年", "他", "她", "他们", "对", "真", "漂亮", "三", "五", "八", "十", "了"],
+      "extensionTargets": ["年龄登记表"],
+      "displayTitle": {
+        "cn": "第5课",
+        "zh": "第5课",
+        "kr": "제5과",
+        "en": "Lesson 5",
+        "jp": "第5課"
+      }
+    },
+    {
+      "lessonNo": 6,
+      "id": "hsk1_lesson6",
+      "file": "lesson6.json",
+      "title": {
+        "cn": "现在几点？",
+        "zh": "现在几点？",
+        "kr": "지금 몇 시예요?",
+        "en": "What Time Is It Now?",
+        "jp": "今何時ですか？"
+      },
+      "sceneGoal": "学习询问与表达时间，掌握「点」「分」「半」及上午、下午、晚上等时段用语",
+      "subtitle": "时间 · 作息",
+      "grammarTargets": ["时间表达", "时间作状语", "点、分、半"],
+      "vocabTargets": ["现在", "点", "分", "分钟", "上午", "中午", "下午", "晚上", "早上", "上课", "下课", "起床", "睡觉", "七", "八", "九", "零", "半", "到"],
+      "extensionTargets": ["今天的时间表"],
+      "displayTitle": {
+        "cn": "第6课",
+        "zh": "第6课",
+        "kr": "제6과",
+        "en": "Lesson 6",
+        "jp": "第6課"
+      }
+    },
+    {
+      "lessonNo": 7,
+      "id": "hsk1_lesson7",
+      "file": "lesson7.json",
+      "title": {
+        "cn": "今天几月几日？",
+        "zh": "今天几月几日？",
+        "kr": "오늘은 몇 월 며칠이에요?",
+        "en": "What Date Is It Today?",
+        "jp": "今日は何月何日ですか？"
+      },
+      "sceneGoal": "学习表达日期与星期，掌握「昨天、今天、明天」与「什么时候」等提问方式",
+      "subtitle": "日期 · 星期",
+      "grammarTargets": ["日期表达", "星期表达", "什么时候"],
+      "vocabTargets": ["今天", "昨天", "明天", "月", "日", "号", "星期", "星期天", "星期日", "二", "五", "六", "你们", "休息", "在", "时候"],
+      "extensionTargets": ["五月日历"],
+      "displayTitle": {
+        "cn": "第7课",
+        "zh": "第7课",
+        "kr": "제7과",
+        "en": "Lesson 7",
+        "jp": "第7課"
       }
     }
   ]
