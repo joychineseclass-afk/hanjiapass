@@ -38,12 +38,12 @@ import {
   maybeGetManualPinyin,
   shouldShowPinyin,
   normalizePinyinDisplayAllLowercase,
+  stripStandalonePinyinLinesForTts,
 } from "../utils/pinyinEngine.js";
 import {
   collectLessonPinyinToHanziMap,
   resolvePinyinDisplayToSpeakZh,
 } from "../utils/hsk30UiMeaningMixedTts.js";
-import { stripStandalonePinyinLinesForTts } from "../utils/explainPinyinTts.js";
 import { loadGlossary } from "../utils/glossary.js";
 import {
   LESSON_ENGINE,

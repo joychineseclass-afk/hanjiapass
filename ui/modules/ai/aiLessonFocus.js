@@ -6,7 +6,7 @@
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import * as LE from "../../core/i18n.js";
 import { getAiLearning, pickLessonLang, mapMultilingualLines } from "./aiLearningShared.js";
-import { stripStandalonePinyinLinesForTts } from "../utils/explainPinyinTts.js";
+import { stripStandalonePinyinLinesForTts } from "../utils/pinyinEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 

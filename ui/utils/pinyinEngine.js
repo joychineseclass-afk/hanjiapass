@@ -161,3 +161,24 @@ export function normalizePinyinInput(text) {
 export function normalizePinyinDisplayAllLowercase(text) {
   return String(text ?? "").toLowerCase();
 }
+
+/** 朗读链：去掉仅含拉丁拼音的行，避免 UI 语言 TTS 误读 */
+const _PINYIN_ONLY_LINE_RE =
+  /^[a-zA-Zāáǎàēéěèīíǐìōóǒòūúǔùüǖǘǚǜńḿ\u0300-\u036f\s·\-—_,.?!…:;'"0-9]+$/u;
+
+export function stripStandalonePinyinLinesForTts(text) {
+  if (text == null) return "";
+  const lines = String(text).split("\n");
+  const out = [];
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) continue;
+    if (/[\u4e00-\u9fff]/.test(t) || /[\uac00-\ud7af]/.test(t)) {
+      out.push(line);
+      continue;
+    }
+    if (_PINYIN_ONLY_LINE_RE.test(t)) continue;
+    out.push(line);
+  }
+  return out.join("\n");
+}
