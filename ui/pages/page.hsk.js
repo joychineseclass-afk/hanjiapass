@@ -43,6 +43,7 @@ import {
   collectLessonPinyinToHanziMap,
   resolvePinyinDisplayToSpeakZh,
 } from "../utils/hsk30UiMeaningMixedTts.js";
+import { stripStandalonePinyinLinesForTts } from "../utils/explainPinyinTts.js";
 import { loadGlossary } from "../utils/glossary.js";
 import {
   LESSON_ENGINE,
@@ -868,8 +869,8 @@ function buildGrammarSpeakSegments(pt, lang) {
   const examples = getGrammarExamples(pt);
   const segs = [];
   if (titleZh) segs.push({ zh: titleZh, ui: "" });
-  if (hintUi) segs.push({ ui: hintUi });
-  if (explUi && explUi !== hintUi) segs.push({ ui: explUi });
+  if (hintUi) segs.push({ ui: stripStandalonePinyinLinesForTts(hintUi) });
+  if (explUi && explUi !== hintUi) segs.push({ ui: stripStandalonePinyinLinesForTts(explUi) });
   for (const ex of examples) {
     if (ex.zh) segs.push({ zh: ex.zh, ui: str(ex.trans || "") });
   }

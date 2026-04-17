@@ -174,10 +174,10 @@
         "jp": "敬称 / 一般"
       },
       "explanation": {
-        "zh": "（第二人称用法）「您」是敬称，多用于长辈、师长或不熟悉的人；「你」是一般第二人称，用于平辈或较随意的场合。对老师可说「您好」，同学之间常用「你好」。",
-        "kr": "「您」은 높임말로 어른·스승·낯선 사람에게 자주 쓰입니다. 「你」는 일반적인 2인칭으로 또래나 편한 상황에 쓰입니다. 스승에게는 「您好」, 친구에게는 「你好」가 흔합니다.",
-        "en": "您 is polite “you” (elders, teachers, strangers). 你 is neutral “you” (peers, informal contexts). 您好 addresses a teacher; 你好 is common among classmates.",
-        "jp": "「您」は敬称（目上・先生・初対面など）。「你」は一般的な「あなた」（同輩・くだけた場面）。先生には「您好」、仲間には「你好」がよく使われます。"
+        "zh": "（第二人称用法）「您」是敬称，多用于长辈、师长或不熟悉的人；「你」是一般第二人称，用于平辈或较随意的场合。对老师可说「您好」，同学之间常用「你好」。\n\n「您」\nnín\n「你」\nnǐ\n「您好」\nnín hǎo\n「你好」\nnǐ hǎo",
+        "kr": "「您」\nnín\n「你」\nnǐ\n「您好」\nnín hǎo\n「你好」\nnǐ hǎo\n\n「您」은 높임말로 어른·스승·낯선 사람에게 자주 쓰입니다. 「你」는 일반적인 2인칭으로 또래나 편한 상황에 쓰입니다. 스승에게는 「您好」, 친구에게는 「你好」가 흔합니다.",
+        "en": "您 is polite “you” (elders, teachers, strangers). 你 is neutral “you” (peers, informal contexts). 您好 addresses a teacher; 你好 is common among classmates.\n\n您 / 你\nnín / nǐ\n您好 / 你好\nnín hǎo / nǐ hǎo",
+        "jp": "「您」は敬称（目上・先生・初対面など）。「你」は一般的な「あなた」（同輩・くだけた場面）。先生には「您好」、仲間には「你好」がよく使われます。\n\n「您」\nnín\n「你」\nnǐ"
       },
       "examples": [
         {
@@ -373,12 +373,17 @@
           "aiRole": { "zh": "同学（汤姆）", "kr": "친구", "en": "Friend", "jp": "友だち" },
           "studentRole": { "zh": "我（王美）", "kr": "나", "en": "Me", "jp": "自分" },
           "goal": {
-            "zh": "用本课道歉与致谢用语完成 2～3 轮对话。",
-            "kr": "본과에서 배운 사과·감사 표현으로 2~3문장 대화를 연습합니다.",
+            "zh": "用本课道歉与致谢用语完成 2～3 轮对话。\n\n「对不起」\nduìbuqǐ\n「没关系」\nméi guānxi\n「谢谢」\nxièxie\n「不客气」\nbú kèqi",
+            "kr": "「对不起」\nduìbuqǐ\n「没关系」\nméi guānxi\n「谢谢」\nxièxie\n「不客气」\nbú kèqi\n\n사과·감사 표현으로 2~3문장 대화를 연습합니다.",
             "en": "Practice 2–3 short turns using apology and thanks from this lesson.",
             "jp": "本課の謝罪・感謝の表現で短い会話を練習します。"
           },
-          "expressions": ["对不起 / 没关系", "谢谢 / 不客气"],
+          "expressions": [
+            { "zh": "对不起", "pinyin": "duìbuqǐ" },
+            { "zh": "没关系", "pinyin": "méi guānxi" },
+            { "zh": "谢谢", "pinyin": "xièxie" },
+            { "zh": "不客气", "pinyin": "bú kèqi" }
+          ],
           "rounds": [
             {
               "aiLine": "王美，对不起！",
@@ -405,12 +410,16 @@
           "aiRole": { "zh": "老师（王老师）", "kr": "선생님", "en": "Teacher", "jp": "先生" },
           "studentRole": { "zh": "学生（李明）", "kr": "학생", "en": "Student", "jp": "生徒" },
           "goal": {
-            "zh": "对师长用「您」与「您好」，区分「你」与「你好」。",
-            "kr": "상황에 맞게 「您」과 「你」를 구분해 말해 봅니다.",
+            "zh": "对师长用「您」与「您好」，区分「你」与「你好」。\n\n「您」\nnín\n「您好」\nnín hǎo\n「你」\nnǐ\n「你好」\nnǐ hǎo",
+            "kr": "「您」\nnín\n「您好」\nnín hǎo\n「你」\nnǐ\n「你好」\nnǐ hǎo\n\n상황에 맞게 구분해 말해 봅니다.",
             "en": "Use 您 / 您好 appropriately when speaking to a teacher.",
             "jp": "場面に合わせて「您」と「你」を使い分けます。"
           },
-          "expressions": ["您好 / 你好", "老师", "再见"],
+          "expressions": [
+            { "zh": "您好 / 你好", "pinyin": "nín hǎo / nǐ hǎo" },
+            { "zh": "老师", "pinyin": "lǎoshī" },
+            { "zh": "再见", "pinyin": "zàijiàn" }
+          ],
           "rounds": [
             {
               "aiLine": "你好，李明！",

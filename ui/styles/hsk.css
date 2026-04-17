@@ -375,6 +375,10 @@
   margin-bottom: 0.35rem;
 }
 
+.ai-lesson-focus-list--multiline li {
+  white-space: pre-line;
+}
+
 .ai-lesson-focus-muted {
   margin: 0;
   font-size: 0.8125rem;
@@ -958,6 +962,7 @@
   font-size: 0.875rem;
   color: #334155;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
 .ai-situation-expr-list {
@@ -966,6 +971,26 @@
   font-size: 0.875rem;
   color: #334155;
   line-height: 1.45;
+}
+
+.ai-situation-expr-item {
+  margin-bottom: 8px;
+}
+
+.ai-situation-expr-item:last-child {
+  margin-bottom: 0;
+}
+
+.ai-situation-expr-zh {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.ai-situation-expr-py {
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-top: 2px;
+  font-style: normal;
 }
 
 .ai-situation-card-muted {
@@ -2739,6 +2764,7 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   line-height: 1.5;
   margin-bottom: 12px;
   margin-top: 0;
+  white-space: pre-line;
 }
 
 .lesson-grammar-head + .lesson-grammar-expl {

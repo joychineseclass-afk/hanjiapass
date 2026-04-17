@@ -34,6 +34,23 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** 支持字符串或 { zh, pinyin } 对象 */
+function normalizeSituationExpression(e) {
+  if (e && typeof e === "object" && !Array.isArray(e)) {
+    const zh = str(e.zh ?? e.cn ?? e.text ?? e.line);
+    const pinyin = str(e.pinyin ?? e.py);
+    return { zh, pinyin };
+  }
+  return { zh: str(e), pinyin: "" };
+}
+
+function expressionItemHtml(e) {
+  const { zh, pinyin } = normalizeSituationExpression(e);
+  if (!zh) return "";
+  const pyHtml = pinyin ? `<div class="ai-situation-expr-py">${escapeHtml(pinyin)}</div>` : "";
+  return `<li class="ai-situation-expr-item"><div class="ai-situation-expr-zh">${escapeHtml(zh)}</div>${pyHtml}</li>`;
+}
+
 function pickLang(obj, lang) {
   if (!obj || typeof obj !== "object") return "";
   const l = (lang || "kr").toLowerCase();
@@ -187,7 +204,7 @@ function buildScenariosFromDialogueCard(card, lang) {
     exprSet.add(r.aiLine);
     r.studentRefs.forEach((x) => exprSet.add(x));
   }
-  const expressions = [...exprSet].slice(0, 4);
+  const expressions = [...exprSet].slice(0, 4).map((s) => ({ zh: s, pinyin: "" }));
 
   return [
     {
@@ -216,7 +233,9 @@ export function buildSituationDialoguePlan(lesson, lang) {
         const aiRole = typeof sc.aiRole === "string" ? sc.aiRole : pickLang(sc.aiRole, lang);
         const studentRole = typeof sc.studentRole === "string" ? sc.studentRole : pickLang(sc.studentRole, lang);
         const goal = typeof sc.goal === "string" ? sc.goal : pickLang(sc.goal, lang);
-        const expressions = Array.isArray(sc.expressions) ? sc.expressions.map(str).filter(Boolean).slice(0, 6) : [];
+        const expressions = Array.isArray(sc.expressions)
+          ? sc.expressions.map(normalizeSituationExpression).filter((x) => x.zh).slice(0, 6)
+          : [];
         const rounds = Array.isArray(sc.rounds)
           ? sc.rounds
             .map((r) => {
@@ -289,7 +308,7 @@ function scenarioCardHtml(sc, lang) {
 
   const exprBlock =
     sc.expressions && sc.expressions.length
-      ? `<ul class="ai-situation-expr-list">${sc.expressions.map((e) => `<li>${escapeHtml(e)}</li>`).join("")}</ul>`
+      ? `<ul class="ai-situation-expr-list">${sc.expressions.map((e) => expressionItemHtml(e)).join("")}</ul>`
       : `<p class="ai-situation-card-muted">${escapeHtml(t("ai.situation_no_expressions", "본과 대화에서 표현을 확인해 보세요."))}</p>`;
 
   return `
