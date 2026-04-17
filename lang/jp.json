@@ -474,7 +474,9 @@
     "lesson_focus_bullet_short_apology": "「对不起」→「没关系」。",
     "lesson_focus_bullet_short_thanks": "「谢谢」→「不客气」。",
     "lesson_focus_tip_final_1": "「您」は敬称（先生・目上）。「你」は同輩・親しい相手に。",
-    "lesson_focus_tip_final_2": "「没关系」は謝罪に、「不客气」はお礼に——役割が違う。"
+    "lesson_focus_tip_final_2": "「没关系」は謝罪に、「不客气」はお礼に——役割が違う。",
+    "lesson_focus_tip_fallback_generic_1": "本課の会話で質問と答えの対応を確認し、語句は文の中で覚えましょう。",
+    "lesson_focus_tip_fallback_generic_2": "迷ったらまず本文の文を真似し、名前・数字・国名だけ置き換えて練習します。"
   },
   "progress": {
     "completed": "完了",

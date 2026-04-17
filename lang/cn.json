@@ -450,6 +450,8 @@
     "lesson_focus_bullet_short_thanks": "「谢谢」→「不客气」。",
     "lesson_focus_tip_final_1": "「您」偏敬称（师长、长辈）；「你」多用于平辈、熟人。",
     "lesson_focus_tip_final_2": "「没关系」接在道歉后；「不客气」接在致谢后——别混。",
+    "lesson_focus_tip_fallback_generic_1": "结合本课对话，注意问句与答句配对，在句子里记生词。",
+    "lesson_focus_tip_fallback_generic_2": "不确定时先模仿课文原句，再替换人名、数字或国名。",
     "title": "AI 学习",
     "ask": "自由提问",
     "explain": "句子讲解",

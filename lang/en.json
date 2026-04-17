@@ -477,7 +477,9 @@
     "lesson_focus_bullet_short_apology": "对不起 → 没关系.",
     "lesson_focus_bullet_short_thanks": "谢谢 → 不客气.",
     "lesson_focus_tip_final_1": "您 = polite “you” (elders, teachers). 你 = everyday “you” (peers).",
-    "lesson_focus_tip_final_2": "没关系 answers 对不起; 不客气 answers 谢谢 — don’t swap them."
+    "lesson_focus_tip_final_2": "没关系 answers 对不起; 不客气 answers 谢谢 — don’t swap them.",
+    "lesson_focus_tip_fallback_generic_1": "Use this lesson’s dialogue to pair questions with answers, and learn words inside sentences.",
+    "lesson_focus_tip_fallback_generic_2": "When unsure, mimic the textbook lines first, then swap names, numbers, or country names."
   },
   "review": {
     "title": "Review",

@@ -168,6 +168,7 @@ async function mergeReviewLessonFromHskLoader(lessonData, lessonNo, file) {
       review: L.review ?? lessonData.review,
       steps: L.steps ?? lessonData.steps,
       stepKeys: L.stepKeys ?? lessonData.stepKeys,
+      aiLearning: L.aiLearning != null ? L.aiLearning : lessonData.aiLearning,
     };
     if (lessonData.meta && typeof lessonData.meta === "object") {
       next.meta = { ...lessonData.meta, type: mergedType };

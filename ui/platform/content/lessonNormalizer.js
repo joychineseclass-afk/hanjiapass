@@ -199,6 +199,7 @@ export function normalizeLesson(raw, ctx = {}) {
     grammar: normGrammar(raw),
     practice: normPractice(raw),
     aiPractice: normAiPractice(raw),
+    aiLearning: raw?.aiLearning && typeof raw.aiLearning === "object" ? raw.aiLearning : undefined,
     review: raw?.review && typeof raw.review === "object" ? raw.review : {},
     steps: raw?.steps,
     scene: raw?.scene && typeof raw.scene === "object" ? raw.scene : undefined,

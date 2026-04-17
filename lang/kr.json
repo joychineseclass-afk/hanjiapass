@@ -477,7 +477,9 @@
     "lesson_focus_bullet_short_apology": "「对不起」 → 「没关系」.",
     "lesson_focus_bullet_short_thanks": "「谢谢」 → 「不客气」.",
     "lesson_focus_tip_final_1": "「您」은 높임말(스승·어른). 「你」는 또래·익숙한 사이에 자주.",
-    "lesson_focus_tip_final_2": "「没关系」은 사과에, 「不客气」은 고마움에—역할이 다르다."
+    "lesson_focus_tip_final_2": "「没关系」은 사과에, 「不客气」은 고마움에—역할이 다르다.",
+    "lesson_focus_tip_fallback_generic_1": "본과 대화를 보며 질문과 답이 짝을 이루는지 확인하고, 낱말은 문장 안에서 익힙니다.",
+    "lesson_focus_tip_fallback_generic_2": "헷갈리면 과문을 그대로 따라 한 뒤, 이름·숫자·나라 이름만 바꿔 연습해 보세요."
   },
   "review": {
     "title": "복습",

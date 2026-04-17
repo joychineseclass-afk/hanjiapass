@@ -37,13 +37,14 @@ function t(key, fallback = "") {
 function buildLessonAbilityItems(lesson, ctx, lang) {
   const al = getAiLearning(lesson);
   const le = al?.lessonExplain;
+  /** 优先 abilityPoints（「이 과에서 기르는 말하기」）；勿被 practiceFocus 挤掉 */
+  if (al?.abilityPoints?.length && Array.isArray(al.abilityPoints)) {
+    const fromJson = al.abilityPoints.map((o) => pickLessonLang(o, lang)).filter(Boolean);
+    if (fromJson.length >= 1) return fromJson.slice(0, 4);
+  }
   if (le?.practiceFocus?.length && Array.isArray(le.practiceFocus)) {
     const lines = mapMultilingualLines(le.practiceFocus, lang);
     if (lines.length) return lines.slice(0, 4);
-  }
-  if (al?.abilityPoints?.length && Array.isArray(al.abilityPoints)) {
-    const fromJson = al.abilityPoints.map((o) => pickLessonLang(o, lang)).filter(Boolean);
-    if (fromJson.length >= 1) return fromJson.slice(0, 3);
   }
 
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
@@ -51,7 +52,8 @@ function buildLessonAbilityItems(lesson, ctx, lang) {
   const pat = str(g0?.pattern != null ? g0.pattern : "");
   const skills = [];
 
-  if (/您|你/.test(joined) || /您|你/.test(pat)) {
+  /** 「你」在多数课都会出现；仅当句中有敬称「您」或语法条目标出您/你对比时，才用第1课敬称模板 */
+  if (/您/.test(joined) || /您/.test(pat) || (Number(lesson?.lessonNo) === 1 && /你/.test(pat))) {
     skills.push(t("ai.lesson_focus_ability_nin_ni", "能根据对象选用「您」与「你」。"));
   }
   if (/您好|你好|再见/.test(joined)) {
@@ -172,7 +174,7 @@ function collectCuratedExpressionGroups(lesson, ctx, lang) {
   const l1StyleGreeting =
     lessonNo === 1 || (lessonNo <= 1 && (/您好/.test(joined) || /王老师/.test(joined)));
 
-  if (/您|你/.test(joined) || /您|你/.test(pat)) {
+  if (/您/.test(joined) || /您/.test(pat) || (Number(lesson?.lessonNo) === 1 && /你/.test(pat))) {
     add("您 / 你", patPy || "nín / nǐ", "ai.lesson_focus_group_usage_nin_ni", "按对象选用敬称「您」或一般「你」。");
   }
   if (l1StyleGreeting && (/您好/.test(joined) || /你好/.test(joined))) {
@@ -272,6 +274,13 @@ function collectTipsFinal(lesson, lang) {
     const tips = al.focusTips.map((tip) => pickLessonLang(tip, lang)).filter(Boolean);
     if (tips.length) return tips.slice(0, 4);
   }
+  const no = Number(lesson?.lessonNo);
+  if (no > 1) {
+    return [
+      t("ai.lesson_focus_tip_fallback_generic_1", "结合本课对话，注意问句与答句配对，生词在句子里记。"),
+      t("ai.lesson_focus_tip_fallback_generic_2", "不确定时先模仿课文原句，再替换人名、数字或国名。"),
+    ];
+  }
   return [
     t("ai.lesson_focus_tip_final_1", "「您」偏敬称（师长、长辈）；「你」多用在平辈、熟人。"),
     t("ai.lesson_focus_tip_final_2", "「没关系」应道歉；「不客气」应谢谢——别混。"),
@@ -320,7 +329,8 @@ export function renderLessonFocusHtml(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "—";
   const summary = pickLang(lesson?.summary, lang) || "";
-  const le = getAiLearning(lesson)?.lessonExplain;
+  const al = getAiLearning(lesson);
+  const le = al?.lessonExplain;
 
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
@@ -330,7 +340,11 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
-  const usePracticeFocusLabel = !!(le?.practiceFocus?.length && Array.isArray(le.practiceFocus));
+  const usePracticeFocusLabel = !!(
+    le?.practiceFocus?.length &&
+    Array.isArray(le.practiceFocus) &&
+    !(al?.abilityPoints?.length && Array.isArray(al.abilityPoints))
+  );
   const H = {
     page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
@@ -441,7 +455,8 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "";
   const summary = pickLang(lesson?.summary, lang) || "";
-  const le = getAiLearning(lesson)?.lessonExplain;
+  const al = getAiLearning(lesson);
+  const le = al?.lessonExplain;
   const objLines = buildObjectiveLines(lesson, lang);
   const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
   const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
@@ -449,7 +464,11 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
   const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
-  const usePracticeFocusLabel = !!(le?.practiceFocus?.length && Array.isArray(le.practiceFocus));
+  const usePracticeFocusLabel = !!(
+    le?.practiceFocus?.length &&
+    Array.isArray(le.practiceFocus) &&
+    !(al?.abilityPoints?.length && Array.isArray(al.abilityPoints))
+  );
   const H = {
     page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),

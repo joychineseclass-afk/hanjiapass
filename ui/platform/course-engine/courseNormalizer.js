@@ -48,12 +48,18 @@ export function normalizeLesson(rawLesson, context = {}) {
     /** 与 platform lessonNormalizer 一致；page.hsk 用 type==='review' 分支复习 UI（勿只放在 meta） */
     type: str(normalized?.type ?? raw?.type ?? "lesson"),
     title: normalized.title ?? {},
+    summary: normalized.summary ?? raw?.summary,
+    objectives: normalized.objectives ?? raw?.objectives,
     vocab: Array.isArray(normalized.vocab) ? normalized.vocab : [],
     dialogueCards: Array.isArray(raw?.dialogueCards) ? raw.dialogueCards : buildDialogueCardsFromFlat(normalized.dialogue),
     dialogue: normalized.dialogue ?? [],
     grammar: Array.isArray(normalized.grammar) ? normalized.grammar : [],
     extension: Array.isArray(raw?.extension) ? raw.extension : (Array.isArray(normalized.extension) ? normalized.extension : []),
     practice: Array.isArray(normalized.practice) ? normalized.practice : [],
+    /** 课 JSON 的 AI 学习区（本课重点讲解等）；勿丢否则 UI 会回退到第1课启发式模板 */
+    aiLearning: raw?.aiLearning && typeof raw.aiLearning === "object" ? raw.aiLearning : undefined,
+    scene: raw?.scene && typeof raw.scene === "object" ? raw.scene : undefined,
+    steps: raw?.steps,
     aiScope: raw?.aiPractice ?? raw?.ai ?? {},
     aiPractice: normalized.aiPractice ?? {},
     meta: {
