@@ -28,6 +28,40 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** @typedef {{ kind: "plain"; text: string } | { kind: "triple"; zh: string; py: string; note: string }} LessonFocusLinePart */
+
+function validFocusPart(p) {
+  if (!p || typeof p !== "object") return false;
+  if (p.kind === "triple") return !!str(p.zh);
+  return !!str(p.text);
+}
+
+/**
+ * 将 aiLearning / objectives 等条目转为「汉字 + 拼音 + 说明」或纯文本。
+ * 对象含 zh/cn 时优先三行结构；否则走单语 pickLang。
+ */
+function explainLineToParts(o, lang) {
+  if (typeof o === "string") return { kind: "plain", text: o };
+  if (!o || typeof o !== "object") return { kind: "plain", text: "" };
+  const zh = str(o.zh ?? o.cn);
+  const py = str(o.pinyin ?? o.py);
+  const note = pickLessonLang({ kr: o.kr, en: o.en, jp: o.jp }, lang);
+  if (zh) return { kind: "triple", zh, py, note: note || "" };
+  const fallback = pickLessonLang(o, lang);
+  return { kind: "plain", text: str(fallback) };
+}
+
+function renderFocusLineInnerHtml(part) {
+  if (part.kind === "plain") return escapeHtml(part.text);
+  const pyHtml = part.py
+    ? `<div class="ai-lesson-focus-line-py">${escapeHtml(part.py)}</div>`
+    : "";
+  const noteHtml = part.note
+    ? `<div class="ai-lesson-focus-line-note">${escapeHtml(part.note)}</div>`
+    : "";
+  return `<div class="ai-lesson-focus-line-cn">${escapeHtml(part.zh)}</div>${pyHtml}${noteHtml}`;
+}
+
 /** UI 文案：与 languageEngine 一致，支持 ai.xxx 与插值 */
 function t(key, fallback = "") {
   const out = LE.t(key, fallback);
@@ -40,12 +74,12 @@ function buildLessonAbilityItems(lesson, ctx, lang) {
   const le = al?.lessonExplain;
   /** 优先 abilityPoints（「이 과에서 기르는 말하기」）；勿被 practiceFocus 挤掉 */
   if (al?.abilityPoints?.length && Array.isArray(al.abilityPoints)) {
-    const fromJson = al.abilityPoints.map((o) => pickLessonLang(o, lang)).filter(Boolean);
+    const fromJson = al.abilityPoints.map((o) => explainLineToParts(o, lang)).filter(validFocusPart);
     if (fromJson.length >= 1) return fromJson.slice(0, 4);
   }
   if (le?.practiceFocus?.length && Array.isArray(le.practiceFocus)) {
     const lines = mapMultilingualLines(le.practiceFocus, lang);
-    if (lines.length) return lines.slice(0, 4);
+    if (lines.length) return lines.map((x) => ({ kind: "plain", text: x })).slice(0, 4);
   }
 
   const joined = (ctx.dialogue || []).map((d) => str(d.zh)).join("");
@@ -70,14 +104,14 @@ function buildLessonAbilityItems(lesson, ctx, lang) {
   }
 
   const out = skills.filter(Boolean);
-  if (out.length >= 2) return out.slice(0, 3);
+  if (out.length >= 2) return out.slice(0, 3).map((text) => ({ kind: "plain", text }));
 
   const sum = pickLang(lesson?.summary, lang) || "";
   if (sum) {
     const one = sum.split(/[。；;]/)[0].trim();
     if (one.length > 8 && one.length < 120) out.push(one);
   }
-  return out.slice(0, 3);
+  return out.slice(0, 3).map((text) => ({ kind: "plain", text }));
 }
 
 /** 本课学习目标：2～4 条，紧贴课文数据 */
@@ -85,16 +119,16 @@ function buildObjectiveLines(lesson, lang) {
   const al = getAiLearning(lesson);
   const le = al?.lessonExplain;
   if (le?.learningGoals?.length && Array.isArray(le.learningGoals)) {
-    const lines = mapMultilingualLines(le.learningGoals, lang);
-    if (lines.length) return lines.slice(0, 4);
+    const parts = le.learningGoals.map((o) => explainLineToParts(o, lang)).filter(validFocusPart);
+    if (parts.length) return parts.slice(0, 6);
   }
 
   const summary = pickLang(lesson?.summary, lang) || "";
   const fromData = Array.isArray(lesson?.objectives)
-    ? lesson.objectives.map((o) => pickLang(o, lang)).filter(Boolean)
+    ? lesson.objectives.map((o) => explainLineToParts(o, lang)).filter(validFocusPart)
     : [];
 
-  if (fromData.length >= 2) return fromData.slice(0, 3);
+  if (fromData.length >= 2) return fromData.slice(0, 4);
 
   const out = [];
   if (fromData.length === 1) out.push(fromData[0]);
@@ -104,8 +138,8 @@ function buildObjectiveLines(lesson, lang) {
     .map((s) => s.trim())
     .filter((s) => s.length > 5);
   for (const p of parts) {
-    if (out.includes(p)) continue;
-    out.push(p);
+    if (out.some((x) => x.kind === "plain" && x.text === p)) continue;
+    out.push({ kind: "plain", text: p });
     if (out.length >= 3) break;
   }
 
@@ -117,21 +151,21 @@ function buildObjectiveLines(lesson, lang) {
     const hint = g0.hint ? pickLang(g0.hint, lang) : "";
     if (pat || hint) {
       const line = pat && hint ? `「${pat.replace(/\s*\/\s*/g, " / ")}」：${hint}` : pat || hint;
-      if (line && !out.includes(line)) out.push(line);
+      if (line && !out.some((x) => x.kind === "plain" && x.text === line)) out.push({ kind: "plain", text: line });
     }
   }
 
   const c0 = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards[0] : null;
   if (c0 && out.length < 2) {
     const cs = pickLang(c0.summary, lang);
-    if (cs && !out.includes(cs)) out.push(cs);
+    if (cs && !out.some((x) => x.kind === "plain" && x.text === cs)) out.push({ kind: "plain", text: cs });
   }
 
   if (out.length >= 2) return out.slice(0, 3);
   if (summary) {
     const one = summary.length > 160 ? `${summary.slice(0, 157)}…` : summary;
-    if (!out.length) return [one];
-    out.push(one);
+    if (!out.length) return [{ kind: "plain", text: one }];
+    out.push({ kind: "plain", text: one });
   }
 
   return out.slice(0, 3);
@@ -150,7 +184,9 @@ function collectCuratedExpressionGroups(lesson, ctx, lang) {
         const expr = str(ce.expr != null ? ce.expr : ce.pattern);
         const py = str(ce.pinyin != null ? ce.pinyin : "");
         const usage = ce.usage && typeof ce.usage === "object" ? pickLessonLang(ce.usage, lang) : str(ce.usage);
-        return { expr, py, gloss: "", usage: usage || t("ai.lesson_focus_usage_fallback", "在本课对话里按角色与场合使用。") };
+        const gloss = ce.gloss && typeof ce.gloss === "object" ? pickLessonLang(ce.gloss, lang) : str(ce.gloss);
+        const note = usage || gloss || t("ai.lesson_focus_usage_fallback", "在本课对话里按角色与场合使用。");
+        return { expr, py, gloss: "", usage: note };
       })
       .filter((r) => r.expr);
     if (mapped.length) return mapped;
@@ -210,10 +246,12 @@ function renderCoreUsageHtml(rows, lang) {
   const usageLabel = t("ai.lesson_focus_label_usage", "用法");
   return rows
     .map((r) => {
-      const main = `<strong>${escapeHtml(r.expr)}</strong>${r.py ? `（${escapeHtml(r.py)}）` : ""}`;
-      const glossPart = r.gloss ? `<span class="ai-lesson-focus-gloss"> — ${escapeHtml(r.gloss)}</span>` : "";
-      const usageLine = `<div class="ai-lesson-focus-usage"><span class="ai-lesson-focus-usage-k">${escapeHtml(usageLabel)}：</span>${escapeHtml(r.usage)}</div>`;
-      return `<li class="ai-lesson-focus-core-item">${main}${glossPart}${usageLine}</li>`;
+      const cn = `<div class="ai-lesson-focus-line-cn ai-lesson-focus-core-cn">${escapeHtml(r.expr)}</div>`;
+      const py = r.py ? `<div class="ai-lesson-focus-line-py">${escapeHtml(r.py)}</div>` : "";
+      const usageLine = r.usage
+        ? `<div class="ai-lesson-focus-usage"><span class="ai-lesson-focus-usage-k">${escapeHtml(usageLabel)}：</span><span class="ai-lesson-focus-line-note ai-lesson-focus-usage-note">${escapeHtml(r.usage)}</span></div>`
+        : "";
+      return `<li class="ai-lesson-focus-core-item">${cn}${py}${usageLine}</li>`;
     })
     .join("");
 }
@@ -268,23 +306,27 @@ function collectTipsFinal(lesson, lang) {
   const al = getAiLearning(lesson);
   const le = al?.lessonExplain;
   if (le?.confusionPoints?.length && Array.isArray(le.confusionPoints)) {
-    const tips = mapMultilingualLines(le.confusionPoints, lang);
+    const tips = le.confusionPoints.map((o) => explainLineToParts(o, lang)).filter(validFocusPart);
     if (tips.length) return tips.slice(0, 4);
   }
   if (al?.focusTips?.length && Array.isArray(al.focusTips)) {
-    const tips = al.focusTips.map((tip) => pickLessonLang(tip, lang)).filter(Boolean);
+    const tips = al.focusTips
+      .map((tip) =>
+        typeof tip === "object" && tip !== null ? explainLineToParts(tip, lang) : { kind: "plain", text: String(tip) },
+      )
+      .filter(validFocusPart);
     if (tips.length) return tips.slice(0, 4);
   }
   const no = Number(lesson?.lessonNo);
   if (no > 1) {
     return [
-      t("ai.lesson_focus_tip_fallback_generic_1", "结合本课对话，注意问句与答句配对，生词在句子里记。"),
-      t("ai.lesson_focus_tip_fallback_generic_2", "不确定时先模仿课文原句，再替换人名、数字或国名。"),
+      { kind: "plain", text: t("ai.lesson_focus_tip_fallback_generic_1", "结合本课对话，注意问句与答句配对，生词在句子里记。") },
+      { kind: "plain", text: t("ai.lesson_focus_tip_fallback_generic_2", "不确定时先模仿课文原句，再替换人名、数字或国名。") },
     ];
   }
   return [
-    t("ai.lesson_focus_tip_final_1", "「您」偏敬称（师长、长辈）；「你」多用在平辈、熟人。"),
-    t("ai.lesson_focus_tip_final_2", "「没关系」应道歉；「不客气」应谢谢——别混。"),
+    { kind: "plain", text: t("ai.lesson_focus_tip_final_1", "「您」偏敬称（师长、长辈）；「你」多用在平辈、熟人。") },
+    { kind: "plain", text: t("ai.lesson_focus_tip_final_2", "「没关系」应道歉；「不客气」应谢谢——别混。") },
   ];
 }
 
@@ -314,10 +356,18 @@ function buildCompactSceneHtml(lesson, ctx, lang) {
 /** 情境与对话：有 lessonExplain.scenarioSummary 时优先用本课概括，避免与第1课通用模板混用 */
 function buildSceneSectionHtml(lesson, ctx, lang) {
   const le = getAiLearning(lesson)?.lessonExplain;
+  if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
+    const blocks = le.scenarioSummaryLines
+      .map((line) => explainLineToParts(line, lang))
+      .filter(validFocusPart)
+      .map((p) => `<div class="ai-lesson-focus-scenario-block">${renderFocusLineInnerHtml(p)}</div>`)
+      .join("");
+    if (blocks) return blocks;
+  }
   if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
     const text = pickLessonLang(le.scenarioSummary, lang);
     if (text) {
-      return `<p class="ai-lesson-focus-p ai-lesson-focus-scenario-summary">${escapeHtml(text)}</p>`;
+      return `<p class="ai-lesson-focus-p ai-lesson-focus-scenario-summary ai-lesson-focus-scenario-summary--pre">${escapeHtml(text)}</p>`;
     }
   }
   return buildCompactSceneHtml(lesson, ctx, lang);
@@ -360,8 +410,13 @@ export function renderLessonFocusHtml(lesson, lang) {
   };
 
   const showSummaryLead = !le && summary && objLines.length <= 1;
+  const objListMultiline = objLines.some(
+    (p) => p.kind === "plain" && String(p.text).includes("\n"),
+  );
   const objBlock = objLines.length
-    ? `<ul class="ai-lesson-focus-list ai-lesson-focus-list--multiline">${objLines.map((o) => `<li>${escapeHtml(o)}</li>`).join("")}</ul>`
+    ? `<ul class="ai-lesson-focus-list${objListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${objLines
+      .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
+      .join("")}</ul>`
     : `<p class="ai-lesson-focus-p">${escapeHtml(summary || t("ai.lesson_focus_no_core", "请结合本课对话学习。"))}</p>`;
 
   const coreBlock = coreRows.length
@@ -370,8 +425,13 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   const sceneBlock = buildSceneSectionHtml(lesson, ctx, lang);
 
+  const abilityListMultiline = abilityItems.some(
+    (p) => p.kind === "plain" && String(p.text).includes("\n"),
+  );
   const abilityBlock = abilityItems.length
-    ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list ai-lesson-focus-list--multiline">${abilityItems.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+    ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list${abilityListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${abilityItems
+      .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
+      .join("")}</ul>`
     : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_ability_empty", "请结合学习目标与对话掌握本课交际。"))}</p>`;
 
   const teacherGuideHtml = teacherBullets.length
@@ -384,15 +444,18 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   const quoteBlock = quotes.length
     ? quotes.map((d) => {
-      const line = `${d.speaker ? `${d.speaker}：` : ""}${d.zh}${d.pinyin ? `（${d.pinyin}）` : ""}`;
-      const tr = d.trans ? `<span class="ai-lesson-focus-trans">${escapeHtml(d.trans)}</span>` : "";
-      return `<blockquote class="ai-lesson-focus-quote"><div class="ai-lesson-focus-zh">${escapeHtml(line)}</div>${tr ? `<div class="ai-lesson-focus-tr">${tr}</div>` : ""}</blockquote>`;
+      const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${d.zh}`;
+      const py = str(d.pinyin);
+      const tr = d.trans ? `<div class="ai-lesson-focus-tr">${escapeHtml(d.trans)}</div>` : "";
+      const pyHtml = py ? `<div class="ai-lesson-focus-line-py ai-lesson-focus-quote-py">${escapeHtml(py)}</div>` : "";
+      return `<blockquote class="ai-lesson-focus-quote"><div class="ai-lesson-focus-line-cn ai-lesson-focus-quote-cn">${escapeHtml(zhLine)}</div>${pyHtml}${tr}</blockquote>`;
     }).join("")
     : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_dialogue", "本课对话见教材会话区，请对照音频练习。"))}</p>`;
 
-  const tipsBlock = tips.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+  const tipsBlock = tips.map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`).join("");
   const tipsListClass =
-    "ai-lesson-focus-list ai-lesson-focus-tips" + (tips.some((x) => String(x).includes("\n")) ? " ai-lesson-focus-list--multiline" : "");
+    "ai-lesson-focus-list ai-lesson-focus-tips" +
+    (tips.some((p) => p.kind === "plain" && String(p.text).includes("\n")) ? " ai-lesson-focus-list--multiline" : "");
 
   const summaryLeadHtml = showSummaryLead && summary
     ? `<p class="ai-lesson-focus-p ai-lesson-focus-summary">${escapeHtml(summary)}</p>`
@@ -504,13 +567,21 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
     else pushUi(title);
   }
 
+  const pushFocusPart = (part) => {
+    if (part.kind === "plain") {
+      pushUi(stripStandalonePinyinLinesForTts(part.text));
+      return;
+    }
+    pushZhUi(part.zh, part.note);
+  };
+
   pushUi(H.a);
   const showSummaryLead = !le && summary && objLines.length <= 1;
   if (showSummaryLead && summary) pushUi(summary);
-  for (const o of objLines) pushUi(stripStandalonePinyinLinesForTts(o));
+  for (const o of objLines) pushFocusPart(o);
 
   pushUi(H.b);
-  for (const x of abilityItems) pushUi(stripStandalonePinyinLinesForTts(x));
+  for (const x of abilityItems) pushFocusPart(x);
 
   pushUi(H.c);
   for (const r of coreRows) {
@@ -519,7 +590,9 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
 
   pushUi(H.d);
   const sceneIdx = segs.length;
-  if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
+  if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
+    for (const line of le.scenarioSummaryLines) pushFocusPart(explainLineToParts(line, lang));
+  } else if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
     const ss = pickLessonLang(le.scenarioSummary, lang);
     if (ss) pushUi(stripStandalonePinyinLinesForTts(ss));
   } else {
@@ -550,7 +623,7 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   }
 
   pushUi(H.e);
-  for (const tip of tips) pushUi(stripStandalonePinyinLinesForTts(tip));
+  for (const tip of tips) pushFocusPart(tip);
 
   return segs.filter((s) => str(s.zh) || str(s.ui));
 }

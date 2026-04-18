@@ -34,21 +34,28 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
-/** 支持字符串或 { zh, pinyin } 对象 */
-function normalizeSituationExpression(e) {
+/** 支持字符串或 { zh, pinyin, kr / note / translation } 对象 */
+function normalizeSituationExpression(e, lang) {
+  const l = String(lang || "kr").toLowerCase();
   if (e && typeof e === "object" && !Array.isArray(e)) {
     const zh = str(e.zh ?? e.cn ?? e.text ?? e.line);
     const pinyin = str(e.pinyin ?? e.py);
-    return { zh, pinyin };
+    let kr = str(e.kr ?? e.ko ?? e.note ?? "");
+    if (!kr && e.translation && typeof e.translation === "object") {
+      const k = l === "zh" || l === "cn" ? "cn" : l === "ko" || l === "kr" ? "kr" : l === "jp" || l === "ja" ? "jp" : "en";
+      kr = str(e.translation[k] ?? e.translation.kr ?? e.translation.en);
+    }
+    return { zh, pinyin, kr };
   }
-  return { zh: str(e), pinyin: "" };
+  return { zh: str(e), pinyin: "", kr: "" };
 }
 
-function expressionItemHtml(e) {
-  const { zh, pinyin } = normalizeSituationExpression(e);
+function expressionItemHtml(e, lang) {
+  const { zh, pinyin, kr } = normalizeSituationExpression(e, lang);
   if (!zh) return "";
   const pyHtml = pinyin ? `<div class="ai-situation-expr-py">${escapeHtml(pinyin)}</div>` : "";
-  return `<li class="ai-situation-expr-item"><div class="ai-situation-expr-zh">${escapeHtml(zh)}</div>${pyHtml}</li>`;
+  const krHtml = kr ? `<div class="ai-situation-expr-kr">${escapeHtml(kr)}</div>` : "";
+  return `<li class="ai-situation-expr-item"><div class="ai-situation-expr-zh">${escapeHtml(zh)}</div>${pyHtml}${krHtml}</li>`;
 }
 
 function pickLang(obj, lang) {
@@ -234,7 +241,7 @@ export function buildSituationDialoguePlan(lesson, lang) {
         const studentRole = typeof sc.studentRole === "string" ? sc.studentRole : pickLang(sc.studentRole, lang);
         const goal = typeof sc.goal === "string" ? sc.goal : pickLang(sc.goal, lang);
         const expressions = Array.isArray(sc.expressions)
-          ? sc.expressions.map(normalizeSituationExpression).filter((x) => x.zh).slice(0, 6)
+          ? sc.expressions.map((ex) => normalizeSituationExpression(ex, lang)).filter((x) => x.zh).slice(0, 12)
           : [];
         const rounds = Array.isArray(sc.rounds)
           ? sc.rounds
@@ -262,7 +269,7 @@ export function buildSituationDialoguePlan(lesson, lang) {
           aiRole: aiRole || t("ai.ai_role", "AI"),
           studentRole: studentRole || t("ai.student_role", "학생"),
           goal: goal || t("ai.situation_goal_fallback", "본과 회화 표현으로 짧은 대화를 연습합니다."),
-          expressions: expressions.length ? expressions.slice(0, 4) : [],
+          expressions: expressions.length ? expressions.slice(0, 12) : [],
           rounds,
         };
       })
@@ -303,12 +310,11 @@ function scenarioCardHtml(sc, lang) {
   const situationL = t("ai.situation_field_situation", "상황");
   const aiL = t("ai.situation_field_ai", "AI 역할");
   const stL = t("ai.situation_field_student", "학생 역할");
-  const goalL = t("ai.situation_field_goal", "연습 목표");
   const exprL = t("ai.situation_field_expressions", "사용 표현");
 
   const exprBlock =
     sc.expressions && sc.expressions.length
-      ? `<ul class="ai-situation-expr-list">${sc.expressions.map((e) => expressionItemHtml(e)).join("")}</ul>`
+      ? `<ul class="ai-situation-expr-list">${sc.expressions.map((e) => expressionItemHtml(e, lang)).join("")}</ul>`
       : `<p class="ai-situation-card-muted">${escapeHtml(t("ai.situation_no_expressions", "본과 대화에서 표현을 확인해 보세요."))}</p>`;
 
   return `
@@ -316,11 +322,7 @@ function scenarioCardHtml(sc, lang) {
       <div class="ai-situation-card-row"><span class="ai-situation-card-k">${escapeHtml(situationL)}</span><span class="ai-situation-card-v">${escapeHtml(sc.situation)}</span></div>
       <div class="ai-situation-card-row"><span class="ai-situation-card-k">${escapeHtml(aiL)}</span><span class="ai-situation-card-v">${escapeHtml(sc.aiRole)}</span></div>
       <div class="ai-situation-card-row"><span class="ai-situation-card-k">${escapeHtml(stL)}</span><span class="ai-situation-card-v">${escapeHtml(sc.studentRole)}</span></div>
-      <div class="ai-situation-card-block">
-        <span class="ai-situation-card-k">${escapeHtml(goalL)}</span>
-        <p class="ai-situation-card-goal">${escapeHtml(sc.goal)}</p>
-      </div>
-      <div class="ai-situation-card-block">
+      <div class="ai-situation-card-block ai-situation-card-block--expr">
         <span class="ai-situation-card-k">${escapeHtml(exprL)}</span>
         ${exprBlock}
       </div>

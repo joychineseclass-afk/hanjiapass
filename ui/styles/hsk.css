@@ -478,6 +478,72 @@
   color: #64748b;
 }
 
+/* 本课说明：汉字 / 拼音 / 释义 层级（主 / 辅 / 再辅） */
+.ai-lesson-focus-line-item {
+  list-style: disc;
+}
+
+.ai-lesson-focus-line-cn {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: #0f172a;
+  line-height: 1.45;
+}
+
+.ai-lesson-focus-line-py {
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  font-weight: 450;
+  color: #475569;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.ai-lesson-focus-line-note {
+  margin-top: 0.28rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.ai-lesson-focus-scenario-block {
+  margin-bottom: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.ai-lesson-focus-scenario-block:last-child {
+  margin-bottom: 0;
+}
+
+.ai-lesson-focus-scenario-summary--pre {
+  white-space: pre-line;
+}
+
+.ai-lesson-focus-quote-cn {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: #0f172a;
+}
+
+.ai-lesson-focus-quote-py {
+  margin-top: 0.2rem;
+}
+
+.ai-lesson-focus-core-cn {
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.ai-lesson-focus-usage-note {
+  font-weight: 400;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
 .ai-tutor-mode-content {
   padding: 0;
 }
@@ -982,15 +1048,32 @@
 }
 
 .ai-situation-expr-zh {
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 650;
   color: #0f172a;
+  line-height: 1.45;
 }
 
 .ai-situation-expr-py {
   font-size: 0.8125rem;
-  color: #64748b;
-  margin-top: 2px;
+  font-weight: 450;
+  color: #475569;
+  margin-top: 3px;
   font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.ai-situation-expr-kr {
+  margin-top: 0.28rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.ai-situation-card-block--expr {
+  margin-top: 12px;
 }
 
 .ai-situation-card-muted {
