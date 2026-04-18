@@ -218,7 +218,7 @@ function mapAiPracticeToTutorItems(lesson) {
     explain: { cn: "讲解本课", kr: "본과 설명", en: "Explain", jp: "本課の解説" },
     roleplay: { cn: "情景对话", kr: "상황 대화", en: "Roleplay", jp: "ロールプレイ" },
     shadowing: { cn: "跟读练习", kr: "따라 말하기", en: "Shadowing", jp: "シャドーイング" },
-    free_talk: { cn: "自由问答", kr: "자유 질문", en: "Free talk", jp: "自由な質問" },
+    free_talk: { cn: "本课提问", kr: "분과 질문", en: "Lesson Q&A", jp: "本課の質問" },
   };
 
   const lessonNo = Number(lesson?.lessonNo);
