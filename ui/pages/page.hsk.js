@@ -56,6 +56,8 @@ import {
   renderReviewMode,
   prepareReviewSession,
   stopAllLearningAudio,
+  playSingleText,
+  TTS_SCOPE,
 } from "../platform/index.js";
 import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
@@ -2889,7 +2891,10 @@ function bindEvents() {
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildGrammarSpeakSegments(pt, getLang());
         const lessonCtx = state.current?.lessonData || raw;
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, {
+          lessonForPinyinMap: lessonCtx,
+          playbackScope: TTS_SCOPE.GRAMMAR,
+        });
         return;
       }
 
@@ -2916,7 +2921,10 @@ function bindEvents() {
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildExtensionFlatSpeakSegments(item, getLang());
         const lessonCtx = state.current?.lessonData || raw;
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, {
+          lessonForPinyinMap: lessonCtx,
+          playbackScope: TTS_SCOPE.EXTENSION,
+        });
         return;
       }
 
@@ -2946,7 +2954,10 @@ function bindEvents() {
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildExtensionGroupSpeakSegments(item, getLang());
         const lessonCtx = state.current?.lessonData || raw;
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: lessonCtx });
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, {
+          lessonForPinyinMap: lessonCtx,
+          playbackScope: TTS_SCOPE.EXTENSION,
+        });
         return;
       }
 
@@ -2974,7 +2985,10 @@ function bindEvents() {
         const cardEl = prListen.closest(".lesson-practice-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../modules/hsk/hskRenderer.js");
         const segs = buildPracticeSpeakSegmentsUnified(q, langKey, ld);
-        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, { lessonForPinyinMap: ld });
+        await speakHsk30ZhUiSegmentChain(segs, cardEl || null, {
+          lessonForPinyinMap: ld,
+          playbackScope: TTS_SCOPE.PRACTICE,
+        });
         return;
       }
 
@@ -3025,8 +3039,6 @@ function bindEvents() {
       e.preventDefault();
       e.stopPropagation();
 
-      stopAllLearningAudio();
-
       const lineEl =
         target.closest(".lesson-dialogue-line") ||
         target.closest(".lesson-extension-card") ||
@@ -3040,10 +3052,22 @@ function bindEvents() {
         target.closest(".lesson-review-summary-word-item") ||
         target.closest(".hsk-lr-speak-row");
 
-      if (lineEl) lineEl.classList.add("is-speaking");
+      const sk = String(target.dataset.speakKind || "other").toLowerCase();
+      const scopeByKind = {
+        dialogue: TTS_SCOPE.DIALOGUE,
+        extension: TTS_SCOPE.EXTENSION,
+        grammar: TTS_SCOPE.GRAMMAR,
+        practice: TTS_SCOPE.PRACTICE,
+      };
+      const scope = scopeByKind[sk] || TTS_SCOPE.OTHER;
 
-      AUDIO_ENGINE.playText(text, {
+      playSingleText(text, {
+        scope,
         lang: "zh-CN",
+        rate: 0.95,
+        beforePlay: () => {
+          if (lineEl) lineEl.classList.add("is-speaking");
+        },
         onEnd: function () {
           if (lineEl) lineEl.classList.remove("is-speaking");
         },

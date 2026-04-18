@@ -132,7 +132,7 @@ function pickText(v, lang = "ko") {
   return "";
 }
 
-function speakText(text, lang = "zh-CN") {
+async function speakText(text, lang = "zh-CN") {
   const t = String(text || "").trim();
   if (!t) return;
 
@@ -144,13 +144,10 @@ function speakText(text, lang = "zh-CN") {
     } catch {}
   }
 
-  // 2) fallback: Web Speech API
+  // 2) 统一 TTS 管理器（先停旧再播新）
   try {
-    if (!("speechSynthesis" in window)) return;
-    const u = new SpeechSynthesisUtterance(t);
-    u.lang = lang;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(u);
+    const { playSingleText, TTS_SCOPE } = await import("../platform/audio/ttsPlaybackManager.js");
+    playSingleText(t, { lang, scope: TTS_SCOPE.DIALOGUE });
   } catch {}
 }
 

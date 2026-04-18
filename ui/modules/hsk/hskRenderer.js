@@ -11,6 +11,20 @@ import {
   tokenizeMixedUiMeaning,
 } from "../../utils/hsk30UiMeaningMixedTts.js";
 import { getMeaningByLang, getPosByLang, getWordImageUrl } from "../../utils/wordDisplay.js";
+import {
+  batchPauseBetweenSegments,
+  bumpWordSpeakGeneration,
+  cancelBatchPauseTimer,
+  cancelLearnVocabSpeakGapTimer,
+  clearHsk30SingleItemLoopState,
+  getHskSpeakGeneration,
+  hsk30ItemLoop,
+  startNewHskSpeakChain,
+} from "./hskSpeakState.js";
+
+function importTtsPlaybackManager() {
+  return import("../../platform/audio/ttsPlaybackManager.js");
+}
 
 /** 同一 stroke 页路径并发 HEAD 只发一次 */
 const _strokeHeadInflight = new Map();
@@ -893,53 +907,13 @@ export function renderReviewWords(gridEl, items, opts = {}) {
 
 let _wordCardBound = false;
 
-/** 打断 HSK3.0 紧凑词条「中文→停顿→释义」链上的间隙定时器 */
-let _learnVocabSpeakGapTimer = null;
-/** 任一点读开始自增，用于丢弃过期的 onEnd / setTimeout */
-let _wordSpeakGeneration = 0;
-
-function cancelLearnVocabSpeakGapTimer() {
-  if (_learnVocabSpeakGapTimer != null) {
-    clearTimeout(_learnVocabSpeakGapTimer);
-    _learnVocabSpeakGapTimer = null;
-  }
-}
-
-/** 批量朗读（单词间 / 会话句间）暂停，需与 bump 一并取消 */
-let _batchPauseTimer = null;
-
-function cancelBatchPauseTimer() {
-  if (_batchPauseTimer != null) {
-    clearTimeout(_batchPauseTimer);
-    _batchPauseTimer = null;
-  }
-}
-
-function bumpWordSpeakGeneration() {
-  _wordSpeakGeneration += 1;
-  cancelLearnVocabSpeakGapTimer();
-  cancelBatchPauseTimer();
-}
-
-/** HSK3.0 HSK1：单条循环（单词/会话行）互斥状态，与整体朗读无关 bump */
-let _compactWordLoopKey = "";
-let _dialogueLineLoopKey = "";
-
-/** 仅清除单条循环标记（整体朗读 open 时与 bump 配合，使旧循环尽快退出） */
-export function clearHsk30SingleItemLoopState() {
-  _compactWordLoopKey = "";
-  _dialogueLineLoopKey = "";
-}
-
-/** 新一条朗读链（与批量会话全文等共用 generation） */
-export function startNewHskSpeakChain() {
-  bumpWordSpeakGeneration();
-  return _wordSpeakGeneration;
-}
-
-export function getHskSpeakGeneration() {
-  return _wordSpeakGeneration;
-}
+export {
+  batchPauseBetweenSegments,
+  bumpWordSpeakGeneration,
+  clearHsk30SingleItemLoopState,
+  getHskSpeakGeneration,
+  startNewHskSpeakChain,
+} from "./hskSpeakState.js";
 
 function randomGapMs(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
@@ -950,21 +924,10 @@ async function pauseAwareDelay(ms, gen, waitWhilePaused) {
   const start = Date.now();
   const waitFn = typeof waitWhilePaused === "function" ? waitWhilePaused : async () => {};
   while (Date.now() - start < ms) {
-    if (gen !== _wordSpeakGeneration) return;
+    if (gen !== getHskSpeakGeneration()) return;
     await waitFn();
     await new Promise((r) => setTimeout(r, 40));
   }
-}
-
-/** 批量朗读：段与段之间的停顿（新点读会 bump 并清掉定时器） */
-export function batchPauseBetweenSegments(gen) {
-  return new Promise((resolve) => {
-    cancelBatchPauseTimer();
-    _batchPauseTimer = setTimeout(() => {
-      _batchPauseTimer = null;
-      resolve();
-    }, randomGapMs(350, 550));
-  });
 }
 
 /** 系统语言释义朗读用的 TTS 语言码（与 kids1 ttsLangForGloss 一致） */
@@ -984,7 +947,7 @@ export async function speakUiLangTextOnce(text, gen) {
   const { AUDIO_ENGINE } = await import("../../platform/index.js");
   if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
   await new Promise((resolve) => {
-    if (gen !== _wordSpeakGeneration) {
+    if (gen !== getHskSpeakGeneration()) {
       resolve();
       return;
     }
@@ -1003,7 +966,7 @@ async function playZhCnOnce(text, gen) {
   const { AUDIO_ENGINE } = await import("../../platform/index.js");
   if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.playText === "function")) return;
   await new Promise((resolve) => {
-    if (gen !== _wordSpeakGeneration) {
+    if (gen !== getHskSpeakGeneration()) {
       resolve();
       return;
     }
@@ -1026,13 +989,13 @@ export async function speakMixedUiMeaningText(meanStr, gen, pinyinMap, speakOpts
   const parts = tokenizeMixedUiMeaning(meanStr);
   if (!parts.length) return;
   for (let k = 0; k < parts.length; k++) {
-    if (gen !== _wordSpeakGeneration) return;
+    if (gen !== getHskSpeakGeneration()) return;
     if (k > 0) {
       await pauseAwareDelay(randomGapMs(100, 220), gen, waitFn);
     }
-    if (gen !== _wordSpeakGeneration) return;
+    if (gen !== getHskSpeakGeneration()) return;
     await waitFn();
-    if (gen !== _wordSpeakGeneration) return;
+    if (gen !== getHskSpeakGeneration()) return;
     const p = parts[k];
     if (p.kind === "ui") {
       await speakUiLangTextOnce(p.text, gen);
@@ -1066,7 +1029,7 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
 
   await new Promise((resolve) => {
     const done = () => resolve();
-    if (gen !== _wordSpeakGeneration) {
+    if (gen !== getHskSpeakGeneration()) {
       done();
       return;
     }
@@ -1084,7 +1047,7 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
       rate: 0.95,
       onEnd: () => {
         (async () => {
-          if (gen !== _wordSpeakGeneration) {
+          if (gen !== getHskSpeakGeneration()) {
             done();
             return;
           }
@@ -1092,12 +1055,12 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
           try {
             await pauseAwareDelay(randomGapMs(400, 700), gen, waitFn);
           } catch (_) {}
-          if (gen !== _wordSpeakGeneration) {
+          if (gen !== getHskSpeakGeneration()) {
             done();
             return;
           }
           await waitFn();
-          if (gen !== _wordSpeakGeneration) {
+          if (gen !== getHskSpeakGeneration()) {
             done();
             return;
           }
@@ -1110,7 +1073,7 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
             return;
           }
           await new Promise((r2) => {
-            if (gen !== _wordSpeakGeneration) {
+            if (gen !== getHskSpeakGeneration()) {
               r2();
               return;
             }
@@ -1133,7 +1096,7 @@ export async function speakZhThenMeaningPromise(zh, meaningRaw, gen, opts = {}) 
  * HSK3.0 HSK1 试点：多段「中文 → 停顿 → 系统语言」链（语法 / 扩展 / 练习单卡）。
  * @param {{ zh?: string, ui?: string }[]} segments — 有 zh+ui 走 speakZhThenMeaningPromise；仅 zh 或仅 ui 亦可
  * @param {HTMLElement | null} highlightEl
- * @param {{ lessonForPinyinMap?: object }} [chainOpts] — 传入当前课时则释义内汉字/拼音按中文与课内拼音映射朗读
+ * @param {{ lessonForPinyinMap?: object, playbackScope?: string }} [chainOpts] — 传入当前课时则释义内汉字/拼音按中文与课内拼音映射朗读；playbackScope 登记到统一播放管理器
  */
 export async function speakHsk30ZhUiSegmentChain(segments, highlightEl, chainOpts = {}) {
   const list = Array.isArray(segments)
@@ -1146,6 +1109,8 @@ export async function speakHsk30ZhUiSegmentChain(segments, highlightEl, chainOpt
     : [];
   if (!list.length) return;
 
+  const { stopAllPlayback, registerChainPlayback, TTS_SCOPE } = await importTtsPlaybackManager();
+
   /** 由调用方在 HSK3.0·HSK1 试点场景传入 lesson，避免与 __HSK_PAGE_CTX 双轨判断不一致 */
   const useMixedMeaning = chainOpts && chainOpts.lessonForPinyinMap != null;
   const rawLesson = useMixedMeaning
@@ -1156,11 +1121,12 @@ export async function speakHsk30ZhUiSegmentChain(segments, highlightEl, chainOpt
     ? { mixedUiMeaning: true, pinyinMap }
     : {};
 
-  bumpWordSpeakGeneration();
-  const gen = _wordSpeakGeneration;
+  stopAllPlayback();
+  registerChainPlayback(chainOpts.playbackScope || TTS_SCOPE.EXTENSION);
+  const gen = getHskSpeakGeneration();
 
   const clearHighlight = () => {
-    if (gen === _wordSpeakGeneration && highlightEl) {
+    if (gen === getHskSpeakGeneration() && highlightEl) {
       try {
         highlightEl.classList.remove("is-speaking");
       } catch (_) {}
@@ -1172,14 +1138,13 @@ export async function speakHsk30ZhUiSegmentChain(segments, highlightEl, chainOpt
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
       return;
     }
-    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
     if (highlightEl) highlightEl.classList.add("is-speaking");
 
     for (let i = 0; i < list.length; i++) {
-      if (gen !== _wordSpeakGeneration) return;
+      if (gen !== getHskSpeakGeneration()) return;
       if (i > 0) await batchPauseBetweenSegments(gen);
-      if (gen !== _wordSpeakGeneration) return;
+      if (gen !== getHskSpeakGeneration()) return;
       const seg = list[i];
       if (seg.zh && seg.ui) {
         await speakZhThenMeaningPromise(seg.zh, seg.ui, gen, meaningOpts);
@@ -1212,42 +1177,39 @@ export async function toggleCompactWordSpeakLoop(han, meaningRaw, cardEl) {
   if (!hanStr) return;
   const meaningForTts = meaningRaw != null ? String(meaningRaw) : "";
 
-  if (_compactWordLoopKey === hanStr) {
-    _compactWordLoopKey = "";
+  if (hsk30ItemLoop.compactWordKey === hanStr) {
+    hsk30ItemLoop.compactWordKey = "";
     bumpWordSpeakGeneration();
     if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
     return;
   }
 
-  _dialogueLineLoopKey = "";
-  bumpWordSpeakGeneration();
-  const gen = _wordSpeakGeneration;
-  _compactWordLoopKey = hanStr;
-
-  const { closeBulkSpeakPlayer } = await import("./hskBulkSpeakPlayer.js");
-  closeBulkSpeakPlayer();
+  const { stopAllPlayback } = await importTtsPlaybackManager();
+  stopAllPlayback();
+  const gen = getHskSpeakGeneration();
+  hsk30ItemLoop.dialogueLineKey = "";
+  hsk30ItemLoop.compactWordKey = hanStr;
 
   try {
     const { AUDIO_ENGINE } = await import("../../platform/index.js");
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-      _compactWordLoopKey = "";
+      hsk30ItemLoop.compactWordKey = "";
       return;
     }
-    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
 
-    while (_compactWordLoopKey === hanStr && gen === _wordSpeakGeneration) {
+    while (hsk30ItemLoop.compactWordKey === hanStr && gen === getHskSpeakGeneration()) {
       if (cardEl && cardEl.classList) cardEl.classList.add("is-speaking");
       await speakZhThenMeaningPromise(hanStr, meaningForTts, gen);
       if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
-      if (_compactWordLoopKey !== hanStr || gen !== _wordSpeakGeneration) break;
+      if (hsk30ItemLoop.compactWordKey !== hanStr || gen !== getHskSpeakGeneration()) break;
       await batchPauseBetweenSegments(gen);
     }
   } catch (err) {
     if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] compact word loop failed:", err);
   } finally {
     if (cardEl && cardEl.classList) cardEl.classList.remove("is-speaking");
-    if (_compactWordLoopKey === hanStr) _compactWordLoopKey = "";
+    if (hsk30ItemLoop.compactWordKey === hanStr) hsk30ItemLoop.compactWordKey = "";
   }
 }
 
@@ -1260,42 +1222,39 @@ export async function toggleDialogueLineSpeakLoop(zh, tr, lineEl) {
   const trStr = String(tr || "");
   const key = dialogueLineSpeakLoopKey(zhStr, trStr);
 
-  if (_dialogueLineLoopKey === key) {
-    _dialogueLineLoopKey = "";
+  if (hsk30ItemLoop.dialogueLineKey === key) {
+    hsk30ItemLoop.dialogueLineKey = "";
     bumpWordSpeakGeneration();
     if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
     return;
   }
 
-  _compactWordLoopKey = "";
-  bumpWordSpeakGeneration();
-  const gen = _wordSpeakGeneration;
-  _dialogueLineLoopKey = key;
-
-  const { closeBulkSpeakPlayer } = await import("./hskBulkSpeakPlayer.js");
-  closeBulkSpeakPlayer();
+  const { stopAllPlayback } = await importTtsPlaybackManager();
+  stopAllPlayback();
+  const gen = getHskSpeakGeneration();
+  hsk30ItemLoop.compactWordKey = "";
+  hsk30ItemLoop.dialogueLineKey = key;
 
   try {
     const { AUDIO_ENGINE } = await import("../../platform/index.js");
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
-      _dialogueLineLoopKey = "";
+      hsk30ItemLoop.dialogueLineKey = "";
       return;
     }
-    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
 
-    while (_dialogueLineLoopKey === key && gen === _wordSpeakGeneration) {
+    while (hsk30ItemLoop.dialogueLineKey === key && gen === getHskSpeakGeneration()) {
       if (lineEl && lineEl.classList) lineEl.classList.add("is-speaking");
       await speakZhThenMeaningPromise(zhStr, trStr, gen);
       if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
-      if (_dialogueLineLoopKey !== key || gen !== _wordSpeakGeneration) break;
+      if (hsk30ItemLoop.dialogueLineKey !== key || gen !== getHskSpeakGeneration()) break;
       await batchPauseBetweenSegments(gen);
     }
   } catch (err) {
     if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] dialogue line loop failed:", err);
   } finally {
     if (lineEl && lineEl.classList) lineEl.classList.remove("is-speaking");
-    if (_dialogueLineLoopKey === key) _dialogueLineLoopKey = "";
+    if (hsk30ItemLoop.dialogueLineKey === key) hsk30ItemLoop.dialogueLineKey = "";
   }
 }
 
@@ -1305,12 +1264,14 @@ export async function toggleDialogueLineSpeakLoop(zh, tr, lineEl) {
 export async function speakZhThenUiTranslationPilot(zh, meaningRaw, highlightEl) {
   const hanStr = String(zh || "").trim();
   if (!hanStr) return;
-  bumpWordSpeakGeneration();
-  const gen = _wordSpeakGeneration;
+  const { stopAllPlayback, registerChainPlayback, TTS_SCOPE } = await importTtsPlaybackManager();
+  stopAllPlayback();
+  registerChainPlayback(TTS_SCOPE.DIALOGUE);
+  const gen = getHskSpeakGeneration();
   const meanStr = String(meaningRaw || "").trim();
 
   const finish = () => {
-    if (gen !== _wordSpeakGeneration) return;
+    if (gen !== getHskSpeakGeneration()) return;
     if (highlightEl) highlightEl.classList.remove("is-speaking");
   };
 
@@ -1319,7 +1280,6 @@ export async function speakZhThenUiTranslationPilot(zh, meaningRaw, highlightEl)
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
       return;
     }
-    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
     if (highlightEl) highlightEl.classList.add("is-speaking");
     await speakZhThenMeaningPromise(hanStr, meanStr, gen);
@@ -1337,8 +1297,10 @@ export async function speakAllHsk30Hsk1LessonWords(items, opts = {}) {
   const arr = Array.isArray(items) ? items : [];
   if (!arr.length) return;
 
-  bumpWordSpeakGeneration();
-  const gen = _wordSpeakGeneration;
+  const { stopAllPlayback, registerChainPlayback, TTS_SCOPE } = await importTtsPlaybackManager();
+  stopAllPlayback();
+  registerChainPlayback(TTS_SCOPE.WORD);
+  const gen = getHskSpeakGeneration();
   const { lang, scope } = opts;
   const currentLang = normalizeLang(lang ?? getLang());
   const glossaryScope = scope || "";
@@ -1348,7 +1310,6 @@ export async function speakAllHsk30Hsk1LessonWords(items, opts = {}) {
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
       return;
     }
-    AUDIO_ENGINE.stop();
     document.querySelectorAll(".is-speaking").forEach((el) => el.classList.remove("is-speaking"));
 
     const rowEls = document.querySelectorAll(".hsk-learn-vocab-list .hsk-learn-vocab-entry");
@@ -1366,7 +1327,7 @@ export async function speakAllHsk30Hsk1LessonWords(items, opts = {}) {
     }
 
     for (let i = 0; i < slice.length; i++) {
-      if (gen !== _wordSpeakGeneration) return;
+      if (gen !== getHskSpeakGeneration()) return;
       const { han, meaningForTts } = slice[i];
       const row = rowEls[i];
       if (row && row.classList) row.classList.add("is-speaking");
@@ -1374,7 +1335,7 @@ export async function speakAllHsk30Hsk1LessonWords(items, opts = {}) {
       await speakZhThenMeaningPromise(han, meaningForTts, gen);
 
       if (row && row.classList) row.classList.remove("is-speaking");
-      if (gen !== _wordSpeakGeneration) return;
+      if (gen !== getHskSpeakGeneration()) return;
 
       if (i < slice.length - 1) await batchPauseBetweenSegments(gen);
     }
@@ -1399,21 +1360,27 @@ async function playLearnCompactVocabSpeak(zh, meaningRaw, cardEl) {
 async function playWordCardSpeak(text, cardEl) {
   const t = String(text || "").trim();
   if (!t) return;
-  bumpWordSpeakGeneration();
   try {
     const { AUDIO_ENGINE } = await import("../../platform/index.js");
     if (!(AUDIO_ENGINE && typeof AUDIO_ENGINE.isSpeechSupported === "function" && AUDIO_ENGINE.isSpeechSupported())) {
       if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] speechSynthesis not supported");
       return;
     }
-    AUDIO_ENGINE.stop();
-    document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
-    if (cardEl) cardEl.classList.add("is-speaking");
-    AUDIO_ENGINE.playText(t, {
+    const { playSingleText, TTS_SCOPE } = await importTtsPlaybackManager();
+    playSingleText(t, {
+      scope: TTS_SCOPE.WORD,
       lang: "zh-CN",
       rate: 0.95,
-      onEnd: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
-      onError: function() { if (cardEl) cardEl.classList.remove("is-speaking"); },
+      beforePlay: () => {
+        document.querySelectorAll(".word-card.is-speaking").forEach((c) => c.classList.remove("is-speaking"));
+        if (cardEl) cardEl.classList.add("is-speaking");
+      },
+      onEnd: function () {
+        if (cardEl) cardEl.classList.remove("is-speaking");
+      },
+      onError: function () {
+        if (cardEl) cardEl.classList.remove("is-speaking");
+      },
     });
   } catch (err) {
     if (typeof console !== "undefined" && console.warn) console.warn("[AUDIO] word speak failed:", err);
@@ -1434,13 +1401,9 @@ export function bindWordCardActions() {
       if (text) {
         e.preventDefault();
         e.stopPropagation();
-        bumpWordSpeakGeneration();
         try {
-          const { AUDIO_ENGINE } = await import("../../platform/index.js");
-          if (AUDIO_ENGINE?.playText) {
-            AUDIO_ENGINE.stop();
-            AUDIO_ENGINE.playText(text, { lang: "zh-CN", rate: 0.95 });
-          }
+          const { playSingleText, TTS_SCOPE } = await importTtsPlaybackManager();
+          playSingleText(text, { scope: TTS_SCOPE.REVIEW, lang: "zh-CN", rate: 0.95 });
         } catch (err) {
           console.warn("[AUDIO] review speak failed:", err);
         }

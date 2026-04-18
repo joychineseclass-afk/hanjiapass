@@ -3,7 +3,9 @@
  */
 import { getMeaningByLang } from "../../utils/wordDisplay.js";
 import { getLang } from "../../core/languageEngine.js";
+import { clearPlaybackRegistration, registerBulkPlayback } from "../../platform/audio/ttsPlaybackFlags.js";
 import { wordKey, normalizeLang, ttsBcp47ForUiMeaningLang } from "./hskRenderer.js";
+import { clearHsk30SingleItemLoopState, startNewHskSpeakChain } from "./hskSpeakState.js";
 
 function normalizeWordForCard(x) {
   if (x == null) return null;
@@ -509,6 +511,7 @@ function bindPlayerUi(player, root) {
 export function closeBulkSpeakPlayer() {
   removeHost();
   getBulkTtsPlayer().stop();
+  clearPlaybackRegistration();
 }
 
 /**
@@ -518,7 +521,6 @@ export function closeBulkSpeakPlayer() {
  * @param {{ loop?: boolean }} [opts]
  */
 export async function openBulkSpeakPlayer(_kind, timeline, anchor, opts = {}) {
-  const { startNewHskSpeakChain, clearHsk30SingleItemLoopState } = await import("./hskRenderer.js");
   startNewHskSpeakChain();
   clearHsk30SingleItemLoopState();
   try {
@@ -549,4 +551,5 @@ export async function openBulkSpeakPlayer(_kind, timeline, anchor, opts = {}) {
   player.idx = 0;
   player._transport = BulkTransport.PLAY_UTT;
   player._step();
+  registerBulkPlayback(_kind);
 }
