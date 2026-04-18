@@ -540,6 +540,7 @@
       }
     ],
     "lessonExplain": {
+      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「几岁」「今年」「岁」「了」在问年龄、说年龄时的基本用法。",

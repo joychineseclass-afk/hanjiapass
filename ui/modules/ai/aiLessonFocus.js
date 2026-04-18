@@ -382,14 +382,16 @@ export function renderLessonFocusHtml(lesson, lang) {
   const summary = pickLang(lesson?.summary, lang) || "";
   const al = getAiLearning(lesson);
   const le = al?.lessonExplain;
+  /** 仅第5课等：본과 핵심 정리 只保留「学习目标 + 易混提醒」，由课数据 lessonExplain.focusMinimal 控制 */
+  const focusMinimal = !!le?.focusMinimal;
 
   const objLines = buildObjectiveLines(lesson, lang);
-  const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
-  const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
+  const abilityItems = focusMinimal ? [] : buildLessonAbilityItems(lesson, ctx, lang);
+  const coreRows = focusMinimal ? [] : collectCuratedExpressionGroups(lesson, ctx, lang);
   const tips = collectTipsFinal(lesson, lang);
-  const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
+  const teacherBullets = focusMinimal ? [] : buildTeacherBullets(lesson, ctx, lang);
 
-  const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
+  const quotes = focusMinimal ? [] : (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
   const usePracticeFocusLabel = !!(
     le?.practiceFocus?.length &&
@@ -419,20 +421,24 @@ export function renderLessonFocusHtml(lesson, lang) {
       .join("")}</ul>`
     : `<p class="ai-lesson-focus-p">${escapeHtml(summary || t("ai.lesson_focus_no_core", "请结合本课对话学习。"))}</p>`;
 
-  const coreBlock = coreRows.length
-    ? `<ul class="ai-lesson-focus-list ai-lesson-focus-core">${renderCoreUsageHtml(coreRows, lang)}</ul>`
-    : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_core", "请结合下方对话与练习中的句子学习本课表达。"))}</p>`;
+  const coreBlock = focusMinimal
+    ? ""
+    : coreRows.length
+      ? `<ul class="ai-lesson-focus-list ai-lesson-focus-core">${renderCoreUsageHtml(coreRows, lang)}</ul>`
+      : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_core", "请结合下方对话与练习中的句子学习本课表达。"))}</p>`;
 
-  const sceneBlock = buildSceneSectionHtml(lesson, ctx, lang);
+  const sceneBlock = focusMinimal ? "" : buildSceneSectionHtml(lesson, ctx, lang);
 
   const abilityListMultiline = abilityItems.some(
     (p) => p.kind === "plain" && String(p.text).includes("\n"),
   );
-  const abilityBlock = abilityItems.length
-    ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list${abilityListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${abilityItems
-      .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
-      .join("")}</ul>`
-    : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_ability_empty", "请结合学习目标与对话掌握本课交际。"))}</p>`;
+  const abilityBlock = focusMinimal
+    ? ""
+    : abilityItems.length
+      ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list${abilityListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${abilityItems
+        .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
+        .join("")}</ul>`
+      : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_ability_empty", "请结合学习目标与对话掌握本课交际。"))}</p>`;
 
   const teacherGuideHtml = teacherBullets.length
     ? `<div class="ai-lesson-focus-teacher-guide">
@@ -463,22 +469,9 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   const speakBtnLabel = t("ai.lesson_focus_speak_all", "全文朗读");
 
-  return `
-<div class="ai-lesson-focus">
-  <header class="ai-lesson-focus-head">
-    <div class="ai-lesson-focus-speak-row">
-      <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}"><span class="ai-lesson-focus-speak-ic" aria-hidden="true">🔊</span><span class="ai-lesson-focus-speak-txt">${escapeHtml(speakBtnLabel)}</span></button>
-    </div>
-    <h4 class="ai-lesson-focus-page-title">${escapeHtml(H.page)}</h4>
-    <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
-  </header>
-
-  <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
-    <h5 class="ai-lesson-focus-h">${escapeHtml(H.a)}</h5>
-    ${summaryLeadHtml}
-    ${objBlock}
-  </section>
-
+  const midSectionsHtml = focusMinimal
+    ? ""
+    : `
   <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
     <h5 class="ai-lesson-focus-h">${escapeHtml(H.b)}</h5>
     ${abilityBlock}
@@ -495,7 +488,24 @@ export function renderLessonFocusHtml(lesson, lang) {
     ${teacherGuideHtml}
     <div class="ai-lesson-focus-quotes">${quoteBlock}</div>
   </section>
+`;
 
+  return `
+<div class="ai-lesson-focus${focusMinimal ? " ai-lesson-focus--minimal" : ""}">
+  <header class="ai-lesson-focus-head">
+    <div class="ai-lesson-focus-speak-row">
+      <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}"><span class="ai-lesson-focus-speak-ic" aria-hidden="true">🔊</span><span class="ai-lesson-focus-speak-txt">${escapeHtml(speakBtnLabel)}</span></button>
+    </div>
+    <h4 class="ai-lesson-focus-page-title">${escapeHtml(H.page)}</h4>
+    <p class="ai-lesson-focus-course-line">${escapeHtml(title)}</p>
+  </header>
+
+  <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
+    <h5 class="ai-lesson-focus-h">${escapeHtml(H.a)}</h5>
+    ${summaryLeadHtml}
+    ${objBlock}
+  </section>
+${midSectionsHtml}
   <section class="ai-lesson-focus-section ai-lesson-focus-section--tips">
     <h5 class="ai-lesson-focus-h">${escapeHtml(H.e)}</h5>
     <ul class="${escapeHtml(tipsListClass)}">${tipsBlock}</ul>
@@ -523,12 +533,13 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   const summary = pickLang(lesson?.summary, lang) || "";
   const al = getAiLearning(lesson);
   const le = al?.lessonExplain;
+  const focusMinimal = !!le?.focusMinimal;
   const objLines = buildObjectiveLines(lesson, lang);
-  const abilityItems = buildLessonAbilityItems(lesson, ctx, lang);
-  const coreRows = collectCuratedExpressionGroups(lesson, ctx, lang);
+  const abilityItems = focusMinimal ? [] : buildLessonAbilityItems(lesson, ctx, lang);
+  const coreRows = focusMinimal ? [] : collectCuratedExpressionGroups(lesson, ctx, lang);
   const tips = collectTipsFinal(lesson, lang);
-  const teacherBullets = buildTeacherBullets(lesson, ctx, lang);
-  const quotes = (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
+  const teacherBullets = focusMinimal ? [] : buildTeacherBullets(lesson, ctx, lang);
+  const quotes = focusMinimal ? [] : (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
   const usePracticeFocusLabel = !!(
     le?.practiceFocus?.length &&
@@ -580,46 +591,48 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   if (showSummaryLead && summary) pushUi(summary);
   for (const o of objLines) pushFocusPart(o);
 
-  pushUi(H.b);
-  for (const x of abilityItems) pushFocusPart(x);
+  if (!focusMinimal) {
+    pushUi(H.b);
+    for (const x of abilityItems) pushFocusPart(x);
 
-  pushUi(H.c);
-  for (const r of coreRows) {
-    pushZhUi(r.expr, r.usage);
-  }
-
-  pushUi(H.d);
-  const sceneIdx = segs.length;
-  if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
-    for (const line of le.scenarioSummaryLines) pushFocusPart(explainLineToParts(line, lang));
-  } else if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
-    const ss = pickLessonLang(le.scenarioSummary, lang);
-    if (ss) pushUi(stripStandalonePinyinLinesForTts(ss));
-  } else {
-    const st = ctx.scene?.title ? str(ctx.scene.title) : "";
-    if (st) pushUi(st);
-    const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
-    for (const c of cards.slice(0, 2)) {
-      const ct = pickLang(c.title, lang);
-      const cs = pickLang(c.summary, lang);
-      if (!cs && !ct) continue;
-      const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
-      const line = ct && short ? `${ct}：${short}` : ct || short;
-      pushUi(line);
+    pushUi(H.c);
+    for (const r of coreRows) {
+      pushZhUi(r.expr, r.usage);
     }
-    if (segs.length === sceneIdx && ctx.scene?.summary) {
-      const ss = str(ctx.scene.summary);
-      pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
+
+    pushUi(H.d);
+    const sceneIdx = segs.length;
+    if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
+      for (const line of le.scenarioSummaryLines) pushFocusPart(explainLineToParts(line, lang));
+    } else if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
+      const ss = pickLessonLang(le.scenarioSummary, lang);
+      if (ss) pushUi(stripStandalonePinyinLinesForTts(ss));
+    } else {
+      const st = ctx.scene?.title ? str(ctx.scene.title) : "";
+      if (st) pushUi(st);
+      const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
+      for (const c of cards.slice(0, 2)) {
+        const ct = pickLang(c.title, lang);
+        const cs = pickLang(c.summary, lang);
+        if (!cs && !ct) continue;
+        const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
+        const line = ct && short ? `${ct}：${short}` : ct || short;
+        pushUi(line);
+      }
+      if (segs.length === sceneIdx && ctx.scene?.summary) {
+        const ss = str(ctx.scene.summary);
+        pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
+      }
     }
-  }
 
-  pushUi(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"));
-  for (const b of teacherBullets) pushUi(b);
+    pushUi(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"));
+    for (const b of teacherBullets) pushUi(b);
 
-  for (const d of quotes) {
-    const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${str(d.zh)}`;
-    const tr = str(d.trans);
-    pushZhUi(zhLine, tr);
+    for (const d of quotes) {
+      const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${str(d.zh)}`;
+      const tr = str(d.trans);
+      pushZhUi(zhLine, tr);
+    }
   }
 
   pushUi(H.e);

@@ -263,6 +263,11 @@
   color: #334155;
 }
 
+/* lessonExplain.focusMinimal：仅「学习目标 + 易混提醒」时的紧凑版 */
+.ai-lesson-focus--minimal .ai-lesson-focus-section--tips {
+  margin-top: 0.35rem;
+}
+
 .ai-lesson-focus-head {
   margin-bottom: 0.75rem;
   padding-bottom: 0.55rem;
