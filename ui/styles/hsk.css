@@ -2682,13 +2682,6 @@ article.lesson-dialogue-line.hsk1-scene-bubble-line {
   line-height: 1.1;
 }
 
-.hsk30-cal-wdsub {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: #94a3b8;
-  margin-top: 3px;
-}
-
 .hsk30-cal-cell[data-speak-text] {
   cursor: pointer;
 }

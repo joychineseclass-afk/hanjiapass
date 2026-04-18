@@ -1225,17 +1225,13 @@ function buildHsk30ExtensionCalendarArticle(item, index, ctx) {
       ? cal.weekdayZh
       : ["一", "二", "三", "四", "五", "六", "日"];
 
-  const wdCircle = ["日", "一", "二", "三", "四", "五", "六"];
-
   const cells = [];
   for (let k = 0; k < lead; k++) cells.push({ type: "empty" });
   for (let d = 1; d <= lastDay; d++) {
-    const dt = new Date(y, mo - 1, d);
     cells.push({
       type: "day",
       day: d,
       speakZh: _hsk30SpeakZhForCalendarDate(y, mo, d),
-      wdShort: wdCircle[dt.getDay()],
     });
   }
   while (cells.length % 7 !== 0) cells.push({ type: "empty" });
@@ -1253,7 +1249,6 @@ function buildHsk30ExtensionCalendarArticle(item, index, ctx) {
       const attrs = c.speakZh && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
       return `<div class="hsk30-cal-cell"${attrs}>
   <span class="hsk30-cal-daynum">${escapeHtml(String(c.day))}</span>
-  <span class="hsk30-cal-wdsub">${escapeHtml(c.wdShort)}</span>
 </div>`;
     })
     .join("");
