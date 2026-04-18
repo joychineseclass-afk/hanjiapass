@@ -8515,5 +8515,90 @@
       "level": "hsk1",
       "version": "hsk3.0"
     }
+  },
+  {
+    "id": "hsk3.0:hsk1:0502",
+    "hanzi": "边",
+    "pinyin": "biān",
+    "meaning": {
+      "zh": "边",
+      "en": "side",
+      "ko": "쪽; 가장자리"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0503",
+    "hanzi": "这个",
+    "pinyin": "zhège",
+    "meaning": {
+      "zh": "这个",
+      "en": "this one",
+      "ko": "이것"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0504",
+    "hanzi": "那个",
+    "pinyin": "nàge",
+    "meaning": {
+      "zh": "那个",
+      "en": "that one",
+      "ko": "저것"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0505",
+    "hanzi": "便宜",
+    "pinyin": "piányi",
+    "meaning": {
+      "zh": "便宜",
+      "en": "cheap; inexpensive",
+      "ko": "싸다"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
+  },
+  {
+    "id": "hsk3.0:hsk1:0506",
+    "hanzi": "苹果",
+    "pinyin": "píngguǒ",
+    "meaning": {
+      "zh": "苹果",
+      "en": "apple",
+      "ko": "사과"
+    },
+    "tags": {
+      "generated": false
+    },
+    "meta": {
+      "level": "hsk1",
+      "version": "hsk3.0"
+    }
   }
 ]

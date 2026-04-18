@@ -1,7 +1,7 @@
 {
   "courseId": "hsk1",
   "level": "HSK1",
-  "_luminaNote": "HSK 3.0 一级：第 1–7 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "_luminaNote": "HSK 3.0 一级：第 1–10 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -169,6 +169,78 @@
         "kr": "제7과",
         "en": "Lesson 7",
         "jp": "第7課"
+      }
+    },
+    {
+      "lessonNo": 8,
+      "id": "hsk1_lesson8",
+      "file": "lesson8.json",
+      "title": {
+        "cn": "你在哪儿上课？",
+        "zh": "你在哪儿上课？",
+        "kr": "어디서 수업해요?",
+        "en": "Where Do You Have Class?",
+        "jp": "どこで授業を受けますか？"
+      },
+      "sceneGoal": "学习用「在、哪儿」与方位词说明地点与位置，谈论学校与教室周边",
+      "subtitle": "地点 · 方位",
+      "grammarTargets": ["在 + 地点", "方位词", "哪儿"],
+      "vocabTargets": ["在", "哪儿", "这边", "这里", "这儿", "那边", "那儿", "学校", "大学", "中学", "上", "下", "前", "后", "边", "房间", "书", "手机", "桌子"],
+      "extensionTargets": ["扩展表达", "学校位置图"],
+      "displayTitle": {
+        "cn": "第8课",
+        "zh": "第8课",
+        "kr": "제8과",
+        "en": "Lesson 8",
+        "jp": "第8課"
+      }
+    },
+    {
+      "lessonNo": 9,
+      "id": "hsk1_lesson9",
+      "file": "lesson9.json",
+      "title": {
+        "cn": "你喜欢吃什么？",
+        "zh": "你喜欢吃什么？",
+        "kr": "뭘 좋아해서 먹어요?",
+        "en": "What Do You Like to Eat?",
+        "jp": "何が好きですか？"
+      },
+      "sceneGoal": "学习表达饮食喜好，掌握「喜欢」「吃/喝」「什么」与「也」",
+      "subtitle": "饮食 · 喜好",
+      "grammarTargets": ["喜欢 + 动词/名词", "什么", "也"],
+      "vocabTargets": ["喜欢", "吃", "什么", "米饭", "面条儿", "喝", "茶", "牛奶", "苹果", "好吃", "水果", "也"],
+      "extensionTargets": ["扩展表达", "早餐单"],
+      "displayTitle": {
+        "cn": "第9课",
+        "zh": "第9课",
+        "kr": "제9과",
+        "en": "Lesson 9",
+        "jp": "第9課"
+      }
+    },
+    {
+      "lessonNo": 10,
+      "id": "hsk1_lesson10",
+      "file": "lesson10.json",
+      "title": {
+        "cn": "这个多少钱？",
+        "zh": "这个多少钱？",
+        "kr": "이거 얼마예요?",
+        "en": "How Much Is This?",
+        "jp": "これはいくらですか？"
+      },
+      "sceneGoal": "学习询问价格，掌握「多少、块、元」与「贵、便宜」「还」等购物用语",
+      "subtitle": "价格 · 购物",
+      "grammarTargets": ["多少钱", "多少", "贵 / 便宜", "还"],
+      "vocabTargets": ["这个", "那个", "杯子", "多少", "钱", "十", "块", "贵", "便宜", "一点儿", "买", "两", "还", "元"],
+      "extensionTargets": ["扩展表达", "商店价签"],
+      "displayTitle": {
+        "cn": "第10课",
+        "zh": "第10课",
+        "kr": "제10과",
+        "en": "Lesson 10",
+        "jp": "第10課"
       }
     }
   ]
