@@ -1246,7 +1246,8 @@ function buildHsk30ExtensionCalendarArticle(item, index, ctx) {
         return `<div class="hsk30-cal-cell is-empty" aria-hidden="true"></div>`;
       }
       const zhEsc = escapeHtml(c.speakZh).replaceAll('"', "&quot;");
-      const attrs = c.speakZh && !speakPilot ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
+      // 试点模式下扩展句默认不绑点读（由顶部 듣기 链式朗读）；日历格必须始终可点读单日（五月一日…）
+      const attrs = c.speakZh ? ` data-speak-text="${zhEsc}" data-speak-kind="extension"` : "";
       return `<div class="hsk30-cal-cell"${attrs}>
   <span class="hsk30-cal-daynum">${escapeHtml(String(c.day))}</span>
 </div>`;
