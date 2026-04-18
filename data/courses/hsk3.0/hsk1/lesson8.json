@@ -9,44 +9,44 @@
     "zh": "第8课｜你在哪儿上课？",
     "cn": "第8课｜你在哪儿上课？",
     "kr": "제8과｜어디서 수업해요?",
-    "en": "Lesson 8 | Where Do You Have Class?",
-    "jp": "第8課｜どこで授業を受けますか？"
+    "en": "Lesson 8 | Where’s Your Class?",
+    "jp": "第8課｜どこで授業をする？"
   },
   "summary": {
     "zh": "学习用「在、哪儿」与方位词说明地点与位置，谈论学校、房间与物品摆放。",
-    "kr": "「在」「哪儿」와 방위어(上·下·前·后·边)로 장소와 위치를 말하는 법을 익힙니다.",
-    "en": "Use 在, 哪儿, and position words for places and locations.",
-    "jp": "「在」「哪儿」と方位語で場所と位置を表します。"
+    "kr": "「在」「哪儿」와 방향말(上·下·前·后·边)로 어디인지, 앞뒤·위아래 같은 위치를 자연스럽게 말합니다.",
+    "en": "Learn to talk about where things are—using 在, 哪儿, and words like 上, 下, 前, 后, 边 for school, rooms, and objects.",
+    "jp": "「在」「哪儿」と方位語で、学校や部屋、物の置いてある場所を表します。"
   },
   "scene": {
     "id": "hsk30_l8_scene",
     "title": {
       "zh": "地点与方位",
-      "kr": "장소와 방위",
-      "en": "Place and position",
-      "jp": "場所と方位"
+      "kr": "장소와 방향",
+      "en": "Places & directions",
+      "jp": "場所と方角"
     },
     "summary": {
       "zh": "会话一：问在哪儿上课；会话二：找老师；会话三：说书与手机的位置。",
-      "kr": "회화1: 어디서 수업하는지; 회화2: 선생님 위치; 회화3: 책·휴대폰 위치.",
-      "en": "Dialogues: class location, finding a teacher, book and phone positions.",
-      "jp": "会話：授業の場所、先生を探す、本とスマホの位置。"
+      "kr": "회화1 어디서 수업하는지 → 회화2 선생님 어디 계신지 → 회화3 책·휴대폰 위치.",
+      "en": "1: Where class is · 2: Where the teacher is · 3: Where the book and phone are.",
+      "jp": "会話1 授業の場所／会話2 先生を探す／会話3 本とスマホの置き場所。"
     }
   },
   "objectives": [
     {
       "zh": "能用「在哪儿……？」「在 + 地点」询问并说明上课地点与学校方位",
       "pinyin": "zài nǎr · zài + dìdiǎn",
-      "kr": "「在哪儿」「在……」로 수업 장소와 학교 방향을 묻고 말할 수 있다",
-      "en": "Ask and say where class is with 在哪儿 and 在 + place",
-      "jp": "「在哪儿」「在」で授業の場所を尋ね・言える"
+      "kr": "「在哪儿」「在 …」로 어디서 수업하는지, 학교가 어느 쪽인지 묻고 답한다.",
+      "en": "Ask and answer where you have class and which way the school is, using 在哪儿 and 在 + place.",
+      "jp": "「在哪儿」「在＋地点」で授業の場所や学校の方角を尋ね、答えられる。"
     },
     {
       "zh": "能用「上、下、前、后、边」等说明物品相对位置",
       "pinyin": "shàng · xià · qián · hòu · biān",
-      "kr": "「上·下·前·后·边」로 물건의 상대 위치를 말할 수 있다",
-      "en": "Describe positions with 上/下/前/后/边",
-      "jp": "「上・下・前・後・边」で位置を言える"
+      "kr": "「上·下·前·后·边」로 책상 위·아래, 앞 등 물건의 상대적인 위치를 말한다.",
+      "en": "Say where things are relative to something else—on/under/in front (上, 下, 前, 后, 边).",
+      "jp": "「上・下・前・后・边」で、物同士の前後や上下の位置が言える。"
     }
   ],
   "vocab": [],
@@ -61,9 +61,9 @@
       },
       "summary": {
         "zh": "询问在哪儿上课，并说明学校在哪一边。",
-        "kr": "어디서 수업하는지 묻고 학교가 어느 쪽인지 말합니다.",
-        "en": "Ask where class is and which side the school is on.",
-        "jp": "どこで授業か、学校がどちら側か。"
+        "kr": "어디서 수업하는지 물은 뒤, 학교가 어느 쪽인지 말합니다.",
+        "en": "They ask where class is and which way the school is.",
+        "jp": "どこで授業をしているかを聞き、学校がどちらの方にあるかを言います。"
       },
       "lines": [
         {
@@ -71,9 +71,9 @@
           "text": "李明，你在哪儿上课？",
           "pinyin": "Lǐ Míng, nǐ zài nǎr shàngkè?",
           "translation": {
-            "kr": "리밍, 어디서 수업해?",
-            "en": "Li Ming, where do you have class?",
-            "jp": "李明、どこで授業を受けてる？"
+            "kr": "리밍아, 어디서 수업해?",
+            "en": "Li Ming, where do you take your classes?",
+            "jp": "リー・ミン、どこで授業してるの？"
           }
         },
         {
@@ -81,9 +81,9 @@
           "text": "我在中学上课。",
           "pinyin": "Wǒ zài zhōngxué shàngkè.",
           "translation": {
-            "kr": "나는 중학교에서 수업해.",
-            "en": "I have class at middle school.",
-            "jp": "中学校で授業を受けています。"
+            "kr": "중학교에서 수업해요.",
+            "en": "At middle school.",
+            "jp": "中学校で授業をしています。"
           }
         },
         {
@@ -91,9 +91,9 @@
           "text": "你的学校在哪边？",
           "pinyin": "Nǐ de xuéxiào zài nǎ biān?",
           "translation": {
-            "kr": "네 학교는 어느 쪽이야?",
-            "en": "Which side is your school on?",
-            "jp": "あなたの学校はどちら側ですか。"
+            "kr": "학교는 어느 쪽에 있어요?",
+            "en": "Which way is your school?",
+            "jp": "学校はどの辺ですか。"
           }
         },
         {
@@ -101,9 +101,9 @@
           "text": "在这边。",
           "pinyin": "Zài zhèbiān.",
           "translation": {
-            "kr": "이쪽이야.",
-            "en": "On this side.",
-            "jp": "こちら側です。"
+            "kr": "이쪽이에요.",
+            "en": "Over here.",
+            "jp": "こちらです。"
           }
         }
       ]
@@ -117,9 +117,9 @@
       },
       "summary": {
         "zh": "问王老师在哪儿，并说到房间前边。",
-        "kr": "왕 선생님이 어디 있는지 묻고 방 앞을 말합니다.",
-        "en": "Ask where Teacher Wang is; in front of the room.",
-        "jp": "王先生がどこにいるか、部屋の前。"
+        "kr": "왕 선생님이 어디 계신지 물은 뒤, 방 앞쪽을 말합니다.",
+        "en": "They ask where Teacher Wang is, then say he’s in front of the room.",
+        "jp": "王先生がどこにいるかを聞き、部屋の前だと言います。"
       },
       "lines": [
         {
@@ -128,8 +128,8 @@
           "pinyin": "Wáng lǎoshī zài nǎr?",
           "translation": {
             "kr": "왕 선생님 어디 계세요?",
-            "en": "Where is Teacher Wang?",
-            "jp": "王先生はどこですか。"
+            "en": "Where’s Teacher Wang?",
+            "jp": "王先生はどこにいますか。"
           }
         },
         {
@@ -137,9 +137,9 @@
           "text": "老师在那边。",
           "pinyin": "Lǎoshī zài nàbiān.",
           "translation": {
-            "kr": "선생님은 저쪽에 있어요.",
-            "en": "The teacher is over there.",
-            "jp": "先生はあちらにいます。"
+            "kr": "저쪽에 계세요.",
+            "en": "Over there.",
+            "jp": "向こうにいます。"
           }
         },
         {
@@ -147,9 +147,9 @@
           "text": "在哪儿？",
           "pinyin": "Zài nǎr?",
           "translation": {
-            "kr": "어디요?",
-            "en": "Where?",
-            "jp": "どこですか。"
+            "kr": "어디 말이에요?",
+            "en": "Where exactly?",
+            "jp": "どのへんですか。"
           }
         },
         {
@@ -157,7 +157,7 @@
           "text": "在房间前边。",
           "pinyin": "Zài fángjiān qián biān.",
           "translation": {
-            "kr": "방 앞쪽이에요.",
+            "kr": "방 앞이에요.",
             "en": "In front of the room.",
             "jp": "部屋の前です。"
           }
@@ -173,9 +173,9 @@
       },
       "summary": {
         "zh": "问书在哪儿，并说到手机在桌子下。",
-        "kr": "책이 어디 있는지 묻고 휴대폰이 책상 아래에 있음을 말합니다.",
-        "en": "Where is the book; the phone is under the desk.",
-        "jp": "本はどこか、スマホは机の下。"
+        "kr": "책이 어디 있는지 물은 뒤, 휴대폰은 책상 밑에 있다고 말합니다.",
+        "en": "They ask where the book is, then say the phone is under the desk.",
+        "jp": "本がどこにあるかを聞き、スマホは机の下にあると言います。"
       },
       "lines": [
         {
@@ -183,9 +183,9 @@
           "text": "书在哪儿？",
           "pinyin": "Shū zài nǎr?",
           "translation": {
-            "kr": "책이 어디 있어요?",
-            "en": "Where is the book?",
-            "jp": "本はどこですか。"
+            "kr": "책 어디 있어요?",
+            "en": "Where’s the book?",
+            "jp": "本はどこ？"
           }
         },
         {
@@ -193,9 +193,9 @@
           "text": "书在桌子上。",
           "pinyin": "Shū zài zhuōzi shàng.",
           "translation": {
-            "kr": "책은 책상 위에 있어요.",
-            "en": "The book is on the desk.",
-            "jp": "本は机の上にあります。"
+            "kr": "책상 위에 있어요.",
+            "en": "On the desk.",
+            "jp": "机の上にあります。"
           }
         },
         {
@@ -204,7 +204,7 @@
           "pinyin": "Shǒujī ne?",
           "translation": {
             "kr": "휴대폰은요?",
-            "en": "What about the phone?",
+            "en": "And the phone?",
             "jp": "スマホは？"
           }
         },
@@ -213,9 +213,9 @@
           "text": "手机在桌子下。",
           "pinyin": "Shǒujī zài zhuōzi xià.",
           "translation": {
-            "kr": "휴대폰은 책상 아래에 있어요.",
-            "en": "The phone is under the desk.",
-            "jp": "スマホは机の下にあります。"
+            "kr": "책상 밑에 있어요.",
+            "en": "Under the desk.",
+            "jp": "机の下です。"
           }
         }
       ]
@@ -227,24 +227,24 @@
       "pinyin": "zài + dìdiǎn",
       "hint": {
         "zh": "表示位置",
-        "kr": "위치",
-        "en": "location",
-        "jp": "位置"
+        "kr": "어디에／어디서",
+        "en": "where / at",
+        "jp": "場所・在籍"
       },
       "explanation": {
         "zh": "介词「在」引出所在之处，常用结构：在 + 地点。如「我在中学上课。」「书在桌子上。」\n\n「在」\nzài\n「在中学」\nzài zhōngxué\n「在桌子上」\nzài zhuōzi shàng",
-        "kr": "「在」\nzài\n「在中学」\nzài zhōngxué\n「在桌子上」\nzài zhuōzi shàng\n\n「在」는 장소를 나타낼 때 씁니다. 「在 + 地点」 구조로 「我在中学上课。」처럼 말합니다.",
-        "en": "在 marks location: 在 + place.\n\n在\nzài\n在中学\nzài zhōngxué",
-        "jp": "「在」は場所を表す。「在 + 地点」。\n\n「在」\nzài"
+        "kr": "「在」\nzài\n「在中学」\nzài zhōngxué\n「在桌子上」\nzài zhuōzi shàng\n\n「어디에 있나／어디에서 하다」를 말할 때 씁니다. 「在 + 地点」에 이어서 「我在中学上课。」처럼 만듭니다.",
+        "en": "在 says where something is or happens. Use 在 + place—e.g. 我在中学上课 (study at middle school), 书在桌子上 (the book is on the desk).\n\n在\nzài\n在中学\nzài zhōngxué",
+        "jp": "「在」は「～にいる／～にある／～で（行為する）」の意味で使います。「在＋地点」のあとに文を続けます。\n\n「在」\nzài"
       },
       "examples": [
         {
           "zh": "我在中学上课。",
           "pinyin": "Wǒ zài zhōngxué shàngkè.",
           "translation": {
-            "kr": "나는 중학교에서 수업해요.",
-            "en": "I have class at middle school.",
-            "jp": "中学校で授業を受けています。"
+            "kr": "중학교에서 수업해요.",
+            "en": "I go to class at middle school.",
+            "jp": "中学校で授業をしています。"
           }
         },
         {
@@ -252,7 +252,7 @@
           "pinyin": "Shū zài zhuōzi shàng.",
           "translation": {
             "kr": "책은 책상 위에 있어요.",
-            "en": "The book is on the desk.",
+            "en": "The book’s on the desk.",
             "jp": "本は机の上にあります。"
           }
         }
@@ -263,23 +263,23 @@
       "pinyin": "fāngwèicí：shàng · xià · qián · hòu · biān",
       "hint": {
         "zh": "相对位置",
-        "kr": "상대 위치",
-        "en": "relative position",
-        "jp": "相対的な位置"
+        "kr": "앞뒤·위아래",
+        "en": "front/back, on/under",
+        "jp": "前後・上下"
       },
       "explanation": {
         "zh": "「上、下」表上下；「前、后」表前后；「边」常与其他词组成「这边、那边、前边」等表示方位。\n\n「上」\nshàng\n「下」\nxià\n「前边」\nqián biān",
-        "kr": "「上·下」는 위아래, 「前·后」는 앞뒤, 「边」는 「这边」「那边」「前边」처럼 방향을 만듭니다.",
-        "en": "上/下: above/below; 前/后: front/back; 边 combines as 这边, 那边, 前边.",
-        "jp": "「上・下」「前・後」、「边」は「这边」「前边」など。"
+        "kr": "「上·下」는 위·아래, 「前·后」는 앞·뒤. 「边」는 「这边」「那边」「前边」처럼 붙어 방향을 만듭니다.",
+        "en": "上 and 下 = on/under or above/below; 前 and 后 = in front/behind. 边 turns up in words like 这边, 那边, 前边.",
+        "jp": "「上・下」は上下、「前・后」は前後。「边」は「这边」「前边」などと組み合わせて方角に使います。"
       },
       "examples": [
         {
           "zh": "手机在桌子下。",
           "pinyin": "Shǒujī zài zhuōzi xià.",
           "translation": {
-            "kr": "휴대폰은 책상 아래에 있어요.",
-            "en": "The phone is under the desk.",
+            "kr": "휴대폰은 책상 밑에 있어요.",
+            "en": "The phone’s under the desk.",
             "jp": "スマホは机の下にあります。"
           }
         },
@@ -287,8 +287,8 @@
           "zh": "在房间前边。",
           "pinyin": "Zài fángjiān qián biān.",
           "translation": {
-            "kr": "방 앞쪽에 있어요.",
-            "en": "In front of the room.",
+            "kr": "방 앞이에요.",
+            "en": "Out in front of the room.",
             "jp": "部屋の前です。"
           }
         }
@@ -305,9 +305,9 @@
       },
       "explanation": {
         "zh": "疑问词「哪儿」用来问地点或位置，口语中也常说「在哪儿」。如「你在哪儿上课？」「书在哪儿？」\n\n「哪儿」\nnǎr\n「在哪儿」\nzài nǎr",
-        "kr": "「哪儿」\nnǎr\n「在哪儿」\nzài nǎr\n\n「哪儿」는 어디인지 묻습니다. 「你在哪儿上课？」「书在哪儿？」",
-        "en": "哪儿 asks where; 在哪儿 = at where.\n\n哪儿\nnǎr",
-        "jp": "「哪儿」はどこかを尋ねる。「在哪儿」。"
+        "kr": "「哪儿」\nnǎr\n「在哪儿」\nzài nǎr\n\n구어에서 「어디」를 물을 때 씁니다. 「你在哪儿上课？」「书在哪儿？」처럼요.",
+        "en": "哪儿 means “where?” 在哪儿 is the spoken “at where?” pattern—e.g. 你在哪儿上课?, 书在哪儿?\n\n哪儿\nnǎr",
+        "jp": "「哪儿」は「どこ」を口語で聞くときの言い方。「在哪儿」は「どこに」の形です。"
       },
       "examples": [
         {
@@ -315,8 +315,8 @@
           "pinyin": "Nǐ zài nǎr shàngkè?",
           "translation": {
             "kr": "어디서 수업해요?",
-            "en": "Where do you have class?",
-            "jp": "どこで授業を受けますか。"
+            "en": "Where do you take classes?",
+            "jp": "どこで授業してるの？"
           }
         },
         {
@@ -324,8 +324,8 @@
           "pinyin": "Shū zài nǎr?",
           "translation": {
             "kr": "책이 어디 있어요?",
-            "en": "Where is the book?",
-            "jp": "本はどこですか。"
+            "en": "Where’s the book?",
+            "jp": "本はどこ？"
           }
         }
       ]
@@ -335,9 +335,9 @@
     {
       "groupTitle": {
         "zh": "扩展表达",
-        "kr": "확장 표현",
-        "en": "Extra expressions",
-        "jp": "拡張表現"
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
       },
       "sentences": [
         {
@@ -345,16 +345,16 @@
           "pinyin": "Xuéxiào zài zhèbiān.",
           "translations": {
             "kr": "학교는 이쪽이에요.",
-            "en": "The school is on this side.",
-            "jp": "学校はこちら側です。"
+            "en": "The school’s over this way.",
+            "jp": "学校はこっちです。"
           }
         },
         {
           "zh": "老师在这里。",
           "pinyin": "Lǎoshī zài zhèlǐ.",
           "translations": {
-            "kr": "선생님은 여기에 있어요.",
-            "en": "The teacher is here.",
+            "kr": "선생님은 여기 계세요.",
+            "en": "The teacher’s right here.",
             "jp": "先生はここにいます。"
           }
         },
@@ -363,7 +363,7 @@
           "pinyin": "Shū zài zhuōzi shàng.",
           "translations": {
             "kr": "책은 책상 위에 있어요.",
-            "en": "The book is on the desk.",
+            "en": "The book’s on the desk.",
             "jp": "本は机の上にあります。"
           }
         }
@@ -372,26 +372,26 @@
     {
       "groupTitle": {
         "zh": "阅读小材料｜学校位置图",
-        "kr": "읽기 자료｜학교 위치도",
+        "kr": "읽기｜학교 안내 그림",
         "en": "Reading | School map",
-        "jp": "読み物｜学校の位置図"
+        "jp": "読み物｜学校の見取り図"
       },
       "sentences": [
         {
           "zh": "学校在中学后边。",
           "pinyin": "Xuéxiào zài zhōngxué hòu biān.",
           "translations": {
-            "kr": "학교는 중학교 뒤쪽에 있어요.",
+            "kr": "학교는 중학교 뒤편이에요.",
             "en": "The school is behind the middle school.",
-            "jp": "学校は中学校の後ろ側にあります。"
+            "jp": "学校は中学校の奥にあります。"
           }
         },
         {
           "zh": "老师在房间前边。",
           "pinyin": "Lǎoshī zài fángjiān qián biān.",
           "translations": {
-            "kr": "선생님은 방 앞쪽에 있어요.",
-            "en": "The teacher is in front of the room.",
+            "kr": "선생님은 방 앞에 계세요.",
+            "en": "The teacher’s in front of the room.",
             "jp": "先生は部屋の前にいます。"
           }
         },
@@ -400,7 +400,7 @@
           "pinyin": "Shū zài zhuōzi shàng.",
           "translations": {
             "kr": "책은 책상 위에 있어요.",
-            "en": "The book is on the desk.",
+            "en": "The book’s on the desk.",
             "jp": "本は机の上にあります。"
           }
         },
@@ -408,9 +408,9 @@
           "zh": "手机在桌子下。",
           "pinyin": "Shǒujī zài zhuōzi xià.",
           "translations": {
-            "kr": "휴대폰은 책상 아래에 있어요.",
-            "en": "The phone is under the desk.",
-            "jp": "スマホは机の下にあります。"
+            "kr": "휴대폰은 책상 밑에 있어요.",
+            "en": "The phone’s under the desk.",
+            "jp": "スマホは机の下です。"
           }
         }
       ]
@@ -423,9 +423,9 @@
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
         "cn": "下面哪一句用来问「在什么地方、哪一处」最贴切？",
-        "kr": "다음 중 장소를 묻는 말로 가장 알맞은 것은?",
-        "en": "Which sentence best asks where something is?",
-        "jp": "場所を尋ねるのに最も適切な文は？"
+        "kr": "「어디」를 묻는 말로 가장 자연스러운 것은?",
+        "en": "Which line is really asking where something is?",
+        "jp": "「どこ」を聞いているのはどの文？"
       },
       "options": [
         { "key": "A", "zh": "你在哪儿上课？", "cn": "你在哪儿上课？" },
@@ -436,9 +436,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「哪儿」用于询问地点；「你在哪儿上课？」与本课一致。",
-        "kr": "「哪儿」는 장소를 묻습니다.",
-        "en": "哪儿 asks location; this matches the lesson.",
-        "jp": "「哪儿」は場所を尋ねる表現です。"
+        "kr": "「哪儿」로 장소를 묻습니다. 본과 문장은 「你在哪儿上课？」이에요.",
+        "en": "哪儿 asks “where?”—你在哪儿上课? fits this lesson.",
+        "jp": "「哪儿」は場所を尋ねる語。本课の例は「你在哪儿上课？」です。"
       }
     },
     {
@@ -447,8 +447,8 @@
       "subtype": "zh_to_pinyin_choice",
       "prompt": {
         "cn": "「这边」的拼音是？",
-        "kr": "「这边」의 병음은?",
-        "en": "What is the pinyin of 这边?",
+        "kr": "「这边」의 병음은 무엇일까요?",
+        "en": "What’s the pinyin for 这边?",
         "jp": "「这边」のピンインは？"
       },
       "options": [
@@ -460,9 +460,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「这边」读作 zhèbiān。",
-        "kr": "「这边」는 zhèbiān입니다.",
-        "en": "这边 is zhèbiān.",
-        "jp": "「这边」は zhèbiān と読みます。"
+        "kr": "「这边」는 zhèbiān으로 읽습니다.",
+        "en": "Say it zhèbiān.",
+        "jp": "読みは zhèbiān です。"
       }
     },
     {
@@ -471,17 +471,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "对方问「书在哪儿？」，下面哪一句应答与本课会话一致？",
-        "kr": "「书在哪儿？」에 대한 답으로 본과 회화와 맞는 것은?",
-        "en": "Which reply matches the lesson dialogue for「书在哪儿？」?",
-        "jp": "「书在哪儿？」の答えとして本课の会話と一致するのは？"
+        "kr": "「书在哪儿？」에 나오는 답과 같은 말은?",
+        "en": "Someone asks 书在哪儿?—which answer matches our dialogue?",
+        "jp": "「书在哪儿？」への答えとして、本课の会話と合うのは？"
       },
       "options": ["书在桌子上。", "我喜欢吃米饭。", "今天星期五。", "有牛奶吗？"],
       "answer": "书在桌子上。",
       "explanation": {
         "cn": "本课会话三：书在桌子上。",
-        "kr": "회화3: 书在桌子上。",
-        "en": "Dialogue 3: 书在桌子上。",
-        "jp": "会話3：书在桌子上。"
+        "kr": "회화3에서는 「书在桌子上。」라고 답합니다.",
+        "en": "In Dialogue 3 they say 书在桌子上.",
+        "jp": "会話3では「书在桌子上。」と答えます。"
       }
     },
     {
@@ -490,17 +490,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "「手机在桌子下」里的「下」表示：",
-        "kr": "「手机在桌子下」에서 「下」는 무엇을 나타내나요?",
-        "en": "In 手机在桌子下, 下 indicates:",
-        "jp": "「手机在桌子下」の「下」は何を表す？"
+        "kr": "「手机在桌子下」에서 「下」는 무슨 뜻이에요?",
+        "en": "In 手机在桌子下, 下 means:",
+        "jp": "「手机在桌子下」の「下」の意味は？"
       },
       "options": ["在物体的下方", "在物体的上面", "在物体的前面", "在物体的后面"],
       "answer": "在物体的下方",
       "explanation": {
         "cn": "「下」表示相对位置在下方（下面）。",
-        "kr": "「下」는 아래쪽 위치를 나타냅니다.",
-        "en": "下 means below / under.",
-        "jp": "「下」は下／下側の位置。"
+        "kr": "「下」는 물건 아래·밑쪽을 가리킬 때 씁니다.",
+        "en": "下 marks “under” or “below” the desk.",
+        "jp": "「下」は机などの「下／した」を表します。"
       }
     }
   ],
@@ -510,9 +510,9 @@
     "chatPrompt": "请只用本课「在、哪儿、这边、那边、上、下、前」等词语练习问地点与说位置；不要写成日期、时间或姓名自我介绍。",
     "prompt": {
       "zh": "请只用本课「在、哪儿、这边、那边、上、下、前」等词语练习问地点与说位置；不要写成日期、时间或姓名自我介绍。",
-      "kr": "본과의 「在·哪儿·这边·那边·上·下·前」만으로 장소 묻기·위치 말하기를 연습하세요. 날짜·시간·이름 소개로 쓰지 마세요.",
-      "en": "Practice only this lesson’s 在, 哪儿, 这边, 那边, 上, 下, 前 for places—no dates, times, or name intros.",
-      "jp": "本課の「在・哪儿・这边・那边・上・下・前」だけで場所の練習を。日付・時間・自己紹介は書かない。"
+      "kr": "이번에 배운 「在·哪儿·这边·那边·上·下·前」만으로 어디냐, 어느 쪽이냐를 연습하세요. 날짜·시간·이름 이야기는 빼 주세요.",
+      "en": "Stick to 在, 哪儿, 这边, 那边, 上, 下, 前—practice asking and telling where things are. Skip dates, clock time, and name intros.",
+      "jp": "「在・哪儿・这边・那边・上・下・前」だけ使って、場所を聞いたり言ったりしましょう。日付・時刻・自己紹介は書かないでください。"
     },
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -521,18 +521,18 @@
           "id": "l8_where_class",
           "situation": {
             "zh": "会话一：问在哪儿上课",
-            "kr": "회화 1: 어디서 수업하는지",
-            "en": "Dialogue 1: where class is",
-            "jp": "会話1：どこで授業か"
+            "kr": "회화1 · 어디서 수업하냐고 묻기",
+            "en": "Dialogue 1 — asking where class is",
+            "jp": "会話1：どこで授業するか"
           },
           "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你在哪儿上课？", "pinyin": "nǐ zài nǎr shàngkè?", "kr": "어디서 수업해?", "en": "Where do you have class?", "jp": "どこで授業？" },
-            { "zh": "我在中学上课。", "pinyin": "wǒ zài zhōngxué shàngkè.", "kr": "중학교에서 수업해.", "en": "At middle school.", "jp": "中学校で。" },
-            { "zh": "你的学校在哪边？", "pinyin": "nǐ de xuéxiào zài nǎ biān?", "kr": "학교는 어느 쪽?", "en": "Which side is your school?", "jp": "学校はどちら側？" },
-            { "zh": "在这边。", "pinyin": "zài zhèbiān.", "kr": "이쪽이야.", "en": "On this side.", "jp": "こちら側。" }
+            { "zh": "你在哪儿上课？", "pinyin": "nǐ zài nǎr shàngkè?", "kr": "어디서 수업해요?", "en": "Where’s your class?", "jp": "どこで授業してるの？" },
+            { "zh": "我在中学上课。", "pinyin": "wǒ zài zhōngxué shàngkè.", "kr": "중학교에서 수업해요.", "en": "At middle school.", "jp": "中学校で。" },
+            { "zh": "你的学校在哪边？", "pinyin": "nǐ de xuéxiào zài nǎ biān?", "kr": "학교는 어느 쪽이에요?", "en": "Which way is the school?", "jp": "学校はどの辺？" },
+            { "zh": "在这边。", "pinyin": "zài zhèbiān.", "kr": "이쪽이에요.", "en": "Over here.", "jp": "こちらです。" }
           ],
           "rounds": [
             {
@@ -553,18 +553,18 @@
           "id": "l8_where_book",
           "situation": {
             "zh": "会话三：书与手机的位置",
-            "kr": "회화 3: 책·휴대폰 위치",
-            "en": "Dialogue 3: book and phone",
-            "jp": "会話3：本とスマホ"
+            "kr": "회화3 · 책이랑 휴대폰 어디 있나",
+            "en": "Dialogue 3 — the book and the phone",
+            "jp": "会話3：本とスマホの置き場所"
           },
           "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "书在哪儿？", "pinyin": "shū zài nǎr?", "kr": "책 어디?", "en": "Where’s the book?", "jp": "本はどこ？" },
-            { "zh": "书在桌子上。", "pinyin": "shū zài zhuōzi shàng.", "kr": "책상 위.", "en": "On the desk.", "jp": "机の上。" },
-            { "zh": "手机呢？", "pinyin": "shǒujī ne?", "kr": "휴대폰은?", "en": "And the phone?", "jp": "スマホは？" },
-            { "zh": "手机在桌子下。", "pinyin": "shǒujī zài zhuōzi xià.", "kr": "책상 아래.", "en": "Under the desk.", "jp": "机の下。" }
+            { "zh": "书在哪儿？", "pinyin": "shū zài nǎr?", "kr": "책 어디 있어요?", "en": "Where’s the book?", "jp": "本はどこ？" },
+            { "zh": "书在桌子上。", "pinyin": "shū zài zhuōzi shàng.", "kr": "책상 위에 있어요.", "en": "On the desk.", "jp": "机の上にあります。" },
+            { "zh": "手机呢？", "pinyin": "shǒujī ne?", "kr": "휴대폰은요?", "en": "How about the phone?", "jp": "スマホは？" },
+            { "zh": "手机在桌子下。", "pinyin": "shǒujī zài zhuōzi xià.", "kr": "책상 밑이에요.", "en": "Under the desk.", "jp": "机の下です。" }
           ],
           "rounds": [
             {
@@ -589,23 +589,23 @@
       {
         "zh": "能用「在哪儿」「在 + 地点」询问并回答上课地点与学校在哪一边。",
         "pinyin": "zài nǎr · zài + dìdiǎn",
-        "kr": "「在哪儿」「在……」로 수업 장소와 학교 방향을 묻고 답한다.",
-        "en": "Ask/answer where class is with 在哪儿 and 在 + place.",
-        "jp": "「在哪儿」「在」で授業の場所を尋ね答える。"
+        "kr": "「在哪儿」「在 …」으로 어디서 수업하는지, 학교가 어느 쪽인지 묻고 답할 수 있다.",
+        "en": "Ask and answer where class is and which way the school is, using 在哪儿 and 在 + place.",
+        "jp": "「在哪儿」「在＋地点」で授業の場所や学校の方角を尋ね、答えられる。"
       },
       {
         "zh": "能用「这边、那边、这里、这儿、那儿」配合「在」说明大致方位。",
         "pinyin": "zhèbiān · nàbiān · zhèlǐ · zhèr · nàr",
-        "kr": "「这边」등과 「在」로 방향을 말한다.",
-        "en": "Use 这边/那边/这里 with 在.",
-        "jp": "「这边」「那边」などと「在」で方角を言う。"
+        "kr": "「这边」「那边」처럼 「在」와 붙여 대략 어느 쪽인지 말한다.",
+        "en": "Use 这边, 那边, 这里, 这儿, 那儿 with 在 to point out directions.",
+        "jp": "「这边」「那边」「这里」などと「在」で、だいたいどちらの方かが言える。"
       },
       {
         "zh": "能用「上、下、前、后、边」说明书、手机等相对桌子的位置。",
         "pinyin": "shàng · xià · qián · hòu · biān",
-        "kr": "방위어로 물건의 위치를 말한다.",
-        "en": "Describe positions with 上/下/前/后/边.",
-        "jp": "「上・下・前・后・边」で位置を表す。"
+        "kr": "「上·下·前·后·边」로 책·휴대폰이 책상 기준 어디 있는지 말한다.",
+        "en": "Say where the book or phone is relative to the desk—上, 下, 前, 后, 边.",
+        "jp": "「上・下・前・后・边」で、机を基準に本やスマホの位置が言える。"
       }
     ],
     "lessonExplain": {
@@ -614,73 +614,77 @@
         {
           "zh": "掌握「在 + 地点」的基本语序，区分问句「在哪儿……？」与陈述「在……」。",
           "pinyin": "zài + dìdiǎn · zài nǎr",
-          "kr": "「在+地点」와 「在哪儿」 질문·평서를 구분한다.",
-          "en": "在 + place vs 在哪儿 questions.",
-          "jp": "「在＋地点」と「在哪儿」の使い分け。"
+          "kr": "「在 + 地点」 평서와 「在哪儿 …?」 질문의 차이를 익힌다.",
+          "en": "Get the word order for 在 + place, and tell questions (在哪儿…) from statements (在…).",
+          "jp": "「在＋地点」の語順と、「在哪儿」の疑問文・「在」の平叙文の違いをつかむ。"
         },
         {
           "zh": "理解「这边、那边」与「这里、这儿、那儿」在口语里指方向或位置。",
           "pinyin": "zhèbiān · nàbiān · zhèlǐ · zhèr · nàr",
-          "kr": "방향·위치를 가리키는 말로 쓰인다.",
-          "en": "口语里表示方向或位置.",
-          "jp": "口語で方向や位置を指す。"
+          "kr": "말할 때 「这边」류 말이 방향·자리를 가리키는 표현임을 이해한다.",
+          "en": "Know that 这边, 那边, 这里, 这儿, 那儿 point to directions or spots in conversation.",
+          "jp": "「这边」「这里」などが、話し言葉で方向や位置を指す語だと分かる。"
         },
         {
           "zh": "本课讲地点与方位，不是日期、钟点或「你叫什么名字」类话题。",
           "pinyin": "dìdiǎn · fāngwèi",
-          "kr": "이 과는 장소·방위가 중심이며 날짜·시간·이름 과제가 아닙니다.",
-          "en": "This lesson is place/position—not dates, time, or names.",
-          "jp": "本課は場所・方位。日付や名前の練習ではない。"
+          "kr": "이번 과는 장소·방향이 핵심이지, 날짜·시각·이름 묻기 연습이 아닙니다.",
+          "en": "This lesson stays on place and position—not dates, clock time, or “what’s your name?”",
+          "jp": "本課は場所と方位が中心。日付や時刻、名前を聞く練習ではありません。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：问在哪儿上课、学校在哪边。会话二：王老师在哪儿、在房间前边。会话三：书在桌上、手机在桌子下。",
-        "kr": "회화1: 수업 장소·학교 방향; 회화2: 선생님 위치; 회화3: 책·휴대폰.",
-        "en": "Three dialogues: school side, teacher in front of room, book/phone on/under desk.",
-        "jp": "三つの会話：学校の方、部屋の前の先生、本とスマホの位置。"
+        "kr": "회화1 어디서 수업·학교 어느 쪽 → 회화2 선생님 어디, 방 앞 → 회화3 책은 책상 위·폰은 밑.",
+        "en": "1: Class & which side the school is · 2: Where Teacher Wang is, in front of the room · 3: Book on the desk, phone underneath.",
+        "jp": "会話1 授業の場所と学校の方／会話2 先生の場所・部屋の前／会話3 本は机の上、スマホは下。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：「你在哪儿上课？」「我在中学上课。」「你的学校在哪边？」「在这边。」",
           "pinyin": "nǎr shàngkè · zhōngxué · nǎ biān · zhèbiān",
-          "kr": "회화1 요지를 따릅니다."
+          "kr": "회화1 줄거리: 어디서 수업 → 중학교 → 학교 어느 쪽 → 이쪽.",
+          "en": "Dialogue 1: where class is → middle school → which side → over here.",
+          "jp": "会話1：どこで授業／中学校／どちらの方／こちら。"
         },
         {
           "zh": "会话二、三：用「哪儿」问人、问物；用「上、下、前边」说相对位置。",
           "pinyin": "nǎr · shàng · xià · qián biān",
-          "kr": "사람·물건 위치를 묻고 상대 위치를 말합니다."
+          "kr": "회화2·3: 「哪儿」로 사람·물건 위치를 묻고, 「上·下·前边」로 맞물려 말하기.",
+          "en": "Dialogues 2–3: 哪儿 for people and things; 上, 下, 前边 for relative position.",
+          "jp": "会話2・3：「哪儿」で人・物の場所、「上・下・前边」で相対的な位置。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「上课」是动宾短语，问地点用「在哪儿上课」，不要漏掉「在」。",
           "pinyin": "zài nǎr shàngkè",
-          "kr": "장소를 말할 때 「在」를 빼지 않도록 합니다.",
-          "en": "Keep 在 in location patterns.",
-          "jp": "「在」を落とさない。"
+          "kr": "「在哪儿上课」처럼 장소를 넣을 때 「在」를 빼먹지 마세요.",
+          "en": "Don’t drop 在 when you ask 在哪儿上课—keep the location pattern complete.",
+          "jp": "「在哪儿上课」のように、場所を言う型では「在」を落とさない。"
         },
         {
           "zh": "「桌子下」口语常说，意思等于「桌子下面」；本课与「书在桌子上」对举。",
           "pinyin": "zhuōzi xià · zhuōzi shàng",
-          "kr": "「上」와 「下」의 짝을 구분합니다.",
-          "en": "下 pairs with 上 for under/on the desk.",
-          "jp": "「上」と「下」の対応。"
+          "kr": "「桌子下」는 말로 자주 쓰고, 「桌子下面」과 비슷한 뜻이에요. 「书在桌子上」と 짝을 이뤄요.",
+          "en": "桌子下 is casual for “under the desk,” like 桌子下面; it pairs with 书在桌子上.",
+          "jp": "「桌子下」は口語で「机の下」と同じくらいの意味。「书在桌子上」と対で覚える。"
         },
         {
           "zh": "「哪边」问方向；「哪儿」更口语化问地点——本课两处都出现。",
           "pinyin": "nǎ biān · nǎr",
-          "kr": "방향과 장소를 묻는 말의 뉘앙스가 조금 다를 수 있습니다.",
-          "en": "哪边 vs 哪儿 nuances.",
-          "jp": "「哪边」と「哪儿」の使い分け。"
+          "kr": "「哪边」는 어느 쪽(방향), 「哪儿」는 더 구어체로 어디—뉘앙스가 조금 달라요.",
+          "en": "哪边 leans toward “which side/direction”; 哪儿 is everyday “where?”—both show up here.",
+          "jp": "「哪边」は方角、「哪儿」はくだけた「どこ」—本课では両方出ます。"
         }
       ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「在这边」和「在那儿」什么时候用？「桌子下」要不要加「面」？",
-      "kr": "예: 「这边」과 「那儿」는 언제 쓰나요? 「桌子下」에 「面」가 필요한가요?",
-      "en": "e.g. 这边 vs 那儿? Say 桌子下面 or 桌子下?",
-      "jp": "例:「这边」と「那儿」の違い。「桌子下」と「下面」。"
+      "kr": "예: 「这边」과 「那儿」는 언제 골라 쓰나요? 「桌子下」에 꼭 「面」를 붙이나요?",
+      "en": "Try asking: When do you say 这边 vs 那儿? Do people say 桌子下 or 桌子下面 more?",
+      "jp": "例:「这边」と「那儿」はいつ使い分ける？「桌子下」と「下面」はどちらを使う？"
     },
     "freeAskExamples": {
       "zh": [
@@ -691,25 +695,25 @@
         "「中学」和「学校」在这课里怎么搭配？"
       ],
       "kr": [
-        "「哪边」와 「哪儿」를 바꿔 쓸 수 있나요?",
-        "「在桌子上」는 언제 쓰나요?",
-        "「房间前边」는 어떤 그림이에요?",
-        "「上」과 「下」를 헷갈리지 않으려면?",
-        "「中学」과 「学校」의 차이는?"
+        "「哪边」랑 「哪儿」를 바꿔 말해도 되나요?",
+        "「在桌子上」는 어떤 상황에서 쓰나요?",
+        "「房间前边」이면 그림으로 보면 어디예요?",
+        "「上」이랑 「下」 안 헷갈리게 외우는 팁이 있을까요?",
+        "이 과에서 「中学」과 「学校」는 어떻게 달라요?"
       ],
       "en": [
-        "Can 哪边 and 哪儿 be swapped in these lines?",
-        "When do you say 在桌子上?",
-        "How to read 房间前边?",
-        "Which line uses 哪儿 vs 哪边?",
-        "中学 vs 学校 in this lesson?"
+        "In this lesson, can I swap 哪边 and 哪儿?",
+        "When is 在桌子上 the natural thing to say?",
+        "What picture do you get from 房间前边?",
+        "Any trick to keep 上 and 下 straight on furniture?",
+        "How are 中学 and 学校 used differently here?"
       ],
       "jp": [
-        "「哪边」と「哪儿」は入れ替えられる？",
-        "「在桌子上」はいつ使う？",
-        "「房间前边」の意味は？",
-        "本课で「哪儿」と「哪边」？",
-        "「中学」と「学校」？"
+        "この文では「哪边」と「哪儿」を入れ替えられる？",
+        "「在桌子上」はどんなときに言う？",
+        "「房间前边」は地図でいうとどこ？",
+        "「上」と「下」を取り違えないコツは？",
+        "この课の「中学」と「学校」の違いは？"
       ]
     },
     "coreExpressions": [
@@ -718,9 +722,9 @@
         "pinyin": "nǐ zài nǎr shàngkè? / wǒ zài zhōngxué shàngkè.",
         "usage": {
           "zh": "询问与回答上课地点。",
-          "kr": "수업 장소를 묻고 답합니다.",
-          "en": "Ask and say where class is.",
-          "jp": "授業の場所を尋ね答える。"
+          "kr": "어디서 수업하는지 묻고 답할 때 씁니다.",
+          "en": "For asking and answering where class meets.",
+          "jp": "どこで授業するかを聞いたり答えたりするときに。"
         }
       },
       {
@@ -728,9 +732,9 @@
         "pinyin": "nǐ de xuéxiào zài nǎ biān? / zài zhèbiān.",
         "usage": {
           "zh": "问学校在哪一侧，用「这边、那边」回答。",
-          "kr": "학교가 어느 쪽인지 묻고 답합니다.",
-          "en": "Which side the school is on.",
-          "jp": "学校がどちら側か。"
+          "kr": "학교가 동·서·남·북 중 어느 쪽인지 묻고, 이쪽·저쪽으로 답할 때.",
+          "en": "Ask which way the school lies; answer with 这边 or 那边.",
+          "jp": "学校がどの方角かを聞き、「这边」などで答える。"
         }
       },
       {
@@ -738,9 +742,9 @@
         "pinyin": "shū zài zhuōzi shàng. / shǒujī zài zhuōzi xià.",
         "usage": {
           "zh": "用「上、下」说物体与桌子的相对位置。",
-          "kr": "책상 위·아래 위치.",
-          "en": "On vs under the desk.",
-          "jp": "机の上／下。"
+          "kr": "책상 ‘위’와 ‘밑’에 뭐가 있는지 말할 때.",
+          "en": "Say whether something is on the desk or under it.",
+          "jp": "机の上か下かを言い分けるとき。"
         }
       }
     ]

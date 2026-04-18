@@ -14,39 +14,39 @@
   },
   "summary": {
     "zh": "学习询问价格，掌握「多少、钱、块、元」与「贵、便宜」「还」等购物用语。",
-    "kr": "가격을 묻고 「多少」「钱」「块」「元」「贵」「便宜」「还」 등을 익힙니다.",
-    "en": "Prices; 多少, 钱, 块, 元; 贵/便宜; 还.",
-    "jp": "値段の尋ね方、「多少」「块」「元」「贵」「便宜」「还」。"
+    "kr": "얼마인지 묻고, 「块·元」로 말하며 「贵」「便宜」「还」로 쇼핑 대화를 완성합니다.",
+    "en": "Ask how much things cost, say prices in 块 or 元, and shop with 贵, 便宜, and 还.",
+    "jp": "値段の聞き方、「块」「元」、そして「贵」「便宜」「还」で買い物の表現を身につけます。"
   },
   "scene": {
     "id": "hsk30_l10_scene",
     "title": {
       "zh": "购物与价格",
-      "kr": "쇼핑과 가격",
-      "en": "Shopping and prices",
+      "kr": "가게에서 · 가격",
+      "en": "At the shop · prices",
       "jp": "買い物と値段"
     },
     "summary": {
       "zh": "会话一：问杯子多少钱；会话二：问贵不贵；会话三：买牛奶与茶并问总价。",
-      "kr": "회화1: 컵 가격; 회화2: 비쌈·쌈; 회화3: 우유·차 구매·총액.",
-      "en": "Cup prices; cheap/expensive; buying milk and tea.",
-      "jp": "会話：コップの値段、安い／高い、牛乳とお茶。"
+      "kr": "회화1 컵 값 → 회화2 비싼지 싼지 → 회화3 우유·차 담고 총액.",
+      "en": "1: Cup prices · 2: Cheap or pricey? · 3: Milk, tea, and the total.",
+      "jp": "会話1 コップの値段／会話2 高い・安い／会話3 牛乳とお茶、合計。"
     }
   },
   "objectives": [
     {
       "zh": "能用「多少钱？」「……块/元」询问并说出常见商品价格",
       "pinyin": "duōshao qián · kuài · yuán",
-      "kr": "「多少钱」「……块/元」로 가격을 묻고 말할 수 있다",
-      "en": "Ask and say prices with 多少钱 and 块/元",
-      "jp": "「多少钱」「块／元」で値段を尋ね答えられる"
+      "kr": "「多少钱？」「… 块／元」으로 흔한 물건의 가격을 묻고 말한다.",
+      "en": "Ask and give prices with 多少钱 and …块 / …元.",
+      "jp": "「多少钱？」「… 块／… 元」で値段を尋ね、答えられる。"
     },
     {
       "zh": "能用「贵、便宜」「还」完成简单购物对话",
       "pinyin": "guì · piányi · hái",
-      "kr": "「贵」「便宜」「还」로 짧은 쇼핑 대화를 한다",
-      "en": "Use 贵/便宜 and 还 in shopping",
-      "jp": "「贵」「便宜」「还」で買い物の会話ができる"
+      "kr": "「贵」「便宜」로 느낌을 말하고 「还」로 덜 사 더 살지 이어 간다.",
+      "en": "Use 贵 and 便宜 to talk about price, and 还 to ask what else to buy.",
+      "jp": "「贵」「便宜」で値ごろ感を言い、「还」で追加の買い物につなげられる。"
     }
   ],
   "vocab": [],
@@ -61,9 +61,9 @@
       },
       "summary": {
         "zh": "用「这个……多少钱」问杯子价格，并追问「那个」。",
-        "kr": "「这个……多少钱」로 컵 가격을 묻고 「那个」를 이어서 묻습니다.",
-        "en": "How much for this cup—then that one.",
-        "jp": "「这个…多少钱」、続けて「那个」。"
+        "kr": "이 컵이 얼마인지 물은 뒤, 저쪽 것도 이어서 묻습니다.",
+        "en": "They ask the price of this cup, then ask about that one.",
+        "jp": "このコップの値段を聞き、続けてあれはいくらかを聞きます。"
       },
       "lines": [
         {
@@ -71,8 +71,8 @@
           "text": "请问，这个杯子多少钱？",
           "pinyin": "Qǐngwèn, zhège bēizi duōshao qián?",
           "translation": {
-            "kr": "실례합니다, 이 컵 얼마예요?",
-            "en": "Excuse me, how much is this cup?",
+            "kr": "실례지만, 이 컵 얼마예요?",
+            "en": "Excuse me—how much is this cup?",
             "jp": "すみません、このコップはいくらですか。"
           }
         },
@@ -81,9 +81,9 @@
           "text": "十块。",
           "pinyin": "Shí kuài.",
           "translation": {
-            "kr": "십 위안이에요.",
+            "kr": "10위안이에요.",
             "en": "Ten yuan.",
-            "jp": "十元です。"
+            "jp": "10元です。"
           }
         },
         {
@@ -91,9 +91,9 @@
           "text": "那个呢？",
           "pinyin": "Nàge ne?",
           "translation": {
-            "kr": "저건요?",
-            "en": "What about that one?",
-            "jp": "あれは？"
+            "kr": "그건요?",
+            "en": "How much is that one?",
+            "jp": "それはいくらですか。"
           }
         },
         {
@@ -101,9 +101,9 @@
           "text": "那个十二块。",
           "pinyin": "Nàge shí’èr kuài.",
           "translation": {
-            "kr": "저건 십이 위안이에요.",
-            "en": "That one is twelve yuan.",
-            "jp": "あれは十二元です。"
+            "kr": "그건 12위안이에요.",
+            "en": "That one’s twelve yuan.",
+            "jp": "それは12元です。"
           }
         }
       ]
@@ -117,9 +117,9 @@
       },
       "summary": {
         "zh": "问贵不贵，用「很便宜」「有一点儿贵」描述价格感受。",
-        "kr": "비싼지 묻고 「很便宜」「有一点儿贵」로 느낌을 말합니다.",
-        "en": "贵吗—very cheap / a bit expensive.",
-        "jp": "高いか、「很便宜」「有一点儿贵」。"
+        "kr": "비싼지 물은 뒤 아주 싸다／조금 비싸다고 말합니다.",
+        "en": "They ask if it’s expensive and say it’s very cheap or a little pricey.",
+        "jp": "高いかどうかを聞き、とても安い／ちょっと高いと言います。"
       },
       "lines": [
         {
@@ -129,7 +129,7 @@
           "translation": {
             "kr": "이 컵 비싸요?",
             "en": "Is this cup expensive?",
-            "jp": "このコップは高いですか。"
+            "jp": "このコップ、高いですか。"
           }
         },
         {
@@ -137,9 +137,9 @@
           "text": "不贵，很便宜。",
           "pinyin": "Bù guì, hěn piányi.",
           "translation": {
-            "kr": "안 비싸요, 아주 쌉니다.",
-            "en": "No, it’s very cheap.",
-            "jp": "高くないです、とても安いです。"
+            "kr": "아니요, 아주 싸요.",
+            "en": "No—it’s very cheap.",
+            "jp": "いいえ、とても安いです。"
           }
         },
         {
@@ -147,9 +147,9 @@
           "text": "那个呢？",
           "pinyin": "Nàge ne?",
           "translation": {
-            "kr": "저건요?",
+            "kr": "그건요?",
             "en": "What about that one?",
-            "jp": "あれは？"
+            "jp": "それは？"
           }
         },
         {
@@ -157,9 +157,9 @@
           "text": "那个有一点儿贵。",
           "pinyin": "Nàge yǒu yìdiǎnr guì.",
           "translation": {
-            "kr": "저건 조금 비싸요.",
-            "en": "That one is a little expensive.",
-            "jp": "あれは少し高いです。"
+            "kr": "그건 좀 비싸요.",
+            "en": "That one’s a bit pricey.",
+            "jp": "あれはちょっと高いです。"
           }
         }
       ]
@@ -173,9 +173,9 @@
       },
       "summary": {
         "zh": "问有没有牛奶，买两杯牛奶与一杯茶，并问总价。",
-        "kr": "우유 있나요, 두 잔·차 한 잔 사고 총액을 묻습니다.",
-        "en": "Milk, two cups, one tea, total price.",
-        "jp": "牛乳、二杯とお茶一杯、合計。"
+        "kr": "우유가 있는지 물은 뒤 두 잔과 차 한 잔을 담고, 총액을 묻습니다.",
+        "en": "They ask for milk, order two cups and a tea, then ask for the total.",
+        "jp": "牛乳の有無を聞き、二杯とお茶一杯を頼んでから合計を聞きます。"
       },
       "lines": [
         {
@@ -193,9 +193,9 @@
           "text": "有。",
           "pinyin": "Yǒu.",
           "translation": {
-            "kr": "있어요.",
-            "en": "Yes.",
-            "jp": "あります。"
+            "kr": "네, 있어요.",
+            "en": "Yes, we do.",
+            "jp": "はい、あります。"
           }
         },
         {
@@ -203,9 +203,9 @@
           "text": "我买两杯牛奶。",
           "pinyin": "Wǒ mǎi liǎng bēi niúnǎi.",
           "translation": {
-            "kr": "우유 두 잔 살게요.",
-            "en": "I’ll buy two cups of milk.",
-            "jp": "牛乳を二杯ください。"
+            "kr": "우유 두 잔 주세요.",
+            "en": "Two milks, please.",
+            "jp": "牛乳を二つください。"
           }
         },
         {
@@ -213,9 +213,9 @@
           "text": "还买什么吗？",
           "pinyin": "Hái mǎi shénme ma?",
           "translation": {
-            "kr": "또 뭐 살 거예요?",
+            "kr": "다른 거 더 드릴까요?",
             "en": "Anything else?",
-            "jp": "他に買いますか。"
+            "jp": "ほかにございますか。"
           }
         },
         {
@@ -223,9 +223,9 @@
           "text": "还买一杯茶。",
           "pinyin": "Hái mǎi yì bēi chá.",
           "translation": {
-            "kr": "차 한 잔도 살게요.",
-            "en": "Also one cup of tea.",
-            "jp": "お茶も一杯。"
+            "kr": "차 한 잔도 주세요.",
+            "en": "A cup of tea, too.",
+            "jp": "お茶も一杯お願いします。"
           }
         },
         {
@@ -233,9 +233,9 @@
           "text": "你的两杯牛奶，一杯茶。",
           "pinyin": "Nǐ de liǎng bēi niúnǎi, yì bēi chá.",
           "translation": {
-            "kr": "우유 두 잔, 차 한 잔이요.",
-            "en": "Two milks and one tea for you.",
-            "jp": "牛乳二杯とお茶一杯ですね。"
+            "kr": "우유 두 잔, 차 한 잔 맞으시죠?",
+            "en": "So that’s two milks and one tea.",
+            "jp": "牛乳が二つとお茶が一杯ですね。"
           }
         },
         {
@@ -243,9 +243,9 @@
           "text": "谢谢，多少钱？",
           "pinyin": "Xièxie, duōshao qián?",
           "translation": {
-            "kr": "감사합니다, 얼마예요?",
-            "en": "Thanks—how much?",
-            "jp": "ありがとう、いくらですか。"
+            "kr": "감사합니다. 얼마예요?",
+            "en": "Thanks. How much is that?",
+            "jp": "ありがとうございます。いくらですか。"
           }
         },
         {
@@ -253,9 +253,9 @@
           "text": "二十元。",
           "pinyin": "Èrshí yuán.",
           "translation": {
-            "kr": "이십 위안이에요.",
+            "kr": "20위안이에요.",
             "en": "Twenty yuan.",
-            "jp": "二十元です。"
+            "jp": "20元です。"
           }
         }
       ]
@@ -267,15 +267,15 @@
       "pinyin": "duōshao qián",
       "hint": {
         "zh": "问价格",
-        "kr": "가격",
-        "en": "price",
-        "jp": "値段"
+        "kr": "얼마",
+        "en": "how much",
+        "jp": "いくら"
       },
       "explanation": {
         "zh": "常用问价句「……多少钱？」如「这个杯子多少钱？」「谢谢，多少钱？」。口语里也可说「多少钱」单独成句。\n\n「多少钱」\nduōshao qián\n「这个杯子多少钱？」\nzhège bēizi duōshao qián?",
-        "kr": "「多少钱」\nduōshao qián\n「这个杯子多少钱？」\nzhège bēizi duōshao qián?\n\n물건을 가리키며 가격을 묻습니다.",
-        "en": "…多少钱? for prices.\n\n多少钱\nduōshao qián",
-        "jp": "「多少钱」で値段を尋ねる。"
+        "kr": "「多少钱」\nduōshao qián\n「这个杯子多少钱？」\nzhège bēizi duōshao qián?\n\n물건을 가리키며 흔히 쓰는 값 묻기예요.",
+        "en": "…多少钱? is the everyday “How much?”—for a cup, the bill, etc.\n\n多少钱\nduōshao qián",
+        "jp": "「多少钱」は「いくらですか」の定番。品物や会計のときに使います。"
       },
       "examples": [
         {
@@ -291,9 +291,9 @@
           "zh": "谢谢，多少钱？",
           "pinyin": "Xièxie, duōshao qián?",
           "translation": {
-            "kr": "감사합니다, 얼마예요?",
-            "en": "Thanks—how much?",
-            "jp": "ありがとう、いくら？"
+            "kr": "감사합니다. 얼마예요?",
+            "en": "Thanks. How much is it?",
+            "jp": "ありがとうございます。いくらですか。"
           }
         }
       ]
@@ -303,15 +303,15 @@
       "pinyin": "duōshao wèn jiàgé",
       "hint": {
         "zh": "与「钱」搭配",
-        "kr": "「钱」와 함께",
-        "en": "with 钱",
-        "jp": "「钱」と"
+        "kr": "값 묻기",
+        "en": "asking cost",
+        "jp": "金額"
       },
       "explanation": {
         "zh": "疑问词「多少」在购物语境常与「钱」搭配构成「多少钱」，用来问价钱多少。\n\n「多少」\nduōshao\n「多少钱」\nduōshao qián",
-        "kr": "「多少」\nduōshao\n「多少钱」\nduōshao qián\n\n쇼핑 맥락에서 가격을 묻습니다.",
-        "en": "多少 + context → 多少钱 for “how much (money)”.",
-        "jp": "「多少」は「多少钱」で金額を尋ねる。"
+        "kr": "「多少」\nduōshao\n「多少钱」\nduōshao qián\n\n가게에서 ‘얼마’를 물을 때 「多少钱」로 묶어 씁니다.",
+        "en": "In a shop, 多少 hooks up with 钱 as 多少钱—“how much (money)?”",
+        "jp": "買い物では「多少」が「多少钱」になり、「いくら（お金）」を尋ねます。"
       },
       "examples": [
         {
@@ -330,33 +330,33 @@
       "pinyin": "guì / piányi",
       "hint": {
         "zh": "评价价格",
-        "kr": "가격 평가",
-        "en": "evaluate price",
-        "jp": "値段の評価"
+        "kr": "싸다·비싸다",
+        "en": "cheap / pricey",
+        "jp": "安い・高い"
       },
       "explanation": {
         "zh": "形容词「贵」表示价格高，「便宜」表示价格低。常用「很贵、有一点儿贵、很便宜」等。\n\n「贵」\nguì\n「便宜」\npiányi\n「很便宜」\nhěn piányi",
-        "kr": "「贵」\nguì\n「便宜」\npiányi\n「很便宜」\nhěn piányi\n\n가격의 높낮이를 평가합니다.",
-        "en": "贵 = expensive; 便宜 = cheap.\n\n贵 / 便宜",
-        "jp": "「贵」は高い、「便宜」は安い。"
+        "kr": "「贵」\nguì\n「便宜」\npiányi\n「很便宜」\nhěn piányi\n\n값이 비싼지, 싼지 말할 때 씁니다.",
+        "en": "贵 says “expensive”; 便宜 says “cheap.” You’ll hear 很贵, 有一点儿贵, 很便宜 a lot.\n\n贵 / 便宜",
+        "jp": "「贵」は高い、「便宜」は安い。「很贵」「有一点儿贵」などよく出ます。"
       },
       "examples": [
         {
           "zh": "不贵，很便宜。",
           "pinyin": "Bù guì, hěn piányi.",
           "translation": {
-            "kr": "안 비싸요, 아주 쌉니다.",
-            "en": "Not expensive—very cheap.",
-            "jp": "高くない、とても安い。"
+            "kr": "안 비싸요. 아주 싸요.",
+            "en": "No—it’s very cheap.",
+            "jp": "いいえ、とても安いです。"
           }
         },
         {
           "zh": "那个有一点儿贵。",
           "pinyin": "Nàge yǒu yìdiǎnr guì.",
           "translation": {
-            "kr": "저건 조금 비싸요.",
-            "en": "That one’s a bit expensive.",
-            "jp": "あれは少し高い。"
+            "kr": "그건 좀 비싸요.",
+            "en": "That one’s a bit pricey.",
+            "jp": "あれはちょっと高いです。"
           }
         }
       ]
@@ -366,33 +366,33 @@
       "pinyin": "hái",
       "hint": {
         "zh": "再、另外",
-        "kr": "또; 게다가",
-        "en": "also; in addition",
-        "jp": "さらに；また"
+        "kr": "더",
+        "en": "else / more",
+        "jp": "ほかに"
       },
       "explanation": {
         "zh": "副词「还」可表示在已有动作或事物之外再追加，如「还买什么吗？」「还买一杯茶」。\n\n「还」\nhái\n「还买」\nhái mǎi",
-        "kr": "「还」\nhái\n「还买」\nhái mǎi\n\n이미 있는 행동 외에 더함을 나타냅니다.",
-        "en": "还 = also / additionally: 还买…?",
-        "jp": "「还」は「さらに」「また」。「还买」。"
+        "kr": "「还」\nhái\n「还买」\nhái mǎi\n\n이미 담은 것 말고 또 살 게 있는지, 또는 한 가지를 더 살 때 씁니다.",
+        "en": "还 adds “anything more?”—more shopping, one more item (还买一杯茶).",
+        "jp": "「还」は「ほかに」「もう一つ」—「还买什么吗？」「还买一杯茶」など。"
       },
       "examples": [
         {
           "zh": "还买什么吗？",
           "pinyin": "Hái mǎi shénme ma?",
           "translation": {
-            "kr": "또 뭐 살 거예요?",
-            "en": "Anything else to buy?",
-            "jp": "他に買いますか。"
+            "kr": "다른 거 더 드릴까요?",
+            "en": "Anything else?",
+            "jp": "ほかにございますか。"
           }
         },
         {
           "zh": "还买一杯茶。",
           "pinyin": "Hái mǎi yì bēi chá.",
           "translation": {
-            "kr": "차 한 잔도 살게요.",
-            "en": "Also buying one tea.",
-            "jp": "お茶も一杯買う。"
+            "kr": "차 한 잔 더 주세요.",
+            "en": "I’ll take a cup of tea as well.",
+            "jp": "お茶も一杯お願いします。"
           }
         }
       ]
@@ -402,9 +402,9 @@
     {
       "groupTitle": {
         "zh": "扩展表达",
-        "kr": "확장 표현",
-        "en": "Extra expressions",
-        "jp": "拡張表現"
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
       },
       "sentences": [
         {
@@ -412,7 +412,7 @@
           "pinyin": "Zhège duōshao qián?",
           "translations": {
             "kr": "이거 얼마예요?",
-            "en": "How much is this?",
+            "en": "How much is this one?",
             "jp": "これはいくらですか。"
           }
         },
@@ -420,17 +420,17 @@
           "zh": "那个有一点儿贵。",
           "pinyin": "Nàge yǒu yìdiǎnr guì.",
           "translations": {
-            "kr": "저건 조금 비싸요.",
-            "en": "That one’s a little expensive.",
-            "jp": "あれは少し高いです。"
+            "kr": "그건 좀 비싸요.",
+            "en": "That one’s a little pricey.",
+            "jp": "あれはちょっと高いです。"
           }
         },
         {
           "zh": "我还买茶。",
           "pinyin": "Wǒ hái mǎi chá.",
           "translations": {
-            "kr": "나는 차도 살게요.",
-            "en": "I’ll also buy tea.",
+            "kr": "차도 살게요.",
+            "en": "I’m getting tea too.",
             "jp": "お茶も買います。"
           }
         }
@@ -439,8 +439,8 @@
     {
       "groupTitle": {
         "zh": "阅读小材料｜商店价签",
-        "kr": "읽기 자료｜가게 가격표",
-        "en": "Reading | Price tags",
+        "kr": "읽기｜매장 가격표",
+        "en": "Reading | Store price tags",
         "jp": "読み物｜店の値札"
       },
       "sentences": [
@@ -449,7 +449,7 @@
           "pinyin": "bēizi shí yuán",
           "translations": {
             "kr": "컵 10위안",
-            "en": "Cup 10 yuan",
+            "en": "Cup: ¥10",
             "jp": "コップ 10元"
           }
         },
@@ -458,7 +458,7 @@
           "pinyin": "niúnǎi liù yuán",
           "translations": {
             "kr": "우유 6위안",
-            "en": "Milk 6 yuan",
+            "en": "Milk: ¥6",
             "jp": "牛乳 6元"
           }
         },
@@ -467,7 +467,7 @@
           "pinyin": "chá bā yuán",
           "translations": {
             "kr": "차 8위안",
-            "en": "Tea 8 yuan",
+            "en": "Tea: ¥8",
             "jp": "お茶 8元"
           }
         },
@@ -476,8 +476,8 @@
           "pinyin": "píngguǒ wǔ yuán yí ge",
           "translations": {
             "kr": "사과 개당 5위안",
-            "en": "Apples 5 yuan each",
-            "jp": "りんご 5元一個"
+            "en": "Apples: ¥5 each",
+            "jp": "りんご 1個5元"
           }
         }
       ]
@@ -490,9 +490,9 @@
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
         "cn": "下面哪一句用来问「价格是多少」最常用？",
-        "kr": "다음 중 가격을 묻는 표현으로 가장 흔한 것은?",
-        "en": "Which is the most common way to ask the price?",
-        "jp": "値段を尋ねるのにいちばんよく使うのは？"
+        "kr": "「얼마예요?」를 묻는 말로 가장 많이 쓰는 것은?",
+        "en": "Which line is the usual way to ask how much something costs?",
+        "jp": "値段を聞くのにいちばんふつうなのはどれ？"
       },
       "options": [
         { "key": "A", "zh": "这个杯子多少钱？", "cn": "这个杯子多少钱？" },
@@ -503,9 +503,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「多少钱」用于询问价钱，与本课一致。",
-        "kr": "「多少钱」는 가격을 묻습니다.",
-        "en": "多少钱 asks the price.",
-        "jp": "「多少钱」は値段を尋ねます。"
+        "kr": "「多少钱」가 값을 묻는 대표 표현이에요.",
+        "en": "多少钱 is how you ask the price—that’s this lesson.",
+        "jp": "「多少钱」は値段を尋ねる基本の文です。"
       }
     },
     {
@@ -514,8 +514,8 @@
       "subtype": "zh_to_pinyin_choice",
       "prompt": {
         "cn": "「便宜」的拼音是？",
-        "kr": "「便宜」의 병음은?",
-        "en": "What is the pinyin of 便宜?",
+        "kr": "「便宜」의 병음은 무엇일까요?",
+        "en": "What’s the pinyin for 便宜?",
         "jp": "「便宜」のピンインは？"
       },
       "options": [
@@ -527,9 +527,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「便宜」读作 piányi。",
-        "kr": "「便宜」는 piányi입니다.",
-        "en": "便宜 is piányi.",
-        "jp": "「便宜」は piányi と読みます。"
+        "kr": "「便宜」는 piányi로 읽습니다.",
+        "en": "Say it piányi.",
+        "jp": "読みは piányi です。"
       }
     },
     {
@@ -538,17 +538,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "店员说「不贵，很便宜。」是在形容：",
-        "kr": "점원이 「不贵，很便宜。」라고 할 때 묘사하는 것은?",
-        "en": "When the clerk says 不贵，很便宜, they mean:",
-        "jp": "「不贵，很便宜。」は何を表す？"
+        "kr": "점원이 「不贵，很便宜。」라고 하면 무슨 뜻이에요?",
+        "en": "The clerk says 不贵，很便宜. They’re talking about:",
+        "jp": "店員が「不贵，很便宜。」と言うのは何について？"
       },
       "options": ["价格低", "时间早", "地点远", "年龄大"],
       "answer": "价格低",
       "explanation": {
         "cn": "「便宜」表示价格低、不贵。",
-        "kr": "「便宜」는 가격이 낮음을 나타냅니다.",
-        "en": "便宜 means low price.",
-        "jp": "「便宜」は価格が安いこと。"
+        "kr": "「便宜」는 값이 싸다는 뜻이에요.",
+        "en": "They mean it’s cheap—not a high price.",
+        "jp": "「安い・値ごろ」という意味です。"
       }
     },
     {
@@ -557,17 +557,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "「还买什么吗？」里的「还」表示：",
-        "kr": "「还买什么吗？」에서 「还」는 무엇을 나타내나요?",
-        "en": "In 还买什么吗?, 还 indicates:",
-        "jp": "「还买什么吗？」の「还」は？"
+        "kr": "「还买什么吗？」의 「还」는 무슨 뜻이에요?",
+        "en": "In 还买什么吗?, 还 means:",
+        "jp": "「还买什么吗？」の「还」の意味は？"
       },
       "options": ["除此之外再要别的吗", "已经结束了", "回到原处", "非常"],
       "answer": "除此之外再要别的吗",
       "explanation": {
         "cn": "「还」在此表示追加、另外还要什么。",
-        "kr": "「还」는 추가로 더 살 것이 있는지 묻습니다.",
-        "en": "还 asks if you want anything else.",
-        "jp": "「还」は追加・ほかに要るか。"
+        "kr": "이미 고른 것 말고 더 살 게 있는지 묻는 말이에요.",
+        "en": "It’s “anything else on your list?”—more to buy.",
+        "jp": "ほかにも買うものがあるか、追加を尋ねています。"
       }
     }
   ],
@@ -577,9 +577,9 @@
     "chatPrompt": "请只用本课「这个、那个、多少钱、块、元、贵、便宜、买、还」等词语练习购物问价；不要写成问时间、问日期或问在哪儿上课。",
     "prompt": {
       "zh": "请只用本课「这个、那个、多少钱、块、元、贵、便宜、买、还」等词语练习购物问价；不要写成问时间、问日期或问在哪儿上课。",
-      "kr": "「这个·那个·多少钱·块·元·贵·便宜·买·还」만으로 가격·쇼핑 연습. 시간·날짜·장소 질문 금지.",
-      "en": "Practice shopping with 这个/那个/多少钱/块/元/贵/便宜/买/还—no time, date, or location drills.",
-      "jp": "本課の買い物・値段の語だけで練習。時間・日付・場所の質問は書かない。"
+      "kr": "「这个·那个·多少钱·块·元·贵·便宜·买·还」만 써서 가게 대화를 연습하세요. 몇 시·며칠·어디 수업 이런 말은 빼 주세요.",
+      "en": "Role-play shopping with 这个, 那个, 多少钱, 块, 元, 贵, 便宜, 买, 还—don’t drift into time, dates, or class locations.",
+      "jp": "「这个」「那个」「多少钱」「块」「元」「贵」「便宜」「买」「还」だけで買い物の練習。時間・日付・授業の場所には触れない。"
     },
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -588,18 +588,18 @@
           "id": "l10_price_cup",
           "situation": {
             "zh": "会话一：问杯子价格",
-            "kr": "회화 1: 컵 가격",
-            "en": "Dialogue 1: cup price",
-            "jp": "会話1：コップの値段"
+            "kr": "회화1 · 컵 값 묻기",
+            "en": "Dialogue 1 — asking cup prices",
+            "jp": "会話1：コップの値段を聞く"
           },
           "aiRole": { "zh": "店员", "kr": "점원", "en": "Clerk", "jp": "店員" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "请问，这个杯子多少钱？", "pinyin": "qǐngwèn, zhège bēizi duōshao qián?", "kr": "이 컵 얼마예요?", "en": "How much is this cup?", "jp": "このコップはいくら？" },
-            { "zh": "十块。", "pinyin": "Shí kuài.", "kr": "십 위안.", "en": "Ten yuan.", "jp": "十元。" },
-            { "zh": "那个呢？", "pinyin": "Nàge ne?", "kr": "저건요?", "en": "That one?", "jp": "あれは？" },
-            { "zh": "那个十二块。", "pinyin": "Nàge shí’èr kuài.", "kr": "십이 위안.", "en": "Twelve yuan.", "jp": "十二元。" }
+            { "zh": "请问，这个杯子多少钱？", "pinyin": "qǐngwèn, zhège bēizi duōshao qián?", "kr": "실례지만 이 컵 얼마예요?", "en": "Excuse me—how much is this cup?", "jp": "すみません、このコップはいくら？" },
+            { "zh": "十块。", "pinyin": "Shí kuài.", "kr": "10위안이에요.", "en": "Ten yuan.", "jp": "10元です。" },
+            { "zh": "那个呢？", "pinyin": "Nàge ne?", "kr": "그건요?", "en": "How much is that one?", "jp": "それはいくら？" },
+            { "zh": "那个十二块。", "pinyin": "Nàge shí’èr kuài.", "kr": "그건 12위안이에요.", "en": "That one’s twelve yuan.", "jp": "それは12元です。" }
           ],
           "rounds": [
             {
@@ -620,18 +620,18 @@
           "id": "l10_buy_milk",
           "situation": {
             "zh": "会话三：买牛奶与茶",
-            "kr": "회화 3: 우유·차 구매",
-            "en": "Dialogue 3: milk and tea",
-            "jp": "会話3：牛乳とお茶"
+            "kr": "회화3 · 우유랑 차 담기",
+            "en": "Dialogue 3 — milk and tea",
+            "jp": "会話3：牛乳とお茶を買う"
           },
           "aiRole": { "zh": "店员", "kr": "점원", "en": "Clerk", "jp": "店員" },
           "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "有牛奶吗？", "pinyin": "yǒu niúnǎi ma?", "kr": "우유 있어요?", "en": "Got milk?", "jp": "牛乳は？" },
-            { "zh": "我买两杯牛奶。", "pinyin": "wǒ mǎi liǎng bēi niúnǎi.", "kr": "우유 두 잔.", "en": "Two milks.", "jp": "牛乳二杯。" },
-            { "zh": "还买一杯茶。", "pinyin": "hái mǎi yì bēi chá.", "kr": "차 한 잔도.", "en": "One tea too.", "jp": "お茶一杯も。" },
-            { "zh": "谢谢，多少钱？", "pinyin": "xièxie, duōshao qián?", "kr": "얼마예요?", "en": "How much?", "jp": "いくら？" }
+            { "zh": "有牛奶吗？", "pinyin": "yǒu niúnǎi ma?", "kr": "우유 있어요?", "en": "Do you have milk?", "jp": "牛乳はありますか。" },
+            { "zh": "我买两杯牛奶。", "pinyin": "wǒ mǎi liǎng bēi niúnǎi.", "kr": "우유 두 잔 주세요.", "en": "Two milks, please.", "jp": "牛乳を二つください。" },
+            { "zh": "还买一杯茶。", "pinyin": "hái mǎi yì bēi chá.", "kr": "차 한 잔도 주세요.", "en": "A cup of tea as well.", "jp": "お茶も一杯お願いします。" },
+            { "zh": "谢谢，多少钱？", "pinyin": "xièxie, duōshao qián?", "kr": "감사합니다. 얼마예요?", "en": "Thanks. How much?", "jp": "ありがとうございます。いくらですか。" }
           ],
           "rounds": [
             {
@@ -663,9 +663,9 @@
       {
         "zh": "能用「贵吗？」「不贵」「很便宜」「有一点儿贵」描述价格感受。",
         "pinyin": "guì ma · piányi · yìdiǎnr guì",
-        "kr": "가격의 높낮이를 말한다.",
-        "en": "Describe if something is expensive or cheap.",
-        "jp": "高いか安いかを言う。"
+        "kr": "「贵吗?」「不贵」「很便宜」「有一点儿贵」로 값이 비싼지·싼지 말한다.",
+        "en": "Use 贵吗?, 不贵, 很便宜, and 有一点儿贵 to talk about how the price feels.",
+        "jp": "「贵吗？」「不贵」「很便宜」「有一点儿贵」で値ごろ感を言える。"
       },
       {
         "zh": "能在购物对话里用「还」追问是否要再买别的东西。",
@@ -703,20 +703,24 @@
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：这个十块、那个十二块。会话二：便宜与有一点儿贵。会话三：两杯牛奶、一杯茶、二十元。",
-        "kr": "회화1: 10·12위안; 회화2: 쌈·조금 비쌈; 회화3: 2+1·20위안.",
-        "en": "Cup prices; cheap/expensive; milk, tea, total.",
-        "jp": "コップの値段、安い／少し高い、牛乳と茶、合計。"
+        "kr": "회화1 이건 10·저건 12위안 → 회화2 싸다·조금 비싸다 → 회화3 우유 둘·차 하나·총 20위안.",
+        "en": "1: This ¥10, that ¥12 · 2: cheap vs a bit pricey · 3: two milks, one tea, ¥20 total.",
+        "jp": "会話1 これ10元・あれ12元／会話2 安い・ちょっと高い／会話3 牛乳二つ・お茶一杯・合計20元。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一、二：「多少钱」问价；「贵吗」谈感受。",
           "pinyin": "duōshao qián · guì ma",
-          "kr": "가격 질문과 감각 표현을 구분합니다."
+          "kr": "회화1·2: 「多少钱」로 값을 묻고, 「贵吗」로 비싼지·싼지 느낌을 말합니다.",
+          "en": "Dialogues 1–2: 多少钱 for the price; 贵吗 for whether it feels expensive or cheap.",
+          "jp": "会話1・2：「多少钱」で値段、「贵吗」で高いか安いかの印象。"
         },
         {
           "zh": "会话三：「还」连接追加购买，最后用「元」报总价。",
           "pinyin": "hái · yuán",
-          "kr": "추가 구매와 총액 표기."
+          "kr": "회화3: 「还」로 한 가지 더 살지 묻고, 마지막에 「元」로 총액을 말합니다.",
+          "en": "Dialogue 3: 还 checks if you want more items; you close with the total in 元.",
+          "jp": "会話3：「还」で追加の買い物を確認し、合計は「元」で言う。"
         }
       ],
       "confusionPoints": [

@@ -8,45 +8,45 @@
   "title": {
     "zh": "第9课｜你喜欢吃什么？",
     "cn": "第9课｜你喜欢吃什么？",
-    "kr": "제9과｜뭘 좋아해서 먹어요?",
+    "kr": "제9과｜뭘 먹는 걸 좋아해요?",
     "en": "Lesson 9 | What Do You Like to Eat?",
-    "jp": "第9課｜何が好きですか？"
+    "jp": "第9課｜何を食べるのが好きですか"
   },
   "summary": {
     "zh": "学习表达饮食喜好，掌握「喜欢」「吃、喝」「什么」与「也」。",
-    "kr": "먹고 마시는 것의 취향을 말하고 「喜欢」「吃/喝」「什么」「也」를 익힙니다.",
-    "en": "Food and drink preferences; 喜欢, 吃/喝, 什么, 也.",
-    "jp": "食べ物・飲み物の好みと「喜欢」「吃／喝」「什么」「也」。"
+    "kr": "좋아하는 음식·음료를 말하고, 「喜欢」「吃／喝」「什么」「也」로 문장을 만듭니다.",
+    "en": "Say what you like to eat and drink—using 喜欢, 吃, 喝, 什么, and 也.",
+    "jp": "好きな食べ物・飲み物を表し、「喜欢」「吃・喝」「什么」「也」を使います。"
   },
   "scene": {
     "id": "hsk30_l9_scene",
     "title": {
       "zh": "饮食喜好",
-      "kr": "음식 취향",
-      "en": "Food preferences",
-      "jp": "食の好み"
+      "kr": "먹고 마시는 취향",
+      "en": "Likes: food & drinks",
+      "jp": "食べ物と飲み物の好み"
     },
     "summary": {
       "zh": "会话一：喜欢的食物；会话二：喜欢的饮料。",
-      "kr": "회화1: 좋아하는 음식; 회화2: 좋아하는 음료.",
-      "en": "Dialogue 1: food; Dialogue 2: drinks.",
-      "jp": "会話1：食べ物；会話2：飲み物。"
+      "kr": "회화1 좋아하는 음식 → 회화2 좋아하는 음료.",
+      "en": "Part 1: food you like · Part 2: drinks you like.",
+      "jp": "会話1 食べ物／会話2 飲み物の好み。"
     }
   },
   "objectives": [
     {
       "zh": "能用「你喜欢吃什么？」「喜欢吃……」谈论主食与小吃",
       "pinyin": "xǐhuan chī shénme · xǐhuan chī …",
-      "kr": "「你喜欢吃什么？」「喜欢吃……」로 밥·국수 등을 말할 수 있다",
-      "en": "Use 你喜欢吃什么? and 喜欢吃… for food",
-      "jp": "「你喜欢吃什么？」「喜欢吃」で主食などを言える"
+      "kr": "「你喜欢吃什么？」「喜欢吃 …」로 밥·국수 같은 음식 이야기를 한다.",
+      "en": "Talk about what you like to eat—rice, noodles, and more—with 你喜欢吃什么? and 喜欢吃…. ",
+      "jp": "「你喜欢吃什么？」「喜欢吃 …」でご飯や麺など、食べ物の好みが言える。"
     },
     {
       "zh": "能用「你喜欢喝什么？」「也喜欢……」谈论茶、牛奶等饮料",
       "pinyin": "hē shénme · yě xǐhuan …",
-      "kr": "「你喜欢喝什么？」「也喜欢」로 차·우유 등을 말할 수 있다",
-      "en": "Use 喝什么 and 也喜欢 for drinks",
-      "jp": "「喝什么」「也喜欢」で飲み物を言える"
+      "kr": "「你喜欢喝什么？」「也喜欢 …」로 차·우유 같은 음료 이야기를 한다.",
+      "en": "Talk about drinks—tea, milk, etc.—with 喝什么 and 也喜欢…. ",
+      "jp": "「喝什么」「也喜欢 …」でお茶や牛乳など、飲み物の好みが言える。"
     }
   ],
   "vocab": [],
@@ -61,9 +61,9 @@
       },
       "summary": {
         "zh": "问喜欢吃什么，谈到米饭与面条儿。",
-        "kr": "무엇을 좋아해 먹는지 묻고 밥·국수를 말합니다.",
-        "en": "What do you like to eat—rice and noodles.",
-        "jp": "何が好きか、ご飯と麺。"
+        "kr": "뭘 좋아해서 먹는지 물은 뒤 밥과 국수 이야기를 합니다.",
+        "en": "They ask what Tom likes to eat and talk about rice and noodles.",
+        "jp": "何を食べるのが好きかを聞き、ご飯と麺の話になります。"
       },
       "lines": [
         {
@@ -71,7 +71,7 @@
           "text": "汤姆，你喜欢吃什么？",
           "pinyin": "Tāngmǔ, nǐ xǐhuan chī shénme?",
           "translation": {
-            "kr": "톰, 뭐 좋아해서 먹어?",
+            "kr": "톰, 뭘 먹는 걸 좋아해?",
             "en": "Tom, what do you like to eat?",
             "jp": "トム、何を食べるのが好き？"
           }
@@ -81,8 +81,8 @@
           "text": "我喜欢吃米饭。",
           "pinyin": "Wǒ xǐhuan chī mǐfàn.",
           "translation": {
-            "kr": "나는 밥 먹는 걸 좋아해.",
-            "en": "I like eating rice.",
+            "kr": "밥 먹는 거 좋아해요.",
+            "en": "I like rice.",
             "jp": "ご飯を食べるのが好きです。"
           }
         },
@@ -91,9 +91,9 @@
           "text": "你喜欢吃面条儿吗？",
           "pinyin": "Nǐ xǐhuan chī miàntiáor ma?",
           "translation": {
-            "kr": "국수 먹는 것도 좋아해?",
-            "en": "Do you like eating noodles?",
-            "jp": "麺も好きですか。"
+            "kr": "국수도 좋아해?",
+            "en": "Do you like noodles?",
+            "jp": "麺は好きですか。"
           }
         },
         {
@@ -101,9 +101,9 @@
           "text": "喜欢。",
           "pinyin": "Xǐhuan.",
           "translation": {
-            "kr": "좋아해.",
+            "kr": "응, 좋아해.",
             "en": "Yes, I do.",
-            "jp": "好きです。"
+            "jp": "うん、好き。"
           }
         }
       ]
@@ -117,9 +117,9 @@
       },
       "summary": {
         "zh": "问喜欢喝什么，谈到茶与牛奶，并用「也」补充。",
-        "kr": "무엇을 좋아해 마시는지 묻고 차·우유를 말하며 「也」를 씁니다.",
-        "en": "What to drink—tea and milk, using 也.",
-        "jp": "飲み物、茶と牛乳、「也」。"
+        "kr": "뭘 마시는 걸 좋아하는지 물은 뒤 차와 우유 이야기를 하고 「也」로 덧붙입니다.",
+        "en": "They ask what Tom likes to drink, talk about tea and milk, and add another like with 也.",
+        "jp": "何を飲むのが好きかを聞き、お茶と牛乳の話になり、「也」で追加の好みを言います。"
       },
       "lines": [
         {
@@ -127,7 +127,7 @@
           "text": "你喜欢喝什么？",
           "pinyin": "Nǐ xǐhuan hē shénme?",
           "translation": {
-            "kr": "뭘 좋아해서 마셔?",
+            "kr": "뭘 마시는 걸 좋아해?",
             "en": "What do you like to drink?",
             "jp": "何を飲むのが好きですか。"
           }
@@ -137,8 +137,8 @@
           "text": "我喜欢喝茶。",
           "pinyin": "Wǒ xǐhuan hē chá.",
           "translation": {
-            "kr": "나는 차 마시는 걸 좋아해.",
-            "en": "I like drinking tea.",
+            "kr": "차 마시는 거 좋아해요.",
+            "en": "I like tea.",
             "jp": "お茶を飲むのが好きです。"
           }
         },
@@ -147,9 +147,9 @@
           "text": "你喜欢喝牛奶吗？",
           "pinyin": "Nǐ xǐhuan hē niúnǎi ma?",
           "translation": {
-            "kr": "우유 마시는 것도 좋아해?",
-            "en": "Do you like drinking milk?",
-            "jp": "牛乳も好きですか。"
+            "kr": "우유도 마셔?",
+            "en": "Do you like milk?",
+            "jp": "牛乳は好きですか。"
           }
         },
         {
@@ -157,9 +157,9 @@
           "text": "喜欢，我也喜欢喝牛奶。",
           "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.",
           "translation": {
-            "kr": "좋아해, 나도 우유 마시는 걸 좋아해.",
-            "en": "Yes, I like drinking milk too.",
-            "jp": "好きです。私も牛乳を飲むのが好きです。"
+            "kr": "응, 나도 우유 마시는 거 좋아해.",
+            "en": "Yes—I like milk too.",
+            "jp": "うん、私も牛乳を飲むのが好きです。"
           }
         }
       ]
@@ -171,23 +171,23 @@
       "pinyin": "xǐhuan + dòngcí / míngcí",
       "hint": {
         "zh": "表达喜好",
-        "kr": "취향",
-        "en": "preference",
-        "jp": "好み"
+        "kr": "좋아하다",
+        "en": "likes",
+        "jp": "好む"
       },
       "explanation": {
         "zh": "动词「喜欢」后面可接动作或事物，如「喜欢吃米饭」「喜欢喝茶」。问句常用「喜欢……吗？」。\n\n「喜欢」\nxǐhuan\n「喜欢吃」\nxǐhuan chī\n「喜欢喝」\nxǐhuan hē",
-        "kr": "「喜欢」\nxǐhuan\n「喜欢吃」\nxǐhuan chī\n「喜欢喝」\nxǐhuan hē\n\n「喜欢」 뒤에 동작이나 대상을 붙입니다.",
-        "en": "喜欢 + verb/noun: 喜欢吃, 喜欢喝.\n\n喜欢\nxǐhuan",
-        "jp": "「喜欢」＋動詞／名詞。「喜欢吃」「喜欢喝」。"
+        "kr": "「喜欢」\nxǐhuan\n「喜欢吃」\nxǐhuan chī\n「喜欢喝」\nxǐhuan hē\n\n뒤에 하고 싶은 동작이나 대상을 붙입니다. 「喜欢吃米饭」「喜欢喝茶」처럼요.",
+        "en": "After 喜欢, add what you like to do or have—喜欢吃米饭, 喜欢喝茶. Yes–no questions use 喜欢……吗?\n\n喜欢\nxǐhuan",
+        "jp": "「喜欢」のあとに、好きな動作やものを続けます。「喜欢吃」「喜欢喝」の形。疑問は「喜欢…吗？」。"
       },
       "examples": [
         {
           "zh": "我喜欢吃米饭。",
           "pinyin": "Wǒ xǐhuan chī mǐfàn.",
           "translation": {
-            "kr": "나는 밥 먹는 걸 좋아해요.",
-            "en": "I like eating rice.",
+            "kr": "밥 먹는 걸 좋아해요.",
+            "en": "I like rice.",
             "jp": "ご飯を食べるのが好きです。"
           }
         },
@@ -195,8 +195,8 @@
           "zh": "我喜欢喝茶。",
           "pinyin": "Wǒ xǐhuan hē chá.",
           "translation": {
-            "kr": "나는 차 마시는 걸 좋아해요.",
-            "en": "I like drinking tea.",
+            "kr": "차 마시는 걸 좋아해요.",
+            "en": "I like tea.",
             "jp": "お茶を飲むのが好きです。"
           }
         }
@@ -207,22 +207,22 @@
       "pinyin": "shénme wèn shìwù",
       "hint": {
         "zh": "疑问代词",
-        "kr": "의문 대명사",
+        "kr": "무엇을",
         "en": "what",
-        "jp": "疑問代名詞"
+        "jp": "何を"
       },
       "explanation": {
         "zh": "「什么」用来询问事物或内容，如「吃什么」「喝什么」。\n\n「什么」\nshénme\n「吃什么」\nchī shénme\n「喝什么」\nhē shénme",
-        "kr": "「什么」\nshénme\n「吃什么」\nchī shénme\n「喝什么」\nhē shénme\n\n「什么」로 무엇인지 묻습니다.",
-        "en": "什么 asks what: 吃什么, 喝什么.\n\n什么\nshénme",
-        "jp": "「什么」は「何に／何を」の意味で「吃什么」「喝什么」など。"
+        "kr": "「什么」\nshénme\n「吃什么」\nchī shénme\n「喝什么」\nhē shénme\n\n먹거나 마실 ‘무엇’인지 물을 때 씁니다.",
+        "en": "什么 asks “what?”—吃什么 is “what to eat?”, 喝什么 is “what to drink?”\n\n什么\nshénme",
+        "jp": "「什么」は「何を／何が」に当たります。「吃什么」「喝什么」のように動詞と組み合わせます。"
       },
       "examples": [
         {
           "zh": "你喜欢吃什么？",
           "pinyin": "Nǐ xǐhuan chī shénme?",
           "translation": {
-            "kr": "뭐 좋아해서 먹어요?",
+            "kr": "뭘 먹는 걸 좋아해요?",
             "en": "What do you like to eat?",
             "jp": "何を食べるのが好きですか。"
           }
@@ -231,7 +231,7 @@
           "zh": "你喜欢喝什么？",
           "pinyin": "Nǐ xǐhuan hē shénme?",
           "translation": {
-            "kr": "뭐 좋아해서 마셔요?",
+            "kr": "뭘 마시는 걸 좋아해요?",
             "en": "What do you like to drink?",
             "jp": "何を飲むのが好きですか。"
           }
@@ -243,23 +243,23 @@
       "pinyin": "yě",
       "hint": {
         "zh": "同样、也",
-        "kr": "또한; 역시",
-        "en": "also; too",
+        "kr": "또 ~도",
+        "en": "also / too",
         "jp": "もまた"
       },
       "explanation": {
         "zh": "副词「也」表示与前面所说的情况相同或追加一层，如「我也喜欢喝牛奶」。\n\n「也」\nyě\n「我也喜欢」\nwǒ yě xǐhuan",
-        "kr": "「也」\nyě\n「我也喜欢」\nwǒ yě xǐhuan\n\n앞 내용과 같거나 덧붙일 때 씁니다.",
-        "en": "也 = also / too: 我也喜欢…\n\n也\nyě",
-        "jp": "「也」は「同様に」「もまた」。「我也喜欢」。"
+        "kr": "「也」\nyě\n「我也喜欢」\nwǒ yě xǐhuan\n\n앞에서 말한 것과 같은 경우, 또는 한 가지를 더 붙일 때 씁니다.",
+        "en": "也 means “also” or “too”—adding another thing you like, e.g. 我也喜欢喝牛奶.\n\n也\nyě",
+        "jp": "「也」は「～も」「同じように」。前の内容に同じことを足すときに使います。"
       },
       "examples": [
         {
           "zh": "喜欢，我也喜欢喝牛奶。",
           "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.",
           "translation": {
-            "kr": "좋아해, 나도 우유 마시는 걸 좋아해.",
-            "en": "Yes—I like drinking milk too.",
+            "kr": "좋아해요, 저도 우유 마시는 거 좋아해요.",
+            "en": "Yes—and I like milk too.",
             "jp": "好きです。私も牛乳を飲むのが好きです。"
           }
         }
@@ -270,17 +270,17 @@
     {
       "groupTitle": {
         "zh": "扩展表达",
-        "kr": "확장 표현",
-        "en": "Extra expressions",
-        "jp": "拡張表現"
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
       },
       "sentences": [
         {
           "zh": "我喜欢吃水果。",
           "pinyin": "Wǒ xǐhuan chī shuǐguǒ.",
           "translations": {
-            "kr": "나는 과일 먹는 걸 좋아해요.",
-            "en": "I like eating fruit.",
+            "kr": "과일 먹는 걸 좋아해요.",
+            "en": "I like fruit.",
             "jp": "果物を食べるのが好きです。"
           }
         },
@@ -288,8 +288,8 @@
           "zh": "苹果很好吃。",
           "pinyin": "Píngguǒ hěn hǎochī.",
           "translations": {
-            "kr": "사과가 아주 맛있어요.",
-            "en": "Apples are very tasty.",
+            "kr": "사과가 정말 맛있어요.",
+            "en": "Apples are really good.",
             "jp": "りんごはとてもおいしいです。"
           }
         },
@@ -297,9 +297,9 @@
           "zh": "我喜欢喝水。",
           "pinyin": "Wǒ xǐhuan hē shuǐ.",
           "translations": {
-            "kr": "나는 물 마시는 걸 좋아해요.",
-            "en": "I like drinking water.",
-            "jp": "水を飲むのが好きです。"
+            "kr": "물 마시는 것도 좋아해요.",
+            "en": "I like water too.",
+            "jp": "水を飲むのも好きです。"
           }
         }
       ]
@@ -307,9 +307,9 @@
     {
       "groupTitle": {
         "zh": "阅读小材料｜早餐单",
-        "kr": "읽기 자료｜아침 메뉴",
-        "en": "Reading | Breakfast list",
-        "jp": "読み物｜朝食メニュー"
+        "kr": "읽기｜아침 식단",
+        "en": "Reading | Breakfast items",
+        "jp": "読み物｜朝ごはんの献立"
       },
       "sentences": [
         {
@@ -367,9 +367,9 @@
       "subtype": "meaning_to_vocab_choice",
       "prompt": {
         "cn": "下面哪一句用来问「喜欢吃什么」？",
-        "kr": "다음 중 「뭐 좋아해서 먹어요?」에 해당하는 문장은?",
-        "en": "Which asks what someone likes to eat?",
-        "jp": "「何が好きですか（食べ物）」に当てはまるのは？"
+        "kr": "「뭐 먹는 걸 좋아해?」를 묻는 문장은?",
+        "en": "Which line asks what you like to eat?",
+        "jp": "「何が好き（食べ物）」を聞いているのはどれ？"
       },
       "options": [
         { "key": "A", "zh": "你喜欢吃什么？", "cn": "你喜欢吃什么？" },
@@ -380,9 +380,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「你喜欢吃什么？」询问饮食喜好，与本课一致。",
-        "kr": "「你喜欢吃什么？」는 먹는 것의 취향을 묻습니다.",
-        "en": "你喜欢吃什么? asks food preferences.",
-        "jp": "「你喜欢吃什么？」は食の好みを尋ねます。"
+        "kr": "「你喜欢吃什么？」가 바로 먹고 싶은 것을 묻는 표현이에요.",
+        "en": "你喜欢吃什么? is how you ask what someone likes to eat.",
+        "jp": "「你喜欢吃什么？」は食べ物の好みを聞く定番の文です。"
       }
     },
     {
@@ -391,8 +391,8 @@
       "subtype": "zh_to_pinyin_choice",
       "prompt": {
         "cn": "「好吃」的拼音是？",
-        "kr": "「好吃」의 병음은?",
-        "en": "What is the pinyin of 好吃?",
+        "kr": "「好吃」의 병음은 무엇일까요?",
+        "en": "What’s the pinyin for 好吃?",
         "jp": "「好吃」のピンインは？"
       },
       "options": [
@@ -404,9 +404,9 @@
       "answer": "A",
       "explanation": {
         "cn": "「好吃」读作 hǎochī。",
-        "kr": "「好吃」는 hǎochī입니다.",
-        "en": "好吃 is hǎochī.",
-        "jp": "「好吃」は hǎochī と読みます。"
+        "kr": "「好吃」는 hǎochī로 읽습니다.",
+        "en": "Read it hǎochī.",
+        "jp": "読みは hǎochī です。"
       }
     },
     {
@@ -415,17 +415,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "「我喜欢喝茶。」后面若要表达「我也喜欢喝牛奶」，应说：",
-        "kr": "「我喜欢喝茶。」 다음에 「나도 우유 마시는 걸 좋아해」를 붙이려면:",
-        "en": "After 我喜欢喝茶, to add “I also like milk”:",
-        "jp": "「我喜欢喝茶。」のあと「牛乳も好き」を足すなら？"
+        "kr": "「我喜欢喝茶。」 다음에 「우유도 좋아해」를 이어 붙이려면:",
+        "en": "You’ve said 我喜欢喝茶. What do you say to add that you like milk too?",
+        "jp": "「我喜欢喝茶。」のあと、「牛乳も好きだ」と続けるなら？"
       },
       "options": ["我也喜欢喝牛奶。", "没关系。", "在这儿。", "二十元。"],
       "answer": "我也喜欢喝牛奶。",
       "explanation": {
         "cn": "本课会话二用「也」表示同样喜欢另一种饮料。",
-        "kr": "본과 회화2에서 「也」로 음료 취향을 덧붙입니다.",
-        "en": "会话二 uses 也 for another drink preference.",
-        "jp": "会話2で「也」が使われます。"
+        "kr": "회화2에서는 「也」로 차 말고 또 좋아하는 음료를 덧붙입니다.",
+        "en": "In Dialogue 2, 也 adds another drink you like.",
+        "jp": "会話2では「也」でもう一つの飲み物の好みを足します。"
       }
     },
     {
@@ -434,17 +434,17 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "「什么」在「你喜欢喝什么？」中的作用是：",
-        "kr": "「你喜欢喝什么？」에서 「什么」의 역할은?",
-        "en": "In 你喜欢喝什么?, 什么:",
-        "jp": "「你喜欢喝什么？」の「什么」は？"
+        "kr": "「你喜欢喝什么？」에서 「什么」는 뭐 하는 말이에요?",
+        "en": "In 你喜欢喝什么?, 什么 is doing what job?",
+        "jp": "「你喜欢喝什么？」の「什么」の役割は？"
       },
       "options": ["询问喝的事物或内容", "表示道歉", "表示时间", "表示地点"],
       "answer": "询问喝的事物或内容",
       "explanation": {
         "cn": "「什么」在此询问「喝」的对象。",
-        "kr": "「什么」는 여기서 마실 것을 묻습니다.",
-        "en": "什么 asks what (to drink).",
-        "jp": "「什么」は飲むものを尋ねます。"
+        "kr": "여기서는 무엇을 마실지 묻는 자리예요.",
+        "en": "Here 什么 asks what you want to drink.",
+        "jp": "ここでは「何を（飲むか）」を聞いています。"
       }
     }
   ],
@@ -454,9 +454,9 @@
     "chatPrompt": "请围绕「喜欢」「吃、喝」「什么」「也」用本课词语编短对话；不要写成问地点、问价格或问日期。",
     "prompt": {
       "zh": "请围绕「喜欢」「吃、喝」「什么」「也」用本课词语编短对话；不要写成问地点、问价格或问日期。",
-      "kr": "「喜欢」「吃/喝」「什么」「也」로 짧은 대화를 만드세요. 장소·가격·날짜 질문으로 쓰지 마세요.",
-      "en": "Use 喜欢, 吃/喝, 什么, 也 in short dialogues—no location, price, or date drills.",
-      "jp": "「喜欢」「吃／喝」「什么」「也」で短い会話を。場所・値段・日付の練習にしない。"
+      "kr": "「喜欢」「吃·喝」「什么」「也」만으로 짧게 말해 보세요. 어디·얼마·며칠 묻기로 바꾸지 마세요.",
+      "en": "Build short lines with 喜欢, 吃, 喝, 什么, 也—keep it about food and drink, not place, price, or dates.",
+      "jp": "「喜欢」「吃・喝」「什么」「也」で短い会話に。場所・値段・日付の話にはしない。"
     },
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -465,18 +465,18 @@
           "id": "l9_food",
           "situation": {
             "zh": "会话一：说喜欢的食物",
-            "kr": "회화 1: 좋아하는 음식",
-            "en": "Dialogue 1: favorite food",
+            "kr": "회화1 · 좋아하는 음식 말하기",
+            "en": "Dialogue 1 — food you like",
             "jp": "会話1：好きな食べ物"
           },
           "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你喜欢吃什么？", "pinyin": "nǐ xǐhuan chī shénme?", "kr": "뭐 좋아해 먹어?", "en": "What do you like to eat?", "jp": "何が好き？" },
-            { "zh": "我喜欢吃米饭。", "pinyin": "wǒ xǐhuan chī mǐfàn.", "kr": "밥 좋아해.", "en": "I like rice.", "jp": "ご飯が好き。" },
-            { "zh": "你喜欢吃面条儿吗？", "pinyin": "nǐ xǐhuan chī miàntiáor ma?", "kr": "국수도 좋아해?", "en": "Do you like noodles?", "jp": "麺は好き？" },
-            { "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "좋아해.", "en": "Yes.", "jp": "好きです。" }
+            { "zh": "你喜欢吃什么？", "pinyin": "nǐ xǐhuan chī shénme?", "kr": "뭘 먹는 걸 좋아해?", "en": "What do you like to eat?", "jp": "何を食べるのが好き？" },
+            { "zh": "我喜欢吃米饭。", "pinyin": "wǒ xǐhuan chī mǐfàn.", "kr": "밥 먹는 거 좋아해.", "en": "I like rice.", "jp": "ご飯が好き。" },
+            { "zh": "你喜欢吃面条儿吗？", "pinyin": "nǐ xǐhuan chī miàntiáor ma?", "kr": "면 먹는 것도 좋아해?", "en": "Do you like noodles?", "jp": "麺は好き？" },
+            { "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "응, 좋아.", "en": "Yes, I do.", "jp": "好き。" }
           ],
           "rounds": [
             {
@@ -497,18 +497,18 @@
           "id": "l9_drink",
           "situation": {
             "zh": "会话二：说喜欢的饮料",
-            "kr": "회화 2: 좋아하는 음료",
-            "en": "Dialogue 2: drinks",
-            "jp": "会話2：飲み物"
+            "kr": "회화2 · 좋아하는 음료",
+            "en": "Dialogue 2 — drinks you like",
+            "jp": "会話2：好きな飲み物"
           },
           "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你喜欢喝什么？", "pinyin": "nǐ xǐhuan hē shénme?", "kr": "뭐 마셔?", "en": "What to drink?", "jp": "何を飲む？" },
-            { "zh": "我喜欢喝茶。", "pinyin": "wǒ xǐhuan hē chá.", "kr": "차 좋아해.", "en": "I like tea.", "jp": "お茶が好き。" },
-            { "zh": "你喜欢喝牛奶吗？", "pinyin": "nǐ xǐhuan hē niúnǎi ma?", "kr": "우유 좋아해?", "en": "Like milk?", "jp": "牛乳は好き？" },
-            { "zh": "喜欢，我也喜欢喝牛奶。", "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.", "kr": "응, 나도 우유 좋아해.", "en": "Yes, milk too.", "jp": "はい、牛乳も好きです。" }
+            { "zh": "你喜欢喝什么？", "pinyin": "nǐ xǐhuan hē shénme?", "kr": "뭘 마시는 걸 좋아해?", "en": "What do you like to drink?", "jp": "何を飲むのが好き？" },
+            { "zh": "我喜欢喝茶。", "pinyin": "wǒ xǐhuan hē chá.", "kr": "차 마시는 거 좋아해.", "en": "I like tea.", "jp": "お茶が好き。" },
+            { "zh": "你喜欢喝牛奶吗？", "pinyin": "nǐ xǐhuan hē niúnǎi ma?", "kr": "우유도 마셔?", "en": "Do you like milk?", "jp": "牛乳は好き？" },
+            { "zh": "喜欢，我也喜欢喝牛奶。", "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.", "kr": "응, 나도 우유 마시는 거 좋아해.", "en": "Yes—I like milk too.", "jp": "うん、私も牛乳が好き。" }
           ],
           "rounds": [
             {
@@ -533,23 +533,23 @@
       {
         "zh": "会用「你喜欢吃什么/喝什么？」与「喜欢吃/喝……」完成简单问答。",
         "pinyin": "chī shénme · hē shénme · xǐhuan chī/hē",
-        "kr": "먹고 마시는 취향을 묻고 답한다.",
-        "en": "Ask/answer food and drink preferences.",
-        "jp": "食べ物・飲み物の好みを尋ね答える。"
+        "kr": "「你喜欢吃什么／喝什么？」와 「喜欢吃／喝 …」로 짧게 묻고 답한다.",
+        "en": "Hold short Q&A with 你喜欢吃什么/喝什么? and 喜欢吃/喝…. ",
+        "jp": "「你喜欢吃什么／喝什么？」「喜欢吃／喝 …」で短い応答ができる。"
       },
       {
         "zh": "能在肯定回答后用「也」补充另一种喜好（如茶与牛奶）。",
         "pinyin": "yě xǐhuan",
-        "kr": "긍정 뒤 「也」로 다른 취향을 덧붙인다.",
-        "en": "Use 也 to add another like.",
-        "jp": "「也」でもう一つの好みを足す。"
+        "kr": "「응, 좋아」 뒤에 「也」로 차·우유처럼 또 하나를 붙인다.",
+        "en": "After yes, use 也 to add another drink or food you like.",
+        "jp": "肯定のあと「也」で、お茶に加えて牛乳も好き、と足せる。"
       },
       {
         "zh": "能区分「吃」与「喝」的常见搭配（米饭、面条儿 / 茶、牛奶）。",
         "pinyin": "chī · hē",
-        "kr": "「吃」과 「喝」의 대표적 조합을 구분한다.",
-        "en": "Match 吃 vs 喝 with food vs drink.",
-        "jp": "「吃」と「喝」の組み合わせ。"
+        "kr": "밥·국수에는 「吃」, 차·우유에는 「喝」이 자주 붙는다.",
+        "en": "Pair 吃 with solids (rice, noodles) and 喝 with drinks (tea, milk).",
+        "jp": "「吃」は食べ物、「喝」は飲み物にそろえる。"
       }
     ],
     "lessonExplain": {
@@ -558,73 +558,77 @@
         {
           "zh": "掌握「喜欢 + 动词」结构，并能与「吗」构成是非问句。",
           "pinyin": "xǐhuan + V · … ma?",
-          "kr": "「喜欢+동사」와 「吗」 질문.",
-          "en": "喜欢 + verb and 吗 questions.",
-          "jp": "「喜欢＋動詞」と「吗」。"
+          "kr": "「喜欢 + 동사」를 만들고 「… 吗?」로 예·아니오를 묻는다.",
+          "en": "Build 喜欢 + verb and yes–no questions with …吗.",
+          "jp": "「喜欢＋動詞」と「吗」のイエス・ノー疑問が作れる。"
         },
         {
           "zh": "会用「什么」分别搭配「吃」「喝」提问。",
           "pinyin": "chī shénme · hē shénme",
-          "kr": "「什么」를 「吃」「喝」와 짝지어 묻는다.",
-          "en": "什么 with 吃 and 喝.",
-          "jp": "「什么」を「吃／喝」と組み合わせる。"
+          "kr": "「吃什么」「喝什么」처럼 「什么」를 밥·음료 질문에 붙인다.",
+          "en": "Hook 什么 onto 吃 and 喝 to ask what to eat or drink.",
+          "jp": "「什么」を「吃」「喝」に付けて何を食べ／飲むかを尋ねる。"
         },
         {
           "zh": "本课讲饮食喜好，不是问地点、问价格或自我介绍姓名。",
           "pinyin": "yǐnshí xǐhào",
-          "kr": "이 과는 음식 취향이 중심이며 장소·가격·이름 과제가 아닙니다.",
-          "en": "This lesson is food/drink—not place, price, or names.",
-          "jp": "本課は食の好み。場所や値段の練習ではない。"
+          "kr": "이 과는 먹고 마시는 이야기예요. 어디·얼마·이름 묻기가 아닙니다.",
+          "en": "Stay on food and drink—this isn’t the lesson for place, price, or names.",
+          "jp": "この課は食べ物と飲み物。場所・値段・名前の練習ではありません。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：米饭与面条儿。会话二：茶、牛奶与「也」。扩展与阅读材料补充水果、水与早餐词汇。",
-        "kr": "회화1: 밥·국수; 회화2: 차·우유·「也」. 확장: 과일·물·아침 단어.",
-        "en": "Dialogues: rice/noodles; tea/milk/也. Extension: fruit, water, breakfast list.",
-        "jp": "会話：ご飯・麺、茶・牛乳と「也」。拡張：果物・水・朝食。"
+        "kr": "회화1 밥·국수 → 회화2 차·우유·「也」 → 확장에 과일·물·아침 단어.",
+        "en": "Dialogue 1: rice & noodles · Dialogue 2: tea, milk, 也 · Extra: fruit, water, breakfast words.",
+        "jp": "会話1 ご飯と麺／会話2 お茶・牛乳と「也」／拡張で果物・水・朝食の語。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：「你喜欢吃什么？」—「我喜欢吃米饭。」—「你喜欢吃面条儿吗？」—「喜欢。」",
           "pinyin": "xǐhuan chī shénme · mǐfàn · miàntiáor",
-          "kr": "회화1 흐름을 따릅니다."
+          "kr": "회화1: 무엇을 좋아하나 → 밥 → 국수도? → 응.",
+          "en": "D1: what do you like → rice → noodles too? → yes.",
+          "jp": "会話1：好きなもの→ご飯→麺も？→うん。"
         },
         {
           "zh": "会话二：「你喜欢喝什么？」—「我喜欢喝茶。」—「你喜欢喝牛奶吗？」—「喜欢，我也喜欢喝牛奶。」",
           "pinyin": "hē shénme · chá · niúnǎi · yě",
-          "kr": "회화2에서 「也」를 주목합니다."
+          "kr": "회화2: 무엇을 마시나 → 차 → 우유도? → 나도 우유.",
+          "en": "D2: what to drink → tea → milk? — yes, milk too.",
+          "jp": "会話2：飲み物は→お茶→牛乳も？→私も牛乳。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「吃」多用于固体食物，「喝」多用于液体；口语里搭配相对固定。",
           "pinyin": "chī · hē",
-          "kr": "고체는 「吃」, 액체는 「喝」에 자주 붙습니다.",
-          "en": "吃 ≈ eat; 喝 ≈ drink.",
-          "jp": "「吃」は食べ物、「喝」は飲み物に。"
+          "kr": "많이 씹는 음식은 「吃」, 마시는 것은 「喝」—궁합이 거의 정해져 있어요.",
+          "en": "Most solids go with 吃; drinks go with 喝—that pairing is pretty fixed.",
+          "jp": "食べ物は「吃」、飲み物は「喝」と覚えると楽です。"
         },
         {
           "zh": "「喜欢。」单独回答时，承接上一句「……吗？」的肯定。",
           "pinyin": "Xǐhuan.",
-          "kr": "앞의 「吗」 질문에 대한 짧은 긍정.",
-          "en": "Short yes to a 吗 question.",
-          "jp": "「吗」の質問への短い肯定。"
+          "kr": "「喜欢。」만 말해도 앞의 「… 吗?」에 대한 ‘응’이에요.",
+          "en": "A bare 喜欢 answers “yes” to the previous 吗 question.",
+          "jp": "「喜欢。」だけで、前の「吗」の質問に「はい」の意味になります。"
         },
         {
           "zh": "「也」放在主语后、动词前，表示「同样」：我也喜欢……",
           "pinyin": "wǒ yě xǐhuan",
-          "kr": "「也」는 주어 뒤, 동사 앞.",
-          "en": "也 after subject: 我也…",
-          "jp": "「也」は主語の後、動詞の前。"
+          "kr": "「也」는 주어 뒤, 「喜欢」 앞—「나도 … 좋아」 패턴.",
+          "en": "Put 也 after the subject: 我也喜欢… “I also like…”.",
+          "jp": "「也」は主語のあと、「喜欢」の前—「私も好き」。"
         }
       ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「吃」和「喝」后面都能接「什么」吗？「也喜欢」的语序可以换吗？",
-      "kr": "예: 「吃」「喝」 뒤에 모두 「什么」가 올 수 있나요? 「也喜欢」 어순은?",
-      "en": "e.g. 什么 after both 吃 and 喝? Word order with 也喜欢?",
-      "jp": "例:「吃」「喝」のあとに「什么」？「也喜欢」の語順？"
+      "kr": "예: 「吃」「喝」 뒤에 둘 다 「什么」가 올 수 있나요? 「也喜欢」 자리를 바꿔도 되나요?",
+      "en": "Ask things like: Can 什么 follow both 吃 and 喝? Can you move 也喜欢 around?",
+      "jp": "例:「吃」と「喝」のあとにどちらも「什么」？「也喜欢」の語順は動かせる？"
     },
     "freeAskExamples": {
       "zh": [
@@ -642,11 +646,11 @@
         "아침 메뉴 단어는 회화 어디에 나오나요?"
       ],
       "en": [
-        "Why 儿 in 面条儿?",
-        "What can 好吃 describe?",
-        "Why 吃水果?",
-        "Where to put 也?",
-        "Where do breakfast-list words appear?"
+        "What’s the 儿 in 面条儿 for?",
+        "What kinds of things can you call 好吃?",
+        "Why do we say 吃水果 and not 喝水果?",
+        "Where does 也 usually sit in the sentence?",
+        "Do breakfast-list words show up in the dialogues?"
       ],
       "jp": [
         "「面条儿」の「儿」は？",
@@ -662,9 +666,9 @@
         "pinyin": "nǐ xǐhuan chī shénme? / wǒ xǐhuan chī mǐfàn.",
         "usage": {
           "zh": "询问与陈述对主食的喜好。",
-          "kr": "주식 취향을 묻고 말합니다.",
-          "en": "Ask and state food likes.",
-          "jp": "主食の好みを尋ね答える。"
+          "kr": "밥·면 같은 먹을 것 좋아하는지 묻고 말할 때.",
+          "en": "For asking and saying what you like to eat.",
+          "jp": "主食の好みを聞いたり言ったりするとき。"
         }
       },
       {
@@ -672,9 +676,9 @@
         "pinyin": "nǐ xǐhuan hē shénme? / wǒ xǐhuan hē chá.",
         "usage": {
           "zh": "询问与陈述对饮料的喜好。",
-          "kr": "음료 취향을 묻고 말합니다.",
-          "en": "Ask and state drink likes.",
-          "jp": "飲み物の好みを尋ね答える。"
+          "kr": "차·우유처럼 마실 것 좋아하는지 묻고 말할 때.",
+          "en": "For asking and saying what you like to drink.",
+          "jp": "飲み物の好みを聞いたり言ったりするとき。"
         }
       },
       {
@@ -682,9 +686,9 @@
         "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.",
         "usage": {
           "zh": "先肯定，再用「也」补充另一种同样喜欢的事物。",
-          "kr": "긍정 후 「也」로 덧붙이기.",
-          "en": "Yes, and also… with 也.",
-          "jp": "肯定したあと「也」で追加。"
+          "kr": "먼저 좋다고 한 뒤, 「也」로 또 하나를 덧붙일 때.",
+          "en": "Say yes first, then 也 to add another thing you like.",
+          "jp": "一度「好き」と言ったあと、「也」でもう一つ足す。"
         }
       }
     ]
