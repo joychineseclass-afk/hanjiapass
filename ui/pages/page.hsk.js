@@ -54,9 +54,9 @@ import {
   PROGRESS_SELECTORS,
   AUDIO_ENGINE,
   renderReviewMode,
-  prepareReviewSession
+  prepareReviewSession,
+  stopAllLearningAudio,
 } from "../platform/index.js";
-import { stopFreeTalkAnswerTts } from "../modules/ai/freeTalkAnswerTts.js";
 import * as PracticeState from "../modules/practice/practiceState.js";
 import { mountPractice as mountPracticeFromEngine, rerenderPractice as rerenderPracticeFromEngine } from "../modules/practice/practiceRenderer.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
@@ -2241,6 +2241,7 @@ async function collectPriorRegularLessonHanziSet(lessonNo, _targetsByNo) {
 }
 
 async function openLesson({ lessonNo, file } = {}) {
+  stopAllLearningAudio();
   const no = Number(lessonNo || 1) || 1;
   const f = String(file || "");
 
@@ -2631,6 +2632,7 @@ function bindEvents() {
 
   // ===== Review mode =====
   function enterReviewMode(mode, lessonId = "", levelKey = "") {
+    stopAllLearningAudio();
     const container = $("hskReviewContainer");
     if (!container || !renderReviewMode) return;
 
@@ -3023,10 +3025,7 @@ function bindEvents() {
       e.preventDefault();
       e.stopPropagation();
 
-      AUDIO_ENGINE.stop();
-      document
-        .querySelectorAll(".is-speaking")
-        .forEach((x) => x.classList.remove("is-speaking"));
+      stopAllLearningAudio();
 
       const lineEl =
         target.closest(".lesson-dialogue-line") ||
@@ -3066,9 +3065,7 @@ function bindEvents() {
         if (!btn) return;
 
         state.tab = btn.dataset.tab;
-        if (state.tab !== "ai") {
-          stopFreeTalkAnswerTts();
-        }
+        stopAllLearningAudio();
         updateTabsUI();
 
         if (state.tab === "practice") {
@@ -3387,6 +3384,7 @@ function showStudyMode(titleText = "") {
 }
 
 function showListMode() {
+  stopAllLearningAudio();
   const studyBar = $("hskStudyBar");
   const studyPanels = $("hskStudyPanels");
   const listWrap = $("hskLessonListWrap");
@@ -4157,9 +4155,7 @@ if (el)
     if (!btn) return;
 
     state.tab = btn.dataset.tab;
-    if (state.tab !== "ai") {
-      stopFreeTalkAnswerTts();
-    }
+    stopAllLearningAudio();
     updateTabsUI();
 
     // ⭐ 只有切到 practice 时才 rerender
@@ -4172,6 +4168,7 @@ if (el)
   });
 
 function enterReviewMode(mode, lessonId = "", levelKey = "") {
+  stopAllLearningAudio();
   const container = $("hskReviewContainer");
   if (!container || !renderReviewMode) return;
 

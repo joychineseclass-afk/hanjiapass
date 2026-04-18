@@ -32,8 +32,8 @@ export {
 export { PROGRESS_ENGINE, PROGRESS_SELECTORS } from "./progress/index.js";
 export * as REVIEW from "./review/index.js";
 export { renderReviewMode, prepareReviewSession } from "./review/index.js";
-import { TTS_ENGINE, AUDIO_ENGINE } from "./audio/index.js";
-export { TTS_ENGINE, AUDIO_ENGINE };
+import { TTS_ENGINE, AUDIO_ENGINE, stopAllLearningAudio } from "./audio/index.js";
+export { TTS_ENGINE, AUDIO_ENGINE, stopAllLearningAudio };
 if (typeof window !== "undefined") {
   window.TTS_ENGINE = TTS_ENGINE;
   window.AUDIO_ENGINE = AUDIO_ENGINE;

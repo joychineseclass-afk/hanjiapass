@@ -11,6 +11,8 @@
 // - Concurrent-safe: latest navigation wins
 // - Robust initial render: always renders once on start (no reliance on hashchange)
 
+import { stopAllLearningAudio } from "./platform/audio/stopAllLearningAudio.js";
+
 const ROUTES = new Map();
 
 let started = false;
@@ -239,6 +241,12 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
     // force: true but already rendered same route → skip to avoid double mount (e.g. startRouter microtask after hashchange)
     emitRouteEvent();
     return;
+  }
+
+  try {
+    stopAllLearningAudio();
+  } catch (e) {
+    console.warn("[router] stopAllLearningAudio:", e);
   }
 
   const token = ++navToken;
