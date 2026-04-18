@@ -1,7 +1,7 @@
 {
   "courseId": "hsk1",
   "level": "HSK1",
-  "_luminaNote": "HSK 3.0 一级：第 1–10 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "_luminaNote": "HSK 3.0 一级：第 1–13 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -241,6 +241,78 @@
         "kr": "제10과",
         "en": "Lesson 10",
         "jp": "第10課"
+      }
+    },
+    {
+      "lessonNo": 11,
+      "id": "hsk1_lesson11",
+      "file": "lesson11.json",
+      "title": {
+        "cn": "这是谁的书？",
+        "zh": "这是谁的书？",
+        "kr": "이거 누구 책이에요?",
+        "en": "Whose Book Is This?",
+        "jp": "これはだれの本ですか。"
+      },
+      "sceneGoal": "学习用「的」表所属，用「这/那/这些/那些」「谁、哪个、哪些」询问物品是谁的，并掌握「都」",
+      "subtitle": "所属 · 疑问代词",
+      "grammarTargets": ["的", "这 / 那 / 这些 / 那些", "谁 / 哪个 / 哪些", "都"],
+      "vocabTargets": ["这", "那", "的", "谁", "哪个", "哪些", "这些", "那些", "本", "个", "东西", "书", "只", "狗", "猫", "它", "都", "有些", "有的", "些"],
+      "extensionTargets": ["扩展表达", "失物信息"],
+      "displayTitle": {
+        "cn": "第11课",
+        "zh": "第11课",
+        "kr": "제11과",
+        "en": "Lesson 11",
+        "jp": "第11課"
+      }
+    },
+    {
+      "lessonNo": 12,
+      "id": "hsk1_lesson12",
+      "file": "lesson12.json",
+      "title": {
+        "cn": "房间里有什么？",
+        "zh": "房间里有什么？",
+        "kr": "방 안에 뭐가 있어요?",
+        "en": "What’s in the Room?",
+        "jp": "部屋の中に何がありますか。"
+      },
+      "sceneGoal": "学习用「……里有什么」描述房间与处所里的事物，用「能/可以」表许可，用形容词作谓语描述房间",
+      "subtitle": "房间 · 里外",
+      "grammarTargets": ["处所 + 有", "能 / 可以", "形容词谓语句"],
+      "vocabTargets": ["里", "能", "看", "可以", "真", "外", "外边", "后", "后边", "小", "大", "新", "好看", "椅子", "电脑"],
+      "extensionTargets": ["扩展表达", "房间物品清单"],
+      "displayTitle": {
+        "cn": "第12课",
+        "zh": "第12课",
+        "kr": "제12과",
+        "en": "Lesson 12",
+        "jp": "第12課"
+      }
+    },
+    {
+      "lessonNo": 13,
+      "id": "hsk1_lesson13",
+      "file": "lesson13.json",
+      "title": {
+        "cn": "你住在哪里？",
+        "zh": "你住在哪里？",
+        "kr": "어디 살아요?",
+        "en": "Where Do You Live?",
+        "jp": "どこに住んでいますか。"
+      },
+      "sceneGoal": "学习用「住在」说住处，用「去、来」说动向，用「和」介绍同伴，并认识「吧」",
+      "subtitle": "住处 · 来去",
+      "grammarTargets": ["住在 + 地点", "去 / 来", "和", "吧"],
+      "vocabTargets": ["住", "哪里", "哪儿", "那里", "同学", "商店", "书店", "饭店", "电影院", "电影", "超市", "店", "来", "去", "和", "知道"],
+      "extensionTargets": ["扩展表达", "场所标识"],
+      "displayTitle": {
+        "cn": "第13课",
+        "zh": "第13课",
+        "kr": "제13과",
+        "en": "Lesson 13",
+        "jp": "第13課"
       }
     }
   ]

@@ -8600,5 +8600,113 @@
       "level": "hsk1",
       "version": "hsk3.0"
     }
+  },
+  {
+    "id": "hsk3.0:hsk1:0507",
+    "hanzi": "哪个",
+    "pinyin": "nǎge",
+    "meaning": {
+      "zh": "哪个",
+      "en": "which one",
+      "ko": "어느"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0508",
+    "hanzi": "些",
+    "pinyin": "xiē",
+    "meaning": {
+      "zh": "些",
+      "en": "some; a few (suffix)",
+      "ko": "조금"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0509",
+    "hanzi": "可以",
+    "pinyin": "kěyǐ",
+    "meaning": {
+      "zh": "可以",
+      "en": "can; may; OK",
+      "ko": "괜찮다; ~해도 되다"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0510",
+    "hanzi": "椅子",
+    "pinyin": "yǐzi",
+    "meaning": {
+      "zh": "椅子",
+      "en": "chair",
+      "ko": "의자"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0511",
+    "hanzi": "超市",
+    "pinyin": "chāoshì",
+    "meaning": {
+      "zh": "超市",
+      "en": "supermarket",
+      "ko": "마트"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0512",
+    "hanzi": "猫",
+    "pinyin": "māo",
+    "meaning": {
+      "zh": "猫",
+      "en": "cat",
+      "ko": "고양이"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0513",
+    "hanzi": "狗",
+    "pinyin": "gǒu",
+    "meaning": {
+      "zh": "狗",
+      "en": "dog",
+      "ko": "개"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0514",
+    "hanzi": "它",
+    "pinyin": "tā",
+    "meaning": {
+      "zh": "它",
+      "en": "it (non-human)",
+      "ko": "그것"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0515",
+    "hanzi": "店",
+    "pinyin": "diàn",
+    "meaning": {
+      "zh": "店",
+      "en": "shop; store",
+      "ko": "가게"
+    },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
   }
 ]

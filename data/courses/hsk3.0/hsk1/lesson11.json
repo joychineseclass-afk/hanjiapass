@@ -1,0 +1,1131 @@
+{
+  "id": "hsk1_lesson11",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 11,
+  "type": "lesson",
+  "title": {
+    "zh": "第11课｜这是谁的书？",
+    "cn": "第11课｜这是谁的书？",
+    "kr": "제11과｜이거 누구 책이에요?",
+    "en": "Lesson 11 | Whose Book Is This?",
+    "jp": "第11課｜これはだれの本ですか。"
+  },
+  "summary": {
+    "zh": "学习用「的」表所属，用「这/那/这些/那些」「谁、哪个、哪些」询问与说明物品是谁的，并认识「都」。",
+    "kr": "「的」로 소유를 말하고 「这·那·这些·那些」「谁·哪个·哪些」로 누구 것인지 묻고 답하며 「都」를 익힙니다.",
+    "en": "Use 的 for possession; 这/那/这些/那些 and 谁/哪个/哪些 to ask and say who things belong to; learn 都.",
+    "jp": "「的」で所属、「这／那／这些／那些」「谁・哪个・哪些」でだれのものかを尋ね・言い、「都」を学びます。"
+  },
+  "scene": {
+    "id": "hsk30_l11_scene",
+    "title": {
+      "zh": "物品是谁的",
+      "kr": "물건이 누구 것",
+      "en": "Whose things?",
+      "jp": "だれのもの"
+    },
+    "summary": {
+      "zh": "会话一：找书；会话二：说宠物；会话三：教室里确认东西。",
+      "kr": "회화1 책 찾기 → 회화2 반려 → 회화3 교실에서 확인.",
+      "en": "1: Finding a book · 2: Pets · 3: Checking things in class.",
+      "jp": "会話1 本／会話2 ペット／会話3 教室で確認。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「……是谁的？」「……是我的/老师的」说明物品归属",
+      "pinyin": "shéi de · wǒ de · lǎoshī de",
+      "kr": "「是谁的?」「是我的」「是老师的」처럼 소유를 말한다.",
+      "en": "Say who owns what with 是谁的, 我的, 老师的, etc.",
+      "jp": "「是谁的？」「是我的」などで持ち主が言える。"
+    },
+    {
+      "zh": "能区分「这个/那个」与「这些/那些」，并用「都」表示总括",
+      "pinyin": "zhège · nàxiē · dōu",
+      "kr": "「这个／那个」와 「这些／那些」를 가리키며 「都」로 전부를 말한다.",
+      "en": "Tell 这个/那个 from 这些/那些; use 都 for “all.”",
+      "jp": "「这个／那个」と「这些／那些」を使い分け、「都」でまとめて言う。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜找书",
+        "kr": "회화 1｜책 찾기",
+        "en": "Dialogue 1 | Finding a book",
+        "jp": "会話1｜本を探す"
+      },
+      "summary": {
+        "zh": "问是谁的书，用「我的」「那本」「这些」说明。",
+        "kr": "누구 책인지 묻고 「我的」「那本」「这些」로 답합니다.",
+        "en": "They ask whose book it is and answer with 我的, 那本, 这些.",
+        "jp": "だれの本かを聞き、「我的」「那本」「这些」で答えます。"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "这是谁的书？",
+          "pinyin": "Zhè shì shéi de shū?",
+          "translation": {
+            "kr": "이거 누구 책이에요?",
+            "en": "Whose book is this?",
+            "jp": "これはだれの本ですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "这是我的书。",
+          "pinyin": "Zhè shì wǒ de shū.",
+          "translation": {
+            "kr": "제 책이에요.",
+            "en": "It’s my book.",
+            "jp": "私の本です。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "那本书呢？",
+          "pinyin": "Nà běn shū ne?",
+          "translation": {
+            "kr": "저 책은요?",
+            "en": "What about that one?",
+            "jp": "あの一冊は？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "那本也是我的。",
+          "pinyin": "Nà běn yě shì wǒ de.",
+          "translation": {
+            "kr": "저것도 제 거예요.",
+            "en": "That one’s mine too.",
+            "jp": "あれも私のです。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "还有哪些是你的？",
+          "pinyin": "Hái yǒu nǎxiē shì nǐ de?",
+          "translation": {
+            "kr": "또 뭐가 당신 거예요?",
+            "en": "What else is yours?",
+            "jp": "ほかにあなたのものは？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "这些都是我的。",
+          "pinyin": "Zhèxiē dōu shì wǒ de.",
+          "translation": {
+            "kr": "이것들은 다 제 거예요.",
+            "en": "These are all mine.",
+            "jp": "これは全部わたしのです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜说宠物",
+        "kr": "회화 2｜반려동물",
+        "en": "Dialogue 2 | Pets",
+        "jp": "会話2｜ペット"
+      },
+      "summary": {
+        "zh": "问猫狗是谁的，用「都」说两种都喜欢。",
+        "kr": "고양이·개가 누구 것인지 묻고 「都」로 둘 다 좋다고 합니다.",
+        "en": "They ask whose cat and dogs are, and say they like both with 都.",
+        "jp": "猫や犬がだれのものかを聞き、「都喜欢」と言います。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "这只猫是谁的？",
+          "pinyin": "Zhè zhī māo shì shéi de?",
+          "translation": {
+            "kr": "이 고양이는 누구 거예요?",
+            "en": "Whose cat is this?",
+            "jp": "この猫はだれのですか。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "它是我的猫。",
+          "pinyin": "Tā shì wǒ de māo.",
+          "translation": {
+            "kr": "제 고양이예요.",
+            "en": "It’s my cat.",
+            "jp": "私の猫です。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "那些狗呢？",
+          "pinyin": "Nàxiē gǒu ne?",
+          "translation": {
+            "kr": "저 개들은요?",
+            "en": "What about those dogs?",
+            "jp": "あの犬たちは？"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "它们也是我的。",
+          "pinyin": "Tāmen yě shì wǒ de.",
+          "translation": {
+            "kr": "그것들도 제 거예요.",
+            "en": "They’re mine too.",
+            "jp": "それも私のです。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "你喜欢猫还是喜欢狗？",
+          "pinyin": "Nǐ xǐhuan māo háishì xǐhuan gǒu?",
+          "translation": {
+            "kr": "고양이랑 개 중에 뭐가 더 좋아요?",
+            "en": "Do you like cats or dogs?",
+            "jp": "猫と犬、どちらが好きですか。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "我都喜欢。",
+          "pinyin": "Wǒ dōu xǐhuan.",
+          "translation": {
+            "kr": "둘 다 좋아요.",
+            "en": "I like both.",
+            "jp": "どちらも好きです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜教室里确认东西",
+        "kr": "회화 3｜교실에서 확인",
+        "en": "Dialogue 3 | Checking in the classroom",
+        "jp": "会話3｜教室で確認"
+      },
+      "summary": {
+        "zh": "问哪张桌子、桌上的东西，区分「这些/那些」与「有的……有的……」。",
+        "kr": "어느 책상인지, 책상 위 물건을 묻고 「这些／那些」「有的…有的…」로 나눕니다.",
+        "en": "Which desk, things on it; 这些/那些; 有的…有的….",
+        "jp": "どの机か、上の物、「这些／那些」、「有的…有的…」。"
+      },
+      "lines": [
+        {
+          "speaker": "安娜",
+          "text": "哪个桌子是你的？",
+          "pinyin": "Nǎge zhuōzi shì nǐ de?",
+          "translation": {
+            "kr": "어느 책상이 당신 거예요?",
+            "en": "Which desk is yours?",
+            "jp": "どの机があなたのですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "这个是我的。",
+          "pinyin": "Zhège shì wǒ de.",
+          "translation": {
+            "kr": "이게 제 거예요.",
+            "en": "This one’s mine.",
+            "jp": "これが私のです。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "你桌子上的东西很多呢！",
+          "pinyin": "Nǐ zhuōzi shàng de dōngxi hěn duō ne!",
+          "translation": {
+            "kr": "책상 위에 물건이 정말 많네요!",
+            "en": "You’ve got a lot on your desk!",
+            "jp": "机の上、物がたくさんありますね！"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "是的，我有很多书。",
+          "pinyin": "Shì de, wǒ yǒu hěn duō shū.",
+          "translation": {
+            "kr": "네, 책이 많아요.",
+            "en": "Yes—I have a lot of books.",
+            "jp": "ええ、本がたくさんあります。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "这些书都是你的吗？",
+          "pinyin": "Zhèxiē shū dōu shì nǐ de ma?",
+          "translation": {
+            "kr": "이 책들이 다 당신 거예요?",
+            "en": "Are all these books yours?",
+            "jp": "この本は全部あなたのですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "不是。这些是我的，那些不是我的",
+          "pinyin": "Bù shì. Zhèxiē shì wǒ de, nàxiē bù shì wǒ de.",
+          "translation": {
+            "kr": "아니요. 이건 제 거고, 저건 제 거 아니에요.",
+            "en": "No. These are mine; those aren’t.",
+            "jp": "いいえ。こちらは私の、あちらは私のではありません。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "那些是谁的？",
+          "pinyin": "Nàxiē shì shéi de?",
+          "translation": {
+            "kr": "그건 누구 거예요?",
+            "en": "Whose are those?",
+            "jp": "あれはだれのですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "有的是老师的，有的是朋友的。",
+          "pinyin": "Yǒude shì lǎoshī de, yǒude shì péngyou de.",
+          "translation": {
+            "kr": "어떤 건 선생님 거고, 어떤 건 친구 거예요.",
+            "en": "Some are the teacher’s, some are friends’.",
+            "jp": "先生のものもあれば、友だちのものもあります。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "的表示所属",
+      "pinyin": "de biǎoshǔ suǒshǔ",
+      "hint": {
+        "zh": "谁的、我的",
+        "kr": "소유",
+        "en": "possession",
+        "jp": "所属"
+      },
+      "explanation": {
+        "zh": "结构助词「的」附在名词或代词后，表示领有或属性，如「我的书」「老师的笔」。\n\n「我的」\nwǒ de\n「老师的」\nlǎoshī de",
+        "kr": "「的」는 「내」「선생님의」처럼 누구 것인지 붙일 때 씁니다.",
+        "en": "的 marks whose: 我的书 my book, 老师的 the teacher’s.",
+        "jp": "「的」は「私の」「先生の」のように持ち主を表します。"
+      },
+      "examples": [
+        {
+          "zh": "这是我的书。",
+          "pinyin": "Zhè shì wǒ de shū.",
+          "translation": {
+            "kr": "이건 제 책이에요.",
+            "en": "This is my book.",
+            "jp": "これは私の本です。"
+          }
+        },
+        {
+          "zh": "那只猫是安娜的。",
+          "pinyin": "Nà zhī māo shì Ānnà de.",
+          "translation": {
+            "kr": "저 고양이는 안나 거예요.",
+            "en": "That cat is Anna’s.",
+            "jp": "あの猫はアンナさんのです。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "这 / 那 / 这些 / 那些",
+      "pinyin": "zhè / nà / zhèxiē / nàxiē",
+      "hint": {
+        "zh": "近指与远指",
+        "kr": "가리키기",
+        "en": "this vs that",
+        "jp": "指示"
+      },
+      "explanation": {
+        "zh": "「这」类词指近处或当前话题，「那」类指远处；加「些」表复数：这些、那些。\n\n「这个」\nzhège\n「那些」\nnàxiē",
+        "kr": "「这」는 가까운 것,「那」는 먼 것; 「些」를 붙이면 여러 개.",
+        "en": "这 = this way; 那 = that; 这些/那些 = these/those.",
+        "jp": "「这」は近く、「那」は遠く；「这些」「那些」は複数。"
+      },
+      "examples": [
+        {
+          "zh": "这些都是我的。",
+          "pinyin": "Zhèxiē dōu shì wǒ de.",
+          "translation": {
+            "kr": "이것들은 다 제 거예요.",
+            "en": "These are all mine.",
+            "jp": "これは全部私のです。"
+          }
+        },
+        {
+          "zh": "那些不是我的。",
+          "pinyin": "Nàxiē bù shì wǒ de.",
+          "translation": {
+            "kr": "저것들은 제 게 아니에요.",
+            "en": "Those aren’t mine.",
+            "jp": "あれは私のではありません。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "谁 / 哪个 / 哪些",
+      "pinyin": "shéi / nǎge / nǎxiē",
+      "hint": {
+        "zh": "询问人或物",
+        "kr": "누구·어느",
+        "en": "who / which",
+        "jp": "だれ・どれ"
+      },
+      "explanation": {
+        "zh": "「谁」问人；「哪个」问在一定范围内的某一个；「哪些」问多个。\n\n「谁的书」\nshéi de shū\n「哪些是你的」\nnǎxiē shì nǐ de",
+        "kr": "「谁」는 사람,「哪个」는 하나를 고를 때,「哪些」는 여러 개.",
+        "en": "谁 = who; 哪个 = which one; 哪些 = which ones.",
+        "jp": "「谁」は人、「哪个」は一つ選ぶとき、「哪些」は複数。"
+      },
+      "examples": [
+        {
+          "zh": "这是谁的书？",
+          "pinyin": "Zhè shì shéi de shū?",
+          "translation": {
+            "kr": "이거 누구 책이에요?",
+            "en": "Whose book is this?",
+            "jp": "これはだれの本ですか。"
+          }
+        },
+        {
+          "zh": "还有哪些是你的？",
+          "pinyin": "Hái yǒu nǎxiē shì nǐ de?",
+          "translation": {
+            "kr": "또 뭐가 당신 거예요?",
+            "en": "What else is yours?",
+            "jp": "ほかにあなたのはどれですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "都",
+      "pinyin": "dōu",
+      "hint": {
+        "zh": "总括",
+        "kr": "모두",
+        "en": "all / both",
+        "jp": "みな・どちらも"
+      },
+      "explanation": {
+        "zh": "副词「都」表示所谈对象在所说范围内全部包括，如「我们都喜欢」「这些书都是我的」。\n\n「都」\ndōu\n「都喜欢」\ndōu xǐhuan",
+        "kr": "「都」는 말한 범위가 전부일 때 씁니다.",
+        "en": "都 sums up: all of them, both.",
+        "jp": "「都」は全部・両方をまとめて言うときに使います。"
+      },
+      "examples": [
+        {
+          "zh": "我都喜欢。",
+          "pinyin": "Wǒ dōu xǐhuan.",
+          "translation": {
+            "kr": "둘 다 좋아요.",
+            "en": "I like both.",
+            "jp": "どちらも好きです。"
+          }
+        },
+        {
+          "zh": "这些书都是你的吗？",
+          "pinyin": "Zhèxiē shū dōu shì nǐ de ma?",
+          "translation": {
+            "kr": "이 책들이 다 당신 거예요?",
+            "en": "Are all these books yours?",
+            "jp": "この本は全部あなたのですか。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "这本书是我的。",
+          "pinyin": "Zhè běn shū shì wǒ de.",
+          "translations": {
+            "kr": "이 책은 제 거예요.",
+            "en": "This book is mine.",
+            "jp": "この本は私のです。"
+          }
+        },
+        {
+          "zh": "那些不是我的。",
+          "pinyin": "Nàxiē bù shì wǒ de.",
+          "translations": {
+            "kr": "저것들은 제 게 아니에요.",
+            "en": "Those aren’t mine.",
+            "jp": "あれは私のではありません。"
+          }
+        },
+        {
+          "zh": "我都喜欢。",
+          "pinyin": "Wǒ dōu xǐhuan.",
+          "translations": {
+            "kr": "다 좋아요.",
+            "en": "I like them all.",
+            "jp": "どれも好きです。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜失物信息",
+        "kr": "읽기｜분실 안내",
+        "en": "Reading | Lost & found notes",
+        "jp": "読み物｜落とし物のお知らせ"
+      },
+      "sentences": [
+        {
+          "zh": "这本书是李明的。",
+          "pinyin": "Zhè běn shū shì Lǐ Míng de.",
+          "translations": {
+            "kr": "이 책은 리밍 씨 거예요.",
+            "en": "This book is Li Ming’s.",
+            "jp": "この本は李明さんのです。"
+          }
+        },
+        {
+          "zh": "那只猫是安娜的。",
+          "pinyin": "Nà zhī māo shì Ānnà de.",
+          "translations": {
+            "kr": "저 고양이는 안나 거예요.",
+            "en": "That cat is Anna’s.",
+            "jp": "あの猫はアンナさんのです。"
+          }
+        },
+        {
+          "zh": "这些东西不是我的。",
+          "pinyin": "Zhèxiē dōngxi bù shì wǒ de.",
+          "translations": {
+            "kr": "이 물건들은 제 게 아니에요.",
+            "en": "These things aren’t mine.",
+            "jp": "これらは私のものではありません。"
+          }
+        },
+        {
+          "zh": "那些书是王美的。",
+          "pinyin": "Nàxiē shū shì Wáng Měi de.",
+          "translations": {
+            "kr": "저 책들은 왕메이 씨 거예요.",
+            "en": "Those books are Wang Mei’s.",
+            "jp": "あの本は王美さんのです。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l11_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「这是谁的东西」？",
+        "kr": "「이게 누구 거야?」에 가장 가까운 말은?",
+        "en": "Which line is really asking who something belongs to?",
+        "jp": "「だれのものか」を聞いているのはどれ？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "这是谁的书？",
+          "cn": "这是谁的书？",
+          "kr": "이거 누구 책이에요?",
+          "en": "Whose book is this?",
+          "jp": "これはだれの本ですか。"
+        },
+        {
+          "key": "B",
+          "zh": "你几岁？",
+          "cn": "你几岁？",
+          "kr": "몇 살이에요?",
+          "en": "How old are you?",
+          "jp": "おいくつですか。"
+        },
+        {
+          "key": "C",
+          "zh": "现在几点？",
+          "cn": "现在几点？",
+          "kr": "지금 몇 시예요?",
+          "en": "What time is it?",
+          "jp": "今何時ですか。"
+        },
+        {
+          "key": "D",
+          "zh": "这个多少钱？",
+          "cn": "这个多少钱？",
+          "kr": "이거 얼마예요?",
+          "en": "How much is this?",
+          "jp": "いくらですか。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「谁」问人；「谁的」问归属，与本课一致。",
+        "kr": "「谁」로 사람을 묻고 「谁的」로 소유를 묻습니다.",
+        "en": "谁 asks who; 谁的 asks whose—this lesson’s focus.",
+        "jp": "「谁」は人、「谁的」は持ち主を尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l11_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「哪些」的拼音是？",
+        "kr": "「哪些」의 병음은?",
+        "en": "What’s the pinyin for 哪些?",
+        "jp": "「哪些」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "nǎxiē",
+          "cn": "nǎxiē",
+          "kr": "nǎxiē",
+          "en": "nǎxiē",
+          "jp": "nǎxiē"
+        },
+        {
+          "key": "B",
+          "zh": "nǎxié",
+          "cn": "nǎxié",
+          "kr": "nǎxié",
+          "en": "nǎxié",
+          "jp": "nǎxié"
+        },
+        {
+          "key": "C",
+          "zh": "lǎxiē",
+          "cn": "lǎxiē",
+          "kr": "lǎxiē",
+          "en": "lǎxiē",
+          "jp": "lǎxiē"
+        },
+        {
+          "key": "D",
+          "zh": "nàxiē",
+          "cn": "nàxiē",
+          "kr": "nàxiē",
+          "en": "nàxiē",
+          "jp": "nàxiē"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「哪些」读作 nǎxiē。",
+        "kr": "「哪些」는 nǎxiē입니다.",
+        "en": "Read it nǎxiē.",
+        "jp": "読みは nǎxiē です。"
+      }
+    },
+    {
+      "id": "hsk30_l11_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "汤姆问「还有哪些是你的？」，与本课会话一致的答句是：",
+        "kr": "「还有哪些是你的？」에 나오는 답으로 맞는 것은?",
+        "en": "Tom asks what else is yours—which answer fits this lesson?",
+        "jp": "「还有哪些是你的？」に合う答えは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "这些都是我的。",
+          "cn": "这些都是我的。",
+          "kr": "이것들은 다 제 거예요.",
+          "en": "These are all mine.",
+          "jp": "これは全部私のです。"
+        },
+        {
+          "key": "B",
+          "zh": "今天星期五。",
+          "cn": "今天星期五。",
+          "kr": "오늘은 금요일이에요.",
+          "en": "Today is Friday.",
+          "jp": "今日は金曜日です。"
+        },
+        {
+          "key": "C",
+          "zh": "我去超市。",
+          "cn": "我去超市。",
+          "kr": "마트에 가요.",
+          "en": "I’m going to the supermarket.",
+          "jp": "スーパーに行きます。"
+        },
+        {
+          "key": "D",
+          "zh": "不贵，很便宜。",
+          "cn": "不贵，很便宜。",
+          "kr": "안 비싸요, 아주 싸요.",
+          "en": "No, it’s very cheap.",
+          "jp": "安くて、とてもやすいです。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "会话一用「这些都是我的」总括近处物品。",
+        "kr": "회화1에서는 가까운 것들을 「这些都是我的」로 말합니다.",
+        "en": "In Dialogue 1 they sum up with 这些都是我的.",
+        "jp": "会話1では「这些都是我的」と言います。"
+      }
+    },
+    {
+      "id": "hsk30_l11_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我都喜欢。」里的「都」表示：",
+        "kr": "「我都喜欢。」의 「都」는 무슨 뜻이에요?",
+        "en": "In 我都喜欢, 都 means:",
+        "jp": "「我都喜欢」の「都」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "猫和狗两种都喜欢",
+          "cn": "猫和狗两种都喜欢",
+          "kr": "고양이랑 개 둘 다 좋아함",
+          "en": "Likes both—cats and dogs",
+          "jp": "猫も犬もどちらも好き"
+        },
+        {
+          "key": "B",
+          "zh": "只喜欢猫",
+          "cn": "只喜欢猫",
+          "kr": "고양이만 좋아함",
+          "en": "Only likes cats",
+          "jp": "猫だけ好き"
+        },
+        {
+          "key": "C",
+          "zh": "都不喜欢",
+          "cn": "都不喜欢",
+          "kr": "둘 다 싫음",
+          "en": "Likes neither",
+          "jp": "どちらも好きではない"
+        },
+        {
+          "key": "D",
+          "zh": "明天再去",
+          "cn": "明天再去",
+          "kr": "내일 또 감",
+          "en": "Will go again tomorrow",
+          "jp": "また明日行く"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「都」总括前面提到的两类（猫、狗），表示两种都喜欢。",
+        "kr": "「都」는 앞에서 말한 둘(고양이·개)을 모두 포함한다는 뜻이에요.",
+        "en": "都 covers both options—cats and dogs.",
+        "jp": "「都」は猫と犬の両方をまとめて言っています。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "这是谁的书？",
+      "这是我的书。",
+      "那本书呢？",
+      "那本也是我的。",
+      "还有哪些是你的？",
+      "这些都是我的。",
+      "这只猫是谁的？",
+      "它是我的猫。",
+      "那些狗呢？",
+      "它们也是我的。",
+      "我都喜欢。",
+      "哪个桌子是你的？",
+      "这些是我的，那些不是我的。"
+    ],
+    "chatPrompt": "请只用本课「这、那、这些、那些、的、谁、哪个、哪些、都」等词语练习问物品是谁的；不要写成问价钱或问时间。",
+    "prompt": {
+      "zh": "请只用本课「这、那、这些、那些、的、谁、哪个、哪些、都」等词语练习问物品是谁的；不要写成问价钱或问时间。",
+      "kr": "「这·那·这些·那些·的·谁·哪个·哪些·都」만 써서 누구 물건인지 연습하세요. 가격·시간 이야기는 빼 주세요.",
+      "en": "Practice who owns what with 这, 那, 这些, 那些, 的, 谁, 哪个, 哪些, 都—skip price and clock talk.",
+      "jp": "「这」「那」「这些」「那些」「的」「谁」「哪个」「哪些」「都」だけで持ち主を練習。値段や時刻は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l11_whose_book",
+          "situation": {
+            "zh": "会话一：找书",
+            "kr": "회화1 · 책이 누구 것인지",
+            "en": "Dialogue 1 — whose book",
+            "jp": "会話1：本がだれのか"
+          },
+          "aiRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "这是谁的书？",
+              "pinyin": "Zhè shì shéi de shū?",
+              "kr": "이거 누구 책이에요?",
+              "en": "Whose book is this?",
+              "jp": "これはだれの本ですか。"
+            },
+            {
+              "zh": "这是我的书。",
+              "pinyin": "Zhè shì wǒ de shū.",
+              "kr": "제 책이에요.",
+              "en": "It’s my book.",
+              "jp": "私の本です。"
+            },
+            {
+              "zh": "那本书呢？",
+              "pinyin": "Nà běn shū ne?",
+              "kr": "저 책은요?",
+              "en": "What about that one?",
+              "jp": "あの一冊は？"
+            },
+            {
+              "zh": "这些都是我的。",
+              "pinyin": "Zhèxiē dōu shì wǒ de.",
+              "kr": "이것들은 다 제 거예요.",
+              "en": "These are all mine.",
+              "jp": "これは全部わたしのです。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "你好！",
+              "studentRefs": [
+                "这是谁的书？"
+              ],
+              "acceptable": [
+                "这是谁的书？",
+                "这是谁的书"
+              ],
+              "closeAnswers": [
+                "谁的书",
+                "谁的"
+              ]
+            },
+            {
+              "aiLine": "这是我的书。",
+              "studentRefs": [
+                "那本书呢？"
+              ],
+              "acceptable": [
+                "那本书呢？",
+                "那本书呢"
+              ],
+              "closeAnswers": [
+                "那本呢",
+                "那本"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "l11_pets",
+          "situation": {
+            "zh": "会话二：宠物",
+            "kr": "회화2 · 고양이와 개",
+            "en": "Dialogue 2 — pets",
+            "jp": "会話2：ペット"
+          },
+          "aiRole": {
+            "zh": "安娜",
+            "kr": "안나",
+            "en": "Anna",
+            "jp": "安娜"
+          },
+          "studentRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "这只猫是谁的？",
+              "pinyin": "Zhè zhī māo shì shéi de?",
+              "kr": "이 고양이는 누구 거예요?",
+              "en": "Whose cat is this?",
+              "jp": "この猫はだれのですか。"
+            },
+            {
+              "zh": "它是我的猫。",
+              "pinyin": "Tā shì wǒ de māo.",
+              "kr": "제 고양이예요.",
+              "en": "It’s my cat.",
+              "jp": "私の猫です。"
+            },
+            {
+              "zh": "那些狗呢？",
+              "pinyin": "Nàxiē gǒu ne?",
+              "kr": "저 개들은요?",
+              "en": "What about those dogs?",
+              "jp": "あの犬たちは？"
+            },
+            {
+              "zh": "我都喜欢。",
+              "pinyin": "Wǒ dōu xǐhuan.",
+              "kr": "둘 다 좋아요.",
+              "en": "I like both.",
+              "jp": "どちらも好きです。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "你好！",
+              "studentRefs": [
+                "这只猫是谁的？"
+              ],
+              "acceptable": [
+                "这只猫是谁的？",
+                "这只猫是谁的"
+              ],
+              "closeAnswers": [
+                "谁的猫",
+                "谁"
+              ]
+            },
+            {
+              "aiLine": "你喜欢猫还是喜欢狗？",
+              "studentRefs": [
+                "我都喜欢。"
+              ],
+              "acceptable": [
+                "我都喜欢。",
+                "我都喜欢"
+              ],
+              "closeAnswers": [
+                "都喜欢",
+                "喜欢"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「谁的」「我的/老师的」说明物品归属。",
+        "pinyin": "shéi de · wǒ de",
+        "kr": "「谁的」「我的」로 소유를 말한다.",
+        "en": "Say who owns things with 谁的 and 我的.",
+        "jp": "「谁的」「我的」で持ち主を言う。"
+      },
+      {
+        "zh": "能区分「这个」与「这些」，「那个」与「那些」。",
+        "pinyin": "zhège · zhèxiē",
+        "kr": "단수·복수 지시어를 구분한다.",
+        "en": "Tell singular 这个/那个 from plural 这些/那些.",
+        "jp": "単数と複数の指示を分ける。"
+      },
+      {
+        "zh": "能用「都」表示总括（全部、两种都喜欢）。",
+        "pinyin": "dōu",
+        "kr": "「都」로 전부·둘 다를 말한다.",
+        "en": "Use 都 for “all” or “both.”",
+        "jp": "「都」で全部・両方を表す。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "掌握「的」字结构表示领属，不与生词「得、地」混淆。",
+          "pinyin": "de",
+          "kr": "소유의 「的」에 익숙해진다.",
+          "en": "Use 的 for possession (not 得/地 here).",
+          "jp": "所属の「的」を使い分ける。"
+        },
+        {
+          "zh": "本课聚焦物品归属，不是问价格或星期几。",
+          "pinyin": "guīshǔ",
+          "kr": "이 과는 물건이 누구 것인지가 중심입니다.",
+          "en": "This lesson is about ownership—not price or weekdays.",
+          "jp": "本課は持ち主。値段や曜日ではない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：谁的书、那本、这些。会话二：猫狗与都喜欢。会话三：哪张桌子、这些那些、有的……有的……",
+        "kr": "회화1 누구 책·저本·이것들 → 회화2 고양이·개·都喜欢 → 회화3 어느 책상·这些那些·有的有的.",
+        "en": "Books & mine; pets & both; which desk & some…some….",
+        "jp": "会話1 本／会話2 猫犬／会話3 机と这些那些。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「谁、哪个、哪些」提问角度不同。",
+          "pinyin": "shéi · nǎge · nǎxiē",
+          "kr": "사람·하나·여러 개를 묻는 말이 달라요.",
+          "en": "谁 / 哪个 / 哪些 ask different things.",
+          "jp": "「谁」「哪个」「哪些」の聞き方の違い。"
+        },
+        {
+          "zh": "「它们」指上文复数事物（如那些狗）。",
+          "pinyin": "tāmen",
+          "kr": "복수를 가리킬 때 「它们」.",
+          "en": "它们 points back to plural things.",
+          "jp": "「它们」は複数のものを指す。"
+        }
+      ],
+      "confusionPoints": [
+        {
+          "zh": "「书」在「一本书」里是量词搭配；本课「那本书」整段作名词短语。",
+          "pinyin": "běn shū",
+          "kr": "「那本书」는 ‘저 책 한 권’ 뉘앙스.",
+          "en": "那本书 = that book (copy).",
+          "jp": "「那本书」は『あの一冊』。"
+        }
+      ]
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「谁的」和「谁」怎么分工？「这些」能换成「很多」吗？",
+      "kr": "예: 「谁的」와 「谁」는 언제 쓰나요?",
+      "en": "e.g. 谁的 vs 谁? 这些 vs 很多?",
+      "jp": "例:「谁的」と「谁」の違いは？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「有的」和「有些」一样吗？",
+        "「它」和「它们」什么时候用？",
+        "「那本」的「本」一定要说吗？"
+      ],
+      "kr": [
+        "「有的」는?",
+        "「它们」는 언제?",
+        "「本」는 꼭?"
+      ],
+      "en": [
+        "有的 vs 有些?",
+        "它 vs 它们?",
+        "Do I need 本 every time?"
+      ],
+      "jp": [
+        "「有的」と「有些」は？",
+        "「它」と「它们」は？",
+        "「本」は必要？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "这是谁的书？ / 这是我的书。",
+        "pinyin": "Zhè shì shéi de shū? / Zhè shì wǒ de shū.",
+        "usage": {
+          "zh": "询问与说明书本等物品的归属。",
+          "kr": "책 등이 누구 것인지 묻고 답한다.",
+          "en": "Ask and say who a book belongs to.",
+          "jp": "本の持ち主を聞き、答える。"
+        }
+      },
+      {
+        "expr": "这些书都是你的吗？ / 有的是老师的，有的是朋友的。",
+        "pinyin": "Zhèxiē shū dōu shì nǐ de ma? / Yǒude shì lǎoshī de, yǒude shì péngyou de.",
+        "usage": {
+          "zh": "用「有的……有的……」分项说明归属。",
+          "kr": "「有的」로 경우를 나누어 말한다.",
+          "en": "Some… some… splits who owns what.",
+          "jp": "「有的…有的…」で分けて言う。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

@@ -1,0 +1,999 @@
+{
+  "id": "hsk1_lesson12",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 12,
+  "type": "lesson",
+  "title": {
+    "zh": "第12课｜房间里有什么？",
+    "cn": "第12课｜房间里有什么？",
+    "kr": "제12과｜방 안에 뭐가 있어요?",
+    "en": "Lesson 12 | What’s in the Room?",
+    "jp": "第12課｜部屋の中に何がありますか。"
+  },
+  "summary": {
+    "zh": "学习用「……里有什么」描述房间与处所里的事物，用「能/可以」表许可，用形容词作谓语描述大小、新旧与好看。",
+    "kr": "「…里有什么」로 방·장소 안을 말하고 「能／可以」로 허락을, 형용사 서술로 크기·새것·예쁨을 말합니다.",
+    "en": "Say what’s in a room with …里有什么; use 能/可以 for permission; adjectives for size, newness, 好看.",
+    "jp": "「…里有什么」で中身、「能／可以」で許可、形容詞述語で大きさや見た目を言います。"
+  },
+  "scene": {
+    "id": "hsk30_l12_scene",
+    "title": {
+      "zh": "房间与里外",
+      "kr": "방 안과 밖",
+      "en": "Inside & outside",
+      "jp": "部屋の内外"
+    },
+    "summary": {
+      "zh": "会话一：房间大小与参观；会话二：房间里和外边有什么；会话三：书与书包的位置。",
+      "kr": "회화1 방 크기·구경 → 회화2 안·밖에 뭐가 → 회화3 책·가방 위치.",
+      "en": "1: Room size & looking around · 2: What’s inside/outside · 3: Where book & bag are.",
+      "jp": "会話1 広さ／会話2 中と外／会話3 位置。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「房间里有什么？」「外边有……」描述处所里或外的事物",
+      "pinyin": "fángjiān lǐ · wàibian yǒu",
+      "kr": "방 안·밖에 무엇이 있는지 말한다.",
+      "en": "Say what’s in the room or outside with 有.",
+      "jp": "「房间里」「外边」に何があるか言える。"
+    },
+    {
+      "zh": "能用「能……吗？」「可以」表达请求许可，用「大不大」「真好看」等描述房间",
+      "pinyin": "néng · kěyǐ · zhēn hǎokàn",
+      "kr": "「能…吗?」「可以」로 허락을 묻고, 「大不大」「真好看」로 방을 묘사한다.",
+      "en": "Ask 能…吗?, hear 可以; describe rooms with 大不大, 真好看.",
+      "jp": "「能」「可以」で許可、「大不大」「真好看」で描写。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜看房间",
+        "kr": "회화 1｜방 구경",
+        "en": "Dialogue 1 | Seeing the room",
+        "jp": "会話1｜部屋を見る"
+      },
+      "summary": {
+        "zh": "问房间大不大，请求看一看，称赞房间好看。",
+        "kr": "방이 큰지 묻고 볼 수 있게 부탁한 뒤 예쁘다고 말합니다.",
+        "en": "They ask if the room is big, ask to look, and say it looks nice.",
+        "jp": "広いか聞き、見せてもらい、きれいだと言います。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "你的房间大不大？",
+          "pinyin": "Nǐ de fángjiān dà bù dà?",
+          "translation": {
+            "kr": "방이 큰 편이에요?",
+            "en": "Is your room big?",
+            "jp": "お部屋は広いですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不大，有一点儿小。",
+          "pinyin": "Bù dà, yǒu yìdiǎnr xiǎo.",
+          "translation": {
+            "kr": "크진 않아요, 좀 작아요.",
+            "en": "Not really—it’s a bit small.",
+            "jp": "大きくはなくて、ちょっと狭いです。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "我能看看吗？",
+          "pinyin": "Wǒ néng kànkan ma?",
+          "translation": {
+            "kr": "좀 봐도 될까요?",
+            "en": "Can I take a look?",
+            "jp": "ちょっと見てもいいですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "可以。",
+          "pinyin": "Kěyǐ.",
+          "translation": {
+            "kr": "네, 괜찮아요.",
+            "en": "Sure.",
+            "jp": "いいですよ。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "房间真好看！",
+          "pinyin": "Fángjiān zhēn hǎokàn!",
+          "translation": {
+            "kr": "방이 정말 예뻐요!",
+            "en": "Your room looks great!",
+            "jp": "お部屋、すてきですね！"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "谢谢。",
+          "pinyin": "Xièxie.",
+          "translation": {
+            "kr": "감사해요.",
+            "en": "Thanks.",
+            "jp": "ありがとう。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜说房间里的东西",
+        "kr": "회화 2｜방 안의 물건",
+        "en": "Dialogue 2 | What’s in the room",
+        "jp": "会話2｜部屋の中のもの"
+      },
+      "summary": {
+        "zh": "问房间里和外边有什么，列举家具、书、电脑与花。",
+        "kr": "방 안·밖에 뭐가 있는지 묻고 가구·책·컴퓨터·꽃을 말합니다.",
+        "en": "They ask what’s inside and outside—desk, chair, books, PC, flowers.",
+        "jp": "中と外に何があるか、机や本、パソコン、花を言います。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "房间里有什么？",
+          "pinyin": "Fángjiān lǐ yǒu shénme?",
+          "translation": {
+            "kr": "방 안에 뭐가 있어요?",
+            "en": "What’s in the room?",
+            "jp": "部屋の中に何がありますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "房间里有桌子、椅子、书和电脑。",
+          "pinyin": "Fángjiān lǐ yǒu zhuōzi, yǐzi, shū hé diànnǎo.",
+          "translation": {
+            "kr": "방에 책상, 의자, 책, 컴퓨터가 있어요.",
+            "en": "There’s a desk, a chair, books, and a computer.",
+            "jp": "机と椅子と本とパソコンがあります。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "外边有什么？",
+          "pinyin": "Wàibian yǒu shénme?",
+          "translation": {
+            "kr": "밖에는 뭐가 있어요?",
+            "en": "What’s outside?",
+            "jp": "外には何がありますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "外边有花。",
+          "pinyin": "Wàibian yǒu huā.",
+          "translation": {
+            "kr": "밖에는 꽃이 있어요.",
+            "en": "There are flowers outside.",
+            "jp": "外に花があります。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜说位置",
+        "kr": "회화 3｜위치",
+        "en": "Dialogue 3 | Position",
+        "jp": "会話3｜位置"
+      },
+      "summary": {
+        "zh": "问书在哪儿，用「电脑前边」「椅子后边」说相对位置。",
+        "kr": "책이 어디 있는지 묻고 「电脑前边」「椅子后边」로 말합니다.",
+        "en": "They ask where the book is—by the computer, behind the chair.",
+        "jp": "本の場所を聞き、「电脑前边」「椅子后边」で答えます。"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "我的书在哪儿？",
+          "pinyin": "Wǒ de shū zài nǎr?",
+          "translation": {
+            "kr": "제 책 어디 있어요?",
+            "en": "Where’s my book?",
+            "jp": "私の本はどこですか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你的书在电脑前边。",
+          "pinyin": "Nǐ de shū zài diànnǎo qiánbian.",
+          "translation": {
+            "kr": "책은 컴퓨터 앞에 있어요.",
+            "en": "It’s in front of the computer.",
+            "jp": "パソコンの前にあります。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "书包呢？",
+          "pinyin": "Shūbāo ne?",
+          "translation": {
+            "kr": "책가방은요?",
+            "en": "What about the schoolbag?",
+            "jp": "カバンは？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "书包在椅子后边。",
+          "pinyin": "Shūbāo zài yǐzi hòubian.",
+          "translation": {
+            "kr": "가방은 의자 뒤에 있어요.",
+            "en": "It’s behind the chair.",
+            "jp": "かばんはいすの後ろです。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "处所 + 有",
+      "pinyin": "chùsuǒ + yǒu",
+      "hint": {
+        "zh": "有什么",
+        "kr": "~에 있다",
+        "en": "there is/are",
+        "jp": "～にある"
+      },
+      "explanation": {
+        "zh": "表示某处存在某物，常用「……里有什么？」「外边有……」。\n\n「房间里」\nfángjiān lǐ\n「有花」\nyǒu huā",
+        "kr": "장소 + 「有」로 무엇이 있는지 말합니다.",
+        "en": "Place + 有: what’s there—房间里有什么?, 外边有花.",
+        "jp": "場所＋「有」で存在を言います。"
+      },
+      "examples": [
+        {
+          "zh": "房间里有什么？",
+          "pinyin": "Fángjiān lǐ yǒu shénme?",
+          "translation": {
+            "kr": "방 안에 뭐가 있어요?",
+            "en": "What’s in the room?",
+            "jp": "部屋の中に何がありますか。"
+          }
+        },
+        {
+          "zh": "外边有花。",
+          "pinyin": "Wàibian yǒu huā.",
+          "translation": {
+            "kr": "밖에는 꽃이 있어요.",
+            "en": "There are flowers outside.",
+            "jp": "外に花があります。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "能 / 可以",
+      "pinyin": "néng / kěyǐ",
+      "hint": {
+        "zh": "许可",
+        "kr": "될까요／괜찮아요",
+        "en": "can / may",
+        "jp": "できる／いい"
+      },
+      "explanation": {
+        "zh": "「能……吗？」请求许可；肯定回答常用「可以」。\n\n「能看看吗」\nnéng kànkan ma\n「可以」\nkěyǐ",
+        "kr": "「能…吗?」로 허락을 묻고 「可以」로 허락합니다.",
+        "en": "能…吗? asks permission; 可以 says yes.",
+        "jp": "「能…吗？」で許可を聞き、「可以」で許します。"
+      },
+      "examples": [
+        {
+          "zh": "我能看看吗？",
+          "pinyin": "Wǒ néng kànkan ma?",
+          "translation": {
+            "kr": "좀 봐도 될까요?",
+            "en": "Can I take a look?",
+            "jp": "見てもいいですか。"
+          }
+        },
+        {
+          "zh": "可以。",
+          "pinyin": "Kěyǐ.",
+          "translation": {
+            "kr": "네, 괜찮아요.",
+            "en": "Sure.",
+            "jp": "いいですよ。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "形容词谓语句",
+      "pinyin": "xíngróngcí wèiyǔ jù",
+      "hint": {
+        "zh": "大不大、真好看",
+        "kr": "형용사 서술",
+        "en": "adj. predicate",
+        "jp": "形容詞述語"
+      },
+      "explanation": {
+        "zh": "形容词可直接作谓语说明主语性质，如「房间小」「电脑新」；也可用「真」加强语气：「房间真好看！」\n\n「大不大」\ndà bù dà\n「真好看」\nzhēn hǎokàn",
+        "kr": "형용사로 상태를 말하고 「真」로 느낌을 세게 말합니다.",
+        "en": "Adjectives predicate: 房间小, 电脑新; 真 strengthens: 真好看.",
+        "jp": "形容詞が述語になり、「真」で強めます。"
+      },
+      "examples": [
+        {
+          "zh": "你的房间大不大？",
+          "pinyin": "Nǐ de fángjiān dà bù dà?",
+          "translation": {
+            "kr": "방이 큰 편이에요?",
+            "en": "Is your room big?",
+            "jp": "お部屋は広いですか。"
+          }
+        },
+        {
+          "zh": "房间真好看！",
+          "pinyin": "Fángjiān zhēn hǎokàn!",
+          "translation": {
+            "kr": "방이 정말 예뻐요!",
+            "en": "The room looks great!",
+            "jp": "すてきなお部屋ですね！"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "房间里有很多书。",
+          "pinyin": "Fángjiān lǐ yǒu hěn duō shū.",
+          "translations": {
+            "kr": "방에 책이 많아요.",
+            "en": "There are lots of books in the room.",
+            "jp": "部屋に本がたくさんあります。"
+          }
+        },
+        {
+          "zh": "电脑很新。",
+          "pinyin": "Diànnǎo hěn xīn.",
+          "translations": {
+            "kr": "컴퓨터가 아주 새 거예요.",
+            "en": "The computer is very new.",
+            "jp": "パソコンはとても新しいです。"
+          }
+        },
+        {
+          "zh": "外边有花。",
+          "pinyin": "Wàibian yǒu huā.",
+          "translations": {
+            "kr": "밖에는 꽃이 있어요.",
+            "en": "There are flowers outside.",
+            "jp": "外に花があります。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜房间物品清单",
+        "kr": "읽기｜방 물건 목록",
+        "en": "Reading | Room checklist",
+        "jp": "読み物｜部屋のリスト"
+      },
+      "sentences": [
+        {
+          "zh": "房间里有：",
+          "pinyin": "Fángjiān lǐ yǒu:",
+          "translations": {
+            "kr": "방 안에는:",
+            "en": "Inside the room:",
+            "jp": "部屋の中には："
+          }
+        },
+        {
+          "zh": "桌子",
+          "pinyin": "zhuōzi",
+          "translations": {
+            "kr": "책상",
+            "en": "desk",
+            "jp": "机"
+          }
+        },
+        {
+          "zh": "椅子",
+          "pinyin": "yǐzi",
+          "translations": {
+            "kr": "의자",
+            "en": "chair",
+            "jp": "いす"
+          }
+        },
+        {
+          "zh": "书",
+          "pinyin": "shū",
+          "translations": {
+            "kr": "책",
+            "en": "books",
+            "jp": "本"
+          }
+        },
+        {
+          "zh": "电脑",
+          "pinyin": "diànnǎo",
+          "translations": {
+            "kr": "컴퓨터",
+            "en": "computer",
+            "jp": "パソコン"
+          }
+        },
+        {
+          "zh": "外边有花。",
+          "pinyin": "Wàibian yǒu huā.",
+          "translations": {
+            "kr": "밖에는 꽃이 있어요.",
+            "en": "Outside there are flowers.",
+            "jp": "外に花があります。"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l12_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「房间里有什么」？",
+        "kr": "「방 안에 뭐가 있어요?」에 해당하는 문장은?",
+        "en": "Which line asks what’s in the room?",
+        "jp": "「部屋の中に何があるか」を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "房间里有什么？",
+          "cn": "房间里有什么？",
+          "kr": "방 안에 뭐가 있어요?",
+          "en": "What’s in the room?",
+          "jp": "部屋の中に何がありますか。"
+        },
+        {
+          "key": "B",
+          "zh": "你住在哪里？",
+          "cn": "你住在哪里？",
+          "kr": "어디 살아요?",
+          "en": "Where do you live?",
+          "jp": "どこに住んでいますか。"
+        },
+        {
+          "key": "C",
+          "zh": "这个多少钱？",
+          "cn": "这个多少钱？",
+          "kr": "이거 얼마예요?",
+          "en": "How much is this?",
+          "jp": "いくらですか。"
+        },
+        {
+          "key": "D",
+          "zh": "你喜欢吃什么？",
+          "cn": "你喜欢吃什么？",
+          "kr": "뭘 좋아해서 먹어요?",
+          "en": "What do you like to eat?",
+          "jp": "何を食べますか。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「房间里有什么」询问处所里的事物，与本课一致。",
+        "kr": "「房间里有什么」로 안에 무엇이 있는지 묻습니다.",
+        "en": "房间里有什么? asks what’s inside—that’s this lesson.",
+        "jp": "「房间里有什么？」は中身を尋ねる本课の文です。"
+      }
+    },
+    {
+      "id": "hsk30_l12_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「可以」的拼音是？",
+        "kr": "「可以」의 병음은?",
+        "en": "What’s the pinyin for 可以?",
+        "jp": "「可以」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "kěyǐ",
+          "cn": "kěyǐ",
+          "kr": "kěyǐ",
+          "en": "kěyǐ",
+          "jp": "kěyǐ"
+        },
+        {
+          "key": "B",
+          "zh": "kèyǐ",
+          "cn": "kèyǐ",
+          "kr": "kèyǐ",
+          "en": "kèyǐ",
+          "jp": "kèyǐ"
+        },
+        {
+          "key": "C",
+          "zh": "kěyī",
+          "cn": "kěyī",
+          "kr": "kěyī",
+          "en": "kěyī",
+          "jp": "kěyī"
+        },
+        {
+          "key": "D",
+          "zh": "kěyí",
+          "cn": "kěyí",
+          "kr": "kěyí",
+          "en": "kěyí",
+          "jp": "kěyí"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「可以」读作 kěyǐ。",
+        "kr": "「可以」는 kěyǐ입니다.",
+        "en": "Say it kěyǐ.",
+        "jp": "読みは kěyǐ です。"
+      }
+    },
+    {
+      "id": "hsk30_l12_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "王美说「我能看看吗？」汤姆表示同意，与本课一致的答句是：",
+        "kr": "「我能看看吗?」에 동의하는 말로 맞는 것은?",
+        "en": "Wang Mei asks to look around—which reply matches the lesson?",
+        "jp": "「我能看看吗？」に合う返事は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "可以。",
+          "cn": "可以。",
+          "kr": "괜찮아요.",
+          "en": "Sure.",
+          "jp": "いいですよ。"
+        },
+        {
+          "key": "B",
+          "zh": "不对。",
+          "cn": "不对。",
+          "kr": "아니에요.",
+          "en": "That’s not right.",
+          "jp": "違います。"
+        },
+        {
+          "key": "C",
+          "zh": "很忙。",
+          "cn": "很忙。",
+          "kr": "바빠요.",
+          "en": "Very busy.",
+          "jp": "忙しいです。"
+        },
+        {
+          "key": "D",
+          "zh": "明天见。",
+          "cn": "明天见。",
+          "kr": "내일 봐요.",
+          "en": "See you tomorrow.",
+          "jp": "また明日。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "本课用「可以」表示同意对方看一看。",
+        "kr": "본과에서는 허락할 때 「可以」를 씁니다.",
+        "en": "Here 可以 means “yes, you may.”",
+        "jp": "この課では「可以」で許可します。"
+      }
+    },
+    {
+      "id": "hsk30_l12_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「你的书在电脑前边」说明书在电脑的：",
+        "kr": "「电脑前边」이면 책은 컴퓨터의 어디에 있나요?",
+        "en": "Your book is 在电脑前边—the book is:",
+        "jp": "「电脑前边」は本がパソコンの？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "前面那一侧",
+          "cn": "前面那一侧",
+          "kr": "앞쪽",
+          "en": "In front",
+          "jp": "前の方"
+        },
+        {
+          "key": "B",
+          "zh": "下面",
+          "cn": "下面",
+          "kr": "아래",
+          "en": "Underneath",
+          "jp": "下"
+        },
+        {
+          "key": "C",
+          "zh": "里面",
+          "cn": "里面",
+          "kr": "안",
+          "en": "Inside",
+          "jp": "中"
+        },
+        {
+          "key": "D",
+          "zh": "外边",
+          "cn": "外边",
+          "kr": "밖",
+          "en": "Outside",
+          "jp": "外"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「前边」表示相对位置在正面方向。",
+        "kr": "「前边」는 앞쪽 방향을 말합니다.",
+        "en": "前边 means toward the front.",
+        "jp": "「前边」は前の方です。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "你的房间大不大？",
+      "不大，有一点儿小。",
+      "我能看看吗？",
+      "可以。",
+      "房间真好看！",
+      "房间里有什么？",
+      "房间里有桌子、椅子、书和电脑。",
+      "外边有什么？",
+      "外边有花。",
+      "我的书在哪儿？",
+      "你的书在电脑前边。",
+      "书包在椅子后边。"
+    ],
+    "chatPrompt": "请只用本课「里、有、外边、能、可以、真、好看、大、小、新」等词语说房间与物品；不要写成问价钱或问星期几。",
+    "prompt": {
+      "zh": "请只用本课「里、有、外边、能、可以、真、好看、大、小、新」等词语说房间与物品；不要写成问价钱或问星期几。",
+      "kr": "「里·有·外边·能·可以·真·好看·大·小·新」만 써서 방과 물건을 말하세요. 값·요일 이야기는 빼 주세요.",
+      "en": "Stick to 里, 有, 外边, 能, 可以, 真, 好看, 大, 小, 新—rooms and things, not price or weekdays.",
+      "jp": "「里」「有」「外边」「能」「可以」などだけ。値段や曜日は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l12_room_tour",
+          "situation": {
+            "zh": "会话一：看房间",
+            "kr": "회화1 · 방 구경",
+            "en": "Dialogue 1 — seeing the room",
+            "jp": "会話1：部屋を見る"
+          },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你的房间大不大？",
+              "pinyin": "Nǐ de fángjiān dà bù dà?",
+              "kr": "방이 큰 편이에요?",
+              "en": "Is your room big?",
+              "jp": "お部屋は広いですか。"
+            },
+            {
+              "zh": "我能看看吗？",
+              "pinyin": "Wǒ néng kànkan ma?",
+              "kr": "좀 봐도 될까요?",
+              "en": "Can I take a look?",
+              "jp": "見てもいいですか。"
+            },
+            {
+              "zh": "可以。",
+              "pinyin": "Kěyǐ.",
+              "kr": "네, 괜찮아요.",
+              "en": "Sure.",
+              "jp": "いいですよ。"
+            },
+            {
+              "zh": "房间真好看！",
+              "pinyin": "Fángjiān zhēn hǎokàn!",
+              "kr": "방이 정말 예뻐요!",
+              "en": "The room looks great!",
+              "jp": "すてきですね！"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "欢迎来我家！",
+              "studentRefs": [
+                "你的房间大不大？"
+              ],
+              "acceptable": [
+                "你的房间大不大？",
+                "你的房间大不大"
+              ],
+              "closeAnswers": [
+                "大不大",
+                "房间"
+              ]
+            },
+            {
+              "aiLine": "不大，有一点儿小。",
+              "studentRefs": [
+                "我能看看吗？"
+              ],
+              "acceptable": [
+                "我能看看吗？",
+                "我能看看吗"
+              ],
+              "closeAnswers": [
+                "看看",
+                "看"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "l12_what_inside",
+          "situation": {
+            "zh": "会话二：房间里有什么",
+            "kr": "회화2 · 방 안에 뭐가",
+            "en": "Dialogue 2 — what’s inside",
+            "jp": "会話2：中に何があるか"
+          },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "房间里有什么？",
+              "pinyin": "Fángjiān lǐ yǒu shénme?",
+              "kr": "방 안에 뭐가 있어요?",
+              "en": "What’s in the room?",
+              "jp": "部屋の中に何がありますか。"
+            },
+            {
+              "zh": "房间里有桌子、椅子、书和电脑。",
+              "pinyin": "Fángjiān lǐ yǒu zhuōzi, yǐzi, shū hé diànnǎo.",
+              "kr": "책상, 의자, 책, 컴퓨터가 있어요.",
+              "en": "There’s a desk, chair, books, and a computer.",
+              "jp": "机と椅子と本とパソコンがあります。"
+            },
+            {
+              "zh": "外边有什么？",
+              "pinyin": "Wàibian yǒu shénme?",
+              "kr": "밖에는 뭐가 있어요?",
+              "en": "What’s outside?",
+              "jp": "外には何がありますか。"
+            },
+            {
+              "zh": "外边有花。",
+              "pinyin": "Wàibian yǒu huā.",
+              "kr": "밖에는 꽃이 있어요.",
+              "en": "There are flowers outside.",
+              "jp": "外に花があります。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "进来吧。",
+              "studentRefs": [
+                "房间里有什么？"
+              ],
+              "acceptable": [
+                "房间里有什么？",
+                "房间里有什么"
+              ],
+              "closeAnswers": [
+                "有什么",
+                "房间"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「……里有什么？」「外边有……」描述处所里或外的事物。",
+        "pinyin": "lǐ yǒu · wàibian yǒu",
+        "kr": "안·밖에 무엇이 있는지 말한다.",
+        "en": "Say what’s inside or outside with 有.",
+        "jp": "「里」「外边」に何があるか言える。"
+      },
+      {
+        "zh": "能用「能……吗？」请求许可，理解「可以」作肯定应答。",
+        "pinyin": "néng · kěyǐ",
+        "kr": "「能…吗?」로 묻고 「可以」로 답한다.",
+        "en": "Ask with 能…吗?; hear 可以 as “yes.”",
+        "jp": "「能…吗？」と「可以」のやりとり。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "区分「里」表内部与「外边」表室外或外侧。",
+          "pinyin": "lǐ · wàibian",
+          "kr": "「里」는 안,「外边」는 밖.",
+          "en": "里 = inside; 外边 = outside.",
+          "jp": "「里」は内側、「外边」は外。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：大不大、能看看吗、可以、真好看。会话二：里有什么、外边有花。会话三：电脑前边、椅子后边。",
+        "kr": "크기·허락·칭찬 → 안·밖 물건 → 책·가방 위치.",
+        "en": "Size, permission, praise · inside & outside · book & bag positions.",
+        "jp": "広さ・許可・ほめ／中と外／位置。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「有」表存在，与第8课「在」表位置可配合理解。",
+          "pinyin": "yǒu · zài",
+          "kr": "「有」는 있음,「在」는 위치.",
+          "en": "有 = there is; 在 = located at.",
+          "jp": "「有」は存在、「在」は位置。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「能」和「可以」口气有什么不同？「前边」一定指正前方吗？",
+      "kr": "예: 「能」와 「可以」 차이는?",
+      "en": "e.g. 能 vs 可以? 前边 always “front”?",
+      "jp": "例:「能」と「可以」の違いは？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「不大」和「很小」一样吗？",
+        "「外边」能换成「外面」吗？",
+        "「电脑很新」怎么说否定？"
+      ],
+      "kr": [
+        "「不大」는?",
+        "「外边」?",
+        "새롭지 않다는?"
+      ],
+      "en": [
+        "不大 vs 很小?",
+        "外边 vs 外面?",
+        "How to negate 很新?"
+      ],
+      "jp": [
+        "「不大」と「很小」は？",
+        "「外边」は？",
+        "「新」の否定は？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "房间里有什么？ / 房间里有桌子、椅子、书和电脑。",
+        "pinyin": "Fángjiān lǐ yǒu shénme? / Fángjiān lǐ yǒu zhuōzi, yǐzi, shū hé diànnǎo.",
+        "usage": {
+          "zh": "询问并列举房间里的事物。",
+          "kr": "방 안에 무엇이 있는지 묻고 나열한다.",
+          "en": "Ask and list what’s in the room.",
+          "jp": "部屋の中身を聞き、列挙する。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

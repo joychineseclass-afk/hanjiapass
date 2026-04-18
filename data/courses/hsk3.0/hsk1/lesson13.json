@@ -1,0 +1,970 @@
+{
+  "id": "hsk1_lesson13",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 13,
+  "type": "lesson",
+  "title": {
+    "zh": "第13课｜你住在哪里？",
+    "cn": "第13课｜你住在哪里？",
+    "kr": "제13과｜어디 살아요?",
+    "en": "Lesson 13 | Where Do You Live?",
+    "jp": "第13課｜どこに住んでいますか。"
+  },
+  "summary": {
+    "zh": "学习用「住在」说住处，用「去、来」说动向，用「和」介绍同伴，并认识提议语气的「吧」。",
+    "kr": "「住在」로 사는 곳을 말하고 「去·来」로 움직임을, 「和」로 함께하는 사람을, 「吧」로 권유합니다.",
+    "en": "Say where you live with 住在; 去/来 for movement; 和 for “with”; 吧 for soft suggestions.",
+    "jp": "「住在」で住まい、「去／来」で動き、「和」で一緒の人、「吧」で軽い提案。"
+  },
+  "scene": {
+    "id": "hsk30_l13_scene",
+    "title": {
+      "zh": "住处与去处",
+      "kr": "사는 곳·가는 곳",
+      "en": "Home & where you go",
+      "jp": "住まいと行き先"
+    },
+    "summary": {
+      "zh": "会话一：住哪儿、与谁同住；会话二：去超市还是饭店、看电影；会话三：星期六来我家、纠正书店/商店后边。",
+      "kr": "어디 살지·누구와 → 마트·식당·영화 → 토요일 집 초대·책방·가게 뒤.",
+      "en": "Where you live · where you go · weekend invite & fixing the place.",
+      "jp": "住まいと同行／行き先／土曜の招待・場所の訂正。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你住在哪里？」「我住在……」询问与说明住址",
+      "pinyin": "zhù zài · nǎlǐ",
+      "kr": "「住在哪里?」「住在 …」으로 사는 곳을 묻고 말한다.",
+      "en": "Ask and say where you live with 住在.",
+      "jp": "「住在哪里」「住在」で住まいを尋ね、答える。"
+    },
+    {
+      "zh": "能用「去……」「来……吧」谈论日常去处与邀请，用「和」说明同行者",
+      "pinyin": "qù · lái · hé",
+      "kr": "「去」「来」「和」로 가기·오기·함께하는 사람을 말한다.",
+      "en": "Use 去/来 for going and coming; 和 for “with.”",
+      "jp": "「去」「来」で行き来、「和」で一緒。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问住处",
+        "kr": "회화 1｜어디 사는지",
+        "en": "Dialogue 1 | Where you live",
+        "jp": "会話1｜住まいを聞く"
+      },
+      "summary": {
+        "zh": "问住在哪里、是否一个人住，说到与同学一起住。",
+        "kr": "어디 사는지, 혼자인지 묻고 동기와 함께 산다고 합니다.",
+        "en": "They ask where Tom lives, if alone, and hear he lives with classmates.",
+        "jp": "どこに住むか、一人かを聞き、同学と住むと言います。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "汤姆，你住在哪里？",
+          "pinyin": "Tāngmǔ, nǐ zhù zài nǎlǐ?",
+          "translation": {
+            "kr": "탐, 어디 살아요?",
+            "en": "Tom, where do you live?",
+            "jp": "トムさん、どこに住んでいますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我住在学校那边。",
+          "pinyin": "Wǒ zhù zài xuéxiào nà biān.",
+          "translation": {
+            "kr": "학교 쪽에 살아요.",
+            "en": "I live over by the school.",
+            "jp": "学校の方に住んでいます。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你一个人住吗？",
+          "pinyin": "Nǐ yí ge rén zhù ma?",
+          "translation": {
+            "kr": "혼자 살아요?",
+            "en": "Do you live alone?",
+            "jp": "一人暮らしですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不是，我和同学一起住。",
+          "pinyin": "Bù shì, wǒ hé tóngxué yìqǐ zhù.",
+          "translation": {
+            "kr": "아니요, 동기랑 같이 살아요.",
+            "en": "No—I live with classmates.",
+            "jp": "いいえ、同学と一緒に住んでいます。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜去哪里",
+        "kr": "회화 2｜어디 가는지",
+        "en": "Dialogue 2 | Where you’re going",
+        "jp": "会話2｜どこへ行くか"
+      },
+      "summary": {
+        "zh": "问去不去超市、饭店、电影院，谈到喜欢看电影。",
+        "kr": "마트·식당·영화관에 가는지 묻고 영화 보는 걸 좋아한다고 합니다.",
+        "en": "Supermarket, restaurant, cinema—and liking movies.",
+        "jp": "スーパー、レストラン、映画館と、映画が好きな話。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "你去超市吗？",
+          "pinyin": "Nǐ qù chāoshì ma?",
+          "translation": {
+            "kr": "마트 가요?",
+            "en": "Are you going to the supermarket?",
+            "jp": "スーパーに行きますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我不去超市，我去饭店。",
+          "pinyin": "Wǒ bù qù chāoshì, wǒ qù fàndiàn.",
+          "translation": {
+            "kr": "마트는 안 가고 식당에 가요.",
+            "en": "I’m not going to the supermarket—I’m going to a restaurant.",
+            "jp": "スーパーには行かず、レストランに行きます。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "去电影院吗？",
+          "pinyin": "Qù diànyǐngyuàn ma?",
+          "translation": {
+            "kr": "영화관 가요?",
+            "en": "Going to the cinema?",
+            "jp": "映画館に行きますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "去，我很喜欢看电影。",
+          "pinyin": "Qù, wǒ hěn xǐhuan kàn diànyǐng.",
+          "translation": {
+            "kr": "가요, 영화 보는 거 정말 좋아해요.",
+            "en": "Yes—I really like watching movies.",
+            "jp": "行きます。映画を見るのが大好きです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜来家里",
+        "kr": "회화 3｜집에 오기",
+        "en": "Dialogue 3 | Coming over",
+        "jp": "会話3｜うちへ来る"
+      },
+      "summary": {
+        "zh": "约星期六来家，问知不知道住哪儿，纠正书店后边与商店后边。",
+        "kr": "토요일에 집으로 오라고 하고, 어디 사는지 묻은 뒤 책방·가게 뒤를 바로잡습니다.",
+        "en": "Saturday invite, checking the address, fixing bookstore vs shop.",
+        "jp": "土曜の招待、住所の確認、書店か店の後ろかの訂正。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "星期六你来我家吧？",
+          "pinyin": "Xīngqīliù nǐ lái wǒ jiā ba?",
+          "translation": {
+            "kr": "토요일에 우리 집 올래요?",
+            "en": "Come to my place on Saturday?",
+            "jp": "土曜日、うちに来ませんか。"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "好的。",
+          "pinyin": "Hǎo de.",
+          "translation": {
+            "kr": "좋아요.",
+            "en": "Sure.",
+            "jp": "いいですよ。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "你知道我住哪儿吗？",
+          "pinyin": "Nǐ zhīdào wǒ zhù nǎr ma?",
+          "translation": {
+            "kr": "내가 어디 사는지 알아요?",
+            "en": "Do you know where I live?",
+            "jp": "私がどこに住んでいるか知ってますか。"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "知道，你家在书店后边。",
+          "pinyin": "Zhīdào, nǐ jiā zài shūdiàn hòubian.",
+          "translation": {
+            "kr": "알아요, 집이 서점 뒤에 있죠.",
+            "en": "Yes—your home is behind the bookstore.",
+            "jp": "知ってます。本屋の後ろですよね。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "不是书店后边，是商店后边。",
+          "pinyin": "Bù shì shūdiàn hòubian, shì shāngdiàn hòubian.",
+          "translation": {
+            "kr": "서점 뒤가 아니라 가게 뒤예요.",
+            "en": "Not behind the bookstore—behind the shop.",
+            "jp": "本屋の後ろじゃなくて、店の後ろです。"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "谢谢，知道了。",
+          "pinyin": "Xièxie, zhīdào le.",
+          "translation": {
+            "kr": "알겠어요, 고마워요.",
+            "en": "Got it—thanks.",
+            "jp": "分かりました、ありがとう。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "住在 + 地点",
+      "pinyin": "zhù zài + dìdiǎn",
+      "hint": {
+        "zh": "住在哪里",
+        "kr": "살다",
+        "en": "live at",
+        "jp": "住む"
+      },
+      "explanation": {
+        "zh": "动词「住」与「在」连用，引出居住地点，如「我住在学校那边」「你住在哪里？」。\n\n「住在」\nzhù zài\n「住在哪里」\nzhù zài nǎlǐ",
+        "kr": "「住在」로 사는 장소를 말합니다.",
+        "en": "住在 + place = live at…; 住在哪里? asks where.",
+        "jp": "「住在＋地点」で住む場所を言います。"
+      },
+      "examples": [
+        {
+          "zh": "你住在哪里？",
+          "pinyin": "Nǐ zhù zài nǎlǐ?",
+          "translation": {
+            "kr": "어디 살아요?",
+            "en": "Where do you live?",
+            "jp": "どこに住んでいますか。"
+          }
+        },
+        {
+          "zh": "我住在学校那边。",
+          "pinyin": "Wǒ zhù zài xuéxiào nà biān.",
+          "translation": {
+            "kr": "학교 쪽에 살아요.",
+            "en": "I live over by the school.",
+            "jp": "学校の方に住んでいます。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "去 / 来",
+      "pinyin": "qù / lái",
+      "hint": {
+        "zh": "动向",
+        "kr": "가다·오다",
+        "en": "go / come",
+        "jp": "行く・来る"
+      },
+      "explanation": {
+        "zh": "「去」表示离开说话者所在前往某处；「来」表示朝向说话者或目标处移动，如「我去饭店」「你来我家吧」。\n\n「去超市」\nqù chāoshì\n「来我家」\nlái wǒ jiā",
+        "kr": "「去」는 어디로 가다,「来」는 오다.",
+        "en": "去 = go (away to); 来 = come (toward).",
+        "jp": "「去」は行く、「来」は来る。"
+      },
+      "examples": [
+        {
+          "zh": "我去饭店。",
+          "pinyin": "Wǒ qù fàndiàn.",
+          "translation": {
+            "kr": "식당에 가요.",
+            "en": "I’m going to a restaurant.",
+            "jp": "レストランに行きます。"
+          }
+        },
+        {
+          "zh": "星期六你来我家吧？",
+          "pinyin": "Xīngqīliù nǐ lái wǒ jiā ba?",
+          "translation": {
+            "kr": "토요일에 우리 집 올래요?",
+            "en": "Come to my place Saturday?",
+            "jp": "土曜にうちに来ませんか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "和",
+      "pinyin": "hé",
+      "hint": {
+        "zh": "一起",
+        "kr": "와/랑",
+        "en": "with",
+        "jp": "と"
+      },
+      "explanation": {
+        "zh": "连词「和」连接名词或代词，表示共同、一起，如「我和同学一起住」。\n\n「和同学」\nhé tóngxué",
+        "kr": "「和」는 함께하는 사람을 잇습니다.",
+        "en": "和 links who you do something with.",
+        "jp": "「和」は一緒の相手をつなぎます。"
+      },
+      "examples": [
+        {
+          "zh": "我和同学一起住。",
+          "pinyin": "Wǒ hé tóngxué yìqǐ zhù.",
+          "translation": {
+            "kr": "동기랑 같이 살아요.",
+            "en": "I live with classmates.",
+            "jp": "同学と一緒に住んでいます。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "吧",
+      "pinyin": "ba",
+      "hint": {
+        "zh": "提议、商量",
+        "kr": "제안",
+        "en": "soft suggestion",
+        "jp": "軽い提案"
+      },
+      "explanation": {
+        "zh": "语气助词「吧」附在句末，使语气委婉，带有提议、商量或推测色彩，如「你来我家吧？」。\n\n「来吧」\nlái ba",
+        "kr": "「吧」는 부드럽게 권하거나 물을 때 씁니다.",
+        "en": "吧 softens—suggestion: 你来我家吧?",
+        "jp": "「吧」は文末で、軽い提案や相談になります。"
+      },
+      "examples": [
+        {
+          "zh": "星期六你来我家吧？",
+          "pinyin": "Xīngqīliù nǐ lái wǒ jiā ba?",
+          "translation": {
+            "kr": "토요일에 우리 집 올래요?",
+            "en": "How about coming Saturday?",
+            "jp": "土曜、うちに来ませんか。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "我住在这里。",
+          "pinyin": "Wǒ zhù zài zhèlǐ.",
+          "translations": {
+            "kr": "여기 살아요.",
+            "en": "I live here.",
+            "jp": "ここに住んでいます。"
+          }
+        },
+        {
+          "zh": "我去看电影。",
+          "pinyin": "Wǒ qù kàn diànyǐng.",
+          "translations": {
+            "kr": "영화 보러 가요.",
+            "en": "I’m going to see a movie.",
+            "jp": "映画を見に行きます。"
+          }
+        },
+        {
+          "zh": "书店在那边。",
+          "pinyin": "Shūdiàn zài nà biān.",
+          "translations": {
+            "kr": "서점은 저쪽에 있어요.",
+            "en": "The bookstore is over there.",
+            "jp": "本屋はあちらにあります。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜场所标识",
+        "kr": "읽기｜시설 표지",
+        "en": "Reading | Signs",
+        "jp": "読み物｜看板"
+      },
+      "sentences": [
+        {
+          "zh": "医院",
+          "pinyin": "yīyuàn",
+          "translations": {
+            "kr": "병원",
+            "en": "hospital",
+            "jp": "病院"
+          }
+        },
+        {
+          "zh": "超市",
+          "pinyin": "chāoshì",
+          "translations": {
+            "kr": "마트",
+            "en": "supermarket",
+            "jp": "スーパー"
+          }
+        },
+        {
+          "zh": "书店",
+          "pinyin": "shūdiàn",
+          "translations": {
+            "kr": "서점",
+            "en": "bookstore",
+            "jp": "本屋"
+          }
+        },
+        {
+          "zh": "饭店",
+          "pinyin": "fàndiàn",
+          "translations": {
+            "kr": "식당",
+            "en": "restaurant",
+            "jp": "レストラン"
+          }
+        },
+        {
+          "zh": "电影院",
+          "pinyin": "diànyǐngyuàn",
+          "translations": {
+            "kr": "영화관",
+            "en": "cinema",
+            "jp": "映画館"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l13_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「住在哪里」？",
+        "kr": "「어디 살아요?」에 해당하는 문장은?",
+        "en": "Which line asks where someone lives?",
+        "jp": "「どこに住むか」を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "你住在哪里？",
+          "cn": "你住在哪里？",
+          "kr": "어디 살아요?",
+          "en": "Where do you live?",
+          "jp": "どこに住んでいますか。"
+        },
+        {
+          "key": "B",
+          "zh": "你去超市吗？",
+          "cn": "你去超市吗？",
+          "kr": "마트 가요?",
+          "en": "Are you going to the supermarket?",
+          "jp": "スーパーに行きますか。"
+        },
+        {
+          "key": "C",
+          "zh": "这个多少钱？",
+          "cn": "这个多少钱？",
+          "kr": "얼마예요?",
+          "en": "How much is this?",
+          "jp": "いくらですか。"
+        },
+        {
+          "key": "D",
+          "zh": "你喜欢猫还是狗？",
+          "cn": "你喜欢猫还是狗？",
+          "kr": "고양이랑 개?",
+          "en": "Cats or dogs?",
+          "jp": "猫と犬どちらが好き？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「住在哪里」询问居住地点，与本课一致。",
+        "kr": "「住在哪里」로 사는 곳을 묻습니다.",
+        "en": "住在哪里? asks where you live.",
+        "jp": "「住在哪里」は住まいを尋ねます。"
+      }
+    },
+    {
+      "id": "hsk30_l13_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「知道」的拼音是？",
+        "kr": "「知道」의 병음은?",
+        "en": "What’s the pinyin for 知道?",
+        "jp": "「知道」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "zhīdào",
+          "cn": "zhīdào",
+          "kr": "zhīdào",
+          "en": "zhīdào",
+          "jp": "zhīdào"
+        },
+        {
+          "key": "B",
+          "zh": "zhīdāo",
+          "cn": "zhīdāo",
+          "kr": "zhīdāo",
+          "en": "zhīdāo",
+          "jp": "zhīdāo"
+        },
+        {
+          "key": "C",
+          "zh": "zīdào",
+          "cn": "zīdào",
+          "kr": "zīdào",
+          "en": "zīdào",
+          "jp": "zīdào"
+        },
+        {
+          "key": "D",
+          "zh": "zhìdào",
+          "cn": "zhìdào",
+          "kr": "zhìdào",
+          "en": "zhìdào",
+          "jp": "zhìdào"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「知道」读作 zhīdào。",
+        "kr": "「知道」는 zhīdào입니다.",
+        "en": "Say it zhīdào.",
+        "jp": "読みは zhīdào です。"
+      }
+    },
+    {
+      "id": "hsk30_l13_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「不是书店后边，是商店后边。」这句话在纠正：",
+        "kr": "「不是书店后边，是商店后边。」는 무엇을 고치는 말이에요?",
+        "en": "That line corrects what mistake?",
+        "jp": "その文は何を訂正していますか。"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "「书店后边」与「商店后边」弄混了",
+          "cn": "「书店后边」与「商店后边」弄混了",
+          "kr": "서점·가게 뒤를 헷갈린 것",
+          "en": "Mixing up which building is behind the home",
+          "jp": "本屋と店の後ろを取り違えたこと"
+        },
+        {
+          "key": "B",
+          "zh": "星期说错了",
+          "cn": "星期说错了",
+          "kr": "요일을 틀림",
+          "en": "Wrong weekday",
+          "jp": "曜日の間違い"
+        },
+        {
+          "key": "C",
+          "zh": "价钱算错了",
+          "cn": "价钱算错了",
+          "kr": "값을 잘못 셈",
+          "en": "Wrong price",
+          "jp": "値段の誤り"
+        },
+        {
+          "key": "D",
+          "zh": "朋友名字忘了",
+          "cn": "朋友名字忘了",
+          "kr": "친구 이름 잊음",
+          "en": "Forgot a friend’s name",
+          "jp": "名前を忘れた"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "会话三纠正「在书店后边」应为「在商店后边」。",
+        "kr": "회화3에서는 서점 뒤가 아니라 가게 뒤라고 바로잡습니다.",
+        "en": "They fix “behind the bookstore” to “behind the shop.”",
+        "jp": "本屋の後ろではなく店の後ろと訂正します。"
+      }
+    },
+    {
+      "id": "hsk30_l13_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我和同学一起住」里的「和」表示：",
+        "kr": "「我和同学一起住」의 「和」는?",
+        "en": "In 我和同学一起住, 和 means:",
+        "jp": "「我和同学一起住」の「和」の意味は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "与同伴一起",
+          "cn": "与同伴一起",
+          "kr": "같이 사는 사람과 함께",
+          "en": "Together with someone",
+          "jp": "一緒にいる相手と"
+        },
+        {
+          "key": "B",
+          "zh": "但是",
+          "cn": "但是",
+          "kr": "하지만",
+          "en": "But",
+          "jp": "しかし"
+        },
+        {
+          "key": "C",
+          "zh": "或者",
+          "cn": "或者",
+          "kr": "혹은",
+          "en": "Or",
+          "jp": "または"
+        },
+        {
+          "key": "D",
+          "zh": "因为",
+          "cn": "因为",
+          "kr": "왜냐하면",
+          "en": "Because",
+          "jp": "だから"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「和」连接「我」与「同学」，表示同住的对象。",
+        "kr": "「和」는 함께 사는 상대를 잇습니다.",
+        "en": "和 links you and who you live with.",
+        "jp": "「和」は一緒に住む相手をつなぎます。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "你住在哪里？",
+      "我住在学校那边。",
+      "我和同学一起住。",
+      "你去超市吗？",
+      "我去饭店。",
+      "我很喜欢看电影。",
+      "星期六你来我家吧？",
+      "你知道我住哪儿吗？",
+      "不是书店后边，是商店后边。"
+    ],
+    "chatPrompt": "请只用本课「住、哪里、哪儿、去、来、和、知道、吧」及场所词练习住处与去向；不要写成问价钱。",
+    "prompt": {
+      "zh": "请只用本课「住、哪里、哪儿、去、来、和、知道、吧」及场所词练习住处与去向；不要写成问价钱。",
+      "kr": "「住·哪里·哪儿·去·来·和·知道·吧」와 장소 표현만 써서 살 곳·가는 곳을 연습하세요. 가격 이야기는 빼 주세요.",
+      "en": "Practice where you live and go with 住, 哪里, 去, 来, 和, 知道, 吧—no price drills.",
+      "jp": "「住」「去」「来」「和」などだけ。値段の練習はしない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l13_where_live",
+          "situation": {
+            "zh": "会话一：问住处",
+            "kr": "회화1 · 어디 사는지",
+            "en": "Dialogue 1 — where you live",
+            "jp": "会話1：住まい"
+          },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你住在哪里？",
+              "pinyin": "Nǐ zhù zài nǎlǐ?",
+              "kr": "어디 살아요?",
+              "en": "Where do you live?",
+              "jp": "どこに住んでいますか。"
+            },
+            {
+              "zh": "我住在学校那边。",
+              "pinyin": "Wǒ zhù zài xuéxiào nà biān.",
+              "kr": "학교 쪽에 살아요.",
+              "en": "I live by the school.",
+              "jp": "学校の方に住んでいます。"
+            },
+            {
+              "zh": "我和同学一起住。",
+              "pinyin": "Wǒ hé tóngxué yìqǐ zhù.",
+              "kr": "동기랑 같이 살아요.",
+              "en": "I live with classmates.",
+              "jp": "同学と一緒に住んでいます。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "你好！",
+              "studentRefs": [
+                "你住在哪里？"
+              ],
+              "acceptable": [
+                "你住在哪里？",
+                "你住在哪里"
+              ],
+              "closeAnswers": [
+                "住在",
+                "哪里"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "l13_go_places",
+          "situation": {
+            "zh": "会话二：去超市还是饭店",
+            "kr": "회화2 · 마트·식당",
+            "en": "Dialogue 2 — supermarket or restaurant",
+            "jp": "会話2：行き先"
+          },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你去超市吗？",
+              "pinyin": "Nǐ qù chāoshì ma?",
+              "kr": "마트 가요?",
+              "en": "Going to the supermarket?",
+              "jp": "スーパーに行きますか。"
+            },
+            {
+              "zh": "我不去超市，我去饭店。",
+              "pinyin": "Wǒ bù qù chāoshì, wǒ qù fàndiàn.",
+              "kr": "마트는 안 가고 식당에 가요.",
+              "en": "Not the supermarket—I’m going to a restaurant.",
+              "jp": "スーパーには行かずレストランに行きます。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "下午好！",
+              "studentRefs": [
+                "你去超市吗？"
+              ],
+              "acceptable": [
+                "你去超市吗？",
+                "你去超市吗"
+              ],
+              "closeAnswers": [
+                "超市",
+                "去"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「住在」说明住址，用「一个人住吗」询问是否独居。",
+        "pinyin": "zhù zài · yí ge rén",
+        "kr": "「住在」로 주소를 말하고 혼자인지 묻는다.",
+        "en": "Say where you live; ask if someone lives alone.",
+        "jp": "「住在」で住まい、一人暮らしかを聞く。"
+      },
+      {
+        "zh": "能用「去……」「来……吧」谈论日常行程与邀请。",
+        "pinyin": "qù · lái ba",
+        "kr": "「去」「来…吧」로 일정과 초대를 말한다.",
+        "en": "Use 去 and 来吧 for plans and invites.",
+        "jp": "「去」「来吧」で予定と招待。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "区分「书店」与「商店」等场所词，本课会话三专门练习纠正。",
+          "pinyin": "shūdiàn · shāngdiàn",
+          "kr": "「书店」와 「商店」를 헷갈리지 않기.",
+          "en": "Tell 书店 from 商店—Dialogue 3 drills this.",
+          "jp": "「书店」と「商店」を区別する。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：住哪儿、和同学住。会话二：超市、饭店、电影。会话三：星期六来我家、书店/商店后边。",
+        "kr": "살 곳 → 가는 곳 → 토요일 집·장소 바로잡기.",
+        "en": "Where you live · where you go · Saturday & fixing the place.",
+        "jp": "住まい／行き先／土曜と場所の訂正。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「吧」使邀请口气委婉。",
+          "pinyin": "ba",
+          "kr": "「吧」는 권유를 부드럽게.",
+          "en": "吧 softens an invitation.",
+          "jp": "「吧」は誘いをやわらげる。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「来我家吧」可以换成「来我家吗」吗？「那边」一定指东边吗？",
+      "kr": "예: 「吧」와 「吗」 차이는?",
+      "en": "e.g. 吧 vs 吗 for invites?",
+      "jp": "例:「吧」と「吗」は？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「知道」能单独回答吗？",
+        "「一起」一定要和「住」连用吗？",
+        "饭店一定指吃饭的地方吗？"
+      ],
+      "kr": [
+        "「知道」만 답해도?",
+        "「一起」?",
+        "「饭店」?"
+      ],
+      "en": [
+        "Short answer with 知道?",
+        "一起 only with 住?",
+        "饭店 always food?"
+      ],
+      "jp": [
+        "「知道」だけで答える？",
+        "「一起」は？",
+        "「饭店」は？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你住在哪里？ / 我住在学校那边。",
+        "pinyin": "Nǐ zhù zài nǎlǐ? / Wǒ zhù zài xuéxiào nà biān.",
+        "usage": {
+          "zh": "询问与说明居住的大致位置。",
+          "kr": "어디 사는지 묻고 대략적인 위치를 말한다.",
+          "en": "Ask and give a rough idea where you live.",
+          "jp": "住まいの方角を聞き、答える。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}
