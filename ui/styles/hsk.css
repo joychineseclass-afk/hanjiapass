@@ -411,15 +411,17 @@
 }
 
 .ai-lesson-focus-gloss {
-  font-size: 0.8125rem;
-  color: #64748b;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #4b5563;
 }
 
 .ai-lesson-focus-usage {
   margin-top: 0.4rem;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
   color: #334155;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .ai-lesson-focus-usage-k {
@@ -478,9 +480,11 @@
 }
 
 .ai-lesson-focus-tr {
-  margin-top: 0.35rem;
-  font-size: 0.8125rem;
-  color: #64748b;
+  margin-top: 0.38rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #4b5563;
+  line-height: 1.5;
 }
 
 /* 本课说明：汉字 / 拼音 / 释义 层级（主 / 辅 / 再辅） */
@@ -505,11 +509,11 @@
 }
 
 .ai-lesson-focus-line-note {
-  margin-top: 0.28rem;
-  font-size: 0.78rem;
+  margin-top: 0.32rem;
+  font-size: 0.9375rem;
   font-weight: 400;
-  color: #64748b;
-  line-height: 1.45;
+  color: #4b5563;
+  line-height: 1.5;
 }
 
 /* 教材式注音：拼音在上、汉字在下（HTML ruby），非整行拼音段落 */
@@ -520,7 +524,7 @@
   font-size: 0.9375rem;
   font-weight: 650;
   color: #0f172a;
-  line-height: 2.05;
+  line-height: 2.18;
   word-break: break-word;
   overflow-wrap: break-word;
   -webkit-ruby-position: over;
@@ -534,11 +538,11 @@
 }
 
 .ai-lesson-focus-ruby-rt {
-  font-size: 0.5em;
-  font-weight: 500;
-  color: #475569;
+  font-size: 0.92em;
+  font-weight: 400;
+  color: #334155;
   letter-spacing: 0;
-  line-height: 1.15;
+  line-height: 1.2;
   font-variant: normal;
 }
 
@@ -586,8 +590,9 @@
 
 .ai-lesson-focus-usage-note {
   font-weight: 400;
-  color: #64748b;
-  font-size: 0.78rem;
+  color: #4b5563;
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 .ai-tutor-mode-content {
