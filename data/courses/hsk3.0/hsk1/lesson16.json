@@ -770,16 +770,16 @@
       {
         "zh": "会用「天气怎么样」开启关于天气的对话。",
         "pinyin": "tiānqì",
-        "kr": "날씨 질문.",
-        "en": "Open with 天气怎么样.",
-        "jp": "天気の話を始める。"
+        "kr": "「今天天气怎么样？」처럼 말을 열면 날씨에 대한 일상적인 대화를 자연스럽게 시작할 수 있습니다.",
+        "en": "Begin with 「今天天气怎么样？」to open a routine conversation about the day’s weather before you add details.",
+        "jp": "「今天天气怎么样？」と聞くことで、その日の天気についての会話を自然に始められます。"
       },
       {
         "zh": "能用「觉得」说出自己对冷热的感受。",
         "pinyin": "juéde",
-        "kr": "느낌 말하기.",
-        "en": "Say how you feel with 觉得.",
-        "jp": "「觉得」で感じを言う。"
+        "kr": "「我觉得很冷」처럼 「觉得」 뒤에 체감이나 판단을 붙여 덥다·춥다 등 자신의 느낌을 문장으로 말합니다.",
+        "en": "Follow 觉得 with how things feel to you (for example 「我觉得很冷」) to express whether you feel hot, cold, and so on.",
+        "jp": "「我觉得」のあとに「很冷」などを置き、自分が寒い・暑いと感じているかを主観として述べられます。"
       }
     ],
     "lessonExplain": {
@@ -788,25 +788,25 @@
         {
           "zh": "能用「天气怎么样」谈晴雨冷暖，并用「真、太、非常、有点儿、觉得」说感受。",
           "pinyin": "tiānqì · juéde",
-          "kr": "「天气怎么样」로 날씨를 말하고 「真」「太」「非常」「有点儿」「觉得」로 느낌을 표현한다.",
-          "en": "Talk about weather with 天气怎么样; express feelings with 真, 太, 非常, 有点儿, 觉得.",
-          "jp": "「天气怎么样」で天気を言い、「真」「太」「非常」「有点儿」「觉得」で気持ちを表せる。"
+          "kr": "맑음·비·눈 등 날씨를 「天气怎么样」로 묻고 답한 뒤, 「真好」「太热了」「非常冷」「有点儿冷」「我觉得……」처럼 정도와 주관적 느낌을 덧붙여 말할 수 있습니다.",
+          "en": "Ask and answer about sun, rain, or snow with 天气怎么样, then shade your reaction with 真, 太, 非常, 有点儿, and subjective 觉得.",
+          "jp": "「天气怎么样」で晴れ・雨・雪などを話し、「真」「太」「非常」「有点儿」「觉得」で気温や体感の強さ、主観的な印象を表せます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：冷暖。会话二：大雨与在家看电视。会话三：下雪与觉得冷。",
-        "kr": "날씨 → 비·TV → 눈·느낌.",
-        "en": "Fine / rainy & TV / snow & cold.",
-        "jp": "晴れ雨／テレビ／雪。"
+        "kr": "첫 회화에서는 덥고 춥다고 느끼는 정도를 말하고, 둘째에서는 비가 많이 와 집에서 TV를 본다고 하며, 셋째에서는 눈이 오고 매우 춥다고 느낀다고 합니다.",
+        "en": "Dialogue 1 discusses feeling hot or cold; Dialogue 2 describes heavy rain and staying home to watch TV; Dialogue 3 covers snow and feeling very cold.",
+        "jp": "会話1では暑さ・寒さの感想、会話2では大雨と在宅でテレビを見ること、会話3では雪と「觉得冷」の話をします。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「还早」的「还」表示尚、仍然。",
           "pinyin": "hái",
-          "kr": "「还」는 아직.",
-          "en": "还 = still/yet.",
-          "jp": "「还」はまだ。"
+          "kr": "「还早」에서 「还」는 ‘아직 ~한 상태다’라는 뜻으로, 시간이 충분히 남았음을 말할 때 씁니다.",
+          "en": "In 「还早」, 还 means “still” in the sense that something has not yet happened or time still remains.",
+          "jp": "「还早」の「还」は「まだ（時間が）ある／まだ早い」の「まだ」を表し、余裕があることを言います。"
         }
       ],
       "confusionPoints": []
@@ -841,9 +841,9 @@
         "pinyin": "Jīntiān tiānqì zěnmeyàng? / Jīntiān tiānqì hěn hǎo.",
         "usage": {
           "zh": "询问并描述当天天气。",
-          "kr": "오늘 날씨 묻고 답하기.",
-          "en": "Ask and describe today’s weather.",
-          "jp": "その日の天気を聞き、答える。"
+          "kr": "「今天天气怎么样？」로 오늘의 기상을 묻고, 「今天天气很好」처럼 맑음·흐림·비 등 상태와 함께 좋다·나쁘다 등의 평가를 덧붙여 답합니다.",
+          "en": "Ask 「今天天气怎么样？」and answer with the day’s conditions plus a short evaluation, such as 「今天天气很好」.",
+          "jp": "「今天天气怎么样？」でその日の天気を尋ね、「今天天气很好」のように状態と良い・悪いなどの感想を一言添えて答えます。"
         }
       }
     ]

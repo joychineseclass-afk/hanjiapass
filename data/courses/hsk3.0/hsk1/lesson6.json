@@ -666,23 +666,23 @@
       {
         "zh": "会问「现在几点？」并能用「现在……点……分」说出具体时间（含「零」与「半」）。",
         "pinyin": "xiànzài jǐ diǎn? · xiànzài … diǎn … fēn",
-        "kr": "「现在几点？」로 묻고 「现在……点……分」로 구체적 시각(「零」「半」 포함)을 말한다.",
-        "en": "Ask 现在几点? and answer with 现在…点…分 including 零 and 半.",
-        "jp": "「现在几点？」と「现在……点……分」で「零」「半」を使える。"
+        "kr": "현재 시각을 묻는 「现在几点？」에 대해, 먼저 「点」로 시를 잡고 이어 「分」으로 분을 말하는 「现在八点零七分。」 같은 문장으로 답합니다. 분이 한 자리일 때 앞에 「零」을 붙는 말하기와, 「七点半」처럼 「半」으로 30분을 표현하는 말하기를 함께 익힙니다.",
+        "en": "Answer 现在几点？ with 现在…点…分: hour first (点), then minutes (分). Include 零 for minutes like “oh seven” (八点零七分) and 半 for half past (七点半). Practice both reading the clock and saying class times.",
+        "jp": "「现在几点？」に「现在……点……分」で答えます。分が一桁のときは「零」を使い（八点零七分）、三十分は「半」で言います（七点半）。"
       },
       {
         "zh": "能用「上午/中午/下午/晚上」配合钟点说明上课、下课与作息。",
         "pinyin": "shàngwǔ · zhōngwǔ · xiàwǔ · wǎnshang",
-        "kr": "「上午／中午／下午／晚上」와 시각을 함께 써 수업·下课·일과를 말한다.",
-        "en": "Use time-of-day words with clock times for class and routine.",
-        "jp": "「上午／中午／下午／晚上」と時刻で授業や生活を言う。"
+        "kr": "하루를 「上午·中午·下午·晚上」로 나누고, 각 시간대 맨 앞에 두고 「我上午八点十分上课。」처럼 동사 구와 짝을 이루면 ‘그때 무엇을 하는지’가 분명해집니다. 수업 시작·종료와 함께 쓰는 연습을 합니다.",
+        "en": "Place 上午 / 中午 / 下午 / 晚上 before the time phrase and verb to say when class starts or ends—e.g. 我上午八点十分上课, 我中午十二点下课. Link each part of the day with your schedule.",
+        "jp": "「上午」「中午」「下午」「晚上」を時刻の前に置き、「我上午八点十分上课。」のように授業の始まり・終わりと組み合わせます。一日の区切りが言えるようになります。"
       },
       {
         "zh": "能使用「上课、下课、起床、睡觉」描述一天的安排。",
         "pinyin": "shàngkè · xiàkè · qǐchuáng · shuìjiào",
-        "kr": "「上课·下课·起床·睡觉」로 하루 일정을 말한다.",
-        "en": "Describe the day with 上课 / 下课 / 起床 / 睡觉.",
-        "jp": "「上课」「下课」「起床」「睡觉」で一日を説明できる。"
+        "kr": "학교 일정에는 「上课」「下课」, 집에서는 「起床」「睡觉」처럼 하루의 큰 사건을 나타내는 동사를 시각 표현과 붙입니다. 같은 날 안에서도 오전·저녁으로 나누어 말하면 듣는 사람이 하루의 흐름을 따라가기 쉽습니다.",
+        "en": "Use 上课 / 下课 for school blocks and 起床 / 睡觉 for home routines. Combine each with a time phrase to build a simple daily timeline.",
+        "jp": "「上课」「下课」は授業、「起床」「睡觉」は起居に使い、それぞれに時刻をつけて一日の予定を話します。"
       }
     ],
     "lessonExplain": {
@@ -691,72 +691,76 @@
         {
           "zh": "掌握询问时间的常用句「现在几点？」以及回答的语序（点 → 分）。",
           "pinyin": "xiànzài jǐ diǎn? · … diǎn … fēn",
-          "kr": "「现在几点？」와 답의 어순(点→分)을 익힌다.",
-          "en": "Master 现在几点? and the 点-then-分 order.",
-          "jp": "「现在几点？」と「点→分」の語順を身につける。"
+          "kr": "「现在几点？」는 ‘지금 몇 시’를 묻는 대표적인 문장입니다. 답할 때는 시침 위치를 나타내는 「点」를 먼저 말하고, 이어 분을 「分」으로 붙입니다. 이 순서가 바뀌면 중국어 시각 표현으로는 어색해질 수 있습니다.",
+          "en": "现在几点？ is the standard “What time is it now?” Answer with 点 for the hour, then 分 for minutes—never the other way around in normal speech.",
+          "jp": "「现在几点？」は現在の時刻を尋ねる定番の文です。答えは必ず「点」で時を言い、そのあと「分」で分を言う順序になります。"
         },
         {
           "zh": "能区分「上午、中午、下午、晚上、早上」并放在动词短语前作时间说明。",
           "pinyin": "shàngwǔ · zhōngwǔ · xiàwǔ · wǎnshang · zǎoshang",
-          "kr": "「上午·中午·下午·晚上·早上」를 구분해 동사 구 앞에 둔다.",
-          "en": "Tell apart 上午…早上 and place them before verbs.",
-          "jp": "「上午」などを区別し、動作の前に置ける。"
+          "kr": "「上午」은 오전 수업 시간대, 「中午」은 점심 무렵, 「下午」는 오후, 「晚上」는 저녁·밤, 「早上」은 이른 아침에 가깝습니다. 문장에서는 보통 이 말을 동사 바로 앞에 두어 ‘언제 그 행동을 하는지’를 분명히 합니다.",
+          "en": "Learn the rough bands: 上午 morning, 中午 around noon, 下午 afternoon, 晚上 evening/night, 早上 early morning. Put the time word before the verb phrase as a time adverbial.",
+          "jp": "「上午」は午前、「中午」は昼前後、「下午」は午後、「晚上」は夜、「早上」は早朝のイメージです。動詞句の前に置いて『いつ』を言います。"
         },
         {
           "zh": "会用「到」连接两个钟点表示一段时间，如「两点到四点」。",
           "pinyin": "liǎng diǎn dào sì diǎn",
-          "kr": "「到」로 두 시점을 잇어 「两点到四点」처럼 말한다.",
-          "en": "Use 到 between two times for a range.",
-          "jp": "「到」で「两点から四点」のような幅を言う。"
+          "kr": "「到」는 ‘부터 … 까지’처럼 시작 시각과 끝 시각을 잇습니다. 「下午两点到四点上课。」은 오후 두 시부터 네 시까지 수업이 있다는 뜻으로, 하루 중 한 구간을 잡아 말할 때 유용합니다.",
+          "en": "到 links a start time and an end time: 两点到四点 means from two o’clock to four o’clock. Use it to describe a span of class or activity in the afternoon, etc.",
+          "jp": "「到」は二つの時刻をつなぎ、「两点到四点」のように時間の幅を表します。午後の授業の区間などを言うのに使います。"
         },
         {
           "zh": "能用钟点、分、半与时段词描述一天里的上课、起床与睡觉等作息。",
           "pinyin": "diǎn · fēn · bàn · zuòxī",
-          "kr": "시·분·반과 시간대 말로 수업·기상·취침 등 하루 일과를 말한다.",
-          "en": "Describe the day’s routine with hours, minutes, half, and time-of-day words.",
-          "jp": "時・分・半と時間帯で、授業・起床・就寝など一日のリズムが言える。"
+          "kr": "시·분·반으로 시각을 세밀하게 말하고, 앞에 시간대 어휘를 붙이면 하루의 그림이 완성됩니다. 같은 구조를 수업·기상·취침에 반복 적용해 말하기 속도를 높입니다.",
+          "en": "Combine 点, 分, and 半 with time-of-day words to narrate a day: classes, wake-up, bedtime. Reuse the same pattern to build fluency.",
+          "jp": "「点」「分」「半」と時間帯の語を組み合わせ、授業・起床・就寝など一日のリズムを描写できます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：问现在几点、几分，说到几分钟后上课。会话二：问上午下午上课与下课时间。会话三：问早上起床与晚上睡觉时间，用「半」。",
-        "kr": "회화1: 지금 몇 시·몇 분·몇 분 후 수업; 회화2: 오전·오후 수업·下课; 회화3: 기상·취침과 「半」.",
-        "en": "Three dialogues: current time, school schedule, sleep routine.",
-        "jp": "会話：今の時刻、授業の時間帯、起床と就寝。"
+        "kr": "첫 대화에서는 ‘지금 몇 시 몇 분’인지 세밀하게 말하고, 몇 분 뒤에 수업이 시작하는지까지 연결합니다. 둘째는 오전·점심·오후의 수업 시작과 종료 시각을 묻고 답합니다. 셋째는 아침에 일어나는 시각과 밤에 잠드는 시각을 말하며, 이때 반시를 「半」으로 표현합니다. 전체적으로 시각 표현과 하루 일과를 엮는 것이 목표입니다.",
+        "en": "Dialogue 1: current time down to minutes and when class starts. Dialogue 2: morning/noon/afternoon class and end times. Dialogue 3: wake-up and bedtime using 半 for half hours. The lesson links telling time with daily routine.",
+        "jp": "会話1は今の時刻と授業までの分数、会話2は午前・昼・午後の授業の始まりと終わり、会話3は起床・就寝の時刻（「半」で三十分）です。時刻表現と生活リズムを結びつけます。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：用「现在几点？」问钟点，用「现在……点……分」回答，并说到「……分钟后上课」。",
           "pinyin": "xiànzài jǐ diǎn? · fēn · shàngkè",
-          "kr": "회화1: 현재 시각과 수업 시작을 말합니다."
+          "kr": "회화1에서는 「现在几点？」「现在……点……分」로 지금 시각을 말하고, 「三分钟后上课吗？」「八点十分上课。」처럼 수업 시작까지 남은 시간이나 정각을 이어 말합니다.",
+          "en": "Dialogue 1: 现在几点？ / 现在…点…分 for the time, then lines like 三分钟后上课吗？ and 八点十分上课 for when class begins.",
+          "jp": "会話1：「现在几点？」「现在……点……分」で現在時刻を言い、「三分钟后上课吗？」「八点十分上课。」のように授業の始まりにつなげます。"
         },
         {
           "zh": "会话二、三：用「上午/下午」等与钟点搭配说上课、下课、起床、睡觉，可用「半」表示半点。",
           "pinyin": "shàngwǔ · xiàwǔ · bàn",
-          "kr": "회화2·3: 시간대·수업·일과를 말합니다."
+          "kr": "회화2에서는 「上午」「下午」「中午」와 시각을 붙여 수업 시간을 말하고, 회화3에서는 「早上」「晚上」와 「七点半」「十点半」처럼 「半」을 써 기상·취침 시각을 말합니다.",
+          "en": "Dialogues 2–3: combine 上午/下午/中午 with times for class; use 早上/晚上 and 半 (e.g. 七点半) for getting up and going to bed.",
+          "jp": "会話2・3：「上午／下午」などと時刻で授業を言い、「早上／晚上」と「半」で起床・就寝を言います。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「二点」在口语里常说「两点」表示两点钟——本课对话用「两点到四点」。",
           "pinyin": "liǎng diǎn",
-          "kr": "시각을 말할 때 「两点」가 자주 쓰입니다(两点到四点).",
-          "en": "Spoken time often uses 两点 for 2 o’clock.",
-          "jp": "時刻の「二」は口語で「两点」と言うことが多い。"
+          "kr": "숫자 「二」도 시각을 말할 때는 「两点」처럼 「两」를 쓰는 경우가 많습니다. 본과의 「下午两点到四点上课。」은 이런 말하기 습관을 그대로 보여 주므로, 책과 회화에서 「二点」 대신 「两点」가 나오는 이유를 함께 기억해 두세요.",
+          "en": "For clock times, spoken Chinese often prefers 两点 over 二点 for “two o’clock.” This lesson’s 下午两点到四点 follows that habit—notice 两, not 二, before 点.",
+          "jp": "時刻では「二点」より「两点」と言うことが多いです。本课の「下午两点到四点上课。」はその口語の形です。"
         },
         {
           "zh": "「零七分」表示 07 分；此处的「十分」指时长十分钟。",
           "pinyin": "líng qī fēn · shí fēn",
-          "kr": "「零七分」은 07분; 여기 「十分」은 시간 길이 10분.",
-          "en": "零七分 = 07 minutes; 十分 here is ten minutes as a duration.",
-          "jp": "「零七分」は「07分」。ここ「十分」は長さとしての10分。"
+          "kr": "「八点零七分」에서 「零七分」은 시계의 ‘7분’을 말합니다. 반면 「三分钟后」의 「三分钟」은 ‘3분 동안’이라는 길이이고, 「八点十分上课」의 「十分」은 시각 ‘10분’을 가리킵니다. 같은 한자 「分」라도 ‘몇 시 몇 분’인지 ‘몇 분간’인지 문맥으로 가릅니다.",
+          "en": "零七分 in 八点零七分 means “:07” on the clock. In 三分钟后, 分钟 is a duration (“three minutes from now”). In 八点十分, 分 is “ten minutes past the hour.” The word 分 covers both ideas—use context.",
+          "jp": "「零七分」は時刻の「7分」。「三分钟后」の「分钟」は経過の長さ、「八点十分」の「十分」は時刻の「10分」です。「分」の役割を文脈で区別します。"
         },
         {
           "zh": "「中午」多指午饭前后到十二点左右，「下午」从中午过后算起。",
           "pinyin": "zhōngwǔ · xiàwǔ",
-          "kr": "「中午」는 점심 무렵, 「下午」는 오후 시간대.",
-          "en": "中午 ≈ noon; 下午 = afternoon.",
-          "jp": "「中午」は昼頃、「下午」は午後。"
+          "kr": "「中午」는 낮·점심 무렵을 가리키는 말로, 본과에서는 열두 시에 수업이 끝난다고 할 때 쓰입니다. 「下午」는 그 뒤의 오후 시간대를 넓게 가리키므로, 「中午十二点下课」 다음에 이어지는 「下午两点到四点」가 자연스럽게 연결됩니다.",
+          "en": "中午 usually covers the noon / lunch window—here, class ends at twelve. 下午 is the afternoon stretch after that, so 下午两点到四点 follows logically after the noon line.",
+          "jp": "「中午」は昼・昼食のあたり、「下午」はその後の午後です。本课では正午前後に終わり、そのあと午後の時間帯が続く流れになっています。"
         }
       ]
     },
@@ -802,9 +806,9 @@
         "pinyin": "xiànzài jǐ diǎn?",
         "usage": {
           "zh": "询问当前钟点。",
-          "kr": "지금 몇 시인지 묻습니다.",
-          "en": "Ask what time it is now.",
-          "jp": "今何時かを尋ねる。"
+          "kr": "말하는 바로 그 순간의 시각을 묻습니다. 답은 「现在八点零七分。」처럼 「现在」로 시작해 시·분을 이어 말하는 형태가 흔합니다.",
+          "en": "Asks for the time right now. Answers typically begin with 现在 and then give 点 and 分.",
+          "jp": "今の時刻を尋ねます。答えは多くの場合「现在」から始まり、そのあと「点」「分」が続きます。"
         }
       },
       {
@@ -812,9 +816,9 @@
         "pinyin": "… diǎn … fēn",
         "usage": {
           "zh": "说明具体时间，可说「八点十分」「八点零七分」。",
-          "kr": "구체 시각을 말할 때 씁니다.",
-          "en": "Hours and minutes.",
-          "jp": "時と分を言うとき。"
+          "kr": "시를 「点」, 분을 「分」으로 말합니다. 한 자리 분 앞에는 「零」을 넣어 「八点零七分」처럼 읽는 경우가 많습니다. 정각이면 「八点」처럼 「分」를 생략할 수 있습니다.",
+          "en": "State the hour with 点 and minutes with 分. Use 零 before single-digit minutes (八点零七分). On the hour you may omit 分 (八点).",
+          "jp": "「点」で時、「分」で分を言います。一桁の分の前には「零」をつけることがあります（八点零七分）。ちょうどのときは「八点」のように「分」を省略できます。"
         }
       },
       {
@@ -822,9 +826,9 @@
         "pinyin": "… diǎn bàn",
         "usage": {
           "zh": "表示半点，如「七点半」「十点半」。",
-          "kr": "삼십 분을 「半」으로 말합니다.",
-          "en": "Half past the hour.",
-          "jp": "「半」で三十分。"
+          "kr": "30분은 「半」 한 글자로 말하는 관용이 있습니다. 「我七点半起床。」「我十点半睡觉。」처럼 일과와 자주 짝을 이룹니다.",
+          "en": "半 after 点 means “half past”—e.g. 七点半 = 7:30. It pairs naturally with daily routines like getting up and sleeping.",
+          "jp": "「点」のあとに「半」をつけると三十分を表します（七点半＝7時30分）。起床・就寝などとよく一緒に使います。"
         }
       }
     ]

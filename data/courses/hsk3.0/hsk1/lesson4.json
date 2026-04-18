@@ -701,23 +701,23 @@
       {
         "zh": "能说清家里有几口人，用「我家有……口人」回答人数。",
         "pinyin": "nǐ jiā yǒu jǐ kǒu rén? · wǒ jiā yǒu … kǒu rén",
-        "kr": "집에 가족이 몇 명인지 말하고 「我家有……口人」로 인원을 답할 수 있다.",
-        "en": "Say how many people in the household with 我家有…口人.",
-        "jp": "家族が何人かを「我家有……口人」で言える。"
+        "kr": "「你家有几口人？」처럼 가구 인원을 묻는 질문에 대해, 숫자와 양사 「口」를 맞춰 「我家有四口人。」처럼 「我家有……口人」 패턴으로 답할 수 있어야 합니다. 이때 숫자는 「口」 앞에 두고, ‘우리 집은 모두 몇 명이다’라는 의미를 분명히 전달하는 연습을 합니다.",
+        "en": "You should be able to answer questions about household size—such as 你家有几口人？—with the pattern 我家有…口人, placing the number before 口 so listeners clearly hear how many people live in your home (for example, 我家有四口人). Practice saying the full sentence rather than only the number.",
+        "jp": "「你家有几口人？」のように家族の人数を尋ねられたとき、「我家有……口人」の形で、数字を「口」の前に置いて答えられること（例：我家有四口人）。『家に何人いるか』を一文で自然に伝えられるよう練習します。"
       },
       {
         "zh": "能介绍家庭成员，用「有……和……」列举爸爸、妈妈、哥哥、姐姐、弟弟、妹妹等。",
         "pinyin": "yǒu … hé …",
-        "kr": "가족을 소개하고 「有……和……」로 아빠·엄마·형·누나·남동생·여동생 등을 나열할 수 있다.",
-        "en": "Introduce family members, listing with 有…和….",
-        "jp": "家族を「有……和……」で列挙して紹介できる。"
+        "kr": "「你家里有谁？」에 답할 때 「有爸爸、妈妈、哥哥和我。」처럼 「有」を 쓰고 「和」로 여러 가족을 이어 나열할 수 있어야 합니다. 아빠·엄마·형제·자매 호칭을 골라 쓰고, 말하는 순서를 정해 차례대로 말하는 연습을 합니다.",
+        "en": "When someone asks 你家里有谁？, you can list family members with 有…和…, as in 有爸爸、妈妈、哥哥和我. Choose the right kinship words (爸爸, 妈妈, 哥哥, 姐姐, 弟弟, 妹妹), link the last two items with 和, and keep the list clear and natural.",
+        "jp": "「你家里有谁？」に「有……和……」で答え、父・母・兄弟姉妹などを列挙して紹介できること。例のように「有爸爸、妈妈、哥哥和我。」の形で、適切な呼び方を選び、「和」で最後のふたつをつなぎます。"
       },
       {
-        "zh": "能用「有……吗？」问有没有哥哥姐姐弟弟妹妹，并用「有……」或「没有。」回答。",
+        "zh": "能用「有……吗？」问有没有某位亲人，并用「有……」或「没有。」回答。",
         "pinyin": "yǒu … ma? · méiyǒu",
-        "kr": "「有……吗?」로 형제·자매가 있는지 묻고 「有……」나 「没有。」로 답할 수 있다.",
-        "en": "Ask 有…吗? about siblings; answer with 有… or 没有。.",
-        "jp": "「有……吗？」で兄弟の有無を聞き、「有／没有」で答えられる。"
+        "kr": "「你有妹妹吗？」처럼 「有……吗?」로 특정 가족의 유무를 묻고, 긍정이면 「有，我有一个妹妹。」처럼 짧게 확장해 답하거나, 부정이면 상황에 맞게 「没有。」처럼 간단히 답하는 패턴을 익힙니다. 질문과 답이 서로 짝을 이루도록 연습합니다.",
+        "en": "Use 有…吗？ to ask whether someone has a particular relative (e.g. 你有弟弟吗？). Answer affirmatively with 有… (adding detail if needed) or negatively with 没有。 as a short, natural reply that matches the yes–no question.",
+        "jp": "「有……吗？」で特定の家族がいるか尋ね、「有……」または「没有。」で答えられること。肯定なら「有，我有一个妹妹。」のように補足してもよく、否定なら「没有。」で簡潔に応じるのが自然です。"
       }
     ],
     "lessonExplain": {
@@ -726,79 +726,83 @@
         {
           "zh": "会问「你家有几口人？」并回答「我家有……口人」，说清家里一共多少人。",
           "pinyin": "nǐ jiā yǒu jǐ kǒu rén? · wǒ jiā yǒu … kǒu rén",
-          "kr": "「你家有几口人？」로 가구 인원을 묻고 「我家有……口人」로 집에 몇 명인지 말할 수 있다.",
-          "en": "Ask 你家有几口人？ and answer 我家有…口人 for household size.",
-          "jp": "「你家有几口人？」で聞き、「我家有……口人」で人数を言える。"
+          "kr": "가족 규모를 묻는 「你家有几口人？」를 쓸 수 있고, 「我家有……口人」로 집 전체 인원을 한 문장에 담아 말할 수 있어야 합니다. 숫자와 「口」의 위치를 익혀 듣는 사람이 바로 이해하도록 말하는 것이 목표입니다.",
+          "en": "Learn to ask 你家有几口人？ and respond with 我家有…口人 so the total number of people in the household is obvious. Focus on correct placement of the numeral and 口, and on saying a complete sentence.",
+          "jp": "「你家有几口人？」で家族の人数を尋ね、「我家有……口人」で世帯の合計を一文で言い切れるようにします。数字は必ず「口」の直前に置き、『うちは口で数える人数が何人か』という中国語特有の言い方に慣れることが目標です。答えは短くても、主語「我家」と「有」までそろえた文にすると聞き手に伝わりやすくなります。"
         },
         {
           "zh": "会问「你家里有谁？」并能用「有……和……」按顺序说出家人（爸爸、妈妈、哥哥、姐姐、弟弟、妹妹等）。",
           "pinyin": "nǐ jiā lǐ yǒu shéi? · yǒu … hé …",
-          "kr": "「你家里有谁?」에 「有……和……」로 가족을 나열해 말할 수 있다(아빠·엄마·형제·자매 등).",
-          "en": "Ask 你家里有谁？ and list members with 有…和….",
-          "jp": "「你家里有谁？」に「有……和……」で家族を列挙できる。"
+          "kr": "「你家里有谁？」로 집에 함께 사는 사람을 묻고, 「有爸爸、妈妈、哥哥和我。」처럼 「有」と「和」로 여러 명을 차례대로 이어 말합니다. 호칭을 바꿔 가며 누가 남녀·연장연하인지 구분해 쓰는 연습을 합니다.",
+          "en": "Ask 你家里有谁？ and answer by listing who lives at home with 有…和…, ordering people naturally (e.g. 有爸爸、妈妈、哥哥和我). Practice choosing 哥哥/弟弟/姐姐/妹妹 correctly.",
+          "jp": "「你家里有谁？」は『家に誰がいるか』を尋ねる定番の文で、答えでは「有爸爸、妈妈、哥哥和我。」のように「有」で列挙を始め、最後のふたりを「和」で結びます。呼び名は性別と長幼に合わせて選び、長いリストでもリズムを崩さずに言えるよう、教科書の順序をまず声に出して真似てから自分の家族に置き換える練習がおすすめです。"
         },
         {
           "zh": "会用「有……吗？」问有没有某位亲人，并能用「有，……」或单独「没有。」回答。",
           "pinyin": "yǒu … ma? · yǒu, … · méiyǒu",
-          "kr": "「有……吗？」로 가족의 유무를 묻고 「有, …」 또는 짧게 「没有。」로 답한다.",
-          "en": "Use 有…吗？ and answer with 有,… or 没有。.",
-          "jp": "「有……吗？」で有無を聞き、「有，……」か「没有。」で答えられる。"
+          "kr": "「有……吗？」는 특정 가족이 있는지 묻는 예·아니오 질문입니다. 긍정이면 「有，……」로 덧붙이거나, 부정이면 맥락이 이어지도록 「没有。」만으로도 자연스럽게 답할 수 있게 합니다.",
+          "en": "Use 有…吗？ to ask whether someone has a given relative. Reply with 有, … if yes, or with 没有。 alone when the context makes the meaning clear—typical after a 有…吗？ question.",
+          "jp": "「有……吗？」はイエス・ノーで親族の有無を尋ねる型です。肯定なら「有，我有一个妹妹。」のように少し情報を足すと自然で、否定なら直前の質問がはっきりしていれば「没有。」だけでも通じます。日本語の「いいえ、いません」より短文で済むことが多いので、会話のテンポに合わせて短い応答を恐れないことが大切です。"
         },
         {
           "zh": "能区分哥哥/弟弟、姐姐/妹妹等称谓，并配合「一个」说明数量。",
           "pinyin": "gēge · dìdi · jiějie · mèimei · yí gè",
-          "kr": "「哥哥/弟弟」「姐姐/妹妹」를 구분하고 「一个」로 수를 붙여 말한다.",
-          "en": "Distinguish 哥哥/弟弟, 姐姐/妹妹 and use 一个 for counting.",
-          "jp": "「哥哥／弟弟」「姐姐／妹妹」を区別し、「一个」で数えられる。"
+          "kr": "형제·자매를 말할 때 성별(남·여)과 연장·연하(형·아우)를 「哥哥／弟弟」「姐姐／妹妹」로 가르고, 「我有一个妹妹。」처럼 「一个」로 몇 명인지 덧붙일 수 있어야 합니다.",
+          "en": "Tell older vs younger and male vs female siblings using 哥哥/弟弟 and 姐姐/妹妹. Add 一个 when you need to say how many (e.g. 我有一个妹妹).",
+          "jp": "「哥哥／弟弟」「姐姐／妹妹」は、話し手ではなく“言及するその人”の性別と年上／年下で選びます。人数を一緒に言いたいときは「一个妹妹」のように名詞の前に「一个」を置きます。兄弟姉妹の呼び方を取り違えると相手がまちがうので、質問文を作る前に『男の子か女の子か／年上か年下か』を頭の中で決めてから語を選ぶ習慣をつけましょう。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：同学问李明家里有几口人、家里有谁，用「有」列举家庭成员。会话二：问有没有妹妹、弟弟，用「有……吗？」和「没有。」说明有无。本课讲家庭与「有」。",
-        "kr": "회화1: 집에 몇 명인지, 누가 있는지 묻고 「有」로 가족을 나열합니다. 회화2: 여동생·남동생이 있는지 「有……吗?」「没有。」로 말합니다. 가족과 「有」가 중심입니다.",
-        "en": "Dialogue 1: ask how many and who at home; list with 有. Dialogue 2: siblings with 有…吗？ and 没有。. Core: family and 有.",
-        "jp": "会話1：家族の人数とメンバーを「有」で。会話2：弟妹の有無を「有……吗？」「没有。」。家族と「有」が中心。"
+        "kr": "첫 번째 대화에서는 왕메이가 리밍에게 가구 인원과 함께 사는 가족을 묻고, 리밍은 「我家有……口人」「有……和……」로 답하며 「有」로 ‘있다·가지고 있다’는 뜻을 익힙니다. 두 번째 대화에서는 남동생·여동생 유무를 「有……吗？」로 묻고 「有……」 또는 「没有。」로 짧게 답해, 같은 「有」가 질문과 부정 답에서 어떻게 쓰이는지 비교합니다. 전체적으로 가족 소개와 소유·존재를 나타내는 「有」가 핵심입니다.",
+        "en": "In Dialogue 1, classmates ask Li Ming how many people are in his family and who they are; he answers with patterns like 我家有…口人 and lists members with 有…和…, practicing 有 for “have / there is.” In Dialogue 2, they ask about younger siblings with 有…吗？ and answer with 有… or 没有。, seeing how 有 works in yes–no questions and short negatives. The lesson centers on talking about family and using 有.",
+        "jp": "会話1では、家族が何人で誰がいるかを尋ね、「我家有……口人」「有……和……」で答える場面から、「有」の意味（いる・持っている）を学びます。会話2では妹・弟の有無を「有……吗？」で聞き、「有……」か「没有。」で答えます。本課全体では家族について話すことと「有」の使い方が中心です。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：问「你家有几口人？」「你家里有谁？」用「我家有……口人」「有……和……」介绍家人。",
           "pinyin": "jǐ kǒu rén · jiā lǐ yǒu shéi",
-          "kr": "회화1: 가족 인원과 구성원을 말합니다."
+          "kr": "회화1에서는 먼저 가구 인원을 「你家有几口人？」「我家有……口人」로 묻고 답한 뒤, 이어서 「你家里有谁？」에 「有爸爸、妈妈、哥哥和我。」처럼 「有」と「和」로 가족을 소개합니다.",
+          "en": "Dialogue 1: ask 你家有几口人？ and answer with 我家有…口人; then ask 你家里有谁？ and introduce family members with 有…和….",
+          "jp": "会話1では、まず「你家有几口人？」「我家有……口人」で家族の人数を確認し、つづけて「你家里有谁？」と聞いてメンバーを具体的に知ります。答えは「有爸爸、妈妈、哥哥和我。」のように「有」と「和」で名前列挙に入るのがこの課の型で、人数の話から顔ぶれの話へと話題を広げる流れを体で覚えます。"
         },
         {
           "zh": "会话二：用「你有妹妹吗？」「你有弟弟吗？」问兄弟姐妹，用「有……」或「没有。」回答。",
           "pinyin": "yǒu … ma?",
-          "kr": "회화2: 형제·자매 유무를 묻고 답합니다."
+          "kr": "회화2에서는 「你有妹妹吗？」「你有弟弟吗？」처럼 「有……吗？」로 형제·자매가 있는지 묻고, 긍정이면 「有，我有一个妹妹。」처럼 말하거나, 부정이면 「没有。」로 짧게 이어 받습니다.",
+          "en": "Dialogue 2: ask about siblings with 你有妹妹吗？ / 你有弟弟吗？; answer with a short 有… sentence or 没有。 when there is no such relative.",
+          "jp": "会話2では「你有妹妹吗？」「你有弟弟吗？」と、妹・弟という異なる対象に同じ「有……吗？」の枠を当てはめます。肯定なら「有，我有一个妹妹。」のように補足してもよく、否定なら「没有。」で十分な場面もあります。同じ「有」が、前の会話の“列挙する有”と、ここでは“有無を尋ねる有”として働く違いを意識すると理解が深まります。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「家」可指家庭；「家里」强调在家里、家中成员——本课问谁在家常用「家里」。",
           "pinyin": "jiā · jiā lǐ",
-          "kr": "「家」는 가족·집, 「家里」는 ‘집 안에’에 가깝습니다. 본과는 집에 누가 있나 물을 때 「家里」가 자주 나옵니다.",
-          "en": "家 = family/home; 家里 = at home / in the household—this lesson often uses 家里 for who’s at home.",
-          "jp": "「家」は家・家族。「家里」は家の中・家庭の中。本課では誰がいるかに「家里」。"
+          "kr": "「家」는 ‘가족’이나 ‘집’처럼 넓게 쓰이고, 「家里」는 말하는 사람이 마음속으로 그려 놓은 ‘집 안·가정’에 초점을 둘 때 자주 씁니다. 그래서 「你家里有谁？」는 ‘집에 누가 있어요?’처럼 함께 사는 사람을 묻는 표현이 됩니다. 「家」만 쓰는 문장과 뉘앙스 차이를 비교해 보세요.",
+          "en": "家 can mean “family” or “home” in a broad sense; 家里 narrows the picture to “inside the home / among the people there.” That is why 你家里有谁？ naturally asks who (among the people) is in the household. Compare with sentences that use only 家 to feel the nuance.",
+          "jp": "「家」は『家族』『家』など広い意味があり、「家里」は『家の中』『家庭の中』という範囲に焦点を当てます。だから「你家里有谁？」は『家に誰がいますか』のように、同居のメンバーを尋ねるのに向きます。「家」だけの文との違いを意識しましょう。"
         },
         {
           "zh": "「有」表示家里有、拥有某位亲人；回答「没有。」常承接上一句「有……吗？」。",
           "pinyin": "yǒu · méiyǒu",
-          "kr": "「有」는 가족이 있다·가지고 있다는 뜻이고, 「没有。」는 앞의 「有……吗?」에 대한 짧은 부정 답입니다.",
-          "en": "有 = have (a relative); 没有 often answers the previous 有…吗? question.",
-          "jp": "「有」は家族がいる。「没有。」は前の「有……吗？」への答え。"
+          "kr": "긍정문에서 「有」는 ‘가족으로서 있다’ ‘그 사람을 두고 있다’는 소유·존재를 나타냅니다. 「你有弟弟吗？」 다음에 「没有。」만 해도, 질문 내용이 분명하면 듣는 사람은 바로 ‘남동생은 없다’고 이해합니다. 긴 문장 없이 짧게 끊는 답이 자연스러운 경우가 많습니다.",
+          "en": "In statements, 有 expresses that a relative “is there” in the family or that you “have” that person. After 你有弟弟吗？, a bare 没有。 is enough when the question is clear—listeners supply “no younger brother” from context. Short answers are normal in Chinese conversation.",
+          "jp": "「有」は家族がいる・その人がいることを表します。「你有弟弟吗？」のあと「没有。」だけでも、質問がはっきりしていれば『弟はいない』と伝わります。会話では短い否定がよく使われます。"
         },
         {
           "zh": "「哥哥」是男性、比自己年长；「弟弟」男性、年幼——「姐姐/妹妹」同理，问句里别混。",
           "pinyin": "gēge · dìdi · jiějie · mèimei",
-          "kr": "「哥哥」는 남자이면서 형·「弟弟」는 남자이면서 남동생. 「姐姐/妹妹」도 성별·연장·연하를 가릅니다.",
-          "en": "哥哥/弟弟 vs 姐姐/妹妹: gender + older/younger—pick the right word.",
-          "jp": "「哥哥／弟弟」「姐姐／妹妹」は性別と長幼の区別が重要。"
+          "kr": "중국어 형제 호칭은 한국어의 ‘형·오빠·동생’처럼 말하는 사람의 성별을 보지 않고, 대상의 성별과 연장·연하를 먼저 가릅니다. 남자 형·아우는 「哥哥」「弟弟」, 여자 언니·여동생은 「姐姐」「妹妹」입니다. 질문을 만들 때 단어를 바꾸면 의미가 완전히 달라지므로, 누구에 대해 말하는지 먼저 정한 뒤 고르세요.",
+          "en": "Chinese sibling words depend on the referred person’s gender and age relative to you, not on the speaker’s gender. 哥哥/弟弟 are brothers (older/younger); 姐姐/妹妹 are sisters (older/younger). Mixing them changes who you mean, so choose after you know who you are talking about.",
+          "jp": "「哥哥」「弟弟」は兄弟の年上・年下と男性、「姐姐」「妹妹」は姉妹の年上・年下と女性を表します。話し手の性別ではなく、言及する相手の性別と長幼で選びます。混同すると相手が誰かまちがうので、先にそれを決めてから使い分けましょう。"
         },
         {
           "zh": "「几口人」的「口」是人口量词习惯用法，问家里多少人时常说「几口人」。",
           "pinyin": "jǐ kǒu rén",
-          "kr": "「几口人」의 「口」는 사람 수를 세는 관용적 양사로, 가족 인원을 묻는 말에 쓰입니다.",
-          "en": "口 in 几口人 is a measure for people—idiomatic for household size.",
-          "jp": "「几口人」の「口」は人数を数える慣用的な助数詞。"
+          "kr": "「几口人」의 「口」는 ‘입’이라는 뜻에서 출발했지만, 여기서는 가구의 사람 수를 세는 관용적인 양사로 굳어졌습니다. 「你家有几口人？」는 일상에서 가족 인원을 묻는 아주 흔한 표현이니, 숫자와 함께 외워 두면 대화가 쉬워집니다.",
+          "en": "口 in 几口人 is a conventional measure word for counting people in a household. 你家有几口人？ is a very common way to ask family size; learn it as a chunk with the number in front of 口.",
+          "jp": "「几口人」の「口」は、もともと『口』の字ですが、ここでは世帯の人数を数える助数詞として定着しています。「你家有几口人？」は家族の人数を尋ねる定番の言い方なので、数字＋口の形で覚えると便利です。"
         }
       ]
     },
@@ -848,9 +852,9 @@
         "pinyin": "yǒu",
         "usage": {
           "zh": "表示家里有谁、有没有某位亲人。",
-          "kr": "집에 누가 있거나 가족이 있는지 말할 때 씁니다.",
-          "en": "Have / there is (family members at home).",
-          "jp": "家族の有無・存在を言うときの「ある・いる」。"
+          "kr": "「有」는 문맥에 따라 ‘집에 그 사람이 있다’ ‘그런 가족을 두고 있다’처럼 존재나 소유를 말합니다. 본과에서는 가족 구성을 말하거나 「你有妹妹吗？」처럼 특정 친족이 있는지 물을 때 핵심 동사로 쓰입니다.",
+          "en": "Here 有 expresses that someone is part of the household or that you “have” that relative. The lesson uses it to list who is at home and to ask yes–no questions like 你有妹妹吗？ about whether a certain family member exists.",
+          "jp": "「有」は文脈で『家にいる』『その家族がいる（持っている）』という存在や所属を表します。本課では家族を列挙したり、「你有妹妹吗？」のように特定の親族の有無を尋ねたりするのに使います。"
         }
       },
       {
@@ -858,9 +862,9 @@
         "pinyin": "nǐ jiā yǒu jǐ kǒu rén? / wǒ jiā yǒu sì kǒu rén",
         "usage": {
           "zh": "询问与回答家庭人口，数字放在「口」前。",
-          "kr": "가족 수를 묻고 답하며 숫자는 「口」 앞에 둡니다.",
-          "en": "Ask/answer how many at home; number + 口人.",
-          "jp": "家族の人数を聞き答える。「口」の前に数字。"
+          "kr": "앞의 문장은 가구 전체 인원을 묻는 질문이고, 뒤는 「我家有」 뒤에 숫자와 「口人」를 붙여 답합니다. 숫자는 반드시 「口」 앞에 와야 하며, 이렇게 말하면 한국어의 ‘우리 집은 네 식구예요’에 해당하는 자연스러운 한 문장이 됩니다.",
+          "en": "The question asks how many people are in the household; the answer uses 我家有 + number + 口人. Put the numeral directly before 口. Together this sounds like a natural, complete reply about family size.",
+          "jp": "前者は世帯の人数を尋ね、後者は「我家有」に数字と「口人」を続けて答えます。数字は「口」の直前に置きます。この型で『うちは四人です』のように自然に言えます。"
         }
       },
       {
@@ -868,9 +872,9 @@
         "pinyin": "gēge / dìdi / jiějie / mèimei",
         "usage": {
           "zh": "区分性别与长幼：兄/弟、姐/妹。",
-          "kr": "성별과 연장·연하를 가르는 호칭입니다.",
-          "en": "Siblings: older/younger brother; older/younger sister.",
-          "jp": "兄弟姉妹：年上・年下と男女の区別。"
+          "kr": "네 단어 모두 ‘형제·자매’를 가리키지만, 먼저 남성(哥·弟)과 여성(姐·妹)을 가르고, 그다음 연장(哥·姐)과 연하(弟·妹)를 가릅니다. 부모를 부르는 말과 달리 말하는 사람 기준이 아니라, 말하는 ‘그 사람’ 기준입니다.",
+          "en": "These four words label siblings by gender (male: 哥/弟; female: 姐/妹) and by older vs younger (哥/姐 vs 弟/妹). They describe the person referred to, not the speaker—unlike some languages that change with the speaker’s gender.",
+          "jp": "四語とも兄弟姉妹を指しますが、まず男女（哥・弟／姐・妹）、次に年上・年下（哥・姐／弟・妹）で分けます。話し手の性別ではなく、言及する相手の性別と長幼で選びます。"
         }
       },
       {
@@ -878,9 +882,9 @@
         "pinyin": "nǐ yǒu gēge ma?",
         "usage": {
           "zh": "用「有……吗？」问有没有某位亲人。",
-          "kr": "「有……吗?」로 특정 가족이 있는지 묻습니다.",
-          "en": "有…吗? asks whether someone (e.g. older brother) is in the family.",
-          "jp": "「有……吗？」で家族の有無を尋ねる。"
+          "kr": "「有 … 吗?」는 ‘～가 있어요?’ 형태의 예·아니오 질문입니다. 중간에 가족 호칭을 넣어 「你有姐姐吗？」처럼 바꿀 수 있고, 듣는 사람은 짧게 「有。」 또는 「没有。」로도 답할 수 있습니다.",
+          "en": "有…吗？ is a yes–no question frame: “Do you have …?” Insert a kinship term to ask about that relative (你有姐姐吗？, etc.). Answers can be short: 有。 / 没有。.",
+          "jp": "「有……吗？」は『～はいますか／いますか』というイエス・ノー疑問の型です。家族の呼び方を入れ替えて「你有姐姐吗？」などにできます。答えは「有。」「没有。」のように短くてもよいです。"
         }
       }
     ]

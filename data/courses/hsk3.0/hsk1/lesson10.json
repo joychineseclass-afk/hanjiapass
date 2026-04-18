@@ -902,23 +902,23 @@
       {
         "zh": "会用「这个/那个……多少钱？」「……块/元」完成问价与报价。",
         "pinyin": "zhège/nàge · duōshao qián · kuài/yuán",
-        "kr": "지시어와 「多少钱」「块/元」로 가격을 묻고 답한다.",
-        "en": "Ask/answer price with 这个/那个 and 块/元.",
-        "jp": "「这个／那个」「多少钱」「块／元」で値段。"
+        "kr": "「这个」「那个」로 가까운 물건과 먼 물건을 가리킨 뒤 「多少钱？」로 값을 묻습니다. 답은 「十块。」「那个十二块。」처럼 숫자 뒤에 「块」를 붙이거나, 회계·표기에서는 「二十元。」처럼 「元」를 씁니다. 가리키기와 숫자·화폐 단위를 한 흐름으로 말하는 연습을 합니다.",
+        "en": "Point with 这个 / 那个, then ask 多少钱. Answers give number + 块 in speech or 元 on receipts and totals—practice both patterns.",
+        "jp": "「这个／那个」で品を示し、「多少钱」で値段を尋ねます。答えは口語で「块」、会計では「元」がよく使われます。"
       },
       {
         "zh": "能用「贵吗？」「不贵」「很便宜」「有一点儿贵」描述价格感受。",
         "pinyin": "guì ma · piányi · yìdiǎnr guì",
-        "kr": "「贵吗?」「不贵」「很便宜」「有一点儿贵」로 값이 비싼지·싼지 말한다.",
-        "en": "Use 贵吗?, 不贵, 很便宜, and 有一点儿贵 to talk about how the price feels.",
-        "jp": "「贵吗？」「不贵」「很便宜」「有一点儿贵」で値ごろ感を言える。"
+        "kr": "가격에 대한 인상을 묻는 「贵吗？」에 「不贵，很便宜。」처럼 싸다고 말하거나, 「那个有一点儿贵。」처럼 조금 비싸다고 부드럽게 말할 수 있어야 합니다. 「很」와 「有一点儿」의 뉘앙스 차이를 비교해 보세요.",
+        "en": "Ask 贵吗? to check if something feels expensive; answer with 不贵 / 很便宜 for “cheap” or 有一点儿贵 for “a bit pricey.” Compare 很 vs 一点儿 for strength of feeling.",
+        "jp": "「贵吗？」で高いかどうかを尋ね、「不贵」「很便宜」「有一点儿贵」で安さ・高さの印象を言い分けます。"
       },
       {
         "zh": "能在购物对话里用「还」追问是否要再买别的东西。",
         "pinyin": "hái mǎi",
-        "kr": "「还」로 추가 구매를 묻는다.",
-        "en": "Use 还 for “anything else?”.",
-        "jp": "「还」で追加を尋ねる。"
+        "kr": "이미 우유를 담은 뒤 점원이 「还买什么吗？」라고 물으면 ‘다른 것도 살까요?’라는 뜻입니다. 손님이 「还买一杯茶。」처럼 답하면 한 품목을 더 담는 장면으로 이어집니다. ‘추가’의 뉘앙스를 기억하세요.",
+        "en": "还 in 还买什么吗？ checks whether the customer wants more items. 还买一杯茶 adds one more purchase—还 marks “in addition.”",
+        "jp": "「还买什么吗？」は追加購入の有無を尋ね、「还买一杯茶。」のように「还」で『もう一つ』を足します。"
       }
     ],
     "lessonExplain": {
@@ -927,69 +927,69 @@
         {
           "zh": "区分口语常用的「块」与书面/标价常见的「元」，并读懂价签数字。",
           "pinyin": "kuài · yuán",
-          "kr": "「块」「元」와 숫자 표기를 읽는다.",
-          "en": "块 vs 元 in speech and tags.",
-          "jp": "「块」と「元」、数字の読み。"
+          "kr": "말할 때는 「十块」처럼 「块」가 흔하고, 가게 안내판·영수증에는 「元」가 자주 씁니다. 뜻은 같은 ‘위안’이지만 어투가 달라, 본과에서는 두 말을 같은 가격을 가리킬 때도 함께 보도록 구성되어 있습니다. 숫자(十·十二·二十)를 소리 내어 읽는 연습을 병행합니다.",
+          "en": "Spoken prices often use 块; signs and totals use 元—they refer to the same yuan. Practice reading numerals on tags and hearing them in speech.",
+          "jp": "口語では「块」、表示や合計では「元」がよく使われます。同じ金額でも文体が違う、と理解し、数字の読みを練習します。"
         },
         {
           "zh": "会用「这个、那个」指近处、远处的商品，并与「多少钱」完成问价与还价。",
           "pinyin": "zhège · nàge · duōshao qián",
-          "kr": "가깝고 먼 물건을 「这个」「那个」로 가리키고 「多少钱」로 값을 묻고 말한다.",
-          "en": "Use 这个/那个 for near and far items; ask prices with 多少钱.",
-          "jp": "「这个／那个」で近く・遠くの品を示し、「多少钱」で値段を尋ね答えられる。"
+          "kr": "가까이 있는 컵은 「这个」, 손이 닿지 않는 쪽은 「那个」로 가리킵니다. 이미 하나의 가격을 말한 뒤 「那个呢？」만으로도 ‘저건 얼마예요?’라는 같은 질문을 이어 갈 수 있습니다. 가리킨 대상이 바뀌어도 「多少钱」 틀은 그대로 유지합니다.",
+          "en": "这个 = this one (near), 那个 = that one (farther). After one price, 那个呢？ asks the same about the other item—reuse the 多少钱 pattern without repeating the whole question.",
+          "jp": "「这个」は手元の品、「那个」は少し離れた品。「那个呢？」で同じ値段の聞き方を続けられます。"
         },
         {
           "zh": "能读懂价签数字，并在买东西时用「贵、便宜、还」等表达感受与追加购买。",
           "pinyin": "guì · piányi · hái",
-          "kr": "가격표 숫자를 읽고 「贵」「便宜」「还」로 느낌과 추가 구매를 말한다.",
-          "en": "Read price tags; use 贵, 便宜, 还 in shopping talk.",
-          "jp": "値札の数字が読め、「贵」「便宜」「还」で気持ちと追加を言える。"
+          "kr": "가격표의 숫자를 읽은 뒤, 「贵吗？」로 느낌을 묻고 「很便宜」처럼 평가를 덧붙입니다. 계산대에서는 「还买什么吗？」로 추가 주문을 확인하고 「谢谢，多少钱？」로 총액을 묻습니다.",
+          "en": "Read numbers on tags; discuss whether things feel 贵 or 便宜; at checkout use 还 for add-ons and 多少钱 for the total.",
+          "jp": "値札の数字を読み、「贵」「便宜」で印象を言い、会計では「还」と「多少钱」で追加と合計を扱えます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：这个十块、那个十二块。会话二：便宜与有一点儿贵。会话三：两杯牛奶、一杯茶、二十元。",
-        "kr": "회화1 이건 10·저건 12위안 → 회화2 싸다·조금 비싸다 → 회화3 우유 둘·차 하나·총 20위안.",
-        "en": "1: This ¥10, that ¥12 · 2: cheap vs a bit pricey · 3: two milks, one tea, ¥20 total.",
-        "jp": "会話1 これ10元・あれ12元／会話2 安い・ちょっと高い／会話3 牛乳二つ・お茶一杯・合計20元。"
+        "kr": "첫 대화에서는 같은 종류의 컵 두 가지를 가리키며 각각의 값을 묻고 답합니다. 둘째는 비싼지 묻고 아주 싸다·조금 비싸다로 느낌을 나눕니다. 셋째는 음료를 여러 잔 담은 뒤 「还」로 추가 주문을 받고, 마지막에 「元」로 총액을 말합니다. 가격 묻기·평가하기·추가 구매·합계까지 쇼핑의 한 바퀴를 돕니다.",
+        "en": "Dialogue 1: two cups, two prices. Dialogue 2: asking 贵吗 and answering cheap vs a little expensive. Dialogue 3: ordering milk and tea with 还, then paying 二十元. The lesson walks through ask → evaluate → add on → total.",
+        "jp": "会話1は二つのコップの値段、会話2は高いか安いかの感想、会話3は牛乳とお茶の追加と合計20元です。買い物の流れを一通りカバーします。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一、二：「多少钱」问价；「贵吗」谈感受。",
           "pinyin": "duōshao qián · guì ma",
-          "kr": "회화1·2: 「多少钱」로 값을 묻고, 「贵吗」로 비싼지·싼지 느낌을 말합니다.",
-          "en": "Dialogues 1–2: 多少钱 for the price; 贵吗 for whether it feels expensive or cheap.",
-          "jp": "会話1・2：「多少钱」で値段、「贵吗」で高いか安いかの印象。"
+          "kr": "회화1에서는 「这个杯子多少钱？」「十块。」「那个呢？」처럼 가격을 묻고 이어 가며, 회화2에서는 같은 물건에 대해 「这个杯子贵吗？」로 값의 부담을 묻고 「不贵，很便宜。」「有一点儿贵。」로 평가합니다. 숫자로 답하는 단계와 감정으로 답하는 단계가 나뉩니다.",
+          "en": "Dialogues 1–2: first get concrete prices with 多少钱; then shift to evaluation with 贵吗 and answers like 很便宜 vs 有一点儿贵.",
+          "jp": "会話1・2では、まず「这个杯子多少钱？」「十块。」「那个呢？」のように「多少钱」を軸に具体的な数字（块）を確認し、そのあと同じ品について「这个杯子贵吗？」と値ごろ感に話題を移します。「不贵，很便宜。」と「有一点儿贵。」の対比のように、金額そのものではなく『高く感じるかどうか』を言葉で表す段階に進むのがポイントです。"
         },
         {
           "zh": "会话三：「还」连接追加购买，最后用「元」报总价。",
           "pinyin": "hái · yuán",
-          "kr": "회화3: 「还」로 한 가지 더 살지 묻고, 마지막에 「元」로 총액을 말합니다.",
-          "en": "Dialogue 3: 还 checks if you want more items; you close with the total in 元.",
-          "jp": "会話3：「还」で追加の買い物を確認し、合計は「元」で言う。"
+          "kr": "회화3에서는 우유를 담은 뒤 「还买什么吗？」로 다른 품목을 제안하고, 「还买一杯茶。」로 주문을 확장합니다. 마지막에 「谢谢，多少钱？」「二十元。」처럼 「元」로 총액을 말해 회계 상황을 마무리합니다.",
+          "en": "Dialogue 3: 还买什么吗？ opens upselling; 还买一杯茶 adds an item; closing with 多少钱 / 二十元 uses 元 for the total.",
+          "jp": "会話3では、まず牛乳を注文したあと店員が「还买什么吗？」と追加の有無を尋ね、客が「还买一杯茶。」ともう一品足します。最後に「谢谢，多少钱？」で会計に移り、答えの「二十元。」のように口語の「块」より書き言いに近い「元」で総額を言い切ると、買い物の一連の流れがまとまります。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「多少」在「多少钱」里问金额；不要与第9课「吃什么」的「什么」混在同一模板里。",
           "pinyin": "duōshao qián · shénme",
-          "kr": "질문 초점이 다릅니다.",
-          "en": "多少钱 ≠ 吃什么 structure.",
-          "jp": "「多少钱」と食べ物の「什么」は別。"
+          "kr": "「多少钱」의 「多少」는 ‘얼마(돈)’를 묻고, 9과의 「吃什么」는 ‘무엇을 먹을지’를 묻습니다. 질문 어휘가 비슷해 보여도 문장 뼈대가 다르므로, 쇼핑 장면에서는 「钱」가 붙은 형태를 쓰도록 구분합니다.",
+          "en": "多少钱 asks how much money; 吃什么 asks what to eat—the templates differ. Don’t mix the 什么 patterns from the food lesson into price questions.",
+          "jp": "「多少钱」の「多少」は『いくら（お金）』を尋ねる塊で、第9課の「你喜欢吃什么？」の「什么」は『何を（食べるか）』を尋ねる塊です。「什么」という字が出ても、前に動詞「吃」があるか、名詞「钱」があるかでまったく別のテンプレートになるので、買い物の場面では必ず「钱」までついた形を使う、と決めておくと安全です。"
         },
         {
           "zh": "「两杯」本课表数量；「两」与第4课家庭成员数量用法一致，语境换成饮料。",
           "pinyin": "liǎng bēi",
-          "kr": "음료 수량에 「两」.",
-          "en": "两 cups—quantity like earlier lessons.",
-          "jp": "「两杯」の数量。"
+          "kr": "「两」는 둘을 세는 말로, 4과에서 가족 수를 말할 때도 쓰였습니다. 여기서는 「杯」와 붙어 음료 잔 수를 세는 데 쓰입니다. 「二杯」보다 「两杯」가 자연스러운 경우가 많습니다.",
+          "en": "两杯 = two cups—两 counts pairs or quantities, as in earlier family lessons but now with drinks. Prefer 两杯 over 二杯 in this context.",
+          "jp": "「两杯」は飲み物を二つという意味で、家族の人数のときの「两」と同じ数え方です。飲み物では「两杯」が自然です。"
         },
         {
           "zh": "价签「10元」与会话「十块」可指同一标价，语体不同。",
           "pinyin": "shí kuài · shí yuán",
-          "kr": "말하기 「块」와 표기 「元」.",
-          "en": "块 in speech, 元 on tags.",
-          "jp": "口語の「块」と表示の「元」。"
+          "kr": "같은 10위안이라도 점원이 말할 때는 「十块」, 매장에 붙은 종이에는 「10元」처럼 쓰는 식으로 말과 글의 습관이 갈립니다. 듣기·읽기를 함께 연습하면 실전 감각이 붙습니다.",
+          "en": "Ten yuan can be spoken as 十块 and written 10元—the amount matches; the style differs between talk and print.",
+          "jp": "話すときは「十块」、札やレシーでは「元」—同じ金額でも文体が違います。"
         }
       ]
     },
@@ -1035,9 +1035,9 @@
         "pinyin": "zhège bēizi duōshao qián? / shí kuài.",
         "usage": {
           "zh": "指近处物品并问价；用「块」口语报价。",
-          "kr": "가까운 물건 가격을 묻고 「块」로 답합니다.",
-          "en": "Ask price for 这个; answer with 块.",
-          "jp": "「这个」で値段を尋ね、「块」で答える。"
+          "kr": "가게에서 손가락으로 가리키며 「这个杯子多少钱？」처럼 물건을 특정하고 값을 묻습니다. 점원은 「十块。」처럼 짧게 숫자와 「块」만 말하는 경우가 많습니다. 구어체에서 「块」는 ‘위안’과 거의 같습니다.",
+          "en": "Point to the near item with 这个 and ask 多少钱; clerks often answer with number + 块 in casual speech—equivalent to yuan in conversation.",
+          "jp": "「这个」で品を示して値段を聞き、答えは口語で「块」がよく使われます。"
         }
       },
       {
@@ -1045,9 +1045,9 @@
         "pinyin": "zhège bēizi guì ma? / bù guì, hěn piányi.",
         "usage": {
           "zh": "用形容词评价价格高低。",
-          "kr": "형용사로 가격을 평가합니다.",
-          "en": "Ask if expensive; say cheap.",
-          "jp": "高いかどうか、安いと答える。"
+          "kr": "「贵吗？」는 값이 부담스러운지 묻는 질문이고, 「不贵」는 부정,「很便宜」는 긍정적으로 싸다고 말합니다. 가격 숫자 없이도 ‘괜찮은 가격’인지 느낌만으로 이야기할 때 씁니다.",
+          "en": "贵吗? asks whether the price feels high; 不贵 / 很便宜 give subjective judgments—cheap or not—without repeating numbers.",
+          "jp": "「贵吗？」で高く感じるかを尋ね、「不贵」「很便宜」で安さの印象を言います。"
         }
       },
       {
@@ -1055,9 +1055,9 @@
         "pinyin": "hái mǎi shénme ma? / xièxie, duōshao qián?",
         "usage": {
           "zh": "追加购物与结算问价。",
-          "kr": "추가 구매와 계산 때 가격 확인.",
-          "en": "Anything else—then total.",
-          "jp": "追加と会計の確認。"
+          "kr": "「还买什么吗？」는 담은 것 외에 더 살 것이 있는지 묻는 점원의 정중한 표현입니다. 손님이 마음에 들면 「还买一杯茶。」로 답하고, 마지막에 「谢谢，多少钱？」로 총액을 확인합니다.",
+          "en": "还买什么吗？ = “Anything else?” After ordering more with 还买…, close with 谢谢，多少钱？ to ask the total.",
+          "jp": "「还买什么吗？」は追加の有無、「谢谢，多少钱？」は会計の合計を尋ねる場面です。"
         }
       }
     ]

@@ -744,16 +744,16 @@
       {
         "zh": "会用「怎么了」关心别人。",
         "pinyin": "zěnme le",
-        "kr": "걱정 질문.",
-        "en": "Ask what’s wrong.",
-        "jp": "「怎么了」で気遣う。"
+        "kr": "「你怎么了？」는 상대가 안색이 안 좋거나 다쳤을 때 무슨 일인지 부드럽게 묻는 표현으로, 걱정과 관심을 나타냅니다.",
+        "en": "Use 「你怎么了？」to show concern when someone looks unwell or upset and invite them to explain what happened.",
+        "jp": "「你怎么了？」は相手の様子がおかしいときに、心配して原因を尋ねる自然な言い方です。"
       },
       {
         "zh": "能区分「生病」与「看病」。",
         "pinyin": "shēngbìng",
-        "kr": "아픔 vs 진료.",
-        "en": "Be ill vs see a doctor.",
-        "jp": "病気と受診。"
+        "kr": "「生病」는 몸이 아픈 상태 자체이고, 「看病」는 병원에 가 의사를 보는 행위이므로 문장에서 역할이 다릅니다.",
+        "en": "生病 describes being ill; 看病 means to see a doctor—one is a state, the other is an action.",
+        "jp": "「生病」は病気であること、「看病」は診てもらいに行くことで、意味の種類が違います。"
       }
     ],
     "lessonExplain": {
@@ -762,25 +762,25 @@
         {
           "zh": "能用「怎么了、生病、看病」说明身体不适，并听懂休息、明天见等嘱咐。",
           "pinyin": "zěnme le · shēngbìng · xiūxi",
-          "kr": "「怎么了」「生病」「看病」로 몸 상태를 말하고 휴식·「明天见」 같은 당부를 듣고 이해한다.",
-          "en": "Say 怎么了, 生病, 看病; understand rest and 明天见.",
-          "jp": "「怎么了」「生病」「看病」で体調を言い、休む・「明天见」などの言葉が分かる。"
+          "kr": "「你怎么了？」로 상태를 묻고 「我生病了」로 아픔을 말하며, 필요하면 「去医院看病」처럼 진료를 받으러 간다고 하고, 「休息一下」「明天见」 같은 당부를 듣고 따를 수 있습니다.",
+          "en": "Use 「怎么了？」to check on someone, 「我生病了」to say you are ill, and 「看病」for seeing a doctor; understand advice such as resting and 「明天见」when parting.",
+          "jp": "「怎么了」「生病」「看病」で体調を伝え、「休息」「明天见」など相手のねぎらいの言葉を聞き取れます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：去医院。会话二：医嘱与好转。会话三：休息与明天见。",
-        "kr": "병원 → 진료 → 휴식·내일.",
-        "en": "Hospital · doctor · rest & goodbye.",
-        "jp": "病院／診察／休む。"
+        "kr": "첫 회화에서는 병원에 가야 한다고 하고, 둘째에서는 의사의 말과 나아지는지를 이야기하며, 셋째에서는 쉬라는 말과 내일 다시 보자는 인사를 나눕니다.",
+        "en": "Dialogue 1 goes to the hospital; Dialogue 2 covers the doctor’s advice and feeling better; Dialogue 3 covers resting and saying goodbye with 「明天见」.",
+        "jp": "会話1は病院へ行くこと、会話2は診察と回復、会話3は休むことと「明天见」で別れます。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「没事」在此表示没有大碍。",
           "pinyin": "méishì",
-          "kr": "괜찮음.",
-          "en": "没事 = it’s fine.",
-          "jp": "「没事」は大丈夫。"
+          "kr": "「没事」는 여기서 큰 문제나 위험은 없다는 안심시키는 말로, 상대의 걱정을 덜어 줄 때 씁니다.",
+          "en": "Here 没事 reassures the listener that the situation is not serious—similar to “it’s nothing” or “don’t worry.”",
+          "jp": "この文脈の「没事」は、大したことはない・心配しなくてよい、という安心させる意味です。"
         }
       ],
       "confusionPoints": []
@@ -815,9 +815,9 @@
         "pinyin": "Nǐ zěnme le? / Wǒ shēngbìng le.",
         "usage": {
           "zh": "关心并说明身体不适。",
-          "kr": "문제 묻고 아픔 말하기.",
-          "en": "Care and say you’re ill.",
-          "jp": "様子を聞き、病気と言う。"
+          "kr": "「你怎么了？」로 상대의 상태를 묻고, 「我生病了」처럼 몸이 아프다고 솔직히 말해 도움을 받을 수 있게 합니다.",
+          "en": "Open with 「你怎么了？」to show care, then explain with 「我生病了」or similar so others know you need rest or a doctor.",
+          "jp": "「你怎么了？」で気遣い、「我生病了」などで体調不良を伝え、休みや受診が必要だと分かってもらいます。"
         }
       }
     ]

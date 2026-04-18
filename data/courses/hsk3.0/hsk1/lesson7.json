@@ -660,23 +660,23 @@
       {
         "zh": "会问「今天几月几日？」并能用「……月……日」回答今天的日期。",
         "pinyin": "jīntiān jǐ yuè jǐ rì? · … yuè … rì",
-        "kr": "오늘 날짜를 묻고 「……月……日」로 답한다.",
-        "en": "Ask 今天几月几日? and answer with …月…日.",
-        "jp": "「今天几月几日？」と「……月……日」で答えられる。"
+        "kr": "「今天几月几日？」로 오늘이 몇 월 며칠인지 묻고, 답은 「五月二日」처럼 「……月……日」 형식으로 말해 오늘 날짜를 정확히 전달할 수 있어야 합니다.",
+        "en": "You should be able to ask “What’s today’s date?” with 今天几月几日? and answer in the …月…日 pattern (e.g. 五月二日), clearly stating today’s month and day.",
+        "jp": "「今天几月几日？」で今日の日付を尋ね、「五月二日」のように「……月……日」の形で答え、今日が何月何日かをはっきり言えるようにします。"
       },
       {
         "zh": "能区分「昨天」「今天」「明天」，并用于简单叙述。",
         "pinyin": "zuótiān · jīntiān · míngtiān",
-        "kr": "셋을 구분해 짧게 이야기한다.",
-        "en": "Use 昨天 / 今天 / 明天 in short statements.",
-        "jp": "「昨天」「今天」「明天」を区別して使う。"
+        "kr": "「昨天」는 말하는 날의 전날, 「今天」는 당일, 「明天」는 다음 날을 가리키므로 문맥에 맞게 골라 짧은 문장으로 어제·오늘·내일 일을 이야기할 수 있어야 합니다.",
+        "en": "Keep 昨天 / 今天 / 明天 straight: they mean yesterday, today, and tomorrow relative to “now,” and use them in short lines to talk about what happened or will happen on each day.",
+        "jp": "「昨天」「今天」「明天」がそれぞれ昨日・今日・明日を指すことを押さえ、短い文の中で日付のずれなく使い分けられるようにします。"
       },
       {
         "zh": "会问「今天星期几？」「你们什么时候休息？」并能回答「星期天休息」等。",
         "pinyin": "jīntiān xīngqī jǐ? · shénme shíhou · xīngqītiān xiūxi",
-        "kr": "요일·휴식 시간을 묻고 답한다.",
-        "en": "Ask weekday and when people rest; answer 星期天休息.",
-        "jp": "曜日と休みのときを尋ね、「星期天休息」などで答える。"
+        "kr": "「今天星期几？」로 요일을 묻고, 「你们什么时候休息？」처럼 쉬는 시점을 물으며, 「星期天休息。」처럼 휴일이 언제인지 자연스럽게 답할 수 있어야 합니다.",
+        "en": "Ask what weekday it is with 今天星期几?, ask when people rest with 你们什么时候休息?, and answer with natural phrases like 星期天休息 to say which day is off.",
+        "jp": "「今天星期几？」で曜日を尋ね、「你们什么时候休息？」で休みのタイミングを聞き、「星期天休息。」のように休みの日を答えられるようにします。"
       }
     ],
     "lessonExplain": {
@@ -685,72 +685,76 @@
         {
           "zh": "掌握「几月几日」问句与「月、日、号」在阅读中的常见搭配（本课以会话「五月一日」等为主）。",
           "pinyin": "jǐ yuè jǐ rì · yuè · rì · hào",
-          "kr": "날짜를 묻고 표기(月·日·号)를 익힙니다.",
-          "en": "几月几日 questions and 月/日 in context.",
-          "jp": "「几月几日」と「月」「日」の使い方。"
+          "kr": "「几月几日」는 몇 월 며칠인지 묻는 표현이고, 본문·표지에서는 「月」「日」「号」가 자주 짝을 이룹니다. 본과에서는 「五月一日」 같은 말을 통해 달력 읽기와 날짜 질문이 어떻게 이어지는지 익힙니다.",
+          "en": "Learn how 几月几日 asks for a calendar date, and how 月, 日, and 号 usually work together in print and speech; this lesson mainly uses lines like 五月一日 to show natural date wording.",
+          "jp": "「几月几日」が日付を尋ねる言い方であることと、本文や見出しで「月」「日」「号」がどう組み合わさるかを押さえます。教材では「五月一日」などを通して、自然な日付の言い方を身につけます。"
         },
         {
           "zh": "能使用「星期……」「星期天/星期日」表达星期与休息日。",
           "pinyin": "xīngqī … · xīngqītiān / xīngqī rì",
-          "kr": "요일과 쉬는 날을 말한다.",
-          "en": "星期… and 星期天/星期日 for weekdays and Sunday.",
-          "jp": "「星期」と「星期天／星期日」で曜日と休日を言う。"
+          "kr": "「星期……」는 몇 요일인지 묻거나 말할 때 쓰는 틀이고, 「星期天」「星期日」는 모두 일요일을 가리키며 쉬는 날 이야기에 자주 나옵니다. 두 표현을 바꿔 쓰며 요일과 휴일을 구분해 말할 수 있어야 합니다.",
+          "en": "Use the 星期… frame to talk about weekdays, and 星期天 / 星期日 for Sunday and rest-day situations; both names for Sunday are common, and you should sound natural when saying which day people are off.",
+          "jp": "「星期……」で曜日を言い、「星期天」「星期日」はどちらも日曜を指し、休みの話によく出ます。置き換えながら、平日と休日の言い分けができるようにします。"
         },
         {
           "zh": "会用「什么时候」提问，并结合「在、时候」理解「什么时候休息」一类问句。",
           "pinyin": "shénme shíhou · shénme shíhou xiūxi",
-          "kr": "「什么时候」로 시점을 묻고 휴식 시간을 말한다.",
-          "en": "什么时候 questions; 什么时候休息.",
-          "jp": "「什么时候」と「什么时候休息」。"
+          "kr": "「什么时候」는 ‘언제’처럼 시점이나 타이밍을 묻습니다. 「在」「时候」가 붙은 「什么时候休息」 같은 문장은 ‘언제 쉬는가’를 묻는 자연스러운 말이므로, 단어를 뜻에 맞게 묶어 이해해야 합니다.",
+          "en": "什么时候 asks “when” about time or timing. Phrases like 什么时候休息 combine 在 / 时候 naturally to ask when people rest—read them as whole questions, not word-by-word glosses.",
+          "jp": "「什么时候」は時点やタイミングを尋ねます。「什么时候休息」のように「在」「时候」と組み合わさると『いつ休むのか』と自然に聞けるので、かたまりとして意味を取る練習をします。"
         },
         {
           "zh": "能说清几月几日、昨天/今天，并询问星期几与何时休息。",
           "pinyin": "rìqī · xīngqī · xiūxi",
-          "kr": "며칠·어제·오늘을 말하고, 무슨 요일인지·언제 쉬는지 묻고 답한다.",
-          "en": "State dates, yesterday/today; ask weekdays and when people rest.",
-          "jp": "日付、昨日・今日、曜日と休みのときを尋ね答えられる。"
+          "kr": "몇 월 며칠인지, 어제·오늘이 언제인지 말로 정리하고, 무슨 요일인지와 언제 쉬는지를 묻고 답하며 대화를 이어 갈 수 있어야 합니다.",
+          "en": "You should state dates clearly, use 昨天 / 今天 correctly, and both ask and answer about weekdays and when people take time off, keeping questions and answers matched.",
+          "jp": "何月何日か、昨日・今日がいつかをはっきり言い、曜日や休みのタイミングを尋ねたり答えたりして、会話をつなげられるようにします。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：问今天几月几日，确认昨天是否五月一日，问五月一日休息了吗。会话二：问星期几、明天星期六休不休息。会话三：问明天是否星期天、什么时候休息。",
-        "kr": "회화1: 오늘 날짜·어제·휴식; 회화2: 요일·토요일; 회화3: 일요일·언제 쉬는지.",
-        "en": "Three dialogues: calendar, weekday, when to rest.",
-        "jp": "三つの会話：日付、曜日、休みの時間。"
+        "kr": "첫 번째 회화에서는 오늘이 몇 월 며칠인지 묻고, 어제가 5월 1일이었는지 확인하며 그날 쉬었는지까지 이어 질문합니다. 두 번째는 오늘이 무슨 요일인지, 내일 토요일에 쉬는지 묻습니다. 세 번째는 내일이 일요일인지 확인하고, 언제 쉬는지까지 묻습니다. 세 회화 모두 날짜·요일·휴식 시간이 한 흐름으로 이어집니다.",
+        "en": "Dialogue 1 asks today’s date, checks whether yesterday was May 1st, and asks whether people rested on that day. Dialogue 2 covers weekdays and whether Saturday is a day off. Dialogue 3 checks if tomorrow is Sunday and when people rest. Together they practice dates, weekdays, and rest times in one coherent thread.",
+        "jp": "会話1では今日の日付を尋ね、昨日が5月1日だったか確認し、その日休みだったかまで聞きます。会話2では曜日と土曜に休むかを。会話3では明日が日曜か、いつ休むかを尋ねます。日付・曜日・休みの時間がつながる練習です。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：用「今天几月几日？」问日期，用「昨天是……吗？」「是的，……」谈昨天与休息日。",
           "pinyin": "jīntiān jǐ yuè jǐ rì? · zuótiān shì … ma?",
-          "kr": "회화1: 달력·어제·휴일을 말합니다."
+          "kr": "첫 회화에서는 「今天几月几日？」로 오늘 날짜를 묻고, 「昨天是……吗？」「是的，……」처럼 어제가 어떤 날이었는지와 그날 쉬었는지까지 질문과 답을 짝지어 말하는 연습을 합니다.",
+          "en": "In the first dialogue, use 今天几月几日? for today’s date, then 昨天是……吗？ and 是的，… to talk about what yesterday was and whether it was a rest day, keeping question types and answers aligned.",
+          "jp": "会話1では「今天几月几日？」で今日の日付を聞き、「昨天是……吗？」「是的，……」で昨日がどんな日だったか、休みだったかまで、質問と答えの型をそろえて練習します。"
         },
         {
           "zh": "会话二、三：用「今天星期几？」问星期，用「你们什么时候休息？」「星期天休息。」谈休息。",
           "pinyin": "xīngqī jǐ? · shénme shíhou xiūxi",
-          "kr": "회화2·3: 요일과 쉬는 때를 말합니다."
+          "kr": "둘째·셋째 회화에서는 「今天星期几？」로 요일을 묻고, 「你们什么时候休息？」「星期天休息。」처럼 쉬는 시점을 묻고 답하며, 요일 질문에는 요일로, 날짜 질문에는 날짜로 대답하도록 짝을 맞춥니다.",
+          "en": "In dialogues 2 and 3, ask the weekday with 今天星期几?, then ask and answer rest times with 你们什么时候休息？ / 星期天休息。, so weekday questions get weekday answers and “when do you rest” gets a clear time or day off.",
+          "jp": "会話2・3では「今天星期几？」で曜日を聞き、「你们什么时候休息？」「星期天休息。」で休みの時間を尋ね答え、曜日の質問には曜日で、いつ休むかには具体的な答えでそろえる練習をします。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「星期几」问星期；「几月几日」问日期——问题和回答要配对。",
           "pinyin": "xīngqī jǐ · jǐ yuè jǐ rì",
-          "kr": "질문 유형이 다릅니다.",
-          "en": "星期几 ≠ 几月几日.",
-          "jp": "「星期几」と「几月几日」は別の質問。"
+          "kr": "「星期几」는 ‘무슨 요일이에요?’처럼 요일만 묻고, 「几月几日」는 ‘몇 월 며칠이에요?’처럼 달력 날짜를 묻습니다. 질문 종류가 다르므로 답도 요일이냐 날짜냐에 맞춰 짝을 이루어야 하고, 두 표현을 섞어 쓰면 어색해집니다.",
+          "en": "星期几 asks *which weekday it is*; 几月几日 asks *which calendar date (month and day)*. They are different question types, so answers must match—weekday for the first, a month–day for the second. Don’t swap them or your reply will sound off.",
+          "jp": "「星期几」は曜日を、「几月几日」は何月何日かを尋ねます。聞き方が違うので答え方も違い、曜日には曜日で、日付には月日でそろえます。混ぜると不自然になります。"
         },
         {
           "zh": "「星期天」与「星期日」常可互换指周日；本课「星期天休息」是自然说法。",
           "pinyin": "xīngqītiān · xīngqī rì",
-          "kr": "일요일을 가리킬 때 자주 바꿔 씁니다.",
-          "en": "星期天 / 星期日 both refer to Sunday.",
-          "jp": "「星期天」「星期日」は日曜を指す言い方。"
+          "kr": "「星期天」와 「星期日」는 둘 다 일요일을 가리키며 상황에 따라 바꿔 써도 됩니다. 본과의 「星期天休息」처럼 쉬는 날이 일요일임을 말할 때 자연스러운 표현입니다.",
+          "en": "星期天 and 星期日 both mean Sunday and are often interchangeable. In this lesson, 星期天休息 is a natural way to say you rest on Sunday—either Sunday word works in daily speech.",
+          "jp": "「星期天」と「星期日」はどちらも日曜を指し、場面によって入れ替えて使えます。教材の「星期天休息」のように、休みが日曜だと言うときの自然な言い方です。"
         },
         {
           "zh": "「什么时候」问时间或时机，回答可用「星期天」等时间短语。",
           "pinyin": "shénme shíhou",
-          "kr": "시점을 묻고 짧은 시간 표현으로 답합니다.",
-          "en": "什么时候 → answer with a time like 星期天.",
-          "jp": "「什么时候」には「星期天」のような答え。"
+          "kr": "「什么时候」는 ‘언제’처럼 시점·타이밍을 묻습니다. 답은 반드시 시계 시간일 필요는 없고, 「星期天」처럼 요일이나 짧은 시간 구절로 ‘그때 쉰다’는 뜻을 분명히 하면 됩니다.",
+          "en": "什么时候 asks *when* something happens—a time or a moment. You don’t have to answer with a clock time; short phrases like 星期天 can mark the day or slot when people rest, as long as the timing is clear.",
+          "jp": "「什么时候」はいつ（時点・タイミング）かを尋ねます。答えは必ずしも時刻である必要はなく、「星期天」のように曜日や短い時間表現で『そのとき休む』と分かれば十分です。"
         }
       ]
     },
@@ -796,9 +800,9 @@
         "pinyin": "jīntiān jǐ yuè jǐ rì? / jīntiān wǔ yuè èr rì",
         "usage": {
           "zh": "询问与回答今天的月日。",
-          "kr": "오늘 날짜를 묻고 답합니다.",
-          "en": "Ask and say today’s date.",
-          "jp": "今日の月日を尋ね答える。"
+          "kr": "「今天几月几日？」로 오늘이 몇 월 며칠인지 묻고, 「今天五月二日。」처럼 ‘오늘은 5월 2일이다’라고 답해 달력 날짜를 분명히 말하는 표현입니다.",
+          "en": "Use 今天几月几日? to ask today’s date, and answer with lines like 今天五月二日 to say clearly which month and day “today” is.",
+          "jp": "「今天几月几日？」で今日の日付を尋ね、「今天五月二日。」のように今日が何月何日かをはっきり答える定型です。"
         }
       },
       {
@@ -806,9 +810,9 @@
         "pinyin": "zuótiān … / míngtiān …",
         "usage": {
           "zh": "分别指说话的前一天与后一天。",
-          "kr": "말하는 날의 전날·다음 날.",
-          "en": "Yesterday / tomorrow relative to today.",
-          "jp": "昨日／明日。"
+          "kr": "「昨天」는 말하는 날짜의 하루 전, 「明天」는 하루 뒤를 가리킵니다. 문장 앞에 붙여 어제·내일 일을 간단히 이야기할 때 씁니다.",
+          "en": "昨天 means the day before the day you’re talking about; 明天 means the day after. Put them at the start of a short clause to narrate what happened or will happen.",
+          "jp": "「昨天」は話している日の前日、「明天」は翌日を指します。短い文の頭に置いて、昨日・明日の出来事を述べます。"
         }
       },
       {
@@ -816,9 +820,9 @@
         "pinyin": "jīntiān xīngqī jǐ? / nǐmen shénme shíhou xiūxi?",
         "usage": {
           "zh": "问星期与「什么时候」做某事。",
-          "kr": "요일과 ‘언제’를 묻습니다.",
-          "en": "Weekday and when to rest.",
-          "jp": "曜日といつ休むか。"
+          "kr": "첫 문장은 오늘이 무슨 요일인지 묻고, 둘째는 ‘언제 쉬나요?’처럼 휴식 시점을 묻습니다. 앞은 요일 답, 뒤는 시간·요일 답이 자연스럽게 이어집니다.",
+          "en": "The first line asks what weekday today is; the second asks when people rest, like “When do you take time off?” Match answers to the question—weekdays for the first, a time or day for the second.",
+          "jp": "前者は今日が何曜日かを尋ね、後者は「いつ休みますか？」のように休むタイミングを聞きます。答えも曜日か、具体的な時間・日に合わせます。"
         }
       }
     ]

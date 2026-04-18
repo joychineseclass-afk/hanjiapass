@@ -700,16 +700,16 @@
       {
         "zh": "会用「给……打电话」说明通话对象。",
         "pinyin": "gěi",
-        "kr": "「给…打电话」로 상대를 말한다.",
-        "en": "Say who you call with 给…打电话.",
-        "jp": "「给…打电话」で相手を言う。"
+        "kr": "「我给同学打电话」처럼 「给 + 사람 + 打电话」순으로 누구에게 거는 전화인지 분명히 말할 수 있어야 합니다.",
+        "en": "Use the frame 给 + person + 打电话 (for example 「我给同学打电话」) to state clearly who you are calling.",
+        "jp": "「给……打电话」の形で、「我给同学打电话」のように通話の相手をはっきり言えます。"
       },
       {
         "zh": "能体会「我看一下」表示先查一查、稍等。",
         "pinyin": "kàn yíxià",
-        "kr": "「看一下」는 잠깐 확인.",
-        "en": "我看一下 ≈ let me check.",
-        "jp": "「看一下」は確認。"
+        "kr": "「我看一下」는 번호를 곧바로 말하지 않고 잠깐 찾아보겠다는 뜻으로, 상대에게 잠시 기다리게 할 때 자연스럽게 씁니다.",
+        "en": "「我看一下」signals that you need a moment to look something up (such as a phone number) before you answer, similar to “let me check.”",
+        "jp": "「我看一下」は、番号などをすぐに言えず、少し確認してから答えるときの「ちょっと見ます」に相当する表現です。"
       }
     ],
     "lessonExplain": {
@@ -718,25 +718,25 @@
         {
           "zh": "能围绕「打电话、号码、给……打电话、看一下」完成通话与问号码。",
           "pinyin": "dǎ diànhuà · hàomǎ · gěi",
-          "kr": "「打电话」「号码」「给……打电话」「看一下」로 통화·번호를 묻고 답한다.",
-          "en": "Handle calls and number Q&A with 打电话, 号码, 给…打电话, 看一下.",
-          "jp": "「打电话」「号码」「给…打电话」「看一下」で電話と番号のやりとりができる。"
+          "kr": "전화를 걸고 받는 표현과 「手机号码」를 묻고 읽어 주는 연습을 하며, 「给……打电话」로 상대를 밝히고 번호를 찾을 때는 「我看一下」로 잠시 시간을 달라고 말할 수 있습니다.",
+          "en": "Carry out simple phone tasks: 打电话 to place a call, ask for and read 手机号码, name the callee with 给…打电话, and use 我看一下 when you need a moment to find the number.",
+          "jp": "「打电话」で発着信のやりとりをし、「手机号码」を尋ねたり伝えたりし、「给……打电话」で相手を明示し、番号を調べるときは「我看一下」で少し待ってもらうことができます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：要老师号码。会话二：给谁打、问什么。会话三：建议给老师打电话并读号码。",
-        "kr": "번호 요청 → 누구·무엇 → 전화 권함.",
-        "en": "Ask number · who/what · suggest calling.",
-        "jp": "番号／相手・用件／電話を勧める。"
+        "kr": "첫 회화에서는 선생님 휴대전화 번호를 부탁하고, 둘째에서는 누구에게 무슨 일로 전화하는지 묻고, 셋째에서는 선생님께 전화하라고 권하며 번호를 읽어 줍니다.",
+        "en": "Dialogue 1 asks the teacher’s mobile number; Dialogue 2 asks who someone is calling and about what; Dialogue 3 suggests calling the teacher and reads the digits aloud.",
+        "jp": "会話1では先生の携帯番号を頼む、会話2では誰に何の用でかけるかを尋ねる、会話3では先生に電話するよう勧め番号を読み上げます。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「手机号码」常简说「手机号」。",
           "pinyin": "shǒujī",
-          "kr": "휴대폰 번호.",
-          "en": "Mobile number.",
-          "jp": "携帯番号。"
+          "kr": "문어체로는 「手机号码」라고 하지만 일상 대화에서는 짧게 「手机号」라고도 많이 부르며, 둘 다 휴대전화 번호를 가리킵니다.",
+          "en": "The full form is 手机号码, but in everyday speech people often shorten it to 手机号; both refer to a mobile phone number.",
+          "jp": "正式には「手机号码」ですが、会話では「手机号」と短く言うことが多く、どちらも携帯電話の番号を指します。"
         }
       ],
       "confusionPoints": []
@@ -771,9 +771,9 @@
         "pinyin": "Nǐ gěi shéi dǎ diànhuà? / Wǒ gěi tóngxué dǎ diànhuà.",
         "usage": {
           "zh": "说明正在与谁通话。",
-          "kr": "누구와 통화하는지 말한다.",
-          "en": "Say who you’re on the phone with.",
-          "jp": "通話の相手を言う。"
+          "kr": "「你给谁打电话？」에 「我给同学打电话」처럼 답해 지금 전화를 걸거나 받는 상대가 누구인지 분명히 말합니다.",
+          "en": "Answer 「你给谁打电话？」with 给 + person + 打电话 (e.g. 「我给同学打电话」) to say whom you are calling.",
+          "jp": "「你给谁打电话？」に対し、「我给同学打电话」のように「给」と相手を言って、いま誰に電話しているかを述べます。"
         }
       }
     ]

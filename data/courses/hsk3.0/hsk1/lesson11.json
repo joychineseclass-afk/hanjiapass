@@ -951,23 +951,23 @@
       {
         "zh": "会用「谁的」「我的/老师的」说明物品归属。",
         "pinyin": "shéi de · wǒ de",
-        "kr": "「谁的」「我的」로 소유를 말한다.",
-        "en": "Say who owns things with 谁的 and 我的.",
-        "jp": "「谁的」「我的」で持ち主を言う。"
+        "kr": "「这是谁的书？」처럼 「谁的」는 소유자가 누구인지 묻는 말이고, 「这是我的书。」「有的是老师的。」처럼 대명사나 이름·역할 뒤에 「的」를 붙이면 ‘그 사람의 것’이라는 소속 관계가 분명해집니다. 한국어의 조사 「의」와 비슷하지만, 중국어에서는 「的」가 형태소처럼 계속 이어 붙는다고 이해하면 문장을 만드는 데 도움이 됩니다.",
+        "en": "Questions like 这是谁的书？ use 谁的 to ask who owns something. Answers chain 的 after pronouns or role nouns—我的书, 老师的, 朋友的—to mark possession, much like “’s” or “of” in English, but with a fixed particle. This lesson keeps returning to books and classroom objects so you can rehearse the pattern until 的 feels automatic after any possessor.",
+        "jp": "「这是谁的书？」の「谁的」は『だれの』と尋ねるときのかたまりで、答えでは「我的」「老师的」「朋友的」のように、代名詞や肩書のあとに「的」をつけて『～の（もの）』という所属関係を示します。日本語の「の」に近いですが、中国語では「的」が短いパーツとして何度も現れる、と捉えると覚えやすくなります。"
       },
       {
         "zh": "能区分「这个」与「这些」，「那个」与「那些」。",
         "pinyin": "zhège · zhèxiē",
-        "kr": "단수·복수 지시어를 구분한다.",
-        "en": "Tell singular 这个/那个 from plural 这些/那些.",
-        "jp": "単数と複数の指示を分ける。"
+        "kr": "「这个」「那个」는 손가락으로 한 가지를 짚을 때 쓰고, 「这些」「那些」는 여러 권·여러 마리처럼 복수를 한데 모아 가리킬 때 씁니다. 「这些都是我的。」처럼 「都」와 함께 쓰면 ‘이 가운데 전부’라는 뜻이 또렷해지고, 「那些不是我的。」처럼 부정과 짝을 이루면 ‘저쪽 무더기는 내 것이 아니다’라고 범위를 나눌 수 있습니다. 복수 지시어를 쓸 때는 뒤에 오는 명사도 복수인지 다시 확인하세요.",
+        "en": "这个 and 那个 single out one book, desk, or pet near or far from the speaker. 这些 and 那些 widen the lens to several items at once. Combine them with 都 to stress “all of these/those” or with negation to deny a whole group, as in 那些不是我的. When you switch from singular to plural demonstratives, make sure the following noun phrase matches in number so listeners track what you mean.",
+        "jp": "「这个」「那个」は一つを指し示し、「这些」「那些」は複数をまとめて指します。「这些都是我的。」のように「都」と組み合わせると『この中の全部』という総括がはっきりし、「那些不是我的。」のように否定と対になれば『あちらのグループは私のものではない』と範囲を切り分けられます。単数から複数へ切り替えるときは、後ろの名詞の数のイメージもそろえると聞き手が混乱しません。"
       },
       {
         "zh": "能用「都」表示总括（全部、两种都喜欢）。",
         "pinyin": "dōu",
-        "kr": "「都」로 전부·둘 다를 말한다.",
-        "en": "Use 都 for “all” or “both.”",
-        "jp": "「都」で全部・両方を表す。"
+        "kr": "「我都喜欢。」에서는 앞에서 제시된 두 가지 선택(고양이와 개)을 모두 포함하고, 「这些书都是你的吗？」에서는 눈앞에 펼쳐진 책 더미 전체가 상대의 것인지 확인합니다. 「都」는 말하는 사람이 마음속에 그려 둔 범위가 ‘전부’일 때 쓰므로, 질문이든 답이든 앞 문장에서 이미 범위가 드러나 있어야 자연스럽습니다. 범위가 불명확하면 듣는 사람이 무엇을 전부라고 이해해야 하는지 헷갈릴 수 있습니다.",
+        "en": "都 packages a whole set: 我都喜欢 affirms both alternatives in a cat-or-dog question; 这些书都是你的吗？ checks whether every visible book belongs to the addressee. Whether you speak or ask, the scope—both items, all books on the desk—must already be clear from context; otherwise 都 floats without a boundary. Teaching tip: underline the noun phrase before 都 in your notes to see what is being totaled.",
+        "jp": "「都」は、話の中ですでに示された範囲が『全部／両方』だと言い切るときに使います。「我都喜欢」は選択肢が二つある場面で『どちらも好き』とまとめ、「这些书都是你的吗？」は目の前の本の集まり全体について尋ねます。質問でも平叙でも、「都」の前に範囲を示す名詞句がはっきりしているかを確認すると、日本語の「みな／ぜんぶ」との対応がつかみやすくなります。"
       }
     ],
     "lessonExplain": {
@@ -976,48 +976,48 @@
         {
           "zh": "掌握「的」字结构表示领属关系（如：我的书、老师的手机）。",
           "pinyin": "de",
-          "kr": "「나의 책」「선생님의 휴대폰」처럼 소유를 「的」로 말한다.",
-          "en": "Use 的 for possession (my book, the teacher’s phone, etc.).",
-          "jp": "「我的书」「老师的手机」のように、所属を「的」で言える。"
+          "kr": "「的」는 앞에 오는 말이 뒤 명사를 수식하거나 소유 관계를 만든다는 표지입니다. 「我的书」는 ‘나의 책’처럼 바로 이어지고, 「老师的」처럼 「的」만 말해도 뒤에 반복되는 명사(책·필통 등)가 문맥으로 채워질 수 있습니다. 초급에서는 ‘누구 것인지’를 말하는 데 집중하고, 생략이 어색하지 않은지 선생님 발화를 따라 말하며 감을 익힙니다.",
+          "en": "的 ties a possessor or modifier to a following noun: 我的书 “my book,” 老师的笔 “the teacher’s pen.” In conversation the noun after 的 may drop when everyone knows what you mean—老师的 can mean “the teacher’s (books)” in context. Practice both full phrases and shortened 的-forms so you sound natural when classmates trade textbooks.",
+          "jp": "「的」は、前にある持ち主や属性が、あとに続く名詞をどう修飾するかを示す小さなしるしです。「我的书」のように続けて言うこともあれば、「老师的」のように名詞を省略して『先生の（もの）』とだけ言うこともあります。会話では文脈で何を指すかが共有されていれば省略が通じるので、教科書の短文と先生の即興の文を聞き比べると理解が進みます。"
         },
         {
           "zh": "能用「谁、哪个、哪些、都」问物品归属并用「这些、那些」应答。",
           "pinyin": "shéi · nǎge · nǎxiē · dōu",
-          "kr": "「谁」「哪个」「哪些」「都」로 물건이 누구 것인지 묻고 「这些」「那些」로 답한다.",
-          "en": "Ask who owns what with 谁/哪个/哪些/都; answer with 这些/那些.",
-          "jp": "「谁」「哪个」「哪些」「都」で持ち主を尋ね、「这些」「那些」で答えられる。"
+          "kr": "「谁」는 사람을,「哪个」는 정해진 후보 가운데 하나를 고를 때,「哪些」는 여러 개를 한꺼번에 묶어 ‘그중 어떤 것들’인지 묻습니다. 「哪个桌子是你的？」는 책상이 여러 개 있을 때 하나를 집는 질문이고, 「还有哪些是你的？」는 남은 물건들 가운데 또 뭐가 네 것이냐는 뜻입니다. 답에서는 「这些」「那些」으로 손가락이 가리키는 쪽을 분명히 하고, 필요하면 「都」로 전부를 묶어 말합니다.",
+          "en": "谁 hunts for a person—whose name or role answers “who owns this?” 哪个 singles out one item from a visible set (which desk?). 哪些 widens the net to several items at once (which other things are yours?). Answers should echo the same plurality: 这些是我的 for a pile of books, 那些不是我的 to push a group aside, and 都 when you mean every item in that pile.",
+          "jp": "「谁」は人を尋ねる語、「哪个」はいくつかの候補のうち一つを選ぶとき、「哪些」は複数のものをまとめて尋ねるときに使い分けます。「哪个桌子是你的？」は机が複数ある教室の場面、「还有哪些是你的？」はすでにいくつか話したあとで残りを聞く場面です。答えでは「这些」「那些」で視線の方向をそろえ、「都」で『その全部』をまとめて言えると自然です。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：谁的书、那本、这些。会话二：猫狗与都喜欢。会话三：哪张桌子、这些那些、有的……有的……",
-        "kr": "회화1 누구 책·저本·이것들 → 회화2 고양이·개·都喜欢 → 회화3 어느 책상·这些那些·有的有的.",
-        "en": "Books & mine; pets & both; which desk & some…some….",
-        "jp": "会話1 本／会話2 猫犬／会話3 机と这些那些。"
+        "kr": "첫 번째 대화는 책 한 권이 누구 것인지에서 시작해 「那本」「这些」로 시선을 옮겨 가며 소유를 넓혀 갑니다. 두 번째 대화는 고양이와 개처럼 생물을 놓고도 같은 「谁的」틀을 쓰고, 취향 질문에는 「我都喜欢。」로 두 선택지를 한 번에 묶어 답합니다. 세 번째 대화는 교실에서 어느 책상이 누구 자리인지 묻고, 책 더미를 「这些」「那些」로 나눈 뒤, 모두 한 사람 것이 아닐 때 「有的是老师的，有的是朋友的。」처럼 소유를 분할해 설명합니다. 한 과 안에서 단수·복수·총괄·분할이 모두 등장합니다.",
+        "en": "Dialogue 1 walks from one book to another and then to a cluster—我的, 那本, 这些—so you practice singular and plural pointing words together. Dialogue 2 moves the same grammar to pets and adds 我都喜欢 to cover both animals in a preference question. Dialogue 3 is classroom inventory: 哪个桌子, then 这些 vs 那些 for piles of books, ending with 有的…有的… when ownership splits between teacher and friends. The lesson stitches pointing, possession, and “some… some…” patterns into one coherent skill set.",
+        "jp": "会話1は、一冊の本の持ち主を尋ね、指示語を「这个」から「那本」「这些」へと広げながら所有を話します。会話2はペットに同じ枠を当てはめ、好みの質問では「我都喜欢」で二者をまとめて答えます。会話3は教室で「哪个桌子」から始まり、本の山を「这些／那些」で分け、最後に「有的…有的…」で持ち主が複数に分かれる場合を説明します。単数・複数・総括・部分を一つの単元でつなぐ構成です。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「谁、哪个、哪些」提问角度不同。",
           "pinyin": "shéi · nǎge · nǎxiē",
-          "kr": "사람·하나·여러 개를 묻는 말이 달라요.",
-          "en": "谁 / 哪个 / 哪些 ask different things.",
-          "jp": "「谁」「哪个」「哪些」の聞き方の違い。"
+          "kr": "「谁」는 사람을,「哪个」는 정해진 후보 안에서 하나를 고를 때,「哪些」는 여러 개가 그물망처럼 펼쳐져 있을 때 씁니다. 같은 ‘물음표’처럼 보여도 대상의 성격이 달라 문장 전체를 바꿔 가며 익혀야 합니다.",
+          "en": "谁 targets people; 哪个 picks one out of a set; 哪些 asks which items among many. The question word changes the whole shape of the answer.",
+          "jp": "「谁」は『だれ』という人に焦点を当て、「哪个」は見えているいくつかの中から一つを選ぶとき、「哪些」は複数の物をまとめて『どれら』と尋ねるときに使います。疑問詞が変わると、答えも名前から「这个／那个」、さらに「这些／那些」へと形が広がっていくので、教科書の会話を声に出して繰り返すと型が体に付きます。"
         },
         {
           "zh": "「它们」指上文复数事物（如那些狗）。",
           "pinyin": "tāmen",
-          "kr": "복수를 가리킬 때 「它们」.",
-          "en": "它们 points back to plural things.",
-          "jp": "「它们」は複数のものを指す。"
+          "kr": "「他们」은 사람 복수에 가깝고, 동물·사물처럼 사람이 아닌 복수에는 「它们」를 씁니다. 「那些狗呢？」 다음에 「它们也是我的。」처럼 앞의 복수 명사를 다시 가리킬 때 사용합니다.",
+          "en": "它们 refers back to plural non-human things—e.g. those dogs. Contrast with 他们 for people.",
+          "jp": "「它们」は、人ではない複数のもの—動物や物—をさかのぼって指すときの代名詞です。「那些狗呢？」と聞いたあと「它们也是我的。」と言えば、さきほどの犬たち全体を再び話題にする、という流れになります。人の集まりには「他们」、人以外の複数には「它们」と書き分けるのが基本です。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「书」在「一本书」里是量词搭配；本课「那本书」整段作名词短语。",
           "pinyin": "běn shū",
-          "kr": "「那本书」는 ‘저 책 한 권’ 뉘앙스.",
-          "en": "那本书 = that book (copy).",
-          "jp": "「那本书」は『あの一冊』。"
+          "kr": "「一本书」에서는 「本」이 ‘한 권’을 세는 양사로, 숫자와 함께 쓰입니다. 반면 「那本书呢？」「那本也是我的。」의 「那本」은 ‘저 책(한 권)’ 전체를 가리키는 지시어에 가깝습니다. 즉 앞의 문장에서는 ‘수량을 세는 도구’로 쓰인 「本」이, 뒤 문장에서는 ‘어느 책을 말하는지 짚어 주는 말’의 일부로 쓰입니다. 듣거나 읽을 때마다 「本」이 숫자 옆에 붙었는지, 「那」 옆에 붙었는지를 확인하면 혼동이 줄어듭니다.",
+          "en": "In 一本书, 本 is a measure word: “one volume,” counting books. In 那本书, the chunk 那本 behaves like “that copy” or “that one (book)”—the whole expression names a particular book without focusing on the number. The same character 本 therefore switches jobs: after a numeral it measures; after 那 it helps point. Listening practice: notice whether 本 follows a number or a demonstrative.",
+          "jp": "「一本书」では「本」は助数詞で、数字と組み合わせて『一冊』と数えます。「那本书」「那本也是我的」では「那本」が『あの一冊』『あの本』をまとめて指す働きをし、その中の「本」は指示のかたまりの一部です。同じ「本」でも、前に数詞があるか「那」があるかで役割が変わるので、リスニングではまずその位置関係を確認すると整理しやすくなります。"
         }
       ]
     },
@@ -1055,9 +1055,9 @@
         "pinyin": "Zhè shì shéi de shū? / Zhè shì wǒ de shū.",
         "usage": {
           "zh": "询问与说明书本等物品的归属。",
-          "kr": "책 등이 누구 것인지 묻고 답한다.",
-          "en": "Ask and say who a book belongs to.",
-          "jp": "本の持ち主を聞き、答える。"
+          "kr": "「这是谁的书？」로 시작하면 한 권의 책이 누구 소유인지 묻고, 「这是我的书。」로 직접 답한 뒤 「那本书呢？」「那本也是我的。」처럼 시선을 옮겨 가며 같은 패턴을 반복합니다. 이렇게 질문과 답의 뼈대는 같고 가리키는 말만 바뀌게 만들면, 복수까지 자연스럽게 확장할 수 있습니다. 「书」는 본과의 핵심 명사이므로 「的」와 짝지어 통째로 익히는 것이 좋습니다.",
+          "en": "Start with 这是谁的书？ to anchor the topic on one book, answer 这是我的书, then extend with 那本书呢？ and 那本也是我的 as attention shifts to another copy. The grammar frame stays stable while 这 / 那 / 这些 widen or narrow the pile in view. Drilling this rhythm helps you sound natural when classmates borrow books and you track which copy is whose.",
+          "jp": "「这是谁的书？」で一冊の本の持ち主を尋ね、「这是我的书。」と答えたあと、「那本书呢？」「那本也是我的。」のように、指示語だけを入れ替えて同じ型を繰り返します。こうすると話題は『本』のまま、視線の向きだけが動くので覚えやすく、最後に「这些都是我的。」へ広げる足場にもなります。「书」はこの課の中心名詞なので、「我的书」のように「的」と一緒に音読して定着させましょう。"
         }
       },
       {
@@ -1065,9 +1065,9 @@
         "pinyin": "Zhèxiē shū dōu shì nǐ de ma? / Yǒude shì lǎoshī de, yǒude shì péngyou de.",
         "usage": {
           "zh": "用「有的……有的……」分项说明归属。",
-          "kr": "「有的」로 경우를 나누어 말한다.",
-          "en": "Some… some… splits who owns what.",
-          "jp": "「有的…有的…」で分けて言う。"
+          "kr": "책 더미가 모두 같은 사람 것이 아닐 때 「有的是老师的，有的是朋友的。」처럼 두 갈래로 나누어 말합니다. 「有的」는 ‘그중 일부는’이라는 뜻으로 묶음 안에서 부분집합을 집어 내고, 각 절 끝의 「的」는 ‘그 사람의 (책들)’처럼 소유를 짧게 마무리합니다. 한국어의 ‘어떤 것은 … 어떤 것은 …’과 비슷한 리듬이니, 호흡을 끊지 않고 두 절을 같은 길이로 말하는 연습을 해 보세요.",
+          "en": "When a stack of books mixes owners, 有的…有的… splits the pile: some volumes belong to the teacher, some to friends. Each branch begins with 有的 to mean “among them, part…” and ends with 的 to mark whose subset it is—the noun “books” can stay implied. Read the line rhythmically so both halves sound parallel; this pattern generalizes beyond books to any grouped objects with mixed ownership.",
+          "jp": "「有的……有的……」は、一つの集まりの中に異なる持ち主が混じるときに、『一部は…一部は…』と整理する言い方です。「有的是老师的，有的是朋友的。」では、本の山を先生のものと友だちのものに二分しています。各分句の末尾の「的」は『～のもの（本）』と言い切る役割をし、名詞を繰り返さなくても通じるのが会話中国語の特徴です。"
         }
       }
     ]

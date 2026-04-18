@@ -733,16 +733,16 @@
       {
         "zh": "会用「件」说衣服件数。",
         "pinyin": "jiàn",
-        "kr": "옷 세기.",
-        "en": "件 for clothes.",
-        "jp": "「件」で服を数える。"
+        "kr": "「这件衣服」처럼 「件」를 써서 옷 한 벌·한 점을 세고 가리킬 수 있어 쇼핑 대화에서 필수입니다.",
+        "en": "Use 件 with clothing (for example 「这件衣服」) to count and point to individual garments when you shop.",
+        "jp": "「这件衣服」のように「件」で服を数え、店で品物を指して話すときに使います。"
       },
       {
         "zh": "能听懂「找你……元」是找零。",
         "pinyin": "zhǎo",
-        "kr": "거스름.",
-        "en": "找你 = your change.",
-        "jp": "おつりの言い方。"
+        "kr": "「找你五元」는 손님이 낸 돈에서 값을 뺀 거스름돈을 건네준다는 뜻으로, 금액을 듣고 받아야 할 잔돈인지 알아들을 수 있어야 합니다.",
+        "en": "Phrases like 「找你五元」mean the clerk is handing back your change after you pay; recognize the number as money returned, not an extra charge.",
+        "jp": "「找你……元」はおつりを渡すときの決まり文句で、あとから返ってくる金額だと聞き取れます。"
       }
     ],
     "lessonExplain": {
@@ -751,25 +751,25 @@
         {
           "zh": "能问衣服价钱，说便宜贵、要不要，并理解「穿很好看」与找零用语。",
           "pinyin": "duōshao qián · piányi · zhǎo",
-          "kr": "옷값을 묻고 싸다·비싸다·살지 말지를 말하며 「穿很好看」「找你…元」를 이해한다.",
-          "en": "Ask clothing prices; say cheap/expensive, want or not; get 穿很好看 and 找你…元.",
-          "jp": "服の値段を聞き、安い・高い・要る要らないを言い、「穿很好看」とおつりの言い方が分かる。"
+          "kr": "「这件衣服多少钱？」로 가격을 묻고 「便宜」「贵」로 평가하며 「要」「不要」로 살지 결정하고, 「你穿很好看」는 입었을 때 어울린다는 뜻이며 「找你…元」는 거스름임을 이해합니다.",
+          "en": "Ask 「这件衣服多少钱？」, judge price with 便宜 or 贵, decide with 要 or 不要, understand 「你穿很好看」as a compliment on how something looks on you, and recognize 找你 + amount as change.",
+          "jp": "服の値段を尋ね、安い・高いと言い、買うか「要」「不要」で答え、「穿很好看」は着ぶせのほめ言葉、「找你…元」はおつりだと分かります。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：问价。会话二：取舍与穿着。会话三：还价与找钱。",
-        "kr": "가격 → 선택·핏 → 흥정·거스름.",
-        "en": "Price · choose & fit · bargain & change.",
-        "jp": "値段／選ぶ／おつり。"
+        "kr": "첫 회화에서는 옷값을 묻고, 둘째에서는 마음에 드는지·입었을 때 어울리는지를 말하며, 셋째에서는 가격을 깎고 지불 후 거스름을 받는 과정을 다룹니다.",
+        "en": "Dialogue 1 asks the price; Dialogue 2 chooses items and comments on how they look when worn; Dialogue 3 bargains and receives change.",
+        "jp": "会話1は値段の確認、会話2は選ぶことと着ぶせの感想、会話3は値切りとおつりです。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「百、千」可组成更大数目表示价格。",
           "pinyin": "bǎi",
-          "kr": "큰 숫자.",
-          "en": "百/千 in prices.",
-          "jp": "「百」「千」。"
+          "kr": "「百」「千」는 ‘백’ ‘천’ 자릿수를 이루어 「五百元」처럼 옷값처럼 큰 금액을 말할 때 자주 쓰입니다.",
+          "en": "百 and 千 combine with other numerals to form larger prices (for example 「五百元」), which you need when talking about clothing costs.",
+          "jp": "「百」「千」は位を表し、「五百元」のように服の値段のような大きな金額を言うのに使います。"
         }
       ],
       "confusionPoints": []
@@ -804,9 +804,9 @@
         "pinyin": "Zhè jiàn yīfu duōshao qián? / Wǔshí yuán.",
         "usage": {
           "zh": "询问并回答衣物价格。",
-          "kr": "옷값 묻고 답하기.",
-          "en": "Ask and give clothing prices.",
-          "jp": "服の値段を聞き、答える。"
+          "kr": "「这件衣服多少钱？」로 특정 옷의 가격을 묻고, 「五十元」처럼 숫자와 「元」를 붙여 답합니다.",
+          "en": "Ask 「这件衣服多少钱？」for the price of a particular item and answer with a numeral + 元, such as 「五十元」.",
+          "jp": "「这件衣服多少钱？」で品物の値段を尋ね、「五十元」のように数詞と「元」で答えます。"
         }
       }
     ]

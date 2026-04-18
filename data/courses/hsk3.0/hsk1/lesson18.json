@@ -760,16 +760,16 @@
       {
         "zh": "会用「做什么」问课余安排。",
         "pinyin": "zuò shénme",
-        "kr": "방과 후 묻기.",
-        "en": "Ask after-class plans.",
-        "jp": "「做什么」で聞く。"
+        "kr": "「下课后你做什么？」처럼 수업이 끝난 뒤 무엇을 할지 물어 방과 후 생활을 이야기할 수 있습니다.",
+        "en": "Use 「下课后你做什么？」to ask what someone does after class and talk about after-school routines.",
+        "jp": "「下课后你做什么？」で授業のあとの予定や過ごし方を尋ねられます。"
       },
       {
         "zh": "能区分「听」与「听见」。",
         "pinyin": "tīng",
-        "kr": "듣기 vs 들림.",
-        "en": "听 vs 听见.",
-        "jp": "「听」「听见」。"
+        "kr": "「听歌」는 음악을 일부러 듣는 행위이고, 「听见」는 귀에 우연히 들어온 소리를 말할 때 쓰여 뜻이 다릅니다.",
+        "en": "听歌 describes choosing to listen to music; 听见 stresses that a sound reached your ears, often something you were not planning on hearing.",
+        "jp": "「听」は意図して聞くこと、「听见」は耳に入ってきたこと（たとえば遠くの声）を表す点が違います。"
       }
     ],
     "lessonExplain": {
@@ -778,25 +778,25 @@
         {
           "zh": "能谈下课后听歌、玩游戏，并用「只、听见、好听」说喜好与听到的声音。",
           "pinyin": "tīng · wán · zhǐ",
-          "kr": "방과 후 노래·게임을 말하고 「只」「听见」「好听」로 취향과 들리는 소리를 말한다.",
-          "en": "Talk after-class music and games; use 只, 听见, 好听 for tastes and what you hear.",
-          "jp": "放課後の音楽・ゲームを言い、「只」「听见」「好听」で好みと聞こえを表せる。"
+          "kr": "방과 후에 노래를 듣거나 게임을 한다고 말하고, 「只喜欢听」처럼 범위를 한정하며, 「听见」로 들린 소리를, 「好听」로 음악이나 노래의 인상을 평가합니다.",
+          "en": "Describe listening to music or playing games after class; narrow preferences with 只, report what reaches your ears with 听见, and judge sounds as 好听.",
+          "jp": "放課後に音楽やゲームについて話し、「只」で好みの範囲を、「听见」で聞こえたこと、「好听」で音楽のよさを表せます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：听歌与游戏。会话二：只喜欢听与好听。会话三：听见唱歌与妹妹唱得好听。",
-        "kr": "노래·게임 → 취향 → 들림·칭찬.",
-        "en": "Music/games · taste · hearing & praise.",
-        "jp": "音楽・ゲーム／趣味／聞こえ方。"
+        "kr": "첫 회화에서는 노래 듣기와 게임을, 둘째에서는 듣기만 좋아한다거나 노래가 듣기 좋다고 말하는 취향을, 셋째에서는 노래 소리가 들리고 동생이 잘 부른다고 칭찬하는 내용을 다룹니다.",
+        "en": "Dialogue 1 covers listening to music and playing games; Dialogue 2 covers only liking to listen and calling music 好听; Dialogue 3 covers hearing singing and praising a younger sister’s voice.",
+        "jp": "会話1では音楽とゲーム、会話2では「只」と「好听」、会話3では「听见」と家族の歌声のほめ方を扱います。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「好玩儿」多形容游戏、活动有趣。",
           "pinyin": "hǎowánr",
-          "kr": "재미있음.",
-          "en": "好玩儿 = fun.",
-          "jp": "「好玩儿」はおもしろさ。"
+          "kr": "「好玩儿」는 게임·운동·행사처럼 참여하면 재미있다고 느끼는 대상을 평가할 때 자주 쓰입니다.",
+          "en": "好玩儿 usually evaluates games, activities, or events as fun to take part in, not only as “interesting” in the abstract.",
+          "jp": "「好玩儿」はゲームや行事など、参加して楽しいと感じる対象によく使われる形容です。"
         }
       ],
       "confusionPoints": []
@@ -831,9 +831,9 @@
         "pinyin": "Xià kè hòu nǐ zuò shénme? / Wǒ tīng gē.",
         "usage": {
           "zh": "询问并回答课余活动。",
-          "kr": "방과 후 일정.",
-          "en": "After-class activities.",
-          "jp": "放課後の予定。"
+          "kr": "「下课后你做什么？」로 수업 후 시간을 어떻게 쓰는지 묻고, 「我听歌」처럼 구체적인 여가 활동으로 답합니다.",
+          "en": "Ask 「下课后你做什么？」and answer with what you actually do after school, for example 「我听歌」.",
+          "jp": "「下课后你做什么？」で放課後の過ごし方を尋ね、「我听歌」のように具体的な活動で答えます。"
         }
       }
     ]

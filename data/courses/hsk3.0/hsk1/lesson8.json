@@ -833,23 +833,23 @@
       {
         "zh": "能用「在哪儿」「在 + 地点」询问并回答上课地点与学校在哪一边。",
         "pinyin": "zài nǎr · zài + dìdiǎn",
-        "kr": "「在哪儿」「在 …」으로 어디서 수업하는지, 학교가 어느 쪽인지 묻고 답할 수 있다.",
-        "en": "Ask and answer where class is and which way the school is, using 在哪儿 and 在 + place.",
-        "jp": "「在哪儿」「在＋地点」で授業の場所や学校の方角を尋ね、答えられる。"
+        "kr": "「你在哪儿上课？」처럼 「在哪儿」로 장소를 묻고, 「我在中学上课。」처럼 「在＋장소」로 어디에서 수업하는지 답합니다. 학교가 동·서·남·북 중 어느 쪽인지는 「你的学校在哪边？」「在这边。」처럼 방향 말과 짝을 이룹니다.",
+        "en": "Ask where class meets with 在哪儿 and answer with 在 + place (e.g. 我在中学上课). For which side/direction the school is, use 哪边 questions and 这边/那边 answers.",
+        "jp": "「在哪儿」で場所を尋ね、「在＋地点」で答えます（我在中学上课）。学校の方角は「哪边」と「这边／那边」で言います。"
       },
       {
         "zh": "能用「这边、那边、这里、这儿、那儿」配合「在」说明大致方位。",
         "pinyin": "zhèbiān · nàbiān · zhèlǐ · zhèr · nàr",
-        "kr": "「这边」「那边」처럼 「在」와 붙여 대략 어느 쪽인지 말한다.",
-        "en": "Use 这边, 那边, 这里, 这儿, 那儿 with 在 to point out directions.",
-        "jp": "「这边」「那边」「这里」などと「在」で、だいたいどちらの方かが言える。"
+        "kr": "말하는 사람을 기준으로 가까운 쪽은 「这边」「这里」「这儿」, 먼 쪽은 「那边」「那儿」에 가깝습니다. 「在这边。」은 ‘이쪽(에 있다)’처럼 대략 방향만 짚어 줄 때 쓰고, 정확한 주소 대신 회화에서 자주 씁니다.",
+        "en": "这边/这里/这儿 point near the speaker; 那边/那儿 point away. With 在 they give a rough direction (“over this way / that way”) without a full address—very common in spoken Chinese.",
+        "jp": "「这边」「这里」は手元の方、「那边」「那儿」は向こう側の方です。「在」と組み合わせて、詳しい住所ではなく大まかな方角を示します。"
       },
       {
         "zh": "能用「上、下、前、后、边」说明书、手机等相对桌子的位置。",
         "pinyin": "shàng · xià · qián · hòu · biān",
-        "kr": "「上·下·前·后·边」로 책·휴대폰이 책상 기준 어디 있는지 말한다.",
-        "en": "Say where the book or phone is relative to the desk—上, 下, 前, 后, 边.",
-        "jp": "「上・下・前・后・边」で、机を基準に本やスマホの位置が言える。"
+        "kr": "「书在桌子上。」「手机在桌子下。」처럼 기준 물건(책상)을 먼저 정한 뒤 「上」「下」로 위·아래를 말합니다. 「在房间前边。」은 ‘방 앞쪽’처럼 「前」と 「边」가 붙은 말로 앞을 나타냅니다. 무엇을 기준으로 하는지 문장 안에서 분명히 하는 연습이 필요합니다.",
+        "en": "Use 上/下 for on/under a reference object (e.g. the desk). 前边 combines 前 + 边 for “the front side.” Always make clear what the object is measured against.",
+        "jp": "「上」「下」は机など基準の上下、「前边」は前の方です。本やスマホが机を基準にどこにあるかを言い分けます。"
       }
     ],
     "lessonExplain": {
@@ -858,69 +858,69 @@
         {
           "zh": "掌握「在 + 地点」的基本语序，区分问句「在哪儿……？」与陈述「在……」。",
           "pinyin": "zài + dìdiǎn · zài nǎr",
-          "kr": "「在 + 地点」 평서와 「在哪儿 …?」 질문의 차이를 익힌다.",
-          "en": "Get the word order for 在 + place, and tell questions (在哪儿…) from statements (在…).",
-          "jp": "「在＋地点」の語順と、「在哪儿」の疑問文・「在」の平叙文の違いをつかむ。"
+          "kr": "평서에서는 「在」가 장소를 이끌고 그 뒤에 동작이나 상태가 옵니다(「在中学上课」). 의문문에서는 「哪儿」가 ‘어디’를 묻는 역할을 하고, 「在」는 「在哪儿」 안에 들어 있거나 문맥으로 연결됩니다. 질문형과 평서형의 뼈대를 나란히 비교해 외웁니다.",
+          "en": "In statements, 在 leads into the place, then the action (在中学上课). In questions, 哪儿 asks “where?”—patterns like 在哪儿上课. Contrast question word order with plain 在… statements.",
+          "jp": "平叙では「在＋場所」が先に立ち、疑問では「哪儿」で『どこ』を尋ねます。「在哪儿」と「在……」の型の違いを押さえます。"
         },
         {
           "zh": "理解「这边、那边」与「这里、这儿、那儿」在口语里指方向或位置。",
           "pinyin": "zhèbiān · nàbiān · zhèlǐ · zhèr · nàr",
-          "kr": "말할 때 「这边」류 말이 방향·자리를 가리키는 표현임을 이해한다.",
-          "en": "Know that 这边, 那边, 这里, 这儿, 那儿 point to directions or spots in conversation.",
-          "jp": "「这边」「这里」などが、話し言葉で方向や位置を指す語だと分かる。"
+          "kr": "이 단어들은 지도 위의 정확한 좌표가 아니라, 말하는 사람과 듣는 사람이 공유하는 시야 안에서 ‘이쪽/저쪽/여기/저기’를 짚는 말입니다. 짧게 방향만 알려 줄 때 특히 자주 쓰입니다.",
+          "en": "These words gesture toward direction or place in shared space—they are not precise map coordinates. They’re ideal for quick answers like 在这边 when someone asks which way.",
+          "jp": "これらは地図の座標ではなく、会話の共有空間で『こっち／あっち』を示す口語表現です。短く方角を答えるのに向きます。"
         },
         {
           "zh": "能问并回答在哪儿上课、学校在哪个方向，并用方位词说物品相对桌子的位置。",
           "pinyin": "zài nǎr · fāngwèi",
-          "kr": "어디서 수업하는지·학교가 어느 쪽인지 묻고 답하고, 물건의 상대적 위치를 방향 말로 말한다.",
-          "en": "Ask and answer where class is, which way the school is; say where things are relative to the desk.",
-          "jp": "授業の場所、学校の方角を尋ね答え、机を基準に物の位置が言える。"
+          "kr": "사람·수업·학교 방향을 묻는 문장과, 책·휴대폰처럼 물건이 책상과 맺는 위치 관계를 말하는 문장을 섞어 씁니다. 전자는 「在」「哪儿」「哪边」가, 후자는 「上」「下」「前边」 같은 방향 어휘가 핵심입니다.",
+          "en": "Handle two kinds of “where”: where people study / which way the school lies (在, 哪儿, 哪边), and where objects sit relative to furniture (上, 下, 前边…).",
+          "jp": "授業の場所や学校の方角を尋ねる表現と、机を基準に物の位置を言う表現の両方を使い分けられます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：问在哪儿上课、学校在哪边。会话二：王老师在哪儿、在房间前边。会话三：书在桌上、手机在桌子下。",
-        "kr": "회화1 어디서 수업·학교 어느 쪽 → 회화2 선생님 어디, 방 앞 → 회화3 책은 책상 위·폰은 밑.",
-        "en": "1: Class & which side the school is · 2: Where Teacher Wang is, in front of the room · 3: Book on the desk, phone underneath.",
-        "jp": "会話1 授業の場所と学校の方／会話2 先生の場所・部屋の前／会話3 本は机の上、スマホは下。"
+        "kr": "첫 대화에서는 수업 장소(「在中学」)와 학교가 말하는 사람 기준으로 어느 쪽인지(「在这边」)를 묻습니다. 둘째는 사람(선생님)의 위치를 「在哪儿」「那边」「房间前边」로 단계를 밟아 좁혀 갑니다. 셋째는 책상을 기준으로 본과 휴대폰의 상대적 위치를 「上」「下」로 말합니다. 장소 질문 → 방향 → 기준 물체 위의 위치라는 세 단계를 연습합니다.",
+        "en": "Dialogue 1: where class is (在 + school) and which side the school is (这边). Dialogue 2: locating a person step by step—在哪儿, 那边, then 房间前边. Dialogue 3: book vs phone on/under the desk. The lesson moves from place questions to direction to relative position.",
+        "jp": "会話1は授業の場所と学校の方角、会話2は先生の居場所を段階的に絞る会話、会話3は机を基準に本とスマホの上下です。場所→方角→相対位置の流れを練習します。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：「你在哪儿上课？」「我在中学上课。」「你的学校在哪边？」「在这边。」",
           "pinyin": "nǎr shàngkè · zhōngxué · nǎ biān · zhèbiān",
-          "kr": "회화1 줄거리: 어디서 수업 → 중학교 → 학교 어느 쪽 → 이쪽.",
-          "en": "Dialogue 1: where class is → middle school → which side → over here.",
-          "jp": "会話1：どこで授業／中学校／どちらの方／こちら。"
+          "kr": "회화1은 먼저 수업 장소를 「你在哪儿上课？」「我在中学上课。」로 묻고 답한 뒤, 같은 학교가 말하는 사람 기준으로 어느 방향에 있는지 「你的学校在哪边？」「在这边。」으로 이어 갑니다. ‘기관’과 ‘방향’을 한 꼭지씩 나누어 말하는 흐름입니다.",
+          "en": "Dialogue 1 first establishes where class is held (在哪儿上课 / 在中学上课), then asks which way the school lies from the speaker (哪边) and answers with a directional 在这边.",
+          "jp": "会話1は、まず授業の場所（你在哪儿上课／我在中学上课）、つづいて学校の方角（你的学校在哪边／在这边）と、段階を分けて話します。"
         },
         {
           "zh": "会话二、三：用「哪儿」问人、问物；用「上、下、前边」说相对位置。",
           "pinyin": "nǎr · shàng · xià · qián biān",
-          "kr": "회화2·3: 「哪儿」로 사람·물건 위치를 묻고, 「上·下·前边」로 맞물려 말하기.",
-          "en": "Dialogues 2–3: 哪儿 for people and things; 上, 下, 前边 for relative position.",
-          "jp": "会話2・3：「哪儿」で人・物の場所、「上・下・前边」で相対的な位置。"
+          "kr": "회화2에서는 「王老师在哪儿？」처럼 사람의 위치를 묻고 「房间前边」까지 좁혀 갑니다. 회화3에서는 「书在哪儿？」로 물건을 묻고 「桌子上」「桌子下」로 기준 물체에 대한 상대 위치를 말합니다. ‘누가 어디’와 ‘무엇이 어디’를 같은 「哪儿」 질문 틀로 연결합니다.",
+          "en": "Dialogues 2–3: use 哪儿 for both people (老师) and things (书). Add 前边 for “in front of the room,” and 上 / 下 for on vs under the desk.",
+          "jp": "会話2・3：人にも物にも「哪儿」を使い、先生は「前边」、本とスマホは「上／下」で机から見た位置を言います。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「上课」是动宾短语，问地点用「在哪儿上课」，不要漏掉「在」。",
           "pinyin": "zài nǎr shàngkè",
-          "kr": "「在哪儿上课」처럼 장소를 넣을 때 「在」를 빼먹지 마세요.",
-          "en": "Don’t drop 在 when you ask 在哪儿上课—keep the location pattern complete.",
-          "jp": "「在哪儿上课」のように、場所を言う型では「在」を落とさない。"
+          "kr": "「上课」만 있으면 ‘수업하다’는 동작이 드러나고, ‘어디에서’는 「在」와 「哪儿」가 맡습니다. 「在哪儿上课？」 전체를 덩어리로 외우면 「你哪儿上课？」처럼 「在」가 빠지는 실수를 줄일 수 있습니다.",
+          "en": "上课 names the activity; 在 + 哪儿 supplies “where.” The fixed chunk is 在哪儿上课—don’t omit 在, or it won’t sound like standard Chinese for “where do you have class?”",
+          "jp": "「上课」は動作、「在」「哪儿」が場所を担います。「在哪儿上课？」はまとまりとして覚え、「在」を抜かないようにします。"
         },
         {
           "zh": "「桌子下」口语常说，意思等于「桌子下面」；本课与「书在桌子上」对举。",
           "pinyin": "zhuōzi xià · zhuōzi shàng",
-          "kr": "「桌子下」는 말로 자주 쓰고, 「桌子下面」과 비슷한 뜻이에요. 「书在桌子上」と 짝을 이뤄요.",
-          "en": "桌子下 is casual for “under the desk,” like 桌子下面; it pairs with 书在桌子上.",
-          "jp": "「桌子下」は口語で「机の下」と同じくらいの意味。「书在桌子上」と対で覚える。"
+          "kr": "「桌子下」는 「桌子下面」보다 짧은 말하기 형태로, 뜻은 ‘책상 아래’로 같습니다. 본과에서는 「书在桌子上。」과 짝을 이루어 ‘위／아래’ 대비를 분명히 보여 줍니다.",
+          "en": "桌子下 is a shorter, spoken way to say “under the desk,” similar to 桌子下面. The lesson pairs it with 书在桌子上 to contrast on vs under.",
+          "jp": "「桌子下」は口語的で、「桌子下面」に近い意味です。本课では「书在桌子上」と上下の対比として出ます。"
         },
         {
           "zh": "「哪边」问方向；「哪儿」更口语化问地点——本课两处都出现。",
           "pinyin": "nǎ biān · nǎr",
-          "kr": "「哪边」는 어느 쪽(방향), 「哪儿」는 더 구어체로 어디—뉘앙스가 조금 달라요.",
-          "en": "哪边 leans toward “which side/direction”; 哪儿 is everyday “where?”—both show up here.",
-          "jp": "「哪边」は方角、「哪儿」はくだけた「どこ」—本课では両方出ます。"
+          "kr": "「你的学校在哪边？」는 학교 건물이 말하는 사람을 기준으로 어느 방향에 있는지 묻습니다. 「王老师在哪儿？」는 ‘어디에 있나’에 더 가깝습니다. 둘 다 ‘어디’ 계열이지만, 하나는 방향, 하나는 위치에 초점을 둔다고 보면 됩니다.",
+          "en": "哪边 asks which side/direction (your school—this way or that way?). 哪儿 is the everyday “where?” for people or things. Both are “where”-type words with slightly different focus.",
+          "jp": "「哪边」は方角や側への注目、「哪儿」は口語的な『どこ』。本课の両方の例を比べます。"
         }
       ]
     },
@@ -966,9 +966,9 @@
         "pinyin": "nǐ zài nǎr shàngkè? / wǒ zài zhōngxué shàngkè.",
         "usage": {
           "zh": "询问与回答上课地点。",
-          "kr": "어디서 수업하는지 묻고 답할 때 씁니다.",
-          "en": "For asking and answering where class meets.",
-          "jp": "どこで授業するかを聞いたり答えたりするときに。"
+          "kr": "「你在哪儿上课？」는 학교·교실 같은 큰 단위에서 어디에서 수업을 듣는지 묻습니다. 「我在中学上课。」은 ‘중학교에서 수업한다’는 뜻으로, 기관 이름을 「在」 뒤에 두는 전형적인 패턴입니다.",
+          "en": "The pair asks and answers where someone takes classes—e.g. at which school. 在 + place + 上课 is the usual frame.",
+          "jp": "「你在哪儿上课？」「我在中学上课。」のように、どこで授業をするかを尋ね、答えます。「在＋場所＋上课」の型です。"
         }
       },
       {
@@ -976,9 +976,9 @@
         "pinyin": "nǐ de xuéxiào zài nǎ biān? / zài zhèbiān.",
         "usage": {
           "zh": "问学校在哪一侧，用「这边、那边」回答。",
-          "kr": "학교가 동·서·남·북 중 어느 쪽인지 묻고, 이쪽·저쪽으로 답할 때.",
-          "en": "Ask which way the school lies; answer with 这边 or 那边.",
-          "jp": "学校がどの方角かを聞き、「这边」などで答える。"
+          "kr": "「哪边」는 지도를 펼쳐 놓지 않아도, 말하는 사람이 서 있는 곳을 기준으로 ‘어느 쪽’인지 묻습니다. 「在这边。」은 짧게 ‘이쪽 방향’이라고 짚어 주는 답입니다. 정확한 주소가 아니어도 대화가 성립합니다.",
+          "en": "哪边 asks which side or direction (relative to the speaker’s viewpoint). 在这边 / 在那边 are short answers—“this way / that way”—without a full address.",
+          "jp": "「哪边」は方角や側を尋ねます。「在这边。」は『こちらの方』と短く示す答えで、詳しい住所でなくても通じます。"
         }
       },
       {
@@ -986,9 +986,9 @@
         "pinyin": "shū zài zhuōzi shàng. / shǒujī zài zhuōzi xià.",
         "usage": {
           "zh": "用「上、下」说物体与桌子的相对位置。",
-          "kr": "책상 ‘위’와 ‘밑’에 뭐가 있는지 말할 때.",
-          "en": "Say whether something is on the desk or under it.",
-          "jp": "机の上か下かを言い分けるとき。"
+          "kr": "먼저 기준이 되는 명사(桌子)를 말한 뒤 「上」「下」를 붙이면 ‘그 물건의 위／아래’가 됩니다. 같은 구조로 책과 휴대폰을 나란히 말하면 위·아래 대비가 분명해집니다.",
+          "en": "After naming the reference object (桌子), add 上 or 下: on the desk vs under the desk. The parallel sentences make the contrast clear.",
+          "jp": "基準となる「桌子」のあとに「上」「下」をつけ、机の上か下かを言い分けます。二文を並べると対比がはっきりします。"
         }
       }
     ]

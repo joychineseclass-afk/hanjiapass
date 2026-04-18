@@ -829,16 +829,16 @@
       {
         "zh": "会用「住在」说明住址，用「一个人住吗」询问是否独居。",
         "pinyin": "zhù zài · yí ge rén",
-        "kr": "「住在」로 주소를 말하고 혼자인지 묻는다.",
-        "en": "Say where you live; ask if someone lives alone.",
-        "jp": "「住在」で住まい、一人暮らしかを聞く。"
+        "kr": "「住在」를 써서 「我住在学校那边」처럼 사는 곳의 대략적인 위치를 설명할 수 있고, 「你一个人住吗？」로 혼자 사는지 여부까지 자연스럽게 물을 수 있어야 합니다.",
+        "en": "You can state roughly where you live with 住在 (for example 「我住在学校那边」), and ask whether someone lives alone with 「你一个人住吗？」.",
+        "jp": "「住在」で住んでいる場所のおおよその位置を述べ、「你一个人住吗？」で一人暮らしかどうかを尋ねられるようになります。"
       },
       {
         "zh": "能用「去……」「来……吧」谈论日常行程与邀请。",
         "pinyin": "qù · lái ba",
-        "kr": "「去」「来…吧」로 일정과 초대를 말한다.",
-        "en": "Use 去 and 来吧 for plans and invites.",
-        "jp": "「去」「来吧」で予定と招待。"
+        "kr": "「去」로 마트·식당·영화관 등 평소 가는 곳과 일정을 말하고, 「星期六你来我家吧？」처럼 「来……吧」를 붙여 상대를 부드럽게 초대하는 표현을 쓸 수 있습니다.",
+        "en": "Use 去 to describe everyday destinations and plans (e.g. going to the supermarket or a restaurant), and add 来 + … + 吧 so invitations sound like gentle suggestions rather than commands.",
+        "jp": "「去」で日々の行き先や予定を話し、「来……吧」で相手を無理のない誘い方で呼ぶことができます。"
       }
     ],
     "lessonExplain": {
@@ -847,25 +847,25 @@
         {
           "zh": "区分「书店」与「商店」等场所词，本课会话三专门练习纠正。",
           "pinyin": "shūdiàn · shāngdiàn",
-          "kr": "「书店」와 「商店」를 헷갈리지 않기.",
-          "en": "Tell 书店 from 商店—Dialogue 3 drills this.",
-          "jp": "「书店」と「商店」を区別する。"
+          "kr": "「书店」는 책을 파는 서점을, 「商店」는 보통 일반 가게를 가리키므로 주소의 기준점을 말할 때 둘을 혼동하면 안 됩니다. 본 과 회화 3에서는 집이 서점 뒤가 아니라 가게 뒤에 있다고 바로잡는 연습을 합니다.",
+          "en": "书店 names a bookstore; 商店 often refers to a general shop. When you give a landmark behind someone’s home, mixing them changes the meaning, so Dialogue 3 practises correcting 「书店后边」to「商店后边」.",
+          "jp": "「书店」は本屋、「商店」は一般の店を指すことが多いので、家の位置の目印を言うときは混同しないこと。会話3では「书店后边」を「商店后边」に訂正する練習をします。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：住哪儿、和同学住。会话二：超市、饭店、电影。会话三：星期六来我家、书店/商店后边。",
-        "kr": "살 곳 → 가는 곳 → 토요일 집·장소 바로잡기.",
-        "en": "Where you live · where you go · Saturday & fixing the place.",
-        "jp": "住まい／行き先／土曜と場所の訂正。"
+        "kr": "첫 회화에서는 어디에 사는지와 동기와 함께 사는지를 묻고, 둘째에서는 마트·식당·영화관에 갈지와 영화를 좋아하는지를 이야기하며, 셋째에서는 토요일에 집으로 오라는 초대와 집이 서점 뒤인지 가게 뒤인지를 바로잡는 대화를 합니다.",
+        "en": "Dialogue 1 asks where you live and whether you live with classmates; Dialogue 2 talks about going to the supermarket, a restaurant, or the cinema; Dialogue 3 invites someone for Saturday and corrects whether the home is behind the bookstore or behind the shop.",
+        "jp": "会話1では住まいと同学との同居、会話2ではスーパー・レストラン・映画館への行き来と好み、会話3では土曜の招待と「书店」か「商店」のうしろかの訂正を扱います。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「吧」使邀请口气委婉。",
           "pinyin": "ba",
-          "kr": "「吧」는 권유를 부드럽게.",
-          "en": "吧 softens an invitation.",
-          "jp": "「吧」は誘いをやわらげる。"
+          "kr": "문장 끝의 「吧」는 명령이 아니라 함께하자는 제안이나 부드러운 확인의 뉘앙스를 주어, 「星期六你来我家吧？」처럼 초대할 때 자연스럽게 씁니다.",
+          "en": "Sentence-final 吧 softens the tone so a line like 「星期六你来我家吧？」sounds like a friendly suggestion to visit rather than a blunt order.",
+          "jp": "文末の「吧」は話し手の提案や相づちをやわらかくし、「星期六你来我家吧？」のような誘いにふさわしい丁寧さを添えます。"
         }
       ],
       "confusionPoints": []
@@ -904,9 +904,9 @@
         "pinyin": "Nǐ zhù zài nǎlǐ? / Wǒ zhù zài xuéxiào nà biān.",
         "usage": {
           "zh": "询问与说明居住的大致位置。",
-          "kr": "어디 사는지 묻고 대략적인 위치를 말한다.",
-          "en": "Ask and give a rough idea where you live.",
-          "jp": "住まいの方角を聞き、答える。"
+          "kr": "「你住在哪里？」로 상대가 어느 지역이나 방향에 사는지 묻고, 「我住在学校那边」처럼 「住在」와 방위·근처 표현을 써서 대략적인 위치만으로도 충분히 소통할 수 있게 답합니다.",
+          "en": "Use 「你住在哪里？」to ask which area or direction someone lives in, and answer with 住在 plus a rough place phrase (for example 「我住在学校那边」) without needing a full street address.",
+          "jp": "「你住在哪里？」で住んでいる地域や方角を尋ね、「我住在学校那边」のように「住在」と「那边」などで、詳しい住所がなくても大まかな位置を伝えられます。"
         }
       }
     ]

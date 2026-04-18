@@ -815,16 +815,16 @@
       {
         "zh": "会用「去年、明年」说相对年份。",
         "pinyin": "qùnián",
-        "kr": "상대적 연도.",
-        "en": "Last/next year.",
-        "jp": "去年・明年。"
+        "kr": "「去年」는 말하는 해의 바로 전 해, 「明年」는 바로 다음 해를 가리키므로 절대 연도 없이도 시점을 잡을 수 있습니다.",
+        "en": "去年 means the year before the one you are talking about; 明年 means the next year—both locate events without giving a calendar year.",
+        "jp": "「去年」は昨年、「明年」は来年で、基準となる「今年」から相対的に年を言えます。"
       },
       {
         "zh": "能在职场情景使用「先生、女士」。",
         "pinyin": "xiānsheng",
-        "kr": "호칭.",
-        "en": "Polite titles.",
-        "jp": "「先生」「女士」。"
+        "kr": "직장·만남 자리에서 「王先生」「李女士」처럼 성과 함께 쓰면 낯선 상대에게 정중하게 부르는 호칭이 됩니다.",
+        "en": "In work settings, 先生 and 女士 after a surname (e.g. 「王先生」) sound polite and appropriate when you address people you do not know well.",
+        "jp": "職場などでは「先生」「女士」を姓と組み合わせ、フォーマルな場で相手を呼ぶのに使えます。"
       }
     ],
     "lessonExplain": {
@@ -833,25 +833,25 @@
         {
           "zh": "能说去年明年、工作公司与忙闲，并在职场情景用「先生、女士」问候。",
           "pinyin": "qùnián · míngnián · gōngzuò",
-          "kr": "작년·내년·회사·바쁨을 말하고 직장에서 「先生」「女士」로 인사한다.",
-          "en": "Say last/next year, company work, busy; greet with 先生 and 女士 at work.",
-          "jp": "去年・来年・会社と忙しさを言い、職場で「先生」「女士」であいさつできる。"
+          "kr": "언제 중국에 왔는지·내년 계획을 「去年」「明年」로 말하고, 어느 회사에서 일하는지와 바쁜지를 이야기하며, 업무 상대에는 「先生」「女士」로 예를 갖춥니다.",
+          "en": "Talk about coming to China last year or plans for next year, describe where you work and how busy you are, and greet colleagues or clients with 先生 or 女士 plus surname.",
+          "jp": "「去年」「明年」で時期を述べ、勤務先と忙しさを話し、職場では「先生」「女士」で丁寧にあいさつできます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：来华时间与家庭。会话二：公司与忙闲。会话三：同事与朋友。",
-        "kr": "시간·가족 → 회사 → 동료.",
-        "en": "Timeline & family · office · colleagues.",
-        "jp": "来日／会社／同僚。"
+        "kr": "첫 회화에서는 중국에 온 시기와 가족·연인 이야기를, 둘째에서는 어디서 일하는지와 바쁜지를, 셋째에서는 직장 동료와 친구를 소개합니다.",
+        "en": "Dialogue 1 covers when you came to China and your family; Dialogue 2 covers workplace and how busy you are; Dialogue 3 covers colleagues and friends.",
+        "jp": "会話1は来日時期と家族、会話2は勤務先と忙しさ、会話3は同僚と友人についてです。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「大家」可指在场或所说的所有人。",
           "pinyin": "dàjiā",
-          "kr": "모두.",
-          "en": "大家 = everyone.",
-          "jp": "「大家」はみんな。"
+          "kr": "「大家好」에서 「大家」는 방 안의 모든 사람이나 말 속에서 언급된 집단 전체를 가리킬 수 있습니다.",
+          "en": "大家 means “everyone” present or everyone in the group you are talking about, as in 「大家好」to greet a whole room.",
+          "jp": "「大家」はその場にいる全員、または話題にしたグループの全員を指し、「大家好」のように全体に向けて使います。"
         }
       ],
       "confusionPoints": []
@@ -886,9 +886,9 @@
         "pinyin": "Nǐ zài nǎr gōngzuò? / Wǒ zài gōngsī shàngbān.",
         "usage": {
           "zh": "询问并说明工作单位。",
-          "kr": "근무지 묻고 답하기.",
-          "en": "Ask and say where you work.",
-          "jp": "勤務先を聞き、言う。"
+          "kr": "「你在哪儿工作？」로 직장의 위치나 소속을 묻고, 「我在公司上班」처럼 회사에서 일한다고 구체적으로 답합니다.",
+          "en": "Ask 「你在哪儿工作？」to learn where someone works, and answer with a pattern like 「我在公司上班」to say you work at a company.",
+          "jp": "「你在哪儿工作？」で勤務先を尋ね、「我在公司上班」のようにどこで働いているかを答えます。"
         }
       }
     ]

@@ -515,23 +515,23 @@
       {
         "zh": "能询问对方姓名，用「请问」礼貌开口，并在初次见面时自然地问名字。",
         "pinyin": "qǐngwèn · nǐ jiào shénme míngzi?",
-        "kr": "상대 이름을 묻고 공손하게 질문을 꺼내며, 첫 만남에서 자연스럽게 이름을 물을 수 있다.",
-        "en": "Ask someone’s name, lead with 请问, and sound natural when meeting for the first time.",
-        "jp": "相手の名前を聞き、「请问」で丁寧に切り出し、初対面で自然に名前を尋ねられる。"
+        "kr": "처음 보는 사람에게 이름을 물을 때는 「请问」를 앞에 붙여 질문을 부드럽게 시작한 뒤 「你叫什么名字？」처럼 완전한 문장으로 묻습니다. 말투가 급하지 않게 이어지도록 연습합니다.",
+        "en": "When you ask a name for the first time, open with 请问 to soften the question, then use a full line like 你叫什么名字？ so you sound polite, not blunt.",
+        "jp": "初対面で名前を聞くときは「请问」で切り出し、「你叫什么名字？」のような丁寧な全文で尋ねます。ぶしつけに聞こえないよう整えます。"
       },
       {
         "zh": "能用「我叫……」清楚地介绍自己叫什么。",
         "pinyin": "wǒ jiào …",
-        "kr": "자신의 이름이 무엇인지 분명하게 말할 수 있다.",
-        "en": "Introduce yourself clearly with 我叫…. ",
-        "jp": "「我叫……」で自分の名前をはっきり名乗れる。"
+        "kr": "「我叫」 뒤에 한자 이름이든 외국어 이름이든 자신이 불리는 이름을 그대로 붙여 말합니다. 짧게 「我叫汤姆。」처럼 완결된 문장으로 응답할 수 있어야 합니다.",
+        "en": "After 我叫, say the name people should call you—Chinese or not—in one short sentence like 我叫汤姆 so your answer is clear and complete.",
+        "jp": "「我叫……」のあとに、自分の呼び名をはっきり続けます。「我叫汤姆。」のように一文で名乗れるようにします。"
       },
       {
         "zh": "能用「是……吗？」确认对方是不是学生等身份，并用「是/不是」或完整短句回答。",
         "pinyin": "shì … ma? · shì / bù shì",
-        "kr": "신분을 확인하고 짧게 답할 수 있다.",
-        "en": "Use 是…吗？ to check identity (e.g. student) and answer with 是/不是 or a short sentence.",
-        "jp": "「是……吗？」で身分を確認し、「是／不是」や短い文で答えられる。"
+        "kr": "「你是新来的学生吗？」처럼 「是……吗？」로 사실을 확인하는 질문을 쓰고, 긍정이면 「是，我是新来的学生。」처럼 짧은 완전한 문장으로, 부정이면 「不是」로 답하는 연습을 합니다.",
+        "en": "Use 是…吗？ to check facts (e.g. “Are you a new student?”). Answer yes with a full short line like 是，我是新来的学生。, or no with 不是 plus detail if needed.",
+        "jp": "「是……吗？」で事実確認の質問をし、肯定なら「是，……」の短い文で、否定なら「不是」で答えられるようにします。"
       }
     ],
     "lessonExplain": {
@@ -540,72 +540,76 @@
         {
           "zh": "会问「你叫什么名字？」并听懂对方名字；能用「我叫……」清楚介绍自己。",
           "pinyin": "nǐ jiào shénme míngzi? · wǒ jiào …",
-          "kr": "「你叫什么名字？」로 이름을 묻고, 「我叫……」로 자신의 이름을 또렷하게 말할 수 있다.",
-          "en": "Ask 你叫什么名字？ and introduce yourself with 我叫…. ",
-          "jp": "「你叫什么名字？」で名前を聞き、「我叫……」で名乗れる。"
+          "kr": "듣기에서는 상대가 「我叫……」로 이름을 말할 때 이름 부분에 집중하고, 말하기에서는 같은 형식으로 자신의 이름을 또렷하게 되돌려 줍니다. 질문과 답의 짝이 맞도록 연습합니다.",
+          "en": "Listen for the name chunk after 我叫…, and produce the same pattern when it’s your turn so question and answer stay parallel and easy to follow.",
+          "jp": "聞き取りでは「我叫……」のあとの名前に注意し、話すときも同じ型で名乗って、質問と答えの対応がはっきりするようにします。"
         },
         {
           "zh": "会用「请问」把问句说得更客气；理解「叫 + 名字」「什么名字」在问句里的作用。",
           "pinyin": "qǐngwèn · jiào · shénme míngzi",
-          "kr": "「请问」로 질문을 더 공손하게 꺼내고, 「叫」「什么名字」가 문장에서 하는 일을 이해한다.",
-          "en": "Use 请问 to soften questions; notice 叫 + name and 什么名字.",
-          "jp": "「请问」で丁寧に聞き、「叫」「什么名字」の働きを押さえる。"
+          "kr": "「请问」는 질문 전체를 부드럽게 만드는 도입 표현이고, 「叫」는 ‘～라고 불리다’는 뜻으로 이름과 연결됩니다. 「什么名字」는 ‘어떤 이름’인지 묻는 말이므로, 세 요소가 한 질문 안에서 역할을 나눕니다.",
+          "en": "请问 softens the whole question; 叫 links to the name (“be called”); 什么名字 asks which name—together they build a polite, standard name question.",
+          "jp": "「请问」は質問全体を和らげ、「叫」は名乗り、「什么名字」はどんな名前かを尋ねる部分です。だから一つの丁寧な名前の質問が組み立ちます。"
         },
         {
           "zh": "会用「是……吗？」确认对方是不是新同学，并能用「是 / 不是」或完整短句回答。",
           "pinyin": "shì … ma? · shì / bù shì",
-          "kr": "「是……吗？」로 상대가 신입생인지 확인하고 「是/不是」나 짧은 완전한 문장으로 답한다.",
-          "en": "Use 是…吗？ to check if someone is a new student; answer with 是/不是 or a short sentence.",
-          "jp": "「是……吗？」で確認し、「是／不是」や短い文で答えられる。"
+          "kr": "신입생 여부처럼 맞거나 틀린 정보를 확인할 때 「是……吗？」를 씁니다. 긍정은 상황에 맞는 짧은 설명까지 덧붙이고, 부정이면 「不是」로 끊거나 이유를 한 마디 보태면 자연스럽습니다.",
+          "en": "是…吗？ checks whether something is true—e.g. new student or not. Say 是 with a brief confirming line, or 不是 (optionally plus a short reason).",
+          "jp": "「是……吗？」で事実確認をし、肯定なら状況に合わせた短い文を、否定なら「不是」で答え、必要なら一言理由を添えます。"
         },
         {
           "zh": "能在认识新同学时用「认识你很高兴」开场，并接「认识你我也很高兴」。",
           "pinyin": "rènshi nǐ hěn gāoxìng · rènshi nǐ wǒ yě hěn gāoxìng",
-          "kr": "새 친구와 「认识你很高兴」「认识你我也很高兴」로 짧게 인사를 이어 간다.",
-          "en": "Use 认识你很高兴 / 认识你我也很高兴 when meeting classmates.",
-          "jp": "「认识你很高兴」「认识你我也很高兴」で短いあいさつを続けられる。"
+          "kr": "이름을 주고받은 뒤에는 「认识你很高兴」로 만나서 반갑다는 뜻을 전하고, 상대는 「认识你我也很高兴」로 같은 정서를 돌려 주는 인사 흐름을 익힙니다.",
+          "en": "After exchanging names, 认识你很高兴 says “nice to meet you”; 认识你我也很高兴 returns the feeling—this two-line pattern is common among new classmates.",
+          "jp": "名乗りのあと「认识你很高兴」で歓迎の気持ちを示し、相手は「认识你我也很高兴」で返す、初対面の定番の流れです。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：校园里第一次问对方姓名，并确认是不是新来的学生。会话二：新同学互报名字，用「认识你很高兴」完成初识寒暄。本课重点在「问名字—说名字—确认身份」。",
-        "kr": "회화1: 캠퍼스에서 처음 이름을 묻고 신입생인지 확인합니다. 회화2: 새 친구끼리 이름을 주고받으며 「认识你很高兴」로 첫 인사를 마칩니다. 초점은 「이름 묻기—이름 말하기—신분 확인」입니다.",
-        "en": "Dialogue 1: first-time name asking and checking if someone is a new student. Dialogue 2: classmates exchange names and use 认识你很高兴. Focus: ask a name, give a name, confirm identity.",
-        "jp": "会話1：初対面で名前を聞き、新入生か確認する。会話2：名乗り合い、「认识你很高兴」で初対面のあいさつ。軸は「名前を聞く・言う・確認」。"
+        "kr": "첫 번째 회화에서는 캠퍼스에서 낯선 친구에게 「请问」「你叫什么名字？」로 이름을 묻고, 「我叫……」로 답한 뒤 「你是新来的学生吗？」로 신입생인지 확인합니다. 두 번째 회화에서는 서로 이름을 주고받고 「认识你很高兴」「认识你我也很高兴」로 첫 만남 인사를 마칩니다. 한 줄로 요약하면 ‘이름을 묻고—말하고—맞는지 확인한다’입니다.",
+        "en": "Dialogue 1 walks through a first meeting on campus: polite name question, 我叫 answer, then 是…吗？ to check if the peer is a new student. Dialogue 2 has classmates swap names and close with 认识你很高兴 / 认识你我也很高兴. The thread is ask a name → say a name → confirm who they are.",
+        "jp": "会話1では校内で初対面の相手に丁寧に名前を聞き、名乗り、新入生かどうかを確認します。会話2では名乗り合いのあと「认识你很高兴」「认识你我也很高兴」で初対面のあいさつを完成させます。流れは「聞く・言う・確認」です。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：用「请问」「你叫什么名字？」问姓名，用「我叫……」回答，并用「是……吗？」确认是否新生。",
           "pinyin": "qǐngwèn · nǐ jiào shénme míngzi? · wǒ jiào … · shì … ma?",
-          "kr": "회화1: 이름을 묻고 답하며 신입생인지 확인합니다."
+          "kr": "질문은 「请问」로 시작해 「你叫什么名字？」로 이름을 묻고, 답은 「我叫……」로 맞춥니다. 그다음 「你是新来的学生吗？」로 정보를 확인해, 묻는 것과 맞는 것이 서로 다른 종류의 문장임을 구분합니다.",
+          "en": "Open politely with 请问, ask the full 你叫什么名字？, answer with 我叫…, then confirm with 是…吗？ about being a new student—each step uses a different sentence pattern on purpose.",
+          "jp": "「请问」から入り「你叫什么名字？」で聞き、「我叫……」で答え、「你是新来的学生吗？」で確認します。質問の種類を段階で変えます。"
         },
         {
           "zh": "会话二：互道「我叫……」，用「认识你很高兴」「认识你我也很高兴」完成初识寒暄。",
           "pinyin": "wǒ jiào … · rènshi nǐ hěn gāoxìng",
-          "kr": "회화2: 이름을 주고받으며 첫 만남 인사를 마칩니다."
+          "kr": "서로 「我叫……」로 이름을 교환한 뒤, 한쪽이 「认识你很高兴」를 말하면 다른 쪽은 「认识你我也很高兴」로 감정을 돌려 주며 짧은 대화로 첫 만남을 마무리합니다.",
+          "en": "After both say 我叫…, one side offers 认识你很高兴 and the other echoes with 认识你我也很高兴—this closes the first-meeting small talk warmly.",
+          "jp": "双方が「我叫……」のあと、一方が「认识你很高兴」と言い、相手が「认识你我也很高兴」と返して、初対面の会話を締めます。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「叫」在「我叫……」里表示“叫做、称呼”，不要和“喊叫”的「叫」混在同一语感里。",
           "pinyin": "wǒ jiào …",
-          "kr": "「我叫……」의 「叫」는 ‘이름이 뭐라고 불리다/일컬다’ 쪽이지, ‘소리치다’ 뜻과 헷갈리지 않기.",
-          "en": "In 我叫…, 叫 means “be called,” not “shout.”",
-          "jp": "「我叫……」の「叫」は「～と言う名前だ」の意味で、「叫ぶ」とは別。"
+          "kr": "「我叫汤姆」에서 「叫」는 ‘이름이 톰이라고 불린다’는 뜻으로, 사람을 부를 때 쓰는 동사입니다. ‘크게 소리치다’는 뜻의 「叫」과 발음은 같아도 문맥이 전혀 다르므로, 이름을 말하는 패턴 안에서는 앞의 의미로만 이해하면 됩니다.",
+          "en": "In 我叫汤姆, 叫 links your name: “I’m called Tom.” That’s different from 叫 meaning “to shout”—same character, different sense, so trust the name pattern.",
+          "jp": "「我叫……」の「叫」は「～と呼ばれている」という意味で、名前を言う決まり文句の一部です。別の文脈では「叫ぶ」の意味もありますが、名乗りの型の中では名前の動詞と考えてください。"
         },
         {
           "zh": "「名字」口语里常用；「姓名」更偏书面或表格。本课对话以「名字」为主。",
           "pinyin": "míngzi · xìngmíng",
-          "kr": "「名字」는 말할 때 자주 쓰고 「姓名」는 서면·서식에 가깝습니다. 본과는 「名字」 중심입니다.",
-          "en": "名字 is colloquial; 姓名 is more formal. This lesson centers on 名字.",
-          "jp": "「名字」は口語、「姓名」はやや書き言葉・帳票向き。本課は「名字」が中心。"
+          "kr": "일상 대화에서는 「名字」로 ‘이름’을 묻는 경우가 많고, 「姓名」는 서류나 공식적인 자리에서 성과 이름을 함께 적을 때 더 자주 씁니다. 본과 회화는 구어체 「你叫什么名字？」에 맞추어 「名字」 사용이 중심입니다.",
+          "en": "名字 is everyday for “name” in speech; 姓名 leans formal (forms, full name). This lesson’s dialogues stick to 名字 in the question pattern you’ll use most often.",
+          "jp": "会話では「名字」が一般的で、「姓名」は書類や正式な場で姓と名をまとめて言うときに近いです。教材の会話は「名字」を中心に組み立てています。"
         },
         {
           "zh": "「你叫什么名字？」很完整；有时只问「你叫什么？」更短——本课先练完整句更清楚。",
           "pinyin": "nǐ jiào shénme míngzi? · nǐ jiào shénme?",
-          "kr": "「你叫什么名字？」는 길고 분명하고, 「你叫什么？」는 더 짧습니다. 본과는 먼저 완전한 질문형에 익숙해지기.",
-          "en": "你叫什么名字？ is full and clear; 你叫什么？ is shorter—this lesson stresses the full form first.",
-          "jp": "「你叫什么名字？」は丁寧で明確、「你叫什么？」は短い。本課はまず完全な形を。"
+          "kr": "「你叫什么名字？」는 의미가 분명하고 예의도 갖춘 완전한 질문입니다. 「你叫什么？」는 짧아져 말하기는 쉽지만 초보자에게는 무엇을 묻는지 덜 드러날 수 있어, 본과에서는 먼저 긴 형을 반복해 귀와 입에 익힙니다.",
+          "en": "你叫什么名字？ is the full, clear form; 你叫什么？ drops 名字 and is shorter. This lesson drills the longer line first so listening and speaking stay unambiguous.",
+          "jp": "「你叫什么名字？」は意味がはっきりした完全な形です。「你叫什么？」は短いですが、初級ではまず長い形で聞き取りと発話の型を固めます。"
         }
       ]
     },
@@ -655,9 +659,9 @@
         "pinyin": "qǐngwèn",
         "usage": {
           "zh": "放在问句前，客气地开口。",
-          "kr": "질문 앞에 두어 공손하게 말을 꺼냅니다.",
-          "en": "Softens a question—polite opener.",
-          "jp": "質問の前に置いて丁寧に切り出す。"
+          "kr": "질문 바로 앞에 두어 ‘실례지만’ ‘여쭤 보건대’ 느낌으로 말을 시작합니다. 특히 낯선 사람에게 이름을 물을 때 「请问，你叫什么名字？」처럼 쓰면 훨씬 부드럽게 들립니다.",
+          "en": "Put 请问 right before a question to sound like “excuse me” or “may I ask…”—especially when asking a stranger’s name: 请问，你叫什么名字？",
+          "jp": "質問の直前に置き、「すみませんが」「ちょっと伺いますが」という前置きになります。初対面で名前を聞くときは「请问，你叫什么名字？」のように使うと丁寧です。"
         }
       },
       {
@@ -665,9 +669,9 @@
         "pinyin": "nǐ jiào shénme míngzi?",
         "usage": {
           "zh": "询问对方姓名的常用完整问句。",
-          "kr": "상대 이름을 묻는 대표적인 완전한 질문입니다.",
-          "en": "Standard full question for someone’s name.",
-          "jp": "名前を尋ねる定番の全文の質問。"
+          "kr": "상대의 이름이 무엇인지 묻는 가장 흔한 완전한 문장입니다. 「你」는 상대를 가리키고, 「什么名字」는 ‘어떤 이름’인지 묻는 부분이라, 한국어로는 ‘이름이 뭐예요?’에 가깝게 이해하면 됩니다.",
+          "en": "The standard full question for “What’s your name?”—你 is “you,” 叫 links to being called, 什么名字 asks which name. Use it whenever you need the full polite form.",
+          "jp": "「あなたの名前は何ですか」を尋ねる定番の全文です。「你」が相手、「什么名字」がどんな名前かを聞く部分です。"
         }
       },
       {
@@ -675,9 +679,9 @@
         "pinyin": "wǒ jiào …",
         "usage": {
           "zh": "用「叫」说出自己叫什么名字。",
-          "kr": "「叫」로 자신의 이름을 말합니다.",
-          "en": "Say what you are called with 我叫…. ",
-          "jp": "「我叫……」で自分の名前を言う。"
+          "kr": "「我」는 나, 「叫」는 ‘～라고 불리다’이므로 뒤에 자신의 이름을 붙입니다. 「我叫李明。」「我叫汤姆。」처럼 한 문장으로 끝내면 질문에 정확히 대응합니다.",
+          "en": "我 means “I,” 叫 ties to your name: “I’m called…”. Finish with 我叫李明 or 我叫汤姆 as one sentence that answers the name question directly.",
+          "jp": "「我」は「私」、「叫」は「～と呼ばれている」と名前につなぎます。「我叫李明。」のように一文で名乗ると、名前の質問にきちんと答えられます。"
         }
       },
       {
@@ -685,9 +689,9 @@
         "pinyin": "míngzi",
         "usage": {
           "zh": "本课问句里的核心名词，与「姓/名」搭配出现。",
-          "kr": "이 과 질문의 핵심 명사로 「姓」「名」과 함께 쓰입니다.",
-          "en": "Core noun in name questions (with 姓/名 patterns in wider Chinese).",
-          "jp": "名前を聞く表現の中心となる名詞。"
+          "kr": "‘이름’을 뜻하는 말로, 본과에서는 「你叫什么名字？」 안에서 핵심을 이룹니다. 한자 성·이름을 나누어 말할 때는 「姓」「名」과 함께 등장하기도 하지만, 일상 질문에는 「名字」가 가장 흔합니다.",
+          "en": "名字 means “name” and anchors 你叫什么名字？. You’ll also see 姓 / 名 in fuller introductions, but in daily questions 名字 is the word you hear most.",
+          "jp": "「名字」は「名前」を表す語で、教材の名前の質問の中心です。姓・名とセットで出ることもありますが、日常の聞き方では「名字」が基本です。"
         }
       }
     ]

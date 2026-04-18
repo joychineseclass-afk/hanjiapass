@@ -436,16 +436,16 @@
       {
         "zh": "能根据对象选用「您」与「你」，并用「您好」「你好」完成见面与道别。",
         "pinyin": "nín · nǐ · nín hǎo · nǐ hǎo · zàijiàn",
-        "kr": "상대에 따라 「您」과 「你」를 가리고 「您好」「你好」「再见」로 인사·작별한다.",
-        "en": "Choose 您/你 and greet or say goodbye with 您好/你好/再见.",
-        "jp": "「您／你」と「您好／你好」「再见」を使い分ける。"
+        "kr": "어른·선생님처럼 높여야 할 상대에게는 「您」과 「您好」를, 친구·또래에게는 「你」와 「你好」를 쓰는 식으로 상황을 보고 고릅니다. 헤어질 때는 「再见」로 짧게 작별 인사까지 마칠 수 있어야 합니다.",
+        "en": "Pick 您 vs 你 by situation: more respectful people (teachers, elders) get 您 and 您好; peers often get 你 and 你好. Close encounters with 再见 so greetings and goodbyes sound natural.",
+        "jp": "相手に応じて「您」と「你」を選び、目上には「您好」、同輩には「你好」が基本です。別れのときは「再见」で会話を締め、あいさつから別れまで一連の型が身につきます。"
       },
       {
         "zh": "能在合适情境使用「对不起」「没关系」「谢谢」「不客气」完成道歉与致谢应答。",
         "pinyin": "duìbuqǐ · méi guānxi · xièxie · bú kèqi",
-        "kr": "「对不起」「没关系」「谢谢」「不客气」로 사과·감사와 응답을 한다.",
-        "en": "Use apology/thanks phrases and their replies in context.",
-        "jp": "謝罪・感謝の定型表現と返答。"
+        "kr": "발을 밟았을 때처럼 미안할 때는 「对不起」로 사과하고, 상대는 「没关系」로 괜찮다고 받아 줍니다. 고마울 때는 「谢谢」로 감사를 말하면 「不客气」로 응답합니다. 두 짝을 바꾸어 쓰지 않도록 연습합니다.",
+        "en": "When you need to apologize, open with 对不起 and expect 没关系 as a gentle “it’s fine.” For thanks, 谢谢 pairs with 不客气. Keep apology pairs and thanks pairs separate so replies match the situation.",
+        "jp": "謝るときは「对不起」→「没关系」、感謝には「谢谢」→「不客气」という返し方が定番です。謝罪の返事に感謝の返事を混ぜないよう、場面ごとに言い分けます。"
       }
     ],
     "lessonExplain": {
@@ -454,72 +454,76 @@
         {
           "zh": "理解「您」与「你」的礼貌程度差异，并对师长、同学选用合适称呼与问候语。",
           "pinyin": "nín · nǐ · nín hǎo · nǐ hǎo",
-          "kr": "높임 「您」과 보통 「你」의 차이를 알고 스승·친구에게 맞게 인사한다.",
-          "en": "Distinguish 您 vs 你 and greet appropriately.",
-          "jp": "「您／你」と「您好／你好」の使い分け。"
+          "kr": "「您」는 나이·지위를 높일 때 쓰는 둘째 사람 높임말이고 「你」는 평상시 말투에 가깝습니다. 선생님께는 「您好」, 친구에게는 「你好」처럼, 누구에게 말하는지에 따라 인사말을 고르는 연습을 합니다.",
+          "en": "您 marks a respectful “you” for elders and teachers; 你 is the everyday “you.” Match greetings—您好 with formal contexts, 你好 with classmates—so your tone fits the relationship.",
+          "jp": "「您」は敬う相手への二人称、「你」はふだんの二人称です。先生には「您好」、同級生には「你好」のように、関係に合わせてあいさつを選べるようにします。"
         },
         {
           "zh": "掌握「对不起」「没关系」「谢谢」「不客气」的配对应答，不在道歉与致谢之间混用。",
           "pinyin": "duìbuqǐ → méi guānxi；xièxie → bú kèqi",
-          "kr": "사과와 감사의 짝을 익히고 서로 바꿔 쓰지 않는다.",
-          "en": "Pair apologies and thanks correctly.",
-          "jp": "謝罪と感謝の返答の組み合わせ。"
+          "kr": "사과를 받을 때는 「没关系」, 감사를 받을 때는 「不客气」처럼 응답이 고정되어 있습니다. 「谢谢」에 「没关系」를 붙이거나 그 반대로 말하면 어색하므로, 짝을 정확히 외웁니다.",
+          "en": "After 对不起 you expect 没关系; after 谢谢 you expect 不客气. These pairs belong to different speech acts—don’t answer thanks with 没关系 or apologies with 不客气.",
+          "jp": "謝罪のやり取りは「对不起」→「没关系」、感謝は「谢谢」→「不客气」です。感謝に「没关系」を返したり、謝罪に「不客气」を返したりしないよう区別します。"
         },
         {
           "zh": "会用「再见」道别，并能在师生、同学场景中完成简短对话。",
           "pinyin": "zàijiàn",
-          "kr": "「再见」로 작별하고 선생님·친구와 짧은 대화를 마친다.",
-          "en": "Say 再见 and complete short dialogues.",
-          "jp": "「再见」で別れのあいさつ。"
+          "kr": "수업이 끝나거나 자리를 뜰 때 「再见」로 가볍게 작별합니다. 선생님·친구 모두에게 쓸 수 있는 기본 작별 표현으로, 인사 뒤에 자연스럽게 붙입니다.",
+          "en": "Use 再见 when you leave class or say goodbye after a chat. It works with teachers and classmates alike—add it after your greeting flow to close the talk politely.",
+          "jp": "「再见」は授業のあとや立ち去るときの別れの定型です。先生にも友達にも使える基本的なひと言として、あいさつの流れの最後に置きます。"
         },
         {
           "zh": "能在师生、同学场景中完成问好、道歉、致谢与道别等简短对话。",
           "pinyin": "duìhuà · lǐmào",
-          "kr": "선생님·친구와 만났을 때 인사·사과·감사·작별을 짧게 이어 말한다.",
-          "en": "Complete short dialogues with greetings, apologies, thanks, and goodbyes.",
-          "jp": "先生・仲間と、あいさつ・謝罪・感謝・別れの短い会話ができる。"
+          "kr": "교실·복도처럼 선생님과 마주쳤을 때와 친구와 이야기할 때를 나누어, 먼저 인사하고 필요하면 사과·감사를 넣은 뒤 「再见」로 끝내는 짧은 대화를 완성합니다.",
+          "en": "In teacher and peer settings, chain short turns: greet first, add apology or thanks if needed, then 再见—so you sound polite from hello to goodbye.",
+          "jp": "先生やクラスメートとの場面を想定し、あいさつから始め、必要なら謝罪やお礼を挟み、「再见」で締める短い会話ができるようにします。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：同学之间道歉与致谢。会话二：向老师问好并道别。本课核心是敬称与礼貌套语。",
-        "kr": "회화1: 친구 사이 사과·감사. 회화2: 선생님께 인사·작별. 제1과 중심은 높임말과 예의 표현입니다.",
-        "en": "Dialogue 1: apology and thanks among peers. Dialogue 2: greet and say goodbye to a teacher. Core: honorifics and polite phrases.",
-        "jp": "会話1：仲間の謝罪とお礼。会話2：先生へのあいさつと別れ。敬称と丁寧な定型が中心。"
+        "kr": "첫 번째 회화에서는 친구 사이에서 발을 밟았을 때 사과하고, 고마울 때 감사와 응답을 주고받습니다. 두 번째 회화에서는 선생님께 「您」「您好」로 인사하고 「老师，再见！」처럼 작별합니다. 제1과 전체는 누구에게 어떤 높임말과 정중한 짜임새를 쓰는가가 핵심입니다.",
+        "en": "Dialogue 1 practices stepping on a friend’s foot—对不起 / 没关系—and thanking a peer—谢谢 / 不客气. Dialogue 2 practices greeting a teacher with 您 / 您好 and leaving with 老师，再见！ The lesson centers on honorific choice and fixed polite routines.",
+        "jp": "会話1では友だち同士の踏み足の謝罪（对不起→没关系）とお礼（谢谢→不客气）を練習します。会話2では先生に「您」「您好」であいさつし、「老师，再见！」で別れます。敬称と定型の丁寧さがこの課の軸です。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "会话一：踩到脚说「对不起」，对方说「没关系」；致谢说「谢谢」，对方说「不客气」。",
           "pinyin": "duìbuqǐ → méi guānxi；xièxie → bú kèqi",
-          "kr": "회화1: 사과와 받기, 감사와 받기의 짝을 연습합니다."
+          "kr": "같은 또래와의 회화에서는 먼저 실수를 인정할 때 「对不起」를 쓰고, 상대는 「没关系」로 받아 줍니다. 도움을 받았을 때는 「谢谢」와 「不客气」의 짝으로 감사와 응답을 연습합니다.",
+          "en": "Among classmates, after a small mishap you say 对不起 and hear 没关系. When someone helps you, 谢谢 pairs with 不客气—practice both apology and thanks routines in short turns.",
+          "jp": "同級生同士では、踏んでしまったとき「对不起」→「没关系」、助けてもらったら「谢谢」→「不客气」と、謝罪と感謝のそれぞれの型を短いやり取りで身につけます。"
         },
         {
           "zh": "会话二：对老师用「您」「您好」问好，离开时说「老师，再见！」。",
           "pinyin": "nín · nín hǎo · lǎoshī, zàijiàn",
-          "kr": "회화2: 스승에게 높임말로 인사하고 작별 인사를 합니다."
+          "kr": "선생님께 말할 때는 「你」보다 「您」를 쓰고, 인사는 「您好」로 시작하는 것이 자연스럽습니다. 자리를 뜰 때는 「老师，再见！」처럼 직함을 붙여 작별하면 공손한 인상을 줍니다.",
+          "en": "With teachers, 您 and 您好 set a respectful tone. When you leave, 老师，再见！ adds the title 老师 before 再见 so the goodbye sounds polite and clear.",
+          "jp": "先生には「您」「您好」で丁寧さを示し、去るときは「老师，再见！」のように呼びかけてから「再见」と言うと礼儀正しく聞こえます。"
         }
       ],
       "confusionPoints": [
         {
           "zh": "「您」偏敬称，多用于长辈、老师；「你」多用于平辈、同学。",
           "pinyin": "nín · nǐ",
-          "kr": "「您」은 어른·스승, 「你」는 또래·친한 사이에 흔합니다.",
-          "en": "您 = polite you; 你 = plain you.",
-          "jp": "「您」は敬称、「你」は普通の二人称。"
+          "kr": "「您」는 상대를 높일 때 쓰는 둘째 사람 대명사로, 부모·선생님처럼 존중할 사람 앞에서 씁니다. 「你」는 친구·동년배처럼 편한 관계에서 흔합니다. 첫 만남이면 상대가 누구인지 보고 고르는 습관을 들이세요.",
+          "en": "您 is the respectful “you” for elders and teachers; 你 is the everyday “you” for peers. In first meetings, judge the relationship—when in doubt with authority figures, 您 is safer.",
+          "jp": "「您」は目上や先生への敬う二人称、「你」は同輩向けのふつうの二人称です。初対面では関係を見て選び、迷ったら目上には「您」が無難です。"
         },
         {
           "zh": "「对不起」搭「没关系」；「谢谢」搭「不客气」——不要交叉混应答。",
           "pinyin": "duìbuqǐ↔méi guānxi；xièxie↔bú kèqi",
-          "kr": "사과에는 「没关系」, 감사에는 「不客气」가 짝입니다.",
-          "en": "Don’t answer 谢谢 with 没关系.",
-          "jp": "ペアを取り違えない。"
+          "kr": "「对不起」는 잘못을 인정할 때 쓰고, 그에 대한 위로·용서의 뉘앙스로 「没关系」가 옵니다. 「谢谢」는 고마움을 말할 때이고, 그 응답이 「不客气」입니다. 감사에 「没关系」를 붙이면 뜻이 맞지 않습니다.",
+          "en": "对不起 starts an apology; 没关系 says “it’s okay.” 谢谢 starts thanks; 不客气 says “you’re welcome.” Mixing 没关系 with thanks or 不客气 with apologies sounds wrong in Chinese.",
+          "jp": "謝罪の流れは「对不起」→「没关系」、感謝は「谢谢」→「不客气」です。お礼に「没关系」、謝罪に「不客气」と返すのは自然ではありません。"
         },
         {
           "zh": "「你好」较通用；「您好」更正式——对老师优先「您好」。",
           "pinyin": "nǐ hǎo · nín hǎo",
-          "kr": "「您好」가 「你好」보다 공손합니다. 스승에게는 「您好」.",
-          "en": "您好 is more formal than 你好.",
-          "jp": "「您好」の方が丁寧。"
+          "kr": "「你好」는 나이·지위를 가리지 않고 쓸 수 있는 가벼운 인사이고, 「您好」는 한 단계 더 공손합니다. 교실에서 선생님께 인사할 때는 「您好」를 먼저 연습하는 것이 좋습니다.",
+          "en": "你好 is a general hello; 您好 is politer and fits teachers and elders better. In school settings, defaulting to 您好 with instructors sounds more appropriate.",
+          "jp": "「你好」は幅広く使えるあいさつ、「您好」は一段丁寧です。教室では先生に「您好」を優先すると自然です。"
         }
       ]
     },
@@ -565,9 +569,9 @@
         "pinyin": "nín hǎo / nǐ hǎo",
         "usage": {
           "zh": "见面问候：对师长多用「您好」，对同学常用「你好」。",
-          "kr": "만날 때 인사. 스승·어른에는 「您好」, 친구에는 「你好」.",
-          "en": "Greetings: 您好 more formal; 你好 common among peers.",
-          "jp": "あいさつ。「您好」はより丁寧。"
+          "kr": "처음 만났을 때나 하루 중 다시 마주쳤을 때 쓰는 인사입니다. 선생님·어른에게는 「您好」가 더 공손하고, 친구·동년배에게는 「你好」가 일상적입니다. 상대에 맞게 골라 쓰면 됩니다.",
+          "en": "Both mean “hello,” but 您好 is politer and fits teachers and elders; 你好 is everyday among classmates. Choose by how formal you need to sound.",
+          "jp": "どちらも「こんにちは」に近いあいさつですが、「您好」は目上向けで一段丁寧、「你好」は同輩との日常的なあいさつです。"
         }
       },
       {
@@ -575,9 +579,9 @@
         "pinyin": "duìbuqǐ. / méi guānxi.",
         "usage": {
           "zh": "道歉与回应：先道歉，对方用「没关系」表示不介意。",
-          "kr": "사과와 받기. 「对不起」→「没关系」.",
-          "en": "Apology → 没关系.",
-          "jp": "謝罪と返答。"
+          "kr": "실수나 방해를 끼쳤을 때 「对不起」로 먼저 사과합니다. 상대는 크게 개의치 않을 때 「没关系」로 받아 주며, 짧은 대화로 마음을 풀어 줍니다.",
+          "en": "Open with 对不起 when you bump into someone or cause a small problem; they often answer 没关系 to mean “don’t worry about it.” It closes the apology politely.",
+          "jp": "踏んだり迷惑をかけたときは「对不起」から入り、相手は「没关系」で「大丈夫ですよ」と受け止めます。謝罪のやり取りの基本形です。"
         }
       },
       {
@@ -585,9 +589,9 @@
         "pinyin": "xièxie! / bú kèqi.",
         "usage": {
           "zh": "致谢与回应：致谢后用「不客气」回答。",
-          "kr": "감사와 응답. 「谢谢」→「不客气」.",
-          "en": "Thanks → 不客气.",
-          "jp": "お礼と返答。"
+          "kr": "도움을 받았을 때·선물을 받았을 때 「谢谢」로 고마움을 표현합니다. 상대는 겸손하게 「不客气」로 ‘별말씀을요’ 느낌으로 받습니다.",
+          "en": "Say 谢谢 when someone helps or gives you something; they often reply 不客气—the standard “you’re welcome” pairing in mainland Chinese.",
+          "jp": "助けてもらったときは「谢谢」、返答は「不客气」が定番で、感謝のやり取りを丁寧に締めます。"
         }
       },
       {
@@ -595,9 +599,9 @@
         "pinyin": "zàijiàn!",
         "usage": {
           "zh": "道别用语，师生、同学告别时均可使用。",
-          "kr": "작별 인사. 선생님·친구와 헤어질 때.",
-          "en": "Goodbye.",
-          "jp": "別れのあいさつ。"
+          "kr": "만남을 마칠 때 쓰는 보통 작별 인사입니다. 선생님에게도 친구에게도 같은 말로 쓸 수 있어, 본과 예문에서 대화를 끝맺는 데 자주 나옵니다.",
+          "en": "A neutral goodbye for leaving class or ending a chat—works with teachers and peers alike, so it’s the default closing line in this lesson.",
+          "jp": "授業や短い会話の終わりに使う一般的な別れのあいさつで、先生にも友達にも使えます。"
         }
       }
     ]

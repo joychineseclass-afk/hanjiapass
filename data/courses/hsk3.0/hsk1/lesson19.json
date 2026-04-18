@@ -791,16 +791,16 @@
       {
         "zh": "会用「想/要」说想吃的食物。",
         "pinyin": "xiǎng",
-        "kr": "먹고 싶음.",
-        "en": "Want food with 想/要.",
-        "jp": "「想」「要」で食べたいもの。"
+        "kr": "「你想吃什么？」에 「我想吃饺子」처럼 「想」나 「要」를 써서 먹고 싶은 음식이나 끼니를 분명히 말할 수 있습니다.",
+        "en": "Answer 「你想吃什么？」with 想 or 要 plus the food (for example 「我想吃饺子」) to state what you would like to eat.",
+        "jp": "「你想吃什么？」に対し、「我想吃饺子」のように「想」または「要」で食べたいものを述べられます。"
       },
       {
         "zh": "能分清早饭、午饭、晚饭。",
         "pinyin": "zǎofàn",
-        "kr": "세 끼.",
-        "en": "Three meals.",
-        "jp": "三餐の言い方。"
+        "kr": "「早饭」「午饭」「晚饭」로 아침·점심·저녁 식사를 구분해 말하고, 끼니에 따라 무엇을 먹고 싶은지 달라질 수 있음을 이해합니다.",
+        "en": "Use 早饭, 午饭, and 晚饭 to separate breakfast, lunch, and dinner when you talk about what you want to eat at each meal.",
+        "jp": "「早饭」「午饭」「晚饭」で朝・昼・夜の食事を区別し、時間帯に応じて食べたいものを話せます。"
       }
     ],
     "lessonExplain": {
@@ -809,25 +809,25 @@
         {
           "zh": "能用「想/要」说三餐想吃什么，并说「做饭、少、一些」等。",
           "pinyin": "xiǎng · yào · zuòfàn",
-          "kr": "「想」「要」로 끼니별로 먹고 싶은 것을 말하고 「做饭」「少」「一些」도 쓴다.",
-          "en": "Say what you want to eat with 想/要; use 做饭, 少, 一些.",
-          "jp": "「想」「要」で食べたいものを言い、「做饭」「少」「一些」も使える。"
+          "kr": "아침·점심·저녁마다 「想」「要」로 먹고 싶은 메뉴를 말하고, 집에서 요리하는 상황에서는 「妈妈做饭」처럼 「做饭」를 쓰며, 양을 줄일 때는 「少做一些」처럼 「少」「一些」를 함께 씁니다.",
+          "en": "For each meal, say what you want with 想 or 要; talk about cooking at home with 做饭; ask for smaller portions with 少 and 一些.",
+          "jp": "「想」「要」で各食事に食べたいものを述べ、「做饭」で料理すること、「少」「一些」で量を少なめに頼む表現が使えます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：早饭点餐。会话二：午晚餐意愿。会话三：妈妈做饭、少做一些。",
-        "kr": "아침 주문 → 끼니 → 요리·양.",
-        "en": "Breakfast · meals · cooking & amount.",
-        "jp": "朝食／昼夕／料理の量。"
+        "kr": "첫 회화에서는 아침에 무엇을 먹을지 고르고, 둘째에서는 점심과 저녁에 먹고 싶은 것을 말하며, 셋째에서는 엄마가 요리하고 양을 조금만 해 달라고 부탁합니다.",
+        "en": "Dialogue 1 orders breakfast; Dialogue 2 states lunch and dinner wishes; Dialogue 3 has Mum cook and asks her to make a bit less.",
+        "jp": "会話1は朝食の注文、会話2は昼と夜の希望、会話3は母が料理することと量を少なめにしてほしいお願いです。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「菜单」列出菜名与价格。",
           "pinyin": "càidān",
-          "kr": "메뉴.",
-          "en": "Menu lists dishes.",
-          "jp": "「菜单」はメニュー。"
+          "kr": "「菜单」는 식당에서 음식 이름과 가격을 나란히 적어 둔 목록으로, 손님이 무엇을 주문할지 고를 때 봅니다.",
+          "en": "A 菜单 is the list in a restaurant that pairs each dish’s name with its price so guests can choose what to order.",
+          "jp": "「菜单」は店で料理名と値段が並んだ一覧で、何を注文するか選ぶときに使います。"
         }
       ],
       "confusionPoints": []
@@ -862,9 +862,9 @@
         "pinyin": "Nǐ xiǎng chī shénme? / Wǒ xiǎng chī jiǎozi.",
         "usage": {
           "zh": "询问并表达想吃的食物。",
-          "kr": "먹고 싶은 것 묻고 답하기.",
-          "en": "Ask and say what you want to eat.",
-          "jp": "食べたいものを聞き、言う。"
+          "kr": "「你想吃什么？」로 상대의 취향을 묻고, 「我想吃饺子」처럼 「想」나 「要」 뒤에 음식명을 붙여 자신이 먹고 싶은 것을 분명히 말합니다.",
+          "en": "Ask 「你想吃什么？」and answer with 想 or 要 + food name (for example 「我想吃饺子」) to state your preference.",
+          "jp": "「你想吃什么？」で尋ね、「我想吃饺子」のように「想」または「要」に食べ物の名称を続けて、食べたいものを述べます。"
         }
       }
     ]

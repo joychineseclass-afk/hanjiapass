@@ -760,16 +760,16 @@
       {
         "zh": "会用「怎么」问出行或做事的方式。",
         "pinyin": "zěnme",
-        "kr": "「怎么」로 방법을 묻는다.",
-        "en": "Ask how with 怎么.",
-        "jp": "「怎么」で方法を聞く。"
+        "kr": "「你怎么去学校？」처럼 「怎么」를 써서 학교나 다른 목적지까지 어떤 방법·교통수단으로 가는지, 또는 일을 어떻게 처리하는지 물을 수 있습니다.",
+        "en": "Use 怎么 in questions like 「你怎么去学校？」to ask which method or means of transport someone uses to get somewhere, or how they do something.",
+        "jp": "「你怎么去学校？」のように「怎么」で、学校などへ行く方法や交通手段、物事のやり方を尋ねられます。"
       },
       {
         "zh": "能区分「坐」接交通工具与「开车」表示驾驶。",
         "pinyin": "zuò · kāichē",
-        "kr": "「坐」는 타기,「开车」는 운전.",
-        "en": "坐 + vehicle vs 开车 to drive.",
-        "jp": "「坐」と「开车」の違い。"
+        "kr": "「坐出租车」「坐火车」에서 「坐」는 탈 것에 오르는 동작을 말하고, 「开车」는 스스로 운전대를 잡는 행위이므로 문맥에 따라 뜻이 달라짐을 구별합니다.",
+        "en": "After 坐 you name a vehicle you ride in (e.g. 「坐出租车」); 开车 means to drive a car yourself, so do not treat the two patterns as the same kind of phrase.",
+        "jp": "「坐」は「坐出租车」のように乗り物に乗ることを、「开车」は自分でハンドルを握る運転を指すので、用法を混同しないようにします。"
       }
     ],
     "lessonExplain": {
@@ -778,25 +778,25 @@
         {
           "zh": "能用「怎么」「坐」「开车」「吧」询问与说明出行方式。",
           "pinyin": "zěnme · zuò · kāichē · ba",
-          "kr": "「怎么」「坐」「开车」「吧」로 가는 방법을 묻고 말한다.",
-          "en": "Ask and say how you travel with 怎么, 坐, 开车, and 吧.",
-          "jp": "「怎么」「坐」「开车」「吧」で行き方を尋ね、言える。"
+          "kr": "「怎么」로 이동 방법을 묻고, 「坐」와 교통수단으로 답하며, 필요하면 「开车」로 운전 여부를 말하고, 「吧」로 데려다 주자는 제안 등 말끝을 부드럽게 할 수 있습니다.",
+          "en": "Ask how someone travels with 怎么, answer with 坐 + a vehicle, say whether you drive with 开车, and soften offers (such as giving a ride) with sentence-final 吧.",
+          "jp": "「怎么」で行き方を尋ね、「坐」と乗り物で答え、「开车」で運転するかどうかを述べ、文末の「吧」で送る・乗せるなどの提案をやわらかく言えます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：出租车与开车送。会话二：上班与送哥哥。会话三：火车去北京与下周五回。",
-        "kr": "택시·운전 → 출근·형 → 기차·귀국.",
-        "en": "Taxi & ride · work & brother · train & return.",
-        "jp": "タクシー／出勤／電車と帰り。"
+        "kr": "첫 회화에서는 택시로 가는지·아버지가 운전해 주는지를 묻고, 둘째에서는 어떻게 출근하는지와 형을 데려다주는 일정을 이야기하며, 셋째에서는 기차로 베이징에 갔다가 돌아오는 시점을 말합니다.",
+        "en": "Dialogue 1 covers taking a taxi versus being driven; Dialogue 2 covers commuting and driving an older brother; Dialogue 3 covers travelling to Beijing by train and coming back the following Friday.",
+        "jp": "会話1ではタクシーと車での送迎、会話2では出勤の仕方と兄を送る予定、会話3では北京へ電車で行くことと翌週の帰りについて話します。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「白天」指一天中的上午、下午时段，常对比「晚上」。",
           "pinyin": "báitiān",
-          "kr": "「白天」는 낮 시간대.",
-          "en": "白天 = daytime.",
-          "jp": "「白天」は昼の時間帯。"
+          "kr": "「白天」는 해가 떠 있는 오전·오후의 시간대를 두루 가리키는 말로, 휴식이나 활동을 말할 때 「晚上」과 대비해 자주 씁니다.",
+          "en": "白天 refers to the daytime hours (roughly morning and afternoon) when it is light out, often contrasted with 晚上 when you talk about rest or daily routines.",
+          "jp": "「白天」は日中の時間帯（午前・午後を含む）を指し、生活リズムを話すとき「晚上」と対にして使われることが多いです。"
         }
       ],
       "confusionPoints": []
@@ -831,9 +831,9 @@
         "pinyin": "Nǐ zěnme qù xuéxiào? / Wǒ zuò chūzūchē qù xuéxiào.",
         "usage": {
           "zh": "询问与说明上学路上的交通方式。",
-          "kr": "등교하는 방법을 묻고 답한다.",
-          "en": "Ask and answer how you get to school.",
-          "jp": "通学の行き方を聞き、答える。"
+          "kr": "「你怎么去学校？」로 통학에 무엇을 이용하는지 묻고, 「我坐出租车去学校」처럼 「坐」나 「开车」 등 구체적인 방법으로 답해 이동 수단을 분명히 합니다.",
+          "en": "Ask 「你怎么去学校？」to find out how someone commutes, and answer with 坐 + vehicle or 开车 so the means of transport is clear.",
+          "jp": "「你怎么去学校？」で通学の方法を尋ね、「我坐出租车去学校」のように「坐」や「开车」などで、実際に使う手段をはっきり述べます。"
         }
       }
     ]

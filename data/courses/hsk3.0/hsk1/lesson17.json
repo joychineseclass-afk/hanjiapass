@@ -774,16 +774,16 @@
       {
         "zh": "会用「正在……呢」说明此刻在做的功课。",
         "pinyin": "zhèngzài",
-        "kr": "진행 중 말하기.",
-        "en": "Ongoing study with 正在…呢.",
-        "jp": "「正在…呢」で進行を言う。"
+        "kr": "「我正在学习汉语呢」처럼 「正在」와 문장 끝의 「呢」를 함께 써서 말하는 순간 진행 중인 공부 내용을 분명히 말할 수 있습니다.",
+        "en": "Use 正在 … 呢 (for example 「我正在学习汉语呢」) to describe what you are studying at the moment of speaking.",
+        "jp": "「我正在学习汉语呢」のように「正在」と文末の「呢」で、いまちょうど行っている学習内容を表せます。"
       },
       {
         "zh": "能用「都」概括「我们、你们」全体。",
         "pinyin": "dōu",
-        "kr": "전원 해당.",
-        "en": "都 for the whole group.",
-        "jp": "「都」で全員。"
+        "kr": "「我们都会说汉语」에서 「都」는 ‘전원’이라는 뜻으로, 우리·너희 집단 안의 사람이 예외 없이 해당됨을 강조합니다.",
+        "en": "In patterns like 「我们都会说汉语」, 都 stresses that every member of 我们 or 你们 shares the same trait.",
+        "jp": "「我们都会说汉语」の「都」は「我们」「你们」など集団の全員に当てはまることを示すのに使います。"
       }
     ],
     "lessonExplain": {
@@ -792,25 +792,25 @@
         {
           "zh": "能用「正在……呢」说此刻在学什么，并说明大中小学身份与「都」。",
           "pinyin": "zhèngzài · dōu",
-          "kr": "「正在……呢」로 지금 무엇을 배우는지 말하고, 학교 단계와 「都」로 신분·전원을 말한다.",
-          "en": "Use 正在…呢 for what you’re studying; say school levels and 都 for everyone.",
-          "jp": "「正在…呢」で勉強中の内容を言い、学校の段階と「都」が使える。"
+          "kr": "「你在学什么呢？」에 「正在……呢」로 답해 지금 배우는 과목을 말하고, 「小学生」「中学生」처럼 학년 단계를 밝히며 「我们都会……」으로 집단 전체가 같은 능력을 갖추었음을 말합니다.",
+          "en": "Answer what you are learning with 正在 … 呢, name your school stage (primary, middle, university), and use 都 to say everyone in the group can do something.",
+          "jp": "「正在……呢」でいま何を勉強しているかを述べ、「小学生」などの段階を言い、「都」でグループ全員が同じことをできることを表せます。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
         "zh": "会话一：读书与汉字。会话二：学汉语的时长。会话三：大中小学与都会说汉语。",
-        "kr": "독서 → 시간 → 신분·都.",
-        "en": "Reading · hours · levels & 都.",
-        "jp": "読書／時間／段階と「都」。"
+        "kr": "첫 회화에서는 책 읽기와 한자 공부를, 둘째에서는 하루에 얼마나 중국어를 배우는지를, 셋째에서는 대·중·초등 학생 신분과 모두 중국어를 할 수 있다는 내용을 다룹니다.",
+        "en": "Dialogue 1 covers reading and Chinese characters; Dialogue 2 covers how long you study Chinese each day; Dialogue 3 covers school levels and everyone being able to speak Chinese.",
+        "jp": "会話1では読書と漢字、会話2では一日の中国語学習時間、会話3では大学・中学・小学と「都会说汉语」について話します。"
       },
       "scenarioSummaryLines": [
         {
           "zh": "「一天」指一昼夜中的学习时段安排。",
           "pinyin": "yī tiān",
-          "kr": "하루.",
-          "en": "一天 = a day.",
-          "jp": "「一天」は一日。"
+          "kr": "「一天」는 하루 24시간 안에서 공부·수업에 쓰는 시간대를 말할 때 자주 쓰이며, ‘몇 시간 배운다’와 같이 일과를 설명할 때 등장합니다.",
+          "en": "一天 refers to a full calendar day; in this lesson it often frames how many hours you spend studying within that day.",
+          "jp": "「一天」は一昼夜を指し、本課ではその中で何時間勉強するかなど、一日のスケジュールを言うときに使います。"
         }
       ],
       "confusionPoints": []
@@ -845,9 +845,9 @@
         "pinyin": "Nǐ zài xué shénme ne? / Wǒ zhèngzài xuéxí Hànyǔ ne.",
         "usage": {
           "zh": "询问并回答正在学的内容。",
-          "kr": "무엇을 배우는지 묻고 답한다.",
-          "en": "Ask and say what you’re studying.",
-          "jp": "勉強内容を聞き、答える。"
+          "kr": "「你在学什么呢？」로 지금 무엇을 공부하는지 묻고, 「我正在学习汉语呢」처럼 「正在……呢」로 구체적인 과목이나 활동을 답합니다.",
+          "en": "Ask 「你在学什么呢？」and reply with 正在 + activity + 呢 to spell out what you are learning right now.",
+          "jp": "「你在学什么呢？」で内容を尋ね、「我正在学习汉语呢」のように「正在……呢」でいま学んでいることを答えます。"
         }
       }
     ]
