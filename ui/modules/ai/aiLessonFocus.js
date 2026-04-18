@@ -6,7 +6,7 @@
 import { buildLessonContext } from "../../platform/capabilities/ai/aiLessonContext.js";
 import * as LE from "../../core/i18n.js";
 import { getAiLearning, pickLessonLang, mapMultilingualLines } from "./aiLearningShared.js";
-import { stripStandalonePinyinLinesForTts } from "../../utils/pinyinEngine.js";
+import { resolvePinyin, stripStandalonePinyinLinesForTts } from "../../utils/pinyinEngine.js";
 
 const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : "");
 
@@ -49,6 +49,72 @@ function explainLineToParts(o, lang) {
   if (zh) return { kind: "triple", zh, py, note: note || "" };
   const fallback = pickLessonLang(o, lang);
   return { kind: "plain", text: str(fallback) };
+}
+
+/** 界面语言：cn / kr / en / jp */
+function normUiLang(lang) {
+  const l = String(lang || "kr").toLowerCase();
+  if (l === "zh" || l === "cn") return "cn";
+  if (l === "ko" || l === "kr") return "kr";
+  if (l === "jp" || l === "ja") return "jp";
+  return "en";
+}
+
+/**
+ * 核心整理专用：整句 zh + 全句拼音（引擎按字生成）+ 系统语言释义（kr/en/jp）。
+ * 不使用 JSON 里节选式 pinyin，避免与「全句拼音」产品规则冲突。
+ */
+function scenarioSummaryGloss(o, lang) {
+  if (!o || typeof o !== "object") return "";
+  return pickLessonLang({ kr: o.kr, en: o.en, jp: o.jp }, lang);
+}
+
+function scenarioSummaryLineToPart(line, lang) {
+  if (!line || typeof line !== "object") return { kind: "plain", text: "" };
+  const zh = str(line.zh ?? line.cn);
+  if (!zh) return explainLineToParts(line, lang);
+  const py = resolvePinyin(zh, "");
+  let note = str(scenarioSummaryGloss(line, lang));
+  if (!note) {
+    const fp = str(pickLessonLang(line, lang));
+    if (fp && fp !== zh) note = fp;
+  }
+  if (normUiLang(lang) === "cn" && note === zh) note = "";
+  return { kind: "triple", zh, py, note };
+}
+
+function scenarioSummaryBlockToPart(summaryObj, lang) {
+  if (!summaryObj || typeof summaryObj !== "object") return null;
+  const zh = str(summaryObj.zh ?? summaryObj.cn);
+  if (!zh) return null;
+  const py = resolvePinyin(zh, "");
+  let note = str(scenarioSummaryGloss(summaryObj, lang));
+  if (!note) {
+    const fp = str(pickLessonLang(summaryObj, lang));
+    if (fp && fp !== zh) note = fp;
+  }
+  if (normUiLang(lang) === "cn" && note === zh) note = "";
+  return { kind: "triple", zh, py, note };
+}
+
+/** 供「场景与对话」与 focusMinimal 下「核心整理」共用 */
+function buildScenarioSummaryBlocksHtml(lesson, lang) {
+  const le = getAiLearning(lesson)?.lessonExplain;
+  if (!le) return "";
+  if (Array.isArray(le.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
+    return le.scenarioSummaryLines
+      .map((line) => scenarioSummaryLineToPart(line, lang))
+      .filter(validFocusPart)
+      .map((p) => `<div class="ai-lesson-focus-scenario-block">${renderFocusLineInnerHtml(p)}</div>`)
+      .join("");
+  }
+  if (le.scenarioSummary && typeof le.scenarioSummary === "object") {
+    const part = scenarioSummaryBlockToPart(le.scenarioSummary, lang);
+    if (part && validFocusPart(part)) {
+      return `<div class="ai-lesson-focus-scenario-block">${renderFocusLineInnerHtml(part)}</div>`;
+    }
+  }
+  return "";
 }
 
 function renderFocusLineInnerHtml(part) {
@@ -353,23 +419,10 @@ function buildCompactSceneHtml(lesson, ctx, lang) {
   return parts.join("");
 }
 
-/** 情境与对话：有 lessonExplain.scenarioSummary 时优先用本课概括，避免与第1课通用模板混用 */
+/** 情境与对话：有 lessonExplain.scenarioSummary 时优先用本课概括（中文 + 全句拼音 + 界面语释义） */
 function buildSceneSectionHtml(lesson, ctx, lang) {
-  const le = getAiLearning(lesson)?.lessonExplain;
-  if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
-    const blocks = le.scenarioSummaryLines
-      .map((line) => explainLineToParts(line, lang))
-      .filter(validFocusPart)
-      .map((p) => `<div class="ai-lesson-focus-scenario-block">${renderFocusLineInnerHtml(p)}</div>`)
-      .join("");
-    if (blocks) return blocks;
-  }
-  if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
-    const text = pickLessonLang(le.scenarioSummary, lang);
-    if (text) {
-      return `<p class="ai-lesson-focus-p ai-lesson-focus-scenario-summary ai-lesson-focus-scenario-summary--pre">${escapeHtml(text)}</p>`;
-    }
-  }
+  const blocks = buildScenarioSummaryBlocksHtml(lesson, lang);
+  if (blocks) return blocks;
   return buildCompactSceneHtml(lesson, ctx, lang);
 }
 
@@ -467,6 +520,15 @@ export function renderLessonFocusHtml(lesson, lang) {
     ? `<p class="ai-lesson-focus-p ai-lesson-focus-summary">${escapeHtml(summary)}</p>`
     : "";
 
+  const coreSummaryBody = buildScenarioSummaryBlocksHtml(lesson, lang);
+  const coreSummarySection =
+    focusMinimal && coreSummaryBody
+      ? `<section class="ai-lesson-focus-section ai-lesson-focus-section--core-summary">
+    <h5 class="ai-lesson-focus-h">${escapeHtml(t("ai.lesson_focus_section_core_summary", "核心整理"))}</h5>
+    <div class="ai-lesson-focus-core-summary-body">${coreSummaryBody}</div>
+  </section>`
+      : "";
+
   const speakBtnLabel = t("ai.lesson_focus_speak_all", "全文朗读");
 
   const midSectionsHtml = focusMinimal
@@ -505,6 +567,7 @@ export function renderLessonFocusHtml(lesson, lang) {
     ${summaryLeadHtml}
     ${objBlock}
   </section>
+${coreSummarySection}
 ${midSectionsHtml}
   <section class="ai-lesson-focus-section ai-lesson-focus-section--tips">
     <h5 class="ai-lesson-focus-h">${escapeHtml(H.e)}</h5>
@@ -591,6 +654,21 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   if (showSummaryLead && summary) pushUi(summary);
   for (const o of objLines) pushFocusPart(o);
 
+  if (focusMinimal) {
+    const coreLbl = t("ai.lesson_focus_section_core_summary", "核心整理");
+    const coreBlocks = buildScenarioSummaryBlocksHtml(lesson, lang);
+    if (coreBlocks) {
+      pushUi(coreLbl);
+      const le2 = getAiLearning(lesson)?.lessonExplain;
+      if (Array.isArray(le2?.scenarioSummaryLines) && le2.scenarioSummaryLines.length) {
+        for (const line of le2.scenarioSummaryLines) pushFocusPart(scenarioSummaryLineToPart(line, lang));
+      } else if (le2?.scenarioSummary && typeof le2.scenarioSummary === "object") {
+        const part = scenarioSummaryBlockToPart(le2.scenarioSummary, lang);
+        if (part && validFocusPart(part)) pushFocusPart(part);
+      }
+    }
+  }
+
   if (!focusMinimal) {
     pushUi(H.b);
     for (const x of abilityItems) pushFocusPart(x);
@@ -603,10 +681,10 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
     pushUi(H.d);
     const sceneIdx = segs.length;
     if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
-      for (const line of le.scenarioSummaryLines) pushFocusPart(explainLineToParts(line, lang));
+      for (const line of le.scenarioSummaryLines) pushFocusPart(scenarioSummaryLineToPart(line, lang));
     } else if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
-      const ss = pickLessonLang(le.scenarioSummary, lang);
-      if (ss) pushUi(stripStandalonePinyinLinesForTts(ss));
+      const part = scenarioSummaryBlockToPart(le.scenarioSummary, lang);
+      if (part && validFocusPart(part)) pushFocusPart(part);
     } else {
       const st = ctx.scene?.title ? str(ctx.scene.title) : "";
       if (st) pushUi(st);
