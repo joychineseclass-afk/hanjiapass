@@ -453,18 +453,12 @@
           },
           "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": {
-            "zh": "用「请问」「你叫什么名字？」「我叫……」「是……吗？」完成问答。\n\n「请问」\nqǐngwèn\n「你叫什么名字？」\nnǐ jiào shénme míngzi?\n「我叫……」\nwǒ jiào …\n「是……吗？」\nshì … ma?",
-            "kr": "「请问」\nqǐngwèn\n「你叫什么名字？」\nnǐ jiào shénme míngzi?\n「我叫……」\nwǒ jiào …\n「是……吗？」\nshì … ma?\n\n질문·답하기.",
-            "en": "Use 请问, 你叫什么名字？, 我叫…, and 是…吗？ in short Q&A.",
-            "jp": "「请问」「你叫什么名字？」「我叫……」「是……吗？」で問い答えする。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "请问", "pinyin": "qǐngwèn" },
-            { "zh": "你叫什么名字？", "pinyin": "nǐ jiào shénme míngzi?" },
-            { "zh": "我叫……", "pinyin": "wǒ jiào …" },
-            { "zh": "你是新来的学生吗？", "pinyin": "nǐ shì xīnlái de xuéshēng ma?" },
-            { "zh": "是，我是新来的学生。", "pinyin": "shì, wǒ shì xīnlái de xuéshēng." }
+            { "zh": "请问，你叫什么名字？", "pinyin": "qǐngwèn, nǐ jiào shénme míngzi?", "kr": "실례지만 이름이 뭐예요?" },
+            { "zh": "你好！我叫汤姆。", "pinyin": "nǐ hǎo! wǒ jiào Tāngmǔ.", "kr": "안녕! 저는 탐이에요." },
+            { "zh": "你是新来的学生吗？", "pinyin": "nǐ shì xīnlái de xuéshēng ma?", "kr": "신입생이에요?" },
+            { "zh": "是，我是新来的学生。", "pinyin": "shì, wǒ shì xīnlái de xuéshēng.", "kr": "네, 신입생이에요." }
           ],
           "rounds": [
             {
@@ -491,16 +485,12 @@
           },
           "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": {
-            "zh": "互相说「我叫……」，并练习「认识你很高兴」的回应。\n\n「我叫……」\nwǒ jiào …\n「认识你很高兴」\nrènshi nǐ hěn gāoxìng\n「认识你我也很高兴」\nrènshi nǐ wǒ yě hěn gāoxìng",
-            "kr": "「我叫……」\nwǒ jiào …\n「认识你很高兴」\nrènshi nǐ hěn gāoxìng\n「认识你我也很高兴」\nrènshi nǐ wǒ yě hěn gāoxìng\n\n서로 이름을 말하고 인사를 이어 갑니다.",
-            "en": "Exchange 我叫… and practice 认识你很高兴 / 认识你我也很高兴.",
-            "jp": "「我叫……」を言い合い、「认识你很高兴」に続く返しを練習する。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你好！我叫……", "pinyin": "nǐ hǎo! wǒ jiào …" },
-            { "zh": "认识你很高兴", "pinyin": "rènshi nǐ hěn gāoxìng" },
-            { "zh": "认识你我也很高兴", "pinyin": "rènshi nǐ wǒ yě hěn gāoxìng" }
+            { "zh": "你好！我叫李明。", "pinyin": "nǐ hǎo! wǒ jiào Lǐ Míng.", "kr": "안녕! 저는 리밍이에요." },
+            { "zh": "你好！我叫汤姆。", "pinyin": "nǐ hǎo! wǒ jiào Tāngmǔ.", "kr": "안녕! 저는 탐이에요." },
+            { "zh": "认识你很高兴。", "pinyin": "rènshi nǐ hěn gāoxìng.", "kr": "만나서 반가워요." },
+            { "zh": "认识你我也很高兴。", "pinyin": "rènshi nǐ wǒ yě hěn gāoxìng.", "kr": "저도 만나서 반가워요." }
           ],
           "rounds": [
             {
@@ -524,45 +514,53 @@
     "abilityPoints": [
       {
         "zh": "能询问对方姓名，用「请问」礼貌开口，并在初次见面时自然地问名字。",
-        "kr": "「请问」\nqǐngwèn\n\n상대 이름을 묻고 공손하게 질문을 꺼내며, 첫 만남에서 자연스럽게 이름을 물을 수 있다.",
+        "pinyin": "qǐngwèn · nǐ jiào shénme míngzi?",
+        "kr": "상대 이름을 묻고 공손하게 질문을 꺼내며, 첫 만남에서 자연스럽게 이름을 물을 수 있다.",
         "en": "Ask someone’s name, lead with 请问, and sound natural when meeting for the first time.",
         "jp": "相手の名前を聞き、「请问」で丁寧に切り出し、初対面で自然に名前を尋ねられる。"
       },
       {
         "zh": "能用「我叫……」清楚地介绍自己叫什么。",
-        "kr": "「我叫……」\nwǒ jiào …\n\n자신의 이름이 무엇인지 분명하게 말할 수 있다.",
+        "pinyin": "wǒ jiào …",
+        "kr": "자신의 이름이 무엇인지 분명하게 말할 수 있다.",
         "en": "Introduce yourself clearly with 我叫…. ",
         "jp": "「我叫……」で自分の名前をはっきり名乗れる。"
       },
       {
         "zh": "能用「是……吗？」确认对方是不是学生等身份，并用「是/不是」或完整短句回答。",
-        "kr": "「是……吗？」\nshì … ma?\n「是/不是」\nshì / bù shì\n\n신분을 확인하고 짧게 답할 수 있다.",
+        "pinyin": "shì … ma? · shì / bù shì",
+        "kr": "신분을 확인하고 짧게 답할 수 있다.",
         "en": "Use 是…吗？ to check identity (e.g. student) and answer with 是/不是 or a short sentence.",
         "jp": "「是……吗？」で身分を確認し、「是／不是」や短い文で答えられる。"
       }
     ],
     "lessonExplain": {
+      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "会问「你叫什么名字？」并听懂对方名字；能用「我叫……」清楚介绍自己。",
+          "pinyin": "nǐ jiào shénme míngzi? · wǒ jiào …",
           "kr": "「你叫什么名字？」로 이름을 묻고, 「我叫……」로 자신의 이름을 또렷하게 말할 수 있다.",
           "en": "Ask 你叫什么名字？ and introduce yourself with 我叫…. ",
           "jp": "「你叫什么名字？」で名前を聞き、「我叫……」で名乗れる。"
         },
         {
           "zh": "会用「请问」把问句说得更客气；理解「叫 + 名字」「什么名字」在问句里的作用。",
+          "pinyin": "qǐngwèn · jiào · shénme míngzi",
           "kr": "「请问」로 질문을 더 공손하게 꺼내고, 「叫」「什么名字」가 문장에서 하는 일을 이해한다.",
           "en": "Use 请问 to soften questions; notice 叫 + name and 什么名字.",
           "jp": "「请问」で丁寧に聞き、「叫」「什么名字」の働きを押さえる。"
         },
         {
           "zh": "会用「是……吗？」确认对方是不是新同学，并能用「是 / 不是」或完整短句回答。",
+          "pinyin": "shì … ma? · shì / bù shì",
           "kr": "「是……吗？」로 상대가 신입생인지 확인하고 「是/不是」나 짧은 완전한 문장으로 답한다.",
           "en": "Use 是…吗？ to check if someone is a new student; answer with 是/不是 or a short sentence.",
           "jp": "「是……吗？」で確認し、「是／不是」や短い文で答えられる。"
         },
         {
           "zh": "能在认识新同学时用「认识你很高兴」开场，并接「认识你我也很高兴」。",
+          "pinyin": "rènshi nǐ hěn gāoxìng · rènshi nǐ wǒ yě hěn gāoxìng",
           "kr": "새 친구와 「认识你很高兴」「认识你我也很高兴」로 짧게 인사를 이어 간다.",
           "en": "Use 认识你很高兴 / 认识你我也很高兴 when meeting classmates.",
           "jp": "「认识你很高兴」「认识你我也很高兴」で短いあいさつを続けられる。"
@@ -575,21 +573,36 @@
         "en": "Dialogue 1: first-time name asking and checking if someone is a new student. Dialogue 2: classmates exchange names and use 认识你很高兴. This lesson centers on name Q&A and identity checks—not Lesson 1 honorifics or thanks/apology routines.",
         "jp": "会話1：初対面で名前を聞き、新入生か確認する。会話2：名乗り合い、「认识你很高兴」で初対面のあいさつを完成する。本課の軸は「名前を聞く・言う・確認」で、第1課の敬称や謝罪・感謝の練習ではありません。"
       },
+      "scenarioSummaryLines": [
+        {
+          "zh": "会话一：用「请问」「你叫什么名字？」问姓名，用「我叫……」回答，并用「是……吗？」确认是否新生。",
+          "pinyin": "qǐngwèn · nǐ jiào shénme míngzi? · wǒ jiào … · shì … ma?",
+          "kr": "회화1: 이름을 묻고 답하며 신입생인지 확인합니다."
+        },
+        {
+          "zh": "会话二：互道「我叫……」，用「认识你很高兴」「认识你我也很高兴」完成初识寒暄。",
+          "pinyin": "wǒ jiào … · rènshi nǐ hěn gāoxìng",
+          "kr": "회화2: 이름을 주고받으며 첫 만남 인사를 마칩니다."
+        }
+      ],
       "confusionPoints": [
         {
           "zh": "「叫」在「我叫……」里表示“叫做、称呼”，不要和“喊叫”的「叫」混在同一语感里。",
+          "pinyin": "wǒ jiào …",
           "kr": "「我叫……」의 「叫」는 ‘이름이 뭐라고 불리다/일컬다’ 쪽이지, ‘소리치다’ 뜻과 헷갈리지 않기.",
           "en": "In 我叫…, 叫 means “be called,” not “shout.”",
           "jp": "「我叫……」の「叫」は「～と言う名前だ」の意味で、「叫ぶ」とは別。"
         },
         {
           "zh": "「名字」口语里常用；「姓名」更偏书面或表格。本课对话以「名字」为主。",
+          "pinyin": "míngzi · xìngmíng",
           "kr": "「名字」는 말할 때 자주 쓰고 「姓名」는 서면·서식에 가깝습니다. 본과는 「名字」 중심입니다.",
           "en": "名字 is colloquial; 姓名 is more formal. This lesson centers on 名字.",
           "jp": "「名字」は口語、「姓名」はやや書き言葉・帳票向き。本課は「名字」が中心。"
         },
         {
           "zh": "「你叫什么名字？」很完整；有时只问「你叫什么？」更短——本课先练完整句更清楚。",
+          "pinyin": "nǐ jiào shénme míngzi? · nǐ jiào shénme?",
           "kr": "「你叫什么名字？」는 길고 분명하고, 「你叫什么？」는 더 짧습니다. 본과는 먼저 완전한 질문형에 익숙해지기.",
           "en": "你叫什么名字？ is full and clear; 你叫什么？ is shorter—this lesson stresses the full form first.",
           "jp": "「你叫什么名字？」は丁寧で明確、「你叫什么？」は短い。本課はまず完全な形を。"

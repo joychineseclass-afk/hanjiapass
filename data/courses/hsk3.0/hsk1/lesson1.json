@@ -374,17 +374,12 @@
           },
           "aiRole": { "zh": "同学（汤姆）", "kr": "친구", "en": "Friend", "jp": "友だち" },
           "studentRole": { "zh": "我（王美）", "kr": "나", "en": "Me", "jp": "自分" },
-          "goal": {
-            "zh": "用本课道歉与致谢用语完成 2～3 轮对话。\n\n「对不起」\nduìbuqǐ\n「没关系」\nméi guānxi\n「谢谢」\nxièxie\n「不客气」\nbú kèqi",
-            "kr": "「对不起」\nduìbuqǐ\n「没关系」\nméi guānxi\n「谢谢」\nxièxie\n「不客气」\nbú kèqi\n\n사과·감사 표현으로 2~3문장 대화를 연습합니다.",
-            "en": "Practice 2–3 short turns using apology and thanks from this lesson.",
-            "jp": "本課の謝罪・感謝の表現で短い会話を練習します。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "对不起", "pinyin": "duìbuqǐ" },
-            { "zh": "没关系", "pinyin": "méi guānxi" },
-            { "zh": "谢谢", "pinyin": "xièxie" },
-            { "zh": "不客气", "pinyin": "bú kèqi" }
+            { "zh": "对不起。", "pinyin": "duìbuqǐ.", "kr": "미안해요." },
+            { "zh": "没关系。", "pinyin": "méi guānxi.", "kr": "괜찮아요." },
+            { "zh": "谢谢！", "pinyin": "xièxie!", "kr": "감사합니다." },
+            { "zh": "不客气。", "pinyin": "bú kèqi.", "kr": "천만에요." }
           ],
           "rounds": [
             {
@@ -411,16 +406,12 @@
           },
           "aiRole": { "zh": "老师（王老师）", "kr": "선생님", "en": "Teacher", "jp": "先生" },
           "studentRole": { "zh": "学生（李明）", "kr": "학생", "en": "Student", "jp": "生徒" },
-          "goal": {
-            "zh": "对师长用「您」与「您好」，区分「你」与「你好」。\n\n「您」\nnín\n「您好」\nnín hǎo\n「你」\nnǐ\n「你好」\nnǐ hǎo",
-            "kr": "「您」\nnín\n「您好」\nnín hǎo\n「你」\nnǐ\n「你好」\nnǐ hǎo\n\n상황에 맞게 구분해 말해 봅니다.",
-            "en": "Use 您 / 您好 appropriately when speaking to a teacher.",
-            "jp": "場面に合わせて「您」と「你」を使い分けます。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "您好 / 你好", "pinyin": "nín hǎo / nǐ hǎo" },
-            { "zh": "老师", "pinyin": "lǎoshī" },
-            { "zh": "再见", "pinyin": "zàijiàn" }
+            { "zh": "王老师，您好！", "pinyin": "Wáng lǎoshī, nín hǎo!", "kr": "왕 선생님, 안녕하세요!" },
+            { "zh": "老师，再见！", "pinyin": "lǎoshī, zàijiàn!", "kr": "선생님, 안녕히 가세요!" },
+            { "zh": "你好，李明！", "pinyin": "nǐ hǎo, Lǐ Míng!", "kr": "안녕, 리밍!" },
+            { "zh": "再见！", "pinyin": "zàijiàn!", "kr": "안녕히 가세요!" }
           ],
           "rounds": [
             {
@@ -439,6 +430,177 @@
         }
       ]
     }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "能根据对象选用「您」与「你」，并用「您好」「你好」完成见面与道别。",
+        "pinyin": "nín · nǐ · nín hǎo · nǐ hǎo · zàijiàn",
+        "kr": "상대에 따라 「您」과 「你」를 가리고 「您好」「你好」「再见」로 인사·작별한다.",
+        "en": "Choose 您/你 and greet or say goodbye with 您好/你好/再见.",
+        "jp": "「您／你」と「您好／你好」「再见」を使い分ける。"
+      },
+      {
+        "zh": "能在合适情境使用「对不起」「没关系」「谢谢」「不客气」完成道歉与致谢应答。",
+        "pinyin": "duìbuqǐ · méi guānxi · xièxie · bú kèqi",
+        "kr": "「对不起」「没关系」「谢谢」「不客气」로 사과·감사와 응답을 한다.",
+        "en": "Use apology/thanks phrases and their replies in context.",
+        "jp": "謝罪・感謝の定型表現と返答。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "理解「您」与「你」的礼貌程度差异，并对师长、同学选用合适称呼与问候语。",
+          "pinyin": "nín · nǐ · nín hǎo · nǐ hǎo",
+          "kr": "높임 「您」과 보통 「你」의 차이를 알고 스승·친구에게 맞게 인사한다.",
+          "en": "Distinguish 您 vs 你 and greet appropriately.",
+          "jp": "「您／你」と「您好／你好」の使い分け。"
+        },
+        {
+          "zh": "掌握「对不起」「没关系」「谢谢」「不客气」的配对应答，不在道歉与致谢之间混用。",
+          "pinyin": "duìbuqǐ → méi guānxi；xièxie → bú kèqi",
+          "kr": "사과와 감사의 짝을 익히고 서로 바꿔 쓰지 않는다.",
+          "en": "Pair apologies and thanks correctly.",
+          "jp": "謝罪と感謝の返答の組み合わせ。"
+        },
+        {
+          "zh": "会用「再见」道别，并能在师生、同学场景中完成简短对话。",
+          "pinyin": "zàijiàn",
+          "kr": "「再见」로 작별하고 선생님·친구와 짧은 대화를 마친다.",
+          "en": "Say 再见 and complete short dialogues.",
+          "jp": "「再见」で別れのあいさつ。"
+        },
+        {
+          "zh": "本课聚焦问候与礼貌用语，不涉及问姓名、国籍或年龄。",
+          "pinyin": "běnkè：wènhòu · lǐmào",
+          "kr": "이 과는 인사·예의 표현이 중심이며 이름·국적·나이 묻기가 아닙니다.",
+          "en": "This lesson is greetings and politeness—not names, nationality, or age.",
+          "jp": "本課はあいさつと丁寧さ。名前・国籍・年齢は扱わない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：同学之间道歉与致谢。会话二：向老师问好并道别。本课核心是敬称与礼貌套语，与后续课的姓名、家庭、时间话题不同。",
+        "kr": "회화1: 친구 사이 사과·감사; 회화2: 선생님께 인사·작별. 제1과는 높임·예의가 중심이며 뒷과의 이름·가족·시간 이야기와 다릅니다.",
+        "en": "Dialogue 1: apology/thanks among peers. Dialogue 2: greeting a teacher. Core is honorifics—not later lessons’ topics.",
+        "jp": "会話1：仲間の謝罪・お礼。会話2：先生へ。敬称が中心。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "会话一：踩到脚说「对不起」，对方说「没关系」；致谢说「谢谢」，对方说「不客气」。",
+          "pinyin": "duìbuqǐ → méi guānxi；xièxie → bú kèqi",
+          "kr": "회화1: 사과와 받기, 감사와 받기의 짝을 연습합니다."
+        },
+        {
+          "zh": "会话二：对老师用「您」「您好」问好，离开时说「老师，再见！」。",
+          "pinyin": "nín · nín hǎo · lǎoshī, zàijiàn",
+          "kr": "회화2: 스승에게 높임말로 인사하고 작별 인사를 합니다."
+        }
+      ],
+      "confusionPoints": [
+        {
+          "zh": "「您」偏敬称，多用于长辈、老师；「你」多用于平辈、同学。",
+          "pinyin": "nín · nǐ",
+          "kr": "「您」은 어른·스승, 「你」는 또래·친한 사이에 흔합니다.",
+          "en": "您 = polite you; 你 = plain you.",
+          "jp": "「您」は敬称、「你」は普通の二人称。"
+        },
+        {
+          "zh": "「对不起」搭「没关系」；「谢谢」搭「不客气」——不要交叉混应答。",
+          "pinyin": "duìbuqǐ↔méi guānxi；xièxie↔bú kèqi",
+          "kr": "사과에는 「没关系」, 감사에는 「不客气」가 짝입니다.",
+          "en": "Don’t answer 谢谢 with 没关系.",
+          "jp": "ペアを取り違えない。"
+        },
+        {
+          "zh": "「你好」较通用；「您好」更正式——对老师优先「您好」。",
+          "pinyin": "nǐ hǎo · nín hǎo",
+          "kr": "「您好」가 「你好」보다 공손합니다. 스승에게는 「您好」.",
+          "en": "您好 is more formal than 你好.",
+          "jp": "「您好」の方が丁寧。"
+        }
+      ]
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「您」和「你」什么时候换着用？道歉后对方一般说什么？",
+      "kr": "예: 「您」과 「你」는 언제 바꿔 쓰나요? 사과한 뒤 상대는 보통 뭐라고 하나요?",
+      "en": "e.g. When to use 您 vs 你? What follows 对不起?",
+      "jp": "例:「您／你」の使い分け。「对不起」のあと。"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「您好」和「你好」哪一句更正式？对老师用哪一句？",
+        "「对不起」之后，对方常说哪一句？",
+        "别人说「谢谢」时，中国人常怎么回应？",
+        "「没关系」一般在什么情形下听到？",
+        "本课学的道别用语是哪一句？"
+      ],
+      "kr": [
+        "「您好」와 「你好」 중 더 공손한 말은? 선생님께는?",
+        "「对不起」 다음에 상대가 자주 하는 말은?",
+        "「谢谢」에 중국어로 흔히 붙이는 응답은?",
+        "「没关系」는 어떤 상황에서 들리나요?",
+        "이 과에서 배운 작별 인사는?"
+      ],
+      "en": [
+        "Which is more formal: 您好 or 你好? For teachers?",
+        "What often follows 对不起?",
+        "Common reply to 谢谢?",
+        "When do you hear 没关系?",
+        "Which goodbye phrase does this lesson teach?"
+      ],
+      "jp": [
+        "「您好」と「你好」どちらが丁寧？先生には？",
+        "「对不起」のあとによく返すのは？",
+        "「谢谢」への返事は？",
+        "「没关系」はどんなとき？",
+        "この課の別れの表現は？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "您好 / 你好",
+        "pinyin": "nín hǎo / nǐ hǎo",
+        "usage": {
+          "zh": "见面问候：对师长多用「您好」，对同学常用「你好」。",
+          "kr": "만날 때 인사. 스승·어른에는 「您好」, 친구에는 「你好」.",
+          "en": "Greetings: 您好 more formal; 你好 common among peers.",
+          "jp": "あいさつ。「您好」はより丁寧。"
+        }
+      },
+      {
+        "expr": "对不起。 / 没关系。",
+        "pinyin": "duìbuqǐ. / méi guānxi.",
+        "usage": {
+          "zh": "道歉与回应：先道歉，对方用「没关系」表示不介意。",
+          "kr": "사과와 받기. 「对不起」→「没关系」.",
+          "en": "Apology → 没关系.",
+          "jp": "謝罪と返答。"
+        }
+      },
+      {
+        "expr": "谢谢！ / 不客气。",
+        "pinyin": "xièxie! / bú kèqi.",
+        "usage": {
+          "zh": "致谢与回应：致谢后用「不客气」回答。",
+          "kr": "감사와 응답. 「谢谢」→「不客气」.",
+          "en": "Thanks → 不客气.",
+          "jp": "お礼と返答。"
+        }
+      },
+      {
+        "expr": "再见！",
+        "pinyin": "zàijiàn!",
+        "usage": {
+          "zh": "道别用语，师生、同学告别时均可使用。",
+          "kr": "작별 인사. 선생님·친구와 헤어질 때.",
+          "en": "Goodbye.",
+          "jp": "別れのあいさつ。"
+        }
+      }
+    ]
   },
   "steps": [
     {

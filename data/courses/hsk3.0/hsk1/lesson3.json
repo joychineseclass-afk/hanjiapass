@@ -409,18 +409,12 @@
           },
           "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": {
-            "zh": "用「你是哪国人？」「我是……人」「你呢？」「你是学生吗？」完成简短问答。\n\n「你是哪国人？」\nnǐ shì nǎ guó rén?\n「我是……人」\nwǒ shì … rén\n「你呢？」\nnǐ ne?\n「你是学生吗？」\nnǐ shì xuéshēng ma?",
-            "kr": "「你是哪国人？」\nnǐ shì nǎ guó rén?\n「我是……人」\nwǒ shì … rén\n「你呢？」\nnǐ ne?\n「你是学生吗？」\nnǐ shì xuéshēng ma?\n\n짧게 묻고 답합니다.",
-            "en": "Practice 你是哪国人？, 我是…人, 你呢？, and 你是学生吗？.",
-            "jp": "「你是哪国人？」「我是……人」「你呢？」「你是学生吗？」で短く問答する。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你是哪国人？", "pinyin": "nǐ shì nǎ guó rén?" },
-            { "zh": "我是美国人。", "pinyin": "wǒ shì Měiguó rén." },
-            { "zh": "你呢？", "pinyin": "nǐ ne?" },
-            { "zh": "你是学生吗？", "pinyin": "nǐ shì xuéshēng ma?" },
-            { "zh": "是，我是学生。", "pinyin": "shì, wǒ shì xuéshēng." }
+            { "zh": "你是哪国人？", "pinyin": "nǐ shì nǎ guó rén?", "kr": "어느 나라 사람이에요?" },
+            { "zh": "我是美国人。你呢？", "pinyin": "wǒ shì Měiguó rén. nǐ ne?", "kr": "저는 미국 사람이에요. 당신은요?" },
+            { "zh": "你是学生吗？", "pinyin": "nǐ shì xuéshēng ma?", "kr": "학생이에요?" },
+            { "zh": "是，我是学生。", "pinyin": "shì, wǒ shì xuéshēng.", "kr": "네, 학생이에요." }
           ],
           "rounds": [
             {
@@ -447,17 +441,12 @@
           },
           "aiRole": { "zh": "王老师", "kr": "왕 선생님", "en": "Teacher Wang", "jp": "王先生" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": {
-            "zh": "用「你会……吗？」「会，我会……」回答会不会说汉语、写汉字，并可用「一点儿」表示程度。\n\n「你会……吗？」\nnǐ huì … ma?\n「会，我会……」\nhuì, wǒ huì …\n「一点儿」\nyīdiǎnr",
-            "kr": "「你会……吗？」\nnǐ huì … ma?\n「会，我会……」\nhuì, wǒ huì …\n「一点儿」\nyīdiǎnr\n\n말하기·쓰기 능력과 정도를 말합니다.",
-            "en": "Use 你会…吗？ / 会，我会… for speaking and writing; add 一点儿 for degree.",
-            "jp": "「你会……吗？」「会，我会……」で話す・書く能力を言い、「一点儿」で程度を示す。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "你会说汉语吗？", "pinyin": "nǐ huì shuō Hànyǔ ma?" },
-            { "zh": "会，我会说一点儿汉语。", "pinyin": "huì, wǒ huì shuō yīdiǎnr Hànyǔ." },
-            { "zh": "你会写汉字吗？", "pinyin": "nǐ huì xiě Hànzì ma?" },
-            { "zh": "会，我会写汉字。", "pinyin": "huì, wǒ huì xiě Hànzì." }
+            { "zh": "你会说汉语吗？", "pinyin": "nǐ huì shuō Hànyǔ ma?", "kr": "중국어 할 줄 알아요?" },
+            { "zh": "会，我会说一点儿汉语。", "pinyin": "huì, wǒ huì shuō yīdiǎnr Hànyǔ.", "kr": "네, 조금 할 줄 알아요." },
+            { "zh": "你会写汉字吗？", "pinyin": "nǐ huì xiě Hànzì ma?", "kr": "한자 쓸 줄 알아요?" },
+            { "zh": "会，我会写汉字。", "pinyin": "huì, wǒ huì xiě Hànzì.", "kr": "네, 한자 쓸 줄 알아요." }
           ],
           "rounds": [
             {
@@ -481,45 +470,53 @@
     "abilityPoints": [
       {
         "zh": "能询问国籍（你是哪国人？），用「我是……人」回答，并用「你呢？」把话题抛回对方。",
-        "kr": "국적을 묻고(「你是哪国人?」) 「我是……人」로 답하며 「你呢?」로 다시 물을 수 있다.",
+        "pinyin": "nǐ shì nǎ guó rén? · wǒ shì … rén · nǐ ne?",
+        "kr": "국적을 묻고 「我是……人」로 답하며 「你呢?」로 다시 물을 수 있다.",
         "en": "Ask nationality, answer 我是…人, and use 你呢？ to return the question.",
         "jp": "国籍を聞き、「我是……人」で答え、「你呢？」で話を返せる。"
       },
       {
         "zh": "能用「你是学生吗？」询问是不是学生，并用「是/不是」或完整短句回答。",
+        "pinyin": "nǐ shì xuéshēng ma?",
         "kr": "「你是学生吗?」로 학생인지 묻고 「是/不是」나 짧은 문장으로 답할 수 있다.",
         "en": "Use 你是学生吗？ and answer with 是/不是 or a short sentence.",
         "jp": "「你是学生吗？」で聞き、「是／不是」や短い文で答えられる。"
       },
       {
         "zh": "能用「会 / 不会」说明会不会说汉语、写汉字，并区分口头「说」与书写「写」。",
+        "pinyin": "huì · bù huì · shuō · xiě",
         "kr": "「会/不会」로 중국어 말하기·한자 쓰기 여부를 말하고 말하기(说)와 쓰기(写)를 가른다.",
         "en": "Use 会/不会 for speaking Chinese vs writing characters.",
         "jp": "「会／不会」で話す・書くを区別して言える。"
       }
     ],
     "lessonExplain": {
+      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "会问「你是哪国人？」并回答「我是……人」，能用「你呢？」把话题抛回对方。",
+          "pinyin": "nǐ shì nǎ guó rén? · wǒ shì … rén · nǐ ne?",
           "kr": "「你是哪国人？」로 국적을 묻고 「我是……人」로 답하며 「你呢？」로 다시 물을 수 있다.",
           "en": "Ask 你是哪国人？, answer 我是…人, and use 你呢？ to return the question.",
           "jp": "「你是哪国人？」で聞き、「我是……人」で答え、「你呢？」で話を返せる。"
         },
         {
           "zh": "会用「你是学生吗？」确认身份，并用「是 / 不是」或完整短句回答。",
+          "pinyin": "nǐ shì xuéshēng ma? · shì / bù shì",
           "kr": "「你是学生吗？」로 신분을 확인하고 「是/不是」나 짧은 문장으로 답한다.",
           "en": "Use 你是学生吗？ and answer with 是/不是 or a short sentence.",
           "jp": "「你是学生吗？」で確認し、「是／不是」や短い文で答えられる。"
         },
         {
           "zh": "会用「你会……吗？」「会，我会……」说明会不会说汉语、写汉字，并能用「一点儿」表示程度不高。",
+          "pinyin": "nǐ huì … ma? · huì, wǒ huì … · yīdiǎnr",
           "kr": "「你会……吗？」「会，我会……」로 중국어 말하기·한자 쓰기 여부를 말하고 「一点儿」로 정도를 덧붙인다.",
           "en": "Use 你会…吗？ / 会，我会… for speaking & writing; add 一点儿 for “just a little”.",
           "jp": "「你会……吗？」「会，我会……」で話す・書けるかを言い、「一点儿」で程度を示せる。"
         },
         {
           "zh": "理解「哪 + 名词」问类别（如哪国人），以及「会」后接「说 / 写」的不同技能。",
+          "pinyin": "nǎ + míngcí · huì + shuō / xiě",
           "kr": "「哪 + 명사」로 종류를 묻는 법(哪国人)과 「会」 뒤에 오는 「说/写」의 차이를 이해한다.",
           "en": "Grasp 哪 + noun (which nationality) and 会 + 说/写 for different skills.",
           "jp": "「哪＋名詞」で種類を聞くことと、「会＋说／写」の違いを押さえる。"
@@ -532,27 +529,43 @@
         "en": "Dialogue 1: classmates ask nationality and student status, using 你呢？. Dialogue 2: the teacher asks about speaking Chinese and writing characters with 会. This lesson is about nationality and skills—not greetings or thanks/apology.",
         "jp": "会話1：国籍と学生かどうかを聞き、「你呢？」で続ける。会話2：先生が中国語の話す・書くを「会」で尋ねる。本課は国籍と能力が中心で、あいさつや謝罪・感謝の練習ではない。"
       },
+      "scenarioSummaryLines": [
+        {
+          "zh": "会话一：问「你是哪国人？」答「我是……人」，用「你呢？」反问；再问「你是学生吗？」",
+          "pinyin": "nǐ shì nǎ guó rén? · wǒ shì … rén · nǐ ne? · nǐ shì xuéshēng ma?",
+          "kr": "회화1: 국적·학생 여부를 묻고 답합니다."
+        },
+        {
+          "zh": "会话二：用「你会说汉语吗？」「你会写汉字吗？」问能力，用「会，我会……」回答。",
+          "pinyin": "nǐ huì shuō Hànyǔ ma? · nǐ huì xiě Hànzì ma?",
+          "kr": "회화2: 말하기·쓰기 능력을 「会」로 묻고 답합니다."
+        }
+      ],
       "confusionPoints": [
         {
           "zh": "「哪国人」很口语；「哪个国家的人」更啰嗦但意思接近——本课用「哪国人」。",
+          "pinyin": "nǎ guó rén",
           "kr": "「哪国人」는 구어에서 짧고, 「哪个国家的人」는 더 풀어 말한 표현으로 뉘앙스는 비슷합니다. 본과는 「哪国人」 중심입니다.",
           "en": "哪国人 is short and spoken; 哪个国家的人 is longer—similar meaning; this lesson uses 哪国人.",
           "jp": "「哪国人」は短く口語的。「哪个国家的人」は言い換えで意味は近い。本課は「哪国人」。"
         },
         {
           "zh": "「会说汉语」问能不能说出来；「会写汉字」问能不能写下来——「会」后面技能不同。",
+          "pinyin": "huì shuō Hànyǔ · huì xiě Hànzì",
           "kr": "「会说汉语」는 말할 수 있나, 「会写汉字」는 글자를 쓸 수 있나입니다. 「会」 뒤의 동사가 다릅니다.",
           "en": "会说汉语 = speaking ability; 会写汉字 = writing characters—the skill after 会 differs.",
           "jp": "「会说汉语」は話す、「会写汉字」は書く。「会」の後が違う。"
         },
         {
           "zh": "「是……吗？」把陈述变成是非问；一般陈述句不用句尾的「吗」。",
+          "pinyin": "shì … ma?",
           "kr": "「是……吗?」는 평서를 예/아니오 질문으로 바꿉니다. 평서문은 문미에 「吗」가 없습니다.",
           "en": "是…吗? turns a statement into a yes/no question; plain statements don’t end with 吗 in the same way.",
           "jp": "「是……吗？」は平叙文をYes/No疑問にする。普通の平叙文とは文末が違う。"
         },
         {
           "zh": "「你呢？」在对方说完后，把同样的问题反问回去——本课常接在国籍句后面。",
+          "pinyin": "nǐ ne?",
           "kr": "「你呢?」는 상대가 말한 뒤 같은 질문을 돌려 묻을 때 씁니다. 본과에서는 국적 말한 뒤에 자주 이어집니다.",
           "en": "你呢？ bounces the same question back—often after a nationality line in this lesson.",
           "jp": "「你呢？」は同じ質問を返すとき。本課では国籍のあとに続くことが多い。"

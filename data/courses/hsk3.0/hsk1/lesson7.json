@@ -475,17 +475,15 @@
           },
           "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
           "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": {
-            "zh": "用「今天几月几日？」「昨天是……吗？」「是的，……」谈论五月一日、五月二日与休息。\n\n「今天几月几日？」\njīntiān jǐ yuè jǐ rì?\n「昨天是……吗？」\nzuótiān shì …… ma?\n「是的，……」\nshì de, ……",
-            "kr": "「今天几月几日？」\njīntiān jǐ yuè jǐ rì?\n「昨天是……吗？」\nzuótiān shì …… ma?\n「是的，……」\nshì de, ……\n\n위 표현으로 오월 일일·이일과 휴식에 대해 말합니다.",
-            "en": "Use date questions and 昨天 / 是的 for May 1–2 and rest.\n\n「今天几月几日？」\njīntiān jǐ yuè jǐ rì?\n「昨天是……吗？」\nzuótiān shì …… ma?\n「是的，……」\nshì de, ……",
-            "jp": "日付の質問と「昨天」「是的」で話す。\n\n「今天几月几日？」\njīntiān jǐ yuè jǐ rì?\n「昨天是……吗？」\nzuótiān shì …… ma?"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "今天几月几日？", "pinyin": "jīntiān jǐ yuè jǐ rì?" },
-            { "zh": "今天五月二日。", "pinyin": "jīntiān wǔ yuè èr rì." },
-            { "zh": "昨天是五月一日吗？", "pinyin": "zuótiān shì wǔ yuè yī rì ma?" },
-            { "zh": "是的，昨天是五月一日。", "pinyin": "shì de, zuótiān shì wǔ yuè yī rì." }
+            { "zh": "今天几月几日？", "pinyin": "jīntiān jǐ yuè jǐ rì?", "kr": "오늘 며칠이에요?" },
+            { "zh": "今天五月二日。", "pinyin": "jīntiān wǔ yuè èr rì.", "kr": "오늘은 5월 2일이에요." },
+            { "zh": "昨天是五月一日吗？", "pinyin": "zuótiān shì wǔ yuè yī rì ma?", "kr": "어제가 5월 1일이에요?" },
+            { "zh": "是的，昨天是五月一日。", "pinyin": "shì de, zuótiān shì wǔ yuè yī rì.", "kr": "네, 어제가 5월 1일이에요." },
+            { "zh": "今天星期几？", "pinyin": "jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?" },
+            { "zh": "你们什么时候休息？", "pinyin": "nǐmen shénme shíhou xiūxi?", "kr": "언제 쉬어요?" },
+            { "zh": "星期天休息。", "pinyin": "xīngqītiān xiūxi.", "kr": "일요일에 쉬어요." }
           ],
           "rounds": [
             {
@@ -503,48 +501,56 @@
     "abilityPoints": [
       {
         "zh": "会问「今天几月几日？」并能用「……月……日」回答今天的日期。",
-        "kr": "「今天几月几日？」\njīntiān jǐ yuè jǐ rì?\n「……月……日」\n…… yuè …… rì\n\n오늘 날짜를 묻고 답한다.",
+        "pinyin": "jīntiān jǐ yuè jǐ rì? · … yuè … rì",
+        "kr": "오늘 날짜를 묻고 「……月……日」로 답한다.",
         "en": "Ask 今天几月几日? and answer with …月…日.",
         "jp": "「今天几月几日？」と「……月……日」で答えられる。"
       },
       {
         "zh": "能区分「昨天」「今天」「明天」，并用于简单叙述。",
-        "kr": "「昨天」\nzuótiān\n「今天」\njīntiān\n「明天」\nmíngtiān\n\n셋을 구분해 짧게 이야기한다.",
+        "pinyin": "zuótiān · jīntiān · míngtiān",
+        "kr": "셋을 구분해 짧게 이야기한다.",
         "en": "Use 昨天 / 今天 / 明天 in short statements.",
         "jp": "「昨天」「今天」「明天」を区別して使う。"
       },
       {
         "zh": "会问「今天星期几？」「你们什么时候休息？」并能回答「星期天休息」等。",
-        "kr": "「今天星期几？」\njīntiān xīngqī jǐ?\n「你们什么时候休息？」\nnǐmen shénme shíhou xiūxi?\n「星期天休息」\nxīngqītiān xiūxi\n\n요일·휴식 시간을 묻고 답한다.",
+        "pinyin": "jīntiān xīngqī jǐ? · shénme shíhou · xīngqītiān xiūxi",
+        "kr": "요일·휴식 시간을 묻고 답한다.",
         "en": "Ask weekday and when people rest; answer 星期天休息.",
         "jp": "曜日と休みのときを尋ね、「星期天休息」などで答える。"
       }
     ],
     "lessonExplain": {
+      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「几月几日」问句与「月、日、号」在阅读中的常见搭配（本课以会话「五月一日」等为主）。",
-          "kr": "「几月几日」\njǐ yuè jǐ rì\n「月·日·号」\nyuè / rì / hào\n「五月一日」\nwǔ yuè yī rì\n\n질문과 표기를 익힙니다.",
+          "pinyin": "jǐ yuè jǐ rì · yuè · rì · hào",
+          "kr": "날짜를 묻고 표기(月·日·号)를 익힙니다.",
           "en": "几月几日 questions and 月/日 in context.",
           "jp": "「几月几日」と「月」「日」の使い方。"
         },
         {
           "zh": "能使用「星期……」「星期天/星期日」表达星期与休息日。",
-          "kr": "「星期……」\nxīngqī …\n「星期天／星期日」\nxīngqītiān / xīngqī rì\n\n요일과 쉬는 날을 말한다.",
+          "pinyin": "xīngqī … · xīngqītiān / xīngqī rì",
+          "kr": "요일과 쉬는 날을 말한다.",
           "en": "星期… and 星期天/星期日 for weekdays and Sunday.",
           "jp": "「星期」と「星期天／星期日」で曜日と休日を言う。"
         },
         {
           "zh": "会用「什么时候」提问，并结合「在、时候」理解「什么时候休息」一类问句。",
-          "kr": "「什么时候」\nshénme shíhou\n「什么时候休息」\nshénme shíhou xiūxi\n\n「在」「时候」와 함께 쓰임을 이해한다.",
+          "pinyin": "shénme shíhou · shénme shíhou xiūxi",
+          "kr": "「什么时候」로 시점을 묻고 휴식 시간을 말한다.",
           "en": "什么时候 questions; 什么时候休息.",
           "jp": "「什么时候」と「什么时候休息」。"
         },
         {
-          "zh": "本课讲日期与星期，不是「你好吗」或只练自我介绍。",
-          "kr": "「你好吗」\nnǐ hǎo ma\n\n이 과는 날짜·요일이 중심이며 인사만 반복하지 않습니다.",
-          "en": "This lesson is dates/weekdays—not 你好吗 drills.",
-          "jp": "本課は日付と曜日。「你好吗」の練習ではない。"
+          "zh": "本课讲日期与星期，不是泛泛的见面寒暄或自我介绍练习。",
+          "pinyin": "rìqī · xīngqī",
+          "kr": "이 과는 날짜·요일이 중심이며 제1·2과 같은 인사·이름 연습이 아닙니다.",
+          "en": "This lesson is dates and weekdays—not generic greetings or name drills.",
+          "jp": "本課は日付と曜日。あいさつや名乗りの繰り返しではない。"
         }
       ],
       "practiceFocus": [],
@@ -554,22 +560,37 @@
         "en": "Three dialogues: calendar, weekday, when to rest.",
         "jp": "三つの会話：日付、曜日、休みの時間。"
       },
+      "scenarioSummaryLines": [
+        {
+          "zh": "会话一：用「今天几月几日？」问日期，用「昨天是……吗？」「是的，……」谈昨天与休息日。",
+          "pinyin": "jīntiān jǐ yuè jǐ rì? · zuótiān shì … ma?",
+          "kr": "회화1: 달력·어제·휴일을 말합니다."
+        },
+        {
+          "zh": "会话二、三：用「今天星期几？」问星期，用「你们什么时候休息？」「星期天休息。」谈休息。",
+          "pinyin": "xīngqī jǐ? · shénme shíhou xiūxi",
+          "kr": "회화2·3: 요일과 쉬는 때를 말합니다."
+        }
+      ],
       "confusionPoints": [
         {
           "zh": "「星期几」问星期；「几月几日」问日期——问题和回答要配对。",
-          "kr": "「星期几」\nxīngqī jǐ\n「几月几日」\njǐ yuè jǐ rì\n\n질문 유형이 다릅니다.",
+          "pinyin": "xīngqī jǐ · jǐ yuè jǐ rì",
+          "kr": "질문 유형이 다릅니다.",
           "en": "星期几 ≠ 几月几日.",
           "jp": "「星期几」と「几月几日」は別の質問。"
         },
         {
           "zh": "「星期天」与「星期日」常可互换指周日；本课「星期天休息」是自然说法。",
-          "kr": "「星期天」\nxīngqītiān\n「星期日」\nxīngqī rì\n「星期天休息」\nxīngqītiān xiūxi\n\n일요일을 가리킬 때 자주 바꿔 씁니다.",
+          "pinyin": "xīngqītiān · xīngqī rì",
+          "kr": "일요일을 가리킬 때 자주 바꿔 씁니다.",
           "en": "星期天 / 星期日 both refer to Sunday.",
           "jp": "「星期天」「星期日」は日曜を指す言い方。"
         },
         {
           "zh": "「什么时候」问时间或时机，回答可用「星期天」等时间短语。",
-          "kr": "「什么时候」\nshénme shíhou\n「星期天」\nxīngqītiān\n\n시점을 묻고 짧은 시간 표현으로 답합니다.",
+          "pinyin": "shénme shíhou",
+          "kr": "시점을 묻고 짧은 시간 표현으로 답합니다.",
           "en": "什么时候 → answer with a time like 星期天.",
           "jp": "「什么时候」には「星期天」のような答え。"
         }

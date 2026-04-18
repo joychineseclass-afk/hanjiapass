@@ -495,16 +495,12 @@
           },
           "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
           "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": {
-            "zh": "用「现在几点？」「现在……点……分」说明时间，并说到「……分钟后上课」。\n\n「现在几点？」\nxiànzài jǐ diǎn?\n「现在……点……分」\nxiànzài … diǎn … fēn",
-            "kr": "「现在几点？」\nxiànzài jǐ diǎn?\n「现在……点……分」\nxiànzài … diǎn … fēn\n\n시각을 말합니다.",
-            "en": "Ask the time and say 现在…点…分 and class time.",
-            "jp": "「现在几点？」と「现在……点……分」で時刻を言う。"
-          },
+          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
           "expressions": [
-            { "zh": "现在几点？", "pinyin": "xiànzài jǐ diǎn?" },
-            { "zh": "现在八点零七分。", "pinyin": "xiànzài bā diǎn líng qī fēn." },
-            { "zh": "八点十分上课。", "pinyin": "bā diǎn shí fēn shàngkè." }
+            { "zh": "现在几点？", "pinyin": "xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?" },
+            { "zh": "现在八点零七分。", "pinyin": "xiànzài bā diǎn líng qī fēn.", "kr": "지금 여덟 시 칠 분이에요." },
+            { "zh": "八点十分上课。", "pinyin": "bā diǎn shí fēn shàngkè.", "kr": "여덟 시 십 분에 수업이에요." },
+            { "zh": "我七点半起床。", "pinyin": "wǒ qī diǎn bàn qǐchuáng.", "kr": "일곱 시 반에 일어나요." }
           ],
           "rounds": [
             {
@@ -522,45 +518,53 @@
     "abilityPoints": [
       {
         "zh": "会问「现在几点？」并能用「现在……点……分」说出具体时间（含「零」与「半」）。",
+        "pinyin": "xiànzài jǐ diǎn? · xiànzài … diǎn … fēn",
         "kr": "「现在几点？」로 묻고 「现在……点……分」로 구체적 시각(「零」「半」 포함)을 말한다.",
         "en": "Ask 现在几点? and answer with 现在…点…分 including 零 and 半.",
         "jp": "「现在几点？」と「现在……点……分」で「零」「半」を使える。"
       },
       {
         "zh": "能用「上午/中午/下午/晚上」配合钟点说明上课、下课与作息。",
+        "pinyin": "shàngwǔ · zhōngwǔ · xiàwǔ · wǎnshang",
         "kr": "「上午／中午／下午／晚上」와 시각을 함께 써 수업·下课·일과를 말한다.",
         "en": "Use time-of-day words with clock times for class and routine.",
         "jp": "「上午／中午／下午／晚上」と時刻で授業や生活を言う。"
       },
       {
         "zh": "能使用「上课、下课、起床、睡觉」描述一天的安排。",
+        "pinyin": "shàngkè · xiàkè · qǐchuáng · shuìjiào",
         "kr": "「上课·下课·起床·睡觉」로 하루 일정을 말한다.",
         "en": "Describe the day with 上课 / 下课 / 起床 / 睡觉.",
         "jp": "「上课」「下课」「起床」「睡觉」で一日を説明できる。"
       }
     ],
     "lessonExplain": {
+      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握询问时间的常用句「现在几点？」以及回答的语序（点 → 分）。",
+          "pinyin": "xiànzài jǐ diǎn? · … diǎn … fēn",
           "kr": "「现在几点？」와 답의 어순(点→分)을 익힌다.",
           "en": "Master 现在几点? and the 点-then-分 order.",
           "jp": "「现在几点？」と「点→分」の語順を身につける。"
         },
         {
           "zh": "能区分「上午、中午、下午、晚上、早上」并放在动词短语前作时间说明。",
+          "pinyin": "shàngwǔ · zhōngwǔ · xiàwǔ · wǎnshang · zǎoshang",
           "kr": "「上午·中午·下午·晚上·早上」를 구분해 동사 구 앞에 둔다.",
           "en": "Tell apart 上午…早上 and place them before verbs.",
           "jp": "「上午」などを区別し、動作の前に置ける。"
         },
         {
           "zh": "会用「到」连接两个钟点表示一段时间，如「两点到四点」。",
+          "pinyin": "liǎng diǎn dào sì diǎn",
           "kr": "「到」로 두 시점을 잇어 「两点到四点」처럼 말한다.",
           "en": "Use 到 between two times for a range.",
           "jp": "「到」で「两点から四点」のような幅を言う。"
         },
         {
           "zh": "本课讲时间与作息，不是问候、年龄或日期话题。",
+          "pinyin": "shíjiān · zuòxī",
           "kr": "이 과는 시간·일과가 중심이며 인사·나이·날짜 이야기가 아닙니다.",
           "en": "This lesson is time and routine—not greetings or dates.",
           "jp": "本課は時間と生活。あいさつや年齢・日付の話ではない。"
@@ -573,21 +577,36 @@
         "en": "Three dialogues: current time, school schedule, sleep routine.",
         "jp": "会話：今の時刻、授業の時間帯、起床と就寝。"
       },
+      "scenarioSummaryLines": [
+        {
+          "zh": "会话一：用「现在几点？」问钟点，用「现在……点……分」回答，并说到「……分钟后上课」。",
+          "pinyin": "xiànzài jǐ diǎn? · fēn · shàngkè",
+          "kr": "회화1: 현재 시각과 수업 시작을 말합니다."
+        },
+        {
+          "zh": "会话二、三：用「上午/下午」等与钟点搭配说上课、下课、起床、睡觉，可用「半」表示半点。",
+          "pinyin": "shàngwǔ · xiàwǔ · bàn",
+          "kr": "회화2·3: 시간대·수업·일과를 말합니다."
+        }
+      ],
       "confusionPoints": [
         {
           "zh": "「二点」在口语里常说「两点」表示两点钟——本课对话用「两点到四点」。",
+          "pinyin": "liǎng diǎn",
           "kr": "시각을 말할 때 「两点」가 자주 쓰입니다(两点到四点).",
           "en": "Spoken time often uses 两点 for 2 o’clock.",
           "jp": "時刻の「二」は口語で「两点」と言うことが多い。"
         },
         {
           "zh": "「零七分」表示 07 分，「十分」这里是十分钟，不是「十分」形容词。",
+          "pinyin": "líng qī fēn · shí fēn",
           "kr": "「零七分」은 07분, 「十分」은 여기서 10분.",
           "en": "零七分 = 07 minutes; 十分 here means ten minutes.",
           "jp": "「零七分」は分の桁、「十分」はここでは10分。"
         },
         {
           "zh": "「中午」多指午饭前后到十二点左右，「下午」从中午过后算起。",
+          "pinyin": "zhōngwǔ · xiàwǔ",
           "kr": "「中午」는 점심 무렵, 「下午」는 오후 시간대.",
           "en": "中午 ≈ noon; 下午 = afternoon.",
           "jp": "「中午」は昼頃、「下午」は午後。"
