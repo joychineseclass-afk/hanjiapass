@@ -4,8 +4,25 @@
 
 - `dialogueCards[].lines[].translation`
 - `grammar[].examples[].translation`、扩展区 `translations`、练习 `prompt` / `explanation` 等 **多语展示文案**
+- 练习区 `practice[].options`（见下）
 
 **不适用于**：课文汉字、拼音、以中文为主的教学讲解正文（`zh` / `cn` 固定为中文教材内容）。
+
+---
+
+## 练习选择题 `practice[].options`（与前端一致）
+
+与 `prompt` / `explanation` 相同，使用 **`cn`（可与 `zh` 同值）、`kr`、`en`、`jp`** 四语展示。渲染与判题逻辑见 `ui/modules/practice/practiceChoice.js`（`getOptionDisplay` / `getOptionValue`）。
+
+**推荐结构（可批量铺课）**
+
+- 每项为对象，**必填**：
+  - **`key`**：`"A"` | `"B"` | `"C"` | `"D"` … —— 稳定判题用；`answer` 字段写同一字母（如 `"A"`），避免用中文全文作 `answer`（否则换语言后选项显示与答案字符串不一致）。
+  - **`cn` / `zh`**：中文题干（教材原文，两键可并存）。
+  - **`kr` / `en` / `jp`**：系统语言自然释义（按上文「核心原则」润色，非硬译）。
+- **纯拼音选项**（如选择正确拼音）：各语可 **与拉丁拼写相同**，四语键仍建议写满，便于界面一致。
+
+**向后兼容**：`options` 仍为 **字符串数组** 的旧题可继续工作（整串作为显示与答案）；新题与迁移题优先采用上表对象结构。
 
 ---
 
@@ -49,3 +66,4 @@
 ## 修订记录
 
 - 2026-04：确立本规范；第 8–10 课会话区释义按本规范统一润色。
+- 2026-04：补充 `practice[].options` 多语对象 schema；第 8–10 课练习选项已按此闭环；`practiceResult` 支持用 `key` 展示当前语言的正确答案文案。

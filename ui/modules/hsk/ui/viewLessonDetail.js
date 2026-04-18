@@ -338,7 +338,15 @@ function renderLessonTabPractice(ctx, container) {
       ${
         options.length
           ? `<div class="mt-2 text-sm text-gray-700 space-y-1">
-              ${options.map((x) => `<div>• ${safeText(x)}</div>`).join("")}
+              ${options
+                .map((x) => {
+                  const line =
+                    x && typeof x === "object"
+                      ? safeText(x.cn ?? x.zh ?? x.key ?? "")
+                      : safeText(x);
+                  return `<div>• ${line}</div>`;
+                })
+                .join("")}
              </div>`
           : ""
       }

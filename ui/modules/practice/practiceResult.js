@@ -30,6 +30,19 @@ function pickPrompt(obj, lang) {
   return str(obj[key] ?? obj.cn ?? obj.zh ?? "") || "";
 }
 
+/** 与 practiceChoice：选项用 key 判题时，结果区展示当前语言的选项正文（而非仅 "A"） */
+function getAnswerDisplayFromQuestion(q, resultAnswer, lang) {
+  if (resultAnswer == null) return "";
+  if (typeof resultAnswer === "object") {
+    return pickPrompt(resultAnswer, lang) || str(resultAnswer.zh ?? resultAnswer.cn) || "";
+  }
+  const s = String(resultAnswer).trim();
+  const opts = Array.isArray(q?.options) ? q.options : [];
+  const found = opts.find((o) => o && typeof o === "object" && String(o.key ?? "").trim() === s);
+  if (found) return pickPrompt(found, lang) || str(found.zh ?? found.cn) || "";
+  return s;
+}
+
 function t(key, params) {
   return (i18n?.t?.(key, params) ?? key);
 }
@@ -54,7 +67,7 @@ export function renderResult(q, result, { lang }) {
   } else if (typeof result.answer === "object") {
     answerDisplay = pickPrompt(result.answer, lang) || JSON.stringify(result.answer);
   } else {
-    answerDisplay = String(result.answer ?? "");
+    answerDisplay = getAnswerDisplayFromQuestion(q, result.answer, lang) || String(result.answer ?? "");
   }
 
   const icon = result.correct ? "○" : "×";

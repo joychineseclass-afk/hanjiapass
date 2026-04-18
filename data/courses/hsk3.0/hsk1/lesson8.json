@@ -428,10 +428,38 @@
         "jp": "「どこ」を聞いているのはどの文？"
       },
       "options": [
-        { "key": "A", "zh": "你在哪儿上课？", "cn": "你在哪儿上课？" },
-        { "key": "B", "zh": "今天几月几日？", "cn": "今天几月几日？" },
-        { "key": "C", "zh": "你喜欢吃什么？", "cn": "你喜欢吃什么？" },
-        { "key": "D", "zh": "这个多少钱？", "cn": "这个多少钱？" }
+        {
+          "key": "A",
+          "zh": "你在哪儿上课？",
+          "cn": "你在哪儿上课？",
+          "kr": "어디서 수업해요?",
+          "en": "Where do you have class?",
+          "jp": "どこで授業をしていますか。"
+        },
+        {
+          "key": "B",
+          "zh": "今天几月几日？",
+          "cn": "今天几月几日？",
+          "kr": "오늘 며칠이에요?",
+          "en": "What’s the date today?",
+          "jp": "今日は何月何日ですか。"
+        },
+        {
+          "key": "C",
+          "zh": "你喜欢吃什么？",
+          "cn": "你喜欢吃什么？",
+          "kr": "뭘 먹는 걸 좋아해요?",
+          "en": "What do you like to eat?",
+          "jp": "何を食べるのが好きですか。"
+        },
+        {
+          "key": "D",
+          "zh": "这个多少钱？",
+          "cn": "这个多少钱？",
+          "kr": "이거 얼마예요?",
+          "en": "How much is this?",
+          "jp": "これはいくらですか。"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -452,10 +480,10 @@
         "jp": "「这边」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "zhèbiān", "cn": "zhèbiān" },
-        { "key": "B", "zh": "zhèbiǎn", "cn": "zhèbiǎn" },
-        { "key": "C", "zh": "zèbiān", "cn": "zèbiān" },
-        { "key": "D", "zh": "zhèbián", "cn": "zhèbián" }
+        { "key": "A", "zh": "zhèbiān", "cn": "zhèbiān", "kr": "zhèbiān", "en": "zhèbiān", "jp": "zhèbiān" },
+        { "key": "B", "zh": "zhèbiǎn", "cn": "zhèbiǎn", "kr": "zhèbiǎn", "en": "zhèbiǎn", "jp": "zhèbiǎn" },
+        { "key": "C", "zh": "zèbiān", "cn": "zèbiān", "kr": "zèbiān", "en": "zèbiān", "jp": "zèbiān" },
+        { "key": "D", "zh": "zhèbián", "cn": "zhèbián", "kr": "zhèbián", "en": "zhèbián", "jp": "zhèbián" }
       ],
       "answer": "A",
       "explanation": {
@@ -475,8 +503,41 @@
         "en": "Someone asks 书在哪儿?—which answer matches our dialogue?",
         "jp": "「书在哪儿？」への答えとして、本课の会話と合うのは？"
       },
-      "options": ["书在桌子上。", "我喜欢吃米饭。", "今天星期五。", "有牛奶吗？"],
-      "answer": "书在桌子上。",
+      "options": [
+        {
+          "key": "A",
+          "zh": "书在桌子上。",
+          "cn": "书在桌子上。",
+          "kr": "책은 책상 위에 있어요.",
+          "en": "The book is on the desk.",
+          "jp": "本は机の上にあります。"
+        },
+        {
+          "key": "B",
+          "zh": "我喜欢吃米饭。",
+          "cn": "我喜欢吃米饭。",
+          "kr": "밥 먹는 걸 좋아해요.",
+          "en": "I like eating rice.",
+          "jp": "ご飯を食べるのが好きです。"
+        },
+        {
+          "key": "C",
+          "zh": "今天星期五。",
+          "cn": "今天星期五。",
+          "kr": "오늘은 금요일이에요.",
+          "en": "Today is Friday.",
+          "jp": "今日は金曜日です。"
+        },
+        {
+          "key": "D",
+          "zh": "有牛奶吗？",
+          "cn": "有牛奶吗？",
+          "kr": "우유 있어요?",
+          "en": "Do you have milk?",
+          "jp": "牛乳はありますか。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "本课会话三：书在桌子上。",
         "kr": "회화3에서는 「书在桌子上。」라고 답합니다.",
@@ -494,8 +555,41 @@
         "en": "In 手机在桌子下, 下 means:",
         "jp": "「手机在桌子下」の「下」の意味は？"
       },
-      "options": ["在物体的下方", "在物体的上面", "在物体的前面", "在物体的后面"],
-      "answer": "在物体的下方",
+      "options": [
+        {
+          "key": "A",
+          "zh": "在物体的下方",
+          "cn": "在物体的下方",
+          "kr": "물건의 아래(밑)",
+          "en": "Below — under the object",
+          "jp": "物の下の方"
+        },
+        {
+          "key": "B",
+          "zh": "在物体的上面",
+          "cn": "在物体的上面",
+          "kr": "물건의 위",
+          "en": "On top — above the object",
+          "jp": "物の上の方"
+        },
+        {
+          "key": "C",
+          "zh": "在物体的前面",
+          "cn": "在物体的前面",
+          "kr": "물건의 앞",
+          "en": "In front of the object",
+          "jp": "物の前の方"
+        },
+        {
+          "key": "D",
+          "zh": "在物体的后面",
+          "cn": "在物体的后面",
+          "kr": "물건의 뒤",
+          "en": "Behind the object",
+          "jp": "物の後ろの方"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「下」表示相对位置在下方（下面）。",
         "kr": "「下」는 물건 아래·밑쪽을 가리킬 때 씁니다.",

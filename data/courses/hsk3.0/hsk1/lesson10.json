@@ -495,10 +495,38 @@
         "jp": "値段を聞くのにいちばんふつうなのはどれ？"
       },
       "options": [
-        { "key": "A", "zh": "这个杯子多少钱？", "cn": "这个杯子多少钱？" },
-        { "key": "B", "zh": "你在哪儿上课？", "cn": "你在哪儿上课？" },
-        { "key": "C", "zh": "你喜欢吃什么？", "cn": "你喜欢吃什么？" },
-        { "key": "D", "zh": "今天星期几？", "cn": "今天星期几？" }
+        {
+          "key": "A",
+          "zh": "这个杯子多少钱？",
+          "cn": "这个杯子多少钱？",
+          "kr": "이 컵 얼마예요?",
+          "en": "How much is this cup?",
+          "jp": "このコップはいくらですか。"
+        },
+        {
+          "key": "B",
+          "zh": "你在哪儿上课？",
+          "cn": "你在哪儿上课？",
+          "kr": "어디서 수업해요?",
+          "en": "Where do you have class?",
+          "jp": "どこで授業をしていますか。"
+        },
+        {
+          "key": "C",
+          "zh": "你喜欢吃什么？",
+          "cn": "你喜欢吃什么？",
+          "kr": "뭘 먹는 걸 좋아해요?",
+          "en": "What do you like to eat?",
+          "jp": "何を食べるのが好きですか。"
+        },
+        {
+          "key": "D",
+          "zh": "今天星期几？",
+          "cn": "今天星期几？",
+          "kr": "오늘 무슨 요일이에요?",
+          "en": "What day of the week is it today?",
+          "jp": "今日は何曜日ですか。"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -519,10 +547,10 @@
         "jp": "「便宜」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "piányi", "cn": "piányi" },
-        { "key": "B", "zh": "pián'yí", "cn": "pián'yí" },
-        { "key": "C", "zh": "piānyi", "cn": "piānyi" },
-        { "key": "D", "zh": "biànyi", "cn": "biànyi" }
+        { "key": "A", "zh": "piányi", "cn": "piányi", "kr": "piányi", "en": "piányi", "jp": "piányi" },
+        { "key": "B", "zh": "pián'yí", "cn": "pián'yí", "kr": "pián'yí", "en": "pián'yí", "jp": "pián'yí" },
+        { "key": "C", "zh": "piānyi", "cn": "piānyi", "kr": "piānyi", "en": "piānyi", "jp": "piānyi" },
+        { "key": "D", "zh": "biànyi", "cn": "biànyi", "kr": "biànyi", "en": "biànyi", "jp": "biànyi" }
       ],
       "answer": "A",
       "explanation": {
@@ -542,8 +570,41 @@
         "en": "The clerk says 不贵，很便宜. They’re talking about:",
         "jp": "店員が「不贵，很便宜。」と言うのは何について？"
       },
-      "options": ["价格低", "时间早", "地点远", "年龄大"],
-      "answer": "价格低",
+      "options": [
+        {
+          "key": "A",
+          "zh": "价格低",
+          "cn": "价格低",
+          "kr": "값이 싸다 · 가격이 낮다",
+          "en": "The price is low",
+          "jp": "値段が安い"
+        },
+        {
+          "key": "B",
+          "zh": "时间早",
+          "cn": "时间早",
+          "kr": "시간이 이르다",
+          "en": "It’s early (time)",
+          "jp": "時間が早い"
+        },
+        {
+          "key": "C",
+          "zh": "地点远",
+          "cn": "地点远",
+          "kr": "장소가 멀다",
+          "en": "The place is far away",
+          "jp": "場所が遠い"
+        },
+        {
+          "key": "D",
+          "zh": "年龄大",
+          "cn": "年龄大",
+          "kr": "나이가 많다",
+          "en": "Someone is old (in age)",
+          "jp": "年をとっている"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「便宜」表示价格低、不贵。",
         "kr": "「便宜」는 값이 싸다는 뜻이에요.",
@@ -561,8 +622,41 @@
         "en": "In 还买什么吗?, 还 means:",
         "jp": "「还买什么吗？」の「还」の意味は？"
       },
-      "options": ["除此之外再要别的吗", "已经结束了", "回到原处", "非常"],
-      "answer": "除此之外再要别的吗",
+      "options": [
+        {
+          "key": "A",
+          "zh": "除此之外再要别的吗",
+          "cn": "除此之外再要别的吗",
+          "kr": "그 밖에 더 살 게 있나요?",
+          "en": "Anything else you want to buy?",
+          "jp": "ほかにも買うものはありますか。"
+        },
+        {
+          "key": "B",
+          "zh": "已经结束了",
+          "cn": "已经结束了",
+          "kr": "이미 끝났어요",
+          "en": "It’s already over",
+          "jp": "もう終わりました"
+        },
+        {
+          "key": "C",
+          "zh": "回到原处",
+          "cn": "回到原处",
+          "kr": "원래 자리로 돌아간다",
+          "en": "Go back to the original spot",
+          "jp": "元の場所に戻る"
+        },
+        {
+          "key": "D",
+          "zh": "非常",
+          "cn": "非常",
+          "kr": "아주 · 대단히",
+          "en": "Very / extremely",
+          "jp": "とても・非常に"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「还」在此表示追加、另外还要什么。",
         "kr": "이미 고른 것 말고 더 살 게 있는지 묻는 말이에요.",
