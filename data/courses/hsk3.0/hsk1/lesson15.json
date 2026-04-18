@@ -716,11 +716,11 @@
       "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "本课聚焦电话与号码，不是问住址或交通。",
-          "pinyin": "diànhuà",
-          "kr": "전화·번호 과목. 주소·교통 아님.",
-          "en": "Phones & numbers—not address or transport.",
-          "jp": "電話と番号。住所や行き方ではない。"
+          "zh": "能围绕「打电话、号码、给……打电话、看一下」完成通话与问号码。",
+          "pinyin": "dǎ diànhuà · hàomǎ · gěi",
+          "kr": "「打电话」「号码」「给……打电话」「看一下」로 통화·번호를 묻고 답한다.",
+          "en": "Handle calls and number Q&A with 打电话, 号码, 给…打电话, 看一下.",
+          "jp": "「打电话」「号码」「给…打电话」「看一下」で電話と番号のやりとりができる。"
         }
       ],
       "practiceFocus": [],

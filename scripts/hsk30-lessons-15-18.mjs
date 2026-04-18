@@ -237,7 +237,7 @@ export const lesson15 = L(15, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课聚焦电话与号码，不是问住址或交通。", pinyin: "diànhuà", kr: "전화·번호 과목. 주소·교통 아님.", en: "Phones & numbers—not address or transport.", jp: "電話と番号。住所や行き方ではない。" }],
+      learningGoals: [{ zh: "能围绕「打电话、号码、给……打电话、看一下」完成通话与问号码。", pinyin: "dǎ diànhuà · hàomǎ · gěi", kr: "「打电话」「号码」「给……打电话」「看一下」로 통화·번호를 묻고 답한다.", en: "Handle calls and number Q&A with 打电话, 号码, 给…打电话, 看一下.", jp: "「打电话」「号码」「给…打电话」「看一下」で電話と番号のやりとりができる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：要老师号码。会话二：给谁打、问什么。会话三：建议给老师打电话并读号码。",
@@ -527,7 +527,7 @@ export const lesson16 = L(16, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课说天气与体感，不是说怎么去学校。", pinyin: "tiānqì", kr: "날씨 과목.", en: "Weather—not transport.", jp: "天気の课。" }],
+      learningGoals: [{ zh: "能用「天气怎么样」谈晴雨冷暖，并用「真、太、非常、有点儿、觉得」说感受。", pinyin: "tiānqì · juéde", kr: "「天气怎么样」로 날씨를 말하고 「真」「太」「非常」「有点儿」「觉得」로 느낌을 표현한다.", en: "Talk about weather with 天气怎么样; express feelings with 真, 太, 非常, 有点儿, 觉得.", jp: "「天气怎么样」で天気を言い、「真」「太」「非常」「有点儿」「觉得」で気持ちを表せる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：冷暖。会话二：大雨与在家看电视。会话三：下雪与觉得冷。",
@@ -807,7 +807,7 @@ export const lesson17 = L(17, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈学习与身份，不是说交通。", pinyin: "xuéxí", kr: "공부·학년.", en: "Study—not transport.", jp: "学習の课。" }],
+      learningGoals: [{ zh: "能用「正在……呢」说此刻在学什么，并说明大中小学身份与「都」。", pinyin: "zhèngzài · dōu", kr: "「正在……呢」로 지금 무엇을 배우는지 말하고, 학교 단계와 「都」로 신분·전원을 말한다.", en: "Use 正在…呢 for what you’re studying; say school levels and 都 for everyone.", jp: "「正在…呢」で勉強中の内容を言い、学校の段階と「都」が使える。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：读书与汉字。会话二：学汉语的时长。会话三：大中小学与都会说汉语。",
@@ -1086,7 +1086,7 @@ export const lesson18 = L(18, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈玩乐与声音，不是谈学习时长。", pinyin: "kè hòu", kr: "취미·소리.", en: "Play & sound—not study hours.", jp: "遊びと音。勉強時間ではない。" }],
+      learningGoals: [{ zh: "能谈下课后听歌、玩游戏，并用「只、听见、好听」说喜好与听到的声音。", pinyin: "tīng · wán · zhǐ", kr: "방과 후 노래·게임을 말하고 「只」「听见」「好听」로 취향과 들리는 소리를 말한다.", en: "Talk after-class music and games; use 只, 听见, 好听 for tastes and what you hear.", jp: "放課後の音楽・ゲームを言い、「只」「听见」「好听」で好みと聞こえを表せる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：听歌与游戏。会话二：只喜欢听与好听。会话三：听见唱歌与妹妹唱得好听。",

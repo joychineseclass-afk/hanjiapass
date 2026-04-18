@@ -524,10 +524,10 @@
       ],
       "practiceFocus": [],
       "scenarioSummary": {
-        "zh": "会话一：同学之间问国籍、互问是不是学生，并练习「你呢？」接话。会话二：老师问汤姆会不会说汉语、写汉字，用「会」回答能力。本课围绕国籍与语言技能，不是问候、道歉或致谢。",
-        "kr": "회화1: 친구 사이에서 국적과 학생 여부를 묻고 「你呢？」로 이어갑니다. 회화2: 선생님이 중국어 말하기·한자 쓰기를 묻고 「会」로 능력을 답합니다. 이 과는 국적·언어 능력이 중심이며 인사·사과·감사 연습이 아닙니다.",
-        "en": "Dialogue 1: classmates ask nationality and student status, using 你呢？. Dialogue 2: the teacher asks about speaking Chinese and writing characters with 会. This lesson is about nationality and skills—not greetings or thanks/apology.",
-        "jp": "会話1：国籍と学生かどうかを聞き、「你呢？」で続ける。会話2：先生が中国語の話す・書くを「会」で尋ねる。本課は国籍と能力が中心で、あいさつや謝罪・感謝の練習ではない。"
+        "zh": "会话一：同学之间问国籍、互问是不是学生，并练习「你呢？」接话。会话二：老师问汤姆会不会说汉语、写汉字，用「会」回答能力。本课围绕国籍与语言技能。",
+        "kr": "회화1: 친구 사이에서 국적과 학생 여부를 묻고 「你呢？」로 이어갑니다. 회화2: 선생님이 중국어 말하기·한자 쓰기를 묻고 「会」로 능력을 답합니다. 국적·언어 능력이 핵심입니다.",
+        "en": "Dialogue 1: nationality and student status, using 你呢？. Dialogue 2: speaking Chinese and writing characters with 会. Core: nationality and language skills.",
+        "jp": "会話1：国籍と学生かどうか、「你呢？」。会話2：話す・書くを「会」で。国籍と言語能力が中心。"
       },
       "scenarioSummaryLines": [
         {

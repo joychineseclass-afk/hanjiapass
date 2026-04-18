@@ -259,7 +259,7 @@ export const lesson19 = L(19, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈吃喝与三餐，不是谈天气。", pinyin: "chī", kr: "음식.", en: "Food—not weather.", jp: "食事の课。" }],
+      learningGoals: [{ zh: "能用「想/要」说三餐想吃什么，并说「做饭、少、一些」等。", pinyin: "xiǎng · yào · zuòfàn", kr: "「想」「要」로 끼니별로 먹고 싶은 것을 말하고 「做饭」「少」「一些」도 쓴다.", en: "Say what you want to eat with 想/要; use 做饭, 少, 一些.", jp: "「想」「要」で食べたいものを言い、「做饭」「少」「一些」も使える。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：早饭点餐。会话二：午晚餐意愿。会话三：妈妈做饭、少做一些。",
@@ -535,7 +535,7 @@ export const lesson20 = L(20, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈购物与穿着，不是谈吃什么。", pinyin: "mǎi", kr: "쇼핑.", en: "Shopping—not food.", jp: "買い物の课。" }],
+      learningGoals: [{ zh: "能问衣服价钱，说便宜贵、要不要，并理解「穿很好看」与找零用语。", pinyin: "duōshao qián · piányi · zhǎo", kr: "옷값을 묻고 싸다·비싸다·살지 말지를 말하며 「穿很好看」「找你…元」를 이해한다.", en: "Ask clothing prices; say cheap/expensive, want or not; get 穿很好看 and 找你…元.", jp: "服の値段を聞き、安い・高い・要る要らないを言い、「穿很好看」とおつりの言い方が分かる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：问价。会话二：取舍与穿着。会话三：还价与找钱。",
@@ -812,7 +812,7 @@ export const lesson21 = L(21, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈健康与休息，不是谈购物。", pinyin: "jiànkāng", kr: "건강.", en: "Health—not shopping.", jp: "健康の课。" }],
+      learningGoals: [{ zh: "能用「怎么了、生病、看病」说明身体不适，并听懂休息、明天见等嘱咐。", pinyin: "zěnme le · shēngbìng · xiūxi", kr: "「怎么了」「生病」「看病」로 몸 상태를 말하고 휴식·「明天见」 같은 당부를 듣고 이해한다.", en: "Say 怎么了, 生病, 看病; understand rest and 明天见.", jp: "「怎么了」「生病」「看病」で体調を言い、休む・「明天见」などの言葉が分かる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：去医院。会话二：医嘱与好转。会话三：休息与明天见。",
@@ -1085,7 +1085,7 @@ export const lesson22 = L(22, {
     ],
     lessonExplain: {
       focusMinimal: true,
-      learningGoals: [{ zh: "本课谈工作与称呼，不是谈看病。", pinyin: "gōngzuò", kr: "직장.", en: "Work—not seeing a doctor.", jp: "仕事の课。" }],
+      learningGoals: [{ zh: "能说去年明年、工作公司与忙闲，并在职场情景用「先生、女士」问候。", pinyin: "qùnián · míngnián · gōngzuò", kr: "작년·내년·회사·바쁨을 말하고 직장에서 「先生」「女士」로 인사한다.", en: "Say last/next year, company work, busy; greet with 先生 and 女士 at work.", jp: "去年・来年・会社と忙しさを言い、職場で「先生」「女士」であいさつできる。" }],
       practiceFocus: [],
       scenarioSummary: {
         zh: "会话一：来华时间与家庭。会话二：公司与忙闲。会话三：同事与朋友。",

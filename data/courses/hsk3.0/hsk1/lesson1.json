@@ -473,19 +473,19 @@
           "jp": "「再见」で別れのあいさつ。"
         },
         {
-          "zh": "本课聚焦问候与礼貌用语，不涉及问姓名、国籍或年龄。",
-          "pinyin": "běnkè：wènhòu · lǐmào",
-          "kr": "이 과는 인사·예의 표현이 중심이며 이름·국적·나이 묻기가 아닙니다.",
-          "en": "This lesson is greetings and politeness—not names, nationality, or age.",
-          "jp": "本課はあいさつと丁寧さ。名前・国籍・年齢は扱わない。"
+          "zh": "能在师生、同学场景中完成问好、道歉、致谢与道别等简短对话。",
+          "pinyin": "duìhuà · lǐmào",
+          "kr": "선생님·친구와 만났을 때 인사·사과·감사·작별을 짧게 이어 말한다.",
+          "en": "Complete short dialogues with greetings, apologies, thanks, and goodbyes.",
+          "jp": "先生・仲間と、あいさつ・謝罪・感謝・別れの短い会話ができる。"
         }
       ],
       "practiceFocus": [],
       "scenarioSummary": {
-        "zh": "会话一：同学之间道歉与致谢。会话二：向老师问好并道别。本课核心是敬称与礼貌套语，与后续课的姓名、家庭、时间话题不同。",
-        "kr": "회화1: 친구 사이 사과·감사; 회화2: 선생님께 인사·작별. 제1과는 높임·예의가 중심이며 뒷과의 이름·가족·시간 이야기와 다릅니다.",
-        "en": "Dialogue 1: apology/thanks among peers. Dialogue 2: greeting a teacher. Core is honorifics—not later lessons’ topics.",
-        "jp": "会話1：仲間の謝罪・お礼。会話2：先生へ。敬称が中心。"
+        "zh": "会话一：同学之间道歉与致谢。会话二：向老师问好并道别。本课核心是敬称与礼貌套语。",
+        "kr": "회화1: 친구 사이 사과·감사. 회화2: 선생님께 인사·작별. 제1과 중심은 높임말과 예의 표현입니다.",
+        "en": "Dialogue 1: apology and thanks among peers. Dialogue 2: greet and say goodbye to a teacher. Core: honorifics and polite phrases.",
+        "jp": "会話1：仲間の謝罪とお礼。会話2：先生へのあいさつと別れ。敬称と丁寧な定型が中心。"
       },
       "scenarioSummaryLines": [
         {

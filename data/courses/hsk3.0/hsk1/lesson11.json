@@ -974,18 +974,18 @@
       "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "掌握「的」字结构表示领属，不与生词「得、地」混淆。",
+          "zh": "掌握「的」字结构表示领属关系（如：我的书、老师的手机）。",
           "pinyin": "de",
-          "kr": "소유의 「的」에 익숙해진다.",
-          "en": "Use 的 for possession (not 得/地 here).",
-          "jp": "所属の「的」を使い分ける。"
+          "kr": "「나의 책」「선생님의 휴대폰」처럼 소유를 「的」로 말한다.",
+          "en": "Use 的 for possession (my book, the teacher’s phone, etc.).",
+          "jp": "「我的书」「老师的手机」のように、所属を「的」で言える。"
         },
         {
-          "zh": "本课聚焦物品归属，不是问价格或星期几。",
-          "pinyin": "guīshǔ",
-          "kr": "이 과는 물건이 누구 것인지가 중심입니다.",
-          "en": "This lesson is about ownership—not price or weekdays.",
-          "jp": "本課は持ち主。値段や曜日ではない。"
+          "zh": "能用「谁、哪个、哪些、都」问物品归属并用「这些、那些」应答。",
+          "pinyin": "shéi · nǎge · nǎxiē · dōu",
+          "kr": "「谁」「哪个」「哪些」「都」로 물건이 누구 것인지 묻고 「这些」「那些」로 답한다.",
+          "en": "Ask who owns what with 谁/哪个/哪些/都; answer with 这些/那些.",
+          "jp": "「谁」「哪个」「哪些」「都」で持ち主を尋ね、「这些」「那些」で答えられる。"
         }
       ],
       "practiceFocus": [],
