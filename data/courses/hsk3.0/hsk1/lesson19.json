@@ -1,0 +1,928 @@
+{
+  "id": "hsk1_lesson19",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 19,
+  "type": "lesson",
+  "title": {
+    "zh": "第19课｜你想吃什么？",
+    "cn": "第19课｜你想吃什么？",
+    "kr": "제19과｜뭐 먹고 싶어요?",
+    "en": "Lesson 19 | What Would You Like to Eat?",
+    "jp": "第19課｜何が食べたいですか。"
+  },
+  "summary": {
+    "zh": "学习用「想、要」表达意愿，掌握一日三餐名称，会说「做饭」与「一些」。",
+    "kr": "「想/要」·아침·점심·저녁·「做饭」·「一些」.",
+    "en": "想/要; meals; 做饭; 一些.",
+    "jp": "「想」「要」、三餐、「做饭」「一些」。"
+  },
+  "scene": {
+    "id": "hsk30_l19_scene",
+    "title": {
+      "zh": "吃饭与点餐",
+      "kr": "밥·주문",
+      "en": "Meals & ordering",
+      "jp": "食事と注文"
+    },
+    "summary": {
+      "zh": "会话一：早饭点餐、包子与茶；会话二：午饭米饭菜、晚饭饺子；会话三：晚饭面条、少做一些。",
+      "kr": "회화1 아침·포자 → 회화2 점심·저녁 메뉴 → 회화3 면·적게.",
+      "en": "Breakfast order · lunch & dinner picks · noodles & less.",
+      "jp": "朝食／昼夕／麺と量。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你想吃什么？」「我想吃饺子」表达想吃的食物",
+      "pinyin": "xiǎng · yào",
+      "kr": "「想」「要」로 먹고 싶은 것을 말한다.",
+      "en": "Say what you want with 想/要.",
+      "jp": "「想」「要」で食べたいものを言う。"
+    },
+    {
+      "zh": "能区分「早饭、午饭、晚饭」，并听懂「少做一些」",
+      "pinyin": "zǎofàn · wǔfàn · wǎnfàn",
+      "kr": "세 끼와 「少做一些」.",
+      "en": "Meal words; 少做一些.",
+      "jp": "三餐と「少做一些」。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜在饭店吃早饭",
+        "kr": "회화 1｜아침 식당",
+        "en": "Dialogue 1 | Breakfast out",
+        "jp": "会話1｜朝の店"
+      },
+      "summary": {
+        "zh": "问早饭有什么、看菜单，要包子与茶。",
+        "kr": "아침 메뉴·책·포자·차.",
+        "en": "What’s for breakfast—menu—buns & tea.",
+        "jp": "朝のメニュー、包子とお茶。"
+      },
+      "lines": [
+        {
+          "speaker": "饭店",
+          "text": "你好，你想吃点什么？",
+          "pinyin": "Nǐ hǎo, nǐ xiǎng chī diǎnr shénme?",
+          "translation": {
+            "kr": "안녕하세요, 뭐 드실래요?",
+            "en": "Hi—what would you like?",
+            "jp": "こんにちは、何になさいますか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "这儿早饭有什么？",
+          "pinyin": "Zhèr zǎofàn yǒu shénme?",
+          "translation": {
+            "kr": "여기 아침 메뉴 뭐 있어요?",
+            "en": "What do you have for breakfast?",
+            "jp": "こちらの朝食は何がありますか。"
+          }
+        },
+        {
+          "speaker": "饭店",
+          "text": "有面包、牛奶，鸡蛋和包子。",
+          "pinyin": "Yǒu miànbāo, niúnǎi, jīdàn hé bāozi.",
+          "translation": {
+            "kr": "빵, 우유, 계란, 만두 있어요.",
+            "en": "Bread, milk, eggs, and buns.",
+            "jp": "パン、牛乳、卵、包子があります。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "有菜单吗？",
+          "pinyin": "Yǒu càidān ma?",
+          "translation": {
+            "kr": "메뉴 있어요?",
+            "en": "Do you have a menu?",
+            "jp": "メニューはありますか。"
+          }
+        },
+        {
+          "speaker": "饭店",
+          "text": "这是菜单。",
+          "pinyin": "Zhè shì càidān.",
+          "translation": {
+            "kr": "여기 메뉴예요.",
+            "en": "Here’s the menu.",
+            "jp": "メニューです。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "给我三个包子吧。",
+          "pinyin": "Gěi wǒ sān ge bāozi ba.",
+          "translation": {
+            "kr": "만두 세 개 주세요.",
+            "en": "Three buns, please.",
+            "jp": "包子を三つください。"
+          }
+        },
+        {
+          "speaker": "饭店",
+          "text": "喝点儿什么吗？",
+          "pinyin": "Hē diǎnr shénme ma?",
+          "translation": {
+            "kr": "뭐 마실래요?",
+            "en": "Something to drink?",
+            "jp": "お飲み物は？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "一杯茶。",
+          "pinyin": "Yì bēi chá.",
+          "translation": {
+            "kr": "차 한 잔이요.",
+            "en": "A cup of tea.",
+            "jp": "お茶一杯。"
+          }
+        },
+        {
+          "speaker": "饭店",
+          "text": "好的。三个包子一杯茶",
+          "pinyin": "Hǎo de. Sān ge bāozi yì bēi chá",
+          "translation": {
+            "kr": "알겠습니다. 만두 세 개, 차 한 잔.",
+            "en": "Sure—three buns and a tea.",
+            "jp": "はい。包子三つ、お茶一杯。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "谢谢。",
+          "pinyin": "Xièxie.",
+          "translation": {
+            "kr": "감사합니다.",
+            "en": "Thanks.",
+            "jp": "ありがとう。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜午饭和晚饭",
+        "kr": "회화 2｜점심·저녁",
+        "en": "Dialogue 2 | Lunch & dinner",
+        "jp": "会話2｜昼と夜"
+      },
+      "summary": {
+        "zh": "妈妈问午饭想吃什么、晚饭想吃什么。",
+        "kr": "점심·저녁 메뉴.",
+        "en": "Lunch and dinner wishes.",
+        "jp": "昼と夜の希望。"
+      },
+      "lines": [
+        {
+          "speaker": "妈妈",
+          "text": "你午饭想吃什么？",
+          "pinyin": "Nǐ wǔfàn xiǎng chī shénme?",
+          "translation": {
+            "kr": "점심에 뭐 먹고 싶어?",
+            "en": "What do you want for lunch?",
+            "jp": "昼ごはんは何が食べたい？"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "我想吃米饭和菜。",
+          "pinyin": "Wǒ xiǎng chī mǐfàn hé cài.",
+          "translation": {
+            "kr": "밥이랑 반찬 먹고 싶어요.",
+            "en": "I’d like rice and dishes.",
+            "jp": "ご飯とおかずが食べたいです。"
+          }
+        },
+        {
+          "speaker": "妈妈",
+          "text": "晚饭呢？",
+          "pinyin": "Wǎnfàn ne?",
+          "translation": {
+            "kr": "저녁은?",
+            "en": "And dinner?",
+            "jp": "夕ごはんは？"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "晚饭我想吃饺子。",
+          "pinyin": "Wǎnfàn wǒ xiǎng chī jiǎozi.",
+          "translation": {
+            "kr": "저녁엔 만두 먹고 싶어요.",
+            "en": "For dinner I want dumplings.",
+            "jp": "夕食は餃子が食べたいです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜做饭",
+        "kr": "회화 3｜요리",
+        "en": "Dialogue 3 | Cooking",
+        "jp": "会話3｜料理"
+      },
+      "summary": {
+        "zh": "晚饭想吃面条，妈妈做面条和饺子，让少做一些。",
+        "kr": "저녁 면·만두·덜 해 달라.",
+        "en": "Noodles & dumplings—make a bit less.",
+        "jp": "麺と餃子、少なめに。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "妈妈，晚饭我想吃面条儿。",
+          "pinyin": "Māma, wǎnfàn wǒ xiǎng chī miàntiáor.",
+          "translation": {
+            "kr": "엄마, 저녁엔 면 먹고 싶어요.",
+            "en": "Mom—I want noodles for dinner.",
+            "jp": "ママ、夕食は麺が食べたい。"
+          }
+        },
+        {
+          "speaker": "妈妈",
+          "text": "好，我给你做面条儿和饺子吧。",
+          "pinyin": "Hǎo, wǒ gěi nǐ zuò miàntiáor hé jiǎozi ba.",
+          "translation": {
+            "kr": "좋아, 면이랑 만두 해 줄게.",
+            "en": "Okay—I’ll make noodles and dumplings.",
+            "jp": "いいわ、麺と餃子を作るね。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "少做一些。",
+          "pinyin": "Shǎo zuò yīxiē.",
+          "translation": {
+            "kr": "적게 해 주세요.",
+            "en": "Not too much.",
+            "jp": "少なめに。"
+          }
+        },
+        {
+          "speaker": "妈妈",
+          "text": "好的。",
+          "pinyin": "Hǎo de.",
+          "translation": {
+            "kr": "알겠어.",
+            "en": "Sure.",
+            "jp": "いいわよ。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "想 / 要",
+      "pinyin": "xiǎng / yào",
+      "hint": {
+        "zh": "意愿",
+        "kr": "바라다",
+        "en": "want",
+        "jp": "欲しい"
+      },
+      "explanation": {
+        "zh": "「想」后接动词或动词短语，表示希望、打算；「要」在餐饮语境中可表示点选、想要，语气较直接，如「我要一杯茶」。\n\n「想吃」\nxiǎng chī",
+        "kr": "「想」「要」로 먹고 싶음·주문.",
+        "en": "想/要 express what you’d like.",
+        "jp": "「想」「要」で希望や注文。"
+      },
+      "examples": [
+        {
+          "zh": "你想吃点什么？",
+          "pinyin": "Nǐ xiǎng chī diǎnr shénme?",
+          "translation": {
+            "kr": "뭐 드실래요?",
+            "en": "What would you like to eat?",
+            "jp": "何か召し上がりますか。"
+          }
+        },
+        {
+          "zh": "晚饭我想吃饺子。",
+          "pinyin": "Wǎnfàn wǒ xiǎng chī jiǎozi.",
+          "translation": {
+            "kr": "저녁엔 만두 먹고 싶어요.",
+            "en": "I want dumplings for dinner.",
+            "jp": "夕食は餃子が食べたいです。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "一日三餐",
+      "pinyin": "yī rì sān cān",
+      "hint": {
+        "zh": "早午晚",
+        "kr": "아·점·저",
+        "en": "meals",
+        "jp": "三餐"
+      },
+      "explanation": {
+        "zh": "「早饭、午饭、晚饭」分别指一天中的三餐，可与「想吃什么」等搭配询问或说明某一餐的安排。\n\n「午饭」\nwǔfàn",
+        "kr": "「早饭」「午饭」「晚饭」로 끼니를 말합니다.",
+        "en": "早饭/午饭/晚饭 = breakfast/lunch/dinner.",
+        "jp": "朝・昼・夕の食事。"
+      },
+      "examples": [
+        {
+          "zh": "你午饭想吃什么？",
+          "pinyin": "Nǐ wǔfàn xiǎng chī shénme?",
+          "translation": {
+            "kr": "점심에 뭐 먹고 싶어?",
+            "en": "What do you want for lunch?",
+            "jp": "昼ごはんは何が食べたい？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "做饭",
+      "pinyin": "zuò fàn",
+      "hint": {
+        "zh": "料理",
+        "kr": "요리",
+        "en": "cook",
+        "jp": "料理"
+      },
+      "explanation": {
+        "zh": "离合词「做饭」表示制作饭菜，可带宾语说明为谁或配合什么菜，如「我给你做面条儿和饺子吧」。\n\n「做饭」\nzuò fàn",
+        "kr": "「做饭」는 밥을 짓다.",
+        "en": "做饭 = cook (a meal).",
+        "jp": "「做饭」は料理を作る。"
+      },
+      "examples": [
+        {
+          "zh": "我给你做面条儿和饺子吧。",
+          "pinyin": "Wǒ gěi nǐ zuò miàntiáor hé jiǎozi ba.",
+          "translation": {
+            "kr": "면이랑 만두 해 줄게.",
+            "en": "I’ll make noodles and dumplings for you.",
+            "jp": "麺と餃子を作るね。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "一些",
+      "pinyin": "yīxiē",
+      "hint": {
+        "zh": "少量",
+        "kr": "조금",
+        "en": "some / a bit",
+        "jp": "少し"
+      },
+      "explanation": {
+        "zh": "数量词「一些」表示不定量的少量，可修饰动词或名词性成分；「少做一些」意为数量上少做一点。\n\n「一些」\nyīxiē",
+        "kr": "「一些」는 양이 많지 않음.",
+        "en": "一些 = some; 少做一些 = make less.",
+        "jp": "「一些」は少し、「少做一些」は量を減らす。"
+      },
+      "examples": [
+        {
+          "zh": "少做一些。",
+          "pinyin": "Shǎo zuò yīxiē.",
+          "translation": {
+            "kr": "적게 해 주세요.",
+            "en": "Make a smaller amount.",
+            "jp": "少なめに。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "我想吃包子。",
+          "pinyin": "Wǒ xiǎng chī bāozi.",
+          "translations": {
+            "kr": "만두 먹고 싶어요.",
+            "en": "I want buns.",
+            "jp": "包子が食べたい。"
+          }
+        },
+        {
+          "zh": "晚饭吃什么？",
+          "pinyin": "Wǎnfàn chī shénme?",
+          "translations": {
+            "kr": "저녁에 뭐 먹을까?",
+            "en": "What’s for dinner?",
+            "jp": "夕食は何にする？"
+          }
+        },
+        {
+          "zh": "我喜欢喝茶。",
+          "pinyin": "Wǒ xǐhuan hē chá.",
+          "translations": {
+            "kr": "차 마시는 걸 좋아해요.",
+            "en": "I like drinking tea.",
+            "jp": "お茶を飲むのが好きです。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜饭店菜单",
+        "kr": "읽기｜메뉴판",
+        "en": "Reading | Menu",
+        "jp": "読み物｜メニュー"
+      },
+      "sentences": [
+        {
+          "zh": "包子 6元",
+          "pinyin": "bāozi liù yuán",
+          "translations": {
+            "kr": "만두 6위안",
+            "en": "Buns 6 yuan",
+            "jp": "包子 6元"
+          }
+        },
+        {
+          "zh": "饺子 12元",
+          "pinyin": "jiǎozi shí'èr yuán",
+          "translations": {
+            "kr": "만두 12위안",
+            "en": "Dumplings 12 yuan",
+            "jp": "餃子 12元"
+          }
+        },
+        {
+          "zh": "面条儿 15元",
+          "pinyin": "miàntiáor shíwǔ yuán",
+          "translations": {
+            "kr": "면 15위안",
+            "en": "Noodles 15 yuan",
+            "jp": "麺 15元"
+          }
+        },
+        {
+          "zh": "米饭 2元",
+          "pinyin": "mǐfàn èr yuán",
+          "translations": {
+            "kr": "밥 2위안",
+            "en": "Rice 2 yuan",
+            "jp": "ご飯 2元"
+          }
+        },
+        {
+          "zh": "茶 3元",
+          "pinyin": "chá sān yuán",
+          "translations": {
+            "kr": "차 3위안",
+            "en": "Tea 3 yuan",
+            "jp": "お茶 3元"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l19_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「想吃什么」？",
+        "kr": "먹고 싶은 걸 묻는 말은?",
+        "en": "Which asks what you’d like to eat?",
+        "jp": "何が食べたいか聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "你想吃点什么？",
+          "cn": "你想吃点什么？",
+          "kr": "뭐 드실래요?",
+          "en": "What would you like to eat?",
+          "jp": "何か召し上がりますか。"
+        },
+        {
+          "key": "B",
+          "zh": "你怎么去学校？",
+          "cn": "你怎么去学校？",
+          "kr": "학교 어떻게 가?",
+          "en": "How do you get to school?",
+          "jp": "学校へどう行く？"
+        },
+        {
+          "key": "C",
+          "zh": "今天冷吗？",
+          "cn": "今天冷吗？",
+          "kr": "추워요?",
+          "en": "Is it cold?",
+          "jp": "寒い？"
+        },
+        {
+          "key": "D",
+          "zh": "你学习几个小时？",
+          "cn": "你学习几个小时？",
+          "kr": "몇 시간 공부?",
+          "en": "How many hours do you study?",
+          "jp": "何時間勉強する？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「想……吃」询问饮食意愿。",
+        "kr": "「想吃」.",
+        "en": "想吃 asks food wishes.",
+        "jp": "「想吃」は食べたいもの。"
+      }
+    },
+    {
+      "id": "hsk30_l19_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「饺子」的拼音是？",
+        "kr": "「饺子」의 병음은?",
+        "en": "What’s the pinyin for 饺子?",
+        "jp": "「饺子」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "jiǎozi",
+          "cn": "jiǎozi",
+          "kr": "jiǎozi",
+          "en": "jiǎozi",
+          "jp": "jiǎozi"
+        },
+        {
+          "key": "B",
+          "zh": "jiāozi",
+          "cn": "jiāozi",
+          "kr": "jiāozi",
+          "en": "jiāozi",
+          "jp": "jiāozi"
+        },
+        {
+          "key": "C",
+          "zh": "jiǎozhi",
+          "cn": "jiǎozhi",
+          "kr": "jiǎozhi",
+          "en": "jiǎozhi",
+          "jp": "jiǎozhi"
+        },
+        {
+          "key": "D",
+          "zh": "jiàozi",
+          "cn": "jiàozi",
+          "kr": "jiàozi",
+          "en": "jiàozi",
+          "jp": "jiàozi"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「饺子」读作 jiǎozi。",
+        "kr": "「饺子」는 jiǎozi입니다.",
+        "en": "Say jiǎozi.",
+        "jp": "読みは jiǎozi です。"
+      }
+    },
+    {
+      "id": "hsk30_l19_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「少做一些。」主要是请对方：",
+        "kr": "「少做一些」는?",
+        "en": "少做一些 mainly asks someone to:",
+        "jp": "「少做一些」は相手に何を頼む？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "把饭菜数量做少一点",
+          "cn": "把饭菜数量做少一点",
+          "kr": "양을 줄여 달라",
+          "en": "Make a smaller amount of food",
+          "jp": "量を少なめに作る"
+        },
+        {
+          "key": "B",
+          "zh": "不要再做饭了",
+          "cn": "不要再做饭了",
+          "kr": "요리 그만",
+          "en": "Stop cooking entirely",
+          "jp": "もう料理しない"
+        },
+        {
+          "key": "C",
+          "zh": "做得快一些",
+          "cn": "做得快一些",
+          "kr": "더 빨리",
+          "en": "Cook faster",
+          "jp": "もっと速く"
+        },
+        {
+          "key": "D",
+          "zh": "只做素菜",
+          "cn": "只做素菜",
+          "kr": "채식만",
+          "en": "Vegetarian only",
+          "jp": "野菜だけ"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「少」与「一些」配合，表示减量。",
+        "kr": "양을 줄이라는 뜻.",
+        "en": "Ask for less food made.",
+        "jp": "量を減らすお願い。"
+      }
+    },
+    {
+      "id": "hsk30_l19_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「午饭」指的是哪一餐？",
+        "kr": "「午饭」는?",
+        "en": "午饭 refers to:",
+        "jp": "「午饭」はいつの食事？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "中午那一餐",
+          "cn": "中午那一餐",
+          "kr": "점심",
+          "en": "Lunch",
+          "jp": "昼の食事"
+        },
+        {
+          "key": "B",
+          "zh": "早上那一餐",
+          "cn": "早上那一餐",
+          "kr": "아침",
+          "en": "Breakfast",
+          "jp": "朝の食事"
+        },
+        {
+          "key": "C",
+          "zh": "晚上那一餐",
+          "cn": "晚上那一餐",
+          "kr": "저녁",
+          "en": "Dinner",
+          "jp": "夜の食事"
+        },
+        {
+          "key": "D",
+          "zh": "夜里加餐",
+          "cn": "夜里加餐",
+          "kr": "야식",
+          "en": "Late snack",
+          "jp": "夜食"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「午饭」即午餐。",
+        "kr": "점심.",
+        "en": "午饭 = lunch.",
+        "jp": "昼食。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "你想吃点什么？",
+      "这儿早饭有什么？",
+      "我想吃米饭和菜。",
+      "晚饭我想吃饺子。",
+      "晚饭我想吃面条儿。",
+      "我给你做面条儿和饺子吧。",
+      "少做一些。"
+    ],
+    "chatPrompt": "请只用本课「包子、饺子、面包、水、鸡蛋、菜、菜单、饭、早饭、午饭、晚饭、做、做饭、想、要、面条儿、少、一些」等词语谈吃喝与三餐；不要写成问怎么去学校。",
+    "prompt": {
+      "zh": "请只用本课「包子、饺子、面包、水、鸡蛋、菜、菜单、饭、早饭、午饭、晚饭、做、做饭、想、要、面条儿、少、一些」等词语谈吃喝与三餐；不要写成问怎么去学校。",
+      "kr": "음식·끼니만. 통학은 빼 주세요.",
+      "en": "Food & meals only—no commuting.",
+      "jp": "食事だけ。通学は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l19_order",
+          "situation": {
+            "zh": "会话一：饭店",
+            "kr": "회화1 · 식당",
+            "en": "Dialogue 1",
+            "jp": "会話1"
+          },
+          "aiRole": {
+            "zh": "饭店",
+            "kr": "식당",
+            "en": "Restaurant",
+            "jp": "店"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你好，你想吃点什么？",
+              "pinyin": "Nǐ hǎo, nǐ xiǎng chī diǎnr shénme?",
+              "kr": "뭐 드실래요?",
+              "en": "What would you like?",
+              "jp": "何になさいますか。"
+            },
+            {
+              "zh": "给我三个包子吧。",
+              "pinyin": "Gěi wǒ sān ge bāozi ba.",
+              "kr": "만두 세 개 주세요.",
+              "en": "Three buns, please.",
+              "jp": "包子を三つください。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "欢迎光临！",
+              "studentRefs": [
+                "你想吃点什么？"
+              ],
+              "acceptable": [
+                "你想吃点什么？"
+              ],
+              "closeAnswers": [
+                "想",
+                "吃"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「想/要」说想吃的食物。",
+        "pinyin": "xiǎng",
+        "kr": "먹고 싶음.",
+        "en": "Want food with 想/要.",
+        "jp": "「想」「要」で食べたいもの。"
+      },
+      {
+        "zh": "能分清早饭、午饭、晚饭。",
+        "pinyin": "zǎofàn",
+        "kr": "세 끼.",
+        "en": "Three meals.",
+        "jp": "三餐の言い方。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课谈吃喝与三餐，不是谈天气。",
+          "pinyin": "chī",
+          "kr": "음식.",
+          "en": "Food—not weather.",
+          "jp": "食事の课。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：早饭点餐。会话二：午晚餐意愿。会话三：妈妈做饭、少做一些。",
+        "kr": "아침 주문 → 끼니 → 요리·양.",
+        "en": "Breakfast · meals · cooking & amount.",
+        "jp": "朝食／昼夕／料理の量。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「菜单」列出菜名与价格。",
+          "pinyin": "càidān",
+          "kr": "메뉴.",
+          "en": "Menu lists dishes.",
+          "jp": "「菜单」はメニュー。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「想」和「要」在饭店里语气一样吗？",
+      "kr": "「想」?",
+      "en": "想 vs 要 in a café?",
+      "jp": "「想」と「要」？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「少做一些」能对朋友说吗？",
+        "午饭和中午有什么区别？"
+      ],
+      "kr": [
+        "「少做一些」?",
+        "午饭?"
+      ],
+      "en": [
+        "少做一些 to friends?",
+        "午饭 vs 中午?"
+      ],
+      "jp": [
+        "「少做一些」は友だちに？",
+        "午饭？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你想吃什么？ / 我想吃饺子。",
+        "pinyin": "Nǐ xiǎng chī shénme? / Wǒ xiǎng chī jiǎozi.",
+        "usage": {
+          "zh": "询问并表达想吃的食物。",
+          "kr": "먹고 싶은 것 묻고 답하기.",
+          "en": "Ask and say what you want to eat.",
+          "jp": "食べたいものを聞き、言う。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

@@ -1,0 +1,870 @@
+{
+  "id": "hsk1_lesson20",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 20,
+  "type": "lesson",
+  "title": {
+    "zh": "第20课｜我想买两件衣服",
+    "cn": "第20课｜我想买两件衣服",
+    "kr": "제20과｜옷 두 벌 사고 싶어요",
+    "en": "Lesson 20 | I Want to Buy Two Pieces of Clothing",
+    "jp": "第20課｜服を二枚買いたいです"
+  },
+  "summary": {
+    "zh": "学习用「件」说衣物，用「多少钱」问价，用「穿」说穿着效果，并认识「不要、便宜」。",
+    "kr": "「件」「多少钱」「穿」「不要」「便宜」.",
+    "en": "件; 多少钱; 穿; 不要; 便宜.",
+    "jp": "「件」「多少钱」「穿」「不要」「便宜」。"
+  },
+  "scene": {
+    "id": "hsk30_l20_scene",
+    "title": {
+      "zh": "买衣服",
+      "kr": "옷 사기",
+      "en": "Buying clothes",
+      "jp": "服を買う"
+    },
+    "summary": {
+      "zh": "会话一：问价五十元、一百元；会话二：想买那件、这件不要、穿着好看；会话三：一共一百、便宜到九十、找十元。",
+      "kr": "가격 → 고르기·핏 → 흥정·거스름.",
+      "en": "Prices · choosing & fit · bargain & change.",
+      "jp": "値段／選ぶ・似合い／値切りとおつり。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「这件衣服多少钱？」「五十元」询问与说明价格",
+      "pinyin": "duōshao qián · yuán",
+      "kr": "가격을 묻고 답한다.",
+      "en": "Ask and state prices.",
+      "jp": "値段を尋ね、言う。"
+    },
+    {
+      "zh": "能用「那件你穿很好看」描述穿着效果，并听懂「找你十元」",
+      "pinyin": "chuān · zhǎo qián",
+      "kr": "입었을 때 모습·거스름 돈.",
+      "en": "穿 for how it looks; change at checkout.",
+      "jp": "「穿」とおつり。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜买衣服",
+        "kr": "회화 1｜옷 가게",
+        "en": "Dialogue 1 | Shopping",
+        "jp": "会話1｜買い物"
+      },
+      "summary": {
+        "zh": "问这件、那件各多少钱。",
+        "kr": "이거·저거 가격.",
+        "en": "This one & that one—prices.",
+        "jp": "これとあれの値段。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "这件衣服多少钱？",
+          "pinyin": "Zhè jiàn yīfu duōshao qián?",
+          "translation": {
+            "kr": "이 옷 얼마예요?",
+            "en": "How much is this piece?",
+            "jp": "この服いくら？"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "五十元。",
+          "pinyin": "Wǔshí yuán.",
+          "translation": {
+            "kr": "50위안.",
+            "en": "Fifty yuan.",
+            "jp": "50元。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "那件呢？",
+          "pinyin": "Nà jiàn ne?",
+          "translation": {
+            "kr": "저건요?",
+            "en": "And that one?",
+            "jp": "あれは？"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "那件一百元。",
+          "pinyin": "Nà jiàn yībǎi yuán.",
+          "translation": {
+            "kr": "저건 100위안.",
+            "en": "That one’s one hundred yuan.",
+            "jp": "あちらは100元。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜做选择",
+        "kr": "회화 2｜고르기",
+        "en": "Dialogue 2 | Choosing",
+        "jp": "会話2｜選ぶ"
+      },
+      "summary": {
+        "zh": "想买那件、不要这件，觉得有点儿大，对方说那件穿着好看。",
+        "kr": "저걸로·이건 패스·큼·핏.",
+        "en": "Want that—not this—a bit big—looks good on you.",
+        "jp": "あれがいい／これは違う／大きい／似合う。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "我想买那件。",
+          "pinyin": "Wǒ xiǎng mǎi nà jiàn.",
+          "translation": {
+            "kr": "저거 살래요.",
+            "en": "I want to buy that one.",
+            "jp": "あれを買いたいです。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "这件不要吗？",
+          "pinyin": "Zhè jiàn bù yào ma?",
+          "translation": {
+            "kr": "이건 안 살 거예요?",
+            "en": "Not this one?",
+            "jp": "これはいらない？"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "不要，我觉得有一点儿大。",
+          "pinyin": "Bù yào, wǒ juéde yǒu yìdiǎnr dà.",
+          "translation": {
+            "kr": "아니요, 좀 큰 것 같아요.",
+            "en": "No—I think it’s a bit big.",
+            "jp": "いいえ、少し大きい気がします。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "那件你穿很好看。",
+          "pinyin": "Nà jiàn nǐ chuān hěn hǎokàn.",
+          "translation": {
+            "kr": "저건 입으면 잘 어울려요.",
+            "en": "That one looks great on you.",
+            "jp": "あれは似合いそう。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜付款找钱",
+        "kr": "회화 3｜결제",
+        "en": "Dialogue 3 | Paying",
+        "jp": "会話3｜会計"
+      },
+      "summary": {
+        "zh": "一共一百、还价到九十、付一百找十块。",
+        "kr": "총액·깎기·거스름.",
+        "en": "Total—deal—change.",
+        "jp": "合計・値切り・おつり。"
+      },
+      "lines": [
+        {
+          "speaker": "店员",
+          "text": "一共一百元。",
+          "pinyin": "Yīgòng yībǎi yuán.",
+          "translation": {
+            "kr": "합계 100위안.",
+            "en": "One hundred yuan altogether.",
+            "jp": "合計100元。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "能便宜一点儿吗？",
+          "pinyin": "Néng piányi yìdiǎnr ma?",
+          "translation": {
+            "kr": "좀 깎아 주실 수 있어요?",
+            "en": "Could you make it a bit cheaper?",
+            "jp": "もう少し安くできますか。"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "九十元吧。",
+          "pinyin": "Jiǔshí yuán ba.",
+          "translation": {
+            "kr": "90위안이요.",
+            "en": "Ninety yuan, then.",
+            "jp": "90元にしましょう。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "给你一百元。",
+          "pinyin": "Gěi nǐ yībǎi yuán.",
+          "translation": {
+            "kr": "100위안 드릴게요.",
+            "en": "Here’s one hundred.",
+            "jp": "100元どうぞ。"
+          }
+        },
+        {
+          "speaker": "店员",
+          "text": "找你十元。",
+          "pinyin": "Zhǎo nǐ shí yuán.",
+          "translation": {
+            "kr": "10위안 거스름.",
+            "en": "Ten yuan back.",
+            "jp": "おつり10元。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "谢谢",
+          "pinyin": "Xièxie",
+          "translation": {
+            "kr": "감사합니다.",
+            "en": "Thanks.",
+            "jp": "ありがとう。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "件",
+      "pinyin": "jiàn",
+      "hint": {
+        "zh": "衣物量词",
+        "kr": "벌",
+        "en": "piece (clothes)",
+        "jp": "枚・着"
+      },
+      "explanation": {
+        "zh": "量词「件」常用于上衣、外套等衣物，如「这件衣服」「那件」。\n\n「这件」\nzhè jiàn",
+        "kr": "「件」는 옷을 세는 말.",
+        "en": "件 counts pieces of clothing.",
+        "jp": "「件」は服の数え方。"
+      },
+      "examples": [
+        {
+          "zh": "这件衣服多少钱？",
+          "pinyin": "Zhè jiàn yīfu duōshao qián?",
+          "translation": {
+            "kr": "이 옷 얼마예요?",
+            "en": "How much is this?",
+            "jp": "この服いくら？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "多少钱",
+      "pinyin": "duōshao qián",
+      "hint": {
+        "zh": "问价",
+        "kr": "가격",
+        "en": "how much",
+        "jp": "いくら"
+      },
+      "explanation": {
+        "zh": "疑问短语「多少钱」用于询问价格，回答时常用「数词 + 元/块」等形式。\n\n「五十元」\nwǔshí yuán",
+        "kr": "「多少钱」로 가격을 묻습니다.",
+        "en": "多少钱? asks the price.",
+        "jp": "「多少钱」で値段を尋ねる。"
+      },
+      "examples": [
+        {
+          "zh": "这件衣服多少钱？",
+          "pinyin": "Zhè jiàn yīfu duōshao qián?",
+          "translation": {
+            "kr": "이 옷 얼마?",
+            "en": "How much is this piece?",
+            "jp": "いくらですか。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "不要",
+      "pinyin": "bù yào",
+      "hint": {
+        "zh": "否定选择",
+        "kr": "안 삼",
+        "en": "don’t want",
+        "jp": "いらない"
+      },
+      "explanation": {
+        "zh": "否定副词「不」与「要」搭配，可表示拒绝、排除某一选项，如「这件不要吗？」「不要，我觉得有一点儿大。」\n\n「不要」\nbù yào",
+        "kr": "「不要」는 원하지 않음.",
+        "en": "不要 = don’t want / pass on this one.",
+        "jp": "「不要」はいらない。"
+      },
+      "examples": [
+        {
+          "zh": "这件不要吗？",
+          "pinyin": "Zhè jiàn bù yào ma?",
+          "translation": {
+            "kr": "이건 안 살 거예요?",
+            "en": "You don’t want this one?",
+            "jp": "これはいらない？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "穿",
+      "pinyin": "chuān",
+      "hint": {
+        "zh": "穿着",
+        "kr": "입다",
+        "en": "wear",
+        "jp": "着る"
+      },
+      "explanation": {
+        "zh": "动词「穿」表示把衣物穿在身上，可用于评价穿着效果，如「那件你穿很好看」。\n\n「穿」\nchuān",
+        "kr": "「穿」는 입다·어울리다.",
+        "en": "穿 = wear; 穿很好看 = looks good on you.",
+        "jp": "「穿」は着る、似合う。"
+      },
+      "examples": [
+        {
+          "zh": "那件你穿很好看。",
+          "pinyin": "Nà jiàn nǐ chuān hěn hǎokàn.",
+          "translation": {
+            "kr": "저건 입으면 정말 잘 어울려요.",
+            "en": "That one looks great on you.",
+            "jp": "あれはよく似合います。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "我想买两件衣服。",
+          "pinyin": "Wǒ xiǎng mǎi liǎng jiàn yīfu.",
+          "translations": {
+            "kr": "옷 두 벌 사고 싶어요.",
+            "en": "I want to buy two pieces.",
+            "jp": "服を二枚買いたいです。"
+          }
+        },
+        {
+          "zh": "这件很便宜。",
+          "pinyin": "Zhè jiàn hěn piányi.",
+          "translations": {
+            "kr": "이건 아주 싸요.",
+            "en": "This one’s very cheap.",
+            "jp": "これはとても安い。"
+          }
+        },
+        {
+          "zh": "那件我穿很好看。",
+          "pinyin": "Nà jiàn wǒ chuān hěn hǎokàn.",
+          "translations": {
+            "kr": "저건 제가 입으면 잘 어울려요.",
+            "en": "That one looks great on me.",
+            "jp": "あれは私に似合います。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜服装店价签",
+        "kr": "읽기｜가격표",
+        "en": "Reading | Price tags",
+        "jp": "読み物｜値札"
+      },
+      "sentences": [
+        {
+          "zh": "这件衣服 90元",
+          "pinyin": "Zhè jiàn yīfu jiǔshí yuán",
+          "translations": {
+            "kr": "이 옷 90위안",
+            "en": "This one 90 yuan",
+            "jp": "この服 90元"
+          }
+        },
+        {
+          "zh": "那件衣服 100元",
+          "pinyin": "Nà jiàn yīfu yībǎi yuán",
+          "translations": {
+            "kr": "저 옷 100위안",
+            "en": "That one 100 yuan",
+            "jp": "あの服 100元"
+          }
+        },
+        {
+          "zh": "这件大",
+          "pinyin": "Zhè jiàn dà",
+          "translations": {
+            "kr": "이건 큼",
+            "en": "This one’s big",
+            "jp": "これは大きい"
+          }
+        },
+        {
+          "zh": "那件小",
+          "pinyin": "Nà jiàn xiǎo",
+          "translations": {
+            "kr": "저건 작음",
+            "en": "That one’s small",
+            "jp": "あれは小さい"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l20_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「衣服多少钱」？",
+        "kr": "옷값을 묻는 말은?",
+        "en": "Which asks the price of clothes?",
+        "jp": "服の値段を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "这件衣服多少钱？",
+          "cn": "这件衣服多少钱？",
+          "kr": "이 옷 얼마?",
+          "en": "How much is this piece?",
+          "jp": "この服いくら？"
+        },
+        {
+          "key": "B",
+          "zh": "今天天气怎么样？",
+          "cn": "今天天气怎么样？",
+          "kr": "날씨?",
+          "en": "How’s the weather?",
+          "jp": "天気は？"
+        },
+        {
+          "key": "C",
+          "zh": "你学习什么？",
+          "cn": "你学习什么？",
+          "kr": "뭐 공부?",
+          "en": "What do you study?",
+          "jp": "何を勉強？"
+        },
+        {
+          "key": "D",
+          "zh": "你怎么去学校？",
+          "cn": "你怎么去学校？",
+          "kr": "학교 어떻게?",
+          "en": "How to school?",
+          "jp": "学校へどう？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「多少钱」问价格。",
+        "kr": "가격 질문.",
+        "en": "多少钱 asks price.",
+        "jp": "値段の質問。"
+      }
+    },
+    {
+      "id": "hsk30_l20_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「便宜」的拼音是？",
+        "kr": "「便宜」의 병음은?",
+        "en": "What’s the pinyin for 便宜?",
+        "jp": "「便宜」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "piányi",
+          "cn": "piányi",
+          "kr": "piányi",
+          "en": "piányi",
+          "jp": "piányi"
+        },
+        {
+          "key": "B",
+          "zh": "piānyi",
+          "cn": "piānyi",
+          "kr": "piānyi",
+          "en": "piānyi",
+          "jp": "piānyi"
+        },
+        {
+          "key": "C",
+          "zh": "piányí",
+          "cn": "piányí",
+          "kr": "piányí",
+          "en": "piányí",
+          "jp": "piányí"
+        },
+        {
+          "key": "D",
+          "zh": "pianyí",
+          "cn": "pianyí",
+          "kr": "pianyí",
+          "en": "pianyí",
+          "jp": "pianyí"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「便宜」读作 piányi。",
+        "kr": "「便宜」는 piányi입니다.",
+        "en": "Say piányi.",
+        "jp": "読みは piányi です。"
+      }
+    },
+    {
+      "id": "hsk30_l20_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「那件你穿很好看。」主要是在说：",
+        "kr": "「穿很好看」는?",
+        "en": "That line mainly comments on:",
+        "jp": "「穿很好看」は主に何を言う？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "穿在身上是否好看、合适",
+          "cn": "穿在身上是否好看、合适",
+          "kr": "입었을 때 보기",
+          "en": "How it looks on you",
+          "jp": "着たときの見え方"
+        },
+        {
+          "key": "B",
+          "zh": "衣服洗得很干净",
+          "cn": "衣服洗得很干净",
+          "kr": "빨래가 깨끗",
+          "en": "It’s washed clean",
+          "jp": "洗濯がきれい"
+        },
+        {
+          "key": "C",
+          "zh": "走路穿得快",
+          "cn": "走路穿得快",
+          "kr": "걸음이 빠름",
+          "en": "You walk fast in it",
+          "jp": "歩くのが速い"
+        },
+        {
+          "key": "D",
+          "zh": "衣服重量很轻",
+          "cn": "衣服重量很轻",
+          "kr": "가벼움",
+          "en": "The cloth is light",
+          "jp": "軽い"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「穿」引出穿着者的外观评价。",
+        "kr": "입었을 때의 모습.",
+        "en": "穿 + 好看 = looks good worn.",
+        "jp": "着たときの見た目。"
+      }
+    },
+    {
+      "id": "hsk30_l20_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「找你十元」表示店员：",
+        "kr": "「找你十元」는?",
+        "en": "找你十元 means the clerk:",
+        "jp": "「找你十元」は店員が何をする？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "把多付的钱退给顾客",
+          "cn": "把多付的钱退给顾客",
+          "kr": "거스름 줌",
+          "en": "Gives change back",
+          "jp": "おつりを渡す"
+        },
+        {
+          "key": "B",
+          "zh": "再要十元",
+          "cn": "再要十元",
+          "kr": "10위안 더 달라",
+          "en": "Asks for 10 more",
+          "jp": "あと10元もらう"
+        },
+        {
+          "key": "C",
+          "zh": "衣服降价十元",
+          "cn": "衣服降价十元",
+          "kr": "가격 인하",
+          "en": "Lowers price by 10",
+          "jp": "値下げ10元"
+        },
+        {
+          "key": "D",
+          "zh": "十元不卖",
+          "cn": "十元不卖",
+          "kr": "안 팜",
+          "en": "Won’t sell for ten",
+          "jp": "10元では売らない"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "付款大于应收时，退回差额即「找钱」。",
+        "kr": "거스름 돈.",
+        "en": "Change returned.",
+        "jp": "おつり。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "这件衣服多少钱？",
+      "五十元。",
+      "我想买那件。",
+      "这件不要吗？",
+      "那件你穿很好看。",
+      "能便宜一点儿吗？",
+      "找你十元。"
+    ],
+    "chatPrompt": "请只用本课「件、衣服、多少、钱、元、块、卖、找、不要、便宜、百、千、穿」等词语谈买衣服与价格；不要写成问学习什么。",
+    "prompt": {
+      "zh": "请只用本课「件、衣服、多少、钱、元、块、卖、找、不要、便宜、百、千、穿」等词语谈买衣服与价格；不要写成问学习什么。",
+      "kr": "옷·가격만. 공부 이야기는 빼 주세요.",
+      "en": "Clothes & prices—no study talk.",
+      "jp": "服と値段だけ。勉強は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l20_shop",
+          "situation": {
+            "zh": "会话一：问价",
+            "kr": "회화1",
+            "en": "Dialogue 1",
+            "jp": "会話1"
+          },
+          "aiRole": {
+            "zh": "店员",
+            "kr": "점원",
+            "en": "Clerk",
+            "jp": "店員"
+          },
+          "studentRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "这件衣服多少钱？",
+              "pinyin": "Zhè jiàn yīfu duōshao qián?",
+              "kr": "이 옷 얼마?",
+              "en": "How much?",
+              "jp": "いくらですか。"
+            },
+            {
+              "zh": "五十元。",
+              "pinyin": "Wǔshí yuán.",
+              "kr": "50위안.",
+              "en": "Fifty yuan.",
+              "jp": "50元。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "欢迎光临！",
+              "studentRefs": [
+                "这件衣服多少钱？"
+              ],
+              "acceptable": [
+                "这件衣服多少钱？"
+              ],
+              "closeAnswers": [
+                "多少钱",
+                "衣服"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「件」说衣服件数。",
+        "pinyin": "jiàn",
+        "kr": "옷 세기.",
+        "en": "件 for clothes.",
+        "jp": "「件」で服を数える。"
+      },
+      {
+        "zh": "能听懂「找你……元」是找零。",
+        "pinyin": "zhǎo",
+        "kr": "거스름.",
+        "en": "找你 = your change.",
+        "jp": "おつりの言い方。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课谈购物与穿着，不是谈吃什么。",
+          "pinyin": "mǎi",
+          "kr": "쇼핑.",
+          "en": "Shopping—not food.",
+          "jp": "買い物の课。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：问价。会话二：取舍与穿着。会话三：还价与找钱。",
+        "kr": "가격 → 선택·핏 → 흥정·거스름.",
+        "en": "Price · choose & fit · bargain & change.",
+        "jp": "値段／選ぶ／おつり。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「百、千」可组成更大数目表示价格。",
+          "pinyin": "bǎi",
+          "kr": "큰 숫자.",
+          "en": "百/千 in prices.",
+          "jp": "「百」「千」。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「块」和「元」在口语里一样吗？",
+      "kr": "「块」?",
+      "en": "块 vs 元?",
+      "jp": "「块」と「元」？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「不要」能单独回答问题吗？",
+        "便宜一定是在讲价钱吗？"
+      ],
+      "kr": [
+        "「不要」?",
+        "便宜?"
+      ],
+      "en": [
+        "Short 不要?",
+        "Is 便宜 only about price?"
+      ],
+      "jp": [
+        "「不要」だけで？",
+        "「便宜」？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "这件衣服多少钱？ / 五十元。",
+        "pinyin": "Zhè jiàn yīfu duōshao qián? / Wǔshí yuán.",
+        "usage": {
+          "zh": "询问并回答衣物价格。",
+          "kr": "옷값 묻고 답하기.",
+          "en": "Ask and give clothing prices.",
+          "jp": "服の値段を聞き、答える。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

@@ -1,0 +1,881 @@
+{
+  "id": "hsk1_lesson21",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 21,
+  "type": "lesson",
+  "title": {
+    "zh": "第21课｜生病了",
+    "cn": "第21课｜生病了",
+    "kr": "제21과｜아파요",
+    "en": "Lesson 21 | Falling Ill",
+    "jp": "第21課｜病気になりました"
+  },
+  "summary": {
+    "zh": "学习用「怎么了」关心状况，用「生病、看病」说就医，用「要、再、见」表达嘱咐与道别。",
+    "kr": "「怎么了」「生病」「看病」「要」「再」「见」.",
+    "en": "怎么了; 生病/看病; 要; 再; 见.",
+    "jp": "「怎么了」「生病」「看病」「要」「再」「见」。"
+  },
+  "scene": {
+    "id": "hsk30_l21_scene",
+    "title": {
+      "zh": "生病与休息",
+      "kr": "아픔·휴식",
+      "en": "Illness & rest",
+      "jp": "病気と休息"
+    },
+    "summary": {
+      "zh": "会话一：不舒服、去医院；会话二：医生说要休息、好多了没事；会话三：睡一会儿、明天再来、再见。",
+      "kr": "몸살·병원 → 진료·괜찮음 → 잠·내일.",
+      "en": "Feeling ill · hospital · better · rest & tomorrow.",
+      "jp": "体調／病院／回復／休む。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你怎么了？」「我生病了」说明身体不适",
+      "pinyin": "zěnme le · shēngbìng",
+      "kr": "상태를 묻고 아프다고 말한다.",
+      "en": "Ask what’s wrong; say you’re ill.",
+      "jp": "「怎么了」「生病」で体調を言う。"
+    },
+    {
+      "zh": "能听懂「要多休息」「明天见」一类关心与道别",
+      "pinyin": "xiūxi · zàijiàn",
+      "kr": "휴식 권함·내일 봐.",
+      "en": "Rest advice; see you tomorrow.",
+      "jp": "休むよう言う／あいさつ。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜不舒服",
+        "kr": "회화 1｜몸이 안 좋을 때",
+        "en": "Dialogue 1 | Feeling ill",
+        "jp": "会話1｜具合が悪い"
+      },
+      "summary": {
+        "zh": "问怎么了，说生病了，提议一起去医院。",
+        "kr": "어떻게 됐니·아픔·병원.",
+        "en": "What’s wrong—ill—hospital.",
+        "jp": "どうした／病気／病院。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "汤姆，你怎么了？",
+          "pinyin": "Tāngmǔ, nǐ zěnme le?",
+          "translation": {
+            "kr": "탐, 왜 그래?",
+            "en": "Tom, what’s wrong?",
+            "jp": "トム、どうしたの？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我生病了。",
+          "pinyin": "Wǒ shēngbìng le.",
+          "translation": {
+            "kr": "아파요.",
+            "en": "I’m sick.",
+            "jp": "病気です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "去医院看病了吗？",
+          "pinyin": "Qù yīyuàn kànbìng le ma?",
+          "translation": {
+            "kr": "병원 갔다 왔어?",
+            "en": "Have you been to the hospital?",
+            "jp": "病院に行った？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "没有。",
+          "pinyin": "Méiyǒu.",
+          "translation": {
+            "kr": "아니요.",
+            "en": "No.",
+            "jp": "いいえ。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我和你去医院吧。",
+          "pinyin": "Wǒ hé nǐ qù yīyuàn ba.",
+          "translation": {
+            "kr": "같이 병원 가자.",
+            "en": "Let’s go together.",
+            "jp": "一緒に病院に行こう。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "好的，谢谢。",
+          "pinyin": "Hǎo de, xièxie.",
+          "translation": {
+            "kr": "네, 고마워요.",
+            "en": "Okay—thanks.",
+            "jp": "はい、ありがとう。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜询问病情",
+        "kr": "회화 2｜병문안",
+        "en": "Dialogue 2 | Checking in",
+        "jp": "会話2｜様子を聞く"
+      },
+      "summary": {
+        "zh": "问医生怎么说、现在怎么样，说好多了、没事。",
+        "kr": "의사 말·괜찮음.",
+        "en": "Doctor said—feeling better.",
+        "jp": "先生の話／大丈夫。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "医生怎么说？",
+          "pinyin": "Yīshēng zěnme shuō?",
+          "translation": {
+            "kr": "의사는 뭐래?",
+            "en": "What did the doctor say?",
+            "jp": "医者は何と？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "医生说要多休息。",
+          "pinyin": "Yīshēng shuō yào duō xiūxi.",
+          "translation": {
+            "kr": "푹 쉬래요.",
+            "en": "Rest more.",
+            "jp": "たくさん休むようにと。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你现在怎么样？",
+          "pinyin": "Nǐ xiànzài zěnmeyàng?",
+          "translation": {
+            "kr": "지금 좀 어때?",
+            "en": "How are you now?",
+            "jp": "今どう？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "好多了，医生说没事。",
+          "pinyin": "Hǎo duō le, yīshēng shuō méishì.",
+          "translation": {
+            "kr": "많이 나았어요, 괜찮대요.",
+            "en": "Much better—the doctor says it’s fine.",
+            "jp": "だいぶよくなりました、大丈夫だそうです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜安慰病人",
+        "kr": "회화 3｜위로",
+        "en": "Dialogue 3 | Comfort",
+        "jp": "会話3｜見舞い"
+      },
+      "summary": {
+        "zh": "让多睡、说明天再来看、道别。",
+        "kr": "잠·내일 다시·안녕.",
+        "en": "Sleep—come back tomorrow—bye.",
+        "jp": "寝る／明日また／さようなら。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "汤姆，你睡一会吧。",
+          "pinyin": "Tāngmǔ, nǐ shuì yīhuìr ba.",
+          "translation": {
+            "kr": "탐, 좀 자.",
+            "en": "Tom—get some sleep.",
+            "jp": "トム、ちょっと寝な。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我好多了。",
+          "pinyin": "Wǒ hǎo duō le.",
+          "translation": {
+            "kr": "많이 나았어요.",
+            "en": "I’m much better.",
+            "jp": "だいぶよくなりました。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "要好好休息。我明天再来看你。",
+          "pinyin": "Yào hǎohāo xiūxi. Wǒ míngtiān zài lái kàn nǐ.",
+          "translation": {
+            "kr": "푹 쉬어. 내일 또 올게.",
+            "en": "Rest well—I’ll come again tomorrow.",
+            "jp": "しっかり休んで。明日また来るね。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "好。谢谢。明天见。",
+          "pinyin": "Hǎo. Xièxie. Míngtiān jiàn.",
+          "translation": {
+            "kr": "네. 고마워요. 내일 봐요.",
+            "en": "Okay. Thanks. See you tomorrow.",
+            "jp": "はい。ありがとう。明日ね。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "怎么了",
+      "pinyin": "zěnme le",
+      "hint": {
+        "zh": "问状况",
+        "kr": "왜",
+        "en": "what’s wrong",
+        "jp": "どうした"
+      },
+      "explanation": {
+        "zh": "疑问短语「怎么了」用于询问对方身体、情绪或处境是否出现异常，如「你怎么了？」。\n\n「怎么了」\nzěnme le",
+        "kr": "「怎么了」로 이상 징후를 묻습니다.",
+        "en": "怎么了? = what’s wrong?",
+        "jp": "「怎么了」はどうしたか。"
+      },
+      "examples": [
+        {
+          "zh": "你怎么了？",
+          "pinyin": "Nǐ zěnme le?",
+          "translation": {
+            "kr": "왜 그래?",
+            "en": "What’s wrong?",
+            "jp": "どうしたの？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "生病 / 看病",
+      "pinyin": "shēngbìng / kànbìng",
+      "hint": {
+        "zh": "健康",
+        "kr": "아픔·진료",
+        "en": "ill / see a doctor",
+        "jp": "病気・診察"
+      },
+      "explanation": {
+        "zh": "「生病」表示患病；「看病」为离合词，表示就医、看医生，如「去医院看病」。\n\n「生病」\nshēngbìng",
+        "kr": "「生病」는 아픔,「看病」는 진료받기.",
+        "en": "生病 = fall ill; 看病 = see a doctor.",
+        "jp": "「生病」は病気、「看病」は診てもらう。"
+      },
+      "examples": [
+        {
+          "zh": "我生病了。",
+          "pinyin": "Wǒ shēngbìng le.",
+          "translation": {
+            "kr": "아파요.",
+            "en": "I’m sick.",
+            "jp": "病気です。"
+          }
+        },
+        {
+          "zh": "去医院看病了吗？",
+          "pinyin": "Qù yīyuàn kànbìng le ma?",
+          "translation": {
+            "kr": "병원 갔다 왔어?",
+            "en": "Did you go to the hospital?",
+            "jp": "病院に行った？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "要",
+      "pinyin": "yào",
+      "hint": {
+        "zh": "应当",
+        "kr": "~해야",
+        "en": "should / need to",
+        "jp": "必要"
+      },
+      "explanation": {
+        "zh": "能愿动词「要」可表示应当、需要，如「要多休息」即建议或嘱咐多休息。\n\n「要多休息」\nyào duō xiūxi",
+        "kr": "「要」는 해야 할 것.",
+        "en": "要 = should / need to (here: rest more).",
+        "jp": "「要」はすべきこと。"
+      },
+      "examples": [
+        {
+          "zh": "医生说要多休息。",
+          "pinyin": "Yīshēng shuō yào duō xiūxi.",
+          "translation": {
+            "kr": "의사가 푹 쉬래요.",
+            "en": "The doctor said to rest more.",
+            "jp": "医者はたくさん休むようにと言いました。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "再",
+      "pinyin": "zài",
+      "hint": {
+        "zh": "又一次",
+        "kr": "다시",
+        "en": "again",
+        "jp": "また"
+      },
+      "explanation": {
+        "zh": "副词「再」表示动作的重复或延续，如「我明天再来看你」意为来日再次探望。\n\n「再来」\nzài lái",
+        "kr": "「再」는 또, 다시.",
+        "en": "再 = again (come again tomorrow).",
+        "jp": "「再」はまた。"
+      },
+      "examples": [
+        {
+          "zh": "我明天再来看你。",
+          "pinyin": "Wǒ míngtiān zài lái kàn nǐ.",
+          "translation": {
+            "kr": "내일 또 보러 올게.",
+            "en": "I’ll come see you again tomorrow.",
+            "jp": "明日また来るね。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "医生说要多睡觉。",
+          "pinyin": "Yīshēng shuō yào duō shuìjiào.",
+          "translations": {
+            "kr": "의사가 많이 자래요.",
+            "en": "The doctor said to sleep more.",
+            "jp": "医者はよく寝るようにと言いました。"
+          }
+        },
+        {
+          "zh": "我现在没事了。",
+          "pinyin": "Wǒ xiànzài méishì le.",
+          "translations": {
+            "kr": "이제 괜찮아요.",
+            "en": "I’m fine now.",
+            "jp": "もう大丈夫です。"
+          }
+        },
+        {
+          "zh": "明天见。",
+          "pinyin": "Míngtiān jiàn.",
+          "translations": {
+            "kr": "내일 봐요.",
+            "en": "See you tomorrow.",
+            "jp": "また明日。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜医院提示",
+        "kr": "읽기｜병원 안내",
+        "en": "Reading | Hospital tips",
+        "jp": "読み物｜病院の注意"
+      },
+      "sentences": [
+        {
+          "zh": "多休息",
+          "pinyin": "duō xiūxi",
+          "translations": {
+            "kr": "푹 쉬기",
+            "en": "Rest more",
+            "jp": "たくさん休む"
+          }
+        },
+        {
+          "zh": "多喝水",
+          "pinyin": "duō hē shuǐ",
+          "translations": {
+            "kr": "물 많이 마시기",
+            "en": "Drink plenty of water",
+            "jp": "水をたくさん飲む"
+          }
+        },
+        {
+          "zh": "早点睡觉",
+          "pinyin": "zǎo diǎn shuìjiào",
+          "translations": {
+            "kr": "일찍 자기",
+            "en": "Sleep early",
+            "jp": "早めに寝る"
+          }
+        },
+        {
+          "zh": "明天再来看病",
+          "pinyin": "míngtiān zài lái kànbìng",
+          "translations": {
+            "kr": "내일 다시 진료",
+            "en": "Come back to the clinic tomorrow",
+            "jp": "明日また受診"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l21_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「身体出什么状况了」？",
+        "kr": "몸 상태를 묻는 말은?",
+        "en": "Which asks what’s wrong with someone?",
+        "jp": "体の様子を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "你怎么了？",
+          "cn": "你怎么了？",
+          "kr": "왜 그래?",
+          "en": "What’s wrong?",
+          "jp": "どうしたの？"
+        },
+        {
+          "key": "B",
+          "zh": "这件衣服多少钱？",
+          "cn": "这件衣服多少钱？",
+          "kr": "옷 얼마?",
+          "en": "How much is this?",
+          "jp": "いくら？"
+        },
+        {
+          "key": "C",
+          "zh": "今天天气怎么样？",
+          "cn": "今天天气怎么样？",
+          "kr": "날씨?",
+          "en": "How’s the weather?",
+          "jp": "天気は？"
+        },
+        {
+          "key": "D",
+          "zh": "你想吃什么？",
+          "cn": "你想吃什么？",
+          "kr": "뭐 먹을래?",
+          "en": "What do you want to eat?",
+          "jp": "何が食べたい？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「怎么了」用于询问异常状况。",
+        "kr": "「怎么了」.",
+        "en": "怎么了 asks what happened.",
+        "jp": "「怎么了」は状況を尋ねる。"
+      }
+    },
+    {
+      "id": "hsk30_l21_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「生病」的拼音是？",
+        "kr": "「生病」의 병음은?",
+        "en": "What’s the pinyin for 生病?",
+        "jp": "「生病」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "shēngbìng",
+          "cn": "shēngbìng",
+          "kr": "shēngbìng",
+          "en": "shēngbìng",
+          "jp": "shēngbìng"
+        },
+        {
+          "key": "B",
+          "zh": "shēngbǐng",
+          "cn": "shēngbǐng",
+          "kr": "shēngbǐng",
+          "en": "shēngbǐng",
+          "jp": "shēngbǐng"
+        },
+        {
+          "key": "C",
+          "zh": "shēnbìng",
+          "cn": "shēnbìng",
+          "kr": "shēnbìng",
+          "en": "shēnbìng",
+          "jp": "shēnbìng"
+        },
+        {
+          "key": "D",
+          "zh": "shèngbìng",
+          "cn": "shèngbìng",
+          "kr": "shèngbìng",
+          "en": "shèngbìng",
+          "jp": "shèngbìng"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「生病」读作 shēngbìng。",
+        "kr": "「生病」는 shēngbìng입니다.",
+        "en": "Say shēngbìng.",
+        "jp": "読みは shēngbìng です。"
+      }
+    },
+    {
+      "id": "hsk30_l21_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「医生说要多休息。」里的「要」更接近：",
+        "kr": "「要」는?",
+        "en": "In 要多休息, 要 is closer to:",
+        "jp": "「要多休息」の「要」は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "应当、需要这样做",
+          "cn": "应当、需要这样做",
+          "kr": "해야 한다",
+          "en": "Should / need to",
+          "jp": "そうすべきだ"
+        },
+        {
+          "key": "B",
+          "zh": "想要买东西",
+          "cn": "想要买东西",
+          "kr": "사고 싶다",
+          "en": "Want to buy",
+          "jp": "買いたい"
+        },
+        {
+          "key": "C",
+          "zh": "询问要不要",
+          "cn": "询问要不要",
+          "kr": "할까 말까",
+          "en": "Asking whether to",
+          "jp": "するかどうか"
+        },
+        {
+          "key": "D",
+          "zh": "表示将来",
+          "cn": "表示将来",
+          "kr": "미래",
+          "en": "Future tense",
+          "jp": "未来"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "此处「要」表医嘱、建议。",
+        "kr": "의사의 권고.",
+        "en": "要 = should (doctor’s advice).",
+        "jp": "忠告としての「要」。"
+      }
+    },
+    {
+      "id": "hsk30_l21_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我明天再来看你」里的「再」表示：",
+        "kr": "「再」는?",
+        "en": "再来 means to come:",
+        "jp": "「再来」の「再」は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "另一次、再一次",
+          "cn": "另一次、再一次",
+          "kr": "또, 다시",
+          "en": "Another time / again",
+          "jp": "もう一度"
+        },
+        {
+          "key": "B",
+          "zh": "再也不来",
+          "cn": "再也不来",
+          "kr": "안 옴",
+          "en": "Never again",
+          "jp": "二度と来ない"
+        },
+        {
+          "key": "C",
+          "zh": "先回家再来",
+          "cn": "先回家再来",
+          "kr": "갔다 옴",
+          "en": "Go home first",
+          "jp": "一度帰ってから"
+        },
+        {
+          "key": "D",
+          "zh": "比别人晚来",
+          "cn": "比别人晚来",
+          "kr": "늦게 옴",
+          "en": "Arrive late",
+          "jp": "遅れて来る"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「再」表动作的重复。",
+        "kr": "반복.",
+        "en": "再 = again.",
+        "jp": "「再」は再び。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "你怎么了？",
+      "我生病了。",
+      "去医院看病了吗？",
+      "我和你去医院吧。",
+      "医生怎么说？",
+      "要多休息。",
+      "好多了，医生说没事。",
+      "你睡一会吧。",
+      "明天见。"
+    ],
+    "chatPrompt": "请只用本课「病、生病、看病、医院、医生、睡、事、怎么、要、再、明天、见、没事」等词语谈生病与休息；不要写成买衣服问价。",
+    "prompt": {
+      "zh": "请只用本课「病、生病、看病、医院、医生、睡、事、怎么、要、再、明天、见、没事」等词语谈生病与休息；不要写成买衣服问价。",
+      "kr": "아픔·병원만. 쇼핑은 빼 주세요.",
+      "en": "Illness & rest—no shopping talk.",
+      "jp": "病気と休息だけ。買い物は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l21_ill",
+          "situation": {
+            "zh": "会话一：不舒服",
+            "kr": "회화1",
+            "en": "Dialogue 1",
+            "jp": "会話1"
+          },
+          "aiRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你怎么了？",
+              "pinyin": "Nǐ zěnme le?",
+              "kr": "왜 그래?",
+              "en": "What’s wrong?",
+              "jp": "どうしたの？"
+            },
+            {
+              "zh": "我生病了。",
+              "pinyin": "Wǒ shēngbìng le.",
+              "kr": "아파요.",
+              "en": "I’m sick.",
+              "jp": "病気です。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "我很担心你。",
+              "studentRefs": [
+                "你怎么了？"
+              ],
+              "acceptable": [
+                "你怎么了？"
+              ],
+              "closeAnswers": [
+                "怎么",
+                "了"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「怎么了」关心别人。",
+        "pinyin": "zěnme le",
+        "kr": "걱정 질문.",
+        "en": "Ask what’s wrong.",
+        "jp": "「怎么了」で気遣う。"
+      },
+      {
+        "zh": "能区分「生病」与「看病」。",
+        "pinyin": "shēngbìng",
+        "kr": "아픔 vs 진료.",
+        "en": "Be ill vs see a doctor.",
+        "jp": "病気と受診。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课谈健康与休息，不是谈购物。",
+          "pinyin": "jiànkāng",
+          "kr": "건강.",
+          "en": "Health—not shopping.",
+          "jp": "健康の课。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：去医院。会话二：医嘱与好转。会话三：休息与明天见。",
+        "kr": "병원 → 진료 → 휴식·내일.",
+        "en": "Hospital · doctor · rest & goodbye.",
+        "jp": "病院／診察／休む。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「没事」在此表示没有大碍。",
+          "pinyin": "méishì",
+          "kr": "괜찮음.",
+          "en": "没事 = it’s fine.",
+          "jp": "「没事」は大丈夫。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「看病」能拆开说「看了病」吗？",
+      "kr": "「看病」?",
+      "en": "Separating 看病?",
+      "jp": "「看病」は？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「睡一会」的「一会」大概多长？",
+        "「再见」和「明天见」语气一样吗？"
+      ],
+      "kr": [
+        "「一会」?",
+        "再见?"
+      ],
+      "en": [
+        "How long is 一会?",
+        "再见 vs 明天见?"
+      ],
+      "jp": [
+        "「一会」は？",
+        "「再见」？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你怎么了？ / 我生病了。",
+        "pinyin": "Nǐ zěnme le? / Wǒ shēngbìng le.",
+        "usage": {
+          "zh": "关心并说明身体不适。",
+          "kr": "문제 묻고 아픔 말하기.",
+          "en": "Care and say you’re ill.",
+          "jp": "様子を聞き、病気と言う。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

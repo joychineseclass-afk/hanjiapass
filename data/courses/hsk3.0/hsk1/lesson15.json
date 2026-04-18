@@ -1,0 +1,837 @@
+{
+  "id": "hsk1_lesson15",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 15,
+  "type": "lesson",
+  "title": {
+    "zh": "第15课｜你给谁打电话？",
+    "cn": "第15课｜你给谁打电话？",
+    "kr": "제15과｜누구에게 전화해요?",
+    "en": "Lesson 15 | Who Are You Calling?",
+    "jp": "第15課｜だれに電話しますか。"
+  },
+  "summary": {
+    "zh": "学习用「给……打电话」说明通话对象，用「看一下」表示短动作，掌握电话用语「喂」与询问号码。",
+    "kr": "「给 … 打电话」로 상대를 말하고 「看一下」로 잠깐 확인, 「喂」·번호 묻기.",
+    "en": "给…打电话 for who you ring; 看一下 for a quick check; 喂 on the phone.",
+    "jp": "「给…打电话」、「看一下」、「喂」、番号の尋ね方。"
+  },
+  "scene": {
+    "id": "hsk30_l15_scene",
+    "title": {
+      "zh": "电话与号码",
+      "kr": "전화·번호",
+      "en": "Calls & numbers",
+      "jp": "電話と番号"
+    },
+    "summary": {
+      "zh": "会话一：喂、有没有时间、要老师号码；会话二：给谁打、问什么；会话三：看见老师了吗、打电话问号码。",
+      "kr": "회화1 안부·시간·선생 번호 → 회화2 누구에게·무엇을 → 회화3 보였는지·전화.",
+      "en": "Greetings & time · who you’re calling · spotting the teacher & numbers.",
+      "jp": "あいさつ／相手／先生を見たか・番号。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你给谁打电话？」「我给同学打电话」说明通话对象",
+      "pinyin": "gěi · dǎ diànhuà",
+      "kr": "「给谁」「给同学打电话」로 누구와 통화하는지 말한다.",
+      "en": "Say who you’re calling with 给…打电话.",
+      "jp": "「给谁」「给同学打电话」で相手を言える。"
+    },
+    {
+      "zh": "能听懂「我看一下」表示稍查一下，并询问、说出电话号码",
+      "pinyin": "yíxià · diànhuà hàomǎ",
+      "kr": "「看一下」로 잠깐 확인, 번호를 묻고 말한다.",
+      "en": "Get 看一下 as “let me check”; ask and give phone numbers.",
+      "jp": "「看一下」と電話番号のやり取り。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜打电话",
+        "kr": "회화 1｜전화",
+        "en": "Dialogue 1 | On the phone",
+        "jp": "会話1｜電話"
+      },
+      "summary": {
+        "zh": "自报姓名、问有没有时间，向对方要王老师的电话号码。",
+        "kr": "이름·시간 확인 후 왕 선생 번호를 부탁.",
+        "en": "Name, time—then asking for Teacher Wang’s number.",
+        "jp": "名前と時間、王先生の番号。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "喂，你好！",
+          "pinyin": "Wèi, nǐ hǎo!",
+          "translation": {
+            "kr": "여보세요, 안녕하세요!",
+            "en": "Hello!",
+            "jp": "もしもし、こんにちは！"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "translation": {
+            "kr": "안녕하세요!",
+            "en": "Hi!",
+            "jp": "こんにちは！"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我是李明。你现在有时间吗？",
+          "pinyin": "Wǒ shì Lǐ Míng. Nǐ xiànzài yǒu shíjiān ma?",
+          "translation": {
+            "kr": "저 리밍이에요. 지금 시간 있어요?",
+            "en": "This is Li Ming. Do you have a moment?",
+            "jp": "李明です。今お時間ありますか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "有，你有什么事吗？",
+          "pinyin": "Yǒu, nǐ yǒu shénme shì ma?",
+          "translation": {
+            "kr": "있어요, 무슨 일이에요?",
+            "en": "Yes—what’s up?",
+            "jp": "はい、どうしました？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你有王老师的电话号码吗？",
+          "pinyin": "Nǐ yǒu Wáng lǎoshī de diànhuà hàomǎ ma?",
+          "translation": {
+            "kr": "왕 선생님 전화번호 알아요?",
+            "en": "Do you have Teacher Wang’s phone number?",
+            "jp": "王先生の電話番号を知っていますか。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "有，我看一下。",
+          "pinyin": "Yǒu, wǒ kàn yíxià.",
+          "translation": {
+            "kr": "있어요, 잠깐 볼게요.",
+            "en": "Yes—hang on, let me check.",
+            "jp": "あります、ちょっと見ます。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜问给谁打电话",
+        "kr": "회화 2｜누구에게",
+        "en": "Dialogue 2 | Who you’re calling",
+        "jp": "会話2｜だれに"
+      },
+      "summary": {
+        "zh": "妈妈问给谁打电话、问什么，李明说是问老师号码。",
+        "kr": "엄마가 누구·무엇을 묻고, 선생 번호를 묻는다고 답함.",
+        "en": "Mom asks who and what; Li Ming explains.",
+        "jp": "母が相手と用件、先生の番号を聞くと答える。"
+      },
+      "lines": [
+        {
+          "speaker": "妈妈",
+          "text": "你给谁打电话？",
+          "pinyin": "Nǐ gěi shéi dǎ diànhuà?",
+          "translation": {
+            "kr": "누구한테 전화해?",
+            "en": "Who are you calling?",
+            "jp": "だれに電話してるの？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我给同学打电话。",
+          "pinyin": "Wǒ gěi tóngxué dǎ diànhuà.",
+          "translation": {
+            "kr": "동기한테 전화해요.",
+            "en": "I’m calling a classmate.",
+            "jp": "同学に電話してます。"
+          }
+        },
+        {
+          "speaker": "妈妈",
+          "text": "你问什么？",
+          "pinyin": "Nǐ wèn shénme?",
+          "translation": {
+            "kr": "뭘 물어봐?",
+            "en": "What are you asking?",
+            "jp": "何を聞いてるの？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我问他老师的电话号码是多少。",
+          "pinyin": "Wǒ wèn tā lǎoshī de diànhuà hàomǎ shì duōshao.",
+          "translation": {
+            "kr": "선생님 전화번호가 몇 번인지 물어봐요.",
+            "en": "I’m asking what the teacher’s number is.",
+            "jp": "先生の電話番号を聞いてます。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜找老师",
+        "kr": "회화 3｜선생님 찾기",
+        "en": "Dialogue 3 | Finding the teacher",
+        "jp": "会話3｜先生を探す"
+      },
+      "summary": {
+        "zh": "有没有看见王老师、有事、建议打电话并说出手机号码。",
+        "kr": "본 적 있나·할 일·전화하라고 하고 번호를 말함.",
+        "en": "Seen Wang?—a question—call him—read the number.",
+        "jp": "見たか・用件・電話を促し、番号。"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "你看见王老师了吗？",
+          "pinyin": "Nǐ kànjiàn Wáng lǎoshī le ma?",
+          "translation": {
+            "kr": "왕 선생님 봤어요?",
+            "en": "Have you seen Teacher Wang?",
+            "jp": "王先生を見ましたか。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "没有。你有事吗？",
+          "pinyin": "Méiyǒu. Nǐ yǒu shì ma?",
+          "translation": {
+            "kr": "아니요. 무슨 일 있어요?",
+            "en": "No. Need something?",
+            "jp": "いいえ。用件ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我有一个问题。",
+          "pinyin": "Wǒ yǒu yí ge wèntí.",
+          "translation": {
+            "kr": "질문이 하나 있어요.",
+            "en": "I have a question.",
+            "jp": "質問があります。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你给王老师打电话吧。",
+          "pinyin": "Nǐ gěi Wáng lǎoshī dǎ diànhuà ba.",
+          "translation": {
+            "kr": "왕 선생님께 전화해 보세요.",
+            "en": "Give Teacher Wang a call.",
+            "jp": "王先生に電話してみてください。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "王老师的手机号码是多少？",
+          "pinyin": "Wáng lǎoshī de shǒujī hàomǎ shì duōshao?",
+          "translation": {
+            "kr": "왕 선생님 휴대폰 번호가 뭐예요?",
+            "en": "What’s Teacher Wang’s mobile number?",
+            "jp": "王先生の携帯番号は？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "王老师的手机号码是123-1234-5678",
+          "pinyin": "Wáng lǎoshī de shǒujī hàomǎ shì yāo èr sān yāo èr sān sì wǔ liù qī bā.",
+          "translation": {
+            "kr": "왕 선생님 번호는 123-1234-5678이에요.",
+            "en": "It’s 123-1234-5678.",
+            "jp": "123-1234-5678 です。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "给 + 人 + 打电话",
+      "pinyin": "gěi + rén + dǎ diànhuà",
+      "hint": {
+        "zh": "打给谁",
+        "kr": "통화 상대",
+        "en": "who you call",
+        "jp": "相手"
+      },
+      "explanation": {
+        "zh": "介词「给」引出动作的接受者，与「打电话」搭配表示打电话给某人，如「我给同学打电话」「你给王老师打电话吧」。\n\n「给同学打电话」\ngěi tóngxué dǎ diànhuà",
+        "kr": "「给」는 받는 사람—「给 … 打电话」로 누구에게 전화한다고 말합니다.",
+        "en": "给 marks who receives the action—给…打电话 = call someone.",
+        "jp": "「给」は相手、「给…打电话」で電話する相手を示す。"
+      },
+      "examples": [
+        {
+          "zh": "我给同学打电话。",
+          "pinyin": "Wǒ gěi tóngxué dǎ diànhuà.",
+          "translation": {
+            "kr": "동기한테 전화해요.",
+            "en": "I’m calling a classmate.",
+            "jp": "同学に電話します。"
+          }
+        },
+        {
+          "zh": "你给王老师打电话吧。",
+          "pinyin": "Nǐ gěi Wáng lǎoshī dǎ diànhuà ba.",
+          "translation": {
+            "kr": "왕 선생님께 전화해 보세요.",
+            "en": "Call Teacher Wang.",
+            "jp": "王先生に電話してみて。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "一下",
+      "pinyin": "yíxià",
+      "hint": {
+        "zh": "短时尝试",
+        "kr": "잠깐",
+        "en": "a quick bit",
+        "jp": "ちょっと"
+      },
+      "explanation": {
+        "zh": "数量补语「一下」附在动词后，常表示动作短暂或尝试，如「我看一下」意为稍查看、确认。\n\n「看一下」\nkàn yíxià",
+        "kr": "「一下」는 잠깐—「看一下」는 잠깐 본다는 뜻이에요.",
+        "en": "一下 makes it quick—看一下 ≈ “let me take a look.”",
+        "jp": "「一下」は短い動作、「看一下」はちょっと見る。"
+      },
+      "examples": [
+        {
+          "zh": "有，我看一下。",
+          "pinyin": "Yǒu, wǒ kàn yíxià.",
+          "translation": {
+            "kr": "있어요, 잠깐 볼게요.",
+            "en": "Sure—let me check.",
+            "jp": "あります、ちょっと見ます。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "喂，你好！",
+          "pinyin": "Wèi, nǐ hǎo!",
+          "translations": {
+            "kr": "여보세요!",
+            "en": "Hello! (on the phone)",
+            "jp": "もしもし、こんにちは！"
+          }
+        },
+        {
+          "zh": "你现在有时间吗？",
+          "pinyin": "Nǐ xiànzài yǒu shíjiān ma?",
+          "translations": {
+            "kr": "지금 시간 있어요?",
+            "en": "Do you have time now?",
+            "jp": "今お時間ありますか。"
+          }
+        },
+        {
+          "zh": "我有一个问题。",
+          "pinyin": "Wǒ yǒu yí ge wèntí.",
+          "translations": {
+            "kr": "질문이 하나 있어요.",
+            "en": "I have a question.",
+            "jp": "質問があります。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜电话记录",
+        "kr": "읽기｜전화 목록",
+        "en": "Reading | Numbers on file",
+        "jp": "読み物｜電話メモ"
+      },
+      "sentences": [
+        {
+          "zh": "王老师：138-0123-4567",
+          "pinyin": "Wáng lǎoshī: yāo sān bā líng yāo èr sān sì wǔ liù qī",
+          "translations": {
+            "kr": "왕 선생님: 138-0123-4567",
+            "en": "Teacher Wang: 138-0123-4567",
+            "jp": "王先生：138-0123-4567"
+          }
+        },
+        {
+          "zh": "李明：139-2345-6789",
+          "pinyin": "Lǐ Míng: yāo sān jiǔ èr sān sì wǔ liù qī bā jiǔ",
+          "translations": {
+            "kr": "리밍: 139-2345-6789",
+            "en": "Li Ming: 139-2345-6789",
+            "jp": "李明：139-2345-6789"
+          }
+        },
+        {
+          "zh": "医院：020-1234-5678",
+          "pinyin": "Yīyuàn: líng èr líng yāo èr sān sì wǔ liù qī bā",
+          "translations": {
+            "kr": "병원: 020-1234-5678",
+            "en": "Hospital: 020-1234-5678",
+            "jp": "病院：020-1234-5678"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l15_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「你在给谁打电话」？",
+        "kr": "「누구에게 전화하니?」에 가까운 말은?",
+        "en": "Which line is asking who you’re calling?",
+        "jp": "「だれに電話してるか」を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "你给谁打电话？",
+          "cn": "你给谁打电话？",
+          "kr": "누구한테 전화해?",
+          "en": "Who are you calling?",
+          "jp": "だれに電話してる？"
+        },
+        {
+          "key": "B",
+          "zh": "你怎么去学校？",
+          "cn": "你怎么去学校？",
+          "kr": "학교엔 어떻게 가?",
+          "en": "How do you get to school?",
+          "jp": "学校へはどう行く？"
+        },
+        {
+          "key": "C",
+          "zh": "今天天气怎么样？",
+          "cn": "今天天气怎么样？",
+          "kr": "날씨 어때?",
+          "en": "How’s the weather?",
+          "jp": "今日の天気は？"
+        },
+        {
+          "key": "D",
+          "zh": "你想吃什么？",
+          "cn": "你想吃什么？",
+          "kr": "뭐 먹고 싶어?",
+          "en": "What do you want to eat?",
+          "jp": "何が食べたい？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「给谁」引出通话对象，与本课一致。",
+        "kr": "「给谁」로 전화 상대를 묻습니다.",
+        "en": "给谁 asks the person you’re calling.",
+        "jp": "「给谁」は電話の相手。"
+      }
+    },
+    {
+      "id": "hsk30_l15_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「号码」的拼音是？",
+        "kr": "「号码」의 병음은?",
+        "en": "What’s the pinyin for 号码?",
+        "jp": "「号码」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "hàomǎ",
+          "cn": "hàomǎ",
+          "kr": "hàomǎ",
+          "en": "hàomǎ",
+          "jp": "hàomǎ"
+        },
+        {
+          "key": "B",
+          "zh": "hǎomǎ",
+          "cn": "hǎomǎ",
+          "kr": "hǎomǎ",
+          "en": "hǎomǎ",
+          "jp": "hǎomǎ"
+        },
+        {
+          "key": "C",
+          "zh": "hàomà",
+          "cn": "hàomà",
+          "kr": "hàomà",
+          "en": "hàomà",
+          "jp": "hàomà"
+        },
+        {
+          "key": "D",
+          "zh": "hāomǎ",
+          "cn": "hāomǎ",
+          "kr": "hāomǎ",
+          "en": "hāomǎ",
+          "jp": "hāomǎ"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「号码」读作 hàomǎ。",
+        "kr": "「号码」는 hàomǎ입니다.",
+        "en": "Say hàomǎ.",
+        "jp": "読みは hàomǎ です。"
+      }
+    },
+    {
+      "id": "hsk30_l15_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「有，我看一下。」里的「看一下」主要表示：",
+        "kr": "「看一下」는 주로?",
+        "en": "In 我看一下, 看一下 mainly means:",
+        "jp": "「看一下」は主に何を表す？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "稍查一下、确认信息",
+          "cn": "稍查一下、确认信息",
+          "kr": "잠깐 확인",
+          "en": "Check briefly",
+          "jp": "ちょっと確かめる"
+        },
+        {
+          "key": "B",
+          "zh": "看一下午电视",
+          "cn": "看一下午电视",
+          "kr": "한 오후 내내 TV",
+          "en": "Watch TV all afternoon",
+          "jp": "午後ずっとテレビ"
+        },
+        {
+          "key": "C",
+          "zh": "只看一眼就走",
+          "cn": "只看一眼就走",
+          "kr": "한눈만 보고 감",
+          "en": "Glance and leave",
+          "jp": "ちらっと見て帰る"
+        },
+        {
+          "key": "D",
+          "zh": "向别人问好",
+          "cn": "向别人问好",
+          "kr": "안부 묻기",
+          "en": "Say hello",
+          "jp": "あいさつする"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「一下」附在动词后，常表短时动作，此处是查号码前先看一眼。",
+        "kr": "「看一下」는 잠깐 확인하는 말이에요.",
+        "en": "看一下 here is “let me check.”",
+        "jp": "「看一下」は短く確認する。"
+      }
+    },
+    {
+      "id": "hsk30_l15_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我给同学打电话。」句中「给」的作用是：",
+        "kr": "「给同学打电话」의 「给」는?",
+        "en": "In 给同学打电话, 给 shows:",
+        "jp": "「给同学打电话」の「给」は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "引出打电话的对象",
+          "cn": "引出打电话的对象",
+          "kr": "전화 받는 사람",
+          "en": "Who gets the call",
+          "jp": "電話の相手を示す"
+        },
+        {
+          "key": "B",
+          "zh": "表示从同学那里借电话",
+          "cn": "表示从同学那里借电话",
+          "kr": "전화 빌림",
+          "en": "Borrowing a phone",
+          "jp": "電話を借りる"
+        },
+        {
+          "key": "C",
+          "zh": "说明同学正在打",
+          "cn": "说明同学正在打",
+          "kr": "동기가 걸고 있음",
+          "en": "Classmate is dialing",
+          "jp": "同学がかけている"
+        },
+        {
+          "key": "D",
+          "zh": "表示打电话很贵",
+          "cn": "表示打电话很贵",
+          "kr": "전화비 비쌈",
+          "en": "Calls are expensive",
+          "jp": "電話代が高い"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「给」引出与事相关的对象，即通话的另一方。",
+        "kr": "「给」는 행위의 상대(받는 사람)를 나타냅니다.",
+        "en": "给 marks who you’re calling.",
+        "jp": "「给」は相手を示す。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "喂，你好！",
+      "我是李明。",
+      "你现在有时间吗？",
+      "你给谁打电话？",
+      "我给同学打电话。",
+      "你有王老师的电话号码吗？",
+      "有，我看一下。",
+      "你给王老师打电话吧。"
+    ],
+    "chatPrompt": "请只用本课「打电话、电话、号码、喂、给、同学、看、一下、问、问题、见、看见、事、手机」等词语练习通话与问号码；不要写成问天气或问怎么去学校。",
+    "prompt": {
+      "zh": "请只用本课「打电话、电话、号码、喂、给、同学、看、一下、问、问题、见、看见、事、手机」等词语练习通话与问号码；不要写成问天气或问怎么去学校。",
+      "kr": "「打电话·号码·喂·给·同学·看一下·问题」만. 날씨·통학은 빼 주세요.",
+      "en": "Practice phone talk with 打电话, 号码, 给…打电话—no weather or commuting.",
+      "jp": "電話と番号の表現だけ。天気や行き方は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l15_who_call",
+          "situation": {
+            "zh": "会话二：给谁打电话",
+            "kr": "회화2 · 누구에게",
+            "en": "Dialogue 2 — who",
+            "jp": "会話2"
+          },
+          "aiRole": {
+            "zh": "妈妈",
+            "kr": "엄마",
+            "en": "Mom",
+            "jp": "母"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你给谁打电话？",
+              "pinyin": "Nǐ gěi shéi dǎ diànhuà?",
+              "kr": "누구한테 전화해?",
+              "en": "Who are you calling?",
+              "jp": "だれに電話してる？"
+            },
+            {
+              "zh": "我给同学打电话。",
+              "pinyin": "Wǒ gěi tóngxué dǎ diànhuà.",
+              "kr": "동기한테 전화해요.",
+              "en": "I’m calling a classmate.",
+              "jp": "同学に電話してます。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "你在做什么呢？",
+              "studentRefs": [
+                "你给谁打电话？"
+              ],
+              "acceptable": [
+                "你给谁打电话？"
+              ],
+              "closeAnswers": [
+                "给谁",
+                "打电话"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「给……打电话」说明通话对象。",
+        "pinyin": "gěi",
+        "kr": "「给…打电话」로 상대를 말한다.",
+        "en": "Say who you call with 给…打电话.",
+        "jp": "「给…打电话」で相手を言う。"
+      },
+      {
+        "zh": "能体会「我看一下」表示先查一查、稍等。",
+        "pinyin": "kàn yíxià",
+        "kr": "「看一下」는 잠깐 확인.",
+        "en": "我看一下 ≈ let me check.",
+        "jp": "「看一下」は確認。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课聚焦电话与号码，不是问住址或交通。",
+          "pinyin": "diànhuà",
+          "kr": "전화·번호 과목. 주소·교통 아님.",
+          "en": "Phones & numbers—not address or transport.",
+          "jp": "電話と番号。住所や行き方ではない。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：要老师号码。会话二：给谁打、问什么。会话三：建议给老师打电话并读号码。",
+        "kr": "번호 요청 → 누구·무엇 → 전화 권함.",
+        "en": "Ask number · who/what · suggest calling.",
+        "jp": "番号／相手・用件／電話を勧める。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「手机号码」常简说「手机号」。",
+          "pinyin": "shǒujī",
+          "kr": "휴대폰 번호.",
+          "en": "Mobile number.",
+          "jp": "携帯番号。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「喂」只在电话里用吗？",
+      "kr": "「喂」?",
+      "en": "喂 only on the phone?",
+      "jp": "「喂」は電話だけ？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「看一下」还能说什么动词后面？",
+        "「给」和「跟」有什么不同？"
+      ],
+      "kr": [
+        "「看一下」?",
+        "「给」?"
+      ],
+      "en": [
+        "Another verb + 一下?",
+        "给 vs 跟?"
+      ],
+      "jp": [
+        "「一下」のほかの動詞は？",
+        "「给」と「跟」？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你给谁打电话？ / 我给同学打电话。",
+        "pinyin": "Nǐ gěi shéi dǎ diànhuà? / Wǒ gěi tóngxué dǎ diànhuà.",
+        "usage": {
+          "zh": "说明正在与谁通话。",
+          "kr": "누구와 통화하는지 말한다.",
+          "en": "Say who you’re on the phone with.",
+          "jp": "通話の相手を言う。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

@@ -8708,5 +8708,133 @@
     },
     "tags": { "generated": false },
     "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0516",
+    "hanzi": "出租车",
+    "pinyin": "chūzūchē",
+    "meaning": { "zh": "出租车", "en": "taxi", "ko": "택시" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0517",
+    "hanzi": "号码",
+    "pinyin": "hàomǎ",
+    "meaning": { "zh": "号码", "en": "number (e.g. phone)", "ko": "번호" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0518",
+    "hanzi": "喂",
+    "pinyin": "wèi",
+    "meaning": { "zh": "喂", "en": "hello (on phone)", "ko": "여보세요" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0519",
+    "hanzi": "一下",
+    "pinyin": "yíxià",
+    "meaning": { "zh": "一下", "en": "a bit; once (verb complement)", "ko": "잠깐; 한번" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0520",
+    "hanzi": "怎么样",
+    "pinyin": "zěnmeyàng",
+    "meaning": { "zh": "怎么样", "en": "how is it?", "ko": "어때요?" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0521",
+    "hanzi": "游戏",
+    "pinyin": "yóuxì",
+    "meaning": { "zh": "游戏", "en": "game", "ko": "게임" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0522",
+    "hanzi": "菜单",
+    "pinyin": "càidān",
+    "meaning": { "zh": "菜单", "en": "menu", "ko": "메뉴" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0523",
+    "hanzi": "做饭",
+    "pinyin": "zuòfàn",
+    "meaning": { "zh": "做饭", "en": "to cook (a meal)", "ko": "밥 짓다" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0524",
+    "hanzi": "千",
+    "pinyin": "qiān",
+    "meaning": { "zh": "千", "en": "thousand", "ko": "천" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0525",
+    "hanzi": "没事",
+    "pinyin": "méishì",
+    "meaning": { "zh": "没事", "en": "it’s fine; nothing wrong", "ko": "괜찮아요" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0526",
+    "hanzi": "公司",
+    "pinyin": "gōngsī",
+    "meaning": { "zh": "公司", "en": "company", "ko": "회사" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0527",
+    "hanzi": "女士",
+    "pinyin": "nǚshì",
+    "meaning": { "zh": "女士", "en": "Ms.; lady", "ko": "여사; 아가씨(호칭)" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0528",
+    "hanzi": "饺子",
+    "pinyin": "jiǎozi",
+    "meaning": { "zh": "饺子", "en": "dumpling (jiaozi)", "ko": "만두" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0529",
+    "hanzi": "件",
+    "pinyin": "jiàn",
+    "meaning": { "zh": "件", "en": "measure word for clothes", "ko": "벌(옷)" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0530",
+    "hanzi": "卖",
+    "pinyin": "mài",
+    "meaning": { "zh": "卖", "en": "to sell", "ko": "팔다" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0531",
+    "hanzi": "大家",
+    "pinyin": "dàjiā",
+    "meaning": { "zh": "大家", "en": "everyone", "ko": "여러분; 모두" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
   }
 ]

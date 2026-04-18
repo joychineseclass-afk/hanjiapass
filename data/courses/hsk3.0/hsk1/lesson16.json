@@ -1,0 +1,907 @@
+{
+  "id": "hsk1_lesson16",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 16,
+  "type": "lesson",
+  "title": {
+    "zh": "第16课｜今天天气真好",
+    "cn": "第16课｜今天天气真好",
+    "kr": "제16과｜오늘 날씨 참 좋네요",
+    "en": "Lesson 16 | Nice Weather Today",
+    "jp": "第16課｜今日はいい天気ですね"
+  },
+  "summary": {
+    "zh": "学习用「天气怎么样」谈论天气，用「真、太、非常、有点儿」表程度，并会说「下雨、下雪」与「觉得」。",
+    "kr": "「天气怎么样」·程度 부사·「下雨/下雪」·「觉得」.",
+    "en": "天气怎么样; degree words; rain/snow; 觉得.",
+    "jp": "天気の聞き方、程度、「下雨」「下雪」、「觉得」。"
+  },
+  "scene": {
+    "id": "hsk30_l16_scene",
+    "title": {
+      "zh": "晴雨与冷暖",
+      "kr": "맑음·비·추위",
+      "en": "Sun, rain, cold",
+      "jp": "晴れ雨・寒暖"
+    },
+    "summary": {
+      "zh": "会话一：今天天气、冷不冷；会话二：外边下雨、改天看电影；会话三：喜不喜欢下雪、冷不冷。",
+      "kr": "회화1 날씨·더위 → 회화2 비·영화 → 회화3 눈·추위.",
+      "en": "Fine day & heat · rain & plans · snow & cold.",
+      "jp": "天気／雨と予定／雪と寒さ。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「今天天气怎么样？」「今天天气很好」谈论天气",
+      "pinyin": "tiānqì · zěnmeyàng",
+      "kr": "「天气怎么样」「天气很好」로 날씨를 묻고 말한다.",
+      "en": "Ask and describe the weather.",
+      "jp": "天気を尋ね、述べる。"
+    },
+    {
+      "zh": "能区分「真、太、非常、有点儿」的语气强弱，并用「觉得」表达感受",
+      "pinyin": "zhēn · tài · juéde",
+      "kr": "정도 부사와 「觉得」로 느낌을 말한다.",
+      "en": "Use degree adverbs and 觉得 for feelings.",
+      "jp": "程度副詞と「觉得」。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜问天气",
+        "kr": "회화 1｜날씨",
+        "en": "Dialogue 1 | Weather",
+        "jp": "会話1｜天気"
+      },
+      "summary": {
+        "zh": "问今天天气怎么样，说到有一点儿热。",
+        "kr": "오늘 날씨·조금 더움.",
+        "en": "How’s the weather—a bit hot.",
+        "jp": "今日の天気、少し暑い。"
+      },
+      "lines": [
+        {
+          "speaker": "王美",
+          "text": "今天天气怎么样？",
+          "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+          "translation": {
+            "kr": "오늘 날씨 어때요?",
+            "en": "How’s the weather today?",
+            "jp": "今日の天気はどう？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "今天天气很好。",
+          "pinyin": "Jīntiān tiānqì hěn hǎo.",
+          "translation": {
+            "kr": "오늘 날씨 아주 좋아요.",
+            "en": "It’s really nice today.",
+            "jp": "今日はとてもいい天気です。"
+          }
+        },
+        {
+          "speaker": "王美",
+          "text": "冷吗？",
+          "pinyin": "Lěng ma?",
+          "translation": {
+            "kr": "추워요?",
+            "en": "Is it cold?",
+            "jp": "寒い？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不冷，有一点儿热。",
+          "pinyin": "Bù lěng, yǒu yìdiǎnr rè.",
+          "translation": {
+            "kr": "안 추워요, 좀 더워요.",
+            "en": "Not cold—a little hot.",
+            "jp": "寒くないです、少し暑いです。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜下雨天",
+        "kr": "회화 2｜비 오는 날",
+        "en": "Dialogue 2 | Rainy day",
+        "jp": "会話2｜雨の日"
+      },
+      "summary": {
+        "zh": "外边下大雨，商量还能不能看电影、在家看电视。",
+        "kr": "밖에 비·영화 vs 집 TV.",
+        "en": "Heavy rain—cinema or TV at home.",
+        "jp": "大雨、映画かテレビ。"
+      },
+      "lines": [
+        {
+          "speaker": "安娜",
+          "text": "外边下雨了吗？",
+          "pinyin": "Wàibian xià yǔ le ma?",
+          "translation": {
+            "kr": "밖에 비 와요?",
+            "en": "Is it raining outside?",
+            "jp": "外は雨？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "下雨了，外边雨非常大。",
+          "pinyin": "Xià yǔ le, wàibian yǔ fēicháng dà.",
+          "translation": {
+            "kr": "와요, 밖에 비가 엄청 커요.",
+            "en": "Yes—the rain’s really heavy.",
+            "jp": "降ってる、外は雨がすごく強い。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "今天还能去看电影吗？",
+          "pinyin": "Jīntiān hái néng qù kàn diànyǐng ma?",
+          "translation": {
+            "kr": "오늘도 영화 보러 갈 수 있어요?",
+            "en": "Can we still go to the movies today?",
+            "jp": "今日映画に行ける？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "现在时间还早，看看再说吧。",
+          "pinyin": "Xiànzài shíjiān hái zǎo, kànkan zài shuō ba.",
+          "translation": {
+            "kr": "지금은 아직 이르니, 두고 봐요.",
+            "en": "It’s still early—we’ll see.",
+            "jp": "まだ早いから、様子を見よう。"
+          }
+        },
+        {
+          "speaker": "安娜",
+          "text": "下雨天，我不想去了。",
+          "pinyin": "Xià yǔ tiān, wǒ bù xiǎng qù le.",
+          "translation": {
+            "kr": "비 오는 날엔 안 가고 싶어요.",
+            "en": "On a day like this I don’t want to go.",
+            "jp": "雨の日は行きたくない。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "那我们在家看电视吧。",
+          "pinyin": "Nà wǒmen zài jiā kàn diànshì ba.",
+          "translation": {
+            "kr": "그럼 집에서 TV 봐요.",
+            "en": "Then let’s watch TV at home.",
+            "jp": "じゃあ家でテレビを見よう。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜冬天的天气",
+        "kr": "회화 3｜겨울 날씨",
+        "en": "Dialogue 3 | Winter",
+        "jp": "会話3｜冬"
+      },
+      "summary": {
+        "zh": "聊喜不喜欢下雪、冷不冷，用「觉得」说感受。",
+        "kr": "눈 좋아함·추위·느낌.",
+        "en": "Snow—cold—觉得.",
+        "jp": "雪が好きか、寒さ、「觉得」。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "你喜欢下雪吗？",
+          "pinyin": "Nǐ xǐhuan xià xuě ma?",
+          "translation": {
+            "kr": "눈 오는 거 좋아해요?",
+            "en": "Do you like snow?",
+            "jp": "雪は好き？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "喜欢。下雪可以去玩雪。",
+          "pinyin": "Xǐhuan. Xià xuě kěyǐ qù wán xuě.",
+          "translation": {
+            "kr": "좋아요. 눈 오면 눈 놀이 가요.",
+            "en": "Yes—when it snows we can play in it.",
+            "jp": "好き。雪が降ったら遊びに行ける。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "不冷吗？",
+          "pinyin": "Bù lěng ma?",
+          "translation": {
+            "kr": "안 추워요?",
+            "en": "Aren’t you cold?",
+            "jp": "寒くない？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不太冷。你喜欢下雪吗？",
+          "pinyin": "Bú tài lěng. Nǐ xǐhuan xià xuě ma?",
+          "translation": {
+            "kr": "별로 안 추워요. 님은요?",
+            "en": "Not very cold. How about you?",
+            "jp": "あまり寒くない。君は？"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "我不太喜欢，我觉得下雪很冷。",
+          "pinyin": "Wǒ bú tài xǐhuan, wǒ juéde xià xuě hěn lěng.",
+          "translation": {
+            "kr": "저는 별로예요. 눈 오면 춥다고 느껴요.",
+            "en": "Not really—I find snowy days cold.",
+            "jp": "あまり好きじゃない。雪の日は寒いと思う。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "天气怎么样",
+      "pinyin": "tiānqì zěnmeyàng",
+      "hint": {
+        "zh": "问天气",
+        "kr": "날씨",
+        "en": "how’s weather",
+        "jp": "天気"
+      },
+      "explanation": {
+        "zh": "常用提问框架「今天天气怎么样？」也可用「今天天气好吗？」等变体，回答可用形容词或短句描述冷暖、晴雨。\n\n「天气」\ntiānqì",
+        "kr": "「天气怎么样」로 날씨를 묻습니다.",
+        "en": "天气怎么样? opens a weather chat.",
+        "jp": "「天气怎么样」で天気を尋ねる。"
+      },
+      "examples": [
+        {
+          "zh": "今天天气怎么样？",
+          "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+          "translation": {
+            "kr": "오늘 날씨 어때요?",
+            "en": "How’s the weather today?",
+            "jp": "今日の天気はどう？"
+          }
+        },
+        {
+          "zh": "今天天气很好。",
+          "pinyin": "Jīntiān tiānqì hěn hǎo.",
+          "translation": {
+            "kr": "오늘 날씨 아주 좋아요.",
+            "en": "It’s lovely today.",
+            "jp": "今日はとてもいい天気です。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "程度副词：真、太、非常、有点儿",
+      "pinyin": "chéngdù fùcí",
+      "hint": {
+        "zh": "强弱",
+        "kr": "정도",
+        "en": "degree",
+        "jp": "程度"
+      },
+      "explanation": {
+        "zh": "「真、太、非常」多加强语气；「有点儿」常表示程度不高或轻微，如「有一点儿热」「我不太喜欢」。\n\n「有点儿」\nyǒudiǎnr",
+        "kr": "강조와 완곡—「有点儿」는 약한 정도.",
+        "en": "真/太/非常 amp up; 有点儿 softens or “a bit.”",
+        "jp": "「有点儿」は「少し」。"
+      },
+      "examples": [
+        {
+          "zh": "外边雨非常大。",
+          "pinyin": "Wàibian yǔ fēicháng dà.",
+          "translation": {
+            "kr": "밖에 비가 엄청 세요.",
+            "en": "The rain outside is really heavy.",
+            "jp": "外は雨がとても強い。"
+          }
+        },
+        {
+          "zh": "有一点儿热。",
+          "pinyin": "Yǒu yìdiǎnr rè.",
+          "translation": {
+            "kr": "좀 더워요.",
+            "en": "A little hot.",
+            "jp": "少し暑い。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "下雨 / 下雪",
+      "pinyin": "xià yǔ / xià xuě",
+      "hint": {
+        "zh": "自然现象",
+        "kr": "비·눈",
+        "en": "rain / snow",
+        "jp": "雨・雪"
+      },
+      "explanation": {
+        "zh": "动词「下」与「雨」「雪」搭配表示降水，如「下雨了」「下雪可以去玩雪」。\n\n「下雨」\nxià yǔ",
+        "kr": "「下雨」「下雪」로 강수를 말합니다.",
+        "en": "下雨了 = it’s raining; 下雪 = snow falls.",
+        "jp": "「下雨」「下雪」で降水。"
+      },
+      "examples": [
+        {
+          "zh": "外边下雨了吗？",
+          "pinyin": "Wàibian xià yǔ le ma?",
+          "translation": {
+            "kr": "밖에 비 와요?",
+            "en": "Is it raining outside?",
+            "jp": "外は雨？"
+          }
+        },
+        {
+          "zh": "下雪可以去玩雪。",
+          "pinyin": "Xià xuě kěyǐ qù wán xuě.",
+          "translation": {
+            "kr": "눈 오면 눈 놀이 가요.",
+            "en": "When it snows you can play in the snow.",
+            "jp": "雪が降ったら遊べる。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "觉得",
+      "pinyin": "juéde",
+      "hint": {
+        "zh": "主观感受",
+        "kr": "느끼다",
+        "en": "feel/think",
+        "jp": "～と思う"
+      },
+      "explanation": {
+        "zh": "动词「觉得」引出主观感受或看法，如「我觉得下雪很冷」。\n\n「觉得」\njuéde",
+        "kr": "「觉得」는 주관적 느낌.",
+        "en": "觉得 = feel / think (subjectively).",
+        "jp": "「觉得」は感じ・思う。"
+      },
+      "examples": [
+        {
+          "zh": "我觉得下雪很冷。",
+          "pinyin": "Wǒ juéde xià xuě hěn lěng.",
+          "translation": {
+            "kr": "눈 오는 날은 춥다고 느껴요.",
+            "en": "I find snowy weather cold.",
+            "jp": "雪の日は寒いと思う。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "今天天气很好。",
+          "pinyin": "Jīntiān tiānqì hěn hǎo.",
+          "translations": {
+            "kr": "오늘 날씨 정말 좋아요.",
+            "en": "Nice weather today.",
+            "jp": "今日はいい天気です。"
+          }
+        },
+        {
+          "zh": "外边很冷。",
+          "pinyin": "Wàibian hěn lěng.",
+          "translations": {
+            "kr": "밖은 매우 추워요.",
+            "en": "It’s cold outside.",
+            "jp": "外はとても寒い。"
+          }
+        },
+        {
+          "zh": "我喜欢下雪。",
+          "pinyin": "Wǒ xǐhuan xià xuě.",
+          "translations": {
+            "kr": "눈 오는 걸 좋아해요.",
+            "en": "I like snow.",
+            "jp": "雪が降るのが好きです。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜天气卡",
+        "kr": "읽기｜날씨 카드",
+        "en": "Reading | Weather card",
+        "jp": "読み物｜天気カード"
+      },
+      "sentences": [
+        {
+          "zh": "北京：冷",
+          "pinyin": "Běijīng: lěng",
+          "translations": {
+            "kr": "베이징: 춥다",
+            "en": "Beijing: cold",
+            "jp": "北京：寒い"
+          }
+        },
+        {
+          "zh": "上海：热",
+          "pinyin": "Shànghǎi: rè",
+          "translations": {
+            "kr": "상하이: 덥다",
+            "en": "Shanghai: hot",
+            "jp": "上海：暑い"
+          }
+        },
+        {
+          "zh": "今天：下雨",
+          "pinyin": "Jīntiān: xià yǔ",
+          "translations": {
+            "kr": "오늘: 비",
+            "en": "Today: rain",
+            "jp": "今日：雨"
+          }
+        },
+        {
+          "zh": "明天：下雪",
+          "pinyin": "Míngtiān: xià xuě",
+          "translations": {
+            "kr": "내일: 눈",
+            "en": "Tomorrow: snow",
+            "jp": "明日：雪"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l16_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句在问「今天天气如何」？",
+        "kr": "오늘 날씨를 묻는 말은?",
+        "en": "Which asks about today’s weather?",
+        "jp": "今日の天気を聞いているのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "今天天气怎么样？",
+          "cn": "今天天气怎么样？",
+          "kr": "오늘 날씨 어때?",
+          "en": "How’s the weather today?",
+          "jp": "今日の天気はどう？"
+        },
+        {
+          "key": "B",
+          "zh": "你给谁打电话？",
+          "cn": "你给谁打电话？",
+          "kr": "누구한테 전화?",
+          "en": "Who are you calling?",
+          "jp": "だれに電話？"
+        },
+        {
+          "key": "C",
+          "zh": "你怎么去学校？",
+          "cn": "你怎么去学校？",
+          "kr": "학교 어떻게 가?",
+          "en": "How do you get to school?",
+          "jp": "学校へどう行く？"
+        },
+        {
+          "key": "D",
+          "zh": "你想吃什么？",
+          "cn": "你想吃什么？",
+          "kr": "뭐 먹고 싶어?",
+          "en": "What do you want to eat?",
+          "jp": "何が食べたい？"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「天气怎么样」用于询问天气。",
+        "kr": "「天气怎么样」로 날씨를 묻습니다.",
+        "en": "天气怎么样 asks about the weather.",
+        "jp": "「天气怎么样」は天気を尋ねる。"
+      }
+    },
+    {
+      "id": "hsk30_l16_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「怎么样」的拼音是？",
+        "kr": "「怎么样」의 병음은?",
+        "en": "What’s the pinyin for 怎么样?",
+        "jp": "「怎么样」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "zěnmeyàng",
+          "cn": "zěnmeyàng",
+          "kr": "zěnmeyàng",
+          "en": "zěnmeyàng",
+          "jp": "zěnmeyàng"
+        },
+        {
+          "key": "B",
+          "zh": "zěnmeyāng",
+          "cn": "zěnmeyāng",
+          "kr": "zěnmeyāng",
+          "en": "zěnmeyāng",
+          "jp": "zěnmeyāng"
+        },
+        {
+          "key": "C",
+          "zh": "zhěnmeyàng",
+          "cn": "zhěnmeyàng",
+          "kr": "zhěnmeyàng",
+          "en": "zhěnmeyàng",
+          "jp": "zhěnmeyàng"
+        },
+        {
+          "key": "D",
+          "zh": "zěnmeyang",
+          "cn": "zěnmeyang",
+          "kr": "zěnmeyang",
+          "en": "zěnmeyang",
+          "jp": "zěnmeyang"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「怎么样」读作 zěnmeyàng。",
+        "kr": "「怎么样」는 zěnmeyàng입니다.",
+        "en": "Say zěnmeyàng.",
+        "jp": "読みは zěnmeyàng です。"
+      }
+    },
+    {
+      "id": "hsk30_l16_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「我觉得下雪很冷。」里的「觉得」表示：",
+        "kr": "「觉得」는?",
+        "en": "In 我觉得下雪很冷, 觉得 expresses:",
+        "jp": "「觉得」は何を表す？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "主观感受或看法",
+          "cn": "主观感受或看法",
+          "kr": "주관적 느낌",
+          "en": "A personal feeling",
+          "jp": "自分の感じ・考え"
+        },
+        {
+          "key": "B",
+          "zh": "向别人道歉",
+          "cn": "向别人道歉",
+          "kr": "사과",
+          "en": "Apologizing",
+          "jp": "あやまる"
+        },
+        {
+          "key": "C",
+          "zh": "命令对方穿外套",
+          "cn": "命令对方穿外套",
+          "kr": "겉옷 입으라 함",
+          "en": "Ordering a coat",
+          "jp": "上着を着ろと命じる"
+        },
+        {
+          "key": "D",
+          "zh": "说明下雪的时间",
+          "cn": "说明下雪的时间",
+          "kr": "눈 오는 시각",
+          "en": "When it snows",
+          "jp": "雪が降る時刻"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「觉得」引出说话人对天气的主观感受。",
+        "kr": "「觉得」는 느낌·생각.",
+        "en": "觉得 = feel/think.",
+        "jp": "「觉得」は感じ・思う。"
+      }
+    },
+    {
+      "id": "hsk30_l16_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「下雨了，外边雨非常大。」句中「非常」 mainly 修饰：",
+        "kr": "「非常大」에서 「非常」는?",
+        "en": "In 雨非常大, 非常 mainly intensifies:",
+        "jp": "「非常大」の「非常」は何を強める？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "雨下得大、程度强",
+          "cn": "雨下得大、程度强",
+          "kr": "비의 세기",
+          "en": "How heavy the rain is",
+          "jp": "雨の強さ"
+        },
+        {
+          "key": "B",
+          "zh": "时间非常早",
+          "cn": "时间非常早",
+          "kr": "시간이 이르다",
+          "en": "Very early",
+          "jp": "とても早い"
+        },
+        {
+          "key": "C",
+          "zh": "路非常远",
+          "cn": "路非常远",
+          "kr": "길이 멀다",
+          "en": "Very far",
+          "jp": "とても遠い"
+        },
+        {
+          "key": "D",
+          "zh": "人非常多",
+          "cn": "人非常多",
+          "kr": "사람이 많다",
+          "en": "Many people",
+          "jp": "人が多い"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「非常」在此说明雨势大。",
+        "kr": "「非常大」는 비가 세다는 뜻.",
+        "en": "非常 + 大 = very heavy (rain).",
+        "jp": "雨の強さを言う。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "今天天气怎么样？",
+      "今天天气很好。",
+      "外边下雨了吗？",
+      "下雨了，外边雨非常大。",
+      "那我们在家看电视吧。",
+      "你喜欢下雪吗？",
+      "我觉得下雪很冷。"
+    ],
+    "chatPrompt": "请只用本课「天气、怎么样、冷、热、雨、下雨、雪、下雪、外边、太、真、非常、有点儿、还、早、再、电视、觉得」等词语谈天气与感受；不要写成问电话号码。",
+    "prompt": {
+      "zh": "请只用本课「天气、怎么样、冷、热、雨、下雨、雪、下雪、外边、太、真、非常、有点儿、还、早、再、电视、觉得」等词语谈天气与感受；不要写成问电话号码。",
+      "kr": "날씨·비·눈·추위·느낌만. 전화번호는 빼 주세요.",
+      "en": "Weather and feelings only—no phone numbers.",
+      "jp": "天気と気持ちだけ。電話番号は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l16_weather",
+          "situation": {
+            "zh": "会话一：问天气",
+            "kr": "회화1 · 날씨",
+            "en": "Dialogue 1",
+            "jp": "会話1"
+          },
+          "aiRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "今天天气怎么样？",
+              "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+              "kr": "오늘 날씨 어때?",
+              "en": "How’s the weather?",
+              "jp": "今日の天気は？"
+            },
+            {
+              "zh": "今天天气很好。",
+              "pinyin": "Jīntiān tiānqì hěn hǎo.",
+              "kr": "아주 좋아요.",
+              "en": "It’s great.",
+              "jp": "とてもいいです。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "我们出去玩吧！",
+              "studentRefs": [
+                "今天天气怎么样？"
+              ],
+              "acceptable": [
+                "今天天气怎么样？"
+              ],
+              "closeAnswers": [
+                "天气",
+                "怎么样"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「天气怎么样」开启关于天气的对话。",
+        "pinyin": "tiānqì",
+        "kr": "날씨 질문.",
+        "en": "Open with 天气怎么样.",
+        "jp": "天気の話を始める。"
+      },
+      {
+        "zh": "能用「觉得」说出自己对冷热的感受。",
+        "pinyin": "juéde",
+        "kr": "느낌 말하기.",
+        "en": "Say how you feel with 觉得.",
+        "jp": "「觉得」で感じを言う。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课说天气与体感，不是说怎么去学校。",
+          "pinyin": "tiānqì",
+          "kr": "날씨 과목.",
+          "en": "Weather—not transport.",
+          "jp": "天気の课。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：冷暖。会话二：大雨与在家看电视。会话三：下雪与觉得冷。",
+        "kr": "날씨 → 비·TV → 눈·느낌.",
+        "en": "Fine / rainy & TV / snow & cold.",
+        "jp": "晴れ雨／テレビ／雪。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「还早」的「还」表示尚、仍然。",
+          "pinyin": "hái",
+          "kr": "「还」는 아직.",
+          "en": "还 = still/yet.",
+          "jp": "「还」はまだ。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「有点儿」和「有一点儿」一样吗？",
+      "kr": "「有点儿」?",
+      "en": "有点儿 vs 有一点儿?",
+      "jp": "「有点儿」は？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「太」一定是不满意吗？",
+        "下雨和下雨天有什么不同？"
+      ],
+      "kr": [
+        "「太」?",
+        "下雨?"
+      ],
+      "en": [
+        "Is 太 always bad?",
+        "下雨 vs 下雨天?"
+      ],
+      "jp": [
+        "「太」は文句？",
+        "「下雨」？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "今天天气怎么样？ / 今天天气很好。",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng? / Jīntiān tiānqì hěn hǎo.",
+        "usage": {
+          "zh": "询问并描述当天天气。",
+          "kr": "오늘 날씨 묻고 답하기.",
+          "en": "Ask and describe today’s weather.",
+          "jp": "その日の天気を聞き、答える。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

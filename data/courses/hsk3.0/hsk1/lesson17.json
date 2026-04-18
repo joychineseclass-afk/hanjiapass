@@ -1,0 +1,911 @@
+{
+  "id": "hsk1_lesson17",
+  "courseId": "hsk3.0_hsk1",
+  "level": "HSK1",
+  "version": "3.0",
+  "lessonNo": 17,
+  "type": "lesson",
+  "title": {
+    "zh": "第17课｜你学习什么？",
+    "cn": "第17课｜你学习什么？",
+    "kr": "제17과｜뭘 공부해요?",
+    "en": "Lesson 17 | What Are You Studying?",
+    "jp": "第17課｜何を勉強していますか。"
+  },
+  "summary": {
+    "zh": "学习用「学、学习」说课业，用「正在……呢」表进行，用「什么」问内容，用「都」表总括。",
+    "kr": "「学/学习」「正在…呢」「什么」「都」.",
+    "en": "学/学习; 正在…呢; 什么; 都.",
+    "jp": "「学」「学习」「正在…呢」「什么」「都」。"
+  },
+  "scene": {
+    "id": "hsk30_l17_scene",
+    "title": {
+      "zh": "读书与上课",
+      "kr": "독서·수업",
+      "en": "Reading & class",
+      "jp": "読書と授業"
+    },
+    "summary": {
+      "zh": "会话一：正在读书、中文书与汉字；会话二：学汉语、一天几小时；会话三：大中小学生的身份、会不会说汉语。",
+      "kr": "회화1 독서·한자 → 회화2 한어·시간 → 회화3 신분·말하기.",
+      "en": "Reading · hours of Chinese · school level & speaking.",
+      "jp": "読書／時間／学生の段階。"
+    }
+  },
+  "objectives": [
+    {
+      "zh": "能用「你在学什么呢？」「我正在学习汉语呢」描述正在进行的学业活动",
+      "pinyin": "zhèngzài · ne",
+      "kr": "「正在 … 呢」로 지금 하는 공부를 말한다.",
+      "en": "Describe ongoing study with 正在…呢.",
+      "jp": "「正在…呢」で勉強中のことを言う。"
+    },
+    {
+      "zh": "能用「你们都会说汉语吗？」一类问句，理解「都」概括全体",
+      "pinyin": "dōu",
+      "kr": "「都」로 모두 해당됨을 말한다.",
+      "en": "Use 都 for “all.”",
+      "jp": "「都」で全部。"
+    }
+  ],
+  "vocab": [],
+  "dialogue": [],
+  "dialogueCards": [
+    {
+      "title": {
+        "zh": "会话一｜读书写字",
+        "kr": "회화 1｜읽고 쓰기",
+        "en": "Dialogue 1 | Read & write",
+        "jp": "会話1｜読み書き"
+      },
+      "summary": {
+        "zh": "问在做什么，说到正在读中文书、会写汉字。",
+        "kr": "뭐 하는지·중국어 책·한자.",
+        "en": "What are you doing—Chinese books & characters.",
+        "jp": "何をしているか、中国語の本と漢字。"
+      },
+      "lines": [
+        {
+          "speaker": "汤姆",
+          "text": "你在做什么呢？",
+          "pinyin": "Nǐ zài zuò shénme ne?",
+          "translation": {
+            "kr": "뭐 하고 있어요?",
+            "en": "What are you doing?",
+            "jp": "何してるの？"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "我正在读书呢。",
+          "pinyin": "Wǒ zhèngzài dúshū ne.",
+          "translation": {
+            "kr": "책 읽고 있어요.",
+            "en": "I’m reading.",
+            "jp": "読書してます。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "你读的是中文书吗？",
+          "pinyin": "Nǐ dú de shì Zhōngwén shū ma?",
+          "translation": {
+            "kr": "중국어 책이에요?",
+            "en": "Is it a Chinese book?",
+            "jp": "中国語の本？"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "是的，是中文书。",
+          "pinyin": "Shì de, shì Zhōngwén shū.",
+          "translation": {
+            "kr": "네, 중국어 책이에요.",
+            "en": "Yes—a Chinese book.",
+            "jp": "ええ、中国語の本です。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "你也会写汉字吗？",
+          "pinyin": "Nǐ yě huì xiě Hànzì ma?",
+          "translation": {
+            "kr": "한자도 쓸 수 있어요?",
+            "en": "Can you write characters too?",
+            "jp": "漢字も書ける？"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "是的，我会写很多汉字。",
+          "pinyin": "Shì de, wǒ huì xiě hěn duō Hànzì.",
+          "translation": {
+            "kr": "네, 한자 많이 써요.",
+            "en": "Yes—I can write a lot.",
+            "jp": "ええ、たくさん書けます。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话二｜说学习情况",
+        "kr": "회화 2｜공부 이야기",
+        "en": "Dialogue 2 | How you study",
+        "jp": "会話2｜学習の様子"
+      },
+      "summary": {
+        "zh": "问学什么、喜欢汉语课吗、一天学几小时。",
+        "kr": "무엇을·좋아함·하루 몇 시간.",
+        "en": "What, liking class, hours a day.",
+        "jp": "何を、好きか、一日何時間。"
+      },
+      "lines": [
+        {
+          "speaker": "王老师",
+          "text": "汤姆，你在学什么呢？",
+          "pinyin": "Tāngmǔ, nǐ zài xué shénme ne?",
+          "translation": {
+            "kr": "탐, 뭐 배우고 있니?",
+            "en": "Tom, what are you studying?",
+            "jp": "トム、何を勉強してる？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我正在学习汉语呢。",
+          "pinyin": "Wǒ zhèngzài xuéxí Hànyǔ ne.",
+          "translation": {
+            "kr": "중국어 공부하고 있어요.",
+            "en": "I’m studying Chinese.",
+            "jp": "中国語を勉強してます。"
+          }
+        },
+        {
+          "speaker": "王老师",
+          "text": "你喜欢汉语课吗？",
+          "pinyin": "Nǐ xǐhuan Hànyǔ kè ma?",
+          "translation": {
+            "kr": "중국어 수업 좋아해?",
+            "en": "Do you like Chinese class?",
+            "jp": "中国語の授業は好き？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "喜欢。",
+          "pinyin": "Xǐhuan.",
+          "translation": {
+            "kr": "좋아요.",
+            "en": "Yes.",
+            "jp": "好きです。"
+          }
+        },
+        {
+          "speaker": "王老师",
+          "text": "你一天学习几个小时汉语？",
+          "pinyin": "Nǐ yī tiān xuéxí jǐ ge xiǎoshí Hànyǔ?",
+          "translation": {
+            "kr": "하루에 중국어 몇 시간 해?",
+            "en": "How many hours of Chinese a day?",
+            "jp": "一日何時間中国語を？"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "我一天学习两个小时汉语。",
+          "pinyin": "Wǒ yī tiān xuéxí liǎng ge xiǎoshí Hànyǔ.",
+          "translation": {
+            "kr": "하루 두 시간이요.",
+            "en": "Two hours a day.",
+            "jp": "一日二時間です。"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "zh": "会话三｜说学生身份",
+        "kr": "회화 3｜학생 신분",
+        "en": "Dialogue 3 | Student type",
+        "jp": "会話3｜学生の身分"
+      },
+      "summary": {
+        "zh": "问是不是大学生，琳达是小学生，大家会不会说汉语。",
+        "kr": "대학생인지·초등·다 함께 말하기.",
+        "en": "College or not—primary—everyone speaks?",
+        "jp": "大学生か、小学生、みんな話せるか。"
+      },
+      "lines": [
+        {
+          "speaker": "李明",
+          "text": "你是大学生吗？",
+          "pinyin": "Nǐ shì dàxuéshēng ma?",
+          "translation": {
+            "kr": "대학생이에요?",
+            "en": "Are you a college student?",
+            "jp": "大学生ですか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "不是，我是中学生。",
+          "pinyin": "Bù shì, wǒ shì zhōngxuéshēng.",
+          "translation": {
+            "kr": "아니요, 중학생이에요.",
+            "en": "No—I’m a middle school student.",
+            "jp": "いいえ、中学生です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "那你呢，琳达？",
+          "pinyin": "Nà nǐ ne, Líndá?",
+          "translation": {
+            "kr": "린다는요?",
+            "en": "How about you, Linda?",
+            "jp": "リンダさんは？"
+          }
+        },
+        {
+          "speaker": "琳达",
+          "text": "我是小学生。",
+          "pinyin": "Wǒ shì xiǎoxuéshēng.",
+          "translation": {
+            "kr": "저는 초등학생이에요.",
+            "en": "I’m an elementary student.",
+            "jp": "小学生です。"
+          }
+        },
+        {
+          "speaker": "李明",
+          "text": "你们都会说汉语吗？",
+          "pinyin": "Nǐmen dōu huì shuō Hànyǔ ma?",
+          "translation": {
+            "kr": "둘 다 중국어 할 수 있어요?",
+            "en": "Can you both speak Chinese?",
+            "jp": "二人とも中国語が話せますか。"
+          }
+        },
+        {
+          "speaker": "汤姆",
+          "text": "是的，我们都会说汉语。",
+          "pinyin": "Shì de, wǒmen dōu huì shuō Hànyǔ.",
+          "translation": {
+            "kr": "네, 둘 다 할 수 있어요.",
+            "en": "Yes—we both can.",
+            "jp": "ええ、二人とも話せます。"
+          }
+        }
+      ]
+    }
+  ],
+  "grammar": [
+    {
+      "pattern": "学 / 学习",
+      "pinyin": "xué / xuéxí",
+      "hint": {
+        "zh": "学习活动",
+        "kr": "배우기",
+        "en": "study",
+        "jp": "勉強"
+      },
+      "explanation": {
+        "zh": "「学」可单独作动词或与其他成分搭配；「学习」为双音节动词，宾语常为语言或技能，如「学习汉语」。\n\n「学习」\nxuéxí",
+        "kr": "「学」「学习」로 공부·습득을 말합니다.",
+        "en": "学 / 学习 = study (学习 often with objects like 汉语).",
+        "jp": "「学」「学习」で勉強。"
+      },
+      "examples": [
+        {
+          "zh": "你在学什么呢？",
+          "pinyin": "Nǐ zài xué shénme ne?",
+          "translation": {
+            "kr": "뭐 배우고 있어?",
+            "en": "What are you studying?",
+            "jp": "何を勉強してる？"
+          }
+        },
+        {
+          "zh": "我正在学习汉语呢。",
+          "pinyin": "Wǒ zhèngzài xuéxí Hànyǔ ne.",
+          "translation": {
+            "kr": "중국어 공부 중이에요.",
+            "en": "I’m studying Chinese.",
+            "jp": "中国語を勉強してます。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "正在……呢",
+      "pinyin": "zhèngzài … ne",
+      "hint": {
+        "zh": "进行中",
+        "kr": "진행",
+        "en": "in progress",
+        "jp": "進行中"
+      },
+      "explanation": {
+        "zh": "副词「正在」与动词性成分组合表示动作正在进行，句末常用语气词「呢」呼应，如「我正在读书呢」。\n\n「正在」\nzhèngzài",
+        "kr": "「正在 … 呢」는 지금 하고 있음.",
+        "en": "正在…呢 = in the middle of doing…",
+        "jp": "「正在…呢」は進行。"
+      },
+      "examples": [
+        {
+          "zh": "我正在读书呢。",
+          "pinyin": "Wǒ zhèngzài dúshū ne.",
+          "translation": {
+            "kr": "책 읽고 있어요.",
+            "en": "I’m reading.",
+            "jp": "読書してます。"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "什么问内容",
+      "pinyin": "shénme wèn nèiróng",
+      "hint": {
+        "zh": "疑问内容",
+        "kr": "내용",
+        "en": "what content",
+        "jp": "内容"
+      },
+      "explanation": {
+        "zh": "疑问代词「什么」可询问事物、行为或内容，如「你在学什么？」「你读的是什么书？」。\n\n「什么」\nshénme",
+        "kr": "「什么」로 내용·대상을 묻습니다.",
+        "en": "什么 asks what (content or thing).",
+        "jp": "「什么」は内容を尋ねる。"
+      },
+      "examples": [
+        {
+          "zh": "你在学什么呢？",
+          "pinyin": "Nǐ zài xué shénme ne?",
+          "translation": {
+            "kr": "뭐 배워?",
+            "en": "What are you studying?",
+            "jp": "何を勉強してる？"
+          }
+        }
+      ]
+    },
+    {
+      "pattern": "都",
+      "pinyin": "dōu",
+      "hint": {
+        "zh": "总括",
+        "kr": "모두",
+        "en": "all",
+        "jp": "みな"
+      },
+      "explanation": {
+        "zh": "副词「都」用于总括前面所举的人或事物，表示全体具有某种情况，如「我们都会说汉语」。\n\n「都」\ndōu",
+        "kr": "「都」는 전원 해당.",
+        "en": "都 = all (in the group).",
+        "jp": "「都」は全部。"
+      },
+      "examples": [
+        {
+          "zh": "我们都会说汉语。",
+          "pinyin": "Wǒmen dōu huì shuō Hànyǔ.",
+          "translation": {
+            "kr": "우리 다 중국어 해요.",
+            "en": "We all speak Chinese.",
+            "jp": "みんな中国語が話せます。"
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "groupTitle": {
+        "zh": "扩展表达",
+        "kr": "더 익히기",
+        "en": "More useful lines",
+        "jp": "表現を広げる"
+      },
+      "sentences": [
+        {
+          "zh": "我在学校学习中文。",
+          "pinyin": "Wǒ zài xuéxiào xuéxí Zhōngwén.",
+          "translations": {
+            "kr": "학교에서 중국어를 배워요.",
+            "en": "I study Chinese at school.",
+            "jp": "学校で中国語を勉強します。"
+          }
+        },
+        {
+          "zh": "我是中学生。",
+          "pinyin": "Wǒ shì zhōngxuéshēng.",
+          "translations": {
+            "kr": "저는 중학생이에요.",
+            "en": "I’m a middle school student.",
+            "jp": "中学生です。"
+          }
+        },
+        {
+          "zh": "我学习两个小时。",
+          "pinyin": "Wǒ xuéxí liǎng ge xiǎoshí.",
+          "translations": {
+            "kr": "두 시간 공부해요.",
+            "en": "I study for two hours.",
+            "jp": "二時間勉強します。"
+          }
+        }
+      ]
+    },
+    {
+      "groupTitle": {
+        "zh": "阅读小材料｜今天的课表",
+        "kr": "읽기｜오늘 시간표",
+        "en": "Reading | Today’s timetable",
+        "jp": "読み物｜今日の時間割"
+      },
+      "sentences": [
+        {
+          "zh": "第一课 读书 9:00—9:50",
+          "pinyin": "Dì-yī kè dúshū jiǔ diǎn líng líng dào jiǔ diǎn wǔ shí",
+          "translations": {
+            "kr": "1교시 독서 9:00—9:50",
+            "en": "Period 1 Reading 9:00—9:50",
+            "jp": "第1時限 読書 9:00—9:50"
+          }
+        },
+        {
+          "zh": "第二课 汉语10:00—10:50",
+          "pinyin": "Dì-èr kè Hànyǔ shí diǎn líng líng dào shí diǎn wǔ shí",
+          "translations": {
+            "kr": "2교시 중국어 10:00—10:50",
+            "en": "Period 2 Chinese 10:00—10:50",
+            "jp": "第2時限 中国語 10:00—10:50"
+          }
+        },
+        {
+          "zh": "下午 书法课 2:00—4:00",
+          "pinyin": "Xiàwǔ shūfǎ kè liǎng diǎn líng líng dào sì diǎn líng líng",
+          "translations": {
+            "kr": "오후 서예 2:00—4:00",
+            "en": "Afternoon calligraphy 2:00—4:00",
+            "jp": "午後 書道 2:00—4:00"
+          }
+        }
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "hsk30_l17_p1",
+      "type": "choice",
+      "subtype": "meaning_to_vocab_choice",
+      "prompt": {
+        "cn": "下面哪一句表示「动作正在进行」？",
+        "kr": "「지금 하고 있다」에 가까운 말은?",
+        "en": "Which shows an action in progress?",
+        "jp": "「いま進行中」を表すのは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "我正在读书呢。",
+          "cn": "我正在读书呢。",
+          "kr": "책 읽는 중이에요.",
+          "en": "I’m reading right now.",
+          "jp": "今、読書してます。"
+        },
+        {
+          "key": "B",
+          "zh": "我昨天读书了。",
+          "cn": "我昨天读书了。",
+          "kr": "어제 책 읽었어요.",
+          "en": "I read yesterday.",
+          "jp": "昨日読みました。"
+        },
+        {
+          "key": "C",
+          "zh": "我会读书。",
+          "cn": "我会读书。",
+          "kr": "책 읽을 줄 알아요.",
+          "en": "I can read.",
+          "jp": "読めます。"
+        },
+        {
+          "key": "D",
+          "zh": "我想读书。",
+          "cn": "我想读书。",
+          "kr": "책 읽고 싶어요.",
+          "en": "I want to read.",
+          "jp": "読みたいです。"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「正在……呢」表进行。",
+        "kr": "「正在…呢」는 진행.",
+        "en": "正在…呢 marks ongoing action.",
+        "jp": "「正在…呢」は進行。"
+      }
+    },
+    {
+      "id": "hsk30_l17_p2",
+      "type": "choice",
+      "subtype": "zh_to_pinyin_choice",
+      "prompt": {
+        "cn": "「学习」的拼音是？",
+        "kr": "「学习」의 병음은?",
+        "en": "What’s the pinyin for 学习?",
+        "jp": "「学习」のピンインは？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "xuéxí",
+          "cn": "xuéxí",
+          "kr": "xuéxí",
+          "en": "xuéxí",
+          "jp": "xuéxí"
+        },
+        {
+          "key": "B",
+          "zh": "xuéxī",
+          "cn": "xuéxī",
+          "kr": "xuéxī",
+          "en": "xuéxī",
+          "jp": "xuéxī"
+        },
+        {
+          "key": "C",
+          "zh": "xüéxí",
+          "cn": "xüéxí",
+          "kr": "xüéxí",
+          "en": "xüéxí",
+          "jp": "xüéxí"
+        },
+        {
+          "key": "D",
+          "zh": "xuéxi",
+          "cn": "xuéxi",
+          "kr": "xuéxi",
+          "en": "xuéxi",
+          "jp": "xuéxi"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「学习」读作 xuéxí。",
+        "kr": "「学习」는 xuéxí입니다.",
+        "en": "Say xuéxí.",
+        "jp": "読みは xuéxí です。"
+      }
+    },
+    {
+      "id": "hsk30_l17_p3",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「你们都会说汉语吗？」里的「都」强调：",
+        "kr": "「都」는?",
+        "en": "In 你们都会…, 都 stresses:",
+        "jp": "「你们都会」の「都」は？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "几个人全部具备所说情况",
+          "cn": "几个人全部具备所说情况",
+          "kr": "여러 사람 모두",
+          "en": "Everyone in the group",
+          "jp": "グループの全員"
+        },
+        {
+          "key": "B",
+          "zh": "只有一个人会",
+          "cn": "只有一个人会",
+          "kr": "한 명만",
+          "en": "Only one person",
+          "jp": "一人だけ"
+        },
+        {
+          "key": "C",
+          "zh": "谁也不大会",
+          "cn": "谁也不大会",
+          "kr": "아무도 못 함",
+          "en": "Nobody can",
+          "jp": "だれもできない"
+        },
+        {
+          "key": "D",
+          "zh": "问时间是不是都花在汉语上",
+          "cn": "问时间是不是都花在汉语上",
+          "kr": "시간을 다 썼냐",
+          "en": "Whether time was all spent",
+          "jp": "時間の使い方"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "「都」总括「你们」全体。",
+        "kr": "「都」는 전원.",
+        "en": "都 = all of you.",
+        "jp": "「都」は全員。"
+      }
+    },
+    {
+      "id": "hsk30_l17_p4",
+      "type": "choice",
+      "subtype": "dialogue_response",
+      "prompt": {
+        "cn": "「你是大学生吗？」「不是，我是中学生。」回答的是关于：",
+        "kr": "무엇에 대한 답?",
+        "en": "That exchange is about:",
+        "jp": "何について答えている？"
+      },
+      "options": [
+        {
+          "key": "A",
+          "zh": "就读的学校阶段/身份",
+          "cn": "就读的学校阶段/身份",
+          "kr": "학교 단계·신분",
+          "en": "School level / status",
+          "jp": "学校の段階・身分"
+        },
+        {
+          "key": "B",
+          "zh": "住在哪座城市",
+          "cn": "住在哪座城市",
+          "kr": "어느 도시",
+          "en": "Which city",
+          "jp": "どの都市"
+        },
+        {
+          "key": "C",
+          "zh": "今天上几节课",
+          "cn": "今天上几节课",
+          "kr": "오늘 몇 교시",
+          "en": "How many classes today",
+          "jp": "今日の授業数"
+        },
+        {
+          "key": "D",
+          "zh": "会不会写汉字",
+          "cn": "会不会写汉字",
+          "kr": "한자 쓰기",
+          "en": "Writing characters",
+          "jp": "漢字が書けるか"
+        }
+      ],
+      "answer": "A",
+      "explanation": {
+        "cn": "大学生、中学生说明学籍阶段。",
+        "kr": "대학·중학은 학년 단계.",
+        "en": "大学生 vs 中学生 = school level.",
+        "jp": "学生の段階の話。"
+      }
+    }
+  ],
+  "review": {},
+  "aiPractice": {
+    "speaking": [
+      "你在做什么呢？",
+      "我正在读书呢。",
+      "你在学什么呢？",
+      "我正在学习汉语呢。",
+      "你一天学习几个小时汉语？",
+      "你是大学生吗？",
+      "我们都是小学生。",
+      "你们都会说汉语吗？"
+    ],
+    "chatPrompt": "请只用本课「学、学习、正在、课、读、读书、大学生、小学生、中学生、小学、中文、我们、都、小时、一天」等词语谈学习；不要写成问天气。",
+    "prompt": {
+      "zh": "请只用本课「学、学习、正在、课、读、读书、大学生、小学生、中学生、小学、中文、我们、都、小时、一天」等词语谈学习；不要写成问天气。",
+      "kr": "공부·학년·시간만. 날씨는 빼 주세요.",
+      "en": "Study and school level only—no weather.",
+      "jp": "勉強と学生の話だけ。天気は書かない。"
+    },
+    "situationDialogue": {
+      "defaultScenarioIndex": 0,
+      "scenarios": [
+        {
+          "id": "l17_study",
+          "situation": {
+            "zh": "会话二：学什么",
+            "kr": "회화2",
+            "en": "Dialogue 2",
+            "jp": "会話2"
+          },
+          "aiRole": {
+            "zh": "王老师",
+            "kr": "왕 선생님",
+            "en": "Teacher Wang",
+            "jp": "王先生"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
+          "expressions": [
+            {
+              "zh": "你在学什么呢？",
+              "pinyin": "Nǐ zài xué shénme ne?",
+              "kr": "뭐 배우고 있니?",
+              "en": "What are you studying?",
+              "jp": "何を勉強してる？"
+            },
+            {
+              "zh": "我正在学习汉语呢。",
+              "pinyin": "Wǒ zhèngzài xuéxí Hànyǔ ne.",
+              "kr": "중국어 공부 중이에요.",
+              "en": "I’m studying Chinese.",
+              "jp": "中国語を勉強してます。"
+            }
+          ],
+          "rounds": [
+            {
+              "aiLine": "加油！",
+              "studentRefs": [
+                "你在学什么呢？"
+              ],
+              "acceptable": [
+                "你在学什么呢？"
+              ],
+              "closeAnswers": [
+                "学",
+                "什么"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "aiLearning": {
+    "abilityPoints": [
+      {
+        "zh": "会用「正在……呢」说明此刻在做的功课。",
+        "pinyin": "zhèngzài",
+        "kr": "진행 중 말하기.",
+        "en": "Ongoing study with 正在…呢.",
+        "jp": "「正在…呢」で進行を言う。"
+      },
+      {
+        "zh": "能用「都」概括「我们、你们」全体。",
+        "pinyin": "dōu",
+        "kr": "전원 해당.",
+        "en": "都 for the whole group.",
+        "jp": "「都」で全員。"
+      }
+    ],
+    "lessonExplain": {
+      "focusMinimal": true,
+      "learningGoals": [
+        {
+          "zh": "本课谈学习与身份，不是说交通。",
+          "pinyin": "xuéxí",
+          "kr": "공부·학년.",
+          "en": "Study—not transport.",
+          "jp": "学習の课。"
+        }
+      ],
+      "practiceFocus": [],
+      "scenarioSummary": {
+        "zh": "会话一：读书与汉字。会话二：学汉语的时长。会话三：大中小学与都会说汉语。",
+        "kr": "독서 → 시간 → 신분·都.",
+        "en": "Reading · hours · levels & 都.",
+        "jp": "読書／時間／段階と「都」。"
+      },
+      "scenarioSummaryLines": [
+        {
+          "zh": "「一天」指一昼夜中的学习时段安排。",
+          "pinyin": "yī tiān",
+          "kr": "하루.",
+          "en": "一天 = a day.",
+          "jp": "「一天」は一日。"
+        }
+      ],
+      "confusionPoints": []
+    },
+    "freeAskPlaceholder": {
+      "zh": "例如：「学」和「学习」能随便换吗？",
+      "kr": "「学」?",
+      "en": "学 vs 学习?",
+      "jp": "「学」と「学习」？"
+    },
+    "freeAskExamples": {
+      "zh": [
+        "「正在」一定要加「呢」吗？",
+        "「小学生」和「小学」有什么不同？"
+      ],
+      "kr": [
+        "「呢」?",
+        "小学生?"
+      ],
+      "en": [
+        "Need 呢?",
+        "小学生 vs 小学?"
+      ],
+      "jp": [
+        "「呢」は？",
+        "小学生と小学？"
+      ]
+    },
+    "coreExpressions": [
+      {
+        "expr": "你在学什么呢？ / 我正在学习汉语呢。",
+        "pinyin": "Nǐ zài xué shénme ne? / Wǒ zhèngzài xuéxí Hànyǔ ne.",
+        "usage": {
+          "zh": "询问并回答正在学的内容。",
+          "kr": "무엇을 배우는지 묻고 답한다.",
+          "en": "Ask and say what you’re studying.",
+          "jp": "勉強内容を聞き、答える。"
+        }
+      }
+    ]
+  },
+  "steps": [
+    {
+      "key": "vocab",
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
+    },
+    {
+      "key": "dialogue",
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
+    },
+    {
+      "key": "grammar",
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
+    },
+    {
+      "key": "extension",
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
+    },
+    {
+      "key": "practice",
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
+    },
+    {
+      "key": "aiPractice",
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "courseId": "hsk1",
   "level": "HSK1",
-  "_luminaNote": "HSK 3.0 一级：第 1–13 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
+  "_luminaNote": "HSK 3.0 一级：第 1–22 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [
     {
       "lessonNo": 1,
@@ -314,6 +314,168 @@
         "en": "Lesson 13",
         "jp": "第13課"
       }
+    },
+    {
+      "lessonNo": 14,
+      "id": "hsk1_lesson14",
+      "file": "lesson14.json",
+      "title": {
+        "cn": "你怎么去学校？",
+        "zh": "你怎么去学校？",
+        "kr": "학교엔 어떻게 가요?",
+        "en": "How Do You Get to School?",
+        "jp": "学校へはどう行きますか。"
+      },
+      "sceneGoal": "学习用「怎么」问方式，用「坐、开车」说交通，认识连动句与提议语气的「吧」",
+      "subtitle": "交通 · 出行",
+      "grammarTargets": ["怎么问方式", "坐 / 开车", "连动句", "吧表示提议"],
+      "vocabTargets": ["车", "出租车", "火车", "飞机", "坐", "开", "开车", "上学", "上班", "下班", "白天", "晚", "时间", "回", "吧", "怎么", "送"],
+      "extensionTargets": ["扩展表达", "出行方式卡"],
+      "displayTitle": { "cn": "第14课", "zh": "第14课", "kr": "제14과", "en": "Lesson 14", "jp": "第14課" }
+    },
+    {
+      "lessonNo": 15,
+      "id": "hsk1_lesson15",
+      "file": "lesson15.json",
+      "title": {
+        "cn": "你给谁打电话？",
+        "zh": "你给谁打电话？",
+        "kr": "누구에게 전화해요?",
+        "en": "Who Are You Calling?",
+        "jp": "だれに電話しますか。"
+      },
+      "sceneGoal": "学习用「给……打电话」说明通话对象，用「看一下」表示短动作，掌握电话用语「喂」与询问号码",
+      "subtitle": "电话 · 号码",
+      "grammarTargets": ["给 + 人 + 打电话", "一下"],
+      "vocabTargets": ["打电话", "电话", "号码", "喂", "给", "同学", "看", "一下", "问", "问题", "怎么", "见", "看见", "事", "手机"],
+      "extensionTargets": ["扩展表达", "电话记录"],
+      "displayTitle": { "cn": "第15课", "zh": "第15课", "kr": "제15과", "en": "Lesson 15", "jp": "第15課" }
+    },
+    {
+      "lessonNo": 16,
+      "id": "hsk1_lesson16",
+      "file": "lesson16.json",
+      "title": {
+        "cn": "今天天气真好",
+        "zh": "今天天气真好",
+        "kr": "오늘 날씨 참 좋네요",
+        "en": "Nice Weather Today",
+        "jp": "今日はいい天気ですね"
+      },
+      "sceneGoal": "学习用「天气怎么样」谈论天气，用「真、太、非常、有点儿」表程度，并会说「下雨、下雪」与「觉得」",
+      "subtitle": "天气 · 感受",
+      "grammarTargets": ["天气怎么样", "程度副词", "下雨 / 下雪", "觉得"],
+      "vocabTargets": ["天", "天气", "怎么样", "冷", "热", "雨", "下雨", "雪", "外边", "太", "真", "非常", "有点儿", "还", "早", "再", "电视", "觉得"],
+      "extensionTargets": ["扩展表达", "天气卡"],
+      "displayTitle": { "cn": "第16课", "zh": "第16课", "kr": "제16과", "en": "Lesson 16", "jp": "第16課" }
+    },
+    {
+      "lessonNo": 17,
+      "id": "hsk1_lesson17",
+      "file": "lesson17.json",
+      "title": {
+        "cn": "你学习什么？",
+        "zh": "你学习什么？",
+        "kr": "뭘 공부해요?",
+        "en": "What Are You Studying?",
+        "jp": "何を勉強していますか。"
+      },
+      "sceneGoal": "学习用「学、学习」说课业，用「正在……呢」表进行，用「什么」问内容，用「都」表总括",
+      "subtitle": "学习 · 身份",
+      "grammarTargets": ["学 / 学习", "正在……呢", "什么问内容", "都"],
+      "vocabTargets": ["学", "学习", "正在", "课", "读", "读书", "大学生", "小学生", "中学生", "小学", "中文", "我们", "们", "都", "小时", "一天"],
+      "extensionTargets": ["扩展表达", "今天的课表"],
+      "displayTitle": { "cn": "第17课", "zh": "第17课", "kr": "제17과", "en": "Lesson 17", "jp": "第17課" }
+    },
+    {
+      "lessonNo": 18,
+      "id": "hsk1_lesson18",
+      "file": "lesson18.json",
+      "title": {
+        "cn": "课后你做什么？",
+        "zh": "课后你做什么？",
+        "kr": "수업 끝나면 뭐 해요?",
+        "en": "What Do You Do After Class?",
+        "jp": "授業のあと何をしますか。"
+      },
+      "sceneGoal": "学习用「做什么」询问课余活动，区分「听」与「听见」，用「只」表限制，用「好听、好玩儿」评价",
+      "subtitle": "课余 · 爱好",
+      "grammarTargets": ["做什么", "只", "听 / 听见", "好听 / 好玩儿"],
+      "vocabTargets": ["唱", "歌", "玩", "游戏", "好玩儿", "找", "小朋友", "只", "听", "听见", "好听"],
+      "extensionTargets": ["扩展表达", "课后活动表"],
+      "displayTitle": { "cn": "第18课", "zh": "第18课", "kr": "제18과", "en": "Lesson 18", "jp": "第18課" }
+    },
+    {
+      "lessonNo": 19,
+      "id": "hsk1_lesson19",
+      "file": "lesson19.json",
+      "title": {
+        "cn": "你想吃什么？",
+        "zh": "你想吃什么？",
+        "kr": "뭐 먹고 싶어요?",
+        "en": "What Would You Like to Eat?",
+        "jp": "何が食べたいですか。"
+      },
+      "sceneGoal": "学习用「想、要」表达意愿，掌握一日三餐名称，会说「做饭」与「一些」",
+      "subtitle": "饮食 · 三餐",
+      "grammarTargets": ["想 / 要", "一日三餐", "做饭", "一些"],
+      "vocabTargets": ["包子", "饺子", "面包", "水", "鸡蛋", "菜", "菜单", "饭", "早饭", "午饭", "晚饭", "做", "做饭", "想", "要", "面条儿", "少", "一些"],
+      "extensionTargets": ["扩展表达", "饭店菜单"],
+      "displayTitle": { "cn": "第19课", "zh": "第19课", "kr": "제19과", "en": "Lesson 19", "jp": "第19課" }
+    },
+    {
+      "lessonNo": 20,
+      "id": "hsk1_lesson20",
+      "file": "lesson20.json",
+      "title": {
+        "cn": "我想买两件衣服",
+        "zh": "我想买两件衣服",
+        "kr": "옷 두 벌 사고 싶어요",
+        "en": "I Want to Buy Two Pieces of Clothing",
+        "jp": "服を二枚買いたいです"
+      },
+      "sceneGoal": "学习用「件」说衣物，用「多少钱」问价，用「穿」说穿着效果，并认识「不要、便宜」",
+      "subtitle": "购物 · 衣着",
+      "grammarTargets": ["件", "多少钱", "不要", "穿"],
+      "vocabTargets": ["件", "衣服", "多少", "钱", "元", "块", "卖", "找", "不要", "便宜", "百", "千", "穿"],
+      "extensionTargets": ["扩展表达", "服装店价签"],
+      "displayTitle": { "cn": "第20课", "zh": "第20课", "kr": "제20과", "en": "Lesson 20", "jp": "第20課" }
+    },
+    {
+      "lessonNo": 21,
+      "id": "hsk1_lesson21",
+      "file": "lesson21.json",
+      "title": {
+        "cn": "生病了",
+        "zh": "生病了",
+        "kr": "아파요",
+        "en": "Falling Ill",
+        "jp": "病気になりました"
+      },
+      "sceneGoal": "学习用「怎么了」关心状况，用「生病、看病」说就医，用「要、再、见」表达嘱咐与道别",
+      "subtitle": "健康 · 休息",
+      "grammarTargets": ["怎么了", "生病 / 看病", "要", "再"],
+      "vocabTargets": ["病", "生病", "看病", "医院", "医生", "睡", "事", "怎么", "要", "再", "明天", "见", "没事"],
+      "extensionTargets": ["扩展表达", "医院提示"],
+      "displayTitle": { "cn": "第21课", "zh": "第21课", "kr": "제21과", "en": "Lesson 21", "jp": "第21課" }
+    },
+    {
+      "lessonNo": 22,
+      "id": "hsk1_lesson22",
+      "file": "lesson22.json",
+      "title": {
+        "cn": "工作与生活",
+        "zh": "工作与生活",
+        "kr": "일과 생활",
+        "en": "Work and Life",
+        "jp": "仕事と生活"
+      },
+      "sceneGoal": "学习用「去年、明年、第」说时间次序，用「工作、公司、忙」谈职场，并认识「先生、女士」等称呼",
+      "subtitle": "工作 · 日常",
+      "grammarTargets": ["去年 / 明年", "第 + 数词", "在 + 地点 + 工作"],
+      "vocabTargets": ["年", "去年", "明年", "第", "回", "知道", "工作", "公司", "忙", "爱", "男", "女", "女士", "先生", "说话", "大家", "家人", "男朋友"],
+      "extensionTargets": ["扩展表达", "工作信息卡"],
+      "displayTitle": { "cn": "第22课", "zh": "第22课", "kr": "제22과", "en": "Lesson 22", "jp": "第22課" }
     }
   ]
 }
