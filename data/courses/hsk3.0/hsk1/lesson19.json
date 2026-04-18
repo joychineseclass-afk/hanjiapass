@@ -602,53 +602,53 @@
     {
       "id": "hsk30_l19_p3",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「少做一些。」主要是请对方：",
-        "kr": "「少做一些」는?",
-        "en": "少做一些 mainly asks someone to:",
-        "jp": "「少做一些」は相手に何を頼む？"
+        "cn": "「少」的拼音是？",
+        "kr": "「少」의 병음은?",
+        "en": "What is the pinyin of 少?",
+        "jp": "「少」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "把饭菜数量做少一点",
-          "cn": "把饭菜数量做少一点",
-          "kr": "양을 줄여 달라",
-          "en": "Make a smaller amount of food",
-          "jp": "量を少なめに作る"
+          "zh": "shǎo",
+          "cn": "shǎo",
+          "kr": "shǎo",
+          "en": "shǎo",
+          "jp": "shǎo"
         },
         {
           "key": "B",
-          "zh": "不要再做饭了",
-          "cn": "不要再做饭了",
-          "kr": "요리 그만",
-          "en": "Stop cooking entirely",
-          "jp": "もう料理しない"
+          "zh": "shào",
+          "cn": "shào",
+          "kr": "shào",
+          "en": "shào",
+          "jp": "shào"
         },
         {
           "key": "C",
-          "zh": "做得快一些",
-          "cn": "做得快一些",
-          "kr": "더 빨리",
-          "en": "Cook faster",
-          "jp": "もっと速く"
+          "zh": "sǎo",
+          "cn": "sǎo",
+          "kr": "sǎo",
+          "en": "sǎo",
+          "jp": "sǎo"
         },
         {
           "key": "D",
-          "zh": "只做素菜",
-          "cn": "只做素菜",
-          "kr": "채식만",
-          "en": "Vegetarian only",
-          "jp": "野菜だけ"
+          "zh": "shāo",
+          "cn": "shāo",
+          "kr": "shāo",
+          "en": "shāo",
+          "jp": "shāo"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「少」与「一些」配合，表示减量。",
-        "kr": "양을 줄이라는 뜻.",
-        "en": "Ask for less food made.",
-        "jp": "量を減らすお願い。"
+        "cn": "「少」读 shǎo。",
+        "kr": "「少」는 shǎo입니다.",
+        "en": "少 is read shǎo.",
+        "jp": "「少」は shǎo と読みます。"
       }
     },
     {
@@ -656,51 +656,51 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「午饭」指的是哪一餐？",
-        "kr": "「午饭」는?",
-        "en": "午饭 refers to:",
-        "jp": "「午饭」はいつの食事？"
+        "cn": "哪一句在问「午饭想吃什么」？",
+        "kr": "「점심에 뭐 먹고 싶니」를 묻는 말은?",
+        "en": "Which line asks what you want for lunch?",
+        "jp": "「昼ごはんに何が食べたいか」を聞いているのは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "中午那一餐",
-          "cn": "中午那一餐",
-          "kr": "점심",
-          "en": "Lunch",
-          "jp": "昼の食事"
+          "zh": "你午饭想吃什么？",
+          "cn": "你午饭想吃什么？",
+          "kr": "점심에 뭐 먹고 싶어?",
+          "en": "What do you want for lunch?",
+          "jp": "昼ごはんは何が食べたい？"
         },
         {
           "key": "B",
-          "zh": "早上那一餐",
-          "cn": "早上那一餐",
-          "kr": "아침",
-          "en": "Breakfast",
-          "jp": "朝の食事"
+          "zh": "晚饭呢？",
+          "cn": "晚饭呢？",
+          "kr": "저녁은?",
+          "en": "What about dinner?",
+          "jp": "夕食は？"
         },
         {
           "key": "C",
-          "zh": "晚上那一餐",
-          "cn": "晚上那一餐",
-          "kr": "저녁",
-          "en": "Dinner",
-          "jp": "夜の食事"
+          "zh": "有菜单吗？",
+          "cn": "有菜单吗？",
+          "kr": "메뉴 있어?",
+          "en": "Is there a menu?",
+          "jp": "メニューはある？"
         },
         {
           "key": "D",
-          "zh": "夜里加餐",
-          "cn": "夜里加餐",
-          "kr": "야식",
-          "en": "Late snack",
-          "jp": "夜食"
+          "zh": "给我三个包子吧。",
+          "cn": "给我三个包子吧。",
+          "kr": "만두 세 개 주세요.",
+          "en": "Three buns, please.",
+          "jp": "包子を三つください。"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「午饭」即午餐。",
-        "kr": "점심.",
-        "en": "午饭 = lunch.",
-        "jp": "昼食。"
+        "cn": "「午饭想吃什么」问午餐想吃的食物。",
+        "kr": "「午饭想吃什么」는 점심 메뉴를 묻습니다.",
+        "en": "午饭想吃什么 asks about lunch.",
+        "jp": "「午饭想吃什么」は昼食を尋ねます。"
       }
     }
   ],

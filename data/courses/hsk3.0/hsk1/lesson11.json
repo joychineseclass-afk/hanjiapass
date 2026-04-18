@@ -692,53 +692,53 @@
     {
       "id": "hsk30_l11_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「我都喜欢。」里的「都」表示：",
-        "kr": "「我都喜欢。」의 「都」는 무슨 뜻이에요?",
-        "en": "In 我都喜欢, 都 means:",
-        "jp": "「我都喜欢」の「都」の意味は？"
+        "cn": "「都」的拼音是？",
+        "kr": "「都」의 병음은?",
+        "en": "What is the pinyin of 都?",
+        "jp": "「都」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "猫和狗两种都喜欢",
-          "cn": "猫和狗两种都喜欢",
-          "kr": "고양이랑 개 둘 다 좋아함",
-          "en": "Likes both—cats and dogs",
-          "jp": "猫も犬もどちらも好き"
+          "zh": "dōu",
+          "cn": "dōu",
+          "kr": "dōu",
+          "en": "dōu",
+          "jp": "dōu"
         },
         {
           "key": "B",
-          "zh": "只喜欢猫",
-          "cn": "只喜欢猫",
-          "kr": "고양이만 좋아함",
-          "en": "Only likes cats",
-          "jp": "猫だけ好き"
+          "zh": "dù",
+          "cn": "dù",
+          "kr": "dù",
+          "en": "dù",
+          "jp": "dù"
         },
         {
           "key": "C",
-          "zh": "都不喜欢",
-          "cn": "都不喜欢",
-          "kr": "둘 다 싫음",
-          "en": "Likes neither",
-          "jp": "どちらも好きではない"
+          "zh": "dǒu",
+          "cn": "dǒu",
+          "kr": "dǒu",
+          "en": "dǒu",
+          "jp": "dǒu"
         },
         {
           "key": "D",
-          "zh": "明天再去",
-          "cn": "明天再去",
-          "kr": "내일 또 감",
-          "en": "Will go again tomorrow",
-          "jp": "また明日行く"
+          "zh": "dōuū",
+          "cn": "dōuū",
+          "kr": "dōuū",
+          "en": "dōuū",
+          "jp": "dōuū"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「都」总括前面提到的两类（猫、狗），表示两种都喜欢。",
-        "kr": "「都」는 앞에서 말한 둘(고양이·개)을 모두 포함한다는 뜻이에요.",
-        "en": "都 covers both options—cats and dogs.",
-        "jp": "「都」は猫と犬の両方をまとめて言っています。"
+        "cn": "「都」读 dōu。",
+        "kr": "「都」는 dōu입니다.",
+        "en": "都 is read dōu.",
+        "jp": "「都」は dōu と読みます。"
       }
     }
   ],

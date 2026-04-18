@@ -573,103 +573,103 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「不是书店后边，是商店后边。」这句话在纠正：",
-        "kr": "「不是书店后边，是商店后边。」는 무엇을 고치는 말이에요?",
-        "en": "That line corrects what mistake?",
-        "jp": "その文は何を訂正していますか。"
+        "cn": "姐姐说「在书店后边」，应该说「在商店后边」才对。正确的句子是：",
+        "kr": "「서점 뒤」가 아니라 「가게 뒤」가 맞다고 할 때 맞는 문장은?",
+        "en": "Pick the sentence that gives the correct location (shop, not bookstore):",
+        "jp": "「本屋の後ろ」ではなく「店の後ろ」が正しいときの文は？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "「书店后边」与「商店后边」弄混了",
-          "cn": "「书店后边」与「商店后边」弄混了",
-          "kr": "서점·가게 뒤를 헷갈린 것",
-          "en": "Mixing up which building is behind the home",
-          "jp": "本屋と店の後ろを取り違えたこと"
+          "zh": "我家在商店后边。",
+          "cn": "我家在商店后边。",
+          "kr": "우리 집은 가게 뒤에 있어요.",
+          "en": "My home is behind the shop.",
+          "jp": "うちは店の後ろにあります。"
         },
         {
           "key": "B",
-          "zh": "星期说错了",
-          "cn": "星期说错了",
-          "kr": "요일을 틀림",
-          "en": "Wrong weekday",
-          "jp": "曜日の間違い"
+          "zh": "我家在书店后边。",
+          "cn": "我家在书店后边。",
+          "kr": "우리 집은 서점 뒤에 있어요.",
+          "en": "My home is behind the bookstore.",
+          "jp": "うちは本屋の後ろにあります。"
         },
         {
           "key": "C",
-          "zh": "价钱算错了",
-          "cn": "价钱算错了",
-          "kr": "값을 잘못 셈",
-          "en": "Wrong price",
-          "jp": "値段の誤り"
+          "zh": "我家在学校后边。",
+          "cn": "我家在学校后边。",
+          "kr": "우리 집은 학교 뒤에 있어요.",
+          "en": "My home is behind the school.",
+          "jp": "うちは学校の後ろにあります。"
         },
         {
           "key": "D",
-          "zh": "朋友名字忘了",
-          "cn": "朋友名字忘了",
-          "kr": "친구 이름 잊음",
-          "en": "Forgot a friend’s name",
-          "jp": "名前を忘れた"
+          "zh": "我家在饭店后边。",
+          "cn": "我家在饭店后边。",
+          "kr": "우리 집은 식당 뒤에 있어요.",
+          "en": "My home is behind the restaurant.",
+          "jp": "うちはレストランの後ろにあります。"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "会话三纠正「在书店后边」应为「在商店后边」。",
-        "kr": "회화3에서는 서점 뒤가 아니라 가게 뒤라고 바로잡습니다.",
-        "en": "They fix “behind the bookstore” to “behind the shop.”",
-        "jp": "本屋の後ろではなく店の後ろと訂正します。"
+        "cn": "会话三纠正：应在「商店后边」而不是「书店后边」。",
+        "kr": "회화3에서는 「商店后边」가 맞습니다.",
+        "en": "Dialogue 3 fixes the place to behind the shop.",
+        "jp": "会話3では「商店后边」が正しい場所です。"
       }
     },
     {
       "id": "hsk30_l13_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「我和同学一起住」里的「和」表示：",
-        "kr": "「我和同学一起住」의 「和」는?",
-        "en": "In 我和同学一起住, 和 means:",
-        "jp": "「我和同学一起住」の「和」の意味は？"
+        "cn": "「和」的拼音是？",
+        "kr": "「和」의 병음은?",
+        "en": "What is the pinyin of 和?",
+        "jp": "「和」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "与同伴一起",
-          "cn": "与同伴一起",
-          "kr": "같이 사는 사람과 함께",
-          "en": "Together with someone",
-          "jp": "一緒にいる相手と"
+          "zh": "hé",
+          "cn": "hé",
+          "kr": "hé",
+          "en": "hé",
+          "jp": "hé"
         },
         {
           "key": "B",
-          "zh": "但是",
-          "cn": "但是",
-          "kr": "하지만",
-          "en": "But",
-          "jp": "しかし"
+          "zh": "hè",
+          "cn": "hè",
+          "kr": "hè",
+          "en": "hè",
+          "jp": "hè"
         },
         {
           "key": "C",
-          "zh": "或者",
-          "cn": "或者",
-          "kr": "혹은",
-          "en": "Or",
-          "jp": "または"
+          "zh": "huó",
+          "cn": "huó",
+          "kr": "huó",
+          "en": "huó",
+          "jp": "huó"
         },
         {
           "key": "D",
-          "zh": "因为",
-          "cn": "因为",
-          "kr": "왜냐하면",
-          "en": "Because",
-          "jp": "だから"
+          "zh": "hē",
+          "cn": "hē",
+          "kr": "hē",
+          "en": "hē",
+          "jp": "hē"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「和」连接「我」与「同学」，表示同住的对象。",
-        "kr": "「和」는 함께 사는 상대를 잇습니다.",
-        "en": "和 links you and who you live with.",
-        "jp": "「和」は一緒に住む相手をつなぎます。"
+        "cn": "「和」在此处读 hé。",
+        "kr": "여기서 「和」는 hé입니다.",
+        "en": "和 is read hé (with).",
+        "jp": "「和」は hé と読みます。"
       }
     }
   ],

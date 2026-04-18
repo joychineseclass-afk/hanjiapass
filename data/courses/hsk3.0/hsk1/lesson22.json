@@ -624,53 +624,53 @@
     {
       "id": "hsk30_l22_p3",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「现在是第二年。」里的「第二」说明：",
-        "kr": "「第二年」는?",
-        "en": "第二年 tells you:",
-        "jp": "「第二年」は何を表す？"
+        "cn": "「第」的拼音是？",
+        "kr": "「第」의 병음은?",
+        "en": "What is the pinyin of 第?",
+        "jp": "「第」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "来华进入的第几个年份/次序",
-          "cn": "来华进入的第几个年份/次序",
-          "kr": "몇 년째인지",
-          "en": "Which year of the stay",
-          "jp": "滞在して何年目か"
+          "zh": "dì",
+          "cn": "dì",
+          "kr": "dì",
+          "en": "dì",
+          "jp": "dì"
         },
         {
           "key": "B",
-          "zh": "一年只有两天",
-          "cn": "一年只有两天",
-          "kr": "이틀뿐",
-          "en": "Only two days a year",
-          "jp": "年に二日だけ"
+          "zh": "dí",
+          "cn": "dí",
+          "kr": "dí",
+          "en": "dí",
+          "jp": "dí"
         },
         {
           "key": "C",
-          "zh": "排名第二的成绩",
-          "cn": "排名第二的成绩",
-          "kr": "성적 2등",
-          "en": "Second in rank",
-          "jp": "成績が二位"
+          "zh": "dī",
+          "cn": "dī",
+          "kr": "dī",
+          "en": "dī",
+          "jp": "dī"
         },
         {
           "key": "D",
-          "zh": "第二个星期",
-          "cn": "第二个星期",
-          "kr": "둘째 주",
-          "en": "Second week",
-          "jp": "第二週"
+          "zh": "de",
+          "cn": "de",
+          "kr": "de",
+          "en": "de",
+          "jp": "de"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「第 + 数词」表顺序，此处指到华第二个年头。",
-        "kr": "서수—중국 온 지 2년째.",
-        "en": "Ordinal—second year in China.",
-        "jp": "順序の「第」。"
+        "cn": "「第」读 dì。",
+        "kr": "「第」는 dì입니다.",
+        "en": "第 is read dì.",
+        "jp": "「第」は dì と読みます。"
       }
     },
     {
@@ -678,51 +678,51 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "会话三里「女士，你好」的「女士」多用于：",
-        "kr": "「女士」는?",
-        "en": "女士 in greeting is often used for:",
-        "jp": "「女士」はどんな場面で使うことが多い？"
+        "cn": "哪一句是礼貌称呼女性听者？",
+        "kr": "여성에게 공손하게 부를 때 맞는 말은?",
+        "en": "Which line is a polite way to address a woman?",
+        "jp": "女性に丁寧に呼びかけるのはどれ？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "对成年女性的礼貌称呼",
-          "cn": "对成年女性的礼貌称呼",
-          "kr": "성인 여성에게",
-          "en": "A polite address to women",
-          "jp": "成年女性への敬称"
+          "zh": "女士，你好。",
+          "cn": "女士，你好。",
+          "kr": "아가씨, 안녕하세요.",
+          "en": "Hello, ma’am.",
+          "jp": "女士、こんにちは。"
         },
         {
           "key": "B",
-          "zh": "只能称呼女学生",
-          "cn": "只能称呼女学生",
-          "kr": "여학생만",
-          "en": "Only students",
-          "jp": "女子学生だけ"
+          "zh": "先生，你好。",
+          "cn": "先生，你好。",
+          "kr": "선생님, 안녕하세요.",
+          "en": "Hello, sir.",
+          "jp": "先生、こんにちは。"
         },
         {
           "key": "C",
-          "zh": "称呼自己的妈妈",
-          "cn": "称呼自己的妈妈",
-          "kr": "엄마",
-          "en": "Your mother",
-          "jp": "母親"
+          "zh": "你是新来的吗？",
+          "cn": "你是新来的吗？",
+          "kr": "신입이에요?",
+          "en": "Are you new?",
+          "jp": "新しい方ですか。"
         },
         {
           "key": "D",
-          "zh": "称呼医生",
-          "cn": "称呼医生",
-          "kr": "의사",
-          "en": "Doctors",
-          "jp": "医者"
+          "zh": "你在哪儿工作？",
+          "cn": "你在哪儿工作？",
+          "kr": "어디서 일해요?",
+          "en": "Where do you work?",
+          "jp": "どこで働いてますか。"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「女士」为礼貌称呼女性听者。",
-        "kr": "여성 호칭.",
-        "en": "女士 ≈ Ms./madam in context.",
-        "jp": "女性への敬称。"
+        "cn": "「女士」用于礼貌称呼女性。",
+        "kr": "「女士」는 여성에게 공손히 부를 때 씁니다.",
+        "en": "女士 politely addresses a woman.",
+        "jp": "「女士」は女性への敬称です。"
       }
     }
   ],

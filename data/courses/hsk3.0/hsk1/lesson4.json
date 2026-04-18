@@ -342,10 +342,26 @@
         "jp": "家族が何人かを尋ねるのはどれですか？"
       },
       "options": [
-        { "key": "A", "zh": "你家有几口人？", "cn": "你家有几口人？" },
-        { "key": "B", "zh": "你是哪国人？", "cn": "你是哪国人？" },
-        { "key": "C", "zh": "你会写汉字吗？", "cn": "你会写汉字吗？" },
-        { "key": "D", "zh": "你叫什么名字？", "cn": "你叫什么名字？" }
+        {
+          "key": "A",
+          "zh": "你家有几口人？",
+          "cn": "你家有几口人？"
+        },
+        {
+          "key": "B",
+          "zh": "你是哪国人？",
+          "cn": "你是哪国人？"
+        },
+        {
+          "key": "C",
+          "zh": "你会写汉字吗？",
+          "cn": "你会写汉字吗？"
+        },
+        {
+          "key": "D",
+          "zh": "你叫什么名字？",
+          "cn": "你叫什么名字？"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -366,10 +382,26 @@
         "jp": "「没有」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "méiyǒu", "cn": "méiyǒu" },
-        { "key": "B", "zh": "méi yǒu", "cn": "méi yǒu" },
-        { "key": "C", "zh": "mèiyǒu", "cn": "mèiyǒu" },
-        { "key": "D", "zh": "méiyòu", "cn": "méiyòu" }
+        {
+          "key": "A",
+          "zh": "méiyǒu",
+          "cn": "méiyǒu"
+        },
+        {
+          "key": "B",
+          "zh": "méi yǒu",
+          "cn": "méi yǒu"
+        },
+        {
+          "key": "C",
+          "zh": "mèiyǒu",
+          "cn": "mèiyǒu"
+        },
+        {
+          "key": "D",
+          "zh": "méiyòu",
+          "cn": "méiyòu"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -385,12 +417,45 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "问句「你有弟弟吗？」若表示「没有弟弟」，应回答：",
-        "kr": "「你有弟弟吗？」에 「남동생 없음」으로 답할 때:",
-        "en": "To answer 你有弟弟吗? when you don’t have a younger brother:",
-        "jp": "「你有弟弟吗？」に「弟はいない」と答えるのは？"
+        "kr": "「你有弟弟吗？」에 「남동생 없음」으로 답할 때 맞는 말은?",
+        "en": "Choose the right reply to 你有弟弟吗? when you don’t have a younger brother:",
+        "jp": "「你有弟弟吗？」に「弟はいない」と答えるのに合うのは？"
       },
-      "options": ["没有。", "有，我是学生。", "是，四口人。", "会，我会写汉字。"],
-      "answer": "没有。",
+      "options": [
+        {
+          "key": "A",
+          "zh": "没有。",
+          "cn": "没有。",
+          "kr": "없어요.",
+          "en": "No. / I don’t.",
+          "jp": "いいえ、いません。"
+        },
+        {
+          "key": "B",
+          "zh": "有，我是学生。",
+          "cn": "有，我是学生。",
+          "kr": "있어요, 학생이에요.",
+          "en": "Yes—I’m a student.",
+          "jp": "はい、学生です。"
+        },
+        {
+          "key": "C",
+          "zh": "是，四口人。",
+          "cn": "是，四口人。",
+          "kr": "네, 네 명이에요.",
+          "en": "Yes—four people.",
+          "jp": "ええ、四人です。"
+        },
+        {
+          "key": "D",
+          "zh": "会，我会写汉字。",
+          "cn": "会，我会写汉字。",
+          "kr": "할 줄 알아요, 한자 써요.",
+          "en": "Yes—I can write characters.",
+          "jp": "はい、漢字も書けます。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「有……吗？」的否定回答常用「没有。」",
         "kr": "「有……吗？」에 대한 부정 답은 「没有。」가 흔합니다.",
@@ -401,26 +466,68 @@
     {
       "id": "hsk30_l4_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「我家有四口人。」这句话里，「四」表示的是：",
-        "kr": "「我家有四口人。」에서 「四」가 나타내는 것은?",
-        "en": "In 我家有四口人。, 四 refers to:",
-        "jp": "「我家有四口人。」の「四」は何を表す？"
+        "cn": "「四」的拼音是？",
+        "kr": "「四」의 병음은?",
+        "en": "What is the pinyin of 四?",
+        "jp": "「四」のピンインは？"
       },
-      "options": ["家庭人口数量", "四个汉字", "四门课", "四个朋友"],
-      "answer": "家庭人口数量",
+      "options": [
+        {
+          "key": "A",
+          "zh": "sì",
+          "cn": "sì",
+          "kr": "sì",
+          "en": "sì",
+          "jp": "sì"
+        },
+        {
+          "key": "B",
+          "zh": "shì",
+          "cn": "shì",
+          "kr": "shì",
+          "en": "shì",
+          "jp": "shì"
+        },
+        {
+          "key": "C",
+          "zh": "sān",
+          "cn": "sān",
+          "kr": "sān",
+          "en": "sān",
+          "jp": "sān"
+        },
+        {
+          "key": "D",
+          "zh": "shí",
+          "cn": "shí",
+          "kr": "shí",
+          "en": "shí",
+          "jp": "shí"
+        }
+      ],
+      "answer": "A",
       "explanation": {
-        "cn": "「几口人」结构里数词说明家里一共有多少人。",
-        "kr": "「几口人」에서 수사는 가구 인원을 나타냅니다.",
-        "en": "The number in …口人 counts people in the household.",
-        "jp": "「几口人」の数詞は家族の人数を表します。"
+        "cn": "「四」读作 sì。",
+        "kr": "「四」는 sì입니다.",
+        "en": "四 is read sì.",
+        "jp": "「四」は sì と読みます。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你家有几口人？", "我家有四口人。", "你家里有谁？", "有爸爸、妈妈、哥哥和我。", "你有妹妹吗？", "有，我有一个妹妹。", "你有弟弟吗？", "没有。"],
+    "speaking": [
+      "你家有几口人？",
+      "我家有四口人。",
+      "你家里有谁？",
+      "有爸爸、妈妈、哥哥和我。",
+      "你有妹妹吗？",
+      "有，我有一个妹妹。",
+      "你有弟弟吗？",
+      "没有。"
+    ],
     "chatPrompt": "请围绕家庭人数、成员和「有/没有」用本课词语问答；不要写成问候或只问名字。",
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -433,27 +540,76 @@
             "en": "Dialogue 1: how many and who",
             "jp": "会話1：何人で誰がいるか"
           },
-          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你家有几口人？", "pinyin": "nǐ jiā yǒu jǐ kǒu rén?", "kr": "가족이 몇 명이에요?" },
-            { "zh": "我家有四口人。", "pinyin": "wǒ jiā yǒu sì kǒu rén.", "kr": "집에 네 명이에요." },
-            { "zh": "你家里有谁？", "pinyin": "nǐ jiā lǐ yǒu shéi?", "kr": "집에 누가 있어요?" },
-            { "zh": "有爸爸、妈妈、哥哥和我。", "pinyin": "yǒu bàba, māma, gēge hé wǒ.", "kr": "아빠, 엄마, 오빠, 저 있어요." }
+            {
+              "zh": "你家有几口人？",
+              "pinyin": "nǐ jiā yǒu jǐ kǒu rén?",
+              "kr": "가족이 몇 명이에요?"
+            },
+            {
+              "zh": "我家有四口人。",
+              "pinyin": "wǒ jiā yǒu sì kǒu rén.",
+              "kr": "집에 네 명이에요."
+            },
+            {
+              "zh": "你家里有谁？",
+              "pinyin": "nǐ jiā lǐ yǒu shéi?",
+              "kr": "집에 누가 있어요?"
+            },
+            {
+              "zh": "有爸爸、妈妈、哥哥和我。",
+              "pinyin": "yǒu bàba, māma, gēge hé wǒ.",
+              "kr": "아빠, 엄마, 오빠, 저 있어요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "李明，你家有几口人？",
-              "studentRefs": ["我家有四口人。"],
-              "acceptable": ["我家有四口人。", "我家有四口人", "四口人"],
-              "closeAnswers": ["四口", "四人"]
+              "studentRefs": [
+                "我家有四口人。"
+              ],
+              "acceptable": [
+                "我家有四口人。",
+                "我家有四口人",
+                "四口人"
+              ],
+              "closeAnswers": [
+                "四口",
+                "四人"
+              ]
             },
             {
               "aiLine": "你家里有谁？",
-              "studentRefs": ["有爸爸、妈妈、哥哥和我。"],
-              "acceptable": ["有爸爸、妈妈、哥哥和我。", "有爸爸、妈妈、哥哥和我"],
-              "closeAnswers": ["爸爸", "妈妈", "哥哥"]
+              "studentRefs": [
+                "有爸爸、妈妈、哥哥和我。"
+              ],
+              "acceptable": [
+                "有爸爸、妈妈、哥哥和我。",
+                "有爸爸、妈妈、哥哥和我"
+              ],
+              "closeAnswers": [
+                "爸爸",
+                "妈妈",
+                "哥哥"
+              ]
             }
           ]
         },
@@ -465,27 +621,75 @@
             "en": "Dialogue 2: younger siblings",
             "jp": "会話2：弟や妹の有無"
           },
-          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你有妹妹吗？", "pinyin": "nǐ yǒu mèimei ma?", "kr": "여동생 있어요?" },
-            { "zh": "有，我有一个妹妹。", "pinyin": "yǒu, wǒ yǒu yí gè mèimei.", "kr": "네, 여동생 한 명 있어요." },
-            { "zh": "你有弟弟吗？", "pinyin": "nǐ yǒu dìdi ma?", "kr": "남동생 있어요?" },
-            { "zh": "没有。", "pinyin": "méiyǒu.", "kr": "없어요." }
+            {
+              "zh": "你有妹妹吗？",
+              "pinyin": "nǐ yǒu mèimei ma?",
+              "kr": "여동생 있어요?"
+            },
+            {
+              "zh": "有，我有一个妹妹。",
+              "pinyin": "yǒu, wǒ yǒu yí gè mèimei.",
+              "kr": "네, 여동생 한 명 있어요."
+            },
+            {
+              "zh": "你有弟弟吗？",
+              "pinyin": "nǐ yǒu dìdi ma?",
+              "kr": "남동생 있어요?"
+            },
+            {
+              "zh": "没有。",
+              "pinyin": "méiyǒu.",
+              "kr": "없어요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "你有妹妹吗？",
-              "studentRefs": ["有，我有一个妹妹。"],
-              "acceptable": ["有，我有一个妹妹。", "有，我有妹妹", "有"],
-              "closeAnswers": ["妹妹", "一个妹妹"]
+              "studentRefs": [
+                "有，我有一个妹妹。"
+              ],
+              "acceptable": [
+                "有，我有一个妹妹。",
+                "有，我有妹妹",
+                "有"
+              ],
+              "closeAnswers": [
+                "妹妹",
+                "一个妹妹"
+              ]
             },
             {
               "aiLine": "你有弟弟吗？",
-              "studentRefs": ["没有。"],
-              "acceptable": ["没有。", "没有"],
-              "closeAnswers": ["没", "不是"]
+              "studentRefs": [
+                "没有。"
+              ],
+              "acceptable": [
+                "没有。",
+                "没有"
+              ],
+              "closeAnswers": [
+                "没",
+                "不是"
+              ]
             }
           ]
         }
@@ -684,27 +888,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

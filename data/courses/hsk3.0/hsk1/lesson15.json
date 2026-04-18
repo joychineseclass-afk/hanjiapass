@@ -510,53 +510,53 @@
     {
       "id": "hsk30_l15_p3",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「有，我看一下。」里的「看一下」主要表示：",
-        "kr": "「看一下」는 주로?",
-        "en": "In 我看一下, 看一下 mainly means:",
-        "jp": "「看一下」は主に何を表す？"
+        "cn": "「看一下」的「看」读作？",
+        "kr": "「看一下」의 「看」 병음은?",
+        "en": "In 看一下, the pinyin of 看 is?",
+        "jp": "「看一下」の「看」は？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "稍查一下、确认信息",
-          "cn": "稍查一下、确认信息",
-          "kr": "잠깐 확인",
-          "en": "Check briefly",
-          "jp": "ちょっと確かめる"
+          "zh": "kàn",
+          "cn": "kàn",
+          "kr": "kàn",
+          "en": "kàn",
+          "jp": "kàn"
         },
         {
           "key": "B",
-          "zh": "看一下午电视",
-          "cn": "看一下午电视",
-          "kr": "한 오후 내내 TV",
-          "en": "Watch TV all afternoon",
-          "jp": "午後ずっとテレビ"
+          "zh": "kān",
+          "cn": "kān",
+          "kr": "kān",
+          "en": "kān",
+          "jp": "kān"
         },
         {
           "key": "C",
-          "zh": "只看一眼就走",
-          "cn": "只看一眼就走",
-          "kr": "한눈만 보고 감",
-          "en": "Glance and leave",
-          "jp": "ちらっと見て帰る"
+          "zh": "kǎn",
+          "cn": "kǎn",
+          "kr": "kǎn",
+          "en": "kǎn",
+          "jp": "kǎn"
         },
         {
           "key": "D",
-          "zh": "向别人问好",
-          "cn": "向别人问好",
-          "kr": "안부 묻기",
-          "en": "Say hello",
-          "jp": "あいさつする"
+          "zh": "kàng",
+          "cn": "kàng",
+          "kr": "kàng",
+          "en": "kàng",
+          "jp": "kàng"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「一下」附在动词后，常表短时动作，此处是查号码前先看一眼。",
-        "kr": "「看一下」는 잠깐 확인하는 말이에요.",
-        "en": "看一下 here is “let me check.”",
-        "jp": "「看一下」は短く確認する。"
+        "cn": "「看」读 kàn。",
+        "kr": "「看」는 kàn입니다.",
+        "en": "看 is read kàn.",
+        "jp": "「看」は kàn と読みます。"
       }
     },
     {
@@ -564,51 +564,51 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「我给同学打电话。」句中「给」的作用是：",
-        "kr": "「给同学打电话」의 「给」는?",
-        "en": "In 给同学打电话, 给 shows:",
-        "jp": "「给同学打电话」の「给」は？"
+        "cn": "哪一句在问「电话打给谁」？",
+        "kr": "「누구에게 전화하니」를 묻는 말은?",
+        "en": "Which line asks who you’re calling?",
+        "jp": "「だれに電話するか」を聞いているのは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "引出打电话的对象",
-          "cn": "引出打电话的对象",
-          "kr": "전화 받는 사람",
-          "en": "Who gets the call",
-          "jp": "電話の相手を示す"
+          "zh": "你给谁打电话？",
+          "cn": "你给谁打电话？",
+          "kr": "누구한테 전화해?",
+          "en": "Who are you calling?",
+          "jp": "だれに電話してる？"
         },
         {
           "key": "B",
-          "zh": "表示从同学那里借电话",
-          "cn": "表示从同学那里借电话",
-          "kr": "전화 빌림",
-          "en": "Borrowing a phone",
-          "jp": "電話を借りる"
+          "zh": "你有时间吗？",
+          "cn": "你有时间吗？",
+          "kr": "시간 있어?",
+          "en": "Do you have time?",
+          "jp": "時間ある？"
         },
         {
           "key": "C",
-          "zh": "说明同学正在打",
-          "cn": "说明同学正在打",
-          "kr": "동기가 걸고 있음",
-          "en": "Classmate is dialing",
-          "jp": "同学がかけている"
+          "zh": "你看一下。",
+          "cn": "你看一下。",
+          "kr": "한번 봐.",
+          "en": "Take a look.",
+          "jp": "ちょっと見て。"
         },
         {
           "key": "D",
-          "zh": "表示打电话很贵",
-          "cn": "表示打电话很贵",
-          "kr": "전화비 비쌈",
-          "en": "Calls are expensive",
-          "jp": "電話代が高い"
+          "zh": "你有什么事？",
+          "cn": "你有什么事？",
+          "kr": "무슨 일 있어?",
+          "en": "What’s up?",
+          "jp": "どうした？"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「给」引出与事相关的对象，即通话的另一方。",
-        "kr": "「给」는 행위의 상대(받는 사람)를 나타냅니다.",
-        "en": "给 marks who you’re calling.",
-        "jp": "「给」は相手を示す。"
+        "cn": "「给谁」引出通话对象。",
+        "kr": "「给谁」로 상대를 묻습니다.",
+        "en": "给谁 asks who you’re calling.",
+        "jp": "「给谁」は相手を尋ねます。"
       }
     }
   ],

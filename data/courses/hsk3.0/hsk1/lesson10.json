@@ -547,10 +547,38 @@
         "jp": "「便宜」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "piányi", "cn": "piányi", "kr": "piányi", "en": "piányi", "jp": "piányi" },
-        { "key": "B", "zh": "pián'yí", "cn": "pián'yí", "kr": "pián'yí", "en": "pián'yí", "jp": "pián'yí" },
-        { "key": "C", "zh": "piānyi", "cn": "piānyi", "kr": "piānyi", "en": "piānyi", "jp": "piānyi" },
-        { "key": "D", "zh": "biànyi", "cn": "biànyi", "kr": "biànyi", "en": "biànyi", "jp": "biànyi" }
+        {
+          "key": "A",
+          "zh": "piányi",
+          "cn": "piányi",
+          "kr": "piányi",
+          "en": "piányi",
+          "jp": "piányi"
+        },
+        {
+          "key": "B",
+          "zh": "pián'yí",
+          "cn": "pián'yí",
+          "kr": "pián'yí",
+          "en": "pián'yí",
+          "jp": "pián'yí"
+        },
+        {
+          "key": "C",
+          "zh": "piānyi",
+          "cn": "piānyi",
+          "kr": "piānyi",
+          "en": "piānyi",
+          "jp": "piānyi"
+        },
+        {
+          "key": "D",
+          "zh": "biànyi",
+          "cn": "biànyi",
+          "kr": "biànyi",
+          "en": "biànyi",
+          "jp": "biànyi"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -563,111 +591,125 @@
     {
       "id": "hsk30_l10_p3",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "店员说「不贵，很便宜。」是在形容：",
-        "kr": "점원이 「不贵，很便宜。」라고 하면 무슨 뜻이에요?",
-        "en": "The clerk says 不贵，很便宜. They’re talking about:",
-        "jp": "店員が「不贵，很便宜。」と言うのは何について？"
+        "cn": "「贵」的拼音是？",
+        "kr": "「贵」의 병음은?",
+        "en": "What is the pinyin of 贵?",
+        "jp": "「贵」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "价格低",
-          "cn": "价格低",
-          "kr": "값이 싸다 · 가격이 낮다",
-          "en": "The price is low",
-          "jp": "値段が安い"
+          "zh": "guì",
+          "cn": "guì",
+          "kr": "guì",
+          "en": "guì",
+          "jp": "guì"
         },
         {
           "key": "B",
-          "zh": "时间早",
-          "cn": "时间早",
-          "kr": "시간이 이르다",
-          "en": "It’s early (time)",
-          "jp": "時間が早い"
+          "zh": "guī",
+          "cn": "guī",
+          "kr": "guī",
+          "en": "guī",
+          "jp": "guī"
         },
         {
           "key": "C",
-          "zh": "地点远",
-          "cn": "地点远",
-          "kr": "장소가 멀다",
-          "en": "The place is far away",
-          "jp": "場所が遠い"
+          "zh": "gùi",
+          "cn": "gùi",
+          "kr": "gùi",
+          "en": "gùi",
+          "jp": "gùi"
         },
         {
           "key": "D",
-          "zh": "年龄大",
-          "cn": "年龄大",
-          "kr": "나이가 많다",
-          "en": "Someone is old (in age)",
-          "jp": "年をとっている"
+          "zh": "guìi",
+          "cn": "guìi",
+          "kr": "guìi",
+          "en": "guìi",
+          "jp": "guìi"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「便宜」表示价格低、不贵。",
-        "kr": "「便宜」는 값이 싸다는 뜻이에요.",
-        "en": "They mean it’s cheap—not a high price.",
-        "jp": "「安い・値ごろ」という意味です。"
+        "cn": "「贵」读 guì。",
+        "kr": "「贵」는 guì입니다.",
+        "en": "贵 is read guì.",
+        "jp": "「贵」は guì と読みます。"
       }
     },
     {
       "id": "hsk30_l10_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「还买什么吗？」里的「还」表示：",
-        "kr": "「还买什么吗？」의 「还」는 무슨 뜻이에요?",
-        "en": "In 还买什么吗?, 还 means:",
-        "jp": "「还买什么吗？」の「还」の意味は？"
+        "cn": "「还」在「还要」中读作？",
+        "kr": "「还要」의 「还」 병음은?",
+        "en": "In 还要, the usual reading of 还 is?",
+        "jp": "「还要」の「还」の読みは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "除此之外再要别的吗",
-          "cn": "除此之外再要别的吗",
-          "kr": "그 밖에 더 살 게 있나요?",
-          "en": "Anything else you want to buy?",
-          "jp": "ほかにも買うものはありますか。"
+          "zh": "hái",
+          "cn": "hái",
+          "kr": "hái",
+          "en": "hái",
+          "jp": "hái"
         },
         {
           "key": "B",
-          "zh": "已经结束了",
-          "cn": "已经结束了",
-          "kr": "이미 끝났어요",
-          "en": "It’s already over",
-          "jp": "もう終わりました"
+          "zh": "huán",
+          "cn": "huán",
+          "kr": "huán",
+          "en": "huán",
+          "jp": "huán"
         },
         {
           "key": "C",
-          "zh": "回到原处",
-          "cn": "回到原处",
-          "kr": "원래 자리로 돌아간다",
-          "en": "Go back to the original spot",
-          "jp": "元の場所に戻る"
+          "zh": "hài",
+          "cn": "hài",
+          "kr": "hài",
+          "en": "hài",
+          "jp": "hài"
         },
         {
           "key": "D",
-          "zh": "非常",
-          "cn": "非常",
-          "kr": "아주 · 대단히",
-          "en": "Very / extremely",
-          "jp": "とても・非常に"
+          "zh": "hāi",
+          "cn": "hāi",
+          "kr": "hāi",
+          "en": "hāi",
+          "jp": "hāi"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「还」在此表示追加、另外还要什么。",
-        "kr": "이미 고른 것 말고 더 살 게 있는지 묻는 말이에요.",
-        "en": "It’s “anything else on your list?”—more to buy.",
-        "jp": "ほかにも買うものがあるか、追加を尋ねています。"
+        "cn": "此处「还」读 hái，表示 additionally。",
+        "kr": "여기서 「还」는 hái로 읽고 ‘또/추가로’입니다.",
+        "en": "Here 还 is hái (also / in addition).",
+        "jp": "ここでは「还」は hái と読み、「さらに」の意。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["请问，这个杯子多少钱？", "十块。", "那个呢？", "那个十二块。", "这个杯子贵吗？", "不贵，很便宜。", "那个有一点儿贵。", "有牛奶吗？", "我买两杯牛奶。", "还买什么吗？", "还买一杯茶。", "谢谢，多少钱？", "二十元。"],
+    "speaking": [
+      "请问，这个杯子多少钱？",
+      "十块。",
+      "那个呢？",
+      "那个十二块。",
+      "这个杯子贵吗？",
+      "不贵，很便宜。",
+      "那个有一点儿贵。",
+      "有牛奶吗？",
+      "我买两杯牛奶。",
+      "还买什么吗？",
+      "还买一杯茶。",
+      "谢谢，多少钱？",
+      "二十元。"
+    ],
     "chatPrompt": "请只用本课「这个、那个、多少钱、块、元、贵、便宜、买、还」等词语练习购物问价；不要写成问时间、问日期或问在哪儿上课。",
     "prompt": {
       "zh": "请只用本课「这个、那个、多少钱、块、元、贵、便宜、买、还」等词语练习购物问价；不要写成问时间、问日期或问在哪儿上课。",
@@ -686,27 +728,82 @@
             "en": "Dialogue 1 — asking cup prices",
             "jp": "会話1：コップの値段を聞く"
           },
-          "aiRole": { "zh": "店员", "kr": "점원", "en": "Clerk", "jp": "店員" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "店员",
+            "kr": "점원",
+            "en": "Clerk",
+            "jp": "店員"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "请问，这个杯子多少钱？", "pinyin": "qǐngwèn, zhège bēizi duōshao qián?", "kr": "실례지만 이 컵 얼마예요?", "en": "Excuse me—how much is this cup?", "jp": "すみません、このコップはいくら？" },
-            { "zh": "十块。", "pinyin": "Shí kuài.", "kr": "10위안이에요.", "en": "Ten yuan.", "jp": "10元です。" },
-            { "zh": "那个呢？", "pinyin": "Nàge ne?", "kr": "그건요?", "en": "How much is that one?", "jp": "それはいくら？" },
-            { "zh": "那个十二块。", "pinyin": "Nàge shí’èr kuài.", "kr": "그건 12위안이에요.", "en": "That one’s twelve yuan.", "jp": "それは12元です。" }
+            {
+              "zh": "请问，这个杯子多少钱？",
+              "pinyin": "qǐngwèn, zhège bēizi duōshao qián?",
+              "kr": "실례지만 이 컵 얼마예요?",
+              "en": "Excuse me—how much is this cup?",
+              "jp": "すみません、このコップはいくら？"
+            },
+            {
+              "zh": "十块。",
+              "pinyin": "Shí kuài.",
+              "kr": "10위안이에요.",
+              "en": "Ten yuan.",
+              "jp": "10元です。"
+            },
+            {
+              "zh": "那个呢？",
+              "pinyin": "Nàge ne?",
+              "kr": "그건요?",
+              "en": "How much is that one?",
+              "jp": "それはいくら？"
+            },
+            {
+              "zh": "那个十二块。",
+              "pinyin": "Nàge shí’èr kuài.",
+              "kr": "그건 12위안이에요.",
+              "en": "That one’s twelve yuan.",
+              "jp": "それは12元です。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "你好，请问买什么？",
-              "studentRefs": ["请问，这个杯子多少钱？"],
-              "acceptable": ["请问，这个杯子多少钱？", "这个杯子多少钱？"],
-              "closeAnswers": ["多少钱", "这个多少钱"]
+              "studentRefs": [
+                "请问，这个杯子多少钱？"
+              ],
+              "acceptable": [
+                "请问，这个杯子多少钱？",
+                "这个杯子多少钱？"
+              ],
+              "closeAnswers": [
+                "多少钱",
+                "这个多少钱"
+              ]
             },
             {
               "aiLine": "十块。",
-              "studentRefs": ["那个呢？"],
-              "acceptable": ["那个呢？", "那个呢"],
-              "closeAnswers": ["那个多少钱", "那个"]
+              "studentRefs": [
+                "那个呢？"
+              ],
+              "acceptable": [
+                "那个呢？",
+                "那个呢"
+              ],
+              "closeAnswers": [
+                "那个多少钱",
+                "那个"
+              ]
             }
           ]
         },
@@ -718,27 +815,82 @@
             "en": "Dialogue 3 — milk and tea",
             "jp": "会話3：牛乳とお茶を買う"
           },
-          "aiRole": { "zh": "店员", "kr": "점원", "en": "Clerk", "jp": "店員" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "店员",
+            "kr": "점원",
+            "en": "Clerk",
+            "jp": "店員"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "有牛奶吗？", "pinyin": "yǒu niúnǎi ma?", "kr": "우유 있어요?", "en": "Do you have milk?", "jp": "牛乳はありますか。" },
-            { "zh": "我买两杯牛奶。", "pinyin": "wǒ mǎi liǎng bēi niúnǎi.", "kr": "우유 두 잔 주세요.", "en": "Two milks, please.", "jp": "牛乳を二つください。" },
-            { "zh": "还买一杯茶。", "pinyin": "hái mǎi yì bēi chá.", "kr": "차 한 잔도 주세요.", "en": "A cup of tea as well.", "jp": "お茶も一杯お願いします。" },
-            { "zh": "谢谢，多少钱？", "pinyin": "xièxie, duōshao qián?", "kr": "감사합니다. 얼마예요?", "en": "Thanks. How much?", "jp": "ありがとうございます。いくらですか。" }
+            {
+              "zh": "有牛奶吗？",
+              "pinyin": "yǒu niúnǎi ma?",
+              "kr": "우유 있어요?",
+              "en": "Do you have milk?",
+              "jp": "牛乳はありますか。"
+            },
+            {
+              "zh": "我买两杯牛奶。",
+              "pinyin": "wǒ mǎi liǎng bēi niúnǎi.",
+              "kr": "우유 두 잔 주세요.",
+              "en": "Two milks, please.",
+              "jp": "牛乳を二つください。"
+            },
+            {
+              "zh": "还买一杯茶。",
+              "pinyin": "hái mǎi yì bēi chá.",
+              "kr": "차 한 잔도 주세요.",
+              "en": "A cup of tea as well.",
+              "jp": "お茶も一杯お願いします。"
+            },
+            {
+              "zh": "谢谢，多少钱？",
+              "pinyin": "xièxie, duōshao qián?",
+              "kr": "감사합니다. 얼마예요?",
+              "en": "Thanks. How much?",
+              "jp": "ありがとうございます。いくらですか。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "有。",
-              "studentRefs": ["我买两杯牛奶。"],
-              "acceptable": ["我买两杯牛奶。", "买两杯牛奶"],
-              "closeAnswers": ["两杯牛奶", "牛奶"]
+              "studentRefs": [
+                "我买两杯牛奶。"
+              ],
+              "acceptable": [
+                "我买两杯牛奶。",
+                "买两杯牛奶"
+              ],
+              "closeAnswers": [
+                "两杯牛奶",
+                "牛奶"
+              ]
             },
             {
               "aiLine": "还买什么吗？",
-              "studentRefs": ["还买一杯茶。"],
-              "acceptable": ["还买一杯茶。", "还买一杯茶"],
-              "closeAnswers": ["一杯茶", "茶"]
+              "studentRefs": [
+                "还买一杯茶。"
+              ],
+              "acceptable": [
+                "还买一杯茶。",
+                "还买一杯茶"
+              ],
+              "closeAnswers": [
+                "一杯茶",
+                "茶"
+              ]
             }
           ]
         }
@@ -913,27 +1065,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

@@ -581,53 +581,53 @@
     {
       "id": "hsk30_l16_p3",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「我觉得下雪很冷。」里的「觉得」表示：",
-        "kr": "「觉得」는?",
-        "en": "In 我觉得下雪很冷, 觉得 expresses:",
-        "jp": "「觉得」は何を表す？"
+        "cn": "「觉得」的拼音是？",
+        "kr": "「觉得」의 병음은?",
+        "en": "What is the pinyin of 觉得?",
+        "jp": "「觉得」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "主观感受或看法",
-          "cn": "主观感受或看法",
-          "kr": "주관적 느낌",
-          "en": "A personal feeling",
-          "jp": "自分の感じ・考え"
+          "zh": "juéde",
+          "cn": "juéde",
+          "kr": "juéde",
+          "en": "juéde",
+          "jp": "juéde"
         },
         {
           "key": "B",
-          "zh": "向别人道歉",
-          "cn": "向别人道歉",
-          "kr": "사과",
-          "en": "Apologizing",
-          "jp": "あやまる"
+          "zh": "juédé",
+          "cn": "juédé",
+          "kr": "juédé",
+          "en": "juédé",
+          "jp": "juédé"
         },
         {
           "key": "C",
-          "zh": "命令对方穿外套",
-          "cn": "命令对方穿外套",
-          "kr": "겉옷 입으라 함",
-          "en": "Ordering a coat",
-          "jp": "上着を着ろと命じる"
+          "zh": "jüéde",
+          "cn": "jüéde",
+          "kr": "jüéde",
+          "en": "jüéde",
+          "jp": "jüéde"
         },
         {
           "key": "D",
-          "zh": "说明下雪的时间",
-          "cn": "说明下雪的时间",
-          "kr": "눈 오는 시각",
-          "en": "When it snows",
-          "jp": "雪が降る時刻"
+          "zh": "juède",
+          "cn": "juède",
+          "kr": "juède",
+          "en": "juède",
+          "jp": "juède"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「觉得」引出说话人对天气的主观感受。",
-        "kr": "「觉得」는 느낌·생각.",
-        "en": "觉得 = feel/think.",
-        "jp": "「觉得」は感じ・思う。"
+        "cn": "「觉得」读 juéde。",
+        "kr": "「觉得」는 juéde입니다.",
+        "en": "觉得 is read juéde.",
+        "jp": "「觉得」は juéde と読みます。"
       }
     },
     {
@@ -635,51 +635,51 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「下雨了，外边雨非常大。」句中「非常」 mainly 修饰：",
-        "kr": "「非常大」에서 「非常」는?",
-        "en": "In 雨非常大, 非常 mainly intensifies:",
-        "jp": "「非常大」の「非常」は何を強める？"
+        "cn": "哪一句在说「雨很大」？",
+        "kr": "「비가 많이 온다」를 말하는 문장은?",
+        "en": "Which line says the rain is heavy?",
+        "jp": "「雨が強い」を言っているのはどれ？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "雨下得大、程度强",
-          "cn": "雨下得大、程度强",
-          "kr": "비의 세기",
-          "en": "How heavy the rain is",
-          "jp": "雨の強さ"
+          "zh": "外边雨非常大。",
+          "cn": "外边雨非常大。",
+          "kr": "밖에 비가 엄청 세요.",
+          "en": "The rain outside is very heavy.",
+          "jp": "外は雨がとても強い。"
         },
         {
           "key": "B",
-          "zh": "时间非常早",
-          "cn": "时间非常早",
-          "kr": "시간이 이르다",
-          "en": "Very early",
-          "jp": "とても早い"
+          "zh": "今天天气很好。",
+          "cn": "今天天气很好。",
+          "kr": "날씨가 아주 좋아요.",
+          "en": "The weather is nice.",
+          "jp": "今日はいい天気です。"
         },
         {
           "key": "C",
-          "zh": "路非常远",
-          "cn": "路非常远",
-          "kr": "길이 멀다",
-          "en": "Very far",
-          "jp": "とても遠い"
+          "zh": "我不想去。",
+          "cn": "我不想去。",
+          "kr": "가기 싫어요.",
+          "en": "I don’t want to go.",
+          "jp": "行きたくない。"
         },
         {
           "key": "D",
-          "zh": "人非常多",
-          "cn": "人非常多",
-          "kr": "사람이 많다",
-          "en": "Many people",
-          "jp": "人が多い"
+          "zh": "现在时间还早。",
+          "cn": "现在时间还早。",
+          "kr": "아직 이르다.",
+          "en": "It’s still early.",
+          "jp": "まだ早い。"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「非常」在此说明雨势大。",
-        "kr": "「非常大」는 비가 세다는 뜻.",
-        "en": "非常 + 大 = very heavy (rain).",
-        "jp": "雨の強さを言う。"
+        "cn": "「雨非常大」表示雨势大。",
+        "kr": "「雨非常大」는 비가 세다는 뜻입니다.",
+        "en": "雨非常大 means heavy rain.",
+        "jp": "「雨非常大」は雨が強いことです。"
       }
     }
   ],

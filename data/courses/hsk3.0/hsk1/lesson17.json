@@ -586,103 +586,103 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「你们都会说汉语吗？」里的「都」强调：",
-        "kr": "「都」는?",
-        "en": "In 你们都会…, 都 stresses:",
-        "jp": "「你们都会」の「都」は？"
+        "cn": "哪一句表示「你们两个人都会说汉语」？",
+        "kr": "「둘 다 중국어 할 수 있다」를 말하는 문장은?",
+        "en": "Which line says you both can speak Chinese?",
+        "jp": "「二人とも中国語が話せる」を言うのはどれ？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "几个人全部具备所说情况",
-          "cn": "几个人全部具备所说情况",
-          "kr": "여러 사람 모두",
-          "en": "Everyone in the group",
-          "jp": "グループの全員"
+          "zh": "你们都会说汉语吗？",
+          "cn": "你们都会说汉语吗？",
+          "kr": "둘 다 중국어 할 수 있어요?",
+          "en": "Can you both speak Chinese?",
+          "jp": "二人とも中国語が話せますか。"
         },
         {
           "key": "B",
-          "zh": "只有一个人会",
-          "cn": "只有一个人会",
-          "kr": "한 명만",
-          "en": "Only one person",
-          "jp": "一人だけ"
+          "zh": "你是大学生吗？",
+          "cn": "你是大学生吗？",
+          "kr": "대학생이에요?",
+          "en": "Are you a college student?",
+          "jp": "大学生ですか。"
         },
         {
           "key": "C",
-          "zh": "谁也不大会",
-          "cn": "谁也不大会",
-          "kr": "아무도 못 함",
-          "en": "Nobody can",
-          "jp": "だれもできない"
+          "zh": "我是小学生。",
+          "cn": "我是小学生。",
+          "kr": "초등학생이에요.",
+          "en": "I’m a primary student.",
+          "jp": "小学生です。"
         },
         {
           "key": "D",
-          "zh": "问时间是不是都花在汉语上",
-          "cn": "问时间是不是都花在汉语上",
-          "kr": "시간을 다 썼냐",
-          "en": "Whether time was all spent",
-          "jp": "時間の使い方"
+          "zh": "我正在读书呢。",
+          "cn": "我正在读书呢。",
+          "kr": "책 읽고 있어요.",
+          "en": "I’m reading.",
+          "jp": "読書してます。"
         }
       ],
       "answer": "A",
       "explanation": {
         "cn": "「都」总括「你们」全体。",
-        "kr": "「都」는 전원.",
-        "en": "都 = all of you.",
-        "jp": "「都」は全員。"
+        "kr": "「都」는 전원을 말합니다.",
+        "en": "都 covers everyone mentioned.",
+        "jp": "「都」はみんなを指します。"
       }
     },
     {
       "id": "hsk30_l17_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「你是大学生吗？」「不是，我是中学生。」回答的是关于：",
-        "kr": "무엇에 대한 답?",
-        "en": "That exchange is about:",
-        "jp": "何について答えている？"
+        "cn": "「学习」的拼音是？",
+        "kr": "「学习」의 병음은?",
+        "en": "What is the pinyin of 学习?",
+        "jp": "「学习」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "就读的学校阶段/身份",
-          "cn": "就读的学校阶段/身份",
-          "kr": "학교 단계·신분",
-          "en": "School level / status",
-          "jp": "学校の段階・身分"
+          "zh": "xuéxí",
+          "cn": "xuéxí",
+          "kr": "xuéxí",
+          "en": "xuéxí",
+          "jp": "xuéxí"
         },
         {
           "key": "B",
-          "zh": "住在哪座城市",
-          "cn": "住在哪座城市",
-          "kr": "어느 도시",
-          "en": "Which city",
-          "jp": "どの都市"
+          "zh": "xuéxī",
+          "cn": "xuéxī",
+          "kr": "xuéxī",
+          "en": "xuéxī",
+          "jp": "xuéxī"
         },
         {
           "key": "C",
-          "zh": "今天上几节课",
-          "cn": "今天上几节课",
-          "kr": "오늘 몇 교시",
-          "en": "How many classes today",
-          "jp": "今日の授業数"
+          "zh": "xüéxí",
+          "cn": "xüéxí",
+          "kr": "xüéxí",
+          "en": "xüéxí",
+          "jp": "xüéxí"
         },
         {
           "key": "D",
-          "zh": "会不会写汉字",
-          "cn": "会不会写汉字",
-          "kr": "한자 쓰기",
-          "en": "Writing characters",
-          "jp": "漢字が書けるか"
+          "zh": "xuéxi",
+          "cn": "xuéxi",
+          "kr": "xuéxi",
+          "en": "xuéxi",
+          "jp": "xuéxi"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "大学生、中学生说明学籍阶段。",
-        "kr": "대학·중학은 학년 단계.",
-        "en": "大学生 vs 中学生 = school level.",
-        "jp": "学生の段階の話。"
+        "cn": "「学习」读 xuéxí。",
+        "kr": "「学习」는 xuéxí입니다.",
+        "en": "学习 is read xuéxí.",
+        "jp": "「学习」は xuéxí と読みます。"
       }
     }
   ],

@@ -184,30 +184,45 @@ export const lesson19 = L(19, {
     {
       id: "hsk30_l19_p3",
       type: "choice",
-      subtype: "dialogue_response",
-      prompt: { cn: "「少做一些。」主要是请对方：", kr: "「少做一些」는?", en: "少做一些 mainly asks someone to:", jp: "「少做一些」は相手に何を頼む？" },
-      options: opt4(
-        ["把饭菜数量做少一点", "양을 줄여 달라", "Make a smaller amount of food", "量を少なめに作る"],
-        ["不要再做饭了", "요리 그만", "Stop cooking entirely", "もう料理しない"],
-        ["做得快一些", "더 빨리", "Cook faster", "もっと速く"],
-        ["只做素菜", "채식만", "Vegetarian only", "野菜だけ"]
-      ),
+      subtype: "zh_to_pinyin_choice",
+      prompt: {
+        cn: "「少」的拼音是？",
+        kr: "「少」의 병음은?",
+        en: "What is the pinyin of 少?",
+        jp: "「少」のピンインは？",
+      },
+      options: pinOpts("shǎo", "shào", "sǎo", "shāo"),
       answer: "A",
-      explanation: { cn: "「少」与「一些」配合，表示减量。", kr: "양을 줄이라는 뜻.", en: "Ask for less food made.", jp: "量を減らすお願い。" },
+      explanation: {
+        cn: "「少」读 shǎo。",
+        kr: "「少」는 shǎo입니다.",
+        en: "少 is read shǎo.",
+        jp: "「少」は shǎo と読みます。",
+      },
     },
     {
       id: "hsk30_l19_p4",
       type: "choice",
       subtype: "dialogue_response",
-      prompt: { cn: "「午饭」指的是哪一餐？", kr: "「午饭」는?", en: "午饭 refers to:", jp: "「午饭」はいつの食事？" },
+      prompt: {
+        cn: "哪一句在问「午饭想吃什么」？",
+        kr: "「점심에 뭐 먹고 싶니」를 묻는 말은?",
+        en: "Which line asks what you want for lunch?",
+        jp: "「昼ごはんに何が食べたいか」を聞いているのは？",
+      },
       options: opt4(
-        ["中午那一餐", "점심", "Lunch", "昼の食事"],
-        ["早上那一餐", "아침", "Breakfast", "朝の食事"],
-        ["晚上那一餐", "저녁", "Dinner", "夜の食事"],
-        ["夜里加餐", "야식", "Late snack", "夜食"]
+        ["你午饭想吃什么？", "점심에 뭐 먹고 싶어?", "What do you want for lunch?", "昼ごはんは何が食べたい？"],
+        ["晚饭呢？", "저녁은?", "What about dinner?", "夕食は？"],
+        ["有菜单吗？", "메뉴 있어?", "Is there a menu?", "メニューはある？"],
+        ["给我三个包子吧。", "만두 세 개 주세요.", "Three buns, please.", "包子を三つください。"]
       ),
       answer: "A",
-      explanation: { cn: "「午饭」即午餐。", kr: "점심.", en: "午饭 = lunch.", jp: "昼食。" },
+      explanation: {
+        cn: "「午饭想吃什么」问午餐想吃的食物。",
+        kr: "「午饭想吃什么」는 점심 메뉴를 묻습니다.",
+        en: "午饭想吃什么 asks about lunch.",
+        jp: "「午饭想吃什么」は昼食を尋ねます。",
+      },
     },
   ],
   aiPractice: {
@@ -446,29 +461,44 @@ export const lesson20 = L(20, {
       id: "hsk30_l20_p3",
       type: "choice",
       subtype: "dialogue_response",
-      prompt: { cn: "「那件你穿很好看。」主要是在说：", kr: "「穿很好看」는?", en: "That line mainly comments on:", jp: "「穿很好看」は主に何を言う？" },
+      prompt: {
+        cn: "哪一句在说「穿起来好看」？",
+        kr: "「입으면 잘 어울린다」를 말하는 문장은?",
+        en: "Which line says it looks good on you when worn?",
+        jp: "「着ると似合う」を言うのはどれ？",
+      },
       options: opt4(
-        ["穿在身上是否好看、合适", "입었을 때 보기", "How it looks on you", "着たときの見え方"],
-        ["衣服洗得很干净", "빨래가 깨끗", "It’s washed clean", "洗濯がきれい"],
-        ["走路穿得快", "걸음이 빠름", "You walk fast in it", "歩くのが速い"],
-        ["衣服重量很轻", "가벼움", "The cloth is light", "軽い"]
+        ["那件你穿很好看。", "저건 입으면 잘 어울려요.", "That one looks great on you.", "あれはよく似合います。"],
+        ["这件衣服多少钱？", "이 옷 얼마예요?", "How much is this?", "いくらですか。"],
+        ["我想买那件。", "저거 살래요.", "I want to buy that one.", "あれを買いたい。"],
+        ["不要，我觉得有一点儿大。", "안 살래요, 좀 커요.", "No—it’s a bit big.", "いいえ、少し大きいです。"]
       ),
       answer: "A",
-      explanation: { cn: "「穿」引出穿着者的外观评价。", kr: "입었을 때의 모습.", en: "穿 + 好看 = looks good worn.", jp: "着たときの見た目。" },
+      explanation: {
+        cn: "「穿很好看」评价穿着效果。",
+        kr: "「穿很好看」는 입었을 때 모습을 말합니다.",
+        en: "穿很好看 comments on how it looks on you.",
+        jp: "「穿很好看」は着たときの見え方です。",
+      },
     },
     {
       id: "hsk30_l20_p4",
       type: "choice",
-      subtype: "dialogue_response",
-      prompt: { cn: "「找你十元」表示店员：", kr: "「找你十元」는?", en: "找你十元 means the clerk:", jp: "「找你十元」は店員が何をする？" },
-      options: opt4(
-        ["把多付的钱退给顾客", "거스름 줌", "Gives change back", "おつりを渡す"],
-        ["再要十元", "10위안 더 달라", "Asks for 10 more", "あと10元もらう"],
-        ["衣服降价十元", "가격 인하", "Lowers price by 10", "値下げ10元"],
-        ["十元不卖", "안 팜", "Won’t sell for ten", "10元では売らない"]
-      ),
+      subtype: "zh_to_pinyin_choice",
+      prompt: {
+        cn: "「找」（找你十元）中读作？",
+        kr: "「找你十元」의 「找」 병음은?",
+        en: "In 找你十元, the pinyin of 找 is?",
+        jp: "「找你十元」の「找」は？",
+      },
+      options: pinOpts("zhǎo", "zhào", "zǎo", "zhāo"),
       answer: "A",
-      explanation: { cn: "付款大于应收时，退回差额即「找钱」。", kr: "거스름 돈.", en: "Change returned.", jp: "おつり。" },
+      explanation: {
+        cn: "此处「找」读 zhǎo，表示找零。",
+        kr: "여기서 「找」는 zhǎo로 거스름 돈을 뜻합니다.",
+        en: "Here 找 is zhǎo (give change).",
+        jp: "ここで「找」は zhǎo、おつりの意味です。",
+      },
     },
   ],
   aiPractice: {
@@ -707,30 +737,45 @@ export const lesson21 = L(21, {
     {
       id: "hsk30_l21_p3",
       type: "choice",
-      subtype: "dialogue_response",
-      prompt: { cn: "「医生说要多休息。」里的「要」更接近：", kr: "「要」는?", en: "In 要多休息, 要 is closer to:", jp: "「要多休息」の「要」は？" },
-      options: opt4(
-        ["应当、需要这样做", "해야 한다", "Should / need to", "そうすべきだ"],
-        ["想要买东西", "사고 싶다", "Want to buy", "買いたい"],
-        ["询问要不要", "할까 말까", "Asking whether to", "するかどうか"],
-        ["表示将来", "미래", "Future tense", "未来"]
-      ),
+      subtype: "zh_to_pinyin_choice",
+      prompt: {
+        cn: "「要」在「要多休息」中读作？",
+        kr: "「要多休息」의 「要」 병음은?",
+        en: "In 要多休息, the pinyin of 要 is?",
+        jp: "「要多休息」の「要」は？",
+      },
+      options: pinOpts("yào", "yāo", "yǎo", "yáo"),
       answer: "A",
-      explanation: { cn: "此处「要」表医嘱、建议。", kr: "의사의 권고.", en: "要 = should (doctor’s advice).", jp: "忠告としての「要」。" },
+      explanation: {
+        cn: "「要」读 yào。",
+        kr: "「要」는 yào입니다.",
+        en: "要 is read yào.",
+        jp: "「要」は yào と読みます。",
+      },
     },
     {
       id: "hsk30_l21_p4",
       type: "choice",
       subtype: "dialogue_response",
-      prompt: { cn: "「我明天再来看你」里的「再」表示：", kr: "「再」는?", en: "再来 means to come:", jp: "「再来」の「再」は？" },
+      prompt: {
+        cn: "哪一句表示「明天再来探望」？",
+        kr: "「내일 또 보러 온다」를 말하는 문장은?",
+        en: "Which line says “I’ll come again tomorrow”?",
+        jp: "「明日また来る」を言うのはどれ？",
+      },
       options: opt4(
-        ["另一次、再一次", "또, 다시", "Another time / again", "もう一度"],
-        ["再也不来", "안 옴", "Never again", "二度と来ない"],
-        ["先回家再来", "갔다 옴", "Go home first", "一度帰ってから"],
-        ["比别人晚来", "늦게 옴", "Arrive late", "遅れて来る"]
+        ["我明天再来看你。", "내일 또 보러 올게.", "I’ll come see you again tomorrow.", "明日また来るね。"],
+        ["你睡一会吧。", "좀 자.", "Get some sleep.", "ちょっと寝て。"],
+        ["我和你去医院吧。", "병원 같이 가자.", "Let’s go to the hospital.", "一緒に病院に行こう。"],
+        ["医生说要多休息。", "의사가 쉬래요.", "The doctor said to rest.", "医者は休めと言いました。"]
       ),
       answer: "A",
-      explanation: { cn: "「再」表动作的重复。", kr: "반복.", en: "再 = again.", jp: "「再」は再び。" },
+      explanation: {
+        cn: "「明天再来」表示改日再来。",
+        kr: "「明天再来」는 다음에 또 온다는 뜻입니다.",
+        en: "明天再来 means coming again another time.",
+        jp: "「明天再来」はまた来ることです。",
+      },
     },
   ],
   aiPractice: {
@@ -965,30 +1010,45 @@ export const lesson22 = L(22, {
     {
       id: "hsk30_l22_p3",
       type: "choice",
-      subtype: "dialogue_response",
-      prompt: { cn: "「现在是第二年。」里的「第二」说明：", kr: "「第二年」는?", en: "第二年 tells you:", jp: "「第二年」は何を表す？" },
-      options: opt4(
-        ["来华进入的第几个年份/次序", "몇 년째인지", "Which year of the stay", "滞在して何年目か"],
-        ["一年只有两天", "이틀뿐", "Only two days a year", "年に二日だけ"],
-        ["排名第二的成绩", "성적 2등", "Second in rank", "成績が二位"],
-        ["第二个星期", "둘째 주", "Second week", "第二週"]
-      ),
+      subtype: "zh_to_pinyin_choice",
+      prompt: {
+        cn: "「第」的拼音是？",
+        kr: "「第」의 병음은?",
+        en: "What is the pinyin of 第?",
+        jp: "「第」のピンインは？",
+      },
+      options: pinOpts("dì", "dí", "dī", "de"),
       answer: "A",
-      explanation: { cn: "「第 + 数词」表顺序，此处指到华第二个年头。", kr: "서수—중국 온 지 2년째.", en: "Ordinal—second year in China.", jp: "順序の「第」。" },
+      explanation: {
+        cn: "「第」读 dì。",
+        kr: "「第」는 dì입니다.",
+        en: "第 is read dì.",
+        jp: "「第」は dì と読みます。",
+      },
     },
     {
       id: "hsk30_l22_p4",
       type: "choice",
       subtype: "dialogue_response",
-      prompt: { cn: "会话三里「女士，你好」的「女士」多用于：", kr: "「女士」는?", en: "女士 in greeting is often used for:", jp: "「女士」はどんな場面で使うことが多い？" },
+      prompt: {
+        cn: "哪一句是礼貌称呼女性听者？",
+        kr: "여성에게 공손하게 부를 때 맞는 말은?",
+        en: "Which line is a polite way to address a woman?",
+        jp: "女性に丁寧に呼びかけるのはどれ？",
+      },
       options: opt4(
-        ["对成年女性的礼貌称呼", "성인 여성에게", "A polite address to women", "成年女性への敬称"],
-        ["只能称呼女学生", "여학생만", "Only students", "女子学生だけ"],
-        ["称呼自己的妈妈", "엄마", "Your mother", "母親"],
-        ["称呼医生", "의사", "Doctors", "医者"]
+        ["女士，你好。", "아가씨, 안녕하세요.", "Hello, ma’am.", "女士、こんにちは。"],
+        ["先生，你好。", "선생님, 안녕하세요.", "Hello, sir.", "先生、こんにちは。"],
+        ["你是新来的吗？", "신입이에요?", "Are you new?", "新しい方ですか。"],
+        ["你在哪儿工作？", "어디서 일해요?", "Where do you work?", "どこで働いてますか。"]
       ),
       answer: "A",
-      explanation: { cn: "「女士」为礼貌称呼女性听者。", kr: "여성 호칭.", en: "女士 ≈ Ms./madam in context.", jp: "女性への敬称。" },
+      explanation: {
+        cn: "「女士」用于礼貌称呼女性。",
+        kr: "「女士」는 여성에게 공손히 부를 때 씁니다.",
+        en: "女士 politely addresses a woman.",
+        jp: "「女士」は女性への敬称です。",
+      },
     },
   ],
   aiPractice: {

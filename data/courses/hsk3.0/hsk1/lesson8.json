@@ -480,10 +480,38 @@
         "jp": "「这边」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "zhèbiān", "cn": "zhèbiān", "kr": "zhèbiān", "en": "zhèbiān", "jp": "zhèbiān" },
-        { "key": "B", "zh": "zhèbiǎn", "cn": "zhèbiǎn", "kr": "zhèbiǎn", "en": "zhèbiǎn", "jp": "zhèbiǎn" },
-        { "key": "C", "zh": "zèbiān", "cn": "zèbiān", "kr": "zèbiān", "en": "zèbiān", "jp": "zèbiān" },
-        { "key": "D", "zh": "zhèbián", "cn": "zhèbián", "kr": "zhèbián", "en": "zhèbián", "jp": "zhèbián" }
+        {
+          "key": "A",
+          "zh": "zhèbiān",
+          "cn": "zhèbiān",
+          "kr": "zhèbiān",
+          "en": "zhèbiān",
+          "jp": "zhèbiān"
+        },
+        {
+          "key": "B",
+          "zh": "zhèbiǎn",
+          "cn": "zhèbiǎn",
+          "kr": "zhèbiǎn",
+          "en": "zhèbiǎn",
+          "jp": "zhèbiǎn"
+        },
+        {
+          "key": "C",
+          "zh": "zèbiān",
+          "cn": "zèbiān",
+          "kr": "zèbiān",
+          "en": "zèbiān",
+          "jp": "zèbiān"
+        },
+        {
+          "key": "D",
+          "zh": "zhèbián",
+          "cn": "zhèbián",
+          "kr": "zhèbián",
+          "en": "zhèbián",
+          "jp": "zhèbián"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -548,59 +576,70 @@
     {
       "id": "hsk30_l8_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「手机在桌子下」里的「下」表示：",
-        "kr": "「手机在桌子下」에서 「下」는 무슨 뜻이에요?",
-        "en": "In 手机在桌子下, 下 means:",
-        "jp": "「手机在桌子下」の「下」の意味は？"
+        "cn": "「下」在「桌子下」中读作？",
+        "kr": "「桌子下」의 「下」 병음은?",
+        "en": "In 桌子下, the pinyin of 下 is?",
+        "jp": "「桌子下」の「下」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "在物体的下方",
-          "cn": "在物体的下方",
-          "kr": "물건의 아래(밑)",
-          "en": "Below — under the object",
-          "jp": "物の下の方"
+          "zh": "xià",
+          "cn": "xià",
+          "kr": "xià",
+          "en": "xià",
+          "jp": "xià"
         },
         {
           "key": "B",
-          "zh": "在物体的上面",
-          "cn": "在物体的上面",
-          "kr": "물건의 위",
-          "en": "On top — above the object",
-          "jp": "物の上の方"
+          "zh": "shàng",
+          "cn": "shàng",
+          "kr": "shàng",
+          "en": "shàng",
+          "jp": "shàng"
         },
         {
           "key": "C",
-          "zh": "在物体的前面",
-          "cn": "在物体的前面",
-          "kr": "물건의 앞",
-          "en": "In front of the object",
-          "jp": "物の前の方"
+          "zh": "qiǎ",
+          "cn": "qiǎ",
+          "kr": "qiǎ",
+          "en": "qiǎ",
+          "jp": "qiǎ"
         },
         {
           "key": "D",
-          "zh": "在物体的后面",
-          "cn": "在物体的后面",
-          "kr": "물건의 뒤",
-          "en": "Behind the object",
-          "jp": "物の後ろの方"
+          "zh": "xiā",
+          "cn": "xiā",
+          "kr": "xiā",
+          "en": "xiā",
+          "jp": "xiā"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「下」表示相对位置在下方（下面）。",
-        "kr": "「下」는 물건 아래·밑쪽을 가리킬 때 씁니다.",
-        "en": "下 marks “under” or “below” the desk.",
-        "jp": "「下」は机などの「下／した」を表します。"
+        "cn": "「下」读 xià，表示下方。",
+        "kr": "「下」는 xià로 읽고 아래를 뜻합니다.",
+        "en": "下 is read xià (below).",
+        "jp": "「下」は xià と読み、下を表します。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你在哪儿上课？", "我在中学上课。", "你的学校在哪边？", "在这边。", "王老师在哪儿？", "老师在那边。", "在房间前边。", "书在哪儿？", "书在桌子上。", "手机在桌子下。"],
+    "speaking": [
+      "你在哪儿上课？",
+      "我在中学上课。",
+      "你的学校在哪边？",
+      "在这边。",
+      "王老师在哪儿？",
+      "老师在那边。",
+      "在房间前边。",
+      "书在哪儿？",
+      "书在桌子上。",
+      "手机在桌子下。"
+    ],
     "chatPrompt": "请只用本课「在、哪儿、这边、那边、上、下、前」等词语练习问地点与说位置；不要写成日期、时间或姓名自我介绍。",
     "prompt": {
       "zh": "请只用本课「在、哪儿、这边、那边、上、下、前」等词语练习问地点与说位置；不要写成日期、时间或姓名自我介绍。",
@@ -619,27 +658,83 @@
             "en": "Dialogue 1 — asking where class is",
             "jp": "会話1：どこで授業するか"
           },
-          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你在哪儿上课？", "pinyin": "nǐ zài nǎr shàngkè?", "kr": "어디서 수업해요?", "en": "Where’s your class?", "jp": "どこで授業してるの？" },
-            { "zh": "我在中学上课。", "pinyin": "wǒ zài zhōngxué shàngkè.", "kr": "중학교에서 수업해요.", "en": "At middle school.", "jp": "中学校で。" },
-            { "zh": "你的学校在哪边？", "pinyin": "nǐ de xuéxiào zài nǎ biān?", "kr": "학교는 어느 쪽이에요?", "en": "Which way is the school?", "jp": "学校はどの辺？" },
-            { "zh": "在这边。", "pinyin": "zài zhèbiān.", "kr": "이쪽이에요.", "en": "Over here.", "jp": "こちらです。" }
+            {
+              "zh": "你在哪儿上课？",
+              "pinyin": "nǐ zài nǎr shàngkè?",
+              "kr": "어디서 수업해요?",
+              "en": "Where’s your class?",
+              "jp": "どこで授業してるの？"
+            },
+            {
+              "zh": "我在中学上课。",
+              "pinyin": "wǒ zài zhōngxué shàngkè.",
+              "kr": "중학교에서 수업해요.",
+              "en": "At middle school.",
+              "jp": "中学校で。"
+            },
+            {
+              "zh": "你的学校在哪边？",
+              "pinyin": "nǐ de xuéxiào zài nǎ biān?",
+              "kr": "학교는 어느 쪽이에요?",
+              "en": "Which way is the school?",
+              "jp": "学校はどの辺？"
+            },
+            {
+              "zh": "在这边。",
+              "pinyin": "zài zhèbiān.",
+              "kr": "이쪽이에요.",
+              "en": "Over here.",
+              "jp": "こちらです。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "李明，你在哪儿上课？",
-              "studentRefs": ["我在中学上课。"],
-              "acceptable": ["我在中学上课。", "我在中学上课"],
-              "closeAnswers": ["中学上课", "在中学上课"]
+              "studentRefs": [
+                "我在中学上课。"
+              ],
+              "acceptable": [
+                "我在中学上课。",
+                "我在中学上课"
+              ],
+              "closeAnswers": [
+                "中学上课",
+                "在中学上课"
+              ]
             },
             {
               "aiLine": "你的学校在哪边？",
-              "studentRefs": ["在这边。"],
-              "acceptable": ["在这边。", "在这边", "这边"],
-              "closeAnswers": ["那边", "在那边"]
+              "studentRefs": [
+                "在这边。"
+              ],
+              "acceptable": [
+                "在这边。",
+                "在这边",
+                "这边"
+              ],
+              "closeAnswers": [
+                "那边",
+                "在那边"
+              ]
             }
           ]
         },
@@ -651,27 +746,82 @@
             "en": "Dialogue 3 — the book and the phone",
             "jp": "会話3：本とスマホの置き場所"
           },
-          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "书在哪儿？", "pinyin": "shū zài nǎr?", "kr": "책 어디 있어요?", "en": "Where’s the book?", "jp": "本はどこ？" },
-            { "zh": "书在桌子上。", "pinyin": "shū zài zhuōzi shàng.", "kr": "책상 위에 있어요.", "en": "On the desk.", "jp": "机の上にあります。" },
-            { "zh": "手机呢？", "pinyin": "shǒujī ne?", "kr": "휴대폰은요?", "en": "How about the phone?", "jp": "スマホは？" },
-            { "zh": "手机在桌子下。", "pinyin": "shǒujī zài zhuōzi xià.", "kr": "책상 밑이에요.", "en": "Under the desk.", "jp": "机の下です。" }
+            {
+              "zh": "书在哪儿？",
+              "pinyin": "shū zài nǎr?",
+              "kr": "책 어디 있어요?",
+              "en": "Where’s the book?",
+              "jp": "本はどこ？"
+            },
+            {
+              "zh": "书在桌子上。",
+              "pinyin": "shū zài zhuōzi shàng.",
+              "kr": "책상 위에 있어요.",
+              "en": "On the desk.",
+              "jp": "机の上にあります。"
+            },
+            {
+              "zh": "手机呢？",
+              "pinyin": "shǒujī ne?",
+              "kr": "휴대폰은요?",
+              "en": "How about the phone?",
+              "jp": "スマホは？"
+            },
+            {
+              "zh": "手机在桌子下。",
+              "pinyin": "shǒujī zài zhuōzi xià.",
+              "kr": "책상 밑이에요.",
+              "en": "Under the desk.",
+              "jp": "机の下です。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "书在哪儿？",
-              "studentRefs": ["书在桌子上。"],
-              "acceptable": ["书在桌子上。", "书在桌子上"],
-              "closeAnswers": ["在桌子上", "桌子上"]
+              "studentRefs": [
+                "书在桌子上。"
+              ],
+              "acceptable": [
+                "书在桌子上。",
+                "书在桌子上"
+              ],
+              "closeAnswers": [
+                "在桌子上",
+                "桌子上"
+              ]
             },
             {
               "aiLine": "手机呢？",
-              "studentRefs": ["手机在桌子下。"],
-              "acceptable": ["手机在桌子下。", "手机在桌子下"],
-              "closeAnswers": ["在桌子下", "桌子下"]
+              "studentRefs": [
+                "手机在桌子下。"
+              ],
+              "acceptable": [
+                "手机在桌子下。",
+                "手机在桌子下"
+              ],
+              "closeAnswers": [
+                "在桌子下",
+                "桌子下"
+              ]
             }
           ]
         }
@@ -846,27 +996,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

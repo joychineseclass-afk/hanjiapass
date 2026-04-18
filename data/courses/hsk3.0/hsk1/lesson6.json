@@ -402,10 +402,26 @@
         "jp": "「今何時ですか」と尋ねるのはどれ？"
       },
       "options": [
-        { "key": "A", "zh": "现在几点？", "cn": "现在几点？" },
-        { "key": "B", "zh": "你几岁？", "cn": "你几岁？" },
-        { "key": "C", "zh": "今天星期几？", "cn": "今天星期几？" },
-        { "key": "D", "zh": "你会说汉语吗？", "cn": "你会说汉语吗？" }
+        {
+          "key": "A",
+          "zh": "现在几点？",
+          "cn": "现在几点？"
+        },
+        {
+          "key": "B",
+          "zh": "你几岁？",
+          "cn": "你几岁？"
+        },
+        {
+          "key": "C",
+          "zh": "今天星期几？",
+          "cn": "今天星期几？"
+        },
+        {
+          "key": "D",
+          "zh": "你会说汉语吗？",
+          "cn": "你会说汉语吗？"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -426,10 +442,26 @@
         "jp": "「七点半」の「半」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "bàn", "cn": "bàn" },
-        { "key": "B", "zh": "bān", "cn": "bān" },
-        { "key": "C", "zh": "bǎn", "cn": "bǎn" },
-        { "key": "D", "zh": "bàng", "cn": "bàng" }
+        {
+          "key": "A",
+          "zh": "bàn",
+          "cn": "bàn"
+        },
+        {
+          "key": "B",
+          "zh": "bān",
+          "cn": "bān"
+        },
+        {
+          "key": "C",
+          "zh": "bǎn",
+          "cn": "bǎn"
+        },
+        {
+          "key": "D",
+          "zh": "bàng",
+          "cn": "bàng"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -445,12 +477,45 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "你想说「下午两点到四点上课」，应说：",
-        "kr": "「오후 두 시부터 네 시까지 수업」이라고 말하려면:",
-        "en": "To say class is from 2 to 4 p.m.:",
-        "jp": "「午後2時から4時まで授業」を言うのは？"
+        "kr": "「오후 두 시부터 네 시까지 수업」이라고 말할 때 맞는 문장은?",
+        "en": "Which line says class is from 2 to 4 p.m.?",
+        "jp": "「午後2時から4時まで授業」を言うのはどれ？"
       },
-      "options": ["下午两点到四点上课。", "现在八点零七分。", "昨天五月一日。", "我今年五岁。"],
-      "answer": "下午两点到四点上课。",
+      "options": [
+        {
+          "key": "A",
+          "zh": "下午两点到四点上课。",
+          "cn": "下午两点到四点上课。",
+          "kr": "오후 두 시부터 네 시까지 수업이에요.",
+          "en": "Class is from 2 to 4 in the afternoon.",
+          "jp": "午後2時から4時まで授業です。"
+        },
+        {
+          "key": "B",
+          "zh": "现在八点零七分。",
+          "cn": "现在八点零七分。",
+          "kr": "지금 여덟 시 칠 분이에요.",
+          "en": "It’s 8:07 now.",
+          "jp": "今は8時7分です。"
+        },
+        {
+          "key": "C",
+          "zh": "昨天五月一日。",
+          "cn": "昨天五月一日。",
+          "kr": "어제 오월 일 일이에요.",
+          "en": "Yesterday was May 1st.",
+          "jp": "昨日は5月1日でした。"
+        },
+        {
+          "key": "D",
+          "zh": "我今年五岁。",
+          "cn": "我今年五岁。",
+          "kr": "올해 다섯 살이에요.",
+          "en": "I’m five this year.",
+          "jp": "今年五歳です。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "用「下午」+ 时间 +「到」+ 时间 +「上课」说明下午上课时段。",
         "kr": "「下午」＋시간＋「到」＋시간＋「上课」으로 오후 시간대를 말합니다.",
@@ -461,26 +526,69 @@
     {
       "id": "hsk30_l6_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「我七点半起床。」这句话里，「起床」表示：",
-        "kr": "「我七点半起床。」에서 「起床」는 무엇을 뜻하나요?",
-        "en": "In 我七点半起床。, 起床 means:",
-        "jp": "「我七点半起床。」の「起床」は？"
+        "cn": "「起床」的拼音是？",
+        "kr": "「起床」의 병음은?",
+        "en": "What is the pinyin of 起床?",
+        "jp": "「起床」のピンインは？"
       },
-      "options": ["起床、醒来开始一天", "去商店", "下课回家", "问别人几岁"],
-      "answer": "起床、醒来开始一天",
+      "options": [
+        {
+          "key": "A",
+          "zh": "qǐchuáng",
+          "cn": "qǐchuáng",
+          "kr": "qǐchuáng",
+          "en": "qǐchuáng",
+          "jp": "qǐchuáng"
+        },
+        {
+          "key": "B",
+          "zh": "qǐchuán",
+          "cn": "qǐchuán",
+          "kr": "qǐchuán",
+          "en": "qǐchuán",
+          "jp": "qǐchuán"
+        },
+        {
+          "key": "C",
+          "zh": "qīchuáng",
+          "cn": "qīchuáng",
+          "kr": "qīchuáng",
+          "en": "qīchuáng",
+          "jp": "qīchuáng"
+        },
+        {
+          "key": "D",
+          "zh": "qǐcháng",
+          "cn": "qǐcháng",
+          "kr": "qǐcháng",
+          "en": "qǐcháng",
+          "jp": "qǐcháng"
+        }
+      ],
+      "answer": "A",
       "explanation": {
-        "cn": "「起床」表示从床上起来，开始一天的活动。",
-        "kr": "「起床」는 잠자리에서 일어나 하루를 시작함을 뜻합니다.",
-        "en": "起床 means to get up from bed.",
-        "jp": "「起床」は起きて一日を始めること。"
+        "cn": "「起床」读作 qǐchuáng。",
+        "kr": "「起床」는 qǐchuáng입니다.",
+        "en": "起床 is read qǐchuáng.",
+        "jp": "「起床」は qǐchuáng と読みます。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["现在几点？", "现在八点零七分。", "八点十分上课。", "你上午几点上课？", "我中午十二点下课。", "下午两点到四点上课。", "你早上几点起床？", "我七点半起床。", "我十点半睡觉。"],
+    "speaking": [
+      "现在几点？",
+      "现在八点零七分。",
+      "八点十分上课。",
+      "你上午几点上课？",
+      "我中午十二点下课。",
+      "下午两点到四点上课。",
+      "你早上几点起床？",
+      "我七点半起床。",
+      "我十点半睡觉。"
+    ],
     "chatPrompt": "请围绕「现在几点」「点、分、半」与上午/下午/晚上、上课/下课/起床/睡觉用本课词语问答；不要写成问候或问姓名。",
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -493,21 +601,60 @@
             "en": "Dialogue 1: time and class",
             "jp": "会話1：今何時と授業"
           },
-          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "现在几点？", "pinyin": "xiànzài jǐ diǎn?", "kr": "지금 몇 시예요?" },
-            { "zh": "现在八点零七分。", "pinyin": "xiànzài bā diǎn líng qī fēn.", "kr": "지금 여덟 시 칠 분이에요." },
-            { "zh": "八点十分上课。", "pinyin": "bā diǎn shí fēn shàngkè.", "kr": "여덟 시 십 분에 수업이에요." },
-            { "zh": "我七点半起床。", "pinyin": "wǒ qī diǎn bàn qǐchuáng.", "kr": "일곱 시 반에 일어나요." }
+            {
+              "zh": "现在几点？",
+              "pinyin": "xiànzài jǐ diǎn?",
+              "kr": "지금 몇 시예요?"
+            },
+            {
+              "zh": "现在八点零七分。",
+              "pinyin": "xiànzài bā diǎn líng qī fēn.",
+              "kr": "지금 여덟 시 칠 분이에요."
+            },
+            {
+              "zh": "八点十分上课。",
+              "pinyin": "bā diǎn shí fēn shàngkè.",
+              "kr": "여덟 시 십 분에 수업이에요."
+            },
+            {
+              "zh": "我七点半起床。",
+              "pinyin": "wǒ qī diǎn bàn qǐchuáng.",
+              "kr": "일곱 시 반에 일어나요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "汤姆，现在几点？",
-              "studentRefs": ["现在八点零七分。"],
-              "acceptable": ["现在八点零七分。", "八点零七分"],
-              "closeAnswers": ["八点", "八分"]
+              "studentRefs": [
+                "现在八点零七分。"
+              ],
+              "acceptable": [
+                "现在八点零七分。",
+                "八点零七分"
+              ],
+              "closeAnswers": [
+                "八点",
+                "八分"
+              ]
             }
           ]
         }
@@ -685,27 +832,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

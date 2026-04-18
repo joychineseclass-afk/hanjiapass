@@ -616,50 +616,50 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「你的书在电脑前边」说明书在电脑的：",
-        "kr": "「电脑前边」이면 책은 컴퓨터의 어디에 있나요?",
-        "en": "Your book is 在电脑前边—the book is:",
-        "jp": "「电脑前边」は本がパソコンの？"
+        "cn": "哪一句表示「书在电脑的前面那一侧」？",
+        "kr": "「책이 컴퓨터 앞쪽」을 말하는 문장은?",
+        "en": "Which line says the book is in front of the computer?",
+        "jp": "「本がパソコンの前の方」を言うのはどれ？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "前面那一侧",
-          "cn": "前面那一侧",
-          "kr": "앞쪽",
-          "en": "In front",
-          "jp": "前の方"
+          "zh": "你的书在电脑前边。",
+          "cn": "你的书在电脑前边。",
+          "kr": "책이 컴퓨터 앞에 있어요.",
+          "en": "Your book is in front of the computer.",
+          "jp": "本はパソコンの前にあります。"
         },
         {
           "key": "B",
-          "zh": "下面",
-          "cn": "下面",
-          "kr": "아래",
-          "en": "Underneath",
-          "jp": "下"
+          "zh": "你的书在电脑后边。",
+          "cn": "你的书在电脑后边。",
+          "kr": "책이 컴퓨터 뒤에 있어요.",
+          "en": "Your book is behind the computer.",
+          "jp": "本はパソコンの後ろにあります。"
         },
         {
           "key": "C",
-          "zh": "里面",
-          "cn": "里面",
-          "kr": "안",
-          "en": "Inside",
-          "jp": "中"
+          "zh": "你的书在电脑里边。",
+          "cn": "你的书在电脑里边。",
+          "kr": "책이 컴퓨터 안에 있어요.",
+          "en": "Your book is inside the computer.",
+          "jp": "本はパソコンの中にあります。"
         },
         {
           "key": "D",
-          "zh": "外边",
-          "cn": "外边",
-          "kr": "밖",
-          "en": "Outside",
-          "jp": "外"
+          "zh": "你的书在桌子上。",
+          "cn": "你的书在桌子上。",
+          "kr": "책이 책상 위에 있어요.",
+          "en": "Your book is on the desk.",
+          "jp": "本は机の上にあります。"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「前边」表示相对位置在正面方向。",
-        "kr": "「前边」는 앞쪽 방향을 말합니다.",
-        "en": "前边 means toward the front.",
+        "cn": "「前边」指面对方向的前方一侧。",
+        "kr": "「前边」는 앞쪽을 말합니다.",
+        "en": "前边 means the front side.",
         "jp": "「前边」は前の方です。"
       }
     }

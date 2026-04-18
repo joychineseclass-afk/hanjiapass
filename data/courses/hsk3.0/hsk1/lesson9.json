@@ -424,10 +424,38 @@
         "jp": "「好吃」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "hǎochī", "cn": "hǎochī", "kr": "hǎochī", "en": "hǎochī", "jp": "hǎochī" },
-        { "key": "B", "zh": "hàochī", "cn": "hàochī", "kr": "hàochī", "en": "hàochī", "jp": "hàochī" },
-        { "key": "C", "zh": "hǎocī", "cn": "hǎocī", "kr": "hǎocī", "en": "hǎocī", "jp": "hǎocī" },
-        { "key": "D", "zh": "hǎochí", "cn": "hǎochí", "kr": "hǎochí", "en": "hǎochí", "jp": "hǎochí" }
+        {
+          "key": "A",
+          "zh": "hǎochī",
+          "cn": "hǎochī",
+          "kr": "hǎochī",
+          "en": "hǎochī",
+          "jp": "hǎochī"
+        },
+        {
+          "key": "B",
+          "zh": "hàochī",
+          "cn": "hàochī",
+          "kr": "hàochī",
+          "en": "hàochī",
+          "jp": "hàochī"
+        },
+        {
+          "key": "C",
+          "zh": "hǎocī",
+          "cn": "hǎocī",
+          "kr": "hǎocī",
+          "en": "hǎocī",
+          "jp": "hǎocī"
+        },
+        {
+          "key": "D",
+          "zh": "hǎochí",
+          "cn": "hǎochí",
+          "kr": "hǎochí",
+          "en": "hǎochí",
+          "jp": "hǎochí"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -492,59 +520,68 @@
     {
       "id": "hsk30_l9_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「什么」在「你喜欢喝什么？」中的作用是：",
-        "kr": "「你喜欢喝什么？」에서 「什么」는 뭐 하는 말이에요?",
-        "en": "In 你喜欢喝什么?, 什么 is doing what job?",
-        "jp": "「你喜欢喝什么？」の「什么」の役割は？"
+        "cn": "「什么」的拼音是？",
+        "kr": "「什么」의 병음은?",
+        "en": "What is the pinyin of 什么?",
+        "jp": "「什么」のピンインは？"
       },
       "options": [
         {
           "key": "A",
-          "zh": "询问喝的事物或内容",
-          "cn": "询问喝的事物或内容",
-          "kr": "무엇을 마실지(내용)를 묻기",
-          "en": "Asking what to drink",
-          "jp": "飲むもの・内容を尋ねる"
+          "zh": "shénme",
+          "cn": "shénme",
+          "kr": "shénme",
+          "en": "shénme",
+          "jp": "shénme"
         },
         {
           "key": "B",
-          "zh": "表示道歉",
-          "cn": "表示道歉",
-          "kr": "사과할 때",
-          "en": "Apologizing",
-          "jp": "あやまる・謝る"
+          "zh": "shénmē",
+          "cn": "shénmē",
+          "kr": "shénmē",
+          "en": "shénmē",
+          "jp": "shénmē"
         },
         {
           "key": "C",
-          "zh": "表示时间",
-          "cn": "表示时间",
-          "kr": "시간을 말할 때",
-          "en": "Stating the time",
-          "jp": "時間を表す"
+          "zh": "shéngme",
+          "cn": "shéngme",
+          "kr": "shéngme",
+          "en": "shéngme",
+          "jp": "shéngme"
         },
         {
           "key": "D",
-          "zh": "表示地点",
-          "cn": "表示地点",
-          "kr": "장소를 말할 때",
-          "en": "Naming a place",
-          "jp": "場所を表す"
+          "zh": "sénme",
+          "cn": "sénme",
+          "kr": "sénme",
+          "en": "sénme",
+          "jp": "sénme"
         }
       ],
       "answer": "A",
       "explanation": {
-        "cn": "「什么」在此询问「喝」的对象。",
-        "kr": "여기서는 무엇을 마실지 묻는 자리예요.",
-        "en": "Here 什么 asks what you want to drink.",
-        "jp": "ここでは「何を（飲むか）」を聞いています。"
+        "cn": "「什么」读作 shénme。",
+        "kr": "「什么」는 shénme입니다.",
+        "en": "什么 is read shénme.",
+        "jp": "「什么」は shénme と読みます。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你喜欢吃什么？", "我喜欢吃米饭。", "你喜欢吃面条儿吗？", "喜欢。", "你喜欢喝什么？", "我喜欢喝茶。", "你喜欢喝牛奶吗？", "喜欢，我也喜欢喝牛奶。"],
+    "speaking": [
+      "你喜欢吃什么？",
+      "我喜欢吃米饭。",
+      "你喜欢吃面条儿吗？",
+      "喜欢。",
+      "你喜欢喝什么？",
+      "我喜欢喝茶。",
+      "你喜欢喝牛奶吗？",
+      "喜欢，我也喜欢喝牛奶。"
+    ],
     "chatPrompt": "请围绕「喜欢」「吃、喝」「什么」「也」用本课词语编短对话；不要写成问地点、问价格或问日期。",
     "prompt": {
       "zh": "请围绕「喜欢」「吃、喝」「什么」「也」用本课词语编短对话；不要写成问地点、问价格或问日期。",
@@ -563,27 +600,83 @@
             "en": "Dialogue 1 — food you like",
             "jp": "会話1：好きな食べ物"
           },
-          "aiRole": { "zh": "王美", "kr": "왕메이", "en": "Wang Mei", "jp": "王美" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "王美",
+            "kr": "왕메이",
+            "en": "Wang Mei",
+            "jp": "王美"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你喜欢吃什么？", "pinyin": "nǐ xǐhuan chī shénme?", "kr": "뭘 먹는 걸 좋아해?", "en": "What do you like to eat?", "jp": "何を食べるのが好き？" },
-            { "zh": "我喜欢吃米饭。", "pinyin": "wǒ xǐhuan chī mǐfàn.", "kr": "밥 먹는 거 좋아해.", "en": "I like rice.", "jp": "ご飯が好き。" },
-            { "zh": "你喜欢吃面条儿吗？", "pinyin": "nǐ xǐhuan chī miàntiáor ma?", "kr": "면 먹는 것도 좋아해?", "en": "Do you like noodles?", "jp": "麺は好き？" },
-            { "zh": "喜欢。", "pinyin": "Xǐhuan.", "kr": "응, 좋아.", "en": "Yes, I do.", "jp": "好き。" }
+            {
+              "zh": "你喜欢吃什么？",
+              "pinyin": "nǐ xǐhuan chī shénme?",
+              "kr": "뭘 먹는 걸 좋아해?",
+              "en": "What do you like to eat?",
+              "jp": "何を食べるのが好き？"
+            },
+            {
+              "zh": "我喜欢吃米饭。",
+              "pinyin": "wǒ xǐhuan chī mǐfàn.",
+              "kr": "밥 먹는 거 좋아해.",
+              "en": "I like rice.",
+              "jp": "ご飯が好き。"
+            },
+            {
+              "zh": "你喜欢吃面条儿吗？",
+              "pinyin": "nǐ xǐhuan chī miàntiáor ma?",
+              "kr": "면 먹는 것도 좋아해?",
+              "en": "Do you like noodles?",
+              "jp": "麺は好き？"
+            },
+            {
+              "zh": "喜欢。",
+              "pinyin": "Xǐhuan.",
+              "kr": "응, 좋아.",
+              "en": "Yes, I do.",
+              "jp": "好き。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "汤姆，你喜欢吃什么？",
-              "studentRefs": ["我喜欢吃米饭。"],
-              "acceptable": ["我喜欢吃米饭。", "我喜欢吃米饭"],
-              "closeAnswers": ["吃米饭", "米饭"]
+              "studentRefs": [
+                "我喜欢吃米饭。"
+              ],
+              "acceptable": [
+                "我喜欢吃米饭。",
+                "我喜欢吃米饭"
+              ],
+              "closeAnswers": [
+                "吃米饭",
+                "米饭"
+              ]
             },
             {
               "aiLine": "你喜欢吃面条儿吗？",
-              "studentRefs": ["喜欢。"],
-              "acceptable": ["喜欢。", "喜欢", "喜欢吃"],
-              "closeAnswers": ["喜欢面条儿", "喜欢吃面条儿"]
+              "studentRefs": [
+                "喜欢。"
+              ],
+              "acceptable": [
+                "喜欢。",
+                "喜欢",
+                "喜欢吃"
+              ],
+              "closeAnswers": [
+                "喜欢面条儿",
+                "喜欢吃面条儿"
+              ]
             }
           ]
         },
@@ -595,27 +688,83 @@
             "en": "Dialogue 2 — drinks you like",
             "jp": "会話2：好きな飲み物"
           },
-          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你喜欢喝什么？", "pinyin": "nǐ xǐhuan hē shénme?", "kr": "뭘 마시는 걸 좋아해?", "en": "What do you like to drink?", "jp": "何を飲むのが好き？" },
-            { "zh": "我喜欢喝茶。", "pinyin": "wǒ xǐhuan hē chá.", "kr": "차 마시는 거 좋아해.", "en": "I like tea.", "jp": "お茶が好き。" },
-            { "zh": "你喜欢喝牛奶吗？", "pinyin": "nǐ xǐhuan hē niúnǎi ma?", "kr": "우유도 마셔?", "en": "Do you like milk?", "jp": "牛乳は好き？" },
-            { "zh": "喜欢，我也喜欢喝牛奶。", "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.", "kr": "응, 나도 우유 마시는 거 좋아해.", "en": "Yes—I like milk too.", "jp": "うん、私も牛乳が好き。" }
+            {
+              "zh": "你喜欢喝什么？",
+              "pinyin": "nǐ xǐhuan hē shénme?",
+              "kr": "뭘 마시는 걸 좋아해?",
+              "en": "What do you like to drink?",
+              "jp": "何を飲むのが好き？"
+            },
+            {
+              "zh": "我喜欢喝茶。",
+              "pinyin": "wǒ xǐhuan hē chá.",
+              "kr": "차 마시는 거 좋아해.",
+              "en": "I like tea.",
+              "jp": "お茶が好き。"
+            },
+            {
+              "zh": "你喜欢喝牛奶吗？",
+              "pinyin": "nǐ xǐhuan hē niúnǎi ma?",
+              "kr": "우유도 마셔?",
+              "en": "Do you like milk?",
+              "jp": "牛乳は好き？"
+            },
+            {
+              "zh": "喜欢，我也喜欢喝牛奶。",
+              "pinyin": "Xǐhuan, wǒ yě xǐhuan hē niúnǎi.",
+              "kr": "응, 나도 우유 마시는 거 좋아해.",
+              "en": "Yes—I like milk too.",
+              "jp": "うん、私も牛乳が好き。"
+            }
           ],
           "rounds": [
             {
               "aiLine": "你喜欢喝什么？",
-              "studentRefs": ["我喜欢喝茶。"],
-              "acceptable": ["我喜欢喝茶。", "我喜欢喝茶"],
-              "closeAnswers": ["喝茶", "茶"]
+              "studentRefs": [
+                "我喜欢喝茶。"
+              ],
+              "acceptable": [
+                "我喜欢喝茶。",
+                "我喜欢喝茶"
+              ],
+              "closeAnswers": [
+                "喝茶",
+                "茶"
+              ]
             },
             {
               "aiLine": "你喜欢喝牛奶吗？",
-              "studentRefs": ["喜欢，我也喜欢喝牛奶。"],
-              "acceptable": ["喜欢，我也喜欢喝牛奶。", "喜欢", "我也喜欢喝牛奶"],
-              "closeAnswers": ["喜欢喝牛奶", "喝牛奶"]
+              "studentRefs": [
+                "喜欢，我也喜欢喝牛奶。"
+              ],
+              "acceptable": [
+                "喜欢，我也喜欢喝牛奶。",
+                "喜欢",
+                "我也喜欢喝牛奶"
+              ],
+              "closeAnswers": [
+                "喜欢喝牛奶",
+                "喝牛奶"
+              ]
             }
           ]
         }
@@ -790,27 +939,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

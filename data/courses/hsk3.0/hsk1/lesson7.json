@@ -382,10 +382,26 @@
         "jp": "今日の月日を尋ねるのはどれ？"
       },
       "options": [
-        { "key": "A", "zh": "今天几月几日？", "cn": "今天几月几日？" },
-        { "key": "B", "zh": "现在几点？", "cn": "现在几点？" },
-        { "key": "C", "zh": "你叫什么名字？", "cn": "你叫什么名字？" },
-        { "key": "D", "zh": "你是哪国人？", "cn": "你是哪国人？" }
+        {
+          "key": "A",
+          "zh": "今天几月几日？",
+          "cn": "今天几月几日？"
+        },
+        {
+          "key": "B",
+          "zh": "现在几点？",
+          "cn": "现在几点？"
+        },
+        {
+          "key": "C",
+          "zh": "你叫什么名字？",
+          "cn": "你叫什么名字？"
+        },
+        {
+          "key": "D",
+          "zh": "你是哪国人？",
+          "cn": "你是哪国人？"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -406,10 +422,26 @@
         "jp": "「昨天」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "zuótiān", "cn": "zuótiān" },
-        { "key": "B", "zh": "zhóutiān", "cn": "zhóutiān" },
-        { "key": "C", "zh": "zuòtiān", "cn": "zuòtiān" },
-        { "key": "D", "zh": "zuótián", "cn": "zuótián" }
+        {
+          "key": "A",
+          "zh": "zuótiān",
+          "cn": "zuótiān"
+        },
+        {
+          "key": "B",
+          "zh": "zhóutiān",
+          "cn": "zhóutiān"
+        },
+        {
+          "key": "C",
+          "zh": "zuòtiān",
+          "cn": "zuòtiān"
+        },
+        {
+          "key": "D",
+          "zh": "zuótián",
+          "cn": "zuótián"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -425,12 +457,45 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "你想问「今天星期几？」，应说：",
-        "kr": "「오늘 무슨 요일?」이라고 묻으려면:",
-        "en": "To ask what weekday it is today:",
-        "jp": "「今日は何曜日ですか」と尋ねるのは？"
+        "kr": "「오늘 무슨 요일?」이라고 묻는 말은?",
+        "en": "Which line asks what weekday it is today?",
+        "jp": "「今日は何曜日ですか」と尋ねるのはどれ？"
       },
-      "options": ["今天星期几？", "今天几月几日？", "现在几点？", "你家有几口人？"],
-      "answer": "今天星期几？",
+      "options": [
+        {
+          "key": "A",
+          "zh": "今天星期几？",
+          "cn": "今天星期几？",
+          "kr": "오늘 무슨 요일이에요?",
+          "en": "What day of the week is it today?",
+          "jp": "今日は何曜日ですか。"
+        },
+        {
+          "key": "B",
+          "zh": "今天几月几日？",
+          "cn": "今天几月几日？",
+          "kr": "오늘 몇 월 며칠이에요?",
+          "en": "What’s the date today?",
+          "jp": "今日は何月何日ですか。"
+        },
+        {
+          "key": "C",
+          "zh": "现在几点？",
+          "cn": "现在几点？",
+          "kr": "지금 몇 시예요?",
+          "en": "What time is it now?",
+          "jp": "今何時ですか。"
+        },
+        {
+          "key": "D",
+          "zh": "你家有几口人？",
+          "cn": "你家有几口人？",
+          "kr": "가족이 몇 명이에요?",
+          "en": "How many people are in your family?",
+          "jp": "ご家族は何人ですか。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「今天星期几？」用来询问今天是星期几。",
         "kr": "「今天星期几？」는 오늘 요일을 묻습니다.",
@@ -443,13 +508,46 @@
       "type": "choice",
       "subtype": "dialogue_response",
       "prompt": {
-        "cn": "「你们什么时候休息？」里的「什么时候」表示：",
-        "kr": "「你们什么时候休息？」에서 「什么时候」는 무엇을 묻나요?",
-        "en": "In 你们什么时候休息？, 什么时候 asks:",
-        "jp": "「你们什么时候休息？」の「什么时候」は？"
+        "cn": "哪一句在问「什么时候做某事」？",
+        "kr": "「언제 무엇을 하느냐」를 묻는 말은?",
+        "en": "Which line asks when something happens?",
+        "jp": "「いつそうするか」を尋ねているのはどれ？"
       },
-      "options": ["做某事的时间", "物体的颜色", "家庭人口", "国籍"],
-      "answer": "做某事的时间",
+      "options": [
+        {
+          "key": "A",
+          "zh": "你们什么时候休息？",
+          "cn": "你们什么时候休息？",
+          "kr": "언제 쉬세요?",
+          "en": "When do you rest?",
+          "jp": "いつ休みますか。"
+        },
+        {
+          "key": "B",
+          "zh": "今天星期几？",
+          "cn": "今天星期几？",
+          "kr": "오늘 무슨 요일?",
+          "en": "What weekday is it?",
+          "jp": "何曜日ですか。"
+        },
+        {
+          "key": "C",
+          "zh": "现在几点？",
+          "cn": "现在几点？",
+          "kr": "지금 몇 시?",
+          "en": "What time is it?",
+          "jp": "今何時ですか。"
+        },
+        {
+          "key": "D",
+          "zh": "你是哪国人？",
+          "cn": "你是哪国人？",
+          "kr": "어느 나라 사람?",
+          "en": "What country are you from?",
+          "jp": "どこの国の人ですか。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "「什么时候」用来提问在何时发生某事。",
         "kr": "「什么时候」는 어떤 일이 언제 일어나는지 묻습니다.",
@@ -460,7 +558,16 @@
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["今天几月几日？", "今天五月二日。", "昨天是五月一日吗？", "是的，昨天是五月一日。", "今天星期几？", "今天星期五。", "你们什么时候休息？", "星期天休息。"],
+    "speaking": [
+      "今天几月几日？",
+      "今天五月二日。",
+      "昨天是五月一日吗？",
+      "是的，昨天是五月一日。",
+      "今天星期几？",
+      "今天星期五。",
+      "你们什么时候休息？",
+      "星期天休息。"
+    ],
     "chatPrompt": "请围绕「今天几月几日」「昨天、今天、明天」「星期几」「什么时候休息」用本课词语问答；不要写成问候、姓名或「你好吗」类套话。",
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -473,24 +580,75 @@
             "en": "Dialogue 1: date & yesterday",
             "jp": "会話1：日付と昨日"
           },
-          "aiRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "studentRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "studentRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "今天几月几日？", "pinyin": "jīntiān jǐ yuè jǐ rì?", "kr": "오늘 며칠이에요?" },
-            { "zh": "今天五月二日。", "pinyin": "jīntiān wǔ yuè èr rì.", "kr": "오늘은 5월 2일이에요." },
-            { "zh": "昨天是五月一日吗？", "pinyin": "zuótiān shì wǔ yuè yī rì ma?", "kr": "어제가 5월 1일이에요?" },
-            { "zh": "是的，昨天是五月一日。", "pinyin": "shì de, zuótiān shì wǔ yuè yī rì.", "kr": "네, 어제가 5월 1일이에요." },
-            { "zh": "今天星期几？", "pinyin": "jīntiān xīngqī jǐ?", "kr": "오늘 무슨 요일이에요?" },
-            { "zh": "你们什么时候休息？", "pinyin": "nǐmen shénme shíhou xiūxi?", "kr": "언제 쉬어요?" },
-            { "zh": "星期天休息。", "pinyin": "xīngqītiān xiūxi.", "kr": "일요일에 쉬어요." }
+            {
+              "zh": "今天几月几日？",
+              "pinyin": "jīntiān jǐ yuè jǐ rì?",
+              "kr": "오늘 며칠이에요?"
+            },
+            {
+              "zh": "今天五月二日。",
+              "pinyin": "jīntiān wǔ yuè èr rì.",
+              "kr": "오늘은 5월 2일이에요."
+            },
+            {
+              "zh": "昨天是五月一日吗？",
+              "pinyin": "zuótiān shì wǔ yuè yī rì ma?",
+              "kr": "어제가 5월 1일이에요?"
+            },
+            {
+              "zh": "是的，昨天是五月一日。",
+              "pinyin": "shì de, zuótiān shì wǔ yuè yī rì.",
+              "kr": "네, 어제가 5월 1일이에요."
+            },
+            {
+              "zh": "今天星期几？",
+              "pinyin": "jīntiān xīngqī jǐ?",
+              "kr": "오늘 무슨 요일이에요?"
+            },
+            {
+              "zh": "你们什么时候休息？",
+              "pinyin": "nǐmen shénme shíhou xiūxi?",
+              "kr": "언제 쉬어요?"
+            },
+            {
+              "zh": "星期天休息。",
+              "pinyin": "xīngqītiān xiūxi.",
+              "kr": "일요일에 쉬어요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "李明，今天几月几日？",
-              "studentRefs": ["今天五月二日。"],
-              "acceptable": ["今天五月二日。", "五月二日"],
-              "closeAnswers": ["二日", "5月2日"]
+              "studentRefs": [
+                "今天五月二日。"
+              ],
+              "acceptable": [
+                "今天五月二日。",
+                "五月二日"
+              ],
+              "closeAnswers": [
+                "二日",
+                "5月2日"
+              ]
             }
           ]
         }
@@ -668,27 +826,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

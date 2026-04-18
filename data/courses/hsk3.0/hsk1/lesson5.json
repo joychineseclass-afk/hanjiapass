@@ -389,10 +389,26 @@
         "jp": "年齢を尋ねるのはどれですか？"
       },
       "options": [
-        { "key": "A", "zh": "你几岁？", "cn": "你几岁？" },
-        { "key": "B", "zh": "现在几点？", "cn": "现在几点？" },
-        { "key": "C", "zh": "今天几月几日？", "cn": "今天几月几日？" },
-        { "key": "D", "zh": "你家有几口人？", "cn": "你家有几口人？" }
+        {
+          "key": "A",
+          "zh": "你几岁？",
+          "cn": "你几岁？"
+        },
+        {
+          "key": "B",
+          "zh": "现在几点？",
+          "cn": "现在几点？"
+        },
+        {
+          "key": "C",
+          "zh": "今天几月几日？",
+          "cn": "今天几月几日？"
+        },
+        {
+          "key": "D",
+          "zh": "你家有几口人？",
+          "cn": "你家有几口人？"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -413,10 +429,26 @@
         "jp": "「今年」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "jīnnián", "cn": "jīnnián" },
-        { "key": "B", "zh": "jīng nián", "cn": "jīng nián" },
-        { "key": "C", "zh": "jìnnián", "cn": "jìnnián" },
-        { "key": "D", "zh": "jīnniǎn", "cn": "jīnniǎn" }
+        {
+          "key": "A",
+          "zh": "jīnnián",
+          "cn": "jīnnián"
+        },
+        {
+          "key": "B",
+          "zh": "jīng nián",
+          "cn": "jīng nián"
+        },
+        {
+          "key": "C",
+          "zh": "jìnnián",
+          "cn": "jìnnián"
+        },
+        {
+          "key": "D",
+          "zh": "jīnniǎn",
+          "cn": "jīnniǎn"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -432,12 +464,45 @@
       "subtype": "dialogue_response",
       "prompt": {
         "cn": "别人问「你几岁？」，你想回答「我今年五岁」，应说：",
-        "kr": "「你几岁?」에 「올해 다섯 살」이라고 답할 때:",
-        "en": "To answer 你几岁? with “I’m five this year”:",
-        "jp": "「你几岁？」に「今年五歳です」と答えるのは？"
+        "kr": "「你几岁?」에 「올해 다섯 살」이라고 답할 때 맞는 문장은?",
+        "en": "Pick the line that says you’re five this year:",
+        "jp": "「今年五歳です」と言うのに合う文は？"
       },
-      "options": ["我今年五岁。", "现在八点。", "今天星期一。", "我家有四口人。"],
-      "answer": "我今年五岁。",
+      "options": [
+        {
+          "key": "A",
+          "zh": "我今年五岁。",
+          "cn": "我今年五岁。",
+          "kr": "올해 다섯 살이에요.",
+          "en": "I’m five this year.",
+          "jp": "今年五歳です。"
+        },
+        {
+          "key": "B",
+          "zh": "现在八点。",
+          "cn": "现在八点。",
+          "kr": "지금 여덟 시예요.",
+          "en": "It’s eight o’clock now.",
+          "jp": "今八時です。"
+        },
+        {
+          "key": "C",
+          "zh": "今天星期一。",
+          "cn": "今天星期一。",
+          "kr": "오늘 월요일이에요.",
+          "en": "Today is Monday.",
+          "jp": "今日は月曜日です。"
+        },
+        {
+          "key": "D",
+          "zh": "我家有四口人。",
+          "cn": "我家有四口人。",
+          "kr": "집에 네 명이에요.",
+          "en": "There are four people in my family.",
+          "jp": "家族は四人です。"
+        }
+      ],
+      "answer": "A",
       "explanation": {
         "cn": "用「我今年……岁」说明自己今年的年龄。",
         "kr": "「我今年……岁」로 올해 나이를 말합니다.",
@@ -448,26 +513,69 @@
     {
       "id": "hsk30_l5_p4",
       "type": "choice",
-      "subtype": "dialogue_response",
+      "subtype": "zh_to_pinyin_choice",
       "prompt": {
-        "cn": "「她真漂亮。」里的「真」表示：",
-        "kr": "「她真漂亮。」에서 「真」의 역할은?",
-        "en": "In 她真漂亮。, 真 shows that she is:",
-        "jp": "「她真漂亮。」の「真」は何を表す？"
+        "cn": "「真」的拼音是？",
+        "kr": "「真」의 병음은?",
+        "en": "What is the pinyin of 真?",
+        "jp": "「真」のピンインは？"
       },
-      "options": ["加强夸奖语气", "表示问题", "表示时间", "表示否定"],
-      "answer": "加强夸奖语气",
+      "options": [
+        {
+          "key": "A",
+          "zh": "zhēn",
+          "cn": "zhēn",
+          "kr": "zhēn",
+          "en": "zhēn",
+          "jp": "zhēn"
+        },
+        {
+          "key": "B",
+          "zh": "zhèn",
+          "cn": "zhèn",
+          "kr": "zhèn",
+          "en": "zhèn",
+          "jp": "zhèn"
+        },
+        {
+          "key": "C",
+          "zh": "zēn",
+          "cn": "zēn",
+          "kr": "zēn",
+          "en": "zēn",
+          "jp": "zēn"
+        },
+        {
+          "key": "D",
+          "zh": "zhěng",
+          "cn": "zhěng",
+          "kr": "zhěng",
+          "en": "zhěng",
+          "jp": "zhěng"
+        }
+      ],
+      "answer": "A",
       "explanation": {
-        "cn": "「真」放在形容词前，加强「的确、非常」的语气。",
-        "kr": "「真」은 형용사 앞에서 칭찬·감탄을 강조합니다.",
-        "en": "真 before an adjective strengthens praise.",
-        "jp": "「真」は形容詞の前で程度を強めます。"
+        "cn": "「真」读作 zhēn。",
+        "kr": "「真」는 zhēn입니다.",
+        "en": "真 is read zhēn.",
+        "jp": "「真」は zhēn と読みます。"
       }
     }
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你几岁？", "我今年五岁。", "他今年八岁。", "她几岁了？", "她三岁了。", "她真漂亮。", "对，她很漂亮。", "他几岁了？", "他十岁了。"],
+    "speaking": [
+      "你几岁？",
+      "我今年五岁。",
+      "他今年八岁。",
+      "她几岁了？",
+      "她三岁了。",
+      "她真漂亮。",
+      "对，她很漂亮。",
+      "他几岁了？",
+      "他十岁了。"
+    ],
     "chatPrompt": "请围绕年龄、「今年」「岁」「他/她/他们」与「真 + 形容词」用本课词语问答；不要写成问候或只问名字。",
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -480,8 +588,18 @@
             "en": "Dialogue 1: classmate’s age",
             "jp": "会話1：同級生の年齢"
           },
-          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "studentRole": { "zh": "小雨", "kr": "샤오위", "en": "Xiao Yu", "jp": "小雨" },
+          "aiRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "studentRole": {
+            "zh": "小雨",
+            "kr": "샤오위",
+            "en": "Xiao Yu",
+            "jp": "小雨"
+          },
           "goal": {
             "zh": "",
             "kr": "",
@@ -489,26 +607,72 @@
             "jp": ""
           },
           "expressions": [
-            { "zh": "你几岁？", "pinyin": "nǐ jǐ suì?", "kr": "몇 살이에요?" },
-            { "zh": "我今年五岁。", "pinyin": "wǒ jīnnián wǔ suì.", "kr": "저는 올해 다섯 살이에요." },
-            { "zh": "小军呢？", "pinyin": "Xiǎo Jūn ne?", "kr": "샤오쥔은요?" },
-            { "zh": "他今年八岁。", "pinyin": "tā jīnnián bā suì.", "kr": "그는 올해 여덟 살이에요." },
-            { "zh": "她几岁了？", "pinyin": "tā jǐ suì le?", "kr": "그녀는 몇 살이에요?" },
-            { "zh": "她三岁了。", "pinyin": "tā sān suì le.", "kr": "그녀는 세 살이에요." },
-            { "zh": "她真漂亮。", "pinyin": "tā zhēn piàoliang.", "kr": "그녀는 정말 예뻐요." }
+            {
+              "zh": "你几岁？",
+              "pinyin": "nǐ jǐ suì?",
+              "kr": "몇 살이에요?"
+            },
+            {
+              "zh": "我今年五岁。",
+              "pinyin": "wǒ jīnnián wǔ suì.",
+              "kr": "저는 올해 다섯 살이에요."
+            },
+            {
+              "zh": "小军呢？",
+              "pinyin": "Xiǎo Jūn ne?",
+              "kr": "샤오쥔은요?"
+            },
+            {
+              "zh": "他今年八岁。",
+              "pinyin": "tā jīnnián bā suì.",
+              "kr": "그는 올해 여덟 살이에요."
+            },
+            {
+              "zh": "她几岁了？",
+              "pinyin": "tā jǐ suì le?",
+              "kr": "그녀는 몇 살이에요?"
+            },
+            {
+              "zh": "她三岁了。",
+              "pinyin": "tā sān suì le.",
+              "kr": "그녀는 세 살이에요."
+            },
+            {
+              "zh": "她真漂亮。",
+              "pinyin": "tā zhēn piàoliang.",
+              "kr": "그녀는 정말 예뻐요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "小雨，你几岁？",
-              "studentRefs": ["我今年五岁。"],
-              "acceptable": ["我今年五岁。", "我今年五岁", "五岁"],
-              "closeAnswers": ["五岁", "5岁"]
+              "studentRefs": [
+                "我今年五岁。"
+              ],
+              "acceptable": [
+                "我今年五岁。",
+                "我今年五岁",
+                "五岁"
+              ],
+              "closeAnswers": [
+                "五岁",
+                "5岁"
+              ]
             },
             {
               "aiLine": "小军呢？",
-              "studentRefs": ["他今年八岁。"],
-              "acceptable": ["他今年八岁。", "他今年八岁", "八岁"],
-              "closeAnswers": ["八岁", "8岁"]
+              "studentRefs": [
+                "他今年八岁。"
+              ],
+              "acceptable": [
+                "他今年八岁。",
+                "他今年八岁",
+                "八岁"
+              ],
+              "closeAnswers": [
+                "八岁",
+                "8岁"
+              ]
             }
           ]
         }
@@ -721,27 +885,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }
