@@ -512,6 +512,47 @@
   line-height: 1.45;
 }
 
+/* 教材式注音：拼音在上、汉字在下（HTML ruby），非整行拼音段落 */
+.ai-lesson-focus-ruby-wrap {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: #0f172a;
+  line-height: 2.05;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  -webkit-ruby-position: over;
+  ruby-position: over;
+  ruby-align: center;
+}
+
+.ai-lesson-focus-ruby-unit {
+  ruby-align: center;
+  white-space: nowrap;
+}
+
+.ai-lesson-focus-ruby-rt {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: #475569;
+  letter-spacing: 0;
+  line-height: 1.15;
+  font-variant: normal;
+}
+
+.ai-lesson-focus-ruby-punct {
+  display: inline;
+  font-weight: 650;
+  color: #0f172a;
+  white-space: pre-wrap;
+}
+
+.ai-lesson-focus-core-item .ai-lesson-focus-ruby-wrap {
+  font-weight: 650;
+}
+
 .ai-lesson-focus-scenario-block {
   margin-bottom: 0.65rem;
   padding: 0.5rem 0.65rem;

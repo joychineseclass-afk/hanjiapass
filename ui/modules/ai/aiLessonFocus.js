@@ -29,6 +29,7 @@ function escapeHtml(s) {
 }
 
 /** @typedef {{ kind: "plain"; text: string } | { kind: "triple"; zh: string; py: string; note: string }} LessonFocusLinePart */
+/** triple：展示层用 HTML ruby 上拼下字，不单独整行显示 py；TTS 仍用 zh + note */
 
 function validFocusPart(p) {
   if (!p || typeof p !== "object") return false;
@@ -117,15 +118,32 @@ function buildScenarioSummaryBlocksHtml(lesson, lang) {
   return "";
 }
 
+/**
+ * 教材式注音：拼音在汉字正上方（ruby），标点单独排版不加注音。
+ * 逐字用 resolvePinyin，与全句一行拼音解耦。
+ */
+function renderHanziRubyLineHtml(zh) {
+  const s = String(zh ?? "");
+  const parts = [];
+  for (const ch of s) {
+    if (/[\u4e00-\u9fff]/.test(ch)) {
+      const py = str(resolvePinyin(ch, ""));
+      parts.push(
+        `<ruby class="ai-lesson-focus-ruby-unit">${escapeHtml(ch)}<rt class="ai-lesson-focus-ruby-rt">${escapeHtml(py)}</rt></ruby>`,
+      );
+    } else {
+      parts.push(`<span class="ai-lesson-focus-ruby-punct">${escapeHtml(ch)}</span>`);
+    }
+  }
+  return `<div class="ai-lesson-focus-ruby-wrap" lang="zh">${parts.join("")}</div>`;
+}
+
 function renderFocusLineInnerHtml(part) {
   if (part.kind === "plain") return escapeHtml(part.text);
-  const pyHtml = part.py
-    ? `<div class="ai-lesson-focus-line-py">${escapeHtml(part.py)}</div>`
-    : "";
   const noteHtml = part.note
     ? `<div class="ai-lesson-focus-line-note">${escapeHtml(part.note)}</div>`
     : "";
-  return `<div class="ai-lesson-focus-line-cn">${escapeHtml(part.zh)}</div>${pyHtml}${noteHtml}`;
+  return `${renderHanziRubyLineHtml(part.zh)}${noteHtml}`;
 }
 
 /** UI 文案：与 languageEngine 一致，支持 ai.xxx 与插值 */
@@ -312,12 +330,11 @@ function renderCoreUsageHtml(rows, lang) {
   const usageLabel = t("ai.lesson_focus_label_usage", "用法");
   return rows
     .map((r) => {
-      const cn = `<div class="ai-lesson-focus-line-cn ai-lesson-focus-core-cn">${escapeHtml(r.expr)}</div>`;
-      const py = r.py ? `<div class="ai-lesson-focus-line-py">${escapeHtml(r.py)}</div>` : "";
+      const rubyCn = renderHanziRubyLineHtml(r.expr);
       const usageLine = r.usage
         ? `<div class="ai-lesson-focus-usage"><span class="ai-lesson-focus-usage-k">${escapeHtml(usageLabel)}：</span><span class="ai-lesson-focus-line-note ai-lesson-focus-usage-note">${escapeHtml(r.usage)}</span></div>`
         : "";
-      return `<li class="ai-lesson-focus-core-item">${cn}${py}${usageLine}</li>`;
+      return `<li class="ai-lesson-focus-core-item">${rubyCn}${usageLine}</li>`;
     })
     .join("");
 }
@@ -504,10 +521,9 @@ export function renderLessonFocusHtml(lesson, lang) {
   const quoteBlock = quotes.length
     ? quotes.map((d) => {
       const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${d.zh}`;
-      const py = str(d.pinyin);
       const tr = d.trans ? `<div class="ai-lesson-focus-tr">${escapeHtml(d.trans)}</div>` : "";
-      const pyHtml = py ? `<div class="ai-lesson-focus-line-py ai-lesson-focus-quote-py">${escapeHtml(py)}</div>` : "";
-      return `<blockquote class="ai-lesson-focus-quote"><div class="ai-lesson-focus-line-cn ai-lesson-focus-quote-cn">${escapeHtml(zhLine)}</div>${pyHtml}${tr}</blockquote>`;
+      const rubyLine = renderHanziRubyLineHtml(zhLine);
+      return `<blockquote class="ai-lesson-focus-quote">${rubyLine}${tr}</blockquote>`;
     }).join("")
     : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_dialogue", "本课对话见教材会话区，请对照音频练习。"))}</p>`;
 
