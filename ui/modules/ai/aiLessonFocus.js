@@ -454,42 +454,16 @@ function buildSceneSectionHtml(lesson, ctx, lang) {
 export function renderLessonFocusHtml(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "—";
-  const summary = pickLang(lesson?.summary, lang) || "";
-  const al = getAiLearning(lesson);
-  const le = al?.lessonExplain;
-  const compactAiLearning = isHsk30Hsk1AiLearningCompact(lesson);
-  /** 旧：部分课用 focusMinimal + 회화·상황 핵심 정리；现 HSK3.0 HSK1 统一为仅目标+易混 */
-  const focusMinimal = !compactAiLearning && !!le?.focusMinimal;
 
   const objLines = buildObjectiveLines(lesson, lang);
-  const abilityItems = focusMinimal || compactAiLearning ? [] : buildLessonAbilityItems(lesson, ctx, lang);
-  const coreRows = focusMinimal || compactAiLearning ? [] : collectCuratedExpressionGroups(lesson, ctx, lang);
   const tips = collectTipsFinal(lesson, lang);
-  const teacherBullets = focusMinimal || compactAiLearning ? [] : buildTeacherBullets(lesson, ctx, lang);
 
-  const quotes = focusMinimal || compactAiLearning ? [] : (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
-
-  const usePracticeFocusLabel = !!(
-    le?.practiceFocus?.length &&
-    Array.isArray(le.practiceFocus) &&
-    !(al?.abilityPoints?.length && Array.isArray(al.abilityPoints))
-  );
   const H = {
-    page: compactAiLearning
-      ? t("ai.lesson_focus_page_title_compact", t("ai.lesson_focus_page_title", "本课重点讲解"))
-      : t("ai.lesson_focus_page_title", "本课重点讲解"),
+    page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
-    b: usePracticeFocusLabel
-      ? t("ai.lesson_focus_section_practice_focus", "这课练什么说法")
-      : t("ai.lesson_focus_section_hsk1", "本课能力点"),
-    c: le
-      ? t("ai.lesson_focus_section_core_pick", "核心表达挑着看")
-      : t("ai.lesson_focus_section_expressions", "重点表达精选"),
-    d: t("ai.lesson_focus_section_scene_dialogue", "场景与对话"),
     e: t("ai.lesson_focus_section_tips", "易混提醒"),
   };
 
-  const showSummaryLead = !compactAiLearning && !le && summary && objLines.length <= 1;
   const objListMultiline = objLines.some(
     (p) => p.kind === "plain" && String(p.text).includes("\n"),
   );
@@ -497,87 +471,20 @@ export function renderLessonFocusHtml(lesson, lang) {
     ? `<ul class="ai-lesson-focus-list${objListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${objLines
       .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
       .join("")}</ul>`
-    : `<p class="ai-lesson-focus-p">${escapeHtml(summary || t("ai.lesson_focus_no_core", "请结合本课对话学习。"))}</p>`;
-
-  const coreBlock = focusMinimal
-    ? ""
-    : coreRows.length
-      ? `<ul class="ai-lesson-focus-list ai-lesson-focus-core">${renderCoreUsageHtml(coreRows, lang)}</ul>`
-      : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_core", "请结合下方对话与练习中的句子学习本课表达。"))}</p>`;
-
-  const sceneBlock = focusMinimal || compactAiLearning ? "" : buildSceneSectionHtml(lesson, ctx, lang);
-
-  const abilityListMultiline = abilityItems.some(
-    (p) => p.kind === "plain" && String(p.text).includes("\n"),
-  );
-  const abilityBlock = focusMinimal
-    ? ""
-    : abilityItems.length
-      ? `<ul class="ai-lesson-focus-list ai-lesson-focus-ability-list${abilityListMultiline ? " ai-lesson-focus-list--multiline" : ""}">${abilityItems
-        .map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`)
-        .join("")}</ul>`
-      : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_ability_empty", "请结合学习目标与对话掌握本课交际。"))}</p>`;
-
-  const teacherGuideHtml = teacherBullets.length
-    ? `<div class="ai-lesson-focus-teacher-guide">
-    <h6 class="ai-lesson-focus-subh">${escapeHtml(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"))}</h6>
-    <ul class="ai-lesson-focus-list ai-lesson-focus-teacher-bullets">${teacherBullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
-    <p class="ai-lesson-focus-quotes-lead">${escapeHtml(t("ai.lesson_focus_quotes_intro_short", "对话示例："))}</p>
-  </div>`
-    : `<p class="ai-lesson-focus-quotes-lead">${escapeHtml(t("ai.lesson_focus_quotes_intro_short", "对话示例："))}</p>`;
-
-  const quoteBlock = quotes.length
-    ? quotes.map((d) => {
-      const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${d.zh}`;
-      const tr = d.trans ? `<div class="ai-lesson-focus-tr">${escapeHtml(d.trans)}</div>` : "";
-      const rubyLine = renderHanziRubyLineHtml(zhLine);
-      return `<blockquote class="ai-lesson-focus-quote">${rubyLine}${tr}</blockquote>`;
-    }).join("")
-    : `<p class="ai-lesson-focus-muted">${escapeHtml(t("ai.lesson_focus_no_dialogue", "本课对话见教材会话区，请对照音频练习。"))}</p>`;
+    : `<p class="ai-lesson-focus-p">${escapeHtml(t("ai.lesson_focus_no_core", "请结合本课对话学习。"))}</p>`;
 
   const tipsBlock = tips.map((p) => `<li class="ai-lesson-focus-line-item">${renderFocusLineInnerHtml(p)}</li>`).join("");
   const tipsListClass =
     "ai-lesson-focus-list ai-lesson-focus-tips" +
     (tips.some((p) => p.kind === "plain" && String(p.text).includes("\n")) ? " ai-lesson-focus-list--multiline" : "");
 
-  const summaryLeadHtml = showSummaryLead && summary
-    ? `<p class="ai-lesson-focus-p ai-lesson-focus-summary">${escapeHtml(summary)}</p>`
-    : "";
-
-  const coreSummaryBody = compactAiLearning ? "" : buildScenarioSummaryBlocksHtml(lesson, lang);
-  const coreSummarySection =
-    !compactAiLearning && focusMinimal && coreSummaryBody
-      ? `<section class="ai-lesson-focus-section ai-lesson-focus-section--core-summary">
-    <h5 class="ai-lesson-focus-h">${escapeHtml(t("ai.lesson_focus_section_core_summary", "核心整理"))}</h5>
-    <div class="ai-lesson-focus-core-summary-body">${coreSummaryBody}</div>
-  </section>`
-      : "";
-
   const speakBtnLabel = t("ai.lesson_focus_speak_all", "全文朗读");
 
-  const midSectionsHtml = focusMinimal || compactAiLearning
-    ? ""
-    : `
-  <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
-    <h5 class="ai-lesson-focus-h">${escapeHtml(H.b)}</h5>
-    ${abilityBlock}
-  </section>
-
-  <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
-    <h5 class="ai-lesson-focus-h">${escapeHtml(H.c)}</h5>
-    ${coreBlock}
-  </section>
-
-  <section class="ai-lesson-focus-section">
-    <h5 class="ai-lesson-focus-h">${escapeHtml(H.d)}</h5>
-    ${sceneBlock}
-    ${teacherGuideHtml}
-    <div class="ai-lesson-focus-quotes">${quoteBlock}</div>
-  </section>
-`;
+  /** 标记 ctx 已使用，避免未使用警告 */
+  void ctx;
 
   return `
-<div class="ai-lesson-focus${focusMinimal || compactAiLearning ? " ai-lesson-focus--minimal" : ""}${compactAiLearning ? " ai-lesson-focus--compact-hsk30-h1" : ""}">
+<div class="ai-lesson-focus ai-lesson-focus--minimal ai-lesson-focus--compact-final">
   <header class="ai-lesson-focus-head">
     <div class="ai-lesson-focus-speak-row">
       <button type="button" class="ai-btn ai-btn-secondary ai-lesson-focus-speak-all" aria-label="${escapeHtml(speakBtnLabel)}"><span class="ai-lesson-focus-speak-ic" aria-hidden="true">🔊</span><span class="ai-lesson-focus-speak-txt">${escapeHtml(speakBtnLabel)}</span></button>
@@ -588,11 +495,9 @@ export function renderLessonFocusHtml(lesson, lang) {
 
   <section class="ai-lesson-focus-section ai-lesson-focus-section--fold">
     <h5 class="ai-lesson-focus-h">${escapeHtml(H.a)}</h5>
-    ${summaryLeadHtml}
     ${objBlock}
   </section>
-${coreSummarySection}
-${midSectionsHtml}
+
   <section class="ai-lesson-focus-section ai-lesson-focus-section--tips">
     <h5 class="ai-lesson-focus-h">${escapeHtml(H.e)}</h5>
     <ul class="${escapeHtml(tipsListClass)}">${tipsBlock}</ul>
@@ -617,35 +522,12 @@ export function stripParenPinyinForSpeak(s) {
 export function buildLessonFocusSpeakSegments(lesson, lang) {
   const ctx = buildLessonContext(lesson, { lang });
   const title = ctx.lessonTitle || pickLang(lesson?.title, lang) || "";
-  const summary = pickLang(lesson?.summary, lang) || "";
-  const al = getAiLearning(lesson);
-  const le = al?.lessonExplain;
-  const compactAiLearning = isHsk30Hsk1AiLearningCompact(lesson);
-  const focusMinimal = !compactAiLearning && !!le?.focusMinimal;
   const objLines = buildObjectiveLines(lesson, lang);
-  const abilityItems = focusMinimal || compactAiLearning ? [] : buildLessonAbilityItems(lesson, ctx, lang);
-  const coreRows = focusMinimal || compactAiLearning ? [] : collectCuratedExpressionGroups(lesson, ctx, lang);
   const tips = collectTipsFinal(lesson, lang);
-  const teacherBullets = focusMinimal || compactAiLearning ? [] : buildTeacherBullets(lesson, ctx, lang);
-  const quotes = focusMinimal || compactAiLearning ? [] : (ctx.dialogue || []).slice(0, 2).filter((d) => str(d.zh));
 
-  const usePracticeFocusLabel = !!(
-    le?.practiceFocus?.length &&
-    Array.isArray(le.practiceFocus) &&
-    !(al?.abilityPoints?.length && Array.isArray(al.abilityPoints))
-  );
   const H = {
-    page: compactAiLearning
-      ? t("ai.lesson_focus_page_title_compact", t("ai.lesson_focus_page_title", "本课重点讲解"))
-      : t("ai.lesson_focus_page_title", "本课重点讲解"),
+    page: t("ai.lesson_focus_page_title", "本课重点讲解"),
     a: t("ai.lesson_focus_section_objectives", "本课学习目标"),
-    b: usePracticeFocusLabel
-      ? t("ai.lesson_focus_section_practice_focus", "这课练什么说法")
-      : t("ai.lesson_focus_section_hsk1", "本课能力点"),
-    c: le
-      ? t("ai.lesson_focus_section_core_pick", "核心表达挑着看")
-      : t("ai.lesson_focus_section_expressions", "重点表达精选"),
-    d: t("ai.lesson_focus_section_scene_dialogue", "场景与对话"),
     e: t("ai.lesson_focus_section_tips", "易混提醒"),
   };
 
@@ -677,68 +559,7 @@ export function buildLessonFocusSpeakSegments(lesson, lang) {
   };
 
   pushUi(H.a);
-  const showSummaryLead = !le && summary && objLines.length <= 1;
-  if (showSummaryLead && summary) pushUi(summary);
   for (const o of objLines) pushFocusPart(o);
-
-  if (focusMinimal && !compactAiLearning) {
-    const coreLbl = t("ai.lesson_focus_section_core_summary", "核心整理");
-    const coreBlocks = buildScenarioSummaryBlocksHtml(lesson, lang);
-    if (coreBlocks) {
-      pushUi(coreLbl);
-      const le2 = getAiLearning(lesson)?.lessonExplain;
-      if (Array.isArray(le2?.scenarioSummaryLines) && le2.scenarioSummaryLines.length) {
-        for (const line of le2.scenarioSummaryLines) pushFocusPart(scenarioSummaryLineToPart(line, lang));
-      } else if (le2?.scenarioSummary && typeof le2.scenarioSummary === "object") {
-        const part = scenarioSummaryBlockToPart(le2.scenarioSummary, lang);
-        if (part && validFocusPart(part)) pushFocusPart(part);
-      }
-    }
-  }
-
-  if (!focusMinimal && !compactAiLearning) {
-    pushUi(H.b);
-    for (const x of abilityItems) pushFocusPart(x);
-
-    pushUi(H.c);
-    for (const r of coreRows) {
-      pushZhUi(r.expr, r.usage);
-    }
-
-    pushUi(H.d);
-    const sceneIdx = segs.length;
-    if (Array.isArray(le?.scenarioSummaryLines) && le.scenarioSummaryLines.length) {
-      for (const line of le.scenarioSummaryLines) pushFocusPart(scenarioSummaryLineToPart(line, lang));
-    } else if (le?.scenarioSummary && typeof le.scenarioSummary === "object") {
-      const part = scenarioSummaryBlockToPart(le.scenarioSummary, lang);
-      if (part && validFocusPart(part)) pushFocusPart(part);
-    } else {
-      const st = ctx.scene?.title ? str(ctx.scene.title) : "";
-      if (st) pushUi(st);
-      const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
-      for (const c of cards.slice(0, 2)) {
-        const ct = pickLang(c.title, lang);
-        const cs = pickLang(c.summary, lang);
-        if (!cs && !ct) continue;
-        const short = cs.length > 76 ? `${cs.slice(0, 73)}…` : cs;
-        const line = ct && short ? `${ct}：${short}` : ct || short;
-        pushUi(line);
-      }
-      if (segs.length === sceneIdx && ctx.scene?.summary) {
-        const ss = str(ctx.scene.summary);
-        pushUi(ss.length > 100 ? `${ss.slice(0, 97)}…` : ss);
-      }
-    }
-
-    pushUi(t("ai.lesson_focus_teacher_guide_title", "老师带你看对话"));
-    for (const b of teacherBullets) pushUi(b);
-
-    for (const d of quotes) {
-      const zhLine = `${d.speaker ? `${d.speaker}：` : ""}${str(d.zh)}`;
-      const tr = str(d.trans);
-      pushZhUi(zhLine, tr);
-    }
-  }
 
   pushUi(H.e);
   for (const tip of tips) pushFocusPart(tip);
