@@ -971,7 +971,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「的」字结构表示领属关系（如：我的书、老师的手机）。",
@@ -989,28 +988,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：谁的书、那本、这些。会话二：猫狗与都喜欢。会话三：哪张桌子、这些那些、有的……有的……",
-        "kr": "첫 번째 대화는 책 한 권이 누구 것인지에서 시작해 「那本」「这些」로 시선을 옮겨 가며 소유를 넓혀 갑니다. 두 번째 대화는 고양이와 개처럼 생물을 놓고도 같은 「谁的」틀을 쓰고, 취향 질문에는 「我都喜欢。」로 두 선택지를 한 번에 묶어 답합니다. 세 번째 대화는 교실에서 어느 책상이 누구 자리인지 묻고, 책 더미를 「这些」「那些」로 나눈 뒤, 모두 한 사람 것이 아닐 때 「有的是老师的，有的是朋友的。」처럼 소유를 분할해 설명합니다. 한 과 안에서 단수·복수·총괄·분할이 모두 등장합니다.",
-        "en": "Dialogue 1 walks from one book to another and then to a cluster—我的, 那本, 这些—so you practice singular and plural pointing words together. Dialogue 2 moves the same grammar to pets and adds 我都喜欢 to cover both animals in a preference question. Dialogue 3 is classroom inventory: 哪个桌子, then 这些 vs 那些 for piles of books, ending with 有的…有的… when ownership splits between teacher and friends. The lesson stitches pointing, possession, and “some… some…” patterns into one coherent skill set.",
-        "jp": "会話1は、一冊の本の持ち主を尋ね、指示語を「这个」から「那本」「这些」へと広げながら所有を話します。会話2はペットに同じ枠を当てはめ、好みの質問では「我都喜欢」で二者をまとめて答えます。会話3は教室で「哪个桌子」から始まり、本の山を「这些／那些」で分け、最後に「有的…有的…」で持ち主が複数に分かれる場合を説明します。単数・複数・総括・部分を一つの単元でつなぐ構成です。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "「谁、哪个、哪些」提问角度不同。",
-          "pinyin": "shéi · nǎge · nǎxiē",
-          "kr": "「谁」는 사람을,「哪个」는 정해진 후보 안에서 하나를 고를 때,「哪些」는 여러 개가 그물망처럼 펼쳐져 있을 때 씁니다. 같은 ‘물음표’처럼 보여도 대상의 성격이 달라 문장 전체를 바꿔 가며 익혀야 합니다.",
-          "en": "谁 targets people; 哪个 picks one out of a set; 哪些 asks which items among many. The question word changes the whole shape of the answer.",
-          "jp": "「谁」は『だれ』という人に焦点を当て、「哪个」は見えているいくつかの中から一つを選ぶとき、「哪些」は複数の物をまとめて『どれら』と尋ねるときに使います。疑問詞が変わると、答えも名前から「这个／那个」、さらに「这些／那些」へと形が広がっていくので、教科書の会話を声に出して繰り返すと型が体に付きます。"
-        },
-        {
-          "zh": "「它们」指上文复数事物（如那些狗）。",
-          "pinyin": "tāmen",
-          "kr": "「他们」은 사람 복수에 가깝고, 동물·사물처럼 사람이 아닌 복수에는 「它们」를 씁니다. 「那些狗呢？」 다음에 「它们也是我的。」처럼 앞의 복수 명사를 다시 가리킬 때 사용합니다.",
-          "en": "它们 refers back to plural non-human things—e.g. those dogs. Contrast with 他们 for people.",
-          "jp": "「它们」は、人ではない複数のもの—動物や物—をさかのぼって指すときの代名詞です。「那些狗呢？」と聞いたあと「它们也是我的。」と言えば、さきほどの犬たち全体を再び話題にする、という流れになります。人の集まりには「他们」、人以外の複数には「它们」と書き分けるのが基本です。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「书」在「一本书」里是量词搭配；本课「那本书」整段作名词短语。",

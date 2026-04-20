@@ -783,33 +783,60 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能用「天气怎么样」谈晴雨冷暖，并用「真、太、非常、有点儿、觉得」说感受。",
-          "pinyin": "tiānqì · juéde",
-          "kr": "맑음·비·눈 등 날씨를 「天气怎么样」로 묻고 답한 뒤, 「真好」「太热了」「非常冷」「有点儿冷」「我觉得……」처럼 정도와 주관적 느낌을 덧붙여 말할 수 있습니다.",
-          "en": "Ask and answer about sun, rain, or snow with 天气怎么样, then shade your reaction with 真, 太, 非常, 有点儿, and subjective 觉得.",
-          "jp": "「天气怎么样」で晴れ・雨・雪などを話し、「真」「太」「非常」「有点儿」「觉得」で気温や体感の強さ、主観的な印象を表せます。"
+          "zh": "本课核心句型：用「今天天气怎么样？」「今天天气很好。」谈论天气；用「今天冷不冷？」「今天很热。」等说冷暖；用「你看，外边下雨了。」「我们去看电影吧。」谈论雨雪与改期活动。",
+          "pinyin": "tiānqì · lěng · rè · xià yǔ",
+          "kr": "핵심 문형：「今天天气怎么样？」「今天天气很好。」로 날씨를 묻고 답하며, 「今天冷不冷？」「今天很热。」로 체감 온도를 말합니다. 「你看，外边下雨了。」처럼 비·눈 상황을 알리고, 약속은 「我们去看电影吧。」류로 바꿉니다.",
+          "en": "Core patterns: 今天天气怎么样？/今天天气很好。; 今天冷不冷？/今天很热。; report rain with 你看，外边下雨了。; suggest new plans with 我们去看电影吧。",
+          "jp": "核心：天気の問答、寒暖、「下雨了」、予定を変える提案。"
+        },
+        {
+          "zh": "本课核心词法：程度副词「真、太、非常、有点儿」修饰形容词时的语气强弱不同；「觉得」引出自己的感受（「我觉得今天很冷。」）；「下雨、下雪」作动词表示自然现象。",
+          "pinyin": "zhēn · tài · fēicháng · yǒudiǎnr · juéde",
+          "kr": "어휘·표현：「真·太·非常·有点儿」는 형용사와 어울릴 때 강조의 세기가 다릅니다. 「觉得」로 주관적 느낌을 말하고, 「下雨」「下雪」는 자연 현상을 동사로 씁니다.",
+          "en": "Degree words 真/太/非常/有点儿 differ in strength before adjectives; 觉得 introduces personal judgment; 下雨 and 下雪 are verbs for weather events.",
+          "jp": "程度「真／太／非常／有点儿」、「觉得」、気象動詞「下雨／下雪」。"
+        },
+        {
+          "zh": "本课表达任务：能完成「聊天气—谈冷暖—因雨雪改计划—说喜不喜欢下雪」等日常闲聊，并正确使用正反疑问（冷不冷）与陈述（很冷）两种句式。",
+          "pinyin": "lǎotiān · zhèngfǎn",
+          "kr": "의사소통 과제：날씨 화제를 열고 추위·더위를 말하며, 비·눈 때문에 일정을 조정하는 대화를 이어 갑니다. 「冷不冷」 같은 정반의문과 「很冷」 같은 평서를 상황에 맞게 바꿉니다.",
+          "en": "Tasks: small talk on weather and temperature; adjust plans for rain/snow; use A-not-A questions (冷不冷) vs simple statements (很冷) appropriately.",
+          "jp": "タスク：天気の雑談、雨雪で予定変更、「冷不冷」と述語の使い分け。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：冷暖。会话二：大雨与在家看电视。会话三：下雪与觉得冷。",
-        "kr": "첫 회화에서는 덥고 춥다고 느끼는 정도를 말하고, 둘째에서는 비가 많이 와 집에서 TV를 본다고 하며, 셋째에서는 눈이 오고 매우 춥다고 느낀다고 합니다.",
-        "en": "Dialogue 1 discusses feeling hot or cold; Dialogue 2 describes heavy rain and staying home to watch TV; Dialogue 3 covers snow and feeling very cold.",
-        "jp": "会話1では暑さ・寒さの感想、会話2では大雨と在宅でテレビを見ること、会話3では雪と「觉得冷」の話をします。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「还早」的「还」表示尚、仍然。",
-          "pinyin": "hái",
-          "kr": "「还早」에서 「还」는 ‘아직 ~한 상태다’라는 뜻으로, 시간이 충분히 남았음을 말할 때 씁니다.",
-          "en": "In 「还早」, 还 means “still” in the sense that something has not yet happened or time still remains.",
-          "jp": "「还早」の「还」は「まだ（時間が）ある／まだ早い」の「まだ」を表し、余裕があることを言います。"
+          "zh": "问天气用「天气怎么样」，问日期用「几月几号」—别把「怎么样」套到日期问答里。",
+          "pinyin": "tiānqì · rìqī",
+          "kr": "날씨는 「天气怎么样」, 날짜는 「几月几号」 등 서로 다른 물음말을 씁니다. 템플릿을 섞지 않습니다.",
+          "en": "天气怎么样 asks about weather; dates use 几月几号 etc.—don’t mix the two question types.",
+          "jp": "天気と日付で疑問文の型が違う。混ぜない。"
+        },
+        {
+          "zh": "「真冷」「太冷了」「非常冷」「有点儿冷」语气由强到弱有层次；「太」常带「了」表变化或感叹，别与「真」随意互换语感。",
+          "pinyin": "zhēn · tài · yǒudiǎnr",
+          "kr": "「真·太·非常·有点儿」는 뉘앙스가 다릅니다. 특히 「太冷了」는 감탄·과함이 느껴질 수 있어, 「有点儿冷」의 약한 정도와 구별합니다.",
+          "en": "真/太/非常/有点儿 scale intensity differently; 太冷了 often sounds like “too cold” or an exclamation—don’t swap blindly with 有点儿冷.",
+          "jp": "程度副詞の強弱。「太…了」と「有点儿」のニュアンス差。"
+        },
+        {
+          "zh": "「我觉得」是个人看法，后面接形容词或小句；不要与表示意愿的「我想吃」类「想」混在同一结构里省字。",
+          "pinyin": "juéde · xiǎng",
+          "kr": "「我觉得」는 평가·느낌, 「我想……」는 의지·희망에 가깝습니다. 뒤에 오는 말의 성격이 다릅니다.",
+          "en": "觉得 states how something seems to you; 想 in 我想… is volition—different frames.",
+          "jp": "「觉得」（感じる）と「想」（～したい）を混同しない。"
+        },
+        {
+          "zh": "说「下雨了」时「下」是动词用法；与名词「雨」单用不同—初学阶段按课文固定搭配记忆，别说成韩语直译语序。",
+          "pinyin": "xià yǔ",
+          "kr": "「下雨了」는 비가 오기 시작했음을 말하는 관용 표현입니다. 단어 순서를 한국어처럼 바꾸지 않고 과문을 따릅니다.",
+          "en": "下雨了 is a fixed predicate meaning “it’s started raining”; keep the 下 + 雨 verb pattern as in the textbook.",
+          "jp": "「下雨」は動詞句として固定搭配で覚える。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「有点儿」和「有一点儿」一样吗？",

@@ -853,7 +853,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「在 + 地点」的基本语序，区分问句「在哪儿……？」与陈述「在……」。",
@@ -878,28 +877,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：问在哪儿上课、学校在哪边。会话二：王老师在哪儿、在房间前边。会话三：书在桌上、手机在桌子下。",
-        "kr": "첫 대화에서는 수업 장소(「在中学」)와 학교가 말하는 사람 기준으로 어느 쪽인지(「在这边」)를 묻습니다. 둘째는 사람(선생님)의 위치를 「在哪儿」「那边」「房间前边」로 단계를 밟아 좁혀 갑니다. 셋째는 책상을 기준으로 본과 휴대폰의 상대적 위치를 「上」「下」로 말합니다. 장소 질문 → 방향 → 기준 물체 위의 위치라는 세 단계를 연습합니다.",
-        "en": "Dialogue 1: where class is (在 + school) and which side the school is (这边). Dialogue 2: locating a person step by step—在哪儿, 那边, then 房间前边. Dialogue 3: book vs phone on/under the desk. The lesson moves from place questions to direction to relative position.",
-        "jp": "会話1は授業の場所と学校の方角、会話2は先生の居場所を段階的に絞る会話、会話3は机を基準に本とスマホの上下です。場所→方角→相対位置の流れを練習します。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：「你在哪儿上课？」「我在中学上课。」「你的学校在哪边？」「在这边。」",
-          "pinyin": "nǎr shàngkè · zhōngxué · nǎ biān · zhèbiān",
-          "kr": "회화1은 먼저 수업 장소를 「你在哪儿上课？」「我在中学上课。」로 묻고 답한 뒤, 같은 학교가 말하는 사람 기준으로 어느 방향에 있는지 「你的学校在哪边？」「在这边。」으로 이어 갑니다. ‘기관’과 ‘방향’을 한 꼭지씩 나누어 말하는 흐름입니다.",
-          "en": "Dialogue 1 first establishes where class is held (在哪儿上课 / 在中学上课), then asks which way the school lies from the speaker (哪边) and answers with a directional 在这边.",
-          "jp": "会話1は、まず授業の場所（你在哪儿上课／我在中学上课）、つづいて学校の方角（你的学校在哪边／在这边）と、段階を分けて話します。"
-        },
-        {
-          "zh": "会话二、三：用「哪儿」问人、问物；用「上、下、前边」说相对位置。",
-          "pinyin": "nǎr · shàng · xià · qián biān",
-          "kr": "회화2에서는 「王老师在哪儿？」처럼 사람의 위치를 묻고 「房间前边」까지 좁혀 갑니다. 회화3에서는 「书在哪儿？」로 물건을 묻고 「桌子上」「桌子下」로 기준 물체에 대한 상대 위치를 말합니다. ‘누가 어디’와 ‘무엇이 어디’를 같은 「哪儿」 질문 틀로 연결합니다.",
-          "en": "Dialogues 2–3: use 哪儿 for both people (老师) and things (书). Add 前边 for “in front of the room,” and 上 / 下 for on vs under the desk.",
-          "jp": "会話2・3：人にも物にも「哪儿」を使い、先生は「前边」、本とスマホは「上／下」で机から見た位置を言います。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「上课」是动宾短语，问地点用「在哪儿上课」，不要漏掉「在」。",

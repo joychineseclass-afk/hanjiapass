@@ -787,33 +787,60 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能用「正在……呢」说此刻在学什么，并说明大中小学身份与「都」。",
-          "pinyin": "zhèngzài · dōu",
-          "kr": "「你在学什么呢？」에 「正在……呢」로 답해 지금 배우는 과목을 말하고, 「小学生」「中学生」처럼 학년 단계를 밝히며 「我们都会……」으로 집단 전체가 같은 능력을 갖추었음을 말합니다.",
-          "en": "Answer what you are learning with 正在 … 呢, name your school stage (primary, middle, university), and use 都 to say everyone in the group can do something.",
-          "jp": "「正在……呢」でいま何を勉強しているかを述べ、「小学生」などの段階を言い、「都」でグループ全員が同じことをできることを表せます。"
+          "zh": "本课核心句型：用「你在学什么呢？」「我正在学习汉语呢。」描述正在进行的动作；用「你学习什么？」问学习内容；用「我学中文，也学习汉字。」扩展并列；用「一天学习几个小时？」问时长。",
+          "pinyin": "zhèngzài · ne · xué · xuéxí",
+          "kr": "핵심 문형：「你在学什么呢？」「我正在学习汉语呢。」로 진행 중인 공부를 말하고, 「你学习什么？」로 과목·내용을 묻습니다. 「我学中文，也学习汉字。」처럼 「也」로 병렬을 늘리고, 「一天学习几个小时？」로 시간을 묻습니다.",
+          "en": "Core patterns: 你在学什么呢？/我正在学习汉语呢。for ongoing study; 你学习什么？for what you study; 我学中文，也学习汉字。with 也; 一天学习几个小时？for duration.",
+          "jp": "核心：「正在…呢」、学習内容、「也」、一日の勉強時間の尋ね方。"
+        },
+        {
+          "zh": "本课核心词法：「学」与「学习」都可表学习，但音节长短与搭配习惯不同，课文中已示范常见搭配；「都」总括前面提到的人或物（如「我们都是小学生。」）。",
+          "pinyin": "xué · xuéxí · dōu",
+          "kr": "어휘：「学」와 「学习」는 둘 다 ‘배우다’지만 길이·콜로케이션이 달라 과문 표현을 우선 익힙니다. 「都」는 앞에서 말한 대상 전체를 아우릅니다.",
+          "en": "学 vs 学习: both mean study; follow textbook collocations; 都 sums up “all of the above” people/things.",
+          "jp": "「学／学习」の使い分けは本文に合わせる。「都」の総括。"
+        },
+        {
+          "zh": "本课表达任务：能介绍自己学什么、每天学多久，并区分「小学生、中学生、大学生」等身份说法，完成校园里的课业闲聊。",
+          "pinyin": "xiǎoxuéshēng · zhōngxuéshēng · dàxuéshēng",
+          "kr": "의사소통 과제：무엇을 배우는지·하루에 몇 시간인지·「小学生／中学生／大学生」 신분을 말해 교내 대화를 완성합니다.",
+          "en": "Tasks: say what you study, how many hours a day, and school level (小学生/中学生/大学生) in campus chat.",
+          "jp": "タスク：学習内容、時間、学生の段階の自己紹介。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：读书与汉字。会话二：学汉语的时长。会话三：大中小学与都会说汉语。",
-        "kr": "첫 회화에서는 책 읽기와 한자 공부를, 둘째에서는 하루에 얼마나 중국어를 배우는지를, 셋째에서는 대·중·초등 학생 신분과 모두 중국어를 할 수 있다는 내용을 다룹니다.",
-        "en": "Dialogue 1 covers reading and Chinese characters; Dialogue 2 covers how long you study Chinese each day; Dialogue 3 covers school levels and everyone being able to speak Chinese.",
-        "jp": "会話1では読書と漢字、会話2では一日の中国語学習時間、会話3では大学・中学・小学と「都会说汉语」について話します。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「一天」指一昼夜中的学习时段安排。",
-          "pinyin": "yī tiān",
-          "kr": "「一天」는 하루 24시간 안에서 공부·수업에 쓰는 시간대를 말할 때 자주 쓰이며, ‘몇 시간 배운다’와 같이 일과를 설명할 때 등장합니다.",
-          "en": "一天 refers to a full calendar day; in this lesson it often frames how many hours you spend studying within that day.",
-          "jp": "「一天」は一昼夜を指し、本課ではその中で何時間勉強するかなど、一日のスケジュールを言うときに使います。"
+          "zh": "「正在……呢」强调进行当中；若只问习惯或能力，句型会不同—别把所有「在学吗」都硬套成「正在」。",
+          "pinyin": "zhèngzài · ne",
+          "kr": "「正在……呢」는 지금 진행 중임을 분명히 합니다. 습관·능력을 묻는 다른 문형과 바꿔 쓰지 않습니다.",
+          "en": "正在…呢 marks progressive aspect “right now”; don’t force it into every question about studying.",
+          "jp": "「正在…呢」は進行中。すべての「学ぶ」に当てはめない。"
+        },
+        {
+          "zh": "「学」较口语、音节短；「学习」较正式或双音节节奏更稳—课文里怎么写就怎么练，避免自己乱缩略成双音节以外的怪形。",
+          "pinyin": "xué · xuéxí",
+          "kr": "「学汉语」처럼 짧은 동사와 「学习汉字」처럼 두 음절 동사가 과문에 같이 나옵니다. 마음대로 줄이거나 늘리지 않습니다.",
+          "en": "Follow the lesson’s mix of 学 and 学习; don’t invent odd shortenings.",
+          "jp": "本文の「学／学习」表記に合わせる。"
+        },
+        {
+          "zh": "「什么」问内容（学什么），「谁」问人—答句主语与疑问词要一致。",
+          "pinyin": "shénme · shéi",
+          "kr": "「什么」는 내용, 「谁」는 사람입니다. 질문과 답의 초점을 맞춥니다.",
+          "en": "什么 asks what (content); 谁 asks who—align answers with the question word.",
+          "jp": "「什么」と「谁」を取り違えない。"
+        },
+        {
+          "zh": "「都」读 dōu 表「全部」；不要与「对」或其他同形字混淆；总括对象要在前文出现，别空降「都」。",
+          "pinyin": "dōu",
+          "kr": "「都」(dōu)는 ‘모두’입니다. 앞에서 대상을 제시한 뒤 총괄할 때 씁니다.",
+          "en": "都 (dōu) means “all”; it needs a clear plural/total referent in context.",
+          "jp": "「都」は全体をまとめる。先行する対象が必要。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「学」和「学习」能随便换吗？",

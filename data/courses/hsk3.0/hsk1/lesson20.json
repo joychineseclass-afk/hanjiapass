@@ -746,33 +746,67 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能问衣服价钱，说便宜贵、要不要，并理解「穿很好看」与找零用语。",
-          "pinyin": "duōshao qián · piányi · zhǎo",
-          "kr": "「这件衣服多少钱？」로 가격을 묻고 「便宜」「贵」로 평가하며 「要」「不要」로 살지 결정하고, 「你穿很好看」는 입었을 때 어울린다는 뜻이며 「找你…元」는 거스름임을 이해합니다.",
-          "en": "Ask 「这件衣服多少钱？」, judge price with 便宜 or 贵, decide with 要 or 不要, understand 「你穿很好看」as a compliment on how something looks on you, and recognize 找你 + amount as change.",
-          "jp": "服の値段を尋ね、安い・高いと言い、買うか「要」「不要」で答え、「穿很好看」は着ぶせのほめ言葉、「找你…元」はおつりだと分かります。"
+          "zh": "本课核心句型：用「这件衣服多少钱？」「五十元。」「一百块。」问价与还价；用「我想买两件衣服。」「那件好看。」「这件不要。」挑选衣物；用「你穿这件衣服很好看。」「一共一百元。」「给你九十，找你十块。」完成付款与找零。",
+          "pinyin": "duōshao qián · yuán · kuài · jiàn",
+          "kr": "핵심 문형：「这件衣服多少钱？」「五十元。」「一百块。」로 가격을 묻고 답하며, 「我想买两件衣服。」「那件好看。」「这件不要。」로 고릅니다. 「你穿这件衣服很好看。」「一共一百元。」「给你九十，找你十块。」로 결제와 거스름을 말합니다.",
+          "en": "Core patterns: 这件衣服多少钱？; 五十元/一百块; 我想买两件衣服。; 那件好看。/这件不要。; 你穿这件衣服很好看。; 一共一百元。; 给你九十，找你十块。",
+          "jp": "核心：値段の尋ね方、「件」、選ぶ、「穿／好看」、会計とおつり。"
+        },
+        {
+          "zh": "本课核心词法：衣物量词「件」；口语「块」与「元」同指货币单位；「穿」表穿着效果；「便宜、贵」表价格高低；「不要」在此表拒绝某件货。",
+          "pinyin": "jiàn · kuài · yuán · chuān",
+          "kr": "어휘：옷은 「件」, 돈 단위는 「元」와 구어 「块」, 착용은 「穿」, 가격 대비는 「便宜／贵」, 마음에 들지 않을 때 「这件不要」.",
+          "en": "件 for clothes; 块 = 元 in speech; 穿 for wearing; 便宜/贵; 这件不要 refuses an item.",
+          "jp": "量詞「件」、「块／元」、「穿」、形容詞「便宜／贵」、拒否の「不要」。"
+        },
+        {
+          "zh": "本课表达任务：能在服装店完成「问价—试穿评价—表示要或不要—听总价—付钱找零」的完整购物链。",
+          "pinyin": "gòuwù liàn",
+          "kr": "의사소통 과제：옷가게에서 가격 문의—어울림 말하기—취소·선택—총액 확인—현금 거스름까지 이어 말합니다.",
+          "en": "Tasks: full clothing-shopping chain—ask price, comment on fit/looks, reject or keep items, hear 一共, pay and get 找钱.",
+          "jp": "タスク：服選びの一連（値段、似合い、不要、合計、おつり）。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：问价。会话二：取舍与穿着。会话三：还价与找钱。",
-        "kr": "첫 회화에서는 옷값을 묻고, 둘째에서는 마음에 드는지·입었을 때 어울리는지를 말하며, 셋째에서는 가격을 깎고 지불 후 거스름을 받는 과정을 다룹니다.",
-        "en": "Dialogue 1 asks the price; Dialogue 2 chooses items and comments on how they look when worn; Dialogue 3 bargains and receives change.",
-        "jp": "会話1は値段の確認、会話2は選ぶことと着ぶせの感想、会話3は値切りとおつりです。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「百、千」可组成更大数目表示价格。",
-          "pinyin": "bǎi",
-          "kr": "「百」「千」는 ‘백’ ‘천’ 자릿수를 이루어 「五百元」처럼 옷값처럼 큰 금액을 말할 때 자주 쓰입니다.",
-          "en": "百 and 千 combine with other numerals to form larger prices (for example 「五百元」), which you need when talking about clothing costs.",
-          "jp": "「百」「千」は位を表し、「五百元」のように服の値段のような大きな金額を言うのに使います。"
+          "zh": "「块」是「元」的口语说法，书面价签常写「元」—听懂「五十块」=「五十元」，别当成重量「块」。",
+          "pinyin": "kuài · yuán",
+          "kr": "「块」는 돈 단위의 구어 표현입니다. 덩어리를 세는 조각과 동음이어도 쇼핑 맥락에서 돈으로 이해합니다.",
+          "en": "块 colloquially equals 元 for money; in a shop it’s not “a chunk of something.”",
+          "jp": "「块」は口語の通貨単位（＝元）。"
+        },
+        {
+          "zh": "「这件」「那件」指近指远指衣服；问价时中心语是「这件衣服」，别把「多少钱」放到韩语式语序中间拆散。",
+          "pinyin": "zhè jiàn · nà jiàn",
+          "kr": "「这件衣服多少钱？」에서 지시어·「件」·「衣服」·가격 질문의 순서를 지킵니다.",
+          "en": "Keep 这件/那件 + 衣服 + 多少钱 in Chinese order; don’t break the noun phrase.",
+          "jp": "「这件衣服多少钱」の語順を保つ。"
+        },
+        {
+          "zh": "「穿」表穿在身上；帽子鞋类有时用「戴」等—本课聚焦「穿衣服好看」，别把所有穿戴都统称成「穿」超纲混用。",
+          "pinyin": "chuān · dài",
+          "kr": "본과는 「穿衣服」의 착용·핏을 말합니다. 다른 두께의 ‘쓰다·신다’까지 한 단어로 합치지 않습니다.",
+          "en": "本课 uses 穿 for wearing clothes; don’t overgeneralize to hats/shoes without the lesson’s words.",
+          "jp": "本課は「穿」中心。未習の「戴」などに勝手に拡張しない。"
+        },
+        {
+          "zh": "「便宜」说价格低；「贵」说价格高—与「好不好看」是不同评价维度，别用「很便宜」回答好看不好看。",
+          "pinyin": "piányi · guì · hǎokàn",
+          "kr": "외모·핏은 「好看」, 가격은 「便宜／贵」로 평가합니다. 질문 유형을 맞춥니다.",
+          "en": "好看 judges appearance; 便宜/贵 judges price—answer the dimension you were asked.",
+          "jp": "見た目と値段の評価軸を取り違えない。"
+        },
+        {
+          "zh": "「一共」是总价；后面跟总金额；「找你十块」是找零—别把「一共」与「多少钱」问句功能搞反。",
+          "pinyin": "yīgòng · zhǎo qián",
+          "kr": "「一共一百元」는 합계를 알려 줄 때, 「找你十块」는 거스름돈입니다. 역할을 구별합니다.",
+          "en": "一共 states the total; 找钱 is your change—don’t swap their roles.",
+          "jp": "「一共」は合計、「找」はおつり。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「块」和「元」在口语里一样吗？",

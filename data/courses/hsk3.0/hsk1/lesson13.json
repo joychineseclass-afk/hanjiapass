@@ -842,7 +842,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "区分「书店」与「商店」等场所词，本课会话三专门练习纠正。",
@@ -853,21 +852,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：住哪儿、和同学住。会话二：超市、饭店、电影。会话三：星期六来我家、书店/商店后边。",
-        "kr": "첫 회화에서는 어디에 사는지와 동기와 함께 사는지를 묻고, 둘째에서는 마트·식당·영화관에 갈지와 영화를 좋아하는지를 이야기하며, 셋째에서는 토요일에 집으로 오라는 초대와 집이 서점 뒤인지 가게 뒤인지를 바로잡는 대화를 합니다.",
-        "en": "Dialogue 1 asks where you live and whether you live with classmates; Dialogue 2 talks about going to the supermarket, a restaurant, or the cinema; Dialogue 3 invites someone for Saturday and corrects whether the home is behind the bookstore or behind the shop.",
-        "jp": "会話1では住まいと同学との同居、会話2ではスーパー・レストラン・映画館への行き来と好み、会話3では土曜の招待と「书店」か「商店」のうしろかの訂正を扱います。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "「吧」使邀请口气委婉。",
-          "pinyin": "ba",
-          "kr": "문장 끝의 「吧」는 명령이 아니라 함께하자는 제안이나 부드러운 확인의 뉘앙스를 주어, 「星期六你来我家吧？」처럼 초대할 때 자연스럽게 씁니다.",
-          "en": "Sentence-final 吧 softens the tone so a line like 「星期六你来我家吧？」sounds like a friendly suggestion to visit rather than a blunt order.",
-          "jp": "文末の「吧」は話し手の提案や相づちをやわらかくし、「星期六你来我家吧？」のような誘いにふさわしい丁寧さを添えます。"
-        }
-      ],
       "confusionPoints": []
     },
     "freeAskPlaceholder": {

@@ -773,33 +773,53 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能用「怎么」「坐」「开车」「吧」询问与说明出行方式。",
+          "zh": "本课核心句型：用「你怎么去学校？」询问对方上学或出行的方式；用「我坐出租车去学校。」「我坐火车去北京。」等「坐 + 交通工具」回答；用「我开车送你吧。」提出开车相送的建议。",
           "pinyin": "zěnme · zuò · kāichē · ba",
-          "kr": "「怎么」로 이동 방법을 묻고, 「坐」와 교통수단으로 답하며, 필요하면 「开车」로 운전 여부를 말하고, 「吧」로 데려다 주자는 제안 등 말끝을 부드럽게 할 수 있습니다.",
-          "en": "Ask how someone travels with 怎么, answer with 坐 + a vehicle, say whether you drive with 开车, and soften offers (such as giving a ride) with sentence-final 吧.",
-          "jp": "「怎么」で行き方を尋ね、「坐」と乗り物で答え、「开车」で運転するかどうかを述べ、文末の「吧」で送る・乗せるなどの提案をやわらかく言えます。"
+          "kr": "핵심 문형으로 「你怎么去学校？」로 통학·출행 방식을 묻고, 「我坐出租车去学校。」「我坐火车去北京。」처럼 「坐」 뒤에 교통수단을 붙여 답하며, 「我开车送你吧。」처럼 「开车」와 문말 「吧」로 부드럽게 태워 주겠다는 제안을 합니다.",
+          "en": "Core patterns: ask how someone gets to school with 「你怎么去学校？」; answer with 坐 + vehicle (e.g. 「我坐出租车去学校。」「我坐火车去北京。」); offer a ride with 「我开车送你吧。」using 开车 and sentence-final 吧.",
+          "jp": "核心文型：「你怎么去学校？」で通学の行き方を尋ね、「我坐出租车去学校。」のように「坐＋乗り物」で答え、「我开车送你吧。」で送る提案を「吧」で柔らかく言います。"
+        },
+        {
+          "zh": "本课核心词法：「怎么」问方式（与问时间的「什么时候」不同）；「白天」「晚上」对比一天中的时段；「有点儿晚了」里「有点儿」表轻微程度，「快走吧！」表催促。",
+          "pinyin": "zěnme · báitiān · wǎnshang · yǒudiǎnr",
+          "kr": "어휘·표현：「怎么」는 ‘어떻게/무슨 방법으로’를 묻는 말이고 「什么时候」와 헷갈리지 않습니다. 「白天」「晚上」로 시간대를 대비해 말하고, 「有点儿晚了」는 정도가 약함을, 「快走吧！」는 재촉을 나타냅니다.",
+          "en": "Key wording: 怎么 asks how/method (contrast 什么时候 for when); 白天 vs 晚上 for time of day; 有点儿 in 有点儿晚了 marks a mild degree; 快走吧 urges someone to hurry.",
+          "jp": "語法・語彙：「怎么」は方法、「什么时候」と区別。「白天／晚上」で時間帯。「有点儿」は程度が軽いこと、「快走吧」は促し。"
+        },
+        {
+          "zh": "本课表达任务：能完成「问路式」交通问答（怎么去—坐什么—要不要开车送）；能在对话里自然使用「吧」软化提议或催促，并听懂「我送你」类相送表达。",
+          "pinyin": "jiāotōng · ba",
+          "kr": "의사소통 과제：‘어떻게 가나요—무엇을 타나요—차로 데려다 줄까요’ 흐름의 짧은 대화를 마치고, 제안·재촉에서 「吧」를 적절히 쓰며 「我送你」류의 상대 배려 표현을 알아듣습니다.",
+          "en": "Tasks: run short exchanges on how to get somewhere—how, which vehicle, whether to drive; use 吧 naturally in offers or urging; understand phrases like 我送你.",
+          "jp": "タスク：行き方のやり取り（どう行く／何に乗る／送るか）、提案の「吧」、「我送你」などの配慮表現の理解。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：出租车与开车送。会话二：上班与送哥哥。会话三：火车去北京与下周五回。",
-        "kr": "첫 회화에서는 택시로 가는지·아버지가 운전해 주는지를 묻고, 둘째에서는 어떻게 출근하는지와 형을 데려다주는 일정을 이야기하며, 셋째에서는 기차로 베이징에 갔다가 돌아오는 시점을 말합니다.",
-        "en": "Dialogue 1 covers taking a taxi versus being driven; Dialogue 2 covers commuting and driving an older brother; Dialogue 3 covers travelling to Beijing by train and coming back the following Friday.",
-        "jp": "会話1ではタクシーと車での送迎、会話2では出勤の仕方と兄を送る予定、会話3では北京へ電車で行くことと翌週の帰りについて話します。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「白天」指一天中的上午、下午时段，常对比「晚上」。",
-          "pinyin": "báitiān",
-          "kr": "「白天」는 해가 떠 있는 오전·오후의 시간대를 두루 가리키는 말로, 휴식이나 활동을 말할 때 「晚上」과 대비해 자주 씁니다.",
-          "en": "白天 refers to the daytime hours (roughly morning and afternoon) when it is light out, often contrasted with 晚上 when you talk about rest or daily routines.",
-          "jp": "「白天」は日中の時間帯（午前・午後を含む）を指し、生活リズムを話すとき「晚上」と対にして使われることが多いです。"
+          "zh": "「怎么」问的是方式（怎么去），「什么时候」问的是时间（什么时候走）——问句与答句要配对，别把方式和时间混在同一问答里。",
+          "pinyin": "zěnme · shénme shíhou",
+          "kr": "「怎么」는 방법, 「什么时候」는 시각·일정입니다. 「你怎么去学校？」에는 교통수단·경로로 답하고, 출발 시각을 묻는 문장과 섞어 쓰지 않도록 질문을 고릅니다.",
+          "en": "怎么 asks how (method); 什么时候 asks when. Pair questions with matching answers—don’t answer a how-question with only a clock time, or vice versa.",
+          "jp": "「怎么」は方法、「什么时候」はいつ。質問と答えの種類をそろえ、方式と時刻を取り違えない。"
+        },
+        {
+          "zh": "「坐出租车」表示乘坐某种交通工具；「开车」表示自己驾驶——「我坐你的车」和「我开你的车」主客关系不同，别混用。",
+          "pinyin": "zuò · kāichē",
+          "kr": "「坐」는 타는 쪽, 「开车」는 운전하는 쪽입니다. 누가 운전대를 잡는지 문맥으로 구분하고, 탑승 표현에 「开车」를 끼워 넣어 버리지 않도록 합니다.",
+          "en": "坐 + vehicle means you ride along; 开车 means you drive. Who holds the wheel changes the phrase—don’t use 开车 inside a 坐-pattern by mistake.",
+          "jp": "「坐」は乗る、「开车」は運転する。主体が運転者か乗客かで言い方が変わる。"
+        },
+        {
+          "zh": "句末「吧」常用于提议、商量或缓和语气（「我开车送你吧」）；疑问句句末若用「吗」则是确认能否，与「吧」的语气不同——别用错句尾助词。",
+          "pinyin": "ba · ma",
+          "kr": "문말 「吧」는 제안·부드러운 권유에 쓰이고, 「……吗？」는 가능 여부를 묻는 확인형에 가깝습니다. 태워 주겠다는 뉘앙스에는 「吧」가 자연스러운 경우가 많습니다.",
+          "en": "Sentence-final 吧 softens offers (我开车送你吧). 吗 checks yes/no ability. Pick 吧 vs 吗 by whether you are offering or asking for confirmation.",
+          "jp": "文末「吧」は提案の柔らかさ、「吗」は可否の確認。役割を取り違えない。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「吧」和「吗」在提议句里怎么选？",

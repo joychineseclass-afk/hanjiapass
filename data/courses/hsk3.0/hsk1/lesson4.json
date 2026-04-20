@@ -721,7 +721,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "会问「你家有几口人？」并回答「我家有……口人」，说清家里一共多少人。",
@@ -753,28 +752,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：同学问李明家里有几口人、家里有谁，用「有」列举家庭成员。会话二：问有没有妹妹、弟弟，用「有……吗？」和「没有。」说明有无。本课讲家庭与「有」。",
-        "kr": "첫 번째 대화에서는 왕메이가 리밍에게 가구 인원과 함께 사는 가족을 묻고, 리밍은 「我家有……口人」「有……和……」로 답하며 「有」로 ‘있다·가지고 있다’는 뜻을 익힙니다. 두 번째 대화에서는 남동생·여동생 유무를 「有……吗？」로 묻고 「有……」 또는 「没有。」로 짧게 답해, 같은 「有」가 질문과 부정 답에서 어떻게 쓰이는지 비교합니다. 전체적으로 가족 소개와 소유·존재를 나타내는 「有」가 핵심입니다.",
-        "en": "In Dialogue 1, classmates ask Li Ming how many people are in his family and who they are; he answers with patterns like 我家有…口人 and lists members with 有…和…, practicing 有 for “have / there is.” In Dialogue 2, they ask about younger siblings with 有…吗？ and answer with 有… or 没有。, seeing how 有 works in yes–no questions and short negatives. The lesson centers on talking about family and using 有.",
-        "jp": "会話1では、家族が何人で誰がいるかを尋ね、「我家有……口人」「有……和……」で答える場面から、「有」の意味（いる・持っている）を学びます。会話2では妹・弟の有無を「有……吗？」で聞き、「有……」か「没有。」で答えます。本課全体では家族について話すことと「有」の使い方が中心です。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：问「你家有几口人？」「你家里有谁？」用「我家有……口人」「有……和……」介绍家人。",
-          "pinyin": "jǐ kǒu rén · jiā lǐ yǒu shéi",
-          "kr": "회화1에서는 먼저 가구 인원을 「你家有几口人？」「我家有……口人」로 묻고 답한 뒤, 이어서 「你家里有谁？」에 「有爸爸、妈妈、哥哥和我。」처럼 「有」と「和」로 가족을 소개합니다.",
-          "en": "Dialogue 1: ask 你家有几口人？ and answer with 我家有…口人; then ask 你家里有谁？ and introduce family members with 有…和….",
-          "jp": "会話1では、まず「你家有几口人？」「我家有……口人」で家族の人数を確認し、つづけて「你家里有谁？」と聞いてメンバーを具体的に知ります。答えは「有爸爸、妈妈、哥哥和我。」のように「有」と「和」で名前列挙に入るのがこの課の型で、人数の話から顔ぶれの話へと話題を広げる流れを体で覚えます。"
-        },
-        {
-          "zh": "会话二：用「你有妹妹吗？」「你有弟弟吗？」问兄弟姐妹，用「有……」或「没有。」回答。",
-          "pinyin": "yǒu … ma?",
-          "kr": "회화2에서는 「你有妹妹吗？」「你有弟弟吗？」처럼 「有……吗？」로 형제·자매가 있는지 묻고, 긍정이면 「有，我有一个妹妹。」처럼 말하거나, 부정이면 「没有。」로 짧게 이어 받습니다.",
-          "en": "Dialogue 2: ask about siblings with 你有妹妹吗？ / 你有弟弟吗？; answer with a short 有… sentence or 没有。 when there is no such relative.",
-          "jp": "会話2では「你有妹妹吗？」「你有弟弟吗？」と、妹・弟という異なる対象に同じ「有……吗？」の枠を当てはめます。肯定なら「有，我有一个妹妹。」のように補足してもよく、否定なら「没有。」で十分な場面もあります。同じ「有」が、前の会話の“列挙する有”と、ここでは“有無を尋ねる有”として働く違いを意識すると理解が深まります。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「家」可指家庭；「家里」强调在家里、家中成员——本课问谁在家常用「家里」。",

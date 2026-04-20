@@ -828,33 +828,67 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能说去年明年、工作公司与忙闲，并在职场情景用「先生、女士」问候。",
+          "zh": "本课核心句型：用「你去年就来中国了吗？」「我来中国一年多了。」「明年我父母来看我。」谈来华时间与探亲计划；用「你在哪儿工作？」「我很忙。」说工作地点与忙闲；用「李先生，您好！」「这位女士是谁？」使用职场与礼貌称呼。",
           "pinyin": "qùnián · míngnián · gōngzuò",
-          "kr": "언제 중국에 왔는지·내년 계획을 「去年」「明年」로 말하고, 어느 회사에서 일하는지와 바쁜지를 이야기하며, 업무 상대에는 「先生」「女士」로 예를 갖춥니다.",
-          "en": "Talk about coming to China last year or plans for next year, describe where you work and how busy you are, and greet colleagues or clients with 先生 or 女士 plus surname.",
-          "jp": "「去年」「明年」で時期を述べ、勤務先と忙しさを話し、職場では「先生」「女士」で丁寧にあいさつできます。"
+          "kr": "핵심 문형：「你去年就来中国了吗？」「我来中国一年多了。」「明年我父母来看我。」로 체류·계획을 말하고, 「你在哪儿工作？」「我很忙。」로 직장과 바쁨을 말합니다. 「李先生，您好！」「这位女士是谁？」로 호칭을 씁니다.",
+          "en": "Core patterns: last/next year and length of stay in China; 明年我父母来看我。; 你在哪儿工作？/我很忙。; 李先生/女士 in polite address.",
+          "jp": "核心：去年・明年・滞在、「工作／忙」、敬称「先生／女士」。"
+        },
+        {
+          "zh": "本课核心词法：「第」与序数、年份表达配合（本课「一年多」等时长）；「工作」可作动词「在哪儿工作」；「公司」指工作单位；「大家」可指在场众人。",
+          "pinyin": "dì · gōngzuò · gōngsī · dàjiā",
+          "kr": "어휘：「第」는 서수, 「工作」는 일하다·직무, 「公司」는 직장 조직, 「大家」는 ‘여러분·모두’ 맥락에서 씁니다.",
+          "en": "第 with ordinals; 工作 as verb (在哪儿工作); 公司; 大家 for “everyone” in context.",
+          "jp": "「第」、動詞用法の「工作」、「公司」、「大家」。"
+        },
+        {
+          "zh": "本课表达任务：能介绍自己何时来中国、是否想家、父母何时来访，并能在公司场景问候同事、简单谈论忙不忙、澄清「是不是男朋友」类身份问题。",
+          "pinyin": "shēnfèn · tóngshì",
+          "kr": "의사소통 과제：중국 체류 기간·향수·가족 방문 계획을 말하고, 직장에서 인사·바쁨·동료 관계를 짧게 설명합니다.",
+          "en": "Tasks: talk stay in China, homesickness, family visits; greet at work; say how busy you are; clarify relationships (同事 vs 男朋友).",
+          "jp": "タスク：滞在・家族訪問、職場の挨拶、忙しさ、人間関係の説明。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：来华时间与家庭。会话二：公司与忙闲。会话三：同事与朋友。",
-        "kr": "첫 회화에서는 중국에 온 시기와 가족·연인 이야기를, 둘째에서는 어디서 일하는지와 바쁜지를, 셋째에서는 직장 동료와 친구를 소개합니다.",
-        "en": "Dialogue 1 covers when you came to China and your family; Dialogue 2 covers workplace and how busy you are; Dialogue 3 covers colleagues and friends.",
-        "jp": "会話1は来日時期と家族、会話2は勤務先と忙しさ、会話3は同僚と友人についてです。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「大家」可指在场或所说的所有人。",
-          "pinyin": "dàjiā",
-          "kr": "「大家好」에서 「大家」는 방 안의 모든 사람이나 말 속에서 언급된 집단 전체를 가리킬 수 있습니다.",
-          "en": "大家 means “everyone” present or everyone in the group you are talking about, as in 「大家好」to greet a whole room.",
-          "jp": "「大家」はその場にいる全員、または話題にしたグループの全員を指し、「大家好」のように全体に向けて使います。"
+          "zh": "「去年、明年」表时间推移；与「上午、下午」表一天内时段不同—别把时间词混进同一模板。",
+          "pinyin": "qùnián · míngnián",
+          "kr": "연도·시기는 「去年／明年」, 하루 안의 구간은 「上午／下午」입니다. 질문에 맞는 시간 단위를 고릅니다.",
+          "en": "去年/明年 are year-scale; 上午/下午 are within a day—pick the right time scale.",
+          "jp": "年単位と日内の時間帯を混同しない。"
+        },
+        {
+          "zh": "「第几年」问顺序／第几个年头；与单纯「几年」问时长时回答方式可能不同—听清问句再答「一年多了」或「第二年」。",
+          "pinyin": "dì jǐ nián · jǐ nián",
+          "kr": "서수 질문과 기간 질문은 답이 달라질 수 있어, 의문사를 먼저 확인합니다.",
+          "en": "Ordinal “which year (in sequence)” vs “how many years” duration—match the question type.",
+          "jp": "「第」と単純な「几」の質問に合わせて答える。"
+        },
+        {
+          "zh": "「工作」作动词时问「在哪儿工作」；与名词「工作很忙」里「工作」作主语不同—注意词性带来的句式。",
+          "pinyin": "gōngzuò",
+          "kr": "「工作」는 ‘일하다’로도, ‘일(직무)’ 명사로도 쓰입니다. 문장 틀이 달라집니다.",
+          "en": "工作 can be verb (在哪儿工作) or noun subject (工作很忙)—watch the pattern.",
+          "jp": "「工作」の動詞用法と名詞用法。"
+        },
+        {
+          "zh": "「先生」在商务场合可称「李先生」；与学校里「老师」不同—别对同事乱叫「老师」除非对方是教师。",
+          "pinyin": "xiānsheng · lǎoshī",
+          "kr": "직장·대외 자리에서는 「李先生」 같은 성+先生이 쓰일 수 있고, 교실의 「老师」와 상황이 다릅니다.",
+          "en": "李先生 is a business-style address; 老师 fits teachers—don’t mix contexts.",
+          "jp": "「李先生」と「老师」の場面の違い。"
+        },
+        {
+          "zh": "「男朋友」是恋爱关系；「男同事」是工作关系—听清「是不是男朋友」类问句，别用错身份词回答。",
+          "pinyin": "nán péngyou · tóngshì",
+          "kr": "연인인지 직장 동료인지에 따라 「男朋友」와 「同事」를 구별합니다.",
+          "en": "男朋友 vs 男同事—clarify relationship words in answers.",
+          "jp": "「男朋友」と「同事」の区別。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「男朋友」一定指恋爱对象吗？",

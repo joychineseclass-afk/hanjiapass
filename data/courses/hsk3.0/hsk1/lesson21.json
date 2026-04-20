@@ -757,33 +757,67 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能用「怎么了、生病、看病」说明身体不适，并听懂休息、明天见等嘱咐。",
-          "pinyin": "zěnme le · shēngbìng · xiūxi",
-          "kr": "「你怎么了？」로 상태를 묻고 「我生病了」로 아픔을 말하며, 필요하면 「去医院看病」처럼 진료를 받으러 간다고 하고, 「休息一下」「明天见」 같은 당부를 듣고 따를 수 있습니다.",
-          "en": "Use 「怎么了？」to check on someone, 「我生病了」to say you are ill, and 「看病」for seeing a doctor; understand advice such as resting and 「明天见」when parting.",
-          "jp": "「怎么了」「生病」「看病」で体調を伝え、「休息」「明天见」など相手のねぎらいの言葉を聞き取れます。"
+          "zh": "本课核心句型：用「你怎么了？」「我生病了。」关心与自述病情；用「我要去医院。」「医生说要休息。」说就医与医嘱；用「你好多了吗？」「我没事了。」「你睡一会儿吧。」安慰与嘱咐休息。",
+          "pinyin": "zěnme le · shēngbìng · kànbìng",
+          "kr": "핵심 문형：「你怎么了？」「我生病了。」로 안부와 증상을 말하고, 「我要去医院。」「医生说要休息。」로 병원·의사 말을 전합니다. 「你好多了吗？」「我没事了。」「你睡一会儿吧。」로 위로와 휴식을 권합니다.",
+          "en": "Core patterns: 你怎么了？/我生病了。; 我要去医院。; 医生说要休息。; 你好多了吗？/我没事了。; 你睡一会儿吧。",
+          "jp": "核心：「怎么了／生病／看病／休息／没事／睡一会儿」。"
+        },
+        {
+          "zh": "本课核心词法：「舒服／不舒服」描述身体感受；「看病」指就医行为；「要」表需要（要休息）；「再」表下一次（明天再来）；「见」用于道别「再见」。",
+          "pinyin": "shūfu · kànbìng · yào · zài · jiàn",
+          "kr": "어휘：몸 상태는 「舒服／不舒服」, 진료는 「看病」, 필요는 「要休息」, 다음 방문은 「明天再来」, 작별은 「再见」.",
+          "en": "舒服/不舒服; 看病; 要 for need (要休息); 再来 for “come again”; 再见 for goodbye.",
+          "jp": "語彙：体調、「看病」、「要」「再」「再见」。"
+        },
+        {
+          "zh": "本课表达任务：能表达「身体不舒服—决定去医院—转述医生说法—亲友探望时安慰—约定明天再来」的完整关怀对话。",
+          "pinyin": "ān wèi",
+          "kr": "의사소통 과제：아픔을 말하고 병원 가기로 하며, 의사의 말을 전하고, 병문안에서 위로·휴식을 권하는 대화를 완성합니다.",
+          "en": "Tasks: report illness, go to hospital, relay the doctor’s advice, comfort a sick friend, plan 明天再来.",
+          "jp": "タスク：体調不良から受診、伝言、見舞い、再訪の約束まで。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：去医院。会话二：医嘱与好转。会话三：休息与明天见。",
-        "kr": "첫 회화에서는 병원에 가야 한다고 하고, 둘째에서는 의사의 말과 나아지는지를 이야기하며, 셋째에서는 쉬라는 말과 내일 다시 보자는 인사를 나눕니다.",
-        "en": "Dialogue 1 goes to the hospital; Dialogue 2 covers the doctor’s advice and feeling better; Dialogue 3 covers resting and saying goodbye with 「明天见」.",
-        "jp": "会話1は病院へ行くこと、会話2は診察と回復、会話3は休むことと「明天见」で別れます。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「没事」在此表示没有大碍。",
-          "pinyin": "méishì",
-          "kr": "「没事」는 여기서 큰 문제나 위험은 없다는 안심시키는 말로, 상대의 걱정을 덜어 줄 때 씁니다.",
-          "en": "Here 没事 reassures the listener that the situation is not serious—similar to “it’s nothing” or “don’t worry.”",
-          "jp": "この文脈の「没事」は、大したことはない・心配しなくてよい、という安心させる意味です。"
+          "zh": "「怎么了」问出了什么事／身体怎么了；不是「为什么」的辩解问句—答「我头疼」比答「因为……」更贴切。",
+          "pinyin": "zěnme le · wèishénme",
+          "kr": "「怎么了」는 상태·사건을 묻습니다. 원인만 길게 「因为」로 답해야 하는 「为什么」와 다릅니다.",
+          "en": "怎么了 asks what’s wrong (often health); 为什么 asks why—don’t answer one with the other’s pattern only.",
+          "jp": "「怎么了」（どうした）と「为什么」（なぜ）を混ぜない。"
+        },
+        {
+          "zh": "「生病」是动词性表述「得病」；「病」多作名词—说「我生病了」自然，别硬说成韩语直译的怪序。",
+          "pinyin": "shēngbìng · bìng",
+          "kr": "「我生病了」는 관용적으로 몸이 아픔을 말합니다. 명사 「病」만 덩그러니 쓰지 않도록 과문을 따릅니다.",
+          "en": "我生病了 is the natural “I’ve fallen ill”; follow textbook predicates.",
+          "jp": "「生病」は述語としての定型。"
+        },
+        {
+          "zh": "「看病」是「去看医生／就诊」；别拆开理解成「看了书」那种「看+名」—搭配固定。",
+          "pinyin": "kànbìng",
+          "kr": "「看病」는 진료를 보러 가다라는 한 덩어리 표현입니다.",
+          "en": "看病 is a set verb-object “see a doctor”; don’t parse 看 like 看书.",
+          "jp": "「看病」は离合不可の慣用。"
+        },
+        {
+          "zh": "「没事」在此表示「没有大碍、不要紧」；与道歉应答的「没关系」场景不同—别在看病语境乱换。",
+          "pinyin": "méishì · méi guānxi",
+          "kr": "몸이 괜찮아졌다는 「我没事了」와 사과 응답 「没关系」는 장면이 다릅니다.",
+          "en": "没事 here means “I’m fine (health-wise)”; 没关系 answers apologies—different situations.",
+          "jp": "「没事」（大丈夫）と「没关系」（謝罪の返答）の場面差。"
+        },
+        {
+          "zh": "「要休息」里「要」是需要；与「我要吃饺子」的「要」同属意愿／需要类，但宾语不同—别省略「休息」只说「我要」。",
+          "pinyin": "yào xiūxi",
+          "kr": "「要休息」에서 목적어 「休息」를 빼면 뜻이 불완전해집니다.",
+          "en": "要休息 needs both 要 and 休息—don’t drop the complement.",
+          "jp": "「要休息」の目的語を落とさない。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「看病」能拆开说「看了病」吗？",

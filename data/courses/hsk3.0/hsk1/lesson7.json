@@ -680,7 +680,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「几月几日」问句与「月、日、号」在阅读中的常见搭配（本课以会话「五月一日」等为主）。",
@@ -712,28 +711,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：问今天几月几日，确认昨天是否五月一日，问五月一日休息了吗。会话二：问星期几、明天星期六休不休息。会话三：问明天是否星期天、什么时候休息。",
-        "kr": "첫 번째 회화에서는 오늘이 몇 월 며칠인지 묻고, 어제가 5월 1일이었는지 확인하며 그날 쉬었는지까지 이어 질문합니다. 두 번째는 오늘이 무슨 요일인지, 내일 토요일에 쉬는지 묻습니다. 세 번째는 내일이 일요일인지 확인하고, 언제 쉬는지까지 묻습니다. 세 회화 모두 날짜·요일·휴식 시간이 한 흐름으로 이어집니다.",
-        "en": "Dialogue 1 asks today’s date, checks whether yesterday was May 1st, and asks whether people rested on that day. Dialogue 2 covers weekdays and whether Saturday is a day off. Dialogue 3 checks if tomorrow is Sunday and when people rest. Together they practice dates, weekdays, and rest times in one coherent thread.",
-        "jp": "会話1では今日の日付を尋ね、昨日が5月1日だったか確認し、その日休みだったかまで聞きます。会話2では曜日と土曜に休むかを。会話3では明日が日曜か、いつ休むかを尋ねます。日付・曜日・休みの時間がつながる練習です。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：用「今天几月几日？」问日期，用「昨天是……吗？」「是的，……」谈昨天与休息日。",
-          "pinyin": "jīntiān jǐ yuè jǐ rì? · zuótiān shì … ma?",
-          "kr": "첫 회화에서는 「今天几月几日？」로 오늘 날짜를 묻고, 「昨天是……吗？」「是的，……」처럼 어제가 어떤 날이었는지와 그날 쉬었는지까지 질문과 답을 짝지어 말하는 연습을 합니다.",
-          "en": "In the first dialogue, use 今天几月几日? for today’s date, then 昨天是……吗？ and 是的，… to talk about what yesterday was and whether it was a rest day, keeping question types and answers aligned.",
-          "jp": "会話1では「今天几月几日？」で今日の日付を聞き、「昨天是……吗？」「是的，……」で昨日がどんな日だったか、休みだったかまで、質問と答えの型をそろえて練習します。"
-        },
-        {
-          "zh": "会话二、三：用「今天星期几？」问星期，用「你们什么时候休息？」「星期天休息。」谈休息。",
-          "pinyin": "xīngqī jǐ? · shénme shíhou xiūxi",
-          "kr": "둘째·셋째 회화에서는 「今天星期几？」로 요일을 묻고, 「你们什么时候休息？」「星期天休息。」처럼 쉬는 시점을 묻고 답하며, 요일 질문에는 요일로, 날짜 질문에는 날짜로 대답하도록 짝을 맞춥니다.",
-          "en": "In dialogues 2 and 3, ask the weekday with 今天星期几?, then ask and answer rest times with 你们什么时候休息？ / 星期天休息。, so weekday questions get weekday answers and “when do you rest” gets a clear time or day off.",
-          "jp": "会話2・3では「今天星期几？」で曜日を聞き、「你们什么时候休息？」「星期天休息。」で休みの時間を尋ね答え、曜日の質問には曜日で、いつ休むかには具体的な答えでそろえる練習をします。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「星期几」问星期；「几月几日」问日期——问题和回答要配对。",

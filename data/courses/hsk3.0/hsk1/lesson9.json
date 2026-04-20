@@ -796,7 +796,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握「喜欢 + 动词」结构，并能与「吗」构成是非问句。",
@@ -821,28 +820,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：米饭与面条儿。会话二：茶、牛奶与「也」。扩展与阅读材料补充水果、水与早餐词汇。",
-        "kr": "첫 대화에서는 좋아하는 음식을 묻고 밥과 국수에 대한 취향을 이어 갑니다. 둘째 대화에서는 마시는 것으로 주제를 바꾸고, 차에 이어 우유를 좋아하는지 물은 뒤 「也」로 ‘나도 우유’를 덧붙입니다. 확장·읽기에는 과일·물·아침 식단 어휘가 나와 본문의 표현을 넓혀 줍니다.",
-        "en": "Dialogue 1: favorite foods—rice and noodles. Dialogue 2: drinks—tea, then milk, using 也 to add that you like milk too. Extension and reading add fruit, water, and breakfast vocabulary.",
-        "jp": "会話1はご飯と麺の好み、会話2はお茶と牛乳と「也」です。拡張と読み物で果物・水・朝食の語を補います。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：「你喜欢吃什么？」—「我喜欢吃米饭。」—「你喜欢吃面条儿吗？」—「喜欢。」",
-          "pinyin": "xǐhuan chī shénme · mǐfàn · miàntiáor",
-          "kr": "회화1은 먼저 먹는 것 전반을 「你喜欢吃什么？」로 묻고, 「我喜欢吃米饭。」로 주된 취향을 말합니다. 이어 「你喜欢吃面条儿吗？」로 구체적인 음식 하나를 짚어 예·아니오를 묻고, 「喜欢。」으로 짧게 긍정합니다. 질문의 초점이 ‘무엇’에서 ‘국수냐 아니냐’로 바뀌는 흐름입니다.",
-          "en": "Dialogue 1: open with 你喜欢吃什么？, answer with 我喜欢吃米饭。, then narrow to 你喜欢吃面条儿吗？ and answer 喜欢。—moving from general to specific, with a minimal yes.",
-          "jp": "会話1：「你喜欢吃什么？」→「我喜欢吃米饭。」→「你喜欢吃面条儿吗？」→「喜欢。」と、一般から具体へ、短い肯定へと進みます。"
-        },
-        {
-          "zh": "会话二：「你喜欢喝什么？」—「我喜欢喝茶。」—「你喜欢喝牛奶吗？」—「喜欢，我也喜欢喝牛奶。」",
-          "pinyin": "hē shénme · chá · niúnǎi · yě",
-          "kr": "회화2는 「喝什么」로 마시는 것을 묻고 「我喜欢喝茶。」로 답한 뒤, 「你喜欢喝牛奶吗？」로 다른 음료를 묻습니다. 마지막에 「也」를 넣어 차뿐 아니라 우유도 좋다고 한 번에 정리합니다.",
-          "en": "Dialogue 2: shift to drinks with 你喜欢喝什么？ / 我喜欢喝茶。, then 你喜欢喝牛奶吗？, and close with 喜欢，我也喜欢喝牛奶。 to stack likes with 也.",
-          "jp": "会話2：飲み物の好みを聞き、お茶のあと牛乳を尋ね、「喜欢，我也喜欢喝牛奶。」で「也」により二つの好みをつなぎます。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「吃」多用于固体食物，「喝」多用于液体；口语里搭配相对固定。",

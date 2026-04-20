@@ -804,33 +804,60 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能用「想/要」说三餐想吃什么，并说「做饭、少、一些」等。",
-          "pinyin": "xiǎng · yào · zuòfàn",
-          "kr": "아침·점심·저녁마다 「想」「要」로 먹고 싶은 메뉴를 말하고, 집에서 요리하는 상황에서는 「妈妈做饭」처럼 「做饭」를 쓰며, 양을 줄일 때는 「少做一些」처럼 「少」「一些」를 함께 씁니다.",
-          "en": "For each meal, say what you want with 想 or 要; talk about cooking at home with 做饭; ask for smaller portions with 少 and 一些.",
-          "jp": "「想」「要」で各食事に食べたいものを述べ、「做饭」で料理すること、「少」「一些」で量を少なめに頼む表現が使えます。"
+          "zh": "本课核心句型：用「你想吃什么？」「我想吃包子。」表达想吃的食物；用「早饭想喝茶。」「午饭我吃米饭和菜。」说三餐搭配；用「晚上我们吃面条吧。」「少做一些吧。」商量分量与菜式。",
+          "pinyin": "xiǎng · yào · zǎofàn · wǔfàn · wǎnfàn",
+          "kr": "핵심 문형：「你想吃什么？」「我想吃包子。」로 먹고 싶은 것을 말하고, 「早饭想喝茶。」등으로 끼니별 메뉴를 말합니다. 「晚上我们吃面条吧。」「少做一些吧。」로 양·메뉴를 상의합니다.",
+          "en": "Core patterns: 你想吃什么？/我想吃包子。; meal words 早饭/午饭/晚饭 with what you want; 晚上我们吃面条吧。and 少做一些吧。for amount and suggestions.",
+          "jp": "核心：「想／要」、三餐、提案「吧」、分量「少一些」。"
+        },
+        {
+          "zh": "本课核心词法：「想」与「要」都可表意愿，语气上「要」有时更干脆；「做饭」指下厨做饭；「一些」表不定少量（「吃一些」「做一些」）。",
+          "pinyin": "xiǎng · yào · zuò fàn · yīxiē",
+          "kr": "어휘：「想」와 「要」는 의지·희망을 나타내며 뉘앙스가 약간 다릅니다. 「做饭」는 요리하다, 「一些」는 양이 많지 않음을 두루 말합니다.",
+          "en": "想 vs 要 for wants; 做饭 = cook; 一些 = some/a bit in 吃一些/做一些.",
+          "jp": "「想／要」、「做饭」、「一些」。"
+        },
+        {
+          "zh": "本课表达任务：能在早饭店或家里讨论「想喝什么、想吃什么」，并礼貌地用「吧」建议晚饭吃面条、请对方少做一点。",
+          "pinyin": "diǎncān · jiātíng",
+          "kr": "의사소통 과제：아침 식당·집 식사 자리에서 음료·메뉴를 고르고, 저녁 메뉴와 양을 「吧」로 부드럽게 조율합니다.",
+          "en": "Tasks: order or choose breakfast items; discuss lunch/dinner; use 吧 to suggest noodles or ask someone to cook a bit less.",
+          "jp": "タスク：食事の希望、分量の相談、提案の「吧」。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：早饭点餐。会话二：午晚餐意愿。会话三：妈妈做饭、少做一些。",
-        "kr": "첫 회화에서는 아침에 무엇을 먹을지 고르고, 둘째에서는 점심과 저녁에 먹고 싶은 것을 말하며, 셋째에서는 엄마가 요리하고 양을 조금만 해 달라고 부탁합니다.",
-        "en": "Dialogue 1 orders breakfast; Dialogue 2 states lunch and dinner wishes; Dialogue 3 has Mum cook and asks her to make a bit less.",
-        "jp": "会話1は朝食の注文、会話2は昼と夜の希望、会話3は母が料理することと量を少なめにしてほしいお願いです。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「菜单」列出菜名与价格。",
-          "pinyin": "càidān",
-          "kr": "「菜单」는 식당에서 음식 이름과 가격을 나란히 적어 둔 목록으로, 손님이 무엇을 주문할지 고를 때 봅니다.",
-          "en": "A 菜单 is the list in a restaurant that pairs each dish’s name with its price so guests can choose what to order.",
-          "jp": "「菜单」は店で料理名と値段が一覧になった紙や冊子で、注文前に内容と価格を確認し、何を頼むか決めるときに必ず目を通します。"
+          "zh": "「想」偏「心里想、想要」，「要」在点餐里有时更直接—本课对话已示范搭配，别把所有句子都改成「要」或都改成「想」。",
+          "pinyin": "xiǎng · yào",
+          "kr": "「想吃什么」와 「要喝茶」처럼 과문에 나온 짝을 우선 따릅니다. 한쪽으로만 통일하지 않습니다.",
+          "en": "Follow the lesson’s mix of 想 and 要; don’t replace every 想 with 要 or vice versa blindly.",
+          "jp": "「想／要」は本文の使い分けを優先。"
+        },
+        {
+          "zh": "「早饭、午饭、晚饭」指三餐时段；与「昨天、今天」类时间词搭配时语序按汉语习惯，别按韩语语序硬套。",
+          "pinyin": "zǎofàn · wǔfàn",
+          "kr": "끼니 명사는 문장 안 위치가 한국어와 다를 수 있어 과문 어순을 익힙니다.",
+          "en": "Meal-time words slot into Chinese word order—mirror the textbook, not Korean SOV habits.",
+          "jp": "三餐名の文中位置は中国語の語順に合わせる。"
+        },
+        {
+          "zh": "「做饭」是动宾「做菜做饭」；不要说成「作饭」或其他别字；「妈妈做饭」主语是做饭的人。",
+          "pinyin": "zuò fàn",
+          "kr": "「做饭」는 고정 표기입니다. 비슷한 음의 한자를 바꿔 쓰지 않습니다.",
+          "en": "做饭 is the fixed spelling for cooking meals; keep the 做 + 饭 pattern.",
+          "jp": "「做饭」の書き言葉を固定で覚える。"
+        },
+        {
+          "zh": "「少一些」是请对方减少分量；对象是「做的量」不是「少一些钱」—别与购物课「便宜点」混用场景。",
+          "pinyin": "shǎo zuò yīxiē",
+          "kr": "「少做一些」는 요리 양을 줄여 달라는 뜻입니다. 가격 흥정 표현과 상황이 다릅니다.",
+          "en": "少一些 here asks for less cooking—don’t confuse with bargaining 便宜点儿 from shopping.",
+          "jp": "「少一些」は料理の量。値切り表現と混同しない。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「想」和「要」在饭店里语气一样吗？",

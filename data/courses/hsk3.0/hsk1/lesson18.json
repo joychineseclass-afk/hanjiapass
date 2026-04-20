@@ -773,33 +773,60 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能谈下课后听歌、玩游戏，并用「只、听见、好听」说喜好与听到的声音。",
-          "pinyin": "tīng · wán · zhǐ",
-          "kr": "방과 후에 노래를 듣거나 게임을 한다고 말하고, 「只喜欢听」처럼 범위를 한정하며, 「听见」로 들린 소리를, 「好听」로 음악이나 노래의 인상을 평가합니다.",
-          "en": "Describe listening to music or playing games after class; narrow preferences with 只, report what reaches your ears with 听见, and judge sounds as 好听.",
-          "jp": "放課後に音楽やゲームについて話し、「只」で好みの範囲を、「听见」で聞こえたこと、「好听」で音楽のよさを表せます。"
+          "zh": "本课核心句型：用「下课后你做什么？」开启话题；用「我听歌。」「我喜欢打游戏。」说爱好；用「我只喜欢听音乐。」「这首歌很好听。」表范围与评价；用「你听见了吗？」「我听见妹妹在唱歌呢。」说听到的内容。",
+          "pinyin": "xià kè · tīng gē · hǎowánr · hǎotīng",
+          "kr": "핵심 문형：「下课后你做什么？」로 방과 후를 묻고, 「我听歌。」「我喜欢打游戏。」로 취미를 말합니다. 「我只喜欢听音乐。」로 범위를 한정하고, 「这首歌很好听。」로 평가합니다. 「听见」로 들린 소리를 전합니다.",
+          "en": "Core patterns: 下课后你做什么？; 我听歌。/我喜欢打游戏。; 我只喜欢听音乐。; 这首歌很好听。; 听见 for something you hear.",
+          "jp": "核心：放課後の過ごし方、趣味、「只」、評価「好听」、「听见」。"
+        },
+        {
+          "zh": "本课核心词法：「听」表主动听；「听见」强调声音传入耳中；「好玩儿」多形容活动有趣，「好听」多形容声音、歌曲悦耳。",
+          "pinyin": "tīng · tīngjiàn · hǎowánr · hǎotīng",
+          "kr": "어휘：「听」는 의도적으로 듣기, 「听见」는 귀에 들림을 강조합니다. 「好玩儿」는 활동·게임, 「好听」는 노래·소리에 쓰는 경향이 있습니다.",
+          "en": "听 vs 听见 vs 好听 vs 好玩儿: listening on purpose vs perceiving sound; 好听 for sounds/music; 好玩儿 for fun activities.",
+          "jp": "「听／听见／好听／好玩儿」の使い分け。"
+        },
+        {
+          "zh": "本课表达任务：能聊课余做什么、喜欢听还是只喜欢听、评价游戏好不好玩、歌曲好不好听，并复述「听见谁在做什么」的句子。",
+          "pinyin": "ài hào · tīngjiàn",
+          "kr": "의사소통 과제：취미·음악·게임 이야기를 하고, 누가 노래하는 소리가 들렸는지까지 짧게 전달합니다.",
+          "en": "Tasks: talk hobbies, music vs games, 好听/好玩儿 judgments, and report what you 听见.",
+          "jp": "タスク：趣味の会話、感覚表現、「听见」の報告。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：听歌与游戏。会话二：只喜欢听与好听。会话三：听见唱歌与妹妹唱得好听。",
-        "kr": "첫 회화에서는 노래 듣기와 게임을, 둘째에서는 듣기만 좋아한다거나 노래가 듣기 좋다고 말하는 취향을, 셋째에서는 노래 소리가 들리고 동생이 잘 부른다고 칭찬하는 내용을 다룹니다.",
-        "en": "Dialogue 1 covers listening to music and playing games; Dialogue 2 covers only liking to listen and calling music 好听; Dialogue 3 covers hearing singing and praising a younger sister’s voice.",
-        "jp": "会話1では音楽とゲーム、会話2では「只」と「好听」、会話3では「听见」と家族の歌声のほめ方を扱います。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「好玩儿」多形容游戏、活动有趣。",
-          "pinyin": "hǎowánr",
-          "kr": "「好玩儿」는 게임·운동·행사처럼 참여하면 재미있다고 느끼는 대상을 평가할 때 자주 쓰입니다.",
-          "en": "好玩儿 usually evaluates games, activities, or events as fun to take part in, not only as “interesting” in the abstract.",
-          "jp": "「好玩儿」はゲームや行事など、参加して楽しいと感じる対象によく使われる形容です。"
+          "zh": "「听」是你去听；「听见」是声音传到你耳朵里—「我在听歌」≠「我听见歌」在语义重点上不同。",
+          "pinyin": "tīng · tīngjiàn",
+          "kr": "「听」는 주체가 듣기 행위를 택한 경우, 「听见」는 소리가 인지된 결과에 가깝습니다. 문장 초점이 다릅니다.",
+          "en": "听 focuses on the act of listening; 听见 on perceiving a sound—don’t swap if the lesson contrasts them.",
+          "jp": "聞く行為「听」と知覚「听见」の焦点の差。"
+        },
+        {
+          "zh": "「好听」评声音、歌曲；「好玩儿」评活动、游戏—别把「这个游戏很好听」说成自然中文。",
+          "pinyin": "hǎotīng · hǎowánr",
+          "kr": "「好听」는 소리·음악, 「好玩儿」는 놀이·행사에 어울립니다. 대상과 형용사를 짝지어야 합니다.",
+          "en": "Pair 好听 with sounds/music and 好玩儿 with games/activities.",
+          "jp": "「好听」と「好玩儿」の修飾対象を混ぜない。"
+        },
+        {
+          "zh": "「只」限制范围（只听不看／只喜欢……），位置要紧贴所限制的成分；别把它当成「只」韩语里「仅仅」的任意直放。",
+          "pinyin": "zhǐ",
+          "kr": "「只」는 범위를 좁히는 부사로, 무엇을 제외하는지 바로 앞뒤와 짝을 이루어야 합니다.",
+          "en": "只 scopes what is included/excluded—place it next to the phrase it limits.",
+          "jp": "「只」のスコープ（直前の成分を限定）。"
+        },
+        {
+          "zh": "口语「玩儿」带儿化；书写与发音按教材规范，别随意省略儿化导致与「玩」书面体混读混乱。",
+          "pinyin": "wánr",
+          "kr": "「玩儿」는 구어체·아화 표기입니다. 과문과 녹음에 맞춰 읽고 씁니다.",
+          "en": "玩儿 is the colloquial form with r-coloring; follow the textbook’s spelling and audio.",
+          "jp": "「玩儿」の児化に注意。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「好听」能形容人吗？",

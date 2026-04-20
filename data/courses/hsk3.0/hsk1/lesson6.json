@@ -686,7 +686,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "掌握询问时间的常用句「现在几点？」以及回答的语序（点 → 分）。",
@@ -718,28 +717,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：问现在几点、几分，说到几分钟后上课。会话二：问上午下午上课与下课时间。会话三：问早上起床与晚上睡觉时间，用「半」。",
-        "kr": "첫 대화에서는 ‘지금 몇 시 몇 분’인지 세밀하게 말하고, 몇 분 뒤에 수업이 시작하는지까지 연결합니다. 둘째는 오전·점심·오후의 수업 시작과 종료 시각을 묻고 답합니다. 셋째는 아침에 일어나는 시각과 밤에 잠드는 시각을 말하며, 이때 반시를 「半」으로 표현합니다. 전체적으로 시각 표현과 하루 일과를 엮는 것이 목표입니다.",
-        "en": "Dialogue 1: current time down to minutes and when class starts. Dialogue 2: morning/noon/afternoon class and end times. Dialogue 3: wake-up and bedtime using 半 for half hours. The lesson links telling time with daily routine.",
-        "jp": "会話1は今の時刻と授業までの分数、会話2は午前・昼・午後の授業の始まりと終わり、会話3は起床・就寝の時刻（「半」で三十分）です。時刻表現と生活リズムを結びつけます。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：用「现在几点？」问钟点，用「现在……点……分」回答，并说到「……分钟后上课」。",
-          "pinyin": "xiànzài jǐ diǎn? · fēn · shàngkè",
-          "kr": "회화1에서는 「现在几点？」「现在……点……分」로 지금 시각을 말하고, 「三分钟后上课吗？」「八点十分上课。」처럼 수업 시작까지 남은 시간이나 정각을 이어 말합니다.",
-          "en": "Dialogue 1: 现在几点？ / 现在…点…分 for the time, then lines like 三分钟后上课吗？ and 八点十分上课 for when class begins.",
-          "jp": "会話1：「现在几点？」「现在……点……分」で現在時刻を言い、「三分钟后上课吗？」「八点十分上课。」のように授業の始まりにつなげます。"
-        },
-        {
-          "zh": "会话二、三：用「上午/下午」等与钟点搭配说上课、下课、起床、睡觉，可用「半」表示半点。",
-          "pinyin": "shàngwǔ · xiàwǔ · bàn",
-          "kr": "회화2에서는 「上午」「下午」「中午」와 시각을 붙여 수업 시간을 말하고, 회화3에서는 「早上」「晚上」와 「七点半」「十点半」처럼 「半」을 써 기상·취침 시각을 말합니다.",
-          "en": "Dialogues 2–3: combine 上午/下午/中午 with times for class; use 早上/晚上 and 半 (e.g. 七点半) for getting up and going to bed.",
-          "jp": "会話2・3：「上午／下午」などと時刻で授業を言い、「早上／晚上」と「半」で起床・就寝を言います。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「二点」在口语里常说「两点」表示两点钟——本课对话用「两点到四点」。",

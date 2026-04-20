@@ -316,10 +316,26 @@
         "jp": "国籍を尋ねるのはどれですか？"
       },
       "options": [
-        { "key": "A", "zh": "你是哪国人？", "cn": "你是哪国人？" },
-        { "key": "B", "zh": "你家有几口人？", "cn": "你家有几口人？" },
-        { "key": "C", "zh": "你叫什么名字？", "cn": "你叫什么名字？" },
-        { "key": "D", "zh": "你会写汉字吗？", "cn": "你会写汉字吗？" }
+        {
+          "key": "A",
+          "zh": "你是哪国人？",
+          "cn": "你是哪国人？"
+        },
+        {
+          "key": "B",
+          "zh": "你家有几口人？",
+          "cn": "你家有几口人？"
+        },
+        {
+          "key": "C",
+          "zh": "你叫什么名字？",
+          "cn": "你叫什么名字？"
+        },
+        {
+          "key": "D",
+          "zh": "你会写汉字吗？",
+          "cn": "你会写汉字吗？"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -340,10 +356,26 @@
         "jp": "「汉语」のピンインは？"
       },
       "options": [
-        { "key": "A", "zh": "Hànyǔ", "cn": "Hànyǔ" },
-        { "key": "B", "zh": "Hànyū", "cn": "Hànyū" },
-        { "key": "C", "zh": "Hānyǔ", "cn": "Hānyǔ" },
-        { "key": "D", "zh": "Hányǔ", "cn": "Hányǔ" }
+        {
+          "key": "A",
+          "zh": "Hànyǔ",
+          "cn": "Hànyǔ"
+        },
+        {
+          "key": "B",
+          "zh": "Hànyū",
+          "cn": "Hànyū"
+        },
+        {
+          "key": "C",
+          "zh": "Hānyǔ",
+          "cn": "Hānyǔ"
+        },
+        {
+          "key": "D",
+          "zh": "Hányǔ",
+          "cn": "Hányǔ"
+        }
       ],
       "answer": "A",
       "explanation": {
@@ -363,7 +395,12 @@
         "en": "Teacher asks 你会说汉语吗? — best answer for “yes, but only a little”:",
         "jp": "「你会说汉语吗？」に「少しだけできる」と答えるのは？"
       },
-      "options": ["会，我会说一点儿汉语。", "不会，我是美国人。", "是，我是学生。", "没有。"],
+      "options": [
+        "会，我会说一点儿汉语。",
+        "不会，我是美国人。",
+        "是，我是学生。",
+        "没有。"
+      ],
       "answer": "会，我会说一点儿汉语。",
       "explanation": {
         "cn": "表示程度不高时常用「一点儿」与「会」搭配。",
@@ -382,7 +419,12 @@
         "en": "Which line focuses more on speaking?",
         "jp": "「話す」ことにより近い文は？"
       },
-      "options": ["我会说一点儿汉语。", "我会写汉字。", "我是中国人。", "你是学生吗？"],
+      "options": [
+        "我会说一点儿汉语。",
+        "我会写汉字。",
+        "我是中国人。",
+        "你是学生吗？"
+      ],
       "answer": "我会说一点儿汉语。",
       "explanation": {
         "cn": "「说」表示口头表达；「写」表示书写。",
@@ -394,7 +436,15 @@
   ],
   "review": {},
   "aiPractice": {
-    "speaking": ["你是哪国人？", "我是……人。", "你呢？", "你会说汉语吗？", "会，我会说一点儿汉语。", "你会写汉字吗？", "会，我会写汉字。"],
+    "speaking": [
+      "你是哪国人？",
+      "我是……人。",
+      "你呢？",
+      "你会说汉语吗？",
+      "会，我会说一点儿汉语。",
+      "你会写汉字吗？",
+      "会，我会写汉字。"
+    ],
     "chatPrompt": "请围绕国籍、「会」表示能力、说汉语与写汉字，用本课句型问答；不要写成第1课的纯问候练习。",
     "situationDialogue": {
       "defaultScenarioIndex": 0,
@@ -407,27 +457,76 @@
             "en": "Dialogue 1: nationality and student status",
             "jp": "会話1：国籍と学生かどうか"
           },
-          "aiRole": { "zh": "李明", "kr": "리밍", "en": "Li Ming", "jp": "李明" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "李明",
+            "kr": "리밍",
+            "en": "Li Ming",
+            "jp": "李明"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你是哪国人？", "pinyin": "nǐ shì nǎ guó rén?", "kr": "어느 나라 사람이에요?" },
-            { "zh": "我是美国人。你呢？", "pinyin": "wǒ shì Měiguó rén. nǐ ne?", "kr": "저는 미국 사람이에요. 당신은요?" },
-            { "zh": "你是学生吗？", "pinyin": "nǐ shì xuéshēng ma?", "kr": "학생이에요?" },
-            { "zh": "是，我是学生。", "pinyin": "shì, wǒ shì xuéshēng.", "kr": "네, 학생이에요." }
+            {
+              "zh": "你是哪国人？",
+              "pinyin": "nǐ shì nǎ guó rén?",
+              "kr": "어느 나라 사람이에요?"
+            },
+            {
+              "zh": "我是美国人。你呢？",
+              "pinyin": "wǒ shì Měiguó rén. nǐ ne?",
+              "kr": "저는 미국 사람이에요. 당신은요?"
+            },
+            {
+              "zh": "你是学生吗？",
+              "pinyin": "nǐ shì xuéshēng ma?",
+              "kr": "학생이에요?"
+            },
+            {
+              "zh": "是，我是学生。",
+              "pinyin": "shì, wǒ shì xuéshēng.",
+              "kr": "네, 학생이에요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "汤姆，你是哪国人？",
-              "studentRefs": ["我是美国人。你呢？"],
-              "acceptable": ["我是美国人。你呢？", "我是美国人", "美国人"],
-              "closeAnswers": ["美国", "美国人"]
+              "studentRefs": [
+                "我是美国人。你呢？"
+              ],
+              "acceptable": [
+                "我是美国人。你呢？",
+                "我是美国人",
+                "美国人"
+              ],
+              "closeAnswers": [
+                "美国",
+                "美国人"
+              ]
             },
             {
               "aiLine": "你是学生吗？",
-              "studentRefs": ["是，我是学生。"],
-              "acceptable": ["是，我是学生。", "是，我是学生", "是"],
-              "closeAnswers": ["是学生", "是"]
+              "studentRefs": [
+                "是，我是学生。"
+              ],
+              "acceptable": [
+                "是，我是学生。",
+                "是，我是学生",
+                "是"
+              ],
+              "closeAnswers": [
+                "是学生",
+                "是"
+              ]
             }
           ]
         },
@@ -439,27 +538,76 @@
             "en": "Dialogue 2: speaking and writing Chinese",
             "jp": "会話2：中国語を話す・漢字を書く"
           },
-          "aiRole": { "zh": "王老师", "kr": "왕 선생님", "en": "Teacher Wang", "jp": "王先生" },
-          "studentRole": { "zh": "汤姆", "kr": "탐", "en": "Tom", "jp": "トム" },
-          "goal": { "zh": "", "kr": "", "en": "", "jp": "" },
+          "aiRole": {
+            "zh": "王老师",
+            "kr": "왕 선생님",
+            "en": "Teacher Wang",
+            "jp": "王先生"
+          },
+          "studentRole": {
+            "zh": "汤姆",
+            "kr": "탐",
+            "en": "Tom",
+            "jp": "トム"
+          },
+          "goal": {
+            "zh": "",
+            "kr": "",
+            "en": "",
+            "jp": ""
+          },
           "expressions": [
-            { "zh": "你会说汉语吗？", "pinyin": "nǐ huì shuō Hànyǔ ma?", "kr": "중국어 할 줄 알아요?" },
-            { "zh": "会，我会说一点儿汉语。", "pinyin": "huì, wǒ huì shuō yīdiǎnr Hànyǔ.", "kr": "네, 조금 할 줄 알아요." },
-            { "zh": "你会写汉字吗？", "pinyin": "nǐ huì xiě Hànzì ma?", "kr": "한자 쓸 줄 알아요?" },
-            { "zh": "会，我会写汉字。", "pinyin": "huì, wǒ huì xiě Hànzì.", "kr": "네, 한자 쓸 줄 알아요." }
+            {
+              "zh": "你会说汉语吗？",
+              "pinyin": "nǐ huì shuō Hànyǔ ma?",
+              "kr": "중국어 할 줄 알아요?"
+            },
+            {
+              "zh": "会，我会说一点儿汉语。",
+              "pinyin": "huì, wǒ huì shuō yīdiǎnr Hànyǔ.",
+              "kr": "네, 조금 할 줄 알아요."
+            },
+            {
+              "zh": "你会写汉字吗？",
+              "pinyin": "nǐ huì xiě Hànzì ma?",
+              "kr": "한자 쓸 줄 알아요?"
+            },
+            {
+              "zh": "会，我会写汉字。",
+              "pinyin": "huì, wǒ huì xiě Hànzì.",
+              "kr": "네, 한자 쓸 줄 알아요."
+            }
           ],
           "rounds": [
             {
               "aiLine": "汤姆，你会说汉语吗？",
-              "studentRefs": ["会，我会说一点儿汉语。"],
-              "acceptable": ["会，我会说一点儿汉语。", "会，我会说汉语", "会"],
-              "closeAnswers": ["一点儿", "会说"]
+              "studentRefs": [
+                "会，我会说一点儿汉语。"
+              ],
+              "acceptable": [
+                "会，我会说一点儿汉语。",
+                "会，我会说汉语",
+                "会"
+              ],
+              "closeAnswers": [
+                "一点儿",
+                "会说"
+              ]
             },
             {
               "aiLine": "你会写汉字吗？",
-              "studentRefs": ["会，我会写汉字。"],
-              "acceptable": ["会，我会写汉字。", "会，我会写", "会"],
-              "closeAnswers": ["写汉字", "会写"]
+              "studentRefs": [
+                "会，我会写汉字。"
+              ],
+              "acceptable": [
+                "会，我会写汉字。",
+                "会，我会写",
+                "会"
+              ],
+              "closeAnswers": [
+                "写汉字",
+                "会写"
+              ]
             }
           ]
         }
@@ -491,7 +639,6 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
           "zh": "会问「你是哪国人？」并回答「我是……人」，能用「你呢？」把话题抛回对方。",
@@ -523,28 +670,6 @@
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：同学之间问国籍、互问是不是学生，并练习「你呢？」接话。会话二：老师问汤姆会不会说汉语、写汉字，用「会」回答能力。本课围绕国籍与语言技能。",
-        "kr": "첫 번째 회화에서는 친구끼리 국적을 묻고 답한 뒤 「你呢？」로 말을 넘기고, 이어 학생인지까지 확인합니다. 두 번째 회화에서는 선생님이 탐에게 중국어를 말할 수 있는지·한자를 쓸 수 있는지를 「你会……吗？」로 묻고, 「会，我会……」로 능력을 답합니다. 본과 전체는 ‘어디서 왔는가’와 ‘무엇을 할 수 있는가’를 연결해 말하는 연습입니다.",
-        "en": "Dialogue 1 has classmates ask nationality, bounce with 你呢？, then check student status. Dialogue 2 has the teacher ask Tom about speaking Chinese and writing characters, answered with 会 patterns. The lesson ties identity (where you’re from) to skills (what you can do).",
-        "jp": "会話1では国籍を聞き合い、「你呢？」で話を返し、学生かどうかまで確認します。会話2では先生がトムに中国語を話せるか・漢字を書けるかを「你会……吗？」で尋ね、「会，我会……」で答えます。出身と能力をつなげるのがねらいです。"
-      },
-      "scenarioSummaryLines": [
-        {
-          "zh": "会话一：问「你是哪国人？」答「我是……人」，用「你呢？」反问；再问「你是学生吗？」",
-          "pinyin": "nǐ shì nǎ guó rén? · wǒ shì … rén · nǐ ne? · nǐ shì xuéshēng ma?",
-          "kr": "같은 회화 안에서 먼저 국적을 주고받고, 「你呢？」로 질문을 돌린 다음 「你是学生吗？」로 신분을 한 단계 더 묻습니다. 질문의 초점이 국적에서 신분으로 바뀌는 순서를 익힙니다.",
-          "en": "In one flow you move from 你是哪国人？ / 我是…人 / 你呢？ to 你是学生吗？—notice how the topic shifts from country to role.",
-          "jp": "会話の流れの中で、国籍のやり取りから「你呢？」を経て、「你是学生吗？」へと話題が身分側に移る順序を練習します。"
-        },
-        {
-          "zh": "会话二：用「你会说汉语吗？」「你会写汉字吗？」问能力，用「会，我会……」回答。",
-          "pinyin": "nǐ huì shuō Hànyǔ ma? · nǐ huì xiě Hànzì ma?",
-          "kr": "말하기와 쓰기는 다른 능력이므로 질문도 「会说」「会写」로 나뉩니다. 각각에 「会，我会……」 형태로 답하고, 말하기에는 「一点儿」를 붙여 정도를 나타낼 수 있습니다.",
-          "en": "Speaking and writing are different skills, so the teacher asks 会说汉语吗？ and 会写汉字吗？ separately; answer each with 会，我会…, adding 一点儿 for speaking level if needed.",
-          "jp": "話すことと書くことは別の能力なので、質問も分かれます。それぞれに「会，我会……」で答え、話す方には「一点儿」で程度を付けられます。"
-        }
-      ],
       "confusionPoints": [
         {
           "zh": "「哪国人」很口语；「哪个国家的人」更啰嗦但意思接近——本课用「哪国人」。",
@@ -662,27 +787,57 @@
   "steps": [
     {
       "key": "vocab",
-      "label": { "zh": "词汇", "kr": "단어", "en": "Words", "jp": "語彙" }
+      "label": {
+        "zh": "词汇",
+        "kr": "단어",
+        "en": "Words",
+        "jp": "語彙"
+      }
     },
     {
       "key": "dialogue",
-      "label": { "zh": "对话", "kr": "대화", "en": "Dialogue", "jp": "会話" }
+      "label": {
+        "zh": "对话",
+        "kr": "대화",
+        "en": "Dialogue",
+        "jp": "会話"
+      }
     },
     {
       "key": "grammar",
-      "label": { "zh": "语法", "kr": "문법", "en": "Grammar", "jp": "文法" }
+      "label": {
+        "zh": "语法",
+        "kr": "문법",
+        "en": "Grammar",
+        "jp": "文法"
+      }
     },
     {
       "key": "extension",
-      "label": { "zh": "扩展", "kr": "확장", "en": "Extension", "jp": "拡張" }
+      "label": {
+        "zh": "扩展",
+        "kr": "확장",
+        "en": "Extension",
+        "jp": "拡張"
+      }
     },
     {
       "key": "practice",
-      "label": { "zh": "练习", "kr": "연습", "en": "Practice", "jp": "練習" }
+      "label": {
+        "zh": "练习",
+        "kr": "연습",
+        "en": "Practice",
+        "jp": "練習"
+      }
     },
     {
       "key": "aiPractice",
-      "label": { "zh": "AI练习", "kr": "AI 연습", "en": "AI Practice", "jp": "AI練習" }
+      "label": {
+        "zh": "AI练习",
+        "kr": "AI 연습",
+        "en": "AI Practice",
+        "jp": "AI練習"
+      }
     }
   ]
 }

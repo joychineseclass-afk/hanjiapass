@@ -713,33 +713,60 @@
       }
     ],
     "lessonExplain": {
-      "focusMinimal": true,
       "learningGoals": [
         {
-          "zh": "能围绕「打电话、号码、给……打电话、看一下」完成通话与问号码。",
-          "pinyin": "dǎ diànhuà · hàomǎ · gěi",
-          "kr": "전화를 걸고 받는 표현과 「手机号码」를 묻고 읽어 주는 연습을 하며, 「给……打电话」로 상대를 밝히고 번호를 찾을 때는 「我看一下」로 잠시 시간을 달라고 말할 수 있습니다.",
-          "en": "Carry out simple phone tasks: 打电话 to place a call, ask for and read 手机号码, name the callee with 给…打电话, and use 我看一下 when you need a moment to find the number.",
-          "jp": "「打电话」で発着信のやりとりをし、「手机号码」を尋ねたり伝えたりし、「给……打电话」で相手を明示し、番号を調べるときは「我看一下」で少し待ってもらうことができます。"
+          "zh": "本课核心句型：接电话用「喂，你好！」；询问对方在做什么用「你在做什么呢？」；说明给谁打电话用「你给谁打电话？」「我给同学打电话。」；请对方稍等查号码用「我看一下。」",
+          "pinyin": "wéi · gěi · dǎ diànhuà · kàn yíxià",
+          "kr": "핵심 문형：전화를 받을 때 「喂，你好！」로 시작하고, 「你在做什么呢？」로 상대가 무엇을 하는지 묻습니다. 「你给谁打电话？」에는 「给……打电话」틀로 상대를 밝히고, 번호를 찾을 때 「我看一下。」로 잠시 시간을 달라고 합니다.",
+          "en": "Core patterns: answer the phone with 「喂，你好！」; ask what someone is doing with 「你在做什么呢？」; state who is being called with 「你给谁打电话？」/「我给同学打电话。」; ask for a moment to look up a number with 「我看一下。」",
+          "jp": "核心：「喂，你好！」で電話に出る。「你在做什么呢？」「你给谁打电话？」「给……打电话」「我看一下。」で番号確認の待ち時間を言う。"
+        },
+        {
+          "zh": "本课核心词法：「手机号码」与口语「手机号」同指移动电话号；对师长可说「您」并配合「王老师，您的手机号码是多少？」一类完整问句；「给」引出动作对象（给谁打）。",
+          "pinyin": "shǒujī hào · nín · gěi",
+          "kr": "어휘：「手机号码」와 짧은 「手机号」는 같은 대상을 가리킵니다. 선생님께는 「您」를 쓰고 번호를 공손히 묻는 문장을 완성합니다. 「给」는 ‘누구에게’의 목적어를 이끕니다.",
+          "en": "Key wording: 手机号码 and spoken 手机号 both mean mobile number; 您 fits teachers in questions like 王老师，您的手机号码是多少？; 给 marks the person you call (给…打电话).",
+          "jp": "語彙：「手机号码／手机号」、目上には「您」、相手を示す「给」。"
+        },
+        {
+          "zh": "本课表达任务：能完成「打电话」场景：问候—说明在做什么—解释打给谁—询问或朗读号码—用「我看一下」处理需要查找的信息。",
+          "pinyin": "diànhuà chǎngjǐng",
+          "kr": "의사소통 과제：전화 통화에서 인사—지금 하는 일—통화 상대—번호 문의·읽기—찾아보겠다는 「我看一下」까지 이어지는 짧은 대화를 마칩니다.",
+          "en": "Tasks: handle a short phone call flow—greeting, what you’re doing, who you’re calling, asking for or reading a number, using 我看一下 when you need to check.",
+          "jp": "タスク：電話の流れ（あいさつ、何をしているか、誰にかけるか、番号、ちょっと見る）を完結できる。"
         }
       ],
       "practiceFocus": [],
-      "scenarioSummary": {
-        "zh": "会话一：要老师号码。会话二：给谁打、问什么。会话三：建议给老师打电话并读号码。",
-        "kr": "첫 회화에서는 선생님 휴대전화 번호를 부탁하고, 둘째에서는 누구에게 무슨 일로 전화하는지 묻고, 셋째에서는 선생님께 전화하라고 권하며 번호를 읽어 줍니다.",
-        "en": "Dialogue 1 asks the teacher’s mobile number; Dialogue 2 asks who someone is calling and about what; Dialogue 3 suggests calling the teacher and reads the digits aloud.",
-        "jp": "会話1では先生の携帯番号を頼む、会話2では誰に何の用でかけるかを尋ねる、会話3では先生に電話するよう勧め番号を読み上げます。"
-      },
-      "scenarioSummaryLines": [
+      "confusionPoints": [
         {
-          "zh": "「手机号码」常简说「手机号」。",
-          "pinyin": "shǒujī",
-          "kr": "문어체로는 「手机号码」라고 하지만 일상 대화에서는 짧게 「手机号」라고도 많이 부르며, 둘 다 휴대전화 번호를 가리킵니다.",
-          "en": "The full form is 手机号码, but in everyday speech people often shorten it to 手机号; both refer to a mobile phone number.",
-          "jp": "正式には「手机号码」ですが、会話では「手机号」と短く言うことが多く、どちらも携帯電話の番号を指します。"
+          "zh": "「喂」多用于接电话开口，不是日常见面问候；见面仍用「你好」，电话里先说「喂」再进入正题。",
+          "pinyin": "wéi · nǐ hǎo",
+          "kr": "「喂」는 전화를 받을 때 쓰는 첫말에 가깝고, 얼굴을 맞대고 인사할 때의 「你好」와 용도가 다릅니다. 상황에 맞게 고릅니다.",
+          "en": "喂 opens a phone call; face-to-face hellos use 你好. Don’t treat 喂 as a general street greeting.",
+          "jp": "「喂」は電話の取り合い、「你好」は対面。混同しない。"
+        },
+        {
+          "zh": "「您」与「你」在电话里同样要看来电对象：对老师、长辈用「您」更得体；同学之间多用「你」。",
+          "pinyin": "nín · nǐ",
+          "kr": "전화라고 해서 높임이 사라지지 않습니다. 선생님·어른과 통화할 때는 「您」, 또래는 「你」가 자연스럽습니다.",
+          "en": "On the phone, 您 vs 你 still follows respect: teachers/elders get 您; classmates get 你.",
+          "jp": "電話でも「您／你」は相手関係で選ぶ。"
+        },
+        {
+          "zh": "「给……打电话」强调「打给某人」；不要漏掉「给」把语序说成韩语式直译。与「跟……打电话」口语里有时接近，但本课规范操练以「给」为主。",
+          "pinyin": "gěi · gēn",
+          "kr": "「给同学打电话」처럼 「给」로 상대를 먼저 잡는 어순을 익힙니다. 한국어식으로 동사만 앞세우지 않도록 「给」를 빠뜨리지 않습니다.",
+          "en": "The textbook frame is 给 + person + 打电话. Don’t drop 给 or scramble the order like a literal translation from Korean.",
+          "jp": "「给……打电话」の型を崩さない。「给」を落とさない。"
+        },
+        {
+          "zh": "「我看一下」表示「让我查一下、稍等」，不是「只看一眼」的字面窄义；对方听到后应等待，不宜催促同一句话重复问。",
+          "pinyin": "kàn yíxià",
+          "kr": "「我看一下」는 번호·정보를 확인하겠다는 뜻으로, 짧은 대기를 요청하는 표현입니다. 글자 그대로 ‘한번 본다’에만 묶어 이해하지 않습니다.",
+          "en": "我看一下 means “let me check”—a short hold, not literally “glance once.”",
+          "jp": "「我看一下」は「確認します・少し待って」のニュアンス。"
         }
-      ],
-      "confusionPoints": []
+      ]
     },
     "freeAskPlaceholder": {
       "zh": "例如：「喂」只在电话里用吗？",
