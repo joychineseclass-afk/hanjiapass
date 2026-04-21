@@ -1,0 +1,1400 @@
+{
+  "generated": "2026-04-21T03:59:04.185Z",
+  "formalWordCount": 306,
+  "vocabUniqueCount": 538,
+  "distributionMissingInVocab": [],
+  "orphansNotInFormal": [
+    {
+      "hanzi": "一下儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "一会儿",
+      "suggestLessonNo": 21,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "一块儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "一样",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "一起",
+      "suggestLessonNo": 7,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "一边",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "上次",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "上网",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "上车",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "上边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "下次",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "下车",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "下边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "不大",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "不对",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "不用",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "东",
+      "suggestLessonNo": 10,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "东边",
+      "suggestLessonNo": 13,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "中",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "中间",
+      "suggestLessonNo": 20,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "书包",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "介绍",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "从",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "先",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "关",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "关上",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "准备",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "出",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "出去",
+      "suggestLessonNo": 16,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "出来",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "别",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "别人",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "别的",
+      "suggestLessonNo": 5,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "前天",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "前边",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "动",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "动作",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "包",
+      "suggestLessonNo": 11,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "北",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "北京",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "北边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "半天",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "半年",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "南",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "南边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "右",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "右边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "吃饭",
+      "suggestLessonNo": 9,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "后天",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "听写",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "听到",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "告诉",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "唱歌",
+      "suggestLessonNo": 18,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "商场",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "回到",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "回去",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "回家",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "回来",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "回答",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "国外",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "国家",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "图书馆",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "在家",
+      "suggestLessonNo": 4,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "地",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "地上",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "地图",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "地方",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "地点",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "坏",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "坐下",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "外国",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "外语",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "女人",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "女孩儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "女生",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "奶",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "奶奶",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "子",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "学院",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "家里",
+      "suggestLessonNo": 4,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "小姐",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "小孩儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "就",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "山",
+      "suggestLessonNo": 11,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "工人",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "左",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "左边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "差",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "帮",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "帮忙",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "常",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "常常",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "干",
+      "suggestLessonNo": 19,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "干什么",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "干净",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "床",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "开会",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "开玩笑",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "得到",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "忘",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "忘记",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "快",
+      "suggestLessonNo": 7,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "慢",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "房子",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "手",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "打",
+      "suggestLessonNo": 15,
+      "suggestReason": "与 vocab-distribution.lessonThemes 课名用语重合",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "打开",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "打球",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "打车",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "找到",
+      "suggestLessonNo": 7,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "拿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "放",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "放假",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "放学",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "教",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "教学楼",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "新年",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "旁边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "日期",
+      "suggestLessonNo": 7,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "明白",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "是不是",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "最",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "最后",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "最好",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "有名",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "有时候",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "有用",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "本子",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "机场",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "机票",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "来到",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "杯",
+      "suggestLessonNo": 10,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "树",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "楼",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "楼上",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "楼下",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "次",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "正",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "比",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "毛",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "汽车",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "没",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "没事儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "没什么",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "洗",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "洗手间",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "渴",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "爱好",
+      "suggestLessonNo": 18,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "爷爷",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "玩儿",
+      "suggestLessonNo": 18,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "班",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "球",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "生日",
+      "suggestLessonNo": 5,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "生气",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "用",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "电",
+      "suggestLessonNo": 15,
+      "suggestReason": "与 vocab-distribution.lessonThemes 课名用语重合",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "电视机",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "男人",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "男孩儿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "男生",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "病人",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "白",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "看到",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "真的",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "着",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "知识",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "票",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "站",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "笑",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "等",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "累",
+      "suggestLessonNo": 18,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "网上",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "网友",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "老",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "老人",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "考",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "考试",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "肉",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "花",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "行",
+      "suggestLessonNo": 8,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "西",
+      "suggestLessonNo": 10,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "西边",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "见面",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "认真",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "记",
+      "suggestLessonNo": 5,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "记住",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "记得",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "试",
+      "suggestLessonNo": 15,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "话",
+      "suggestLessonNo": 15,
+      "suggestReason": "与 vocab-distribution.lessonThemes 课名用语重合",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "请假",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "请坐",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "请进",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "课文",
+      "suggestLessonNo": 16,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "课本",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "走",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "走路",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "起",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "起来",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "跑",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "跟",
+      "suggestLessonNo": 15,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "路",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "路上",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "路口",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "身上",
+      "suggestLessonNo": 20,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "身体",
+      "suggestLessonNo": 21,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "车上",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "车票",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "车站",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "过",
+      "suggestLessonNo": 1,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "还是",
+      "suggestLessonNo": 6,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "还有",
+      "suggestLessonNo": 11,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "进",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "进去",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "进来",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "远",
+      "suggestLessonNo": 10,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "里边",
+      "suggestLessonNo": 12,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "重",
+      "suggestLessonNo": 3,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "重要",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "钱包",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "错",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "门",
+      "suggestLessonNo": 13,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "门口",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "门票",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "间",
+      "suggestLessonNo": 12,
+      "suggestReason": "与 vocab-distribution.lessonThemes 课名用语重合",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "难",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "页",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "风",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "飞",
+      "suggestLessonNo": 14,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    },
+    {
+      "hanzi": "饿",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "马上",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "马路",
+      "suggestLessonNo": null,
+      "suggestReason": "课内非会话字段未命中，可能为总表扩展/预备词条，需人工定夺",
+      "usageNote": "课内 JSON 未检索到用例（总表扩展/预留）"
+    },
+    {
+      "hanzi": "高",
+      "suggestLessonNo": 2,
+      "suggestReason": "出现在该课 JSON 非 dialogueCards 字段（如语法/扩展/练习/目标等）",
+      "usageNote": "课内非会话字段已出现；若纳入教学可进正式分布"
+    }
+  ]
+}

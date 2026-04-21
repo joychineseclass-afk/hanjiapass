@@ -26,7 +26,9 @@
     "verify:hsk1-review": "node scripts/verify-hsk1-review-canonical.mjs",
     "check:hsk1-mixed-language": "node scripts/check-hsk1-mixed-language.mjs",
     "check:hsk1-lesson-metadata": "node scripts/check-hsk1-lesson-metadata.mjs",
-    "check:hsk1-practice": "node scripts/check-hsk1-practice.mjs"
+    "check:hsk1-practice": "node scripts/check-hsk1-practice.mjs",
+    "check:hsk30-hsk1": "node scripts/check-hsk30-hsk1.mjs",
+    "check:hsk30-hsk1:strict": "node scripts/check-hsk30-hsk1.mjs --strict"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",

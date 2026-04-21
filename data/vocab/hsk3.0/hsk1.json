@@ -1570,7 +1570,8 @@
     "meaning": {
       "zh": "多",
       "en": "many; much; a lot",
-      "ko": ""
+      "ko": "많다; 많이",
+      "jp": "多い; たくさん"
     },
     "tags": {
       "generated": false
@@ -4511,7 +4512,8 @@
     "meaning": {
       "zh": "呢",
       "en": "(particle) and …?; how about …?",
-      "ko": ""
+      "ko": "（어미） ~은/는요?; ~은/는 어때요?",
+      "jp": "（終助）〜は？; 〜の場合は？"
     },
     "tags": {
       "generated": false
@@ -4677,11 +4679,12 @@
   {
     "id": "hsk3.0:hsk1:0276",
     "hanzi": "女朋友",
-    "pinyin": "nǔpéngyǒu",
+    "pinyin": "nǚpéngyou",
     "meaning": {
       "zh": "女朋友",
-      "en": "jane, girl, girl friend, lady friend, girlfriend, amie",
-      "ko": ""
+      "en": "girlfriend",
+      "ko": "여자 친구",
+      "jp": "彼女"
     },
     "tags": {
       "generated": false
@@ -6007,7 +6010,8 @@
     "meaning": {
       "zh": "她们",
       "en": "they (female)",
-      "ko": ""
+      "ko": "그녀들; 그 여자들",
+      "jp": "彼女たち"
     },
     "tags": {
       "generated": false
@@ -7197,7 +7201,8 @@
     "meaning": {
       "zh": "一",
       "en": "one",
-      "ko": ""
+      "ko": "하나",
+      "jp": "一; いち"
     },
     "tags": {
       "generated": false
@@ -7264,8 +7269,9 @@
     "pinyin": "yíbàn",
     "meaning": {
       "zh": "一半",
-      "en": "det.: one half, in part, half",
-      "ko": ""
+      "en": "half; one half",
+      "ko": "절반",
+      "jp": "半分"
     },
     "tags": {
       "generated": false
@@ -8834,6 +8840,67 @@
     "hanzi": "大家",
     "pinyin": "dàjiā",
     "meaning": { "zh": "大家", "en": "everyone", "ko": "여러분; 모두" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0532",
+    "hanzi": "问题",
+    "pinyin": "wèntí",
+    "meaning": { "zh": "问题", "en": "question; problem", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0533",
+    "hanzi": "雪",
+    "pinyin": "xuě",
+    "meaning": { "zh": "雪", "en": "snow", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0534",
+    "hanzi": "有点儿",
+    "pinyin": "yǒudiǎnr",
+    "meaning": { "zh": "有点儿", "en": "a little; somewhat", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0535",
+    "hanzi": "一天",
+    "pinyin": "yī tiān",
+    "meaning": { "zh": "一天", "en": "one day; a day", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0536",
+    "hanzi": "玩",
+    "pinyin": "wán",
+    "meaning": { "zh": "玩", "en": "to play", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0537",
+    "hanzi": "不要",
+    "pinyin": "búyào",
+    "meaning": { "zh": "不要", "en": "do not; don't want", "ko": "" },
+    "tags": { "generated": false },
+    "meta": { "level": "hsk1", "version": "hsk3.0" }
+  },
+  {
+    "id": "hsk3.0:hsk1:0538",
+    "hanzi": "它们",
+    "pinyin": "tāmen",
+    "meaning": {
+      "zh": "它们",
+      "en": "they (things/animals)",
+      "ko": "그것들(사물·동물)",
+      "jp": "それら（物・動物）"
+    },
     "tags": { "generated": false },
     "meta": { "level": "hsk1", "version": "hsk3.0" }
   }
