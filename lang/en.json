@@ -704,8 +704,8 @@
       "lesson": "Lesson"
     },
     "course": {
-      "kids": "Kids",
-      "hsk": "HSK"
+      "kids": "Kids Chinese",
+      "hsk": "HSK program"
     },
     "my": {
       "materials": "My materials",
@@ -741,6 +741,10 @@
     }
   },
   "commerce": {
+    "ui": {
+      "text_pending": "(Loading UI text…)",
+      "fallback_label": "Field"
+    },
     "stage0": {
       "title": "Teacher commerce · Stage 0 shell",
       "subtitle": "Business rules and placeholder data. No payment APIs are connected. Stored locally; you can reset demo seed data.",
@@ -969,6 +973,11 @@
       }
     },
     "demo": {
+      "listing_generic": "Demo listing",
+      "listing_labels": {
+        "lst_platform_hsk1_bundle_001": "Sample content A (platform)",
+        "lst_teacher_ppt_pack_001": "Sample content B (teacher)"
+      },
       "user_student": "Demo learner A",
       "user_teacher": "Demo teacher (account)",
       "user_reviewer": "Demo reviewer",

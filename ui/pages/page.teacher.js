@@ -1,11 +1,11 @@
 // /ui/pages/page.teacher.js
-// Lumina 教师工具中心（平台级入口）：文案全部走全局 i18n（/lang/*.json）。
+// Lumina 教师工具中心：文案经 safeUiText，禁止 key 路径直出；课程名为 teacher.course.* 映射。
 
+import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
 
-function tx(key, params) {
-  if (params != null && typeof params === "object") return String(i18n.t(key, params) ?? "").trim();
-  return String(i18n.t(key) ?? "").trim();
+function tx(path, params) {
+  return safeUiText(path, params);
 }
 
 function escapeHtml(s) {
@@ -41,12 +41,12 @@ function renderTeacherHub(root) {
             <label class="teacher-field">
               <span>${escapeHtml(tx("teacher.label.course"))}</span>
               <select id="teacherCourseSelect">
-                <option value="kids">${escapeHtml(tx("teacher.course.kids"))}</option>
-                <option value="hsk">${escapeHtml(tx("teacher.course.hsk"))}</option>
+                <option value="kids">${escapeHtml(formatTeacherHubCourseDisplay("kids"))}</option>
+                <option value="hsk">${escapeHtml(formatTeacherHubCourseDisplay("hsk"))}</option>
               </select>
             </label>
             <label class="teacher-field">
-              <span>${escapeHtml(tx("teacher.level"))}</span>
+              <span>${escapeHtml(tx("teacher.label.level"))}</span>
               <select id="teacherLevelSelect">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -54,7 +54,7 @@ function renderTeacherHub(root) {
               </select>
             </label>
             <label class="teacher-field">
-              <span>${escapeHtml(tx("teacher.lesson"))}</span>
+              <span>${escapeHtml(tx("teacher.label.lesson"))}</span>
               <input id="teacherLessonInput" type="number" min="1" value="1" />
             </label>
             <button type="button" id="teacherEnterClassroomBtn" class="teacher-enter-btn">

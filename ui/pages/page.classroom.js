@@ -5,11 +5,10 @@ import { i18n } from "../i18n.js";
 import { initClassroomEngine } from "../platform/classroom/classroomEngine.js";
 import { getClassroomState } from "../platform/classroom/classroomState.js";
 import { getClassroomGamesForContext } from "../modules/games/gamesRegistry.js";
-import { formatGameModeType } from "../lumina-commerce/commerceDisplayLabels.js";
+import { formatGameModeType, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(key, params) {
-  if (params != null && typeof params === "object") return String(i18n.t(key, params) ?? "").trim();
-  return String(i18n.t(key) ?? "").trim();
+  return safeUiText(key, params);
 }
 
 function parseQuery() {
@@ -129,8 +128,7 @@ export default async function pageClassroom(ctxOrRoot) {
     const st = getClassroomState();
     const metaEl = root.querySelector("#classroomMeta");
     if (metaEl) {
-      const courseLabel =
-        String(courseId).toLowerCase() === "kids" ? tx("teacher.course.kids") : tx("teacher.course.hsk");
+      const courseLabel = formatTeacherHubCourseDisplay(courseId);
       metaEl.textContent = tx("classroom.meta.format", {
         course: courseLabel,
         level,

@@ -713,8 +713,8 @@
       "lesson": "課"
     },
     "course": {
-      "kids": "Kids",
-      "hsk": "HSK"
+      "kids": "キッズ中国語",
+      "hsk": "HSK コース"
     },
     "my": {
       "materials": "マイ教材",
@@ -750,6 +750,10 @@
     }
   },
   "commerce": {
+    "ui": {
+      "text_pending": "（UI 文言を読み込み中）",
+      "fallback_label": "項目"
+    },
     "stage0": {
       "title": "教師向けコマース · Stage 0 骨格",
       "subtitle": "業務ルールとデータの枠です。決済 API は未接続です。ローカル保存・デモシードにリセット可能。",
@@ -978,6 +982,11 @@
       }
     },
     "demo": {
+      "listing_generic": "デモ掲載コンテンツ",
+      "listing_labels": {
+        "lst_platform_hsk1_bundle_001": "サンプル A（プラットフォーム）",
+        "lst_teacher_ppt_pack_001": "サンプル B（教師）"
+      },
       "user_student": "デモ学習者 A",
       "user_teacher": "デモ教師（アカウント）",
       "user_reviewer": "デモレビュアー",

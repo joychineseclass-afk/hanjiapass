@@ -704,8 +704,8 @@
       "lesson": "차시"
     },
     "course": {
-      "kids": "Kids",
-      "hsk": "HSK"
+      "kids": "어린이 중국어",
+      "hsk": "HSK 코스"
     },
     "my": {
       "materials": "내 교재",
@@ -741,6 +741,10 @@
     }
   },
   "commerce": {
+    "ui": {
+      "text_pending": "（UI 문구를 불러오는 중）",
+      "fallback_label": "항목"
+    },
     "stage0": {
       "title": "교사 커머스 · Stage 0 뼈대",
       "subtitle": "비즈니스 규칙과 데이터 자리입니다. 결제 API는 연결되어 있지 않습니다. 로컬에 저장되며 데모 시드를 복원할 수 있습니다.",
@@ -969,6 +973,11 @@
       }
     },
     "demo": {
+      "listing_generic": "데모 등록 콘텐츠",
+      "listing_labels": {
+        "lst_platform_hsk1_bundle_001": "예시 콘텐츠 A（플랫폼）",
+        "lst_teacher_ppt_pack_001": "예시 콘텐츠 B（교사）"
+      },
       "user_student": "데모 학습자 A",
       "user_teacher": "데모 교사(계정)",
       "user_reviewer": "데모 검수자",

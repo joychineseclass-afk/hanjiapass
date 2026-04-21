@@ -704,8 +704,8 @@
       "lesson": "课次"
     },
     "course": {
-      "kids": "Kids",
-      "hsk": "HSK"
+      "kids": "少儿中文",
+      "hsk": "HSK 标准课程"
     },
     "my": {
       "materials": "我的教材",
@@ -741,6 +741,10 @@
     }
   },
   "commerce": {
+    "ui": {
+      "text_pending": "（界面文案加载中）",
+      "fallback_label": "字段"
+    },
     "stage0": {
       "title": "教师商业化 · Stage 0 骨架",
       "subtitle": "业务规则与数据占位。当前未接入任何支付 API。数据保存在本地，可重置为演示种子。",
@@ -972,6 +976,11 @@
       }
     },
     "demo": {
+      "listing_generic": "演示上架内容",
+      "listing_labels": {
+        "lst_platform_hsk1_bundle_001": "演示内容 A（平台）",
+        "lst_teacher_ppt_pack_001": "演示内容 B（教师）"
+      },
       "user_student": "演示学员 A",
       "user_teacher": "演示老师（账号）",
       "user_reviewer": "演示审核员",

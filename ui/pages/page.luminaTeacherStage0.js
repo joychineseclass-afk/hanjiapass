@@ -26,6 +26,8 @@ import {
   formatCommerceErrorCode,
   formatDemoTeacherProfileDisplayName,
   formatCommerceTableHead,
+  formatDemoListingSelectLabel,
+  formatDemoListingContentTitleAttr,
 } from "../lumina-commerce/commerceDisplayLabels.js";
 import { hasListingAccess } from "../lumina-commerce/entitlementService.js";
 import { canTransitionListingStatus } from "../lumina-commerce/listingStateMachine.js";
@@ -158,7 +160,11 @@ function renderPage(root, ctx) {
         <p class="desc" style="font-size:13px;color:#64748b;">${escapeHtml(commerceT("commerce.review.panel_desc"))}</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
           <label>${escapeHtml(commerceT("commerce.review.pick_listing"))}<br/><select id="lts0ReviewListing">${snap.listings
-            .map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.title)}</option>`)
+            .map((L) => {
+              const lab = formatDemoListingSelectLabel(L);
+              const tit = formatDemoListingContentTitleAttr(L);
+              return `<option value="${escapeHtml(L.id)}" title="${escapeHtml(tit)}">${escapeHtml(lab)}</option>`;
+            })
             .join("")}</select></label>
           <label>${escapeHtml(commerceT("commerce.review.new_status"))}<br/><select id="lts0ReviewNext">${optEnumLocalized(
             [
@@ -186,7 +192,10 @@ function renderPage(root, ctx) {
   const accessListingId = snap.listings[0]?.id || "";
   const hasAccess = hasListingAccess(snap.entitlements, accessUser, accessListingId);
   const accessUserLabel = formatDemoUserDisplay(accessUser, snap.users.find((u) => u.id === accessUser)?.display_name);
-  const accessListingLabel = accessListingId;
+  const accessListingObj = snap.listings.find((x) => x.id === accessListingId) || snap.listings[0];
+  const accessListingLabel = accessListingObj
+    ? formatDemoListingSelectLabel(accessListingObj)
+    : commerceT("commerce.table.empty_cell");
 
   root.innerHTML = `
     <div class="wrap" style="padding-bottom:48px;">
@@ -294,7 +303,13 @@ function renderPage(root, ctx) {
         <h3>${escapeHtml(commerceT("commerce.stage0.entitlement_title"))}</h3>
         <form id="lts0Grant" style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
           <label>${escapeHtml(commerceT("commerce.form.grant_user"))}<input name="user_id" value="u_student_demo_001"/></label>
-          <label>${escapeHtml(commerceT("commerce.form.grant_listing"))}<select name="listing_id">${snap.listings.map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.title)}</option>`).join("")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.form.grant_listing"))}<select name="listing_id">${snap.listings
+            .map((L) => {
+              const lab = formatDemoListingSelectLabel(L);
+              const tit = formatDemoListingContentTitleAttr(L);
+              return `<option value="${escapeHtml(L.id)}" title="${escapeHtml(tit)}">${escapeHtml(lab)}</option>`;
+            })
+            .join("")}</select></label>
           <button type="submit">${escapeHtml(commerceT("commerce.form.grant_submit"))}</button>
         </form>
         <div style="overflow:auto;margin-top:10px;">
