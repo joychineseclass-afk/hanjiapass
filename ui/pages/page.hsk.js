@@ -2333,9 +2333,6 @@ async function openLesson({ lessonNo, file } = {}) {
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
 
   const isReviewLesson = lessonIsReview(lessonData);
-  if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
-    state.tab = "words";
-  }
   let panelWords;
   if (isReviewLesson) {
     panelWords = selectHskWordPanelVocabulary(lessonWords, {
@@ -2470,9 +2467,6 @@ function rerenderHSKFromState() {
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
   const isReviewLesson = lessonIsReview(lessonData);
-  if (isReviewLesson && (no === 21 || no === 22) && state.tab === "review") {
-    state.tab = "words";
-  }
   const titleText =
     (listEntry && getLessonDisplayTitle(listEntry, lang)) ||
     getLessonDisplayTitle(lessonData, lang) ||
@@ -3444,13 +3438,6 @@ function showListMode() {
 }
 
 function updateTabsUI() {
-  const hideReviewTab = (() => {
-    const cur = state.current;
-    if (!cur) return false;
-    const lessonNo = Number(cur.lessonNo) || 0;
-    return lessonNo === 21 || lessonNo === 22;
-  })();
-
   const ids = [
     ["words", "hskTabWords", "hskPanelWords"],
     ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
@@ -3464,15 +3451,6 @@ function updateTabsUI() {
   ids.forEach(([tab, btnId, panelId]) => {
     const btn = $(btnId);
     const panel = $(panelId);
-
-    if (tab === "review" && hideReviewTab) {
-      if (btn) {
-        btn.classList.add("hidden");
-        btn.setAttribute("aria-hidden", "true");
-      }
-      if (panel) panel.classList.add("hidden");
-      return;
-    }
 
     if (tab === "review" && btn) {
       btn.classList.remove("hidden");
