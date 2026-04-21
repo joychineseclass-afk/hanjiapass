@@ -29,6 +29,7 @@ import {
   formatCommerceTableHead,
   formatDemoListingSelectLabel,
   formatDemoListingContentTitleAttr,
+  formatListingDemoSourceLine,
   formatListingManagePrimaryLabel,
 } from "../lumina-commerce/commerceDisplayLabels.js";
 import { hasListingAccess } from "../lumina-commerce/entitlementService.js";
@@ -109,7 +110,7 @@ function renderPage(root, ctx) {
 
   const listingRows =
     snap.listings.length === 0
-      ? `<tr><td colspan="7" class="lts0-list-empty-cell">
+      ? `<tr><td colspan="8" class="lts0-list-empty-cell">
           <div class="lts0-empty-in-table" role="status">
             <p class="lts0-empty-in-table-title">${escapeHtml(commerceT("commerce.stage0.list_empty_title"))}</p>
             <p class="lts0-empty-in-table-desc">${escapeHtml(commerceT("commerce.stage0.list_empty_hint"))}</p>
@@ -129,8 +130,10 @@ function renderPage(root, ctx) {
             const nameHtml = titleAttr
               ? `<span title="${escapeHtml(titleAttr)}">${escapeHtml(primaryName)}</span>`
               : escapeHtml(primaryName);
+            const sourceLine = escapeHtml(formatListingDemoSourceLine(L));
             return `<tr data-listing-id="${escapeHtml(L.id)}">
         <td class="lts0-cell-strong">${nameHtml}</td>
+        <td class="lts0-cell-source"><span class="lts0-source-line">${sourceLine}</span></td>
         <td>${escapeHtml(formatCommerceEnum("listing_type", L.listing_type))}</td>
         <td>${listingStatusPill(L.status)}</td>
         <td>${escapeHtml(formatCommerceEnum("visibility", L.visibility))}</td>
@@ -348,6 +351,7 @@ function renderPage(root, ctx) {
           <div class="lts0-panel lts0-panel--primary">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h3>
             <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.panel_draft_desc"))}</p>
+            <p class="lts0-draft-source-hint">${escapeHtml(commerceT("commerce.stage0.draft_source_hint"))}</p>
             <form id="lts0NewListing" class="lts0-form-draft">
               <div class="lts0-form-primary-grid">
                 <label>${escapeHtml(commerceT("commerce.form.title"))}<input name="title" required value="${escapeHtml(commerceT("commerce.form.default_title"))}"/></label>
@@ -418,6 +422,7 @@ function renderPage(root, ctx) {
             <thead>
               <tr>
                 <th scope="col">${escapeHtml(formatCommerceTableHead("content_name"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("listing_source"))}</th>
                 <th scope="col">${escapeHtml(formatCommerceTableHead("listing_type"))}</th>
                 <th scope="col">${escapeHtml(formatCommerceTableHead("status"))}</th>
                 <th scope="col">${escapeHtml(formatCommerceTableHead("visibility"))}</th>
@@ -492,6 +497,8 @@ function renderPage(root, ctx) {
         updated_at: now,
         published_at: null,
         delisted_at: null,
+        source_kind: null,
+        source_id: null,
       });
     });
     renderPage(root, ctx);

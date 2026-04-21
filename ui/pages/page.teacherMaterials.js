@@ -1,6 +1,12 @@
 // 我的教材：与课程页统一的教师管理页模板；文案经 safeUiText。
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
+import {
+  TEACHER_DEMO_MATERIALS,
+  formatDemoMaterialCoursesLine,
+  formatDemoMaterialListingPrep,
+  formatDemoShortUpdated,
+} from "../lumina-commerce/teacherDemoCatalog.js";
 import { i18n } from "../i18n.js";
 import { teacherMaterialsNextGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
 
@@ -19,6 +25,30 @@ function escapeHtml(s) {
 
 let __matLangHandler = /** @type {null | (() => void)} */ (null);
 let __matRootRef = /** @type {HTMLElement | null} */ (null);
+
+function materialsTableBody() {
+  return TEACHER_DEMO_MATERIALS.map((m) => {
+    const title = escapeHtml(tx(`teacher.demo.material.${m.id}.title`));
+    const type = escapeHtml(tx(`teacher.demo.material.${m.id}.type`));
+    const status = escapeHtml(tx(`teacher.demo.material.${m.id}.status`));
+    const coursesLine = escapeHtml(formatDemoMaterialCoursesLine(m, tx));
+    const listingPrep = escapeHtml(formatDemoMaterialListingPrep(m, tx));
+    const updated = escapeHtml(formatDemoShortUpdated(m.updated_at));
+    const badge = escapeHtml(tx("common.demo_badge"));
+    return `<tr>
+      <td class="teacher-manage-cell-title">
+        <span class="teacher-demo-badge">${badge}</span>
+        ${title}
+      </td>
+      <td>${type}</td>
+      <td>${status}</td>
+      <td class="teacher-manage-cell-meta">${coursesLine}</td>
+      <td class="teacher-manage-cell-meta">${listingPrep}</td>
+      <td>${updated}</td>
+      <td class="teacher-manage-col-actions">${escapeHtml(tx("teacher.materials_page.demo_action_placeholder"))}</td>
+    </tr>`;
+  }).join("");
+}
 
 function renderMaterialsDom(root) {
   root.innerHTML = `
@@ -46,6 +76,8 @@ function renderMaterialsDom(root) {
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
         <h2 id="teacher-materials-list-title" class="teacher-admin-list-heading">${escapeHtml(tx("teacher.materials_page.list_title"))}</h2>
+        <p class="teacher-demo-disclosure">${escapeHtml(tx("teacher.demo.disclosure"))}</p>
+        <p class="teacher-list-demo-note">${escapeHtml(tx("teacher.materials_page.list_demo_note"))}</p>
         <div class="teacher-manage-table-scroll">
           <table class="teacher-manage-table">
             <thead>
@@ -53,25 +85,14 @@ function renderMaterialsDom(root) {
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_name"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_type"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.materials_page.th_used_courses"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.materials_page.th_listing_prep"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_updated"))}</th>
                 <th scope="col" class="teacher-manage-col-actions">${escapeHtml(tx("teacher.materials_page.th_actions"))}</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="teacher-manage-empty-row">
-                <td colspan="5">
-                  <div class="teacher-admin-empty" role="status">
-                    <p class="teacher-admin-empty-title">${escapeHtml(tx("teacher.materials_page.empty_cell_title"))}</p>
-                    <p class="teacher-admin-empty-sub">${escapeHtml(tx("teacher.materials_page.empty_subhint"))}</p>
-                    <p class="teacher-admin-empty-intro">${escapeHtml(tx("teacher.materials_page.empty_cell_intro"))}</p>
-                    <ul class="teacher-admin-empty-list">
-                      <li>${escapeHtml(tx("teacher.materials_page.empty_cell_item_1"))}</li>
-                      <li>${escapeHtml(tx("teacher.materials_page.empty_cell_item_2"))}</li>
-                      <li>${escapeHtml(tx("teacher.materials_page.empty_cell_item_3"))}</li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
+              ${materialsTableBody()}
             </tbody>
           </table>
         </div>

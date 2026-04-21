@@ -172,3 +172,36 @@ export function formatListingManagePrimaryLabel(listing) {
   if (t) return t;
   return commerceT("commerce.demo.listing_generic");
 }
+
+/**
+ * Listing 演示来源（source_kind / source_id），仅本地演示数据。
+ * @param {{ source_kind?: string|null, source_id?: string|null }} listing
+ */
+export function formatListingDemoSourceLine(listing) {
+  const kind = listing?.source_kind != null ? String(listing.source_kind).trim() : "";
+  if (!kind) {
+    return commerceT("commerce.stage0.source.not_set");
+  }
+  const kindPath = `commerce.stage0.source.kind_${kind}`;
+  let kindLabel = rawT(kindPath);
+  if (!kindLabel || kindLabel === kindPath || looksLikeUntranslatedKey(kindLabel)) {
+    kindLabel = commerceT("commerce.stage0.source.kind_unknown");
+  }
+  let detail = "";
+  if (kind === "platform") {
+    detail = commerceT("commerce.stage0.source.detail_platform");
+  } else if (kind === "course" && listing.source_id) {
+    const p = `teacher.demo.course.${listing.source_id}.title`;
+    const v = rawT(p);
+    detail = v && v !== p && !looksLikeUntranslatedKey(v) ? v : commerceT("commerce.table.empty_cell");
+  } else if (kind === "material" && listing.source_id) {
+    const p = `teacher.demo.material.${listing.source_id}.title`;
+    const v = rawT(p);
+    detail = v && v !== p && !looksLikeUntranslatedKey(v) ? v : commerceT("commerce.table.empty_cell");
+  } else {
+    detail = commerceT("commerce.table.empty_cell");
+  }
+  const line = commerceT("commerce.stage0.source.line", { kind: kindLabel, detail });
+  if (line && line !== "commerce.stage0.source.line" && !looksLikeUntranslatedKey(line)) return line;
+  return `${kindLabel}：${detail}`;
+}

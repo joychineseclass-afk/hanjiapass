@@ -9,6 +9,7 @@
     "not_found_desc": "This route is not registered."
   },
   "common": {
+    "demo_badge": "Sample",
     "ok": "OK",
     "cancel": "Cancel",
     "listen": "Listen",
@@ -749,19 +750,65 @@
     "hub": {
       "materials": {
         "title": "My materials",
-        "desc": "Private prep assets for class; use them to build courses, or later move toward listings.",
+        "desc": "Private prep library—use in courses or shape into sellable material listings.",
         "cta": "Open materials library"
       },
       "courses": {
         "title": "My courses",
-        "desc": "Structure what you teach; when it is ready, continue in Listings & sales.",
+        "desc": "Structure lessons, attach materials, then move to listing management when ready.",
         "cta": "Open course management"
       },
       "listing": {
         "title": "Listings & sales",
-        "desc": "Review and publish what you sell—usually based on a course or materials you prepared.",
+        "desc": "Manage public listings that usually come from a course or materials you prepared.",
         "cta": "Open listing hub",
         "badge": "Preview · Stage 0"
+      }
+    },
+    "demo": {
+      "disclosure": "Rows below are local demo data to illustrate how materials, courses, and listings relate—not real student or order data.",
+      "enum": {
+        "sep": ", "
+      },
+      "material": {
+        "not_in_courses": "Not linked to a course yet",
+        "listing_prep": {
+          "ready_pack": "Can become a material product",
+          "internal_only": "Internal teaching use for now",
+          "not_yet_ready": "Not ready to list yet"
+        },
+        "tdm_animals_ppt": {
+          "title": "Kids animal vocabulary slides",
+          "type": "Sample · Slides",
+          "status": "Ready"
+        },
+        "tdm_politeness_handout": {
+          "title": "Politeness expressions handout",
+          "type": "Sample · Handout",
+          "status": "Ready"
+        },
+        "tdm_color_chain_cards": {
+          "title": "Color chain activity cards",
+          "type": "Sample · Activity",
+          "status": "In progress"
+        }
+      },
+      "course": {
+        "no_materials": "No materials linked yet",
+        "has_listing": "Linked listing: {name}",
+        "ready_for_listing": "Ready to prepare a listing",
+        "in_progress": "Still being organized",
+        "no_listing": "No listing yet",
+        "tdc_kids_draft_a": {
+          "title": "Kids class draft A",
+          "type": "Sample · Kids draft",
+          "status": "Draft"
+        },
+        "tdc_hsk_oral_draft_b": {
+          "title": "HSK speaking draft B",
+          "type": "Sample · HSK draft",
+          "status": "Draft"
+        }
       }
     },
     "materials_page": {
@@ -769,11 +816,15 @@
       "subtitle": "Manage your private teaching assets and prep library.",
       "tagline": "Your personal files and lesson assets for prep and class—not the public storefront by default.",
       "list_title": "Materials list",
+      "list_demo_note": "Sample rows show demo relationships; uploads will arrive in a future release.",
       "th_name": "Name",
       "th_type": "Type",
       "th_status": "Status",
+      "th_used_courses": "Courses",
+      "th_listing_prep": "Listing readiness",
       "th_updated": "Last updated",
       "th_actions": "Actions",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "You don’t have private materials yet",
       "empty_cell_intro": "Later you’ll upload and manage items such as:",
       "empty_cell_item_1": "Slides (PPT), handouts, and lesson plans",
@@ -794,11 +845,15 @@
       "subtitle": "Manage the course content you create and organize.",
       "tagline": "Your own teaching structures—drafts or class-ready—not the same as a sellable listing.",
       "list_title": "Courses list",
+      "list_demo_note": "Sample rows show materials and listing hints; editing will arrive in a future release.",
       "th_name": "Course name",
       "th_type": "Type",
       "th_status": "Status",
+      "th_uses_materials": "Materials",
+      "th_listing_track": "Listing status",
       "th_updated": "Last updated",
       "th_actions": "Actions",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "You don’t have your own courses yet",
       "empty_cell_intro": "Later you’ll create and manage:",
       "empty_cell_item_1": "Course drafts and outlines in progress",
@@ -914,7 +969,17 @@
       "review_log_title": "Review log",
       "entitlement_title": "Learning access (placeholder · manual grant demo)",
       "order_title": "Orders (placeholder)",
-      "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration."
+      "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration.",
+      "draft_source_hint": "Demo note: real listings often come from a finished course or sellable materials. New drafts here do not record a real source link yet.",
+      "source": {
+        "not_set": "Source not set (demo draft)",
+        "line": "{kind}: {detail}",
+        "kind_platform": "Platform",
+        "kind_course": "Course",
+        "kind_material": "Materials",
+        "kind_unknown": "Source",
+        "detail_platform": "Official catalog (demo)"
+      }
     },
     "review": {
       "zone_title": "Reviewer actions",
@@ -976,7 +1041,8 @@
         "amount": "Amount",
         "payout_ready": "Payout ready",
         "content_name": "Content name",
-        "updated_at": "Last updated"
+        "updated_at": "Last updated",
+        "listing_source": "Listing source"
       }
     },
     "field": {
@@ -1134,7 +1200,8 @@
       "listing_generic": "Demo listing",
       "listing_labels": {
         "lst_platform_hsk1_bundle_001": "Sample content A (platform)",
-        "lst_teacher_ppt_pack_001": "Sample content B (teacher)"
+        "lst_teacher_ppt_pack_001": "Sample content B (teacher · from handout)",
+        "lst_demo_kids_course_001": "Sample content C (teacher · from Kids draft)"
       },
       "user_student": "Demo learner A",
       "user_teacher": "Demo teacher (account)",

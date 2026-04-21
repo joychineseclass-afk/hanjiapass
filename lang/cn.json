@@ -9,6 +9,7 @@
     "not_found_desc": "未注册的路径。"
   },
   "common": {
+    "demo_badge": "示例",
     "ok": "确定",
     "cancel": "取消",
     "listen": "发音",
@@ -749,19 +750,65 @@
     "hub": {
       "materials": {
         "title": "我的教材",
-        "desc": "管理私有备课资料，可用于课程准备，也可后续进入上架流程。",
+        "desc": "管理私有备课资料；可用于课程，也可整理为资料类上架对象。",
         "cta": "进入教材库"
       },
       "courses": {
         "title": "我的课程",
-        "desc": "组织教学内容，整理完成后可进入注册/销售管理。",
+        "desc": "组织教学内容；可引用教材，整理完成后进入上架管理。",
         "cta": "进入课程管理"
       },
       "listing": {
         "title": "上架与售卖管理",
-        "desc": "管理待售课程/资料的审核与公开状态，来源通常是课程或教材。",
+        "desc": "管理来自课程或资料的公开售卖对象（审核与展示）。",
         "cta": "进入上架管理",
         "badge": "预备区 · Stage 0"
+      }
+    },
+    "demo": {
+      "disclosure": "下列为本地演示数据，用于展示教材—课程—上架之间的示例关系，并非真实学员或订单数据。",
+      "enum": {
+        "sep": "、"
+      },
+      "material": {
+        "not_in_courses": "暂未关联课程",
+        "listing_prep": {
+          "ready_pack": "可整理为资料商品",
+          "internal_only": "当前仅作为内部教学资料",
+          "not_yet_ready": "暂未准备上架"
+        },
+        "tdm_animals_ppt": {
+          "title": "Kids 动物词汇 PPT",
+          "type": "演示 · 幻灯片",
+          "status": "可用"
+        },
+        "tdm_politeness_handout": {
+          "title": "礼貌表达课堂讲义",
+          "type": "演示 · 讲义",
+          "status": "可用"
+        },
+        "tdm_color_chain_cards": {
+          "title": "颜色接龙活动卡",
+          "type": "演示 · 课堂活动",
+          "status": "整理中"
+        }
+      },
+      "course": {
+        "no_materials": "暂未添加教材",
+        "has_listing": "已关联上架项：{name}",
+        "ready_for_listing": "可准备上架",
+        "in_progress": "仍在整理中",
+        "no_listing": "暂未创建 listing",
+        "tdc_kids_draft_a": {
+          "title": "Kids 课堂草稿 A",
+          "type": "演示 · Kids 草稿课",
+          "status": "草稿"
+        },
+        "tdc_hsk_oral_draft_b": {
+          "title": "HSK 口语课草稿 B",
+          "type": "演示 · HSK 草稿课",
+          "status": "草稿"
+        }
       }
     },
     "materials_page": {
@@ -769,11 +816,15 @@
       "subtitle": "管理您的私有教学资料与备课资产。",
       "tagline": "这里存放您的个人资料与课件，用于备课与课堂使用；默认不是商城商品。",
       "list_title": "资料列表",
+      "list_demo_note": "表中条目含演示关系提示，上传功能仍将在后续版本开放。",
       "th_name": "资料名称",
       "th_type": "类型",
       "th_status": "状态",
+      "th_used_courses": "与课程",
+      "th_listing_prep": "上架准备度",
       "th_updated": "最后更新",
       "th_actions": "操作",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "您还没有私有教材",
       "empty_cell_intro": "后续可在此上传与管理：",
       "empty_cell_item_1": "演示文稿（PPT）、讲义与教案",
@@ -794,11 +845,15 @@
       "subtitle": "管理您创建与组织的课程教学内容。",
       "tagline": "这里存放您自建的教学结构（草稿或已可用于授课）；课程本体不等于商城 listing。",
       "list_title": "课程列表",
+      "list_demo_note": "表中条目含演示引用与上架提示，创建/编辑功能仍将在后续版本开放。",
       "th_name": "课程名称",
       "th_type": "类型",
       "th_status": "状态",
+      "th_uses_materials": "引用教材",
+      "th_listing_track": "上架进度",
       "th_updated": "最后更新",
       "th_actions": "操作",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "您还没有自建课程",
       "empty_cell_intro": "后续可在此创建与管理：",
       "empty_cell_item_1": "课程草稿与整理中的大纲",
@@ -914,7 +969,17 @@
       "review_log_title": "审核记录",
       "entitlement_title": "学习权益（占位 · 手动发放演示）",
       "order_title": "订单（占位）",
-      "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。"
+      "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。",
+      "draft_source_hint": "演示说明：实际上架可来自整理好的课程，或适合单独售卖的资料；新建草稿暂不记录真实来源关联。",
+      "source": {
+        "not_set": "来源未标注（演示草稿）",
+        "line": "{kind}：{detail}",
+        "kind_platform": "平台内容",
+        "kind_course": "课程",
+        "kind_material": "教材资料",
+        "kind_unknown": "来源",
+        "detail_platform": "官方精选（演示）"
+      }
     },
     "review": {
       "zone_title": "审核操作",
@@ -976,7 +1041,8 @@
         "amount": "金额",
         "payout_ready": "可收款准备",
         "content_name": "内容名称",
-        "updated_at": "最后更新"
+        "updated_at": "最后更新",
+        "listing_source": "上架来源"
       }
     },
     "field": {
@@ -1137,7 +1203,8 @@
       "listing_generic": "演示上架内容",
       "listing_labels": {
         "lst_platform_hsk1_bundle_001": "演示内容 A（平台）",
-        "lst_teacher_ppt_pack_001": "演示内容 B（教师）"
+        "lst_teacher_ppt_pack_001": "演示内容 B（教师 · 来自讲义资料）",
+        "lst_demo_kids_course_001": "演示内容 C（教师 · 来自 Kids 草稿课）"
       },
       "user_student": "演示学员 A",
       "user_teacher": "演示老师（账号）",

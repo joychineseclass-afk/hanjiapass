@@ -72,6 +72,8 @@
  * @property {string} updated_at
  * @property {string|null} [published_at]
  * @property {string|null} [delisted_at]
+ * @property {'platform'|'course'|'material'|string|null} [source_kind] 演示用：上架来源类型（非正式契约）
+ * @property {string|null} [source_id] 演示用：对应 teacher.demo.* 或业务 id
  */
 
 /**
@@ -122,4 +124,4 @@
  * @property {string} updated_at
  */
 
-export const SCHEMA_VERSION_STAGE0 = "lumina_commerce_stage0_v1";
+export const SCHEMA_VERSION_STAGE0 = "lumina_commerce_stage0_v2";

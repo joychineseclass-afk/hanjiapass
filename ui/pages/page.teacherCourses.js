@@ -1,6 +1,12 @@
 // 我的课程：与教材页统一的教师管理页模板；文案经 safeUiText。
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
+import {
+  TEACHER_DEMO_COURSES,
+  formatDemoCourseListingHint,
+  formatDemoCourseMaterialsLine,
+  formatDemoShortUpdated,
+} from "../lumina-commerce/teacherDemoCatalog.js";
 import { i18n } from "../i18n.js";
 import { teacherCoursesNextGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
 
@@ -19,6 +25,30 @@ function escapeHtml(s) {
 
 let __crsLangHandler = /** @type {null | (() => void)} */ (null);
 let __crsRootRef = /** @type {HTMLElement | null} */ (null);
+
+function coursesTableBody() {
+  return TEACHER_DEMO_COURSES.map((c) => {
+    const title = escapeHtml(tx(`teacher.demo.course.${c.id}.title`));
+    const type = escapeHtml(tx(`teacher.demo.course.${c.id}.type`));
+    const status = escapeHtml(tx(`teacher.demo.course.${c.id}.status`));
+    const materialsLine = escapeHtml(formatDemoCourseMaterialsLine(c, tx));
+    const listingHint = escapeHtml(formatDemoCourseListingHint(c, tx));
+    const updated = escapeHtml(formatDemoShortUpdated(c.updated_at));
+    const badge = escapeHtml(tx("common.demo_badge"));
+    return `<tr>
+      <td class="teacher-manage-cell-title">
+        <span class="teacher-demo-badge">${badge}</span>
+        ${title}
+      </td>
+      <td>${type}</td>
+      <td>${status}</td>
+      <td class="teacher-manage-cell-meta">${materialsLine}</td>
+      <td class="teacher-manage-cell-meta">${listingHint}</td>
+      <td>${updated}</td>
+      <td class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.demo_action_placeholder"))}</td>
+    </tr>`;
+  }).join("");
+}
 
 function renderCoursesDom(root) {
   root.innerHTML = `
@@ -46,6 +76,8 @@ function renderCoursesDom(root) {
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-courses-list-title">
         <h2 id="teacher-courses-list-title" class="teacher-admin-list-heading">${escapeHtml(tx("teacher.courses_page.list_title"))}</h2>
+        <p class="teacher-demo-disclosure">${escapeHtml(tx("teacher.demo.disclosure"))}</p>
+        <p class="teacher-list-demo-note">${escapeHtml(tx("teacher.courses_page.list_demo_note"))}</p>
         <div class="teacher-manage-table-scroll">
           <table class="teacher-manage-table">
             <thead>
@@ -53,25 +85,14 @@ function renderCoursesDom(root) {
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_name"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_type"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_uses_materials"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_listing_track"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_updated"))}</th>
                 <th scope="col" class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.th_actions"))}</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="teacher-manage-empty-row">
-                <td colspan="5">
-                  <div class="teacher-admin-empty" role="status">
-                    <p class="teacher-admin-empty-title">${escapeHtml(tx("teacher.courses_page.empty_cell_title"))}</p>
-                    <p class="teacher-admin-empty-sub">${escapeHtml(tx("teacher.courses_page.empty_subhint"))}</p>
-                    <p class="teacher-admin-empty-intro">${escapeHtml(tx("teacher.courses_page.empty_cell_intro"))}</p>
-                    <ul class="teacher-admin-empty-list">
-                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_1"))}</li>
-                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_2"))}</li>
-                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_3"))}</li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
+              ${coursesTableBody()}
             </tbody>
           </table>
         </div>

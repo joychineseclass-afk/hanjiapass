@@ -80,11 +80,16 @@ function pickTeacherProfile(examples) {
 function pickListings(examples) {
   const a = examples.listing_platform_example;
   const b = examples.listing_teacher_example;
+  const c = examples.listing_teacher_course_example;
   if (!a || !b) throw new Error("mockSeed: missing listing examples");
-  return [
+  const out = [
     /** @type {import('./schema.js').Listing} */ (structuredClone(a)),
     /** @type {import('./schema.js').Listing} */ (structuredClone(b)),
   ];
+  if (c && typeof c === "object") {
+    out.push(/** @type {import('./schema.js').Listing} */ (structuredClone(c)));
+  }
+  return out;
 }
 
 /**
@@ -160,6 +165,8 @@ export function builtinStage0Examples() {
       review_reason_code: null,
       review_reason_text: null,
       ownership_declaration_accepted: null,
+      source_kind: "platform",
+      source_id: null,
       created_at: "2026-03-01T00:00:00.000Z",
       updated_at: "2026-03-20T00:00:00.000Z",
       published_at: "2026-03-20T00:00:00.000Z",
@@ -171,9 +178,9 @@ export function builtinStage0Examples() {
       teacher_id: "tp_demo_seller_001",
       listing_type: "ppt",
       delivery_type: "downloadable",
-      title: "金老师 · HSK2 课件包（示例）",
-      summary: "老师售卖内容，后续可分账。",
-      description: "Stage 0 占位，验证 teacher_id 归属。",
+      title: "金老师 · 礼貌表达讲义包（示例）",
+      summary: "由教材条目演示进入上架流程的示例。",
+      description: "Stage 0 占位，演示 source_kind=material。",
       status: "pending_review",
       visibility: "unlisted",
       price_amount: "12000",
@@ -184,8 +191,36 @@ export function builtinStage0Examples() {
       review_reason_code: null,
       review_reason_text: null,
       ownership_declaration_accepted: true,
+      source_kind: "material",
+      source_id: "tdm_politeness_handout",
       created_at: "2026-04-10T00:00:00.000Z",
       updated_at: "2026-04-10T00:00:00.000Z",
+      published_at: null,
+      delisted_at: null,
+    },
+    listing_teacher_course_example: {
+      id: "lst_demo_kids_course_001",
+      seller_type: "teacher",
+      teacher_id: "tp_demo_seller_001",
+      listing_type: "course",
+      delivery_type: "live",
+      title: "Kids 课堂草稿 A — 上架草稿（示例）",
+      summary: "由演示课程进入上架流程的草稿。",
+      description: "Stage 0 演示：source_kind=course。",
+      status: "draft",
+      visibility: "private",
+      price_amount: "35000",
+      price_currency: "KRW",
+      list_price_amount: null,
+      sale_price_amount: null,
+      refund_policy_type: "within_7_days",
+      review_reason_code: null,
+      review_reason_text: null,
+      ownership_declaration_accepted: true,
+      source_kind: "course",
+      source_id: "tdc_kids_draft_a",
+      created_at: "2026-04-15T10:00:00.000Z",
+      updated_at: "2026-04-15T10:00:00.000Z",
       published_at: null,
       delisted_at: null,
     },

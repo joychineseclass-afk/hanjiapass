@@ -1085,12 +1085,66 @@ button.teacher-hub-cta:hover{
 .teacher-info-note-list li{
   margin: 3px 0;
 }
+.teacher-demo-disclosure{
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 750;
+  color: #64748b;
+  line-height: 1.45;
+  max-width: 72ch;
+}
+.teacher-list-demo-note{
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+  max-width: 72ch;
+}
+.teacher-demo-badge{
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #4338ca;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  vertical-align: middle;
+}
+.teacher-manage-cell-title{
+  font-weight: 750;
+  color: rgba(15, 23, 42, 0.9);
+}
+.teacher-manage-cell-meta{
+  font-size: 13px;
+  line-height: 1.45;
+  color: #64748b;
+  max-width: 28ch;
+}
 
 /* =========================================================
    Listing management Stage 0 (#lumina-teacher-stage0)
    ========================================================= */
 .lts0-page{
   padding-bottom: 48px;
+}
+.lts0-draft-source-hint{
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 62ch;
+}
+.lts0-cell-source{
+  font-size: 13px;
+  line-height: 1.45;
+  color: #475569;
+  max-width: 22rem;
+}
+.lts0-source-line{
+  display: inline-block;
 }
 .lts0-hero .title{
   margin-bottom: 6px;

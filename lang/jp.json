@@ -9,6 +9,7 @@
     "not_found_desc": "登録されていないパスです。"
   },
   "common": {
+    "demo_badge": "サンプル",
     "ok": "OK",
     "cancel": "キャンセル",
     "listen": "発音",
@@ -758,19 +759,65 @@
     "hub": {
       "materials": {
         "title": "マイ教材",
-        "desc": "個人の準備資料を管理します。コース作りに使い、のちに掲載へ進むこともできます。",
+        "desc": "個人の準備資料を管理。コースで使うほか、教材として掲載することもできます。",
         "cta": "教材ライブラリへ"
       },
       "courses": {
         "title": "マイコース",
-        "desc": "授業内容を構成します。整ったら掲載・販売管理へ進みます。",
+        "desc": "授業を構成し教材を紐づけ、整ったら掲載・販売管理へ進みます。",
         "cta": "コース管理へ"
       },
       "listing": {
         "title": "掲載・販売管理",
-        "desc": "販売する内容の審査と公開を管理します。元は通常コースか教材です。",
+        "desc": "コースや教材から用意した、公開販売用オブジェクト（審査・表示）を管理します。",
         "cta": "掲載管理へ",
         "badge": "準備エリア · Stage 0"
+      }
+    },
+    "demo": {
+      "disclosure": "以下は教材・コース・掲載の関係を示すローカルデモデータであり、実在の学習者や注文ではありません。",
+      "enum": {
+        "sep": "、"
+      },
+      "material": {
+        "not_in_courses": "コース未連携",
+        "listing_prep": {
+          "ready_pack": "資料商品に整理可",
+          "internal_only": "現在は内部授業用",
+          "not_yet_ready": "掲載準備は未着手"
+        },
+        "tdm_animals_ppt": {
+          "title": "Kids 動物語彙スライド",
+          "type": "サンプル · スライド",
+          "status": "利用可"
+        },
+        "tdm_politeness_handout": {
+          "title": "丁寧表現レッスン配布資料",
+          "type": "サンプル · 配布資料",
+          "status": "利用可"
+        },
+        "tdm_color_chain_cards": {
+          "title": "色しりとり活動カード",
+          "type": "サンプル · 活動",
+          "status": "整理中"
+        }
+      },
+      "course": {
+        "no_materials": "教材はまだなし",
+        "has_listing": "関連掲載：{name}",
+        "ready_for_listing": "掲載準備へ進めます",
+        "in_progress": "まだ整理中",
+        "no_listing": "掲載は未作成",
+        "tdc_kids_draft_a": {
+          "title": "Kids 授業ドラフト A",
+          "type": "サンプル · Kids 下書き",
+          "status": "下書き"
+        },
+        "tdc_hsk_oral_draft_b": {
+          "title": "HSK 会話ドラフト B",
+          "type": "サンプル · HSK 下書き",
+          "status": "下書き"
+        }
       }
     },
     "materials_page": {
@@ -778,11 +825,15 @@
       "subtitle": "個人用の教材・準備資産を管理します。",
       "tagline": "個人の資料と授業用ファイルを置く場所です。既定ではストア商品ではありません。",
       "list_title": "資料一覧",
+      "list_demo_note": "サンプル行はデモ上の関係表示です。アップロードは今後のバージョンで提供予定です。",
       "th_name": "資料名",
       "th_type": "種類",
       "th_status": "状態",
+      "th_used_courses": "コース",
+      "th_listing_prep": "掲載の準備",
       "th_updated": "最終更新",
       "th_actions": "操作",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "まだ個人用の教材がありません",
       "empty_cell_intro": "今後、次のような内容をアップロード・管理できる予定です。",
       "empty_cell_item_1": "スライド（PPT）、配布物、教案",
@@ -803,11 +854,15 @@
       "subtitle": "作成・構成したコースの授業内容を管理します。",
       "tagline": "ご自身が作った授業の枠組み（下書きまたは授業可）を置く場所です。掲載 listing そのものではありません。",
       "list_title": "コース一覧",
+      "list_demo_note": "サンプル行は教材・掲載のヒントを示します。編集は今後のバージョンで提供予定です。",
       "th_name": "コース名",
       "th_type": "種類",
       "th_status": "状態",
+      "th_uses_materials": "使用教材",
+      "th_listing_track": "掲載の状況",
       "th_updated": "最終更新",
       "th_actions": "操作",
+      "demo_action_placeholder": "—",
       "empty_cell_title": "まだ自分用のコースがありません",
       "empty_cell_intro": "今後、次のような内容を作成・管理できる予定です。",
       "empty_cell_item_1": "コースの下書きと整理中の構成",
@@ -923,7 +978,17 @@
       "review_log_title": "審査ログ",
       "entitlement_title": "学習権限（枠 · 手動付与デモ）",
       "order_title": "注文（枠）",
-      "order_note": "手数料項目は取引時点のスナップショット。決済プロバイダー欄は将来接続用です。"
+      "order_note": "手数料項目は取引時点のスナップショット。決済プロバイダー欄は将来接続用です。",
+      "draft_source_hint": "デモ：本番では整理済みコースや単体販売向け資料から掲載に進むことが多いです。ここで作る新規下書きはまず出所を記録しません。",
+      "source": {
+        "not_set": "出所未設定（デモ下書き）",
+        "line": "{kind}：{detail}",
+        "kind_platform": "プラットフォーム",
+        "kind_course": "コース",
+        "kind_material": "教材・資料",
+        "kind_unknown": "出所",
+        "detail_platform": "公式コンテンツ（デモ）"
+      }
     },
     "review": {
       "zone_title": "審査操作",
@@ -985,7 +1050,8 @@
         "amount": "金額",
         "payout_ready": "送金準備",
         "content_name": "コンテンツ名",
-        "updated_at": "最終更新"
+        "updated_at": "最終更新",
+        "listing_source": "掲載の出所"
       }
     },
     "field": {
@@ -1143,7 +1209,8 @@
       "listing_generic": "デモ掲載コンテンツ",
       "listing_labels": {
         "lst_platform_hsk1_bundle_001": "サンプル A（プラットフォーム）",
-        "lst_teacher_ppt_pack_001": "サンプル B（教師）"
+        "lst_teacher_ppt_pack_001": "サンプル B（教師 · 配布資料由来）",
+        "lst_demo_kids_course_001": "サンプル C（教師 · Kids ドラフト由来）"
       },
       "user_student": "デモ学習者 A",
       "user_teacher": "デモ教師（アカウント）",
