@@ -1773,6 +1773,17 @@ function getLessonNumber(lesson) {
   ) || 0;
 }
 
+/** Lumina HSK 3.0 一级第 21–22 课为正式课；与 1–20 课相同，保留 lessons.json 的多语言 title / displayTitle，不走旧版复习课 blueprint·theme 覆盖。 */
+function regularLessonMaxNoForTitleOverlay(version, lv) {
+  return String(version || "").toLowerCase() === "hsk3.0" && Number(lv) === 1 ? 22 : 20;
+}
+
+function isRegularLessonSkippingPedagogyTitleOverlay(lesson, version, lv) {
+  const no = getLessonNumber(lesson);
+  const maxNo = regularLessonMaxNoForTitleOverlay(version, lv);
+  return String(lesson?.type || "lesson") !== "review" && no >= 1 && no <= maxNo;
+}
+
 /**
  * Blueprint title resolver
  * Strict current language only
@@ -1797,15 +1808,14 @@ function resolveBlueprintTitle(titleObj, lang) {
   return typeof v === "string" && v.trim() ? v.trim() : "";
 }
 
-function refreshBlueprintDisplayTitles(lessons, lang) {
+function refreshBlueprintDisplayTitles(lessons, lang, version, lv) {
   if (!Array.isArray(lessons)) return;
   const l = lang || getLang();
 
   lessons.forEach((lesson) => {
     if (!lesson || lesson.blueprintTitle == null) return;
     const no = getLessonNumber(lesson);
-    const isRegularL1toL20 = String(lesson.type || "lesson") !== "review" && no >= 1 && no <= 20;
-    if (isRegularL1toL20) return;
+    if (isRegularLessonSkippingPedagogyTitleOverlay(lesson, version, lv)) return;
     if (lesson && lesson.blueprintTitle != null) {
       const nextDisplayTitle = resolveBlueprintTitle(lesson.blueprintTitle, l);
       lesson.displayTitle = nextDisplayTitle;
@@ -1827,16 +1837,14 @@ function refreshBlueprintDisplayTitles(lessons, lang) {
   });
 }
 
-function applyBlueprintTitles(lessons, blueprint) {
+function applyBlueprintTitles(lessons, blueprint, version, lv) {
   if (!Array.isArray(lessons) || !blueprint || typeof blueprint !== "object") {
     return lessons;
   }
 
   return lessons.map((lesson) => {
     const no = getLessonNumber(lesson);
-    const isRegularL1toL20 =
-      String(lesson?.type || "lesson") !== "review" && no >= 1 && no <= 20;
-    if (isRegularL1toL20) return lesson;
+    if (isRegularLessonSkippingPedagogyTitleOverlay(lesson, version, lv)) return lesson;
     const entry = no ? blueprint[String(no)] : null;
     const rawTitle = entry && entry.title != null ? entry.title : null;
     if (!rawTitle) return lesson;
@@ -1849,16 +1857,14 @@ function applyBlueprintTitles(lessons, blueprint) {
   });
 }
 
-function applyVocabDistributionTitles(lessons, lessonThemes) {
+function applyVocabDistributionTitles(lessons, lessonThemes, version, lv) {
   if (!Array.isArray(lessons) || !lessonThemes || typeof lessonThemes !== "object") {
     return lessons;
   }
 
   return lessons.map((lesson) => {
     const no = getLessonNumber(lesson);
-    const isRegularL1toL20 =
-      String(lesson?.type || "lesson") !== "review" && no >= 1 && no <= 20;
-    if (isRegularL1toL20) return lesson;
+    if (isRegularLessonSkippingPedagogyTitleOverlay(lesson, version, lv)) return lesson;
     const theme = no ? (lessonThemes[String(no)] || lessonThemes[no]) : null;
     if (!theme || typeof theme !== "string") return lesson;
 
@@ -2069,12 +2075,17 @@ async function loadLessons() {
 
     // optional theme titles
     if (vocabDist && vocabDist.lessonThemes) {
-      result = applyVocabDistributionTitles(result, vocabDist.lessonThemes);
+      result = applyVocabDistributionTitles(
+        result,
+        vocabDist.lessonThemes,
+        state.version,
+        state.lv
+      );
     }
 
     const blueprint = await loadBlueprint(`hsk${state.lv}`);
     if (blueprint) {
-      result = applyBlueprintTitles(result, blueprint);
+      result = applyBlueprintTitles(result, blueprint, state.version, state.lv);
 
       let vocabList = null;
       try {
@@ -2114,7 +2125,7 @@ async function loadLessons() {
     }
 
     state.lessons = result;
-    refreshBlueprintDisplayTitles(state.lessons, lang);
+    refreshBlueprintDisplayTitles(state.lessons, lang, state.version, state.lv);
     try {
       window.__HSK_LESSONS_DATA_SOURCE__ = lessonsDataSource;
       window.__HSK_TITLE_DIAG_LESSONS__ = state.lessons.slice(0, 3).map((x) => ({
@@ -3186,7 +3197,7 @@ function bindEvents() {
 
       if (!isHSKPageActive()) return;
 
-      refreshBlueprintDisplayTitles(state.lessons, newLang);
+      refreshBlueprintDisplayTitles(state.lessons, newLang, state.version, state.lv);
 
       if (
         state.current &&
