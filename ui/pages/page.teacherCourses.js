@@ -19,7 +19,7 @@ function escapeHtml(s) {
 let __crsLangHandler = /** @type {null | (() => void)} */ (null);
 let __crsRootRef = /** @type {HTMLElement | null} */ (null);
 
-function render(root) {
+function renderCoursesDom(root) {
   root.innerHTML = `
     <div class="teacher-page wrap">
       <p style="margin:0 0 12px;">
@@ -55,11 +55,11 @@ export default function pageTeacherCourses(ctxOrRoot) {
   __crsRootRef = root;
   if (__crsLangHandler) window.removeEventListener("joy:langChanged", __crsLangHandler);
   __crsLangHandler = () => {
-    if (__crsRootRef?.isConnected) render(__crsRootRef);
+    if (__crsRootRef?.isConnected) renderCoursesDom(__crsRootRef);
   };
   window.addEventListener("joy:langChanged", __crsLangHandler);
 
-  render(root);
+  renderCoursesDom(root);
 }
 
 export function mount(ctxOrRoot) {

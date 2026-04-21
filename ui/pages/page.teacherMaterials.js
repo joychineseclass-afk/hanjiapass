@@ -19,7 +19,7 @@ function escapeHtml(s) {
 let __matLangHandler = /** @type {null | (() => void)} */ (null);
 let __matRootRef = /** @type {HTMLElement | null} */ (null);
 
-function render(root) {
+function renderMaterialsDom(root) {
   root.innerHTML = `
     <div class="teacher-page wrap">
       <p style="margin:0 0 12px;">
@@ -55,11 +55,11 @@ export default function pageTeacherMaterials(ctxOrRoot) {
   __matRootRef = root;
   if (__matLangHandler) window.removeEventListener("joy:langChanged", __matLangHandler);
   __matLangHandler = () => {
-    if (__matRootRef?.isConnected) render(__matRootRef);
+    if (__matRootRef?.isConnected) renderMaterialsDom(__matRootRef);
   };
   window.addEventListener("joy:langChanged", __matLangHandler);
 
-  render(root);
+  renderMaterialsDom(root);
 }
 
 export function mount(ctxOrRoot) {
