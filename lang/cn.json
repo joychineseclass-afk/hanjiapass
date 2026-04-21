@@ -688,9 +688,18 @@
       "center": "教师工具中心",
       "subtitle": "平台级入口：由此进入课堂；教材、AI、控制台等能力将在此扩展。"
     },
+    "manage": {
+      "page_kicker": "教师端管理"
+    },
+    "relation_flow": {
+      "title": "三层关系",
+      "materials": "教材 · 私有备课资产",
+      "courses": "课程 · 教学内容结构",
+      "listing": "上架 · 售卖与审核入口"
+    },
     "workspace": {
       "title": "老师工作台",
-      "subtitle": "在此进入课堂、管理备课资料与课程，并处理可售卖上架。",
+      "subtitle": "上课、资料、课程、上架——常用入口集中在这里。",
       "layer_materials": "教材：您的私有资料与课件，用于备课与课堂，不等于已上架商品。",
       "layer_courses": "课程：您组织的教学内容，可为草稿或已可用于教学，未来可转为上架来源。",
       "layer_listing": "上架管理：面向展示与售卖的 listing，含审核与状态；可售卖内容需在此管理并通过审核。"
@@ -730,10 +739,12 @@
       "empty_cell_item_3": "资料默认为个人教学资产，不会自动上架售卖",
       "upload_cta": "上传资料",
       "upload_note": "上传与文件管理功能将在后续版本开放。",
-      "relation_title": "与课程、上架的关系",
-      "relation_item_1": "教材 ≠ 课程：课程用于组织教学内容，教材是您的备课资产。",
-      "relation_item_2": "教材 ≠ 已上架商品：若需售卖，请在「上架与售卖管理」中创建 listing 并走审核。",
-      "relation_item_3": "未来可将资料用于课堂素材，或在您确认后进入上架流程。",
+      "relation_title": "提示",
+      "relation_item_1": "教材≠课程。",
+      "relation_item_2": "教材≠已上架商品。",
+      "relation_item_3": "售卖请进上架管理。",
+      "empty_subhint": "功能开放后，条目将显示在下方列表。",
+      "relation_note_short": "教材≠课程；≠自动商品。",
       "back": "返回工作台"
     },
     "courses_page": {
@@ -753,10 +764,12 @@
       "empty_cell_item_3": "课程不会自动成为商品；售卖请走「上架与售卖管理」与审核",
       "new_cta": "新建课程",
       "new_note": "课程创建与编辑功能将在后续版本开放。",
-      "relation_title": "与教材、上架的关系",
-      "relation_item_1": "课程 ≠ 教材：教材是资料仓库，课程是教学内容的组织方式。",
-      "relation_item_2": "课程 ≠ 自动售卖商品：定价与上架在「上架与售卖管理」中单独完成。",
-      "relation_item_3": "课程整理完成后，可按需进入 listing 流程并接受审核。",
+      "relation_title": "提示",
+      "relation_item_1": "课程≠教材。",
+      "relation_item_2": "课程≠自动上架商品。",
+      "relation_item_3": "售卖请进上架管理。",
+      "empty_subhint": "功能开放后，课程将显示在下方列表。",
+      "relation_note_short": "课程≠教材；≠自动上架。",
       "back": "返回工作台"
     },
     "stage0": {
@@ -766,6 +779,8 @@
     },
     "enter": {
       "classroom": "进入课堂",
+      "classroom_section_title": "进入课堂",
+      "classroom_section_lead": "选择课程、册别与课次，打开投屏与课堂工具。",
       "classroom_desc": "选择课程、册别与课次，进入课堂投屏与课程内工具。",
       "classroom_button": "进入课堂"
     },
@@ -827,8 +842,11 @@
       "demo_user": "演示账号",
       "reset_seed": "重置演示数据",
       "panel_draft_desc": "填写基本信息即可生成草稿；保存后可提交审核并在此跟踪状态。",
-      "identity_title": "当前查看身份",
-      "identity_desc": "切换演示账号可体验学员、老师或审核员视角。",
+      "secondary_fold_title": "演示预留区",
+      "secondary_fold_hint": "权益检测、档案、审核日志、订单等（默认收起）",
+      "identity_title": "当前演示身份",
+      "identity_desc": "选择要预览的角色；数据为本地演示，可随时重置。",
+      "identity_switch": "切换身份",
       "identity_reviewer_active": "当前身份具备审核权限，下方将显示「审核操作」区域。",
       "guide_title": "使用说明",
       "guide_1": "草稿可提交审核；通过后更接近可对外展示状态（仍为演示流程）。",
@@ -886,7 +904,9 @@
       "grant_user": "学员账号",
       "grant_listing": "上架内容",
       "grant_submit": "发放权益",
-      "default_title": "未命名草稿"
+      "default_title": "未命名草稿",
+      "more_settings": "更多设置",
+      "more_settings_hint": "卖家类型、老师档案 ID、计价货币"
     },
     "table": {
       "empty_cell": "—",

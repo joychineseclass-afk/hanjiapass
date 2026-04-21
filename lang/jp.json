@@ -697,9 +697,18 @@
       "center": "教師ハブ",
       "subtitle": "プラットフォーム入口です。授業に入ると教材・AI・コンソールなどのツールが使えます。"
     },
+    "manage": {
+      "page_kicker": "教師向け管理"
+    },
+    "relation_flow": {
+      "title": "三つの層",
+      "materials": "教材 · 個人の準備資産",
+      "courses": "コース · 授業の構成",
+      "listing": "掲載 · 販売と審査の入り口"
+    },
     "workspace": {
       "title": "教師ワークスペース",
-      "subtitle": "授業への入り口、準備資料・コースの管理、販売用 listing の管理をここから。",
+      "subtitle": "授業・教材・コース・掲載まで、よく使う入口をまとめました。",
       "layer_materials": "教材：個人用の資料・スライド・配布物などの準備資産。掲載商品とは別です。",
       "layer_courses": "コース：構成した授業内容。下書き・整理中・授業可能など。後から listing の元になります。",
       "layer_listing": "掲載管理：販売向けの listing と審査・状態。販売するにはここで管理し審査を通します。"
@@ -739,10 +748,12 @@
       "empty_cell_item_3": "資料は基本個人の授業資産であり、自動では販売されません",
       "upload_cta": "資料をアップロード",
       "upload_note": "アップロードとファイル管理は今後のバージョンで提供予定です。",
-      "relation_title": "コース・掲載（販売）との関係",
-      "relation_item_1": "教材 ≠ コース：コースは授業の構成、教材は準備資産です。",
-      "relation_item_2": "教材 ≠ 掲載商品：販売する場合は「掲載・販売管理」で listing を作り審査を受けてください。",
-      "relation_item_3": "将来、授業素材として使うか、listing 化するかはご自身で選べます。",
+      "relation_title": "ヒント",
+      "relation_item_1": "教材≠コース。",
+      "relation_item_2": "教材≠掲載商品。",
+      "relation_item_3": "販売は掲載・販売管理へ。",
+      "empty_subhint": "機能公開後、下の一覧に表示されます。",
+      "relation_note_short": "教材≠コース；≠自動商品。",
       "back": "ワークスペースに戻る"
     },
     "courses_page": {
@@ -762,10 +773,12 @@
       "empty_cell_item_3": "コースは自動では商品になりません。販売は「掲載・販売管理」と審査で行います",
       "new_cta": "新規コース",
       "new_note": "コースの新規作成・編集は今後のバージョンで提供予定です。",
-      "relation_title": "教材・掲載（販売）との関係",
-      "relation_item_1": "コース ≠ 教材：教材は資料置き場、コースは授業内容の組み立てです。",
-      "relation_item_2": "コース ≠ 自動販売：価格と掲載は「掲載・販売管理」で別途行います。",
-      "relation_item_3": "コースが整ったら、必要に応じて listing 化と審査に進めます。",
+      "relation_title": "ヒント",
+      "relation_item_1": "コース≠教材。",
+      "relation_item_2": "コース≠自動販売商品。",
+      "relation_item_3": "販売は掲載管理・審査。",
+      "empty_subhint": "機能公開後、下の一覧に表示されます。",
+      "relation_note_short": "コース≠教材；≠自動掲載。",
       "back": "ワークスペースに戻る"
     },
     "stage0": {
@@ -775,6 +788,8 @@
     },
     "enter": {
       "classroom": "授業モードへ",
+      "classroom_section_title": "授業に入る",
+      "classroom_section_lead": "コース・巻・課を選び、投影と教材ツールを開きます。",
       "classroom_desc": "コース・巻・課を選び、投影モードと教材ツールを開きます。",
       "classroom_button": "授業を開く"
     },
@@ -836,8 +851,11 @@
       "demo_user": "デモアカウント",
       "reset_seed": "デモデータをリセット",
       "panel_draft_desc": "基本情報を入力すると下書きが作成され、審査提出後にここで状態を追跡できます。",
-      "identity_title": "現在の表示アカウント",
-      "identity_desc": "デモアカウントを切り替えて、学習者・教師・審査者の視点を試せます。",
+      "secondary_fold_title": "デモ予約エリア",
+      "secondary_fold_hint": "権限確認・プロフィール・審査ログ・注文など（既定で閉じる）",
+      "identity_title": "現在のデモ身份",
+      "identity_desc": "プレビューする役割を選びます。データはローカルデモでリセット可能です。",
+      "identity_switch": "身份を切り替え",
       "identity_reviewer_active": "現在のアカウントは審査権限があります。下に「審査操作」エリアが表示されます。",
       "guide_title": "ご利用の説明",
       "guide_1": "下書きは審査に提出でき、承認後は公開に近い状態を演習できます（いずれもデモ）。",
@@ -895,7 +913,9 @@
       "grant_user": "学習者アカウント",
       "grant_listing": "掲載コンテンツ",
       "grant_submit": "権限を付与",
-      "default_title": "無題の下書き"
+      "default_title": "無題の下書き",
+      "more_settings": "詳細設定",
+      "more_settings_hint": "販売者タイプ・教師プロフィール ID・通貨"
     },
     "table": {
       "empty_cell": "—",

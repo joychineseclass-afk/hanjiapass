@@ -688,9 +688,18 @@
       "center": "Teacher hub",
       "subtitle": "Platform-level entry points. Open a lesson to access classroom tools, materials, AI, and console."
     },
+    "manage": {
+      "page_kicker": "Teacher admin"
+    },
+    "relation_flow": {
+      "title": "Three layers",
+      "materials": "Materials · private prep",
+      "courses": "Courses · teaching structure",
+      "listing": "Listings · sales & review"
+    },
     "workspace": {
       "title": "Teacher workspace",
-      "subtitle": "Enter class, manage prep assets and courses, and handle sellable listings.",
+      "subtitle": "Classroom, materials, courses, and listings—common actions in one place.",
       "layer_materials": "Materials: your private slides, handouts, and lesson assets for prep and class—not the same as listed products.",
       "layer_courses": "Courses: the teaching content you structure—drafts, in progress, or ready to teach—can later feed listings.",
       "layer_listing": "Listing management: sellable items with review and status. To sell, manage listings here and pass review."
@@ -730,10 +739,12 @@
       "empty_cell_item_3": "Items stay personal teaching assets by default and are not auto-listed for sale",
       "upload_cta": "Upload materials",
       "upload_note": "Upload and file management will open in a future release.",
-      "relation_title": "How this relates to courses and listings",
-      "relation_item_1": "Materials ≠ courses: courses structure what you teach; materials are prep assets.",
-      "relation_item_2": "Materials ≠ listed products: to sell, create a listing under Listings & sales and pass review.",
-      "relation_item_3": "You may later link materials to lessons or start a listing flow when you choose.",
+      "relation_title": "Note",
+      "relation_item_1": "Materials ≠ courses.",
+      "relation_item_2": "Materials ≠ listed products.",
+      "relation_item_3": "To sell, use Listings & sales.",
+      "empty_subhint": "When upload opens, rows will appear below.",
+      "relation_note_short": "Materials ≠ courses; ≠ auto products.",
       "back": "Back to workspace"
     },
     "courses_page": {
@@ -753,10 +764,12 @@
       "empty_cell_item_3": "Courses don’t auto-become products; selling uses Listings & sales and review",
       "new_cta": "New course",
       "new_note": "Course creation and editing will open in a future release.",
-      "relation_title": "How this relates to materials and listings",
-      "relation_item_1": "Courses ≠ materials: materials are files; courses organize teaching content.",
-      "relation_item_2": "Courses ≠ auto-sellable: pricing and listing happen under Listings & sales.",
-      "relation_item_3": "When a course is ready, you can move it into the listing flow and review on purpose.",
+      "relation_title": "Note",
+      "relation_item_1": "Courses ≠ materials.",
+      "relation_item_2": "Courses ≠ auto-listed for sale.",
+      "relation_item_3": "Use Listings & sales for selling.",
+      "empty_subhint": "When creation opens, courses will appear below.",
+      "relation_note_short": "Courses ≠ materials; ≠ auto listings.",
       "back": "Back to workspace"
     },
     "stage0": {
@@ -766,6 +779,8 @@
     },
     "enter": {
       "classroom": "Enter classroom",
+      "classroom_section_title": "Enter classroom",
+      "classroom_section_lead": "Pick course, level, and lesson—open projection and lesson tools.",
       "classroom_desc": "Pick a course, level, and lesson to open classroom mode and lesson tools.",
       "classroom_button": "Open classroom"
     },
@@ -827,8 +842,11 @@
       "demo_user": "Demo account",
       "reset_seed": "Reset demo data",
       "panel_draft_desc": "Fill in the basics to create a draft, then submit for review and track status here.",
-      "identity_title": "Viewing as",
-      "identity_desc": "Switch demo accounts to preview learner, teacher, or reviewer perspectives.",
+      "secondary_fold_title": "Demo placeholders",
+      "secondary_fold_hint": "Entitlements, profile, review log, orders (collapsed by default)",
+      "identity_title": "Demo identity",
+      "identity_desc": "Choose the role to preview. Data is local demo and can be reset.",
+      "identity_switch": "Switch identity",
       "identity_reviewer_active": "This account can review. A Reviewer actions section appears below.",
       "guide_title": "How this preview works",
       "guide_1": "Drafts can be submitted for review; approval simulates a publish-ready state (still a demo).",
@@ -886,7 +904,9 @@
       "grant_user": "Learner account",
       "grant_listing": "Listing",
       "grant_submit": "Grant access",
-      "default_title": "Untitled draft"
+      "default_title": "Untitled draft",
+      "more_settings": "More settings",
+      "more_settings_hint": "Seller type, teacher profile ID, currency"
     },
     "table": {
       "empty_cell": "—",

@@ -688,9 +688,18 @@
       "center": "교사 도구 센터",
       "subtitle": "플랫폼 허브입니다. 수업에 들어간 뒤 교재·AI·콘솔 등 강의실 도구를 사용합니다."
     },
+    "manage": {
+      "page_kicker": "교사 관리"
+    },
+    "relation_flow": {
+      "title": "세 단계 관계",
+      "materials": "교재 · 개인 준비 자산",
+      "courses": "코스 · 수업 구조",
+      "listing": "등록 · 판매·심사 입구"
+    },
     "workspace": {
       "title": "교사 워크스페이스",
-      "subtitle": "수업 진입, 준비 자료·코스 관리, 판매용 등록까지 한곳에서 시작합니다.",
+      "subtitle": "수업·교재·코스·등록까지 자주 쓰는 입구를 모았습니다.",
       "layer_materials": "교재: 개인 자료·강의안·PPT 등 준비 자산. 기본적으로 판매 상품이 아닙니다.",
       "layer_courses": "코스: 구성한 수업 내용. 초안·정리 중·수업 가능 상태가 있으며, 나중에 등록 소스가 될 수 있습니다.",
       "layer_listing": "등록 관리: 전시·판매용 listing, 심사·상태 관리. 판매하려면 여기서 관리하고 심사를 거칩니다."
@@ -730,10 +739,12 @@
       "empty_cell_item_3": "자료는 기본적으로 개인 교수 자산이며 자동으로 판매되지 않습니다",
       "upload_cta": "자료 업로드",
       "upload_note": "업로드·파일 관리 기능은 이후 버전에서 제공됩니다.",
-      "relation_title": "코스·등록(판매)과의 관계",
-      "relation_item_1": "교재 ≠ 코스: 코스는 수업 구성, 교재는 준비 자산입니다.",
-      "relation_item_2": "교재 ≠ 등록 상품: 판매하려면 「등록·판매 관리」에서 listing을 만들고 심사를 받으세요.",
-      "relation_item_3": "나중에 수업 자료로 쓰거나, 원하실 때 등록·판매 흐름에 넣을 수 있습니다.",
+      "relation_title": "안내",
+      "relation_item_1": "교재≠코스.",
+      "relation_item_2": "교재≠등록 상품.",
+      "relation_item_3": "판매는 등록·판매 관리에서.",
+      "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
+      "relation_note_short": "교재≠코스;≠자동 상품.",
       "back": "워크스페이스로 돌아가기"
     },
     "courses_page": {
@@ -753,10 +764,12 @@
       "empty_cell_item_3": "코스는 자동으로 상품이 되지 않습니다. 판매는 「등록·판매 관리」와 심사를 거칩니다",
       "new_cta": "새 코스",
       "new_note": "코스 생성·편집 기능은 이후 버전에서 제공됩니다.",
-      "relation_title": "교재·등록(판매)과의 관계",
-      "relation_item_1": "코스 ≠ 교재: 교재는 자료 보관함, 코스는 수업 내용의 구성입니다.",
-      "relation_item_2": "코스 ≠ 자동 판매 상품: 가격·등록은 「등록·판매 관리」에서 따로 합니다.",
-      "relation_item_3": "코스 정리가 끝나면 필요 시 listing 절차와 심사를 진행할 수 있습니다.",
+      "relation_title": "안내",
+      "relation_item_1": "코스≠교재.",
+      "relation_item_2": "코스≠자동 판매 상품.",
+      "relation_item_3": "판매는 등록 관리·심사.",
+      "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
+      "relation_note_short": "코스≠교재;≠자동 등록.",
       "back": "워크스페이스로 돌아가기"
     },
     "stage0": {
@@ -766,6 +779,8 @@
     },
     "enter": {
       "classroom": "수업 모드 들어가기",
+      "classroom_section_title": "수업 들어가기",
+      "classroom_section_lead": "과정·권·차시를 고르고 수업 화면과 도구를 엽니다.",
       "classroom_desc": "과정·권·차시를 선택해 수업 화면과 과정별 도구를 엽니다.",
       "classroom_button": "수업 시작"
     },
@@ -827,8 +842,11 @@
       "demo_user": "데모 계정",
       "reset_seed": "데모 데이터 초기화",
       "panel_draft_desc": "기본 정보를 입력하면 초안이 만들어지며, 이후 심사를 제출하고 여기서 상태를 추적합니다.",
-      "identity_title": "현재 보기 계정",
-      "identity_desc": "데모 계정을 바꿔 학습자·강사·심사자 관점을 미리 볼 수 있습니다.",
+      "secondary_fold_title": "데모 예약 영역",
+      "secondary_fold_hint": "권한 확인·프로필·심사 로그·주문 등(기본 접힘)",
+      "identity_title": "현재 데모 신분",
+      "identity_desc": "미리 볼 역할을 고릅니다. 데이터는 로컬 데모이며 초기화할 수 있습니다.",
+      "identity_switch": "신분 바꾸기",
       "identity_reviewer_active": "현재 계정은 심사 권한이 있으며 아래에 「심사 작업」영역이 표시됩니다.",
       "guide_title": "이용 안내",
       "guide_1": "초안은 심사로 제출할 수 있으며, 승인되면 공개에 가까운 상태를 연습할 수 있습니다(여전히 데모).",
@@ -886,7 +904,9 @@
       "grant_user": "학습자 계정",
       "grant_listing": "등록 콘텐츠",
       "grant_submit": "권한 부여",
-      "default_title": "제목 없는 초안"
+      "default_title": "제목 없는 초안",
+      "more_settings": "추가 설정",
+      "more_settings_hint": "판매자 유형·교사 프로필 ID·통화"
     },
     "table": {
       "empty_cell": "—",

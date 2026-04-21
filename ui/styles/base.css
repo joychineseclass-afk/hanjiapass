@@ -667,6 +667,279 @@ a.teacher-back-link:hover{
 }
 
 /* =========================================================
+   Teacher workspace (#teacher) — round 2
+   ========================================================= */
+.teacher-page-kicker{
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.teacher-page-kicker--shell{
+  margin-top: 4px;
+}
+.teacher-hero--compact .hero .title{
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.08;
+}
+.teacher-hero-lead{
+  max-width: 52ch;
+}
+.teacher-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.teacher-relation-flow{
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(67, 56, 202, 0.18);
+  background: linear-gradient(180deg, #fafbff 0%, #f8fafc 100%);
+  border-radius: 14px;
+}
+.teacher-relation-flow-title{
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #4338ca;
+  letter-spacing: 0.02em;
+}
+.teacher-relation-flow-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.teacher-flow-step{
+  flex: 1 1 140px;
+  min-width: 120px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+.teacher-flow-step-label{
+  font-size: 13px;
+  font-weight: 750;
+  color: #334155;
+  line-height: 1.35;
+}
+.teacher-flow-arrow{
+  color: #94a3b8;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+.teacher-tile--primary{
+  grid-column: 1 / -1;
+  border: 2px solid #c7d2fe;
+  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+.teacher-tile--primary .teacher-tile-title{
+  font-size: 1.2rem;
+}
+.teacher-classroom-form--primary{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+.teacher-tile--muted{
+  opacity: 0.96;
+}
+.teacher-tile--muted .teacher-tile-desc{
+  color: #64748b;
+}
+.teacher-tile-title--inline{
+  margin: 0;
+}
+a.teacher-hub-cta,
+button.teacher-hub-cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+}
+a.teacher-hub-cta:hover,
+button.teacher-hub-cta:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.teacher-hub-cta--primary{
+  grid-column: 1 / -1;
+  justify-self: start;
+  background: #4f46e5;
+  color: #fff !important;
+  border-color: #4338ca;
+}
+.teacher-hub-cta--secondary{
+  background: #0f172a;
+  color: #f8fafc !important;
+}
+.teacher-hub-cta--accent{
+  background: #312e81;
+  color: #eef2ff !important;
+  border-color: #3730a3;
+}
+
+/* =========================================================
+   Teacher admin shell (materials / courses / listing outer)
+   ========================================================= */
+.teacher-admin-shell{
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 48px;
+}
+.teacher-admin-back{
+  margin: 0 0 6px;
+}
+.teacher-admin-header{
+  padding: 18px 20px;
+}
+.teacher-admin-title{
+  margin: 0 0 6px;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.92);
+}
+.teacher-admin-subtitle{
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  color: rgba(51, 65, 85, 0.95);
+}
+.teacher-admin-tagline{
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 62ch;
+}
+.teacher-admin-toolbar{
+  margin-top: 14px;
+  padding: 14px 18px;
+}
+.teacher-admin-toolbar-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+.teacher-admin-btn{
+  font-family: inherit;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  font-size: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #0f172a;
+  color: #f8fafc;
+}
+.teacher-admin-btn--disabled,
+.teacher-admin-btn:disabled{
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+.teacher-admin-toolbar-hint{
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  flex: 1 1 200px;
+  line-height: 1.45;
+}
+.teacher-admin-list-card{
+  margin-top: 14px;
+  padding: 16px 18px;
+}
+.teacher-admin-list-heading{
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.9);
+}
+.teacher-admin-empty{
+  padding: 24px 18px 28px;
+  text-align: center;
+}
+.teacher-admin-empty-title{
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.9);
+}
+.teacher-admin-empty-sub{
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #64748b;
+}
+.teacher-admin-empty-intro{
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #475569;
+  text-align: left;
+  max-width: 48ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.teacher-admin-empty-list{
+  margin: 0 auto;
+  padding-left: 1.2rem;
+  max-width: 48ch;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+}
+.teacher-admin-empty-list li{
+  margin: 5px 0;
+}
+.teacher-info-note{
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+.teacher-info-note-title{
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.teacher-info-note-lead{
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+.teacher-info-note-list{
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #64748b;
+}
+.teacher-info-note-list li{
+  margin: 3px 0;
+}
+
+/* =========================================================
    Listing management Stage 0 (#lumina-teacher-stage0)
    ========================================================= */
 .lts0-page{
@@ -741,12 +1014,20 @@ a.teacher-back-link:hover{
   color: #64748b;
 }
 .lts0-form-draft{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+}
+.lts0-form-primary-grid{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 10px;
   align-items: end;
 }
-.lts0-form-draft label{
+.lts0-form-draft label,
+.lts0-form-primary-grid label,
+.lts0-form-more-grid label{
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -755,11 +1036,55 @@ a.teacher-back-link:hover{
   color: #475569;
 }
 .lts0-form-draft input,
-.lts0-form-draft select{
+.lts0-form-draft select,
+.lts0-form-primary-grid input,
+.lts0-form-primary-grid select,
+.lts0-form-more-grid input,
+.lts0-form-more-grid select{
   font: inherit;
   padding: 6px 8px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
+}
+.lts0-form-more{
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 4px 10px 10px;
+  background: #fafafa;
+}
+.lts0-form-more-summary{
+  cursor: pointer;
+  list-style: none;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lts0-form-more-summary::-webkit-details-marker{
+  display: none;
+}
+.lts0-form-more-title{
+  font-size: 13px;
+  font-weight: 800;
+  color: #334155;
+}
+.lts0-form-more-hint{
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+.lts0-form-more-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  align-items: end;
+  padding: 0 4px 4px;
+}
+.lts0-form-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 .lts0-btn{
   font-family: inherit;
@@ -1065,4 +1390,52 @@ a.teacher-back-link:hover{
   padding: 6px 8px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
+}
+.lts0-fold-secondary{
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #fcfcfd;
+}
+.lts0-fold-secondary-summary{
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+.lts0-fold-secondary-summary::-webkit-details-marker{
+  display: none;
+}
+.lts0-fold-secondary-title{
+  font-size: 15px;
+  font-weight: 900;
+  color: #334155;
+}
+.lts0-fold-secondary-hint{
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 650;
+}
+.lts0-fold-secondary-body{
+  padding: 0 18px 8px;
+  border-top: 1px solid #e2e8f0;
+}
+.lts0-secondary-chunk{
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.lts0-secondary-chunk:last-child{
+  border-bottom: none;
+}
+.lts0-chunk-title{
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #334155;
+}
+.lts0-chunk-banner{
+  margin: 0 0 8px;
 }

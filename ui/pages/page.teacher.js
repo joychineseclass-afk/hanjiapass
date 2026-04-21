@@ -1,5 +1,5 @@
 // /ui/pages/page.teacher.js
-// 老师工作台入口：教材 / 课程 / Listing 三层；文案经 safeUiText。
+// 老师工作台：轻量关系流 + 统一入口 CTA；文案经 safeUiText。
 
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
@@ -23,23 +23,36 @@ let __teacherRootRef = /** @type {HTMLElement | null} */ (null);
 function renderTeacherHub(root) {
   root.innerHTML = `
     <div class="teacher-page wrap">
-      <section class="teacher-hero card teacher-center-page">
+      <section class="teacher-hero card teacher-center-page teacher-hero--compact">
+        <p class="teacher-page-kicker">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
         <div class="hero">
           <h2 class="title">${escapeHtml(tx("teacher.workspace.title"))}</h2>
-          <p class="desc">${escapeHtml(tx("teacher.workspace.subtitle"))}</p>
-          <ul class="teacher-workspace-layers">
-            <li>${escapeHtml(tx("teacher.workspace.layer_materials"))}</li>
-            <li>${escapeHtml(tx("teacher.workspace.layer_courses"))}</li>
-            <li>${escapeHtml(tx("teacher.workspace.layer_listing"))}</li>
-          </ul>
+          <p class="desc teacher-hero-lead">${escapeHtml(tx("teacher.workspace.subtitle"))}</p>
+        </div>
+      </section>
+
+      <section class="card teacher-relation-flow" aria-label="${escapeHtml(tx("teacher.relation_flow.title"))}">
+        <p class="teacher-relation-flow-title">${escapeHtml(tx("teacher.relation_flow.title"))}</p>
+        <div class="teacher-relation-flow-row">
+          <div class="teacher-flow-step">
+            <span class="teacher-flow-step-label">${escapeHtml(tx("teacher.relation_flow.materials"))}</span>
+          </div>
+          <span class="teacher-flow-arrow" aria-hidden="true">→</span>
+          <div class="teacher-flow-step">
+            <span class="teacher-flow-step-label">${escapeHtml(tx("teacher.relation_flow.courses"))}</span>
+          </div>
+          <span class="teacher-flow-arrow" aria-hidden="true">→</span>
+          <div class="teacher-flow-step">
+            <span class="teacher-flow-step-label">${escapeHtml(tx("teacher.relation_flow.listing"))}</span>
+          </div>
         </div>
       </section>
 
       <section class="teacher-grid">
-        <article class="teacher-tile card teacher-tile-classroom">
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.enter.classroom"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.enter.classroom_desc"))}</p>
-          <div class="teacher-classroom-form">
+        <article class="teacher-tile card teacher-tile-classroom teacher-tile--primary">
+          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.enter.classroom_section_title"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.enter.classroom_section_lead"))}</p>
+          <div class="teacher-classroom-form teacher-classroom-form--primary">
             <label class="teacher-field">
               <span>${escapeHtml(tx("teacher.label.course"))}</span>
               <select id="teacherCourseSelect">
@@ -59,40 +72,40 @@ function renderTeacherHub(root) {
               <span>${escapeHtml(tx("teacher.label.lesson"))}</span>
               <input id="teacherLessonInput" type="number" min="1" value="1" />
             </label>
-            <button type="button" id="teacherEnterClassroomBtn" class="teacher-enter-btn">
+            <button type="button" id="teacherEnterClassroomBtn" class="teacher-hub-cta teacher-hub-cta--primary">
               ${escapeHtml(tx("teacher.enter.classroom_button"))}
             </button>
           </div>
         </article>
 
-        <article class="teacher-tile card">
+        <article class="teacher-tile card teacher-tile--entry">
           <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.hub.materials.title"))}</h3>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.materials.desc"))}</p>
-          <a class="teacher-entry-cta" href="#teacher-materials">${escapeHtml(tx("teacher.hub.materials.cta"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-materials">${escapeHtml(tx("teacher.hub.materials.cta"))}</a>
         </article>
 
-        <article class="teacher-tile card">
+        <article class="teacher-tile card teacher-tile--entry">
           <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.hub.courses.title"))}</h3>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.courses.desc"))}</p>
-          <a class="teacher-entry-cta" href="#teacher-courses">${escapeHtml(tx("teacher.hub.courses.cta"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(tx("teacher.hub.courses.cta"))}</a>
         </article>
 
-        <article class="teacher-tile card">
+        <article class="teacher-tile card teacher-tile--entry">
           <div class="teacher-tile-head">
-            <h3 class="teacher-tile-title" style="margin:0;">${escapeHtml(tx("teacher.hub.listing.title"))}</h3>
+            <h3 class="teacher-tile-title teacher-tile-title--inline">${escapeHtml(tx("teacher.hub.listing.title"))}</h3>
             <span class="teacher-hub-badge">${escapeHtml(tx("teacher.hub.listing.badge"))}</span>
           </div>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.listing.desc"))}</p>
-          <a class="teacher-entry-cta" href="#lumina-teacher-stage0">${escapeHtml(tx("teacher.hub.listing.cta"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#lumina-teacher-stage0">${escapeHtml(tx("teacher.hub.listing.cta"))}</a>
         </article>
 
-        <article class="teacher-tile card">
+        <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
           <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.ai.assistant"))}</h3>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.ai.desc"))}</p>
           <p class="teacher-tile-scope">${escapeHtml(tx("teacher.ai.scope_note"))}</p>
         </article>
 
-        <article class="teacher-tile card">
+        <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
           <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.console.title"))}</h3>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.console.desc"))}</p>
           <p class="teacher-tile-scope">${escapeHtml(tx("teacher.console.scope_note"))}</p>

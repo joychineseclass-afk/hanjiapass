@@ -1,4 +1,4 @@
-// 我的课程：管理页骨架（列表壳 + 空状态 + 禁用 CTA）；文案经 safeUiText。
+// 我的课程：与教材页统一的教师管理页模板；文案经 safeUiText。
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
@@ -21,28 +21,29 @@ let __crsRootRef = /** @type {HTMLElement | null} */ (null);
 
 function renderCoursesDom(root) {
   root.innerHTML = `
-    <div class="teacher-page wrap teacher-manage-page">
-      <p class="teacher-manage-back">
+    <div class="teacher-page wrap teacher-manage-page teacher-admin-shell">
+      <p class="teacher-admin-back">
         <a href="#teacher" class="teacher-back-link">${escapeHtml(tx("teacher.courses_page.back"))}</a>
       </p>
+      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
 
-      <header class="card teacher-manage-header">
-        <h2 class="title">${escapeHtml(tx("teacher.courses_page.title"))}</h2>
-        <p class="desc">${escapeHtml(tx("teacher.courses_page.subtitle"))}</p>
-        <p class="teacher-manage-tagline">${escapeHtml(tx("teacher.courses_page.tagline"))}</p>
+      <header class="card teacher-admin-header">
+        <h1 class="teacher-admin-title">${escapeHtml(tx("teacher.courses_page.title"))}</h1>
+        <p class="teacher-admin-subtitle">${escapeHtml(tx("teacher.courses_page.subtitle"))}</p>
+        <p class="teacher-admin-tagline">${escapeHtml(tx("teacher.courses_page.tagline"))}</p>
       </header>
 
-      <section class="card teacher-manage-toolbar" aria-label="${escapeHtml(tx("teacher.courses_page.new_cta"))}">
-        <div class="teacher-manage-toolbar-row">
-          <button type="button" class="teacher-manage-cta teacher-manage-cta--disabled" disabled>
+      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(tx("teacher.courses_page.new_cta"))}">
+        <div class="teacher-admin-toolbar-row">
+          <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled>
             ${escapeHtml(tx("teacher.courses_page.new_cta"))}
           </button>
-          <p class="teacher-manage-toolbar-hint">${escapeHtml(tx("teacher.courses_page.new_note"))}</p>
+          <p class="teacher-admin-toolbar-hint">${escapeHtml(tx("teacher.courses_page.new_note"))}</p>
         </div>
       </section>
 
-      <section class="card teacher-manage-list" aria-labelledby="teacher-courses-list-title">
-        <h3 id="teacher-courses-list-title" class="teacher-manage-list-title">${escapeHtml(tx("teacher.courses_page.list_title"))}</h3>
+      <section class="card teacher-admin-list-card" aria-labelledby="teacher-courses-list-title">
+        <h2 id="teacher-courses-list-title" class="teacher-admin-list-heading">${escapeHtml(tx("teacher.courses_page.list_title"))}</h2>
         <div class="teacher-manage-table-scroll">
           <table class="teacher-manage-table">
             <thead>
@@ -57,10 +58,11 @@ function renderCoursesDom(root) {
             <tbody>
               <tr class="teacher-manage-empty-row">
                 <td colspan="5">
-                  <div class="teacher-manage-empty" role="status">
-                    <p class="teacher-manage-empty-title">${escapeHtml(tx("teacher.courses_page.empty_cell_title"))}</p>
-                    <p class="teacher-manage-empty-intro">${escapeHtml(tx("teacher.courses_page.empty_cell_intro"))}</p>
-                    <ul class="teacher-manage-empty-list">
+                  <div class="teacher-admin-empty" role="status">
+                    <p class="teacher-admin-empty-title">${escapeHtml(tx("teacher.courses_page.empty_cell_title"))}</p>
+                    <p class="teacher-admin-empty-sub">${escapeHtml(tx("teacher.courses_page.empty_subhint"))}</p>
+                    <p class="teacher-admin-empty-intro">${escapeHtml(tx("teacher.courses_page.empty_cell_intro"))}</p>
+                    <ul class="teacher-admin-empty-list">
                       <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_1"))}</li>
                       <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_2"))}</li>
                       <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_3"))}</li>
@@ -73,14 +75,15 @@ function renderCoursesDom(root) {
         </div>
       </section>
 
-      <section class="card teacher-manage-relation">
-        <h3 class="teacher-manage-relation-title">${escapeHtml(tx("teacher.courses_page.relation_title"))}</h3>
-        <ul class="teacher-manage-relation-list">
+      <aside class="teacher-info-note">
+        <p class="teacher-info-note-title">${escapeHtml(tx("teacher.courses_page.relation_title"))}</p>
+        <p class="teacher-info-note-lead">${escapeHtml(tx("teacher.courses_page.relation_note_short"))}</p>
+        <ul class="teacher-info-note-list">
           <li>${escapeHtml(tx("teacher.courses_page.relation_item_1"))}</li>
           <li>${escapeHtml(tx("teacher.courses_page.relation_item_2"))}</li>
           <li>${escapeHtml(tx("teacher.courses_page.relation_item_3"))}</li>
         </ul>
-      </section>
+      </aside>
     </div>
   `;
   i18n.apply?.(root);
