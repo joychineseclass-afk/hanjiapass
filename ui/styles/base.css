@@ -456,3 +456,67 @@ button{
 .lumina-char-text{
   font-size:16px;
 }
+
+/* =========================================================
+   Teacher workspace hub (materials / courses / listings)
+   ========================================================= */
+.teacher-workspace-layers{
+  margin: 12px 0 0;
+  padding-left: 1.25rem;
+  color: rgba(71, 85, 105, 0.95);
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 62ch;
+}
+.teacher-workspace-layers li{
+  margin: 6px 0;
+}
+.teacher-tile-head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.teacher-hub-badge{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #4338ca;
+  background: #eef2ff;
+  border: 1px solid rgba(67, 56, 202, 0.2);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+a.teacher-entry-cta{
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 16px;
+  border-radius: 12px;
+  background: #0f172a;
+  color: #f8fafc !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+a.teacher-entry-cta:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.teacher-tile-scope{
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+a.teacher-back-link{
+  font-size: 14px;
+  font-weight: 650;
+  color: #4338ca;
+  text-decoration: none;
+}
+a.teacher-back-link:hover{
+  text-decoration: underline;
+}

@@ -688,9 +688,52 @@
       "center": "教师工具中心",
       "subtitle": "平台级入口：由此进入课堂；教材、AI、控制台等能力将在此扩展。"
     },
+    "workspace": {
+      "title": "老师工作台",
+      "subtitle": "在此进入课堂、管理备课资料与课程，并处理可售卖上架。",
+      "layer_materials": "教材：您的私有资料与课件，用于备课与课堂，不等于已上架商品。",
+      "layer_courses": "课程：您组织的教学内容，可为草稿或已可用于教学，未来可转为上架来源。",
+      "layer_listing": "上架管理：面向展示与售卖的 listing，含审核与状态；可售卖内容需在此管理并通过审核。"
+    },
+    "hub": {
+      "materials": {
+        "title": "我的教材",
+        "desc": "管理私有讲义、PPT、教案与课堂素材。资料默认不对外售卖。",
+        "cta": "进入教材库"
+      },
+      "courses": {
+        "title": "我的课程",
+        "desc": "创建与管理课程结构：草稿、整理中或已可用于教学。课程不等于 listing。",
+        "cta": "进入课程管理"
+      },
+      "listing": {
+        "title": "上架与售卖管理",
+        "desc": "管理可售卖对象：课程包、资料、课件的审核与上架状态。（支付与分账尚未接入）",
+        "cta": "进入上架管理",
+        "badge": "预备区 · Stage 0"
+      }
+    },
+    "materials_page": {
+      "title": "我的教材",
+      "subtitle": "管理您的私有教学资料与备课资产。",
+      "empty": "暂无资料。完整上传与编辑能力即将上线。",
+      "upload_cta": "上传资料",
+      "upload_note": "上传功能即将上线。",
+      "relation_note": "说明：此处为备课资产层。资料不会自动成为可售卖商品；若需售卖，请在「上架与售卖管理」中创建 listing 并走审核。",
+      "back": "返回工作台"
+    },
+    "courses_page": {
+      "title": "我的课程",
+      "subtitle": "管理您创建与组织的课程教学内容。",
+      "empty": "暂无课程。新建与编辑能力即将上线。",
+      "new_cta": "新建课程",
+      "new_note": "新建功能即将上线。",
+      "relation_note": "说明：此处为课程管理层。课程不会自动上架；可售卖需在「上架与售卖管理」中单独配置 listing。",
+      "back": "返回工作台"
+    },
     "stage0": {
       "commerce": {
-        "skeleton": "教师商业化 Stage 0（数据占位，未接支付）"
+        "skeleton": "上架与售卖管理（Stage 0 预备区）"
       }
     },
     "enter": {
@@ -709,15 +752,17 @@
     },
     "my": {
       "materials": "我的教材",
-      "materials_desc": "管理私有教材与课件。（即将上线）"
+      "materials_desc": "私有讲义、PPT、教案等备课资产；默认不对外售卖。"
     },
     "ai": {
       "assistant": "AI 教学助手",
-      "desc": "用 AI 设计练习、生成情境对话。（即将上线）"
+      "desc": "用 AI 设计练习、生成情境对话。（即将上线）",
+      "scope_note": "教学环节辅助工具，不用于管理教材、课程或上架 listing。"
     },
     "console": {
       "title": "课堂控制台",
-      "desc": "控制课堂进度、点名、投票等。（即将上线）"
+      "desc": "控制课堂进度、点名、投票等。（即将上线）",
+      "scope_note": "课堂执行与控场工具，不用于编辑教材、课程或商品 listing。"
     }
   },
   "classroom": {
@@ -746,8 +791,9 @@
       "fallback_label": "字段"
     },
     "stage0": {
-      "title": "教师商业化 · Stage 0 骨架",
-      "subtitle": "业务规则与数据占位。当前未接入任何支付 API。数据保存在本地，可重置为演示种子。",
+      "title": "上架与售卖管理",
+      "subtitle": "管理 listing、审核状态与老师档案占位。当前为 Stage 0：无真实支付与分账；数据可在本地保存并重置演示数据。",
+      "back_workspace": "返回老师工作台",
       "demo_user": "演示账号",
       "reset_seed": "重置为种子数据",
       "access_title": "学习权益检测",
@@ -760,8 +806,8 @@
       "listing_title": "上架内容",
       "new_draft_title": "新建草稿",
       "review_log_title": "审核记录",
-      "entitlement_title": "学习权益 · 手动发放",
-      "order_title": "订单占位",
+      "entitlement_title": "学习权益（占位 · 手动发放演示）",
+      "order_title": "订单（占位）",
       "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。"
     },
     "review": {

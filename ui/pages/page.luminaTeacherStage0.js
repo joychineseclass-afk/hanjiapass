@@ -1,5 +1,6 @@
 /**
- * Lumina 教师模块 Stage 0 — 骨架页。文案与枚举显示走全局 i18n + commerceDisplayLabels。
+ * 上架与售卖管理（Stage 0）：listing / 审核 / 老师档案等占位，本地演示数据。
+ * 文案与枚举显示走 commerceDisplayLabels + i18n。
  */
 
 import {
@@ -200,6 +201,9 @@ function renderPage(root, ctx) {
   root.innerHTML = `
     <div class="wrap" style="padding-bottom:48px;">
       <section class="card">
+        <p style="margin:0 0 10px;">
+          <a href="#teacher" class="teacher-back-link">${escapeHtml(commerceT("commerce.stage0.back_workspace"))}</a>
+        </p>
         <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
         <p class="desc">${escapeHtml(commerceT("commerce.stage0.subtitle"))}</p>
         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px;">

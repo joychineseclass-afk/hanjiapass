@@ -688,9 +688,52 @@
       "center": "Teacher hub",
       "subtitle": "Platform-level entry points. Open a lesson to access classroom tools, materials, AI, and console."
     },
+    "workspace": {
+      "title": "Teacher workspace",
+      "subtitle": "Enter class, manage prep assets and courses, and handle sellable listings.",
+      "layer_materials": "Materials: your private slides, handouts, and lesson assets for prep and class—not the same as listed products.",
+      "layer_courses": "Courses: the teaching content you structure—drafts, in progress, or ready to teach—can later feed listings.",
+      "layer_listing": "Listing management: sellable items with review and status. To sell, manage listings here and pass review."
+    },
+    "hub": {
+      "materials": {
+        "title": "My materials",
+        "desc": "Private handouts, slides, lesson plans, and classroom assets. Not public storefront items by default.",
+        "cta": "Open materials library"
+      },
+      "courses": {
+        "title": "My courses",
+        "desc": "Create and manage course structure—drafts, in progress, or ready to teach. A course is not a listing.",
+        "cta": "Open course management"
+      },
+      "listing": {
+        "title": "Listings & sales",
+        "desc": "Manage sellable courses, bundles, and materials—review and listing status. (No live payments yet.)",
+        "cta": "Open listing hub",
+        "badge": "Preview · Stage 0"
+      }
+    },
+    "materials_page": {
+      "title": "My materials",
+      "subtitle": "Manage your private teaching assets and prep library.",
+      "empty": "No items yet. Full upload and editing is coming soon.",
+      "upload_cta": "Upload materials",
+      "upload_note": "Upload is coming soon.",
+      "relation_note": "This is your prep-asset layer. Materials do not auto-become products. To sell, create a listing under Listings & sales and go through review.",
+      "back": "Back to workspace"
+    },
+    "courses_page": {
+      "title": "My courses",
+      "subtitle": "Manage the course content you create and organize.",
+      "empty": "No courses yet. Create and edit flows are coming soon.",
+      "new_cta": "New course",
+      "new_note": "Create is coming soon.",
+      "relation_note": "This is your course layer. Courses are not auto-listed. Configure sellable listings separately under Listings & sales.",
+      "back": "Back to workspace"
+    },
     "stage0": {
       "commerce": {
-        "skeleton": "Commerce Stage 0 (data placeholders, no live payments)"
+        "skeleton": "Listings & sales (Stage 0 preview)"
       }
     },
     "enter": {
@@ -709,15 +752,17 @@
     },
     "my": {
       "materials": "My materials",
-      "materials_desc": "Manage your private teaching materials. (Coming soon)"
+      "materials_desc": "Private handouts, slides, and lesson plans—not public storefront items by default."
     },
     "ai": {
       "assistant": "AI teaching assistant",
-      "desc": "Design practice and dialogues with AI. (Coming soon)"
+      "desc": "Design practice and dialogues with AI. (Coming soon)",
+      "scope_note": "In-class helper—not for managing materials, courses, or listings."
     },
     "console": {
       "title": "Classroom console",
-      "desc": "Lesson flow, attendance, polls, and more. (Coming soon)"
+      "desc": "Lesson flow, attendance, polls, and more. (Coming soon)",
+      "scope_note": "Live lesson controls—not for editing materials, courses, or sellable listings."
     }
   },
   "classroom": {
@@ -746,8 +791,9 @@
       "fallback_label": "Field"
     },
     "stage0": {
-      "title": "Teacher commerce · Stage 0 shell",
-      "subtitle": "Business rules and placeholder data. No payment APIs are connected. Stored locally; you can reset demo seed data.",
+      "title": "Listings & sales",
+      "subtitle": "Manage listings, review status, and teacher profile placeholders. Stage 0: no live payments or payouts. Data is local; you can reset demo seed.",
+      "back_workspace": "Back to teacher workspace",
       "demo_user": "Demo account",
       "reset_seed": "Reset to seed data",
       "access_title": "Entitlement check",
@@ -760,7 +806,7 @@
       "listing_title": "Listings",
       "new_draft_title": "New draft",
       "review_log_title": "Review log",
-      "entitlement_title": "Entitlements · manual grant",
+      "entitlement_title": "Learning access (placeholder · manual grant demo)",
       "order_title": "Orders (placeholder)",
       "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration."
     },
