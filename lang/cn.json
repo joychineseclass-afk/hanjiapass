@@ -683,6 +683,63 @@
     "restaurant": "餐厅",
     "transport": "交通"
   },
+  "teacher": {
+    "tools": {
+      "center": "教师工具中心",
+      "subtitle": "平台级入口：由此进入课堂；教材、AI、控制台等能力将在此扩展。"
+    },
+    "stage0": {
+      "commerce": {
+        "skeleton": "教师商业化 Stage 0（数据占位，未接支付）"
+      }
+    },
+    "enter": {
+      "classroom": "进入课堂",
+      "classroom_desc": "选择课程、册别与课次，进入课堂投屏与课程内工具。",
+      "classroom_button": "进入课堂"
+    },
+    "label": {
+      "course": "课程",
+      "level": "级别/册",
+      "lesson": "课次"
+    },
+    "course": {
+      "kids": "Kids",
+      "hsk": "HSK"
+    },
+    "my": {
+      "materials": "我的教材",
+      "materials_desc": "管理私有教材与课件。（即将上线）"
+    },
+    "ai": {
+      "assistant": "AI 教学助手",
+      "desc": "用 AI 设计练习、生成情境对话。（即将上线）"
+    },
+    "console": {
+      "title": "课堂控制台",
+      "desc": "控制课堂进度、点名、投票等。（即将上线）"
+    }
+  },
+  "classroom": {
+    "title": "课堂模式",
+    "back": {
+      "to": {
+        "teacher": "返回教师中心"
+      }
+    },
+    "meta": {
+      "format": "{course} · 第{level}册 · 第{lesson}课"
+    },
+    "kids": {
+      "games": {
+        "title": "课堂小游戏",
+        "desc": "以下互动仅在已进入具体课次后的课堂中显示，便于投屏与互动。"
+      }
+    },
+    "init": {
+      "failed": "无法加载课堂数据"
+    }
+  },
   "hanja": {
     "title": "汉字功夫",
     "section_vocab": "📖 常用汉字",

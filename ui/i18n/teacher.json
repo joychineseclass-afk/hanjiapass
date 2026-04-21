@@ -9,9 +9,14 @@
 
   "teacher_tools_center": { "cn": "教师工具中心", "kr": "교사 도구 센터", "en": "Teacher Tools Center" },
   "teacher_tools_subtitle": {
-    "cn": "课堂小游戏、课堂教材、AI课堂助手与课堂控制，一站式入口。",
-    "kr": "수업용 게임, 교재, AI 도우미, 수업 컨트롤을 한곳에서 관리합니다.",
-    "en": "Central hub for classroom games, materials, AI assistant and control tools."
+    "cn": "平台级入口：由此进入课堂；教材、AI、控制台与商业化将在此扩展。",
+    "kr": "플랫폼 허브: 수업 진입·교재·AI·콘솔·커머스 확장을 위한 시작점입니다.",
+    "en": "Platform hub: enter lessons here; materials, AI, console, and commerce extend from this page."
+  },
+  "teacher_stage0_commerce_skeleton": {
+    "cn": "教师商业化 Stage 0（数据占位，未接支付）",
+    "kr": "교사 커머스 Stage 0（데이터 자리만, 결제 미연동）",
+    "en": "Commerce Stage 0 (data placeholders, no live payments)"
   },
   "teacher_games": { "cn": "课堂小游戏", "kr": "수업 게임", "en": "Classroom Games" },
   "teacher_games_desc": {
@@ -25,6 +30,13 @@
     "kr": "나만의 교재와 수업 자료를 관리합니다. (준비 중)",
     "en": "Manage your private materials and lesson content. (Coming soon)"
   },
+  "teacher_label_course": { "cn": "课程", "kr": "과정", "en": "Course" },
+  "teacher_my_materials": { "cn": "我的教材", "kr": "내 교재", "en": "My materials" },
+  "teacher_my_materials_desc": {
+    "cn": "管理私有教材与课件。（即将上线）",
+    "kr": "개인 교재와 수업 자료를 관리합니다. (준비 중)",
+    "en": "Manage private teaching materials. (Coming soon)"
+  },
   "teacher_ai_assistant": { "cn": "AI课堂助手", "kr": "AI 수업 도우미", "en": "AI Classroom Assistant" },
   "teacher_ai_desc": {
     "cn": "用 AI 生成练习、情境对话与课堂活动。（即将上线）",
@@ -32,6 +44,7 @@
     "en": "Use AI to generate practice, dialogues and activities. (Coming soon)"
   },
   "teacher_console": { "cn": "课堂控制台", "kr": "수업 콘솔", "en": "Classroom Console" },
+  "teacher_console_title": { "cn": "课堂控制台", "kr": "수업 콘솔", "en": "Classroom console" },
   "teacher_console_desc": {
     "cn": "控制课堂进度、点名、投票、计时器等。（即将上线）",
     "kr": "진도, 출석, 투표, 타이머 등을 제어합니다. (준비 중)",
@@ -49,9 +62,9 @@
 
   "teacher_enter_classroom": { "cn": "进入课堂", "kr": "수업 모드 들어가기", "en": "Enter Classroom" },
   "teacher_enter_classroom_desc": {
-    "cn": "选择课程与课次，进入课堂投屏模式。",
-    "kr": "과정과 차시를 선택해 수업 화면으로 들어갑니다.",
-    "en": "Select a course and lesson to start classroom mode."
+    "cn": "选择课程、册别与课次，进入课堂投屏与课程内工具。",
+    "kr": "과정·권·차시를 선택해 수업 화면과 과정별 도구로 들어갑니다.",
+    "en": "Pick course, level, and lesson to open classroom mode and lesson tools."
   },
   "teacher_course": { "cn": "课程", "kr": "과정", "en": "Course" },
   "teacher_course_kids": { "cn": "Kids", "kr": "Kids", "en": "Kids" },
@@ -92,5 +105,16 @@
     "kr": "학생이 구두로 답하거나 숙제 시스템과 연계해 사용할 수 있습니다.",
     "en": "Use this step for oral answers or homework integration."
   },
-  "classroom_init_failed": { "cn": "无法加载课堂数据", "kr": "수업 데이터를 불러오지 못했습니다", "en": "Failed to load classroom data" }
+  "classroom_init_failed": { "cn": "无法加载课堂数据", "kr": "수업 데이터를 불러오지 못했습니다", "en": "Failed to load classroom data" },
+  "classroom_kids_games_title": { "cn": "课堂小游戏", "kr": "수업 미니 게임", "en": "Kids classroom games" },
+  "classroom_kids_games_desc": {
+    "cn": "以下互动仅在已进入具体课次后的课堂中显示。",
+    "kr": "Kids 과정에서 차시를 연 뒤에만 표시됩니다.",
+    "en": "Shown only after you open a Kids lesson in classroom mode."
+  },
+  "classroom_meta_format": {
+    "cn": "{course} · 第{level}册 · 第{lesson}课",
+    "kr": "{course} · {level}권 · 제{lesson}과",
+    "en": "{course} · Vol. {level} · Lesson {lesson}"
+  }
 }

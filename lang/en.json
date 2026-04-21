@@ -683,6 +683,63 @@
     "restaurant": "Restaurant",
     "transport": "Transport"
   },
+  "teacher": {
+    "tools": {
+      "center": "Teacher hub",
+      "subtitle": "Platform-level entry points. Open a lesson to access classroom tools, materials, AI, and console."
+    },
+    "stage0": {
+      "commerce": {
+        "skeleton": "Commerce Stage 0 (data placeholders, no live payments)"
+      }
+    },
+    "enter": {
+      "classroom": "Enter classroom",
+      "classroom_desc": "Pick a course, level, and lesson to open classroom mode and lesson tools.",
+      "classroom_button": "Open classroom"
+    },
+    "label": {
+      "course": "Course",
+      "level": "Level / book",
+      "lesson": "Lesson"
+    },
+    "course": {
+      "kids": "Kids",
+      "hsk": "HSK"
+    },
+    "my": {
+      "materials": "My materials",
+      "materials_desc": "Manage your private teaching materials. (Coming soon)"
+    },
+    "ai": {
+      "assistant": "AI teaching assistant",
+      "desc": "Design practice and dialogues with AI. (Coming soon)"
+    },
+    "console": {
+      "title": "Classroom console",
+      "desc": "Lesson flow, attendance, polls, and more. (Coming soon)"
+    }
+  },
+  "classroom": {
+    "title": "Classroom mode",
+    "back": {
+      "to": {
+        "teacher": "Back to teacher hub"
+      }
+    },
+    "meta": {
+      "format": "{course} · Vol. {level} · Lesson {lesson}"
+    },
+    "kids": {
+      "games": {
+        "title": "Kids classroom games",
+        "desc": "Shown only after you open a Kids lesson—ready for projection and interaction."
+      }
+    },
+    "init": {
+      "failed": "Could not load classroom data"
+    }
+  },
   "hanja": {
     "title": "Hanzi Study",
     "section_vocab": "📖 Common Hanzi",

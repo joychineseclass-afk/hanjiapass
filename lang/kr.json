@@ -683,6 +683,63 @@
     "restaurant": "식당",
     "transport": "교통"
   },
+  "teacher": {
+    "tools": {
+      "center": "교사 도구 센터",
+      "subtitle": "플랫폼 허브입니다. 수업에 들어간 뒤 교재·AI·콘솔 등 강의실 도구를 사용합니다."
+    },
+    "stage0": {
+      "commerce": {
+        "skeleton": "교사 커머스 Stage 0（데이터 자리만, 결제 미연동）"
+      }
+    },
+    "enter": {
+      "classroom": "수업 모드 들어가기",
+      "classroom_desc": "과정·권·차시를 선택해 수업 화면과 과정별 도구를 엽니다.",
+      "classroom_button": "수업 시작"
+    },
+    "label": {
+      "course": "과정",
+      "level": "레벨/권",
+      "lesson": "차시"
+    },
+    "course": {
+      "kids": "Kids",
+      "hsk": "HSK"
+    },
+    "my": {
+      "materials": "내 교재",
+      "materials_desc": "개인 교재와 수업 자료를 관리합니다. (준비 중)"
+    },
+    "ai": {
+      "assistant": "AI 수업 도우미",
+      "desc": "AI로 연습·상황 대화를 설계합니다. (준비 중)"
+    },
+    "console": {
+      "title": "수업 콘솔",
+      "desc": "진도·출석·투표 등을 제어합니다. (준비 중)"
+    }
+  },
+  "classroom": {
+    "title": "수업 모드",
+    "back": {
+      "to": {
+        "teacher": "교사 센터로"
+      }
+    },
+    "meta": {
+      "format": "{course} · {level}권 · 제{lesson}과"
+    },
+    "kids": {
+      "games": {
+        "title": "수업 미니 게임",
+        "desc": "Kids 과정에서 차시를 연 뒤에만 표시되는 수업용 인터랙션입니다."
+      }
+    },
+    "init": {
+      "failed": "수업 데이터를 불러오지 못했습니다"
+    }
+  },
   "hanja": {
     "title": "한자공부",
     "section_vocab": "📖 자주 쓰는 한자",

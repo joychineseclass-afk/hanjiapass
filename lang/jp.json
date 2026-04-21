@@ -692,6 +692,63 @@
     "restaurant": "レストラン",
     "transport": "交通"
   },
+  "teacher": {
+    "tools": {
+      "center": "教師ハブ",
+      "subtitle": "プラットフォーム入口です。授業に入ると教材・AI・コンソールなどのツールが使えます。"
+    },
+    "stage0": {
+      "commerce": {
+        "skeleton": "教師向けコマース Stage 0（データ枠のみ・決済未接続）"
+      }
+    },
+    "enter": {
+      "classroom": "授業モードへ",
+      "classroom_desc": "コース・巻・課を選び、投影モードと教材ツールを開きます。",
+      "classroom_button": "授業を開く"
+    },
+    "label": {
+      "course": "コース",
+      "level": "レベル/巻",
+      "lesson": "課"
+    },
+    "course": {
+      "kids": "Kids",
+      "hsk": "HSK"
+    },
+    "my": {
+      "materials": "マイ教材",
+      "materials_desc": "個人用教材と資料を管理します。（準備中）"
+    },
+    "ai": {
+      "assistant": "AI 授業アシスタント",
+      "desc": "AI で練習や会話シナリオを作成します。（準備中）"
+    },
+    "console": {
+      "title": "授業コンソール",
+      "desc": "進行・出席・投票などを操作します。（準備中）"
+    }
+  },
+  "classroom": {
+    "title": "授業モード",
+    "back": {
+      "to": {
+        "teacher": "教師ハブに戻る"
+      }
+    },
+    "meta": {
+      "format": "{course} · {level}巻 · 第{lesson}課"
+    },
+    "kids": {
+      "games": {
+        "title": "授業ミニゲーム",
+        "desc": "Kids の具体的な課を開いたあとにだけ表示されます。"
+      }
+    },
+    "init": {
+      "failed": "授業データを読み込めませんでした"
+    }
+  },
   "hanja": {
     "title": "漢字学習",
     "section_vocab": "📖 よく使う漢字",
