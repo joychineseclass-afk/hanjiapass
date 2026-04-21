@@ -57,6 +57,9 @@ export default function pageTeacher(ctxOrRoot) {
         <div class="hero">
           <h2 class="title">${escapeHtml(title)}</h2>
           <p class="desc">${escapeHtml(t("teacher_tools_subtitle", "为课堂准备的工具面板：小游戏、教材、AI 助手与课堂控制。"))}</p>
+          <p class="desc" style="margin-top:10px;font-size:14px;">
+            <a href="/index.html#lumina-teacher-stage0">${escapeHtml(t("teacher_stage0_commerce_skeleton", "教师商业化 Stage 0 骨架（枚举 / entitlement / 订单占位）"))}</a>
+          </p>
         </div>
       </section>
 
