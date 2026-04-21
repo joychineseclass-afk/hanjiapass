@@ -691,6 +691,48 @@
     "manage": {
       "page_kicker": "교사 관리"
     },
+    "path_strip": {
+      "aria": "교재·코스·등록 진행 단계",
+      "materials": "자료 준비",
+      "courses": "코스 구성",
+      "listing": "등록·판매",
+      "arrow": "→"
+    },
+    "flow": {
+      "cta_organize_courses": "코스 정리하기",
+      "cta_prepare_listing": "등록 준비하기",
+      "cta_continue_courses": "코스 계속 다듬기",
+      "cta_register_listing": "판매 등록하기",
+      "cta_refine_materials": "교재 보완하기",
+      "cta_view_courses": "내 코스 보기",
+      "cta_view_materials": "내 교재 보기",
+      "materials_next": {
+        "title": "다음 단계 제안",
+        "intro": "교재 정리가 끝나면 보통 아래 두 방향 중 하나로 이어갑니다.",
+        "path_a_title": "경로 A · 코스 지원",
+        "path_a_body": "자료를 수업 준비에 쓰고, 「내 코스」에서 가르칠 구조로 정리합니다.",
+        "path_b_title": "경로 B · 단독 판매",
+        "path_b_body": "자료가 단독 판매에 적합하면 「등록·판매 관리」에서 listing을 만들고 심사를 제출합니다."
+      },
+      "courses_next": {
+        "title": "코스 정리 후 다음",
+        "intro": "코스는 수업 내용 그 자체이며, 스토어 상품과 같지 않습니다.",
+        "note": "코스는 자동으로 상품이 되지 않습니다. 판매하려면 listing을 만들고 심사를 거쳐야 합니다.",
+        "path_a_title": "경로 A · 계속 보완",
+        "path_a_body": "목차와 단원을 더 다듬을 때는 이 페이지에서 코스를 관리하세요.",
+        "path_b_title": "경로 B · 판매 준비",
+        "path_b_body": "구성이 정리되면 「등록·판매 관리」에서 listing을 만들고 심사를 진행하세요."
+      },
+      "listing_source": {
+        "title": "등록 내용은 어디서 오나요",
+        "intro": "코스나 교재를 먼저 준비한 뒤, 여기서 판매 등록을 진행합니다.",
+        "scope": "이 페이지는 공개·심사·판매를 위한 listing을 관리합니다. 코스 본체나 개인 교재 보관함이 아닙니다.",
+        "source_a_title": "출처 A · 정리된 코스",
+        "source_a_body": "수업 구조가 준비되면 보통 여기서 판매용 listing을 만듭니다.",
+        "source_b_title": "출처 B · 단독 판매 자료",
+        "source_b_body": "강의안·패키지 등은 먼저 정리한 뒤, 여기서 판매 대상으로 등록할 수 있습니다."
+      }
+    },
     "relation_flow": {
       "title": "세 단계 관계",
       "materials": "교재 · 개인 준비 자산",
@@ -707,17 +749,17 @@
     "hub": {
       "materials": {
         "title": "내 교재",
-        "desc": "개인 강의안·PPT·교안·수업 자료를 관리합니다. 기본적으로 외부 판매용이 아닙니다.",
+        "desc": "개인 준비 자료를 관리합니다. 코스 구성에 쓰거나 이후 등록으로 이어갈 수 있습니다.",
         "cta": "교재 보관함으로"
       },
       "courses": {
         "title": "내 코스",
-        "desc": "코스 구조를 만들고 관리합니다. 초안·정리 중·수업 가능. 코스는 listing과 다릅니다.",
+        "desc": "수업 내용을 구성합니다. 정리가 끝나면 등록·판매 관리로 이어가세요.",
         "cta": "코스 관리로"
       },
       "listing": {
         "title": "등록·판매 관리",
-        "desc": "판매 가능한 코스·패키지·자료의 심사·등록 상태를 관리합니다. (결제·정산 미연동)",
+        "desc": "판매할 항목의 심사·공개 상태를 관리합니다. 보통 코스나 교재에서 옵니다.",
         "cta": "등록 관리로",
         "badge": "준비 구역 · Stage 0"
       }

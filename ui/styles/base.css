@@ -713,6 +713,153 @@ a.teacher-back-link:hover{
   align-items: center;
   gap: 8px 10px;
 }
+.teacher-relation-flow .teacher-path-strip{
+  margin-top: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #fff;
+  box-shadow: none;
+}
+.teacher-path-strip{
+  margin-top: 12px;
+  padding: 12px 14px;
+}
+.teacher-path-strip-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 10px;
+}
+.teacher-path-strip-node{
+  flex: 1 1 120px;
+  min-width: 108px;
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 780;
+  line-height: 1.35;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+}
+.teacher-path-strip-node--current{
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  border-color: #a5b4fc;
+  color: #312e81;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+a.teacher-path-strip-node--link{
+  text-decoration: none;
+  color: #334155;
+  background: #fff;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+a.teacher-path-strip-node--link:hover{
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+.teacher-path-strip-arrow{
+  flex: 0 0 auto;
+  color: #94a3b8;
+  font-weight: 900;
+  font-size: 14px;
+}
+.teacher-guide-panel{
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid rgba(67, 56, 202, 0.14);
+  background: linear-gradient(180deg, #fafbff 0%, #f8fafc 100%);
+  border-radius: 14px;
+}
+.teacher-guide-panel-title{
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgba(30, 27, 75, 0.92);
+}
+.teacher-guide-panel-intro,
+.teacher-guide-panel-note,
+.teacher-guide-panel-scope{
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #475569;
+  max-width: 70ch;
+}
+.teacher-guide-panel-note,
+.teacher-guide-panel-scope{
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+}
+.teacher-guide-routes{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 14px;
+  margin-top: 4px;
+}
+.teacher-guide-route{
+  padding: 12px 12px 14px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+.teacher-guide-route-heading{
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #4338ca;
+  letter-spacing: 0.02em;
+}
+.teacher-guide-route-body{
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  min-height: 3.1em;
+}
+a.teacher-guide-cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #0f172a;
+  color: #f8fafc !important;
+  transition: opacity 0.12s ease, transform 0.1s ease;
+}
+a.teacher-guide-cta:hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+a.teacher-guide-cta--accent{
+  background: #312e81;
+  border-color: #3730a3;
+  color: #eef2ff !important;
+}
+a.teacher-guide-cta--ghost{
+  background: transparent;
+  color: #334155 !important;
+  border-color: #cbd5e1;
+}
+.teacher-guide-panel-foot{
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(148, 163, 184, 0.55);
+}
+.lts0-page .teacher-path-strip{
+  margin-top: 14px;
+}
+.lts0-page .teacher-guide-panel{
+  margin-top: 14px;
+}
 .teacher-flow-step{
   flex: 1 1 140px;
   min-width: 120px;

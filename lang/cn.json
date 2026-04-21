@@ -691,6 +691,48 @@
     "manage": {
       "page_kicker": "教师端管理"
     },
+    "path_strip": {
+      "aria": "教材、课程与上架流程位置",
+      "materials": "材料准备",
+      "courses": "课程组织",
+      "listing": "上架售卖",
+      "arrow": "→"
+    },
+    "flow": {
+      "cta_organize_courses": "去整理课程",
+      "cta_prepare_listing": "去准备上架",
+      "cta_continue_courses": "继续完善课程",
+      "cta_register_listing": "去注册上架",
+      "cta_refine_materials": "去完善教材",
+      "cta_view_courses": "查看我的课程",
+      "cta_view_materials": "查看我的教材",
+      "materials_next": {
+        "title": "下一步建议",
+        "intro": "教材整理好后，通常可以往这两个方向继续。",
+        "path_a_title": "路径 A · 支撑课程",
+        "path_a_body": "将资料用作备课素材，到「我的课程」整理成可授课的教学结构。",
+        "path_b_title": "路径 B · 准备单独售卖",
+        "path_b_body": "若某份资料适合直接售卖，可到「注册/销售管理」准备 listing 并提交审核。"
+      },
+      "courses_next": {
+        "title": "课程完成后的下一步",
+        "intro": "课程是教学内容本身，不等于商城商品。",
+        "note": "课程不会自动变成商品；若要售卖，需进入 listing 管理并完成审核。",
+        "path_a_title": "路径 A · 继续完善",
+        "path_a_body": "大纲与单元仍可调整时，可留在本页继续管理课程。",
+        "path_b_title": "路径 B · 进入售卖准备",
+        "path_b_body": "内容整理完成后，到「注册/销售管理」创建 listing 并走审核流程。"
+      },
+      "listing_source": {
+        "title": "上架内容从哪里来",
+        "intro": "您可以先准备课程或教材，再到这里注册售卖。",
+        "scope": "本页管理的是将要公开展示、接受审核与售卖的 listing，不是课程本体，也不是私有教材库。",
+        "source_a_title": "来源 A · 已整理好的课程",
+        "source_a_body": "授课结构就绪后，通常在此创建对应的售卖 listing。",
+        "source_b_title": "来源 B · 适合单独售卖的资料",
+        "source_b_body": "讲义、课包等资料也可先整理，再在此注册为可售对象。"
+      }
+    },
     "relation_flow": {
       "title": "三层关系",
       "materials": "教材 · 私有备课资产",
@@ -707,17 +749,17 @@
     "hub": {
       "materials": {
         "title": "我的教材",
-        "desc": "管理私有讲义、PPT、教案与课堂素材。资料默认不对外售卖。",
+        "desc": "管理私有备课资料，可用于课程准备，也可后续进入上架流程。",
         "cta": "进入教材库"
       },
       "courses": {
         "title": "我的课程",
-        "desc": "创建与管理课程结构：草稿、整理中或已可用于教学。课程不等于 listing。",
+        "desc": "组织教学内容，整理完成后可进入注册/销售管理。",
         "cta": "进入课程管理"
       },
       "listing": {
         "title": "上架与售卖管理",
-        "desc": "管理可售卖对象：课程包、资料、课件的审核与上架状态。（支付与分账尚未接入）",
+        "desc": "管理待售课程/资料的审核与公开状态，来源通常是课程或教材。",
         "cta": "进入上架管理",
         "badge": "预备区 · Stage 0"
       }

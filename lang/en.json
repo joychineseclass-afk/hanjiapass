@@ -691,6 +691,48 @@
     "manage": {
       "page_kicker": "Teacher admin"
     },
+    "path_strip": {
+      "aria": "Where you are in materials, courses, and listings",
+      "materials": "Prep materials",
+      "courses": "Build courses",
+      "listing": "List for sale",
+      "arrow": "→"
+    },
+    "flow": {
+      "cta_organize_courses": "Organize my courses",
+      "cta_prepare_listing": "Prepare a listing",
+      "cta_continue_courses": "Keep refining courses",
+      "cta_register_listing": "Register for sale",
+      "cta_refine_materials": "Refine my materials",
+      "cta_view_courses": "View my courses",
+      "cta_view_materials": "View my materials",
+      "materials_next": {
+        "title": "Suggested next steps",
+        "intro": "After materials are in good shape, most teachers continue in one of these directions.",
+        "path_a_title": "Path A · Support a course",
+        "path_a_body": "Use files as prep assets, then structure them in My courses for teaching.",
+        "path_b_title": "Path B · Sell a standalone asset",
+        "path_b_body": "If something is ready to sell on its own, open Listings & sales to create a listing and submit it for review."
+      },
+      "courses_next": {
+        "title": "After your course is ready",
+        "intro": "A course is teaching content—it is not a store product by itself.",
+        "note": "Courses do not auto-become products. To sell, create a listing here and go through review.",
+        "path_a_title": "Path A · Keep improving",
+        "path_a_body": "While the outline and units are still moving, stay on this page to manage the course.",
+        "path_b_title": "Path B · Move toward selling",
+        "path_b_body": "When the structure is ready, go to Listings & sales to create a listing and submit it for review."
+      },
+      "listing_source": {
+        "title": "Where listings come from",
+        "intro": "Prepare a course or materials first, then register what you want to sell here.",
+        "scope": "This page manages listings—public display, review, and selling—not the course itself or your private library.",
+        "source_a_title": "Source A · A structured course",
+        "source_a_body": "When the teaching structure is ready, you usually create the sellable listing here.",
+        "source_b_title": "Source B · Standalone materials",
+        "source_b_body": "Handouts, packs, and similar assets can be organized first, then registered here as sellable items."
+      }
+    },
     "relation_flow": {
       "title": "Three layers",
       "materials": "Materials · private prep",
@@ -707,17 +749,17 @@
     "hub": {
       "materials": {
         "title": "My materials",
-        "desc": "Private handouts, slides, lesson plans, and classroom assets. Not public storefront items by default.",
+        "desc": "Private prep assets for class; use them to build courses, or later move toward listings.",
         "cta": "Open materials library"
       },
       "courses": {
         "title": "My courses",
-        "desc": "Create and manage course structure—drafts, in progress, or ready to teach. A course is not a listing.",
+        "desc": "Structure what you teach; when it is ready, continue in Listings & sales.",
         "cta": "Open course management"
       },
       "listing": {
         "title": "Listings & sales",
-        "desc": "Manage sellable courses, bundles, and materials—review and listing status. (No live payments yet.)",
+        "desc": "Review and publish what you sell—usually based on a course or materials you prepared.",
         "cta": "Open listing hub",
         "badge": "Preview · Stage 0"
       }

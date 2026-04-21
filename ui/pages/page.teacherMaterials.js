@@ -2,6 +2,7 @@
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
+import { teacherMaterialsNextGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -26,12 +27,13 @@ function renderMaterialsDom(root) {
         <a href="#teacher" class="teacher-back-link">${escapeHtml(tx("teacher.materials_page.back"))}</a>
       </p>
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
-
+      ${teacherPathStripHtml("materials", tx)}
       <header class="card teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(tx("teacher.materials_page.title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(tx("teacher.materials_page.subtitle"))}</p>
         <p class="teacher-admin-tagline">${escapeHtml(tx("teacher.materials_page.tagline"))}</p>
       </header>
+      ${teacherMaterialsNextGuideHtml(tx)}
 
       <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(tx("teacher.materials_page.upload_cta"))}">
         <div class="teacher-admin-toolbar-row">

@@ -41,6 +41,7 @@ import {
   userHasRole,
 } from "../lumina-commerce/store.js";
 import { i18n } from "../i18n.js";
+import { teacherListingSourceGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -339,6 +340,8 @@ function renderPage(root, ctx) {
           <span class="lts0-stage-badge" aria-label="${escapeHtml(commerceT("commerce.stage0.stage_badge"))}">${escapeHtml(commerceT("commerce.stage0.stage_badge"))}</span>
         </div>
       </section>
+      ${teacherPathStripHtml("listing", commerceT)}
+      ${teacherListingSourceGuideHtml(commerceT)}
 
       <section class="card lts0-actions-hub">
         <div class="lts0-actions-grid">
