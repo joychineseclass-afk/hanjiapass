@@ -2,7 +2,11 @@
 // 统一使用 i18n.t() + languageEngine.pick/getContentText，禁止散乱 item.kr/item.en 判断
 
 import { i18n } from "../../i18n.js";
-import { getContentText, getLang, getLessonDisplayTitle } from "../../core/languageEngine.js";
+import {
+  getContentText,
+  getLang,
+  getLocalizedLessonHeading,
+} from "../../core/languageEngine.js";
 import { openStrokeInModal } from "./strokeModal.js";
 import { resolvePinyin, maybeGetManualPinyin } from "../../utils/pinyinEngine.js";
 import {
@@ -631,7 +635,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
   const rows = list.map((it) => {
     const lessonNo = Number(it.lessonNo || it.no || it.lesson || it.id || 0) || 0;
     const file = it.file || it.path || it.url || "";
-    const titleDisplay = getLessonDisplayTitle(it, displayLang) || "-";
+    const rowHeading = getLocalizedLessonHeading(it, displayLang) || "-";
     if (lessonNo >= 1 && lessonNo <= 3) {
       try {
         console.log("[HSK-TITLE-DIAG]", {
@@ -649,7 +653,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
               : it?.displayTitle && typeof it.displayTitle === "object"
                 ? "object"
                 : typeof it?.displayTitle,
-          picked: titleDisplay,
+          picked: rowHeading,
           lessonsDataSource:
             typeof window !== "undefined" ? window.__HSK_LESSONS_DATA_SOURCE__ : "",
           source: {
@@ -661,7 +665,6 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
       } catch {}
     }
 
-    const lessonNoFormatted = i18n.t("hsk.lesson_no_format", { n: lessonNo });
     const isActive = currentLessonNo > 0 && lessonNo === currentLessonNo;
 
     return `
@@ -672,7 +675,7 @@ export function renderLessonList(containerEl, lessons, { lang, currentLessonNo =
         ${isActive ? ' aria-current="true"' : ""}
       >
         <span class="hsk-directory-no">${lessonNo || ""}</span>
-        <span class="hsk-directory-title">${escapeHtml(lessonNoFormatted)} / ${escapeHtml(titleDisplay)}</span>
+        <span class="hsk-directory-title">${escapeHtml(rowHeading)}</span>
         <span class="hsk-directory-arrow">${arrow}</span>
       </button>
     `;

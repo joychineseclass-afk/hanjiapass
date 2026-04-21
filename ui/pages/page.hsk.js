@@ -7,7 +7,12 @@
 // 4) Keep extension meaning/explanation separated
 
 import { i18n } from "../i18n.js";
-import { pick, getContentText, getLang as getEngineLang, getLessonDisplayTitle } from "../core/languageEngine.js";
+import {
+  pick,
+  getContentText,
+  getLang as getEngineLang,
+  getLocalizedLessonHeading,
+} from "../core/languageEngine.js";
 import { mountNavBar } from "../components/navBar.js";
 import { ensureHSKDeps } from "../modules/hsk/hskDeps.js";
 import { getHSKLayoutHTML } from "../modules/hsk/hskLayout.js";
@@ -2366,10 +2371,11 @@ async function openLesson({ lessonNo, file } = {}) {
     lessonWords: panelWords,
   };
 
-  const titleText =
-    (listEntry && getLessonDisplayTitle(listEntry, lang)) ||
-    getLessonDisplayTitle(lessonData, lang) ||
-    "";
+  const titleText = getLocalizedLessonHeading(
+    listEntry || lessonData,
+    lang,
+    listEntry ? lessonData : null
+  );
 
   showStudyMode(titleText);
   updateLessonContextWindow(no);
@@ -2478,10 +2484,11 @@ function rerenderHSKFromState() {
   const listEntry =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
   const isReviewLesson = lessonIsReview(lessonData);
-  const titleText =
-    (listEntry && getLessonDisplayTitle(listEntry, lang)) ||
-    getLessonDisplayTitle(lessonData, lang) ||
-    "";
+  const titleText = getLocalizedLessonHeading(
+    listEntry || lessonData,
+    lang,
+    listEntry ? lessonData : null
+  );
 
   showStudyMode(titleText);
   updateLessonContextWindow(no);
@@ -4071,10 +4078,7 @@ function buildAIContext() {
 
   const found =
     state.lessons && state.lessons.find((x) => getLessonNumber(x) === no);
-  const title =
-    (found && getLessonDisplayTitle(found, lang)) ||
-    getLessonDisplayTitle(ld, lang) ||
-    "";
+  const heading = getLocalizedLessonHeading(found || ld, lang, found ? ld : null);
 
   const words = Array.isArray(state.current.lessonWords) ? state.current.lessonWords : [];
   const wordsLine = words
@@ -4087,23 +4091,12 @@ function buildAIContext() {
     })
     .join("\n");
 
-  const lessonLabel =
-    i18n.t("hsk.lesson_no_format", { n: no }) ||
-    (lang === "jp"
-      ? `第 ${no} 課`
-      : lang === "kr"
-      ? `제 ${no}과`
-      : `Lesson ${no}`);
-
   const questionLabel =
     i18n.t("practice.question_label") ||
     (lang === "jp" ? "質問" : "Question");
 
-  const titleLabel = lang === "jp" ? "タイトル" : "Title";
-
   return [
-    lessonLabel,
-    title ? `${titleLabel}: ${title}` : "",
+    heading,
     wordsLine ? `Words:\n${wordsLine}` : "",
     "",
     questionLabel + ":",

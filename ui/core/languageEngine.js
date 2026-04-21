@@ -405,6 +405,47 @@ export function getLessonDisplayTitle(lesson, lang) {
 }
 
 /**
+ * 从目录项 / 课节数据解析课号（与 ui/pages/page.hsk.js getLessonNumber 字段顺序一致）
+ */
+export function getLessonNoFromItem(lesson) {
+  if (!lesson || typeof lesson !== "object") return 0;
+  const n =
+    Number(
+      lesson.lessonNo ??
+        lesson.no ??
+        lesson.id ??
+        lesson.lesson ??
+        lesson.index ??
+        0
+    ) || 0;
+  return n >= 1 ? n : 0;
+}
+
+/**
+ * 课次标签 + 本地化课题（与目录行「课次 / 标题」同一规则，供学习页顶栏等复用）
+ * @param {object|null|undefined} primary - 优先取课号与标题（通常为 lessons 目录项）
+ * @param {string} [lang]
+ * @param {object|null|undefined} [secondary] - 标题 fallback（通常为当前 lesson JSON / lessonData）
+ */
+export function getLocalizedLessonHeading(primary, lang, secondary = null) {
+  const a = primary && typeof primary === "object" ? primary : null;
+  const b = secondary && typeof secondary === "object" ? secondary : null;
+  const l = lang ?? getLang();
+  const no = (a && getLessonNoFromItem(a)) || (b && getLessonNoFromItem(b)) || 0;
+  const titlePart =
+    (a && str(getLessonDisplayTitle(a, l))) ||
+    (b && str(getLessonDisplayTitle(b, l))) ||
+    "";
+  const label =
+    no >= 1
+      ? t("hsk.lesson_no_format", { n: no }, `Lesson ${no}`)
+      : "";
+  if (label && titlePart) return `${label} / ${titlePart}`;
+  if (titlePart) return titlePart;
+  return label || "";
+}
+
+/**
  * 5. getContentText(item, field?, options?)
  * 课程内容字段：兼容 translation/meaning/explain + 旧结构
  * options: { strict: true, lang: "jp" } — JP strict lock 时绝不 fallback 到 kr/cn
