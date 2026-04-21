@@ -1,26 +1,15 @@
 // /ui/pages/page.classroom.js
 // 课堂模式入口：/#classroom?course=kids&level=1&lesson=1
-// 课程级工具（如 Kids 小游戏）仅在本页按 course/level/lesson 上下文渲染。
 
 import { i18n } from "../i18n.js";
 import { initClassroomEngine } from "../platform/classroom/classroomEngine.js";
 import { getClassroomState } from "../platform/classroom/classroomState.js";
 import { getClassroomGamesForContext } from "../modules/games/gamesRegistry.js";
+import { formatGameModeType } from "../lumina-commerce/commerceDisplayLabels.js";
 
-function t(key, fallback = "", params) {
-  try {
-    if (params && typeof params === "object") {
-      const v = i18n?.t?.(key, params);
-      if (v != null && String(v).trim() && String(v) !== key) return String(v);
-    } else {
-      const v = i18n?.t?.(key);
-      if (v != null) {
-        const s = String(v).trim();
-        if (s && s !== key) return s;
-      }
-    }
-  } catch {}
-  return fallback;
+function tx(key, params) {
+  if (params != null && typeof params === "object") return String(i18n.t(key, params) ?? "").trim();
+  return String(i18n.t(key) ?? "").trim();
 }
 
 function parseQuery() {
@@ -59,15 +48,12 @@ function renderKidsGamesPanel(host, ctx) {
     return;
   }
 
-  const title = t("classroom_kids_games_title", "Kids classroom games");
-  const desc = t(
-    "classroom_kids_games_desc",
-    "Interactive games for this course appear only in classroom mode after you pick a lesson."
-  );
+  const title = tx("classroom.kids.games.title");
+  const desc = tx("classroom.kids.games.desc");
 
   const cards = games
     .map((g) => {
-      const typeLabel = g.type || "";
+      const typeLabel = formatGameModeType(g.type || "");
       return `<button type="button" class="teacher-game-card" data-game-id="${escapeHtml(g.id)}">
       <div class="teacher-game-title">${escapeHtml(g.title)}</div>
       <div class="teacher-game-meta">${escapeHtml(typeLabel)}</div>
@@ -106,8 +92,8 @@ export default async function pageClassroom(ctxOrRoot) {
   const level = q.level || "1";
   const lessonNo = q.lesson || "1";
 
-  const title = t("classroom_title", "Classroom mode");
-  const backLabel = t("classroom_back_to_teacher", "Back to teacher hub");
+  const title = tx("classroom.title");
+  const backLabel = tx("classroom.back.to.teacher");
 
   root.innerHTML = `
     <section class="lumina-classroom-page wrap">
@@ -121,7 +107,7 @@ export default async function pageClassroom(ctxOrRoot) {
       <div id="classroomKidsGamesHost"></div>
       <section class="classroom-toolbar-wrap" id="classroomToolbar"></section>
       <main class="classroom-stage" id="classroomStage">
-        <p class="classroom-empty">${escapeHtml(t("common.loading", "Loading..."))}</p>
+        <p class="classroom-empty">${escapeHtml(tx("common.loading"))}</p>
       </main>
     </section>
   `;
@@ -144,10 +130,8 @@ export default async function pageClassroom(ctxOrRoot) {
     const metaEl = root.querySelector("#classroomMeta");
     if (metaEl) {
       const courseLabel =
-        String(courseId).toLowerCase() === "kids"
-          ? t("teacher_course_kids", "Kids")
-          : t("teacher_course_hsk", "HSK");
-      metaEl.textContent = t("classroom_meta_format", {
+        String(courseId).toLowerCase() === "kids" ? tx("teacher.course.kids") : tx("teacher.course.hsk");
+      metaEl.textContent = tx("classroom.meta.format", {
         course: courseLabel,
         level,
         lesson: String(st.lessonId || lessonNo),
@@ -156,7 +140,7 @@ export default async function pageClassroom(ctxOrRoot) {
   } catch (e) {
     console.error("[page.classroom] init failed:", e);
     if (stageEl) {
-      stageEl.innerHTML = `<p class="classroom-empty">${escapeHtml(t("classroom_init_failed", "Failed to load classroom"))}</p>`;
+      stageEl.innerHTML = `<p class="classroom-empty">${escapeHtml(tx("classroom.init.failed"))}</p>`;
     }
   }
 

@@ -740,6 +740,247 @@
       "failed": "无法加载课堂数据"
     }
   },
+  "commerce": {
+    "stage0": {
+      "title": "教师商业化 · Stage 0 骨架",
+      "subtitle": "业务规则与数据占位。当前未接入任何支付 API。数据保存在本地，可重置为演示种子。",
+      "demo_user": "演示账号",
+      "reset_seed": "重置为种子数据",
+      "access_title": "学习权益检测",
+      "access_body": "账号 {user} 对内容 {listing}：",
+      "access_yes": "有权访问",
+      "access_no": "无权访问",
+      "access_note": "（演示：默认检测列表中的首条上架内容）",
+      "profile_title": "老师档案",
+      "profile_caption": "卖家资料与资质占位",
+      "listing_title": "上架内容",
+      "new_draft_title": "新建草稿",
+      "review_log_title": "审核记录",
+      "entitlement_title": "学习权益 · 手动发放",
+      "order_title": "订单占位",
+      "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。"
+    },
+    "review": {
+      "panel_title": "审核（审核员/管理员）",
+      "panel_desc": "变更上架状态并记录原因代码与说明；须符合状态机规则。",
+      "pick_listing": "选择上架内容",
+      "new_status": "目标状态",
+      "reason_code": "原因类型",
+      "reason_text": "原因说明",
+      "reason_placeholder": "驳回或下架说明",
+      "apply": "应用",
+      "hidden": "当前演示账号无审核权限。请切换为审核员或管理员演示账号。",
+      "transition_denied": "不允许从「{from}」变为「{to}」。"
+    },
+    "form": {
+      "title": "标题",
+      "seller_type": "卖家类型",
+      "teacher_profile_id": "老师档案 ID",
+      "teacher_placeholder": "平台自营可留空",
+      "listing_type": "内容类型",
+      "delivery_type": "交付形式",
+      "visibility": "可见范围",
+      "price_amount": "价格",
+      "price_currency": "货币",
+      "refund_policy": "退款策略",
+      "create_draft": "创建草稿",
+      "submit_review": "提交审核",
+      "grant_user": "学员账号",
+      "grant_listing": "上架内容",
+      "grant_submit": "发放权益",
+      "default_title": "未命名草稿"
+    },
+    "table": {
+      "empty_cell": "—",
+      "no_rows": "暂无记录",
+      "head": {
+        "record_id": "记录 ID",
+        "user": "用户",
+        "display_name": "显示名",
+        "buyer": "买家",
+        "listing": "上架内容",
+        "seller_type": "卖家类型",
+        "teacher": "老师",
+        "listing_type": "内容类型",
+        "status": "状态",
+        "visibility": "可见范围",
+        "price": "价格",
+        "actions": "操作",
+        "time": "时间",
+        "action": "操作类型",
+        "reason_code": "原因类型",
+        "reason_text": "原因说明",
+        "entitlement_type": "权益类型",
+        "source": "来源",
+        "provider": "支付渠道",
+        "amount": "金额",
+        "payout_ready": "可收款准备"
+      }
+    },
+    "field": {
+      "id": "记录 ID",
+      "user_id": "用户 ID",
+      "buyer_id": "买家 ID",
+      "listing_id": "上架内容 ID",
+      "teacher_id": "老师 ID",
+      "display_name": "显示名",
+      "teacher_level": "老师层级",
+      "verification_status": "认证状态",
+      "seller_eligibility": "售卖资格",
+      "payout_ready": "收款准备",
+      "seller_type": "卖家类型",
+      "listing_type": "内容类型",
+      "delivery_type": "交付形式",
+      "status": "状态",
+      "visibility": "可见范围",
+      "price_amount": "价格",
+      "price_currency": "货币",
+      "title": "标题",
+      "entitlement_type": "权益类型",
+      "source_type": "来源类型",
+      "provider": "支付渠道",
+      "amount": "金额",
+      "currency": "货币",
+      "reason_code": "原因类型",
+      "reason_text": "原因说明"
+    },
+    "bool": { "yes": "是", "no": "否" },
+    "err": {
+      "unknown": "发生未知错误。",
+      "teacher_id_required": "老师上架内容必须填写老师 ID。",
+      "teacher_profile_missing": "缺少老师档案。",
+      "teacher_mismatch": "上架内容与老师档案不匹配。",
+      "not_seller_eligible": "需具备售卖资质与老师层级后方可提交审核。"
+    },
+    "enum": {
+      "unknown": "（未识别）",
+      "seller_type": {
+        "platform": "平台官方",
+        "teacher": "老师"
+      },
+      "teacher_level": {
+        "basic_teacher": "基础老师",
+        "verified_teacher": "已认证老师",
+        "seller_teacher": "可售卖老师"
+      },
+      "verification_status": {
+        "not_submitted": "未提交",
+        "pending": "审核中",
+        "approved": "已通过",
+        "rejected": "已拒绝"
+      },
+      "seller_eligibility": {
+        "none": "无",
+        "internal_use_only": "仅内部使用",
+        "eligible_to_sell": "可公开售卖"
+      },
+      "listing_type": {
+        "course": "正式课程",
+        "course_bundle": "系列课/课包",
+        "material": "教材资料",
+        "ppt": "课件/PPT",
+        "live_class": "直播班",
+        "one_on_one": "一对一",
+        "subscription_plan": "会员订阅",
+        "other": "其他"
+      },
+      "delivery_type": {
+        "recorded": "录播",
+        "downloadable": "可下载资料",
+        "live": "直播",
+        "service": "服务类",
+        "membership": "会员型",
+        "manual": "人工发放"
+      },
+      "listing_status": {
+        "draft": "草稿",
+        "pending_review": "待审核",
+        "approved": "已通过",
+        "rejected": "已拒绝",
+        "delisted": "已下架",
+        "archived": "已归档",
+        "appeal_pending": "申诉处理中"
+      },
+      "visibility": {
+        "private": "仅自己",
+        "unlisted": "不公开列表",
+        "public": "公开"
+      },
+      "entitlement_type": {
+        "platform_subscription": "平台订阅",
+        "listing_access": "内容访问",
+        "teacher_course_access": "老师课程访问",
+        "manual_grant": "手动发放",
+        "invite": "邀请",
+        "free_access": "免费访问"
+      },
+      "entitlement_source_type": {
+        "order": "订单",
+        "admin": "管理员",
+        "campaign": "活动",
+        "teacher_invite": "老师邀请",
+        "system": "系统"
+      },
+      "entitlement_status": {
+        "active": "生效中",
+        "expired": "已过期",
+        "revoked": "已撤销",
+        "scheduled": "已排期"
+      },
+      "order_status": {
+        "pending_payment": "待支付",
+        "paid": "已支付",
+        "failed": "失败",
+        "cancelled": "已取消",
+        "refunded": "已退款",
+        "partially_refunded": "部分退款"
+      },
+      "refund_policy_type": {
+        "no_refund": "不可退款",
+        "within_7_days": "7 日内",
+        "before_class_start": "开课前",
+        "prorated": "按比例",
+        "case_review": "个案审核"
+      },
+      "review_reason_code": {
+        "copyright_risk": "版权风险",
+        "policy_violation": "违反政策",
+        "insufficient_quality": "质量不足",
+        "missing_credentials": "资质缺失",
+        "incomplete_listing": "信息不完整",
+        "unsafe_or_inappropriate": "不当/不安全内容",
+        "other": "其他"
+      },
+      "listing_review_action": {
+        "submitted": "已提交审核",
+        "approved": "审核通过",
+        "rejected": "审核拒绝",
+        "delisted": "下架",
+        "appeal_submitted": "申诉提交",
+        "appeal_resolved": "申诉处理"
+      },
+      "commission_type": {
+        "none": "无",
+        "platform_rate": "平台比例",
+        "platform_flat": "平台固定额"
+      },
+      "game_mode": {
+        "speaking": "口语",
+        "response": "应答",
+        "vocab": "词汇",
+        "guessing": "猜谜"
+      }
+    },
+    "demo": {
+      "user_student": "演示学员 A",
+      "user_teacher": "演示老师（账号）",
+      "user_reviewer": "演示审核员",
+      "user_admin": "演示管理员",
+      "profile_names": {
+        "tp_demo_seller_001": "演示 · 金老师"
+      }
+    }
+  },
   "hanja": {
     "title": "汉字功夫",
     "section_vocab": "📖 常用汉字",

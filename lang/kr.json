@@ -740,6 +740,242 @@
       "failed": "수업 데이터를 불러오지 못했습니다"
     }
   },
+  "commerce": {
+    "stage0": {
+      "title": "교사 커머스 · Stage 0 뼈대",
+      "subtitle": "비즈니스 규칙과 데이터 자리입니다. 결제 API는 연결되어 있지 않습니다. 로컬에 저장되며 데모 시드를 복원할 수 있습니다.",
+      "demo_user": "데모 계정",
+      "reset_seed": "시드 데이터로 초기화",
+      "access_title": "학습 권한 확인",
+      "access_body": "계정 {user} · 콘텐츠 {listing}:",
+      "access_yes": "접근 가능",
+      "access_no": "접근 불가",
+      "access_note": "(데모: 목록 첫 번째 콘텐츠 기준)",
+      "profile_title": "교사 프로필",
+      "profile_caption": "판매자 정보·자격(자리)",
+      "listing_title": "등록 콘텐츠",
+      "new_draft_title": "새 초안",
+      "review_log_title": "심사 기록",
+      "entitlement_title": "학습 권한 · 수동 부여",
+      "order_title": "주문(자리)",
+      "order_note": "수수료 필드는 거래 시점 스냅샷이며, 결제사 필드는 이후 연동용입니다."
+    },
+    "review": {
+      "panel_title": "심사(검수자/관리자)",
+      "panel_desc": "등록 상태와 사유 코드·설명을 기록합니다. 상태 전이 규칙을 따릅니다.",
+      "pick_listing": "콘텐츠 선택",
+      "new_status": "목표 상태",
+      "reason_code": "사유 유형",
+      "reason_text": "사유 설명",
+      "reason_placeholder": "반려 또는 내리기 사유",
+      "apply": "적용",
+      "hidden": "현재 데모 계정에는 심사 권한이 없습니다. 검수자 또는 관리자 데모 계정으로 바꿔 주세요.",
+      "transition_denied": "「{from}」에서 「{to}」(으)로 변경할 수 없습니다."
+    },
+    "form": {
+      "title": "제목",
+      "seller_type": "판매자 유형",
+      "teacher_profile_id": "교사 프로필 ID",
+      "teacher_placeholder": "플랫폼 자체 판매 시 비워 둠",
+      "listing_type": "콘텐츠 유형",
+      "delivery_type": "제공 형태",
+      "visibility": "공개 범위",
+      "price_amount": "가격",
+      "price_currency": "통화",
+      "refund_policy": "환불 정책",
+      "create_draft": "초안 만들기",
+      "submit_review": "심사 제출",
+      "grant_user": "학습자 계정",
+      "grant_listing": "등록 콘텐츠",
+      "grant_submit": "권한 부여",
+      "default_title": "제목 없는 초안"
+    },
+    "table": {
+      "empty_cell": "—",
+      "no_rows": "기록 없음",
+      "head": {
+        "record_id": "기록 ID",
+        "user": "사용자",
+        "display_name": "표시 이름",
+        "buyer": "구매자",
+        "listing": "등록 콘텐츠",
+        "seller_type": "판매자 유형",
+        "teacher": "교사",
+        "listing_type": "콘텐츠 유형",
+        "status": "상태",
+        "visibility": "공개 범위",
+        "price": "가격",
+        "actions": "작업",
+        "time": "시간",
+        "action": "작업 유형",
+        "reason_code": "사유 유형",
+        "reason_text": "사유 설명",
+        "entitlement_type": "권한 유형",
+        "source": "출처",
+        "provider": "결제사",
+        "amount": "금액",
+        "payout_ready": "정산 준비"
+      }
+    },
+    "field": {
+      "id": "기록 ID",
+      "user_id": "사용자 ID",
+      "buyer_id": "구매자 ID",
+      "listing_id": "등록 콘텐츠 ID",
+      "teacher_id": "교사 ID",
+      "display_name": "표시 이름",
+      "teacher_level": "교사 단계",
+      "verification_status": "인증 상태",
+      "seller_eligibility": "판매 자격",
+      "payout_ready": "정산 준비",
+      "seller_type": "판매자 유형",
+      "listing_type": "콘텐츠 유형",
+      "delivery_type": "제공 형태",
+      "status": "상태",
+      "visibility": "공개 범위",
+      "price_amount": "가격",
+      "price_currency": "통화",
+      "title": "제목",
+      "entitlement_type": "권한 유형",
+      "source_type": "출처 유형",
+      "provider": "결제사",
+      "amount": "금액",
+      "currency": "통화",
+      "reason_code": "사유 유형",
+      "reason_text": "사유 설명"
+    },
+    "bool": { "yes": "예", "no": "아니오" },
+    "err": {
+      "unknown": "알 수 없는 오류입니다.",
+      "teacher_id_required": "교사 콘텐츠에는 교사 ID가 필요합니다.",
+      "teacher_profile_missing": "교사 프로필이 없습니다.",
+      "teacher_mismatch": "등록 콘텐츠와 교사 프로필이 일치하지 않습니다.",
+      "not_seller_eligible": "판매 자격과 교사 단계를 갖춘 뒤 심사를 제출할 수 있습니다."
+    },
+    "enum": {
+      "unknown": "(알 수 없음)",
+      "seller_type": { "platform": "플랫폼", "teacher": "교사" },
+      "teacher_level": {
+        "basic_teacher": "기본 교사",
+        "verified_teacher": "인증 교사",
+        "seller_teacher": "판매 가능 교사"
+      },
+      "verification_status": {
+        "not_submitted": "미제출",
+        "pending": "심사 중",
+        "approved": "승인",
+        "rejected": "거절"
+      },
+      "seller_eligibility": {
+        "none": "없음",
+        "internal_use_only": "내부용만",
+        "eligible_to_sell": "공개 판매 가능"
+      },
+      "listing_type": {
+        "course": "정규 코스",
+        "course_bundle": "시리즈/번들",
+        "material": "교재",
+        "ppt": "PPT/자료",
+        "live_class": "라이브 클래스",
+        "one_on_one": "1:1",
+        "subscription_plan": "구독",
+        "other": "기타"
+      },
+      "delivery_type": {
+        "recorded": "녹화",
+        "downloadable": "다운로드",
+        "live": "라이브",
+        "service": "서비스형",
+        "membership": "멤버십",
+        "manual": "수동 지급"
+      },
+      "listing_status": {
+        "draft": "초안",
+        "pending_review": "심사 대기",
+        "approved": "승인됨",
+        "rejected": "거절됨",
+        "delisted": "판매 중지",
+        "archived": "보관됨",
+        "appeal_pending": "이의 제기 처리 중"
+      },
+      "visibility": {
+        "private": "비공개",
+        "unlisted": "링크만",
+        "public": "공개"
+      },
+      "entitlement_type": {
+        "platform_subscription": "플랫폼 구독",
+        "listing_access": "콘텐츠 접근",
+        "teacher_course_access": "교사 코스 접근",
+        "manual_grant": "수동 부여",
+        "invite": "초대",
+        "free_access": "무료 접근"
+      },
+      "entitlement_source_type": {
+        "order": "주문",
+        "admin": "관리자",
+        "campaign": "캠페인",
+        "teacher_invite": "교사 초대",
+        "system": "시스템"
+      },
+      "entitlement_status": {
+        "active": "유효",
+        "expired": "만료",
+        "revoked": "취소됨",
+        "scheduled": "예약됨"
+      },
+      "order_status": {
+        "pending_payment": "결제 대기",
+        "paid": "결제 완료",
+        "failed": "실패",
+        "cancelled": "취소",
+        "refunded": "환불",
+        "partially_refunded": "부분 환불"
+      },
+      "refund_policy_type": {
+        "no_refund": "환불 불가",
+        "within_7_days": "7일 이내",
+        "before_class_start": "수업 시작 전",
+        "prorated": "일할",
+        "case_review": "개별 심사"
+      },
+      "review_reason_code": {
+        "copyright_risk": "저작권 위험",
+        "policy_violation": "정책 위반",
+        "insufficient_quality": "품질 부족",
+        "missing_credentials": "자격 미비",
+        "incomplete_listing": "정보 불완전",
+        "unsafe_or_inappropriate": "부적절/안전 이슈",
+        "other": "기타"
+      },
+      "listing_review_action": {
+        "submitted": "심사 제출",
+        "approved": "승인",
+        "rejected": "거절",
+        "delisted": "내리기",
+        "appeal_submitted": "이의 제기",
+        "appeal_resolved": "이의 처리"
+      },
+      "commission_type": {
+        "none": "없음",
+        "platform_rate": "플랫폼 비율",
+        "platform_flat": "플랫폼 정액"
+      },
+      "game_mode": {
+        "speaking": "말하기",
+        "response": "응답",
+        "vocab": "어휘",
+        "guessing": "추측"
+      }
+    },
+    "demo": {
+      "user_student": "데모 학습자 A",
+      "user_teacher": "데모 교사(계정)",
+      "user_reviewer": "데모 검수자",
+      "user_admin": "데모 관리자",
+      "profile_names": { "tp_demo_seller_001": "데모 · 김 선생님" }
+    }
+  },
   "hanja": {
     "title": "한자공부",
     "section_vocab": "📖 자주 쓰는 한자",

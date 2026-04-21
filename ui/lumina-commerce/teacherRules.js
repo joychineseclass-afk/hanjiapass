@@ -18,7 +18,7 @@ export function canTeacherPublishForSale(profile) {
  *
  * @param {import('./schema.js').TeacherSellerProfile|null} teacherProfile
  * @param {import('./schema.js').Listing} listing
- * @returns {{ ok: boolean, code?: string, message?: string }}
+ * @returns {{ ok: boolean, code?: string }}
  */
 export function assertCanSubmitListingForReview(teacherProfile, listing) {
   if (listing.seller_type === SELLER_TYPE.platform) {
@@ -26,19 +26,18 @@ export function assertCanSubmitListingForReview(teacherProfile, listing) {
   }
   if (listing.seller_type === SELLER_TYPE.teacher) {
     if (!listing.teacher_id) {
-      return { ok: false, code: "teacher_id_required", message: "teacher listing 必须带 teacher_id" };
+      return { ok: false, code: "teacher_id_required" };
     }
     if (!teacherProfile) {
-      return { ok: false, code: "teacher_profile_missing", message: "缺少老师档案" };
+      return { ok: false, code: "teacher_profile_missing" };
     }
     if (teacherProfile.id !== listing.teacher_id) {
-      return { ok: false, code: "teacher_mismatch", message: "listing.teacher_id 与档案不一致" };
+      return { ok: false, code: "teacher_mismatch" };
     }
     if (!canTeacherPublishForSale(teacherProfile)) {
       return {
         ok: false,
         code: "not_seller_eligible",
-        message: "需 seller_teacher 且 seller_eligibility=eligible_to_sell 方可提交售卖审核",
       };
     }
     if (listing.visibility === VISIBILITY.public) {

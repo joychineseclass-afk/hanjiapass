@@ -749,6 +749,242 @@
       "failed": "授業データを読み込めませんでした"
     }
   },
+  "commerce": {
+    "stage0": {
+      "title": "教師向けコマース · Stage 0 骨格",
+      "subtitle": "業務ルールとデータの枠です。決済 API は未接続です。ローカル保存・デモシードにリセット可能。",
+      "demo_user": "デモアカウント",
+      "reset_seed": "シードにリセット",
+      "access_title": "学習権限の確認",
+      "access_body": "アカウント {user} · コンテンツ {listing}：",
+      "access_yes": "アクセス可",
+      "access_no": "アクセス不可",
+      "access_note": "（デモ：一覧の先頭コンテンツ）",
+      "profile_title": "教師プロフィール",
+      "profile_caption": "販売者情報・審査（枠）",
+      "listing_title": "掲載コンテンツ",
+      "new_draft_title": "新規下書き",
+      "review_log_title": "審査ログ",
+      "entitlement_title": "学習権限 · 手動付与",
+      "order_title": "注文（枠）",
+      "order_note": "手数料項目は取引時点のスナップショット。決済プロバイダー欄は将来接続用です。"
+    },
+    "review": {
+      "panel_title": "審査（レビュアー/管理者）",
+      "panel_desc": "掲載状態と理由コード・説明を記録します。状態遷移ルールに従います。",
+      "pick_listing": "コンテンツを選択",
+      "new_status": "移行先ステータス",
+      "reason_code": "理由タイプ",
+      "reason_text": "理由の説明",
+      "reason_placeholder": "却下・掲載停止の説明",
+      "apply": "適用",
+      "hidden": "現在のデモアカウントには審査権限がありません。レビュアーまたは管理者デモに切り替えてください。",
+      "transition_denied": "「{from}」から「{to}」へは変更できません。"
+    },
+    "form": {
+      "title": "タイトル",
+      "seller_type": "販売者タイプ",
+      "teacher_profile_id": "教師プロフィール ID",
+      "teacher_placeholder": "プラットフォーム販売は空欄",
+      "listing_type": "コンテンツタイプ",
+      "delivery_type": "提供形態",
+      "visibility": "公開範囲",
+      "price_amount": "価格",
+      "price_currency": "通貨",
+      "refund_policy": "返金ポリシー",
+      "create_draft": "下書き作成",
+      "submit_review": "審査に提出",
+      "grant_user": "学習者アカウント",
+      "grant_listing": "掲載コンテンツ",
+      "grant_submit": "権限を付与",
+      "default_title": "無題の下書き"
+    },
+    "table": {
+      "empty_cell": "—",
+      "no_rows": "データなし",
+      "head": {
+        "record_id": "記録 ID",
+        "user": "ユーザー",
+        "display_name": "表示名",
+        "buyer": "購入者",
+        "listing": "掲載",
+        "seller_type": "販売者タイプ",
+        "teacher": "教師",
+        "listing_type": "コンテンツタイプ",
+        "status": "状態",
+        "visibility": "公開範囲",
+        "price": "価格",
+        "actions": "操作",
+        "time": "日時",
+        "action": "操作種別",
+        "reason_code": "理由タイプ",
+        "reason_text": "理由本文",
+        "entitlement_type": "権限タイプ",
+        "source": "発行元",
+        "provider": "決済プロバイダー",
+        "amount": "金額",
+        "payout_ready": "送金準備"
+      }
+    },
+    "field": {
+      "id": "記録 ID",
+      "user_id": "ユーザー ID",
+      "buyer_id": "購入者 ID",
+      "listing_id": "掲載 ID",
+      "teacher_id": "教師 ID",
+      "display_name": "表示名",
+      "teacher_level": "教師レベル",
+      "verification_status": "認証状態",
+      "seller_eligibility": "販売資格",
+      "payout_ready": "送金準備",
+      "seller_type": "販売者タイプ",
+      "listing_type": "コンテンツタイプ",
+      "delivery_type": "提供形態",
+      "status": "状態",
+      "visibility": "公開範囲",
+      "price_amount": "価格",
+      "price_currency": "通貨",
+      "title": "タイトル",
+      "entitlement_type": "権限タイプ",
+      "source_type": "発行元タイプ",
+      "provider": "プロバイダー",
+      "amount": "金額",
+      "currency": "通貨",
+      "reason_code": "理由タイプ",
+      "reason_text": "理由本文"
+    },
+    "bool": { "yes": "はい", "no": "いいえ" },
+    "err": {
+      "unknown": "不明なエラーです。",
+      "teacher_id_required": "教師コンテンツには教師 ID が必要です。",
+      "teacher_profile_missing": "教師プロフィールがありません。",
+      "teacher_mismatch": "掲載と教師プロフィールが一致しません。",
+      "not_seller_eligible": "販売資格と教師レベルを満たしてから審査に提出できます。"
+    },
+    "enum": {
+      "unknown": "（不明）",
+      "seller_type": { "platform": "プラットフォーム", "teacher": "教師" },
+      "teacher_level": {
+        "basic_teacher": "ベーシック教師",
+        "verified_teacher": "認証済み教師",
+        "seller_teacher": "販売可能教師"
+      },
+      "verification_status": {
+        "not_submitted": "未提出",
+        "pending": "審査中",
+        "approved": "承認",
+        "rejected": "却下"
+      },
+      "seller_eligibility": {
+        "none": "なし",
+        "internal_use_only": "内部利用のみ",
+        "eligible_to_sell": "公開販売可"
+      },
+      "listing_type": {
+        "course": "コース",
+        "course_bundle": "シリーズ/セット",
+        "material": "教材",
+        "ppt": "スライド",
+        "live_class": "ライブクラス",
+        "one_on_one": "1対1",
+        "subscription_plan": "サブスク",
+        "other": "その他"
+      },
+      "delivery_type": {
+        "recorded": "録画",
+        "downloadable": "ダウンロード",
+        "live": "ライブ",
+        "service": "サービス",
+        "membership": "会員",
+        "manual": "手動付与"
+      },
+      "listing_status": {
+        "draft": "下書き",
+        "pending_review": "審査待ち",
+        "approved": "承認済み",
+        "rejected": "却下",
+        "delisted": "掲載停止",
+        "archived": "アーカイブ",
+        "appeal_pending": "異議申し立て処理中"
+      },
+      "visibility": {
+        "private": "非公開",
+        "unlisted": "限定公開",
+        "public": "公開"
+      },
+      "entitlement_type": {
+        "platform_subscription": "プラットフォーム購読",
+        "listing_access": "コンテンツアクセス",
+        "teacher_course_access": "教師コースアクセス",
+        "manual_grant": "手動付与",
+        "invite": "招待",
+        "free_access": "無料アクセス"
+      },
+      "entitlement_source_type": {
+        "order": "注文",
+        "admin": "管理者",
+        "campaign": "キャンペーン",
+        "teacher_invite": "教師招待",
+        "system": "システム"
+      },
+      "entitlement_status": {
+        "active": "有効",
+        "expired": "期限切れ",
+        "revoked": "取消",
+        "scheduled": "予定"
+      },
+      "order_status": {
+        "pending_payment": "未決済",
+        "paid": "支払済",
+        "failed": "失敗",
+        "cancelled": "キャンセル",
+        "refunded": "返金済",
+        "partially_refunded": "一部返金"
+      },
+      "refund_policy_type": {
+        "no_refund": "返金不可",
+        "within_7_days": "7日以内",
+        "before_class_start": "開講前",
+        "prorated": "日割り",
+        "case_review": "個別審査"
+      },
+      "review_reason_code": {
+        "copyright_risk": "著作権リスク",
+        "policy_violation": "ポリシー違反",
+        "insufficient_quality": "品質不足",
+        "missing_credentials": "資格不足",
+        "incomplete_listing": "情報不足",
+        "unsafe_or_inappropriate": "不適切/安全",
+        "other": "その他"
+      },
+      "listing_review_action": {
+        "submitted": "審査提出",
+        "approved": "承認",
+        "rejected": "却下",
+        "delisted": "掲載停止",
+        "appeal_submitted": "異議申し立て",
+        "appeal_resolved": "異議処理"
+      },
+      "commission_type": {
+        "none": "なし",
+        "platform_rate": "プラットフォーム率",
+        "platform_flat": "プラットフォーム定額"
+      },
+      "game_mode": {
+        "speaking": "スピーキング",
+        "response": "応答",
+        "vocab": "語彙",
+        "guessing": "クイズ"
+      }
+    },
+    "demo": {
+      "user_student": "デモ学習者 A",
+      "user_teacher": "デモ教師（アカウント）",
+      "user_reviewer": "デモレビュアー",
+      "user_admin": "デモ管理者",
+      "profile_names": { "tp_demo_seller_001": "デモ · キム先生" }
+    }
+  },
   "hanja": {
     "title": "漢字学習",
     "section_vocab": "📖 よく使う漢字",

@@ -740,6 +740,242 @@
       "failed": "Could not load classroom data"
     }
   },
+  "commerce": {
+    "stage0": {
+      "title": "Teacher commerce · Stage 0 shell",
+      "subtitle": "Business rules and placeholder data. No payment APIs are connected. Stored locally; you can reset demo seed data.",
+      "demo_user": "Demo account",
+      "reset_seed": "Reset to seed data",
+      "access_title": "Entitlement check",
+      "access_body": "Account {user} · listing {listing}:",
+      "access_yes": "Has access",
+      "access_no": "No access",
+      "access_note": "(Demo: first listing in the table)",
+      "profile_title": "Teacher profile",
+      "profile_caption": "Seller profile & verification (placeholder)",
+      "listing_title": "Listings",
+      "new_draft_title": "New draft",
+      "review_log_title": "Review log",
+      "entitlement_title": "Entitlements · manual grant",
+      "order_title": "Orders (placeholder)",
+      "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration."
+    },
+    "review": {
+      "panel_title": "Review (reviewer / admin)",
+      "panel_desc": "Change listing status with reason code and text; transitions must follow the state machine.",
+      "pick_listing": "Choose listing",
+      "new_status": "Target status",
+      "reason_code": "Reason type",
+      "reason_text": "Reason details",
+      "reason_placeholder": "Rejection or delist explanation",
+      "apply": "Apply",
+      "hidden": "The current demo account cannot review. Switch to the reviewer or admin demo account.",
+      "transition_denied": "Cannot move from “{from}” to “{to}”."
+    },
+    "form": {
+      "title": "Title",
+      "seller_type": "Seller type",
+      "teacher_profile_id": "Teacher profile ID",
+      "teacher_placeholder": "Leave empty for platform-owned",
+      "listing_type": "Listing type",
+      "delivery_type": "Delivery type",
+      "visibility": "Visibility",
+      "price_amount": "Price",
+      "price_currency": "Currency",
+      "refund_policy": "Refund policy",
+      "create_draft": "Create draft",
+      "submit_review": "Submit for review",
+      "grant_user": "Learner account",
+      "grant_listing": "Listing",
+      "grant_submit": "Grant access",
+      "default_title": "Untitled draft"
+    },
+    "table": {
+      "empty_cell": "—",
+      "no_rows": "No rows",
+      "head": {
+        "record_id": "Record ID",
+        "user": "User",
+        "display_name": "Display name",
+        "buyer": "Buyer",
+        "listing": "Listing",
+        "seller_type": "Seller type",
+        "teacher": "Teacher",
+        "listing_type": "Listing type",
+        "status": "Status",
+        "visibility": "Visibility",
+        "price": "Price",
+        "actions": "Actions",
+        "time": "Time",
+        "action": "Action",
+        "reason_code": "Reason type",
+        "reason_text": "Reason text",
+        "entitlement_type": "Entitlement type",
+        "source": "Source",
+        "provider": "Provider",
+        "amount": "Amount",
+        "payout_ready": "Payout ready"
+      }
+    },
+    "field": {
+      "id": "Record ID",
+      "user_id": "User ID",
+      "buyer_id": "Buyer ID",
+      "listing_id": "Listing ID",
+      "teacher_id": "Teacher ID",
+      "display_name": "Display name",
+      "teacher_level": "Teacher tier",
+      "verification_status": "Verification",
+      "seller_eligibility": "Seller eligibility",
+      "payout_ready": "Payout ready",
+      "seller_type": "Seller type",
+      "listing_type": "Listing type",
+      "delivery_type": "Delivery type",
+      "status": "Status",
+      "visibility": "Visibility",
+      "price_amount": "Price",
+      "price_currency": "Currency",
+      "title": "Title",
+      "entitlement_type": "Entitlement type",
+      "source_type": "Source type",
+      "provider": "Provider",
+      "amount": "Amount",
+      "currency": "Currency",
+      "reason_code": "Reason type",
+      "reason_text": "Reason text"
+    },
+    "bool": { "yes": "Yes", "no": "No" },
+    "err": {
+      "unknown": "Something went wrong.",
+      "teacher_id_required": "Teacher listings must include a teacher ID.",
+      "teacher_profile_missing": "Teacher profile is missing.",
+      "teacher_mismatch": "Listing does not match the teacher profile.",
+      "not_seller_eligible": "Seller eligibility and teacher tier are required before submitting for review."
+    },
+    "enum": {
+      "unknown": "(Unknown)",
+      "seller_type": { "platform": "Platform", "teacher": "Teacher" },
+      "teacher_level": {
+        "basic_teacher": "Basic teacher",
+        "verified_teacher": "Verified teacher",
+        "seller_teacher": "Seller teacher"
+      },
+      "verification_status": {
+        "not_submitted": "Not submitted",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "seller_eligibility": {
+        "none": "None",
+        "internal_use_only": "Internal use only",
+        "eligible_to_sell": "Eligible to sell"
+      },
+      "listing_type": {
+        "course": "Course",
+        "course_bundle": "Bundle / series",
+        "material": "Materials",
+        "ppt": "Slides / PPT",
+        "live_class": "Live class",
+        "one_on_one": "One-to-one",
+        "subscription_plan": "Subscription",
+        "other": "Other"
+      },
+      "delivery_type": {
+        "recorded": "Recorded",
+        "downloadable": "Downloadable",
+        "live": "Live",
+        "service": "Service",
+        "membership": "Membership",
+        "manual": "Manual"
+      },
+      "listing_status": {
+        "draft": "Draft",
+        "pending_review": "Pending review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "delisted": "Delisted",
+        "archived": "Archived",
+        "appeal_pending": "Appeal pending"
+      },
+      "visibility": {
+        "private": "Private",
+        "unlisted": "Unlisted",
+        "public": "Public"
+      },
+      "entitlement_type": {
+        "platform_subscription": "Platform subscription",
+        "listing_access": "Listing access",
+        "teacher_course_access": "Teacher course access",
+        "manual_grant": "Manual grant",
+        "invite": "Invite",
+        "free_access": "Free access"
+      },
+      "entitlement_source_type": {
+        "order": "Order",
+        "admin": "Admin",
+        "campaign": "Campaign",
+        "teacher_invite": "Teacher invite",
+        "system": "System"
+      },
+      "entitlement_status": {
+        "active": "Active",
+        "expired": "Expired",
+        "revoked": "Revoked",
+        "scheduled": "Scheduled"
+      },
+      "order_status": {
+        "pending_payment": "Pending payment",
+        "paid": "Paid",
+        "failed": "Failed",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded",
+        "partially_refunded": "Partially refunded"
+      },
+      "refund_policy_type": {
+        "no_refund": "No refund",
+        "within_7_days": "Within 7 days",
+        "before_class_start": "Before class starts",
+        "prorated": "Prorated",
+        "case_review": "Case review"
+      },
+      "review_reason_code": {
+        "copyright_risk": "Copyright risk",
+        "policy_violation": "Policy violation",
+        "insufficient_quality": "Insufficient quality",
+        "missing_credentials": "Missing credentials",
+        "incomplete_listing": "Incomplete listing",
+        "unsafe_or_inappropriate": "Unsafe / inappropriate",
+        "other": "Other"
+      },
+      "listing_review_action": {
+        "submitted": "Submitted",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "delisted": "Delisted",
+        "appeal_submitted": "Appeal submitted",
+        "appeal_resolved": "Appeal resolved"
+      },
+      "commission_type": {
+        "none": "None",
+        "platform_rate": "Platform rate",
+        "platform_flat": "Platform flat fee"
+      },
+      "game_mode": {
+        "speaking": "Speaking",
+        "response": "Response",
+        "vocab": "Vocabulary",
+        "guessing": "Guessing"
+      }
+    },
+    "demo": {
+      "user_student": "Demo learner A",
+      "user_teacher": "Demo teacher (account)",
+      "user_reviewer": "Demo reviewer",
+      "user_admin": "Demo admin",
+      "profile_names": { "tp_demo_seller_001": "Demo · Teacher Kim" }
+    }
+  },
   "hanja": {
     "title": "Hanzi Study",
     "section_vocab": "📖 Common Hanzi",

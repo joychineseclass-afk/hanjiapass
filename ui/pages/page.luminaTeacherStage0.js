@@ -1,6 +1,5 @@
 /**
- * Lumina 教师模块 Stage 0 — 最小骨架页（验证枚举、状态机、entitlement、order 占位）。
- * 未接支付；数据存 localStorage（lumina_commerce_stage0_store_v1）。
+ * Lumina 教师模块 Stage 0 — 骨架页。文案与枚举显示走全局 i18n + commerceDisplayLabels。
  */
 
 import {
@@ -18,6 +17,16 @@ import {
   VISIBILITY,
   LISTING_REVIEW_ACTION,
 } from "../lumina-commerce/enums.js";
+import {
+  commerceT,
+  formatCommerceEnum,
+  formatCommerceFieldLabel,
+  formatCommerceBool,
+  formatDemoUserDisplay,
+  formatCommerceErrorCode,
+  formatDemoTeacherProfileDisplayName,
+  formatCommerceTableHead,
+} from "../lumina-commerce/commerceDisplayLabels.js";
 import { hasListingAccess } from "../lumina-commerce/entitlementService.js";
 import { canTransitionListingStatus } from "../lumina-commerce/listingStateMachine.js";
 import { assertCanSubmitListingForReview } from "../lumina-commerce/teacherRules.js";
@@ -27,6 +36,7 @@ import {
   resetCommerceStoreToSeed,
   userHasRole,
 } from "../lumina-commerce/store.js";
+import { i18n } from "../i18n.js";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -41,10 +51,19 @@ function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function optEnum(values, selected) {
+/** @param {string[]} values @param {string} selected @param {string} group */
+function optEnumLocalized(values, selected, group) {
   return values
-    .map((v) => `<option value="${escapeHtml(v)}" ${v === selected ? "selected" : ""}>${escapeHtml(v)}</option>`)
+    .map((v) => {
+      const label = formatCommerceEnum(group, v);
+      return `<option value="${escapeHtml(v)}" ${v === selected ? "selected" : ""}>${escapeHtml(label)}</option>`;
+    })
     .join("");
+}
+
+function cellDash(val) {
+  if (val == null || val === "") return commerceT("commerce.table.empty_cell");
+  return escapeHtml(String(val));
 }
 
 function renderPage(root, ctx) {
@@ -54,13 +73,13 @@ function renderPage(root, ctx) {
   const teacherRows = snap.teacher_profiles
     .map(
       (t) => `<tr>
-      <td>${escapeHtml(t.id)}</td>
-      <td>${escapeHtml(t.user_id)}</td>
-      <td>${escapeHtml(t.display_name)}</td>
-      <td>${escapeHtml(t.teacher_level)}</td>
-      <td>${escapeHtml(t.verification_status)}</td>
-      <td>${escapeHtml(t.seller_eligibility)}</td>
-      <td>${t.payout_ready ? "yes" : "no"}</td>
+      <td>${cellDash(t.id)}</td>
+      <td>${cellDash(t.user_id)}</td>
+      <td>${escapeHtml(formatDemoTeacherProfileDisplayName(t.id, t.display_name))}</td>
+      <td>${escapeHtml(formatCommerceEnum("teacher_level", t.teacher_level))}</td>
+      <td>${escapeHtml(formatCommerceEnum("verification_status", t.verification_status))}</td>
+      <td>${escapeHtml(formatCommerceEnum("seller_eligibility", t.seller_eligibility))}</td>
+      <td>${escapeHtml(formatCommerceBool(!!t.payout_ready))}</td>
     </tr>`
     )
     .join("");
@@ -72,19 +91,18 @@ function renderPage(root, ctx) {
           ? snap.teacher_profiles.find((x) => x.id === L.teacher_id) || null
           : null;
       const canSubmit =
-        L.status === LISTING_STATUS.draft &&
-        assertCanSubmitListingForReview(tp, L).ok;
+        L.status === LISTING_STATUS.draft && assertCanSubmitListingForReview(tp, L).ok;
       const submitDisabled = canSubmit ? "" : "disabled";
       return `<tr data-listing-id="${escapeHtml(L.id)}">
-        <td>${escapeHtml(L.id)}</td>
-        <td>${escapeHtml(L.seller_type)}</td>
-        <td>${escapeHtml(L.teacher_id || "—")}</td>
-        <td>${escapeHtml(L.listing_type)}</td>
-        <td>${escapeHtml(L.status)}</td>
-        <td>${escapeHtml(L.visibility)}</td>
-        <td>${escapeHtml(String(L.price_amount))} ${escapeHtml(L.price_currency)}</td>
+        <td>${cellDash(L.id)}</td>
+        <td>${escapeHtml(formatCommerceEnum("seller_type", L.seller_type))}</td>
+        <td>${cellDash(L.teacher_id)}</td>
+        <td>${escapeHtml(formatCommerceEnum("listing_type", L.listing_type))}</td>
+        <td>${escapeHtml(formatCommerceEnum("listing_status", L.status))}</td>
+        <td>${escapeHtml(formatCommerceEnum("visibility", L.visibility))}</td>
+        <td>${escapeHtml(String(L.price_amount))} ${escapeHtml(String(L.price_currency))}</td>
         <td>
-          <button type="button" class="lts0-submit-review" data-id="${escapeHtml(L.id)}" ${submitDisabled}>提交审核</button>
+          <button type="button" class="lts0-submit-review" data-id="${escapeHtml(L.id)}" ${submitDisabled}>${escapeHtml(commerceT("commerce.form.submit_review"))}</button>
         </td>
       </tr>`;
     })
@@ -95,11 +113,11 @@ function renderPage(root, ctx) {
     .reverse()
     .map(
       (r) => `<tr>
-      <td>${escapeHtml(r.created_at)}</td>
-      <td>${escapeHtml(r.listing_id)}</td>
-      <td>${escapeHtml(r.action)}</td>
-      <td>${escapeHtml(r.reason_code || "—")}</td>
-      <td>${escapeHtml(r.reason_text || "—")}</td>
+      <td>${cellDash(r.created_at)}</td>
+      <td>${cellDash(r.listing_id)}</td>
+      <td>${escapeHtml(formatCommerceEnum("listing_review_action", r.action))}</td>
+      <td>${escapeHtml(formatCommerceEnum("review_reason_code", r.reason_code))}</td>
+      <td>${cellDash(r.reason_text)}</td>
     </tr>`
     )
     .join("");
@@ -107,12 +125,12 @@ function renderPage(root, ctx) {
   const entRows = snap.entitlements
     .map(
       (e) => `<tr>
-      <td>${escapeHtml(e.id)}</td>
-      <td>${escapeHtml(e.user_id)}</td>
-      <td>${escapeHtml(e.entitlement_type)}</td>
-      <td>${escapeHtml(e.listing_id || "—")}</td>
-      <td>${escapeHtml(e.status)}</td>
-      <td>${escapeHtml(e.source_type)}</td>
+      <td>${cellDash(e.id)}</td>
+      <td>${cellDash(e.user_id)}</td>
+      <td>${escapeHtml(formatCommerceEnum("entitlement_type", e.entitlement_type))}</td>
+      <td>${cellDash(e.listing_id)}</td>
+      <td>${escapeHtml(formatCommerceEnum("entitlement_status", e.status))}</td>
+      <td>${escapeHtml(formatCommerceEnum("entitlement_source_type", e.source_type))}</td>
     </tr>`
     )
     .join("");
@@ -120,13 +138,13 @@ function renderPage(root, ctx) {
   const orderRows = snap.orders
     .map(
       (o) => `<tr>
-      <td>${escapeHtml(o.id)}</td>
-      <td>${escapeHtml(o.buyer_id)}</td>
-      <td>${escapeHtml(o.listing_id)}</td>
-      <td>${escapeHtml(o.seller_type)}</td>
-      <td>${escapeHtml(o.status)}</td>
-      <td>${escapeHtml(String(o.amount))} ${escapeHtml(o.currency)}</td>
-      <td>${escapeHtml(o.provider || "—")}</td>
+      <td>${cellDash(o.id)}</td>
+      <td>${cellDash(o.buyer_id)}</td>
+      <td>${cellDash(o.listing_id)}</td>
+      <td>${escapeHtml(formatCommerceEnum("seller_type", o.seller_type))}</td>
+      <td>${escapeHtml(formatCommerceEnum("order_status", o.status))}</td>
+      <td>${escapeHtml(String(o.amount))} ${escapeHtml(String(o.currency))}</td>
+      <td>${o.provider ? cellDash(o.provider) : cellDash(null)}</td>
     </tr>`
     )
     .join("");
@@ -136,11 +154,13 @@ function renderPage(root, ctx) {
 
   const reviewPanel = isReviewer
     ? `<section class="card" style="margin-top:14px;">
-        <h3>审核骨架（reviewer / admin）</h3>
-        <p class="desc" style="font-size:13px;color:#64748b;">演示：变更 listing 状态并写入 review_reason_code / review_reason_text；状态转移受状态机约束。</p>
+        <h3>${escapeHtml(commerceT("commerce.review.panel_title"))}</h3>
+        <p class="desc" style="font-size:13px;color:#64748b;">${escapeHtml(commerceT("commerce.review.panel_desc"))}</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
-          <label>listing_id<br/><select id="lts0ReviewListing">${snap.listings.map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.title)} (${escapeHtml(L.id)})</option>`).join("")}</select></label>
-          <label>新状态<br/><select id="lts0ReviewNext">${optEnum(
+          <label>${escapeHtml(commerceT("commerce.review.pick_listing"))}<br/><select id="lts0ReviewListing">${snap.listings
+            .map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.title)}</option>`)
+            .join("")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.review.new_status"))}<br/><select id="lts0ReviewNext">${optEnumLocalized(
             [
               LISTING_STATUS.pending_review,
               LISTING_STATUS.approved,
@@ -148,109 +168,164 @@ function renderPage(root, ctx) {
               LISTING_STATUS.delisted,
               LISTING_STATUS.archived,
             ],
-            LISTING_STATUS.approved
+            LISTING_STATUS.approved,
+            "listing_status"
           )}</select></label>
-          <label>reason_code<br/><select id="lts0ReasonCode">${optEnum(Object.values(REVIEW_REASON_CODE), REVIEW_REASON_CODE.other)}</select></label>
-          <label style="min-width:220px;">reason_text<br/><input id="lts0ReasonText" type="text" placeholder="驳回/下架说明" style="width:100%;"/></label>
-          <button type="button" id="lts0ApplyReview">应用状态</button>
+          <label>${escapeHtml(commerceT("commerce.review.reason_code"))}<br/><select id="lts0ReasonCode">${optEnumLocalized(
+            Object.values(REVIEW_REASON_CODE),
+            REVIEW_REASON_CODE.other,
+            "review_reason_code"
+          )}</select></label>
+          <label style="min-width:220px;">${escapeHtml(commerceT("commerce.review.reason_text"))}<br/><input id="lts0ReasonText" type="text" placeholder="${escapeHtml(commerceT("commerce.review.reason_placeholder"))}" style="width:100%;"/></label>
+          <button type="button" id="lts0ApplyReview">${escapeHtml(commerceT("commerce.review.apply"))}</button>
         </div>
       </section>`
-    : `<p style="font-size:13px;color:#94a3b8;">当前演示用户非 reviewer/admin，已隐藏审核面板。切换为 u_reviewer_demo_001 或 u_admin_demo_001。</p>`;
+    : `<p style="font-size:13px;color:#94a3b8;">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`;
 
   const accessUser = demoUserId;
   const accessListingId = snap.listings[0]?.id || "";
   const hasAccess = hasListingAccess(snap.entitlements, accessUser, accessListingId);
+  const accessUserLabel = formatDemoUserDisplay(accessUser, snap.users.find((u) => u.id === accessUser)?.display_name);
+  const accessListingLabel = accessListingId;
 
   root.innerHTML = `
     <div class="wrap" style="padding-bottom:48px;">
       <section class="card">
-        <h2 class="title">Lumina 教师模块 · Stage 0 骨架</h2>
-        <p class="desc">商业规则与数据占位；<b>未接任何支付 API</b>。数据持久化在本地 localStorage，可「重置为种子数据」。</p>
+        <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
+        <p class="desc">${escapeHtml(commerceT("commerce.stage0.subtitle"))}</p>
         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px;">
-          <label>演示用户（user_id）
+          <label>${escapeHtml(commerceT("commerce.stage0.demo_user"))}
             <select id="lts0DemoUser">
-              ${snap.users.map((u) => `<option value="${escapeHtml(u.id)}" ${u.id === demoUserId ? "selected" : ""}>${escapeHtml(u.display_name || u.id)}</option>`).join("")}
+              ${snap.users
+                .map((u) => {
+                  const label = formatDemoUserDisplay(u.id, u.display_name);
+                  return `<option value="${escapeHtml(u.id)}" ${u.id === demoUserId ? "selected" : ""}>${escapeHtml(label)}</option>`;
+                })
+                .join("")}
             </select>
           </label>
-          <button type="button" id="lts0ResetSeed">重置为种子数据</button>
+          <button type="button" id="lts0ResetSeed">${escapeHtml(commerceT("commerce.stage0.reset_seed"))}</button>
         </div>
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h3>学习权益探测（优先 entitlement）</h3>
-        <p style="font-size:13px;">用户 <code>${escapeHtml(accessUser)}</code> 对 listing <code>${escapeHtml(accessListingId)}</code>：
-          <strong>${hasAccess ? "有访问权" : "无访问权"}</strong>（仅演示默认首条 listing）。</p>
+        <h3>${escapeHtml(commerceT("commerce.stage0.access_title"))}</h3>
+        <p style="font-size:13px;">${escapeHtml(
+          String(i18n.t("commerce.stage0.access_body", { user: accessUserLabel, listing: accessListingLabel }) || "")
+        )}
+          <strong>${escapeHtml(hasAccess ? commerceT("commerce.stage0.access_yes") : commerceT("commerce.stage0.access_no"))}</strong>
+          ${escapeHtml(commerceT("commerce.stage0.access_note"))}</p>
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h3>老师档案（TeacherSellerProfile）</h3>
+        <h3>${escapeHtml(commerceT("commerce.stage0.profile_title"))}</h3>
+        <p style="font-size:12px;color:#94a3b8;margin:0 0 8px;">${escapeHtml(commerceT("commerce.stage0.profile_caption"))}</p>
         <div style="overflow:auto;">
           <table class="lts0-table">
-            <thead><tr><th>id</th><th>user_id</th><th>display_name</th><th>teacher_level</th><th>verification_status</th><th>seller_eligibility</th><th>payout_ready</th></tr></thead>
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("user_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("display_name"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("teacher_level"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("verification_status"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("seller_eligibility"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("payout_ready"))}</th>
+            </tr></thead>
             <tbody>${teacherRows}</tbody>
           </table>
         </div>
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h3>上架 Listing</h3>
+        <h3>${escapeHtml(commerceT("commerce.stage0.listing_title"))}</h3>
         <div style="overflow:auto;">
           <table class="lts0-table">
-            <thead><tr><th>id</th><th>seller_type</th><th>teacher_id</th><th>listing_type</th><th>status</th><th>visibility</th><th>price</th><th>操作</th></tr></thead>
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("seller_type"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("teacher_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("listing_type"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("status"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("visibility"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("price"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("actions"))}</th>
+            </tr></thead>
             <tbody>${listingRows}</tbody>
           </table>
         </div>
-        <h4 style="margin-top:16px;">新建草稿</h4>
+        <h4 style="margin-top:16px;">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h4>
         <form id="lts0NewListing" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;align-items:end;">
-          <label>title<input name="title" required value="草稿 · 示例"/></label>
-          <label>seller_type<select name="seller_type">${optEnum(Object.values(SELLER_TYPE), SELLER_TYPE.teacher)}</select></label>
-          <label>teacher_profile_id<input name="teacher_id" placeholder="platform 可空" value="tp_demo_seller_001"/></label>
-          <label>listing_type<select name="listing_type">${optEnum(Object.values(LISTING_TYPE), LISTING_TYPE.course)}</select></label>
-          <label>delivery_type<select name="delivery_type">${optEnum(Object.values(DELIVERY_TYPE), DELIVERY_TYPE.recorded)}</select></label>
-          <label>visibility<select name="visibility">${optEnum(Object.values(VISIBILITY), VISIBILITY.private)}</select></label>
-          <label>price_amount<input name="price_amount" value="10000"/></label>
-          <label>price_currency<input name="price_currency" value="${DEFAULT_SETTLEMENT_CURRENCY}"/></label>
-          <label>refund_policy<select name="refund_policy_type">${optEnum(
+          <label>${escapeHtml(commerceT("commerce.form.title"))}<input name="title" required value="${escapeHtml(commerceT("commerce.form.default_title"))}"/></label>
+          <label>${escapeHtml(commerceT("commerce.form.seller_type"))}<select name="seller_type">${optEnumLocalized(Object.values(SELLER_TYPE), SELLER_TYPE.teacher, "seller_type")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.form.teacher_profile_id"))}<input name="teacher_id" placeholder="${escapeHtml(commerceT("commerce.form.teacher_placeholder"))}" value="tp_demo_seller_001"/></label>
+          <label>${escapeHtml(commerceT("commerce.form.listing_type"))}<select name="listing_type">${optEnumLocalized(Object.values(LISTING_TYPE), LISTING_TYPE.course, "listing_type")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.form.delivery_type"))}<select name="delivery_type">${optEnumLocalized(Object.values(DELIVERY_TYPE), DELIVERY_TYPE.recorded, "delivery_type")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.form.visibility"))}<select name="visibility">${optEnumLocalized(Object.values(VISIBILITY), VISIBILITY.private, "visibility")}</select></label>
+          <label>${escapeHtml(commerceT("commerce.form.price_amount"))}<input name="price_amount" value="10000"/></label>
+          <label>${escapeHtml(commerceT("commerce.form.price_currency"))}<input name="price_currency" value="${DEFAULT_SETTLEMENT_CURRENCY}"/></label>
+          <label>${escapeHtml(commerceT("commerce.form.refund_policy"))}<select name="refund_policy_type">${optEnumLocalized(
             Object.values(REFUND_POLICY_TYPE),
-            REFUND_POLICY_TYPE.within_7_days
+            REFUND_POLICY_TYPE.within_7_days,
+            "refund_policy_type"
           )}</select></label>
-          <button type="submit" style="grid-column:1/-1;justify-self:start;">创建 draft</button>
+          <button type="submit" style="grid-column:1/-1;justify-self:start;">${escapeHtml(commerceT("commerce.form.create_draft"))}</button>
         </form>
       </section>
 
       ${reviewPanel}
 
       <section class="card" style="margin-top:14px;">
-        <h3>Listing 审核日志（占位）</h3>
+        <h3>${escapeHtml(commerceT("commerce.stage0.review_log_title"))}</h3>
         <div style="overflow:auto;">
           <table class="lts0-table">
-            <thead><tr><th>时间</th><th>listing_id</th><th>action</th><th>reason_code</th><th>reason_text</th></tr></thead>
-            <tbody>${logRows || `<tr><td colspan="5">暂无</td></tr>`}</tbody>
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("time"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("listing_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("action"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("reason_code"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("reason_text"))}</th>
+            </tr></thead>
+            <tbody>${snap.listing_review_logs.length ? logRows : `<tr><td colspan="5">${escapeHtml(commerceT("commerce.table.no_rows"))}</td></tr>`}</tbody>
           </table>
         </div>
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h3>Entitlement · 手动发放（manual_grant）</h3>
+        <h3>${escapeHtml(commerceT("commerce.stage0.entitlement_title"))}</h3>
         <form id="lts0Grant" style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
-          <label>user_id<input name="user_id" value="u_student_demo_001"/></label>
-          <label>listing_id<select name="listing_id">${snap.listings.map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.id)}</option>`).join("")}</select></label>
-          <button type="submit">发放</button>
+          <label>${escapeHtml(commerceT("commerce.form.grant_user"))}<input name="user_id" value="u_student_demo_001"/></label>
+          <label>${escapeHtml(commerceT("commerce.form.grant_listing"))}<select name="listing_id">${snap.listings.map((L) => `<option value="${escapeHtml(L.id)}">${escapeHtml(L.title)}</option>`).join("")}</select></label>
+          <button type="submit">${escapeHtml(commerceT("commerce.form.grant_submit"))}</button>
         </form>
         <div style="overflow:auto;margin-top:10px;">
           <table class="lts0-table">
-            <thead><tr><th>id</th><th>user_id</th><th>type</th><th>listing_id</th><th>status</th><th>source</th></tr></thead>
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("user_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("entitlement_type"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("listing_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("status"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("source"))}</th>
+            </tr></thead>
             <tbody>${entRows}</tbody>
           </table>
         </div>
       </section>
 
       <section class="card" style="margin-top:14px;">
-        <h3>Order 占位</h3>
-        <p class="desc" style="font-size:13px;">commission_* / seller_net_amount 为成交快照字段；provider_* 预留给支付接入。</p>
+        <h3>${escapeHtml(commerceT("commerce.stage0.order_title"))}</h3>
+        <p class="desc" style="font-size:13px;">${escapeHtml(commerceT("commerce.stage0.order_note"))}</p>
         <div style="overflow:auto;">
           <table class="lts0-table">
-            <thead><tr><th>id</th><th>buyer</th><th>listing</th><th>seller_type</th><th>status</th><th>金额</th><th>provider</th></tr></thead>
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("buyer"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("listing"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("seller_type"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("status"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("amount"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("provider"))}</th>
+            </tr></thead>
             <tbody>${orderRows}</tbody>
           </table>
         </div>
@@ -286,13 +361,15 @@ function renderPage(root, ctx) {
     const teacher_id = seller_type === SELLER_TYPE.platform ? null : teacher_id_raw || null;
     mutateCommerceStore((draft) => {
       const now = new Date().toISOString();
+      const titleIn = String(fd.get("title") || "").trim();
+      const defaultTitle = commerceT("commerce.form.default_title");
       draft.listings.push({
         id: uid("lst"),
         seller_type,
         teacher_id,
         listing_type: String(fd.get("listing_type")),
         delivery_type: String(fd.get("delivery_type")),
-        title: String(fd.get("title") || "未命名"),
+        title: titleIn || defaultTitle,
         summary: "",
         description: "",
         status: LISTING_STATUS.draft,
@@ -327,7 +404,7 @@ function renderPage(root, ctx) {
             : null;
         const gate = assertCanSubmitListingForReview(tp, L);
         if (!gate.ok) {
-          alert(gate.message || gate.code);
+          alert(formatCommerceErrorCode(gate.code));
           return;
         }
         if (!canTransitionListingStatus(L.status, LISTING_STATUS.pending_review)) return;
@@ -357,7 +434,12 @@ function renderPage(root, ctx) {
       const L = draft.listings.find((x) => x.id === listingId);
       if (!L) return;
       if (!canTransitionListingStatus(L.status, next)) {
-        alert(`不允许转移: ${L.status} -> ${next}`);
+        alert(
+          i18n.t("commerce.review.transition_denied", {
+            from: formatCommerceEnum("listing_status", L.status),
+            to: formatCommerceEnum("listing_status", next),
+          })
+        );
         return;
       }
       const now = new Date().toISOString();
@@ -423,6 +505,10 @@ function renderPage(root, ctx) {
   });
 }
 
+let __stage0LangHandler = /** @type {null | (() => void)} */ (null);
+let __stage0RootRef = /** @type {HTMLElement | null} */ (null);
+let __stage0CtxRef = /** @type {{ snap: any, demoUserId: string } | null} */ (null);
+
 export default async function pageLuminaTeacherStage0(ctxOrRoot) {
   const root =
     ctxOrRoot?.root ||
@@ -439,6 +525,13 @@ export default async function pageLuminaTeacherStage0(ctxOrRoot) {
   } catch {}
 
   const ctx = { snap, demoUserId };
+  __stage0RootRef = root;
+  __stage0CtxRef = ctx;
+  if (__stage0LangHandler) window.removeEventListener("joy:langChanged", __stage0LangHandler);
+  __stage0LangHandler = () => {
+    if (__stage0RootRef?.isConnected && __stage0CtxRef) renderPage(__stage0RootRef, __stage0CtxRef);
+  };
+  window.addEventListener("joy:langChanged", __stage0LangHandler);
   renderPage(root, ctx);
 }
 
