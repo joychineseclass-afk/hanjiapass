@@ -749,22 +749,34 @@
       "subtitle": "Classroom, materials, courses, and listings—common actions in one place.",
       "layer_materials": "Materials: your private slides, handouts, and lesson assets for prep and class—not the same as listed products.",
       "layer_courses": "Courses: the teaching content you structure—drafts, in progress, or ready to teach—can later feed listings.",
-      "layer_listing": "Listing management: sellable items with review and status. To sell, manage listings here and pass review."
+      "layer_listing": "Listing management: sellable items with review and status. To sell, manage listings here and pass review.",
+      "overview": {
+        "title": "Demo prep progress",
+        "disclosure": "Lightweight totals from local demo data to show where things are in the prep journey—not real business analytics.",
+        "chip_materials": "Demo materials · {count}",
+        "chip_courses": "Demo courses · {count}",
+        "chip_materials_in_use": "In use in courses · {count}",
+        "chip_courses_with_listing": "Linked to listings · {count}",
+        "chip_listings": "Listings · {count}",
+        "chip_pending": "Pending review · {count}",
+        "chip_drafts": "Drafts · {count}",
+        "chip_approved": "Approved · {count}"
+      }
     },
     "hub": {
       "materials": {
         "title": "My materials",
-        "desc": "Private prep library—use in courses or shape into sellable material listings.",
+        "desc": "Manage prep assets and see what is already used in courses or ready to move toward listing.",
         "cta": "Open materials library"
       },
       "courses": {
         "title": "My courses",
-        "desc": "Structure lessons, attach materials, then move to listing management when ready.",
+        "desc": "Shape your teaching structure and see whether materials are attached or you are ready for listing.",
         "cta": "Open course management"
       },
       "listing": {
         "title": "Listings & sales management",
-        "desc": "Manage public listings that usually come from a course or materials you prepared.",
+        "desc": "Manage public display and review status; see which content has entered the listing stage.",
         "cta": "Open listing hub",
         "badge": "Preview · Stage 0"
       }
@@ -776,6 +788,16 @@
       },
       "material": {
         "not_in_courses": "Not linked to a course yet",
+        "phase": {
+          "in_course_can_list": "In a course · ready to list",
+          "in_course_internal": "In a course · internal use",
+          "can_list_only": "Ready to list",
+          "not_ready": "Still organizing"
+        },
+        "usage": {
+          "none": "Not linked to a course",
+          "in_n_courses": "Used in {count} course(s)"
+        },
         "listing_prep": {
           "ready_pack": "Can become a material product",
           "internal_only": "Internal teaching use for now",
@@ -803,6 +825,17 @@
         "ready_for_listing": "Ready to prepare a listing",
         "in_progress": "Still being organized",
         "no_listing": "No listing yet",
+        "progress": {
+          "linked_listing": "Linked to a listing",
+          "ready_for_listing": "Ready to list",
+          "has_materials_building": "Materials linked · organizing",
+          "organizing": "Organizing · no materials yet"
+        },
+        "materials": {
+          "none": "No materials added yet",
+          "linked_n": "{count} material(s) linked"
+        },
+        "linked_listing_short": "Listing: {name}",
         "tdc_kids_draft_a": {
           "title": "Kids class draft A",
           "type": "Sample · Kids draft",
@@ -812,6 +845,24 @@
           "title": "HSK speaking draft B",
           "type": "Sample · HSK draft",
           "status": "Draft"
+        }
+      },
+      "listing": {
+        "source_stage": {
+          "unset": "Source not labeled; see the status column for the listing stage.",
+          "fallback": "Source and stage vary by row; see the status column.",
+          "platform": {
+            "approved": "Platform content · approved"
+          },
+          "material": {
+            "pending_review": "From materials · in review",
+            "draft": "From materials · draft not submitted"
+          },
+          "course": {
+            "draft": "From a course · listing draft not submitted",
+            "pending_review": "From a course · in review",
+            "approved": "From a course · approved"
+          }
         }
       }
     },
@@ -824,8 +875,9 @@
       "th_name": "Name",
       "th_type": "Type",
       "th_status": "Status",
-      "th_used_courses": "Courses",
-      "th_listing_prep": "Listing readiness",
+      "th_prepare_phase": "Prep stage",
+      "th_used_courses": "Course usage",
+      "th_listing_prep": "Listing intent",
       "th_updated": "Last updated",
       "th_actions": "Actions",
       "demo_action_placeholder": "—",
@@ -853,8 +905,9 @@
       "th_name": "Course name",
       "th_type": "Type",
       "th_status": "Status",
+      "th_prepare_progress": "Prep progress",
       "th_uses_materials": "Materials",
-      "th_listing_track": "Listing status",
+      "th_listing_track": "Listing link",
       "th_updated": "Last updated",
       "th_actions": "Actions",
       "demo_action_placeholder": "—",
@@ -976,6 +1029,7 @@
       "order_title": "Orders (placeholder)",
       "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration.",
       "draft_source_hint": "Demo note: real listings often come from a finished course or sellable materials. New drafts here do not record a real source link yet.",
+      "flow_note": "Flow: after you create a draft you can submit it for review; once approved it is closer to going public (still a local demo).",
       "source": {
         "not_set": "Source not set (demo draft)",
         "line": "{kind}: {detail}",

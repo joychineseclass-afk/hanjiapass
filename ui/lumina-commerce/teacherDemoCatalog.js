@@ -104,3 +104,136 @@ export function formatDemoShortUpdated(iso) {
   const s = String(iso);
   return s.includes("T") ? s.replace("T", " ").slice(0, 16) : s.slice(0, 16);
 }
+
+/**
+ * 教材「准备阶段」口径（演示）：与课程 / 上架语感统一。
+ * @param {TeacherDemoMaterial} m
+ * @returns {string} i18n key suffix teacher.demo.material.phase.<key>
+ */
+export function getDemoMaterialPhaseKey(m) {
+  const inCourse = m.usedByCourseIds.length > 0;
+  if (m.listingPrepKey === "not_yet_ready") return "not_ready";
+  if (inCourse && m.listingPrepKey === "ready_pack") return "in_course_can_list";
+  if (inCourse && m.listingPrepKey === "internal_only") return "in_course_internal";
+  if (!inCourse && m.listingPrepKey === "ready_pack") return "can_list_only";
+  return "not_ready";
+}
+
+/**
+ * 课程「准备进度」口径（演示）。
+ * @param {TeacherDemoCourse} c
+ * @returns {string} teacher.demo.course.progress.<key>
+ */
+export function getDemoCourseProgressKey(c) {
+  if (c.listingReadinessKey === "has_listing" && c.listingId) return "linked_listing";
+  if (c.listingReadinessKey === "ready") return "ready_for_listing";
+  if (c.materialIds.length > 0) return "has_materials_building";
+  return "organizing";
+}
+
+/**
+ * @param {TeacherDemoMaterial} m
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoMaterialUsageChipLabel(m, tx) {
+  const n = m.usedByCourseIds.length;
+  if (n === 0) return tx("teacher.demo.material.usage.none");
+  return tx("teacher.demo.material.usage.in_n_courses", { count: String(n) });
+}
+
+/**
+ * @param {TeacherDemoCourse} c
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoCourseMaterialsChipLabel(c, tx) {
+  const n = c.materialIds.length;
+  if (n === 0) return tx("teacher.demo.course.materials.none");
+  return tx("teacher.demo.course.materials.linked_n", { count: String(n) });
+}
+
+/**
+ * @param {string} phaseKey getDemoMaterialPhaseKey
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoMaterialPhasePill(phaseKey, tx) {
+  return tx(`teacher.demo.material.phase.${phaseKey}`);
+}
+
+/**
+ * @param {string} progressKey getDemoCourseProgressKey
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoCourseProgressPill(progressKey, tx) {
+  return tx(`teacher.demo.course.progress.${progressKey}`);
+}
+
+/**
+ * 已关联 listing 时的短标题（演示）。
+ * @param {TeacherDemoCourse} c
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoCourseLinkedListingLine(c, tx) {
+  if (c.listingReadinessKey !== "has_listing" || !c.listingId) return "";
+  const name = tx(`commerce.demo.listing_labels.${c.listingId}`);
+  return tx("teacher.demo.course.linked_listing_short", { name });
+}
+
+/**
+ * @param {Array<{ status?: string }>|null|undefined} listings
+ */
+export function getTeacherWorkspaceDemoSummary(listings) {
+  const materialsCount = TEACHER_DEMO_MATERIALS.length;
+  const coursesCount = TEACHER_DEMO_COURSES.length;
+  const materialsInUseCount = TEACHER_DEMO_MATERIALS.filter((m) => m.usedByCourseIds.length > 0).length;
+  const coursesWithListing = TEACHER_DEMO_COURSES.filter((c) => c.listingReadinessKey === "has_listing").length;
+
+  let listingTotal = 0;
+  let pendingReview = 0;
+  let draft = 0;
+  let approved = 0;
+  if (Array.isArray(listings)) {
+    listingTotal = listings.length;
+    for (const L of listings) {
+      const st = String(L?.status || "");
+      if (st === "pending_review") pendingReview += 1;
+      if (st === "draft") draft += 1;
+      if (st === "approved") approved += 1;
+    }
+  }
+
+  return {
+    materialsCount,
+    coursesCount,
+    materialsInUseCount,
+    coursesWithListing,
+    listingTotal,
+    pendingReview,
+    draft,
+    approved,
+  };
+}
+
+/** @type {Record<string, string>} */
+const LISTING_SOURCE_STAGE_PATH = {
+  "platform|approved": "teacher.demo.listing.source_stage.platform.approved",
+  "material|pending_review": "teacher.demo.listing.source_stage.material.pending_review",
+  "material|draft": "teacher.demo.listing.source_stage.material.draft",
+  "course|draft": "teacher.demo.listing.source_stage.course.draft",
+  "course|pending_review": "teacher.demo.listing.source_stage.course.pending_review",
+  "course|approved": "teacher.demo.listing.source_stage.course.approved",
+};
+
+/**
+ * Listing 来源与上架阶段衔接说明（仅展示，不读状态机）。
+ * @param {{ source_kind?: string|null, status?: string|null }} listing
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatListingDemoSourceStageNote(listing, tx) {
+  const sk = listing?.source_kind != null ? String(listing.source_kind).trim() : "";
+  const st = listing?.status != null ? String(listing.status).trim() : "";
+  if (!sk) return tx("teacher.demo.listing.source_stage.unset");
+  const pathKey = `${sk}|${st}`;
+  const i18nPath = LISTING_SOURCE_STAGE_PATH[pathKey];
+  if (i18nPath) return tx(i18nPath);
+  return tx("teacher.demo.listing.source_stage.fallback");
+}

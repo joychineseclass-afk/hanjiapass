@@ -2,6 +2,8 @@
 // 老师工作台：轻量关系流 + 统一入口 CTA；文案经 safeUiText。
 
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
+import { getTeacherWorkspaceDemoSummary } from "../lumina-commerce/teacherDemoCatalog.js";
+import { initCommerceStore } from "../lumina-commerce/store.js";
 import { i18n } from "../i18n.js";
 import { teacherPathStripHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
 
@@ -21,7 +23,38 @@ function escapeHtml(s) {
 let __teacherLangHandler = /** @type {null | (() => void)} */ (null);
 let __teacherRootRef = /** @type {HTMLElement | null} */ (null);
 
-function renderTeacherHub(root) {
+/** @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum */
+function teacherWorkspaceOverviewHtml(sum) {
+  const p = "teacher.workspace.overview";
+  const chips = [
+    tx(`${p}.chip_materials`, { count: String(sum.materialsCount) }),
+    tx(`${p}.chip_courses`, { count: String(sum.coursesCount) }),
+    tx(`${p}.chip_materials_in_use`, { count: String(sum.materialsInUseCount) }),
+    tx(`${p}.chip_courses_with_listing`, { count: String(sum.coursesWithListing) }),
+    tx(`${p}.chip_listings`, { count: String(sum.listingTotal) }),
+    tx(`${p}.chip_pending`, { count: String(sum.pendingReview) }),
+    tx(`${p}.chip_drafts`, { count: String(sum.draft) }),
+    tx(`${p}.chip_approved`, { count: String(sum.approved) }),
+  ];
+  const chipsHtml = chips.map((c) => `<span class="teacher-workspace-chip">${escapeHtml(c)}</span>`).join("");
+  return `
+      <section class="card teacher-workspace-overview" aria-labelledby="teacher-workspace-overview-title">
+        <h3 id="teacher-workspace-overview-title" class="teacher-workspace-overview-title">${escapeHtml(tx(`${p}.title`))}</h3>
+        <p class="teacher-workspace-overview-disclosure">${escapeHtml(tx(`${p}.disclosure`))}</p>
+        <div class="teacher-workspace-overview-chips">${chipsHtml}</div>
+      </section>`;
+}
+
+async function renderTeacherHub(root) {
+  let listings = [];
+  try {
+    const snap = await initCommerceStore();
+    listings = Array.isArray(snap?.listings) ? snap.listings : [];
+  } catch {
+    listings = [];
+  }
+  const sum = getTeacherWorkspaceDemoSummary(listings);
+
   root.innerHTML = `
     <div class="teacher-page wrap">
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
@@ -38,6 +71,7 @@ function renderTeacherHub(root) {
         <p class="teacher-relation-flow-title">${escapeHtml(tx("teacher.relation_flow.title"))}</p>
         ${teacherPathStripHtml(null, tx)}
       </section>
+      ${teacherWorkspaceOverviewHtml(sum)}
 
       <section class="teacher-grid">
         <article class="teacher-tile card teacher-tile-classroom teacher-tile--primary">
@@ -127,11 +161,11 @@ export default function pageTeacher(ctxOrRoot) {
   __teacherRootRef = root;
   if (__teacherLangHandler) window.removeEventListener("joy:langChanged", __teacherLangHandler);
   __teacherLangHandler = () => {
-    if (__teacherRootRef?.isConnected) renderTeacherHub(__teacherRootRef);
+    if (__teacherRootRef?.isConnected) void renderTeacherHub(__teacherRootRef);
   };
   window.addEventListener("joy:langChanged", __teacherLangHandler);
 
-  renderTeacherHub(root);
+  void renderTeacherHub(root);
 }
 
 export function mount(ctxOrRoot) {

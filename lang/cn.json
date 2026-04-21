@@ -749,22 +749,34 @@
       "subtitle": "上课、资料、课程、上架——常用入口集中在这里。",
       "layer_materials": "教材：您的私有资料与课件，用于备课与课堂，不等于已上架商品。",
       "layer_courses": "课程：您组织的教学内容，可为草稿或已可用于教学，未来可转为上架来源。",
-      "layer_listing": "上架管理：面向展示与售卖的 listing，含审核与状态；可售卖内容需在此管理并通过审核。"
+      "layer_listing": "上架管理：面向展示与售卖的 listing，含审核与状态；可售卖内容需在此管理并通过审核。",
+      "overview": {
+        "title": "演示准备进度一览",
+        "disclosure": "以下为本地演示数据的轻量汇总，便于感受准备阶段；非真实业务统计。",
+        "chip_materials": "演示教材 {count} 份",
+        "chip_courses": "演示课程 {count} 门",
+        "chip_materials_in_use": "其中 {count} 份已用于课程",
+        "chip_courses_with_listing": "其中 {count} 门已关联上架项",
+        "chip_listings": "上架条目 {count} 条",
+        "chip_pending": "待审核 {count}",
+        "chip_drafts": "草稿 {count}",
+        "chip_approved": "已通过 {count}"
+      }
     },
     "hub": {
       "materials": {
         "title": "我的教材",
-        "desc": "管理私有备课资料；可用于课程，也可整理为资料类上架对象。",
+        "desc": "管理备课资料，查看是否已用于课程或可准备上架。",
         "cta": "进入教材库"
       },
       "courses": {
         "title": "我的课程",
-        "desc": "组织教学内容；可引用教材，整理完成后进入上架管理。",
+        "desc": "整理课程内容，查看是否已引用教材或能否进入上架流程。",
         "cta": "进入课程管理"
       },
       "listing": {
         "title": "上架与售卖管理",
-        "desc": "管理来自课程或资料的公开售卖对象（审核与展示）。",
+        "desc": "管理公开展示与审核状态，查看哪些内容已进入上架阶段。",
         "cta": "进入上架管理",
         "badge": "预备区 · Stage 0"
       }
@@ -776,6 +788,16 @@
       },
       "material": {
         "not_in_courses": "暂未关联课程",
+        "phase": {
+          "in_course_can_list": "已用于课程 · 可准备上架",
+          "in_course_internal": "已用于课程 · 内部使用",
+          "can_list_only": "可准备上架",
+          "not_ready": "暂未整理完成"
+        },
+        "usage": {
+          "none": "未关联课程",
+          "in_n_courses": "已用于 {count} 门课程"
+        },
         "listing_prep": {
           "ready_pack": "可整理为资料商品",
           "internal_only": "当前仅作为内部教学资料",
@@ -803,6 +825,17 @@
         "ready_for_listing": "可准备上架",
         "in_progress": "仍在整理中",
         "no_listing": "暂未创建 listing",
+        "progress": {
+          "linked_listing": "已关联上架项",
+          "ready_for_listing": "可准备上架",
+          "has_materials_building": "已关联教材 · 整理中",
+          "organizing": "整理中 · 未关联教材"
+        },
+        "materials": {
+          "none": "暂未添加教材",
+          "linked_n": "已关联 {count} 份教材"
+        },
+        "linked_listing_short": "对应上架：{name}",
         "tdc_kids_draft_a": {
           "title": "Kids 课堂草稿 A",
           "type": "演示 · Kids 草稿课",
@@ -812,6 +845,24 @@
           "title": "HSK 口语课草稿 B",
           "type": "演示 · HSK 草稿课",
           "status": "草稿"
+        }
+      },
+      "listing": {
+        "source_stage": {
+          "unset": "来源未标注，上架阶段请见状态列。",
+          "fallback": "来源与阶段因条目而异，详见状态列。",
+          "platform": {
+            "approved": "平台内容 · 已通过审核"
+          },
+          "material": {
+            "pending_review": "来源资料 · 已进入审核流程",
+            "draft": "来源资料 · 草稿待提交"
+          },
+          "course": {
+            "draft": "来源课程 · 上架草稿待提交",
+            "pending_review": "来源课程 · 审核中",
+            "approved": "来源课程 · 已通过审核"
+          }
         }
       }
     },
@@ -824,8 +875,9 @@
       "th_name": "资料名称",
       "th_type": "类型",
       "th_status": "状态",
-      "th_used_courses": "与课程",
-      "th_listing_prep": "上架准备度",
+      "th_prepare_phase": "准备阶段",
+      "th_used_courses": "课程使用情况",
+      "th_listing_prep": "上架意向",
       "th_updated": "最后更新",
       "th_actions": "操作",
       "demo_action_placeholder": "—",
@@ -853,8 +905,9 @@
       "th_name": "课程名称",
       "th_type": "类型",
       "th_status": "状态",
-      "th_uses_materials": "引用教材",
-      "th_listing_track": "上架进度",
+      "th_prepare_progress": "准备进度",
+      "th_uses_materials": "教材关联",
+      "th_listing_track": "上架关联",
       "th_updated": "最后更新",
       "th_actions": "操作",
       "demo_action_placeholder": "—",
@@ -976,6 +1029,7 @@
       "order_title": "订单（占位）",
       "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。",
       "draft_source_hint": "演示说明：实际上架可来自整理好的课程，或适合单独售卖的资料；新建草稿暂不记录真实来源关联。",
+      "flow_note": "流程提示：草稿创建后可提交审核；审核通过后更接近对外展示（仍为本地演示流程）。",
       "source": {
         "not_set": "来源未标注（演示草稿）",
         "line": "{kind}：{detail}",

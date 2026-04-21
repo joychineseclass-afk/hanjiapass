@@ -1180,6 +1180,128 @@ button.teacher-hub-cta:hover{
   color: #64748b;
   max-width: 28ch;
 }
+.teacher-manage-cell-phase{
+  vertical-align: top;
+  white-space: nowrap;
+}
+.teacher-phase-pill{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: #334155;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+.teacher-phase-pill--sub{
+  font-weight: 700;
+  color: #475569;
+  background: #f8fafc;
+}
+.teacher-phase-pill--mat-in_course_can_list,
+.teacher-phase-pill--mat-can_list_only{
+  color: #14532d;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+}
+.teacher-phase-pill--mat-in_course_internal{
+  color: #1e3a8a;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+.teacher-phase-pill--mat-not_ready{
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.teacher-phase-pill--crs-linked_listing{
+  color: #3730a3;
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+.teacher-phase-pill--crs-ready_for_listing{
+  color: #14532d;
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+}
+.teacher-phase-pill--crs-has_materials_building{
+  color: #0f766e;
+  background: #f0fdfa;
+  border-color: #99f6e4;
+}
+.teacher-phase-pill--crs-organizing{
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.teacher-mini-chip{
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 750;
+  color: #334155;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+.teacher-mini-chip--muted{
+  color: #94a3b8;
+  background: #f8fafc;
+}
+.teacher-meta-subline{
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #64748b;
+  max-width: 36ch;
+}
+.teacher-meta-subline--accent{
+  color: #4338ca;
+  font-weight: 650;
+}
+.teacher-listing-hint-line{
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #475569;
+}
+.teacher-workspace-overview{
+  margin-top: 14px;
+  padding: 16px 18px 18px;
+}
+.teacher-workspace-overview-title{
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 850;
+  color: #0f172a;
+  letter-spacing: 0.01em;
+}
+.teacher-workspace-overview-disclosure{
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #64748b;
+  max-width: 72ch;
+}
+.teacher-workspace-overview-chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.teacher-workspace-chip{
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  line-height: 1.3;
+}
 
 /* =========================================================
    Listing management Stage 0 (#lumina-teacher-stage0)
@@ -1194,6 +1316,13 @@ button.teacher-hub-cta:hover{
   color: #64748b;
   max-width: 62ch;
 }
+.lts0-flow-note{
+  margin: -6px 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 62ch;
+}
 .lts0-cell-source{
   font-size: 13px;
   line-height: 1.45;
@@ -1202,6 +1331,14 @@ button.teacher-hub-cta:hover{
 }
 .lts0-source-line{
   display: inline-block;
+}
+.lts0-source-stage{
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #64748b;
+  max-width: 22rem;
 }
 .lts0-hero .title{
   margin-bottom: 6px;

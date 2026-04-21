@@ -48,6 +48,7 @@ import {
   teacherPathStripHtml,
   teacherWorkspaceSubnavHtml,
 } from "./teacherPathNav.js";
+import { formatListingDemoSourceStageNote } from "../lumina-commerce/teacherDemoCatalog.js";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -136,9 +137,10 @@ function renderPage(root, ctx) {
               ? `<span title="${escapeHtml(titleAttr)}">${escapeHtml(primaryName)}</span>`
               : escapeHtml(primaryName);
             const sourceLine = escapeHtml(formatListingDemoSourceLine(L));
+            const sourceStageNote = escapeHtml(formatListingDemoSourceStageNote(L, commerceT));
             return `<tr data-listing-id="${escapeHtml(L.id)}">
         <td class="lts0-cell-strong">${nameHtml}</td>
-        <td class="lts0-cell-source"><span class="lts0-source-line">${sourceLine}</span></td>
+        <td class="lts0-cell-source"><span class="lts0-source-line">${sourceLine}</span><span class="lts0-source-stage">${sourceStageNote}</span></td>
         <td>${escapeHtml(formatCommerceEnum("listing_type", L.listing_type))}</td>
         <td>${listingStatusPill(L.status)}</td>
         <td>${escapeHtml(formatCommerceEnum("visibility", L.visibility))}</td>
@@ -356,6 +358,7 @@ function renderPage(root, ctx) {
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h3>
             <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.panel_draft_desc"))}</p>
             <p class="lts0-draft-source-hint">${escapeHtml(commerceT("commerce.stage0.draft_source_hint"))}</p>
+            <p class="lts0-flow-note">${escapeHtml(commerceT("commerce.stage0.flow_note"))}</p>
             <form id="lts0NewListing" class="lts0-form-draft">
               <div class="lts0-form-primary-grid">
                 <label>${escapeHtml(commerceT("commerce.form.title"))}<input name="title" required value="${escapeHtml(commerceT("commerce.form.default_title"))}"/></label>

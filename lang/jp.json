@@ -758,22 +758,34 @@
       "subtitle": "授業・教材・コース・掲載まで、よく使う入口をまとめました。",
       "layer_materials": "教材：個人用の資料・スライド・配布物などの準備資産。掲載商品とは別です。",
       "layer_courses": "コース：構成した授業内容。下書き・整理中・授業可能など。後から listing の元になります。",
-      "layer_listing": "掲載管理：販売向けの listing と審査・状態。販売するにはここで管理し審査を通します。"
+      "layer_listing": "掲載管理：販売向けの listing と審査・状態。販売するにはここで管理し審査を通します。",
+      "overview": {
+        "title": "デモ準備の進み（概要）",
+        "disclosure": "ローカルデモデータの軽い集計です。準備段階のイメージ用で、本番の分析ではありません。",
+        "chip_materials": "デモ教材 {count} 件",
+        "chip_courses": "デモコース {count} 件",
+        "chip_materials_in_use": "コースで使用中 {count} 件",
+        "chip_courses_with_listing": "掲載と紐づき {count} 件",
+        "chip_listings": "掲載 {count} 件",
+        "chip_pending": "審査待ち {count} 件",
+        "chip_drafts": "下書き {count} 件",
+        "chip_approved": "承認済み {count} 件"
+      }
     },
     "hub": {
       "materials": {
         "title": "マイ教材",
-        "desc": "個人の準備資料を管理。コースで使うほか、教材として掲載することもできます。",
+        "desc": "準備資料を管理し、コースで使われているか・掲載に進めるかを素早く把握します。",
         "cta": "教材ライブラリへ"
       },
       "courses": {
         "title": "マイコース",
-        "desc": "授業を構成し教材を紐づけ、整ったら掲載・販売管理へ進みます。",
+        "desc": "授業構成を整え、教材の有無や掲載フローに入れる段階かを確認します。",
         "cta": "コース管理へ"
       },
       "listing": {
         "title": "掲載・販売管理",
-        "desc": "コースや教材から用意した、公開販売用オブジェクト（審査・表示）を管理します。",
+        "desc": "公開・審査の状態を管理し、どの内容が掲載段階に入ったかを見ます。",
         "cta": "掲載管理へ",
         "badge": "準備エリア · Stage 0"
       }
@@ -785,6 +797,16 @@
       },
       "material": {
         "not_in_courses": "コース未連携",
+        "phase": {
+          "in_course_can_list": "コース利用中 · 掲載準備可",
+          "in_course_internal": "コース利用中 · 内部利用",
+          "can_list_only": "掲載準備可",
+          "not_ready": "整理未完"
+        },
+        "usage": {
+          "none": "コース未連携",
+          "in_n_courses": "{count} コースで利用中"
+        },
         "listing_prep": {
           "ready_pack": "資料商品に整理可",
           "internal_only": "現在は内部授業用",
@@ -812,6 +834,17 @@
         "ready_for_listing": "掲載準備へ進めます",
         "in_progress": "まだ整理中",
         "no_listing": "掲載は未作成",
+        "progress": {
+          "linked_listing": "掲載と紐づき済み",
+          "ready_for_listing": "掲載準備可",
+          "has_materials_building": "教材あり · 整理中",
+          "organizing": "整理中 · 教材なし"
+        },
+        "materials": {
+          "none": "教材未追加",
+          "linked_n": "教材 {count} 件を紐づけ"
+        },
+        "linked_listing_short": "掲載：{name}",
         "tdc_kids_draft_a": {
           "title": "Kids 授業ドラフト A",
           "type": "サンプル · Kids 下書き",
@@ -821,6 +854,24 @@
           "title": "HSK 会話ドラフト B",
           "type": "サンプル · HSK 下書き",
           "status": "下書き"
+        }
+      },
+      "listing": {
+        "source_stage": {
+          "unset": "出所が未表示です。段階は状態列をご確認ください。",
+          "fallback": "出所と段階は行ごとに異なります。状態列をご確認ください。",
+          "platform": {
+            "approved": "プラットフォーム提供 · 承認済み"
+          },
+          "material": {
+            "pending_review": "教材由来 · 審査中",
+            "draft": "教材由来 · 下書き（未提出）"
+          },
+          "course": {
+            "draft": "コース由来 · 掲載下書き（未提出）",
+            "pending_review": "コース由来 · 審査中",
+            "approved": "コース由来 · 承認済み"
+          }
         }
       }
     },
@@ -833,8 +884,9 @@
       "th_name": "資料名",
       "th_type": "種類",
       "th_status": "状態",
-      "th_used_courses": "コース",
-      "th_listing_prep": "掲載の準備",
+      "th_prepare_phase": "準備段階",
+      "th_used_courses": "コース利用",
+      "th_listing_prep": "掲載の意向",
       "th_updated": "最終更新",
       "th_actions": "操作",
       "demo_action_placeholder": "—",
@@ -862,8 +914,9 @@
       "th_name": "コース名",
       "th_type": "種類",
       "th_status": "状態",
-      "th_uses_materials": "使用教材",
-      "th_listing_track": "掲載の状況",
+      "th_prepare_progress": "準備の進み",
+      "th_uses_materials": "教材の紐づけ",
+      "th_listing_track": "掲載との関係",
       "th_updated": "最終更新",
       "th_actions": "操作",
       "demo_action_placeholder": "—",
@@ -985,6 +1038,7 @@
       "order_title": "注文（枠）",
       "order_note": "手数料項目は取引時点のスナップショット。決済プロバイダー欄は将来接続用です。",
       "draft_source_hint": "デモ：本番では整理済みコースや単体販売向け資料から掲載に進むことが多いです。ここで作る新規下書きはまず出所を記録しません。",
+      "flow_note": "流れのヒント：下書き作成後に審査へ提出でき、承認されると公開に近い状態になります（ローカルデモのまま）。",
       "source": {
         "not_set": "出所未設定（デモ下書き）",
         "line": "{kind}：{detail}",

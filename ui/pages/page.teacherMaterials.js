@@ -5,7 +5,10 @@ import {
   TEACHER_DEMO_MATERIALS,
   formatDemoMaterialCoursesLine,
   formatDemoMaterialListingPrep,
+  formatDemoMaterialPhasePill,
+  formatDemoMaterialUsageChipLabel,
   formatDemoShortUpdated,
+  getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { i18n } from "../i18n.js";
 import {
@@ -36,7 +39,15 @@ function materialsTableBody() {
     const title = escapeHtml(tx(`teacher.demo.material.${m.id}.title`));
     const type = escapeHtml(tx(`teacher.demo.material.${m.id}.type`));
     const status = escapeHtml(tx(`teacher.demo.material.${m.id}.status`));
-    const coursesLine = escapeHtml(formatDemoMaterialCoursesLine(m, tx));
+    const phaseKey = getDemoMaterialPhaseKey(m);
+    const phaseLabel = escapeHtml(formatDemoMaterialPhasePill(phaseKey, tx));
+    const phaseClass = escapeHtml(String(phaseKey).replace(/[^a-z0-9_-]/gi, ""));
+    const usageChip = escapeHtml(formatDemoMaterialUsageChipLabel(m, tx));
+    const usageChipMod = m.usedByCourseIds.length ? "" : " teacher-mini-chip--muted";
+    const coursesDetail =
+      m.usedByCourseIds.length > 0
+        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoMaterialCoursesLine(m, tx))}</div>`
+        : "";
     const listingPrep = escapeHtml(formatDemoMaterialListingPrep(m, tx));
     const updated = escapeHtml(formatDemoShortUpdated(m.updated_at));
     const badge = escapeHtml(tx("common.demo_badge"));
@@ -47,8 +58,12 @@ function materialsTableBody() {
       </td>
       <td>${type}</td>
       <td>${status}</td>
-      <td class="teacher-manage-cell-meta">${coursesLine}</td>
-      <td class="teacher-manage-cell-meta">${listingPrep}</td>
+      <td class="teacher-manage-cell-phase"><span class="teacher-phase-pill teacher-phase-pill--mat-${phaseClass}">${phaseLabel}</span></td>
+      <td class="teacher-manage-cell-meta">
+        <span class="teacher-mini-chip${usageChipMod}">${usageChip}</span>
+        ${coursesDetail}
+      </td>
+      <td class="teacher-manage-cell-meta"><span class="teacher-phase-pill teacher-phase-pill--sub">${listingPrep}</span></td>
       <td>${updated}</td>
       <td class="teacher-manage-col-actions">${escapeHtml(tx("teacher.materials_page.demo_action_placeholder"))}</td>
     </tr>`;
@@ -89,6 +104,7 @@ function renderMaterialsDom(root) {
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_name"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_type"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.materials_page.th_prepare_phase"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_used_courses"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_listing_prep"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.materials_page.th_updated"))}</th>

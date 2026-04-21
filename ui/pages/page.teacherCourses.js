@@ -3,9 +3,13 @@
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import {
   TEACHER_DEMO_COURSES,
+  formatDemoCourseLinkedListingLine,
   formatDemoCourseListingHint,
+  formatDemoCourseMaterialsChipLabel,
   formatDemoCourseMaterialsLine,
+  formatDemoCourseProgressPill,
   formatDemoShortUpdated,
+  getDemoCourseProgressKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { i18n } from "../i18n.js";
 import {
@@ -36,7 +40,19 @@ function coursesTableBody() {
     const title = escapeHtml(tx(`teacher.demo.course.${c.id}.title`));
     const type = escapeHtml(tx(`teacher.demo.course.${c.id}.type`));
     const status = escapeHtml(tx(`teacher.demo.course.${c.id}.status`));
-    const materialsLine = escapeHtml(formatDemoCourseMaterialsLine(c, tx));
+    const progressKey = getDemoCourseProgressKey(c);
+    const progressLabel = escapeHtml(formatDemoCourseProgressPill(progressKey, tx));
+    const progressClass = escapeHtml(String(progressKey).replace(/[^a-z0-9_-]/gi, ""));
+    const matChip = escapeHtml(formatDemoCourseMaterialsChipLabel(c, tx));
+    const matChipMod = c.materialIds.length ? "" : " teacher-mini-chip--muted";
+    const materialsDetail =
+      c.materialIds.length > 0
+        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoCourseMaterialsLine(c, tx))}</div>`
+        : "";
+    const listingLinked = formatDemoCourseLinkedListingLine(c, tx);
+    const listingSub = listingLinked
+      ? `<div class="teacher-meta-subline teacher-meta-subline--accent">${escapeHtml(listingLinked)}</div>`
+      : "";
     const listingHint = escapeHtml(formatDemoCourseListingHint(c, tx));
     const updated = escapeHtml(formatDemoShortUpdated(c.updated_at));
     const badge = escapeHtml(tx("common.demo_badge"));
@@ -47,8 +63,15 @@ function coursesTableBody() {
       </td>
       <td>${type}</td>
       <td>${status}</td>
-      <td class="teacher-manage-cell-meta">${materialsLine}</td>
-      <td class="teacher-manage-cell-meta">${listingHint}</td>
+      <td class="teacher-manage-cell-phase"><span class="teacher-phase-pill teacher-phase-pill--crs-${progressClass}">${progressLabel}</span></td>
+      <td class="teacher-manage-cell-meta">
+        <span class="teacher-mini-chip${matChipMod}">${matChip}</span>
+        ${materialsDetail}
+      </td>
+      <td class="teacher-manage-cell-meta">
+        <span class="teacher-listing-hint-line">${listingHint}</span>
+        ${listingSub}
+      </td>
       <td>${updated}</td>
       <td class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.demo_action_placeholder"))}</td>
     </tr>`;
@@ -89,6 +112,7 @@ function renderCoursesDom(root) {
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_name"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_type"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_prepare_progress"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_uses_materials"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_listing_track"))}</th>
                 <th scope="col">${escapeHtml(tx("teacher.courses_page.th_updated"))}</th>

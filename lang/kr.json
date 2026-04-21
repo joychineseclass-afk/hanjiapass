@@ -749,22 +749,34 @@
       "subtitle": "수업·교재·코스·등록까지 자주 쓰는 입구를 모았습니다.",
       "layer_materials": "교재: 개인 자료·강의안·PPT 등 준비 자산. 기본적으로 판매 상품이 아닙니다.",
       "layer_courses": "코스: 구성한 수업 내용. 초안·정리 중·수업 가능 상태가 있으며, 나중에 등록 소스가 될 수 있습니다.",
-      "layer_listing": "등록 관리: 전시·판매용 listing, 심사·상태 관리. 판매하려면 여기서 관리하고 심사를 거칩니다."
+      "layer_listing": "등록 관리: 전시·판매용 listing, 심사·상태 관리. 판매하려면 여기서 관리하고 심사를 거칩니다.",
+      "overview": {
+        "title": "데모 준비 진행 요약",
+        "disclosure": "로컬 데모 데이터의 가벼운 집계로 준비 단계를 보여 줍니다. 실제 운영 지표가 아닙니다.",
+        "chip_materials": "데모 교재 {count}건",
+        "chip_courses": "데모 코스 {count}개",
+        "chip_materials_in_use": "코스에서 사용 중 {count}건",
+        "chip_courses_with_listing": "등록 연결됨 {count}개",
+        "chip_listings": "등록 항목 {count}개",
+        "chip_pending": "심사 대기 {count}개",
+        "chip_drafts": "초안 {count}개",
+        "chip_approved": "승인됨 {count}개"
+      }
     },
     "hub": {
       "materials": {
         "title": "내 교재",
-        "desc": "개인 준비 자료를 관리합니다. 코스에 쓰거나 자료형 판매 등록으로 이어갈 수 있습니다.",
+        "desc": "준비 자료를 관리하고, 코스에서 이미 쓰는지·등록 준비가 되었는지 한눈에 확인합니다.",
         "cta": "교재 보관함으로"
       },
       "courses": {
         "title": "내 코스",
-        "desc": "수업을 구성하고 교재를 연결한 뒤, 정리되면 등록·판매 관리로 진행하세요.",
+        "desc": "수업 구조를 정리하고 교재 연결 여부·등록 단계로 갈 준비가 되었는지 확인합니다.",
         "cta": "코스 관리로"
       },
       "listing": {
         "title": "등록·판매 관리",
-        "desc": "코스나 교재에서 준비한 공개 판매 대상(심사·전시)을 관리합니다.",
+        "desc": "공개·심사 상태를 관리하고 어떤 콘텐츠가 등록 단계에 들어왔는지 봅니다.",
         "cta": "등록 관리로",
         "badge": "준비 구역 · Stage 0"
       }
@@ -776,6 +788,16 @@
       },
       "material": {
         "not_in_courses": "아직 코스에 연결되지 않음",
+        "phase": {
+          "in_course_can_list": "코스 사용 중 · 등록 준비 가능",
+          "in_course_internal": "코스 사용 중 · 내부용",
+          "can_list_only": "등록 준비 가능",
+          "not_ready": "아직 정리 중"
+        },
+        "usage": {
+          "none": "코스 미연결",
+          "in_n_courses": "{count}개 코스에서 사용 중"
+        },
         "listing_prep": {
           "ready_pack": "자료 상품으로 정리 가능",
           "internal_only": "현재는 내부 수업용",
@@ -803,6 +825,17 @@
         "ready_for_listing": "등록 준비 가능",
         "in_progress": "아직 정리 중",
         "no_listing": "등록 없음",
+        "progress": {
+          "linked_listing": "등록 항목 연결됨",
+          "ready_for_listing": "등록 준비 가능",
+          "has_materials_building": "교재 연결됨 · 정리 중",
+          "organizing": "정리 중 · 교재 없음"
+        },
+        "materials": {
+          "none": "교재 미추가",
+          "linked_n": "교재 {count}건 연결"
+        },
+        "linked_listing_short": "등록: {name}",
         "tdc_kids_draft_a": {
           "title": "Kids 수업 초안 A",
           "type": "예시 · Kids 초안",
@@ -812,6 +845,24 @@
           "title": "HSK 회화 수업 초안 B",
           "type": "예시 · HSK 초안",
           "status": "초안"
+        }
+      },
+      "listing": {
+        "source_stage": {
+          "unset": "출처가 표시되지 않았습니다. 단계는 상태 열을 확인하세요.",
+          "fallback": "출처·단계는 항목마다 다릅니다. 상태 열을 확인하세요.",
+          "platform": {
+            "approved": "플랫폼 콘텐츠 · 심사 통과"
+          },
+          "material": {
+            "pending_review": "교재 출처 · 심사 진행 중",
+            "draft": "교재 출처 · 초안(미제출)"
+          },
+          "course": {
+            "draft": "코스 출처 · 등록 초안(미제출)",
+            "pending_review": "코스 출처 · 심사 중",
+            "approved": "코스 출처 · 심사 통과"
+          }
         }
       }
     },
@@ -824,8 +875,9 @@
       "th_name": "자료 이름",
       "th_type": "유형",
       "th_status": "상태",
-      "th_used_courses": "코스 연결",
-      "th_listing_prep": "등록 준비도",
+      "th_prepare_phase": "준비 단계",
+      "th_used_courses": "코스 사용",
+      "th_listing_prep": "등록 의향",
       "th_updated": "최종 업데이트",
       "th_actions": "작업",
       "demo_action_placeholder": "—",
@@ -853,8 +905,9 @@
       "th_name": "코스 이름",
       "th_type": "유형",
       "th_status": "상태",
-      "th_uses_materials": "사용 교재",
-      "th_listing_track": "등록 진행",
+      "th_prepare_progress": "준비 진행",
+      "th_uses_materials": "교재 연결",
+      "th_listing_track": "등록 연계",
       "th_updated": "최종 업데이트",
       "th_actions": "작업",
       "demo_action_placeholder": "—",
@@ -976,6 +1029,7 @@
       "order_title": "주문（자리）",
       "order_note": "수수료 필드는 거래 시점 스냅샷이며, 결제사 필드는 이후 연동용입니다.",
       "draft_source_hint": "데모 안내: 실제 등록은 정리된 코스나 단독 판매 가능한 자료에서 이어질 수 있습니다. 여기서 새 초안은 아직 출처를 기록하지 않습니다.",
+      "flow_note": "흐름 안내: 초안 작성 후 심사를 제출할 수 있으며, 승인되면 공개에 더 가까워집니다(여전히 로컬 데모).",
       "source": {
         "not_set": "출처 미표기(데모 초안)",
         "line": "{kind}: {detail}",
