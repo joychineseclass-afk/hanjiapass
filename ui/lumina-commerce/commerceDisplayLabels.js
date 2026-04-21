@@ -158,3 +158,17 @@ export function formatDemoListingContentTitleAttr(listing) {
   const t = listing?.title != null ? String(listing.title).trim() : "";
   return t || "";
 }
+
+/**
+ * Listing 管理表主列：优先演示文案映射，否则用草稿 title，再回退通用占位。
+ * @param {{ id?: string, title?: string }} listing
+ */
+export function formatListingManagePrimaryLabel(listing) {
+  if (!listing?.id) return commerceT("commerce.table.empty_cell");
+  const path = `commerce.demo.listing_labels.${listing.id}`;
+  const v = rawT(path);
+  if (v && v !== path && !looksLikeUntranslatedKey(v)) return v;
+  const t = listing.title != null ? String(listing.title).trim() : "";
+  if (t) return t;
+  return commerceT("commerce.demo.listing_generic");
+}

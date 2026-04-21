@@ -29,6 +29,7 @@ import {
   formatCommerceTableHead,
   formatDemoListingSelectLabel,
   formatDemoListingContentTitleAttr,
+  formatListingManagePrimaryLabel,
 } from "../lumina-commerce/commerceDisplayLabels.js";
 import { hasListingAccess } from "../lumina-commerce/entitlementService.js";
 import { canTransitionListingStatus } from "../lumina-commerce/listingStateMachine.js";
@@ -69,6 +70,24 @@ function cellDash(val) {
   return escapeHtml(String(val));
 }
 
+/** @param {string} status */
+function listingStatusPill(status) {
+  const label = formatCommerceEnum("listing_status", status);
+  const safe = String(status || "unknown")
+    .replace(/[^a-z0-9_]/gi, "")
+    .toLowerCase();
+  const mod = safe || "unknown";
+  return `<span class="lts0-status-pill lts0-status-pill--${escapeHtml(mod)}">${escapeHtml(label)}</span>`;
+}
+
+/** @param {string|null|undefined} iso */
+function formatListingUpdatedCell(iso) {
+  if (iso == null || iso === "") return commerceT("commerce.table.empty_cell");
+  const s = String(iso);
+  const short = s.includes("T") ? s.replace("T", " ").slice(0, 16) : s.slice(0, 16);
+  return escapeHtml(short);
+}
+
 function renderPage(root, ctx) {
   const snap = ctx.snap;
   const demoUserId = ctx.demoUserId;
@@ -87,29 +106,41 @@ function renderPage(root, ctx) {
     )
     .join("");
 
-  const listingRows = snap.listings
-    .map((L) => {
-      const tp =
-        L.seller_type === SELLER_TYPE.teacher
-          ? snap.teacher_profiles.find((x) => x.id === L.teacher_id) || null
-          : null;
-      const canSubmit =
-        L.status === LISTING_STATUS.draft && assertCanSubmitListingForReview(tp, L).ok;
-      const submitDisabled = canSubmit ? "" : "disabled";
-      return `<tr data-listing-id="${escapeHtml(L.id)}">
-        <td>${cellDash(L.id)}</td>
-        <td>${escapeHtml(formatCommerceEnum("seller_type", L.seller_type))}</td>
-        <td>${cellDash(L.teacher_id)}</td>
+  const listingRows =
+    snap.listings.length === 0
+      ? `<tr><td colspan="7" class="lts0-list-empty-cell">
+          <div class="lts0-empty-in-table" role="status">
+            <p class="lts0-empty-in-table-title">${escapeHtml(commerceT("commerce.stage0.list_empty_title"))}</p>
+            <p class="lts0-empty-in-table-desc">${escapeHtml(commerceT("commerce.stage0.list_empty_hint"))}</p>
+          </div>
+        </td></tr>`
+      : snap.listings
+          .map((L) => {
+            const tp =
+              L.seller_type === SELLER_TYPE.teacher
+                ? snap.teacher_profiles.find((x) => x.id === L.teacher_id) || null
+                : null;
+            const canSubmit =
+              L.status === LISTING_STATUS.draft && assertCanSubmitListingForReview(tp, L).ok;
+            const submitDisabled = canSubmit ? "" : "disabled";
+            const primaryName = formatListingManagePrimaryLabel(L);
+            const titleAttr = formatDemoListingContentTitleAttr(L);
+            const nameHtml = titleAttr
+              ? `<span title="${escapeHtml(titleAttr)}">${escapeHtml(primaryName)}</span>`
+              : escapeHtml(primaryName);
+            return `<tr data-listing-id="${escapeHtml(L.id)}">
+        <td class="lts0-cell-strong">${nameHtml}</td>
         <td>${escapeHtml(formatCommerceEnum("listing_type", L.listing_type))}</td>
-        <td>${escapeHtml(formatCommerceEnum("listing_status", L.status))}</td>
+        <td>${listingStatusPill(L.status)}</td>
         <td>${escapeHtml(formatCommerceEnum("visibility", L.visibility))}</td>
         <td>${escapeHtml(String(L.price_amount))} ${escapeHtml(String(L.price_currency))}</td>
-        <td>
-          <button type="button" class="lts0-submit-review" data-id="${escapeHtml(L.id)}" ${submitDisabled}>${escapeHtml(commerceT("commerce.form.submit_review"))}</button>
+        <td>${formatListingUpdatedCell(L.updated_at)}</td>
+        <td class="lts0-cell-actions">
+          <button type="button" class="lts0-btn lts0-btn--teacher lts0-submit-review" data-id="${escapeHtml(L.id)}" ${submitDisabled}>${escapeHtml(commerceT("commerce.form.submit_review"))}</button>
         </td>
       </tr>`;
-    })
-    .join("");
+          })
+          .join("");
 
   const logRows = snap.listing_review_logs
     .slice()
@@ -156,10 +187,12 @@ function renderPage(root, ctx) {
     userHasRole(snap, demoUserId, USER_ROLE.reviewer) || userHasRole(snap, demoUserId, USER_ROLE.admin);
 
   const reviewPanel = isReviewer
-    ? `<section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.review.panel_title"))}</h3>
-        <p class="desc" style="font-size:13px;color:#64748b;">${escapeHtml(commerceT("commerce.review.panel_desc"))}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
+    ? `<section class="card lts0-reviewer-zone">
+        <h2 class="lts0-reviewer-zone-title">${escapeHtml(commerceT("commerce.review.zone_title"))}</h2>
+        <p class="lts0-reviewer-zone-sub">${escapeHtml(commerceT("commerce.review.zone_subtitle"))}</p>
+        <h3 class="lts0-reviewer-panel-title">${escapeHtml(commerceT("commerce.review.panel_title"))}</h3>
+        <p class="lts0-reviewer-panel-desc">${escapeHtml(commerceT("commerce.review.panel_desc"))}</p>
+        <div class="lts0-review-controls">
           <label>${escapeHtml(commerceT("commerce.review.pick_listing"))}<br/><select id="lts0ReviewListing">${snap.listings
             .map((L) => {
               const lab = formatDemoListingSelectLabel(L);
@@ -183,11 +216,11 @@ function renderPage(root, ctx) {
             REVIEW_REASON_CODE.other,
             "review_reason_code"
           )}</select></label>
-          <label style="min-width:220px;">${escapeHtml(commerceT("commerce.review.reason_text"))}<br/><input id="lts0ReasonText" type="text" placeholder="${escapeHtml(commerceT("commerce.review.reason_placeholder"))}" style="width:100%;"/></label>
-          <button type="button" id="lts0ApplyReview">${escapeHtml(commerceT("commerce.review.apply"))}</button>
+          <label class="lts0-review-reason-text">${escapeHtml(commerceT("commerce.review.reason_text"))}<br/><input id="lts0ReasonText" type="text" placeholder="${escapeHtml(commerceT("commerce.review.reason_placeholder"))}"/></label>
+          <button type="button" class="lts0-btn lts0-btn--reviewer" id="lts0ApplyReview">${escapeHtml(commerceT("commerce.review.apply"))}</button>
         </div>
       </section>`
-    : `<p style="font-size:13px;color:#94a3b8;">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`;
+    : "";
 
   const accessUser = demoUserId;
   const accessListingId = snap.listings[0]?.id || "";
@@ -199,41 +232,116 @@ function renderPage(root, ctx) {
     : commerceT("commerce.table.empty_cell");
 
   root.innerHTML = `
-    <div class="wrap" style="padding-bottom:48px;">
-      <section class="card">
-        <p style="margin:0 0 10px;">
+    <div class="wrap lts0-page">
+      <section class="card lts0-hero">
+        <p class="teacher-manage-back">
           <a href="#teacher" class="teacher-back-link">${escapeHtml(commerceT("commerce.stage0.back_workspace"))}</a>
         </p>
-        <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
-        <p class="desc">${escapeHtml(commerceT("commerce.stage0.subtitle"))}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:10px;">
-          <label>${escapeHtml(commerceT("commerce.stage0.demo_user"))}
-            <select id="lts0DemoUser">
-              ${snap.users
-                .map((u) => {
-                  const label = formatDemoUserDisplay(u.id, u.display_name);
-                  return `<option value="${escapeHtml(u.id)}" ${u.id === demoUserId ? "selected" : ""}>${escapeHtml(label)}</option>`;
-                })
-                .join("")}
-            </select>
-          </label>
-          <button type="button" id="lts0ResetSeed">${escapeHtml(commerceT("commerce.stage0.reset_seed"))}</button>
+        <div class="lts0-hero-top">
+          <div class="lts0-hero-text">
+            <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
+            <p class="desc">${escapeHtml(commerceT("commerce.stage0.subtitle"))}</p>
+            <p class="lts0-stage-note">${escapeHtml(commerceT("commerce.stage0.stage_note"))}</p>
+          </div>
+          <span class="lts0-stage-badge" aria-label="${escapeHtml(commerceT("commerce.stage0.stage_badge"))}">${escapeHtml(commerceT("commerce.stage0.stage_badge"))}</span>
         </div>
       </section>
 
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.access_title"))}</h3>
-        <p style="font-size:13px;">${escapeHtml(
+      <section class="card lts0-actions-hub">
+        <div class="lts0-actions-grid">
+          <div class="lts0-panel lts0-panel--primary">
+            <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h3>
+            <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.panel_draft_desc"))}</p>
+            <form id="lts0NewListing" class="lts0-form-draft">
+              <label>${escapeHtml(commerceT("commerce.form.title"))}<input name="title" required value="${escapeHtml(commerceT("commerce.form.default_title"))}"/></label>
+              <label>${escapeHtml(commerceT("commerce.form.seller_type"))}<select name="seller_type">${optEnumLocalized(Object.values(SELLER_TYPE), SELLER_TYPE.teacher, "seller_type")}</select></label>
+              <label>${escapeHtml(commerceT("commerce.form.teacher_profile_id"))}<input name="teacher_id" placeholder="${escapeHtml(commerceT("commerce.form.teacher_placeholder"))}" value="tp_demo_seller_001"/></label>
+              <label>${escapeHtml(commerceT("commerce.form.listing_type"))}<select name="listing_type">${optEnumLocalized(Object.values(LISTING_TYPE), LISTING_TYPE.course, "listing_type")}</select></label>
+              <label>${escapeHtml(commerceT("commerce.form.delivery_type"))}<select name="delivery_type">${optEnumLocalized(Object.values(DELIVERY_TYPE), DELIVERY_TYPE.recorded, "delivery_type")}</select></label>
+              <label>${escapeHtml(commerceT("commerce.form.visibility"))}<select name="visibility">${optEnumLocalized(Object.values(VISIBILITY), VISIBILITY.private, "visibility")}</select></label>
+              <label>${escapeHtml(commerceT("commerce.form.price_amount"))}<input name="price_amount" value="10000"/></label>
+              <label>${escapeHtml(commerceT("commerce.form.price_currency"))}<input name="price_currency" value="${DEFAULT_SETTLEMENT_CURRENCY}"/></label>
+              <label>${escapeHtml(commerceT("commerce.form.refund_policy"))}<select name="refund_policy_type">${optEnumLocalized(
+                Object.values(REFUND_POLICY_TYPE),
+                REFUND_POLICY_TYPE.within_7_days,
+                "refund_policy_type"
+              )}</select></label>
+              <button type="submit" class="lts0-btn lts0-btn--primary">${escapeHtml(commerceT("commerce.form.create_draft"))}</button>
+            </form>
+          </div>
+          <div class="lts0-panel lts0-panel--identity">
+            <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.identity_title"))}</h3>
+            <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.identity_desc"))}</p>
+            <div class="lts0-identity-row">
+              <label class="lts0-identity-select">${escapeHtml(commerceT("commerce.stage0.demo_user"))}
+                <select id="lts0DemoUser">
+                  ${snap.users
+                    .map((u) => {
+                      const label = formatDemoUserDisplay(u.id, u.display_name);
+                      return `<option value="${escapeHtml(u.id)}" ${u.id === demoUserId ? "selected" : ""}>${escapeHtml(label)}</option>`;
+                    })
+                    .join("")}
+                </select>
+              </label>
+              <button type="button" class="lts0-btn lts0-btn--ghost" id="lts0ResetSeed">${escapeHtml(commerceT("commerce.stage0.reset_seed"))}</button>
+            </div>
+            ${
+              isReviewer
+                ? `<p class="lts0-reviewer-hint">${escapeHtml(commerceT("commerce.stage0.identity_reviewer_active"))}</p>`
+                : `<p class="lts0-muted">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`
+            }
+          </div>
+          <div class="lts0-panel lts0-panel--guide">
+            <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.guide_title"))}</h3>
+            <ul class="lts0-guide-list">
+              <li>${escapeHtml(commerceT("commerce.stage0.guide_1"))}</li>
+              <li>${escapeHtml(commerceT("commerce.stage0.guide_2"))}</li>
+              <li>${escapeHtml(commerceT("commerce.stage0.guide_3"))}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card lts0-listing-main">
+        <h2 class="lts0-listing-main-title">${escapeHtml(commerceT("commerce.stage0.listing_title"))}</h2>
+        <p class="lts0-listing-main-hint">${escapeHtml(commerceT("commerce.stage0.list_section_hint"))}</p>
+        <div class="lts0-table-scroll">
+          <table class="lts0-table lts0-table--listing">
+            <thead>
+              <tr>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("content_name"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("listing_type"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("status"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("visibility"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("price"))}</th>
+                <th scope="col">${escapeHtml(formatCommerceTableHead("updated_at"))}</th>
+                <th scope="col" class="lts0-th-actions">${escapeHtml(formatCommerceTableHead("actions"))}</th>
+              </tr>
+            </thead>
+            <tbody>${listingRows}</tbody>
+          </table>
+        </div>
+      </section>
+
+      ${reviewPanel}
+
+      <section class="card lts0-secondary">
+        <p class="lts0-secondary-kicker">${escapeHtml(commerceT("commerce.stage0.secondary_caption"))}</p>
+        <p class="lts0-banner-note">${escapeHtml(commerceT("commerce.stage0.access_banner"))}</p>
+        <h3 class="lts0-secondary-title">${escapeHtml(commerceT("commerce.stage0.access_title"))}</h3>
+        <p class="lts0-access-line">${escapeHtml(
           String(i18n.t("commerce.stage0.access_body", { user: accessUserLabel, listing: accessListingLabel }) || "")
         )}
           <strong>${escapeHtml(hasAccess ? commerceT("commerce.stage0.access_yes") : commerceT("commerce.stage0.access_no"))}</strong>
           ${escapeHtml(commerceT("commerce.stage0.access_note"))}</p>
       </section>
 
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.profile_title"))}</h3>
-        <p style="font-size:12px;color:#94a3b8;margin:0 0 8px;">${escapeHtml(commerceT("commerce.stage0.profile_caption"))}</p>
-        <div style="overflow:auto;">
+      <section class="card lts0-secondary">
+        <p class="lts0-secondary-kicker">${escapeHtml(commerceT("commerce.stage0.secondary_caption"))}</p>
+        <p class="lts0-banner-note">${escapeHtml(commerceT("commerce.stage0.profile_note"))}</p>
+        <h3 class="lts0-secondary-title">${escapeHtml(commerceT("commerce.stage0.profile_title"))}</h3>
+        <p class="lts0-profile-caption">${escapeHtml(commerceT("commerce.stage0.profile_caption"))}</p>
+        <div class="lts0-table-scroll">
           <table class="lts0-table">
             <thead><tr>
               <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
@@ -249,47 +357,10 @@ function renderPage(root, ctx) {
         </div>
       </section>
 
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.listing_title"))}</h3>
-        <div style="overflow:auto;">
-          <table class="lts0-table">
-            <thead><tr>
-              <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("seller_type"))}</th>
-              <th>${escapeHtml(formatCommerceFieldLabel("teacher_id"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("listing_type"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("status"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("visibility"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("price"))}</th>
-              <th>${escapeHtml(formatCommerceTableHead("actions"))}</th>
-            </tr></thead>
-            <tbody>${listingRows}</tbody>
-          </table>
-        </div>
-        <h4 style="margin-top:16px;">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h4>
-        <form id="lts0NewListing" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;align-items:end;">
-          <label>${escapeHtml(commerceT("commerce.form.title"))}<input name="title" required value="${escapeHtml(commerceT("commerce.form.default_title"))}"/></label>
-          <label>${escapeHtml(commerceT("commerce.form.seller_type"))}<select name="seller_type">${optEnumLocalized(Object.values(SELLER_TYPE), SELLER_TYPE.teacher, "seller_type")}</select></label>
-          <label>${escapeHtml(commerceT("commerce.form.teacher_profile_id"))}<input name="teacher_id" placeholder="${escapeHtml(commerceT("commerce.form.teacher_placeholder"))}" value="tp_demo_seller_001"/></label>
-          <label>${escapeHtml(commerceT("commerce.form.listing_type"))}<select name="listing_type">${optEnumLocalized(Object.values(LISTING_TYPE), LISTING_TYPE.course, "listing_type")}</select></label>
-          <label>${escapeHtml(commerceT("commerce.form.delivery_type"))}<select name="delivery_type">${optEnumLocalized(Object.values(DELIVERY_TYPE), DELIVERY_TYPE.recorded, "delivery_type")}</select></label>
-          <label>${escapeHtml(commerceT("commerce.form.visibility"))}<select name="visibility">${optEnumLocalized(Object.values(VISIBILITY), VISIBILITY.private, "visibility")}</select></label>
-          <label>${escapeHtml(commerceT("commerce.form.price_amount"))}<input name="price_amount" value="10000"/></label>
-          <label>${escapeHtml(commerceT("commerce.form.price_currency"))}<input name="price_currency" value="${DEFAULT_SETTLEMENT_CURRENCY}"/></label>
-          <label>${escapeHtml(commerceT("commerce.form.refund_policy"))}<select name="refund_policy_type">${optEnumLocalized(
-            Object.values(REFUND_POLICY_TYPE),
-            REFUND_POLICY_TYPE.within_7_days,
-            "refund_policy_type"
-          )}</select></label>
-          <button type="submit" style="grid-column:1/-1;justify-self:start;">${escapeHtml(commerceT("commerce.form.create_draft"))}</button>
-        </form>
-      </section>
-
-      ${reviewPanel}
-
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.review_log_title"))}</h3>
-        <div style="overflow:auto;">
+      <section class="card lts0-secondary">
+        <p class="lts0-secondary-kicker">${escapeHtml(commerceT("commerce.stage0.secondary_caption"))}</p>
+        <h3 class="lts0-secondary-title">${escapeHtml(commerceT("commerce.stage0.review_log_title"))}</h3>
+        <div class="lts0-table-scroll">
           <table class="lts0-table">
             <thead><tr>
               <th>${escapeHtml(formatCommerceTableHead("time"))}</th>
@@ -303,9 +374,11 @@ function renderPage(root, ctx) {
         </div>
       </section>
 
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.entitlement_title"))}</h3>
-        <form id="lts0Grant" style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;">
+      <section class="card lts0-secondary">
+        <p class="lts0-secondary-kicker">${escapeHtml(commerceT("commerce.stage0.secondary_caption"))}</p>
+        <p class="lts0-banner-note">${escapeHtml(commerceT("commerce.stage0.entitlement_banner"))}</p>
+        <h3 class="lts0-secondary-title">${escapeHtml(commerceT("commerce.stage0.entitlement_title"))}</h3>
+        <form id="lts0Grant" class="lts0-grant-form">
           <label>${escapeHtml(commerceT("commerce.form.grant_user"))}<input name="user_id" value="u_student_demo_001"/></label>
           <label>${escapeHtml(commerceT("commerce.form.grant_listing"))}<select name="listing_id">${snap.listings
             .map((L) => {
@@ -314,9 +387,9 @@ function renderPage(root, ctx) {
               return `<option value="${escapeHtml(L.id)}" title="${escapeHtml(tit)}">${escapeHtml(lab)}</option>`;
             })
             .join("")}</select></label>
-          <button type="submit">${escapeHtml(commerceT("commerce.form.grant_submit"))}</button>
+          <button type="submit" class="lts0-btn lts0-btn--ghost">${escapeHtml(commerceT("commerce.form.grant_submit"))}</button>
         </form>
-        <div style="overflow:auto;margin-top:10px;">
+        <div class="lts0-table-scroll lts0-table-scroll--tight">
           <table class="lts0-table">
             <thead><tr>
               <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
@@ -331,10 +404,12 @@ function renderPage(root, ctx) {
         </div>
       </section>
 
-      <section class="card" style="margin-top:14px;">
-        <h3>${escapeHtml(commerceT("commerce.stage0.order_title"))}</h3>
-        <p class="desc" style="font-size:13px;">${escapeHtml(commerceT("commerce.stage0.order_note"))}</p>
-        <div style="overflow:auto;">
+      <section class="card lts0-secondary">
+        <p class="lts0-secondary-kicker">${escapeHtml(commerceT("commerce.stage0.secondary_caption"))}</p>
+        <p class="lts0-banner-note">${escapeHtml(commerceT("commerce.stage0.order_banner"))}</p>
+        <h3 class="lts0-secondary-title">${escapeHtml(commerceT("commerce.stage0.order_title"))}</h3>
+        <p class="desc lts0-order-note">${escapeHtml(commerceT("commerce.stage0.order_note"))}</p>
+        <div class="lts0-table-scroll">
           <table class="lts0-table">
             <thead><tr>
               <th>${escapeHtml(formatCommerceTableHead("record_id"))}</th>
@@ -349,12 +424,6 @@ function renderPage(root, ctx) {
           </table>
         </div>
       </section>
-
-      <style>
-        .lts0-table { width:100%; border-collapse:collapse; font-size:13px; }
-        .lts0-table th, .lts0-table td { border:1px solid #e2e8f0; padding:6px 8px; text-align:left; }
-        .lts0-table th { background:#f8fafc; }
-      </style>
     </div>
   `;
 
