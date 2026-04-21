@@ -1,4 +1,4 @@
-// 我的课程占位页：课程管理层；文案经 safeUiText。
+// 我的课程：管理页骨架（列表壳 + 空状态 + 禁用 CTA）；文案经 safeUiText。
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
@@ -21,23 +21,65 @@ let __crsRootRef = /** @type {HTMLElement | null} */ (null);
 
 function renderCoursesDom(root) {
   root.innerHTML = `
-    <div class="teacher-page wrap">
-      <p style="margin:0 0 12px;">
+    <div class="teacher-page wrap teacher-manage-page">
+      <p class="teacher-manage-back">
         <a href="#teacher" class="teacher-back-link">${escapeHtml(tx("teacher.courses_page.back"))}</a>
       </p>
-      <section class="card teacher-center-page">
+
+      <header class="card teacher-manage-header">
         <h2 class="title">${escapeHtml(tx("teacher.courses_page.title"))}</h2>
         <p class="desc">${escapeHtml(tx("teacher.courses_page.subtitle"))}</p>
+        <p class="teacher-manage-tagline">${escapeHtml(tx("teacher.courses_page.tagline"))}</p>
+      </header>
+
+      <section class="card teacher-manage-toolbar" aria-label="${escapeHtml(tx("teacher.courses_page.new_cta"))}">
+        <div class="teacher-manage-toolbar-row">
+          <button type="button" class="teacher-manage-cta teacher-manage-cta--disabled" disabled>
+            ${escapeHtml(tx("teacher.courses_page.new_cta"))}
+          </button>
+          <p class="teacher-manage-toolbar-hint">${escapeHtml(tx("teacher.courses_page.new_note"))}</p>
+        </div>
       </section>
-      <section class="card" style="margin-top:14px;">
-        <h3 class="title" style="font-size:1.1rem;">${escapeHtml(tx("teacher.courses_page.empty"))}</h3>
-        <p class="desc" style="font-size:13px;color:#94a3b8;margin-top:8px;">${escapeHtml(tx("teacher.courses_page.new_note"))}</p>
-        <button type="button" class="teacher-enter-btn" disabled style="margin-top:12px;opacity:0.65;cursor:not-allowed;">
-          ${escapeHtml(tx("teacher.courses_page.new_cta"))}
-        </button>
+
+      <section class="card teacher-manage-list" aria-labelledby="teacher-courses-list-title">
+        <h3 id="teacher-courses-list-title" class="teacher-manage-list-title">${escapeHtml(tx("teacher.courses_page.list_title"))}</h3>
+        <div class="teacher-manage-table-scroll">
+          <table class="teacher-manage-table">
+            <thead>
+              <tr>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_name"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_type"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_updated"))}</th>
+                <th scope="col" class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.th_actions"))}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="teacher-manage-empty-row">
+                <td colspan="5">
+                  <div class="teacher-manage-empty" role="status">
+                    <p class="teacher-manage-empty-title">${escapeHtml(tx("teacher.courses_page.empty_cell_title"))}</p>
+                    <p class="teacher-manage-empty-intro">${escapeHtml(tx("teacher.courses_page.empty_cell_intro"))}</p>
+                    <ul class="teacher-manage-empty-list">
+                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_1"))}</li>
+                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_2"))}</li>
+                      <li>${escapeHtml(tx("teacher.courses_page.empty_cell_item_3"))}</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
-      <section class="card" style="margin-top:14px;">
-        <p class="desc" style="font-size:13px;line-height:1.6;margin:0;">${escapeHtml(tx("teacher.courses_page.relation_note"))}</p>
+
+      <section class="card teacher-manage-relation">
+        <h3 class="teacher-manage-relation-title">${escapeHtml(tx("teacher.courses_page.relation_title"))}</h3>
+        <ul class="teacher-manage-relation-list">
+          <li>${escapeHtml(tx("teacher.courses_page.relation_item_1"))}</li>
+          <li>${escapeHtml(tx("teacher.courses_page.relation_item_2"))}</li>
+          <li>${escapeHtml(tx("teacher.courses_page.relation_item_3"))}</li>
+        </ul>
       </section>
     </div>
   `;

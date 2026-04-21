@@ -520,3 +520,148 @@ a.teacher-back-link{
 a.teacher-back-link:hover{
   text-decoration: underline;
 }
+
+/* =========================================================
+   Teacher manage shells (#teacher-materials / #teacher-courses)
+   ========================================================= */
+.teacher-manage-page{
+  padding-bottom: 40px;
+}
+.teacher-manage-back{
+  margin: 0 0 12px;
+}
+.teacher-manage-header .title{
+  margin-bottom: 6px;
+}
+.teacher-manage-tagline{
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(51, 65, 85, 0.95);
+  max-width: 62ch;
+}
+.teacher-manage-toolbar{
+  margin-top: 14px;
+}
+.teacher-manage-toolbar-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+.teacher-manage-cta{
+  font-family: inherit;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #0f172a;
+  color: #f8fafc;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.teacher-manage-cta:not(:disabled):hover{
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.teacher-manage-cta--disabled,
+.teacher-manage-cta:disabled{
+  opacity: 0.48;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background: rgba(15, 23, 42, 0.35);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: rgba(248, 250, 252, 0.85);
+}
+.teacher-manage-toolbar-hint{
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+.teacher-manage-list{
+  margin-top: 14px;
+}
+.teacher-manage-list-title{
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.9);
+}
+.teacher-manage-table-scroll{
+  overflow-x: auto;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  background: rgba(248, 250, 252, 0.65);
+}
+.teacher-manage-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.teacher-manage-table thead th{
+  text-align: left;
+  padding: 10px 12px;
+  background: rgba(241, 245, 249, 0.95);
+  color: rgba(30, 41, 59, 0.88);
+  font-weight: 800;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  white-space: nowrap;
+}
+.teacher-manage-col-actions{
+  text-align: right;
+}
+.teacher-manage-empty-row td{
+  padding: 0;
+  vertical-align: top;
+  border-bottom: none;
+}
+.teacher-manage-empty{
+  padding: 28px 20px 32px;
+  text-align: left;
+}
+.teacher-manage-empty-title{
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.92);
+}
+.teacher-manage-empty-intro{
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+}
+.teacher-manage-empty-list{
+  margin: 0;
+  padding-left: 1.2rem;
+  color: rgba(51, 65, 85, 0.95);
+  line-height: 1.55;
+  font-size: 14px;
+}
+.teacher-manage-empty-list li{
+  margin: 6px 0;
+}
+.teacher-manage-relation{
+  margin-top: 14px;
+}
+.teacher-manage-relation-title{
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.88);
+}
+.teacher-manage-relation-list{
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(51, 65, 85, 0.95);
+}
+.teacher-manage-relation-list li{
+  margin: 6px 0;
+}
