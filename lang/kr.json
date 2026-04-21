@@ -711,6 +711,7 @@
       "cta_refine_materials": "교재 보완하기",
       "cta_view_courses": "내 코스 보기",
       "cta_view_materials": "내 교재 보기",
+      "cta_open_classroom": "수업 들어가기(예시 진도)",
       "materials_next": {
         "title": "다음 단계 제안",
         "intro": "교재 정리가 끝나면 보통 아래 두 방향 중 하나로 이어갑니다.",
@@ -721,12 +722,14 @@
       },
       "courses_next": {
         "title": "코스 정리 후 다음",
-        "intro": "코스는 수업 내용 그 자체이며, 스토어 상품과 같지 않습니다.",
-        "note": "코스는 자동으로 상품이 되지 않습니다. 판매하려면 listing을 만들고 심사를 거쳐야 합니다.",
+        "intro": "코스는 수업 내용 그 자체이며 스토어 상품과 같지 않습니다. 정리가 되면 수업(클래스룸)에 쓰고, 동시에 판매용 등록도 병행할 수 있습니다.",
+        "note": "「수업 들어가기」는 실제 수업 실행, 「등록·판매 관리」는 공개·판매·심사입니다. 서로 배타적이 아니라 병행 가능합니다.",
         "path_a_title": "경로 A · 계속 보완",
         "path_a_body": "목차와 단원을 더 다듬을 때는 이 페이지에서 코스를 관리하세요.",
-        "path_b_title": "경로 B · 판매 준비",
-        "path_b_body": "구성이 정리되면 「등록·판매 관리」에서 listing을 만들고 심사를 진행하세요."
+        "path_classroom_title": "경로 B · 수업(클래스룸)",
+        "path_classroom_body": "코스 체계로 실제 수업을 진행합니다. 클래스룸에서 Kids/HSK·권·차시를 고릅니다. 아래 링크는 예시 진도이며 워크스페이스에서도 바꿀 수 있습니다.",
+        "path_b_title": "경로 C · 판매 준비",
+        "path_b_body": "공개 판매가 필요하면 「등록·판매 관리」에서 listing을 만들고 심사를 진행하세요."
       },
       "listing_source": {
         "title": "등록 내용은 어디서 오나요",
@@ -761,7 +764,8 @@
         "chip_pending": "심사 대기 {count}개",
         "chip_drafts": "초안 {count}개",
         "chip_approved": "승인됨 {count}개"
-      }
+      },
+      "classroom_flow_note": "흐름 안내: 교재 → 코스 → 수업(클래스룸). 공개·판매가 필요하면 코스·교재를 「등록·판매 관리」로 이어갈 수 있습니다. 아래 「수업 들어가기」가 실행 단계입니다."
     },
     "hub": {
       "materials": {
@@ -894,7 +898,8 @@
       "relation_item_3": "판매는 등록·판매 관리에서.",
       "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
       "relation_note_short": "교재≠코스;≠자동 상품.",
-      "back": "교사 워크스페이스로 돌아가기"
+      "back": "교사 워크스페이스로 돌아가기",
+      "classroom_note": "교재는 준비 자산이며 코스·수업을 지탱합니다. 자료 정리가 끝이 아니라 코스 구조와 실제 수업에서 완성됩니다."
     },
     "courses_page": {
       "title": "내 코스",
@@ -936,7 +941,18 @@
       "classroom_section_title": "수업 들어가기",
       "classroom_section_lead": "과정·권·차시를 고르고 수업 화면과 도구를 엽니다.",
       "classroom_desc": "과정·권·차시를 선택해 수업 화면과 과정별 도구를 엽니다.",
-      "classroom_button": "수업 시작"
+      "classroom_button": "수업 시작",
+      "classroom_stage_kicker": "수업 실행",
+      "classroom_workflow_note": "교재·코스 준비가 되면 여기서 실제 수업으로 들어갑니다. 판매 등록과 병행됩니다—수업은 클래스룸, 판매는 등록 관리."
+    },
+    "classroom": {
+      "context": {
+        "mode_label": "교사 수업 모드",
+        "from_workspace": "교사 워크플로의 수업 단계",
+        "params_hint": "링크 기준: 과정 「{course}」· 권 {level} · 차시 {lesson}",
+        "no_url_params": "주소에 과정 파라미터가 없습니다. 기본 수업 컨텍스트가 사용됩니다. 준비 단계와 맞추려면 워크스페이스에서 과정·권·차시를 고른 뒤 들어오세요."
+      },
+      "back_courses": "코스 관리로"
     },
     "label": {
       "course": "과정",

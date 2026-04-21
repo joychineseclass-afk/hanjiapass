@@ -25,6 +25,12 @@ function parseQuery() {
   return out;
 }
 
+/** @param {string} hash */
+function hashHasQueryString(hash) {
+  const qIndex = String(hash || "").indexOf("?");
+  return qIndex >= 0 && String(hash || "").slice(qIndex + 1).trim().length > 0;
+}
+
 function escapeHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -90,14 +96,35 @@ export default async function pageClassroom(ctxOrRoot) {
   const courseId = q.course || "kids";
   const level = q.level || "1";
   const lessonNo = q.lesson || "1";
+  const hasUrlParams = hashHasQueryString(String(location.hash || ""));
 
   const title = tx("classroom.title");
   const backLabel = tx("teacher.nav.back_workspace");
+  const backCourses = tx("teacher.classroom.back_courses");
+  const modeLabel = tx("teacher.classroom.context.mode_label");
+  const fromWs = tx("teacher.classroom.context.from_workspace");
+  const ctxLine2 = hasUrlParams
+    ? tx("teacher.classroom.context.params_hint", {
+        course: formatTeacherHubCourseDisplay(courseId),
+        level: String(level),
+        lesson: String(lessonNo),
+      })
+    : tx("teacher.classroom.context.no_url_params");
 
   root.innerHTML = `
     <section class="lumina-classroom-page wrap">
       <header class="classroom-topbar">
-        <button type="button" class="classroom-back" id="classroomBackBtn">← ${escapeHtml(backLabel)}</button>
+        <div class="classroom-topbar-actions">
+          <button type="button" class="classroom-back" id="classroomBackBtn">← ${escapeHtml(backLabel)}</button>
+          <a class="classroom-back-secondary" href="#teacher-courses">${escapeHtml(backCourses)}</a>
+        </div>
+        <div class="classroom-teacher-ctx" id="classroomTeacherContext">
+          <p class="classroom-ctx-line1">
+            <span class="classroom-ctx-badge">${escapeHtml(modeLabel)}</span>
+            <span class="classroom-ctx-muted">${escapeHtml(fromWs)}</span>
+          </p>
+          <p class="classroom-ctx-line2">${escapeHtml(ctxLine2)}</p>
+        </div>
         <div class="classroom-title-wrap">
           <div class="classroom-title">${escapeHtml(title)}</div>
           <div class="classroom-subtitle" id="classroomMeta"></div>

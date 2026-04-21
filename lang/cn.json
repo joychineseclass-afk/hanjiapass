@@ -711,6 +711,7 @@
       "cta_refine_materials": "去完善教材",
       "cta_view_courses": "查看我的课程",
       "cta_view_materials": "查看我的教材",
+      "cta_open_classroom": "进入课堂（示例进度）",
       "materials_next": {
         "title": "下一步建议",
         "intro": "教材整理好后，通常可以往这两个方向继续。",
@@ -721,12 +722,14 @@
       },
       "courses_next": {
         "title": "课程完成后的下一步",
-        "intro": "课程是教学内容本身，不等于商城商品。",
-        "note": "课程不会自动变成商品；若要售卖，需进入 listing 管理并完成审核。",
+        "intro": "课程是教学内容本身，不等于商城商品；整理好后既可用于课堂授课，也可并行准备上架。",
+        "note": "「进入课堂」侧重教学执行；「上架与售卖管理」侧重公开展示与售卖审核——两条去向并行，不必二选一。",
         "path_a_title": "路径 A · 继续完善",
         "path_a_body": "大纲与单元仍可调整时，可留在本页继续管理课程。",
-        "path_b_title": "路径 B · 进入售卖准备",
-        "path_b_body": "内容整理完成后，到「注册/销售管理」创建 listing 并走审核流程。"
+        "path_classroom_title": "路径 B · 课堂授课",
+        "path_classroom_body": "将课程体系用于实际教学：打开课堂模式并选择 Kids / HSK、册别与课次（下方链接为示例参数，可在课堂内或工作台调整）。",
+        "path_b_title": "路径 C · 进入售卖准备",
+        "path_b_body": "需要公开展示与售卖时，到「上架与售卖管理」创建 listing 并走审核流程。"
       },
       "listing_source": {
         "title": "上架内容从哪里来",
@@ -761,7 +764,8 @@
         "chip_pending": "待审核 {count}",
         "chip_drafts": "草稿 {count}",
         "chip_approved": "已通过 {count}"
-      }
+      },
+      "classroom_flow_note": "工作流提示：教材 → 课程 → 课堂授课；若需售卖与公开展示，课程或资料还可进入「上架与售卖管理」。下方「进入课堂」即教学执行阶段入口。"
     },
     "hub": {
       "materials": {
@@ -894,7 +898,8 @@
       "relation_item_3": "售卖请进上架管理。",
       "empty_subhint": "功能开放后，条目将显示在下方列表。",
       "relation_note_short": "教材≠课程；≠自动商品。",
-      "back": "返回教师工作台"
+      "back": "返回教师工作台",
+      "classroom_note": "教材用于备课，并支撑课程与课堂；整理资料不是终点，最终会在课程结构与课堂授课中落地。"
     },
     "courses_page": {
       "title": "我的课程",
@@ -936,7 +941,18 @@
       "classroom_section_title": "进入课堂",
       "classroom_section_lead": "选择课程、册别与课次，打开投屏与课堂工具。",
       "classroom_desc": "选择课程、册别与课次，进入课堂投屏与课程内工具。",
-      "classroom_button": "进入课堂"
+      "classroom_button": "进入课堂",
+      "classroom_stage_kicker": "教学执行",
+      "classroom_workflow_note": "教材与课程准备到位后，从这里进入实际授课；与「上架管理」并行——上课走课堂，售卖走上架。"
+    },
+    "classroom": {
+      "context": {
+        "mode_label": "教师课堂模式",
+        "from_workspace": "教师工作流中的授课场景",
+        "params_hint": "当前链接：课程「{course}」· 册别 {level} · 课次 {lesson}",
+        "no_url_params": "地址中未携带课程参数，将使用默认课堂上下文；建议从教师工作台选择课程、册别与课次后进入，以便与准备层一致。"
+      },
+      "back_courses": "返回课程管理"
     },
     "label": {
       "course": "课程",

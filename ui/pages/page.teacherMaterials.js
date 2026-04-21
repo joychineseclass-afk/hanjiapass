@@ -81,6 +81,7 @@ function renderMaterialsDom(root) {
         <h1 class="teacher-admin-title">${escapeHtml(tx("teacher.materials_page.title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(tx("teacher.materials_page.subtitle"))}</p>
         <p class="teacher-admin-tagline">${escapeHtml(tx("teacher.materials_page.tagline"))}</p>
+        <p class="teacher-admin-workflow-note">${escapeHtml(tx("teacher.materials_page.classroom_note"))}</p>
       </header>
       ${teacherMaterialsNextGuideHtml(tx)}
 

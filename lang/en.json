@@ -711,6 +711,7 @@
       "cta_refine_materials": "Refine my materials",
       "cta_view_courses": "View my courses",
       "cta_view_materials": "View my materials",
+      "cta_open_classroom": "Open classroom (sample lesson)",
       "materials_next": {
         "title": "Suggested next steps",
         "intro": "After materials are in good shape, most teachers continue in one of these directions.",
@@ -721,12 +722,14 @@
       },
       "courses_next": {
         "title": "After your course is ready",
-        "intro": "A course is teaching content—it is not a store product by itself.",
-        "note": "Courses do not auto-become products. To sell, create a listing here and go through review.",
+        "intro": "A course is teaching content—not a store product by itself. Once it is in good shape, you can teach in the classroom and, in parallel, prepare a public listing.",
+        "note": "Classroom mode is for live teaching; Listings & sales is for public display and selling—they are parallel tracks, not an either/or choice.",
         "path_a_title": "Path A · Keep improving",
         "path_a_body": "While the outline and units are still moving, stay on this page to manage the course.",
-        "path_b_title": "Path B · Move toward selling",
-        "path_b_body": "When the structure is ready, go to Listings & sales to create a listing and submit it for review."
+        "path_classroom_title": "Path B · Teach in the classroom",
+        "path_classroom_body": "Use your course line in class: open classroom mode and pick Kids or HSK, book/volume, and lesson. The link below uses sample parameters; you can adjust in the hub or here.",
+        "path_b_title": "Path C · Move toward selling",
+        "path_b_body": "When you want public listing and selling, go to Listings & sales to create a listing and submit it for review."
       },
       "listing_source": {
         "title": "Where listings come from",
@@ -761,7 +764,8 @@
         "chip_pending": "Pending review · {count}",
         "chip_drafts": "Drafts · {count}",
         "chip_approved": "Approved · {count}"
-      }
+      },
+      "classroom_flow_note": "Flow: materials → courses → teach in the classroom; for selling and public display, also use Listings & sales. “Enter classroom” below is the teaching execution step."
     },
     "hub": {
       "materials": {
@@ -894,7 +898,8 @@
       "relation_item_3": "To sell, use Listings & sales.",
       "empty_subhint": "When upload opens, rows will appear below.",
       "relation_note_short": "Materials ≠ courses; ≠ auto products.",
-      "back": "Back to Teacher Workspace"
+      "back": "Back to Teacher Workspace",
+      "classroom_note": "Materials support prep and feed into courses and the classroom; organizing files is not the end—teaching happens in your course structure and in class."
     },
     "courses_page": {
       "title": "My courses",
@@ -936,7 +941,18 @@
       "classroom_section_title": "Enter classroom",
       "classroom_section_lead": "Pick course, level, and lesson—open projection and lesson tools.",
       "classroom_desc": "Pick a course, level, and lesson to open classroom mode and lesson tools.",
-      "classroom_button": "Open classroom"
+      "classroom_button": "Open classroom",
+      "classroom_stage_kicker": "Teach",
+      "classroom_workflow_note": "After materials and courses are ready, enter here to teach. Listing management runs in parallel—classroom for teaching, listings for selling."
+    },
+    "classroom": {
+      "context": {
+        "mode_label": "Teacher classroom mode",
+        "from_workspace": "Part of the teacher workflow",
+        "params_hint": "From link: course “{course}” · level {level} · lesson {lesson}",
+        "no_url_params": "No course parameters in the URL—defaults will be used. For consistency with your prep flow, pick course, level, and lesson from the Teacher Workspace first."
+      },
+      "back_courses": "Back to course management"
     },
     "label": {
       "course": "Course",

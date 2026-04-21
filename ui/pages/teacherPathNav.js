@@ -119,6 +119,7 @@ export function teacherMaterialsNextGuideHtml(tx) {
 /** @param {(path: string, params?: object) => string} tx */
 export function teacherCoursesNextGuideHtml(tx) {
   const m = (path) => escapeHtml(tx(path));
+  const classroomHref = "#classroom?course=kids&level=1&lesson=1";
   return `
     <section class="card teacher-guide-panel" aria-labelledby="teacher-flow-courses-next-title">
       <h2 id="teacher-flow-courses-next-title" class="teacher-guide-panel-title">${m("teacher.flow.courses_next.title")}</h2>
@@ -129,6 +130,11 @@ export function teacherCoursesNextGuideHtml(tx) {
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_a_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.courses_next.path_a_body")}</p>
           <a class="teacher-guide-cta" href="#teacher-courses">${m("teacher.flow.cta_continue_courses")}</a>
+        </div>
+        <div class="teacher-guide-route">
+          <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_classroom_title")}</p>
+          <p class="teacher-guide-route-body">${m("teacher.flow.courses_next.path_classroom_body")}</p>
+          <a class="teacher-guide-cta teacher-guide-cta--classroom" href="${classroomHref}">${m("teacher.flow.cta_open_classroom")}</a>
         </div>
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_b_title")}</p>

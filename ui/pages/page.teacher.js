@@ -70,13 +70,16 @@ async function renderTeacherHub(root) {
       <section class="card teacher-relation-flow" aria-label="${escapeHtml(tx("teacher.relation_flow.title"))}">
         <p class="teacher-relation-flow-title">${escapeHtml(tx("teacher.relation_flow.title"))}</p>
         ${teacherPathStripHtml(null, tx)}
+        <p class="teacher-relation-flow-classroom">${escapeHtml(tx("teacher.workspace.classroom_flow_note"))}</p>
       </section>
       ${teacherWorkspaceOverviewHtml(sum)}
 
       <section class="teacher-grid">
         <article class="teacher-tile card teacher-tile-classroom teacher-tile--primary">
+          <p class="teacher-tile-stage-kicker">${escapeHtml(tx("teacher.enter.classroom_stage_kicker"))}</p>
           <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.enter.classroom_section_title"))}</h3>
           <p class="teacher-tile-desc">${escapeHtml(tx("teacher.enter.classroom_section_lead"))}</p>
+          <p class="teacher-tile-workflow-note">${escapeHtml(tx("teacher.enter.classroom_workflow_note"))}</p>
           <div class="teacher-classroom-form teacher-classroom-form--primary">
             <label class="teacher-field">
               <span>${escapeHtml(tx("teacher.label.course"))}</span>
