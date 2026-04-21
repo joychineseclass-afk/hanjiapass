@@ -1,5 +1,5 @@
 {
-  "courseId": "hsk1",
+  "courseId": "hsk3.0_hsk1",
   "level": "HSK1",
   "_luminaNote": "HSK 3.0 一级：第 1–22 课为 Lumina 正式铺课数据。会话画布规范见同目录 DIALOGUE-CANVAS-DATA.md。新增课次请在本数组追加条目，并同步 vocab-distribution.json 与 lessonN.json。",
   "lessons": [

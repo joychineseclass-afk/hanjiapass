@@ -14,23 +14,23 @@
   },
   "summary": {
     "zh": "学习用「怎么了」关心状况，用「生病、看病」说就医，用「要、再、见」表达嘱咐与道别。",
-    "kr": "「怎么了」「生病」「看病」「要」「再」「见」.",
-    "en": "怎么了; 生病/看病; 要; 再; 见.",
-    "jp": "「怎么了」「生病」「看病」「要」「再」「见」。"
+    "kr": "몸이 안 좋을 때 「怎么了」로 안부를 묻고, 「生病」「看病」으로 병원·진료를 말하며, 「要」「再」「见」로 휴식 권유와 작별을 표현합니다.",
+    "en": "Ask how someone is feeling with 怎么了; talk about being ill and seeing a doctor with 生病 / 看病; give advice or say goodbye with 要, 再, 见.",
+    "jp": "具合が悪いときは「怎么了」で様子を尋ね、「生病」「看病」で病気と受診を言い、「要」「再」「见」でねぎらいや別れの言葉を使います。"
   },
   "scene": {
     "id": "hsk30_l21_scene",
     "title": {
       "zh": "生病与休息",
-      "kr": "아픔·휴식",
-      "en": "Illness & rest",
+      "kr": "아픔과 휴식",
+      "en": "Illness and rest",
       "jp": "病気と休息"
     },
     "summary": {
       "zh": "会话一：不舒服、去医院；会话二：医生说要休息、好多了没事；会话三：睡一会儿、明天再来、再见。",
-      "kr": "몸살·병원 → 진료·괜찮음 → 잠·내일.",
-      "en": "Feeling ill · hospital · better · rest & tomorrow.",
-      "jp": "体調／病院／回復／休む。"
+      "kr": "회화1: 몸이 안 좋아 병원에 가려 함; 회화2: 의사는 푹 쉬라고 하고, 많이 나아 괜찮다고 말함; 회화3: 잠깐 자고 내일 다시 오며 작별 인사를 나눔.",
+      "en": "Dialogue 1: feeling unwell and planning to go to hospital; Dialogue 2: the doctor says to rest more, and you feel much better; Dialogue 3: sleep a while, come again tomorrow, and say goodbye.",
+      "jp": "会話1：具合が悪く病院へ行く話；会話2：医者が休むよう言い、だいぶよくなったと言う；会話3：少し寝て、明日また来て、さようなら。"
     }
   },
   "objectives": [

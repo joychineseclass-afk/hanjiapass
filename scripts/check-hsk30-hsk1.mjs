@@ -1,6 +1,9 @@
 /**
  * HSK3.0 · HSK1 最小校验（不修改课程 JSON）
  *
+ * 说明：`scripts/check-hsk1-*.mjs` 等仍指向 data/courses/hsk2.0/hsk1；
+ * Lumina **HSK 3.0 · 一级** 正式课请以本脚本与 `npm run check:hsk30-hsk1(:strict)` 为准。
+ *
  * 覆盖：
  * 1) vocab-distribution 中的词 ⊆ data/vocab/hsk3.0/hsk1.json（hanzi 精确匹配）
  * 2) lesson1～lesson22 基础结构字段

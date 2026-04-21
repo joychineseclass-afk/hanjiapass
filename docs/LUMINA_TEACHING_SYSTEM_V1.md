@@ -93,3 +93,12 @@
 | EN 模式释义/词性 | ✓ |
 | AI 面板 4 模式 | ✓ |
 | AI mock 开始练习 | ✓ |
+
+---
+
+## 六、HSK 3.0 · 一级（Lumina）门禁与约定
+
+- **发布 / CI**：在 `data/` JSON 校验之外，固定执行 `npm run check:hsk30-hsk1:strict`（见 `.github/workflows/lumina-release-check.yml`）。
+- **与 2.0 校验脚本分工**：`check-hsk1-*.mjs` 等仍针对 `data/courses/hsk2.0/hsk1`；**3.0 一级铺课**以 `check-hsk30-hsk1` 为准，勿将 2.0 脚本结果误认为已覆盖 3.0。
+- **普通课练习题量**：HSK 3.0 · HSK1 当前 **固定为每课 4 题**（与部分生成器/文档中的「5 题」描述不同者，以本线为准）。
+- **总表释义多语**：`data/vocab/hsk3.0/hsk1.json` 中大量 `meaning.ko` 仍空、JP 需逐步补齐；四语单词区体验为**已知债**，按批次填充 `meaning.ko` / `meaning.jp`（或等价字段），不依赖写死中文。
