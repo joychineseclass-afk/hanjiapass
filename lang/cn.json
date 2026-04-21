@@ -48,7 +48,7 @@
     "culture": "文化",
     "review": "复习",
     "resources": "资源",
-    "teacher": "教师专区",
+    "teacher": "教师工作台",
     "my": "我的学习",
     "login": "登录"
   },
@@ -686,11 +686,15 @@
   },
   "teacher": {
     "tools": {
-      "center": "教师工具中心",
-      "subtitle": "平台级入口：由此进入课堂；教材、AI、控制台等能力将在此扩展。"
+      "center": "教学工具（扩展）",
+      "subtitle": "与「教师工作台」配合的辅助能力；主入口仍以工作台为准。"
     },
     "manage": {
-      "page_kicker": "教师端管理"
+      "page_kicker": "教师工作台"
+    },
+    "nav": {
+      "back_workspace": "返回教师工作台",
+      "subnav_aria": "教师工作台内导航"
     },
     "path_strip": {
       "aria": "教材、课程与上架流程位置",
@@ -741,7 +745,7 @@
       "listing": "上架 · 售卖与审核入口"
     },
     "workspace": {
-      "title": "老师工作台",
+      "title": "教师工作台",
       "subtitle": "上课、资料、课程、上架——常用入口集中在这里。",
       "layer_materials": "教材：您的私有资料与课件，用于备课与课堂，不等于已上架商品。",
       "layer_courses": "课程：您组织的教学内容，可为草稿或已可用于教学，未来可转为上架来源。",
@@ -838,7 +842,7 @@
       "relation_item_3": "售卖请进上架管理。",
       "empty_subhint": "功能开放后，条目将显示在下方列表。",
       "relation_note_short": "教材≠课程；≠自动商品。",
-      "back": "返回工作台"
+      "back": "返回教师工作台"
     },
     "courses_page": {
       "title": "我的课程",
@@ -867,7 +871,7 @@
       "relation_item_3": "售卖请进上架管理。",
       "empty_subhint": "功能开放后，课程将显示在下方列表。",
       "relation_note_short": "课程≠教材；≠自动上架。",
-      "back": "返回工作台"
+      "back": "返回教师工作台"
     },
     "stage0": {
       "commerce": {
@@ -909,7 +913,7 @@
     "title": "课堂模式",
     "back": {
       "to": {
-        "teacher": "返回教师中心"
+        "teacher": "返回教师工作台"
       }
     },
     "meta": {
@@ -935,9 +939,10 @@
       "subtitle": "在此集中查看与管理您的上架内容、审核状态与基础信息。",
       "stage_note": "当前为 Stage 0 预留：无真实支付、订单与分账；数据保存在本地，可随时重置为演示种子。",
       "stage_badge": "Stage 0",
-      "back_workspace": "返回老师工作台",
+      "back_workspace": "返回教师工作台",
       "demo_user": "演示账号",
       "reset_seed": "重置演示数据",
+      "seed_sync_hint": "若上架列表、来源列或条目不完整（例如浏览器仍保留旧版本地缓存），请点击「重置演示数据」以同步最新演示种子。",
       "panel_draft_desc": "填写基本信息即可生成草稿；保存后可提交审核并在此跟踪状态。",
       "secondary_fold_title": "演示预留区",
       "secondary_fold_hint": "权益检测、档案、审核日志、订单等（默认收起）",

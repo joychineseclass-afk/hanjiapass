@@ -8,6 +8,57 @@ function escapeHtml(s) {
 }
 
 /**
+ * 返回教师工作台（统一入口 #teacher）。
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function teacherBackToWorkspaceHtml(tx) {
+  const m = (path) => escapeHtml(tx(path));
+  return `<p class="teacher-admin-back">
+    <a href="#teacher" class="teacher-back-link">${m("teacher.nav.back_workspace")}</a>
+  </p>`;
+}
+
+/**
+ * 教师模块轻量子导航：工作台 + 教材 / 课程 / 上架（当前项高亮）。
+ * @param {'workspace' | 'materials' | 'courses' | 'listing'} active
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function teacherWorkspaceSubnavHtml(active, tx) {
+  const m = (path) => escapeHtml(tx(path));
+  /** @param {'workspace'|'materials'|'courses'|'listing'} kind */
+  const item = (kind) => {
+    const isCurrent = active === kind;
+    let href = "#teacher";
+    let label = m("teacher.workspace.title");
+    if (kind === "materials") {
+      href = "#teacher-materials";
+      label = m("teacher.hub.materials.title");
+    } else if (kind === "courses") {
+      href = "#teacher-courses";
+      label = m("teacher.hub.courses.title");
+    } else if (kind === "listing") {
+      href = "#lumina-teacher-stage0";
+      label = m("teacher.hub.listing.title");
+    }
+    if (isCurrent) {
+      return `<span class="teacher-subnav-item teacher-subnav-item--current" aria-current="page">${label}</span>`;
+    }
+    return `<a class="teacher-subnav-item teacher-subnav-item--link" href="${href}">${label}</a>`;
+  };
+
+  return `
+    <nav class="teacher-subnav card" aria-label="${m("teacher.nav.subnav_aria")}">
+      <div class="teacher-subnav-row">
+        ${item("workspace")}
+        ${item("materials")}
+        ${item("courses")}
+        ${item("listing")}
+      </div>
+    </nav>
+  `;
+}
+
+/**
  * 教材 / 课程 / Listing 轻量路径条（仅导航与展示，无数据关联）。
  * @param {'materials' | 'courses' | 'listing' | null} active 为 null 时三步均可点选（如工作台首页）
  * @param {(path: string, params?: object) => string} tx 通常为 safeUiText / commerceT

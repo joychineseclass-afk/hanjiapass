@@ -92,7 +92,7 @@ export default async function pageClassroom(ctxOrRoot) {
   const lessonNo = q.lesson || "1";
 
   const title = tx("classroom.title");
-  const backLabel = tx("classroom.back.to.teacher");
+  const backLabel = tx("teacher.nav.back_workspace");
 
   root.innerHTML = `
     <section class="lumina-classroom-page wrap">

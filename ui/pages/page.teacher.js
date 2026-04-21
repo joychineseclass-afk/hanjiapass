@@ -3,7 +3,7 @@
 
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
-import { teacherPathStripHtml } from "./teacherPathNav.js";
+import { teacherPathStripHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -31,6 +31,8 @@ function renderTeacherHub(root) {
           <p class="desc teacher-hero-lead">${escapeHtml(tx("teacher.workspace.subtitle"))}</p>
         </div>
       </section>
+
+      ${teacherWorkspaceSubnavHtml("workspace", tx)}
 
       <section class="card teacher-relation-flow" aria-label="${escapeHtml(tx("teacher.relation_flow.title"))}">
         <p class="teacher-relation-flow-title">${escapeHtml(tx("teacher.relation_flow.title"))}</p>

@@ -8,7 +8,12 @@ import {
   formatDemoShortUpdated,
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { i18n } from "../i18n.js";
-import { teacherCoursesNextGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
+import {
+  teacherBackToWorkspaceHtml,
+  teacherCoursesNextGuideHtml,
+  teacherPathStripHtml,
+  teacherWorkspaceSubnavHtml,
+} from "./teacherPathNav.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -53,10 +58,9 @@ function coursesTableBody() {
 function renderCoursesDom(root) {
   root.innerHTML = `
     <div class="teacher-page wrap teacher-manage-page teacher-admin-shell">
-      <p class="teacher-admin-back">
-        <a href="#teacher" class="teacher-back-link">${escapeHtml(tx("teacher.courses_page.back"))}</a>
-      </p>
+      ${teacherBackToWorkspaceHtml(tx)}
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
+      ${teacherWorkspaceSubnavHtml("courses", tx)}
       ${teacherPathStripHtml("courses", tx)}
       <header class="card teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(tx("teacher.courses_page.title"))}</h1>

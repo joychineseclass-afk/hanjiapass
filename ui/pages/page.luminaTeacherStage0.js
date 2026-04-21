@@ -42,7 +42,12 @@ import {
   userHasRole,
 } from "../lumina-commerce/store.js";
 import { i18n } from "../i18n.js";
-import { teacherListingSourceGuideHtml, teacherPathStripHtml } from "./teacherPathNav.js";
+import {
+  teacherBackToWorkspaceHtml,
+  teacherListingSourceGuideHtml,
+  teacherPathStripHtml,
+  teacherWorkspaceSubnavHtml,
+} from "./teacherPathNav.js";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -329,11 +334,10 @@ function renderPage(root, ctx) {
 
   root.innerHTML = `
     <div class="wrap lts0-page teacher-admin-shell">
+      ${teacherBackToWorkspaceHtml(commerceT)}
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
+      ${teacherWorkspaceSubnavHtml("listing", commerceT)}
       <section class="card lts0-hero">
-        <p class="teacher-admin-back">
-          <a href="#teacher" class="teacher-back-link">${escapeHtml(commerceT("commerce.stage0.back_workspace"))}</a>
-        </p>
         <div class="lts0-hero-top">
           <div class="lts0-hero-text">
             <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
@@ -397,6 +401,7 @@ function renderPage(root, ctx) {
               </label>
               <button type="button" class="lts0-btn lts0-btn--ghost" id="lts0ResetSeed">${escapeHtml(commerceT("commerce.stage0.reset_seed"))}</button>
             </div>
+            <p class="lts0-seed-sync-hint">${escapeHtml(commerceT("commerce.stage0.seed_sync_hint"))}</p>
             ${
               isReviewer
                 ? `<p class="lts0-reviewer-hint">${escapeHtml(commerceT("commerce.stage0.identity_reviewer_active"))}</p>`

@@ -48,7 +48,7 @@
     "culture": "Culture",
     "review": "Review",
     "resources": "Resources",
-    "teacher": "Teacher",
+    "teacher": "Teacher Workspace",
     "my": "My Learning",
     "login": "Login"
   },
@@ -686,11 +686,15 @@
   },
   "teacher": {
     "tools": {
-      "center": "Teacher hub",
-      "subtitle": "Platform-level entry points. Open a lesson to access classroom tools, materials, AI, and console."
+      "center": "Teaching tools (extended)",
+      "subtitle": "Extras that pair with the Teacher Workspace; the workspace remains the main hub."
     },
     "manage": {
-      "page_kicker": "Teacher admin"
+      "page_kicker": "Teacher Workspace"
+    },
+    "nav": {
+      "back_workspace": "Back to Teacher Workspace",
+      "subnav_aria": "Navigation inside the Teacher Workspace"
     },
     "path_strip": {
       "aria": "Where you are in materials, courses, and listings",
@@ -741,7 +745,7 @@
       "listing": "Listings · sales & review"
     },
     "workspace": {
-      "title": "Teacher workspace",
+      "title": "Teacher Workspace",
       "subtitle": "Classroom, materials, courses, and listings—common actions in one place.",
       "layer_materials": "Materials: your private slides, handouts, and lesson assets for prep and class—not the same as listed products.",
       "layer_courses": "Courses: the teaching content you structure—drafts, in progress, or ready to teach—can later feed listings.",
@@ -759,7 +763,7 @@
         "cta": "Open course management"
       },
       "listing": {
-        "title": "Listings & sales",
+        "title": "Listings & sales management",
         "desc": "Manage public listings that usually come from a course or materials you prepared.",
         "cta": "Open listing hub",
         "badge": "Preview · Stage 0"
@@ -838,7 +842,7 @@
       "relation_item_3": "To sell, use Listings & sales.",
       "empty_subhint": "When upload opens, rows will appear below.",
       "relation_note_short": "Materials ≠ courses; ≠ auto products.",
-      "back": "Back to workspace"
+      "back": "Back to Teacher Workspace"
     },
     "courses_page": {
       "title": "My courses",
@@ -867,7 +871,7 @@
       "relation_item_3": "Use Listings & sales for selling.",
       "empty_subhint": "When creation opens, courses will appear below.",
       "relation_note_short": "Courses ≠ materials; ≠ auto listings.",
-      "back": "Back to workspace"
+      "back": "Back to Teacher Workspace"
     },
     "stage0": {
       "commerce": {
@@ -909,7 +913,7 @@
     "title": "Classroom mode",
     "back": {
       "to": {
-        "teacher": "Back to teacher hub"
+        "teacher": "Back to Teacher Workspace"
       }
     },
     "meta": {
@@ -931,13 +935,14 @@
       "fallback_label": "Field"
     },
     "stage0": {
-      "title": "Listings & sales",
+      "title": "Listings & sales management",
       "subtitle": "Manage your sellable listings, review status, and supporting details in one place.",
       "stage_note": "Stage 0 preview: no live payments, orders, or payouts. Data is stored locally; you can reset demo seed data.",
       "stage_badge": "Stage 0",
-      "back_workspace": "Back to teacher workspace",
+      "back_workspace": "Back to Teacher Workspace",
       "demo_user": "Demo account",
       "reset_seed": "Reset demo data",
+      "seed_sync_hint": "If listings, source columns, or rows look incomplete (for example after an old browser cache), tap “Reset demo data” to reload the latest demo seed.",
       "panel_draft_desc": "Fill in the basics to create a draft, then submit for review and track status here.",
       "secondary_fold_title": "Demo placeholders",
       "secondary_fold_hint": "Entitlements, profile, review log, orders (collapsed by default)",

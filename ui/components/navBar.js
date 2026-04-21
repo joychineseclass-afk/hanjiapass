@@ -22,7 +22,7 @@ const NAV_ITEMS_FULL = [
   { href: "/index.html#hanja",   key: "nav.hanjagongfu", label: "한자공부",    color: "#a855f7" },
   { href: "/index.html#review",  key: "nav.review",    label: "복습",          color: "#8b5cf6" },
   { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
-  { href: "/index.html#teacher", key: "nav.teacher",   label: "학부모/선생님",  color: "#f43f5e" },
+  { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
   { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
 ];
 
@@ -65,7 +65,12 @@ function setActive(rootEl) {
     // ✅ 首页：path 匹配 + hash 匹配（有 hash 的话）
     if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
       const wantHash = toHash ? `#${toHash}` : "";
-      active = wantHash ? (curHash === wantHash) : true;
+      const teacherHashes = new Set(["#teacher", "#teacher-materials", "#teacher-courses", "#lumina-teacher-stage0"]);
+      if (wantHash === "#teacher") {
+        active = teacherHashes.has(curHash);
+      } else {
+        active = wantHash ? curHash === wantHash : true;
+      }
     } else {
       // ✅ 其它页面：只看 pathname
       active = navPath === curPath;

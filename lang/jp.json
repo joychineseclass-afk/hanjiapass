@@ -48,7 +48,7 @@
     "culture": "文化",
     "review": "復習",
     "resources": "資料",
-    "teacher": "教師向け",
+    "teacher": "教師ワークスペース",
     "my": "マイ学習",
     "my_learning": "マイ学習",
     "login": "ログイン"
@@ -695,11 +695,15 @@
   },
   "teacher": {
     "tools": {
-      "center": "教師ハブ",
-      "subtitle": "プラットフォーム入口です。授業に入ると教材・AI・コンソールなどのツールが使えます。"
+      "center": "授業ツール（拡張）",
+      "subtitle": "「教師ワークスペース」と組み合わせる補助機能です。主な入り口はワークスペースです。"
     },
     "manage": {
-      "page_kicker": "教師向け管理"
+      "page_kicker": "教師ワークスペース"
+    },
+    "nav": {
+      "back_workspace": "教師ワークスペースに戻る",
+      "subnav_aria": "教師ワークスペース内のナビゲーション"
     },
     "path_strip": {
       "aria": "教材・コース・掲載の流れでの位置",
@@ -847,7 +851,7 @@
       "relation_item_3": "販売は掲載・販売管理へ。",
       "empty_subhint": "機能公開後、下の一覧に表示されます。",
       "relation_note_short": "教材≠コース；≠自動商品。",
-      "back": "ワークスペースに戻る"
+      "back": "教師ワークスペースに戻る"
     },
     "courses_page": {
       "title": "マイコース",
@@ -876,7 +880,7 @@
       "relation_item_3": "販売は掲載管理・審査。",
       "empty_subhint": "機能公開後、下の一覧に表示されます。",
       "relation_note_short": "コース≠教材；≠自動掲載。",
-      "back": "ワークスペースに戻る"
+      "back": "教師ワークスペースに戻る"
     },
     "stage0": {
       "commerce": {
@@ -947,6 +951,7 @@
       "back_workspace": "教師ワークスペースに戻る",
       "demo_user": "デモアカウント",
       "reset_seed": "デモデータをリセット",
+      "seed_sync_hint": "掲載一覧・出所列・行が欠ける場合は（古いブラウザキャッシュなど）「デモデータをリセット」で最新のデモシードを読み込んでください。",
       "panel_draft_desc": "基本情報を入力すると下書きが作成され、審査提出後にここで状態を追跡できます。",
       "secondary_fold_title": "デモ予約エリア",
       "secondary_fold_hint": "権限確認・プロフィール・審査ログ・注文など（既定で閉じる）",

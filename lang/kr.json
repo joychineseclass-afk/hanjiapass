@@ -48,7 +48,7 @@
     "culture": "문화",
     "review": "복습",
     "resources": "자료",
-    "teacher": "교사 전용",
+    "teacher": "교사 워크스페이스",
     "my": "내 학습",
     "login": "로그인"
   },
@@ -686,11 +686,15 @@
   },
   "teacher": {
     "tools": {
-      "center": "교사 도구 센터",
-      "subtitle": "플랫폼 허브입니다. 수업에 들어간 뒤 교재·AI·콘솔 등 강의실 도구를 사용합니다."
+      "center": "교수 도구（확장）",
+      "subtitle": "「교사 워크스페이스」와 함께 쓰는 보조 기능입니다. 주 허브는 워크스페이스입니다."
     },
     "manage": {
-      "page_kicker": "교사 관리"
+      "page_kicker": "교사 워크스페이스"
+    },
+    "nav": {
+      "back_workspace": "교사 워크스페이스로 돌아가기",
+      "subnav_aria": "교사 워크스페이스 안내 네비게이션"
     },
     "path_strip": {
       "aria": "교재·코스·등록 진행 단계",
@@ -838,7 +842,7 @@
       "relation_item_3": "판매는 등록·판매 관리에서.",
       "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
       "relation_note_short": "교재≠코스;≠자동 상품.",
-      "back": "워크스페이스로 돌아가기"
+      "back": "교사 워크스페이스로 돌아가기"
     },
     "courses_page": {
       "title": "내 코스",
@@ -867,7 +871,7 @@
       "relation_item_3": "판매는 등록 관리·심사.",
       "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
       "relation_note_short": "코스≠교재;≠자동 등록.",
-      "back": "워크스페이스로 돌아가기"
+      "back": "교사 워크스페이스로 돌아가기"
     },
     "stage0": {
       "commerce": {
@@ -909,7 +913,7 @@
     "title": "수업 모드",
     "back": {
       "to": {
-        "teacher": "교사 센터로"
+        "teacher": "교사 워크스페이스로 돌아가기"
       }
     },
     "meta": {
@@ -935,9 +939,10 @@
       "subtitle": "등록 콘텐츠·심사 상태·기본 정보를 한곳에서 관리합니다.",
       "stage_note": "Stage 0 준비 단계: 실제 결제·주문·정산은 없습니다. 로컬 데모 데이터이며 시드로 초기화할 수 있습니다.",
       "stage_badge": "Stage 0",
-      "back_workspace": "교사 워크스페이스로",
+      "back_workspace": "교사 워크스페이스로 돌아가기",
       "demo_user": "데모 계정",
       "reset_seed": "데모 데이터 초기화",
+      "seed_sync_hint": "등록 목록·출처 열·행이 비어 있거나 이상하면(예: 예전 브라우저 캐시) 「데모 데이터 초기화」를 눌러 최신 데모 시드를 불러오세요.",
       "panel_draft_desc": "기본 정보를 입력하면 초안이 만들어지며, 이후 심사를 제출하고 여기서 상태를 추적합니다.",
       "secondary_fold_title": "데모 예약 영역",
       "secondary_fold_hint": "권한 확인·프로필·심사 로그·주문 등(기본 접힘)",
