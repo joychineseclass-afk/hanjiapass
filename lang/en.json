@@ -1204,6 +1204,8 @@
       "tabs_aria": "Decks and trash",
       "tab_active": "My decks",
       "tab_trash": "Trash",
+      "list_toolbar_heading": "Your decks",
+      "back_to_active_decks": "Back to my decks",
       "view_trash": "View trash",
       "empty_trash": "Empty trash",
       "empty_trash_confirm_1": "Empty the trash?",

@@ -1213,6 +1213,8 @@
       "tabs_aria": "课件とゴミ箱",
       "tab_active": "マイ课件",
       "tab_trash": "ゴミ箱",
+      "list_toolbar_heading": "授業课件一覧",
+      "back_to_active_decks": "マイ课件へ",
       "view_trash": "ゴミ箱を見る",
       "empty_trash": "ゴミ箱を空にする",
       "empty_trash_confirm_1": "ゴミ箱を空にしますか？",

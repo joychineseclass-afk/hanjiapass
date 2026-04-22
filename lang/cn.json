@@ -1204,6 +1204,8 @@
       "tabs_aria": "课件与垃圾桶切换",
       "tab_active": "我的课件",
       "tab_trash": "垃圾桶",
+      "list_toolbar_heading": "教案列表",
+      "back_to_active_decks": "返回我的教案",
       "view_trash": "查看垃圾桶",
       "empty_trash": "清空垃圾桶",
       "empty_trash_confirm_1": "是否清空垃圾桶？",

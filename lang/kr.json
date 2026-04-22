@@ -1204,6 +1204,8 @@
       "tabs_aria": "교안과 휴지통",
       "tab_active": "내 교안",
       "tab_trash": "휴지통",
+      "list_toolbar_heading": "교안 목록",
+      "back_to_active_decks": "내 교안으로",
       "view_trash": "휴지통 보기",
       "empty_trash": "휴지통 비우기",
       "empty_trash_confirm_1": "휴지통을 비울까요?",

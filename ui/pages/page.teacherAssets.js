@@ -236,9 +236,6 @@ function assetRow(a, t, profileId, userId, listing, snap) {
         ${editDeck}
         ${enterRoom}
       </div>
-      <p class="teacher-assets-trash-near-actions">
-        <a class="teacher-assets-trash-near-link" href="#teacher-assets?tab=trash">${escapeHtml(t("teacher.assets.view_trash"))}</a>
-      </p>
       <div class="teacher-asset-row-secondary" role="group" aria-label="${escapeHtml(t("teacher.assets.row_secondary_actions_aria"))}">
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-submit="${escapeHtml(
         a.id,
@@ -377,13 +374,6 @@ async function renderPage(root) {
            <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(
              t("teacher.assets.empty_cta_from_course"),
            )}</a>
-           ${
-             trashCount > 0
-               ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
-                   t("teacher.assets.view_trash"),
-                 )} (${escapeHtml(String(trashCount))})</a>`
-               : ""
-           }
          </p>
        </div>`
       : tab === "trash" && !hasRows
@@ -392,14 +382,38 @@ async function renderPage(root) {
          <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.trash_empty_body"))}</p>
        </div>`
         : "";
-  const trashToolbar =
-    tab === "trash" && hasRows
-      ? `<div class="teacher-trash-toolbar">
-          <button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--danger" id="teacherAssetsEmptyTrash">${escapeHtml(
-            t("teacher.assets.empty_trash"),
-          )}</button>
+  const listToolbarHtml =
+    tab === "active"
+      ? `<div class="teacher-assets-list-toolbar">
+          <div class="teacher-assets-list-toolbar-text">
+            <h2 class="teacher-assets-list-toolbar-title">${escapeHtml(t("teacher.assets.list_toolbar_heading"))}</h2>
+          </div>
+          <div class="teacher-assets-list-toolbar-actions">
+            <a class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
+              t("teacher.assets.view_trash"),
+            )}${trashCount > 0 ? ` (${escapeHtml(String(trashCount))})` : ""}</a>
+          </div>
         </div>`
-      : "";
+      : tab === "trash"
+        ? `<div class="teacher-assets-list-toolbar teacher-assets-list-toolbar--trash">
+          <div class="teacher-assets-list-toolbar-text">
+            <h2 class="teacher-assets-list-toolbar-title">${escapeHtml(t("teacher.assets.tab_trash"))}</h2>
+            <p class="teacher-assets-list-toolbar-desc">${escapeHtml(t("teacher.assets.trash_empty_body"))}</p>
+          </div>
+          <div class="teacher-assets-list-toolbar-actions">
+            <a class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(
+              t("teacher.assets.back_to_active_decks"),
+            )}</a>
+            ${
+              hasRows
+                ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--danger" id="teacherAssetsEmptyTrash">${escapeHtml(
+                    t("teacher.assets.empty_trash"),
+                  )}</button>`
+                : ""
+            }
+          </div>
+        </div>`
+        : "";
   const tableBlock =
     tab === "active" && hasRows
       ? `<div class="teacher-manage-table-scroll">
@@ -421,7 +435,7 @@ async function renderPage(root) {
         </table>
       </div>`
       : tab === "trash" && hasRows
-        ? `${trashToolbar}<div class="teacher-manage-table-scroll teacher-trash-table-wrap">
+        ? `<div class="teacher-manage-table-scroll teacher-trash-table-wrap">
         <table class="teacher-manage-table teacher-trash-table">
           <thead>
             <tr>
@@ -455,18 +469,6 @@ async function renderPage(root) {
             t("teacher.assets.tab_trash"),
           )}</a>
         </div>
-        <div class="teacher-assets-header-actions">
-          ${
-            tab === "active"
-              ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
-            ${escapeHtml(t("teacher.assets.new_classroom_deck"))}
-          </button>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
-            t("teacher.assets.view_trash"),
-          )}${trashCount > 0 ? ` (${escapeHtml(String(trashCount))})` : ""}</a>`
-              : ""
-          }
-        </div>
         <div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(t("teacher.surface.nav_aria"))}">
           <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(t("teacher.nav.back_mine_workbench"))}</a>
           <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
@@ -476,10 +478,9 @@ async function renderPage(root) {
       ${teacherPathStripHtml("assets", t)}
       ${teacherPathStripClassroomHintHtml(t)}
 
-      ${emptyBlock}
       <section class="card teacher-assets-list-card${tab === "trash" ? " teacher-assets-list-card--trash" : ""}" aria-label="${escapeHtml(
         tab === "trash" ? t("teacher.assets.trash_list_aria") : t("teacher.assets.list_aria"),
-      )}">${tableBlock}</section>
+      )}">${listToolbarHtml}${emptyBlock}${tableBlock}</section>
     </div>
   `;
 
@@ -499,11 +500,6 @@ async function renderPage(root) {
     }
     location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
   };
-  root.querySelector("#teacherAssetsHeaderQuickCreate")?.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    doQuickCreate();
-  });
-
   root.querySelectorAll("[data-teacher-asset-trash]").forEach((btn) => {
     btn.addEventListener("click", (ev) => {
       const id = btn.getAttribute("data-teacher-asset-trash");
