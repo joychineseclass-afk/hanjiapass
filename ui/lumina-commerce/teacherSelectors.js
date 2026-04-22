@@ -3,8 +3,9 @@
  */
 import { USER_ROLE } from "./enums.js";
 import { getCurrentUser } from "./currentUser.js";
-import { getMergedProfileForUser } from "./teacherProfileStore.js";
+import { getMergedProfileForUser, ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
 import { initCommerceStore } from "./store.js";
+import { canOfferDemoTeacherMigration, isDevTeacherMigrationUIEnabled } from "./teacherProfileService.js";
 
 /**
  * 工作台 gating 状态：与产品文案一致，后续审核流承接。
@@ -47,6 +48,7 @@ import { initCommerceStore } from "./store.js";
  * @property {TeacherWorkbenchStatus|'not_teacher'|'guest'} workbenchStatus
  * @property {boolean} hasCommerceProfile
  * @property {boolean} isApproved
+ * @property {boolean} [showDemoTakeoverCta] 已登录但非老师时：是否可显示「接管演示老师」开发态 CTA
  */
 
 /**
@@ -90,32 +92,41 @@ export async function getTeacherPageContext() {
       workbenchStatus: /** @type {const} */ ("guest"),
       hasCommerceProfile: false,
       isApproved: false,
+      showDemoTakeoverCta: false,
     };
   }
-  const isTeacherRole = userIsTeacher(user);
+  await initCommerceStore();
+  await ensureCurrentUserMatchesCommerceTeacher();
+  const userAfterSync = getCurrentUser();
+  const isTeacherRole = userIsTeacher(userAfterSync);
   if (!isTeacherRole) {
+    const migr = await canOfferDemoTeacherMigration(String(userAfterSync.id));
+    const showDev = Boolean(migr.show && (await isDevTeacherMigrationUIEnabled()));
     return {
-      user,
+      user: userAfterSync,
       isLoggedIn: true,
       isTeacherRole: false,
       profile: null,
       workbenchStatus: /** @type {const} */ ("not_teacher"),
       hasCommerceProfile: false,
       isApproved: false,
+      showDemoTakeoverCta: showDev,
     };
   }
-  const { profile, commerceRow } = await getMergedProfileForUser(user);
+  const { profile, commerceRow } = await getMergedProfileForUser();
+  const u = getCurrentUser();
   const hasRow = Boolean(commerceRow);
-  const gate = resolveWorkbenchGate(user, profile, hasRow);
+  const gate = resolveWorkbenchGate(u, profile, hasRow);
   const isApproved = profile != null && profile.workbench_status === "approved";
   return {
-    user,
+    user: getCurrentUser(),
     isLoggedIn: true,
     isTeacherRole: true,
     profile,
     workbenchStatus: gate,
     hasCommerceProfile: hasRow,
     isApproved,
+    showDemoTakeoverCta: false,
   };
 }
 

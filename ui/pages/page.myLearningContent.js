@@ -78,7 +78,7 @@ export default async function pageMyLearningContent(ctxOrRoot) {
 
   const empty = withListings.length
     ? ""
-    : `<p class="learner-my-empty">${escapeHtml(tx("learner.my_content.empty"))}</p>`;
+    : `<p class="learner-my-empty my-content-empty">${escapeHtml(tx("learner.my_content.empty"))}</p>`;
   const table = withListings.length
     ? `<div class="learner-my-table-wrap"><table class="learner-my-table">
       <thead><tr>

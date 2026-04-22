@@ -68,7 +68,7 @@ export default async function pageMyOrders(ctxOrRoot) {
 
   const empty = orders.length
     ? ""
-    : `<p class="learner-my-empty">${escapeHtml(tx("learner.my_orders.empty"))}</p>`;
+    : `<p class="learner-my-empty my-orders-empty">${escapeHtml(tx("learner.my_orders.empty"))}</p>`;
   const table = orders.length
     ? `<div class="learner-my-table-wrap"><table class="learner-my-table">
       <thead><tr>

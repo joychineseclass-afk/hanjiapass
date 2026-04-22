@@ -2,8 +2,8 @@
  * 老师档案：与 commerce store 的 teacher_profiles 合并，并持久化 workbench 扩展字段（审核台占位）。
  */
 import { initCommerceStore, mutateCommerceStore, getCommerceStoreSync } from "./store.js";
-import { VERIFICATION_STATUS } from "./enums.js";
-import { DEMO_TEACHER_USER, getCurrentUser } from "./currentUser.js";
+import { USER_ROLE, VERIFICATION_STATUS } from "./enums.js";
+import { DEMO_TEACHER_USER, getCurrentUser, setCurrentUser } from "./currentUser.js";
 import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
 
 const OVERLAY_KEY = "lumina_teacher_workbench_overlays_v1";
@@ -197,6 +197,32 @@ export function findCommerceTeacherProfile(snap, teacherProfileId) {
 }
 
 /**
+ * 将 commerce 中按 user_id 命中的老师档案同步到 currentUser，避免仅 LS 中仍为纯 student 时误判「还不是老师」。
+ * @returns {Promise<void>}
+ */
+export async function ensureCurrentUserMatchesCommerceTeacher() {
+  await initCommerceStore();
+  const snap = getCommerceStoreSync();
+  if (!snap) return;
+  const u = getCurrentUser();
+  if (!u || u.isGuest || u.id === "u_guest") return;
+  const row = findTeacherProfileByUserId(snap, u.id);
+  if (!row) return;
+  const hadTeacher = Array.isArray(u.roles) && u.roles.includes(USER_ROLE.teacher);
+  if (hadTeacher && u.teacherProfileId === row.id) return;
+  const roles = Array.isArray(u.roles) ? u.roles.map((r) => String(r)) : [];
+  if (!roles.includes(USER_ROLE.student)) roles.push(USER_ROLE.student);
+  if (!roles.includes(USER_ROLE.teacher)) roles.push(USER_ROLE.teacher);
+  setCurrentUser({
+    id: u.id,
+    name: u.name,
+    roles: roles,
+    teacherProfileId: row.id,
+    isGuest: false,
+  });
+}
+
+/**
  * 确保演示老师 commerce 行存在；缺失时向 commerce 写入最小档案（不破坏其他 stage0 表）。
  * @param {import('./store.js').CommerceStoreSnapshot} snap
  * @param {import('./currentUser.js').CurrentUserV1} user
@@ -230,13 +256,14 @@ function ensureDemoProfileInCommerce(snap, user) {
 }
 
 /**
- * 异步：拉取 commerce 并返回当前老师合并档案；用于页面首屏。
- * @param {import('./currentUser.js').CurrentUserV1} [user]
+ * 异步：拉取 commerce 并返回当前老师合并档案；用于页面首屏（始终基于 getCurrentUser，并在之前对齐 commerce 绑定）。
  * @returns {Promise<{ profile: import('./teacherSelectors.js').ResolvedTeacherProfile|null, commerceRow: import('./schema.js').TeacherSellerProfile|null }>}
  */
-export async function getMergedProfileForUser(user) {
-  const u = user || getCurrentUser();
-  const snap = await initCommerceStore();
+export async function getMergedProfileForUser() {
+  await initCommerceStore();
+  await ensureCurrentUserMatchesCommerceTeacher();
+  const u = getCurrentUser();
+  const snap = getCommerceStoreSync();
   if (u.isGuest || u.id === "u_guest" || !u.roles || !u.roles.includes("teacher")) {
     return { profile: null, commerceRow: null };
   }

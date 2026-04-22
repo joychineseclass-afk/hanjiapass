@@ -7,7 +7,8 @@ import { initCommerceStore } from "../lumina-commerce/store.js";
 import { getTeacherProfileCommerceStats } from "../lumina-commerce/teacherCommerceBridge.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
-import { applyToBecomeTeacher } from "../auth/authService.js";
+import { applyToBecomeTeacher, hydrateCurrentUserFromSession } from "../auth/authService.js";
+import { migrateDemoTeacherProfileToAuthUser } from "../lumina-commerce/teacherProfileService.js";
 import {
   createClassroomAssetForLesson,
   getRecentAssetsForProfile,
@@ -57,6 +58,13 @@ function teacherGatePanelHtml(ctx, t) {
   const w = ctx.workbenchStatus;
   if (w === "not_teacher") {
     if (ctx.isLoggedIn) {
+      const devTakeoverBlock =
+        ctx.showDemoTakeoverCta
+          ? `<p class="teacher-migration-hint">${escapeHtml(t("teacher.gate.migration_dev_hint"))}</p>
+        <button type="button" class="teacher-identity-gate-cta teacher-identity-gate-cta--dev" id="takeoverDemoTeacherBtn">
+          ${escapeHtml(t("teacher.gate.takeover_demo_cta"))}
+        </button>`
+          : "";
       return `
       <section class="card teacher-identity-gate teacher-gate" aria-labelledby="tw-gate-title">
         <h3 id="tw-gate-title" class="teacher-identity-gate-title">${escapeHtml(t("teacher.gate.logged_in_not_teacher_title"))}</h3>
@@ -65,6 +73,7 @@ function teacherGatePanelHtml(ctx, t) {
           ${escapeHtml(t("teacher.gate.apply_cta"))}
         </button>
         <p class="teacher-identity-gate-foot">${escapeHtml(t("teacher.gate.apply_note_v2"))}</p>
+        ${devTakeoverBlock}
       </section>`;
     }
     return `
@@ -466,6 +475,30 @@ async function renderTeacherHub(root) {
       }
       try {
         alert(t("teacher.gate.apply_failed"));
+      } catch {
+        /* */
+      }
+    });
+    root.querySelector("#takeoverDemoTeacherBtn")?.addEventListener("click", async () => {
+      const u = getCurrentUser();
+      const r = await migrateDemoTeacherProfileToAuthUser(String(u.id));
+      if (r && r.ok) {
+        await hydrateCurrentUserFromSession();
+        try {
+          window.dispatchEvent(new CustomEvent("joy:authChanged"));
+        } catch {
+          /* */
+        }
+        try {
+          alert(t("teacher.gate.migration_dev_done"));
+        } catch {
+          /* */
+        }
+        void renderTeacherHub(root);
+        return;
+      }
+      try {
+        alert(t("teacher.gate.migration_dev_failed"));
       } catch {
         /* */
       }

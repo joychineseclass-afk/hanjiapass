@@ -3,9 +3,10 @@
  */
 import { SELLER_ELIGIBILITY, TEACHER_LEVEL, USER_ROLE, VERIFICATION_STATUS } from "./enums.js";
 import { initCommerceStore, mutateCommerceStore, getCommerceStoreSync } from "./store.js";
-import { getCurrentUser, setCurrentUser } from "./currentUser.js";
-import { getTeacherProfileOverlay, patchTeacherProfileOverlay } from "./teacherProfileStore.js";
+import { getCurrentUser, setCurrentUser, DEMO_TEACHER_USER } from "./currentUser.js";
+import { getTeacherProfileOverlay, patchTeacherProfileOverlay, ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
 import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
+import { reassignTeacherAssetOwnersFromUserId } from "./teacherAssetsStore.js";
 
 function uid(p) {
   return `${p}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -315,5 +316,128 @@ export async function removeTeacherCredentialItem(profileId, ownerUserId, credId
   const o = getTeacherProfileOverlay(profileId);
   const list = (Array.isArray(o.credential_items) ? o.credential_items : []).filter((c) => c && c.id !== credId);
   patchTeacherProfileOverlay(profileId, { credential_items: list, credential_status: list.length ? "draft" : "empty" });
+  return { ok: true };
+}
+
+const LS_DEMO_TAKEOVER = "lumina_demo_teacher_takeover_v1";
+
+/**
+ * 是否展示开发态「接管演示老师」CTA：本地存在尚未被接管的 tp_demo 且当前账号尚无 teacher_profiles 行。
+ * @param {string} userId
+ * @returns {Promise<{ show: boolean, code?: string, profileId?: string }>}
+ */
+export async function canOfferDemoTeacherMigration(userId) {
+  if (!userId) return { show: false, code: "no_user" };
+  await initCommerceStore();
+  const snap = getCommerceStoreSync();
+  if (!snap) return { show: false, code: "no_store" };
+  const existing = findTeacherProfileByUserId(snap, userId);
+  if (existing) return { show: false, code: "has_profile" };
+  const list = Array.isArray(snap.teacher_profiles) ? snap.teacher_profiles : [];
+  const demo = list.find(
+    (p) => p && p.id === DEMO_TEACHER_USER.teacherProfileId && p.user_id === DEMO_TEACHER_USER.id,
+  );
+  if (!demo) return { show: false, code: "no_unclaimed_demo" };
+  return { show: true, code: "ok", profileId: demo.id };
+}
+
+/**
+ * 开发/测试：在 localhost 或 Vite 开发构建下才展示接管按钮，避免误当正式能力。
+ * @returns {Promise<boolean>}
+ */
+export async function isDevTeacherMigrationUIEnabled() {
+  try {
+    if (typeof import.meta !== "undefined" && /** @type {any} */ (import.meta).env && /** @type {any} */ (import.meta).env.DEV) return true;
+  } catch {
+    /* */
+  }
+  if (typeof location !== "undefined") {
+    if (String(location.protocol || "") === "file:") return true;
+    const h = String(location.hostname || "");
+    if (h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h.endsWith(".local")) return true;
+  }
+  return false;
+}
+
+/**
+ * @param {string} userId 当前登录 auth 用户 id
+ * @returns {Promise<import('./schema.js').TeacherSellerProfile | null>}
+ */
+export async function getTeacherProfileForAuthUser(userId) {
+  await initCommerceStore();
+  const snap = getCommerceStoreSync();
+  if (!snap || !userId) return null;
+  return findTeacherProfileByUserId(snap, userId) || null;
+}
+
+/**
+ * 将演示老师 profile 的 user_id 与课堂资产 owner 显式挂到当前账号（不自动多绑、可重复调用于幂等检查）。
+ * @param {string} userId
+ * @returns {Promise<{ ok: true, profileId: string, code: string } | { ok: false, code: string }>}
+ */
+export async function migrateDemoTeacherProfileToAuthUser(userId) {
+  await initCommerceStore();
+  const snap0 = getCommerceStoreSync();
+  if (!userId || !snap0) return { ok: false, code: "invalid" };
+  const existing = findTeacherProfileByUserId(snap0, userId);
+  if (existing && existing.id !== DEMO_TEACHER_USER.teacherProfileId) {
+    return { ok: false, code: "has_other_profile" };
+  }
+  const list0 = Array.isArray(snap0.teacher_profiles) ? snap0.teacher_profiles : [];
+  const row = list0.find((p) => p && p.id === DEMO_TEACHER_USER.teacherProfileId) || null;
+  if (!row || row.user_id !== DEMO_TEACHER_USER.id) {
+    return { ok: false, code: "demo_unavailable" };
+  }
+  mutateCommerceStore((draft) => {
+    if (!Array.isArray(draft.teacher_profiles)) draft.teacher_profiles = [];
+    const r = draft.teacher_profiles.find((p) => p && p.id === DEMO_TEACHER_USER.teacherProfileId);
+    if (r) r.user_id = userId;
+  });
+  reassignTeacherAssetOwnersFromUserId(String(DEMO_TEACHER_USER.id), String(userId));
+  try {
+    localStorage.setItem(
+      LS_DEMO_TAKEOVER,
+      JSON.stringify({
+        profileId: DEMO_TEACHER_USER.teacherProfileId,
+        userId,
+        at: new Date().toISOString(),
+      }),
+    );
+  } catch {
+    /* */
+  }
+  const au = getCurrentUser();
+  if (au.id === userId) {
+    setCurrentUser({
+      id: userId,
+      name: au.name,
+      roles: [USER_ROLE.student, USER_ROLE.teacher],
+      teacherProfileId: DEMO_TEACHER_USER.teacherProfileId,
+      isGuest: false,
+    });
+  }
+  return { ok: true, profileId: DEMO_TEACHER_USER.teacherProfileId, code: "migrated" };
+}
+
+/**
+ * 显式将指定 profile 绑定到当前用户（本阶段仅支持接管控演示 profile）。
+ * @param {string} userId
+ * @param {string} teacherProfileId
+ */
+export async function bindTeacherProfileToAuthUser(userId, teacherProfileId) {
+  if (String(teacherProfileId) !== String(DEMO_TEACHER_USER.teacherProfileId)) {
+    return { ok: false, code: "not_supported" };
+  }
+  return migrateDemoTeacherProfileToAuthUser(userId);
+}
+
+/**
+ * 登录后或路由进入前，确保 currentUser 与 commerce teacher_profiles 一致。
+ * @param {string} userId
+ */
+export async function ensureTeacherWorkspaceForAuthUser(userId) {
+  const u = getCurrentUser();
+  if (!u || u.id !== userId) return { ok: false, code: "mismatch" };
+  await ensureCurrentUserMatchesCommerceTeacher();
   return { ok: true };
 }

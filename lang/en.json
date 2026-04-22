@@ -987,7 +987,11 @@
       "resubmit_cta": "Resubmit profile (placeholder)",
       "title_suspended": "Account paused",
       "body_suspended": "Your teacher access is suspended. New listings and classroom tools are blocked until the issue is resolved with support.",
-      "next_suspended": "Contact support to understand next steps. This build only shows the state."
+      "next_suspended": "Contact support to understand next steps. This build only shows the state.",
+      "migration_dev_hint": "[Dev/test] An unclaimed approved demo teacher profile exists in this browser. You can bind tp_demo_seller_001 and its linked classroom assets to the signed-in account. Not a production feature.",
+      "takeover_demo_cta": "Take over demo teacher workspace",
+      "migration_dev_done": "Demo teacher profile and asset ownership were reassigned.",
+      "migration_dev_failed": "Could not take over (already claimed or demo row missing)."
     },
     "access": {
       "not_teacher_title": "Teacher sign-in only",
@@ -1057,8 +1061,8 @@
       "edit": "Edit",
       "edit_placeholder": "Editor comes in a later step",
       "archive": "Archive",
-      "empty_title": "No classroom assets yet",
-      "empty_body": "Create from the workbench or a course row. This list is for your teacher profile only.",
+      "empty_title": "No classroom assets for this account yet",
+      "empty_body": "Create from the workbench or a course. This list follows your bound teacher profile; after taking over local demo data, refresh to see linked assets.",
       "col_title": "Title",
       "col_type": "Type",
       "col_source": "Source lesson",
@@ -1388,8 +1392,8 @@
       "my_orders": "My orders"
     },
     "my_content": {
-      "lead": "Listings you can open after a free unlock or a simulated purchase in this browser.",
-      "empty": "No items yet. Unlock from a public teacher listing when you are signed in.",
+      "lead": "Content you are allowed to open for this account. Free unlocks and simulated purchases appear here.",
+      "empty": "This account has no content yet. Try a public teacher listing to add a test item.",
       "col_title": "Title",
       "col_teacher": "Teacher",
       "col_type": "Type",
@@ -1398,8 +1402,8 @@
       "col_action": "Classroom / detail"
     },
     "my_orders": {
-      "lead": "Local orders, including free unlocks. Paid rows use a simulated successful payment.",
-      "empty": "No orders yet.",
+      "lead": "Order history for this account. Payments are simulated only; no real charges.",
+      "empty": "No orders for this account yet. After a simulated purchase, it will show up here.",
       "col_time": "Time",
       "col_title": "Content",
       "col_amount": "Amount",

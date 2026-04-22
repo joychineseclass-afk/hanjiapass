@@ -157,7 +157,7 @@ export default async function pageClassroom(ctxOrRoot) {
   let assetError = /** @type {null | 'not_found' | 'forbidden'} */ (null);
 
   if (assetId) {
-    const res = selectClassroomContextFromAssetId(assetId);
+    const res = await selectClassroomContextFromAssetId(assetId);
     if (res.ok) {
       courseId = res.courseId;
       level = res.level;

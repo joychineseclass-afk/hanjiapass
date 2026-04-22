@@ -235,6 +235,38 @@ export function createTeacherAssetFromLesson(p) {
 }
 
 /**
+ * 将原 demo 等账号在资产上的 owner_user_id 显式改到新用户（与 commerce profile 迁移配套）。
+ * @param {string} fromUserId
+ * @param {string} toUserId
+ * @returns {boolean} 是否写入了变更
+ */
+export function reassignTeacherAssetOwnersFromUserId(fromUserId, toUserId) {
+  const f = loadFile();
+  const from = String(fromUserId);
+  const to = String(toUserId);
+  if (from === to) return false;
+  let changed = false;
+  f.items = f.items.map((a) => {
+    if (!a) return a;
+    const o = sanitizeItem(a);
+    if (!o) return a;
+    if (o.owner_user_id === from) {
+      changed = true;
+      return /** @type {TeacherClassroomAsset} */ (
+        sanitizeItem({
+          ...o,
+          owner_user_id: to,
+          updated_at: nowIso(),
+        })
+      );
+    }
+    return o;
+  });
+  if (changed) saveFile(f);
+  return changed;
+}
+
+/**
  * 开发/测试用：慎用于生产
  */
 export function __dangerClearAllAssetsForTests() {

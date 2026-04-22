@@ -2,6 +2,8 @@
  * 课堂资产：面向页面的 selector，避免页面直接操作 store 细节。
  */
 import { getCurrentUser } from "./currentUser.js";
+import { ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
+import { initCommerceStore } from "./store.js";
 import { createTeacherAssetFromLesson, findAssetById, listAssetsByProfileId, updateTeacherAsset, ASSET_STATUS } from "./teacherAssetsStore.js";
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
 
@@ -70,16 +72,26 @@ export function createClassroomAssetForLesson(opts) {
  *   | { ok: false, error: 'not_found'|'forbidden' }
  * }
  */
-export function selectClassroomContextFromAssetId(assetId) {
+export async function selectClassroomContextFromAssetId(assetId) {
   if (!assetId) return { ok: false, error: "not_found" };
+  try {
+    await initCommerceStore();
+    await ensureCurrentUserMatchesCommerceTeacher();
+  } catch {
+    /* 课堂入口在无 commerce 时仍尝试弱校验 */
+  }
   const asset = findAssetById(String(assetId));
   if (!asset) return { ok: false, error: "not_found" };
 
   const u = getCurrentUser();
-  if (asset.owner_user_id && u.id && asset.owner_user_id !== u.id) {
-    return { ok: false, error: "forbidden" };
-  }
-  if (asset.teacher_profile_id && u.teacherProfileId && asset.teacher_profile_id !== u.teacherProfileId) {
+  const sameProfile =
+    u.teacherProfileId && asset.teacher_profile_id && String(asset.teacher_profile_id) === String(u.teacherProfileId);
+  const sameOwner = u.id && asset.owner_user_id && String(asset.owner_user_id) === String(u.id);
+  if (sameProfile) {
+    // 资产归属当前老师 profile（含迁移后旧 owner_user_id 未改全的兼容器路径）
+  } else if (sameOwner) {
+    // 无 profile 时仅靠 owner
+  } else {
     return { ok: false, error: "forbidden" };
   }
 

@@ -15,6 +15,7 @@ import { USER_ROLE } from "../lumina-commerce/enums.js";
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
 import { findTeacherProfileByUserId } from "../lumina-commerce/teacherProfileQueries.js";
 import { ensureTeacherProfileForUser as ensureTeacherProfile } from "../lumina-commerce/teacherProfileService.js";
+import { ensureCurrentUserMatchesCommerceTeacher } from "../lumina-commerce/teacherProfileStore.js";
 
 /**
  * @typedef {Object} AuthUserShape
@@ -66,6 +67,7 @@ async function applyProfileToCurrentUser(authUser) {
       teacherProfileId: row.id,
       isGuest: false,
     });
+    await ensureCurrentUserMatchesCommerceTeacher();
     return;
   }
   setCurrentUser({
@@ -75,6 +77,7 @@ async function applyProfileToCurrentUser(authUser) {
     teacherProfileId: null,
     isGuest: false,
   });
+  await ensureCurrentUserMatchesCommerceTeacher();
 }
 
 /**

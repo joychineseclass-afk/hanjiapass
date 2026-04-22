@@ -107,7 +107,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     return;
   }
 
-  const { profile, commerceRow } = await getMergedProfileForUser(u);
+  const { profile, commerceRow } = await getMergedProfileForUser();
   if (!profile || !commerceRow) {
     root.innerHTML = `<div class="wrap"><p>${escapeHtml(tx("common.loading"))}</p></div>`;
     return;

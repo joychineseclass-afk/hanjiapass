@@ -3317,6 +3317,30 @@ button.teacher-hub-cta:hover{
 .teacher-gate{
   border-radius: var(--radius);
 }
+.teacher-migration-hint{
+  margin: 16px 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #7c2d12;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.teacher-identity-gate-cta--dev{
+  margin-top: 8px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+.teacher-identity-gate-cta--dev:hover{
+  background: #e2e8f0;
+}
+.my-content-empty,
+.my-orders-empty{
+  max-width: 40rem;
+  line-height: 1.6;
+}
 .teacher-gate-auth-actions{
   display: flex;
   flex-wrap: wrap;
