@@ -703,8 +703,10 @@
       "aria": "教材、课程与上架流程位置",
       "aria_mine": "我的工作流：材料 → 课程 → 上架；从「我的教材/我的课程」准备后再到工作台进入课堂",
       "classroom_from_mine": "上课入口：在「我的教材」或「我的课程」中整理内容后，回到工作台使用「进入课堂」。此处为备课与售卖的并行关系说明，非故障提示。",
+      "step2_lead": "先准备教材/课程，再建课堂资产，最后可上架；上课可从「我的课堂资产」或工作台的进入课堂。",
       "materials": "材料准备",
       "courses": "课程组织",
+      "assets": "我的课堂资产",
       "listing": "上架售卖",
       "arrow": "→"
     },
@@ -852,6 +854,12 @@
         "cta": "进入课程管理",
         "cta_mine": "我的课程"
       },
+      "assets": {
+        "title": "我的课堂资产",
+        "desc": "绑定课次的课件草稿、笔记与材料入口；可从此进入课堂。",
+        "desc_mine": "仅本老师本地草稿，非正式商品。",
+        "cta_mine": "查看全部课堂资产"
+      },
       "listing": {
         "title": "上架与售卖管理",
         "desc": "管理公开展示与审核状态，查看哪些内容已进入上架阶段。",
@@ -860,6 +868,43 @@
         "cta_mine": "上架与售卖（Stage 0 演示）",
         "badge": "预备区 · Stage 0"
       }
+    },
+    "assets": {
+      "default_title": "{course} 第{level} 册 第{lesson} 课 — 课堂课件（草稿）",
+      "page_title": "我的课堂资产",
+      "page_subtitle": "当前 {name}，数据保存在本机浏览器。",
+      "gated": "需老师档案通过审核后方可管理课堂资产。",
+      "list_aria": "课堂资产列表",
+      "panel_title": "我的课堂资产",
+      "panel_hint": "为某一课次创建课件草稿，再从列表或链接进入课堂。真正 PPT 能力在后续步骤。",
+      "quick_create": "快速创建（Kids 第1册 第1课 演示）",
+      "quick_create_note": "默认：Kids、册别 1、课次 1。更多请在「我的课程」按行创建。",
+      "view_all": "查看全部",
+      "recent_heading": "最近（最多 5 条）",
+      "recent_empty": "暂无；可用上方快速创建，或在「我的课程」里按课生成。",
+      "type": {
+        "lesson_slide_draft": "课件草稿（PPT 路径预留）",
+        "teacher_note_draft": "教师笔记",
+        "classroom_material": "课堂材料"
+      },
+      "state": {
+        "draft": "草稿",
+        "ready": "已就绪",
+        "archived": "已归档"
+      },
+      "source_line": "来源：{course} · 册{level} · 第{lesson} 课",
+      "enter_classroom": "进入课堂",
+      "edit": "编辑",
+      "edit_placeholder": "编辑功能在后续版本",
+      "archive": "归档",
+      "empty_title": "还没有课堂资产",
+      "empty_body": "可在工作台或「我的课程」中创建。本列表仅对应当前老师。",
+      "col_title": "标题",
+      "col_type": "类型",
+      "col_source": "来源课次",
+      "col_status": "状态",
+      "col_updated": "最近更新",
+      "col_actions": "操作"
     },
     "demo": {
       "disclosure": "下列为本地演示数据，用于展示教材—课程—上架之间的示例关系，并非真实学员或订单数据。",
@@ -1021,6 +1066,7 @@
       "empty_mine_item_1": "准备教材后，在课程中组织教学结构",
       "empty_mine_item_2": "关联课堂与投影资产（将在后续开放）",
       "empty_mine_item_3": "可选：在「上架与售卖管理」（Stage 0）登记可售条目",
+      "create_slides_draft": "从本课程生成课件草稿",
       "relation_title": "提示",
       "relation_item_1": "课程≠教材。",
       "relation_item_2": "课程≠自动上架商品。",
@@ -1048,10 +1094,16 @@
       "context": {
         "mode_label": "教师课堂模式",
         "from_workspace": "教师工作流中的授课场景",
+        "from_teacher_asset": "从老师课堂资产进入",
         "params_hint": "当前链接：课程「{course}」· 册别 {level} · 课次 {lesson}",
+        "asset_params_hint": "按资产课次：「{course}」· 册{level} · 第{lesson} 课",
         "no_url_params": "地址中未携带课程参数，将使用默认课堂上下文；建议从教师工作台选择课程、册别与课次后进入，以便与准备层一致。"
       },
-      "back_courses": "返回课程管理"
+      "from_asset_badge": "来自老师课堂资产",
+      "asset_not_found": "未找到该课堂资产，已加载默认可用课堂。可在「我的课堂资产」中核对。",
+      "asset_forbidden": "当前账号无法使用该资产，已加载默认可用课堂。",
+      "back_courses": "我的课程",
+      "back_assets": "我的课堂资产"
     },
     "label": {
       "course": "课程",

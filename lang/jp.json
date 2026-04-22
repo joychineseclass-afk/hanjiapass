@@ -712,8 +712,10 @@
       "aria": "教材・コース・掲載の流れでの位置",
       "aria_mine": "教材 → コース → 掲載の流れ。授業は教材／コースを経てワークスペースの「授業を開く」から",
       "classroom_from_mine": "授業：「マイ教材」または「マイコース」で準備し、ワークスペースの「授業を開く」を使います。ここは説明用で、不具合ではありません。",
+      "step2_lead": "教材・コースを用意 → 授業用資産を作る → 掲載。授業は資産かワークスペースから。",
       "materials": "教材準備",
       "courses": "コース構成",
+      "assets": "授業用資産",
       "listing": "掲載・販売",
       "arrow": "→"
     },
@@ -861,6 +863,12 @@
         "cta": "コース管理へ",
         "cta_mine": "マイコース"
       },
+      "assets": {
+        "title": "マイ授業用資産",
+        "desc": "課に紐づくスライド下書きとノート。授業はここから開きます。",
+        "desc_mine": "この教師のローカル下書きのみ。",
+        "cta_mine": "一覧を開く"
+      },
       "listing": {
         "title": "掲載・販売管理",
         "desc": "公開・審査の状態を管理し、どの内容が掲載段階に入ったかを見ます。",
@@ -869,6 +877,43 @@
         "cta_mine": "掲載・販売（Stage 0）",
         "badge": "準備エリア · Stage 0"
       }
+    },
+    "assets": {
+      "default_title": "{course} 第{level} 巻 第{lesson} 回 — 授業スライド（下書き）",
+      "page_title": "マイ授業用資産",
+      "page_subtitle": "{name}（ローカル保存）",
+      "gated": "承認後に利用可能です。",
+      "list_aria": "授業用資産の一覧",
+      "panel_title": "マイ授業用資産",
+      "panel_hint": "課に紐づく下書きを作り、一覧またはリンクから授業を開きます。",
+      "quick_create": "素早く作成（Kids 1-1 デモ）",
+      "quick_create_note": "既定は Kids・巻1・第1回。",
+      "view_all": "すべて見る",
+      "recent_heading": "直近（最大5件）",
+      "recent_empty": "まだありません。上のボタンまたはマイコースから。",
+      "type": {
+        "lesson_slide_draft": "スライド下書き",
+        "teacher_note_draft": "教員メモ",
+        "classroom_material": "授業資料"
+      },
+      "state": {
+        "draft": "下書き",
+        "ready": "準備OK",
+        "archived": "アーカイブ"
+      },
+      "source_line": "元：{course} · 巻{level} · 第{lesson}回",
+      "enter_classroom": "授業を開く",
+      "edit": "編集",
+      "edit_placeholder": "次の段階",
+      "archive": "アーカイブ",
+      "empty_title": "授業用資産はまだありません",
+      "empty_body": "ワークスペースまたはコース行から作成できます。",
+      "col_title": "タイトル",
+      "col_type": "種類",
+      "col_source": "元の授業",
+      "col_status": "状態",
+      "col_updated": "最終更新",
+      "col_actions": "操作"
     },
     "demo": {
       "disclosure": "以下は教材・コース・掲載の関係を示すローカルデモデータであり、実在の学習者や注文ではありません。",
@@ -1020,6 +1065,7 @@
       "new_cta": "新規コース",
       "new_note": "コースの新規作成・編集は今後のバージョンで提供予定です。",
       "new_next_stage": "次段階：新規コースと授業用資産。ボタンは意図的に無効。不具合ではありません。",
+      "create_slides_draft": "このコースから下書きを生成",
       "mine_page_title": "マイコース · {name}",
       "mine_page_subtitle": "この教師のコースに絞り込み。",
       "list_title_mine": "このプロフィールのコース一覧",
@@ -1057,10 +1103,16 @@
       "context": {
         "mode_label": "教師の授業モード",
         "from_workspace": "教師ワークフローの授業段階",
+        "from_teacher_asset": "教師の授業用資産から起動",
         "params_hint": "リンク指定：コース「{course}」· 巻 {level} · 第{lesson}課",
+        "asset_params_hint": "資産の回：「{course}」· 巻{level} · 第{lesson}回",
         "no_url_params": "URL にコース指定がありません。既定の授業コンテキストが使われます。準備段階と揃えるには、ワークスペースでコース・巻・課を選んでから入ってください。"
       },
-      "back_courses": "コース管理に戻る"
+      "from_asset_badge": "教師の授業用資産",
+      "asset_not_found": "資産が見つかりません。既定の授業を表示しました。",
+      "asset_forbidden": "この資産は利用できません。既定の授業を表示しました。",
+      "back_courses": "マイコース",
+      "back_assets": "マイ授業用資産"
     },
     "label": {
       "course": "コース",

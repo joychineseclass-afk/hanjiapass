@@ -703,8 +703,10 @@
       "aria": "Where you are in materials, courses, and listings",
       "aria_mine": "Your workflow: materials, courses, listings; classroom is entered from materials or courses",
       "classroom_from_mine": "To teach: go from My materials or My courses, then use Enter classroom on the workbench. Other steps here are prep and sales tracks.",
+      "step2_lead": "Pick materials & course → build classroom assets → list for sale; enter class from an asset or the workbench.",
       "materials": "Prep materials",
       "courses": "Build courses",
+      "assets": "Classroom assets",
       "listing": "List for sale",
       "arrow": "→"
     },
@@ -852,6 +854,12 @@
         "cta": "Open course management",
         "cta_mine": "My courses"
       },
+      "assets": {
+        "title": "My classroom assets",
+        "desc": "Slide drafts and notes bound to a lesson; open the classroom from an asset when you teach.",
+        "desc_mine": "Local drafts for this teacher only; not a store product yet.",
+        "cta_mine": "Open assets"
+      },
       "listing": {
         "title": "Listings & sales management",
         "desc": "Manage public display and review status; see which content has entered the listing stage.",
@@ -860,6 +868,43 @@
         "cta_mine": "Listings & sales (Stage 0 preview)",
         "badge": "Preview · Stage 0"
       }
+    },
+    "assets": {
+      "default_title": "{course} · Book {level} · Lesson {lesson} — classroom slides (draft)",
+      "page_title": "My classroom assets",
+      "page_subtitle": "Signed in as {name}. Stored locally in this browser.",
+      "gated": "Classroom assets open after your teacher profile is approved.",
+      "list_aria": "Classroom assets list",
+      "panel_title": "My classroom assets",
+      "panel_hint": "Create a lesson-bound slide draft, then open the classroom from the list or a link. Step 3 will add a real PPT path.",
+      "quick_create": "Create classroom asset (Kids · 1-1 · demo)",
+      "quick_create_note": "Default: Kids, book 1, lesson 1. You can build more from each course row.",
+      "view_all": "View all",
+      "recent_heading": "Recent (up to 5)",
+      "recent_empty": "No assets yet—use the button above or create from My courses.",
+      "type": {
+        "lesson_slide_draft": "Slide draft (PPT path later)",
+        "teacher_note_draft": "Teacher notes",
+        "classroom_material": "Classroom material"
+      },
+      "state": {
+        "draft": "Draft",
+        "ready": "Ready",
+        "archived": "Archived"
+      },
+      "source_line": "Source: {course} · {level} · {lesson}",
+      "enter_classroom": "Open classroom",
+      "edit": "Edit",
+      "edit_placeholder": "Editor comes in a later step",
+      "archive": "Archive",
+      "empty_title": "No classroom assets yet",
+      "empty_body": "Create from the workbench or a course row. This list is for your teacher profile only.",
+      "col_title": "Title",
+      "col_type": "Type",
+      "col_source": "Source lesson",
+      "col_status": "Status",
+      "col_updated": "Last updated",
+      "col_actions": "Actions"
     },
     "demo": {
       "disclosure": "Rows below are local demo data to illustrate how materials, courses, and listings relate—not real student or order data.",
@@ -1021,6 +1066,7 @@
       "empty_mine_item_1": "Prepare materials, then group them in a course",
       "empty_mine_item_2": "Link classroom assets (coming later) for projection",
       "empty_mine_item_3": "Optional: when ready, move to Listings (Stage 0) for a sellable item",
+      "create_slides_draft": "Create slide draft from this course",
       "relation_title": "Note",
       "relation_item_1": "Courses ≠ materials.",
       "relation_item_2": "Courses ≠ auto-listed for sale.",
@@ -1048,10 +1094,16 @@
       "context": {
         "mode_label": "Teacher classroom mode",
         "from_workspace": "Part of the teacher workflow",
+        "from_teacher_asset": "Opened from a teacher asset",
         "params_hint": "From link: course “{course}” · level {level} · lesson {lesson}",
+        "asset_params_hint": "Loaded from your asset: “{course}” · book {level} · lesson {lesson}",
         "no_url_params": "No course parameters in the URL—defaults will be used. For consistency with your prep flow, pick course, level, and lesson from the Teacher Workspace first."
       },
-      "back_courses": "Back to course management"
+      "from_asset_badge": "From teacher asset",
+      "asset_not_found": "That classroom asset was not found. We loaded a default classroom instead. Check My classroom assets on the workbench.",
+      "asset_forbidden": "This asset is not available for your current account. We loaded a default classroom instead.",
+      "back_courses": "My courses",
+      "back_assets": "My classroom assets"
     },
     "label": {
       "course": "Course",

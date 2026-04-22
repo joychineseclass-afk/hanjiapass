@@ -3,6 +3,7 @@
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import {
   getDemoCoursesForProfile,
+  DEMO_COURSE_DEFAULT_LESSON_SOURCE,
   formatDemoCourseLinkedListingLine,
   formatDemoCourseListingHint,
   formatDemoCourseMaterialsChipLabel,
@@ -12,6 +13,8 @@ import {
   getDemoCourseProgressKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
+import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { createClassroomAssetForLesson } from "../lumina-commerce/teacherAssetsSelectors.js";
 import { i18n } from "../i18n.js";
 import {
   teacherBackToWorkspaceHtml,
@@ -40,8 +43,9 @@ let __crsRootRef = /** @type {HTMLElement | null} */ (null);
 /**
  * @param {Array<{ id: string, updated_at: string, materialIds: string[], listingReadinessKey: string, listingId: string|null }>} courses
  * @param {(a: string, b?: object) => string} t
+ * @param {boolean} canCreate
  */
-function coursesTableBody(courses, t) {
+function coursesTableBody(courses, t, canCreate) {
   return courses.map((c) => {
     const title = escapeHtml(t(`teacher.demo.course.${c.id}.title`));
     const type = escapeHtml(t(`teacher.demo.course.${c.id}.type`));
@@ -62,6 +66,13 @@ function coursesTableBody(courses, t) {
     const listingHint = escapeHtml(formatDemoCourseListingHint(c, t));
     const updated = escapeHtml(formatDemoShortUpdated(c.updated_at));
     const badge = escapeHtml(t("common.demo_badge"));
+    const src = DEMO_COURSE_DEFAULT_LESSON_SOURCE[c.id] || { course: "kids", level: "1", lesson: "1" };
+    const createBtn = canCreate
+      ? `<button type="button" class="teacher-asset-row-btn" data-teacher-asset-from-course
+          data-course="${escapeHtml(String(src.course))}" data-level="${escapeHtml(String(src.level))}" data-lesson="${escapeHtml(String(src.lesson))}">
+          ${escapeHtml(t("teacher.courses_page.create_slides_draft"))}
+        </button>`
+      : escapeHtml(t("teacher.courses_page.demo_action_placeholder"));
     return `<tr>
       <td class="teacher-manage-cell-title">
         <span class="teacher-demo-badge">${badge}</span>
@@ -79,7 +90,7 @@ function coursesTableBody(courses, t) {
         ${listingSub}
       </td>
       <td>${updated}</td>
-      <td class="teacher-manage-col-actions">${escapeHtml(t("teacher.courses_page.demo_action_placeholder"))}</td>
+      <td class="teacher-manage-col-actions teacher-manage-col-assetcell">${createBtn}</td>
     </tr>`;
   }).join("");
 }
@@ -125,17 +136,26 @@ async function renderCoursesDom(root) {
     : t("teacher.courses_page.subtitle");
   const newHint = t("teacher.courses_page.new_next_stage");
 
-  const tableRows = coursesTableBody(courses, t);
+  const tableRows = coursesTableBody(courses, t, canShow && !!ctx.profile);
   const lockedBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
         <div class="teacher-manage-empty">
           <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.access.courses_locked_title"))}</p>
           <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.access.courses_locked_body"))}</p>
         </div>
       </td></tr></tbody>`;
+  const emptyCreate =
+    canShow && ctx.profile
+      ? `<p class="teacher-courses-empty-create">
+          <button type="button" class="teacher-asset-row-btn" data-teacher-asset-from-default data-course="kids" data-level="1" data-lesson="1">
+            ${escapeHtml(t("teacher.courses_page.create_slides_draft"))}
+          </button>
+         </p>`
+      : "";
   const emptyMineBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
         <div class="teacher-manage-empty">
           <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.courses_page.empty_mine_title"))}</p>
           <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.courses_page.empty_mine_intro"))}</p>
+          ${emptyCreate}
           <ul class="teacher-manage-empty-list">
             <li>${escapeHtml(t("teacher.courses_page.empty_mine_item_1"))}</li>
             <li>${escapeHtml(t("teacher.courses_page.empty_mine_item_2"))}</li>
@@ -208,6 +228,20 @@ async function renderCoursesDom(root) {
       </aside>
     </div>
   `;
+  if (ctx.isApproved && ctx.profile) {
+    const pid = ctx.profile.id;
+    const uid = getCurrentUser().id;
+    root.querySelectorAll("[data-teacher-asset-from-course], [data-teacher-asset-from-default]").forEach((b) => {
+      b.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const course = b.getAttribute("data-course") || "kids";
+        const level = b.getAttribute("data-level") || "1";
+        const lesson = b.getAttribute("data-lesson") || "1";
+        createClassroomAssetForLesson({ teacherProfileId: pid, ownerUserId: uid, course, level, lesson, t: tx });
+        location.hash = "#teacher-assets";
+      });
+    });
+  }
   i18n.apply?.(root);
 }
 

@@ -19,13 +19,13 @@ export function teacherBackToWorkspaceHtml(tx) {
 }
 
 /**
- * 教师模块轻量子导航：工作台 + 教材 / 课程 / 上架（当前项高亮）。
- * @param {'workspace' | 'materials' | 'courses' | 'listing'} active
+ * 教师模块轻量子导航：工作台 + 教材 / 课程 / 课堂资产 / 上架（当前项高亮）。
+ * @param {'workspace' | 'materials' | 'courses' | 'assets' | 'listing'} active
  * @param {(path: string, params?: object) => string} tx
  */
 export function teacherWorkspaceSubnavHtml(active, tx) {
   const m = (path) => escapeHtml(tx(path));
-  /** @param {'workspace'|'materials'|'courses'|'listing'} kind */
+  /** @param {'workspace'|'materials'|'courses'|'assets'|'listing'} kind */
   const item = (kind) => {
     const isCurrent = active === kind;
     let href = "#teacher";
@@ -36,6 +36,9 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
     } else if (kind === "courses") {
       href = "#teacher-courses";
       label = m("teacher.hub.courses.title");
+    } else if (kind === "assets") {
+      href = "#teacher-assets";
+      label = m("teacher.hub.assets.title");
     } else if (kind === "listing") {
       href = "#lumina-teacher-stage0";
       label = m("teacher.hub.listing.title");
@@ -52,6 +55,7 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
         ${item("workspace")}
         ${item("materials")}
         ${item("courses")}
+        ${item("assets")}
         ${item("listing")}
       </div>
     </nav>
@@ -59,18 +63,19 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
 }
 
 /**
- * 教材 / 课程 / Listing 轻量路径条（仅导航与展示，无数据关联）。
- * @param {'materials' | 'courses' | 'listing' | null} active 为 null 时三步均可点选（如工作台首页）
- * @param {(path: string, params?: object) => string} tx 通常为 safeUiText / commerceT
+ * 工作流条：选教材/课程 → 建课堂资产 → 上架；进入课堂在资产或工作台完成。
+ * @param {'materials' | 'courses' | 'assets' | 'listing' | null} active
+ * @param {(path: string, params?: object) => string} tx
  */
 export function teacherPathStripHtml(active, tx) {
   const m = (path) => escapeHtml(tx(path));
   const hrefs = {
     materials: "#teacher-materials",
     courses: "#teacher-courses",
+    assets: "#teacher-assets",
     listing: "#lumina-teacher-stage0",
   };
-  /** @param {'materials'|'courses'|'listing'} kind */
+  /** @param {'materials'|'courses'|'assets'|'listing'} kind */
   const node = (kind) => {
     const isCurrent = active != null && active === kind;
     const label = m(`teacher.path_strip.${kind}`);
@@ -82,10 +87,13 @@ export function teacherPathStripHtml(active, tx) {
 
   return `
     <nav class="teacher-path-strip card" aria-label="${m("teacher.path_strip.aria_mine")}">
+      <p class="teacher-path-strip-lead">${m("teacher.path_strip.step2_lead")}</p>
       <div class="teacher-path-strip-row">
         ${node("materials")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("courses")}
+        <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
+        ${node("assets")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("listing")}
       </div>

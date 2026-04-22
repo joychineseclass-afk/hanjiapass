@@ -30,6 +30,15 @@ export const TEACHER_DEMO_MATERIALS = [
   },
 ];
 
+/**
+ * 演示课程 id → 创建课堂资产时的默认课次（用于「从课程生成」最小闭环，非细粒度课表系统）。
+ * @type {Record<string, { course: string, level: string, lesson: string }>}
+ */
+export const DEMO_COURSE_DEFAULT_LESSON_SOURCE = {
+  tdc_kids_draft_a: { course: "kids", level: "1", lesson: "1" },
+  tdc_hsk_oral_draft_b: { course: "hsk", level: "1", lesson: "3" },
+};
+
 /** @type {TeacherDemoCourse[]} */
 export const TEACHER_DEMO_COURSES = [
   {
@@ -236,7 +245,7 @@ export function getTeacherWorkspaceDemoSummary(listings, profileId) {
     pendingReview,
     draft,
     approved,
-    /** 课堂资产占位，Step 2 接入 */
+    /** 由 page 层以 teacherAssets 实际数量覆盖；默认 0 */
     classroomAssetCount: 0,
   };
 }
