@@ -740,7 +740,9 @@
       "title": "My listings",
       "subtitle": "Submit classroom work for review, then set visibility when it is approved.",
       "note": "You are seeing your own rows in this browser’s demo data.",
-      "link_full_console": "Open full Stage 0 console (advanced demo tools)"
+      "link_full_console": "Open full Stage 0 console (advanced demo tools)",
+      "session_identity_hint": "This page uses your signed-in account. To switch demo users, open the full Stage 0 console.",
+      "session_guest_label": "Not signed in"
     },
     "review_page": {
       "title": "Review console",
@@ -1652,6 +1654,7 @@
       "via_purchase": "Purchase",
       "via_free": "Free unlock",
       "open_classroom": "Open classroom",
+      "login_to_acquire": "Sign in to get or purchase this content.",
       "error": {
         "unknown": "Something went wrong. Please try again.",
         "listing_not_found": "This content was not found.",

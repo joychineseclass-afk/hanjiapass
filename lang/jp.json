@@ -749,7 +749,9 @@
       "title": "マイ掲載",
       "subtitle": "授業用資産を審査に出し、承認後に公開設定を行います。",
       "note": "このブラウザのデモデータで、いまのデモ身元に紐づく行を表示します。",
-      "link_full_console": "完全な Stage0 コンソール（上級デモ）を開く"
+      "link_full_console": "完全な Stage0 コンソール（上級デモ）を開く",
+      "session_identity_hint": "このページはサインイン中のアカウントに紐づきます。デモユーザーを切り替えるには完全な Stage0 コンソールを開いてください。",
+      "session_guest_label": "未ログイン"
     },
     "review_page": {
       "title": "審査台",
@@ -1661,6 +1663,7 @@
       "via_purchase": "購入",
       "via_free": "無料",
       "open_classroom": "授業を開く",
+      "login_to_acquire": "取得・購入の前にログインしてください。",
       "error": {
         "unknown": "エラーが発生しました。再試行してください。",
         "listing_not_found": "見つかりません。",

@@ -108,6 +108,7 @@ export async function getListingCommerceUiState(listingId, userId) {
   const hasAccess = hasListingAccess(snap.entitlements, userId, listingId);
   const pt = getListingPricingType(L);
   const amount = getListingPayableAmount(L);
+  const guestBuyer = !userId || userId === "u_guest";
   return {
     isPublic: true,
     hasAccess,
@@ -115,7 +116,7 @@ export async function getListingCommerceUiState(listingId, userId) {
     amount,
     currency: String(L.price_currency || DEFAULT_SETTLEMENT_CURRENCY),
     isFree: pt === PRICING_TYPE.free,
-    canAttemptPurchase: !hasAccess,
+    canAttemptPurchase: !hasAccess && !guestBuyer,
   };
 }
 
@@ -130,7 +131,7 @@ export async function getListingCommerceUiState(listingId, userId) {
  */
 export async function purchaseOrGrantListingAccess(listingId, buyerUser) {
   const buyerId = String(buyerUser?.id || "").trim();
-  if (!buyerId) return { ok: false, code: "buyer_required" };
+  if (!buyerId || buyerId === "u_guest") return { ok: false, code: "buyer_required" };
 
   await initCommerceStore();
   const snap0 = getCommerceStoreSync();

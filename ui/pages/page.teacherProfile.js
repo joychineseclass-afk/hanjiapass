@@ -65,13 +65,13 @@ function credCardHtml(c, readOnly, label) {
       <span class="teacher-credential-title">${escapeHtml(c.title || "")}</span>
       <span class="teacher-credential-meta">${escapeHtml(label(kindKey) !== kindKey ? label(kindKey) : String(c.kind))}</span>
       <span class="teacher-credential-file">${escapeHtml(c.file_name || "—")}</span>
-      <span class="teacher-credential-time">${escapeHtml(t("teacher.profile.uploaded_at"))}: ${escapeHtml(fmtTime(c.uploaded_at))}</span>
+      <span class="teacher-credential-time">${escapeHtml(label("teacher.profile.uploaded_at"))}: ${escapeHtml(fmtTime(c.uploaded_at))}</span>
     </div>
     ${
       readOnly
         ? ""
         : `<div class="teacher-credential-card-actions">
-      <button type="button" class="teacher-cred-remove" data-remove-cred="${escapeHtml(c.id)}">${escapeHtml(t("common.delete"))}</button>
+      <button type="button" class="teacher-cred-remove" data-remove-cred="${escapeHtml(c.id)}">${escapeHtml(label("common.delete"))}</button>
     </div>`
     }
   </li>`;

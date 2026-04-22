@@ -46,6 +46,7 @@ import {
   userHasRole,
 } from "../lumina-commerce/store.js";
 import { i18n } from "../i18n.js";
+import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import {
   teacherBackToWorkspaceHtml,
   teacherListingSourceGuideHtml,
@@ -212,14 +213,30 @@ function renderPage(root, ctx) {
   const demoUserId = ctx.demoUserId;
   const pageMode = /** @type {'full'|'publishing'|'review'} */ (ctx.pageMode || "full");
 
-  const myTp = snap.teacher_profiles.find((tp) => tp.user_id === demoUserId) || null;
-  const myTeacherId = myTp?.id ?? null;
+  const cu = getCurrentUser();
+  const sessionUserId =
+    !cu.isGuest && cu.id && cu.id !== "u_guest" ? String(cu.id).trim() : "";
+  const sessionTeacherProfileId =
+    cu.teacherProfileId != null && String(cu.teacherProfileId) !== ""
+      ? String(cu.teacherProfileId)
+      : null;
+
+  /** #teacher-publishing：按当前登录老师的 profile 过滤；#lumina-teacher-stage0 全量台仍用 demo 下拉框 */
+  let myTeacherId = null;
+  if (pageMode === "publishing") {
+    if (sessionTeacherProfileId) {
+      myTeacherId = sessionTeacherProfileId;
+    } else if (sessionUserId) {
+      const tpByUser = snap.teacher_profiles.find((tp) => tp.user_id === sessionUserId) || null;
+      myTeacherId = tpByUser?.id ?? null;
+    }
+  }
 
   let listingsForTable = snap.listings;
   if (pageMode === "publishing") {
     listingsForTable = myTeacherId
       ? snap.listings.filter((L) => L.seller_type === SELLER_TYPE.teacher && L.teacher_id === myTeacherId)
-      : snap.listings.filter((L) => L.seller_type === SELLER_TYPE.teacher);
+      : [];
   }
   const sortedForReview =
     pageMode === "review"
@@ -364,7 +381,16 @@ function renderPage(root, ctx) {
     .join("");
 
   const isReviewer =
-    userHasRole(snap, demoUserId, USER_ROLE.reviewer) || userHasRole(snap, demoUserId, USER_ROLE.admin);
+    pageMode === "review"
+      ? sessionUserId !== "" &&
+        (userHasRole(snap, sessionUserId, USER_ROLE.reviewer) ||
+          userHasRole(snap, sessionUserId, USER_ROLE.admin))
+      : userHasRole(snap, demoUserId, USER_ROLE.reviewer) || userHasRole(snap, demoUserId, USER_ROLE.admin);
+
+  const teacherSubmitReviewActorId = pageMode === "full" ? demoUserId : sessionUserId || demoUserId;
+  const listingStatusMutationActorId =
+    pageMode === "review" ? sessionUserId || demoUserId : demoUserId;
+  const profileReviewActorId = sessionUserId || demoUserId;
 
   if (pageMode === "review" && !isReviewer) {
     root.innerHTML = `
@@ -568,8 +594,8 @@ function renderPage(root, ctx) {
 
   const assetStripListings = snap.listings.filter((L) => {
     if (String(L.source_kind) !== "classroom_asset") return false;
-    if (pageMode === "publishing" && myTeacherId) {
-      return L.teacher_id === myTeacherId;
+    if (pageMode === "publishing") {
+      return myTeacherId ? L.teacher_id === myTeacherId : false;
     }
     return true;
   });
@@ -665,7 +691,9 @@ function renderPage(root, ctx) {
           </div>`
               : ""
           }
-          <div class="lts0-panel lts0-panel--identity">
+          ${
+            pageMode === "full"
+              ? `<div class="lts0-panel lts0-panel--identity">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.identity_title"))}</h3>
             <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.identity_desc"))}</p>
             <div class="lts0-identity-row">
@@ -687,7 +715,28 @@ function renderPage(root, ctx) {
                 ? `<p class="lts0-reviewer-hint">${escapeHtml(commerceT("commerce.stage0.identity_reviewer_active"))}</p>`
                 : `<p class="lts0-muted">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`
             }
-          </div>
+          </div>`
+              : `<div class="lts0-panel lts0-panel--identity lts0-panel--identity-session">
+            <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.identity_title"))}</h3>
+            <p class="lts0-panel-desc">${escapeHtml(commerceT("teacher.publishing_page.session_identity_hint"))}</p>
+            <p class="lts0-session-user-line"><strong>${escapeHtml(
+              sessionUserId
+                ? formatDemoUserDisplay(
+                    sessionUserId,
+                    snap.users.find((x) => x.id === sessionUserId)?.display_name,
+                  )
+                : commerceT("teacher.publishing_page.session_guest_label"),
+            )}</strong></p>
+            <p class="lts0-to-full-console-hint"><a href="#lumina-teacher-stage0">${escapeHtml(
+              commerceT("teacher.publishing_page.link_full_console"),
+            )}</a></p>
+            ${
+              isReviewer
+                ? `<p class="lts0-reviewer-hint">${escapeHtml(commerceT("commerce.stage0.identity_reviewer_active"))}</p>`
+                : `<p class="lts0-muted">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`
+            }
+          </div>`
+          }
           ${
             showGuideColumn
               ? `<div class="lts0-panel lts0-panel--guide">
@@ -845,7 +894,7 @@ function renderPage(root, ctx) {
         draft.listing_review_logs.push({
           id: uid("lrl"),
           listing_id: L.id,
-          reviewer_user_id: demoUserId,
+          reviewer_user_id: teacherSubmitReviewActorId,
           action: LISTING_REVIEW_ACTION.submitted,
           reason_code: null,
           reason_text: null,
@@ -899,7 +948,7 @@ function renderPage(root, ctx) {
       draft.listing_review_logs.push({
         id: uid("lrl"),
         listing_id: L.id,
-        reviewer_user_id: demoUserId,
+        reviewer_user_id: listingStatusMutationActorId,
         action,
         reason_code: reason_code || null,
         reason_text: reason_text || null,
@@ -940,7 +989,7 @@ function renderPage(root, ctx) {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-profile-id");
       if (!id) return;
-      const r = await approveTeacherProfileByReviewer(id, demoUserId, "");
+      const r = await approveTeacherProfileByReviewer(id, profileReviewActorId, "");
       if (r.ok) {
         ctx.snap = getCommerceStoreSync() || ctx.snap;
         renderPage(root, ctx);
@@ -963,7 +1012,7 @@ function renderPage(root, ctx) {
       const reason = String(fd.get("reason") || "").trim();
       if (!reason) return;
       const note = String(fd.get("note") || "").trim();
-      const r = await rejectTeacherProfileByReviewer(id, demoUserId, reason, note);
+      const r = await rejectTeacherProfileByReviewer(id, profileReviewActorId, reason, note);
       if (r.ok) {
         ctx.snap = getCommerceStoreSync() || ctx.snap;
         renderPage(root, ctx);

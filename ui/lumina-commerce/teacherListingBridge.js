@@ -157,7 +157,7 @@ export async function ensureListingForTeacherAsset(assetId) {
       price_currency: DEFAULT_SETTLEMENT_CURRENCY,
       list_price_amount: null,
       sale_price_amount: null,
-      refund_policy_type: REFUND_POLICY.no_refund,
+      refund_policy_type: REFUND_POLICY_TYPE.no_refund,
       review_reason_code: null,
       review_reason_text: null,
       ownership_declaration_accepted: true,

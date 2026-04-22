@@ -740,7 +740,9 @@
       "title": "我的上架",
       "subtitle": "将课堂资产提交审核，通过后再设置公开可见。",
       "note": "以下为当前演示身份在本机数据中的上架项。",
-      "link_full_console": "打开完整 Stage0 控制台（高级演示）"
+      "link_full_console": "打开完整 Stage0 控制台（高级演示）",
+      "session_identity_hint": "本页绑定当前浏览器登录账号；切换演示用户请打开完整 Stage0 控制台。",
+      "session_guest_label": "未登录"
     },
     "review_page": {
       "title": "审核台",
@@ -1652,6 +1654,7 @@
       "via_purchase": "购买",
       "via_free": "免费获取",
       "open_classroom": "进入课堂",
+      "login_to_acquire": "获取或购买前请先登录。",
       "error": {
         "unknown": "操作失败，请重试。",
         "listing_not_found": "未找到该内容。",

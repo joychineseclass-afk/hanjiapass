@@ -740,7 +740,9 @@
       "title": "내 등록(상架)",
       "subtitle": "수업 자산을 심사에 제출하고, 승인 후 공개를 설정하세요.",
       "note": "이 브라우저의 데모 데이터에서 현재 계정에 해당하는 항목입니다.",
-      "link_full_console": "전체 Stage0 콘솔(고급 데모) 열기"
+      "link_full_console": "전체 Stage0 콘솔(고급 데모) 열기",
+      "session_identity_hint": "이 페이지는 현재 로그인 계정에 연결됩니다. 데모 사용자를 바꾸려면 전체 Stage0 콘솔을 여세요.",
+      "session_guest_label": "로그인 안 됨"
     },
     "review_page": {
       "title": "심사 콘솔",
@@ -1652,6 +1654,7 @@
       "via_purchase": "구매",
       "via_free": "무료",
       "open_classroom": "수업 열기",
+      "login_to_acquire": "받기/구매 전에 로그인하세요.",
       "error": {
         "unknown": "문제가 발생했습니다. 다시 시도하세요.",
         "listing_not_found": "콘텐츠를 찾을 수 없습니다.",

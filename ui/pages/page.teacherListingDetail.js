@@ -190,8 +190,12 @@ async function renderPublicDetail(root, listingId) {
         });
 
   const hasAccess = viewMode === "public" && ui?.hasAccess;
+  const isGuestVisitor = Boolean(u.isGuest) || !u.id || u.id === "u_guest";
   const canBuy =
-    viewMode === "public" && ui?.canAttemptPurchase && (pt === PRICING_TYPE.free || (pt === PRICING_TYPE.paid && (ui?.amount || 0) > 0));
+    viewMode === "public" &&
+    !isGuestVisitor &&
+    ui?.canAttemptPurchase &&
+    (pt === PRICING_TYPE.free || (pt === PRICING_TYPE.paid && (ui?.amount || 0) > 0));
   const ownedLabel = hasAccess
     ? pt === PRICING_TYPE.free
       ? tx("learner.commerce.status_granted")
@@ -210,15 +214,19 @@ async function renderPublicDetail(root, listingId) {
        <p class="teacher-listing-toast-placeholder" id="teacherListingToast" hidden></p>`
     : `<p class="teacher-listing-toast-placeholder" id="teacherListingToast" hidden></p>`;
 
+  const loginNext = encodeURIComponent(`teacher-listing?id=${listingId}`);
   const purchaseBlock =
     viewMode === "teacher_preview"
       ? `<p class="teacher-listing-preview-purchase-hint" role="note">${escapeHtml(tx("teacher.listing_detail.preview_acquire_note"))}</p>`
       : hasAccess
         ? `<a class="teacher-hub-cta" href="${classUrl}">${escapeHtml(tx("teacher.listing_public.cta_classroom"))}</a>
        <button type="button" class="teacher-listing-cta-fake" disabled>${escapeHtml(tx("learner.commerce.already_owned_hint"))}</button>`
-        : `<button type="button" class="teacher-hub-cta teacher-listing-buy" id="teacherListingAcquire" ${
-            canBuy ? "" : "disabled"
-          }" data-listing-id="${escapeHtml(listingId)}">
+        : isGuestVisitor
+          ? `<p class="teacher-listing-guest-acquire-hint" role="note">${escapeHtml(tx("learner.commerce.login_to_acquire"))}</p>
+      <a class="teacher-hub-cta teacher-listing-login-to-acquire" href="#login?next=${loginNext}">${escapeHtml(tx("auth.nav_login"))}</a>`
+          : `<button type="button" class="teacher-hub-cta teacher-listing-buy" id="teacherListingAcquire" ${
+              canBuy ? "" : "disabled"
+            }" data-listing-id="${escapeHtml(listingId)}">
         ${escapeHtml(pt === PRICING_TYPE.free ? tx("learner.commerce.cta_free") : tx("learner.commerce.cta_buy"))}
       </button>
       <span class="teacher-listing-sim-note">${escapeHtml(tx("learner.commerce.simulated_checkout_note"))}</span>`;
