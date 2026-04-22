@@ -31,6 +31,8 @@ function t(key, fallback = "") {
 export function renderClassroomToolbar(rootEl, stageEl) {
   if (!rootEl) return;
   const state = getClassroomState();
+  const isCourseware = Boolean(state.coursewareAsset);
+  rootEl.classList.toggle("classroom-toolbar-wrap--courseware", isCourseware);
   const prevLabel = t("classroom_prev", "上一步");
   const nextLabel = t("classroom_next", "下一步");
 
@@ -44,6 +46,8 @@ export function renderClassroomToolbar(rootEl, stageEl) {
     total: String(total),
   });
   const currentStepHeading = t("teacher.classroom.presentation.current_step_label");
+  const controlKicker = t("teacher.classroom.toolbar_control_kicker", "翻页");
+  const indexOnlyHint = t("teacher.classroom.toolbar_index_hint", "使用上一页/下一页或上方课件目录跳段。");
   const keyboardHint = t("teacher.classroom.presentation.keyboard_shortcuts");
   const viewStandard = t("teacher.classroom.presentation.mode_standard");
   const viewPresent = t("teacher.classroom.presentation.mode_presentation");
@@ -56,6 +60,9 @@ export function renderClassroomToolbar(rootEl, stageEl) {
   const viewToggleLabel = isPres ? viewStandard : viewPresent;
   const fsLabel = fsOn ? fsExit : fsEnter;
 
+  const quickTabsAria = isCourseware
+    ? t("teacher.classroom.toolbar_quick_steps_aria", "快速步进")
+    : viewModeLine;
   const stepBtns = state.availableSteps
     .map((id) => {
       const s = CLASSROOM_STEPS.find((x) => x.id === id);
@@ -67,19 +74,26 @@ export function renderClassroomToolbar(rootEl, stageEl) {
 
   rootEl.classList.toggle("classroom-toolbar--presentation", isPres);
 
+  const centerBlock = isCourseware
+    ? `<div class="classroom-step-now classroom-step-now--courseware" role="status" aria-label="${indexOnlyHint}">
+        <span class="classroom-step-now-kicker">${controlKicker}</span>
+        <span class="classroom-step-now-idx classroom-step-now-idx--solo" aria-label="${stepIndexLine}">${stepIndexLine}</span>
+      </div>`
+    : `<div class="classroom-step-now" role="status">
+        <span class="classroom-step-now-kicker">${currentStepHeading}</span>
+        <span class="classroom-step-now-name">${currentStepLabel}</span>
+        <span class="classroom-step-now-idx" aria-label="${stepIndexLine}">${stepIndexLine}</span>
+      </div>`;
+
   rootEl.innerHTML = `
-    <div class="classroom-toolbar${isPres ? " classroom-toolbar--presentation-inner" : ""}">
+    <div class="classroom-toolbar${isPres ? " classroom-toolbar--presentation-inner" : ""}${isCourseware ? " classroom-toolbar--courseware" : ""}">
       <div class="classroom-toolbar-row classroom-toolbar-row--nav">
         <button type="button" class="classroom-nav-btn classroom-nav-btn--large" data-role="prev" aria-label="${prevLabel}">${prevLabel}</button>
-        <div class="classroom-step-now" role="status">
-          <span class="classroom-step-now-kicker">${currentStepHeading}</span>
-          <span class="classroom-step-now-name">${currentStepLabel}</span>
-          <span class="classroom-step-now-idx" aria-label="${stepIndexLine}">${stepIndexLine}</span>
-        </div>
+        ${centerBlock}
         <button type="button" class="classroom-nav-btn classroom-nav-btn--large" data-role="next" aria-label="${nextLabel}">${nextLabel}</button>
       </div>
-      <div class="classroom-toolbar-row classroom-toolbar-row--tabs">
-        <div class="classroom-step-tabs" role="tablist" aria-label="${viewModeLine}">
+      <div class="classroom-toolbar-row classroom-toolbar-row--tabs${isCourseware ? " classroom-toolbar-row--tabs--cw" : ""}">
+        <div class="classroom-step-tabs" role="tablist" aria-label="${quickTabsAria}">
           ${stepBtns}
         </div>
       </div>

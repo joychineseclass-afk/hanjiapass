@@ -25,6 +25,44 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+const STEP_TO_SECTION_KEY = {
+  scene: "teacher.classroom.section_name_scene",
+  words: "teacher.classroom.section_name_words",
+  dialogue: "teacher.classroom.section_name_dialogue",
+  practice: "teacher.classroom.section_name_practice",
+  notes: "teacher.classroom.section_name_notes",
+};
+
+/**
+ * 当前段“章节头”（老师课件，贴近主内容区顶部）
+ * @param {string} step
+ * @param {ReturnType<typeof getClassroomState>} state
+ */
+function renderCoursewareChapterHead(step, state) {
+  if (!state.coursewareAsset) return "";
+  const arr = state.availableSteps;
+  const i = arr.indexOf(step);
+  const n = i >= 0 ? i + 1 : 1;
+  const total = arr.length || 1;
+  const nameKey = /** @type {Record<string, string>} */ (STEP_TO_SECTION_KEY)[String(step)] || "classroom_scene";
+  const name = t(nameKey, step);
+  return `
+<header class="classroom-current-section" aria-label="${escapeHtml(t("teacher.classroom.current_chapter_aria", "当前课堂章节"))}">
+  <p class="classroom-current-section-kicker">${escapeHtml(t("teacher.classroom.chapter_kicker", "课堂章节"))}</p>
+  <div class="classroom-current-section-row">
+    <h2 class="classroom-current-section-title">${escapeHtml(name)}</h2>
+    <span class="classroom-current-section-idx" aria-label="${escapeHtml(
+    t("teacher.classroom.section_index_aria", { n: String(n), total: String(total) }),
+  )}">${escapeHtml(
+    t("teacher.classroom.chapter_badge", {
+      n: String(n),
+      total: String(total),
+    }),
+  )}</span>
+  </div>
+</header>`;
+}
+
 // 预留：场景元数据提取
 export function getSceneMetaFromLesson(lessonData, lang) {
   const scene = lessonData?.scene || "";
@@ -61,7 +99,7 @@ function renderSceneStep(lesson, lang) {
     const csummary = String(cw?.summary || "").trim();
     const coverN = String(cw?.cover_note || "").trim();
     return `
-    <section class="classroom-panel classroom-panel-scene classroom-panel--courseware-slide">
+    <section class="classroom-panel classroom-panel-scene classroom-panel--courseware-slide classroom-panel--cw-kind-cover">
       <div class="classroom-cw-cover-card">
         <p class="classroom-cw-cover-kicker">${escapeHtml(t("teacher.classroom.cw_kicker_cover", "本课结构 · 封面"))}</p>
         <h2 class="classroom-cw-cover-title">${escapeHtml(ctitle)}</h2>
@@ -99,7 +137,7 @@ function renderWordsStep(lesson, lang) {
   const st = getClassroomState();
   const isCw = Boolean(st.coursewareAsset);
   const wrap = (inner) => `
-    <section class="classroom-panel classroom-panel-words${isCw ? " classroom-panel-words--courseware" : ""}">
+    <section class="classroom-panel classroom-panel-words${isCw ? " classroom-panel-words--courseware classroom-panel--cw-kind-vocab" : ""}">
       <p class="classroom-cw-struct-kicker">${escapeHtml(t("teacher.classroom.cw_kicker_vocab", "词汇与核心句"))}</p>
       ${inner}
     </section>`;
@@ -122,14 +160,14 @@ function renderDialogueStep(lesson, lang) {
   const cards = Array.isArray(lesson?.dialogueCards) ? lesson.dialogueCards : [];
   const rawDia = Array.isArray(lesson?.dialogues) ? lesson.dialogues : [];
   if (!cards.length && !rawDia.length) {
-    return `<section class="classroom-panel classroom-panel-dialogue${isCw ? " classroom-panel--courseware-block" : ""}"><p class="classroom-cw-struct-kicker">${escapeHtml(
+    return `<section class="classroom-panel classroom-panel-dialogue${isCw ? " classroom-panel--courseware-block classroom-panel--cw-kind-dialogue" : ""}"><p class="classroom-cw-struct-kicker">${escapeHtml(
       t("teacher.classroom.cw_kicker_dialogue", "对话与场景"),
     )}</p><p class="classroom-empty">${escapeHtml(
       t("classroom_no_dialogue", "暂无对话内容"),
     )}</p><p class="classroom-cw-missing-hint">${escapeHtml(t("teacher.classroom.cw_no_lesson_block"))}</p></section>`;
   }
   return `
-    <section class="classroom-panel classroom-panel-dialogue${isCw ? " classroom-panel--courseware-block" : ""}">
+    <section class="classroom-panel classroom-panel-dialogue${isCw ? " classroom-panel--courseware-block classroom-panel--cw-kind-dialogue" : ""}">
       <p class="classroom-cw-struct-kicker">${escapeHtml(t("teacher.classroom.cw_kicker_dialogue", "对话与场景"))}</p>
       <h3 class="classroom-panel-title">${escapeHtml(t("classroom_dialogue", "课堂对话"))}</h3>
       <p class="classroom-panel-sub">${escapeHtml(t("classroom_dialogue_hint", "按句点读，带学生跟读。"))}</p>
@@ -143,13 +181,13 @@ function renderPracticeStep(lesson, lang) {
   const hasPractice = Array.isArray(lesson?.practice) && lesson.practice.length;
   if (!hasPractice) {
     return `<section class="classroom-panel classroom-panel-practice${
-      isCw ? " classroom-panel--courseware-block" : ""
+      isCw ? " classroom-panel--courseware-block classroom-panel--cw-kind-practice" : ""
     }"><p class="classroom-cw-struct-kicker">${escapeHtml(t("teacher.classroom.cw_kicker_practice", "练习"))}</p><p class="classroom-empty">${escapeHtml(
       t("classroom_no_practice", "本课暂未配置课堂练习。"),
     )}</p><p class="classroom-cw-missing-hint">${escapeHtml(t("teacher.classroom.cw_no_lesson_block"))}</p></section>`;
   }
   return `
-    <section class="classroom-panel classroom-panel-practice${isCw ? " classroom-panel--courseware-block" : ""}">
+    <section class="classroom-panel classroom-panel-practice${isCw ? " classroom-panel--courseware-block classroom-panel--cw-kind-practice" : ""}">
       <p class="classroom-cw-struct-kicker">${escapeHtml(t("teacher.classroom.cw_kicker_practice", "练习"))}</p>
       <h3 class="classroom-panel-title">${escapeHtml(t("classroom_practice", "课堂练习"))}</h3>
       <p class="classroom-panel-sub">${escapeHtml(t("classroom_practice_hint", "可让学生口头作答或配合作业系统。"))}</p>
@@ -164,18 +202,19 @@ function renderPracticeStep(lesson, lang) {
 function renderNotesStep(lesson, lang, asset) {
   const body = asset ? getEffectiveTeacherNote(asset) : "";
   if (!String(body).trim()) {
-    return `<section class="classroom-panel classroom-panel-notes"><p class="classroom-empty">${escapeHtml(
+    return `<section class="classroom-panel classroom-panel-notes classroom-panel--cw-kind-notes"><p class="classroom-empty">${escapeHtml(
       t("teacher.classroom.notes_empty", "暂无教师备注。"),
     )}</p></section>`;
   }
   return `
-    <section class="classroom-panel classroom-panel-notes" role="complementary" aria-label="${escapeHtml(
+    <section class="classroom-panel classroom-panel-notes classroom-panel--cw-kind-notes" role="complementary" aria-label="${escapeHtml(
       t("teacher.classroom.notes_aria", "教学提示与教师备注"),
     )}">
       <p class="classroom-notes-eyebrow">${escapeHtml(t("teacher.classroom.notes_eyebrow", "教学提示"))}</p>
       <h3 class="classroom-panel-title classroom-notes-title">${escapeHtml(
-        t("teacher.classroom.notes_block_title", "教师备注与授课建议"),
+        t("teacher.classroom.notes_block_title_v2", "教学提示与授课参考"),
       )}</h3>
+      <p class="classroom-notes-lead">${escapeHtml(t("teacher.classroom.notes_for_reference", "供老师授课参考，可与学生侧展示策略配合使用。"))}</p>
       <div class="classroom-notes-body">${escapeHtml(String(body))}</div>
     </section>
   `;
@@ -217,6 +256,10 @@ export function renderClassroomStage(rootEl) {
   else if (step === "game") html = renderGameStep(lesson, lang);
   else if (step === "ai") html = renderAIStep(lesson, lang);
 
+  if (state.coursewareAsset) {
+    const ch = renderCoursewareChapterHead(step, state);
+    html = `<div class="classroom-cw-slide" data-cw-step="${escapeHtml(String(step))}">${ch}<div class="classroom-cw-slide-panel">${html}</div></div>`;
+  }
   rootEl.innerHTML = html;
 }
 

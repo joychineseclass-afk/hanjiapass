@@ -2145,37 +2145,151 @@ button.teacher-hub-cta:hover{
   border-radius: 4px;
   max-width: 68ch;
 }
-/* 老师课件 A6-1：slide_outline 段指示 + 结构块 */
-.classroom-courseware-section-strip{
-  margin: 8px 0 4px;
+/* 老师课件 A6-1 / A6-2：slide_outline 段指示 + 章节目录导航 */
+.classroom-courseware-section-strip,
+.classroom-courseware-strip{
+  margin: 8px 0 6px;
 }
-.classroom-cwstrip-card{
+.classroom-courseware-strip-inner{
+  padding: 10px 12px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #faf5ff 0%, #fff 100%);
+  border: 1px solid #ddd6fe;
+  box-shadow: 0 2px 12px rgba(91, 33, 182, 0.06);
+}
+.classroom-cwstrip-head{
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 14px;
-  padding: 8px 12px 10px;
-  border-radius: 10px;
-  background: #ede9fe;
-  border: 1px solid #c4b5fd;
-  color: #3b0764;
-  font-size: 13px;
-  line-height: 1.45;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #5b21b6;
+  font-weight: 800;
 }
-.classroom-cwstrip-badge{
+.classroom-cwstrip-head-t{ font-size: 14px; color: #1e1b4b; }
+.classroom-cwstrip-head-sep{ opacity: 0.45; }
+.classroom-cwstrip-head-sub{ font-size: 12px; font-weight: 700; color: #6d28d9; }
+.classroom-cwstrip-head-badge{
   display: inline-block;
   font-size: 10px;
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 6px;
   background: #5b21b6;
   color: #fff;
 }
-.classroom-cwstrip-current{ flex: 1 1 180px; }
-.classroom-cwstrip-idx{ font-weight: 800; color: #4c1d95; }
-.classroom-cwstrip-sep{ margin: 0 5px; opacity: 0.6; }
+.classroom-cwstrip-items{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: stretch;
+}
+.classroom-cwstrip-item{
+  position: relative;
+  flex: 1 1 108px;
+  min-width: 100px;
+  max-width: 200px;
+  text-align: left;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px 8px 8px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #334155;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+}
+.classroom-cwstrip-item:hover{
+  border-color: #c4b5fd;
+  background: #faf5ff;
+  box-shadow: 0 1px 0 #ede9fe;
+}
+.classroom-cwstrip-item--current{
+  border-color: #7c3aed;
+  background: #fff;
+  box-shadow: 0 0 0 1px #7c3aed33, 0 4px 14px rgba(91, 33, 182, 0.12);
+  z-index: 1;
+  transform: translateY(-1px);
+}
+.classroom-cwstrip-item--done{
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #14532d;
+  opacity: 0.95;
+}
+.classroom-cwstrip-item--upcoming{
+  opacity: 0.9;
+  color: #64748b;
+}
+.classroom-cwstrip-item--notes{
+  border-style: dashed;
+  background: #ecfdf5;
+  border-color: #6ee7b7;
+}
+.classroom-cwstrip-item--notes.classroom-cwstrip-item--current{
+  background: #fff;
+  border-style: solid;
+}
+.classroom-cwstrip-item-no{
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.classroom-cwstrip-item--current .classroom-cwstrip-item-no{
+  background: #7c3aed;
+  color: #fff;
+}
+.classroom-cwstrip-item--done .classroom-cwstrip-item-no{
+  background: #22c55e;
+  color: #fff;
+}
+.classroom-cwstrip-item-main{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.classroom-cwstrip-item-name{
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: inherit;
+}
+.classroom-cwstrip-item-st{
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+.classroom-cwstrip-item--current .classroom-cwstrip-item-st{ color: #5b21b6; }
+.classroom-cwstrip-item--done .classroom-cwstrip-item-st{ color: #166534; }
+.classroom-cwstrip-notes-tag{
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #059669;
+  color: #fff;
+  align-self: flex-start;
+}
+.classroom-cwstrip-item--notes .classroom-cwstrip-item-st{ color: #047857; }
 .lumina-classroom-page--teacher-courseware-shell .classroom-stage{
   background: #faf5ff;
   border-radius: 12px;
@@ -2251,28 +2365,153 @@ button.teacher-hub-cta:hover{
   border-top: 1px solid #e9d5ff;
   padding-top: 8px;
 }
-.classroom-panel-notes{
-  background: #f0fdf4 !important;
-  border-color: #86efac !important;
-  border-left: 4px solid #16a34a;
+/* A6-2 当前章节头 + 切页动效 */
+.classroom-cw-slide{
+  animation: classroomCwEnter 0.35s ease-out;
 }
+@keyframes classroomCwEnter{
+  from{ opacity: 0; transform: translateY(8px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+.classroom-cw-slide-panel{ margin: 0; }
+.classroom-current-section{
+  margin: 0 0 12px;
+  padding: 10px 12px 12px;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(90deg, #f5f3ff 0%, #fff 100%);
+  border: 1px solid #e9d5ff;
+  border-bottom: none;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-current-section{
+  background: linear-gradient(90deg, #ede9fe 0%, #ffffff 55%);
+  border-color: #c4b5fd;
+}
+.classroom-current-section-kicker{
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #6d28d9;
+}
+.classroom-current-section-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  justify-content: space-between;
+}
+.classroom-current-section-title{
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.classroom-current-section-idx{
+  font-size: 12px;
+  font-weight: 800;
+  color: #5b21b6;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff8;
+  border: 1px solid #c4b5fd88;
+  white-space: nowrap;
+}
+/* 各段 kind 差异（老师课件） */
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-cover{
+  border-top: 3px solid #7c3aed !important;
+  box-shadow: 0 6px 20px rgba(91, 33, 182, 0.08) !important;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-vocab{
+  border-top: 3px solid #2563eb !important;
+  background: linear-gradient(180deg, #eff6ff 0%, #fff 32%) !important;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-dialogue{
+  border-top: 3px solid #0ea5e9 !important;
+  background: linear-gradient(180deg, #f0f9ff 0%, #fff 30%) !important;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-practice{
+  border-top: 3px solid #ea580c !important;
+  background: linear-gradient(180deg, #fff7ed 0%, #fff 32%) !important;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel-words--courseware .classroom-words-main{
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-dialogue .classroom-panel-title{
+  color: #0c4a6e;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-panel--cw-kind-practice .classroom-panel-title{
+  color: #9a3412;
+}
+/* notes：更柔和、仍偏辅助，不像后台红框 */
+.classroom-panel-notes{
+  background: linear-gradient(180deg, #f7fee7 0%, #fff 40%) !important;
+  border: 1px solid #bfe8c5 !important;
+  border-left: 4px solid #4d7c0f !important;
+  box-shadow: 0 2px 8px rgba(20, 83, 45, 0.06) !important;
+}
+.classroom-panel--cw-kind-notes{ border-left-color: #4d7c0f !important; }
 .classroom-notes-eyebrow{
   display: block;
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #166534;
+  color: #3f6212;
   margin: 0 0 4px;
 }
 .classroom-notes-title{ color: #14532d !important; }
+.classroom-notes-lead{
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #3f6212;
+  font-weight: 600;
+  max-width: 58ch;
+}
 .classroom-notes-body{
   font-size: 14px;
   line-height: 1.6;
   color: #0f172a;
   white-space: pre-wrap;
   margin: 0;
-  padding: 0;
+  padding: 10px 0 0;
+  border-top: 1px dashed #bbf7d0;
+}
+/* 工具栏：课件模式偏控制，弱化与目录重复 */
+.classroom-toolbar-wrap--courseware .classroom-step-now--courseware{
+  min-width: 0;
+  padding: 4px 8px;
+  background: #faf5ff;
+  border-radius: 8px;
+  border: 1px solid #e9d5ff;
+}
+.classroom-step-now--courseware .classroom-step-now-kicker{
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  color: #6d28d9;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 2px;
+}
+.classroom-step-now-idx--solo{
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e1b4b;
+}
+.classroom-toolbar--courseware .classroom-step-tabs{
+  gap: 4px;
+  opacity: 0.92;
+}
+.classroom-toolbar-row--tabs--cw .classroom-step-btn{
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 8px;
 }
 .teacher-asset-editor-hint--cw{
   font-size: 12px;

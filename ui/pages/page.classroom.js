@@ -4,7 +4,7 @@
 import { i18n } from "../i18n.js";
 import { getLang } from "../core/languageEngine.js";
 import { initClassroomEngine } from "../platform/classroom/classroomEngine.js";
-import { getClassroomState } from "../platform/classroom/classroomState.js";
+import { getClassroomState, setClassroomStep } from "../platform/classroom/classroomState.js";
 import { getClassroomGamesForContext } from "../modules/games/gamesRegistry.js";
 import { formatGameModeType, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getEffectiveTeacherNote, selectClassroomContextFromAssetId } from "../lumina-commerce/teacherAssetsSelectors.js";
@@ -100,37 +100,67 @@ function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass,
  * @param {unknown} lesson
  * @returns {string}
  */
+const COURSEWARE_STRIP_STEP_KEYS = {
+  scene: "teacher.classroom.section_name_scene",
+  words: "teacher.classroom.section_name_words",
+  dialogue: "teacher.classroom.section_name_dialogue",
+  practice: "teacher.classroom.section_name_practice",
+  notes: "teacher.classroom.section_name_notes",
+};
+
 /**
- * 老师课件模式：资源条下轻量「当前结构段」条（与工具栏步进一致）
+ * 老师课件：资源条下「课件目录」导航（当前 / 已完成 / 未开始 + 可点击跳段）
  * @param {(a: string, p?: object) => string} t
  */
 function buildCoursewareSectionStripHtml(t) {
   const st = getClassroomState();
   if (!st.coursewareAsset) return "";
-  const step = st.currentStep || st.availableSteps[0] || "scene";
+  const cur = st.currentStep || st.availableSteps[0] || "scene";
   const arr = st.availableSteps;
-  const i = arr.indexOf(step);
-  const n = i >= 0 ? i + 1 : 1;
-  const total = arr.length || 1;
-  const key = /** @type {Record<string, string>} */ ({
-    scene: "teacher.classroom.section_name_scene",
-    words: "teacher.classroom.section_name_words",
-    dialogue: "teacher.classroom.section_name_dialogue",
-    practice: "teacher.classroom.section_name_practice",
-    notes: "teacher.classroom.section_name_notes",
-  })[String(step)] || "classroom_scene";
-  const name = t(key);
+  const curI = arr.indexOf(cur);
+  const items = arr
+    .map((id, idx) => {
+      const name = t(/** @type {Record<string, string>} */ (COURSEWARE_STRIP_STEP_KEYS)[String(id)] || "classroom_scene");
+      let status = "upcoming";
+      if (idx < curI) status = "done";
+      if (id === cur) status = "current";
+      const statusLabel =
+        status === "done"
+          ? t("teacher.classroom.nav_status_done", "已完成")
+          : status === "current"
+            ? t("teacher.classroom.nav_status_current", "当前段")
+            : t("teacher.classroom.nav_status_todo", "未开始");
+      const isNotes = id === "notes";
+      const labelHint = t("teacher.classroom.nav_jump_title", "点击切换到此段");
+      const aCur = id === cur ? " aria-current=\"step\"" : "";
+      return `<button type="button" class="classroom-cwstrip-item${isNotes ? " classroom-cwstrip-item--notes" : ""} classroom-cwstrip-item--${status}" data-cw-jump-step="${escapeHtml(
+        String(id),
+      )}" title="${escapeHtml(labelHint)}"${aCur} role="listitem">
+        <span class="classroom-cwstrip-item-no" aria-hidden="true">${idx + 1}</span>
+        <span class="classroom-cwstrip-item-main">
+          <span class="classroom-cwstrip-item-name">${escapeHtml(name)}</span>
+          <span class="classroom-cwstrip-item-slabel visually-hidden"> · </span>
+          <span class="classroom-cwstrip-item-st">${escapeHtml(statusLabel)}</span>
+          ${
+            isNotes
+              ? `<span class="classroom-cwstrip-notes-tag">${escapeHtml(
+                  t("teacher.classroom.nav_notes_pill", "教学提示段"),
+                )}</span>`
+              : ""
+          }
+        </span>
+      </button>`;
+    })
+    .join("");
   return `
-  <div class="classroom-cwstrip-card" role="status">
-    <span class="classroom-cwstrip-badge">${escapeHtml(t("teacher.classroom.section_mode_badge", "课件结构模式"))}</span>
-    <span class="classroom-cwstrip-current"><strong>${escapeHtml(t("teacher.classroom.current_section", "当前结构段"))}</strong> ${escapeHtml(
-    name,
-  )}</span>
-    <span class="classroom-cwstrip-idx" aria-label="${escapeHtml(
-      t("teacher.classroom.section_index_aria", { n: String(n), total: String(total) }),
-    )}"><span class="classroom-cwstrip-nth">${escapeHtml(t("teacher.classroom.section_nth", { n: String(n) }))}</span><span class="classroom-cwstrip-sep" aria-hidden="true">·</span><span class="classroom-cwstrip-tot">${escapeHtml(
-    t("teacher.classroom.section_total", { n: String(total) }),
-  )}</span></span>
+  <div class="classroom-courseware-strip-inner">
+    <p class="classroom-cwstrip-head">
+      <span class="classroom-cwstrip-head-badge">${escapeHtml(t("teacher.classroom.section_mode_badge", "课件结构模式"))}</span>
+      <span class="classroom-cwstrip-head-t">${escapeHtml(t("teacher.classroom.deck_catalog", "课件目录"))}</span>
+      <span class="classroom-cwstrip-head-sep" aria-hidden="true">·</span>
+      <span class="classroom-cwstrip-head-sub">${escapeHtml(t("teacher.classroom.chapter_label", "课堂章节"))}</span>
+    </p>
+    <div class="classroom-cwstrip-items" role="list" aria-label="${escapeHtml(t("teacher.classroom.nav_aria_deck", "课件章节目录"))}">${items}</div>
   </div>`;
 }
 
@@ -337,7 +367,7 @@ export default async function pageClassroom(ctxOrRoot) {
         <div class="classroom-subtitle" id="classroomMeta"></div>
         </div>
         <div class="classroom-asset-wrap" id="classroomAssetBannerHost">${assetBlock}</div>
-        <div class="classroom-courseware-section-strip" id="classroomCoursewareSectionStrip" ${apSlide === "1" && activeAsset && !assetError ? "" : "hidden"}></div>
+        <div class="classroom-courseware-section-strip classroom-courseware-strip" id="classroomCoursewareSectionStrip" ${apSlide === "1" && activeAsset && !assetError ? "" : "hidden"}></div>
         <div class="classroom-teacher-ctx" id="classroomTeacherContext">
           ${line1}
           <p class="classroom-ctx-line2 classroom-ctx-line2--meta">${escapeHtml(ctxLine2)}</p>
@@ -359,6 +389,20 @@ export default async function pageClassroom(ctxOrRoot) {
   const kidsHost = root.querySelector("#classroomKidsGamesHost");
   const toolbarEl = root.querySelector("#classroomToolbar");
   const stageEl = root.querySelector("#classroomStage");
+  const stripHost = root.querySelector("#classroomCoursewareSectionStrip");
+  if (stripHost && !stripHost.dataset.cwNavBound) {
+    stripHost.dataset.cwNavBound = "1";
+    stripHost.addEventListener("click", (e) => {
+      const el = e.target;
+      const b = el && /** @type {HTMLElement} */ (el).closest?.("[data-cw-jump-step]");
+      if (!b) return;
+      e.preventDefault();
+      const id = b.getAttribute("data-cw-jump-step");
+      if (!id) return;
+      setClassroomStep(id);
+      shellRefresh();
+    });
+  }
 
   /** 顶栏、游戏区、工具栏、舞台 同步 */
   function shellRefresh() {
