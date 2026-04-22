@@ -6,11 +6,13 @@ export const CLASSROOM_STEPS = [
   { id: "words",    labelKey: "classroom_words" },
   { id: "dialogue", labelKey: "classroom_dialogue" },
   { id: "practice", labelKey: "classroom_practice" },
+  { id: "notes",    labelKey: "teacher.classroom.nav_step_notes" },
   { id: "game",     labelKey: "classroom_game" },
   { id: "ai",       labelKey: "classroom_ai" }
 ];
 
 export function getDefaultSteps() {
-  return CLASSROOM_STEPS.map((s) => s.id);
+  // notes 仅出现在老师课件（slide_outline）序列中，不应进入普通课程直开
+  return CLASSROOM_STEPS.filter((s) => s.id !== "notes").map((s) => s.id);
 }
 

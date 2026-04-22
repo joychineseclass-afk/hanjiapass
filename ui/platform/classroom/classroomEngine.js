@@ -4,9 +4,11 @@
 
 import { loadLessonDetail as loadLessonDetailFromEngine } from "../content/courseLoader.js";
 import { getDefaultSteps } from "./classroomStepRegistry.js";
+import { getCoursewareClassroomStepSequenceFromAsset } from "../../lumina-commerce/teacherAssetsSelectors.js";
 import {
   resetClassroomState,
   setClassroomCourse,
+  setClassroomCoursewareAsset,
   setClassroomLesson,
   setClassroomStep,
   setAvailableSteps,
@@ -17,17 +19,19 @@ import { renderClassroomToolbar } from "./classroomToolbar.js";
 
 /**
  * 初始化课堂引擎
- * @param {{ courseId:string, lessonId:string, level?:string }} opts
+ * @param {{ courseId:string, lessonId:string, level?:string, coursewareAsset?:import('../../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset|null }} opts
  * @param {{ toolbarEl:HTMLElement, stageEl:HTMLElement }} dom
  */
 export async function initClassroomEngine(opts, dom) {
-  const { courseId, lessonId, level } = opts || {};
+  const { courseId, lessonId, level, coursewareAsset } = opts || {};
   const toolbarEl = dom?.toolbarEl || null;
   const stageEl = dom?.stageEl || null;
 
   resetClassroomState();
   setClassroomCourse(courseId);
-  setAvailableSteps(getDefaultSteps());
+  setClassroomCoursewareAsset(coursewareAsset || null);
+  const cwSeq = coursewareAsset ? getCoursewareClassroomStepSequenceFromAsset(coursewareAsset) : null;
+  setAvailableSteps(cwSeq && cwSeq.length ? cwSeq : getDefaultSteps());
 
   let lessonData = null;
 
@@ -44,7 +48,8 @@ export async function initClassroomEngine(opts, dom) {
   }
 
   setClassroomLesson(lessonId, lessonData || {});
-  setClassroomStep("scene");
+  const st0 = getClassroomState();
+  setClassroomStep(st0.availableSteps[0] || "scene");
 
   if (toolbarEl && stageEl) {
     renderClassroomToolbar(toolbarEl, stageEl);

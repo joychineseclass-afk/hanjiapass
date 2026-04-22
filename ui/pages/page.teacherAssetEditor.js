@@ -146,6 +146,8 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
       <div class="teacher-asset-editor-section card teacher-asset-editor-section--outline">
         <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_outline"))}</h2>
         <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.section_outline_hint"))}</p>
+        <p class="teacher-asset-editor-section-hint teacher-asset-editor-hint--cw">${esc(t("teacher.asset_editor.section_outline_classroom"))}</p>
+        <p class="teacher-asset-editor-section-hint teacher-asset-editor-hint--cw">${esc(t("teacher.asset_editor.section_outline_notes_classroom"))}</p>
         <ol class="teacher-asset-editor-outline-list">${outline}</ol>
       </div>
       <div class="teacher-asset-editor-section card teacher-asset-editor-section--source">

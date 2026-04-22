@@ -6,6 +6,7 @@ import { ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.j
 import { initCommerceStore } from "./store.js";
 import {
   createTeacherAssetFromLesson,
+  defaultSlideOutline,
   findAssetById,
   getEffectiveTeacherNote,
   listAssetsByProfileId,
@@ -88,6 +89,37 @@ export function getClassroomAssetPresentationContext(asset) {
     is_lesson_slide_draft: isDraft,
     has_teacher_note: note.length > 0,
   };
+}
+
+/** slide_outline 结构块 → 课堂 step id */
+const OUTLINE_KIND_TO_CLASSROOM_STEP = {
+  cover: "scene",
+  vocab: "words",
+  dialogue: "dialogue",
+  practice: "practice",
+  notes: "notes",
+};
+
+/**
+ * 由 slide_outline 生成课堂步骤序列（仅 lesson_slide_draft）。
+ * 顺序为 outline 数组顺序；禁用的段不出现；notes 需 enabled 且 teacher_note 有内容。
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset} asset
+ * @returns {string[] | null} 非课件草稿则 null（使用引擎默认全步骤含 game/ai）
+ */
+export function getCoursewareClassroomStepSequenceFromAsset(asset) {
+  if (!asset || String(asset.asset_type) !== String(ASSET_TYPE.lesson_slide_draft)) return null;
+  const outline = asset.slide_outline && asset.slide_outline.length ? asset.slide_outline : defaultSlideOutline();
+  const seq = /** @type {string[]} */ ([]);
+  for (const item of outline) {
+    if (!item || item.enabled === false) continue;
+    const kind = String(item.kind);
+    const step = /** @type {string|undefined} */ (OUTLINE_KIND_TO_CLASSROOM_STEP[kind]);
+    if (!step) continue;
+    if (step === "notes" && !String(getEffectiveTeacherNote(asset) || "").trim()) continue;
+    if (seq.includes(step)) continue;
+    seq.push(step);
+  }
+  return seq.length ? seq : ["scene"];
 }
 
 /**

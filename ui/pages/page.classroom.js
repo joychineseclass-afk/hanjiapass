@@ -100,6 +100,40 @@ function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass,
  * @param {unknown} lesson
  * @returns {string}
  */
+/**
+ * 老师课件模式：资源条下轻量「当前结构段」条（与工具栏步进一致）
+ * @param {(a: string, p?: object) => string} t
+ */
+function buildCoursewareSectionStripHtml(t) {
+  const st = getClassroomState();
+  if (!st.coursewareAsset) return "";
+  const step = st.currentStep || st.availableSteps[0] || "scene";
+  const arr = st.availableSteps;
+  const i = arr.indexOf(step);
+  const n = i >= 0 ? i + 1 : 1;
+  const total = arr.length || 1;
+  const key = /** @type {Record<string, string>} */ ({
+    scene: "teacher.classroom.section_name_scene",
+    words: "teacher.classroom.section_name_words",
+    dialogue: "teacher.classroom.section_name_dialogue",
+    practice: "teacher.classroom.section_name_practice",
+    notes: "teacher.classroom.section_name_notes",
+  })[String(step)] || "classroom_scene";
+  const name = t(key);
+  return `
+  <div class="classroom-cwstrip-card" role="status">
+    <span class="classroom-cwstrip-badge">${escapeHtml(t("teacher.classroom.section_mode_badge", "课件结构模式"))}</span>
+    <span class="classroom-cwstrip-current"><strong>${escapeHtml(t("teacher.classroom.current_section", "当前结构段"))}</strong> ${escapeHtml(
+    name,
+  )}</span>
+    <span class="classroom-cwstrip-idx" aria-label="${escapeHtml(
+      t("teacher.classroom.section_index_aria", { n: String(n), total: String(total) }),
+    )}"><span class="classroom-cwstrip-nth">${escapeHtml(t("teacher.classroom.section_nth", { n: String(n) }))}</span><span class="classroom-cwstrip-sep" aria-hidden="true">·</span><span class="classroom-cwstrip-tot">${escapeHtml(
+    t("teacher.classroom.section_total", { n: String(total) }),
+  )}</span></span>
+  </div>`;
+}
+
 function displayLessonTitle(lesson) {
   if (!lesson || typeof lesson !== "object") return "";
   const l = getLang();
@@ -303,6 +337,7 @@ export default async function pageClassroom(ctxOrRoot) {
         <div class="classroom-subtitle" id="classroomMeta"></div>
         </div>
         <div class="classroom-asset-wrap" id="classroomAssetBannerHost">${assetBlock}</div>
+        <div class="classroom-courseware-section-strip" id="classroomCoursewareSectionStrip" ${apSlide === "1" && activeAsset && !assetError ? "" : "hidden"}></div>
         <div class="classroom-teacher-ctx" id="classroomTeacherContext">
           ${line1}
           <p class="classroom-ctx-line2 classroom-ctx-line2--meta">${escapeHtml(ctxLine2)}</p>
@@ -363,11 +398,29 @@ export default async function pageClassroom(ctxOrRoot) {
       renderClassroomToolbar(toolbarEl, stageEl);
       renderClassroomStage(stageEl);
     }
+    const strip = root.querySelector("#classroomCoursewareSectionStrip");
+    if (strip) {
+      if (pageSection && pageSection.getAttribute("data-teacher-courseware") === "1" && getClassroomState().coursewareAsset) {
+        strip.hidden = false;
+        strip.innerHTML = buildCoursewareSectionStripHtml(tx);
+      } else {
+        strip.hidden = true;
+        strip.innerHTML = "";
+      }
+    }
     i18n.apply?.(root);
   }
 
   try {
-    await initClassroomEngine({ courseId, lessonId: lessonNo, level }, { toolbarEl, stageEl });
+    await initClassroomEngine(
+      {
+        courseId,
+        lessonId: lessonNo,
+        level,
+        coursewareAsset: apSlide === "1" && activeAsset && !assetError ? activeAsset : null,
+      },
+      { toolbarEl, stageEl },
+    );
   } catch (e) {
     console.error("[page.classroom] init failed:", e);
     if (stageEl) {
