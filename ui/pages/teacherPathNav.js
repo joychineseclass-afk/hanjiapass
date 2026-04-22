@@ -20,18 +20,21 @@ export function teacherBackToWorkspaceHtml(tx) {
 
 /**
  * 教师模块轻量子导航：工作台 + 教材 / 课程 / 课堂资产 / 上架（当前项高亮）。
- * @param {'workspace' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
+ * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
  * @param {(path: string, params?: object) => string} tx
  */
 export function teacherWorkspaceSubnavHtml(active, tx) {
   const m = (path) => escapeHtml(tx(path));
-  /** @param {'workspace'|'materials'|'courses'|'assets'|'listing'|'publishing'|'review'} kind */
+  /** @param {'workspace'|'profile'|'materials'|'courses'|'assets'|'listing'|'publishing'|'review'} kind */
   const item = (kind) => {
     let isCurrent = active === kind;
     if (kind === "listing") isCurrent = active === "listing" || active === "publishing";
     let href = "#teacher";
     let label = m("teacher.nav.mine_workbench");
-    if (kind === "materials") {
+    if (kind === "profile") {
+      href = "#teacher-profile";
+      label = m("teacher.nav.teacher_profile");
+    } else if (kind === "materials") {
       href = "#teacher-materials";
       label = m("teacher.hub.materials.title");
     } else if (kind === "courses") {
@@ -57,6 +60,7 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
     <nav class="teacher-subnav card" aria-label="${m("teacher.nav.subnav_aria")}">
       <div class="teacher-subnav-row teacher-subnav-row--wrap">
         ${item("workspace")}
+        ${item("profile")}
         ${item("materials")}
         ${item("courses")}
         ${item("assets")}

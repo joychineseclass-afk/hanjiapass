@@ -3332,3 +3332,265 @@ button.teacher-hub-cta:hover{
   color: #854d0e;
   line-height: 1.5;
 }
+.teacher-gate-draft-hint,
+.teacher-gate-pending-ability{
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.55;
+}
+.teacher-gate-submitted-line{
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #0f172a;
+}
+.teacher-profile-meta-line{
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+.teacher-profile-section-title{
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+.teacher-profile-section-title--sub{
+  margin-top: 20px;
+}
+.teacher-profile-checkgroup{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+.teacher-profile-check{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.teacher-profile-optional{
+  font-weight: 600;
+  color: #94a3b8;
+}
+.teacher-credential-hint{
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 12px;
+}
+.teacher-credential-empty{
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  color: #64748b;
+  font-size: 14px;
+}
+.teacher-credential-list{
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teacher-credential-card{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+.teacher-credential-card-main{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #334155;
+}
+.teacher-credential-title{
+  font-weight: 900;
+  font-size: 15px;
+  color: #0f172a;
+}
+.teacher-credential-meta,
+.teacher-credential-file,
+.teacher-credential-time{
+  font-size: 12px;
+  color: #64748b;
+}
+.teacher-credential-add{
+  margin-top: 8px;
+}
+.teacher-credential-add-title{
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.teacher-profile-reject-banner{
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+}
+.teacher-profile-reject-title{
+  margin: 0 0 6px;
+  font-weight: 900;
+  color: #991b1b;
+}
+.teacher-profile-reject-body{
+  margin: 0 0 8px;
+  color: #7f1d1d;
+  font-size: 14px;
+}
+.teacher-profile-reject-reason{
+  margin: 0;
+  font-size: 14px;
+  color: #450a0a;
+}
+.teacher-workbench-profile-link{
+  margin: 12px 0 0;
+}
+
+/* 审核台：老师档案分区 */
+.teacher-review-profiles{
+  border: 2px solid rgba(37,99,235,0.18);
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 40%);
+}
+.teacher-review-profiles-h2{
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+.teacher-review-profiles-lead{
+  margin: 0 0 16px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.teacher-review-profiles-h3{
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.teacher-review-profiles-empty{
+  margin: 0;
+  padding: 14px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #475569;
+  font-size: 14px;
+}
+.teacher-review-tp-list{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.teacher-review-tp-list--compact .teacher-review-tp-card{
+  opacity: 0.95;
+}
+.teacher-review-tp-card{
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fff;
+}
+.teacher-review-tp-card-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.teacher-review-tp-name{
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+.teacher-review-tp-pill{
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.teacher-review-tp-pill--pending{
+  background: #fef3c7;
+  color: #92400e;
+}
+.teacher-review-tp-pill--approved{
+  background: #d1fae5;
+  color: #065f46;
+}
+.teacher-review-tp-pill--rejected{
+  background: #fee2e2;
+  color: #991b1b;
+}
+.teacher-review-tp-ids{
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+.teacher-review-tp-summary{
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #334155;
+}
+.teacher-review-tp-meta{
+  margin: 0;
+  padding: 0 0 0 18px;
+  font-size: 13px;
+  color: #475569;
+}
+.teacher-review-tp-actions{
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teacher-review-tp-reject{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-end;
+}
+.teacher-review-tp-reject-lab{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+.teacher-review-tp-reject input{
+  min-width: min(100%, 220px);
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+.teacher-review-tp-past-title{
+  margin: 20px 0 10px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #64748b;
+}
+.lts0-listing-section-sep{
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+.lts0-listing-sep-title{
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 900;
+}
+.lts0-listing-sep-desc{
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}

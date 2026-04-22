@@ -37,6 +37,7 @@ import { canTransitionListingStatus } from "../lumina-commerce/listingStateMachi
 import { assertCanSubmitListingForReview } from "../lumina-commerce/teacherRules.js";
 import {
   initCommerceStore,
+  getCommerceStoreSync,
   mutateCommerceStore,
   resetCommerceStoreToSeed,
   userHasRole,
@@ -49,6 +50,9 @@ import {
   teacherWorkspaceSubnavHtml,
 } from "./teacherPathNav.js";
 import { formatListingDemoSourceStageNote } from "../lumina-commerce/teacherDemoCatalog.js";
+import { mergeTeacherProfileRow } from "../lumina-commerce/teacherProfileStore.js";
+import { approveTeacherProfileByReviewer, rejectTeacherProfileByReviewer } from "../lumina-commerce/teacherProfileService.js";
+import { VERIFICATION_STATUS } from "../lumina-commerce/enums.js";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -102,6 +106,102 @@ function formatListingUpdatedCell(iso) {
   const s = String(iso);
   const short = s.includes("T") ? s.replace("T", " ").slice(0, 16) : s.slice(0, 16);
   return escapeHtml(short);
+}
+
+function shortSummary(text, n) {
+  const s = String(text || "").replace(/\s+/g, " ").trim();
+  if (s.length <= n) return s;
+  return s.slice(0, n) + "…";
+}
+
+/**
+ * 审核台：老师档案与 listing 分区；待审/最近已审（占位真实对象）。
+ * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot} snap
+ */
+function buildTeacherProfileReviewSection(snap) {
+  const pending = (snap.teacher_profiles || []).filter((tp) => String(tp.verification_status) === VERIFICATION_STATUS.pending);
+  const recent = (snap.teacher_profiles || [])
+    .filter((tp) => {
+      const v = String(tp.verification_status);
+      return v === VERIFICATION_STATUS.approved || v === VERIFICATION_STATUS.rejected;
+    })
+    .sort((a, b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")))
+    .slice(0, 10);
+
+  /** @param {import('../lumina-commerce/schema.js').TeacherSellerProfile} row */
+  const card = (row, { showActions }) => {
+    const m = mergeTeacherProfileRow(row, row.id);
+    const sum = [m.bio, m.introduction_note, m.experience_note].map((x) => String(x || "").trim()).find(Boolean) || "";
+    const subAt = m.submitted_at ? formatListingUpdatedCell(m.submitted_at) : escapeHtml("—");
+    const nCred = Array.isArray(m.credential_items) ? m.credential_items.length : 0;
+    const stLabel = formatCommerceEnum("verification_status", row.verification_status);
+    const ex = (m.expertise_tags || []).slice(0, 6).join(", ") || "—";
+    const tg = (m.teaching_targets || []).length ? (m.teaching_targets || []).join(", ") : "—";
+    return `<article class="teacher-review-tp-card">
+      <header class="teacher-review-tp-card-head">
+        <h3 class="teacher-review-tp-name">${escapeHtml(row.display_name || row.id)}</h3>
+        <span class="teacher-review-tp-pill teacher-review-tp-pill--${String(row.verification_status).replace(/[^a-z0-9_]/g, "_")}">${escapeHtml(
+          stLabel,
+        )}</span>
+      </header>
+      <p class="teacher-review-tp-ids"><code>${escapeHtml(row.user_id)}</code> · <code>${escapeHtml(row.id)}</code></p>
+      <p class="teacher-review-tp-summary"><strong>${escapeHtml(commerceT("teacher.review_tp.summary"))}</strong> ${escapeHtml(shortSummary(sum, 200))}</p>
+      <ul class="teacher-review-tp-meta">
+        <li><strong>${escapeHtml(commerceT("teacher.profile.expertise_tags"))}:</strong> ${escapeHtml(ex)}</li>
+        <li><strong>${escapeHtml(commerceT("teacher.profile.teaching_targets"))}:</strong> ${escapeHtml(tg)}</li>
+        <li><strong>${escapeHtml(commerceT("teacher.review_tp.cred_count"))}:</strong> ${escapeHtml(String(nCred))}</li>
+        <li><strong>${escapeHtml(commerceT("teacher.profile.submitted_at"))}:</strong> ${subAt}</li>
+      </ul>
+      ${
+        showActions
+          ? `<div class="teacher-review-tp-actions">
+        <button type="button" class="lts0-btn lts0-btn--reviewer" data-tp-approve="1" data-profile-id="${escapeHtml(row.id)}">${escapeHtml(
+            commerceT("teacher.review_tp.approve"),
+          )}</button>
+        <form class="teacher-review-tp-reject" data-tp-reject-form data-profile-id="${escapeHtml(row.id)}">
+          <label class="teacher-review-tp-reject-lab">${escapeHtml(commerceT("teacher.review_tp.reject_reason"))}
+            <input type="text" name="reason" required placeholder="${escapeHtml(commerceT("teacher.review_tp.reject_placeholder"))}"/></label>
+          <label class="teacher-review-tp-reject-lab">${escapeHtml(commerceT("teacher.review_tp.reviewer_note"))}
+            <input type="text" name="note" placeholder="${escapeHtml(commerceT("teacher.review_tp.note_placeholder"))}"/></label>
+          <button type="submit" class="lts0-btn lts0-btn--ghost">${escapeHtml(commerceT("teacher.review_tp.reject_cta"))}</button>
+        </form>
+      </div>`
+          : m.reviewed_at
+            ? `<p class="teacher-review-tp-reviewed"><strong>${escapeHtml(commerceT("teacher.profile.reviewed_at"))}:</strong> ${formatListingUpdatedCell(
+                m.reviewed_at,
+              )}</p>`
+            : ""
+      }
+      ${
+        String(row.verification_status) === VERIFICATION_STATUS.rejected && m.rejection_reason
+          ? `<p class="teacher-review-tp-reject-note"><strong>${escapeHtml(commerceT("teacher.profile.rejection_label"))}:</strong> ${escapeHtml(
+              m.rejection_reason,
+            )}</p>`
+          : ""
+      }
+    </article>`;
+  };
+
+  const pendingHtml =
+    pending.length === 0
+      ? `<p class="teacher-review-profiles-empty">${escapeHtml(commerceT("teacher.review_tp.empty_pending"))}</p>`
+      : `<div class="teacher-review-tp-list">${pending.map((p) => card(p, { showActions: true })).join("")}</div>`;
+  const recentHtml =
+    recent.length === 0
+      ? ""
+      : `<h3 class="teacher-review-tp-past-title">${escapeHtml(commerceT("teacher.review_tp.past_title"))}</h3><div class="teacher-review-tp-list teacher-review-tp-list--compact">${recent
+          .map((p) => card(p, { showActions: false }))
+          .join("")}</div>`;
+
+  return `<section class="card teacher-review-profiles" aria-labelledby="tr-tp-h2">
+    <h2 id="tr-tp-h2" class="teacher-review-profiles-h2">${escapeHtml(commerceT("teacher.review_tp.section_title"))}</h2>
+    <p class="teacher-review-profiles-lead">${escapeHtml(commerceT("teacher.review_tp.section_lead"))}</p>
+    <div class="teacher-review-profiles-pending-blk">
+      <h3 class="teacher-review-profiles-h3">${escapeHtml(commerceT("teacher.review_tp.pending_title"))}</h3>
+      ${pendingHtml}
+    </div>
+    ${recentHtml}
+  </section>`;
 }
 
 function renderPage(root, ctx) {
@@ -414,6 +514,14 @@ function renderPage(root, ctx) {
   const showPrimaryDraft = pageMode !== "review";
   const showGuideColumn = pageMode === "full";
   const reviewPanelTop = pageMode === "review" && isReviewer ? reviewPanel : "";
+  const teacherProfileReviewBlock = pageMode === "review" && isReviewer ? buildTeacherProfileReviewSection(snap) : "";
+  const listingReviewSeparator =
+    pageMode === "review" && isReviewer
+      ? `<section class="card lts0-listing-section-sep" aria-hidden="true">
+        <h2 class="lts0-listing-sep-title">${escapeHtml(commerceT("teacher.review_tp.listing_block_title"))}</h2>
+        <p class="lts0-listing-sep-desc">${escapeHtml(commerceT("teacher.review_tp.listing_block_lead"))}</p>
+      </section>`
+      : "";
   const reviewPanelBottom = pageMode === "full" && isReviewer ? reviewPanel : "";
   const showSecondaryFold = pageMode === "full";
   const actionsHubClass = `lts0-actions-hub${pageMode === "publishing" ? " lts0-actions-hub--publishing" : ""}${
@@ -476,6 +584,8 @@ function renderPage(root, ctx) {
       ${showSourceGuide ? teacherListingSourceGuideHtml(commerceT) : ""}
 
       ${reviewPanelTop}
+      ${teacherProfileReviewBlock}
+      ${listingReviewSeparator}
 
       <section class="card ${actionsHubClass}">
         <div class="lts0-actions-grid">
@@ -786,6 +896,47 @@ function renderPage(root, ctx) {
       });
     });
     renderPage(root, ctx);
+  });
+
+  root.querySelectorAll("[data-tp-approve]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-profile-id");
+      if (!id) return;
+      const r = await approveTeacherProfileByReviewer(id, demoUserId, "");
+      if (r.ok) {
+        ctx.snap = getCommerceStoreSync() || ctx.snap;
+        renderPage(root, ctx);
+      } else {
+        try {
+          alert(String(r.code || "error"));
+        } catch {
+          /* */
+        }
+      }
+    });
+  });
+
+  root.querySelectorAll("[data-tp-reject-form]").forEach((form) => {
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const id = form.getAttribute("data-profile-id");
+      if (!id) return;
+      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+      const reason = String(fd.get("reason") || "").trim();
+      if (!reason) return;
+      const note = String(fd.get("note") || "").trim();
+      const r = await rejectTeacherProfileByReviewer(id, demoUserId, reason, note);
+      if (r.ok) {
+        ctx.snap = getCommerceStoreSync() || ctx.snap;
+        renderPage(root, ctx);
+      } else {
+        try {
+          alert(String(r.code || "error"));
+        } catch {
+          /* */
+        }
+      }
+    });
   });
 }
 

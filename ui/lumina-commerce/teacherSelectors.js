@@ -23,7 +23,17 @@ import { initCommerceStore } from "./store.js";
  * @property {string} onboarding_status
  * @property {TeacherWorkbenchStatus} workbench_status
  * @property {string[]} expertise_tags
+ * @property {string[]} [teaching_targets]
+ * @property {string[]} [teaching_languages]
+ * @property {string} [experience_note]
+ * @property {string} [introduction_note]
+ * @property {string} [contact_note]
+ * @property {string} [credential_status]
+ * @property {import('./teacherProfileStore.js').TeacherCredentialItemV1[]} [credential_items]
  * @property {string|null} rejection_reason
+ * @property {string|null} [review_note]
+ * @property {string|null} [submitted_at]
+ * @property {string|null} [reviewed_at]
  * @property {string} created_at
  * @property {string} updated_at
  */

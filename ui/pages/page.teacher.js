@@ -29,6 +29,13 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** @param {string|undefined|null} iso */
+function fmtProfileTime(iso) {
+  if (!iso) return "";
+  const s = String(iso);
+  return s.includes("T") ? s.replace("T", " ").slice(0, 19) : s.slice(0, 19);
+}
+
 let __teacherLangHandler = /** @type {null | (() => void)} */ (null);
 let __teacherAuthHandler = /** @type {null | (() => void)} */ (null);
 let __teacherRootRef = /** @type {HTMLElement | null} */ (null);
@@ -80,6 +87,7 @@ function teacherGatePanelHtml(ctx, t) {
   const next = escapeHtml(t(nextKey));
   const showProfileCta = w === "no_profile" || w === "draft" || w === "rejected";
   const showPendingOnly = w === "pending_review";
+  const showDraftPath = w === "draft" || w === "no_profile";
   const reasonBlock =
     w === "rejected"
       ? `<p class="teacher-identity-gate-reason"><strong>${escapeHtml(t("teacher.gate.rejected_reason_label"))}</strong> ${escapeHtml(
@@ -100,7 +108,19 @@ function teacherGatePanelHtml(ctx, t) {
       ${showProfileCta && w !== "rejected" ? `<p class="teacher-gate-cta-row"><a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-profile">${escapeHtml(
         t("teacher.gate.cta_profile"),
       )}</a></p>` : ""}
+      ${
+        showDraftPath
+          ? `<p class="teacher-gate-draft-hint">${escapeHtml(t("teacher.gate.draft_path_hint"))}</p>`
+          : ""
+      }
       ${showPendingOnly ? `<p class="teacher-gate-pending-hint">${escapeHtml(t("teacher.gate.pending_teacher_apply"))}</p>` : ""}
+      ${
+        showPendingOnly && ctx.profile?.submitted_at
+          ? `<p class="teacher-gate-submitted-line"><strong>${escapeHtml(t("teacher.gate.submitted_time_label"))}:</strong> ${escapeHtml(
+              fmtProfileTime(ctx.profile.submitted_at),
+            )}</p><p class="teacher-gate-pending-ability">${escapeHtml(t("teacher.gate.pending_ability"))}</p>`
+          : ""
+      }
       ${reasonBlock}
       <p class="teacher-identity-gate-locked-note">${escapeHtml(t("teacher.gate.workbench_limited"))}</p>
     </section>`;
@@ -217,6 +237,9 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats) {
           <div>
             <h2 class="title">${escapeHtml(t("teacher.workspace.mine_title"))}</h2>
             <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.mine_subtitle", { name: profile.display_name }))}</p>
+            <p class="teacher-workbench-profile-link"><a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-profile">${escapeHtml(
+              t("teacher.nav.teacher_profile"),
+            )}</a></p>
           </div>
           <span class="${escapeHtml(statusChipClass(st))}">${label}</span>
         </div>

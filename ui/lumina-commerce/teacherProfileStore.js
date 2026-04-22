@@ -9,6 +9,21 @@ import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
 const OVERLAY_KEY = "lumina_teacher_workbench_overlays_v1";
 
 /**
+ * 资质材料占位（不接真实文件，仅 metadata，后续可接对象存储）。
+ * @typedef {Object} TeacherCredentialItemV1
+ * @property {string} id
+ * @property {string} [teacher_profile_id]
+ * @property {string} title
+ * @property {'language_certificate'|'teaching_certificate'|'identity'|'other'} kind
+ * @property {string} [file_name]
+ * @property {string} [mime_type]
+ * @property {string} [file_size_label]
+ * @property {string} [note]
+ * @property {string} [uploaded_at]
+ * @property {'local_placeholder'|string} [storage_status]
+ */
+
+/**
  * @typedef {Object} TeacherProfileOverlayV1
  * @property {string} [workbench_status]
  * @property {boolean} [account_suspended]
@@ -17,6 +32,16 @@ const OVERLAY_KEY = "lumina_teacher_workbench_overlays_v1";
  * @property {string} [seller_type]
  * @property {string} [teacher_tier]
  * @property {string|null} [rejection_reason]
+ * @property {string} [review_note] 审核员内部备注/可见备注
+ * @property {string} [submitted_at] 老师提交审核时间 ISO
+ * @property {string} [reviewed_at] 审核处理时间 ISO
+ * @property {string[]} [teaching_targets] e.g. kids, hsk
+ * @property {string[]} [teaching_languages] e.g. zh, en
+ * @property {string} [experience_note]
+ * @property {string} [introduction_note]
+ * @property {string} [contact_note]
+ * @property {'empty'|'draft'|'submitted'} [credential_status]
+ * @property {TeacherCredentialItemV1[]} [credential_items]
  */
 
 /**
@@ -82,6 +107,7 @@ function buildDoc(row, overlay, workbenchStatus, rejectionReason) {
   const tier = overlay.teacher_tier || mapLevelToTier(row.teacher_level);
   const seller = overlay.seller_type || "individual";
   const onboarding = overlay.onboarding_status || (workbenchStatus === "approved" ? "completed" : "draft");
+  const creds = Array.isArray(overlay.credential_items) ? overlay.credential_items : [];
   return {
     id: row.id,
     user_id: row.user_id,
@@ -93,7 +119,17 @@ function buildDoc(row, overlay, workbenchStatus, rejectionReason) {
     onboarding_status: onboarding,
     workbench_status: workbenchStatus,
     expertise_tags: Array.isArray(overlay.expertise_tags) ? overlay.expertise_tags.map(String) : [],
+    teaching_targets: Array.isArray(overlay.teaching_targets) ? overlay.teaching_targets.map(String) : [],
+    teaching_languages: Array.isArray(overlay.teaching_languages) ? overlay.teaching_languages.map(String) : [],
+    experience_note: String(overlay.experience_note || ""),
+    introduction_note: String(overlay.introduction_note || ""),
+    contact_note: String(overlay.contact_note || ""),
+    credential_status: overlay.credential_status || (creds.length ? "draft" : "empty"),
+    credential_items: creds,
     rejection_reason: rejectionReason,
+    review_note: overlay.review_note != null ? String(overlay.review_note) : null,
+    submitted_at: overlay.submitted_at != null ? String(overlay.submitted_at) : null,
+    reviewed_at: overlay.reviewed_at != null ? String(overlay.reviewed_at) : null,
     created_at: row.created_at,
     updated_at: row.updated_at,
   };
