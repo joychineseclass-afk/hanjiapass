@@ -29,6 +29,14 @@ const LS_KEY = "lumina_teacher_assets_v1";
  */
 
 /**
+ * @typedef {Object} TeacherSlideOutlineItemV1
+ * @property {string} id
+ * @property {string} kind  cover|vocab|dialogue|practice|notes
+ * @property {string} title
+ * @property {boolean} [enabled]
+ */
+
+/**
  * @typedef {Object} TeacherClassroomAsset
  * @property {string} id
  * @property {string} teacher_profile_id
@@ -36,9 +44,14 @@ const LS_KEY = "lumina_teacher_assets_v1";
  * @property {TeacherClassroomAssetSource} source
  * @property {keyof ASSET_TYPE} asset_type
  * @property {string} title
+ * @property {string} [subtitle]
+ * @property {string} [summary]
+ * @property {string} [teacher_note] 教师授课备注
+ * @property {string} [cover_note] 封面说明
  * @property {keyof ASSET_STATUS} status
  * @property {keyof PPT_MODE} [ppt_mode]
- * @property {string} notes
+ * @property {string} [notes] 旧版备注字段，与 teacher_note 二选一，sanitize 时合并到展示
+ * @property {TeacherSlideOutlineItemV1[]} [slide_outline]
  * @property {string} created_at
  * @property {string} updated_at
  */
@@ -54,6 +67,39 @@ function nowIso() {
 function newId() {
   const r = Math.random().toString(36).slice(2, 8);
   return `tasset_${Date.now().toString(36)}_${r}`;
+}
+
+/**
+ * 默认可编辑课件结构（标题可在编辑页改；kind 稳定）
+ * @returns {TeacherSlideOutlineItemV1[]}
+ */
+export function defaultSlideOutline() {
+  return [
+    { id: "cover", kind: "cover", title: "Cover", enabled: true },
+    { id: "vocab", kind: "vocab", title: "Vocabulary", enabled: true },
+    { id: "dialogue", kind: "dialogue", title: "Dialogue", enabled: true },
+    { id: "practice", kind: "practice", title: "Practice", enabled: true },
+    { id: "notes", kind: "notes", title: "Teacher notes", enabled: true },
+  ];
+}
+
+/**
+ * @param {unknown} x
+ * @returns {TeacherSlideOutlineItemV1[]}
+ */
+function normalizeSlideOutline(x) {
+  if (!Array.isArray(x) || !x.length) return defaultSlideOutline();
+  return x
+    .map((r, i) => {
+      if (!r || typeof r !== "object") return null;
+      const o = /** @type {Record<string, unknown>} */ (r);
+      const id = o.id != null ? String(o.id) : `slide_${i}`;
+      const kind = o.kind != null ? String(o.kind) : "cover";
+      const title = o.title != null ? String(o.title) : id;
+      const enabled = o.enabled !== false;
+      return { id, kind, title, enabled };
+    })
+    .filter(Boolean);
 }
 
 /**
@@ -90,7 +136,17 @@ function sanitizeItem(raw) {
   const asset_type = String(o.asset_type || ASSET_TYPE.lesson_slide_draft);
   const status = String(o.status || ASSET_STATUS.draft);
   const title = o.title != null ? String(o.title) : defaultTitleEn(course, level, lesson);
-  const notes = o.notes != null ? String(o.notes) : "";
+  const notesLegacy = o.notes != null ? String(o.notes) : "";
+  const teacher_note = o.teacher_note != null ? String(o.teacher_note) : notesLegacy;
+  const subtitle = o.subtitle != null ? String(o.subtitle) : "";
+  const summary = o.summary != null ? String(o.summary) : "";
+  const cover_note = o.cover_note != null ? String(o.cover_note) : "";
+  const isSlide = asset_type === ASSET_TYPE.lesson_slide_draft;
+  const slide_outline = isSlide
+    ? normalizeSlideOutline(o.slide_outline)
+    : o.slide_outline && Array.isArray(o.slide_outline) && o.slide_outline.length
+      ? normalizeSlideOutline(o.slide_outline)
+      : [];
   const ppt_mode = o.ppt_mode != null ? String(o.ppt_mode) : PPT_MODE.structured;
   const created_at = o.created_at != null ? String(o.created_at) : nowIso();
   const updated_at = o.updated_at != null ? String(o.updated_at) : created_at;
@@ -101,9 +157,15 @@ function sanitizeItem(raw) {
     source: { course, level, lesson },
     asset_type: /** @type {keyof ASSET_TYPE} */ (Object.values(ASSET_TYPE).includes(asset_type) ? asset_type : ASSET_TYPE.lesson_slide_draft),
     title,
+    subtitle,
+    summary,
+    teacher_note,
+    cover_note,
     status: /** @type {keyof ASSET_STATUS} */ (Object.values(ASSET_STATUS).includes(status) ? status : ASSET_STATUS.draft),
     ppt_mode: /** @type {keyof PPT_MODE} */ (Object.values(PPT_MODE).includes(ppt_mode) ? ppt_mode : PPT_MODE.structured),
-    notes,
+    /** @deprecated 保留读路径兼容，新数据用 teacher_note */
+    notes: notesLegacy,
+    slide_outline,
     created_at,
     updated_at,
   };
@@ -173,6 +235,7 @@ export function updateTeacherAsset(patch) {
     ...prev,
     ...patch,
     source: patch.source ? { ...prev.source, ...patch.source } : prev.source,
+    slide_outline: patch.slide_outline != null ? patch.slide_outline : prev.slide_outline,
     updated_at: nowIso(),
   };
   const clean = sanitizeItem(merged);
@@ -215,6 +278,11 @@ function insertAsset(input) {
  * @param {keyof ASSET_STATUS} [p.status]
  * @param {keyof PPT_MODE} [p.ppt_mode]
  * @param {string} [p.notes]
+ * @param {string} [p.subtitle]
+ * @param {string} [p.summary]
+ * @param {string} [p.teacher_note]
+ * @param {string} [p.cover_note]
+ * @param {TeacherSlideOutlineItemV1[]} [p.slide_outline]
  * @returns {TeacherClassroomAsset}
  */
 export function createTeacherAssetFromLesson(p) {
@@ -222,16 +290,39 @@ export function createTeacherAssetFromLesson(p) {
   const level = String(p.level ?? "1");
   const lesson = String(p.lesson ?? "1");
   const title = p.title != null && String(p.title).trim() !== "" ? String(p.title) : defaultTitleEn(course, level, lesson);
+  const at = p.asset_type != null ? p.asset_type : ASSET_TYPE.lesson_slide_draft;
+  const slideOutline = at === ASSET_TYPE.lesson_slide_draft
+    ? p.slide_outline && Array.isArray(p.slide_outline)
+      ? normalizeSlideOutline(p.slide_outline)
+      : defaultSlideOutline()
+    : [];
   return insertAsset({
     teacher_profile_id: String(p.teacherProfileId),
     owner_user_id: String(p.ownerUserId),
     source: { course, level, lesson },
-    asset_type: p.asset_type != null ? p.asset_type : ASSET_TYPE.lesson_slide_draft,
+    asset_type: at,
     status: p.status != null ? p.status : ASSET_STATUS.draft,
     ppt_mode: p.ppt_mode != null ? p.ppt_mode : PPT_MODE.structured,
     notes: p.notes != null ? String(p.notes) : "",
     title,
+    subtitle: p.subtitle != null ? String(p.subtitle) : "",
+    summary: p.summary != null ? String(p.summary) : "",
+    teacher_note: p.teacher_note != null ? String(p.teacher_note) : "",
+    cover_note: p.cover_note != null ? String(p.cover_note) : "",
+    slide_outline: slideOutline,
   });
+}
+
+/**
+ * 合并 teacher_note 与历史 notes
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset | null} a
+ * @returns {string}
+ */
+export function getEffectiveTeacherNote(a) {
+  if (!a) return "";
+  if (a.teacher_note && String(a.teacher_note).trim()) return String(a.teacher_note).trim();
+  if (a.notes && String(a.notes).trim()) return String(a.notes).trim();
+  return "";
 }
 
 /**

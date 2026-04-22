@@ -437,9 +437,9 @@ function bindClassroomForm(root) {
  * @param {string} ownerUserId
  * @param {() => void} rerender
  */
-function bindAssetQuickCreate(root, profileId, ownerUserId, rerender) {
+function bindAssetQuickCreate(root, profileId, ownerUserId) {
   root.querySelector("#teacherQuickCreateAsset")?.addEventListener("click", () => {
-    createClassroomAssetForLesson({
+    const a = createClassroomAssetForLesson({
       teacherProfileId: profileId,
       ownerUserId,
       course: "kids",
@@ -447,7 +447,12 @@ function bindAssetQuickCreate(root, profileId, ownerUserId, rerender) {
       lesson: "1",
       t: tx,
     });
-    rerender();
+    try {
+      window.dispatchEvent(new CustomEvent("joy:navigate"));
+    } catch {
+      /* */
+    }
+    location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
   });
 }
 
@@ -528,12 +533,9 @@ async function renderTeacherHub(root) {
     const sum = { ...base, classroomAssetCount: assetN };
     const recent = getRecentAssetsForProfile(ctx.profile.id, 5);
     const commerceStats = commerceSnap ? getTeacherProfileCommerceStats(commerceSnap, ctx.profile.id) : null;
-    const rerender = () => {
-      if (__teacherRootRef?.isConnected) void renderTeacherHub(__teacherRootRef);
-    };
     root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats);
     bindClassroomForm(root);
-    bindAssetQuickCreate(root, ctx.profile.id, u.id, rerender);
+    bindAssetQuickCreate(root, ctx.profile.id, u.id);
     i18n.apply?.(root);
     return;
   }

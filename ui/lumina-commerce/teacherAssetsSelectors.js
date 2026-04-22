@@ -4,7 +4,15 @@
 import { getCurrentUser } from "./currentUser.js";
 import { ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
 import { initCommerceStore } from "./store.js";
-import { createTeacherAssetFromLesson, findAssetById, listAssetsByProfileId, updateTeacherAsset, ASSET_STATUS } from "./teacherAssetsStore.js";
+import {
+  createTeacherAssetFromLesson,
+  findAssetById,
+  getEffectiveTeacherNote,
+  listAssetsByProfileId,
+  updateTeacherAsset,
+  ASSET_STATUS,
+  ASSET_TYPE,
+} from "./teacherAssetsStore.js";
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
 
 /**
@@ -61,14 +69,29 @@ export function createClassroomAssetForLesson(opts) {
     level: opts.level,
     lesson: opts.lesson,
     ...(title ? { title } : {}),
+    asset_type: opts.asset_type,
   });
+}
+
+/**
+ * 课堂 / 列表外层：老师课件型资产展示用元数据
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset} asset
+ */
+export function getClassroomAssetPresentationContext(asset) {
+  const note = getEffectiveTeacherNote(asset);
+  const isDraft = String(asset?.asset_type) === String(ASSET_TYPE.lesson_slide_draft);
+  return {
+    asset_presentation_kind: isDraft ? "lesson_slide_draft" : "other",
+    is_lesson_slide_draft: isDraft,
+    has_teacher_note: note.length > 0,
+  };
 }
 
 /**
  * 课堂页：按 assetId 解析；校验 profile 与当前用户（最小校验，防串改占位）。
  * @param {string|null|undefined} assetId
  * @returns {
- *   | { ok: true, asset: import('./teacherAssetsStore.js').TeacherClassroomAsset, courseId: string, level: string, lessonNo: string }
+ *   | { ok: true, asset: import('./teacherAssetsStore.js').TeacherClassroomAsset, courseId: string, level: string, lessonNo: string, presentation: ReturnType<typeof getClassroomAssetPresentationContext> }
  *   | { ok: false, error: 'not_found'|'forbidden' }
  * }
  */
@@ -102,6 +125,7 @@ export async function selectClassroomContextFromAssetId(assetId) {
     courseId: String(s.course || "kids"),
     level: String(s.level || "1"),
     lessonNo: String(s.lesson || "1"),
+    presentation: getClassroomAssetPresentationContext(asset),
   };
 }
 
@@ -114,4 +138,4 @@ export function archiveAssetById(assetId) {
   return updateTeacherAsset({ id: assetId, status: ASSET_STATUS.archived });
 }
 
-export { findAssetById, listAssetsByProfileId, ASSET_STATUS };
+export { findAssetById, getEffectiveTeacherNote, listAssetsByProfileId, ASSET_STATUS, ASSET_TYPE };

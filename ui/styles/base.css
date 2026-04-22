@@ -1776,6 +1776,169 @@ button.teacher-hub-cta:hover{
 .classroom-asset-warn p{
   margin: 0;
 }
+.classroom-asset-ctx-subtitle{
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #312e81;
+  line-height: 1.4;
+}
+.classroom-asset-ctx-summary{
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #334155;
+  max-width: 64ch;
+}
+.classroom-asset-ctx-pill{
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 999px;
+  background: #fff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  vertical-align: middle;
+}
+.lumina-classroom-page[data-teacher-courseware="1"] .classroom-asset-ctx{
+  border-color: #7c3aed;
+  background: #f5f3ff;
+}
+
+/* =========================================================
+   课件编辑 #teacher-asset-editor
+   ========================================================= */
+.teacher-asset-editor-page{
+  padding-bottom: 48px;
+}
+.teacher-asset-editor-hero{
+  margin-bottom: 16px;
+}
+.teacher-asset-editor-title{
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+.teacher-asset-editor-lead{
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.teacher-asset-editor-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.teacher-asset-editor-section{
+  padding: 16px 18px;
+}
+.teacher-asset-editor-h{
+  margin: 0 0 12px;
+  font-size: 1.02rem;
+  font-weight: 900;
+}
+.teacher-asset-editor-field{
+  display: block;
+  margin: 0 0 12px;
+}
+.teacher-asset-editor-label{
+  display: block;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+}
+.teacher-asset-editor-input,
+.teacher-asset-editor-textarea{
+  width: 100%;
+  max-width: 40rem;
+  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+}
+.teacher-asset-editor-dl{
+  display: grid;
+  gap: 8px 16px;
+  font-size: 14px;
+}
+.teacher-asset-editor-dl dt{
+  font-weight: 700;
+  color: #64748b;
+  margin: 0;
+}
+.teacher-asset-editor-dl dd{
+  margin: 0;
+}
+.teacher-asset-editor-outline-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teacher-asset-editor-outline-item{
+  display: grid;
+  grid-template-columns: minmax(5rem, 7rem) 1fr auto;
+  gap: 10px 12px;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+.teacher-asset-editor-outline-readonly{
+  font-size: 12px;
+  color: #64748b;
+}
+.teacher-asset-editor-outline-kind{
+  font-weight: 800;
+  color: #0f172a;
+}
+.teacher-asset-editor-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.teacher-asset-editor-banner--warn{
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #92400e;
+  font-size: 13px;
+}
+.teacher-asset-editor-denied,
+.teacher-asset-editor-empty{
+  padding: 20px 18px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+.teacher-assets-header-actions{
+  margin: 10px 0 0;
+}
+.teacher-asset-subline{
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.teacher-asset-note-chip{
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+.teacher-asset-note-chip.has-note{
+  color: #1d4ed8;
+}
 
 /* =========================================================
    Listing management Stage 0 (#lumina-teacher-stage0)

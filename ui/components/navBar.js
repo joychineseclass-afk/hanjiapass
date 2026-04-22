@@ -69,6 +69,7 @@ function setActive(rootEl) {
         "#teacher-materials",
         "#teacher-courses",
         "#teacher-assets",
+        "#teacher-asset-editor",
         "#lumina-teacher-stage0",
         "#teacher-publishing",
         "#teacher-review",

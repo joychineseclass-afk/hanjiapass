@@ -86,6 +86,7 @@ registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
 registerRoute("#teacher-materials", () => import("./pages/page.teacherMaterials.js"));
 registerRoute("#teacher-courses", () => import("./pages/page.teacherCourses.js"));
 registerRoute("#teacher-assets", () => import("./pages/page.teacherAssets.js"));
+registerRoute("#teacher-asset-editor", () => import("./pages/page.teacherAssetEditor.js"));
 registerRoute("#classroom", () => import("./pages/page.classroom.js"));
 registerRoute("#game",      () => import("./pages/page.game.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));

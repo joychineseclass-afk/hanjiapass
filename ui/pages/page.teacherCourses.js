@@ -237,8 +237,8 @@ async function renderCoursesDom(root) {
         const course = b.getAttribute("data-course") || "kids";
         const level = b.getAttribute("data-level") || "1";
         const lesson = b.getAttribute("data-lesson") || "1";
-        createClassroomAssetForLesson({ teacherProfileId: pid, ownerUserId: uid, course, level, lesson, t: tx });
-        location.hash = "#teacher-assets";
+        const a = createClassroomAssetForLesson({ teacherProfileId: pid, ownerUserId: uid, course, level, lesson, t: tx });
+        location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
       });
     });
   }

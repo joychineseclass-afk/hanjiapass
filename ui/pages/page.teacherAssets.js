@@ -3,7 +3,13 @@
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { updateTeacherAsset } from "../lumina-commerce/teacherAssetsStore.js";
-import { listAssetsByProfileId, ASSET_STATUS } from "../lumina-commerce/teacherAssetsSelectors.js";
+import {
+  listAssetsByProfileId,
+  ASSET_STATUS,
+  ASSET_TYPE,
+  createClassroomAssetForLesson,
+  getEffectiveTeacherNote,
+} from "../lumina-commerce/teacherAssetsSelectors.js";
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
 import {
   findListingByAssetId,
@@ -85,6 +91,16 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     ? `#teacher-listing?id=${encodeURIComponent(listing.id)}`
     : "";
   const archDisabled = a.status === ASSET_STATUS.archived;
+  const hasNote = Boolean(getEffectiveTeacherNote(a));
+  const noteShort = hasNote ? t("teacher.assets.has_teacher_note_yes") : t("teacher.assets.has_teacher_note_no");
+  const editDeck =
+    a.asset_type === ASSET_TYPE.lesson_slide_draft
+      ? `<a class="teacher-asset-link" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+          t("teacher.assets.edit_deck"),
+        )}</a>`
+      : `<span class="teacher-asset-muted" title="${escapeHtml(t("teacher.assets.edit_placeholder"))}">${escapeHtml(
+          t("teacher.assets.edit"),
+        )}</span>`;
   const commerceCell = (() => {
     if (!listing || !snap) {
       return `<td class="teacher-manage-cell-commerce"><span class="teacher-commerce-na">${escapeHtml(
@@ -142,11 +158,16 @@ function assetRow(a, t, profileId, userId, listing, snap) {
       </div>
     </td>`;
   })();
+  const stitle = a.subtitle && String(a.subtitle).trim() ? String(a.subtitle).trim() : "";
   return `<tr data-teacher-asset-id="${escapeHtml(a.id)}">
-    <td class="teacher-manage-cell-title">${escapeHtml(a.title)}</td>
+    <td class="teacher-manage-cell-title">
+      <div class="teacher-asset-title-line">${escapeHtml(a.title)}</div>
+      ${stitle ? `<div class="teacher-asset-subline">${escapeHtml(stitle)}</div>` : ""}
+    </td>
     <td class="teacher-manage-cell-meta"><span class="teacher-asset-type-pill">${escapeHtml(t(`teacher.assets.type.${a.asset_type}`))}</span></td>
     <td>${escapeHtml(srcLine)}</td>
     <td><span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span></td>
+    <td class="teacher-manage-cell-note"><span class="teacher-asset-note-chip ${hasNote ? "has-note" : ""}">${escapeHtml(noteShort)}</span></td>
     <td>
       <span class="teacher-publish-chips">
         <span class="teacher-publish-chip">${escapeHtml(listingChip)}</span>
@@ -185,9 +206,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
           : ""
       }
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
-      <button type="button" class="teacher-asset-ghost" disabled title="${escapeHtml(t("teacher.assets.edit_placeholder"))}">${escapeHtml(
-    t("teacher.assets.edit"),
-  )}</button>
+      ${editDeck}
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-archive="${escapeHtml(a.id)}" ${
     archDisabled ? "disabled" : ""
@@ -244,7 +263,12 @@ async function renderPage(root) {
     ? ""
     : `<div class="teacher-assets-empty card">
          <h3 class="teacher-assets-empty-title">${escapeHtml(t("teacher.assets.empty_title"))}</h3>
-         <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.empty_body"))}</p>
+         <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.empty_body_v2"))}</p>
+         <p class="teacher-assets-empty-cta">
+           <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsEmptyQuickCreate">
+             ${escapeHtml(t("teacher.assets.empty_cta_create"))}
+           </button>
+         </p>
        </div>`;
   const tableBlock = hasRows
     ? `<div class="teacher-manage-table-scroll">
@@ -255,6 +279,7 @@ async function renderPage(root) {
               <th scope="col">${escapeHtml(t("teacher.assets.col_type"))}</th>
               <th scope="col">${escapeHtml(t("teacher.assets.col_source"))}</th>
               <th scope="col">${escapeHtml(t("teacher.assets.col_status"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.col_note"))}</th>
               <th scope="col">${escapeHtml(t("teacher.publishing.col_publish"))}</th>
               <th scope="col">${escapeHtml(t("teacher.assets.col_updated"))}</th>
               <th scope="col">${escapeHtml(t("teacher.assets.col_commerce"))}</th>
@@ -275,6 +300,11 @@ async function renderPage(root) {
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(t("teacher.assets.page_subtitle", { name: ctx.profile.display_name }))}</p>
         <p class="teacher-assets-step4-hint teacher-tile-desc">${escapeHtml(t("teacher.publishing.page_hint"))}</p>
+        <div class="teacher-assets-header-actions">
+          <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
+            ${escapeHtml(t("teacher.assets.new_classroom_deck"))}
+          </button>
+        </div>
       </header>
       ${teacherPathStripHtml("assets", t)}
       ${teacherPathStripClassroomHintHtml(t)}
@@ -283,6 +313,31 @@ async function renderPage(root) {
       <section class="card teacher-assets-list-card" aria-label="${escapeHtml(t("teacher.assets.list_aria"))}">${tableBlock}</section>
     </div>
   `;
+
+  const doQuickCreate = () => {
+    const a = createClassroomAssetForLesson({
+      teacherProfileId: profileId,
+      ownerUserId: userId,
+      course: "kids",
+      level: "1",
+      lesson: "1",
+      t: tx,
+    });
+    try {
+      alert(t("teacher.assets.create_ok_toast"));
+    } catch {
+      /* */
+    }
+    location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
+  };
+  root.querySelector("#teacherAssetsHeaderQuickCreate")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    doQuickCreate();
+  });
+  root.querySelector("#teacherAssetsEmptyQuickCreate")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    doQuickCreate();
+  });
 
   root.querySelectorAll("[data-teacher-asset-archive]").forEach((btn) => {
     btn.addEventListener("click", (ev) => {

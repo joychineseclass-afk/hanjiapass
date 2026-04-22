@@ -7,7 +7,7 @@ import { initClassroomEngine } from "../platform/classroom/classroomEngine.js";
 import { getClassroomState } from "../platform/classroom/classroomState.js";
 import { getClassroomGamesForContext } from "../modules/games/gamesRegistry.js";
 import { formatGameModeType, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
-import { selectClassroomContextFromAssetId } from "../lumina-commerce/teacherAssetsSelectors.js";
+import { getEffectiveTeacherNote, selectClassroomContextFromAssetId } from "../lumina-commerce/teacherAssetsSelectors.js";
 import { initClassroomPresentation, getClassroomViewMode, toggleClassroomViewMode, ViewMode, toggleClassroomFullscreen, isClassroomDocumentFullscreen } from "../platform/classroom/classroomPresentation.js";
 import { renderClassroomStage } from "../platform/classroom/classroomRenderer.js";
 import { renderClassroomToolbar } from "../platform/classroom/classroomToolbar.js";
@@ -51,12 +51,28 @@ function escapeHtml(s) {
  * @param {string} sourceLine
  * @param {string} statusLabel
  * @param {string} statusClass
+ * @param {null|{ is_lesson_slide_draft: boolean, has_teacher_note: boolean, asset_presentation_kind: string }} [pres]
  */
-function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass) {
+function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass, pres) {
+  const kicker =
+    pres && pres.is_lesson_slide_draft
+      ? tx("teacher.classroom.current_teacher_mode")
+      : tx("teacher.classroom.from_asset_badge");
+  const stitle = (asset.subtitle && String(asset.subtitle).trim()) || "";
+  const smry = (asset.summary && String(asset.summary).trim()) || "";
+  const notePill = pres && pres.has_teacher_note
+    ? `<span class="classroom-asset-ctx-pill" title="${escapeHtml(getEffectiveTeacherNote(asset).slice(0, 200))}">${escapeHtml(
+        tx("teacher.classroom.has_teacher_note_badge"),
+      )}</span>`
+    : "";
   return `
-  <div class="classroom-asset-ctx" role="status">
-    <p class="classroom-asset-ctx-kicker">${escapeHtml(tx("teacher.classroom.from_asset_badge"))}</p>
+  <div class="classroom-asset-ctx" role="status" data-asset-presentation="${escapeHtml(
+    String(pres?.asset_presentation_kind || "other"),
+  )}" data-teacher-note="${pres && pres.has_teacher_note ? "1" : "0"}">
+    <p class="classroom-asset-ctx-kicker">${escapeHtml(kicker)}</p>
     <p class="classroom-asset-ctx-title">${escapeHtml(asset.title)}</p>
+    ${stitle ? `<p class="classroom-asset-ctx-subtitle">${escapeHtml(stitle)}</p>` : ""}
+    ${smry ? `<p class="classroom-asset-ctx-summary">${escapeHtml(smry)}</p>` : ""}
     <p class="classroom-asset-ctx-meta">
       <span class="classroom-asset-ctx-type">${escapeHtml(typeLabel)}</span>
       <span class="classroom-asset-ctx-sep" aria-hidden="true"> · </span>
@@ -64,6 +80,7 @@ function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass)
     </p>
     <p class="classroom-asset-ctx-row">
       <span class="classroom-asset-status-chip ${statusClass}">${escapeHtml(statusLabel)}</span>
+      ${notePill}
     </p>
   </div>`;
 }
@@ -155,6 +172,7 @@ export default async function pageClassroom(ctxOrRoot) {
   let lessonNo = String(q.lesson || "1");
   let activeAsset = /** @type {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset | null} */ (null);
   let assetError = /** @type {null | 'not_found' | 'forbidden'} */ (null);
+  let assetPresentation = /** @type {null | { is_lesson_slide_draft: boolean, has_teacher_note: boolean, asset_presentation_kind: string }} */ (null);
 
   if (assetId) {
     const res = await selectClassroomContextFromAssetId(assetId);
@@ -163,6 +181,7 @@ export default async function pageClassroom(ctxOrRoot) {
       level = res.level;
       lessonNo = res.lessonNo;
       activeAsset = res.asset;
+      assetPresentation = res.presentation;
     } else {
       assetError = res.error;
     }
@@ -229,7 +248,7 @@ export default async function pageClassroom(ctxOrRoot) {
         : "classroom-asset-status-chip--draft";
   const assetBlock =
     activeAsset && !assetError
-      ? assetBannerHtml(activeAsset, typeLabel, sourceLine, statusForBanner, statusClass)
+      ? assetBannerHtml(activeAsset, typeLabel, sourceLine, statusForBanner, statusClass, assetPresentation)
       : invalidBanner;
 
   const line1Text = activeAsset ? fromAsset : fromWs;
@@ -248,8 +267,12 @@ export default async function pageClassroom(ctxOrRoot) {
   const initialViewTgl = (isPres0 || getClassroomViewMode() === ViewMode.PRESENTATION) ? viewStandard : viewPresent;
   const initialFsL = openFs ? fsExit : fsEnter;
 
+  const apKind = activeAsset && assetPresentation ? String(assetPresentation.asset_presentation_kind || "") : "";
+  const apSlide = apKind === "lesson_slide_draft" ? "1" : "0";
   root.innerHTML = `
-    <section class="lumina-classroom-page wrap" id="luminaClassroomPage">
+    <section class="lumina-classroom-page wrap" id="luminaClassroomPage" data-asset-presentation-kind="${escapeHtml(
+      apKind,
+    )}" data-teacher-courseware="${apSlide}"${activeAsset && assetId ? ` data-classroom-asset-id="${escapeHtml(assetId)}"` : ""}>
       <header class="classroom-topbar classroom-control-bar">
         <div class="classroom-control-bar-row1">
         <div class="classroom-topbar-actions">
