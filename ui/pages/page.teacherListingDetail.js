@@ -39,6 +39,38 @@ function escapeHtml(s) {
 }
 
 /**
+ * 与 #teacher 工作台统一的状态 pill 文案/样式。
+ * @param {import('../lumina-commerce/schema.js').Listing} L
+ * @param {(k: string, p?: object) => string} t
+ */
+function listingUnifiedPillsForDetail(L, t) {
+  const st = L.status;
+  const stMod =
+    st === LISTING_STATUS.pending_review
+      ? "pending"
+      : st === LISTING_STATUS.approved
+        ? "approved"
+        : st === LISTING_STATUS.rejected
+          ? "rejected"
+          : "draft";
+  const stKey =
+    st === LISTING_STATUS.pending_review
+      ? "status_pending"
+      : st === LISTING_STATUS.approved
+        ? "status_approved"
+        : st === LISTING_STATUS.rejected
+          ? "status_rejected"
+          : "status_draft";
+  const pub = L.visibility === VISIBILITY.public;
+  const visKey = pub ? "vis_public" : "vis_unlisted";
+  return `<span class="teacher-state-pill teacher-state-pill--${stMod}">${escapeHtml(
+    t(`teacher.unified.${stKey}`),
+  )}</span><span class="teacher-state-pill teacher-state-pill--${pub ? "vis_public" : "vis_unlisted"}">${escapeHtml(
+    t(`teacher.unified.${visKey}`),
+  )}</span>`;
+}
+
+/**
  * 教师预览模式下的首屏说明
  * @param {import('../lumina-commerce/schema.js').Listing} L
  * @param {(k: string, p?: object) => string} t
@@ -244,9 +276,24 @@ async function renderPublicDetail(root, listingId) {
   const detailWrapClass =
     (isCourseware ? " teacher-listing-detail--courseware" : "") + (viewMode === "teacher_preview" ? " teacher-listing-detail--teacher-preview" : "");
 
+  const surfaceNav =
+    viewMode === "teacher_preview"
+      ? `<div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(tx("teacher.surface.nav_aria"))}">
+        <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(tx("teacher.listing_detail.go_teacher_home"))}</a>
+        <a class="teacher-surface-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
+        <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(tx("teacher.listing_detail.nav_back_publishing"))}</a>
+        ${
+          editorUrl
+            ? `<a class="teacher-surface-link" href="${editorUrl}">${escapeHtml(tx("teacher.listing_detail.nav_back_editor"))}</a>`
+            : ""
+        }
+        <a class="teacher-surface-link" href="${classUrl}">${escapeHtml(tx("teacher.listing_public.cta_classroom"))}</a>
+      </div>`
+      : "";
+
   root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail${detailWrapClass}" data-teacher-listing-mode="${viewMode}">
     ${previewBanner}
-    <section class="card teacher-listing-hero${heroClass}">
+    <section class="card teacher-surface-hero teacher-listing-hero${heroClass}">
       <p class="teacher-listing-kicker">${escapeHtml(kickerT)}</p>
       <h1 class="teacher-listing-title">${escapeHtml(mainTitle)}</h1>
       ${
@@ -254,9 +301,10 @@ async function renderPublicDetail(root, listingId) {
           ? `<p class="teacher-listing-subtitle">${escapeHtml(subT)}</p>`
           : ""
       }
+      ${surfaceNav}
       <div class="teacher-listing-badges">
         ${publicBadge}
-        <span class="teacher-listing-pill">${escapeHtml(visLabel)}</span>
+        ${viewMode === "teacher_preview" ? "" : `<span class="teacher-listing-pill">${escapeHtml(visLabel)}</span>`}
         <span class="teacher-listing-pill">${escapeHtml(
           pt === PRICING_TYPE.free ? tx("learner.commerce.pricing_free") : tx("learner.commerce.pricing_paid"),
         )}</span>
@@ -265,9 +313,7 @@ async function renderPublicDetail(root, listingId) {
         )}</span>
         ${
           viewMode === "teacher_preview"
-            ? `<span class="teacher-listing-pill teacher-listing-pill--state">${escapeHtml(
-                reviewStatusLabel,
-              )}</span>`
+            ? `<span class="teacher-listing-unified-badges" role="group">${listingUnifiedPillsForDetail(L, tx)}</span>`
             : ""
         }
       </div>

@@ -324,7 +324,7 @@ async function renderPage(root) {
       ${teacherBackToWorkspaceHtml(t)}
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
       ${teacherWorkspaceSubnavHtml("assets", t)}
-      <header class="card teacher-admin-header">
+      <header class="card teacher-surface-hero teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(t("teacher.assets.page_subtitle", { name: ctx.profile.display_name }))}</p>
         <p class="teacher-assets-step4-hint teacher-tile-desc">${escapeHtml(t("teacher.publishing.page_hint"))}</p>
@@ -332,6 +332,11 @@ async function renderPage(root) {
           <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
             ${escapeHtml(t("teacher.assets.new_classroom_deck"))}
           </button>
+        </div>
+        <div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(t("teacher.surface.nav_aria"))}">
+          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(t("teacher.nav.back_mine_workbench"))}</a>
+          <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
+          <a class="teacher-surface-link" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>
         </div>
       </header>
       ${teacherPathStripHtml("assets", t)}

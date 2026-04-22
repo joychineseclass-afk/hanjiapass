@@ -307,9 +307,22 @@ async function renderEditor(root) {
       ${teacherBackToWorkspaceHtml(t)}
       <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
       ${teacherWorkspaceSubnavHtml("assets", t)}
-      <header class="card teacher-asset-editor-hero">
+      <header class="card teacher-surface-hero teacher-asset-editor-hero">
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.page_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.lead"))}</p>
+        <div class="teacher-surface-action-row" role="navigation" aria-label="${esc(t("teacher.surface.nav_aria"))}">
+          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+          <a class="teacher-surface-link" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(t("teacher.asset_editor.to_classroom"))}</a>
+          <a class="teacher-surface-link" href="#teacher-publishing">${esc(t("teacher.nav.my_publishing"))}</a>
+          <a class="teacher-surface-link" href="#teacher-review">${esc(t("teacher.nav.review_console"))}</a>
+          ${
+            listingRow
+              ? `<a class="teacher-surface-link" href="#teacher-listing?id=${encodeURIComponent(listingRow.id)}">${esc(
+                  t("teacher.asset_editor.publishing_preview_listing"),
+                )}</a>`
+              : ""
+          }
+        </div>
       </header>
       ${publishBlock}
       ${editorFormHtml(a, t, u.id, ctx.profile.id, canEdit, isArchived)}

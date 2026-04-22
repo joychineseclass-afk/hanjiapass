@@ -1115,6 +1115,256 @@ button.teacher-hub-cta:hover{
   color: #eef2ff !important;
   border-color: #3730a3;
 }
+.teacher-hub-cta--compact{
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.teacher-hub-muted{
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* =========================================================
+   Teacher workbench A5: hub + unified surface
+   ========================================================= */
+.teacher-surface-hero{
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.teacher-surface-hero .teacher-page-kicker{
+  margin: 0 0 6px;
+}
+.teacher-surface-hero h1.teacher-admin-title,
+.teacher-surface-hero .teacher-hub-surface-title,
+.teacher-surface-hero .teacher-asset-editor-title,
+.teacher-surface-hero .teacher-listing-title{
+  font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.teacher-surface-hero.teacher-asset-editor-hero,
+.teacher-surface-hero.teacher-admin-header{
+  padding: 20px 22px 18px;
+}
+.teacher-surface-hero.teacher-listing-hero{
+  padding: 20px 22px 24px;
+}
+.teacher-surface-action-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+}
+.teacher-surface-link{
+  font-size: 13px;
+  font-weight: 800;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+.teacher-surface-link:hover{ text-decoration: underline; }
+.teacher-surface-link--secondary{
+  color: #475569;
+  font-weight: 700;
+}
+.teacher-hub{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.teacher-hub-surface-title{
+  margin: 0 0 6px;
+  color: #0f172a;
+  font-size: clamp(1.4rem, 2.3vw, 1.7rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.teacher-hub-identity{
+  margin: 0 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 14px;
+  color: #334155;
+}
+.teacher-hub-identity-k{
+  font-weight: 800;
+  color: #0f172a;
+}
+.teacher-hub-identity-v{ font-weight: 700; }
+.teacher-hub-inline-link{
+  font-size: 13px;
+  font-weight: 800;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+.teacher-hub-inline-link:hover{ text-decoration: underline; }
+.teacher-hub-profile-chip{
+  vertical-align: middle;
+  margin: 0;
+}
+.teacher-hub-section-title{
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+.teacher-hub-section-title--small{
+  font-size: 1rem;
+  margin: 0 0 6px;
+}
+.teacher-hub-recommended{
+  padding: 16px 18px 18px;
+  border: 1px solid rgba(79, 70, 229, 0.15);
+  background: linear-gradient(180deg, #f5f3ff 0%, #fff 100%);
+}
+.teacher-hub-recommended-line{
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1e1b4b;
+  font-weight: 600;
+}
+.teacher-hub-recommended-cta{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+.teacher-workspace-overview--hub .teacher-workspace-overview-disclosure--short{
+  font-size: 12px;
+  line-height: 1.4;
+  color: #64748b;
+  max-width: 64ch;
+}
+.teacher-workspace-overview--hub .teacher-workspace-chip--hub{
+  font-size: 12px;
+  padding: 4px 8px;
+}
+.teacher-relation-flow--tight{
+  padding: 12px 16px 14px;
+}
+.teacher-relation-flow--tight .teacher-relation-flow-title{
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+  color: #475569;
+}
+.teacher-hub-workflow-panels{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.teacher-hub-wf-card{
+  padding: 14px 16px 16px;
+  min-height: 0;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+.teacher-hub-wf-h{
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+.teacher-hub-wf-p{
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  min-height: 2.8em;
+}
+.teacher-hub-wf-card--primary{
+  border-color: rgba(37, 99, 235, 0.25);
+  background: #eff6ff;
+}
+.teacher-hub-wf-p .teacher-hub-cta{ margin: 4px 0 0; }
+.teacher-hub-recent-dual{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  padding: 16px 18px 20px;
+}
+@media (max-width: 800px){
+  .teacher-hub-recent-dual{ grid-template-columns: 1fr; }
+}
+.teacher-hub-recent-dual-hint{ margin: 0 0 6px; font-size: 12px; }
+.teacher-assets-mine-hint--tight{ max-width: 64ch; }
+.teacher-assets-recent-list--hub{
+  margin: 0;
+  padding: 0 0 0 1.1em;
+  max-width: 100%;
+}
+.teacher-hub-recent-listing-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teacher-hub-recent-listing-item{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.teacher-hub-recent-listing-item:last-child{ border-bottom: 0; padding-bottom: 0; }
+.teacher-hub-recent-listing-link{
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.teacher-hub-recent-listing-link:hover{ text-decoration: underline; }
+.teacher-hub-recent-listing-pills{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.teacher-state-pill{
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #f1f5f9;
+  color: #334155;
+  letter-spacing: 0.01em;
+}
+.teacher-state-pill--draft{ background: #eff6ff; color: #1e3a8a; border-color: #93c5fd; }
+.teacher-state-pill--pending{ background: #fffbeb; color: #92400e; border-color: #fcd34d; }
+.teacher-state-pill--approved{ background: #ecfdf3; color: #14532d; border-color: #86efac; }
+.teacher-state-pill--rejected{ background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+.teacher-state-pill--vis_public{ background: #ecfdf3; color: #14532d; border-color: #86efac; }
+.teacher-state-pill--vis_unlisted{ background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+.teacher-state-pill--asset_draft{ background: #eff6ff; color: #1e3a8a; border-color: #93c5fd; }
+.teacher-state-pill--asset_ready{ background: #ecfdf3; color: #14532d; border-color: #86efac; }
+.teacher-state-pill--asset_archived{ background: #f5f5f4; color: #44403c; border-color: #d6d3d1; }
+.teacher-listing-hero.teacher-surface-hero .teacher-listing-pill{
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 3px 10px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+.teacher-listing-unified-badges{
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
 
 /* =========================================================
    Teacher admin shell (materials / courses / listing outer)
