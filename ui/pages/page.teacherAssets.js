@@ -8,6 +8,7 @@ import {
   listTrashedAssetsByProfileId,
   moveTeacherAssetToTrash,
   restoreTeacherAssetFromTrash,
+  permanentlyDeleteAllTrashedForTeacherProfile,
   teacherAssetTrashDaysRemaining,
   TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
@@ -235,6 +236,9 @@ function assetRow(a, t, profileId, userId, listing, snap) {
         ${editDeck}
         ${enterRoom}
       </div>
+      <p class="teacher-assets-trash-near-actions">
+        <a class="teacher-assets-trash-near-link" href="#teacher-assets?tab=trash">${escapeHtml(t("teacher.assets.view_trash"))}</a>
+      </p>
       <div class="teacher-asset-row-secondary" role="group" aria-label="${escapeHtml(t("teacher.assets.row_secondary_actions_aria"))}">
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-submit="${escapeHtml(
         a.id,
@@ -345,6 +349,7 @@ async function renderPage(root) {
   const profileId = ctx.profile.id;
   const userId = ctx.user?.id || "";
   const tab = assetsTabFromHash();
+  const trashCount = listTrashedAssetsByProfileId(profileId).length;
 
   const assets = tab === "active" ? listAssetsByProfileId(profileId) : [];
   const trashed = tab === "trash" ? listTrashedAssetsByProfileId(profileId) : [];
@@ -372,6 +377,13 @@ async function renderPage(root) {
            <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(
              t("teacher.assets.empty_cta_from_course"),
            )}</a>
+           ${
+             trashCount > 0
+               ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
+                   t("teacher.assets.view_trash"),
+                 )} (${escapeHtml(String(trashCount))})</a>`
+               : ""
+           }
          </p>
        </div>`
       : tab === "trash" && !hasRows
@@ -380,6 +392,14 @@ async function renderPage(root) {
          <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.trash_empty_body"))}</p>
        </div>`
         : "";
+  const trashToolbar =
+    tab === "trash" && hasRows
+      ? `<div class="teacher-trash-toolbar">
+          <button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--danger" id="teacherAssetsEmptyTrash">${escapeHtml(
+            t("teacher.assets.empty_trash"),
+          )}</button>
+        </div>`
+      : "";
   const tableBlock =
     tab === "active" && hasRows
       ? `<div class="teacher-manage-table-scroll">
@@ -401,7 +421,7 @@ async function renderPage(root) {
         </table>
       </div>`
       : tab === "trash" && hasRows
-        ? `<div class="teacher-manage-table-scroll teacher-trash-table-wrap">
+        ? `${trashToolbar}<div class="teacher-manage-table-scroll teacher-trash-table-wrap">
         <table class="teacher-manage-table teacher-trash-table">
           <thead>
             <tr>
@@ -440,7 +460,10 @@ async function renderPage(root) {
             tab === "active"
               ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
             ${escapeHtml(t("teacher.assets.new_classroom_deck"))}
-          </button>`
+          </button>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
+            t("teacher.assets.view_trash"),
+          )}${trashCount > 0 ? ` (${escapeHtml(String(trashCount))})` : ""}</a>`
               : ""
           }
         </div>
@@ -523,6 +546,16 @@ async function renderPage(root) {
       location.hash = "#teacher-assets";
       void renderPage(root);
     });
+  });
+
+  root.querySelector("#teacherAssetsEmptyTrash")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    if (trashed.length === 0) return;
+    if (!confirm(t("teacher.assets.empty_trash_confirm_1"))) return;
+    if (!confirm(t("teacher.assets.empty_trash_confirm_2"))) return;
+    const r = permanentlyDeleteAllTrashedForTeacherProfile(profileId);
+    if (!r.ok) return;
+    void renderPage(root);
   });
   root.querySelector("#teacherAssetsEmptyQuickCreate")?.addEventListener("click", (ev) => {
     ev.preventDefault();

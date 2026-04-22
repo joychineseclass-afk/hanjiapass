@@ -1115,6 +1115,14 @@ button.teacher-hub-cta:hover{
   color: #eef2ff !important;
   border-color: #3730a3;
 }
+.teacher-hub-cta--danger{
+  background: #fff1f2;
+  color: #9f1239 !important;
+  border-color: #fecdd3;
+}
+.teacher-hub-cta--danger:hover{
+  background: #ffe4e6;
+}
 .teacher-hub-cta--compact{
   padding: 8px 12px;
   font-size: 13px;
@@ -1914,8 +1922,16 @@ button.teacher-hub-cta:hover{
   border: none;
   background: transparent;
   color: #64748b;
-  cursor: not-allowed;
+  cursor: pointer;
   padding: 0;
+}
+.teacher-asset-ghost:disabled{
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.teacher-asset-ghost.teacher-asset-move-trash:not(:disabled):hover{
+  color: #be123c !important;
+  text-decoration: underline;
 }
 .teacher-asset-row-btn{
   font-family: inherit;
@@ -2005,6 +2021,7 @@ button.teacher-hub-cta:hover{
 }
 .teacher-asset-move-trash{
   color: #9f1239 !important;
+  cursor: pointer;
 }
 .teacher-trash-meta-line{
   margin: 6px 0 0;
@@ -2933,6 +2950,36 @@ button.teacher-hub-cta:hover{
 }
 .teacher-assets-header-actions{
   margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+}
+.teacher-assets-header-actions .teacher-hub-cta{
+  margin-top: 0;
+}
+.teacher-assets-trash-near-actions{
+  margin: 6px 0 4px;
+  line-height: 1.3;
+}
+.teacher-assets-trash-near-link{
+  font-size: 12px;
+  font-weight: 750;
+  color: #9f1239;
+  text-decoration: none;
+}
+.teacher-assets-trash-near-link:hover{
+  text-decoration: underline;
+}
+.teacher-trash-toolbar{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.teacher-trash-toolbar .teacher-hub-cta{
+  margin-top: 0;
 }
 .teacher-asset-subline{
   font-size: 12px;

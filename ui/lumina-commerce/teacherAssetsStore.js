@@ -451,6 +451,27 @@ export function restoreTeacherAssetFromTrash(assetId, _userId) {
 }
 
 /**
+ * 手动清空当前老师 profile 下垃圾桶：永久删除所有已软删项。不影响未删除草案与其他 profile。
+ * @param {string} profileId
+ * @returns {{ ok: true, removed: number } | { ok: false, code: string }}
+ */
+export function permanentlyDeleteAllTrashedForTeacherProfile(profileId) {
+  const pid = String(profileId || "").trim();
+  if (!pid) return { ok: false, code: "missing_profile" };
+  const f = loadFile();
+  const before = f.items.length;
+  const next = f.items.filter((a) => {
+    if (!a) return true;
+    if (String(a.teacher_profile_id || "") !== pid) return true;
+    if (!isTeacherAssetTrashed(a)) return true;
+    return false;
+  });
+  const removed = before - next.length;
+  if (removed > 0) saveFile({ v: 1, items: next });
+  return { ok: true, removed };
+}
+
+/**
  * 显式执行过期清理并写回（通常 loadFile 已自动执行；供调试或外部调用）
  * @returns {number} 移除条数
  */
