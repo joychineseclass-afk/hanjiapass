@@ -1,4 +1,4 @@
-// 前台：老师 listing 公开展示 + 免费获取 / 模拟购买（Step 5）
+// 前台：老师 listing 公开展示 + 免费获取 / 模拟购买（Step 5）+ 教师会话态预览
 
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
 import { formatCommerceEnum, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
@@ -10,6 +10,7 @@ import {
   getListingPricingType,
   purchaseOrGrantListingAccess,
 } from "../lumina-commerce/teacherCommerceBridge.js";
+import { canCurrentUserPreviewTeacherListing } from "../lumina-commerce/teacherListingBridge.js";
 import { i18n } from "../i18n.js";
 
 function tx(k, p) {
@@ -38,6 +39,28 @@ function escapeHtml(s) {
 }
 
 /**
+ * 教师预览模式下的首屏说明
+ * @param {import('../lumina-commerce/schema.js').Listing} L
+ * @param {(k: string, p?: object) => string} t
+ */
+function teacherPreviewContextLine(L, t) {
+  const st = L.status;
+  if (st === LISTING_STATUS.approved && L.visibility !== VISIBILITY.public) {
+    return t("teacher.listing_detail.preview_context_approved_unlisted");
+  }
+  if (st === LISTING_STATUS.pending_review) {
+    return t("teacher.listing_detail.preview_context_pending");
+  }
+  if (st === LISTING_STATUS.rejected) {
+    return t("teacher.listing_detail.preview_context_rejected");
+  }
+  if (st === LISTING_STATUS.draft) {
+    return t("teacher.listing_detail.preview_context_draft");
+  }
+  return t("teacher.listing_detail.preview_context_generic");
+}
+
+/**
  * @param {HTMLElement} root
  * @param {string} listingId
  */
@@ -63,17 +86,10 @@ async function renderPublicDetail(root, listingId) {
     return;
   }
 
-  const isPublic = L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public;
-  /** 适合公开展示的教师备注前段（不整段外泄） */
-  const publicTeacherTeaser = (s, max) => {
-    const t0 = String(s || "")
-      .replace(/\s+/g, " ")
-      .trim();
-    if (!t0) return "";
-    if (t0.length <= max) return t0;
-    return t0.slice(0, max) + "…";
-  };
-  if (!isPublic) {
+  const u = getCurrentUser();
+  const isPublicListing = L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public;
+  const canTeacherPreview = canCurrentUserPreviewTeacherListing(snap, L, u);
+  if (!isPublicListing && !canTeacherPreview) {
     const limitedTitle = tx("teacher.listing_detail.unavailable_title");
     const limitedBody = tx("teacher.listing_detail.unavailable_body");
     root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail">
@@ -91,7 +107,18 @@ async function renderPublicDetail(root, listingId) {
     return;
   }
 
-  const u = getCurrentUser();
+  const viewMode = isPublicListing ? "public" : "teacher_preview";
+
+  /** 适合公开展示的教师备注前段（不整段外泄） */
+  const publicTeacherTeaser = (s, max) => {
+    const t0 = String(s || "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!t0) return "";
+    if (t0.length <= max) return t0;
+    return t0.slice(0, max) + "…";
+  };
+
   const ui = await getListingCommerceUiState(listingId, u.id);
   const tp = L.teacher_id ? snap.teacher_profiles.find((p) => p.id === L.teacher_id) : null;
   const teacherName = tp?.display_name || "—";
@@ -130,8 +157,9 @@ async function renderPublicDetail(root, listingId) {
           currency: String(L.price_currency || "KRW"),
         });
 
-  const hasAccess = ui?.hasAccess;
-  const canBuy = ui?.canAttemptPurchase && (pt === PRICING_TYPE.free || (pt === PRICING_TYPE.paid && (ui?.amount || 0) > 0));
+  const hasAccess = viewMode === "public" && ui?.hasAccess;
+  const canBuy =
+    viewMode === "public" && ui?.canAttemptPurchase && (pt === PRICING_TYPE.free || (pt === PRICING_TYPE.paid && (ui?.amount || 0) > 0));
   const ownedLabel = hasAccess
     ? pt === PRICING_TYPE.free
       ? tx("learner.commerce.status_granted")
@@ -140,27 +168,84 @@ async function renderPublicDetail(root, listingId) {
 
   const classUrl =
     L.source_kind === "classroom_asset" && L.source_id ? "#classroom?assetId=" + encodeURIComponent(String(L.source_id)) : "#classroom";
+  const editorUrl =
+    asset && L.source_kind === "classroom_asset" && L.source_id
+      ? "#teacher-asset-editor?id=" + encodeURIComponent(String(L.source_id))
+      : null;
 
   const statusBlock = hasAccess
     ? `<p class="teacher-listing-owned-badge" role="status">${escapeHtml(ownedLabel)}</p>
        <p class="teacher-listing-toast-placeholder" id="teacherListingToast" hidden></p>`
     : `<p class="teacher-listing-toast-placeholder" id="teacherListingToast" hidden></p>`;
 
-  const purchaseBlock = hasAccess
-    ? `<a class="teacher-hub-cta" href="${classUrl}">${escapeHtml(tx("teacher.listing_public.cta_classroom"))}</a>
+  const purchaseBlock =
+    viewMode === "teacher_preview"
+      ? `<p class="teacher-listing-preview-purchase-hint" role="note">${escapeHtml(tx("teacher.listing_detail.preview_acquire_note"))}</p>`
+      : hasAccess
+        ? `<a class="teacher-hub-cta" href="${classUrl}">${escapeHtml(tx("teacher.listing_public.cta_classroom"))}</a>
        <button type="button" class="teacher-listing-cta-fake" disabled>${escapeHtml(tx("learner.commerce.already_owned_hint"))}</button>`
-    : `<button type="button" class="teacher-hub-cta teacher-listing-buy" id="teacherListingAcquire" ${
-        canBuy ? "" : "disabled"
-      }" data-listing-id="${escapeHtml(listingId)}">
+        : `<button type="button" class="teacher-hub-cta teacher-listing-buy" id="teacherListingAcquire" ${
+            canBuy ? "" : "disabled"
+          }" data-listing-id="${escapeHtml(listingId)}">
         ${escapeHtml(pt === PRICING_TYPE.free ? tx("learner.commerce.cta_free") : tx("learner.commerce.cta_buy"))}
       </button>
       <span class="teacher-listing-sim-note">${escapeHtml(tx("learner.commerce.simulated_checkout_note"))}</span>`;
 
   const visLabel = safeUiText(`commerce.enum.visibility.${L.visibility || "private"}`);
+  const reviewStatusLabel = formatCommerceEnum("listing_status", L.status);
+  const isVisPublic = L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public;
+
+  const previewBanner =
+    viewMode === "teacher_preview"
+      ? `<div class="teacher-listing-preview-banner" role="region" aria-label="${escapeHtml(tx("teacher.listing_detail.preview_aria"))}">
+  <p class="teacher-listing-preview-banner-kicker">${escapeHtml(tx("teacher.listing_detail.preview_badge"))}</p>
+  <p class="teacher-listing-preview-banner-title">${escapeHtml(tx("teacher.listing_detail.preview_mode_title"))}</p>
+  <p class="teacher-listing-preview-banner-lead">${escapeHtml(tx("teacher.listing_detail.preview_mode_lead"))}</p>
+  <p class="teacher-listing-preview-banner-context">${escapeHtml(teacherPreviewContextLine(L, tx))}</p>
+  <ul class="teacher-listing-preview-facts" role="list">
+    <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_review"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
+        reviewStatusLabel,
+      )}</span></li>
+    <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_visibility"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
+        visLabel,
+      )}</span></li>
+    <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_public"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
+        isVisPublic ? tx("teacher.listing_detail.preview_yes_public") : tx("teacher.listing_detail.preview_not_public"),
+      )}</span></li>
+  </ul>
+  <p class="teacher-listing-preview-nav">
+    <a class="teacher-listing-preview-nav-link" href="#teacher-publishing">${escapeHtml(tx("teacher.listing_detail.nav_back_publishing"))}</a>
+    <span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span>
+    <a class="teacher-listing-preview-nav-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
+    ${
+      editorUrl
+        ? `<span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span><a class="teacher-listing-preview-nav-link" href="${editorUrl}">${escapeHtml(
+            tx("teacher.listing_detail.nav_back_editor"),
+          )}</a>`
+        : ""
+    }
+  </p>
+</div>`
+      : "";
 
   const heroClass = isCourseware ? " teacher-listing-hero--courseware" : "";
-  const kickerT = isCourseware ? tx("teacher.listing_detail.courseware_hero_kicker") : tx("teacher.listing_public.kicker");
-  root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail${isCourseware ? " teacher-listing-detail--courseware" : ""}">
+  const kickerT =
+    viewMode === "teacher_preview"
+      ? tx("teacher.listing_detail.preview_kicker")
+      : isCourseware
+        ? tx("teacher.listing_detail.courseware_hero_kicker")
+        : tx("teacher.listing_public.kicker");
+  const publicBadge =
+    viewMode === "public"
+      ? `<span class="teacher-listing-pill teacher-listing-pill--ok">${escapeHtml(tx("teacher.listing_detail.badge_public"))}</span>`
+      : viewMode === "teacher_preview"
+        ? `<span class="teacher-listing-pill teacher-listing-pill--preview">${escapeHtml(tx("teacher.listing_detail.preview_badge"))}</span>`
+        : "";
+  const detailWrapClass =
+    (isCourseware ? " teacher-listing-detail--courseware" : "") + (viewMode === "teacher_preview" ? " teacher-listing-detail--teacher-preview" : "");
+
+  root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail${detailWrapClass}" data-teacher-listing-mode="${viewMode}">
+    ${previewBanner}
     <section class="card teacher-listing-hero${heroClass}">
       <p class="teacher-listing-kicker">${escapeHtml(kickerT)}</p>
       <h1 class="teacher-listing-title">${escapeHtml(mainTitle)}</h1>
@@ -170,7 +255,7 @@ async function renderPublicDetail(root, listingId) {
           : ""
       }
       <div class="teacher-listing-badges">
-        <span class="teacher-listing-pill teacher-listing-pill--ok">${escapeHtml(tx("teacher.listing_detail.badge_public"))}</span>
+        ${publicBadge}
         <span class="teacher-listing-pill">${escapeHtml(visLabel)}</span>
         <span class="teacher-listing-pill">${escapeHtml(
           pt === PRICING_TYPE.free ? tx("learner.commerce.pricing_free") : tx("learner.commerce.pricing_paid"),
@@ -178,6 +263,13 @@ async function renderPublicDetail(root, listingId) {
         <span class="teacher-listing-pill teacher-listing-pill--tone">${escapeHtml(tx("teacher.listing_detail.content_form_label"))}: ${escapeHtml(
           productFormatLabel,
         )}</span>
+        ${
+          viewMode === "teacher_preview"
+            ? `<span class="teacher-listing-pill teacher-listing-pill--state">${escapeHtml(
+                reviewStatusLabel,
+              )}</span>`
+            : ""
+        }
       </div>
       <div class="teacher-listing-price-card">
         <span class="teacher-listing-price-label">${escapeHtml(tx("learner.commerce.price"))}</span>

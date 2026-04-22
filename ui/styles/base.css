@@ -3128,6 +3128,104 @@ button.teacher-hub-cta:hover{
 .teacher-listing-public-page{
   padding-bottom: 48px;
 }
+.teacher-listing-preview-banner{
+  max-width: min(100%, 44rem);
+  margin: 0 auto 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #c4b5fd;
+  background: linear-gradient(135deg, #faf5ff 0%, #ffffff 100%);
+  box-shadow: 0 1px 0 rgba(91, 33, 182, 0.06);
+}
+.teacher-listing-preview-banner-kicker{
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b21a8;
+}
+.teacher-listing-preview-banner-title{
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #4c1d95;
+  line-height: 1.3;
+}
+.teacher-listing-preview-banner-lead,
+.teacher-listing-preview-banner-context{
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+  max-width: 62ch;
+}
+.teacher-listing-preview-facts{
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #334155;
+}
+.teacher-listing-preview-facts li{
+  margin: 0 0 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+.teacher-listing-preview-k{
+  font-weight: 800;
+  color: #64748b;
+  min-width: 5.5em;
+}
+.teacher-listing-preview-v{
+  font-weight: 700;
+  color: #0f172a;
+}
+.teacher-listing-preview-nav{
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: center;
+}
+.teacher-listing-preview-nav-link{
+  color: #1d4ed8;
+  font-weight: 800;
+  text-decoration: none;
+}
+.teacher-listing-preview-nav-link:hover{
+  text-decoration: underline;
+}
+.teacher-listing-preview-nav-sep{
+  color: #94a3b8;
+  margin: 0 2px;
+}
+.teacher-listing-pill--preview{
+  background: #ede9fe;
+  border-color: #c4b5fd;
+  color: #5b21b6;
+  font-weight: 900;
+}
+.teacher-listing-pill--state{
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+.teacher-listing-preview-purchase-hint{
+  font-size: 13px;
+  line-height: 1.5;
+  color: #5b21b6;
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  background: #f5f3ff;
+  border-radius: 8px;
+  border: 1px solid #e9d5ff;
+  max-width: 52ch;
+}
 .teacher-listing-hero,
 .teacher-listing-gate{
   max-width: min(100%, 44rem);
@@ -3227,6 +3325,18 @@ button.teacher-hub-cta:hover{
   flex-wrap: wrap;
   gap: 8px 10px;
   align-items: center;
+}
+.teacher-hub-cta--preview-listing{
+  background: #5b21b6;
+  border-color: #4c1d95;
+  color: #fff;
+}
+.teacher-hub-cta--preview-listing:hover{
+  filter: brightness(0.95);
+}
+.teacher-asset-link--preview{
+  font-weight: 800;
+  color: #5b21b6;
 }
 .teacher-asset-pub-row{
   display: flex;

@@ -190,9 +190,9 @@ function assetRow(a, t, profileId, userId, listing, snap) {
         )}</a>
         ${
           hasPubListing && listingId
-            ? ` <a class="teacher-asset-link" href="#teacher-listing?id=${encodeURIComponent(listingId)}">${escapeHtml(
-                t("teacher.assets.view_listing_link"),
-              )}</a>`
+            ? ` <a class="teacher-asset-link teacher-asset-link--preview" href="#teacher-listing?id=${encodeURIComponent(
+                listingId,
+              )}">${escapeHtml(t("teacher.assets.preview_listing_page"))}</a>`
             : ""
         }
       </p>

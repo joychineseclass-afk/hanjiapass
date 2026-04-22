@@ -21,7 +21,6 @@ import {
 } from "./teacherRules.js";
 import { initCommerceStore, getCommerceStoreSync, mutateCommerceStore } from "./store.js";
 import { findAssetById, ASSET_STATUS } from "./teacherAssetsStore.js";
-import { LISTING_STATUS, VISIBILITY } from "./enums.js";
 
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -90,6 +89,30 @@ export function syncClassroomAssetListingFromAsset(assetId) {
     row.updated_at = new Date().toISOString();
   });
   return { ok: true, updated: true };
+}
+
+/**
+ * 教师会话态：是否可预览未公开/未过审的 listing（本地规则，非正式 ACL）。
+ * @param {import('./schema.js').CommerceStoreSnapshot|Record<string, unknown>|null|undefined} _snap
+ * @param {import('./schema.js').Listing} listing
+ * @param {{ id?: string, teacherProfileId?: string | null, isGuest?: boolean } | null | undefined} user
+ * @returns {boolean}
+ */
+export function canCurrentUserPreviewTeacherListing(_snap, listing, user) {
+  if (!listing || !user || user.isGuest) return false;
+  const uid = String(user.id || "");
+  if (!uid || uid === "u_guest") return false;
+  const lTid = listing.teacher_id != null ? String(listing.teacher_id) : "";
+  const uTid = user.teacherProfileId != null ? String(user.teacherProfileId) : "";
+  if (lTid && uTid && lTid === uTid) return true;
+  if (String(listing.source_kind) === "classroom_asset" && listing.source_id) {
+    const asset = findAssetById(String(listing.source_id));
+    if (asset) {
+      if (String(asset.owner_user_id) === uid) return true;
+      if (uTid && String(asset.teacher_profile_id) === uTid) return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -372,6 +395,7 @@ export function getAssetEditorPublishingModel(teacherProfileId, currentUserId, l
     canCreate,
     canGoPublic,
     showViewPublic: hasListing && isPublic,
+    showPreviewListing: Boolean(listing?.id) && !isPublic,
     showViewListingConsole: hasListing,
   };
 }

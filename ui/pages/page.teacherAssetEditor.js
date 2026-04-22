@@ -211,6 +211,20 @@ function publishingStatusCardHtml(m, listing, t) {
       </ul>
       <div class="teacher-asset-editor-publish-actions" role="group" aria-label="${esc(t("teacher.asset_editor.publishing_actions_aria"))}">
         ${
+          m.showViewPublic && m.listingId
+            ? `<a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(
+                t("teacher.asset_editor.publishing_view_public"),
+              )}</a>`
+            : ""
+        }
+        ${
+          m.showPreviewListing && m.listingId
+            ? `<a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--preview-listing" href="#teacher-listing?id=${encodeURIComponent(
+                m.listingId,
+              )}">${esc(t("teacher.asset_editor.publishing_preview_listing"))}</a>`
+            : ""
+        }
+        ${
           m.canCreate
             ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetCreateListing">${esc(
                 t("teacher.asset_editor.publishing_create_listing"),
@@ -222,13 +236,6 @@ function publishingStatusCardHtml(m, listing, t) {
             ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetSubmitListing"${subDisabled} title="${subTitle}">${esc(
                 t("teacher.asset_editor.publishing_submit_review"),
               )}</button>`
-            : ""
-        }
-        ${
-          m.showViewPublic && m.listingId
-            ? `<a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(
-                t("teacher.asset_editor.publishing_view_public"),
-              )}</a>`
             : ""
         }
         <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${esc(
