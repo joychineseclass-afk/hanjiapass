@@ -93,6 +93,8 @@ registerRoute("#my-content", () => import("./pages/page.myLearningContent.js"));
 registerRoute("#my-orders", () => import("./pages/page.myOrders.js"));
 registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacherStage0.js"));
+registerRoute("#teacher-publishing", () => import("./pages/page.luminaTeacherStage0.js"));
+registerRoute("#teacher-review", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
 
 /* ===============================

@@ -706,7 +706,43 @@
       "back_workspace": "教師ワークスペースに戻る",
       "back_mine_workbench": "マイワークスペースに戻る",
       "mine_workbench": "マイワークスペース",
-      "subnav_aria": "教師ワークスペース内のナビゲーション"
+      "subnav_aria": "教師ワークスペース内のナビゲーション",
+      "my_publishing": "マイ掲載",
+      "review_console": "審査台",
+      "public_detail": "公開詳細"
+    },
+    "publishing_page": {
+      "title": "マイ掲載",
+      "subtitle": "授業用資産を審査に出し、承認後に公開設定を行います。",
+      "note": "このブラウザのデモデータで、いまのデモ身元に紐づく行を表示します。",
+      "link_full_console": "完全な Stage0 コンソール（上級デモ）を開く"
+    },
+    "review_page": {
+      "title": "審査台",
+      "subtitle": "掲載を選び、ステータスを更新。差し戻し・非公開のときは理由を残します。",
+      "note": "デモ用のため実キューではありません。審査員でなければデモ身元を切り替えてください。",
+      "gate_title": "審査員専用",
+      "gate_body": "この画面は審査者／管理者向けのデモです。教師は「マイ掲載」から送ってください。",
+      "gate_hint": "下のリンクで身元切り替え可能な完全コンソールを開くこともできます。",
+      "gate_switch_identity": "完全コンソールを開く（身元切り替え）"
+    },
+    "listing_detail": {
+      "badge_public": "公開中",
+      "content_section_title": "内容詳細",
+      "audience": "対象",
+      "audience_placeholder": "紐づくコース／授業向け学習者（詳細は今後の設定で）。",
+      "course_source": "コースの出所",
+      "content_format": "形式",
+      "format_placeholder": "本プレビューは授業のステップ流れです。教材連携は今後。",
+      "usage": "使い方",
+      "usage_placeholder": "授業で投影する／自分で流れを試す（デモ）。",
+      "coming_more": "資料のダウンロードや正式シラバスは次の段階で。",
+      "go_teacher_home": "教師ワークスペースへ",
+      "unavailable_title": "閲覧できません",
+      "unavailable_body": "審査済みで公開中の掲載だけが表示されます。資産管理や掲載画面で確認してください。",
+      "status_line": "ステータス: {status}",
+      "desc_placeholder": "教師が補足する短い説明（今後表示）。",
+      "source_asset_label": "元の授業用資産"
     },
     "path_strip": {
       "aria": "教材・コース・掲載の流れでの位置",

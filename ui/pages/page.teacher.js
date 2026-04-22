@@ -269,7 +269,8 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats) {
             <span class="teacher-hub-badge">${escapeHtml(t("teacher.hub.listing.badge"))}</span>
           </div>
           <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.listing.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#lumina-teacher-stage0">${escapeHtml(t("teacher.hub.listing.cta_mine"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.hub.listing.cta_mine"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">

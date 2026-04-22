@@ -697,7 +697,43 @@
       "back_workspace": "返回教师工作台",
       "back_mine_workbench": "返回我的工作台",
       "mine_workbench": "我的工作台",
-      "subnav_aria": "教师工作台内导航"
+      "subnav_aria": "教师工作台内导航",
+      "my_publishing": "我的上架",
+      "review_console": "审核台",
+      "public_detail": "公开详情"
+    },
+    "publishing_page": {
+      "title": "我的上架",
+      "subtitle": "将课堂资产提交审核，通过后再设置公开可见。",
+      "note": "以下为当前演示身份在本机数据中的上架项。",
+      "link_full_console": "打开完整 Stage0 控制台（高级演示）"
+    },
+    "review_page": {
+      "title": "审核台",
+      "subtitle": "选择上架项、更新状态，拒绝或下架时请填写原因。",
+      "note": "演示环境，非真实审核队列。若非审核员身份，请先切换演示账号。",
+      "gate_title": "仅审核员",
+      "gate_body": "此页面向审核员/管理员演示账号开放。老师请使用「我的上架」提交内容。",
+      "gate_hint": "可在完整控制台切换演示身份，或访问下方链接。",
+      "gate_switch_identity": "打开完整控制台以切换身份"
+    },
+    "listing_detail": {
+      "badge_public": "已公开",
+      "content_section_title": "内容详情",
+      "audience": "适合对象",
+      "audience_placeholder": "与关联课次路径一致的学习者；后续可配置更细人群。",
+      "course_source": "课程来源",
+      "content_format": "内容形式",
+      "format_placeholder": "本预览为课次步骤流；课件与文件将在后续版本接入。",
+      "usage": "使用方式",
+      "usage_placeholder": "老师现场授课投屏，或自行预览课次流程（演示）。",
+      "coming_more": "更多资料、下载与结构化大纲将在后续版本开放。",
+      "go_teacher_home": "前往教师工作台",
+      "unavailable_title": "当前不可访问",
+      "unavailable_body": "仅当上架已审核通过且公开时，访客可查看本页。老师可在「我的课堂资产」或「我的上架」查看状态。",
+      "status_line": "当前状态：{status}",
+      "desc_placeholder": "老师补充的简介将显示在此处（后续版本）。",
+      "source_asset_label": "来源课堂资产"
     },
     "path_strip": {
       "aria": "教材、课程与上架流程位置",

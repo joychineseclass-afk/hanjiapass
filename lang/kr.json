@@ -697,7 +697,43 @@
       "back_workspace": "교사 워크스페이스로 돌아가기",
       "back_mine_workbench": "내 작업대로 돌아가기",
       "mine_workbench": "내 작업대",
-      "subnav_aria": "교사 워크스페이스 안내 네비게이션"
+      "subnav_aria": "교사 워크스페이스 안내 네비게이션",
+      "my_publishing": "내 판매 등록",
+      "review_console": "심사 콘솔",
+      "public_detail": "공개 상세"
+    },
+    "publishing_page": {
+      "title": "내 등록(상架)",
+      "subtitle": "수업 자산을 심사에 제출하고, 승인 후 공개를 설정하세요.",
+      "note": "이 브라우저의 데모 데이터에서 현재 계정에 해당하는 항목입니다.",
+      "link_full_console": "전체 Stage0 콘솔(고급 데모) 열기"
+    },
+    "review_page": {
+      "title": "심사 콘솔",
+      "subtitle": "등록을 선택해 상태를 바꾸고, 반려·비공개 시 사유를 남기세요.",
+      "note": "데모용이며 실제 큐가 아닙니다. 심사자가 아니면 데모 계정을 전환하세요.",
+      "gate_title": "심사자 전용",
+      "gate_body": "이 화면은 심사자/관리자 데모 계정용입니다. 강사는 ‘내 등록’에서 제출하세요.",
+      "gate_hint": "전체 콘솔에서 데모 계정을 전환하거나 아래 링크를 사용하세요.",
+      "gate_switch_identity": "전체 콘솔 열기(계정 전환)"
+    },
+    "listing_detail": {
+      "badge_public": "공개",
+      "content_section_title": "콘텐츠 소개",
+      "audience": "대상",
+      "audience_placeholder": "연결된 코스/차시에 맞는 학습자(추후 세부 설정).",
+      "course_source": "코스 출처",
+      "content_format": "형식",
+      "format_placeholder": "이 미리보기는 차시 흐름입니다. 자료/슬라이드는 이후 연동.",
+      "usage": "사용 방법",
+      "usage_placeholder": "강의 현장 수업(프로젝터) 또는 혼자 미리보기(데모).",
+      "coming_more": "자료, 다운로드, 정식 실라버스는 이후 버전에서 제공.",
+      "go_teacher_home": "교사 워크스페이스로",
+      "unavailable_title": "지금은 볼 수 없음",
+      "unavailable_body": "승인·공개된 등록만 공개 페이지로 표시됩니다. ‘내 수업 자산’ 또는 ‘내 등록’에서 확인하세요.",
+      "status_line": "상태: {status}",
+      "desc_placeholder": "강사가 입력한 한 줄 설명(추가 예정).",
+      "source_asset_label": "출처 수업 자산"
     },
     "path_strip": {
       "aria": "교재·코스·등록 진행 단계",

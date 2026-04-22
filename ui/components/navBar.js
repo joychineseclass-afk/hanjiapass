@@ -67,7 +67,15 @@ function setActive(rootEl) {
     // ✅ 首页：path 匹配 + hash 匹配（有 hash 的话）
     if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
       const wantHash = toHash ? `#${toHash}` : "";
-      const teacherHashes = new Set(["#teacher", "#teacher-materials", "#teacher-courses", "#teacher-assets", "#lumina-teacher-stage0"]);
+      const teacherHashes = new Set([
+        "#teacher",
+        "#teacher-materials",
+        "#teacher-courses",
+        "#teacher-assets",
+        "#lumina-teacher-stage0",
+        "#teacher-publishing",
+        "#teacher-review",
+      ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
       } else {

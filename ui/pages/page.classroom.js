@@ -182,8 +182,6 @@ export default async function pageClassroom(ctxOrRoot) {
   const viewPresent = tx("teacher.classroom.presentation.mode_presentation");
   const fsEnter = tx("teacher.classroom.presentation.fullscreen");
   const fsExit = tx("teacher.classroom.presentation.exit_fullscreen");
-  const controlBarKicker = tx("teacher.classroom.presentation.control_bar_title");
-
   let ctxLine2;
   if (activeAsset) {
     ctxLine2 = tx("teacher.classroom.context.asset_params_hint", {
@@ -253,7 +251,6 @@ export default async function pageClassroom(ctxOrRoot) {
   root.innerHTML = `
     <section class="lumina-classroom-page wrap" id="luminaClassroomPage">
       <header class="classroom-topbar classroom-control-bar">
-        <p class="classroom-control-kicker">${escapeHtml(controlBarKicker)}</p>
         <div class="classroom-control-bar-row1">
         <div class="classroom-topbar-actions">
           <button type="button" class="classroom-back" id="classroomBackBtn">← ${escapeHtml(backLabel)}</button>
@@ -272,7 +269,7 @@ export default async function pageClassroom(ctxOrRoot) {
         <div class="classroom-asset-wrap" id="classroomAssetBannerHost">${assetBlock}</div>
         <div class="classroom-teacher-ctx" id="classroomTeacherContext">
           ${line1}
-          <p class="classroom-ctx-line2">${escapeHtml(ctxLine2)}</p>
+          <p class="classroom-ctx-line2 classroom-ctx-line2--meta">${escapeHtml(ctxLine2)}</p>
         </div>
       </header>
       <div id="classroomKidsGamesHost"></div>

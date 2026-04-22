@@ -63,6 +63,14 @@ function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+/** @returns {'full' | 'publishing' | 'review'} */
+function getPageMode() {
+  const h = String(location.hash || "");
+  if (h.startsWith("#teacher-review")) return "review";
+  if (h.startsWith("#teacher-publishing")) return "publishing";
+  return "full";
+}
+
 /** @param {string[]} values @param {string} selected @param {string} group */
 function optEnumLocalized(values, selected, group) {
   return values
@@ -99,6 +107,26 @@ function formatListingUpdatedCell(iso) {
 function renderPage(root, ctx) {
   const snap = ctx.snap;
   const demoUserId = ctx.demoUserId;
+  const pageMode = /** @type {'full'|'publishing'|'review'} */ (ctx.pageMode || "full");
+
+  const myTp = snap.teacher_profiles.find((tp) => tp.user_id === demoUserId) || null;
+  const myTeacherId = myTp?.id ?? null;
+
+  let listingsForTable = snap.listings;
+  if (pageMode === "publishing") {
+    listingsForTable = myTeacherId
+      ? snap.listings.filter((L) => L.seller_type === SELLER_TYPE.teacher && L.teacher_id === myTeacherId)
+      : snap.listings.filter((L) => L.seller_type === SELLER_TYPE.teacher);
+  }
+  const sortedForReview =
+    pageMode === "review"
+      ? [...listingsForTable].sort((a, b) => {
+          const rank = (s) => (s === LISTING_STATUS.pending_review ? 0 : 1);
+          const d = rank(a.status) - rank(b.status);
+          if (d !== 0) return d;
+          return String(b.updated_at || "").localeCompare(String(a.updated_at || ""));
+        })
+      : listingsForTable;
 
   const teacherRows = snap.teacher_profiles
     .map(
@@ -115,14 +143,14 @@ function renderPage(root, ctx) {
     .join("");
 
   const listingRows =
-    snap.listings.length === 0
+    sortedForReview.length === 0
       ? `<tr><td colspan="8" class="lts0-list-empty-cell">
           <div class="lts0-empty-in-table" role="status">
             <p class="lts0-empty-in-table-title">${escapeHtml(commerceT("commerce.stage0.list_empty_title"))}</p>
             <p class="lts0-empty-in-table-desc">${escapeHtml(commerceT("commerce.stage0.list_empty_hint"))}</p>
           </div>
         </td></tr>`
-      : snap.listings
+      : sortedForReview
           .map((L) => {
             const tp =
               L.seller_type === SELLER_TYPE.teacher
@@ -147,6 +175,9 @@ function renderPage(root, ctx) {
         <td>${escapeHtml(String(L.price_amount))} ${escapeHtml(String(L.price_currency))}</td>
         <td>${formatListingUpdatedCell(L.updated_at)}</td>
         <td class="lts0-cell-actions">
+          <a class="lts0-public-detail-link" href="#teacher-listing?id=${encodeURIComponent(L.id)}">${escapeHtml(
+            commerceT("teacher.nav.public_detail"),
+          )}</a>
           <button type="button" class="lts0-btn lts0-btn--teacher lts0-submit-review" data-id="${escapeHtml(L.id)}" ${submitDisabled}>${escapeHtml(commerceT("commerce.form.submit_review"))}</button>
         </td>
       </tr>`;
@@ -197,7 +228,29 @@ function renderPage(root, ctx) {
   const isReviewer =
     userHasRole(snap, demoUserId, USER_ROLE.reviewer) || userHasRole(snap, demoUserId, USER_ROLE.admin);
 
-  const reviewPanel = isReviewer
+  if (pageMode === "review" && !isReviewer) {
+    root.innerHTML = `
+    <div class="wrap teacher-review teacher-review--gate lts0-page teacher-admin-shell">
+      ${teacherBackToWorkspaceHtml(commerceT)}
+      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
+      ${teacherWorkspaceSubnavHtml("review", commerceT)}
+      <section class="card teacher-review-gate-card">
+        <h1 class="teacher-review-gate-title">${escapeHtml(commerceT("teacher.review_page.gate_title"))}</h1>
+        <p class="teacher-review-gate-body">${escapeHtml(commerceT("teacher.review_page.gate_body"))}</p>
+        <p class="teacher-review-gate-hint">${escapeHtml(commerceT("teacher.review_page.gate_hint"))}</p>
+        <div class="teacher-review-gate-actions">
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#lumina-teacher-stage0">${escapeHtml(
+            commerceT("teacher.review_page.gate_switch_identity"),
+          )}</a>
+          <a class="teacher-hub-cta" href="#teacher">${escapeHtml(commerceT("teacher.nav.back_mine_workbench"))}</a>
+        </div>
+      </section>
+    </div>`;
+    i18n.apply?.(root);
+    return;
+  }
+
+  const reviewPanel = isReviewer && pageMode !== "publishing"
     ? `<section class="card lts0-reviewer-zone">
         <h2 class="lts0-reviewer-zone-title">${escapeHtml(commerceT("commerce.review.zone_title"))}</h2>
         <p class="lts0-reviewer-zone-sub">${escapeHtml(commerceT("commerce.review.zone_subtitle"))}</p>
@@ -334,27 +387,101 @@ function renderPage(root, ctx) {
         </div>
       </div>`;
 
+  const subnavActive = pageMode === "review" ? "review" : pageMode === "publishing" ? "publishing" : "listing";
+  const pageShellClass =
+    pageMode === "publishing" ? "teacher-publishing" : pageMode === "review" ? "teacher-review" : "teacher-stage0-full";
+  const stageTitle =
+    pageMode === "publishing"
+      ? commerceT("teacher.publishing_page.title")
+      : pageMode === "review"
+        ? commerceT("teacher.review_page.title")
+        : commerceT("commerce.stage0.title");
+  const stageSubtitle =
+    pageMode === "publishing"
+      ? commerceT("teacher.publishing_page.subtitle")
+      : pageMode === "review"
+        ? commerceT("teacher.review_page.subtitle")
+        : commerceT("commerce.stage0.subtitle");
+  const stageNote =
+    pageMode === "publishing"
+      ? commerceT("teacher.publishing_page.note")
+      : pageMode === "review"
+        ? commerceT("teacher.review_page.note")
+        : commerceT("commerce.stage0.stage_note");
+
+  const showHeroBadge = pageMode === "full";
+  const showSourceGuide = pageMode === "full" || pageMode === "publishing";
+  const showPrimaryDraft = pageMode !== "review";
+  const showGuideColumn = pageMode === "full";
+  const reviewPanelTop = pageMode === "review" && isReviewer ? reviewPanel : "";
+  const reviewPanelBottom = pageMode === "full" && isReviewer ? reviewPanel : "";
+  const showSecondaryFold = pageMode === "full";
+  const actionsHubClass = `lts0-actions-hub${pageMode === "publishing" ? " lts0-actions-hub--publishing" : ""}${
+    pageMode === "review" ? " lts0-actions-hub--review" : ""
+  }`;
+
+  const assetStripListings = snap.listings.filter((L) => {
+    if (String(L.source_kind) !== "classroom_asset") return false;
+    if (pageMode === "publishing" && myTeacherId) {
+      return L.teacher_id === myTeacherId;
+    }
+    return true;
+  });
+
+  const reviewLogMainTable =
+    pageMode === "review" && isReviewer
+      ? `<section class="card teacher-review-log-main" aria-labelledby="trlog-main-title">
+        <h2 id="trlog-main-title" class="teacher-review-log-main-title">${escapeHtml(
+          commerceT("commerce.stage0.review_log_title"),
+        )}</h2>
+        <div class="lts0-table-scroll">
+          <table class="lts0-table">
+            <thead><tr>
+              <th>${escapeHtml(formatCommerceTableHead("time"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("listing_id"))}</th>
+              <th>${escapeHtml(formatCommerceTableHead("action"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("reason_code"))}</th>
+              <th>${escapeHtml(formatCommerceFieldLabel("reason_text"))}</th>
+            </tr></thead>
+            <tbody>${
+              snap.listing_review_logs.length
+                ? logRows
+                : `<tr><td colspan="5">${escapeHtml(commerceT("commerce.table.no_rows"))}</td></tr>`
+            }</tbody>
+          </table>
+        </div>
+      </section>`
+      : "";
+
   root.innerHTML = `
-    <div class="wrap lts0-page teacher-admin-shell">
+    <div class="wrap lts0-page teacher-admin-shell ${pageShellClass}">
       ${teacherBackToWorkspaceHtml(commerceT)}
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
-      ${teacherWorkspaceSubnavHtml("listing", commerceT)}
+      ${teacherWorkspaceSubnavHtml(subnavActive, commerceT)}
       <section class="card lts0-hero">
         <div class="lts0-hero-top">
           <div class="lts0-hero-text">
-            <h2 class="title">${escapeHtml(commerceT("commerce.stage0.title"))}</h2>
-            <p class="desc">${escapeHtml(commerceT("commerce.stage0.subtitle"))}</p>
-            <p class="lts0-stage-note">${escapeHtml(commerceT("commerce.stage0.stage_note"))}</p>
+            <h2 class="title">${escapeHtml(stageTitle)}</h2>
+            <p class="desc">${escapeHtml(stageSubtitle)}</p>
+            <p class="lts0-stage-note">${escapeHtml(stageNote)}</p>
           </div>
-          <span class="lts0-stage-badge" aria-label="${escapeHtml(commerceT("commerce.stage0.stage_badge"))}">${escapeHtml(commerceT("commerce.stage0.stage_badge"))}</span>
+          ${
+            showHeroBadge
+              ? `<span class="lts0-stage-badge" aria-label="${escapeHtml(commerceT("commerce.stage0.stage_badge"))}">${escapeHtml(commerceT("commerce.stage0.stage_badge"))}</span>`
+              : ""
+          }
         </div>
       </section>
       ${teacherPathStripHtml("listing", commerceT)}
-      ${teacherListingSourceGuideHtml(commerceT)}
+      ${showSourceGuide ? teacherListingSourceGuideHtml(commerceT) : ""}
 
-      <section class="card lts0-actions-hub">
+      ${reviewPanelTop}
+
+      <section class="card ${actionsHubClass}">
         <div class="lts0-actions-grid">
-          <div class="lts0-panel lts0-panel--primary">
+          ${
+            showPrimaryDraft
+              ? `<div class="lts0-panel lts0-panel--primary">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h3>
             <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.panel_draft_desc"))}</p>
             <p class="lts0-draft-source-hint">${escapeHtml(commerceT("commerce.stage0.draft_source_hint"))}</p>
@@ -387,7 +514,9 @@ function renderPage(root, ctx) {
                 <button type="submit" class="lts0-btn lts0-btn--primary">${escapeHtml(commerceT("commerce.form.create_draft"))}</button>
               </div>
             </form>
-          </div>
+          </div>`
+              : ""
+          }
           <div class="lts0-panel lts0-panel--identity">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.identity_title"))}</h3>
             <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.identity_desc"))}</p>
@@ -411,27 +540,30 @@ function renderPage(root, ctx) {
                 : `<p class="lts0-muted">${escapeHtml(commerceT("commerce.review.hidden"))}</p>`
             }
           </div>
-          <div class="lts0-panel lts0-panel--guide">
+          ${
+            showGuideColumn
+              ? `<div class="lts0-panel lts0-panel--guide">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.guide_title"))}</h3>
             <ul class="lts0-guide-list">
               <li>${escapeHtml(commerceT("commerce.stage0.guide_1"))}</li>
               <li>${escapeHtml(commerceT("commerce.stage0.guide_2"))}</li>
               <li>${escapeHtml(commerceT("commerce.stage0.guide_3"))}</li>
             </ul>
-          </div>
+          </div>`
+              : ""
+          }
         </div>
       </section>
 
       ${
-        snap.listings.filter((L) => String(L.source_kind) === "classroom_asset").length
+        assetStripListings.length
           ? `<section class="card lts0-classroom-asset-strip" aria-label="${escapeHtml(
               commerceT("commerce.stage0.asset_listings_aria"),
             )}">
         <h2 class="lts0-classroom-asset-strip-title">${escapeHtml(commerceT("commerce.stage0.asset_listings_title"))}</h2>
         <p class="lts0-classroom-asset-strip-desc">${escapeHtml(commerceT("commerce.stage0.asset_listings_desc"))}</p>
         <ul class="lts0-classroom-asset-strip-list">
-          ${snap.listings
-            .filter((L) => String(L.source_kind) === "classroom_asset")
+          ${assetStripListings
             .map(
               (L) =>
                 `<li class="lts0-classroom-asset-strip-item"><span class="lts0-strip-id">${escapeHtml(
@@ -467,9 +599,13 @@ function renderPage(root, ctx) {
         </div>
       </section>
 
-      ${reviewPanel}
+      ${reviewLogMainTable}
 
-      <details class="card lts0-fold-secondary">
+      ${reviewPanelBottom}
+
+      ${
+        showSecondaryFold
+          ? `<details class="card lts0-fold-secondary">
         <summary class="lts0-fold-secondary-summary">
           <span class="lts0-fold-secondary-title">${escapeHtml(commerceT("commerce.stage0.secondary_fold_title"))}</span>
           <span class="lts0-fold-secondary-hint">${escapeHtml(commerceT("commerce.stage0.secondary_fold_hint"))}</span>
@@ -477,7 +613,11 @@ function renderPage(root, ctx) {
         <div class="lts0-fold-secondary-body">
           ${secondaryFoldBody}
         </div>
-      </details>
+      </details>`
+          : `<p class="lts0-to-full-console-hint"><a href="#lumina-teacher-stage0">${escapeHtml(
+              commerceT("teacher.publishing_page.link_full_console"),
+            )}</a></p>`
+      }
     </div>
   `;
 
@@ -651,7 +791,7 @@ function renderPage(root, ctx) {
 
 let __stage0LangHandler = /** @type {null | (() => void)} */ (null);
 let __stage0RootRef = /** @type {HTMLElement | null} */ (null);
-let __stage0CtxRef = /** @type {{ snap: any, demoUserId: string } | null} */ (null);
+let __stage0CtxRef = /** @type {{ snap: any, demoUserId: string, pageMode?: string } | null} */ (null);
 
 export default async function pageLuminaTeacherStage0(ctxOrRoot) {
   const root =
@@ -668,12 +808,15 @@ export default async function pageLuminaTeacherStage0(ctxOrRoot) {
     demoUserId = sessionStorage.getItem("lumina_stage0_demo_user") || demoUserId;
   } catch {}
 
-  const ctx = { snap, demoUserId };
+  const ctx = { snap, demoUserId, pageMode: getPageMode() };
   __stage0RootRef = root;
   __stage0CtxRef = ctx;
   if (__stage0LangHandler) window.removeEventListener("joy:langChanged", __stage0LangHandler);
   __stage0LangHandler = () => {
-    if (__stage0RootRef?.isConnected && __stage0CtxRef) renderPage(__stage0RootRef, __stage0CtxRef);
+    if (__stage0RootRef?.isConnected && __stage0CtxRef) {
+      __stage0CtxRef.pageMode = getPageMode();
+      renderPage(__stage0RootRef, __stage0CtxRef);
+    }
   };
   window.addEventListener("joy:langChanged", __stage0LangHandler);
   renderPage(root, ctx);

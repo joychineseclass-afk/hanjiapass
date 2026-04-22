@@ -65,8 +65,10 @@ export function renderClassroomToolbar(rootEl, stageEl) {
     })
     .join("");
 
+  rootEl.classList.toggle("classroom-toolbar--presentation", isPres);
+
   rootEl.innerHTML = `
-    <div class="classroom-toolbar">
+    <div class="classroom-toolbar${isPres ? " classroom-toolbar--presentation-inner" : ""}">
       <div class="classroom-toolbar-row classroom-toolbar-row--nav">
         <button type="button" class="classroom-nav-btn classroom-nav-btn--large" data-role="prev" aria-label="${prevLabel}">${prevLabel}</button>
         <div class="classroom-step-now" role="status">
@@ -87,7 +89,7 @@ export function renderClassroomToolbar(rootEl, stageEl) {
           <button type="button" class="classroom-ctrl-btn" data-role="view-mode" aria-pressed="${isPres}">${viewToggleLabel}</button>
           <button type="button" class="classroom-ctrl-btn classroom-ctrl-btn--primary" data-role="fullscreen" aria-pressed="${fsOn}">${fsLabel}</button>
         </div>
-        <p class="classroom-keyboard-hint">${keyboardHint}</p>
+        <p class="classroom-keyboard-hint" ${isPres ? 'hidden data-pres-hidden="1"' : ""}>${keyboardHint}</p>
       </div>
     </div>
   `;

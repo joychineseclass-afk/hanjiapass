@@ -20,14 +20,15 @@ export function teacherBackToWorkspaceHtml(tx) {
 
 /**
  * 教师模块轻量子导航：工作台 + 教材 / 课程 / 课堂资产 / 上架（当前项高亮）。
- * @param {'workspace' | 'materials' | 'courses' | 'assets' | 'listing'} active
+ * @param {'workspace' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
  * @param {(path: string, params?: object) => string} tx
  */
 export function teacherWorkspaceSubnavHtml(active, tx) {
   const m = (path) => escapeHtml(tx(path));
-  /** @param {'workspace'|'materials'|'courses'|'assets'|'listing'} kind */
+  /** @param {'workspace'|'materials'|'courses'|'assets'|'listing'|'publishing'|'review'} kind */
   const item = (kind) => {
-    const isCurrent = active === kind;
+    let isCurrent = active === kind;
+    if (kind === "listing") isCurrent = active === "listing" || active === "publishing";
     let href = "#teacher";
     let label = m("teacher.nav.mine_workbench");
     if (kind === "materials") {
@@ -39,9 +40,12 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
     } else if (kind === "assets") {
       href = "#teacher-assets";
       label = m("teacher.hub.assets.title");
-    } else if (kind === "listing") {
-      href = "#lumina-teacher-stage0";
-      label = m("teacher.hub.listing.title");
+    } else if (kind === "listing" || kind === "publishing") {
+      href = "#teacher-publishing";
+      label = m("teacher.nav.my_publishing");
+    } else if (kind === "review") {
+      href = "#teacher-review";
+      label = m("teacher.nav.review_console");
     }
     if (isCurrent) {
       return `<span class="teacher-subnav-item teacher-subnav-item--current" aria-current="page">${label}</span>`;
@@ -51,12 +55,13 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
 
   return `
     <nav class="teacher-subnav card" aria-label="${m("teacher.nav.subnav_aria")}">
-      <div class="teacher-subnav-row">
+      <div class="teacher-subnav-row teacher-subnav-row--wrap">
         ${item("workspace")}
         ${item("materials")}
         ${item("courses")}
         ${item("assets")}
-        ${item("listing")}
+        ${item("publishing")}
+        ${item("review")}
       </div>
     </nav>
   `;
@@ -73,7 +78,7 @@ export function teacherPathStripHtml(active, tx) {
     materials: "#teacher-materials",
     courses: "#teacher-courses",
     assets: "#teacher-assets",
-    listing: "#lumina-teacher-stage0",
+    listing: "#teacher-publishing",
   };
   /** @param {'materials'|'courses'|'assets'|'listing'} kind */
   const node = (kind) => {
@@ -126,7 +131,7 @@ export function teacherMaterialsNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.materials_next.path_b_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.materials_next.path_b_body")}</p>
-          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#lumina-teacher-stage0">${m("teacher.flow.cta_prepare_listing")}</a>
+          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#teacher-publishing">${m("teacher.flow.cta_prepare_listing")}</a>
         </div>
       </div>
     </section>
@@ -156,7 +161,7 @@ export function teacherCoursesNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_b_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.courses_next.path_b_body")}</p>
-          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#lumina-teacher-stage0">${m("teacher.flow.cta_register_listing")}</a>
+          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#teacher-publishing">${m("teacher.flow.cta_register_listing")}</a>
         </div>
       </div>
       <p class="teacher-guide-panel-foot">

@@ -697,7 +697,43 @@
       "back_workspace": "Back to Teacher Workspace",
       "back_mine_workbench": "Back to my workbench",
       "mine_workbench": "My workbench",
-      "subnav_aria": "Navigation inside the Teacher Workspace"
+      "subnav_aria": "Navigation inside the Teacher Workspace",
+      "my_publishing": "My listings",
+      "review_console": "Review console",
+      "public_detail": "Public detail"
+    },
+    "publishing_page": {
+      "title": "My listings",
+      "subtitle": "Submit classroom work for review, then set visibility when it is approved.",
+      "note": "You are seeing your own rows in this browser’s demo data.",
+      "link_full_console": "Open full Stage 0 console (advanced demo tools)"
+    },
+    "review_page": {
+      "title": "Review console",
+      "subtitle": "Pick a listing, move its status, and leave a reason when rejecting or delisting.",
+      "note": "Demo only: no real compliance queue. Switch identity if you are not a reviewer yet.",
+      "gate_title": "Reviewers only",
+      "gate_body": "This screen is for reviewer and admin demo accounts. Teachers use “My listings” to submit content.",
+      "gate_hint": "Switch the demo identity to a reviewer, or open the full console from the link below.",
+      "gate_switch_identity": "Open full console to switch identity"
+    },
+    "listing_detail": {
+      "badge_public": "Published",
+      "content_section_title": "About this content",
+      "audience": "Who it is for",
+      "audience_placeholder": "Learners in the linked course path; exact cohorts will be configurable later.",
+      "course_source": "Course source",
+      "content_format": "Format",
+      "format_placeholder": "Lesson flow in this preview; files and slides connect in a later release.",
+      "usage": "How to use",
+      "usage_placeholder": "Live classroom with the teacher, or preview the flow on your own in this demo.",
+      "coming_more": "More materials, downloads, and structured syllabi will open in a future release.",
+      "go_teacher_home": "Go to Teacher Workspace",
+      "unavailable_title": "Not available",
+      "unavailable_body": "This page is only shown when a listing is approved and public. Teachers can check status in My classroom assets or My listings.",
+      "status_line": "Current status: {status}",
+      "desc_placeholder": "Short description will appear here when the teacher adds copy in a later step.",
+      "source_asset_label": "From classroom asset"
     },
     "path_strip": {
       "aria": "Where you are in materials, courses, and listings",

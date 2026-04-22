@@ -89,7 +89,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     if (!listing || !snap) {
       return `<td class="teacher-manage-cell-commerce"><span class="teacher-commerce-na">${escapeHtml(
         t("teacher.assets.commerce_no_listing_short"),
-      )}</span> <a class="teacher-asset-link" href="#lumina-teacher-stage0">${escapeHtml(
+      )}</span> <a class="teacher-asset-link" href="#teacher-publishing">${escapeHtml(
         t("teacher.assets.commerce_go_listing"),
       )}</a></td>`;
     }
@@ -163,7 +163,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
         a.id,
       )}" ${canSubmit ? "" : "disabled"} title="${submitTitle}">${escapeHtml(t("teacher.publishing.submit_review"))}</button>
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
-      <a class="teacher-asset-link" href="#lumina-teacher-stage0" title="${escapeHtml(
+      <a class="teacher-asset-link" href="#teacher-publishing" title="${escapeHtml(
         t("teacher.publishing.view_review_console"),
       )}">${escapeHtml(t("teacher.publishing.view_status"))}</a>
       ${

@@ -3,29 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title data-i18n="nav_teacher">교사专区 | Joy Chinese</title>
+  <meta http-equiv="refresh" content="0; url=../index.html#teacher" />
+  <title>교사 워크스페이스로 이동</title>
   <link rel="stylesheet" href="../styles/base.css" />
+  <style>
+    .teacher-redirect-card{ max-width:28rem; margin:48px auto; padding:24px; }
+    .teacher-redirect-card a{ color:#2563eb; font-weight:700; }
+  </style>
 </head>
 <body>
-
-<div id="navBar"></div>
-
-<main class="page-wrap">
-  <h1 class="page-title" data-i18n="nav_teacher"></h1>
-  <p class="muted">教师教学资料与课程管理区。</p>
-
-  <div class="card" style="margin-top:16px;">
-    <div class="placeholder">👩‍🏫 教师功能模块（下一步接入）</div>
-  </div>
-</main>
-
-<script type="module">
-  import { i18n } from "../ui/i18n.js";
-  import { mountNavBar } from "../ui/components/navBar.js";
-  i18n.init({ defaultLang:"kr", storageKey:"joy_lang", autoApplyRoot: document });
-  mountNavBar(document.getElementById("navBar"));
-  i18n.apply();
-</script>
-
+  <main class="page-wrap teacher-redirect-card card">
+    <h1 class="title" style="font-size:1.1rem;">教师模块已统一至站内应用</h1>
+    <p class="desc" style="color:#64748b; margin:12px 0;">正在跳转到 <strong>#teacher</strong> … 若未自动跳转，请点下方链接。</p>
+    <p><a href="../index.html#teacher">打开 Lumina 教师工作台（SPA）</a></p>
+  </main>
+  <script>
+    try {
+      if (String(location.pathname).endsWith("teacher.html")) {
+        location.replace(
+          new URL("../index.html#teacher", location.href).href,
+        );
+      }
+    } catch (e) {}
+  </script>
 </body>
 </html>
