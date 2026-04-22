@@ -904,7 +904,18 @@
       "col_source": "Source lesson",
       "col_status": "Status",
       "col_updated": "Last updated",
-      "col_actions": "Actions"
+      "col_commerce": "Pricing & access",
+      "col_actions": "Actions",
+      "commerce_no_listing_short": "No listing",
+      "commerce_go_listing": "Open listing flow",
+      "commerce_price_unset": "Price not set",
+      "commerce_public_yes": "Public",
+      "commerce_public_no": "Not public",
+      "commerce_grants": "Unlocks: {n}",
+      "commerce_pricing_type": "Price type",
+      "commerce_paid_amount_hint": "Amount in KRW (whole number)",
+      "commerce_save_pricing": "Save price",
+      "commerce_save_failed": "Could not save. Check values and try again."
     },
     "demo": {
       "disclosure": "Rows below are local demo data to illustrate how materials, courses, and listings relate—not real student or order data.",
@@ -1199,6 +1210,67 @@
       "not_found_desc": "The link may be wrong or the item was removed. Check with the teacher or platform.",
       "no_access_title": "Not available publicly",
       "no_access_body": "This item is not approved for public view, is still private, or does not exist. Teachers can see status in My classroom assets and the review console."
+    },
+    "sales": {
+      "title": "Sales snapshot (demo)",
+      "lead": "Counts and amounts come from local orders. This is not a tax or payout statement.",
+      "chip_public_listings": "public listings",
+      "chip_grants_or_sales": "unlocks or purchases",
+      "chip_gross": "gross (simulated)",
+      "chip_teacher_income": "your share (est.)",
+      "chip_platform_share": "platform share (est.)",
+      "pending_settlement": "Payouts, tax, and real settlement are not in this step—these numbers are for display only."
+    }
+  },
+  "learner": {
+    "nav": {
+      "my_content": "My content",
+      "my_orders": "My orders"
+    },
+    "my_content": {
+      "lead": "Listings you can open after a free unlock or a simulated purchase in this browser.",
+      "empty": "No items yet. Unlock from a public teacher listing when you are signed in.",
+      "col_title": "Title",
+      "col_teacher": "Teacher",
+      "col_type": "Type",
+      "col_how": "How you got it",
+      "col_time": "Unlocked at",
+      "col_action": "Classroom / detail"
+    },
+    "my_orders": {
+      "lead": "Local orders, including free unlocks. Paid rows use a simulated successful payment.",
+      "empty": "No orders yet.",
+      "col_time": "Time",
+      "col_title": "Content",
+      "col_amount": "Amount",
+      "col_status": "Status",
+      "col_outcome": "Payment and access"
+    },
+    "commerce": {
+      "price": "Price",
+      "pricing_free": "Free",
+      "pricing_paid": "Paid",
+      "price_free": "Free",
+      "price_paid_line": "{amount} {currency}",
+      "status_granted": "Unlocked",
+      "status_purchased": "Purchased",
+      "already_owned_hint": "You already have access to this content",
+      "cta_free": "Get for free",
+      "cta_buy": "Buy",
+      "simulated_checkout_note": "Simulated payment—no real charge in this preview.",
+      "success_in_library": "Added to My content.",
+      "via_purchase": "Purchase",
+      "via_free": "Free unlock",
+      "open_classroom": "Open classroom",
+      "error": {
+        "unknown": "Something went wrong. Please try again.",
+        "listing_not_found": "This content was not found.",
+        "not_public": "This content is not available as a public listing.",
+        "already_owned": "You already have access. No need to get it again.",
+        "invalid_price": "The price is not set up for purchase yet.",
+        "buyer_required": "Sign in to get access.",
+        "invalid_type": "That price type is not supported."
+      }
     }
   },
   "classroom": {
@@ -1461,6 +1533,15 @@
         "cancelled": "Cancelled",
         "refunded": "Refunded",
         "partially_refunded": "Partially refunded"
+      },
+      "payment_status": {
+        "pending": "Pending",
+        "simulated_paid": "Simulated payment"
+      },
+      "fulfillment_status": {
+        "pending": "Pending",
+        "granted": "Access granted",
+        "failed": "Failed"
       },
       "refund_policy_type": {
         "no_refund": "No refund",

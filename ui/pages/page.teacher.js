@@ -4,6 +4,7 @@
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getTeacherWorkspaceDemoSummary } from "../lumina-commerce/teacherDemoCatalog.js";
 import { initCommerceStore } from "../lumina-commerce/store.js";
+import { getTeacherProfileCommerceStats } from "../lumina-commerce/teacherCommerceBridge.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import {
@@ -87,6 +88,28 @@ function teacherGatePanelHtml(ctx, t) {
 /**
  * @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum
  */
+/**
+ * @param {object} st
+ * @param {(a: string, b?: object) => string} t
+ */
+function teacherSalesOverviewHtml(st, t) {
+  if (!st) return "";
+  const fmt = (n) => String(Math.round(Number(n) || 0).toLocaleString());
+  return `
+    <section class="card teacher-sales-overview" aria-labelledby="teacher-sales-title">
+      <h3 id="teacher-sales-title" class="teacher-sales-title">${escapeHtml(t("teacher.sales.title"))}</h3>
+      <p class="teacher-sales-lead">${escapeHtml(t("teacher.sales.lead"))}</p>
+      <div class="teacher-sales-chips">
+        <span class="teacher-sales-chip"><strong>${fmt(st.publicListingCount)}</strong> ${escapeHtml(t("teacher.sales.chip_public_listings"))}</span>
+        <span class="teacher-sales-chip"><strong>${fmt(st.grantOrSaleCount)}</strong> ${escapeHtml(t("teacher.sales.chip_grants_or_sales"))}</span>
+        <span class="teacher-sales-chip"><strong>${fmt(st.totalGross)} KRW</strong> ${escapeHtml(t("teacher.sales.chip_gross"))}</span>
+        <span class="teacher-sales-chip"><strong>${fmt(st.totalTeacherIncome)} KRW</strong> ${escapeHtml(t("teacher.sales.chip_teacher_income"))}</span>
+        <span class="teacher-sales-chip"><strong>${fmt(st.totalPlatformIncome)} KRW</strong> ${escapeHtml(t("teacher.sales.chip_platform_share"))}</span>
+      </div>
+      <p class="teacher-sales-pending">${escapeHtml(t("teacher.sales.pending_settlement"))}</p>
+    </section>`;
+}
+
 function teacherWorkspaceOverviewHtml(sum) {
   const p = "teacher.workspace.overview_mine";
   const chips = [
@@ -115,8 +138,9 @@ function teacherWorkspaceOverviewHtml(sum) {
  * @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum
  * @param {(a: string, b?: object) => string} t
  * @param {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset[]} recentAssets
+ * @param {object|null} commerceStats
  */
-function approvedWorkbenchHtml(profile, sum, t, recentAssets) {
+function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats) {
   const st = String(profile.workbench_status);
   const label = escapeHtml(t(`teacher.wbstate.${st}`));
   const recentRows =
@@ -186,6 +210,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets) {
         <p class="teacher-relation-flow-classroom">${escapeHtml(t("teacher.workspace.classroom_flow_note_mine"))}</p>
       </section>
       ${teacherWorkspaceOverviewHtml(sum)}
+      ${teacherSalesOverviewHtml(commerceStats, t)}
       ${assetsPanel}
 
       <section class="teacher-grid">
@@ -341,9 +366,11 @@ async function renderTeacherHub(root) {
   const t = tx;
   let ctx;
   let listings = [];
+  /** @type {any} */
+  let commerceSnap = null;
   try {
-    const snap = await initCommerceStore();
-    listings = Array.isArray(snap?.listings) ? snap.listings : [];
+    commerceSnap = await initCommerceStore();
+    listings = Array.isArray(commerceSnap?.listings) ? commerceSnap.listings : [];
   } catch {
     listings = [];
   }
@@ -368,10 +395,11 @@ async function renderTeacherHub(root) {
     const base = getTeacherWorkspaceDemoSummary(listings, ctx.profile.id);
     const sum = { ...base, classroomAssetCount: assetN };
     const recent = getRecentAssetsForProfile(ctx.profile.id, 5);
+    const commerceStats = commerceSnap ? getTeacherProfileCommerceStats(commerceSnap, ctx.profile.id) : null;
     const rerender = () => {
       if (__teacherRootRef?.isConnected) void renderTeacherHub(__teacherRootRef);
     };
-    root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent);
+    root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats);
     bindClassroomForm(root);
     bindAssetQuickCreate(root, ctx.profile.id, u.id, rerender);
     i18n.apply?.(root);

@@ -75,6 +75,10 @@
  * @property {'platform'|'course'|'material'|'classroom_asset'|string|null} [source_kind] 演示用：上架来源类型（非正式契约）
  * @property {string|null} [source_id] 演示用：对应 teacher.demo.*、课堂资产 id 等
  * @property {string|null} [asset_id] 与 source_kind=classroom_asset 对应时等同 source_id，便于查询
+ * @property {import('./enums.js').PricingType|string} [pricing_type] 免费/付费
+ * @property {import('./enums.js').RevenueShareModel|string} [revenue_share_model] 分成模型占位
+ * @property {string|number} [teacher_share_rate] 如 "0.7"
+ * @property {string|number} [platform_share_rate] 如 "0.3"
  */
 
 /**
@@ -121,6 +125,11 @@
  * @property {string|null} [commission_rate] 如 "0.15"
  * @property {string|null} [commission_amount]
  * @property {string|null} [seller_net_amount]
+ * @property {import('./enums.js').PaymentStatus|string} [payment_status] 如 simulated_paid
+ * @property {import('./enums.js').FulfillmentStatus|string} [fulfillment_status] 如 granted
+ * @property {string|null} [entitlement_id] 自动发放后写入
+ * @property {string|null} [teacher_profile_id] 老师 listing 时与 teacher_id 对齐（演示层）
+ * @property {string|null} [platform_income_amount] 分成占位
  * @property {string} created_at
  * @property {string} updated_at
  */

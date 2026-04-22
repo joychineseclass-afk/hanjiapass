@@ -1,5 +1,38 @@
 import { SCHEMA_VERSION_STAGE0 } from "./schema.js";
+import { PRICING_TYPE, REVENUE_SHARE_MODEL } from "./enums.js";
 import { builtinStage0Examples, createInitialStoreSnapshot } from "./mockSeed.js";
+
+/**
+ * 老数据补全 Step5 商业字段（不改变 schema_version，仅补字段）。
+ * @param {import('./schema.js').CommerceStoreSnapshot} snap
+ * @returns {boolean} 是否改过
+ */
+function applyCommerceStep5Defaults(snap) {
+  let changed = false;
+  if (Array.isArray(snap.listings)) {
+    for (const L of snap.listings) {
+      if (!L) continue;
+      if (L.pricing_type == null || L.pricing_type === undefined) {
+        const amt = Number(L.price_amount);
+        L.pricing_type = !Number.isFinite(amt) || amt <= 0 ? PRICING_TYPE.free : PRICING_TYPE.paid;
+        changed = true;
+      }
+      if (L.revenue_share_model == null) {
+        L.revenue_share_model = REVENUE_SHARE_MODEL.platform_split;
+        changed = true;
+      }
+      if (L.teacher_share_rate == null) {
+        L.teacher_share_rate = "0.7";
+        changed = true;
+      }
+      if (L.platform_share_rate == null) {
+        L.platform_share_rate = "0.3";
+        changed = true;
+      }
+    }
+  }
+  return changed;
+}
 
 const LS_KEY = "lumina_commerce_stage0_store_v1";
 
@@ -58,6 +91,7 @@ export function initCommerceStore() {
     const existing = loadFromLocalStorage();
     if (existing) {
       _cache = existing;
+      if (applyCommerceStep5Defaults(_cache)) saveToLocalStorage(_cache);
       return _cache;
     }
     let examples = builtinStage0Examples();
@@ -67,6 +101,7 @@ export function initCommerceStore() {
       /* use builtin */
     }
     _cache = createInitialStoreSnapshot(examples);
+    applyCommerceStep5Defaults(_cache);
     saveToLocalStorage(_cache);
     return _cache;
   })();

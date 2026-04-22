@@ -11,7 +11,13 @@ import {
   setClassroomAssetListingToPublic,
   getTeacherAssetPublishUiState,
 } from "../lumina-commerce/teacherListingBridge.js";
-import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
+import { LISTING_STATUS, PRICING_TYPE, VISIBILITY } from "../lumina-commerce/enums.js";
+import {
+  countGrantsForListing,
+  getListingPayableAmount,
+  getListingPricingType,
+  updateListingPricingForTeacher,
+} from "../lumina-commerce/teacherCommerceBridge.js";
 import { i18n } from "../i18n.js";
 import {
   teacherBackToWorkspaceHtml,
@@ -46,8 +52,9 @@ let __root = /** @type {HTMLElement | null} */ (null);
  * @param {(k: string, p?: object) => string} t
  * @param {string} profileId
  * @param {string} userId
+ * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot|null} snap
  */
-function assetRow(a, t, profileId, userId, listing) {
+function assetRow(a, t, profileId, userId, listing, snap) {
   const src = a.source;
   const srcLine = t("teacher.assets.source_line", {
     course: formatTeacherHubCourseDisplay(src.course),
@@ -78,6 +85,63 @@ function assetRow(a, t, profileId, userId, listing) {
     ? `#teacher-listing?id=${encodeURIComponent(listing.id)}`
     : "";
   const archDisabled = a.status === ASSET_STATUS.archived;
+  const commerceCell = (() => {
+    if (!listing || !snap) {
+      return `<td class="teacher-manage-cell-commerce"><span class="teacher-commerce-na">${escapeHtml(
+        t("teacher.assets.commerce_no_listing_short"),
+      )}</span> <a class="teacher-asset-link" href="#lumina-teacher-stage0">${escapeHtml(
+        t("teacher.assets.commerce_go_listing"),
+      )}</a></td>`;
+    }
+    const pt = getListingPricingType(listing);
+    const payAmt = getListingPayableAmount(listing);
+    const priceShort =
+      pt === PRICING_TYPE.free
+        ? t("learner.commerce.pricing_free")
+        : payAmt > 0
+          ? `${String(listing.price_currency || "KRW")} ${payAmt.toLocaleString()}`
+          : t("teacher.assets.commerce_price_unset");
+    const isPub = listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
+    const nGrants = countGrantsForListing(snap, listing.id);
+    const priceVal = payAmt > 0 ? String(payAmt) : String(listing.price_amount || listing.sale_price_amount || 0);
+    return `<td class="teacher-manage-cell-commerce" data-commerce-listing="${escapeHtml(listing.id)}">
+      <div class="teacher-asset-commerce-summary">
+        <span class="teacher-commerce-chip teacher-commerce-chip--price">${escapeHtml(priceShort)}</span>
+        <span class="teacher-commerce-chip ${isPub ? "is-pub" : ""}">${escapeHtml(
+      isPub ? t("teacher.assets.commerce_public_yes") : t("teacher.assets.commerce_public_no"),
+    )}</span>
+        <span class="teacher-commerce-chip">${escapeHtml(
+          t("teacher.assets.commerce_grants", { n: String(nGrants) }),
+        )}</span>
+      </div>
+      <div class="teacher-commerce-mini" data-commerce-edit="${escapeHtml(listing.id)}">
+        <label class="teacher-commerce-label"><span class="visually-hidden">${escapeHtml(
+          t("teacher.assets.commerce_pricing_type"),
+        )}</span>
+          <select class="teacher-commerce-pt" data-commerce-pt="${escapeHtml(listing.id)}" aria-label="${escapeHtml(
+            t("teacher.assets.commerce_pricing_type"),
+          )}">
+            <option value="free" ${pt === PRICING_TYPE.free ? "selected" : ""}>${escapeHtml(
+              t("learner.commerce.pricing_free"),
+            )}</option>
+            <option value="paid" ${pt === PRICING_TYPE.paid ? "selected" : ""}>${escapeHtml(
+              t("learner.commerce.pricing_paid"),
+            )}</option>
+          </select>
+        </label>
+        <input type="number" class="teacher-commerce-amt" data-commerce-amt="${escapeHtml(
+          listing.id,
+        )}" min="0" step="1" value="${escapeHtml(priceVal)}" ${
+      pt === PRICING_TYPE.paid ? "" : 'style="display:none" aria-hidden="true"'
+    }" aria-label="${escapeHtml(t("learner.commerce.price"))}" title="${escapeHtml(
+      t("teacher.assets.commerce_paid_amount_hint"),
+    )}" />
+        <button type="button" class="teacher-commerce-save" data-commerce-save="${escapeHtml(
+          listing.id,
+        )}">${escapeHtml(t("teacher.assets.commerce_save_pricing"))}</button>
+      </div>
+    </td>`;
+  })();
   return `<tr data-teacher-asset-id="${escapeHtml(a.id)}">
     <td class="teacher-manage-cell-title">${escapeHtml(a.title)}</td>
     <td class="teacher-manage-cell-meta"><span class="teacher-asset-type-pill">${escapeHtml(t(`teacher.assets.type.${a.asset_type}`))}</span></td>
@@ -91,6 +155,7 @@ function assetRow(a, t, profileId, userId, listing) {
       ${rejectHint}
     </td>
     <td>${escapeHtml(formatDemoShortUpdated(a.updated_at))}</td>
+    ${commerceCell}
     <td class="teacher-manage-col-actions teacher-asset-actions">
       <a class="teacher-asset-link" href="#classroom?assetId=${encodeURIComponent(a.id)}">${escapeHtml(t("teacher.assets.enter_classroom"))}</a>
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
@@ -171,7 +236,7 @@ async function renderPage(root) {
     ? assets
         .map((a) => {
           const listing = snap ? findListingByAssetId(snap, a.id) : null;
-          return assetRow(a, t, profileId, userId, listing);
+          return assetRow(a, t, profileId, userId, listing, snap);
         })
         .join("")
     : "";
@@ -192,6 +257,7 @@ async function renderPage(root) {
               <th scope="col">${escapeHtml(t("teacher.assets.col_status"))}</th>
               <th scope="col">${escapeHtml(t("teacher.publishing.col_publish"))}</th>
               <th scope="col">${escapeHtml(t("teacher.assets.col_updated"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.col_commerce"))}</th>
               <th scope="col" class="teacher-manage-col-actions">${escapeHtml(t("teacher.assets.col_actions"))}</th>
             </tr>
           </thead>
@@ -248,6 +314,47 @@ async function renderPage(root) {
     });
   });
 
+  root.querySelectorAll(".teacher-commerce-pt").forEach((sel) => {
+    sel.addEventListener("change", () => {
+      const id = sel.getAttribute("data-commerce-pt");
+      if (!id) return;
+      const cell = root.querySelector(`[data-commerce-listing="${id}"]`);
+      const pt = String(sel.value || "");
+      const inp = cell?.querySelector(`[data-commerce-amt="${id}"]`);
+      if (inp) {
+        const show = pt === PRICING_TYPE.paid;
+        /** @type {HTMLInputElement} */ (inp).style.display = show ? "" : "none";
+        inp.toggleAttribute("aria-hidden", !show);
+      }
+    });
+  });
+  root.querySelectorAll("[data-commerce-save]").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      const id = btn.getAttribute("data-commerce-save");
+      if (!id) return;
+      ev.preventDefault();
+      const cell = root.querySelector(`[data-commerce-listing="${id}"]`);
+      const sel = cell?.querySelector(`[data-commerce-pt="${id}"]`);
+      const inp = cell?.querySelector(`[data-commerce-amt="${id}"]`);
+      const pt = String(sel?.value || "free");
+      const raw = inp && "value" in inp ? String(/** @type {HTMLInputElement} */ (inp).value) : "0";
+      const r = updateListingPricingForTeacher(id, {
+        pricing_type: pt === PRICING_TYPE.paid ? PRICING_TYPE.paid : PRICING_TYPE.free,
+        price_amount: raw,
+        teacher_profile_id: profileId,
+      });
+      if (!r.ok) {
+        const msg = t("teacher.assets.commerce_save_failed");
+        try {
+          alert(msg);
+        } catch {
+          /* */
+        }
+        return;
+      }
+      void renderPage(root);
+    });
+  });
   root.querySelectorAll("[data-teacher-asset-gopublic]").forEach((btn) => {
     btn.addEventListener("click", async (ev) => {
       const id = btn.getAttribute("data-teacher-asset-gopublic");

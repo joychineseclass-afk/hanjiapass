@@ -904,7 +904,18 @@
       "col_source": "来源课次",
       "col_status": "状态",
       "col_updated": "最近更新",
-      "col_actions": "操作"
+      "col_commerce": "定价与获取",
+      "col_actions": "操作",
+      "commerce_no_listing_short": "无上架",
+      "commerce_go_listing": "去上架",
+      "commerce_price_unset": "暂未定价",
+      "commerce_public_yes": "已公开",
+      "commerce_public_no": "未公开",
+      "commerce_grants": "已获取/购买 {n} 次",
+      "commerce_pricing_type": "定价类型",
+      "commerce_paid_amount_hint": "金额（韩元，整数）",
+      "commerce_save_pricing": "保存定价",
+      "commerce_save_failed": "保存失败，请检查金额后重试。"
     },
     "demo": {
       "disclosure": "下列为本地演示数据，用于展示教材—课程—上架之间的示例关系，并非真实学员或订单数据。",
@@ -1199,6 +1210,67 @@
       "not_found_desc": "链接可能有误，或内容已下线。可联系老师或平台确认。",
       "no_access_title": "当前不可公开访问",
       "no_access_body": "该内容未通过公开审核、仍为非公开，或不存在。老师可在「我的课堂资产」与审核台查看状态。"
+    },
+    "sales": {
+      "title": "销售概览（演示）",
+      "lead": "统计来自本机订单，非税务或打款依据。",
+      "chip_public_listings": "已公开内容",
+      "chip_grants_or_sales": "获取/购买次数",
+      "chip_gross": "成交总额（模拟）",
+      "chip_teacher_income": "老师收入（估）",
+      "chip_platform_share": "平台分成（估）",
+      "pending_settlement": "提现、税务与正式结算在后续步骤；此处仅为展示占位。"
+    }
+  },
+  "learner": {
+    "nav": {
+      "my_content": "我的内容",
+      "my_orders": "我的订单"
+    },
+    "my_content": {
+      "lead": "在本机通过免费获取或模拟购买后，可在此打开对应内容。",
+      "empty": "暂无内容。登录后从老师公开内容页获取权限。",
+      "col_title": "标题",
+      "col_teacher": "老师",
+      "col_type": "类型",
+      "col_how": "获取方式",
+      "col_time": "获取时间",
+      "col_action": "进入/详情"
+    },
+    "my_orders": {
+      "lead": "本机订单记录；付费为模拟支付成功。",
+      "empty": "暂无订单。",
+      "col_time": "时间",
+      "col_title": "内容",
+      "col_amount": "金额",
+      "col_status": "状态",
+      "col_outcome": "支付与权限结果"
+    },
+    "commerce": {
+      "price": "价格",
+      "pricing_free": "免费",
+      "pricing_paid": "付费",
+      "price_free": "免费",
+      "price_paid_line": "{amount} {currency}",
+      "status_granted": "已获取",
+      "status_purchased": "已购买",
+      "already_owned_hint": "你已拥有该内容权限",
+      "cta_free": "免费获取",
+      "cta_buy": "购买",
+      "simulated_checkout_note": "模拟支付成功，无真实扣款。",
+      "success_in_library": "内容已加入我的学习内容。",
+      "via_purchase": "购买",
+      "via_free": "免费获取",
+      "open_classroom": "进入课堂",
+      "error": {
+        "unknown": "操作失败，请重试。",
+        "listing_not_found": "未找到该内容。",
+        "not_public": "该内容未公开。",
+        "already_owned": "无法重复购买。你已拥有该内容权限。",
+        "invalid_price": "价格未设置，暂无法购买。",
+        "buyer_required": "请先登录。",
+        "invalid_type": "不支持的定价类型。"
+      }
     }
   },
   "classroom": {
@@ -1464,6 +1536,15 @@
         "cancelled": "已取消",
         "refunded": "已退款",
         "partially_refunded": "部分退款"
+      },
+      "payment_status": {
+        "pending": "待支付",
+        "simulated_paid": "模拟支付成功"
+      },
+      "fulfillment_status": {
+        "pending": "待发放",
+        "granted": "已发放",
+        "failed": "失败"
       },
       "refund_policy_type": {
         "no_refund": "不可退款",

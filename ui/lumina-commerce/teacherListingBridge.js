@@ -8,7 +8,9 @@ import {
   LISTING_REVIEW_ACTION,
   LISTING_STATUS,
   LISTING_TYPE,
+  PRICING_TYPE,
   REFUND_POLICY_TYPE,
+  REVENUE_SHARE_MODEL,
   SELLER_TYPE,
   VISIBILITY,
 } from "./enums.js";
@@ -94,6 +96,10 @@ export async function ensureListingForTeacherAsset(assetId) {
       updated_at: now,
       published_at: null,
       delisted_at: null,
+      pricing_type: PRICING_TYPE.free,
+      revenue_share_model: REVENUE_SHARE_MODEL.platform_split,
+      teacher_share_rate: "0.7",
+      platform_share_rate: "0.3",
     };
     draft.listings.push(/** @type {import('./schema.js').Listing} */ (listing));
   });

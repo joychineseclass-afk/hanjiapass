@@ -913,7 +913,18 @@
       "col_source": "元の授業",
       "col_status": "状態",
       "col_updated": "最終更新",
-      "col_actions": "操作"
+      "col_commerce": "価格・アクセス",
+      "col_actions": "操作",
+      "commerce_no_listing_short": "未掲載",
+      "commerce_go_listing": "掲載へ",
+      "commerce_price_unset": "価格未設定",
+      "commerce_public_yes": "公開",
+      "commerce_public_no": "非公開",
+      "commerce_grants": "解放: {n} 回",
+      "commerce_pricing_type": "価格タイプ",
+      "commerce_paid_amount_hint": "KRW・整数",
+      "commerce_save_pricing": "価格を保存",
+      "commerce_save_failed": "保存に失敗しました。もう一度お試しください。"
     },
     "demo": {
       "disclosure": "以下は教材・コース・掲載の関係を示すローカルデモデータであり、実在の学習者や注文ではありません。",
@@ -1208,6 +1219,67 @@
       "not_found_desc": "URL が誤っているか、掲載が終了した可能性があります。",
       "no_access_title": "公開表示できません",
       "no_access_body": "未承認・非公開、または存在しません。教師向けの資産画面と審査コンソールで確認してください。"
+    },
+    "sales": {
+      "title": "販売サマリー（デモ）",
+      "lead": "ローカル注文に基づく目安。税務や送金の根拠ではありません。",
+      "chip_public_listings": "公開リスティング",
+      "chip_grants_or_sales": "取得・購入",
+      "chip_gross": "総額（模擬）",
+      "chip_teacher_income": "講師分（目安）",
+      "chip_platform_share": "プラットフォーム分（目安）",
+      "pending_settlement": "出金・税・本社精算は次段階。ここは表示用です。"
+    }
+  },
+  "learner": {
+    "nav": {
+      "my_content": "マイコンテンツ",
+      "my_orders": "マイ注文"
+    },
+    "my_content": {
+      "lead": "このブラウザで無料取得または模擬購入したコンテンツが一覧になります。",
+      "empty": "まだありません。公開中の教師リスティングから取得してください。",
+      "col_title": "タイトル",
+      "col_teacher": "教師",
+      "col_type": "種類",
+      "col_how": "取得方法",
+      "col_time": "取得日時",
+      "col_action": "授業／詳細"
+    },
+    "my_orders": {
+      "lead": "ローカル注文。有料は模擬決済成功として記録。",
+      "empty": "注文はまだありません。",
+      "col_time": "日時",
+      "col_title": "コンテンツ",
+      "col_amount": "金額",
+      "col_status": "ステータス",
+      "col_outcome": "決済とアクセス"
+    },
+    "commerce": {
+      "price": "価格",
+      "pricing_free": "無料",
+      "pricing_paid": "有料",
+      "price_free": "無料",
+      "price_paid_line": "{amount} {currency}",
+      "status_granted": "取得済み",
+      "status_purchased": "購入済み",
+      "already_owned_hint": "既にアクセス権があります",
+      "cta_free": "無料で取得",
+      "cta_buy": "購入",
+      "simulated_checkout_note": "模擬決済。実際の課金はありません。",
+      "success_in_library": "マイ学習コンテンツに追加しました。",
+      "via_purchase": "購入",
+      "via_free": "無料",
+      "open_classroom": "授業を開く",
+      "error": {
+        "unknown": "エラーが発生しました。再試行してください。",
+        "listing_not_found": "見つかりません。",
+        "not_public": "公開リスティングではありません。",
+        "already_owned": "既に権限があります。重複取得はできません。",
+        "invalid_price": "価格が未設定のため購入できません。",
+        "buyer_required": "サインインが必要です。",
+        "invalid_type": "価格タイプが無効です。"
+      }
     }
   },
   "classroom": {
@@ -1470,6 +1542,15 @@
         "cancelled": "キャンセル",
         "refunded": "返金済",
         "partially_refunded": "一部返金"
+      },
+      "payment_status": {
+        "pending": "未払い",
+        "simulated_paid": "模擬決済済み"
+      },
+      "fulfillment_status": {
+        "pending": "未付与",
+        "granted": "アクセス付与済み",
+        "failed": "失敗"
       },
       "refund_policy_type": {
         "no_refund": "返金不可",

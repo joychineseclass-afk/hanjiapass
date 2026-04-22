@@ -24,6 +24,8 @@ const NAV_ITEMS_FULL = [
   { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
   { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
   { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#my-content", key: "learner.nav.my_content", label: "My content", color: "#0d9488" },
+  { href: "/index.html#my-orders", key: "learner.nav.my_orders", label: "My orders", color: "#14b8a6" },
 ];
 
 // ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
