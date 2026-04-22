@@ -1112,7 +1112,22 @@
       "asset_not_found": "資産が見つかりません。既定の授業を表示しました。",
       "asset_forbidden": "この資産は利用できません。既定の授業を表示しました。",
       "back_courses": "マイコース",
-      "back_assets": "マイ授業用資産"
+      "back_assets": "マイ授業用資産",
+      "asset_not_found_title": "授業用アセットが見つかりません",
+      "asset_forbidden_title": "このアセットを使えません",
+      "presentation": {
+        "control_bar_title": "授業用コントロール",
+        "view_mode": "表示モード",
+        "mode_standard": "標準",
+        "mode_presentation": "プレゼン",
+        "fullscreen": "全画面",
+        "exit_fullscreen": "全画面を終了",
+        "current_step_label": "現在のステップ",
+        "step_index": "ステップ {current} / {total}",
+        "keyboard_shortcuts": "← / PageUp、→ / PageDown：手順切替 · F：全画面 · Esc：全画面終了/標準に戻す",
+        "source_line": "元の授業：{course} · 巻{level} · 第{lesson}回",
+        "teaching_mode": "授業"
+      }
     },
     "label": {
       "course": "コース",

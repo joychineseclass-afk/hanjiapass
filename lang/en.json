@@ -1103,7 +1103,22 @@
       "asset_not_found": "That classroom asset was not found. We loaded a default classroom instead. Check My classroom assets on the workbench.",
       "asset_forbidden": "This asset is not available for your current account. We loaded a default classroom instead.",
       "back_courses": "My courses",
-      "back_assets": "My classroom assets"
+      "back_assets": "My classroom assets",
+      "asset_not_found_title": "Classroom asset not found",
+      "asset_forbidden_title": "You cannot use this asset",
+      "presentation": {
+        "control_bar_title": "Teaching bar",
+        "view_mode": "View mode",
+        "mode_standard": "Standard",
+        "mode_presentation": "Presentation",
+        "fullscreen": "Full screen",
+        "exit_fullscreen": "Exit full screen",
+        "current_step_label": "Current step",
+        "step_index": "Step {current} / {total}",
+        "keyboard_shortcuts": "← or PageUp / → or PageDown: change step · F: full screen · Esc: exit full screen or standard view",
+        "source_line": "Source: {course} · book {level} · lesson {lesson}",
+        "teaching_mode": "Teaching"
+      }
     },
     "label": {
       "course": "Course",

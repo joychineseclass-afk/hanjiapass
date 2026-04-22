@@ -1103,7 +1103,22 @@
       "asset_not_found": "未找到该课堂资产，已加载默认可用课堂。可在「我的课堂资产」中核对。",
       "asset_forbidden": "当前账号无法使用该资产，已加载默认可用课堂。",
       "back_courses": "我的课程",
-      "back_assets": "我的课堂资产"
+      "back_assets": "我的课堂资产",
+      "asset_not_found_title": "未找到该课堂资产",
+      "asset_forbidden_title": "无权使用该课堂资产",
+      "presentation": {
+        "control_bar_title": "授课控制区",
+        "view_mode": "展示模式",
+        "mode_standard": "标准模式",
+        "mode_presentation": "展示模式",
+        "fullscreen": "全屏",
+        "exit_fullscreen": "退出全屏",
+        "current_step_label": "当前步骤",
+        "step_index": "第 {current} / {total} 步",
+        "keyboard_shortcuts": "← 或 PageUp、→ 或 PageDown：切换步骤 · F：全屏 · Esc：退出全屏或切回标准视图",
+        "source_line": "来源课程：{course} · 册{level} · 第{lesson}课",
+        "teaching_mode": "教师授课"
+      }
     },
     "label": {
       "course": "课程",

@@ -1,5 +1,6 @@
 // /ui/platform/classroom/classroomEngine.js
 // 课堂引擎 v1：串联课程加载、状态管理与渲染
+// 展示模式 / 全屏 / 键盘：见 classroomPresentation.js（由 page.classroom 装配）
 
 import { loadLessonDetail as loadLessonDetailFromEngine } from "../content/courseLoader.js";
 import { getDefaultSteps } from "./classroomStepRegistry.js";

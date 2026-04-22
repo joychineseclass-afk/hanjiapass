@@ -2308,3 +2308,270 @@ button.teacher-hub-cta:hover{
 .lts0-chunk-banner{
   margin: 0 0 8px;
 }
+
+/* =========================================================
+   Classroom · presentation / full screen (Lumina Step 3)
+   仅作用于 .lumina-classroom-page 内，不污染全局
+   ========================================================= */
+.lumina-classroom-page.classroom-control-bar,
+.lumina-classroom-page .classroom-control-bar{
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  padding: 12px 0 14px;
+  margin: 0 -6px 12px;
+  padding-left: 6px;
+  padding-right: 6px;
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 62%);
+  border-bottom: 1px solid #e2e8f0;
+}
+.lumina-classroom-page .classroom-control-kicker{
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.lumina-classroom-page .classroom-control-bar-row1{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-bottom: 10px;
+}
+.lumina-classroom-page .classroom-topbar-ctrl{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.lumina-classroom-page .classroom-title-block{
+  margin: 4px 0 8px;
+}
+.lumina-classroom-page .classroom-title--main{
+  margin: 0;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  line-height: 1.25;
+}
+.lumina-classroom-page .classroom-ctx-badge--teach{
+  background: #ecfdf3;
+  border-color: #86efac;
+  color: #14532d;
+}
+.lumina-classroom-page .classroom-asset-ctx-meta{
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #475569;
+  font-weight: 650;
+}
+.lumina-classroom-page .classroom-asset-status-chip{
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid #e2e8f0;
+}
+.lumina-classroom-page .classroom-asset-status-chip--draft{
+  color: #1e3a5f;
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+.lumina-classroom-page .classroom-asset-status-chip--ready{
+  color: #14532d;
+  background: #ecfdf3;
+  border-color: #86efac;
+}
+.lumina-classroom-page .classroom-asset-status-chip--archived{
+  color: #57534e;
+  background: #f5f5f4;
+  border-color: #d6d3d1;
+}
+.lumina-classroom-page .classroom-asset-warn-title{
+  margin: 0;
+  font-weight: 800;
+}
+
+/* 工具栏 */
+.lumina-classroom-page .classroom-toolbar-wrap{
+  margin: 10px 0 16px;
+}
+.lumina-classroom-page .classroom-toolbar{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.lumina-classroom-page .classroom-toolbar-row--nav{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 12px;
+}
+.lumina-classroom-page .classroom-step-now{
+  flex: 1 1 200px;
+  min-width: 0;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+.lumina-classroom-page .classroom-step-now-kicker{
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+.lumina-classroom-page .classroom-step-now-name{
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+.lumina-classroom-page .classroom-step-now-idx{
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+.lumina-classroom-page .classroom-nav-btn--large{
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: 12px;
+}
+.lumina-classroom-page .classroom-toolbar-row--tabs{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+.lumina-classroom-page .classroom-step-tabs{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  min-width: min-content;
+}
+.lumina-classroom-page .classroom-step-btn{
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.lumina-classroom-page .classroom-step-btn.is-active{
+  border-color: #4338ca;
+  background: #eef2ff;
+  color: #312e81;
+  font-weight: 900;
+}
+.lumina-classroom-page .classroom-toolbar-row--view{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+.lumina-classroom-page .classroom-view-actions{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.lumina-classroom-page .classroom-toolbar-muted{
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+}
+.lumina-classroom-page .classroom-ctrl-btn{
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #1e293b;
+}
+.lumina-classroom-page .classroom-ctrl-btn--primary{
+  border-color: #4338ca;
+  background: #4338ca;
+  color: #fff;
+}
+.lumina-classroom-page .classroom-ctrl-btn:hover{
+  filter: brightness(0.98);
+}
+.lumina-classroom-page .classroom-keyboard-hint{
+  margin: 0;
+  flex: 1 1 220px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #64748b;
+  max-width: 42rem;
+}
+.lumina-classroom-page .classroom-keyboard-hint.is-compact{
+  max-width: 28rem;
+  font-size: 11px;
+}
+
+/* 全屏时工具条仍可见（相对视口 sticky 在 section 内） */
+.lumina-classroom-page[data-classroom-fullscreen="1"] .classroom-toolbar-wrap,
+.lumina-classroom-page[data-classroom-fullscreen="1"] .classroom-control-bar{
+  position: relative;
+  z-index: 5;
+}
+
+/* 展示模式：主内容加宽、弱化「后台」感 */
+.lumina-classroom-page.lumina-classroom--presentation .classroom-teacher-ctx{
+  max-width: min(100%, 52rem);
+  padding: 8px 10px;
+}
+.lumina-classroom-page.lumina-classroom--presentation .classroom-ctx-line2{
+  font-size: 12px;
+  color: #64748b;
+}
+.lumina-classroom-page.lumina-classroom--presentation .classroom-stage{
+  max-width: min(100%, 92rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+.lumina-classroom-page.lumina-classroom--presentation .classroom-panel,
+.lumina-classroom-page.lumina-classroom--presentation .classroom-scene-card{
+  margin-bottom: 18px;
+}
+.lumina-classroom-page.lumina-classroom--presentation .classroom-control-kicker,
+.lumina-classroom-page.lumina-classroom--presentation .classroom-topbar-actions .classroom-back-secondary{
+  font-size: 12px;
+}
+.lumina-classroom-page.lumina-classroom--presentation .classroom-keyboard-hint{
+  display: none;
+}
+
+/* 主舞台 */
+.lumina-classroom-page .classroom-stage{
+  max-width: min(100%, 72rem);
+  margin: 0 auto;
+  padding: 4px 4px 32px;
+}
+.lumina-classroom-page .classroom-panel{
+  margin-bottom: 14px;
+}
