@@ -96,6 +96,9 @@ registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacher
 registerRoute("#teacher-publishing", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-review", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
+registerRoute("#login", () => import("./pages/page.login.js"));
+registerRoute("#register", () => import("./pages/page.register.js"));
+registerRoute("#teacher-profile", () => import("./pages/page.teacherProfile.js"));
 
 /* ===============================
    🚀 Boot
@@ -130,6 +133,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     await i18n.load();
   } catch (e) {
     console.warn("[app] i18n.load failed:", e?.message);
+  }
+
+  try {
+    const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
+    await hydrateCurrentUserFromSession();
+  } catch (e) {
+    console.warn("[app] auth hydrate failed:", e?.message);
   }
 
   // 1) Nav

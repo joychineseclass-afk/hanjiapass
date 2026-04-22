@@ -12,6 +12,15 @@ export const DEMO_TEACHER_USER = Object.freeze({
   teacherProfileId: "tp_demo_seller_001",
 });
 
+/** 未登录 / 无会话时的壳用户（#teacher 门卡、买家上下文） */
+export const GUEST_USER = Object.freeze({
+  id: "u_guest",
+  name: "",
+  roles: /** @type {const} */ ([]),
+  teacherProfileId: null,
+  isGuest: true,
+});
+
 /**
  * @typedef {Object} CurrentUserV1
  * @property {string} id
@@ -26,16 +35,20 @@ export const DEMO_TEACHER_USER = Object.freeze({
 function readParsed() {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return { ...DEMO_TEACHER_USER, roles: [...DEMO_TEACHER_USER.roles] };
+    if (!raw) {
+      return { id: GUEST_USER.id, name: GUEST_USER.name, roles: [...GUEST_USER.roles], teacherProfileId: null, isGuest: true };
+    }
     const p = JSON.parse(raw);
-    if (!p || typeof p !== "object") return { ...DEMO_TEACHER_USER, roles: [...DEMO_TEACHER_USER.roles] };
-    const id = String(p.id ?? DEMO_TEACHER_USER.id);
-    const name = p.name != null ? String(p.name) : DEMO_TEACHER_USER.name;
-    const roles = Array.isArray(p.roles) ? p.roles.map((r) => String(r)) : [...DEMO_TEACHER_USER.roles];
+    if (!p || typeof p !== "object")
+      return { id: GUEST_USER.id, name: GUEST_USER.name, roles: [...GUEST_USER.roles], teacherProfileId: null, isGuest: true };
+    const id = String(p.id ?? GUEST_USER.id);
+    const name = p.name != null ? String(p.name) : "";
+    const roles = Array.isArray(p.roles) ? p.roles.map((r) => String(r)) : [];
     const teacherProfileId = p.teacherProfileId != null && p.teacherProfileId !== "" ? String(p.teacherProfileId) : null;
-    return { id, name, roles, teacherProfileId };
+    const isGuest = Boolean(p.isGuest) || id === "u_guest";
+    return { id, name, roles, teacherProfileId, isGuest: isGuest || undefined };
   } catch {
-    return { ...DEMO_TEACHER_USER, roles: [...DEMO_TEACHER_USER.roles] };
+    return { id: GUEST_USER.id, name: GUEST_USER.name, roles: [...GUEST_USER.roles], teacherProfileId: null, isGuest: true };
   }
 }
 
@@ -55,6 +68,8 @@ export function setCurrentUser(patch) {
   const next = { ...cur, ...patch };
   if (patch.roles) next.roles = patch.roles.map((r) => String(r));
   if (patch.teacherProfileId === null) next.teacherProfileId = null;
+  if (patch.isGuest === true) next.isGuest = true;
+  if (patch.isGuest === false) delete next.isGuest;
   try {
     localStorage.setItem(LS_KEY, JSON.stringify(next));
   } catch {
@@ -67,7 +82,7 @@ export function setCurrentUser(patch) {
 export function resetCurrentUserToDemo() {
   const u = { ...DEMO_TEACHER_USER, roles: [...DEMO_TEACHER_USER.roles] };
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(u));
+    localStorage.setItem(LS_KEY, JSON.stringify({ ...u, isGuest: false }));
   } catch {
     /* ignore */
   }

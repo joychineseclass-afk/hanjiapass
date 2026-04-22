@@ -31,9 +31,10 @@ import { initCommerceStore } from "./store.js";
 /**
  * @typedef {Object} TeacherPageContext
  * @property {import('./currentUser.js').CurrentUserV1} user
+ * @property {boolean} isLoggedIn
  * @property {boolean} isTeacherRole
  * @property {ResolvedTeacherProfile|null} profile
- * @property {TeacherWorkbenchStatus|'not_teacher'} workbenchStatus
+ * @property {TeacherWorkbenchStatus|'not_teacher'|'guest'} workbenchStatus
  * @property {boolean} hasCommerceProfile
  * @property {boolean} isApproved
  */
@@ -63,12 +64,29 @@ export function resolveWorkbenchGate(user, profile, hasRow) {
  * 异步构建教师页所需上下文（含 commerce 初始化 + 档案合并）。
  * @returns {Promise<TeacherPageContext>}
  */
+function isUserLoggedIn(user) {
+  return Boolean(user && user.id && user.id !== "u_guest" && !user.isGuest);
+}
+
 export async function getTeacherPageContext() {
   const user = getCurrentUser();
+  const isLoggedIn = isUserLoggedIn(user);
+  if (!isLoggedIn) {
+    return {
+      user,
+      isLoggedIn: false,
+      isTeacherRole: false,
+      profile: null,
+      workbenchStatus: /** @type {const} */ ("guest"),
+      hasCommerceProfile: false,
+      isApproved: false,
+    };
+  }
   const isTeacherRole = userIsTeacher(user);
   if (!isTeacherRole) {
     return {
       user,
+      isLoggedIn: true,
       isTeacherRole: false,
       profile: null,
       workbenchStatus: /** @type {const} */ ("not_teacher"),
@@ -82,6 +100,7 @@ export async function getTeacherPageContext() {
   const isApproved = profile != null && profile.workbench_status === "approved";
   return {
     user,
+    isLoggedIn: true,
     isTeacherRole: true,
     profile,
     workbenchStatus: gate,

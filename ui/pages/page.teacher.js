@@ -7,6 +7,7 @@ import { initCommerceStore } from "../lumina-commerce/store.js";
 import { getTeacherProfileCommerceStats } from "../lumina-commerce/teacherCommerceBridge.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { applyToBecomeTeacher } from "../auth/authService.js";
 import {
   createClassroomAssetForLesson,
   getRecentAssetsForProfile,
@@ -29,6 +30,7 @@ function escapeHtml(s) {
 }
 
 let __teacherLangHandler = /** @type {null | (() => void)} */ (null);
+let __teacherAuthHandler = /** @type {null | (() => void)} */ (null);
 let __teacherRootRef = /** @type {HTMLElement | null} */ (null);
 
 /**
@@ -47,6 +49,17 @@ function statusChipClass(st) {
 function teacherGatePanelHtml(ctx, t) {
   const w = ctx.workbenchStatus;
   if (w === "not_teacher") {
+    if (ctx.isLoggedIn) {
+      return `
+      <section class="card teacher-identity-gate teacher-gate" aria-labelledby="tw-gate-title">
+        <h3 id="tw-gate-title" class="teacher-identity-gate-title">${escapeHtml(t("teacher.gate.logged_in_not_teacher_title"))}</h3>
+        <p class="teacher-identity-gate-body">${escapeHtml(t("teacher.gate.logged_in_not_teacher_body"))}</p>
+        <button type="button" class="teacher-identity-gate-cta" id="applyTeacherProfileBtn">
+          ${escapeHtml(t("teacher.gate.apply_cta"))}
+        </button>
+        <p class="teacher-identity-gate-foot">${escapeHtml(t("teacher.gate.apply_note_v2"))}</p>
+      </section>`;
+    }
     return `
       <section class="card teacher-identity-gate" aria-labelledby="tw-gate-title">
         <h3 id="tw-gate-title" class="teacher-identity-gate-title">${escapeHtml(t("teacher.gate.not_teacher_title"))}</h3>
@@ -65,21 +78,29 @@ function teacherGatePanelHtml(ctx, t) {
   const title = escapeHtml(t(titleKey));
   const body = escapeHtml(t(bodyKey));
   const next = escapeHtml(t(nextKey));
+  const showProfileCta = w === "no_profile" || w === "draft" || w === "rejected";
+  const showPendingOnly = w === "pending_review";
   const reasonBlock =
     w === "rejected"
       ? `<p class="teacher-identity-gate-reason"><strong>${escapeHtml(t("teacher.gate.rejected_reason_label"))}</strong> ${escapeHtml(
           ctx.profile?.rejection_reason || t("teacher.gate.rejected_reason_placeholder"),
         )}</p>
-         <p class="teacher-identity-gate-resubmit"><button type="button" class="teacher-identity-gate-cta" disabled aria-disabled="true">${escapeHtml(t("teacher.gate.resubmit_cta"))}</button></p>`
+         <p class="teacher-identity-gate-resubmit"><a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-profile">${escapeHtml(
+           t("teacher.gate.resubmit_link"),
+         )}</a></p>`
       : "";
   return `
-    <section class="card teacher-identity-gate" aria-labelledby="tw-gate-teacher-title">
+    <section class="card teacher-identity-gate teacher-gate" aria-labelledby="tw-gate-teacher-title">
       <div class="teacher-identity-gate-row">
         <h3 id="tw-gate-teacher-title" class="teacher-identity-gate-title">${title}</h3>
         <span class="${escapeHtml(statusChipClass(w))}" aria-label="${label}">${label}</span>
       </div>
       <p class="teacher-identity-gate-body">${body}</p>
       <p class="teacher-identity-gate-next"><strong>${escapeHtml(t("teacher.gate.next_label"))}</strong> ${next}</p>
+      ${showProfileCta && w !== "rejected" ? `<p class="teacher-gate-cta-row"><a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-profile">${escapeHtml(
+        t("teacher.gate.cta_profile"),
+      )}</a></p>` : ""}
+      ${showPendingOnly ? `<p class="teacher-gate-pending-hint">${escapeHtml(t("teacher.gate.pending_teacher_apply"))}</p>` : ""}
       ${reasonBlock}
       <p class="teacher-identity-gate-locked-note">${escapeHtml(t("teacher.gate.workbench_limited"))}</p>
     </section>`;
@@ -317,7 +338,10 @@ function gatedTeacherShellHtml(ctx, t) {
  * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
  * @param {(a: string, b?: object) => string} t
  */
-function notTeacherShellHtml(t) {
+/**
+ * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
+ */
+function notTeacherShellHtml(t, ctx) {
   return `
     <div class="teacher-page wrap">
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
@@ -325,7 +349,26 @@ function notTeacherShellHtml(t) {
         <h2 class="title">${escapeHtml(t("teacher.workspace.mine_entry_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.mine_entry_subtitle"))}</p>
       </section>
-      ${teacherGatePanelHtml({ workbenchStatus: "not_teacher" }, t)}
+      ${teacherGatePanelHtml(ctx, t)}
+    </div>
+  `;
+}
+
+/**
+ * 未登录：引导注册 / 登录
+ * @param {(a: string, b?: object) => string} t
+ */
+function guestAuthShellHtml(t) {
+  return `
+    <div class="teacher-page wrap teacher-gate--guest">
+      <section class="card teacher-hero teacher-hero--compact">
+        <h2 class="title">${escapeHtml(t("teacher.gate.guest_title"))}</h2>
+        <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.gate.guest_body"))}</p>
+        <div class="teacher-gate-auth-actions">
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#login?next=teacher">${escapeHtml(t("auth.nav_login"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#register?next=teacher">${escapeHtml(t("auth.nav_register"))}</a>
+        </div>
+      </section>
     </div>
   `;
 }
@@ -384,8 +427,26 @@ async function renderTeacherHub(root) {
     return;
   }
 
+  if (ctx.workbenchStatus === "guest") {
+    root.innerHTML = guestAuthShellHtml(t);
+    i18n.apply?.(root);
+    return;
+  }
+
   if (ctx.workbenchStatus === "not_teacher") {
-    root.innerHTML = notTeacherShellHtml(t);
+    root.innerHTML = notTeacherShellHtml(t, ctx);
+    root.querySelector("#applyTeacherProfileBtn")?.addEventListener("click", async () => {
+      const r = await applyToBecomeTeacher();
+      if (r && r.ok) {
+        location.hash = "#teacher-profile";
+        return;
+      }
+      try {
+        alert(t("teacher.gate.apply_failed"));
+      } catch {
+        /* */
+      }
+    });
     i18n.apply?.(root);
     return;
   }
@@ -425,6 +486,11 @@ export default function pageTeacher(ctxOrRoot) {
     if (__teacherRootRef?.isConnected) void renderTeacherHub(__teacherRootRef);
   };
   window.addEventListener("joy:langChanged", __teacherLangHandler);
+  if (__teacherAuthHandler) window.removeEventListener("joy:authChanged", __teacherAuthHandler);
+  __teacherAuthHandler = () => {
+    if (__teacherRootRef?.isConnected) void renderTeacherHub(__teacherRootRef);
+  };
+  window.addEventListener("joy:authChanged", __teacherAuthHandler);
 
   void renderTeacherHub(root);
 }

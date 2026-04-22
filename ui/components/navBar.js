@@ -28,9 +28,6 @@ const NAV_ITEMS_FULL = [
   { href: "/index.html#my-orders", key: "learner.nav.my_orders", label: "My orders", color: "#14b8a6" },
 ];
 
-// ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
-const LOGIN_HREF = "/pages/login.html";
-
 function t(key, fallback = "") {
   try {
     const v = i18n?.t?.(key);
@@ -75,6 +72,7 @@ function setActive(rootEl) {
         "#lumina-teacher-stage0",
         "#teacher-publishing",
         "#teacher-review",
+        "#teacher-profile",
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
@@ -110,6 +108,11 @@ function applyI18n(rootEl) {
   try { i18n?.apply?.(rootEl); } catch {}
   syncLangButtons(rootEl);
   setActive(rootEl);
+  try {
+    syncAuthBlock(rootEl);
+  } catch {
+    /* */
+  }
 }
 
 let globalBound = false;
@@ -125,6 +128,77 @@ function bindGlobalOnce() {
   // ✅ navbar highlight update hooks
   try { i18n?.on?.("change", () => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
   try { i18n?.onChange?.(() => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
+  window.addEventListener("joy:authChanged", () => {
+    if (lastRootEl) syncAuthBlock(lastRootEl);
+  });
+}
+
+let __authModuleCache = null;
+/** @returns {Promise<import('../auth/authService.js')>} */
+function loadAuthService() {
+  if (__authModuleCache) return Promise.resolve(__authModuleCache);
+  return import("/ui/auth/authService.js").then((m) => {
+    __authModuleCache = m;
+    return m;
+  });
+}
+
+/**
+ * 顶部：未登录为「登录/注册」；已登录为昵称 + 我的 + 登出。
+ * @param {HTMLElement} rootEl
+ */
+function syncAuthBlock(rootEl) {
+  const box = rootEl?.querySelector?.("[data-joy-auth]");
+  if (!box) return;
+  void loadAuthService().then((mod) => {
+    const u = mod.getCurrentSessionAuthUser();
+    if (!u) {
+      box.innerHTML = `
+      <a href="/index.html#login" class="joy-auth-link" data-joy-auth-login data-i18n="auth.nav_login">${escapeAuthText(t("auth.nav_login", "Login"))}</a>
+      <a href="/index.html#register" class="joy-auth-link joy-auth-link--alt" data-joy-auth-register data-i18n="auth.nav_register">${escapeAuthText(
+        t("auth.nav_register", "Register"),
+      )}</a>
+    `;
+    } else {
+      const name = escapeAuthText(String(u.displayName || u.email || "User").trim() || "User");
+      box.innerHTML = `
+      <span class="joy-auth-name" title="${name}">${name}</span>
+      <a href="/index.html#my" class="joy-auth-link" data-joy-auth-my data-i18n="auth.nav_my">${escapeAuthText(t("auth.nav_my", "My learning"))}</a>
+      <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
+    `;
+    }
+    i18n?.apply?.(box);
+    box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", () => {
+      mod.logoutUser();
+      syncAuthBlock(rootEl);
+    });
+    ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]"].forEach((sel) => {
+      box.querySelector(sel)?.addEventListener("click", (e) => {
+        if (!isIndexPage()) return;
+        e.preventDefault();
+        const a = /** @type {HTMLAnchorElement} */ (e.currentTarget);
+        const href = a.getAttribute("href") || "";
+        const hash = href.split("#")[1];
+        if (!hash) return;
+        import("/ui/router.js")
+          .then((r) => {
+            r.navigateTo("#" + hash, { force: true });
+          })
+          .catch(() => {
+            location.href = a.href;
+          });
+        setActive(rootEl);
+      });
+    });
+  });
+}
+
+function escapeAuthText(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 /**
@@ -171,8 +245,13 @@ function ensureNavStylesOnce() {
     .topbar .lang{display:flex;align-items:center;gap:6px}
     .topbar .lang button{border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;cursor:pointer;font-weight:800;font-size:12px}
     .topbar .lang button.active{border-color:#2563eb;background:rgba(37,99,235,.08);color:#2563eb}
-    .topbar .login a{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px}
-    .topbar .login a:hover{transform:translateY(-1px)}
+    .topbar .joy-auth{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:min(100%, 22rem);justify-content:flex-end}
+    .joy-auth-name{max-width:7.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:800;color:#0f172a}
+    .joy-auth a.joy-auth-link,.joy-auth-link{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;text-decoration:none;color:#0f172a}
+    .joy-auth-link--alt{border-style:dashed}
+    .joy-auth-link:hover{transform:translateY(-1px)}
+    .joy-auth-logout{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;cursor:pointer;color:#334155}
+    .joy-auth-logout:hover{background:#e2e8f0}
     nav.site-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
     nav.site-nav a{padding:9px 12px;border-radius:999px;border:1px solid rgba(226,232,240,.9);background:#fff;font-weight:800;font-size:13px}
     nav.site-nav a.active{border-color:var(--navc,#2563eb);background:color-mix(in srgb, var(--navc,#2563eb) 12%, white)}
@@ -214,9 +293,7 @@ export function mountNavBar(rootEl) {
           <button id="btnJP" type="button" aria-label="Japanese" data-lang="jp">JP</button>
         </div>
 
-        <div class="login">
-          <a href="${LOGIN_HREF}" data-i18n="nav_login">로그인</a>
-        </div>
+        <div class="joy-auth" data-joy-auth></div>
       </div>
     </div>
 

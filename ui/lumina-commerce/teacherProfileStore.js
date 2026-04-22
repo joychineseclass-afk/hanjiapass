@@ -4,6 +4,7 @@
 import { initCommerceStore, mutateCommerceStore, getCommerceStoreSync } from "./store.js";
 import { VERIFICATION_STATUS } from "./enums.js";
 import { DEMO_TEACHER_USER, getCurrentUser } from "./currentUser.js";
+import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
 
 const OVERLAY_KEY = "lumina_teacher_workbench_overlays_v1";
 
@@ -200,20 +201,21 @@ function ensureDemoProfileInCommerce(snap, user) {
 export async function getMergedProfileForUser(user) {
   const u = user || getCurrentUser();
   const snap = await initCommerceStore();
-  if (!u.roles || !u.roles.includes("teacher")) {
+  if (u.isGuest || u.id === "u_guest" || !u.roles || !u.roles.includes("teacher")) {
     return { profile: null, commerceRow: null };
   }
-  if (!u.teacherProfileId) {
-    return { profile: null, commerceRow: null };
+  let row = u.teacherProfileId ? findCommerceTeacherProfile(snap, u.teacherProfileId) : null;
+  if (!row) {
+    row = findTeacherProfileByUserId(snap, u.id) || null;
   }
-  let row = findCommerceTeacherProfile(snap, u.teacherProfileId);
   if (!row && u.teacherProfileId === DEMO_TEACHER_USER.teacherProfileId) {
     row = ensureDemoProfileInCommerce(snap, u);
   }
   if (!row) {
     return { profile: null, commerceRow: null };
   }
-  return { profile: mergeTeacherProfileRow(row, u.teacherProfileId), commerceRow: row };
+  const profileId = row.id;
+  return { profile: mergeTeacherProfileRow(row, profileId), commerceRow: row };
 }
 
 export const TEACHER_OVERLAY_STORAGE_KEY = OVERLAY_KEY;
