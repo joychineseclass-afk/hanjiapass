@@ -1209,7 +1209,33 @@
       "empty_cta_new_deck": "新規授業课件",
       "empty_cta_from_course": "コースから下書きを生成",
       "create_ok_toast": "下書きを作成しました。",
-      "edit_deck": "课件を編集"
+      "edit_deck": "课件を編集",
+      "tabs_aria": "课件とゴミ箱",
+      "tab_active": "マイ课件",
+      "tab_trash": "ゴミ箱",
+      "delete_to_trash": "削除",
+      "delete_to_trash_title": "ゴミ箱へ移動",
+      "restore": "下書きを復元",
+      "trash_state_deleted": "削除済み",
+      "trash_purge_in_days": "{days}日後に完全削除",
+      "trash_days_remaining": "残り {n} 日",
+      "trash_col_deleted_at": "削除日時",
+      "trash_col_remaining": "保持期限",
+      "trash_empty_title": "ゴミ箱は空です",
+      "trash_empty_body": "削除した课件下書きがここに表示されます。30日を過ぎると自動的に完全削除されます。",
+      "trash_list_aria": "削除済み课件一覧",
+      "trash_confirm_title": "この下書きを削除しますか？",
+      "trash_confirm_not_immediate": "すぐに完全削除はされません。",
+      "trash_confirm_move": "この下書きはゴミ箱に移動します。",
+      "trash_confirm_keep_days": "ゴミ箱に {days} 日間保持されます。",
+      "trash_confirm_after_permanent": "期限後は完全削除され、復元できません。",
+      "trash_error": {
+        "missing_id": "アセットIDがありません。",
+        "not_found": "课件が見つかりません。",
+        "already_trashed": "すでにゴミ箱にあります。",
+        "archived": "アーカイブ済みの课件はこの手順ではゴミ箱に送れません。",
+        "not_trashed": "ゴミ箱にありません。"
+      }
     },
     "asset_editor": {
       "page_title": "课件を編集",
@@ -1244,6 +1270,10 @@
       "back_assets": "授業用資産へ戻る",
       "to_classroom": "授業へ",
       "to_classroom_teach": "授業で使用する",
+      "delete_draft": "下書きを削除",
+      "trashed_gate_title": "この下書きはゴミ箱にあります",
+      "trashed_gate_body": "削除された下書きはここでは編集できません。ゴミ箱から復元するか、自動削除を待ってください。",
+      "trashed_go_trash": "ゴミ箱を開く",
       "save_success": "保存しました",
       "structure_saved": "構成を保存しました",
       "section_publishing": "掲載・公開",
@@ -1596,7 +1626,8 @@
         "teacher_not_verified": "教師の認証が未完了のため実行できません。",
         "teacher_id_required": "教師 ID が未設定です。",
         "teacher_profile_missing": "デモ データに教師プロフィールがありません。",
-        "not_seller_eligible": "販売資格が必要なタイプです。授業用アセット経路を使ってください。"
+        "not_seller_eligible": "販売資格が必要なタイプです。授業用アセット経路を使ってください。",
+        "asset_trashed": "この课件はゴミ箱にあります。先に復元してください。"
       }
     },
     "listing_public": {

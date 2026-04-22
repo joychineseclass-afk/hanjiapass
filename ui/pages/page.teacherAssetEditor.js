@@ -7,6 +7,9 @@ import {
   updateTeacherAsset,
   getEffectiveTeacherNote,
   defaultSlideOutline,
+  isTeacherAssetTrashed,
+  moveTeacherAssetToTrash,
+  TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
   ASSET_TYPE,
 } from "../lumina-commerce/teacherAssetsStore.js";
@@ -39,6 +42,20 @@ function parseIdFromHash() {
   const q = h.indexOf("?");
   if (q < 0) return "";
   return String(new URLSearchParams(h.slice(q + 1)).get("id") || "").trim();
+}
+
+/**
+ * @param {(k: string, p?: object) => string} t
+ */
+function trashDraftConfirmMessage(t) {
+  return [
+    t("teacher.assets.trash_confirm_title"),
+    "",
+    t("teacher.assets.trash_confirm_not_immediate"),
+    t("teacher.assets.trash_confirm_move"),
+    t("teacher.assets.trash_confirm_keep_days", { days: String(TEACHER_ASSET_TRASH_RETENTION_DAYS) }),
+    t("teacher.assets.trash_confirm_after_permanent"),
+  ].join("\n");
 }
 
 /**
@@ -87,8 +104,9 @@ function outlineRowHtml(item, idx, t, readOnly) {
  * @param {string} profileId
  * @param {boolean} canEdit
  * @param {boolean} isArchived
+ * @param {boolean} canMoveToTrash
  */
-function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
+function editorFormHtml(a, t, userId, profileId, canEdit, isArchived, canMoveToTrash) {
   const src = a.source;
   const ro = canEdit && !isArchived ? "" : " readonly";
   const dis = canEdit && !isArchived ? "" : " disabled";
@@ -98,7 +116,14 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
   const disHint = isArchived
     ? `<p class="teacher-asset-editor-banner teacher-asset-editor-banner--warn" role="status">${esc(t("teacher.asset_editor.readonly_archived"))}</p>`
     : "";
-  const actionsBar = (suffix) => `
+  const actionsBar = (suffix) => {
+    const deleteBtn =
+      suffix === "Bottom" && canMoveToTrash
+        ? `<button type="button" class="teacher-hub-cta teacher-asset-editor-delete-deck" id="teacherAssetMoveToDraftTrash">${esc(
+            t("teacher.asset_editor.delete_draft"),
+          )}</button>`
+        : "";
+    return `
     <div class="teacher-asset-editor-actions teacher-asset-editor-actions--bar" id="teacherAssetEditorActions${suffix}">
       <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetEditorSave${suffix}" data-save-bar="${suffix}" ${
     !canEdit || isArchived ? "disabled" : ""
@@ -109,7 +134,9 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
       <a class="teacher-hub-cta teacher-hub-cta--accent" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(
     t("teacher.asset_editor.to_classroom_teach"),
   )}</a>
+      ${deleteBtn}
     </div>`;
+  };
   return `
     <form id="teacherAssetEditorForm" class="teacher-asset-editor-form">
       ${disHint}
@@ -295,8 +322,27 @@ async function renderEditor(root) {
     root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.not_lesson_draft"))}</p></div>`;
     return;
   }
+  if (isTeacherAssetTrashed(a)) {
+    root.innerHTML = `
+    <div class="wrap teacher-asset-editor-page">
+      ${teacherBackToWorkspaceHtml(t)}
+      <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
+      ${teacherWorkspaceSubnavHtml("assets", t)}
+      <section class="card teacher-asset-editor-trashed-gate">
+        <h2 class="teacher-asset-editor-trashed-title">${esc(t("teacher.asset_editor.trashed_gate_title"))}</h2>
+        <p class="teacher-asset-editor-trashed-body">${esc(t("teacher.asset_editor.trashed_gate_body"))}</p>
+        <p class="teacher-asset-editor-trashed-actions">
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets?tab=trash">${esc(t("teacher.asset_editor.trashed_go_trash"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+        </p>
+      </section>
+    </div>`;
+    i18n.apply?.(root);
+    return;
+  }
   const isArchived = a.status === ASSET_STATUS.archived;
   const canEdit = !isArchived;
+  const canMoveToTrash = canEdit && !isArchived;
 
   await initCommerceStore();
   const snap = getCommerceStoreSync();
@@ -327,7 +373,7 @@ async function renderEditor(root) {
         </div>
       </header>
       ${publishBlock}
-      ${editorFormHtml(a, t, u.id, ctx.profile.id, canEdit, isArchived)}
+      ${editorFormHtml(a, t, u.id, ctx.profile.id, canEdit, isArchived, canMoveToTrash)}
     </div>
   `;
   i18n.apply?.(root);
@@ -421,6 +467,24 @@ async function renderEditor(root) {
       ev.preventDefault();
       runSave();
     });
+  });
+
+  root.querySelector("#teacherAssetMoveToDraftTrash")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    if (!confirm(trashDraftConfirmMessage(t))) return;
+    const r = moveTeacherAssetToTrash(a.id, u.id);
+    if (!r.ok) {
+      const ek = `teacher.assets.trash_error.${r.code}`;
+      let msg = t(ek);
+      if (msg === ek) msg = String(r.code);
+      try {
+        alert(msg);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    location.hash = "#teacher-assets";
   });
 }
 

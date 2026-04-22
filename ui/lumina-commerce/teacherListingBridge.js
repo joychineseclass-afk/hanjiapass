@@ -20,7 +20,7 @@ import {
   assertCanSubmitListingForReview,
 } from "./teacherRules.js";
 import { initCommerceStore, getCommerceStoreSync, mutateCommerceStore } from "./store.js";
-import { findAssetById, ASSET_STATUS } from "./teacherAssetsStore.js";
+import { findAssetById, ASSET_STATUS, isTeacherAssetTrashed } from "./teacherAssetsStore.js";
 
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -71,7 +71,7 @@ export function listingDisplayFieldsFromClassroomAsset(asset) {
  */
 export function syncClassroomAssetListingFromAsset(assetId) {
   const asset = findAssetById(String(assetId));
-  if (!asset) return { ok: false, code: "asset_not_found" };
+  if (!asset || isTeacherAssetTrashed(asset)) return { ok: false, code: "asset_not_found" };
   const snap = getCommerceStoreSync();
   if (!snap) return { ok: false, code: "store_unavailable" };
   const L = findListingByAssetId(snap, asset.id);
@@ -134,6 +134,7 @@ export async function ensureListingForTeacherAsset(assetId) {
   if (!snap) return { ok: false, code: "store_unavailable" };
   const asset = findAssetById(String(assetId));
   if (!asset) return { ok: false, code: "asset_not_found" };
+  if (isTeacherAssetTrashed(asset)) return { ok: false, code: "asset_trashed" };
   if (asset.status === ASSET_STATUS.archived) return { ok: false, code: "asset_archived" };
 
   const existing = findListingByAssetId(snap, asset.id);
@@ -214,6 +215,7 @@ export async function submitTeacherAssetListingForReview(assetId, actingUserId) 
 
   const asset = findAssetById(String(assetId));
   if (!asset) return { ok: false, code: "asset_not_found" };
+  if (isTeacherAssetTrashed(asset)) return { ok: false, code: "asset_trashed" };
   if (asset.status === ASSET_STATUS.archived) return { ok: false, code: "asset_archived" };
 
   await initCommerceStore();
@@ -254,6 +256,8 @@ export async function submitTeacherAssetListingForReview(assetId, actingUserId) 
  * @returns {Promise<{ ok: boolean, code?: string, listing?: import('./schema.js').Listing }>}
  */
 export async function setClassroomAssetListingToPublic(assetId, teacherProfileId) {
+  const asset = findAssetById(String(assetId));
+  if (!asset || isTeacherAssetTrashed(asset)) return { ok: false, code: "asset_trashed" };
   await initCommerceStore();
   const L = findListingByAssetId(getCommerceStoreSync(), assetId);
   if (!L) return { ok: false, code: "listing_not_found" };

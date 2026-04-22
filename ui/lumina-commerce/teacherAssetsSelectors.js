@@ -9,8 +9,14 @@ import {
   defaultSlideOutline,
   findAssetById,
   getEffectiveTeacherNote,
+  isTeacherAssetTrashed,
+  teacherAssetTrashDaysRemaining,
   listAssetsByProfileId,
+  listTrashedAssetsByProfileId,
+  moveTeacherAssetToTrash,
+  restoreTeacherAssetFromTrash,
   updateTeacherAsset,
+  TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
   ASSET_TYPE,
 } from "./teacherAssetsStore.js";
@@ -140,6 +146,7 @@ export async function selectClassroomContextFromAssetId(assetId) {
   }
   const asset = findAssetById(String(assetId));
   if (!asset) return { ok: false, error: "not_found" };
+  if (isTeacherAssetTrashed(asset)) return { ok: false, error: "forbidden" };
 
   const u = getCurrentUser();
   const sameProfile =
@@ -173,4 +180,16 @@ export function archiveAssetById(assetId) {
   return updateTeacherAsset({ id: assetId, status: ASSET_STATUS.archived });
 }
 
-export { findAssetById, getEffectiveTeacherNote, listAssetsByProfileId, ASSET_STATUS, ASSET_TYPE };
+export {
+  findAssetById,
+  getEffectiveTeacherNote,
+  isTeacherAssetTrashed,
+  teacherAssetTrashDaysRemaining,
+  listAssetsByProfileId,
+  listTrashedAssetsByProfileId,
+  moveTeacherAssetToTrash,
+  restoreTeacherAssetFromTrash,
+  TEACHER_ASSET_TRASH_RETENTION_DAYS,
+  ASSET_STATUS,
+  ASSET_TYPE,
+};

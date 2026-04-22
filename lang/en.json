@@ -1200,7 +1200,33 @@
       "empty_cta_new_deck": "New classroom deck",
       "empty_cta_from_course": "Generate a deck draft from a course",
       "create_ok_toast": "Draft created.",
-      "edit_deck": "Edit deck"
+      "edit_deck": "Edit deck",
+      "tabs_aria": "Decks and trash",
+      "tab_active": "My decks",
+      "tab_trash": "Trash",
+      "delete_to_trash": "Delete",
+      "delete_to_trash_title": "Move to trash",
+      "restore": "Restore draft",
+      "trash_state_deleted": "Deleted",
+      "trash_purge_in_days": "Permanently removed after {days} days",
+      "trash_days_remaining": "{n} days left",
+      "trash_col_deleted_at": "Deleted at",
+      "trash_col_remaining": "Time left",
+      "trash_empty_title": "Trash is empty",
+      "trash_empty_body": "Deleted deck drafts appear here. Items older than 30 days are removed automatically.",
+      "trash_list_aria": "Deleted deck drafts",
+      "trash_confirm_title": "Delete this draft?",
+      "trash_confirm_not_immediate": "This does not permanently delete immediately.",
+      "trash_confirm_move": "The draft will be moved to trash.",
+      "trash_confirm_keep_days": "It stays in trash for {days} days.",
+      "trash_confirm_after_permanent": "After that it is permanently deleted and cannot be recovered.",
+      "trash_error": {
+        "missing_id": "Missing asset id.",
+        "not_found": "Deck not found.",
+        "already_trashed": "This draft is already in trash.",
+        "archived": "Archived decks cannot be moved to trash in this step.",
+        "not_trashed": "This draft is not in trash."
+      }
     },
     "asset_editor": {
       "page_title": "Edit deck",
@@ -1235,6 +1261,10 @@
       "back_assets": "Back to my teaching assets",
       "to_classroom": "Enter classroom",
       "to_classroom_teach": "Open classroom to teach",
+      "delete_draft": "Delete draft",
+      "trashed_gate_title": "This draft is in trash",
+      "trashed_gate_body": "You cannot edit a deleted draft here. Restore it from trash, or wait until it is permanently removed.",
+      "trashed_go_trash": "Open trash",
       "save_success": "Saved",
       "structure_saved": "Structure saved",
       "section_publishing": "Publishing",
@@ -1587,7 +1617,8 @@
         "teacher_not_verified": "Your teacher profile is not verified for this action.",
         "teacher_id_required": "Teacher profile is required on the listing.",
         "teacher_profile_missing": "Teacher profile not found in the demo store.",
-        "not_seller_eligible": "Seller eligibility does not allow this listing type (use classroom-asset flow)."
+        "not_seller_eligible": "Seller eligibility does not allow this listing type (use classroom-asset flow).",
+        "asset_trashed": "This deck is in trash. Restore it before continuing."
       }
     },
     "listing_public": {

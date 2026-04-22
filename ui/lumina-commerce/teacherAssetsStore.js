@@ -19,6 +19,10 @@ export const PPT_MODE = Object.freeze({
   structured: "structured",
 });
 
+/** 垃圾桶内草案保留天数，超时在读存储时自动永久清除 */
+export const TEACHER_ASSET_TRASH_RETENTION_DAYS = 30;
+const TRASH_RETENTION_MS = TEACHER_ASSET_TRASH_RETENTION_DAYS * 24 * 60 * 60 * 1000;
+
 const LS_KEY = "lumina_teacher_assets_v1";
 
 /**
@@ -54,6 +58,8 @@ const LS_KEY = "lumina_teacher_assets_v1";
  * @property {TeacherSlideOutlineItemV1[]} [slide_outline]
  * @property {string} created_at
  * @property {string} updated_at
+ * @property {string} [deleted_at] ISO，非空表示在垃圾桶
+ * @property {string} [deleted_by_user_id]
  */
 
 /**
@@ -105,16 +111,30 @@ function normalizeSlideOutline(x) {
 /**
  * @returns {TeacherAssetsFileV1}
  */
-function loadFile() {
+/**
+ * 从 localStorage 读出并 sanitize，不执行过期清理（供 loadFile / 显式 purge 复用）
+ * @returns {TeacherClassroomAsset[]}
+ */
+function parseStorageToItems() {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return { v: 1, items: [] };
+    if (!raw) return [];
     const p = JSON.parse(raw);
-    if (!p || p.v !== 1 || !Array.isArray(p.items)) return { v: 1, items: [] };
-    return { v: 1, items: p.items.filter(Boolean).map(sanitizeItem).filter(Boolean) };
+    if (!p || p.v !== 1 || !Array.isArray(p.items)) return [];
+    return p.items.filter(Boolean).map(sanitizeItem).filter(Boolean);
   } catch {
-    return { v: 1, items: [] };
+    return [];
   }
+}
+
+function loadFile() {
+  let items = parseStorageToItems();
+  const { items: purged, removed } = purgeExpiredTrashedTeacherAssetsFromList(items);
+  if (removed > 0) {
+    saveFile({ v: 1, items: purged });
+    items = purged;
+  }
+  return { v: 1, items };
 }
 
 /**
@@ -150,6 +170,9 @@ function sanitizeItem(raw) {
   const ppt_mode = o.ppt_mode != null ? String(o.ppt_mode) : PPT_MODE.structured;
   const created_at = o.created_at != null ? String(o.created_at) : nowIso();
   const updated_at = o.updated_at != null ? String(o.updated_at) : created_at;
+  const deleted_at_raw = o.deleted_at != null ? String(o.deleted_at).trim() : "";
+  const deleted_at = deleted_at_raw || "";
+  const deleted_by_user_id = o.deleted_by_user_id != null ? String(o.deleted_by_user_id) : "";
   return {
     id,
     teacher_profile_id,
@@ -168,7 +191,46 @@ function sanitizeItem(raw) {
     slide_outline,
     created_at,
     updated_at,
+    deleted_at,
+    deleted_by_user_id,
   };
+}
+
+/**
+ * @param {TeacherClassroomAsset | null | undefined} a
+ * @returns {boolean}
+ */
+export function isTeacherAssetTrashed(a) {
+  return Boolean(a && String(a.deleted_at || "").trim());
+}
+
+/**
+ * 距离自动永久删除剩余整天数（0 表示当天或已过期将被读时清理）
+ * @param {TeacherClassroomAsset} a
+ * @returns {number|null} 非垃圾桶内为 null
+ */
+export function teacherAssetTrashDaysRemaining(a) {
+  if (!isTeacherAssetTrashed(a)) return null;
+  const t = Date.parse(String(a.deleted_at));
+  if (!Number.isFinite(t)) return 0;
+  const expireAt = t + TRASH_RETENTION_MS;
+  return Math.max(0, Math.ceil((expireAt - Date.now()) / (24 * 60 * 60 * 1000)));
+}
+
+/**
+ * 读存储时：永久删除 deleted_at 超过保留期的资产（仅垃圾桶内项）。
+ * @param {TeacherClassroomAsset[]} items
+ * @returns {{ items: TeacherClassroomAsset[], removed: number }}
+ */
+export function purgeExpiredTrashedTeacherAssetsFromList(items) {
+  const cutoff = Date.now() - TRASH_RETENTION_MS;
+  const next = items.filter((a) => {
+    if (!a || !String(a.deleted_at || "").trim()) return true;
+    const ts = Date.parse(String(a.deleted_at));
+    if (!Number.isFinite(ts)) return true;
+    return ts >= cutoff;
+  });
+  return { items: next, removed: items.length - next.length };
 }
 
 /**
@@ -206,8 +268,21 @@ export function listAssetsByProfileId(profileId) {
   if (!profileId) return [];
   const pid = String(profileId);
   return listAllTeacherAssets()
-    .filter((a) => a.teacher_profile_id === pid)
+    .filter((a) => a.teacher_profile_id === pid && !isTeacherAssetTrashed(a))
     .sort((a, b) => (a.updated_at < b.updated_at ? 1 : -1));
+}
+
+/**
+ * 垃圾桶：当前 profile 下已软删且未过期的草案
+ * @param {string} profileId
+ * @returns {TeacherClassroomAsset[]}
+ */
+export function listTrashedAssetsByProfileId(profileId) {
+  if (!profileId) return [];
+  const pid = String(profileId);
+  return listAllTeacherAssets()
+    .filter((a) => a.teacher_profile_id === pid && isTeacherAssetTrashed(a))
+    .sort((a, b) => String(b.deleted_at || "").localeCompare(String(a.deleted_at || "")));
 }
 
 /**
@@ -236,6 +311,9 @@ export function updateTeacherAsset(patch) {
     ...patch,
     source: patch.source ? { ...prev.source, ...patch.source } : prev.source,
     slide_outline: patch.slide_outline != null ? patch.slide_outline : prev.slide_outline,
+    deleted_at: patch.deleted_at !== undefined ? String(patch.deleted_at || "") : prev.deleted_at,
+    deleted_by_user_id:
+      patch.deleted_by_user_id !== undefined ? String(patch.deleted_by_user_id || "") : prev.deleted_by_user_id,
     updated_at: nowIso(),
   };
   const clean = sanitizeItem(merged);
@@ -331,6 +409,58 @@ export function getEffectiveTeacherNote(a) {
  * @param {string} toUserId
  * @returns {boolean} 是否写入了变更
  */
+/**
+ * 软删：写入 deleted_at，主列表与课堂入口将隐藏。
+ * @param {string} assetId
+ * @param {string} userId
+ * @returns {{ ok: true } | { ok: false, code: string }}
+ */
+export function moveTeacherAssetToTrash(assetId, userId) {
+  const id = String(assetId || "").trim();
+  if (!id) return { ok: false, code: "missing_id" };
+  const a = findAssetById(id);
+  if (!a) return { ok: false, code: "not_found" };
+  if (isTeacherAssetTrashed(a)) return { ok: false, code: "already_trashed" };
+  if (a.status === ASSET_STATUS.archived) return { ok: false, code: "archived" };
+  updateTeacherAsset({
+    id,
+    deleted_at: nowIso(),
+    deleted_by_user_id: String(userId || ""),
+  });
+  return { ok: true };
+}
+
+/**
+ * 从垃圾桶恢复
+ * @param {string} assetId
+ * @param {string} [_userId] 预留校验
+ * @returns {{ ok: true } | { ok: false, code: string }}
+ */
+export function restoreTeacherAssetFromTrash(assetId, _userId) {
+  const id = String(assetId || "").trim();
+  if (!id) return { ok: false, code: "missing_id" };
+  const a = findAssetById(id);
+  if (!a) return { ok: false, code: "not_found" };
+  if (!isTeacherAssetTrashed(a)) return { ok: false, code: "not_trashed" };
+  updateTeacherAsset({
+    id,
+    deleted_at: "",
+    deleted_by_user_id: "",
+  });
+  return { ok: true };
+}
+
+/**
+ * 显式执行过期清理并写回（通常 loadFile 已自动执行；供调试或外部调用）
+ * @returns {number} 移除条数
+ */
+export function purgeExpiredTrashedTeacherAssets() {
+  const items = parseStorageToItems();
+  const { items: next, removed } = purgeExpiredTrashedTeacherAssetsFromList(items);
+  if (removed > 0) saveFile({ v: 1, items: next });
+  return removed;
+}
+
 export function reassignTeacherAssetOwnersFromUserId(fromUserId, toUserId) {
   const f = loadFile();
   const from = String(fromUserId);

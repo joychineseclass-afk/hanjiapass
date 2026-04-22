@@ -5,6 +5,11 @@ import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { updateTeacherAsset } from "../lumina-commerce/teacherAssetsStore.js";
 import {
   listAssetsByProfileId,
+  listTrashedAssetsByProfileId,
+  moveTeacherAssetToTrash,
+  restoreTeacherAssetFromTrash,
+  teacherAssetTrashDaysRemaining,
+  TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
   ASSET_TYPE,
   createClassroomAssetForLesson,
@@ -50,7 +55,31 @@ function assetStatusLabel(t, st) {
   return t(`teacher.assets.state.${st}`);
 }
 
+/** @returns {'active' | 'trash'} */
+function assetsTabFromHash() {
+  const h = String(location.hash || "");
+  const q = h.indexOf("?");
+  if (q < 0) return "active";
+  const tab = String(new URLSearchParams(h.slice(q + 1)).get("tab") || "").toLowerCase();
+  return tab === "trash" ? "trash" : "active";
+}
+
+/**
+ * @param {(k: string, p?: object) => string} t
+ */
+function trashConfirmMessage(t) {
+  return [
+    t("teacher.assets.trash_confirm_title"),
+    "",
+    t("teacher.assets.trash_confirm_not_immediate"),
+    t("teacher.assets.trash_confirm_move"),
+    t("teacher.assets.trash_confirm_keep_days", { days: String(TEACHER_ASSET_TRASH_RETENTION_DAYS) }),
+    t("teacher.assets.trash_confirm_after_permanent"),
+  ].join("\n");
+}
+
 let __lang = /** @type {null | (() => void)} */ (null);
+let __hash = /** @type {null | (() => void)} */ (null);
 let __root = /** @type {HTMLElement | null} */ (null);
 
 /**
@@ -90,6 +119,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     ? `#teacher-listing?id=${encodeURIComponent(listing.id)}`
     : "";
   const archDisabled = a.status === ASSET_STATUS.archived;
+  const canMoveToTrash = !archDisabled && a.asset_type === ASSET_TYPE.lesson_slide_draft;
   const hasNote = Boolean(getEffectiveTeacherNote(a));
   const noteShort = hasNote ? t("teacher.assets.has_teacher_note_badge") : t("teacher.assets.has_teacher_note_no");
   const editDeck =
@@ -235,7 +265,48 @@ function assetRow(a, t, profileId, userId, listing, snap) {
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-archive="${escapeHtml(a.id)}" ${
     archDisabled ? "disabled" : ""
   }>${escapeHtml(t("teacher.assets.archive"))}</button>
+      ${
+        canMoveToTrash
+          ? `<span class="teacher-asset-sep" aria-hidden="true">|</span><button type="button" class="teacher-asset-ghost teacher-asset-move-trash" data-teacher-asset-trash="${escapeHtml(
+              a.id,
+            )}" title="${escapeHtml(t("teacher.assets.delete_to_trash_title"))}">${escapeHtml(t("teacher.assets.delete_to_trash"))}</button>`
+          : ""
+      }
       </div>
+    </td>
+  </tr>`;
+}
+
+/**
+ * @param {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset} a
+ * @param {(k: string, p?: object) => string} t
+ */
+function trashAssetRow(a, t) {
+  const src = a.source;
+  const srcLine = t("teacher.assets.source_line", {
+    course: formatTeacherHubCourseDisplay(src.course),
+    level: String(src.level),
+    lesson: String(src.lesson),
+  });
+  const delAt = formatDemoShortUpdated(a.deleted_at || "");
+  const daysLeft = teacherAssetTrashDaysRemaining(a) ?? 0;
+  const pillClass =
+    daysLeft <= 3 ? "teacher-trash-days-pill teacher-trash-days-pill--urgent" : "teacher-trash-days-pill";
+  return `<tr data-teacher-asset-trash-id="${escapeHtml(a.id)}">
+    <td class="teacher-manage-cell-title">
+      <div class="teacher-asset-title-line">${escapeHtml(a.title)}</div>
+      <p class="teacher-trash-meta-line"><span class="teacher-trash-badge">${escapeHtml(t("teacher.assets.trash_state_deleted"))}</span> ${escapeHtml(
+        t("teacher.assets.trash_purge_in_days", { days: String(TEACHER_ASSET_TRASH_RETENTION_DAYS) }),
+      )}</p>
+    </td>
+    <td class="teacher-manage-cell-meta"><span class="teacher-asset-type-pill">${escapeHtml(t(`teacher.assets.type.${a.asset_type}`))}</span></td>
+    <td>${escapeHtml(srcLine)}</td>
+    <td>${escapeHtml(delAt)}</td>
+    <td><span class="${escapeHtml(pillClass)}">${escapeHtml(t("teacher.assets.trash_days_remaining", { n: String(daysLeft) }))}</span></td>
+    <td class="teacher-manage-col-actions">
+      <button type="button" class="teacher-hub-cta teacher-hub-cta--secondary teacher-trash-restore" data-teacher-asset-restore="${escapeHtml(
+        a.id,
+      )}">${escapeHtml(t("teacher.assets.restore"))}</button>
     </td>
   </tr>`;
 }
@@ -273,20 +344,25 @@ async function renderPage(root) {
   const snap = getCommerceStoreSync();
   const profileId = ctx.profile.id;
   const userId = ctx.user?.id || "";
+  const tab = assetsTabFromHash();
 
-  const assets = listAssetsByProfileId(profileId);
-  const hasRows = assets.length > 0;
-  const rows = hasRows
-    ? assets
-        .map((a) => {
-          const listing = snap ? findListingByAssetId(snap, a.id) : null;
-          return assetRow(a, t, profileId, userId, listing, snap);
-        })
-        .join("")
-    : "";
-  const emptyBlock = hasRows
-    ? ""
-    : `<div class="teacher-assets-empty card">
+  const assets = tab === "active" ? listAssetsByProfileId(profileId) : [];
+  const trashed = tab === "trash" ? listTrashedAssetsByProfileId(profileId) : [];
+  const hasRows = tab === "active" ? assets.length > 0 : trashed.length > 0;
+  const rows =
+    tab === "active" && hasRows
+      ? assets
+          .map((a) => {
+            const listing = snap ? findListingByAssetId(snap, a.id) : null;
+            return assetRow(a, t, profileId, userId, listing, snap);
+          })
+          .join("")
+      : tab === "trash" && hasRows
+        ? trashed.map((a) => trashAssetRow(a, t)).join("")
+        : "";
+  const emptyBlock =
+    tab === "active" && !hasRows
+      ? `<div class="teacher-assets-empty card">
          <h3 class="teacher-assets-empty-title">${escapeHtml(t("teacher.assets.empty_title_v2"))}</h3>
          <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.empty_body_v3"))}</p>
          <p class="teacher-assets-empty-cta">
@@ -297,9 +373,16 @@ async function renderPage(root) {
              t("teacher.assets.empty_cta_from_course"),
            )}</a>
          </p>
-       </div>`;
-  const tableBlock = hasRows
-    ? `<div class="teacher-manage-table-scroll">
+       </div>`
+      : tab === "trash" && !hasRows
+        ? `<div class="teacher-assets-empty card teacher-trash-empty">
+         <h3 class="teacher-assets-empty-title">${escapeHtml(t("teacher.assets.trash_empty_title"))}</h3>
+         <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.trash_empty_body"))}</p>
+       </div>`
+        : "";
+  const tableBlock =
+    tab === "active" && hasRows
+      ? `<div class="teacher-manage-table-scroll">
         <table class="teacher-manage-table">
           <thead>
             <tr>
@@ -317,7 +400,23 @@ async function renderPage(root) {
           <tbody>${rows}</tbody>
         </table>
       </div>`
-    : "";
+      : tab === "trash" && hasRows
+        ? `<div class="teacher-manage-table-scroll teacher-trash-table-wrap">
+        <table class="teacher-manage-table teacher-trash-table">
+          <thead>
+            <tr>
+              <th scope="col">${escapeHtml(t("teacher.assets.col_title"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.col_type"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.col_source"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.trash_col_deleted_at"))}</th>
+              <th scope="col">${escapeHtml(t("teacher.assets.trash_col_remaining"))}</th>
+              <th scope="col" class="teacher-manage-col-actions">${escapeHtml(t("teacher.assets.col_actions"))}</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`
+        : "";
 
   root.innerHTML = `
     <div class="teacher-page wrap teacher-assets-page teacher-manage-page">
@@ -328,10 +427,22 @@ async function renderPage(root) {
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(t("teacher.assets.page_subtitle", { name: ctx.profile.display_name }))}</p>
         <p class="teacher-assets-step4-hint teacher-tile-desc">${escapeHtml(t("teacher.publishing.page_hint"))}</p>
+        <div class="teacher-assets-tabs" role="tablist" aria-label="${escapeHtml(t("teacher.assets.tabs_aria"))}">
+          <a role="tab" class="teacher-assets-tab ${tab === "active" ? "is-active" : ""}" href="#teacher-assets" aria-selected="${tab === "active" ? "true" : "false"}">${escapeHtml(
+            t("teacher.assets.tab_active"),
+          )}</a>
+          <a role="tab" class="teacher-assets-tab ${tab === "trash" ? "is-active" : ""}" href="#teacher-assets?tab=trash" aria-selected="${tab === "trash" ? "true" : "false"}">${escapeHtml(
+            t("teacher.assets.tab_trash"),
+          )}</a>
+        </div>
         <div class="teacher-assets-header-actions">
-          <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
+          ${
+            tab === "active"
+              ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsHeaderQuickCreate">
             ${escapeHtml(t("teacher.assets.new_classroom_deck"))}
-          </button>
+          </button>`
+              : ""
+          }
         </div>
         <div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(t("teacher.surface.nav_aria"))}">
           <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(t("teacher.nav.back_mine_workbench"))}</a>
@@ -343,7 +454,9 @@ async function renderPage(root) {
       ${teacherPathStripClassroomHintHtml(t)}
 
       ${emptyBlock}
-      <section class="card teacher-assets-list-card" aria-label="${escapeHtml(t("teacher.assets.list_aria"))}">${tableBlock}</section>
+      <section class="card teacher-assets-list-card${tab === "trash" ? " teacher-assets-list-card--trash" : ""}" aria-label="${escapeHtml(
+        tab === "trash" ? t("teacher.assets.trash_list_aria") : t("teacher.assets.list_aria"),
+      )}">${tableBlock}</section>
     </div>
   `;
 
@@ -366,6 +479,50 @@ async function renderPage(root) {
   root.querySelector("#teacherAssetsHeaderQuickCreate")?.addEventListener("click", (ev) => {
     ev.preventDefault();
     doQuickCreate();
+  });
+
+  root.querySelectorAll("[data-teacher-asset-trash]").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      const id = btn.getAttribute("data-teacher-asset-trash");
+      if (!id || /** @type {HTMLButtonElement} */ (btn).disabled) return;
+      ev.preventDefault();
+      if (!confirm(trashConfirmMessage(t))) return;
+      const r = moveTeacherAssetToTrash(id, userId);
+      if (!r.ok) {
+        const ek = `teacher.assets.trash_error.${r.code}`;
+        let msg = t(ek);
+        if (msg === ek) msg = String(r.code);
+        try {
+          alert(msg);
+        } catch {
+          /* */
+        }
+        return;
+      }
+      void renderPage(root);
+    });
+  });
+
+  root.querySelectorAll("[data-teacher-asset-restore]").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      const id = btn.getAttribute("data-teacher-asset-restore");
+      if (!id) return;
+      ev.preventDefault();
+      const r = restoreTeacherAssetFromTrash(id, userId);
+      if (!r.ok) {
+        const ek = `teacher.assets.trash_error.${r.code}`;
+        let msg = t(ek);
+        if (msg === ek) msg = String(r.code);
+        try {
+          alert(msg);
+        } catch {
+          /* */
+        }
+        return;
+      }
+      location.hash = "#teacher-assets";
+      void renderPage(root);
+    });
   });
   root.querySelector("#teacherAssetsEmptyQuickCreate")?.addEventListener("click", (ev) => {
     ev.preventDefault();
@@ -479,6 +636,11 @@ export default function pageTeacherAssets(ctxOrRoot) {
     if (__root?.isConnected) void renderPage(__root);
   };
   window.addEventListener("joy:langChanged", __lang);
+  if (__hash) window.removeEventListener("hashchange", __hash);
+  __hash = () => {
+    if (__root?.isConnected) void renderPage(__root);
+  };
+  window.addEventListener("hashchange", __hash);
 
   void renderPage(root);
 }

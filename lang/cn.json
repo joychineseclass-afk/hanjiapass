@@ -1200,7 +1200,33 @@
       "empty_cta_new_deck": "新建课堂课件",
       "empty_cta_from_course": "从课程生成课件草稿",
       "create_ok_toast": "已创建课件草稿。",
-      "edit_deck": "编辑课件"
+      "edit_deck": "编辑课件",
+      "tabs_aria": "课件与垃圾桶切换",
+      "tab_active": "我的课件",
+      "tab_trash": "垃圾桶",
+      "delete_to_trash": "删除",
+      "delete_to_trash_title": "移动到垃圾桶",
+      "restore": "恢复草案",
+      "trash_state_deleted": "已删除",
+      "trash_purge_in_days": "将在 {days} 天后永久删除",
+      "trash_days_remaining": "剩余 {n} 天",
+      "trash_col_deleted_at": "删除时间",
+      "trash_col_remaining": "保留期限",
+      "trash_empty_title": "垃圾桶是空的",
+      "trash_empty_body": "删除的课件草案会出现在这里；超过 30 天将自动永久清除。",
+      "trash_list_aria": "已删除课件列表",
+      "trash_confirm_title": "确认删除这份草案吗？",
+      "trash_confirm_not_immediate": "此操作不会立即永久删除。",
+      "trash_confirm_move": "此草案将移动到垃圾桶。",
+      "trash_confirm_keep_days": "垃圾桶中保留 {days} 天。",
+      "trash_confirm_after_permanent": "超过上述期限后将永久删除，且无法恢复。",
+      "trash_error": {
+        "missing_id": "缺少资产 ID。",
+        "not_found": "未找到该课件。",
+        "already_trashed": "该课件已在垃圾桶中。",
+        "archived": "已归档的课件不能移入垃圾桶，请先保持归档状态或联系支持。",
+        "not_trashed": "该课件不在垃圾桶中。"
+      }
     },
     "asset_editor": {
       "page_title": "编辑课件",
@@ -1235,6 +1261,10 @@
       "back_assets": "返回我的授课资产",
       "to_classroom": "进入课堂",
       "to_classroom_teach": "进入课堂授课",
+      "delete_draft": "删除草案",
+      "trashed_gate_title": "该课件已在垃圾桶中",
+      "trashed_gate_body": "无法在此编辑已删除的草案。可在垃圾桶中恢复，或等待自动永久清除。",
+      "trashed_go_trash": "打开垃圾桶",
       "save_success": "保存成功",
       "structure_saved": "结构已保存",
       "section_publishing": "发布状态",
@@ -1587,7 +1617,8 @@
         "teacher_not_verified": "老师认证未通过，无法执行此操作。",
         "teacher_id_required": "发布项缺少教师档案 ID。",
         "teacher_profile_missing": "演示数据中未找到老师档案。",
-        "not_seller_eligible": "当前上架类型需售卖资格，请使用课堂资产提交流程。"
+        "not_seller_eligible": "当前上架类型需售卖资格，请使用课堂资产提交流程。",
+        "asset_trashed": "该课件在垃圾桶中，请先恢复后再操作。"
       }
     },
     "listing_public": {
