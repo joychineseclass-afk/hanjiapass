@@ -1151,6 +1151,63 @@
       "title": "授業コンソール",
       "desc": "進行・出席・投票などを操作します。（準備中）",
       "scope_note": "授業進行・運営用。教材・コース・販売 listing の編集には使いません。"
+    },
+    "publishing": {
+      "page_hint": "授業用アセットを listing 化し審査に出します。承認後に公開表示へ切り替え可能です（ローカルデモ・決済未接続）。",
+      "col_publish": "公開 / 審査",
+      "submit_review": "審査に出す",
+      "view_status": "審査状況とコンソール",
+      "view_review_console": "販売管理（Stage 0）を開く",
+      "view_public_detail": "公開ページを見る",
+      "not_public_yet": "未公開",
+      "go_public": "公開にする",
+      "badge_listing_yes": "発行項あり",
+      "badge_listing_no": "未作成",
+      "from_asset": "元の授業用アセット",
+      "source_course": "元の授業",
+      "source_course_line": "{course} · 巻{level} · 第{lesson}回",
+      "source_course_unknown": "ローカルでアセットに未リンク",
+      "rejection_prefix": "前回の審査：",
+      "state": {
+        "none": "—",
+        "no_listing": "未発行",
+        "pending": "審査中",
+        "approved": "承認済み",
+        "rejected": "非承認",
+        "draft": "下書き"
+      },
+      "error": {
+        "asset_not_found": "授業用アセットが見つかりません。",
+        "asset_archived": "アーカイブ済みのため提出できません。",
+        "already_pending": "すでに審査中です。",
+        "invalid_listing_state": "この状態では提出できません。",
+        "store_unavailable": "データを読めません。再試行してください。",
+        "listing_create_failed": "発行項を作成できませんでした。",
+        "listing_missing": "操作後に発行項が見つかりません。",
+        "not_approved": "承認後のみ公開にできます。",
+        "listing_not_found": "発行項が見つかりません。",
+        "teacher_mismatch": "このアセットは現在の教師に属しません。",
+        "forbidden": "操作できません。",
+        "not_classroom_asset": "授業用アセット向けの操作のみ可能です。",
+        "submit_denied": "ルールにより阻止されました。",
+        "teacher_not_verified": "教師の認証が未完了のため実行できません。",
+        "teacher_id_required": "教師 ID が未設定です。",
+        "teacher_profile_missing": "デモ データに教師プロフィールがありません。",
+        "not_seller_eligible": "販売資格が必要なタイプです。授業用アセット経路を使ってください。"
+      }
+    },
+    "listing_public": {
+      "kicker": "教師向けコンテンツ",
+      "teacher_label": "教師",
+      "cta_classroom": "授業プレビューを開く",
+      "cta_purchase": "購入",
+      "cta_entitlement": "アクセスを取得",
+      "cta_purchase_note": "本プレビューでは決済に接続していません。",
+      "cta_entitlement_note": "権限付与は次の段階（ボタンは無効）",
+      "not_found": "コンテンツが見つかりません",
+      "not_found_desc": "URL が誤っているか、掲載が終了した可能性があります。",
+      "no_access_title": "公開表示できません",
+      "no_access_body": "未承認・非公開、または存在しません。教師向けの資産画面と審査コンソールで確認してください。"
     }
   },
   "classroom": {
@@ -1221,12 +1278,16 @@
       "order_note": "手数料項目は取引時点のスナップショット。決済プロバイダー欄は将来接続用です。",
       "draft_source_hint": "デモ：本番では整理済みコースや単体販売向け資料から掲載に進むことが多いです。ここで作る新規下書きはまず出所を記録しません。",
       "flow_note": "流れのヒント：下書き作成後に審査へ提出でき、承認されると公開に近い状態になります（ローカルデモのまま）。",
+      "asset_listings_aria": "授業用アセットからの掲載",
+      "asset_listings_title": "「マイ授業用資産」起点の掲載",
+      "asset_listings_desc": "授業用資産から審査に出すと、ここと下の主一覧に行が現れます。審査操作で承認/却下できます。",
       "source": {
         "not_set": "出所未設定（デモ下書き）",
         "line": "{kind}：{detail}",
         "kind_platform": "プラットフォーム",
         "kind_course": "コース",
         "kind_material": "教材・資料",
+        "kind_classroom_asset": "授業用アセット",
         "kind_unknown": "出所",
         "detail_platform": "公式コンテンツ（デモ）"
       }

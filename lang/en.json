@@ -1142,6 +1142,63 @@
       "title": "Classroom console",
       "desc": "Lesson flow, attendance, polls, and more. (Coming soon)",
       "scope_note": "Live lesson controls—not for editing materials, courses, or sellable listings."
+    },
+    "publishing": {
+      "page_hint": "Package a classroom asset as a listing, submit for review, then (when approved) choose public visibility for the storefront detail page. Payments are not live in this step.",
+      "col_publish": "Publish / review",
+      "submit_review": "Submit for review",
+      "view_status": "Review status & console",
+      "view_review_console": "Open the listing & sales console (Stage 0)",
+      "view_public_detail": "View public page",
+      "not_public_yet": "Not public yet",
+      "go_public": "Set to public",
+      "badge_listing_yes": "Listing created",
+      "badge_listing_no": "No listing yet",
+      "from_asset": "From classroom asset",
+      "source_course": "Source course",
+      "source_course_line": "{course} · book {level} · lesson {lesson}",
+      "source_course_unknown": "Not linked to a local asset in this browser",
+      "rejection_prefix": "Last review:",
+      "state": {
+        "none": "—",
+        "no_listing": "No listing",
+        "pending": "Pending review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "draft": "Draft"
+      },
+      "error": {
+        "asset_not_found": "Classroom asset not found.",
+        "asset_archived": "This asset is archived and cannot be submitted.",
+        "already_pending": "A review is already in progress for this listing.",
+        "invalid_listing_state": "This listing cannot be submitted in its current state.",
+        "store_unavailable": "Data store is not ready. Try again.",
+        "listing_create_failed": "Could not create the listing. Try again.",
+        "listing_missing": "Listing record missing after action.",
+        "not_approved": "Only approved listings can be set to public.",
+        "listing_not_found": "Listing not found.",
+        "teacher_mismatch": "This asset does not belong to the current profile.",
+        "forbidden": "You do not have access to this asset.",
+        "not_classroom_asset": "This action only applies to classroom-asset listings.",
+        "submit_denied": "Submit was blocked by platform rules.",
+        "teacher_not_verified": "Your teacher profile is not verified for this action.",
+        "teacher_id_required": "Teacher profile is required on the listing.",
+        "teacher_profile_missing": "Teacher profile not found in the demo store.",
+        "not_seller_eligible": "Seller eligibility does not allow this listing type (use classroom-asset flow)."
+      }
+    },
+    "listing_public": {
+      "kicker": "Teacher content",
+      "teacher_label": "Teacher",
+      "cta_classroom": "Open classroom preview",
+      "cta_purchase": "Buy",
+      "cta_entitlement": "Get access",
+      "cta_purchase_note": "Checkout is not connected in this preview.",
+      "cta_entitlement_note": "Entitlement grant is a later step; button is disabled.",
+      "not_found": "This content is not available",
+      "not_found_desc": "The link may be wrong or the item was removed. Check with the teacher or platform.",
+      "no_access_title": "Not available publicly",
+      "no_access_body": "This item is not approved for public view, is still private, or does not exist. Teachers can see status in My classroom assets and the review console."
     }
   },
   "classroom": {
@@ -1212,12 +1269,16 @@
       "order_note": "Commission fields are snapshots at purchase; provider fields are reserved for future payment integration.",
       "draft_source_hint": "Demo note: real listings often come from a finished course or sellable materials. New drafts here do not record a real source link yet.",
       "flow_note": "Flow: after you create a draft you can submit it for review; once approved it is closer to going public (still a local demo).",
+      "asset_listings_aria": "Listings from classroom assets",
+      "asset_listings_title": "Listings from My classroom assets",
+      "asset_listings_desc": "When you submit a classroom asset, a matching row appears here and in the main listing table. Reviewers can approve or reject in the section below.",
       "source": {
         "not_set": "Source not set (demo draft)",
         "line": "{kind}: {detail}",
         "kind_platform": "Platform",
         "kind_course": "Course",
         "kind_material": "Materials",
+        "kind_classroom_asset": "Classroom asset",
         "kind_unknown": "Source",
         "detail_platform": "Official catalog (demo)"
       }

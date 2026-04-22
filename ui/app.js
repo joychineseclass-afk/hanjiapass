@@ -91,6 +91,7 @@ registerRoute("#game",      () => import("./pages/page.game.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
 registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacherStage0.js"));
+registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
 
 /* ===============================
    🚀 Boot

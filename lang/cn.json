@@ -1142,6 +1142,63 @@
       "title": "课堂控制台",
       "desc": "控制课堂进度、点名、投票等。（即将上线）",
       "scope_note": "课堂执行与控场工具，不用于编辑教材、课程或商品 listing。"
+    },
+    "publishing": {
+      "page_hint": "将课堂资产包装为可审核的发布项，提交后由平台审核；通过后可将可见性设为公开（本阶段为本地演示，未接真实支付）。",
+      "col_publish": "发布 / 审核",
+      "submit_review": "提交审核",
+      "view_status": "审核状态与控制台",
+      "view_review_console": "打开发布与售卖管理（Stage 0）",
+      "view_public_detail": "查看公开页",
+      "not_public_yet": "尚未公开",
+      "go_public": "设为公开展示",
+      "badge_listing_yes": "已生成发布项",
+      "badge_listing_no": "尚未生成发布项",
+      "from_asset": "来源课堂资产",
+      "source_course": "来源课程",
+      "source_course_line": "{course} · 第{level} 册 · 第{lesson} 课",
+      "source_course_unknown": "本机未链接到可读的课堂资产",
+      "rejection_prefix": "最近审核：",
+      "state": {
+        "none": "—",
+        "no_listing": "无发布项",
+        "pending": "审核中",
+        "approved": "审核已通过",
+        "rejected": "审核未通过",
+        "draft": "草稿"
+      },
+      "error": {
+        "asset_not_found": "未找到该课堂资产。",
+        "asset_archived": "该资产已归档，无法提交审核。",
+        "already_pending": "该发布项已在审核中。",
+        "invalid_listing_state": "当前状态不允许提交。",
+        "store_unavailable": "数据未就绪，请稍后再试。",
+        "listing_create_failed": "无法创建发布项。",
+        "listing_missing": "操作后未找到发布项记录。",
+        "not_approved": "仅已通过的发布项可设为公开。",
+        "listing_not_found": "未找到发布项。",
+        "teacher_mismatch": "该资产不属于当前老师档案。",
+        "forbidden": "你无权操作该资产。",
+        "not_classroom_asset": "仅支持课堂资产类发布项。",
+        "submit_denied": "未通过平台规则校验。",
+        "teacher_not_verified": "老师认证未通过，无法执行此操作。",
+        "teacher_id_required": "发布项缺少教师档案 ID。",
+        "teacher_profile_missing": "演示数据中未找到老师档案。",
+        "not_seller_eligible": "当前上架类型需售卖资格，请使用课堂资产提交流程。"
+      }
+    },
+    "listing_public": {
+      "kicker": "老师内容",
+      "teacher_label": "老师",
+      "cta_classroom": "进入课堂预览",
+      "cta_purchase": "购买",
+      "cta_entitlement": "获取权限",
+      "cta_purchase_note": "本预览未接入真实购买流程。",
+      "cta_entitlement_note": "权限发放将在后续步骤提供，按钮暂不可用。",
+      "not_found": "该内容不存在或不可用",
+      "not_found_desc": "链接可能有误，或内容已下线。可联系老师或平台确认。",
+      "no_access_title": "当前不可公开访问",
+      "no_access_body": "该内容未通过公开审核、仍为非公开，或不存在。老师可在「我的课堂资产」与审核台查看状态。"
     }
   },
   "classroom": {
@@ -1212,12 +1269,16 @@
       "order_note": "佣金相关字段为成交快照；支付渠道字段预留给后续接入。",
       "draft_source_hint": "演示说明：实际上架可来自整理好的课程，或适合单独售卖的资料；新建草稿暂不记录真实来源关联。",
       "flow_note": "流程提示：草稿创建后可提交审核；审核通过后更接近对外展示（仍为本地演示流程）。",
+      "asset_listings_aria": "来自课堂资产的上架",
+      "asset_listings_title": "来自「我的课堂资产」的上架项",
+      "asset_listings_desc": "在课堂资产页提交审核后，会在此与下方主表中出现。审核员可在「审核操作」中通过或驳回。",
       "source": {
         "not_set": "来源未标注（演示草稿）",
         "line": "{kind}：{detail}",
         "kind_platform": "平台内容",
         "kind_course": "课程",
         "kind_material": "教材资料",
+        "kind_classroom_asset": "课堂资产",
         "kind_unknown": "来源",
         "detail_platform": "官方精选（演示）"
       }

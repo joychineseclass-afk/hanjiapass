@@ -422,6 +422,29 @@ function renderPage(root, ctx) {
         </div>
       </section>
 
+      ${
+        snap.listings.filter((L) => String(L.source_kind) === "classroom_asset").length
+          ? `<section class="card lts0-classroom-asset-strip" aria-label="${escapeHtml(
+              commerceT("commerce.stage0.asset_listings_aria"),
+            )}">
+        <h2 class="lts0-classroom-asset-strip-title">${escapeHtml(commerceT("commerce.stage0.asset_listings_title"))}</h2>
+        <p class="lts0-classroom-asset-strip-desc">${escapeHtml(commerceT("commerce.stage0.asset_listings_desc"))}</p>
+        <ul class="lts0-classroom-asset-strip-list">
+          ${snap.listings
+            .filter((L) => String(L.source_kind) === "classroom_asset")
+            .map(
+              (L) =>
+                `<li class="lts0-classroom-asset-strip-item"><span class="lts0-strip-id">${escapeHtml(
+                  L.asset_id || L.source_id || "—",
+                )}</span> — ${escapeHtml(L.title || "")} · ${listingStatusPill(L.status)} · ${escapeHtml(
+                  formatCommerceEnum("visibility", L.visibility),
+                )}</li>`,
+            )
+            .join("")}
+        </ul>
+      </section>`
+          : ""
+      }
       <section class="card lts0-listing-main">
         <h2 class="lts0-listing-main-title">${escapeHtml(commerceT("commerce.stage0.listing_title"))}</h2>
         <p class="lts0-listing-main-hint">${escapeHtml(commerceT("commerce.stage0.list_section_hint"))}</p>

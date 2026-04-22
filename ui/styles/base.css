@@ -2575,3 +2575,169 @@ button.teacher-hub-cta:hover{
 .lumina-classroom-page .classroom-panel{
   margin-bottom: 14px;
 }
+
+/* =========================================================
+   Teacher · Step 4 资产发布、前台 listing 公开展示
+   ========================================================= */
+.teacher-assets-step4-hint{
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 62ch;
+}
+.teacher-publish-chips{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.teacher-publish-chip{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+.teacher-publish-chip--state{
+  background: #eef2ff;
+  color: #3730a3;
+  border-color: #c7d2fe;
+}
+.teacher-asset-reject-hint{
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #9f1239;
+  max-width: 32rem;
+}
+.teacher-asset-primary{
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #4338ca;
+  background: #4338ca;
+  color: #fff;
+  cursor: pointer;
+}
+.teacher-asset-primary:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.teacher-asset-actions{
+  min-width: 12rem;
+}
+.teacher-asset-muted{
+  font-size: 12px;
+  color: #64748b;
+}
+.teacher-listing-public-page{
+  padding-bottom: 48px;
+}
+.teacher-listing-hero,
+.teacher-listing-gate{
+  max-width: min(100%, 44rem);
+  margin: 0 auto;
+}
+.teacher-listing-gate{
+  text-align: left;
+}
+.teacher-listing-gate-title{
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+.teacher-listing-gate-body{
+  margin: 0;
+  color: #475569;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.teacher-listing-kicker{
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0 0 6px;
+}
+.teacher-listing-title{
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: #0f172a;
+}
+.teacher-listing-meta,
+.teacher-listing-source-line,
+.teacher-listing-asset-hint{
+  font-size: 14px;
+  line-height: 1.5;
+  color: #334155;
+  margin: 0 0 8px;
+}
+.teacher-listing-sep{
+  margin: 0 6px;
+  color: #94a3b8;
+}
+.teacher-listing-desc{
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1e293b;
+  margin: 12px 0;
+}
+.teacher-listing-cta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 18px;
+  align-items: center;
+}
+.teacher-listing-cta-fake{
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px dashed #cbd5e1;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: not-allowed;
+}
+.lts0-classroom-asset-strip{
+  margin-bottom: 14px;
+  border: 1px solid #c7d2fe;
+  background: #eef2ff;
+}
+.lts0-classroom-asset-strip-title{
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1e1b4b;
+}
+.lts0-classroom-asset-strip-desc{
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+}
+.lts0-classroom-asset-strip-list{
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1e293b;
+}
+.lts0-classroom-asset-strip-item{
+  margin-bottom: 4px;
+}
+.lts0-strip-id{
+  font-weight: 800;
+  font-size: 12px;
+  color: #4338ca;
+}

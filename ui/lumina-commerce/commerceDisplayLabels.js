@@ -198,6 +198,11 @@ export function formatListingDemoSourceLine(listing) {
     const p = `teacher.demo.material.${listing.source_id}.title`;
     const v = rawT(p);
     detail = v && v !== p && !looksLikeUntranslatedKey(v) ? v : commerceT("commerce.table.empty_cell");
+  } else if (kind === "classroom_asset" && listing.source_id) {
+    // 不拉 teacherAssetsStore，避免与 defaultTitle 路径循环依赖；bridge 建 listing 时已写入 title
+    const t0 =
+      listing.title != null && String(listing.title).trim() ? String(listing.title).trim() : String(listing.source_id);
+    detail = t0;
   } else {
     detail = commerceT("commerce.table.empty_cell");
   }

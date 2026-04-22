@@ -72,8 +72,9 @@
  * @property {string} updated_at
  * @property {string|null} [published_at]
  * @property {string|null} [delisted_at]
- * @property {'platform'|'course'|'material'|string|null} [source_kind] 演示用：上架来源类型（非正式契约）
- * @property {string|null} [source_id] 演示用：对应 teacher.demo.* 或业务 id
+ * @property {'platform'|'course'|'material'|'classroom_asset'|string|null} [source_kind] 演示用：上架来源类型（非正式契约）
+ * @property {string|null} [source_id] 演示用：对应 teacher.demo.*、课堂资产 id 等
+ * @property {string|null} [asset_id] 与 source_kind=classroom_asset 对应时等同 source_id，便于查询
  */
 
 /**

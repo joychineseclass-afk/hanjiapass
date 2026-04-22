@@ -1142,6 +1142,63 @@
       "title": "수업 콘솔",
       "desc": "진도·출석·투표 등을 제어합니다. (준비 중)",
       "scope_note": "수업 진행·운영용이며 교재·코스·상품 편집용이 아닙니다."
+    },
+    "publishing": {
+      "page_hint": "수업 자산을 리스팅으로 묶어 심사에 제출합니다. 승인 후 공개 전환 가능합니다(로컬 데모, 결제 미연동).",
+      "col_publish": "게시 / 심사",
+      "submit_review": "심사 제출",
+      "view_status": "심사 상태·콘솔",
+      "view_review_console": "판매 관리(Stage 0) 열기",
+      "view_public_detail": "공개 페이지 보기",
+      "not_public_yet": "아직 비공개",
+      "go_public": "공개로 설정",
+      "badge_listing_yes": "발행 항목 있음",
+      "badge_listing_no": "미생성",
+      "from_asset": "원본 수업 자산",
+      "source_course": "기준 수업",
+      "source_course_line": "{course} · 권 {level} · {lesson}차시",
+      "source_course_unknown": "이 브라우저에서 자산과 연결되지 않음",
+      "rejection_prefix": "최근 심사:",
+      "state": {
+        "none": "—",
+        "no_listing": "항목 없음",
+        "pending": "심사 중",
+        "approved": "승인됨",
+        "rejected": "반려됨",
+        "draft": "초안"
+      },
+      "error": {
+        "asset_not_found": "수업 자산을 찾을 수 없습니다.",
+        "asset_archived": "보관된 자산은 제출할 수 없습니다.",
+        "already_pending": "이미 심사 중인 항목입니다.",
+        "invalid_listing_state": "현재 상태에서는 제출할 수 없습니다.",
+        "store_unavailable": "데이터를 불러올 수 없습니다. 다시 시도하세요.",
+        "listing_create_failed": "발행 항목을 만들 수 없습니다.",
+        "listing_missing": "처리 후 항목을 찾을 수 없습니다.",
+        "not_approved": "승인된 항목만 공개로 설정할 수 있습니다.",
+        "listing_not_found": "발행 항목을 찾을 수 없습니다.",
+        "teacher_mismatch": "이 자산은 현재 교사에 속하지 않습니다.",
+        "forbidden": "권한이 없습니다.",
+        "not_classroom_asset": "수업 자산 전용 항목만 해당됩니다.",
+        "submit_denied": "정책에 의해 막혔습니다.",
+        "teacher_not_verified": "강사 인증이 아직이면 이 작업을 할 수 없습니다.",
+        "teacher_id_required": "강사 프로필 ID가 없습니다.",
+        "teacher_profile_missing": "데모 스토어에 강사 프로필이 없습니다.",
+        "not_seller_eligible": "판매 자격이 필요한 유형입니다. 수업 자산 흐름을 사용하세요."
+      }
+    },
+    "listing_public": {
+      "kicker": "강사 콘텐츠",
+      "teacher_label": "강사",
+      "cta_classroom": "수업 미리보기",
+      "cta_purchase": "구매",
+      "cta_entitlement": "권한 받기",
+      "cta_purchase_note": "이 미리보기는 결제에 연결되어 있지 않습니다.",
+      "cta_entitlement_note": "권한 부여는 이후 단계(버튼 비활성).",
+      "not_found": "콘텐츠를 찾을 수 없습니다",
+      "not_found_desc": "링크가 잘못됐거나 비공개·삭제되었을 수 있습니다.",
+      "no_access_title": "공개로 볼 수 없습니다",
+      "no_access_body": "미승인·비공개이거나 없습니다. 강사 자산·심사 콘솔에서 상태를 확인하세요."
     }
   },
   "classroom": {
@@ -1212,12 +1269,16 @@
       "order_note": "수수료 필드는 거래 시점 스냅샷이며, 결제사 필드는 이후 연동용입니다.",
       "draft_source_hint": "데모 안내: 실제 등록은 정리된 코스나 단독 판매 가능한 자료에서 이어질 수 있습니다. 여기서 새 초안은 아직 출처를 기록하지 않습니다.",
       "flow_note": "흐름 안내: 초안 작성 후 심사를 제출할 수 있으며, 승인되면 공개에 더 가까워집니다(여전히 로컬 데모).",
+      "asset_listings_aria": "수업 자산에서 온 리스팅",
+      "asset_listings_title": "「내 수업 자산」에서 온 항목",
+      "asset_listings_desc": "자산에서 심사를 제출하면 여기와 아래 메인 표에 나타납니다. 심사 구역에서 승인/반려할 수 있습니다.",
       "source": {
         "not_set": "출처 미표기(데모 초안)",
         "line": "{kind}: {detail}",
         "kind_platform": "플랫폼 콘텐츠",
         "kind_course": "코스",
         "kind_material": "교재·자료",
+        "kind_classroom_asset": "수업 자산",
         "kind_unknown": "출처",
         "detail_platform": "공식 큐레이션(데모)"
       }
