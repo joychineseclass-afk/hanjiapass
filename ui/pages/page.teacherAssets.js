@@ -69,9 +69,6 @@ function assetRow(a, t, profileId, userId, listing, snap) {
   });
   const stClass = `teacher-asset-status-chip--${String(a.status).replace(/[^a-z0-9_]/g, "_")}`;
   const pub = getTeacherAssetPublishUiState(profileId, userId, listing || null, a, t);
-  const listingChip = pub.hasListing
-    ? t("teacher.publishing.badge_listing_yes")
-    : t("teacher.publishing.badge_listing_no");
   const reviewLine = pub.listingStateLabel;
   const hasPubListing = Boolean(listing && listing.id);
   const listingId = listing?.id || "";
@@ -87,6 +84,8 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     Boolean(listing) &&
     listing.status === LISTING_STATUS.approved &&
     listing.visibility !== VISIBILITY.public;
+  const isVisPublic =
+    Boolean(listing) && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
   const publicUrl = hasPubListing && listing && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public
     ? `#teacher-listing?id=${encodeURIComponent(listing.id)}`
     : "";
@@ -171,11 +170,32 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     <td>${escapeHtml(srcLine)}</td>
     <td><span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span></td>
     <td class="teacher-manage-cell-note"><span class="teacher-asset-note-chip ${hasNote ? "has-note" : ""}">${escapeHtml(noteShort)}</span></td>
-    <td>
-      <span class="teacher-publish-chips">
-        <span class="teacher-publish-chip">${escapeHtml(listingChip)}</span>
+    <td class="teacher-manage-cell-publish">
+      <div class="teacher-asset-pub-row">
+        <span class="teacher-publish-chip teacher-publish-chip--listing">${escapeHtml(
+          hasPubListing ? t("teacher.assets.has_listing_yes") : t("teacher.assets.has_listing_no"),
+        )}</span>
         <span class="teacher-publish-chip teacher-publish-chip--state">${escapeHtml(reviewLine)}</span>
-      </span>
+        ${
+          hasPubListing
+            ? `<span class="teacher-asset-visibility-pill ${isVisPublic ? "is-pub" : "is-prv"}">${escapeHtml(
+                isVisPublic ? t("teacher.assets.publish_vis_public") : t("teacher.assets.publish_vis_private"),
+              )}</span>`
+            : ""
+        }
+      </div>
+      <p class="teacher-asset-pub-aux">
+        <a class="teacher-asset-link" href="#teacher-publishing" title="${escapeHtml(t("teacher.assets.view_publish_state"))}">${escapeHtml(
+          t("teacher.assets.view_publish_state"),
+        )}</a>
+        ${
+          hasPubListing && listingId
+            ? ` <a class="teacher-asset-link" href="#teacher-listing?id=${encodeURIComponent(listingId)}">${escapeHtml(
+                t("teacher.assets.view_listing_link"),
+              )}</a>`
+            : ""
+        }
+      </p>
       ${rejectHint}
     </td>
     <td>${escapeHtml(formatDemoShortUpdated(a.updated_at))}</td>

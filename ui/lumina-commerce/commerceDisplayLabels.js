@@ -210,3 +210,23 @@ export function formatListingDemoSourceLine(listing) {
   if (line && line !== "commerce.stage0.source.line" && !looksLikeUntranslatedKey(line)) return line;
   return `${kindLabel}：${detail}`;
 }
+
+/**
+ * 审核台列表：课件资产来源 listing 的补充说明行（不依赖 page 层）。
+ * @param {import('./schema.js').Listing} L
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset|undefined|null} asset
+ * @param {{ id?: string, display_name?: string } | null} teacher
+ * @param {string} courseLine
+ * @param {(k: string, p?: object) => string} t
+ */
+export function buildClassroomAssetReviewExtraHtml(L, asset, teacher, courseLine, t) {
+  const assetId = L?.source_id != null ? String(L.source_id) : "";
+  return {
+    kicker: t("teacher.review_listing.from_classroom_deck"),
+    title: asset && String(asset.title).trim() ? String(asset.title).trim() : String(L?.title || ""),
+    assetId: assetId,
+    profileId: L?.teacher_id != null ? String(L.teacher_id) : "",
+    teacherName: teacher?.display_name || teacher?.id || "—",
+    courseLine: courseLine || "—",
+  };
+}

@@ -21,6 +21,7 @@ import {
 } from "./teacherRules.js";
 import { initCommerceStore, getCommerceStoreSync, mutateCommerceStore } from "./store.js";
 import { findAssetById, ASSET_STATUS } from "./teacherAssetsStore.js";
+import { LISTING_STATUS, VISIBILITY } from "./enums.js";
 
 function uid(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -42,6 +43,53 @@ export function findListingByAssetId(snap, assetId) {
         (String(L.source_kind) === "classroom_asset" && L.source_id && String(L.source_id) === id),
     ) || null
   );
+}
+
+/**
+ * 将老师课件资产字段映射为「发布项」展示文案（不写入整段教师私有备注）。
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset} asset
+ * @returns {{ title: string, summary: string, description: string }}
+ */
+export function listingDisplayFieldsFromClassroomAsset(asset) {
+  const title = String(asset.title || "").trim() || "—";
+  const sub = String(asset.subtitle || "").trim();
+  const sum = String(asset.summary || "").trim();
+  const cover = String(asset.cover_note || "").trim();
+  const oneLine = [sub, sum].filter(Boolean);
+  const summary = (oneLine.length ? oneLine.join(" · ") : sum || title).slice(0, 500);
+  const descParts = [];
+  if (sub) descParts.push(sub);
+  if (sum) descParts.push(sum);
+  if (cover) descParts.push(cover);
+  const description = descParts.join("\n\n").trim() || sum || title;
+  return { title, summary, description };
+}
+
+/**
+ * 保存课件后，将标题/副标题/说明等同步到已绑定的发布项，便于公开展示与审核台。
+ * @param {string} assetId
+ * @returns {{ ok: true, updated: boolean } | { ok: false, code: string }}
+ */
+export function syncClassroomAssetListingFromAsset(assetId) {
+  const asset = findAssetById(String(assetId));
+  if (!asset) return { ok: false, code: "asset_not_found" };
+  const snap = getCommerceStoreSync();
+  if (!snap) return { ok: false, code: "store_unavailable" };
+  const L = findListingByAssetId(snap, asset.id);
+  if (!L) return { ok: true, updated: false };
+  const f = listingDisplayFieldsFromClassroomAsset(asset);
+  mutateCommerceStore((draft) => {
+    const row = draft.listings.find((x) => x.id === L.id);
+    if (!row) return;
+    row.title = f.title;
+    row.summary = f.summary;
+    row.description = f.description;
+    row.asset_id = asset.id;
+    row.source_id = asset.id;
+    row.source_kind = "classroom_asset";
+    row.updated_at = new Date().toISOString();
+  });
+  return { ok: true, updated: true };
 }
 
 /**
@@ -68,6 +116,7 @@ export async function ensureListingForTeacherAsset(assetId) {
   const existing = findListingByAssetId(snap, asset.id);
   if (existing) return { ok: true, listing: existing, created: false };
 
+  const copy = listingDisplayFieldsFromClassroomAsset(asset);
   mutateCommerceStore((draft) => {
     const now = new Date().toISOString();
     const listing = {
@@ -76,9 +125,9 @@ export async function ensureListingForTeacherAsset(assetId) {
       teacher_id: asset.teacher_profile_id,
       listing_type: listingTypeFromAssetType(asset.asset_type),
       delivery_type: DELIVERY_TYPE.downloadable,
-      title: asset.title,
-      summary: (asset.notes || "").slice(0, 240),
-      description: asset.notes || "",
+      title: copy.title,
+      summary: copy.summary,
+      description: copy.description,
       status: LISTING_STATUS.draft,
       visibility: VISIBILITY.private,
       price_amount: "0",
@@ -290,4 +339,39 @@ function listingStateKey(L, t) {
   if (s === "rejected") return t("teacher.publishing.state.rejected");
   if (s === "draft") return t("teacher.publishing.state.draft");
   return s;
+}
+
+/**
+ * 课件编辑页 #teacher-asset-editor：发布区状态与按钮显隐
+ * @param {string} teacherProfileId
+ * @param {string} currentUserId
+ * @param {import('./schema.js').Listing|null} listing
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset} asset
+ * @param {(k: string, p?: object) => string} t
+ */
+export function getAssetEditorPublishingModel(teacherProfileId, currentUserId, listing, asset, t) {
+  const base = getTeacherAssetPublishUiState(teacherProfileId, currentUserId, listing, asset, t);
+  const hasListing = base.hasListing;
+  const isPublic = Boolean(
+    listing && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public,
+  );
+  const canCreate = !hasListing && asset.status !== ASSET_STATUS.archived;
+  const canGoPublic =
+    Boolean(listing) &&
+    listing.status === LISTING_STATUS.approved &&
+    listing.visibility !== VISIBILITY.public &&
+    String(asset.teacher_profile_id) === String(teacherProfileId) &&
+    (!currentUserId || !asset.owner_user_id || String(asset.owner_user_id) === String(currentUserId));
+  return {
+    hasListing: Boolean(listing),
+    listingId: listing?.id || "",
+    listingStateLine: base.listingStateLabel,
+    canSubmit: base.canSubmit,
+    submitReason: base.submitReason,
+    isPublic,
+    canCreate,
+    canGoPublic,
+    showViewPublic: hasListing && isPublic,
+    showViewListingConsole: hasListing,
+  };
 }

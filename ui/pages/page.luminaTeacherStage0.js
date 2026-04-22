@@ -31,7 +31,10 @@ import {
   formatDemoListingContentTitleAttr,
   formatListingDemoSourceLine,
   formatListingManagePrimaryLabel,
+  buildClassroomAssetReviewExtraHtml,
+  formatTeacherHubCourseDisplay,
 } from "../lumina-commerce/commerceDisplayLabels.js";
+import { findAssetById } from "../lumina-commerce/teacherAssetsStore.js";
 import { hasListingAccess } from "../lumina-commerce/entitlementService.js";
 import { canTransitionListingStatus } from "../lumina-commerce/listingStateMachine.js";
 import { assertCanSubmitListingForReview } from "../lumina-commerce/teacherRules.js";
@@ -266,9 +269,44 @@ function renderPage(root, ctx) {
               : escapeHtml(primaryName);
             const sourceLine = escapeHtml(formatListingDemoSourceLine(L));
             const sourceStageNote = escapeHtml(formatListingDemoSourceStageNote(L, commerceT));
+            const classroomX =
+              String(L.source_kind) === "classroom_asset" && L.source_id
+                ? (() => {
+                    const A = findAssetById(String(L.source_id));
+                    const tp0 =
+                      L.seller_type === SELLER_TYPE.teacher
+                        ? snap.teacher_profiles.find((x) => x.id === L.teacher_id) || null
+                        : null;
+                    const cLine = A
+                      ? commerceT("teacher.publishing.source_course_line", {
+                          course: formatTeacherHubCourseDisplay(String(A.source?.course || "")),
+                          level: String(A.source?.level || ""),
+                          lesson: String(A.source?.lesson || ""),
+                        })
+                      : "";
+                    const ex = buildClassroomAssetReviewExtraHtml(L, A, tp0, cLine, commerceT);
+                    return `<div class="lts0-classroom-asset-explain" data-from-deck-asset="1" role="group" aria-label="${escapeHtml(
+                      commerceT("teacher.review_listing.aria_deck_listing"),
+                    )}">
+  <p class="lts0-classroom-asset-pillline"><span class="lts0-classroom-asset-pill">${escapeHtml(ex.kicker)}</span>${
+    A && A.asset_type === "lesson_slide_draft"
+      ? ` <span class="lts0-classroom-asset-skind">${escapeHtml(commerceT("teacher.review_listing.lesson_slide_draft_badge"))}</span>`
+      : ""
+  }</p>
+  <p class="lts0-classroom-asset-ttl">${escapeHtml(ex.title)}</p>
+  <p class="lts0-classroom-asset-people"><strong>${escapeHtml(commerceT("teacher.review_listing.teacher"))}</strong> ${escapeHtml(
+                    ex.teacherName,
+                  )} · <code>${escapeHtml(ex.profileId)}</code></p>
+  <p class="lts0-classroom-asset-ids"><strong>${escapeHtml(commerceT("teacher.review_listing.ids_caption"))}</strong> <code>asset: ${escapeHtml(
+                    ex.assetId,
+                  )}</code></p>
+  <p class="lts0-classroom-asset-crs">${escapeHtml(ex.courseLine)}</p>
+</div>`;
+                  })()
+                : "";
             return `<tr data-listing-id="${escapeHtml(L.id)}">
         <td class="lts0-cell-strong">${nameHtml}</td>
-        <td class="lts0-cell-source"><span class="lts0-source-line">${sourceLine}</span><span class="lts0-source-stage">${sourceStageNote}</span></td>
+        <td class="lts0-cell-source">${classroomX}<span class="lts0-source-line">${sourceLine}</span><span class="lts0-source-stage">${sourceStageNote}</span></td>
         <td>${escapeHtml(formatCommerceEnum("listing_type", L.listing_type))}</td>
         <td>${listingStatusPill(L.status)}</td>
         <td>${escapeHtml(formatCommerceEnum("visibility", L.visibility))}</td>

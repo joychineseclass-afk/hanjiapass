@@ -10,6 +10,16 @@ import {
   ASSET_STATUS,
   ASSET_TYPE,
 } from "../lumina-commerce/teacherAssetsStore.js";
+import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
+import {
+  findListingByAssetId,
+  ensureListingForTeacherAsset,
+  submitTeacherAssetListingForReview,
+  setClassroomAssetListingToPublic,
+  syncClassroomAssetListingFromAsset,
+  getAssetEditorPublishingModel,
+} from "../lumina-commerce/teacherListingBridge.js";
+import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
 import { i18n } from "../i18n.js";
 import { teacherBackToWorkspaceHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
 
@@ -171,6 +181,70 @@ function collectOutlineFromDom(root) {
   return out;
 }
 
+/**
+ * @param {object} m
+ * @param {import('../lumina-commerce/schema.js').Listing|undefined|null} listing
+ * @param {(k: string, p?: object) => string} t
+ */
+function publishingStatusCardHtml(m, listing, t) {
+  const L = listing;
+  const hasL = m.hasListing;
+  const publicLine = hasL
+    ? L && L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public
+      ? t("teacher.asset_editor.publishing_public_yes")
+      : t("teacher.asset_editor.publishing_public_no")
+    : "—";
+  const listingLine = hasL
+    ? t("teacher.publishing.badge_listing_yes")
+    : t("teacher.publishing.badge_listing_no");
+  const goPubDisabled = m.canGoPublic ? "" : " disabled";
+  const subDisabled = m.canSubmit ? "" : " disabled";
+  const subTitle = m.submitReason ? esc(String(m.submitReason)) : "";
+  return `
+    <section class="card teacher-asset-editor-section teacher-asset-editor-section--publishing" aria-labelledby="teacherAssetPubH2">
+      <h2 class="teacher-asset-editor-h" id="teacherAssetPubH2">${esc(t("teacher.asset_editor.section_publishing"))}</h2>
+      <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.publishing_lead"))}</p>
+      <ul class="teacher-asset-editor-publish-facts" role="list">
+        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_listing"))}</span> <span class="teacher-asset-editor-publish-v">${esc(listingLine)}</span></li>
+        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_review"))}</span> <span class="teacher-asset-editor-publish-v">${esc(m.listingStateLine)}</span></li>
+        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_public"))}</span> <span class="teacher-asset-editor-publish-v">${esc(publicLine)}</span></li>
+      </ul>
+      <div class="teacher-asset-editor-publish-actions" role="group" aria-label="${esc(t("teacher.asset_editor.publishing_actions_aria"))}">
+        ${
+          m.canCreate
+            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetCreateListing">${esc(
+                t("teacher.asset_editor.publishing_create_listing"),
+              )}</button>`
+            : ""
+        }
+        ${
+          hasL && m.canSubmit
+            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetSubmitListing"${subDisabled} title="${subTitle}">${esc(
+                t("teacher.asset_editor.publishing_submit_review"),
+              )}</button>`
+            : ""
+        }
+        ${
+          m.showViewPublic && m.listingId
+            ? `<a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(
+                t("teacher.asset_editor.publishing_view_public"),
+              )}</a>`
+            : ""
+        }
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${esc(
+          t("teacher.asset_editor.publishing_go_my_listings"),
+        )}</a>
+        ${
+          m.canGoPublic
+            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--secondary" id="teacherAssetGoPublic"${goPubDisabled}>${esc(
+                t("teacher.asset_editor.publishing_set_public"),
+              )}</button>`
+            : ""
+        }
+      </div>
+    </section>`;
+}
+
 async function renderEditor(root) {
   const t = tx;
   const id = parseIdFromHash();
@@ -215,6 +289,12 @@ async function renderEditor(root) {
   const isArchived = a.status === ASSET_STATUS.archived;
   const canEdit = !isArchived;
 
+  await initCommerceStore();
+  const snap = getCommerceStoreSync();
+  const listingRow = snap ? findListingByAssetId(snap, a.id) : null;
+  const pubM = getAssetEditorPublishingModel(ctx.profile.id, u.id, listingRow, a, t);
+  const publishBlock = publishingStatusCardHtml(pubM, listingRow, t);
+
   root.innerHTML = `
     <div class="wrap teacher-asset-editor-page">
       ${teacherBackToWorkspaceHtml(t)}
@@ -224,6 +304,7 @@ async function renderEditor(root) {
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.page_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.lead"))}</p>
       </header>
+      ${publishBlock}
       ${editorFormHtml(a, t, u.id, ctx.profile.id, canEdit, isArchived)}
     </div>
   `;
@@ -264,8 +345,55 @@ async function renderEditor(root) {
       cover_note: String(fd.get("cover_note") || ""),
       slide_outline: outline,
     });
-    if (next) showSaveToast();
+    if (next) {
+      showSaveToast();
+      syncClassroomAssetListingFromAsset(a.id);
+    }
   };
+  const refresh = () => {
+    if (root.isConnected) void renderEditor(root);
+  };
+  root.querySelector("#teacherAssetCreateListing")?.addEventListener("click", async (ev) => {
+    ev.preventDefault();
+    const r = await ensureListingForTeacherAsset(a.id);
+    if (!r.ok) {
+      try {
+        alert(t(`teacher.publishing.error.${r.code}`) || r.code);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    refresh();
+  });
+  root.querySelector("#teacherAssetSubmitListing")?.addEventListener("click", async (ev) => {
+    ev.preventDefault();
+    if (!pubM.canSubmit) return;
+    const r = await submitTeacherAssetListingForReview(a.id, u.id);
+    if (!r.ok) {
+      try {
+        alert(t(`teacher.publishing.error.${r.code}`) || r.code);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    refresh();
+  });
+  root.querySelector("#teacherAssetGoPublic")?.addEventListener("click", async (ev) => {
+    ev.preventDefault();
+    if (!pubM.canGoPublic) return;
+    const r = await setClassroomAssetListingToPublic(a.id, ctx.profile.id);
+    if (!r.ok) {
+      try {
+        alert(t(`teacher.publishing.error.${r.code}`) || r.code);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    refresh();
+  });
   root.querySelectorAll("[id^=teacherAssetEditorSave]").forEach((btn) => {
     btn.addEventListener("click", (ev) => {
       ev.preventDefault();

@@ -2,7 +2,7 @@
 
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
 import { formatCommerceEnum, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
-import { findAssetById } from "../lumina-commerce/teacherAssetsStore.js";
+import { findAssetById, getEffectiveTeacherNote, ASSET_TYPE } from "../lumina-commerce/teacherAssetsStore.js";
 import { LISTING_STATUS, VISIBILITY, PRICING_TYPE } from "../lumina-commerce/enums.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import {
@@ -64,6 +64,15 @@ async function renderPublicDetail(root, listingId) {
   }
 
   const isPublic = L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public;
+  /** 适合公开展示的教师备注前段（不整段外泄） */
+  const publicTeacherTeaser = (s, max) => {
+    const t0 = String(s || "")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!t0) return "";
+    if (t0.length <= max) return t0;
+    return t0.slice(0, max) + "…";
+  };
   if (!isPublic) {
     const limitedTitle = tx("teacher.listing_detail.unavailable_title");
     const limitedBody = tx("teacher.listing_detail.unavailable_body");
@@ -87,6 +96,7 @@ async function renderPublicDetail(root, listingId) {
   const tp = L.teacher_id ? snap.teacher_profiles.find((p) => p.id === L.teacher_id) : null;
   const teacherName = tp?.display_name || "—";
   const asset = L.source_kind === "classroom_asset" && L.source_id ? findAssetById(String(L.source_id)) : null;
+  const isCourseware = Boolean(asset) && asset && asset.asset_type === ASSET_TYPE.lesson_slide_draft;
   const sourceCourse = asset
     ? tx("teacher.publishing.source_course_line", {
         course: formatTeacherHubCourseDisplay(asset.source?.course),
@@ -95,8 +105,22 @@ async function renderPublicDetail(root, listingId) {
       })
     : tx("teacher.publishing.source_course_unknown");
 
-  const desc = (L.description || L.summary || L.title || "").trim();
+  const mainTitle = isCourseware && asset && String(asset.title).trim() ? String(asset.title).trim() : L.title;
+  const subT = isCourseware && asset && String(asset.subtitle || "").trim() ? String(asset.subtitle).trim() : "";
+  const desc = isCourseware && asset
+    ? [String(asset.summary || "").trim(), L.description, L.summary]
+        .map((x) => String(x || "").trim())
+        .find((x) => x.length) || ""
+    : (L.description || L.summary || L.title || "").trim();
+  const coverBlurb = isCourseware && asset ? String(asset.cover_note || "").trim() : "";
+  const teachTease =
+    isCourseware && asset && getEffectiveTeacherNote(asset)
+      ? publicTeacherTeaser(getEffectiveTeacherNote(asset), 220)
+      : "";
   const typeLabel = safeUiText(`commerce.enum.listing_type.${L.listing_type}`);
+  const productFormatLabel = isCourseware
+    ? tx("teacher.listing_detail.format_teacher_courseware")
+    : typeLabel;
   const pt = getListingPricingType(L);
   const priceLine =
     pt === PRICING_TYPE.free
@@ -134,15 +158,25 @@ async function renderPublicDetail(root, listingId) {
 
   const visLabel = safeUiText(`commerce.enum.visibility.${L.visibility || "private"}`);
 
-  root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail">
-    <section class="card teacher-listing-hero">
-      <p class="teacher-listing-kicker">${escapeHtml(tx("teacher.listing_public.kicker"))}</p>
-      <h1 class="teacher-listing-title">${escapeHtml(L.title)}</h1>
+  const heroClass = isCourseware ? " teacher-listing-hero--courseware" : "";
+  const kickerT = isCourseware ? tx("teacher.listing_detail.courseware_hero_kicker") : tx("teacher.listing_public.kicker");
+  root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail${isCourseware ? " teacher-listing-detail--courseware" : ""}">
+    <section class="card teacher-listing-hero${heroClass}">
+      <p class="teacher-listing-kicker">${escapeHtml(kickerT)}</p>
+      <h1 class="teacher-listing-title">${escapeHtml(mainTitle)}</h1>
+      ${
+        subT
+          ? `<p class="teacher-listing-subtitle">${escapeHtml(subT)}</p>`
+          : ""
+      }
       <div class="teacher-listing-badges">
         <span class="teacher-listing-pill teacher-listing-pill--ok">${escapeHtml(tx("teacher.listing_detail.badge_public"))}</span>
         <span class="teacher-listing-pill">${escapeHtml(visLabel)}</span>
         <span class="teacher-listing-pill">${escapeHtml(
           pt === PRICING_TYPE.free ? tx("learner.commerce.pricing_free") : tx("learner.commerce.pricing_paid"),
+        )}</span>
+        <span class="teacher-listing-pill teacher-listing-pill--tone">${escapeHtml(tx("teacher.listing_detail.content_form_label"))}: ${escapeHtml(
+          productFormatLabel,
         )}</span>
       </div>
       <div class="teacher-listing-price-card">
@@ -155,10 +189,24 @@ async function renderPublicDetail(root, listingId) {
       <p class="teacher-listing-meta">
         <span class="teacher-listing-teacher">${escapeHtml(tx("teacher.listing_public.teacher_label"))}: ${escapeHtml(teacherName)}</span>
         <span class="teacher-listing-sep" aria-hidden="true">·</span>
-        <span class="teacher-listing-type">${escapeHtml(typeLabel)}</span>
+        <span class="teacher-listing-type">${escapeHtml(isCourseware ? productFormatLabel : typeLabel)}</span>
       </p>
-      <p class="teacher-listing-source-line"><strong>${escapeHtml(tx("teacher.publishing.source_course"))}</strong> ${escapeHtml(sourceCourse)}</p>
+      <p class="teacher-listing-source-line"><strong>${escapeHtml(tx("teacher.listing_detail.source_course_label"))}</strong> ${escapeHtml(sourceCourse)}</p>
       <p class="teacher-listing-desc">${escapeHtml(desc || tx("teacher.listing_detail.desc_placeholder"))}</p>
+      ${
+        coverBlurb
+          ? `<p class="teacher-listing-cover-note" role="note"><strong>${escapeHtml(tx("teacher.listing_detail.cover_label"))}</strong> ${escapeHtml(
+              coverBlurb,
+            )}</p>`
+          : ""
+      }
+      ${
+        teachTease
+          ? `<p class="teacher-listing-teacher-public-tease" role="note"><strong>${escapeHtml(
+              tx("teacher.listing_detail.public_note_teaser_label"),
+            )}</strong> ${escapeHtml(teachTease)}</p>`
+          : ""
+      }
       <p class="teacher-listing-asset-hint"><strong>${escapeHtml(tx("teacher.listing_detail.source_asset_label"))}</strong> ${
     asset
       ? escapeHtml(asset.title)
@@ -170,8 +218,10 @@ async function renderPublicDetail(root, listingId) {
         <a class="teacher-hub-cta teacher-hub-cta--secondary" href="${classUrl}">${escapeHtml(tx("teacher.listing_public.cta_classroom"))}</a>
       </div>
     </section>
-    <section class="card teacher-listing-body-skeleton" aria-labelledby="tld-skel-h">
-      <h2 id="tld-skel-h" class="teacher-listing-body-title">${escapeHtml(tx("teacher.listing_detail.content_section_title"))}</h2>
+    <section class="card teacher-listing-body-skeleton teacher-listing-about" aria-labelledby="tld-skel-h">
+      <h2 id="tld-skel-h" class="teacher-listing-body-title">${escapeHtml(
+        isCourseware ? tx("teacher.listing_detail.about_courseware_title") : tx("teacher.listing_detail.content_section_title"),
+      )}</h2>
       <dl class="teacher-listing-dl">
         <div class="teacher-listing-dl-row">
           <dt>${escapeHtml(tx("teacher.listing_detail.audience"))}</dt>
@@ -183,7 +233,11 @@ async function renderPublicDetail(root, listingId) {
         </div>
         <div class="teacher-listing-dl-row">
           <dt>${escapeHtml(tx("teacher.listing_detail.content_format"))}</dt>
-          <dd>${escapeHtml(typeLabel)} · ${escapeHtml(tx("teacher.listing_detail.format_placeholder"))}</dd>
+          <dd>${escapeHtml(productFormatLabel)} · ${
+    isCourseware
+      ? escapeHtml(tx("teacher.listing_detail.format_courseware_blurb"))
+      : `${escapeHtml(typeLabel)} · ${escapeHtml(tx("teacher.listing_detail.format_placeholder"))}`
+  }</dd>
         </div>
         <div class="teacher-listing-dl-row">
           <dt>${escapeHtml(tx("teacher.listing_detail.usage"))}</dt>

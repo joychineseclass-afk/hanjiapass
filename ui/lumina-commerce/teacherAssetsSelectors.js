@@ -14,6 +14,9 @@ import {
   ASSET_TYPE,
 } from "./teacherAssetsStore.js";
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
+import { findListingByAssetId } from "./teacherListingBridge.js";
+
+export { findListingByAssetId };
 
 /**
  * @param {string|null|undefined} profileId
