@@ -690,14 +690,19 @@
       "subtitle": "与「教师工作台」配合的辅助能力；主入口仍以工作台为准。"
     },
     "manage": {
-      "page_kicker": "教师工作台"
+      "page_kicker": "教师工作台",
+      "page_kicker_mine": "我的工作台"
     },
     "nav": {
       "back_workspace": "返回教师工作台",
+      "back_mine_workbench": "返回我的工作台",
+      "mine_workbench": "我的工作台",
       "subnav_aria": "教师工作台内导航"
     },
     "path_strip": {
       "aria": "教材、课程与上架流程位置",
+      "aria_mine": "我的工作流：材料 → 课程 → 上架；从「我的教材/我的课程」准备后再到工作台进入课堂",
+      "classroom_from_mine": "上课入口：在「我的教材」或「我的课程」中整理内容后，回到工作台使用「进入课堂」。此处为备课与售卖的并行关系说明，非故障提示。",
       "materials": "材料准备",
       "courses": "课程组织",
       "listing": "上架售卖",
@@ -743,6 +748,7 @@
     },
     "relation_flow": {
       "title": "三层关系",
+      "title_mine": "我的工作流：三层（从备课到售卖）",
       "materials": "教材 · 私有备课资产",
       "courses": "课程 · 教学内容结构",
       "listing": "上架 · 售卖与审核入口"
@@ -765,28 +771,100 @@
         "chip_drafts": "草稿 {count}",
         "chip_approved": "已通过 {count}"
       },
-      "classroom_flow_note": "工作流提示：教材 → 课程 → 课堂授课；若需售卖与公开展示，课程或资料还可进入「上架与售卖管理」。下方「进入课堂」即教学执行阶段入口。"
+      "classroom_flow_note": "工作流提示：教材 → 课程 → 课堂授课；若需售卖与公开展示，课程或资料还可进入「上架与售卖管理」。下方「进入课堂」即教学执行阶段入口。",
+      "classroom_flow_note_mine": "在「我的教材/我的课程」中整理后，可回到本页「进入课堂」。「上架与售卖管理」是另一条并行线，用于公开展示与售卖，并非与课堂二选一。",
+      "mine_title": "我的教师工作台",
+      "mine_subtitle": "当前为 {name} 的概览。以下统计与本地数据中的本教师档案相关，非全站通用演示。",
+      "gated_lead": "你的教师档案尚未通过审核。通过后将解锁完整工作台。",
+      "mine_entry_title": "教师模块",
+      "mine_entry_subtitle": "在获得老师身份并建立档案、通过审核后，可进入教学工作台、我的教材与我的课程。",
+      "overview_mine": {
+        "title": "本教师数据一览",
+        "disclosure": "以下为与当前登录教师档案绑定的本地轻量统计，用于预览准备进度；非真实业务分析。",
+        "chip_materials": "我的教材 {count} 份",
+        "chip_courses": "我的课程 {count} 门",
+        "chip_classroom_assets": "我的课堂资产 {count} 项",
+        "chip_materials_in_use": "其中 {count} 份已用于课程",
+        "chip_courses_with_listing": "其中 {count} 门已关联上架",
+        "chip_listings": "本教师上架 {count} 条",
+        "chip_pending": "待审核 {count}",
+        "chip_drafts": "草稿 {count}",
+        "chip_approved": "已通过 {count}"
+      }
+    },
+    "wbstate": {
+      "no_profile": "未建档案",
+      "draft": "资料草稿",
+      "pending_review": "审核中",
+      "approved": "已通过",
+      "rejected": "未通过",
+      "suspended": "已暂停"
+    },
+    "gate": {
+      "not_teacher_title": "你还不是老师",
+      "not_teacher_body": "教师模块供实际授课、管理资料与课程的老师使用。开放申请后，可在此提交档案等待审核。",
+      "not_teacher_scope": "一般用于：私有备课、课程组织与未来上架。未发布前不会直接影响学员端。",
+      "apply_cta": "申请成为老师",
+      "apply_note": "本阶段为占位按钮，不提交任何真实申请。",
+      "next_label": "建议下一步：",
+      "workbench_limited": "在档案通过前，主工作台、教材与课程管理将保持受限。下方工作流条仍可帮助理解阶段关系。",
+      "title_no_profile": "尚未建立老师档案",
+      "body_no_profile": "你具备老师身份，但本地尚未有与之绑定的老师档案。需先完成最小档案，后续才挂载教材与课程数据。",
+      "next_no_profile": "后续版本将提供「创建档案」操作（本阶段为占位说明）。在创建前，工作台不会绑定到个人。",
+      "title_draft": "请继续完善资料",
+      "body_draft": "你的档案为草稿。补充必填项后可提交审核。",
+      "next_draft": "填写缺项，并在将来提交审核（占位）。",
+      "title_pending_review": "老师档案审核中",
+      "body_pending_review": "我们已收到你提交的老师档案。审核通过前，listing 与结算相关能力不会开放。",
+      "next_pending_review": "请等待审核结果。本阶段请勿重复从本页「重复提交」；真实流程以后端为准。",
+      "title_rejected": "老师档案未通过",
+      "body_rejected": "上次审核未通过。请按原因修改后再次提交。",
+      "next_rejected": "见下方原因，修正后可重新提交（本阶段为占位入口）。",
+      "rejected_reason_label": "原因（占位）",
+      "rejected_reason_placeholder": "示例：资质材料不完整。",
+      "resubmit_cta": "重新提交档案（下一阶段）",
+      "title_suspended": "老师账号已暂停",
+      "body_suspended": "你的老师能力已暂停，新建上架、课堂类功能暂不可用。",
+      "next_suspended": "请联系支持了解恢复条件。本处仅作状态说明。"
+    },
+    "access": {
+      "not_teacher_title": "需老师身份",
+      "not_teacher_body": "请切换为老师账号以管理教材与课程；访客模式无法使用本页。",
+      "need_approved_body": "在老师档案未通过前，下表不展示可编辑内容。可返回「我的工作台」查看状态。",
+      "need_approved_courses": "在老师档案未通过前，课程列表不开放。可返回「我的工作台」查看状态。",
+      "library_locked_title": "当前状态下列表不可用",
+      "library_locked_body": "非已通过状态时，不混入演示行，避免与真实个人资料混淆。通过后将仅显示与本教师相关数据。",
+      "courses_locked_title": "当前状态下列表不可用",
+      "courses_locked_body": "与教材页一致，通过审核后再展示与当前教师相关的课程行。"
     },
     "hub": {
       "materials": {
         "title": "我的教材",
         "desc": "管理备课资料，查看是否已用于课程或可准备上架。",
-        "cta": "进入教材库"
+        "desc_mine": "与当前老师档案绑定的教材区域；下表为本地预览数据。",
+        "cta": "进入教材库",
+        "cta_mine": "我的教材"
       },
       "courses": {
         "title": "我的课程",
         "desc": "整理课程内容，查看是否已引用教材或能否进入上架流程。",
-        "cta": "进入课程管理"
+        "desc_mine": "与当前老师档案绑定的课程；若为空，表示本账号在预览中尚无课程。",
+        "cta": "进入课程管理",
+        "cta_mine": "我的课程"
       },
       "listing": {
         "title": "上架与售卖管理",
         "desc": "管理公开展示与审核状态，查看哪些内容已进入上架阶段。",
+        "desc_mine": "上架与审核仍使用 Stage 0 演示页，非正式支付。",
         "cta": "进入上架管理",
+        "cta_mine": "上架与售卖（Stage 0 演示）",
         "badge": "预备区 · Stage 0"
       }
     },
     "demo": {
       "disclosure": "下列为本地演示数据，用于展示教材—课程—上架之间的示例关系，并非真实学员或订单数据。",
+      "disclosure_mine": "下方行（在解锁时）对应当前登录老师，非全站通用目录。",
+      "disclosure_mine_courses": "课程行（在展示时）对应当前教师档案。",
       "enum": {
         "sep": "、"
       },
@@ -899,7 +977,16 @@
       "empty_subhint": "功能开放后，条目将显示在下方列表。",
       "relation_note_short": "教材≠课程；≠自动商品。",
       "back": "返回教师工作台",
-      "classroom_note": "教材用于备课，并支撑课程与课堂；整理资料不是终点，最终会在课程结构与课堂授课中落地。"
+      "classroom_note": "教材用于备课，并支撑课程与课堂；整理资料不是终点，最终会在课程结构与课堂授课中落地。",
+      "classroom_note_mine": "从「我的教材」进入后续课程，再回到工作台使用「进入课堂」。上传功能在下一阶段；下方按钮为有意禁用，并写明下一阶段开放。",
+      "upload_next_stage": "下一阶段：上传资料与 PPT 导入。按钮当前为有意禁用，并非故障。",
+      "mine_page_title": "我的教材 · {name}",
+      "mine_page_subtitle": "下方数据按当前老师档案在本地过滤。",
+      "list_title_mine": "本档案教材列表",
+      "list_mine_note": "若暂无行，表示本账号在预览中尚无资料；未来可在此管理课堂与生成式教材等资产（Step 2+）。",
+      "relation_note_mine": "本列表在通过后仅对应当前登录教师。",
+      "empty_mine_title": "我的教材中暂无内容",
+      "empty_mine_body": "可先在课程中设计结构，再回到此处补充资料；上传与课堂资产将在后续步骤接入。"
     },
     "courses_page": {
       "title": "我的课程",
@@ -923,6 +1010,17 @@
       "empty_cell_item_3": "课程不会自动成为商品；售卖请走「上架与售卖管理」与审核",
       "new_cta": "新建课程",
       "new_note": "课程创建与编辑功能将在后续版本开放。",
+      "new_next_stage": "下一阶段：新建课程与课堂资产流程。按钮为有意禁用，并非故障。",
+      "mine_page_title": "我的课程 · {name}",
+      "mine_page_subtitle": "仅显示与当前老师档案关联的课程（本地数据）。",
+      "list_title_mine": "本档案课程列表",
+      "list_mine_note": "无课程时为本账号在预览中尚未建课。下一步可准备课堂资产、绑定教材，再开始授课。",
+      "relation_note_mine": "本列表在通过后对应当前教师；空状态在 Step 1 为预期。",
+      "empty_mine_title": "本账号下暂无课程",
+      "empty_mine_intro": "无课程时，可先从教学资产入手：",
+      "empty_mine_item_1": "准备教材后，在课程中组织教学结构",
+      "empty_mine_item_2": "关联课堂与投影资产（将在后续开放）",
+      "empty_mine_item_3": "可选：在「上架与售卖管理」（Stage 0）登记可售条目",
       "relation_title": "提示",
       "relation_item_1": "课程≠教材。",
       "relation_item_2": "课程≠自动上架商品。",
@@ -943,7 +1041,8 @@
       "classroom_desc": "选择课程、册别与课次，进入课堂投屏与课程内工具。",
       "classroom_button": "进入课堂",
       "classroom_stage_kicker": "教学执行",
-      "classroom_workflow_note": "教材与课程准备到位后，从这里进入实际授课；与「上架管理」并行——上课走课堂，售卖走上架。"
+      "classroom_workflow_note": "教材与课程准备到位后，从这里进入实际授课；与「上架管理」并行——上课走课堂，售卖走上架。",
+      "classroom_workflow_note_mine": "请先在「我的教材/我的课程」中整理，再回到工作台「进入课堂」。「上架与售卖管理」是售卖与展示轨道，与课堂并行而非互斥。"
     },
     "classroom": {
       "context": {

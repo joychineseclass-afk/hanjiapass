@@ -8,13 +8,13 @@ function escapeHtml(s) {
 }
 
 /**
- * 返回教师工作台（统一入口 #teacher）。
+ * 返回「我的工作台」（统一入口 #teacher）。
  * @param {(path: string, params?: object) => string} tx
  */
 export function teacherBackToWorkspaceHtml(tx) {
   const m = (path) => escapeHtml(tx(path));
   return `<p class="teacher-admin-back">
-    <a href="#teacher" class="teacher-back-link">${m("teacher.nav.back_workspace")}</a>
+    <a href="#teacher" class="teacher-back-link">${m("teacher.nav.back_mine_workbench")}</a>
   </p>`;
 }
 
@@ -29,7 +29,7 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
   const item = (kind) => {
     const isCurrent = active === kind;
     let href = "#teacher";
-    let label = m("teacher.workspace.title");
+    let label = m("teacher.nav.mine_workbench");
     if (kind === "materials") {
       href = "#teacher-materials";
       label = m("teacher.hub.materials.title");
@@ -81,7 +81,7 @@ export function teacherPathStripHtml(active, tx) {
   };
 
   return `
-    <nav class="teacher-path-strip card" aria-label="${m("teacher.path_strip.aria")}">
+    <nav class="teacher-path-strip card" aria-label="${m("teacher.path_strip.aria_mine")}">
       <div class="teacher-path-strip-row">
         ${node("materials")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
@@ -91,6 +91,15 @@ export function teacherPathStripHtml(active, tx) {
       </div>
     </nav>
   `;
+}
+
+/**
+ * 课堂入口从课程/教材进入的说明（避免误以为路径坏了）。
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function teacherPathStripClassroomHintHtml(tx) {
+  const m = (path) => escapeHtml(tx(path));
+  return `<p class="teacher-path-classroom-hint">${m("teacher.path_strip.classroom_from_mine")}</p>`;
 }
 
 /** @param {(path: string, params?: object) => string} tx */

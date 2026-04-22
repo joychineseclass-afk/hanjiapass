@@ -3,6 +3,8 @@
  * 与 commerce store 中的 listing.source_kind / source_id 演示字段对齐。
  */
 
+import { DEFAULT_DEMO_TEACHER_PROFILE_ID } from "./currentUser.js";
+
 /** @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string }} TeacherDemoMaterial */
 /** @typedef {{ id: string, updated_at: string, materialIds: string[], listingReadinessKey: string, listingId: string|null }} TeacherDemoCourse */
 
@@ -45,6 +47,25 @@ export const TEACHER_DEMO_COURSES = [
     listingId: null,
   },
 ];
+
+/**
+ * 仅当当前老师 profile 为演示绑定 id 时返回演示教材；否则空（避免非该老师看到他人演示行）。
+ * @param {string|null|undefined} profileId
+ * @returns {TeacherDemoMaterial[]}
+ */
+export function getDemoMaterialsForProfile(profileId) {
+  if (!profileId || String(profileId) !== DEFAULT_DEMO_TEACHER_PROFILE_ID) return [];
+  return TEACHER_DEMO_MATERIALS;
+}
+
+/**
+ * @param {string|null|undefined} profileId
+ * @returns {TeacherDemoCourse[]}
+ */
+export function getDemoCoursesForProfile(profileId) {
+  if (!profileId || String(profileId) !== DEFAULT_DEMO_TEACHER_PROFILE_ID) return [];
+  return TEACHER_DEMO_COURSES;
+}
 
 /** @param {string} id */
 export function getDemoMaterialById(id) {
@@ -179,21 +200,26 @@ export function formatDemoCourseLinkedListingLine(c, tx) {
 }
 
 /**
- * @param {Array<{ status?: string }>|null|undefined} listings
+ * @param {Array<{ status?: string, teacher_id?: string|null, seller_type?: string }>|null|undefined} listings
+ * @param {string|null|undefined} profileId 当前老师 profileId；未通过审核或空则不含演示教材/课程计数、且 listing 按该 id 过滤
  */
-export function getTeacherWorkspaceDemoSummary(listings) {
-  const materialsCount = TEACHER_DEMO_MATERIALS.length;
-  const coursesCount = TEACHER_DEMO_COURSES.length;
-  const materialsInUseCount = TEACHER_DEMO_MATERIALS.filter((m) => m.usedByCourseIds.length > 0).length;
-  const coursesWithListing = TEACHER_DEMO_COURSES.filter((c) => c.listingReadinessKey === "has_listing").length;
+export function getTeacherWorkspaceDemoSummary(listings, profileId) {
+  const mats = getDemoMaterialsForProfile(profileId);
+  const crs = getDemoCoursesForProfile(profileId);
+  const materialsCount = mats.length;
+  const coursesCount = crs.length;
+  const materialsInUseCount = mats.filter((m) => m.usedByCourseIds.length > 0).length;
+  const coursesWithListing = crs.filter((c) => c.listingReadinessKey === "has_listing").length;
 
+  const pid = profileId != null && String(profileId).trim() !== "" ? String(profileId) : null;
   let listingTotal = 0;
   let pendingReview = 0;
   let draft = 0;
   let approved = 0;
-  if (Array.isArray(listings)) {
-    listingTotal = listings.length;
+  if (Array.isArray(listings) && pid) {
     for (const L of listings) {
+      if (!L || String(L.seller_type) !== "teacher" || String(L.teacher_id || "") !== pid) continue;
+      listingTotal += 1;
       const st = String(L?.status || "");
       if (st === "pending_review") pendingReview += 1;
       if (st === "draft") draft += 1;
@@ -210,6 +236,8 @@ export function getTeacherWorkspaceDemoSummary(listings) {
     pendingReview,
     draft,
     approved,
+    /** 课堂资产占位，Step 2 接入 */
+    classroomAssetCount: 0,
   };
 }
 

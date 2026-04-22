@@ -690,14 +690,19 @@
       "subtitle": "Extras that pair with the Teacher Workspace; the workspace remains the main hub."
     },
     "manage": {
-      "page_kicker": "Teacher Workspace"
+      "page_kicker": "Teacher Workspace",
+      "page_kicker_mine": "My workbench"
     },
     "nav": {
       "back_workspace": "Back to Teacher Workspace",
+      "back_mine_workbench": "Back to my workbench",
+      "mine_workbench": "My workbench",
       "subnav_aria": "Navigation inside the Teacher Workspace"
     },
     "path_strip": {
       "aria": "Where you are in materials, courses, and listings",
+      "aria_mine": "Your workflow: materials, courses, listings; classroom is entered from materials or courses",
+      "classroom_from_mine": "To teach: go from My materials or My courses, then use Enter classroom on the workbench. Other steps here are prep and sales tracks.",
       "materials": "Prep materials",
       "courses": "Build courses",
       "listing": "List for sale",
@@ -743,6 +748,7 @@
     },
     "relation_flow": {
       "title": "Three layers",
+      "title_mine": "My workflow: three layers (prep to sale)",
       "materials": "Materials · private prep",
       "courses": "Courses · teaching structure",
       "listing": "Listings · sales & review"
@@ -765,28 +771,100 @@
         "chip_drafts": "Drafts · {count}",
         "chip_approved": "Approved · {count}"
       },
-      "classroom_flow_note": "Flow: materials → courses → teach in the classroom; for selling and public display, also use Listings & sales. “Enter classroom” below is the teaching execution step."
+      "classroom_flow_note": "Flow: materials → courses → teach in the classroom; for selling and public display, also use Listings & sales. “Enter classroom” below is the teaching execution step.",
+      "classroom_flow_note_mine": "From My materials and My courses, organize what you teach; return here to Enter classroom. Listings is a separate track for public sale.",
+      "mine_title": "My teaching workbench",
+      "mine_subtitle": "Signed in as {name}. This overview counts items linked to your teacher profile in local preview data.",
+      "gated_lead": "Your teacher account is not fully cleared yet. Once approved, the full workbench will unlock.",
+      "mine_entry_title": "Teacher module",
+      "mine_entry_subtitle": "The teaching workbench, materials, and courses open after you are assigned the teacher role and pass profile review.",
+      "overview_mine": {
+        "title": "At a glance (this teacher)",
+        "disclosure": "Counts are filtered to the signed-in teacher’s profile from local data—not global demos or real analytics.",
+        "chip_materials": "My materials · {count}",
+        "chip_courses": "My courses · {count}",
+        "chip_classroom_assets": "Classroom assets · {count}",
+        "chip_materials_in_use": "In use in courses · {count}",
+        "chip_courses_with_listing": "Linked to listings · {count}",
+        "chip_listings": "Listings (mine) · {count}",
+        "chip_pending": "Pending review · {count}",
+        "chip_drafts": "Drafts · {count}",
+        "chip_approved": "Approved · {count}"
+      }
+    },
+    "wbstate": {
+      "no_profile": "No profile",
+      "draft": "Profile draft",
+      "pending_review": "In review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "suspended": "Suspended"
+    },
+    "gate": {
+      "not_teacher_title": "You are not a teacher yet",
+      "not_teacher_body": "The teacher module is for people who run classes and manage materials on Lumina. When applications open, you can submit a profile for review from here.",
+      "not_teacher_scope": "Typical use: private prep assets, course structure, and future listings. Nothing here affects learners until you publish.",
+      "apply_cta": "Apply to become a teacher",
+      "apply_note": "The apply flow is a placeholder in this build—no submission yet.",
+      "next_label": "Next step:",
+      "workbench_limited": "The full workbench, materials library, and course manager stay limited until your profile is approved. You can still read the workflow hints below.",
+      "title_no_profile": "No teacher profile yet",
+      "body_no_profile": "You have the teacher role, but a seller profile is not on file. Create a minimal profile to continue—this is a placeholder in this build.",
+      "next_no_profile": "Use a future “Create profile” action (Step 2) to submit basic info. Until then, workbench data cannot attach to you.",
+      "title_draft": "Finish your profile",
+      "body_draft": "Your profile is saved as a draft. Complete the required info before you can submit for review.",
+      "next_draft": "Fill in the remaining fields, then submit for review (placeholder).",
+      "title_pending_review": "Profile is being reviewed",
+      "body_pending_review": "We are reviewing your teacher profile. This usually comes before listing or payout features.",
+      "next_pending_review": "Wait for a decision. The workbench will unlock after approval—no need to resubmit from here in this build.",
+      "title_rejected": "Profile not approved",
+      "body_rejected": "The last review did not pass. Update your materials and try again when resubmit is available.",
+      "next_rejected": "Read the reason below, fix the issues, then resubmit (placeholder).",
+      "rejected_reason_label": "Reason on file:",
+      "rejected_reason_placeholder": "Example: incomplete credentials (placeholder).",
+      "resubmit_cta": "Resubmit profile (placeholder)",
+      "title_suspended": "Account paused",
+      "body_suspended": "Your teacher access is suspended. New listings and classroom tools are blocked until the issue is resolved with support.",
+      "next_suspended": "Contact support to understand next steps. This build only shows the state."
+    },
+    "access": {
+      "not_teacher_title": "Teacher sign-in only",
+      "not_teacher_body": "Switch to a teacher account to manage materials and courses. This page is not available in guest mode here.",
+      "need_approved_body": "These rows open after your teacher profile is approved. You can still return to the workbench to check status.",
+      "need_approved_courses": "The course list opens after your teacher profile is approved.",
+      "library_locked_title": "Library locked for your current status",
+      "library_locked_body": "We hide sample rows so non-approved states are not mixed with a teacher’s own library. After approval, your materials will show here (with uploads in a later release).",
+      "courses_locked_title": "Course list locked for your current status",
+      "courses_locked_body": "We hide sample rows for the same reason as materials. After approval, your courses will list here."
     },
     "hub": {
       "materials": {
         "title": "My materials",
         "desc": "Manage prep assets and see what is already used in courses or ready to move toward listing.",
-        "cta": "Open materials library"
+        "desc_mine": "Your prep library for this profile—rows below are only for this signed-in teacher in local data.",
+        "cta": "Open materials library",
+        "cta_mine": "My materials"
       },
       "courses": {
         "title": "My courses",
         "desc": "Shape your teaching structure and see whether materials are attached or you are ready for listing.",
-        "cta": "Open course management"
+        "desc_mine": "Your teaching structure for this profile. Filtered to the current teacher; empty means nothing linked yet in preview data.",
+        "cta": "Open course management",
+        "cta_mine": "My courses"
       },
       "listing": {
         "title": "Listings & sales management",
         "desc": "Manage public display and review status; see which content has entered the listing stage.",
+        "desc_mine": "Listings and review still use the Stage 0 screen; this is not live checkout.",
         "cta": "Open listing hub",
+        "cta_mine": "Listings & sales (Stage 0 preview)",
         "badge": "Preview · Stage 0"
       }
     },
     "demo": {
       "disclosure": "Rows below are local demo data to illustrate how materials, courses, and listings relate—not real student or order data.",
+      "disclosure_mine": "Rows below (when unlocked) are tied to the signed-in teacher in local data—not a global catalog.",
+      "disclosure_mine_courses": "Course rows, when shown, belong to the current teacher in local data.",
       "enum": {
         "sep": ", "
       },
@@ -899,7 +977,16 @@
       "empty_subhint": "When upload opens, rows will appear below.",
       "relation_note_short": "Materials ≠ courses; ≠ auto products.",
       "back": "Back to Teacher Workspace",
-      "classroom_note": "Materials support prep and feed into courses and the classroom; organizing files is not the end—teaching happens in your course structure and in class."
+      "classroom_note": "Materials support prep and feed into courses and the classroom; organizing files is not the end—teaching happens in your course structure and in class.",
+      "classroom_note_mine": "From My materials, your files feed My courses, then the workbench to enter the classroom. Upload itself is in a later release—button below is intentionally disabled for now with a next-stage note.",
+      "upload_next_stage": "Next release: file upload and PPT import. This button is disabled on purpose; not a bug.",
+      "mine_page_title": "My materials · {name}",
+      "mine_page_subtitle": "What you see is filtered to this teacher in local data.",
+      "list_title_mine": "Materials for this profile",
+      "list_mine_note": "When your profile has no sample rows, the table is empty. Later you can build classroom assets and generated materials from here (Step 2+).",
+      "relation_note_mine": "Materials in this list belong to the signed-in teacher only when approved.",
+      "empty_mine_title": "No materials in your library yet",
+      "empty_mine_body": "Add prep assets, then connect them in My courses, then teach from the workbench. Upload and PPT features come in a later step."
     },
     "courses_page": {
       "title": "My courses",
@@ -923,6 +1010,17 @@
       "empty_cell_item_3": "Courses don’t auto-become products; selling uses Listings & sales and review",
       "new_cta": "New course",
       "new_note": "Course creation and editing will open in a future release.",
+      "new_next_stage": "Next release: new course and classroom asset flow. The button is disabled on purpose; not a bug.",
+      "mine_page_title": "My courses · {name}",
+      "mine_page_subtitle": "Only courses linked to this teacher profile in local data appear here.",
+      "list_title_mine": "Courses for this profile",
+      "list_mine_note": "An empty list means you have not created courses in preview for this account yet. Next: prepare classroom assets, bind materials, then teach.",
+      "relation_note_mine": "Courses for this list belong to the current teacher; empty is expected before you add content (Step 2+).",
+      "empty_mine_title": "No courses yet for this account",
+      "empty_mine_intro": "When you have no course rows, start from teaching assets:",
+      "empty_mine_item_1": "Prepare materials, then group them in a course",
+      "empty_mine_item_2": "Link classroom assets (coming later) for projection",
+      "empty_mine_item_3": "Optional: when ready, move to Listings (Stage 0) for a sellable item",
       "relation_title": "Note",
       "relation_item_1": "Courses ≠ materials.",
       "relation_item_2": "Courses ≠ auto-listed for sale.",
@@ -943,7 +1041,8 @@
       "classroom_desc": "Pick a course, level, and lesson to open classroom mode and lesson tools.",
       "classroom_button": "Open classroom",
       "classroom_stage_kicker": "Teach",
-      "classroom_workflow_note": "After materials and courses are ready, enter here to teach. Listing management runs in parallel—classroom for teaching, listings for selling."
+      "classroom_workflow_note": "After materials and courses are ready, enter here to teach. Listing management runs in parallel—classroom for teaching, listings for selling.",
+      "classroom_workflow_note_mine": "Use My materials / My courses to prepare, then come back here to enter the classroom. Listing is a separate track for selling."
     },
     "classroom": {
       "context": {

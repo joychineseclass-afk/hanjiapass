@@ -1,11 +1,12 @@
 // /ui/pages/page.teacher.js
-// 老师工作台：轻量关系流 + 统一入口 CTA；文案经 safeUiText。
+// 老师工作台：基于当前用户身份与 teacher profile 状态分流。
 
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getTeacherWorkspaceDemoSummary } from "../lumina-commerce/teacherDemoCatalog.js";
 import { initCommerceStore } from "../lumina-commerce/store.js";
+import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { i18n } from "../i18n.js";
-import { teacherPathStripHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
+import { teacherPathStripHtml, teacherPathStripClassroomHintHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -23,12 +24,69 @@ function escapeHtml(s) {
 let __teacherLangHandler = /** @type {null | (() => void)} */ (null);
 let __teacherRootRef = /** @type {HTMLElement | null} */ (null);
 
-/** @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum */
+/**
+ * @param {string} st
+ * @param {(a: string, b?: object) => string} t
+ */
+function statusChipClass(st) {
+  const s = String(st).replace(/[^a-z0-9_]/gi, "_");
+  return `teacher-wb-status-chip teacher-wb-status-chip--${s}`;
+}
+
+/**
+ * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
+ * @param {(a: string, b?: object) => string} t
+ */
+function teacherGatePanelHtml(ctx, t) {
+  const w = ctx.workbenchStatus;
+  if (w === "not_teacher") {
+    return `
+      <section class="card teacher-identity-gate" aria-labelledby="tw-gate-title">
+        <h3 id="tw-gate-title" class="teacher-identity-gate-title">${escapeHtml(t("teacher.gate.not_teacher_title"))}</h3>
+        <p class="teacher-identity-gate-body">${escapeHtml(t("teacher.gate.not_teacher_body"))}</p>
+        <p class="teacher-identity-gate-scope">${escapeHtml(t("teacher.gate.not_teacher_scope"))}</p>
+        <button type="button" class="teacher-identity-gate-cta" disabled aria-disabled="true">
+          ${escapeHtml(t("teacher.gate.apply_cta"))}
+        </button>
+        <p class="teacher-identity-gate-foot">${escapeHtml(t("teacher.gate.apply_note"))}</p>
+      </section>`;
+  }
+  const label = escapeHtml(t(`teacher.wbstate.${w}`));
+  const titleKey = `teacher.gate.title_${w}`;
+  const bodyKey = `teacher.gate.body_${w}`;
+  const nextKey = `teacher.gate.next_${w}`;
+  const title = escapeHtml(t(titleKey));
+  const body = escapeHtml(t(bodyKey));
+  const next = escapeHtml(t(nextKey));
+  const reasonBlock =
+    w === "rejected"
+      ? `<p class="teacher-identity-gate-reason"><strong>${escapeHtml(t("teacher.gate.rejected_reason_label"))}</strong> ${escapeHtml(
+          ctx.profile?.rejection_reason || t("teacher.gate.rejected_reason_placeholder"),
+        )}</p>
+         <p class="teacher-identity-gate-resubmit"><button type="button" class="teacher-identity-gate-cta" disabled aria-disabled="true">${escapeHtml(t("teacher.gate.resubmit_cta"))}</button></p>`
+      : "";
+  return `
+    <section class="card teacher-identity-gate" aria-labelledby="tw-gate-teacher-title">
+      <div class="teacher-identity-gate-row">
+        <h3 id="tw-gate-teacher-title" class="teacher-identity-gate-title">${title}</h3>
+        <span class="${escapeHtml(statusChipClass(w))}" aria-label="${label}">${label}</span>
+      </div>
+      <p class="teacher-identity-gate-body">${body}</p>
+      <p class="teacher-identity-gate-next"><strong>${escapeHtml(t("teacher.gate.next_label"))}</strong> ${next}</p>
+      ${reasonBlock}
+      <p class="teacher-identity-gate-locked-note">${escapeHtml(t("teacher.gate.workbench_limited"))}</p>
+    </section>`;
+}
+
+/**
+ * @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum
+ */
 function teacherWorkspaceOverviewHtml(sum) {
-  const p = "teacher.workspace.overview";
+  const p = "teacher.workspace.overview_mine";
   const chips = [
     tx(`${p}.chip_materials`, { count: String(sum.materialsCount) }),
     tx(`${p}.chip_courses`, { count: String(sum.coursesCount) }),
+    tx(`${p}.chip_classroom_assets`, { count: String(sum.classroomAssetCount) }),
     tx(`${p}.chip_materials_in_use`, { count: String(sum.materialsInUseCount) }),
     tx(`${p}.chip_courses_with_listing`, { count: String(sum.coursesWithListing) }),
     tx(`${p}.chip_listings`, { count: String(sum.listingTotal) }),
@@ -45,51 +103,54 @@ function teacherWorkspaceOverviewHtml(sum) {
       </section>`;
 }
 
-async function renderTeacherHub(root) {
-  let listings = [];
-  try {
-    const snap = await initCommerceStore();
-    listings = Array.isArray(snap?.listings) ? snap.listings : [];
-  } catch {
-    listings = [];
-  }
-  const sum = getTeacherWorkspaceDemoSummary(listings);
-
-  root.innerHTML = `
+/**
+ * 已通过审核的完整工作台。
+ * @param {import('../lumina-commerce/teacherSelectors.js').ResolvedTeacherProfile} profile
+ * @param {ReturnType<typeof getTeacherWorkspaceDemoSummary>} sum
+ * @param {(a: string, b?: object) => string} t
+ */
+function approvedWorkbenchHtml(profile, sum, t) {
+  const st = String(profile.workbench_status);
+  const label = escapeHtml(t(`teacher.wbstate.${st}`));
+  return `
     <div class="teacher-page wrap">
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
-        <p class="teacher-page-kicker">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
-        <div class="hero">
-          <h2 class="title">${escapeHtml(tx("teacher.workspace.title"))}</h2>
-          <p class="desc teacher-hero-lead">${escapeHtml(tx("teacher.workspace.subtitle"))}</p>
+        <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
+        <div class="hero teacher-workbench-hero-row">
+          <div>
+            <h2 class="title">${escapeHtml(t("teacher.workspace.mine_title"))}</h2>
+            <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.mine_subtitle", { name: profile.display_name }))}</p>
+          </div>
+          <span class="${escapeHtml(statusChipClass(st))}">${label}</span>
         </div>
       </section>
 
-      ${teacherWorkspaceSubnavHtml("workspace", tx)}
+      ${teacherWorkspaceSubnavHtml("workspace", t)}
 
-      <section class="card teacher-relation-flow" aria-label="${escapeHtml(tx("teacher.relation_flow.title"))}">
-        <p class="teacher-relation-flow-title">${escapeHtml(tx("teacher.relation_flow.title"))}</p>
-        ${teacherPathStripHtml(null, tx)}
-        <p class="teacher-relation-flow-classroom">${escapeHtml(tx("teacher.workspace.classroom_flow_note"))}</p>
+      <section class="card teacher-relation-flow" aria-label="${escapeHtml(t("teacher.relation_flow.title"))}">
+        <p class="teacher-relation-flow-title">${escapeHtml(t("teacher.relation_flow.title_mine"))}</p>
+        ${teacherPathStripHtml(null, t)}
+        ${teacherPathStripClassroomHintHtml(t)}
+        <p class="teacher-relation-flow-classroom">${escapeHtml(t("teacher.workspace.classroom_flow_note_mine"))}</p>
       </section>
       ${teacherWorkspaceOverviewHtml(sum)}
 
       <section class="teacher-grid">
         <article class="teacher-tile card teacher-tile-classroom teacher-tile--primary">
-          <p class="teacher-tile-stage-kicker">${escapeHtml(tx("teacher.enter.classroom_stage_kicker"))}</p>
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.enter.classroom_section_title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.enter.classroom_section_lead"))}</p>
-          <p class="teacher-tile-workflow-note">${escapeHtml(tx("teacher.enter.classroom_workflow_note"))}</p>
+          <p class="teacher-tile-stage-kicker">${escapeHtml(t("teacher.enter.classroom_stage_kicker"))}</p>
+          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.enter.classroom_section_title"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.enter.classroom_section_lead"))}</p>
+          <p class="teacher-tile-workflow-note">${escapeHtml(t("teacher.enter.classroom_workflow_note_mine"))}</p>
           <div class="teacher-classroom-form teacher-classroom-form--primary">
             <label class="teacher-field">
-              <span>${escapeHtml(tx("teacher.label.course"))}</span>
+              <span>${escapeHtml(t("teacher.label.course"))}</span>
               <select id="teacherCourseSelect">
                 <option value="kids">${escapeHtml(formatTeacherHubCourseDisplay("kids"))}</option>
                 <option value="hsk">${escapeHtml(formatTeacherHubCourseDisplay("hsk"))}</option>
               </select>
             </label>
             <label class="teacher-field">
-              <span>${escapeHtml(tx("teacher.label.level"))}</span>
+              <span>${escapeHtml(t("teacher.label.level"))}</span>
               <select id="teacherLevelSelect">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -97,51 +158,97 @@ async function renderTeacherHub(root) {
               </select>
             </label>
             <label class="teacher-field">
-              <span>${escapeHtml(tx("teacher.label.lesson"))}</span>
+              <span>${escapeHtml(t("teacher.label.lesson"))}</span>
               <input id="teacherLessonInput" type="number" min="1" value="1" />
             </label>
             <button type="button" id="teacherEnterClassroomBtn" class="teacher-hub-cta teacher-hub-cta--primary">
-              ${escapeHtml(tx("teacher.enter.classroom_button"))}
+              ${escapeHtml(t("teacher.enter.classroom_button"))}
             </button>
           </div>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry">
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.hub.materials.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.materials.desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-materials">${escapeHtml(tx("teacher.hub.materials.cta"))}</a>
+          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.hub.materials.title"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.materials.desc_mine"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-materials">${escapeHtml(t("teacher.hub.materials.cta_mine"))}</a>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry">
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.hub.courses.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.courses.desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(tx("teacher.hub.courses.cta"))}</a>
+          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.hub.courses.title"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.courses.desc_mine"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(t("teacher.hub.courses.cta_mine"))}</a>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry">
           <div class="teacher-tile-head">
-            <h3 class="teacher-tile-title teacher-tile-title--inline">${escapeHtml(tx("teacher.hub.listing.title"))}</h3>
-            <span class="teacher-hub-badge">${escapeHtml(tx("teacher.hub.listing.badge"))}</span>
+            <h3 class="teacher-tile-title teacher-tile-title--inline">${escapeHtml(t("teacher.hub.listing.title"))}</h3>
+            <span class="teacher-hub-badge">${escapeHtml(t("teacher.hub.listing.badge"))}</span>
           </div>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.hub.listing.desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#lumina-teacher-stage0">${escapeHtml(tx("teacher.hub.listing.cta"))}</a>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.listing.desc_mine"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#lumina-teacher-stage0">${escapeHtml(t("teacher.hub.listing.cta_mine"))}</a>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.ai.assistant"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.ai.desc"))}</p>
-          <p class="teacher-tile-scope">${escapeHtml(tx("teacher.ai.scope_note"))}</p>
+          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.ai.assistant"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.ai.desc"))}</p>
+          <p class="teacher-tile-scope">${escapeHtml(t("teacher.ai.scope_note"))}</p>
         </article>
 
         <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
-          <h3 class="teacher-tile-title">${escapeHtml(tx("teacher.console.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(tx("teacher.console.desc"))}</p>
-          <p class="teacher-tile-scope">${escapeHtml(tx("teacher.console.scope_note"))}</p>
+          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.console.title"))}</h3>
+          <p class="teacher-tile-desc">${escapeHtml(t("teacher.console.desc"))}</p>
+          <p class="teacher-tile-scope">${escapeHtml(t("teacher.console.scope_note"))}</p>
         </article>
       </section>
     </div>
   `;
+}
 
+/**
+ * 老师身份但尚未通过：保留导航、路径条，主功能受限。
+ * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
+ * @param {(a: string, b?: object) => string} t
+ */
+function gatedTeacherShellHtml(ctx, t) {
+  return `
+    <div class="teacher-page wrap">
+      <section class="teacher-hero card teacher-center-page teacher-hero--compact">
+        <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
+        <h2 class="title">${escapeHtml(t("teacher.workspace.mine_title"))}</h2>
+        <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.gated_lead"))}</p>
+      </section>
+      ${teacherWorkspaceSubnavHtml("workspace", t)}
+      ${teacherGatePanelHtml(ctx, t)}
+      <section class="card teacher-relation-flow teacher-relation-flow--muted" aria-label="${escapeHtml(t("teacher.relation_flow.title_mine"))}">
+        <p class="teacher-relation-flow-title">${escapeHtml(t("teacher.relation_flow.title_mine"))}</p>
+        ${teacherPathStripHtml(null, t)}
+        ${teacherPathStripClassroomHintHtml(t)}
+      </section>
+    </div>
+  `;
+}
+
+/**
+ * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
+ * @param {(a: string, b?: object) => string} t
+ */
+function notTeacherShellHtml(t) {
+  return `
+    <div class="teacher-page wrap">
+      <section class="teacher-hero card teacher-center-page teacher-hero--compact">
+        <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker"))}</p>
+        <h2 class="title">${escapeHtml(t("teacher.workspace.mine_entry_title"))}</h2>
+        <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.mine_entry_subtitle"))}</p>
+      </section>
+      ${teacherGatePanelHtml({ workbenchStatus: "not_teacher" }, t)}
+    </div>
+  `;
+}
+
+/**
+ * @param {HTMLElement} root
+ */
+function bindClassroomForm(root) {
   root.querySelector("#teacherEnterClassroomBtn")?.addEventListener("click", () => {
     const course = String(root.querySelector("#teacherCourseSelect")?.value || "kids");
     const level = String(root.querySelector("#teacherLevelSelect")?.value || "1");
@@ -149,7 +256,42 @@ async function renderTeacherHub(root) {
     const lesson = String(Math.max(1, parseInt(lessonRaw, 10) || 1));
     location.hash = `#classroom?course=${encodeURIComponent(course)}&level=${encodeURIComponent(level)}&lesson=${encodeURIComponent(lesson)}`;
   });
+}
 
+async function renderTeacherHub(root) {
+  const t = tx;
+  let ctx;
+  let listings = [];
+  try {
+    const snap = await initCommerceStore();
+    listings = Array.isArray(snap?.listings) ? snap.listings : [];
+  } catch {
+    listings = [];
+  }
+  try {
+    ctx = await getTeacherPageContext();
+  } catch {
+    root.innerHTML = `<div class="teacher-page wrap card teacher-identity-gate"><p class="teacher-identity-gate-body">${escapeHtml(
+      t("common.loading"),
+    )}</p></div>`;
+    return;
+  }
+
+  if (ctx.workbenchStatus === "not_teacher") {
+    root.innerHTML = notTeacherShellHtml(t);
+    i18n.apply?.(root);
+    return;
+  }
+
+  if (ctx.isApproved && ctx.profile) {
+    const sum = getTeacherWorkspaceDemoSummary(listings, ctx.profile.id);
+    root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t);
+    bindClassroomForm(root);
+    i18n.apply?.(root);
+    return;
+  }
+
+  root.innerHTML = gatedTeacherShellHtml(ctx, t);
   i18n.apply?.(root);
 }
 

@@ -699,14 +699,19 @@
       "subtitle": "「教師ワークスペース」と組み合わせる補助機能です。主な入り口はワークスペースです。"
     },
     "manage": {
-      "page_kicker": "教師ワークスペース"
+      "page_kicker": "教師ワークスペース",
+      "page_kicker_mine": "マイワークスペース"
     },
     "nav": {
       "back_workspace": "教師ワークスペースに戻る",
+      "back_mine_workbench": "マイワークスペースに戻る",
+      "mine_workbench": "マイワークスペース",
       "subnav_aria": "教師ワークスペース内のナビゲーション"
     },
     "path_strip": {
       "aria": "教材・コース・掲載の流れでの位置",
+      "aria_mine": "教材 → コース → 掲載の流れ。授業は教材／コースを経てワークスペースの「授業を開く」から",
+      "classroom_from_mine": "授業：「マイ教材」または「マイコース」で準備し、ワークスペースの「授業を開く」を使います。ここは説明用で、不具合ではありません。",
       "materials": "教材準備",
       "courses": "コース構成",
       "listing": "掲載・販売",
@@ -752,6 +757,7 @@
     },
     "relation_flow": {
       "title": "三つの層",
+      "title_mine": "私の作業：三層（準備から販売へ）",
       "materials": "教材 · 個人の準備資産",
       "courses": "コース · 授業の構成",
       "listing": "掲載 · 販売と審査の入り口"
@@ -774,28 +780,100 @@
         "chip_drafts": "下書き {count} 件",
         "chip_approved": "承認済み {count} 件"
       },
-      "classroom_flow_note": "流れの目安：教材 → コース → 授業で使用。公開・販売が必要ならコースや教材から「掲載・販売管理」へ。下の「授業を開く」が実行の入口です。"
+      "classroom_flow_note": "流れの目安：教材 → コース → 授業で使用。公開・販売が必要ならコースや教材から「掲載・販売管理」へ。下の「授業を開く」が実行の入口です。",
+      "classroom_flow_note_mine": "「マイ教材／マイコース」で整え、ワークスペースの「授業を開く」へ。掲載は販売用の別ラインで、授業と並行します。",
+      "mine_title": "マイ教師ワークスペース",
+      "mine_subtitle": "{name} として表示中。下の数値はローカルでこの教師プロフィールに紐づくプレビュー用です。",
+      "gated_lead": "教師プロフィールが未承認のため、本番相当の作業台は制限中です。",
+      "mine_entry_title": "教師エリア",
+      "mine_entry_subtitle": "教師ロールと承認されたプロフィールが整うと、ワークスペースとマイ教材／マイコースに入れます。",
+      "overview_mine": {
+        "title": "この教師の概要",
+        "disclosure": "ログイン中の教師に紐づくローカル集計です。全員共通のグローバル集計ではありません。",
+        "chip_materials": "マイ教材 {count} 件",
+        "chip_courses": "マイコース {count} 件",
+        "chip_classroom_assets": "授業用資産 {count} 件",
+        "chip_materials_in_use": "コースで使用中 {count} 件",
+        "chip_courses_with_listing": "掲載と紐づき {count} 件",
+        "chip_listings": "教師掲載 {count} 件",
+        "chip_pending": "審査待ち {count} 件",
+        "chip_drafts": "下書き {count} 件",
+        "chip_approved": "承認済み {count} 件"
+      }
+    },
+    "wbstate": {
+      "no_profile": "未作成",
+      "draft": "下書き",
+      "pending_review": "審査中",
+      "approved": "承認済み",
+      "rejected": "非承認",
+      "suspended": "一時停止"
+    },
+    "gate": {
+      "not_teacher_title": "教師アカウントではありません",
+      "not_teacher_body": "教師向けの教材・コース管理です。受付が開いたら、ここから提出できます（現状はプレースホルダー）。",
+      "not_teacher_scope": "想定：個人の準備・コース設計・将来の掲載。未公開の間は学習者向け表示は変わりません。",
+      "apply_cta": "教師申請",
+      "apply_note": "本ビルドでは申請不可のプレースホルダーです。",
+      "next_label": "次の一歩：",
+      "workbench_limited": "承認までフル作業台と一覧は制限します。下の流れ図は閲覧できます。",
+      "title_no_profile": "教師プロフィール未作成",
+      "body_no_profile": "教師ロールはありますが、プロフィール行がありません。最小プロフィールが必要です。",
+      "next_no_profile": "次の段階で「作成」が入ります（本段階は説明のみ）。",
+      "title_draft": "プロフィールを完成させる",
+      "body_draft": "下書きのままです。必須項目を埋めてから審査に出してください。",
+      "next_draft": "不足を埋め、提出（プレースホルダー）へ。",
+      "title_pending_review": "プロフィール審査中",
+      "body_pending_review": "承認前は掲載・決済系の機能を開放しません。",
+      "next_pending_review": "結果待ち。本ビルドでは再提出の必要は想定しません。",
+      "title_rejected": "プロフィール非承認",
+      "body_rejected": "前回の審査に通りませんでした。理由を直して再提出します。",
+      "next_rejected": "下記理由を参考に、再提出（プレースホルダー）を使います。",
+      "rejected_reason_label": "理由：",
+      "rejected_reason_placeholder": "例：資格情報が不足。",
+      "resubmit_cta": "再提出（次段階）",
+      "title_suspended": "教師機能が停止中",
+      "body_suspended": "新しい掲載・授業向け操作は一時的に使えません。",
+      "next_suspended": "サポートに連絡してください（本画面は通知のみ）。"
+    },
+    "access": {
+      "not_teacher_title": "教師専用",
+      "not_teacher_body": "教師に切り替えてからご利用ください。",
+      "need_approved_body": "未承認の間は一覧を開きません。ステータスはワークスペースで。",
+      "need_approved_courses": "未承認の間はコース表を開きません。",
+      "library_locked_title": "現在の状態では一覧不可",
+      "library_locked_body": "混同を防ぐためデモ行を出しません。承認後に教師用データを表示します。",
+      "courses_locked_title": "現在の状態では一覧不可",
+      "courses_locked_body": "教材と同じ理由で承認前は非表示です。"
     },
     "hub": {
       "materials": {
         "title": "マイ教材",
         "desc": "準備資料を管理し、コースで使われているか・掲載に進めるかを素早く把握します。",
-        "cta": "教材ライブラリへ"
+        "desc_mine": "この教師に紐づく教材エリア。",
+        "cta": "教材ライブラリへ",
+        "cta_mine": "マイ教材"
       },
       "courses": {
         "title": "マイコース",
         "desc": "授業構成を整え、教材の有無や掲載フローに入れる段階かを確認します。",
-        "cta": "コース管理へ"
+        "desc_mine": "この教師のコース。空の場合はプレビューに行がありません。",
+        "cta": "コース管理へ",
+        "cta_mine": "マイコース"
       },
       "listing": {
         "title": "掲載・販売管理",
         "desc": "公開・審査の状態を管理し、どの内容が掲載段階に入ったかを見ます。",
+        "desc_mine": "Stage 0 プレビュー。本番決済ではありません。",
         "cta": "掲載管理へ",
+        "cta_mine": "掲載・販売（Stage 0）",
         "badge": "準備エリア · Stage 0"
       }
     },
     "demo": {
       "disclosure": "以下は教材・コース・掲載の関係を示すローカルデモデータであり、実在の学習者や注文ではありません。",
+      "disclosure_mine": "表示はログイン中の教師向け。全体カタログではありません。",
+      "disclosure_mine_courses": "表示されるコース行は、現在の教師プロフィール向けのプレビューです。",
       "enum": {
         "sep": "、"
       },
@@ -908,7 +986,16 @@
       "empty_subhint": "機能公開後、下の一覧に表示されます。",
       "relation_note_short": "教材≠コース；≠自動商品。",
       "back": "教師ワークスペースに戻る",
-      "classroom_note": "教材は準備資産としてコースと授業を支えます。資料整理だけがゴールではなく、コース構成と実際の授業の中で活きます。"
+      "classroom_note": "教材は準備資産としてコースと授業を支えます。資料整理だけがゴールではなく、コース構成と実際の授業の中で活きます。",
+      "classroom_note_mine": "「マイ教材」→「マイコース」→ ワークスペースの授業。アップロードは次段階。ボタンは意図的に無効です。",
+      "upload_next_stage": "次段階：アップロードとPPT取り込み。ボタンは意図的に無効。不具合ではありません。",
+      "mine_page_title": "マイ教材 · {name}",
+      "mine_page_subtitle": "表示はこの教師のローカル束ねです。",
+      "list_title_mine": "このプロフィールの教材一覧",
+      "list_mine_note": "行がなければプレビューに未登録。次段階で授業用資産も扱います。",
+      "relation_note_mine": "表は承認後に当該教師向け。",
+      "empty_mine_title": "まだ教材がありません",
+      "empty_mine_body": "先にコースを設計し、次にここに資産。アップロードは後続ステップで。"
     },
     "courses_page": {
       "title": "マイコース",
@@ -932,6 +1019,17 @@
       "empty_cell_item_3": "コースは自動では商品になりません。販売は「掲載・販売管理」と審査で行います",
       "new_cta": "新規コース",
       "new_note": "コースの新規作成・編集は今後のバージョンで提供予定です。",
+      "new_next_stage": "次段階：新規コースと授業用資産。ボタンは意図的に無効。不具合ではありません。",
+      "mine_page_title": "マイコース · {name}",
+      "mine_page_subtitle": "この教師のコースに絞り込み。",
+      "list_title_mine": "このプロフィールのコース一覧",
+      "list_mine_note": "空のときは未作成。授業用資産→教材→コースの順で。",
+      "relation_note_mine": "行は当該教師のみ。",
+      "empty_mine_title": "このアカウントにコースなし",
+      "empty_mine_intro": "まだコースがない場合の例：",
+      "empty_mine_item_1": "教材を整え、コースに集約",
+      "empty_mine_item_2": "授業用資産を後続で紐づけ",
+      "empty_mine_item_3": "必要なら Stage 0 の掲載を利用",
       "relation_title": "ヒント",
       "relation_item_1": "コース≠教材。",
       "relation_item_2": "コース≠自動販売商品。",
@@ -952,7 +1050,8 @@
       "classroom_desc": "コース・巻・課を選び、投影モードと教材ツールを開きます。",
       "classroom_button": "授業を開く",
       "classroom_stage_kicker": "授業の実行",
-      "classroom_workflow_note": "教材とコースの準備が整ったら、ここから実際の授業へ。掲載管理と並行できます——授業は教室モード、販売は掲載管理です。"
+      "classroom_workflow_note": "教材とコースの準備が整ったら、ここから実際の授業へ。掲載管理と並行できます——授業は教室モード、販売は掲載管理です。",
+      "classroom_workflow_note_mine": "先に「マイ教材／マイコース」、戻って「授業を開く」。掲載は販売用の平行ラインです。"
     },
     "classroom": {
       "context": {

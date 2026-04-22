@@ -690,14 +690,19 @@
       "subtitle": "「교사 워크스페이스」와 함께 쓰는 보조 기능입니다. 주 허브는 워크스페이스입니다."
     },
     "manage": {
-      "page_kicker": "교사 워크스페이스"
+      "page_kicker": "교사 워크스페이스",
+      "page_kicker_mine": "내 작업대"
     },
     "nav": {
       "back_workspace": "교사 워크스페이스로 돌아가기",
+      "back_mine_workbench": "내 작업대로 돌아가기",
+      "mine_workbench": "내 작업대",
       "subnav_aria": "교사 워크스페이스 안내 네비게이션"
     },
     "path_strip": {
       "aria": "교재·코스·등록 진행 단계",
+      "aria_mine": "내 작업: 교재 → 코스 → 등록. 수업은 내 교재/내 코스를 거쳐 작업대의 수업 입구로",
+      "classroom_from_mine": "수업: ‘내 교재’ 또는 ‘내 코스’를 준비한 뒤 작업대의 ‘수업 들어가기’를 씁니다. 이 설명은 흐름 안내이며 오류가 아닙니다.",
       "materials": "자료 준비",
       "courses": "코스 구성",
       "listing": "등록·판매",
@@ -743,6 +748,7 @@
     },
     "relation_flow": {
       "title": "세 단계 관계",
+      "title_mine": "내 흐름: 세 층(준비~판매)",
       "materials": "교재 · 개인 준비 자산",
       "courses": "코스 · 수업 구조",
       "listing": "등록 · 판매·심사 입구"
@@ -765,28 +771,100 @@
         "chip_drafts": "초안 {count}개",
         "chip_approved": "승인됨 {count}개"
       },
-      "classroom_flow_note": "흐름 안내: 교재 → 코스 → 수업(클래스룸). 공개·판매가 필요하면 코스·교재를 「등록·판매 관리」로 이어갈 수 있습니다. 아래 「수업 들어가기」가 실행 단계입니다."
+      "classroom_flow_note": "흐름 안내: 교재 → 코스 → 수업(클래스룸). 공개·판매가 필요하면 코스·교재를 「등록·판매 관리」로 이어갈 수 있습니다. 아래 「수업 들어가기」가 실행 단계입니다.",
+      "classroom_flow_note_mine": "‘내 교재/내 코스’에서 정리한 뒤 작업대의 ‘수업 들어가기’로. 등록·판매는 별도 궤도입니다.",
+      "mine_title": "내 교사 작업대",
+      "mine_subtitle": "{name} 계정 기준. 아래는 로컬에서 이 교사 프로필에 묶인 미리보기 집계입니다.",
+      "gated_lead": "교사 프로필이 아직 승인되지 않아 전체 작업대는 제한됩니다.",
+      "mine_entry_title": "교사 영역",
+      "mine_entry_subtitle": "교사 역할과 승인된 프로필이 있어야 작업대·내 교재·내 코스에 들어갈 수 있습니다.",
+      "overview_mine": {
+        "title": "이 교사 데이터 요약",
+        "disclosure": "로그인한 교사에 연결된 로컬 합계이며, 전체 데모를 대표하지 않습니다.",
+        "chip_materials": "내 교재 {count}건",
+        "chip_courses": "내 코스 {count}개",
+        "chip_classroom_assets": "수업 자산 {count}건",
+        "chip_materials_in_use": "코스에서 사용 중 {count}건",
+        "chip_courses_with_listing": "등록 연결됨 {count}개",
+        "chip_listings": "이 교사 등록 {count}개",
+        "chip_pending": "심사 대기 {count}개",
+        "chip_drafts": "초안 {count}개",
+        "chip_approved": "승인됨 {count}개"
+      }
+    },
+    "wbstate": {
+      "no_profile": "프로필 없음",
+      "draft": "초안",
+      "pending_review": "심사 중",
+      "approved": "승인됨",
+      "rejected": "거절됨",
+      "suspended": "중지됨"
+    },
+    "gate": {
+      "not_teacher_title": "아직 선생님이 아닙니다",
+      "not_teacher_body": "이 영역은 수업·교재·코스를 다루는 선생님을 위한 것입니다. 신청이 열리면 여기서 제출할 수 있게 됩니다(지금은 자리만).",
+      "not_teacher_scope": "개인 준비, 코스 구성, 이후 판매 등. 공개되기 전까지는 학습자 뷰에 반영되지 않습니다.",
+      "apply_cta": "선생님으로 신청",
+      "apply_note": "이 빌드에서는 제출되지 않는 자리 표시입니다.",
+      "next_label": "다음 단계:",
+      "workbench_limited": "승인될 때까지 본 작업대와 목록은 제한됩니다. 아래 흐름 설명은 볼 수 있습니다.",
+      "title_no_profile": "교사 프로필 없음",
+      "body_no_profile": "교사 역할은 있으나 판매자 프로필이 없습니다. 최소 프로필이 필요합니다.",
+      "next_no_profile": "이후 도입될 ‘만들기’(이 단계는 안내용).",
+      "title_draft": "프로필을 완성하세요",
+      "body_draft": "초안 상태입니다. 필수 항목을 채우고 심사를 냅니다.",
+      "next_draft": "빠진 항목을 채우고 제출(자리 표시)합니다.",
+      "title_pending_review": "프로필 심사 중",
+      "body_pending_review": "승인 전에는 등록·정산 경로를 열지 않습니다.",
+      "next_pending_review": "결과를 기다립니다(이 빌드에서 재제출 강제 없음).",
+      "title_rejected": "프로필이 승인되지 않음",
+      "body_rejected": "지난 심사에 통과하지 못했습니다. 이유에 맞게 수정하세요.",
+      "next_rejected": "아래 사유를 보고, 다시 제출(자리 표시).",
+      "rejected_reason_label": "기록된 사유:",
+      "rejected_reason_placeholder": "예: 자격 자료 누락",
+      "resubmit_cta": "다시 제출(다음 단계)",
+      "title_suspended": "교사 계정이 일시 정지",
+      "body_suspended": "새로운 등록·수업 흐름이 막힌 상태입니다.",
+      "next_suspended": "지원팀에 문의하세요(이 화면은 상태만 표시)."
+    },
+    "access": {
+      "not_teacher_title": "선생님 전용",
+      "not_teacher_body": "선생님으로 전환한 뒤 사용하세요.",
+      "need_approved_body": "승인 전에는 표를 열지 않습니다. 작업대에서 상태를 확인하세요.",
+      "need_approved_courses": "승인 전에는 코스 표를 열지 않습니다.",
+      "library_locked_title": "현재 상태에선 목록 사용 불가",
+      "library_locked_body": "혼동을 줄이기 위해 데모 행을 보여 주지 않습니다. 승인 뒤 이 교사에만 묶인 데이터를 봅니다.",
+      "courses_locked_title": "현재 상태에선 목록 사용 불가",
+      "courses_locked_body": "교재와 같은 이유로 승인 전 비표시."
     },
     "hub": {
       "materials": {
         "title": "내 교재",
         "desc": "준비 자료를 관리하고, 코스에서 이미 쓰는지·등록 준비가 되었는지 한눈에 확인합니다.",
-        "cta": "교재 보관함으로"
+        "desc_mine": "이 교사에 묶인 교재 구역(로컬).",
+        "cta": "교재 보관함으로",
+        "cta_mine": "내 교재"
       },
       "courses": {
         "title": "내 코스",
         "desc": "수업 구조를 정리하고 교재 연결 여부·등록 단계로 갈 준비가 되었는지 확인합니다.",
-        "cta": "코스 관리로"
+        "desc_mine": "이 교사의 코스. 비어 있으면 미리보기에 아직 없음.",
+        "cta": "코스 관리로",
+        "cta_mine": "내 코스"
       },
       "listing": {
         "title": "등록·판매 관리",
         "desc": "공개·심사 상태를 관리하고 어떤 콘텐츠가 등록 단계에 들어왔는지 봅니다.",
+        "desc_mine": "Stage 0 미리보기(실제 결제 아님).",
         "cta": "등록 관리로",
+        "cta_mine": "등록·판매(Stage 0)",
         "badge": "준비 구역 · Stage 0"
       }
     },
     "demo": {
       "disclosure": "아래는 교재·코스·등록 관계를 보여 주는 로컬 예시 데이터이며 실제 학습자·주문 데이터가 아닙니다.",
+      "disclosure_mine": "행은 로그인한 교사에 한정. 전체 카탈로그가 아닙니다.",
+      "disclosure_mine_courses": "보이는 코스 행은 현재 교사 프로필용 미리보기.",
       "enum": {
         "sep": ", "
       },
@@ -899,7 +977,16 @@
       "empty_subhint": "기능이 열리면 아래 목록에 표시됩니다.",
       "relation_note_short": "교재≠코스;≠자동 상품.",
       "back": "교사 워크스페이스로 돌아가기",
-      "classroom_note": "교재는 준비 자산이며 코스·수업을 지탱합니다. 자료 정리가 끝이 아니라 코스 구조와 실제 수업에서 완성됩니다."
+      "classroom_note": "교재는 준비 자산이며 코스·수업을 지탱합니다. 자료 정리가 끝이 아니라 코스 구조와 실제 수업에서 완성됩니다.",
+      "classroom_note_mine": "‘내 교재’→‘내 코스’→ 작업대의 수업. 업로드는 다음 단계이며, 버튼은 의도적으로 비활성.",
+      "upload_next_stage": "다음 단계: 업로드·PPT 가져오기. 버튼은 의도적으로 비활성(정상).",
+      "mine_page_title": "내 교재 · {name}",
+      "mine_page_subtitle": "이 교사에 묶인 로컬만 표시.",
+      "list_title_mine": "이 프로필 교재 목록",
+      "list_mine_note": "행이 없으면 이 계정에 미리보기가 없는 것. 이후 수업 자산(Step2+).",
+      "relation_note_mine": "승인 뒤 이 선생님에만.",
+      "empty_mine_title": "아직 내 교재 없음",
+      "empty_mine_body": "코스 구성을 먼저 쌓고, 이후에 자료. 업로드는 다음."
     },
     "courses_page": {
       "title": "내 코스",
@@ -923,6 +1010,17 @@
       "empty_cell_item_3": "코스는 자동으로 상품이 되지 않습니다. 판매는 「등록·판매 관리」와 심사를 거칩니다",
       "new_cta": "새 코스",
       "new_note": "코스 생성·편집 기능은 이후 버전에서 제공됩니다.",
+      "new_next_stage": "다음 단계: 신규 코스·수업 자산. 버튼은 의도적 비활성(정상).",
+      "mine_page_title": "내 코스 · {name}",
+      "mine_page_subtitle": "이 교사 프로필에만 연결(로컬).",
+      "list_title_mine": "이 프로필 코스 목록",
+      "list_mine_note": "비어 있으면 아직 없음. 수업 자산→교재→코스.",
+      "relation_note_mine": "행은 이 선생님에만(Step1에서 빈 화면은 정상).",
+      "empty_mine_title": "이 계정에 코스 없음",
+      "empty_mine_intro": "없을 때 예시:",
+      "empty_mine_item_1": "교재를 모아 코스에 연결",
+      "empty_mine_item_2": "수업 투사 자산은 추후(Step2+)",
+      "empty_mine_item_3": "선택: Stage 0 등록",
       "relation_title": "안내",
       "relation_item_1": "코스≠교재.",
       "relation_item_2": "코스≠자동 판매 상품.",
@@ -943,7 +1041,8 @@
       "classroom_desc": "과정·권·차시를 선택해 수업 화면과 과정별 도구를 엽니다.",
       "classroom_button": "수업 시작",
       "classroom_stage_kicker": "수업 실행",
-      "classroom_workflow_note": "교재·코스 준비가 되면 여기서 실제 수업으로 들어갑니다. 판매 등록과 병행됩니다—수업은 클래스룸, 판매는 등록 관리."
+      "classroom_workflow_note": "교재·코스 준비가 되면 여기서 실제 수업으로 들어갑니다. 판매 등록과 병행됩니다—수업은 클래스룸, 판매는 등록 관리.",
+      "classroom_workflow_note_mine": "먼저 ‘내 교재/내 코스’를 정리한 뒤 작업대의 ‘수업 들어가기’를 쓰세요. 등록·판매는 별 궤도입니다."
     },
     "classroom": {
       "context": {
