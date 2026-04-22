@@ -3336,6 +3336,12 @@ button.teacher-hub-cta:hover{
 .teacher-identity-gate-cta--dev:hover{
   background: #e2e8f0;
 }
+.teacher-takeover-sub{
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+}
 .my-content-empty,
 .my-orders-empty{
   max-width: 40rem;

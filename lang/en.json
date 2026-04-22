@@ -991,7 +991,12 @@
       "migration_dev_hint": "[Dev/test] An unclaimed approved demo teacher profile exists in this browser. You can bind tp_demo_seller_001 and its linked classroom assets to the signed-in account. Not a production feature.",
       "takeover_demo_cta": "Take over demo teacher workspace",
       "migration_dev_done": "Demo teacher profile and asset ownership were reassigned.",
-      "migration_dev_failed": "Could not take over (already claimed or demo row missing)."
+      "migration_dev_failed": "Could not take over (already claimed or demo row missing).",
+      "takeover_demo_sub": "Bind this account to the existing on-device teacher row (dev/test only).",
+      "dev_force_hint": "[Dev/test] If you already have a profile but the merged status blocks the full workbench, force-approve it here (local only).",
+      "dev_force_approve_cta": "Force-approve this teacher profile",
+      "dev_force_approve_done": "Profile is now approved. Check the workbench.",
+      "dev_force_approve_failed": "Could not force-approve. Make sure a teacher profile exists for this user."
     },
     "access": {
       "not_teacher_title": "Teacher sign-in only",

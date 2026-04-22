@@ -441,3 +441,43 @@ export async function ensureTeacherWorkspaceForAuthUser(userId) {
   await ensureCurrentUserMatchesCommerceTeacher();
   return { ok: true };
 }
+
+/**
+ * 仅开发/测试：将当前 user_id 命中的老师档案在 commerce 与 overlay 中强制置为可售卖「已通过」。
+ * @param {string} userId
+ * @returns {Promise<{ ok: true, profileId: string } | { ok: false, code: string }>}
+ */
+export async function devForceApproveCurrentUserTeacherProfile(userId) {
+  if (!userId) return { ok: false, code: "no_user" };
+  await initCommerceStore();
+  const row = findTeacherProfileByUserId(getCommerceStoreSync(), userId);
+  if (!row) return { ok: false, code: "no_profile" };
+  const now = new Date().toISOString();
+  const pid = String(row.id);
+  mutateCommerceStore((draft) => {
+    if (!Array.isArray(draft.teacher_profiles)) return;
+    const r = draft.teacher_profiles.find((p) => p && p.id === pid);
+    if (r) {
+      r.verification_status = VERIFICATION_STATUS.approved;
+      r.seller_eligibility = SELLER_ELIGIBILITY.eligible_to_sell;
+      r.updated_at = now;
+    }
+  });
+  patchTeacherProfileOverlay(pid, {
+    workbench_status: "approved",
+    onboarding_status: "completed",
+    account_suspended: false,
+  });
+  const au = getCurrentUser();
+  if (au.id === userId) {
+    const roles = new Set([...(au.roles || []), USER_ROLE.student, USER_ROLE.teacher]);
+    setCurrentUser({
+      id: userId,
+      name: au.name,
+      roles: Array.from(roles),
+      teacherProfileId: pid,
+      isGuest: false,
+    });
+  }
+  return { ok: true, profileId: pid };
+}

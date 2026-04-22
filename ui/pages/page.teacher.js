@@ -8,7 +8,11 @@ import { getTeacherProfileCommerceStats } from "../lumina-commerce/teacherCommer
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { applyToBecomeTeacher, hydrateCurrentUserFromSession } from "../auth/authService.js";
-import { migrateDemoTeacherProfileToAuthUser } from "../lumina-commerce/teacherProfileService.js";
+import {
+  devForceApproveCurrentUserTeacherProfile,
+  migrateDemoTeacherProfileToAuthUser,
+} from "../lumina-commerce/teacherProfileService.js";
+import { logTeacherHubPageDebug } from "../lumina-commerce/teacherPageDebugLog.js";
 import {
   createClassroomAssetForLesson,
   getRecentAssetsForProfile,
@@ -63,7 +67,8 @@ function teacherGatePanelHtml(ctx, t) {
           ? `<p class="teacher-migration-hint">${escapeHtml(t("teacher.gate.migration_dev_hint"))}</p>
         <button type="button" class="teacher-identity-gate-cta teacher-identity-gate-cta--dev" id="takeoverDemoTeacherBtn">
           ${escapeHtml(t("teacher.gate.takeover_demo_cta"))}
-        </button>`
+        </button>
+        <p class="teacher-takeover-sub">${escapeHtml(t("teacher.gate.takeover_demo_sub"))}</p>`
           : "";
       return `
       <section class="card teacher-identity-gate teacher-gate" aria-labelledby="tw-gate-title">
@@ -97,6 +102,13 @@ function teacherGatePanelHtml(ctx, t) {
   const showProfileCta = w === "no_profile" || w === "draft" || w === "rejected";
   const showPendingOnly = w === "pending_review";
   const showDraftPath = w === "draft" || w === "no_profile";
+  const devForceBlock =
+    w !== "not_teacher" && ctx.showDevForceApproveCta
+      ? `<p class="teacher-migration-hint">${escapeHtml(t("teacher.gate.dev_force_hint"))}</p>
+        <button type="button" class="teacher-identity-gate-cta teacher-identity-gate-cta--dev" id="devForceApproveTeacherProfileBtn">
+          ${escapeHtml(t("teacher.gate.dev_force_approve_cta"))}
+        </button>`
+      : "";
   const reasonBlock =
     w === "rejected"
       ? `<p class="teacher-identity-gate-reason"><strong>${escapeHtml(t("teacher.gate.rejected_reason_label"))}</strong> ${escapeHtml(
@@ -131,6 +143,7 @@ function teacherGatePanelHtml(ctx, t) {
           : ""
       }
       ${reasonBlock}
+      ${devForceBlock}
       <p class="teacher-identity-gate-locked-note">${escapeHtml(t("teacher.gate.workbench_limited"))}</p>
     </section>`;
 }
@@ -452,6 +465,7 @@ async function renderTeacherHub(root) {
   }
   try {
     ctx = await getTeacherPageContext();
+    void logTeacherHubPageDebug(ctx);
   } catch {
     root.innerHTML = `<div class="teacher-page wrap card teacher-identity-gate"><p class="teacher-identity-gate-body">${escapeHtml(
       t("common.loading"),
@@ -525,6 +539,30 @@ async function renderTeacherHub(root) {
   }
 
   root.innerHTML = gatedTeacherShellHtml(ctx, t);
+  root.querySelector("#devForceApproveTeacherProfileBtn")?.addEventListener("click", async () => {
+    const u = getCurrentUser();
+    const r = await devForceApproveCurrentUserTeacherProfile(String(u.id));
+    if (r && r.ok) {
+      await hydrateCurrentUserFromSession();
+      try {
+        window.dispatchEvent(new CustomEvent("joy:authChanged"));
+      } catch {
+        /* */
+      }
+      try {
+        alert(t("teacher.gate.dev_force_approve_done"));
+      } catch {
+        /* */
+      }
+      void renderTeacherHub(root);
+      return;
+    }
+    try {
+      alert(t("teacher.gate.dev_force_approve_failed"));
+    } catch {
+      /* */
+    }
+  });
   i18n.apply?.(root);
 }
 

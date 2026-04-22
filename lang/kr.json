@@ -991,7 +991,12 @@
       "migration_dev_hint": "【개발/테스트】로컬에 미인수 승인된 데모 선생님 프로필이 있습니다. tp_demo_seller_001 를 현재 계정에 연결할 수 있으며, 정식 기능이 아닙니다.",
       "takeover_demo_cta": "데모 선생님 작업대 인수",
       "migration_dev_done": "데모 선생님 프로필과 자산 소유권이 이전되었습니다.",
-      "migration_dev_failed": "인수에 실패했습니다(이미 사용 중이거나 데모 행이 없음)."
+      "migration_dev_failed": "인수에 실패했습니다(이미 사용 중이거나 데모 행이 없음).",
+      "takeover_demo_sub": "기존 선생님 행을 이 계정에 연결(개발/테스트 전용).",
+      "dev_force_hint": "【개발/테스트】병합 상태로 작업대가 잠기면, 로컬에서만 승인으로 맞출 수 있습니다.",
+      "dev_force_approve_cta": "현재 선생님 프로필을 승인으로 강제 설정",
+      "dev_force_approve_done": "승인 처리됨. 작업대를 확인하세요.",
+      "dev_force_approve_failed": "실행 실패. 선생님 프로필이 있는지 확인하세요."
     },
     "access": {
       "not_teacher_title": "선생님 전용",

@@ -5,7 +5,10 @@ import { USER_ROLE } from "./enums.js";
 import { getCurrentUser } from "./currentUser.js";
 import { getMergedProfileForUser, ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
 import { initCommerceStore } from "./store.js";
-import { canOfferDemoTeacherMigration, isDevTeacherMigrationUIEnabled } from "./teacherProfileService.js";
+import {
+  canOfferDemoTeacherMigration,
+  isDevTeacherMigrationUIEnabled,
+} from "./teacherProfileService.js";
 
 /**
  * 工作台 gating 状态：与产品文案一致，后续审核流承接。
@@ -48,7 +51,8 @@ import { canOfferDemoTeacherMigration, isDevTeacherMigrationUIEnabled } from "./
  * @property {TeacherWorkbenchStatus|'not_teacher'|'guest'} workbenchStatus
  * @property {boolean} hasCommerceProfile
  * @property {boolean} isApproved
- * @property {boolean} [showDemoTakeoverCta] 已登录但非老师时：是否可显示「接管演示老师」开发态 CTA
+ * @property {boolean} [showDemoTakeoverCta] 已登录但无绑定时：可显示「接管演示」
+ * @property {boolean} [showDevForceApproveCta] 已绑定但非 approved 时：开发态「强制批准」
  */
 
 /**
@@ -66,9 +70,19 @@ export function userIsTeacher(user) {
  * @param {boolean} hasRow
  * @returns {TeacherWorkbenchStatus|'not_teacher'}
  */
+/**
+ * 工作台 gating 仅依据「是否已有合并后的老师 profile」与 merged workbench 状态，不依赖 currentUser.roles 里是否有 teacher（避免仅 learner 误判）。
+ * @param {import('./currentUser.js').CurrentUserV1} user
+ * @param {ResolvedTeacherProfile|null} profile
+ * @param {boolean} hasRow
+ * @returns {TeacherWorkbenchStatus|'not_teacher'}
+ */
 export function resolveWorkbenchGate(user, profile, hasRow) {
-  if (!userIsTeacher(user)) return "not_teacher";
-  if (!user.teacherProfileId || !hasRow || !profile) return "no_profile";
+  if (!hasRow || !profile) {
+    if (hasRow && !profile) return "no_profile";
+    return "not_teacher";
+  }
+  if (!user.teacherProfileId) return "no_profile";
   return profile.workbench_status;
 }
 
@@ -93,31 +107,34 @@ export async function getTeacherPageContext() {
       hasCommerceProfile: false,
       isApproved: false,
       showDemoTakeoverCta: false,
+      showDevForceApproveCta: false,
     };
   }
   await initCommerceStore();
   await ensureCurrentUserMatchesCommerceTeacher();
-  const userAfterSync = getCurrentUser();
-  const isTeacherRole = userIsTeacher(userAfterSync);
-  if (!isTeacherRole) {
-    const migr = await canOfferDemoTeacherMigration(String(userAfterSync.id));
-    const showDev = Boolean(migr.show && (await isDevTeacherMigrationUIEnabled()));
+  const u0 = getCurrentUser();
+  const { profile, commerceRow } = await getMergedProfileForUser();
+  const u1 = getCurrentUser();
+  const hasRow = Boolean(commerceRow);
+  const devUi = await isDevTeacherMigrationUIEnabled();
+
+  if (!commerceRow || !profile) {
+    const migr = await canOfferDemoTeacherMigration(String(u0.id));
     return {
-      user: userAfterSync,
+      user: u1,
       isLoggedIn: true,
       isTeacherRole: false,
       profile: null,
       workbenchStatus: /** @type {const} */ ("not_teacher"),
       hasCommerceProfile: false,
       isApproved: false,
-      showDemoTakeoverCta: showDev,
+      showDemoTakeoverCta: Boolean(migr.show && devUi),
+      showDevForceApproveCta: false,
     };
   }
-  const { profile, commerceRow } = await getMergedProfileForUser();
-  const u = getCurrentUser();
-  const hasRow = Boolean(commerceRow);
-  const gate = resolveWorkbenchGate(u, profile, hasRow);
-  const isApproved = profile != null && profile.workbench_status === "approved";
+
+  const gate = resolveWorkbenchGate(u1, profile, hasRow);
+  const isApproved = profile.workbench_status === "approved";
   return {
     user: getCurrentUser(),
     isLoggedIn: true,
@@ -127,6 +144,7 @@ export async function getTeacherPageContext() {
     hasCommerceProfile: hasRow,
     isApproved,
     showDemoTakeoverCta: false,
+    showDevForceApproveCta: devUi && !isApproved,
   };
 }
 

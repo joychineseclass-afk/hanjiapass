@@ -991,7 +991,12 @@
       "migration_dev_hint": "【开发/测试】本机存在尚未被接管的演示通过老师档案。可将 `tp_demo_seller_001` 与关联课堂资产一次性绑定到当前登录账号。非正式能力，请勿在演示环境外依赖。",
       "takeover_demo_cta": "接管演示教师工作台",
       "migration_dev_done": "已迁移演示老师档案与资产归属。",
-      "migration_dev_failed": "无法接管（可能已被其他账号占用或本机无可用演示档案）。"
+      "migration_dev_failed": "无法接管（可能已被其他账号占用或本机无可用演示档案）。",
+      "takeover_demo_sub": "绑定当前账号到现有教师资料（仅开发/测试，用于本机数据贯通）。",
+      "dev_force_hint": "【开发/测试】若当前老师档案因审核状态而未进入完整工作台，可在此强制设为已批准（本机 only）。",
+      "dev_force_approve_cta": "将当前老师档案设为已批准",
+      "dev_force_approve_done": "已强制设为通过；请查看工作台。",
+      "dev_force_approve_failed": "无法执行强制批准，请检查是否已有老师档案。"
     },
     "access": {
       "not_teacher_title": "需老师身份",

@@ -1000,7 +1000,12 @@
       "migration_dev_hint": "【開発/テスト】未引き取りの承認済みデモ教師プロフィールがあります。tp_demo_seller_001 を現在のアカウントに紐づけます。本番向けの機能ではありません。",
       "takeover_demo_cta": "デモ教師ワークスペースを引き取る",
       "migration_dev_done": "デモ教師のプロファイルと資産の所有者を移行しました。",
-      "migration_dev_failed": "引き取れません（他に取得済み、またはデモ行がありません）。"
+      "migration_dev_failed": "引き取れません（他に取得済み、またはデモ行がありません）。",
+      "takeover_demo_sub": "既存の教師行をこのアカウントに紐づけます（開発/テストのみ）。",
+      "dev_force_hint": "【開発/テスト】マージ状態で工作台が制限される場合、本機のみ審査通過扱いにします。",
+      "dev_force_approve_cta": "現在の教師プロフィールを承認済みにする",
+      "dev_force_approve_done": "承認済みにしました。工作台をご確認ください。",
+      "dev_force_approve_failed": "実行できません。教師プロフィールの有無を確認してください。"
     },
     "access": {
       "not_teacher_title": "教師専用",

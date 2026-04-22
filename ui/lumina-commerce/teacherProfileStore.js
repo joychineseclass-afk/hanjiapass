@@ -262,17 +262,37 @@ function ensureDemoProfileInCommerce(snap, user) {
 export async function getMergedProfileForUser() {
   await initCommerceStore();
   await ensureCurrentUserMatchesCommerceTeacher();
-  const u = getCurrentUser();
+  const u0 = getCurrentUser();
   const snap = getCommerceStoreSync();
-  if (u.isGuest || u.id === "u_guest" || !u.roles || !u.roles.includes("teacher")) {
+  if (u0.isGuest || u0.id === "u_guest" || !snap) {
     return { profile: null, commerceRow: null };
   }
-  let row = u.teacherProfileId ? findCommerceTeacherProfile(snap, u.teacherProfileId) : null;
-  if (!row) {
-    row = findTeacherProfileByUserId(snap, u.id) || null;
+  /** 防止 LS 中 teacherProfileId 与 commerce user_id 不一致时串单 */
+  let row = u0.teacherProfileId ? findCommerceTeacherProfile(snap, u0.teacherProfileId) : null;
+  if (row && String(row.user_id) !== String(u0.id)) {
+    row = null;
   }
-  if (!row && u.teacherProfileId === DEMO_TEACHER_USER.teacherProfileId) {
-    row = ensureDemoProfileInCommerce(snap, u);
+  if (!row) {
+    row = findTeacherProfileByUserId(snap, u0.id) || null;
+  }
+  if (row) {
+    const needRole =
+      !Array.isArray(u0.roles) || !u0.roles.includes(USER_ROLE.teacher) || String(u0.teacherProfileId) !== String(row.id);
+    if (needRole) {
+      const roles = Array.isArray(u0.roles) ? u0.roles.map((r) => String(r)) : [];
+      if (!roles.includes(USER_ROLE.student)) roles.push(USER_ROLE.student);
+      if (!roles.includes(USER_ROLE.teacher)) roles.push(USER_ROLE.teacher);
+      setCurrentUser({
+        id: u0.id,
+        name: u0.name,
+        roles: roles,
+        teacherProfileId: row.id,
+        isGuest: false,
+      });
+    }
+  }
+  if (!row && u0.teacherProfileId === DEMO_TEACHER_USER.teacherProfileId) {
+    row = ensureDemoProfileInCommerce(snap, u0);
   }
   if (!row) {
     return { profile: null, commerceRow: null };
