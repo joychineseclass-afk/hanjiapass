@@ -43,18 +43,30 @@ function outlineRowHtml(item, idx, t, readOnly) {
     { cover: "kind_cover", vocab: "kind_vocab", dialogue: "kind_dialogue", practice: "kind_practice", notes: "kind_notes" }[k] ||
     "kind_cover";
   const kindLabel = t(`teacher.asset_editor.${kindKey}`);
-  return `<li class="teacher-asset-editor-outline-item" data-outline-row data-idx="${idx}" data-kind="${esc(item.kind)}" data-id="${esc(item.id)}">
-    <div class="teacher-asset-editor-outline-readonly">
-      <span class="teacher-asset-editor-outline-kind">${esc(kindLabel)}</span>
+  const isNotes = k === "notes";
+  const on = item.enabled !== false;
+  return `<li class="teacher-asset-editor-outline-item ${isNotes ? "teacher-asset-editor-outline-item--notes" : ""} teacher-asset-editor-outline-item--${esc(k)}" data-outline-row data-idx="${idx}" data-kind="${esc(item.kind)}" data-id="${esc(item.id)}">
+    <div class="teacher-asset-editor-outline-head">
+      <span class="teacher-asset-editor-kind-pill" title="${esc(kindLabel)}">${esc(kindLabel)}</span>
     </div>
-    <label class="teacher-asset-editor-outline-title">
-      <span class="visually-hidden">${esc(t("teacher.asset_editor.outline_item_title"))}</span>
-      <input type="text" name="outline_title_${idx}" class="teacher-asset-editor-input" value="${esc(item.title)}" data-field="title"${readOnly ? " readonly" : ""} />
-    </label>
-    <label class="teacher-asset-editor-outline-en">
-      <input type="checkbox" data-field="enabled" ${item.enabled !== false ? "checked" : ""}${readOnly ? " disabled" : ""} />
-      <span class="teacher-asset-editor-en-label">${esc(t("teacher.asset_editor.outline_enable_label"))}</span>
-    </label>
+    <div class="teacher-asset-editor-outline-body">
+      <label class="teacher-asset-editor-outline-title">
+        <span class="teacher-asset-editor-sublabel">${esc(t("teacher.asset_editor.outline_item_title"))}</span>
+        <input type="text" name="outline_title_${idx}" class="teacher-asset-editor-input" value="${esc(item.title)}" data-field="title"${readOnly ? " readonly" : ""} />
+      </label>
+      <div class="teacher-asset-editor-outline-en-wrap">
+        <span class="teacher-asset-editor-sublabel" id="teacherOutlineEnL_${idx}">${esc(t("teacher.asset_editor.outline_enable_label"))}</span>
+        <label class="teacher-asset-editor-en-toggle${readOnly ? " is-disabled" : ""}">
+          <input type="checkbox" class="teacher-asset-editor-en-input" data-field="enabled" ${on ? "checked" : ""}${readOnly ? " disabled" : ""} aria-labelledby="teacherOutlineEnL_${idx}" />
+          <span class="teacher-asset-editor-en-track" aria-hidden="true">
+            <span class="teacher-asset-editor-en-thumb"></span>
+          </span>
+          <span class="teacher-asset-editor-en-state">${esc(
+            on ? t("teacher.asset_editor.outline_state_on") : t("teacher.asset_editor.outline_state_off"),
+          )}</span>
+        </label>
+      </div>
+    </div>
   </li>`;
 }
 
@@ -76,11 +88,26 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
   const disHint = isArchived
     ? `<p class="teacher-asset-editor-banner teacher-asset-editor-banner--warn" role="status">${esc(t("teacher.asset_editor.readonly_archived"))}</p>`
     : "";
+  const actionsBar = (suffix) => `
+    <div class="teacher-asset-editor-actions teacher-asset-editor-actions--bar" id="teacherAssetEditorActions${suffix}">
+      <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetEditorSave${suffix}" data-save-bar="${suffix}" ${
+    !canEdit || isArchived ? "disabled" : ""
+  }>
+        ${esc(t("teacher.asset_editor.save"))}
+      </button>
+      <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+      <a class="teacher-hub-cta teacher-hub-cta--accent" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(
+    t("teacher.asset_editor.to_classroom_teach"),
+  )}</a>
+    </div>`;
   return `
     <form id="teacherAssetEditorForm" class="teacher-asset-editor-form">
       ${disHint}
-      <div class="teacher-asset-editor-section card">
-        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_meta"))}</h2>
+      <div class="teacher-asset-editor-toast" id="teacherAssetEditorToast" role="status" aria-live="polite" hidden></div>
+      ${actionsBar("Top")}
+      <div class="teacher-asset-editor-section card teacher-asset-editor-section--basics">
+        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_basics"))}</h2>
+        <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.section_basics_hint"))}</p>
         <label class="teacher-asset-editor-field">
           <span class="teacher-asset-editor-label">${esc(t("teacher.asset_editor.title"))}</span>
           <input class="teacher-asset-editor-input" name="title" value="${esc(a.title)}"${ro} required />
@@ -94,35 +121,34 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived) {
           <textarea class="teacher-asset-editor-textarea" name="summary" rows="3"${ro}>${esc(a.summary || "")}</textarea>
         </label>
         <label class="teacher-asset-editor-field">
-          <span class="teacher-asset-editor-label">${esc(t("teacher.asset_editor.teacher_note"))}</span>
-          <textarea class="teacher-asset-editor-textarea" name="teacher_note" rows="3"${ro}>${esc(getEffectiveTeacherNote(a))}</textarea>
-        </label>
-        <label class="teacher-asset-editor-field">
           <span class="teacher-asset-editor-label">${esc(t("teacher.asset_editor.cover_note"))}</span>
           <textarea class="teacher-asset-editor-textarea" name="cover_note" rows="2"${ro}>${esc(a.cover_note || "")}</textarea>
         </label>
       </div>
-      <div class="teacher-asset-editor-section card">
-        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.outline"))}</h2>
+      <div class="teacher-asset-editor-section card teacher-asset-editor-section--teacher-note">
+        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_teacher_note"))}</h2>
+        <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.section_teacher_note_hint"))}</p>
+        <label class="teacher-asset-editor-field">
+          <span class="teacher-asset-editor-label">${esc(t("teacher.asset_editor.teacher_note"))}</span>
+          <textarea class="teacher-asset-editor-textarea" name="teacher_note" rows="4"${ro}>${esc(getEffectiveTeacherNote(a))}</textarea>
+        </label>
+      </div>
+      <div class="teacher-asset-editor-section card teacher-asset-editor-section--outline">
+        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_outline"))}</h2>
+        <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.section_outline_hint"))}</p>
         <ol class="teacher-asset-editor-outline-list">${outline}</ol>
       </div>
-      <div class="teacher-asset-editor-section card">
-        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.source_readonly"))}</h2>
+      <div class="teacher-asset-editor-section card teacher-asset-editor-section--source">
+        <h2 class="teacher-asset-editor-h">${esc(t("teacher.asset_editor.section_source"))}</h2>
         <dl class="teacher-asset-editor-dl">
           <div><dt>${esc(t("teacher.asset_editor.source_course"))}</dt><dd>${esc(formatTeacherHubCourseDisplay(String(src.course)))}</dd></div>
-          <div><dt>Level</dt><dd>${esc(String(src.level))}</dd></div>
-          <div><dt>Lesson</dt><dd>${esc(String(src.lesson))}</dd></div>
+          <div><dt>${esc(t("teacher.asset_editor.source_level"))}</dt><dd>${esc(String(src.level))}</dd></div>
+          <div><dt>${esc(t("teacher.asset_editor.source_lesson"))}</dt><dd>${esc(String(src.lesson))}</dd></div>
           <div><dt>${esc(t("teacher.asset_editor.asset_type"))}</dt><dd>${esc(t(`teacher.assets.type.${a.asset_type}`))}</dd></div>
           <div><dt>${esc(t("teacher.asset_editor.status"))}</dt><dd>${esc(t(`teacher.assets.state.${a.status}`))}</dd></div>
         </dl>
       </div>
-      <div class="teacher-asset-editor-actions">
-        <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetEditorSave" ${!canEdit || isArchived ? "disabled" : ""}>
-          ${esc(t("teacher.asset_editor.save"))}
-        </button>
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
-        <a class="teacher-hub-cta teacher-hub-cta--accent" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(t("teacher.asset_editor.to_classroom"))}</a>
-      </div>
+      ${actionsBar("Bottom")}
     </form>
   `;
 }
@@ -204,8 +230,28 @@ async function renderEditor(root) {
   i18n.apply?.(root);
 
   const form = root.querySelector("#teacherAssetEditorForm");
-  root.querySelector("#teacherAssetEditorSave")?.addEventListener("click", (ev) => {
-    ev.preventDefault();
+  const toastEl = root.querySelector("#teacherAssetEditorToast");
+  const showSaveToast = () => {
+    if (!toastEl) return;
+    toastEl.textContent = `${t("teacher.asset_editor.save_success")} · ${t("teacher.asset_editor.structure_saved")}`;
+    toastEl.removeAttribute("hidden");
+    window.clearTimeout(/** @type {any} */ (showSaveToast)._tid);
+    /** @type {any} */ (showSaveToast)._tid = window.setTimeout(() => {
+      toastEl.setAttribute("hidden", "");
+    }, 4200);
+  };
+  const syncOutlineEnabledLabels = () => {
+    root.querySelectorAll('.teacher-asset-editor-en-input[data-field="enabled"]').forEach((inp) => {
+      const on = /** @type {HTMLInputElement} */ (inp).checked;
+      const host = inp.closest(".teacher-asset-editor-en-toggle");
+      const state = host?.querySelector(".teacher-asset-editor-en-state");
+      if (state) state.textContent = on ? t("teacher.asset_editor.outline_state_on") : t("teacher.asset_editor.outline_state_off");
+    });
+  };
+  root.querySelectorAll('.teacher-asset-editor-en-input[data-field="enabled"]').forEach((inp) => {
+    inp.addEventListener("change", () => syncOutlineEnabledLabels());
+  });
+  const runSave = () => {
     if (!form || isArchived) return;
     const fd = new FormData(/** @type {HTMLFormElement} */ (form));
     const outline = collectOutlineFromDom(root);
@@ -218,13 +264,13 @@ async function renderEditor(root) {
       cover_note: String(fd.get("cover_note") || ""),
       slide_outline: outline,
     });
-    if (next) {
-      try {
-        alert(t("teacher.asset_editor.save_ok"));
-      } catch {
-        /* */
-      }
-    }
+    if (next) showSaveToast();
+  };
+  root.querySelectorAll("[id^=teacherAssetEditorSave]").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      runSave();
+    });
   });
 }
 

@@ -1806,6 +1806,139 @@ button.teacher-hub-cta:hover{
   border-color: #7c3aed;
   background: #f5f3ff;
 }
+.lumina-classroom-page--teacher-courseware-shell{
+  --classroom-teacher-accent: #6d28d9;
+  --classroom-teacher-surface: #faf5ff;
+}
+.lumina-classroom-page--teacher-courseware-shell .classroom-topbar,
+.lumina-classroom-page--teacher-courseware-shell .classroom-control-bar{
+  border-bottom: 1px solid #e9d5ff;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+  padding-bottom: 8px;
+}
+.lumina-classroom-page--from-asset:not(.lumina-classroom-page--teacher-courseware-shell) .classroom-asset-ctx{
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+.classroom-asset-ctx--courseware{
+  box-shadow: 0 1px 0 rgba(109, 40, 217, 0.1);
+}
+.classroom-asset-ctx-mode-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 0 0 4px;
+}
+.classroom-asset-ctx-mode-pill{
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #5b21b6;
+  background: #ede9fe;
+  border: 1px solid #c4b5fd;
+}
+.classroom-asset-ctx-kicker-inline{
+  font-size: 12px;
+  font-weight: 700;
+  color: #4c1d95;
+  margin: 0;
+}
+.classroom-asset-ctx-type-line{
+  margin: 0 0 2px;
+  font-size: 12px;
+  color: #5b21b6;
+  font-weight: 700;
+}
+.classroom-asset-ctx--courseware .classroom-asset-ctx-title,
+.classroom-asset-ctx-title{
+  margin: 2px 0 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1e1b4b;
+}
+.classroom-asset-ctx-source-block{
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #ffffff9c;
+  border: 1px solid #c4b5fd55;
+}
+.classroom-asset-ctx-source-label{
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b21a8;
+  margin: 0 0 2px;
+}
+.classroom-asset-ctx-source-line{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1e1b4b;
+  font-weight: 600;
+}
+.classroom-asset-ctx-note-hint{
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4c1d95;
+  padding: 6px 8px;
+  border-left: 3px solid #a78bfa;
+  background: #faf5ff;
+  border-radius: 4px;
+  max-width: 68ch;
+}
+.teacher-assets-empty-cta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+  margin: 10px 0 0;
+}
+.teacher-asset-row-primary{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-bottom: 8px;
+}
+.teacher-asset-row-secondary{
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  padding-top: 4px;
+  border-top: 1px solid #e2e8f0;
+  margin: 0;
+}
+.teacher-asset-btn{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  line-height: 1.2;
+  border: 1px solid transparent;
+}
+.teacher-asset-btn--primary{
+  background: #1d4ed8;
+  color: #fff;
+  border-color: #1e40af;
+}
+.teacher-asset-btn--primary:hover{ filter: brightness(0.95); }
+.teacher-asset-btn--accent{
+  background: #5b21b6;
+  color: #fff;
+  border-color: #4c1d95;
+}
+.teacher-asset-btn--accent:hover{ filter: brightness(0.95); }
 
 /* =========================================================
    课件编辑 #teacher-asset-editor
@@ -1882,16 +2015,6 @@ button.teacher-hub-cta:hover{
   flex-direction: column;
   gap: 10px;
 }
-.teacher-asset-editor-outline-item{
-  display: grid;
-  grid-template-columns: minmax(5rem, 7rem) 1fr auto;
-  gap: 10px 12px;
-  align-items: center;
-  padding: 10px 12px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-}
 .teacher-asset-editor-outline-readonly{
   font-size: 12px;
   color: #64748b;
@@ -1905,6 +2028,160 @@ button.teacher-hub-cta:hover{
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 8px;
+  align-items: center;
+}
+.teacher-asset-editor-actions--bar{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+.teacher-asset-editor-toast{
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #ecfdf3;
+  border: 1px solid #86efac;
+  color: #14532d;
+  font-size: 13px;
+  font-weight: 700;
+}
+.teacher-asset-editor-toast:empty[hidden]{
+  display: none;
+}
+.teacher-asset-editor-section-hint{
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 52ch;
+}
+.teacher-asset-editor-sublabel{
+  display: block;
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.01em;
+}
+.teacher-asset-editor-section--teacher-note{
+  border-color: #e9d5ff;
+  background: #faf5ff;
+}
+.teacher-asset-editor-section--source .teacher-asset-editor-dl{
+  margin-top: 0;
+}
+.teacher-asset-editor-kind-pill{
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  background: #e0f2fe;
+  color: #0c4a6e;
+  border: 1px solid #bae6fd;
+  max-width: 100%;
+  word-break: break-word;
+}
+.teacher-asset-editor-outline-item--vocab .teacher-asset-editor-kind-pill{ background: #ecfdf3; color: #14532d; border-color: #86efac; }
+.teacher-asset-editor-outline-item--dialogue .teacher-asset-editor-kind-pill{ background: #fff7ed; color: #9a3412; border-color: #fdba74; }
+.teacher-asset-editor-outline-item--practice .teacher-asset-editor-kind-pill{ background: #eff6ff; color: #1e3a5f; border-color: #93c5fd; }
+.teacher-asset-editor-outline-item--cover .teacher-asset-editor-kind-pill{ background: #f5f3ff; color: #5b21b6; border-color: #c4b5fd; }
+.teacher-asset-editor-outline-item--notes{
+  border-color: #d8b4fe;
+  background: #faf5ff;
+}
+.teacher-asset-editor-outline-item--notes .teacher-asset-editor-kind-pill{
+  background: #ede9fe;
+  color: #4c1d95;
+  border-color: #c4b5fd;
+}
+.teacher-asset-editor-outline-head{
+  align-self: start;
+}
+.teacher-asset-editor-outline-body{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.teacher-asset-editor-outline-item{
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 5.5rem) 1fr;
+  gap: 10px 12px;
+  align-items: start;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+.teacher-asset-editor-outline-en-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.teacher-asset-editor-en-toggle{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+}
+.teacher-asset-editor-en-toggle.is-disabled{ cursor: not-allowed; opacity: 0.6; }
+.teacher-asset-editor-en-input{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 24px;
+  margin: 0;
+  opacity: 0.001;
+  cursor: pointer;
+  z-index: 2;
+}
+.teacher-asset-editor-en-input:focus-visible + .teacher-asset-editor-en-track{
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+.teacher-asset-editor-en-track{
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  flex: none;
+  transition: background 0.12s ease;
+}
+.teacher-asset-editor-en-thumb{
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px #94a3b8;
+  transition: transform 0.12s ease;
+}
+.teacher-asset-editor-en-input:checked + .teacher-asset-editor-en-track{
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+.teacher-asset-editor-en-input:checked + .teacher-asset-editor-en-track .teacher-asset-editor-en-thumb{
+  transform: translateX(16px);
+}
+.teacher-asset-editor-en-state{
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
 }
 .teacher-asset-editor-banner--warn{
   background: #fffbeb;

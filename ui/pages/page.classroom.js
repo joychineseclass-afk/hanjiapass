@@ -54,30 +54,41 @@ function escapeHtml(s) {
  * @param {null|{ is_lesson_slide_draft: boolean, has_teacher_note: boolean, asset_presentation_kind: string }} [pres]
  */
 function assetBannerHtml(asset, typeLabel, sourceLine, statusLabel, statusClass, pres) {
-  const kicker =
-    pres && pres.is_lesson_slide_draft
-      ? tx("teacher.classroom.current_teacher_mode")
-      : tx("teacher.classroom.from_asset_badge");
+  const isCw = pres && pres.is_lesson_slide_draft;
   const stitle = (asset.subtitle && String(asset.subtitle).trim()) || "";
   const smry = (asset.summary && String(asset.summary).trim()) || "";
+  const kicker = isCw ? tx("teacher.classroom.current_teacher_mode") : tx("teacher.classroom.from_asset_badge");
+  const modePill = isCw
+    ? `<span class="classroom-asset-ctx-mode-pill" title="${escapeHtml(kicker)}">${escapeHtml(
+        tx("teacher.classroom.mode_pill_teacher_courseware"),
+      )}</span>`
+    : "";
   const notePill = pres && pres.has_teacher_note
     ? `<span class="classroom-asset-ctx-pill" title="${escapeHtml(getEffectiveTeacherNote(asset).slice(0, 200))}">${escapeHtml(
         tx("teacher.classroom.has_teacher_note_badge"),
       )}</span>`
     : "";
+  const noteTeaser =
+    pres && pres.has_teacher_note
+      ? `<p class="classroom-asset-ctx-note-hint" role="note">${escapeHtml(tx("teacher.classroom.teacher_note_teaser"))}</p>`
+      : "";
   return `
-  <div class="classroom-asset-ctx" role="status" data-asset-presentation="${escapeHtml(
+  <div class="classroom-asset-ctx${isCw ? " classroom-asset-ctx--courseware" : ""}" role="status" data-asset-presentation="${escapeHtml(
     String(pres?.asset_presentation_kind || "other"),
-  )}" data-teacher-note="${pres && pres.has_teacher_note ? "1" : "0"}">
-    <p class="classroom-asset-ctx-kicker">${escapeHtml(kicker)}</p>
+  )}" data-teacher-note="${pres && pres.has_teacher_note ? "1" : "0"}" data-teacher-courseware="${isCw ? "1" : "0"}">
+    <div class="classroom-asset-ctx-mode-row">
+      ${modePill}
+      <span class="classroom-asset-ctx-kicker-inline">${escapeHtml(kicker)}</span>
+    </div>
+    <p class="classroom-asset-ctx-type-line"><span class="classroom-asset-ctx-type">${escapeHtml(typeLabel)}</span></p>
     <p class="classroom-asset-ctx-title">${escapeHtml(asset.title)}</p>
     ${stitle ? `<p class="classroom-asset-ctx-subtitle">${escapeHtml(stitle)}</p>` : ""}
     ${smry ? `<p class="classroom-asset-ctx-summary">${escapeHtml(smry)}</p>` : ""}
-    <p class="classroom-asset-ctx-meta">
-      <span class="classroom-asset-ctx-type">${escapeHtml(typeLabel)}</span>
-      <span class="classroom-asset-ctx-sep" aria-hidden="true"> · </span>
-      <span class="classroom-asset-ctx-source">${escapeHtml(sourceLine)}</span>
-    </p>
+    <div class="classroom-asset-ctx-source-block">
+      <span class="classroom-asset-ctx-source-label">${escapeHtml(tx("teacher.classroom.source_course_label"))}</span>
+      <p class="classroom-asset-ctx-source-line">${escapeHtml(sourceLine)}</p>
+    </div>
+    ${noteTeaser}
     <p class="classroom-asset-ctx-row">
       <span class="classroom-asset-status-chip ${statusClass}">${escapeHtml(statusLabel)}</span>
       ${notePill}
@@ -269,8 +280,10 @@ export default async function pageClassroom(ctxOrRoot) {
 
   const apKind = activeAsset && assetPresentation ? String(assetPresentation.asset_presentation_kind || "") : "";
   const apSlide = apKind === "lesson_slide_draft" ? "1" : "0";
+  const fromAssetClass = activeAsset && assetId ? " lumina-classroom-page--from-asset" : "";
+  const coursewareClass = apSlide === "1" ? " lumina-classroom-page--teacher-courseware-shell" : "";
   root.innerHTML = `
-    <section class="lumina-classroom-page wrap" id="luminaClassroomPage" data-asset-presentation-kind="${escapeHtml(
+    <section class="lumina-classroom-page wrap${fromAssetClass}${coursewareClass}" id="luminaClassroomPage" data-asset-presentation-kind="${escapeHtml(
       apKind,
     )}" data-teacher-courseware="${apSlide}"${activeAsset && assetId ? ` data-classroom-asset-id="${escapeHtml(assetId)}"` : ""}>
       <header class="classroom-topbar classroom-control-bar">

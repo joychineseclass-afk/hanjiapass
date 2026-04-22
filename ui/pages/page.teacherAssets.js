@@ -92,15 +92,18 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     : "";
   const archDisabled = a.status === ASSET_STATUS.archived;
   const hasNote = Boolean(getEffectiveTeacherNote(a));
-  const noteShort = hasNote ? t("teacher.assets.has_teacher_note_yes") : t("teacher.assets.has_teacher_note_no");
+  const noteShort = hasNote ? t("teacher.assets.has_teacher_note_badge") : t("teacher.assets.has_teacher_note_no");
   const editDeck =
     a.asset_type === ASSET_TYPE.lesson_slide_draft
-      ? `<a class="teacher-asset-link" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+      ? `<a class="teacher-asset-btn teacher-asset-btn--primary" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
           t("teacher.assets.edit_deck"),
         )}</a>`
       : `<span class="teacher-asset-muted" title="${escapeHtml(t("teacher.assets.edit_placeholder"))}">${escapeHtml(
           t("teacher.assets.edit"),
         )}</span>`;
+  const enterRoom = `<a class="teacher-asset-btn teacher-asset-btn--accent" href="#classroom?assetId=${encodeURIComponent(
+    a.id,
+  )}">${escapeHtml(t("teacher.assets.enter_classroom_teach"))}</a>`;
   const commerceCell = (() => {
     if (!listing || !snap) {
       return `<td class="teacher-manage-cell-commerce"><span class="teacher-commerce-na">${escapeHtml(
@@ -178,9 +181,12 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     <td>${escapeHtml(formatDemoShortUpdated(a.updated_at))}</td>
     ${commerceCell}
     <td class="teacher-manage-col-actions teacher-asset-actions">
-      <a class="teacher-asset-link" href="#classroom?assetId=${encodeURIComponent(a.id)}">${escapeHtml(t("teacher.assets.enter_classroom"))}</a>
-      <span class="teacher-asset-sep" aria-hidden="true">|</span>
-      <button type="button" class="teacher-asset-primary" data-teacher-asset-submit="${escapeHtml(
+      <div class="teacher-asset-row-primary" role="group" aria-label="${escapeHtml(t("teacher.assets.row_primary_actions_aria"))}">
+        ${editDeck}
+        ${enterRoom}
+      </div>
+      <div class="teacher-asset-row-secondary" role="group" aria-label="${escapeHtml(t("teacher.assets.row_secondary_actions_aria"))}">
+      <button type="button" class="teacher-asset-ghost" data-teacher-asset-submit="${escapeHtml(
         a.id,
       )}" ${canSubmit ? "" : "disabled"} title="${submitTitle}">${escapeHtml(t("teacher.publishing.submit_review"))}</button>
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
@@ -206,11 +212,10 @@ function assetRow(a, t, profileId, userId, listing, snap) {
           : ""
       }
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
-      ${editDeck}
-      <span class="teacher-asset-sep" aria-hidden="true">|</span>
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-archive="${escapeHtml(a.id)}" ${
     archDisabled ? "disabled" : ""
   }>${escapeHtml(t("teacher.assets.archive"))}</button>
+      </div>
     </td>
   </tr>`;
 }
@@ -262,12 +267,15 @@ async function renderPage(root) {
   const emptyBlock = hasRows
     ? ""
     : `<div class="teacher-assets-empty card">
-         <h3 class="teacher-assets-empty-title">${escapeHtml(t("teacher.assets.empty_title"))}</h3>
-         <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.empty_body_v2"))}</p>
+         <h3 class="teacher-assets-empty-title">${escapeHtml(t("teacher.assets.empty_title_v2"))}</h3>
+         <p class="teacher-assets-empty-body">${escapeHtml(t("teacher.assets.empty_body_v3"))}</p>
          <p class="teacher-assets-empty-cta">
            <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetsEmptyQuickCreate">
-             ${escapeHtml(t("teacher.assets.empty_cta_create"))}
+             ${escapeHtml(t("teacher.assets.empty_cta_new_deck"))}
            </button>
+           <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(
+             t("teacher.assets.empty_cta_from_course"),
+           )}</a>
          </p>
        </div>`;
   const tableBlock = hasRows
