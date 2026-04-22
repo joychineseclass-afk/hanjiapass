@@ -1,5 +1,5 @@
 /**
- * #teacher 诊断：在开发/本地/ lumina_debug_teacher=1 时输出到 console，便于查 binding / approved / gate。
+ * #teacher 诊断：与 devRuntimeFlags.shouldEnableLuminaDevUi 一致（含 Vercel 预览与 lumina_dev_ui=1）。
  */
 import { getCurrentUser } from "./currentUser.js";
 import { getCommerceStoreSync, initCommerceStore } from "./store.js";
@@ -9,24 +9,14 @@ import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
 import { resolveWorkbenchGate, userIsTeacher } from "./teacherSelectors.js";
 import { VERIFICATION_STATUS } from "./enums.js";
 import { DEMO_TEACHER_USER } from "./currentUser.js";
+import { shouldEnableLuminaDevUi } from "./devRuntimeFlags.js";
 
 /**
- * 是否应打印教师页调试信息（不依赖仅 async 的 isDev 标志）。
+ * 是否应打印教师页调试信息（与 isDevTeacherMigrationUIEnabled / dev CTA 同源判定）。
  * @returns {boolean}
  */
 export function shouldLogLuminaTeacherPageDebug() {
-  try {
-    if (typeof import.meta !== "undefined" && /** @type {any} */ (import.meta).env && /** @type {any} */ (import.meta).env.DEV) return true;
-  } catch {
-    /* */
-  }
-  if (typeof localStorage !== "undefined" && localStorage.getItem("lumina_debug_teacher") === "1") return true;
-  if (typeof location !== "undefined") {
-    if (String(location.protocol || "") === "file:") return true;
-    const h = String(location.hostname || "");
-    if (h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h.endsWith(".local")) return true;
-  }
-  return false;
+  return shouldEnableLuminaDevUi();
 }
 
 /**

@@ -7,6 +7,7 @@ import { getCurrentUser, setCurrentUser, DEMO_TEACHER_USER } from "./currentUser
 import { getTeacherProfileOverlay, patchTeacherProfileOverlay, ensureCurrentUserMatchesCommerceTeacher } from "./teacherProfileStore.js";
 import { findTeacherProfileByUserId } from "./teacherProfileQueries.js";
 import { reassignTeacherAssetOwnersFromUserId } from "./teacherAssetsStore.js";
+import { shouldEnableLuminaDevUi } from "./devRuntimeFlags.js";
 
 function uid(p) {
   return `${p}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -342,21 +343,11 @@ export async function canOfferDemoTeacherMigration(userId) {
 }
 
 /**
- * 开发/测试：在 localhost 或 Vite 开发构建下才展示接管按钮，避免误当正式能力。
+ * 开发/预览：与 devRuntimeFlags 一致（含 *.vercel.app / lumina_dev_ui=1）；浏览器 ESM 不依赖 import.meta.env.DEV。
  * @returns {Promise<boolean>}
  */
 export async function isDevTeacherMigrationUIEnabled() {
-  try {
-    if (typeof import.meta !== "undefined" && /** @type {any} */ (import.meta).env && /** @type {any} */ (import.meta).env.DEV) return true;
-  } catch {
-    /* */
-  }
-  if (typeof location !== "undefined") {
-    if (String(location.protocol || "") === "file:") return true;
-    const h = String(location.hostname || "");
-    if (h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h.endsWith(".local")) return true;
-  }
-  return false;
+  return shouldEnableLuminaDevUi();
 }
 
 /**
