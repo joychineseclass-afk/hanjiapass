@@ -2100,6 +2100,32 @@ button.teacher-hub-cta:hover{
 .teacher-assets-list-card{
   margin-top: 12px;
 }
+
+/* #teacher-assets 页头：L1 子导航 → L2 流程条 → L3 标题+副标+tab；收紧块间距与副标层级 */
+.teacher-assets-page .teacher-subnav{
+  margin-top: 0;
+}
+.teacher-assets-page .teacher-path-strip{
+  margin-top: 10px;
+}
+.teacher-assets-page .teacher-path-strip--no-lead{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.teacher-assets-page .teacher-assets-page-hero{
+  margin-top: 14px;
+}
+.teacher-assets-page .teacher-assets-page-hero .teacher-admin-title{
+  margin-bottom: 8px;
+}
+.teacher-assets-page .teacher-assets-page-hero .teacher-admin-subtitle{
+  margin: 0;
+  max-width: 64ch;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #64748b;
+}
 .teacher-assets-list-toolbar{
   display: flex;
   flex-wrap: wrap;
@@ -3967,13 +3993,6 @@ button.teacher-hub-cta:hover{
 /* =========================================================
    Teacher · Step 4 资产发布、前台 listing 公开展示
    ========================================================= */
-.teacher-assets-step4-hint{
-  margin: 8px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #64748b;
-  max-width: 62ch;
-}
 .teacher-publish-chips{
   display: flex;
   flex-direction: column;

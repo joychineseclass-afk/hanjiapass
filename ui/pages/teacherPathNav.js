@@ -104,9 +104,14 @@ export function teacherWorkspaceSubnavHtml(active, tx, options = {}) {
  * 工作流条：选教材/课程 → 建课堂资产 → 上架；进入课堂在资产或工作台完成。
  * @param {'materials' | 'courses' | 'assets' | 'listing' | null} active
  * @param {(path: string, params?: object) => string} tx
+ * @param {{ showLead?: boolean }} [options] 为 false 时不渲染段首说明句（与页面标题区副标去重，如 #teacher-assets）
  */
-export function teacherPathStripHtml(active, tx) {
+export function teacherPathStripHtml(active, tx, options = {}) {
   const m = (path) => escapeHtml(tx(path));
+  const showLead = options.showLead !== false;
+  const leadHtml = showLead
+    ? `<p class="teacher-path-strip-lead">${m("teacher.path_strip.step2_lead")}</p>`
+    : "";
   const hrefs = {
     materials: "#teacher-materials",
     courses: "#teacher-courses",
@@ -124,8 +129,8 @@ export function teacherPathStripHtml(active, tx) {
   };
 
   return `
-    <nav class="teacher-path-strip card" aria-label="${m("teacher.path_strip.aria_mine")}">
-      <p class="teacher-path-strip-lead">${m("teacher.path_strip.step2_lead")}</p>
+    <nav class="teacher-path-strip card${showLead ? "" : " teacher-path-strip--no-lead"}" aria-label="${m("teacher.path_strip.aria_mine")}">
+      ${leadHtml}
       <div class="teacher-path-strip-row">
         ${node("materials")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>

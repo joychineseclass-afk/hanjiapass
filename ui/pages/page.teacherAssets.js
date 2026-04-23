@@ -32,13 +32,7 @@ import {
   updateListingPricingForTeacher,
 } from "../lumina-commerce/teacherCommerceBridge.js";
 import { i18n } from "../i18n.js";
-import {
-  teacherBackToWorkspaceHtml,
-  teacherPathStripClassroomHintHtml,
-  teacherPathStripHtml,
-  teacherWorkspaceSubnavHtml,
-  userCanAccessTeacherReviewConsole,
-} from "./teacherPathNav.js";
+import { teacherPathStripHtml, teacherWorkspaceSubnavHtml, userCanAccessTeacherReviewConsole } from "./teacherPathNav.js";
 import { formatDemoShortUpdated } from "../lumina-commerce/teacherDemoCatalog.js";
 import {
   TEACHER_ASSET_IMPORT_ACCEPT,
@@ -577,13 +571,11 @@ async function renderPage(root) {
 
   root.innerHTML = `
     <div class="teacher-page wrap teacher-assets-page teacher-manage-page">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
       ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
-      <header class="card teacher-surface-hero teacher-admin-header">
+      ${teacherPathStripHtml("assets", t, { showLead: false })}
+      <header class="card teacher-surface-hero teacher-admin-header teacher-assets-page-hero">
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(t("teacher.assets.page_subtitle", { name: ctx.profile.display_name }))}</p>
-        <p class="teacher-assets-step4-hint teacher-tile-desc">${escapeHtml(t("teacher.publishing.page_hint"))}</p>
         <div class="teacher-assets-tabs" role="tablist" aria-label="${escapeHtml(t("teacher.assets.tabs_aria"))}">
           <a role="tab" class="teacher-assets-tab ${tab === "active" ? "is-active" : ""}" href="#teacher-assets" aria-selected="${tab === "active" ? "true" : "false"}">${escapeHtml(
             t("teacher.assets.tab_active"),
@@ -592,19 +584,7 @@ async function renderPage(root) {
             t("teacher.assets.tab_trash"),
           )}</a>
         </div>
-        <div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(t("teacher.surface.nav_aria"))}">
-          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(t("teacher.nav.back_mine_workbench"))}</a>
-          <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
-          <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(t("teacher.workflow.view_review_status"))}</a>
-          ${
-            showReviewConsole
-              ? `<a class="teacher-surface-link" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>`
-              : ""
-          }
-        </div>
       </header>
-      ${teacherPathStripHtml("assets", t)}
-      ${teacherPathStripClassroomHintHtml(t)}
 
       <section class="card teacher-assets-list-card${tab === "trash" ? " teacher-assets-list-card--trash" : ""}" aria-label="${escapeHtml(
         tab === "trash" ? t("teacher.assets.trash_list_aria") : t("teacher.assets.list_aria"),
