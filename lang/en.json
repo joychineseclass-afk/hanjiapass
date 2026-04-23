@@ -1165,8 +1165,29 @@
       "view_all": "View all",
       "recent_heading": "Recent (up to 5)",
       "recent_empty": "No assets yet—use the button above or create from My courses.",
+      "upload_own_draft": "Upload your own draft",
+      "import_local_courseware": "Import local courseware",
+      "upload_own_draft_sub": "Pick a file from this device; it is recorded in My teaching assets only (no content parsing yet).",
+      "import_ok_toast": "Imported draft added. You can find it in the list.",
+      "import_error": {
+        "empty": "No valid file selected.",
+        "type_not_allowed": "Only .pptx, .pdf, .png, .jpg, .jpeg are supported.",
+        "unknown": "Import failed. Please try again."
+      },
+      "import_status_label": "Import status",
+      "import_provenance_dt": "Source",
+      "source_local_import": "Local import",
+      "col_file_name": "File name",
+      "col_file_type": "File type",
+      "col_upload_time": "Uploaded at",
+      "col_file_size": "File size",
+      "open_import_draft": "View imported draft",
+      "enter_classroom_blocked_upload": "Classroom unavailable",
+      "enter_classroom_blocked_upload_short": "Classroom N/A",
+      "enter_classroom_blocked_upload_title": "Imported drafts are not classroom-ready until a future version can convert them.",
       "type": {
         "lesson_slide_draft": "Classroom deck (draft)",
+        "uploaded_slide_draft": "Imported courseware draft",
         "teacher_note_draft": "Teacher notes",
         "classroom_material": "Classroom material"
       },
@@ -1322,7 +1343,14 @@
       "kind_vocab": "Vocabulary",
       "kind_dialogue": "Dialogue",
       "kind_practice": "Practice",
-      "kind_notes": "Teacher notes"
+      "kind_notes": "Teacher notes",
+      "import_readonly_title": "Imported courseware draft",
+      "import_readonly_lead": "This version only stores file metadata; content is not parsed.",
+      "import_no_parse_yet": "Parsing and deep editing are not supported in this version.",
+      "import_future_note": "Later versions will support richer imports and conversion into teachable classroom decks.",
+      "import_status": {
+        "raw_uploaded": "Uploaded (pending parse)"
+      }
     },
     "demo": {
       "disclosure": "Rows below are local demo data to illustrate how materials, courses, and listings relate—not real student or order data.",

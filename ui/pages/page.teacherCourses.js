@@ -182,6 +182,15 @@ async function renderCoursesDom(root) {
         <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
         <p class="teacher-admin-tagline">${escapeHtml(t("teacher.courses_page.tagline"))}</p>
+        ${
+          canShow && ctx.profile
+            ? `<p class="teacher-courses-import-cta">
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.import_local_courseware"))}</a>
+              <span class="teacher-hub-muted teacher-courses-import-cta-hint">${escapeHtml(t("teacher.assets.upload_own_draft_sub"))}</span>
+            </p>`
+            : ""
+        }
       </header>
       ${ctx.isApproved ? teacherCoursesNextGuideHtml(t) : ""}
 

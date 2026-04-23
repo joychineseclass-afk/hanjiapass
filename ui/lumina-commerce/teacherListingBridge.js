@@ -121,6 +121,7 @@ export function canCurrentUserPreviewTeacherListing(_snap, listing, user) {
  */
 function listingTypeFromAssetType(at) {
   if (at === "teacher_note_draft" || at === "classroom_material") return LISTING_TYPE.material;
+  if (at === "uploaded_slide_draft") return LISTING_TYPE.ppt;
   return LISTING_TYPE.ppt;
 }
 

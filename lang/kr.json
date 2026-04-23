@@ -1165,8 +1165,29 @@
       "view_all": "전체 보기",
       "recent_heading": "최근(최대 5)",
       "recent_empty": "아직 없음. 위 버튼 또는 내 코스에서.",
+      "upload_own_draft": "내 초안 업로드",
+      "import_local_courseware": "로컬 교안 가져오기",
+      "upload_own_draft_sub": "기기에서 파일을 선택하면 「내 강의 자산」에만 기록됩니다(현재 내용 분석 없음).",
+      "import_ok_toast": "가져온 초안이 추가되었습니다. 목록에서 확인하세요.",
+      "import_error": {
+        "empty": "유효한 파일이 선택되지 않았습니다.",
+        "type_not_allowed": ".pptx, .pdf, .png, .jpg, .jpeg 만 지원합니다.",
+        "unknown": "가져오기에 실패했습니다. 다시 시도하세요."
+      },
+      "import_status_label": "가져오기 상태",
+      "import_provenance_dt": "출처",
+      "source_local_import": "로컬 가져오기",
+      "col_file_name": "파일 이름",
+      "col_file_type": "파일 형식",
+      "col_upload_time": "업로드 시각",
+      "col_file_size": "파일 크기",
+      "open_import_draft": "가져온 초안 보기",
+      "enter_classroom_blocked_upload": "수업 입장 불가",
+      "enter_classroom_blocked_upload_short": "수업 불가",
+      "enter_classroom_blocked_upload_title": "가져온 초안은 향후 변환 후 수업에서 열 수 있습니다.",
       "type": {
         "lesson_slide_draft": "수업用 교안（초안）",
+        "uploaded_slide_draft": "가져온 교안 초안",
         "teacher_note_draft": "강사 노트",
         "classroom_material": "수업 자료"
       },
@@ -1322,7 +1343,14 @@
       "kind_vocab": "어휘",
       "kind_dialogue": "대화",
       "kind_practice": "연습",
-      "kind_notes": "교사 메모"
+      "kind_notes": "교사 메모",
+      "import_readonly_title": "가져온 교안 초안",
+      "import_readonly_lead": "현재 버전은 파일 정보만 저장하며 내용을 분석하지 않습니다.",
+      "import_no_parse_yet": "현재 버전에서는 분석·심층 편집을 지원하지 않습니다.",
+      "import_future_note": "이후 버전에서 더 완전한 가져오기와 수업용 교안 변환을 지원할 예정입니다.",
+      "import_status": {
+        "raw_uploaded": "업로드됨(분석 대기)"
+      }
     },
     "demo": {
       "disclosure": "아래는 교재·코스·등록 관계를 보여 주는 로컬 예시 데이터이며 실제 학습자·주문 데이터가 아닙니다.",

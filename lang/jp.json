@@ -1174,8 +1174,29 @@
       "view_all": "すべて見る",
       "recent_heading": "直近（最大5件）",
       "recent_empty": "まだありません。上のボタンまたはマイコースから。",
+      "upload_own_draft": "自分の下書きをアップロード",
+      "import_local_courseware": "ローカル教材を取り込む",
+      "upload_own_draft_sub": "端末からファイルを選ぶと「マイ授業用資産」に記録されます（現時点では内容は解析しません）。",
+      "import_ok_toast": "取り込み下書きを追加しました。一覧で確認できます。",
+      "import_error": {
+        "empty": "有効なファイルが選択されていません。",
+        "type_not_allowed": ".pptx、.pdf、.png、.jpg、.jpeg のみ対応です。",
+        "unknown": "取り込みに失敗しました。もう一度お試しください。"
+      },
+      "import_status_label": "取り込み状態",
+      "import_provenance_dt": "出所",
+      "source_local_import": "ローカル取り込み",
+      "col_file_name": "ファイル名",
+      "col_file_type": "ファイル種別",
+      "col_upload_time": "アップロード日時",
+      "col_file_size": "ファイルサイズ",
+      "open_import_draft": "取り込み下書きを見る",
+      "enter_classroom_blocked_upload": "授業を開けません",
+      "enter_classroom_blocked_upload_short": "授業不可",
+      "enter_classroom_blocked_upload_title": "取り込み下書きは将来の変換後に授業で開けるようになります。",
       "type": {
         "lesson_slide_draft": "授業用课件（下書き）",
+        "uploaded_slide_draft": "取り込み教材下書き",
         "teacher_note_draft": "教員メモ",
         "classroom_material": "授業資料"
       },
@@ -1331,7 +1352,14 @@
       "kind_vocab": "語彙",
       "kind_dialogue": "会話",
       "kind_practice": "練習",
-      "kind_notes": "教師メモ"
+      "kind_notes": "教師メモ",
+      "import_readonly_title": "取り込み教材下書き",
+      "import_readonly_lead": "現バージョンはファイル情報のみ保存し、内容は解析しません。",
+      "import_no_parse_yet": "現バージョンでは解析・詳細編集には対応していません。",
+      "import_future_note": "今後のバージョンで、より完全な取り込みと授業用课件への変換に対応する予定です。",
+      "import_status": {
+        "raw_uploaded": "アップロード済み（解析待ち）"
+      }
     },
     "demo": {
       "disclosure": "以下は教材・コース・掲載の関係を示すローカルデモデータであり、実在の学習者や注文ではありません。",

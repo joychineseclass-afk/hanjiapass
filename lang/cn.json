@@ -1165,8 +1165,29 @@
       "view_all": "查看全部",
       "recent_heading": "最近（最多 5 条）",
       "recent_empty": "暂无；可用上方快速创建，或在「我的课程」里按课生成。",
+      "upload_own_draft": "上传自己的草案",
+      "import_local_courseware": "导入本地课件",
+      "upload_own_draft_sub": "上传自己的草案：从本机选择文件，先记录在「我的教案」中（当前不解析内容）。",
+      "import_ok_toast": "已添加导入型草案，可在列表中查看。",
+      "import_error": {
+        "empty": "未选择有效文件。",
+        "type_not_allowed": "仅支持 .pptx、.pdf、.png、.jpg、.jpeg。",
+        "unknown": "导入失败，请重试。"
+      },
+      "import_status_label": "导入状态",
+      "import_provenance_dt": "来源",
+      "source_local_import": "本地导入",
+      "col_file_name": "文件名",
+      "col_file_type": "文件类型",
+      "col_upload_time": "上传时间",
+      "col_file_size": "文件大小",
+      "open_import_draft": "查看导入草案",
+      "enter_classroom_blocked_upload": "暂不可上课",
+      "enter_classroom_blocked_upload_short": "暂不可上课",
+      "enter_classroom_blocked_upload_title": "导入型草案尚未解析为课堂课件，后续版本支持后可从课堂打开。",
       "type": {
         "lesson_slide_draft": "课堂课件草稿",
+        "uploaded_slide_draft": "导入课件草案",
         "teacher_note_draft": "教师笔记",
         "classroom_material": "课堂材料"
       },
@@ -1322,7 +1343,14 @@
       "kind_vocab": "单词",
       "kind_dialogue": "对话",
       "kind_practice": "练习",
-      "kind_notes": "教师备注"
+      "kind_notes": "教师备注",
+      "import_readonly_title": "导入型课件草案",
+      "import_readonly_lead": "当前版本仅保存文件信息，不进行内容解析。",
+      "import_no_parse_yet": "当前版本暂不支持解析编辑。",
+      "import_future_note": "后续将支持更完整的课件导入，并可将导入内容转为可授课的课堂课件。",
+      "import_status": {
+        "raw_uploaded": "已上传（待解析）"
+      }
     },
     "demo": {
       "disclosure": "下列为本地演示数据，用于展示教材—课程—上架之间的示例关系，并非真实学员或订单数据。",

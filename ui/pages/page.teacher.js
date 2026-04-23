@@ -382,19 +382,32 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
       ? `<li class="teacher-assets-recent-item teacher-assets-recent-item--empty">${escapeHtml(t("teacher.assets.recent_empty"))}</li>`
       : recentAssets
           .map((a) => {
-            const src = t("teacher.assets.source_line", {
-              course: formatTeacherHubCourseDisplay(a.source.course),
-              level: a.source.level,
-              lesson: a.source.lesson,
-            });
-            const editDeck =
-              a.asset_type === ASSET_TYPE.lesson_slide_draft
+            const isUploaded = a.asset_type === ASSET_TYPE.uploaded_slide_draft;
+            const src = isUploaded
+              ? t("teacher.assets.source_local_import")
+              : t("teacher.assets.source_line", {
+                  course: formatTeacherHubCourseDisplay(a.source.course),
+                  level: a.source.level,
+                  lesson: a.source.lesson,
+                });
+            const editDeck = isUploaded
+              ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+                  t("teacher.assets.open_import_draft"),
+                )}</a>`
+              : a.asset_type === ASSET_TYPE.lesson_slide_draft
                 ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
                     t("teacher.workspace.hub_deck_edit"),
                   )}</a>`
                 : `<span class="teacher-hub-muted" title="${escapeHtml(t("teacher.assets.edit_placeholder"))}">${escapeHtml(
                     t("teacher.assets.edit"),
                   )}</span>`;
+            const enterClass = isUploaded
+              ? `<span class="teacher-hub-muted" title="${escapeHtml(t("teacher.assets.enter_classroom_blocked_upload_title"))}">${escapeHtml(
+                  t("teacher.assets.enter_classroom_blocked_upload_short"),
+                )}</span>`
+              : `<a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--compact" href="#classroom?assetId=${encodeURIComponent(
+                  a.id,
+                )}">${escapeHtml(t("teacher.assets.enter_classroom"))}</a>`;
             return `<li class="teacher-assets-recent-item">
               <div class="teacher-assets-recent-main">
                 <span class="teacher-assets-recent-title">${escapeHtml(a.title)}</span>
@@ -402,9 +415,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
               </div>
               ${assetStatePillHtml(a, t)}
               <div class="teacher-assets-recent-actions">
-                <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--compact" href="#classroom?assetId=${encodeURIComponent(
-                  a.id,
-                )}">${escapeHtml(t("teacher.assets.enter_classroom"))}</a>
+                ${enterClass}
                 ${editDeck}
               </div>
             </li>`;
@@ -415,7 +426,11 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
     <section class="card teacher-assets-mine" aria-labelledby="tw-assets-title">
       <div class="teacher-assets-mine-head">
         <h3 id="tw-assets-title" class="teacher-assets-mine-title">${escapeHtml(t("teacher.workspace.hub_classroom_assets_title"))}</h3>
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.view_all"))}</a>
+        <div class="teacher-assets-mine-head-actions">
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.view_all"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.import_local_courseware"))}</a>
+        </div>
       </div>
       <p class="teacher-assets-mine-hint teacher-assets-mine-hint--tight">${escapeHtml(t("teacher.workspace.hub_classroom_assets_hint"))}</p>
       <div class="teacher-assets-quick">

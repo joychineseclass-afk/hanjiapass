@@ -387,10 +387,6 @@ async function renderEditor(root) {
     root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.forbidden_edit"))}</p></div>`;
     return;
   }
-  if (a.asset_type !== ASSET_TYPE.lesson_slide_draft) {
-    root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.not_lesson_draft"))}</p></div>`;
-    return;
-  }
   if (isTeacherAssetTrashed(a)) {
     root.innerHTML = `
     <div class="wrap teacher-asset-editor-page">
@@ -407,6 +403,50 @@ async function renderEditor(root) {
       </section>
     </div>`;
     i18n.apply?.(root);
+    return;
+  }
+  if (a.asset_type === ASSET_TYPE.uploaded_slide_draft) {
+    const um = a.upload_meta;
+    const fn = um?.file_name ? esc(um.file_name) : "—";
+    const ft = um?.file_type ? esc(um.file_type) : "—";
+    const fsz = um?.file_size_label ? esc(um.file_size_label) : "—";
+    const upAt = um?.uploaded_at ? esc(um.uploaded_at) : "—";
+    const impKey = a.import_status ? `teacher.asset_editor.import_status.${a.import_status}` : "teacher.asset_editor.import_status.raw_uploaded";
+    let impLabel = t(impKey);
+    if (impLabel === impKey) impLabel = esc(String(a.import_status || "raw_uploaded"));
+    else impLabel = esc(impLabel);
+    root.innerHTML = `
+    <div class="wrap teacher-asset-editor-page">
+      ${teacherBackToWorkspaceHtml(t)}
+      <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
+      ${teacherWorkspaceSubnavHtml("assets", t)}
+      <header class="card teacher-surface-hero teacher-asset-editor-hero">
+        <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.import_readonly_title"))}</h1>
+        <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.import_readonly_lead"))}</p>
+        <div class="teacher-surface-action-row" role="navigation" aria-label="${esc(t("teacher.surface.nav_aria"))}">
+          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+        </div>
+      </header>
+      <section class="card teacher-asset-editor-section teacher-asset-editor-import-card" aria-labelledby="teacherAssetImportH2">
+        <h2 class="teacher-asset-editor-h" id="teacherAssetImportH2">${esc(a.title)}</h2>
+        <span class="teacher-asset-type-pill teacher-asset-type-pill--uploaded">${esc(t("teacher.assets.type.uploaded_slide_draft"))}</span>
+        <dl class="teacher-asset-editor-dl teacher-asset-editor-import-dl">
+          <div><dt>${esc(t("teacher.assets.col_file_name"))}</dt><dd>${fn}</dd></div>
+          <div><dt>${esc(t("teacher.assets.col_file_type"))}</dt><dd>${ft}</dd></div>
+          <div><dt>${esc(t("teacher.assets.col_upload_time"))}</dt><dd>${upAt}</dd></div>
+          <div><dt>${esc(t("teacher.assets.col_file_size"))}</dt><dd>${fsz}</dd></div>
+          <div><dt>${esc(t("teacher.assets.import_status_label"))}</dt><dd>${impLabel}</dd></div>
+          <div><dt>${esc(t("teacher.assets.import_provenance_dt"))}</dt><dd>${esc(t("teacher.assets.source_local_import"))}</dd></div>
+        </dl>
+        <p class="teacher-asset-editor-import-disclaimer" role="status">${esc(t("teacher.asset_editor.import_no_parse_yet"))}</p>
+        <p class="teacher-asset-editor-import-future">${esc(t("teacher.asset_editor.import_future_note"))}</p>
+      </section>
+    </div>`;
+    i18n.apply?.(root);
+    return;
+  }
+  if (a.asset_type !== ASSET_TYPE.lesson_slide_draft) {
+    root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.not_lesson_draft"))}</p></div>`;
     return;
   }
   const isArchived = a.status === ASSET_STATUS.archived;

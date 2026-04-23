@@ -39,6 +39,11 @@ import {
   teacherWorkspaceSubnavHtml,
 } from "./teacherPathNav.js";
 import { formatDemoShortUpdated } from "../lumina-commerce/teacherDemoCatalog.js";
+import {
+  TEACHER_ASSET_IMPORT_ACCEPT,
+  createImportedSlideDraftFromFile,
+  validateTeacherImportFile,
+} from "../lumina-commerce/teacherAssetImportService.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -55,6 +60,21 @@ function escapeHtml(s) {
 
 function assetStatusLabel(t, st) {
   return t(`teacher.assets.state.${st}`);
+}
+
+/**
+ * @param {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset} a
+ * @param {(k: string, p?: object) => string} t
+ */
+function assetSourceDisplayLine(a, t) {
+  const sk = a.source && /** @type {{ kind?: string }} */ (a.source).kind;
+  if (sk === "local_upload") return t("teacher.assets.source_local_import");
+  const src = a.source;
+  return t("teacher.assets.source_line", {
+    course: formatTeacherHubCourseDisplay(src.course),
+    level: String(src.level),
+    lesson: String(src.lesson),
+  });
 }
 
 /**
@@ -135,12 +155,15 @@ let __root = /** @type {HTMLElement | null} */ (null);
  * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot|null} snap
  */
 function assetRow(a, t, profileId, userId, listing, snap) {
-  const src = a.source;
-  const srcLine = t("teacher.assets.source_line", {
-    course: formatTeacherHubCourseDisplay(src.course),
-    level: String(src.level),
-    lesson: String(src.lesson),
-  });
+  const isUploaded = a.asset_type === ASSET_TYPE.uploaded_slide_draft;
+  const um = a.upload_meta;
+  const srcLine = assetSourceDisplayLine(a, t);
+  const fileSub =
+    isUploaded && um && um.file_name
+      ? `<div class="teacher-asset-subline teacher-asset-subline--import-file">${escapeHtml(t("teacher.assets.col_file_name"))}: ${escapeHtml(
+          um.file_name,
+        )}</div>`
+      : "";
   const stClass = `teacher-asset-status-chip--${String(a.status).replace(/[^a-z0-9_]/g, "_")}`;
   const pub = getTeacherAssetPublishUiState(profileId, userId, listing || null, a, t);
   const hasPubListing = Boolean(listing && listing.id);
@@ -204,20 +227,34 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     return "";
   })();
   const archDisabled = a.status === ASSET_STATUS.archived;
-  const canMoveToTrash = !archDisabled && a.asset_type === ASSET_TYPE.lesson_slide_draft;
+  const canMoveToTrash =
+    !archDisabled && (a.asset_type === ASSET_TYPE.lesson_slide_draft || a.asset_type === ASSET_TYPE.uploaded_slide_draft);
   const hasNote = Boolean(getEffectiveTeacherNote(a));
   const noteShort = hasNote ? t("teacher.assets.has_teacher_note_badge") : t("teacher.assets.has_teacher_note_no");
-  const editDeck =
-    a.asset_type === ASSET_TYPE.lesson_slide_draft
+  const noteCellInner =
+    isUploaded && um
+      ? `${escapeHtml(t("teacher.assets.col_file_type"))}: ${escapeHtml(um.file_type)} · ${escapeHtml(um.file_size_label)}`
+      : escapeHtml(noteShort);
+  const noteCellClass = isUploaded && um ? "teacher-asset-note-chip has-note teacher-asset-note-chip--import" : `teacher-asset-note-chip ${hasNote ? "has-note" : ""}`;
+  const editDeck = isUploaded
+    ? `<a class="teacher-asset-btn teacher-asset-btn--primary" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+        t("teacher.assets.open_import_draft"),
+      )}</a>`
+    : a.asset_type === ASSET_TYPE.lesson_slide_draft
       ? `<a class="teacher-asset-btn teacher-asset-btn--primary" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
           t("teacher.assets.edit_deck"),
         )}</a>`
       : `<span class="teacher-asset-muted" title="${escapeHtml(t("teacher.assets.edit_placeholder"))}">${escapeHtml(
           t("teacher.assets.edit"),
         )}</span>`;
-  const enterRoom = `<a class="teacher-asset-btn teacher-asset-btn--accent" href="#classroom?assetId=${encodeURIComponent(
-    a.id,
-  )}">${escapeHtml(t("teacher.assets.enter_classroom_teach"))}</a>`;
+  const enterRoom = isUploaded
+    ? `<span class="teacher-asset-muted teacher-asset-enter-blocked" title="${escapeHtml(t("teacher.assets.enter_classroom_blocked_upload_title"))}">${escapeHtml(
+        t("teacher.assets.enter_classroom_blocked_upload"),
+      )}</span>`
+    : `<a class="teacher-asset-btn teacher-asset-btn--accent" href="#classroom?assetId=${encodeURIComponent(
+        a.id,
+      )}">${escapeHtml(t("teacher.assets.enter_classroom_teach"))}</a>`;
+  const updatedCell = isUploaded && um && um.uploaded_at ? formatDemoShortUpdated(um.uploaded_at) : formatDemoShortUpdated(a.updated_at);
   const commerceCell = (() => {
     if (!listing || !snap) {
       return `<td class="teacher-manage-cell-commerce"><span class="teacher-commerce-na">${escapeHtml(
@@ -274,16 +311,32 @@ function assetRow(a, t, profileId, userId, listing, snap) {
       </div>
     </td>`;
   })();
-  const stitle = a.subtitle && String(a.subtitle).trim() ? String(a.subtitle).trim() : "";
+  const stitle = !isUploaded && a.subtitle && String(a.subtitle).trim() ? String(a.subtitle).trim() : "";
+  const typePillMod = isUploaded ? " teacher-asset-type-pill--uploaded" : "";
+  const impKey =
+    isUploaded && a.import_status ? `teacher.asset_editor.import_status.${a.import_status}` : "";
+  let impShort = "";
+  if (impKey) {
+    impShort = t(impKey);
+    if (impShort === impKey) impShort = String(a.import_status || "");
+  }
+  const statusCellHtml =
+    isUploaded && impShort
+      ? `<span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span>
+        <div class="teacher-asset-import-status-sub">${escapeHtml(t("teacher.assets.import_status_label"))}: ${escapeHtml(impShort)}</div>`
+      : `<span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span>`;
   return `<tr data-teacher-asset-id="${escapeHtml(a.id)}">
     <td class="teacher-manage-cell-title">
       <div class="teacher-asset-title-line">${escapeHtml(a.title)}</div>
       ${stitle ? `<div class="teacher-asset-subline">${escapeHtml(stitle)}</div>` : ""}
+      ${fileSub}
     </td>
-    <td class="teacher-manage-cell-meta"><span class="teacher-asset-type-pill">${escapeHtml(t(`teacher.assets.type.${a.asset_type}`))}</span></td>
+    <td class="teacher-manage-cell-meta"><span class="teacher-asset-type-pill${typePillMod}">${escapeHtml(
+      t(`teacher.assets.type.${a.asset_type}`),
+    )}</span></td>
     <td>${escapeHtml(srcLine)}</td>
-    <td><span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span></td>
-    <td class="teacher-manage-cell-note"><span class="teacher-asset-note-chip ${hasNote ? "has-note" : ""}">${escapeHtml(noteShort)}</span></td>
+    <td class="teacher-manage-cell-status">${statusCellHtml}</td>
+    <td class="teacher-manage-cell-note"><span class="${noteCellClass}">${noteCellInner}</span></td>
     <td class="teacher-manage-cell-publish">
       <div class="teacher-asset-pub-pills" role="group" aria-label="${escapeHtml(t("teacher.assets.pub_pills_aria"))}">
         ${assetsRowReviewPill(listing || null, t)}
@@ -304,7 +357,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
       ${pubQuick ? `<div class="teacher-asset-pub-quick">${pubQuick}</div>` : ""}
       ${rejectHint}
     </td>
-    <td>${escapeHtml(formatDemoShortUpdated(a.updated_at))}</td>
+    <td>${escapeHtml(updatedCell)}</td>
     ${commerceCell}
     <td class="teacher-manage-col-actions teacher-asset-actions">
       <div class="teacher-asset-row-primary" role="group" aria-label="${escapeHtml(t("teacher.assets.row_primary_actions_aria"))}">
@@ -340,12 +393,7 @@ function assetRow(a, t, profileId, userId, listing, snap) {
  * @param {(k: string, p?: object) => string} t
  */
 function trashAssetRow(a, t) {
-  const src = a.source;
-  const srcLine = t("teacher.assets.source_line", {
-    course: formatTeacherHubCourseDisplay(src.course),
-    level: String(src.level),
-    lesson: String(src.lesson),
-  });
+  const srcLine = assetSourceDisplayLine(a, t);
   const delAt = formatDemoShortUpdated(a.deleted_at || "");
   const daysLeft = teacherAssetTrashDaysRemaining(a) ?? 0;
   const pillClass =
@@ -431,7 +479,14 @@ async function renderPage(root) {
            <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(
              t("teacher.assets.empty_cta_from_course"),
            )}</a>
+           <button type="button" class="teacher-hub-cta teacher-hub-cta--secondary js-teacher-assets-import-trigger">${escapeHtml(
+             t("teacher.assets.upload_own_draft"),
+           )}</button>
+           <button type="button" class="teacher-hub-cta teacher-hub-cta--secondary js-teacher-assets-import-trigger">${escapeHtml(
+             t("teacher.assets.import_local_courseware"),
+           )}</button>
          </p>
+         <p class="teacher-assets-empty-import-hint">${escapeHtml(t("teacher.assets.upload_own_draft_sub"))}</p>
        </div>`
       : tab === "trash" && !hasRows
         ? `<div class="teacher-assets-empty card teacher-trash-empty">
@@ -445,7 +500,16 @@ async function renderPage(root) {
           <div class="teacher-assets-list-toolbar-text">
             <h2 class="teacher-assets-list-toolbar-title">${escapeHtml(t("teacher.assets.list_toolbar_heading"))}</h2>
           </div>
-          <div class="teacher-assets-list-toolbar-actions">
+          <div class="teacher-assets-list-toolbar-actions teacher-assets-list-toolbar-actions--with-import">
+            <div class="teacher-assets-import-slot" id="teacher-assets-import">
+              <button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary js-teacher-assets-import-trigger">${escapeHtml(
+                t("teacher.assets.upload_own_draft"),
+              )}</button>
+              <button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary js-teacher-assets-import-trigger">${escapeHtml(
+                t("teacher.assets.import_local_courseware"),
+              )}</button>
+              <input type="file" id="teacherAssetsImportInput" class="visually-hidden" accept="${escapeHtml(TEACHER_ASSET_IMPORT_ACCEPT)}" />
+            </div>
             <a class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary" href="#teacher-assets?tab=trash">${escapeHtml(
               t("teacher.assets.view_trash"),
             )}${trashCount > 0 ? ` (${escapeHtml(String(trashCount))})` : ""}</a>
@@ -704,6 +768,47 @@ async function renderPage(root) {
       void renderPage(root);
     });
   });
+  const importInp = root.querySelector("#teacherAssetsImportInput");
+  root.querySelectorAll(".js-teacher-assets-import-trigger").forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      importInp?.click();
+    });
+  });
+  importInp?.addEventListener("change", () => {
+    const f = importInp.files && importInp.files[0];
+    importInp.value = "";
+    if (!f) return;
+    const v = validateTeacherImportFile(f);
+    if (!v.ok) {
+      const ek = `teacher.assets.import_error.${v.code}`;
+      let msg = t(ek);
+      if (msg === ek) msg = v.code || "";
+      try {
+        alert(msg);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    try {
+      createImportedSlideDraftFromFile(f, { teacherProfileId: profileId, ownerUserId: userId });
+    } catch {
+      try {
+        alert(t("teacher.assets.import_error.unknown"));
+      } catch {
+        /* */
+      }
+      return;
+    }
+    try {
+      alert(t("teacher.assets.import_ok_toast"));
+    } catch {
+      /* */
+    }
+    void renderPage(root);
+  });
+
   root.querySelectorAll("[data-teacher-asset-goprivate]").forEach((btn) => {
     btn.addEventListener("click", async (ev) => {
       const id = btn.getAttribute("data-teacher-asset-goprivate");

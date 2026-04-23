@@ -20,6 +20,8 @@ import {
   TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
   ASSET_TYPE,
+  ASSET_IMPORT_STATUS,
+  createUploadedSlideDraftFromLocalFile,
 } from "./teacherAssetsStore.js";
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
 import { findListingByAssetId, canCurrentUserPreviewTeacherListing } from "./teacherListingBridge.js";
@@ -148,6 +150,9 @@ export async function selectClassroomContextFromAssetId(assetId) {
   const asset = findAssetById(String(assetId));
   if (!asset) return { ok: false, error: "not_found" };
   if (isTeacherAssetTrashed(asset)) return { ok: false, error: "forbidden" };
+  if (String(asset.asset_type) === String(ASSET_TYPE.uploaded_slide_draft)) {
+    return { ok: false, error: "forbidden" };
+  }
 
   const u = getCurrentUser();
   const sameProfile =
@@ -194,4 +199,6 @@ export {
   TEACHER_ASSET_TRASH_RETENTION_DAYS,
   ASSET_STATUS,
   ASSET_TYPE,
+  ASSET_IMPORT_STATUS,
+  createUploadedSlideDraftFromLocalFile,
 };

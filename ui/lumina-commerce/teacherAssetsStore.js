@@ -5,8 +5,15 @@ import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
 
 export const ASSET_TYPE = Object.freeze({
   lesson_slide_draft: "lesson_slide_draft",
+  /** 本地选择文件生成的导入型课件草案（仅占位元数据，未解析幻灯片） */
+  uploaded_slide_draft: "uploaded_slide_draft",
   teacher_note_draft: "teacher_note_draft",
   classroom_material: "classroom_material",
+});
+
+/** 导入型草案解析/处理进度（预留） */
+export const ASSET_IMPORT_STATUS = Object.freeze({
+  raw_uploaded: "raw_uploaded",
 });
 
 export const ASSET_STATUS = Object.freeze({
@@ -30,6 +37,15 @@ const LS_KEY = "lumina_teacher_assets_v1";
  * @property {string} course
  * @property {string} level
  * @property {string} lesson
+ * @property {string} [kind] 如 local_upload 表示本地导入，非课次来源
+ */
+
+/**
+ * @typedef {Object} TeacherAssetUploadMetaV1
+ * @property {string} file_name
+ * @property {string} file_type 扩展名小写，如 pptx
+ * @property {string} file_size_label 展示用，如 2.4 MB
+ * @property {string} uploaded_at ISO
  */
 
 /**
@@ -60,6 +76,8 @@ const LS_KEY = "lumina_teacher_assets_v1";
  * @property {string} updated_at
  * @property {string} [deleted_at] ISO，非空表示在垃圾桶
  * @property {string} [deleted_by_user_id]
+ * @property {TeacherAssetUploadMetaV1} [upload_meta] 导入型草案文件信息
+ * @property {string} [import_status] 如 raw_uploaded
  */
 
 /**
@@ -93,6 +111,21 @@ export function defaultSlideOutline() {
  * @param {unknown} x
  * @returns {TeacherSlideOutlineItemV1[]}
  */
+/**
+ * @param {unknown} raw
+ * @returns {TeacherAssetUploadMetaV1|null}
+ */
+function sanitizeUploadMeta(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const o = /** @type {Record<string, unknown>} */ (raw);
+  const file_name = o.file_name != null ? String(o.file_name) : "";
+  const file_type = o.file_type != null ? String(o.file_type) : "";
+  const file_size_label = o.file_size_label != null ? String(o.file_size_label) : "";
+  const uploaded_at = o.uploaded_at != null ? String(o.uploaded_at) : "";
+  if (!file_name && !file_type) return null;
+  return { file_name, file_type, file_size_label, uploaded_at };
+}
+
 function normalizeSlideOutline(x) {
   if (!Array.isArray(x) || !x.length) return defaultSlideOutline();
   return x
@@ -150,18 +183,33 @@ function sanitizeItem(raw) {
   const owner_user_id = o.owner_user_id != null ? String(o.owner_user_id) : "";
   const src = o.source && typeof o.source === "object" ? o.source : {};
   const s = /** @type {Record<string, unknown>} */ (src);
-  const course = s.course != null ? String(s.course) : "kids";
-  const level = s.level != null ? String(s.level) : "1";
-  const lesson = s.lesson != null ? String(s.lesson) : "1";
+  const sourceKind = s.kind != null ? String(s.kind) : "";
+  let course = s.course != null ? String(s.course) : "kids";
+  let level = s.level != null ? String(s.level) : "1";
+  let lesson = s.lesson != null ? String(s.lesson) : "1";
+  if (sourceKind === "local_upload") {
+    if (s.course == null) course = "local_import";
+    if (s.level == null) level = "0";
+    if (s.lesson == null) lesson = "0";
+  }
   const asset_type = String(o.asset_type || ASSET_TYPE.lesson_slide_draft);
   const status = String(o.status || ASSET_STATUS.draft);
-  const title = o.title != null ? String(o.title) : defaultTitleEn(course, level, lesson);
+  let title = o.title != null && String(o.title).trim() !== "" ? String(o.title) : "";
+  if (!title) {
+    if (asset_type === ASSET_TYPE.uploaded_slide_draft) {
+      const umEarly = sanitizeUploadMeta(o.upload_meta);
+      title = umEarly?.file_name || "upload";
+    } else {
+      title = defaultTitleEn(course, level, lesson);
+    }
+  }
   const notesLegacy = o.notes != null ? String(o.notes) : "";
   const teacher_note = o.teacher_note != null ? String(o.teacher_note) : notesLegacy;
   const subtitle = o.subtitle != null ? String(o.subtitle) : "";
   const summary = o.summary != null ? String(o.summary) : "";
   const cover_note = o.cover_note != null ? String(o.cover_note) : "";
   const isSlide = asset_type === ASSET_TYPE.lesson_slide_draft;
+  const isUploadedDraft = asset_type === ASSET_TYPE.uploaded_slide_draft;
   const slide_outline = isSlide
     ? normalizeSlideOutline(o.slide_outline)
     : o.slide_outline && Array.isArray(o.slide_outline) && o.slide_outline.length
@@ -173,11 +221,27 @@ function sanitizeItem(raw) {
   const deleted_at_raw = o.deleted_at != null ? String(o.deleted_at).trim() : "";
   const deleted_at = deleted_at_raw || "";
   const deleted_by_user_id = o.deleted_by_user_id != null ? String(o.deleted_by_user_id) : "";
+  const uploadMetaSan = sanitizeUploadMeta(o.upload_meta);
+  const upload_meta =
+    isUploadedDraft || uploadMetaSan
+      ? uploadMetaSan || {
+          file_name: "",
+          file_type: "",
+          file_size_label: "",
+          uploaded_at: "",
+        }
+      : undefined;
+  const import_status =
+    isUploadedDraft || o.import_status != null
+      ? String(o.import_status || ASSET_IMPORT_STATUS.raw_uploaded)
+      : "";
+  /** @type {TeacherClassroomAssetSource} */
+  const sourceObj = sourceKind ? { course, level, lesson, kind: sourceKind } : { course, level, lesson };
   return {
     id,
     teacher_profile_id,
     owner_user_id,
-    source: { course, level, lesson },
+    source: sourceObj,
     asset_type: /** @type {keyof ASSET_TYPE} */ (Object.values(ASSET_TYPE).includes(asset_type) ? asset_type : ASSET_TYPE.lesson_slide_draft),
     title,
     subtitle,
@@ -193,6 +257,8 @@ function sanitizeItem(raw) {
     updated_at,
     deleted_at,
     deleted_by_user_id,
+    ...(upload_meta ? { upload_meta } : {}),
+    ...(import_status ? { import_status } : {}),
   };
 }
 
@@ -311,6 +377,8 @@ export function updateTeacherAsset(patch) {
     ...patch,
     source: patch.source ? { ...prev.source, ...patch.source } : prev.source,
     slide_outline: patch.slide_outline != null ? patch.slide_outline : prev.slide_outline,
+    upload_meta: patch.upload_meta !== undefined ? patch.upload_meta : prev.upload_meta,
+    import_status: patch.import_status !== undefined ? String(patch.import_status || "") : prev.import_status,
     deleted_at: patch.deleted_at !== undefined ? String(patch.deleted_at || "") : prev.deleted_at,
     deleted_by_user_id:
       patch.deleted_by_user_id !== undefined ? String(patch.deleted_by_user_id || "") : prev.deleted_by_user_id,
@@ -363,6 +431,41 @@ function insertAsset(input) {
  * @param {TeacherSlideOutlineItemV1[]} [p.slide_outline]
  * @returns {TeacherClassroomAsset}
  */
+/**
+ * 从本机选择的文件元数据创建导入型课件草案（不读文件内容、不上传服务器）。
+ * @param {object} p
+ * @param {string} p.teacherProfileId
+ * @param {string} p.ownerUserId
+ * @param {TeacherAssetUploadMetaV1} p.upload_meta
+ * @param {string} [p.title] 默认用文件名
+ * @param {string} [p.import_status]
+ * @returns {TeacherClassroomAsset}
+ */
+export function createUploadedSlideDraftFromLocalFile(p) {
+  const um = sanitizeUploadMeta(p.upload_meta);
+  if (!um || !um.file_name) {
+    throw new Error("createUploadedSlideDraftFromLocalFile: missing upload_meta.file_name");
+  }
+  const title = p.title != null && String(p.title).trim() !== "" ? String(p.title).trim() : um.file_name;
+  return insertAsset({
+    teacher_profile_id: String(p.teacherProfileId),
+    owner_user_id: String(p.ownerUserId),
+    source: { kind: "local_upload", course: "local_import", level: "0", lesson: "0" },
+    asset_type: ASSET_TYPE.uploaded_slide_draft,
+    status: ASSET_STATUS.draft,
+    ppt_mode: PPT_MODE.structured,
+    title,
+    subtitle: "",
+    summary: "",
+    teacher_note: "",
+    cover_note: "",
+    notes: "",
+    slide_outline: [],
+    upload_meta: um,
+    import_status: String(p.import_status || ASSET_IMPORT_STATUS.raw_uploaded),
+  });
+}
+
 export function createTeacherAssetFromLesson(p) {
   const course = String(p.course ?? "kids");
   const level = String(p.level ?? "1");
