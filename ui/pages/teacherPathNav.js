@@ -44,49 +44,74 @@ export function teacherBackToWorkspaceHtml(tx) {
 const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
   "workspace",
   "profile",
+  "create_material",
   "materials",
   "courses",
   "assets",
+  "pub_review",
+  "sales_orders",
   "publishing",
 ]);
 
 /**
  * 老师端模块导航单条：与已移除的横向 subnav 同一数据源，仅由侧栏 `renderTeacherAdminShell` 使用。
- * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} kind
- * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
+ * @param {'workspace' | 'profile' | 'create_material' | 'materials' | 'courses' | 'assets' | 'pub_review' | 'sales_orders' | 'listing' | 'publishing' | 'review'} kind
+ * @param {string} active  当前高亮键（与页面 `renderTeacherAdminShell` 传入一致）
  * @param {(path: string) => string} m  已转义安全文案
  */
 function teacherModuleNavItemSpec(kind, active, m) {
-  let isCurrent = active === kind;
-  if (kind === "listing" || kind === "publishing") isCurrent = active === "listing" || active === "publishing";
+  const publishingGroup = active === "publishing" || active === "pub_review" || active === "listing";
+  const materialsGroup = active === "materials" || active === "create_material";
   let href = "#teacher";
   let label = m("teacher.nav.mine_workbench");
-  if (kind === "profile") {
+  let isCurrent = false;
+
+  if (kind === "workspace") {
+    isCurrent = active === "workspace";
+  } else if (kind === "profile") {
     href = "#teacher-profile";
     label = m("teacher.nav.teacher_profile");
+    isCurrent = active === "profile";
+  } else if (kind === "create_material") {
+    href = "#teacher-materials";
+    label = m("teacher.nav.create_material");
+    isCurrent = materialsGroup;
   } else if (kind === "materials") {
     href = "#teacher-materials";
     label = m("teacher.hub.materials.title");
+    isCurrent = materialsGroup;
   } else if (kind === "courses") {
     href = "#teacher-courses";
     label = m("teacher.hub.courses.title");
+    isCurrent = active === "courses";
   } else if (kind === "assets") {
     href = "#teacher-assets";
     label = m("teacher.hub.assets.title");
+    isCurrent = active === "assets";
+  } else if (kind === "pub_review") {
+    href = "#teacher-publishing";
+    label = m("teacher.nav.publish_and_review");
+    isCurrent = publishingGroup;
+  } else if (kind === "sales_orders") {
+    href = "#my-orders";
+    label = m("teacher.nav.sales_and_orders");
+    isCurrent = active === "sales_orders";
   } else if (kind === "publishing" || kind === "listing") {
     href = "#teacher-publishing";
     label = m("teacher.nav.my_publishing");
+    isCurrent = publishingGroup;
   } else if (kind === "review") {
     href = "#teacher-review";
     label = m("teacher.nav.review_console");
+    isCurrent = active === "review";
   }
   return { href, label, isCurrent };
 }
 
 /**
  * 侧栏内单链：块级纵向导航。
- * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} kind
- * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
+ * @param {'workspace' | 'profile' | 'create_material' | 'materials' | 'courses' | 'assets' | 'pub_review' | 'sales_orders' | 'listing' | 'publishing' | 'review'} kind
+ * @param {string} active
  * @param {(path: string) => string} m
  */
 function teacherShellNavItemHtml(kind, active, m) {
@@ -100,7 +125,7 @@ function teacherShellNavItemHtml(kind, active, m) {
 /**
  * 老师端统一后台布局：左侧固定模块导航 + 右侧主内容。不改变 hash 与权限语义。
  * @param {object} opts
- * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} opts.active
+ * @param {string} opts.active  如 workspace、materials、create_material、pub_review、sales_orders、publishing、listing、review 等
  * @param {(path: string, params?: object) => string} opts.tx
  * @param {string} opts.mainHtml
  * @param {boolean} [opts.showReviewConsole]  省略时按 currentUser 与 commerce store 同步判断

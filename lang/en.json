@@ -731,6 +731,9 @@
       "back_mine_workbench": "Back to my workbench",
       "mine_workbench": "My workbench",
       "subnav_aria": "Navigation inside the Teacher Workspace",
+      "create_material": "Create materials",
+      "publish_and_review": "Publishing & review",
+      "sales_and_orders": "Sales & orders",
       "my_publishing": "My listings",
       "review_console": "Review console",
       "teacher_profile": "Teacher profile",
@@ -964,7 +967,10 @@
       "hub_listings_empty": "No publish items yet. Create one from a deck.",
       "hub_deck_edit": "Edit deck",
       "hub_classroom_assets_title": "Decks & classroom assets",
-      "hub_classroom_assets_hint": "Shortcuts here. Full management is on the classroom assets page."
+      "hub_classroom_assets_hint": "Shortcuts here. Full management is on the classroom assets page.",
+      "home_assets_peek_aria": "Classroom assets entry",
+      "home_assets_cta": "Open my classroom assets",
+      "home_assets_count_hint": "{count} classroom asset(s) in the demo (local)"
     },
     "recommended": {
       "line_no_deck": "You don’t have a deck to publish yet. Create your first teacher deck.",

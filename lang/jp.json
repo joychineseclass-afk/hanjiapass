@@ -740,6 +740,9 @@
       "back_mine_workbench": "マイワークスペースに戻る",
       "mine_workbench": "マイワークスペース",
       "subnav_aria": "教師ワークスペース内のナビゲーション",
+      "create_material": "教材を作成",
+      "publish_and_review": "公開と審査",
+      "sales_and_orders": "販売と注文",
       "my_publishing": "マイ掲載",
       "review_console": "審査台",
       "teacher_profile": "教師プロフィール",
@@ -973,7 +976,10 @@
       "hub_listings_empty": "掲載はまだありません。教材から掲載を作成してください。",
       "hub_deck_edit": "教材を編集",
       "hub_classroom_assets_title": "教材と授業用資産",
-      "hub_classroom_assets_hint": "ここはショートカット。全件は授業用資産ページで。"
+      "hub_classroom_assets_hint": "ここはショートカット。全件は授業用資産ページで。",
+      "home_assets_peek_aria": "授業用資産へ",
+      "home_assets_cta": "授業用資産を開く",
+      "home_assets_count_hint": "現在 {count} 件の授業用資産（ローカル・デモ）"
     },
     "recommended": {
       "line_no_deck": "掲載できる教材がまだありません。まず教師用教材を作りましょう。",

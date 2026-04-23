@@ -731,6 +731,9 @@
       "back_mine_workbench": "返回我的工作台",
       "mine_workbench": "我的工作台",
       "subnav_aria": "教师工作台内导航",
+      "create_material": "创建教材",
+      "publish_and_review": "发布与审核",
+      "sales_and_orders": "销售与订单",
       "my_publishing": "我的上架",
       "review_console": "审核台",
       "teacher_profile": "老师档案",
@@ -964,7 +967,10 @@
       "hub_listings_empty": "暂无发布项。可在课件页生成发布项。",
       "hub_deck_edit": "编辑课件",
       "hub_classroom_assets_title": "课件与课堂资产",
-      "hub_classroom_assets_hint": "本页为快捷入口。完整管理请前往我的课堂资产。"
+      "hub_classroom_assets_hint": "本页为快捷入口。完整管理请前往我的课堂资产。",
+      "home_assets_peek_aria": "我的课堂资产入口",
+      "home_assets_cta": "进入我的课堂资产",
+      "home_assets_count_hint": "当前共 {count} 项课堂资产（演示数据）"
     },
     "recommended": {
       "line_no_deck": "你还没有可发布的课件。先创建第一套老师课件。",

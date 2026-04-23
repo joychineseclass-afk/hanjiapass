@@ -14,7 +14,6 @@ import {
 } from "../lumina-commerce/teacherProfileService.js";
 import { logTeacherHubPageDebug } from "../lumina-commerce/teacherPageDebugLog.js";
 import {
-  createClassroomAssetForLesson,
   getRecentAssetsForProfile,
   getTeacherClassroomAssetCountForProfile,
   listAssetsByProfileId,
@@ -428,23 +427,14 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           })
           .join("");
 
-  const assetsPanel = `
-    <section class="card teacher-assets-mine" aria-labelledby="tw-assets-title">
-      <div class="teacher-assets-mine-head">
-        <h3 id="tw-assets-title" class="teacher-assets-mine-title">${escapeHtml(t("teacher.workspace.hub_classroom_assets_title"))}</h3>
-        <div class="teacher-assets-mine-head-actions">
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.view_all"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.import_local_courseware"))}</a>
-        </div>
-      </div>
-      <p class="teacher-assets-mine-hint teacher-assets-mine-hint--tight">${escapeHtml(t("teacher.workspace.hub_classroom_assets_hint"))}</p>
-      <div class="teacher-assets-quick">
-        <button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherQuickCreateAsset">
-          ${escapeHtml(t("teacher.assets.quick_create"))}
-        </button>
-        <p class="teacher-assets-quick-note">${escapeHtml(t("teacher.assets.quick_create_note"))}</p>
-      </div>
+  const assetsHomePeek = `
+    <section class="card teacher-assets-home-peek" aria-label="${escapeHtml(t("teacher.workspace.home_assets_peek_aria"))}">
+      <p class="teacher-assets-home-peek-body">
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.workspace.home_assets_cta"))}</a>
+        <span class="teacher-assets-home-peek-meta">${escapeHtml(
+          t("teacher.workspace.home_assets_count_hint", { count: String(sum.classroomAssetCount) }),
+        )}</span>
+      </p>
     </section>
   `;
 
@@ -543,7 +533,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         </div>
       </section>
 
-      ${assetsPanel}
+      ${assetsHomePeek}
 
       <section class="teacher-grid" id="teacher-hub-classroom" tabindex="-1">
         <article class="teacher-tile card teacher-tile--entry">
@@ -706,31 +696,6 @@ function bindClassroomForm(root) {
   });
 }
 
-/**
- * @param {HTMLElement} root
- * @param {string} profileId
- * @param {string} ownerUserId
- * @param {() => void} rerender
- */
-function bindAssetQuickCreate(root, profileId, ownerUserId) {
-  root.querySelector("#teacherQuickCreateAsset")?.addEventListener("click", () => {
-    const a = createClassroomAssetForLesson({
-      teacherProfileId: profileId,
-      ownerUserId,
-      course: "kids",
-      level: "1",
-      lesson: "1",
-      t: tx,
-    });
-    try {
-      window.dispatchEvent(new CustomEvent("joy:navigate"));
-    } catch {
-      /* */
-    }
-    location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
-  });
-}
-
 async function renderTeacherHub(root) {
   const t = tx;
   let ctx;
@@ -811,7 +776,6 @@ async function renderTeacherHub(root) {
     const commerceStats = commerceSnap ? getTeacherProfileCommerceStats(commerceSnap, ctx.profile.id) : null;
     root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats, commerceSnap, showReviewConsole);
     bindClassroomForm(root);
-    bindAssetQuickCreate(root, ctx.profile.id, u.id);
     i18n.apply?.(root);
     return;
   }
