@@ -9,23 +9,18 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
-// 正式路由顺序：Home, 考试学术, Kids, Business, Travel, Culture, Speaking, Stroke, Hanja, Review, Resources, Teacher
+// 一级：Home, 考试学术, Kids, Culture, Speaking（商务/旅游会话进 Speaking 子 tab）, Stroke, Hanja, Resources, Teacher, 我的学习
 const NAV_ITEMS_FULL = [
   { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
   { href: "/index.html#exam-learning", key: "nav.exam_learning", label: "시험학습", color: "#22c55e" },
   { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
-  { href: "/index.html#business", key: "nav.business", label: "비즈니스",      color: "#0ea5e9" },
-  { href: "/index.html#travel",  key: "nav.travel",     label: "여행중국어",    color: "#06b6d4" },
   { href: "/index.html#culture", key: "nav.culture",   label: "문화",          color: "#eab308" },
   { href: "/index.html#speaking", key: "nav.speaking", label: "회화",          color: "#ef4444" },
   { href: "/index.html#stroke",  key: "nav.stroke",    label: "한자 필순",     color: "#f97316" },
   { href: "/index.html#hanja",   key: "nav.hanjagongfu", label: "한자공부",    color: "#a855f7" },
-  { href: "/index.html#review",  key: "nav.review",    label: "복습",          color: "#8b5cf6" },
   { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
   { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
   { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
-  { href: "/index.html#my-content", key: "learner.nav.my_content", label: "My content", color: "#0d9488" },
-  { href: "/index.html#my-orders", key: "learner.nav.my_orders", label: "My orders", color: "#14b8a6" },
 ];
 
 function t(key, fallback = "") {
@@ -91,6 +86,9 @@ function setActive(rootEl) {
         active = teacherHashes.has(curHash);
       } else if (wantBase === "#exam-learning") {
         active = curBase === "#exam-learning" || curBase === "#hsk";
+      } else if (wantBase === "#speaking") {
+        // #speaking?tab=daily|business|travel 等与顶栏「会话」同一模块
+        active = curBase === "#speaking";
       } else {
         active = wantHash ? curBase === wantBase : true;
       }
@@ -267,7 +265,7 @@ function ensureNavStylesOnce() {
     .joy-auth-link:hover{transform:translateY(-1px)}
     .joy-auth-logout{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;cursor:pointer;color:#334155}
     .joy-auth-logout:hover{background:#e2e8f0}
-    nav.site-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    nav.site-nav{display:flex;gap:8px;row-gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
     nav.site-nav a{padding:9px 12px;border-radius:999px;border:1px solid rgba(226,232,240,.9);background:#fff;font-weight:800;font-size:13px}
     nav.site-nav a.active{border-color:var(--navc,#2563eb);background:color-mix(in srgb, var(--navc,#2563eb) 12%, white)}
     nav.site-nav.mini{gap:6px}
