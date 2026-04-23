@@ -6,6 +6,24 @@ export const AUTH_USERS_KEY = "lumina_auth_users_v1";
 export const AUTH_SESSION_KEY = "lumina_auth_session_v1";
 
 /**
+ * @typedef {'active'|'none'} StudentRoleState
+ * @typedef {'none'|'pending'|'active'|'rejected'} TeacherRoleState
+ * @typedef {Object} LuminaRolesV1
+ * @property {StudentRoleState} student
+ * @property {TeacherRoleState} teacher
+ */
+
+/**
+ * @typedef {Object} TeacherApplicationProfileV1
+ * @property {string} displayName
+ * @property {string} intro
+ * @property {string[]} teachingTypes
+ * @property {string} experienceLevel
+ * @property {string} [note]
+ * @property {string} submittedAt
+ */
+
+/**
  * @typedef {Object} AuthUserV1
  * @property {string} id
  * @property {string} email
@@ -13,6 +31,9 @@ export const AUTH_SESSION_KEY = "lumina_auth_session_v1";
  * @property {string} passwordHash
  * @property {string} created_at
  * @property {string} updated_at
+ * @property {boolean} [onboardingCompleted] 缺省时按 legacy 视为 true
+ * @property {LuminaRolesV1} [roles]
+ * @property {TeacherApplicationProfileV1|null} [teacherProfile]
  */
 
 /**
@@ -31,6 +52,49 @@ function normEmail(s) {
   return String(s || "")
     .trim()
     .toLowerCase();
+}
+
+/** 登录标识：邮箱或手机号等，统一小写/去首尾空格 */
+export function normAccount(s) {
+  return String(s || "")
+    .trim()
+    .toLowerCase();
+}
+
+const TEACHER_STATES = new Set(["none", "pending", "active", "rejected"]);
+
+/**
+ * @param {Record<string, unknown>} o
+ * @returns {{ onboardingCompleted: boolean, roles: LuminaRolesV1, teacherProfile: TeacherApplicationProfileV1 | null }}
+ */
+export function normalizeLuminaProfileFields(o) {
+  const explicit = Object.prototype.hasOwnProperty.call(o, "onboardingCompleted");
+  const onboardingCompleted = explicit ? Boolean(o.onboardingCompleted) : true;
+  let roles = o.roles;
+  if (!roles || typeof roles !== "object") {
+    roles = { student: "active", teacher: "none" };
+  } else {
+    const ro = /** @type {Record<string, unknown>} */ (roles);
+    const st = ro.student === "none" ? "none" : "active";
+    const tr = ro.teacher;
+    const te = typeof tr === "string" && TEACHER_STATES.has(tr) ? tr : "none";
+    roles = { student: st, teacher: /** @type {TeacherRoleState} */ (te) };
+  }
+  let teacherProfile = o.teacherProfile;
+  if (teacherProfile != null && typeof teacherProfile === "object") {
+    const tp = /** @type {Record<string, unknown>} */ (teacherProfile);
+    teacherProfile = {
+      displayName: String(tp.displayName || ""),
+      intro: String(tp.intro || ""),
+      teachingTypes: Array.isArray(tp.teachingTypes) ? tp.teachingTypes.map((x) => String(x)) : [],
+      experienceLevel: String(tp.experienceLevel || ""),
+      note: tp.note != null ? String(tp.note) : "",
+      submittedAt: String(tp.submittedAt || ""),
+    };
+  } else {
+    teacherProfile = null;
+  }
+  return { onboardingCompleted, roles, teacherProfile };
 }
 
 /**
@@ -61,6 +125,7 @@ export function loadAuthUsers() {
 function sanitizeUser(u) {
   if (!u || typeof u !== "object") return null;
   const o = /** @type {Record<string, unknown>} */ (u);
+  const lumina = normalizeLuminaProfileFields(o);
   return {
     id: String(o.id || "").trim(),
     email: normEmail(String(o.email || "")),
@@ -68,6 +133,9 @@ function sanitizeUser(u) {
     passwordHash: String(o.passwordHash || ""),
     created_at: String(o.created_at || new Date().toISOString()),
     updated_at: String(o.updated_at || new Date().toISOString()),
+    onboardingCompleted: lumina.onboardingCompleted,
+    roles: lumina.roles,
+    teacherProfile: lumina.teacherProfile,
   };
 }
 
@@ -113,9 +181,9 @@ export function saveSession(userId) {
  * @returns {AuthUserV1|undefined}
  */
 export function findUserByEmail(email) {
-  const e = normEmail(email);
+  const e = normAccount(email);
   if (!e) return undefined;
-  return loadAuthUsers().users.find((u) => u.email === e);
+  return loadAuthUsers().users.find((u) => normAccount(u.email) === e);
 }
 
 /**
@@ -133,7 +201,7 @@ export function findUserById(id) {
 export function upsertUser(user) {
   const data = loadAuthUsers();
   const i = data.users.findIndex((u) => u.id === user.id);
-  const next = { ...user, email: normEmail(user.email) };
+  const next = { ...user, email: normAccount(String(user.email || "")) };
   if (i >= 0) data.users[i] = next;
   else data.users.push(next);
   saveAuthUsers(data);

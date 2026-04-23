@@ -99,8 +99,13 @@ registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacher
 registerRoute("#teacher-publishing", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-review", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
-registerRoute("#login", () => import("./pages/page.login.js"));
-registerRoute("#register", () => import("./pages/page.register.js"));
+registerRoute("#auth-login", () => import("./pages/page.authLogin.js"));
+registerRoute("#auth-register", () => import("./pages/page.authRegister.js"));
+registerRoute("#onboarding-role", () => import("./pages/page.onboardingRole.js"));
+registerRoute("#teacher-apply", () => import("./pages/page.teacherApply.js"));
+registerRoute("#teacher-status", () => import("./pages/page.teacherStatus.js"));
+registerRoute("#login", () => import("./pages/page.authLogin.js"));
+registerRoute("#register", () => import("./pages/page.authRegister.js"));
 registerRoute("#teacher-profile", () => import("./pages/page.teacherProfile.js"));
 registerRoute("#teacher-ai", () => import("./pages/page.teacherAiAssistant.js"));
 registerRoute("#teacher-console", () => import("./pages/page.teacherClassroomConsole.js"));
@@ -170,6 +175,14 @@ try {
   console.error("[app] startRouter error:", e);
   showFatal(e);
 }
+
+  try {
+    const { ensureOnboardingRoute, bindOnboardingHashGuard } = await import("./auth/authFlow.js");
+    bindOnboardingHashGuard();
+    requestAnimationFrame(() => ensureOnboardingRoute());
+  } catch (e) {
+    console.warn("[app] ensureOnboardingRoute failed:", e?.message);
+  }
 
   // 4) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.

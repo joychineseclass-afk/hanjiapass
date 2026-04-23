@@ -7,7 +7,7 @@ import { initCommerceStore } from "../lumina-commerce/store.js";
 import { getTeacherProfileCommerceStats } from "../lumina-commerce/teacherCommerceBridge.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
-import { applyToBecomeTeacher, hydrateCurrentUserFromSession } from "../auth/authService.js";
+import { applyToBecomeTeacher, getCurrentSessionAuthUser, getTeacherNavRoleState, hydrateCurrentUserFromSession } from "../auth/authService.js";
 import {
   devForceApproveCurrentUserTeacherProfile,
   migrateDemoTeacherProfileToAuthUser,
@@ -603,6 +603,21 @@ async function renderTeacherHub(root) {
   } catch {
     listings = [];
   }
+  const au = getCurrentSessionAuthUser();
+  if (au) {
+    const tr = getTeacherNavRoleState() ?? "none";
+    if (tr === "pending" || tr === "rejected") {
+      const { navigateTo } = await import("../router.js");
+      navigateTo("#teacher-status", { force: true });
+      return;
+    }
+    if (tr === "none") {
+      const { navigateTo } = await import("../router.js");
+      navigateTo("#teacher-apply", { force: true });
+      return;
+    }
+  }
+
   try {
     ctx = await getTeacherPageContext();
     void logTeacherHubPageDebug(ctx);

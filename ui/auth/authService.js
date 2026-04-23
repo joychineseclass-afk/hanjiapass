@@ -3,14 +3,14 @@
  * 密码为轻量占位哈希，非生产级。
  */
 import {
-  loadAuthUsers,
   findUserByEmail,
   findUserById,
   upsertUser,
   loadSession,
   saveSession,
+  normAccount,
 } from "./authStore.js";
-import { setCurrentUser, GUEST_USER } from "../lumina-commerce/currentUser.js";
+import { setCurrentUser, GUEST_USER, getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { USER_ROLE } from "../lumina-commerce/enums.js";
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
 import { findTeacherProfileByUserId } from "../lumina-commerce/teacherProfileQueries.js";
@@ -52,29 +52,37 @@ function hashPasswordInner(s) {
 }
 
 /**
- * 从 commerce 中的老师档案推导 currentUser 的角色与 teacherProfileId。
- * @param {import('../lumina-commerce/currentUser.js').AuthUserShape} authUser
+ * 从本地 Lumina 角色 + commerce 老师档案同步 currentUser。
+ * @param {{ id: string, displayName: string, email: string }} authUser
  */
 async function applyProfileToCurrentUser(authUser) {
+  const stored = findUserById(authUser.id);
+  const teacherRole = stored?.roles?.teacher ?? "none";
+  const studentRole = stored?.roles?.student !== "none" ? "active" : "none";
+
+  if (teacherRole === "active") {
+    await initCommerceStore();
+    const snap0 = getCommerceStoreSync();
+    const existing = snap0 ? findTeacherProfileByUserId(snap0, authUser.id) : null;
+    if (!existing) {
+      await ensureTeacherProfile(authUser.id, String(stored?.displayName || authUser.displayName || "Teacher"));
+    }
+  }
+
   await initCommerceStore();
   const snap = getCommerceStoreSync();
   const row = snap ? findTeacherProfileByUserId(snap, authUser.id) : null;
-  if (row) {
-    setCurrentUser({
-      id: authUser.id,
-      name: authUser.displayName,
-      roles: [USER_ROLE.student, USER_ROLE.teacher],
-      teacherProfileId: row.id,
-      isGuest: false,
-    });
-    await ensureCurrentUserMatchesCommerceTeacher();
-    return;
-  }
+
+  const roles = /** @type {string[]} */ ([]);
+  if (studentRole === "active") roles.push(USER_ROLE.student);
+  if (teacherRole === "active" && row) roles.push(USER_ROLE.teacher);
+  if (roles.length === 0) roles.push(USER_ROLE.student);
+
   setCurrentUser({
     id: authUser.id,
-    name: authUser.displayName,
-    roles: [USER_ROLE.student],
-    teacherProfileId: null,
+    name: String(stored?.displayName || authUser.displayName),
+    roles,
+    teacherProfileId: teacherRole === "active" && row ? row.id : null,
     isGuest: false,
   });
   await ensureCurrentUserMatchesCommerceTeacher();
@@ -125,18 +133,21 @@ export async function registerAndLogin(p) {
 
 export function registerUser(p) {
   const displayName = String(p.name || "").trim();
-  const email = String(p.email || "").trim().toLowerCase();
+  const account = normAccount(String(p.email || p.account || ""));
   const password = String(p.password || "");
-  if (!email) return { ok: false, code: "email_required" };
+  if (!account) return { ok: false, code: "email_required" };
   if (!password) return { ok: false, code: "password_required" };
-  if (findUserByEmail(email)) return { ok: false, code: "email_taken" };
+  if (findUserByEmail(account)) return { ok: false, code: "email_taken" };
   const user = {
     id: uid("u"),
-    email,
-    displayName: displayName || email.split("@")[0] || "User",
+    email: account,
+    displayName: displayName || (account.includes("@") ? account.split("@")[0] : account) || "User",
     passwordHash: hashPassword(password),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
+    onboardingCompleted: false,
+    roles: { student: "active", teacher: "none" },
+    teacherProfile: null,
   };
   upsertUser(user);
   return { ok: true, user };
@@ -147,11 +158,11 @@ export function registerUser(p) {
  * @returns {Promise<{ ok: true } | { ok: false, code: string }>}
  */
 export async function loginUser(p) {
-  const email = String(p.email || "").trim().toLowerCase();
+  const account = normAccount(String(p.email || p.account || ""));
   const password = String(p.password || "");
-  if (!email) return { ok: false, code: "email_required" };
+  if (!account) return { ok: false, code: "email_required" };
   if (!password) return { ok: false, code: "password_required" };
-  const u = findUserByEmail(email);
+  const u = findUserByEmail(account);
   if (!u) return { ok: false, code: "invalid_credentials" };
   if (u.passwordHash !== hashPassword(password)) return { ok: false, code: "invalid_credentials" };
   saveSession(u.id);
@@ -198,6 +209,113 @@ export async function applyToBecomeTeacher() {
     /* */
   }
   return r;
+}
+
+/**
+ * 未登录应去登录；已登录且未完成 onboarding → 角色选择；否则 #my
+ */
+export function getDefaultPostAuthTargetHash() {
+  const u = getCurrentSessionAuthUser();
+  if (!u) return "#auth-login";
+  if (u.onboardingCompleted === false) return "#onboarding-role";
+  return "#my";
+}
+
+/**
+ * 「我要学习中文」：标记 onboarding 完成
+ */
+export async function markOnboardingCompletedStudentPath() {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  if (!full) return { ok: false, code: "not_found" };
+  upsertUser({
+    ...full,
+    onboardingCompleted: true,
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
+  }
+  return { ok: true };
+}
+
+/**
+ * 提交教师申请：teacher → pending，写入 teacherProfile
+ * @param {{ displayName: string, intro: string, teachingTypes: string[], experienceLevel: string, note?: string }} p
+ */
+export async function submitTeacherApplication(p) {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  if (!full) return { ok: false, code: "not_found" };
+  const teacherProfile = {
+    displayName: String(p.displayName || "").trim(),
+    intro: String(p.intro || "").trim(),
+    teachingTypes: Array.isArray(p.teachingTypes) ? p.teachingTypes.map((x) => String(x)) : [],
+    experienceLevel: String(p.experienceLevel || "").trim(),
+    note: p.note != null ? String(p.note) : "",
+    submittedAt: new Date().toISOString(),
+  };
+  upsertUser({
+    ...full,
+    onboardingCompleted: true,
+    roles: { student: "active", teacher: "pending" },
+    teacherProfile,
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
+  }
+  return { ok: true };
+}
+
+/**
+ * 本地开发/验收：将 teacher 标为 active 并确保 commerce 档案为已批准（Mock）
+ */
+export async function setMockTeacherRoleActiveForTest() {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  if (!full) return { ok: false, code: "not_found" };
+  upsertUser({
+    ...full,
+    onboardingCompleted: true,
+    roles: { ...full.roles, student: "active", teacher: "active" },
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  const { devForceApproveCurrentUserTeacherProfile } = await import("../lumina-commerce/teacherProfileService.js");
+  const r = await devForceApproveCurrentUserTeacherProfile(String(au.id));
+  await hydrateCurrentUserFromSession();
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
+  }
+  return r;
+}
+
+/**
+ * 供导航栏等读取 teacher 分栏状态
+ * @returns {'none'|'pending'|'active'|'rejected'|null} null 表示未登录
+ */
+export function getTeacherNavRoleState() {
+  const u = getCurrentSessionAuthUser();
+  if (!u) return null;
+  const tr = u.roles?.teacher ?? "none";
+  if (tr && tr !== "none") return tr;
+  const cu = getCurrentUser();
+  if (cu?.id === u.id && Array.isArray(cu.roles) && cu.roles.includes(USER_ROLE.teacher)) {
+    return "active";
+  }
+  return tr;
 }
 
 /** @deprecated 直接 import teacherProfileService */

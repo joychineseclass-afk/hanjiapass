@@ -81,6 +81,8 @@ function setActive(rootEl) {
         "#teacher-profile",
         "#teacher-ai",
         "#teacher-console",
+        "#teacher-apply",
+        "#teacher-status",
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
@@ -167,14 +169,36 @@ function syncAuthBlock(rootEl) {
     const u = mod.getCurrentSessionAuthUser();
     if (!u) {
       box.innerHTML = `
-      <a href="/index.html#login" class="joy-auth-link" data-joy-auth-login data-i18n="auth.nav_login">${escapeAuthText(t("auth.nav_login", "Login"))}</a>
-      <a href="/index.html#register" class="joy-auth-link joy-auth-link--alt" data-joy-auth-register data-i18n="auth.nav_register">${escapeAuthText(
+      <a href="/index.html#auth-login" class="joy-auth-link" data-joy-auth-login data-i18n="auth.nav_login">${escapeAuthText(t("auth.nav_login", "Login"))}</a>
+      <a href="/index.html#auth-register" class="joy-auth-link joy-auth-link--alt" data-joy-auth-register data-i18n="auth.nav_register">${escapeAuthText(
         t("auth.nav_register", "Register"),
       )}</a>
     `;
     } else {
       const name = escapeAuthText(String(u.displayName || u.email || "User").trim() || "User");
+      const tState = mod.getTeacherNavRoleState();
+      const myLabel = escapeAuthText(t("nav.my", "My learning"));
+      let teacherEntry = "";
+      if (tState === "active") {
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_workspace">${escapeAuthText(
+          t("auth.teacher_nav_workspace", t("nav.teacher", "Teacher")),
+        )}</a>`;
+      } else if (tState === "pending") {
+        teacherEntry = `<a href="/index.html#teacher-status" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_pending">${escapeAuthText(
+          t("auth.teacher_nav_pending", "Under review"),
+        )}</a>`;
+      } else if (tState === "rejected") {
+        teacherEntry = `<a href="/index.html#teacher-status" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_rejected">${escapeAuthText(
+          t("auth.teacher_nav_rejected", t("auth.teacher_nav_pending", "Under review")),
+        )}</a>`;
+      } else {
+        teacherEntry = `<a href="/index.html#teacher-apply" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_apply">${escapeAuthText(
+          t("auth.teacher_nav_apply", "Apply to teach"),
+        )}</a>`;
+      }
       box.innerHTML = `
+      <a href="/index.html#my" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.my">${myLabel}</a>
+      ${teacherEntry}
       <span class="joy-auth-name" title="${name}">${name}</span>
       <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
     `;
@@ -184,7 +208,7 @@ function syncAuthBlock(rootEl) {
       mod.logoutUser();
       syncAuthBlock(rootEl);
     });
-    ["[data-joy-auth-login]", "[data-joy-auth-register]"].forEach((sel) => {
+    ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]", "[data-joy-teacher]"].forEach((sel) => {
       box.querySelector(sel)?.addEventListener("click", (e) => {
         if (!isIndexPage()) return;
         e.preventDefault();
@@ -260,6 +284,8 @@ function ensureNavStylesOnce() {
     .topbar .joy-auth{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:min(100%, 22rem);justify-content:flex-end}
     .joy-auth-name{max-width:7.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:800;color:#0f172a}
     .joy-auth a.joy-auth-link,.joy-auth-link{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;text-decoration:none;color:#0f172a}
+    .joy-auth-aux{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;text-decoration:none;color:#334155;max-width:8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .joy-auth-aux--pending{border-color:#f59e0b;background:rgba(245,158,11,.08);color:#b45309}
     .joy-auth-link--alt{border-style:dashed}
     .joy-auth-link:hover{transform:translateY(-1px)}
     .joy-auth-logout{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;cursor:pointer;color:#334155}

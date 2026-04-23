@@ -5366,6 +5366,117 @@ a.teacher-shell-nav-link:hover{
 .auth-link:hover{
   text-decoration: underline;
 }
+.auth-field--check{
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+.auth-field--check input{
+  width: auto;
+  margin-top: 3px;
+}
+.auth-label-inline{
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.4;
+}
+.lumina-onboarding__head{
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 8px;
+}
+.lumina-onboarding__grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (min-width: 700px){
+  .lumina-onboarding__grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.lumina-onboarding__card{
+  padding: 20px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 14rem;
+}
+.lumina-onboarding__card-title{
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+.lumina-onboarding__card-desc,
+.lumina-onboarding__hint{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  flex: 1;
+}
+.lumina-onboarding__hint{
+  font-size: 12px;
+  opacity: 0.9;
+}
+.lumina-teacher-apply__tip{
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.teacher-apply__types{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.teacher-apply__check{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+}
+.teacher-apply__check input{ margin-top: 3px; }
+.teacher-apply__radio{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.role-pill{
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin: 0 0 8px;
+}
+.role-pill--pending{
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+}
+.role-pill--rejected{
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+}
+.lumina-teacher-status__meta{
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 8px;
+}
+.lumina-teacher-status__actions{
+  margin-top: 12px;
+}
+.lumina-teacher-status__dev{
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed #e2e8f0;
+}
 
 /* 老师档案页 */
 .teacher-profile-page .teacher-profile-hero{
