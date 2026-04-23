@@ -26,9 +26,9 @@ import { findAssetById } from "../lumina-commerce/teacherAssetsStore.js";
 import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
 import { i18n } from "../i18n.js";
 import {
+  renderTeacherAdminShell,
   teacherPathStripHtml,
   teacherPathStripClassroomHintHtml,
-  teacherWorkspaceSubnavHtml,
   userCanAccessTeacherReviewConsole,
 } from "./teacherPathNav.js";
 
@@ -448,8 +448,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
     </section>
   `;
 
-  return `
-    <div class="teacher-page wrap teacher-hub">
+  const workbenchMain = `
       <section class="card teacher-surface-hero teacher-hub-surface" aria-labelledby="tw-hub-h1">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.workspace.hub_hero_kicker"))}</p>
         <div class="teacher-hub-surface-row">
@@ -467,8 +466,6 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           </div>
         </div>
       </section>
-
-      ${teacherWorkspaceSubnavHtml("workspace", t, { showReviewConsole })}
 
       <section class="card teacher-hub-recommended" aria-labelledby="tw-hub-rec">
         <h2 id="tw-hub-rec" class="teacher-hub-section-title">${escapeHtml(t("teacher.workspace.hub_recommended_title"))}</h2>
@@ -627,8 +624,14 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           <p class="teacher-tile-scope">${escapeHtml(t("teacher.console.scope_note"))}</p>
         </article>
       </section>
-    </div>
   `;
+  return renderTeacherAdminShell({
+    active: "workspace",
+    tx: t,
+    showReviewConsole,
+    shellClass: "teacher-page teacher-hub",
+    mainHtml: workbenchMain,
+  });
 }
 
 /**
@@ -637,22 +640,20 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
  * @param {(a: string, b?: object) => string} t
  */
 function gatedTeacherShellHtml(ctx, t) {
-  return `
-    <div class="teacher-page wrap">
+  const main = `
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
         <h2 class="title">${escapeHtml(t("teacher.workspace.mine_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.gated_lead"))}</p>
       </section>
-      ${teacherWorkspaceSubnavHtml("workspace", t)}
       ${teacherGatePanelHtml(ctx, t)}
       <section class="card teacher-relation-flow teacher-relation-flow--muted" aria-label="${escapeHtml(t("teacher.relation_flow.title_mine"))}">
         <p class="teacher-relation-flow-title">${escapeHtml(t("teacher.relation_flow.title_mine"))}</p>
         ${teacherPathStripHtml(null, t)}
         ${teacherPathStripClassroomHintHtml(t)}
       </section>
-    </div>
   `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page" });
 }
 
 /**
@@ -663,16 +664,15 @@ function gatedTeacherShellHtml(ctx, t) {
  * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
  */
 function notTeacherShellHtml(t, ctx) {
-  return `
-    <div class="teacher-page wrap">
+  const main = `
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker"))}</p>
         <h2 class="title">${escapeHtml(t("teacher.workspace.mine_entry_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.mine_entry_subtitle"))}</p>
       </section>
       ${teacherGatePanelHtml(ctx, t)}
-    </div>
   `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page" });
 }
 
 /**
@@ -680,8 +680,7 @@ function notTeacherShellHtml(t, ctx) {
  * @param {(a: string, b?: object) => string} t
  */
 function guestAuthShellHtml(t) {
-  return `
-    <div class="teacher-page wrap teacher-gate--guest">
+  const main = `
       <section class="card teacher-hero teacher-hero--compact">
         <h2 class="title">${escapeHtml(t("teacher.gate.guest_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.gate.guest_body"))}</p>
@@ -690,8 +689,8 @@ function guestAuthShellHtml(t) {
           <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#register?next=teacher">${escapeHtml(t("auth.nav_register"))}</a>
         </div>
       </section>
-    </div>
   `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page teacher-gate--guest" });
 }
 
 /**

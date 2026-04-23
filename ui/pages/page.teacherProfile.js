@@ -11,7 +11,7 @@ import {
   removeTeacherCredentialItem,
 } from "../lumina-commerce/teacherProfileService.js";
 import { USER_ROLE, VERIFICATION_STATUS } from "../lumina-commerce/enums.js";
-import { teacherBackToWorkspaceHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
+import { currentUserCanAccessTeacherReviewConsoleSync, renderTeacherAdminShell } from "./teacherPathNav.js";
 
 const TARGET_OPTS = /** @type {const} */ (["kids", "hsk", "adults", "business"]);
 const LANG_OPTS = /** @type {const} */ (["zh", "kr", "en", "jp"]);
@@ -125,6 +125,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   const statusLabel = escapeHtml(tx(`teacher.wbstate.${statusKey}`));
 
   const tLabel = (k) => (tx(k) !== k ? tx(k) : k);
+  const showReviewConsole = currentUserCanAccessTeacherReviewConsoleSync();
   const targets = Array.isArray(profile.teaching_targets) ? profile.teaching_targets : [];
   const langs = Array.isArray(profile.teaching_languages) ? profile.teaching_languages : [];
   const creds = Array.isArray(profile.credential_items) ? profile.credential_items : [];
@@ -132,11 +133,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     ? `<ul class="teacher-credential-list">${creds.map((c) => credCardHtml(c, readOnly, tLabel)).join("")}</ul>`
     : `<p class="teacher-credential-empty">${escapeHtml(tx("teacher.profile.credential_empty"))}</p>`;
 
-  root.innerHTML = `
-    <div class="wrap teacher-profile-page teacher-admin-shell">
-      ${teacherBackToWorkspaceHtml(tx)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(tx("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("profile", tx)}
+  const main = `
       <section class="card teacher-profile-hero">
         <h1 class="teacher-profile-title">${escapeHtml(tx("teacher.profile.page_title"))}</h1>
         <p class="teacher-profile-status">${escapeHtml(tx("teacher.profile.status_label"))}: <strong>${statusLabel}</strong></p>
@@ -248,8 +245,14 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         </form>
       </section>
       <p class="teacher-profile-back"><a href="#teacher">${escapeHtml(tx("teacher.nav.back_mine_workbench"))}</a></p>
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: "profile",
+    tx,
+    showReviewConsole,
+    mainHtml: main,
+    shellClass: "teacher-profile-page teacher-page teacher-admin-shell",
+  });
   i18n.apply?.(root);
 
   const toast = root.querySelector("#tpToast");

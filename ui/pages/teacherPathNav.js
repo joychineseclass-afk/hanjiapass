@@ -41,63 +41,99 @@ export function teacherBackToWorkspaceHtml(tx) {
   </p>`;
 }
 
+const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
+  "workspace",
+  "profile",
+  "materials",
+  "courses",
+  "assets",
+  "publishing",
+]);
+
 /**
- * 教师模块轻量子导航：工作台 + 教材 / 课程 / 课堂资产 / 上架（当前项高亮）。
+ * 老师端模块导航单条：与已移除的横向 subnav 同一数据源，仅由侧栏 `renderTeacherAdminShell` 使用。
+ * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} kind
  * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
- * @param {(path: string, params?: object) => string} tx
- * @param {{ showReviewConsole?: boolean }} [options] 若为普通老师则隐藏「审核台」链；在 #teacher-review 门页仍保留当前项。
+ * @param {(path: string) => string} m  已转义安全文案
  */
-export function teacherWorkspaceSubnavHtml(active, tx, options = {}) {
+function teacherModuleNavItemSpec(kind, active, m) {
+  let isCurrent = active === kind;
+  if (kind === "listing" || kind === "publishing") isCurrent = active === "listing" || active === "publishing";
+  let href = "#teacher";
+  let label = m("teacher.nav.mine_workbench");
+  if (kind === "profile") {
+    href = "#teacher-profile";
+    label = m("teacher.nav.teacher_profile");
+  } else if (kind === "materials") {
+    href = "#teacher-materials";
+    label = m("teacher.hub.materials.title");
+  } else if (kind === "courses") {
+    href = "#teacher-courses";
+    label = m("teacher.hub.courses.title");
+  } else if (kind === "assets") {
+    href = "#teacher-assets";
+    label = m("teacher.hub.assets.title");
+  } else if (kind === "publishing" || kind === "listing") {
+    href = "#teacher-publishing";
+    label = m("teacher.nav.my_publishing");
+  } else if (kind === "review") {
+    href = "#teacher-review";
+    label = m("teacher.nav.review_console");
+  }
+  return { href, label, isCurrent };
+}
+
+/**
+ * 侧栏内单链：块级纵向导航。
+ * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} kind
+ * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
+ * @param {(path: string) => string} m
+ */
+function teacherShellNavItemHtml(kind, active, m) {
+  const { href, label, isCurrent } = teacherModuleNavItemSpec(kind, active, m);
+  if (isCurrent) {
+    return `<span class="teacher-shell-nav-link teacher-shell-nav-link--current" aria-current="page">${label}</span>`;
+  }
+  return `<a class="teacher-shell-nav-link" href="${href}">${label}</a>`;
+}
+
+/**
+ * 老师端统一后台布局：左侧固定模块导航 + 右侧主内容。不改变 hash 与权限语义。
+ * @param {object} opts
+ * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} opts.active
+ * @param {(path: string, params?: object) => string} opts.tx
+ * @param {string} opts.mainHtml
+ * @param {boolean} [opts.showReviewConsole]  省略时按 currentUser 与 commerce store 同步判断
+ * @param {string} [opts.shellClass]  附加在 .teacher-shell 上的类名（如 teacher-page、teacher-manage-page）
+ * @param {string} [opts.brandKey]  侧栏品牌/模块标题的 i18n 路径，默认 teacher.workspace.hub_hero_kicker
+ */
+export function renderTeacherAdminShell(opts) {
+  const { active, tx, mainHtml } = opts;
   const m = (path) => escapeHtml(tx(path));
   const showReview =
-    typeof options.showReviewConsole === "boolean"
-      ? options.showReviewConsole
+    typeof opts.showReviewConsole === "boolean"
+      ? opts.showReviewConsole
       : currentUserCanAccessTeacherReviewConsoleSync();
   const includeReviewNav = showReview || active === "review";
-  /** @param {'workspace'|'profile'|'materials'|'courses'|'assets'|'listing'|'publishing'|'review'} kind */
-  const item = (kind) => {
-    let isCurrent = active === kind;
-    if (kind === "listing") isCurrent = active === "listing" || active === "publishing";
-    let href = "#teacher";
-    let label = m("teacher.nav.mine_workbench");
-    if (kind === "profile") {
-      href = "#teacher-profile";
-      label = m("teacher.nav.teacher_profile");
-    } else if (kind === "materials") {
-      href = "#teacher-materials";
-      label = m("teacher.hub.materials.title");
-    } else if (kind === "courses") {
-      href = "#teacher-courses";
-      label = m("teacher.hub.courses.title");
-    } else if (kind === "assets") {
-      href = "#teacher-assets";
-      label = m("teacher.hub.assets.title");
-    } else if (kind === "listing" || kind === "publishing") {
-      href = "#teacher-publishing";
-      label = m("teacher.nav.my_publishing");
-    } else if (kind === "review") {
-      href = "#teacher-review";
-      label = m("teacher.nav.review_console");
-    }
-    if (isCurrent) {
-      return `<span class="teacher-subnav-item teacher-subnav-item--current" aria-current="page">${label}</span>`;
-    }
-    return `<a class="teacher-subnav-item teacher-subnav-item--link" href="${href}">${label}</a>`;
-  };
+  const brandKey = opts.brandKey != null && opts.brandKey !== "" ? opts.brandKey : "teacher.workspace.hub_hero_kicker";
+  const shellClass = (opts.shellClass || "").trim();
+  const shellExtra = shellClass ? ` ${shellClass}` : "";
+  const kinds = includeReviewNav ? [...TEACHER_MODULE_NAV_ORDER, "review"] : [...TEACHER_MODULE_NAV_ORDER];
+  const navItems = kinds.map((k) => teacherShellNavItemHtml(/** @type {any} */ (k), active, m)).join("");
 
-  return `
-    <nav class="teacher-subnav card" aria-label="${m("teacher.nav.subnav_aria")}">
-      <div class="teacher-subnav-row teacher-subnav-row--wrap">
-        ${item("workspace")}
-        ${item("profile")}
-        ${item("materials")}
-        ${item("courses")}
-        ${item("assets")}
-        ${item("publishing")}
-        ${includeReviewNav ? item("review") : ""}
+  return `<div class="teacher-shell wrap${shellExtra}">
+    <aside class="teacher-shell-sidebar">
+      <div class="teacher-shell-brand">
+        <span class="teacher-shell-brand-text">${m(brandKey)}</span>
       </div>
-    </nav>
-  `;
+      <nav class="teacher-shell-nav" aria-label="${m("teacher.nav.subnav_aria")}">
+        ${navItems}
+      </nav>
+    </aside>
+    <div class="teacher-shell-main">
+      <div class="teacher-main" data-teacher-main>${mainHtml}</div>
+    </div>
+  </div>`;
 }
 
 /**

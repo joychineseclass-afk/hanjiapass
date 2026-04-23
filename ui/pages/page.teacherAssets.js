@@ -32,7 +32,11 @@ import {
   updateListingPricingForTeacher,
 } from "../lumina-commerce/teacherCommerceBridge.js";
 import { i18n } from "../i18n.js";
-import { teacherPathStripHtml, teacherWorkspaceSubnavHtml, userCanAccessTeacherReviewConsole } from "./teacherPathNav.js";
+import {
+  renderTeacherAdminShell,
+  teacherPathStripHtml,
+  userCanAccessTeacherReviewConsole,
+} from "./teacherPathNav.js";
 import { formatDemoShortUpdated } from "../lumina-commerce/teacherDemoCatalog.js";
 import {
   TEACHER_ASSET_IMPORT_ACCEPT,
@@ -423,20 +427,28 @@ async function renderPage(root) {
   }
 
   if (!ctx.isTeacherRole) {
-    root.innerHTML = `<div class="teacher-page wrap card teacher-identity-gate"><p class="teacher-identity-gate-body">${escapeHtml(
-      t("teacher.access.not_teacher_body"),
-    )}</p></div>`;
+    root.innerHTML = renderTeacherAdminShell({
+      active: "assets",
+      tx: t,
+      mainHtml: `<section class="card teacher-identity-gate"><p class="teacher-identity-gate-body">${escapeHtml(
+        t("teacher.access.not_teacher_body"),
+      )}</p></section>`,
+      shellClass: "teacher-assets-page teacher-page",
+    });
     i18n.apply?.(root);
     return;
   }
   if (!ctx.isApproved || !ctx.profile) {
     const w = String(ctx.workbenchStatus);
-    root.innerHTML = `<div class="teacher-page wrap">
-      <section class="card teacher-access-gate">
+    root.innerHTML = renderTeacherAdminShell({
+      active: "assets",
+      tx: t,
+      mainHtml: `<section class="card teacher-access-gate">
         <p class="teacher-access-gate-title">${escapeHtml(t(`teacher.gate.title_${w}`))}</p>
         <p class="teacher-access-gate-body">${escapeHtml(t("teacher.assets.gated"))}</p>
-      </section>
-    </div>`;
+      </section>`,
+      shellClass: "teacher-assets-page teacher-page",
+    });
     i18n.apply?.(root);
     return;
   }
@@ -569,9 +581,7 @@ async function renderPage(root) {
       </div>`
         : "";
 
-  root.innerHTML = `
-    <div class="teacher-page wrap teacher-assets-page teacher-manage-page">
-      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
+  const main = `
       ${teacherPathStripHtml("assets", t, { showLead: false })}
       <header class="card teacher-surface-hero teacher-admin-header teacher-assets-page-hero">
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
@@ -589,8 +599,14 @@ async function renderPage(root) {
       <section class="card teacher-assets-list-card${tab === "trash" ? " teacher-assets-list-card--trash" : ""}" aria-label="${escapeHtml(
         tab === "trash" ? t("teacher.assets.trash_list_aria") : t("teacher.assets.list_aria"),
       )}">${listToolbarHtml}${emptyBlock}${tableBlock}</section>
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: "assets",
+    tx: t,
+    showReviewConsole,
+    mainHtml: main,
+    shellClass: "teacher-assets-page teacher-page teacher-manage-page",
+  });
 
   const doQuickCreate = () => {
     const a = createClassroomAssetForLesson({

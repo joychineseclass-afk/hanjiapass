@@ -25,7 +25,7 @@ import {
 } from "../lumina-commerce/teacherListingBridge.js";
 import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
 import { i18n } from "../i18n.js";
-import { teacherBackToWorkspaceHtml, teacherWorkspaceSubnavHtml, userCanAccessTeacherReviewConsole } from "./teacherPathNav.js";
+import { renderTeacherAdminShell, userCanAccessTeacherReviewConsole } from "./teacherPathNav.js";
 
 function tx(p, a) {
   return safeUiText(p, a);
@@ -392,11 +392,11 @@ async function renderEditor(root) {
     return;
   }
   if (isTeacherAssetTrashed(a)) {
-    root.innerHTML = `
-    <div class="wrap teacher-asset-editor-page">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
+    root.innerHTML = renderTeacherAdminShell({
+      active: "assets",
+      tx: t,
+      showReviewConsole,
+      mainHtml: `
       <section class="card teacher-asset-editor-trashed-gate">
         <h2 class="teacher-asset-editor-trashed-title">${esc(t("teacher.asset_editor.trashed_gate_title"))}</h2>
         <p class="teacher-asset-editor-trashed-body">${esc(t("teacher.asset_editor.trashed_gate_body"))}</p>
@@ -404,8 +404,9 @@ async function renderEditor(root) {
           <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets?tab=trash">${esc(t("teacher.asset_editor.trashed_go_trash"))}</a>
           <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
         </p>
-      </section>
-    </div>`;
+      </section>`,
+      shellClass: "teacher-asset-editor-page teacher-page",
+    });
     i18n.apply?.(root);
     return;
   }
@@ -419,11 +420,11 @@ async function renderEditor(root) {
     let impLabel = t(impKey);
     if (impLabel === impKey) impLabel = esc(String(a.import_status || "raw_uploaded"));
     else impLabel = esc(impLabel);
-    root.innerHTML = `
-    <div class="wrap teacher-asset-editor-page">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
+    root.innerHTML = renderTeacherAdminShell({
+      active: "assets",
+      tx: t,
+      showReviewConsole,
+      mainHtml: `
       <header class="card teacher-surface-hero teacher-asset-editor-hero">
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.import_readonly_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.import_readonly_lead"))}</p>
@@ -444,8 +445,9 @@ async function renderEditor(root) {
         </dl>
         <p class="teacher-asset-editor-import-disclaimer" role="status">${esc(t("teacher.asset_editor.import_no_parse_yet"))}</p>
         <p class="teacher-asset-editor-import-future">${esc(t("teacher.asset_editor.import_future_note"))}</p>
-      </section>
-    </div>`;
+      </section>`,
+      shellClass: "teacher-asset-editor-page teacher-page",
+    });
     i18n.apply?.(root);
     return;
   }
@@ -462,11 +464,11 @@ async function renderEditor(root) {
   const pubM = getAssetEditorPublishingModel(ctx.profile.id, u.id, listingRow, a, t);
   const publishBlock = publishingStatusCardHtml(pubM, listingRow, t);
 
-  root.innerHTML = `
-    <div class="wrap teacher-asset-editor-page">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
+  root.innerHTML = renderTeacherAdminShell({
+    active: "assets",
+    tx: t,
+    showReviewConsole,
+    mainHtml: `
       <header class="card teacher-surface-hero teacher-asset-editor-hero">
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.page_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.lead"))}</p>
@@ -491,8 +493,9 @@ async function renderEditor(root) {
       </header>
       ${publishBlock}
       ${editorFormHtml(a, t, u.id, ctx.profile.id, canEdit, isArchived, canMoveToTrash)}
-    </div>
-  `;
+  `,
+    shellClass: "teacher-asset-editor-page teacher-page",
+  });
   i18n.apply?.(root);
 
   const form = root.querySelector("#teacherAssetEditorForm");

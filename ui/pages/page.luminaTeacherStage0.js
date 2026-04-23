@@ -48,10 +48,9 @@ import {
 import { i18n } from "../i18n.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import {
-  teacherBackToWorkspaceHtml,
+  renderTeacherAdminShell,
   teacherListingSourceGuideHtml,
   teacherPathStripHtml,
-  teacherWorkspaceSubnavHtml,
   userCanAccessTeacherReviewConsole,
 } from "./teacherPathNav.js";
 import { formatListingDemoSourceStageNote } from "../lumina-commerce/teacherDemoCatalog.js";
@@ -395,11 +394,7 @@ function renderPage(root, ctx) {
   const showReviewConsoleNav = sessionUserId ? userCanAccessTeacherReviewConsole(snap, sessionUserId) : false;
 
   if (pageMode === "review" && !isReviewer) {
-    root.innerHTML = `
-    <div class="wrap teacher-review teacher-review--gate lts0-page teacher-admin-shell">
-      ${teacherBackToWorkspaceHtml(commerceT)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
-      ${teacherWorkspaceSubnavHtml("review", commerceT)}
+    const gateMain = `
       <section class="card teacher-review-gate-card">
         <h1 class="teacher-review-gate-title">${escapeHtml(commerceT("teacher.review_page.gate_title"))}</h1>
         <p class="teacher-review-gate-body">${escapeHtml(commerceT("teacher.review_page.gate_body"))}</p>
@@ -421,8 +416,15 @@ function renderPage(root, ctx) {
             commerceT("teacher.review_page.gate_switch_identity"),
           )}</a>
         </div>
-      </section>
-    </div>`;
+      </section>`;
+    root.innerHTML = renderTeacherAdminShell({
+      active: "review",
+      tx: commerceT,
+      showReviewConsole: showReviewConsoleNav,
+      mainHtml: gateMain,
+      shellClass: "teacher-review teacher-review--gate lts0-page teacher-admin-shell",
+      brandKey: "teacher.manage.page_kicker",
+    });
     i18n.apply?.(root);
     return;
   }
@@ -659,11 +661,7 @@ function renderPage(root, ctx) {
       </section>`
       : "";
 
-  root.innerHTML = `
-    <div class="wrap lts0-page teacher-admin-shell ${pageShellClass}">
-      ${teacherBackToWorkspaceHtml(commerceT)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
-      ${teacherWorkspaceSubnavHtml(subnavActive, commerceT, { showReviewConsole: showReviewConsoleNav })}
+  const lts0Main = `
       <section class="card lts0-hero">
         <div class="lts0-hero-top">
           <div class="lts0-hero-text">
@@ -850,8 +848,15 @@ function renderPage(root, ctx) {
               commerceT("teacher.publishing_page.link_full_console"),
             )}</a></p>`
       }
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: subnavActive,
+    tx: commerceT,
+    showReviewConsole: showReviewConsoleNav,
+    mainHtml: lts0Main,
+    shellClass: `lts0-page teacher-admin-shell ${pageShellClass}`.trim(),
+    brandKey: "teacher.manage.page_kicker",
+  });
 
   const demoSel = root.querySelector("#lts0DemoUser");
   demoSel?.addEventListener("change", () => {

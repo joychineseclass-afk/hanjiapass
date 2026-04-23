@@ -13,11 +13,11 @@ import {
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { i18n } from "../i18n.js";
 import {
-  teacherBackToWorkspaceHtml,
+  currentUserCanAccessTeacherReviewConsoleSync,
+  renderTeacherAdminShell,
   teacherMaterialsNextGuideHtml,
   teacherPathStripHtml,
   teacherPathStripClassroomHintHtml,
-  teacherWorkspaceSubnavHtml,
 } from "./teacherPathNav.js";
 
 function tx(path, params) {
@@ -137,11 +137,8 @@ async function renderMaterialsDom(root) {
     tbodyOnly = emptyMineBody;
   }
 
-  root.innerHTML = `
-    <div class="teacher-page wrap teacher-manage-page teacher-admin-shell">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("materials", t)}
+  const showReview = currentUserCanAccessTeacherReviewConsoleSync();
+  const main = `
       ${restrictedBannerHtml(ctx, t)}
       ${teacherPathStripHtml("materials", t)}
       ${teacherPathStripClassroomHintHtml(t)}
@@ -194,8 +191,14 @@ async function renderMaterialsDom(root) {
           <li>${escapeHtml(t("teacher.materials_page.relation_item_3"))}</li>
         </ul>
       </aside>
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: "materials",
+    tx: t,
+    showReviewConsole: showReview,
+    mainHtml: main,
+    shellClass: "teacher-page teacher-manage-page teacher-admin-shell",
+  });
   i18n.apply?.(root);
 }
 

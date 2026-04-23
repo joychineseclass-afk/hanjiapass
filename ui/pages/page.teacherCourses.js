@@ -17,11 +17,11 @@ import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { createClassroomAssetForLesson } from "../lumina-commerce/teacherAssetsSelectors.js";
 import { i18n } from "../i18n.js";
 import {
-  teacherBackToWorkspaceHtml,
+  currentUserCanAccessTeacherReviewConsoleSync,
+  renderTeacherAdminShell,
   teacherCoursesNextGuideHtml,
   teacherPathStripHtml,
   teacherPathStripClassroomHintHtml,
-  teacherWorkspaceSubnavHtml,
 } from "./teacherPathNav.js";
 
 function tx(path, params) {
@@ -170,11 +170,8 @@ async function renderCoursesDom(root) {
     tbodyOnly = emptyMineBody;
   }
 
-  root.innerHTML = `
-    <div class="teacher-page wrap teacher-manage-page teacher-admin-shell">
-      ${teacherBackToWorkspaceHtml(t)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("courses", t)}
+  const showReview = currentUserCanAccessTeacherReviewConsoleSync();
+  const main = `
       ${restrictedBannerHtml(ctx, t)}
       ${teacherPathStripHtml("courses", t)}
       ${teacherPathStripClassroomHintHtml(t)}
@@ -235,8 +232,14 @@ async function renderCoursesDom(root) {
           <li>${escapeHtml(t("teacher.courses_page.relation_item_3"))}</li>
         </ul>
       </aside>
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: "courses",
+    tx: t,
+    showReviewConsole: showReview,
+    mainHtml: main,
+    shellClass: "teacher-page teacher-manage-page teacher-admin-shell",
+  });
   if (ctx.isApproved && ctx.profile) {
     const pid = ctx.profile.id;
     const uid = getCurrentUser().id;
