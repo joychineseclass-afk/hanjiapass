@@ -74,6 +74,8 @@ function setActive(rootEl) {
         "#teacher-publishing",
         "#teacher-review",
         "#teacher-profile",
+        "#teacher-ai",
+        "#teacher-console",
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);

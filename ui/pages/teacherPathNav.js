@@ -50,7 +50,8 @@ const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
   "assets",
   "pub_review",
   "sales_orders",
-  "publishing",
+  "ai_assistant",
+  "classroom_console",
 ]);
 
 /**
@@ -96,6 +97,14 @@ function teacherModuleNavItemSpec(kind, active, m) {
     href = "#my-orders";
     label = m("teacher.nav.sales_and_orders");
     isCurrent = active === "sales_orders";
+  } else if (kind === "ai_assistant") {
+    href = "#teacher-ai";
+    label = m("teacher.nav.ai_assistant");
+    isCurrent = active === "ai_assistant";
+  } else if (kind === "classroom_console") {
+    href = "#teacher-console";
+    label = m("teacher.nav.classroom_console");
+    isCurrent = active === "classroom_console";
   } else if (kind === "publishing" || kind === "listing") {
     href = "#teacher-publishing";
     label = m("teacher.nav.my_publishing");

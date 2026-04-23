@@ -427,17 +427,6 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           })
           .join("");
 
-  const assetsHomePeek = `
-    <section class="card teacher-assets-home-peek" aria-label="${escapeHtml(t("teacher.workspace.home_assets_peek_aria"))}">
-      <p class="teacher-assets-home-peek-body">
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.workspace.home_assets_cta"))}</a>
-        <span class="teacher-assets-home-peek-meta">${escapeHtml(
-          t("teacher.workspace.home_assets_count_hint", { count: String(sum.classroomAssetCount) }),
-        )}</span>
-      </p>
-    </section>
-  `;
-
   const workbenchMain = `
       <section class="card teacher-surface-hero teacher-hub-surface" aria-labelledby="tw-hub-h1">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.workspace.hub_hero_kicker"))}</p>
@@ -474,49 +463,6 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         ${teacherPathStripClassroomHintHtml(t)}
       </section>
 
-      <section class="teacher-hub-workflows" aria-labelledby="tw-hub-wf">
-        <h2 id="tw-hub-wf" class="teacher-hub-section-title">${escapeHtml(t("teacher.workspace.hub_workflows_title"))}</h2>
-        <div class="teacher-hub-workflow-panels">
-          <article class="card teacher-hub-wf-card">
-            <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.workspace.hub_wf_decks"))}</h3>
-            <p class="teacher-hub-wf-p">${escapeHtml(t("teacher.workspace.hub_wf_decks_sub"))}</p>
-            <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets">${escapeHtml(t("teacher.workspace.hub_wf_decks_cta"))}</a>
-            <a class="teacher-hub-inline-link" href="#teacher-assets">${escapeHtml(t("teacher.workspace.hub_wf_decks_secondary"))}</a>
-          </article>
-          <article class="card teacher-hub-wf-card teacher-hub-wf-card--primary">
-            <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.enter.classroom_section_title"))}</h3>
-            <p class="teacher-hub-wf-p">${escapeHtml(t("teacher.workspace.hub_wf_class_sub"))}</p>
-            <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-hub-classroom">${escapeHtml(
-              t("teacher.workspace.hub_wf_class_scroll"),
-            )}</a>
-            <a class="teacher-hub-inline-link" href="#teacher-assets">${escapeHtml(t("teacher.workspace.hub_wf_class_pick"))}</a>
-          </article>
-          <article class="card teacher-hub-wf-card">
-            <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.workspace.hub_wf_publish"))}</h3>
-            <p class="teacher-hub-wf-p">${escapeHtml(t("teacher.workspace.hub_wf_publish_sub"))}</p>
-            <div class="teacher-hub-wf-cta-stack">
-              <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
-              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(
-                t("teacher.workflow.view_review_status"),
-              )}</a>
-              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(t("teacher.workflow.submit_for_review"))}</a>
-              ${
-                showReviewConsole
-                  ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(
-                      t("teacher.nav.review_console"),
-                    )}</a>`
-                  : `<p class="teacher-hub-wf-routing-hint">${escapeHtml(t("teacher.workflow.publish_routing_hint"))}</p>`
-              }
-            </div>
-          </article>
-          <article class="card teacher-hub-wf-card">
-            <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.workspace.hub_wf_commerce"))}</h3>
-            <p class="teacher-hub-wf-p">${escapeHtml(t("teacher.workspace.hub_wf_commerce_sub"))}</p>
-            <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(t("teacher.workspace.hub_wf_commerce_cta"))}</a>
-          </article>
-        </div>
-      </section>
-
       ${teacherSalesOverviewHtml(commerceStats, t)}
 
       <section class="card teacher-hub-recent-dual" aria-label="${escapeHtml(t("teacher.workspace.hub_recent_aria"))}">
@@ -533,86 +479,35 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         </div>
       </section>
 
-      ${assetsHomePeek}
-
-      <section class="teacher-grid" id="teacher-hub-classroom" tabindex="-1">
-        <article class="teacher-tile card teacher-tile--entry">
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.hub.assets.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.assets.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.hub.assets.cta_mine"))}</a>
-        </article>
-
-        <article class="teacher-tile card teacher-tile-classroom teacher-tile--primary">
-          <p class="teacher-tile-stage-kicker">${escapeHtml(t("teacher.enter.classroom_stage_kicker"))}</p>
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.enter.classroom_section_title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.enter.classroom_section_lead"))}</p>
-          <p class="teacher-tile-workflow-note">${escapeHtml(t("teacher.enter.classroom_workflow_note_mine"))}</p>
-          <div class="teacher-classroom-form teacher-classroom-form--primary">
-            <label class="teacher-field">
-              <span>${escapeHtml(t("teacher.label.course"))}</span>
-              <select id="teacherCourseSelect">
-                <option value="kids">${escapeHtml(formatTeacherHubCourseDisplay("kids"))}</option>
-                <option value="hsk">${escapeHtml(formatTeacherHubCourseDisplay("hsk"))}</option>
-              </select>
-            </label>
-            <label class="teacher-field">
-              <span>${escapeHtml(t("teacher.label.level"))}</span>
-              <select id="teacherLevelSelect">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-            </label>
-            <label class="teacher-field">
-              <span>${escapeHtml(t("teacher.label.lesson"))}</span>
-              <input id="teacherLessonInput" type="number" min="1" value="1" />
-            </label>
-            <button type="button" id="teacherEnterClassroomBtn" class="teacher-hub-cta teacher-hub-cta--primary">
-              ${escapeHtml(t("teacher.enter.classroom_button"))}
-            </button>
-          </div>
-        </article>
-
-        <article class="teacher-tile card teacher-tile--entry">
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.hub.materials.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.materials.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-materials">${escapeHtml(t("teacher.hub.materials.cta_mine"))}</a>
-        </article>
-
-        <article class="teacher-tile card teacher-tile--entry">
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.hub.courses.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.courses.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses">${escapeHtml(t("teacher.hub.courses.cta_mine"))}</a>
-        </article>
-
-        <article class="teacher-tile card teacher-tile--entry">
-          <div class="teacher-tile-head">
-            <h3 class="teacher-tile-title teacher-tile-title--inline">${escapeHtml(t("teacher.hub.listing.title"))}</h3>
-            <span class="teacher-hub-badge">${escapeHtml(t("teacher.hub.listing.badge"))}</span>
-          </div>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.listing.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(
-            t("teacher.workflow.view_review_status"),
-          )}</a>
-          ${
-            showReviewConsole
-              ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>`
-              : `<p class="teacher-tile-scope">${escapeHtml(t("teacher.workflow.publish_routing_hint"))}</p>`
-          }
-        </article>
-
-        <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.ai.assistant"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.ai.desc"))}</p>
-          <p class="teacher-tile-scope">${escapeHtml(t("teacher.ai.scope_note"))}</p>
-        </article>
-
-        <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
-          <h3 class="teacher-tile-title">${escapeHtml(t("teacher.console.title"))}</h3>
-          <p class="teacher-tile-desc">${escapeHtml(t("teacher.console.desc"))}</p>
-          <p class="teacher-tile-scope">${escapeHtml(t("teacher.console.scope_note"))}</p>
-        </article>
+      <section class="card teacher-tile-classroom teacher-tile--primary teacher-hub-classroom-only" id="teacher-hub-classroom" tabindex="-1">
+        <p class="teacher-tile-stage-kicker">${escapeHtml(t("teacher.enter.classroom_stage_kicker"))}</p>
+        <h2 class="teacher-hub-classroom-h2">${escapeHtml(t("teacher.enter.classroom_section_title"))}</h2>
+        <p class="teacher-tile-desc">${escapeHtml(t("teacher.enter.classroom_section_lead"))}</p>
+        <p class="teacher-tile-workflow-note">${escapeHtml(t("teacher.enter.classroom_workflow_note_mine"))}</p>
+        <div class="teacher-classroom-form teacher-classroom-form--primary">
+          <label class="teacher-field">
+            <span>${escapeHtml(t("teacher.label.course"))}</span>
+            <select id="teacherCourseSelect">
+              <option value="kids">${escapeHtml(formatTeacherHubCourseDisplay("kids"))}</option>
+              <option value="hsk">${escapeHtml(formatTeacherHubCourseDisplay("hsk"))}</option>
+            </select>
+          </label>
+          <label class="teacher-field">
+            <span>${escapeHtml(t("teacher.label.level"))}</span>
+            <select id="teacherLevelSelect">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </label>
+          <label class="teacher-field">
+            <span>${escapeHtml(t("teacher.label.lesson"))}</span>
+            <input id="teacherLessonInput" type="number" min="1" value="1" />
+          </label>
+          <button type="button" id="teacherEnterClassroomBtn" class="teacher-hub-cta teacher-hub-cta--primary">
+            ${escapeHtml(t("teacher.enter.classroom_button"))}
+          </button>
+        </div>
       </section>
   `;
   return renderTeacherAdminShell({

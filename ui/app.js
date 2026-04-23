@@ -100,6 +100,8 @@ registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetai
 registerRoute("#login", () => import("./pages/page.login.js"));
 registerRoute("#register", () => import("./pages/page.register.js"));
 registerRoute("#teacher-profile", () => import("./pages/page.teacherProfile.js"));
+registerRoute("#teacher-ai", () => import("./pages/page.teacherAiAssistant.js"));
+registerRoute("#teacher-console", () => import("./pages/page.teacherClassroomConsole.js"));
 
 /* ===============================
    🚀 Boot

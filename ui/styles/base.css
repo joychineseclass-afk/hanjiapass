@@ -1345,6 +1345,30 @@ button.teacher-hub-cta:hover{
   font-size: 12px;
   color: #64748b;
 }
+.teacher-module-placeholder-h1,
+.teacher-hub-classroom-h2{
+  margin: 0 0 8px;
+  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  font-weight: 900;
+  color: #0f172a;
+}
+.teacher-module-placeholder-page .teacher-module-placeholder-lead{
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #334155;
+}
+.teacher-module-placeholder-page .teacher-module-placeholder-note{
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 62ch;
+}
+.teacher-module-placeholder-page .teacher-module-placeholder-p{ margin: 0 0 12px; }
+.teacher-hub-classroom-only{
+  padding: 16px 18px 20px;
+}
 .teacher-assets-recent-list--hub{
   margin: 0;
   padding: 0 0 0 1.1em;
