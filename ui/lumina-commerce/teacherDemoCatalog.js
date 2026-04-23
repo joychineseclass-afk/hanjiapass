@@ -5,25 +5,28 @@
 
 import { DEFAULT_DEMO_TEACHER_PROFILE_ID } from "./currentUser.js";
 
-/** @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string }} TeacherDemoMaterial */
+/** @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string }} TeacherDemoMaterial */
 /** @typedef {{ id: string, updated_at: string, materialIds: string[], listingReadinessKey: string, listingId: string|null }} TeacherDemoCourse */
 
 /** @type {TeacherDemoMaterial[]} */
 export const TEACHER_DEMO_MATERIALS = [
   {
     id: "tdm_animals_ppt",
+    materialCategoryKey: "ppt",
     updated_at: "2026-04-12T09:30:00.000Z",
     usedByCourseIds: ["tdc_kids_draft_a"],
     listingPrepKey: "ready_pack",
   },
   {
     id: "tdm_politeness_handout",
+    materialCategoryKey: "handout",
     updated_at: "2026-04-11T14:00:00.000Z",
     usedByCourseIds: ["tdc_kids_draft_a"],
     listingPrepKey: "internal_only",
   },
   {
     id: "tdm_color_chain_cards",
+    materialCategoryKey: "picture_book",
     updated_at: "2026-04-09T11:15:00.000Z",
     usedByCourseIds: [],
     listingPrepKey: "not_yet_ready",
@@ -79,6 +82,16 @@ export function getDemoCoursesForProfile(profileId) {
 /** @param {string} id */
 export function getDemoMaterialById(id) {
   return TEACHER_DEMO_MATERIALS.find((m) => m.id === id) || null;
+}
+
+/**
+ * 演示教材分类（与 `teacher.materials_page.category.*` 对齐）。
+ * @param {TeacherDemoMaterial} m
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoMaterialCategory(m, tx) {
+  const key = m.materialCategoryKey && String(m.materialCategoryKey).trim() ? String(m.materialCategoryKey) : "other";
+  return tx(`teacher.materials_page.category.${key}`);
 }
 
 /** @param {string} id */

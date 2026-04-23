@@ -1369,6 +1369,75 @@ button.teacher-hub-cta:hover{
 .teacher-hub-classroom-only{
   padding: 16px 18px 20px;
 }
+.teacher-create-material-page .teacher-create-material-lead{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #475569;
+  max-width: 68ch;
+}
+.teacher-create-material-types-hint{
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+}
+.teacher-create-material-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.teacher-create-material-type-card{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+.teacher-create-material-type-btn{
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 10px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #334155;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.teacher-create-material-type-badge{
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-align: center;
+}
+.teacher-create-material-next-lead{
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+}
+.teacher-admin-manage-note{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  max-width: 72ch;
+}
+.teacher-material-category-pill{
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f766e;
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.2);
+}
+.teacher-materials-create-link{
+  margin: 10px 0 0;
+  font-size: 13px;
+}
 .teacher-assets-recent-list--hub{
   margin: 0;
   padding: 0 0 0 1.1em;

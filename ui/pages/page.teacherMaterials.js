@@ -7,6 +7,7 @@ import {
   formatDemoMaterialListingPrep,
   formatDemoMaterialPhasePill,
   formatDemoMaterialUsageChipLabel,
+  formatDemoMaterialCategory,
   formatDemoShortUpdated,
   getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
@@ -48,6 +49,7 @@ function materialsTableBody(materials, t) {
     const phaseKey = getDemoMaterialPhaseKey(m);
     const phaseLabel = escapeHtml(formatDemoMaterialPhasePill(phaseKey, t));
     const phaseClass = escapeHtml(String(phaseKey).replace(/[^a-z0-9_-]/gi, ""));
+    const categoryLabel = escapeHtml(formatDemoMaterialCategory(m, t));
     const usageChip = escapeHtml(formatDemoMaterialUsageChipLabel(m, t));
     const usageChipMod = m.usedByCourseIds.length ? "" : " teacher-mini-chip--muted";
     const coursesDetail =
@@ -62,6 +64,7 @@ function materialsTableBody(materials, t) {
         <span class="teacher-demo-badge">${badge}</span>
         ${title}
       </td>
+      <td><span class="teacher-material-category-pill">${categoryLabel}</span></td>
       <td>${type}</td>
       <td>${status}</td>
       <td class="teacher-manage-cell-phase"><span class="teacher-phase-pill teacher-phase-pill--mat-${phaseClass}">${phaseLabel}</span></td>
@@ -118,13 +121,13 @@ async function renderMaterialsDom(root) {
   const uploadHint = t("teacher.materials_page.upload_next_stage");
 
   const tableRows = materialsTableBody(materials, t);
-  const lockedBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
+  const lockedBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="9">
         <div class="teacher-manage-empty">
           <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.access.library_locked_title"))}</p>
           <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.access.library_locked_body"))}</p>
         </div>
       </td></tr></tbody>`;
-  const emptyMineBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
+  const emptyMineBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="9">
         <div class="teacher-manage-empty">
           <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.materials_page.empty_mine_title"))}</p>
           <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.materials_page.empty_mine_body"))}</p>
@@ -146,6 +149,7 @@ async function renderMaterialsDom(root) {
         <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
         <p class="teacher-admin-tagline">${escapeHtml(t("teacher.materials_page.tagline"))}</p>
+        <p class="teacher-admin-manage-note">${escapeHtml(t("teacher.materials_page.manage_scope_note"))}</p>
         <p class="teacher-admin-workflow-note">${escapeHtml(t("teacher.materials_page.classroom_note_mine"))}</p>
       </header>
       ${ctx.isApproved ? teacherMaterialsNextGuideHtml(t) : ""}
@@ -157,6 +161,9 @@ async function renderMaterialsDom(root) {
           </button>
           <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(uploadHint)}</p>
         </div>
+        <p class="teacher-materials-create-link">
+          <a class="teacher-hub-inline-link" href="#teacher-create-material">${escapeHtml(t("teacher.materials_page.link_to_create"))}</a>
+        </p>
       </section>
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
@@ -168,6 +175,7 @@ async function renderMaterialsDom(root) {
             <thead>
               <tr>
                 <th scope="col">${escapeHtml(t("teacher.materials_page.th_name"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.materials_page.th_category"))}</th>
                 <th scope="col">${escapeHtml(t("teacher.materials_page.th_type"))}</th>
                 <th scope="col">${escapeHtml(t("teacher.materials_page.th_status"))}</th>
                 <th scope="col">${escapeHtml(t("teacher.materials_page.th_prepare_phase"))}</th>

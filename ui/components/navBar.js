@@ -67,6 +67,7 @@ function setActive(rootEl) {
       const teacherHashes = new Set([
         "#teacher",
         "#teacher-materials",
+        "#teacher-create-material",
         "#teacher-courses",
         "#teacher-assets",
         "#teacher-asset-editor",
