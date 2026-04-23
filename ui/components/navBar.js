@@ -157,7 +157,7 @@ function loadAuthService() {
 }
 
 /**
- * 顶部：未登录为「登录/注册」；已登录为昵称 + 我的 + 登出。
+ * 顶部：未登录为「登录/注册」；已登录为昵称 + 登出（「我的学习」仅保留主导航 #my）。
  * @param {HTMLElement} rootEl
  */
 function syncAuthBlock(rootEl) {
@@ -176,7 +176,6 @@ function syncAuthBlock(rootEl) {
       const name = escapeAuthText(String(u.displayName || u.email || "User").trim() || "User");
       box.innerHTML = `
       <span class="joy-auth-name" title="${name}">${name}</span>
-      <a href="/index.html#my" class="joy-auth-link" data-joy-auth-my data-i18n="auth.nav_my">${escapeAuthText(t("auth.nav_my", "My learning"))}</a>
       <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
     `;
     }
@@ -185,7 +184,7 @@ function syncAuthBlock(rootEl) {
       mod.logoutUser();
       syncAuthBlock(rootEl);
     });
-    ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]"].forEach((sel) => {
+    ["[data-joy-auth-login]", "[data-joy-auth-register]"].forEach((sel) => {
       box.querySelector(sel)?.addEventListener("click", (e) => {
         if (!isIndexPage()) return;
         e.preventDefault();
