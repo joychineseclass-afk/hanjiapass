@@ -275,6 +275,32 @@ export async function setClassroomAssetListingToPublic(assetId, teacherProfileId
 }
 
 /**
+ * 审核通过后，将 visibility 从 public 改回 private（不改变 approved）。
+ * @param {string} assetId
+ * @param {string} teacherProfileId
+ * @returns {Promise<{ ok: boolean, code?: string, listing?: import('./schema.js').Listing }>}
+ */
+export async function setClassroomAssetListingToPrivate(assetId, teacherProfileId) {
+  const asset = findAssetById(String(assetId));
+  if (!asset || isTeacherAssetTrashed(asset)) return { ok: false, code: "asset_trashed" };
+  await initCommerceStore();
+  const L = findListingByAssetId(getCommerceStoreSync(), assetId);
+  if (!L) return { ok: false, code: "listing_not_found" };
+  if (L.teacher_id !== teacherProfileId) return { ok: false, code: "teacher_mismatch" };
+  if (L.status !== LISTING_STATUS.approved) return { ok: false, code: "not_approved" };
+  if (L.visibility !== VISIBILITY.public) return { ok: false, code: "not_public" };
+  mutateCommerceStore((draft) => {
+    const row = draft.listings.find((x) => x.id === L.id);
+    if (!row) return;
+    row.visibility = VISIBILITY.private;
+    row.updated_at = new Date().toISOString();
+  });
+  const after = getCommerceStoreSync();
+  const u = after ? findListingByAssetId(after, String(assetId)) : null;
+  return u ? { ok: true, listing: u } : { ok: false, code: "listing_missing" };
+}
+
+/**
  * @param {string} teacherProfileId
  * @param {string} currentUserId
  * @param {import('./schema.js').Listing|null} listing
@@ -378,19 +404,43 @@ function listingStateKey(L, t) {
  */
 export function getAssetEditorPublishingModel(teacherProfileId, currentUserId, listing, asset, t) {
   const base = getTeacherAssetPublishUiState(teacherProfileId, currentUserId, listing, asset, t);
-  const hasListing = base.hasListing;
+  const hasListing = Boolean(listing);
+  const sameTeacher =
+    String(asset.teacher_profile_id) === String(teacherProfileId) &&
+    (!currentUserId || !asset.owner_user_id || String(asset.owner_user_id) === String(currentUserId));
+  const isApproved = Boolean(listing && listing.status === LISTING_STATUS.approved);
+  const isPending = Boolean(listing && listing.status === LISTING_STATUS.pending_review);
+  const isDraftOrRejected = Boolean(
+    listing &&
+      (listing.status === LISTING_STATUS.draft || listing.status === LISTING_STATUS.rejected),
+  );
   const isPublic = Boolean(
     listing && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public,
   );
-  const canCreate = !hasListing && asset.status !== ASSET_STATUS.archived;
-  const canGoPublic =
-    Boolean(listing) &&
-    listing.status === LISTING_STATUS.approved &&
-    listing.visibility !== VISIBILITY.public &&
-    String(asset.teacher_profile_id) === String(teacherProfileId) &&
-    (!currentUserId || !asset.owner_user_id || String(asset.owner_user_id) === String(currentUserId));
+  const isPrivateApproved = Boolean(
+    listing && listing.status === LISTING_STATUS.approved && listing.visibility !== VISIBILITY.public,
+  );
+  const canCreate = !hasListing && asset.status !== ASSET_STATUS.archived && sameTeacher;
+  const canGoPublic = isPrivateApproved && sameTeacher;
+  const canGoPrivate = isPublic && sameTeacher;
+
+  /** @type {1|2|3|4|5} */
+  let scenario = 1;
+  if (!hasListing) scenario = 1;
+  else if (isPending) scenario = 3;
+  else if (isPrivateApproved) scenario = 4;
+  else if (isPublic) scenario = 5;
+  else if (isDraftOrRejected) scenario = 2;
+  else scenario = 2;
+
+  let visibilityHintKey = "teacher.asset_editor.vis_hint_no_listing";
+  if (!hasListing) visibilityHintKey = "teacher.asset_editor.vis_hint_no_listing";
+  else if (!isApproved) visibilityHintKey = "teacher.asset_editor.vis_hint_not_approved";
+  else if (isPrivateApproved) visibilityHintKey = "teacher.asset_editor.vis_hint_can_public";
+  else if (isPublic) visibilityHintKey = "teacher.asset_editor.vis_hint_is_public";
+
   return {
-    hasListing: Boolean(listing),
+    hasListing,
     listingId: listing?.id || "",
     listingStateLine: base.listingStateLabel,
     canSubmit: base.canSubmit,
@@ -398,6 +448,10 @@ export function getAssetEditorPublishingModel(teacherProfileId, currentUserId, l
     isPublic,
     canCreate,
     canGoPublic,
+    canGoPrivate,
+    sameTeacher,
+    scenario,
+    visibilityHintKey,
     showViewPublic: hasListing && isPublic,
     showPreviewListing: Boolean(listing?.id) && !isPublic,
     showViewListingConsole: hasListing,

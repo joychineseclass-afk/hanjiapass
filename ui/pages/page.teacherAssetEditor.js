@@ -19,6 +19,7 @@ import {
   ensureListingForTeacherAsset,
   submitTeacherAssetListingForReview,
   setClassroomAssetListingToPublic,
+  setClassroomAssetListingToPrivate,
   syncClassroomAssetListingFromAsset,
   getAssetEditorPublishingModel,
 } from "../lumina-commerce/teacherListingBridge.js";
@@ -211,72 +212,140 @@ function collectOutlineFromDom(root) {
 }
 
 /**
+ * @param {import('../lumina-commerce/schema.js').Listing|null|undefined} listing
+ * @param {(k: string, p?: object) => string} t
+ */
+function editorListingReviewPill(listing, t) {
+  if (!listing) {
+    return `<span class="teacher-state-pill teacher-state-pill--muted">${esc(t("teacher.asset_editor.review_pill_none"))}</span>`;
+  }
+  const st = listing.status;
+  const mod =
+    st === LISTING_STATUS.pending_review
+      ? "pending"
+      : st === LISTING_STATUS.approved
+        ? "approved"
+        : st === LISTING_STATUS.rejected
+          ? "rejected"
+          : "draft";
+  const key =
+    st === LISTING_STATUS.pending_review
+      ? "status_pending"
+      : st === LISTING_STATUS.approved
+        ? "status_approved"
+        : st === LISTING_STATUS.rejected
+          ? "status_rejected"
+          : "status_draft";
+  return `<span class="teacher-state-pill teacher-state-pill--${mod}">${esc(t(`teacher.unified.${key}`))}</span>`;
+}
+
+/**
+ * @param {import('../lumina-commerce/schema.js').Listing|null|undefined} listing
+ * @param {(k: string, p?: object) => string} t
+ */
+function editorVisibilityPill(listing, t) {
+  if (!listing) {
+    return `<span class="teacher-state-pill teacher-state-pill--muted">${esc(t("teacher.asset_editor.visibility_pill_na"))}</span>`;
+  }
+  const isPub = listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
+  const key = isPub ? "vis_public" : "vis_private";
+  return `<span class="teacher-state-pill teacher-state-pill--${isPub ? "vis_public" : "vis_private"}">${esc(
+    t(`teacher.unified.${key}`),
+  )}</span>`;
+}
+
+/**
  * @param {object} m
  * @param {import('../lumina-commerce/schema.js').Listing|undefined|null} listing
  * @param {(k: string, p?: object) => string} t
  */
 function publishingStatusCardHtml(m, listing, t) {
-  const L = listing;
-  const hasL = m.hasListing;
-  const publicLine = hasL
-    ? L && L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public
-      ? t("teacher.asset_editor.publishing_public_yes")
-      : t("teacher.asset_editor.publishing_public_no")
-    : "—";
-  const listingLine = hasL
-    ? t("teacher.publishing.badge_listing_yes")
-    : t("teacher.publishing.badge_listing_no");
-  const goPubDisabled = m.canGoPublic ? "" : " disabled";
-  const subDisabled = m.canSubmit ? "" : " disabled";
   const subTitle = m.submitReason ? esc(String(m.submitReason)) : "";
+  const subDisabled = m.canSubmit ? "" : " disabled";
+  const previewLink = (cls) =>
+    m.listingId
+      ? `<a class="${cls}" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(t("teacher.asset_editor.publishing_preview_listing"))}</a>`
+      : "";
+  const consoleLink = `<a class="teacher-asset-editor-publish-link" href="#teacher-publishing">${esc(
+    t("teacher.asset_editor.publishing_go_my_listings"),
+  )}</a>`;
+
+  let primaryBlock = "";
+  let secondaryBlock = "";
+
+  switch (m.scenario) {
+    case 1:
+      primaryBlock = m.canCreate
+        ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetCreateListing">${esc(
+            t("teacher.asset_editor.publishing_create_listing"),
+          )}</button>`
+        : "";
+      secondaryBlock = consoleLink;
+      break;
+    case 2:
+      primaryBlock =
+        m.canSubmit && listing
+          ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetSubmitListing"${subDisabled} title="${subTitle}">${esc(
+              t("teacher.asset_editor.publishing_submit_review"),
+            )}</button>`
+          : "";
+      secondaryBlock = [previewLink("teacher-asset-editor-publish-link"), consoleLink].filter(Boolean).join("");
+      break;
+    case 3:
+      primaryBlock = m.listingId
+        ? `<a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--preview-listing" href="#teacher-listing?id=${encodeURIComponent(
+            m.listingId,
+          )}">${esc(t("teacher.asset_editor.publishing_preview_listing"))}</a>`
+        : "";
+      secondaryBlock = consoleLink;
+      break;
+    case 4:
+      primaryBlock = m.canGoPublic
+        ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetGoPublic">${esc(
+            t("teacher.asset_editor.publishing_set_public"),
+          )}</button>`
+        : "";
+      secondaryBlock = [previewLink("teacher-asset-editor-publish-link"), consoleLink].filter(Boolean).join("");
+      break;
+    case 5:
+      primaryBlock = m.listingId
+        ? `<a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(
+            t("teacher.asset_editor.publishing_view_public"),
+          )}</a>`
+        : "";
+      secondaryBlock = [
+        m.canGoPrivate
+          ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--danger" id="teacherAssetMakePrivate">${esc(
+              t("teacher.asset_editor.publishing_make_private"),
+            )}</button>`
+          : "",
+        consoleLink,
+      ]
+        .filter(Boolean)
+        .join("");
+      break;
+    default:
+      secondaryBlock = consoleLink;
+  }
+
   return `
     <section class="card teacher-asset-editor-section teacher-asset-editor-section--publishing" aria-labelledby="teacherAssetPubH2">
       <h2 class="teacher-asset-editor-h" id="teacherAssetPubH2">${esc(t("teacher.asset_editor.section_publishing"))}</h2>
       <p class="teacher-asset-editor-section-hint">${esc(t("teacher.asset_editor.publishing_lead"))}</p>
-      <ul class="teacher-asset-editor-publish-facts" role="list">
-        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_listing"))}</span> <span class="teacher-asset-editor-publish-v">${esc(listingLine)}</span></li>
-        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_review"))}</span> <span class="teacher-asset-editor-publish-v">${esc(m.listingStateLine)}</span></li>
-        <li><span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_public"))}</span> <span class="teacher-asset-editor-publish-v">${esc(publicLine)}</span></li>
-      </ul>
+      <div class="teacher-asset-editor-publish-meta" role="group" aria-label="${esc(t("teacher.asset_editor.publish_meta_aria"))}">
+        <div class="teacher-asset-editor-publish-meta-row">
+          <span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publishing_row_review"))}</span>
+          <span class="teacher-asset-editor-publish-pills">${editorListingReviewPill(listing, t)}</span>
+        </div>
+        <div class="teacher-asset-editor-publish-meta-row">
+          <span class="teacher-asset-editor-publish-k">${esc(t("teacher.asset_editor.publish_meta_visibility"))}</span>
+          <span class="teacher-asset-editor-publish-pills">${editorVisibilityPill(listing, t)}</span>
+        </div>
+      </div>
+      <p class="teacher-asset-editor-visibility-hint" role="status">${esc(t(m.visibilityHintKey))}</p>
       <div class="teacher-asset-editor-publish-actions" role="group" aria-label="${esc(t("teacher.asset_editor.publishing_actions_aria"))}">
-        ${
-          m.showViewPublic && m.listingId
-            ? `<a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-listing?id=${encodeURIComponent(m.listingId)}">${esc(
-                t("teacher.asset_editor.publishing_view_public"),
-              )}</a>`
-            : ""
-        }
-        ${
-          m.showPreviewListing && m.listingId
-            ? `<a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--preview-listing" href="#teacher-listing?id=${encodeURIComponent(
-                m.listingId,
-              )}">${esc(t("teacher.asset_editor.publishing_preview_listing"))}</a>`
-            : ""
-        }
-        ${
-          m.canCreate
-            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetCreateListing">${esc(
-                t("teacher.asset_editor.publishing_create_listing"),
-              )}</button>`
-            : ""
-        }
-        ${
-          hasL && m.canSubmit
-            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--primary" id="teacherAssetSubmitListing"${subDisabled} title="${subTitle}">${esc(
-                t("teacher.asset_editor.publishing_submit_review"),
-              )}</button>`
-            : ""
-        }
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${esc(
-          t("teacher.asset_editor.publishing_go_my_listings"),
-        )}</a>
-        ${
-          m.canGoPublic
-            ? `<button type="button" class="teacher-hub-cta teacher-hub-cta--secondary" id="teacherAssetGoPublic"${goPubDisabled}>${esc(
-                t("teacher.asset_editor.publishing_set_public"),
-              )}</button>`
-            : ""
-        }
+        ${primaryBlock}
+        <div class="teacher-asset-editor-publish-secondary">${secondaryBlock}</div>
       </div>
     </section>`;
 }
@@ -452,6 +521,20 @@ async function renderEditor(root) {
     ev.preventDefault();
     if (!pubM.canGoPublic) return;
     const r = await setClassroomAssetListingToPublic(a.id, ctx.profile.id);
+    if (!r.ok) {
+      try {
+        alert(t(`teacher.publishing.error.${r.code}`) || r.code);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    refresh();
+  });
+  root.querySelector("#teacherAssetMakePrivate")?.addEventListener("click", async (ev) => {
+    ev.preventDefault();
+    if (!pubM.canGoPrivate) return;
+    const r = await setClassroomAssetListingToPrivate(a.id, ctx.profile.id);
     if (!r.ok) {
       try {
         alert(t(`teacher.publishing.error.${r.code}`) || r.code);

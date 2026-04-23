@@ -84,12 +84,11 @@ function listingUnifiedPillsHtml(L, t) {
           ? "status_rejected"
           : "status_draft";
   const pub = L.visibility === VISIBILITY.public;
-  const visKey = pub ? "vis_public" : "vis_unlisted";
+  const visKey = pub ? "vis_public" : "vis_private";
+  const visMod = pub ? "vis_public" : "vis_private";
   return `<span class="teacher-state-pill teacher-state-pill--${stMod}">${escapeHtml(
     t(`teacher.unified.${stKey}`),
-  )}</span><span class="teacher-state-pill teacher-state-pill--${pub ? "vis_public" : "vis_unlisted"}">${escapeHtml(
-    t(`teacher.unified.${visKey}`),
-  )}</span>`;
+  )}</span><span class="teacher-state-pill teacher-state-pill--${visMod}">${escapeHtml(t(`teacher.unified.${visKey}`))}</span>`;
 }
 
 /**

@@ -21,6 +21,7 @@ import {
   findListingByAssetId,
   submitTeacherAssetListingForReview,
   setClassroomAssetListingToPublic,
+  setClassroomAssetListingToPrivate,
   getTeacherAssetPublishUiState,
 } from "../lumina-commerce/teacherListingBridge.js";
 import { LISTING_STATUS, PRICING_TYPE, VISIBILITY } from "../lumina-commerce/enums.js";
@@ -54,6 +55,49 @@ function escapeHtml(s) {
 
 function assetStatusLabel(t, st) {
   return t(`teacher.assets.state.${st}`);
+}
+
+/**
+ * @param {import('../lumina-commerce/schema.js').Listing|null|undefined} listing
+ * @param {(k: string, p?: object) => string} t
+ */
+function assetsRowReviewPill(listing, t) {
+  if (!listing) {
+    return `<span class="teacher-state-pill teacher-state-pill--muted">${escapeHtml(t("teacher.assets.pub_badge_no_listing"))}</span>`;
+  }
+  const st = listing.status;
+  const mod =
+    st === LISTING_STATUS.pending_review
+      ? "pending"
+      : st === LISTING_STATUS.approved
+        ? "approved"
+        : st === LISTING_STATUS.rejected
+          ? "rejected"
+          : "draft";
+  const key =
+    st === LISTING_STATUS.pending_review
+      ? "status_pending"
+      : st === LISTING_STATUS.approved
+        ? "status_approved"
+        : st === LISTING_STATUS.rejected
+          ? "status_rejected"
+          : "status_draft";
+  return `<span class="teacher-state-pill teacher-state-pill--${mod}">${escapeHtml(t(`teacher.unified.${key}`))}</span>`;
+}
+
+/**
+ * @param {import('../lumina-commerce/schema.js').Listing|null|undefined} listing
+ * @param {(k: string, p?: object) => string} t
+ */
+function assetsRowVisibilityPill(listing, t) {
+  if (!listing) {
+    return `<span class="teacher-state-pill teacher-state-pill--muted">${escapeHtml(t("teacher.assets.pub_visibility_na"))}</span>`;
+  }
+  const isPub = listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
+  const key = isPub ? "vis_public" : "vis_private";
+  return `<span class="teacher-state-pill teacher-state-pill--${isPub ? "vis_public" : "vis_private"}">${escapeHtml(
+    t(`teacher.unified.${key}`),
+  )}</span>`;
 }
 
 /** @returns {'active' | 'trash'} */
@@ -99,7 +143,6 @@ function assetRow(a, t, profileId, userId, listing, snap) {
   });
   const stClass = `teacher-asset-status-chip--${String(a.status).replace(/[^a-z0-9_]/g, "_")}`;
   const pub = getTeacherAssetPublishUiState(profileId, userId, listing || null, a, t);
-  const reviewLine = pub.listingStateLabel;
   const hasPubListing = Boolean(listing && listing.id);
   const listingId = listing?.id || "";
   const canSubmit = pub.canSubmit;
@@ -116,9 +159,50 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     listing.visibility !== VISIBILITY.public;
   const isVisPublic =
     Boolean(listing) && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
-  const publicUrl = hasPubListing && listing && listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public
-    ? `#teacher-listing?id=${encodeURIComponent(listing.id)}`
-    : "";
+  const canSetPrivate = isVisPublic;
+  const previewListingUrl = hasPubListing && listingId ? `#teacher-listing?id=${encodeURIComponent(listingId)}` : "";
+  const isDraftOrRejected =
+    Boolean(listing) &&
+    (listing.status === LISTING_STATUS.draft || listing.status === LISTING_STATUS.rejected);
+  const isPending = Boolean(listing) && listing.status === LISTING_STATUS.pending_review;
+  const pubQuick = (() => {
+    if (!hasPubListing) {
+      return `<a class="teacher-asset-link" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+        t("teacher.assets.pub_quick_editor_listing"),
+      )}</a>`;
+    }
+    if (isPending) {
+      return `<span class="teacher-asset-muted">${escapeHtml(t("teacher.assets.pub_quick_pending_only"))}</span>`;
+    }
+    if (isDraftOrRejected && canSubmit) {
+      return `<a class="teacher-asset-link" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+        t("teacher.assets.pub_quick_submit_review"),
+      )}</a>`;
+    }
+    if (isDraftOrRejected && !canSubmit) {
+      return `<a class="teacher-asset-link" href="#teacher-asset-editor?id=${encodeURIComponent(a.id)}">${escapeHtml(
+        t("teacher.assets.pub_quick_open_editor"),
+      )}</a>`;
+    }
+    if (canSetPublic) {
+      return `<button type="button" class="teacher-asset-ghost teacher-asset-pub-vis-btn" data-teacher-asset-gopublic="${escapeHtml(
+        a.id,
+      )}">${escapeHtml(t("teacher.assets.pub_action_set_public"))}</button>`;
+    }
+    if (canSetPrivate) {
+      return `<button type="button" class="teacher-asset-ghost teacher-asset-pub-vis-btn teacher-asset-pub-vis-btn--private" data-teacher-asset-goprivate="${escapeHtml(
+        a.id,
+      )}">${escapeHtml(t("teacher.assets.pub_action_make_private"))}</button>
+      ${
+        previewListingUrl
+          ? `<a class="teacher-asset-link" href="${escapeHtml(previewListingUrl)}">${escapeHtml(
+              t("teacher.assets.preview_listing_page"),
+            )}</a>`
+          : ""
+      }`;
+    }
+    return "";
+  })();
   const archDisabled = a.status === ASSET_STATUS.archived;
   const canMoveToTrash = !archDisabled && a.asset_type === ASSET_TYPE.lesson_slide_draft;
   const hasNote = Boolean(getEffectiveTeacherNote(a));
@@ -151,14 +235,13 @@ function assetRow(a, t, profileId, userId, listing, snap) {
           ? `${String(listing.price_currency || "KRW")} ${payAmt.toLocaleString()}`
           : t("teacher.assets.commerce_price_unset");
     const isPub = listing.status === LISTING_STATUS.approved && listing.visibility === VISIBILITY.public;
+    const visLabel = isPub ? t("teacher.unified.vis_public") : t("teacher.unified.vis_private");
     const nGrants = countGrantsForListing(snap, listing.id);
     const priceVal = payAmt > 0 ? String(payAmt) : String(listing.price_amount || listing.sale_price_amount || 0);
     return `<td class="teacher-manage-cell-commerce" data-commerce-listing="${escapeHtml(listing.id)}">
       <div class="teacher-asset-commerce-summary">
         <span class="teacher-commerce-chip teacher-commerce-chip--price">${escapeHtml(priceShort)}</span>
-        <span class="teacher-commerce-chip ${isPub ? "is-pub" : ""}">${escapeHtml(
-      isPub ? t("teacher.assets.commerce_public_yes") : t("teacher.assets.commerce_public_no"),
-    )}</span>
+        <span class="teacher-commerce-chip ${isPub ? "is-pub" : ""}">${escapeHtml(visLabel)}</span>
         <span class="teacher-commerce-chip">${escapeHtml(
           t("teacher.assets.commerce_grants", { n: String(nGrants) }),
         )}</span>
@@ -202,31 +285,23 @@ function assetRow(a, t, profileId, userId, listing, snap) {
     <td><span class="teacher-asset-status-chip ${escapeHtml(stClass)}">${escapeHtml(assetStatusLabel(t, a.status))}</span></td>
     <td class="teacher-manage-cell-note"><span class="teacher-asset-note-chip ${hasNote ? "has-note" : ""}">${escapeHtml(noteShort)}</span></td>
     <td class="teacher-manage-cell-publish">
-      <div class="teacher-asset-pub-row">
-        <span class="teacher-publish-chip teacher-publish-chip--listing">${escapeHtml(
-          hasPubListing ? t("teacher.assets.has_listing_yes") : t("teacher.assets.has_listing_no"),
-        )}</span>
-        <span class="teacher-publish-chip teacher-publish-chip--state">${escapeHtml(reviewLine)}</span>
-        ${
-          hasPubListing
-            ? `<span class="teacher-asset-visibility-pill ${isVisPublic ? "is-pub" : "is-prv"}">${escapeHtml(
-                isVisPublic ? t("teacher.assets.publish_vis_public") : t("teacher.assets.publish_vis_private"),
-              )}</span>`
-            : ""
-        }
+      <div class="teacher-asset-pub-pills" role="group" aria-label="${escapeHtml(t("teacher.assets.pub_pills_aria"))}">
+        ${assetsRowReviewPill(listing || null, t)}
+        ${assetsRowVisibilityPill(listing || null, t)}
       </div>
       <p class="teacher-asset-pub-aux">
         <a class="teacher-asset-link" href="#teacher-publishing" title="${escapeHtml(t("teacher.assets.view_publish_state"))}">${escapeHtml(
           t("teacher.assets.view_publish_state"),
         )}</a>
         ${
-          hasPubListing && listingId
+          hasPubListing && listingId && !isVisPublic
             ? ` <a class="teacher-asset-link teacher-asset-link--preview" href="#teacher-listing?id=${encodeURIComponent(
                 listingId,
               )}">${escapeHtml(t("teacher.assets.preview_listing_page"))}</a>`
             : ""
         }
       </p>
+      ${pubQuick ? `<div class="teacher-asset-pub-quick">${pubQuick}</div>` : ""}
       ${rejectHint}
     </td>
     <td>${escapeHtml(formatDemoShortUpdated(a.updated_at))}</td>
@@ -244,24 +319,6 @@ function assetRow(a, t, profileId, userId, listing, snap) {
       <a class="teacher-asset-link" href="#teacher-publishing" title="${escapeHtml(
         t("teacher.publishing.view_review_console"),
       )}">${escapeHtml(t("teacher.publishing.view_status"))}</a>
-      ${
-        hasPubListing && publicUrl
-          ? `<span class="teacher-asset-sep" aria-hidden="true">|</span><a class="teacher-asset-link" href="${publicUrl}">${escapeHtml(
-              t("teacher.publishing.view_public_detail"),
-            )}</a>`
-          : hasPubListing
-            ? `<span class="teacher-asset-sep" aria-hidden="true">|</span><span class="teacher-asset-muted">${escapeHtml(
-                t("teacher.publishing.not_public_yet"),
-              )}</span>`
-            : ""
-      }
-      ${
-        canSetPublic
-          ? `<span class="teacher-asset-sep" aria-hidden="true">|</span><button type="button" class="teacher-asset-ghost" data-teacher-asset-gopublic="${escapeHtml(
-              a.id,
-            )}">${escapeHtml(t("teacher.publishing.go_public"))}</button>`
-          : ""
-      }
       <span class="teacher-asset-sep" aria-hidden="true">|</span>
       <button type="button" class="teacher-asset-ghost" data-teacher-asset-archive="${escapeHtml(a.id)}" ${
     archDisabled ? "disabled" : ""
@@ -635,6 +692,24 @@ async function renderPage(root) {
       if (!id) return;
       ev.preventDefault();
       const res = await setClassroomAssetListingToPublic(id, profileId);
+      if (!res.ok) {
+        const msg = t(`teacher.publishing.error.${res.code}`) || res.code;
+        try {
+          alert(msg);
+        } catch {
+          /* */
+        }
+        return;
+      }
+      void renderPage(root);
+    });
+  });
+  root.querySelectorAll("[data-teacher-asset-goprivate]").forEach((btn) => {
+    btn.addEventListener("click", async (ev) => {
+      const id = btn.getAttribute("data-teacher-asset-goprivate");
+      if (!id) return;
+      ev.preventDefault();
+      const res = await setClassroomAssetListingToPrivate(id, profileId);
       if (!res.ok) {
         const msg = t(`teacher.publishing.error.${res.code}`) || res.code;
         try {

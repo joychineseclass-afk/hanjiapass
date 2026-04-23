@@ -10,7 +10,10 @@ import {
   getListingPricingType,
   purchaseOrGrantListingAccess,
 } from "../lumina-commerce/teacherCommerceBridge.js";
-import { canCurrentUserPreviewTeacherListing } from "../lumina-commerce/teacherListingBridge.js";
+import {
+  canCurrentUserPreviewTeacherListing,
+  setClassroomAssetListingToPrivate,
+} from "../lumina-commerce/teacherListingBridge.js";
 import { i18n } from "../i18n.js";
 
 function tx(k, p) {
@@ -62,12 +65,11 @@ function listingUnifiedPillsForDetail(L, t) {
           ? "status_rejected"
           : "status_draft";
   const pub = L.visibility === VISIBILITY.public;
-  const visKey = pub ? "vis_public" : "vis_unlisted";
+  const visKey = pub ? "vis_public" : "vis_private";
+  const visMod = pub ? "vis_public" : "vis_private";
   return `<span class="teacher-state-pill teacher-state-pill--${stMod}">${escapeHtml(
     t(`teacher.unified.${stKey}`),
-  )}</span><span class="teacher-state-pill teacher-state-pill--${pub ? "vis_public" : "vis_unlisted"}">${escapeHtml(
-    t(`teacher.unified.${visKey}`),
-  )}</span>`;
+  )}</span><span class="teacher-state-pill teacher-state-pill--${visMod}">${escapeHtml(t(`teacher.unified.${visKey}`))}</span>`;
 }
 
 /**
@@ -231,9 +233,34 @@ async function renderPublicDetail(root, listingId) {
       </button>
       <span class="teacher-listing-sim-note">${escapeHtml(tx("learner.commerce.simulated_checkout_note"))}</span>`;
 
-  const visLabel = safeUiText(`commerce.enum.visibility.${L.visibility || "private"}`);
+  const visLabel =
+    isPublicListing || L.visibility === VISIBILITY.public
+      ? tx("teacher.unified.vis_public")
+      : tx("teacher.unified.vis_private");
   const reviewStatusLabel = formatCommerceEnum("listing_status", L.status);
   const isVisPublic = L.status === LISTING_STATUS.approved && L.visibility === VISIBILITY.public;
+
+  const previewGoPublicHint =
+    L.status === LISTING_STATUS.approved && L.visibility !== VISIBILITY.public
+      ? `<p class="teacher-listing-preview-banner-go-public">${escapeHtml(tx("teacher.listing_detail.preview_can_go_public"))}</p>`
+      : "";
+
+  const isListingOwner =
+    !u.isGuest &&
+    Boolean(u.teacherProfileId) &&
+    Boolean(L.teacher_id) &&
+    String(u.teacherProfileId) === String(L.teacher_id);
+  const assetIdForListing =
+    L.source_kind === "classroom_asset" && L.source_id ? String(L.source_id) : "";
+  const ownerPublicBar =
+    viewMode === "public" && isListingOwner && assetIdForListing
+      ? `<div class="teacher-listing-owner-vis" role="region" aria-label="${escapeHtml(tx("teacher.listing_detail.owner_vis_aria"))}">
+  <p class="teacher-listing-owner-vis-text">${escapeHtml(tx("teacher.listing_detail.owner_listing_is_public"))}</p>
+  <button type="button" class="teacher-hub-cta teacher-hub-cta--compact teacher-hub-cta--secondary" id="teacherListingMakePrivate" data-asset-id="${escapeHtml(
+    assetIdForListing,
+  )}">${escapeHtml(tx("teacher.listing_detail.make_private"))}</button>
+</div>`
+      : "";
 
   const previewBanner =
     viewMode === "teacher_preview"
@@ -242,15 +269,16 @@ async function renderPublicDetail(root, listingId) {
   <p class="teacher-listing-preview-banner-title">${escapeHtml(tx("teacher.listing_detail.preview_mode_title"))}</p>
   <p class="teacher-listing-preview-banner-lead">${escapeHtml(tx("teacher.listing_detail.preview_mode_lead"))}</p>
   <p class="teacher-listing-preview-banner-context">${escapeHtml(teacherPreviewContextLine(L, tx))}</p>
+  ${previewGoPublicHint}
   <ul class="teacher-listing-preview-facts" role="list">
     <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_review"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
         reviewStatusLabel,
       )}</span></li>
     <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_visibility"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
-        visLabel,
+        L.visibility === VISIBILITY.public ? tx("teacher.unified.vis_public") : tx("teacher.unified.vis_private"),
       )}</span></li>
     <li><span class="teacher-listing-preview-k">${escapeHtml(tx("teacher.listing_detail.preview_row_public"))}</span> <span class="teacher-listing-preview-v">${escapeHtml(
-        isVisPublic ? tx("teacher.listing_detail.preview_yes_public") : tx("teacher.listing_detail.preview_not_public"),
+        isVisPublic ? tx("teacher.unified.vis_public") : tx("teacher.unified.vis_private"),
       )}</span></li>
   </ul>
   <p class="teacher-listing-preview-nav">
@@ -325,6 +353,7 @@ async function renderPublicDetail(root, listingId) {
             : ""
         }
       </div>
+      ${ownerPublicBar}
       <div class="teacher-listing-price-card">
         <span class="teacher-listing-price-label">${escapeHtml(tx("learner.commerce.price"))}</span>
         <span class="teacher-listing-price-value">${escapeHtml(priceLine)}</span>
@@ -396,6 +425,26 @@ async function renderPublicDetail(root, listingId) {
 
   const btn = root.querySelector("#teacherListingAcquire");
   const toast = root.querySelector("#teacherListingToast");
+  root.querySelector("#teacherListingMakePrivate")?.addEventListener("click", async (ev) => {
+    ev.preventDefault();
+    const mk = root.querySelector("#teacherListingMakePrivate");
+    const aid = mk?.getAttribute("data-asset-id") || "";
+    const tid = u.teacherProfileId ? String(u.teacherProfileId) : "";
+    if (!aid || !tid) return;
+    const res = await setClassroomAssetListingToPrivate(aid, tid);
+    if (!res.ok) {
+      const key = `teacher.publishing.error.${res.code}`;
+      const msg = tx(key) !== key ? tx(key) : String(res.code || "");
+      try {
+        alert(msg);
+      } catch {
+        /* */
+      }
+      return;
+    }
+    await renderPublicDetail(root, listingId);
+  });
+
   btn?.addEventListener("click", async () => {
     if (!btn || btn.disabled) return;
     const res = await purchaseOrGrantListingAccess(listingId, u);
