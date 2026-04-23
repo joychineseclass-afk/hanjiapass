@@ -118,6 +118,118 @@ function shortSummary(text, n) {
   return s.slice(0, n) + "…";
 }
 
+/** @param {import('../lumina-commerce/schema.js').Listing[]} listings */
+function computeMySalesStats(listings) {
+  let draft = 0;
+  let pending_review = 0;
+  let approved = 0;
+  let rejected = 0;
+  let public_visible = 0;
+  let approved_not_public = 0;
+  for (const L of listings) {
+    const st = L.status;
+    if (st === LISTING_STATUS.draft) draft++;
+    else if (st === LISTING_STATUS.pending_review) pending_review++;
+    else if (st === LISTING_STATUS.approved) {
+      approved++;
+      if (L.visibility !== VISIBILITY.public) approved_not_public++;
+    } else if (st === LISTING_STATUS.rejected) rejected++;
+    if (L.visibility === VISIBILITY.public) public_visible++;
+  }
+  return {
+    draft,
+    pending_review,
+    approved,
+    rejected,
+    public_visible,
+    approved_not_public,
+    total: listings.length,
+  };
+}
+
+/**
+ * @param {import('../lumina-commerce/schema.js').Listing} a
+ * @param {import('../lumina-commerce/schema.js').Listing} b
+ */
+function mySalesListingSort(a, b) {
+  const rank = (s) => {
+    if (s === LISTING_STATUS.rejected) return 0;
+    if (s === LISTING_STATUS.draft) return 1;
+    if (s === LISTING_STATUS.pending_review) return 2;
+    if (s === LISTING_STATUS.approved) return 3;
+    return 4;
+  };
+  const d = rank(a.status) - rank(b.status);
+  if (d !== 0) return d;
+  return String(b.updated_at || "").localeCompare(String(a.updated_at || ""));
+}
+
+/** @param {ReturnType<typeof computeMySalesStats>} stats @param {(k: string, p?: object) => string} tx */
+function buildMySalesSummaryHtml(stats, tx) {
+  const chip = (labelKey, n) =>
+    `<div class="teacher-my-sales-stat">
+      <span class="teacher-my-sales-stat-value">${escapeHtml(String(n))}</span>
+      <span class="teacher-my-sales-stat-label">${escapeHtml(tx(labelKey))}</span>
+    </div>`;
+  return `<section class="card teacher-my-sales-summary" aria-labelledby="tms-sum-h">
+    <h2 id="tms-sum-h" class="teacher-my-sales-summary-title">${escapeHtml(tx("teacher.my_sales.summary_title"))}</h2>
+    <p class="teacher-my-sales-summary-lead">${escapeHtml(tx("teacher.my_sales.summary_lead"))}</p>
+    <div class="teacher-my-sales-summary-grid">
+      ${chip("teacher.my_sales.stat_draft", stats.draft)}
+      ${chip("teacher.my_sales.stat_pending", stats.pending_review)}
+      ${chip("teacher.my_sales.stat_approved", stats.approved)}
+      ${chip("teacher.my_sales.stat_public", stats.public_visible)}
+      ${chip("teacher.my_sales.stat_rejected", stats.rejected)}
+      ${chip("teacher.my_sales.stat_total", stats.total)}
+    </div>
+  </section>`;
+}
+
+/** @param {ReturnType<typeof computeMySalesStats>} stats @param {(k: string, p?: object) => string} tx */
+function buildMySalesNextStepsHtml(stats, tx) {
+  const lines = [];
+  if (stats.rejected > 0) {
+    lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_rejected", { count: String(stats.rejected) }))}</li>`);
+  }
+  if (stats.draft > 0) {
+    lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_drafts", { count: String(stats.draft) }))}</li>`);
+  }
+  if (stats.pending_review > 0) {
+    lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_pending", { count: String(stats.pending_review) }))}</li>`);
+  }
+  if (stats.approved_not_public > 0) {
+    lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_go_public", { count: String(stats.approved_not_public) }))}</li>`);
+  }
+  if (lines.length === 0) {
+    if (stats.total === 0) {
+      lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_start_hint"))}</li>`);
+    } else {
+      lines.push(`<li>${escapeHtml(tx("teacher.my_sales.next_no_blockers"))}</li>`);
+    }
+  }
+  const listHtml = `<ul class="teacher-my-sales-next-list">${lines.slice(0, 4).join("")}</ul>`;
+  const ctas = `<div class="teacher-my-sales-next-ctas">
+    <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets">${escapeHtml(tx("teacher.my_sales.next_cta_assets"))}</a>
+    <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-create-material">${escapeHtml(tx("teacher.my_sales.next_cta_create"))}</a>
+  </div>`;
+  return `<section class="card teacher-my-sales-next" aria-labelledby="tms-next-h">
+    <h2 id="tms-next-h" class="teacher-my-sales-next-title">${escapeHtml(tx("teacher.my_sales.next_title"))}</h2>
+    ${listHtml}
+    ${ctas}
+    <p class="teacher-my-sales-next-table-hint"><a class="teacher-hub-inline-link" href="#teacher-my-sales-resources">${escapeHtml(tx("teacher.my_sales.jump_to_table"))}</a></p>
+  </section>`;
+}
+
+/** @param {(k: string, p?: object) => string} tx */
+function buildPublishingHeroHtml(tx) {
+  return `<section class="card teacher-my-sales-hero">
+    <p class="teacher-page-kicker">${escapeHtml(tx("teacher.my_sales.kicker"))}</p>
+    <h1 class="teacher-my-sales-h1">${escapeHtml(tx("teacher.my_sales.page_title"))}</h1>
+    <p class="teacher-my-sales-sub">${escapeHtml(tx("teacher.my_sales.page_subtitle"))}</p>
+    <p class="teacher-my-sales-note">${escapeHtml(tx("teacher.my_sales.page_note"))}</p>
+  </section>`;
+}
+
 /**
  * 审核台：老师档案与 listing 分区；待审/最近已审（占位真实对象）。
  * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot} snap
@@ -238,6 +350,7 @@ function renderPage(root, ctx) {
       ? snap.listings.filter((L) => L.seller_type === SELLER_TYPE.teacher && L.teacher_id === myTeacherId)
       : [];
   }
+  const mySalesStats = pageMode === "publishing" ? computeMySalesStats(listingsForTable) : null;
   const sortedForReview =
     pageMode === "review"
       ? [...listingsForTable].sort((a, b) => {
@@ -246,7 +359,9 @@ function renderPage(root, ctx) {
           if (d !== 0) return d;
           return String(b.updated_at || "").localeCompare(String(a.updated_at || ""));
         })
-      : listingsForTable;
+      : pageMode === "publishing"
+        ? [...listingsForTable].sort(mySalesListingSort)
+        : listingsForTable;
 
   const teacherRows = snap.teacher_profiles
     .map(
@@ -593,9 +708,47 @@ function renderPage(root, ctx) {
         : commerceT("commerce.stage0.stage_note");
 
   const showHeroBadge = pageMode === "full";
-  const showSourceGuide = pageMode === "full" || pageMode === "publishing";
+  const showInlineSourceGuide = pageMode === "full";
+  const showPublishingSourceFold = pageMode === "publishing";
   const showPrimaryDraft = pageMode !== "review";
   const showGuideColumn = pageMode === "full";
+
+  const newDraftTitle =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.form_section_title")
+      : commerceT("commerce.stage0.new_draft_title");
+  const newDraftDesc =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.form_section_desc")
+      : commerceT("commerce.stage0.panel_draft_desc");
+  const identitySessionDesc =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.session_panel_desc")
+      : commerceT("teacher.publishing_page.session_identity_hint");
+  const assetStripTitle =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.asset_strip_title")
+      : commerceT("commerce.stage0.asset_listings_title");
+  const assetStripDesc =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.asset_strip_desc")
+      : commerceT("commerce.stage0.asset_listings_desc");
+  const listingMainTitle =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.main_title")
+      : commerceT("commerce.stage0.listing_title");
+  const listingMainHint =
+    pageMode === "publishing"
+      ? commerceT("teacher.my_sales.main_hint")
+      : commerceT("commerce.stage0.list_section_hint");
+
+  const publishingTopBlock =
+    pageMode === "publishing" && mySalesStats
+      ? `${buildPublishingHeroHtml(commerceT)}${buildMySalesSummaryHtml(mySalesStats, commerceT)}${buildMySalesNextStepsHtml(
+          mySalesStats,
+          commerceT,
+        )}`
+      : "";
   const reviewPanelTop = pageMode === "review" && isReviewer ? reviewPanel : "";
   const teacherProfileReviewBlock = pageMode === "review" && isReviewer ? buildTeacherProfileReviewSection(snap) : "";
   const listingReviewSeparator =
@@ -661,8 +814,29 @@ function renderPage(root, ctx) {
       </section>`
       : "";
 
+  const publishingSourceFold =
+    showPublishingSourceFold
+      ? `<details class="card teacher-my-sales-guide-fold">
+        <summary class="teacher-my-sales-guide-fold-sum">${escapeHtml(commerceT("teacher.my_sales.guide_fold_summary"))}</summary>
+        <div class="teacher-my-sales-guide-fold-body">${teacherListingSourceGuideHtml(commerceT)}</div>
+      </details>`
+      : "";
+
+  const fullConsoleFooterHint =
+    pageMode === "publishing"
+      ? `<p class="lts0-to-full-console-hint lts0-to-full-console-hint--sales"><a href="#lumina-teacher-stage0">${escapeHtml(
+          commerceT("teacher.my_sales.link_advanced"),
+        )}</a></p>`
+      : `<p class="lts0-to-full-console-hint"><a href="#lumina-teacher-stage0">${escapeHtml(
+          commerceT("teacher.publishing_page.link_full_console"),
+        )}</a></p>`;
+
   const lts0Main = `
-      <section class="card lts0-hero">
+      ${publishingTopBlock}
+      ${
+        pageMode === "publishing"
+          ? ""
+          : `<section class="card lts0-hero">
         <div class="lts0-hero-top">
           <div class="lts0-hero-text">
             <h2 class="title">${escapeHtml(stageTitle)}</h2>
@@ -675,10 +849,12 @@ function renderPage(root, ctx) {
               : ""
           }
         </div>
-      </section>
+      </section>`
+      }
       ${reviewerModeBanner}
       ${teacherPathStripHtml("listing", commerceT)}
-      ${showSourceGuide ? teacherListingSourceGuideHtml(commerceT) : ""}
+      ${showInlineSourceGuide ? teacherListingSourceGuideHtml(commerceT) : ""}
+      ${publishingSourceFold}
 
       ${teacherProfileReviewBlock}
       ${listingReviewSeparator}
@@ -689,8 +865,8 @@ function renderPage(root, ctx) {
           ${
             showPrimaryDraft
               ? `<div class="lts0-panel lts0-panel--primary">
-            <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.new_draft_title"))}</h3>
-            <p class="lts0-panel-desc">${escapeHtml(commerceT("commerce.stage0.panel_draft_desc"))}</p>
+            <h3 class="lts0-panel-title">${escapeHtml(newDraftTitle)}</h3>
+            <p class="lts0-panel-desc">${escapeHtml(newDraftDesc)}</p>
             <p class="lts0-draft-source-hint">${escapeHtml(commerceT("commerce.stage0.draft_source_hint"))}</p>
             <p class="lts0-flow-note">${escapeHtml(commerceT("commerce.stage0.flow_note"))}</p>
             <form id="lts0NewListing" class="lts0-form-draft">
@@ -751,7 +927,7 @@ function renderPage(root, ctx) {
           </div>`
               : `<div class="lts0-panel lts0-panel--identity lts0-panel--identity-session">
             <h3 class="lts0-panel-title">${escapeHtml(commerceT("commerce.stage0.identity_title"))}</h3>
-            <p class="lts0-panel-desc">${escapeHtml(commerceT("teacher.publishing_page.session_identity_hint"))}</p>
+            <p class="lts0-panel-desc">${escapeHtml(identitySessionDesc)}</p>
             <p class="lts0-session-user-line"><strong>${escapeHtml(
               sessionUserId
                 ? formatDemoUserDisplay(
@@ -760,9 +936,6 @@ function renderPage(root, ctx) {
                   )
                 : commerceT("teacher.publishing_page.session_guest_label"),
             )}</strong></p>
-            <p class="lts0-to-full-console-hint"><a href="#lumina-teacher-stage0">${escapeHtml(
-              commerceT("teacher.publishing_page.link_full_console"),
-            )}</a></p>
             ${
               isReviewer
                 ? `<p class="lts0-reviewer-hint">${escapeHtml(commerceT("commerce.stage0.identity_reviewer_active"))}</p>`
@@ -790,8 +963,8 @@ function renderPage(root, ctx) {
           ? `<section class="card lts0-classroom-asset-strip" aria-label="${escapeHtml(
               commerceT("commerce.stage0.asset_listings_aria"),
             )}">
-        <h2 class="lts0-classroom-asset-strip-title">${escapeHtml(commerceT("commerce.stage0.asset_listings_title"))}</h2>
-        <p class="lts0-classroom-asset-strip-desc">${escapeHtml(commerceT("commerce.stage0.asset_listings_desc"))}</p>
+        <h2 class="lts0-classroom-asset-strip-title">${escapeHtml(assetStripTitle)}</h2>
+        <p class="lts0-classroom-asset-strip-desc">${escapeHtml(assetStripDesc)}</p>
         <ul class="lts0-classroom-asset-strip-list">
           ${assetStripListings
             .map(
@@ -807,9 +980,9 @@ function renderPage(root, ctx) {
       </section>`
           : ""
       }
-      <section class="card lts0-listing-main">
-        <h2 class="lts0-listing-main-title">${escapeHtml(commerceT("commerce.stage0.listing_title"))}</h2>
-        <p class="lts0-listing-main-hint">${escapeHtml(commerceT("commerce.stage0.list_section_hint"))}</p>
+      <section class="card lts0-listing-main"${pageMode === "publishing" ? ' id="teacher-my-sales-resources"' : ""}>
+        <h2 class="lts0-listing-main-title">${escapeHtml(listingMainTitle)}</h2>
+        <p class="lts0-listing-main-hint">${escapeHtml(listingMainHint)}</p>
         <div class="lts0-table-scroll">
           <table class="lts0-table lts0-table--listing">
             <thead>
@@ -844,9 +1017,7 @@ function renderPage(root, ctx) {
           ${secondaryFoldBody}
         </div>
       </details>`
-          : `<p class="lts0-to-full-console-hint"><a href="#lumina-teacher-stage0">${escapeHtml(
-              commerceT("teacher.publishing_page.link_full_console"),
-            )}</a></p>`
+          : fullConsoleFooterHint
       }
   `;
   root.innerHTML = renderTeacherAdminShell({
