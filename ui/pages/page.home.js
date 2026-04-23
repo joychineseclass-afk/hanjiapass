@@ -485,7 +485,7 @@ function renderHome(root) {
 
                 <!-- Row 1: buttons -->
                 <div class="cta">
-                  <a class="btn primary" href="#hsk">${T.cta1}</a>
+                  <a class="btn primary" href="#exam-learning">${T.cta1}</a>
                   <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
 

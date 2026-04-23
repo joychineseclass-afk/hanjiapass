@@ -71,6 +71,7 @@ try {
    🧭 Routes (lazy)
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
+registerRoute("#exam-learning", () => import("./pages/page.examLearning.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
 registerRoute("#kids",      () => import("./pages/page.kids.js"));
 registerRoute("#kids-kids1", () => import("./pages/page.kids1.js"));

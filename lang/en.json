@@ -70,6 +70,7 @@
   "nav": {
     "home": "Home",
     "courses": "Courses",
+    "exam_learning": "Exams & Academic",
     "hsk": "HSK Learning",
     "kids": "Kids",
     "business": "Business",
@@ -705,8 +706,36 @@
   },
   "speaking": {
     "title": "Speaking",
-    "subtitle": "Real-world speaking practice",
-    "comingSoon": "Coming soon"
+    "subtitle": "Scenario-based conversation practice",
+    "comingSoon": "Coming soon",
+    "sidebar_title": "Speaking",
+    "nav_aria": "Speaking sections",
+    "tab_daily": "Daily conversation",
+    "tab_business": "Business conversation",
+    "tab_travel": "Travel conversation",
+    "daily_title": "Daily conversation",
+    "daily_lead": "High-frequency phrases for everyday life.",
+    "daily_topics": "Greetings\nSelf-introduction\nShopping\nOrdering food\nAsking directions",
+    "business_title": "Business conversation",
+    "business_lead": "Workplace and business communication.",
+    "business_topics": "Business greetings\nMeetings\nEmail & phone phrases",
+    "travel_title": "Travel conversation",
+    "travel_lead": "Common situations when you travel.",
+    "travel_topics": "Hotel\nAirport\nTransport\nSightseeing\nRestaurants",
+    "section_placeholder": "More structured lessons will roll out here."
+  },
+  "examLearning": {
+    "sidebar_title": "Exams & Academic",
+    "nav_aria": "Exam and academic study areas",
+    "tab_hsk": "HSK",
+    "tab_hskk": "HSKK",
+    "tab_yct": "YCT",
+    "hskk_title": "HSKK",
+    "hskk_lead": "HSK Speaking test prep and practice hub.",
+    "hskk_placeholder": "Focused courses are coming soon. Use HSK on the left to build a strong base.",
+    "yct_title": "YCT",
+    "yct_lead": "Youth Chinese Test (YCT) starter and level track.",
+    "yct_placeholder": "YCT learning paths will arrive in stages."
   },
   "travel": {
     "title": "Travel Chinese",

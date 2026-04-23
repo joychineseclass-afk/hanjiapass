@@ -95,6 +95,17 @@ const state = {
 };
 
 let el;
+/** HSK 页内事件：嵌入 / 重复 mount 前先 abort，避免重复监听 */
+let hskEventsController = null;
+
+export function abortHskBoundEvents() {
+  try {
+    hskEventsController?.abort();
+  } catch {
+    /* */
+  }
+  hskEventsController = null;
+}
 
 function $(id) {
   return document.getElementById(id);
@@ -220,9 +231,24 @@ function getHskState() {
 }
 
 function isHSKPageActive() {
-  const hash = ((typeof location !== "undefined" && location.hash) || "").toLowerCase();
-  const path = ((typeof location !== "undefined" && location.pathname) || "").toLowerCase();
-  return hash.includes("hsk") || path.includes("hsk");
+  const raw = String((typeof location !== "undefined" && location.hash) || "").toLowerCase();
+  const path = String((typeof location !== "undefined" && location.pathname) || "").toLowerCase();
+  const base = raw.split("?")[0].split("&")[0];
+  if (base === "#hsk") return true;
+  if (base === "#exam-learning") {
+    const q = raw.indexOf("?");
+    let tab = "hsk";
+    if (q >= 0) {
+      try {
+        tab = String(new URLSearchParams(raw.slice(q + 1)).get("tab") || "hsk").toLowerCase();
+      } catch {
+        tab = "hsk";
+      }
+    }
+    return tab === "hsk";
+  }
+  if (raw.includes("hsk") && base !== "#exam-learning") return true;
+  return path.includes("hsk");
 }
 
 function getCourseId() {
@@ -2574,8 +2600,9 @@ if (typeof window !== "undefined") {
  */
 
 function bindEvents() {
-  const controller = new AbortController();
-  const { signal } = controller;
+  abortHskBoundEvents();
+  hskEventsController = new AbortController();
+  const { signal } = hskEventsController;
 
   // ===== Level change =====
   el = $("hskLevel");
@@ -3251,13 +3278,24 @@ function bindEvents() {
   } catch {}
 }
 
-export async function mount() {
-  const navRoot = $("siteNav");
-  const app = $("app");
+export async function mount(ctx) {
+  const opts = ctx && typeof ctx === "object" && !(ctx instanceof HTMLElement) ? ctx : {};
+  const embed = opts.embed === true;
+  const app = opts.root instanceof HTMLElement ? opts.root : $("app");
 
-  if (!navRoot || !app) {
-    console.error("HSK Page Error: missing #siteNav or #app");
+  if (!app) {
+    console.error("HSK Page Error: missing mount root");
     return false;
+  }
+
+  if (!embed) {
+    const navRoot = $("siteNav");
+    if (!navRoot) {
+      console.error("HSK Page Error: missing #siteNav");
+      return false;
+    }
+    navRoot.dataset.mode = "mini";
+    mountNavBar(navRoot);
   }
 
   await ensureHSKDeps();
@@ -3266,9 +3304,6 @@ export async function mount() {
   loadGlossary("kr", scope).catch(() => {});
   loadGlossary("en", scope).catch(() => {});
   loadGlossary("jp", scope).catch(() => {});
-
-  navRoot.dataset.mode = "mini";
-  mountNavBar(navRoot);
 
   app.innerHTML = getHSKLayoutHTML();
 

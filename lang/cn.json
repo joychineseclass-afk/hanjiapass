@@ -70,6 +70,7 @@
   "nav": {
     "home": "首页",
     "courses": "课程",
+    "exam_learning": "考试学术",
     "hsk": "HSK学习",
     "kids": "儿童",
     "business": "商务",
@@ -705,8 +706,36 @@
   },
   "speaking": {
     "title": "会话",
-    "subtitle": "实战口语练习",
-    "comingSoon": "即将开放"
+    "subtitle": "按场景学口语与会话",
+    "comingSoon": "即将开放",
+    "sidebar_title": "会话",
+    "nav_aria": "会话学习分区",
+    "tab_daily": "日常会话",
+    "tab_business": "商务会话",
+    "tab_travel": "旅游会话",
+    "daily_title": "日常会话",
+    "daily_lead": "生活中最常用的口语场景。",
+    "daily_topics": "打招呼\n自我介绍\n购物\n点餐\n问路",
+    "business_title": "商务会话",
+    "business_lead": "职场与商务沟通常用表达。",
+    "business_topics": "商务问候\n会议交流\n邮件/电话表达",
+    "travel_title": "旅游会话",
+    "travel_lead": "出行常见场景口语。",
+    "travel_topics": "酒店\n机场\n交通\n景点\n餐馆",
+    "section_placeholder": "系统内容将陆续扩展。"
+  },
+  "examLearning": {
+    "sidebar_title": "考试学术",
+    "nav_aria": "考试学习分区",
+    "tab_hsk": "HSK",
+    "tab_hskk": "HSKK",
+    "tab_yct": "YCT",
+    "hskk_title": "HSKK",
+    "hskk_lead": "汉语水平口语考试（HSKK）学习与练习入口。",
+    "hskk_placeholder": "课程与专项练习将陆续上线；可先通过左侧 HSK 夯实基础。",
+    "yct_title": "YCT",
+    "yct_lead": "中小学生汉语考试（YCT）入门与等级学习区。",
+    "yct_placeholder": "儿童等级考试内容将陆续上线。"
   },
   "travel": {
     "title": "旅游中文",

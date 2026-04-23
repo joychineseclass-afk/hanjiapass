@@ -9,10 +9,10 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
-// 正式路由顺序：Home, HSK, Kids, Business, Travel, Culture, Speaking, Stroke, Hanja, Review, Resources, Teacher
+// 正式路由顺序：Home, 考试学术, Kids, Business, Travel, Culture, Speaking, Stroke, Hanja, Review, Resources, Teacher
 const NAV_ITEMS_FULL = [
   { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
-  { href: "/index.html#hsk",     key: "nav.hsk",       label: "HSK 학습",      color: "#22c55e" },
+  { href: "/index.html#exam-learning", key: "nav.exam_learning", label: "시험학습", color: "#22c55e" },
   { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
   { href: "/index.html#business", key: "nav.business", label: "비즈니스",      color: "#0ea5e9" },
   { href: "/index.html#travel",  key: "nav.travel",     label: "여행중국어",    color: "#06b6d4" },
@@ -48,11 +48,19 @@ function isIndexPage() {
   return p === "/" || p.endsWith("/index.html");
 }
 
+function hashBase(hash) {
+  const s = String(hash || "").trim();
+  if (!s) return "";
+  const q = s.indexOf("?");
+  return (q >= 0 ? s.slice(0, q) : s).split("&")[0];
+}
+
 function setActive(rootEl) {
   if (!rootEl) return;
 
   const curPath = normalizePath(location.pathname);
   const curHash = (location.hash || "").trim();
+  const curBase = hashBase(curHash);
 
   rootEl.querySelectorAll('a[data-nav="1"]').forEach((a) => {
     const href = a.getAttribute("href") || "";
@@ -64,6 +72,7 @@ function setActive(rootEl) {
     // ✅ 首页：path 匹配 + hash 匹配（有 hash 的话）
     if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
       const wantHash = toHash ? `#${toHash}` : "";
+      const wantBase = hashBase(wantHash);
       const teacherHashes = new Set([
         "#teacher",
         "#teacher-materials",
@@ -80,8 +89,10 @@ function setActive(rootEl) {
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
+      } else if (wantBase === "#exam-learning") {
+        active = curBase === "#exam-learning" || curBase === "#hsk";
       } else {
-        active = wantHash ? curHash === wantHash : true;
+        active = wantHash ? curBase === wantBase : true;
       }
     } else {
       // ✅ 其它页面：只看 pathname

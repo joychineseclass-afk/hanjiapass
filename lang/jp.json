@@ -70,6 +70,7 @@
   "nav": {
     "home": "ホーム",
     "courses": "コース",
+    "exam_learning": "試験・学術",
     "hsk": "HSK学習",
     "kids": "キッズ",
     "business": "ビジネス",
@@ -714,8 +715,36 @@
   },
   "speaking": {
     "title": "会話",
-    "subtitle": "実践スピーキング練習",
-    "comingSoon": "準備中"
+    "subtitle": "シーン別の会話・スピーキング",
+    "comingSoon": "準備中",
+    "sidebar_title": "会話",
+    "nav_aria": "会話学習エリア",
+    "tab_daily": "日常会話",
+    "tab_business": "ビジネス会話",
+    "tab_travel": "旅行会話",
+    "daily_title": "日常会話",
+    "daily_lead": "生活でよく使う表現。",
+    "daily_topics": "あいさつ\n自己紹介\n買い物\n注文\n道を聞く",
+    "business_title": "ビジネス会話",
+    "business_lead": "職場・ビジネスのやり取り。",
+    "business_topics": "ビジネスあいさつ\n会議のやり取り\nメール・電話表現",
+    "travel_title": "旅行会話",
+    "travel_lead": "旅行のよくある場面。",
+    "travel_topics": "ホテル\n空港\n交通\n観光地\nレストラン",
+    "section_placeholder": "コンテンツは順次拡充予定です。"
+  },
+  "examLearning": {
+    "sidebar_title": "試験・学術",
+    "nav_aria": "試験・学術学習エリア",
+    "tab_hsk": "HSK",
+    "tab_hskk": "HSKK",
+    "tab_yct": "YCT",
+    "hskk_title": "HSKK",
+    "hskk_lead": "中国語スピーキング試験（HSKK）の学習・練習エリアです。",
+    "hskk_placeholder": "講座と集中練習は順次公開予定です。まず左のHSKで基礎を固められます。",
+    "yct_title": "YCT",
+    "yct_lead": "青少年向け中国語試験（YCT）の入門・レベル学習エリアです。",
+    "yct_placeholder": "児童向け等級試験コンテンツは順次公開予定です。"
   },
   "travel": {
     "title": "旅行中国語",

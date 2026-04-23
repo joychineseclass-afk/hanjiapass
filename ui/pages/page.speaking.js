@@ -1,12 +1,11 @@
 // /ui/pages/page.speaking.js
-// ✅ Speaking 课程域主页 — 统一平台风格
-// ✅ 全部文案走 i18n，支持 KR/CN/EN/JP
-// ✅ 语言切换后完整 rerender
+// 会话模块：左侧日常 / 商务 / 旅游，右侧说明与主题占位
 
 import { i18n } from "../i18n.js";
 
-const STYLE_ID = "lumina-speaking-style";
-let _bound = false;
+const SHELL_CLASS = "lumina-speaking-module-shell";
+let _hashBound = false;
+let _langBound = false;
 
 function t(key, fallback = "") {
   try {
@@ -15,70 +14,173 @@ function t(key, fallback = "") {
     const s = String(v).trim();
     if (!s || s === key || s === `[${key}]`) return fallback;
     return s;
-  } catch { return fallback; }
-}
-
-function ensureStyles() {
-  if (document.getElementById(STYLE_ID)) return;
-  const style = document.createElement("style");
-  style.id = STYLE_ID;
-  style.textContent = `
-    .lumina-speaking{ background: var(--soft,#f8fafc); color: var(--text,#0f172a); }
-    .lumina-speaking .wrap{ max-width: var(--max,1120px); margin:0 auto; padding:0 16px; }
-    .lumina-speaking .section{ padding:10px 0 18px; }
-    .lumina-speaking .card{ background:rgba(255,255,255,.72); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.45); border-radius:calc(var(--radius,18px) + 8px); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden; }
-    .lumina-speaking .inner{ padding:18px; display:grid; gap:12px; }
-    .lumina-speaking .page-title{ margin:0; font-size:24px; font-weight:900; }
-    .lumina-speaking .page-desc{ margin:0; color:var(--muted,#475569); font-size:15px; line-height:1.6; }
-  `;
-  document.head.appendChild(style);
-}
-
-function renderSpeaking(root) {
-  ensureStyles();
-  const title = t("speaking.title", "Speaking");
-  const subtitle = t("speaking.subtitle", "Real-world speaking practice");
-  const comingSoon = t("speaking.comingSoon", "Coming soon");
-
-  root.innerHTML = `
-    <div class="lumina-speaking">
-      <section class="section">
-        <div class="wrap">
-          <div class="card">
-            <div class="inner">
-              <h1 class="page-title">${escapeHtml(title)}</h1>
-              <p class="page-desc">${escapeHtml(subtitle)}. ${escapeHtml(comingSoon)}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  `;
+  } catch {
+    return fallback;
+  }
 }
 
 function escapeHtml(s) {
-  return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
-function bindLiveRerender(root) {
-  if (_bound) return;
-  _bound = true;
-  const rerender = () => {
-    const el = root?.isConnected ? root : document.getElementById("app");
-    if (!el) return;
-    renderSpeaking(el);
-  };
-  window.addEventListener("joy:langChanged", rerender);
-  try { i18n?.on?.("change", rerender); } catch {}
-  try { i18n?.onChange?.(rerender); } catch {}
+function parseSpeakingTab() {
+  const raw = String(location.hash || "").toLowerCase();
+  if (!raw.startsWith("#speaking")) return "daily";
+  const q = raw.indexOf("?");
+  if (q < 0) return "daily";
+  try {
+    const tab = String(new URLSearchParams(raw.slice(q + 1)).get("tab") || "daily").toLowerCase();
+    if (tab === "daily" || tab === "business" || tab === "travel") return tab;
+  } catch {
+    /* */
+  }
+  return "daily";
+}
+
+function navLink(tab, current, label) {
+  const href = `#speaking?tab=${tab}`;
+  const safe = escapeHtml(label);
+  if (current === tab) {
+    return `<span class="teacher-shell-nav-link teacher-shell-nav-link--current" aria-current="page">${safe}</span>`;
+  }
+  return `<a class="teacher-shell-nav-link" href="${href}">${safe}</a>`;
+}
+
+function topicsList(key, fallbackLines) {
+  const text = t(key, fallbackLines);
+  const items = String(text)
+    .split(/\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (!items.length) return "";
+  const lis = items.map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+  return `<ul class="desc" style="margin:10px 0 0 1.1em;padding:0;line-height:1.65">${lis}</ul>`;
+}
+
+function mainHtml(tab) {
+  if (tab === "business") {
+    return `
+      <div class="card" style="margin:0">
+        <div class="hero" style="padding:18px 20px">
+          <div class="title" style="font-size:clamp(20px,2.4vw,24px)">${escapeHtml(t("speaking.business_title", "商务会话"))}</div>
+          <p class="desc" style="margin:8px 0 0">${escapeHtml(t("speaking.business_lead", "职场与商务场景常用表达。"))}</p>
+          ${topicsList(
+            "speaking.business_topics",
+            ["商务问候", "会议交流", "邮件/电话表达"].join("\n"),
+          )}
+          <p class="desc" style="margin-top:14px;opacity:.9">${escapeHtml(t("speaking.section_placeholder", "系统内容将陆续扩展。"))}</p>
+        </div>
+      </div>`;
+  }
+  if (tab === "travel") {
+    return `
+      <div class="card" style="margin:0">
+        <div class="hero" style="padding:18px 20px">
+          <div class="title" style="font-size:clamp(20px,2.4vw,24px)">${escapeHtml(t("speaking.travel_title", "旅游会话"))}</div>
+          <p class="desc" style="margin:8px 0 0">${escapeHtml(t("speaking.travel_lead", "出行常见场景口语。"))}</p>
+          ${topicsList(
+            "speaking.travel_topics",
+            ["酒店", "机场", "交通", "景点", "餐馆"].join("\n"),
+          )}
+          <p class="desc" style="margin-top:14px;opacity:.9">${escapeHtml(t("speaking.section_placeholder", "系统内容将陆续扩展。"))}</p>
+        </div>
+      </div>`;
+  }
+  return `
+    <div class="card" style="margin:0">
+      <div class="hero" style="padding:18px 20px">
+        <div class="title" style="font-size:clamp(20px,2.4vw,24px)">${escapeHtml(t("speaking.daily_title", "日常会话"))}</div>
+        <p class="desc" style="margin:8px 0 0">${escapeHtml(t("speaking.daily_lead", "生活中最常用的口语场景。"))}</p>
+        ${topicsList(
+          "speaking.daily_topics",
+          ["打招呼", "自我介绍", "购物", "点餐", "问路"].join("\n"),
+        )}
+        <p class="desc" style="margin-top:14px;opacity:.9">${escapeHtml(t("speaking.section_placeholder", "系统内容将陆续扩展。"))}</p>
+      </div>
+    </div>`;
+}
+
+function shellHtml(currentTab) {
+  const brand = escapeHtml(t("speaking.sidebar_title", "会话"));
+  const aria = escapeHtml(t("speaking.nav_aria", "会话分区"));
+  const daily = navLink("daily", currentTab, t("speaking.tab_daily", "日常会话"));
+  const business = navLink("business", currentTab, t("speaking.tab_business", "商务会话"));
+  const travel = navLink("travel", currentTab, t("speaking.tab_travel", "旅游会话"));
+  const main = mainHtml(currentTab);
+  return `
+    <div class="teacher-shell wrap ${SHELL_CLASS}">
+      <aside class="teacher-shell-sidebar">
+        <div class="teacher-shell-brand">
+          <span class="teacher-shell-brand-text">${brand}</span>
+        </div>
+        <nav class="teacher-shell-nav" aria-label="${aria}">
+          ${daily}
+          ${business}
+          ${travel}
+        </nav>
+      </aside>
+      <div class="teacher-shell-main">
+        <div class="teacher-main" data-speaking-main>
+          ${main}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderSpeaking(root) {
+  const tab = parseSpeakingTab();
+  root.innerHTML = shellHtml(tab);
+}
+
+function bindHashAndLang() {
+  if (!_hashBound) {
+    _hashBound = true;
+    window.addEventListener("hashchange", () => {
+      const low = String(location.hash || "").toLowerCase();
+      if (!low.startsWith("#speaking")) return;
+      const root = document.getElementById("app");
+      if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
+      renderSpeaking(root);
+    });
+  }
+  if (!_langBound) {
+    _langBound = true;
+    const rerender = () => {
+      const low = String(location.hash || "").toLowerCase();
+      if (!low.startsWith("#speaking")) return;
+      const root = document.getElementById("app");
+      if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
+      renderSpeaking(root);
+    };
+    window.addEventListener("joy:langChanged", rerender);
+    try {
+      i18n?.on?.("change", rerender);
+    } catch {
+      /* */
+    }
+    try {
+      i18n?.onChange?.(rerender);
+    } catch {
+      /* */
+    }
+  }
 }
 
 export default function pageSpeaking(ctxOrRoot) {
   const root = ctxOrRoot?.root || ctxOrRoot?.app || (ctxOrRoot instanceof HTMLElement ? ctxOrRoot : null) || document.getElementById("app");
   if (!root) return;
-  bindLiveRerender(root);
+  bindHashAndLang();
   renderSpeaking(root);
 }
 
-export function mount(ctxOrRoot) { return pageSpeaking(ctxOrRoot); }
-export function render(ctxOrRoot) { return pageSpeaking(ctxOrRoot); }
+export function mount(ctxOrRoot) {
+  return pageSpeaking(ctxOrRoot);
+}
+export function render(ctxOrRoot) {
+  return pageSpeaking(ctxOrRoot);
+}
