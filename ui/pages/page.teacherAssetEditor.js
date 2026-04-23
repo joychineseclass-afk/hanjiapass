@@ -25,7 +25,7 @@ import {
 } from "../lumina-commerce/teacherListingBridge.js";
 import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
 import { i18n } from "../i18n.js";
-import { teacherBackToWorkspaceHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
+import { teacherBackToWorkspaceHtml, teacherWorkspaceSubnavHtml, userCanAccessTeacherReviewConsole } from "./teacherPathNav.js";
 
 function tx(p, a) {
   return safeUiText(p, a);
@@ -375,12 +375,16 @@ async function renderEditor(root) {
     root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.gated"))}</p></div>`;
     return;
   }
+  const u = getCurrentUser();
+  await initCommerceStore();
+  const snapForNav = getCommerceStoreSync();
+  const showReviewConsole =
+    snapForNav && u?.id ? userCanAccessTeacherReviewConsole(snapForNav, String(u.id)) : false;
   const a = findAssetById(id);
   if (!a) {
     root.innerHTML = `<div class="wrap card teacher-asset-editor-denied"><p>${esc(t("teacher.asset_editor.not_found"))}</p></div>`;
     return;
   }
-  const u = getCurrentUser();
   const sameProfile = String(a.teacher_profile_id) === String(ctx.profile.id);
   const sameOwner = String(a.owner_user_id) === String(u.id);
   if (!sameProfile && !sameOwner) {
@@ -392,7 +396,7 @@ async function renderEditor(root) {
     <div class="wrap teacher-asset-editor-page">
       ${teacherBackToWorkspaceHtml(t)}
       <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t)}
+      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
       <section class="card teacher-asset-editor-trashed-gate">
         <h2 class="teacher-asset-editor-trashed-title">${esc(t("teacher.asset_editor.trashed_gate_title"))}</h2>
         <p class="teacher-asset-editor-trashed-body">${esc(t("teacher.asset_editor.trashed_gate_body"))}</p>
@@ -419,7 +423,7 @@ async function renderEditor(root) {
     <div class="wrap teacher-asset-editor-page">
       ${teacherBackToWorkspaceHtml(t)}
       <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t)}
+      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
       <header class="card teacher-surface-hero teacher-asset-editor-hero">
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.import_readonly_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.import_readonly_lead"))}</p>
@@ -453,7 +457,6 @@ async function renderEditor(root) {
   const canEdit = !isArchived;
   const canMoveToTrash = canEdit && !isArchived;
 
-  await initCommerceStore();
   const snap = getCommerceStoreSync();
   const listingRow = snap ? findListingByAssetId(snap, a.id) : null;
   const pubM = getAssetEditorPublishingModel(ctx.profile.id, u.id, listingRow, a, t);
@@ -463,7 +466,7 @@ async function renderEditor(root) {
     <div class="wrap teacher-asset-editor-page">
       ${teacherBackToWorkspaceHtml(t)}
       <p class="teacher-page-kicker">${esc(t("teacher.manage.page_kicker_mine"))}</p>
-      ${teacherWorkspaceSubnavHtml("assets", t)}
+      ${teacherWorkspaceSubnavHtml("assets", t, { showReviewConsole })}
       <header class="card teacher-surface-hero teacher-asset-editor-hero">
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.page_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.lead"))}</p>
@@ -471,7 +474,12 @@ async function renderEditor(root) {
           <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
           <a class="teacher-surface-link" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(t("teacher.asset_editor.to_classroom"))}</a>
           <a class="teacher-surface-link" href="#teacher-publishing">${esc(t("teacher.nav.my_publishing"))}</a>
-          <a class="teacher-surface-link" href="#teacher-review">${esc(t("teacher.nav.review_console"))}</a>
+          <a class="teacher-surface-link" href="#teacher-publishing">${esc(t("teacher.workflow.view_review_status"))}</a>
+          ${
+            showReviewConsole
+              ? `<a class="teacher-surface-link" href="#teacher-review">${esc(t("teacher.nav.review_console"))}</a>`
+              : ""
+          }
           ${
             listingRow
               ? `<a class="teacher-surface-link" href="#teacher-listing?id=${encodeURIComponent(listingRow.id)}">${esc(

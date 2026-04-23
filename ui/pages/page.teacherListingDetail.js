@@ -284,6 +284,8 @@ async function renderPublicDetail(root, listingId) {
   <p class="teacher-listing-preview-nav">
     <a class="teacher-listing-preview-nav-link" href="#teacher-publishing">${escapeHtml(tx("teacher.listing_detail.nav_back_publishing"))}</a>
     <span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span>
+    <a class="teacher-listing-preview-nav-link" href="#teacher-publishing">${escapeHtml(tx("teacher.workflow.view_review_status"))}</a>
+    <span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span>
     <a class="teacher-listing-preview-nav-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
     ${
       editorUrl
@@ -318,6 +320,7 @@ async function renderPublicDetail(root, listingId) {
         <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(tx("teacher.listing_detail.go_teacher_home"))}</a>
         <a class="teacher-surface-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
         <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(tx("teacher.listing_detail.nav_back_publishing"))}</a>
+        <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(tx("teacher.workflow.view_review_status"))}</a>
         ${
           editorUrl
             ? `<a class="teacher-surface-link" href="${editorUrl}">${escapeHtml(tx("teacher.listing_detail.nav_back_editor"))}</a>`

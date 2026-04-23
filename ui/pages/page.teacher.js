@@ -25,7 +25,12 @@ import { findListingByAssetId } from "../lumina-commerce/teacherListingBridge.js
 import { findAssetById } from "../lumina-commerce/teacherAssetsStore.js";
 import { LISTING_STATUS, VISIBILITY } from "../lumina-commerce/enums.js";
 import { i18n } from "../i18n.js";
-import { teacherPathStripHtml, teacherPathStripClassroomHintHtml, teacherWorkspaceSubnavHtml } from "./teacherPathNav.js";
+import {
+  teacherPathStripHtml,
+  teacherPathStripClassroomHintHtml,
+  teacherWorkspaceSubnavHtml,
+  userCanAccessTeacherReviewConsole,
+} from "./teacherPathNav.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -342,8 +347,9 @@ function assetStatePillHtml(a, t) {
  * @param {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset[]} recentAssets
  * @param {object|null} commerceStats
  * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot|null|undefined} commerceSnap
+ * @param {boolean} showReviewConsole
  */
-function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, commerceSnap) {
+function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, commerceSnap, showReviewConsole) {
   const st = String(profile.workbench_status);
   const label = escapeHtml(t(`teacher.wbstate.${st}`));
   const rec = computeRecommendedNextStep(String(profile.id), commerceSnap, t);
@@ -462,7 +468,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         </div>
       </section>
 
-      ${teacherWorkspaceSubnavHtml("workspace", t)}
+      ${teacherWorkspaceSubnavHtml("workspace", t, { showReviewConsole })}
 
       <section class="card teacher-hub-recommended" aria-labelledby="tw-hub-rec">
         <h2 id="tw-hub-rec" class="teacher-hub-section-title">${escapeHtml(t("teacher.workspace.hub_recommended_title"))}</h2>
@@ -501,8 +507,20 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           <article class="card teacher-hub-wf-card">
             <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.workspace.hub_wf_publish"))}</h3>
             <p class="teacher-hub-wf-p">${escapeHtml(t("teacher.workspace.hub_wf_publish_sub"))}</p>
-            <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.hub.listing.cta_mine"))}</a>
-            <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>
+            <div class="teacher-hub-wf-cta-stack">
+              <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(
+                t("teacher.workflow.view_review_status"),
+              )}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(t("teacher.workflow.submit_for_review"))}</a>
+              ${
+                showReviewConsole
+                  ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(
+                      t("teacher.nav.review_console"),
+                    )}</a>`
+                  : `<p class="teacher-hub-wf-routing-hint">${escapeHtml(t("teacher.workflow.publish_routing_hint"))}</p>`
+              }
+            </div>
           </article>
           <article class="card teacher-hub-wf-card">
             <h3 class="teacher-hub-wf-h">${escapeHtml(t("teacher.workspace.hub_wf_commerce"))}</h3>
@@ -586,8 +604,15 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
             <span class="teacher-hub-badge">${escapeHtml(t("teacher.hub.listing.badge"))}</span>
           </div>
           <p class="teacher-tile-desc">${escapeHtml(t("teacher.hub.listing.desc_mine"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.hub.listing.cta_mine"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--accent" href="#teacher-publishing">${escapeHtml(t("teacher.nav.my_publishing"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(
+            t("teacher.workflow.view_review_status"),
+          )}</a>
+          ${
+            showReviewConsole
+              ? `<a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-review">${escapeHtml(t("teacher.nav.review_console"))}</a>`
+              : `<p class="teacher-tile-scope">${escapeHtml(t("teacher.workflow.publish_routing_hint"))}</p>`
+          }
         </article>
 
         <article class="teacher-tile card teacher-tile--entry teacher-tile--muted">
@@ -779,12 +804,13 @@ async function renderTeacherHub(root) {
 
   if (ctx.isApproved && ctx.profile) {
     const u = getCurrentUser();
+    const showReviewConsole = commerceSnap ? userCanAccessTeacherReviewConsole(commerceSnap, String(u.id)) : false;
     const assetN = getTeacherClassroomAssetCountForProfile(ctx.profile.id);
     const base = getTeacherWorkspaceDemoSummary(listings, ctx.profile.id);
     const sum = { ...base, classroomAssetCount: assetN };
     const recent = getRecentAssetsForProfile(ctx.profile.id, 3);
     const commerceStats = commerceSnap ? getTeacherProfileCommerceStats(commerceSnap, ctx.profile.id) : null;
-    root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats, commerceSnap);
+    root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats, commerceSnap, showReviewConsole);
     bindClassroomForm(root);
     bindAssetQuickCreate(root, ctx.profile.id, u.id);
     i18n.apply?.(root);

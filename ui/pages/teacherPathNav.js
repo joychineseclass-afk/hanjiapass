@@ -1,3 +1,7 @@
+import { getCommerceStoreSync, userHasRole } from "../lumina-commerce/store.js";
+import { USER_ROLE } from "../lumina-commerce/enums.js";
+import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+
 function escapeHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -5,6 +9,25 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+/**
+ * 当前会话用户是否具备审核台权限（演示：commerce store 中的 reviewer / admin 角色）。
+ * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot|null} snap
+ * @param {string|null|undefined} userId
+ */
+export function userCanAccessTeacherReviewConsole(snap, userId) {
+  if (!snap || userId == null || userId === "") return false;
+  const uid = String(userId);
+  return userHasRole(snap, uid, USER_ROLE.reviewer) || userHasRole(snap, uid, USER_ROLE.admin);
+}
+
+/** 依赖已初始化的 commerce store（教师页在 getTeacherPageContext 后会就绪）。 */
+export function currentUserCanAccessTeacherReviewConsoleSync() {
+  const snap = getCommerceStoreSync();
+  const u = getCurrentUser();
+  if (!snap || !u?.id || u.isGuest) return false;
+  return userCanAccessTeacherReviewConsole(snap, String(u.id));
 }
 
 /**
@@ -22,9 +45,15 @@ export function teacherBackToWorkspaceHtml(tx) {
  * 教师模块轻量子导航：工作台 + 教材 / 课程 / 课堂资产 / 上架（当前项高亮）。
  * @param {'workspace' | 'profile' | 'materials' | 'courses' | 'assets' | 'listing' | 'publishing' | 'review'} active
  * @param {(path: string, params?: object) => string} tx
+ * @param {{ showReviewConsole?: boolean }} [options] 若为普通老师则隐藏「审核台」链；在 #teacher-review 门页仍保留当前项。
  */
-export function teacherWorkspaceSubnavHtml(active, tx) {
+export function teacherWorkspaceSubnavHtml(active, tx, options = {}) {
   const m = (path) => escapeHtml(tx(path));
+  const showReview =
+    typeof options.showReviewConsole === "boolean"
+      ? options.showReviewConsole
+      : currentUserCanAccessTeacherReviewConsoleSync();
+  const includeReviewNav = showReview || active === "review";
   /** @param {'workspace'|'profile'|'materials'|'courses'|'assets'|'listing'|'publishing'|'review'} kind */
   const item = (kind) => {
     let isCurrent = active === kind;
@@ -65,7 +94,7 @@ export function teacherWorkspaceSubnavHtml(active, tx) {
         ${item("courses")}
         ${item("assets")}
         ${item("publishing")}
-        ${item("review")}
+        ${includeReviewNav ? item("review") : ""}
       </div>
     </nav>
   `;

@@ -736,6 +736,11 @@
       "teacher_profile": "Teacher profile",
       "public_detail": "Public detail"
     },
+    "workflow": {
+      "view_review_status": "View review status",
+      "submit_for_review": "Submit for review",
+      "publish_routing_hint": "Use My listings to submit and track reviews. The review console is for platform reviewers only."
+    },
     "publishing_page": {
       "title": "My listings",
       "subtitle": "Submit classroom work for review, then set visibility when it is approved.",
@@ -745,17 +750,29 @@
       "session_guest_label": "Not signed in"
     },
     "review_page": {
-      "title": "Review console",
-      "subtitle": "Pick a listing, move its status, and leave a reason when rejecting or delisting.",
-      "note": "Demo only: no real compliance queue. Switch identity if you are not a reviewer yet.",
-      "gate_title": "Reviewers only",
-      "gate_body": "This screen is for reviewer and admin demo accounts. Teachers use “My listings” to submit content.",
-      "gate_hint": "Switch the demo identity to a reviewer, or open the full console from the link below.",
-      "gate_switch_identity": "Open full console to switch identity"
+      "title": "Platform review workspace",
+      "subtitle": "Pick a listing, move its status, and leave a reason when rejecting or delisting (demo data).",
+      "subtitle_reviewer": "You are in reviewer mode: handle teacher profiles first, then courseware listings. Reviews are manual at this stage.",
+      "note": "Demo only: not a real compliance queue.",
+      "note_reviewer": "Human review today; later we may add AI pre-screening or assistive checks—final decisions remain human.",
+      "gate_title": "Platform review entry",
+      "gate_body": "This area is for platform reviewers working on teacher profiles and courseware listings. Teachers should use “My listings” to submit work and check status.",
+      "gate_hint": "If you are not a reviewer, use “My listings” below for your own submissions.",
+      "gate_cta_my_publishing": "Go to My listings",
+      "gate_cta_review_status": "View review status",
+      "gate_dev_console_lead": "Dev / demo: switch to a reviewer or admin demo user from the full Stage 0 console.",
+      "gate_switch_identity": "Open full console to switch identity",
+      "reviewer_mode_kicker": "Current review identity",
+      "reviewer_banner_title": "Reviewer mode",
+      "reviewer_banner_lead": "You can process two areas here: teacher profiles (identity/credentials) and courseware listings (publishable items).",
+      "reviewer_cap_profile": "Teacher profile review",
+      "reviewer_cap_listing": "Courseware listing review",
+      "manual_review_note": "Human review: outcomes are recorded by reviewers in the system.",
+      "ai_future_note": "Future versions may add AI pre-screening or assistive review to speed up triage and surface risks."
     },
     "review_tp": {
       "section_title": "Teacher profile review",
-      "section_lead": "Separate from “Listing review” below: identity/qualification applications vs. content sales listings.",
+      "section_lead": "Separate from “Courseware listing review” below: identity and credentials vs. publishable courseware listings.",
       "pending_title": "Pending teacher profiles",
       "past_title": "Recently decided profiles",
       "summary": "Summary",
@@ -767,8 +784,8 @@
       "reviewer_note": "Review note (optional)",
       "note_placeholder": "Internal note or message to the teacher",
       "empty_pending": "No teacher profile is waiting for review.",
-      "listing_block_title": "Listing (content) review",
-      "listing_block_lead": "The section below is for listing status and controls—not the same as teacher profile review above."
+      "listing_block_title": "Courseware listing review",
+      "listing_block_lead": "Courseware listing status and reviewer controls—separate from teacher profile review above."
     },
     "review_listing": {
       "from_classroom_deck": "Teacher deck listing",
@@ -1838,8 +1855,8 @@
       }
     },
     "review": {
-      "zone_title": "Reviewer actions",
-      "zone_subtitle": "Visible only for reviewer or admin demo accounts—approve, reject, or delist with reasons.",
+      "zone_title": "Courseware listings · Reviewer actions",
+      "zone_subtitle": "Reviewer or admin only. Human review today; AI assist may come later. Approve, reject, or delist with reasons.",
       "panel_title": "Review (reviewer / admin)",
       "panel_desc": "Change listing status with reason code and text; transitions must follow the state machine.",
       "pick_listing": "Choose listing",

@@ -52,6 +52,7 @@ import {
   teacherListingSourceGuideHtml,
   teacherPathStripHtml,
   teacherWorkspaceSubnavHtml,
+  userCanAccessTeacherReviewConsole,
 } from "./teacherPathNav.js";
 import { formatListingDemoSourceStageNote } from "../lumina-commerce/teacherDemoCatalog.js";
 import { mergeTeacherProfileRow } from "../lumina-commerce/teacherProfileStore.js";
@@ -391,6 +392,7 @@ function renderPage(root, ctx) {
   const listingStatusMutationActorId =
     pageMode === "review" ? sessionUserId || demoUserId : demoUserId;
   const profileReviewActorId = sessionUserId || demoUserId;
+  const showReviewConsoleNav = sessionUserId ? userCanAccessTeacherReviewConsole(snap, sessionUserId) : false;
 
   if (pageMode === "review" && !isReviewer) {
     root.innerHTML = `
@@ -403,10 +405,21 @@ function renderPage(root, ctx) {
         <p class="teacher-review-gate-body">${escapeHtml(commerceT("teacher.review_page.gate_body"))}</p>
         <p class="teacher-review-gate-hint">${escapeHtml(commerceT("teacher.review_page.gate_hint"))}</p>
         <div class="teacher-review-gate-actions">
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#lumina-teacher-stage0">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-publishing">${escapeHtml(
+            commerceT("teacher.review_page.gate_cta_my_publishing"),
+          )}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-publishing">${escapeHtml(
+            commerceT("teacher.review_page.gate_cta_review_status"),
+          )}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher">${escapeHtml(
+            commerceT("teacher.nav.back_mine_workbench"),
+          )}</a>
+        </div>
+        <p class="teacher-review-gate-dev">${escapeHtml(commerceT("teacher.review_page.gate_dev_console_lead"))}</p>
+        <div class="teacher-review-gate-actions teacher-review-gate-actions--dev">
+          <a class="teacher-hub-cta teacher-hub-cta--ghost" href="#lumina-teacher-stage0">${escapeHtml(
             commerceT("teacher.review_page.gate_switch_identity"),
           )}</a>
-          <a class="teacher-hub-cta" href="#teacher">${escapeHtml(commerceT("teacher.nav.back_mine_workbench"))}</a>
         </div>
       </section>
     </div>`;
@@ -564,13 +577,17 @@ function renderPage(root, ctx) {
     pageMode === "publishing"
       ? commerceT("teacher.publishing_page.subtitle")
       : pageMode === "review"
-        ? commerceT("teacher.review_page.subtitle")
+        ? isReviewer
+          ? commerceT("teacher.review_page.subtitle_reviewer")
+          : commerceT("teacher.review_page.subtitle")
         : commerceT("commerce.stage0.subtitle");
   const stageNote =
     pageMode === "publishing"
       ? commerceT("teacher.publishing_page.note")
       : pageMode === "review"
-        ? commerceT("teacher.review_page.note")
+        ? isReviewer
+          ? commerceT("teacher.review_page.note_reviewer")
+          : commerceT("teacher.review_page.note")
         : commerceT("commerce.stage0.stage_note");
 
   const showHeroBadge = pageMode === "full";
@@ -599,6 +616,23 @@ function renderPage(root, ctx) {
     }
     return true;
   });
+
+  const reviewerModeBanner =
+    pageMode === "review" && isReviewer
+      ? `<section class="card teacher-review-reviewer-banner" role="region" aria-labelledby="tr-reviewer-banner-h">
+        <p class="teacher-review-reviewer-kicker">${escapeHtml(commerceT("teacher.review_page.reviewer_mode_kicker"))}</p>
+        <h2 id="tr-reviewer-banner-h" class="teacher-review-reviewer-banner-title">${escapeHtml(
+          commerceT("teacher.review_page.reviewer_banner_title"),
+        )}</h2>
+        <p class="teacher-review-reviewer-lead">${escapeHtml(commerceT("teacher.review_page.reviewer_banner_lead"))}</p>
+        <ul class="teacher-review-reviewer-caps">
+          <li>${escapeHtml(commerceT("teacher.review_page.reviewer_cap_profile"))}</li>
+          <li>${escapeHtml(commerceT("teacher.review_page.reviewer_cap_listing"))}</li>
+        </ul>
+        <p class="teacher-review-reviewer-manual">${escapeHtml(commerceT("teacher.review_page.manual_review_note"))}</p>
+        <p class="teacher-review-reviewer-ai">${escapeHtml(commerceT("teacher.review_page.ai_future_note"))}</p>
+      </section>`
+      : "";
 
   const reviewLogMainTable =
     pageMode === "review" && isReviewer
@@ -629,7 +663,7 @@ function renderPage(root, ctx) {
     <div class="wrap lts0-page teacher-admin-shell ${pageShellClass}">
       ${teacherBackToWorkspaceHtml(commerceT)}
       <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(commerceT("teacher.manage.page_kicker"))}</p>
-      ${teacherWorkspaceSubnavHtml(subnavActive, commerceT)}
+      ${teacherWorkspaceSubnavHtml(subnavActive, commerceT, { showReviewConsole: showReviewConsoleNav })}
       <section class="card lts0-hero">
         <div class="lts0-hero-top">
           <div class="lts0-hero-text">
@@ -644,12 +678,13 @@ function renderPage(root, ctx) {
           }
         </div>
       </section>
+      ${reviewerModeBanner}
       ${teacherPathStripHtml("listing", commerceT)}
       ${showSourceGuide ? teacherListingSourceGuideHtml(commerceT) : ""}
 
-      ${reviewPanelTop}
       ${teacherProfileReviewBlock}
       ${listingReviewSeparator}
+      ${reviewPanelTop}
 
       <section class="card ${actionsHubClass}">
         <div class="lts0-actions-grid">

@@ -745,6 +745,11 @@
       "teacher_profile": "教師プロフィール",
       "public_detail": "公開詳細"
     },
+    "workflow": {
+      "view_review_status": "審査ステータスを見る",
+      "submit_for_review": "審査に提出",
+      "publish_routing_hint": "提出と進捗は「マイ掲載」で。審査台はプラットフォーム審査者向けです。"
+    },
     "publishing_page": {
       "title": "マイ掲載",
       "subtitle": "授業用資産を審査に出し、承認後に公開設定を行います。",
@@ -754,17 +759,29 @@
       "session_guest_label": "未ログイン"
     },
     "review_page": {
-      "title": "審査台",
-      "subtitle": "掲載を選び、ステータスを更新。差し戻し・非公開のときは理由を残します。",
-      "note": "デモ用のため実キューではありません。審査員でなければデモ身元を切り替えてください。",
-      "gate_title": "審査員専用",
-      "gate_body": "この画面は審査者／管理者向けのデモです。教師は「マイ掲載」から送ってください。",
-      "gate_hint": "下のリンクで身元切り替え可能な完全コンソールを開くこともできます。",
-      "gate_switch_identity": "完全コンソールを開く（身元切り替え）"
+      "title": "プラットフォーム審査ワークスペース",
+      "subtitle": "掲載を選び、ステータスを更新。差し戻し・非公開のときは理由を残します（デモデータ）。",
+      "subtitle_reviewer": "審査モードです。教師プロフィールを先に処理し、続けて课件掲載を処理します。現段階は人力審査です。",
+      "note": "デモ用のため実キューではありません。",
+      "note_reviewer": "現段階は人力審査です。将来は AI 事前チェックや補助が拡張されても、最終判断は人が行います。",
+      "gate_title": "プラットフォーム審査の入口",
+      "gate_body": "プラットフォーム審査者が教師プロフィールと课件掲載を扱うエリアです。教師は「マイ掲載」で提出し、進捗を確認してください。",
+      "gate_hint": "審査者でない場合は、下の「マイ掲載」をご利用ください。",
+      "gate_cta_my_publishing": "マイ掲載へ",
+      "gate_cta_review_status": "審査ステータスを見る",
+      "gate_dev_console_lead": "開発・デモ：審査者／管理者のデモ身元に切り替えるには、完全な Stage 0 コンソールを開いてください。",
+      "gate_switch_identity": "完全コンソールを開く（身元切り替え）",
+      "reviewer_mode_kicker": "現在の審査身元",
+      "reviewer_banner_title": "審査モード",
+      "reviewer_banner_lead": "教師プロフィール（身元・資格）と课件掲載（公開項目）の両方を扱えます。",
+      "reviewer_cap_profile": "教師プロフィール審査",
+      "reviewer_cap_listing": "课件掲載審査",
+      "manual_review_note": "現段階は人力審査です。結果は審査者がシステムに記録します。",
+      "ai_future_note": "将来は AI 事前スクリーニングや補助審査でトリアージとリスク表示を強化できます。"
     },
     "review_tp": {
       "section_title": "教師プロフィール審査",
-      "section_lead": "下の「掲載（listing）審査」とは別枠：こちらは身元・資格、あちらは内容販売用の掲載です。",
+      "section_lead": "下の「课件掲載審査」とは別枠：こちらは身元・資格、下は公開可能な课件掲載です。",
       "pending_title": "審査待ちの教師プロフィール",
       "past_title": "直近の処理結果",
       "summary": "概要",
@@ -776,8 +793,8 @@
       "reviewer_note": "審査メモ（任意）",
       "note_placeholder": "内部用または教師向け",
       "empty_pending": "審査待ちの教師プロフィールはありません。",
-      "listing_block_title": "掲載（コンテンツ）審査",
-      "listing_block_lead": "下の枠は listing の審査操作です。教師プロフィール審査とは別物です。"
+      "listing_block_title": "课件掲載審査",
+      "listing_block_lead": "课件掲載の状態と審査操作のエリアです。教師プロフィール審査とは別です。"
     },
     "review_listing": {
       "from_classroom_deck": "教員课件·掲載",
@@ -1847,8 +1864,8 @@
       }
     },
     "review": {
-      "zone_title": "審査操作",
-      "zone_subtitle": "レビュアーまたは管理者のデモアカウントでのみ表示。承認・差し戻し・掲載終了などに使います。",
+      "zone_title": "课件掲載 · 審査操作",
+      "zone_subtitle": "レビュアーまたは管理者専用。現段階は人力審査で、将来 AI 補助を拡張可能。承認・差し戻し・掲載終了など。",
       "panel_title": "審査（レビュアー/管理者）",
       "panel_desc": "掲載状態と理由コード・説明を記録します。状態遷移ルールに従います。",
       "pick_listing": "コンテンツを選択",

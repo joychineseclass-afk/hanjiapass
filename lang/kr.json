@@ -736,6 +736,11 @@
       "teacher_profile": "강사 프로필",
       "public_detail": "공개 상세"
     },
+    "workflow": {
+      "view_review_status": "심사 상태 보기",
+      "submit_for_review": "심사 제출",
+      "publish_routing_hint": "제출·진행은 ‘내 등록’에서 하세요. 심사 콘솔은 플랫폼 심사자용입니다."
+    },
     "publishing_page": {
       "title": "내 등록(상架)",
       "subtitle": "수업 자산을 심사에 제출하고, 승인 후 공개를 설정하세요.",
@@ -745,17 +750,29 @@
       "session_guest_label": "로그인 안 됨"
     },
     "review_page": {
-      "title": "심사 콘솔",
-      "subtitle": "등록을 선택해 상태를 바꾸고, 반려·비공개 시 사유를 남기세요.",
-      "note": "데모용이며 실제 큐가 아닙니다. 심사자가 아니면 데모 계정을 전환하세요.",
-      "gate_title": "심사자 전용",
-      "gate_body": "이 화면은 심사자/관리자 데모 계정용입니다. 강사는 ‘내 등록’에서 제출하세요.",
-      "gate_hint": "전체 콘솔에서 데모 계정을 전환하거나 아래 링크를 사용하세요.",
-      "gate_switch_identity": "전체 콘솔 열기(계정 전환)"
+      "title": "플랫폼 심사 작업대",
+      "subtitle": "등록을 선택해 상태를 바꾸고, 반려·비공개 시 사유를 남기세요(데모 데이터).",
+      "subtitle_reviewer": "심사자 모드입니다. 강사 프로필을 먼저 처리한 뒤 교안 등록을 처리하세요. 현재는 수동 심사입니다.",
+      "note": "데모용이며 실제 큐가 아닙니다.",
+      "note_reviewer": "현재는 수동 심사입니다. 이후 AI 사전 검토·보조 기능을 확장할 수 있으며, 최종 판단은 사람이 합니다.",
+      "gate_title": "플랫폼 심사 입구",
+      "gate_body": "플랫폼 심사자가 강사 프로필과 교안 등록을 처리하는 영역입니다. 강사는 ‘내 등록’에서 제출하고 진행 상태를 확인하세요.",
+      "gate_hint": "심사자가 아니라면 아래 ‘내 등록’으로 이동하세요.",
+      "gate_cta_my_publishing": "내 등록으로",
+      "gate_cta_review_status": "심사 상태 보기",
+      "gate_dev_console_lead": "개발·데모: 심사자/관리자 데모 계정으로 바꾸려면 전체 Stage 0 콘솔을 여세요.",
+      "gate_switch_identity": "전체 콘솔 열기(계정 전환)",
+      "reviewer_mode_kicker": "현재 심사 신분",
+      "reviewer_banner_title": "심사 모드",
+      "reviewer_banner_lead": "강사 프로필(신원·자료)과 교안 등록(판매/공개 항목) 두 가지를 처리할 수 있습니다.",
+      "reviewer_cap_profile": "강사 프로필 심사",
+      "reviewer_cap_listing": "교안 등록 심사",
+      "manual_review_note": "현재는 수동 심사이며, 결과는 심사자가 시스템에 기록합니다.",
+      "ai_future_note": "향후 AI 사전 검토나 보조 심사로 속도와 위험 표시를 보강할 수 있습니다."
     },
     "review_tp": {
       "section_title": "강사 프로필 심사",
-      "section_lead": "아래 ‘등록(listing) 심사’와 별도입니다. 여기는 신원·자격, 아래는 콘텐츠 판매 등록입니다.",
+      "section_lead": "아래 ‘교안 등록 심사’와 별도입니다. 여기는 신원·자격, 아래는 공개 가능한 교안 등록입니다.",
       "pending_title": "심사 대기 강사 프로필",
       "past_title": "최근 처리 내역",
       "summary": "요약",
@@ -767,8 +784,8 @@
       "reviewer_note": "심사 메모(선택)",
       "note_placeholder": "내부 메모 또는 강사 안내",
       "empty_pending": "대기 중인 강사 프로필이 없습니다.",
-      "listing_block_title": "등록(콘텐츠) 심사",
-      "listing_block_lead": "아래 영역은 listing 상태·컨트롤용이며, 강사 프로필 심사와는 구분됩니다."
+      "listing_block_title": "교안 등록 심사",
+      "listing_block_lead": "교안 등록의 상태와 심사 조작 영역이며, 강사 프로필 심사와는 다릅니다."
     },
     "review_listing": {
       "from_classroom_deck": "강의 교안 등록",
@@ -1838,8 +1855,8 @@
       }
     },
     "review": {
-      "zone_title": "심사 작업",
-      "zone_subtitle": "검수자 또는 관리자 계정에서만 보이며 승인·반려·내리기 등 상태 변경에 쓰입니다.",
+      "zone_title": "교안 등록 · 심사 작업",
+      "zone_subtitle": "검수자 또는 관리자 전용. 현재는 수동 심사이며, 이후 AI 보조를 확장할 수 있습니다. 승인·반려·내리기 등 상태 변경.",
       "panel_title": "심사(검수자/관리자)",
       "panel_desc": "등록 상태와 사유 코드·설명을 기록합니다. 상태 전이 규칙을 따릅니다.",
       "pick_listing": "콘텐츠 선택",

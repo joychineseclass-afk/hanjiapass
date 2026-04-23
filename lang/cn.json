@@ -736,6 +736,11 @@
       "teacher_profile": "老师档案",
       "public_detail": "公开详情"
     },
+    "workflow": {
+      "view_review_status": "查看审核状态",
+      "submit_for_review": "提交审核",
+      "publish_routing_hint": "日常请用「我的上架」提交与跟踪审核；审核台仅面向平台审核员。"
+    },
     "publishing_page": {
       "title": "我的上架",
       "subtitle": "将课堂资产提交审核，通过后再设置公开可见。",
@@ -745,17 +750,29 @@
       "session_guest_label": "未登录"
     },
     "review_page": {
-      "title": "审核台",
-      "subtitle": "选择上架项、更新状态，拒绝或下架时请填写原因。",
-      "note": "演示环境，非真实审核队列。若非审核员身份，请先切换演示账号。",
-      "gate_title": "仅审核员",
-      "gate_body": "此页面向审核员/管理员演示账号开放。老师请使用「我的上架」提交内容。",
-      "gate_hint": "可在完整控制台切换演示身份，或访问下方链接。",
-      "gate_switch_identity": "打开完整控制台以切换身份"
+      "title": "平台审核工作台",
+      "subtitle": "选择上架项、更新状态；拒绝或下架时请填写原因（演示数据）。",
+      "subtitle_reviewer": "你正以审核员身份处理队列：先审老师档案，再处理课件发布项。当前为人工审核。",
+      "note": "演示环境，非真实审核队列。",
+      "note_reviewer": "当前阶段为人工审核；后续可扩展 AI 预审或 AI 辅助审查，不会替代最终人工裁定。",
+      "gate_title": "平台审核入口",
+      "gate_body": "这里是平台内部审核区域，用于审核员处理老师档案与课件发布项。老师请在「我的上架」中提交内容、查看审核进度与结果。",
+      "gate_hint": "若你并非审核员，请使用下方「我的上架」管理自己的发布项。",
+      "gate_cta_my_publishing": "前往我的发布",
+      "gate_cta_review_status": "查看审核状态",
+      "gate_dev_console_lead": "开发与演示：若需切换为审核员/管理员演示账号，可打开完整 Stage 0 控制台。",
+      "gate_switch_identity": "打开完整控制台以切换身份",
+      "reviewer_mode_kicker": "当前审核身份",
+      "reviewer_banner_title": "审核模式",
+      "reviewer_banner_lead": "你可在此处理两类事项：老师档案（身份/资质）与课件发布项（上架内容）。",
+      "reviewer_cap_profile": "老师档案审核",
+      "reviewer_cap_listing": "课件发布项审核",
+      "manual_review_note": "当前为人工审核：处理结果由审核员在系统中记录。",
+      "ai_future_note": "后续版本可加入 AI 预审或 AI 辅助审查，用于提速与提示风险点。"
     },
     "review_tp": {
       "section_title": "老师档案审核",
-      "section_lead": "与下方「内容 listing 审核」分区独立：此处为身份/资质类申请，listing 为内容上架审核。",
+      "section_lead": "与下方「课件发布项审核」分区相互独立：此处审身份与资质材料，下方审可上架的课件发布项。",
       "pending_title": "待审核老师档案",
       "past_title": "最近已处理的老师档案",
       "summary": "资料摘要",
@@ -767,8 +784,8 @@
       "reviewer_note": "审核备注（选填）",
       "note_placeholder": "对内可见或同步老师的说明",
       "empty_pending": "当前没有待审核的老师档案。",
-      "listing_block_title": "内容上架（listing）审核",
-      "listing_block_lead": "以下为 listing 状态与审核控件，与老师档案审核分区不同。"
+      "listing_block_title": "课件发布项审核",
+      "listing_block_lead": "以下为课件类发布项的状态与审核操作区，与老师档案审核分区不同。"
     },
     "review_listing": {
       "from_classroom_deck": "老师课件发布项",
@@ -1838,8 +1855,8 @@
       }
     },
     "review": {
-      "zone_title": "审核操作",
-      "zone_subtitle": "仅审核员或管理员身份可见，用于通过、驳回或下架等状态变更。",
+      "zone_title": "课件发布项 · 审核操作",
+      "zone_subtitle": "仅审核员或管理员可见。当前为人工审核；后续可扩展 AI 辅助。在此通过、驳回或下架等状态变更。",
       "panel_title": "审核（审核员/管理员）",
       "panel_desc": "变更上架状态并记录原因代码与说明；须符合状态机规则。",
       "pick_listing": "选择上架内容",
