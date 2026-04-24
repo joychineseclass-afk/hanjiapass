@@ -2,6 +2,7 @@
  * 老师课堂资产 — localStorage 领域层（与 Step 1 用户/档案隔离）。
  */
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
+import { E2E_FIXTURE_ASSET_ID, E2E_FIXTURE_TEACHER_PROFILE_ID } from "./e2eClassroomFixture.js";
 
 export const ASSET_TYPE = Object.freeze({
   lesson_slide_draft: "lesson_slide_draft",
@@ -319,6 +320,31 @@ function saveFile(data) {
   } catch {
     /* quota */
   }
+}
+
+/**
+ * Lumina 回归：写入与 e2eClassroomFixture 同 ID 的课堂课件，供 listing / #classroom 联调。
+ * 若本地已有同 id 项则不覆盖。
+ */
+export function ensureE2EClassroomFixtureAsset() {
+  const f = loadFile();
+  if (f.items.some((a) => a && a.id === E2E_FIXTURE_ASSET_ID)) return;
+  const t = nowIso();
+  const row = sanitizeItem({
+    id: E2E_FIXTURE_ASSET_ID,
+    teacher_profile_id: E2E_FIXTURE_TEACHER_PROFILE_ID,
+    owner_user_id: "u_teacher_demo_001",
+    source: { course: "hsk", level: "1", lesson: "1" },
+    asset_type: ASSET_TYPE.lesson_slide_draft,
+    title: "E2E fixture — lesson slide (demo)",
+    status: ASSET_STATUS.ready,
+    slide_outline: defaultSlideOutline(),
+    created_at: t,
+    updated_at: t,
+  });
+  if (!row) return;
+  f.items.push(row);
+  saveFile(f);
 }
 
 /** @returns {TeacherClassroomAsset[]} */

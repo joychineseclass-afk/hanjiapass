@@ -2015,7 +2015,8 @@
       "col_type": "类型",
       "col_how": "获取方式",
       "col_time": "获取时间",
-      "col_action": "进入/详情"
+      "col_action": "进入/详情",
+      "e2e_apply_demo_student": "切换为 mock 学生「示例学生 A」（E2E 固定演示）"
     },
     "my_orders": {
       "lead": "这是当前账号的订单记录；付费为本地模拟，不会真实扣款。",

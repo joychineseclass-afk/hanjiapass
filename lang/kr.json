@@ -2015,7 +2015,8 @@
       "col_type": "유형",
       "col_how": "획득 방식",
       "col_time": "획득 시각",
-      "col_action": "수업/상세"
+      "col_action": "수업/상세",
+      "e2e_apply_demo_student": "모의 학습자「예시 학생 A」로 전환(E2E 고정 루트)"
     },
     "my_orders": {
       "lead": "이 계정의 주문 기록입니다. 유료는 모의 결제이며 실제 청구되지 않습니다.",

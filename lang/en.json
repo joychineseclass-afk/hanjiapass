@@ -2015,7 +2015,8 @@
       "col_type": "Type",
       "col_how": "How you got it",
       "col_time": "Unlocked at",
-      "col_action": "Classroom / detail"
+      "col_action": "Classroom / detail",
+      "e2e_apply_demo_student": "Switch to mock student \"Sample A\" (E2E fixture)"
     },
     "my_orders": {
       "lead": "Order history for this account. Payments are simulated only; no real charges.",

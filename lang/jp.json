@@ -2024,7 +2024,8 @@
       "col_type": "種類",
       "col_how": "取得方法",
       "col_time": "取得日時",
-      "col_action": "授業／詳細"
+      "col_action": "授業／詳細",
+      "e2e_apply_demo_student": "モック学習者「サンプル生徒A」に切替（E2E 固定手順）"
     },
     "my_orders": {
       "lead": "このアカウントの注文履歴です。有料表示は模擬のみで、実課金は行われません。",

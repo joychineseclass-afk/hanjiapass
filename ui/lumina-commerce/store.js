@@ -1,6 +1,7 @@
 import { SCHEMA_VERSION_STAGE0 } from "./schema.js";
 import { PRICING_TYPE, REVENUE_SHARE_MODEL } from "./enums.js";
 import { builtinStage0Examples, createInitialStoreSnapshot } from "./mockSeed.js";
+import { ensureE2eCommerceFixture } from "./e2eClassroomFixture.js";
 
 /**
  * 老数据补全 Step5 商业字段（不改变 schema_version，仅补字段）。
@@ -91,7 +92,11 @@ export function initCommerceStore() {
     const existing = loadFromLocalStorage();
     if (existing) {
       _cache = existing;
-      if (applyCommerceStep5Defaults(_cache)) saveToLocalStorage(_cache);
+      let needsSave = false;
+      if (applyCommerceStep5Defaults(_cache)) needsSave = true;
+      if (ensureE2eCommerceFixture(_cache)) needsSave = true;
+      if (applyCommerceStep5Defaults(_cache)) needsSave = true;
+      if (needsSave) saveToLocalStorage(_cache);
       return _cache;
     }
     let examples = builtinStage0Examples();
@@ -101,6 +106,8 @@ export function initCommerceStore() {
       /* use builtin */
     }
     _cache = createInitialStoreSnapshot(examples);
+    applyCommerceStep5Defaults(_cache);
+    ensureE2eCommerceFixture(_cache);
     applyCommerceStep5Defaults(_cache);
     saveToLocalStorage(_cache);
     return _cache;

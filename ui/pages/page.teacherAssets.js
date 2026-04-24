@@ -2,7 +2,7 @@
 
 import { safeUiText, formatTeacherHubCourseDisplay } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
-import { updateTeacherAsset } from "../lumina-commerce/teacherAssetsStore.js";
+import { updateTeacherAsset, ensureE2EClassroomFixtureAsset } from "../lumina-commerce/teacherAssetsStore.js";
 import {
   listAssetsByProfileId,
   listTrashedAssetsByProfileId,
@@ -454,6 +454,7 @@ async function renderPage(root) {
   }
 
   await initCommerceStore();
+  ensureE2EClassroomFixtureAsset();
   const snap = getCommerceStoreSync();
   const profileId = ctx.profile.id;
   const userId = ctx.user?.id || "";

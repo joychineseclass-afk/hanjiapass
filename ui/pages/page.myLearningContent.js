@@ -1,9 +1,11 @@
 // 我的内容：已获 entitlement 的 listing（#my-content）
 
 import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/store.js";
-import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { getCurrentUser, setCurrentUser } from "../lumina-commerce/currentUser.js";
+import { ensureE2EClassroomFixtureAsset } from "../lumina-commerce/teacherAssetsStore.js";
+import { E2E_FIXTURE_DEMO_STUDENT_USER_ID } from "../lumina-commerce/e2eClassroomFixture.js";
 import { listActiveEntitlementsForUser } from "../lumina-commerce/entitlementService.js";
-import { ENTITLEMENT_SOURCE_TYPE, PRICING_TYPE } from "../lumina-commerce/enums.js";
+import { ENTITLEMENT_SOURCE_TYPE, PRICING_TYPE, USER_ROLE } from "../lumina-commerce/enums.js";
 import { getListingPricingType } from "../lumina-commerce/teacherCommerceBridge.js";
 import { safeUiText, formatCommerceEnum } from "../lumina-commerce/commerceDisplayLabels.js";
 import { i18n } from "../i18n.js";
@@ -29,6 +31,7 @@ export default async function pageMyLearningContent(ctxOrRoot) {
   if (!root) return;
 
   await initCommerceStore();
+  ensureE2EClassroomFixtureAsset();
   const snap = getCommerceStoreSync();
   const u = getCurrentUser();
   if (!snap) {
@@ -76,9 +79,15 @@ export default async function pageMyLearningContent(ctxOrRoot) {
     })
     .join("");
 
+  const e2eBtn =
+    String(u.id) !== E2E_FIXTURE_DEMO_STUDENT_USER_ID || u.isGuest
+      ? `<p class="learner-my-e2e-hint my-content-e2e-hint"><button type="button" class="lts0-btn lts0-btn--ghost" id="myContentE2eDemoStudent">${escapeHtml(
+          tx("learner.my_content.e2e_apply_demo_student"),
+        )}</button></p>`
+      : "";
   const empty = withListings.length
     ? ""
-    : `<p class="learner-my-empty my-content-empty">${escapeHtml(tx("learner.my_content.empty"))}</p>`;
+    : `<p class="learner-my-empty my-content-empty">${escapeHtml(tx("learner.my_content.empty"))}</p>${e2eBtn}`;
   const table = withListings.length
     ? `<div class="learner-my-table-wrap"><table class="learner-my-table">
       <thead><tr>
@@ -100,6 +109,21 @@ export default async function pageMyLearningContent(ctxOrRoot) {
     </header>
     <section class="card learner-my-section">${empty}${table}</section>
   </div>`;
+  root.querySelector("#myContentE2eDemoStudent")?.addEventListener("click", () => {
+    setCurrentUser({
+      id: E2E_FIXTURE_DEMO_STUDENT_USER_ID,
+      name: "示例学生 A",
+      roles: [USER_ROLE.student],
+      teacherProfileId: null,
+      isGuest: false,
+    });
+    try {
+      sessionStorage.setItem("joy_return_hash_after_login", "#my-content");
+    } catch {
+      /* */
+    }
+    location.hash = "#my-content";
+  });
   i18n.apply?.(root);
 }
 

@@ -7,6 +7,7 @@ import { initCommerceStore } from "./store.js";
 import {
   createTeacherAssetFromLesson,
   defaultSlideOutline,
+  ensureE2EClassroomFixtureAsset,
   findAssetById,
   getEffectiveTeacherNote,
   isTeacherAssetTrashed,
@@ -25,6 +26,8 @@ import {
 } from "./teacherAssetsStore.js";
 import { formatTeacherHubCourseDisplay } from "./commerceDisplayLabels.js";
 import { findListingByAssetId, canCurrentUserPreviewTeacherListing } from "./teacherListingBridge.js";
+import { getCommerceStoreSync } from "./store.js";
+import { hasListingAccess } from "./entitlementService.js";
 
 export { findListingByAssetId, canCurrentUserPreviewTeacherListing };
 
@@ -141,6 +144,7 @@ export function getCoursewareClassroomStepSequenceFromAsset(asset) {
  */
 export async function selectClassroomContextFromAssetId(assetId) {
   if (!assetId) return { ok: false, error: "not_found" };
+  ensureE2EClassroomFixtureAsset();
   try {
     await initCommerceStore();
     await ensureCurrentUserMatchesCommerceTeacher();
@@ -163,7 +167,18 @@ export async function selectClassroomContextFromAssetId(assetId) {
   } else if (sameOwner) {
     // 无 profile 时仅靠 owner
   } else {
-    return { ok: false, error: "forbidden" };
+    const snap = getCommerceStoreSync();
+    const L = snap ? findListingByAssetId(snap, String(assetId)) : null;
+    if (
+      L &&
+      u.id &&
+      !u.isGuest &&
+      hasListingAccess(snap?.entitlements || [], String(u.id), L.id)
+    ) {
+      // 已获 listing 学习权益的学员
+    } else {
+      return { ok: false, error: "forbidden" };
+    }
   }
 
   const s = asset.source;
