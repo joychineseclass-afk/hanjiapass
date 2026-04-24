@@ -7,33 +7,14 @@ import { initClassroomEngine } from "../platform/classroom/classroomEngine.js";
 import { getClassroomState, setClassroomStep } from "../platform/classroom/classroomState.js";
 import { getClassroomGamesForContext } from "../modules/games/gamesRegistry.js";
 import { formatGameModeType, formatTeacherHubCourseDisplay, safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
-import { getEffectiveTeacherNote, selectClassroomContextFromAssetId } from "../lumina-commerce/teacherAssetsSelectors.js";
+import { getEffectiveTeacherNote } from "../lumina-commerce/teacherAssetsSelectors.js";
+import { resolveClassroomPageLessonExperience } from "../platform/course-engine/lessonExperienceResolver.js";
 import { initClassroomPresentation, getClassroomViewMode, toggleClassroomViewMode, ViewMode, toggleClassroomFullscreen, isClassroomDocumentFullscreen } from "../platform/classroom/classroomPresentation.js";
 import { renderClassroomStage } from "../platform/classroom/classroomRenderer.js";
 import { renderClassroomToolbar } from "../platform/classroom/classroomToolbar.js";
 
 function tx(key, params) {
   return safeUiText(key, params);
-}
-
-function parseQuery() {
-  const hash = String(location.hash || "");
-  const qIndex = hash.indexOf("?");
-  const query = qIndex >= 0 ? hash.slice(qIndex + 1) : "";
-  const out = /** @type {Record<string, string>} */ ({});
-  if (!query) return out;
-  query.split("&").forEach((kv) => {
-    const [k, v] = kv.split("=");
-    if (!k) return;
-    out[decodeURIComponent(k)] = decodeURIComponent(v || "");
-  });
-  return out;
-}
-
-/** @param {string} hash */
-function hashHasQueryString(hash) {
-  const qIndex = String(hash || "").indexOf("?");
-  return qIndex >= 0 && String(hash || "").slice(qIndex + 1).trim().length > 0;
 }
 
 function escapeHtml(s) {
@@ -238,31 +219,13 @@ export default async function pageClassroom(ctxOrRoot) {
     document.getElementById("app");
   if (!root) return;
 
-  const q = parseQuery();
-  const assetIdRaw = q.assetId || q.assetid || "";
-  const assetId = String(assetIdRaw).trim();
+  const resolution = await resolveClassroomPageLessonExperience({ hash: String(location.hash || "") });
+  const { context, query: q, routing, engineInit, activeAsset, assetError, assetPresentation, hasUrlParams } = resolution;
 
-  let courseId = String(q.course || "kids");
-  let level = String(q.level || "1");
-  let lessonNo = String(q.lesson || "1");
-  let activeAsset = /** @type {import('../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset | null} */ (null);
-  let assetError = /** @type {null | 'not_found' | 'forbidden'} */ (null);
-  let assetPresentation = /** @type {null | { is_lesson_slide_draft: boolean, has_teacher_note: boolean, asset_presentation_kind: string }} */ (null);
-
-  if (assetId) {
-    const res = await selectClassroomContextFromAssetId(assetId);
-    if (res.ok) {
-      courseId = res.courseId;
-      level = res.level;
-      lessonNo = res.lessonNo;
-      activeAsset = res.asset;
-      assetPresentation = res.presentation;
-    } else {
-      assetError = res.error;
-    }
-  }
-
-  const hasUrlParams = hashHasQueryString(String(location.hash || ""));
+  const courseId = routing.courseId;
+  const level = routing.level;
+  const lessonNo = routing.lessonId;
+  const assetId = String(q.assetId || q.assetid || "").trim();
 
   const titleBase = tx("classroom.title");
   const backLabel = tx("teacher.nav.back_mine_workbench");
@@ -346,8 +309,11 @@ export default async function pageClassroom(ctxOrRoot) {
   const apSlide = apKind === "lesson_slide_draft" ? "1" : "0";
   const fromAssetClass = activeAsset && assetId ? " lumina-classroom-page--from-asset" : "";
   const coursewareClass = apSlide === "1" ? " lumina-classroom-page--teacher-courseware-shell" : "";
+  const expSource = String(context?.sourceType || "unknown");
   root.innerHTML = `
-    <section class="lumina-classroom-page wrap${fromAssetClass}${coursewareClass}" id="luminaClassroomPage" data-asset-presentation-kind="${escapeHtml(
+    <section class="lumina-classroom-page wrap${fromAssetClass}${coursewareClass}" id="luminaClassroomPage" data-lesson-experience-source="${escapeHtml(
+      expSource,
+    )}" data-asset-presentation-kind="${escapeHtml(
       apKind,
     )}" data-teacher-courseware="${apSlide}"${activeAsset && assetId ? ` data-classroom-asset-id="${escapeHtml(assetId)}"` : ""}>
       <header class="classroom-topbar classroom-control-bar">
@@ -456,15 +422,7 @@ export default async function pageClassroom(ctxOrRoot) {
   }
 
   try {
-    await initClassroomEngine(
-      {
-        courseId,
-        lessonId: lessonNo,
-        level,
-        coursewareAsset: apSlide === "1" && activeAsset && !assetError ? activeAsset : null,
-      },
-      { toolbarEl, stageEl },
-    );
+    await initClassroomEngine(engineInit, { toolbarEl, stageEl });
   } catch (e) {
     console.error("[page.classroom] init failed:", e);
     if (stageEl) {
