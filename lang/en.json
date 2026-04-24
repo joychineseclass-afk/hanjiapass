@@ -899,8 +899,8 @@
       "title": "My listings",
       "subtitle": "Submit classroom work for review, then set visibility when it is approved.",
       "note": "You are seeing your own rows in this browser’s demo data.",
-      "link_full_console": "Open full Stage 0 console (advanced demo tools)",
-      "session_identity_hint": "This page uses your signed-in account. To switch demo users, open the full Stage 0 console.",
+      "link_full_console": "Open advanced demo & sandbox (same page, fold below)",
+      "session_identity_hint": "This page uses your signed-in account. To switch demo users, use the “Advanced / sandbox” fold at the bottom of My listings.",
       "session_guest_label": "Not signed in"
     },
     "my_sales": {
@@ -929,12 +929,12 @@
       "guide_fold_summary": "Where do sale listings come from? (expand)",
       "form_section_title": "New sale listing (draft)",
       "form_section_desc": "Create a draft with basic fields, then submit for review and track status in the list below.",
-      "session_panel_desc": "Actions are tied to your signed-in account. For demo identity switching, use the advanced link at the bottom.",
+      "session_panel_desc": "Actions are tied to your signed-in account. For demo identity switching, use the “Advanced / sandbox” fold at the bottom of this page.",
       "asset_strip_title": "Listings linked to classroom assets",
       "asset_strip_desc": "These entries are tied to your decks or assets; manage review and visibility in the main list.",
       "main_title": "My sale listings",
       "main_hint": "Review status, visibility, and actions for each item—open details or submit for review.",
-      "link_advanced": "Need the full demo console? (team / advanced)"
+      "link_advanced": "Jump to advanced demo & sandbox (team tools)"
     },
     "review_page": {
       "title": "Platform review workspace",
@@ -947,8 +947,8 @@
       "gate_hint": "If you are not a reviewer, use “My sales” in the sidebar for your own listings.",
       "gate_cta_my_publishing": "Go to My listings",
       "gate_cta_review_status": "View review status",
-      "gate_dev_console_lead": "Dev / demo: switch to a reviewer or admin demo user from the full Stage 0 console.",
-      "gate_switch_identity": "Open full console to switch identity",
+      "gate_dev_console_lead": "Dev / demo: open “My listings”, then use the “Advanced / sandbox” fold at the bottom to switch to a reviewer or admin demo user.",
+      "gate_switch_identity": "Open My listings (demo switch in sandbox fold)",
       "reviewer_mode_kicker": "Current review identity",
       "reviewer_banner_title": "Reviewer mode",
       "reviewer_banner_lead": "You can process two areas here: teacher profiles (identity/credentials) and courseware listings (publishable items).",

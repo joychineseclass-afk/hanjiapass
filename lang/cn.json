@@ -899,8 +899,8 @@
       "title": "我的上架",
       "subtitle": "将课堂资产提交审核，通过后再设置公开可见。",
       "note": "以下为当前演示身份在本机数据中的上架项。",
-      "link_full_console": "打开完整 Stage0 控制台（高级演示）",
-      "session_identity_hint": "本页绑定当前浏览器登录账号；切换演示用户请打开完整 Stage0 控制台。",
+      "link_full_console": "打开本页下方「高级/沙盒」演示区（不跳转新页面）",
+      "session_identity_hint": "本页绑定当前登录账号；需切换演示用户请在本页底部展开「高级/沙盒」区域。",
       "session_guest_label": "未登录"
     },
     "my_sales": {
@@ -929,12 +929,12 @@
       "guide_fold_summary": "上架资源通常从哪里来？（展开查看说明）",
       "form_section_title": "新建售卖资源（草稿）",
       "form_section_desc": "填写基本信息生成草稿后，可在下方列表中提交审核并跟踪状态。",
-      "session_panel_desc": "当前操作与您的登录账号绑定。若需在演示环境切换身份，请使用页面底部的进阶入口。",
+      "session_panel_desc": "当前操作与您的登录账号绑定。若需切换演示用户，请展开本页底部「高级/沙盒」区域。",
       "asset_strip_title": "与课堂资产关联的发布项",
       "asset_strip_desc": "下列条目与您的课堂课件或资产相关，可在主列表中继续管理审核与可见性。",
       "main_title": "我的售卖资源",
       "main_hint": "管理每条资源的审核进度、可见性与操作；可打开详情或提交审核。",
-      "link_advanced": "需要演示用的完整控制台？（团队/进阶）"
+      "link_advanced": "跳转到本页「高级/沙盒」演示区"
     },
     "review_page": {
       "title": "平台审核工作台",
@@ -947,8 +947,8 @@
       "gate_hint": "若你并非审核员，请使用侧栏「我的销售」管理自己的售卖资源。",
       "gate_cta_my_publishing": "前往我的发布",
       "gate_cta_review_status": "查看审核状态",
-      "gate_dev_console_lead": "开发与演示：若需切换为审核员/管理员演示账号，可打开完整 Stage 0 控制台。",
-      "gate_switch_identity": "打开完整控制台以切换身份",
+      "gate_dev_console_lead": "开发与演示：请打开「我的发布/上架与售卖管理」，在页面底部「高级/沙盒」中切换为审核员或管理员演示用户。",
+      "gate_switch_identity": "打开我的发布/上架页（在沙盒区切换身份）",
       "reviewer_mode_kicker": "当前审核身份",
       "reviewer_banner_title": "审核模式",
       "reviewer_banner_lead": "你可在此处理两类事项：老师档案（身份/资质）与课件发布项（上架内容）。",
