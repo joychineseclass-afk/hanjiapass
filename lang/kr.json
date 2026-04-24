@@ -155,14 +155,18 @@
   "nav": {
     "home": "홈",
     "courses": "과정",
-    "exam_learning": "시험학습",
+    "exam_learning": "시험 학습",
     "hsk": "HSK 학습",
-    "kids": "어린이",
+    "kids": "어린이 중국어",
     "business": "비즈니스",
-    "stroke": "한자 필순",
-    "hanjagongfu": "한자공부",
+    "stroke": "필순·쓰기",
+    "hanjagongfu": "한자 학습",
     "hanja": "한자",
+    "hanzi_hub": "한자·쓰기",
     "speaking": "회화",
+    "speaking_business": "비즈니스 회화",
+    "speaking_travel": "여행 회화",
+    "speaking_daily": "일상 회화",
     "travel": "여행중국어",
     "culture": "문화",
     "review": "복습",
@@ -170,6 +174,35 @@
     "teacher": "교사 워크스페이스",
     "my": "내 학습",
     "login": "로그인"
+  },
+  "demo": {
+    "banner": {
+      "title": "시연 모드",
+      "body": "이 화면은 제품 시연용입니다. 실제 결제·승인·쇼핑몰·게시, 실시간 동기화는 연결되지 않았을 수 있으며, 데이터는 로컬 mock/데모 seed일 수 있습니다.",
+      "disclaimer": "정식 서비스에서는 안내·라벨이 있는 운영 기능을 기준으로 사용해 주세요.",
+      "extra_publishing": "게시·판매: 초안·심사·노출 흐름만 시연이며, 실제 앱스토어/정산/수익 배분이 아닙니다.",
+      "extra_review": "심사 콘솔: UI 체험용이며, 실제 SL·팀 협업 워크플로는 없습니다.",
+      "extra_listing": "리스팅/결제/접근: 모의이며, 실제 결제·주문이 없습니다.",
+      "extra_materials": "일부는 시드 데이터이며, 업로드·라이브러리 관리는 개발 중입니다.",
+      "extra_courses": "일부는 예시 강의이며, 전체 제작/게시 루프는 진행 중입니다.",
+      "extra_stage0": "본 콘솔은 합쳐진 샌드박스입니다. 계정/리셋/데모 도우미는 랩용이며 운영 백오피스가 아닙니다.",
+      "extra_resources": "이 허브는 다른 모듈로 연결하며, 다수는 미리보기/플레이스홀더 수준일 수 있습니다."
+    }
+  },
+  "resourceHub": {
+    "title": "자료·확장",
+    "lead": "필순, 한자, 문화, 복습, 회화(여행·비즈) 연결을 한곳에 모아 상위 내비를 가볍게 합니다.",
+    "section_script": "한자·쓰기",
+    "link_hanja": "한자 학습",
+    "link_stroke": "필순/따라쓰기",
+    "section_practice": "문화·복습",
+    "link_culture": "문화(시연)",
+    "link_review": "복습/오답(시연)",
+    "section_speaking": "여행/비즈 회화(회화 모듈)",
+    "speaking_note": "여행·비즈는 상단 메인에서 분리해 『회화』탭에서 진입합니다.",
+    "link_speaking_travel": "여행 탭 열기",
+    "link_speaking_business": "비즈니스 탭 열기",
+    "link_speaking_daily": "일상 탭 열기"
   },
     "hsk": {
     "title": "HSK 학습",

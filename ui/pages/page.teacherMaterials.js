@@ -13,6 +13,7 @@ import {
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 import {
   currentUserCanAccessTeacherReviewConsoleSync,
   renderTeacherAdminShell,
@@ -142,6 +143,7 @@ async function renderMaterialsDom(root) {
 
   const showReview = currentUserCanAccessTeacherReviewConsoleSync();
   const main = `
+      ${demoBannerHtml("materials")}
       ${restrictedBannerHtml(ctx, t)}
       ${teacherPathStripHtml("materials", t)}
       ${teacherPathStripClassroomHintHtml(t)}

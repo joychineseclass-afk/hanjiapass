@@ -155,14 +155,18 @@
   "nav": {
     "home": "ホーム",
     "courses": "コース",
-    "exam_learning": "試験・学術",
+    "exam_learning": "試験学習",
     "hsk": "HSK学習",
-    "kids": "キッズ",
+    "kids": "キッズ中国語",
     "business": "ビジネス",
-    "stroke": "筆順",
+    "stroke": "筆順・書き方",
     "hanjagongfu": "漢字学習",
     "hanja": "漢字",
+    "hanzi_hub": "漢字と書写",
     "speaking": "会話",
+    "speaking_business": "ビジネス会話",
+    "speaking_travel": "旅行情景",
+    "speaking_daily": "日常会話",
     "travel": "旅行中国語",
     "culture": "文化",
     "review": "復習",
@@ -171,6 +175,35 @@
     "my": "マイ学習",
     "my_learning": "マイ学習",
     "login": "ログイン"
+  },
+  "demo": {
+    "banner": {
+      "title": "デモモード",
+      "body": "この画面は製品デモ用です。本番の決済・審査・公開・同期には接続されていません。データはローカル mock / デモ生成の可能性があります。",
+      "disclaimer": "本番提供時は、本番用と明示された機能を基準にしてください。",
+      "extra_publishing": "ここは下書き→審査→公開の流れの見せ方で、本番のストア掲載やレベニュー分配ではありません。",
+      "extra_review": "審査コンソールはUIの歩行デモで、本番の審査フロー・多人数作業はありません。",
+      "extra_listing": "掲載・申込はシミュレーションで、本番の課金・注文体系ではありません。",
+      "extra_materials": "一部はシード。作成・アップロード等は開発中のことがあります。",
+      "extra_courses": "行は例示的なもので、一連のコース作成・掲載は未完了箇所があります。",
+      "extra_stage0": "本コンソールは技術的な合わせ用サンドボックスです。識別切替等は本番管理画面ではありません。",
+      "extra_resources": "本ページは他モジュールへの入口で、多くはプレビュー/プレースホルダー段階です。"
+    }
+  },
+  "resourceHub": {
+    "title": "資料・拡張",
+    "lead": "筆順・漢字・文化・復習、会話（旅/ビジネス）の入り口を集約し、最上段をすっきりさせます。",
+    "section_script": "漢字と筆順",
+    "link_hanja": "漢字学習",
+    "link_stroke": "筆順の練習",
+    "section_practice": "文化・復習",
+    "link_culture": "文化（プレビュー）",
+    "link_review": "復習/誤答（プレビュー）",
+    "section_speaking": "旅・ビジは「会話」内タブ",
+    "speaking_note": "旅・ビジの情景は、独立トップではなく会話のタブから入ります。",
+    "link_speaking_travel": "旅行タブ",
+    "link_speaking_business": "ビジネスタブ",
+    "link_speaking_daily": "日常タブ"
   },
   "hsk": {
     "title": "HSK学習",

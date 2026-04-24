@@ -4,6 +4,7 @@ import { initCommerceStore } from "../lumina-commerce/store.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 import { currentUserCanAccessTeacherReviewConsoleSync, renderTeacherAdminShell } from "./teacherPathNav.js";
 
 function tx(k, p) {
@@ -56,9 +57,11 @@ export default async function pageTeacherCreateMaterial(ctxOrRoot) {
   ).join("");
 
   const main = u.isGuest
-    ? `<section class="card"><p class="teacher-module-placeholder-p">${esc(t("teacher.create_material.guest_body"))}</p>
+    ? `${demoBannerHtml("materials")}
+    <section class="card"><p class="teacher-module-placeholder-p">${esc(t("teacher.create_material.guest_body"))}</p>
         <a class="teacher-hub-cta teacher-hub-cta--primary" href="#login?next=teacher-create-material">${esc(t("auth.nav_login"))}</a></section>`
-    : `<section class="card teacher-create-material-hero" aria-labelledby="tcm-h1">
+    : `${demoBannerHtml("materials")}
+    <section class="card teacher-create-material-hero" aria-labelledby="tcm-h1">
         <p class="teacher-page-kicker">${esc(t("teacher.create_material.kicker"))}</p>
         <h1 id="tcm-h1" class="teacher-admin-title">${esc(t("teacher.create_material.title"))}</h1>
         <p class="teacher-admin-subtitle">${esc(t("teacher.create_material.subtitle"))}</p>

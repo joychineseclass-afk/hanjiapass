@@ -15,6 +15,7 @@ import {
   setClassroomAssetListingToPrivate,
 } from "../lumina-commerce/teacherListingBridge.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 
 function tx(k, p) {
   return safeUiText(k, p);
@@ -330,7 +331,8 @@ async function renderPublicDetail(root, listingId) {
       </div>`
       : "";
 
-  root.innerHTML = `<div class="wrap teacher-listing-public-page teacher-listing-detail${detailWrapClass}" data-teacher-listing-mode="${viewMode}">
+  root.innerHTML = `${demoBannerHtml("listing")}
+  <div class="wrap teacher-listing-public-page teacher-listing-detail${detailWrapClass}" data-teacher-listing-mode="${viewMode}">
     ${previewBanner}
     <section class="card teacher-surface-hero teacher-listing-hero${heroClass}">
       <p class="teacher-listing-kicker">${escapeHtml(kickerT)}</p>

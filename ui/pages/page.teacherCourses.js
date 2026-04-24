@@ -16,6 +16,7 @@ import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { createClassroomAssetForLesson } from "../lumina-commerce/teacherAssetsSelectors.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 import {
   currentUserCanAccessTeacherReviewConsoleSync,
   renderTeacherAdminShell,
@@ -172,6 +173,7 @@ async function renderCoursesDom(root) {
 
   const showReview = currentUserCanAccessTeacherReviewConsoleSync();
   const main = `
+      ${demoBannerHtml("courses")}
       ${restrictedBannerHtml(ctx, t)}
       ${teacherPathStripHtml("courses", t)}
       ${teacherPathStripClassroomHintHtml(t)}

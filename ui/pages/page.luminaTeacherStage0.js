@@ -46,6 +46,7 @@ import {
   userHasRole,
 } from "../lumina-commerce/store.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import {
   renderTeacherAdminShell,
@@ -510,6 +511,7 @@ function renderPage(root, ctx) {
 
   if (pageMode === "review" && !isReviewer) {
     const gateMain = `
+      ${demoBannerHtml("review")}
       <section class="card teacher-review-gate-card">
         <h1 class="teacher-review-gate-title">${escapeHtml(commerceT("teacher.review_page.gate_title"))}</h1>
         <p class="teacher-review-gate-body">${escapeHtml(commerceT("teacher.review_page.gate_body"))}</p>
@@ -832,6 +834,9 @@ function renderPage(root, ctx) {
         )}</a></p>`;
 
   const lts0Main = `
+      ${demoBannerHtml(
+        pageMode === "publishing" ? "publishing" : pageMode === "review" ? "review" : "stage0",
+      )}
       ${publishingTopBlock}
       ${
         pageMode === "publishing"

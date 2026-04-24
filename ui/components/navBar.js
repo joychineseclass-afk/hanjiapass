@@ -9,15 +9,12 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
-// 一级：Home, 考试学术, Kids, Culture, Speaking（商务/旅游会话进 Speaking 子 tab）, Stroke, Hanja, Resources, Teacher, 我的学习
+// 一级收敛：Home · 考试学习 · 儿童中文 · 会话（旅游/商务为 #speaking?tab=）· 资料（笔顺/汉字/文化/复习等二级入口）· 教师 · 我的
 const NAV_ITEMS_FULL = [
   { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
   { href: "/index.html#exam-learning", key: "nav.exam_learning", label: "시험학습", color: "#22c55e" },
   { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
-  { href: "/index.html#culture", key: "nav.culture",   label: "문화",          color: "#eab308" },
   { href: "/index.html#speaking", key: "nav.speaking", label: "회화",          color: "#ef4444" },
-  { href: "/index.html#stroke",  key: "nav.stroke",    label: "한자 필순",     color: "#f97316" },
-  { href: "/index.html#hanja",   key: "nav.hanjagongfu", label: "한자공부",    color: "#a855f7" },
   { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
   { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
   { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
@@ -83,14 +80,24 @@ function setActive(rootEl) {
         "#teacher-console",
         "#teacher-apply",
         "#teacher-status",
+        "#teacher-listing",
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
       } else if (wantBase === "#exam-learning") {
         active = curBase === "#exam-learning" || curBase === "#hsk";
       } else if (wantBase === "#speaking") {
-        // #speaking?tab=daily|business|travel 等与顶栏「会话」同一模块
-        active = curBase === "#speaking";
+        // 会话 + 旧 #travel / #business 重定向前路由，统一高亮
+        active = curBase === "#speaking" || curBase === "#travel" || curBase === "#business";
+      } else if (wantBase === "#resources") {
+        const navSecondary = new Set([
+          "#resources",
+          "#culture",
+          "#review",
+          "#stroke",
+          "#hanja",
+        ]);
+        active = navSecondary.has(curBase);
       } else {
         active = wantHash ? curBase === wantBase : true;
       }
