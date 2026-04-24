@@ -1,7 +1,8 @@
 // #auth-login 统一登录
 
 import { i18n } from "../i18n.js";
-import { loginUser, getDefaultPostAuthTargetHash } from "../auth/authService.js";
+import { loginUser } from "../auth/authService.js";
+import { getResolvedSessionLandingHash } from "../auth/resolveSessionRoute.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(k, p) {
@@ -24,7 +25,7 @@ export default async function pageAuthLogin(ctxOrRoot) {
   const { getCurrentSessionAuthUser } = await import("../auth/authService.js");
   if (getCurrentSessionAuthUser()) {
     const { navigateTo } = await import("../router.js");
-    navigateTo(getDefaultPostAuthTargetHash(), { force: true });
+    navigateTo(getResolvedSessionLandingHash(), { force: true });
     return;
   }
 
@@ -73,7 +74,7 @@ export default async function pageAuthLogin(ctxOrRoot) {
       return;
     }
     const { navigateTo } = await import("../router.js");
-    navigateTo(getDefaultPostAuthTargetHash(), { force: true });
+    navigateTo(getResolvedSessionLandingHash(), { force: true });
   });
 }
 

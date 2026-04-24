@@ -188,8 +188,8 @@ function syncAuthBlock(rootEl) {
           t("auth.teacher_nav_pending", "Under review"),
         )}</a>`;
       } else if (tState === "rejected") {
-        teacherEntry = `<a href="/index.html#teacher-status" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_rejected">${escapeAuthText(
-          t("auth.teacher_nav_rejected", t("auth.teacher_nav_pending", "Under review")),
+        teacherEntry = `<a href="/index.html#teacher-apply" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_reapply">${escapeAuthText(
+          t("auth.teacher_nav_reapply", t("auth.teacher_nav_rejected", "Re-apply")),
         )}</a>`;
       } else {
         teacherEntry = `<a href="/index.html#teacher-apply" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_apply">${escapeAuthText(

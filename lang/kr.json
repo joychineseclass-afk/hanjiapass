@@ -71,6 +71,8 @@
     "teacher_nav_apply": "강사 지원",
     "teacher_nav_pending": "강사 심사 중",
     "teacher_nav_rejected": "신청 보류/거절",
+    "teacher_nav_reapply": "강사 재신청",
+    "redirecting": "이동 중…",
     "teacher_nav_workspace": "교사 워크스페이스",
     "error": {
       "unknown": "오류가 발생했습니다. 다시 시도하세요.",
@@ -96,6 +98,9 @@
     "title": "강사 지원",
     "lead": "간단한 정보만 입력하세요. 긴 심사 양식이 아닙니다.",
     "tip_student_ready": "심사 중에도 언제든지 학습자로 이용하실 수 있습니다.",
+    "bullet_learner_ready": "학습 기능은 지금 바로 이용할 수 있습니다.",
+    "bullet_teacher_gated": "강사 기능은 신청·승인 후 사용할 수 있습니다.",
+    "bullet_approved_console": "승인 후 강사 워크스페이스가 열립니다.",
     "display_name": "표시 이름",
     "intro": "자기소개",
     "teaching_directions": "강의 방향",
@@ -110,6 +115,7 @@
     "exp_no": "경험 거의 없음",
     "note": "비고(선택)",
     "submit": "신청서 제출",
+    "resubmit": "다시 제출",
     "back_learning": "학습으로 돌아가기",
     "error_types": "강의 방향을 하나 이상 선택하세요."
   },
@@ -129,7 +135,22 @@
     "still_learn": "심사 대기 중에도 학습자로 정상적으로 이용하실 수 있습니다.",
     "submitted_at": "제출 시각",
     "back_my": "내 학습으로",
-    "dev_mock_active": "Dev: 강사 활성(mock)"
+    "dev_mock_active": "Dev: 강사 활성(mock)",
+    "reapply_lead": "내용을 수정한 뒤 다시 제출할 수 있습니다. 학습 이용은 그대로입니다.",
+    "reapply_cta": "수정 후 다시 신청",
+    "dev_title": "Dev: 강사 상태 mock",
+    "dev_reset_onb": "온보딩 초기화(재테스트)"
+  },
+  "myLumina": {
+    "teacher_section": "Lumina 강사 기능",
+    "teacher_blurb_active": "강사 워크스페이스가 열려 있습니다. 학습과 강의를 오갈 수 있습니다.",
+    "teacher_goto": "강사 워크스페이스 열기",
+    "teacher_blurb_pending": "강사 신청을 검토 중입니다. 학습은 정상 이용 가능합니다.",
+    "teacher_see_status": "신청 상태 보기",
+    "teacher_blurb_rejected": "이전 신청은 승인되지 않았습니다. 내용을 바꿔 다시 신청할 수 있습니다.",
+    "teacher_reapply": "다시 신청하기",
+    "teacher_blurb_none": "교재·수업을 만들려면 강사 승인이 필요합니다(학습과 별도).",
+    "teacher_apply_cta": "강사 신청하기"
   },
   "nav": {
     "home": "홈",

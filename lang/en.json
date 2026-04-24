@@ -71,6 +71,8 @@
     "teacher_nav_apply": "Apply to teach",
     "teacher_nav_pending": "Application under review",
     "teacher_nav_rejected": "Application declined",
+    "teacher_nav_reapply": "Re-apply for teacher",
+    "redirecting": "Redirecting…",
     "teacher_nav_workspace": "Teacher workspace",
     "error": {
       "unknown": "Something went wrong. Please try again.",
@@ -96,6 +98,9 @@
     "title": "Apply to become a teacher",
     "lead": "Tell us a bit about yourself. This is not a long onboarding form.",
     "tip_student_ready": "You can use Lumina as a learner anytime while we review your application.",
+    "bullet_learner_ready": "Learning features are available now—no waiting.",
+    "bullet_teacher_gated": "Teacher tools need an application and approval.",
+    "bullet_approved_console": "After approval you can use the teacher workspace.",
     "display_name": "Display name",
     "intro": "Introduction",
     "teaching_directions": "Teaching focus",
@@ -110,6 +115,7 @@
     "exp_no": "Little or no experience yet",
     "note": "Notes (optional)",
     "submit": "Submit application",
+    "resubmit": "Submit again",
     "back_learning": "Back to learning",
     "error_types": "Please select at least one teaching focus."
   },
@@ -129,7 +135,22 @@
     "still_learn": "You can keep using Lumina as a learner while waiting.",
     "submitted_at": "Submitted at",
     "back_my": "Back to my learning",
-    "dev_mock_active": "Dev: set teacher active (mock)"
+    "dev_mock_active": "Dev: set teacher active (mock)",
+    "reapply_lead": "You can edit your information and submit again. Your learner access is unchanged.",
+    "reapply_cta": "Re-apply with updated information",
+    "dev_title": "Dev: mock teacher state",
+    "dev_reset_onb": "Reset onboarding (retest)"
+  },
+  "myLumina": {
+    "teacher_section": "Teacher on Lumina",
+    "teacher_blurb_active": "Your teacher workspace is open. You can switch between learning and teaching anytime.",
+    "teacher_goto": "Open teacher workspace",
+    "teacher_blurb_pending": "We are reviewing your teacher application. Learning stays fully available.",
+    "teacher_see_status": "View application status",
+    "teacher_blurb_rejected": "Your last application was not approved. You can update your details and apply again.",
+    "teacher_reapply": "Re-apply to teach",
+    "teacher_blurb_none": "To create materials and teach, apply for a teacher account (separate from learning).",
+    "teacher_apply_cta": "Apply to become a teacher"
   },
   "nav": {
     "home": "Home",

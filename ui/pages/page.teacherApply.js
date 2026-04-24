@@ -1,7 +1,8 @@
 // #teacher-apply 教师申请（轻量）
 
 import { i18n } from "../i18n.js";
-import { getCurrentSessionAuthUser, submitTeacherApplication } from "../auth/authService.js";
+import { getCurrentSessionAuthUser, getTeacherNavRoleState, submitTeacherApplication } from "../auth/authService.js";
+import { findUserById } from "../auth/authStore.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(k, p) {
@@ -29,29 +30,55 @@ export default async function pageTeacherApply(ctxOrRoot) {
     return;
   }
 
-  const checks = TYPE_VALUES.map(
-    (v) => `
+  const tState = getTeacherNavRoleState() ?? "none";
+  if (tState === "pending") {
+    const { navigateTo } = await import("../router.js");
+    navigateTo("#teacher-status", { force: true });
+    return;
+  }
+  if (tState === "active") {
+    const { navigateTo } = await import("../router.js");
+    navigateTo("#teacher", { force: true });
+    return;
+  }
+  // none or rejected: show form; rejected 可重填
+  const au = getCurrentSessionAuthUser();
+  const full = au ? findUserById(au.id) : null;
+  const tp = full?.teacherProfile;
+  const typesSel = new Set(tp?.teachingTypes || []);
+  const exp = String(tp?.experienceLevel || "");
+  const checks = TYPE_VALUES.map((v) => {
+    const c = typesSel.has(v) ? " checked" : "";
+    return `
     <label class="teacher-apply__check">
-      <input type="checkbox" name="teachingTypes" value="${escapeHtml(v)}" />
+      <input type="checkbox" name="teachingTypes" value="${escapeHtml(v)}"${c} />
       <span data-i18n="teacherApply.type_${v}">${escapeHtml(tx(`teacherApply.type_${v}`))}</span>
     </label>
-  `,
-  ).join("");
+  `;
+  }).join("");
+
+  const exHas = exp === "has_experience" ? " checked" : "";
+  const exNo = exp === "no_experience" ? " checked" : "";
 
   root.innerHTML = `
     <div class="wrap auth-page lumina-teacher-apply">
       <section class="card auth-card">
         <h1 class="auth-title">${escapeHtml(tx("teacherApply.title"))}</h1>
         <p class="auth-lead">${escapeHtml(tx("teacherApply.lead"))}</p>
+        <ul class="lumina-teacher-apply__bullets">
+          <li>${escapeHtml(tx("teacherApply.bullet_learner_ready"))}</li>
+          <li>${escapeHtml(tx("teacherApply.bullet_teacher_gated"))}</li>
+          <li>${escapeHtml(tx("teacherApply.bullet_approved_console"))}</li>
+        </ul>
         <p class="lumina-teacher-apply__tip">${escapeHtml(tx("teacherApply.tip_student_ready"))}</p>
         <form class="auth-form" id="teacherApplyForm">
           <label class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacherApply.display_name"))}</span>
-            <input name="displayName" type="text" required />
+            <input name="displayName" type="text" required value="${escapeHtml(tp?.displayName || full?.displayName || "")}" />
           </label>
           <label class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacherApply.intro"))}</span>
-            <textarea name="intro" class="teacher-profile-textarea" rows="3" required></textarea>
+            <textarea name="intro" class="teacher-profile-textarea" rows="3" required>${escapeHtml(tp?.intro || "")}</textarea>
           </label>
           <div class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacherApply.teaching_directions"))}</span>
@@ -59,23 +86,30 @@ export default async function pageTeacherApply(ctxOrRoot) {
           </div>
           <div class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacherApply.experience"))}</span>
-            <label class="teacher-apply__radio"><input type="radio" name="experience" value="has_experience" required /> <span data-i18n="teacherApply.exp_yes">${escapeHtml(tx("teacherApply.exp_yes"))}</span></label>
-            <label class="teacher-apply__radio"><input type="radio" name="experience" value="no_experience" /> <span data-i18n="teacherApply.exp_no">${escapeHtml(tx("teacherApply.exp_no"))}</span></label>
+            <label class="teacher-apply__radio"><input type="radio" name="experience" value="has_experience" required${exHas} /> <span data-i18n="teacherApply.exp_yes">${escapeHtml(tx("teacherApply.exp_yes"))}</span></label>
+            <label class="teacher-apply__radio"><input type="radio" name="experience" value="no_experience"${exNo} /> <span data-i18n="teacherApply.exp_no">${escapeHtml(tx("teacherApply.exp_no"))}</span></label>
           </div>
           <label class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacherApply.note"))}</span>
-            <textarea name="note" class="teacher-profile-textarea" rows="2" placeholder=""></textarea>
+            <textarea name="note" class="teacher-profile-textarea" rows="2">${escapeHtml(tp?.note != null ? String(tp.note) : "")}</textarea>
           </label>
           <p class="auth-error" id="teacherApplyErr" hidden></p>
-          <button type="submit" class="auth-submit">${escapeHtml(tx("teacherApply.submit"))}</button>
+          <button type="submit" class="auth-submit">${escapeHtml(
+            tState === "rejected" ? tx("teacherApply.resubmit") : tx("teacherApply.submit"),
+          )}</button>
         </form>
         <p class="auth-footer">
-          <a href="#my" class="auth-link">${escapeHtml(tx("teacherApply.back_learning"))}</a>
+          <a href="#my" class="auth-link" id="taBackMy">${escapeHtml(tx("teacherApply.back_learning"))}</a>
         </p>
       </section>
     </div>
   `;
   i18n.apply?.(root);
+  const back = root.querySelector("#taBackMy");
+  back?.addEventListener("click", (e) => {
+    e.preventDefault();
+    import("../router.js").then((r) => r.navigateTo("#my", { force: true }));
+  });
 
   const form = root.querySelector("#teacherApplyForm");
   const errEl = root.querySelector("#teacherApplyErr");

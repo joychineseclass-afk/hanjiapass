@@ -177,11 +177,24 @@ try {
 }
 
   try {
-    const { ensureOnboardingRoute, bindOnboardingHashGuard } = await import("./auth/authFlow.js");
+    const { runSessionRouteGuards, bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
     bindOnboardingHashGuard();
-    requestAnimationFrame(() => ensureOnboardingRoute());
+    requestAnimationFrame(() => runSessionRouteGuards());
+    const { shouldEnableLuminaDevUi } = await import("./lumina-commerce/devRuntimeFlags.js");
+    if (shouldEnableLuminaDevUi()) {
+      const mod = await import("./auth/authService.js");
+      const rs = await import("./auth/resolveSessionRoute.js");
+      attachLuminaAuthDevGlobal({
+        getResolvedSessionLandingHash: rs.getResolvedSessionLandingHash,
+        devSetMockTeacherState: mod.devSetMockTeacherState,
+        devResetOnboardingForTest: mod.devResetOnboardingForTest,
+        setMockTeacherRoleActiveForTest: mod.setMockTeacherRoleActiveForTest,
+        /** 说明见 docs/auth-onboarding-teacher-regression-checklist.md */
+        __doc: "Lumina auth dev: devSetMockTeacherState('none'|'pending'|'rejected'|'active'), devResetOnboardingForTest()",
+      });
+    }
   } catch (e) {
-    console.warn("[app] ensureOnboardingRoute failed:", e?.message);
+    console.warn("[app] session route guards / dev failed:", e?.message);
   }
 
   // 4) Helpful debug hint

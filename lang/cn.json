@@ -71,6 +71,8 @@
     "teacher_nav_apply": "申请成为老师",
     "teacher_nav_pending": "教师申请审核中",
     "teacher_nav_rejected": "申请未通过",
+    "teacher_nav_reapply": "重新申请教师功能",
+    "redirecting": "正在跳转…",
     "teacher_nav_workspace": "教师工作台",
     "error": {
       "unknown": "出错了，请重试。",
@@ -96,6 +98,9 @@
     "title": "申请成为老师",
     "lead": "先填写简要信息。这不是冗长的入驻表单。",
     "tip_student_ready": "学生功能已可直接使用，审核期间仍不影响学习。",
+    "bullet_learner_ready": "学习功能无需等待，现在即可使用。",
+    "bullet_teacher_gated": "教师相关功能需提交申请并审核通过。",
+    "bullet_approved_console": "通过后可使用教师工作台。",
     "display_name": "教师显示名称",
     "intro": "自我介绍",
     "teaching_directions": "想教授的方向",
@@ -110,6 +115,7 @@
     "exp_no": "经验较少/暂无",
     "note": "备注（选填）",
     "submit": "提交申请",
+    "resubmit": "再次提交",
     "back_learning": "返回学习",
     "error_types": "请至少选择一项教学方向。"
   },
@@ -129,7 +135,22 @@
     "still_learn": "审核期间你仍可正常使用学习功能。",
     "submitted_at": "提交时间",
     "back_my": "返回我的学习",
-    "dev_mock_active": "开发用：标为已开通老师(mock)"
+    "dev_mock_active": "开发用：标为已开通老师(mock)",
+    "reapply_lead": "可修改资料后再次提交。学习功能不受限制。",
+    "reapply_cta": "修改资料后重新申请",
+    "dev_title": "开发：教师状态 Mock",
+    "dev_reset_onb": "重置引导流程(重测)"
+  },
+  "myLumina": {
+    "teacher_section": "教师功能",
+    "teacher_blurb_active": "已开通教师工作台。学习与教学可随时切换。",
+    "teacher_goto": "进入教师工作台",
+    "teacher_blurb_pending": "教师申请审核中。学习可正常使用。",
+    "teacher_see_status": "查看申请状态",
+    "teacher_blurb_rejected": "上次申请未通过。可修改后重新申请。",
+    "teacher_reapply": "重新申请",
+    "teacher_blurb_none": "教学/教材需先申请并开通教师功能（与学生学习分开）。",
+    "teacher_apply_cta": "申请成为老师"
   },
   "nav": {
     "home": "首页",

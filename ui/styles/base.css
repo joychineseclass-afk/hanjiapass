@@ -5428,6 +5428,22 @@ a.teacher-shell-nav-link:hover{
   margin: 0 0 12px;
   line-height: 1.5;
 }
+.lumina-teacher-apply__bullets{
+  margin: 0 0 14px;
+  padding-left: 1.1rem;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.lumina-teacher-apply__bullets li{
+  margin-bottom: 4px;
+}
+.lumina-dev-btns{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
 .teacher-apply__types{
   display: flex;
   flex-direction: column;

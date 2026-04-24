@@ -211,15 +211,8 @@ export async function applyToBecomeTeacher() {
   return r;
 }
 
-/**
- * 未登录应去登录；已登录且未完成 onboarding → 角色选择；否则 #my
- */
-export function getDefaultPostAuthTargetHash() {
-  const u = getCurrentSessionAuthUser();
-  if (!u) return "#auth-login";
-  if (u.onboardingCompleted === false) return "#onboarding-role";
-  return "#my";
-}
+export { getResolvedSessionLandingHash as getDefaultPostAuthTargetHash } from "./resolveSessionRoute.js";
+export { getResolvedHashAfterRegisterSuccess } from "./resolveSessionRoute.js";
 
 /**
  * 「我要学习中文」：标记 onboarding 完成
@@ -300,6 +293,88 @@ export async function setMockTeacherRoleActiveForTest() {
     /* */
   }
   return r;
+}
+
+/**
+ * 开发/回归：切换当前用户 teacher 状态（Mock，无后端）
+ * 启用 Dev UI 时亦挂载到 `window.__LUMINA_AUTH_DEV__`（见 `app.js` / docs）
+ * @param {'none'|'pending'|'rejected'|'active'} state
+ */
+export async function devSetMockTeacherState(state) {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  if (!full) return { ok: false, code: "not_found" };
+  const now = new Date().toISOString();
+  const base = { ...full, onboardingCompleted: true, updated_at: now };
+  if (state === "active") {
+    return setMockTeacherRoleActiveForTest();
+  }
+  if (state === "none") {
+    upsertUser({
+      ...base,
+      roles: { ...full.roles, student: "active", teacher: "none" },
+    });
+  } else if (state === "pending") {
+    const tp = full.teacherProfile || {
+      displayName: full.displayName,
+      intro: "(mock pending)",
+      teachingTypes: ["hsk"],
+      experienceLevel: "no_experience",
+      note: "",
+      submittedAt: now,
+    };
+    upsertUser({
+      ...base,
+      roles: { ...full.roles, student: "active", teacher: "pending" },
+      teacherProfile: { ...tp, submittedAt: now },
+    });
+  } else if (state === "rejected") {
+    const tp = full.teacherProfile || {
+      displayName: full.displayName,
+      intro: "(mock rejected)",
+      teachingTypes: ["hsk"],
+      experienceLevel: "no_experience",
+      note: "",
+      submittedAt: now,
+    };
+    upsertUser({
+      ...base,
+      roles: { ...full.roles, student: "active", teacher: "rejected" },
+      teacherProfile: { ...tp, submittedAt: now },
+    });
+  } else {
+    return { ok: false, code: "invalid_state" };
+  }
+  await hydrateCurrentUserFromSession();
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
+  }
+  return { ok: true };
+}
+
+/**
+ * 开发/回归：将 onboarding 打回 false，用于重测
+ */
+export async function devResetOnboardingForTest() {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  if (!full) return { ok: false, code: "not_found" };
+  upsertUser({
+    ...full,
+    onboardingCompleted: false,
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
+  }
+  return { ok: true };
 }
 
 /**

@@ -26,6 +26,16 @@ export default async function pageOnboardingRole(ctxOrRoot) {
     navigateTo("#auth-login", { force: true });
     return;
   }
+  const { findUserById } = await import("../auth/authStore.js");
+  const u0 = getCurrentSessionAuthUser();
+  if (u0) {
+    const full = findUserById(u0.id);
+    if (full && full.onboardingCompleted !== false) {
+      const { navigateTo } = await import("../router.js");
+      navigateTo("#my", { force: true });
+      return;
+    }
+  }
 
   root.innerHTML = `
     <div class="wrap auth-page lumina-onboarding">

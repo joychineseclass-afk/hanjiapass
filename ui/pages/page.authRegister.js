@@ -2,6 +2,7 @@
 
 import { i18n } from "../i18n.js";
 import { registerAndLogin } from "../auth/authService.js";
+import { getResolvedHashAfterRegisterSuccess } from "../auth/resolveSessionRoute.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(k, p) {
@@ -24,8 +25,8 @@ export default async function pageAuthRegister(ctxOrRoot) {
   const { getCurrentSessionAuthUser } = await import("../auth/authService.js");
   if (getCurrentSessionAuthUser()) {
     const { navigateTo } = await import("../router.js");
-    const { getDefaultPostAuthTargetHash } = await import("../auth/authService.js");
-    navigateTo(getDefaultPostAuthTargetHash(), { force: true });
+    const { getDefaultPostAuthTargetHash: land } = await import("../auth/authService.js");
+    navigateTo(land(), { force: true });
     return;
   }
 
@@ -97,7 +98,7 @@ export default async function pageAuthRegister(ctxOrRoot) {
       return;
     }
     const { navigateTo } = await import("../router.js");
-    navigateTo("#onboarding-role", { force: true });
+    navigateTo(getResolvedHashAfterRegisterSuccess(), { force: true });
   });
 }
 

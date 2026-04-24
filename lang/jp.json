@@ -71,6 +71,8 @@
     "teacher_nav_apply": "講師に申し込む",
     "teacher_nav_pending": "講師審査中",
     "teacher_nav_rejected": "申請不承認",
+    "teacher_nav_reapply": "講師に再申請",
+    "redirecting": "移動中…",
     "teacher_nav_workspace": "講師ワークスペース",
     "error": {
       "unknown": "エラーが発生しました。もう一度お試しください。",
@@ -96,6 +98,9 @@
     "title": "講師申請",
     "lead": "簡単にご記入ください。重い審査フォームではありません。",
     "tip_student_ready": "審査中も学習者として引き続き利用できます。",
+    "bullet_learner_ready": "学習機能は今すぐ利用できます。",
+    "bullet_teacher_gated": "講師向けは申請と承認が必要です。",
+    "bullet_approved_console": "承認後に講師ワークスペースが使えます。",
     "display_name": "表示名",
     "intro": "自己紹介",
     "teaching_directions": "指導分野",
@@ -110,6 +115,7 @@
     "exp_no": "少ない/なし",
     "note": "メモ（任意）",
     "submit": "申請を送信",
+    "resubmit": "再申請",
     "back_learning": "学習に戻る",
     "error_types": "指導分野を1つ以上選んでください。"
   },
@@ -129,7 +135,22 @@
     "still_learn": "審査中も学習者として引き続き利用できます。",
     "submitted_at": "送信日時",
     "back_my": "マイ学習へ",
-    "dev_mock_active": "Dev: 講師を有効化(mock)"
+    "dev_mock_active": "Dev: 講師を有効化(mock)",
+    "reapply_lead": "内容を更新して再提出できます。学習はそのまま利用できます。",
+    "reapply_cta": "内容を直して再申請",
+    "dev_title": "Dev: 講師ステータス mock",
+    "dev_reset_onb": "オンボーディングをリセット"
+  },
+  "myLumina": {
+    "teacher_section": "講師向け",
+    "teacher_blurb_active": "講師ワークスペースが利用できます。学習と講師の切替が可能です。",
+    "teacher_goto": "講師ワークスペースを開く",
+    "teacher_blurb_pending": "講師申請を審査中です。学習は通常どおり使えます。",
+    "teacher_see_status": "申請状況を見る",
+    "teacher_blurb_rejected": "前回の申請は承認されませんでした。修正して再申請できます。",
+    "teacher_reapply": "再申請",
+    "teacher_blurb_none": "教材制作・授業は講師承認が必要です（学習とは別）。",
+    "teacher_apply_cta": "講師申請"
   },
   "nav": {
     "home": "ホーム",
