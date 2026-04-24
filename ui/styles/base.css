@@ -5504,6 +5504,125 @@ a.teacher-shell-nav-link:hover{
 }
 .teacher-lumina-home__badge{ margin: 4px 0 8px; }
 .teacher-lumina-home__top-actions{ margin: 0; }
+.teacher-lumina-home__hero--slim{
+  padding: 12px 14px 14px;
+}
+.teacher-lumina-home__kicker{
+  margin: 0 0 4px;
+  font-size: 12px;
+}
+.teacher-lumina-home__lead--one{
+  margin: 0 0 6px;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 14px;
+}
+.teacher-lumina-home__head-cta{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 4px;
+}
+.teacher-lumina-wf-card .teacher-hub-cta--card{
+  margin-top: auto;
+  align-self: flex-start;
+}
+.teacher-lumina-wf-card__row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 0;
+}
+.teacher-lumina-inline-link{
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: #2563eb;
+}
+.teacher-lumina-wf-card--muted .teacher-lumina-soon{ margin: 0; }
+.teacher-lumina-next--tight{
+  margin-bottom: 8px;
+  padding: 10px 12px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+.teacher-lumina-next--tight .teacher-lumina-next__title{
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.teacher-lumina-next__steps--short{
+  list-style: decimal;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+}
+.teacher-lumina-next__steps--short li{ margin-bottom: 2px; }
+.teacher-lumina-more{
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fafbfc;
+  overflow: hidden;
+}
+.teacher-lumina-more__summary{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #475569;
+}
+.teacher-lumina-more__summary::-webkit-details-marker{ display: none; }
+.teacher-lumina-more__summary::marker{ content: ""; }
+.teacher-lumina-more__summary-text{
+  font-weight: 800;
+  color: #334155;
+}
+.teacher-lumina-more__summary-hint{
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.teacher-lumina-more[open] .teacher-lumina-more__summary{
+  border-bottom: 1px solid #e2e8f0;
+  background: #f1f5f9;
+}
+.teacher-lumina-more__body{
+  padding: 10px 10px 12px;
+  background: #fff;
+}
+.teacher-lumina-more__body .card{
+  background: #fafbfc;
+}
+.teacher-lumina-more-identity{ padding: 12px 14px; }
+.teacher-lumina-more-identity__h{
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+.teacher-lumina-more-identity__p{
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+}
+.teacher-lumina-more-identity__k{ color: #94a3b8; margin-right: 6px; }
+.teacher-lumina-more-identity__v{ font-weight: 700; color: #334155; margin-right: 6px; }
 .teacher-lumina-wf-grid{
   display: grid;
   grid-template-columns: 1fr;

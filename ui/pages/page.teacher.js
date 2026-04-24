@@ -427,25 +427,18 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           })
           .join("");
 
-  const workbenchMain =
-    teacherActiveHomeWorkflowHtml(t) +
-    `
-      <section class="card teacher-surface-hero teacher-hub-surface" aria-labelledby="tw-hub-h1">
-        <p class="teacher-page-kicker">${escapeHtml(t("teacher.workspace.hub_hero_kicker"))}</p>
-        <div class="teacher-hub-surface-row">
-          <div class="teacher-hub-surface-main">
-            <h1 id="tw-hub-h1" class="teacher-hub-surface-title">${escapeHtml(t("teacher.workspace.mine_title"))}</h1>
-            <p class="teacher-hub-identity">
-              <span class="teacher-hub-identity-k">${escapeHtml(t("teacher.workspace.hub_label_identity"))}</span>
-              <span class="teacher-hub-identity-v">${escapeHtml(profile.display_name)}</span>
-              <a class="teacher-hub-inline-link" href="#teacher-profile">${escapeHtml(t("teacher.nav.teacher_profile"))}</a>
-            </p>
-            <p class="teacher-hub-identity">
-              <span class="teacher-hub-identity-k">${escapeHtml(t("teacher.workspace.hub_label_review"))}</span>
-              <span class="${escapeHtml(statusChipClass(st))} teacher-hub-profile-chip" aria-label="${label}">${label}</span>
-            </p>
-          </div>
-        </div>
+  const legacyWorkbenchInner = `
+      <section class="card teacher-lumina-more-identity" aria-labelledby="tw-more-id">
+        <h2 id="tw-more-id" class="teacher-lumina-more-identity__h">${escapeHtml(t("teacher.home.more_account_strip_title"))}</h2>
+        <p class="teacher-lumina-more-identity__p">
+          <span class="teacher-lumina-more-identity__k">${escapeHtml(t("teacher.workspace.hub_label_identity"))}</span>
+          <span class="teacher-lumina-more-identity__v">${escapeHtml(profile.display_name)}</span>
+          <a class="teacher-hub-inline-link" href="#teacher-profile">${escapeHtml(t("teacher.nav.teacher_profile"))}</a>
+        </p>
+        <p class="teacher-lumina-more-identity__p">
+          <span class="teacher-lumina-more-identity__k">${escapeHtml(t("teacher.workspace.hub_label_review"))}</span>
+          <span class="${escapeHtml(statusChipClass(st))} teacher-hub-profile-chip" aria-label="${label}">${label}</span>
+        </p>
       </section>
 
       <section class="card teacher-hub-recommended" aria-labelledby="tw-hub-rec">
@@ -512,6 +505,7 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         </div>
       </section>
   `;
+  const workbenchMain = renderTeacherHomeActiveOverview(t) + wrapLegacyWorkbenchCollapsible(legacyWorkbenchInner, t);
   return renderTeacherAdminShell({
     active: "workspace",
     tx: t,
@@ -581,64 +575,89 @@ function guestAuthShellHtml(t) {
 }
 
 /**
- * Lumina 身份层：工作流总览（仅 active 且已通过 commerce 工作台时插在原有内容前）
+ * Active 老师首页：概览 + 主入口 + 轻量下一步（不含旧工作台详情）
  * @param {(a: string, b?: object) => string} t
  */
-function teacherActiveHomeWorkflowHtml(t) {
+function renderTeacherHomeActiveOverview(t) {
   return `
     <div class="teacher-lumina-home" data-teacher-lumina-home>
-      <section class="card teacher-lumina-home__hero">
-        <p class="teacher-page-kicker">${escapeHtml(t("teacher.home.kicker"))}</p>
+      <header class="card teacher-lumina-home__hero teacher-lumina-home__hero--slim">
+        <p class="teacher-page-kicker teacher-lumina-home__kicker">${escapeHtml(t("teacher.home.kicker"))}</p>
         <h1 class="teacher-lumina-home__h1">${escapeHtml(t("teacher.home.title"))}</h1>
-        <p class="desc teacher-lumina-home__lead">${escapeHtml(t("teacher.home.subtitle"))}</p>
+        <p class="teacher-lumina-home__lead--one">${escapeHtml(t("teacher.home.subtitle"))}</p>
         <span class="role-pill role-pill--ok teacher-lumina-home__badge" data-i18n="teacher.home.badge_open">${escapeHtml(
           t("teacher.home.badge_open"),
         )}</span>
-        <p class="teacher-lumina-home__top-actions">
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(t("teacher.home.back_my"))}</a>
-        </p>
-      </section>
-      <div class="teacher-lumina-wf-grid">
+        <div class="teacher-lumina-home__head-cta">
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+            t("teacher.home.back_my"),
+          )}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#classroom" data-teacher-spa="1">${escapeHtml(
+            t("teacher.home.header_primary_cta"),
+          )}</a>
+        </div>
+      </header>
+      <div class="teacher-lumina-wf-grid" aria-label="${escapeHtml(t("teacher.home.wf_aria"))}">
         <article class="card teacher-lumina-wf-card">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_courses_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_courses_desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-courses" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-courses" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.card_courses_cta"),
           )}</a>
         </article>
         <article class="card teacher-lumina-wf-card">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_assets_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_assets_desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-assets" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.card_assets_cta"),
           )}</a>
         </article>
         <article class="card teacher-lumina-wf-card">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_classroom_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_classroom_desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#classroom" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#classroom" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.card_classroom_cta"),
           )}</a>
         </article>
         <article class="card teacher-lumina-wf-card teacher-lumina-wf-card--muted">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_publish_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_publish_desc"))}</p>
-          <span class="teacher-lumina-soon" data-i18n="teacher.home.card_publish_soon">${escapeHtml(t("teacher.home.card_publish_soon"))}</span>
+          <p class="teacher-lumina-wf-card__row">
+            <span class="teacher-lumina-soon">${escapeHtml(t("teacher.home.card_publish_soon"))}</span>
+            <a class="teacher-lumina-inline-link" href="#teacher-publishing" data-teacher-spa="1">${escapeHtml(
+              t("teacher.home.card_publish_learn_more"),
+            )}</a>
+          </p>
         </article>
       </div>
-      <section class="card teacher-lumina-next">
-        <h2 class="teacher-hub-section-title">${escapeHtml(t("teacher.home.next_title"))}</h2>
-        <ol class="teacher-lumina-next__steps">
-          <li><span class="teacher-lumina-next__i">1</span> ${escapeHtml(t("teacher.home.next_step1"))}</li>
-          <li><span class="teacher-lumina-next__i">2</span> ${escapeHtml(t("teacher.home.next_step2"))}</li>
-          <li><span class="teacher-lumina-next__i">3</span> ${escapeHtml(t("teacher.home.next_step3"))}</li>
+      <section class="teacher-lumina-next teacher-lumina-next--tight" aria-labelledby="th-next">
+        <h2 id="th-next" class="teacher-lumina-next__title">${escapeHtml(t("teacher.home.next_title"))}</h2>
+        <ol class="teacher-lumina-next__steps teacher-lumina-next__steps--short">
+          <li>${escapeHtml(t("teacher.home.next_step1"))}</li>
+          <li>${escapeHtml(t("teacher.home.next_step2"))}</li>
+          <li>${escapeHtml(t("teacher.home.next_step3"))}</li>
         </ol>
-      </section>
-      <section class="card teacher-lumina-footnote">
-        <p class="teacher-lumina-footnote__p" data-i18n="teacher.home.status_hint">${escapeHtml(t("teacher.home.status_hint"))}</p>
       </section>
     </div>
   `;
+}
+
+/**
+ * 折叠区：原 commerce 工作台（推荐、概览、路径、销售、最近、课堂表单）
+ * @param {string} innerHtml
+ * @param {(a: string, b?: object) => string} t
+ */
+function wrapLegacyWorkbenchCollapsible(innerHtml, t) {
+  return `
+<details class="teacher-lumina-more">
+  <summary class="teacher-lumina-more__summary">
+    <span class="teacher-lumina-more__summary-text">${escapeHtml(t("teacher.home.more_tools_title"))}</span>
+    <span class="teacher-lumina-more__summary-hint">${escapeHtml(t("teacher.home.more_tools_hint"))}</span>
+  </summary>
+  <div class="teacher-lumina-more__body">
+    ${innerHtml}
+  </div>
+</details>`;
 }
 
 /**
