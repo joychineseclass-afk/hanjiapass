@@ -184,15 +184,15 @@ function syncAuthBlock(rootEl) {
           t("auth.teacher_nav_workspace", t("nav.teacher", "Teacher")),
         )}</a>`;
       } else if (tState === "pending") {
-        teacherEntry = `<a href="/index.html#teacher-status" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_pending">${escapeAuthText(
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_pending">${escapeAuthText(
           t("auth.teacher_nav_pending", "Under review"),
         )}</a>`;
       } else if (tState === "rejected") {
-        teacherEntry = `<a href="/index.html#teacher-apply" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_reapply">${escapeAuthText(
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_reapply">${escapeAuthText(
           t("auth.teacher_nav_reapply", t("auth.teacher_nav_rejected", "Re-apply")),
         )}</a>`;
       } else {
-        teacherEntry = `<a href="/index.html#teacher-apply" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_apply">${escapeAuthText(
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_apply">${escapeAuthText(
           t("auth.teacher_nav_apply", "Apply to teach"),
         )}</a>`;
       }

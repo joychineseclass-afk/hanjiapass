@@ -27,15 +27,15 @@ function teacherStatusCardHtml() {
   } else if (st === "pending") {
     inner = `
       <p class="my-teacher__desc" data-i18n="myLumina.teacher_blurb_pending">${esc(tx("myLumina.teacher_blurb_pending"))}</p>
-      <a class="learner-my-link" href="#teacher-status" data-nav-teacher="1" data-i18n="myLumina.teacher_see_status">${esc(tx("myLumina.teacher_see_status"))}</a>`;
+      <a class="learner-my-link" href="#teacher" data-nav-teacher="1" data-i18n="myLumina.teacher_see_status">${esc(tx("myLumina.teacher_see_status"))}</a>`;
   } else if (st === "rejected") {
     inner = `
       <p class="my-teacher__desc" data-i18n="myLumina.teacher_blurb_rejected">${esc(tx("myLumina.teacher_blurb_rejected"))}</p>
-      <a class="learner-my-link" href="#teacher-apply" data-nav-teacher="1" data-i18n="myLumina.teacher_reapply">${esc(tx("myLumina.teacher_reapply"))}</a>`;
+      <a class="learner-my-link" href="#teacher" data-nav-teacher="1" data-i18n="myLumina.teacher_reapply">${esc(tx("myLumina.teacher_reapply"))}</a>`;
   } else {
     inner = `
       <p class="my-teacher__desc" data-i18n="myLumina.teacher_blurb_none">${esc(tx("myLumina.teacher_blurb_none"))}</p>
-      <a class="learner-my-link" href="#teacher-apply" data-nav-teacher="1" data-i18n="myLumina.teacher_apply_cta">${esc(tx("myLumina.teacher_apply_cta"))}</a>`;
+      <a class="learner-my-link" href="#teacher" data-nav-teacher="1" data-i18n="myLumina.teacher_apply_cta">${esc(tx("myLumina.teacher_apply_cta"))}</a>`;
   }
   return `
     <section class="my-teacher card" style="margin-top:12px; padding:16px; border:1px solid var(--line); border-radius: var(--radius);">

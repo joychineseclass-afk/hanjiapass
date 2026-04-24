@@ -427,7 +427,9 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
           })
           .join("");
 
-  const workbenchMain = `
+  const workbenchMain =
+    teacherActiveHomeWorkflowHtml(t) +
+    `
       <section class="card teacher-surface-hero teacher-hub-surface" aria-labelledby="tw-hub-h1">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.workspace.hub_hero_kicker"))}</p>
         <div class="teacher-hub-surface-row">
@@ -570,12 +572,165 @@ function guestAuthShellHtml(t) {
         <h2 class="title">${escapeHtml(t("teacher.gate.guest_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.gate.guest_body"))}</p>
         <div class="teacher-gate-auth-actions">
-          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#login?next=teacher">${escapeHtml(t("auth.nav_login"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#register?next=teacher">${escapeHtml(t("auth.nav_register"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#auth-login">${escapeHtml(t("auth.nav_login"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#auth-register">${escapeHtml(t("auth.nav_register"))}</a>
         </div>
       </section>
   `;
   return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page teacher-gate--guest" });
+}
+
+/**
+ * Lumina 身份层：工作流总览（仅 active 且已通过 commerce 工作台时插在原有内容前）
+ * @param {(a: string, b?: object) => string} t
+ */
+function teacherActiveHomeWorkflowHtml(t) {
+  return `
+    <div class="teacher-lumina-home" data-teacher-lumina-home>
+      <section class="card teacher-lumina-home__hero">
+        <p class="teacher-page-kicker">${escapeHtml(t("teacher.home.kicker"))}</p>
+        <h1 class="teacher-lumina-home__h1">${escapeHtml(t("teacher.home.title"))}</h1>
+        <p class="desc teacher-lumina-home__lead">${escapeHtml(t("teacher.home.subtitle"))}</p>
+        <span class="role-pill role-pill--ok teacher-lumina-home__badge" data-i18n="teacher.home.badge_open">${escapeHtml(
+          t("teacher.home.badge_open"),
+        )}</span>
+        <p class="teacher-lumina-home__top-actions">
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(t("teacher.home.back_my"))}</a>
+        </p>
+      </section>
+      <div class="teacher-lumina-wf-grid">
+        <article class="card teacher-lumina-wf-card">
+          <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_courses_title"))}</h2>
+          <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_courses_desc"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-courses" data-teacher-spa="1">${escapeHtml(
+            t("teacher.home.card_courses_cta"),
+          )}</a>
+        </article>
+        <article class="card teacher-lumina-wf-card">
+          <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_assets_title"))}</h2>
+          <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_assets_desc"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets" data-teacher-spa="1">${escapeHtml(
+            t("teacher.home.card_assets_cta"),
+          )}</a>
+        </article>
+        <article class="card teacher-lumina-wf-card">
+          <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_classroom_title"))}</h2>
+          <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_classroom_desc"))}</p>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#classroom" data-teacher-spa="1">${escapeHtml(
+            t("teacher.home.card_classroom_cta"),
+          )}</a>
+        </article>
+        <article class="card teacher-lumina-wf-card teacher-lumina-wf-card--muted">
+          <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_publish_title"))}</h2>
+          <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_publish_desc"))}</p>
+          <span class="teacher-lumina-soon" data-i18n="teacher.home.card_publish_soon">${escapeHtml(t("teacher.home.card_publish_soon"))}</span>
+        </article>
+      </div>
+      <section class="card teacher-lumina-next">
+        <h2 class="teacher-hub-section-title">${escapeHtml(t("teacher.home.next_title"))}</h2>
+        <ol class="teacher-lumina-next__steps">
+          <li><span class="teacher-lumina-next__i">1</span> ${escapeHtml(t("teacher.home.next_step1"))}</li>
+          <li><span class="teacher-lumina-next__i">2</span> ${escapeHtml(t("teacher.home.next_step2"))}</li>
+          <li><span class="teacher-lumina-next__i">3</span> ${escapeHtml(t("teacher.home.next_step3"))}</li>
+        </ol>
+      </section>
+      <section class="card teacher-lumina-footnote">
+        <p class="teacher-lumina-footnote__p" data-i18n="teacher.home.status_hint">${escapeHtml(t("teacher.home.status_hint"))}</p>
+      </section>
+    </div>
+  `;
+}
+
+/**
+ * @param {(a: string, b?: object) => string} t
+ */
+function renderTeacherEntryNone(t) {
+  const cap = (key) => escapeHtml(t(`teacher.entry.cap_${key}`));
+  const main = `
+    <section class="card teacher-lumina-guide">
+      <p class="teacher-page-kicker">${escapeHtml(t("teacher.entry.none_kicker"))}</p>
+      <h1 class="teacher-lumina-guide__h1">${escapeHtml(t("teacher.entry.none_title"))}</h1>
+      <p class="desc teacher-lumina-guide__lead">${escapeHtml(t("teacher.entry.none_lead"))}</p>
+      <p class="teacher-lumina-guide__state"><strong data-i18n="teacher.entry.none_status_label">${escapeHtml(
+        t("teacher.entry.none_status_label"),
+      )}</strong> <span data-i18n="teacher.entry.none_status_value">${escapeHtml(t("teacher.entry.none_status_value"))}</span></p>
+      <div class="teacher-lumina-wf-grid teacher-lumina-wf-grid--4">
+        <article class="card teacher-lumina-cap"><p class="teacher-lumina-cap__t">${cap("1")}</p></article>
+        <article class="card teacher-lumina-cap"><p class="teacher-lumina-cap__t">${cap("2")}</p></article>
+        <article class="card teacher-lumina-cap"><p class="teacher-lumina-cap__t">${cap("3")}</p></article>
+        <article class="card teacher-lumina-cap"><p class="teacher-lumina-cap__t">${cap("4")}</p></article>
+      </div>
+      <p class="teacher-lumina-guide__cta">
+        <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-apply" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.cta_apply"),
+        )}</a>
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.cta_back_my"),
+        )}</a>
+      </p>
+    </section>
+  `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page teacher-lumina-entry" });
+}
+
+/**
+ * @param {(a: string, b?: object) => string} t
+ */
+function renderTeacherEntryPending(t) {
+  const main = `
+    <section class="card teacher-lumina-guide">
+      <p class="teacher-page-kicker">${escapeHtml(t("teacher.entry.pending_kicker"))}</p>
+      <h1 class="teacher-lumina-guide__h1">${escapeHtml(t("teacher.entry.pending_title"))}</h1>
+      <p class="desc">${escapeHtml(t("teacher.entry.pending_lead"))}</p>
+      <p class="desc teacher-lumina-guide__mute">${escapeHtml(t("teacher.entry.pending_learn_ok"))}</p>
+      <p class="teacher-lumina-guide__cta">
+        <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-status" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.pending_cta_status"),
+        )}</a>
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.cta_back_my"),
+        )}</a>
+      </p>
+    </section>
+  `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page teacher-lumina-entry" });
+}
+
+/**
+ * @param {(a: string, b?: object) => string} t
+ */
+function renderTeacherEntryRejected(t) {
+  const main = `
+    <section class="card teacher-lumina-guide">
+      <p class="teacher-page-kicker">${escapeHtml(t("teacher.entry.rejected_kicker"))}</p>
+      <h1 class="teacher-lumina-guide__h1">${escapeHtml(t("teacher.entry.rejected_title"))}</h1>
+      <p class="desc">${escapeHtml(t("teacher.entry.rejected_lead"))}</p>
+      <p class="desc teacher-lumina-guide__hint">${escapeHtml(t("teacher.entry.rejected_hint"))}</p>
+      <p class="teacher-lumina-guide__cta">
+        <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-apply" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.cta_reapply"),
+        )}</a>
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+          t("teacher.entry.cta_back_my"),
+        )}</a>
+      </p>
+    </section>
+  `;
+  return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page teacher-lumina-entry" });
+}
+
+/**
+ * @param {HTMLElement} root
+ */
+function bindTeacherSpaLinks(root) {
+  root.querySelectorAll("[data-teacher-spa='1']")?.forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const h = a.getAttribute("href") || "";
+      if (!h.startsWith("#")) return;
+      import("../router.js").then((r) => r.navigateTo(h, { force: true }));
+    });
+  });
 }
 
 /**
@@ -606,14 +761,22 @@ async function renderTeacherHub(root) {
   const au = getCurrentSessionAuthUser();
   if (au) {
     const tr = getTeacherNavRoleState() ?? "none";
-    if (tr === "pending" || tr === "rejected") {
-      const { navigateTo } = await import("../router.js");
-      navigateTo("#teacher-status", { force: true });
+    if (tr === "none") {
+      root.innerHTML = renderTeacherEntryNone(t);
+      bindTeacherSpaLinks(root);
+      i18n.apply?.(root);
       return;
     }
-    if (tr === "none") {
-      const { navigateTo } = await import("../router.js");
-      navigateTo("#teacher-apply", { force: true });
+    if (tr === "pending") {
+      root.innerHTML = renderTeacherEntryPending(t);
+      bindTeacherSpaLinks(root);
+      i18n.apply?.(root);
+      return;
+    }
+    if (tr === "rejected") {
+      root.innerHTML = renderTeacherEntryRejected(t);
+      bindTeacherSpaLinks(root);
+      i18n.apply?.(root);
       return;
     }
   }
@@ -685,6 +848,7 @@ async function renderTeacherHub(root) {
     const recent = getRecentAssetsForProfile(ctx.profile.id, 3);
     const commerceStats = commerceSnap ? getTeacherProfileCommerceStats(commerceSnap, ctx.profile.id) : null;
     root.innerHTML = approvedWorkbenchHtml(ctx.profile, sum, t, recent, commerceStats, commerceSnap, showReviewConsole);
+    bindTeacherSpaLinks(root);
     bindClassroomForm(root);
     i18n.apply?.(root);
     return;

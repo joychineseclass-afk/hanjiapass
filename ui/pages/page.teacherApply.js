@@ -33,7 +33,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
   const tState = getTeacherNavRoleState() ?? "none";
   if (tState === "pending") {
     const { navigateTo } = await import("../router.js");
-    navigateTo("#teacher-status", { force: true });
+    navigateTo("#teacher", { force: true });
     return;
   }
   if (tState === "active") {
