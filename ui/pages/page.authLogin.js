@@ -3,6 +3,7 @@
 import { i18n } from "../i18n.js";
 import { loginUser } from "../auth/authService.js";
 import { getResolvedSessionLandingHash } from "../auth/resolveSessionRoute.js";
+import { consumePendingPostAuthTargetHash } from "../auth/postAuthRedirect.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(k, p) {
@@ -74,7 +75,12 @@ export default async function pageAuthLogin(ctxOrRoot) {
       return;
     }
     const { navigateTo } = await import("../router.js");
-    navigateTo(getResolvedSessionLandingHash(), { force: true });
+    const land = getResolvedSessionLandingHash();
+    if (land === "#onboarding-role") {
+      navigateTo("#onboarding-role", { force: true });
+    } else {
+      navigateTo(consumePendingPostAuthTargetHash() || land, { force: true });
+    }
   });
 }
 

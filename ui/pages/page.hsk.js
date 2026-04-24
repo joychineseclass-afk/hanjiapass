@@ -7,6 +7,7 @@
 // 4) Keep extension meaning/explanation separated
 
 import { i18n } from "../i18n.js";
+import { buildLearnerResumeEntryHash, recordLearnerResume } from "../learner/luminaLearnerResume.js";
 import {
   pick,
   getContentText,
@@ -227,6 +228,43 @@ function getHskState() {
     activeTab: state.tab,
     reviewMode: state.reviewMode,
     searchKeyword: state.searchKeyword,
+  };
+}
+
+/**
+ * 从 #exam-learning?tab=hsk&... 或 #hsk?... 解析深链，用于首屏直达指定课
+ */
+function parseHskDeepLinkFromLocation() {
+  const raw = String((typeof location !== "undefined" && location.hash) || "");
+  const base = raw.split("?")[0].split("&")[0].toLowerCase();
+  const q = raw.indexOf("?");
+  const sp = q >= 0 ? new URLSearchParams(raw.slice(q + 1)) : new URLSearchParams();
+
+  if (base === "#exam-learning") {
+    const tab = String(sp.get("tab") || "hsk").toLowerCase();
+    if (tab && tab !== "hsk") {
+      return { active: false, ver: null, lv: null, lessonNo: null, file: "" };
+    }
+  } else if (base !== "#hsk") {
+    return { active: false, ver: null, lv: null, lessonNo: null, file: "" };
+  }
+
+  const ver = sp.get("ver") || sp.get("version");
+  const lvRaw = sp.get("lv") || sp.get("level");
+  const lessonRaw = sp.get("lesson") || sp.get("lessonNo") || sp.get("n");
+  const file = String(sp.get("file") || "");
+  const lv = lvRaw != null && lvRaw !== "" ? Number(lvRaw) : null;
+  const lessonNo = lessonRaw != null && lessonRaw !== "" ? Number(lessonRaw) : null;
+
+  const has = Boolean(ver || (lv != null && !Number.isNaN(lv)) || (lessonNo != null && !Number.isNaN(lessonNo)) || file);
+  if (!has) return { active: false, ver: null, lv: null, lessonNo: null, file: "" };
+
+  return {
+    active: true,
+    ver: ver || null,
+    lv: lv != null && !Number.isNaN(lv) ? lv : null,
+    lessonNo: lessonNo != null && !Number.isNaN(lessonNo) ? lessonNo : null,
+    file,
   };
 }
 
@@ -2403,6 +2441,25 @@ async function openLesson({ lessonNo, file } = {}) {
     listEntry ? lessonData : null
   );
 
+  try {
+    const entryHash = buildLearnerResumeEntryHash({
+      version: state.version,
+      lv: state.lv,
+      lessonNo: no,
+      file: f,
+    });
+    recordLearnerResume({
+      courseType: "hsk",
+      level: String(state.lv),
+      lessonId: String(lessonData?.id || `lesson${no}`),
+      lessonTitle: titleText,
+      lastVisitedAt: new Date().toISOString(),
+      entryHash,
+    });
+  } catch (e) {
+    console.warn("[HSK] learner resume record failed", e);
+  }
+
   showStudyMode(titleText);
   updateLessonContextWindow(no);
 
@@ -3315,6 +3372,27 @@ export async function mount(ctx) {
       : null) ||
     (savedVer === "hsk3.0" ? "hsk3.0" : "hsk2.0");
 
+  const dlv = parseHskDeepLinkFromLocation();
+  if (dlv.active) {
+    if (dlv.ver) {
+      const nv =
+        window.HSK_LOADER && typeof window.HSK_LOADER.normalizeVersion === "function"
+          ? window.HSK_LOADER.normalizeVersion(dlv.ver)
+          : dlv.ver;
+      if (nv) {
+        state.version = nv;
+        try {
+          localStorage.setItem("hsk_vocab_version", state.version);
+        } catch {
+          /* */
+        }
+      }
+    }
+    if (dlv.lv != null && !Number.isNaN(dlv.lv)) {
+      state.lv = dlv.lv;
+    }
+  }
+
   if ($("hskLevel")) $("hskLevel").value = String(state.lv);
   if ($("hskVersion")) $("hskVersion").value = String(state.version);
 
@@ -3327,6 +3405,14 @@ export async function mount(ctx) {
 
   await loadLessons();
   showListMode();
+
+  if (dlv.active && dlv.lessonNo != null && !Number.isNaN(dlv.lessonNo)) {
+    try {
+      await openLesson({ lessonNo: dlv.lessonNo, file: dlv.file || "" });
+    } catch (e) {
+      console.warn("[HSK] deep link open lesson failed", e);
+    }
+  }
 
   return true;
 }

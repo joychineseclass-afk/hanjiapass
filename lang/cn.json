@@ -1962,6 +1962,18 @@
       "my_content": "我的内容",
       "my_orders": "我的订单"
     },
+    "my_page_subtitle": "在此继续学习，或在下方进入「我的内容 / 我的订单」。",
+    "resume": {
+      "continue_title": "继续学习",
+      "last_studied_line": "上次学到 HSK {level} · {title}",
+      "continue_cta": "继续学习",
+      "continue_hint": "更多课程内容将陆续上线，先从这里把第一课学稳。",
+      "start_title": "开始学习",
+      "start_subtitle": "从当前可学的第一课开始：HSK 一级 第 1 课。",
+      "start_cta": "开始学习",
+      "start_hint": "本设备上还没有学习记录，可从第一课进入。",
+      "back_to_learning": "返回学习"
+    },
     "my_content": {
       "lead": "这是当前账号已获得的内容列表；通过免费获取或模拟购买后，会出现在这里。",
       "empty": "当前账号还没有获得任何内容。可从老师公开内容页先获取一些用于测试。",

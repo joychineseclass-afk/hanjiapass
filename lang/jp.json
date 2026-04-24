@@ -1971,6 +1971,18 @@
       "my_content": "マイコンテンツ",
       "my_orders": "マイ注文"
     },
+    "my_page_subtitle": "学習を再開するか、下のコンテンツ・注文へ移動します。",
+    "resume": {
+      "continue_title": "学習を続ける",
+      "last_studied_line": "前回: HSK {level} · {title}",
+      "continue_cta": "学習を続ける",
+      "continue_hint": "今後はさらに多くのレッスンが入ります。まずはここから。",
+      "start_title": "学習を始める",
+      "start_subtitle": "学習可能な第1歩目として、HSK1 第1課に入ります。",
+      "start_cta": "学習を始める",
+      "start_hint": "まだ学習履歴がありません。第1課から始めましょう。",
+      "back_to_learning": "学習に戻る"
+    },
     "my_content": {
       "lead": "このアカウントで利用できる権限付き一覧です。無料取得や模擬購入後に表示されます。",
       "empty": "このアカウントにまだコンテンツはありません。テスト用に公開中の教師リスティングから取得してみてください。",

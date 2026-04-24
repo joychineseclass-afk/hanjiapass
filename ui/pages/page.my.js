@@ -2,9 +2,10 @@
 import { i18n } from "../i18n.js";
 import { getCurrentSessionAuthUser, getTeacherNavRoleState } from "../auth/authService.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
+import { readLearnerResume, LUMINA_DEFAULT_LEARNING_ENTRY_HASH } from "../learner/luminaLearnerResume.js";
 
-function tx(k) {
-  return safeUiText(k);
+function tx(k, p) {
+  return safeUiText(k, p);
 }
 function esc(s) {
   return String(s ?? "")
@@ -47,17 +48,43 @@ function teacherStatusCardHtml() {
   `;
 }
 
+function learnerResumeCardHtml() {
+  const resume = readLearnerResume();
+  const has = Boolean(resume && resume.lastVisitedAt && resume.entryHash);
+  const href = has ? resume.entryHash : LUMINA_DEFAULT_LEARNING_ENTRY_HASH;
+  const line = has
+    ? esc(tx("learner.resume.last_studied_line", { level: String(resume.level), title: String(resume.lessonTitle) }))
+    : "";
+  const cardStyle =
+    "margin-bottom:14px;padding:14px 16px;border:1px solid var(--line,#e2e8f0);border-radius:var(--radius,12px);background:linear-gradient(135deg,#f8fafc 0%,#fff 100%);";
+  if (has) {
+    return `
+    <section class="learner-resume-card" style="${cardStyle}">
+      <h3 class="title" style="margin:0 0 6px;font-size:1.05rem" data-i18n="learner.resume.continue_title">${esc(tx("learner.resume.continue_title"))}</h3>
+      <p class="desc" style="margin:0 0 10px;font-size:14px;color:var(--muted,#475569)">${line}</p>
+      <a class="auth-submit" style="display:inline-block;text-align:center;text-decoration:none" data-learner-resume-nav="1" href="${esc(href)}" data-i18n="learner.resume.continue_cta">${esc(tx("learner.resume.continue_cta"))}</a>
+      <p class="desc" style="margin:10px 0 0;font-size:12px;opacity:0.85" data-i18n="learner.resume.continue_hint">${esc(tx("learner.resume.continue_hint"))}</p>
+    </section>`;
+  }
+  return `
+    <section class="learner-resume-card" style="${cardStyle}">
+      <h3 class="title" style="margin:0 0 6px;font-size:1.05rem" data-i18n="learner.resume.start_title">${esc(tx("learner.resume.start_title"))}</h3>
+      <p class="desc" style="margin:0 0 10px;font-size:14px;color:var(--muted,#475569)" data-i18n="learner.resume.start_subtitle">${esc(tx("learner.resume.start_subtitle"))}</p>
+      <a class="auth-submit" style="display:inline-block;text-align:center;text-decoration:none" data-learner-resume-nav="1" href="${esc(href)}" data-i18n="learner.resume.start_cta">${esc(tx("learner.resume.start_cta"))}</a>
+      <p class="desc" style="margin:10px 0 0;font-size:12px;opacity:0.85" data-i18n="learner.resume.start_hint">${esc(tx("learner.resume.start_hint"))}</p>
+    </section>`;
+}
+
 export function mount() {
   const app = document.getElementById("app");
   if (!app) return;
 
   app.innerHTML = `
     <div class="card">
+      ${learnerResumeCardHtml()}
       <section class="hero">
         <h2 class="title" data-i18n="my_title">내 학습</h2>
-        <p class="desc" data-i18n="coming_soon">
-          개인 학습 기록 기능을 준비 중입니다.
-        </p>
+        <p class="desc" data-i18n="learner.my_page_subtitle">${esc(tx("learner.my_page_subtitle"))}</p>
         <p class="learner-my-quicklinks">
           <a class="learner-my-link" href="#my-content" data-i18n="learner.nav.my_content">My content</a>
           <span class="learner-my-quicksep" aria-hidden="true">·</span>
@@ -69,6 +96,14 @@ export function mount() {
   `;
 
   i18n.apply?.(app);
+  app.querySelectorAll("a[data-learner-resume-nav]").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const raw = a.getAttribute("href") || "";
+      if (!raw.startsWith("#")) return;
+      import("../router.js").then((r) => r.navigateTo(raw, { force: true }));
+    });
+  });
   app.querySelectorAll('a[href^="#"][data-nav-teacher="1"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       e.preventDefault();

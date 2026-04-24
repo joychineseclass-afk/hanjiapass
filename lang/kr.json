@@ -1962,6 +1962,18 @@
       "my_content": "내 콘텐츠",
       "my_orders": "내 주문"
     },
+    "my_page_subtitle": "다시 이어서 학습하거나 아래에서 콘텐츠·주문으로 이동하세요.",
+    "resume": {
+      "continue_title": "이어서 학습",
+      "last_studied_line": "마지막으로 학습: HSK {level} · {title}",
+      "continue_cta": "이어서 학습",
+      "continue_hint": "앞으로 더 많은 콘텐츠가 열릴 예정이에요. 우선은 여기서 계속해보세요.",
+      "start_title": "시작하기",
+      "start_subtitle": "지금 열려 있는 첫 HSK 강의(HSK1 제1과)로 바로 들어갈 수 있어요.",
+      "start_cta": "시작하기",
+      "start_hint": "이 기기에 아직 학습 기록이 없어요. 제1과부터 시작해요.",
+      "back_to_learning": "학습으로 돌아가기"
+    },
     "my_content": {
       "lead": "이 계정으로 열 권한이 있는 콘텐츠 목록입니다. 무료 획득 또는 모의 구매 후 표시됩니다.",
       "empty": "이 계정에 아직 콘텐츠가 없습니다. 테스트로 공개 강사 리스팅에서 먼저 받아 보세요.",

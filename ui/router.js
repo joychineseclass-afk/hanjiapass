@@ -25,6 +25,8 @@ let _appEl = null;
 let _defaultHash = "#home";
 let _scrollTop = true;
 let _hashDebounceTimer = null;
+/** 与 currentHash 一起判断：同一路由仅 query 变化时仍需重渲染（如 #exam-learning?lesson=1 → ?lesson=2） */
+let _lastHandledHashFull = "";
 
 function $(id) {
   return document.getElementById(id);
@@ -44,6 +46,17 @@ function normalizeHash(h) {
   // keep only first segment: "#home/xx" -> "#home"
   const slash = withHash.indexOf("/", 1);
   return slash > 0 ? withHash.slice(0, slash) : withHash;
+}
+
+/** 保留 query：输入可为 "#exam-learning?tab=hsk&lv=1" 或 "exam-learning?a=1" */
+function buildFullHashFromInput(input) {
+  const s0 = String(input || "").trim();
+  if (!s0) return { base: "", full: "" };
+  const s = s0.startsWith("#") ? s0 : `#${s0}`;
+  const base = normalizeHash(s);
+  const q = s.indexOf("?");
+  const full = q >= 0 && q < s.length ? base + s.slice(q) : base;
+  return { base, full };
 }
 
 function escapeHtml(s) {
@@ -158,13 +171,18 @@ export function getCurrentRoute() {
 
 // ✅ force rerender even when hash is same
 export function navigateTo(hash, opts = {}) {
-  const h = normalizeHash(hash);
+  const { base: h, full: fullHash } = buildFullHashFromInput(hash);
   if (!h) return;
 
   const { force = false } = opts;
   const cur = normalizeHash(location.hash);
+  const curFull = String(location.hash || "");
 
   if (cur === h) {
+    if (curFull !== fullHash) {
+      location.hash = fullHash;
+      return;
+    }
     if (force && started && _appEl) {
       // call handler directly (do not rely on hashchange)
       handleRouteChange({
@@ -177,7 +195,7 @@ export function navigateTo(hash, opts = {}) {
     return;
   }
 
-  location.hash = h;
+  location.hash = fullHash;
 }
 
 export function startRouter(opts = {}) {
@@ -230,17 +248,21 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
   }
 
   // Same route: skip when page already rendered (avoid first-load stuck + duplicate render from hashchange + microtask)
+  const hashFull = String(location.hash || "");
   const html = appEl?.innerHTML || "";
   const isLoading = html.includes("불러오는 중") || html.includes("Loading");
   const isEmpty = html.trim().length === 0;
   if (hash === currentHash && !isLoading && !isEmpty) {
-    if (!force) {
+    if (hashFull !== _lastHandledHashFull) {
+      /* 仅 #hash 后 query 变化：需重新挂载以应用深链等 */
+    } else if (!force) {
+      emitRouteEvent();
+      return;
+    } else {
+      // force: true but already rendered same route → skip to avoid double mount (e.g. startRouter microtask after hashchange)
       emitRouteEvent();
       return;
     }
-    // force: true but already rendered same route → skip to avoid double mount (e.g. startRouter microtask after hashchange)
-    emitRouteEvent();
-    return;
   }
 
   try {
@@ -258,6 +280,7 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
   if (!loader) {
     await safeUnmountCurrent();
     setNotFoundUI(appEl, hash);
+    _lastHandledHashFull = hashFull;
     if (scrollTop) scrollToTopSafe();
     return;
   }
@@ -302,11 +325,13 @@ async function handleRouteChange({ appEl, defaultHash, scrollTop, force = false 
 
     // 3) final
     if (token !== navToken) return;
+    _lastHandledHashFull = String(location.hash || "");
     emitRouteEvent();
   } catch (e) {
     console.error("[router] page load error:", e);
     if (token !== navToken) return;
     setErrorUI(appEl, "페이지 로드 실패", e?.stack || e?.message || String(e));
+    _lastHandledHashFull = String(location.hash || "");
   } finally {
     clearTimeout(slowTimer);
   }

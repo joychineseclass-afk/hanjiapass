@@ -1962,6 +1962,18 @@
       "my_content": "My content",
       "my_orders": "My orders"
     },
+    "my_page_subtitle": "Jump back into your course, or open content and orders below.",
+    "resume": {
+      "continue_title": "Continue learning",
+      "last_studied_line": "Last studied: HSK {level} · {title}",
+      "continue_cta": "Continue learning",
+      "continue_hint": "You have not finished the full path yet—pick up from here.",
+      "start_title": "Start learning",
+      "start_subtitle": "Start with the first available HSK lesson (HSK 1, Lesson 1).",
+      "start_cta": "Start learning",
+      "start_hint": "No study history on this device yet. Start with lesson 1.",
+      "back_to_learning": "Back to learning"
+    },
     "my_content": {
       "lead": "Content you are allowed to open for this account. Free unlocks and simulated purchases appear here.",
       "empty": "This account has no content yet. Try a public teacher listing to add a test item.",

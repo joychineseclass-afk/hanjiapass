@@ -3,6 +3,7 @@
 import { i18n } from "../i18n.js";
 import { getCurrentSessionAuthUser, markOnboardingCompletedStudentPath } from "../auth/authService.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
+import { consumePendingPostAuthTargetHash, clearPendingPostAuthTargetHash } from "../auth/postAuthRedirect.js";
 
 function tx(k, p) {
   return safeUiText(k, p);
@@ -64,9 +65,10 @@ export default async function pageOnboardingRole(ctxOrRoot) {
     const r = await markOnboardingCompletedStudentPath();
     if (!r?.ok) return;
     const { navigateTo } = await import("../router.js");
-    navigateTo("#my", { force: true });
+    navigateTo(consumePendingPostAuthTargetHash() || "#my", { force: true });
   });
   root.querySelector("#onbTeachBtn")?.addEventListener("click", async () => {
+    clearPendingPostAuthTargetHash();
     const { navigateTo } = await import("../router.js");
     navigateTo("#teacher-apply", { force: true });
   });

@@ -6,6 +6,7 @@
 // ✅ IMPORTANT: Styles are scoped; DO NOT override global :root tokens here.
 
 import { i18n } from "../i18n.js";
+import { LUMINA_DEFAULT_LEARNING_ENTRY_HASH, setPendingPostAuthTargetHash } from "../auth/postAuthRedirect.js";
 
 const STYLE_ID = "lumina-home-style-v5";
 let _bound = false;
@@ -485,7 +486,7 @@ function renderHome(root) {
 
                 <!-- Row 1: buttons -->
                 <div class="cta">
-                  <a class="btn primary" href="#exam-learning">${T.cta1}</a>
+                  <a class="btn primary" data-lumina-start-learning="1" href="${LUMINA_DEFAULT_LEARNING_ENTRY_HASH}">${T.cta1}</a>
                   <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
 
@@ -568,6 +569,24 @@ function bindLiveRerender(root) {
   });
 }
 
+function bindHomeStartLearning() {
+  if (window.__luminaHomeStartLearnBound) return;
+  window.__luminaHomeStartLearnBound = true;
+  document.addEventListener("click", async (e) => {
+    const a = e.target?.closest?.("a[data-lumina-start-learning]");
+    if (!a) return;
+    e.preventDefault();
+    const { getCurrentSessionAuthUser } = await import("../auth/authService.js");
+    const { navigateTo } = await import("../router.js");
+    if (getCurrentSessionAuthUser()) {
+      navigateTo(LUMINA_DEFAULT_LEARNING_ENTRY_HASH, { force: true });
+    } else {
+      setPendingPostAuthTargetHash(LUMINA_DEFAULT_LEARNING_ENTRY_HASH);
+      navigateTo("#auth-login", { force: true });
+    }
+  });
+}
+
 export default function pageHome(ctxOrRoot) {
   const root =
     ctxOrRoot?.root ||
@@ -576,6 +595,7 @@ export default function pageHome(ctxOrRoot) {
     document.getElementById("app");
 
   if (!root) return;
+  bindHomeStartLearning();
   bindLiveRerender(root);
   renderHome(root);
 }
