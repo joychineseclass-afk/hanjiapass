@@ -30,7 +30,8 @@
     "check:hsk1-practice": "node scripts/check-hsk1-practice.mjs",
     "check:hsk30-hsk1": "node scripts/check-hsk30-hsk1.mjs",
     "check:hsk30-hsk1:strict": "node scripts/check-hsk30-hsk1.mjs --strict",
-    "check:culture-idioms": "node scripts/check-culture-idioms.mjs"
+    "check:culture-idioms": "node scripts/check-culture-idioms.mjs",
+    "check:dictionary": "node scripts/check-dictionary-data.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
