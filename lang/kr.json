@@ -876,7 +876,9 @@
       "storySourceLabel": "이야기 출처",
       "storyCnLabel": "중국어 이야기",
       "storyLangLabel": "이야기 설명",
-      "loadError": "성어를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+      "loadError": "성어를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      "indexLoadError": "성어 목록을 불러올 수 없습니다.",
+      "detailLoadError": "성어 내용을 불러올 수 없습니다."
     },
     "proverbs": {
       "title": "속담 학습",

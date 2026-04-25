@@ -1,0 +1,82 @@
+[
+  {
+    "id": "idiom_0001",
+    "idiom": "画蛇添足",
+    "pinyin": "huà shé tiān zú",
+    "file": "idioms-basic-001.json",
+    "theme": ["寓言", "做事", "智慧"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0002",
+    "idiom": "井底之蛙",
+    "pinyin": "jǐng dǐ zhī wā",
+    "file": "idioms-basic-001.json",
+    "theme": ["视野", "智慧"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0003",
+    "idiom": "亡羊补牢",
+    "pinyin": "wáng yáng bǔ láo",
+    "file": "idioms-basic-001.json",
+    "theme": ["补救", "错误", "行动"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0004",
+    "idiom": "守株待兔",
+    "pinyin": "shǒu zhū dài tù",
+    "file": "idioms-basic-001.json",
+    "theme": ["寓言", "方法", "教训"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0005",
+    "idiom": "自相矛盾",
+    "pinyin": "zì xiāng máo dùn",
+    "file": "idioms-basic-001.json",
+    "theme": ["寓言", "逻辑", "语言"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0006",
+    "idiom": "一举两得",
+    "pinyin": "yī jǔ liǎng dé",
+    "file": "idioms-basic-001.json",
+    "theme": ["方法", "效率", "行动"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0007",
+    "idiom": "半途而废",
+    "pinyin": "bàn tú ér fèi",
+    "file": "idioms-basic-001.json",
+    "theme": ["学习", "坚持", "习惯"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0008",
+    "idiom": "刻舟求剑",
+    "pinyin": "kè zhōu qiú jiàn",
+    "file": "idioms-basic-001.json",
+    "theme": ["寓言", "变化", "方法"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0009",
+    "idiom": "三心二意",
+    "pinyin": "sān xīn èr yì",
+    "file": "idioms-basic-001.json",
+    "theme": ["学习", "态度", "专注"],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0010",
+    "idiom": "熟能生巧",
+    "pinyin": "shú néng shēng qiǎo",
+    "file": "idioms-basic-001.json",
+    "theme": ["学习", "练习", "技能"],
+    "difficulty": 1
+  }
+]

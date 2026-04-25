@@ -884,7 +884,9 @@
       "storySourceLabel": "故事の出典",
       "storyCnLabel": "中国語故事",
       "storyLangLabel": "故事説明",
-      "loadError": "成語を読み込めませんでした。しばらくしてから再度お試しください。"
+      "loadError": "成語を読み込めませんでした。しばらくしてから再度お試しください。",
+      "indexLoadError": "成語一覧を読み込めませんでした。",
+      "detailLoadError": "成語の内容を読み込めませんでした。"
     },
     "proverbs": {
       "title": "ことわざ学習",

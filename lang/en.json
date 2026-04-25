@@ -876,7 +876,9 @@
       "storySourceLabel": "Story Source",
       "storyCnLabel": "Chinese Story",
       "storyLangLabel": "Story Explanation",
-      "loadError": "Could not load idioms. Please try again later."
+      "loadError": "Could not load idioms. Please try again later.",
+      "indexLoadError": "The idiom catalog could not be loaded.",
+      "detailLoadError": "Idiom content could not be loaded."
     },
     "proverbs": {
       "title": "Proverb Learning",

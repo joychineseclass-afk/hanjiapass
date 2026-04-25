@@ -876,7 +876,9 @@
       "storySourceLabel": "故事来源",
       "storyCnLabel": "中文故事",
       "storyLangLabel": "故事说明",
-      "loadError": "成语内容加载失败，请稍后重试。"
+      "loadError": "成语内容加载失败，请稍后重试。",
+      "indexLoadError": "成语目录暂时无法加载。",
+      "detailLoadError": "成语内容暂时无法加载。"
     },
     "proverbs": {
       "title": "俗语学习",

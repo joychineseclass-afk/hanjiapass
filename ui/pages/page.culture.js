@@ -15,8 +15,14 @@ const DEFAULT_ID = "idioms";
 const DEFAULT_IDIOM_ID = "idiom_0001";
 const ALLOWED = new Set(CULTURE_SECTION_IDS);
 
-let _idiomsCache = null;
-let _idiomsFetchPromise = null;
+/** 成语目录索引缓存（仅 id / idiom / pinyin / file / theme / difficulty） */
+let _idiomsIndexCache = null;
+let _idiomsIndexPromise = null;
+/** 详情 JSON 分文件缓存 fileName → 详情数组 */
+const _idiomDetailFileCache = new Map();
+const _idiomDetailFilePromises = new Map();
+
+let _idiomsPanelRequestId = 0;
 
 /** 已展开侧栏的二级分类（有三级子项的区块点击后 open） */
 const expandedCultureSections = new Set();
@@ -66,8 +72,8 @@ function navItemClassL3(active) {
  * @param {string} sectionId
  */
 function getSectionChildren(sectionId) {
-  if (sectionId === "idioms" && _idiomsCache && Array.isArray(_idiomsCache) && _idiomsCache.length) {
-    return _idiomsCache;
+  if (sectionId === "idioms" && _idiomsIndexCache && Array.isArray(_idiomsIndexCache) && _idiomsIndexCache.length) {
+    return _idiomsIndexCache;
   }
   return [];
 }
@@ -79,9 +85,95 @@ function sectionHasChildren(sectionId) {
   return getSectionChildren(sectionId).length > 0;
 }
 
-function idiomsDataUrl() {
+function idiomsDataBaseUrl() {
   const b = typeof window !== "undefined" && String(window.__APP_BASE__ || "").replace(/\/+$/, "");
-  return (b ? b + "/" : "/") + "data/culture/idioms/idioms-basic.json";
+  return (b ? b + "/" : "/") + "data/culture/idioms/";
+}
+
+/**
+ * @param {string} relativePath
+ * @returns {Promise<unknown>}
+ */
+async function fetchIdiomsJsonFile(relativePath) {
+  const rel = String(relativePath || "").replace(/^\//, "");
+  const u = `${idiomsDataBaseUrl()}${rel}`;
+  const tryOne = async (url) => {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("not ok");
+    return res.json();
+  };
+  try {
+    return await tryOne(u);
+  } catch {
+    if (u.startsWith("/data/")) {
+      return tryOne(`.${u}`);
+    }
+    throw new Error("idioms json fetch failed");
+  }
+}
+
+/**
+ * @returns {Promise<object[]>}
+ */
+async function loadIdiomsIndex() {
+  if (_idiomsIndexCache) return _idiomsIndexCache;
+  if (_idiomsIndexPromise) return _idiomsIndexPromise;
+  _idiomsIndexPromise = (async () => {
+    const data = await fetchIdiomsJsonFile("idioms-index.json");
+    if (!Array.isArray(data)) throw new Error("index bad shape");
+    _idiomsIndexCache = data;
+    return _idiomsIndexCache;
+  })();
+  try {
+    return await _idiomsIndexPromise;
+  } catch (e) {
+    throw e;
+  } finally {
+    _idiomsIndexPromise = null;
+  }
+}
+
+/**
+ * @param {string} file
+ * @returns {Promise<unknown[]>}
+ */
+async function loadIdiomDetailFile(file) {
+  if (!file) throw new Error("no file");
+  if (_idiomDetailFileCache.has(file)) {
+    return /** @type {unknown[]} */ (_idiomDetailFileCache.get(file));
+  }
+  if (_idiomDetailFilePromises.has(file)) {
+    return /** @type {Promise<unknown[]>} */ (_idiomDetailFilePromises.get(file));
+  }
+  const p = (async () => {
+    const data = await fetchIdiomsJsonFile(file);
+    if (!Array.isArray(data)) throw new Error("detail bad shape");
+    _idiomDetailFileCache.set(file, data);
+    return data;
+  })();
+  _idiomDetailFilePromises.set(file, p);
+  try {
+    return await p;
+  } catch (e) {
+    throw e;
+  } finally {
+    _idiomDetailFilePromises.delete(file);
+  }
+}
+
+/**
+ * 按 id 在 index 中定位 file，再加载详情 JSON 中同 id 的条目
+ * @param {string} id
+ * @returns {Promise<object|null>}
+ */
+async function loadIdiomDetailById(id) {
+  const index = await loadIdiomsIndex();
+  if (!index?.length) return null;
+  const entry = index.find((item) => item && String(item.id) === String(id)) || index[0];
+  if (!entry?.file) return null;
+  const detailList = await loadIdiomDetailFile(String(entry.file));
+  if (!Array.isArray(detailList)) return null;
+  return detailList.find((item) => item && String(item.id) === String(entry.id)) || null;
 }
 
 /**
@@ -106,47 +198,6 @@ function ensureDefaultIdiomInHash() {
     } catch {
       location.hash = want;
     }
-  }
-}
-
-/**
- * @returns {Promise<unknown[]>}
- */
-async function loadIdiomsData() {
-  if (_idiomsCache) return _idiomsCache;
-  if (_idiomsFetchPromise) return _idiomsFetchPromise;
-  _idiomsFetchPromise = (async () => {
-    const u = idiomsDataUrl();
-    const tryFetch = async (url) => {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) throw new Error("idioms fetch failed");
-      return res.json();
-    };
-    let data;
-    try {
-      data = await tryFetch(u);
-    } catch {
-      if (u.startsWith("/data/")) {
-        try {
-          data = await tryFetch("." + u);
-        } catch {
-          throw new Error("idioms fetch failed");
-        }
-      } else {
-        throw new Error("idioms fetch failed");
-      }
-    }
-    if (!Array.isArray(data)) throw new Error("idioms bad shape");
-    _idiomsCache = data;
-    return _idiomsCache;
-  })();
-  try {
-    return await _idiomsFetchPromise;
-  } catch (e) {
-    _idiomsCache = null;
-    throw e;
-  } finally {
-    _idiomsFetchPromise = null;
   }
 }
 
@@ -314,24 +365,12 @@ function updateSideNav(root, sectionId, activeChildId) {
   i18n.apply?.(navInner);
 }
 
-/**
- * @param {object} root
- * @param {string} sectionId
- * @param {object[]|null} list
- * @param {string} [idiomId]
- */
-function renderIdiomRight(root, list, sectionId, idiomId) {
-  const inner = root.querySelector("[data-culture-panel-inner]");
-  if (!inner) return;
-  if (!_idiomsCache || !list?.length) {
-    inner.innerHTML = `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`;
-    i18n.apply?.(inner);
-    return;
-  }
-  const targetId = idiomId || currentIdiomIdFromList(list);
-  const item = list.find((x) => String(x.id) === targetId) || list[0];
-  inner.innerHTML = renderIdiomDetailPage(item);
-  i18n.apply?.(inner);
+function renderIdiomsIndexErrorPanel() {
+  return `<p class="culture-idiom-error" data-i18n="culture.idioms.indexLoadError">${esc(t("culture.idioms.indexLoadError"))}</p>`;
+}
+
+function renderIdiomsDetailErrorPanel() {
+  return `<p class="culture-idiom-error" data-i18n="culture.idioms.detailLoadError">${esc(t("culture.idioms.detailLoadError"))}</p>`;
 }
 
 function renderDefaultRightPanel(sectionId) {
@@ -343,52 +382,72 @@ function renderDefaultRightPanel(sectionId) {
   `;
 }
 
-function renderIdiomsErrorPanel() {
-  return `<p class="culture-idiom-error" data-i18n="culture.idioms.loadError">${esc(t("culture.idioms.loadError"))}</p>`;
-}
-
 function updatePanel(root, sectionId) {
   const inner = root.querySelector("[data-culture-panel-inner]");
   if (!inner) return;
   if (sectionId === "idioms") {
-    if (_idiomsCache) {
-      const iid = currentIdiomIdFromList(_idiomsCache);
-      updateSideNav(root, "idioms", iid);
-      renderIdiomRight(root, _idiomsCache, "idioms", iid);
-      return;
-    }
-    updateSideNav(root, "idioms", DEFAULT_IDIOM_ID);
+    const reqId = ++_idiomsPanelRequestId;
     inner.innerHTML = `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`;
     i18n.apply?.(inner);
-    loadIdiomsData()
-      .then((list) => {
+    void (async () => {
+      let index;
+      try {
+        index = await loadIdiomsIndex();
+      } catch {
+        if (reqId !== _idiomsPanelRequestId) return;
         if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
         if (currentSectionId() !== "idioms") return;
         const p = root.querySelector("[data-culture-panel-inner]");
         if (!p) return;
-        const iid = currentIdiomIdFromList(list);
-        if (getHashIdParam() !== iid) {
-          try {
-            const u = new URL(window.location.href);
-            u.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
-            history.replaceState(null, "", u.toString());
-          } catch {
-            /* */
-          }
+        updateSideNav(root, "idioms", getHashIdParam() || DEFAULT_IDIOM_ID);
+        p.innerHTML = renderIdiomsIndexErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      if (reqId !== _idiomsPanelRequestId) return;
+      if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+      if (currentSectionId() !== "idioms") return;
+      if (!index?.length) {
+        const p = root.querySelector("[data-culture-panel-inner]");
+        if (!p) return;
+        updateSideNav(root, "idioms", getHashIdParam() || DEFAULT_IDIOM_ID);
+        p.innerHTML = renderIdiomsIndexErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      const iid = currentIdiomIdFromList(index);
+      if (getHashIdParam() !== iid) {
+        try {
+          const u = new URL(window.location.href);
+          u.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
+          history.replaceState(null, "", u.toString());
+        } catch {
+          /* */
         }
-        updateSideNav(root, "idioms", iid);
-        p.innerHTML = renderIdiomDetailPage(list.find((x) => x.id === iid) || list[0]);
+      }
+      updateSideNav(root, "idioms", iid);
+      const p = root.querySelector("[data-culture-panel-inner]");
+      if (!p) return;
+      let item;
+      try {
+        item = await loadIdiomDetailById(iid);
+      } catch {
+        if (reqId !== _idiomsPanelRequestId) return;
+        p.innerHTML = renderIdiomsDetailErrorPanel();
         i18n.apply?.(p);
-      })
-      .catch(() => {
-        if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
-        if (currentSectionId() !== "idioms") return;
-        updateSideNav(root, "idioms", DEFAULT_IDIOM_ID);
-        const p = root.querySelector("[data-culture-panel-inner]");
-        if (!p) return;
-        p.innerHTML = renderIdiomsErrorPanel();
+        return;
+      }
+      if (reqId !== _idiomsPanelRequestId) return;
+      if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+      if (currentSectionId() !== "idioms") return;
+      if (!item) {
+        p.innerHTML = renderIdiomsDetailErrorPanel();
         i18n.apply?.(p);
-      });
+        return;
+      }
+      p.innerHTML = renderIdiomDetailPage(item);
+      i18n.apply?.(p);
+    })();
     return;
   }
   updateSideNav(root, sectionId, "");
@@ -397,8 +456,8 @@ function updatePanel(root, sectionId) {
 }
 
 function updateNavForSectionOnly(root, sectionId) {
-  if (sectionId === "idioms" && _idiomsCache) {
-    updateSideNav(root, "idioms", currentIdiomIdFromList(_idiomsCache));
+  if (sectionId === "idioms" && _idiomsIndexCache?.length) {
+    updateSideNav(root, "idioms", currentIdiomIdFromList(_idiomsIndexCache));
   } else {
     updateSideNav(root, sectionId, "");
   }
@@ -466,7 +525,7 @@ export function unmount() {
   expandedCultureSections.clear();
 }
 
-export function mount() {
+export async function mount() {
   unmount();
   ensureDefaultIdiomInHash();
 
@@ -477,8 +536,43 @@ export function mount() {
   const sectionId = currentSectionId();
   const sideNavTitle = t("culture.side_nav_label");
   const sideNavTitleKey = "culture.side_nav_label";
+
+  let rightBody =
+    sectionId === "idioms" ? `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>` : renderDefaultRightPanel(sectionId);
+  if (sectionId === "idioms") {
+    try {
+      await loadIdiomsIndex();
+    } catch {
+      /* 下面按空 index 走错误区 */
+    }
+    if (_idiomsIndexCache?.length) {
+      const iid = currentIdiomIdFromList(_idiomsIndexCache);
+      if (getHashIdParam() !== iid) {
+        try {
+          const u = new URL(window.location.href);
+          u.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
+          history.replaceState(null, "", u.toString());
+        } catch {
+          /* */
+        }
+      }
+      try {
+        const item = await loadIdiomDetailById(iid);
+        rightBody = item ? renderIdiomDetailPage(item) : renderIdiomsDetailErrorPanel();
+      } catch {
+        rightBody = renderIdiomsDetailErrorPanel();
+      }
+    } else {
+      rightBody = renderIdiomsIndexErrorPanel();
+    }
+  }
+
   const idiomIdForNav =
-    _idiomsCache && sectionId === "idioms" ? currentIdiomIdFromList(_idiomsCache) : sectionId === "idioms" ? getHashIdParam() || DEFAULT_IDIOM_ID : "";
+    _idiomsIndexCache && sectionId === "idioms" && _idiomsIndexCache.length
+      ? currentIdiomIdFromList(_idiomsIndexCache)
+      : sectionId === "idioms"
+        ? getHashIdParam() || DEFAULT_IDIOM_ID
+        : "";
 
   const sideNavBody = buildSideNavInnerHtml(sectionId, idiomIdForNav);
 
@@ -493,14 +587,8 @@ export function mount() {
         </aside>
         <main class="section-main-panel">
           <div class="section-main-panel-inner" data-culture-panel>
-            <div data-culture-panel-inner>
-              ${
-                sectionId === "idioms"
-                  ? _idiomsCache
-                    ? renderIdiomDetailPage(_idiomsCache.find((x) => x.id === currentIdiomIdFromList(_idiomsCache)) || _idiomsCache[0])
-                    : `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`
-                  : renderDefaultRightPanel(sectionId)
-              }
+            <div data-culture-panel-inner">
+              ${rightBody}
             </div>
           </div>
         </main>
@@ -509,18 +597,6 @@ export function mount() {
   `;
 
   i18n.apply?.(app);
-  if (sectionId === "idioms" && !_idiomsCache) {
-    updatePanel(app, "idioms");
-  } else if (sectionId === "idioms" && _idiomsCache) {
-    const iid = currentIdiomIdFromList(_idiomsCache);
-    updateSideNav(app, "idioms", iid);
-    const inner = app.querySelector("[data-culture-panel-inner]");
-    if (inner) {
-      const item = _idiomsCache.find((x) => x.id === iid) || _idiomsCache[0];
-      inner.innerHTML = renderIdiomDetailPage(item);
-      i18n.apply?.(inner);
-    }
-  }
 
   const navTo = (hash) => {
     import("../router.js")
@@ -558,8 +634,8 @@ export function mount() {
       e.preventDefault();
       if (currentSectionId() !== id) {
         expandedCultureSections.add(id);
-        if (id === "idioms" && _idiomsCache?.length) {
-          const iid = currentIdiomIdFromList(_idiomsCache);
+        if (id === "idioms" && _idiomsIndexCache?.length) {
+          const iid = currentIdiomIdFromList(_idiomsIndexCache);
           navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`);
         } else {
           navTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`);
