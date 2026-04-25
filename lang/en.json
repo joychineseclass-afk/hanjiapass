@@ -781,6 +781,21 @@
     "wrong_hint": "Start from this stroke",
     "complete_toast": "Great!"
   },
+  "dictionary": {
+    "search": {
+      "placeholder": "Search a character or word"
+    },
+    "meaningLabel": "Meaning",
+    "chineseExplanationLabel": "Chinese Explanation",
+    "teachingNoteLabel": "Learning Note",
+    "commonWordsLabel": "Common Words",
+    "strokeLabel": "Stroke Order",
+    "strokeAvailable": "Stroke data is available.",
+    "strokeMissing": "Stroke data is not available yet.",
+    "openStroke": "Open Stroke Order / Tracing",
+    "entryMissing": "Dictionary meaning is not available yet.",
+    "viewDetail": "View Dictionary Detail"
+  },
   "kids": {
     "title": "Kids Chinese",
     "subtitle": "Learn Chinese the fun way",

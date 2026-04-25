@@ -781,6 +781,21 @@
     "wrong_hint": "이 획부터 써 보세요",
     "complete_toast": "잘했어요!"
   },
+  "dictionary": {
+    "search": {
+      "placeholder": "한자나 단어를 검색하세요"
+    },
+    "meaningLabel": "뜻",
+    "chineseExplanationLabel": "중국어 설명",
+    "teachingNoteLabel": "학습 설명",
+    "commonWordsLabel": "자주 쓰는 단어",
+    "strokeLabel": "필순",
+    "strokeAvailable": "필순 데이터가 있습니다.",
+    "strokeMissing": "필순 데이터가 아직 없습니다.",
+    "openStroke": "필순/따라쓰기 열기",
+    "entryMissing": "사전 뜻 자료가 아직 없습니다.",
+    "viewDetail": "사전 자세히 보기"
+  },
   "kids": {
     "title": "어린이 중국어",
     "subtitle": "재미있게 배우는 중국어",

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "hanzi_4eba",
+    "type": "char",
+    "query": "人",
+    "char": "人",
+    "pinyin": "rén",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_53e3",
+    "type": "char",
+    "query": "口",
+    "char": "口",
+    "pinyin": "kǒu",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_624b",
+    "type": "char",
+    "query": "手",
+    "char": "手",
+    "pinyin": "shǒu",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5927",
+    "type": "char",
+    "query": "大",
+    "char": "大",
+    "pinyin": "dà",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5c0f",
+    "type": "char",
+    "query": "小",
+    "char": "小",
+    "pinyin": "xiǎo",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e0a",
+    "type": "char",
+    "query": "上",
+    "char": "上",
+    "pinyin": "shàng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e0b",
+    "type": "char",
+    "query": "下",
+    "char": "下",
+    "pinyin": "xià",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e2d",
+    "type": "char",
+    "query": "中",
+    "char": "中",
+    "pinyin": "zhōng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_65e5",
+    "type": "char",
+    "query": "日",
+    "char": "日",
+    "pinyin": "rì",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6708",
+    "type": "char",
+    "query": "月",
+    "char": "月",
+    "pinyin": "yuè",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6c34",
+    "type": "char",
+    "query": "水",
+    "char": "水",
+    "pinyin": "shuǐ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_706b",
+    "type": "char",
+    "query": "火",
+    "char": "火",
+    "pinyin": "huǒ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5c71",
+    "type": "char",
+    "query": "山",
+    "char": "山",
+    "pinyin": "shān",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6728",
+    "type": "char",
+    "query": "木",
+    "char": "木",
+    "pinyin": "mù",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_9a6c",
+    "type": "char",
+    "query": "马",
+    "char": "马",
+    "pinyin": "mǎ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5973",
+    "type": "char",
+    "query": "女",
+    "char": "女",
+    "pinyin": "nǚ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5b50",
+    "type": "char",
+    "query": "子",
+    "char": "子",
+    "pinyin": "zǐ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5b66",
+    "type": "char",
+    "query": "学",
+    "char": "学",
+    "pinyin": "xué",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_751f",
+    "type": "char",
+    "query": "生",
+    "char": "生",
+    "pinyin": "shēng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_597d",
+    "type": "char",
+    "query": "好",
+    "char": "好",
+    "pinyin": "hǎo",
+    "file": "hanzi-basic-001.json"
+  }
+]

@@ -781,6 +781,21 @@
     "wrong_hint": "请从这一笔开始",
     "complete_toast": "太棒了！"
   },
+  "dictionary": {
+    "search": {
+      "placeholder": "搜索汉字或词语"
+    },
+    "meaningLabel": "释义",
+    "chineseExplanationLabel": "中文说明",
+    "teachingNoteLabel": "学习说明",
+    "commonWordsLabel": "常用词",
+    "strokeLabel": "笔顺",
+    "strokeAvailable": "已收录笔顺数据。",
+    "strokeMissing": "暂未收录笔顺数据。",
+    "openStroke": "打开笔顺/跟写",
+    "entryMissing": "字典释义暂未收录。",
+    "viewDetail": "查看字典详情"
+  },
   "kids": {
     "title": "儿童中文",
     "subtitle": "快乐学中文",

@@ -14,7 +14,8 @@ const ID_PARAM = "id";
 const DEFAULT_ID = "idioms";
 const DEFAULT_IDIOM_ID = "idiom_0001";
 const ALLOWED = new Set(CULTURE_SECTION_IDS);
-const HANJA_HASH = "#hanja";
+/** 文化页单字搜索：跳转字典（#dictionary），笔顺在字典页再进入 #stroke */
+const DICTIONARY_HASH = "#dictionary";
 /** 单字：跳转汉字/字典学习，不显示文化内搜索结果 */
 const CN_SINGLE_CHAR = /^[\u4e00-\u9fff]$/;
 
@@ -779,7 +780,7 @@ function handleCultureSearchSubmit(app, navTo) {
   if (!q) return;
   if (CN_SINGLE_CHAR.test(q)) {
     showIdiomAiComingSoonToast(t("culture.search.singleCharHint"));
-    navTo(`${HANJA_HASH}?char=${encodeURIComponent(q)}`);
+    navTo(`${DICTIONARY_HASH}?char=${encodeURIComponent(q)}`);
     return;
   }
   void (async () => {

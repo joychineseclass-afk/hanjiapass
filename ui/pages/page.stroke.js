@@ -4,8 +4,63 @@
 // ✅ 语言切换后完整 rerender
 
 import { i18n } from "../i18n.js";
+import { getLang, pick } from "../core/languageEngine.js";
 import { mountStrokeSwitcher } from "../ui-stroke-player.js";
 import { findInHSK } from "../hskLookup.js";
+import { getDictionaryEntryByChar } from "../platform/dictionary/dictionaryEngine.js";
+
+function esc(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+/** 笔顺区上方：字典引擎简短摘要 + 跳转 #dictionary?char= */
+async function renderDictionaryDigest(ch) {
+  const el = document.getElementById("stroke-dict-digest");
+  if (!el) return;
+  if (!isHan(String(ch).trim())) {
+    el.innerHTML = "";
+    el.hidden = true;
+    return;
+  }
+  const c = Array.from(String(ch).trim())[0] || "";
+  if (!c) {
+    el.innerHTML = "";
+    el.hidden = true;
+    return;
+  }
+  el.hidden = false;
+  el.innerHTML = `<div class="stroke-dict-digest-skel muted">${esc(i18n.t("common.loading"))}</div>`;
+  try {
+    const res = await getDictionaryEntryByChar(c);
+    const lang = getLang();
+    if (res.found && res.entry) {
+      const line = pick(res.entry.meaning, { lang }) || "";
+      const py = res.entry.pinyin || "";
+      el.innerHTML = `
+        <div class="stroke-dict-digest-inner">
+          <div class="stroke-dict-line1"><span class="stroke-dict-ch">${esc(c)}</span> <span class="stroke-dict-py">${esc(py)}</span></div>
+          <div class="stroke-dict-line2"><span class="stroke-dict-mean-lab" data-i18n="dictionary.meaningLabel"></span>：${esc(line)}</div>
+          <a class="btn btn-sm primary stroke-dict-link" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="stroke-dict-digest-inner stroke-dict-digest--empty">
+          <p class="muted" data-i18n="dictionary.entryMissing"></p>
+          <a class="btn btn-sm primary stroke-dict-link" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+        </div>`;
+    }
+  } catch (e) {
+    console.warn("[stroke] dictionary digest:", e);
+    el.innerHTML = "";
+    el.hidden = true;
+    return;
+  }
+  i18n.apply(el);
+}
 
 /** 释义区：从 HSK 里查并渲染（随语言切换） */
 async function renderMeaningFromHSK(ch) {
@@ -98,6 +153,7 @@ function render(container) {
           <div class="card">
             <div class="inner">
               <h2 class="section-title" data-i18n="stroke.player_title"></h2>
+              <div id="stroke-dict-digest" class="stroke-dict-digest" hidden></div>
               <div id="stroke-root" class="stroke-player-wrap"></div>
             </div>
           </div>
@@ -170,7 +226,7 @@ export function mount(ctxOrRoot) {
     return Array.from(raw).filter(isHan);
   }
 
-  function loadCharAt(index) {
+  async function loadCharAt(index) {
     const arr = getTextArray();
     if (!arr.length) return;
 
@@ -180,7 +236,8 @@ export function mount(ctxOrRoot) {
     if (!ch) return;
 
     mountStrokeSwitcher(strokeRoot, ch);
-    renderMeaningFromHSK(ch);
+    await renderDictionaryDigest(ch);
+    void renderMeaningFromHSK(ch);
 
     try {
       input.focus();
@@ -194,7 +251,7 @@ export function mount(ctxOrRoot) {
 
     _seq.text = s;
     _seq.idx = 0;
-    loadCharAt(0);
+    void loadCharAt(0);
   }
 
   btn?.addEventListener("click", handleLoad);
@@ -212,7 +269,7 @@ export function mount(ctxOrRoot) {
     const next = _seq.idx + 1;
     if (next >= arr.length) return;
 
-    loadCharAt(next);
+    void loadCharAt(next);
   };
 
   strokeRoot?.addEventListener("stroke:nextchar", _onNextChar);
@@ -223,12 +280,31 @@ export function mount(ctxOrRoot) {
     const arr = getTextArray();
     const ch = arr.length ? arr[Math.min(_seq.idx, arr.length - 1)] : String((input?.value || "").trim()).charAt(0);
 
-    if (ch) renderMeaningFromHSK(ch);
+    if (ch) {
+      void renderDictionaryDigest(ch);
+      void renderMeaningFromHSK(ch);
+    }
   };
 
   window.addEventListener("joy:langChanged", _strokeLangHandler);
   window.addEventListener("joy:lang", _strokeLangHandler);
   window.addEventListener("i18n:changed", _strokeLangHandler);
+
+  const fromHash = (() => {
+    const h = typeof location !== "undefined" ? location.hash || "" : "";
+    const qm = h.indexOf("?");
+    if (qm < 0) return "";
+    return (new URLSearchParams(h.slice(qm + 1)).get("char") || "").trim();
+  })();
+  if (fromHash) {
+    const first = Array.from(fromHash).find(isHan) || fromHash[0];
+    if (first) {
+      input.value = first;
+      _seq.text = first;
+      _seq.idx = 0;
+      void loadCharAt(0);
+    }
+  }
 }
 
 export function unmount() {

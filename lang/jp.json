@@ -789,6 +789,21 @@
     "wrong_hint": "この画から書いてみましょう",
     "complete_toast": "よくできました！"
   },
+  "dictionary": {
+    "search": {
+      "placeholder": "漢字や単語を検索"
+    },
+    "meaningLabel": "意味",
+    "chineseExplanationLabel": "中国語説明",
+    "teachingNoteLabel": "学習説明",
+    "commonWordsLabel": "よく使う単語",
+    "strokeLabel": "筆順",
+    "strokeAvailable": "筆順データがあります。",
+    "strokeMissing": "筆順データはまだありません。",
+    "openStroke": "筆順/なぞり書きを開く",
+    "entryMissing": "辞書の意味データはまだありません。",
+    "viewDetail": "辞書の詳細を見る"
+  },
   "kids": {
     "title": "キッズ中国語",
     "subtitle": "楽しく学ぶ中国語",

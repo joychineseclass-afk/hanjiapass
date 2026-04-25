@@ -78,6 +78,7 @@ registerRoute("#kids",      () => import("./pages/page.kids.js"));
 registerRoute("#kids-kids1", () => import("./pages/page.kids1.js"));
 registerRoute("#business",  () => import("./pages/page.business.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
+registerRoute("#dictionary", () => import("./pages/page.dictionary.js"));
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
 registerRoute("#conversation", () => import("./pages/page.speaking.js"));
 registerRoute("#speaking",  () => import("./pages/page.speaking.js"));
