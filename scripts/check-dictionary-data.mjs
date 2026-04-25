@@ -33,6 +33,9 @@ function readJson(path) {
 const errors = { missing: [], mismatch: [] };
 const warnings = { components: [], forbidden: [], cedictReview: [] };
 let hasFatal = false;
+/** 主库 words-cedict-001 中 isCedictPendingWord 条数（用于汇总；同一 id 只计一次，避免 index 与全文件遍历重复） */
+let cedictRootReviewPending = 0;
+const cedictPendingIdCounted = new Set();
 
 function failMissing(msg) {
   hasFatal = true;
@@ -46,13 +49,6 @@ function failMismatch(msg) {
 
 function warnComponent(msg) {
   warnings.components.push(msg);
-}
-
-const cedictReviewOnce = new Set();
-function warnCedictReview(msg) {
-  if (cedictReviewOnce.has(msg)) return;
-  cedictReviewOnce.add(msg);
-  warnings.cedictReview.push(msg);
 }
 
 function walkForbidden(value, pathStr, isRoot = false) {
@@ -197,7 +193,10 @@ function checkWordDetail(detail, indexRow) {
     if (!detail.meaning || String(detail.meaning.en).trim() === "") {
       failMissing(`word ${id} meaning.en required for CC-CEDICT pending`);
     }
-    warnCedictReview(`Needs review: ${id} ${detail.word}`);
+    if (!cedictPendingIdCounted.has(detail.id)) {
+      cedictPendingIdCounted.add(detail.id);
+      cedictRootReviewPending += 1;
+    }
     if (detail.id !== indexRow.id) failMismatch(`word ${id}: detail.id !== index.id`);
     if (detail.word !== indexRow.word) failMismatch(`word ${id}: detail.word !== index.word`);
     if (detail.pinyin !== indexRow.pinyin) failMismatch(`word ${id}: pinyin mismatch index / detail`);
@@ -343,20 +342,25 @@ function checkCedictFullWordDetail(detail, indexRow) {
 /**
  * 校验 data/dictionary/cedict/ 全量架构（轻量 index + 详情分包 words-cedict-*.json）
  */
+/**
+ * @returns {{ needsReview: number, indexLen: number, chunkFileCount: number } | { needsReview: 0, indexLen: 0, chunkFileCount: 0 }}
+ */
 function checkCedictFullLayout(cedictIndexPath) {
+  const empty = { needsReview: 0, indexLen: 0, chunkFileCount: 0 };
   if (!existsSync(cedictIndexPath)) {
     failMissing(`cedict full index not found: data/dictionary/${CEDICT_INDEX_FULL}`);
-    return;
+    return empty;
   }
   let cedictIndex;
   try {
     cedictIndex = readJson(cedictIndexPath);
   } catch (e) {
     failMissing(`cedict full index read: ${e?.message || e}`);
-    return;
+    return empty;
   }
   if (!Array.isArray(cedictIndex) || cedictIndex.length === 0) {
     failMismatch("cedict/cedict-index.json must be a non-empty array");
+    return empty;
   }
 
   for (const row of cedictIndex) {
@@ -450,6 +454,12 @@ function checkCedictFullLayout(cedictIndexPath) {
       }
     }
   }
+
+  const needsReview = cedictIndex.filter((r) => r && r.needsReview === true).length;
+  const chunkFileCount = new Set(
+    cedictIndex.map((r) => (r && r.file ? String(r.file) : "")).filter((f) => f && f.startsWith("cedict/"))
+  ).size;
+  return { needsReview, indexLen: cedictIndex.length, chunkFileCount };
 }
 
 function main() {
@@ -581,12 +591,20 @@ function main() {
   }
 
   // --- cedict/ 全量架构（轻量 index + words-cedict-*.json 详情分包）----------------
-  checkCedictFullLayout(join(DICT_DIR, CEDICT_INDEX_FULL));
+  const cedictFullStats = checkCedictFullLayout(join(DICT_DIR, CEDICT_INDEX_FULL));
+  const cedictFullReviewCount = cedictFullStats?.needsReview || 0;
 
   const nIndex = index.length;
   const nChar = index.filter((r) => r.type === "char").length;
   const nWord = index.filter((r) => r.type === "word").length;
   const nFiles = detailFileNames.size;
+
+  warnings.cedictReview = [];
+  if (cedictRootReviewPending + cedictFullReviewCount > 0) {
+    warnings.cedictReview.push(
+      `CC-CEDICT raw entries needing review: ${cedictRootReviewPending + cedictFullReviewCount} (root data/dictionary/${CEDICT_WORDS_FILE}: ${cedictRootReviewPending}, cedict/: ${cedictFullReviewCount})`
+    );
+  }
 
   const wCount =
     warnings.components.length + warnings.forbidden.length + warnings.cedictReview.length;
@@ -615,6 +633,12 @@ function main() {
   console.log(`Word entries: ${nWord}`);
   console.log(`Detail files: ${nFiles}`);
   console.log(`Warnings: ${wCount}`);
+  if (cedictFullStats && cedictFullStats.indexLen > 0) {
+    console.log(`cedict/cedict-index.json entries: ${cedictFullStats.indexLen} (light index rows)`);
+    if (cedictFullStats.chunkFileCount > 0) {
+      console.log(`cedict/ detail chunk files: ${cedictFullStats.chunkFileCount}`);
+    }
+  }
 
   if (wCount) {
     if (warnings.forbidden.length) {
@@ -631,15 +655,9 @@ function main() {
     }
   }
 
-  if (Array.isArray(cedictList)) {
-    const nCedictPending = cedictList.filter(
-      (e) => e && String(e.source) === "CC-CEDICT" && e.needsReview === true
-    ).length;
-    if (nCedictPending > 0) {
-      console.log("");
-      console.log(`CC-CEDICT needsReview entries: ${nCedictPending}`);
-      console.log("Run npm run build:cedict-review to generate review queue.");
-    }
+  if (cedictRootReviewPending > 0) {
+    console.log("");
+    console.log("Run npm run build:cedict-review to generate review queue (root cedict file).");
   }
 
   process.exit(0);
