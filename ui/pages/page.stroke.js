@@ -17,7 +17,20 @@ function esc(s) {
     .replaceAll('"', "&quot;");
 }
 
-/** 笔顺区上方：字典引擎简短摘要 + 跳转 #dictionary?char= */
+function getStrokeFromWordParam() {
+  const h = typeof location !== "undefined" ? location.hash || "" : "";
+  const qm = h.indexOf("?");
+  if (qm < 0) return "";
+  return (new URLSearchParams(h.slice(qm + 1)).get("fromWord") || "").trim();
+}
+
+function buildDictCharHref(c, fromWord) {
+  const cenc = encodeURIComponent(c);
+  if (!fromWord) return `#dictionary?char=${cenc}`;
+  return `#dictionary?char=${cenc}&fromWord=${encodeURIComponent(fromWord)}`;
+}
+
+/** 笔顺区上方：字典引擎简短摘要 + 跳转 #dictionary?char=（可带 fromWord） */
 async function renderDictionaryDigest(ch) {
   const el = document.getElementById("stroke-dict-digest");
   if (!el) return;
@@ -32,6 +45,13 @@ async function renderDictionaryDigest(ch) {
     el.hidden = true;
     return;
   }
+  const fromWord = getStrokeFromWordParam();
+  const backToWordBlock = fromWord
+    ? `<div class="stroke-dict-backword"><a class="dictionary-back-link stroke-dict-backword-link" href="#dictionary?query=${encodeURIComponent(
+        fromWord
+      )}">← ${esc(i18n.t("dictionary.backToWord"))}：${esc(fromWord)}</a></div>`
+    : "";
+  const dictHref = buildDictCharHref(c, fromWord);
   el.hidden = false;
   el.innerHTML = `<div class="stroke-dict-digest-skel muted">${esc(i18n.t("common.loading"))}</div>`;
   try {
@@ -41,19 +61,21 @@ async function renderDictionaryDigest(ch) {
       const line = pick(res.entry.meaning, { lang }) || "";
       const py = res.entry.pinyin || "";
       el.innerHTML = `
+        ${backToWordBlock}
         <div class="stroke-dict-digest-inner stroke-dict-digest--compact">
           <div class="stroke-dict-topline">
             <span class="stroke-dict-ch">${esc(c)}</span>
             <span class="stroke-dict-py">${esc(py)}</span>
           </div>
           <p class="stroke-dict-meaning-line">${esc(line)}</p>
-          <a class="stroke-dict-more" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+          <a class="stroke-dict-more" href="${esc(dictHref)}"><span data-i18n="dictionary.viewDetail"></span></a>
         </div>`;
     } else {
       el.innerHTML = `
+        ${backToWordBlock}
         <div class="stroke-dict-digest-inner stroke-dict-digest--compact stroke-dict-digest--empty">
           <p class="stroke-dict-meaning-line muted" data-i18n="dictionary.entryMissing"></p>
-          <a class="stroke-dict-more" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+          <a class="stroke-dict-more" href="${esc(dictHref)}"><span data-i18n="dictionary.viewDetail"></span></a>
         </div>`;
     }
   } catch (e) {

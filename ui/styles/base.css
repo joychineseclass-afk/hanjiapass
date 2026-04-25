@@ -6712,31 +6712,71 @@ a.section-side-nav-item:hover{
 .dictionary-entry-card--word .dictionary-section-title:first-of-type {
   margin-top: 20px;
 }
-.dictionary-component-chars {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-a.dictionary-component-char {
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  border-radius: 12px;
-  padding: 8px 12px;
-  background: #fff;
-  font-size: 20px;
-  font-weight: 800;
-  cursor: pointer;
+.dictionary-back-link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 18px;
+  color: #2563eb;
+  font-weight: 700;
   text-decoration: none;
-  color: #0f172a;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  font-size: 15px;
 }
-a.dictionary-component-char:hover {
-  border-color: rgba(37, 99, 235, 0.45);
-  background: #f8fafc;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+.dictionary-back-link:hover {
+  text-decoration: underline;
+}
+.dictionary-component-char-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+.dictionary-component-char-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 14px;
+  background: #fff;
+}
+.dictionary-component-char-main {
+  font-size: 24px;
+  font-weight: 900;
+  min-width: 36px;
+  line-height: 1;
+  font-family: "KaiTi", "STKaiti", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  color: #0f172a;
+}
+.dictionary-component-char-actions {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-left: auto;
+}
+.dictionary-component-sep {
+  color: #94a3b8;
+  font-size: 12px;
+  user-select: none;
+}
+a.dictionary-component-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+}
+a.dictionary-component-link:hover {
+  text-decoration: underline;
 }
 
 /* #stroke 笔顺页：轻量字典摘要 */
+.stroke-dict-backword {
+  margin-bottom: 8px;
+}
+.stroke-dict-backword .dictionary-back-link {
+  margin-bottom: 0;
+  font-size: 14px;
+}
 .stroke-dict-digest {
   margin: 0 0 10px;
   padding: 10px 12px;

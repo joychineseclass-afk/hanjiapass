@@ -14,11 +14,12 @@ function getMountEl(ctxOrRoot) {
 function getDictQueryFromHash() {
   const h = typeof location !== "undefined" ? location.hash || "" : "";
   const qm = h.indexOf("?");
-  if (qm < 0) return { char: "", query: "" };
+  if (qm < 0) return { char: "", query: "", fromWord: "" };
   const p = new URLSearchParams(h.slice(qm + 1));
   return {
     char: (p.get("char") || "").trim(),
     query: (p.get("query") || p.get("q") || "").trim(),
+    fromWord: (p.get("fromWord") || "").trim(),
   };
 }
 
@@ -93,6 +94,23 @@ function wordComponentChars(word) {
   return [...String(word || "")].filter((c) => isSingleCjkChar(c));
 }
 
+function renderComponentCharRow(char, sourceWord, t) {
+  const fw = encodeURIComponent(sourceWord);
+  const cenc = encodeURIComponent(char);
+  return `<div class="dictionary-component-char-row">
+  <span class="dictionary-component-char-main">${esc(char)}</span>
+  <span class="dictionary-component-char-actions">
+    <a class="dictionary-component-link" href="#dictionary?char=${cenc}&fromWord=${fw}">${esc(
+    t("dictionary.component.dictionary")
+  )}</a>
+    <span class="dictionary-component-sep" aria-hidden="true">|</span>
+    <a class="dictionary-component-link" href="#stroke?char=${cenc}&fromWord=${fw}">${esc(
+    t("dictionary.component.stroke")
+  )}</a>
+  </span>
+</div>`;
+}
+
 function renderWordEntry(area, res) {
   if (!area) return;
   const lang = getLang();
@@ -128,19 +146,13 @@ function renderWordEntry(area, res) {
       </div>`
       : "";
 
-  const chars = wordComponentChars(e.word);
+  const sourceWord = e.word || "";
+  const chars = wordComponentChars(sourceWord);
   const compBlock =
     chars.length > 0
       ? `<h2 class="dictionary-section-title">${esc(t("dictionary.componentsLabel"))}</h2>
-      <div class="dictionary-component-chars" role="list">
-        ${chars
-          .map(
-            (c) =>
-              `<a class="dictionary-component-char" role="listitem" href="#dictionary?char=${encodeURIComponent(
-                c
-              )}">${esc(c)}</a>`
-          )
-          .join("")}
+      <div class="dictionary-component-char-list" role="list">
+        ${chars.map((c) => renderComponentCharRow(c, sourceWord, t)).join("")}
       </div>`
       : "";
 
@@ -184,6 +196,12 @@ function renderCharEntry(area, res) {
   if (!area) return;
   const lang = getLang();
   const t = (k) => i18n.t(k);
+  const { fromWord } = getDictQueryFromHash();
+  const backToWordBlock = fromWord
+    ? `<a class="dictionary-back-link" href="#dictionary?query=${encodeURIComponent(fromWord)}">← ${esc(
+        t("dictionary.backToWord")
+      )}：${esc(fromWord)}</a>`
+    : "";
   const stroke = res.stroke || { codePoint: 0, path: "", exists: false };
   const hasEntry = res.found && res.entry;
   const chFromQuery =
@@ -264,6 +282,7 @@ function renderCharEntry(area, res) {
 
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article" lang="${esc(lang)}">
+      ${backToWordBlock}
       ${headBlock}
       ${missingLine}
       ${meaningBlock}
@@ -279,7 +298,10 @@ function renderCharEntry(area, res) {
   strokeBtn?.addEventListener("click", () => {
     const c = strokeBtn.getAttribute("data-char");
     if (!c) return;
-    navigateTo(`#stroke?char=${encodeURIComponent(c)}`, { force: true });
+    const q = fromWord
+      ? `#stroke?char=${encodeURIComponent(c)}&fromWord=${encodeURIComponent(fromWord)}`
+      : `#stroke?char=${encodeURIComponent(c)}`;
+    navigateTo(q, { force: true });
   });
 }
 

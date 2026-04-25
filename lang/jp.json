@@ -805,7 +805,12 @@
     "viewDetail": "辞書の詳細を見る",
     "traditionalLabel": "繁体字",
     "exampleLabel": "例文",
-    "componentsLabel": "構成漢字"
+    "componentsLabel": "構成漢字",
+    "backToWord": "単語に戻る",
+    "component": {
+      "dictionary": "辞書",
+      "stroke": "筆順"
+    }
   },
   "kids": {
     "title": "キッズ中国語",

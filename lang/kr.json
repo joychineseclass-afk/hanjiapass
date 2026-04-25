@@ -797,7 +797,12 @@
     "viewDetail": "사전 자세히 보기",
     "traditionalLabel": "번체",
     "exampleLabel": "예문",
-    "componentsLabel": "구성 한자"
+    "componentsLabel": "구성 한자",
+    "backToWord": "단어로 돌아가기",
+    "component": {
+      "dictionary": "사전",
+      "stroke": "필순"
+    }
   },
   "kids": {
     "title": "어린이 중국어",

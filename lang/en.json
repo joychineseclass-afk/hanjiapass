@@ -797,7 +797,12 @@
     "viewDetail": "View Dictionary Detail",
     "traditionalLabel": "Traditional",
     "exampleLabel": "Example",
-    "componentsLabel": "Characters"
+    "componentsLabel": "Characters",
+    "backToWord": "Back to word",
+    "component": {
+      "dictionary": "Dictionary",
+      "stroke": "Stroke"
+    }
   },
   "kids": {
     "title": "Kids Chinese",
