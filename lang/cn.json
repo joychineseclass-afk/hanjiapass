@@ -801,6 +801,10 @@
     "componentsLabel": "组成汉字",
     "meaningNotIndexed": "释义资料暂未收录。",
     "reviewPendingHint": "详细学习内容正在整理中。",
+    "idiomFallback": {
+      "message": "这个词条属于文化成语学习内容。",
+      "open": "打开成语学习"
+    },
     "backToWord": "返回词语",
     "component": {
       "dictionary": "查字典",

@@ -2,7 +2,7 @@
 import { i18n } from "../i18n.js";
 import { pick, getLang } from "../core/languageEngine.js";
 import { navigateTo } from "../router.js";
-import { searchDictionary, isSingleCjkChar } from "../platform/dictionary/dictionaryEngine.js";
+import { searchDictionaryWithIdiomFallback, isSingleCjkChar } from "../platform/dictionary/dictionaryEngine.js";
 
 let _langHandler = null;
 
@@ -55,6 +55,11 @@ function ensureDictStyles() {
     .lumina-dictionary .section{ padding:10px 0 18px; }
     .lumina-dictionary .card{ background:rgba(255,255,255,.72); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.45); border-radius:calc(var(--radius,18px) + 8px); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden; }
     .lumina-dictionary .inner{ padding:18px; display:grid; gap:12px; }
+    .dictionary-idiom-fallback-card{ border-radius: calc(var(--radius,12px) + 4px); border:1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.9); padding: 18px 20px; display:grid; gap: 14px; }
+    .dictionary-idiom-fallback-card .dictionary-idiom-title{ font-size: 1.35rem; font-weight: 700; letter-spacing: 0.02em; }
+    .dictionary-idiom-fallback-card .dictionary-idiom-pinyin{ font-size: 0.95rem; color: var(--muted,#64748b); }
+    .dictionary-idiom-fallback-card .dictionary-idiom-msg{ line-height: 1.5; }
+    .dictionary-idiom-fallback-card .dictionary-idiom-open{ display:inline-block; }
   `;
   document.head.appendChild(style);
 }
@@ -327,8 +332,38 @@ function renderCharEntry(area, res) {
   });
 }
 
+function renderIdiomFallbackCard(area, res) {
+  if (!area) return;
+  const lang = getLang();
+  const t = (k) => i18n.t(k);
+  const e = res.entry;
+  const id = e?.id ? encodeURIComponent(e.id) : "";
+  const href = id ? `#culture?tab=idioms&id=${id}` : "#culture?tab=idioms";
+  area.innerHTML = `
+    <article class="dictionary-entry-card dictionary-idiom-fallback-card dict-result-article" lang="${esc(lang)}">
+      <div>
+        <div class="dictionary-idiom-title">${esc(e?.idiom || "—")}</div>
+        <div class="dictionary-idiom-pinyin">${esc(e?.pinyin || "")}</div>
+      </div>
+      <p class="dictionary-idiom-msg muted">${esc(t("dictionary.idiomFallback.message"))}</p>
+      <div>
+        <a class="btn primary dictionary-idiom-open" href="${href}">${esc(t("dictionary.idiomFallback.open"))}</a>
+      </div>
+    </article>
+  `;
+  const a = area.querySelector("a.dictionary-idiom-open");
+  a?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    navigateTo(href, { force: true });
+  });
+}
+
 function renderResult(area, res) {
   if (!area) return;
+  if (res && res.found && res.type === "culture-idiom" && res.entry) {
+    renderIdiomFallbackCard(area, res);
+    return;
+  }
   const entry = res && res.entry;
   const isWord = res && (res.type === "word" || (entry && entry.type === "word"));
   if (isWord && res.found && entry) {
@@ -378,14 +413,16 @@ export function mount(ctxOrRoot) {
       busy = false;
       return;
     }
-    if (!/[\u4e00-\u9fff]/.test(term) && !isSingleCjkChar(term)) {
+    const hasCjk = /[\u4e00-\u9fff]/.test(term);
+    const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(String(term).replace(/\s/g, " ").trim());
+    if (!hasCjk && !isSingleCjkChar(term) && !pinyinish) {
       area.innerHTML = `<p class="muted">${esc(i18n.t("dictionary.entryMissing"))}</p>`;
       busy = false;
       return;
     }
     area.innerHTML = `<p class="muted">${esc(i18n.t("common.loading"))}</p>`;
     try {
-      const res = await searchDictionary(term);
+      const res = await searchDictionaryWithIdiomFallback(term);
       if (typeof localStorage !== "undefined" && localStorage.getItem("DEBUG_DICT") === "1") {
         console.log("[dictionary] query", term, "result", res);
       }

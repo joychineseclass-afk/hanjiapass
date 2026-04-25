@@ -41,6 +41,171 @@ function dictDataUrl(fileName) {
   return u.href;
 }
 
+/** 成语轻量索引缓存版本（与 dictionary 分离） */
+const IDIOMS_INDEX_VERSION = "20260427";
+
+/**
+ * data/culture/idioms/ 目录 URL（与 page.culture 数据路径一致）
+ */
+function getIdiomsDataDir() {
+  try {
+    if (typeof import.meta !== "undefined" && import.meta.url) {
+      return new URL("../../../data/culture/idioms/", import.meta.url);
+    }
+  } catch (e) {
+    /* ignore */
+  }
+  if (typeof location !== "undefined" && location.origin) {
+    const r = getDataRoot() || "/";
+    const pathBase =
+      r === "/" ? `${location.origin}/` : `${location.origin}${r.startsWith("/") ? r : `/${r}`}`.replace(/\/+$/, "/");
+    return new URL("data/culture/idioms/", pathBase);
+  }
+  return new URL("../../../data/culture/idioms/", "http://localhost/");
+}
+
+function idiomsIndexDataUrl() {
+  const u = new URL("idioms-index.json", getIdiomsDataDir());
+  u.searchParams.set("v", IDIOMS_INDEX_VERSION);
+  return u.href;
+}
+
+let _idiomsIndexCache = null;
+let _idiomsIndexLoadPromise = null;
+
+/**
+ * 搜索归一化：小写、去声调、去空白
+ * @param {string} value
+ */
+export function normalizeSearchText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+async function loadIdiomsIndexForSearch() {
+  if (_idiomsIndexCache) return _idiomsIndexCache;
+  if (!_idiomsIndexLoadPromise) {
+    const url = idiomsIndexDataUrl();
+    if (DEBUG_DICT()) console.log("[dictionary] fetch idioms index", url);
+    _idiomsIndexLoadPromise = fetch(url, { cache: "default" })
+      .then((r) => {
+        if (r.status === 404) return [];
+        if (!r.ok) throw new Error(`idioms index: HTTP ${r.status} ${url}`);
+        return r.json();
+      })
+      .then((data) => {
+        const arr = Array.isArray(data) ? data : [];
+        _idiomsIndexCache = arr;
+        return _idiomsIndexCache;
+      })
+      .catch((e) => {
+        if (DEBUG_DICT()) console.warn("[dictionary] idioms index", e);
+        _idiomsIndexCache = [];
+        return _idiomsIndexCache;
+      });
+  }
+  return _idiomsIndexLoadPromise;
+}
+
+/**
+ * 在 idioms-index.json 中找一条最匹配项（不加载详情 JSON）
+ * @param {any[]} rows
+ * @param {string} q
+ * @returns {any | null}
+ */
+function bestIdiomIndexMatch(rows, q) {
+  const qRaw = String(q).trim();
+  if (!qRaw || !rows?.length) return null;
+  const qNorm = normalizeSearchText(q);
+  if (!qNorm && !/[\u4e00-\u9fff]/.test(qRaw)) return null;
+  let best = null;
+  let bestScore = -1;
+  for (const row of rows) {
+    if (!row || !row.idiom) continue;
+    const idiom = String(row.idiom);
+    const p = String(row.pinyin || "");
+    const pNorm = normalizeSearchText(p);
+    const idiomNorm = normalizeSearchText(idiom);
+    let s = 0;
+    if (idiom === qRaw) s = 100000;
+    else if (qNorm && idiomNorm === qNorm) s = 95000;
+    else if (qNorm && pNorm && pNorm === qNorm) s = 90000;
+    else if (qRaw && idiom.includes(qRaw)) s = 70000 - idiom.length;
+    else if (qNorm && idiomNorm.includes(qNorm)) s = 65000 - idiom.length;
+    else if (qRaw && p.toLowerCase().includes(qRaw.toLowerCase())) s = 50000;
+    else if (qNorm && pNorm && pNorm.includes(qNorm)) s = 40000;
+    else continue;
+    if (s > bestScore) {
+      bestScore = s;
+      best = row;
+    } else if (s === bestScore && best) {
+      if (idiom.length > String(best.idiom || "").length) best = row;
+    }
+  }
+  return best;
+}
+
+/**
+ * 词典主库 + cedict 均未命中时，在文化成语索引中兜底
+ * @param {string} query
+ * @returns {Promise<{ found: boolean, type: string, query: string, entry?: object }>}
+ */
+export async function searchCultureIdiomFallback(query) {
+  const q = String(query ?? "").trim();
+  const notFound = { found: false, type: "word", query: q, stroke: { codePoint: 0, path: "", exists: false } };
+  if (!q) return notFound;
+  const hasCjk = /[\u4e00-\u9fff]/.test(q);
+  const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(q.replace(/\s/g, " ").trim());
+  if (!hasCjk && !pinyinish) return notFound;
+
+  let list = [];
+  try {
+    list = await loadIdiomsIndexForSearch();
+  } catch (e) {
+    if (DEBUG_DICT()) console.warn("[dictionary] searchCultureIdiomFallback", e);
+    return notFound;
+  }
+  const row = bestIdiomIndexMatch(list, q);
+  if (!row) return notFound;
+
+  return {
+    found: true,
+    type: "culture-idiom",
+    query: q,
+    entry: {
+      id: row.id,
+      idiom: row.idiom,
+      pinyin: row.pinyin,
+      file: row.file,
+      category: row.category,
+    },
+  };
+}
+
+/**
+ * 主词库 → cedict → 文化成语 index
+ * @param {string} query
+ */
+export async function searchDictionaryWithIdiomFallback(query) {
+  const q = String(query ?? "").trim();
+  if (!q) {
+    return emptyCharStrokeResult("");
+  }
+  const dictResult = await searchDictionary(q);
+  if (dictResult && dictResult.found) {
+    return dictResult;
+  }
+  const idiomResult = await searchCultureIdiomFallback(q);
+  if (idiomResult && idiomResult.found) {
+    return idiomResult;
+  }
+  return dictResult;
+}
+
 let _indexCache = null;
 let _indexLoadPromise = null;
 /** @type {Map<string, Promise<any[]>>} */

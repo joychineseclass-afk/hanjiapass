@@ -801,6 +801,10 @@
     "componentsLabel": "Characters",
     "meaningNotIndexed": "No meaning text is available yet.",
     "reviewPendingHint": "Detailed learning content is being prepared.",
+    "idiomFallback": {
+      "message": "This entry is available in Culture Idiom Learning.",
+      "open": "Open Idiom Learning"
+    },
     "backToWord": "Back to word",
     "component": {
       "dictionary": "Dictionary",
