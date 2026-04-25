@@ -176,6 +176,26 @@ function currentIdiomIdFromList(list) {
   return String(list[0].id);
 }
 
+function sameText(a, b) {
+  return String(a ?? "")
+    .trim()
+    .replaceAll(/\s+/g, " ") ===
+    String(b ?? "")
+      .trim()
+      .replaceAll(/\s+/g, " ");
+}
+
+/**
+ * 当前系统语言下「释义」段第二行用；CN 时取 meaning.cn
+ * @param {object} item
+ */
+function pickMeaningForLocale(item) {
+  const o = item?.meaning;
+  if (!o || typeof o !== "object") return "";
+  const k = meaningLocaleKey();
+  return String(o[k] ?? o.cn ?? o.en ?? "").trim() || pickLocaleField(o);
+}
+
 /**
  * @param {object} item
  */
@@ -185,77 +205,64 @@ function renderIdiomDetailPage(item) {
   const storyObj = item?.story && typeof item.story === "object" ? item.story : null;
   const srcObj = item?.storySource && typeof item.storySource === "object" ? item.storySource : null;
 
-  const meaningText = pickLocaleField(item?.meaning);
   const explainZh = String(item?.chineseExplanation ?? "").trim();
-  const hideMeaningIfDup = lang === "cn" && meaningText && explainZh && meaningText === explainZh;
-
+  const meaningInLocale = pickMeaningForLocale(item);
   const exCn = exObj ? String(exObj.cn ?? "").trim() : "";
   const exTrans = exObj ? pickLocaleField(exObj) : "";
-  const showExampleTranslation = lang !== "cn" && exTrans && exTrans !== exCn;
+  const exPy = String(item?.examplePinyin ?? "").trim();
+
+  const showMeaningSecond =
+    Boolean(explainZh) && Boolean(meaningInLocale) && !sameText(explainZh, meaningInLocale);
+  const showExTranslation = Boolean(exTrans) && !sameText(exTrans, exCn);
 
   const storySrc = srcObj ? pickLocaleField(srcObj) : "";
   const storyZh = String(storyObj?.cn ?? "").trim();
   const storyLang = storyObj ? pickLocaleField(storyObj) : "";
-  const showLangStory = lang !== "cn" && Boolean(storyLang) && storyLang !== storyZh;
+  const showLangStory = lang !== "cn" && Boolean(storyLang) && !sameText(storyLang, storyZh);
 
   let h = "";
-  h += `<article class="idiom-detail-panel" data-idiom-detail="${esc(item?.id)}">`;
-  h += `<header class="idiom-detail-head">`;
+  h += `<article class="idiom-detail-card" data-idiom-detail="${esc(item?.id)}">`;
+  h += `<header class="idiom-detail-header">`;
   h += `<h2 class="idiom-detail-title" lang="zh-Hans">${esc(item?.idiom)}</h2>`;
-  h += `<p class="idiom-detail-pinyin" lang="zh-Latn">${esc(item?.pinyin)}</p>`;
+  h += `<p class="idiom-pinyin" lang="zh-Latn">${esc(item?.pinyin)}</p>`;
   h += `</header>`;
 
-  h += `<section class="idiom-detail-section idiom-detail-section--card">`;
-  h += `<h3 class="idiom-detail-h3" data-i18n="culture.idioms.chineseExplanationLabel">${esc(t("culture.idioms.chineseExplanationLabel"))}</h3>`;
-  h += `<p class="idiom-detail-body idiom-detail-body--zh" lang="zh-Hans">${esc(explainZh)}</p>`;
+  h += `<section class="idiom-detail-section idiom-detail-section--reading">`;
+  h += `<h3 class="idiom-section-title" data-i18n="culture.idioms.meaningLabel">${esc(t("culture.idioms.meaningLabel"))}</h3>`;
+  h += `<p class="idiom-cn-text" lang="zh-Hans">${esc(explainZh)}</p>`;
+  if (showMeaningSecond) {
+    h += `<p class="idiom-lang-text">${esc(meaningInLocale)}</p>`;
+  }
   h += `</section>`;
 
-  if (!hideMeaningIfDup) {
-    h += `<section class="idiom-detail-section idiom-detail-section--card">`;
-    h += `<h3 class="idiom-detail-h3" data-i18n="culture.idioms.meaningLabel">${esc(t("culture.idioms.meaningLabel"))}</h3>`;
-    h += `<p class="idiom-detail-body">${esc(meaningText)}</p>`;
-    h += `</section>`;
+  h += `<section class="idiom-detail-section idiom-detail-section--reading">`;
+  h += `<h3 class="idiom-section-title" data-i18n="culture.idioms.exampleLabel">${esc(t("culture.idioms.exampleLabel"))}</h3>`;
+  h += `<p class="idiom-cn-text" lang="zh-Hans">${esc(exCn)}</p>`;
+  if (exPy) {
+    h += `<p class="idiom-pinyin-line" lang="zh-Latn">${esc(exPy)}</p>`;
   }
-
-  h += `<section class="idiom-detail-section idiom-detail-section--card">`;
-  h += `<h3 class="idiom-detail-h3" data-i18n="culture.idioms.exampleLabel">${esc(t("culture.idioms.exampleLabel"))}</h3>`;
-  h += `<p class="idiom-detail-body idiom-detail-body--zh" lang="zh-Hans">${esc(exCn)}</p>`;
+  if (showExTranslation) {
+    h += `<p class="idiom-lang-text">${esc(exTrans)}</p>`;
+  }
   h += `</section>`;
-
-  if (showExampleTranslation) {
-    h += `<section class="idiom-detail-section idiom-detail-section--card">`;
-    h += `<h3 class="idiom-detail-h3" data-i18n="culture.idioms.exampleTranslationLabel">${esc(t("culture.idioms.exampleTranslationLabel"))}</h3>`;
-    h += `<p class="idiom-detail-body">${esc(exTrans)}</p>`;
-    h += `</section>`;
-  }
 
   h += `<section class="idiom-ai-section" aria-label="${esc(t("culture.idioms.aiSectionTitle"))}">`;
-  h += `<h3 class="idiom-ai-section__title" data-i18n="culture.idioms.aiSectionTitle">${esc(t("culture.idioms.aiSectionTitle"))}</h3>`;
-  h += `<div class="idiom-ai-section__inner">`;
-  h += `<div class="idiom-ai-block">`;
-  h += `<h4 class="idiom-detail-h4" data-i18n="culture.idioms.storySourceLabel">${esc(t("culture.idioms.storySourceLabel"))}</h4>`;
-  h += `<p class="idiom-detail-body">${esc(storySrc)}</p>`;
+  h += `<h3 class="idiom-ai-main-title" data-i18n="culture.idioms.aiSectionTitle">${esc(t("culture.idioms.aiSectionTitle"))}</h3>`;
+  h += `<div class="idiom-ai-group">`;
+  h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storySourceLabel">${esc(t("culture.idioms.storySourceLabel"))}</h4>`;
+  h += `<p class="idiom-ai-para">${esc(storySrc)}</p>`;
   h += `</div>`;
-  if (lang === "cn") {
-    h += `<div class="idiom-ai-block">`;
-    h += `<h4 class="idiom-detail-h4" data-i18n="culture.idioms.storyLangLabel">${esc(t("culture.idioms.storyLangLabel"))}</h4>`;
-    h += `<p class="idiom-detail-body idiom-detail-body--zh" lang="zh-Hans">${esc(storyZh)}</p>`;
+  h += `<div class="idiom-ai-group">`;
+  h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storyCnLabel">${esc(t("culture.idioms.storyCnLabel"))}</h4>`;
+  h += `<p class="idiom-ai-para idiom-cn-text" lang="zh-Hans">${esc(storyZh)}</p>`;
+  h += `</div>`;
+  if (showLangStory) {
+    h += `<div class="idiom-ai-group">`;
+    h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storyLangLabel">${esc(t("culture.idioms.storyLangLabel"))}</h4>`;
+    h += `<p class="idiom-ai-para idiom-lang-text">${esc(storyLang)}</p>`;
     h += `</div>`;
-  } else {
-    if (storyZh) {
-      h += `<div class="idiom-ai-block">`;
-      h += `<h4 class="idiom-detail-h4" data-i18n="culture.idioms.storyCnLabel">${esc(t("culture.idioms.storyCnLabel"))}</h4>`;
-      h += `<p class="idiom-detail-body idiom-detail-body--zh" lang="zh-Hans">${esc(storyZh)}</p>`;
-      h += `</div>`;
-    }
-    if (showLangStory) {
-      h += `<div class="idiom-ai-block">`;
-      h += `<h4 class="idiom-detail-h4" data-i18n="culture.idioms.storyLangLabel">${esc(t("culture.idioms.storyLangLabel"))}</h4>`;
-      h += `<p class="idiom-detail-body">${esc(storyLang)}</p>`;
-      h += `</div>`;
-    }
   }
-  h += `</div></section>`;
+  h += `</section>`;
   h += `</article>`;
   return h;
 }

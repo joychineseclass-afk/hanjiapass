@@ -18,6 +18,7 @@
       "en": "This essay is already good. Adding another paragraph may be unnecessary and make it worse.",
       "jp": "この文章はすでに十分よいので、もう一段落加えるとかえって蛇足になるかもしれません。"
     },
+    "examplePinyin": "Zhè piān wénzhāng yǐjīng hěn hǎo le, zài jiā yí duàn fǎn'ér yǒudiǎn huà shé tiān zú.",
     "storySource": {
       "cn": "出自中国古代寓言故事。",
       "kr": "중국 고대 우화에서 유래한 성어입니다.",
@@ -50,6 +51,7 @@
       "en": "Thinking you know everything after reading a few books is a bit like a frog in a well.",
       "jp": "本を数冊読んだだけで何でも知った気になるのは、少し井の中の蛙かもしれません。"
     },
+    "examplePinyin": "Zhǐ dú guò jǐ běn shū jiù jué de zìjǐ wú suǒ bù zhī, wèimiǎn yǒudiǎn jǐng dǐ zhī wā.",
     "storySource": {
       "cn": "出自《庄子》等古代典籍中的寓言。",
       "kr": "《莊子》 등 고대 문헌에 실린 우화에서 널리 알려졌습니다.",
@@ -69,30 +71,31 @@
     "pinyin": "wáng yáng bǔ láo",
     "category": "成语",
     "difficulty": 1,
-    "chineseExplanation": "比喻出了问题之后及时补救，还来得及。",
+    "chineseExplanation": "出了问题以后，及时想办法补救，还可以避免继续受损。",
     "meaning": {
-      "cn": "比喻出了问题以后想办法补救，还来得及。",
-      "kr": "문제가 생긴 뒤에라도 대책을 세우면 아직 늦지 않다는 뜻입니다.",
-      "en": "It means you can still fix things after a mistake; it is not too late to mend the situation.",
-      "jp": "失敗のあとに手を打てば、まだ間に合うという教えを表します。"
+      "cn": "出了问题以后，及时想办法补救，还可以避免继续受损。",
+      "kr": "문제가 생긴 뒤라도 대책을 세우면 아직 늦지 않다는 뜻입니다.",
+      "en": "It means it is not too late to fix a problem after it has happened.",
+      "jp": "問題が起きた後でも、すぐに対策を取ればまだ遅くないという意味です。"
     },
     "example": {
       "cn": "虽然这次考得不好，但亡羊补牢，下学期我们调整方法还来得及。",
-      "kr": "이번 시험은 별로였지만, 亡羊補牢이라고, 다음 학기에 방법을 바꾸면 아직 늦지 않아요.",
-      "en": "The exam did not go well, but it is not too late to fix things: we can change our study plan next term.",
-      "jp": "今回の試験は良くなかったけれど、失敗のあとに手を打てばまだ間に合います。来学期のやり方を変えましょう。"
+      "kr": "이번 시험은 별로였지만, ‘亡羊补牢’라고, 다음 학기에 방법을 바꾸면 아직 늦지 않아요.",
+      "en": "Although this exam did not go well, it is not too late to make changes next semester.",
+      "jp": "今回の試験はよくありませんでしたが、次の学期に方法を変えればまだ間に合います。"
     },
+    "examplePinyin": "suīrán zhè cì kǎo de bù hǎo, dàn wáng yáng bǔ láo, xià xuéqī wǒmen tiáozhěng fāngfǎ hái lái de jí.",
     "storySource": {
-      "cn": "出自《战国策》中的典故。",
-      "kr": "《戰國策》에 전하는 고사에서 온 말입니다.",
-      "en": "The story is recorded in the Stratagems of the Warring States.",
-      "jp": "『戦国策』にまとまる故事に由来します。"
+      "cn": "出自《战国策》中流传的故事。",
+      "kr": "《전국책》에 전하는 고사에서 온 말입니다.",
+      "en": "It comes from a story recorded in Strategies of the Warring States.",
+      "jp": "『戦国策』に伝わる故事に由来します。"
     },
     "story": {
-      "cn": "有人丢了羊，别人劝他赶快修补羊圈。他一开始没听，后来又丢了羊，才赶紧修好羊圈。说明出了问题只要认真补救，仍然可以避免更大的损失。",
-      "kr": "양이 도망가자, 어떤 이가 말을 그치라고 잘 잠그라고 권합니다. 사양은 처음엔 말을 듣지 않다가 또 잃고 나서야 우리를 손봤습니다. 늦게라도 바로잡으면 더 큰 손해를 막을 수 있다는 뜻입니다.",
-      "en": "A person loses sheep. Others say to fix the pen quickly. He ignores it at first, loses more, and finally mends the pen. Mending it late is still better than not mending it at all.",
-      "jp": "羊が抜けたあと、すぐ囲いを直せと言われます。最初は聞かず、また減らしてからやっと直します。遅くても手を打てば、損失を減らせるという教えです。"
+      "cn": "有人丢了羊，别人劝他赶快修补羊圈。他一开始没有听，后来又丢了羊，才赶紧修好羊圈。这个故事说明，出了问题以后及时补救，仍然可以减少损失。",
+      "kr": "양을 잃은 사람이 있었고, 다른 사람이 양 우리를 빨리 고치라고 권했습니다. 처음에는 듣지 않았지만, 또 양을 잃고 나서야 우리를 고쳤습니다. 이 이야기는 문제가 생긴 뒤라도 빨리 고치면 더 큰 손해를 막을 수 있다는 뜻입니다.",
+      "en": "A man lost a sheep, and someone advised him to repair the sheepfold. At first, he did not listen. Later, after losing another sheep, he finally repaired it. The story shows that even after a problem occurs, fixing it in time can still prevent greater loss.",
+      "jp": "羊を失った人がいて、周りの人が羊小屋を早く直すように勧めました。最初は聞き入れませんでしたが、また羊を失ってから、ようやく羊小屋を直しました。この話は、問題が起きた後でもすぐに直せば、さらに大きな損失を防げることを表しています。"
     }
   },
   {
@@ -114,6 +117,7 @@
       "en": "Waiting for class to improve your Chinese but never practicing is like waiting for a hare by a tree stump.",
       "jp": "中国語の上達を願いながら授業を待つだけで練習しないのは、待兎（うさぎを待つ）のようなものです。"
     },
+    "examplePinyin": "Xiǎng tígāo Zhōngwén què zhǐ děng shàngkè, cóng bù liànxí, yǒudiǎn xiàng shǒu zhū dài tù.",
     "storySource": {
       "cn": "出自《韩非子》中的寓言。",
       "kr": "《韓非子》에 실린 우화를 바탕으로 합니다.",
@@ -146,6 +150,7 @@
       "en": "Saying you are on a diet but eating dessert every day is a bit self-contradictory.",
       "jp": "ダイエットしていると言いながら毎日スイーツを食べるのは、少し矛盾しています。"
     },
+    "examplePinyin": "Tā yībiān shuō yào jiǎnféi, yībiān tiāntiān chī tiǎnpǐn, yǒuxiē zì xiāng máo dùn.",
     "storySource": {
       "cn": "出自《韩非子》中卖矛与盾的寓言。",
       "kr": "《韓非子》에 실린 ‘창과 방패’ 이야기에서 유래합니다.",
@@ -178,6 +183,7 @@
       "en": "Listening to a Chinese podcast while walking trains your ears and saves time: two benefits at once.",
       "jp": "歩きながら中国語ポッドキャストを聞くと、聴解の練習にも時間短縮にもなり、一石二鳥です。"
     },
+    "examplePinyin": "Biān zǒu lù biān tīng Zhōngwén bōkè, jì liàn tīnglì yòu shěng shíjiān, yī jǔ liǎng dé.",
     "storySource": {
       "cn": "出自《史记》等史书中的表述，后泛化为固定成语。",
       "kr": "《史記》 등 사서의 표현에서 널리 쓰이며 고정된 성어가 되었습니다.",
@@ -210,6 +216,7 @@
       "en": "The worst in language study is to quit halfway: ten minutes a day is better than on-and-off work.",
       "jp": "語学学習で一番困るのは途切れること。毎日10分でも、思い出したときだけ学ぶよりましです。"
     },
+    "examplePinyin": "Xué yǔyán zuì pà bàn tú ér fèi, měi tiān liàn shí fēnzhōng yě shèng guò sān tiān dǎ yú.",
     "storySource": {
       "cn": "出自《礼记·中庸》中“人皆曰予知”等劝人持之以恒的表述，后世固定为“半途而废”成语。",
       "kr": "《禮記·中庸》 등에서 꾸준함을 권면하는 문맥에서 널리 쓰였고, 後代에 일관된 성어가 되었습니다.",
@@ -242,6 +249,7 @@
       "en": "The market has changed, but you still use a ten-year-old method—that is like marking the boat to find a sword.",
       "jp": "市場が変わったのに、十年前と同じやり方では、刻舟求剣（舟に印を刻んで剣を探す）のようなものです。"
     },
+    "examplePinyin": "Shìchǎng dōu biàn le, hái zhào shí nián qián de lǎo bànfǎ, yǒudiǎn xiàng kè zhōu qiú jiàn.",
     "storySource": {
       "cn": "出自《吕氏春秋》中“刻舟求剑”的寓言。",
       "kr": "《呂氏春秋》에 실린 ‘刻舟求劍’ 우화에 나옵니다.",
@@ -274,6 +282,7 @@
       "en": "You cannot learn a language with a half-hearted, scattered mind; daily, steady practice works better.",
       "jp": "言語学習は気持ちが定まらないと続きません。毎日の定番練習が重要です。"
     },
+    "examplePinyin": "Xué yǔyán bù néng sān xīn èr yì, zuì hǎo měi tiān dōu yǒu gùdìng liànxí.",
     "storySource": {
       "cn": "由古代表示“多心、不专”的词语演变而来，后定型为“三心二意”。",
       "kr": "옛말에 ‘여러 생각, 집중 부족’을 나타내던 표현이 이어져 성어 三心二意로 굳어졌습니다.",
@@ -306,6 +315,7 @@
       "en": "Writing characters is hard at first, but practice makes skill come naturally.",
       "jp": "漢字は最初難しいですが、書けば書くほど習慣は上達の母です。"
     },
+    "examplePinyin": "Xiě Hànzì yī kāishǐ nán, duō xiě jiù shú néng shēng qiǎo.",
     "storySource": {
       "cn": "与欧阳修《卖油翁》中“我亦无他，惟手熟尔”的典故常一起被提到。",
       "kr": "옹순(歐陽修)「賣油翁(기름장수)」의 ‘特히 손익(熟)한 것뿐’에 얽힌 일화가 함께 전해집니다.",
