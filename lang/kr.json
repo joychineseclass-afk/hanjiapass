@@ -86,7 +86,8 @@
       "email_not_confirmed": "로그인하려면 이메일 인증을 완료하세요.",
       "network_error": "네트워크 오류입니다. 연결을 확인한 뒤 다시 시도하세요.",
       "supabase_not_configured": "로그인이 구성되지 않았습니다. 잠시 후 다시 시도하거나 지원팀에 문의하세요.",
-      "supabase_auth_unreachable": "Supabase 주소가 잘못되었습니다(404). Vercel의 VITE_SUPABASE_URL을 Supabase → Settings → API → Project URL과 동일하게 맞춘 뒤 재배포하세요."
+      "supabase_auth_unreachable": "Supabase 주소가 잘못되었습니다(404). Vercel의 VITE_SUPABASE_URL을 Supabase → Settings → API → Project URL과 동일하게 맞춘 뒤 재배포하세요.",
+      "supabase_key_mismatch": "VITE_SUPABASE_URL과 VITE_SUPABASE_ANON_KEY가 같은 Supabase 프로젝트 쌍이 아닙니다. 둘 다 Settings → API에서 복사한 뒤 Vercel에 다시 넣고 재배포하세요."
     }
   },
   "onboarding": {

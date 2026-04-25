@@ -86,7 +86,8 @@
       "email_not_confirmed": "请先确认邮箱后再登录。",
       "network_error": "网络异常，请检查连接后重试。",
       "supabase_not_configured": "未配置登录服务，请稍后再试或联系支持。",
-      "supabase_auth_unreachable": "Supabase 项目地址错误（认证接口返回 404）。请把 Vercel 中的 VITE_SUPABASE_URL 设为与 Supabase「设置 → API → Project URL」完全一致并重新部署。"
+      "supabase_auth_unreachable": "Supabase 项目地址错误（认证接口返回 404）。请把 Vercel 中的 VITE_SUPABASE_URL 设为与 Supabase「设置 → API → Project URL」完全一致并重新部署。",
+      "supabase_key_mismatch": "VITE_SUPABASE_URL 与 VITE_SUPABASE_ANON_KEY 不是同一 Supabase 项目的一对值。请在同一项目的「设置 → API」各复制一次，填入 Vercel 后重新部署。"
     }
   },
   "onboarding": {

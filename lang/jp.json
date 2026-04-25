@@ -86,7 +86,8 @@
       "email_not_confirmed": "ログインする前にメールで確認してください。",
       "network_error": "ネットワークエラーです。接続を確認してもう一度お試しください。",
       "supabase_not_configured": "サインインが設定されていません。しばらくしてから再試行するかサポートに連絡してください。",
-      "supabase_auth_unreachable": "Supabase の URL が正しくありません（認証が 404）。Vercel の VITE_SUPABASE_URL を Supabase → Settings → API → Project URL と一致させ、再デプロイしてください。"
+      "supabase_auth_unreachable": "Supabase の URL が正しくありません（認証が 404）。Vercel の VITE_SUPABASE_URL を Supabase → Settings → API → Project URL と一致させ、再デプロイしてください。",
+      "supabase_key_mismatch": "VITE_SUPABASE_URL と VITE_SUPABASE_ANON_KEY が同じ Supabase プロジェクトのペアではありません。Settings → API で同一プロジェクトから両方をコピーし、Vercel に入れて再デプロイしてください。"
     }
   },
   "onboarding": {

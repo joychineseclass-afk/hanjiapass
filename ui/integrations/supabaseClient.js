@@ -63,19 +63,13 @@ function normalizeSupabaseProjectUrl(raw) {
   try {
     const u = new URL(s);
     if (u.host.endsWith("supabase.co") && u.pathname && u.pathname !== "/") {
-      if (u.pathname.includes("dashboard") || u.pathname.length > 1) {
-        console.warn(
-          "[Lumina] VITE_SUPABASE_URL has a path; using origin only. Use Settings → API → Project URL (e.g. https://<ref>.supabase.co).",
-        );
-      }
+      /** 常见误把 /rest/v1 等一起粘贴；去 path 到 origin 即可，勿刷黄色警告误导为「配错」 */
       return u.origin;
     }
     if (u.pathname && u.pathname !== "/") {
-      console.warn(
-        "[Lumina] VITE_SUPABASE_URL includes a path; if auth 404, set it to the API origin only (no /project/...).",
-      );
+      return u.origin + u.pathname.replace(/\/+$/g, "");
     }
-    return u.origin + (u.pathname && u.pathname !== "/" ? u.pathname.replace(/\/+$/g, "") : "");
+    return u.origin;
   } catch {
     return "";
   }

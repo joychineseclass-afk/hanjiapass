@@ -239,10 +239,25 @@ function mapError(err, _mode) {
   if (status != null && status >= 500) {
     return { code: "network_error", message: "Server error" };
   }
-  if (code === "email_not_confirmed" || /email.*confirm|confirm.*email/i.test(message)) {
+  /** URL 与 anon 来自不同项目、或 key 被轮换后未更新，常见 401/403，勿显示成「密码错误」 */
+  if (status === 401 || status === 403) {
+    return { code: "supabase_key_mismatch", message: "Anon key does not match project URL" };
+  }
+  if (
+    /invalid (api|API) key|JWT|jwk|not allowed|bad_jwt|invalid_jwt|Unauthorized/i.test(message) ||
+    code === "bad_jwt" ||
+    code === "invalid_jwt" ||
+    code === "invalid_api_key"
+  ) {
+    return { code: "supabase_key_mismatch", message: "Anon key or URL mismatch" };
+  }
+  if (
+    code === "email_not_confirmed" ||
+    /email.*confirm|confirm.*email|Email not confirmed|not confirmed/i.test(message)
+  ) {
     return { code: "email_not_confirmed", message: "Email not confirmed" };
   }
-  if (code === "invalid_credentials" || /Invalid login|invalid password|Invalid email or password/i.test(message)) {
+  if (code === "invalid_credentials" || /Invalid login|invalid password|Invalid email or password|invalid grant/i.test(message)) {
     return { code: "invalid_credentials", message: "Invalid login credentials" };
   }
   if (code === "user_already_registered" || /already registered|already exists|User already registered/i.test(message)) {
