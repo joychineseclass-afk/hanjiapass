@@ -1,0 +1,570 @@
+[
+  {
+    "id": "cedict_draft_0001",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "中国",
+    "traditional": "中國",
+    "pinyinNumbered": "Zhong1 guo2",
+    "pinyin": "zhōngguó",
+    "rawEnglishDefinitions": [
+      "China",
+      "Middle Kingdom"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "China; Middle Kingdom",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0002",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "学习",
+    "traditional": "學習",
+    "pinyinNumbered": "xue2 xi2",
+    "pinyin": "xuéxí",
+    "rawEnglishDefinitions": [
+      "to learn",
+      "to study"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to learn; to study",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0003",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "中文",
+    "traditional": "中文",
+    "pinyinNumbered": "Zhong1 wen2",
+    "pinyin": "zhōngwén",
+    "rawEnglishDefinitions": [
+      "Chinese language"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese language",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0004",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "汉字",
+    "traditional": "漢字",
+    "pinyinNumbered": "Han4 zi4",
+    "pinyin": "hànzì",
+    "rawEnglishDefinitions": [
+      "Chinese character"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese character",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0005",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "老师",
+    "traditional": "老師",
+    "pinyinNumbered": "lao3 shi1",
+    "pinyin": "lǎoshī",
+    "rawEnglishDefinitions": [
+      "teacher"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "teacher",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0006",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "学生",
+    "traditional": "學生",
+    "pinyinNumbered": "xue2 sheng5",
+    "pinyin": "xuésheng",
+    "rawEnglishDefinitions": [
+      "student",
+      "schoolchild"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "student; schoolchild",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0007",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "朋友",
+    "traditional": "朋友",
+    "pinyinNumbered": "peng2 you5",
+    "pinyin": "péngyou",
+    "rawEnglishDefinitions": [
+      "friend"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "friend",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0008",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "家人",
+    "traditional": "家人",
+    "pinyinNumbered": "jia1 ren2",
+    "pinyin": "jiārén",
+    "rawEnglishDefinitions": [
+      "family member"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "family member",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0009",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "爸爸",
+    "traditional": "爸爸",
+    "pinyinNumbered": "ba4 ba5",
+    "pinyin": "bàba",
+    "rawEnglishDefinitions": [
+      "father",
+      "dad"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "father; dad",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0010",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "妈妈",
+    "traditional": "媽媽",
+    "pinyinNumbered": "ma1 ma5",
+    "pinyin": "māma",
+    "rawEnglishDefinitions": [
+      "mother",
+      "mom"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "mother; mom",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0011",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "哥哥",
+    "traditional": "哥哥",
+    "pinyinNumbered": "ge1 ge5",
+    "pinyin": "gēge",
+    "rawEnglishDefinitions": [
+      "older brother"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "older brother",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0012",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "姐姐",
+    "traditional": "姐姐",
+    "pinyinNumbered": "jie3 jie5",
+    "pinyin": "jiějie",
+    "rawEnglishDefinitions": [
+      "older sister"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "older sister",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0013",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "弟弟",
+    "traditional": "弟弟",
+    "pinyinNumbered": "di4 di5",
+    "pinyin": "dìdi",
+    "rawEnglishDefinitions": [
+      "younger brother"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "younger brother",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0014",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "妹妹",
+    "traditional": "妹妹",
+    "pinyinNumbered": "mei4 mei5",
+    "pinyin": "mèimei",
+    "rawEnglishDefinitions": [
+      "younger sister"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "younger sister",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0015",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "你好",
+    "traditional": "你好",
+    "pinyinNumbered": "ni3 hao3",
+    "pinyin": "nǐhǎo",
+    "rawEnglishDefinitions": [
+      "hello",
+      "hi"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "hello; hi",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0016",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "谢谢",
+    "traditional": "謝謝",
+    "pinyinNumbered": "xie4 xie5",
+    "pinyin": "xièxie",
+    "rawEnglishDefinitions": [
+      "to thank",
+      "thanks"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to thank; thanks",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0017",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "再见",
+    "traditional": "再見",
+    "pinyinNumbered": "zai4 jian4",
+    "pinyin": "zàijiàn",
+    "rawEnglishDefinitions": [
+      "goodbye",
+      "see you again"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "goodbye; see you again",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0018",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "学校",
+    "traditional": "學校",
+    "pinyinNumbered": "xue2 xiao4",
+    "pinyin": "xuéxiào",
+    "rawEnglishDefinitions": [
+      "school"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "school",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0019",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "中国人",
+    "traditional": "中國人",
+    "pinyinNumbered": "Zhong1 guo2 ren2",
+    "pinyin": "zhōngguórén",
+    "rawEnglishDefinitions": [
+      "Chinese person"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese person",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  },
+  {
+    "id": "cedict_draft_0020",
+    "type": "word",
+    "status": "draft",
+    "source": "CC-CEDICT",
+    "word": "汉语",
+    "traditional": "漢語",
+    "pinyinNumbered": "Han4 yu3",
+    "pinyin": "hànyǔ",
+    "rawEnglishDefinitions": [
+      "Chinese language"
+    ],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese language",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
+  }
+]

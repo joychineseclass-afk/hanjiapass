@@ -31,7 +31,8 @@
     "check:hsk30-hsk1": "node scripts/check-hsk30-hsk1.mjs",
     "check:hsk30-hsk1:strict": "node scripts/check-hsk30-hsk1.mjs --strict",
     "check:culture-idioms": "node scripts/check-culture-idioms.mjs",
-    "check:dictionary": "node scripts/check-dictionary-data.mjs"
+    "check:dictionary": "node scripts/check-dictionary-data.mjs",
+    "convert:cedict-sample": "node scripts/convert-cedict-sample.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
