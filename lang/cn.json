@@ -855,7 +855,40 @@
   "culture": {
     "title": "文化学习",
     "subtitle": "学习成语、俗语、节日、礼仪、历史人物和中国文化表达。",
-    "comingSoon": "内容将陆续扩展"
+    "comingSoon": "内容将逐步扩展。",
+    "side_nav_label": "文化分类",
+    "nav": {
+      "idioms": "成语",
+      "proverbs": "俗语",
+      "festivals": "节日",
+      "etiquette": "礼仪",
+      "figures": "历史人物",
+      "expressions": "文化表达"
+    },
+    "idioms": {
+      "title": "成语学习",
+      "desc": "学习常用四字成语的意思、来源、使用场景和例句。"
+    },
+    "proverbs": {
+      "title": "俗语学习",
+      "desc": "学习日常生活中常见的俗语、固定表达和口语化文化表达。"
+    },
+    "festivals": {
+      "title": "中国节日",
+      "desc": "学习春节、中秋节、端午节等中国传统节日的习俗、表达和文化背景。"
+    },
+    "etiquette": {
+      "title": "中国礼仪",
+      "desc": "学习问候、称呼、送礼、餐桌礼仪和日常交往中的文化习惯。"
+    },
+    "figures": {
+      "title": "历史人物",
+      "desc": "学习中国历史人物的故事、时代背景、重要贡献和相关文化表达。"
+    },
+    "expressions": {
+      "title": "文化表达",
+      "desc": "学习带有中国文化背景的词语、句子和常用表达方式。"
+    }
   },
   "speaking": {
     "title": "会话",

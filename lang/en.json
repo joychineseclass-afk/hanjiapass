@@ -855,7 +855,40 @@
   "culture": {
     "title": "Culture Learning",
     "subtitle": "Learn idioms, proverbs, festivals, etiquette, historical figures, and Chinese cultural expressions.",
-    "comingSoon": "Content will expand over time"
+    "comingSoon": "Content will be expanded step by step.",
+    "side_nav_label": "Topics",
+    "nav": {
+      "idioms": "Idioms",
+      "proverbs": "Proverbs",
+      "festivals": "Festivals",
+      "etiquette": "Etiquette",
+      "figures": "Historical Figures",
+      "expressions": "Cultural Expressions"
+    },
+    "idioms": {
+      "title": "Idiom Learning",
+      "desc": "Learn the meaning, origin, usage contexts, and examples of common four-character idioms."
+    },
+    "proverbs": {
+      "title": "Proverb Learning",
+      "desc": "Learn common proverbs, fixed expressions, and colloquial cultural expressions used in daily life."
+    },
+    "festivals": {
+      "title": "Chinese Festivals",
+      "desc": "Learn the customs, expressions, and cultural background of traditional Chinese festivals such as Spring Festival, Mid-Autumn Festival, and Dragon Boat Festival."
+    },
+    "etiquette": {
+      "title": "Chinese Etiquette",
+      "desc": "Learn greetings, forms of address, gift-giving, table manners, and cultural habits in daily interaction."
+    },
+    "figures": {
+      "title": "Historical Figures",
+      "desc": "Learn the stories, historical background, major contributions, and related cultural expressions of Chinese historical figures."
+    },
+    "expressions": {
+      "title": "Cultural Expressions",
+      "desc": "Learn words, sentences, and common expressions with Chinese cultural background."
+    }
   },
   "speaking": {
     "title": "Speaking",

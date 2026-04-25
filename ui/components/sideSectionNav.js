@@ -47,3 +47,36 @@ export function resourceSectionContentKeys(id) {
   };
   return m[id] || m.free;
 }
+
+/** @type {readonly ['idioms','proverbs','festivals','etiquette','figures','expressions']} */
+export const CULTURE_SECTION_IDS = /** @type {const} */ ([
+  "idioms",
+  "proverbs",
+  "festivals",
+  "etiquette",
+  "figures",
+  "expressions",
+]);
+
+const CULTURE_ID_SET = new Set(CULTURE_SECTION_IDS);
+
+/**
+ * @param {'idioms'|'proverbs'|'festivals'|'etiquette'|'figures'|'expressions'} id
+ * @returns {{ titleKey: string, descKey: string }}
+ */
+export function cultureSectionContentKeys(id) {
+  const m = {
+    idioms: { titleKey: "culture.idioms.title", descKey: "culture.idioms.desc" },
+    proverbs: { titleKey: "culture.proverbs.title", descKey: "culture.proverbs.desc" },
+    festivals: { titleKey: "culture.festivals.title", descKey: "culture.festivals.desc" },
+    etiquette: { titleKey: "culture.etiquette.title", descKey: "culture.etiquette.desc" },
+    figures: { titleKey: "culture.figures.title", descKey: "culture.figures.desc" },
+    expressions: { titleKey: "culture.expressions.title", descKey: "culture.expressions.desc" },
+  };
+  return m[id] || m.idioms;
+}
+
+/** @param {string} id */
+export function isCultureSectionId(id) {
+  return CULTURE_ID_SET.has(String(id || "").toLowerCase());
+}
