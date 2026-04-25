@@ -30,7 +30,6 @@ import {
   SCENE_ENGINE,
   PROGRESS_ENGINE,
   PROGRESS_SELECTORS,
-  stopAllLearningAudio,
 } from "../platform/index.js";
 import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
@@ -45,6 +44,8 @@ import {
   refreshBlueprintDisplayTitles as refreshBlueprintDisplayTitlesImpl,
   resolveBlueprintTitle as resolveBlueprintTitleImpl,
 } from "./hsk/hskLessonLoad.js";
+// Step 4 split — 页面壳 UI (see task: 《Lumina HSK 页面巨石文件拆分 Step 4》)
+import * as hskPageChrome from "./hsk/hskPageChrome.js";
 import { bindHskPageEvents, abortHskPageEvents } from "./hsk/hskBindEvents.js";
 import { renderHskWordsTab } from "./hsk/hskWordsTab.js";
 import { renderHskDialogueTab } from "./hsk/hskDialogueTab.js";
@@ -76,15 +77,6 @@ const state = {
 
 function $(id) {
   return document.getElementById(id);
-}
-
-function escapeHtml(s) {
-  return String(s != null ? s : "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }
 
 /** GCE 曾只把 type 放在 meta；判断复习课需同时看顶层与 meta */
@@ -179,6 +171,38 @@ function isHSKPageActive() {
 
 function getCourseId() {
   return `${state.version}_hsk${state.lv}`;
+}
+
+function buildChromeCtx() {
+  return { $, state, getCourseId };
+}
+
+function setError(msg = "") {
+  hskPageChrome.setError(buildChromeCtx(), msg);
+}
+
+function setSubTitle() {
+  hskPageChrome.setSubTitle(buildChromeCtx());
+}
+
+function updateProgressBlock() {
+  hskPageChrome.updateProgressBlock(buildChromeCtx());
+}
+
+function showStudyMode(titleText = "") {
+  hskPageChrome.showStudyMode(buildChromeCtx(), titleText);
+}
+
+function showListMode() {
+  hskPageChrome.showListMode(buildChromeCtx());
+}
+
+function updateTabsUI() {
+  hskPageChrome.updateTabsUI(buildChromeCtx());
+}
+
+function updateTabsLabels() {
+  hskPageChrome.updateTabsLabels(buildChromeCtx());
 }
 
 function buildLessonLoadCtx() {
@@ -467,191 +491,6 @@ export async function mount(ctx) {
  * Keep this tail simple.
  * No extra fallback logic here.
  */
-
-function updateTabsLabels() {
-  const tabs = [
-    ["hskTabWords", "hsk.tab.words"],
-    ["hskTabDialogue", "hsk.tab.dialogue"],
-    ["hskTabGrammar", "hsk.tab.grammar"],
-    ["hskTabExtension", "hsk.tab.extension"],
-    ["hskTabPractice", "hsk.tab.practice"],
-    ["hskTabAI", "hsk.tab.ai"],
-    ["hskTabReview", "hsk.tab.review"],
-  ];
-
-  tabs.forEach(([id, key]) => {
-    const btn = $(id);
-    if (!btn) return;
-    const span = btn.querySelector("span") || btn;
-    span.textContent = i18n.t(key);
-  });
-
-  const reviewLabels = [
-    ["hskReviewEntry", "span", "hsk.review_mode"],
-    ["hskReviewLesson", null, "hsk.review_this_lesson"],
-    ["hskReviewLevel", null, "hsk.review_this_level"],
-    ["hskReviewAll", null, "hsk.review_all_wrong"],
-  ];
-
-  reviewLabels.forEach(([id, child, key]) => {
-    const node = $(id);
-    if (!node) return;
-    const target = child ? node.querySelector(child) : node;
-    if (target) target.textContent = i18n.t(key);
-  });
-}
-
-function updateProgressBlock() {
-  const block = $("hskProgressBlock");
-  if (!block) return;
-
-  const courseId = getCourseId();
-  const total = (state.lessons && state.lessons.length) || 0;
-
-  const stats =
-    (PROGRESS_SELECTORS &&
-      typeof PROGRESS_SELECTORS.getCourseStats === "function"
-      ? PROGRESS_SELECTORS.getCourseStats(courseId, total)
-      : null) || {};
-
-  const {
-    completedLessonCount = 0,
-    dueReviewCount = 0,
-    lastLessonNo = 0,
-    lastActivityAt = 0,
-  } = stats;
-
-  const lessonUnit = i18n.t("hsk.meta.lesson_unit");
-  const wordUnit = i18n.t("hsk.meta.word_unit");
-
-  const chips = [];
-
-  chips.push(
-    total > 0
-      ? `${i18n.t("hsk.meta.completed")} ${completedLessonCount} / ${total} ${lessonUnit}`
-      : "—"
-  );
-
-  if (lastLessonNo > 0) {
-    chips.push(`${i18n.t("hsk.meta.current_lesson")} ${lastLessonNo} ${lessonUnit}`);
-  }
-
-  if (dueReviewCount > 0) {
-    chips.push(`${i18n.t("hsk.meta.review_words")} ${dueReviewCount} ${wordUnit}`);
-  }
-
-  if (lastActivityAt > 0) {
-    const d = new Date(lastActivityAt);
-    const dateStr = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
-    chips.push(`${i18n.t("hsk.meta.last_study")} ${dateStr}`);
-  }
-
-  block.innerHTML = chips
-    .map((text) => `<span class="hsk-meta-chip">${escapeHtml(text)}</span>`)
-    .join("");
-}
-
-function setError(msg = "") {
-  const err = $("hskError");
-  if (!err) return;
-
-  if (!msg) {
-    err.classList.add("hidden");
-    err.textContent = "";
-    return;
-  }
-
-  err.classList.remove("hidden");
-  err.textContent = msg;
-}
-
-function setSubTitle() {
-  const sub = $("hskSubTitle");
-  if (!sub) return;
-  sub.textContent = `HSK ${state.lv} · ${state.version}`;
-}
-
-function showStudyMode(titleText = "") {
-  const listWrap = $("hskLessonListWrap");
-  const studyBar = $("hskStudyBar");
-  const studyPanels = $("hskStudyPanels");
-  const titleEl = $("hskStudyTitle");
-
-  if (listWrap) listWrap.classList.add("hidden");
-  if (studyBar) studyBar.classList.remove("hidden");
-  if (studyPanels) studyPanels.classList.remove("hidden");
-  if (titleEl) titleEl.textContent = titleText || "";
-}
-
-function showListMode() {
-  stopAllLearningAudio();
-  const studyBar = $("hskStudyBar");
-  const studyPanels = $("hskStudyPanels");
-  const listWrap = $("hskLessonListWrap");
-
-  if (studyBar) studyBar.classList.add("hidden");
-  if (studyPanels) studyPanels.classList.add("hidden");
-  if (listWrap) listWrap.classList.remove("hidden");
-
-  const ids = [
-    "hskPanelWords",
-    "hskDialogueBody",
-    "hskGrammarBody",
-    "hskExtensionBody",
-    "hskPracticeBody",
-    "hskAIResult",
-    "hskReviewBody",
-  ];
-
-  ids.forEach((id) => {
-    const node = $(id);
-    if (node) node.innerHTML = "";
-  });
-
-  const sceneSection = $("hskSceneSection");
-  if (sceneSection) {
-    sceneSection.innerHTML = "";
-    sceneSection.classList.add("hidden");
-  }
-
-  state.current = null;
-  state.tab = "words";
-  updateTabsUI();
-}
-
-function updateTabsUI() {
-  const ids = [
-    ["words", "hskTabWords", "hskPanelWords"],
-    ["dialogue", "hskTabDialogue", "hskPanelDialogue"],
-    ["grammar", "hskTabGrammar", "hskPanelGrammar"],
-    ["extension", "hskTabExtension", "hskPanelExtension"],
-    ["practice", "hskTabPractice", "hskPanelPractice"],
-    ["ai", "hskTabAI", "hskPanelAI"],
-    ["review", "hskTabReview", "hskPanelReview"],
-  ];
-
-  ids.forEach(([tab, btnId, panelId]) => {
-    const btn = $(btnId);
-    const panel = $(panelId);
-
-    if (tab === "review" && btn) {
-      btn.classList.remove("hidden");
-      btn.removeAttribute("aria-hidden");
-    }
-
-    const active = state.tab === tab;
-
-    if (btn) {
-      btn.classList.toggle("active", active);
-      btn.style.background = active ? "rgba(34,197,94,0.10)" : "";
-      btn.style.borderColor = active ? "rgba(34,197,94,0.55)" : "";
-    }
-
-    if (panel) {
-      panel.classList.toggle("hidden", !active);
-    }
-  });
-}
 /**
  * ===============================
  * Lesson Peripheral Helpers
