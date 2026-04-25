@@ -867,7 +867,13 @@
     },
     "idioms": {
       "title": "Idiom Learning",
-      "desc": "Learn the meaning, origin, usage contexts, and examples of common four-character idioms."
+      "desc": "Learn the meaning, origin, usage contexts, and examples of common four-character idioms.",
+      "meaningLabel": "Meaning",
+      "chineseExplanationLabel": "Chinese Explanation",
+      "exampleLabel": "Example",
+      "aiExplain": "AI Explanation",
+      "aiComingSoon": "AI explanation will be available soon.",
+      "loadError": "Could not load idioms. Please try again later."
     },
     "proverbs": {
       "title": "Proverb Learning",

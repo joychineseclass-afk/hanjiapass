@@ -1,0 +1,212 @@
+[
+  {
+    "id": "idiom_0001",
+    "idiom": "画蛇添足",
+    "pinyin": "huà shé tiān zú",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻做了多余的事，反而把事情弄坏。",
+      "kr": "쓸데없는 일을 덧붙여 오히려 일을 망친다는 뜻입니다.",
+      "en": "It means adding something unnecessary and making things worse.",
+      "jp": "余計なことを付け加えて、かえって物事を悪くすることを意味します。"
+    },
+    "chineseExplanation": "这个成语常用来提醒别人不要做不必要的补充。事情已经很好时，再多做反而可能出错。",
+    "example": "这篇文章已经很好了，再加一段反而有点画蛇添足。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“画蛇添足”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘画蛇添足’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘画蛇添足’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「画蛇添足」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0002",
+    "idiom": "井底之蛙",
+    "pinyin": "jǐng dǐ zhī wā",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻见识狭窄、眼光短浅的人。",
+      "kr": "견문이 좁고 시야가 짧은 사람을 비유하는 말입니다.",
+      "en": "It describes someone with a narrow view of the world and short-sightedness.",
+      "jp": "見識が狭く、目の届く範囲が小さい人のたとえです。"
+    },
+    "chineseExplanation": "常用来提醒人们要多看看外面的世界，不要只满足于自己熟悉的小环境。",
+    "example": "只读过几本书就觉得自己无所不知，未免有点井底之蛙。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“井底之蛙”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘井底之蛙’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘井底之蛙’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「井底之蛙」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0003",
+    "idiom": "亡羊补牢",
+    "pinyin": "wáng yáng bǔ láo",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻出了问题以后想办法补救，还来得及。",
+      "kr": "문제가 생긴 뒤에라도 대책을 세우면 아직 늦지 않다는 뜻입니다.",
+      "en": "It means you can still fix things after a mistake; it is not too late to mend the situation.",
+      "jp": "失敗のあとに手を打てば、まだ間に合うという教えを表します。"
+    },
+    "chineseExplanation": "强调事后补救仍然有价值，鼓励人们在发现问题后积极改正。",
+    "example": "虽然考得不理想，但亡羊补牢，下学期我们可以调整学习方法。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“亡羊补牢”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘亡羊补牢’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘亡羊补牢’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「亡羊补牢」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0004",
+    "idiom": "守株待兔",
+    "pinyin": "shǒu zhū dài tù",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻死守狭隘经验，不知变通，或妄想不劳而获。",
+      "kr": "한 가지에만 얽매이거나, 노력 없이 남의 행운을 기다린다는 뜻입니다.",
+      "en": "It criticizes clinging to one lucky accident or waiting for good fortune without effort.",
+      "jp": "狭い経験に固執したり、働かずに幸運を待つ人を批判する表現です。"
+    },
+    "chineseExplanation": "常用来提醒要主动努力，不能指望意外一再发生。",
+    "example": "想提高口语却只等着上课，不练习，有点守株待兔。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“守株待兔”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘守株待兔’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘守株待兔’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「守株待兔」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0005",
+    "idiom": "自相矛盾",
+    "pinyin": "zì xiāng máo dùn",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻自己的言行或论点前后抵触，不能自圆其说。",
+      "kr": "말이나 논리가 앞뒤가 맞지 않는다는 뜻입니다.",
+      "en": "It means one’s words or position contradict each other and cannot both be true.",
+      "jp": "自分の言葉や主張が前後で食い違い、通じないことをいいます。"
+    },
+    "chineseExplanation": "多用来指出别人或自己说法、做法上的逻辑冲突。",
+    "example": "他一边说支持环保，一边浪费纸张，有些自相矛盾。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“自相矛盾”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘自相矛盾’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘自相矛盾’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「自相矛盾」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0006",
+    "idiom": "一举两得",
+    "pinyin": "yī jǔ liǎng dé",
+    "level": "basic",
+    "category": "常用表达",
+    "meaning": {
+      "cn": "做一件事，能同时得到两方面的好处。",
+      "kr": "한 가지 일로 두 가지 이익을 얻는다는 뜻입니다.",
+      "en": "It means one action brings two benefits at the same time.",
+      "jp": "一つの行動で二つの得があることをいいます。"
+    },
+    "chineseExplanation": "常用来形容效率高、设计巧妙的办法，让学习者体会汉语里“俭省而有效”的表达。",
+    "example": "边走路边听中文播客，既锻炼听力又省时间，一举两得。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“一举两得”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘一举两得’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘一举两得’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「一举两得」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0007",
+    "idiom": "半途而废",
+    "pinyin": "bàn tú ér fèi",
+    "level": "basic",
+    "category": "常用表达",
+    "meaning": {
+      "cn": "比喻事情做到一半就放弃，没有坚持到底。",
+      "kr": "일을 절반만 하다가 그만두어 완수하지 못한다는 뜻입니다.",
+      "en": "It means giving up halfway and not finishing what you started.",
+      "jp": "物事の途中でやめてしまい、最後までやり遂げないことです。"
+    },
+    "chineseExplanation": "多用来提醒学习或工作要持之以恒，和“有始有终”形成对照。",
+    "example": "学中文最怕半途而废，每天哪怕十分钟也比三天打鱼强。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“半途而废”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘半途而废’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘半途而废’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「半途而废」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0008",
+    "idiom": "刻舟求剑",
+    "pinyin": "kè zhōu qiú jiàn",
+    "level": "basic",
+    "category": "寓言故事",
+    "meaning": {
+      "cn": "比喻拘泥成例，不知道跟着情况变化而调整办法。",
+      "kr": "상황이 변했는데도 옛 방식에만 얽매인다는 뜻입니다.",
+      "en": "It mocks rigidly sticking to an old method when circumstances have changed.",
+      "jp": "状況が変わったのに古いやり方に固執することのたとえです。"
+    },
+    "chineseExplanation": "提醒人们要灵活思考，用发展的眼光看问题。",
+    "example": "市场都变了，还沿用十年前的老办法，有点像刻舟求剑。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“刻舟求剑”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘刻舟求剑’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘刻舟求剑’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「刻舟求剑」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0009",
+    "idiom": "三心二意",
+    "pinyin": "sān xīn èr yì",
+    "level": "basic",
+    "category": "常用表达",
+    "meaning": {
+      "cn": "形容意志不坚定，又想这样又想那样，不专心。",
+      "kr": "마음이 한곳에 집중되지 않고 이것저것 바람을 든다는 뜻입니다.",
+      "en": "It describes being indecisive and unable to focus on one thing.",
+      "jp": "気持ちが定まらず、一つのことに集中できないさまをいいます。"
+    },
+    "chineseExplanation": "常在学习、工作场景里提醒要专注，与“一心一意”相对。",
+    "example": "学语言不能三心二意，最好每天都接触一下。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“三心二意”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘三心二意’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘三心二意’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「三心二意」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  },
+  {
+    "id": "idiom_0010",
+    "idiom": "熟能生巧",
+    "pinyin": "shú néng shēng qiǎo",
+    "level": "basic",
+    "category": "常用表达",
+    "meaning": {
+      "cn": "熟练了就能找到窍门，多练就能提高技能。",
+      "kr": "익숙해지면 요령이 생기고, 반복이 실력을 키운다는 뜻입니다.",
+      "en": "It means practice leads to skill; the more familiar you are, the better you get.",
+      "jp": "慣れればコツがわかり、練習が上達を生むという意味です。"
+    },
+    "chineseExplanation": "常用来鼓励中文学习者多听说读写，别害怕犯错。",
+    "example": "写汉字一开始很难，多写几遍就熟能生巧了。",
+    "aiPrompt": {
+      "cn": "请用适合中文学习者的方式讲解成语“熟能生巧”，包括意思、使用场景和一个简单例子。",
+      "kr": "중국어 학습자에게 맞게 성어 ‘熟能生巧’를 설명해 주세요. 뜻, 사용 상황, 쉬운 예문을 포함해 주세요.",
+      "en": "Explain the Chinese idiom ‘熟能生巧’ for Chinese learners, including its meaning, usage context, and a simple example.",
+      "jp": "中国語学習者向けに成語「熟能生巧」を説明してください。意味、使う場面、簡単な例を含めてください。"
+    }
+  }
+]

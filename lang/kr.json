@@ -867,7 +867,13 @@
     },
     "idioms": {
       "title": "성어 학습",
-      "desc": "자주 쓰이는 사자성어의 뜻, 유래, 사용 상황과 예문을 학습합니다."
+      "desc": "자주 쓰이는 사자성어의 뜻, 유래, 사용 상황과 예문을 학습합니다.",
+      "meaningLabel": "뜻",
+      "chineseExplanationLabel": "중국어 설명",
+      "exampleLabel": "예문",
+      "aiExplain": "AI 설명",
+      "aiComingSoon": "AI 설명 기능은 곧 제공될 예정입니다.",
+      "loadError": "성어를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
     },
     "proverbs": {
       "title": "속담 학습",

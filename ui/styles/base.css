@@ -1847,6 +1847,112 @@ a.section-side-nav-item:hover{
   font-size: 15px;
   line-height: 1.65;
 }
+/* Culture · 成语文化卡片 */
+.culture-idiom-list{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+.culture-idiom-card{
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: #fafbfc;
+  padding: 16px 18px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.culture-idiom-card__word{
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.02em;
+}
+.culture-idiom-card__pinyin{
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+.culture-idiom-card__row{
+  margin-bottom: 12px;
+}
+.culture-idiom-card__row:last-of-type{
+  margin-bottom: 14px;
+}
+.culture-idiom-card__label{
+  display: block;
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.culture-idiom-card__value{
+  margin: 0;
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.culture-idiom-card__value--zh{
+  color: #1e293b;
+}
+.culture-idiom-card__ai{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #312e81;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  border: 1px solid #a5b4fc;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.culture-idiom-card__ai:hover{
+  background: #e0e7ff;
+  border-color: #818cf8;
+}
+.culture-idiom-card__ai:focus-visible{
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+.culture-idiom-loading,
+.culture-idiom-error,
+.culture-idiom-empty{
+  margin: 16px 0 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.culture-idiom-error{
+  color: #b91c1c;
+}
+#culture-idiom-toast.culture-idiom-toast,
+.culture-idiom-toast{
+  position: fixed;
+  z-index: 10050;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  max-width: min(92vw, 400px);
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #f8fafc;
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+  pointer-events: none;
+}
 @media (max-width: 900px) {
   .page-shell{
     flex-direction: column;

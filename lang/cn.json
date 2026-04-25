@@ -867,7 +867,13 @@
     },
     "idioms": {
       "title": "成语学习",
-      "desc": "学习常用四字成语的意思、来源、使用场景和例句。"
+      "desc": "学习常用四字成语的意思、来源、使用场景和例句。",
+      "meaningLabel": "释义",
+      "chineseExplanationLabel": "中文解释",
+      "exampleLabel": "例句",
+      "aiExplain": "AI讲解",
+      "aiComingSoon": "AI讲解功能即将开放。",
+      "loadError": "成语内容加载失败，请稍后重试。"
     },
     "proverbs": {
       "title": "俗语学习",

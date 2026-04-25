@@ -1,5 +1,6 @@
 // /ui/pages/page.culture.js — 文化学习：左侧分类导航 + 右侧内容（与资料页 .page-shell 一致）
 import { i18n } from "../i18n.js";
+import * as LE from "../core/languageEngine.js";
 import {
   CULTURE_SECTION_IDS,
   parseHashSectionId,
@@ -7,6 +8,9 @@ import {
 } from "../components/sideSectionNav.js";
 
 const STYLE_ID = "lumina-culture-shell";
+
+let _idiomsCache = null;
+let _idiomsFetchPromise = null;
 
 function t(key) {
   try {
@@ -48,7 +52,134 @@ function navItemClass(id, active) {
   return active ? `${base} is-active` : base;
 }
 
-function renderRightPanelMarkup(sectionId) {
+function idiomsDataUrl() {
+  const b = typeof window !== "undefined" && String(window.__APP_BASE__ || "").replace(/\/+$/, "");
+  return (b ? b + "/" : "/") + "data/culture/idioms/idioms-basic.json";
+}
+
+/**
+ * @returns {Promise<unknown[]>}
+ */
+async function loadIdiomsData() {
+  if (_idiomsCache) return _idiomsCache;
+  if (_idiomsFetchPromise) return _idiomsFetchPromise;
+  _idiomsFetchPromise = (async () => {
+    const u = idiomsDataUrl();
+    const tryFetch = async (url) => {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error("idioms fetch failed");
+      return res.json();
+    };
+    let data;
+    try {
+      data = await tryFetch(u);
+    } catch {
+      if (u.startsWith("/data/")) {
+        try {
+          data = await tryFetch("." + u);
+        } catch {
+          throw new Error("idioms fetch failed");
+        }
+      } else {
+        throw new Error("idioms fetch failed");
+      }
+    }
+    if (!Array.isArray(data)) throw new Error("idioms bad shape");
+    _idiomsCache = data;
+    return _idiomsCache;
+  })();
+  try {
+    return await _idiomsFetchPromise;
+  } catch (e) {
+    _idiomsCache = null;
+    throw e;
+  } finally {
+    _idiomsFetchPromise = null;
+  }
+}
+
+function meaningLocaleKey() {
+  const l = LE.getLang();
+  if (l === "cn" || l === "kr" || l === "en" || l === "jp") return l;
+  return "en";
+}
+
+/**
+ * @param {Record<string, string>|null|undefined} m
+ */
+function pickMeaning(m) {
+  if (!m || typeof m !== "object") return "";
+  const k = meaningLocaleKey();
+  return String(m[k] ?? m.en ?? m.cn ?? "");
+}
+
+/**
+ * @param {object} item
+ */
+function oneIdiomCard(item) {
+  const id = String(item?.id ?? "");
+  const mean = pickMeaning(item?.meaning);
+  const zhExp = String(item?.chineseExplanation ?? "");
+  const ex = String(item?.example ?? "");
+  return `
+  <article class="culture-idiom-card" data-idiom-id="${esc(id)}">
+    <h3 class="culture-idiom-card__word" lang="zh-Hans">${esc(item?.idiom)}</h3>
+    <p class="culture-idiom-card__pinyin" lang="zh-Latn">${esc(item?.pinyin)}</p>
+    <div class="culture-idiom-card__row">
+      <div class="culture-idiom-card__label" data-i18n="culture.idioms.meaningLabel">${esc(t("culture.idioms.meaningLabel"))}</div>
+      <p class="culture-idiom-card__value">${esc(mean)}</p>
+    </div>
+    <div class="culture-idiom-card__row">
+      <div class="culture-idiom-card__label" data-i18n="culture.idioms.chineseExplanationLabel">${esc(t("culture.idioms.chineseExplanationLabel"))}</div>
+      <p class="culture-idiom-card__value culture-idiom-card__value--zh" lang="zh-Hans">${esc(zhExp)}</p>
+    </div>
+    <div class="culture-idiom-card__row">
+      <div class="culture-idiom-card__label" data-i18n="culture.idioms.exampleLabel">${esc(t("culture.idioms.exampleLabel"))}</div>
+      <p class="culture-idiom-card__value culture-idiom-card__value--zh" lang="zh-Hans">${esc(ex)}</p>
+    </div>
+    <button type="button" class="culture-idiom-card__ai" data-idiom-ai="1" data-i18n="culture.idioms.aiExplain">${esc(t("culture.idioms.aiExplain"))}</button>
+  </article>`;
+}
+
+/**
+ * @param {object[]} list
+ */
+function idiomListInnerHtml(list) {
+  if (!list.length) {
+    return `<p class="culture-idiom-empty" data-i18n="common.no_data">${esc(t("common.no_data"))}</p>`;
+  }
+  return `<div class="culture-idiom-list">${list.map((x) => oneIdiomCard(x)).join("")}</div>`;
+}
+
+function renderIdiomsHeader() {
+  const keys = cultureSectionContentKeys("idioms");
+  return `
+    <h2 class="title" data-i18n="${esc(keys.titleKey)}">${esc(t(keys.titleKey))}</h2>
+    <p class="desc" data-i18n="${esc(keys.descKey)}">${esc(t(keys.descKey))}</p>`;
+}
+
+function renderIdiomsPanelLoading() {
+  return (
+    renderIdiomsHeader() +
+    `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`
+  );
+}
+
+/**
+ * @param {object[]} list
+ */
+function renderIdiomsPanelWithList(list) {
+  return renderIdiomsHeader() + idiomListInnerHtml(list);
+}
+
+function renderIdiomsPanelError() {
+  return (
+    renderIdiomsHeader() +
+    `<p class="culture-idiom-error" data-i18n="culture.idioms.loadError">${esc(t("culture.idioms.loadError"))}</p>`
+  );
+}
+
+function renderDefaultRightPanel(sectionId) {
   const keys = cultureSectionContentKeys(sectionId);
   return `
     <h2 class="title" data-i18n="${esc(keys.titleKey)}">${esc(t(keys.titleKey))}</h2>
@@ -57,10 +188,63 @@ function renderRightPanelMarkup(sectionId) {
   `;
 }
 
+function renderRightPanelMarkup(sectionId) {
+  if (sectionId === "idioms") {
+    return renderIdiomsPanelLoading();
+  }
+  return renderDefaultRightPanel(sectionId);
+}
+
+function showAiComingSoonToast() {
+  const msg = t("culture.idioms.aiComingSoon");
+  const ex = document.getElementById("culture-idiom-toast");
+  if (ex) ex.remove();
+  const el = document.createElement("div");
+  el.id = "culture-idiom-toast";
+  el.className = "culture-idiom-toast";
+  el.setAttribute("role", "status");
+  el.textContent = msg;
+  document.body.appendChild(el);
+  window.setTimeout(() => {
+    try {
+      el.remove();
+    } catch {
+      /* */
+    }
+  }, 2600);
+}
+
 function updatePanel(root, sectionId) {
   const inner = root.querySelector("[data-culture-panel-inner]");
   if (!inner) return;
-  inner.innerHTML = renderRightPanelMarkup(sectionId);
+  if (sectionId === "idioms") {
+    if (_idiomsCache) {
+      inner.innerHTML = renderIdiomsPanelWithList(_idiomsCache);
+      i18n.apply?.(inner);
+      return;
+    }
+    inner.innerHTML = renderIdiomsPanelLoading();
+    i18n.apply?.(inner);
+    loadIdiomsData()
+      .then((list) => {
+        if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+        if (currentSectionId() !== "idioms") return;
+        const p = root.querySelector("[data-culture-panel-inner]");
+        if (!p) return;
+        p.innerHTML = renderIdiomsPanelWithList(list);
+        i18n.apply?.(p);
+      })
+      .catch(() => {
+        if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+        if (currentSectionId() !== "idioms") return;
+        const p = root.querySelector("[data-culture-panel-inner]");
+        if (!p) return;
+        p.innerHTML = renderIdiomsPanelError();
+        i18n.apply?.(p);
+      });
+    return;
+  }
+  inner.innerHTML = renderDefaultRightPanel(sectionId);
   i18n.apply?.(inner);
 }
 
@@ -130,6 +314,7 @@ export function mount() {
   `;
 
   i18n.apply?.(app);
+  updatePanel(app, sectionId);
 
   const onNavClick = (e) => {
     const btn = e.target?.closest?.("[data-culture-nav]");
@@ -147,6 +332,14 @@ export function mount() {
       });
   };
   app.querySelector("[data-culture-side-nav]")?.addEventListener("click", onNavClick);
+
+  const onPanelClick = (e) => {
+    const b = e.target?.closest?.("[data-idiom-ai]");
+    if (!b) return;
+    e.preventDefault();
+    showAiComingSoonToast();
+  };
+  app.querySelector("[data-culture-panel]")?.addEventListener("click", onPanelClick);
 
   const onHash = () => {
     if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
@@ -169,6 +362,7 @@ export function mount() {
 
   _teardown = () => {
     app.querySelector("[data-culture-side-nav]")?.removeEventListener("click", onNavClick);
+    app.querySelector("[data-culture-panel]")?.removeEventListener("click", onPanelClick);
     window.removeEventListener("hashchange", onHash);
     window.removeEventListener("joy:langChanged", onLang);
     try {
