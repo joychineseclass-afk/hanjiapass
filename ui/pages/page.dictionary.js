@@ -285,11 +285,13 @@ function renderCharEntry(area, res) {
 
 function renderResult(area, res) {
   if (!area) return;
-  if (res.type === "word" && res.found && res.entry) {
+  const entry = res && res.entry;
+  const isWord = res && (res.type === "word" || (entry && entry.type === "word"));
+  if (isWord && res.found && entry) {
     renderWordEntry(area, res);
     return;
   }
-  if (res.type === "word" && !res.found) {
+  if (isWord && !res.found) {
     renderWordNotFound(area, res);
     return;
   }
@@ -340,6 +342,9 @@ export function mount(ctxOrRoot) {
     area.innerHTML = `<p class="muted">${esc(i18n.t("common.loading"))}</p>`;
     try {
       const res = await searchDictionary(term);
+      if (typeof localStorage !== "undefined" && localStorage.getItem("DEBUG_DICT") === "1") {
+        console.log("[dictionary] query", term, "result", res);
+      }
       renderResult(area, res);
     } catch (e) {
       console.warn("[dictionary]", e);
