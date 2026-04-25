@@ -11,6 +11,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const DICT_DIR = join(ROOT, "data", "dictionary");
 const INDEX_PATH = join(DICT_DIR, "dictionary-index.json");
+const DRAFT_CEDICT_PATH = join(DICT_DIR, "drafts", "words-cedict-draft-001.json");
+const CEDICT_WORDS_FILE = "words-cedict-001.json";
 
 const CJK = /^[\u4e00-\u9fff]$/;
 const FORBIDDEN_KEYS = new Set(["quiz", "exercise", "score", "progress", "wrongQuestions"]);
@@ -183,6 +185,69 @@ function checkWordDetail(detail, indexRow) {
   if (detail.pinyin !== indexRow.pinyin) failMismatch(`word ${id}: pinyin mismatch index / detail`);
 }
 
+/**
+ * 校验 cedict 正式词库文件内每条（含未挂 index 的备查词条）
+ */
+function checkWordDetailStandalone(detail, fileLabel) {
+  const id = detail.id;
+  const fake = {
+    id: detail.id,
+    type: "word",
+    word: detail.word,
+    pinyin: detail.pinyin,
+    file: fileLabel,
+  };
+  checkWordDetail(detail, fake);
+}
+
+/**
+ * 已发布到 cedict 正式文件的 draft：与 index / cedict 一致
+ * indexOmitted：同 query 已在别条 index 中，本 publishedId 仅存在于 words-cedict-001.json
+ */
+function checkPublishedCedictDraft(d, indexRows, cedictById) {
+  if (d.status !== "published" || d.type !== "word") return;
+
+  if (!d.publishedId || String(d.publishedId).trim() === "") {
+    failMissing(`draft ${d.id} published: missing publishedId`);
+  }
+  if (!d.publishedFile || String(d.publishedFile).trim() === "") {
+    failMissing(`draft ${d.id} published: missing publishedFile`);
+  }
+  if (d.needsReview !== false) {
+    failMismatch(`draft ${d.id} published: needsReview must be false`);
+  }
+  if (d.publishedFile !== CEDICT_WORDS_FILE) {
+    failMismatch(`draft ${d.id} published: publishedFile must be ${CEDICT_WORDS_FILE}`);
+  }
+
+  const det = cedictById.get(d.publishedId);
+  if (!det) {
+    failMissing(`draft ${d.id} published: publishedId ${d.publishedId} not found in ${CEDICT_WORDS_FILE}`);
+    return;
+  }
+  if (det.word !== d.word) {
+    failMismatch(`draft ${d.id} word vs cedict detail ${d.publishedId}`);
+  }
+
+  const idx = indexRows.find((r) => r.id === d.publishedId);
+  if (idx) {
+    if (idx.file !== d.publishedFile) {
+      failMismatch(`draft ${d.id}: publishedFile vs index file for ${d.publishedId}`);
+    }
+    if (idx.type !== "word" || idx.query !== d.word) {
+      failMismatch(`draft ${d.id} vs index ${d.publishedId}`);
+    }
+  } else {
+    if (!d.indexOmitted) {
+      failMissing(`draft ${d.id} published: publishedId ${d.publishedId} not in dictionary-index (set indexOmitted if duplicate query)`);
+    }
+    const dup = indexRows.some((r) => r.type === "word" && r.query === d.word);
+    if (!dup) {
+      failMissing(`draft ${d.id} indexOmitted but no index word row with query "${d.word}"`);
+    }
+  }
+}
+
 function wordToComponentChars(word) {
   return [...String(word || "")].filter((c) => isSingleCjk(c));
 }
@@ -267,6 +332,50 @@ function main() {
     for (const ch of comps) {
       if (!charIndexByChar.has(ch)) {
         warnComponent(`Missing char index for component: ${row.id} ${detail.word} → ${ch}`);
+      }
+    }
+  }
+
+  // --- words-cedict-001.json 全量结构（含未在 index 中的备查条）-----------------
+  const cedictPath = join(DICT_DIR, CEDICT_WORDS_FILE);
+  let cedictList = null;
+  let cedictById = new Map();
+  if (existsSync(cedictPath)) {
+    try {
+      cedictList = readJson(cedictPath);
+      if (!Array.isArray(cedictList)) {
+        failMismatch(`${CEDICT_WORDS_FILE} is not a JSON array`);
+      } else {
+        cedictById = new Map(cedictList.filter((x) => x && x.id).map((x) => [x.id, x]));
+        for (const ent of cedictList) {
+          if (!ent || !ent.id) continue;
+          walkForbidden(ent, `cedict[${ent.id}]`);
+          checkWordDetailStandalone(ent, CEDICT_WORDS_FILE);
+        }
+      }
+    } catch (e) {
+      failMissing(`${CEDICT_WORDS_FILE} read error: ${e?.message || e}`);
+    }
+  }
+
+  // --- CC-CEDICT draft：仅校验已发布行；draft 行不因空义报错 ------------------------
+  if (existsSync(DRAFT_CEDICT_PATH)) {
+    let draftList;
+    try {
+      draftList = readJson(DRAFT_CEDICT_PATH);
+    } catch (e) {
+      failMissing(`draft file parse: ${e?.message || e}`);
+      draftList = null;
+    }
+    if (draftList && !Array.isArray(draftList)) {
+      failMismatch("words-cedict-draft-001.json is not an array");
+    } else if (Array.isArray(draftList)) {
+      for (const d of draftList) {
+        if (!d) continue;
+        if (d.status === "published") {
+          checkPublishedCedictDraft(d, index, cedictById);
+        }
+        walkForbidden(d, `cedict-draft[${d.id || "?"}]`);
       }
     }
   }

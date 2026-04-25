@@ -1,0 +1,107 @@
+[
+  {
+    "id": "cedict_word_0001",
+    "type": "word",
+    "word": "再见",
+    "traditional": "再見",
+    "pinyin": "zàijiàn",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "分别时使用的告别语，意思是以后再见面。",
+      "kr": "헤어질 때 쓰는 인사말로, 다시 만나자는 뜻입니다.",
+      "en": "A farewell expression used when parting, meaning “see you again.”",
+      "jp": "別れる時に使うあいさつで、また会いましょうという意味です。"
+    },
+    "example": {
+      "cn": "老师，再见！",
+      "kr": "선생님, 안녕히 계세요!",
+      "en": "Goodbye, teacher!",
+      "jp": "先生、さようなら！"
+    },
+    "examplePinyin": "lǎoshī, zàijiàn!"
+  },
+  {
+    "id": "cedict_word_0002",
+    "type": "word",
+    "word": "学校",
+    "traditional": "學校",
+    "pinyin": "xuéxiào",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "学生学习和老师教学的地方。",
+      "kr": "학생이 공부하고 선생님이 가르치는 곳을 뜻합니다.",
+      "en": "A place where students study and teachers teach.",
+      "jp": "学生が勉強し、先生が教える場所を意味します。"
+    },
+    "example": {
+      "cn": "我去学校学习。",
+      "kr": "저는 학교에 가서 공부합니다.",
+      "en": "I go to school to study.",
+      "jp": "私は学校へ行って勉強します。"
+    },
+    "examplePinyin": "wǒ qù xuéxiào xuéxí."
+  },
+  {
+    "id": "cedict_word_0003",
+    "type": "word",
+    "word": "中国人",
+    "traditional": "中國人",
+    "pinyin": "zhōngguórén",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "中国的人；也可以指具有中国国籍或中国文化背景的人。",
+      "kr": "중국 사람을 뜻하며, 중국 국적이나 중국 문화 배경을 가진 사람을 말할 수 있습니다.",
+      "en": "A Chinese person; someone with Chinese nationality or Chinese cultural background.",
+      "jp": "中国の人、または中国国籍や中国文化の背景を持つ人を意味します。"
+    },
+    "example": {
+      "cn": "他是中国人。",
+      "kr": "그는 중국 사람입니다.",
+      "en": "He is Chinese.",
+      "jp": "彼は中国人です。"
+    },
+    "examplePinyin": "tā shì zhōngguórén."
+  },
+  {
+    "id": "cedict_word_0004",
+    "type": "word",
+    "word": "汉语",
+    "traditional": "漢語",
+    "pinyin": "hànyǔ",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "汉民族的语言，通常也指中文或普通话。",
+      "kr": "한족의 언어를 뜻하며, 보통 중국어나 표준중국어를 가리키기도 합니다.",
+      "en": "The language of the Han people; often used to refer to Chinese or Mandarin.",
+      "jp": "漢民族の言語で、一般的に中国語や普通話を指すこともあります。"
+    },
+    "example": {
+      "cn": "我正在学习汉语。",
+      "kr": "저는 지금 중국어를 배우고 있습니다.",
+      "en": "I am learning Chinese.",
+      "jp": "私は今、中国語を学んでいます。"
+    },
+    "examplePinyin": "wǒ zhèngzài xuéxí hànyǔ."
+  },
+  {
+    "id": "cedict_word_0005",
+    "type": "word",
+    "word": "朋友",
+    "traditional": "朋友",
+    "pinyin": "péngyou",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "关系亲近、彼此熟悉并互相关心的人。",
+      "kr": "가깝게 지내며 서로 알고 아끼는 사람, 친구를 뜻합니다.",
+      "en": "A friend; someone close, familiar, and caring.",
+      "jp": "親しく付き合い、互いに知っていて大切に思う人、友人を意味します。"
+    },
+    "example": {
+      "cn": "她是我的朋友。",
+      "kr": "그녀는 제 친구입니다.",
+      "en": "She is my friend.",
+      "jp": "彼女は私の友達です。"
+    },
+    "examplePinyin": "tā shì wǒ de péngyou."
+  }
+]

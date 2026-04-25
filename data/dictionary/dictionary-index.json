@@ -318,5 +318,32 @@
     "word": "谢谢",
     "pinyin": "xièxie",
     "file": "words-basic-001.json"
+  },
+  {
+    "id": "cedict_word_0001",
+    "type": "word",
+    "query": "再见",
+    "word": "再见",
+    "pinyin": "zàijiàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
+  },
+  {
+    "id": "cedict_word_0003",
+    "type": "word",
+    "query": "中国人",
+    "word": "中国人",
+    "pinyin": "zhōngguórén",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
+  },
+  {
+    "id": "cedict_word_0004",
+    "type": "word",
+    "query": "汉语",
+    "word": "汉语",
+    "pinyin": "hànyǔ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
   }
 ]
