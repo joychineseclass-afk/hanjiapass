@@ -193,6 +193,9 @@ function checkForbidden(obj, id) {
 }
 
 function main() {
+  const argv = process.argv.slice(2);
+  const verbose = argv.includes("--verbose") || argv.includes("-v");
+
   const indexPath = path.join(IDIOMS_DIR, INDEX_FILE);
   if (!fileExists(indexPath)) {
     console.error("❌ Culture idioms check failed.\n");
@@ -264,8 +267,8 @@ function main() {
       }
     }
     for (const c of IDIOM_CATEGORY_ORDER) {
-      if (catCounts.get(c) === 0) {
-        warnings.push(`No idioms in category "${c}" (empty category in nav is OK; add items later or ignore).`);
+      if (catCounts.get(c) === 0 && verbose) {
+        console.log(`ℹ Empty category: ${c}`);
       }
     }
   }

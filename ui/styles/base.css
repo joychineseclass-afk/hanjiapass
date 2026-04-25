@@ -1830,6 +1830,14 @@ a.section-side-nav-item:hover{
   min-width: 0;
   text-align: left;
 }
+.section-side-nav-count{
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  user-select: none;
+}
 .section-side-nav-item__chev{
   flex: 0 0 auto;
   font-size: 0.7rem;

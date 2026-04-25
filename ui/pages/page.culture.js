@@ -399,6 +399,7 @@ function buildIdiomsNavGroupHtml(sectionId, activeChildId) {
       l4id
     )}" aria-current="false">
     <span class="section-side-nav-item__text" data-i18n="${esc(catKey)}">${esc(t(catKey))}</span>
+    <span class="section-side-nav-count" aria-hidden="true">${items.length}</span>
     <span class="section-side-nav-item__chev" aria-hidden="true">${catChev}</span>
   </button>
   <div class="section-side-nav-children level-4-group" id="${esc(l4id)}" ${catExpanded ? "" : "hidden"}>${kids}</div>
