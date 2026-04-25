@@ -717,6 +717,115 @@ export async function getDictionaryEntryByChar(char) {
 }
 
 /**
+ * 主索引 + cedict 轻量索引上的候选，不加载 detail 分包，不含文化成语
+ * @param {string} query
+ * @param {object} _options 预留
+ * @returns {Promise<object[]>}
+ */
+export async function searchDictionarySuggestions(query, _options = {}) {
+  const rawQ = String(query ?? "").trim();
+  if (!rawQ) return [];
+  const hasCjk = /[\u4e00-\u9fff]/.test(rawQ);
+  const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(String(rawQ).replace(/\s/g, " ").trim());
+  if (!hasCjk && !isSingleCjkChar(rawQ) && !pinyinish) return [];
+
+  const [mainIndex, cedictIndexRaw] = await Promise.all([loadIndex(), loadCedictIndex()]);
+  const mainWords = (Array.isArray(mainIndex) ? mainIndex : []).filter((x) => x && x.type === "word");
+  const cedictIndex = Array.isArray(cedictIndexRaw) ? cedictIndexRaw : [];
+  const mainAllWord = new Set();
+  for (const r of mainWords) {
+    const w = r.word || r.query;
+    if (w) mainAllWord.add(String(w));
+  }
+
+  const collected = [];
+
+  for (const row of mainWords) {
+    if (!rowMatchesForSuggestion(row, rawQ)) continue;
+    collected.push(mapSuggestionRow(row, "main"));
+  }
+
+  for (const row of cedictIndex) {
+    if (!row || row.type !== "word") continue;
+    const w = String(row.word || row.query || "");
+    if (w && mainAllWord.has(w)) continue;
+    if (!rowMatchesForSuggestion(row, rawQ)) continue;
+    collected.push(mapSuggestionRow(row, "cedict"));
+  }
+
+  const nq = normalizeSearchText(rawQ);
+  collected.sort((a, b) => {
+    const sa = scoreSuggestionItem(a, rawQ, nq);
+    const sb = scoreSuggestionItem(b, rawQ, nq);
+    if (sb !== sa) return sb - sa;
+    return String(a.id).localeCompare(String(b.id), "en");
+  });
+
+  return collected.slice(0, 200);
+}
+
+/**
+ * 候选在索引行上是否相关（不加载 detail）
+ * @param {any} row
+ * @param {string} rawQ
+ */
+function rowMatchesForSuggestion(row, rawQ) {
+  const q = String(rawQ ?? "").trim();
+  if (!q) return false;
+  const nq = normalizeSearchText(q);
+  const w = String(row.word || row.query || "");
+  const tr = String(row.traditional || "");
+  const pp = normalizeSearchText(String(row.pinyinPlain || ""));
+  const py = normalizeSearchText(String(row.pinyin || ""));
+  if (w && w.includes(q)) return true;
+  if (q.length && w.length && q.includes(w)) return true;
+  if (tr && tr.includes(q)) return true;
+  if (nq && pp && (pp.includes(nq) || pp === nq)) return true;
+  if (nq && py && (py.includes(nq) || py === nq)) return true;
+  return false;
+}
+
+/**
+ * @param {any} row
+ * @param {"main"|"cedict"} sourceLayer
+ */
+function mapSuggestionRow(row, sourceLayer) {
+  return {
+    id: row.id,
+    type: "word",
+    word: String(row.word || row.query || ""),
+    query: String(row.query || row.word || ""),
+    pinyin: String(row.pinyin || ""),
+    pinyinPlain: row.pinyinPlain != null ? String(row.pinyinPlain) : "",
+    pinyinNumbered: row.pinyinNumbered != null ? String(row.pinyinNumbered) : "",
+    file: row.file,
+    sourceLayer,
+  };
+}
+
+/**
+ * @param {object} item
+ * @param {string} query
+ * @param {string} nq
+ */
+function scoreSuggestionItem(item, query, nq) {
+  let score = 0;
+  const q = String(query ?? "").trim();
+  const word = String(item.word || item.query || "");
+  const wordNorm = normalizeSearchText(word);
+  const pinyinNorm = normalizeSearchText(String(item.pinyinPlain || item.pinyin || ""));
+  if (word === q) score += 1000;
+  if (wordNorm === nq) score += 900;
+  if (item.sourceLayer === "main") score += 200;
+  if (q && word.startsWith(q)) score += 120;
+  if (q && word.includes(q)) score += 80;
+  if (nq && pinyinNorm.startsWith(nq)) score += 60;
+  if (nq && pinyinNorm.includes(nq)) score += 30;
+  score -= word.length;
+  return score;
+}
+
+/**
  * 仅在 localStorage DEBUG_DICT=1 时用于控制台手查。勿在正常路径调用。
  * @param {string} query
  */

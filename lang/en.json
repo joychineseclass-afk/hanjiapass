@@ -801,6 +801,7 @@
     "componentsLabel": "Characters",
     "meaningNotIndexed": "No meaning text is available yet.",
     "reviewPendingHint": "Detailed learning notes and examples are being prepared.",
+    "relatedEntriesLabel": "Related Entries",
     "idiomFallback": {
       "message": "This entry is available in Culture Idiom Learning.",
       "open": "Open Idiom Learning"

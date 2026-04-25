@@ -2,7 +2,11 @@
 import { i18n } from "../i18n.js";
 import { pick, getLang } from "../core/languageEngine.js";
 import { navigateTo } from "../router.js";
-import { searchDictionaryWithIdiomFallback, isSingleCjkChar } from "../platform/dictionary/dictionaryEngine.js";
+import {
+  searchDictionaryWithIdiomFallback,
+  isSingleCjkChar,
+  searchDictionarySuggestions,
+} from "../platform/dictionary/dictionaryEngine.js";
 
 let _langHandler = null;
 
@@ -119,6 +123,69 @@ function displayPinyin(entry) {
   return entry?.pinyin || "";
 }
 
+/** 候选行拼音：有 pinyinNumbered 时优先学习者友好分音节展示 */
+function suggestionPinyinForDisplay(s) {
+  if (s?.pinyinNumbered) return numberedPinyinToDisplay(s.pinyinNumbered);
+  return s?.pinyin || "";
+}
+
+/**
+ * 与当前主结果同词的候选项不展示
+ * @param {any} res
+ * @returns {string}
+ */
+function getSuggestionExcludeKey(res) {
+  if (!res) return "";
+  if (!res.found) return String(res.query || "").trim();
+  const e = res.entry;
+  if (!e) return String(res.query || "").trim();
+  if (res.type === "culture-idiom" || e.idiom) return String(e.idiom || "").trim();
+  if (e.type === "word" || (res.type === "word" && e.word)) return String(e.word || e.query || "").trim();
+  if (e.type === "char" || e.char) return String(e.char || "").trim();
+  return String(res.query || "").trim();
+}
+
+/**
+ * 相关词条 HTML（可接在结果卡片后）
+ * @param {any[]} suggestions
+ * @param {(k:string)=>string} t
+ */
+function buildRelatedEntriesHtml(suggestions, t) {
+  if (!suggestions || !suggestions.length) return "";
+  const label = t("dictionary.relatedEntriesLabel");
+  const items = suggestions
+    .map((s) => {
+      const w = s.word || s.query || "";
+      if (!w) return "";
+      const py = suggestionPinyinForDisplay(s);
+      const href = `#dictionary?query=${encodeURIComponent(w)}`;
+      return `<a class="dictionary-related-item" href=${JSON.stringify(href)}>
+  <span class="dictionary-related-word">${esc(w)}</span>
+  <span class="dictionary-related-pinyin">${esc(py || "—")}</span>
+</a>`;
+    })
+    .filter(Boolean)
+    .join("");
+  if (!items) return "";
+  return `<div class="dictionary-related-card" role="region" aria-label="${esc(label)}">
+  <h2 class="dictionary-section-title">${esc(label)}</h2>
+  <div class="dictionary-related-list">${items}</div>
+</div>`;
+}
+
+function bindRelatedEntryLinks(container) {
+  if (!container) return;
+  container.querySelectorAll("a.dictionary-related-item[href^='#dictionary']").forEach((a) => {
+    a.addEventListener("click", (ev) => {
+      const href = a.getAttribute("href");
+      if (href) {
+        ev.preventDefault();
+        navigateTo(href, { force: true });
+      }
+    });
+  });
+}
+
 /** 当前为中文 UI 时，主释义与 meaning.cn 是否重复，避免同句显示两次 */
 function isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) {
   if (lang !== "cn" || !mCn) return false;
@@ -141,6 +208,11 @@ function ensureDictStyles() {
     .dictionary-idiom-fallback-card .dictionary-idiom-msg{ line-height: 1.5; }
     .dictionary-idiom-fallback-card .dictionary-idiom-open{ display:inline-block; }
     .dictionary-review-pending-hint{ margin:0; font-size:0.9rem; line-height:1.5; color: var(--muted,#64748b); }
+    .dictionary-related-card{ margin-top:22px; padding:22px 24px; border-radius:22px; background:#fff; border:1px solid rgba(148,163,184,.25); box-shadow:0 10px 28px rgba(15,23,42,.04); }
+    .dictionary-related-list{ display:grid; gap:10px; margin-top:14px; }
+    .dictionary-related-item{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:14px; padding:12px 14px; border-radius:14px; background:#f8fafc; text-decoration:none; color:inherit; }
+    .dictionary-related-word{ font-size:18px; font-weight:800; color:#0f172a; }
+    .dictionary-related-pinyin{ font-size:14px; font-weight:700; color:#64748b; }
   `;
   document.head.appendChild(style);
 }
@@ -215,8 +287,9 @@ function wordEntryHasAnyMeaningField(e) {
   return ["cn", "kr", "en", "jp"].some((k) => m[k] != null && String(m[k]).trim() !== "");
 }
 
-function renderWordEntry(area, res) {
+function renderWordEntry(area, res, options = {}) {
   if (!area) return;
+  const { suggestions = [] } = options;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const e = res.entry;
@@ -278,6 +351,7 @@ function renderWordEntry(area, res) {
     : "";
 
   const headPinyin = displayPinyin(e) || e.pinyin || "—";
+  const related = buildRelatedEntriesHtml(suggestions, t);
 
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">
@@ -291,14 +365,18 @@ function renderWordEntry(area, res) {
       ${exampleBlock}
       ${compBlock}
     </article>
+    ${related}
   `;
+  bindRelatedEntryLinks(area);
 }
 
-function renderWordNotFound(area, res) {
+function renderWordNotFound(area, res, options = {}) {
   if (!area) return;
+  const { suggestions = [] } = options;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const q = res.query || "";
+  const related = buildRelatedEntriesHtml(suggestions, t);
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">
       <header class="dictionary-entry-head dictionary-word-head">
@@ -306,11 +384,14 @@ function renderWordNotFound(area, res) {
       </header>
       <p class="dictionary-entry-missing muted">${esc(t("dictionary.entryMissing"))}</p>
     </article>
+    ${related}
   `;
+  bindRelatedEntryLinks(area);
 }
 
-function renderCharEntry(area, res) {
+function renderCharEntry(area, res, options = {}) {
   if (!area) return;
+  const { suggestions = [] } = options;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const { fromWord } = getDictQueryFromHash();
@@ -397,6 +478,7 @@ function renderCharEntry(area, res) {
   )}</button>
     </div>`;
 
+  const related = buildRelatedEntriesHtml(suggestions, t);
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article" lang="${esc(lang)}">
       ${backToWordBlock}
@@ -409,7 +491,9 @@ function renderCharEntry(area, res) {
         ${strokeBlock}
       </div>
     </article>
+    ${related}
   `;
+  bindRelatedEntryLinks(area);
 
   const strokeBtn = area.querySelector(".dict-open-stroke");
   strokeBtn?.addEventListener("click", () => {
@@ -422,13 +506,15 @@ function renderCharEntry(area, res) {
   });
 }
 
-function renderIdiomFallbackCard(area, res) {
+function renderIdiomFallbackCard(area, res, options = {}) {
   if (!area) return;
+  const { suggestions = [] } = options;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const e = res.entry;
   const id = e?.id ? encodeURIComponent(e.id) : "";
   const href = id ? `#culture?tab=idioms&id=${id}` : "#culture?tab=idioms";
+  const related = buildRelatedEntriesHtml(suggestions, t);
   area.innerHTML = `
     <article class="dictionary-entry-card dictionary-idiom-fallback-card dict-result-article" lang="${esc(lang)}">
       <div>
@@ -440,7 +526,9 @@ function renderIdiomFallbackCard(area, res) {
         <a class="btn primary dictionary-idiom-open" href="${href}">${esc(t("dictionary.idiomFallback.open"))}</a>
       </div>
     </article>
+    ${related}
   `;
+  bindRelatedEntryLinks(area);
   const a = area.querySelector("a.dictionary-idiom-open");
   a?.addEventListener("click", (ev) => {
     ev.preventDefault();
@@ -448,23 +536,32 @@ function renderIdiomFallbackCard(area, res) {
   });
 }
 
-function renderResult(area, res) {
+function renderResult(area, res, options = {}) {
   if (!area) return;
+  const { suggestions: rawSug = [] } = options;
+  const ex = getSuggestionExcludeKey(res);
+  const suggestions = (rawSug || [])
+    .filter((s) => {
+      const w = String(s.word || s.query || "").trim();
+      return w && w !== ex;
+    })
+    .slice(0, 10);
+
   if (res && res.found && res.type === "culture-idiom" && res.entry) {
-    renderIdiomFallbackCard(area, res);
+    renderIdiomFallbackCard(area, res, { suggestions });
     return;
   }
   const entry = res && res.entry;
   const isWord = res && (res.type === "word" || (entry && entry.type === "word"));
   if (isWord && res.found && entry) {
-    renderWordEntry(area, res);
+    renderWordEntry(area, res, { suggestions });
     return;
   }
   if (isWord && !res.found) {
-    renderWordNotFound(area, res);
+    renderWordNotFound(area, res, { suggestions });
     return;
   }
-  renderCharEntry(area, res);
+  renderCharEntry(area, res, { suggestions });
 }
 
 function resolveSearchTerm() {
@@ -516,7 +613,13 @@ export function mount(ctxOrRoot) {
       if (typeof localStorage !== "undefined" && localStorage.getItem("DEBUG_DICT") === "1") {
         console.log("[dictionary] query", term, "result", res);
       }
-      renderResult(area, res);
+      let rawSug = [];
+      try {
+        rawSug = await searchDictionarySuggestions(term);
+      } catch (sugErr) {
+        console.warn("[dictionary] suggestions", sugErr);
+      }
+      renderResult(area, res, { suggestions: rawSug });
     } catch (e) {
       console.warn("[dictionary]", e);
       area.innerHTML = `<p class="muted">${esc(i18n.t("common.no_data"))}</p>`;
