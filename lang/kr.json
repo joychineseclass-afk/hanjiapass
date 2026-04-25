@@ -800,7 +800,7 @@
     "exampleLabel": "예문",
     "componentsLabel": "구성 한자",
     "meaningNotIndexed": "뜻풀이 자료가 아직 없습니다.",
-    "reviewPendingHint": "자세한 학습 내용은 준비 중입니다.",
+    "reviewPendingHint": "자세한 학습 설명과 예문은 준비 중입니다.",
     "idiomFallback": {
       "message": "이 항목은 문화 성어 학습에 있습니다.",
       "open": "성어 학습으로 열기"

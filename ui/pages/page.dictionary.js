@@ -39,6 +39,86 @@ function esc(s) {
     .replaceAll('"', "&quot;");
 }
 
+// --- 数字声调 → 带调拼音（与 scripts/convert-cedict-sample.mjs 同源，供浏览器展示用）---
+
+const _PY_TONE = {
+  a: ["ā", "á", "ǎ", "à"],
+  e: ["ē", "é", "ě", "è"],
+  i: ["ī", "í", "ǐ", "ì"],
+  o: ["ō", "ó", "ǒ", "ò"],
+  u: ["ū", "ú", "ǔ", "ù"],
+  ü: ["ǖ", "ǘ", "ǚ", "ǜ"],
+  v: ["ǖ", "ǘ", "ǚ", "ǜ"],
+};
+
+function _pyGetToneVowelIndex(body) {
+  const s = String(body).toLowerCase();
+  if (s.includes("a")) return s.indexOf("a");
+  if (s.includes("e")) return s.indexOf("e");
+  if (s.includes("o")) return s.indexOf("o");
+  if (s.length >= 2 && s.endsWith("iu")) return s.length - 1;
+  if (s.length >= 2 && s.endsWith("ui")) return s.length - 1;
+  if (s.includes("i") && s.includes("ü")) return s.indexOf("ü");
+  if (s.includes("i")) return s.lastIndexOf("i");
+  if (s.includes("u")) return s.indexOf("u");
+  if (s.includes("ü") || s.includes("v")) return s.includes("ü") ? s.indexOf("ü") : s.indexOf("v");
+  return 0;
+}
+
+function _pyCharAtCaseAware(orig, i, withTone) {
+  const c = orig[i];
+  return c && c === c.toUpperCase() && c !== c.toLowerCase() ? withTone.toUpperCase() : withTone;
+}
+
+function _pyAddToneToSyllableBody(body, tone) {
+  const t = Math.min(4, Math.max(1, tone));
+  const b = String(body);
+  const lower = b.toLowerCase();
+  const idx = _pyGetToneVowelIndex(b);
+  const ch = lower[idx];
+  const map = ch === "ü" || ch === "v" ? _PY_TONE.ü : _PY_TONE[ch];
+  if (!map) return lower;
+  const repl = _pyCharAtCaseAware(b, idx, map[t - 1]);
+  return b.slice(0, idx) + repl + b.slice(idx + 1);
+}
+
+/**
+ * 单音节如 "shou3" / "xie5" → 带调或轻声
+ * @param {string} token
+ */
+function numberedSyllableToToneMark(token) {
+  const m = String(token).match(/^(.+?)([1-5])$/i);
+  if (!m) return String(token).toLowerCase();
+  const body = m[1];
+  const t = +m[2];
+  if (t === 5) return body.toLowerCase();
+  return _pyAddToneToSyllableBody(body, t);
+}
+
+/**
+ * "shou3 zhu1 dai4 tu4" → "shǒu zhū dài tù"（音节后空格，便于学习）
+ * @param {string} input
+ */
+function numberedPinyinToDisplay(input) {
+  return String(input || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((syllable) => numberedSyllableToToneMark(syllable))
+    .join(" ");
+}
+
+/**
+ * 标题旁拼音：有 pinyinNumbered 时优先用其生成带空格学习版
+ * @param {object} entry
+ */
+function displayPinyin(entry) {
+  if (entry?.pinyinNumbered) {
+    return numberedPinyinToDisplay(entry.pinyinNumbered);
+  }
+  return entry?.pinyin || "";
+}
+
 /** 当前为中文 UI 时，主释义与 meaning.cn 是否重复，避免同句显示两次 */
 function isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) {
   if (lang !== "cn" || !mCn) return false;
@@ -60,6 +140,7 @@ function ensureDictStyles() {
     .dictionary-idiom-fallback-card .dictionary-idiom-pinyin{ font-size: 0.95rem; color: var(--muted,#64748b); }
     .dictionary-idiom-fallback-card .dictionary-idiom-msg{ line-height: 1.5; }
     .dictionary-idiom-fallback-card .dictionary-idiom-open{ display:inline-block; }
+    .dictionary-review-pending-hint{ margin:0; font-size:0.9rem; line-height:1.5; color: var(--muted,#64748b); }
   `;
   document.head.appendChild(style);
 }
@@ -191,14 +272,22 @@ function renderWordEntry(area, res) {
       : `<p class="dictionary-main-meaning muted">${esc(t("dictionary.meaningNotIndexed"))}</p>`
     : `<p class="dictionary-main-meaning muted">${esc(t("dictionary.meaningNotIndexed"))}</p>`;
 
+  const showRawReviewHint = e.qualityLevel === "raw" && e.needsReview === true;
+  const reviewHintBlock = showRawReviewHint
+    ? `<p class="dictionary-review-pending-hint" role="note">${esc(t("dictionary.reviewPendingHint"))}</p>`
+    : "";
+
+  const headPinyin = displayPinyin(e) || e.pinyin || "—";
+
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">
       <header class="dictionary-entry-head dictionary-word-head">
         <span class="dictionary-entry-word">${esc(e.word || "—")}</span>
-        <span class="dictionary-entry-pinyin">${esc(e.pinyin || "—")}</span>
+        <span class="dictionary-entry-pinyin">${esc(headPinyin)}</span>
       </header>
       ${tradLine}
       ${meaningBlock}
+      ${reviewHintBlock}
       ${exampleBlock}
       ${compBlock}
     </article>

@@ -808,7 +808,7 @@
     "exampleLabel": "例文",
     "componentsLabel": "構成漢字",
     "meaningNotIndexed": "意味の解説はまだ掲載されていません。",
-    "reviewPendingHint": "詳しい学習内容は準備中です。",
+    "reviewPendingHint": "詳しい学習説明と例文は準備中です。",
     "idiomFallback": {
       "message": "この項目は文化成語学習にあります。",
       "open": "成語学習を開く"

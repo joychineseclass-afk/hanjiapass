@@ -800,7 +800,7 @@
     "exampleLabel": "例句",
     "componentsLabel": "组成汉字",
     "meaningNotIndexed": "释义资料暂未收录。",
-    "reviewPendingHint": "详细学习内容正在整理中。",
+    "reviewPendingHint": "详细学习说明和例句正在整理中。",
     "idiomFallback": {
       "message": "这个词条属于文化成语学习内容。",
       "open": "打开成语学习"

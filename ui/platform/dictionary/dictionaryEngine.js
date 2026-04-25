@@ -645,9 +645,12 @@ function normalizeEntryShape(entry) {
       word: entry.word,
       traditional: entry.traditional,
       pinyin: entry.pinyin,
+      pinyinNumbered: entry.pinyinNumbered,
       meaning: entry.meaning,
       example: entry.example,
       examplePinyin: entry.examplePinyin,
+      qualityLevel: entry.qualityLevel,
+      needsReview: entry.needsReview,
     };
   }
   return {
