@@ -72,6 +72,8 @@ export async function hydrateCurrentUserFromSession() {
     await prepareSupabaseClient();
     const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
     await syncLuminaCacheFromSupabaseClient();
+    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+    await ensureLuminaProfileAndMerge();
   }
   const s = loadSession();
   if (!s.userId) {
@@ -100,9 +102,14 @@ export async function registerAndLogin(p) {
   const r = await registerUser(p);
   if (!r.ok) return r;
   saveSession(r.user.id);
-  await applyProfileToCurrentUser({ id: r.user.id, displayName: r.user.displayName, email: r.user.email });
+  if (getActiveProvider().type === "supabase") {
+    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+    await ensureLuminaProfileAndMerge();
+  }
+  const u = findUserById(r.user.id) || r.user;
+  await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
   emitAuthStateChanged();
-  return { ok: true, user: r.user };
+  return { ok: true, user: u };
 }
 
 /**
@@ -121,7 +128,11 @@ export async function registerUser(p) {
 export async function loginUser(p) {
   const r = await authStore.signIn(p);
   if (!r.ok) return r;
-  const u = r.user;
+  if (getActiveProvider().type === "supabase") {
+    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+    await ensureLuminaProfileAndMerge();
+  }
+  const u = findUserById(r.user.id) || r.user;
   await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
   emitAuthStateChanged();
   return { ok: true };

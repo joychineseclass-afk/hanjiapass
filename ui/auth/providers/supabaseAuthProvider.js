@@ -110,6 +110,51 @@ export function applySessionToLuminaCache(session) {
 }
 
 /**
+ * 将 public.profiles + user_roles 合并到 Lumina 缓存（不写入 passwordHash 等敏感字段）。
+ * @param {{
+ *   profile: import('./authTypes.js').LuminaProfileRow | null,
+ *   roleKeys: import('./authTypes.js').LuminaPlatformRole[],
+ *   defaultRole: import('./authTypes.js').LuminaPlatformRole | string
+ * }} bundle
+ */
+export function applyProfileBundleToLuminaCache(bundle) {
+  if (!_cachedUser || !bundle) {
+    return;
+  }
+  const { profile, roleKeys, defaultRole } = bundle;
+  const base = _cachedUser;
+  const dName =
+    (profile && String(profile.display_name || "").trim()) || base.displayName;
+  const appRoles = Array.isArray(roleKeys) ? roleKeys : [];
+  const dRole = (/** @type {string} */ (defaultRole)) || (profile && profile.default_role) || "student";
+  const next = {
+    ...base,
+    displayName: dName,
+    email: profile ? normAccount(String(profile.email || base.email)) : base.email,
+    provider: "supabase",
+    appRoles: [...appRoles],
+    defaultRole: dRole,
+    avatarUrl: profile?.avatar_url != null ? String(profile.avatar_url) : base.avatarUrl,
+    locale: profile?.locale != null ? String(profile.locale) : base.locale,
+    updated_at: new Date().toISOString(),
+  };
+  const hasTeacherPlat = appRoles.includes("teacher");
+  const prevTeacher = base?.roles?.teacher ?? "none";
+  next.roles = {
+    student: appRoles.includes("student") ? "active" : "none",
+    teacher: /** @type {import('./authTypes.js').TeacherRoleState} */ (hasTeacherPlat ? "active" : prevTeacher),
+  };
+  if (base.teacherProfile != null) {
+    next.teacherProfile = base.teacherProfile;
+  }
+  if (base.onboardingCompleted != null) {
+    next.onboardingCompleted = base.onboardingCompleted;
+  }
+  _cachedUser = /** @type {import('./authTypes.js').AuthUserV1} */ (next);
+  writeUserOverlay(_cachedUser);
+}
+
+/**
  * 从 Client 拉取 session 并更新缓存（用于首屏 / 登录后；刷新页恢复亦依赖此入口）。
  * @returns {Promise<import('./authTypes.js').AuthUserV1 | null>}
  */
@@ -145,8 +190,16 @@ export function mountSupabaseAuthChannel(emit) {
   }
   _authListenerInited = true;
   _emitToStore = emit;
-  const { data } = client.auth.onAuthStateChange((event, session) => {
+  const { data } = client.auth.onAuthStateChange(async (event, session) => {
     applySessionToLuminaCache(session);
+    if (session?.user) {
+      try {
+        const m = await import("../profileService.js");
+        await m.ensureLuminaProfileAndMerge();
+      } catch (e) {
+        console.warn("[Lumina] ensure profile after auth event:", e?.message || e);
+      }
+    }
     try {
       _emitToStore && _emitToStore();
     } catch {
