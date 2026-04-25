@@ -1,14 +1,19 @@
 /**
  * Supabase 单例。环境变量未配置时返回 null，由调用方回退到 demo auth。
  * 支持：Vite `import.meta.env`、Node `process.env`、浏览器 `globalThis.__LUMINA_ENV__`（静态 HTML 可在 app 前注入）。
+ *
+ * ⚠️ 纯静态部署：浏览器原生 ESM 无法解析裸模块名 `@supabase/supabase-js`，
+ *   必须依赖 `index.html` 中的 `<script type="importmap">` 把它映射到 CDN。
+ *   这里改成「仅在 env 完整且未强制 demo 时才动态 import」，
+ *   避免 demo 路径下每次开页都白白下载 ~100KB 的 supabase-js。
  */
-import { createClient } from "@supabase/supabase-js";
 
 let _warnedMissing = false;
 let _client = /** @type {import("@supabase/supabase-js").SupabaseClient | null} */ (null);
 let _resolvedNull = false;
 let _prodDemoFlagWarned = false;
 let _prodMissingSupaWarned = false;
+let _createClientLoadFailed = false;
 
 /**
  * @param {string} key
@@ -140,10 +145,46 @@ export function warnIfSupabaseEnvMissing() {
 }
 
 /**
- * 懒加载单例。未配置或强制 demo 时返回 null（禁止 createClient 空 URL）。
- * @returns {import("@supabase/supabase-js").SupabaseClient | null}
+ * @type {Promise<((url: string, anonKey: string, opts?: object) => import("@supabase/supabase-js").SupabaseClient) | null> | null}
  */
-export function getSupabase() {
+let _createClientPromise = null;
+
+/**
+ * 仅在确实需要时按需 import 真正的 supabase-js（依赖 importmap 把裸名解析到 CDN）。
+ * 失败时缓存 null，避免反复网络请求。
+ * @returns {Promise<((url: string, anonKey: string, opts?: object) => import("@supabase/supabase-js").SupabaseClient) | null>}
+ */
+function loadCreateClient() {
+  if (_createClientPromise) {
+    return _createClientPromise;
+  }
+  _createClientPromise = import("@supabase/supabase-js")
+    .then((m) => {
+      const fn = /** @type {any} */ (m).createClient;
+      if (typeof fn !== "function") {
+        _createClientLoadFailed = true;
+        console.warn("[Lumina] @supabase/supabase-js loaded but createClient missing.");
+        return null;
+      }
+      return fn;
+    })
+    .catch((e) => {
+      _createClientLoadFailed = true;
+      console.warn(
+        "[Lumina] Failed to dynamically import @supabase/supabase-js (check <importmap> in index.html / network):",
+        e?.message || e,
+      );
+      return null;
+    });
+  return _createClientPromise;
+}
+
+/**
+ * 异步预热：在 app 启动时若 env 完整即可触发，使后续同步 `getSupabase()` 命中缓存。
+ * 即使不显式调用，第一次 `getSupabase()` 也会自动启动预热（首次返回 null，预热后自然命中）。
+ * @returns {Promise<import("@supabase/supabase-js").SupabaseClient | null>}
+ */
+export async function prepareSupabaseClient() {
   if (isAuthDemoForced()) {
     return null;
   }
@@ -159,13 +200,50 @@ export function getSupabase() {
     warnIfSupabaseEnvMissing();
     return null;
   }
-  _client = createClient(url, anonKey, {
+  const create = await loadCreateClient();
+  if (!create) {
+    _resolvedNull = true;
+    return null;
+  }
+  if (_client) {
+    return _client;
+  }
+  _client = create(url, anonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
     },
   });
+  return _client;
+}
+
+/**
+ * 懒加载单例。未配置或强制 demo 时返回 null（禁止 createClient 空 URL）。
+ * 注：当 env 完整但 supabase-js 尚未异步下载完时，首次同步调用会先返回 null 并触发后台加载，
+ *   下一次同步调用（或调用方在 `joy:authChanged` 等事件后重试）即可拿到真实 client。
+ * @returns {import("@supabase/supabase-js").SupabaseClient | null}
+ */
+export function getSupabase() {
+  if (isAuthDemoForced()) {
+    return null;
+  }
+  if (_client) {
+    return _client;
+  }
+  if (_resolvedNull) {
+    return null;
+  }
+  const { isComplete } = getSupabaseEnv();
+  if (!isComplete) {
+    _resolvedNull = true;
+    warnIfSupabaseEnvMissing();
+    return null;
+  }
+  if (_createClientLoadFailed) {
+    return null;
+  }
+  void prepareSupabaseClient();
   return _client;
 }
 

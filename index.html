@@ -37,6 +37,16 @@ content="A next-generation Mandarin learning experience powered by structure, te
   <link rel="stylesheet" href="./ui/styles/hsk.css?v=20260418">
 
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- ✅ Browser ESM importmap：解析裸模块名（无打包静态站点必须） -->
+  <!-- 注意：必须放在任何 <script type="module"> 之前 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.104.1"
+    }
+  }
+  </script>
 </head>
 
 <body>

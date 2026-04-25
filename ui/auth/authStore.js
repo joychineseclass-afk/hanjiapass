@@ -15,6 +15,7 @@ import {
   isAuthDemoForced,
   isLikelyProductionRuntime,
   isNonLocalhostDeployment,
+  prepareSupabaseClient,
   warnIfProductionAuthMisconfiguration,
   warnIfSupabaseEnvMissing,
 } from "../integrations/supabaseClient.js";
@@ -135,7 +136,14 @@ export function onAuthChange(callback) {
 }
 
 if (shouldUseSupabase()) {
-  mountSupabaseAuthChannel(emitAuthStateChanged);
+  // 异步：等 supabase-js 通过 importmap 从 CDN 拉好后再挂监听器，避免阻塞首屏。
+  void prepareSupabaseClient().then((client) => {
+    if (client) {
+      mountSupabaseAuthChannel(emitAuthStateChanged);
+      // 预热完成后广播一次，让导航栏等同步到真实会话状态。
+      emitAuthStateChanged();
+    }
+  });
 }
 
 /** 供迁移文档与排错；仍指向 demo 使用的 key 名。 */
