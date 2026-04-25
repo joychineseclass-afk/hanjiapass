@@ -6,6 +6,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻做了多余的事，反而把事情弄坏。",
+    "chineseExplanationPinyin": "bǐyù zuòle duōyú de shì, fǎn'ér bǎ shìqíng nònghuài.",
     "meaning": {
       "cn": "比喻做了多余的事，反而把事情弄坏。",
       "kr": "쓸데없는 일을 덧붙여 오히려 일을 망친다는 뜻입니다.",
@@ -39,6 +40,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻见识狭窄、眼光短浅的人。常用来提醒人们要开阔视野。",
+    "chineseExplanationPinyin": "bǐyù jiànshí xiázhǎi, yǎnguāng duǎnqiǎn de rén. cháng yòng lái tíxǐng rénmen yào kāikuò shìyě.",
     "meaning": {
       "cn": "比喻见识狭窄、眼光短浅的人。",
       "kr": "견문이 좁고 시야가 짧은 사람을 비유하는 말입니다.",
@@ -72,6 +74,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "出了问题以后，及时想办法补救，还可以避免继续受损。",
+    "chineseExplanationPinyin": "chūle wèntí yǐhòu, jíshí xiǎng bànfǎ bǔjiǔ, hái kěyǐ bìmiǎn jìxù shòusǔn.",
     "meaning": {
       "cn": "出了问题以后，及时想办法补救，还可以避免继续受损。",
       "kr": "문제가 생긴 뒤라도 대책을 세우면 아직 늦지 않다는 뜻입니다.",
@@ -105,6 +108,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻死守旧经验、不知变通，或幻想不劳而获。",
+    "chineseExplanationPinyin": "bǐyù sǐshǒu jiù jīngyàn, bù zhī biàntōng, huò huànxiǎng bùláo'érhuò.",
     "meaning": {
       "cn": "比喻死守狭隘经验，不知变通，或妄想不劳而获。",
       "kr": "한 가지에만 얽매이거나, 노력 없이 남의 행운을 기다린다는 뜻입니다.",
@@ -138,6 +142,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻自己的话或行为前后互相抵触。",
+    "chineseExplanationPinyin": "bǐyù zìjǐ de huà huò xíngwéi qiánhòu hùxiāng dǐchù.",
     "meaning": {
       "cn": "比喻自己的言行或论点前后抵触，不能自圆其说。",
       "kr": "말이나 논리가 앞뒤가 맞지 않는다는 뜻입니다.",
@@ -171,6 +176,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "做一件事，能同时获得两方面的好处。",
+    "chineseExplanationPinyin": "zuò yī jiàn shì, néng tóngshí huòdé liǎng fāngmiàn de hǎochù.",
     "meaning": {
       "cn": "做一件事，能同时得到两方面的好处。",
       "kr": "한 가지 일로 두 가지 이익을 얻는다는 뜻입니다.",
@@ -204,6 +210,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻做事做到一半就放弃。",
+    "chineseExplanationPinyin": "bǐyù zuòshì zuò dào yībàn jiù fàngqì.",
     "meaning": {
       "cn": "比喻事情做到一半就放弃，没有坚持到底。",
       "kr": "일을 절반만 하다가 그만두어 완수하지 못한다는 뜻입니다.",
@@ -237,6 +244,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "比喻拘泥成例、不顾环境变化。",
+    "chineseExplanationPinyin": "bǐyù jūnì chénglì, bùgù huánjìng biànhuà.",
     "meaning": {
       "cn": "比喻拘泥成例，不知道跟着情况变化而调整办法。",
       "kr": "상황이 변했는데도 옛 방식에만 얽매인다는 뜻입니다.",
@@ -270,6 +278,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "形容意志不坚定、注意力不集中。",
+    "chineseExplanationPinyin": "xíngróng yìzhì bù jiāndìng, zhùyìlì bù jízhōng.",
     "meaning": {
       "cn": "形容意志不坚定，又想这样又想那样，不专心。",
       "kr": "마음이 한곳에 집중되지 않고 이것저것 바람을 든다는 뜻입니다.",
@@ -303,6 +312,7 @@
     "category": "成语",
     "difficulty": 1,
     "chineseExplanation": "熟练了自然能掌握技巧，多练多进步。",
+    "chineseExplanationPinyin": "shúliànle zìrán néng zhǎngwò jìqiǎo, duō liàn duō jìnbù.",
     "meaning": {
       "cn": "熟练了就能找到窍门，多练就能提高技能。",
       "kr": "익숙해지면 요령이 생기고, 반복이 실력을 키운다는 뜻입니다.",

@@ -275,13 +275,14 @@ function renderIdiomDetailPage(item) {
   const exObj = item?.example && typeof item.example === "object" ? item.example : null;
 
   const explainZh = String(item?.chineseExplanation ?? "").trim();
+  const explainPy = String(item?.chineseExplanationPinyin ?? "").trim();
   const meaningInLocale = pickMeaningForLocale(item);
   const exCn = exObj ? String(exObj.cn ?? "").trim() : "";
   const exTrans = exObj ? pickLocaleField(exObj) : "";
   const exPy = String(item?.examplePinyin ?? "").trim();
 
-  const showMeaningSecond =
-    Boolean(explainZh) && Boolean(meaningInLocale) && !sameText(explainZh, meaningInLocale);
+  const isCn = meaningLocaleKey() === "cn";
+  const showMeaningSecond = Boolean(meaningInLocale) && (!isCn || !sameText(explainZh, meaningInLocale));
   const showExTranslation = Boolean(exTrans) && !sameText(exTrans, exCn);
 
   let h = "";
@@ -294,6 +295,9 @@ function renderIdiomDetailPage(item) {
   h += `<section class="idiom-detail-section idiom-detail-section--reading">`;
   h += `<h3 class="idiom-section-title" data-i18n="culture.idioms.meaningLabel">${esc(t("culture.idioms.meaningLabel"))}</h3>`;
   h += `<p class="idiom-cn-text" lang="zh-Hans">${esc(explainZh)}</p>`;
+  if (explainPy) {
+    h += `<p class="idiom-pinyin-line idiom-meaning-pinyin-line" lang="zh-Latn">${esc(explainPy)}</p>`;
+  }
   if (showMeaningSecond) {
     h += `<p class="idiom-lang-text">${esc(meaningInLocale)}</p>`;
   }

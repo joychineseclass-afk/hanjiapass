@@ -1946,11 +1946,14 @@ a.section-side-nav-item:hover{
   font-weight: 520;
 }
 .idiom-pinyin-line{
-  margin: 0 0 10px;
   color: #64748b;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.95em;
+  line-height: 1.7;
+  margin: 4px 0 10px;
   letter-spacing: 0.04em;
+}
+.idiom-meaning-pinyin-line{
+  display: block;
 }
 .idiom-lang-text{
   margin: 0;
