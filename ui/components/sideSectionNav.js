@@ -80,3 +80,27 @@ export function cultureSectionContentKeys(id) {
 export function isCultureSectionId(id) {
   return CULTURE_ID_SET.has(String(id || "").toLowerCase());
 }
+
+/** @type {readonly ['basic3000','oracle','korean-test']} */
+export const HANJA_SECTION_IDS = /** @type {const} */ (["basic3000", "oracle", "korean-test"]);
+const HANJA_ID_SET = new Set(HANJA_SECTION_IDS);
+
+/**
+ * @param {'basic3000'|'oracle'|'korean-test'|string} id
+ * @returns {{ titleKey: string, descKey: string }}
+ */
+export function hanjaSectionContentKeys(id) {
+  const s = String(id || "basic3000").toLowerCase();
+  const m = {
+    basic3000: { titleKey: "hanja.basic3000.title", descKey: "hanja.basic3000.desc" },
+    oracle: { titleKey: "hanja.oracle.title", descKey: "hanja.oracle.desc" },
+    "korean-test": { titleKey: "hanja.koreanTest.title", descKey: "hanja.koreanTest.desc" },
+  };
+  if (m[s]) return m[s];
+  return m.basic3000;
+}
+
+/** @param {string} id */
+export function isHanjaSectionId(id) {
+  return HANJA_ID_SET.has(String(id || "").toLowerCase());
+}

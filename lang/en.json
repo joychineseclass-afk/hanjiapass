@@ -2504,6 +2504,24 @@
   "hanja": {
     "title": "Hanja Learning",
     "lead": "Learn common Chinese characters by meaning, reading, word formation, and level classification for Korean Hanja exams and Chinese vocabulary understanding.",
+    "side_nav_label": "Learning modules",
+    "nav": {
+      "basic3000": "Basic Hanzi 3000",
+      "oracle": "Oracle Bone Script",
+      "koreanTest": "Korean Hanja Proficiency Test"
+    },
+    "basic3000": {
+      "title": "Basic Hanzi 3000",
+      "desc": "Learn 3,000 commonly used foundational Chinese characters step by step, including forms, pronunciation, meanings, and common words."
+    },
+    "oracle": {
+      "title": "Oracle Bone Script",
+      "desc": "Learn the origins, forms, evolution, and cultural background of Chinese characters through readable oracle bone script examples."
+    },
+    "koreanTest": {
+      "title": "Korean Hanja Proficiency Test",
+      "desc": "Study Chinese characters according to the Korean Hanja proficiency test framework and use them to understand Chinese vocabulary."
+    },
     "card_levels_title": "Level-based Hanja",
     "card_levels_desc": "Study in stages by Korean Hanja exam levels or platform-defined tracks.",
     "card_vocab_title": "Hanja & Chinese Vocabulary",
