@@ -1733,6 +1733,145 @@ a.teacher-shell-nav-link:hover{
     text-align: center;
   }
 }
+
+/* =========================================================
+   通用页壳：左侧区块导航 + 右侧主内容（与 .teacher-shell 视觉对齐，全站可复用）
+   ========================================================= */
+.page-shell{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px 28px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 48px;
+}
+.page-shell.wrap{
+  max-width: min(1240px, 100%);
+}
+.page-shell--resource{
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.section-side-nav{
+  flex: 0 0 220px;
+  width: 220px;
+  max-width: 100%;
+  position: sticky;
+  top: 10px;
+  padding: 14px 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+.section-side-nav__title{
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+  line-height: 1.35;
+}
+.section-side-nav-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+button.section-side-nav-item{
+  font-family: inherit;
+}
+.section-side-nav-item{
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 11px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #334155;
+  text-decoration: none;
+  border: 1px solid transparent;
+  background: #f8fafc;
+  cursor: pointer;
+}
+button.section-side-nav-item:hover,
+a.section-side-nav-item:hover{
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+.section-side-nav-item.is-active{
+  color: #1e1b4b;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  border-color: #a5b4fc;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+}
+/* 三级、四级：更小字号、更深缩进；默认折叠由 JS 控制 display/aria-expanded */
+.section-side-nav-item.level-3{
+  font-size: 12px;
+  font-weight: 650;
+  padding-left: 18px;
+}
+.section-side-nav-item.level-4{
+  font-size: 11px;
+  font-weight: 600;
+  padding-left: 26px;
+}
+.section-main-panel{
+  flex: 1 1 0;
+  min-width: 0;
+}
+.section-main-panel-inner{
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #fff;
+  padding: 20px 22px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+.section-main-panel-inner .title{
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+.section-main-panel-inner .desc{
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.65;
+}
+@media (max-width: 900px) {
+  .page-shell{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .section-side-nav{
+    position: static;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .section-side-nav-inner{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .section-side-nav-item{
+    flex: 1 1 auto;
+    min-width: 112px;
+    text-align: center;
+  }
+  .section-side-nav-item.level-3,
+  .section-side-nav-item.level-4{
+    padding-left: 11px;
+  }
+}
 .teacher-admin-back{
   margin: 0 0 6px;
 }

@@ -192,6 +192,7 @@
   "resources": {
     "title": "Resource Library",
     "subtitle": "A place for official platform materials, teacher-shared resources, free learning materials, and paid teaching resources.",
+    "side_nav_label": "Categories",
     "free": {
       "title": "Free Resources",
       "desc": "Free materials shared by teachers or the platform. After review, students and teachers can view or download them."
