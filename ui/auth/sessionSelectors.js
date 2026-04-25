@@ -25,7 +25,7 @@ export function isSessionActive() {
 }
 
 /**
- * @returns {import('./authStore.js').AuthUserV1 | null}
+ * @returns {import('./providers/authTypes.js').AuthUserV1 | null}
  */
 export function getSessionAuthUser() {
   return getCurrentSessionAuthUser();
@@ -33,7 +33,7 @@ export function getSessionAuthUser() {
 
 /**
  * 聚合：登录态 + 教师页上下文。
- * @returns {Promise<Awaited<ReturnType<typeof getTeacherPageContext>> & { authUser: import('./authStore.js').AuthUserV1 | null }>}
+ * @returns {Promise<Awaited<ReturnType<typeof getTeacherPageContext>> & { authUser: import('./providers/authTypes.js').AuthUserV1 | null }>}
  */
 export async function getSessionAndTeacherContext() {
   const authUser = getCurrentSessionAuthUser();

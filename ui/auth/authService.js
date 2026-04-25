@@ -1,14 +1,15 @@
 /**
  * 最小账号动作：注册 / 登录 / 登出 + 与 lumina currentUser 同步。
- * 密码为轻量占位哈希，非生产级。
+ * 实际持久化与凭据比对由 `authStore` 选定的 provider 完成；此处仅编排 UI 与 commerce 同步。
  */
 import {
-  findUserByEmail,
   findUserById,
   upsertUser,
   loadSession,
   saveSession,
   normAccount,
+  authStore,
+  emitAuthStateChanged,
 } from "./authStore.js";
 import { setCurrentUser, GUEST_USER, getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { USER_ROLE } from "../lumina-commerce/enums.js";
@@ -23,33 +24,6 @@ import { ensureCurrentUserMatchesCommerceTeacher } from "../lumina-commerce/teac
  * @property {string} displayName
  * @property {string} email
  */
-
-function uid(prefix) {
-  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 9)}`;
-}
-
-/**
- * @param {string} password
- * @returns {string}
- */
-export function hashPassword(password) {
-  const s = String(password || "");
-  let h = 5381;
-  for (let i = 0; i < s.length; i++) {
-    h = (h * 33) ^ s.charCodeAt(i);
-  }
-  const salt = "lumina_auth_v1";
-  return `h1_${(h >>> 0).toString(16)}_${hashPasswordInner(s + salt)}`;
-}
-
-function hashPasswordInner(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) {
-    h = Math.imul(31, h) + s.charCodeAt(i);
-    h |= 0;
-  }
-  return (h >>> 0).toString(16);
-}
 
 /**
  * 从本地 Lumina 角色 + commerce 老师档案同步 currentUser。
@@ -111,46 +85,26 @@ export async function hydrateCurrentUserFromSession() {
 }
 
 /**
- * @param {{ name: string, email: string, password: string }} p
- * @returns {{ ok: true, user: import('./authStore.js').AuthUserV1 } | { ok: false, code: string }}
- */
-/**
  * 注册并立即建立会话（本阶段无邮箱验证）。
  * @param {{ name: string, email: string, password: string }} p
+ * @returns {Promise<{ ok: true, user: import('./providers/authTypes.js').AuthUserV1 } | { ok: false, code: string }>}
  */
 export async function registerAndLogin(p) {
-  const r = registerUser(p);
+  const r = await registerUser(p);
   if (!r.ok) return r;
   saveSession(r.user.id);
   await applyProfileToCurrentUser({ id: r.user.id, displayName: r.user.displayName, email: r.user.email });
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true, user: r.user };
 }
 
-export function registerUser(p) {
-  const displayName = String(p.name || "").trim();
-  const account = normAccount(String(p.email || p.account || ""));
-  const password = String(p.password || "");
-  if (!account) return { ok: false, code: "email_required" };
-  if (!password) return { ok: false, code: "password_required" };
-  if (findUserByEmail(account)) return { ok: false, code: "email_taken" };
-  const user = {
-    id: uid("u"),
-    email: account,
-    displayName: displayName || (account.includes("@") ? account.split("@")[0] : account) || "User",
-    passwordHash: hashPassword(password),
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    onboardingCompleted: false,
-    roles: { student: "active", teacher: "none" },
-    teacherProfile: null,
-  };
-  upsertUser(user);
-  return { ok: true, user };
+/**
+ * 创建账号（由 authStore 委托 demo 或未来 remote；不在此实现 localStorage）。
+ * @param {{ name: string, email: string, password: string }} p
+ * @returns {Promise<{ ok: true, user: import('./providers/authTypes.js').AuthUserV1 } | { ok: false, code: string }>}
+ */
+export async function registerUser(p) {
+  return authStore.signUp(p);
 }
 
 /**
@@ -158,35 +112,22 @@ export function registerUser(p) {
  * @returns {Promise<{ ok: true } | { ok: false, code: string }>}
  */
 export async function loginUser(p) {
-  const account = normAccount(String(p.email || p.account || ""));
-  const password = String(p.password || "");
-  if (!account) return { ok: false, code: "email_required" };
-  if (!password) return { ok: false, code: "password_required" };
-  const u = findUserByEmail(account);
-  if (!u) return { ok: false, code: "invalid_credentials" };
-  if (u.passwordHash !== hashPassword(password)) return { ok: false, code: "invalid_credentials" };
-  saveSession(u.id);
+  const r = await authStore.signIn(p);
+  if (!r.ok) return r;
+  const u = r.user;
   await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true };
 }
 
-export function logoutUser() {
-  saveSession(null);
+export async function logoutUser() {
+  await authStore.signOut();
   setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
 }
 
 /**
- * @returns {import('./authStore.js').AuthUserV1 | null}
+ * @returns {import('./providers/authTypes.js').AuthUserV1 | null}
  */
 export function getCurrentSessionAuthUser() {
   const s = loadSession();
@@ -203,11 +144,7 @@ export async function applyToBecomeTeacher() {
   const r = await ensureTeacherProfile(au.id, au.displayName);
   if (!r.ok) return r;
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return r;
 }
 
@@ -228,11 +165,7 @@ export async function markOnboardingCompletedStudentPath() {
     updated_at: new Date().toISOString(),
   });
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true };
 }
 
@@ -261,11 +194,7 @@ export async function submitTeacherApplication(p) {
     updated_at: new Date().toISOString(),
   });
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true };
 }
 
@@ -287,11 +216,7 @@ export async function setMockTeacherRoleActiveForTest() {
   const { devForceApproveCurrentUserTeacherProfile } = await import("../lumina-commerce/teacherProfileService.js");
   const r = await devForceApproveCurrentUserTeacherProfile(String(au.id));
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return r;
 }
 
@@ -347,11 +272,7 @@ export async function devSetMockTeacherState(state) {
     return { ok: false, code: "invalid_state" };
   }
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true };
 }
 
@@ -369,11 +290,7 @@ export async function devResetOnboardingForTest() {
     updated_at: new Date().toISOString(),
   });
   await hydrateCurrentUserFromSession();
-  try {
-    window.dispatchEvent(new CustomEvent("joy:authChanged"));
-  } catch {
-    /* */
-  }
+  emitAuthStateChanged();
   return { ok: true };
 }
 

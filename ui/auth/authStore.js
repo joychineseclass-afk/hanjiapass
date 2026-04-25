@@ -1,208 +1,176 @@
 /**
- * 本地账号持久化：用户表 + 会话 id（可替换为真实后端）。
- * Keys: lumina_auth_users_v1, lumina_auth_session_v1
+ * Lumina 认证适配层：选择 provider、暴露统一 API、在 UI 与业务之间隔离持久化实现。
+ * 不直接写 localStorage 用户表 — 由 `demoLocalAuthProvider` 或未来的 remote 实现负责。
  */
-export const AUTH_USERS_KEY = "lumina_auth_users_v1";
-export const AUTH_SESSION_KEY = "lumina_auth_session_v1";
+import * as demo from "./providers/demoLocalAuthProvider.js";
+import { remoteAuthProviderPlaceholder } from "./providers/remoteAuthProvider.placeholder.js";
 
 /**
- * @typedef {'active'|'none'} StudentRoleState
- * @typedef {'none'|'pending'|'active'|'rejected'} TeacherRoleState
- * @typedef {Object} LuminaRolesV1
- * @property {StudentRoleState} student
- * @property {TeacherRoleState} teacher
+ * 设为 `true` 时启用 `remoteAuthProviderPlaceholder`（未接后端前会抛错，仅用于接库前的编译/分支验证）。
+ * 接好真实后端后在此切换或通过构建注入。
  */
+const LUMINA_USE_REMOTE_AUTH_PLACEHOLDER = false;
+
+let demoProdWarned = false;
 
 /**
- * @typedef {Object} TeacherApplicationProfileV1
- * @property {string} displayName
- * @property {string} intro
- * @property {string[]} teachingTypes
- * @property {string} experienceLevel
- * @property {string} [note]
- * @property {string} submittedAt
+ * @returns {boolean}
  */
-
-/**
- * @typedef {Object} AuthUserV1
- * @property {string} id
- * @property {string} email
- * @property {string} displayName
- * @property {string} passwordHash
- * @property {string} created_at
- * @property {string} updated_at
- * @property {boolean} [onboardingCompleted] 缺省时按 legacy 视为 true
- * @property {LuminaRolesV1} [roles]
- * @property {TeacherApplicationProfileV1|null} [teacherProfile]
- */
-
-/**
- * @typedef {{ v: 1, users: AuthUserV1[] }} AuthUsersFile
- */
-
-/**
- * @typedef {{ v: 1, userId: string | null }} AuthSession
- */
-
-/**
- * @param {string} s
- * @returns {string}
- */
-function normEmail(s) {
-  return String(s || "")
-    .trim()
-    .toLowerCase();
-}
-
-/** 登录标识：邮箱或手机号等，统一小写/去首尾空格 */
-export function normAccount(s) {
-  return String(s || "")
-    .trim()
-    .toLowerCase();
-}
-
-const TEACHER_STATES = new Set(["none", "pending", "active", "rejected"]);
-
-/**
- * @param {Record<string, unknown>} o
- * @returns {{ onboardingCompleted: boolean, roles: LuminaRolesV1, teacherProfile: TeacherApplicationProfileV1 | null }}
- */
-export function normalizeLuminaProfileFields(o) {
-  const explicit = Object.prototype.hasOwnProperty.call(o, "onboardingCompleted");
-  const onboardingCompleted = explicit ? Boolean(o.onboardingCompleted) : true;
-  let roles = o.roles;
-  if (!roles || typeof roles !== "object") {
-    roles = { student: "active", teacher: "none" };
-  } else {
-    const ro = /** @type {Record<string, unknown>} */ (roles);
-    const st = ro.student === "none" ? "none" : "active";
-    const tr = ro.teacher;
-    const te = typeof tr === "string" && TEACHER_STATES.has(tr) ? tr : "none";
-    roles = { student: st, teacher: /** @type {TeacherRoleState} */ (te) };
-  }
-  let teacherProfile = o.teacherProfile;
-  if (teacherProfile != null && typeof teacherProfile === "object") {
-    const tp = /** @type {Record<string, unknown>} */ (teacherProfile);
-    teacherProfile = {
-      displayName: String(tp.displayName || ""),
-      intro: String(tp.intro || ""),
-      teachingTypes: Array.isArray(tp.teachingTypes) ? tp.teachingTypes.map((x) => String(x)) : [],
-      experienceLevel: String(tp.experienceLevel || ""),
-      note: tp.note != null ? String(tp.note) : "",
-      submittedAt: String(tp.submittedAt || ""),
-    };
-  } else {
-    teacherProfile = null;
-  }
-  return { onboardingCompleted, roles, teacherProfile };
-}
-
-/**
- * @returns {AuthUsersFile}
- */
-export function loadAuthUsers() {
+function isProductionRuntime() {
   try {
-    const raw = localStorage.getItem(AUTH_USERS_KEY);
-    if (!raw) return { v: 1, users: [] };
-    const p = JSON.parse(raw);
-    if (!p || p.v !== 1 || !Array.isArray(p.users)) return { v: 1, users: [] };
-    return {
-      v: 1,
-      users: p.users
-        .map(sanitizeUser)
-        .filter((u) => u && u.id && u.email)
-        .map((u) => /** @type {AuthUserV1} */ (u)),
-    };
+    if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.PROD) return true;
   } catch {
-    return { v: 1, users: [] };
+    /* */
+  }
+  try {
+    if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "production") return true;
+  } catch {
+    /* */
+  }
+  return false;
+}
+
+function maybeWarnDemoAuthInProduction() {
+  if (!isProductionRuntime() || LUMINA_USE_REMOTE_AUTH_PLACEHOLDER || demoProdWarned) return;
+  demoProdWarned = true;
+  console.warn(
+    "Lumina is using demo local auth. This is not persistent across devices and must not be used for production accounts."
+  );
+}
+
+maybeWarnDemoAuthInProduction();
+
+/**
+ * 异步会话/登录 API 使用的 provider（含 demo / remote-placeholder）。
+ * @returns {typeof demo.demoLocalAuthProvider | typeof remoteAuthProviderPlaceholder}
+ */
+function getActiveProvider() {
+  return LUMINA_USE_REMOTE_AUTH_PLACEHOLDER ? remoteAuthProviderPlaceholder : demo.demoLocalAuthProvider;
+}
+
+/**
+ * 用户表、会话的同步存取与查询（同构于当前 demo 的模块级函数；切 remote 时委托占位实现）。
+ * @returns {typeof remoteAuthProviderPlaceholder | typeof import('./providers/demoLocalAuthProvider.js')}
+ */
+function getPersistenceApi() {
+  return LUMINA_USE_REMOTE_AUTH_PLACEHOLDER ? remoteAuthProviderPlaceholder : demo;
+}
+
+// --- 订阅与广播（`joy:authChanged` 与 onAuthChange 同时触发，便于统一迁移）---
+const authChangeSubscribers = new Set();
+
+/**
+ * 通知已订阅者并派发 `joy:authChanged`（与现有页面兼容）。
+ * 供 authService 等在会话变更后显式调用。
+ */
+export function emitAuthStateChanged() {
+  for (const fn of authChangeSubscribers) {
+    try {
+      fn();
+    } catch {
+      /* */
+    }
+  }
+  try {
+    window.dispatchEvent(new CustomEvent("joy:authChanged"));
+  } catch {
+    /* */
   }
 }
 
 /**
- * @param {unknown} u
- * @returns {AuthUserV1|null}
+ * @param {() => void} callback
+ * @returns {() => void} 取消订阅
  */
-function sanitizeUser(u) {
-  if (!u || typeof u !== "object") return null;
-  const o = /** @type {Record<string, unknown>} */ (u);
-  const lumina = normalizeLuminaProfileFields(o);
-  return {
-    id: String(o.id || "").trim(),
-    email: normEmail(String(o.email || "")),
-    displayName: String(o.displayName || o.name || "").trim() || "User",
-    passwordHash: String(o.passwordHash || ""),
-    created_at: String(o.created_at || new Date().toISOString()),
-    updated_at: String(o.updated_at || new Date().toISOString()),
-    onboardingCompleted: lumina.onboardingCompleted,
-    roles: lumina.roles,
-    teacherProfile: lumina.teacherProfile,
+export function onAuthChange(callback) {
+  if (typeof callback !== "function") {
+    return () => {};
+  }
+  authChangeSubscribers.add(callback);
+  return () => {
+    authChangeSubscribers.delete(callback);
   };
 }
 
+/** 供迁移文档与排错；仍指向 demo 使用的 key 名。 */
+export const AUTH_USERS_KEY = demo.AUTH_USERS_KEY;
+export const AUTH_SESSION_KEY = demo.AUTH_SESSION_KEY;
+
+/** 与存储无关的纯函数，仍从 demo 模块导出。 */
+export const normAccount = demo.normAccount;
+export const normalizeLuminaProfileFields = demo.normalizeLuminaProfileFields;
+
 /**
- * @param {AuthUsersFile} data
+ * @param {string} id
  */
-export function saveAuthUsers(data) {
-  try {
-    localStorage.setItem(AUTH_USERS_KEY, JSON.stringify({ v: 1, users: data.users }));
-  } catch {
-    /* ignore */
-  }
+export function findUserById(id) {
+  return getPersistenceApi().findUserById(id);
 }
 
 /**
- * @returns {AuthSession}
+ * @param {string} email
  */
+export function findUserByEmail(email) {
+  return getPersistenceApi().findUserByEmail(email);
+}
+
 export function loadSession() {
-  try {
-    const raw = localStorage.getItem(AUTH_SESSION_KEY);
-    if (!raw) return { v: 1, userId: null };
-    const p = JSON.parse(raw);
-    if (!p || p.v !== 1) return { v: 1, userId: null };
-    return { v: 1, userId: p.userId ? String(p.userId) : null };
-  } catch {
-    return { v: 1, userId: null };
-  }
+  return getPersistenceApi().loadSession();
 }
 
 /**
  * @param {string | null} userId
  */
 export function saveSession(userId) {
-  try {
-    localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({ v: 1, userId: userId && String(userId) ? String(userId) : null }));
-  } catch {
-    /* ignore */
-  }
+  return getPersistenceApi().saveSession(userId);
 }
 
 /**
- * @param {string} email
- * @returns {AuthUserV1|undefined}
- */
-export function findUserByEmail(email) {
-  const e = normAccount(email);
-  if (!e) return undefined;
-  return loadAuthUsers().users.find((u) => normAccount(u.email) === e);
-}
-
-/**
- * @param {string} id
- * @returns {AuthUserV1|undefined}
- */
-export function findUserById(id) {
-  if (!id) return undefined;
-  return loadAuthUsers().users.find((u) => u.id === id);
-}
-
-/**
- * @param {AuthUserV1} user
+ * @param {import('./providers/authTypes.js').AuthUserV1} user
  */
 export function upsertUser(user) {
-  const data = loadAuthUsers();
-  const i = data.users.findIndex((u) => u.id === user.id);
-  const next = { ...user, email: normAccount(String(user.email || "")) };
-  if (i >= 0) data.users[i] = next;
-  else data.users.push(next);
-  saveAuthUsers(data);
+  return getPersistenceApi().upsertUser(user);
 }
+
+export function loadAuthUsers() {
+  return getPersistenceApi().loadAuthUsers();
+}
+
+/**
+ * @param {import('./providers/authTypes.js').AuthUsersFile} data
+ */
+export function saveAuthUsers(data) {
+  return getPersistenceApi().saveAuthUsers(data);
+}
+
+/**
+ * 统一 API（新代码优先使用）
+ */
+export const authStore = {
+  getType: () => getActiveProvider().type,
+
+  signUp: (payload) => getActiveProvider().signUp(payload),
+  signIn: (payload) => getActiveProvider().signIn(payload),
+  signOut: () => getActiveProvider().signOut(),
+
+  getSession: () => getActiveProvider().getSession(),
+
+  getCurrentUser: () => getActiveProvider().getCurrentUser(),
+
+  updateProfile: (payload) => getActiveProvider().updateProfile(payload),
+
+  isAuthenticated: async () => {
+    const p = getActiveProvider();
+    if (!p.getSession) return false;
+    const s = await p.getSession();
+    if (!s) return false;
+    if (typeof s === "object" && s !== null && "userId" in s) {
+      return Boolean(/** @type {{ userId?: string | null }} */ (s).userId);
+    }
+    return false;
+  },
+
+  onAuthChange,
+};
+
+export { getActiveProvider };
