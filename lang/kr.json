@@ -856,6 +856,12 @@
     "title": "문화 학습",
     "subtitle": "성어, 속담, 명절, 예절, 역사 인물과 중국 문화 표현을 학습합니다.",
     "comingSoon": "콘텐츠는 순차적으로 확장됩니다.",
+    "search": {
+      "placeholder": "문화 검색",
+      "results": "검색 결과",
+      "noResults": "관련 문화 내용을 찾을 수 없습니다.",
+      "singleCharHint": "한자 학습으로 이동합니다."
+    },
     "side_nav_label": "문화 구분",
     "nav": {
       "idioms": "성어",

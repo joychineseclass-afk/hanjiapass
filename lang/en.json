@@ -856,6 +856,12 @@
     "title": "Culture Learning",
     "subtitle": "Learn idioms, proverbs, festivals, etiquette, historical figures, and Chinese cultural expressions.",
     "comingSoon": "Content will be expanded step by step.",
+    "search": {
+      "placeholder": "Search culture",
+      "results": "Search Results",
+      "noResults": "No matching culture content found.",
+      "singleCharHint": "Opening character learning."
+    },
     "side_nav_label": "Topics",
     "nav": {
       "idioms": "Idioms",

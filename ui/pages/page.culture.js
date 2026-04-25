@@ -14,6 +14,9 @@ const ID_PARAM = "id";
 const DEFAULT_ID = "idioms";
 const DEFAULT_IDIOM_ID = "idiom_0001";
 const ALLOWED = new Set(CULTURE_SECTION_IDS);
+const HANJA_HASH = "#hanja";
+/** 单字：跳转汉字/字典学习，不显示文化内搜索结果 */
+const CN_SINGLE_CHAR = /^[\u4e00-\u9fff]$/;
 
 const IDIOM_CATEGORY_ORDER = [
   "fable",
@@ -37,6 +40,8 @@ const _idiomDetailFileCache = new Map();
 const _idiomDetailFilePromises = new Map();
 
 let _idiomsPanelRequestId = 0;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _cultureSearchDebounceTimer = null;
 
 /** 已展开侧栏的二级分类（成语/俗语等有下层子项的区块） */
 const expandedCultureSections = new Set();
@@ -100,6 +105,77 @@ function groupIdiomsByCategory(index) {
     groups.get(category).push(item);
   }
   return groups;
+}
+
+/**
+ * 拼音/英文检索归一化（小写、去声调、去空白）
+ * @param {string} [value]
+ */
+function normalizeSearchText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+/**
+ * 匹配：idiom、pinyin、theme、category
+ * @param {object} item
+ * @param {string} qNorm normalizeSearchText(query)
+ */
+function idiomIndexMatches(item, qNorm) {
+  if (!qNorm) return false;
+  if (normalizeSearchText(item.idiom).includes(qNorm)) return true;
+  if (normalizeSearchText(item.pinyin).includes(qNorm)) return true;
+  if (item.theme && Array.isArray(item.theme)) {
+    for (const tag of item.theme) {
+      if (normalizeSearchText(String(tag || "")).includes(qNorm)) return true;
+    }
+  }
+  if (normalizeSearchText(String(item.category || "")).includes(qNorm)) return true;
+  return false;
+}
+
+/**
+ * @param {string} query
+ * @param {object[]} idioms
+ * @returns {{ type: "idiom"; id: string; idiom: string; pinyin: string }[]}
+ */
+function searchIdioms(query, idioms) {
+  const qn = normalizeSearchText(query);
+  if (!qn) return [];
+  const out = [];
+  for (const item of idioms) {
+    if (!item || !item.id) continue;
+    if (idiomIndexMatches(item, qn)) {
+      out.push({
+        type: "idiom",
+        id: String(item.id),
+        idiom: String(item.idiom || ""),
+        pinyin: String(item.pinyin || ""),
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * 可扩展：后续加入俗语/节日等正式数据
+ * @param {string} query
+ */
+async function searchCultureEntries(query) {
+  const results = [];
+  let idioms;
+  try {
+    idioms = await loadIdiomsIndex();
+  } catch {
+    return results;
+  }
+  if (!Array.isArray(idioms) || !idioms.length) return results;
+  results.push(...searchIdioms(query, idioms));
+  return results;
 }
 
 /**
@@ -567,6 +643,80 @@ function updateNavForSectionOnly(root, sectionId) {
   }
 }
 
+/**
+ * @param {object[]} results
+ * @param {() => void} tfn
+ * @param {(s: string) => string} escFn
+ */
+function buildCultureSearchResultsHtml(results, tfn, escFn) {
+  if (!results.length) {
+    return `<div class="culture-search-results" role="status">
+  <p class="culture-search-no-results" data-i18n="culture.search.noResults">${escFn(tfn("culture.search.noResults"))}</p>
+</div>`;
+  }
+  const items = results
+    .filter((r) => r.type === "idiom")
+    .map(
+      (r) => `<button type="button" class="culture-search-result-item" data-culture-search-pick="idiom" data-culture-search-id="${escFn(
+        r.id
+      )}" role="listitem">
+  <div class="culture-search-result-word" lang="zh-Hans">${escFn(r.idiom)}</div>
+  <div class="culture-search-result-pinyin" lang="zh-Latn">${escFn(r.pinyin)}</div>
+  <div class="culture-search-result-type" data-i18n="culture.nav.idioms">${escFn(tfn("culture.nav.idioms"))}</div>
+</button>`
+    )
+    .join("");
+  return `<div class="culture-search-results" role="region">
+  <p class="culture-search-results-title" data-i18n="culture.search.results">${escFn(tfn("culture.search.results"))}</p>
+  <div class="culture-search-results-list" role="list">${items}</div>
+</div>`;
+}
+
+/**
+ * @param {object} app root #app
+ */
+async function renderCultureSearchPanel(app) {
+  const panel = app.querySelector("[data-culture-search-panel]");
+  const input = app.querySelector("[data-culture-search-input]");
+  if (!panel || !input) return;
+  const q = String(input.value || "").trim();
+  if (!q) {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  if (CN_SINGLE_CHAR.test(q)) {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  let results;
+  try {
+    results = await searchCultureEntries(q);
+  } catch {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  panel.removeAttribute("hidden");
+  panel.innerHTML = buildCultureSearchResultsHtml(results, t, esc);
+  i18n.apply?.(panel);
+}
+
+/**
+ * @param {object} app
+ */
+function scheduleCultureSearchPanelRender(app) {
+  if (_cultureSearchDebounceTimer) {
+    clearTimeout(_cultureSearchDebounceTimer);
+    _cultureSearchDebounceTimer = null;
+  }
+  _cultureSearchDebounceTimer = setTimeout(() => {
+    _cultureSearchDebounceTimer = null;
+    void renderCultureSearchPanel(app);
+  }, 200);
+}
+
 function ensureShellBgStyle() {
   if (document.getElementById(STYLE_ID)) return;
   const style = document.createElement("style");
@@ -619,6 +769,34 @@ function showIdiomAiComingSoonToast(message) {
   }, 2600);
 }
 
+/**
+ * @param {object} app
+ * @param {function(string): void} navTo
+ */
+function handleCultureSearchSubmit(app, navTo) {
+  const input = app.querySelector("[data-culture-search-input]");
+  const q = String(input?.value || "").trim();
+  if (!q) return;
+  if (CN_SINGLE_CHAR.test(q)) {
+    showIdiomAiComingSoonToast(t("culture.search.singleCharHint"));
+    navTo(`${HANJA_HASH}?char=${encodeURIComponent(q)}`);
+    return;
+  }
+  void (async () => {
+    let results;
+    try {
+      results = await searchCultureEntries(q);
+    } catch {
+      return;
+    }
+    if (results.length === 1 && results[0].type === "idiom") {
+      navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(results[0].id)}`);
+      return;
+    }
+    await renderCultureSearchPanel(app);
+  })();
+}
+
 export function unmount() {
   try {
     _teardown?.();
@@ -626,6 +804,10 @@ export function unmount() {
     /* */
   }
   _teardown = null;
+  if (_cultureSearchDebounceTimer) {
+    clearTimeout(_cultureSearchDebounceTimer);
+    _cultureSearchDebounceTimer = null;
+  }
   expandedCultureSections.clear();
   expandedIdiomCategories.clear();
 }
@@ -685,6 +867,21 @@ export async function mount() {
     <div class="lumina-culture resource-library wrap" style="max-width:var(--max,1120px);margin:0 auto;padding:12px 16px 24px">
       <div class="page-shell page-shell--resource">
         <aside class="section-side-nav" aria-label="${esc(sideNavTitle)}">
+          <div class="culture-side-search-wrap">
+            <form class="culture-side-search" data-culture-search-form action="#">
+              <input
+                type="search"
+                class="culture-side-search-input"
+                data-culture-search-input
+                placeholder="${esc(t("culture.search.placeholder"))}"
+                aria-label="${esc(t("culture.search.placeholder"))}"
+                autocomplete="off"
+                enterkeyhint="search"
+                spellcheck="false"
+              />
+            </form>
+            <div class="culture-side-search-panel" data-culture-search-panel hidden></div>
+          </div>
           <p class="section-side-nav__title" data-i18n="${esc(sideNavTitleKey)}">${esc(sideNavTitle)}</p>
           <nav class="section-side-nav-inner" data-culture-side-nav>
             ${sideNavBody}
@@ -714,6 +911,33 @@ export async function mount() {
         }
       });
   };
+
+  const searchForm = app.querySelector("[data-culture-search-form]");
+  const searchInput = app.querySelector("[data-culture-search-input]");
+  if (searchInput) {
+    searchInput.setAttribute("placeholder", t("culture.search.placeholder"));
+    searchInput.setAttribute("aria-label", t("culture.search.placeholder"));
+  }
+  const onCultureSearchSubmit = (e) => {
+    e.preventDefault();
+    handleCultureSearchSubmit(app, navTo);
+  };
+  const onCultureSearchInput = () => {
+    scheduleCultureSearchPanelRender(app);
+  };
+  const onCultureSearchPick = (e) => {
+    const btn = e.target?.closest?.("[data-culture-search-pick]");
+    if (!btn || !app.contains(btn)) return;
+    const typ = btn.getAttribute("data-culture-search-pick");
+    const id = btn.getAttribute("data-culture-search-id");
+    if (typ === "idiom" && id) {
+      e.preventDefault();
+      navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(id)}`);
+    }
+  };
+  searchForm?.addEventListener("submit", onCultureSearchSubmit);
+  searchInput?.addEventListener("input", onCultureSearchInput);
+  app.addEventListener("click", onCultureSearchPick);
 
   const onNavClick = (e) => {
     const childBtn = e.target?.closest?.("[data-culture-child]");
@@ -803,6 +1027,12 @@ export async function mount() {
     i18n.apply?.(app);
     const sec = currentSectionId();
     ensureDefaultIdiomInHash();
+    const sin = app.querySelector("[data-culture-search-input]");
+    if (sin) {
+      sin.setAttribute("placeholder", t("culture.search.placeholder"));
+      sin.setAttribute("aria-label", t("culture.search.placeholder"));
+    }
+    void renderCultureSearchPanel(app);
     updateNavForSectionOnly(app, sec);
     updatePanel(app, sec);
   };
@@ -822,7 +1052,14 @@ export async function mount() {
       clearTimeout(_idiomAiToastFadeTimer);
       _idiomAiToastFadeTimer = null;
     }
+    if (_cultureSearchDebounceTimer) {
+      clearTimeout(_cultureSearchDebounceTimer);
+      _cultureSearchDebounceTimer = null;
+    }
     document.querySelectorAll(".culture-idiom-ai-toast").forEach((n) => n.remove());
+    searchForm?.removeEventListener("submit", onCultureSearchSubmit);
+    searchInput?.removeEventListener("input", onCultureSearchInput);
+    app.removeEventListener("click", onCultureSearchPick);
     app.querySelector("[data-culture-side-nav]")?.removeEventListener("click", onNavClick);
     app.querySelector("[data-culture-panel]")?.removeEventListener("click", onPanelClick);
     window.removeEventListener("hashchange", onHash);

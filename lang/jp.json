@@ -864,6 +864,12 @@
     "title": "文化学習",
     "subtitle": "成語、ことわざ、祝日、礼儀、歴史人物、中国文化表現を学習します。",
     "comingSoon": "コンテンツは順次拡張されます。",
+    "search": {
+      "placeholder": "文化を検索",
+      "results": "検索結果",
+      "noResults": "関連する文化内容が見つかりません。",
+      "singleCharHint": "漢字学習を開きます。"
+    },
     "side_nav_label": "文化トピック",
     "nav": {
       "idioms": "成語",

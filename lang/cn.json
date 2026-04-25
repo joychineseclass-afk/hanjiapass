@@ -856,6 +856,12 @@
     "title": "文化学习",
     "subtitle": "学习成语、俗语、节日、礼仪、历史人物和中国文化表达。",
     "comingSoon": "内容将逐步扩展。",
+    "search": {
+      "placeholder": "搜索文化内容",
+      "results": "搜索结果",
+      "noResults": "没有找到相关文化内容。",
+      "singleCharHint": "正在打开单字学习。"
+    },
     "side_nav_label": "文化分类",
     "nav": {
       "idioms": "成语",
