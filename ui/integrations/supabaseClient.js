@@ -46,6 +46,42 @@ function readEnvString(key) {
 }
 
 /**
+ * 将 Vercel / Dashboard 里粘贴的 Project URL 规范为 `https://<ref>.supabase.co`（无尾斜杠、无意外路径），
+ * 避免 `/auth/v1/token` 拼成 404 或 `//auth`。
+ * @param {string} raw
+ * @returns {string}
+ */
+function normalizeSupabaseProjectUrl(raw) {
+  let s = String(raw || "").trim();
+  if (!s) {
+    return "";
+  }
+  s = s.replace(/\/+$/g, "");
+  if (!/^https?:\/\//i.test(s)) {
+    s = "https://" + s.replace(/^\/+/, "");
+  }
+  try {
+    const u = new URL(s);
+    if (u.host.endsWith("supabase.co") && u.pathname && u.pathname !== "/") {
+      if (u.pathname.includes("dashboard") || u.pathname.length > 1) {
+        console.warn(
+          "[Lumina] VITE_SUPABASE_URL has a path; using origin only. Use Settings → API → Project URL (e.g. https://<ref>.supabase.co).",
+        );
+      }
+      return u.origin;
+    }
+    if (u.pathname && u.pathname !== "/") {
+      console.warn(
+        "[Lumina] VITE_SUPABASE_URL includes a path; if auth 404, set it to the API origin only (no /project/...).",
+      );
+    }
+    return u.origin + (u.pathname && u.pathname !== "/" ? u.pathname.replace(/\/+$/g, "") : "");
+  } catch {
+    return "";
+  }
+}
+
+/**
  * 是否显式仅使用本地 demo 认证（即使已配置 Supabase URL key）。
  * `VITE_LUMINA_AUTH_USE_DEMO=1` 或 `__LUMINA_ENV__` 同 key。
  */
@@ -58,7 +94,7 @@ export function isAuthDemoForced() {
  * @returns {{ url: string, anonKey: string, isComplete: boolean }}
  */
 export function getSupabaseEnv() {
-  const url = readEnvString("VITE_SUPABASE_URL");
+  const url = normalizeSupabaseProjectUrl(readEnvString("VITE_SUPABASE_URL"));
   const anonKey = readEnvString("VITE_SUPABASE_ANON_KEY");
   return {
     url,

@@ -85,7 +85,8 @@
       "password_mismatch": "パスワードが一致しません。",
       "email_not_confirmed": "ログインする前にメールで確認してください。",
       "network_error": "ネットワークエラーです。接続を確認してもう一度お試しください。",
-      "supabase_not_configured": "サインインが設定されていません。しばらくしてから再試行するかサポートに連絡してください。"
+      "supabase_not_configured": "サインインが設定されていません。しばらくしてから再試行するかサポートに連絡してください。",
+      "supabase_auth_unreachable": "Supabase の URL が正しくありません（認証が 404）。Vercel の VITE_SUPABASE_URL を Supabase → Settings → API → Project URL と一致させ、再デプロイしてください。"
     }
   },
   "onboarding": {

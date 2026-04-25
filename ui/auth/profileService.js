@@ -38,7 +38,12 @@ async function resolveAuthUserForEnsure(client) {
   }
   const g = await client.auth.getUser();
   if (g.error) {
-    console.warn("[Lumina] resolveAuthUser: getSession empty, getUser error:", g.error.message);
+    const m = g.error.message || "";
+    if (m.includes("session") || m.includes("Session")) {
+      /* 未登录或尚未恢复 cookie：预期，勿刷 warn */
+    } else {
+      console.warn("[Lumina] resolveAuthUser: getSession empty, getUser error:", g.error.message);
+    }
   }
   return { user: g.data?.user ?? null, error: g.error || null };
 }
@@ -89,7 +94,9 @@ export async function ensureCurrentUserProfile() {
   const { user, error: guErr } = await resolveAuthUserForEnsure(client);
   if (!user) {
     const msg = guErr != null && typeof guErr === "object" && "message" in guErr ? String(/** @type {{ message: string }} */ (guErr).message) : "no user";
-    console.error("[Lumina] ensureCurrentUserProfile: no auth user (after getSession / getUser):", msg);
+    if (!msg.includes("session") && !msg.includes("Session")) {
+      console.error("[Lumina] ensureCurrentUserProfile: no auth user (after getSession / getUser):", msg);
+    }
     return { ok: false, code: "not_authenticated" };
   }
   const meta = /** @type {Record<string, unknown>} */ (user.user_metadata || {});
@@ -269,7 +276,9 @@ export async function ensureLuminaProfileAndMerge() {
   }
   const r = await ensureCurrentUserProfile();
   if (!r.ok) {
-    console.error("[Lumina] ensureLuminaProfileAndMerge: ensureCurrentUserProfile failed, code =", r.code);
+    if (r.code !== "not_authenticated") {
+      console.error("[Lumina] ensureLuminaProfileAndMerge: ensureCurrentUserProfile failed, code =", r.code);
+    }
     return;
   }
   const bundle = await getCurrentUserProfileBundle();

@@ -228,16 +228,24 @@ function mapError(err, _mode) {
   if (!err) {
     return { code: "unknown", message: "Unknown error" };
   }
-  const o = /** @type {{ code?: string, message?: string, status?: number }} */ (err);
+  const o = /** @type {{ code?: string, message?: string, status?: number, name?: string }} */ (err);
   const code = o.code != null ? String(o.code) : "";
   const message = o.message != null ? String(o.message) : "Request failed";
+  const status = typeof o.status === "number" && !Number.isNaN(o.status) ? o.status : undefined;
+  /** GoTrue 在错误 Project URL 上常见 404，必须早于 invalid_credentials，否则会误报「密码错误」 */
+  if (status === 404 || /\b404\b|Not Found|non-2xx:\s*404|Requested resource was not found/i.test(message)) {
+    return { code: "supabase_auth_unreachable", message: "Auth endpoint 404. Check VITE_SUPABASE_URL." };
+  }
+  if (status != null && status >= 500) {
+    return { code: "network_error", message: "Server error" };
+  }
   if (code === "email_not_confirmed" || /email.*confirm|confirm.*email/i.test(message)) {
     return { code: "email_not_confirmed", message: "Email not confirmed" };
   }
   if (code === "invalid_credentials" || /Invalid login|invalid password|Invalid email or password/i.test(message)) {
     return { code: "invalid_credentials", message: "Invalid login credentials" };
   }
-  if (code === "user_already_registered" || /already registered|already exists/i.test(message)) {
+  if (code === "user_already_registered" || /already registered|already exists|User already registered/i.test(message)) {
     return { code: "email_taken", message: "Email already registered" };
   }
   if (/fetch failed|NetworkError|network|Failed to fetch/i.test(message) || o.status === 0) {

@@ -71,9 +71,12 @@ export async function hydrateCurrentUserFromSession() {
     const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
     await getSupabaseClientReady();
     const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
-    await syncLuminaCacheFromSupabaseClient();
-    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
-    await ensureLuminaProfileAndMerge();
+    const supaUser = await syncLuminaCacheFromSupabaseClient();
+    /** 未登录访客无 Supabase session，不应 ensure（否则会 not_authentication + 刷屏） */
+    if (supaUser) {
+      const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+      await ensureLuminaProfileAndMerge();
+    }
   }
   const s = loadSession();
   if (!s.userId) {
@@ -99,17 +102,22 @@ export async function hydrateCurrentUserFromSession() {
  * @returns {Promise<{ ok: true, user: import('./providers/authTypes.js').AuthUserV1 } | { ok: false, code: string }>}
  */
 export async function registerAndLogin(p) {
-  const r = await registerUser(p);
-  if (!r.ok) return r;
-  saveSession(r.user.id);
-  if (getActiveProvider().type === "supabase") {
-    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
-    await ensureLuminaProfileAndMerge();
+  try {
+    const r = await registerUser(p);
+    if (!r.ok) return r;
+    saveSession(r.user.id);
+    if (getActiveProvider().type === "supabase") {
+      const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+      await ensureLuminaProfileAndMerge();
+    }
+    const u = findUserById(r.user.id) || r.user;
+    await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
+    emitAuthStateChanged();
+    return { ok: true, user: u };
+  } catch (e) {
+    console.error("[Lumina] registerAndLogin", e);
+    return { ok: false, code: "unknown" };
   }
-  const u = findUserById(r.user.id) || r.user;
-  await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
-  emitAuthStateChanged();
-  return { ok: true, user: u };
 }
 
 /**
@@ -126,16 +134,21 @@ export async function registerUser(p) {
  * @returns {Promise<{ ok: true } | { ok: false, code: string }>}
  */
 export async function loginUser(p) {
-  const r = await authStore.signIn(p);
-  if (!r.ok) return r;
-  if (getActiveProvider().type === "supabase") {
-    const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
-    await ensureLuminaProfileAndMerge();
+  try {
+    const r = await authStore.signIn(p);
+    if (!r.ok) return r;
+    if (getActiveProvider().type === "supabase") {
+      const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+      await ensureLuminaProfileAndMerge();
+    }
+    const u = findUserById(r.user.id) || r.user;
+    await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
+    emitAuthStateChanged();
+    return { ok: true };
+  } catch (e) {
+    console.error("[Lumina] loginUser", e);
+    return { ok: false, code: "unknown" };
   }
-  const u = findUserById(r.user.id) || r.user;
-  await applyProfileToCurrentUser({ id: u.id, displayName: u.displayName, email: u.email });
-  emitAuthStateChanged();
-  return { ok: true };
 }
 
 export async function logoutUser() {

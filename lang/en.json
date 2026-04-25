@@ -85,7 +85,8 @@
       "password_mismatch": "Passwords do not match.",
       "email_not_confirmed": "Please confirm your email before signing in.",
       "network_error": "Network error. Check your connection and try again.",
-      "supabase_not_configured": "Sign-in is not configured. Try again later or contact support."
+      "supabase_not_configured": "Sign-in is not configured. Try again later or contact support.",
+      "supabase_auth_unreachable": "Supabase URL is wrong (auth returned 404). Set VITE_SUPABASE_URL in Vercel to match Supabase → Settings → API → Project URL, then redeploy."
     }
   },
   "onboarding": {
