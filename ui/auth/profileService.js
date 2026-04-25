@@ -2,7 +2,7 @@
  * Supabase public.profiles + public.user_roles 读取与 ensure（方案 B：登录后创建）。
  * demo provider 不会调用本模块。
  */
-import { getSupabase, prepareSupabaseClient } from "../integrations/supabaseClient.js";
+import { getSupabaseClientReady } from "../integrations/supabaseClient.js";
 import { getActiveProvider } from "./authStore.js";
 import { applyProfileBundleToLuminaCache } from "./providers/supabaseAuthProvider.js";
 
@@ -25,11 +25,29 @@ import { applyProfileBundleToLuminaCache } from "./providers/supabaseAuthProvide
  */
 
 /**
+ * 注册/登录后立刻调用 `auth.getUser()` 时，可能尚未与 `signUp` 刚写入的本地 session 对齐，会误判未登录。
+ * 应优先 `getSession().session.user`（与 `signIn` / `signUp` 返回的同一会话一致）。
+ * @param {import("@supabase/supabase-js").SupabaseClient} client
+ * @returns {Promise<{ user: import("@supabase/supabase-js").User | null, error: import("@supabase/supabase-js").AuthError | null }>}
+ */
+async function resolveAuthUserForEnsure(client) {
+  const s = await client.auth.getSession();
+  const su = s.data?.session?.user;
+  if (su) {
+    return { user: su, error: s.error || null };
+  }
+  const g = await client.auth.getUser();
+  if (g.error) {
+    console.warn("[Lumina] resolveAuthUser: getSession empty, getUser error:", g.error.message);
+  }
+  return { user: g.data?.user ?? null, error: g.error || null };
+}
+
+/**
  * @returns {Promise<import("@supabase/supabase-js").SupabaseClient | null>}
  */
 async function clientOrNull() {
-  await prepareSupabaseClient();
-  return getSupabase();
+  return getSupabaseClientReady();
 }
 
 /**
@@ -43,11 +61,11 @@ export async function getCurrentProfile() {
   if (!client) {
     return null;
   }
-  const { data: uData, error: uErr } = await client.auth.getUser();
-  if (uErr || !uData?.user) {
+  const { user: u0 } = await resolveAuthUserForEnsure(client);
+  if (!u0) {
     return null;
   }
-  const uid = uData.user.id;
+  const uid = u0.id;
   const { data, error } = await client.from("profiles").select("*").eq("id", uid).maybeSingle();
   if (error) {
     console.warn("[Lumina] getCurrentProfile:", error.message);
@@ -68,11 +86,12 @@ export async function ensureCurrentUserProfile() {
   if (!client) {
     return { ok: false, code: "no_client" };
   }
-  const { data: uData, error: uErr } = await client.auth.getUser();
-  if (uErr || !uData?.user) {
+  const { user, error: guErr } = await resolveAuthUserForEnsure(client);
+  if (!user) {
+    const msg = guErr != null && typeof guErr === "object" && "message" in guErr ? String(/** @type {{ message: string }} */ (guErr).message) : "no user";
+    console.error("[Lumina] ensureCurrentUserProfile: no auth user (after getSession / getUser):", msg);
     return { ok: false, code: "not_authenticated" };
   }
-  const user = uData.user;
   const meta = /** @type {Record<string, unknown>} */ (user.user_metadata || {});
   const displayName =
     String(meta.display_name || meta.displayName || meta.name || "").trim() ||
@@ -92,8 +111,17 @@ export async function ensureCurrentUserProfile() {
       default_role: "student",
     });
     if (ins.error) {
-      console.warn("[Lumina] ensureCurrentUserProfile insert profile:", ins.error.message);
-      return { ok: false, code: "db_error" };
+      const code = /** @type {{ code?: string }} */ (ins.error).code;
+      if (code === "23505") {
+        /* 并发/重复，视为已存在 */
+      } else {
+        console.error(
+          "[Lumina] ensureCurrentUserProfile insert profile (RLS/表/约束):",
+          ins.error,
+          (/** @type {{ details?: string, hint?: string }} */ (ins.error)).details || ""
+        );
+        return { ok: false, code: "db_error" };
+      }
     }
   }
 
@@ -106,8 +134,13 @@ export async function ensureCurrentUserProfile() {
   if (!hasStudent) {
     const insR = await client.from("user_roles").insert({ user_id: user.id, role: "student" });
     if (insR.error) {
-      console.warn("[Lumina] ensureCurrentUserProfile insert role:", insR.error.message);
-      return { ok: false, code: "db_error" };
+      const code = /** @type {{ code?: string }} */ (insR.error).code;
+      if (code === "23505") {
+        /* unique 冲突：已有 student */
+      } else {
+        console.error("[Lumina] ensureCurrentUserProfile insert user_roles (RLS/约束):", insR.error);
+        return { ok: false, code: "db_error" };
+      }
     }
   }
 
@@ -126,10 +159,11 @@ export async function updateCurrentProfile(patch) {
   if (!client) {
     return { ok: false, code: "no_client" };
   }
-  const { data: uData, error: uErr } = await client.auth.getUser();
-  if (uErr || !uData?.user) {
+  const { user, error: gErr } = await resolveAuthUserForEnsure(client);
+  if (!user) {
     return { ok: false, code: "not_authenticated" };
   }
+  void gErr;
   const row = /** @type {Record<string, unknown>} */ ({});
   if (patch.displayName != null) {
     row.display_name = String(patch.displayName);
@@ -143,7 +177,7 @@ export async function updateCurrentProfile(patch) {
   if (Object.keys(row).length === 0) {
     return { ok: true, profile: await getCurrentProfile() };
   }
-  const { data, error } = await client.from("profiles").update(row).eq("id", uData.user.id).select().maybeSingle();
+  const { data, error } = await client.from("profiles").update(row).eq("id", user.id).select().maybeSingle();
   if (error) {
     console.warn("[Lumina] updateCurrentProfile:", error.message);
     return { ok: false, code: "db_error" };
@@ -163,11 +197,12 @@ export async function getCurrentUserRoles() {
   if (!client) {
     return [];
   }
-  const { data: uData, error: uErr } = await client.auth.getUser();
-  if (uErr || !uData?.user) {
+  const { user, error: uErr } = await resolveAuthUserForEnsure(client);
+  if (!user) {
     return [];
   }
-  const { data, error } = await client.from("user_roles").select("role").eq("user_id", uData.user.id);
+  void uErr;
+  const { data, error } = await client.from("user_roles").select("role").eq("user_id", user.id);
   if (error) {
     console.warn("[Lumina] getCurrentUserRoles:", error.message);
     return [];
@@ -194,11 +229,11 @@ export async function getCurrentUserProfileBundle() {
   if (!client) {
     return null;
   }
-  const { data: uData, error: uErr } = await client.auth.getUser();
-  if (uErr || !uData?.user) {
+  const { user: su, error: uErr } = await resolveAuthUserForEnsure(client);
+  if (!su) {
     return null;
   }
-  const su = uData.user;
+  void uErr;
   const profile = await getCurrentProfile();
   const roleList = await getCurrentUserRoles();
   const defaultRole = (profile && profile.default_role) || "student";
@@ -234,6 +269,7 @@ export async function ensureLuminaProfileAndMerge() {
   }
   const r = await ensureCurrentUserProfile();
   if (!r.ok) {
+    console.error("[Lumina] ensureLuminaProfileAndMerge: ensureCurrentUserProfile failed, code =", r.code);
     return;
   }
   const bundle = await getCurrentUserProfileBundle();

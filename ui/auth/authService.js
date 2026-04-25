@@ -68,8 +68,8 @@ async function applyProfileToCurrentUser(authUser) {
  */
 export async function hydrateCurrentUserFromSession() {
   if (getActiveProvider().type === "supabase") {
-    const { prepareSupabaseClient } = await import("../integrations/supabaseClient.js");
-    await prepareSupabaseClient();
+    const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
+    await getSupabaseClientReady();
     const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
     await syncLuminaCacheFromSupabaseClient();
     const { ensureLuminaProfileAndMerge } = await import("./profileService.js");

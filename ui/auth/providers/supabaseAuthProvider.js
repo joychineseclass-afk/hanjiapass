@@ -2,7 +2,7 @@
  * Supabase 认证 provider（真实跨端会话由 Supabase 客户端落盘与刷新）。
  * Lumina 业务用户字段的同步 overlay 用 sessionStorage 暂存，供 `findUserById` 等与 demo 路径对齐；后续可迁 public.profiles。
  */
-import { getSupabase, isAuthDemoForced } from "../../integrations/supabaseClient.js";
+import { getSupabase, isAuthDemoForced, prepareSupabaseClient } from "../../integrations/supabaseClient.js";
 import { normAccount, normalizeLuminaProfileFields } from "./demoLocalAuthProvider.js";
 
 const OVERLAY_KEY = "lumina_supabase_lumina_overlay_v1";
@@ -257,6 +257,7 @@ async function signInImpl(payload) {
   if (isAuthDemoForced()) {
     return { ok: false, code: "supabase_not_configured", message: "Supabase not configured" };
   }
+  await prepareSupabaseClient();
   const client = getSupabase();
   if (!client) {
     return { ok: false, code: "supabase_not_configured", message: "Supabase not configured" };
@@ -288,6 +289,7 @@ async function signUpImpl(payload) {
   if (isAuthDemoForced()) {
     return { ok: false, code: "supabase_not_configured", message: "Supabase not configured" };
   }
+  await prepareSupabaseClient();
   const client = getSupabase();
   if (!client) {
     return { ok: false, code: "supabase_not_configured", message: "Supabase not configured" };

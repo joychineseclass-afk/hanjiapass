@@ -179,11 +179,6 @@ function loadCreateClient() {
   return _createClientPromise;
 }
 
-/**
- * 异步预热：在 app 启动时若 env 完整即可触发，使后续同步 `getSupabase()` 命中缓存。
- * 即使不显式调用，第一次 `getSupabase()` 也会自动启动预热（首次返回 null，预热后自然命中）。
- * @returns {Promise<import("@supabase/supabase-js").SupabaseClient | null>}
- */
 export async function prepareSupabaseClient() {
   if (isAuthDemoForced()) {
     return null;
@@ -216,6 +211,15 @@ export async function prepareSupabaseClient() {
     },
   });
   return _client;
+}
+
+/**
+ * 等待 Client 创建完成（signUp / ensure 前务必使用，避免同步 getSupabase() 仍 null）。
+ * @returns {Promise<import("@supabase/supabase-js").SupabaseClient | null>}
+ */
+export async function getSupabaseClientReady() {
+  await prepareSupabaseClient();
+  return getSupabase();
 }
 
 /**
