@@ -4,6 +4,7 @@
   "description": "Lumina Chinese Learning Center - HSK vocabulary system",
   "type": "module",
   "scripts": {
+    "build": "node scripts/vercel-build.mjs",
     "build:vocab": "node scripts/build-vocab.mjs",
     "build:pinyin": "node scripts/build-pinyin-map.mjs",
     "check:pinyin": "node scripts/check-pinyin-needed.mjs",

@@ -71,6 +71,30 @@ if (!shouldUseSupabase() && !LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
   warnIfSupabaseEnvMissing();
 }
 
+/** Step 6B：一次性排障（不输出 key） */
+let _luminaAuthProviderDebugLogged = false;
+function logLuminaAuthProviderDebugOnce() {
+  if (_luminaAuthProviderDebugLogged) {
+    return;
+  }
+  _luminaAuthProviderDebugLogged = true;
+  if (typeof console === "undefined" || typeof console.info !== "function") {
+    return;
+  }
+  try {
+    const { url, anonKey } = getSupabaseEnv();
+    console.info("[Lumina auth] provider", {
+      activeProviderType: getActiveProvider().type,
+      hasSupabaseUrl: Boolean(url),
+      hasSupabaseAnonKey: Boolean(anonKey),
+      forceDemo: isAuthDemoForced(),
+    });
+  } catch {
+    /* */
+  }
+}
+logLuminaAuthProviderDebugOnce();
+
 /**
  * 异步会话/登录 API 使用的 provider
  */

@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
   "functions": {
     "api/shadowing-asr.js": {
       "maxDuration": 60
