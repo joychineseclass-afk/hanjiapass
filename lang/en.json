@@ -2512,7 +2512,20 @@
     },
     "basic3000": {
       "title": "Basic Hanzi 3000",
-      "desc": "Learn 3,000 commonly used foundational Chinese characters step by step, including forms, pronunciation, meanings, and common words."
+      "desc": "Learn 3,000 commonly used foundational Chinese characters step by step, including forms, pronunciation, meanings, and common words.",
+      "level1": "Level 1｜Basic 500 Characters",
+      "level2": "Level 2｜Basic 1000 Characters",
+      "level3": "Level 3｜Basic 1500 Characters",
+      "level4": "Level 4｜Basic 2000 Characters",
+      "level5": "Level 5｜Basic 2500 Characters",
+      "level6": "Level 6｜Basic 3000 Characters",
+      "level1Title": "Basic 500 Characters",
+      "level2Title": "Basic 1000 Characters",
+      "level3Title": "Basic 1500 Characters",
+      "level4Title": "Basic 2000 Characters",
+      "level5Title": "Basic 2500 Characters",
+      "level6Title": "Basic 3000 Characters",
+      "levelDesc": "This section will organize the first {count} foundational Chinese characters."
     },
     "oracle": {
       "title": "Oracle Bone Script",

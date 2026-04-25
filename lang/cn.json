@@ -2517,7 +2517,20 @@
     },
     "basic3000": {
       "title": "3000基础汉字",
-      "desc": "系统学习中文中常用的 3000 个基础汉字，包括字形、读音、意思和常用词。"
+      "desc": "系统学习中文中常用的 3000 个基础汉字，包括字形、读音、意思和常用词。",
+      "level1": "Level 1｜基础500字",
+      "level2": "Level 2｜基础1000字",
+      "level3": "Level 3｜基础1500字",
+      "level4": "Level 4｜基础2000字",
+      "level5": "Level 5｜基础2500字",
+      "level6": "Level 6｜基础3000字",
+      "level1Title": "基础500字",
+      "level2Title": "基础1000字",
+      "level3Title": "基础1500字",
+      "level4Title": "基础2000字",
+      "level5Title": "基础2500字",
+      "level6Title": "基础3000字",
+      "levelDesc": "这里将整理最基础的 {count} 个常用汉字。"
     },
     "oracle": {
       "title": "甲骨文",

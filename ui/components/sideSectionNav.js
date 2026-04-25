@@ -85,6 +85,30 @@ export function isCultureSectionId(id) {
 export const HANJA_SECTION_IDS = /** @type {const} */ (["basic3000", "oracle", "korean-test"]);
 const HANJA_ID_SET = new Set(HANJA_SECTION_IDS);
 
+const HANJA_BASE = "#hanja";
+const HANJA_TAB_KEY = "tab";
+const HANJA_LEVEL_KEY = "level";
+/** 基础汉字 3000 的六级与对应字数 */
+export const HANJA_BASIC3000_LEVEL_COUNTS = /** @type {const} */ ([500, 1000, 1500, 2000, 2500, 3000]);
+
+/**
+ * 当前 #hanja 的「层」；仅当 tab=basic3000 时 1–6 有效，否则返回 1（占位）。
+ * @param {string} [baseHash] 默认 #hanja
+ */
+export function parseHanjaLevel(baseHash = HANJA_BASE) {
+  const want = String(baseHash).startsWith("#") ? String(baseHash).toLowerCase() : `#${String(baseHash).toLowerCase()}`;
+  const raw = String(typeof location !== "undefined" ? location.hash || "" : "");
+  if (raw.split("?")[0].split("/")[0].toLowerCase() !== want) return 1;
+  const tab = parseHashSectionId(want, HANJA_TAB_KEY, "basic3000", HANJA_ID_SET);
+  if (tab !== "basic3000") return 1;
+  const q = raw.indexOf("?");
+  if (q < 0) return 1;
+  const sp = new URLSearchParams(raw.slice(q + 1));
+  const n = parseInt(String(sp.get(HANJA_LEVEL_KEY) || "1"), 10);
+  if (!Number.isFinite(n) || n < 1 || n > 6) return 1;
+  return n;
+}
+
 /**
  * @param {'basic3000'|'oracle'|'korean-test'|string} id
  * @returns {{ titleKey: string, descKey: string }}

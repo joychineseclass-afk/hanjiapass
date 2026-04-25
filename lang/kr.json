@@ -2512,7 +2512,20 @@
     },
     "basic3000": {
       "title": "기초 한자3000",
-      "desc": "중국어 학습에 자주 쓰이는 기초 한자 3000자를 단계적으로 학습합니다."
+      "desc": "중국어 학습에 자주 쓰이는 기초 한자 3000자를 단계적으로 학습합니다.",
+      "level1": "Level 1｜기초 500자",
+      "level2": "Level 2｜기초 1000자",
+      "level3": "Level 3｜기초 1500자",
+      "level4": "Level 4｜기초 2000자",
+      "level5": "Level 5｜기초 2500자",
+      "level6": "Level 6｜기초 3000자",
+      "level1Title": "기초 500자",
+      "level2Title": "기초 1000자",
+      "level3Title": "기초 1500자",
+      "level4Title": "기초 2000자",
+      "level5Title": "기초 2500자",
+      "level6Title": "기초 3000자",
+      "levelDesc": "가장 기본이 되는 상용 한자 {count}자를 정리할 예정입니다."
     },
     "oracle": {
       "title": "갑골문",

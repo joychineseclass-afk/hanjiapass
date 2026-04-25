@@ -1949,6 +1949,30 @@ a.section-side-nav-item:hover{
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
+/* Hanja #hanja：basic3000 下六级，字号小于二级、左侧缩进 */
+.hanja-page .hanja-level-subnav{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin: 0 0 8px 0;
+  padding: 0 0 0 8px;
+  border-left: 2px solid rgba(99, 102, 241, 0.28);
+  box-sizing: border-box;
+}
+.hanja-page .hanja-level-subnav[hidden]{
+  display: none !important;
+}
+.hanja-page .section-side-nav-item.hanja-level-item{
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 9px 6px 10px;
+  opacity: 0.95;
+}
+.hanja-page .section-side-nav-item.hanja-level-item.is-active{
+  opacity: 1;
+  font-weight: 700;
+}
 .section-side-nav-children.level-4-group{
   display: grid;
   gap: 5px;
@@ -2160,6 +2184,9 @@ a.section-side-nav-item:hover{
   }
   .section-side-nav-children .section-side-nav-item.level-3{
     padding-left: 20px;
+  }
+  .hanja-page .hanja-level-subnav{
+    flex: 1 1 100%;
   }
 }
 .teacher-admin-back{
