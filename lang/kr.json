@@ -870,6 +870,8 @@
       "desc": "자주 쓰이는 사자성어의 뜻, 유래, 사용 상황과 예문을 학습합니다.",
       "meaningLabel": "뜻",
       "exampleLabel": "예문",
+      "aiExplain": "AI 설명",
+      "aiComingSoon": "AI 설명 기능은 곧 제공될 예정입니다.",
       "aiSectionTitle": "AI 설명",
       "storySourceLabel": "이야기 출처",
       "storyCnLabel": "중국어 이야기",

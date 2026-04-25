@@ -870,6 +870,8 @@
       "desc": "Learn the meaning, origin, usage contexts, and examples of common four-character idioms.",
       "meaningLabel": "Meaning",
       "exampleLabel": "Example",
+      "aiExplain": "AI Explanation",
+      "aiComingSoon": "AI explanation will be available soon.",
       "aiSectionTitle": "AI Explanation",
       "storySourceLabel": "Story Source",
       "storyCnLabel": "Chinese Story",

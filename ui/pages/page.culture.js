@@ -221,10 +221,7 @@ function pickMeaningForLocale(item) {
  * @param {object} item
  */
 function renderIdiomDetailPage(item) {
-  const lang = meaningLocaleKey();
   const exObj = item?.example && typeof item.example === "object" ? item.example : null;
-  const storyObj = item?.story && typeof item.story === "object" ? item.story : null;
-  const srcObj = item?.storySource && typeof item.storySource === "object" ? item.storySource : null;
 
   const explainZh = String(item?.chineseExplanation ?? "").trim();
   const meaningInLocale = pickMeaningForLocale(item);
@@ -235,11 +232,6 @@ function renderIdiomDetailPage(item) {
   const showMeaningSecond =
     Boolean(explainZh) && Boolean(meaningInLocale) && !sameText(explainZh, meaningInLocale);
   const showExTranslation = Boolean(exTrans) && !sameText(exTrans, exCn);
-
-  const storySrc = srcObj ? pickLocaleField(srcObj) : "";
-  const storyZh = String(storyObj?.cn ?? "").trim();
-  const storyLang = storyObj ? pickLocaleField(storyObj) : "";
-  const showLangStory = lang !== "cn" && Boolean(storyLang) && !sameText(storyLang, storyZh);
 
   let h = "";
   h += `<article class="idiom-detail-card" data-idiom-detail="${esc(item?.id)}">`;
@@ -267,23 +259,11 @@ function renderIdiomDetailPage(item) {
   }
   h += `</section>`;
 
-  h += `<section class="idiom-ai-section" aria-label="${esc(t("culture.idioms.aiSectionTitle"))}">`;
-  h += `<h3 class="idiom-ai-main-title" data-i18n="culture.idioms.aiSectionTitle">${esc(t("culture.idioms.aiSectionTitle"))}</h3>`;
-  h += `<div class="idiom-ai-group">`;
-  h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storySourceLabel">${esc(t("culture.idioms.storySourceLabel"))}</h4>`;
-  h += `<p class="idiom-ai-para">${esc(storySrc)}</p>`;
+  h += `<div class="idiom-ai-button-wrap">`;
+  h += `<button type="button" class="idiom-ai-button" data-idiom-ai-btn="1" data-i18n="culture.idioms.aiExplain">${esc(
+    t("culture.idioms.aiExplain")
+  )}</button>`;
   h += `</div>`;
-  h += `<div class="idiom-ai-group">`;
-  h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storyCnLabel">${esc(t("culture.idioms.storyCnLabel"))}</h4>`;
-  h += `<p class="idiom-ai-para idiom-cn-text" lang="zh-Hans">${esc(storyZh)}</p>`;
-  h += `</div>`;
-  if (showLangStory) {
-    h += `<div class="idiom-ai-group">`;
-    h += `<h4 class="idiom-ai-subhead" data-i18n="culture.idioms.storyLangLabel">${esc(t("culture.idioms.storyLangLabel"))}</h4>`;
-    h += `<p class="idiom-ai-para idiom-lang-text">${esc(storyLang)}</p>`;
-    h += `</div>`;
-  }
-  h += `</section>`;
   h += `</article>`;
   return h;
 }
@@ -435,6 +415,46 @@ function ensureShellBgStyle() {
 }
 
 let _teardown = null;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _idiomAiToastTimer = null;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _idiomAiToastFadeTimer = null;
+
+/**
+ * 成语详情「AI讲解」：即将开放提示（固定底部轻提示，非长弹窗）
+ * @param {string} message
+ */
+function showIdiomAiComingSoonToast(message) {
+  const text = String(message || "").trim() || t("culture.idioms.aiComingSoon");
+  const existing = document.querySelector(".culture-idiom-ai-toast");
+  if (existing) {
+    existing.remove();
+  }
+  if (_idiomAiToastTimer) {
+    clearTimeout(_idiomAiToastTimer);
+    _idiomAiToastTimer = null;
+  }
+  if (_idiomAiToastFadeTimer) {
+    clearTimeout(_idiomAiToastFadeTimer);
+    _idiomAiToastFadeTimer = null;
+  }
+  const el = document.createElement("div");
+  el.className = "culture-idiom-ai-toast";
+  el.setAttribute("role", "status");
+  el.textContent = text;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => {
+    el.classList.add("culture-idiom-ai-toast--show");
+  });
+  _idiomAiToastTimer = setTimeout(() => {
+    el.classList.remove("culture-idiom-ai-toast--show");
+    _idiomAiToastFadeTimer = setTimeout(() => {
+      el.remove();
+      _idiomAiToastFadeTimer = null;
+    }, 200);
+    _idiomAiToastTimer = null;
+  }, 2600);
+}
 
 export function unmount() {
   try {
@@ -561,6 +581,14 @@ export function mount() {
   };
   app.querySelector("[data-culture-side-nav]")?.addEventListener("click", onNavClick);
 
+  const onPanelClick = (e) => {
+    const aiBtn = e.target?.closest?.("[data-idiom-ai-btn]");
+    if (!aiBtn) return;
+    e.preventDefault();
+    showIdiomAiComingSoonToast(t("culture.idioms.aiComingSoon"));
+  };
+  app.querySelector("[data-culture-panel]")?.addEventListener("click", onPanelClick);
+
   const onHash = () => {
     if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
     const next = currentSectionId();
@@ -585,7 +613,17 @@ export function mount() {
   }
 
   _teardown = () => {
+    if (_idiomAiToastTimer) {
+      clearTimeout(_idiomAiToastTimer);
+      _idiomAiToastTimer = null;
+    }
+    if (_idiomAiToastFadeTimer) {
+      clearTimeout(_idiomAiToastFadeTimer);
+      _idiomAiToastFadeTimer = null;
+    }
+    document.querySelectorAll(".culture-idiom-ai-toast").forEach((n) => n.remove());
     app.querySelector("[data-culture-side-nav]")?.removeEventListener("click", onNavClick);
+    app.querySelector("[data-culture-panel]")?.removeEventListener("click", onPanelClick);
     window.removeEventListener("hashchange", onHash);
     window.removeEventListener("joy:langChanged", onLang);
     try {

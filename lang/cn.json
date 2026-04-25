@@ -870,6 +870,8 @@
       "desc": "学习常用四字成语的意思、来源、使用场景和例句。",
       "meaningLabel": "释义",
       "exampleLabel": "例句",
+      "aiExplain": "AI讲解",
+      "aiComingSoon": "AI讲解功能即将开放。",
       "aiSectionTitle": "AI讲解",
       "storySourceLabel": "故事来源",
       "storyCnLabel": "中文故事",

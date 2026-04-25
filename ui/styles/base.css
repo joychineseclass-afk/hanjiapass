@@ -1958,42 +1958,50 @@ a.section-side-nav-item:hover{
   font-size: 1rem;
   line-height: 1.75;
 }
-.idiom-ai-section{
-  margin: 16px 0 0;
-  padding: 18px 16px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(199, 210, 254, 0.55);
-  background: linear-gradient(180deg, #f4f6ff 0%, #fafbff 100%);
-}
-.idiom-ai-main-title{
-  margin: 0 0 16px;
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: #312e81;
-  letter-spacing: 0.02em;
-}
-.idiom-ai-group{
-  margin: 0 0 16px;
-}
-.idiom-ai-group:last-child{
-  margin-bottom: 0;
-}
-.idiom-ai-subhead{
-  margin: 0 0 6px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #475569;
-}
-.idiom-ai-para{
+.idiom-ai-button-wrap{
   margin: 0;
-  color: #334155;
-  font-size: 0.98rem;
-  line-height: 1.75;
 }
-.idiom-ai-para.idiom-cn-text{
-  font-size: 1.02rem;
+.idiom-ai-button{
+  margin-top: 20px;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.idiom-ai-button:hover{
+  border-color: #94a3b8;
+  color: #334155;
+  background: #f8fafc;
+}
+.culture-idiom-ai-toast{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 2000;
+  max-width: min(90vw, 400px);
+  margin: 0;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.culture-idiom-ai-toast.culture-idiom-ai-toast--show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 .culture-idiom-loading,
 .culture-idiom-error,
