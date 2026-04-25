@@ -9,6 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 const IDIOMS_DIR = path.join(ROOT, "data", "culture", "idioms");
 const INDEX_FILE = "idioms-index.json";
+const EXPANSION_CANDIDATES_FILE = "idioms-expansion-candidates-050.json";
+
+const EXPANSION_STATUS = new Set(["candidate", "approved", "drafted", "published"]);
 
 const INDEX_REQUIRED = ["id", "idiom", "pinyin", "file", "theme", "difficulty"];
 const DETAIL_REQUIRED = [
@@ -28,6 +31,8 @@ const FORBIDDEN_TOP = ["quiz", "exercise", "score", "progress", "wrongQuestions"
 const missing = [];
 const mismatch = [];
 const warnings = [];
+/** @type {string[]} */
+const expansionErrors = [];
 
 function isNonEmptyString(v) {
   return typeof v === "string" && v.trim() !== "";
@@ -51,6 +56,79 @@ function fileExists(p) {
 
 function readJson(p) {
   return JSON.parse(fs.readFileSync(p, "utf8"));
+}
+
+/**
+ * @param {object[]} index
+ * @param {string} expPath
+ * @returns {number} candidate 条目数
+ */
+function checkExpansionCandidates(index, expPath) {
+  if (!fileExists(expPath)) {
+    warnings.push(`Expansion file not found: ${EXPANSION_CANDIDATES_FILE} (optional check skipped)`);
+    return 0;
+  }
+  let data;
+  try {
+    data = readJson(expPath);
+  } catch (e) {
+    expansionErrors.push(`Expansion file invalid JSON: ${e?.message || e}`);
+    return 0;
+  }
+  if (!Array.isArray(data)) {
+    expansionErrors.push("Expansion file must be a JSON array");
+    return 0;
+  }
+
+  const formalIdioms = new Set(
+    (index || [])
+      .map((r) => (r && isNonEmptyString(r.idiom) ? String(r.idiom).trim() : ""))
+      .filter(Boolean)
+  );
+
+  const seen = new Set();
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    const label = `expansion[${i}]`;
+    if (row == null || typeof row !== "object") {
+      expansionErrors.push(`${label}: not an object`);
+      continue;
+    }
+    if (!isNonEmptyString(row.idiom)) {
+      expansionErrors.push(`${label}: idiom must be a non-empty string`);
+    } else {
+      const idm = String(row.idiom).trim();
+      if (seen.has(idm)) {
+        expansionErrors.push(`duplicate idiom in expansion file: ${idm}`);
+      }
+      seen.add(idm);
+      if (formalIdioms.has(idm)) {
+        warnings.push(`Candidate idiom is already in formal index: ${idm}`);
+      }
+    }
+    if (!isNonEmptyString(row.pinyin)) {
+      expansionErrors.push(`${label}: pinyin must be a non-empty string`);
+    }
+    if (!Array.isArray(row.theme)) {
+      expansionErrors.push(`${label}: theme must be an array`);
+    } else {
+      if (row.theme.length < 2 || row.theme.length > 4) {
+        warnings.push(`Theme count for ${row.idiom || label} is ${row.theme.length}; suggest 2–4 tags`);
+      }
+    }
+    if (typeof row.difficulty !== "number" || !Number.isFinite(row.difficulty)) {
+      expansionErrors.push(`${label}: difficulty must be a number`);
+    } else if (row.difficulty < 1 || row.difficulty > 5) {
+      expansionErrors.push(`${label}: difficulty must be between 1 and 5`);
+    }
+    if (!isNonEmptyString(row.status) || !EXPANSION_STATUS.has(String(row.status).trim())) {
+      expansionErrors.push(
+        `${label}: status must be one of: ${[...EXPANSION_STATUS].join(", ")}`
+      );
+    }
+  }
+
+  return data.length;
 }
 
 function checkForbidden(obj, id) {
@@ -227,14 +305,32 @@ function main() {
     process.exit(1);
   }
 
-  if (warnings.length) {
-    for (const w of warnings) console.warn(w);
+  const expansionPath = path.join(IDIOMS_DIR, EXPANSION_CANDIDATES_FILE);
+  const candidateEntries = checkExpansionCandidates(index, expansionPath);
+
+  if (expansionErrors.length) {
+    console.error("❌ Culture idioms check failed.\n");
+    console.error("Expansion / candidate list errors:");
+    for (const e of expansionErrors) {
+      console.error(`- ${e}`);
+    }
+    if (warnings.length) {
+      console.error("\nWarnings:");
+      for (const w of warnings) console.error(`- ${w}`);
+    }
+    process.exit(1);
+  }
+
+  for (const w of warnings) {
+    console.warn(w);
   }
 
   console.log("✅ Culture idioms check passed.");
   console.log(`Index entries: ${index.length}`);
   console.log(`Detail files: ${filesToLoad.length}`);
   console.log(`Detail entries: ${totalDetailEntries}`);
+  console.log(`Candidate entries: ${candidateEntries}`);
+  console.log(`Warnings: ${warnings.length}`);
 }
 
 try {

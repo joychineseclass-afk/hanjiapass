@@ -1,0 +1,322 @@
+[
+  {
+    "idiom": "坐井观天",
+    "pinyin": "zuò jǐng guān tiān",
+    "theme": ["寓言故事", "智慧思考", "视野", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "适合与「井底之蛙」对比教学。"
+  },
+  {
+    "idiom": "拔苗助长",
+    "pinyin": "bá miáo zhù zhǎng",
+    "theme": ["寓言故事", "学习成长", "教训"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与急于求成类话题配合。"
+  },
+  {
+    "idiom": "狐假虎威",
+    "pinyin": "hú jiǎ hǔ wēi",
+    "theme": ["寓言故事", "做人处事", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "典故易联想权力与依附。"
+  },
+  {
+    "idiom": "叶公好龙",
+    "pinyin": "yè gōng hào lóng",
+    "theme": ["寓言故事", "智慧思考", "态度"],
+    "difficulty": 2,
+    "status": "candidate",
+    "note": "可讨论「名实不符」。"
+  },
+  {
+    "idiom": "滥竽充数",
+    "pinyin": "làn yú chōng shù",
+    "theme": ["寓言故事", "学习成长", "课堂常用"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "适合课堂诚信与真才实学主题。"
+  },
+  {
+    "idiom": "掩耳盗铃",
+    "pinyin": "yǎn ěr dào líng",
+    "theme": ["寓言故事", "智慧思考", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "自欺欺人的经典比喻。"
+  },
+  {
+    "idiom": "杯弓蛇影",
+    "pinyin": "bēi gōng shé yǐng",
+    "theme": ["寓言故事", "情绪表达", "儿童适合"],
+    "difficulty": 2,
+    "status": "candidate",
+    "note": "疑心生暗鬼，可与心理类话题结合。"
+  },
+  {
+    "idiom": "惊弓之鸟",
+    "pinyin": "jīng gōng zhī niǎo",
+    "theme": ["寓言故事", "情绪表达", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与杯弓蛇影、心理阴影可联动。"
+  },
+  {
+    "idiom": "盲人摸象",
+    "pinyin": "máng rén mō xiàng",
+    "theme": ["寓言故事", "智慧思考", "视野"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "片面与全面，适合思维方法课。"
+  },
+  {
+    "idiom": "对牛弹琴",
+    "pinyin": "duì niú tán qín",
+    "theme": ["寓言故事", "语言", "课堂常用"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "对象与表达方式是否匹配。"
+  },
+  {
+    "idiom": "雪中送炭",
+    "pinyin": "xuě zhōng sòng tàn",
+    "theme": ["做人处事", "日常描写", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与锦上添花对比讲解效果好。"
+  },
+  {
+    "idiom": "锦上添花",
+    "pinyin": "jǐn shàng tiān huā",
+    "theme": ["做人处事", "日常描写"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "好上加好，注意与雪中对比。"
+  },
+  {
+    "idiom": "一心一意",
+    "pinyin": "yī xīn yī yì",
+    "theme": ["学习成长", "专注", "儿童适合", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与三心二意对举。"
+  },
+  {
+    "idiom": "专心致志",
+    "pinyin": "zhuān xīn zhì zhì",
+    "theme": ["学习成长", "专注", "课堂常用"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "课堂纪律与注意力主题。"
+  },
+  {
+    "idiom": "坚持不懈",
+    "pinyin": "jiān chí bù xiè",
+    "theme": ["学习成长", "习惯", "行动"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与半途而废对举。"
+  },
+  {
+    "idiom": "水滴石穿",
+    "pinyin": "shuǐ dī shí chuān",
+    "theme": ["学习成长", "习惯", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "坚持与积累。"
+  },
+  {
+    "idiom": "温故知新",
+    "pinyin": "wēn gù zhī xīn",
+    "theme": ["学习成长", "课堂常用", "方法"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "复习与迁移。"
+  },
+  {
+    "idiom": "学以致用",
+    "pinyin": "xué yǐ zhì yòng",
+    "theme": ["学习成长", "方法", "成人适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "学用结合。"
+  },
+  {
+    "idiom": "举一反三",
+    "pinyin": "jǔ yī fǎn sān",
+    "theme": ["学习成长", "智慧思考", "课堂常用"],
+    "difficulty": 2,
+    "status": "candidate",
+    "note": "迁移与泛化能力。"
+  },
+  {
+    "idiom": "不耻下问",
+    "pinyin": "bù chǐ xià wèn",
+    "theme": ["学习成长", "态度", "做人处事"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "谦虚向他人请教。"
+  },
+  {
+    "idiom": "心满意足",
+    "pinyin": "xīn mǎn yì zú",
+    "theme": ["情绪表达", "日常描写", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "满意、知足。"
+  },
+  {
+    "idiom": "依依不舍",
+    "pinyin": "yī yī bù shě",
+    "theme": ["情绪表达", "日常描写", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "离别、留恋。"
+  },
+  {
+    "idiom": "大惊小怪",
+    "pinyin": "dà jīng xiǎo guài",
+    "theme": ["情绪表达", "日常描写", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "对小事反应过度。"
+  },
+  {
+    "idiom": "小心翼翼",
+    "pinyin": "xiǎo xīn yì yì",
+    "theme": ["情绪表达", "动作行为", "日常描写"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "谨慎、放轻动作。"
+  },
+  {
+    "idiom": "七上八下",
+    "pinyin": "qī shàng bā xià",
+    "theme": ["情绪表达", "儿童适合", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "心里不安、忐忑。"
+  },
+  {
+    "idiom": "开开心心",
+    "pinyin": "kāi kāi xīn xīn",
+    "theme": ["情绪表达", "日常描写", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "AABB 叠词，偏口语书面化使用。"
+  },
+  {
+    "idiom": "高高兴兴",
+    "pinyin": "gāo gāo xìng xìng",
+    "theme": ["情绪表达", "儿童适合", "日常描写"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与开开心心近义，注意场景。"
+  },
+  {
+    "idiom": "安安静静",
+    "pinyin": "ān ān jìng jìng",
+    "theme": ["情绪表达", "日常描写", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "环境或状态安静。"
+  },
+  {
+    "idiom": "明明白白",
+    "pinyin": "míng míng bái bái",
+    "theme": ["日常描写", "语言", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "清楚、不含糊。"
+  },
+  {
+    "idiom": "清清楚楚",
+    "pinyin": "qīng qīng chǔ chǔ",
+    "theme": ["日常描写", "语言", "课堂常用"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与明明白白近义，可对比。"
+  },
+  {
+    "idiom": "人山人海",
+    "pinyin": "rén shān rén hǎi",
+    "theme": ["数量夸张", "日常描写", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "形容人多。"
+  },
+  {
+    "idiom": "车水马龙",
+    "pinyin": "chē shuǐ mǎ lóng",
+    "theme": ["日常描写", "自然景物", "数量夸张"],
+    "difficulty": 2,
+    "status": "candidate",
+    "note": "街市热闹、交通繁忙。"
+  },
+  {
+    "idiom": "风和日丽",
+    "pinyin": "fēng hé rì lì",
+    "theme": ["自然景物", "日常描写", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "天气好。"
+  },
+  {
+    "idiom": "春暖花开",
+    "pinyin": "chūn nuǎn huā kāi",
+    "theme": ["自然景物", "儿童适合", "日常描写"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "春景、比喻形势好。"
+  },
+  {
+    "idiom": "五颜六色",
+    "pinyin": "wǔ yán liù sè",
+    "theme": ["日常描写", "自然景物", "儿童适合"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "色彩多。"
+  },
+  {
+    "idiom": "五光十色",
+    "pinyin": "wǔ guāng shí sè",
+    "theme": ["日常描写", "自然景物", "数量夸张"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与五颜六色可对比光感。"
+  },
+  {
+    "idiom": "千山万水",
+    "pinyin": "qiān shān wàn shuǐ",
+    "theme": ["数量夸张", "自然景物", "韩国学生易懂"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "路途远、障碍多。"
+  },
+  {
+    "idiom": "千言万语",
+    "pinyin": "qiān yán wàn yǔ",
+    "theme": ["数量夸张", "情绪表达", "语言"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "话多、情长。"
+  },
+  {
+    "idiom": "东张西望",
+    "pinyin": "dōng zhāng xī wàng",
+    "theme": ["动作行为", "儿童适合", "日常描写"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "到处看，可含分心义。"
+  },
+  {
+    "idiom": "左顾右盼",
+    "pinyin": "zuǒ gù yòu pàn",
+    "theme": ["动作行为", "日常描写", "情绪表达"],
+    "difficulty": 1,
+    "status": "candidate",
+    "note": "与东张西望近义，注意语境褒贬。"
+  }
+]
