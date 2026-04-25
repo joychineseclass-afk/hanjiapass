@@ -203,7 +203,13 @@ function ensureDictStyles() {
     .lumina-dictionary .wrap{ max-width: var(--max,1120px); margin:0 auto; padding:0 16px; }
     .lumina-dictionary .section{ padding:10px 0 18px; }
     .lumina-dictionary .card{ background:rgba(255,255,255,.72); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.45); border-radius:calc(var(--radius,18px) + 8px); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden; }
+    .lumina-dictionary .dictionary-search-section{ position:relative; z-index:50; }
+    .lumina-dictionary .dictionary-search-section .dictionary-search-card{ overflow:visible; position:relative; z-index:50; }
+    .lumina-dictionary .dictionary-search-section .dictionary-search-card > .inner{ overflow:visible; }
+    .lumina-dictionary .dictionary-result-section{ position:relative; z-index:1; }
     .lumina-dictionary .inner{ padding:18px; display:grid; gap:12px; }
+    #dict-result-area,
+    .lumina-dictionary .dictionary-entry-card{ position:relative; z-index:1; }
     .dictionary-idiom-fallback-card{ border-radius: calc(var(--radius,12px) + 4px); border:1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.9); padding: 18px 20px; display:grid; gap: 14px; }
     .dictionary-idiom-fallback-card .dictionary-idiom-title{ font-size: 1.35rem; font-weight: 700; letter-spacing: 0.02em; }
     .dictionary-idiom-fallback-card .dictionary-idiom-pinyin{ font-size: 0.95rem; color: var(--muted,#64748b); }
@@ -215,7 +221,7 @@ function ensureDictStyles() {
     .dictionary-related-item{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:14px; padding:12px 14px; border-radius:14px; background:#f8fafc; text-decoration:none; color:inherit; }
     .dictionary-related-word{ font-size:18px; font-weight:800; color:#0f172a; }
     .dictionary-related-pinyin{ font-size:14px; font-weight:700; color:#64748b; }
-    .dictionary-autocomplete{ position:absolute; top: calc(100% + 8px); left:0; right:0; z-index:30; padding:8px; border-radius:18px; background: rgba(255,255,255,0.98); border:1px solid rgba(148,163,184,0.28); box-shadow:0 18px 40px rgba(15,23,42,0.12); }
+    .dictionary-autocomplete{ position:absolute; top: calc(100% + 10px); left:0; right:0; z-index:9999; max-height:360px; overflow-y:auto; padding:8px; border-radius:18px; background: rgba(255,255,255,0.98); border:1px solid rgba(148,163,184,0.32); box-shadow:0 22px 50px rgba(15,23,42,0.18); }
     .dictionary-autocomplete[hidden]{ display:none !important; }
     .dictionary-autocomplete-item{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; width:100%; padding:10px 12px; border:0; border-radius:12px; background:transparent; cursor:pointer; text-align:left; font: inherit; }
     .dictionary-autocomplete-item:hover,
@@ -232,9 +238,9 @@ function ensureDictStyles() {
 function renderShell(container) {
   container.innerHTML = `
     <div class="lumina-dictionary">
-      <section class="section">
+      <section class="section dictionary-search-section">
         <div class="wrap">
-          <div class="card">
+          <div class="card dictionary-search-card">
             <div class="inner">
               <form id="dict-search-form" class="dict-search-form" action="#" method="get">
                 <div class="dict-search-row">
@@ -249,9 +255,9 @@ function renderShell(container) {
           </div>
         </div>
       </section>
-      <section class="section">
+      <section class="section dictionary-result-section">
         <div class="wrap">
-          <div class="card">
+          <div class="card dictionary-result-card">
             <div class="inner" id="dict-result-area" aria-live="polite">
               <p class="muted" data-i18n="dictionary.search.placeholder"></p>
             </div>
