@@ -9,6 +9,8 @@ import {
 } from "../platform/dictionary/dictionaryEngine.js";
 
 let _langHandler = null;
+/** @type {null | (() => void)} */
+let _dictPageCleanup = null;
 
 function getMountEl(ctxOrRoot) {
   if (ctxOrRoot && ctxOrRoot.nodeType === 1) return ctxOrRoot;
@@ -213,6 +215,16 @@ function ensureDictStyles() {
     .dictionary-related-item{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:14px; padding:12px 14px; border-radius:14px; background:#f8fafc; text-decoration:none; color:inherit; }
     .dictionary-related-word{ font-size:18px; font-weight:800; color:#0f172a; }
     .dictionary-related-pinyin{ font-size:14px; font-weight:700; color:#64748b; }
+    .dictionary-autocomplete{ position:absolute; top: calc(100% + 8px); left:0; right:0; z-index:30; padding:8px; border-radius:18px; background: rgba(255,255,255,0.98); border:1px solid rgba(148,163,184,0.28); box-shadow:0 18px 40px rgba(15,23,42,0.12); }
+    .dictionary-autocomplete[hidden]{ display:none !important; }
+    .dictionary-autocomplete-item{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; width:100%; padding:10px 12px; border:0; border-radius:12px; background:transparent; cursor:pointer; text-align:left; font: inherit; }
+    .dictionary-autocomplete-item:hover,
+    .dictionary-autocomplete-item.is-active{ background:#eff6ff; }
+    .dictionary-autocomplete-word{ font-size:16px; font-weight:800; color:#0f172a; }
+    .dictionary-autocomplete-pinyin{ font-size:13px; font-weight:700; color:#64748b; }
+    @media (max-width: 640px) {
+      .dictionary-autocomplete-item{ align-items:flex-start; flex-direction:column; }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -226,7 +238,10 @@ function renderShell(container) {
             <div class="inner">
               <form id="dict-search-form" class="dict-search-form" action="#" method="get">
                 <div class="dict-search-row">
-                  <input type="search" id="dict-search-inp" class="input-box dict-input" autocomplete="off" />
+                  <div class="dictionary-search-wrap">
+                    <input type="search" id="dict-search-inp" class="input-box dict-input" autocomplete="off" />
+                    <div id="dictionary-autocomplete" class="dictionary-autocomplete" hidden role="listbox" aria-label="Suggestions"></div>
+                  </div>
                   <button type="submit" class="btn primary" data-i18n="common.search"></button>
                 </div>
               </form>
@@ -582,15 +597,106 @@ export function mount(ctxOrRoot) {
   const inp = el.querySelector("#dict-search-inp");
   const form = el.querySelector("#dict-search-form");
   const area = el.querySelector("#dict-result-area");
+  const acEl = el.querySelector("#dictionary-autocomplete");
 
   if (inp) {
     inp.setAttribute("data-i18n-placeholder", "dictionary.search.placeholder");
     inp.placeholder = i18n.t("dictionary.search.placeholder");
   }
 
+  const acState = {
+    items: /** @type {any[]} */ ([]),
+    active: -1,
+    req: 0,
+    debounceTimer: /** @type {ReturnType<typeof setTimeout> | null} */ (null),
+    blurTimer: /** @type {ReturnType<typeof setTimeout> | null} */ (null),
+  };
+
+  function closeAutocomplete() {
+    if (acState.blurTimer) {
+      clearTimeout(acState.blurTimer);
+      acState.blurTimer = null;
+    }
+    acState.items = [];
+    acState.active = -1;
+    if (acEl) {
+      acEl.hidden = true;
+      acEl.innerHTML = "";
+    }
+  }
+
+  function updateAutocompleteActiveClass() {
+    if (!acEl) return;
+    acEl.querySelectorAll(".dictionary-autocomplete-item").forEach((node, i) => {
+      node.classList.toggle("is-active", i === acState.active);
+    });
+  }
+
+  function renderAutocomplete(list) {
+    if (!acEl) return;
+    if (!list.length) {
+      closeAutocomplete();
+      return;
+    }
+    acState.items = list;
+    acState.active = -1;
+    acEl.innerHTML = list
+      .map((s, i) => {
+        const w = s.word || s.query || "";
+        const py = suggestionPinyinForDisplay(s) || (s.pinyin ? String(s.pinyin) : "");
+        return `<button type="button" class="dictionary-autocomplete-item" role="option" data-index="${i}" data-word=${JSON.stringify(
+          w
+        )}>
+  <span class="dictionary-autocomplete-word">${esc(w)}</span>
+  <span class="dictionary-autocomplete-pinyin">${esc(py || "—")}</span>
+</button>`;
+      })
+      .join("");
+    acEl.hidden = false;
+    updateAutocompleteActiveClass();
+  }
+
+  function isAutocompleteOpen() {
+    return !!(acEl && !acEl.hidden && acState.items.length);
+  }
+
+  function scheduleAutocomplete() {
+    if (acState.debounceTimer) clearTimeout(acState.debounceTimer);
+    const q0 = String(inp?.value || "").trim();
+    if (!q0) {
+      closeAutocomplete();
+      return;
+    }
+    const hasCjk = /[\u4e00-\u9fff]/.test(q0);
+    const piny = /^[a-zA-Z0-9\s'·.]+$/.test(String(q0).replace(/\s/g, " ").trim());
+    if (!hasCjk && !isSingleCjkChar(q0) && !piny) {
+      closeAutocomplete();
+      return;
+    }
+    acState.debounceTimer = setTimeout(async () => {
+      acState.debounceTimer = null;
+      const q = String(inp?.value || "").trim();
+      if (!q) {
+        closeAutocomplete();
+        return;
+      }
+      const my = ++acState.req;
+      try {
+        const list = await searchDictionarySuggestions(q, { limit: 8 });
+        if (my !== acState.req) return;
+        if (q !== String(inp?.value || "").trim()) return;
+        renderAutocomplete(list);
+      } catch (err) {
+        console.warn("[dictionary] autocomplete", err);
+        if (my === acState.req) closeAutocomplete();
+      }
+    }, 180);
+  }
+
   let busy = false;
   async function runSearch(rawTerm) {
     if (!area) return;
+    closeAutocomplete();
     const term = String(rawTerm || "").trim();
     if (busy) return;
     busy = true;
@@ -615,7 +721,7 @@ export function mount(ctxOrRoot) {
       }
       let rawSug = [];
       try {
-        rawSug = await searchDictionarySuggestions(term);
+        rawSug = await searchDictionarySuggestions(term, { limit: 200 });
       } catch (sugErr) {
         console.warn("[dictionary] suggestions", sugErr);
       }
@@ -628,18 +734,104 @@ export function mount(ctxOrRoot) {
     }
   }
 
+  const acAbort = new AbortController();
+  const { signal } = acAbort;
+
+  if (acEl) {
+    acEl.addEventListener(
+      "mousedown",
+      (e) => {
+        if (e.target instanceof Element && e.target.closest(".dictionary-autocomplete-item")) e.preventDefault();
+      },
+      { signal }
+    );
+    acEl.addEventListener(
+      "click",
+      (e) => {
+        const btn = e.target && e.target.closest && e.target.closest("button.dictionary-autocomplete-item");
+        if (!btn) return;
+        const w = btn.getAttribute("data-word");
+        if (w) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeAutocomplete();
+          navigateTo(`#dictionary?query=${encodeURIComponent(w)}`, { force: true });
+        }
+      },
+      { signal }
+    );
+  }
+
+  if (inp) {
+    inp.addEventListener("input", () => scheduleAutocomplete(), { signal });
+    inp.addEventListener("focus", () => {
+      if (acState.blurTimer) {
+        clearTimeout(acState.blurTimer);
+        acState.blurTimer = null;
+      }
+    }, { signal });
+    inp.addEventListener("blur", () => {
+      acState.blurTimer = setTimeout(() => {
+        acState.blurTimer = null;
+        closeAutocomplete();
+      }, 120);
+    }, { signal });
+    inp.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape" && isAutocompleteOpen()) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeAutocomplete();
+          return;
+        }
+        if (e.key === "ArrowDown" && isAutocompleteOpen()) {
+          e.preventDefault();
+          acState.active = Math.min(acState.items.length - 1, acState.active + 1);
+          updateAutocompleteActiveClass();
+          return;
+        }
+        if (e.key === "ArrowUp" && isAutocompleteOpen()) {
+          e.preventDefault();
+          acState.active = Math.max(-1, acState.active - 1);
+          updateAutocompleteActiveClass();
+          return;
+        }
+        if (e.key === "Enter" && isAutocompleteOpen() && acState.active >= 0) {
+          const s = acState.items[acState.active];
+          const w = s && (s.word || s.query);
+          if (w) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAutocomplete();
+            navigateTo(`#dictionary?query=${encodeURIComponent(String(w))}`, { force: true });
+          }
+        }
+      },
+      { signal }
+    );
+  }
+
   const initial = resolveSearchTerm();
   if (initial) {
     if (inp) inp.value = initial;
     runSearch(initial);
   }
 
-  form?.addEventListener("submit", (ev) => {
+  const onFormSubmit = (ev) => {
     ev.preventDefault();
+    closeAutocomplete();
     const s = String(inp?.value || "").trim();
     if (!s) return;
     navigateTo(`#dictionary?query=${encodeURIComponent(s)}`, { force: true });
-  });
+  };
+  form?.addEventListener("submit", onFormSubmit, { signal });
+
+  _dictPageCleanup = () => {
+    acAbort.abort();
+    if (acState.debounceTimer) clearTimeout(acState.debounceTimer);
+    if (acState.blurTimer) clearTimeout(acState.blurTimer);
+  };
 
   _langHandler = () => {
     i18n.apply(el);
@@ -654,6 +846,10 @@ export function mount(ctxOrRoot) {
 }
 
 export function unmount() {
+  if (typeof _dictPageCleanup === "function") {
+    _dictPageCleanup();
+    _dictPageCleanup = null;
+  }
   if (_langHandler) {
     window.removeEventListener("joy:langChanged", _langHandler);
     window.removeEventListener("joy:lang", _langHandler);

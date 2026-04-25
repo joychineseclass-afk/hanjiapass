@@ -719,15 +719,19 @@ export async function getDictionaryEntryByChar(char) {
 /**
  * 主索引 + cedict 轻量索引上的候选，不加载 detail 分包，不含文化成语
  * @param {string} query
- * @param {object} _options 预留
+ * @param {{ limit?: number }} [options] limit 默认 200；autocomplete 等可传 8
  * @returns {Promise<object[]>}
  */
-export async function searchDictionarySuggestions(query, _options = {}) {
+export async function searchDictionarySuggestions(query, options = {}) {
   const rawQ = String(query ?? "").trim();
   if (!rawQ) return [];
   const hasCjk = /[\u4e00-\u9fff]/.test(rawQ);
   const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(String(rawQ).replace(/\s/g, " ").trim());
   if (!hasCjk && !isSingleCjkChar(rawQ) && !pinyinish) return [];
+
+  const lim = options.limit;
+  const maxOut =
+    lim != null && Number.isFinite(Number(lim)) && Number(lim) > 0 ? Math.min(200, Math.floor(Number(lim))) : 200;
 
   const [mainIndex, cedictIndexRaw] = await Promise.all([loadIndex(), loadCedictIndex()]);
   const mainWords = (Array.isArray(mainIndex) ? mainIndex : []).filter((x) => x && x.type === "word");
@@ -761,7 +765,16 @@ export async function searchDictionarySuggestions(query, _options = {}) {
     return String(a.id).localeCompare(String(b.id), "en");
   });
 
-  return collected.slice(0, 200);
+  const seen = new Set();
+  const out = [];
+  for (const it of collected) {
+    const w = String(it.word || it.query || "").trim();
+    if (!w || seen.has(w)) continue;
+    seen.add(w);
+    out.push(it);
+    if (out.length >= maxOut) break;
+  }
+  return out;
 }
 
 /**

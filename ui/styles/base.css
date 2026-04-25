@@ -6526,6 +6526,16 @@ a.section-side-nav-item:hover{
   align-items: center;
   flex-wrap: wrap;
 }
+.lumina-dictionary .dictionary-search-wrap {
+  position: relative;
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+.lumina-dictionary .dictionary-search-wrap .dict-input {
+  flex: none;
+  width: 100%;
+  box-sizing: border-box;
+}
 .lumina-dictionary .dict-input {
   flex: 1 1 220px;
   min-width: 180px;
