@@ -86,6 +86,13 @@ function checkExpansionCandidates(index, expPath) {
       .filter(Boolean)
   );
 
+  const indexById = new Map();
+  for (const r of index || []) {
+    if (r && isNonEmptyString(r.id)) {
+      indexById.set(String(r.id).trim(), r);
+    }
+  }
+
   const seen = new Set();
   for (let i = 0; i < data.length; i++) {
     const row = data[i];
@@ -102,7 +109,7 @@ function checkExpansionCandidates(index, expPath) {
         expansionErrors.push(`duplicate idiom in expansion file: ${idm}`);
       }
       seen.add(idm);
-      if (formalIdioms.has(idm)) {
+      if (String(row.status || "").trim() === "candidate" && formalIdioms.has(idm)) {
         warnings.push(`Candidate idiom is already in formal index: ${idm}`);
       }
     }
@@ -125,6 +132,31 @@ function checkExpansionCandidates(index, expPath) {
       expansionErrors.push(
         `${label}: status must be one of: ${[...EXPANSION_STATUS].join(", ")}`
       );
+    }
+
+    const st = String(row.status || "").trim();
+    if (st === "published") {
+      if (!isNonEmptyString(row.publishedId)) {
+        expansionErrors.push(`${label}: published status requires publishedId`);
+      }
+      if (!isNonEmptyString(row.publishedFile)) {
+        expansionErrors.push(`${label}: published status requires publishedFile`);
+      }
+      if (isNonEmptyString(row.publishedId) && isNonEmptyString(row.publishedFile)) {
+        const ir = indexById.get(String(row.publishedId).trim());
+        if (!ir) {
+          expansionErrors.push(`${label}: publishedId "${row.publishedId}" not found in index`);
+        } else {
+          if (isNonEmptyString(row.idiom) && String(ir.idiom || "").trim() !== String(row.idiom).trim()) {
+            expansionErrors.push(`${label}: idiom does not match index entry for ${row.publishedId}`);
+          }
+          if (String(ir.file || "").trim() !== String(row.publishedFile).trim()) {
+            expansionErrors.push(
+              `${label}: publishedFile must match index file for ${row.publishedId} (expected ${ir.file})`
+            );
+          }
+        }
+      }
     }
   }
 

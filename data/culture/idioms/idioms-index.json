@@ -4,7 +4,11 @@
     "idiom": "画蛇添足",
     "pinyin": "huà shé tiān zú",
     "file": "idioms-basic-001.json",
-    "theme": ["寓言", "做事", "智慧"],
+    "theme": [
+      "寓言",
+      "做事",
+      "智慧"
+    ],
     "difficulty": 1
   },
   {
@@ -12,7 +16,10 @@
     "idiom": "井底之蛙",
     "pinyin": "jǐng dǐ zhī wā",
     "file": "idioms-basic-001.json",
-    "theme": ["视野", "智慧"],
+    "theme": [
+      "视野",
+      "智慧"
+    ],
     "difficulty": 1
   },
   {
@@ -20,7 +27,11 @@
     "idiom": "亡羊补牢",
     "pinyin": "wáng yáng bǔ láo",
     "file": "idioms-basic-001.json",
-    "theme": ["补救", "错误", "行动"],
+    "theme": [
+      "补救",
+      "错误",
+      "行动"
+    ],
     "difficulty": 1
   },
   {
@@ -28,7 +39,11 @@
     "idiom": "守株待兔",
     "pinyin": "shǒu zhū dài tù",
     "file": "idioms-basic-001.json",
-    "theme": ["寓言", "方法", "教训"],
+    "theme": [
+      "寓言",
+      "方法",
+      "教训"
+    ],
     "difficulty": 1
   },
   {
@@ -36,7 +51,11 @@
     "idiom": "自相矛盾",
     "pinyin": "zì xiāng máo dùn",
     "file": "idioms-basic-001.json",
-    "theme": ["寓言", "逻辑", "语言"],
+    "theme": [
+      "寓言",
+      "逻辑",
+      "语言"
+    ],
     "difficulty": 1
   },
   {
@@ -44,7 +63,11 @@
     "idiom": "一举两得",
     "pinyin": "yī jǔ liǎng dé",
     "file": "idioms-basic-001.json",
-    "theme": ["方法", "效率", "行动"],
+    "theme": [
+      "方法",
+      "效率",
+      "行动"
+    ],
     "difficulty": 1
   },
   {
@@ -52,7 +75,11 @@
     "idiom": "半途而废",
     "pinyin": "bàn tú ér fèi",
     "file": "idioms-basic-001.json",
-    "theme": ["学习", "坚持", "习惯"],
+    "theme": [
+      "学习",
+      "坚持",
+      "习惯"
+    ],
     "difficulty": 1
   },
   {
@@ -60,7 +87,11 @@
     "idiom": "刻舟求剑",
     "pinyin": "kè zhōu qiú jiàn",
     "file": "idioms-basic-001.json",
-    "theme": ["寓言", "变化", "方法"],
+    "theme": [
+      "寓言",
+      "变化",
+      "方法"
+    ],
     "difficulty": 1
   },
   {
@@ -68,7 +99,11 @@
     "idiom": "三心二意",
     "pinyin": "sān xīn èr yì",
     "file": "idioms-basic-001.json",
-    "theme": ["学习", "态度", "专注"],
+    "theme": [
+      "学习",
+      "态度",
+      "专注"
+    ],
     "difficulty": 1
   },
   {
@@ -76,7 +111,490 @@
     "idiom": "熟能生巧",
     "pinyin": "shú néng shēng qiǎo",
     "file": "idioms-basic-001.json",
-    "theme": ["学习", "练习", "技能"],
+    "theme": [
+      "学习",
+      "练习",
+      "技能"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0011",
+    "idiom": "坐井观天",
+    "pinyin": "zuò jǐng guān tiān",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "智慧思考",
+      "视野"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0012",
+    "idiom": "拔苗助长",
+    "pinyin": "bá miáo zhù zhǎng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "学习成长",
+      "教训"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0013",
+    "idiom": "狐假虎威",
+    "pinyin": "hú jiǎ hǔ wēi",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "做人处事",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0014",
+    "idiom": "叶公好龙",
+    "pinyin": "yè gōng hào lóng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "智慧思考",
+      "态度"
+    ],
+    "difficulty": 2
+  },
+  {
+    "id": "idiom_0015",
+    "idiom": "滥竽充数",
+    "pinyin": "làn yú chōng shù",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "学习成长",
+      "课堂常用"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0016",
+    "idiom": "掩耳盗铃",
+    "pinyin": "yǎn ěr dào líng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "智慧思考",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0017",
+    "idiom": "杯弓蛇影",
+    "pinyin": "bēi gōng shé yǐng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "情绪表达",
+      "儿童适合"
+    ],
+    "difficulty": 2
+  },
+  {
+    "id": "idiom_0018",
+    "idiom": "惊弓之鸟",
+    "pinyin": "jīng gōng zhī niǎo",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "情绪表达",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0019",
+    "idiom": "盲人摸象",
+    "pinyin": "máng rén mō xiàng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "智慧思考",
+      "视野"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0020",
+    "idiom": "对牛弹琴",
+    "pinyin": "duì niú tán qín",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "寓言故事",
+      "语言",
+      "课堂常用"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0021",
+    "idiom": "雪中送炭",
+    "pinyin": "xuě zhōng sòng tàn",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "做人处事",
+      "日常描写",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0022",
+    "idiom": "锦上添花",
+    "pinyin": "jǐn shàng tiān huā",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "做人处事",
+      "日常描写"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0023",
+    "idiom": "一心一意",
+    "pinyin": "yī xīn yī yì",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "专注",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0024",
+    "idiom": "专心致志",
+    "pinyin": "zhuān xīn zhì zhì",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "专注",
+      "课堂常用"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0025",
+    "idiom": "坚持不懈",
+    "pinyin": "jiān chí bù xiè",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "习惯",
+      "行动"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0026",
+    "idiom": "水滴石穿",
+    "pinyin": "shuǐ dī shí chuān",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "习惯",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0027",
+    "idiom": "温故知新",
+    "pinyin": "wēn gù zhī xīn",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "课堂常用",
+      "方法"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0028",
+    "idiom": "学以致用",
+    "pinyin": "xué yǐ zhì yòng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "方法",
+      "成人适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0029",
+    "idiom": "举一反三",
+    "pinyin": "jǔ yī fǎn sān",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "智慧思考",
+      "课堂常用"
+    ],
+    "difficulty": 2
+  },
+  {
+    "id": "idiom_0030",
+    "idiom": "不耻下问",
+    "pinyin": "bù chǐ xià wèn",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "学习成长",
+      "态度",
+      "做人处事"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0031",
+    "idiom": "心满意足",
+    "pinyin": "xīn mǎn yì zú",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "日常描写",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0032",
+    "idiom": "依依不舍",
+    "pinyin": "yī yī bù shě",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "日常描写",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0033",
+    "idiom": "大惊小怪",
+    "pinyin": "dà jīng xiǎo guài",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "日常描写",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0034",
+    "idiom": "小心翼翼",
+    "pinyin": "xiǎo xīn yì yì",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "动作行为",
+      "日常描写"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0035",
+    "idiom": "七上八下",
+    "pinyin": "qī shàng bā xià",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "儿童适合",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0036",
+    "idiom": "开开心心",
+    "pinyin": "kāi kāi xīn xīn",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "日常描写",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0037",
+    "idiom": "高高兴兴",
+    "pinyin": "gāo gāo xìng xìng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "儿童适合",
+      "日常描写"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0038",
+    "idiom": "安安静静",
+    "pinyin": "ān ān jìng jìng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "情绪表达",
+      "日常描写",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0039",
+    "idiom": "明明白白",
+    "pinyin": "míng míng bái bái",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "日常描写",
+      "语言",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0040",
+    "idiom": "清清楚楚",
+    "pinyin": "qīng qīng chǔ chǔ",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "日常描写",
+      "语言",
+      "课堂常用"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0041",
+    "idiom": "人山人海",
+    "pinyin": "rén shān rén hǎi",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "数量夸张",
+      "日常描写",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0042",
+    "idiom": "车水马龙",
+    "pinyin": "chē shuǐ mǎ lóng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "日常描写",
+      "自然景物",
+      "数量夸张"
+    ],
+    "difficulty": 2
+  },
+  {
+    "id": "idiom_0043",
+    "idiom": "风和日丽",
+    "pinyin": "fēng hé rì lì",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "自然景物",
+      "日常描写",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0044",
+    "idiom": "春暖花开",
+    "pinyin": "chūn nuǎn huā kāi",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "自然景物",
+      "儿童适合",
+      "日常描写"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0045",
+    "idiom": "五颜六色",
+    "pinyin": "wǔ yán liù sè",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "日常描写",
+      "自然景物",
+      "儿童适合"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0046",
+    "idiom": "五光十色",
+    "pinyin": "wǔ guāng shí sè",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "日常描写",
+      "自然景物",
+      "数量夸张"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0047",
+    "idiom": "千山万水",
+    "pinyin": "qiān shān wàn shuǐ",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "数量夸张",
+      "自然景物",
+      "韩国学生易懂"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0048",
+    "idiom": "千言万语",
+    "pinyin": "qiān yán wàn yǔ",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "数量夸张",
+      "情绪表达",
+      "语言"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0049",
+    "idiom": "东张西望",
+    "pinyin": "dōng zhāng xī wàng",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "动作行为",
+      "儿童适合",
+      "日常描写"
+    ],
+    "difficulty": 1
+  },
+  {
+    "id": "idiom_0050",
+    "idiom": "左顾右盼",
+    "pinyin": "zuǒ gù yòu pàn",
+    "file": "idioms-basic-002.json",
+    "theme": [
+      "动作行为",
+      "日常描写",
+      "情绪表达"
+    ],
     "difficulty": 1
   }
 ]
