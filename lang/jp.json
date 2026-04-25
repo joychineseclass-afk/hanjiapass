@@ -802,7 +802,10 @@
     "strokeMissing": "筆順データはまだありません。",
     "openStroke": "筆順/なぞり書きを開く",
     "entryMissing": "辞書の意味データはまだありません。",
-    "viewDetail": "辞書の詳細を見る"
+    "viewDetail": "辞書の詳細を見る",
+    "traditionalLabel": "繁体字",
+    "exampleLabel": "例文",
+    "componentsLabel": "構成漢字"
   },
   "kids": {
     "title": "キッズ中国語",

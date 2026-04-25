@@ -6666,6 +6666,76 @@ a.section-side-nav-item:hover{
   gap: 10px;
 }
 
+/* 词语卡片 */
+.dictionary-word-head .dictionary-entry-word {
+  font-size: clamp(32px, 7.5vw, 56px);
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.05;
+  font-family: "KaiTi", "STKaiti", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+}
+.dictionary-word-head {
+  flex-wrap: wrap;
+}
+.dictionary-traditional-row {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #64748b;
+}
+.dictionary-traditional-label {
+  font-weight: 800;
+  color: #64748b;
+}
+.dictionary-example-block {
+  margin-top: 0;
+}
+.dictionary-example-cn {
+  margin: 0 0 6px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #0f172a;
+}
+.dictionary-example-pinyin {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+.dictionary-example-tr {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #334155;
+}
+.dictionary-entry-card--word .dictionary-section-title:first-of-type {
+  margin-top: 20px;
+}
+.dictionary-component-chars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+a.dictionary-component-char {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  color: #0f172a;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+a.dictionary-component-char:hover {
+  border-color: rgba(37, 99, 235, 0.45);
+  background: #f8fafc;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
 /* #stroke 笔顺页：轻量字典摘要 */
 .stroke-dict-digest {
   margin: 0 0 10px;

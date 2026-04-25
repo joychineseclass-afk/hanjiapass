@@ -794,7 +794,10 @@
     "strokeMissing": "Stroke data is not available yet.",
     "openStroke": "Open Stroke Order / Tracing",
     "entryMissing": "Dictionary meaning is not available yet.",
-    "viewDetail": "View Dictionary Detail"
+    "viewDetail": "View Dictionary Detail",
+    "traditionalLabel": "Traditional",
+    "exampleLabel": "Example",
+    "componentsLabel": "Characters"
   },
   "kids": {
     "title": "Kids Chinese",

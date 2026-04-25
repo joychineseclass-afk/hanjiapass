@@ -794,7 +794,10 @@
     "strokeMissing": "暂未收录笔顺数据。",
     "openStroke": "打开笔顺/跟写",
     "entryMissing": "字典释义暂未收录。",
-    "viewDetail": "查看字典详情"
+    "viewDetail": "查看字典详情",
+    "traditionalLabel": "繁体",
+    "exampleLabel": "例句",
+    "componentsLabel": "组成汉字"
   },
   "kids": {
     "title": "儿童中文",

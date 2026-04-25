@@ -794,7 +794,10 @@
     "strokeMissing": "필순 데이터가 아직 없습니다.",
     "openStroke": "필순/따라쓰기 열기",
     "entryMissing": "사전 뜻 자료가 아직 없습니다.",
-    "viewDetail": "사전 자세히 보기"
+    "viewDetail": "사전 자세히 보기",
+    "traditionalLabel": "번체",
+    "exampleLabel": "예문",
+    "componentsLabel": "구성 한자"
   },
   "kids": {
     "title": "어린이 중국어",

@@ -110,16 +110,20 @@ async function loadDetailArray(fileName) {
  * 从已加载的详情列表中取一条
  * @param {any[]} list
  * @param {string} id
- * @param {string} char
+ * @param {string} key
+ * @param {"char"|"word"} entryType
  */
-function pickEntryFromList(list, id, char) {
+function pickEntryFromList(list, id, key, entryType) {
   if (!list?.length) return null;
   if (id) {
     const byId = list.find((x) => x && x.id === id);
     if (byId) return byId;
   }
-  if (char) {
-    return list.find((x) => x && x.type === "char" && x.char === char) || null;
+  if (entryType === "char" && key) {
+    return list.find((x) => x && x.type === "char" && x.char === key) || null;
+  }
+  if (entryType === "word" && key) {
+    return list.find((x) => x && x.type === "word" && x.word === key) || null;
   }
   return null;
 }
@@ -139,53 +143,56 @@ export async function buildStrokeInfo(char) {
   return { codePoint, path, exists };
 }
 
+function emptyCharStrokeResult(query) {
+  return { found: false, type: "char", query: query || "", stroke: { codePoint: 0, path: "", exists: false } };
+}
+
 /**
- * 单字/词语统一查询
- * @param {string} query
+ * 词语查询：完全匹配 → 含「query」/「被 query 含」的最近一条
+ * @param {string} word
  */
-export async function searchDictionary(query) {
-  const raw = String(query ?? "").trim();
+export async function getDictionaryEntryByWord(word) {
+  const raw = String(word ?? "").trim();
   if (!raw) {
-    return { found: false, type: "char", query: "", stroke: { codePoint: 0, path: "", exists: false } };
+    return { found: false, type: "word", query: "", stroke: { codePoint: 0, path: "", exists: false } };
   }
-
-  if (isSingleCjkChar(raw)) {
-    return lookupSingleChar(raw);
+  if (!/[\u4e00-\u9fff]/.test(raw)) {
+    return { found: false, type: "word", query: raw, stroke: { codePoint: 0, path: "", exists: false } };
   }
-
-  const hasCjk = /[\u4e00-\u9fff]/.test(raw);
-  if (!hasCjk) {
-    return {
-      found: false,
-      type: "char",
-      query: raw,
-      stroke: { codePoint: 0, path: "", exists: false },
-    };
-  }
-
+  const first = firstCjkFromString(raw) || raw[0];
+  const stroke = await buildStrokeInfo(first);
   const index = await loadIndex();
-  const wordRow = index.find(
-    (x) => x && x.type === "word" && (x.query === raw || x.char === raw)
-  );
-  if (wordRow) {
-    const list = await loadDetailArray(wordRow.file);
-    const entry = pickEntryFromList(list, wordRow.id, wordRow.char);
-    const firstHan = firstCjkFromString(raw);
-    const stroke = await buildStrokeInfo(firstHan || raw);
-    if (!entry) {
-      return { found: false, type: "word", query: raw, stroke };
+  const wordRows = index.filter((x) => x && x.type === "word");
+  let row = wordRows.find((x) => (x.word && x.word === raw) || (x.query && x.query === raw));
+  if (!row) {
+    const candidates = wordRows.filter(
+      (x) => x.word && (x.word === raw || x.word.includes(raw) || raw.includes(x.word))
+    );
+    if (candidates.length) {
+      row = candidates
+        .slice()
+        .sort((a, b) => {
+          const al = a.word.length;
+          const bl = b.word.length;
+          if (bl !== al) return bl - al;
+          return String(a.id || "").localeCompare(String(b.id || ""));
+        })[0];
     }
-    return {
-      found: true,
-      type: "word",
-      entry: normalizeEntryShape(entry),
-      stroke,
-    };
   }
-
-  const ch0 = firstCjkFromString(raw) || raw[0];
-  const stroke = await buildStrokeInfo(ch0);
-  return { found: false, type: "word", query: raw, stroke };
+  if (!row) {
+    return { found: false, type: "word", query: raw, stroke };
+  }
+  const list = await loadDetailArray(row.file);
+  const entry = pickEntryFromList(list, row.id, row.word, "word");
+  if (!entry) {
+    return { found: false, type: "word", query: raw, stroke };
+  }
+  return {
+    found: true,
+    type: "word",
+    entry: normalizeEntryShape(entry),
+    stroke,
+  };
 }
 
 async function lookupSingleChar(char) {
@@ -199,7 +206,7 @@ async function lookupSingleChar(char) {
   }
 
   const list = await loadDetailArray(row.file);
-  const entry = pickEntryFromList(list, row.id, c);
+  const entry = pickEntryFromList(list, row.id, c, "char");
   if (!entry) {
     return { found: false, type: "char", query: c, stroke };
   }
@@ -214,9 +221,21 @@ async function lookupSingleChar(char) {
 
 function normalizeEntryShape(entry) {
   if (!entry) return null;
+  if (entry.type === "word") {
+    return {
+      id: entry.id,
+      type: "word",
+      word: entry.word,
+      traditional: entry.traditional,
+      pinyin: entry.pinyin,
+      meaning: entry.meaning,
+      example: entry.example,
+      examplePinyin: entry.examplePinyin,
+    };
+  }
   return {
     id: entry.id,
-    type: entry.type,
+    type: "char",
     char: entry.char,
     pinyin: entry.pinyin,
     meaning: entry.meaning,
@@ -226,17 +245,40 @@ function normalizeEntryShape(entry) {
 }
 
 /**
- * 按单字取字典结果（同 searchDictionary 对单字）
+ * 单字/词语统一查询：单字 → char 词条；多字/词 → 词语
+ * @param {string} query
+ */
+export async function searchDictionary(query) {
+  const raw = String(query ?? "").trim();
+  if (!raw) {
+    return emptyCharStrokeResult("");
+  }
+
+  if (isSingleCjkChar(raw)) {
+    return lookupSingleChar(raw);
+  }
+
+  if (!/[\u4e00-\u9fff]/.test(raw)) {
+    return { found: false, type: "word", query: raw, stroke: { codePoint: 0, path: "", exists: false } };
+  }
+
+  return getDictionaryEntryByWord(raw);
+}
+
+/**
+ * 按单字取字典：整串为单字则 char，否则当词语/短语
  * @param {string} char
  */
 export async function getDictionaryEntryByChar(char) {
   const c = String(char ?? "").trim();
   if (!c) {
-    return { found: false, type: "char", query: "", stroke: { codePoint: 0, path: "", exists: false } };
+    return emptyCharStrokeResult("");
   }
-  const one = [...c][0] || c;
-  if (isSingleCjkChar(one)) {
-    return lookupSingleChar(one);
+  if (isSingleCjkChar(c)) {
+    return lookupSingleChar(c);
   }
-  return searchDictionary(c);
+  if (/[\u4e00-\u9fff]/.test(c)) {
+    return getDictionaryEntryByWord(c);
+  }
+  return emptyCharStrokeResult(c);
 }

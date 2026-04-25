@@ -158,5 +158,165 @@
     "char": "好",
     "pinyin": "hǎo",
     "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "word_0001",
+    "type": "word",
+    "query": "人",
+    "word": "人",
+    "pinyin": "rén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0002",
+    "type": "word",
+    "query": "大人",
+    "word": "大人",
+    "pinyin": "dàrén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0003",
+    "type": "word",
+    "query": "人口",
+    "word": "人口",
+    "pinyin": "rénkǒu",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0004",
+    "type": "word",
+    "query": "中国",
+    "word": "中国",
+    "pinyin": "zhōngguó",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0005",
+    "type": "word",
+    "query": "中文",
+    "word": "中文",
+    "pinyin": "zhōngwén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0006",
+    "type": "word",
+    "query": "汉字",
+    "word": "汉字",
+    "pinyin": "hànzì",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0007",
+    "type": "word",
+    "query": "学习",
+    "word": "学习",
+    "pinyin": "xuéxí",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0008",
+    "type": "word",
+    "query": "学生",
+    "word": "学生",
+    "pinyin": "xuéshēng",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0009",
+    "type": "word",
+    "query": "老师",
+    "word": "老师",
+    "pinyin": "lǎoshī",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0010",
+    "type": "word",
+    "query": "学校",
+    "word": "学校",
+    "pinyin": "xuéxiào",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0011",
+    "type": "word",
+    "query": "朋友",
+    "word": "朋友",
+    "pinyin": "péngyǒu",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0012",
+    "type": "word",
+    "query": "家人",
+    "word": "家人",
+    "pinyin": "jiārén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0013",
+    "type": "word",
+    "query": "爸爸",
+    "word": "爸爸",
+    "pinyin": "bàba",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0014",
+    "type": "word",
+    "query": "妈妈",
+    "word": "妈妈",
+    "pinyin": "māma",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0015",
+    "type": "word",
+    "query": "哥哥",
+    "word": "哥哥",
+    "pinyin": "gēge",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0016",
+    "type": "word",
+    "query": "姐姐",
+    "word": "姐姐",
+    "pinyin": "jiějie",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0017",
+    "type": "word",
+    "query": "弟弟",
+    "word": "弟弟",
+    "pinyin": "dìdi",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0018",
+    "type": "word",
+    "query": "妹妹",
+    "word": "妹妹",
+    "pinyin": "mèimei",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0019",
+    "type": "word",
+    "query": "你好",
+    "word": "你好",
+    "pinyin": "nǐ hǎo",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0020",
+    "type": "word",
+    "query": "谢谢",
+    "word": "谢谢",
+    "pinyin": "xièxie",
+    "file": "words-basic-001.json"
   }
 ]

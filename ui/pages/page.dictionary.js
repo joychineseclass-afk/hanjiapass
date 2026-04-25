@@ -88,7 +88,99 @@ function renderShell(container) {
   `;
 }
 
-function renderResult(area, res) {
+/** 词语中可点击的 CJK 单字 */
+function wordComponentChars(word) {
+  return [...String(word || "")].filter((c) => isSingleCjkChar(c));
+}
+
+function renderWordEntry(area, res) {
+  if (!area) return;
+  const lang = getLang();
+  const t = (k) => i18n.t(k);
+  const e = res.entry;
+  let mainMeaning = pick(e.meaning, { lang }) || "";
+  const mCn = e.meaning?.cn || "";
+  if (!String(mainMeaning).trim() && mCn) mainMeaning = mCn;
+  const showCnSecond =
+    mCn &&
+    !isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) &&
+    String(mainMeaning || "").trim() !== String(mCn).trim();
+  const trad = e.traditional || "";
+  const showTrad = String(trad).trim() && String(trad).trim() !== String(e.word || "").trim();
+  const tradLine = showTrad
+    ? `<p class="dictionary-traditional-row"><span class="dictionary-traditional-label">${esc(
+        t("dictionary.traditionalLabel")
+      )}</span>：${esc(String(trad).trim())}</p>`
+    : "";
+
+  const exCn = e.example?.cn || "";
+  const exPy = e.examplePinyin || "";
+  const exTrans = e.example ? pick(e.example, { lang }) || "" : "";
+  const showExTrans = exTrans && (lang !== "cn" || String(exTrans).trim() !== String(exCn).trim());
+
+  const exampleBlock =
+    exCn || exPy
+      ? `<h2 class="dictionary-section-title">${esc(t("dictionary.exampleLabel"))}</h2>
+      <div class="dictionary-example-block">
+        ${exCn ? `<p class="dictionary-example-cn" lang="zh-CN">${esc(exCn)}</p>` : ""}
+        ${exPy ? `<p class="dictionary-example-pinyin">${esc(exPy)}</p>` : ""}
+        ${showExTrans ? `<p class="dictionary-example-tr">${esc(exTrans)}</p>` : ""}
+      </div>`
+      : "";
+
+  const chars = wordComponentChars(e.word);
+  const compBlock =
+    chars.length > 0
+      ? `<h2 class="dictionary-section-title">${esc(t("dictionary.componentsLabel"))}</h2>
+      <div class="dictionary-component-chars" role="list">
+        ${chars
+          .map(
+            (c) =>
+              `<a class="dictionary-component-char" role="listitem" href="#dictionary?char=${encodeURIComponent(
+                c
+              )}">${esc(c)}</a>`
+          )
+          .join("")}
+      </div>`
+      : "";
+
+  const meaningBlock =
+    String(mainMeaning).trim() || showCnSecond
+      ? `${String(mainMeaning).trim() ? `<p class="dictionary-main-meaning">${esc(mainMeaning)}</p>` : ""}${
+          showCnSecond ? `<p class="dictionary-cn-explanation" lang="zh-CN">${esc(mCn)}</p>` : ""
+        }`
+      : "";
+
+  area.innerHTML = `
+    <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">
+      <header class="dictionary-entry-head dictionary-word-head">
+        <span class="dictionary-entry-word">${esc(e.word || "—")}</span>
+        <span class="dictionary-entry-pinyin">${esc(e.pinyin || "—")}</span>
+      </header>
+      ${tradLine}
+      ${meaningBlock}
+      ${exampleBlock}
+      ${compBlock}
+    </article>
+  `;
+}
+
+function renderWordNotFound(area, res) {
+  if (!area) return;
+  const lang = getLang();
+  const t = (k) => i18n.t(k);
+  const q = res.query || "";
+  area.innerHTML = `
+    <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">
+      <header class="dictionary-entry-head dictionary-word-head">
+        <span class="dictionary-entry-word">${q ? esc(q) : "—"}</span>
+      </header>
+      <p class="dictionary-entry-missing muted">${esc(t("dictionary.entryMissing"))}</p>
+    </article>
+  `;
+}
+
+function renderCharEntry(area, res) {
   if (!area) return;
   const lang = getLang();
   const t = (k) => i18n.t(k);
@@ -96,8 +188,8 @@ function renderResult(area, res) {
   const hasEntry = res.found && res.entry;
   const chFromQuery =
     res.query && isSingleCjkChar(res.query) ? res.query : firstCjkInString(res.query);
-  const ch = (hasEntry && res.entry.char) || chFromQuery || "";
-  const py = (hasEntry && res.entry.pinyin) || "";
+  const ch = (hasEntry && res.entry && res.entry.char) || chFromQuery || "";
+  const py = (hasEntry && res.entry && res.entry.pinyin) || "";
 
   let mainMeaning = "";
   let mCn = "";
@@ -115,7 +207,9 @@ function renderResult(area, res) {
       wordsHtml = commonWords
         .map((w) => {
           const wm = pick(w.meaning, { lang }) || "";
-          return `<li class="dict-cw-line">${esc(w.word)} <span class="dict-cw-py">${esc(w.pinyin || "")}</span> — ${esc(wm)}</li>`;
+          return `<li class="dict-cw-line">${esc(w.word)} <span class="dict-cw-py">${esc(w.pinyin || "")}</span> — ${esc(
+            wm
+          )}</li>`;
         })
         .join("");
     }
@@ -187,6 +281,19 @@ function renderResult(area, res) {
     if (!c) return;
     navigateTo(`#stroke?char=${encodeURIComponent(c)}`, { force: true });
   });
+}
+
+function renderResult(area, res) {
+  if (!area) return;
+  if (res.type === "word" && res.found && res.entry) {
+    renderWordEntry(area, res);
+    return;
+  }
+  if (res.type === "word" && !res.found) {
+    renderWordNotFound(area, res);
+    return;
+  }
+  renderCharEntry(area, res);
 }
 
 function resolveSearchTerm() {
