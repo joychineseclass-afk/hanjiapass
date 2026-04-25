@@ -1,13 +1,19 @@
 /**
  * Lumina 认证适配层：选择 provider、暴露统一 API、在 UI 与业务之间隔离持久化实现。
- * 不直接写 localStorage 用户表 — 由 `demoLocalAuthProvider` 或未来的 remote 实现负责。
+ * 不直接写 localStorage 用户表 — 由 `demoLocalAuthProvider` 或 `supabaseAuthProvider` 等实现负责。
  */
 import * as demo from "./providers/demoLocalAuthProvider.js";
 import { remoteAuthProviderPlaceholder } from "./providers/remoteAuthProvider.placeholder.js";
+import {
+  supabaseAuthProvider,
+  supabasePersistenceApi,
+  mountSupabaseAuthChannel,
+  onAuthStateChange as supabaseOnAuthStateChange,
+} from "./providers/supabaseAuthProvider.js";
+import { getSupabaseEnv, isAuthDemoForced, warnIfSupabaseEnvMissing } from "../integrations/supabaseClient.js";
 
 /**
  * 设为 `true` 时启用 `remoteAuthProviderPlaceholder`（未接后端前会抛错，仅用于接库前的编译/分支验证）。
- * 接好真实后端后在此切换或通过构建注入。
  */
 const LUMINA_USE_REMOTE_AUTH_PLACEHOLDER = false;
 
@@ -30,8 +36,37 @@ function isProductionRuntime() {
   return false;
 }
 
+/**
+ * 是否使用 Supabase：环境完整且未显式强制 demo、且未启用 remote placeholder。
+ * @returns {boolean}
+ */
+function shouldUseSupabase() {
+  if (LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
+    return false;
+  }
+  if (isAuthDemoForced()) {
+    return false;
+  }
+  return getSupabaseEnv().isComplete;
+}
+
+/**
+ * @returns {boolean}
+ */
+function isUsingDemoProvider() {
+  if (LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
+    return false;
+  }
+  if (shouldUseSupabase()) {
+    return false;
+  }
+  return true;
+}
+
 function maybeWarnDemoAuthInProduction() {
-  if (!isProductionRuntime() || LUMINA_USE_REMOTE_AUTH_PLACEHOLDER || demoProdWarned) return;
+  if (!isProductionRuntime() || LUMINA_USE_REMOTE_AUTH_PLACEHOLDER || !isUsingDemoProvider() || demoProdWarned) {
+    return;
+  }
   demoProdWarned = true;
   console.warn(
     "Lumina is using demo local auth. This is not persistent across devices and must not be used for production accounts."
@@ -39,21 +74,35 @@ function maybeWarnDemoAuthInProduction() {
 }
 
 maybeWarnDemoAuthInProduction();
-
-/**
- * 异步会话/登录 API 使用的 provider（含 demo / remote-placeholder）。
- * @returns {typeof demo.demoLocalAuthProvider | typeof remoteAuthProviderPlaceholder}
- */
-function getActiveProvider() {
-  return LUMINA_USE_REMOTE_AUTH_PLACEHOLDER ? remoteAuthProviderPlaceholder : demo.demoLocalAuthProvider;
+if (!shouldUseSupabase() && !LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
+  warnIfSupabaseEnvMissing();
 }
 
 /**
- * 用户表、会话的同步存取与查询（同构于当前 demo 的模块级函数；切 remote 时委托占位实现）。
- * @returns {typeof remoteAuthProviderPlaceholder | typeof import('./providers/demoLocalAuthProvider.js')}
+ * 异步会话/登录 API 使用的 provider
+ */
+function getActiveProvider() {
+  maybeWarnDemoAuthInProduction();
+  if (LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
+    return remoteAuthProviderPlaceholder;
+  }
+  if (shouldUseSupabase()) {
+    return supabaseAuthProvider;
+  }
+  return demo.demoLocalAuthProvider;
+}
+
+/**
+ * 用户表、会话的同步存取
  */
 function getPersistenceApi() {
-  return LUMINA_USE_REMOTE_AUTH_PLACEHOLDER ? remoteAuthProviderPlaceholder : demo;
+  if (LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
+    return remoteAuthProviderPlaceholder;
+  }
+  if (shouldUseSupabase()) {
+    return supabasePersistenceApi;
+  }
+  return demo;
 }
 
 // --- 订阅与广播（`joy:authChanged` 与 onAuthChange 同时触发，便于统一迁移）---
@@ -79,6 +128,7 @@ export function emitAuthStateChanged() {
 }
 
 /**
+ * 应用内通用订阅（不依赖具体 provider 实现细节）。
  * @param {() => void} callback
  * @returns {() => void} 取消订阅
  */
@@ -90,6 +140,10 @@ export function onAuthChange(callback) {
   return () => {
     authChangeSubscribers.delete(callback);
   };
+}
+
+if (shouldUseSupabase()) {
+  mountSupabaseAuthChannel(emitAuthStateChanged);
 }
 
 /** 供迁移文档与排错；仍指向 demo 使用的 key 名。 */
@@ -161,15 +215,31 @@ export const authStore = {
 
   isAuthenticated: async () => {
     const p = getActiveProvider();
-    if (!p.getSession) return false;
+    if (!p.getSession) {
+      return false;
+    }
     const s = await p.getSession();
-    if (!s) return false;
+    if (!s) {
+      return false;
+    }
     if (typeof s === "object" && s !== null && "userId" in s) {
       return Boolean(/** @type {{ userId?: string | null }} */ (s).userId);
     }
     return false;
   },
 
+  onAuthStateChange: (cb) => {
+    if (shouldUseSupabase()) {
+      return supabaseOnAuthStateChange(cb);
+    }
+    return onAuthChange(() => {
+      try {
+        /** @type {(arg: { event: string, session: null }) => void} */ (cb)({ event: "LOCAL", session: null });
+      } catch {
+        /* */
+      }
+    });
+  },
   onAuthChange,
 };
 

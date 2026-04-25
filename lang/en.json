@@ -80,7 +80,10 @@
       "password_required": "Please enter your password.",
       "email_taken": "This email is already registered.",
       "invalid_credentials": "Incorrect email or password.",
-      "password_mismatch": "Passwords do not match."
+      "password_mismatch": "Passwords do not match.",
+      "email_not_confirmed": "Please confirm your email before signing in.",
+      "network_error": "Network error. Check your connection and try again.",
+      "supabase_not_configured": "Sign-in is not configured. Try again later or contact support."
     }
   },
   "onboarding": {

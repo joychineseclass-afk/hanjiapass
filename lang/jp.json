@@ -80,7 +80,10 @@
       "password_required": "パスワードを入力してください。",
       "email_taken": "このメールは登録済みです。",
       "invalid_credentials": "メールまたはパスワードが違います。",
-      "password_mismatch": "パスワードが一致しません。"
+      "password_mismatch": "パスワードが一致しません。",
+      "email_not_confirmed": "ログインする前にメールで確認してください。",
+      "network_error": "ネットワークエラーです。接続を確認してもう一度お試しください。",
+      "supabase_not_configured": "サインインが設定されていません。しばらくしてから再試行するかサポートに連絡してください。"
     }
   },
   "onboarding": {

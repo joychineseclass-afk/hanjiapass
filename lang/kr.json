@@ -80,7 +80,10 @@
       "password_required": "비밀번호를 입력하세요.",
       "email_taken": "이미 사용 중인 이메일입니다.",
       "invalid_credentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
-      "password_mismatch": "비밀번호가 일치하지 않습니다."
+      "password_mismatch": "비밀번호가 일치하지 않습니다.",
+      "email_not_confirmed": "로그인하려면 이메일 인증을 완료하세요.",
+      "network_error": "네트워크 오류입니다. 연결을 확인한 뒤 다시 시도하세요.",
+      "supabase_not_configured": "로그인이 구성되지 않았습니다. 잠시 후 다시 시도하거나 지원팀에 문의하세요."
     }
   },
   "onboarding": {

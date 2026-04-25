@@ -4,6 +4,7 @@
  */
 import {
   findUserById,
+  getActiveProvider,
   upsertUser,
   loadSession,
   saveSession,
@@ -66,6 +67,10 @@ async function applyProfileToCurrentUser(authUser) {
  * 会话存在时，将 commerce 老师档案同步到 currentUser（登录后 / 页面加载）。
  */
 export async function hydrateCurrentUserFromSession() {
+  if (getActiveProvider().type === "supabase") {
+    const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
+    await syncLuminaCacheFromSupabaseClient();
+  }
   const s = loadSession();
   if (!s.userId) {
     setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
