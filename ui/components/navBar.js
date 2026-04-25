@@ -16,6 +16,7 @@ const NAV_ITEMS_FULL = [
   { href: "/index.html#kids", key: "nav.kids", label: "어린이 중국어", color: "#ec4899" },
   { href: "/index.html#conversation", key: "nav.conversation", label: "회화", color: "#ef4444" },
   { href: "/index.html#hanja", key: "nav.hanja", label: "한자 학습", color: "#8b5cf6" },
+  { href: "/index.html#dictionary", key: "nav.dictionary", label: "汉语字典", color: "#0284c7" },
   { href: "/index.html#stroke", key: "nav.stroke", label: "필순/따라쓰기", color: "#0d9488" },
   { href: "/index.html#culture", key: "nav.culture", label: "문화", color: "#d97706" },
   { href: "/index.html#resources", key: "nav.resources", label: "자료", color: "#10b981" },
