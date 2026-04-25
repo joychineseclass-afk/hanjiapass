@@ -1885,10 +1885,26 @@ a.section-side-nav-item:hover{
   margin-top: 5px;
 }
 .section-side-nav-item.level-4{
-  font-size: 13px;
-  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1.35;
+  text-align: left;
   padding-left: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   opacity: 0.9;
+}
+.section-side-nav-idiom-word{
+  font-size: 14px;
+  font-weight: 700;
+  color: inherit;
+}
+.section-side-nav-idiom-pinyin{
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
 }
 .section-side-nav-item.level-4.is-active{
   background: #eef2ff;
@@ -1897,6 +1913,9 @@ a.section-side-nav-item:hover{
   opacity: 1;
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+}
+.section-side-nav-item.level-4.is-active .section-side-nav-idiom-pinyin{
+  color: #475569;
 }
 .section-main-panel{
   flex: 1 1 0;
@@ -2067,6 +2086,7 @@ a.section-side-nav-item:hover{
   }
   .section-side-nav-item.level-4{
     padding-left: 24px;
+    text-align: left;
   }
   .section-side-nav-children .section-side-nav-item.level-3{
     padding-left: 20px;

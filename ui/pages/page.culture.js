@@ -385,11 +385,14 @@ function buildIdiomsNavGroupHtml(sectionId, activeChildId) {
       .map((it) => {
         const cid = String(it?.id ?? "");
         const isChild = isSec && Boolean(cid) && cid === String(activeChildId);
+        const py = String(it?.pinyin ?? "").trim();
         return `<button type="button" class="${navItemClassL4(isChild)}" data-culture-child="${esc(
           cid
         )}" data-culture-parent-section="idioms" data-culture-idiom-cat="${esc(cat)}" data-culture-idiom="${esc(
           cid
-        )}" aria-current="${isChild ? "true" : "false"}">${esc(it?.idiom)}</button>`;
+        )}" aria-current="${isChild ? "true" : "false"}"><span class="section-side-nav-idiom-word" lang="zh-Hans">${esc(
+          it?.idiom
+        )}</span><span class="section-side-nav-idiom-pinyin" lang="zh-Latn">${esc(py)}</span></button>`;
       })
       .join("");
     return `<div class="section-side-nav__subgroup" data-culture-idiom-subgroup="${esc(cat)}">
