@@ -173,7 +173,7 @@
   {
     "id": "cedict_draft_0007",
     "type": "word",
-    "status": "published",
+    "status": "draft",
     "source": "CC-CEDICT",
     "word": "朋友",
     "traditional": "朋友",
@@ -195,12 +195,8 @@
       "jp": ""
     },
     "examplePinyin": "",
-    "publishedId": "cedict_word_0005",
-    "publishedFile": "words-cedict-001.json",
-    "indexOmitted": true,
-    "indexOmitReason": "word query already in dictionary-index (words-basic-001), not duplicating cedict index entry",
-    "needsReview": false,
-    "notes": "Published to words-cedict-001.json. Index kept at existing word_0011 (words-basic) for 朋友 — CC-CEDICT reviewed file holds alternate entry cedict_word_0005."
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
   },
   {
     "id": "cedict_draft_0008",
@@ -461,7 +457,7 @@
   {
     "id": "cedict_draft_0017",
     "type": "word",
-    "status": "published",
+    "status": "draft",
     "source": "CC-CEDICT",
     "word": "再见",
     "traditional": "再見",
@@ -484,15 +480,13 @@
       "jp": ""
     },
     "examplePinyin": "",
-    "publishedId": "cedict_word_0001",
-    "publishedFile": "words-cedict-001.json",
-    "needsReview": false,
-    "notes": "Published to words-cedict-001.json and dictionary-index (cedict_word_0001)."
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
   },
   {
     "id": "cedict_draft_0018",
     "type": "word",
-    "status": "published",
+    "status": "draft",
     "source": "CC-CEDICT",
     "word": "学校",
     "traditional": "學校",
@@ -514,17 +508,13 @@
       "jp": ""
     },
     "examplePinyin": "",
-    "publishedId": "cedict_word_0002",
-    "publishedFile": "words-cedict-001.json",
-    "indexOmitted": true,
-    "indexOmitReason": "word query already in dictionary-index (words-basic-001), not duplicating cedict index entry",
-    "needsReview": false,
-    "notes": "Published to words-cedict-001.json. Index kept at existing word_0010 (words-basic) for 学校 — CC-CEDICT reviewed file holds alternate entry cedict_word_0002."
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
   },
   {
     "id": "cedict_draft_0019",
     "type": "word",
-    "status": "published",
+    "status": "draft",
     "source": "CC-CEDICT",
     "word": "中国人",
     "traditional": "中國人",
@@ -546,15 +536,13 @@
       "jp": ""
     },
     "examplePinyin": "",
-    "publishedId": "cedict_word_0003",
-    "publishedFile": "words-cedict-001.json",
-    "needsReview": false,
-    "notes": "Published to words-cedict-001.json and dictionary-index (cedict_word_0003)."
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
   },
   {
     "id": "cedict_draft_0020",
     "type": "word",
-    "status": "published",
+    "status": "draft",
     "source": "CC-CEDICT",
     "word": "汉语",
     "traditional": "漢語",
@@ -576,9 +564,7 @@
       "jp": ""
     },
     "examplePinyin": "",
-    "publishedId": "cedict_word_0004",
-    "publishedFile": "words-cedict-001.json",
-    "needsReview": false,
-    "notes": "Published to words-cedict-001.json and dictionary-index (cedict_word_0004)."
+    "needsReview": true,
+    "notes": "Imported from CC-CEDICT sample. Requires CN/KR/JP meanings and examples before publishing."
   }
 ]

@@ -27,7 +27,7 @@ function readJson(path) {
 }
 
 const errors = { missing: [], mismatch: [] };
-const warnings = { components: [], forbidden: [] };
+const warnings = { components: [], forbidden: [], cedictReview: [] };
 let hasFatal = false;
 
 function failMissing(msg) {
@@ -42,6 +42,13 @@ function failMismatch(msg) {
 
 function warnComponent(msg) {
   warnings.components.push(msg);
+}
+
+const cedictReviewOnce = new Set();
+function warnCedictReview(msg) {
+  if (cedictReviewOnce.has(msg)) return;
+  cedictReviewOnce.add(msg);
+  warnings.cedictReview.push(msg);
 }
 
 function walkForbidden(value, pathStr, isRoot = false) {
@@ -159,6 +166,16 @@ function checkCharDetail(detail, indexRow) {
   if (detail.pinyin !== indexRow.pinyin) failMismatch(`char ${id}: pinyin mismatch index / detail`);
 }
 
+/**
+ * 未审校 CC-CEDICT 批量条：仅要求 meaning.en 等
+ */
+function isCedictPendingWord(detail) {
+  if (!detail || detail.type !== "word") return false;
+  if (String(detail.source) !== "CC-CEDICT") return false;
+  if (detail.needsReview !== true) return false;
+  return true;
+}
+
 function checkWordDetail(detail, indexRow) {
   const id = indexRow.id;
   const need = ["id", "type", "word", "pinyin", "meaning", "example", "examplePinyin"];
@@ -168,6 +185,21 @@ function checkWordDetail(detail, indexRow) {
     }
   }
   if (detail.type !== "word") failMismatch(`word ${id} detail.type expected word, got ${detail.type}`);
+
+  if (isCedictPendingWord(detail)) {
+    if (detail.traditional == null || String(detail.traditional).trim() === "") {
+      failMissing(`word ${id} traditional required`);
+    }
+    if (!detail.meaning || String(detail.meaning.en).trim() === "") {
+      failMissing(`word ${id} meaning.en required for CC-CEDICT pending`);
+    }
+    warnCedictReview(`Needs review: ${id} ${detail.word}`);
+    if (detail.id !== indexRow.id) failMismatch(`word ${id}: detail.id !== index.id`);
+    if (detail.word !== indexRow.word) failMismatch(`word ${id}: detail.word !== index.word`);
+    if (detail.pinyin !== indexRow.pinyin) failMismatch(`word ${id}: pinyin mismatch index / detail`);
+    return;
+  }
+
   for (const L of MEANING_LANGS) {
     if (!detail.meaning || detail.meaning[L] == null || String(detail.meaning[L]).trim() === "") {
       failMissing(`word ${id} meaning.${L}`);
@@ -385,7 +417,8 @@ function main() {
   const nWord = index.filter((r) => r.type === "word").length;
   const nFiles = detailFileNames.size;
 
-  const wCount = warnings.components.length + warnings.forbidden.length;
+  const wCount =
+    warnings.components.length + warnings.forbidden.length + warnings.cedictReview.length;
 
   if (hasFatal) {
     console.error("❌ Dictionary data check failed.\n");
@@ -416,6 +449,10 @@ function main() {
     if (warnings.forbidden.length) {
       console.log("\nWarnings (forbidden key names found):");
       for (const p of warnings.forbidden) console.log(`- ${p}`);
+    }
+    if (warnings.cedictReview.length) {
+      console.log("\nWarnings (CC-CEDICT needs review):");
+      for (const m of warnings.cedictReview) console.log(`- ${m}`);
     }
     if (warnings.components.length) {
       console.log("\nWarnings (word components without char index):");

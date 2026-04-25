@@ -111,12 +111,24 @@ function renderComponentCharRow(char, sourceWord, t) {
 </div>`;
 }
 
+/** 当前 UI 语言无释义时：当前语言 → 中文 → 英文，避免仅 EN 的 CC-CEDICT 条空白 */
+function wordMeaningWithFallback(e, lang) {
+  const m = e?.meaning || {};
+  const key = lang === "zh" || lang === "cn" ? "cn" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" ? "jp" : "en";
+  const chain = [key, "cn", "en", "kr", "jp"].filter((x, i, a) => a.indexOf(x) === i);
+  for (const k of chain) {
+    const v = m[k];
+    if (v != null && String(v).trim()) return String(v).trim();
+  }
+  return "";
+}
+
 function renderWordEntry(area, res) {
   if (!area) return;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const e = res.entry;
-  let mainMeaning = pick(e.meaning, { lang }) || "";
+  let mainMeaning = wordMeaningWithFallback(e, lang);
   const mCn = e.meaning?.cn || "";
   if (!String(mainMeaning).trim() && mCn) mainMeaning = mCn;
   const showCnSecond =

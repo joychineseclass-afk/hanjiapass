@@ -3,7 +3,7 @@
 // 数据根路径：优先相对 import.meta.url 解析，避免子目录部署时 /data/ 解析错误
 
 /** 资源缓存版本，修改 dictionary JSON 时递增以绕开 HTTP 强缓存 */
-const DICT_DATA_VERSION = "20260221";
+const DICT_DATA_VERSION = "20260223";
 
 function getDataRoot() {
   const base = String(typeof window !== "undefined" && window.__APP_BASE__ ? window.__APP_BASE__ : "")
