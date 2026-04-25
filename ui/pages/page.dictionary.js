@@ -38,6 +38,12 @@ function esc(s) {
     .replaceAll('"', "&quot;");
 }
 
+/** 当前为中文 UI 时，主释义与 meaning.cn 是否重复，避免同句显示两次 */
+function isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) {
+  if (lang !== "cn" || !mCn) return false;
+  return String(mainMeaning || "").trim() === String(mCn).trim();
+}
+
 function ensureDictStyles() {
   if (document.getElementById("lumina-dictionary-style")) return;
   const style = document.createElement("style");
@@ -97,14 +103,16 @@ function renderResult(area, res) {
   let mCn = "";
   let teach = "";
   let wordsHtml = "";
+  const commonWords = hasEntry && res.entry.commonWords && res.entry.commonWords.length ? res.entry.commonWords : null;
 
   if (hasEntry) {
     const e = res.entry;
     mainMeaning = pick(e.meaning, { lang }) || "";
     mCn = e.meaning?.cn || "";
+    if (!String(mainMeaning).trim() && mCn) mainMeaning = mCn;
     teach = pick(e.teachingNote, { lang }) || "";
-    if (e.commonWords && e.commonWords.length) {
-      wordsHtml = e.commonWords
+    if (commonWords) {
+      wordsHtml = commonWords
         .map((w) => {
           const wm = pick(w.meaning, { lang }) || "";
           return `<li class="dict-cw-line">${esc(w.word)} <span class="dict-cw-py">${esc(w.pinyin || "")}</span> — ${esc(wm)}</li>`;
@@ -113,53 +121,64 @@ function renderResult(area, res) {
     }
   }
 
+  const showCnSecond =
+    hasEntry &&
+    mCn &&
+    !isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) &&
+    String(mainMeaning || "").trim() !== String(mCn).trim();
+  const showTeach = hasEntry && teach;
+  const showCommonBlock = hasEntry && commonWords;
+
   const missingLine = hasEntry
     ? ""
-    : `<p class="dict-entry-missing muted">${esc(t("dictionary.entryMissing"))}</p>`;
+    : `<p class="dictionary-entry-missing muted">${esc(t("dictionary.entryMissing"))}</p>`;
 
   const strokeText = stroke.exists ? t("dictionary.strokeAvailable") : t("dictionary.strokeMissing");
 
-  area.innerHTML = `
-    <div class="dict-result-block">
-      <div class="dict-char-head">
-        <span class="dict-char-glyph">${ch ? esc(ch) : "—"}</span>
-        <div class="dict-char-meta">
-          <div class="dict-pinyin-line">${esc(py || "—")}</div>
-        </div>
-      </div>
+  const headBlock = `
+    <header class="dictionary-entry-head">
+      <span class="dictionary-entry-char">${ch ? esc(ch) : "—"}</span>
+      <span class="dictionary-entry-pinyin">${esc(py || "—")}</span>
+    </header>`;
 
-      ${missingLine}
+  const meaningBlock =
+    hasEntry && String(mainMeaning).trim()
+      ? `<p class="dictionary-main-meaning">${esc(mainMeaning)}</p>${
+          showCnSecond
+            ? `<p class="dictionary-cn-explanation" lang="zh-CN">${esc(mCn)}</p>`
+            : ""
+        }`
+      : "";
 
-      <div class="dict-section">
-        <h3 class="dict-subtitle">${esc(t("dictionary.meaningLabel"))}</h3>
-        <p class="dict-body">${hasEntry ? esc(mainMeaning) : "—"}</p>
-      </div>
+  const teachBlock = showTeach
+    ? `<div class="dictionary-learning-note" role="note">${esc(teach)}</div>`
+    : "";
 
-      <div class="dict-section">
-        <h3 class="dict-subtitle">${esc(t("dictionary.chineseExplanationLabel"))}</h3>
-        <p class="dict-body">${hasEntry && mCn ? esc(mCn) : "—"}</p>
-      </div>
+  const commonBlock = showCommonBlock
+    ? `<h2 class="dictionary-section-title">${esc(t("dictionary.commonWordsLabel"))}</h2>
+        <ul class="dictionary-cw-list">${wordsHtml}</ul>`
+    : "";
 
-      <div class="dict-section">
-        <h3 class="dict-subtitle">${esc(t("dictionary.teachingNoteLabel"))}</h3>
-        <p class="dict-body">${hasEntry && teach ? esc(teach) : "—"}</p>
-      </div>
-
-      <div class="dict-section">
-        <h3 class="dict-subtitle">${esc(t("dictionary.commonWordsLabel"))}</h3>
-        ${hasEntry && wordsHtml ? `<ul class="dict-cw-list">${wordsHtml}</ul>` : `<p class="dict-body muted">—</p>`}
-      </div>
-
-      <div class="dict-section dict-stroke-block">
-        <h3 class="dict-subtitle">${esc(t("dictionary.strokeLabel"))}</h3>
-        <p class="dict-body dict-stroke-status">${esc(strokeText)}</p>
-        <div class="dict-actions">
-          <button type="button" class="btn primary dict-open-stroke" ${ch ? "" : "disabled"} data-char="${ch ? esc(ch) : ""}">${esc(
+  const strokeBlock = `
+    <h2 class="dictionary-section-title">${esc(t("dictionary.strokeLabel"))}</h2>
+    <p class="dictionary-stroke-status">${esc(strokeText)}</p>
+    <div class="dictionary-stroke-actions">
+      <button type="button" class="btn primary dict-open-stroke" ${ch ? "" : "disabled"} data-char="${ch ? esc(ch) : ""}">${esc(
     t("dictionary.openStroke")
   )}</button>
-        </div>
+    </div>`;
+
+  area.innerHTML = `
+    <article class="dictionary-entry-card dict-result-article" lang="${esc(lang)}">
+      ${headBlock}
+      ${missingLine}
+      ${meaningBlock}
+      ${teachBlock}
+      ${commonBlock}
+      <div class="dictionary-stroke-section">
+        ${strokeBlock}
       </div>
-    </div>
+    </article>
   `;
 
   const strokeBtn = area.querySelector(".dict-open-stroke");

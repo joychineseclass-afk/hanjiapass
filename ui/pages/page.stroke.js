@@ -41,16 +41,19 @@ async function renderDictionaryDigest(ch) {
       const line = pick(res.entry.meaning, { lang }) || "";
       const py = res.entry.pinyin || "";
       el.innerHTML = `
-        <div class="stroke-dict-digest-inner">
-          <div class="stroke-dict-line1"><span class="stroke-dict-ch">${esc(c)}</span> <span class="stroke-dict-py">${esc(py)}</span></div>
-          <div class="stroke-dict-line2"><span class="stroke-dict-mean-lab" data-i18n="dictionary.meaningLabel"></span>：${esc(line)}</div>
-          <a class="btn btn-sm primary stroke-dict-link" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+        <div class="stroke-dict-digest-inner stroke-dict-digest--compact">
+          <div class="stroke-dict-topline">
+            <span class="stroke-dict-ch">${esc(c)}</span>
+            <span class="stroke-dict-py">${esc(py)}</span>
+          </div>
+          <p class="stroke-dict-meaning-line">${esc(line)}</p>
+          <a class="stroke-dict-more" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
         </div>`;
     } else {
       el.innerHTML = `
-        <div class="stroke-dict-digest-inner stroke-dict-digest--empty">
-          <p class="muted" data-i18n="dictionary.entryMissing"></p>
-          <a class="btn btn-sm primary stroke-dict-link" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
+        <div class="stroke-dict-digest-inner stroke-dict-digest--compact stroke-dict-digest--empty">
+          <p class="stroke-dict-meaning-line muted" data-i18n="dictionary.entryMissing"></p>
+          <a class="stroke-dict-more" href="#dictionary?char=${encodeURIComponent(c)}"><span data-i18n="dictionary.viewDetail"></span></a>
         </div>`;
     }
   } catch (e) {
