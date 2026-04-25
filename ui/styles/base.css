@@ -1812,11 +1812,38 @@ a.section-side-nav-item:hover{
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
-/* 三级、四级：更小字号、更深缩进；默认折叠由 JS 控制 display/aria-expanded */
-.section-side-nav-item.level-3{
+/* 三级、四级：更小字号、更深缩进；文化页成语三级导航见 .section-side-nav-item.level-3 */
+.section-side-nav__idiom-block{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+.section-side-nav-idiom-children{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  margin: 0 0 2px;
+  padding-left: 0;
+}
+.section-side-nav-idiom-placeholder{
+  margin: 4px 0 4px 24px;
   font-size: 12px;
-  font-weight: 650;
-  padding-left: 18px;
+  color: #94a3b8;
+}
+.section-side-nav-item.level-3{
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 24px;
+  opacity: 0.9;
+}
+.section-side-nav-item.level-3.is-active{
+  opacity: 1;
+  color: #312e81;
+  background: #eef2ff;
+  border-color: #a5b4fc;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
 .section-side-nav-item.level-4{
   font-size: 11px;
@@ -1847,111 +1874,99 @@ a.section-side-nav-item:hover{
   font-size: 15px;
   line-height: 1.65;
 }
-/* Culture · 成语文化卡片 */
-.culture-idiom-list{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 18px;
+/* Culture · 成语详情页 */
+.idiom-detail-panel{
+  max-width: 100%;
 }
-.culture-idiom-card{
-  border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  background: #fafbfc;
-  padding: 16px 18px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+.idiom-detail-head{
+  margin: 0 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
 }
-.culture-idiom-card__word{
-  margin: 0 0 4px;
-  font-size: 1.15rem;
-  font-weight: 800;
+.idiom-detail-title{
+  margin: 0 0 6px;
+  font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+  font-weight: 900;
   color: #0f172a;
   letter-spacing: 0.02em;
+  line-height: 1.25;
 }
-.culture-idiom-card__pinyin{
-  margin: 0 0 14px;
-  font-size: 14px;
-  font-weight: 600;
+.idiom-detail-pinyin{
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
   color: #64748b;
   letter-spacing: 0.04em;
 }
-.culture-idiom-card__row{
-  margin-bottom: 12px;
-}
-.culture-idiom-card__row:last-of-type{
+.idiom-detail-section{
   margin-bottom: 14px;
 }
-.culture-idiom-card__label{
-  display: block;
-  margin: 0 0 4px;
-  font-size: 11px;
+.idiom-detail-section--card{
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: #fafbfc;
+  padding: 14px 16px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+}
+.idiom-detail-h3{
+  margin: 0 0 8px;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #64748b;
 }
-.culture-idiom-card__value{
+.idiom-detail-h4{
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #475569;
+}
+.idiom-detail-body{
   margin: 0;
   color: #334155;
   font-size: 15px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
-.culture-idiom-card__value--zh{
+.idiom-detail-body--zh{
   color: #1e293b;
 }
-.culture-idiom-card__ai{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  color: #312e81;
-  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
-  border: 1px solid #a5b4fc;
+.idiom-ai-section{
+  margin-top: 20px;
+  border-radius: 12px;
+  border: 1px solid #c7d2fe;
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 48%);
+  padding: 16px 18px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
-  transition: background 0.15s ease, border-color 0.15s ease;
 }
-.culture-idiom-card__ai:hover{
-  background: #e0e7ff;
-  border-color: #818cf8;
+.idiom-ai-section__title{
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #312e81;
+  letter-spacing: 0.02em;
 }
-.culture-idiom-card__ai:focus-visible{
-  outline: 2px solid #6366f1;
-  outline-offset: 2px;
+.idiom-ai-section__inner{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.idiom-ai-block{
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(165, 180, 252, 0.45);
+  padding: 10px 12px;
 }
 .culture-idiom-loading,
 .culture-idiom-error,
 .culture-idiom-empty{
-  margin: 16px 0 0;
+  margin: 4px 0 0;
   color: #64748b;
   font-size: 14px;
   line-height: 1.5;
 }
 .culture-idiom-error{
   color: #b91c1c;
-}
-#culture-idiom-toast.culture-idiom-toast,
-.culture-idiom-toast{
-  position: fixed;
-  z-index: 10050;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%);
-  max-width: min(92vw, 400px);
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: #1e293b;
-  color: #f8fafc;
-  font-size: 14px;
-  line-height: 1.45;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
-  pointer-events: none;
 }
 @media (max-width: 900px) {
   .page-shell{
@@ -1973,9 +1988,11 @@ a.section-side-nav-item:hover{
     min-width: 112px;
     text-align: center;
   }
-  .section-side-nav-item.level-3,
   .section-side-nav-item.level-4{
     padding-left: 11px;
+  }
+  .section-side-nav-idiom-children .section-side-nav-item.level-3{
+    padding-left: 20px;
   }
 }
 .teacher-admin-back{

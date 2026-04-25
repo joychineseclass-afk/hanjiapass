@@ -870,9 +870,12 @@
       "desc": "Learn the meaning, origin, usage contexts, and examples of common four-character idioms.",
       "meaningLabel": "Meaning",
       "chineseExplanationLabel": "Chinese Explanation",
-      "exampleLabel": "Example",
-      "aiExplain": "AI Explanation",
-      "aiComingSoon": "AI explanation will be available soon.",
+      "exampleLabel": "Chinese Example",
+      "exampleTranslationLabel": "Example Translation",
+      "aiSectionTitle": "AI Explanation",
+      "storySourceLabel": "Story Source",
+      "storyCnLabel": "Detailed Story in Chinese",
+      "storyLangLabel": "Story Explanation",
       "loadError": "Could not load idioms. Please try again later."
     },
     "proverbs": {

@@ -870,9 +870,12 @@
       "desc": "学习常用四字成语的意思、来源、使用场景和例句。",
       "meaningLabel": "释义",
       "chineseExplanationLabel": "中文解释",
-      "exampleLabel": "例句",
-      "aiExplain": "AI讲解",
-      "aiComingSoon": "AI讲解功能即将开放。",
+      "exampleLabel": "中文例句",
+      "exampleTranslationLabel": "例句释义",
+      "aiSectionTitle": "AI说明",
+      "storySourceLabel": "故事来源",
+      "storyCnLabel": "中文详细故事说明",
+      "storyLangLabel": "故事说明",
       "loadError": "成语内容加载失败，请稍后重试。"
     },
     "proverbs": {
