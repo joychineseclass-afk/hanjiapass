@@ -46,14 +46,20 @@ function renderCulture(root) {
         <div class="wrap">
           <div class="card">
             <div class="inner">
-              <h1 class="page-title">${escapeHtml(title)}</h1>
-              <p class="page-desc">${escapeHtml(subtitle)}. ${escapeHtml(comingSoon)}</p>
+              <h1 class="page-title" data-i18n="culture.title">${escapeHtml(title)}</h1>
+              <p class="page-desc" data-i18n="culture.subtitle">${escapeHtml(subtitle)}</p>
+              <p class="page-desc" style="opacity:.85" data-i18n="culture.comingSoon">${escapeHtml(comingSoon)}</p>
             </div>
           </div>
         </div>
       </section>
     </div>
   `;
+  try {
+    i18n.apply?.(root);
+  } catch {
+    /* */
+  }
 }
 
 function escapeHtml(s) {

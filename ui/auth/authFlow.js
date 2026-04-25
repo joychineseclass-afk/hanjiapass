@@ -34,7 +34,7 @@ export function runSessionRouteGuards() {
 }
 
 /**
- * 未登录访问需账号的 hash（#my、#teacher*、onboarding/教师申请等）→ 登录
+ * 未登录访问需账号的 hash（#my-learning、#teacher*、onboarding/教师申请等）→ 登录
  */
 function ensureGuestRedirectToAuth() {
   if (getCurrentSessionAuthUser()) return;
@@ -57,7 +57,7 @@ function ensureOnboardingIncompleteGuard() {
 }
 
 /**
- * 已完成 onboarding 仍打开 #onboarding-role → #my
+ * 已完成 onboarding 仍打开 #onboarding-role → #my-learning
  */
 function ensureOnboardingRoleRedirectWhenComplete() {
   const u = getCurrentSessionAuthUser();
@@ -66,7 +66,7 @@ function ensureOnboardingRoleRedirectWhenComplete() {
   if (!full || full.onboardingCompleted === false) return;
   const base = normalizeHashBase(location.hash);
   if (base !== "#onboarding-role") return;
-  navigateTo("#my", { force: true });
+  navigateTo("#my-learning", { force: true });
 }
 
 /** @deprecated 使用 runSessionRouteGuards */

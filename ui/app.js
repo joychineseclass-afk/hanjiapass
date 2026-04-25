@@ -71,6 +71,7 @@ try {
    🧭 Routes (lazy)
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
+registerRoute("#exam",      () => import("./pages/page.examLearning.js"));
 registerRoute("#exam-learning", () => import("./pages/page.examLearning.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
 registerRoute("#kids",      () => import("./pages/page.kids.js"));
@@ -78,6 +79,7 @@ registerRoute("#kids-kids1", () => import("./pages/page.kids1.js"));
 registerRoute("#business",  () => import("./pages/page.business.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
+registerRoute("#conversation", () => import("./pages/page.speaking.js"));
 registerRoute("#speaking",  () => import("./pages/page.speaking.js"));
 registerRoute("#travel",    () => import("./pages/page.travel.js"));
 registerRoute("#culture",   () => import("./pages/page.culture.js"));
@@ -91,6 +93,7 @@ registerRoute("#teacher-assets", () => import("./pages/page.teacherAssets.js"));
 registerRoute("#teacher-asset-editor", () => import("./pages/page.teacherAssetEditor.js"));
 registerRoute("#classroom", () => import("./pages/page.classroom.js"));
 registerRoute("#game",      () => import("./pages/page.game.js"));
+registerRoute("#my-learning", () => import("./pages/page.my.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
 registerRoute("#my-content", () => import("./pages/page.myLearningContent.js"));
 registerRoute("#my-orders", () => import("./pages/page.myOrders.js"));

@@ -6,7 +6,7 @@ const STORAGE_KEY = "lumina_post_auth_target_hash_v1";
 
 /** 默认第一课：HSK 2.0 · 一级 · 第 1 课（考试学习 → HSK 内嵌，稳定有数据） */
 export const LUMINA_DEFAULT_LEARNING_ENTRY_HASH =
-  "#exam-learning?tab=hsk&ver=hsk2.0&lv=1&lesson=1";
+  "#exam?tab=hsk&ver=hsk2.0&lv=1&lesson=1";
 
 function safeParseHash(h) {
   const s = String(h || "").trim();

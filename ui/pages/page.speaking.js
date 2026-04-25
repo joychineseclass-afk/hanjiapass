@@ -28,9 +28,23 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+function getConversationBaseFromLocation() {
+  const raw = String(location.hash || "").toLowerCase();
+  const base = raw.split("?")[0].split("/")[0];
+  if (base === "#speaking") return "#speaking";
+  if (base === "#conversation") return "#conversation";
+  return "#conversation";
+}
+
+function isConversationHashRoute() {
+  const raw = String(location.hash || "").toLowerCase();
+  const base = raw.split("?")[0].split("/")[0];
+  return base === "#speaking" || base === "#conversation";
+}
+
 function parseSpeakingTab() {
   const raw = String(location.hash || "").toLowerCase();
-  if (!raw.startsWith("#speaking")) return "daily";
+  if (!isConversationHashRoute()) return "daily";
   const q = raw.indexOf("?");
   if (q < 0) return "daily";
   try {
@@ -43,7 +57,7 @@ function parseSpeakingTab() {
 }
 
 function navLink(tab, current, label) {
-  const href = `#speaking?tab=${tab}`;
+  const href = `${getConversationBaseFromLocation()}?tab=${tab}`;
   const safe = escapeHtml(label);
   if (current === tab) {
     return `<span class="teacher-shell-nav-link teacher-shell-nav-link--current" aria-current="page">${safe}</span>`;
@@ -141,8 +155,7 @@ function bindHashAndLang() {
   if (!_hashBound) {
     _hashBound = true;
     window.addEventListener("hashchange", () => {
-      const low = String(location.hash || "").toLowerCase();
-      if (!low.startsWith("#speaking")) return;
+      if (!isConversationHashRoute()) return;
       const root = document.getElementById("app");
       if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
       renderSpeaking(root);
@@ -151,8 +164,7 @@ function bindHashAndLang() {
   if (!_langBound) {
     _langBound = true;
     const rerender = () => {
-      const low = String(location.hash || "").toLowerCase();
-      if (!low.startsWith("#speaking")) return;
+      if (!isConversationHashRoute()) return;
       const root = document.getElementById("app");
       if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
       renderSpeaking(root);

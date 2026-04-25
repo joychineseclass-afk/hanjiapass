@@ -1,5 +1,5 @@
 /**
- * 学生端「继续学习」最小本地记录（无后端），供 #my 与埋点用。
+ * 学生端「继续学习」最小本地记录（无后端），供 #my-learning 与埋点用。
  */
 import { LUMINA_DEFAULT_LEARNING_ENTRY_HASH } from "../auth/postAuthRedirect.js";
 
@@ -29,7 +29,7 @@ export function buildLearnerResumeEntryHash({ version, lv, lessonNo, file }) {
   p.set("lesson", String(lessonNo != null && !Number.isNaN(Number(lessonNo)) ? Number(lessonNo) : 1));
   const f = String(file || "").trim();
   if (f) p.set("file", f);
-  return `#exam-learning?${p.toString()}`;
+  return `#exam?${p.toString()}`;
 }
 
 /**

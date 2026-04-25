@@ -119,7 +119,7 @@ function parseHskDeepLinkFromLocation() {
   const q = raw.indexOf("?");
   const sp = q >= 0 ? new URLSearchParams(raw.slice(q + 1)) : new URLSearchParams();
 
-  if (base === "#exam-learning") {
+  if (base === "#exam-learning" || base === "#exam") {
     const tab = String(sp.get("tab") || "hsk").toLowerCase();
     if (tab && tab !== "hsk") {
       return { active: false, ver: null, lv: null, lessonNo: null, file: "" };
@@ -152,7 +152,7 @@ function isHSKPageActive() {
   const path = String((typeof location !== "undefined" && location.pathname) || "").toLowerCase();
   const base = raw.split("?")[0].split("&")[0];
   if (base === "#hsk") return true;
-  if (base === "#exam-learning") {
+  if (base === "#exam-learning" || base === "#exam") {
     const q = raw.indexOf("?");
     let tab = "hsk";
     if (q >= 0) {
@@ -164,7 +164,7 @@ function isHSKPageActive() {
     }
     return tab === "hsk";
   }
-  if (raw.includes("hsk") && base !== "#exam-learning") return true;
+  if (raw.includes("hsk") && base !== "#exam-learning" && base !== "#exam") return true;
   return path.includes("hsk");
 }
 

@@ -29,9 +29,23 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+function getExamBaseFromLocation() {
+  const raw = String(location.hash || "").toLowerCase();
+  const base = raw.split("?")[0].split("/")[0];
+  if (base === "#exam-learning") return "#exam-learning";
+  if (base === "#exam") return "#exam";
+  return "#exam";
+}
+
+function isExamHashRoute() {
+  const raw = String(location.hash || "").toLowerCase();
+  const base = raw.split("?")[0].split("/")[0];
+  return base === "#exam" || base === "#exam-learning";
+}
+
 function parseExamTab() {
   const raw = String(location.hash || "").toLowerCase();
-  if (!raw.startsWith("#exam-learning")) return "hsk";
+  if (!isExamHashRoute()) return "hsk";
   const q = raw.indexOf("?");
   if (q < 0) return "hsk";
   try {
@@ -44,7 +58,7 @@ function parseExamTab() {
 }
 
 function navLink(tab, current, label) {
-  const href = `#exam-learning?tab=${tab}`;
+  const href = `${getExamBaseFromLocation()}?tab=${tab}`;
   const safe = escapeHtml(label);
   if (current === tab) {
     return `<span class="teacher-shell-nav-link teacher-shell-nav-link--current" aria-current="page">${safe}</span>`;
@@ -133,8 +147,7 @@ function bindHashAndLang() {
   } else {
     _hashBound = true;
     window.addEventListener("hashchange", async () => {
-      const low = String(location.hash || "").toLowerCase();
-      if (!low.startsWith("#exam-learning")) return;
+      if (!isExamHashRoute()) return;
       const root = document.getElementById("app");
       if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
       try {
@@ -151,8 +164,7 @@ function bindHashAndLang() {
   if (!_langBound) {
     _langBound = true;
     const rerender = async () => {
-      const low = String(location.hash || "").toLowerCase();
-      if (!low.startsWith("#exam-learning")) return;
+      if (!isExamHashRoute()) return;
       const root = document.getElementById("app");
       if (!root?.querySelector(`.${SHELL_CLASS}`)) return;
       await renderExam(root);

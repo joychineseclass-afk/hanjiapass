@@ -162,15 +162,17 @@
   "nav": {
     "home": "首页",
     "courses": "课程",
+    "exam": "考试学习",
     "exam_learning": "考试学习",
     "hsk": "HSK学习",
     "kids": "儿童中文",
     "business": "商务",
-    "stroke": "笔顺与书写",
+    "stroke": "笔顺/跟写",
     "hanjagongfu": "汉字学习",
-    "hanja": "汉字",
+    "hanja": "汉字学习",
     "hanzi_hub": "汉字与书写",
     "speaking": "会话",
+    "conversation": "会话",
     "speaking_business": "商务会话",
     "speaking_travel": "旅游会话",
     "speaking_daily": "日常会话",
@@ -178,9 +180,34 @@
     "culture": "文化",
     "review": "复习",
     "resources": "资料",
-    "teacher": "教师工作台",
+    "teacher": "教师工作区",
     "my": "我的学习",
+    "myLearning": "我的学习",
     "login": "登录"
+  },
+  "myLearning": {
+    "review_title": "我的复习",
+    "review_desc": "这里将显示错题、收藏内容、学习记录和个性化复习任务。"
+  },
+  "resources": {
+    "title": "资料库",
+    "subtitle": "这里展示平台官方资料、老师共享资料、免费学习资料和需要购买的教学资源。",
+    "free": {
+      "title": "免费资料",
+      "desc": "老师或平台公开分享的免费资料。通过审核后，学生和老师可以自由查看或下载。"
+    },
+    "paid": {
+      "title": "付费资料",
+      "desc": "老师上传并通过审核的有价资料。购买后可以查看或下载，后续可接入支付和平台抽成。"
+    },
+    "official": {
+      "title": "平台官方资料",
+      "desc": "Lumina 官方整理的示范教材、活动资料、学习单和教学样张。"
+    },
+    "teacherShared": {
+      "title": "老师共享资料",
+      "desc": "老师可以上传自己的 PPT、PDF、课堂教材或练习资料。资料需审核后才可公开展示。"
+    }
   },
   "demo": {
     "banner": {
@@ -193,7 +220,7 @@
       "extra_materials": "当前部分为示例数据，创建、上传与完整管理能力仍在完善中。",
       "extra_courses": "部分课程为示例行，全链路创建与上架仍在迭代中。",
       "extra_stage0": "本页为综合演示控制台，身份切换、重置等能力仅供本地演示，非生产管理后台。",
-      "extra_resources": "本页为二级入口集合，所链模块中多为示意或尚未完善。"
+      "extra_resources": "本页为资料库示意：免费/付费/官方/教师共享结构；上架与支付未接入。"
     }
   },
   "resourceHub": {
@@ -725,8 +752,8 @@
     "tip": "听→跟读→自己说。"
   },
   "stroke": {
-    "title": "汉字笔顺练习",
-    "desc": "输入一个汉字，即可观看笔顺动画并进行描红练习。",
+    "title": "笔顺/跟写",
+    "desc": "查看单个汉字的笔顺动画，进行跟写练习，也可在每课单词学习中调用。",
     "input_label": "输入汉字",
     "input_ph": "例如：你 / 学 / 人",
     "load_btn": "加载",
@@ -825,9 +852,9 @@
     "reception": "接待表达"
   },
   "culture": {
-    "title": "文化",
-    "subtitle": "语言与文化一起学",
-    "comingSoon": "即将开放"
+    "title": "文化学习",
+    "subtitle": "学习成语、俗语、节日、礼仪、历史人物和中国文化表达。",
+    "comingSoon": "内容将陆续扩展"
   },
   "speaking": {
     "title": "会话",
@@ -2388,10 +2415,17 @@
     }
   },
   "hanja": {
-    "title": "汉字功夫",
-    "section_vocab": "📖 常用汉字",
-    "section_compare": "🔄 中韩汉字对比",
-    "coming_soon": "正在建设中，汉字学习内容即将上线。",
+    "title": "汉字学习",
+    "lead": "面向韩国汉字等级考试和中文词汇理解，学习常用汉字的字义、读音、组词和等级分类。",
+    "card_levels_title": "等级汉字学习",
+    "card_levels_desc": "按照韩国汉字等级考试或平台自定义等级，分阶段学习汉字。",
+    "card_vocab_title": "汉字与中文词汇",
+    "card_vocab_desc": "通过汉字的意义、结构和组词理解中文词汇。",
+    "card_quiz_title": "汉字小测验",
+    "card_quiz_desc": "后续可加入认读、意思选择、组词、听音辨字等练习。",
+    "section_vocab": "常用汉字",
+    "section_compare": "中韩汉字对比",
+    "coming_soon": "轻量示意页，完整等级与题库将后续接入。",
     "coming_soon_detail": "汉字词汇学习内容即将上线。",
     "compare_placeholder": "未来将加入简体、繁体与韩字对照功能。"
   }

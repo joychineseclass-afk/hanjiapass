@@ -162,15 +162,17 @@
   "nav": {
     "home": "Home",
     "courses": "Courses",
+    "exam": "Exam Learning",
     "exam_learning": "Exam study",
     "hsk": "HSK Learning",
     "kids": "Kids Chinese",
     "business": "Business",
-    "stroke": "Stroke order",
+    "stroke": "Stroke Order / Tracing",
     "hanjagongfu": "Hanzi study",
-    "hanja": "Han characters",
+    "hanja": "Hanja Learning",
     "hanzi_hub": "Characters & writing",
     "speaking": "Speaking",
+    "conversation": "Conversation",
     "speaking_business": "Business speaking",
     "speaking_travel": "Travel speaking",
     "speaking_daily": "Everyday speaking",
@@ -178,9 +180,34 @@
     "culture": "Culture",
     "review": "Review",
     "resources": "Resources",
-    "teacher": "Teacher workspace",
+    "teacher": "Teacher Workspace",
     "my": "My learning",
+    "myLearning": "My Learning",
     "login": "Login"
+  },
+  "myLearning": {
+    "review_title": "My Review",
+    "review_desc": "Wrong answers, saved items, learning records, and personalized review tasks will appear here."
+  },
+  "resources": {
+    "title": "Resource Library",
+    "subtitle": "A place for official platform materials, teacher-shared resources, free learning materials, and paid teaching resources.",
+    "free": {
+      "title": "Free Resources",
+      "desc": "Free materials shared by teachers or the platform. After review, students and teachers can view or download them."
+    },
+    "paid": {
+      "title": "Paid Resources",
+      "desc": "Paid materials uploaded by teachers and approved through review. After purchase, users can view or download them. Payment and platform commission can be connected later."
+    },
+    "official": {
+      "title": "Official Platform Resources",
+      "desc": "Sample textbooks, activity materials, worksheets, and teaching samples prepared by Lumina."
+    },
+    "teacherShared": {
+      "title": "Teacher-Shared Resources",
+      "desc": "Teachers can upload their own PPTs, PDFs, classroom materials, or practice resources. Materials must pass review before being publicly displayed."
+    }
   },
   "demo": {
     "banner": {
@@ -193,7 +220,7 @@
       "extra_materials": "Some items are seed data; create / upload and library management are still under active development.",
       "extra_courses": "Some rows are sample courses; end-to-end course creation and publishing are still in progress.",
       "extra_stage0": "This full console is a combined sandbox. Identity switching, demo store reset, and listing helpers are for labs only—not a production admin.",
-      "extra_resources": "This hub only links to other modules. Many linked areas are still preview or placeholder quality."
+      "extra_resources": "Resource library preview: free/paid/official/teacher-shared layout; payments not live."
     }
   },
   "resourceHub": {
@@ -725,8 +752,8 @@
     "tip": "Listen → repeat → speak by yourself."
   },
   "stroke": {
-    "title": "Stroke Order",
-    "desc": "Enter a character to see stroke animation and trace practice.",
+    "title": "Stroke Order / Tracing",
+    "desc": "View stroke-order animations for individual Chinese characters, practice tracing, and connect writing practice to lesson vocabulary.",
     "input_label": "Enter character",
     "input_ph": "e.g. 你 / 学 / 人",
     "load_btn": "Load",
@@ -825,9 +852,9 @@
     "reception": "Reception expressions"
   },
   "culture": {
-    "title": "Culture",
-    "subtitle": "Learn Chinese language and culture together.",
-    "comingSoon": "Coming soon"
+    "title": "Culture Learning",
+    "subtitle": "Learn idioms, proverbs, festivals, etiquette, historical figures, and Chinese cultural expressions.",
+    "comingSoon": "Content will expand over time"
   },
   "speaking": {
     "title": "Speaking",
@@ -2383,11 +2410,18 @@
     }
   },
   "hanja": {
-    "title": "Hanzi Study",
-    "section_vocab": "📖 Common Hanzi",
-    "section_compare": "🔄 Chinese-Korean Hanzi Compare",
-    "coming_soon": "Coming soon. Hanzi learning content will be added.",
+    "title": "Hanja Learning",
+    "lead": "Learn common Chinese characters by meaning, reading, word formation, and level classification for Korean Hanja exams and Chinese vocabulary understanding.",
+    "card_levels_title": "Level-based Hanja",
+    "card_levels_desc": "Study in stages by Korean Hanja exam levels or platform-defined tracks.",
+    "card_vocab_title": "Hanja & Chinese Vocabulary",
+    "card_vocab_desc": "Use meaning, structure, and word-building to understand Chinese words.",
+    "card_quiz_title": "Hanja Quiz",
+    "card_quiz_desc": "Reading, meaning, word-building, and listening exercises can be added next.",
+    "section_vocab": "Common Hanzi",
+    "section_compare": "Chinese–Korean Hanja",
+    "coming_soon": "Lightweight placeholder; full item banks and exam flows come later.",
     "coming_soon_detail": "Hanzi vocabulary content coming soon.",
-    "compare_placeholder": "Simplified, Traditional, and Korean Hanzi comparison coming soon."
+    "compare_placeholder": "Simplified, Traditional, and Korean Hanja comparison coming soon."
   }
 }

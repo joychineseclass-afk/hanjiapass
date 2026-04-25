@@ -14,14 +14,14 @@ function getSessionUser() {
 }
 
 /**
- * 已存在会话时，登录/注册页应导向的 hash（onboarding 未完成 → 角色页，否则 #my）
+ * 已存在会话时，登录/注册页应导向的 hash（onboarding 未完成 → 角色页，否则 #my-learning）
  * 未登录时用于「需要登录」的占位目标：#auth-login
  */
 export function getResolvedSessionLandingHash() {
   const u = getSessionUser();
   if (!u) return "#auth-login";
   if (u.onboardingCompleted === false) return "#onboarding-role";
-  return "#my";
+  return "#my-learning";
 }
 
 /**
@@ -64,7 +64,15 @@ export function isOnboardingIncompleteAllowedHash(hash) {
 /**
  * 未登录用户访问到需登录的 hash（账号/我的/教师系）
  */
-const GUEST_MUST_LOGIN_EXACT = new Set(["#my", "#my-content", "#my-orders", "#onboarding-role", "#teacher-apply", "#teacher-status"]);
+const GUEST_MUST_LOGIN_EXACT = new Set([
+  "#my",
+  "#my-learning",
+  "#my-content",
+  "#my-orders",
+  "#onboarding-role",
+  "#teacher-apply",
+  "#teacher-status",
+]);
 
 function hashRequiresSession(hash) {
   const b = normalizeHashBase(hash);

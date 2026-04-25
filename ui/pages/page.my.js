@@ -82,8 +82,12 @@ export function mount() {
   app.innerHTML = `
     <div class="card">
       ${learnerResumeCardHtml()}
+      <section class="card" style="margin-bottom:12px;padding:16px 18px;border:1px solid var(--line,#e2e8f0);border-radius:var(--radius,12px);box-shadow:0 8px 20px rgba(15,23,42,.06)">
+        <h3 class="title" style="font-size:1.05rem;margin:0 0 8px" data-i18n="myLearning.review_title">${esc(tx("myLearning.review_title"))}</h3>
+        <p class="desc" style="margin:0;font-size:14px;color:var(--muted,#475569);line-height:1.6" data-i18n="myLearning.review_desc">${esc(tx("myLearning.review_desc"))}</p>
+      </section>
       <section class="hero">
-        <h2 class="title" data-i18n="my_title">내 학습</h2>
+        <h2 class="title" data-i18n="nav.myLearning">${esc(tx("nav.myLearning"))}</h2>
         <p class="desc" data-i18n="learner.my_page_subtitle">${esc(tx("learner.my_page_subtitle"))}</p>
         <p class="learner-my-quicklinks">
           <a class="learner-my-link" href="#my-content" data-i18n="learner.nav.my_content">My content</a>

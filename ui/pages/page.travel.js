@@ -2,10 +2,10 @@
 export default async function pageTravel() {
   try {
     const { navigateTo } = await import("../router.js");
-    navigateTo("#speaking?tab=travel", { force: true });
+    navigateTo("#conversation?tab=travel", { force: true });
   } catch {
     if (typeof location !== "undefined") {
-      location.hash = "#speaking?tab=travel";
+      location.hash = "#conversation?tab=travel";
     }
   }
 }

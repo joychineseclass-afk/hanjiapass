@@ -95,7 +95,7 @@ export default async function pageTeacherStatus(ctxOrRoot) {
         ${submitted ? `<p class="lumina-teacher-status__meta">${escapeHtml(tx("teacherStatus.submitted_at"))} ${submitted}</p>` : ""}
         ${reapplyBlock}
         <div class="lumina-teacher-status__actions" style="margin-top:12px">
-          <a class="auth-submit" style="display:inline-block;text-align:center;text-decoration:none; cursor:pointer" href="#my" id="tsBackMy" data-i18n="teacherStatus.back_my">${escapeHtml(
+          <a class="auth-submit" style="display:inline-block;text-align:center;text-decoration:none; cursor:pointer" href="#my-learning" id="tsBackMy" data-i18n="teacherStatus.back_my">${escapeHtml(
             tx("teacherStatus.back_my"),
           )}</a>
         </div>
@@ -110,7 +110,7 @@ export default async function pageTeacherStatus(ctxOrRoot) {
   });
   root.querySelector("#tsBackMy")?.addEventListener("click", (e) => {
     e.preventDefault();
-    import("../router.js").then((r) => r.navigateTo("#my", { force: true }));
+    import("../router.js").then((r) => r.navigateTo("#my-learning", { force: true }));
   });
   root.querySelector("#devMockTeacherActive")?.addEventListener("click", async () => {
     const r = await setMockTeacherRoleActiveForTest();

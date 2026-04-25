@@ -9,15 +9,18 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
-// 一级收敛：Home · 考试学习 · 儿童中文 · 会话（旅游/商务为 #speaking?tab=）· 资料（笔顺/汉字/文化/复习等二级入口）· 教师 · 我的
+// 顶栏：한자/필순 분리、会话/资料/文化独立；复习不入口顶栏
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
-  { href: "/index.html#exam-learning", key: "nav.exam_learning", label: "시험학습", color: "#22c55e" },
-  { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
-  { href: "/index.html#speaking", key: "nav.speaking", label: "회화",          color: "#ef4444" },
-  { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
-  { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
-  { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#home", key: "nav.home", label: "홈", color: "#3b82f6" },
+  { href: "/index.html#exam", key: "nav.exam", label: "시험 학습", color: "#22c55e" },
+  { href: "/index.html#kids", key: "nav.kids", label: "어린이 중국어", color: "#ec4899" },
+  { href: "/index.html#conversation", key: "nav.conversation", label: "회화", color: "#ef4444" },
+  { href: "/index.html#hanja", key: "nav.hanja", label: "한자 학습", color: "#8b5cf6" },
+  { href: "/index.html#stroke", key: "nav.stroke", label: "필순/따라쓰기", color: "#0d9488" },
+  { href: "/index.html#culture", key: "nav.culture", label: "문화", color: "#d97706" },
+  { href: "/index.html#resources", key: "nav.resources", label: "자료", color: "#10b981" },
+  { href: "/index.html#teacher", key: "nav.teacher", label: "교사 워크스페이스", color: "#f43f5e" },
+  { href: "/index.html#my-learning", key: "nav.myLearning", label: "내 학습", color: "#64748b" },
 ];
 
 function t(key, fallback = "") {
@@ -83,20 +86,13 @@ function setActive(rootEl) {
       ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
-      } else if (wantBase === "#exam-learning") {
-        active = curBase === "#exam-learning" || curBase === "#hsk";
-      } else if (wantBase === "#speaking") {
-        // 会话 + 旧 #travel / #business 重定向前路由，统一高亮
-        active = curBase === "#speaking" || curBase === "#travel" || curBase === "#business";
-      } else if (wantBase === "#resources") {
-        const navSecondary = new Set([
-          "#resources",
-          "#culture",
-          "#review",
-          "#stroke",
-          "#hanja",
-        ]);
-        active = navSecondary.has(curBase);
+      } else if (wantBase === "#exam") {
+        active = curBase === "#exam" || curBase === "#exam-learning" || curBase === "#hsk";
+      } else if (wantBase === "#conversation") {
+        active = curBase === "#conversation" || curBase === "#speaking" || curBase === "#travel" || curBase === "#business";
+      } else if (wantBase === "#my-learning") {
+        const myArea = new Set(["#my-learning", "#my", "#my-content", "#my-orders"]);
+        active = myArea.has(curBase);
       } else {
         active = wantHash ? curBase === wantBase : true;
       }
@@ -165,7 +161,7 @@ function loadAuthService() {
 }
 
 /**
- * 顶部：未登录为「登录/注册」；已登录为昵称 + 登出（「我的学习」仅保留主导航 #my）。
+ * 顶部：未登录为「登录/注册」；已登录为昵称 + 登出（「我的学习」为主导航 #my-learning）。
  * @param {HTMLElement} rootEl
  */
 function syncAuthBlock(rootEl) {
@@ -183,7 +179,7 @@ function syncAuthBlock(rootEl) {
     } else {
       const name = escapeAuthText(String(u.displayName || u.email || "User").trim() || "User");
       const tState = mod.getTeacherNavRoleState();
-      const myLabel = escapeAuthText(t("nav.my", "My learning"));
+      const myLabel = escapeAuthText(t("nav.myLearning", t("nav.my", "My learning")));
       let teacherEntry = "";
       if (tState === "active") {
         teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_workspace">${escapeAuthText(
@@ -203,7 +199,7 @@ function syncAuthBlock(rootEl) {
         )}</a>`;
       }
       box.innerHTML = `
-      <a href="/index.html#my" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.my">${myLabel}</a>
+      <a href="/index.html#my-learning" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.myLearning">${myLabel}</a>
       ${teacherEntry}
       <span class="joy-auth-name" title="${name}">${name}</span>
       <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>

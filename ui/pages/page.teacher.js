@@ -589,7 +589,7 @@ function renderTeacherHomeActiveOverview(t) {
           t("teacher.home.badge_open"),
         )}</span>
         <div class="teacher-lumina-home__head-cta">
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my-learning" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.back_my"),
           )}</a>
           <a class="teacher-hub-cta teacher-hub-cta--primary" href="#classroom" data-teacher-spa="1">${escapeHtml(
@@ -683,7 +683,7 @@ function renderTeacherEntryNone(t) {
         <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-apply" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.cta_apply"),
         )}</a>
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my-learning" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.cta_back_my"),
         )}</a>
       </p>
@@ -706,7 +706,7 @@ function renderTeacherEntryPending(t) {
         <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-status" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.pending_cta_status"),
         )}</a>
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my-learning" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.cta_back_my"),
         )}</a>
       </p>
@@ -729,7 +729,7 @@ function renderTeacherEntryRejected(t) {
         <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-apply" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.cta_reapply"),
         )}</a>
-        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my" data-teacher-spa="1">${escapeHtml(
+        <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#my-learning" data-teacher-spa="1">${escapeHtml(
           t("teacher.entry.cta_back_my"),
         )}</a>
       </p>

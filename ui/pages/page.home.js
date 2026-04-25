@@ -535,9 +535,9 @@ function renderHome(root) {
           <div>
             ${T.contact}: 010-0000-0000<br/>
             ${T.email}: hello@lumina.example<br/>
-            <a href="#my" style="text-decoration:underline;">${T.privacy}</a>
+            <a href="#my-learning" style="text-decoration:underline;">${T.privacy}</a>
             ·
-            <a href="#my" style="text-decoration:underline;">${T.terms}</a><br/>
+            <a href="#my-learning" style="text-decoration:underline;">${T.terms}</a><br/>
             ${T.copy}
           </div>
         </div>

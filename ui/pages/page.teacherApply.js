@@ -99,7 +99,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
           )}</button>
         </form>
         <p class="auth-footer">
-          <a href="#my" class="auth-link" id="taBackMy">${escapeHtml(tx("teacherApply.back_learning"))}</a>
+          <a href="#my-learning" class="auth-link" id="taBackMy">${escapeHtml(tx("teacherApply.back_learning"))}</a>
         </p>
       </section>
     </div>
@@ -108,7 +108,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
   const back = root.querySelector("#taBackMy");
   back?.addEventListener("click", (e) => {
     e.preventDefault();
-    import("../router.js").then((r) => r.navigateTo("#my", { force: true }));
+    import("../router.js").then((r) => r.navigateTo("#my-learning", { force: true }));
   });
 
   const form = root.querySelector("#teacherApplyForm");

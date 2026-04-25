@@ -33,7 +33,7 @@ export default async function pageOnboardingRole(ctxOrRoot) {
     const full = findUserById(u0.id);
     if (full && full.onboardingCompleted !== false) {
       const { navigateTo } = await import("../router.js");
-      navigateTo("#my", { force: true });
+      navigateTo("#my-learning", { force: true });
       return;
     }
   }
@@ -65,7 +65,7 @@ export default async function pageOnboardingRole(ctxOrRoot) {
     const r = await markOnboardingCompletedStudentPath();
     if (!r?.ok) return;
     const { navigateTo } = await import("../router.js");
-    navigateTo(consumePendingPostAuthTargetHash() || "#my", { force: true });
+    navigateTo(consumePendingPostAuthTargetHash() || "#my-learning", { force: true });
   });
   root.querySelector("#onbTeachBtn")?.addEventListener("click", async () => {
     clearPendingPostAuthTargetHash();
