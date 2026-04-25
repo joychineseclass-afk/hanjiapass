@@ -460,6 +460,17 @@ function main() {
     }
   }
 
+  if (Array.isArray(cedictList)) {
+    const nCedictPending = cedictList.filter(
+      (e) => e && String(e.source) === "CC-CEDICT" && e.needsReview === true
+    ).length;
+    if (nCedictPending > 0) {
+      console.log("");
+      console.log(`CC-CEDICT needsReview entries: ${nCedictPending}`);
+      console.log("Run npm run build:cedict-review to generate review queue.");
+    }
+  }
+
   process.exit(0);
 }
 

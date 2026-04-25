@@ -33,7 +33,8 @@
     "check:culture-idioms": "node scripts/check-culture-idioms.mjs",
     "check:dictionary": "node scripts/check-dictionary-data.mjs",
     "convert:cedict-sample": "node scripts/convert-cedict-sample.mjs",
-    "convert:cedict-basic": "node scripts/convert-cedict-basic.mjs"
+    "convert:cedict-basic": "node scripts/convert-cedict-basic.mjs",
+    "build:cedict-review": "node scripts/build-cedict-review-queue.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
