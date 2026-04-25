@@ -878,7 +878,17 @@
       "storyLangLabel": "이야기 설명",
       "loadError": "성어를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
       "indexLoadError": "성어 목록을 불러올 수 없습니다.",
-      "detailLoadError": "성어 내용을 불러올 수 없습니다."
+      "detailLoadError": "성어 내용을 불러올 수 없습니다.",
+      "category": {
+        "fable": "우화 이야기",
+        "learning": "학습과 성장",
+        "behavior": "사람과 태도",
+        "wisdom": "지혜와 사고",
+        "emotion": "감정 표현",
+        "daily": "일상 묘사",
+        "nature": "자연 풍경",
+        "quantity": "수량과 과장"
+      }
     },
     "proverbs": {
       "title": "속담 학습",

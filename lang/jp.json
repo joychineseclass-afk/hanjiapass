@@ -886,7 +886,17 @@
       "storyLangLabel": "故事説明",
       "loadError": "成語を読み込めませんでした。しばらくしてから再度お試しください。",
       "indexLoadError": "成語一覧を読み込めませんでした。",
-      "detailLoadError": "成語の内容を読み込めませんでした。"
+      "detailLoadError": "成語の内容を読み込めませんでした。",
+      "category": {
+        "fable": "寓話故事",
+        "learning": "学習と成長",
+        "behavior": "人柄と態度",
+        "wisdom": "知恵と思考",
+        "emotion": "感情表現",
+        "daily": "日常描写",
+        "nature": "自然風景",
+        "quantity": "数量と誇張"
+      }
     },
     "proverbs": {
       "title": "ことわざ学習",

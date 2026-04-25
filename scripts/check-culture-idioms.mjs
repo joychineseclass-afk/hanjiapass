@@ -13,7 +13,27 @@ const EXPANSION_CANDIDATES_FILE = "idioms-expansion-candidates-050.json";
 
 const EXPANSION_STATUS = new Set(["candidate", "approved", "drafted", "published"]);
 
-const INDEX_REQUIRED = ["id", "idiom", "pinyin", "file", "theme", "difficulty"];
+const INDEX_REQUIRED = ["id", "idiom", "pinyin", "file", "theme", "difficulty", "category"];
+const IDIOM_CATEGORY_VALUES = new Set([
+  "fable",
+  "learning",
+  "behavior",
+  "wisdom",
+  "emotion",
+  "daily",
+  "nature",
+  "quantity",
+]);
+const IDIOM_CATEGORY_ORDER = [
+  "fable",
+  "learning",
+  "behavior",
+  "wisdom",
+  "emotion",
+  "daily",
+  "nature",
+  "quantity",
+];
 const DETAIL_REQUIRED = [
   "id",
   "idiom",
@@ -198,6 +218,12 @@ function main() {
       }
     }
     if (!row) continue;
+    const cat = String(row.category || "").trim();
+    if (!cat || !IDIOM_CATEGORY_VALUES.has(cat)) {
+      addMismatch(
+        `index ${row.id}: category must be one of: ${[...IDIOM_CATEGORY_VALUES].join(", ")} (got: ${row.category == null ? "∅" : JSON.stringify(String(row.category))})`
+      );
+    }
     if (!Array.isArray(row.theme)) {
       addMismatch(`index ${row.id}: theme is not an array`);
     }
@@ -221,6 +247,25 @@ function main() {
       const full = path.join(IDIOMS_DIR, path.basename(rel));
       if (!fileExists(full)) {
         addMismatch(`index ${row.id}: file not found: ${row.file}`);
+      }
+    }
+  }
+
+  if (!missing.length && !mismatch.length) {
+    const catCounts = new Map();
+    for (const c of IDIOM_CATEGORY_ORDER) {
+      catCounts.set(c, 0);
+    }
+    for (const row of index) {
+      if (!row || !isNonEmptyString(row.id)) continue;
+      const c = String(row.category || "").trim();
+      if (c && IDIOM_CATEGORY_VALUES.has(c)) {
+        catCounts.set(c, (catCounts.get(c) || 0) + 1);
+      }
+    }
+    for (const c of IDIOM_CATEGORY_ORDER) {
+      if (catCounts.get(c) === 0) {
+        warnings.push(`No idioms in category "${c}" (empty category in nav is OK; add items later or ignore).`);
       }
     }
   }

@@ -878,7 +878,17 @@
       "storyLangLabel": "Story Explanation",
       "loadError": "Could not load idioms. Please try again later.",
       "indexLoadError": "The idiom catalog could not be loaded.",
-      "detailLoadError": "Idiom content could not be loaded."
+      "detailLoadError": "Idiom content could not be loaded.",
+      "category": {
+        "fable": "Fables",
+        "learning": "Learning & Growth",
+        "behavior": "People & Conduct",
+        "wisdom": "Wisdom & Thinking",
+        "emotion": "Emotions",
+        "daily": "Daily Description",
+        "nature": "Nature",
+        "quantity": "Quantity & Exaggeration"
+      }
     },
     "proverbs": {
       "title": "Proverb Learning",

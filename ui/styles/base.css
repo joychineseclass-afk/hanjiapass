@@ -1850,12 +1850,18 @@ a.section-side-nav-item:hover{
 .section-side-nav-children[hidden]{
   display: none !important;
 }
+.section-side-nav__subgroup{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+}
 .section-side-nav-item.level-3{
   font-size: 14px;
-  font-weight: 600;
-  padding-left: 28px;
+  font-weight: 700;
+  padding-left: 26px;
   margin-top: 0;
-  opacity: 0.92;
+  opacity: 0.95;
 }
 .section-side-nav-item.level-3.is-active{
   opacity: 1;
@@ -1865,10 +1871,24 @@ a.section-side-nav-item:hover{
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
+.section-side-nav-children.level-4-group{
+  display: grid;
+  gap: 5px;
+  margin-top: 5px;
+}
 .section-side-nav-item.level-4{
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  padding-left: 26px;
+  padding-left: 40px;
+  opacity: 0.9;
+}
+.section-side-nav-item.level-4.is-active{
+  background: #eef2ff;
+  color: #312e81;
+  font-weight: 700;
+  opacity: 1;
+  border-color: #a5b4fc;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
 .section-main-panel{
   flex: 1 1 0;
@@ -2038,10 +2058,10 @@ a.section-side-nav-item:hover{
     text-align: center;
   }
   .section-side-nav-item.level-4{
-    padding-left: 11px;
+    padding-left: 24px;
   }
   .section-side-nav-children .section-side-nav-item.level-3{
-    padding-left: 22px;
+    padding-left: 20px;
   }
 }
 .teacher-admin-back{

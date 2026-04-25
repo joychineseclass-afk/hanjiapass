@@ -878,7 +878,17 @@
       "storyLangLabel": "故事说明",
       "loadError": "成语内容加载失败，请稍后重试。",
       "indexLoadError": "成语目录暂时无法加载。",
-      "detailLoadError": "成语内容暂时无法加载。"
+      "detailLoadError": "成语内容暂时无法加载。",
+      "category": {
+        "fable": "寓言故事",
+        "learning": "学习成长",
+        "behavior": "做人处事",
+        "wisdom": "智慧思考",
+        "emotion": "情绪表达",
+        "daily": "日常描写",
+        "nature": "自然景物",
+        "quantity": "数量夸张"
+      }
     },
     "proverbs": {
       "title": "俗语学习",
