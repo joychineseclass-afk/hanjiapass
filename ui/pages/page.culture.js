@@ -18,6 +18,9 @@ const ALLOWED = new Set(CULTURE_SECTION_IDS);
 let _idiomsCache = null;
 let _idiomsFetchPromise = null;
 
+/** 已展开侧栏的二级分类（有三级子项的区块点击后 open） */
+const expandedCultureSections = new Set();
+
 function t(key) {
   try {
     const v = i18n?.t?.(key);
@@ -56,6 +59,24 @@ function navItemClassL2(id, active) {
 function navItemClassL3(active) {
   const base = "section-side-nav-item level-3";
   return active ? `${base} is-active` : base;
+}
+
+/**
+ * 某二级分类下是否有三级子项（可扩展；目前成语来自 JSON，其余可后续接入数据）
+ * @param {string} sectionId
+ */
+function getSectionChildren(sectionId) {
+  if (sectionId === "idioms" && _idiomsCache && Array.isArray(_idiomsCache) && _idiomsCache.length) {
+    return _idiomsCache;
+  }
+  return [];
+}
+
+/**
+ * @param {string} sectionId
+ */
+function sectionHasChildren(sectionId) {
+  return getSectionChildren(sectionId).length > 0;
 }
 
 function idiomsDataUrl() {
@@ -268,44 +289,47 @@ function renderIdiomDetailPage(item) {
 }
 
 /**
- * @param {object[]|null} idiomList
- * @param {string} sectionId
- * @param {string} activeIdiomId
+ * @param {string} sectionId 当前 tab（来自 hash）
+ * @param {string} activeChildId 当前选中的三级 id（成语为 idiom_xxxx）
  */
-function buildSideNavInnerHtml(idiomList, sectionId, activeIdiomId) {
+function buildSideNavInnerHtml(sectionId, activeChildId) {
   return CULTURE_SECTION_IDS.map((id) => {
     const navKey = `culture.nav.${id}`;
     const isSec = id === sectionId;
-    if (id !== "idioms") {
+    const children = getSectionChildren(id);
+    const hasCh = sectionHasChildren(id);
+    if (!hasCh) {
       return `<button type="button" class="${navItemClassL2(id, isSec)}" data-culture-nav="${id}" data-i18n="${esc(navKey)}" aria-current="${isSec ? "true" : "false"}">${esc(t(navKey))}</button>`;
     }
-    const kids =
-      idiomList && idiomList.length
-        ? idiomList
-            .map((it) => {
-              const iid = String(it?.id ?? "");
-              const isId = isSec && iid && iid === activeIdiomId;
-              return `<button type="button" class="${navItemClassL3(isId)}" data-culture-idiom="${esc(iid)}" aria-current="${isId ? "true" : "false"}">${esc(it?.idiom)}</button>`;
-            })
-            .join("")
-        : `<p class="section-side-nav-idiom-placeholder" data-i18n="common.loading">${esc(t("common.loading"))}</p>`;
-    return `<div class="section-side-nav__idiom-block">
-  <button type="button" class="${navItemClassL2("idioms", isSec)}" data-culture-nav="idioms" data-i18n="${esc(navKey)}" aria-current="${isSec ? "true" : "false"}">${esc(t(navKey))}</button>
-  <div class="section-side-nav-idiom-children" data-idiom-children="1">${kids}</div>
+    const expanded = expandedCultureSections.has(id);
+    const chev = expanded ? "▾" : "▸";
+    const childrenId = `culture-nav-children-${id}`;
+    const kids = children
+      .map((it) => {
+        const cid = String(it?.id ?? "");
+        const isChild = isSec && Boolean(cid) && cid === activeChildId;
+        return `<button type="button" class="${navItemClassL3(isChild)}" data-culture-child="${esc(cid)}" data-culture-parent-section="${esc(id)}" data-culture-idiom="${esc(cid)}" aria-current="${isChild ? "true" : "false"}">${esc(it?.idiom)}</button>`;
+      })
+      .join("");
+    return `<div class="section-side-nav__group" data-culture-group="${esc(id)}">
+  <button type="button" class="${navItemClassL2(id, isSec)} section-side-nav-item--expandable" data-culture-nav="${id}" data-culture-expandable="1" aria-expanded="${expanded ? "true" : "false"}" aria-controls="${esc(childrenId)}" aria-current="${isSec ? "true" : "false"}">
+    <span class="section-side-nav-item__text" data-i18n="${esc(navKey)}">${esc(t(navKey))}</span>
+    <span class="section-side-nav-item__chev" aria-hidden="true">${chev}</span>
+  </button>
+  <div class="section-side-nav-children" id="${esc(childrenId)}" ${expanded ? "" : "hidden"}>${kids}</div>
 </div>`;
   }).join("");
 }
 
 /**
  * @param {object} root
- * @param {object[]|null} list
  * @param {string} sectionId
- * @param {string} idiomId
+ * @param {string} activeChildId
  */
-function updateSideNav(root, list, sectionId, idiomId) {
+function updateSideNav(root, sectionId, activeChildId) {
   const navInner = root.querySelector("[data-culture-side-nav]");
   if (!navInner) return;
-  navInner.innerHTML = buildSideNavInnerHtml(list, sectionId, idiomId);
+  navInner.innerHTML = buildSideNavInnerHtml(sectionId, activeChildId);
   i18n.apply?.(navInner);
 }
 
@@ -348,11 +372,11 @@ function updatePanel(root, sectionId) {
   if (sectionId === "idioms") {
     if (_idiomsCache) {
       const iid = currentIdiomIdFromList(_idiomsCache);
-      updateSideNav(root, _idiomsCache, "idioms", iid);
+      updateSideNav(root, "idioms", iid);
       renderIdiomRight(root, _idiomsCache, "idioms", iid);
       return;
     }
-    updateSideNav(root, null, "idioms", DEFAULT_IDIOM_ID);
+    updateSideNav(root, "idioms", DEFAULT_IDIOM_ID);
     inner.innerHTML = `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`;
     i18n.apply?.(inner);
     loadIdiomsData()
@@ -371,14 +395,14 @@ function updatePanel(root, sectionId) {
             /* */
           }
         }
-        updateSideNav(root, list, "idioms", iid);
+        updateSideNav(root, "idioms", iid);
         p.innerHTML = renderIdiomDetailPage(list.find((x) => x.id === iid) || list[0]);
         i18n.apply?.(p);
       })
       .catch(() => {
         if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
         if (currentSectionId() !== "idioms") return;
-        updateSideNav(root, null, "idioms", DEFAULT_IDIOM_ID);
+        updateSideNav(root, "idioms", DEFAULT_IDIOM_ID);
         const p = root.querySelector("[data-culture-panel-inner]");
         if (!p) return;
         p.innerHTML = renderIdiomsErrorPanel();
@@ -386,16 +410,16 @@ function updatePanel(root, sectionId) {
       });
     return;
   }
-  updateSideNav(root, _idiomsCache, sectionId, "");
+  updateSideNav(root, sectionId, "");
   inner.innerHTML = renderDefaultRightPanel(sectionId);
   i18n.apply?.(inner);
 }
 
 function updateNavForSectionOnly(root, sectionId) {
   if (sectionId === "idioms" && _idiomsCache) {
-    updateSideNav(root, _idiomsCache, "idioms", currentIdiomIdFromList(_idiomsCache));
+    updateSideNav(root, "idioms", currentIdiomIdFromList(_idiomsCache));
   } else {
-    updateSideNav(root, _idiomsCache, sectionId, "");
+    updateSideNav(root, sectionId, "");
   }
 }
 
@@ -418,6 +442,7 @@ export function unmount() {
     /* */
   }
   _teardown = null;
+  expandedCultureSections.clear();
 }
 
 export function mount() {
@@ -434,9 +459,7 @@ export function mount() {
   const idiomIdForNav =
     _idiomsCache && sectionId === "idioms" ? currentIdiomIdFromList(_idiomsCache) : sectionId === "idioms" ? getHashIdParam() || DEFAULT_IDIOM_ID : "";
 
-  const sideNavBody = _idiomsCache
-    ? buildSideNavInnerHtml(_idiomsCache, sectionId, idiomIdForNav)
-    : buildSideNavInnerHtml(null, sectionId, DEFAULT_IDIOM_ID);
+  const sideNavBody = buildSideNavInnerHtml(sectionId, idiomIdForNav);
 
   app.innerHTML = `
     <div class="lumina-culture resource-library wrap" style="max-width:var(--max,1120px);margin:0 auto;padding:12px 16px 24px">
@@ -469,7 +492,7 @@ export function mount() {
     updatePanel(app, "idioms");
   } else if (sectionId === "idioms" && _idiomsCache) {
     const iid = currentIdiomIdFromList(_idiomsCache);
-    updateSideNav(app, _idiomsCache, "idioms", iid);
+    updateSideNav(app, "idioms", iid);
     const inner = app.querySelector("[data-culture-panel-inner]");
     if (inner) {
       const item = _idiomsCache.find((x) => x.id === iid) || _idiomsCache[0];
@@ -478,53 +501,62 @@ export function mount() {
     }
   }
 
+  const navTo = (hash) => {
+    import("../router.js")
+      .then((r) => {
+        r.navigateTo(hash, { force: true });
+      })
+      .catch(() => {
+        if (typeof location !== "undefined") {
+          location.hash = hash;
+        }
+      });
+  };
+
   const onNavClick = (e) => {
-    const idiomBtn = e.target?.closest?.("[data-culture-idiom]");
-    if (idiomBtn) {
-      const iid = idiomBtn.getAttribute("data-culture-idiom");
-      if (!iid) return;
-      e.preventDefault();
-      import("../router.js")
-        .then((r) => {
-          r.navigateTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`, { force: true });
-        })
-        .catch(() => {
-          if (typeof location !== "undefined") {
-            location.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
-          }
-        });
-      return;
+    const childBtn = e.target?.closest?.("[data-culture-child]");
+    if (childBtn) {
+      const iid = childBtn.getAttribute("data-culture-child");
+      const parentSec = childBtn.getAttribute("data-culture-parent-section");
+      if (iid && parentSec) {
+        e.preventDefault();
+        expandedCultureSections.add(parentSec);
+        if (parentSec === "idioms") {
+          navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`);
+        }
+        return;
+      }
     }
+
     const btn = e.target?.closest?.("[data-culture-nav]");
     if (!btn) return;
     const id = btn.getAttribute("data-culture-nav");
-    if (!id || !ALLOWED.has(id) || id === currentSectionId()) {
-      if (id === "idioms" && id === currentSectionId()) e.preventDefault();
+    if (!id || !ALLOWED.has(id)) return;
+
+    if (sectionHasChildren(id) && btn.getAttribute("data-culture-expandable") === "1") {
+      e.preventDefault();
+      if (currentSectionId() !== id) {
+        expandedCultureSections.add(id);
+        if (id === "idioms" && _idiomsCache?.length) {
+          const iid = currentIdiomIdFromList(_idiomsCache);
+          navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`);
+        } else {
+          navTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`);
+        }
+        return;
+      }
+      if (expandedCultureSections.has(id)) {
+        expandedCultureSections.delete(id);
+      } else {
+        expandedCultureSections.add(id);
+      }
+      updateNavForSectionOnly(app, id);
       return;
     }
+
+    if (id === currentSectionId()) return;
     e.preventDefault();
-    if (id === "idioms" && _idiomsCache?.length) {
-      const iid = currentIdiomIdFromList(_idiomsCache);
-      import("../router.js")
-        .then((r) => {
-          r.navigateTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`, { force: true });
-        })
-        .catch(() => {
-          if (typeof location !== "undefined") {
-            location.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
-          }
-        });
-    } else {
-      import("../router.js")
-        .then((r) => {
-          r.navigateTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`, { force: true });
-        })
-        .catch(() => {
-          if (typeof location !== "undefined") {
-            location.hash = `${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`;
-          }
-        });
-    }
+    navTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`);
   };
   app.querySelector("[data-culture-side-nav]")?.addEventListener("click", onNavClick);
 

@@ -1812,35 +1812,51 @@ a.section-side-nav-item:hover{
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
 }
-/* 三级、四级：更小字号、更深缩进；文化页成语三级导航见 .section-side-nav-item.level-3 */
-.section-side-nav__idiom-block{
+/* 三级、四级：文化页侧栏二级可展开 + 三级子项 */
+.section-side-nav__group{
   display: flex;
   flex-direction: column;
-  gap: 2px;
   width: 100%;
+  gap: 0;
 }
-.section-side-nav-idiom-children{
+.section-side-nav-item.section-side-nav-item--expandable{
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 100%;
-  margin: 0 0 2px;
-  padding-left: 0;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
-.section-side-nav-idiom-placeholder{
-  margin: 4px 0 4px 24px;
-  font-size: 12px;
+.section-side-nav-item__text{
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+.section-side-nav-item__chev{
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  line-height: 1;
   color: #94a3b8;
+  font-weight: 800;
+  user-select: none;
+}
+.section-side-nav-children{
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 0;
 }
 .section-side-nav-item.level-3{
   font-size: 14px;
   font-weight: 600;
-  padding-left: 24px;
-  opacity: 0.9;
+  padding-left: 28px;
+  margin-top: 0;
+  opacity: 0.92;
 }
 .section-side-nav-item.level-3.is-active{
   opacity: 1;
   color: #312e81;
+  font-weight: 700;
   background: #eef2ff;
   border-color: #a5b4fc;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
@@ -2009,8 +2025,8 @@ a.section-side-nav-item:hover{
   .section-side-nav-item.level-4{
     padding-left: 11px;
   }
-  .section-side-nav-idiom-children .section-side-nav-item.level-3{
-    padding-left: 20px;
+  .section-side-nav-children .section-side-nav-item.level-3{
+    padding-left: 22px;
   }
 }
 .teacher-admin-back{
