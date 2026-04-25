@@ -1,0 +1,77 @@
+[
+  {
+    "id": "cedict_full_000001",
+    "type": "word",
+    "word": "工作",
+    "traditional": "工作",
+    "pinyin": "gōngzuò",
+    "pinyinNumbered": "gong1 zuo4",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true,
+    "rawEnglishDefinitions": ["work", "job"],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "work; job",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": ""
+  },
+  {
+    "id": "cedict_full_000002",
+    "type": "word",
+    "word": "时间",
+    "traditional": "時間",
+    "pinyin": "shíjiān",
+    "pinyinNumbered": "shi2 jian1",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true,
+    "rawEnglishDefinitions": ["time"],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "time",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": ""
+  },
+  {
+    "id": "cedict_full_000003",
+    "type": "word",
+    "word": "咖啡",
+    "traditional": "咖啡",
+    "pinyin": "kāfēi",
+    "pinyinNumbered": "ka1 fei1",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true,
+    "rawEnglishDefinitions": ["coffee"],
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "coffee",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": ""
+  }
+]

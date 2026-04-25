@@ -799,6 +799,8 @@
     "traditionalLabel": "번체",
     "exampleLabel": "예문",
     "componentsLabel": "구성 한자",
+    "meaningNotIndexed": "뜻풀이 자료가 아직 없습니다.",
+    "reviewPendingHint": "자세한 학습 내용은 준비 중입니다.",
     "backToWord": "단어로 돌아가기",
     "component": {
       "dictionary": "사전",

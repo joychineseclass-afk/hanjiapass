@@ -3,7 +3,7 @@
 // 数据根路径：优先相对 import.meta.url 解析，避免子目录部署时 /data/ 解析错误
 
 /** 资源缓存版本，修改 dictionary JSON 时递增以绕开 HTTP 强缓存 */
-const DICT_DATA_VERSION = "20260223";
+const DICT_DATA_VERSION = "20260425";
 
 function getDataRoot() {
   const base = String(typeof window !== "undefined" && window.__APP_BASE__ ? window.__APP_BASE__ : "")
@@ -45,6 +45,12 @@ let _indexCache = null;
 let _indexLoadPromise = null;
 /** @type {Map<string, Promise<any[]>>} */
 const _filePromises = new Map();
+
+/** CC-CEDICT 全量 fallback 轻量索引（懒加载） */
+let cedictIndexCache = null;
+let _cedictIndexLoadPromise = null;
+/** @type {Map<string, Promise<any[]>>} cedict 详情分包 Promise 缓存（与 _filePromises 键一致，显式命名供调试） */
+const cedictDetailFileCache = new Map();
 
 const DEBUG_DICT = () =>
   typeof localStorage !== "undefined" && localStorage.getItem("DEBUG_DICT") === "1";
@@ -145,6 +151,147 @@ async function loadDetailArray(fileName) {
 }
 
 /**
+ * 词语索引层匹配：word → query → traditional → pinyinPlain → 包含
+ * 每个索引层内同规则，返回一个最优匹配
+ * @param {any[]} wordRows
+ * @param {string} q
+ * @returns {any | null}
+ */
+function bestWordIndexEntry(wordRows, q) {
+  const nq = String(q).trim();
+  if (!nq || !wordRows?.length) return null;
+  const nqLower = nq.toLowerCase();
+  let best = null;
+  let bestScore = -1;
+  for (const item of wordRows) {
+    if (!item || item.type !== "word") continue;
+    const w = String(item.word || "");
+    const qu = String(item.query || "");
+    const tr = String(item.traditional || "");
+    const pp = String(item.pinyinPlain || "").toLowerCase();
+    let s = 0;
+    if (w === nq) s = 100000;
+    else if (qu === nq) s = 90000;
+    else if (tr && tr === nq) s = 80000;
+    else if (pp && nqLower === pp) s = 70000;
+    else if (w && nq.length && w.includes(nq)) s = 50000 - w.length;
+    else if (w && w.length && nq.includes(w)) s = 40000 - w.length;
+    else continue;
+    if (s > bestScore) {
+      bestScore = s;
+      best = item;
+    } else if (s === bestScore && best && s >= 40000) {
+      if (w.length < String(best.word || "").length) best = item;
+    }
+  }
+  return best;
+}
+
+/**
+ * 加载 CC-CEDICT 全量 fallback 轻量索引
+ * @returns {Promise<any[]>}
+ */
+export async function loadCedictIndex() {
+  if (cedictIndexCache) return cedictIndexCache;
+  if (!_cedictIndexLoadPromise) {
+    const url = dictDataUrl("cedict/cedict-index.json");
+    if (DEBUG_DICT()) console.log("[dictionary] fetch cedict index", url);
+    _cedictIndexLoadPromise = fetch(url, { cache: "default" })
+      .then((r) => {
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error(`cedict index: HTTP ${r.status} ${url}`);
+        return r.json();
+      })
+      .then((data) => {
+        if (data === null) {
+          cedictIndexCache = [];
+          return cedictIndexCache;
+        }
+        const arr = Array.isArray(data) ? data : [];
+        cedictIndexCache = arr;
+        return cedictIndexCache;
+      })
+      .catch((e) => {
+        if (DEBUG_DICT()) console.warn("[dictionary] cedict index", e);
+        cedictIndexCache = [];
+        return cedictIndexCache;
+      });
+  }
+  return _cedictIndexLoadPromise;
+}
+
+/**
+ * 加载 cedict 目录下详情分包（带缓存，路径相对 data/dictionary/）
+ * @param {string} file
+ * @returns {Promise<any[]>}
+ */
+export async function loadCedictDetailFile(file) {
+  const name = String(file || "").replace(/^\//, "");
+  if (!name) return [];
+  if (cedictDetailFileCache.has(name)) {
+    return cedictDetailFileCache.get(name);
+  }
+  const p = loadDetailArray(name);
+  cedictDetailFileCache.set(name, p);
+  return p;
+}
+
+/**
+ * 仅 cedict 索引层查词（fallback）
+ * @param {string} query
+ */
+export async function getCedictEntryByWord(query) {
+  const q = String(query ?? "").trim();
+  const emptySt = { codePoint: 0, path: "", exists: false };
+  if (!q) {
+    return { found: false, type: "word", query: q, stroke: emptySt };
+  }
+
+  let list = [];
+  try {
+    list = await loadCedictIndex();
+  } catch (e) {
+    if (DEBUG_DICT()) console.warn("[dictionary] getCedictEntryByWord", e);
+    return { found: false, type: "word", query: q, stroke: emptySt };
+  }
+
+  const wordRows = (list || []).filter((x) => x && x.type === "word");
+  const indexEntry = bestWordIndexEntry(wordRows, q);
+  if (!indexEntry) {
+    if (DEBUG_DICT()) console.log("[dictionary] no cedict index for", q);
+    return { found: false, type: "word", query: q, stroke: emptySt };
+  }
+  if (!indexEntry.file) {
+    if (DEBUG_DICT()) console.warn("[dictionary] cedict index entry missing file", indexEntry);
+    return { found: false, type: "word", query: q, stroke: emptySt, indexEntry };
+  }
+
+  const detailList = await loadCedictDetailFile(indexEntry.file);
+  const entry = pickWordEntryFromList(detailList, indexEntry, q);
+
+  if (DEBUG_DICT()) {
+    console.log("[dictionary] cedict word lookup", { q, indexEntry, detailHit: !!entry, detailLen: detailList.length });
+  }
+
+  if (!entry) {
+    return { found: false, type: "word", query: q, stroke: emptySt, indexEntry };
+  }
+
+  const fc = firstCjkFromString(entry.word);
+  const stroke = fc ? await buildStrokeInfo(fc) : emptySt;
+
+  return {
+    found: true,
+    type: "word",
+    query: q,
+    sourceLayer: "cedict",
+    entry: normalizeEntryShape(entry),
+    indexEntry,
+    stroke,
+  };
+}
+
+/**
  * 从已加载的详情列表中取一条（单字）
  */
 function pickCharEntryFromList(list, id, char) {
@@ -198,52 +345,36 @@ function emptyCharStrokeResult(query) {
 }
 
 /**
- * 词语查询
+ * 词语查询：先 dictionary-index.json，未命中再 cedict/cedict-index.json
  * @param {string} word
  */
 export async function getDictionaryEntryByWord(query) {
   const q = String(query ?? "").trim();
+  const emptySt = { codePoint: 0, path: "", exists: false };
   if (!q) {
-    return { found: false, type: "word", query: q, stroke: { codePoint: 0, path: "", exists: false } };
+    return { found: false, type: "word", query: q, stroke: emptySt };
   }
-  if (!/[\u4e00-\u9fff]/.test(q)) {
-    return { found: false, type: "word", query: q, stroke: { codePoint: 0, path: "", exists: false } };
+  const hasCjk = /[\u4e00-\u9fff]/.test(q);
+  const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(q.replace(/\s/g, " ").trim());
+  if (!hasCjk && !pinyinish) {
+    return { found: false, type: "word", query: q, stroke: emptySt };
   }
-  const first = firstCjkFromString(q) || q[0];
-  const stroke = await buildStrokeInfo(first);
+
+  const firstCjk = hasCjk ? firstCjkFromString(q) || q[0] : "";
+  let stroke = firstCjk ? await buildStrokeInfo(firstCjk) : emptySt;
+
   const index = await loadIndex();
   const wordEntries = index.filter((item) => item && item.type === "word");
-
-  let indexEntry =
-    wordEntries.find((item) => item && item.word === q) ||
-    wordEntries.find((item) => item && item.query === q) ||
-    wordEntries.find((item) => item && item.word && String(item.word).includes(q)) ||
-    wordEntries.find((item) => item && item.query && String(item.query).includes(q)) ||
-    null;
+  const indexEntry = bestWordIndexEntry(wordEntries, q);
 
   if (!indexEntry) {
-    const looser = wordEntries.filter(
-      (item) => item && item.word && (q.includes(String(item.word)) || String(item.word).includes(q))
-    );
-    if (looser.length) {
-      indexEntry = looser
-        .sort((a, b) => {
-          const al = String(a.word || "").length;
-          const bl = String(b.word || "").length;
-          if (bl !== al) return bl - al;
-          return String(a.id || "").localeCompare(String(b.id || ""));
-        })[0];
-    }
-  }
-
-  if (!indexEntry) {
-    if (DEBUG_DICT()) console.log("[dictionary] no word index for", q);
-    return { found: false, type: "word", query: q, stroke };
+    if (DEBUG_DICT()) console.log("[dictionary] no main word index for", q);
+    return getCedictEntryByWord(q);
   }
 
   if (!indexEntry.file) {
     if (DEBUG_DICT()) console.warn("[dictionary] index entry missing file", indexEntry);
-    return { found: false, type: "word", query: q, stroke, indexEntry };
+    return { found: false, type: "word", query: q, stroke, indexEntry, sourceLayer: "main" };
   }
 
   const detailList = await loadDetailArray(indexEntry.file);
@@ -254,13 +385,19 @@ export async function getDictionaryEntryByWord(query) {
   }
 
   if (!entry) {
-    return { found: false, type: "word", query: q, stroke, indexEntry };
+    return { found: false, type: "word", query: q, stroke, indexEntry, sourceLayer: "main" };
+  }
+
+  if (!firstCjk && entry.word) {
+    const fc = firstCjkFromString(entry.word);
+    if (fc) stroke = await buildStrokeInfo(fc);
   }
 
   return {
     found: true,
     type: "word",
     query: q,
+    sourceLayer: "main",
     entry: normalizeEntryShape(entry),
     stroke,
     indexEntry,
@@ -330,7 +467,9 @@ export async function searchDictionary(query) {
     return getDictionaryEntryByChar(q);
   }
 
-  if (!/[\u4e00-\u9fff]/.test(q)) {
+  const hasCjk = /[\u4e00-\u9fff]/.test(q);
+  const pinyinish = /^[a-zA-Z0-9\s'·.]+$/.test(q.replace(/\s/g, " ").trim());
+  if (!hasCjk && !pinyinish) {
     return { found: false, type: "word", query: q, stroke: { codePoint: 0, path: "", exists: false } };
   }
 

@@ -799,6 +799,8 @@
     "traditionalLabel": "繁体",
     "exampleLabel": "例句",
     "componentsLabel": "组成汉字",
+    "meaningNotIndexed": "释义资料暂未收录。",
+    "reviewPendingHint": "详细学习内容正在整理中。",
     "backToWord": "返回词语",
     "component": {
       "dictionary": "查字典",

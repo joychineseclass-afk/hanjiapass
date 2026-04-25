@@ -1,0 +1,41 @@
+[
+  {
+    "id": "cedict_full_000001",
+    "type": "word",
+    "query": "工作",
+    "word": "工作",
+    "traditional": "工作",
+    "pinyin": "gōngzuò",
+    "pinyinPlain": "gongzuo",
+    "file": "cedict/words-cedict-001.json",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_full_000002",
+    "type": "word",
+    "query": "时间",
+    "word": "时间",
+    "traditional": "時間",
+    "pinyin": "shíjiān",
+    "pinyinPlain": "shijian",
+    "file": "cedict/words-cedict-001.json",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_full_000003",
+    "type": "word",
+    "query": "咖啡",
+    "word": "咖啡",
+    "traditional": "咖啡",
+    "pinyin": "kāfēi",
+    "pinyinPlain": "kafei",
+    "file": "cedict/words-cedict-001.json",
+    "source": "CC-CEDICT",
+    "qualityLevel": "raw",
+    "needsReview": true
+  }
+]

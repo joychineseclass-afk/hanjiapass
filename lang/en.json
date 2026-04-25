@@ -799,6 +799,8 @@
     "traditionalLabel": "Traditional",
     "exampleLabel": "Example",
     "componentsLabel": "Characters",
+    "meaningNotIndexed": "No meaning text is available yet.",
+    "reviewPendingHint": "Detailed learning content is being prepared.",
     "backToWord": "Back to word",
     "component": {
       "dictionary": "Dictionary",

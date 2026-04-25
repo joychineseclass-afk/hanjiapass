@@ -111,7 +111,7 @@ function renderComponentCharRow(char, sourceWord, t) {
 </div>`;
 }
 
-/** 当前 UI 语言无释义时：当前语言 → 中文 → 英文，避免仅 EN 的 CC-CEDICT 条空白 */
+/** 当前 UI 语言无释义时：当前语言 → 中文 → 英文 */
 function wordMeaningWithFallback(e, lang) {
   const m = e?.meaning || {};
   const key = lang === "zh" || lang === "cn" ? "cn" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" ? "jp" : "en";
@@ -123,18 +123,27 @@ function wordMeaningWithFallback(e, lang) {
   return "";
 }
 
+function wordEntryHasAnyMeaningField(e) {
+  const m = e?.meaning || {};
+  return ["cn", "kr", "en", "jp"].some((k) => m[k] != null && String(m[k]).trim() !== "");
+}
+
 function renderWordEntry(area, res) {
   if (!area) return;
   const lang = getLang();
   const t = (k) => i18n.t(k);
   const e = res.entry;
-  let mainMeaning = wordMeaningWithFallback(e, lang);
   const mCn = e.meaning?.cn || "";
-  if (!String(mainMeaning).trim() && mCn) mainMeaning = mCn;
+  const primary = wordMeaningWithFallback(e, lang);
+  let line = primary;
+  if (!String(line).trim() && mCn) line = mCn;
+  const hasMeaning = wordEntryHasAnyMeaningField(e);
   const showCnSecond =
+    hasMeaning &&
     mCn &&
-    !isDuplicateCnWithMainMeaning(lang, mainMeaning, mCn) &&
-    String(mainMeaning || "").trim() !== String(mCn).trim();
+    String(line).trim() &&
+    !isDuplicateCnWithMainMeaning(lang, line, mCn) &&
+    String(line).trim() !== String(mCn).trim();
   const trad = e.traditional || "";
   const showTrad = String(trad).trim() && String(trad).trim() !== String(e.word || "").trim();
   const tradLine = showTrad
@@ -168,12 +177,13 @@ function renderWordEntry(area, res) {
       </div>`
       : "";
 
-  const meaningBlock =
-    String(mainMeaning).trim() || showCnSecond
-      ? `${String(mainMeaning).trim() ? `<p class="dictionary-main-meaning">${esc(mainMeaning)}</p>` : ""}${
+  const meaningBlock = hasMeaning
+    ? String(line).trim()
+      ? `${`<p class="dictionary-main-meaning">${esc(line)}</p>`}${
           showCnSecond ? `<p class="dictionary-cn-explanation" lang="zh-CN">${esc(mCn)}</p>` : ""
         }`
-      : "";
+      : `<p class="dictionary-main-meaning muted">${esc(t("dictionary.meaningNotIndexed"))}</p>`
+    : `<p class="dictionary-main-meaning muted">${esc(t("dictionary.meaningNotIndexed"))}</p>`;
 
   area.innerHTML = `
     <article class="dictionary-entry-card dict-result-article dictionary-entry-card--word" lang="${esc(lang)}">

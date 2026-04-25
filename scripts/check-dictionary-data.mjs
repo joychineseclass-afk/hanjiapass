@@ -3,7 +3,7 @@
  * 用法: node scripts/check-dictionary-data.mjs
  * 或: npm run check:dictionary
  */
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -13,6 +13,10 @@ const DICT_DIR = join(ROOT, "data", "dictionary");
 const INDEX_PATH = join(DICT_DIR, "dictionary-index.json");
 const DRAFT_CEDICT_PATH = join(DICT_DIR, "drafts", "words-cedict-draft-001.json");
 const CEDICT_WORDS_FILE = "words-cedict-001.json";
+const CEDICT_INDEX_FULL = "cedict/cedict-index.json";
+const CEDICT_FULL_DIR = "cedict";
+const CEDICT_SOURCE_TAG = "CC-CEDICT";
+const CEDICT_FULL_LEVELS = new Set(["raw", "reviewed", "teaching", "courseReady"]);
 
 const CJK = /^[\u4e00-\u9fff]$/;
 const FORBIDDEN_KEYS = new Set(["quiz", "exercise", "score", "progress", "wrongQuestions"]);
@@ -284,6 +288,170 @@ function wordToComponentChars(word) {
   return [...String(word || "")].filter((c) => isSingleCjk(c));
 }
 
+function isCedictFullRawPending(detail) {
+  if (!detail || detail.type !== "word") return false;
+  if (String(detail.source) !== CEDICT_SOURCE_TAG) return false;
+  if (detail.qualityLevel === "raw" && detail.needsReview === true) return true;
+  return false;
+}
+
+/**
+ * cedict/ 下全量架构详情条校验（与主 words-cedict-001 分离）
+ */
+function checkCedictFullWordDetail(detail, indexRow) {
+  const id = indexRow.id;
+  const need = ["id", "type", "word", "pinyin", "source", "qualityLevel", "needsReview", "meaning", "example", "examplePinyin"];
+  for (const f of need) {
+    if (detail[f] === undefined) {
+      failMissing(`cedict word ${id} missing field: ${f}`);
+    }
+  }
+  if (detail.type !== "word") failMismatch(`cedict word ${id} detail.type expected word, got ${detail.type}`);
+  if (String(detail.source) !== CEDICT_SOURCE_TAG) {
+    failMismatch(`cedict word ${id} source must be ${CEDICT_SOURCE_TAG}`);
+  }
+  if (!CEDICT_FULL_LEVELS.has(detail.qualityLevel)) {
+    failMismatch(`cedict word ${id} invalid qualityLevel: ${detail.qualityLevel}`);
+  }
+
+  if (isCedictFullRawPending(detail)) {
+    if (detail.traditional == null || String(detail.traditional).trim() === "") {
+      failMissing(`cedict word ${id} traditional required`);
+    }
+    if (!detail.meaning || String(detail.meaning.en).trim() === "") {
+      failMissing(`cedict word ${id} meaning.en required (raw + needsReview)`);
+    }
+  } else {
+    for (const L of MEANING_LANGS) {
+      if (!detail.meaning || detail.meaning[L] == null || String(detail.meaning[L]).trim() === "") {
+        failMissing(`cedict word ${id} meaning.${L} (non-raw or reviewed)`);
+      }
+    }
+    for (const L of MEANING_LANGS) {
+      if (!detail.example || detail.example[L] == null || String(detail.example[L]).trim() === "") {
+        failMissing(`cedict word ${id} example.${L} (non-raw or reviewed)`);
+      }
+    }
+    if (String(detail.examplePinyin).trim() === "") failMissing(`cedict word ${id} examplePinyin (non-raw or reviewed)`);
+  }
+
+  if (detail.id !== indexRow.id) failMismatch(`cedict ${id}: detail.id !== index.id`);
+  if (detail.word !== indexRow.word) failMismatch(`cedict ${id}: detail.word !== index.word`);
+  if (detail.pinyin !== indexRow.pinyin) failMismatch(`cedict ${id}: pinyin mismatch index / detail`);
+}
+
+/**
+ * 校验 data/dictionary/cedict/ 全量架构（轻量 index + 详情分包 words-cedict-*.json）
+ */
+function checkCedictFullLayout(cedictIndexPath) {
+  if (!existsSync(cedictIndexPath)) {
+    failMissing(`cedict full index not found: data/dictionary/${CEDICT_INDEX_FULL}`);
+    return;
+  }
+  let cedictIndex;
+  try {
+    cedictIndex = readJson(cedictIndexPath);
+  } catch (e) {
+    failMissing(`cedict full index read: ${e?.message || e}`);
+    return;
+  }
+  if (!Array.isArray(cedictIndex) || cedictIndex.length === 0) {
+    failMismatch("cedict/cedict-index.json must be a non-empty array");
+  }
+
+  for (const row of cedictIndex) {
+    for (const f of [
+      "id",
+      "type",
+      "query",
+      "word",
+      "traditional",
+      "pinyin",
+      "pinyinPlain",
+      "file",
+      "source",
+      "qualityLevel",
+      "needsReview",
+    ]) {
+      const v = row?.[f];
+      if (v === undefined || v === null || (typeof v === "string" && v.trim() === "" && f !== "needsReview")) {
+        if (f === "needsReview" && typeof row?.needsReview !== "boolean") {
+          failMissing(`cedict index row ${row?.id || "?"}: needsReview must be boolean`);
+        } else if (f !== "needsReview") {
+          failMissing(`cedict index row ${row?.id || "?"}: missing or empty: ${f}`);
+        }
+      }
+    }
+    if (row.type !== "word") failMismatch(`cedict index ${row.id}: type must be word`);
+    if (row.source !== CEDICT_SOURCE_TAG) failMismatch(`cedict index ${row.id}: source must be ${CEDICT_SOURCE_TAG}`);
+    if (!CEDICT_FULL_LEVELS.has(row.qualityLevel)) {
+      failMismatch(`cedict index ${row.id}: invalid qualityLevel ${row.qualityLevel}`);
+    }
+    if (typeof row.needsReview !== "boolean") {
+      failMismatch(`cedict index ${row.id}: needsReview must be boolean`);
+    }
+  }
+
+  for (const row of cedictIndex) {
+    if (!row?.file) continue;
+    const rel = row.file;
+    const fullPath = join(DICT_DIR, rel);
+    if (!existsSync(fullPath)) {
+      failMissing(`cedict index ${row.id} file not found: data/dictionary/${rel}`);
+      continue;
+    }
+    let list;
+    try {
+      list = readJson(fullPath);
+    } catch (e) {
+      failMissing(`cedict file ${rel}: ${e?.message || e}`);
+      continue;
+    }
+    if (!Array.isArray(list)) {
+      failMismatch(`cedict file ${rel} is not a JSON array`);
+      continue;
+    }
+    const detail = findDetailById(list, row.id);
+    if (!detail) {
+      failMissing(`cedict: no detail id ${row.id} in ${rel}`);
+      continue;
+    }
+    walkForbidden(detail, `cedictFull[${row.id}]`);
+    checkCedictFullWordDetail(detail, row);
+  }
+
+  // cedict/words-cedict-*.json 中每条也必须合格（与 index 可多余）
+  const cedictDir = join(DICT_DIR, CEDICT_FULL_DIR);
+  if (existsSync(cedictDir)) {
+    const names = readdirSync(cedictDir);
+    for (const name of names) {
+      if (!/^words-cedict-\d+\.json$/.test(name)) continue;
+      const fileRel = `${CEDICT_FULL_DIR}/${name}`;
+      const p = join(cedictDir, name);
+      let list;
+      try {
+        list = readJson(p);
+      } catch (e) {
+        failMissing(`cedict file ${fileRel}: ${e?.message || e}`);
+        continue;
+      }
+      if (!Array.isArray(list)) {
+        failMismatch(`cedict file ${fileRel} is not a JSON array`);
+        continue;
+      }
+      for (const ent of list) {
+        if (!ent?.id) continue;
+        walkForbidden(ent, `cedictFile[${ent.id}]`);
+        if (!cedictIndex.some((r) => r && r.id === ent.id)) {
+          failMissing(`cedict detail ${ent.id} in ${fileRel} not listed in cedict-index.json`);
+        }
+        const idxRow = cedictIndex.find((r) => r && r.id === ent.id);
+        if (idxRow) checkCedictFullWordDetail(ent, idxRow);
+      }
+    }
+  }
+}
+
 function main() {
   if (!existsSync(INDEX_PATH)) {
     console.error("❌ Dictionary data check failed.\n\nIndex file not found: data/dictionary/dictionary-index.json");
@@ -411,6 +579,9 @@ function main() {
       }
     }
   }
+
+  // --- cedict/ 全量架构（轻量 index + words-cedict-*.json 详情分包）----------------
+  checkCedictFullLayout(join(DICT_DIR, CEDICT_INDEX_FULL));
 
   const nIndex = index.length;
   const nChar = index.filter((r) => r.type === "char").length;

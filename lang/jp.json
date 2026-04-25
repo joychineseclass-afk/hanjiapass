@@ -807,6 +807,8 @@
     "traditionalLabel": "繁体字",
     "exampleLabel": "例文",
     "componentsLabel": "構成漢字",
+    "meaningNotIndexed": "意味の解説はまだ掲載されていません。",
+    "reviewPendingHint": "詳しい学習内容は準備中です。",
     "backToWord": "単語に戻る",
     "component": {
       "dictionary": "辞書",

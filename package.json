@@ -34,7 +34,8 @@
     "check:dictionary": "node scripts/check-dictionary-data.mjs",
     "convert:cedict-sample": "node scripts/convert-cedict-sample.mjs",
     "convert:cedict-basic": "node scripts/convert-cedict-basic.mjs",
-    "build:cedict-review": "node scripts/build-cedict-review-queue.mjs"
+    "build:cedict-review": "node scripts/build-cedict-review-queue.mjs",
+    "convert:cedict-full:sample": "node scripts/convert-cedict-full.mjs --sample"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
