@@ -10,7 +10,14 @@ import {
   mountSupabaseAuthChannel,
   onAuthStateChange as supabaseOnAuthStateChange,
 } from "./providers/supabaseAuthProvider.js";
-import { getSupabaseEnv, isAuthDemoForced, warnIfSupabaseEnvMissing } from "../integrations/supabaseClient.js";
+import {
+  getSupabaseEnv,
+  isAuthDemoForced,
+  isLikelyProductionRuntime,
+  isNonLocalhostDeployment,
+  warnIfProductionAuthMisconfiguration,
+  warnIfSupabaseEnvMissing,
+} from "../integrations/supabaseClient.js";
 
 /**
  * 设为 `true` 时启用 `remoteAuthProviderPlaceholder`（未接后端前会抛错，仅用于接库前的编译/分支验证）。
@@ -18,23 +25,6 @@ import { getSupabaseEnv, isAuthDemoForced, warnIfSupabaseEnvMissing } from "../i
 const LUMINA_USE_REMOTE_AUTH_PLACEHOLDER = false;
 
 let demoProdWarned = false;
-
-/**
- * @returns {boolean}
- */
-function isProductionRuntime() {
-  try {
-    if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.PROD) return true;
-  } catch {
-    /* */
-  }
-  try {
-    if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "production") return true;
-  } catch {
-    /* */
-  }
-  return false;
-}
 
 /**
  * 是否使用 Supabase：环境完整且未显式强制 demo、且未启用 remote placeholder。
@@ -64,7 +54,8 @@ function isUsingDemoProvider() {
 }
 
 function maybeWarnDemoAuthInProduction() {
-  if (!isProductionRuntime() || LUMINA_USE_REMOTE_AUTH_PLACEHOLDER || !isUsingDemoProvider() || demoProdWarned) {
+  const prodish = isLikelyProductionRuntime() || isNonLocalhostDeployment();
+  if (!prodish || LUMINA_USE_REMOTE_AUTH_PLACEHOLDER || !isUsingDemoProvider() || demoProdWarned) {
     return;
   }
   demoProdWarned = true;
@@ -74,6 +65,7 @@ function maybeWarnDemoAuthInProduction() {
 }
 
 maybeWarnDemoAuthInProduction();
+warnIfProductionAuthMisconfiguration();
 if (!shouldUseSupabase() && !LUMINA_USE_REMOTE_AUTH_PLACEHOLDER) {
   warnIfSupabaseEnvMissing();
 }
@@ -242,5 +234,36 @@ export const authStore = {
   },
   onAuthChange,
 };
+
+const prodishEnv = () => isLikelyProductionRuntime() || isNonLocalhostDeployment();
+
+/**
+ * 类生产 / 可公开访问的部署上且当前走 demo 本地表（无 Supabase 或不可用时）。
+ * @returns {boolean}
+ */
+export function isLuminaAuthProductionDemoPath() {
+  return prodishEnv() && isUsingDemoProvider();
+}
+
+/**
+ * 可公开部署或类生产、未配 Supabase、且未显式 VITE_LUMINA_AUTH_USE_DEMO — 提示「无正式跨端登录」，不宜引导真实用户把 demo 当生产账号。
+ * @returns {boolean}
+ */
+export function isLuminaAuthProductionSupabaseOff() {
+  return (
+    prodishEnv() &&
+    !LUMINA_USE_REMOTE_AUTH_PLACEHOLDER &&
+    !getSupabaseEnv().isComplete &&
+    !isAuthDemoForced()
+  );
+}
+
+/**
+ * 可公开部署或类生产且显式强制 demo（内部预览等）。
+ * @returns {boolean}
+ */
+export function isLuminaAuthProductionDemoForcedByEnv() {
+  return prodishEnv() && isAuthDemoForced();
+}
 
 export { getActiveProvider };

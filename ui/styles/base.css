@@ -5286,6 +5286,16 @@ a.teacher-shell-nav-link:hover{
   font-size: 14px;
   line-height: 1.55;
 }
+.auth-prod-notice{
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 12px;
+}
 .auth-form{
   display: flex;
   flex-direction: column;

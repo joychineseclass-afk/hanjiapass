@@ -73,6 +73,8 @@
     "teacher_nav_rejected": "신청 보류/거절",
     "teacher_nav_reapply": "강사 재신청",
     "redirecting": "이동 중…",
+    "production_supabase_off": "이 빌드에는 계정 서버가 연결되어 있지 않습니다(공식 로그인 없음). 아래는 브라우저 데모 전용이며 실제/유료 계정에 사용할 수 없습니다.",
+    "production_demo_forced": "이 배포는 데모 로그인을 강제합니다. 실제 사용자 계정에 사용하지 마세요. Production에서 Supabase를 설정하고 데모 플래그를 제거하세요.",
     "teacher_nav_workspace": "교사 워크스페이스",
     "error": {
       "unknown": "오류가 발생했습니다. 다시 시도하세요.",

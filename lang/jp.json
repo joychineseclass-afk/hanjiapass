@@ -73,6 +73,8 @@
     "teacher_nav_rejected": "申請不承認",
     "teacher_nav_reapply": "講師に再申請",
     "redirecting": "移動中…",
+    "production_supabase_off": "このビルドはアカウントサーバー未接続です（本番向けのログインなし）。以下はブラウザのデモ用で、本番/有償利用に使えません。",
+    "production_demo_forced": "このデプロイはデモログインを強制しています。本番利用はしないでください。Production で Supabase を設定し、デモフラグを外してください。",
     "teacher_nav_workspace": "講師ワークスペース",
     "error": {
       "unknown": "エラーが発生しました。もう一度お試しください。",

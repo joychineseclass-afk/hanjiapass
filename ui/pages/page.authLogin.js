@@ -24,6 +24,16 @@ export default async function pageAuthLogin(ctxOrRoot) {
   if (!root) return;
 
   const { getCurrentSessionAuthUser } = await import("../auth/authService.js");
+  const { isLuminaAuthProductionSupabaseOff, isLuminaAuthProductionDemoForcedByEnv } = await import(
+    "../auth/authStore.js"
+  );
+  let prodNotice = "";
+  if (isLuminaAuthProductionSupabaseOff()) {
+    prodNotice = tx("auth.production_supabase_off");
+  } else if (isLuminaAuthProductionDemoForcedByEnv()) {
+    prodNotice = tx("auth.production_demo_forced");
+  }
+
   if (getCurrentSessionAuthUser()) {
     const { navigateTo } = await import("../router.js");
     navigateTo(getResolvedSessionLandingHash(), { force: true });
@@ -34,6 +44,7 @@ export default async function pageAuthLogin(ctxOrRoot) {
     <div class="wrap auth-page">
       <section class="card auth-card">
         <h1 class="auth-title">${escapeHtml(tx("auth.login_title"))}</h1>
+        ${prodNotice ? `<p class="auth-prod-notice" role="status">${escapeHtml(prodNotice)}</p>` : ""}
         <p class="auth-lead">${escapeHtml(tx("auth.login_lead_unified"))}</p>
         <form class="auth-form" id="authLoginForm">
           <label class="auth-field">

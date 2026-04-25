@@ -73,6 +73,8 @@
     "teacher_nav_rejected": "申请未通过",
     "teacher_nav_reapply": "重新申请教师功能",
     "redirecting": "正在跳转…",
+    "production_supabase_off": "当前构建未连接账号服务（无正式跨端登录）。以下表单为浏览器本地演示数据，不适用于真实或付费用户。",
+    "production_demo_forced": "当前部署启用了仅本地演示模式，请勿作为真实用户账号。请在生产环境配置 Supabase 并取消 demo 标志。",
     "teacher_nav_workspace": "教师工作台",
     "error": {
       "unknown": "出错了，请重试。",

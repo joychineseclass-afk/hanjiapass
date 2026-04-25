@@ -73,6 +73,8 @@
     "teacher_nav_rejected": "Application declined",
     "teacher_nav_reapply": "Re-apply for teacher",
     "redirecting": "Redirecting…",
+    "production_supabase_off": "Account system is not connected (no server sign-in in this build). The forms below use browser-only demo storage — not for real or paid accounts.",
+    "production_demo_forced": "This deployment forces demo sign-in. Do not use for real user accounts. Configure Supabase in production and remove the demo flag.",
     "teacher_nav_workspace": "Teacher workspace",
     "error": {
       "unknown": "Something went wrong. Please try again.",
