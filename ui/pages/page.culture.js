@@ -301,6 +301,7 @@ function buildSideNavInnerHtml(sectionId, activeChildId) {
     if (!hasCh) {
       return `<button type="button" class="${navItemClassL2(id, isSec)}" data-culture-nav="${id}" data-i18n="${esc(navKey)}" aria-current="${isSec ? "true" : "false"}">${esc(t(navKey))}</button>`;
     }
+    // 仅 expandedCultureSections 控制展开；activeChildId 只影响三级 is-active，不参与展开判断
     const expanded = expandedCultureSections.has(id);
     const chev = expanded ? "▾" : "▸";
     const childrenId = `culture-nav-children-${id}`;

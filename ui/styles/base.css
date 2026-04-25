@@ -1846,6 +1846,10 @@ a.section-side-nav-item:hover{
   margin-bottom: 2px;
   padding: 0;
 }
+/* hidden 须压过本类的 display:grid，否则带 #culture?tab=idioms&id= 进入时三级列表仍可见 */
+.section-side-nav-children[hidden]{
+  display: none !important;
+}
 .section-side-nav-item.level-3{
   font-size: 14px;
   font-weight: 600;
