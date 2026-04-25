@@ -396,6 +396,9 @@ function checkCedictFullLayout(cedictIndexPath) {
     }
   }
 
+  const cedictIndexById = new Map(cedictIndex.filter((r) => r?.id).map((r) => [r.id, r]));
+  const cedictListCache = new Map();
+
   for (const row of cedictIndex) {
     if (!row?.file) continue;
     const rel = row.file;
@@ -406,7 +409,10 @@ function checkCedictFullLayout(cedictIndexPath) {
     }
     let list;
     try {
-      list = readJson(fullPath);
+      if (!cedictListCache.has(rel)) {
+        cedictListCache.set(rel, readJson(fullPath));
+      }
+      list = cedictListCache.get(rel);
     } catch (e) {
       failMissing(`cedict file ${rel}: ${e?.message || e}`);
       continue;
@@ -446,11 +452,12 @@ function checkCedictFullLayout(cedictIndexPath) {
       for (const ent of list) {
         if (!ent?.id) continue;
         walkForbidden(ent, `cedictFile[${ent.id}]`);
-        if (!cedictIndex.some((r) => r && r.id === ent.id)) {
+        const idxRow = cedictIndexById.get(ent.id);
+        if (!idxRow) {
           failMissing(`cedict detail ${ent.id} in ${fileRel} not listed in cedict-index.json`);
+        } else {
+          checkCedictFullWordDetail(ent, idxRow);
         }
-        const idxRow = cedictIndex.find((r) => r && r.id === ent.id);
-        if (idxRow) checkCedictFullWordDetail(ent, idxRow);
       }
     }
   }
