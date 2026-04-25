@@ -116,7 +116,7 @@ function renderComponentCharRow(char, sourceWord, t) {
 </div>`;
 }
 
-/** 当前 UI 语言无释义时：当前语言 → 中文 → 英文 */
+/** 当前 UI 语言无释义时：当前语言 → 中文 → 英文等；raw CC-CEDICT 常仅有 meaning.en，须能展示英文 */
 function wordMeaningWithFallback(e, lang) {
   const m = e?.meaning || {};
   const key = lang === "zh" || lang === "cn" ? "cn" : lang === "ko" || lang === "kr" ? "kr" : lang === "jp" ? "jp" : "en";
@@ -125,6 +125,7 @@ function wordMeaningWithFallback(e, lang) {
     const v = m[k];
     if (v != null && String(v).trim()) return String(v).trim();
   }
+  if (m.en != null && String(m.en).trim()) return String(m.en).trim();
   return "";
 }
 

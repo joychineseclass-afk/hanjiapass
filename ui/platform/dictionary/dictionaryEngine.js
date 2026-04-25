@@ -1,9 +1,9 @@
 // ui/platform/dictionary/dictionaryEngine.js
 // Dictionary Engine：索引 + 详情分文件，与笔顺数据独立
-// 数据根路径：优先相对 import.meta.url 解析，避免子目录部署时 /data/ 解析错误
+// 数据根路径：浏览器内与 dataPaths 一致（origin + __APP_BASE__），无 DOM 时再回退 import.meta
 
 /** 资源缓存版本，修改 dictionary JSON 时递增以绕开 HTTP 强缓存 */
-const DICT_DATA_VERSION = "20260426";
+const DICT_DATA_VERSION = "20260427-full-1";
 
 function getDataRoot() {
   const base = String(typeof window !== "undefined" && window.__APP_BASE__ ? window.__APP_BASE__ : "")
@@ -14,22 +14,23 @@ function getDataRoot() {
 
 /**
  * 解析 data/dictionary/ 的目录 URL，供 fetch 使用。
- * 使用 import.meta.url 相对定位到仓库根下 data/dictionary/，Vercel / GitHub Pages 子路径下均有效。
- * 回退：以当前页面 origin + __APP_BASE__ 拼出根路径，避免仅用 "/data" 在子目录部署 404。
+ * 在浏览器中优先用 origin + __APP_BASE__，子路径部署时须落在 /[base]/data/dictionary/。
+ * 若先 import.meta.url，子路径下 ../../../ 常指到站点根，误成 /data/ 而非 /[base]/data/ 导致 cedict 全量 404。
+ * 无 DOM 时回退 import.meta 或本地占位，供构建/单测。
  */
 function getDictionaryDataDir() {
+  if (typeof location !== "undefined" && location.origin) {
+    const r = getDataRoot() || "/";
+    const pathBase =
+      r === "/" ? `${location.origin}/` : `${location.origin}${r.startsWith("/") ? r : `/${r}`}`.replace(/\/+$/, "/");
+    return new URL("data/dictionary/", pathBase);
+  }
   try {
     if (typeof import.meta !== "undefined" && import.meta.url) {
       return new URL("../../../data/dictionary/", import.meta.url);
     }
   } catch (e) {
     /* ignore */
-  }
-  if (typeof location !== "undefined" && location.origin) {
-    const r = getDataRoot() || "/";
-    const pathBase =
-      r === "/" ? `${location.origin}/` : `${location.origin}${r.startsWith("/") ? r : `/${r}`}`.replace(/\/+$/, "/");
-    return new URL("data/dictionary/", pathBase);
   }
   return new URL("../../../data/dictionary/", "http://localhost/");
 }
@@ -41,25 +42,38 @@ function dictDataUrl(fileName) {
   return u.href;
 }
 
+/**
+ * 索引中 file 可能为 cedict/words-… 或仅 words-…，须落在 data/dictionary/cedict/ 下
+ * @param {string} file
+ * @returns {string}
+ */
+function normalizeCedictFilePath(file) {
+  const raw = String(file || "").replace(/^\/+/, "");
+  if (!raw) return raw;
+  if (raw.startsWith("cedict/cedict/")) return raw.replace(/^cedict\//, "");
+  if (raw.startsWith("cedict/")) return raw;
+  return `cedict/${raw}`;
+}
+
 /** 成语轻量索引缓存版本（与 dictionary 分离） */
 const IDIOMS_INDEX_VERSION = "20260427";
 
 /**
- * data/culture/idioms/ 目录 URL（与 page.culture 数据路径一致）
+ * data/culture/idioms/ 目录 URL（与 page.culture、dataPaths 子路径规则一致）
  */
 function getIdiomsDataDir() {
+  if (typeof location !== "undefined" && location.origin) {
+    const r = getDataRoot() || "/";
+    const pathBase =
+      r === "/" ? `${location.origin}/` : `${location.origin}${r.startsWith("/") ? r : `/${r}`}`.replace(/\/+$/, "/");
+    return new URL("data/culture/idioms/", pathBase);
+  }
   try {
     if (typeof import.meta !== "undefined" && import.meta.url) {
       return new URL("../../../data/culture/idioms/", import.meta.url);
     }
   } catch (e) {
     /* ignore */
-  }
-  if (typeof location !== "undefined" && location.origin) {
-    const r = getDataRoot() || "/";
-    const pathBase =
-      r === "/" ? `${location.origin}/` : `${location.origin}${r.startsWith("/") ? r : `/${r}`}`.replace(/\/+$/, "/");
-    return new URL("data/culture/idioms/", pathBase);
   }
   return new URL("../../../data/culture/idioms/", "http://localhost/");
 }
@@ -374,6 +388,7 @@ export async function loadCedictIndex() {
         }
         const arr = Array.isArray(data) ? data : [];
         cedictIndexCache = arr;
+        if (DEBUG_DICT()) console.log("[dictionary] cedict index loaded count:", arr.length);
         return cedictIndexCache;
       })
       .catch((e) => {
@@ -391,10 +406,14 @@ export async function loadCedictIndex() {
  * @returns {Promise<any[]>}
  */
 export async function loadCedictDetailFile(file) {
-  const name = String(file || "").replace(/^\//, "");
+  const name = normalizeCedictFilePath(file);
   if (!name) return [];
   if (cedictDetailFileCache.has(name)) {
     return cedictDetailFileCache.get(name);
+  }
+  if (DEBUG_DICT()) {
+    const url = dictDataUrl(name);
+    console.log("[dictionary] cedict detail url", url);
   }
   const p = loadDetailArray(name);
   cedictDetailFileCache.set(name, p);
@@ -411,6 +430,7 @@ export async function getCedictEntryByWord(query) {
   if (!q) {
     return { found: false, type: "word", query: q, stroke: emptySt };
   }
+  if (DEBUG_DICT()) console.log("[dictionary] query (cedict path)", q);
 
   let list = [];
   try {
@@ -426,6 +446,9 @@ export async function getCedictEntryByWord(query) {
     if (DEBUG_DICT()) console.log("[dictionary] no cedict index for", q);
     return { found: false, type: "word", query: q, stroke: emptySt };
   }
+  if (DEBUG_DICT()) {
+    console.log("[dictionary] cedict match:", indexEntry.word || indexEntry.query, "detail file:", indexEntry.file, "id:", indexEntry.id);
+  }
   if (!indexEntry.file) {
     if (DEBUG_DICT()) console.warn("[dictionary] cedict index entry missing file", indexEntry);
     return { found: false, type: "word", query: q, stroke: emptySt, indexEntry };
@@ -435,7 +458,16 @@ export async function getCedictEntryByWord(query) {
   const entry = pickWordEntryFromList(detailList, indexEntry, q);
 
   if (DEBUG_DICT()) {
-    console.log("[dictionary] cedict word lookup", { q, indexEntry, detailHit: !!entry, detailLen: detailList.length });
+    console.log("[dictionary] cedict word lookup", {
+      q,
+      indexEntry,
+      detailHit: !!entry,
+      detailLen: detailList.length,
+    });
+    if (indexEntry.id) {
+      const byId = detailList.find((x) => x && x.id === indexEntry.id);
+      console.log("[dictionary] detail hit by id:", !!byId);
+    }
   }
 
   if (!entry) {
@@ -479,15 +511,25 @@ function pickWordEntryFromList(list, indexEntry, q) {
   const byId = indexEntry.id ? list.find((x) => x && x.id === indexEntry.id) : null;
   if (byId) return byId;
   const w = indexEntry.word || indexEntry.query;
-  return (
+  const byWord =
     list.find((x) => x && x.type === "word" && w && x.word === w) ||
     list.find((x) => x && x.type === "word" && x.word === indexEntry.query) ||
     (q
       ? list.find((x) => x && x.type === "word" && x.word === q) ||
         list.find((x) => x && x.type === "word" && x.word && q && x.word.includes(q))
-      : null) ||
-    null
-  );
+      : null);
+  if (byWord) return byWord;
+  const qp = String(q || "").trim();
+  const ip = indexEntry.pinyinPlain ? String(indexEntry.pinyinPlain).toLowerCase() : "";
+  if (qp && ip && normalizeSearchText(qp) === normalizeSearchText(ip)) {
+    const trad = String(indexEntry.traditional || indexEntry.word || "");
+    return (
+      list.find(
+        (x) => x && x.type === "word" && (x.pinyinPlain || "").toLowerCase() === ip && (x.word === w || x.word === trad)
+      ) || null
+    );
+  }
+  return null;
 }
 
 /**
@@ -533,9 +575,10 @@ export async function getDictionaryEntryByWord(query) {
   const indexEntry = bestWordIndexEntry(wordEntries, q);
 
   if (!indexEntry) {
-    if (DEBUG_DICT()) console.log("[dictionary] no main word index for", q);
+    if (DEBUG_DICT()) console.log("[dictionary] main index miss for", q, "→ cedict fallback");
     return getCedictEntryByWord(q);
   }
+  if (DEBUG_DICT()) console.log("[dictionary] main index hit for", q, { file: indexEntry.file, id: indexEntry.id });
 
   if (!indexEntry.file) {
     if (DEBUG_DICT()) console.warn("[dictionary] index entry missing file", indexEntry);
@@ -622,8 +665,19 @@ function normalizeEntryShape(entry) {
  * 单字/词语统一查询
  * @param {string} query
  */
+let _debugDictionaryLookupExposed = false;
+function ensureDebugDictionaryLookupOnWindow() {
+  if (typeof window === "undefined" || _debugDictionaryLookupExposed || !DEBUG_DICT()) return;
+  _debugDictionaryLookupExposed = true;
+  window.debugDictionaryLookup = debugDictionaryLookup;
+}
+
 export async function searchDictionary(query) {
   const q = String(query ?? "").trim();
+  if (DEBUG_DICT()) {
+    ensureDebugDictionaryLookupOnWindow();
+    console.log("[dictionary] query", q);
+  }
   if (!q) {
     return emptyCharStrokeResult("");
   }
@@ -657,4 +711,34 @@ export async function getDictionaryEntryByChar(char) {
     return getDictionaryEntryByWord(c);
   }
   return emptyCharStrokeResult(c);
+}
+
+/**
+ * 仅在 localStorage DEBUG_DICT=1 时用于控制台手查。勿在正常路径调用。
+ * @param {string} query
+ */
+export async function debugDictionaryLookup(query) {
+  if (typeof localStorage === "undefined" || localStorage.getItem("DEBUG_DICT") !== "1") {
+    if (typeof console !== "undefined" && console.debug) {
+      console.debug("[dict debug] set localStorage.setItem('DEBUG_DICT','1') first");
+    }
+    return null;
+  }
+  const q = String(query ?? "").trim();
+  console.log("[dict debug] query", q);
+  const main = await getDictionaryEntryByWord(q);
+  console.log("[dict debug] getDictionaryEntryByWord (main then cedict)", main);
+  const cedictIndex = await loadCedictIndex();
+  const wordRows = cedictIndex.filter((x) => x && x.type === "word");
+  const cedictMatch = bestWordIndexEntry(wordRows, q);
+  console.log("[dict debug] cedict index count", cedictIndex.length);
+  console.log("[dict debug] cedict match", cedictMatch);
+  if (cedictMatch && cedictMatch.file) {
+    const norm = normalizeCedictFilePath(cedictMatch.file);
+    const detailList = await loadCedictDetailFile(cedictMatch.file);
+    console.log("[dict debug] cedict detail file", norm, "count", detailList.length);
+    const hit = cedictMatch.id ? detailList.find((x) => x && x.id === cedictMatch.id) : null;
+    console.log("[dict debug] detail hit", !!hit, hit);
+  }
+  return { main, cedictIndexLen: cedictIndex.length, cedictMatch };
 }
