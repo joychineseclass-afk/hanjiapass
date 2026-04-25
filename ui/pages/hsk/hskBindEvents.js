@@ -500,7 +500,9 @@ export function bindHskPageEvents(ctx) {
         const langKey = practiceLangKeyFromUiLang(getLang());
         const cardEl = prListen.closest(".lesson-practice-card");
         const { speakHsk30ZhUiSegmentChain } = await import("../../modules/hsk/hskRenderer.js");
-        const segs = _buildPracticeSpeakSegmentsUnified(q, langKey, ld);
+        const segs = _buildPracticeSpeakSegmentsUnified(q, langKey, ld, {
+          useHsk30Hsk1Pilot: shouldUseHsk30Hsk1SpeakPilot(),
+        });
         await speakHsk30ZhUiSegmentChain(segs, cardEl || null, {
           lessonForPinyinMap: ld,
           playbackScope: TTS_SCOPE.PRACTICE,

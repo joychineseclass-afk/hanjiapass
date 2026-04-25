@@ -10,7 +10,7 @@ import {
   distributeVocabularyByMap,
   auditVocabularyCoverage,
 } from "../../modules/curriculum/vocabDistributor.js";
-import { practiceLangKeyFromUiLang, escapeHtml } from "./hskPageUtils.js";
+import { practiceLangKeyFromUiLang, escapeHtml, abbrPracticeItemForLog } from "./hskPageUtils.js";
 import { LESSON_ENGINE, PROGRESS_SELECTORS, stopAllLearningAudio } from "../../platform/index.js";
 import {
   renderLessonList,
@@ -19,7 +19,6 @@ import {
   deriveRegularLessonPanelWordList,
   collectRegularLessonPanelHanziKeys,
 } from "../../modules/hsk/hskRenderer.js";
-import { _abbrPracticeItemForLog } from "./hskPracticeTab.js";
 
 const HSK1_THEME_TRANSLATIONS = {
   "打招呼": { ko: "인사하기", en: "Greetings", jp: "あいさつ" },
@@ -671,14 +670,14 @@ export async function openHskLesson(ctx, lessonNo, options = {}) {
       lessonNo: raw?.lessonNo ?? lessonData?.lessonNo ?? no,
       hasPracticeArray: Array.isArray(rp),
       rawPracticeLength: Array.isArray(rp) ? rp.length : 0,
-      firstTwoRaw: Array.isArray(rp) ? rp.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+      firstTwoRaw: Array.isArray(rp) ? rp.slice(0, 2).map(abbrPracticeItemForLog) : [],
     });
     const np = lessonData.practice;
     console.log("[HSK-PRACTICE-NORMALIZED]", {
       lessonId: lessonData.id,
       lessonNo: lessonData.lessonNo,
       normalizedPracticeLength: Array.isArray(np) ? np.length : 0,
-      firstTwoNormalized: Array.isArray(np) ? np.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+      firstTwoNormalized: Array.isArray(np) ? np.slice(0, 2).map(abbrPracticeItemForLog) : [],
       preservedFieldsSample:
         np && np[0] && typeof np[0] === "object"
           ? {

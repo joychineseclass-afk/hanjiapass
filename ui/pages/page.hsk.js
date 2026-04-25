@@ -31,7 +31,6 @@ import {
   PROGRESS_ENGINE,
   PROGRESS_SELECTORS,
 } from "../platform/index.js";
-import { addWrongItems, addRecentItem } from "../modules/review/reviewEngine.js";
 import * as SceneRenderer from "../platform/scene/sceneRenderer.js";
 
 // Step 1 split — HSK tab modules (see task: 《Lumina HSK 页面巨石文件拆分 Step 1》)
@@ -600,81 +599,4 @@ function updateLessonContextWindow(lessonNo) {
         ? location.pathname
         : "/pages/hsk.html",
   };
-}
-
-function markStepCompletedSafe(stepKey) {
-  if (!state.current || !state.current.lessonData) return;
-
-  const courseId = getCourseId();
-  const lessonId =
-    state.current.lessonData.id ||
-    `${courseId}_lesson${state.current.lessonNo}`;
-
-  if (
-    PROGRESS_ENGINE &&
-    typeof PROGRESS_ENGINE.markStepCompleted === "function"
-  ) {
-    PROGRESS_ENGINE.markStepCompleted({
-      courseId,
-      lessonId,
-      step: stepKey,
-    });
-  }
-
-  updateProgressBlock();
-}
-
-function recordPracticeCompletionSafe({
-  total,
-  correct,
-  score,
-  lesson,
-  wrongItems = [],
-}) {
-  if (!state.current || !state.current.lessonData) return;
-
-  const courseId = getCourseId();
-  const lessonId =
-    state.current.lessonData.id ||
-    `${courseId}_lesson${state.current.lessonNo}`;
-
-  if (
-    PROGRESS_ENGINE &&
-    typeof PROGRESS_ENGINE.recordPracticeResult === "function"
-  ) {
-    PROGRESS_ENGINE.recordPracticeResult({
-      courseId,
-      lessonId,
-      total,
-      correct,
-      score,
-      vocabItems: ((lesson && lesson.vocab) || (lesson && lesson.words) || [])
-        .map((w) =>
-          typeof w === "string"
-            ? w
-            : (w && w.hanzi) || (w && w.word) || ""
-        )
-        .filter(Boolean),
-      wrongItems,
-    });
-  }
-
-  if (
-    PROGRESS_ENGINE &&
-    typeof PROGRESS_ENGINE.markLessonCompleted === "function"
-  ) {
-    PROGRESS_ENGINE.markLessonCompleted({ courseId, lessonId });
-  }
-
-  addWrongItems(wrongItems, { lessonId, courseId });
-  addRecentItem({
-    lessonId,
-    courseId,
-    total,
-    correct,
-    score,
-    practicedAt: Date.now(),
-  });
-
-  updateProgressBlock();
 }

@@ -47,10 +47,23 @@ export function practiceLangKeyFromUiLang(lang) {
   return "kr";
 }
 
+/** 从对象上取第一个非空字符串值（用于缺译兜底；键名排序稳定）。 */
+function firstStringValueFromObject(obj) {
+  if (!obj || typeof obj !== "object") return "";
+  for (const k of Object.keys(obj).sort()) {
+    const v = obj[k];
+    if (typeof v === "string") {
+      const t = trimStr(v);
+      if (t) return t;
+    }
+  }
+  return "";
+}
+
 /**
  * Controlled text getter
- * Rule: current UI lang -> English -> Chinese
- * Never jump randomly into unrelated languages.
+ * Rule: current UI lang → en → cn/zh → 其它已知键 → 任意非空字符串
+ * JP/ja 缺译时不应出现空白或孤立 "-"。
  */
 export function getControlledLangText(obj, langKey, context = "text") {
   if (!obj || typeof obj !== "object") return "";
@@ -62,18 +75,28 @@ export function getControlledLangText(obj, langKey, context = "text") {
     key === "cn" ? ["cn", "zh"] :
     ["en"];
 
-  const order = [...primary, "en", "cn", "zh"];
+  const secondary = ["en", "cn", "zh", "kr", "ko", "jp", "ja"];
+  const order = [...new Set([...primary, ...secondary])];
   const tried = [];
+  const primarySet = new Set(primary);
 
   for (const k of order) {
     tried.push(k);
     const value = trimStr(obj[k]);
     if (value) {
-      if (!primary.includes(k) && typeof console !== "undefined" && console.warn) {
+      if (!primarySet.has(k) && typeof console !== "undefined" && console.warn) {
         console.warn(`[HSK Language] Fallback triggered for ${context}: ${key} -> ${k}`);
       }
       return value;
     }
+  }
+
+  const any = firstStringValueFromObject(obj);
+  if (any) {
+    if (typeof console !== "undefined" && console.warn) {
+      console.warn(`[HSK Language] Fallback to any field for ${context} (lang=${key})`);
+    }
+    return any;
   }
 
   if (typeof console !== "undefined" && console.warn) {
@@ -83,16 +106,58 @@ export function getControlledLangText(obj, langKey, context = "text") {
 }
 
 /**
- * Strict direct getter — current language family only. No fallback.
+ * Strict getter with stable fallbacks — JP 缺译：jp/ja → en → cn/zh → kr/ko → 任意字符串字段
  */
 export function getStrictLangText(obj, langKey) {
   if (!obj || typeof obj !== "object") return "";
   const key = normalizePracticeLangAliases(langKey);
 
-  if (key === "kr") return trimStr(obj.kr) || trimStr(obj.ko) || "";
-  if (key === "jp") return trimStr(obj.jp) || trimStr(obj.ja) || "";
-  if (key === "cn") return trimStr(obj.cn) || trimStr(obj.zh) || "";
-  return trimStr(obj.en) || "";
+  if (key === "kr") {
+    return (
+      trimStr(obj.kr) ||
+      trimStr(obj.ko) ||
+      trimStr(obj.en) ||
+      trimStr(obj.cn) ||
+      trimStr(obj.zh) ||
+      trimStr(obj.jp) ||
+      trimStr(obj.ja) ||
+      firstStringValueFromObject(obj)
+    );
+  }
+  if (key === "jp") {
+    return (
+      trimStr(obj.jp) ||
+      trimStr(obj.ja) ||
+      trimStr(obj.en) ||
+      trimStr(obj.cn) ||
+      trimStr(obj.zh) ||
+      trimStr(obj.kr) ||
+      trimStr(obj.ko) ||
+      firstStringValueFromObject(obj)
+    );
+  }
+  if (key === "cn") {
+    return (
+      trimStr(obj.cn) ||
+      trimStr(obj.zh) ||
+      trimStr(obj.en) ||
+      trimStr(obj.kr) ||
+      trimStr(obj.ko) ||
+      trimStr(obj.jp) ||
+      trimStr(obj.ja) ||
+      firstStringValueFromObject(obj)
+    );
+  }
+  return (
+    trimStr(obj.en) ||
+    trimStr(obj.cn) ||
+    trimStr(obj.zh) ||
+    trimStr(obj.kr) ||
+    trimStr(obj.ko) ||
+    trimStr(obj.jp) ||
+    trimStr(obj.ja) ||
+    firstStringValueFromObject(obj)
+  );
 }
 
 /**
@@ -128,4 +193,37 @@ export function safeObject(obj) {
 }
 export function safeString(v) {
   return typeof v === "string" ? v : "";
+}
+
+/**
+ * 练习题日志缩略（数据层与练习 tab 共用，避免 lesson 模块依赖 practice 模块）。
+ */
+export function abbrPracticeItemForLog(q) {
+  if (!q || typeof q !== "object") return q;
+  const prompt = q.prompt;
+  const question = q.question;
+  return {
+    id: q.id,
+    type: q.type,
+    subtype: q.subtype,
+    optionsLen: Array.isArray(q.options) ? q.options.length : null,
+    optionsHead: Array.isArray(q.options)
+      ? q.options.slice(0, 2).map((o) =>
+          typeof o === "string" ? o.slice(0, 40) : JSON.stringify(o).slice(0, 80)
+        )
+      : q.options,
+    prompt:
+      prompt && typeof prompt === "object"
+        ? Object.keys(prompt)
+        : typeof prompt === "string"
+          ? prompt.slice(0, 60)
+          : prompt,
+    question:
+      question && typeof question === "object"
+        ? Object.keys(question)
+        : typeof question === "string"
+          ? question.slice(0, 60)
+          : question,
+    zh_options: q.zh_options,
+  };
 }

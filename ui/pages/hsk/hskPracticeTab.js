@@ -30,7 +30,10 @@ import {
   getControlledLangText,
   normalizePracticeLangAliases,
   practiceLangKeyFromUiLang,
+  abbrPracticeItemForLog,
 } from "./hskPageUtils.js";
+
+export { abbrPracticeItemForLog as _abbrPracticeItemForLog };
 
 /* ------------------------------- display patch ------------------------------- */
 
@@ -320,36 +323,6 @@ export function _structuralDropReason(q, langKey) {
   return "unknown";
 }
 
-export function _abbrPracticeItemForLog(q) {
-  if (!q || typeof q !== "object") return q;
-  const prompt = q.prompt;
-  const question = q.question;
-  return {
-    id: q.id,
-    type: q.type,
-    subtype: q.subtype,
-    optionsLen: Array.isArray(q.options) ? q.options.length : null,
-    optionsHead: Array.isArray(q.options)
-      ? q.options.slice(0, 2).map((o) =>
-          typeof o === "string" ? o.slice(0, 40) : JSON.stringify(o).slice(0, 80)
-        )
-      : q.options,
-    prompt:
-      prompt && typeof prompt === "object"
-        ? Object.keys(prompt)
-        : typeof prompt === "string"
-        ? prompt.slice(0, 60)
-        : prompt,
-    question:
-      question && typeof question === "object"
-        ? Object.keys(question)
-        : typeof question === "string"
-        ? question.slice(0, 60)
-        : question,
-    zh_options: q.zh_options,
-  };
-}
-
 /** Clone lesson.practice + apply display + drop structurally-unrenderable items. */
 export function buildLessonWithClonedPracticeForDisplay(lesson, langKey) {
   if (!lesson || !Array.isArray(lesson.practice)) {
@@ -441,7 +414,7 @@ export function mountHskPractice(container, opts) {
       lessonId: lessonForPractice?.id,
       lessonNo: lessonForPractice?.lessonNo,
       finalCountPassedToEngine: Array.isArray(fp) ? fp.length : 0,
-      firstTwoFinal: Array.isArray(fp) ? fp.slice(0, 2).map(_abbrPracticeItemForLog) : [],
+      firstTwoFinal: Array.isArray(fp) ? fp.slice(0, 2).map(abbrPracticeItemForLog) : [],
     });
   } catch (e) {
     console.warn("[HSK-PRACTICE-MOUNT] log failed:", e?.message || e);
