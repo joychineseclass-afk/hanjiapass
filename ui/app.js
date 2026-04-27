@@ -139,6 +139,46 @@ function showFatal(err) {
   `;
 }
 
+const STARTUP_HYDRATE_BUDGET_MS = 2500;
+
+/**
+ * P0：首屏最多等待该时间即认为「不阻塞」；会话恢复仍在后台继续。
+ * P2：在 startRouter 之后执行；结束后再次跑 guards，避免 Supabase 慢时误把已登录用户挡去登录页。
+ */
+async function runStartupHydrateWithBudget() {
+  const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
+  const work = hydrateCurrentUserFromSession();
+  const settled = work.then(
+    () => ({ error: null }),
+    (error) => ({ error }),
+  );
+  let tid = 0;
+  const budgetP = new Promise((resolve) => {
+    tid = setTimeout(() => resolve("timeout"), STARTUP_HYDRATE_BUDGET_MS);
+  });
+  let raceResult;
+  try {
+    raceResult = await Promise.race([settled.then(() => "done"), budgetP]);
+  } finally {
+    clearTimeout(tid);
+  }
+  if (raceResult === "timeout") {
+    console.warn(
+      `[app] startup hydrate: still pending after ${STARTUP_HYDRATE_BUDGET_MS}ms (session restore continues in background)`,
+    );
+  }
+  const outcome = await settled;
+  if (outcome.error) {
+    console.warn("[app] hydrate error:", outcome.error?.message || outcome.error);
+  }
+  try {
+    const { runSessionRouteGuards } = await import("./auth/authFlow.js");
+    requestAnimationFrame(() => runSessionRouteGuards());
+  } catch (e) {
+    console.warn("[app] post-hydrate route guards failed:", e?.message);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("[app] DOMContentLoaded");
 
@@ -149,14 +189,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("[app] i18n.load failed:", e?.message);
   }
 
-  try {
-    const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
-    await hydrateCurrentUserFromSession();
-  } catch (e) {
-    console.warn("[app] auth hydrate failed:", e?.message);
-  }
-
-  // 1) Nav
+  // 1) Nav（先于 hydrate，避免 Supabase 阻塞顶栏首屏）
   try {
     mountNavBar(document.getElementById("siteNav"));
   } catch (e) {
@@ -171,14 +204,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("[app] mount panels error:", e);
   }
 
-// 3) Start router (router will ensure defaultHash + first render)
-try {
-  console.log("[app] startRouter (boot)");
-  startRouter({ defaultHash: "#home", appId: "app", scrollTop: true });
-} catch (e) {
-  console.error("[app] startRouter error:", e);
-  showFatal(e);
-}
+  // 3) Start router (router will ensure defaultHash + first render)
+  try {
+    console.log("[app] startRouter (boot)");
+    startRouter({ defaultHash: "#home", appId: "app", scrollTop: true });
+  } catch (e) {
+    console.error("[app] startRouter error:", e);
+    showFatal(e);
+  }
 
   try {
     const { runSessionRouteGuards, bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
@@ -201,7 +234,10 @@ try {
     console.warn("[app] session route guards / dev failed:", e?.message);
   }
 
-  // 4) Helpful debug hint
+  // 4) 后台恢复会话（不阻塞首屏路由）；P0 预算内未结束则 warn，仍等待完成以同步状态
+  void runStartupHydrateWithBudget();
+
+  // 5) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.
 
 });

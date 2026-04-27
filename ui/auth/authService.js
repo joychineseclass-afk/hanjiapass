@@ -19,6 +19,38 @@ import { findTeacherProfileByUserId } from "../lumina-commerce/teacherProfileQue
 import { ensureTeacherProfileForUser as ensureTeacherProfile } from "../lumina-commerce/teacherProfileService.js";
 import { ensureCurrentUserMatchesCommerceTeacher } from "../lumina-commerce/teacherProfileStore.js";
 
+/** hydrate 内各 Supabase 步骤独立超时（与 app 启动 2500ms 预算配合，避免单步挂死） */
+const HYDRATE_REMOTE_STEP_MS = 2500;
+
+const _hydrateStepTimeoutSymbol = Symbol("lumina-hydrate-step-timeout");
+
+/**
+ * @template T
+ * @param {Promise<T>} promise
+ * @param {number} ms
+ * @param {string} stepLabel
+ * @returns {Promise<T | undefined>}
+ */
+async function runHydrateStep(promise, ms, stepLabel) {
+  let tid = 0;
+  const timeoutP = new Promise((resolve) => {
+    tid = setTimeout(() => resolve(_hydrateStepTimeoutSymbol), ms);
+  });
+  try {
+    const out = await Promise.race([promise, timeoutP]);
+    if (out === _hydrateStepTimeoutSymbol) {
+      console.warn(`[Lumina] hydrate step timeout (${ms}ms): ${stepLabel}`);
+      return undefined;
+    }
+    return /** @type {T} */ (out);
+  } catch (e) {
+    console.warn(`[Lumina] hydrate step error (${stepLabel}):`, e?.message || e);
+    return undefined;
+  } finally {
+    clearTimeout(tid);
+  }
+}
+
 /**
  * @typedef {Object} AuthUserShape
  * @property {string} id
@@ -67,33 +99,63 @@ async function applyProfileToCurrentUser(authUser) {
  * 会话存在时，将 commerce 老师档案同步到 currentUser（登录后 / 页面加载）。
  */
 export async function hydrateCurrentUserFromSession() {
-  if (getActiveProvider().type === "supabase") {
-    const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
-    await getSupabaseClientReady();
-    const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
-    const supaUser = await syncLuminaCacheFromSupabaseClient();
-    /** 未登录访客无 Supabase session，不应 ensure（否则会 not_authentication + 刷屏） */
-    if (supaUser) {
-      const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
-      await ensureLuminaProfileAndMerge();
+  try {
+    if (getActiveProvider().type === "supabase") {
+      try {
+        const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
+        await runHydrateStep(getSupabaseClientReady(), HYDRATE_REMOTE_STEP_MS, "getSupabaseClientReady");
+      } catch (e) {
+        console.warn("[Lumina] hydrate: getSupabaseClientReady:", e?.message || e);
+      }
+
+      let supaUser = null;
+      try {
+        const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
+        supaUser = await runHydrateStep(
+          syncLuminaCacheFromSupabaseClient(),
+          HYDRATE_REMOTE_STEP_MS,
+          "syncLuminaCacheFromSupabaseClient",
+        );
+      } catch (e) {
+        console.warn("[Lumina] hydrate: syncLuminaCacheFromSupabaseClient:", e?.message || e);
+      }
+
+      /** 未登录访客无 Supabase session，不应 ensure（否则会 not_authentication + 刷屏） */
+      if (supaUser) {
+        try {
+          const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+          await runHydrateStep(ensureLuminaProfileAndMerge(), HYDRATE_REMOTE_STEP_MS, "ensureLuminaProfileAndMerge");
+        } catch (e) {
+          console.warn("[Lumina] hydrate: ensureLuminaProfileAndMerge:", e?.message || e);
+        }
+      }
+    }
+
+    const s = loadSession();
+    if (!s.userId) {
+      setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+      return;
+    }
+    const u = findUserById(s.userId);
+    if (!u) {
+      saveSession(null);
+      setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+      return;
+    }
+    await applyProfileToCurrentUser({
+      id: u.id,
+      displayName: u.displayName,
+      email: u.email,
+    });
+  } catch (e) {
+    console.warn("[Lumina] hydrateCurrentUserFromSession:", e?.message || e);
+  } finally {
+    try {
+      emitAuthStateChanged();
+    } catch {
+      /* */
     }
   }
-  const s = loadSession();
-  if (!s.userId) {
-    setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
-    return;
-  }
-  const u = findUserById(s.userId);
-  if (!u) {
-    saveSession(null);
-    setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
-    return;
-  }
-  await applyProfileToCurrentUser({
-    id: u.id,
-    displayName: u.displayName,
-    email: u.email,
-  });
 }
 
 /**
