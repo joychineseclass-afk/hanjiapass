@@ -62,77 +62,46 @@ export default async function pageTeacherApply(ctxOrRoot) {
 
   root.innerHTML = `
     <div class="wrap auth-page lumina-teacher-apply">
-      <div class="lumina-teacher-apply__container card auth-card">
-        <header class="lumina-teacher-apply__hero">
-          <h1 class="lumina-teacher-apply__title auth-title" data-i18n="teacherApply.title">${escapeHtml(tx("teacherApply.title"))}</h1>
-          <p class="lumina-teacher-apply__hero-lead" data-i18n="teacherApply.hero_lead">${escapeHtml(tx("teacherApply.hero_lead"))}</p>
-          <p class="lumina-teacher-apply__status" data-i18n-aria-label="teacherApply.status_aria" data-i18n="teacherApply.status_line" aria-label="${escapeHtml(tx("teacherApply.status_aria"))}">${escapeHtml(tx("teacherApply.status_line"))}</p>
-        </header>
-
-        <aside class="lumina-teacher-apply__info" role="region" data-i18n-aria-label="teacherApply.info_region_aria" aria-label="${escapeHtml(tx("teacherApply.info_region_aria"))}">
-          <p class="lumina-teacher-apply__info-line" data-i18n="teacherApply.info_target">${escapeHtml(tx("teacherApply.info_target"))}</p>
-          <p class="lumina-teacher-apply__info-line" data-i18n="teacherApply.info_review">${escapeHtml(tx("teacherApply.info_review"))}</p>
-          <p class="lumina-teacher-apply__info-line" data-i18n="teacherApply.info_learning">${escapeHtml(tx("teacherApply.info_learning"))}</p>
-        </aside>
-
-        <form class="auth-form lumina-teacher-apply__form" id="teacherApplyForm">
-          <section class="lumina-teacher-apply__section" aria-labelledby="ta-sec-basic">
-            <h2 class="lumina-teacher-apply__section-title" id="ta-sec-basic" data-i18n="teacherApply.section_basic">${escapeHtml(tx("teacherApply.section_basic"))}</h2>
-            <label class="auth-field">
-              <span class="auth-label" data-i18n="teacherApply.display_name">${escapeHtml(tx("teacherApply.display_name"))}</span>
-              <input name="displayName" type="text" required autocomplete="name" value="${escapeHtml(tp?.displayName || full?.displayName || "")}" />
-            </label>
-            <label class="auth-field">
-              <span class="auth-label" data-i18n="teacherApply.intro">${escapeHtml(tx("teacherApply.intro"))}</span>
-              <textarea name="intro" class="teacher-profile-textarea" rows="4" required>${escapeHtml(tp?.intro || "")}</textarea>
-            </label>
-          </section>
-
-          <section class="lumina-teacher-apply__section" aria-labelledby="ta-sec-directions">
-            <h2 class="lumina-teacher-apply__section-title" id="ta-sec-directions" data-i18n="teacherApply.section_directions">${escapeHtml(tx("teacherApply.section_directions"))}</h2>
-            <div class="auth-field lumina-teacher-apply__field--choice">
-              <span class="auth-label" id="ta-label-types" data-i18n="teacherApply.teaching_directions">${escapeHtml(tx("teacherApply.teaching_directions"))}</span>
-              <div class="teacher-apply__types teacher-apply__types--grid" role="group" aria-labelledby="ta-label-types">${checks}</div>
-            </div>
-          </section>
-
-          <section class="lumina-teacher-apply__section" aria-labelledby="ta-sec-exp">
-            <h2 class="lumina-teacher-apply__section-title" id="ta-sec-exp" data-i18n="teacherApply.section_experience">${escapeHtml(tx("teacherApply.section_experience"))}</h2>
-            <div class="auth-field lumina-teacher-apply__field--choice">
-              <span class="auth-label" id="ta-label-exp" data-i18n="teacherApply.experience">${escapeHtml(tx("teacherApply.experience"))}</span>
-              <div class="teacher-apply__radio-group" role="radiogroup" aria-labelledby="ta-label-exp">
-                <label class="teacher-apply__radio">
-                  <input type="radio" name="experience" value="has_experience" required${exHas} />
-                  <span data-i18n="teacherApply.exp_yes">${escapeHtml(tx("teacherApply.exp_yes"))}</span>
-                </label>
-                <label class="teacher-apply__radio">
-                  <input type="radio" name="experience" value="no_experience"${exNo} />
-                  <span data-i18n="teacherApply.exp_no">${escapeHtml(tx("teacherApply.exp_no"))}</span>
-                </label>
-              </div>
-            </div>
-          </section>
-
-          <section class="lumina-teacher-apply__section" aria-labelledby="ta-sec-note">
-            <h2 class="lumina-teacher-apply__section-title" id="ta-sec-note" data-i18n="teacherApply.section_note">${escapeHtml(tx("teacherApply.section_note"))}</h2>
-            <label class="auth-field">
-              <span class="auth-label" data-i18n="teacherApply.note">${escapeHtml(tx("teacherApply.note"))}</span>
-              <textarea name="note" class="teacher-profile-textarea lumina-teacher-apply__note" rows="3">${escapeHtml(tp?.note != null ? String(tp.note) : "")}</textarea>
-            </label>
-          </section>
-
-          <div class="lumina-teacher-apply__actions">
-            <p class="auth-error" id="teacherApplyErr" hidden></p>
-            <button type="submit" class="auth-submit lumina-teacher-apply__submit">${escapeHtml(
-              tState === "rejected" ? tx("teacherApply.resubmit") : tx("teacherApply.submit"),
-            )}</button>
+      <section class="card auth-card">
+        <h1 class="auth-title">${escapeHtml(tx("teacherApply.title"))}</h1>
+        <p class="auth-lead">${escapeHtml(tx("teacherApply.lead"))}</p>
+        <ul class="lumina-teacher-apply__bullets">
+          <li>${escapeHtml(tx("teacherApply.bullet_learner_ready"))}</li>
+          <li>${escapeHtml(tx("teacherApply.bullet_teacher_gated"))}</li>
+          <li>${escapeHtml(tx("teacherApply.bullet_approved_console"))}</li>
+        </ul>
+        <p class="lumina-teacher-apply__tip">${escapeHtml(tx("teacherApply.tip_student_ready"))}</p>
+        <form class="auth-form" id="teacherApplyForm">
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.display_name"))}</span>
+            <input name="displayName" type="text" required value="${escapeHtml(tp?.displayName || full?.displayName || "")}" />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.intro"))}</span>
+            <textarea name="intro" class="teacher-profile-textarea" rows="3" required>${escapeHtml(tp?.intro || "")}</textarea>
+          </label>
+          <div class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.teaching_directions"))}</span>
+            <div class="teacher-apply__types">${checks}</div>
           </div>
+          <div class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.experience"))}</span>
+            <label class="teacher-apply__radio"><input type="radio" name="experience" value="has_experience" required${exHas} /> <span data-i18n="teacherApply.exp_yes">${escapeHtml(tx("teacherApply.exp_yes"))}</span></label>
+            <label class="teacher-apply__radio"><input type="radio" name="experience" value="no_experience"${exNo} /> <span data-i18n="teacherApply.exp_no">${escapeHtml(tx("teacherApply.exp_no"))}</span></label>
+          </div>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.note"))}</span>
+            <textarea name="note" class="teacher-profile-textarea" rows="2">${escapeHtml(tp?.note != null ? String(tp.note) : "")}</textarea>
+          </label>
+          <p class="auth-error" id="teacherApplyErr" hidden></p>
+          <button type="submit" class="auth-submit">${escapeHtml(
+            tState === "rejected" ? tx("teacherApply.resubmit") : tx("teacherApply.submit"),
+          )}</button>
         </form>
-
-        <p class="auth-footer lumina-teacher-apply__footer">
-          <a href="#my-learning" class="auth-link" id="taBackMy" data-i18n="teacherApply.back_learning">${escapeHtml(tx("teacherApply.back_learning"))}</a>
+        <p class="auth-footer">
+          <a href="#my-learning" class="auth-link" id="taBackMy">${escapeHtml(tx("teacherApply.back_learning"))}</a>
         </p>
-      </div>
+      </section>
     </div>
   `;
   i18n.apply?.(root);

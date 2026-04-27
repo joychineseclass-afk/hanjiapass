@@ -5888,100 +5888,6 @@ a.section-side-nav-item:hover{
   font-size: 12px;
   opacity: 0.9;
 }
-.lumina-teacher-apply.auth-page{
-  max-width: 920px;
-  padding-top: 24px;
-  padding-bottom: 56px;
-}
-.lumina-teacher-apply__container.card{
-  padding: 26px 22px 28px;
-}
-.lumina-teacher-apply__hero{
-  margin: 0 0 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--line, #e2e8f0);
-}
-.lumina-teacher-apply__title{
-  margin: 0 0 10px;
-  font-size: 1.45rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-}
-.lumina-teacher-apply__hero-lead{
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.6;
-  max-width: 52rem;
-}
-.lumina-teacher-apply__status{
-  margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-  color: #64748b;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-}
-.lumina-teacher-apply__info{
-  margin: 0 0 24px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-}
-.lumina-teacher-apply__info-line{
-  margin: 0 0 8px;
-  font-size: 13px;
-  line-height: 1.55;
-  color: #475569;
-}
-.lumina-teacher-apply__info-line:last-child{
-  margin-bottom: 0;
-}
-.auth-form.lumina-teacher-apply__form{
-  gap: 0;
-}
-.lumina-teacher-apply__section{
-  margin: 0 0 24px;
-}
-.lumina-teacher-apply__section:last-of-type{
-  margin-bottom: 0;
-}
-.lumina-teacher-apply__section-title{
-  margin: 0 0 12px;
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #64748b;
-}
-.lumina-teacher-apply__field--choice .auth-label{
-  margin-bottom: 2px;
-}
-.lumina-teacher-apply__field--choice{
-  gap: 8px;
-}
-.lumina-teacher-apply__note.teacher-profile-textarea{
-  min-height: 88px;
-  padding: 12px 14px;
-}
-.lumina-teacher-apply__actions{
-  margin-top: 28px;
-  padding-top: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: stretch;
-}
-.lumina-teacher-apply__submit{
-  width: 100%;
-  max-width: 100%;
-  margin-top: 0;
-}
-.lumina-teacher-apply__footer{
-  margin-top: 20px;
-}
 .lumina-teacher-apply__tip{
   font-size: 13px;
   color: #64748b;
@@ -6008,73 +5914,19 @@ a.section-side-nav-item:hover{
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 100%;
-}
-.teacher-apply__types--grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px 14px;
-  align-items: start;
-  width: 100%;
-}
-@media (min-width: 480px){
-  .teacher-apply__types--grid{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 720px){
-  .teacher-apply__types--grid{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 .teacher-apply__check{
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-  line-height: 1.45;
-  margin: 0;
-  min-width: 0;
-  cursor: pointer;
-}
-.teacher-apply__check input{
-  flex-shrink: 0;
-  width: auto;
-  margin: 0.2em 0 0;
-}
-.teacher-apply__check span{
-  flex: 1;
-  min-width: 0;
-}
-.teacher-apply__radio-group{
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   gap: 8px;
-  width: 100%;
-  max-width: 100%;
+  font-size: 14px;
 }
+.teacher-apply__check input{ margin-top: 3px; }
 .teacher-apply__radio{
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
-  line-height: 1.45;
-  margin: 0;
-  width: 100%;
-  max-width: 100%;
-  cursor: pointer;
-}
-.teacher-apply__radio input{
-  flex-shrink: 0;
-  width: auto;
-  margin: 0.2em 0 0;
-}
-.teacher-apply__radio span{
-  flex: 1;
-  min-width: 0;
 }
 .role-pill{
   display: inline-block;
