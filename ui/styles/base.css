@@ -6880,3 +6880,41 @@ a.dictionary-component-link:hover {
   font-size: 13px;
   margin: 0;
 }
+
+/* #stroke 工具页：HSK 命中卡片（仅 .lumina-stroke 内，见 page.stroke.js） */
+.lumina-stroke .stroke-meaning-status {
+  opacity: 0.65;
+}
+.lumina-stroke .stroke-meaning-hit {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.lumina-stroke .stroke-meaning-hit__head {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.lumina-stroke .stroke-meaning-hit__word b {
+  font-weight: 800;
+}
+.lumina-stroke .stroke-meaning-hit__hsk {
+  opacity: 0.7;
+  font-size: 0.95em;
+}
+.lumina-stroke .stroke-meaning-hit__line {
+  margin: 0;
+  line-height: 1.45;
+}
+.lumina-stroke .stroke-meaning-hit__example {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0.95;
+}
