@@ -3,30 +3,44 @@
  * 与 commerce store 中的 listing.source_kind / source_id 演示字段对齐。
  */
 
-/** @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string }} TeacherDemoMaterial */
+import { DEFAULT_DEMO_TEACHER_PROFILE_ID } from "./currentUser.js";
+
+/** @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string }} TeacherDemoMaterial */
 /** @typedef {{ id: string, updated_at: string, materialIds: string[], listingReadinessKey: string, listingId: string|null }} TeacherDemoCourse */
 
 /** @type {TeacherDemoMaterial[]} */
 export const TEACHER_DEMO_MATERIALS = [
   {
     id: "tdm_animals_ppt",
+    materialCategoryKey: "ppt",
     updated_at: "2026-04-12T09:30:00.000Z",
     usedByCourseIds: ["tdc_kids_draft_a"],
     listingPrepKey: "ready_pack",
   },
   {
     id: "tdm_politeness_handout",
+    materialCategoryKey: "handout",
     updated_at: "2026-04-11T14:00:00.000Z",
     usedByCourseIds: ["tdc_kids_draft_a"],
     listingPrepKey: "internal_only",
   },
   {
     id: "tdm_color_chain_cards",
+    materialCategoryKey: "picture_book",
     updated_at: "2026-04-09T11:15:00.000Z",
     usedByCourseIds: [],
     listingPrepKey: "not_yet_ready",
   },
 ];
+
+/**
+ * 演示课程 id → 创建课堂资产时的默认课次（用于「从课程生成」最小闭环，非细粒度课表系统）。
+ * @type {Record<string, { course: string, level: string, lesson: string }>}
+ */
+export const DEMO_COURSE_DEFAULT_LESSON_SOURCE = {
+  tdc_kids_draft_a: { course: "kids", level: "1", lesson: "1" },
+  tdc_hsk_oral_draft_b: { course: "hsk", level: "1", lesson: "3" },
+};
 
 /** @type {TeacherDemoCourse[]} */
 export const TEACHER_DEMO_COURSES = [
@@ -46,9 +60,38 @@ export const TEACHER_DEMO_COURSES = [
   },
 ];
 
+/**
+ * 仅当当前老师 profile 为演示绑定 id 时返回演示教材；否则空（避免非该老师看到他人演示行）。
+ * @param {string|null|undefined} profileId
+ * @returns {TeacherDemoMaterial[]}
+ */
+export function getDemoMaterialsForProfile(profileId) {
+  if (!profileId || String(profileId) !== DEFAULT_DEMO_TEACHER_PROFILE_ID) return [];
+  return TEACHER_DEMO_MATERIALS;
+}
+
+/**
+ * @param {string|null|undefined} profileId
+ * @returns {TeacherDemoCourse[]}
+ */
+export function getDemoCoursesForProfile(profileId) {
+  if (!profileId || String(profileId) !== DEFAULT_DEMO_TEACHER_PROFILE_ID) return [];
+  return TEACHER_DEMO_COURSES;
+}
+
 /** @param {string} id */
 export function getDemoMaterialById(id) {
   return TEACHER_DEMO_MATERIALS.find((m) => m.id === id) || null;
+}
+
+/**
+ * 演示教材分类（与 `teacher.materials_page.category.*` 对齐）。
+ * @param {TeacherDemoMaterial} m
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function formatDemoMaterialCategory(m, tx) {
+  const key = m.materialCategoryKey && String(m.materialCategoryKey).trim() ? String(m.materialCategoryKey) : "other";
+  return tx(`teacher.materials_page.category.${key}`);
 }
 
 /** @param {string} id */
@@ -179,21 +222,26 @@ export function formatDemoCourseLinkedListingLine(c, tx) {
 }
 
 /**
- * @param {Array<{ status?: string }>|null|undefined} listings
+ * @param {Array<{ status?: string, teacher_id?: string|null, seller_type?: string }>|null|undefined} listings
+ * @param {string|null|undefined} profileId 当前老师 profileId；未通过审核或空则不含演示教材/课程计数、且 listing 按该 id 过滤
  */
-export function getTeacherWorkspaceDemoSummary(listings) {
-  const materialsCount = TEACHER_DEMO_MATERIALS.length;
-  const coursesCount = TEACHER_DEMO_COURSES.length;
-  const materialsInUseCount = TEACHER_DEMO_MATERIALS.filter((m) => m.usedByCourseIds.length > 0).length;
-  const coursesWithListing = TEACHER_DEMO_COURSES.filter((c) => c.listingReadinessKey === "has_listing").length;
+export function getTeacherWorkspaceDemoSummary(listings, profileId) {
+  const mats = getDemoMaterialsForProfile(profileId);
+  const crs = getDemoCoursesForProfile(profileId);
+  const materialsCount = mats.length;
+  const coursesCount = crs.length;
+  const materialsInUseCount = mats.filter((m) => m.usedByCourseIds.length > 0).length;
+  const coursesWithListing = crs.filter((c) => c.listingReadinessKey === "has_listing").length;
 
+  const pid = profileId != null && String(profileId).trim() !== "" ? String(profileId) : null;
   let listingTotal = 0;
   let pendingReview = 0;
   let draft = 0;
   let approved = 0;
-  if (Array.isArray(listings)) {
-    listingTotal = listings.length;
+  if (Array.isArray(listings) && pid) {
     for (const L of listings) {
+      if (!L || String(L.seller_type) !== "teacher" || String(L.teacher_id || "") !== pid) continue;
+      listingTotal += 1;
       const st = String(L?.status || "");
       if (st === "pending_review") pendingReview += 1;
       if (st === "draft") draft += 1;
@@ -210,6 +258,8 @@ export function getTeacherWorkspaceDemoSummary(listings) {
     pendingReview,
     draft,
     approved,
+    /** 由 page 层以 teacherAssets 实际数量覆盖；默认 0 */
+    classroomAssetCount: 0,
   };
 }
 

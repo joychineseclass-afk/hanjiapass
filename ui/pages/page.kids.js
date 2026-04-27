@@ -109,10 +109,21 @@ function escapeHtml(s) {
   return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 }
 
+/** 与 router normalizeHash 一致：仅取 # 后第一段，忽略 query（避免语言切换时误渲染其它路由） */
+function routeBaseForKidsGuard() {
+  const raw = String(location.hash || "").trim();
+  if (!raw) return "#home";
+  const noQuery = raw.includes("?") ? raw.slice(0, raw.indexOf("?")) : raw;
+  const withHash = noQuery.startsWith("#") ? noQuery : `#${noQuery}`;
+  const slash = withHash.indexOf("/", 1);
+  return (slash > 0 ? withHash.slice(0, slash) : withHash).toLowerCase();
+}
+
 function bindLiveRerender(root) {
   if (_bound) return;
   _bound = true;
   const rerender = () => {
+    if (routeBaseForKidsGuard() !== "#kids") return;
     const el = root?.isConnected ? root : document.getElementById("app");
     if (!el) return;
     renderKids(el);

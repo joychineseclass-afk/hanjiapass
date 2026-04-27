@@ -71,12 +71,16 @@ try {
    🧭 Routes (lazy)
 ================================== */
 registerRoute("#home",      () => import("./pages/page.home.js"));
+registerRoute("#exam",      () => import("./pages/page.examLearning.js"));
+registerRoute("#exam-learning", () => import("./pages/page.examLearning.js"));
 registerRoute("#hsk",       () => import("./pages/page.hsk.js"));
 registerRoute("#kids",      () => import("./pages/page.kids.js"));
 registerRoute("#kids-kids1", () => import("./pages/page.kids1.js"));
 registerRoute("#business",  () => import("./pages/page.business.js"));
 registerRoute("#stroke",    () => import("./pages/page.stroke.js"));
+registerRoute("#dictionary", () => import("./pages/page.dictionary.js"));
 registerRoute("#hanja",     () => import("./pages/page.hanja.js"));
+registerRoute("#conversation", () => import("./pages/page.speaking.js"));
 registerRoute("#speaking",  () => import("./pages/page.speaking.js"));
 registerRoute("#travel",    () => import("./pages/page.travel.js"));
 registerRoute("#culture",   () => import("./pages/page.culture.js"));
@@ -84,12 +88,31 @@ registerRoute("#review",    () => import("./pages/page.review.js"));
 registerRoute("#resources", () => import("./pages/page.resources.js"));
 registerRoute("#teacher",   () => import("./pages/page.teacher.js"));
 registerRoute("#teacher-materials", () => import("./pages/page.teacherMaterials.js"));
+registerRoute("#teacher-create-material", () => import("./pages/page.teacherCreateMaterial.js"));
 registerRoute("#teacher-courses", () => import("./pages/page.teacherCourses.js"));
+registerRoute("#teacher-assets", () => import("./pages/page.teacherAssets.js"));
+registerRoute("#teacher-asset-editor", () => import("./pages/page.teacherAssetEditor.js"));
 registerRoute("#classroom", () => import("./pages/page.classroom.js"));
 registerRoute("#game",      () => import("./pages/page.game.js"));
+registerRoute("#my-learning", () => import("./pages/page.my.js"));
 registerRoute("#my",        () => import("./pages/page.my.js"));
+registerRoute("#my-content", () => import("./pages/page.myLearningContent.js"));
+registerRoute("#my-orders", () => import("./pages/page.myOrders.js"));
 registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacherStage0.js"));
+registerRoute("#teacher-publishing", () => import("./pages/page.teacherPublishing.js"));
+registerRoute("#teacher-review", () => import("./pages/page.teacherReview.js"));
+registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
+registerRoute("#auth-login", () => import("./pages/page.authLogin.js"));
+registerRoute("#auth-register", () => import("./pages/page.authRegister.js"));
+registerRoute("#onboarding-role", () => import("./pages/page.onboardingRole.js"));
+registerRoute("#teacher-apply", () => import("./pages/page.teacherApply.js"));
+registerRoute("#teacher-status", () => import("./pages/page.teacherStatus.js"));
+registerRoute("#login", () => import("./pages/page.authLogin.js"));
+registerRoute("#register", () => import("./pages/page.authRegister.js"));
+registerRoute("#teacher-profile", () => import("./pages/page.teacherProfile.js"));
+registerRoute("#teacher-ai", () => import("./pages/page.teacherAiAssistant.js"));
+registerRoute("#teacher-console", () => import("./pages/page.teacherClassroomConsole.js"));
 
 /* ===============================
    🚀 Boot
@@ -126,6 +149,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("[app] i18n.load failed:", e?.message);
   }
 
+  try {
+    const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
+    await hydrateCurrentUserFromSession();
+  } catch (e) {
+    console.warn("[app] auth hydrate failed:", e?.message);
+  }
+
   // 1) Nav
   try {
     mountNavBar(document.getElementById("siteNav"));
@@ -149,6 +179,27 @@ try {
   console.error("[app] startRouter error:", e);
   showFatal(e);
 }
+
+  try {
+    const { runSessionRouteGuards, bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
+    bindOnboardingHashGuard();
+    requestAnimationFrame(() => runSessionRouteGuards());
+    const { shouldEnableLuminaDevUi } = await import("./lumina-commerce/devRuntimeFlags.js");
+    if (shouldEnableLuminaDevUi()) {
+      const mod = await import("./auth/authService.js");
+      const rs = await import("./auth/resolveSessionRoute.js");
+      attachLuminaAuthDevGlobal({
+        getResolvedSessionLandingHash: rs.getResolvedSessionLandingHash,
+        devSetMockTeacherState: mod.devSetMockTeacherState,
+        devResetOnboardingForTest: mod.devResetOnboardingForTest,
+        setMockTeacherRoleActiveForTest: mod.setMockTeacherRoleActiveForTest,
+        /** 说明见 docs/auth-onboarding-teacher-regression-checklist.md */
+        __doc: "Lumina auth dev: devSetMockTeacherState('none'|'pending'|'rejected'|'active'), devResetOnboardingForTest()",
+      });
+    }
+  } catch (e) {
+    console.warn("[app] session route guards / dev failed:", e?.message);
+  }
 
   // 4) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.

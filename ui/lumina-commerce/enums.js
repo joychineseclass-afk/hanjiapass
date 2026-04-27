@@ -162,3 +162,31 @@ export const USER_ROLE = Object.freeze({
 
 /** 主结算币种占位：韩国主市场默认 KRW（不在此文件做汇率逻辑）。 */
 export const DEFAULT_SETTLEMENT_CURRENCY = "KRW";
+
+/** 课堂 / listing 定价：免费与付费分流（与 price_amount 一致维护）。 */
+/** @typedef {typeof PRICING_TYPE[keyof typeof PRICING_TYPE]} PricingType */
+export const PRICING_TYPE = Object.freeze({
+  free: "free",
+  paid: "paid",
+});
+
+/** 分成模型占位 */
+/** @typedef {typeof REVENUE_SHARE_MODEL[keyof typeof REVENUE_SHARE_MODEL]} RevenueShareModel */
+export const REVENUE_SHARE_MODEL = Object.freeze({
+  platform_split: "platform_split",
+});
+
+/** 模拟支付层：非真实 PSP */
+/** @typedef {typeof PAYMENT_STATUS[keyof typeof PAYMENT_STATUS]} PaymentStatus */
+export const PAYMENT_STATUS = Object.freeze({
+  pending: "pending",
+  simulated_paid: "simulated_paid",
+});
+
+/** 履约占位 */
+/** @typedef {typeof FULFILLMENT_STATUS[keyof typeof FULFILLMENT_STATUS]} FulfillmentStatus */
+export const FULFILLMENT_STATUS = Object.freeze({
+  pending: "pending",
+  granted: "granted",
+  failed: "failed",
+});

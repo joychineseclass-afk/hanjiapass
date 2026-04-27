@@ -9,7 +9,9 @@ let STATE = {
   lessonData: null,
   currentStep: "scene",
   availableSteps: [...DEFAULT_STEPS],
-  mode: "teacher"
+  mode: "teacher",
+  /** 老师课件资产：用于 slide_outline 映射与 notes 段渲染 */
+  coursewareAsset: /** @type {import('../../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset | null} */ (null),
 };
 
 export function getClassroomState() {
@@ -23,7 +25,8 @@ export function resetClassroomState() {
     lessonData: null,
     currentStep: "scene",
     availableSteps: [...DEFAULT_STEPS],
-    mode: "teacher"
+    mode: "teacher",
+    coursewareAsset: null,
   };
 }
 
@@ -65,5 +68,13 @@ export function setAvailableSteps(steps) {
   if (!STATE.availableSteps.includes(STATE.currentStep)) {
     STATE.currentStep = STATE.availableSteps[0];
   }
+}
+
+/**
+ * 设置当前课堂是否绑定老师课件（slide_outline / notes 渲染用）
+ * @param {import('../../lumina-commerce/teacherAssetsStore.js').TeacherClassroomAsset | null} asset
+ */
+export function setClassroomCoursewareAsset(asset) {
+  STATE.coursewareAsset = asset && typeof asset === "object" ? asset : null;
 }
 

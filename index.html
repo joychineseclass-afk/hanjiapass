@@ -37,6 +37,16 @@ content="A next-generation Mandarin learning experience powered by structure, te
   <link rel="stylesheet" href="./ui/styles/hsk.css?v=20260418">
 
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- ✅ Browser ESM importmap：解析裸模块名（无打包静态站点必须） -->
+  <!-- 注意：必须放在任何 <script type="module"> 之前 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.104.1"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -53,6 +63,8 @@ content="A next-generation Mandarin learning experience powered by structure, te
     <div id="siteFooter"></div>
   </footer>
 
+  <!-- 纯静态无 Vite：Vercel 的 VITE_* 经 `npm run build` 注入到此文件 → globalThis.__LUMINA_ENV__（须先于 ESM 入口） -->
+  <script src="./ui/lumina-env.auto.js?v=6b-20250425"></script>
   <!-- ✅ 全站工具 -->
   <script src="./ui/dataPaths.js?v=20260201"></script>
 

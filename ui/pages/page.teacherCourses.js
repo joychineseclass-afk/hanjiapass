@@ -1,8 +1,9 @@
-// 我的课程：与教材页统一的教师管理页模板；文案经 safeUiText。
+// 我的课程：按当前老师 profile 过滤；无课程时展示与课堂资产/教材方向一致的空状态。
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import {
-  TEACHER_DEMO_COURSES,
+  getDemoCoursesForProfile,
+  DEMO_COURSE_DEFAULT_LESSON_SOURCE,
   formatDemoCourseLinkedListingLine,
   formatDemoCourseListingHint,
   formatDemoCourseMaterialsChipLabel,
@@ -11,12 +12,17 @@ import {
   formatDemoShortUpdated,
   getDemoCourseProgressKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
+import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
+import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { createClassroomAssetForLesson } from "../lumina-commerce/teacherAssetsSelectors.js";
 import { i18n } from "../i18n.js";
+import { demoBannerHtml } from "../components/demoBanner.js";
 import {
-  teacherBackToWorkspaceHtml,
+  currentUserCanAccessTeacherReviewConsoleSync,
+  renderTeacherAdminShell,
   teacherCoursesNextGuideHtml,
   teacherPathStripHtml,
-  teacherWorkspaceSubnavHtml,
+  teacherPathStripClassroomHintHtml,
 } from "./teacherPathNav.js";
 
 function tx(path, params) {
@@ -35,27 +41,39 @@ function escapeHtml(s) {
 let __crsLangHandler = /** @type {null | (() => void)} */ (null);
 let __crsRootRef = /** @type {HTMLElement | null} */ (null);
 
-function coursesTableBody() {
-  return TEACHER_DEMO_COURSES.map((c) => {
-    const title = escapeHtml(tx(`teacher.demo.course.${c.id}.title`));
-    const type = escapeHtml(tx(`teacher.demo.course.${c.id}.type`));
-    const status = escapeHtml(tx(`teacher.demo.course.${c.id}.status`));
+/**
+ * @param {Array<{ id: string, updated_at: string, materialIds: string[], listingReadinessKey: string, listingId: string|null }>} courses
+ * @param {(a: string, b?: object) => string} t
+ * @param {boolean} canCreate
+ */
+function coursesTableBody(courses, t, canCreate) {
+  return courses.map((c) => {
+    const title = escapeHtml(t(`teacher.demo.course.${c.id}.title`));
+    const type = escapeHtml(t(`teacher.demo.course.${c.id}.type`));
+    const status = escapeHtml(t(`teacher.demo.course.${c.id}.status`));
     const progressKey = getDemoCourseProgressKey(c);
-    const progressLabel = escapeHtml(formatDemoCourseProgressPill(progressKey, tx));
+    const progressLabel = escapeHtml(formatDemoCourseProgressPill(progressKey, t));
     const progressClass = escapeHtml(String(progressKey).replace(/[^a-z0-9_-]/gi, ""));
-    const matChip = escapeHtml(formatDemoCourseMaterialsChipLabel(c, tx));
+    const matChip = escapeHtml(formatDemoCourseMaterialsChipLabel(c, t));
     const matChipMod = c.materialIds.length ? "" : " teacher-mini-chip--muted";
     const materialsDetail =
       c.materialIds.length > 0
-        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoCourseMaterialsLine(c, tx))}</div>`
+        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoCourseMaterialsLine(c, t))}</div>`
         : "";
-    const listingLinked = formatDemoCourseLinkedListingLine(c, tx);
+    const listingLinked = formatDemoCourseLinkedListingLine(c, t);
     const listingSub = listingLinked
       ? `<div class="teacher-meta-subline teacher-meta-subline--accent">${escapeHtml(listingLinked)}</div>`
       : "";
-    const listingHint = escapeHtml(formatDemoCourseListingHint(c, tx));
+    const listingHint = escapeHtml(formatDemoCourseListingHint(c, t));
     const updated = escapeHtml(formatDemoShortUpdated(c.updated_at));
-    const badge = escapeHtml(tx("common.demo_badge"));
+    const badge = escapeHtml(t("common.demo_badge"));
+    const src = DEMO_COURSE_DEFAULT_LESSON_SOURCE[c.id] || { course: "kids", level: "1", lesson: "1" };
+    const createBtn = canCreate
+      ? `<button type="button" class="teacher-asset-row-btn" data-teacher-asset-from-course
+          data-course="${escapeHtml(String(src.course))}" data-level="${escapeHtml(String(src.level))}" data-lesson="${escapeHtml(String(src.lesson))}">
+          ${escapeHtml(t("teacher.courses_page.create_slides_draft"))}
+        </button>`
+      : escapeHtml(t("teacher.courses_page.demo_action_placeholder"));
     return `<tr>
       <td class="teacher-manage-cell-title">
         <span class="teacher-demo-badge">${badge}</span>
@@ -73,70 +91,171 @@ function coursesTableBody() {
         ${listingSub}
       </td>
       <td>${updated}</td>
-      <td class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.demo_action_placeholder"))}</td>
+      <td class="teacher-manage-col-actions teacher-manage-col-assetcell">${createBtn}</td>
     </tr>`;
   }).join("");
 }
 
-function renderCoursesDom(root) {
-  root.innerHTML = `
-    <div class="teacher-page wrap teacher-manage-page teacher-admin-shell">
-      ${teacherBackToWorkspaceHtml(tx)}
-      <p class="teacher-page-kicker teacher-page-kicker--shell">${escapeHtml(tx("teacher.manage.page_kicker"))}</p>
-      ${teacherWorkspaceSubnavHtml("courses", tx)}
-      ${teacherPathStripHtml("courses", tx)}
-      <header class="card teacher-admin-header">
-        <h1 class="teacher-admin-title">${escapeHtml(tx("teacher.courses_page.title"))}</h1>
-        <p class="teacher-admin-subtitle">${escapeHtml(tx("teacher.courses_page.subtitle"))}</p>
-        <p class="teacher-admin-tagline">${escapeHtml(tx("teacher.courses_page.tagline"))}</p>
-      </header>
-      ${teacherCoursesNextGuideHtml(tx)}
+/**
+ * @param {import('../lumina-commerce/teacherSelectors.js').TeacherPageContext} ctx
+ * @param {(a: string, b?: object) => string} t
+ */
+function restrictedBannerHtml(ctx, t) {
+  if (ctx.workbenchStatus === "not_teacher") {
+    return `<div class="card teacher-access-gate" role="status">
+      <p class="teacher-access-gate-title">${escapeHtml(t("teacher.access.not_teacher_title"))}</p>
+      <p class="teacher-access-gate-body">${escapeHtml(t("teacher.access.not_teacher_body"))}</p>
+    </div>`;
+  }
+  if (!ctx.isApproved) {
+    const w = String(ctx.workbenchStatus);
+    return `<div class="card teacher-access-gate" role="status">
+      <p class="teacher-access-gate-title">${escapeHtml(t(`teacher.gate.title_${w}`))}</p>
+      <p class="teacher-access-gate-body">${escapeHtml(t("teacher.access.need_approved_courses"))}</p>
+    </div>`;
+  }
+  return "";
+}
 
-      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(tx("teacher.courses_page.new_cta"))}">
+async function renderCoursesDom(root) {
+  const t = tx;
+  let ctx;
+  try {
+    ctx = await getTeacherPageContext();
+  } catch {
+    root.innerHTML = `<div class="teacher-page wrap teacher-manage-page"><p>${escapeHtml(t("common.loading"))}</p></div>`;
+    return;
+  }
+
+  const canShow = ctx.isTeacherRole && ctx.isApproved;
+  const courses = canShow && ctx.profile ? getDemoCoursesForProfile(ctx.profile.id) : [];
+  const headTitle = canShow
+    ? t("teacher.courses_page.mine_page_title", { name: ctx.profile?.display_name || "" })
+    : t("teacher.courses_page.title");
+  const headSubtitle = canShow
+    ? t("teacher.courses_page.mine_page_subtitle")
+    : t("teacher.courses_page.subtitle");
+  const newHint = t("teacher.courses_page.new_next_stage");
+
+  const tableRows = coursesTableBody(courses, t, canShow && !!ctx.profile);
+  const lockedBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
+        <div class="teacher-manage-empty">
+          <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.access.courses_locked_title"))}</p>
+          <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.access.courses_locked_body"))}</p>
+        </div>
+      </td></tr></tbody>`;
+  const emptyCreate =
+    canShow && ctx.profile
+      ? `<p class="teacher-courses-empty-create">
+          <button type="button" class="teacher-asset-row-btn" data-teacher-asset-from-default data-course="kids" data-level="1" data-lesson="1">
+            ${escapeHtml(t("teacher.courses_page.create_slides_draft"))}
+          </button>
+         </p>`
+      : "";
+  const emptyMineBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="8">
+        <div class="teacher-manage-empty">
+          <p class="teacher-manage-empty-title">${escapeHtml(t("teacher.courses_page.empty_mine_title"))}</p>
+          <p class="teacher-manage-empty-intro">${escapeHtml(t("teacher.courses_page.empty_mine_intro"))}</p>
+          ${emptyCreate}
+          <ul class="teacher-manage-empty-list">
+            <li>${escapeHtml(t("teacher.courses_page.empty_mine_item_1"))}</li>
+            <li>${escapeHtml(t("teacher.courses_page.empty_mine_item_2"))}</li>
+            <li>${escapeHtml(t("teacher.courses_page.empty_mine_item_3"))}</li>
+          </ul>
+        </div>
+      </td></tr></tbody>`;
+  let tbodyOnly = `<tbody>${tableRows}</tbody>`;
+  if (!canShow) {
+    tbodyOnly = lockedBody;
+  } else if (courses.length === 0) {
+    tbodyOnly = emptyMineBody;
+  }
+
+  const showReview = currentUserCanAccessTeacherReviewConsoleSync();
+  const main = `
+      ${demoBannerHtml("courses")}
+      ${restrictedBannerHtml(ctx, t)}
+      ${teacherPathStripHtml("courses", t)}
+      ${teacherPathStripClassroomHintHtml(t)}
+      <header class="card teacher-admin-header">
+        <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
+        <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
+        <p class="teacher-admin-tagline">${escapeHtml(t("teacher.courses_page.tagline"))}</p>
+        ${
+          canShow && ctx.profile
+            ? `<p class="teacher-courses-import-cta">
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.import_local_courseware"))}</a>
+              <span class="teacher-hub-muted teacher-courses-import-cta-hint">${escapeHtml(t("teacher.assets.upload_own_draft_sub"))}</span>
+            </p>`
+            : ""
+        }
+      </header>
+      ${ctx.isApproved ? teacherCoursesNextGuideHtml(t) : ""}
+
+      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.courses_page.new_cta"))}">
         <div class="teacher-admin-toolbar-row">
           <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled>
-            ${escapeHtml(tx("teacher.courses_page.new_cta"))}
+            ${escapeHtml(t("teacher.courses_page.new_cta"))}
           </button>
-          <p class="teacher-admin-toolbar-hint">${escapeHtml(tx("teacher.courses_page.new_note"))}</p>
+          <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(newHint)}</p>
         </div>
       </section>
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-courses-list-title">
-        <h2 id="teacher-courses-list-title" class="teacher-admin-list-heading">${escapeHtml(tx("teacher.courses_page.list_title"))}</h2>
-        <p class="teacher-demo-disclosure">${escapeHtml(tx("teacher.demo.disclosure"))}</p>
-        <p class="teacher-list-demo-note">${escapeHtml(tx("teacher.courses_page.list_demo_note"))}</p>
+        <h2 id="teacher-courses-list-title" class="teacher-admin-list-heading">${escapeHtml(t("teacher.courses_page.list_title_mine"))}</h2>
+        <p class="teacher-demo-disclosure">${escapeHtml(t("teacher.demo.disclosure_mine_courses"))}</p>
+        <p class="teacher-list-demo-note">${escapeHtml(t("teacher.courses_page.list_mine_note"))}</p>
         <div class="teacher-manage-table-scroll">
           <table class="teacher-manage-table">
             <thead>
               <tr>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_name"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_type"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_status"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_prepare_progress"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_uses_materials"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_listing_track"))}</th>
-                <th scope="col">${escapeHtml(tx("teacher.courses_page.th_updated"))}</th>
-                <th scope="col" class="teacher-manage-col-actions">${escapeHtml(tx("teacher.courses_page.th_actions"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_name"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_type"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_status"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_prepare_progress"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_uses_materials"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_listing_track"))}</th>
+                <th scope="col">${escapeHtml(t("teacher.courses_page.th_updated"))}</th>
+                <th scope="col" class="teacher-manage-col-actions">${escapeHtml(t("teacher.courses_page.th_actions"))}</th>
               </tr>
             </thead>
-            <tbody>
-              ${coursesTableBody()}
-            </tbody>
+            ${tbodyOnly}
           </table>
         </div>
       </section>
 
       <aside class="teacher-info-note">
-        <p class="teacher-info-note-title">${escapeHtml(tx("teacher.courses_page.relation_title"))}</p>
-        <p class="teacher-info-note-lead">${escapeHtml(tx("teacher.courses_page.relation_note_short"))}</p>
+        <p class="teacher-info-note-title">${escapeHtml(t("teacher.courses_page.relation_title"))}</p>
+        <p class="teacher-info-note-lead">${escapeHtml(t("teacher.courses_page.relation_note_mine"))}</p>
         <ul class="teacher-info-note-list">
-          <li>${escapeHtml(tx("teacher.courses_page.relation_item_1"))}</li>
-          <li>${escapeHtml(tx("teacher.courses_page.relation_item_2"))}</li>
-          <li>${escapeHtml(tx("teacher.courses_page.relation_item_3"))}</li>
+          <li>${escapeHtml(t("teacher.courses_page.relation_item_1"))}</li>
+          <li>${escapeHtml(t("teacher.courses_page.relation_item_2"))}</li>
+          <li>${escapeHtml(t("teacher.courses_page.relation_item_3"))}</li>
         </ul>
       </aside>
-    </div>
   `;
+  root.innerHTML = renderTeacherAdminShell({
+    active: "courses",
+    tx: t,
+    showReviewConsole: showReview,
+    mainHtml: main,
+    shellClass: "teacher-page teacher-manage-page teacher-admin-shell",
+  });
+  if (ctx.isApproved && ctx.profile) {
+    const pid = ctx.profile.id;
+    const uid = getCurrentUser().id;
+    root.querySelectorAll("[data-teacher-asset-from-course], [data-teacher-asset-from-default]").forEach((b) => {
+      b.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const course = b.getAttribute("data-course") || "kids";
+        const level = b.getAttribute("data-level") || "1";
+        const lesson = b.getAttribute("data-lesson") || "1";
+        const a = createClassroomAssetForLesson({ teacherProfileId: pid, ownerUserId: uid, course, level, lesson, t: tx });
+        location.hash = `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`;
+      });
+    });
+  }
   i18n.apply?.(root);
 }
 
@@ -151,11 +270,11 @@ export default function pageTeacherCourses(ctxOrRoot) {
   __crsRootRef = root;
   if (__crsLangHandler) window.removeEventListener("joy:langChanged", __crsLangHandler);
   __crsLangHandler = () => {
-    if (__crsRootRef?.isConnected) renderCoursesDom(__crsRootRef);
+    if (__crsRootRef?.isConnected) void renderCoursesDom(__crsRootRef);
   };
   window.addEventListener("joy:langChanged", __crsLangHandler);
 
-  renderCoursesDom(root);
+  void renderCoursesDom(root);
 }
 
 export function mount(ctxOrRoot) {

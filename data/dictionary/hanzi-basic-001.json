@@ -1,0 +1,802 @@
+[
+  {
+    "id": "hanzi_4eba",
+    "type": "char",
+    "char": "人",
+    "pinyin": "rén",
+    "meaning": {
+      "cn": "人类；也指一个具体的人。",
+      "kr": "사람, 인간을 뜻합니다.",
+      "en": "A person; a human being.",
+      "jp": "人、人間を意味します。"
+    },
+    "teachingNote": {
+      "cn": "“人”是很基础的汉字，常用于表示人、别人、家人、学生等。",
+      "kr": "‘人’은 매우 기본적인 한자로, 사람·다른 사람·가족·학생 등을 말할 때 자주 쓰입니다.",
+      "en": "“人” is a very basic Chinese character used in words related to people, others, family, and students.",
+      "jp": "「人」はとても基本的な漢字で、人、他人、家族、学生などを表す言葉によく使われます。"
+    },
+    "commonWords": [
+      {
+        "word": "人",
+        "pinyin": "rén",
+        "meaning": {
+          "cn": "人",
+          "kr": "사람",
+          "en": "person",
+          "jp": "人"
+        }
+      },
+      {
+        "word": "大人",
+        "pinyin": "dàrén",
+        "meaning": {
+          "cn": "成年人",
+          "kr": "어른",
+          "en": "adult",
+          "jp": "大人"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_53e3",
+    "type": "char",
+    "char": "口",
+    "pinyin": "kǒu",
+    "meaning": {
+      "cn": "嘴；出入口。",
+      "kr": "입, 입구.",
+      "en": "Mouth; opening.",
+      "jp": "口、入り口。"
+    },
+    "teachingNote": {
+      "cn": "“口”是常用基础汉字。",
+      "kr": "「口」는 기초 한자로 자주 쓰입니다.",
+      "en": "“口” is a common basic character.",
+      "jp": "「口」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "口",
+        "pinyin": "kǒu",
+        "meaning": {
+          "cn": "口",
+          "kr": "한자",
+          "en": "character",
+          "jp": "口"
+        }
+      },
+      {
+        "word": "出口",
+        "pinyin": "chūkǒu",
+        "meaning": {
+          "cn": "出口",
+          "kr": "출구",
+          "en": "exit",
+          "jp": "出口"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_624b",
+    "type": "char",
+    "char": "手",
+    "pinyin": "shǒu",
+    "meaning": {
+      "cn": "手；拿着。",
+      "kr": "손, 손에 들다.",
+      "en": "Hand; to hold.",
+      "jp": "手、持つ。"
+    },
+    "teachingNote": {
+      "cn": "“手”是常用基础汉字。",
+      "kr": "「手」는 기초 한자로 자주 쓰입니다.",
+      "en": "“手” is a common basic character.",
+      "jp": "「手」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "手",
+        "pinyin": "shǒu",
+        "meaning": {
+          "cn": "手",
+          "kr": "한자",
+          "en": "character",
+          "jp": "手"
+        }
+      },
+      {
+        "word": "右手",
+        "pinyin": "yòushǒu",
+        "meaning": {
+          "cn": "右手",
+          "kr": "오른손",
+          "en": "right hand",
+          "jp": "右手"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5927",
+    "type": "char",
+    "char": "大",
+    "pinyin": "dà",
+    "meaning": {
+      "cn": "大；多；非常。",
+      "kr": "크다, 많다, 매우.",
+      "en": "Big; much; very.",
+      "jp": "大きい、多い。"
+    },
+    "teachingNote": {
+      "cn": "“大”是常用基础汉字。",
+      "kr": "「大」는 기초 한자로 자주 쓰입니다.",
+      "en": "“大” is a common basic character.",
+      "jp": "「大」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "大",
+        "pinyin": "dà",
+        "meaning": {
+          "cn": "大",
+          "kr": "한자",
+          "en": "character",
+          "jp": "大"
+        }
+      },
+      {
+        "word": "大学",
+        "pinyin": "dàxué",
+        "meaning": {
+          "cn": "大学",
+          "kr": "대학",
+          "en": "university",
+          "jp": "大学"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5c0f",
+    "type": "char",
+    "char": "小",
+    "pinyin": "xiǎo",
+    "meaning": {
+      "cn": "小；年轻。",
+      "kr": "작다, 어리다.",
+      "en": "Small; young.",
+      "jp": "小さい、若い。"
+    },
+    "teachingNote": {
+      "cn": "“小”是常用基础汉字。",
+      "kr": "「小」는 기초 한자로 자주 쓰입니다.",
+      "en": "“小” is a common basic character.",
+      "jp": "「小」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "小",
+        "pinyin": "xiǎo",
+        "meaning": {
+          "cn": "小",
+          "kr": "한자",
+          "en": "character",
+          "jp": "小"
+        }
+      },
+      {
+        "word": "小学",
+        "pinyin": "xiǎoxué",
+        "meaning": {
+          "cn": "小学",
+          "kr": "초등학교",
+          "en": "elementary school",
+          "jp": "小学校"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_4e0a",
+    "type": "char",
+    "char": "上",
+    "pinyin": "shàng",
+    "meaning": {
+      "cn": "上；上面；去。",
+      "kr": "위, 올리다, 가다.",
+      "en": "Up; on; to go.",
+      "jp": "上、行く。"
+    },
+    "teachingNote": {
+      "cn": "“上”是常用基础汉字。",
+      "kr": "「上」는 기초 한자로 자주 쓰입니다.",
+      "en": "“上” is a common basic character.",
+      "jp": "「上」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "上",
+        "pinyin": "shàng",
+        "meaning": {
+          "cn": "上",
+          "kr": "한자",
+          "en": "character",
+          "jp": "上"
+        }
+      },
+      {
+        "word": "上面",
+        "pinyin": "shàngmiàn",
+        "meaning": {
+          "cn": "上面",
+          "kr": "위",
+          "en": "above",
+          "jp": "上"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_4e0b",
+    "type": "char",
+    "char": "下",
+    "pinyin": "xià",
+    "meaning": {
+      "cn": "下；下面。",
+      "kr": "아래, 내리다.",
+      "en": "Down; below.",
+      "jp": "下、下がる。"
+    },
+    "teachingNote": {
+      "cn": "“下”是常用基础汉字。",
+      "kr": "「下」는 기초 한자로 자주 쓰입니다.",
+      "en": "“下” is a common basic character.",
+      "jp": "「下」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "下",
+        "pinyin": "xià",
+        "meaning": {
+          "cn": "下",
+          "kr": "한자",
+          "en": "character",
+          "jp": "下"
+        }
+      },
+      {
+        "word": "下面",
+        "pinyin": "xiàmián",
+        "meaning": {
+          "cn": "下面",
+          "kr": "아래",
+          "en": "below",
+          "jp": "下"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_4e2d",
+    "type": "char",
+    "char": "中",
+    "pinyin": "zhōng",
+    "meaning": {
+      "cn": "中间；中国。",
+      "kr": "가운데, 중국.",
+      "en": "Middle; China.",
+      "jp": "中、中国。"
+    },
+    "teachingNote": {
+      "cn": "“中”是常用基础汉字。",
+      "kr": "「中」는 기초 한자로 자주 쓰입니다.",
+      "en": "“中” is a common basic character.",
+      "jp": "「中」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "中",
+        "pinyin": "zhōng",
+        "meaning": {
+          "cn": "中",
+          "kr": "한자",
+          "en": "character",
+          "jp": "中"
+        }
+      },
+      {
+        "word": "中国",
+        "pinyin": "zhōngguó",
+        "meaning": {
+          "cn": "中国",
+          "kr": "중국",
+          "en": "China",
+          "jp": "中国"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_65e5",
+    "type": "char",
+    "char": "日",
+    "pinyin": "rì",
+    "meaning": {
+      "cn": "太阳；天。",
+      "kr": "해, 날.",
+      "en": "Sun; day.",
+      "jp": "日、陽。"
+    },
+    "teachingNote": {
+      "cn": "“日”是常用基础汉字。",
+      "kr": "「日」는 기초 한자로 자주 쓰입니다.",
+      "en": "“日” is a common basic character.",
+      "jp": "「日」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "日",
+        "pinyin": "rì",
+        "meaning": {
+          "cn": "日",
+          "kr": "한자",
+          "en": "character",
+          "jp": "日"
+        }
+      },
+      {
+        "word": "日本",
+        "pinyin": "rìběn",
+        "meaning": {
+          "cn": "日本",
+          "kr": "일본",
+          "en": "Japan",
+          "jp": "日本"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_6708",
+    "type": "char",
+    "char": "月",
+    "pinyin": "yuè",
+    "meaning": {
+      "cn": "月亮；月。",
+      "kr": "달, 달(月).",
+      "en": "Moon; month.",
+      "jp": "月。"
+    },
+    "teachingNote": {
+      "cn": "“月”是常用基础汉字。",
+      "kr": "「月」는 기초 한자로 자주 쓰입니다.",
+      "en": "“月” is a common basic character.",
+      "jp": "「月」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "月",
+        "pinyin": "yuè",
+        "meaning": {
+          "cn": "月",
+          "kr": "한자",
+          "en": "character",
+          "jp": "月"
+        }
+      },
+      {
+        "word": "月亮",
+        "pinyin": "yuèliang",
+        "meaning": {
+          "cn": "月亮",
+          "kr": "달",
+          "en": "moon",
+          "jp": "月"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_6c34",
+    "type": "char",
+    "char": "水",
+    "pinyin": "shuǐ",
+    "meaning": {
+      "cn": "水。",
+      "kr": "물.",
+      "en": "Water.",
+      "jp": "水。"
+    },
+    "teachingNote": {
+      "cn": "“水”是常用基础汉字。",
+      "kr": "「水」는 기초 한자로 자주 쓰입니다.",
+      "en": "“水” is a common basic character.",
+      "jp": "「水」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "水",
+        "pinyin": "shuǐ",
+        "meaning": {
+          "cn": "水",
+          "kr": "한자",
+          "en": "character",
+          "jp": "水"
+        }
+      },
+      {
+        "word": "水果",
+        "pinyin": "shuǐguǒ",
+        "meaning": {
+          "cn": "水果",
+          "kr": "과일",
+          "en": "fruit",
+          "jp": "果物"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_706b",
+    "type": "char",
+    "char": "火",
+    "pinyin": "huǒ",
+    "meaning": {
+      "cn": "火。",
+      "kr": "불.",
+      "en": "Fire.",
+      "jp": "火。"
+    },
+    "teachingNote": {
+      "cn": "“火”是常用基础汉字。",
+      "kr": "「火」는 기초 한자로 자주 쓰입니다.",
+      "en": "“火” is a common basic character.",
+      "jp": "「火」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "火",
+        "pinyin": "huǒ",
+        "meaning": {
+          "cn": "火",
+          "kr": "한자",
+          "en": "character",
+          "jp": "火"
+        }
+      },
+      {
+        "word": "火车",
+        "pinyin": "huǒchē",
+        "meaning": {
+          "cn": "火车",
+          "kr": "기차",
+          "en": "train",
+          "jp": "列車"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5c71",
+    "type": "char",
+    "char": "山",
+    "pinyin": "shān",
+    "meaning": {
+      "cn": "山。",
+      "kr": "산.",
+      "en": "Mountain.",
+      "jp": "山。"
+    },
+    "teachingNote": {
+      "cn": "“山”是常用基础汉字。",
+      "kr": "「山」는 기초 한자로 자주 쓰입니다.",
+      "en": "“山” is a common basic character.",
+      "jp": "「山」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "山",
+        "pinyin": "shān",
+        "meaning": {
+          "cn": "山",
+          "kr": "한자",
+          "en": "character",
+          "jp": "山"
+        }
+      },
+      {
+        "word": "山上",
+        "pinyin": "shānshàng",
+        "meaning": {
+          "cn": "山上",
+          "kr": "산 위",
+          "en": "on the mountain",
+          "jp": "山の上"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_6728",
+    "type": "char",
+    "char": "木",
+    "pinyin": "mù",
+    "meaning": {
+      "cn": "树；木。",
+      "kr": "나무, 목재.",
+      "en": "Tree; wood.",
+      "jp": "木。"
+    },
+    "teachingNote": {
+      "cn": "“木”是常用基础汉字。",
+      "kr": "「木」는 기초 한자로 자주 쓰입니다.",
+      "en": "“木” is a common basic character.",
+      "jp": "「木」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "木",
+        "pinyin": "mù",
+        "meaning": {
+          "cn": "木",
+          "kr": "한자",
+          "en": "character",
+          "jp": "木"
+        }
+      },
+      {
+        "word": "木头",
+        "pinyin": "mùtóu",
+        "meaning": {
+          "cn": "木头",
+          "kr": "나무",
+          "en": "wood",
+          "jp": "木"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_9a6c",
+    "type": "char",
+    "char": "马",
+    "pinyin": "mǎ",
+    "meaning": {
+      "cn": "马。",
+      "kr": "말.",
+      "en": "Horse.",
+      "jp": "馬。"
+    },
+    "teachingNote": {
+      "cn": "“马”是常用基础汉字。",
+      "kr": "「马」는 기초 한자로 자주 쓰입니다.",
+      "en": "“马” is a common basic character.",
+      "jp": "「马」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "马",
+        "pinyin": "mǎ",
+        "meaning": {
+          "cn": "马",
+          "kr": "한자",
+          "en": "character",
+          "jp": "马"
+        }
+      },
+      {
+        "word": "马上",
+        "pinyin": "mǎshàng",
+        "meaning": {
+          "cn": "马上",
+          "kr": "곧",
+          "en": "immediately",
+          "jp": "すぐ"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5973",
+    "type": "char",
+    "char": "女",
+    "pinyin": "nǚ",
+    "meaning": {
+      "cn": "女；女性。",
+      "kr": "여성.",
+      "en": "Woman; female.",
+      "jp": "女。"
+    },
+    "teachingNote": {
+      "cn": "“女”是常用基础汉字。",
+      "kr": "「女」는 기초 한자로 자주 쓰입니다.",
+      "en": "“女” is a common basic character.",
+      "jp": "「女」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "女",
+        "pinyin": "nǚ",
+        "meaning": {
+          "cn": "女",
+          "kr": "한자",
+          "en": "character",
+          "jp": "女"
+        }
+      },
+      {
+        "word": "女人",
+        "pinyin": "nǚrén",
+        "meaning": {
+          "cn": "女人",
+          "kr": "여자",
+          "en": "woman",
+          "jp": "女"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5b50",
+    "type": "char",
+    "char": "子",
+    "pinyin": "zǐ",
+    "meaning": {
+      "cn": "孩子；子。",
+      "kr": "아이, 자(子).",
+      "en": "Child; suffix zi.",
+      "jp": "子。"
+    },
+    "teachingNote": {
+      "cn": "“子”是常用基础汉字。",
+      "kr": "「子」는 기초 한자로 자주 쓰입니다.",
+      "en": "“子” is a common basic character.",
+      "jp": "「子」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "子",
+        "pinyin": "zǐ",
+        "meaning": {
+          "cn": "子",
+          "kr": "한자",
+          "en": "character",
+          "jp": "子"
+        }
+      },
+      {
+        "word": "孩子",
+        "pinyin": "háizi",
+        "meaning": {
+          "cn": "孩子",
+          "kr": "아이",
+          "en": "child",
+          "jp": "子供"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_5b66",
+    "type": "char",
+    "char": "学",
+    "pinyin": "xué",
+    "meaning": {
+      "cn": "学习。",
+      "kr": "배우다, 공부.",
+      "en": "To study, learn.",
+      "jp": "学ぶ。"
+    },
+    "teachingNote": {
+      "cn": "“学”是常用基础汉字。",
+      "kr": "「学」는 기초 한자로 자주 쓰입니다.",
+      "en": "“学” is a common basic character.",
+      "jp": "「学」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "学",
+        "pinyin": "xué",
+        "meaning": {
+          "cn": "学",
+          "kr": "한자",
+          "en": "character",
+          "jp": "学"
+        }
+      },
+      {
+        "word": "学生",
+        "pinyin": "xuéshēng",
+        "meaning": {
+          "cn": "学生",
+          "kr": "학생",
+          "en": "student",
+          "jp": "学生"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_751f",
+    "type": "char",
+    "char": "生",
+    "pinyin": "shēng",
+    "meaning": {
+      "cn": "生；活；学生。",
+      "kr": "낳다, 살다, 학생.",
+      "en": "Birth; life; student.",
+      "jp": "生、学生。"
+    },
+    "teachingNote": {
+      "cn": "“生”是常用基础汉字。",
+      "kr": "「生」는 기초 한자로 자주 쓰입니다.",
+      "en": "“生” is a common basic character.",
+      "jp": "「生」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "生",
+        "pinyin": "shēng",
+        "meaning": {
+          "cn": "生",
+          "kr": "한자",
+          "en": "character",
+          "jp": "生"
+        }
+      },
+      {
+        "word": "生活",
+        "pinyin": "shēnghuó",
+        "meaning": {
+          "cn": "生活",
+          "kr": "생활",
+          "en": "life",
+          "jp": "生活"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hanzi_597d",
+    "type": "char",
+    "char": "好",
+    "pinyin": "hǎo",
+    "meaning": {
+      "cn": "好。",
+      "kr": "좋다.",
+      "en": "Good.",
+      "jp": "良い。"
+    },
+    "teachingNote": {
+      "cn": "“好”是常用基础汉字。",
+      "kr": "「好」는 기초 한자로 자주 쓰입니다.",
+      "en": "“好” is a common basic character.",
+      "jp": "「好」はよく使う基礎漢字です。"
+    },
+    "commonWords": [
+      {
+        "word": "好",
+        "pinyin": "hǎo",
+        "meaning": {
+          "cn": "好",
+          "kr": "한자",
+          "en": "character",
+          "jp": "好"
+        }
+      },
+      {
+        "word": "好人",
+        "pinyin": "hǎorén",
+        "meaning": {
+          "cn": "好人",
+          "kr": "착한 사람",
+          "en": "good person",
+          "jp": "良い人"
+        }
+      }
+    ]
+  }
+]

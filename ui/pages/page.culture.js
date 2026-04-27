@@ -1,84 +1,1079 @@
-// /ui/pages/page.culture.js
-// ✅ Culture 课程域主页 — 统一平台风格
-// ✅ 全部文案走 i18n，支持 KR/CN/EN/JP
-// ✅ 语言切换后完整 rerender
-
+// /ui/pages/page.culture.js — 文化学习：左侧分类导航 + 右侧内容（与资料页 .page-shell 一致）
 import { i18n } from "../i18n.js";
+import * as LE from "../core/languageEngine.js";
+import {
+  CULTURE_SECTION_IDS,
+  parseHashSectionId,
+  cultureSectionContentKeys,
+} from "../components/sideSectionNav.js";
 
-const STYLE_ID = "lumina-culture-style";
-let _bound = false;
+const STYLE_ID = "lumina-culture-shell";
+const BASE = "#culture";
+const TAB_PARAM = "tab";
+const ID_PARAM = "id";
+const DEFAULT_ID = "idioms";
+const DEFAULT_IDIOM_ID = "idiom_0001";
+const ALLOWED = new Set(CULTURE_SECTION_IDS);
+/** 文化页单字搜索：跳转字典（#dictionary），笔顺在字典页再进入 #stroke */
+const DICTIONARY_HASH = "#dictionary";
+/** 单字：跳转汉字/字典学习，不显示文化内搜索结果 */
+const CN_SINGLE_CHAR = /^[\u4e00-\u9fff]$/;
 
-function t(key, fallback = "") {
+const IDIOM_CATEGORY_ORDER = [
+  "fable",
+  "learning",
+  "behavior",
+  "wisdom",
+  "emotion",
+  "daily",
+  "nature",
+  "quantity",
+];
+
+/** 成语主分类；侧栏 L3=分类，L4=成语；空分类不渲染 */
+const IDIOM_CATEGORY_LABEL_KEY = (cat) => `culture.idioms.category.${cat}`;
+
+/** 成语目录索引缓存（id / idiom / pinyin / file / theme / difficulty / category 等） */
+let _idiomsIndexCache = null;
+let _idiomsIndexPromise = null;
+/** 详情 JSON 分文件缓存 fileName → 详情数组 */
+const _idiomDetailFileCache = new Map();
+const _idiomDetailFilePromises = new Map();
+
+let _idiomsPanelRequestId = 0;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _cultureSearchDebounceTimer = null;
+
+/** 已展开侧栏的二级分类（成语/俗语等有下层子项的区块） */
+const expandedCultureSections = new Set();
+/** 成语 tab 下已展开的主分类（L3，仅 L4 列表展开；hash 不驱动此 Set） */
+const expandedIdiomCategories = new Set();
+
+function t(key) {
   try {
     const v = i18n?.t?.(key);
-    if (v == null) return fallback;
+    if (v == null) return key;
     const s = String(v).trim();
-    if (!s || s === key || s === `[${key}]`) return fallback;
+    if (!s || s === key) return key;
     return s;
-  } catch { return fallback; }
+  } catch {
+    return key;
+  }
 }
 
-function ensureStyles() {
+function esc(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+/**
+ * @returns {'idioms'|'proverbs'|'festivals'|'etiquette'|'figures'|'expressions'}
+ */
+function currentSectionId() {
+  return /** @type {'idioms'|'proverbs'|'festivals'|'etiquette'|'figures'|'expressions'} */ (
+    parseHashSectionId(BASE, TAB_PARAM, DEFAULT_ID, ALLOWED)
+  );
+}
+
+function navItemClassL2(id, active) {
+  const base = "section-side-nav-item level-2";
+  return active ? `${base} is-active` : base;
+}
+
+function navItemClassL3(active) {
+  const base = "section-side-nav-item level-3";
+  return active ? `${base} is-active` : base;
+}
+
+function navItemClassL4(active) {
+  const base = "section-side-nav-item level-4";
+  return active ? `${base} is-active` : base;
+}
+
+/**
+ * @param {object[]} index
+ * @returns {Map<string, object[]>}
+ */
+function groupIdiomsByCategory(index) {
+  const groups = new Map();
+  for (const item of index) {
+    const category = String(item?.category || "uncategorized").trim();
+    if (!groups.has(category)) groups.set(category, []);
+    groups.get(category).push(item);
+  }
+  return groups;
+}
+
+/**
+ * 拼音/英文检索归一化（小写、去声调、去空白）
+ * @param {string} [value]
+ */
+function normalizeSearchText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+/**
+ * 匹配：idiom、pinyin、theme、category
+ * @param {object} item
+ * @param {string} qNorm normalizeSearchText(query)
+ */
+function idiomIndexMatches(item, qNorm) {
+  if (!qNorm) return false;
+  if (normalizeSearchText(item.idiom).includes(qNorm)) return true;
+  if (normalizeSearchText(item.pinyin).includes(qNorm)) return true;
+  if (item.theme && Array.isArray(item.theme)) {
+    for (const tag of item.theme) {
+      if (normalizeSearchText(String(tag || "")).includes(qNorm)) return true;
+    }
+  }
+  if (normalizeSearchText(String(item.category || "")).includes(qNorm)) return true;
+  return false;
+}
+
+/**
+ * @param {string} query
+ * @param {object[]} idioms
+ * @returns {{ type: "idiom"; id: string; idiom: string; pinyin: string }[]}
+ */
+function searchIdioms(query, idioms) {
+  const qn = normalizeSearchText(query);
+  if (!qn) return [];
+  const out = [];
+  for (const item of idioms) {
+    if (!item || !item.id) continue;
+    if (idiomIndexMatches(item, qn)) {
+      out.push({
+        type: "idiom",
+        id: String(item.id),
+        idiom: String(item.idiom || ""),
+        pinyin: String(item.pinyin || ""),
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * 可扩展：后续加入俗语/节日等正式数据
+ * @param {string} query
+ */
+async function searchCultureEntries(query) {
+  const results = [];
+  let idioms;
+  try {
+    idioms = await loadIdiomsIndex();
+  } catch {
+    return results;
+  }
+  if (!Array.isArray(idioms) || !idioms.length) return results;
+  results.push(...searchIdioms(query, idioms));
+  return results;
+}
+
+/**
+ * 某二级分类下是否有三级子项（可扩展；目前成语来自 JSON，其余可后续接入数据）
+ * @param {string} sectionId
+ */
+function getSectionChildren(sectionId) {
+  if (sectionId === "idioms" && _idiomsIndexCache && Array.isArray(_idiomsIndexCache) && _idiomsIndexCache.length) {
+    return _idiomsIndexCache;
+  }
+  return [];
+}
+
+/**
+ * @param {string} sectionId
+ */
+function sectionHasChildren(sectionId) {
+  return getSectionChildren(sectionId).length > 0;
+}
+
+function idiomsDataBaseUrl() {
+  const b = typeof window !== "undefined" && String(window.__APP_BASE__ || "").replace(/\/+$/, "");
+  return (b ? b + "/" : "/") + "data/culture/idioms/";
+}
+
+/**
+ * @param {string} relativePath
+ * @returns {Promise<unknown>}
+ */
+async function fetchIdiomsJsonFile(relativePath) {
+  const rel = String(relativePath || "").replace(/^\//, "");
+  const u = `${idiomsDataBaseUrl()}${rel}`;
+  const tryOne = async (url) => {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("not ok");
+    return res.json();
+  };
+  try {
+    return await tryOne(u);
+  } catch {
+    if (u.startsWith("/data/")) {
+      return tryOne(`.${u}`);
+    }
+    throw new Error("idioms json fetch failed");
+  }
+}
+
+/**
+ * @returns {Promise<object[]>}
+ */
+async function loadIdiomsIndex() {
+  if (_idiomsIndexCache) return _idiomsIndexCache;
+  if (_idiomsIndexPromise) return _idiomsIndexPromise;
+  _idiomsIndexPromise = (async () => {
+    const data = await fetchIdiomsJsonFile("idioms-index.json");
+    if (!Array.isArray(data)) throw new Error("index bad shape");
+    _idiomsIndexCache = data;
+    return _idiomsIndexCache;
+  })();
+  try {
+    return await _idiomsIndexPromise;
+  } catch (e) {
+    throw e;
+  } finally {
+    _idiomsIndexPromise = null;
+  }
+}
+
+/**
+ * @param {string} file
+ * @returns {Promise<unknown[]>}
+ */
+async function loadIdiomDetailFile(file) {
+  if (!file) throw new Error("no file");
+  if (_idiomDetailFileCache.has(file)) {
+    return /** @type {unknown[]} */ (_idiomDetailFileCache.get(file));
+  }
+  if (_idiomDetailFilePromises.has(file)) {
+    return /** @type {Promise<unknown[]>} */ (_idiomDetailFilePromises.get(file));
+  }
+  const p = (async () => {
+    const data = await fetchIdiomsJsonFile(file);
+    if (!Array.isArray(data)) throw new Error("detail bad shape");
+    _idiomDetailFileCache.set(file, data);
+    return data;
+  })();
+  _idiomDetailFilePromises.set(file, p);
+  try {
+    return await p;
+  } catch (e) {
+    throw e;
+  } finally {
+    _idiomDetailFilePromises.delete(file);
+  }
+}
+
+/**
+ * 按 id 在 index 中定位 file，再加载详情 JSON 中同 id 的条目
+ * @param {string} id
+ * @returns {Promise<object|null>}
+ */
+async function loadIdiomDetailById(id) {
+  const index = await loadIdiomsIndex();
+  if (!index?.length) return null;
+  const entry = index.find((item) => item && String(item.id) === String(id)) || index[0];
+  if (!entry?.file) return null;
+  const detailList = await loadIdiomDetailFile(String(entry.file));
+  if (!Array.isArray(detailList)) return null;
+  return detailList.find((item) => item && String(item.id) === String(entry.id)) || null;
+}
+
+/**
+ * 默认 #culture 无 query 时 tab 为 idioms；为 idioms 且缺少 id 时补全为第一个成语
+ */
+function ensureDefaultIdiomInHash() {
+  if (typeof location === "undefined") return;
+  if (String(location.hash || "").split("?")[0].split("/")[0].toLowerCase() !== BASE) return;
+  if (currentSectionId() !== "idioms") return;
+  const raw = String(location.hash || "");
+  const q = raw.indexOf("?");
+  const params = q >= 0 ? new URLSearchParams(raw.slice(q + 1)) : new URLSearchParams();
+  if (params.get(ID_PARAM)) return;
+  const want = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(DEFAULT_IDIOM_ID)}`;
+  try {
+    const u = new URL(window.location.href);
+    u.hash = want;
+    history.replaceState(null, "", u.toString());
+  } catch {
+    try {
+      location.replace(`${location.pathname}${location.search || ""}${want}`);
+    } catch {
+      location.hash = want;
+    }
+  }
+}
+
+function meaningLocaleKey() {
+  const l = LE.getLang();
+  if (l === "cn" || l === "kr" || l === "en" || l === "jp") return l;
+  return "en";
+}
+
+/**
+ * 当前语言 → kr → cn → en → jp
+ * @param {Record<string, string>|null|undefined} obj
+ */
+function pickLocaleField(obj) {
+  if (!obj || typeof obj !== "object") return "";
+  const first = meaningLocaleKey();
+  const order = [first, "kr", "cn", "en", "jp"];
+  const seen = new Set();
+  for (const k of order) {
+    if (seen.has(k)) continue;
+    seen.add(k);
+    const s = String(obj[k] ?? "").trim();
+    if (s) return s;
+  }
+  return "";
+}
+
+function getHashIdParam() {
+  try {
+    const raw = String(location.hash || "");
+    const q = raw.indexOf("?");
+    if (q < 0) return null;
+    return new URLSearchParams(raw.slice(q + 1)).get(ID_PARAM);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * @param {object[]} list
+ * @returns {string}
+ */
+function currentIdiomIdFromList(list) {
+  if (!list?.length) return DEFAULT_IDIOM_ID;
+  const fromHash = getHashIdParam();
+  const allowed = new Set(list.map((x) => x?.id).filter(Boolean));
+  if (fromHash && allowed.has(fromHash)) return fromHash;
+  return String(list[0].id);
+}
+
+function sameText(a, b) {
+  return String(a ?? "")
+    .trim()
+    .replaceAll(/\s+/g, " ") ===
+    String(b ?? "")
+      .trim()
+      .replaceAll(/\s+/g, " ");
+}
+
+/**
+ * 当前系统语言下「释义」段第二行用；CN 时取 meaning.cn
+ * @param {object} item
+ */
+function pickMeaningForLocale(item) {
+  const o = item?.meaning;
+  if (!o || typeof o !== "object") return "";
+  const k = meaningLocaleKey();
+  return String(o[k] ?? o.cn ?? o.en ?? "").trim() || pickLocaleField(o);
+}
+
+/**
+ * @param {object} item
+ */
+function renderIdiomDetailPage(item) {
+  const exObj = item?.example && typeof item.example === "object" ? item.example : null;
+
+  const explainZh = String(item?.chineseExplanation ?? "").trim();
+  const explainPy = String(item?.chineseExplanationPinyin ?? "").trim();
+  const meaningInLocale = pickMeaningForLocale(item);
+  const exCn = exObj ? String(exObj.cn ?? "").trim() : "";
+  const exTrans = exObj ? pickLocaleField(exObj) : "";
+  const exPy = String(item?.examplePinyin ?? "").trim();
+
+  const isCn = meaningLocaleKey() === "cn";
+  const showMeaningSecond = Boolean(meaningInLocale) && (!isCn || !sameText(explainZh, meaningInLocale));
+  const showExTranslation = Boolean(exTrans) && !sameText(exTrans, exCn);
+
+  let h = "";
+  h += `<article class="idiom-detail-card" data-idiom-detail="${esc(item?.id)}">`;
+  h += `<header class="idiom-detail-header">`;
+  h += `<h2 class="idiom-detail-title" lang="zh-Hans">${esc(item?.idiom)}</h2>`;
+  h += `<p class="idiom-pinyin" lang="zh-Latn">${esc(item?.pinyin)}</p>`;
+  h += `</header>`;
+
+  h += `<section class="idiom-detail-section idiom-detail-section--reading">`;
+  h += `<h3 class="idiom-section-title" data-i18n="culture.idioms.meaningLabel">${esc(t("culture.idioms.meaningLabel"))}</h3>`;
+  h += `<p class="idiom-cn-text" lang="zh-Hans">${esc(explainZh)}</p>`;
+  if (explainPy) {
+    h += `<p class="idiom-pinyin-line idiom-meaning-pinyin-line" lang="zh-Latn">${esc(explainPy)}</p>`;
+  }
+  if (showMeaningSecond) {
+    h += `<p class="idiom-lang-text">${esc(meaningInLocale)}</p>`;
+  }
+  h += `</section>`;
+
+  h += `<section class="idiom-detail-section idiom-detail-section--reading">`;
+  h += `<h3 class="idiom-section-title" data-i18n="culture.idioms.exampleLabel">${esc(t("culture.idioms.exampleLabel"))}</h3>`;
+  h += `<p class="idiom-cn-text" lang="zh-Hans">${esc(exCn)}</p>`;
+  if (exPy) {
+    h += `<p class="idiom-pinyin-line" lang="zh-Latn">${esc(exPy)}</p>`;
+  }
+  if (showExTranslation) {
+    h += `<p class="idiom-lang-text">${esc(exTrans)}</p>`;
+  }
+  h += `</section>`;
+
+  h += `<div class="idiom-ai-button-wrap">`;
+  h += `<button type="button" class="idiom-ai-button" data-idiom-ai-btn="1" data-i18n="culture.idioms.aiExplain">${esc(
+    t("culture.idioms.aiExplain")
+  )}</button>`;
+  h += `</div>`;
+  h += `</article>`;
+  return h;
+}
+
+/**
+ * 成语：L2「成语」→ L3 主分类 → L4 单条；仅 expandedCultureSections / expandedIdiomCategories 控制展开，hash 不自动展开
+ * @param {string} sectionId
+ * @param {string} activeChildId
+ */
+function buildIdiomsNavGroupHtml(sectionId, activeChildId) {
+  const index = getSectionChildren("idioms");
+  if (!index.length) return "";
+  const groups = groupIdiomsByCategory(index);
+  const isSec = sectionId === "idioms";
+  const expanded = expandedCultureSections.has("idioms");
+  const chev = expanded ? "▾" : "▸";
+  const childrenId = "culture-nav-children-idioms";
+  const navKey = "culture.nav.idioms";
+  const categoryBlocks = IDIOM_CATEGORY_ORDER.map((cat) => {
+    const items = (groups.get(cat) || []).slice();
+    if (!items.length) return "";
+    items.sort((a, b) => String(a.id).localeCompare(String(b.id), undefined, { numeric: true }));
+    const catKey = IDIOM_CATEGORY_LABEL_KEY(cat);
+    const l4id = `culture-nav-children-idioms-${cat}`;
+    const catExpanded = expandedIdiomCategories.has(cat);
+    const catChev = catExpanded ? "▾" : "▸";
+    const isCatActive = isSec && items.some((it) => String(it?.id) === String(activeChildId));
+    const kids = items
+      .map((it) => {
+        const cid = String(it?.id ?? "");
+        const isChild = isSec && Boolean(cid) && cid === String(activeChildId);
+        const py = String(it?.pinyin ?? "").trim();
+        return `<button type="button" class="${navItemClassL4(isChild)}" data-culture-child="${esc(
+          cid
+        )}" data-culture-parent-section="idioms" data-culture-idiom-cat="${esc(cat)}" data-culture-idiom="${esc(
+          cid
+        )}" aria-current="${isChild ? "true" : "false"}"><span class="section-side-nav-idiom-word" lang="zh-Hans">${esc(
+          it?.idiom
+        )}</span><span class="section-side-nav-idiom-pinyin" lang="zh-Latn">${esc(py)}</span></button>`;
+      })
+      .join("");
+    return `<div class="section-side-nav__subgroup" data-culture-idiom-subgroup="${esc(cat)}">
+  <button type="button" class="${navItemClassL3(isCatActive)} section-side-nav-item--expandable" data-culture-idiom-cat="${esc(
+      cat
+    )}" data-culture-parent-section="idioms" aria-expanded="${catExpanded ? "true" : "false"}" aria-controls="${esc(
+      l4id
+    )}" aria-current="false">
+    <span class="section-side-nav-item__text" data-i18n="${esc(catKey)}">${esc(t(catKey))}</span>
+    <span class="section-side-nav-count" aria-hidden="true">${items.length}</span>
+    <span class="section-side-nav-item__chev" aria-hidden="true">${catChev}</span>
+  </button>
+  <div class="section-side-nav-children level-4-group" id="${esc(l4id)}" ${catExpanded ? "" : "hidden"}>${kids}</div>
+</div>`;
+  }).join("");
+
+  return `<div class="section-side-nav__group" data-culture-group="idioms">
+  <button type="button" class="${navItemClassL2("idioms", isSec)} section-side-nav-item--expandable" data-culture-nav="idioms" data-culture-expandable="1" aria-expanded="${expanded ? "true" : "false"}" aria-controls="${esc(
+    childrenId
+  )}" aria-current="${isSec ? "true" : "false"}">
+    <span class="section-side-nav-item__text" data-i18n="${esc(navKey)}">${esc(t(navKey))}</span>
+    <span class="section-side-nav-item__chev" aria-hidden="true">${chev}</span>
+  </button>
+  <div class="section-side-nav-children" id="${esc(childrenId)}" ${expanded ? "" : "hidden"}>${categoryBlocks}</div>
+</div>`;
+}
+
+/**
+ * @param {string} sectionId 当前 tab（来自 hash）
+ * @param {string} activeChildId 当前选中的成语 id（idiom_xxxx）
+ */
+function buildSideNavInnerHtml(sectionId, activeChildId) {
+  return CULTURE_SECTION_IDS.map((id) => {
+    const navKey = `culture.nav.${id}`;
+    const isSec = id === sectionId;
+    if (id === "idioms" && sectionHasChildren("idioms")) {
+      return buildIdiomsNavGroupHtml(sectionId, activeChildId);
+    }
+    const children = getSectionChildren(id);
+    const hasCh = sectionHasChildren(id);
+    if (!hasCh) {
+      return `<button type="button" class="${navItemClassL2(id, isSec)}" data-culture-nav="${id}" data-i18n="${esc(navKey)}" aria-current="${isSec ? "true" : "false"}">${esc(t(navKey))}</button>`;
+    }
+    // 仅 expandedCultureSections 控制展开；activeChildId 只影响子级 is-active，不参与展开
+    const expanded = expandedCultureSections.has(id);
+    const chev = expanded ? "▾" : "▸";
+    const childrenId = `culture-nav-children-${id}`;
+    const kids = children
+      .map((it) => {
+        const cid = String(it?.id ?? "");
+        const isChild = isSec && Boolean(cid) && cid === activeChildId;
+        return `<button type="button" class="${navItemClassL3(isChild)}" data-culture-child="${esc(cid)}" data-culture-parent-section="${esc(id)}" data-culture-idiom="${esc(cid)}" aria-current="${isChild ? "true" : "false"}">${esc(it?.idiom)}</button>`;
+      })
+      .join("");
+    return `<div class="section-side-nav__group" data-culture-group="${esc(id)}">
+  <button type="button" class="${navItemClassL2(id, isSec)} section-side-nav-item--expandable" data-culture-nav="${id}" data-culture-expandable="1" aria-expanded="${expanded ? "true" : "false"}" aria-controls="${esc(childrenId)}" aria-current="${isSec ? "true" : "false"}">
+    <span class="section-side-nav-item__text" data-i18n="${esc(navKey)}">${esc(t(navKey))}</span>
+    <span class="section-side-nav-item__chev" aria-hidden="true">${chev}</span>
+  </button>
+  <div class="section-side-nav-children" id="${esc(childrenId)}" ${expanded ? "" : "hidden"}>${kids}</div>
+</div>`;
+  }).join("");
+}
+
+/**
+ * @param {object} root
+ * @param {string} sectionId
+ * @param {string} activeChildId
+ */
+function updateSideNav(root, sectionId, activeChildId) {
+  const navInner = root.querySelector("[data-culture-side-nav]");
+  if (!navInner) return;
+  navInner.innerHTML = buildSideNavInnerHtml(sectionId, activeChildId);
+  i18n.apply?.(navInner);
+}
+
+function renderIdiomsIndexErrorPanel() {
+  return `<p class="culture-idiom-error" data-i18n="culture.idioms.indexLoadError">${esc(t("culture.idioms.indexLoadError"))}</p>`;
+}
+
+function renderIdiomsDetailErrorPanel() {
+  return `<p class="culture-idiom-error" data-i18n="culture.idioms.detailLoadError">${esc(t("culture.idioms.detailLoadError"))}</p>`;
+}
+
+function renderDefaultRightPanel(sectionId) {
+  const keys = cultureSectionContentKeys(sectionId);
+  return `
+    <h2 class="title" data-i18n="${esc(keys.titleKey)}">${esc(t(keys.titleKey))}</h2>
+    <p class="desc" data-i18n="${esc(keys.descKey)}">${esc(t(keys.descKey))}</p>
+    <p class="desc" style="margin-top:14px;opacity:0.88;font-size:14px" data-i18n="culture.comingSoon">${esc(t("culture.comingSoon"))}</p>
+  `;
+}
+
+function updatePanel(root, sectionId) {
+  const inner = root.querySelector("[data-culture-panel-inner]");
+  if (!inner) return;
+  if (sectionId === "idioms") {
+    const reqId = ++_idiomsPanelRequestId;
+    inner.innerHTML = `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>`;
+    i18n.apply?.(inner);
+    void (async () => {
+      let index;
+      try {
+        index = await loadIdiomsIndex();
+      } catch {
+        if (reqId !== _idiomsPanelRequestId) return;
+        if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+        if (currentSectionId() !== "idioms") return;
+        const p = root.querySelector("[data-culture-panel-inner]");
+        if (!p) return;
+        updateSideNav(root, "idioms", getHashIdParam() || DEFAULT_IDIOM_ID);
+        p.innerHTML = renderIdiomsIndexErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      if (reqId !== _idiomsPanelRequestId) return;
+      if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+      if (currentSectionId() !== "idioms") return;
+      if (!index?.length) {
+        const p = root.querySelector("[data-culture-panel-inner]");
+        if (!p) return;
+        updateSideNav(root, "idioms", getHashIdParam() || DEFAULT_IDIOM_ID);
+        p.innerHTML = renderIdiomsIndexErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      const iid = currentIdiomIdFromList(index);
+      if (getHashIdParam() !== iid) {
+        try {
+          const u = new URL(window.location.href);
+          u.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
+          history.replaceState(null, "", u.toString());
+        } catch {
+          /* */
+        }
+      }
+      updateSideNav(root, "idioms", iid);
+      const p = root.querySelector("[data-culture-panel-inner]");
+      if (!p) return;
+      let item;
+      try {
+        item = await loadIdiomDetailById(iid);
+      } catch {
+        if (reqId !== _idiomsPanelRequestId) return;
+        p.innerHTML = renderIdiomsDetailErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      if (reqId !== _idiomsPanelRequestId) return;
+      if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+      if (currentSectionId() !== "idioms") return;
+      if (!item) {
+        p.innerHTML = renderIdiomsDetailErrorPanel();
+        i18n.apply?.(p);
+        return;
+      }
+      p.innerHTML = renderIdiomDetailPage(item);
+      i18n.apply?.(p);
+    })();
+    return;
+  }
+  updateSideNav(root, sectionId, "");
+  inner.innerHTML = renderDefaultRightPanel(sectionId);
+  i18n.apply?.(inner);
+}
+
+function updateNavForSectionOnly(root, sectionId) {
+  if (sectionId === "idioms" && _idiomsIndexCache?.length) {
+    updateSideNav(root, "idioms", currentIdiomIdFromList(_idiomsIndexCache));
+  } else {
+    updateSideNav(root, sectionId, "");
+  }
+}
+
+/**
+ * @param {object[]} results
+ * @param {() => void} tfn
+ * @param {(s: string) => string} escFn
+ */
+function buildCultureSearchResultsHtml(results, tfn, escFn) {
+  if (!results.length) {
+    return `<div class="culture-search-results" role="status">
+  <p class="culture-search-no-results" data-i18n="culture.search.noResults">${escFn(tfn("culture.search.noResults"))}</p>
+</div>`;
+  }
+  const items = results
+    .filter((r) => r.type === "idiom")
+    .map(
+      (r) => `<button type="button" class="culture-search-result-item" data-culture-search-pick="idiom" data-culture-search-id="${escFn(
+        r.id
+      )}" role="listitem">
+  <div class="culture-search-result-word" lang="zh-Hans">${escFn(r.idiom)}</div>
+  <div class="culture-search-result-pinyin" lang="zh-Latn">${escFn(r.pinyin)}</div>
+  <div class="culture-search-result-type" data-i18n="culture.nav.idioms">${escFn(tfn("culture.nav.idioms"))}</div>
+</button>`
+    )
+    .join("");
+  return `<div class="culture-search-results" role="region">
+  <p class="culture-search-results-title" data-i18n="culture.search.results">${escFn(tfn("culture.search.results"))}</p>
+  <div class="culture-search-results-list" role="list">${items}</div>
+</div>`;
+}
+
+/**
+ * @param {object} app root #app
+ */
+async function renderCultureSearchPanel(app) {
+  const panel = app.querySelector("[data-culture-search-panel]");
+  const input = app.querySelector("[data-culture-search-input]");
+  if (!panel || !input) return;
+  const q = String(input.value || "").trim();
+  if (!q) {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  if (CN_SINGLE_CHAR.test(q)) {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  let results;
+  try {
+    results = await searchCultureEntries(q);
+  } catch {
+    panel.innerHTML = "";
+    panel.setAttribute("hidden", "");
+    return;
+  }
+  panel.removeAttribute("hidden");
+  panel.innerHTML = buildCultureSearchResultsHtml(results, t, esc);
+  i18n.apply?.(panel);
+}
+
+/**
+ * @param {object} app
+ */
+function scheduleCultureSearchPanelRender(app) {
+  if (_cultureSearchDebounceTimer) {
+    clearTimeout(_cultureSearchDebounceTimer);
+    _cultureSearchDebounceTimer = null;
+  }
+  _cultureSearchDebounceTimer = setTimeout(() => {
+    _cultureSearchDebounceTimer = null;
+    void renderCultureSearchPanel(app);
+  }, 200);
+}
+
+function ensureShellBgStyle() {
   if (document.getElementById(STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = STYLE_ID;
   style.textContent = `
-    .lumina-culture{ background: var(--soft,#f8fafc); color: var(--text,#0f172a); }
-    .lumina-culture .wrap{ max-width: var(--max,1120px); margin:0 auto; padding:0 16px; }
-    .lumina-culture .section{ padding:10px 0 18px; }
-    .lumina-culture .card{ background:rgba(255,255,255,.72); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.45); border-radius:calc(var(--radius,18px) + 8px); box-shadow:0 20px 50px rgba(0,0,0,.08); overflow:hidden; }
-    .lumina-culture .inner{ padding:18px; display:grid; gap:12px; }
-    .lumina-culture .page-title{ margin:0; font-size:24px; font-weight:900; }
-    .lumina-culture .page-desc{ margin:0; color:var(--muted,#475569); font-size:15px; line-height:1.6; }
+    .lumina-culture{background:var(--soft,#f8fafc);min-height:50vh}
   `;
   document.head.appendChild(style);
 }
 
-function renderCulture(root) {
-  ensureStyles();
-  const title = t("culture.title", "Culture");
-  const subtitle = t("culture.subtitle", "Learn Chinese language and culture together.");
-  const comingSoon = t("culture.comingSoon", "Coming soon");
+let _teardown = null;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _idiomAiToastTimer = null;
+/** @type {ReturnType<typeof setTimeout> | null} */
+let _idiomAiToastFadeTimer = null;
 
-  root.innerHTML = `
-    <div class="lumina-culture">
-      <section class="section">
-        <div class="wrap">
-          <div class="card">
-            <div class="inner">
-              <h1 class="page-title">${escapeHtml(title)}</h1>
-              <p class="page-desc">${escapeHtml(subtitle)}. ${escapeHtml(comingSoon)}</p>
+/**
+ * 成语详情「AI讲解」：即将开放提示（固定底部轻提示，非长弹窗）
+ * @param {string} message
+ */
+function showIdiomAiComingSoonToast(message) {
+  const text = String(message || "").trim() || t("culture.idioms.aiComingSoon");
+  const existing = document.querySelector(".culture-idiom-ai-toast");
+  if (existing) {
+    existing.remove();
+  }
+  if (_idiomAiToastTimer) {
+    clearTimeout(_idiomAiToastTimer);
+    _idiomAiToastTimer = null;
+  }
+  if (_idiomAiToastFadeTimer) {
+    clearTimeout(_idiomAiToastFadeTimer);
+    _idiomAiToastFadeTimer = null;
+  }
+  const el = document.createElement("div");
+  el.className = "culture-idiom-ai-toast";
+  el.setAttribute("role", "status");
+  el.textContent = text;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => {
+    el.classList.add("culture-idiom-ai-toast--show");
+  });
+  _idiomAiToastTimer = setTimeout(() => {
+    el.classList.remove("culture-idiom-ai-toast--show");
+    _idiomAiToastFadeTimer = setTimeout(() => {
+      el.remove();
+      _idiomAiToastFadeTimer = null;
+    }, 200);
+    _idiomAiToastTimer = null;
+  }, 2600);
+}
+
+/**
+ * @param {object} app
+ * @param {function(string): void} navTo
+ */
+function handleCultureSearchSubmit(app, navTo) {
+  const input = app.querySelector("[data-culture-search-input]");
+  const q = String(input?.value || "").trim();
+  if (!q) return;
+  if (CN_SINGLE_CHAR.test(q)) {
+    showIdiomAiComingSoonToast(t("culture.search.singleCharHint"));
+    navTo(`${DICTIONARY_HASH}?char=${encodeURIComponent(q)}`);
+    return;
+  }
+  void (async () => {
+    let results;
+    try {
+      results = await searchCultureEntries(q);
+    } catch {
+      return;
+    }
+    if (results.length === 1 && results[0].type === "idiom") {
+      navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(results[0].id)}`);
+      return;
+    }
+    await renderCultureSearchPanel(app);
+  })();
+}
+
+export function unmount() {
+  try {
+    _teardown?.();
+  } catch {
+    /* */
+  }
+  _teardown = null;
+  if (_cultureSearchDebounceTimer) {
+    clearTimeout(_cultureSearchDebounceTimer);
+    _cultureSearchDebounceTimer = null;
+  }
+  expandedCultureSections.clear();
+  expandedIdiomCategories.clear();
+}
+
+export async function mount() {
+  unmount();
+  ensureDefaultIdiomInHash();
+
+  const app = document.getElementById("app");
+  if (!app) return;
+  ensureShellBgStyle();
+
+  const sectionId = currentSectionId();
+  const sideNavTitle = t("culture.side_nav_label");
+  const sideNavTitleKey = "culture.side_nav_label";
+
+  let rightBody =
+    sectionId === "idioms" ? `<p class="culture-idiom-loading" data-i18n="common.loading">${esc(t("common.loading"))}</p>` : renderDefaultRightPanel(sectionId);
+  if (sectionId === "idioms") {
+    try {
+      await loadIdiomsIndex();
+    } catch {
+      /* 下面按空 index 走错误区 */
+    }
+    if (_idiomsIndexCache?.length) {
+      const iid = currentIdiomIdFromList(_idiomsIndexCache);
+      if (getHashIdParam() !== iid) {
+        try {
+          const u = new URL(window.location.href);
+          u.hash = `${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`;
+          history.replaceState(null, "", u.toString());
+        } catch {
+          /* */
+        }
+      }
+      try {
+        const item = await loadIdiomDetailById(iid);
+        rightBody = item ? renderIdiomDetailPage(item) : renderIdiomsDetailErrorPanel();
+      } catch {
+        rightBody = renderIdiomsDetailErrorPanel();
+      }
+    } else {
+      rightBody = renderIdiomsIndexErrorPanel();
+    }
+  }
+
+  const idiomIdForNav =
+    _idiomsIndexCache && sectionId === "idioms" && _idiomsIndexCache.length
+      ? currentIdiomIdFromList(_idiomsIndexCache)
+      : sectionId === "idioms"
+        ? getHashIdParam() || DEFAULT_IDIOM_ID
+        : "";
+
+  const sideNavBody = buildSideNavInnerHtml(sectionId, idiomIdForNav);
+
+  app.innerHTML = `
+    <div class="lumina-culture resource-library wrap" style="max-width:var(--max,1120px);margin:0 auto;padding:12px 16px 24px">
+      <div class="page-shell page-shell--resource">
+        <aside class="section-side-nav" aria-label="${esc(sideNavTitle)}">
+          <div class="culture-side-search-wrap">
+            <form class="culture-side-search" data-culture-search-form action="#">
+              <input
+                type="search"
+                class="culture-side-search-input"
+                data-culture-search-input
+                placeholder="${esc(t("culture.search.placeholder"))}"
+                aria-label="${esc(t("culture.search.placeholder"))}"
+                autocomplete="off"
+                enterkeyhint="search"
+                spellcheck="false"
+              />
+            </form>
+            <div class="culture-side-search-panel" data-culture-search-panel hidden></div>
+          </div>
+          <p class="section-side-nav__title" data-i18n="${esc(sideNavTitleKey)}">${esc(sideNavTitle)}</p>
+          <nav class="section-side-nav-inner" data-culture-side-nav>
+            ${sideNavBody}
+          </nav>
+        </aside>
+        <main class="section-main-panel">
+          <div class="section-main-panel-inner" data-culture-panel>
+            <div data-culture-panel-inner">
+              ${rightBody}
             </div>
           </div>
-        </div>
-      </section>
+        </main>
+      </div>
     </div>
   `;
-}
 
-function escapeHtml(s) {
-  return String(s ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
-}
+  i18n.apply?.(app);
 
-function bindLiveRerender(root) {
-  if (_bound) return;
-  _bound = true;
-  const rerender = () => {
-    const el = root?.isConnected ? root : document.getElementById("app");
-    if (!el) return;
-    renderCulture(el);
+  const navTo = (hash) => {
+    import("../router.js")
+      .then((r) => {
+        r.navigateTo(hash, { force: true });
+      })
+      .catch(() => {
+        if (typeof location !== "undefined") {
+          location.hash = hash;
+        }
+      });
   };
-  window.addEventListener("joy:langChanged", rerender);
-  try { i18n?.on?.("change", rerender); } catch {}
-  try { i18n?.onChange?.(rerender); } catch {}
+
+  const searchForm = app.querySelector("[data-culture-search-form]");
+  const searchInput = app.querySelector("[data-culture-search-input]");
+  if (searchInput) {
+    searchInput.setAttribute("placeholder", t("culture.search.placeholder"));
+    searchInput.setAttribute("aria-label", t("culture.search.placeholder"));
+  }
+  const onCultureSearchSubmit = (e) => {
+    e.preventDefault();
+    handleCultureSearchSubmit(app, navTo);
+  };
+  const onCultureSearchInput = () => {
+    scheduleCultureSearchPanelRender(app);
+  };
+  const onCultureSearchPick = (e) => {
+    const btn = e.target?.closest?.("[data-culture-search-pick]");
+    if (!btn || !app.contains(btn)) return;
+    const typ = btn.getAttribute("data-culture-search-pick");
+    const id = btn.getAttribute("data-culture-search-id");
+    if (typ === "idiom" && id) {
+      e.preventDefault();
+      navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(id)}`);
+    }
+  };
+  searchForm?.addEventListener("submit", onCultureSearchSubmit);
+  searchInput?.addEventListener("input", onCultureSearchInput);
+  app.addEventListener("click", onCultureSearchPick);
+
+  const onNavClick = (e) => {
+    const childBtn = e.target?.closest?.("[data-culture-child]");
+    if (childBtn) {
+      const iid = childBtn.getAttribute("data-culture-child");
+      const parentSec = childBtn.getAttribute("data-culture-parent-section");
+      if (iid && parentSec) {
+        e.preventDefault();
+        expandedCultureSections.add(parentSec);
+        if (parentSec === "idioms") {
+          const c = childBtn.getAttribute("data-culture-idiom-cat");
+          if (c) expandedIdiomCategories.add(c);
+          navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`);
+        }
+        return;
+      }
+    }
+
+    const catOnly = e.target?.closest?.("button[data-culture-idiom-cat]");
+    if (catOnly && !catOnly.getAttribute("data-culture-child")) {
+      e.preventDefault();
+      const cat = catOnly.getAttribute("data-culture-idiom-cat");
+      if (cat) {
+        if (expandedIdiomCategories.has(cat)) {
+          expandedIdiomCategories.delete(cat);
+        } else {
+          expandedIdiomCategories.add(cat);
+        }
+        updateNavForSectionOnly(app, "idioms");
+      }
+      return;
+    }
+
+    const btn = e.target?.closest?.("[data-culture-nav]");
+    if (!btn) return;
+    const id = btn.getAttribute("data-culture-nav");
+    if (!id || !ALLOWED.has(id)) return;
+
+    if (sectionHasChildren(id) && btn.getAttribute("data-culture-expandable") === "1") {
+      e.preventDefault();
+      if (currentSectionId() !== id) {
+        expandedCultureSections.add(id);
+        if (id === "idioms" && _idiomsIndexCache?.length) {
+          const iid = currentIdiomIdFromList(_idiomsIndexCache);
+          navTo(`${BASE}?${TAB_PARAM}=idioms&${ID_PARAM}=${encodeURIComponent(iid)}`);
+        } else {
+          navTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`);
+        }
+        return;
+      }
+      if (expandedCultureSections.has(id)) {
+        expandedCultureSections.delete(id);
+        if (id === "idioms") {
+          expandedIdiomCategories.clear();
+        }
+      } else {
+        expandedCultureSections.add(id);
+      }
+      updateNavForSectionOnly(app, id);
+      return;
+    }
+
+    if (id === currentSectionId()) return;
+    e.preventDefault();
+    navTo(`${BASE}?${TAB_PARAM}=${encodeURIComponent(id)}`);
+  };
+  app.querySelector("[data-culture-side-nav]")?.addEventListener("click", onNavClick);
+
+  const onPanelClick = (e) => {
+    const aiBtn = e.target?.closest?.("[data-idiom-ai-btn]");
+    if (!aiBtn) return;
+    e.preventDefault();
+    showIdiomAiComingSoonToast(t("culture.idioms.aiComingSoon"));
+  };
+  app.querySelector("[data-culture-panel]")?.addEventListener("click", onPanelClick);
+
+  const onHash = () => {
+    if (String(location.hash || "").split("?")[0].toLowerCase() !== BASE) return;
+    const next = currentSectionId();
+    ensureDefaultIdiomInHash();
+    updateNavForSectionOnly(app, next);
+    updatePanel(app, next);
+  };
+  window.addEventListener("hashchange", onHash);
+
+  const onLang = () => {
+    i18n.apply?.(app);
+    const sec = currentSectionId();
+    ensureDefaultIdiomInHash();
+    const sin = app.querySelector("[data-culture-search-input]");
+    if (sin) {
+      sin.setAttribute("placeholder", t("culture.search.placeholder"));
+      sin.setAttribute("aria-label", t("culture.search.placeholder"));
+    }
+    void renderCultureSearchPanel(app);
+    updateNavForSectionOnly(app, sec);
+    updatePanel(app, sec);
+  };
+  window.addEventListener("joy:langChanged", onLang);
+  try {
+    i18n?.on?.("change", onLang);
+  } catch {
+    /* */
+  }
+
+  _teardown = () => {
+    if (_idiomAiToastTimer) {
+      clearTimeout(_idiomAiToastTimer);
+      _idiomAiToastTimer = null;
+    }
+    if (_idiomAiToastFadeTimer) {
+      clearTimeout(_idiomAiToastFadeTimer);
+      _idiomAiToastFadeTimer = null;
+    }
+    if (_cultureSearchDebounceTimer) {
+      clearTimeout(_cultureSearchDebounceTimer);
+      _cultureSearchDebounceTimer = null;
+    }
+    document.querySelectorAll(".culture-idiom-ai-toast").forEach((n) => n.remove());
+    searchForm?.removeEventListener("submit", onCultureSearchSubmit);
+    searchInput?.removeEventListener("input", onCultureSearchInput);
+    app.removeEventListener("click", onCultureSearchPick);
+    app.querySelector("[data-culture-side-nav]")?.removeEventListener("click", onNavClick);
+    app.querySelector("[data-culture-panel]")?.removeEventListener("click", onPanelClick);
+    window.removeEventListener("hashchange", onHash);
+    window.removeEventListener("joy:langChanged", onLang);
+    try {
+      i18n?.off?.("change", onLang);
+    } catch {
+      /* */
+    }
+  };
 }
 
-export default function pageCulture(ctxOrRoot) {
-  const root = ctxOrRoot?.root || ctxOrRoot?.app || (ctxOrRoot instanceof HTMLElement ? ctxOrRoot : null) || document.getElementById("app");
-  if (!root) return;
-  bindLiveRerender(root);
-  renderCulture(root);
+export default { mount, unmount };
+export function render() {
+  return mount();
 }
-
-export function mount(ctxOrRoot) { return pageCulture(ctxOrRoot); }
-export function render(ctxOrRoot) { return pageCulture(ctxOrRoot); }

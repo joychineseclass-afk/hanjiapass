@@ -4,6 +4,7 @@
   "description": "Lumina Chinese Learning Center - HSK vocabulary system",
   "type": "module",
   "scripts": {
+    "build": "node scripts/vercel-build.mjs",
     "build:vocab": "node scripts/build-vocab.mjs",
     "build:pinyin": "node scripts/build-pinyin-map.mjs",
     "check:pinyin": "node scripts/check-pinyin-needed.mjs",
@@ -28,9 +29,17 @@
     "check:hsk1-lesson-metadata": "node scripts/check-hsk1-lesson-metadata.mjs",
     "check:hsk1-practice": "node scripts/check-hsk1-practice.mjs",
     "check:hsk30-hsk1": "node scripts/check-hsk30-hsk1.mjs",
-    "check:hsk30-hsk1:strict": "node scripts/check-hsk30-hsk1.mjs --strict"
+    "check:hsk30-hsk1:strict": "node scripts/check-hsk30-hsk1.mjs --strict",
+    "check:culture-idioms": "node scripts/check-culture-idioms.mjs",
+    "check:dictionary": "node scripts/check-dictionary-data.mjs",
+    "convert:cedict-sample": "node scripts/convert-cedict-sample.mjs",
+    "convert:cedict-basic": "node scripts/convert-cedict-basic.mjs",
+    "build:cedict-review": "node scripts/build-cedict-review-queue.mjs",
+    "convert:cedict-full": "node scripts/convert-cedict-full.mjs --full",
+    "convert:cedict-full:sample": "node scripts/convert-cedict-full.mjs --sample"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.104.1",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
     "@vercel/functions": "^3.4.3",

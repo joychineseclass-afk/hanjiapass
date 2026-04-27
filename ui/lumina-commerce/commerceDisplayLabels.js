@@ -198,10 +198,35 @@ export function formatListingDemoSourceLine(listing) {
     const p = `teacher.demo.material.${listing.source_id}.title`;
     const v = rawT(p);
     detail = v && v !== p && !looksLikeUntranslatedKey(v) ? v : commerceT("commerce.table.empty_cell");
+  } else if (kind === "classroom_asset" && listing.source_id) {
+    // 不拉 teacherAssetsStore，避免与 defaultTitle 路径循环依赖；bridge 建 listing 时已写入 title
+    const t0 =
+      listing.title != null && String(listing.title).trim() ? String(listing.title).trim() : String(listing.source_id);
+    detail = t0;
   } else {
     detail = commerceT("commerce.table.empty_cell");
   }
   const line = commerceT("commerce.stage0.source.line", { kind: kindLabel, detail });
   if (line && line !== "commerce.stage0.source.line" && !looksLikeUntranslatedKey(line)) return line;
   return `${kindLabel}：${detail}`;
+}
+
+/**
+ * 审核台列表：课件资产来源 listing 的补充说明行（不依赖 page 层）。
+ * @param {import('./schema.js').Listing} L
+ * @param {import('./teacherAssetsStore.js').TeacherClassroomAsset|undefined|null} asset
+ * @param {{ id?: string, display_name?: string } | null} teacher
+ * @param {string} courseLine
+ * @param {(k: string, p?: object) => string} t
+ */
+export function buildClassroomAssetReviewExtraHtml(L, asset, teacher, courseLine, t) {
+  const assetId = L?.source_id != null ? String(L.source_id) : "";
+  return {
+    kicker: t("teacher.review_listing.from_classroom_deck"),
+    title: asset && String(asset.title).trim() ? String(asset.title).trim() : String(L?.title || ""),
+    assetId: assetId,
+    profileId: L?.teacher_id != null ? String(L.teacher_id) : "",
+    teacherName: teacher?.display_name || teacher?.id || "—",
+    courseLine: courseLine || "—",
+  };
 }

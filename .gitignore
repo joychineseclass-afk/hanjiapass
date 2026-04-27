@@ -1,3 +1,10 @@
 node_modules/
+.env
+.env.*.local
+.env.local
 # 构建报告（建议保留便于复现，可选忽略）
 # data/reports/
+
+# CC-CEDICT 全量源文件与下载的压缩包（本地放置；转换产物在 data/dictionary/cedict/）
+data/dictionary/sources/cedict-full.u8
+data/dictionary/sources/*.gz

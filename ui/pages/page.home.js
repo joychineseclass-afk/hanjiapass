@@ -6,6 +6,7 @@
 // ✅ IMPORTANT: Styles are scoped; DO NOT override global :root tokens here.
 
 import { i18n } from "../i18n.js";
+import { LUMINA_DEFAULT_LEARNING_ENTRY_HASH, setPendingPostAuthTargetHash } from "../auth/postAuthRedirect.js";
 
 const STYLE_ID = "lumina-home-style-v5";
 let _bound = false;
@@ -485,7 +486,7 @@ function renderHome(root) {
 
                 <!-- Row 1: buttons -->
                 <div class="cta">
-                  <a class="btn primary" href="#hsk">${T.cta1}</a>
+                  <a class="btn primary" data-lumina-start-learning="1" href="${LUMINA_DEFAULT_LEARNING_ENTRY_HASH}">${T.cta1}</a>
                   <a class="btn" href="#catalog">${T.cta2}</a>
                 </div>
 
@@ -534,9 +535,9 @@ function renderHome(root) {
           <div>
             ${T.contact}: 010-0000-0000<br/>
             ${T.email}: hello@lumina.example<br/>
-            <a href="#my" style="text-decoration:underline;">${T.privacy}</a>
+            <a href="#my-learning" style="text-decoration:underline;">${T.privacy}</a>
             ·
-            <a href="#my" style="text-decoration:underline;">${T.terms}</a><br/>
+            <a href="#my-learning" style="text-decoration:underline;">${T.terms}</a><br/>
             ${T.copy}
           </div>
         </div>
@@ -545,11 +546,23 @@ function renderHome(root) {
   `;
 }
 
+/** 与 router normalizeHash 一致：仅取 # 后第一段，忽略 query（语言切换不得把其它页替换为首页） */
+function routeBaseForHomeGuard() {
+  const raw = String(location.hash || "").trim();
+  if (!raw) return "#home";
+  const noQuery = raw.includes("?") ? raw.slice(0, raw.indexOf("?")) : raw;
+  const withHash = noQuery.startsWith("#") ? noQuery : `#${noQuery}`;
+  const slash = withHash.indexOf("/", 1);
+  return (slash > 0 ? withHash.slice(0, slash) : withHash).toLowerCase();
+}
+
 function bindLiveRerender(root) {
   if (_bound) return;
   _bound = true;
 
   const rerender = () => {
+    const base = routeBaseForHomeGuard();
+    if (base !== "#home") return;
     const el = root?.isConnected ? root : document.getElementById("app");
     if (!el) return;
     renderHome(el);
@@ -568,6 +581,24 @@ function bindLiveRerender(root) {
   });
 }
 
+function bindHomeStartLearning() {
+  if (window.__luminaHomeStartLearnBound) return;
+  window.__luminaHomeStartLearnBound = true;
+  document.addEventListener("click", async (e) => {
+    const a = e.target?.closest?.("a[data-lumina-start-learning]");
+    if (!a) return;
+    e.preventDefault();
+    const { getCurrentSessionAuthUser } = await import("../auth/authService.js");
+    const { navigateTo } = await import("../router.js");
+    if (getCurrentSessionAuthUser()) {
+      navigateTo(LUMINA_DEFAULT_LEARNING_ENTRY_HASH, { force: true });
+    } else {
+      setPendingPostAuthTargetHash(LUMINA_DEFAULT_LEARNING_ENTRY_HASH);
+      navigateTo("#auth-login", { force: true });
+    }
+  });
+}
+
 export default function pageHome(ctxOrRoot) {
   const root =
     ctxOrRoot?.root ||
@@ -576,6 +607,7 @@ export default function pageHome(ctxOrRoot) {
     document.getElementById("app");
 
   if (!root) return;
+  bindHomeStartLearning();
   bindLiveRerender(root);
   renderHome(root);
 }

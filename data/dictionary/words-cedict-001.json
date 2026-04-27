@@ -1,0 +1,2197 @@
+[
+  {
+    "id": "cedict_word_0001",
+    "type": "word",
+    "word": "再见",
+    "traditional": "再見",
+    "pinyin": "zàijiàn",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "分别时使用的告别语，意思是以后再见面。",
+      "kr": "헤어질 때 쓰는 인사말로, 다시 만나자는 뜻입니다.",
+      "en": "A farewell expression used when parting, meaning “see you again.”",
+      "jp": "別れる時に使うあいさつで、また会いましょうという意味です。"
+    },
+    "example": {
+      "cn": "老师，再见！",
+      "kr": "선생님, 안녕히 계세요!",
+      "en": "Goodbye, teacher!",
+      "jp": "先生、さようなら！"
+    },
+    "examplePinyin": "lǎoshī, zàijiàn!"
+  },
+  {
+    "id": "cedict_word_0002",
+    "type": "word",
+    "word": "学校",
+    "traditional": "學校",
+    "pinyin": "xuéxiào",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "学生学习和老师教学的地方。",
+      "kr": "학생이 공부하고 선생님이 가르치는 곳을 뜻합니다.",
+      "en": "A place where students study and teachers teach.",
+      "jp": "学生が勉強し、先生が教える場所を意味します。"
+    },
+    "example": {
+      "cn": "我去学校学习。",
+      "kr": "저는 학교에 가서 공부합니다.",
+      "en": "I go to school to study.",
+      "jp": "私は学校へ行って勉強します。"
+    },
+    "examplePinyin": "wǒ qù xuéxiào xuéxí."
+  },
+  {
+    "id": "cedict_word_0003",
+    "type": "word",
+    "word": "中国人",
+    "traditional": "中國人",
+    "pinyin": "zhōngguórén",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "中国的人；也可以指具有中国国籍或中国文化背景的人。",
+      "kr": "중국 사람을 뜻하며, 중국 국적이나 중국 문화 배경을 가진 사람을 말할 수 있습니다.",
+      "en": "A Chinese person; someone with Chinese nationality or Chinese cultural background.",
+      "jp": "中国の人、または中国国籍や中国文化の背景を持つ人を意味します。"
+    },
+    "example": {
+      "cn": "他是中国人。",
+      "kr": "그는 중국 사람입니다.",
+      "en": "He is Chinese.",
+      "jp": "彼は中国人です。"
+    },
+    "examplePinyin": "tā shì zhōngguórén."
+  },
+  {
+    "id": "cedict_word_0004",
+    "type": "word",
+    "word": "汉语",
+    "traditional": "漢語",
+    "pinyin": "hànyǔ",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "汉民族的语言，通常也指中文或普通话。",
+      "kr": "한족의 언어를 뜻하며, 보통 중국어나 표준중국어를 가리키기도 합니다.",
+      "en": "The language of the Han people; often used to refer to Chinese or Mandarin.",
+      "jp": "漢民族の言語で、一般的に中国語や普通話を指すこともあります。"
+    },
+    "example": {
+      "cn": "我正在学习汉语。",
+      "kr": "저는 지금 중국어를 배우고 있습니다.",
+      "en": "I am learning Chinese.",
+      "jp": "私は今、中国語を学んでいます。"
+    },
+    "examplePinyin": "wǒ zhèngzài xuéxí hànyǔ."
+  },
+  {
+    "id": "cedict_word_0005",
+    "type": "word",
+    "word": "朋友",
+    "traditional": "朋友",
+    "pinyin": "péngyou",
+    "source": "CC-CEDICT draft reviewed",
+    "meaning": {
+      "cn": "关系亲近、彼此熟悉并互相关心的人。",
+      "kr": "가깝게 지내며 서로 알고 아끼는 사람, 친구를 뜻합니다.",
+      "en": "A friend; someone close, familiar, and caring.",
+      "jp": "親しく付き合い、互いに知っていて大切に思う人、友人を意味します。"
+    },
+    "example": {
+      "cn": "她是我的朋友。",
+      "kr": "그녀는 제 친구입니다.",
+      "en": "She is my friend.",
+      "jp": "彼女は私の友達です。"
+    },
+    "examplePinyin": "tā shì wǒ de péngyou."
+  },
+  {
+    "id": "cedict_word_0006",
+    "type": "word",
+    "word": "中国",
+    "traditional": "中國",
+    "pinyin": "zhōngguó",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "China; Middle Kingdom",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0007",
+    "type": "word",
+    "word": "学习",
+    "traditional": "學習",
+    "pinyin": "xuéxí",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to learn; to study",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0008",
+    "type": "word",
+    "word": "老师",
+    "traditional": "老師",
+    "pinyin": "lǎoshī",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "teacher",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0009",
+    "type": "word",
+    "word": "学生",
+    "traditional": "學生",
+    "pinyin": "xuéshēng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "student",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0010",
+    "type": "word",
+    "word": "中文",
+    "traditional": "中文",
+    "pinyin": "zhōngwén",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese language",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0011",
+    "type": "word",
+    "word": "汉字",
+    "traditional": "漢字",
+    "pinyin": "hànzì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "Chinese character",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0012",
+    "type": "word",
+    "word": "工作",
+    "traditional": "工作",
+    "pinyin": "gōngzuò",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "work; job",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0013",
+    "type": "word",
+    "word": "时间",
+    "traditional": "時間",
+    "pinyin": "shíjiān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "time",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0014",
+    "type": "word",
+    "word": "今天",
+    "traditional": "今天",
+    "pinyin": "jīntiān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "today",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0015",
+    "type": "word",
+    "word": "明天",
+    "traditional": "明天",
+    "pinyin": "míngtiān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "tomorrow",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0016",
+    "type": "word",
+    "word": "昨天",
+    "traditional": "昨天",
+    "pinyin": "zuótiān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "yesterday",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0017",
+    "type": "word",
+    "word": "吃饭",
+    "traditional": "吃飯",
+    "pinyin": "chīfàn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to eat a meal; dining",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0018",
+    "type": "word",
+    "word": "喝水",
+    "traditional": "喝水",
+    "pinyin": "hēshuǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to drink water",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0019",
+    "type": "word",
+    "word": "睡觉",
+    "traditional": "睡覺",
+    "pinyin": "shuìjiào",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to sleep",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0020",
+    "type": "word",
+    "word": "飞机",
+    "traditional": "飛機",
+    "pinyin": "fēijī",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "airplane; aeroplane",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0021",
+    "type": "word",
+    "word": "火车",
+    "traditional": "火車",
+    "pinyin": "huǒchē",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "train",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0022",
+    "type": "word",
+    "word": "汽车",
+    "traditional": "汽車",
+    "pinyin": "qìchē",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "car; automobile",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0023",
+    "type": "word",
+    "word": "医院",
+    "traditional": "醫院",
+    "pinyin": "yīyuàn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "hospital",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0024",
+    "type": "word",
+    "word": "商店",
+    "traditional": "商店",
+    "pinyin": "shāngdiàn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "shop; store",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0025",
+    "type": "word",
+    "word": "银行",
+    "traditional": "銀行",
+    "pinyin": "yínháng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "bank",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0026",
+    "type": "word",
+    "word": "国家",
+    "traditional": "國家",
+    "pinyin": "guójiā",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "country; nation",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0027",
+    "type": "word",
+    "word": "世界",
+    "traditional": "世界",
+    "pinyin": "shìjiè",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "world",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0028",
+    "type": "word",
+    "word": "问题",
+    "traditional": "問題",
+    "pinyin": "wèntí",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "question; problem",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0029",
+    "type": "word",
+    "word": "事情",
+    "traditional": "事情",
+    "pinyin": "shìqing",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "matter; affair",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0030",
+    "type": "word",
+    "word": "希望",
+    "traditional": "希望",
+    "pinyin": "xīwàng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to hope; hope",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0031",
+    "type": "word",
+    "word": "觉得",
+    "traditional": "覺得",
+    "pinyin": "juéde",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to think; to feel",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0032",
+    "type": "word",
+    "word": "知道",
+    "traditional": "知道",
+    "pinyin": "zhīdao",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to know",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0033",
+    "type": "word",
+    "word": "可以",
+    "traditional": "可以",
+    "pinyin": "kěyǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "can; may",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0034",
+    "type": "word",
+    "word": "应该",
+    "traditional": "應該",
+    "pinyin": "yīnggāi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "should; ought to",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0035",
+    "type": "word",
+    "word": "因为",
+    "traditional": "因為",
+    "pinyin": "yīnwèi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "because",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0036",
+    "type": "word",
+    "word": "所以",
+    "traditional": "所以",
+    "pinyin": "suǒyǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "so; therefore",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0037",
+    "type": "word",
+    "word": "但是",
+    "traditional": "但是",
+    "pinyin": "dànshì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "but; however",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0038",
+    "type": "word",
+    "word": "还是",
+    "traditional": "還是",
+    "pinyin": "háishì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "still; or",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0039",
+    "type": "word",
+    "word": "或者",
+    "traditional": "或者",
+    "pinyin": "huòzhě",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "or; perhaps",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0040",
+    "type": "word",
+    "word": "如果",
+    "traditional": "如果",
+    "pinyin": "rúguǒ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "if",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0041",
+    "type": "word",
+    "word": "虽然",
+    "traditional": "雖然",
+    "pinyin": "suīrán",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "although",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0042",
+    "type": "word",
+    "word": "然后",
+    "traditional": "然後",
+    "pinyin": "ránhòu",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "then; after that",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0043",
+    "type": "word",
+    "word": "现在",
+    "traditional": "現在",
+    "pinyin": "xiànzài",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "now; at present",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0044",
+    "type": "word",
+    "word": "以后",
+    "traditional": "以後",
+    "pinyin": "yǐhòu",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "after; later",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0045",
+    "type": "word",
+    "word": "之前",
+    "traditional": "之前",
+    "pinyin": "zhīqián",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "before; previously",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0046",
+    "type": "word",
+    "word": "非常",
+    "traditional": "非常",
+    "pinyin": "fēicháng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "very; extremely",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0047",
+    "type": "word",
+    "word": "比较",
+    "traditional": "比較",
+    "pinyin": "bǐjiào",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to compare; relatively",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0048",
+    "type": "word",
+    "word": "还有",
+    "traditional": "還有",
+    "pinyin": "háiyǒu",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "also; there is still",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0049",
+    "type": "word",
+    "word": "就是",
+    "traditional": "就是",
+    "pinyin": "jiùshì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "exactly; that is",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0050",
+    "type": "word",
+    "word": "什么",
+    "traditional": "什麼",
+    "pinyin": "shénme",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "what",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0051",
+    "type": "word",
+    "word": "怎么",
+    "traditional": "怎麼",
+    "pinyin": "zěnme",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "how",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0052",
+    "type": "word",
+    "word": "为什么",
+    "traditional": "為什麼",
+    "pinyin": "wèishénme",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "why",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0053",
+    "type": "word",
+    "word": "多少",
+    "traditional": "多少",
+    "pinyin": "duōshǎo",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "how many; how much",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0054",
+    "type": "word",
+    "word": "儿子",
+    "traditional": "兒子",
+    "pinyin": "érzi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "son",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0055",
+    "type": "word",
+    "word": "女儿",
+    "traditional": "女兒",
+    "pinyin": "nǚér",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "daughter",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0056",
+    "type": "word",
+    "word": "丈夫",
+    "traditional": "丈夫",
+    "pinyin": "zhàngfū",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "husband",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0057",
+    "type": "word",
+    "word": "妻子",
+    "traditional": "妻子",
+    "pinyin": "qīzǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "wife",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0058",
+    "type": "word",
+    "word": "父亲",
+    "traditional": "父親",
+    "pinyin": "fùqīn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "father",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0059",
+    "type": "word",
+    "word": "母亲",
+    "traditional": "母親",
+    "pinyin": "mǔqīn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "mother",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0060",
+    "type": "word",
+    "word": "名字",
+    "traditional": "名字",
+    "pinyin": "míngzi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "name",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0061",
+    "type": "word",
+    "word": "电话",
+    "traditional": "電話",
+    "pinyin": "diànhuà",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "telephone; phone call",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0062",
+    "type": "word",
+    "word": "地址",
+    "traditional": "地址",
+    "pinyin": "dìzhǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "address",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0063",
+    "type": "word",
+    "word": "公司",
+    "traditional": "公司",
+    "pinyin": "gōngsī",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "company",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0064",
+    "type": "word",
+    "word": "欢迎",
+    "traditional": "歡迎",
+    "pinyin": "huānyíng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to welcome",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0065",
+    "type": "word",
+    "word": "谢谢",
+    "traditional": "謝謝",
+    "pinyin": "xièxie",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "thank you; thanks",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0066",
+    "type": "word",
+    "word": "对不起",
+    "traditional": "對不起",
+    "pinyin": "duìbuqǐ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "sorry; excuse me",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0067",
+    "type": "word",
+    "word": "没关系",
+    "traditional": "沒關係",
+    "pinyin": "méiguānxi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "it doesn't matter; never mind",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0068",
+    "type": "word",
+    "word": "请坐",
+    "traditional": "請坐",
+    "pinyin": "qǐngzuò",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "please sit",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0069",
+    "type": "word",
+    "word": "请问",
+    "traditional": "請問",
+    "pinyin": "qǐngwèn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "may I ask; excuse me",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0070",
+    "type": "word",
+    "word": "多少钱",
+    "traditional": "多少錢",
+    "pinyin": "duōshǎoqián",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "how much does it cost",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0071",
+    "type": "word",
+    "word": "天气",
+    "traditional": "天氣",
+    "pinyin": "tiānqì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "weather",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0072",
+    "type": "word",
+    "word": "下雨",
+    "traditional": "下雨",
+    "pinyin": "xiàyǔ",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to rain",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0073",
+    "type": "word",
+    "word": "太阳",
+    "traditional": "太陽",
+    "pinyin": "tàiyang",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "sun; solar",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0074",
+    "type": "word",
+    "word": "冷",
+    "traditional": "冷",
+    "pinyin": "lěng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "cold",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0075",
+    "type": "word",
+    "word": "热",
+    "traditional": "熱",
+    "pinyin": "rè",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "hot; heat",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0076",
+    "type": "word",
+    "word": "高",
+    "traditional": "高",
+    "pinyin": "gāo",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "tall; high",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0077",
+    "type": "word",
+    "word": "新",
+    "traditional": "新",
+    "pinyin": "xīn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "new",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0078",
+    "type": "word",
+    "word": "旧",
+    "traditional": "舊",
+    "pinyin": "jiù",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "old; used",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0079",
+    "type": "word",
+    "word": "对",
+    "traditional": "對",
+    "pinyin": "duì",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "right; correct",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0080",
+    "type": "word",
+    "word": "错",
+    "traditional": "錯",
+    "pinyin": "cuò",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "wrong; mistake",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0081",
+    "type": "word",
+    "word": "来",
+    "traditional": "來",
+    "pinyin": "lái",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to come",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0082",
+    "type": "word",
+    "word": "去",
+    "traditional": "去",
+    "pinyin": "qù",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to go",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0083",
+    "type": "word",
+    "word": "看",
+    "traditional": "看",
+    "pinyin": "kàn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to look; to read",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0084",
+    "type": "word",
+    "word": "听",
+    "traditional": "聽",
+    "pinyin": "tīng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to listen; to hear",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0085",
+    "type": "word",
+    "word": "说",
+    "traditional": "說",
+    "pinyin": "shuō",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to speak; to say",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0086",
+    "type": "word",
+    "word": "读",
+    "traditional": "讀",
+    "pinyin": "dú",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to read",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0087",
+    "type": "word",
+    "word": "写",
+    "traditional": "寫",
+    "pinyin": "xiě",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to write",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0088",
+    "type": "word",
+    "word": "买",
+    "traditional": "買",
+    "pinyin": "mǎi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to buy",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0089",
+    "type": "word",
+    "word": "卖",
+    "traditional": "賣",
+    "pinyin": "mài",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to sell",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0090",
+    "type": "word",
+    "word": "开",
+    "traditional": "開",
+    "pinyin": "kāi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to open; to drive",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0091",
+    "type": "word",
+    "word": "关",
+    "traditional": "關",
+    "pinyin": "guān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "to close; shut",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0092",
+    "type": "word",
+    "word": "门",
+    "traditional": "門",
+    "pinyin": "mén",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "door; gate",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0093",
+    "type": "word",
+    "word": "房间",
+    "traditional": "房間",
+    "pinyin": "fángjiān",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "room",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0094",
+    "type": "word",
+    "word": "桌子",
+    "traditional": "桌子",
+    "pinyin": "zhuōzi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "table; desk",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0095",
+    "type": "word",
+    "word": "椅子",
+    "traditional": "椅子",
+    "pinyin": "yǐzi",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "chair",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0096",
+    "type": "word",
+    "word": "书",
+    "traditional": "書",
+    "pinyin": "shū",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "book; to write",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0097",
+    "type": "word",
+    "word": "钱",
+    "traditional": "錢",
+    "pinyin": "qián",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "money",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0098",
+    "type": "word",
+    "word": "照片",
+    "traditional": "照片",
+    "pinyin": "zhàopiàn",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "photo; picture",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0099",
+    "type": "word",
+    "word": "电影",
+    "traditional": "電影",
+    "pinyin": "diànyǐng",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "movie; film",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  },
+  {
+    "id": "cedict_word_0100",
+    "type": "word",
+    "word": "音乐",
+    "traditional": "音樂",
+    "pinyin": "yīnyuè",
+    "source": "CC-CEDICT",
+    "meaning": {
+      "cn": "",
+      "kr": "",
+      "en": "music",
+      "jp": ""
+    },
+    "example": {
+      "cn": "",
+      "kr": "",
+      "en": "",
+      "jp": ""
+    },
+    "examplePinyin": "",
+    "needsReview": true
+  }
+]

@@ -1,0 +1,402 @@
+[
+  {
+    "id": "word_0001",
+    "type": "word",
+    "word": "人",
+    "traditional": "人",
+    "pinyin": "rén",
+    "meaning": {
+      "cn": "人类；也指某一个人。",
+      "kr": "사람, 인간을 가리키거나 어떤 사람 한 명을 뜻합니다.",
+      "en": "A human being; also a certain person.",
+      "jp": "人間、またある一人の人を指します。"
+    },
+    "example": {
+      "cn": "做人要诚实。",
+      "kr": "사람은 정직해야 해요.",
+      "en": "One should be honest.",
+      "jp": "人は正直でいるべきです。"
+    },
+    "examplePinyin": "zuò rén yào chéngshí."
+  },
+  {
+    "id": "word_0002",
+    "type": "word",
+    "word": "大人",
+    "traditional": "大人",
+    "pinyin": "dàrén",
+    "meaning": {
+      "cn": "成年人。",
+      "kr": "어른, 성인.",
+      "en": "An adult.",
+      "jp": "大人、成人。"
+    },
+    "example": {
+      "cn": "他已经是大人了。",
+      "kr": "그는 이제 어른이에요.",
+      "en": "He is already an adult.",
+      "jp": "彼はもう大人です。"
+    },
+    "examplePinyin": "tā yǐjīng shì dàrén le."
+  },
+  {
+    "id": "word_0003",
+    "type": "word",
+    "word": "人口",
+    "traditional": "人口",
+    "pinyin": "rénkǒu",
+    "meaning": {
+      "cn": "一个地区或国家的居民数量。",
+      "kr": "지역이나 국가의 주민 수.",
+      "en": "The number of people in a region or country.",
+      "jp": "地域や国の人口。"
+    },
+    "example": {
+      "cn": "中国人口很多。",
+      "kr": "중국 인구는 아주 많아요.",
+      "en": "China has a large population.",
+      "jp": "中国の人口は多い。"
+    },
+    "examplePinyin": "zhōngguó rénkǒu hěn duō."
+  },
+  {
+    "id": "word_0004",
+    "type": "word",
+    "word": "中国",
+    "traditional": "中國",
+    "pinyin": "zhōngguó",
+    "meaning": {
+      "cn": "国家名称。",
+      "kr": "국가 이름(중국).",
+      "en": "The country China.",
+      "jp": "国名「中国」。"
+    },
+    "example": {
+      "cn": "我住在中国。",
+      "kr": "저는 중국에 살아요.",
+      "en": "I live in China.",
+      "jp": "私は中国に住んでいます。"
+    },
+    "examplePinyin": "wǒ zhù zài zhōngguó."
+  },
+  {
+    "id": "word_0005",
+    "type": "word",
+    "word": "中文",
+    "traditional": "中文",
+    "pinyin": "zhōngwén",
+    "meaning": {
+      "cn": "中国的语言文字。",
+      "kr": "중국어(언어).",
+      "en": "Chinese (language).",
+      "jp": "中国語。"
+    },
+    "example": {
+      "cn": "我在学中文。",
+      "kr": "저는 중국어를 공부해요.",
+      "en": "I am learning Chinese.",
+      "jp": "中国語を勉強しています。"
+    },
+    "examplePinyin": "wǒ zài xué zhōngwén."
+  },
+  {
+    "id": "word_0006",
+    "type": "word",
+    "word": "汉字",
+    "traditional": "漢字",
+    "pinyin": "hànzì",
+    "meaning": {
+      "cn": "中文使用的方块文字。",
+      "kr": "중국어에 쓰이는 상형 문자.",
+      "en": "Chinese characters.",
+      "jp": "中国語の漢字。"
+    },
+    "example": {
+      "cn": "汉字很美。",
+      "kr": "한자는 아름다워요.",
+      "en": "Chinese characters are beautiful.",
+      "jp": "漢字は美しい。"
+    },
+    "examplePinyin": "hànzì hěn měi."
+  },
+  {
+    "id": "word_0007",
+    "type": "word",
+    "word": "学习",
+    "traditional": "學習",
+    "pinyin": "xuéxí",
+    "meaning": {
+      "cn": "通过阅读、练习或听讲来获得知识或技能。",
+      "kr": "읽기, 연습, 수업 등을 통해 지식이나 능력을 익히는 것을 뜻합니다.",
+      "en": "To learn or study knowledge or skills through reading, practice, or instruction.",
+      "jp": "読書、練習、授業などを通して知識や技能を身につけることを意味します。"
+    },
+    "example": {
+      "cn": "我喜欢学习中文。",
+      "kr": "저는 중국어 공부를 좋아합니다.",
+      "en": "I like studying Chinese.",
+      "jp": "私は中国語を勉強するのが好きです。"
+    },
+    "examplePinyin": "wǒ xǐhuan xuéxí zhōngwén."
+  },
+  {
+    "id": "word_0008",
+    "type": "word",
+    "word": "学生",
+    "traditional": "學生",
+    "pinyin": "xuéshēng",
+    "meaning": {
+      "cn": "在学校学习的人。",
+      "kr": "학교에서 배우는 사람.",
+      "en": "A student.",
+      "jp": "学生。"
+    },
+    "example": {
+      "cn": "他是我的学生。",
+      "kr": "그는 제 학생이에요.",
+      "en": "He is my student.",
+      "jp": "彼は私の生徒です。"
+    },
+    "examplePinyin": "tā shì wǒ de xuéshēng."
+  },
+  {
+    "id": "word_0009",
+    "type": "word",
+    "word": "老师",
+    "traditional": "老師",
+    "pinyin": "lǎoshī",
+    "meaning": {
+      "cn": "教书的人。",
+      "kr": "가르치는 사람, 선생님.",
+      "en": "A teacher.",
+      "jp": "教師、先生。"
+    },
+    "example": {
+      "cn": "老师好！",
+      "kr": "선생님, 안녕하세요!",
+      "en": "Hello, teacher!",
+      "jp": "先生、こんにちは！"
+    },
+    "examplePinyin": "lǎoshī hǎo!"
+  },
+  {
+    "id": "word_0010",
+    "type": "word",
+    "word": "学校",
+    "traditional": "學校",
+    "pinyin": "xuéxiào",
+    "meaning": {
+      "cn": "进行教育的机构。",
+      "kr": "교육을 하는 기관, 학교.",
+      "en": "A school.",
+      "jp": "学校。"
+    },
+    "example": {
+      "cn": "我每天都去学校。",
+      "kr": "저는 매일 학교에 가요.",
+      "en": "I go to school every day.",
+      "jp": "毎日学校に行きます。"
+    },
+    "examplePinyin": "wǒ měitiān dōu qù xuéxiào."
+  },
+  {
+    "id": "word_0011",
+    "type": "word",
+    "word": "朋友",
+    "traditional": "朋友",
+    "pinyin": "péngyǒu",
+    "meaning": {
+      "cn": "彼此友好的人。",
+      "kr": "서로 잘 아는 사이, 친구.",
+      "en": "A friend.",
+      "jp": "友だち。"
+    },
+    "example": {
+      "cn": "他是我的好朋友。",
+      "kr": "그는 제 좋은 친구예요.",
+      "en": "He is my good friend.",
+      "jp": "彼は私の大切な友だちです。"
+    },
+    "examplePinyin": "tā shì wǒ de hǎo péngyǒu."
+  },
+  {
+    "id": "word_0012",
+    "type": "word",
+    "word": "家人",
+    "traditional": "家人",
+    "pinyin": "jiārén",
+    "meaning": {
+      "cn": "家庭成员。",
+      "kr": "가족, 식구.",
+      "en": "Family members.",
+      "jp": "家族。"
+    },
+    "example": {
+      "cn": "我很爱我的家人。",
+      "kr": "가족을 정말 사랑해요.",
+      "en": "I love my family very much.",
+      "jp": "家族を心から愛しています。"
+    },
+    "examplePinyin": "wǒ hěn ài wǒ de jiārén."
+  },
+  {
+    "id": "word_0013",
+    "type": "word",
+    "word": "爸爸",
+    "traditional": "爸爸",
+    "pinyin": "bàba",
+    "meaning": {
+      "cn": "对父亲的口语称呼。",
+      "kr": "아빠.",
+      "en": "Dad, father (informal).",
+      "jp": "パパ、お父さん。"
+    },
+    "example": {
+      "cn": "爸爸在家吗？",
+      "kr": "아빠 집에 계세요?",
+      "en": "Is Dad home?",
+      "jp": "パパは家にいる？"
+    },
+    "examplePinyin": "bàba zài jiā ma?"
+  },
+  {
+    "id": "word_0014",
+    "type": "word",
+    "word": "妈妈",
+    "traditional": "媽媽",
+    "pinyin": "māma",
+    "meaning": {
+      "cn": "对母亲的口语称呼。",
+      "kr": "엄마.",
+      "en": "Mom, mother (informal).",
+      "jp": "ママ、お母さん。"
+    },
+    "example": {
+      "cn": "妈妈做饭很好吃。",
+      "kr": "엄마가 요리를 정말 잘하세요.",
+      "en": "Mom cooks very well.",
+      "jp": "ママの料理はおいしい。"
+    },
+    "examplePinyin": "māma zuò fàn hěn hǎochī."
+  },
+  {
+    "id": "word_0015",
+    "type": "word",
+    "word": "哥哥",
+    "traditional": "哥哥",
+    "pinyin": "gēge",
+    "meaning": {
+      "cn": "同父母或同父/母、年龄比自己大的男子。",
+      "kr": "남자 형(오빠).",
+      "en": "Older brother (male or female speaker in Chinese).",
+      "jp": "兄（年上の男子）。"
+    },
+    "example": {
+      "cn": "我哥哥会打篮球。",
+      "kr": "오빠는 농구를 잘해요.",
+      "en": "My older brother can play basketball.",
+      "jp": "兄はバスケができます。"
+    },
+    "examplePinyin": "wǒ gēge huì dǎ lánqiú."
+  },
+  {
+    "id": "word_0016",
+    "type": "word",
+    "word": "姐姐",
+    "traditional": "姐姐",
+    "pinyin": "jiějie",
+    "meaning": {
+      "cn": "同父母或同父/母、年龄比自己大的女子。",
+      "kr": "여자 형(언니).",
+      "en": "Older sister.",
+      "jp": "姉。"
+    },
+    "example": {
+      "cn": "姐姐很照顾我。",
+      "kr": "언니가 저를 잘 챙겨요.",
+      "en": "My older sister takes good care of me.",
+      "jp": "姉はよく面倒を見てくれます。"
+    },
+    "examplePinyin": "jiějie hěn zhàogù wǒ."
+  },
+  {
+    "id": "word_0017",
+    "type": "word",
+    "word": "弟弟",
+    "traditional": "弟弟",
+    "pinyin": "dìdi",
+    "meaning": {
+      "cn": "同父母所生的、年龄比自己小的男子。",
+      "kr": "남동생.",
+      "en": "Younger brother.",
+      "jp": "弟。"
+    },
+    "example": {
+      "cn": "我弟弟还很小。",
+      "kr": "남동생은 아직 어려요.",
+      "en": "My little brother is still young.",
+      "jp": "弟はまだ小さい。"
+    },
+    "examplePinyin": "wǒ dìdi hái hěn xiǎo."
+  },
+  {
+    "id": "word_0018",
+    "type": "word",
+    "word": "妹妹",
+    "traditional": "妹妹",
+    "pinyin": "mèimei",
+    "meaning": {
+      "cn": "同父母所生的、年龄比自己小的女子。",
+      "kr": "여동생.",
+      "en": "Younger sister.",
+      "jp": "妹。"
+    },
+    "example": {
+      "cn": "我妹妹很活泼。",
+      "kr": "여동생은 정말 활발해요.",
+      "en": "My little sister is very lively.",
+      "jp": "妹はとても元気。"
+    },
+    "examplePinyin": "wǒ mèimei hěn huópō."
+  },
+  {
+    "id": "word_0019",
+    "type": "word",
+    "word": "你好",
+    "traditional": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning": {
+      "cn": "用于打招呼。",
+      "kr": "인사로 쓰는 말(안녕하세요).",
+      "en": "Hello; a greeting.",
+      "jp": "こんにちは、挨拶。"
+    },
+    "example": {
+      "cn": "你好，很高兴认识你。",
+      "kr": "안녕하세요, 만나서 반가워요.",
+      "en": "Hello, nice to meet you.",
+      "jp": "初めまして、よろしく。"
+    },
+    "examplePinyin": "nǐ hǎo, hěn gāoxìng rènshi nǐ."
+  },
+  {
+    "id": "word_0020",
+    "type": "word",
+    "word": "谢谢",
+    "traditional": "謝謝",
+    "pinyin": "xièxie",
+    "meaning": {
+      "cn": "表示感激。",
+      "kr": "감사하다, 고맙다는 말.",
+      "en": "Thank you; to express thanks.",
+      "jp": "ありがとう、感謝。"
+    },
+    "example": {
+      "cn": "谢谢你的帮助。",
+      "kr": "도와주셔서 감사합니다.",
+      "en": "Thank you for your help.",
+      "jp": "手伝ってくれてありがとう。"
+    },
+    "examplePinyin": "xièxie nǐ de bāngzhù."
+  }
+]

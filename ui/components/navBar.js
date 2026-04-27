@@ -9,25 +9,20 @@
 import { i18n } from "../i18n.js";
 
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
-// 正式路由顺序：Home, HSK, Kids, Business, Travel, Culture, Speaking, Stroke, Hanja, Review, Resources, Teacher
+// 顶栏：한자/필순 분리、会话/资料/文化独立；复习不入口顶栏
 const NAV_ITEMS_FULL = [
-  { href: "/index.html#home",     key: "nav.home",      label: "홈",            color: "#3b82f6" },
-  { href: "/index.html#hsk",     key: "nav.hsk",       label: "HSK 학습",      color: "#22c55e" },
-  { href: "/index.html#kids",    key: "nav.kids",      label: "어린이",        color: "#ec4899" },
-  { href: "/index.html#business", key: "nav.business", label: "비즈니스",      color: "#0ea5e9" },
-  { href: "/index.html#travel",  key: "nav.travel",     label: "여행중국어",    color: "#06b6d4" },
-  { href: "/index.html#culture", key: "nav.culture",   label: "문화",          color: "#eab308" },
-  { href: "/index.html#speaking", key: "nav.speaking", label: "회화",          color: "#ef4444" },
-  { href: "/index.html#stroke",  key: "nav.stroke",    label: "한자 필순",     color: "#f97316" },
-  { href: "/index.html#hanja",   key: "nav.hanjagongfu", label: "한자공부",    color: "#a855f7" },
-  { href: "/index.html#review",  key: "nav.review",    label: "복습",          color: "#8b5cf6" },
-  { href: "/index.html#resources", key: "nav.resources", label: "자료",      color: "#10b981" },
-  { href: "/index.html#teacher", key: "nav.teacher",   label: "교사 워크스페이스",  color: "#f43f5e" },
-  { href: "/index.html#my",      key: "nav.my",        label: "내 학습",       color: "#64748b" },
+  { href: "/index.html#home", key: "nav.home", label: "홈", color: "#3b82f6" },
+  { href: "/index.html#exam", key: "nav.exam", label: "시험 학습", color: "#22c55e" },
+  { href: "/index.html#kids", key: "nav.kids", label: "어린이 중국어", color: "#ec4899" },
+  { href: "/index.html#conversation", key: "nav.conversation", label: "회화", color: "#ef4444" },
+  { href: "/index.html#hanja", key: "nav.hanja", label: "한자 학습", color: "#8b5cf6" },
+  { href: "/index.html#dictionary", key: "nav.dictionary", label: "汉语字典", color: "#0284c7" },
+  { href: "/index.html#stroke", key: "nav.stroke", label: "필순/따라쓰기", color: "#0d9488" },
+  { href: "/index.html#culture", key: "nav.culture", label: "문화", color: "#d97706" },
+  { href: "/index.html#resources", key: "nav.resources", label: "자료", color: "#10b981" },
+  { href: "/index.html#teacher", key: "nav.teacher", label: "교사 워크스페이스", color: "#f43f5e" },
+  { href: "/index.html#my-learning", key: "nav.myLearning", label: "내 학습", color: "#64748b" },
 ];
-
-// ✅ 로그인 링크（你可改成 /login 或 /pages/login.html）
-const LOGIN_HREF = "/pages/login.html";
 
 function t(key, fallback = "") {
   try {
@@ -49,11 +44,19 @@ function isIndexPage() {
   return p === "/" || p.endsWith("/index.html");
 }
 
+function hashBase(hash) {
+  const s = String(hash || "").trim();
+  if (!s) return "";
+  const q = s.indexOf("?");
+  return (q >= 0 ? s.slice(0, q) : s).split("&")[0];
+}
+
 function setActive(rootEl) {
   if (!rootEl) return;
 
   const curPath = normalizePath(location.pathname);
   const curHash = (location.hash || "").trim();
+  const curBase = hashBase(curHash);
 
   rootEl.querySelectorAll('a[data-nav="1"]').forEach((a) => {
     const href = a.getAttribute("href") || "";
@@ -65,11 +68,34 @@ function setActive(rootEl) {
     // ✅ 首页：path 匹配 + hash 匹配（有 hash 的话）
     if (navPath.endsWith("/index.html") && (curPath === "/" || curPath.endsWith("/index.html"))) {
       const wantHash = toHash ? `#${toHash}` : "";
-      const teacherHashes = new Set(["#teacher", "#teacher-materials", "#teacher-courses", "#lumina-teacher-stage0"]);
+      const wantBase = hashBase(wantHash);
+      const teacherHashes = new Set([
+        "#teacher",
+        "#teacher-materials",
+        "#teacher-create-material",
+        "#teacher-courses",
+        "#teacher-assets",
+        "#teacher-asset-editor",
+        "#teacher-publishing",
+        "#teacher-review",
+        "#teacher-profile",
+        "#teacher-ai",
+        "#teacher-console",
+        "#teacher-apply",
+        "#teacher-status",
+        "#teacher-listing",
+      ]);
       if (wantHash === "#teacher") {
         active = teacherHashes.has(curHash);
+      } else if (wantBase === "#exam") {
+        active = curBase === "#exam" || curBase === "#exam-learning" || curBase === "#hsk";
+      } else if (wantBase === "#conversation") {
+        active = curBase === "#conversation" || curBase === "#speaking" || curBase === "#travel" || curBase === "#business";
+      } else if (wantBase === "#my-learning") {
+        const myArea = new Set(["#my-learning", "#my", "#my-content", "#my-orders"]);
+        active = myArea.has(curBase);
       } else {
-        active = wantHash ? curHash === wantHash : true;
+        active = wantHash ? curBase === wantBase : true;
       }
     } else {
       // ✅ 其它页面：只看 pathname
@@ -100,6 +126,11 @@ function applyI18n(rootEl) {
   try { i18n?.apply?.(rootEl); } catch {}
   syncLangButtons(rootEl);
   setActive(rootEl);
+  try {
+    syncAuthBlock(rootEl);
+  } catch {
+    /* */
+  }
 }
 
 let globalBound = false;
@@ -115,6 +146,98 @@ function bindGlobalOnce() {
   // ✅ navbar highlight update hooks
   try { i18n?.on?.("change", () => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
   try { i18n?.onChange?.(() => { if (lastRootEl) applyI18n(lastRootEl); }); } catch {}
+  window.addEventListener("joy:authChanged", () => {
+    if (lastRootEl) syncAuthBlock(lastRootEl);
+  });
+}
+
+let __authModuleCache = null;
+/** @returns {Promise<import('../auth/authService.js')>} */
+function loadAuthService() {
+  if (__authModuleCache) return Promise.resolve(__authModuleCache);
+  return import("/ui/auth/authService.js").then((m) => {
+    __authModuleCache = m;
+    return m;
+  });
+}
+
+/**
+ * 顶部：未登录为「登录/注册」；已登录为昵称 + 登出（「我的学习」为主导航 #my-learning）。
+ * @param {HTMLElement} rootEl
+ */
+function syncAuthBlock(rootEl) {
+  const box = rootEl?.querySelector?.("[data-joy-auth]");
+  if (!box) return;
+  void loadAuthService().then((mod) => {
+    const u = mod.getCurrentSessionAuthUser();
+    if (!u) {
+      box.innerHTML = `
+      <a href="/index.html#auth-login" class="joy-auth-link" data-joy-auth-login data-i18n="auth.nav_login">${escapeAuthText(t("auth.nav_login", "Login"))}</a>
+      <a href="/index.html#auth-register" class="joy-auth-link joy-auth-link--alt" data-joy-auth-register data-i18n="auth.nav_register">${escapeAuthText(
+        t("auth.nav_register", "Register"),
+      )}</a>
+    `;
+    } else {
+      const name = escapeAuthText(String(u.displayName || u.email || "User").trim() || "User");
+      const tState = mod.getTeacherNavRoleState();
+      const myLabel = escapeAuthText(t("nav.myLearning", t("nav.my", "My learning")));
+      let teacherEntry = "";
+      if (tState === "active") {
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_workspace">${escapeAuthText(
+          t("auth.teacher_nav_workspace", t("nav.teacher", "Teacher")),
+        )}</a>`;
+      } else if (tState === "pending") {
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_pending">${escapeAuthText(
+          t("auth.teacher_nav_pending", "Under review"),
+        )}</a>`;
+      } else if (tState === "rejected") {
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux joy-auth-aux--pending" data-joy-teacher data-i18n="auth.teacher_nav_reapply">${escapeAuthText(
+          t("auth.teacher_nav_reapply", t("auth.teacher_nav_rejected", "Re-apply")),
+        )}</a>`;
+      } else {
+        teacherEntry = `<a href="/index.html#teacher" class="joy-auth-aux" data-joy-teacher data-i18n="auth.teacher_nav_apply">${escapeAuthText(
+          t("auth.teacher_nav_apply", "Apply to teach"),
+        )}</a>`;
+      }
+      box.innerHTML = `
+      <a href="/index.html#my-learning" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.myLearning">${myLabel}</a>
+      ${teacherEntry}
+      <span class="joy-auth-name" title="${name}">${name}</span>
+      <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
+    `;
+    }
+    i18n?.apply?.(box);
+    box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", () => {
+      mod.logoutUser();
+      syncAuthBlock(rootEl);
+    });
+    ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]", "[data-joy-teacher]"].forEach((sel) => {
+      box.querySelector(sel)?.addEventListener("click", (e) => {
+        if (!isIndexPage()) return;
+        e.preventDefault();
+        const a = /** @type {HTMLAnchorElement} */ (e.currentTarget);
+        const href = a.getAttribute("href") || "";
+        const hash = href.split("#")[1];
+        if (!hash) return;
+        import("/ui/router.js")
+          .then((r) => {
+            r.navigateTo("#" + hash, { force: true });
+          })
+          .catch(() => {
+            location.href = a.href;
+          });
+        setActive(rootEl);
+      });
+    });
+  });
+}
+
+function escapeAuthText(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 /**
@@ -161,9 +284,16 @@ function ensureNavStylesOnce() {
     .topbar .lang{display:flex;align-items:center;gap:6px}
     .topbar .lang button{border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;cursor:pointer;font-weight:800;font-size:12px}
     .topbar .lang button.active{border-color:#2563eb;background:rgba(37,99,235,.08);color:#2563eb}
-    .topbar .login a{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px}
-    .topbar .login a:hover{transform:translateY(-1px)}
-    nav.site-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .topbar .joy-auth{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:min(100%, 22rem);justify-content:flex-end}
+    .joy-auth-name{max-width:7.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:800;color:#0f172a}
+    .joy-auth a.joy-auth-link,.joy-auth-link{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(148,163,184,.6);background:#fff;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;text-decoration:none;color:#0f172a}
+    .joy-auth-aux{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;text-decoration:none;color:#334155;max-width:8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .joy-auth-aux--pending{border-color:#f59e0b;background:rgba(245,158,11,.08);color:#b45309}
+    .joy-auth-link--alt{border-style:dashed}
+    .joy-auth-link:hover{transform:translateY(-1px)}
+    .joy-auth-logout{display:inline-flex;align-items:center;border:1px solid rgba(148,163,184,.5);background:#f8fafc;border-radius:12px;padding:6px 10px;font-weight:800;font-size:12px;cursor:pointer;color:#334155}
+    .joy-auth-logout:hover{background:#e2e8f0}
+    nav.site-nav{display:flex;gap:8px;row-gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
     nav.site-nav a{padding:9px 12px;border-radius:999px;border:1px solid rgba(226,232,240,.9);background:#fff;font-weight:800;font-size:13px}
     nav.site-nav a.active{border-color:var(--navc,#2563eb);background:color-mix(in srgb, var(--navc,#2563eb) 12%, white)}
     nav.site-nav.mini{gap:6px}
@@ -204,9 +334,7 @@ export function mountNavBar(rootEl) {
           <button id="btnJP" type="button" aria-label="Japanese" data-lang="jp">JP</button>
         </div>
 
-        <div class="login">
-          <a href="${LOGIN_HREF}" data-i18n="nav_login">로그인</a>
-        </div>
+        <div class="joy-auth" data-joy-auth></div>
       </div>
     </div>
 

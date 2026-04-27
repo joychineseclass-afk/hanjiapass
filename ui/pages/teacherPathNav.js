@@ -1,3 +1,7 @@
+import { getCommerceStoreSync, userHasRole } from "../lumina-commerce/store.js";
+import { USER_ROLE } from "../lumina-commerce/enums.js";
+import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+
 function escapeHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -8,69 +12,186 @@ function escapeHtml(s) {
 }
 
 /**
- * 返回教师工作台（统一入口 #teacher）。
+ * 当前会话用户是否具备审核台权限（演示：commerce store 中的 reviewer / admin 角色）。
+ * @param {import('../lumina-commerce/store.js').CommerceStoreSnapshot|null} snap
+ * @param {string|null|undefined} userId
+ */
+export function userCanAccessTeacherReviewConsole(snap, userId) {
+  if (!snap || userId == null || userId === "") return false;
+  const uid = String(userId);
+  return userHasRole(snap, uid, USER_ROLE.reviewer) || userHasRole(snap, uid, USER_ROLE.admin);
+}
+
+/** 依赖已初始化的 commerce store（教师页在 getTeacherPageContext 后会就绪）。 */
+export function currentUserCanAccessTeacherReviewConsoleSync() {
+  const snap = getCommerceStoreSync();
+  const u = getCurrentUser();
+  if (!snap || !u?.id || u.isGuest) return false;
+  return userCanAccessTeacherReviewConsole(snap, String(u.id));
+}
+
+/**
+ * 返回「我的工作台」（统一入口 #teacher）。
  * @param {(path: string, params?: object) => string} tx
  */
 export function teacherBackToWorkspaceHtml(tx) {
   const m = (path) => escapeHtml(tx(path));
   return `<p class="teacher-admin-back">
-    <a href="#teacher" class="teacher-back-link">${m("teacher.nav.back_workspace")}</a>
+    <a href="#teacher" class="teacher-back-link">${m("teacher.nav.back_mine_workbench")}</a>
   </p>`;
 }
 
-/**
- * 教师模块轻量子导航：工作台 + 教材 / 课程 / 上架（当前项高亮）。
- * @param {'workspace' | 'materials' | 'courses' | 'listing'} active
- * @param {(path: string, params?: object) => string} tx
- */
-export function teacherWorkspaceSubnavHtml(active, tx) {
-  const m = (path) => escapeHtml(tx(path));
-  /** @param {'workspace'|'materials'|'courses'|'listing'} kind */
-  const item = (kind) => {
-    const isCurrent = active === kind;
-    let href = "#teacher";
-    let label = m("teacher.workspace.title");
-    if (kind === "materials") {
-      href = "#teacher-materials";
-      label = m("teacher.hub.materials.title");
-    } else if (kind === "courses") {
-      href = "#teacher-courses";
-      label = m("teacher.hub.courses.title");
-    } else if (kind === "listing") {
-      href = "#lumina-teacher-stage0";
-      label = m("teacher.hub.listing.title");
-    }
-    if (isCurrent) {
-      return `<span class="teacher-subnav-item teacher-subnav-item--current" aria-current="page">${label}</span>`;
-    }
-    return `<a class="teacher-subnav-item teacher-subnav-item--link" href="${href}">${label}</a>`;
-  };
+const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
+  "workspace",
+  "profile",
+  "create_material",
+  "materials",
+  "courses",
+  "assets",
+  "my_sales",
+  "my_purchase",
+  "ai_assistant",
+  "classroom_console",
+]);
 
-  return `
-    <nav class="teacher-subnav card" aria-label="${m("teacher.nav.subnav_aria")}">
-      <div class="teacher-subnav-row">
-        ${item("workspace")}
-        ${item("materials")}
-        ${item("courses")}
-        ${item("listing")}
-      </div>
-    </nav>
-  `;
+/** 老师端「我的销售」相关界面：上架 / 发布 / Stage0 控制台（过渡期多 hash 共用高亮）。 */
+function isTeacherSalesSurfaceActive(active) {
+  return active === "publishing" || active === "listing" || active === "pub_review";
 }
 
 /**
- * 教材 / 课程 / Listing 轻量路径条（仅导航与展示，无数据关联）。
- * @param {'materials' | 'courses' | 'listing' | null} active 为 null 时三步均可点选（如工作台首页）
- * @param {(path: string, params?: object) => string} tx 通常为 safeUiText / commerceT
+ * 老师端模块导航单条：与已移除的横向 subnav 同一数据源，仅由侧栏 `renderTeacherAdminShell` 使用。
+ * @param {'workspace' | 'profile' | 'create_material' | 'materials' | 'courses' | 'assets' | 'my_sales' | 'my_purchase' | 'listing' | 'publishing' | 'review'} kind
+ * @param {string} active  当前高亮键（与页面 `renderTeacherAdminShell` 传入一致）
+ * @param {(path: string) => string} m  已转义安全文案
  */
-export function teacherPathStripHtml(active, tx) {
+function teacherModuleNavItemSpec(kind, active, m) {
+  let href = "#teacher";
+  let label = m("teacher.nav.mine_workbench");
+  let isCurrent = false;
+
+  if (kind === "workspace") {
+    isCurrent = active === "workspace";
+  } else if (kind === "profile") {
+    href = "#teacher-profile";
+    label = m("teacher.nav.teacher_profile");
+    isCurrent = active === "profile";
+  } else if (kind === "create_material") {
+    href = "#teacher-create-material";
+    label = m("teacher.nav.create_material");
+    isCurrent = active === "create_material";
+  } else if (kind === "materials") {
+    href = "#teacher-materials";
+    label = m("teacher.hub.materials.title");
+    isCurrent = active === "materials";
+  } else if (kind === "courses") {
+    href = "#teacher-courses";
+    label = m("teacher.hub.courses.title");
+    isCurrent = active === "courses";
+  } else if (kind === "assets") {
+    href = "#teacher-assets";
+    label = m("teacher.hub.assets.title");
+    isCurrent = active === "assets";
+  } else if (kind === "my_sales") {
+    href = "#teacher-publishing";
+    label = m("teacher.nav.my_sales");
+    isCurrent = isTeacherSalesSurfaceActive(active);
+  } else if (kind === "my_purchase") {
+    href = "#my-orders";
+    label = m("teacher.nav.my_purchase");
+    isCurrent = active === "my_purchase";
+  } else if (kind === "ai_assistant") {
+    href = "#teacher-ai";
+    label = m("teacher.nav.ai_assistant");
+    isCurrent = active === "ai_assistant";
+  } else if (kind === "classroom_console") {
+    href = "#teacher-console";
+    label = m("teacher.nav.classroom_console");
+    isCurrent = active === "classroom_console";
+  } else if (kind === "publishing" || kind === "listing") {
+    href = "#teacher-publishing";
+    label = m("teacher.nav.my_publishing");
+    isCurrent = isTeacherSalesSurfaceActive(active);
+  } else if (kind === "review") {
+    href = "#teacher-review";
+    label = m("teacher.nav.review_console");
+    isCurrent = active === "review";
+  }
+  return { href, label, isCurrent };
+}
+
+/**
+ * 侧栏内单链：块级纵向导航。
+ * @param {'workspace' | 'profile' | 'create_material' | 'materials' | 'courses' | 'assets' | 'my_sales' | 'my_purchase' | 'listing' | 'publishing' | 'review'} kind
+ * @param {string} active
+ * @param {(path: string) => string} m
+ */
+function teacherShellNavItemHtml(kind, active, m) {
+  const { href, label, isCurrent } = teacherModuleNavItemSpec(kind, active, m);
+  if (isCurrent) {
+    return `<span class="teacher-shell-nav-link teacher-shell-nav-link--current" aria-current="page">${label}</span>`;
+  }
+  return `<a class="teacher-shell-nav-link" href="${href}">${label}</a>`;
+}
+
+/**
+ * 老师端统一后台布局：左侧固定模块导航 + 右侧主内容。不改变 hash 与权限语义。
+ * @param {object} opts
+ * @param {string} opts.active  如 workspace、materials、create_material、my_sales、my_purchase、publishing、listing、review 等
+ * @param {(path: string, params?: object) => string} opts.tx
+ * @param {string} opts.mainHtml
+ * @param {boolean} [opts.showReviewConsole]  省略时按 currentUser 与 commerce store 同步判断
+ * @param {string} [opts.shellClass]  附加在 .teacher-shell 上的类名（如 teacher-page、teacher-manage-page）
+ * @param {string} [opts.brandKey]  侧栏品牌/模块标题的 i18n 路径，默认 teacher.workspace.hub_hero_kicker
+ */
+export function renderTeacherAdminShell(opts) {
+  const { active, tx, mainHtml } = opts;
   const m = (path) => escapeHtml(tx(path));
+  const showReview =
+    typeof opts.showReviewConsole === "boolean"
+      ? opts.showReviewConsole
+      : currentUserCanAccessTeacherReviewConsoleSync();
+  const includeReviewNav = showReview || active === "review";
+  const brandKey = opts.brandKey != null && opts.brandKey !== "" ? opts.brandKey : "teacher.workspace.hub_hero_kicker";
+  const shellClass = (opts.shellClass || "").trim();
+  const shellExtra = shellClass ? ` ${shellClass}` : "";
+  const kinds = includeReviewNav ? [...TEACHER_MODULE_NAV_ORDER, "review"] : [...TEACHER_MODULE_NAV_ORDER];
+  const navItems = kinds.map((k) => teacherShellNavItemHtml(/** @type {any} */ (k), active, m)).join("");
+
+  return `<div class="teacher-shell wrap${shellExtra}">
+    <aside class="teacher-shell-sidebar">
+      <div class="teacher-shell-brand">
+        <span class="teacher-shell-brand-text">${m(brandKey)}</span>
+      </div>
+      <nav class="teacher-shell-nav" aria-label="${m("teacher.nav.subnav_aria")}">
+        ${navItems}
+      </nav>
+    </aside>
+    <div class="teacher-shell-main">
+      <div class="teacher-main" data-teacher-main>${mainHtml}</div>
+    </div>
+  </div>`;
+}
+
+/**
+ * 工作流条：选教材/课程 → 建课堂资产 → 上架；进入课堂在资产或工作台完成。
+ * @param {'materials' | 'courses' | 'assets' | 'listing' | null} active
+ * @param {(path: string, params?: object) => string} tx
+ * @param {{ showLead?: boolean }} [options] 为 false 时不渲染段首说明句（与页面标题区副标去重，如 #teacher-assets）
+ */
+export function teacherPathStripHtml(active, tx, options = {}) {
+  const m = (path) => escapeHtml(tx(path));
+  const showLead = options.showLead !== false;
+  const leadHtml = showLead
+    ? `<p class="teacher-path-strip-lead">${m("teacher.path_strip.step2_lead")}</p>`
+    : "";
   const hrefs = {
     materials: "#teacher-materials",
     courses: "#teacher-courses",
-    listing: "#lumina-teacher-stage0",
+    assets: "#teacher-assets",
+    listing: "#teacher-publishing",
   };
-  /** @param {'materials'|'courses'|'listing'} kind */
+  /** @param {'materials'|'courses'|'assets'|'listing'} kind */
   const node = (kind) => {
     const isCurrent = active != null && active === kind;
     const label = m(`teacher.path_strip.${kind}`);
@@ -81,16 +202,28 @@ export function teacherPathStripHtml(active, tx) {
   };
 
   return `
-    <nav class="teacher-path-strip card" aria-label="${m("teacher.path_strip.aria")}">
+    <nav class="teacher-path-strip card${showLead ? "" : " teacher-path-strip--no-lead"}" aria-label="${m("teacher.path_strip.aria_mine")}">
+      ${leadHtml}
       <div class="teacher-path-strip-row">
         ${node("materials")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("courses")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
+        ${node("assets")}
+        <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("listing")}
       </div>
     </nav>
   `;
+}
+
+/**
+ * 课堂入口从课程/教材进入的说明（避免误以为路径坏了）。
+ * @param {(path: string, params?: object) => string} tx
+ */
+export function teacherPathStripClassroomHintHtml(tx) {
+  const m = (path) => escapeHtml(tx(path));
+  return `<p class="teacher-path-classroom-hint">${m("teacher.path_strip.classroom_from_mine")}</p>`;
 }
 
 /** @param {(path: string, params?: object) => string} tx */
@@ -109,7 +242,7 @@ export function teacherMaterialsNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.materials_next.path_b_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.materials_next.path_b_body")}</p>
-          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#lumina-teacher-stage0">${m("teacher.flow.cta_prepare_listing")}</a>
+          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#teacher-publishing">${m("teacher.flow.cta_prepare_listing")}</a>
         </div>
       </div>
     </section>
@@ -139,7 +272,7 @@ export function teacherCoursesNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_b_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.courses_next.path_b_body")}</p>
-          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#lumina-teacher-stage0">${m("teacher.flow.cta_register_listing")}</a>
+          <a class="teacher-guide-cta teacher-guide-cta--accent" href="#teacher-publishing">${m("teacher.flow.cta_register_listing")}</a>
         </div>
       </div>
       <p class="teacher-guide-panel-foot">

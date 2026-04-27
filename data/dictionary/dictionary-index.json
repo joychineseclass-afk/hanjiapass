@@ -1,0 +1,1141 @@
+[
+  {
+    "id": "hanzi_4eba",
+    "type": "char",
+    "query": "人",
+    "char": "人",
+    "pinyin": "rén",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_53e3",
+    "type": "char",
+    "query": "口",
+    "char": "口",
+    "pinyin": "kǒu",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_624b",
+    "type": "char",
+    "query": "手",
+    "char": "手",
+    "pinyin": "shǒu",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5927",
+    "type": "char",
+    "query": "大",
+    "char": "大",
+    "pinyin": "dà",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5c0f",
+    "type": "char",
+    "query": "小",
+    "char": "小",
+    "pinyin": "xiǎo",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e0a",
+    "type": "char",
+    "query": "上",
+    "char": "上",
+    "pinyin": "shàng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e0b",
+    "type": "char",
+    "query": "下",
+    "char": "下",
+    "pinyin": "xià",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_4e2d",
+    "type": "char",
+    "query": "中",
+    "char": "中",
+    "pinyin": "zhōng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_65e5",
+    "type": "char",
+    "query": "日",
+    "char": "日",
+    "pinyin": "rì",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6708",
+    "type": "char",
+    "query": "月",
+    "char": "月",
+    "pinyin": "yuè",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6c34",
+    "type": "char",
+    "query": "水",
+    "char": "水",
+    "pinyin": "shuǐ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_706b",
+    "type": "char",
+    "query": "火",
+    "char": "火",
+    "pinyin": "huǒ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5c71",
+    "type": "char",
+    "query": "山",
+    "char": "山",
+    "pinyin": "shān",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_6728",
+    "type": "char",
+    "query": "木",
+    "char": "木",
+    "pinyin": "mù",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_9a6c",
+    "type": "char",
+    "query": "马",
+    "char": "马",
+    "pinyin": "mǎ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5973",
+    "type": "char",
+    "query": "女",
+    "char": "女",
+    "pinyin": "nǚ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5b50",
+    "type": "char",
+    "query": "子",
+    "char": "子",
+    "pinyin": "zǐ",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_5b66",
+    "type": "char",
+    "query": "学",
+    "char": "学",
+    "pinyin": "xué",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_751f",
+    "type": "char",
+    "query": "生",
+    "char": "生",
+    "pinyin": "shēng",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "hanzi_597d",
+    "type": "char",
+    "query": "好",
+    "char": "好",
+    "pinyin": "hǎo",
+    "file": "hanzi-basic-001.json"
+  },
+  {
+    "id": "word_0001",
+    "type": "word",
+    "query": "人",
+    "word": "人",
+    "pinyin": "rén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0002",
+    "type": "word",
+    "query": "大人",
+    "word": "大人",
+    "pinyin": "dàrén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0003",
+    "type": "word",
+    "query": "人口",
+    "word": "人口",
+    "pinyin": "rénkǒu",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0004",
+    "type": "word",
+    "query": "中国",
+    "word": "中国",
+    "pinyin": "zhōngguó",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0005",
+    "type": "word",
+    "query": "中文",
+    "word": "中文",
+    "pinyin": "zhōngwén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0006",
+    "type": "word",
+    "query": "汉字",
+    "word": "汉字",
+    "pinyin": "hànzì",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0007",
+    "type": "word",
+    "query": "学习",
+    "word": "学习",
+    "pinyin": "xuéxí",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0008",
+    "type": "word",
+    "query": "学生",
+    "word": "学生",
+    "pinyin": "xuéshēng",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0009",
+    "type": "word",
+    "query": "老师",
+    "word": "老师",
+    "pinyin": "lǎoshī",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0010",
+    "type": "word",
+    "query": "学校",
+    "word": "学校",
+    "pinyin": "xuéxiào",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0011",
+    "type": "word",
+    "query": "朋友",
+    "word": "朋友",
+    "pinyin": "péngyǒu",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0012",
+    "type": "word",
+    "query": "家人",
+    "word": "家人",
+    "pinyin": "jiārén",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0013",
+    "type": "word",
+    "query": "爸爸",
+    "word": "爸爸",
+    "pinyin": "bàba",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0014",
+    "type": "word",
+    "query": "妈妈",
+    "word": "妈妈",
+    "pinyin": "māma",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0015",
+    "type": "word",
+    "query": "哥哥",
+    "word": "哥哥",
+    "pinyin": "gēge",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0016",
+    "type": "word",
+    "query": "姐姐",
+    "word": "姐姐",
+    "pinyin": "jiějie",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0017",
+    "type": "word",
+    "query": "弟弟",
+    "word": "弟弟",
+    "pinyin": "dìdi",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0018",
+    "type": "word",
+    "query": "妹妹",
+    "word": "妹妹",
+    "pinyin": "mèimei",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0019",
+    "type": "word",
+    "query": "你好",
+    "word": "你好",
+    "pinyin": "nǐ hǎo",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "word_0020",
+    "type": "word",
+    "query": "谢谢",
+    "word": "谢谢",
+    "pinyin": "xièxie",
+    "file": "words-basic-001.json"
+  },
+  {
+    "id": "cedict_word_0001",
+    "type": "word",
+    "query": "再见",
+    "word": "再见",
+    "pinyin": "zàijiàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
+  },
+  {
+    "id": "cedict_word_0003",
+    "type": "word",
+    "query": "中国人",
+    "word": "中国人",
+    "pinyin": "zhōngguórén",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
+  },
+  {
+    "id": "cedict_word_0004",
+    "type": "word",
+    "query": "汉语",
+    "word": "汉语",
+    "pinyin": "hànyǔ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT draft reviewed"
+  },
+  {
+    "id": "cedict_word_0012",
+    "type": "word",
+    "query": "工作",
+    "word": "工作",
+    "pinyin": "gōngzuò",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0013",
+    "type": "word",
+    "query": "时间",
+    "word": "时间",
+    "pinyin": "shíjiān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0014",
+    "type": "word",
+    "query": "今天",
+    "word": "今天",
+    "pinyin": "jīntiān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0015",
+    "type": "word",
+    "query": "明天",
+    "word": "明天",
+    "pinyin": "míngtiān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0016",
+    "type": "word",
+    "query": "昨天",
+    "word": "昨天",
+    "pinyin": "zuótiān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0017",
+    "type": "word",
+    "query": "吃饭",
+    "word": "吃饭",
+    "pinyin": "chīfàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0018",
+    "type": "word",
+    "query": "喝水",
+    "word": "喝水",
+    "pinyin": "hēshuǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0019",
+    "type": "word",
+    "query": "睡觉",
+    "word": "睡觉",
+    "pinyin": "shuìjiào",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0020",
+    "type": "word",
+    "query": "飞机",
+    "word": "飞机",
+    "pinyin": "fēijī",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0021",
+    "type": "word",
+    "query": "火车",
+    "word": "火车",
+    "pinyin": "huǒchē",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0022",
+    "type": "word",
+    "query": "汽车",
+    "word": "汽车",
+    "pinyin": "qìchē",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0023",
+    "type": "word",
+    "query": "医院",
+    "word": "医院",
+    "pinyin": "yīyuàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0024",
+    "type": "word",
+    "query": "商店",
+    "word": "商店",
+    "pinyin": "shāngdiàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0025",
+    "type": "word",
+    "query": "银行",
+    "word": "银行",
+    "pinyin": "yínháng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0026",
+    "type": "word",
+    "query": "国家",
+    "word": "国家",
+    "pinyin": "guójiā",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0027",
+    "type": "word",
+    "query": "世界",
+    "word": "世界",
+    "pinyin": "shìjiè",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0028",
+    "type": "word",
+    "query": "问题",
+    "word": "问题",
+    "pinyin": "wèntí",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0029",
+    "type": "word",
+    "query": "事情",
+    "word": "事情",
+    "pinyin": "shìqing",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0030",
+    "type": "word",
+    "query": "希望",
+    "word": "希望",
+    "pinyin": "xīwàng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0031",
+    "type": "word",
+    "query": "觉得",
+    "word": "觉得",
+    "pinyin": "juéde",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0032",
+    "type": "word",
+    "query": "知道",
+    "word": "知道",
+    "pinyin": "zhīdao",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0033",
+    "type": "word",
+    "query": "可以",
+    "word": "可以",
+    "pinyin": "kěyǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0034",
+    "type": "word",
+    "query": "应该",
+    "word": "应该",
+    "pinyin": "yīnggāi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0035",
+    "type": "word",
+    "query": "因为",
+    "word": "因为",
+    "pinyin": "yīnwèi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0036",
+    "type": "word",
+    "query": "所以",
+    "word": "所以",
+    "pinyin": "suǒyǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0037",
+    "type": "word",
+    "query": "但是",
+    "word": "但是",
+    "pinyin": "dànshì",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0038",
+    "type": "word",
+    "query": "还是",
+    "word": "还是",
+    "pinyin": "háishì",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0039",
+    "type": "word",
+    "query": "或者",
+    "word": "或者",
+    "pinyin": "huòzhě",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0040",
+    "type": "word",
+    "query": "如果",
+    "word": "如果",
+    "pinyin": "rúguǒ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0041",
+    "type": "word",
+    "query": "虽然",
+    "word": "虽然",
+    "pinyin": "suīrán",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0042",
+    "type": "word",
+    "query": "然后",
+    "word": "然后",
+    "pinyin": "ránhòu",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0043",
+    "type": "word",
+    "query": "现在",
+    "word": "现在",
+    "pinyin": "xiànzài",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0044",
+    "type": "word",
+    "query": "以后",
+    "word": "以后",
+    "pinyin": "yǐhòu",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0045",
+    "type": "word",
+    "query": "之前",
+    "word": "之前",
+    "pinyin": "zhīqián",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0046",
+    "type": "word",
+    "query": "非常",
+    "word": "非常",
+    "pinyin": "fēicháng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0047",
+    "type": "word",
+    "query": "比较",
+    "word": "比较",
+    "pinyin": "bǐjiào",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0048",
+    "type": "word",
+    "query": "还有",
+    "word": "还有",
+    "pinyin": "háiyǒu",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0049",
+    "type": "word",
+    "query": "就是",
+    "word": "就是",
+    "pinyin": "jiùshì",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0050",
+    "type": "word",
+    "query": "什么",
+    "word": "什么",
+    "pinyin": "shénme",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0051",
+    "type": "word",
+    "query": "怎么",
+    "word": "怎么",
+    "pinyin": "zěnme",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0052",
+    "type": "word",
+    "query": "为什么",
+    "word": "为什么",
+    "pinyin": "wèishénme",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0053",
+    "type": "word",
+    "query": "多少",
+    "word": "多少",
+    "pinyin": "duōshǎo",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0054",
+    "type": "word",
+    "query": "儿子",
+    "word": "儿子",
+    "pinyin": "érzi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0055",
+    "type": "word",
+    "query": "女儿",
+    "word": "女儿",
+    "pinyin": "nǚér",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0056",
+    "type": "word",
+    "query": "丈夫",
+    "word": "丈夫",
+    "pinyin": "zhàngfū",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0057",
+    "type": "word",
+    "query": "妻子",
+    "word": "妻子",
+    "pinyin": "qīzǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0058",
+    "type": "word",
+    "query": "父亲",
+    "word": "父亲",
+    "pinyin": "fùqīn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0059",
+    "type": "word",
+    "query": "母亲",
+    "word": "母亲",
+    "pinyin": "mǔqīn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0060",
+    "type": "word",
+    "query": "名字",
+    "word": "名字",
+    "pinyin": "míngzi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0061",
+    "type": "word",
+    "query": "电话",
+    "word": "电话",
+    "pinyin": "diànhuà",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0062",
+    "type": "word",
+    "query": "地址",
+    "word": "地址",
+    "pinyin": "dìzhǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0063",
+    "type": "word",
+    "query": "公司",
+    "word": "公司",
+    "pinyin": "gōngsī",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0064",
+    "type": "word",
+    "query": "欢迎",
+    "word": "欢迎",
+    "pinyin": "huānyíng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0066",
+    "type": "word",
+    "query": "对不起",
+    "word": "对不起",
+    "pinyin": "duìbuqǐ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0067",
+    "type": "word",
+    "query": "没关系",
+    "word": "没关系",
+    "pinyin": "méiguānxi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0068",
+    "type": "word",
+    "query": "请坐",
+    "word": "请坐",
+    "pinyin": "qǐngzuò",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0069",
+    "type": "word",
+    "query": "请问",
+    "word": "请问",
+    "pinyin": "qǐngwèn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0070",
+    "type": "word",
+    "query": "多少钱",
+    "word": "多少钱",
+    "pinyin": "duōshǎoqián",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0071",
+    "type": "word",
+    "query": "天气",
+    "word": "天气",
+    "pinyin": "tiānqì",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0072",
+    "type": "word",
+    "query": "下雨",
+    "word": "下雨",
+    "pinyin": "xiàyǔ",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0073",
+    "type": "word",
+    "query": "太阳",
+    "word": "太阳",
+    "pinyin": "tàiyang",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0074",
+    "type": "word",
+    "query": "冷",
+    "word": "冷",
+    "pinyin": "lěng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0075",
+    "type": "word",
+    "query": "热",
+    "word": "热",
+    "pinyin": "rè",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0076",
+    "type": "word",
+    "query": "高",
+    "word": "高",
+    "pinyin": "gāo",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0077",
+    "type": "word",
+    "query": "新",
+    "word": "新",
+    "pinyin": "xīn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0078",
+    "type": "word",
+    "query": "旧",
+    "word": "旧",
+    "pinyin": "jiù",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0079",
+    "type": "word",
+    "query": "对",
+    "word": "对",
+    "pinyin": "duì",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0080",
+    "type": "word",
+    "query": "错",
+    "word": "错",
+    "pinyin": "cuò",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0081",
+    "type": "word",
+    "query": "来",
+    "word": "来",
+    "pinyin": "lái",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0082",
+    "type": "word",
+    "query": "去",
+    "word": "去",
+    "pinyin": "qù",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0083",
+    "type": "word",
+    "query": "看",
+    "word": "看",
+    "pinyin": "kàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0084",
+    "type": "word",
+    "query": "听",
+    "word": "听",
+    "pinyin": "tīng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0085",
+    "type": "word",
+    "query": "说",
+    "word": "说",
+    "pinyin": "shuō",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0086",
+    "type": "word",
+    "query": "读",
+    "word": "读",
+    "pinyin": "dú",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0087",
+    "type": "word",
+    "query": "写",
+    "word": "写",
+    "pinyin": "xiě",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0088",
+    "type": "word",
+    "query": "买",
+    "word": "买",
+    "pinyin": "mǎi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0089",
+    "type": "word",
+    "query": "卖",
+    "word": "卖",
+    "pinyin": "mài",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0090",
+    "type": "word",
+    "query": "开",
+    "word": "开",
+    "pinyin": "kāi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0091",
+    "type": "word",
+    "query": "关",
+    "word": "关",
+    "pinyin": "guān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0092",
+    "type": "word",
+    "query": "门",
+    "word": "门",
+    "pinyin": "mén",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0093",
+    "type": "word",
+    "query": "房间",
+    "word": "房间",
+    "pinyin": "fángjiān",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0094",
+    "type": "word",
+    "query": "桌子",
+    "word": "桌子",
+    "pinyin": "zhuōzi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0095",
+    "type": "word",
+    "query": "椅子",
+    "word": "椅子",
+    "pinyin": "yǐzi",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0096",
+    "type": "word",
+    "query": "书",
+    "word": "书",
+    "pinyin": "shū",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0097",
+    "type": "word",
+    "query": "钱",
+    "word": "钱",
+    "pinyin": "qián",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0098",
+    "type": "word",
+    "query": "照片",
+    "word": "照片",
+    "pinyin": "zhàopiàn",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0099",
+    "type": "word",
+    "query": "电影",
+    "word": "电影",
+    "pinyin": "diànyǐng",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  },
+  {
+    "id": "cedict_word_0100",
+    "type": "word",
+    "query": "音乐",
+    "word": "音乐",
+    "pinyin": "yīnyuè",
+    "file": "words-cedict-001.json",
+    "source": "CC-CEDICT"
+  }
+]

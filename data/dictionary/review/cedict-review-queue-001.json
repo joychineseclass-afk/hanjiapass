@@ -1,0 +1,1718 @@
+{
+  "sourceFile": "words-cedict-001.json",
+  "total": 100,
+  "reviewed": 5,
+  "needsReview": 95,
+  "items": [
+    {
+      "id": "cedict_word_0006",
+      "word": "中国",
+      "traditional": "中國",
+      "pinyin": "zhōngguó",
+      "meaningEn": "China; Middle Kingdom",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0007",
+      "word": "学习",
+      "traditional": "學習",
+      "pinyin": "xuéxí",
+      "meaningEn": "to learn; to study",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0008",
+      "word": "老师",
+      "traditional": "老師",
+      "pinyin": "lǎoshī",
+      "meaningEn": "teacher",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0009",
+      "word": "学生",
+      "traditional": "學生",
+      "pinyin": "xuéshēng",
+      "meaningEn": "student",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0010",
+      "word": "中文",
+      "traditional": "中文",
+      "pinyin": "zhōngwén",
+      "meaningEn": "Chinese language",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0011",
+      "word": "汉字",
+      "traditional": "漢字",
+      "pinyin": "hànzì",
+      "meaningEn": "Chinese character",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0012",
+      "word": "工作",
+      "traditional": "工作",
+      "pinyin": "gōngzuò",
+      "meaningEn": "work; job",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0013",
+      "word": "时间",
+      "traditional": "時間",
+      "pinyin": "shíjiān",
+      "meaningEn": "time",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0014",
+      "word": "今天",
+      "traditional": "今天",
+      "pinyin": "jīntiān",
+      "meaningEn": "today",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0015",
+      "word": "明天",
+      "traditional": "明天",
+      "pinyin": "míngtiān",
+      "meaningEn": "tomorrow",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0016",
+      "word": "昨天",
+      "traditional": "昨天",
+      "pinyin": "zuótiān",
+      "meaningEn": "yesterday",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0017",
+      "word": "吃饭",
+      "traditional": "吃飯",
+      "pinyin": "chīfàn",
+      "meaningEn": "to eat a meal; dining",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0018",
+      "word": "喝水",
+      "traditional": "喝水",
+      "pinyin": "hēshuǐ",
+      "meaningEn": "to drink water",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0019",
+      "word": "睡觉",
+      "traditional": "睡覺",
+      "pinyin": "shuìjiào",
+      "meaningEn": "to sleep",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0020",
+      "word": "飞机",
+      "traditional": "飛機",
+      "pinyin": "fēijī",
+      "meaningEn": "airplane; aeroplane",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0021",
+      "word": "火车",
+      "traditional": "火車",
+      "pinyin": "huǒchē",
+      "meaningEn": "train",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0022",
+      "word": "汽车",
+      "traditional": "汽車",
+      "pinyin": "qìchē",
+      "meaningEn": "car; automobile",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0023",
+      "word": "医院",
+      "traditional": "醫院",
+      "pinyin": "yīyuàn",
+      "meaningEn": "hospital",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0024",
+      "word": "商店",
+      "traditional": "商店",
+      "pinyin": "shāngdiàn",
+      "meaningEn": "shop; store",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0025",
+      "word": "银行",
+      "traditional": "銀行",
+      "pinyin": "yínháng",
+      "meaningEn": "bank",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0026",
+      "word": "国家",
+      "traditional": "國家",
+      "pinyin": "guójiā",
+      "meaningEn": "country; nation",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0027",
+      "word": "世界",
+      "traditional": "世界",
+      "pinyin": "shìjiè",
+      "meaningEn": "world",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0028",
+      "word": "问题",
+      "traditional": "問題",
+      "pinyin": "wèntí",
+      "meaningEn": "question; problem",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0029",
+      "word": "事情",
+      "traditional": "事情",
+      "pinyin": "shìqing",
+      "meaningEn": "matter; affair",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0030",
+      "word": "希望",
+      "traditional": "希望",
+      "pinyin": "xīwàng",
+      "meaningEn": "to hope; hope",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0031",
+      "word": "觉得",
+      "traditional": "覺得",
+      "pinyin": "juéde",
+      "meaningEn": "to think; to feel",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0032",
+      "word": "知道",
+      "traditional": "知道",
+      "pinyin": "zhīdao",
+      "meaningEn": "to know",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0033",
+      "word": "可以",
+      "traditional": "可以",
+      "pinyin": "kěyǐ",
+      "meaningEn": "can; may",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0034",
+      "word": "应该",
+      "traditional": "應該",
+      "pinyin": "yīnggāi",
+      "meaningEn": "should; ought to",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0035",
+      "word": "因为",
+      "traditional": "因為",
+      "pinyin": "yīnwèi",
+      "meaningEn": "because",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0036",
+      "word": "所以",
+      "traditional": "所以",
+      "pinyin": "suǒyǐ",
+      "meaningEn": "so; therefore",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0037",
+      "word": "但是",
+      "traditional": "但是",
+      "pinyin": "dànshì",
+      "meaningEn": "but; however",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0038",
+      "word": "还是",
+      "traditional": "還是",
+      "pinyin": "háishì",
+      "meaningEn": "still; or",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0039",
+      "word": "或者",
+      "traditional": "或者",
+      "pinyin": "huòzhě",
+      "meaningEn": "or; perhaps",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0040",
+      "word": "如果",
+      "traditional": "如果",
+      "pinyin": "rúguǒ",
+      "meaningEn": "if",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0041",
+      "word": "虽然",
+      "traditional": "雖然",
+      "pinyin": "suīrán",
+      "meaningEn": "although",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0042",
+      "word": "然后",
+      "traditional": "然後",
+      "pinyin": "ránhòu",
+      "meaningEn": "then; after that",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0043",
+      "word": "现在",
+      "traditional": "現在",
+      "pinyin": "xiànzài",
+      "meaningEn": "now; at present",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0044",
+      "word": "以后",
+      "traditional": "以後",
+      "pinyin": "yǐhòu",
+      "meaningEn": "after; later",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0045",
+      "word": "之前",
+      "traditional": "之前",
+      "pinyin": "zhīqián",
+      "meaningEn": "before; previously",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0046",
+      "word": "非常",
+      "traditional": "非常",
+      "pinyin": "fēicháng",
+      "meaningEn": "very; extremely",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0047",
+      "word": "比较",
+      "traditional": "比較",
+      "pinyin": "bǐjiào",
+      "meaningEn": "to compare; relatively",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0048",
+      "word": "还有",
+      "traditional": "還有",
+      "pinyin": "háiyǒu",
+      "meaningEn": "also; there is still",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0049",
+      "word": "就是",
+      "traditional": "就是",
+      "pinyin": "jiùshì",
+      "meaningEn": "exactly; that is",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0050",
+      "word": "什么",
+      "traditional": "什麼",
+      "pinyin": "shénme",
+      "meaningEn": "what",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0051",
+      "word": "怎么",
+      "traditional": "怎麼",
+      "pinyin": "zěnme",
+      "meaningEn": "how",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0052",
+      "word": "为什么",
+      "traditional": "為什麼",
+      "pinyin": "wèishénme",
+      "meaningEn": "why",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cedict_word_0053",
+      "word": "多少",
+      "traditional": "多少",
+      "pinyin": "duōshǎo",
+      "meaningEn": "how many; how much",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0054",
+      "word": "儿子",
+      "traditional": "兒子",
+      "pinyin": "érzi",
+      "meaningEn": "son",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0055",
+      "word": "女儿",
+      "traditional": "女兒",
+      "pinyin": "nǚér",
+      "meaningEn": "daughter",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0056",
+      "word": "丈夫",
+      "traditional": "丈夫",
+      "pinyin": "zhàngfū",
+      "meaningEn": "husband",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0057",
+      "word": "妻子",
+      "traditional": "妻子",
+      "pinyin": "qīzǐ",
+      "meaningEn": "wife",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0058",
+      "word": "父亲",
+      "traditional": "父親",
+      "pinyin": "fùqīn",
+      "meaningEn": "father",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0059",
+      "word": "母亲",
+      "traditional": "母親",
+      "pinyin": "mǔqīn",
+      "meaningEn": "mother",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0060",
+      "word": "名字",
+      "traditional": "名字",
+      "pinyin": "míngzi",
+      "meaningEn": "name",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0061",
+      "word": "电话",
+      "traditional": "電話",
+      "pinyin": "diànhuà",
+      "meaningEn": "telephone; phone call",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0062",
+      "word": "地址",
+      "traditional": "地址",
+      "pinyin": "dìzhǐ",
+      "meaningEn": "address",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0063",
+      "word": "公司",
+      "traditional": "公司",
+      "pinyin": "gōngsī",
+      "meaningEn": "company",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0064",
+      "word": "欢迎",
+      "traditional": "歡迎",
+      "pinyin": "huānyíng",
+      "meaningEn": "to welcome",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0065",
+      "word": "谢谢",
+      "traditional": "謝謝",
+      "pinyin": "xièxie",
+      "meaningEn": "thank you; thanks",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0066",
+      "word": "对不起",
+      "traditional": "對不起",
+      "pinyin": "duìbuqǐ",
+      "meaningEn": "sorry; excuse me",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cedict_word_0067",
+      "word": "没关系",
+      "traditional": "沒關係",
+      "pinyin": "méiguānxi",
+      "meaningEn": "it doesn't matter; never mind",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cedict_word_0068",
+      "word": "请坐",
+      "traditional": "請坐",
+      "pinyin": "qǐngzuò",
+      "meaningEn": "please sit",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0069",
+      "word": "请问",
+      "traditional": "請問",
+      "pinyin": "qǐngwèn",
+      "meaningEn": "may I ask; excuse me",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0070",
+      "word": "多少钱",
+      "traditional": "多少錢",
+      "pinyin": "duōshǎoqián",
+      "meaningEn": "how much does it cost",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 2
+    },
+    {
+      "id": "cedict_word_0071",
+      "word": "天气",
+      "traditional": "天氣",
+      "pinyin": "tiānqì",
+      "meaningEn": "weather",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0072",
+      "word": "下雨",
+      "traditional": "下雨",
+      "pinyin": "xiàyǔ",
+      "meaningEn": "to rain",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0073",
+      "word": "太阳",
+      "traditional": "太陽",
+      "pinyin": "tàiyang",
+      "meaningEn": "sun; solar",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0074",
+      "word": "冷",
+      "traditional": "冷",
+      "pinyin": "lěng",
+      "meaningEn": "cold",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0075",
+      "word": "热",
+      "traditional": "熱",
+      "pinyin": "rè",
+      "meaningEn": "hot; heat",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0076",
+      "word": "高",
+      "traditional": "高",
+      "pinyin": "gāo",
+      "meaningEn": "tall; high",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0077",
+      "word": "新",
+      "traditional": "新",
+      "pinyin": "xīn",
+      "meaningEn": "new",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0078",
+      "word": "旧",
+      "traditional": "舊",
+      "pinyin": "jiù",
+      "meaningEn": "old; used",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0079",
+      "word": "对",
+      "traditional": "對",
+      "pinyin": "duì",
+      "meaningEn": "right; correct",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0080",
+      "word": "错",
+      "traditional": "錯",
+      "pinyin": "cuò",
+      "meaningEn": "wrong; mistake",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0081",
+      "word": "来",
+      "traditional": "來",
+      "pinyin": "lái",
+      "meaningEn": "to come",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0082",
+      "word": "去",
+      "traditional": "去",
+      "pinyin": "qù",
+      "meaningEn": "to go",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0083",
+      "word": "看",
+      "traditional": "看",
+      "pinyin": "kàn",
+      "meaningEn": "to look; to read",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0084",
+      "word": "听",
+      "traditional": "聽",
+      "pinyin": "tīng",
+      "meaningEn": "to listen; to hear",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0085",
+      "word": "说",
+      "traditional": "說",
+      "pinyin": "shuō",
+      "meaningEn": "to speak; to say",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0086",
+      "word": "读",
+      "traditional": "讀",
+      "pinyin": "dú",
+      "meaningEn": "to read",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0087",
+      "word": "写",
+      "traditional": "寫",
+      "pinyin": "xiě",
+      "meaningEn": "to write",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0088",
+      "word": "买",
+      "traditional": "買",
+      "pinyin": "mǎi",
+      "meaningEn": "to buy",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0089",
+      "word": "卖",
+      "traditional": "賣",
+      "pinyin": "mài",
+      "meaningEn": "to sell",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0090",
+      "word": "开",
+      "traditional": "開",
+      "pinyin": "kāi",
+      "meaningEn": "to open; to drive",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0091",
+      "word": "关",
+      "traditional": "關",
+      "pinyin": "guān",
+      "meaningEn": "to close; shut",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0092",
+      "word": "门",
+      "traditional": "門",
+      "pinyin": "mén",
+      "meaningEn": "door; gate",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0093",
+      "word": "房间",
+      "traditional": "房間",
+      "pinyin": "fángjiān",
+      "meaningEn": "room",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0094",
+      "word": "桌子",
+      "traditional": "桌子",
+      "pinyin": "zhuōzi",
+      "meaningEn": "table; desk",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0095",
+      "word": "椅子",
+      "traditional": "椅子",
+      "pinyin": "yǐzi",
+      "meaningEn": "chair",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0096",
+      "word": "书",
+      "traditional": "書",
+      "pinyin": "shū",
+      "meaningEn": "book; to write",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0097",
+      "word": "钱",
+      "traditional": "錢",
+      "pinyin": "qián",
+      "meaningEn": "money",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0098",
+      "word": "照片",
+      "traditional": "照片",
+      "pinyin": "zhàopiàn",
+      "meaningEn": "photo; picture",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0099",
+      "word": "电影",
+      "traditional": "電影",
+      "pinyin": "diànyǐng",
+      "meaningEn": "movie; film",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    },
+    {
+      "id": "cedict_word_0100",
+      "word": "音乐",
+      "traditional": "音樂",
+      "pinyin": "yīnyuè",
+      "meaningEn": "music",
+      "missing": [
+        "meaning.cn",
+        "meaning.kr",
+        "meaning.jp",
+        "example.cn",
+        "example.kr",
+        "example.en",
+        "example.jp",
+        "examplePinyin"
+      ],
+      "priority": 1
+    }
+  ]
+}
