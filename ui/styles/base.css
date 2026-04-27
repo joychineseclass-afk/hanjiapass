@@ -5769,6 +5769,7 @@ a.section-side-nav-item:hover{
 }
 .auth-form input,
 .auth-form textarea,
+.auth-form select,
 .teacher-profile-form input,
 .teacher-profile-form textarea{
   width: 100%;
@@ -5777,6 +5778,73 @@ a.section-side-nav-item:hover{
   padding: 10px 12px;
   font-size: 15px;
   background: #fff;
+}
+.auth-form select{
+  cursor: pointer;
+}
+.lumina-teacher-apply--r2 .teacher-apply__section{
+  margin: 0 0 22px;
+}
+.lumina-teacher-apply--r2 .teacher-apply__h2{
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+.lumina-teacher-apply--r2 .teacher-apply__static{
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0 0 10px;
+}
+.lumina-teacher-apply--r2 .teacher-apply__static-p{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #475569;
+}
+.lumina-teacher-apply--r2 .teacher-apply__ack-row{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.lumina-teacher-apply--r2 .teacher-apply__ack-row input{
+  flex-shrink: 0;
+  margin: 0.2em 0 0;
+  width: auto;
+}
+.lumina-teacher-apply--r2 .teacher-apply__input-readonly{
+  background: #f1f5f9;
+  color: #334155;
+  cursor: default;
+}
+.lumina-teacher-apply--r2 .teacher-apply__field-hint{
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.45;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-lead{
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-list{
+  margin: 0 0 12px;
+  padding-left: 1.1rem;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-list li{
+  margin-bottom: 4px;
 }
 .teacher-profile-textarea{
   resize: vertical;
