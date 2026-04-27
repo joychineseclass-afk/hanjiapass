@@ -76,10 +76,12 @@ function buildSideNavMarkup(sectionId, level) {
   const chunks = [];
   for (const id of HANJA_SECTION_IDS) {
     const lbl = NAV_LABEL_KEY(id);
+    const ariaExp =
+      id === "basic3000" ? ` aria-expanded="${sectionId === "basic3000" ? "true" : "false"}"` : "";
     chunks.push(
       `<button type="button" class="${navItemClass(id, id === sectionId)}" data-hanja-nav="${id}" data-i18n="${esc(
         lbl
-      )}" aria-current="${id === sectionId ? "true" : "false"}">${esc(t(lbl))}</button>`
+      )}" aria-current="${id === sectionId ? "true" : "false"}"${ariaExp}>${esc(t(lbl))}</button>`
     );
     if (id === "basic3000") {
       const hiddenAttr = sectionId !== "basic3000" ? " hidden" : "";
@@ -98,6 +100,15 @@ function buildSideNavMarkup(sectionId, level) {
   return chunks.join("");
 }
 
+/** 方案 A：右栏补充全页引言 + 已有「即将上线」说明（lang 内已有 key，不新增 i18n） */
+function renderPanelContextExtrasHtml() {
+  const leadKey = "hanja.lead";
+  const noteKey = "hanja.coming_soon_detail";
+  return `
+      <p class="hanja-panel-lead" data-hanja-panel="lead" data-i18n="${esc(leadKey)}">${esc(t(leadKey))}</p>
+      <p class="hanja-panel-aside" data-hanja-panel="aside" data-i18n="${esc(noteKey)}">${esc(t(noteKey))}</p>`;
+}
+
 function renderRightPanelMarkup(sectionId, level) {
   if (sectionId === "basic3000") {
     const lv = Math.min(6, Math.max(1, level));
@@ -106,13 +117,13 @@ function renderRightPanelMarkup(sectionId, level) {
     const descText = i18n.t("hanja.basic3000.levelDesc", { count });
     return `
       <h2 class="title" data-hanja-panel="title" data-i18n="${esc(titleKey)}">${esc(t(titleKey))}</h2>
-      <p class="desc" data-hanja-panel="desc">${esc(descText)}</p>
+      <p class="desc" data-hanja-panel="desc">${esc(descText)}</p>${renderPanelContextExtrasHtml()}
     `;
   }
   const keys = hanjaSectionContentKeys(sectionId);
   return `
     <h2 class="title" data-hanja-panel="title" data-i18n="${esc(keys.titleKey)}">${esc(t(keys.titleKey))}</h2>
-    <p class="desc" data-hanja-panel="desc" data-i18n="${esc(keys.descKey)}">${esc(t(keys.descKey))}</p>
+    <p class="desc" data-hanja-panel="desc" data-i18n="${esc(keys.descKey)}">${esc(t(keys.descKey))}</p>${renderPanelContextExtrasHtml()}
   `;
 }
 
@@ -137,6 +148,9 @@ function syncFromHash(root) {
     const on = id === tab;
     el.classList.toggle("is-active", on);
     if (el instanceof HTMLButtonElement) el.setAttribute("aria-current", on ? "true" : "false");
+    if (id === "basic3000" && el instanceof HTMLButtonElement) {
+      el.setAttribute("aria-expanded", tab === "basic3000" ? "true" : "false");
+    }
   });
   root.querySelectorAll("[data-hanja-level]").forEach((el) => {
     const n = parseInt(String(el.getAttribute("data-hanja-level")), 10);
