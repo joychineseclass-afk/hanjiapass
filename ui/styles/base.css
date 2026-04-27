@@ -1973,23 +1973,6 @@ a.section-side-nav-item:hover{
   opacity: 1;
   font-weight: 700;
 }
-/* Hanja · 右栏方案 A：全页引言 + 辅助说明（仅本页，不影响其它 section-main-panel） */
-.hanja-page .section-main-panel-inner .hanja-panel-lead{
-  margin: 18px 0 0;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(248, 250, 252, 0.92);
-  color: #334155;
-  font-size: 14px;
-  line-height: 1.65;
-}
-.hanja-page .section-main-panel-inner .hanja-panel-aside{
-  margin: 12px 0 0;
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.55;
-}
 .section-side-nav-children.level-4-group{
   display: grid;
   gap: 5px;
