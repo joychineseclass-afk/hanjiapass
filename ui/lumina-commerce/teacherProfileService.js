@@ -181,12 +181,18 @@ export async function submitTeacherProfileForReview(profileId, ownerUserId) {
   if (st === VERIFICATION_STATUS.pending) return { ok: true, code: "already_pending" };
   if (st === VERIFICATION_STATUS.approved) return { ok: true, code: "already_approved" };
 
-  const o = getTeacherProfileOverlay(profileId);
+  let o = getTeacherProfileOverlay(profileId);
   const display = String(row.display_name || "").trim();
   if (!display) return { ok: false, code: "missing_display_name" };
-  const bio = String(row.bio || "").trim();
-  const intro = String(o.introduction_note || "").trim();
-  if (!bio && !intro) return { ok: false, code: "missing_bio_or_intro" };
+  const bioTrim = String(row.bio || "").trim();
+  let intro = String(o.introduction_note || "").trim();
+  // Compat: UI stores public copy in `teacher_profiles.bio`; overlay `introduction_note` may lag on older data.
+  if (bioTrim && !intro) {
+    patchTeacherProfileOverlay(profileId, { introduction_note: String(row.bio ?? "") });
+    o = getTeacherProfileOverlay(profileId);
+    intro = String(o.introduction_note || "").trim();
+  }
+  if (!bioTrim && !intro) return { ok: false, code: "missing_bio_or_intro" };
   const tags = Array.isArray(o.expertise_tags) ? o.expertise_tags : [];
   const targets = Array.isArray(o.teaching_targets) ? o.teaching_targets : [];
   if (tags.length === 0 && targets.length === 0) return { ok: false, code: "missing_scope" };

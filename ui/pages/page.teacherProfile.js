@@ -416,14 +416,18 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   }
 
   const collectFields = (fd) => {
+    const bio = String(fd.get("bio") ?? "");
+    const legacyIntroHidden = String(fd.get("introduction_note") || "");
+    // Overlay intro kept for reviewers; mirror `bio` when non-empty, else keep hidden legacy until field retired.
+    const introduction_note = bio.trim() !== "" ? bio : legacyIntroHidden;
     return {
       display_name: String(fd.get("display_name") || ""),
-      bio: String(fd.get("bio") ?? ""),
+      bio,
       expertiseTagsStr: String(fd.get("expertise_tags") || ""),
       teachingTargetsStr: getTargetsFromForm().join(","),
       teachingLanguagesStr: getLangsFromForm().join(","),
       experience_note: String(fd.get("experience_note") || ""),
-      introduction_note: String(fd.get("introduction_note") || ""),
+      introduction_note,
       contact_note: String(fd.get("contact_note") || ""),
     };
   };
