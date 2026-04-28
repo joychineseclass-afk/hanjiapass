@@ -27,7 +27,6 @@ import { i18n } from "../i18n.js";
 import {
   renderTeacherAdminShell,
   teacherPathStripHtml,
-  teacherPathStripClassroomHintHtml,
   userCanAccessTeacherReviewConsole,
 } from "./teacherPathNav.js";
 
@@ -452,12 +451,6 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
 
       ${teacherWorkspaceOverviewHtmlHub(sum, t)}
 
-      <section class="card teacher-relation-flow teacher-relation-flow--tight" aria-label="${escapeHtml(t("teacher.relation_flow.title"))}">
-        <p class="teacher-relation-flow-title">${escapeHtml(t("teacher.workspace.hub_path_lead"))}</p>
-        ${teacherPathStripHtml(null, t)}
-        ${teacherPathStripClassroomHintHtml(t)}
-      </section>
-
       ${teacherSalesOverviewHtml(commerceStats, t)}
 
       <section class="card teacher-hub-recent-dual" aria-label="${escapeHtml(t("teacher.workspace.hub_recent_aria"))}">
@@ -505,7 +498,10 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
         </div>
       </section>
   `;
-  const workbenchMain = renderTeacherHomeActiveOverview(t) + wrapLegacyWorkbenchCollapsible(legacyWorkbenchInner, t);
+  const workbenchMain =
+    `<div class="teacher-workbench-path-strip-top">${teacherPathStripHtml(null, t, { showLead: false })}</div>` +
+    renderTeacherHomeActiveOverview(t) +
+    wrapLegacyWorkbenchCollapsible(legacyWorkbenchInner, t);
   return renderTeacherAdminShell({
     active: "workspace",
     tx: t,
@@ -522,17 +518,13 @@ function approvedWorkbenchHtml(profile, sum, t, recentAssets, commerceStats, com
  */
 function gatedTeacherShellHtml(ctx, t) {
   const main = `
+      <div class="teacher-workbench-path-strip-top">${teacherPathStripHtml(null, t, { showLead: false })}</div>
       <section class="teacher-hero card teacher-center-page teacher-hero--compact">
         <p class="teacher-page-kicker">${escapeHtml(t("teacher.manage.page_kicker_mine"))}</p>
         <h2 class="title">${escapeHtml(t("teacher.workspace.mine_title"))}</h2>
         <p class="desc teacher-hero-lead">${escapeHtml(t("teacher.workspace.gated_lead"))}</p>
       </section>
       ${teacherGatePanelHtml(ctx, t)}
-      <section class="card teacher-relation-flow teacher-relation-flow--muted" aria-label="${escapeHtml(t("teacher.relation_flow.title_mine"))}">
-        <p class="teacher-relation-flow-title">${escapeHtml(t("teacher.relation_flow.title_mine"))}</p>
-        ${teacherPathStripHtml(null, t)}
-        ${teacherPathStripClassroomHintHtml(t)}
-      </section>
   `;
   return renderTeacherAdminShell({ active: "workspace", tx: t, mainHtml: main, shellClass: "teacher-page" });
 }

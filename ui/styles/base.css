@@ -777,6 +777,13 @@ a.teacher-subnav-item--link:hover{
   color: #64748b;
   max-width: 52ch;
 }
+/* 工作台首页顶部：四步路径条（与下方内容留空） */
+.teacher-workbench-path-strip-top{
+  margin-bottom: 16px;
+}
+.teacher-workbench-path-strip-top .teacher-path-strip{
+  margin-top: 0;
+}
 .teacher-path-strip{
   margin-top: 12px;
   padding: 12px 14px;

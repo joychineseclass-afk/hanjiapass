@@ -13,12 +13,10 @@ import {
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { i18n } from "../i18n.js";
-import { demoBannerHtml } from "../components/demoBanner.js";
 import {
   currentUserCanAccessTeacherReviewConsoleSync,
   renderTeacherAdminShell,
   teacherMaterialsNextGuideHtml,
-  teacherPathStripHtml,
 } from "./teacherPathNav.js";
 
 function tx(path, params) {
@@ -142,25 +140,11 @@ async function renderMaterialsDom(root) {
 
   const showReview = currentUserCanAccessTeacherReviewConsoleSync();
   const main = `
-      ${demoBannerHtml("materials")}
       ${restrictedBannerHtml(ctx, t)}
-      ${teacherPathStripHtml("materials", t, { showLead: false })}
       <header class="card teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
       </header>
-
-      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.materials_page.upload_cta"))}">
-        <div class="teacher-admin-toolbar-row">
-          <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled>
-            ${escapeHtml(t("teacher.materials_page.upload_cta"))}
-          </button>
-          <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(uploadHint)}</p>
-        </div>
-        <p class="teacher-materials-create-link">
-          <a class="teacher-hub-inline-link" href="#teacher-create-material">${escapeHtml(t("teacher.materials_page.link_to_create"))}</a>
-        </p>
-      </section>
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
         <h2 id="teacher-materials-list-title" class="teacher-admin-list-heading">${escapeHtml(t("teacher.materials_page.list_title_mine"))}</h2>
@@ -184,6 +168,18 @@ async function renderMaterialsDom(root) {
             ${tbodyOnly}
           </table>
         </div>
+      </section>
+
+      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.materials_page.upload_cta"))}">
+        <div class="teacher-admin-toolbar-row">
+          <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled>
+            ${escapeHtml(t("teacher.materials_page.upload_cta"))}
+          </button>
+          <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(uploadHint)}</p>
+        </div>
+        <p class="teacher-materials-create-link">
+          <a class="teacher-hub-inline-link" href="#teacher-create-material">${escapeHtml(t("teacher.materials_page.link_to_create"))}</a>
+        </p>
       </section>
 
       <aside class="teacher-info-note">
