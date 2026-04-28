@@ -5846,6 +5846,103 @@ a.section-side-nav-item:hover{
 .lumina-teacher-apply--r2 .teacher-apply__cred-list li{
   margin-bottom: 4px;
 }
+.lumina-teacher-apply--r2 .teacher-apply__identity-lead{
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #475569;
+}
+.lumina-teacher-apply--r2 .teacher-apply__phone-send-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+}
+.lumina-teacher-apply--r2 .teacher-apply__phone-send-row input{
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.lumina-teacher-apply--r2 .teacher-apply__phone-send-row .auth-submit{
+  flex: 0 0 auto;
+  margin-top: 0;
+  align-self: center;
+  padding: 10px 14px;
+}
+.lumina-teacher-apply--r2 .teacher-apply__otp-banner{
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #166534;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.lumina-teacher-apply--r2 .teacher-apply__verify-ok{
+  margin: -4px 0 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--brand, #2563eb);
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-row{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-row:last-of-type{
+  border-bottom: 0;
+  margin-bottom: 8px;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-check{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #334155;
+  cursor: pointer;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-check input{
+  flex-shrink: 0;
+  margin-top: 0.25em;
+  width: auto;
+}
+.lumina-teacher-apply--r2 .teacher-apply__cred-upload{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-left: 28px;
+}
+.lumina-teacher-apply--r2 .teacher-apply__file-native{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+}
+.lumina-teacher-apply--r2 .teacher-apply__file-btn{
+  margin-top: 0;
+  flex-shrink: 0;
+}
+.lumina-teacher-apply--r2 .teacher-apply__file-picked{
+  font-size: 12px;
+  color: #64748b;
+  max-width: 100%;
+  word-break: break-word;
+}
+.lumina-teacher-apply--r2 .teacher-apply__ack--final{
+  margin: 4px 0 10px;
+}
 .teacher-profile-textarea{
   resize: vertical;
   min-height: 96px;
