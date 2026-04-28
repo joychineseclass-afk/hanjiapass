@@ -14,6 +14,7 @@ import {
   removeTeacherCredentialItem,
 } from "../lumina-commerce/teacherProfileService.js";
 import { USER_ROLE, VERIFICATION_STATUS } from "../lumina-commerce/enums.js";
+import { withButtonLock } from "../lumina-commerce/uiAsync.js";
 import { currentUserCanAccessTeacherReviewConsoleSync, renderTeacherAdminShell } from "./teacherPathNav.js";
 
 const TARGET_OPTS = /** @type {const} */ (["kids", "hsk", "adults", "business"]);
@@ -381,18 +382,21 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     ta.focus();
   });
 
-  root.querySelector("#tpIntroSave")?.addEventListener("click", async () => {
+  const tpIntroSaveBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpIntroSave"));
+  tpIntroSaveBtn?.addEventListener("click", async () => {
     if (readOnly) return;
-    const form = root.querySelector("#teacherProfileForm");
-    if (!form) return;
-    const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-    const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-    if (!r.ok) {
-      const key = `teacher.profile.error.${r.code || "unknown"}`;
-      showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
-      return;
-    }
-    showToast(tx("auth.save_ok"));
+    await withButtonLock(tpIntroSaveBtn, async () => {
+      const form = root.querySelector("#teacherProfileForm");
+      if (!form) return;
+      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+      const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+      if (!r.ok) {
+        const key = `teacher.profile.error.${r.code || "unknown"}`;
+        showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+        return;
+      }
+      showToast(tx("auth.save_ok"));
+    });
   });
 
   const toast = root.querySelector("#tpToast");
@@ -457,6 +461,8 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     const otpBanner = root.querySelector("#tpRegOtpBanner");
     const otpWrap = root.querySelector("#tpRegOtpWrap");
     const saveSnapBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegSaveSnap"));
+    const sendSmsBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegSendSms"));
+    const verifySmsBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegVerifySms"));
 
     if (bdIn) {
       const now = new Date();
@@ -470,175 +476,193 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       otpWrap?.removeAttribute("hidden");
     });
 
-    root.querySelector("#tpRegSendSms")?.addEventListener("click", () => {
-      clearRegErr();
-      const realName = normalizeName(legalIn?.value || "");
-      const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
-      const phone = normalizePhoneDigits(phIn?.value || "");
-      if (!realName || !birthdayIso || phone.length < 5) {
-        showRegErr(tx("teacher.profile.reg_err_need_fields"));
-        return;
-      }
-      const code = String(Math.floor(100000 + Math.random() * 900000));
-      profileOtpSession = {
-        phone,
-        code,
-        nameLocked: realName,
-        birthdayLocked: birthdayIso,
-        exp: Date.now() + 10 * 60 * 1000,
-      };
-      if (otpBanner) {
-        otpBanner.hidden = false;
-        otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code });
-      }
+    sendSmsBtn?.addEventListener("click", () => {
+      void withButtonLock(sendSmsBtn, async () => {
+        clearRegErr();
+        const realName = normalizeName(legalIn?.value || "");
+        const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+        const phone = normalizePhoneDigits(phIn?.value || "");
+        if (!realName || !birthdayIso || phone.length < 5) {
+          showRegErr(tx("teacher.profile.reg_err_need_fields"));
+          return;
+        }
+        const code = String(Math.floor(100000 + Math.random() * 900000));
+        profileOtpSession = {
+          phone,
+          code,
+          nameLocked: realName,
+          birthdayLocked: birthdayIso,
+          exp: Date.now() + 10 * 60 * 1000,
+        };
+        if (otpBanner) {
+          otpBanner.hidden = false;
+          otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code });
+        }
+      });
     });
 
-    root.querySelector("#tpRegVerifySms")?.addEventListener("click", () => {
-      clearRegErr();
-      const sess = profileOtpSession;
-      if (!sess || Date.now() > sess.exp) {
-        showRegErr(tx("teacherApply.error_otp_expired"));
+    verifySmsBtn?.addEventListener("click", () => {
+      void withButtonLock(verifySmsBtn, async () => {
+        clearRegErr();
+        const sess = profileOtpSession;
+        if (!sess || Date.now() > sess.exp) {
+          showRegErr(tx("teacherApply.error_otp_expired"));
+          profileOtpSession = null;
+          if (otpBanner) {
+            otpBanner.hidden = true;
+            otpBanner.textContent = "";
+          }
+          return;
+        }
+        const phone = normalizePhoneDigits(phIn?.value || "");
+        const codeIn = String(otpIn?.value || "").replace(/\s/g, "");
+        const realName = normalizeName(legalIn?.value || "");
+        const birthdayNow = normalizeBirthdayIso(bdIn?.value ?? "") || "";
+        if (phone !== sess.phone) {
+          showRegErr(tx("teacherApply.error_phone_mismatch_session"));
+          return;
+        }
+        if (codeIn !== sess.code) {
+          showRegErr(tx("teacherApply.error_otp_wrong"));
+          return;
+        }
+        if (realName !== sess.nameLocked) {
+          showRegErr(tx("teacherApply.error_realname_vs_otp"));
+          return;
+        }
+        if (birthdayNow !== sess.birthdayLocked) {
+          showRegErr(tx("teacherApply.error_birthday_vs_otp"));
+          return;
+        }
+        registrationEditUnlocked = true;
         profileOtpSession = null;
         if (otpBanner) {
           otpBanner.hidden = true;
           otpBanner.textContent = "";
         }
-        return;
-      }
-      const phone = normalizePhoneDigits(phIn?.value || "");
-      const codeIn = String(otpIn?.value || "").replace(/\s/g, "");
-      const realName = normalizeName(legalIn?.value || "");
-      const birthdayNow = normalizeBirthdayIso(bdIn?.value ?? "") || "";
-      if (phone !== sess.phone) {
-        showRegErr(tx("teacherApply.error_phone_mismatch_session"));
-        return;
-      }
-      if (codeIn !== sess.code) {
-        showRegErr(tx("teacherApply.error_otp_wrong"));
-        return;
-      }
-      if (realName !== sess.nameLocked) {
-        showRegErr(tx("teacherApply.error_realname_vs_otp"));
-        return;
-      }
-      if (birthdayNow !== sess.birthdayLocked) {
-        showRegErr(tx("teacherApply.error_birthday_vs_otp"));
-        return;
-      }
-      registrationEditUnlocked = true;
-      profileOtpSession = null;
-      if (otpBanner) {
-        otpBanner.hidden = true;
-        otpBanner.textContent = "";
-      }
-      otpWrap?.setAttribute("hidden", "");
-      applyPersonalGateVisual(true);
-      if (saveSnapBtn) saveSnapBtn.disabled = false;
-      const ok = root.querySelector("#tpRegOkLine");
-      if (ok) {
-        ok.hidden = false;
-        ok.textContent = tx("teacher.profile.reg_unlocked");
-      }
+        otpWrap?.setAttribute("hidden", "");
+        applyPersonalGateVisual(true);
+        if (saveSnapBtn) saveSnapBtn.disabled = false;
+        const ok = root.querySelector("#tpRegOkLine");
+        if (ok) {
+          ok.hidden = false;
+          ok.textContent = tx("teacher.profile.reg_unlocked");
+        }
+      });
     });
 
     saveSnapBtn?.addEventListener("click", async () => {
-      if (!registrationEditUnlocked) {
-        showRegErr(tx("teacher.profile.reg_err_verify_first"));
-        return;
-      }
-      clearRegErr();
-      const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
-      const phoneDigits = normalizePhoneDigits(phIn?.value || "");
-      if (!normalizeName(legalIn?.value || "") || !birthdayIso || phoneDigits.length < 5) {
-        showRegErr(tx("teacher.profile.reg_err_need_fields"));
-        return;
-      }
-      const g = String(genderSel?.value || "");
-      const gender = g === "m" || g === "f" ? /** @type {'m'|'f'} */ (g) : /** @type {''|'m'|'f'} */ ("");
-      const rSnap = await updateTeacherRegistrationSnapshot({
-        legal_name: normalizeName(legalIn?.value || ""),
-        gender,
-        birthday_iso: birthdayIso,
-        phone_digits: phoneDigits,
+      await withButtonLock(saveSnapBtn, async () => {
+        if (!registrationEditUnlocked) {
+          showRegErr(tx("teacher.profile.reg_err_verify_first"));
+          return;
+        }
+        clearRegErr();
+        const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+        const phoneDigits = normalizePhoneDigits(phIn?.value || "");
+        if (!normalizeName(legalIn?.value || "") || !birthdayIso || phoneDigits.length < 5) {
+          showRegErr(tx("teacher.profile.reg_err_need_fields"));
+          return;
+        }
+        const g = String(genderSel?.value || "");
+        const gender = g === "m" || g === "f" ? /** @type {'m'|'f'} */ (g) : /** @type {''|'m'|'f'} */ ("");
+        const rSnap = await updateTeacherRegistrationSnapshot({
+          legal_name: normalizeName(legalIn?.value || ""),
+          gender,
+          birthday_iso: birthdayIso,
+          phone_digits: phoneDigits,
+        });
+        if (!rSnap.ok) {
+          showRegErr(tx("auth.error.unknown"));
+          return;
+        }
+        const form = root.querySelector("#teacherProfileForm");
+        if (!form) return;
+        const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+        const rSave = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+        if (!rSave.ok) {
+          const key = `teacher.profile.error.${rSave.code || "unknown"}`;
+          showRegErr(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+          return;
+        }
+        showToast(tx("teacher.profile.personal_saved"));
+        await reloadPage(root);
       });
-      if (!rSnap.ok) {
-        showRegErr(tx("auth.error.unknown"));
-        return;
-      }
-      const form = root.querySelector("#teacherProfileForm");
-      if (!form) return;
-      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-      const rSave = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-      if (!rSave.ok) {
-        const key = `teacher.profile.error.${rSave.code || "unknown"}`;
-        showRegErr(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
-        return;
-      }
-      showToast(tx("teacher.profile.personal_saved"));
-      await reloadPage(root);
     });
   }
 
-  root.querySelector("#tpSave")?.addEventListener("click", async () => {
+  const tpSaveBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpSave"));
+  tpSaveBtn?.addEventListener("click", async () => {
     if (readOnly) return;
-    const form = root.querySelector("#teacherProfileForm");
-    if (!form) return;
-    const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-    const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-    showToast(r.ok ? tx("auth.save_ok") : tx("auth.error.unknown"));
-  });
-
-  root.querySelector("#tpAddCred")?.addEventListener("click", async () => {
-    const title = String(root.querySelector("#newCredTitle")?.value || "").trim();
-    const kind = String(root.querySelector("#newCredKind")?.value || "other");
-    const note = String(root.querySelector("#newCredNote")?.value || "");
-    if (!title) {
-      showToast(tx("teacher.profile.cred_title_required"));
-      return;
-    }
-    const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, { title, kind, note });
-    if (r.ok) {
-      await reloadPage(root);
-    } else {
-      showToast(tx("auth.error.unknown"));
-    }
-  });
-
-  root.querySelectorAll(".teacher-cred-remove").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const id = btn.getAttribute("data-remove-cred");
-      if (!id) return;
-      const r = await removeTeacherCredentialItem(u.teacherProfileId, u.id, id);
-      if (r.ok) await reloadPage(root);
-      else showToast(tx("auth.error.unknown"));
+    await withButtonLock(tpSaveBtn, async () => {
+      const form = root.querySelector("#teacherProfileForm");
+      if (!form) return;
+      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+      const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+      showToast(r.ok ? tx("auth.save_ok") : tx("auth.error.unknown"));
     });
   });
 
-  root.querySelector("#tpSubmit")?.addEventListener("click", async () => {
-    if (readOnly || approved || !u.teacherProfileId) return;
-    const form = root.querySelector("#teacherProfileForm");
-    if (form) {
-      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-      const sr = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-      if (!sr.ok) {
-        showToast(tx("auth.error.unknown"));
+  const tpAddCredBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpAddCred"));
+  tpAddCredBtn?.addEventListener("click", async () => {
+    await withButtonLock(tpAddCredBtn, async () => {
+      const title = String(root.querySelector("#newCredTitle")?.value || "").trim();
+      const kind = String(root.querySelector("#newCredKind")?.value || "other");
+      const note = String(root.querySelector("#newCredNote")?.value || "");
+      if (!title) {
+        showToast(tx("teacher.profile.cred_title_required"));
         return;
       }
-    }
-    const r = await submitTeacherProfileForReview(u.teacherProfileId, u.id);
-    if (!r.ok) {
-      const key = `teacher.profile.error.${r.code || "unknown"}`;
-      const msg = tx(key) !== key ? tx(key) : tx("auth.error.unknown");
+      const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, { title, kind, note });
+      if (r.ok) {
+        await reloadPage(root);
+      } else {
+        showToast(tx("auth.error.unknown"));
+      }
+    });
+  });
+
+  root.querySelectorAll(".teacher-cred-remove").forEach((btn) => {
+    const rm = /** @type {HTMLButtonElement} */ (btn);
+    rm.addEventListener("click", () => {
+      void withButtonLock(rm, async () => {
+        const id = rm.getAttribute("data-remove-cred");
+        if (!id) return;
+        const r = await removeTeacherCredentialItem(u.teacherProfileId, u.id, id);
+        if (r.ok) await reloadPage(root);
+        else showToast(tx("auth.error.unknown"));
+      });
+    });
+  });
+
+  const tpSubmitBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpSubmit"));
+  tpSubmitBtn?.addEventListener("click", async () => {
+    if (readOnly || approved || !u.teacherProfileId) return;
+    await withButtonLock(tpSubmitBtn, async () => {
+      const form = root.querySelector("#teacherProfileForm");
+      if (form) {
+        const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+        const sr = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+        if (!sr.ok) {
+          showToast(tx("auth.error.unknown"));
+          return;
+        }
+      }
+      const r = await submitTeacherProfileForReview(u.teacherProfileId, u.id);
+      if (!r.ok) {
+        const key = `teacher.profile.error.${r.code || "unknown"}`;
+        const msg = tx(key) !== key ? tx(key) : tx("auth.error.unknown");
+        showToast(msg);
+        return;
+      }
+      const msg =
+        r.softWarning === "no_credentials"
+          ? `${tx("teacher.profile.submit_ok")} ${tx("teacher.profile.warn_no_credential")}`
+          : tx("teacher.profile.submit_ok");
       showToast(msg);
-      return;
-    }
-    const msg =
-      r.softWarning === "no_credentials"
-        ? `${tx("teacher.profile.submit_ok")} ${tx("teacher.profile.warn_no_credential")}`
-        : tx("teacher.profile.submit_ok");
-    showToast(msg);
-    const { navigateTo } = await import("../router.js");
-    navigateTo("#teacher", { force: true });
+      const { navigateTo } = await import("../router.js");
+      navigateTo("#teacher", { force: true });
+    });
   });
 }
 

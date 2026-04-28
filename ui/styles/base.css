@@ -5998,6 +5998,13 @@ a.section-side-nav-item:hover{
   cursor: not-allowed;
   box-shadow: none;
 }
+/* withButtonLock: request in-flight (see ui/lumina-commerce/uiAsync.js) */
+.auth-submit[data-busy="1"],
+.teacher-profile-save[data-busy="1"],
+#tpSubmit[data-busy="1"],
+.teacher-cred-remove[data-busy="1"]{
+  cursor: progress;
+}
 .auth-error,
 .auth-toast{
   color: #b91c1c;
