@@ -25,7 +25,14 @@ import { currentUserCanAccessTeacherReviewConsoleSync, renderTeacherAdminShell }
 
 const TARGET_OPTS = /** @type {const} */ (["kids", "hsk", "adults", "business"]);
 const LANG_OPTS = /** @type {const} */ (["zh", "kr", "en", "jp"]);
-const KIND_OPTS = /** @type {const} */ (["language_certificate", "teaching_certificate", "identity", "other"]);
+/** 档案「材料类型」下拉（与 commerce 存储的 cred.kind 一致） */
+const KIND_OPTS = /** @type {const} */ ([
+  "intl_chinese_teaching_qual",
+  "hsk_level6_plus_cert",
+  "other_cn_teaching_qual",
+  "other_lang_teaching_qual",
+  "other",
+]);
 
 function tx(k, p) {
   return safeUiText(k, p);
@@ -366,7 +373,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
           ? ""
           : `<section class="card teacher-profile-form-card teacher-profile-card--below teacher-profile-actions-card">
           <div class="teacher-profile-actions">
-            <button type="button" class="auth-submit teacher-profile-save" id="tpSave">${escapeHtml(tx("common.save"))}</button>
             <button type="button" class="auth-submit auth-submit--secondary" id="tpSubmit" ${showSubmit ? "" : "hidden"}>${escapeHtml(
               tx(submitLabelKey),
             )}</button>
@@ -591,18 +597,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       });
     });
   }
-
-  const tpSaveBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpSave"));
-  tpSaveBtn?.addEventListener("click", async () => {
-    if (readOnly) return;
-    await withButtonLock(tpSaveBtn, async () => {
-      const form = root.querySelector("#teacherProfileForm");
-      if (!form) return;
-      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-      const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-      showToast(r.ok ? tx("auth.save_ok") : tx("auth.error.unknown"));
-    });
-  });
 
   const tpAddCredBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpAddCred"));
   tpAddCredBtn?.addEventListener("click", async () => {

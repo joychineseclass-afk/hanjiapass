@@ -13,6 +13,18 @@ function uid(p) {
   return `${p}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+/** 资质条目的 kind（含历史枚举与档案页下拉枚举） */
+const TEACHER_CRED_KIND_IDS = /** @type {readonly string[]} */ ([
+  "language_certificate",
+  "teaching_certificate",
+  "identity",
+  "other",
+  "intl_chinese_teaching_qual",
+  "hsk_level6_plus_cert",
+  "other_cn_teaching_qual",
+  "other_lang_teaching_qual",
+]);
+
 function splitTags(s) {
   return String(s || "")
     .split(/[,，;；]/)
@@ -291,7 +303,7 @@ export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, it
   const list = Array.isArray(o.credential_items) ? [...o.credential_items] : [];
   const id = item.id && String(item.id).startsWith("cred_") ? String(item.id) : uid("cred");
   const now = new Date().toISOString();
-  const kind = item.kind && ["language_certificate", "teaching_certificate", "identity", "other"].includes(String(item.kind))
+  const kind = item.kind && TEACHER_CRED_KIND_IDS.includes(String(item.kind))
     ? String(item.kind)
     : "other";
   list.push({
