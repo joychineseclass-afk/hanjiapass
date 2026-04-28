@@ -1475,6 +1475,7 @@
         "missing_bio_or_intro": "Please fill in the bio or the “about you” section (at least one).",
         "missing_scope": "Choose at least one teaching audience or add expertise tags.",
         "locked_pending": "Under review; saving is disabled.",
+        "credential_placeholder_disabled": "This action is available in preview/dev only. Credential file upload will be added later.",
         "unknown": "Could not complete the action."
       }
     },

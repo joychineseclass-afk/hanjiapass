@@ -275,12 +275,13 @@ export async function rejectTeacherProfileByReviewer(profileId, reviewerUserId, 
 }
 
 /**
- * 资质占位：添加一条。不调文件 API。
+ * 资质占位：添加一条。不调文件 API。正式域关闭；预览 / 本地 Dev UI（shouldEnableLuminaDevUi）下可用直至接入上传。
  * @param {string} profileId
  * @param {string} ownerUserId
  * @param {Partial<import('./teacherProfileStore.js').TeacherCredentialItemV1>} item
  */
 export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, item) {
+  if (!shouldEnableLuminaDevUi()) return { ok: false, code: "credential_placeholder_disabled" };
   await initCommerceStore();
   const snap = getCommerceStoreSync();
   const row = snap && snap.teacher_profiles ? snap.teacher_profiles.find((x) => x.id === profileId) : null;
@@ -310,11 +311,13 @@ export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, it
 }
 
 /**
+ * 删除占位资质一条。正式域与同上（仅 Dev UI）。
  * @param {string} profileId
  * @param {string} ownerUserId
  * @param {string} credId
  */
 export async function removeTeacherCredentialItem(profileId, ownerUserId, credId) {
+  if (!shouldEnableLuminaDevUi()) return { ok: false, code: "credential_placeholder_disabled" };
   await initCommerceStore();
   const snap = getCommerceStoreSync();
   const row = snap && snap.teacher_profiles ? snap.teacher_profiles.find((x) => x.id === profileId) : null;

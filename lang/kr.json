@@ -1475,6 +1475,7 @@
         "missing_bio_or_intro": "소개 또는 자기소개/지도 방침 중 하나를 입력하세요.",
         "missing_scope": "지도 대상을 하나 이상 선택하거나 전문 분야를 입력하세요.",
         "locked_pending": "심사 중에는 저장할 수 없습니다.",
+        "credential_placeholder_disabled": "정식 배포에서는 이 기능을 쓸 수 없습니다(미리보기·개발 UI에서만 가능). 파일 업로드는 이후 제공 예정입니다.",
         "unknown": "처리에 실패했습니다."
       }
     },

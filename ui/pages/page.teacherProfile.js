@@ -11,6 +11,7 @@ import { updateTeacherRegistrationSnapshot } from "../auth/authService.js";
 import { findUserById } from "../auth/authStore.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { shouldEnableLuminaDevUi } from "../lumina-commerce/devRuntimeFlags.js";
 import { getMergedProfileForUser } from "../lumina-commerce/teacherProfileStore.js";
 import {
   saveTeacherProfileFields,
@@ -208,8 +209,9 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   const vPhone = regPhone || legacyParsed.phone_digits || "";
   const accountEmail = String(authFull?.email ?? "").trim();
 
+  const showCredCommerceUi = shouldEnableLuminaDevUi();
   const credentialAddBlock =
-    readOnly
+    readOnly || !showCredCommerceUi
       ? ""
       : `<div class="teacher-credential-add card teacher-credential-add-form teacher-cred-add--nested">
             <h3 class="teacher-credential-add-title">${escapeHtml(tx("teacher.profile.add_credential"))}</h3>
@@ -296,11 +298,15 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         <div class="teacher-reg-cred-box">
           <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.personal_certs_heading"))}</h3>
           ${registrationCredentialsHtml(regSnap)}
-          <div class="teacher-credential-commerce-block">
+          ${
+            showCredCommerceUi
+              ? `<div class="teacher-credential-commerce-block">
             <p class="teacher-credential-hint">${escapeHtml(tx("teacher.profile.credential_hint"))}</p>
             ${credsHtml}
             ${credentialAddBlock}
-          </div>
+          </div>`
+              : ""
+          }
         </div>
         <label class="auth-field">
           <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro_short"))}</span>
@@ -411,6 +417,10 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     if (!toast) return;
     toast.textContent = msg;
     toast.hidden = false;
+  };
+  const showProfileServiceErr = (code) => {
+    const key = `teacher.profile.error.${code || "unknown"}`;
+    showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
   };
 
   function getTargetsFromForm() {
@@ -610,7 +620,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       if (r.ok) {
         await reloadPage(root);
       } else {
-        showToast(tx("auth.error.unknown"));
+        showProfileServiceErr(typeof r.code === "string" ? r.code : undefined);
       }
     });
   });
@@ -623,7 +633,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         if (!id) return;
         const r = await removeTeacherCredentialItem(u.teacherProfileId, u.id, id);
         if (r.ok) await reloadPage(root);
-        else showToast(tx("auth.error.unknown"));
+        else showProfileServiceErr(typeof r.code === "string" ? r.code : undefined);
       });
     });
   });

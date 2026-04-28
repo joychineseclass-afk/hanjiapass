@@ -1475,6 +1475,7 @@
         "missing_bio_or_intro": "请填写简介或自我介绍/教学理念至少一项。",
         "missing_scope": "请至少选择一项教学对象，或填写擅长方向。",
         "locked_pending": "审核中，暂不可保存。",
+        "credential_placeholder_disabled": "正式环境暂不开放本条功能；敬请期待档案资质上传能力。",
         "unknown": "无法完成操作。"
       }
     },
