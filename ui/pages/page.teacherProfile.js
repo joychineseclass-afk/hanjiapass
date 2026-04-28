@@ -47,8 +47,7 @@ function registrationCredentialsHtml(snap) {
     snap && typeof snap === "object" && Array.isArray(snap.credentials)
       ? /** @type {{ labelKey?: string; fileName?: string }[]} */ (snap.credentials)
       : [];
-  if (list.length === 0)
-    return `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.personal_certs_placeholder"))}</p>`;
+  if (list.length === 0) return "";
   return `<ul class="teacher-reg-cred-ul">${list
     .map((c) => {
       const k = String(c.labelKey || "");
@@ -301,7 +300,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
           ${
             showCredCommerceUi
               ? `<div class="teacher-credential-commerce-block">
-            <p class="teacher-credential-hint">${escapeHtml(tx("teacher.profile.credential_hint"))}</p>
             ${credsHtml}
             ${credentialAddBlock}
           </div>`
