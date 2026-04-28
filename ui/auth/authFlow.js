@@ -53,6 +53,8 @@ function ensureOnboardingIncompleteGuard() {
   if (!full || full.onboardingCompleted !== false) return;
   const base = normalizeHashBase(location.hash);
   if (isOnboardingIncompleteAllowedHash(base)) return;
+  // 与 ensureGuestRedirectToAuth 对齐：不要求 session 的公共学习页允许未完成 onboarding 用户浏览，避免顶栏点击被立即挡回 #onboarding-role
+  if (!isHashRequiringSession(base)) return;
   navigateTo("#onboarding-role", { force: true });
 }
 
