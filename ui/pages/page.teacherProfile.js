@@ -203,6 +203,27 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   const accountEmail = String(authFull?.email ?? "").trim();
 
   const chkLockInit = true;
+
+  const credentialAddBlock =
+    readOnly
+      ? ""
+      : `<div class="teacher-credential-add card teacher-credential-add-form teacher-cred-add--nested">
+            <h3 class="teacher-credential-add-title">${escapeHtml(tx("teacher.profile.add_credential"))}</h3>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_title"))}</span>
+              <input type="text" id="newCredTitle" />
+            </label>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_kind"))}</span>
+              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind.${k}`))}</option>`).join("")}</select>
+            </label>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
+              <input type="text" id="newCredNote" />
+            </label>
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpAddCred">${escapeHtml(tx("teacher.profile.cred_add_btn"))}</button>
+          </div>`;
+
   const personalTargetsRow = checkboxesRow(
     targets,
     "teaching_target",
@@ -271,11 +292,20 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         <div class="teacher-reg-cred-box">
           <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.personal_certs_heading"))}</h3>
           ${registrationCredentialsHtml(regSnap)}
+          <div class="teacher-credential-commerce-block">
+            <p class="teacher-credential-hint">${escapeHtml(tx("teacher.profile.credential_hint"))}</p>
+            ${credsHtml}
+            ${credentialAddBlock}
+          </div>
         </div>
         <label class="auth-field">
-          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro"))}</span>
-          <textarea name="bio" rows="4" class="teacher-profile-textarea tp-personal-lock" disabled>${escapeHtml(commerceRow.bio || "")}</textarea>
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro_short"))}</span>
+          <textarea name="bio" id="tpBioField" rows="4" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(commerceRow.bio || "")}</textarea>
         </label>
+        <div class="teacher-intro-actions">
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroEdit">${escapeHtml(tx("common.edit"))}</button>
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroSave" ${readOnly ? "disabled" : ""}>${escapeHtml(tx("common.save"))}</button>
+        </div>
         <div class="auth-field">
           <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_targets"))}</span>
           <div class="teacher-profile-checkgroup">${personalTargetsRow}</div>
@@ -314,63 +344,14 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       </div>`
           : ""
       }
-      <form id="teacherProfileForm" class="teacher-profile-shell-form${readOnly ? " teacher-profile-form--readonly" : ""}">
+      <form id="teacherProfileForm" class="teacher-profile-shell-form teacher-profile-form${readOnly ? " teacher-profile-form--readonly" : ""}">
+        <input type="hidden" name="display_name" value="${escapeHtml(commerceRow.display_name || "")}" />
+        <input type="hidden" name="expertise_tags" value="${escapeHtml(tagsStr)}" />
+        <textarea name="experience_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.experience_note || "")}</textarea>
+        <textarea name="introduction_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.introduction_note || "")}</textarea>
+        <input type="hidden" name="contact_note" value="${escapeHtml(profile.contact_note || "")}" />
         ${personalCard}
-      <section class="card teacher-profile-form-card teacher-profile-card--below">
-        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_basic"))}</h2>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.display_name"))}</span>
-            <input name="display_name" type="text" required value="${escapeHtml(commerceRow.display_name || "")}" ${readOnly ? "disabled" : ""} />
-          </label>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.expertise_tags"))}</span>
-            <input name="expertise_tags" type="text" value="${escapeHtml(tagsStr)}" placeholder="${escapeHtml(
-              tx("teacher.profile.expertise_placeholder"),
-            )}" ${readOnly ? "disabled" : ""} />
-          </div>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.experience_note"))}</span>
-            <textarea name="experience_note" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              profile.experience_note || "",
-            )}</textarea>
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.introduction_note"))}</span>
-            <textarea name="introduction_note" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              profile.introduction_note || "",
-            )}</textarea>
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.contact_note"))} <span class="teacher-profile-optional">(${escapeHtml(
-              tx("teacher.profile.optional"),
-            )})</span></span>
-            <input name="contact_note" type="text" value="${escapeHtml(profile.contact_note || "")}" ${readOnly ? "disabled" : ""} />
-          </label>
-
-          <h2 class="teacher-profile-section-title teacher-profile-section-title--sub">${escapeHtml(tx("teacher.profile.credential_section"))}</h2>
-          <p class="teacher-credential-hint">${escapeHtml(tx("teacher.profile.credential_hint"))}</p>
-          ${credsHtml}
-          ${
-            readOnly
-              ? ""
-              : `<div class="teacher-credential-add card teacher-credential-add-form">
-            <h3 class="teacher-credential-add-title">${escapeHtml(tx("teacher.profile.add_credential"))}</h3>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_title"))}</span>
-              <input type="text" id="newCredTitle" />
-            </label>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_kind"))}</span>
-              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind.${k}`))}</option>`).join("")}</select>
-            </label>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
-              <input type="text" id="newCredNote" />
-            </label>
-            <button type="button" class="auth-submit auth-submit--secondary" id="tpAddCred">${escapeHtml(tx("teacher.profile.cred_add_btn"))}</button>
-          </div>`
-          }
-
+      <section class="card teacher-profile-form-card teacher-profile-card--below teacher-profile-actions-card">
           <div class="teacher-profile-actions">
             <button type="button" class="auth-submit teacher-profile-save" id="tpSave" ${readOnly ? "disabled" : ""}>${escapeHtml(
               tx("common.save"),
@@ -393,6 +374,27 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   });
   i18n.apply?.(root);
 
+  root.querySelector("#tpIntroEdit")?.addEventListener("click", () => {
+    if (readOnly) return;
+    const ta = /** @type {HTMLTextAreaElement | null} */ (root.querySelector("#tpBioField") || root.querySelector('textarea[name="bio"]'));
+    if (!ta) return;
+    ta.focus();
+  });
+
+  root.querySelector("#tpIntroSave")?.addEventListener("click", async () => {
+    if (readOnly) return;
+    const form = root.querySelector("#teacherProfileForm");
+    if (!form) return;
+    const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+    const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+    if (!r.ok) {
+      const key = `teacher.profile.error.${r.code || "unknown"}`;
+      showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+      return;
+    }
+    showToast(tx("auth.save_ok"));
+  });
+
   const toast = root.querySelector("#tpToast");
   const showToast = (msg) => {
     if (!toast) return;
@@ -408,10 +410,9 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   }
 
   const collectFields = (fd) => {
-    const bioEl = root.querySelector('textarea[name="bio"]');
     return {
       display_name: String(fd.get("display_name") || ""),
-      bio: String(bioEl && "value" in bioEl ? /** @type {HTMLTextAreaElement} */ (bioEl).value : fd.get("bio") || ""),
+      bio: String(fd.get("bio") ?? ""),
       expertiseTagsStr: String(fd.get("expertise_tags") || ""),
       teachingTargetsStr: getTargetsFromForm().join(","),
       teachingLanguagesStr: getLangsFromForm().join(","),

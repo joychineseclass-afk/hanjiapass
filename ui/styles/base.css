@@ -5947,6 +5947,30 @@ a.section-side-nav-item:hover{
   resize: vertical;
   min-height: 96px;
 }
+.teacher-profile-preserve-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+.teacher-credential-commerce-block{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+.teacher-intro-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
 .auth-submit,
 .teacher-profile-save{
   margin-top: 4px;
@@ -6470,6 +6494,7 @@ a.section-side-nav-item:hover{
   margin-top: 20px;
 }
 .teacher-profile-shell-form{
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0;
