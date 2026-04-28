@@ -339,10 +339,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
           <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro_short"))}</span>
           <textarea name="bio" id="tpBioField" rows="4" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(commerceRow.bio || "")}</textarea>
         </label>
-        <div class="teacher-intro-actions">
-          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroEdit">${escapeHtml(tx("common.edit"))}</button>
-          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroSave" ${readOnly ? "disabled" : ""}>${escapeHtml(tx("common.save"))}</button>
-        </div>
         <div class="auth-field">
           <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_targets"))}</span>
           <div class="teacher-profile-checkgroup">${personalTargetsRow}</div>
@@ -350,6 +346,10 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         <div class="auth-field">
           <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_langs"))}</span>
           <div class="teacher-profile-checkgroup">${personalLangsRow}</div>
+        </div>
+        <div class="teacher-intro-actions teacher-public-edit-actions">
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroEdit">${escapeHtml(tx("common.edit"))}</button>
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroSave" ${readOnly ? "disabled" : ""}>${escapeHtml(tx("common.save"))}</button>
         </div>
         ${personalGateBlock}
         <p class="auth-error" id="tpRegErr" hidden></p>
@@ -418,6 +418,11 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     if (readOnly) return;
     const ta = /** @type {HTMLTextAreaElement | null} */ (root.querySelector("#tpBioField") || root.querySelector('textarea[name="bio"]'));
     if (!ta) return;
+    try {
+      ta.scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch {
+      // older browsers without smooth scrolling fall back silently
+    }
     ta.focus();
   });
 
