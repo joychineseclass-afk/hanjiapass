@@ -1,6 +1,14 @@
 // #teacher-profile 老师档案：扩展资料 + 资质占位 + 提交审核
 
 import { i18n } from "../i18n.js";
+import {
+  normalizeBirthdayIso,
+  normalizeName,
+  normalizePhoneDigits,
+  ageFromBirthdayIso,
+} from "../auth/teacherRegistrationUtils.js";
+import { updateTeacherRegistrationSnapshot } from "../auth/authService.js";
+import { findUserById } from "../auth/authStore.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
 import { getMergedProfileForUser } from "../lumina-commerce/teacherProfileStore.js";
@@ -27,6 +35,29 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+/**
+ * @param {Record<string, unknown>|null|undefined} snap
+ */
+function registrationCredentialsHtml(snap) {
+  const list =
+    snap && typeof snap === "object" && Array.isArray(snap.credentials)
+      ? /** @type {{ labelKey?: string; fileName?: string }[]} */ (snap.credentials)
+      : [];
+  if (list.length === 0)
+    return `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.registration_cred_empty"))}</p>`;
+  return `<ul class="teacher-reg-cred-ul">${list
+    .map((c) => {
+      const k = String(c.labelKey || "");
+      const lab = k && tx(k) !== k ? tx(k) : k || "—";
+      const fn =
+        c.fileName && String(c.fileName).trim() !== ""
+          ? escapeHtml(String(c.fileName))
+          : `<span class="teacher-reg-muted-inline">${escapeHtml(tx("teacher.profile.registration_cred_no_file"))}</span>`;
+      return `<li><span class="teacher-reg-cred-label">${escapeHtml(lab)}</span> · ${escapeHtml(tx("teacher.profile.registration_cred_file"))} ${fn}</li>`;
+    })
+    .join("")}</ul>`;
 }
 
 /** @param {string} [iso] */
@@ -133,6 +164,82 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     ? `<ul class="teacher-credential-list">${creds.map((c) => credCardHtml(c, readOnly, tLabel)).join("")}</ul>`
     : `<p class="teacher-credential-empty">${escapeHtml(tx("teacher.profile.credential_empty"))}</p>`;
 
+  const authFull = findUserById(u.id);
+  const tpAuth = authFull?.teacherProfile;
+  /** @type {Record<string, unknown>|null} */
+  const regSnap =
+    tpAuth?.registration_snapshot && typeof tpAuth.registration_snapshot === "object"
+      ? /** @type {Record<string, unknown>} */ (tpAuth.registration_snapshot)
+      : null;
+  const regLegal = regSnap?.legal_name != null ? String(regSnap.legal_name).trim() : "";
+  const regGender = regSnap?.gender === "m" || regSnap?.gender === "f" ? String(regSnap.gender) : "";
+  const regBirth = regSnap?.birthday_iso != null ? String(regSnap.birthday_iso).trim() : "";
+  const regPhone = regSnap?.phone_digits != null ? String(regSnap.phone_digits).replace(/\D/g, "") : "";
+  const regAge = regBirth ? ageFromBirthdayIso(regBirth) : null;
+  const hasStructuredReg = !!(regSnap && (regLegal !== "" || regBirth !== "" || regPhone !== ""));
+  const legacyIntro = tpAuth?.intro ? String(tpAuth.intro) : "";
+  const legacyNote = tpAuth?.note != null ? String(tpAuth.note) : "";
+
+  const regSnapshotCard = hasStructuredReg
+    ? `<section class="card teacher-reg-card" data-teacher-reg="1">
+        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_registration"))}</h2>
+        <p class="teacher-reg-lead">${escapeHtml(tx("teacher.profile.registration_lead"))}</p>
+        <div class="teacher-reg-grid">
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_legal_name"))}</span>
+            <input id="tpRegLegalName" type="text" autocomplete="name" maxlength="80" value="${escapeHtml(regLegal)}" disabled />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.field_gender"))}</span>
+            <select id="tpRegGender" disabled>
+              <option value="" ${regGender === "" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_ph"))}</option>
+              <option value="m" ${regGender === "m" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_m"))}</option>
+              <option value="f" ${regGender === "f" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_f"))}</option>
+            </select>
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_birthday"))}</span>
+            <input id="tpRegBirthday" type="date" autocomplete="bday" value="${escapeHtml(regBirth)}" disabled />
+          </label>
+          <div class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_age"))}</span>
+            <p id="tpRegAgeLine" class="teacher-reg-age">${regAge != null ? escapeHtml(tx("teacher.profile.registration_age_line", { n: regAge })) : "—"}</p>
+          </div>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_phone"))}</span>
+            <input id="tpRegPhoneDigits" type="tel" inputmode="tel" value="${escapeHtml(regPhone)}" maxlength="22" disabled />
+          </label>
+        </div>
+        <div class="teacher-reg-cred-box">
+          <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.registration_credentials"))}</h3>
+          ${registrationCredentialsHtml(regSnap)}
+        </div>
+        <p class="teacher-reg-hint">${escapeHtml(tx("teacher.profile.registration_unlock_hint"))}</p>
+        <button type="button" id="tpRegGate" class="auth-submit auth-submit--secondary">${escapeHtml(tx("teacher.profile.reg_verify_start"))}</button>
+        <div id="tpRegOtpWrap" class="teacher-reg-otp" hidden>
+          <p class="teacher-reg-mini">${escapeHtml(tx("teacher.profile.registration_phone_gate"))}</p>
+          <div class="teacher-apply__phone-send-row teacher-reg-otp-row">
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSendSms">${escapeHtml(tx("teacher.profile.reg_send_sms"))}</button>
+          </div>
+          <p class="teacher-apply__otp-banner" id="tpRegOtpBanner" hidden></p>
+          <div class="teacher-apply__phone-send-row">
+            <input type="text" id="tpRegOtpInput" maxlength="8" autocomplete="one-time-code" placeholder="${escapeHtml(tx("teacher.profile.reg_sms_placeholder"))}" />
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpRegVerifySms">${escapeHtml(tx("teacher.profile.reg_verify"))}</button>
+          </div>
+        </div>
+        <p class="teacher-reg-ok" id="tpRegOkLine" role="status" hidden></p>
+        <div class="teacher-reg-actions-row">
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSaveSnap" disabled>${escapeHtml(tx("teacher.profile.reg_save"))}</button>
+        </div>
+        <p class="auth-error" id="tpRegErr" hidden></p>
+      </section>`
+    : `<section class="card teacher-reg-card teacher-reg-card--legacy">
+        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_registration"))}</h2>
+        <p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.registration_no_snapshot_lead"))}</p>
+        ${legacyIntro.trim() !== "" ? `<pre class="teacher-reg-intro-pre">${escapeHtml(legacyIntro)}</pre>` : ""}
+        ${legacyNote.trim() !== "" && legacyNote !== legacyIntro ? `<pre class="teacher-reg-intro-pre">${escapeHtml(legacyNote)}</pre>` : ""}
+      </section>`;
+
   const main = `
       <section class="card teacher-profile-hero">
         <h1 class="teacher-profile-title">${escapeHtml(tx("teacher.profile.page_title"))}</h1>
@@ -141,6 +248,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         ${profile.reviewed_at && (approved || rejected) ? `<p class="teacher-profile-meta-line">${escapeHtml(tx("teacher.profile.reviewed_at"))}: ${escapeHtml(fmtTime(profile.reviewed_at))}</p>` : ""}
         ${profile.review_note && (approved || rejected) ? `<p class="teacher-profile-meta-line teacher-profile-review-note"><span>${escapeHtml(tx("teacher.profile.review_note_label"))}:</span> ${escapeHtml(profile.review_note)}</p>` : ""}
       </section>
+      ${regSnapshotCard}
       ${
         readOnly
           ? `<p class="teacher-profile-locked card">${escapeHtml(tx("teacher.profile.pending_readonly"))} <a href="#teacher">${escapeHtml(
@@ -281,6 +389,158 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       contact_note: String(fd.get("contact_note") || ""),
     };
   };
+
+  /** @type {{ phone: string; code: string; nameLocked: string; birthdayLocked: string; exp: number } | null} */
+  let profileOtpSession = null;
+  let registrationEditUnlocked = false;
+
+  const showRegErr = (msg) => {
+    const el = root.querySelector("#tpRegErr");
+    if (el) {
+      el.textContent = msg;
+      el.hidden = false;
+    }
+  };
+  const clearRegErr = () => {
+    const el = root.querySelector("#tpRegErr");
+    if (el) el.hidden = true;
+  };
+
+  const updateRegAgeLine = () => {
+    const b = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegBirthday"));
+    const ageEl = root.querySelector("#tpRegAgeLine");
+    if (!b || !ageEl) return;
+    const iso = normalizeBirthdayIso(b.value);
+    const age = iso ? ageFromBirthdayIso(iso) : null;
+    ageEl.textContent = age != null ? tx("teacher.profile.registration_age_line", { n: age }) : "—";
+  };
+
+  if (hasStructuredReg) {
+    const legalIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegLegalName"));
+    const bdIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegBirthday"));
+    const phIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegPhoneDigits"));
+    const genderSel = /** @type {HTMLSelectElement | null} */ (root.querySelector("#tpRegGender"));
+    const otpIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegOtpInput"));
+    const otpBanner = root.querySelector("#tpRegOtpBanner");
+    const otpWrap = root.querySelector("#tpRegOtpWrap");
+    const saveSnapBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegSaveSnap"));
+
+    if (bdIn) {
+      const now = new Date();
+      const pad = (/** @type {number} */ n) => String(n).padStart(2, "0");
+      bdIn.max = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      const minD = new Date(now.getFullYear() - 120, now.getMonth(), now.getDate());
+      bdIn.min = `${minD.getFullYear()}-${pad(minD.getMonth() + 1)}-${pad(minD.getDate())}`;
+    }
+    bdIn?.addEventListener("input", updateRegAgeLine);
+
+    root.querySelector("#tpRegGate")?.addEventListener("click", () => {
+      clearRegErr();
+      otpWrap?.removeAttribute("hidden");
+    });
+
+    root.querySelector("#tpRegSendSms")?.addEventListener("click", () => {
+      clearRegErr();
+      const realName = normalizeName(legalIn?.value || "");
+      const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+      const phone = normalizePhoneDigits(phIn?.value || "");
+      if (!realName || !birthdayIso || phone.length < 5) {
+        showRegErr(tx("teacher.profile.reg_err_need_fields"));
+        return;
+      }
+      const code = String(Math.floor(100000 + Math.random() * 900000));
+      profileOtpSession = {
+        phone,
+        code,
+        nameLocked: realName,
+        birthdayLocked: birthdayIso,
+        exp: Date.now() + 10 * 60 * 1000,
+      };
+      if (otpBanner) {
+        otpBanner.hidden = false;
+        otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code });
+      }
+    });
+
+    root.querySelector("#tpRegVerifySms")?.addEventListener("click", () => {
+      clearRegErr();
+      const sess = profileOtpSession;
+      if (!sess || Date.now() > sess.exp) {
+        showRegErr(tx("teacherApply.error_otp_expired"));
+        profileOtpSession = null;
+        if (otpBanner) {
+          otpBanner.hidden = true;
+          otpBanner.textContent = "";
+        }
+        return;
+      }
+      const phone = normalizePhoneDigits(phIn?.value || "");
+      const codeIn = String(otpIn?.value || "").replace(/\s/g, "");
+      const realName = normalizeName(legalIn?.value || "");
+      const birthdayNow = normalizeBirthdayIso(bdIn?.value ?? "") || "";
+      if (phone !== sess.phone) {
+        showRegErr(tx("teacherApply.error_phone_mismatch_session"));
+        return;
+      }
+      if (codeIn !== sess.code) {
+        showRegErr(tx("teacherApply.error_otp_wrong"));
+        return;
+      }
+      if (realName !== sess.nameLocked) {
+        showRegErr(tx("teacherApply.error_realname_vs_otp"));
+        return;
+      }
+      if (birthdayNow !== sess.birthdayLocked) {
+        showRegErr(tx("teacherApply.error_birthday_vs_otp"));
+        return;
+      }
+      registrationEditUnlocked = true;
+      profileOtpSession = null;
+      if (otpBanner) {
+        otpBanner.hidden = true;
+        otpBanner.textContent = "";
+      }
+      otpWrap?.setAttribute("hidden", "");
+      if (legalIn) legalIn.disabled = false;
+      if (bdIn) bdIn.disabled = false;
+      if (phIn) phIn.disabled = false;
+      if (genderSel) genderSel.disabled = false;
+      if (saveSnapBtn) saveSnapBtn.disabled = false;
+      const ok = root.querySelector("#tpRegOkLine");
+      if (ok) {
+        ok.hidden = false;
+        ok.textContent = tx("teacher.profile.reg_unlocked");
+      }
+    });
+
+    saveSnapBtn?.addEventListener("click", async () => {
+      if (!registrationEditUnlocked) {
+        showRegErr(tx("teacher.profile.reg_err_verify_first"));
+        return;
+      }
+      clearRegErr();
+      const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+      const phoneDigits = normalizePhoneDigits(phIn?.value || "");
+      if (!normalizeName(legalIn?.value || "") || !birthdayIso || phoneDigits.length < 5) {
+        showRegErr(tx("teacher.profile.reg_err_need_fields"));
+        return;
+      }
+      const g = String(genderSel?.value || "");
+      const gender = g === "m" || g === "f" ? /** @type {'m'|'f'} */ (g) : /** @type {''|'m'|'f'} */ ("");
+      const r = await updateTeacherRegistrationSnapshot({
+        legal_name: normalizeName(legalIn?.value || ""),
+        gender,
+        birthday_iso: birthdayIso,
+        phone_digits: phoneDigits,
+      });
+      if (!r.ok) {
+        showRegErr(tx("auth.error.unknown"));
+        return;
+      }
+      showToast(tx("teacher.profile.reg_saved"));
+      await reloadPage(root);
+    });
+  }
 
   root.querySelector("#tpSave")?.addEventListener("click", async () => {
     if (readOnly) return;

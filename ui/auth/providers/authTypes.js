@@ -18,6 +18,18 @@
  */
 
 /**
+ * 教师申请时在本地存档的实名快照（与短信验证时填写的信息一致，供老师档案展示）
+ * @typedef {Object} TeacherRegistrationSnapshotV1
+ * @property {string} [legal_name]
+ * @property {''|'m'|'f'} [gender]
+ * @property {string} [birthday_iso] YYYY-MM-DD
+ * @property {string} [phone_digits] 仅数字
+ * @property {{ slot: string, labelKey: string, fileName: string }[]} [credentials]
+ * @property {string} [captured_at]
+ * @property {string} [updated_at]
+ */
+
+/**
  * @typedef {Object} TeacherApplicationProfileV1
  * @property {string} displayName
  * @property {string} intro
@@ -25,6 +37,7 @@
  * @property {string} experienceLevel
  * @property {string} [note]
  * @property {string} submittedAt
+ * @property {TeacherRegistrationSnapshotV1} [registration_snapshot]
  */
 
 /**

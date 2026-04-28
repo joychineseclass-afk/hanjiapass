@@ -1,8 +1,13 @@
 // #teacher-apply 教师申请（基础资料 + 手机实名验证码 + 可选资质勾选与本地文件）
 
 import { i18n } from "../i18n.js";
-import { getCurrentSessionAuthUser, getTeacherNavRoleState, submitTeacherApplication } from "../auth/authService.js";
+import {
+  getCurrentSessionAuthUser,
+  getTeacherNavRoleState,
+  submitTeacherApplication,
+} from "../auth/authService.js";
 import { findUserById } from "../auth/authStore.js";
+import { normalizeBirthdayIso, normalizeName, normalizePhoneDigits } from "../auth/teacherRegistrationUtils.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
 function tx(k, p) {
@@ -15,36 +20,6 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-}
-
-function normalizeName(s) {
-  return String(s || "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function normalizePhone(p) {
-  return String(p || "").replace(/\D/g, "");
-}
-
-/**
- * YYYY-MM-DD，须为真实日历日且介于（今天 − 120 年）到今天之间。
- * @returns {string | null}
- */
-function normalizeBirthdayInput(val) {
-  const raw = String(val ?? "").trim();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
-  const [y, m, d] = raw.split("-").map((x) => parseInt(x, 10));
-  if ([y, m, d].some(Number.isNaN)) return null;
-  const bd = new Date(y, m - 1, d);
-  if (bd.getFullYear() !== y || bd.getMonth() !== m - 1 || bd.getDate() !== d) return null;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const b0 = new Date(y, m - 1, d);
-  if (b0 > today) return null;
-  const oldest = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate());
-  if (b0 < oldest) return null;
-  return raw;
 }
 
 /** @type {{ phone: string, code: string, nameLocked: string, birthdayLocked: string, exp: number } | null} */
@@ -64,7 +39,7 @@ function buildProfileIntro(/** @type {FormData} */ fd) {
   };
   const gKey = g === "m" || g === "f" ? g : "m";
   const gLabel = tx(gmap[gKey]);
-  const bd = normalizeBirthdayInput(String(fd.get("birthday") || ""));
+  const bd = normalizeBirthdayIso(String(fd.get("birthday") || ""));
   const bdLine = bd || String(fd.get("birthday") || "").trim();
   const phone = String(fd.get("identity_phone") || "").trim();
   return [`${tx("teacherApply.pack_gender")}: ${gLabel}`, `${tx("teacherApply.pack_birthday")}: ${bdLine}`, `${tx("teacherApply.pack_phone")}: ${phone}`].join(
@@ -87,6 +62,34 @@ function buildProfileNote(/** @type {FormData} */ fd, /** @type {HTMLFormElement
   if (credBits.length) bits.push(credBits.join("\n"));
   if (cred) bits.push(cred);
   return bits.filter(Boolean).join("\n\n");
+}
+
+/**
+ * @param {FormData} fd
+ * @param {HTMLFormElement} form
+ */
+function buildRegistrationSnapshot(fd, form) {
+  const legal_name = normalizeName(fd.get("realName") || "");
+  const g = String(fd.get("gender") || "");
+  const gender = g === "m" || g === "f" ? g : "";
+  const birthday_iso = normalizeBirthdayIso(String(fd.get("birthday") || "")) || "";
+  const phone_digits = normalizePhoneDigits(String(fd.get("identity_phone") || ""));
+  /** @type {{ slot: string, labelKey: string, fileName: string }[]} */
+  const credentials = [];
+  for (let i = 1; i <= 4; i++) {
+    if (!fd.get(`cred_pick_${i}`)) continue;
+    const fileInp = form.querySelector(`input[name="cred_upload_${i}"]`);
+    const fn = fileInp && fileInp.files && fileInp.files[0] ? String(fileInp.files[0].name) : "";
+    credentials.push({ slot: String(i), labelKey: `teacherApply.cred_b${i}`, fileName: fn });
+  }
+  return {
+    legal_name,
+    gender,
+    birthday_iso,
+    phone_digits,
+    credentials,
+    captured_at: new Date().toISOString(),
+  };
 }
 
 export default async function pageTeacherApply(ctxOrRoot) {
@@ -280,8 +283,8 @@ export default async function pageTeacherApply(ctxOrRoot) {
     clearErr();
     const realName = normalizeName(/** @type {HTMLInputElement} */ (taRealName)?.value || "");
     const phoneRaw = /** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "";
-    const phone = normalizePhone(phoneRaw);
-    const birthdayIso = normalizeBirthdayInput(taBirthday?.value ?? "");
+    const phone = normalizePhoneDigits(phoneRaw);
+    const birthdayIso = normalizeBirthdayIso(taBirthday?.value ?? "");
     if (!realName) {
       showErr(tx("teacherApply.error_name"));
       return;
@@ -322,7 +325,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
       }
       return;
     }
-    const phone = normalizePhone(/** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "");
+    const phone = normalizePhoneDigits(/** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "");
     const codeIn = String(/** @type {HTMLInputElement} */ (taSmsCode)?.value || "").replace(/\s/g, "");
     const realName = normalizeName(/** @type {HTMLInputElement} */ (taRealName)?.value || "");
     if (phone !== sess.phone) {
@@ -337,7 +340,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_realname_vs_otp"));
       return;
     }
-    const birthdayNow = normalizeBirthdayInput(/** @type {HTMLInputElement} */ (taBirthday)?.value ?? "");
+    const birthdayNow = normalizeBirthdayIso(/** @type {HTMLInputElement} */ (taBirthday)?.value ?? "");
     if (!birthdayNow || birthdayNow !== sess.birthdayLocked) {
       showErr(tx("teacherApply.error_birthday_vs_otp"));
       return;
@@ -385,7 +388,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_name"));
       return;
     }
-    const birthdayIso = normalizeBirthdayInput(String(fd.get("birthday") || ""));
+    const birthdayIso = normalizeBirthdayIso(String(fd.get("birthday") || ""));
     if (!birthdayIso) {
       showErr(tx("teacherApply.error_birthday"));
       return;
@@ -394,12 +397,14 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_birthday_mismatch_verify"));
       return;
     }
+    const formEl = /** @type {HTMLFormElement} */ (e.target);
     const res = await submitTeacherApplication({
       displayName: realName,
       intro: buildProfileIntro(fd),
       teachingTypes: ["other"],
       experienceLevel: "no_experience",
-      note: buildProfileNote(fd, /** @type {HTMLFormElement} */ (e.target)),
+      note: buildProfileNote(fd, formEl),
+      registrationSnapshot: buildRegistrationSnapshot(fd, formEl),
     });
     if (!res.ok) {
       showErr(tx("auth.error.unknown"));

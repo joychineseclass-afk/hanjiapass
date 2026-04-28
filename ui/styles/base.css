@@ -6469,6 +6469,87 @@ a.section-side-nav-item:hover{
 .teacher-profile-section-title--sub{
   margin-top: 20px;
 }
+.teacher-reg-card{
+  margin: 0 0 18px;
+}
+.teacher-reg-lead{
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #475569;
+}
+.teacher-reg-grid{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.teacher-reg-age{
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.teacher-reg-cred-box{
+  margin: 16px 0 12px;
+}
+.teacher-reg-subtitle{
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #334155;
+}
+.teacher-reg-cred-ul{
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #334155;
+}
+.teacher-reg-muted{
+  margin: 0;
+}
+.teacher-reg-muted-inline{
+  font-size: inherit;
+  color: #94a3b8;
+}
+.teacher-reg-hint{
+  margin: 10px 0 10px;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+}
+.teacher-reg-mini{
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #475569;
+}
+.teacher-reg-otp{
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+.teacher-reg-intro-pre{
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #334155;
+}
+.teacher-reg-actions-row{
+  margin: 12px 0 0;
+}
+.teacher-reg-ok{
+  margin: 10px 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--brand, #2563eb);
+}
 .teacher-profile-checkgroup{
   display: flex;
   flex-wrap: wrap;

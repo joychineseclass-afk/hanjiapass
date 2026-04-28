@@ -264,13 +264,14 @@ export async function markOnboardingCompletedStudentPath() {
 
 /**
  * 提交教师申请：teacher → pending，写入 teacherProfile
- * @param {{ displayName: string, intro: string, teachingTypes: string[], experienceLevel: string, note?: string }} p
+ * @param {{ displayName: string, intro: string, teachingTypes: string[], experienceLevel: string, note?: string, registrationSnapshot?: Record<string, unknown> }} p
  */
 export async function submitTeacherApplication(p) {
   const au = getCurrentSessionAuthUser();
   if (!au) return { ok: false, code: "not_authenticated" };
   const full = findUserById(au.id);
   if (!full) return { ok: false, code: "not_found" };
+  /** @type {Record<string, unknown>} */
   const teacherProfile = {
     displayName: String(p.displayName || "").trim(),
     intro: String(p.intro || "").trim(),
@@ -279,11 +280,54 @@ export async function submitTeacherApplication(p) {
     note: p.note != null ? String(p.note) : "",
     submittedAt: new Date().toISOString(),
   };
+  if (p.registrationSnapshot && typeof p.registrationSnapshot === "object") {
+    teacherProfile.registration_snapshot = p.registrationSnapshot;
+  }
   upsertUser({
     ...full,
     onboardingCompleted: true,
     roles: { student: "active", teacher: "pending" },
     teacherProfile,
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  emitAuthStateChanged();
+  return { ok: true };
+}
+
+/**
+ * 更新教师申请存档中的实名快照（须在 UI 中先完成手机短信验证）。
+ * @param {{ legal_name?: string, gender?: ''|'m'|'f', birthday_iso?: string, phone_digits?: string }} patch
+ */
+export async function updateTeacherRegistrationSnapshot(patch) {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  const prevTp = full?.teacherProfile;
+  if (!full || !prevTp) return { ok: false, code: "no_teacher_profile" };
+  const prevSnap = prevTp.registration_snapshot && typeof prevTp.registration_snapshot === "object"
+    ? { .../** @type {Record<string, unknown>} */ (prevTp.registration_snapshot) }
+    : {};
+  /** @type {Record<string, unknown>} */
+  const rs = { ...prevSnap };
+  if (patch.legal_name != null) rs.legal_name = String(patch.legal_name).trim();
+  if (patch.birthday_iso != null) rs.birthday_iso = String(patch.birthday_iso).trim();
+  if (patch.phone_digits != null) rs.phone_digits = String(patch.phone_digits).replace(/\D/g, "");
+  if (patch.gender !== undefined && (patch.gender === "" || patch.gender === "m" || patch.gender === "f"))
+    rs.gender = patch.gender;
+  rs.updated_at = new Date().toISOString();
+  const ln = rs.legal_name != null ? String(rs.legal_name).trim() : "";
+  const nextTeacherDisplay = ln !== "" ? ln : prevTp.displayName;
+  const nextGlobalName = ln !== "" ? ln : full.displayName;
+
+  upsertUser({
+    ...full,
+    displayName: nextGlobalName != null ? String(nextGlobalName) : full.displayName,
+    teacherProfile: {
+      ...prevTp,
+      displayName: String(nextTeacherDisplay || prevTp.displayName || ""),
+      registration_snapshot: rs,
+    },
     updated_at: new Date().toISOString(),
   });
   await hydrateCurrentUserFromSession();
