@@ -27,8 +27,31 @@ function normalizePhone(p) {
   return String(p || "").replace(/\D/g, "");
 }
 
-/** @type {{ phone: string, code: string, nameLocked: string, exp: number } | null} */
+/**
+ * YYYY-MM-DD，须为真实日历日且介于（今天 − 120 年）到今天之间。
+ * @returns {string | null}
+ */
+function normalizeBirthdayInput(val) {
+  const raw = String(val ?? "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw)) return null;
+  const [y, m, d] = raw.split("-").map((x) => parseInt(x, 10));
+  if ([y, m, d].some(Number.isNaN)) return null;
+  const bd = new Date(y, m - 1, d);
+  if (bd.getFullYear() !== y || bd.getMonth() !== m - 1 || bd.getDate() !== d) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const b0 = new Date(y, m - 1, d);
+  if (b0 > today) return null;
+  const oldest = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate());
+  if (b0 < oldest) return null;
+  return raw;
+}
+
+/** @type {{ phone: string, code: string, nameLocked: string, birthdayLocked: string, exp: number } | null} */
 let phoneOtpSession = null;
+
+/** @type {string | null} 已通过短信验证锁定的生日（YYYY-MM-DD） */
+let verifiedBirthdayIso = null;
 
 /**
  * 将新表单字段写回既有的 teacherProfile 结构（不改 auth 层接口）。
@@ -41,9 +64,10 @@ function buildProfileIntro(/** @type {FormData} */ fd) {
   };
   const gKey = g === "m" || g === "f" ? g : "m";
   const gLabel = tx(gmap[gKey]);
-  const age = String(fd.get("age") || "").trim();
+  const bd = normalizeBirthdayInput(String(fd.get("birthday") || ""));
+  const bdLine = bd || String(fd.get("birthday") || "").trim();
   const phone = String(fd.get("identity_phone") || "").trim();
-  return [`${tx("teacherApply.pack_gender")}: ${gLabel}`, `${tx("teacherApply.pack_age")}: ${age}`, `${tx("teacherApply.pack_phone")}: ${phone}`].join(
+  return [`${tx("teacherApply.pack_gender")}: ${gLabel}`, `${tx("teacherApply.pack_birthday")}: ${bdLine}`, `${tx("teacherApply.pack_phone")}: ${phone}`].join(
     "\n",
   );
 }
@@ -118,8 +142,9 @@ export default async function pageTeacherApply(ctxOrRoot) {
               </select>
             </label>
             <label class="auth-field">
-              <span class="auth-label" data-i18n="teacherApply.field_age">${escapeHtml(tx("teacherApply.field_age"))}</span>
-              <input name="age" type="number" inputmode="numeric" min="1" max="120" required step="1" />
+              <span class="auth-label" data-i18n="teacherApply.field_birthday">${escapeHtml(tx("teacherApply.field_birthday"))}</span>
+              <input id="taBirthday" name="birthday" type="date" required autocomplete="bday" />
+              <p class="teacher-apply__field-hint" data-i18n="teacherApply.field_birthday_hint">${escapeHtml(tx("teacherApply.field_birthday_hint"))}</p>
             </label>
             <div class="auth-field">
               <span class="auth-label" data-i18n="teacherApply.field_email">${escapeHtml(tx("teacherApply.field_email"))}</span>
@@ -217,6 +242,14 @@ export default async function pageTeacherApply(ctxOrRoot) {
   const taIdentityVerified = root.querySelector("#taIdentityVerified");
   const sendBtn = root.querySelector("#taSendSms");
   const verifyBtn = root.querySelector("#taVerifySms");
+  const taBirthday = /** @type {HTMLInputElement | null} */ (root.querySelector("#taBirthday"));
+  if (taBirthday) {
+    const now = new Date();
+    const pad = (/** @type {number} */ n) => String(n).padStart(2, "0");
+    taBirthday.max = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const minD = new Date(now.getFullYear() - 120, now.getMonth(), now.getDate());
+    taBirthday.min = `${minD.getFullYear()}-${pad(minD.getMonth() + 1)}-${pad(minD.getDate())}`;
+  }
 
   function showErr(msg) {
     if (errEl) {
@@ -229,6 +262,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
   }
 
   function setVerifiedUi(ok) {
+    if (!ok) verifiedBirthdayIso = null;
     if (form) form.dataset.phoneVerified = ok ? "1" : "0";
     if (taIdentityVerified) taIdentityVerified.value = ok ? "1" : "0";
     if (taVerifyOk) {
@@ -239,6 +273,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
     if (sendBtn) sendBtn.disabled = ok;
     if (verifyBtn) verifyBtn.disabled = ok;
     if (taSmsCode) taSmsCode.readOnly = ok;
+    if (taBirthday) taBirthday.readOnly = ok;
   }
 
   sendBtn?.addEventListener("click", () => {
@@ -246,8 +281,13 @@ export default async function pageTeacherApply(ctxOrRoot) {
     const realName = normalizeName(/** @type {HTMLInputElement} */ (taRealName)?.value || "");
     const phoneRaw = /** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "";
     const phone = normalizePhone(phoneRaw);
+    const birthdayIso = normalizeBirthdayInput(taBirthday?.value ?? "");
     if (!realName) {
       showErr(tx("teacherApply.error_name"));
+      return;
+    }
+    if (!birthdayIso) {
+      showErr(tx("teacherApply.error_birthday"));
       return;
     }
     if (phone.length < 5) {
@@ -259,6 +299,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
       phone,
       code,
       nameLocked: realName,
+      birthdayLocked: birthdayIso,
       exp: Date.now() + 10 * 60 * 1000,
     };
     if (taOtpBanner) {
@@ -296,6 +337,12 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_realname_vs_otp"));
       return;
     }
+    const birthdayNow = normalizeBirthdayInput(/** @type {HTMLInputElement} */ (taBirthday)?.value ?? "");
+    if (!birthdayNow || birthdayNow !== sess.birthdayLocked) {
+      showErr(tx("teacherApply.error_birthday_vs_otp"));
+      return;
+    }
+    verifiedBirthdayIso = sess.birthdayLocked;
     setVerifiedUi(true);
     phoneOtpSession = null;
     if (taOtpBanner) {
@@ -338,10 +385,13 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_name"));
       return;
     }
-    const ageRaw = String(fd.get("age") || "").trim();
-    const ageN = parseInt(ageRaw, 10);
-    if (!ageRaw || Number.isNaN(ageN) || ageN < 1 || ageN > 120) {
-      showErr(tx("teacherApply.error_age"));
+    const birthdayIso = normalizeBirthdayInput(String(fd.get("birthday") || ""));
+    if (!birthdayIso) {
+      showErr(tx("teacherApply.error_birthday"));
+      return;
+    }
+    if (!verifiedBirthdayIso || birthdayIso !== verifiedBirthdayIso) {
+      showErr(tx("teacherApply.error_birthday_mismatch_verify"));
       return;
     }
     const res = await submitTeacherApplication({
