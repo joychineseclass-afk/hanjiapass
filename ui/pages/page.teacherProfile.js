@@ -1,12 +1,7 @@
 // #teacher-profile 老师档案：扩展资料 + 资质占位 + 提交审核
 
 import { i18n } from "../i18n.js";
-import {
-  normalizeBirthdayIso,
-  normalizeName,
-  normalizePhoneDigits,
-  ageFromBirthdayIso,
-} from "../auth/teacherRegistrationUtils.js";
+import { normalizeBirthdayIso, normalizeName, normalizePhoneDigits } from "../auth/teacherRegistrationUtils.js";
 import { updateTeacherRegistrationSnapshot } from "../auth/authService.js";
 import { findUserById } from "../auth/authStore.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
@@ -46,7 +41,7 @@ function registrationCredentialsHtml(snap) {
       ? /** @type {{ labelKey?: string; fileName?: string }[]} */ (snap.credentials)
       : [];
   if (list.length === 0)
-    return `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.registration_cred_empty"))}</p>`;
+    return `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.personal_certs_placeholder"))}</p>`;
   return `<ul class="teacher-reg-cred-ul">${list
     .map((c) => {
       const k = String(c.labelKey || "");
@@ -58,6 +53,27 @@ function registrationCredentialsHtml(snap) {
       return `<li><span class="teacher-reg-cred-label">${escapeHtml(lab)}</span> · ${escapeHtml(tx("teacher.profile.registration_cred_file"))} ${fn}</li>`;
     })
     .join("")}</ul>`;
+}
+
+/**
+ * 无结构化存档时，从轻量中文 intro 文本中解析性别/手机（不向用户展示原文）。
+ * @param {string} intro
+ */
+function parseLegacyZhIntro(intro) {
+  const s = String(intro ?? "").replace(/\r\n/g, "\n");
+  const o = /** @type {{ gender?: '' | 'm' | 'f'; phone_digits?: string }} */ ({});
+  const gm = s.match(/性别\s*[：:]\s*([^\n\r]+)/);
+  if (gm) {
+    const t = String(gm[1] ?? "").trim();
+    if (/男/.test(t) && !/女/.test(t)) o.gender = "m";
+    else if (/女/.test(t)) o.gender = "f";
+  }
+  const pm = s.match(/手机\s*[：:]\s*([\d\s\-+]+)/);
+  if (pm) {
+    const d = normalizePhoneDigits(pm[1]);
+    if (d.length >= 5) o.phone_digits = d;
+  }
+  return o;
 }
 
 /** @param {string} [iso] */
@@ -73,13 +89,15 @@ function fmtTime(iso) {
  * @param {readonly string[]} options
  * @param {(c: string) => string} labelFn
  * @param {boolean} [disabled]
+ * @param {string} [inputClass]
  */
-function checkboxesRow(selected, name, options, labelFn, disabled) {
+function checkboxesRow(selected, name, options, labelFn, disabled, inputClass) {
   const d = disabled ? "disabled" : "";
+  const ic = inputClass && String(inputClass).trim() !== "" ? ` class="${escapeHtml(String(inputClass))}"` : "";
   return options
     .map((c) => {
       const on = selected.includes(c) ? "checked" : "";
-      return `<label class="teacher-profile-check"><input type="checkbox" name="${name}" value="${c}" ${on} ${d} />${escapeHtml(labelFn(c))}</label>`;
+      return `<label class="teacher-profile-check"><input type="checkbox"${ic} name="${name}" value="${c}" ${on} ${d} />${escapeHtml(labelFn(c))}</label>`;
     })
     .join(" ");
 }
@@ -175,50 +193,40 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   const regGender = regSnap?.gender === "m" || regSnap?.gender === "f" ? String(regSnap.gender) : "";
   const regBirth = regSnap?.birthday_iso != null ? String(regSnap.birthday_iso).trim() : "";
   const regPhone = regSnap?.phone_digits != null ? String(regSnap.phone_digits).replace(/\D/g, "") : "";
-  const regAge = regBirth ? ageFromBirthdayIso(regBirth) : null;
-  const hasStructuredReg = !!(regSnap && (regLegal !== "" || regBirth !== "" || regPhone !== ""));
   const legacyIntro = tpAuth?.intro ? String(tpAuth.intro) : "";
-  const legacyNote = tpAuth?.note != null ? String(tpAuth.note) : "";
 
-  const regSnapshotCard = hasStructuredReg
-    ? `<section class="card teacher-reg-card" data-teacher-reg="1">
-        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_registration"))}</h2>
-        <p class="teacher-reg-lead">${escapeHtml(tx("teacher.profile.registration_lead"))}</p>
-        <div class="teacher-reg-grid">
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_legal_name"))}</span>
-            <input id="tpRegLegalName" type="text" autocomplete="name" maxlength="80" value="${escapeHtml(regLegal)}" disabled />
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacherApply.field_gender"))}</span>
-            <select id="tpRegGender" disabled>
-              <option value="" ${regGender === "" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_ph"))}</option>
-              <option value="m" ${regGender === "m" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_m"))}</option>
-              <option value="f" ${regGender === "f" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_f"))}</option>
-            </select>
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_birthday"))}</span>
-            <input id="tpRegBirthday" type="date" autocomplete="bday" value="${escapeHtml(regBirth)}" disabled />
-          </label>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_age"))}</span>
-            <p id="tpRegAgeLine" class="teacher-reg-age">${regAge != null ? escapeHtml(tx("teacher.profile.registration_age_line", { n: regAge })) : "—"}</p>
-          </div>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.registration_phone"))}</span>
-            <input id="tpRegPhoneDigits" type="tel" inputmode="tel" value="${escapeHtml(regPhone)}" maxlength="22" disabled />
-          </label>
-        </div>
-        <div class="teacher-reg-cred-box">
-          <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.registration_credentials"))}</h3>
-          ${registrationCredentialsHtml(regSnap)}
-        </div>
-        <p class="teacher-reg-hint">${escapeHtml(tx("teacher.profile.registration_unlock_hint"))}</p>
-        <button type="button" id="tpRegGate" class="auth-submit auth-submit--secondary">${escapeHtml(tx("teacher.profile.reg_verify_start"))}</button>
+  const legacyParsed = parseLegacyZhIntro(legacyIntro);
+  const vLegal = regLegal;
+  const vGender = regGender || legacyParsed.gender || "";
+  const vBirth = regBirth;
+  const vPhone = regPhone || legacyParsed.phone_digits || "";
+  const accountEmail = String(authFull?.email ?? "").trim();
+
+  const chkLockInit = true;
+  const personalTargetsRow = checkboxesRow(
+    targets,
+    "teaching_target",
+    TARGET_OPTS,
+    (c) => tx(`teacher.profile.target.${c}`),
+    chkLockInit,
+    "tp-personal-lock",
+  );
+  const personalLangsRow = checkboxesRow(
+    langs,
+    "teaching_lang",
+    LANG_OPTS,
+    (c) => tx(`teacher.profile.lang.${c}`),
+    chkLockInit,
+    "tp-personal-lock",
+  );
+
+  const personalGateBlock = readOnly
+    ? `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.personal_gate_pending_notice"))}</p>`
+    : `<p class="teacher-reg-hint">${escapeHtml(tx("teacher.profile.personal_gate_hint"))}</p>
+        <button type="button" id="tpChangePersonal" class="auth-submit auth-submit--secondary">${escapeHtml(tx("teacher.profile.personal_change_cta"))}</button>
         <div id="tpRegOtpWrap" class="teacher-reg-otp" hidden>
           <p class="teacher-reg-mini">${escapeHtml(tx("teacher.profile.registration_phone_gate"))}</p>
-          <div class="teacher-apply__phone-send-row teacher-reg-otp-row">
+          <div class="teacher-apply__phone-send-row">
             <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSendSms">${escapeHtml(tx("teacher.profile.reg_send_sms"))}</button>
           </div>
           <p class="teacher-apply__otp-banner" id="tpRegOtpBanner" hidden></p>
@@ -229,15 +237,55 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         </div>
         <p class="teacher-reg-ok" id="tpRegOkLine" role="status" hidden></p>
         <div class="teacher-reg-actions-row">
-          <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSaveSnap" disabled>${escapeHtml(tx("teacher.profile.reg_save"))}</button>
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSaveSnap" disabled>${escapeHtml(tx("teacher.profile.personal_save"))}</button>
+        </div>`;
+
+  const personalCard = `<section class="card teacher-personal-card">
+        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_personal"))}</h2>
+        <div class="teacher-personal-grid">
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_real_name"))}</span>
+            <input id="tpRegLegalName" class="tp-personal-lock" type="text" autocomplete="name" maxlength="80" value="${escapeHtml(vLegal)}" disabled />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.field_gender"))}</span>
+            <select id="tpRegGender" class="tp-personal-lock" disabled>
+              <option value="" ${vGender === "" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_ph"))}</option>
+              <option value="m" ${vGender === "m" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_m"))}</option>
+              <option value="f" ${vGender === "f" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_f"))}</option>
+            </select>
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_birthday"))}</span>
+            <input id="tpRegBirthday" type="date" class="tp-personal-lock" autocomplete="bday" value="${escapeHtml(vBirth)}" disabled />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_phone"))}</span>
+            <input id="tpRegPhoneDigits" type="tel" class="tp-personal-lock" inputmode="tel" value="${escapeHtml(vPhone)}" maxlength="22" disabled />
+          </label>
+          <div class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_email"))}</span>
+            <input type="email" readonly class="teacher-apply__input-readonly teacher-profile-input" value="${escapeHtml(accountEmail || "")}" />
+          </div>
         </div>
+        <div class="teacher-reg-cred-box">
+          <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.personal_certs_heading"))}</h3>
+          ${registrationCredentialsHtml(regSnap)}
+        </div>
+        <label class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro"))}</span>
+          <textarea name="bio" rows="4" class="teacher-profile-textarea tp-personal-lock" disabled>${escapeHtml(commerceRow.bio || "")}</textarea>
+        </label>
+        <div class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_targets"))}</span>
+          <div class="teacher-profile-checkgroup">${personalTargetsRow}</div>
+        </div>
+        <div class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_langs"))}</span>
+          <div class="teacher-profile-checkgroup">${personalLangsRow}</div>
+        </div>
+        ${personalGateBlock}
         <p class="auth-error" id="tpRegErr" hidden></p>
-      </section>`
-    : `<section class="card teacher-reg-card teacher-reg-card--legacy">
-        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_registration"))}</h2>
-        <p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.registration_no_snapshot_lead"))}</p>
-        ${legacyIntro.trim() !== "" ? `<pre class="teacher-reg-intro-pre">${escapeHtml(legacyIntro)}</pre>` : ""}
-        ${legacyNote.trim() !== "" && legacyNote !== legacyIntro ? `<pre class="teacher-reg-intro-pre">${escapeHtml(legacyNote)}</pre>` : ""}
       </section>`;
 
   const main = `
@@ -248,7 +296,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         ${profile.reviewed_at && (approved || rejected) ? `<p class="teacher-profile-meta-line">${escapeHtml(tx("teacher.profile.reviewed_at"))}: ${escapeHtml(fmtTime(profile.reviewed_at))}</p>` : ""}
         ${profile.review_note && (approved || rejected) ? `<p class="teacher-profile-meta-line teacher-profile-review-note"><span>${escapeHtml(tx("teacher.profile.review_note_label"))}:</span> ${escapeHtml(profile.review_note)}</p>` : ""}
       </section>
-      ${regSnapshotCard}
       ${
         readOnly
           ? `<p class="teacher-profile-locked card">${escapeHtml(tx("teacher.profile.pending_readonly"))} <a href="#teacher">${escapeHtml(
@@ -267,36 +314,19 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       </div>`
           : ""
       }
-      <section class="card teacher-profile-form-card">
+      <form id="teacherProfileForm" class="teacher-profile-shell-form${readOnly ? " teacher-profile-form--readonly" : ""}">
+        ${personalCard}
+      <section class="card teacher-profile-form-card teacher-profile-card--below">
         <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_basic"))}</h2>
-        <form id="teacherProfileForm" class="teacher-profile-form${readOnly ? " teacher-profile-form--readonly" : ""}">
           <label class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacher.profile.display_name"))}</span>
             <input name="display_name" type="text" required value="${escapeHtml(commerceRow.display_name || "")}" ${readOnly ? "disabled" : ""} />
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.bio"))}</span>
-            <textarea name="bio" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              commerceRow.bio || "",
-            )}</textarea>
           </label>
           <div class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacher.profile.expertise_tags"))}</span>
             <input name="expertise_tags" type="text" value="${escapeHtml(tagsStr)}" placeholder="${escapeHtml(
               tx("teacher.profile.expertise_placeholder"),
             )}" ${readOnly ? "disabled" : ""} />
-          </div>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.teaching_targets"))}</span>
-            <div class="teacher-profile-checkgroup">
-              ${checkboxesRow(targets, "teaching_target", TARGET_OPTS, (c) => tx(`teacher.profile.target.${c}`), readOnly)}
-            </div>
-          </div>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.teaching_languages"))}</span>
-            <div class="teacher-profile-checkgroup">
-              ${checkboxesRow(langs, "teaching_lang", LANG_OPTS, (c) => tx(`teacher.profile.lang.${c}`), readOnly)}
-            </div>
           </div>
           <label class="auth-field">
             <span class="auth-label">${escapeHtml(tx("teacher.profile.experience_note"))}</span>
@@ -350,8 +380,8 @@ export default async function pageTeacherProfile(ctxOrRoot) {
             )}</button>
           </div>
           <p class="auth-toast" id="tpToast" hidden></p>
-        </form>
       </section>
+      </form>
       <p class="teacher-profile-back"><a href="#teacher">${escapeHtml(tx("teacher.nav.back_mine_workbench"))}</a></p>
   `;
   root.innerHTML = renderTeacherAdminShell({
@@ -378,9 +408,10 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   }
 
   const collectFields = (fd) => {
+    const bioEl = root.querySelector('textarea[name="bio"]');
     return {
       display_name: String(fd.get("display_name") || ""),
-      bio: String(fd.get("bio") || ""),
+      bio: String(bioEl && "value" in bioEl ? /** @type {HTMLTextAreaElement} */ (bioEl).value : fd.get("bio") || ""),
       expertiseTagsStr: String(fd.get("expertise_tags") || ""),
       teachingTargetsStr: getTargetsFromForm().join(","),
       teachingLanguagesStr: getLangsFromForm().join(","),
@@ -406,16 +437,17 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     if (el) el.hidden = true;
   };
 
-  const updateRegAgeLine = () => {
-    const b = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegBirthday"));
-    const ageEl = root.querySelector("#tpRegAgeLine");
-    if (!b || !ageEl) return;
-    const iso = normalizeBirthdayIso(b.value);
-    const age = iso ? ageFromBirthdayIso(iso) : null;
-    ageEl.textContent = age != null ? tx("teacher.profile.registration_age_line", { n: age }) : "—";
-  };
+  /** @param {boolean} unlocked */
+  function applyPersonalGateVisual(unlocked) {
+    if (readOnly) return;
+    root.querySelectorAll(".tp-personal-lock").forEach((el) => {
+      /** @type {HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement} */ (el).disabled = !unlocked;
+    });
+  }
 
-  if (hasStructuredReg) {
+  if (!readOnly) applyPersonalGateVisual(false);
+
+  if (!readOnly) {
     const legalIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegLegalName"));
     const bdIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegBirthday"));
     const phIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegPhoneDigits"));
@@ -432,9 +464,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       const minD = new Date(now.getFullYear() - 120, now.getMonth(), now.getDate());
       bdIn.min = `${minD.getFullYear()}-${pad(minD.getMonth() + 1)}-${pad(minD.getDate())}`;
     }
-    bdIn?.addEventListener("input", updateRegAgeLine);
-
-    root.querySelector("#tpRegGate")?.addEventListener("click", () => {
+    root.querySelector("#tpChangePersonal")?.addEventListener("click", () => {
       clearRegErr();
       otpWrap?.removeAttribute("hidden");
     });
@@ -501,10 +531,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         otpBanner.textContent = "";
       }
       otpWrap?.setAttribute("hidden", "");
-      if (legalIn) legalIn.disabled = false;
-      if (bdIn) bdIn.disabled = false;
-      if (phIn) phIn.disabled = false;
-      if (genderSel) genderSel.disabled = false;
+      applyPersonalGateVisual(true);
       if (saveSnapBtn) saveSnapBtn.disabled = false;
       const ok = root.querySelector("#tpRegOkLine");
       if (ok) {
@@ -527,17 +554,26 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       }
       const g = String(genderSel?.value || "");
       const gender = g === "m" || g === "f" ? /** @type {'m'|'f'} */ (g) : /** @type {''|'m'|'f'} */ ("");
-      const r = await updateTeacherRegistrationSnapshot({
+      const rSnap = await updateTeacherRegistrationSnapshot({
         legal_name: normalizeName(legalIn?.value || ""),
         gender,
         birthday_iso: birthdayIso,
         phone_digits: phoneDigits,
       });
-      if (!r.ok) {
+      if (!rSnap.ok) {
         showRegErr(tx("auth.error.unknown"));
         return;
       }
-      showToast(tx("teacher.profile.reg_saved"));
+      const form = root.querySelector("#teacherProfileForm");
+      if (!form) return;
+      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+      const rSave = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+      if (!rSave.ok) {
+        const key = `teacher.profile.error.${rSave.code || "unknown"}`;
+        showRegErr(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+        return;
+      }
+      showToast(tx("teacher.profile.personal_saved"));
       await reloadPage(root);
     });
   }
