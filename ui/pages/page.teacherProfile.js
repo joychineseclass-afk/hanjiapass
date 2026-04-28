@@ -203,8 +203,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   const vPhone = regPhone || legacyParsed.phone_digits || "";
   const accountEmail = String(authFull?.email ?? "").trim();
 
-  const chkLockInit = true;
-
   const credentialAddBlock =
     readOnly
       ? ""
@@ -230,16 +228,16 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     "teaching_target",
     TARGET_OPTS,
     (c) => tx(`teacher.profile.target.${c}`),
-    chkLockInit,
-    "tp-personal-lock",
+    false,
+    "",
   );
   const personalLangsRow = checkboxesRow(
     langs,
     "teaching_lang",
     LANG_OPTS,
     (c) => tx(`teacher.profile.lang.${c}`),
-    chkLockInit,
-    "tp-personal-lock",
+    false,
+    "",
   );
 
   const personalGateBlock = readOnly
