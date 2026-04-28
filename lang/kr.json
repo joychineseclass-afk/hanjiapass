@@ -1436,6 +1436,9 @@
         "other_lang_teaching_qual": "기타 언어 교학 경력 증명"
       },
       "cred_note": "메모",
+      "cred_local_upload": "로컬 업로드(선택)",
+      "cred_local_upload_hint": "이미지·PDF·Word·Excel·PowerPoint·TXT 등 일반 형식 지원. 파일명·크기만 프로필에 기록되며 현재 버전에서는 서버로 원본이 업로드되지 않습니다.",
+      "cred_file_none": "선택 안 함",
       "cred_add_btn": "추가",
       "cred_title_required": "이름을 입력하세요.",
       "uploaded_at": "추가 시각",

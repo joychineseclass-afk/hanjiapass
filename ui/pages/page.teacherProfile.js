@@ -46,6 +46,14 @@ function escapeHtml(s) {
     .replaceAll("'", "&#39;");
 }
 
+/** @param {number} n */
+function formatCredFileSize(n) {
+  if (typeof n !== "number" || !Number.isFinite(n) || n < 0) return "—";
+  if (n < 1024) return `${Math.round(n)} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 /**
  * @param {Record<string, unknown>|null|undefined} snap
  */
@@ -233,6 +241,20 @@ export default async function pageTeacherProfile(ctxOrRoot) {
               <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
               <input type="text" id="newCredNote" />
             </label>
+            <div class="auth-field teacher-cred-upload-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_local_upload"))}</span>
+              <input
+                type="file"
+                id="newCredFile"
+                class="teacher-profile-cred-file-native"
+                accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.rtf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              />
+              <div class="teacher-cred-file-row">
+                <button type="button" class="auth-submit auth-submit--secondary" id="tpCredPickFile">${escapeHtml(tx("teacherApply.upload_file"))}</button>
+                <span class="teacher-cred-file-picked" id="newCredFileLabel" aria-live="polite">${escapeHtml(tx("teacher.profile.cred_file_none"))}</span>
+              </div>
+              <p class="teacher-cred-file-hint">${escapeHtml(tx("teacher.profile.cred_local_upload_hint"))}</p>
+            </div>
             <button type="button" class="auth-submit auth-submit--secondary" id="tpAddCred">${escapeHtml(tx("teacher.profile.cred_add_btn"))}</button>
           </div>`;
 
@@ -598,17 +620,44 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     });
   }
 
+  root.querySelector("#tpCredPickFile")?.addEventListener("click", () => {
+    /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"))?.click();
+  });
+  root.querySelector("#newCredFile")?.addEventListener("change", () => {
+    const fin = /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"));
+    const picked = root.querySelector("#newCredFileLabel");
+    const f = fin?.files?.[0];
+    if (picked)
+      picked.textContent = f
+        ? `${f.name}${f.size >= 0 ? ` · ${formatCredFileSize(f.size)}` : ""}`
+        : tx("teacher.profile.cred_file_none");
+  });
+
   const tpAddCredBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpAddCred"));
   tpAddCredBtn?.addEventListener("click", async () => {
     await withButtonLock(tpAddCredBtn, async () => {
       const title = String(root.querySelector("#newCredTitle")?.value || "").trim();
       const kind = String(root.querySelector("#newCredKind")?.value || "other");
       const note = String(root.querySelector("#newCredNote")?.value || "");
+      const fileIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"));
+      const file = fileIn?.files?.[0];
       if (!title) {
         showToast(tx("teacher.profile.cred_title_required"));
         return;
       }
-      const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, { title, kind, note });
+      const item = {
+        title,
+        kind,
+        note,
+        ...(file
+          ? {
+              file_name: file.name,
+              mime_type: file.type || "application/octet-stream",
+              file_size_label: formatCredFileSize(file.size),
+            }
+          : {}),
+      };
+      const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, item);
       if (r.ok) {
         await reloadPage(root);
       } else {

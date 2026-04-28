@@ -1436,6 +1436,9 @@
         "other_lang_teaching_qual": "Other language teaching experience proof"
       },
       "cred_note": "Note",
+      "cred_local_upload": "Local upload (optional)",
+      "cred_local_upload_hint": "Supports common images, PDFs, Word, Excel, PowerPoint, TXT, etc. Only the file name and size are saved in your profile metadata; originals are not uploaded to a server in this version.",
+      "cred_file_none": "No local file chosen",
       "cred_add_btn": "Add",
       "cred_title_required": "Please enter a title.",
       "uploaded_at": "Added at",

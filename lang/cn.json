@@ -1436,6 +1436,9 @@
         "other_lang_teaching_qual": "其他语言教学经验资格证"
       },
       "cred_note": "备注",
+      "cred_local_upload": "本地上传（选填）",
+      "cred_local_upload_hint": "支持常用图片格式及 PDF、Word、Excel、PowerPoint、TXT 等文档。所选内容仅写入档案内的文件名与大小信息，不向服务器上传原件。",
+      "cred_file_none": "尚未选择本地文件",
       "cred_add_btn": "添加",
       "cred_title_required": "请填写材料名称。",
       "uploaded_at": "上传/添加时间",

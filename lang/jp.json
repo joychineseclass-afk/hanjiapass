@@ -1444,6 +1444,9 @@
         "other_lang_teaching_qual": "その他語学・指導経験に関する資格・証明"
       },
       "cred_note": "メモ",
+      "cred_local_upload": "ローカルアップロード（任意）",
+      "cred_local_upload_hint": "画像、PDF、Word、Excel、PowerPoint、TXT などに対応。ファイル名・サイズのみプロフィールに記録されます（サーバーへの原本アップロードは当面ありません）。",
+      "cred_file_none": "未選択",
       "cred_add_btn": "追加",
       "cred_title_required": "材料名を入力してください。",
       "uploaded_at": "登録日時",
