@@ -19,7 +19,6 @@ import {
   renderTeacherAdminShell,
   teacherMaterialsNextGuideHtml,
   teacherPathStripHtml,
-  teacherPathStripClassroomHintHtml,
 } from "./teacherPathNav.js";
 
 function tx(path, params) {
@@ -145,16 +144,11 @@ async function renderMaterialsDom(root) {
   const main = `
       ${demoBannerHtml("materials")}
       ${restrictedBannerHtml(ctx, t)}
-      ${teacherPathStripHtml("materials", t)}
-      ${teacherPathStripClassroomHintHtml(t)}
+      ${teacherPathStripHtml("materials", t, { showLead: false })}
       <header class="card teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
-        <p class="teacher-admin-tagline">${escapeHtml(t("teacher.materials_page.tagline"))}</p>
-        <p class="teacher-admin-manage-note">${escapeHtml(t("teacher.materials_page.manage_scope_note"))}</p>
-        <p class="teacher-admin-workflow-note">${escapeHtml(t("teacher.materials_page.classroom_note_mine"))}</p>
       </header>
-      ${ctx.isApproved ? teacherMaterialsNextGuideHtml(t) : ""}
 
       <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.materials_page.upload_cta"))}">
         <div class="teacher-admin-toolbar-row">
@@ -201,6 +195,7 @@ async function renderMaterialsDom(root) {
           <li>${escapeHtml(t("teacher.materials_page.relation_item_3"))}</li>
         </ul>
       </aside>
+      ${ctx.isApproved ? teacherMaterialsNextGuideHtml(t) : ""}
   `;
   root.innerHTML = renderTeacherAdminShell({
     active: "materials",
