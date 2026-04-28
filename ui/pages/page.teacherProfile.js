@@ -351,18 +351,22 @@ export default async function pageTeacherProfile(ctxOrRoot) {
         <textarea name="experience_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.experience_note || "")}</textarea>
         <textarea name="introduction_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.introduction_note || "")}</textarea>
         <input type="hidden" name="contact_note" value="${escapeHtml(profile.contact_note || "")}" />
+        <fieldset class="teacher-profile-fieldset teacher-profile-fieldset--personal"${readOnly ? " disabled" : ""}>
         ${personalCard}
-      <section class="card teacher-profile-form-card teacher-profile-card--below teacher-profile-actions-card">
+        </fieldset>
+      ${
+        readOnly
+          ? ""
+          : `<section class="card teacher-profile-form-card teacher-profile-card--below teacher-profile-actions-card">
           <div class="teacher-profile-actions">
-            <button type="button" class="auth-submit teacher-profile-save" id="tpSave" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              tx("common.save"),
-            )}</button>
+            <button type="button" class="auth-submit teacher-profile-save" id="tpSave">${escapeHtml(tx("common.save"))}</button>
             <button type="button" class="auth-submit auth-submit--secondary" id="tpSubmit" ${showSubmit ? "" : "hidden"}>${escapeHtml(
               tx(submitLabelKey),
             )}</button>
           </div>
           <p class="auth-toast" id="tpToast" hidden></p>
-      </section>
+      </section>`
+      }
       </form>
       <p class="teacher-profile-back"><a href="#teacher">${escapeHtml(tx("teacher.nav.back_mine_workbench"))}</a></p>
   `;

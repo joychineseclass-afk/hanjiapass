@@ -6506,6 +6506,16 @@ a.section-side-nav-item:hover{
   flex-direction: column;
   gap: 0;
 }
+.teacher-profile-fieldset{
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.teacher-profile-fieldset:disabled .teacher-profile-check,
+.teacher-profile-fieldset:disabled label{
+  cursor: not-allowed;
+}
 .teacher-profile-card--below{
   margin-top: 0;
 }
