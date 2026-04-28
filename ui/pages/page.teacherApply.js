@@ -7,6 +7,11 @@ import {
   submitTeacherApplication,
 } from "../auth/authService.js";
 import { findUserById } from "../auth/authStore.js";
+import {
+  requestTeacherPhoneOtp,
+  TEACHER_PHONE_OTP_ERR_TX,
+  verifyTeacherPhoneOtp,
+} from "../auth/teacherOtpService.js";
 import { normalizeBirthdayIso, normalizeName, normalizePhoneDigits } from "../auth/teacherRegistrationUtils.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 
@@ -21,9 +26,6 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
-
-/** @type {{ phone: string, code: string, nameLocked: string, birthdayLocked: string, exp: number } | null} */
-let phoneOtpSession = null;
 
 /** @type {string | null} 已通过短信验证锁定的生日（YYYY-MM-DD） */
 let verifiedBirthdayIso = null;
@@ -279,7 +281,7 @@ export default async function pageTeacherApply(ctxOrRoot) {
     if (taBirthday) taBirthday.readOnly = ok;
   }
 
-  sendBtn?.addEventListener("click", () => {
+  sendBtn?.addEventListener("click", async () => {
     clearErr();
     const realName = normalizeName(/** @type {HTMLInputElement} */ (taRealName)?.value || "");
     const phoneRaw = /** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "";
@@ -297,57 +299,42 @@ export default async function pageTeacherApply(ctxOrRoot) {
       showErr(tx("teacherApply.error_phone"));
       return;
     }
-    const code = String(Math.floor(100000 + Math.random() * 900000));
-    phoneOtpSession = {
-      phone,
-      code,
-      nameLocked: realName,
-      birthdayLocked: birthdayIso,
-      exp: Date.now() + 10 * 60 * 1000,
-    };
+    const res = await requestTeacherPhoneOtp({
+      legalName: /** @type {HTMLInputElement} */ (taRealName)?.value || "",
+      phoneDigitsRaw: phoneRaw,
+      birthdayRaw: taBirthday?.value ?? "",
+    });
     if (taOtpBanner) {
       taOtpBanner.hidden = false;
-      taOtpBanner.textContent = tx("teacherApply.otp_sent_show", { code });
+      if (res.devCode != null && res.devCode !== "") {
+        taOtpBanner.textContent = tx("teacherApply.otp_sent_show", { code: res.devCode });
+      } else {
+        taOtpBanner.textContent = tx("teacherApply.otp_sent_masked", { masked: res.maskedPhone });
+      }
     }
     setVerifiedUi(false);
     if (taVerifyOk) taVerifyOk.hidden = true;
   });
 
-  verifyBtn?.addEventListener("click", () => {
+  verifyBtn?.addEventListener("click", async () => {
     clearErr();
-    const sess = phoneOtpSession;
-    if (!sess || Date.now() > sess.exp) {
-      showErr(tx("teacherApply.error_otp_expired"));
-      phoneOtpSession = null;
-      if (taOtpBanner) {
+    const vr = await verifyTeacherPhoneOtp({
+      legalName: /** @type {HTMLInputElement} */ (taRealName)?.value || "",
+      phoneDigitsRaw: /** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "",
+      smsCodeRaw: /** @type {HTMLInputElement} */ (taSmsCode)?.value || "",
+      birthdayRaw: /** @type {HTMLInputElement} */ (taBirthday)?.value ?? "",
+    });
+    if (!vr.ok) {
+      if (vr.reason === "expired" && taOtpBanner) {
         taOtpBanner.hidden = true;
         taOtpBanner.textContent = "";
       }
+      showErr(tx(TEACHER_PHONE_OTP_ERR_TX[vr.reason]));
       return;
     }
-    const phone = normalizePhoneDigits(/** @type {HTMLInputElement} */ (taIdentityPhone)?.value || "");
-    const codeIn = String(/** @type {HTMLInputElement} */ (taSmsCode)?.value || "").replace(/\s/g, "");
-    const realName = normalizeName(/** @type {HTMLInputElement} */ (taRealName)?.value || "");
-    if (phone !== sess.phone) {
-      showErr(tx("teacherApply.error_phone_mismatch_session"));
-      return;
-    }
-    if (codeIn !== sess.code) {
-      showErr(tx("teacherApply.error_otp_wrong"));
-      return;
-    }
-    if (realName !== sess.nameLocked) {
-      showErr(tx("teacherApply.error_realname_vs_otp"));
-      return;
-    }
-    const birthdayNow = normalizeBirthdayIso(/** @type {HTMLInputElement} */ (taBirthday)?.value ?? "");
-    if (!birthdayNow || birthdayNow !== sess.birthdayLocked) {
-      showErr(tx("teacherApply.error_birthday_vs_otp"));
-      return;
-    }
-    verifiedBirthdayIso = sess.birthdayLocked;
+    const bd = normalizeBirthdayIso(/** @type {HTMLInputElement} */ (taBirthday)?.value ?? "");
+    verifiedBirthdayIso = bd || null;
     setVerifiedUi(true);
-    phoneOtpSession = null;
     if (taOtpBanner) {
       taOtpBanner.hidden = true;
       taOtpBanner.textContent = "";

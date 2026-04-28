@@ -1,6 +1,11 @@
 // #teacher-profile 老师档案：扩展资料 + 资质占位 + 提交审核
 
 import { i18n } from "../i18n.js";
+import {
+  requestTeacherPhoneOtp,
+  TEACHER_PHONE_OTP_ERR_TX,
+  verifyTeacherPhoneOtp,
+} from "../auth/teacherOtpService.js";
 import { normalizeBirthdayIso, normalizeName, normalizePhoneDigits } from "../auth/teacherRegistrationUtils.js";
 import { updateTeacherRegistrationSnapshot } from "../auth/authService.js";
 import { findUserById } from "../auth/authStore.js";
@@ -432,8 +437,6 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     };
   };
 
-  /** @type {{ phone: string; code: string; nameLocked: string; birthdayLocked: string; exp: number } | null} */
-  let profileOtpSession = null;
   let registrationEditUnlocked = false;
 
   const showRegErr = (msg) => {
@@ -492,17 +495,18 @@ export default async function pageTeacherProfile(ctxOrRoot) {
           showRegErr(tx("teacher.profile.reg_err_need_fields"));
           return;
         }
-        const code = String(Math.floor(100000 + Math.random() * 900000));
-        profileOtpSession = {
-          phone,
-          code,
-          nameLocked: realName,
-          birthdayLocked: birthdayIso,
-          exp: Date.now() + 10 * 60 * 1000,
-        };
+        const res = await requestTeacherPhoneOtp({
+          legalName: legalIn?.value || "",
+          phoneDigitsRaw: phIn?.value || "",
+          birthdayRaw: bdIn?.value ?? "",
+        });
         if (otpBanner) {
           otpBanner.hidden = false;
-          otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code });
+          if (res.devCode != null && res.devCode !== "") {
+            otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code: res.devCode });
+          } else {
+            otpBanner.textContent = tx("teacher.profile.reg_otp_banner_masked", { masked: res.maskedPhone });
+          }
         }
       });
     });
@@ -510,38 +514,21 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     verifySmsBtn?.addEventListener("click", () => {
       void withButtonLock(verifySmsBtn, async () => {
         clearRegErr();
-        const sess = profileOtpSession;
-        if (!sess || Date.now() > sess.exp) {
-          showRegErr(tx("teacherApply.error_otp_expired"));
-          profileOtpSession = null;
-          if (otpBanner) {
+        const vr = await verifyTeacherPhoneOtp({
+          legalName: legalIn?.value || "",
+          phoneDigitsRaw: phIn?.value || "",
+          smsCodeRaw: otpIn?.value || "",
+          birthdayRaw: bdIn?.value ?? "",
+        });
+        if (!vr.ok) {
+          if (vr.reason === "expired" && otpBanner) {
             otpBanner.hidden = true;
             otpBanner.textContent = "";
           }
-          return;
-        }
-        const phone = normalizePhoneDigits(phIn?.value || "");
-        const codeIn = String(otpIn?.value || "").replace(/\s/g, "");
-        const realName = normalizeName(legalIn?.value || "");
-        const birthdayNow = normalizeBirthdayIso(bdIn?.value ?? "") || "";
-        if (phone !== sess.phone) {
-          showRegErr(tx("teacherApply.error_phone_mismatch_session"));
-          return;
-        }
-        if (codeIn !== sess.code) {
-          showRegErr(tx("teacherApply.error_otp_wrong"));
-          return;
-        }
-        if (realName !== sess.nameLocked) {
-          showRegErr(tx("teacherApply.error_realname_vs_otp"));
-          return;
-        }
-        if (birthdayNow !== sess.birthdayLocked) {
-          showRegErr(tx("teacherApply.error_birthday_vs_otp"));
+          showRegErr(tx(TEACHER_PHONE_OTP_ERR_TX[vr.reason]));
           return;
         }
         registrationEditUnlocked = true;
-        profileOtpSession = null;
         if (otpBanner) {
           otpBanner.hidden = true;
           otpBanner.textContent = "";
