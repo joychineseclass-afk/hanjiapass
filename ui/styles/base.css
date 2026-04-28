@@ -2227,6 +2227,122 @@ a.section-side-nav-item:hover{
 .teacher-admin-header{
   padding: 18px 20px;
 }
+.teacher-admin-header--with-actions{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.teacher-admin-header--with-actions .teacher-admin-header-text{
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+/* 「+ 新建教材」下拉（基于 <details>，不需要额外 JS 状态） */
+.teacher-new-material{
+  position: relative;
+  flex: 0 0 auto;
+}
+.teacher-new-material-trigger{
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid #4f46e5;
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.16) inset, 0 1px 2px rgba(15,23,42,0.12);
+  user-select: none;
+}
+.teacher-new-material-trigger::-webkit-details-marker{ display: none; }
+.teacher-new-material-trigger:hover{
+  background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%);
+}
+.teacher-new-material-trigger:focus-visible{
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+.teacher-new-material-trigger-plus{
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 900;
+}
+.teacher-new-material-trigger-caret{
+  font-size: 10px;
+  margin-left: 2px;
+  opacity: 0.85;
+}
+.teacher-new-material[open] .teacher-new-material-trigger-caret{
+  transform: rotate(180deg);
+}
+.teacher-new-material-menu{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 260px;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12), 0 2px 4px rgba(15, 23, 42, 0.06);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.teacher-new-material-item{
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+  cursor: pointer;
+}
+.teacher-new-material-item:hover,
+.teacher-new-material-item:focus-visible{
+  background: #eef2ff;
+  outline: none;
+}
+.teacher-new-material-item--primary{
+  color: #312e81;
+  background: #f5f3ff;
+}
+.teacher-new-material-item--primary:hover{
+  background: #ede9fe;
+}
+.teacher-new-material-item-sub{
+  margin: -2px 12px 4px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+}
+.teacher-new-material-divider{
+  height: 1px;
+  background: #e2e8f0;
+  margin: 6px 4px;
+}
+.teacher-new-material-section-title{
+  margin: 2px 12px 4px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 .teacher-admin-title{
   margin: 0 0 6px;
   font-size: clamp(22px, 3vw, 28px);

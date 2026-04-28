@@ -44,7 +44,6 @@ export function teacherBackToWorkspaceHtml(tx) {
 const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
   "workspace",
   "profile",
-  "create_material",
   "materials",
   "courses",
   "assets",
@@ -76,10 +75,6 @@ function teacherModuleNavItemSpec(kind, active, m) {
     href = "#teacher-profile";
     label = m("teacher.nav.teacher_profile");
     isCurrent = active === "profile";
-  } else if (kind === "create_material") {
-    href = "#teacher-create-material";
-    label = m("teacher.nav.create_material");
-    isCurrent = active === "create_material";
   } else if (kind === "materials") {
     href = "#teacher-materials";
     label = m("teacher.hub.materials.title");

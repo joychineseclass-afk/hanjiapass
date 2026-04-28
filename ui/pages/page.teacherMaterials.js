@@ -35,6 +35,58 @@ function escapeHtml(s) {
 let __matLangHandler = /** @type {null | (() => void)} */ (null);
 let __matRootRef = /** @type {HTMLElement | null} */ (null);
 
+/** @type {readonly { kind: string, labelKey: string, hrefHash: string }[]} */
+const NEW_MATERIAL_KINDS = [
+  { kind: "pdf", labelKey: "teacher.create_material.type_pdf", hrefHash: "#teacher-create-material?kind=pdf" },
+  { kind: "doc", labelKey: "teacher.create_material.type_doc", hrefHash: "#teacher-create-material?kind=doc" },
+  { kind: "picture_book", labelKey: "teacher.create_material.type_picture_book", hrefHash: "#teacher-create-material?kind=picture_book" },
+  { kind: "handout", labelKey: "teacher.create_material.type_handout", hrefHash: "#teacher-create-material?kind=handout" },
+  { kind: "deck", labelKey: "teacher.create_material.type_deck", hrefHash: "#teacher-create-material?kind=deck" },
+];
+
+/** 从 `#teacher-materials?new=1` 中读出是否应展开「新建教材」下拉。 */
+function readShouldOpenNew() {
+  try {
+    const h = String(location.hash || "");
+    const qi = h.indexOf("?");
+    if (qi < 0) return false;
+    const sp = new URLSearchParams(h.slice(qi));
+    return sp.get("new") === "1";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * 「我的教材」页主入口下拉：本地上传 + 5 种类型创建。
+ * @param {(a: string, b?: object) => string} t
+ * @param {boolean} openByDefault
+ */
+function newMaterialDropdownHtml(t, openByDefault) {
+  const kindItems = NEW_MATERIAL_KINDS.map(
+    ({ labelKey, hrefHash }) =>
+      `<a class="teacher-new-material-item" role="menuitem" href="${escapeHtml(hrefHash)}">${escapeHtml(t(labelKey))}</a>`,
+  ).join("");
+  return `
+    <details class="teacher-new-material" data-mat-new-dropdown="1"${openByDefault ? " open" : ""}>
+      <summary class="teacher-new-material-trigger" aria-haspopup="menu">
+        <span class="teacher-new-material-trigger-plus" aria-hidden="true">+</span>
+        ${escapeHtml(t("teacher.materials_page.new_button"))}
+        <span class="teacher-new-material-trigger-caret" aria-hidden="true">&#9662;</span>
+      </summary>
+      <div class="teacher-new-material-menu" role="menu" aria-label="${escapeHtml(t("teacher.materials_page.new_button"))}">
+        <button type="button" class="teacher-new-material-item teacher-new-material-item--primary" role="menuitem" data-mat-local-upload="1">
+          ${escapeHtml(t("teacher.materials_page.new_local_upload"))}
+        </button>
+        <p class="teacher-new-material-item-sub">${escapeHtml(t("teacher.materials_page.new_local_upload_sub"))}</p>
+        <div class="teacher-new-material-divider" role="separator"></div>
+        <p class="teacher-new-material-section-title">${escapeHtml(t("teacher.materials_page.new_section_create"))}</p>
+        ${kindItems}
+      </div>
+    </details>
+  `;
+}
+
 /**
  * @param {Array<{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string }>} materials
  * @param {(a: string, b?: object) => string} t
@@ -139,11 +191,15 @@ async function renderMaterialsDom(root) {
   }
 
   const showReview = currentUserCanAccessTeacherReviewConsoleSync();
+  const wantNewOpen = readShouldOpenNew();
   const main = `
       ${restrictedBannerHtml(ctx, t)}
-      <header class="card teacher-admin-header">
-        <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
-        <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
+      <header class="card teacher-admin-header teacher-admin-header--with-actions">
+        <div class="teacher-admin-header-text">
+          <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
+          <p class="teacher-admin-subtitle">${escapeHtml(headSubtitle)}</p>
+        </div>
+        ${canShowLibrary ? newMaterialDropdownHtml(t, wantNewOpen) : ""}
       </header>
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
@@ -172,14 +228,11 @@ async function renderMaterialsDom(root) {
 
       <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.materials_page.upload_cta"))}">
         <div class="teacher-admin-toolbar-row">
-          <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled>
+          <button type="button" class="teacher-admin-btn teacher-admin-btn--disabled" disabled data-mat-local-upload="1">
             ${escapeHtml(t("teacher.materials_page.upload_cta"))}
           </button>
           <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(uploadHint)}</p>
         </div>
-        <p class="teacher-materials-create-link">
-          <a class="teacher-hub-inline-link" href="#teacher-create-material">${escapeHtml(t("teacher.materials_page.link_to_create"))}</a>
-        </p>
       </section>
 
       <aside class="teacher-info-note">
@@ -201,6 +254,42 @@ async function renderMaterialsDom(root) {
     shellClass: "teacher-page teacher-manage-page teacher-admin-shell",
   });
   i18n.apply?.(root);
+  bindMaterialsInteractions(root, t);
+}
+
+/**
+ * 我的教材页交互：
+ *  - 「+ 新建教材」下拉中的本地上传按钮（占位）
+ *  - 顶部按钮与底部「本地上传教材」共享同一占位提示
+ *  - 点击下拉外部时关闭 `<details>`
+ * @param {HTMLElement} root
+ * @param {(a: string, b?: object) => string} t
+ */
+function bindMaterialsInteractions(root, t) {
+  const onLocalUploadClick = (ev) => {
+    ev.preventDefault();
+    try {
+      alert(t("teacher.materials_page.local_upload_coming_alert"));
+    } catch {
+      /* noop */
+    }
+  };
+  root.querySelectorAll('[data-mat-local-upload="1"]').forEach((el) => {
+    el.removeAttribute("disabled");
+    el.addEventListener("click", onLocalUploadClick);
+  });
+
+  const dropdown = /** @type {HTMLDetailsElement|null} */ (root.querySelector('[data-mat-new-dropdown="1"]'));
+  if (dropdown) {
+    const onDocClick = (ev) => {
+      if (!dropdown.open) return;
+      const target = /** @type {Node|null} */ (ev.target);
+      if (target && !dropdown.contains(target)) {
+        dropdown.open = false;
+      }
+    };
+    document.addEventListener("click", onDocClick, { passive: true });
+  }
 }
 
 export default function pageTeacherMaterials(ctxOrRoot) {
