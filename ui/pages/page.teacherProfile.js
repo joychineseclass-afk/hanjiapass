@@ -121,7 +121,7 @@ function checkboxesRow(selected, name, options, labelFn, disabled, inputClass) {
  * @param {(k: string) => string} label
  */
 function credCardHtml(c, readOnly, label) {
-  const kindKey = `teacher.profile.cred_kind.${c.kind || "other"}`;
+  const kindKey = `teacher.profile.cred_kind_enum.${c.kind || "other"}`;
   return `<li class="teacher-credential-card" data-cred-id="${escapeHtml(c.id)}">
     <div class="teacher-credential-card-main">
       <span class="teacher-credential-title">${escapeHtml(c.title || "")}</span>
@@ -227,7 +227,7 @@ export default async function pageTeacherProfile(ctxOrRoot) {
             </label>
             <label class="auth-field">
               <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_kind"))}</span>
-              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind.${k}`))}</option>`).join("")}</select>
+              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind_enum.${k}`))}</option>`).join("")}</select>
             </label>
             <label class="auth-field">
               <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
