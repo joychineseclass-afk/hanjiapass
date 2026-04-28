@@ -2145,6 +2145,8 @@
       "lead": "Start producing new teaching resources here—PDFs, common documents, picture books, handouts, slide decks, and more. The buttons below are placeholders until editors ship.",
       "types_title": "Choose a type to create",
       "types_hint": "Buttons are intentionally disabled for now; each will open an editor or wizard later.",
+      "step_back": "Back to type selection",
+      "step_placeholder": "Design and implement this material type’s authoring flow here.",
       "type_pdf": "PDF material",
       "type_doc": "Document (Word, etc.)",
       "type_picture_book": "Picture book / album",
