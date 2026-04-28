@@ -214,9 +214,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const { runSessionRouteGuards, bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
+    // Hydrate 前不跑 guards（避免 Supabase _cachedUser 未就绪误判）；首屏守卫在 runStartupHydrateWithBudget 完成后执行。
+    const { bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
     bindOnboardingHashGuard();
-    requestAnimationFrame(() => runSessionRouteGuards());
     const { shouldEnableLuminaDevUi } = await import("./lumina-commerce/devRuntimeFlags.js");
     if (shouldEnableLuminaDevUi()) {
       const mod = await import("./auth/authService.js");
