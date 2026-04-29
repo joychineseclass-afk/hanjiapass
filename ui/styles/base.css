@@ -2344,74 +2344,31 @@ a.section-side-nav-item:hover{
   text-transform: uppercase;
 }
 
-/* 我的教材 · 本地上传弹层（骨架） */
-.teacher-upload-modal{
-  position: fixed;
-  inset: 0;
-  z-index: 1200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
+/* 我的教材 · 本地上传（页内卡片，非弹层） */
+.teacher-local-upload{
+  margin-top: 14px;
+  padding: 16px 18px 18px;
 }
-.teacher-upload-modal__backdrop{
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  cursor: pointer;
-}
-.teacher-upload-modal__panel{
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 440px;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
-  border: 1px solid #e2e8f0;
-  padding: 18px 20px 16px;
-  max-height: min(92vh, 560px);
-  overflow: auto;
-}
-.teacher-upload-modal__head{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.teacher-upload-modal__title{
-  margin: 0;
-  font-size: 1.15rem;
+.teacher-local-upload__h2{
+  margin: 0 0 8px;
+  font-size: 1.05rem;
   font-weight: 900;
   color: rgba(15, 23, 42, 0.92);
-  line-height: 1.25;
 }
-.teacher-upload-modal__x{
-  flex: 0 0 auto;
-  border: none;
-  background: #f1f5f9;
+.teacher-local-upload__stage{
+  margin: 0 0 10px;
+  font-size: 13px;
   color: #64748b;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  font-weight: 400;
+  line-height: 1.45;
 }
-.teacher-upload-modal__x:hover{
-  background: #e2e8f0;
-  color: #334155;
-}
-.teacher-upload-modal__types{
+.teacher-local-upload__types{
   margin: 0 0 14px;
   font-size: 13px;
   color: #64748b;
   line-height: 1.45;
 }
-.teacher-upload-modal__drop{
+.teacher-local-upload__drop{
+  position: relative;
   border: 2px dashed #cbd5e1;
   border-radius: 12px;
   padding: 18px 14px;
@@ -2419,20 +2376,25 @@ a.section-side-nav-item:hover{
   background: #f8fafc;
   margin-bottom: 14px;
   transition: border-color 0.15s ease, background 0.15s ease;
+  outline: none;
 }
-.teacher-upload-modal__drop:focus-within,
-.teacher-upload-modal__drop:hover{
+.teacher-local-upload__drop:focus-visible{
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+.teacher-local-upload__drop:focus-within,
+.teacher-local-upload__drop:hover{
   border-color: #94a3b8;
   background: #f1f5f9;
 }
-.teacher-upload-modal__input{
+.teacher-local-upload__input{
   position: absolute;
   width: 0;
   height: 0;
   opacity: 0;
   pointer-events: none;
 }
-.teacher-upload-modal__drop-line{
+.teacher-local-upload__drop-line{
   margin: 0;
   font-size: 14px;
   color: #475569;
@@ -2442,7 +2404,7 @@ a.section-side-nav-item:hover{
   justify-content: center;
   gap: 6px;
 }
-.teacher-upload-modal__browse{
+.teacher-local-upload__browse{
   border: none;
   background: none;
   padding: 0;
@@ -2453,66 +2415,66 @@ a.section-side-nav-item:hover{
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.teacher-upload-modal__picked{
+.teacher-local-upload__picked{
   margin: 10px 0 0;
   font-size: 13px;
   font-weight: 700;
   color: #0f172a;
   word-break: break-all;
 }
-.teacher-upload-modal__field{
+.teacher-local-upload__field{
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-bottom: 10px;
 }
-.teacher-upload-modal__label{
+.teacher-local-upload__label{
   font-size: 13px;
   font-weight: 750;
   color: #475569;
 }
-.teacher-upload-modal__textinp{
+.teacher-local-upload__textinp{
   font-family: inherit;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 10px 12px;
   font-size: 14px;
 }
-.teacher-upload-modal__textinp:focus{
+.teacher-local-upload__textinp:focus{
   outline: 2px solid #818cf8;
   outline-offset: 0;
   border-color: #a5b4fc;
 }
-.teacher-upload-modal__err{
+.teacher-local-upload__err{
   margin: 0 0 10px;
   font-size: 13px;
   font-weight: 700;
   color: #b91c1c;
 }
-.teacher-upload-modal__progress{
+.teacher-local-upload__progress{
   margin-bottom: 12px;
 }
-.teacher-upload-modal__progress-track{
+.teacher-local-upload__progress-track{
   height: 8px;
   border-radius: 999px;
   background: #e2e8f0;
   overflow: hidden;
 }
-.teacher-upload-modal__progress-bar{
+.teacher-local-upload__progress-bar{
   height: 100%;
   width: 0%;
   border-radius: 999px;
   background: linear-gradient(90deg, #6366f1, #4f46e5);
   transition: width 0.65s ease;
 }
-.teacher-upload-modal__actions{
+.teacher-local-upload__actions{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 4px;
 }
-.teacher-upload-modal__btn{
+.teacher-local-upload__btn{
   font-family: inherit;
   border-radius: 10px;
   padding: 9px 16px;
@@ -2521,22 +2483,14 @@ a.section-side-nav-item:hover{
   cursor: pointer;
   border: 1px solid transparent;
 }
-.teacher-upload-modal__btn--ghost{
-  background: #f1f5f9;
-  color: #475569;
-  border-color: #e2e8f0;
-}
-.teacher-upload-modal__btn--ghost:hover{
-  background: #e2e8f0;
-}
-.teacher-upload-modal__btn--primary{
+.teacher-local-upload__btn--primary{
   background: #4f46e5;
   color: #fff;
 }
-.teacher-upload-modal__btn--primary:hover{
+.teacher-local-upload__btn--primary:hover{
   background: #4338ca;
 }
-.teacher-upload-modal__btn:disabled{
+.teacher-local-upload__btn:disabled{
   opacity: 0.5;
   cursor: not-allowed;
 }

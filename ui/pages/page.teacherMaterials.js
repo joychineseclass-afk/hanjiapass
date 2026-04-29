@@ -88,43 +88,38 @@ function newMaterialDropdownHtml(t, openByDefault) {
 }
 
 /**
- * 本地上传弹层（骨架）：拖拽 / 选择、校验、进度条、经 service mock 提交。
+ * 本地上传：页内卡片（标题区下方、列表上方），非全屏弹层。
  * @param {(a: string, b?: object) => string} t
+ * @param {string} uploadStageHint 来自 `upload_next_stage` 的说明句
  */
-function uploadModalHtml(t) {
+function localUploadSectionHtml(t, uploadStageHint) {
   return `
-<div class="teacher-upload-modal" data-mat-upload-modal hidden aria-hidden="true">
-  <div class="teacher-upload-modal__backdrop" data-mat-upload-backdrop tabindex="-1"></div>
-  <div class="teacher-upload-modal__panel" role="dialog" aria-modal="true" aria-labelledby="mat-upload-h2">
-    <div class="teacher-upload-modal__head">
-      <h2 id="mat-upload-h2" class="teacher-upload-modal__title">${escapeHtml(t("teacher.materials_page.upload_modal_title"))}</h2>
-      <button type="button" class="teacher-upload-modal__x" data-mat-upload-close aria-label="${escapeHtml(t("teacher.materials_page.upload_modal_close_aria"))}">×</button>
-    </div>
-    <p class="teacher-upload-modal__types">${escapeHtml(t("teacher.materials_page.upload_modal_types"))}</p>
-    <div class="teacher-upload-modal__drop" data-mat-upload-drop>
-      <input type="file" class="teacher-upload-modal__input" data-mat-upload-input accept=".pdf,.ppt,.pptx,.doc,.docx,.png,.jpg,.jpeg,.webp" />
-      <p class="teacher-upload-modal__drop-line">
-        <span>${escapeHtml(t("teacher.materials_page.upload_modal_drop"))}</span>
-        <button type="button" class="teacher-upload-modal__browse" data-mat-upload-browse>${escapeHtml(t("teacher.materials_page.upload_modal_browse"))}</button>
-      </p>
-      <p class="teacher-upload-modal__picked" data-mat-upload-filename hidden></p>
-    </div>
-    <label class="teacher-upload-modal__field">
-      <span class="teacher-upload-modal__label">${escapeHtml(t("teacher.materials_page.upload_modal_name_label"))}</span>
-      <input type="text" class="teacher-upload-modal__textinp" data-mat-upload-title-inp autocomplete="off" />
-    </label>
-    <p class="teacher-upload-modal__err" data-mat-upload-err role="alert" hidden></p>
-    <div class="teacher-upload-modal__progress" data-mat-upload-progress hidden>
-      <div class="teacher-upload-modal__progress-track">
-        <div class="teacher-upload-modal__progress-bar" data-mat-upload-progress-bar></div>
-      </div>
-    </div>
-    <div class="teacher-upload-modal__actions">
-      <button type="button" class="teacher-upload-modal__btn teacher-upload-modal__btn--ghost" data-mat-upload-close>${escapeHtml(t("teacher.materials_page.upload_modal_cancel"))}</button>
-      <button type="button" class="teacher-upload-modal__btn teacher-upload-modal__btn--primary" data-mat-upload-submit>${escapeHtml(t("teacher.materials_page.upload_modal_submit"))}</button>
+<section class="card teacher-local-upload" id="teacher-materials-local-upload" data-mat-upload-root aria-labelledby="mat-local-upload-h2">
+  <h2 id="mat-local-upload-h2" class="teacher-local-upload__h2">${escapeHtml(t("teacher.materials_page.upload_modal_title"))}</h2>
+  <p class="teacher-local-upload__stage">${escapeHtml(uploadStageHint)}</p>
+  <p class="teacher-local-upload__types">${escapeHtml(t("teacher.materials_page.upload_modal_types"))}</p>
+  <div class="teacher-local-upload__drop" data-mat-upload-drop tabindex="0" role="button" aria-label="${escapeHtml(t("teacher.materials_page.upload_modal_browse"))}">
+    <input type="file" class="teacher-local-upload__input" data-mat-upload-input accept=".pdf,.ppt,.pptx,.doc,.docx,.png,.jpg,.jpeg,.webp" />
+    <p class="teacher-local-upload__drop-line">
+      <span>${escapeHtml(t("teacher.materials_page.upload_modal_drop"))}</span>
+      <button type="button" class="teacher-local-upload__browse" data-mat-upload-browse>${escapeHtml(t("teacher.materials_page.upload_modal_browse"))}</button>
+    </p>
+    <p class="teacher-local-upload__picked" data-mat-upload-filename hidden></p>
+  </div>
+  <label class="teacher-local-upload__field">
+    <span class="teacher-local-upload__label">${escapeHtml(t("teacher.materials_page.upload_modal_name_label"))}</span>
+    <input type="text" class="teacher-local-upload__textinp" data-mat-upload-title-inp autocomplete="off" />
+  </label>
+  <p class="teacher-local-upload__err" data-mat-upload-err role="alert" hidden></p>
+  <div class="teacher-local-upload__progress" data-mat-upload-progress hidden>
+    <div class="teacher-local-upload__progress-track">
+      <div class="teacher-local-upload__progress-bar" data-mat-upload-progress-bar></div>
     </div>
   </div>
-</div>`;
+  <div class="teacher-local-upload__actions">
+    <button type="button" class="teacher-local-upload__btn teacher-local-upload__btn--primary" data-mat-upload-submit>${escapeHtml(t("teacher.materials_page.upload_modal_submit"))}</button>
+  </div>
+</section>`;
 }
 
 /**
@@ -243,6 +238,8 @@ async function renderMaterialsDom(root) {
         ${canShowLibrary ? newMaterialDropdownHtml(t, wantNewOpen) : ""}
       </header>
 
+      ${canShowLibrary ? localUploadSectionHtml(t, uploadHint) : ""}
+
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
         <h2 id="teacher-materials-list-title" class="teacher-admin-list-heading">${escapeHtml(t("teacher.materials_page.list_title_mine"))}</h2>
         <p class="teacher-demo-disclosure">${escapeHtml(t("teacher.demo.disclosure_mine"))}</p>
@@ -267,15 +264,6 @@ async function renderMaterialsDom(root) {
         </div>
       </section>
 
-      <section class="card teacher-admin-toolbar" aria-label="${escapeHtml(t("teacher.materials_page.upload_cta"))}">
-        <div class="teacher-admin-toolbar-row">
-          <button type="button" class="teacher-admin-btn" data-mat-local-upload="1">
-            ${escapeHtml(t("teacher.materials_page.upload_cta"))}
-          </button>
-          <p class="teacher-admin-toolbar-hint teacher-admin-toolbar-hint--stage">${escapeHtml(uploadHint)}</p>
-        </div>
-      </section>
-
       <aside class="teacher-info-note">
         <p class="teacher-info-note-title">${escapeHtml(t("teacher.materials_page.relation_title"))}</p>
         <p class="teacher-info-note-lead">${escapeHtml(t("teacher.materials_page.relation_note_mine"))}</p>
@@ -286,7 +274,6 @@ async function renderMaterialsDom(root) {
         </ul>
       </aside>
       ${ctx.isApproved ? teacherMaterialsNextGuideHtml(t) : ""}
-      ${canShowLibrary ? uploadModalHtml(t) : ""}
   `;
   root.innerHTML = renderTeacherAdminShell({
     active: "materials",
@@ -301,7 +288,7 @@ async function renderMaterialsDom(root) {
 }
 
 /**
- * 我的教材页交互：本地上传弹层、新建下拉、` Esc` 关闭弹层。
+ * 我的教材页交互：页内本地上传区、新建下拉；「本地上传」入口滚动到上传卡片。
  * @param {HTMLElement} root
  * @param {(a: string, b?: object) => string} t
  * @param {string|null} teacherProfileId
@@ -309,17 +296,16 @@ async function renderMaterialsDom(root) {
 function bindMaterialsInteractions(root, t, teacherProfileId) {
   /** @type {File|null} */
   let pickedFile = null;
-  /** @type {null | ((e: KeyboardEvent) => void)} */
-  let escHandler = null;
 
-  const modal = /** @type {HTMLElement|null} */ (root.querySelector("[data-mat-upload-modal]"));
-  const errEl = /** @type {HTMLElement|null} */ (modal?.querySelector("[data-mat-upload-err]"));
-  const nameEl = /** @type {HTMLElement|null} */ (modal?.querySelector("[data-mat-upload-filename]"));
-  const titleInp = /** @type {HTMLInputElement|null} */ (modal?.querySelector("[data-mat-upload-title-inp]"));
-  const fileInp = /** @type {HTMLInputElement|null} */ (modal?.querySelector("[data-mat-upload-input]"));
-  const progressWrap = /** @type {HTMLElement|null} */ (modal?.querySelector("[data-mat-upload-progress]"));
-  const progressBar = /** @type {HTMLElement|null} */ (modal?.querySelector("[data-mat-upload-progress-bar]"));
-  const submitBtn = /** @type {HTMLButtonElement|null} */ (modal?.querySelector("[data-mat-upload-submit]"));
+  const panel = /** @type {HTMLElement|null} */ (root.querySelector("[data-mat-upload-root]"));
+  const errEl = /** @type {HTMLElement|null} */ (panel?.querySelector("[data-mat-upload-err]"));
+  const nameEl = /** @type {HTMLElement|null} */ (panel?.querySelector("[data-mat-upload-filename]"));
+  const titleInp = /** @type {HTMLInputElement|null} */ (panel?.querySelector("[data-mat-upload-title-inp]"));
+  const fileInp = /** @type {HTMLInputElement|null} */ (panel?.querySelector("[data-mat-upload-input]"));
+  const progressWrap = /** @type {HTMLElement|null} */ (panel?.querySelector("[data-mat-upload-progress]"));
+  const progressBar = /** @type {HTMLElement|null} */ (panel?.querySelector("[data-mat-upload-progress-bar]"));
+  const submitBtn = /** @type {HTMLButtonElement|null} */ (panel?.querySelector("[data-mat-upload-submit]"));
+  const dropZone = /** @type {HTMLElement|null} */ (panel?.querySelector("[data-mat-upload-drop]"));
 
   function setErr(msg) {
     if (!errEl) return;
@@ -332,7 +318,7 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
     errEl.textContent = msg;
   }
 
-  function resetModal() {
+  function resetUploadForm() {
     pickedFile = null;
     if (fileInp) fileInp.value = "";
     if (titleInp) titleInp.value = "";
@@ -344,24 +330,15 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
     if (progressWrap) progressWrap.hidden = true;
     if (progressBar) progressBar.style.width = "0%";
     if (submitBtn) submitBtn.disabled = false;
-    modal?.querySelectorAll("button[data-mat-upload-close]").forEach((b) => {
-      b.disabled = false;
-    });
   }
 
-  function closeModal() {
-    if (!modal) return;
-    modal.hidden = true;
-    modal.setAttribute("aria-hidden", "true");
-    if (escHandler) {
-      document.removeEventListener("keydown", escHandler);
-      escHandler = null;
-    }
-    resetModal();
+  function scrollToLocalUpload() {
+    const el = document.getElementById("teacher-materials-local-upload");
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => dropZone?.focus(), 280);
   }
 
-  function openModal() {
-    if (!modal) return;
+  function focusUploadFromNav() {
     if (!teacherProfileId) {
       try {
         alert(`${t("teacher.access.library_locked_title")}\n\n${t("teacher.access.library_locked_body")}`);
@@ -370,16 +347,9 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
       }
       return;
     }
-    resetModal();
-    modal.hidden = false;
-    modal.setAttribute("aria-hidden", "false");
     const dd = /** @type {HTMLDetailsElement|null} */ (root.querySelector('[data-mat-new-dropdown="1"]'));
     if (dd) dd.open = false;
-    escHandler = (e) => {
-      if (e.key === "Escape") closeModal();
-    };
-    document.addEventListener("keydown", escHandler);
-    titleInp?.focus();
+    scrollToLocalUpload();
   }
 
   function applyPickedFile(file) {
@@ -409,34 +379,38 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
   root.querySelectorAll('[data-mat-local-upload="1"]').forEach((el) => {
     el.addEventListener("click", (ev) => {
       ev.preventDefault();
-      openModal();
+      focusUploadFromNav();
     });
   });
 
-  modal?.querySelector("[data-mat-upload-backdrop]")?.addEventListener("click", () => closeModal());
-  modal?.querySelectorAll("[data-mat-upload-close]").forEach((el) => {
-    el.addEventListener("click", () => closeModal());
+  dropZone?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInp?.click();
+    }
   });
 
-  const drop = modal?.querySelector("[data-mat-upload-drop]");
-  drop?.addEventListener("dragover", (e) => {
+  dropZone?.addEventListener("dragover", (e) => {
     e.preventDefault();
     e.stopPropagation();
   });
-  drop?.addEventListener("drop", (e) => {
+  dropZone?.addEventListener("drop", (e) => {
     e.preventDefault();
     const f = e.dataTransfer?.files?.[0];
     if (f) applyPickedFile(f);
   });
 
-  modal?.querySelector("[data-mat-upload-browse]")?.addEventListener("click", () => fileInp?.click());
+  panel?.querySelector("[data-mat-upload-browse]")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    fileInp?.click();
+  });
   fileInp?.addEventListener("change", () => {
     const f = fileInp.files?.[0];
     if (f) applyPickedFile(f);
   });
 
   submitBtn?.addEventListener("click", async () => {
-    if (!teacherProfileId || !modal) return;
+    if (!teacherProfileId || !panel) return;
     const v = validateLocalMaterialFile(pickedFile || undefined);
     if (!v.ok) {
       setErr(
@@ -450,11 +424,7 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
     }
     const title = (titleInp?.value || "").trim() || pickedFile?.name || "";
     setErr("");
-    const closers = modal.querySelectorAll("button[data-mat-upload-close]");
     submitBtn.disabled = true;
-    closers.forEach((b) => {
-      (/** @type {HTMLButtonElement} */ (b)).disabled = true;
-    });
     if (progressWrap) progressWrap.hidden = false;
     if (progressBar) {
       progressBar.style.width = "0%";
@@ -468,19 +438,14 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
         file: /** @type {File} */ (pickedFile),
         title,
       });
-      closeModal();
+      resetUploadForm();
       alert(t("teacher.materials_page.upload_mock_ok"));
     } catch {
       setErr(t("teacher.materials_page.upload_err_no_file"));
     } finally {
-      if (modal && !modal.hidden) {
-        submitBtn.disabled = false;
-        closers.forEach((b) => {
-          (/** @type {HTMLButtonElement} */ (b)).disabled = false;
-        });
-        if (progressWrap) progressWrap.hidden = true;
-        if (progressBar) progressBar.style.width = "0%";
-      }
+      submitBtn.disabled = false;
+      if (progressWrap) progressWrap.hidden = true;
+      if (progressBar) progressBar.style.width = "0%";
     }
   });
 
@@ -489,11 +454,13 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
     const onDocClick = (ev) => {
       if (!dropdown.open) return;
       const target = /** @type {Node|null} */ (ev.target);
-      const uploadOpen = modal && !modal.hidden;
-      if (uploadOpen && modal && target && modal.contains(target)) return;
       if (target && !dropdown.contains(target)) dropdown.open = false;
     };
     document.addEventListener("click", onDocClick, { passive: true });
+  }
+
+  if (readShouldOpenNew() && teacherProfileId) {
+    window.setTimeout(() => scrollToLocalUpload(), 120);
   }
 }
 
