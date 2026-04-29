@@ -2,7 +2,6 @@
 
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import {
-  getDemoMaterialsForProfile,
   formatDemoMaterialCoursesLine,
   formatDemoMaterialListingPrep,
   formatDemoMaterialPhasePill,
@@ -11,6 +10,7 @@ import {
   formatDemoShortUpdated,
   getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
+import { listMaterialsForTeacherProfile } from "../lumina-commerce/teacherMaterialsService.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
 import { i18n } from "../i18n.js";
 import {
@@ -161,7 +161,8 @@ async function renderMaterialsDom(root) {
   }
 
   const canShowLibrary = ctx.isTeacherRole && ctx.isApproved;
-  const materials = canShowLibrary && ctx.profile ? getDemoMaterialsForProfile(ctx.profile.id) : [];
+  const materials =
+    canShowLibrary && ctx.profile ? await listMaterialsForTeacherProfile(ctx.profile.id) : [];
   const headTitle = canShowLibrary
     ? t("teacher.materials_page.mine_page_title", { name: ctx.profile?.display_name || "" })
     : t("teacher.materials_page.title");
