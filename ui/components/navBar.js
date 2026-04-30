@@ -208,10 +208,13 @@ function syncAuthBlock(rootEl) {
     }
     i18n?.apply?.(box);
     box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", (ev) => {
+      console.log("[Lumina Logout] clicked");
       ev.preventDefault();
       void (async () => {
         try {
+          console.log("[Lumina Logout] before logoutUser");
           await mod.logoutUser();
+          console.log("[Lumina Logout] after logoutUser");
         } catch (e) {
           console.warn("[Lumina] logoutUser:", e?.message || e);
         }
