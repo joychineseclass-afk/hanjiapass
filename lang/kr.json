@@ -1955,6 +1955,7 @@
       "delete_confirm": "목록에서 이 교재를 제거할까요? (데모: 이 탭 메모리만 유지, 새로고침 시 복구)",
       "err_rename_empty": "이름은 비울 수 없습니다.",
       "err_category_invalid": "분류 키가 올바르지 않습니다. ppt, handout, picture_book, pdf, other 중 하나를 입력하세요.",
+      "delete_blocked_hint": "이 교재는 코스에서 사용 중이라 삭제할 수 없습니다. 먼저 「내 코스」에서 연결을 해제하세요.",
       "new_button": "교재 새로 만들기",
       "new_section_create": "생성 유형 선택",
       "new_local_upload": "내 컴퓨터에서 업로드",

@@ -1955,6 +1955,7 @@
       "delete_confirm": "从当前列表移除此教材？（演示数据仅保存在本页会话中，刷新可恢复。）",
       "err_rename_empty": "名称不能为空。",
       "err_category_invalid": "分类键无效。请使用：ppt、handout、picture_book、pdf、other。",
+      "delete_blocked_hint": "该教材已被课程引用，无法删除。请先在「我的课程」中解除关联后再试。",
       "new_button": "新建教材",
       "new_section_create": "选择创建类型",
       "new_local_upload": "本地上传教材",

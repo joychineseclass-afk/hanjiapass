@@ -1955,6 +1955,7 @@
       "delete_confirm": "Remove this material from the list? (Demo: in-memory only; refresh restores demo rows.)",
       "err_rename_empty": "Name cannot be empty.",
       "err_category_invalid": "Invalid category. Use: ppt, handout, picture_book, pdf, other.",
+      "delete_blocked_hint": "This material is linked to one or more courses and can’t be removed. Unlink it in My courses first.",
       "new_button": "New material",
       "new_section_create": "Choose a creation type",
       "new_local_upload": "Upload from your computer",

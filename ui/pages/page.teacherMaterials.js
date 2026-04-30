@@ -155,6 +155,11 @@ function materialsTableBody(materials, t) {
     const listingPrep = escapeHtml(formatDemoMaterialListingPrep(m, t));
     const updated = escapeHtml(formatDemoShortUpdated(m.updated_at));
     const badge = escapeHtml(t("common.demo_badge"));
+    const deleteBlocked = Array.isArray(m.usedByCourseIds) && m.usedByCourseIds.length > 0;
+    const deleteHint = escapeHtml(t("teacher.materials_page.delete_blocked_hint"));
+    const deleteBtnAttrs = deleteBlocked
+      ? ` class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger" disabled aria-disabled="true" title="${deleteHint}" aria-label="${deleteHint}"`
+      : ` class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger"`;
     return `<tr>
       <td class="teacher-manage-cell-title">
         <span class="teacher-demo-badge">${badge}</span>
@@ -174,7 +179,7 @@ function materialsTableBody(materials, t) {
         <div class="teacher-material-row-actions" role="toolbar" aria-label="${escapeHtml(t("teacher.materials_page.actions_toolbar_aria"))}">
           <button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="rename" data-mat-id="${escapeHtml(m.id)}" data-mat-cur-title="${escapeHtml(titleDisplayRaw)}">${escapeHtml(t("teacher.materials_page.action_rename"))}</button>
           <button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="category" data-mat-id="${escapeHtml(m.id)}" data-mat-cur-cat="${escapeHtml(m.materialCategoryKey)}">${escapeHtml(t("teacher.materials_page.action_category"))}</button>
-          <button type="button" class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger" data-mat-row-act="delete" data-mat-id="${escapeHtml(m.id)}">${escapeHtml(t("teacher.materials_page.action_delete"))}</button>
+          <button type="button"${deleteBtnAttrs} data-mat-row-act="delete" data-mat-id="${escapeHtml(m.id)}">${escapeHtml(t("teacher.materials_page.action_delete"))}</button>
         </div>
       </td>
     </tr>`;
@@ -518,7 +523,7 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
         if (!window.confirm(t("teacher.materials_page.delete_confirm"))) return;
         const r = await mockDeleteTeacherMaterial(pid, mid);
         if (!r.ok) {
-          window.alert(t("common.error.unknown"));
+          window.alert(r.reason === "in_use" ? t("teacher.materials_page.delete_blocked_hint") : t("common.error.unknown"));
           return;
         }
         void renderMaterialsDom(root);

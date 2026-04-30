@@ -155,14 +155,19 @@ export async function mockSetTeacherMaterialCategory(profileId, materialId, cate
 
 /**
  * 演示用：从列表移除一行（内存；刷新页面后恢复，除非后续接持久化）。
+ * 若演示行仍关联课程（`usedByCourseIds` 非空），禁止删除以贴近正式规则。
  * @param {string|null|undefined} profileId
  * @param {string} materialId
- * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" }>}
+ * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "in_use" }>}
  */
 export async function mockDeleteTeacherMaterial(profileId, materialId) {
   const rows = getDemoMaterialsForProfile(profileId);
-  if (!rows.some((m) => m.id === materialId)) {
+  const row = rows.find((m) => m.id === materialId);
+  if (!row) {
     return { ok: false, reason: "not_found" };
+  }
+  if (Array.isArray(row.usedByCourseIds) && row.usedByCourseIds.length > 0) {
+    return { ok: false, reason: "in_use" };
   }
   await new Promise((r) => setTimeout(r, 200));
   const pk = normProfileId(profileId);

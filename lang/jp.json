@@ -1963,6 +1963,7 @@
       "delete_confirm": "一覧からこの教材を外しますか？（デモ：このタブのメモリのみ。更新で元に戻ります。）",
       "err_rename_empty": "名称を入力してください。",
       "err_category_invalid": "分類キーが無効です。ppt、handout、picture_book、pdf、other のいずれかを使ってください。",
+      "delete_blocked_hint": "この教材はコースで使用中のため削除できません。先に「マイコース」で関連を外してください。",
       "new_button": "教材を新規作成",
       "new_section_create": "作成タイプを選択",
       "new_local_upload": "ローカルからアップロード",

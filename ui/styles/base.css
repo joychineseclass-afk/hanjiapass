@@ -643,8 +643,11 @@ a.teacher-back-link:hover{
   border-color: rgba(220, 38, 38, 0.35);
   color: #b91c1c;
 }
-.teacher-material-row-actions__btn--danger:hover{
-  background: rgba(254, 226, 226, 0.5);
+.teacher-material-row-actions__btn:disabled,
+.teacher-material-row-actions__btn[aria-disabled="true"]{
+  opacity: 0.48;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 .teacher-manage-empty-row td{
   padding: 0;
