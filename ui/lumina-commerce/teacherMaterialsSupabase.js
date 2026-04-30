@@ -8,6 +8,12 @@ import { getCurrentUser } from "./currentUser.js";
 
 export const TEACHER_MATERIALS_BUCKET = "teacher-materials";
 
+/** 列表请求超时（避免网络挂起导致页面永不替换加载占位） */
+const TEACHER_MATERIALS_LIST_TIMEOUT_MS = 12000;
+
+/** 签名 URL 默认有效期（秒） */
+const SIGNED_URL_DEFAULT_TTL_SEC = 3600;
+
 /** @returns {string} */
 function randomUuidV4() {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
@@ -75,20 +81,58 @@ function mapDbRowToListRow(row) {
  * @param {string|null|undefined} teacherProfileId
  */
 export async function listTeacherMaterialsFromSupabase(teacherProfileId) {
-  const client = await getSupabaseClientReady();
-  if (!client) return [];
-  const { data, error } = await client
-    .from("teacher_materials")
-    .select(
-      "id, title, material_category_key, original_filename, storage_bucket, storage_path, updated_at, created_at",
-    )
-    .eq("teacher_profile_id", String(teacherProfileId))
-    .order("updated_at", { ascending: false });
-  if (error) {
-    console.warn("[Lumina] teacher_materials list:", error.message);
+  try {
+    const client = await getSupabaseClientReady();
+    if (!client) return [];
+    const q = client
+      .from("teacher_materials")
+      .select(
+        "id, title, material_category_key, original_filename, storage_bucket, storage_path, updated_at, created_at",
+      )
+      .eq("teacher_profile_id", String(teacherProfileId))
+      .order("updated_at", { ascending: false });
+    const timeoutP = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error("teacher_materials_list_timeout")), TEACHER_MATERIALS_LIST_TIMEOUT_MS);
+    });
+    const { data, error } = await Promise.race([q, timeoutP]);
+    if (error) {
+      console.warn("[Lumina] teacher_materials list:", error.message);
+      return [];
+    }
+    return (data || []).map((row) => mapDbRowToListRow(/** @type {Record<string, unknown>} */ (row)));
+  } catch (e) {
+    console.warn("[Lumina] teacher_materials list failed:", e?.message || e);
     return [];
   }
-  return (data || []).map((row) => mapDbRowToListRow(/** @type {Record<string, unknown>} */ (row)));
+}
+
+/**
+ * 为私有 bucket 对象生成短期可访问 URL（打开/下载）。
+ * @param {string} storagePath `teacher_materials.storage_path`
+ * @param {string} [bucket]
+ * @param {number} [expiresSeconds]
+ * @returns {Promise<{ ok: true, url: string } | { ok: false, reason: string }>}
+ */
+export async function createTeacherMaterialSignedUrl(storagePath, bucket, expiresSeconds) {
+  const path = String(storagePath || "").trim();
+  if (!path) {
+    return { ok: false, reason: "no_path" };
+  }
+  const b = String(bucket || TEACHER_MATERIALS_BUCKET);
+  const ttl = typeof expiresSeconds === "number" && expiresSeconds > 60 ? expiresSeconds : SIGNED_URL_DEFAULT_TTL_SEC;
+  try {
+    const client = await getSupabaseClientReady();
+    if (!client) {
+      return { ok: false, reason: "no_client" };
+    }
+    const { data, error } = await client.storage.from(b).createSignedUrl(path, ttl);
+    if (error || !data?.signedUrl) {
+      return { ok: false, reason: error?.message || "sign_failed" };
+    }
+    return { ok: true, url: data.signedUrl };
+  } catch (e) {
+    return { ok: false, reason: String(e?.message || e) };
+  }
 }
 
 /**

@@ -10,6 +10,7 @@ import {
   formatDemoShortUpdated,
   getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
+import { createTeacherMaterialSignedUrl } from "../lumina-commerce/teacherMaterialsSupabase.js";
 import {
   isLocalMockMaterialId,
   listMaterialsForTeacherProfile,
@@ -148,12 +149,15 @@ function materialsTableBody(materials, t) {
   return materials.map((m) => {
     const isCloudRow = Boolean(m.cloudSource);
     const isLocalRow = isLocalMockMaterialId(m.id);
+    const usedIds = Array.isArray(m.usedByCourseIds) ? m.usedByCourseIds : [];
     const titleDisplayRaw =
       m.titleOverride != null && String(m.titleOverride).trim() !== ""
         ? String(m.titleOverride).trim()
         : isLocalRow && m.localSourceFileName
           ? String(m.localSourceFileName).replace(/\.[^.]+$/, "") || String(m.localSourceFileName)
-          : t(`teacher.demo.material.${m.id}.title`);
+          : isCloudRow && m.localSourceFileName
+            ? String(m.localSourceFileName).replace(/\.[^.]+$/, "") || String(m.localSourceFileName)
+            : t(`teacher.demo.material.${m.id}.title`);
     const title = escapeHtml(titleDisplayRaw);
     const type = escapeHtml(
       (isCloudRow || isLocalRow) && m.localSourceFileName
@@ -172,23 +176,34 @@ function materialsTableBody(materials, t) {
       : isLocalRow
         ? `<span class="teacher-local-session-badge">${escapeHtml(t("teacher.materials_page.local_upload_badge"))}</span>`
         : `<span class="teacher-demo-badge">${escapeHtml(t("common.demo_badge"))}</span>`;
-    const phaseKey = getDemoMaterialPhaseKey(m);
+    const rowSafe = {
+      ...m,
+      usedByCourseIds: usedIds,
+      listingPrepKey: m.listingPrepKey || "not_yet_ready",
+    };
+    const phaseKey = getDemoMaterialPhaseKey(rowSafe);
     const phaseLabel = escapeHtml(formatDemoMaterialPhasePill(phaseKey, t));
     const phaseClass = escapeHtml(String(phaseKey).replace(/[^a-z0-9_-]/gi, ""));
-    const categoryLabel = escapeHtml(formatDemoMaterialCategory(m, t));
-    const usageChip = escapeHtml(formatDemoMaterialUsageChipLabel(m, t));
-    const usageChipMod = m.usedByCourseIds.length ? "" : " teacher-mini-chip--muted";
+    const categoryLabel = escapeHtml(formatDemoMaterialCategory(rowSafe, t));
+    const usageChip = escapeHtml(formatDemoMaterialUsageChipLabel(rowSafe, t));
+    const usageChipMod = usedIds.length ? "" : " teacher-mini-chip--muted";
     const coursesDetail =
-      m.usedByCourseIds.length > 0
-        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoMaterialCoursesLine(m, t))}</div>`
+      usedIds.length > 0
+        ? `<div class="teacher-meta-subline">${escapeHtml(formatDemoMaterialCoursesLine(rowSafe, t))}</div>`
         : "";
-    const listingPrep = escapeHtml(formatDemoMaterialListingPrep(m, t));
+    const listingPrep = escapeHtml(formatDemoMaterialListingPrep(rowSafe, t));
     const updated = escapeHtml(formatDemoShortUpdated(m.updated_at));
-    const deleteBlocked = Array.isArray(m.usedByCourseIds) && m.usedByCourseIds.length > 0;
+    const deleteBlocked = usedIds.length > 0;
     const deleteHint = escapeHtml(t("teacher.materials_page.delete_blocked_hint"));
     const deleteBtnAttrs = deleteBlocked
       ? ` class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger" disabled aria-disabled="true" title="${deleteHint}" aria-label="${deleteHint}"`
       : ` class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger"`;
+    const stPath = String(m.storagePath || "").trim();
+    const stBucket = String(m.storageBucket || "teacher-materials");
+    const cloudFileActions =
+      isCloudRow && stPath
+        ? `<button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="open" data-mat-storage-path="${escapeHtml(stPath)}" data-mat-storage-bucket="${escapeHtml(stBucket)}">${escapeHtml(t("teacher.materials_page.action_open"))}</button><button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="download" data-mat-storage-path="${escapeHtml(stPath)}" data-mat-storage-bucket="${escapeHtml(stBucket)}" data-mat-filename="${escapeHtml(m.localSourceFileName || "file")}">${escapeHtml(t("teacher.materials_page.action_download"))}</button>`
+        : "";
     return `<tr>
       <td class="teacher-manage-cell-title">
         ${badgeHtml}
@@ -206,6 +221,7 @@ function materialsTableBody(materials, t) {
       <td>${updated}</td>
       <td class="teacher-manage-col-actions">
         <div class="teacher-material-row-actions" role="toolbar" aria-label="${escapeHtml(t("teacher.materials_page.actions_toolbar_aria"))}">
+          ${cloudFileActions}
           <button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="rename" data-mat-id="${escapeHtml(m.id)}" data-mat-cur-title="${escapeHtml(titleDisplayRaw)}">${escapeHtml(t("teacher.materials_page.action_rename"))}</button>
           <button type="button" class="teacher-material-row-actions__btn" data-mat-row-act="category" data-mat-id="${escapeHtml(m.id)}" data-mat-cur-cat="${escapeHtml(m.materialCategoryKey)}">${escapeHtml(t("teacher.materials_page.action_category"))}</button>
           <button type="button"${deleteBtnAttrs} data-mat-row-act="delete" data-mat-id="${escapeHtml(m.id)}">${escapeHtml(t("teacher.materials_page.action_delete"))}</button>
@@ -238,17 +254,27 @@ function restrictedBannerHtml(ctx, t) {
 
 async function renderMaterialsDom(root) {
   const t = tx;
-  let ctx;
   try {
-    ctx = await getTeacherPageContext();
-  } catch {
-    root.innerHTML = `<div class="teacher-page wrap teacher-manage-page"><p>${escapeHtml(t("common.loading"))}</p></div>`;
-    return;
-  }
+    let ctx;
+    try {
+      ctx = await getTeacherPageContext();
+    } catch {
+      root.innerHTML = `<div class="teacher-page wrap teacher-manage-page"><p>${escapeHtml(t("common.loading"))}</p></div>`;
+      return;
+    }
 
-  const canShowLibrary = ctx.isTeacherRole && ctx.isApproved;
-  const materials =
-    canShowLibrary && ctx.profile ? await listMaterialsForTeacherProfile(ctx.profile.id) : [];
+    let materials = [];
+    try {
+      const canLoad = Boolean(ctx.isTeacherRole && ctx.isApproved && ctx.profile);
+      if (canLoad) {
+        materials = await listMaterialsForTeacherProfile(ctx.profile.id);
+      }
+    } catch (e) {
+      console.error("[teacher-materials] listMaterialsForTeacherProfile:", e);
+      materials = [];
+    }
+
+    const canShowLibrary = ctx.isTeacherRole && ctx.isApproved;
   const headTitle = canShowLibrary
     ? t("teacher.materials_page.mine_page_title", { name: ctx.profile?.display_name || "" })
     : t("teacher.materials_page.title");
@@ -336,6 +362,13 @@ async function renderMaterialsDom(root) {
   i18n.apply?.(root);
   const profileIdForUpload = canShowLibrary ? ctx.profile?.id ?? null : null;
   bindMaterialsInteractions(root, t, profileIdForUpload);
+  } catch (e) {
+    console.error("[teacher-materials] renderMaterialsDom:", e);
+    root.innerHTML = `<div class="teacher-page wrap teacher-manage-page card" style="padding:20px;">
+      <p style="font-weight:800;margin:0 0 8px;">${escapeHtml(t("router.error_title"))}</p>
+      <p style="margin:0;color:#64748b;font-size:14px;line-height:1.5;">${escapeHtml(t("teacher.materials_page.render_err_hint"))}</p>
+    </div>`;
+  }
 }
 
 /**
@@ -532,10 +565,42 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
   const mainEl = /** @type {HTMLElement|null} */ (root.querySelector("[data-teacher-main]"));
   mainEl?.addEventListener("click", (e) => {
     const btn = /** @type {HTMLElement|null} */ (e.target instanceof HTMLElement ? e.target.closest("[data-mat-row-act]") : null);
-    if (!btn || !teacherProfileId || !mainEl.contains(btn)) return;
+    if (!btn || !mainEl.contains(btn)) return;
     const act = btn.getAttribute("data-mat-row-act");
+    if (!act) return;
+
+    if (act === "open" || act === "download") {
+      const stPath = btn.getAttribute("data-mat-storage-path") || "";
+      const stBucketRaw = btn.getAttribute("data-mat-storage-bucket");
+      if (!stPath.trim()) return;
+      e.preventDefault();
+      const stBucket = stBucketRaw && stBucketRaw.trim() ? stBucketRaw.trim() : undefined;
+      void (async () => {
+        const r = await createTeacherMaterialSignedUrl(stPath, stBucket);
+        if (!r.ok) {
+          window.alert(t("teacher.materials_page.open_signed_url_err"));
+          return;
+        }
+        if (act === "open") {
+          window.open(r.url, "_blank", "noopener,noreferrer");
+        } else {
+          const fn = btn.getAttribute("data-mat-filename") || "download";
+          const a = document.createElement("a");
+          a.href = r.url;
+          a.download = fn;
+          a.rel = "noopener noreferrer";
+          a.target = "_blank";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
+      })();
+      return;
+    }
+
+    if (!teacherProfileId) return;
     const mid = btn.getAttribute("data-mat-id");
-    if (!act || !mid) return;
+    if (!mid) return;
     e.preventDefault();
     const pid = String(teacherProfileId);
     void (async () => {
@@ -597,7 +662,7 @@ export default function pageTeacherMaterials(ctxOrRoot) {
   };
   window.addEventListener("joy:langChanged", __matLangHandler);
 
-  void renderMaterialsDom(root);
+  return renderMaterialsDom(root);
 }
 
 export function mount(ctxOrRoot) {
