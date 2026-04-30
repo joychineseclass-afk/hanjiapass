@@ -16,6 +16,46 @@ import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
 
+/** document 级登出兜底：先于 mountNavBar，避免 ESM 子模块缓存导致 navBar 未更新时无监听 */
+if (!window.__LUMINA_LOGOUT_DOC_BOUND__) {
+  window.__LUMINA_LOGOUT_DOC_BOUND__ = true;
+  document.addEventListener(
+    "click",
+    (ev) => {
+      const raw = ev.target;
+      const btn =
+        raw && typeof raw.closest === "function" ? raw.closest("[data-joy-auth-logout]") : null;
+      if (!btn || !(btn instanceof HTMLElement)) return;
+      console.log("[Lumina Logout doc] clicked");
+      ev.preventDefault();
+      ev.stopImmediatePropagation();
+      void (async () => {
+        try {
+          const mod = await import("./auth/authService.js");
+          try {
+            await mod.logoutUser();
+          } catch (e) {
+            console.warn("[Lumina] doc logoutUser:", e?.message || e);
+          }
+        } catch (e) {
+          console.warn("[Lumina] doc authService import:", e?.message || e);
+        }
+        try {
+          const r = await import("./router.js");
+          if (typeof r.navigateTo === "function") {
+            r.navigateTo("#auth-login", { force: true });
+          } else {
+            location.href = "/index.html#auth-login";
+          }
+        } catch {
+          location.href = "/index.html#auth-login";
+        }
+      })();
+    },
+    true,
+  );
+}
+
 console.log("[HSK-REAL-ENTRY-BOOT]", {
   file: "ui/app.js",
   ts: "2026-03-27-real-entry",

@@ -8,6 +8,8 @@
 
 import { i18n } from "../i18n.js";
 
+console.log("[navBar] build navbar-logout-delegation-2026-04-30");
+
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
 // 顶栏：한자/필순 분리、会话/资料/文化独立；复习不入口顶栏
 const NAV_ITEMS_FULL = [
@@ -249,7 +251,7 @@ function syncAuthBlock(rootEl) {
       <a href="/index.html#my-learning" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.myLearning">${myLabel}</a>
       ${teacherEntry}
       <span class="joy-auth-name" title="${name}">${name}</span>
-      <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
+      <button type="button" class="joy-auth-logout" data-joy-auth-logout aria-label="logout" data-test="logout" data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
     `;
     }
     i18n?.apply?.(box);
