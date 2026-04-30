@@ -124,7 +124,7 @@ function computeRecommendedNextStep(profileId, snap, t) {
       rank: 0,
       lineKey: "teacher.recommended.line_no_deck",
       primaryLabelKey: "teacher.recommended.primary_create_deck",
-      primaryHref: "#teacher-assets",
+      primaryHref: "#teacher-courses?tab=assets",
     };
   }
   const candidates = [];
@@ -138,7 +138,7 @@ function computeRecommendedNextStep(profileId, snap, t) {
         primaryLabelKey: "teacher.recommended.primary_create_listing",
         primaryHref: `#teacher-asset-editor?id=${encodeURIComponent(a.id)}`,
         secondaryLabelKey: "teacher.recommended.secondary_open_assets",
-        secondaryHref: "#teacher-assets",
+        secondaryHref: "#teacher-courses?tab=assets",
       });
       continue;
     }
@@ -178,7 +178,7 @@ function computeRecommendedNextStep(profileId, snap, t) {
       rank: 99,
       lineKey: "teacher.recommended.line_all_ok",
       primaryLabelKey: "teacher.recommended.primary_manage_assets",
-      primaryHref: "#teacher-assets",
+      primaryHref: "#teacher-courses?tab=assets",
     };
   }
   candidates.sort((x, y) => x.rank - y.rank);
@@ -600,7 +600,7 @@ function renderTeacherHomeActiveOverview(t) {
         <article class="card teacher-lumina-wf-card">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_assets_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_assets_desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-assets" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-courses?tab=assets" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.card_assets_cta"),
           )}</a>
         </article>

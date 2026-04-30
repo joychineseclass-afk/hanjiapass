@@ -287,7 +287,7 @@ async function renderPublicDetail(root, listingId) {
     <span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span>
     <a class="teacher-listing-preview-nav-link" href="#teacher-publishing">${escapeHtml(tx("teacher.workflow.view_review_status"))}</a>
     <span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span>
-    <a class="teacher-listing-preview-nav-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
+    <a class="teacher-listing-preview-nav-link" href="#teacher-courses?tab=assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
     ${
       editorUrl
         ? `<span class="teacher-listing-preview-nav-sep" aria-hidden="true">·</span><a class="teacher-listing-preview-nav-link" href="${editorUrl}">${escapeHtml(
@@ -319,7 +319,7 @@ async function renderPublicDetail(root, listingId) {
     viewMode === "teacher_preview"
       ? `<div class="teacher-surface-action-row" role="navigation" aria-label="${escapeHtml(tx("teacher.surface.nav_aria"))}">
         <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher">${escapeHtml(tx("teacher.listing_detail.go_teacher_home"))}</a>
-        <a class="teacher-surface-link" href="#teacher-assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
+        <a class="teacher-surface-link" href="#teacher-courses?tab=assets">${escapeHtml(tx("teacher.listing_detail.nav_back_assets"))}</a>
         <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(tx("teacher.listing_detail.nav_back_publishing"))}</a>
         <a class="teacher-surface-link" href="#teacher-publishing">${escapeHtml(tx("teacher.workflow.view_review_status"))}</a>
         ${

@@ -46,7 +46,6 @@ const TEACHER_MODULE_NAV_ORDER = /** @type {const} */ ([
   "profile",
   "materials",
   "courses",
-  "assets",
   "my_sales",
   "my_purchase",
   "ai_assistant",
@@ -84,7 +83,7 @@ function teacherModuleNavItemSpec(kind, active, m) {
     label = m("teacher.hub.courses.title");
     isCurrent = active === "courses";
   } else if (kind === "assets") {
-    href = "#teacher-assets";
+    href = "#teacher-courses?tab=assets";
     label = m("teacher.hub.assets.title");
     isCurrent = active === "assets";
   } else if (kind === "my_sales") {
@@ -183,7 +182,7 @@ export function teacherPathStripHtml(active, tx, options = {}) {
   const hrefs = {
     materials: "#teacher-materials",
     courses: "#teacher-courses",
-    assets: "#teacher-assets",
+    assets: "#teacher-courses?tab=assets",
     listing: "#teacher-publishing",
   };
   /** @param {'materials'|'courses'|'assets'|'listing'} kind */

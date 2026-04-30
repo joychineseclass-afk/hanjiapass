@@ -320,7 +320,7 @@ export default async function pageClassroom(ctxOrRoot) {
         <div class="classroom-control-bar-row1">
         <div class="classroom-topbar-actions">
           <button type="button" class="classroom-back" id="classroomBackBtn">← ${escapeHtml(backLabel)}</button>
-          <a class="classroom-back-secondary" href="#teacher-assets">${escapeHtml(backAssets)}</a>
+          <a class="classroom-back-secondary" href="#teacher-courses?tab=assets">${escapeHtml(backAssets)}</a>
           <a class="classroom-back-secondary" href="#teacher-courses">${escapeHtml(backCourses)}</a>
         </div>
         <div class="classroom-topbar-ctrl">
@@ -348,7 +348,7 @@ export default async function pageClassroom(ctxOrRoot) {
   `;
 
   root.querySelector("#classroomBackBtn")?.addEventListener("click", () => {
-    location.hash = activeAsset ? "#teacher-assets" : "#teacher";
+    location.hash = activeAsset ? "#teacher-courses?tab=assets" : "#teacher";
   });
 
   const pageSection = root.querySelector("#luminaClassroomPage");

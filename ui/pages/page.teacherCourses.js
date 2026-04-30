@@ -24,6 +24,7 @@ import {
   teacherPathStripHtml,
   teacherPathStripClassroomHintHtml,
 } from "./teacherPathNav.js";
+import { mountTeacherAssetsPanel } from "../platform/teacher/teacherAssetsPanel.js";
 
 function tx(path, params) {
   return safeUiText(path, params);
@@ -36,6 +37,32 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+/** #teacher-courses?tab=courses | assets，默认 courses */
+function teacherCoursesTopTabFromHash() {
+  const h = String(location.hash || "");
+  const q = h.indexOf("?");
+  if (q < 0) return "courses";
+  const v = String(new URLSearchParams(h.slice(q + 1)).get("tab") || "").toLowerCase();
+  return v === "assets" ? "assets" : "courses";
+}
+
+/**
+ * @param {(a: string, b?: object) => string} t
+ * @param {'courses' | 'assets'} topTab
+ */
+function teacherCoursesHubTabsHtml(t, topTab) {
+  const coursesHref = "#teacher-courses?tab=courses";
+  const assetsHref = "#teacher-courses?tab=assets";
+  return `<div class="teacher-assets-tabs teacher-courses-hub-tabs" role="tablist" aria-label="${escapeHtml(t("teacher.courses_page.hub_tabs_aria"))}">
+    <a role="tab" class="teacher-assets-tab ${topTab === "courses" ? "is-active" : ""}" href="${coursesHref}" aria-selected="${topTab === "courses" ? "true" : "false"}">${escapeHtml(
+      t("teacher.courses_page.hub_tab_courses"),
+    )}</a>
+    <a role="tab" class="teacher-assets-tab ${topTab === "assets" ? "is-active" : ""}" href="${assetsHref}" aria-selected="${topTab === "assets" ? "true" : "false"}">${escapeHtml(
+      t("teacher.courses_page.hub_tab_assets"),
+    )}</a>
+  </div>`;
 }
 
 let __crsLangHandler = /** @type {null | (() => void)} */ (null);
@@ -127,6 +154,7 @@ async function renderCoursesDom(root) {
     return;
   }
 
+  const topTab = teacherCoursesTopTabFromHash();
   const canShow = ctx.isTeacherRole && ctx.isApproved;
   const courses = canShow && ctx.profile ? getDemoCoursesForProfile(ctx.profile.id) : [];
   const headTitle = canShow
@@ -172,10 +200,29 @@ async function renderCoursesDom(root) {
   }
 
   const showReview = currentUserCanAccessTeacherReviewConsoleSync();
-  const main = `
-      ${demoBannerHtml("courses")}
-      ${restrictedBannerHtml(ctx, t)}
-      ${teacherPathStripHtml("courses", t)}
+  const hubTabs = teacherCoursesHubTabsHtml(t, topTab);
+  const pathStrip =
+    topTab === "assets"
+      ? teacherPathStripHtml("assets", t, { showLead: false })
+      : teacherPathStripHtml("courses", t);
+
+  const assetsTabBody = (() => {
+    if (!ctx.isTeacherRole) {
+      return `<section class="card teacher-identity-gate"><p class="teacher-identity-gate-body">${escapeHtml(
+        t("teacher.access.not_teacher_body"),
+      )}</p></section>`;
+    }
+    if (!ctx.isApproved || !ctx.profile) {
+      const w = String(ctx.workbenchStatus);
+      return `<section class="card teacher-access-gate">
+        <p class="teacher-access-gate-title">${escapeHtml(t(`teacher.gate.title_${w}`))}</p>
+        <p class="teacher-access-gate-body">${escapeHtml(t("teacher.assets.gated"))}</p>
+      </section>`;
+    }
+    return `<div class="teacher-courses-assets-panel-host" id="teacher-courses-assets-panel-host"></div>`;
+  })();
+
+  const coursesTabBody = `
       ${teacherPathStripClassroomHintHtml(t)}
       <header class="card teacher-admin-header">
         <h1 class="teacher-admin-title">${escapeHtml(headTitle)}</h1>
@@ -184,8 +231,10 @@ async function renderCoursesDom(root) {
         ${
           canShow && ctx.profile
             ? `<p class="teacher-courses-import-cta">
-              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
-              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${escapeHtml(t("teacher.assets.import_local_courseware"))}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses?tab=assets">${escapeHtml(t("teacher.assets.upload_own_draft"))}</a>
+              <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses?tab=assets">${escapeHtml(
+                t("teacher.assets.import_local_courseware"),
+              )}</a>
               <span class="teacher-hub-muted teacher-courses-import-cta-hint">${escapeHtml(t("teacher.assets.upload_own_draft_sub"))}</span>
             </p>`
             : ""
@@ -235,14 +284,26 @@ async function renderCoursesDom(root) {
         </ul>
       </aside>
   `;
+
+  const main =
+    topTab === "courses"
+      ? `${demoBannerHtml("courses")}${restrictedBannerHtml(ctx, t)}${pathStrip}${hubTabs}${coursesTabBody}`
+      : `${pathStrip}${hubTabs}${assetsTabBody}`;
+
+  const shellExtra =
+    topTab === "assets"
+      ? "teacher-page teacher-manage-page teacher-admin-shell teacher-courses-hub-page teacher-assets-page"
+      : "teacher-page teacher-manage-page teacher-admin-shell teacher-courses-hub-page";
+
   root.innerHTML = renderTeacherAdminShell({
     active: "courses",
     tx: t,
     showReviewConsole: showReview,
     mainHtml: main,
-    shellClass: "teacher-page teacher-manage-page teacher-admin-shell",
+    shellClass: shellExtra,
   });
-  if (ctx.isApproved && ctx.profile) {
+
+  if (topTab === "courses" && ctx.isApproved && ctx.profile) {
     const pid = ctx.profile.id;
     const uid = getCurrentUser().id;
     root.querySelectorAll("[data-teacher-asset-from-course], [data-teacher-asset-from-default]").forEach((b) => {
@@ -256,6 +317,19 @@ async function renderCoursesDom(root) {
       });
     });
   }
+
+  if (topTab === "assets" && ctx.isTeacherRole && ctx.isApproved && ctx.profile) {
+    const host = root.querySelector("#teacher-courses-assets-panel-host");
+    if (host) {
+      await mountTeacherAssetsPanel(host, {
+        profileId: ctx.profile.id,
+        userId: ctx.user?.id || "",
+        displayName: ctx.profile.display_name || "",
+        onRefresh: () => void renderCoursesDom(root),
+      });
+    }
+  }
+
   i18n.apply?.(root);
 }
 
@@ -275,6 +349,12 @@ export default function pageTeacherCourses(ctxOrRoot) {
   window.addEventListener("joy:langChanged", __crsLangHandler);
 
   void renderCoursesDom(root);
+}
+
+export function unmount() {
+  if (__crsLangHandler) window.removeEventListener("joy:langChanged", __crsLangHandler);
+  __crsLangHandler = null;
+  __crsRootRef = null;
 }
 
 export function mount(ctxOrRoot) {

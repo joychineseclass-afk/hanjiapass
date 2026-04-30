@@ -206,7 +206,7 @@ function buildMySalesNextStepsHtml(stats, tx) {
   }
   const listHtml = `<ul class="teacher-my-sales-next-list">${lines.slice(0, 4).join("")}</ul>`;
   const ctas = `<div class="teacher-my-sales-next-ctas">
-    <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets">${escapeHtml(tx("teacher.my_sales.next_cta_assets"))}</a>
+    <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-courses?tab=assets">${escapeHtml(tx("teacher.my_sales.next_cta_assets"))}</a>
     <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-create-material">${escapeHtml(tx("teacher.my_sales.next_cta_create"))}</a>
   </div>`;
   return `<section class="card teacher-my-sales-next" aria-labelledby="tms-next-h">

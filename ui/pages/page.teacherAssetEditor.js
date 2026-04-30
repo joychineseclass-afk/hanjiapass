@@ -131,7 +131,7 @@ function editorFormHtml(a, t, userId, profileId, canEdit, isArchived, canMoveToT
   }>
         ${esc(t("teacher.asset_editor.save"))}
       </button>
-      <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+      <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses?tab=assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
       <a class="teacher-hub-cta teacher-hub-cta--accent" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(
     t("teacher.asset_editor.to_classroom_teach"),
   )}</a>
@@ -401,8 +401,8 @@ async function renderEditor(root) {
         <h2 class="teacher-asset-editor-trashed-title">${esc(t("teacher.asset_editor.trashed_gate_title"))}</h2>
         <p class="teacher-asset-editor-trashed-body">${esc(t("teacher.asset_editor.trashed_gate_body"))}</p>
         <p class="teacher-asset-editor-trashed-actions">
-          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-assets?tab=trash">${esc(t("teacher.asset_editor.trashed_go_trash"))}</a>
-          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--primary" href="#teacher-courses?tab=assets&assetsView=trash">${esc(t("teacher.asset_editor.trashed_go_trash"))}</a>
+          <a class="teacher-hub-cta teacher-hub-cta--secondary" href="#teacher-courses?tab=assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
         </p>
       </section>`,
       shellClass: "teacher-asset-editor-page teacher-page",
@@ -429,7 +429,7 @@ async function renderEditor(root) {
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.import_readonly_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.import_readonly_lead"))}</p>
         <div class="teacher-surface-action-row" role="navigation" aria-label="${esc(t("teacher.surface.nav_aria"))}">
-          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-courses?tab=assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
         </div>
       </header>
       <section class="card teacher-asset-editor-section teacher-asset-editor-import-card" aria-labelledby="teacherAssetImportH2">
@@ -473,7 +473,7 @@ async function renderEditor(root) {
         <h1 class="teacher-asset-editor-title">${esc(t("teacher.asset_editor.page_title"))}</h1>
         <p class="teacher-asset-editor-lead">${esc(t("teacher.asset_editor.lead"))}</p>
         <div class="teacher-surface-action-row" role="navigation" aria-label="${esc(t("teacher.surface.nav_aria"))}">
-          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
+          <a class="teacher-surface-link teacher-surface-link--secondary" href="#teacher-courses?tab=assets">${esc(t("teacher.asset_editor.back_assets"))}</a>
           <a class="teacher-surface-link" href="#classroom?assetId=${encodeURIComponent(a.id)}">${esc(t("teacher.asset_editor.to_classroom"))}</a>
           <a class="teacher-surface-link" href="#teacher-publishing">${esc(t("teacher.nav.my_publishing"))}</a>
           <a class="teacher-surface-link" href="#teacher-publishing">${esc(t("teacher.workflow.view_review_status"))}</a>
@@ -618,7 +618,7 @@ async function renderEditor(root) {
       }
       return;
     }
-    location.hash = "#teacher-assets";
+    location.hash = "#teacher-courses?tab=assets";
   });
 }
 
