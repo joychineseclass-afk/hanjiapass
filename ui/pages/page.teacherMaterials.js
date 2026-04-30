@@ -11,6 +11,7 @@ import {
   getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
 import {
+  isLocalMockMaterialId,
   listMaterialsForTeacherProfile,
   mockDeleteTeacherMaterial,
   mockRenameTeacherMaterial,
@@ -50,6 +51,15 @@ const NEW_MATERIAL_KINDS = [
   { kind: "handout", labelKey: "teacher.create_material.type_handout", hrefHash: "#teacher-create-material?kind=handout" },
   { kind: "deck", labelKey: "teacher.create_material.type_deck", hrefHash: "#teacher-create-material?kind=deck" },
 ];
+
+function localUploadTypeLabelKey(fileName) {
+  const n = String(fileName || "").toLowerCase();
+  if (/\.pdf$/i.test(n)) return "teacher.materials_page.local_upload_row.type_pdf";
+  if (/\.(ppt|pptx)$/i.test(n)) return "teacher.materials_page.local_upload_row.type_ppt";
+  if (/\.(doc|docx)$/i.test(n)) return "teacher.materials_page.local_upload_row.type_doc";
+  if (/\.(png|jpg|jpeg|webp)$/i.test(n)) return "teacher.materials_page.local_upload_row.type_image";
+  return "teacher.materials_page.local_upload_row.type_file";
+}
 
 /** 从 `#teacher-materials?new=1` 中读出是否应展开「新建教材」下拉。 */
 function readShouldOpenNew() {
@@ -105,6 +115,7 @@ function localUploadSectionHtml(t, uploadStageHint) {
   <h2 id="mat-local-upload-h2" class="teacher-local-upload__h2">${escapeHtml(t("teacher.materials_page.upload_modal_title"))}</h2>
   <p class="teacher-local-upload__stage">${escapeHtml(uploadStageHint)}</p>
   <p class="teacher-local-upload__types">${escapeHtml(t("teacher.materials_page.upload_modal_types"))}</p>
+  <p class="teacher-local-upload__session-hint">${escapeHtml(t("teacher.materials_page.local_upload_list_hint"))}</p>
   <div class="teacher-local-upload__drop" data-mat-upload-drop tabindex="0" role="button" aria-label="${escapeHtml(t("teacher.materials_page.upload_modal_browse"))}">
     <input type="file" class="teacher-local-upload__input" data-mat-upload-input accept=".pdf,.ppt,.pptx,.doc,.docx,.png,.jpg,.jpeg,.webp" />
     <p class="teacher-local-upload__drop-line">
@@ -135,13 +146,25 @@ function localUploadSectionHtml(t, uploadStageHint) {
  */
 function materialsTableBody(materials, t) {
   return materials.map((m) => {
+    const isLocalRow = isLocalMockMaterialId(m.id);
     const titleDisplayRaw =
       m.titleOverride != null && String(m.titleOverride).trim() !== ""
         ? String(m.titleOverride).trim()
-        : t(`teacher.demo.material.${m.id}.title`);
+        : isLocalRow && m.localSourceFileName
+          ? String(m.localSourceFileName).replace(/\.[^.]+$/, "") || String(m.localSourceFileName)
+          : t(`teacher.demo.material.${m.id}.title`);
     const title = escapeHtml(titleDisplayRaw);
-    const type = escapeHtml(t(`teacher.demo.material.${m.id}.type`));
-    const status = escapeHtml(t(`teacher.demo.material.${m.id}.status`));
+    const type = escapeHtml(
+      isLocalRow && m.localSourceFileName
+        ? t(localUploadTypeLabelKey(m.localSourceFileName))
+        : t(`teacher.demo.material.${m.id}.type`),
+    );
+    const status = escapeHtml(
+      isLocalRow ? t("teacher.materials_page.local_upload_row.status") : t(`teacher.demo.material.${m.id}.status`),
+    );
+    const badgeHtml = isLocalRow
+      ? `<span class="teacher-local-session-badge">${escapeHtml(t("teacher.materials_page.local_upload_badge"))}</span>`
+      : `<span class="teacher-demo-badge">${escapeHtml(t("common.demo_badge"))}</span>`;
     const phaseKey = getDemoMaterialPhaseKey(m);
     const phaseLabel = escapeHtml(formatDemoMaterialPhasePill(phaseKey, t));
     const phaseClass = escapeHtml(String(phaseKey).replace(/[^a-z0-9_-]/gi, ""));
@@ -154,7 +177,6 @@ function materialsTableBody(materials, t) {
         : "";
     const listingPrep = escapeHtml(formatDemoMaterialListingPrep(m, t));
     const updated = escapeHtml(formatDemoShortUpdated(m.updated_at));
-    const badge = escapeHtml(t("common.demo_badge"));
     const deleteBlocked = Array.isArray(m.usedByCourseIds) && m.usedByCourseIds.length > 0;
     const deleteHint = escapeHtml(t("teacher.materials_page.delete_blocked_hint"));
     const deleteBtnAttrs = deleteBlocked
@@ -162,7 +184,7 @@ function materialsTableBody(materials, t) {
       : ` class="teacher-material-row-actions__btn teacher-material-row-actions__btn--danger"`;
     return `<tr>
       <td class="teacher-manage-cell-title">
-        <span class="teacher-demo-badge">${badge}</span>
+        ${badgeHtml}
         ${title}
       </td>
       <td><span class="teacher-material-category-pill">${categoryLabel}</span></td>
@@ -455,13 +477,26 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
       });
     }
     try {
-      await mockSubmitLocalMaterialUpload({
+      const r = await mockSubmitLocalMaterialUpload({
         teacherProfileId: String(teacherProfileId),
         file: /** @type {File} */ (pickedFile),
         title,
       });
+      if (!r.ok) {
+        setErr(
+          r.reason === "type"
+            ? t("teacher.materials_page.upload_err_type")
+            : r.reason === "size"
+              ? t("teacher.materials_page.upload_err_size")
+              : t("teacher.materials_page.upload_err_no_file"),
+        );
+        return;
+      }
       resetUploadForm();
-      alert(t("teacher.materials_page.upload_mock_ok"));
+      void renderMaterialsDom(root);
+      window.setTimeout(() => {
+        document.getElementById("teacher-materials-list-title")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
     } catch {
       setErr(t("teacher.materials_page.upload_err_no_file"));
     } finally {

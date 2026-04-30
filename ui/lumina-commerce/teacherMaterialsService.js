@@ -7,8 +7,48 @@ import { getDemoMaterialsForProfile } from "./teacherDemoCatalog.js";
 
 /**
  * 与当前演示行字段一致；正式接口可扩展后在此做 DTO → 列表行映射。
- * @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string, titleOverride?: string }} TeacherMaterialListRow
+ * `localSourceFileName`：本地上传（内存行）用于推断「类型」列展示，不含文件内容。
+ * @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string, titleOverride?: string, localSourceFileName?: string }} TeacherMaterialListRow
  */
+
+const LOCAL_MATERIAL_ID_PREFIX = "lmu_";
+
+/** @type {Map<string, TeacherMaterialListRow[]>} profileId → 本地上传内存行（未接存储，刷新即清空） */
+const localUploadedMaterialsByProfile = new Map();
+
+/** @param {string|null|undefined} id */
+export function isLocalMockMaterialId(id) {
+  return String(id || "").startsWith(LOCAL_MATERIAL_ID_PREFIX);
+}
+
+/** @param {string|null|undefined} pid */
+function localMaterialListForProfile(pid) {
+  const k = normProfileId(pid);
+  let arr = localUploadedMaterialsByProfile.get(k);
+  if (!arr) {
+    arr = [];
+    localUploadedMaterialsByProfile.set(k, arr);
+  }
+  return arr;
+}
+
+/** @param {string} name */
+function inferCategoryKeyFromFileName(name) {
+  const n = String(name || "").toLowerCase();
+  if (/\.pdf$/i.test(n)) return "pdf";
+  if (/\.(ppt|pptx)$/i.test(n)) return "ppt";
+  if (/\.(doc|docx)$/i.test(n)) return "handout";
+  if (/\.(png|jpg|jpeg|webp)$/i.test(n)) return "other";
+  return "other";
+}
+
+/** @returns {string} */
+function newLocalMaterialId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${LOCAL_MATERIAL_ID_PREFIX}${crypto.randomUUID()}`;
+  }
+  return `${LOCAL_MATERIAL_ID_PREFIX}${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
+}
 
 /** 与 `teacher.materials_page.category.*` 一致 */
 export const TEACHER_MATERIAL_CATEGORY_KEYS = /** @type {const} */ (["ppt", "handout", "picture_book", "pdf", "other"]);
@@ -82,15 +122,30 @@ export function validateLocalMaterialFile(file) {
 }
 
 /**
- * 演示用：模拟网络延迟，不写入列表。
+ * 演示用：校验通过后追加到当前教师 profile 的**内存列表**（浏览器会话内有效，刷新即无）。
+ * 正式版：客户端直传对象存储（S3/R2 等）或经后端预签名 URL，再把 `file_key`、标题等写入数据库。
  * @param {{ teacherProfileId: string, file: File, title: string }} payload
- * @returns {Promise<{ ok: boolean, mock?: boolean }>}
+ * @returns {Promise<{ ok: true, mock: true } | { ok: false, reason: "no_file"|"size"|"type", mock: true }>}
  */
 export async function mockSubmitLocalMaterialUpload(payload) {
-  void payload.teacherProfileId;
-  void payload.title;
-  void payload.file?.size;
+  const v = validateLocalMaterialFile(payload.file);
+  if (!v.ok) {
+    return /** @type {const} */ ({ ok: false, reason: v.reason, mock: true });
+  }
   await new Promise((r) => setTimeout(r, 750));
+  const file = /** @type {File} */ (payload.file);
+  const title = String(payload.title || "").trim() || file.name;
+  /** @type {TeacherMaterialListRow} */
+  const row = {
+    id: newLocalMaterialId(),
+    updated_at: new Date().toISOString(),
+    usedByCourseIds: [],
+    listingPrepKey: "not_yet_ready",
+    materialCategoryKey: inferCategoryKeyFromFileName(file.name),
+    titleOverride: title,
+    localSourceFileName: file.name,
+  };
+  localMaterialListForProfile(payload.teacherProfileId).push(row);
   return { ok: true, mock: true };
 }
 
@@ -100,11 +155,16 @@ export async function mockSubmitLocalMaterialUpload(payload) {
  */
 export async function listMaterialsForTeacherProfile(teacherProfileId) {
   const demoRows = getDemoMaterialsForProfile(teacherProfileId);
+  const locals = localMaterialListForProfile(teacherProfileId);
+  const out = [];
   if (demoRows.length > 0) {
-    return applyDemoRowMutations(teacherProfileId, demoRows);
+    out.push(...applyDemoRowMutations(teacherProfileId, demoRows));
   }
-  // TODO(MAT-008): const r = await fetch(`/api/teacher/materials?profileId=${encodeURIComponent(String(teacherProfileId))}`);
-  return [];
+  out.push(...locals);
+  if (out.length === 0) {
+    // TODO(MAT-008): const r = await fetch(`/api/teacher/materials?profileId=...`);
+  }
+  return out;
 }
 
 /**
@@ -115,13 +175,24 @@ export async function listMaterialsForTeacherProfile(teacherProfileId) {
  * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "empty" }>}
  */
 export async function mockRenameTeacherMaterial(profileId, materialId, title) {
-  const rows = getDemoMaterialsForProfile(profileId);
-  if (!rows.some((m) => m.id === materialId)) {
-    return { ok: false, reason: "not_found" };
-  }
   const trimmed = String(title || "").trim();
   if (!trimmed) {
     return { ok: false, reason: "empty" };
+  }
+  if (isLocalMockMaterialId(materialId)) {
+    const list = localMaterialListForProfile(profileId);
+    const row = list.find((m) => m.id === materialId);
+    if (!row) {
+      return { ok: false, reason: "not_found" };
+    }
+    await new Promise((r) => setTimeout(r, 200));
+    row.titleOverride = trimmed;
+    row.updated_at = new Date().toISOString();
+    return { ok: true };
+  }
+  const rows = getDemoMaterialsForProfile(profileId);
+  if (!rows.some((m) => m.id === materialId)) {
+    return { ok: false, reason: "not_found" };
   }
   await new Promise((r) => setTimeout(r, 200));
   const map = patchMapForProfile(profileId);
@@ -138,13 +209,24 @@ export async function mockRenameTeacherMaterial(profileId, materialId, title) {
  * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "bad_category" }>}
  */
 export async function mockSetTeacherMaterialCategory(profileId, materialId, categoryKey) {
-  const rows = getDemoMaterialsForProfile(profileId);
-  if (!rows.some((m) => m.id === materialId)) {
-    return { ok: false, reason: "not_found" };
-  }
   const k = String(categoryKey || "").trim();
   if (!isAllowedMaterialCategoryKey(k)) {
     return { ok: false, reason: "bad_category" };
+  }
+  if (isLocalMockMaterialId(materialId)) {
+    const list = localMaterialListForProfile(profileId);
+    const row = list.find((m) => m.id === materialId);
+    if (!row) {
+      return { ok: false, reason: "not_found" };
+    }
+    await new Promise((r) => setTimeout(r, 200));
+    row.materialCategoryKey = k;
+    row.updated_at = new Date().toISOString();
+    return { ok: true };
+  }
+  const rows = getDemoMaterialsForProfile(profileId);
+  if (!rows.some((m) => m.id === materialId)) {
+    return { ok: false, reason: "not_found" };
   }
   await new Promise((r) => setTimeout(r, 200));
   const map = patchMapForProfile(profileId);
@@ -161,6 +243,16 @@ export async function mockSetTeacherMaterialCategory(profileId, materialId, cate
  * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "in_use" }>}
  */
 export async function mockDeleteTeacherMaterial(profileId, materialId) {
+  if (isLocalMockMaterialId(materialId)) {
+    const list = localMaterialListForProfile(profileId);
+    const idx = list.findIndex((m) => m.id === materialId);
+    if (idx < 0) {
+      return { ok: false, reason: "not_found" };
+    }
+    await new Promise((r) => setTimeout(r, 200));
+    list.splice(idx, 1);
+    return { ok: true };
+  }
   const rows = getDemoMaterialsForProfile(profileId);
   const row = rows.find((m) => m.id === materialId);
   if (!row) {
