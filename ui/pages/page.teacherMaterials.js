@@ -10,7 +10,7 @@ import {
   formatDemoShortUpdated,
   getDemoMaterialPhaseKey,
 } from "../lumina-commerce/teacherDemoCatalog.js";
-import { createTeacherMaterialSignedUrl } from "../lumina-commerce/teacherMaterialsSupabase.js";
+import { createTeacherMaterialSignedUrl, shouldUseSupabaseMaterials } from "../lumina-commerce/teacherMaterialsSupabase.js";
 import {
   isLocalMockMaterialId,
   listMaterialsForTeacherProfile,
@@ -109,8 +109,9 @@ function newMaterialDropdownHtml(t, openByDefault) {
  * 本地上传：页内卡片（标题区下方、列表上方），非全屏弹层。
  * @param {(a: string, b?: object) => string} t
  * @param {string} uploadStageHint 来自 `upload_next_stage` 的说明句
+ * @param {string} uploadSubmitLabel 提交按钮文案（云端 / 演示分支）
  */
-function localUploadSectionHtml(t, uploadStageHint) {
+function localUploadSectionHtml(t, uploadStageHint, uploadSubmitLabel) {
   return `
 <section class="card teacher-local-upload" id="teacher-materials-local-upload" data-mat-upload-root aria-labelledby="mat-local-upload-h2">
   <h2 id="mat-local-upload-h2" class="teacher-local-upload__h2">${escapeHtml(t("teacher.materials_page.upload_modal_title"))}</h2>
@@ -136,7 +137,7 @@ function localUploadSectionHtml(t, uploadStageHint) {
     </div>
   </div>
   <div class="teacher-local-upload__actions">
-    <button type="button" class="teacher-local-upload__btn teacher-local-upload__btn--primary" data-mat-upload-submit>${escapeHtml(t("teacher.materials_page.upload_modal_submit"))}</button>
+    <button type="button" class="teacher-local-upload__btn teacher-local-upload__btn--primary" data-mat-upload-submit>${escapeHtml(uploadSubmitLabel)}</button>
   </div>
 </section>`;
 }
@@ -275,13 +276,23 @@ async function renderMaterialsDom(root) {
     }
 
     const canShowLibrary = ctx.isTeacherRole && ctx.isApproved;
+
+    let uploadHint = t("teacher.materials_page.upload_next_stage");
+    let uploadSubmitLabel = t("teacher.materials_page.upload_modal_submit");
+    if (canShowLibrary) {
+      const uploadUsesCloud = await shouldUseSupabaseMaterials();
+      if (uploadUsesCloud) {
+        uploadHint = t("teacher.materials_page.upload_next_stage_cloud");
+        uploadSubmitLabel = t("teacher.materials_page.upload_modal_submit_cloud");
+      }
+    }
+
   const headTitle = canShowLibrary
     ? t("teacher.materials_page.mine_page_title", { name: ctx.profile?.display_name || "" })
     : t("teacher.materials_page.title");
   const headSubtitle = canShowLibrary
     ? t("teacher.materials_page.mine_page_subtitle")
     : t("teacher.materials_page.subtitle");
-  const uploadHint = t("teacher.materials_page.upload_next_stage");
 
   const tableRows = materialsTableBody(materials, t);
   const lockedBody = `<tbody><tr class="teacher-manage-empty-row"><td colspan="9">
@@ -315,7 +326,7 @@ async function renderMaterialsDom(root) {
         ${canShowLibrary ? newMaterialDropdownHtml(t, wantNewOpen) : ""}
       </header>
 
-      ${canShowLibrary ? localUploadSectionHtml(t, uploadHint) : ""}
+      ${canShowLibrary ? localUploadSectionHtml(t, uploadHint, uploadSubmitLabel) : ""}
 
       <section class="card teacher-admin-list-card" aria-labelledby="teacher-materials-list-title">
         <h2 id="teacher-materials-list-title" class="teacher-admin-list-heading">${escapeHtml(t("teacher.materials_page.list_title_mine"))}</h2>

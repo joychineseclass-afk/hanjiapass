@@ -73,6 +73,13 @@ function normProfileId(pid) {
   return String(pid ?? "");
 }
 
+/** 登出或切换账号时清空本页演示/内存教材状态，避免残留到下一会话。 */
+export function clearTeacherMaterialsSessionCaches() {
+  localUploadedMaterialsByProfile.clear();
+  deletedDemoMaterialIdsByProfile.clear();
+  demoMaterialPatchesByProfile.clear();
+}
+
 /** @param {string|null|undefined} pid */
 function patchMapForProfile(pid) {
   const k = normProfileId(pid);

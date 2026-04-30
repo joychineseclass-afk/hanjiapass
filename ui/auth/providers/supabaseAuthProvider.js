@@ -199,6 +199,13 @@ export function mountSupabaseAuthChannel(emit) {
       } catch (e) {
         console.warn("[Lumina] ensure profile after auth event:", e?.message || e);
       }
+    } else if (event === "SIGNED_OUT") {
+      try {
+        const { resetLocalSessionAfterSignOut } = await import("../authService.js");
+        resetLocalSessionAfterSignOut();
+      } catch (e) {
+        console.warn("[Lumina] reset local session after SIGNED_OUT:", e?.message || e);
+      }
     }
     try {
       _emitToStore && _emitToStore();

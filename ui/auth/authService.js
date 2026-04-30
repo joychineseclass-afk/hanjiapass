@@ -18,6 +18,13 @@ import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/stor
 import { findTeacherProfileByUserId } from "../lumina-commerce/teacherProfileQueries.js";
 import { ensureTeacherProfileForUser as ensureTeacherProfile } from "../lumina-commerce/teacherProfileService.js";
 import { ensureCurrentUserMatchesCommerceTeacher } from "../lumina-commerce/teacherProfileStore.js";
+import { clearTeacherMaterialsSessionCaches } from "../lumina-commerce/teacherMaterialsService.js";
+
+/** 登出或 Supabase SIGNED_OUT 后统一清理本机 Lumina 会话态（不含远端 signOut）。 */
+export function resetLocalSessionAfterSignOut() {
+  clearTeacherMaterialsSessionCaches();
+  setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+}
 
 /** hydrate 内各 Supabase 步骤独立超时（与 app 启动 2500ms 预算配合，避免单步挂死） */
 const HYDRATE_REMOTE_STEP_MS = 2500;
@@ -215,7 +222,7 @@ export async function loginUser(p) {
 
 export async function logoutUser() {
   await authStore.signOut();
-  setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+  resetLocalSessionAfterSignOut();
   emitAuthStateChanged();
 }
 

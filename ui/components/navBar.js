@@ -207,9 +207,27 @@ function syncAuthBlock(rootEl) {
     `;
     }
     i18n?.apply?.(box);
-    box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", () => {
-      mod.logoutUser();
-      syncAuthBlock(rootEl);
+    box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      void (async () => {
+        try {
+          await mod.logoutUser();
+        } catch (e) {
+          console.warn("[Lumina] logoutUser:", e?.message || e);
+        }
+        syncAuthBlock(rootEl);
+        try {
+          const r = await import("/ui/router.js");
+          if (typeof r.navigateTo === "function") {
+            r.navigateTo("#auth-login", { force: true });
+          } else {
+            location.hash = "#auth-login";
+          }
+        } catch {
+          location.href = "/index.html#auth-login";
+        }
+        setActive(rootEl);
+      })();
     });
     ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]", "[data-joy-teacher]"].forEach((sel) => {
       box.querySelector(sel)?.addEventListener("click", (e) => {
