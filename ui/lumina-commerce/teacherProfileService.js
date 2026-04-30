@@ -13,6 +13,18 @@ function uid(p) {
   return `${p}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+/** 资质条目的 kind（含历史枚举与档案页下拉枚举） */
+const TEACHER_CRED_KIND_IDS = /** @type {readonly string[]} */ ([
+  "language_certificate",
+  "teaching_certificate",
+  "identity",
+  "other",
+  "intl_chinese_teaching_qual",
+  "hsk_level6_plus_cert",
+  "other_cn_teaching_qual",
+  "other_lang_teaching_qual",
+]);
+
 function splitTags(s) {
   return String(s || "")
     .split(/[,，;；]/)
@@ -181,12 +193,18 @@ export async function submitTeacherProfileForReview(profileId, ownerUserId) {
   if (st === VERIFICATION_STATUS.pending) return { ok: true, code: "already_pending" };
   if (st === VERIFICATION_STATUS.approved) return { ok: true, code: "already_approved" };
 
-  const o = getTeacherProfileOverlay(profileId);
+  let o = getTeacherProfileOverlay(profileId);
   const display = String(row.display_name || "").trim();
   if (!display) return { ok: false, code: "missing_display_name" };
-  const bio = String(row.bio || "").trim();
-  const intro = String(o.introduction_note || "").trim();
-  if (!bio && !intro) return { ok: false, code: "missing_bio_or_intro" };
+  const bioTrim = String(row.bio || "").trim();
+  let intro = String(o.introduction_note || "").trim();
+  // Compat: UI stores public copy in `teacher_profiles.bio`; overlay `introduction_note` may lag on older data.
+  if (bioTrim && !intro) {
+    patchTeacherProfileOverlay(profileId, { introduction_note: String(row.bio ?? "") });
+    o = getTeacherProfileOverlay(profileId);
+    intro = String(o.introduction_note || "").trim();
+  }
+  if (!bioTrim && !intro) return { ok: false, code: "missing_bio_or_intro" };
   const tags = Array.isArray(o.expertise_tags) ? o.expertise_tags : [];
   const targets = Array.isArray(o.teaching_targets) ? o.teaching_targets : [];
   if (tags.length === 0 && targets.length === 0) return { ok: false, code: "missing_scope" };
@@ -269,12 +287,13 @@ export async function rejectTeacherProfileByReviewer(profileId, reviewerUserId, 
 }
 
 /**
- * 资质占位：添加一条。不调文件 API。
+ * 资质占位：添加一条。不调文件 API。正式域关闭；预览 / 本地 Dev UI（shouldEnableLuminaDevUi）下可用直至接入上传。
  * @param {string} profileId
  * @param {string} ownerUserId
  * @param {Partial<import('./teacherProfileStore.js').TeacherCredentialItemV1>} item
  */
 export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, item) {
+  if (!shouldEnableLuminaDevUi()) return { ok: false, code: "credential_placeholder_disabled" };
   await initCommerceStore();
   const snap = getCommerceStoreSync();
   const row = snap && snap.teacher_profiles ? snap.teacher_profiles.find((x) => x.id === profileId) : null;
@@ -284,7 +303,7 @@ export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, it
   const list = Array.isArray(o.credential_items) ? [...o.credential_items] : [];
   const id = item.id && String(item.id).startsWith("cred_") ? String(item.id) : uid("cred");
   const now = new Date().toISOString();
-  const kind = item.kind && ["language_certificate", "teaching_certificate", "identity", "other"].includes(String(item.kind))
+  const kind = item.kind && TEACHER_CRED_KIND_IDS.includes(String(item.kind))
     ? String(item.kind)
     : "other";
   list.push({
@@ -304,11 +323,13 @@ export async function addTeacherCredentialPlaceholder(profileId, ownerUserId, it
 }
 
 /**
+ * 删除占位资质一条。正式域与同上（仅 Dev UI）。
  * @param {string} profileId
  * @param {string} ownerUserId
  * @param {string} credId
  */
 export async function removeTeacherCredentialItem(profileId, ownerUserId, credId) {
+  if (!shouldEnableLuminaDevUi()) return { ok: false, code: "credential_placeholder_disabled" };
   await initCommerceStore();
   const snap = getCommerceStoreSync();
   const row = snap && snap.teacher_profiles ? snap.teacher_profiles.find((x) => x.id === profileId) : null;

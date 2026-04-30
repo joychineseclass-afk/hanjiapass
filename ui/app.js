@@ -16,6 +16,106 @@ import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
 
+console.log("[app] build navbar-logout-doc-2026-04-30 loaded");
+
+/** document 级登出兜底：先于 mountNavBar，避免 ESM 子模块缓存导致 navBar 未更新时无监听 */
+if (!window.__LUMINA_LOGOUT_DOC_BOUND__) {
+  window.__LUMINA_LOGOUT_DOC_BOUND__ = true;
+  document.addEventListener(
+    "click",
+    (ev) => {
+      const raw = ev.target;
+      const btn =
+        raw && typeof raw.closest === "function" ? raw.closest("[data-joy-auth-logout]") : null;
+      if (!btn || !(btn instanceof HTMLElement)) return;
+      console.log("[Lumina Logout doc] clicked");
+      ev.preventDefault();
+      void (async () => {
+        const mod = await import("./auth/authService.js");
+        const store = await import("./auth/authStore.js");
+        console.log("[Lumina Logout doc] before logoutUser");
+        try {
+          await mod.logoutUser();
+        } catch (e) {
+          console.warn("[Lumina Logout doc] logoutUser threw:", e?.message || e);
+        }
+        console.log("[Lumina Logout doc] after logoutUser");
+        try {
+          console.log("[Lumina Logout doc] auth session after logout", {
+            loadSession: store.loadSession(),
+            getCurrentSessionAuthUser: mod.getCurrentSessionAuthUser(),
+          });
+        } catch (e) {
+          console.warn("[Lumina Logout doc] session snapshot failed:", e?.message || e);
+        }
+        console.log("[Lumina Logout doc] before navigateTo");
+        try {
+          const r = await import("./router.js");
+          if (typeof r.navigateTo === "function") {
+            r.navigateTo("#auth-login", { force: true });
+            console.log("[Lumina Logout doc] after navigateTo (ok)");
+          } else {
+            console.log("[Lumina Logout doc] after navigateTo (skip: no fn)");
+          }
+        } catch (e) {
+          console.warn("[Lumina Logout doc] navigateTo failed:", e?.message || e);
+        }
+        try {
+          location.replace("/index.html#auth-login");
+          console.log("[Lumina Logout doc] after location.replace requested");
+        } catch (e) {
+          console.warn("[Lumina Logout doc] location.replace failed:", e?.message || e);
+        }
+      })();
+    },
+    true,
+  );
+  console.log("[app] document logout handler bound");
+}
+
+/**
+ * 分支 3：若点了 로그아웃 却看不到 [Lumina Logout doc] clicked，在控制台调用：
+ * __luminaDebugLogoutFromLastClick() —— 须先点此函数定义后再点按钮；或
+ * __luminaDebugLogoutAt(clientX, clientY) —— 传入鼠标事件 e.clientX/Y。
+ */
+window.__luminaDebugLogoutAt = function __luminaDebugLogoutAt(clientX, clientY) {
+  const top = document.elementFromPoint(clientX, clientY);
+  const logoutBtn = document.querySelector("[data-joy-auth-logout]");
+  const path = [];
+  for (let el = top; el && el instanceof HTMLElement && path.length < 12; el = el.parentElement) {
+    const cs = getComputedStyle(el);
+    path.push({
+      tag: el.tagName,
+      id: el.id || undefined,
+      class: (el.className && String(el.className).slice(0, 80)) || undefined,
+      pointerEvents: cs.pointerEvents,
+      position: cs.position,
+      zIndex: cs.zIndex,
+    });
+  }
+  return {
+    elementFromPoint: top,
+    logoutButtonExists: Boolean(logoutBtn),
+    logoutButtonMatchesFromPoint: Boolean(top && logoutBtn && (top === logoutBtn || logoutBtn.contains(top))),
+    chainFromPoint: path,
+  };
+};
+window.__luminaDebugLogoutFromLastClick = function __luminaDebugLogoutFromLastClick() {
+  const last = window.__LUMINA_LAST_POINTER__;
+  if (!last || typeof last.clientX !== "number") {
+    console.warn("[Lumina debug] 无记录：请先在控制台执行 document.addEventListener('click',e=>{window.__LUMINA_LAST_POINTER__={clientX:e.clientX,clientY:e.clientY};},true); 再点 로그아웃");
+    return null;
+  }
+  return window.__luminaDebugLogoutAt(last.clientX, last.clientY);
+};
+document.addEventListener(
+  "click",
+  (e) => {
+    window.__LUMINA_LAST_POINTER__ = { clientX: e.clientX, clientY: e.clientY };
+  },
+  true,
+);
+
 console.log("[HSK-REAL-ENTRY-BOOT]", {
   file: "ui/app.js",
   ts: "2026-03-27-real-entry",
@@ -139,6 +239,46 @@ function showFatal(err) {
   `;
 }
 
+const STARTUP_HYDRATE_BUDGET_MS = 2500;
+
+/**
+ * P0：首屏最多等待该时间即认为「不阻塞」；会话恢复仍在后台继续。
+ * P2：在 startRouter 之后执行；结束后再次跑 guards，避免 Supabase 慢时误把已登录用户挡去登录页。
+ */
+async function runStartupHydrateWithBudget() {
+  const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
+  const work = hydrateCurrentUserFromSession();
+  const settled = work.then(
+    () => ({ error: null }),
+    (error) => ({ error }),
+  );
+  let tid = 0;
+  const budgetP = new Promise((resolve) => {
+    tid = setTimeout(() => resolve("timeout"), STARTUP_HYDRATE_BUDGET_MS);
+  });
+  let raceResult;
+  try {
+    raceResult = await Promise.race([settled.then(() => "done"), budgetP]);
+  } finally {
+    clearTimeout(tid);
+  }
+  if (raceResult === "timeout") {
+    console.warn(
+      `[app] startup hydrate: still pending after ${STARTUP_HYDRATE_BUDGET_MS}ms (session restore continues in background)`,
+    );
+  }
+  const outcome = await settled;
+  if (outcome.error) {
+    console.warn("[app] hydrate error:", outcome.error?.message || outcome.error);
+  }
+  try {
+    const { runSessionRouteGuards } = await import("./auth/authFlow.js");
+    requestAnimationFrame(() => runSessionRouteGuards());
+  } catch (e) {
+    console.warn("[app] post-hydrate route guards failed:", e?.message);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("[app] DOMContentLoaded");
 
@@ -149,14 +289,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("[app] i18n.load failed:", e?.message);
   }
 
-  try {
-    const { hydrateCurrentUserFromSession } = await import("./auth/authService.js");
-    await hydrateCurrentUserFromSession();
-  } catch (e) {
-    console.warn("[app] auth hydrate failed:", e?.message);
-  }
-
-  // 1) Nav
+  // 1) Nav（先于 hydrate，避免 Supabase 阻塞顶栏首屏）
   try {
     mountNavBar(document.getElementById("siteNav"));
   } catch (e) {
@@ -171,19 +304,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("[app] mount panels error:", e);
   }
 
-// 3) Start router (router will ensure defaultHash + first render)
-try {
-  console.log("[app] startRouter (boot)");
-  startRouter({ defaultHash: "#home", appId: "app", scrollTop: true });
-} catch (e) {
-  console.error("[app] startRouter error:", e);
-  showFatal(e);
-}
+  // 3) Start router (router will ensure defaultHash + first render)
+  try {
+    console.log("[app] startRouter (boot)");
+    startRouter({ defaultHash: "#home", appId: "app", scrollTop: true });
+  } catch (e) {
+    console.error("[app] startRouter error:", e);
+    showFatal(e);
+  }
 
   try {
-    const { runSessionRouteGuards, bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
+    // Hydrate 前不跑 guards（避免 Supabase _cachedUser 未就绪误判）；首屏守卫在 runStartupHydrateWithBudget 完成后执行。
+    const { bindOnboardingHashGuard, attachLuminaAuthDevGlobal } = await import("./auth/authFlow.js");
     bindOnboardingHashGuard();
-    requestAnimationFrame(() => runSessionRouteGuards());
     const { shouldEnableLuminaDevUi } = await import("./lumina-commerce/devRuntimeFlags.js");
     if (shouldEnableLuminaDevUi()) {
       const mod = await import("./auth/authService.js");
@@ -201,7 +334,10 @@ try {
     console.warn("[app] session route guards / dev failed:", e?.message);
   }
 
-  // 4) Helpful debug hint
+  // 4) 后台恢复会话（不阻塞首屏路由）；P0 预算内未结束则 warn，仍等待完成以同步状态
+  void runStartupHydrateWithBudget();
+
+  // 5) Helpful debug hint
   // If stuck on loading, likely page module export mismatch or wrong file path.
 
 });

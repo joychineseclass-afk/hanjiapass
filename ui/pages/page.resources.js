@@ -1,6 +1,5 @@
 // /ui/pages/page.resources.js — 资料库：左侧分类导航 + 右侧内容（全站 .page-shell 规范）
 import { i18n } from "../i18n.js";
-import { demoBannerHtml } from "../components/demoBanner.js";
 import {
   RESOURCE_SECTION_IDS,
   parseHashSectionId,
@@ -103,11 +102,6 @@ export function mount() {
 
   app.innerHTML = `
     <div class="resource-library wrap" style="max-width:var(--max,1120px);margin:0 auto;padding:12px 16px 24px">
-      ${demoBannerHtml("resources")}
-      <header class="card" style="padding:16px 18px;margin-bottom:12px; box-shadow:0 8px 24px rgba(15,23,42,.07)">
-        <h1 class="title" style="font-size:1.35rem;margin:0 0 8px" data-i18n="resources.title">${esc(t("resources.title"))}</h1>
-        <p class="desc" style="margin:0;color:var(--muted,#475569);line-height:1.6" data-i18n="resources.subtitle">${esc(t("resources.subtitle"))}</p>
-      </header>
       <div class="page-shell page-shell--resource">
         <aside class="section-side-nav" aria-label="${esc(sideNavTitle)}">
           <p class="section-side-nav__title" data-i18n="${esc(sideNavTitleKey)}">${esc(sideNavTitle)}</p>

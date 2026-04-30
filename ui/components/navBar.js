@@ -8,6 +8,8 @@
 
 import { i18n } from "../i18n.js";
 
+console.log("[navBar] build navbar-logout-delegation-2026-04-30");
+
 // ✅ SPA 路由：全部使用 hash 路由，不再跳转 /pages/*.html
 // 顶栏：한자/필순 분리、会话/资料/文化独立；复习不入口顶栏
 const NAV_ITEMS_FULL = [
@@ -162,6 +164,52 @@ function loadAuthService() {
 }
 
 /**
+ * 登出 + 刷新顶栏 + 进登录页（与 syncAuthBlock 内联按钮解耦，供事件委托调用）。
+ * @param {HTMLElement} rootEl
+ */
+async function runLuminaNavbarLogout(rootEl) {
+  const mod = await loadAuthService();
+  try {
+    await mod.logoutUser();
+  } catch (e) {
+    console.warn("[Lumina] logoutUser:", e?.message || e);
+  }
+  syncAuthBlock(rootEl);
+  try {
+    const r = await import("/ui/router.js");
+    if (typeof r.navigateTo === "function") {
+      r.navigateTo("#auth-login", { force: true });
+    } else {
+      location.hash = "#auth-login";
+    }
+  } catch {
+    location.href = "/index.html#auth-login";
+  }
+  setActive(rootEl);
+}
+
+/**
+ * 在 nav 根节点委托登出点击：避免 syncAuthBlock 异步重绘 innerHTML 后丢失直连监听器。
+ * @param {HTMLElement} rootEl mountNavBar 的根（#siteNav）
+ */
+function bindNavbarLogoutDelegation(rootEl) {
+  if (!rootEl || rootEl.dataset.joyNavLogoutDelegation === "1") return;
+  rootEl.dataset.joyNavLogoutDelegation = "1";
+  rootEl.addEventListener(
+    "click",
+    (ev) => {
+      const t = ev.target;
+      const btn = t && typeof t.closest === "function" ? t.closest("[data-joy-auth-logout]") : null;
+      if (!btn || !(btn instanceof HTMLElement) || !rootEl.contains(btn)) return;
+      console.log("[Lumina Logout actual] clicked");
+      ev.preventDefault();
+      void runLuminaNavbarLogout(rootEl);
+    },
+    true,
+  );
+}
+
+/**
  * 顶部：未登录为「登录/注册」；已登录为昵称 + 登出（「我的学习」为主导航 #my-learning）。
  * @param {HTMLElement} rootEl
  */
@@ -203,14 +251,10 @@ function syncAuthBlock(rootEl) {
       <a href="/index.html#my-learning" class="joy-auth-aux" data-joy-auth-my data-i18n="nav.myLearning">${myLabel}</a>
       ${teacherEntry}
       <span class="joy-auth-name" title="${name}">${name}</span>
-      <button type="button" class="joy-auth-logout" data-joy-auth-logout data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
+      <button type="button" class="joy-auth-logout" data-joy-auth-logout aria-label="logout" data-test="logout" data-i18n="auth.nav_logout">${escapeAuthText(t("auth.nav_logout", "Log out"))}</button>
     `;
     }
     i18n?.apply?.(box);
-    box.querySelector("[data-joy-auth-logout]")?.addEventListener("click", () => {
-      mod.logoutUser();
-      syncAuthBlock(rootEl);
-    });
     ["[data-joy-auth-login]", "[data-joy-auth-register]", "[data-joy-auth-my]", "[data-joy-teacher]"].forEach((sel) => {
       box.querySelector(sel)?.addEventListener("click", (e) => {
         if (!isIndexPage()) return;
@@ -308,6 +352,7 @@ export function mountNavBar(rootEl) {
   ensureNavStylesOnce();
   bindGlobalOnce();
   lastRootEl = rootEl;
+  bindNavbarLogoutDelegation(rootEl);
 
   // ✅ 防重复挂载
   if (rootEl.dataset.mounted === "1") {

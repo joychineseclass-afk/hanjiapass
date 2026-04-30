@@ -1,8 +1,17 @@
 // #teacher-profile 老师档案：扩展资料 + 资质占位 + 提交审核
 
 import { i18n } from "../i18n.js";
+import {
+  requestTeacherPhoneOtp,
+  TEACHER_PHONE_OTP_ERR_TX,
+  verifyTeacherPhoneOtp,
+} from "../auth/teacherOtpService.js";
+import { normalizeBirthdayIso, normalizeName, normalizePhoneDigits } from "../auth/teacherRegistrationUtils.js";
+import { updateTeacherRegistrationSnapshot } from "../auth/authService.js";
+import { findUserById } from "../auth/authStore.js";
 import { safeUiText } from "../lumina-commerce/commerceDisplayLabels.js";
 import { getCurrentUser } from "../lumina-commerce/currentUser.js";
+import { shouldEnableLuminaDevUi } from "../lumina-commerce/devRuntimeFlags.js";
 import { getMergedProfileForUser } from "../lumina-commerce/teacherProfileStore.js";
 import {
   saveTeacherProfileFields,
@@ -11,11 +20,19 @@ import {
   removeTeacherCredentialItem,
 } from "../lumina-commerce/teacherProfileService.js";
 import { USER_ROLE, VERIFICATION_STATUS } from "../lumina-commerce/enums.js";
+import { withButtonLock } from "../lumina-commerce/uiAsync.js";
 import { currentUserCanAccessTeacherReviewConsoleSync, renderTeacherAdminShell } from "./teacherPathNav.js";
 
 const TARGET_OPTS = /** @type {const} */ (["kids", "hsk", "adults", "business"]);
 const LANG_OPTS = /** @type {const} */ (["zh", "kr", "en", "jp"]);
-const KIND_OPTS = /** @type {const} */ (["language_certificate", "teaching_certificate", "identity", "other"]);
+/** 档案「材料类型」下拉（与 commerce 存储的 cred.kind 一致） */
+const KIND_OPTS = /** @type {const} */ ([
+  "intl_chinese_teaching_qual",
+  "hsk_level6_plus_cert",
+  "other_cn_teaching_qual",
+  "other_lang_teaching_qual",
+  "other",
+]);
 
 function tx(k, p) {
   return safeUiText(k, p);
@@ -27,6 +44,57 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+/** @param {number} n */
+function formatCredFileSize(n) {
+  if (typeof n !== "number" || !Number.isFinite(n) || n < 0) return "—";
+  if (n < 1024) return `${Math.round(n)} B`;
+  if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+/**
+ * @param {Record<string, unknown>|null|undefined} snap
+ */
+function registrationCredentialsHtml(snap) {
+  const list =
+    snap && typeof snap === "object" && Array.isArray(snap.credentials)
+      ? /** @type {{ labelKey?: string; fileName?: string }[]} */ (snap.credentials)
+      : [];
+  if (list.length === 0) return "";
+  return `<ul class="teacher-reg-cred-ul">${list
+    .map((c) => {
+      const k = String(c.labelKey || "");
+      const lab = k && tx(k) !== k ? tx(k) : k || "—";
+      const fn =
+        c.fileName && String(c.fileName).trim() !== ""
+          ? escapeHtml(String(c.fileName))
+          : `<span class="teacher-reg-muted-inline">${escapeHtml(tx("teacher.profile.registration_cred_no_file"))}</span>`;
+      return `<li><span class="teacher-reg-cred-label">${escapeHtml(lab)}</span> · ${escapeHtml(tx("teacher.profile.registration_cred_file"))} ${fn}</li>`;
+    })
+    .join("")}</ul>`;
+}
+
+/**
+ * 无结构化存档时，从轻量中文 intro 文本中解析性别/手机（不向用户展示原文）。
+ * @param {string} intro
+ */
+function parseLegacyZhIntro(intro) {
+  const s = String(intro ?? "").replace(/\r\n/g, "\n");
+  const o = /** @type {{ gender?: '' | 'm' | 'f'; phone_digits?: string }} */ ({});
+  const gm = s.match(/性别\s*[：:]\s*([^\n\r]+)/);
+  if (gm) {
+    const t = String(gm[1] ?? "").trim();
+    if (/男/.test(t) && !/女/.test(t)) o.gender = "m";
+    else if (/女/.test(t)) o.gender = "f";
+  }
+  const pm = s.match(/手机\s*[：:]\s*([\d\s\-+]+)/);
+  if (pm) {
+    const d = normalizePhoneDigits(pm[1]);
+    if (d.length >= 5) o.phone_digits = d;
+  }
+  return o;
 }
 
 /** @param {string} [iso] */
@@ -42,13 +110,15 @@ function fmtTime(iso) {
  * @param {readonly string[]} options
  * @param {(c: string) => string} labelFn
  * @param {boolean} [disabled]
+ * @param {string} [inputClass]
  */
-function checkboxesRow(selected, name, options, labelFn, disabled) {
+function checkboxesRow(selected, name, options, labelFn, disabled, inputClass) {
   const d = disabled ? "disabled" : "";
+  const ic = inputClass && String(inputClass).trim() !== "" ? ` class="${escapeHtml(String(inputClass))}"` : "";
   return options
     .map((c) => {
       const on = selected.includes(c) ? "checked" : "";
-      return `<label class="teacher-profile-check"><input type="checkbox" name="${name}" value="${c}" ${on} ${d} />${escapeHtml(labelFn(c))}</label>`;
+      return `<label class="teacher-profile-check"><input type="checkbox"${ic} name="${name}" value="${c}" ${on} ${d} />${escapeHtml(labelFn(c))}</label>`;
     })
     .join(" ");
 }
@@ -59,7 +129,7 @@ function checkboxesRow(selected, name, options, labelFn, disabled) {
  * @param {(k: string) => string} label
  */
 function credCardHtml(c, readOnly, label) {
-  const kindKey = `teacher.profile.cred_kind.${c.kind || "other"}`;
+  const kindKey = `teacher.profile.cred_kind_enum.${c.kind || "other"}`;
   return `<li class="teacher-credential-card" data-cred-id="${escapeHtml(c.id)}">
     <div class="teacher-credential-card-main">
       <span class="teacher-credential-title">${escapeHtml(c.title || "")}</span>
@@ -133,6 +203,158 @@ export default async function pageTeacherProfile(ctxOrRoot) {
     ? `<ul class="teacher-credential-list">${creds.map((c) => credCardHtml(c, readOnly, tLabel)).join("")}</ul>`
     : `<p class="teacher-credential-empty">${escapeHtml(tx("teacher.profile.credential_empty"))}</p>`;
 
+  const authFull = findUserById(u.id);
+  const tpAuth = authFull?.teacherProfile;
+  /** @type {Record<string, unknown>|null} */
+  const regSnap =
+    tpAuth?.registration_snapshot && typeof tpAuth.registration_snapshot === "object"
+      ? /** @type {Record<string, unknown>} */ (tpAuth.registration_snapshot)
+      : null;
+  const regLegal = regSnap?.legal_name != null ? String(regSnap.legal_name).trim() : "";
+  const regGender = regSnap?.gender === "m" || regSnap?.gender === "f" ? String(regSnap.gender) : "";
+  const regBirth = regSnap?.birthday_iso != null ? String(regSnap.birthday_iso).trim() : "";
+  const regPhone = regSnap?.phone_digits != null ? String(regSnap.phone_digits).replace(/\D/g, "") : "";
+  const legacyIntro = tpAuth?.intro ? String(tpAuth.intro) : "";
+
+  const legacyParsed = parseLegacyZhIntro(legacyIntro);
+  const vLegal = regLegal;
+  const vGender = regGender || legacyParsed.gender || "";
+  const vBirth = regBirth;
+  const vPhone = regPhone || legacyParsed.phone_digits || "";
+  const accountEmail = String(authFull?.email ?? "").trim();
+
+  const showCredCommerceUi = shouldEnableLuminaDevUi();
+  const credentialAddBlock =
+    readOnly || !showCredCommerceUi
+      ? ""
+      : `<div class="teacher-credential-add card teacher-credential-add-form teacher-cred-add--nested">
+            <h3 class="teacher-credential-add-title">${escapeHtml(tx("teacher.profile.add_credential"))}</h3>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_title"))}</span>
+              <input type="text" id="newCredTitle" />
+            </label>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_kind"))}</span>
+              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind_enum.${k}`))}</option>`).join("")}</select>
+            </label>
+            <label class="auth-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
+              <input type="text" id="newCredNote" />
+            </label>
+            <div class="auth-field teacher-cred-upload-field">
+              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_local_upload"))}</span>
+              <input
+                type="file"
+                id="newCredFile"
+                class="teacher-profile-cred-file-native"
+                accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.rtf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              />
+              <div class="teacher-cred-file-row">
+                <button type="button" class="auth-submit auth-submit--secondary" id="tpCredPickFile">${escapeHtml(tx("teacherApply.upload_file"))}</button>
+                <span class="teacher-cred-file-picked" id="newCredFileLabel" aria-live="polite">${escapeHtml(tx("teacher.profile.cred_file_none"))}</span>
+              </div>
+              <p class="teacher-cred-file-hint">${escapeHtml(tx("teacher.profile.cred_local_upload_hint"))}</p>
+            </div>
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpAddCred">${escapeHtml(tx("teacher.profile.cred_add_btn"))}</button>
+          </div>`;
+
+  const personalTargetsRow = checkboxesRow(
+    targets,
+    "teaching_target",
+    TARGET_OPTS,
+    (c) => tx(`teacher.profile.target.${c}`),
+    false,
+    "",
+  );
+  const personalLangsRow = checkboxesRow(
+    langs,
+    "teaching_lang",
+    LANG_OPTS,
+    (c) => tx(`teacher.profile.lang.${c}`),
+    false,
+    "",
+  );
+
+  const personalGateBlock = readOnly
+    ? `<p class="teacher-reg-muted">${escapeHtml(tx("teacher.profile.personal_gate_pending_notice"))}</p>`
+    : `<p class="teacher-reg-hint">${escapeHtml(tx("teacher.profile.personal_gate_hint"))}</p>
+        <button type="button" id="tpChangePersonal" class="auth-submit auth-submit--secondary">${escapeHtml(tx("teacher.profile.personal_change_cta"))}</button>
+        <div id="tpRegOtpWrap" class="teacher-reg-otp" hidden>
+          <p class="teacher-reg-mini">${escapeHtml(tx("teacher.profile.registration_phone_gate"))}</p>
+          <div class="teacher-apply__phone-send-row">
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSendSms">${escapeHtml(tx("teacher.profile.reg_send_sms"))}</button>
+          </div>
+          <p class="teacher-apply__otp-banner" id="tpRegOtpBanner" hidden></p>
+          <div class="teacher-apply__phone-send-row">
+            <input type="text" id="tpRegOtpInput" maxlength="8" autocomplete="one-time-code" placeholder="${escapeHtml(tx("teacher.profile.reg_sms_placeholder"))}" />
+            <button type="button" class="auth-submit auth-submit--secondary" id="tpRegVerifySms">${escapeHtml(tx("teacher.profile.reg_verify"))}</button>
+          </div>
+        </div>
+        <p class="teacher-reg-ok" id="tpRegOkLine" role="status" hidden></p>
+        <div class="teacher-reg-actions-row">
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpRegSaveSnap" disabled>${escapeHtml(tx("teacher.profile.personal_save"))}</button>
+        </div>`;
+
+  const personalCard = `<section class="card teacher-personal-card">
+        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_personal"))}</h2>
+        <div class="teacher-personal-grid">
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_real_name"))}</span>
+            <input id="tpRegLegalName" class="tp-personal-lock" type="text" autocomplete="name" maxlength="80" value="${escapeHtml(vLegal)}" disabled />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacherApply.field_gender"))}</span>
+            <select id="tpRegGender" class="tp-personal-lock" disabled>
+              <option value="" ${vGender === "" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_ph"))}</option>
+              <option value="m" ${vGender === "m" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_m"))}</option>
+              <option value="f" ${vGender === "f" ? "selected" : ""}>${escapeHtml(tx("teacherApply.gender_f"))}</option>
+            </select>
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_birthday"))}</span>
+            <input id="tpRegBirthday" type="date" class="tp-personal-lock" autocomplete="bday" value="${escapeHtml(vBirth)}" disabled />
+          </label>
+          <label class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_phone"))}</span>
+            <input id="tpRegPhoneDigits" type="tel" class="tp-personal-lock" inputmode="tel" value="${escapeHtml(vPhone)}" maxlength="22" disabled />
+          </label>
+          <div class="auth-field">
+            <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_email"))}</span>
+            <input type="email" readonly class="teacher-apply__input-readonly teacher-profile-input" value="${escapeHtml(accountEmail || "")}" />
+          </div>
+        </div>
+        <div class="teacher-reg-cred-box">
+          <h3 class="teacher-reg-subtitle">${escapeHtml(tx("teacher.profile.personal_certs_heading"))}</h3>
+          ${registrationCredentialsHtml(regSnap)}
+          ${
+            showCredCommerceUi
+              ? `<div class="teacher-credential-commerce-block">
+            ${credsHtml}
+            ${credentialAddBlock}
+          </div>`
+              : ""
+          }
+        </div>
+        <label class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_intro_short"))}</span>
+          <textarea name="bio" id="tpBioField" rows="4" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(commerceRow.bio || "")}</textarea>
+        </label>
+        <div class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_targets"))}</span>
+          <div class="teacher-profile-checkgroup">${personalTargetsRow}</div>
+        </div>
+        <div class="auth-field">
+          <span class="auth-label">${escapeHtml(tx("teacher.profile.personal_langs"))}</span>
+          <div class="teacher-profile-checkgroup">${personalLangsRow}</div>
+        </div>
+        <div class="teacher-intro-actions teacher-public-edit-actions">
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroEdit">${escapeHtml(tx("common.edit"))}</button>
+          <button type="button" class="auth-submit auth-submit--secondary" id="tpIntroSave" ${readOnly ? "disabled" : ""}>${escapeHtml(tx("common.save"))}</button>
+        </div>
+        ${personalGateBlock}
+        <p class="auth-error" id="tpRegErr" hidden></p>
+      </section>`;
+
   const main = `
       <section class="card teacher-profile-hero">
         <h1 class="teacher-profile-title">${escapeHtml(tx("teacher.profile.page_title"))}</h1>
@@ -159,91 +381,28 @@ export default async function pageTeacherProfile(ctxOrRoot) {
       </div>`
           : ""
       }
-      <section class="card teacher-profile-form-card">
-        <h2 class="teacher-profile-section-title">${escapeHtml(tx("teacher.profile.section_basic"))}</h2>
-        <form id="teacherProfileForm" class="teacher-profile-form${readOnly ? " teacher-profile-form--readonly" : ""}">
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.display_name"))}</span>
-            <input name="display_name" type="text" required value="${escapeHtml(commerceRow.display_name || "")}" ${readOnly ? "disabled" : ""} />
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.bio"))}</span>
-            <textarea name="bio" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              commerceRow.bio || "",
-            )}</textarea>
-          </label>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.expertise_tags"))}</span>
-            <input name="expertise_tags" type="text" value="${escapeHtml(tagsStr)}" placeholder="${escapeHtml(
-              tx("teacher.profile.expertise_placeholder"),
-            )}" ${readOnly ? "disabled" : ""} />
-          </div>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.teaching_targets"))}</span>
-            <div class="teacher-profile-checkgroup">
-              ${checkboxesRow(targets, "teaching_target", TARGET_OPTS, (c) => tx(`teacher.profile.target.${c}`), readOnly)}
-            </div>
-          </div>
-          <div class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.teaching_languages"))}</span>
-            <div class="teacher-profile-checkgroup">
-              ${checkboxesRow(langs, "teaching_lang", LANG_OPTS, (c) => tx(`teacher.profile.lang.${c}`), readOnly)}
-            </div>
-          </div>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.experience_note"))}</span>
-            <textarea name="experience_note" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              profile.experience_note || "",
-            )}</textarea>
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.introduction_note"))}</span>
-            <textarea name="introduction_note" rows="3" class="teacher-profile-textarea" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              profile.introduction_note || "",
-            )}</textarea>
-          </label>
-          <label class="auth-field">
-            <span class="auth-label">${escapeHtml(tx("teacher.profile.contact_note"))} <span class="teacher-profile-optional">(${escapeHtml(
-              tx("teacher.profile.optional"),
-            )})</span></span>
-            <input name="contact_note" type="text" value="${escapeHtml(profile.contact_note || "")}" ${readOnly ? "disabled" : ""} />
-          </label>
-
-          <h2 class="teacher-profile-section-title teacher-profile-section-title--sub">${escapeHtml(tx("teacher.profile.credential_section"))}</h2>
-          <p class="teacher-credential-hint">${escapeHtml(tx("teacher.profile.credential_hint"))}</p>
-          ${credsHtml}
-          ${
-            readOnly
-              ? ""
-              : `<div class="teacher-credential-add card teacher-credential-add-form">
-            <h3 class="teacher-credential-add-title">${escapeHtml(tx("teacher.profile.add_credential"))}</h3>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_title"))}</span>
-              <input type="text" id="newCredTitle" />
-            </label>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_kind"))}</span>
-              <select id="newCredKind">${KIND_OPTS.map((k) => `<option value="${k}">${escapeHtml(tLabel(`teacher.profile.cred_kind.${k}`))}</option>`).join("")}</select>
-            </label>
-            <label class="auth-field">
-              <span class="auth-label">${escapeHtml(tx("teacher.profile.cred_note"))}</span>
-              <input type="text" id="newCredNote" />
-            </label>
-            <button type="button" class="auth-submit auth-submit--secondary" id="tpAddCred">${escapeHtml(tx("teacher.profile.cred_add_btn"))}</button>
-          </div>`
-          }
-
+      <form id="teacherProfileForm" class="teacher-profile-shell-form teacher-profile-form${readOnly ? " teacher-profile-form--readonly" : ""}">
+        <input type="hidden" name="display_name" value="${escapeHtml(commerceRow.display_name || "")}" />
+        <input type="hidden" name="expertise_tags" value="${escapeHtml(tagsStr)}" />
+        <textarea name="experience_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.experience_note || "")}</textarea>
+        <textarea name="introduction_note" class="teacher-profile-preserve-hidden">${escapeHtml(profile.introduction_note || "")}</textarea>
+        <input type="hidden" name="contact_note" value="${escapeHtml(profile.contact_note || "")}" />
+        <fieldset class="teacher-profile-fieldset teacher-profile-fieldset--personal"${readOnly ? " disabled" : ""}>
+        ${personalCard}
+        </fieldset>
+      ${
+        readOnly
+          ? ""
+          : `<section class="card teacher-profile-form-card teacher-profile-card--below teacher-profile-actions-card">
           <div class="teacher-profile-actions">
-            <button type="button" class="auth-submit teacher-profile-save" id="tpSave" ${readOnly ? "disabled" : ""}>${escapeHtml(
-              tx("common.save"),
-            )}</button>
             <button type="button" class="auth-submit auth-submit--secondary" id="tpSubmit" ${showSubmit ? "" : "hidden"}>${escapeHtml(
               tx(submitLabelKey),
             )}</button>
           </div>
           <p class="auth-toast" id="tpToast" hidden></p>
-        </form>
-      </section>
+      </section>`
+      }
+      </form>
       <p class="teacher-profile-back"><a href="#teacher">${escapeHtml(tx("teacher.nav.back_mine_workbench"))}</a></p>
   `;
   root.innerHTML = renderTeacherAdminShell({
@@ -255,11 +414,44 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   });
   i18n.apply?.(root);
 
+  root.querySelector("#tpIntroEdit")?.addEventListener("click", () => {
+    if (readOnly) return;
+    const ta = /** @type {HTMLTextAreaElement | null} */ (root.querySelector("#tpBioField") || root.querySelector('textarea[name="bio"]'));
+    if (!ta) return;
+    try {
+      ta.scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch {
+      // older browsers without smooth scrolling fall back silently
+    }
+    ta.focus();
+  });
+
+  const tpIntroSaveBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpIntroSave"));
+  tpIntroSaveBtn?.addEventListener("click", async () => {
+    if (readOnly) return;
+    await withButtonLock(tpIntroSaveBtn, async () => {
+      const form = root.querySelector("#teacherProfileForm");
+      if (!form) return;
+      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+      const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+      if (!r.ok) {
+        const key = `teacher.profile.error.${r.code || "unknown"}`;
+        showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+        return;
+      }
+      showToast(tx("auth.save_ok"));
+    });
+  });
+
   const toast = root.querySelector("#tpToast");
   const showToast = (msg) => {
     if (!toast) return;
     toast.textContent = msg;
     toast.hidden = false;
+  };
+  const showProfileServiceErr = (code) => {
+    const key = `teacher.profile.error.${code || "unknown"}`;
+    showToast(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
   };
 
   function getTargetsFromForm() {
@@ -270,78 +462,256 @@ export default async function pageTeacherProfile(ctxOrRoot) {
   }
 
   const collectFields = (fd) => {
+    const bio = String(fd.get("bio") ?? "");
+    const legacyIntroHidden = String(fd.get("introduction_note") || "");
+    // Overlay intro kept for reviewers; mirror `bio` when non-empty, else keep hidden legacy until field retired.
+    const introduction_note = bio.trim() !== "" ? bio : legacyIntroHidden;
     return {
       display_name: String(fd.get("display_name") || ""),
-      bio: String(fd.get("bio") || ""),
+      bio,
       expertiseTagsStr: String(fd.get("expertise_tags") || ""),
       teachingTargetsStr: getTargetsFromForm().join(","),
       teachingLanguagesStr: getLangsFromForm().join(","),
       experience_note: String(fd.get("experience_note") || ""),
-      introduction_note: String(fd.get("introduction_note") || ""),
+      introduction_note,
       contact_note: String(fd.get("contact_note") || ""),
     };
   };
 
-  root.querySelector("#tpSave")?.addEventListener("click", async () => {
+  let registrationEditUnlocked = false;
+
+  const showRegErr = (msg) => {
+    const el = root.querySelector("#tpRegErr");
+    if (el) {
+      el.textContent = msg;
+      el.hidden = false;
+    }
+  };
+  const clearRegErr = () => {
+    const el = root.querySelector("#tpRegErr");
+    if (el) el.hidden = true;
+  };
+
+  /** @param {boolean} unlocked */
+  function applyPersonalGateVisual(unlocked) {
     if (readOnly) return;
-    const form = root.querySelector("#teacherProfileForm");
-    if (!form) return;
-    const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-    const r = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-    showToast(r.ok ? tx("auth.save_ok") : tx("auth.error.unknown"));
+    root.querySelectorAll(".tp-personal-lock").forEach((el) => {
+      /** @type {HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement} */ (el).disabled = !unlocked;
+    });
+  }
+
+  if (!readOnly) applyPersonalGateVisual(false);
+
+  if (!readOnly) {
+    const legalIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegLegalName"));
+    const bdIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegBirthday"));
+    const phIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegPhoneDigits"));
+    const genderSel = /** @type {HTMLSelectElement | null} */ (root.querySelector("#tpRegGender"));
+    const otpIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#tpRegOtpInput"));
+    const otpBanner = root.querySelector("#tpRegOtpBanner");
+    const otpWrap = root.querySelector("#tpRegOtpWrap");
+    const saveSnapBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegSaveSnap"));
+    const sendSmsBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegSendSms"));
+    const verifySmsBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpRegVerifySms"));
+
+    if (bdIn) {
+      const now = new Date();
+      const pad = (/** @type {number} */ n) => String(n).padStart(2, "0");
+      bdIn.max = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      const minD = new Date(now.getFullYear() - 120, now.getMonth(), now.getDate());
+      bdIn.min = `${minD.getFullYear()}-${pad(minD.getMonth() + 1)}-${pad(minD.getDate())}`;
+    }
+    root.querySelector("#tpChangePersonal")?.addEventListener("click", () => {
+      clearRegErr();
+      otpWrap?.removeAttribute("hidden");
+    });
+
+    sendSmsBtn?.addEventListener("click", () => {
+      void withButtonLock(sendSmsBtn, async () => {
+        clearRegErr();
+        const realName = normalizeName(legalIn?.value || "");
+        const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+        const phone = normalizePhoneDigits(phIn?.value || "");
+        if (!realName || !birthdayIso || phone.length < 5) {
+          showRegErr(tx("teacher.profile.reg_err_need_fields"));
+          return;
+        }
+        const res = await requestTeacherPhoneOtp({
+          legalName: legalIn?.value || "",
+          phoneDigitsRaw: phIn?.value || "",
+          birthdayRaw: bdIn?.value ?? "",
+        });
+        if (otpBanner) {
+          otpBanner.hidden = false;
+          if (res.devCode != null && res.devCode !== "") {
+            otpBanner.textContent = tx("teacher.profile.reg_otp_banner", { code: res.devCode });
+          } else {
+            otpBanner.textContent = tx("teacher.profile.reg_otp_banner_masked", { masked: res.maskedPhone });
+          }
+        }
+      });
+    });
+
+    verifySmsBtn?.addEventListener("click", () => {
+      void withButtonLock(verifySmsBtn, async () => {
+        clearRegErr();
+        const vr = await verifyTeacherPhoneOtp({
+          legalName: legalIn?.value || "",
+          phoneDigitsRaw: phIn?.value || "",
+          smsCodeRaw: otpIn?.value || "",
+          birthdayRaw: bdIn?.value ?? "",
+        });
+        if (!vr.ok) {
+          if (vr.reason === "expired" && otpBanner) {
+            otpBanner.hidden = true;
+            otpBanner.textContent = "";
+          }
+          showRegErr(tx(TEACHER_PHONE_OTP_ERR_TX[vr.reason]));
+          return;
+        }
+        registrationEditUnlocked = true;
+        if (otpBanner) {
+          otpBanner.hidden = true;
+          otpBanner.textContent = "";
+        }
+        otpWrap?.setAttribute("hidden", "");
+        applyPersonalGateVisual(true);
+        if (saveSnapBtn) saveSnapBtn.disabled = false;
+        const ok = root.querySelector("#tpRegOkLine");
+        if (ok) {
+          ok.hidden = false;
+          ok.textContent = tx("teacher.profile.reg_unlocked");
+        }
+      });
+    });
+
+    saveSnapBtn?.addEventListener("click", async () => {
+      await withButtonLock(saveSnapBtn, async () => {
+        if (!registrationEditUnlocked) {
+          showRegErr(tx("teacher.profile.reg_err_verify_first"));
+          return;
+        }
+        clearRegErr();
+        const birthdayIso = normalizeBirthdayIso(bdIn?.value ?? "");
+        const phoneDigits = normalizePhoneDigits(phIn?.value || "");
+        if (!normalizeName(legalIn?.value || "") || !birthdayIso || phoneDigits.length < 5) {
+          showRegErr(tx("teacher.profile.reg_err_need_fields"));
+          return;
+        }
+        const g = String(genderSel?.value || "");
+        const gender = g === "m" || g === "f" ? /** @type {'m'|'f'} */ (g) : /** @type {''|'m'|'f'} */ ("");
+        const rSnap = await updateTeacherRegistrationSnapshot({
+          legal_name: normalizeName(legalIn?.value || ""),
+          gender,
+          birthday_iso: birthdayIso,
+          phone_digits: phoneDigits,
+        });
+        if (!rSnap.ok) {
+          showRegErr(tx("auth.error.unknown"));
+          return;
+        }
+        const form = root.querySelector("#teacherProfileForm");
+        if (!form) return;
+        const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+        const rSave = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+        if (!rSave.ok) {
+          const key = `teacher.profile.error.${rSave.code || "unknown"}`;
+          showRegErr(tx(key) !== key ? tx(key) : tx("auth.error.unknown"));
+          return;
+        }
+        showToast(tx("teacher.profile.personal_saved"));
+        await reloadPage(root);
+      });
+    });
+  }
+
+  root.querySelector("#tpCredPickFile")?.addEventListener("click", () => {
+    /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"))?.click();
+  });
+  root.querySelector("#newCredFile")?.addEventListener("change", () => {
+    const fin = /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"));
+    const picked = root.querySelector("#newCredFileLabel");
+    const f = fin?.files?.[0];
+    if (picked)
+      picked.textContent = f
+        ? `${f.name}${f.size >= 0 ? ` · ${formatCredFileSize(f.size)}` : ""}`
+        : tx("teacher.profile.cred_file_none");
   });
 
-  root.querySelector("#tpAddCred")?.addEventListener("click", async () => {
-    const title = String(root.querySelector("#newCredTitle")?.value || "").trim();
-    const kind = String(root.querySelector("#newCredKind")?.value || "other");
-    const note = String(root.querySelector("#newCredNote")?.value || "");
-    if (!title) {
-      showToast(tx("teacher.profile.cred_title_required"));
-      return;
-    }
-    const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, { title, kind, note });
-    if (r.ok) {
-      await reloadPage(root);
-    } else {
-      showToast(tx("auth.error.unknown"));
-    }
-  });
-
-  root.querySelectorAll(".teacher-cred-remove").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const id = btn.getAttribute("data-remove-cred");
-      if (!id) return;
-      const r = await removeTeacherCredentialItem(u.teacherProfileId, u.id, id);
-      if (r.ok) await reloadPage(root);
-      else showToast(tx("auth.error.unknown"));
+  const tpAddCredBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpAddCred"));
+  tpAddCredBtn?.addEventListener("click", async () => {
+    await withButtonLock(tpAddCredBtn, async () => {
+      const title = String(root.querySelector("#newCredTitle")?.value || "").trim();
+      const kind = String(root.querySelector("#newCredKind")?.value || "other");
+      const note = String(root.querySelector("#newCredNote")?.value || "");
+      const fileIn = /** @type {HTMLInputElement | null} */ (root.querySelector("#newCredFile"));
+      const file = fileIn?.files?.[0];
+      if (!title) {
+        showToast(tx("teacher.profile.cred_title_required"));
+        return;
+      }
+      const item = {
+        title,
+        kind,
+        note,
+        ...(file
+          ? {
+              file_name: file.name,
+              mime_type: file.type || "application/octet-stream",
+              file_size_label: formatCredFileSize(file.size),
+            }
+          : {}),
+      };
+      const r = await addTeacherCredentialPlaceholder(u.teacherProfileId, u.id, item);
+      if (r.ok) {
+        await reloadPage(root);
+      } else {
+        showProfileServiceErr(typeof r.code === "string" ? r.code : undefined);
+      }
     });
   });
 
-  root.querySelector("#tpSubmit")?.addEventListener("click", async () => {
+  root.querySelectorAll(".teacher-cred-remove").forEach((btn) => {
+    const rm = /** @type {HTMLButtonElement} */ (btn);
+    rm.addEventListener("click", () => {
+      void withButtonLock(rm, async () => {
+        const id = rm.getAttribute("data-remove-cred");
+        if (!id) return;
+        const r = await removeTeacherCredentialItem(u.teacherProfileId, u.id, id);
+        if (r.ok) await reloadPage(root);
+        else showProfileServiceErr(typeof r.code === "string" ? r.code : undefined);
+      });
+    });
+  });
+
+  const tpSubmitBtn = /** @type {HTMLButtonElement | null} */ (root.querySelector("#tpSubmit"));
+  tpSubmitBtn?.addEventListener("click", async () => {
     if (readOnly || approved || !u.teacherProfileId) return;
-    const form = root.querySelector("#teacherProfileForm");
-    if (form) {
-      const fd = new FormData(/** @type {HTMLFormElement} */ (form));
-      const sr = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
-      if (!sr.ok) {
-        showToast(tx("auth.error.unknown"));
+    await withButtonLock(tpSubmitBtn, async () => {
+      const form = root.querySelector("#teacherProfileForm");
+      if (form) {
+        const fd = new FormData(/** @type {HTMLFormElement} */ (form));
+        const sr = await saveTeacherProfileFields(u.teacherProfileId, collectFields(fd), u.id);
+        if (!sr.ok) {
+          showToast(tx("auth.error.unknown"));
+          return;
+        }
+      }
+      const r = await submitTeacherProfileForReview(u.teacherProfileId, u.id);
+      if (!r.ok) {
+        const key = `teacher.profile.error.${r.code || "unknown"}`;
+        const msg = tx(key) !== key ? tx(key) : tx("auth.error.unknown");
+        showToast(msg);
         return;
       }
-    }
-    const r = await submitTeacherProfileForReview(u.teacherProfileId, u.id);
-    if (!r.ok) {
-      const key = `teacher.profile.error.${r.code || "unknown"}`;
-      const msg = tx(key) !== key ? tx(key) : tx("auth.error.unknown");
+      const msg =
+        r.softWarning === "no_credentials"
+          ? `${tx("teacher.profile.submit_ok")} ${tx("teacher.profile.warn_no_credential")}`
+          : tx("teacher.profile.submit_ok");
       showToast(msg);
-      return;
-    }
-    const msg =
-      r.softWarning === "no_credentials"
-        ? `${tx("teacher.profile.submit_ok")} ${tx("teacher.profile.warn_no_credential")}`
-        : tx("teacher.profile.submit_ok");
-    showToast(msg);
-    const { navigateTo } = await import("../router.js");
-    navigateTo("#teacher", { force: true });
+      const { navigateTo } = await import("../router.js");
+      navigateTo("#teacher", { force: true });
+    });
   });
 }
 

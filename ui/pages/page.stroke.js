@@ -1,7 +1,7 @@
 // ui/pages/page.stroke.js
 // ✅ 统一平台风格：与 Home / HSK 一致的 card/section 布局
 // ✅ 全部文案走 i18n，支持 KR/CN/EN/JP
-// ✅ 语言切换后完整 rerender
+// ✅ 语言切换：对根容器 i18n.apply，并异步刷新字典摘要 + HSK 列表（不整页替换 #app 结构）
 
 import { i18n } from "../i18n.js";
 import { getLang, pick } from "../core/languageEngine.js";
@@ -92,38 +92,36 @@ async function renderMeaningFromHSK(ch) {
   const area = document.getElementById("stroke-meaning-area");
   if (!area) return;
 
-  area.innerHTML = `<div style="opacity:.6">${i18n.t("stroke.loading")}</div>`;
+  area.innerHTML = `<div class="stroke-meaning-status muted">${esc(i18n.t("stroke.loading"))}</div>`;
 
   const hits = await findInHSK(ch, { max: 8 });
 
   if (!hits.length) {
-    area.innerHTML = `<div style="opacity:.6">${i18n.t("stroke.not_found")}</div>`;
+    area.innerHTML = `<div class="stroke-meaning-status muted">${esc(i18n.t("stroke.not_found"))}</div>`;
     return;
   }
 
-  const labelPinyin = i18n.t("stroke.meaning_pinyin") || "Pinyin";
-  const labelKorean = i18n.t("stroke.meaning_korean") || "Korean";
-  const labelExample = i18n.t("stroke.meaning_example") || "Example";
+  const labelPinyin = i18n.t("stroke.meaning_pinyin");
+  const labelKorean = i18n.t("stroke.meaning_korean");
+  const labelExample = i18n.t("stroke.meaning_example");
 
   area.innerHTML = hits
     .map(
       (h) => `
-    <div style="margin:12px 0; padding:12px; border:1px solid #eee; border-radius:12px">
-      <div style="display:flex; gap:8px; align-items:baseline; flex-wrap:wrap">
-        <div><b>${h.word}</b></div>
-        <div style="opacity:.7">HSK${h.level}</div>
+    <div class="stroke-meaning-hit">
+      <div class="stroke-meaning-hit__head">
+        <div class="stroke-meaning-hit__word"><b>${esc(h.word)}</b></div>
+        <div class="stroke-meaning-hit__hsk">HSK${esc(String(h.level))}</div>
       </div>
-
-      <div><b>${labelPinyin}:</b> ${h.pinyin || "-"}</div>
-      <div><b>${labelKorean}:</b> ${h.kr || "-"}</div>
-
+      <div class="stroke-meaning-hit__line"><b>${esc(labelPinyin)}:</b> ${esc(h.pinyin || "-")}</div>
+      <div class="stroke-meaning-hit__line"><b>${esc(labelKorean)}:</b> ${esc(h.kr || "-")}</div>
       ${
         h.example?.cn
           ? `
-        <div style="margin-top:8px; opacity:.9">
-          <div><b>${labelExample}:</b> ${h.example.cn}</div>
-          <div><b>${labelPinyin}:</b> ${h.example.py || "-"}</div>
-          <div><b>${labelKorean}:</b> ${h.example.kr || "-"}</div>
+        <div class="stroke-meaning-hit__example">
+          <div class="stroke-meaning-hit__line"><b>${esc(labelExample)}:</b> ${esc(h.example.cn)}</div>
+          <div class="stroke-meaning-hit__line"><b>${esc(labelPinyin)}:</b> ${esc(h.example.py || "-")}</div>
+          <div class="stroke-meaning-hit__line"><b>${esc(labelKorean)}:</b> ${esc(h.example.kr || "-")}</div>
         </div>
       `
           : ""
@@ -242,7 +240,6 @@ export function mount(ctxOrRoot) {
   const input = el.querySelector("#stroke-input");
   const btn = el.querySelector("#stroke-load-btn");
   const strokeRoot = el.querySelector("#stroke-root");
-  const meaningArea = el.querySelector("#stroke-meaning-area");
 
   let _seq = { text: "", idx: 0 };
 

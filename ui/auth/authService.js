@@ -18,6 +18,45 @@ import { initCommerceStore, getCommerceStoreSync } from "../lumina-commerce/stor
 import { findTeacherProfileByUserId } from "../lumina-commerce/teacherProfileQueries.js";
 import { ensureTeacherProfileForUser as ensureTeacherProfile } from "../lumina-commerce/teacherProfileService.js";
 import { ensureCurrentUserMatchesCommerceTeacher } from "../lumina-commerce/teacherProfileStore.js";
+import { clearTeacherMaterialsSessionCaches } from "../lumina-commerce/teacherMaterialsService.js";
+
+/** 登出或 Supabase SIGNED_OUT 后统一清理本机 Lumina 会话态（不含远端 signOut）。 */
+export function resetLocalSessionAfterSignOut() {
+  clearTeacherMaterialsSessionCaches();
+  setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+}
+
+/** hydrate 内各 Supabase 步骤独立超时（与 app 启动 2500ms 预算配合，避免单步挂死） */
+const HYDRATE_REMOTE_STEP_MS = 2500;
+
+const _hydrateStepTimeoutSymbol = Symbol("lumina-hydrate-step-timeout");
+
+/**
+ * @template T
+ * @param {Promise<T>} promise
+ * @param {number} ms
+ * @param {string} stepLabel
+ * @returns {Promise<T | undefined>}
+ */
+async function runHydrateStep(promise, ms, stepLabel) {
+  let tid = 0;
+  const timeoutP = new Promise((resolve) => {
+    tid = setTimeout(() => resolve(_hydrateStepTimeoutSymbol), ms);
+  });
+  try {
+    const out = await Promise.race([promise, timeoutP]);
+    if (out === _hydrateStepTimeoutSymbol) {
+      console.warn(`[Lumina] hydrate step timeout (${ms}ms): ${stepLabel}`);
+      return undefined;
+    }
+    return /** @type {T} */ (out);
+  } catch (e) {
+    console.warn(`[Lumina] hydrate step error (${stepLabel}):`, e?.message || e);
+    return undefined;
+  } finally {
+    clearTimeout(tid);
+  }
+}
 
 /**
  * @typedef {Object} AuthUserShape
@@ -67,33 +106,63 @@ async function applyProfileToCurrentUser(authUser) {
  * 会话存在时，将 commerce 老师档案同步到 currentUser（登录后 / 页面加载）。
  */
 export async function hydrateCurrentUserFromSession() {
-  if (getActiveProvider().type === "supabase") {
-    const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
-    await getSupabaseClientReady();
-    const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
-    const supaUser = await syncLuminaCacheFromSupabaseClient();
-    /** 未登录访客无 Supabase session，不应 ensure（否则会 not_authentication + 刷屏） */
-    if (supaUser) {
-      const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
-      await ensureLuminaProfileAndMerge();
+  try {
+    if (getActiveProvider().type === "supabase") {
+      try {
+        const { getSupabaseClientReady } = await import("../integrations/supabaseClient.js");
+        await runHydrateStep(getSupabaseClientReady(), HYDRATE_REMOTE_STEP_MS, "getSupabaseClientReady");
+      } catch (e) {
+        console.warn("[Lumina] hydrate: getSupabaseClientReady:", e?.message || e);
+      }
+
+      let supaUser = null;
+      try {
+        const { syncLuminaCacheFromSupabaseClient } = await import("./providers/supabaseAuthProvider.js");
+        supaUser = await runHydrateStep(
+          syncLuminaCacheFromSupabaseClient(),
+          HYDRATE_REMOTE_STEP_MS,
+          "syncLuminaCacheFromSupabaseClient",
+        );
+      } catch (e) {
+        console.warn("[Lumina] hydrate: syncLuminaCacheFromSupabaseClient:", e?.message || e);
+      }
+
+      /** 未登录访客无 Supabase session，不应 ensure（否则会 not_authentication + 刷屏） */
+      if (supaUser) {
+        try {
+          const { ensureLuminaProfileAndMerge } = await import("./profileService.js");
+          await runHydrateStep(ensureLuminaProfileAndMerge(), HYDRATE_REMOTE_STEP_MS, "ensureLuminaProfileAndMerge");
+        } catch (e) {
+          console.warn("[Lumina] hydrate: ensureLuminaProfileAndMerge:", e?.message || e);
+        }
+      }
+    }
+
+    const s = loadSession();
+    if (!s.userId) {
+      setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+      return;
+    }
+    const u = findUserById(s.userId);
+    if (!u) {
+      saveSession(null);
+      setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+      return;
+    }
+    await applyProfileToCurrentUser({
+      id: u.id,
+      displayName: u.displayName,
+      email: u.email,
+    });
+  } catch (e) {
+    console.warn("[Lumina] hydrateCurrentUserFromSession:", e?.message || e);
+  } finally {
+    try {
+      emitAuthStateChanged();
+    } catch {
+      /* */
     }
   }
-  const s = loadSession();
-  if (!s.userId) {
-    setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
-    return;
-  }
-  const u = findUserById(s.userId);
-  if (!u) {
-    saveSession(null);
-    setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
-    return;
-  }
-  await applyProfileToCurrentUser({
-    id: u.id,
-    displayName: u.displayName,
-    email: u.email,
-  });
 }
 
 /**
@@ -151,10 +220,43 @@ export async function loginUser(p) {
   }
 }
 
+/** 登出时顺带移除用户提到的旧 key 名与代码中的 v1 key，避免顶栏仍读到会话。 */
+function wipeLocalAuthStorageKeys() {
+  const keys = [
+    "lumina_current_user",
+    "lumina_auth_session",
+    "lumina_demo_auth_session",
+    "lumina_current_user_v1",
+    "lumina_auth_session_v1",
+  ];
+  for (const k of keys) {
+    try {
+      localStorage.removeItem(k);
+    } catch {
+      /* */
+    }
+  }
+}
+
+/**
+ * 统一登出：await provider / Supabase signOut → 清本地相关 storage → guest currentUser → 广播。
+ */
 export async function logoutUser() {
+  console.log("[Lumina] logoutUser: before authStore.signOut (await provider.signOut)");
   await authStore.signOut();
-  setCurrentUser({ ...GUEST_USER, roles: [...GUEST_USER.roles], isGuest: true, teacherProfileId: null });
+  console.log("[Lumina] logoutUser: after authStore.signOut");
+  wipeLocalAuthStorageKeys();
+  resetLocalSessionAfterSignOut();
   emitAuthStateChanged();
+  try {
+    console.log("[Lumina] logoutUser: auth snapshot after local wipe", {
+      loadSession: loadSession(),
+      getCurrentSessionAuthUser: getCurrentSessionAuthUser(),
+      currentUserLs: typeof localStorage !== "undefined" ? localStorage.getItem("lumina_current_user_v1") : null,
+    });
+  } catch (e) {
+    console.warn("[Lumina] logoutUser: snapshot log failed:", e?.message || e);
+  }
 }
 
 /**
@@ -202,13 +304,14 @@ export async function markOnboardingCompletedStudentPath() {
 
 /**
  * 提交教师申请：teacher → pending，写入 teacherProfile
- * @param {{ displayName: string, intro: string, teachingTypes: string[], experienceLevel: string, note?: string }} p
+ * @param {{ displayName: string, intro: string, teachingTypes: string[], experienceLevel: string, note?: string, registrationSnapshot?: Record<string, unknown> }} p
  */
 export async function submitTeacherApplication(p) {
   const au = getCurrentSessionAuthUser();
   if (!au) return { ok: false, code: "not_authenticated" };
   const full = findUserById(au.id);
   if (!full) return { ok: false, code: "not_found" };
+  /** @type {Record<string, unknown>} */
   const teacherProfile = {
     displayName: String(p.displayName || "").trim(),
     intro: String(p.intro || "").trim(),
@@ -217,11 +320,54 @@ export async function submitTeacherApplication(p) {
     note: p.note != null ? String(p.note) : "",
     submittedAt: new Date().toISOString(),
   };
+  if (p.registrationSnapshot && typeof p.registrationSnapshot === "object") {
+    teacherProfile.registration_snapshot = p.registrationSnapshot;
+  }
   upsertUser({
     ...full,
     onboardingCompleted: true,
     roles: { student: "active", teacher: "pending" },
     teacherProfile,
+    updated_at: new Date().toISOString(),
+  });
+  await hydrateCurrentUserFromSession();
+  emitAuthStateChanged();
+  return { ok: true };
+}
+
+/**
+ * 更新教师申请存档中的实名快照（须在 UI 中先完成手机短信验证）。
+ * @param {{ legal_name?: string, gender?: ''|'m'|'f', birthday_iso?: string, phone_digits?: string }} patch
+ */
+export async function updateTeacherRegistrationSnapshot(patch) {
+  const au = getCurrentSessionAuthUser();
+  if (!au) return { ok: false, code: "not_authenticated" };
+  const full = findUserById(au.id);
+  const prevTp = full?.teacherProfile;
+  if (!full || !prevTp) return { ok: false, code: "no_teacher_profile" };
+  const prevSnap = prevTp.registration_snapshot && typeof prevTp.registration_snapshot === "object"
+    ? { .../** @type {Record<string, unknown>} */ (prevTp.registration_snapshot) }
+    : {};
+  /** @type {Record<string, unknown>} */
+  const rs = { ...prevSnap };
+  if (patch.legal_name != null) rs.legal_name = String(patch.legal_name).trim();
+  if (patch.birthday_iso != null) rs.birthday_iso = String(patch.birthday_iso).trim();
+  if (patch.phone_digits != null) rs.phone_digits = String(patch.phone_digits).replace(/\D/g, "");
+  if (patch.gender !== undefined && (patch.gender === "" || patch.gender === "m" || patch.gender === "f"))
+    rs.gender = patch.gender;
+  rs.updated_at = new Date().toISOString();
+  const ln = rs.legal_name != null ? String(rs.legal_name).trim() : "";
+  const nextTeacherDisplay = ln !== "" ? ln : prevTp.displayName;
+  const nextGlobalName = ln !== "" ? ln : full.displayName;
+
+  upsertUser({
+    ...full,
+    displayName: nextGlobalName != null ? String(nextGlobalName) : full.displayName,
+    teacherProfile: {
+      ...prevTp,
+      displayName: String(nextTeacherDisplay || prevTp.displayName || ""),
+      registration_snapshot: rs,
+    },
     updated_at: new Date().toISOString(),
   });
   await hydrateCurrentUserFromSession();
