@@ -220,10 +220,43 @@ export async function loginUser(p) {
   }
 }
 
+/** 登出时顺带移除用户提到的旧 key 名与代码中的 v1 key，避免顶栏仍读到会话。 */
+function wipeLocalAuthStorageKeys() {
+  const keys = [
+    "lumina_current_user",
+    "lumina_auth_session",
+    "lumina_demo_auth_session",
+    "lumina_current_user_v1",
+    "lumina_auth_session_v1",
+  ];
+  for (const k of keys) {
+    try {
+      localStorage.removeItem(k);
+    } catch {
+      /* */
+    }
+  }
+}
+
+/**
+ * 统一登出：await provider / Supabase signOut → 清本地相关 storage → guest currentUser → 广播。
+ */
 export async function logoutUser() {
+  console.log("[Lumina] logoutUser: before authStore.signOut (await provider.signOut)");
   await authStore.signOut();
+  console.log("[Lumina] logoutUser: after authStore.signOut");
+  wipeLocalAuthStorageKeys();
   resetLocalSessionAfterSignOut();
   emitAuthStateChanged();
+  try {
+    console.log("[Lumina] logoutUser: auth snapshot after local wipe", {
+      loadSession: loadSession(),
+      getCurrentSessionAuthUser: getCurrentSessionAuthUser(),
+      currentUserLs: typeof localStorage !== "undefined" ? localStorage.getItem("lumina_current_user_v1") : null,
+    });
+  } catch (e) {
+    console.warn("[Lumina] logoutUser: snapshot log failed:", e?.message || e);
+  }
 }
 
 /**

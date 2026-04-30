@@ -16,6 +16,8 @@ import { mountNavBar } from "./components/navBar.js";
 import { mountAIPanel } from "./components/aiPanel.js";
 import { mountLearnPanel } from "./components/learnPanel.js";
 
+console.log("[app] build navbar-logout-doc-2026-04-30 loaded");
+
 /** document 级登出兜底：先于 mountNavBar，避免 ESM 子模块缓存导致 navBar 未更新时无监听 */
 if (!window.__LUMINA_LOGOUT_DOC_BOUND__) {
   window.__LUMINA_LOGOUT_DOC_BOUND__ = true;
@@ -28,33 +30,91 @@ if (!window.__LUMINA_LOGOUT_DOC_BOUND__) {
       if (!btn || !(btn instanceof HTMLElement)) return;
       console.log("[Lumina Logout doc] clicked");
       ev.preventDefault();
-      ev.stopImmediatePropagation();
       void (async () => {
+        const mod = await import("./auth/authService.js");
+        const store = await import("./auth/authStore.js");
+        console.log("[Lumina Logout doc] before logoutUser");
         try {
-          const mod = await import("./auth/authService.js");
-          try {
-            await mod.logoutUser();
-          } catch (e) {
-            console.warn("[Lumina] doc logoutUser:", e?.message || e);
-          }
+          await mod.logoutUser();
         } catch (e) {
-          console.warn("[Lumina] doc authService import:", e?.message || e);
+          console.warn("[Lumina Logout doc] logoutUser threw:", e?.message || e);
         }
+        console.log("[Lumina Logout doc] after logoutUser");
+        try {
+          console.log("[Lumina Logout doc] auth session after logout", {
+            loadSession: store.loadSession(),
+            getCurrentSessionAuthUser: mod.getCurrentSessionAuthUser(),
+          });
+        } catch (e) {
+          console.warn("[Lumina Logout doc] session snapshot failed:", e?.message || e);
+        }
+        console.log("[Lumina Logout doc] before navigateTo");
         try {
           const r = await import("./router.js");
           if (typeof r.navigateTo === "function") {
             r.navigateTo("#auth-login", { force: true });
+            console.log("[Lumina Logout doc] after navigateTo (ok)");
           } else {
-            location.href = "/index.html#auth-login";
+            console.log("[Lumina Logout doc] after navigateTo (skip: no fn)");
           }
-        } catch {
-          location.href = "/index.html#auth-login";
+        } catch (e) {
+          console.warn("[Lumina Logout doc] navigateTo failed:", e?.message || e);
+        }
+        try {
+          location.replace("/index.html#auth-login");
+          console.log("[Lumina Logout doc] after location.replace requested");
+        } catch (e) {
+          console.warn("[Lumina Logout doc] location.replace failed:", e?.message || e);
         }
       })();
     },
     true,
   );
+  console.log("[app] document logout handler bound");
 }
+
+/**
+ * 分支 3：若点了 로그아웃 却看不到 [Lumina Logout doc] clicked，在控制台调用：
+ * __luminaDebugLogoutFromLastClick() —— 须先点此函数定义后再点按钮；或
+ * __luminaDebugLogoutAt(clientX, clientY) —— 传入鼠标事件 e.clientX/Y。
+ */
+window.__luminaDebugLogoutAt = function __luminaDebugLogoutAt(clientX, clientY) {
+  const top = document.elementFromPoint(clientX, clientY);
+  const logoutBtn = document.querySelector("[data-joy-auth-logout]");
+  const path = [];
+  for (let el = top; el && el instanceof HTMLElement && path.length < 12; el = el.parentElement) {
+    const cs = getComputedStyle(el);
+    path.push({
+      tag: el.tagName,
+      id: el.id || undefined,
+      class: (el.className && String(el.className).slice(0, 80)) || undefined,
+      pointerEvents: cs.pointerEvents,
+      position: cs.position,
+      zIndex: cs.zIndex,
+    });
+  }
+  return {
+    elementFromPoint: top,
+    logoutButtonExists: Boolean(logoutBtn),
+    logoutButtonMatchesFromPoint: Boolean(top && logoutBtn && (top === logoutBtn || logoutBtn.contains(top))),
+    chainFromPoint: path,
+  };
+};
+window.__luminaDebugLogoutFromLastClick = function __luminaDebugLogoutFromLastClick() {
+  const last = window.__LUMINA_LAST_POINTER__;
+  if (!last || typeof last.clientX !== "number") {
+    console.warn("[Lumina debug] 无记录：请先在控制台执行 document.addEventListener('click',e=>{window.__LUMINA_LAST_POINTER__={clientX:e.clientX,clientY:e.clientY};},true); 再点 로그아웃");
+    return null;
+  }
+  return window.__luminaDebugLogoutAt(last.clientX, last.clientY);
+};
+document.addEventListener(
+  "click",
+  (e) => {
+    window.__LUMINA_LAST_POINTER__ = { clientX: e.clientX, clientY: e.clientY };
+  },
+  true,
+);
 
 console.log("[HSK-REAL-ENTRY-BOOT]", {
   file: "ui/app.js",
