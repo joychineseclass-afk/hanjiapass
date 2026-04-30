@@ -1957,7 +1957,11 @@
       "err_category_invalid": "Invalid category. Use: ppt, handout, picture_book, pdf, other.",
       "delete_blocked_hint": "This material is linked to one or more courses and can’t be removed. Unlink it in My courses first.",
       "local_upload_badge": "Local session",
-      "local_upload_list_hint": "After a successful upload, the item appears in Created materials below. Rows exist only in this browser tab’s memory until cloud storage is connected; they disappear on full refresh.",
+      "local_upload_list_hint": "Successful uploads appear in the list below. With Supabase sign-in and once you apply the SQL + Storage bucket, files go to Storage and rows persist across refresh; demo / no-cloud builds keep rows only in this tab’s memory.",
+      "cloud_storage_badge": "Cloud",
+      "cloud_row": {
+        "status": "Saved (cloud)"
+      },
       "local_upload_row": {
         "status": "Received (local session only)",
         "type_pdf": "PDF",
@@ -1984,6 +1988,7 @@
       "upload_err_type": "This file type is not supported.",
       "upload_err_size": "File exceeds the 100 MB limit.",
       "upload_err_no_file": "Choose a file first.",
+      "upload_err_cloud": "Cloud storage or database write failed. Create the private bucket `teacher-materials`, run `docs/supabase-teacher-materials.sql` in Supabase, verify RLS/policies, and ensure you are signed in.",
       "upload_mock_ok": "(Demo) Added to the list below. The file is not in the cloud yet—only visible in this session.",
       "relation_title": "How this relates to other areas",
       "relation_item_1": "Materials ≠ courses.",

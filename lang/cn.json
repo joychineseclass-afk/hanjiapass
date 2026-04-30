@@ -1957,7 +1957,11 @@
       "err_category_invalid": "分类键无效。请使用：ppt、handout、picture_book、pdf、other。",
       "delete_blocked_hint": "该教材已被课程引用，无法删除。请先在「我的课程」中解除关联后再试。",
       "local_upload_badge": "本地会话",
-      "local_upload_list_hint": "上传成功后会出现在下方「已创建教材列表」；当前仅保存在浏览器内存（未接云存储），刷新页面后这些行会消失。",
+      "local_upload_list_hint": "上传成功后将出现在下方列表。使用 Supabase 登录且已部署表与 Storage 时，文件写入云存储并入库，刷新后仍保留；纯演示或未配置云服务时，仅在当前浏览器会话内存中保留。",
+      "cloud_storage_badge": "云存储",
+      "cloud_row": {
+        "status": "已保存（云端）"
+      },
       "local_upload_row": {
         "status": "已接收（仅本机会话）",
         "type_pdf": "PDF",
@@ -1984,6 +1988,7 @@
       "upload_err_type": "不支持此文件类型。",
       "upload_err_size": "文件超过 100 MB 上限。",
       "upload_err_no_file": "请先选择要上传的文件。",
+      "upload_err_cloud": "云存储或数据库写入失败。请确认已在 Supabase 中创建 storage bucket `teacher-materials`、执行 `docs/supabase-teacher-materials.sql`，并检查策略与登录状态。",
       "upload_mock_ok": "（演示）已加入下方列表。文件本身尚未上传到云端，仅本页会话内可见。",
       "relation_title": "与其他模块的关系",
       "relation_item_1": "教材≠课程。",

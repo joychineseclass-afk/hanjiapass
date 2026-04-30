@@ -1965,7 +1965,11 @@
       "err_category_invalid": "分類キーが無効です。ppt、handout、picture_book、pdf、other のいずれかを使ってください。",
       "delete_blocked_hint": "この教材はコースで使用中のため削除できません。先に「マイコース」で関連を外してください。",
       "local_upload_badge": "ローカルセッション",
-      "local_upload_list_hint": "アップロードに成功すると下の「作成済み教材一覧」に表示されます。クラウド未接続のため、このブラウザタブのメモリのみ保持し、再読み込みで消えます。",
+      "local_upload_list_hint": "アップロード成功後、下の一覧に表示されます。Supabase でログインし SQL と Storage バケットを用意するとファイルはクラウドに保存され再読み込み後も残ります。デモ／未構成ではこのタブのメモリのみです。",
+      "cloud_storage_badge": "クラウド",
+      "cloud_row": {
+        "status": "保存済み（クラウド）"
+      },
       "local_upload_row": {
         "status": "受信済み（このタブのみ）",
         "type_pdf": "PDF",
@@ -1992,6 +1996,7 @@
       "upload_err_type": "このファイル形式はサポートされていません。",
       "upload_err_size": "ファイルが 100 MB の上限を超えています。",
       "upload_err_no_file": "先にファイルを選んでください。",
+      "upload_err_cloud": "ストレージまたは DB への書き込みに失敗しました。 bucket `teacher-materials` を作成し `docs/supabase-teacher-materials.sql` を実行、RLS を確認し、ログイン状態を確認してください。",
       "upload_mock_ok": "（デモ）下の一覧に追加しました。ファイル本体はクラウド未保存で、このセッションのみ表示されます。",
       "relation_title": "他モジュールとの関係",
       "relation_item_1": "教材≠コース。",

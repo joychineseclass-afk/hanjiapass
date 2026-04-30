@@ -1957,7 +1957,11 @@
       "err_category_invalid": "분류 키가 올바르지 않습니다. ppt, handout, picture_book, pdf, other 중 하나를 입력하세요.",
       "delete_blocked_hint": "이 교재는 코스에서 사용 중이라 삭제할 수 없습니다. 먼저 「내 코스」에서 연결을 해제하세요.",
       "local_upload_badge": "로컬 세션",
-      "local_upload_list_hint": "업로드가 완료되면 아래 「만든 교재 목록」에 표시됩니다. 클라우드가 아직 없어 이 브라우저 탭 메모리에만 있으며, 새로고침하면 사라집니다.",
+      "local_upload_list_hint": "업로드 성공 후 아래 목록에 표시됩니다. Supabase 로그인 후 SQL과 Storage 버킷을 준비하면 파일이 클라우드에 저장되어 새로고침 후에도 유지됩니다. 데모/미구성 시 이 탭 메모리에만 있습니다.",
+      "cloud_storage_badge": "클라우드",
+      "cloud_row": {
+        "status": "저장됨(클라우드)"
+      },
       "local_upload_row": {
         "status": "수신됨(이 탭만)",
         "type_pdf": "PDF",
@@ -1984,6 +1988,7 @@
       "upload_err_type": "지원하지 않는 파일 형식입니다.",
       "upload_err_size": "파일이 100 MB 한도를 초과합니다.",
       "upload_err_no_file": "먼저 파일을 선택하세요.",
+      "upload_err_cloud": "저장소 또는 DB 저장에 실패했습니다. Supabase에서 비공개 버킷 `teacher-materials`를 만들고 `docs/supabase-teacher-materials.sql`을 실행한 뒤 RLS와 로그인을 확인하세요.",
       "upload_mock_ok": "(데모) 아래 목록에 추가했습니다. 파일은 아직 클라우드에 없으며 이 세션에서만 보입니다.",
       "relation_title": "다른 모듈과의 관계",
       "relation_item_1": "교재≠코스.",

@@ -1,14 +1,23 @@
 /**
- * 「我的教材」列表数据源：演示 profile 走本地种子，其余在接 API 前返回空数组。
- * 后续在此接入 GET /api/teacher/materials 与缓存，不改变页面直接 import catalog 的习惯。
+ * 「我的教材」列表数据源：Supabase 登录且已配置时走 Storage + `teacher_materials`；否则演示 profile 走本地种子 + 会话内内存行。
+ * 数据库脚本见 `docs/supabase-teacher-materials.sql`（需先具备 `set_updated_at`，如已执行 `docs/supabase-auth-profile-roles.sql`）。
  */
 
 import { getDemoMaterialsForProfile } from "./teacherDemoCatalog.js";
+import {
+  deleteTeacherMaterialSupabase,
+  listTeacherMaterialsFromSupabase,
+  renameTeacherMaterialSupabase,
+  setTeacherMaterialCategorySupabase,
+  shouldUseSupabaseMaterials,
+  submitTeacherMaterialUploadSupabase,
+} from "./teacherMaterialsSupabase.js";
 
 /**
  * 与当前演示行字段一致；正式接口可扩展后在此做 DTO → 列表行映射。
- * `localSourceFileName`：本地上传（内存行）用于推断「类型」列展示，不含文件内容。
- * @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string, titleOverride?: string, localSourceFileName?: string }} TeacherMaterialListRow
+ * `localSourceFileName`：本地上传（内存行）或 Supabase 行展示用，不含文件二进制。
+ * `cloudSource`：已为 Supabase 持久化。
+ * @typedef {{ id: string, updated_at: string, usedByCourseIds: string[], listingPrepKey: string, materialCategoryKey: string, titleOverride?: string, localSourceFileName?: string, cloudSource?: boolean, storagePath?: string, storageBucket?: string }} TeacherMaterialListRow
  */
 
 const LOCAL_MATERIAL_ID_PREFIX = "lmu_";
@@ -122,8 +131,29 @@ export function validateLocalMaterialFile(file) {
 }
 
 /**
+ * 本地上传入口：Supabase 已配置且当前为真实登录时 → Storage + `teacher_materials`；否则走演示内存行。
+ * @param {{ teacherProfileId: string, file: File, title: string }} payload
+ * @returns {Promise<{ ok: true, mock?: boolean } | { ok: false, reason: string, mock?: boolean, cloud?: boolean }>}
+ */
+export async function submitLocalMaterialUpload(payload) {
+  const v = validateLocalMaterialFile(payload.file);
+  if (!v.ok) {
+    return /** @type {const} */ ({ ok: false, reason: v.reason, mock: true });
+  }
+  if (await shouldUseSupabaseMaterials()) {
+    const r = await submitTeacherMaterialUploadSupabase(payload);
+    if (r.ok) return { ok: true };
+    return {
+      ok: false,
+      reason: r.reason === "storage" || r.reason === "db" || r.reason === "auth" ? r.reason : "db",
+      cloud: true,
+    };
+  }
+  return mockSubmitLocalMaterialUpload(payload);
+}
+
+/**
  * 演示用：校验通过后追加到当前教师 profile 的**内存列表**（浏览器会话内有效，刷新即无）。
- * 正式版：客户端直传对象存储（S3/R2 等）或经后端预签名 URL，再把 `file_key`、标题等写入数据库。
  * @param {{ teacherProfileId: string, file: File, title: string }} payload
  * @returns {Promise<{ ok: true, mock: true } | { ok: false, reason: "no_file"|"size"|"type", mock: true }>}
  */
@@ -154,6 +184,9 @@ export async function mockSubmitLocalMaterialUpload(payload) {
  * @returns {Promise<TeacherMaterialListRow[]>}
  */
 export async function listMaterialsForTeacherProfile(teacherProfileId) {
+  if (await shouldUseSupabaseMaterials()) {
+    return listTeacherMaterialsFromSupabase(teacherProfileId);
+  }
   const demoRows = getDemoMaterialsForProfile(teacherProfileId);
   const locals = localMaterialListForProfile(teacherProfileId);
   const out = [];
@@ -178,6 +211,9 @@ export async function mockRenameTeacherMaterial(profileId, materialId, title) {
   const trimmed = String(title || "").trim();
   if (!trimmed) {
     return { ok: false, reason: "empty" };
+  }
+  if (await shouldUseSupabaseMaterials()) {
+    return renameTeacherMaterialSupabase(materialId, trimmed);
   }
   if (isLocalMockMaterialId(materialId)) {
     const list = localMaterialListForProfile(profileId);
@@ -209,6 +245,9 @@ export async function mockRenameTeacherMaterial(profileId, materialId, title) {
  * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "bad_category" }>}
  */
 export async function mockSetTeacherMaterialCategory(profileId, materialId, categoryKey) {
+  if (await shouldUseSupabaseMaterials()) {
+    return setTeacherMaterialCategorySupabase(materialId, categoryKey);
+  }
   const k = String(categoryKey || "").trim();
   if (!isAllowedMaterialCategoryKey(k)) {
     return { ok: false, reason: "bad_category" };
@@ -243,6 +282,9 @@ export async function mockSetTeacherMaterialCategory(profileId, materialId, cate
  * @returns {Promise<{ ok: true } | { ok: false, reason: "not_found" | "in_use" }>}
  */
 export async function mockDeleteTeacherMaterial(profileId, materialId) {
+  if (await shouldUseSupabaseMaterials()) {
+    return deleteTeacherMaterialSupabase(materialId);
+  }
   if (isLocalMockMaterialId(materialId)) {
     const list = localMaterialListForProfile(profileId);
     const idx = list.findIndex((m) => m.id === materialId);

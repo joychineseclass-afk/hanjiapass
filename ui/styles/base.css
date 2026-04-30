@@ -2704,6 +2704,19 @@ a.section-side-nav-item:hover{
   border: 1px solid #5eead4;
   vertical-align: middle;
 }
+.teacher-cloud-storage-badge{
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #1d4ed8;
+  background: #dbeafe;
+  border: 1px solid #93c5fd;
+  vertical-align: middle;
+}
 .teacher-manage-cell-title{
   font-weight: 750;
   color: rgba(15, 23, 42, 0.9);

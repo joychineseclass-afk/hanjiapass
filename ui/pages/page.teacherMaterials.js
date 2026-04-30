@@ -16,7 +16,7 @@ import {
   mockDeleteTeacherMaterial,
   mockRenameTeacherMaterial,
   mockSetTeacherMaterialCategory,
-  mockSubmitLocalMaterialUpload,
+  submitLocalMaterialUpload,
   validateLocalMaterialFile,
 } from "../lumina-commerce/teacherMaterialsService.js";
 import { getTeacherPageContext } from "../lumina-commerce/teacherSelectors.js";
@@ -146,6 +146,7 @@ function localUploadSectionHtml(t, uploadStageHint) {
  */
 function materialsTableBody(materials, t) {
   return materials.map((m) => {
+    const isCloudRow = Boolean(m.cloudSource);
     const isLocalRow = isLocalMockMaterialId(m.id);
     const titleDisplayRaw =
       m.titleOverride != null && String(m.titleOverride).trim() !== ""
@@ -155,16 +156,22 @@ function materialsTableBody(materials, t) {
           : t(`teacher.demo.material.${m.id}.title`);
     const title = escapeHtml(titleDisplayRaw);
     const type = escapeHtml(
-      isLocalRow && m.localSourceFileName
+      (isCloudRow || isLocalRow) && m.localSourceFileName
         ? t(localUploadTypeLabelKey(m.localSourceFileName))
         : t(`teacher.demo.material.${m.id}.type`),
     );
     const status = escapeHtml(
-      isLocalRow ? t("teacher.materials_page.local_upload_row.status") : t(`teacher.demo.material.${m.id}.status`),
+      isCloudRow
+        ? t("teacher.materials_page.cloud_row.status")
+        : isLocalRow
+          ? t("teacher.materials_page.local_upload_row.status")
+          : t(`teacher.demo.material.${m.id}.status`),
     );
-    const badgeHtml = isLocalRow
-      ? `<span class="teacher-local-session-badge">${escapeHtml(t("teacher.materials_page.local_upload_badge"))}</span>`
-      : `<span class="teacher-demo-badge">${escapeHtml(t("common.demo_badge"))}</span>`;
+    const badgeHtml = isCloudRow
+      ? `<span class="teacher-cloud-storage-badge">${escapeHtml(t("teacher.materials_page.cloud_storage_badge"))}</span>`
+      : isLocalRow
+        ? `<span class="teacher-local-session-badge">${escapeHtml(t("teacher.materials_page.local_upload_badge"))}</span>`
+        : `<span class="teacher-demo-badge">${escapeHtml(t("common.demo_badge"))}</span>`;
     const phaseKey = getDemoMaterialPhaseKey(m);
     const phaseLabel = escapeHtml(formatDemoMaterialPhasePill(phaseKey, t));
     const phaseClass = escapeHtml(String(phaseKey).replace(/[^a-z0-9_-]/gi, ""));
@@ -477,7 +484,7 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
       });
     }
     try {
-      const r = await mockSubmitLocalMaterialUpload({
+      const r = await submitLocalMaterialUpload({
         teacherProfileId: String(teacherProfileId),
         file: /** @type {File} */ (pickedFile),
         title,
@@ -488,7 +495,9 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
             ? t("teacher.materials_page.upload_err_type")
             : r.reason === "size"
               ? t("teacher.materials_page.upload_err_size")
-              : t("teacher.materials_page.upload_err_no_file"),
+              : r.reason === "auth" || r.reason === "storage" || r.reason === "db"
+                ? t("teacher.materials_page.upload_err_cloud")
+                : t("teacher.materials_page.upload_err_no_file"),
         );
         return;
       }
@@ -558,7 +567,13 @@ function bindMaterialsInteractions(root, t, teacherProfileId) {
         if (!window.confirm(t("teacher.materials_page.delete_confirm"))) return;
         const r = await mockDeleteTeacherMaterial(pid, mid);
         if (!r.ok) {
-          window.alert(r.reason === "in_use" ? t("teacher.materials_page.delete_blocked_hint") : t("common.error.unknown"));
+          window.alert(
+            r.reason === "in_use"
+              ? t("teacher.materials_page.delete_blocked_hint")
+              : r.reason === "storage" || r.reason === "db"
+                ? t("teacher.materials_page.upload_err_cloud")
+                : t("common.error.unknown"),
+          );
           return;
         }
         void renderMaterialsDom(root);
