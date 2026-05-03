@@ -325,7 +325,11 @@ async function renderCoursesDom(root) {
         profileId: ctx.profile.id,
         userId: ctx.user?.id || "",
         displayName: ctx.profile.display_name || "",
-        onRefresh: () => void renderCoursesDom(root),
+        onRefresh: () => {
+          void renderCoursesDom(root).catch((err) => {
+            console.warn("[teacher-courses] panel refresh failed:", err);
+          });
+        },
       });
     }
   }

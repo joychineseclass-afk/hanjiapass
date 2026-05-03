@@ -321,7 +321,7 @@ export default async function pageClassroom(ctxOrRoot) {
         <div class="classroom-topbar-actions">
           <button type="button" class="classroom-back" id="classroomBackBtn">← ${escapeHtml(backLabel)}</button>
           <a class="classroom-back-secondary" href="#teacher-courses?tab=assets">${escapeHtml(backAssets)}</a>
-          <a class="classroom-back-secondary" href="#teacher-courses">${escapeHtml(backCourses)}</a>
+          <a class="classroom-back-secondary" href="#teacher-courses?tab=courses">${escapeHtml(backCourses)}</a>
         </div>
         <div class="classroom-topbar-ctrl">
           <button type="button" class="classroom-ctrl-btn" id="classroomViewModeTop" aria-pressed="${isPres0}">${escapeHtml(initialViewTgl)}</button>

@@ -393,7 +393,7 @@ async function renderEditor(root) {
   }
   if (isTeacherAssetTrashed(a)) {
     root.innerHTML = renderTeacherAdminShell({
-      active: "assets",
+      active: "courses",
       tx: t,
       showReviewConsole,
       mainHtml: `
@@ -421,7 +421,7 @@ async function renderEditor(root) {
     if (impLabel === impKey) impLabel = esc(String(a.import_status || "raw_uploaded"));
     else impLabel = esc(impLabel);
     root.innerHTML = renderTeacherAdminShell({
-      active: "assets",
+      active: "courses",
       tx: t,
       showReviewConsole,
       mainHtml: `
@@ -465,7 +465,7 @@ async function renderEditor(root) {
   const publishBlock = publishingStatusCardHtml(pubM, listingRow, t);
 
   root.innerHTML = renderTeacherAdminShell({
-    active: "assets",
+    active: "courses",
     tx: t,
     showReviewConsole,
     mainHtml: `

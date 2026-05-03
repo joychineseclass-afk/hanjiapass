@@ -593,7 +593,7 @@ function renderTeacherHomeActiveOverview(t) {
         <article class="card teacher-lumina-wf-card">
           <h2 class="teacher-lumina-wf-card__h">${escapeHtml(t("teacher.home.card_courses_title"))}</h2>
           <p class="teacher-lumina-wf-card__d">${escapeHtml(t("teacher.home.card_courses_desc"))}</p>
-          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-courses" data-teacher-spa="1">${escapeHtml(
+          <a class="teacher-hub-cta teacher-hub-cta--primary teacher-hub-cta--card" href="#teacher-courses?tab=courses" data-teacher-spa="1">${escapeHtml(
             t("teacher.home.card_courses_cta"),
           )}</a>
         </article>

@@ -79,7 +79,7 @@ function teacherModuleNavItemSpec(kind, active, m) {
     label = m("teacher.hub.materials.title");
     isCurrent = active === "materials";
   } else if (kind === "courses") {
-    href = "#teacher-courses";
+    href = "#teacher-courses?tab=courses";
     label = m("teacher.hub.courses.title");
     isCurrent = active === "courses";
   } else if (kind === "assets") {
@@ -181,7 +181,7 @@ export function teacherPathStripHtml(active, tx, options = {}) {
     : "";
   const hrefs = {
     materials: "#teacher-materials",
-    courses: "#teacher-courses",
+    courses: "#teacher-courses?tab=courses",
     assets: "#teacher-courses?tab=assets",
     listing: "#teacher-publishing",
   };
@@ -231,7 +231,7 @@ export function teacherMaterialsNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.materials_next.path_a_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.materials_next.path_a_body")}</p>
-          <a class="teacher-guide-cta" href="#teacher-courses">${m("teacher.flow.cta_organize_courses")}</a>
+          <a class="teacher-guide-cta" href="#teacher-courses?tab=courses">${m("teacher.flow.cta_organize_courses")}</a>
         </div>
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.materials_next.path_b_title")}</p>
@@ -256,7 +256,7 @@ export function teacherCoursesNextGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_a_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.courses_next.path_a_body")}</p>
-          <a class="teacher-guide-cta" href="#teacher-courses">${m("teacher.flow.cta_continue_courses")}</a>
+          <a class="teacher-guide-cta" href="#teacher-courses?tab=courses">${m("teacher.flow.cta_continue_courses")}</a>
         </div>
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.courses_next.path_classroom_title")}</p>
@@ -288,7 +288,7 @@ export function teacherListingSourceGuideHtml(tx) {
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.listing_source.source_a_title")}</p>
           <p class="teacher-guide-route-body">${m("teacher.flow.listing_source.source_a_body")}</p>
-          <a class="teacher-guide-cta" href="#teacher-courses">${m("teacher.flow.cta_view_courses")}</a>
+          <a class="teacher-guide-cta" href="#teacher-courses?tab=courses">${m("teacher.flow.cta_view_courses")}</a>
         </div>
         <div class="teacher-guide-route">
           <p class="teacher-guide-route-heading">${m("teacher.flow.listing_source.source_b_title")}</p>
