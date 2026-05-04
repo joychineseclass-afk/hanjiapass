@@ -2101,7 +2101,7 @@
       "asset_not_found": "資産が見つかりません。既定の授業を表示しました。",
       "asset_forbidden": "この資産は利用できません。既定の授業を表示しました。",
       "back_courses": "マイコース",
-      "back_assets": "マイ授業用資産",
+      "back_assets": "マイコース・授業用資産",
       "asset_not_found_title": "授業用アセットが見つかりません",
       "asset_forbidden_title": "このアセットを使えません",
       "presentation": {
@@ -2395,7 +2395,7 @@
       "draft_source_hint": "デモ：本番では整理済みコースや単体販売向け資料から掲載に進むことが多いです。ここで作る新規下書きはまず出所を記録しません。",
       "flow_note": "流れのヒント：下書き作成後に審査へ提出でき、承認されると公開に近い状態になります（ローカルデモのまま）。",
       "asset_listings_aria": "授業用アセットからの掲載",
-      "asset_listings_title": "「マイ授業用資産」起点の掲載",
+      "asset_listings_title": "「マイコース」の授業用資産由来の掲載",
       "asset_listings_desc": "授業用資産から審査に出すと、ここと下の主一覧に行が現れます。審査操作で承認/却下できます。",
       "source": {
         "not_set": "出所未設定（デモ下書き）",

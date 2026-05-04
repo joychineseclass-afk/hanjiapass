@@ -101,6 +101,7 @@ registerRoute("#my-orders", () => import("./pages/page.myOrders.js"));
 registerRoute("#catalog", () => import("./pages/page.catalog.js"));
 registerRoute("#lumina-teacher-stage0", () => import("./pages/page.luminaTeacherStage0.js"));
 registerRoute("#teacher-publishing", () => import("./pages/page.teacherPublishing.js"));
+registerRoute("#my-sales", () => import("./pages/page.mySalesAlias.js"));
 registerRoute("#teacher-review", () => import("./pages/page.teacherReview.js"));
 registerRoute("#teacher-listing", () => import("./pages/page.teacherListingDetail.js"));
 registerRoute("#auth-login", () => import("./pages/page.authLogin.js"));

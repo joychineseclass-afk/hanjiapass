@@ -2090,7 +2090,7 @@
       "current_teacher_mode": "当前使用老师课件授课",
       "has_teacher_note_badge": "含教师备注",
       "mode_teacher_courseware": "课堂课件模式",
-      "asset_not_found": "未找到该课堂资产，已加载默认可用课堂。可在「我的课堂资产」中核对。",
+      "asset_not_found": "未找到该课堂资产，已加载默认可用课堂。可在「我的课程」→「课堂资产」核对。",
       "asset_forbidden": "当前账号无法使用该资产，已加载默认可用课堂。",
       "back_courses": "我的课程",
       "back_assets": "我的授课资产",
@@ -2240,7 +2240,7 @@
       "not_found": "该内容不存在或不可用",
       "not_found_desc": "链接可能有误，或内容已下线。可联系老师或平台确认。",
       "no_access_title": "当前不可公开访问",
-      "no_access_body": "该内容未通过公开审核、仍为非公开，或不存在。老师可在「我的课堂资产」与审核台查看状态。"
+      "no_access_body": "该内容未通过公开审核、仍为非公开，或不存在。老师可在「我的课程 → 课堂资产」与审核台查看状态。"
     },
     "sales": {
       "title": "销售概览（演示）",
@@ -2387,7 +2387,7 @@
       "draft_source_hint": "演示说明：实际上架可来自整理好的课程，或适合单独售卖的资料；新建草稿暂不记录真实来源关联。",
       "flow_note": "流程提示：草稿创建后可提交审核；审核通过后更接近对外展示（仍为本地演示流程）。",
       "asset_listings_aria": "来自课堂资产的上架",
-      "asset_listings_title": "来自「我的课堂资产」的上架项",
+      "asset_listings_title": "来自课堂资产（「我的课程」内）的上架项",
       "asset_listings_desc": "在课堂资产页提交审核后，会在此与下方主表中出现。审核员可在「审核操作」中通过或驳回。",
       "source": {
         "not_set": "来源未标注（演示草稿）",

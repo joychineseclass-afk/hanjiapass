@@ -2090,7 +2090,7 @@
       "current_teacher_mode": "Teaching with a classroom deck",
       "has_teacher_note_badge": "Has teacher notes",
       "mode_teacher_courseware": "Classroom deck mode",
-      "asset_not_found": "That classroom asset was not found. We loaded a default classroom instead. Check My classroom assets on the workbench.",
+      "asset_not_found": "That classroom asset was not found. We loaded a default classroom instead. Verify in My courses → Classroom assets.",
       "asset_forbidden": "This asset is not available for your current account. We loaded a default classroom instead.",
       "back_courses": "My courses",
       "back_assets": "My teaching assets",
@@ -2240,7 +2240,7 @@
       "not_found": "This content is not available",
       "not_found_desc": "The link may be wrong or the item was removed. Check with the teacher or platform.",
       "no_access_title": "Not available publicly",
-      "no_access_body": "This item is not approved for public view, is still private, or does not exist. Teachers can see status in My classroom assets and the review console."
+      "no_access_body": "This item is not approved for public view, is still private, or does not exist. Teachers can check status under My courses → Classroom assets or in the review console."
     },
     "sales": {
       "title": "Sales snapshot (demo)",
@@ -2387,7 +2387,7 @@
       "draft_source_hint": "Demo note: real listings often come from a finished course or sellable materials. New drafts here do not record a real source link yet.",
       "flow_note": "Flow: after you create a draft you can submit it for review; once approved it is closer to going public (still a local demo).",
       "asset_listings_aria": "Listings from classroom assets",
-      "asset_listings_title": "Listings from My classroom assets",
+      "asset_listings_title": "Listings originating from Classroom assets (inside My courses)",
       "asset_listings_desc": "When you submit a classroom asset, a matching row appears here and in the main listing table. Reviewers can approve or reject in the section below.",
       "source": {
         "not_set": "Source not set (demo draft)",

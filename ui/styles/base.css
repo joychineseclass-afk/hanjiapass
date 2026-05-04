@@ -3349,7 +3349,7 @@ a.section-side-nav-item:hover{
   background: #1d4ed8;
   border-color: #1d4ed8;
 }
-/* 「我的课程」页顶：课程 / 课程资产 与下方流程条间距 */
+/* 「我的课程」页顶：课程列表 / 课堂资产 Tab 与下方流程条间距 */
 .teacher-courses-hub-tabs{
   margin: 0 0 16px;
 }

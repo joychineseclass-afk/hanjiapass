@@ -77,6 +77,7 @@ function setActive(rootEl) {
         "#teacher-assets",
         "#teacher-asset-editor",
         "#teacher-publishing",
+        "#my-sales",
         "#teacher-review",
         "#teacher-profile",
         "#teacher-ai",
