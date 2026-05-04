@@ -1088,7 +1088,7 @@
     "my_sales": {
       "kicker": "Seller home",
       "page_title": "My sales",
-      "page_subtitle": "Manage teaching resources you offer for sale—listings tied to materials, courses, slide decks, picture books, and more.",
+      "page_subtitle": "Operate sellable listings for both standalone uploads and structured courses; materials-first and course-first paths both converge here.",
       "page_note": "Numbers below are demo data in this browser; production will reflect your real review and visibility states.",
       "summary_title": "Status at a glance",
       "summary_lead": "Counts follow publish and visibility states for your listings in the table below.",
@@ -1207,20 +1207,21 @@
       "coming_more": "More materials, downloads, and structured syllabi will open in a future release.",
       "go_teacher_home": "Go to Teacher Workspace",
       "unavailable_title": "Not available",
-      "unavailable_body": "This page is only shown when a listing is approved and public. Teachers can check status in My classroom assets or My listings.",
+      "unavailable_body": "This page is visible only when the listing is approved and public. Check status via My courses → Classroom assets tab or My listings.",
       "status_line": "Current status: {status}",
       "desc_placeholder": "Short description will appear here when the teacher adds copy in a later step.",
       "source_asset_label": "From classroom asset"
     },
     "path_strip": {
-      "aria": "Where you are in materials, courses, and listings",
-      "aria_mine": "Your workflow: materials, courses, listings; classroom is entered from materials or courses",
-      "classroom_from_mine": "To teach: go from My materials or My courses, then use Enter classroom on the workbench. Other steps here are prep and sales tracks.",
-      "step2_lead": "Pick materials & course → build classroom assets → list for sale; enter class from an asset or the workbench.",
-      "materials": "Prep materials",
-      "courses": "Build courses",
+      "aria": "Prep areas: materials, courses, listings, classroom assets",
+      "aria_mine": "Prep and sales: upload materials first; organize a course or go straight to listing in parallel; classroom assets stay inside My courses, not in the sidebar",
+      "classroom_from_mine": "Teaching: organize in My materials or My courses, then use Enter classroom on the workbench. Classroom assets live only under My courses → Classroom assets, not as a sidebar top-level item.",
+      "step2_lead": "Start from materials prep: branch into structuring a course, or jump to listing standalone materials/courses; generate classroom-ready assets inside My courses → Classroom assets. Steps can overlap—no rigid single ladder.",
+      "materials": "Materials prep",
+      "courses": "Course outline",
       "assets": "Classroom assets",
-      "listing": "List for sale",
+      "listing": "Listings & sales",
+      "parallel_sep": "/",
       "arrow": "→"
     },
     "flow": {
@@ -1234,11 +1235,11 @@
       "cta_open_classroom": "Open classroom (sample lesson)",
       "materials_next": {
         "title": "Suggested next steps",
-        "intro": "After materials are in good shape, most teachers continue in one of these directions.",
-        "path_a_title": "Path A · Support a course",
-        "path_a_body": "Use files as prep assets, then structure them in My courses for teaching.",
-        "path_b_title": "Path B · Sell a standalone asset",
-        "path_b_body": "If something is ready to sell on its own, open Listings & sales to create a listing and submit it for review."
+        "intro": "My materials is your raw library (PDF/PPT/handouts/practice/image files) and supports preparing sellable bundles; structured curricula need assets per lesson.",
+        "path_a_title": "Path A · Build a structured course",
+        "path_a_body": "For a syllabus with lesson-level teaching assets, go to My courses and use the Classroom assets tab—those assets are inside the course page, not a sidebar top-level item.",
+        "path_b_title": "Path B · Sell materials standalone",
+        "path_b_body": "You can sell materials alone: once prep looks good here, continue in My sales to register the listing and submit for review. My sales accepts both standalone materials and course-shaped listings."
       },
       "courses_next": {
         "title": "After your course is ready",
@@ -1253,8 +1254,8 @@
       },
       "listing_source": {
         "title": "Where listings come from",
-        "intro": "Prepare a course or materials first, then register what you want to sell here.",
-        "scope": "This page manages listings—public display, review, and selling—not the course itself or your private library.",
+        "intro": "Prep raw files in My materials or finish a structured course line in My courses—both flows can converge into sellable listings on this page.",
+        "scope": "This workspace handles material and course-linked listings awaiting review—not the private library (My materials) nor the teaching shell (My courses).",
         "source_a_title": "Source A · A structured course",
         "source_a_body": "When the teaching structure is ready, you usually create the sellable listing here.",
         "source_b_title": "Source B · Standalone materials",
@@ -1298,7 +1299,7 @@
         "disclosure": "Counts are filtered to the signed-in teacher’s profile from local data—not global demos or real analytics.",
         "chip_materials": "My materials · {count}",
         "chip_courses": "My courses · {count}",
-        "chip_classroom_assets": "Classroom assets · {count}",
+        "chip_classroom_assets": "Classroom assets · {count} (in-course)",
         "chip_materials_in_use": "In use in courses · {count}",
         "chip_courses_with_listing": "Linked to listings · {count}",
         "chip_listings": "Listings (mine) · {count}",
@@ -1315,7 +1316,7 @@
       "hub_path_lead": "Main path",
       "hub_workflows_title": "Primary workflows",
       "hub_wf_decks": "Create / edit courseware",
-      "hub_wf_decks_sub": "Create a deck in Classroom assets, or open an existing deck to edit.",
+      "hub_wf_decks_sub": "Create or revise decks inside My courses → Classroom assets (not via a lone sidebar shortcut).",
       "hub_wf_decks_cta": "Open classroom assets",
       "hub_wf_decks_secondary": "Choose a deck to edit",
       "hub_wf_class_sub": "Pick course, level, and lesson—then enter the teacher courseware view.",
@@ -1333,9 +1334,9 @@
       "hub_listings_empty": "No publish items yet. Create one from a deck.",
       "hub_deck_edit": "Edit deck",
       "hub_classroom_assets_title": "Decks & classroom assets",
-      "hub_classroom_assets_hint": "Shortcuts here. Full management is on the classroom assets page.",
-      "home_assets_peek_aria": "Classroom assets entry",
-      "home_assets_cta": "Open my classroom assets",
+      "hub_classroom_assets_hint": "Shortcuts appear here—full authoring happens under My courses → Classroom assets.",
+      "home_assets_peek_aria": "Jump to Classroom assets tab",
+      "home_assets_cta": "Enter Classroom assets tab",
       "home_assets_count_hint": "{count} classroom asset(s) in the demo (local)"
     },
     "recommended": {
@@ -1603,23 +1604,23 @@
     "hub": {
       "materials": {
         "title": "My materials",
-        "desc": "Manage prep assets and see what is already used in courses or ready to move toward listing.",
-        "desc_mine": "Your prep library for this profile—rows below are only for this signed-in teacher in local data.",
+        "desc": "Raw library (PDF/PPT/handouts/practice/image files); you may also groom items into sellable bundles without assembling a whole course.",
+        "desc_mine": "Teaching materials tied to your profile incl. listing readiness cues—rows show local previews.",
         "cta": "Open materials library",
         "cta_mine": "My materials"
       },
       "courses": {
         "title": "My courses",
-        "desc": "Shape your teaching structure and see whether materials are attached or you are ready for listing.",
-        "desc_mine": "Your teaching structure for this profile. Filtered to the current teacher; empty means nothing linked yet in preview data.",
+        "desc": "Course workspace: outline, link materials, and use the Classroom assets tab for projector-ready bundles.",
+        "desc_mine": "Your teaching outline for this profile; empty implies no seeded syllabus.",
         "cta": "Open course management",
         "cta_mine": "My courses"
       },
       "assets": {
-        "title": "My classroom assets",
-        "desc": "Slide drafts and notes bound to a lesson; open the classroom from an asset when you teach.",
-        "desc_mine": "Local drafts for this teacher only; not a store product yet.",
-        "cta_mine": "Open assets"
+        "title": "Classroom assets",
+        "desc": "Inside My courses: slide stacks, projector pages, and practice hooks—not its own sidebar top-level hub.",
+        "desc_mine": "Local drafts; full management stays under My courses → Classroom assets.",
+        "cta_mine": "Jump to Classroom assets tab"
       },
       "listing": {
         "title": "Listings & sales management",
@@ -1632,11 +1633,11 @@
     },
     "assets": {
       "default_title": "{course} · Book {level} · Lesson {lesson} — classroom slides (draft)",
-      "page_title": "My teaching assets",
-      "page_subtitle": "Signed in as {name}. Stored locally in this browser.",
+      "page_title": "Teaching assets · Classroom tab",
+      "page_subtitle": "Logged in as {name}. Classroom assets belong inside My courses, not under a separate sidebar item. Stored locally.",
       "gated": "Classroom assets open after your teacher profile is approved.",
       "list_aria": "Classroom assets list",
-      "panel_title": "My classroom assets",
+      "panel_title": "Classroom assets",
       "panel_hint": "Create a lesson-bound slide draft, then open the classroom from the list or a link. Step 3 will add a real PPT path.",
       "quick_create": "Create classroom asset (Kids · 1-1 · demo)",
       "quick_create_note": "Default: Kids, book 1, lesson 1. You can build more from each course row.",
@@ -1995,11 +1996,11 @@
       "upload_err_cloud": "Cloud storage or database write failed. Create the private bucket `teacher-materials`, run `docs/supabase-teacher-materials.sql` in Supabase, verify RLS/policies, and ensure you are signed in.",
       "upload_mock_ok": "(Demo) Added to the list below. The file is not in the cloud yet—only visible in this session.",
       "relation_title": "How this relates to other areas",
-      "relation_item_1": "Materials ≠ courses.",
-      "relation_item_2": "Materials ≠ listed products.",
-      "relation_item_3": "To sell, use Listings & sales.",
+      "relation_item_1": "Materials ≠ courses; classroom-ready assets belong under My courses → Classroom assets.",
+      "relation_item_2": "Materials ≠ listed items, though you may prep uploads here before opening My sales.",
+      "relation_item_3": "Material-led and course-led listings both route through My sales review.",
       "mine_page_title": "My materials · {name}",
-      "mine_page_subtitle": "Materials already created for this teacher profile (demo rows with category labels).",
+      "mine_page_subtitle": "Raw prep library plus listing-readiness cues; bundles can ship alone or feed a syllabus in My courses.",
       "list_title_mine": "Created materials",
       "list_mine_note": "The category column is demo-only; filters, bulk actions, and a real taxonomy ship at launch.",
       "category": {
@@ -2011,15 +2012,15 @@
       },
       "relation_note_mine": "When approved, this list belongs to the signed-in teacher only.",
       "empty_mine_title": "No materials in your library yet",
-      "empty_mine_body": "Structure courses in My courses first, then attach files here; local upload and classroom assets follow in later steps."
+      "empty_mine_body": "Upload handouts/practice bundles here first; migrate into a syllabus from My courses if you need Lesson-level decks. Classroom assets always live inside the course tabs."
     },
     "courses_page": {
       "title": "My courses",
-      "subtitle": "Manage the course content you create and organize.",
-      "tagline": "Your own teaching structures—drafts or class-ready—not the same as a sellable listing.",
-      "hub_tab_courses": "Courses",
-      "hub_tab_assets": "Course assets",
-      "hub_tabs_aria": "My courses: switch between courses and course assets",
+      "subtitle": "Course center: syllabus, linking materials, and classroom assets tailored for live teaching.",
+      "tagline": "Courses stay separate from storefront listings—material-led and course-led sales both converge in My sales.",
+      "hub_tab_courses": "Course list",
+      "hub_tab_assets": "Classroom assets",
+      "hub_tabs_aria": "My courses: toggle between Course list and Classroom assets",
       "list_title": "Courses list",
       "list_demo_note": "Sample rows show materials and listing hints; editing will arrive in a future release.",
       "th_name": "Course name",

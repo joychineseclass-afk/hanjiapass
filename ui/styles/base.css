@@ -864,6 +864,14 @@ a.teacher-path-strip-node--link:hover{
   font-weight: 900;
   font-size: 14px;
 }
+.teacher-path-strip-parallel-sep{
+  flex: 0 0 auto;
+  color: #94a3b8;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 0 2px;
+  user-select: none;
+}
 .teacher-guide-panel{
   margin-top: 14px;
   padding: 16px 18px;

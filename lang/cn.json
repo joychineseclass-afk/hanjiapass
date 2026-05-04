@@ -1088,7 +1088,7 @@
     "my_sales": {
       "kicker": "卖家后台",
       "page_title": "我的销售",
-      "page_subtitle": "管理您准备出售或正在出售的教学资源——可与教材、课程、课件、PPT、绘本等内容关联的售卖条目。",
+      "page_subtitle": "管理您准备上架或在售的教学资源条目：材料型与结构化课程均可在此提交审核并与 listing 绑定，不限定仅能来自某一种来源。",
       "page_note": "以下为当前登录老师在本地的演示数据；真实环境将反映您的上架、审核与公开状态。",
       "summary_title": "资源状态一览",
       "summary_lead": "根据发布与可见性汇总；数字仅对应下方列表中「我的」售卖资源。",
@@ -1207,20 +1207,21 @@
       "coming_more": "更多资料、下载与结构化大纲将在后续版本开放。",
       "go_teacher_home": "前往教师工作台",
       "unavailable_title": "当前不可访问",
-      "unavailable_body": "仅当上架已审核通过且公开时，访客可查看本页。老师可在「我的课堂资产」或「我的上架」查看状态。",
+      "unavailable_body": "仅当上架已审核通过且公开时，访客可查看本页。老师可在「我的课程」→「课堂资产」或「我的上架」查看状态。",
       "status_line": "当前状态：{status}",
       "desc_placeholder": "老师补充的简介将显示在此处（后续版本）。",
       "source_asset_label": "来源课堂资产"
     },
     "path_strip": {
-      "aria": "教材、课程与上架流程位置",
-      "aria_mine": "我的工作流：材料 → 课程 → 上架；从「我的教材/我的课程」准备后再到工作台进入课堂",
-      "classroom_from_mine": "上课入口：在「我的教材」或「我的课程」中整理内容后，回到工作台使用「进入课堂」。此处为备课与售卖的并行关系说明，非故障提示。",
-      "step2_lead": "先准备教材/课程，再建课堂资产，最后可上架；上课可从「我的课堂资产」或工作台的进入课堂。",
+      "aria": "教材、课程、课堂资产与上架入口",
+      "aria_mine": "备课与上架：先准备材料；组织课程或直接上架二选一并行；课堂资产在我的课程内，用于上课入口见工作台",
+      "classroom_from_mine": "上课入口：在「我的教材」或「我的课程」中整理后，回到工作台使用「进入课堂」。课堂资产仅在「我的课程」内维护，不作为侧栏一级入口。",
+      "step2_lead": "从材料准备出发：可先进入课程组织结构化教学，或直接到上架售卖准备资料／课程 listing；随后在「我的课程 → 课堂资产」生成课件与上课资源。次序可交错，不必单线完成。",
       "materials": "材料准备",
       "courses": "课程组织",
-      "assets": "我的课堂资产",
+      "assets": "课堂资产",
       "listing": "上架售卖",
+      "parallel_sep": "/",
       "arrow": "→"
     },
     "flow": {
@@ -1234,11 +1235,11 @@
       "cta_open_classroom": "进入课堂（示例进度）",
       "materials_next": {
         "title": "下一步建议",
-        "intro": "教材整理好后，通常可以往这两个方向继续。",
-        "path_a_title": "路径 A · 支撑课程",
-        "path_a_body": "将资料用作备课素材，到「我的课程」整理成可授课的教学结构。",
-        "path_b_title": "路径 B · 准备单独售卖",
-        "path_b_body": "若某份资料适合直接售卖，可到「注册/销售管理」准备 listing 并提交审核。"
+        "intro": "「我的教材」是原材料仓库（PDF/PPT／讲义／练习／图片等），也可把资料单独准备为可售条目；系统化课程则需先在各课次下维护课堂资产。",
+        "path_a_title": "路径 A · 组织系统课程",
+        "path_a_body": "若要做成系统化课程与课次内资源，请进入「我的课程」整理结构与「课堂资产」；课堂资产不作为左侧一级入口。",
+        "path_b_title": "路径 B · 资料可先上架",
+        "path_b_body": "教材也可以作为资料单独上架；若已通过「上架准备」，请到「我的销售」创建 listing。「我的销售」统一承接教材型与课程型上架，不限定必须来自某一课程。"
       },
       "courses_next": {
         "title": "课程完成后的下一步",
@@ -1253,8 +1254,8 @@
       },
       "listing_source": {
         "title": "上架内容从哪里来",
-        "intro": "您可以先准备课程或教材，再到这里注册售卖。",
-        "scope": "本页管理的是将要公开展示、接受审核与售卖的 listing，不是课程本体，也不是私有教材库。",
+        "intro": "可以先在「我的教材」准备原材料，也可以在「我的课程」完成授课结构后再上架；两者均可经由本页汇聚为可售条目。",
+        "scope": "本页统一管理教材型与课程型上架：listing 须经审核后方可公开售卖；课程本体仍在「我的课程」，私有文件库仍在「我的教材」。",
         "source_a_title": "来源 A · 已整理好的课程",
         "source_a_body": "授课结构就绪后，通常在此创建对应的售卖 listing。",
         "source_b_title": "来源 B · 适合单独售卖的资料",
@@ -1298,7 +1299,7 @@
         "disclosure": "以下为与当前登录教师档案绑定的本地轻量统计，用于预览准备进度；非真实业务分析。",
         "chip_materials": "我的教材 {count} 份",
         "chip_courses": "我的课程 {count} 门",
-        "chip_classroom_assets": "我的课堂资产 {count} 项",
+        "chip_classroom_assets": "课堂资产（课程内）{count} 项",
         "chip_materials_in_use": "其中 {count} 份已用于课程",
         "chip_courses_with_listing": "其中 {count} 门已关联上架",
         "chip_listings": "本教师上架 {count} 条",
@@ -1315,7 +1316,7 @@
       "hub_path_lead": "主路径",
       "hub_workflows_title": "主要工作流",
       "hub_wf_decks": "创建 / 编辑课件",
-      "hub_wf_decks_sub": "在「我的课堂资产」中创建课件，或在已有课件上继续编辑。",
+      "hub_wf_decks_sub": "在「我的课程 → 课堂资产」创建或继续编辑课件与上课资源（非工作台侧栏一级入口）。",
       "hub_wf_decks_cta": "打开课堂资产",
       "hub_wf_decks_secondary": "选择某套课件以编辑",
       "hub_wf_class_sub": "在下方或资产页选课程/级别/课次，进入老师课件。",
@@ -1333,9 +1334,9 @@
       "hub_listings_empty": "暂无发布项。可在课件页生成发布项。",
       "hub_deck_edit": "编辑课件",
       "hub_classroom_assets_title": "课件与课堂资产",
-      "hub_classroom_assets_hint": "本页为快捷入口。完整管理请前往我的课堂资产。",
-      "home_assets_peek_aria": "我的课堂资产入口",
-      "home_assets_cta": "进入我的课堂资产",
+      "hub_classroom_assets_hint": "快捷预览。请在「我的课程 → 课堂资产」完成完整管理与回收站操作。",
+      "home_assets_peek_aria": "从我的课程打开课堂资产",
+      "home_assets_cta": "进入课堂资产 Tab",
       "home_assets_count_hint": "当前共 {count} 项课堂资产（演示数据）"
     },
     "recommended": {
@@ -1603,23 +1604,23 @@
     "hub": {
       "materials": {
         "title": "我的教材",
-        "desc": "管理备课资料，查看是否已用于课程或可准备上架。",
-        "desc_mine": "与当前老师档案绑定的教材区域；下表为本地预览数据。",
+        "desc": "原材料仓库；含上传与分类列表，亦可单独整理为可售资料。适合 PDF／PPT／讲义／练习／图片等。",
+        "desc_mine": "与当前老师档案绑定的教材区域；下表为本地预览数据。也可在此查看上架准备度。",
         "cta": "进入教材库",
         "cta_mine": "我的教材"
       },
       "courses": {
         "title": "我的课程",
-        "desc": "整理课程内容，查看是否已引用教材或能否进入上架流程。",
+        "desc": "课程中心：组织课程结构、连接教材；在「课堂资产」 Tab 生成课件包、展示页与课堂材料。",
         "desc_mine": "与当前老师档案绑定的课程；若为空，表示本账号在预览中尚无课程。",
         "cta": "进入课程管理",
         "cta_mine": "我的课程"
       },
       "assets": {
-        "title": "我的课堂资产",
-        "desc": "绑定课次的课件草稿、笔记与材料入口；可从此进入课堂。",
-        "desc_mine": "仅本老师本地草稿，非正式商品。",
-        "cta_mine": "查看全部课堂资产"
+        "title": "课堂资产",
+        "desc": "位于「我的课程」内部：课件包、展示页与课堂活动等上课资源（非左侧一级入口）。",
+        "desc_mine": "与本老师草稿同步；需在「我的课程 → 课堂资产」中查看完整列表。",
+        "cta_mine": "在课程页打开课堂资产"
       },
       "listing": {
         "title": "上架与售卖管理",
@@ -1632,11 +1633,11 @@
     },
     "assets": {
       "default_title": "{course} 第{level} 册 第{lesson} 课 — 课堂课件（草稿）",
-      "page_title": "我的授课资产",
-      "page_subtitle": "当前 {name}，数据保存在本机浏览器。",
+      "page_title": "授课资产 · 课堂资产",
+      "page_subtitle": "当前 {name}；本 Tab 属于我的课程内部资源（非工作台侧栏一级入口）。数据保存在本机浏览器。",
       "gated": "需老师档案通过审核后方可管理课堂资产。",
       "list_aria": "课堂资产列表",
-      "panel_title": "我的课堂资产",
+      "panel_title": "课堂资产",
       "panel_hint": "为某一课次创建课件草稿，再从列表或链接进入课堂。真正 PPT 能力在后续步骤。",
       "quick_create": "快速创建（Kids 第1册 第1课 演示）",
       "quick_create_note": "默认：Kids、册别 1、课次 1。更多请在「我的课程」按行创建。",
@@ -1995,11 +1996,11 @@
       "upload_err_cloud": "云存储或数据库写入失败。请确认已在 Supabase 中创建 storage bucket `teacher-materials`、执行 `docs/supabase-teacher-materials.sql`，并检查策略与登录状态。",
       "upload_mock_ok": "（演示）已加入下方列表。文件本身尚未上传到云端，仅本页会话内可见。",
       "relation_title": "与其他模块的关系",
-      "relation_item_1": "教材≠课程。",
-      "relation_item_2": "教材≠已上架商品。",
-      "relation_item_3": "售卖请进上架管理。",
+      "relation_item_1": "教材≠课程；课堂资产只在「我的课程」内维护。",
+      "relation_item_2": "教材≠已上架商品，但可把资料在本页备好后再去「我的销售」上架。",
+      "relation_item_3": "教材与课程的 listing 均通过「我的销售」统一管理与审核。",
       "mine_page_title": "我的教材 · {name}",
-      "mine_page_subtitle": "当前教师档案下的教材列表（演示数据，含分类占位）。",
+      "mine_page_subtitle": "原材料仓库：PDF／PPT／讲义／练习／图片等；也可单独准备为可售资料。系统化课程请先进入「我的课程」组织结构。",
       "list_title_mine": "已创建教材列表",
       "list_mine_note": "分类列为演示占位；正式上线后将支持筛选、批量操作与真实分类体系。",
       "category": {
@@ -2011,15 +2012,15 @@
       },
       "relation_note_mine": "列表在审核通过后仅对应当前登录教师。",
       "empty_mine_title": "我的教材中暂无内容",
-      "empty_mine_body": "可先在「我的课程」中组织结构，再回到此处补充资料；本地上传与课堂资产将在后续步骤接入。"
+      "empty_mine_body": "可先在此上传讲义与练习等原材料；若要做系统化课程请进入「我的课程」。课堂资产在课程页内生成与管理。"
     },
     "courses_page": {
       "title": "我的课程",
-      "subtitle": "管理您创建与组织的课程教学内容。",
-      "tagline": "这里存放您自建的教学结构（草稿或已可用于授课）；课程本体不等于商城 listing。",
-      "hub_tab_courses": "课程",
-      "hub_tab_assets": "课程资产",
-      "hub_tabs_aria": "我的课程：课程与课程资产切换",
+      "subtitle": "课程中心：组织课程结构，连接教材，并在「课堂资产」中生成上课资源。",
+      "tagline": "课程本体≠商城 listing；教材型与课程型售卖均由「我的销售」承接。",
+      "hub_tab_courses": "课程列表",
+      "hub_tab_assets": "课堂资产",
+      "hub_tabs_aria": "我的课程：课程列表与课堂资产切换",
       "list_title": "课程列表",
       "list_demo_note": "表中条目含演示引用与上架提示，创建/编辑功能仍将在后续版本开放。",
       "th_name": "课程名称",

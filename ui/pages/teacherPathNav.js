@@ -168,7 +168,7 @@ export function renderTeacherAdminShell(opts) {
 }
 
 /**
- * 工作流条：选教材/课程 → 建课堂资产 → 上架；进入课堂在资产或工作台完成。
+ * 工作流条：材料 →（课程组织 / 上架并行）→ 课堂资产用于上课；非严格单一路径。
  * @param {'materials' | 'courses' | 'assets' | 'listing' | null} active
  * @param {(path: string, params?: object) => string} tx
  * @param {{ showLead?: boolean }} [options] 为 false 时不渲染段首说明句（与页面标题区副标去重，如 #teacher-assets）
@@ -195,6 +195,10 @@ export function teacherPathStripHtml(active, tx, options = {}) {
     return `<a class="teacher-path-strip-node teacher-path-strip-node--link" href="${hrefs[kind]}">${label}</a>`;
   };
 
+  const parallelSep = `<span class="teacher-path-strip-parallel-sep" aria-hidden="true">${m(
+    "teacher.path_strip.parallel_sep",
+  )}</span>`;
+
   return `
     <nav class="teacher-path-strip card${showLead ? "" : " teacher-path-strip--no-lead"}" aria-label="${m("teacher.path_strip.aria_mine")}">
       ${leadHtml}
@@ -202,10 +206,10 @@ export function teacherPathStripHtml(active, tx, options = {}) {
         ${node("materials")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("courses")}
+        ${parallelSep}
+        ${node("listing")}
         <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
         ${node("assets")}
-        <span class="teacher-path-strip-arrow" aria-hidden="true">${m("teacher.path_strip.arrow")}</span>
-        ${node("listing")}
       </div>
     </nav>
   `;

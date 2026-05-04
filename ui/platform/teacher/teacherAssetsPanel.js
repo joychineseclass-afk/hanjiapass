@@ -31,7 +31,6 @@ import {
   updateListingPricingForTeacher,
 } from "../../lumina-commerce/teacherCommerceBridge.js";
 import { i18n } from "../../i18n.js";
-import { teacherPathStripHtml } from "../../pages/teacherPathNav.js";
 import { formatDemoShortUpdated } from "../../lumina-commerce/teacherDemoCatalog.js";
 import {
   TEACHER_ASSET_IMPORT_ACCEPT,
@@ -562,7 +561,6 @@ export async function mountTeacherAssetsPanel(container, opts) {
         : "";
 
   const main = `
-      ${teacherPathStripHtml("assets", t, { showLead: false })}
       <header class="card teacher-surface-hero teacher-admin-header teacher-assets-page-hero">
         <h1 class="teacher-admin-title">${escapeHtml(t("teacher.assets.page_title"))}</h1>
         <p class="teacher-admin-subtitle">${escapeHtml(t("teacher.assets.page_subtitle", { name: displayName }))}</p>
